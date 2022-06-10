@@ -17,6 +17,7 @@
 		background: var(--sc-color-brand-main-background);
 		display: flex;
 		flex-direction: column;
+		overflow: hidden;
 	}
 	@media screen and (max-width: 600px) {
 		#sc-settings-container {
@@ -27,6 +28,7 @@
 	#sc-settings-content {
 		display: flex;
 		flex: 1;
+		overflow: hidden;
 	}
 	#sc-settings {
 		flex: 1;
@@ -39,12 +41,14 @@
 		flex-direction: column;
 		gap: 2px;
 		min-width: 225px;
+		overflow: auto;
 	}
 	.sc-container {
 		width: 100%;
+		overflow-y: auto;
 	}
 
-	.sc-container {
+	.sc-content {
 		margin-left: auto;
 		margin-right: auto;
 		max-width: 768px;
@@ -53,6 +57,16 @@
 		flex-direction: column;
 		gap: var(--sc-spacing-large);
 	}
+
+	/* .sc-container {
+		margin-left: auto;
+		margin-right: auto;
+		max-width: 768px;
+		padding: 2rem;
+		display: flex;
+		flex-direction: column;
+		gap: var(--sc-spacing-large);
+	} */
 
 	.sc-section-heading {
 		margin-bottom: 1.5rem;

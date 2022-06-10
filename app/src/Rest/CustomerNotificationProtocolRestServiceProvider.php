@@ -2,26 +2,26 @@
 
 namespace SureCart\Rest;
 
+use SureCart\Controllers\Rest\CustomerNotificationProtocolController;
 use SureCart\Rest\RestServiceInterface;
-use SureCart\Controllers\Rest\BrandController;
 
 /**
  * Service provider for Price Rest Requests
  */
-class BrandRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
+class CustomerNotificationProtocolRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
 	/**
 	 * Endpoint.
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'brand';
+	protected $endpoint = 'customer_notification_protocol';
 
 	/**
 	 * Rest Controller
 	 *
 	 * @var string
 	 */
-	protected $controller = BrandController::class;
+	protected $controller = CustomerNotificationProtocolController::class;
 
 	/**
 	 * Methods allowed for the model.
@@ -30,6 +30,11 @@ class BrandRestServiceProvider extends RestServiceProvider implements RestServic
 	 */
 	protected $methods = [];
 
+	/**
+	 * Register REST Routes
+	 *
+	 * @return void
+	 */
 	public function registerRoutes() {
 		register_rest_route(
 			"$this->name/v$this->version",
@@ -50,20 +55,6 @@ class BrandRestServiceProvider extends RestServiceProvider implements RestServic
 					'schema' => [ $this, 'get_item_schema' ],
 				]
 			)
-		);
-
-		register_rest_route(
-			"$this->name/v$this->version",
-			$this->endpoint . '/purge_logo/',
-			[
-				[
-					'methods'             => \WP_REST_Server::DELETABLE,
-					'callback'            => $this->callback( $this->controller, 'purgeLogo' ),
-					'permission_callback' => [ $this, 'update_item_permissions_check' ],
-				],
-				// Register our schema callback.
-				'schema' => [ $this, 'get_item_schema' ],
-			]
 		);
 	}
 
@@ -86,67 +77,52 @@ class BrandRestServiceProvider extends RestServiceProvider implements RestServic
 			'type'       => 'object',
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
-				'id'               => [
+				'id'                      => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'edit' ],
 					'readonly'    => true,
 				],
-				'object'           => [
-					'description' => esc_html__( 'Type of object (Account)', 'surecart' ),
-					'type'        => 'string',
-					'context'     => [ 'view', 'edit' ],
-					'readonly'    => true,
+				'created_at'              => [
+					'type'    => 'integer',
+					'context' => [ 'edit' ],
 				],
-				'created_at'       => [
-					'description' => esc_html__( 'Created at timestamp', 'surecart' ),
-					'type'        => 'integer',
-					'context'     => [ 'edit' ],
-					'readonly'    => true,
+				'updated_at'              => [
+					'type'    => 'integer',
+					'context' => [ 'edit' ],
 				],
-				'updated_at'       => [
-					'description' => esc_html__( 'Created at timestamp', 'surecart' ),
-					'type'        => 'integer',
-					'context'     => [ 'edit' ],
-					'readonly'    => true,
-				],
-				'color'            => [
-					'description' => esc_html__( 'The brand color.', 'surecart' ),
-					'type'        => 'string',
+				'abandoned_order_enabled' => [
+					'description' => esc_html__( 'If set to true abandonded order reminder emails will be sent to customers.', 'surecart' ),
+					'type'        => 'boolean',
 					'context'     => [ 'view', 'edit' ],
 				],
-				'email'            => [
-					'description' => esc_html__( 'The email address that will be shown to customers for support, on invoices, etc.', 'surecart' ),
-					'type'        => 'string',
+				'order_enabled'           => [
+					'description' => esc_html__( 'If set to true order confirmation emails will be sent to customers.', 'surecart' ),
+					'type'        => 'boolean',
 					'context'     => [ 'view', 'edit' ],
 				],
-				'phone'            => [
-					'description' => esc_html__( 'The phone number that will be shown to customers for support, on invoices, etc.', 'surecart' ),
-					'type'        => 'string',
+				'payment_failure_enabled' => [
+					'description' => esc_html__( 'If set to true subscription dunning emails will be sent to customers.', 'surecart' ),
+					'type'        => 'boolean',
 					'context'     => [ 'view', 'edit' ],
 				],
-				'website'          => [
-					'description' => esc_html__( 'The website that will be shown to customers for support, on invoices, etc.', 'surecart' ),
+				'refund_enabled'          => [
+					'description' => esc_html__( 'If set to true refund emails will be sent to customers.', 'surecart' ),
+					'type'        => 'boolean',
+					'context'     => [ 'view', 'edit' ],
+				],
+				'from_name'               => [
+					'description' => esc_html__( 'The from name to use when sending emails to customers.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit' ],
 				],
-				'logo_url'         => [
-					'description' => esc_html__( 'The URL of the brand logo.', 'surecart' ),
+				'locale'                  => [
+					'description' => esc_html__( 'The language that will be used for all customer notifications. Current available locales are de, en, es, and fr.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit' ],
 				],
-				'address'          => [
-					'description' => esc_html__( 'The associated address.', 'surecart' ),
-					'type'        => 'object',
-					'context'     => [ 'view', 'edit' ],
-				],
-				'statement_memo'   => [
-					'description' => esc_html__( 'The default memo for invoices and receipts.', 'surecart' ),
-					'type'        => 'string',
-					'context'     => [ 'view', 'edit' ],
-				],
-				'statement_footer' => [
-					'description' => esc_html__( 'The default footer for invoices and receipts.', 'surecart' ),
+				'reply_to_email'          => [
+					'description' => esc_html__( 'The reply-to email address to use when sending emails to customers.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit' ],
 				],
@@ -157,17 +133,17 @@ class BrandRestServiceProvider extends RestServiceProvider implements RestServic
 	}
 
 	/**
-	 * Get items
+	 * Anyone can get the protocols.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'manage_options' );
 	}
 
 	/**
-	 * Update item
+	 * Need priveleges to update.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.

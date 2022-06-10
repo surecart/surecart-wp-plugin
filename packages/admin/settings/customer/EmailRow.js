@@ -1,0 +1,18 @@
+import { __ } from '@wordpress/i18n';
+
+export default ({ title, description, model }) => {
+	return (
+		<sc-stacked-list-row style={{ '--columns': '3' }}>
+			<strong>{title}</strong>
+			<div style={{ opacity: '0.75' }}>{description}</div>
+			<sc-button
+				size="small"
+				slot="suffix"
+				href={`https://app.surecart.com/notification_templates/:customer_notifications/${model}/notification/edit`}
+				target="_blank"
+			>
+				{__('Edit', 'surecart')}
+			</sc-button>
+		</sc-stacked-list-row>
+	);
+};

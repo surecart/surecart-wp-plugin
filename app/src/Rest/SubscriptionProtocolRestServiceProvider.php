@@ -95,7 +95,7 @@ class SubscriptionProtocolRestServiceProvider extends RestServiceProvider implem
 				'payment_retry_window_weeks' => [
 					'description' => esc_html__( 'Payment retry window in weeks.', 'surecart' ),
 					'type'        => 'integer',
-					'context'     => [ 'edit' ],
+					'context'     => [ 'view', 'edit' ],
 				],
 				'cancel_behavior'            => [
 					'description' => esc_html__( 'Cancel behavior. Either pending or immediate.', 'surecart' ),

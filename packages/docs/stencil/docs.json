@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-06-09T17:38:19",
+  "timestamp": "2022-06-10T18:37:27",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.15.1",
@@ -96,12 +96,53 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "showLine2",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-line-2",
+          "reflectToAttr": false,
+          "docs": "Should we show name field?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showName",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-name",
+          "reflectToAttr": false,
+          "docs": "Should we show name field?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
       "events": [
         {
           "event": "scChangeAddress",
+          "detail": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Address change event.",
+          "docsTags": []
+        },
+        {
+          "event": "scInputAddress",
           "detail": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "bubbles": true,
           "cancelable": true,
@@ -125,19 +166,22 @@
       ],
       "dependencies": [
         "sc-form-control",
-        "sc-select",
         "sc-input",
+        "sc-select",
         "sc-block-ui"
       ],
       "dependencyGraph": {
         "sc-address": [
           "sc-form-control",
-          "sc-select",
           "sc-input",
+          "sc-select",
           "sc-block-ui"
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ],
+        "sc-input": [
+          "sc-form-control"
         ],
         "sc-select": [
           "sc-icon",
@@ -148,9 +192,6 @@
           "sc-input",
           "sc-spinner",
           "sc-menu"
-        ],
-        "sc-input": [
-          "sc-form-control"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -2419,12 +2460,15 @@
         ],
         "sc-address": [
           "sc-form-control",
-          "sc-select",
           "sc-input",
+          "sc-select",
           "sc-block-ui"
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ],
+        "sc-input": [
+          "sc-form-control"
         ],
         "sc-select": [
           "sc-icon",
@@ -2435,9 +2479,6 @@
           "sc-input",
           "sc-spinner",
           "sc-menu"
-        ],
-        "sc-input": [
-          "sc-form-control"
         ],
         "sc-compact-address": [
           "sc-form-control",
@@ -3955,8 +3996,8 @@
         ],
         "sc-address": [
           "sc-form-control",
-          "sc-select",
           "sc-input",
+          "sc-select",
           "sc-block-ui"
         ],
         "sc-select": [
@@ -6540,12 +6581,15 @@
         ],
         "sc-address": [
           "sc-form-control",
-          "sc-select",
           "sc-input",
+          "sc-select",
           "sc-block-ui"
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ],
+        "sc-input": [
+          "sc-form-control"
         ],
         "sc-select": [
           "sc-icon",
@@ -6556,9 +6600,6 @@
           "sc-input",
           "sc-spinner",
           "sc-menu"
-        ],
-        "sc-input": [
-          "sc-form-control"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -6797,7 +6838,8 @@
         "sc-compact-address",
         "sc-input",
         "sc-payment",
-        "sc-select"
+        "sc-select",
+        "sc-textarea"
       ],
       "dependencies": [
         "sc-tooltip"
@@ -6822,6 +6864,9 @@
           "sc-form-control"
         ],
         "sc-select": [
+          "sc-form-control"
+        ],
+        "sc-textarea": [
           "sc-form-control"
         ]
       }
@@ -11150,12 +11195,15 @@
         ],
         "sc-address": [
           "sc-form-control",
-          "sc-select",
           "sc-input",
+          "sc-select",
           "sc-block-ui"
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ],
+        "sc-input": [
+          "sc-form-control"
         ],
         "sc-select": [
           "sc-icon",
@@ -11166,9 +11214,6 @@
           "sc-input",
           "sc-spinner",
           "sc-menu"
-        ],
-        "sc-input": [
-          "sc-form-control"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -18968,6 +19013,561 @@
         ],
         "sc-upcoming-invoice": [
           "sc-text"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/sc-textarea/sc-textarea.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-textarea",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "autocapitalize",
+          "type": "\"characters\" | \"none\" | \"off\" | \"on\" | \"sentences\" | \"words\"",
+          "mutable": false,
+          "attr": "autocapitalize",
+          "reflectToAttr": false,
+          "docs": "The textarea's autocapitalize attribute.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "characters",
+              "type": "string"
+            },
+            {
+              "value": "none",
+              "type": "string"
+            },
+            {
+              "value": "off",
+              "type": "string"
+            },
+            {
+              "value": "on",
+              "type": "string"
+            },
+            {
+              "value": "sentences",
+              "type": "string"
+            },
+            {
+              "value": "words",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "autocomplete",
+          "type": "string",
+          "mutable": false,
+          "attr": "autocomplete",
+          "reflectToAttr": false,
+          "docs": "The textarea's autocomplete attribute.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "autocorrect",
+          "type": "string",
+          "mutable": false,
+          "attr": "autocorrect",
+          "reflectToAttr": false,
+          "docs": "The textarea's autocorrect attribute.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "autofocus",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "autofocus",
+          "reflectToAttr": false,
+          "docs": "The textarea's autofocus attribute.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "disabled",
+          "reflectToAttr": true,
+          "docs": "Disables the textarea.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "enterkeyhint",
+          "type": "\"done\" | \"enter\" | \"go\" | \"next\" | \"previous\" | \"search\" | \"send\"",
+          "mutable": false,
+          "attr": "enterkeyhint",
+          "reflectToAttr": false,
+          "docs": "The input's enterkeyhint attribute. This can be used to customize the label or icon of the Enter key on virtual\nkeyboards.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "done",
+              "type": "string"
+            },
+            {
+              "value": "enter",
+              "type": "string"
+            },
+            {
+              "value": "go",
+              "type": "string"
+            },
+            {
+              "value": "next",
+              "type": "string"
+            },
+            {
+              "value": "previous",
+              "type": "string"
+            },
+            {
+              "value": "search",
+              "type": "string"
+            },
+            {
+              "value": "send",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "filled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "filled",
+          "reflectToAttr": true,
+          "docs": "Draws a filled textarea.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "help",
+          "type": "string",
+          "mutable": false,
+          "attr": "help-text",
+          "reflectToAttr": false,
+          "docs": "The textarea's help text. Alternatively, you can use the help-text slot.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "inputmode",
+          "type": "\"decimal\" | \"email\" | \"none\" | \"numeric\" | \"search\" | \"tel\" | \"text\" | \"url\"",
+          "mutable": false,
+          "attr": "inputmode",
+          "reflectToAttr": false,
+          "docs": "The textarea's inputmode attribute.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "decimal",
+              "type": "string"
+            },
+            {
+              "value": "email",
+              "type": "string"
+            },
+            {
+              "value": "none",
+              "type": "string"
+            },
+            {
+              "value": "numeric",
+              "type": "string"
+            },
+            {
+              "value": "search",
+              "type": "string"
+            },
+            {
+              "value": "tel",
+              "type": "string"
+            },
+            {
+              "value": "text",
+              "type": "string"
+            },
+            {
+              "value": "url",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "invalid",
+          "reflectToAttr": true,
+          "docs": "This will be true when the control is in an invalid state. Validity is determined by props such as `type`,\n`required`, `minlength`, and `maxlength` using the browser's constraint validation API.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "The textarea's label. Alternatively, you can use the label slot.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "maxlength",
+          "type": "number",
+          "mutable": false,
+          "attr": "maxlength",
+          "reflectToAttr": false,
+          "docs": "The maximum length of input that will be considered valid.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "minlength",
+          "type": "number",
+          "mutable": false,
+          "attr": "minlength",
+          "reflectToAttr": false,
+          "docs": "The minimum length of input that will be considered valid.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "mutable": false,
+          "attr": "name",
+          "reflectToAttr": false,
+          "docs": "The textarea's name attribute.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "placeholder",
+          "reflectToAttr": false,
+          "docs": "The textarea's placeholder text.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "readonly",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "readonly",
+          "reflectToAttr": true,
+          "docs": "Makes the textarea readonly.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "required",
+          "reflectToAttr": true,
+          "docs": "Makes the textarea a required field.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "resize",
+          "type": "\"auto\" | \"none\" | \"vertical\"",
+          "mutable": false,
+          "attr": "resize",
+          "reflectToAttr": false,
+          "docs": "Controls how the textarea can be resized.",
+          "docsTags": [],
+          "default": "'vertical'",
+          "values": [
+            {
+              "value": "auto",
+              "type": "string"
+            },
+            {
+              "value": "none",
+              "type": "string"
+            },
+            {
+              "value": "vertical",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "rows",
+          "type": "number",
+          "mutable": false,
+          "attr": "rows",
+          "reflectToAttr": false,
+          "docs": "The number of rows to display by default.",
+          "docsTags": [],
+          "default": "4",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showLabel",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-label",
+          "reflectToAttr": false,
+          "docs": "Should we show the label",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The textarea's size.",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "spellcheck",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "spellcheck",
+          "reflectToAttr": false,
+          "docs": "Enables spell checking on the textarea.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "mutable": false,
+          "attr": "value",
+          "reflectToAttr": false,
+          "docs": "The textarea's value attribute.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scBlur",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scChange",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scFocus",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scInput",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        },
+        {
+          "name": "form-control",
+          "docs": ""
+        },
+        {
+          "name": "form-control-input",
+          "docs": ""
+        },
+        {
+          "name": "textarea",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "sc-form-control"
+      ],
+      "dependencyGraph": {
+        "sc-textarea": [
+          "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
         ]
       }
     },

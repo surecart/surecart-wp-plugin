@@ -128,6 +128,7 @@ export const ScTableRow = /*@__PURE__*/createReactComponent<JSX.ScTableRow, HTML
 export const ScTag = /*@__PURE__*/createReactComponent<JSX.ScTag, HTMLScTagElement>('sc-tag');
 export const ScTaxIdInput = /*@__PURE__*/createReactComponent<JSX.ScTaxIdInput, HTMLScTaxIdInputElement>('sc-tax-id-input');
 export const ScText = /*@__PURE__*/createReactComponent<JSX.ScText, HTMLScTextElement>('sc-text');
+export const ScTextarea = /*@__PURE__*/createReactComponent<JSX.ScTextarea, HTMLScTextareaElement>('sc-textarea');
 export const ScToggle = /*@__PURE__*/createReactComponent<JSX.ScToggle, HTMLScToggleElement>('sc-toggle');
 export const ScToggles = /*@__PURE__*/createReactComponent<JSX.ScToggles, HTMLScTogglesElement>('sc-toggles');
 export const ScTooltip = /*@__PURE__*/createReactComponent<JSX.ScTooltip, HTMLScTooltipElement>('sc-tooltip');

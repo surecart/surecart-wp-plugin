@@ -2,7 +2,16 @@ import { __ } from '@wordpress/i18n';
 import { ScDashboardModule } from '@surecart/components-react';
 import SaveButton from '../templates/SaveButton';
 
-export default ({ title, description, loading, children }) => {
+export default ({
+	title,
+	description,
+	loading,
+	children,
+	wrapperTag = 'sc-card',
+	noButton = false,
+}) => {
+	const TagName = wrapperTag;
+
 	return (
 		<ScDashboardModule
 			heading={title}
@@ -13,7 +22,7 @@ export default ({ title, description, loading, children }) => {
 		>
 			{!!description && <span slot="description">{description}</span>}
 
-			<sc-card>
+			<TagName>
 				{loading ? (
 					<div>
 						<sc-skeleton
@@ -33,10 +42,12 @@ export default ({ title, description, loading, children }) => {
 				) : (
 					children
 				)}
-			</sc-card>
-			<div>
-				<SaveButton>{__('Save', 'surecart')}</SaveButton>
-			</div>
+			</TagName>
+			{!noButton && (
+				<div>
+					<SaveButton>{__('Save', 'surecart')}</SaveButton>
+				</div>
+			)}
 		</ScDashboardModule>
 	);
 };

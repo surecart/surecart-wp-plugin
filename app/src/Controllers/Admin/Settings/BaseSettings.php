@@ -68,12 +68,15 @@ abstract class BaseSettings {
 	 */
 	public function enqueue( $handle, $path, $deps = [] ) {
 		$deps = array_merge( $deps, $this->dependencies );
-		$deps = array_merge( $deps, [ 'sc-ui-data' ] );
+		$deps = array_merge( $deps, [ 'sc-ui-data', 'wp-data', 'wp-core-data' ] );
 
 		wp_enqueue_media();
 		wp_enqueue_style( 'wp-components' );
+		wp_enqueue_style( 'wp-block-editor' );
 		wp_enqueue_style( 'surecart-themes-default' );
 		wp_enqueue_script( 'surecart-components' );
+		wp_enqueue_script( 'wp-format-library' );
+		wp_enqueue_style( 'wp-format-library' );
 
 		// automatically load dependencies and version.
 		$asset_file = include plugin_dir_path( SURECART_PLUGIN_FILE ) . "dist/$path.asset.php";

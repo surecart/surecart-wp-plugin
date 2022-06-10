@@ -51,8 +51,8 @@ graph TD;
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
   sc-address --> sc-form-control
-  sc-address --> sc-select
   sc-address --> sc-input
+  sc-address --> sc-select
   sc-address --> sc-block-ui
   sc-select --> sc-icon
   sc-select --> sc-menu-label

@@ -62,6 +62,7 @@ return [
 		\SureCart\Rest\SubscriptionRestServiceProvider::class,
 		\SureCart\Rest\SubscriptionProtocolRestServiceProvider::class,
 		\SureCart\Rest\PortalProtocolRestServiceProvider::class,
+		\SureCart\Rest\CustomerNotificationProtocolRestServiceProvider::class,
 		\SureCart\Rest\OrderRestServiceProvider::class,
 		\SureCart\Rest\InvoicesRestServiceProvider::class,
 		\SureCart\Rest\WebhooksRestServiceProvider::class,

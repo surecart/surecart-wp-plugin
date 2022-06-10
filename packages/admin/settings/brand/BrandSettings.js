@@ -7,6 +7,7 @@ import {
 	ScFormControl,
 	ScInput,
 	ScSelect,
+	ScTextarea,
 } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
@@ -61,7 +62,7 @@ export default () => {
 			>
 				<div
 					css={css`
-						gap: var(--sc-form-row-spacing);
+						gap: 2em;
 						display: grid;
 						align-items: flex-start;
 						grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -128,18 +129,21 @@ export default () => {
 				>
 					<ScInput
 						label={__('Email', 'surecart')}
+						value={item?.email}
 						placeholder={__('Enter an email', 'surecart')}
 						onScInput={(e) => editItem({ email: e.target.value })}
 						type="email"
 					/>
 					<ScInput
 						label={__('Phone', 'surecart')}
+						value={item?.phone}
 						placeholder={__('Enter an phone number', 'surecart')}
 						onScInput={(e) => editItem({ phone: e.target.value })}
 						type="tel"
 					/>
 					<ScInput
 						label={__('Website', 'surecart')}
+						value={item?.website}
 						placeholder={__('Enter a website URL', 'surecart')}
 						onScInput={(e) => editItem({ website: e.target.value })}
 						type="url"
@@ -164,7 +168,30 @@ export default () => {
 					'surecart'
 				)}
 				loading={!hasLoadedItem}
-			></SettingsBox>
+			>
+				<ScTextarea
+					label={__('Memo', 'surecart')}
+					value={item?.statement_memo}
+					onScInput={(e) =>
+						editItem({ statement_memo: e.target.value })
+					}
+					help={__(
+						'This appears in the memo area of your invoices and receipts.',
+						'surecart'
+					)}
+				></ScTextarea>
+				<ScTextarea
+					label={__('Footer', 'surecart')}
+					value={item?.statement_footer}
+					onScInput={(e) =>
+						editItem({ statement_footer: e.target.value })
+					}
+					help={__(
+						'Help or legal text that appears at the bottom of the invoice.',
+						'surecart'
+					)}
+				></ScTextarea>
+			</SettingsBox>
 		</SettingsTemplate>
 	);
 };

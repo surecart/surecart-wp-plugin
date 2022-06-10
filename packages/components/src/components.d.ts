@@ -2370,6 +2370,100 @@ export namespace Components {
         "tag": 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
         "truncate": boolean;
     }
+    interface ScTextarea {
+        /**
+          * The textarea's autocapitalize attribute.
+         */
+        "autocapitalize": 'off' | 'none' | 'on' | 'sentences' | 'words' | 'characters';
+        /**
+          * The textarea's autocomplete attribute.
+         */
+        "autocomplete": string;
+        /**
+          * The textarea's autocorrect attribute.
+         */
+        "autocorrect": string;
+        /**
+          * The textarea's autofocus attribute.
+         */
+        "autofocus": boolean;
+        /**
+          * Disables the textarea.
+         */
+        "disabled": boolean;
+        /**
+          * The input's enterkeyhint attribute. This can be used to customize the label or icon of the Enter key on virtual keyboards.
+         */
+        "enterkeyhint": 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
+        /**
+          * Draws a filled textarea.
+         */
+        "filled": boolean;
+        /**
+          * The textarea's help text. Alternatively, you can use the help-text slot.
+         */
+        "help": string;
+        /**
+          * The textarea's inputmode attribute.
+         */
+        "inputmode": 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url';
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, and `maxlength` using the browser's constraint validation API.
+         */
+        "invalid": boolean;
+        /**
+          * The textarea's label. Alternatively, you can use the label slot.
+         */
+        "label": string;
+        /**
+          * The maximum length of input that will be considered valid.
+         */
+        "maxlength": number;
+        /**
+          * The minimum length of input that will be considered valid.
+         */
+        "minlength": number;
+        /**
+          * The textarea's name attribute.
+         */
+        "name": string;
+        /**
+          * The textarea's placeholder text.
+         */
+        "placeholder": string;
+        /**
+          * Makes the textarea readonly.
+         */
+        "readonly": boolean;
+        /**
+          * Makes the textarea a required field.
+         */
+        "required": boolean;
+        /**
+          * Controls how the textarea can be resized.
+         */
+        "resize": 'none' | 'vertical' | 'auto';
+        /**
+          * The number of rows to display by default.
+         */
+        "rows": number;
+        /**
+          * Should we show the label
+         */
+        "showLabel": boolean;
+        /**
+          * The textarea's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * Enables spell checking on the textarea.
+         */
+        "spellcheck": boolean;
+        /**
+          * The textarea's value attribute.
+         */
+        "value": string;
+    }
     interface ScToggle {
         /**
           * Is this a borderless toggle?
@@ -3204,6 +3298,12 @@ declare global {
         prototype: HTMLScTextElement;
         new (): HTMLScTextElement;
     };
+    interface HTMLScTextareaElement extends Components.ScTextarea, HTMLStencilElement {
+    }
+    var HTMLScTextareaElement: {
+        prototype: HTMLScTextareaElement;
+        new (): HTMLScTextareaElement;
+    };
     interface HTMLScToggleElement extends Components.ScToggle, HTMLStencilElement {
     }
     var HTMLScToggleElement: {
@@ -3374,6 +3474,7 @@ declare global {
         "sc-tag": HTMLScTagElement;
         "sc-tax-id-input": HTMLScTaxIdInputElement;
         "sc-text": HTMLScTextElement;
+        "sc-textarea": HTMLScTextareaElement;
         "sc-toggle": HTMLScToggleElement;
         "sc-toggles": HTMLScTogglesElement;
         "sc-tooltip": HTMLScTooltipElement;
@@ -6023,6 +6124,104 @@ declare namespace LocalJSX {
         "tag"?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
         "truncate"?: boolean;
     }
+    interface ScTextarea {
+        /**
+          * The textarea's autocapitalize attribute.
+         */
+        "autocapitalize"?: 'off' | 'none' | 'on' | 'sentences' | 'words' | 'characters';
+        /**
+          * The textarea's autocomplete attribute.
+         */
+        "autocomplete"?: string;
+        /**
+          * The textarea's autocorrect attribute.
+         */
+        "autocorrect"?: string;
+        /**
+          * The textarea's autofocus attribute.
+         */
+        "autofocus"?: boolean;
+        /**
+          * Disables the textarea.
+         */
+        "disabled"?: boolean;
+        /**
+          * The input's enterkeyhint attribute. This can be used to customize the label or icon of the Enter key on virtual keyboards.
+         */
+        "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
+        /**
+          * Draws a filled textarea.
+         */
+        "filled"?: boolean;
+        /**
+          * The textarea's help text. Alternatively, you can use the help-text slot.
+         */
+        "help"?: string;
+        /**
+          * The textarea's inputmode attribute.
+         */
+        "inputmode"?: 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url';
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, and `maxlength` using the browser's constraint validation API.
+         */
+        "invalid"?: boolean;
+        /**
+          * The textarea's label. Alternatively, you can use the label slot.
+         */
+        "label"?: string;
+        /**
+          * The maximum length of input that will be considered valid.
+         */
+        "maxlength"?: number;
+        /**
+          * The minimum length of input that will be considered valid.
+         */
+        "minlength"?: number;
+        /**
+          * The textarea's name attribute.
+         */
+        "name"?: string;
+        "onScBlur"?: (event: CustomEvent<void>) => void;
+        "onScChange"?: (event: CustomEvent<void>) => void;
+        "onScFocus"?: (event: CustomEvent<void>) => void;
+        "onScInput"?: (event: CustomEvent<void>) => void;
+        /**
+          * The textarea's placeholder text.
+         */
+        "placeholder"?: string;
+        /**
+          * Makes the textarea readonly.
+         */
+        "readonly"?: boolean;
+        /**
+          * Makes the textarea a required field.
+         */
+        "required"?: boolean;
+        /**
+          * Controls how the textarea can be resized.
+         */
+        "resize"?: 'none' | 'vertical' | 'auto';
+        /**
+          * The number of rows to display by default.
+         */
+        "rows"?: number;
+        /**
+          * Should we show the label
+         */
+        "showLabel"?: boolean;
+        /**
+          * The textarea's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * Enables spell checking on the textarea.
+         */
+        "spellcheck"?: boolean;
+        /**
+          * The textarea's value attribute.
+         */
+        "value"?: string;
+    }
     interface ScToggle {
         /**
           * Is this a borderless toggle?
@@ -6259,6 +6458,7 @@ declare namespace LocalJSX {
         "sc-tag": ScTag;
         "sc-tax-id-input": ScTaxIdInput;
         "sc-text": ScText;
+        "sc-textarea": ScTextarea;
         "sc-toggle": ScToggle;
         "sc-toggles": ScToggles;
         "sc-tooltip": ScTooltip;
@@ -6394,6 +6594,7 @@ declare module "@stencil/core" {
             "sc-tag": LocalJSX.ScTag & JSXBase.HTMLAttributes<HTMLScTagElement>;
             "sc-tax-id-input": LocalJSX.ScTaxIdInput & JSXBase.HTMLAttributes<HTMLScTaxIdInputElement>;
             "sc-text": LocalJSX.ScText & JSXBase.HTMLAttributes<HTMLScTextElement>;
+            "sc-textarea": LocalJSX.ScTextarea & JSXBase.HTMLAttributes<HTMLScTextareaElement>;
             "sc-toggle": LocalJSX.ScToggle & JSXBase.HTMLAttributes<HTMLScToggleElement>;
             "sc-toggles": LocalJSX.ScToggles & JSXBase.HTMLAttributes<HTMLScTogglesElement>;
             "sc-tooltip": LocalJSX.ScTooltip & JSXBase.HTMLAttributes<HTMLScTooltipElement>;

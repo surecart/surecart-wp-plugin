@@ -72,6 +72,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/settings/brand/index.js'
 		),
+		['admin/settings/customer']: path.resolve(
+			__dirname,
+			'packages/admin/settings/customer/index.js'
+		),
 
 		/**
 		 * Data.

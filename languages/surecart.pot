@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-06-09T17:38:25+00:00\n"
+"POT-Creation-Date: 2022-06-10T18:37:33+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -445,14 +445,14 @@ msgstr ""
 
 #: src/Controllers/Admin/Settings.php:55
 #: src/Controllers/Admin/Settings/Settings.php:76
-#: layouts/partials/admin-settings-sidebar.php:50
+#: layouts/partials/admin-settings-sidebar.php:45
 msgid "Connection"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsController.php:23
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:59
 #: admin/subscriptions/index.php:23
-#: layouts/partials/admin-settings-sidebar.php:26
+#: layouts/partials/admin-settings-sidebar.php:21
 #: web/dashboard/orders/show.php:58
 msgid "Subscriptions"
 msgstr ""
@@ -705,7 +705,8 @@ msgstr ""
 msgid "SureCart Customer"
 msgstr ""
 
-#: src/Rest/AccountRestServiceProvider.php:46
+#: src/Rest/AccountRestServiceProvider.php:76
+#: src/Rest/BrandRestServiceProvider.php:90
 #: src/Rest/ChargesRestServiceProvider.php:74
 #: src/Rest/CouponRestServiceProvider.php:46
 #: src/Rest/CustomerLinksRestServiceProvider.php:53
@@ -717,41 +718,45 @@ msgstr ""
 #: src/Rest/OrderRestServiceProvider.php:90
 #: src/Rest/PaymentIntentsRestServiceProvider.php:76
 #: src/Rest/PaymentMethodsRestServiceProvider.php:77
+#: src/Rest/PortalProtocolRestServiceProvider.php:83
 #: src/Rest/PriceRestServiceProvider.php:47
 #: src/Rest/ProductGroupsRestServiceProvider.php:47
 #: src/Rest/ProductsRestServiceProvider.php:82
 #: src/Rest/PromotionRestServiceProvider.php:46
 #: src/Rest/PurchasesRestServiceProvider.php:88
 #: src/Rest/RefundsRestServiceProvider.php:54
-#: src/Rest/SubscriptionProtocolRestServiceProvider.php:75
+#: src/Rest/SubscriptionProtocolRestServiceProvider.php:82
 #: src/Rest/SubscriptionRestServiceProvider.php:101
 #: src/Rest/UploadsRestServiceProvider.php:54
 #: src/Rest/WebhooksRestServiceProvider.php:46
 msgid "Unique identifier for the object."
 msgstr ""
 
-#: src/Rest/AccountRestServiceProvider.php:52
+#: src/Rest/AccountRestServiceProvider.php:82
+#: src/Rest/BrandRestServiceProvider.php:96
 msgid "Type of object (Account)"
 msgstr ""
 
-#: src/Rest/AccountRestServiceProvider.php:58
-#: src/Rest/AccountRestServiceProvider.php:64
+#: src/Rest/AccountRestServiceProvider.php:88
+#: src/Rest/AccountRestServiceProvider.php:94
+#: src/Rest/BrandRestServiceProvider.php:102
+#: src/Rest/BrandRestServiceProvider.php:108
 msgid "Created at timestamp"
 msgstr ""
 
-#: src/Rest/AccountRestServiceProvider.php:70
+#: src/Rest/AccountRestServiceProvider.php:100
 msgid "The name of the account."
 msgstr ""
 
-#: src/Rest/AccountRestServiceProvider.php:75
+#: src/Rest/AccountRestServiceProvider.php:105
 msgid "The default currency for the account."
 msgstr ""
 
-#: src/Rest/AccountRestServiceProvider.php:80
+#: src/Rest/AccountRestServiceProvider.php:110
 msgid "Owner data."
 msgstr ""
 
-#: src/Rest/AccountRestServiceProvider.php:85
+#: src/Rest/AccountRestServiceProvider.php:115
 msgid "Connected processors"
 msgstr ""
 
@@ -793,6 +798,38 @@ msgstr ""
 
 #: src/Rest/BlockPatternsRestServiceProvider.php:219
 msgid "Determines whether the pattern is visible in inserter."
+msgstr ""
+
+#: src/Rest/BrandRestServiceProvider.php:114
+msgid "The brand color."
+msgstr ""
+
+#: src/Rest/BrandRestServiceProvider.php:119
+msgid "The email address that will be shown to customers for support, on invoices, etc."
+msgstr ""
+
+#: src/Rest/BrandRestServiceProvider.php:124
+msgid "The phone number that will be shown to customers for support, on invoices, etc."
+msgstr ""
+
+#: src/Rest/BrandRestServiceProvider.php:129
+msgid "The website that will be shown to customers for support, on invoices, etc."
+msgstr ""
+
+#: src/Rest/BrandRestServiceProvider.php:134
+msgid "The URL of the brand logo."
+msgstr ""
+
+#: src/Rest/BrandRestServiceProvider.php:139
+msgid "The associated address."
+msgstr ""
+
+#: src/Rest/BrandRestServiceProvider.php:144
+msgid "The default memo for invoices and receipts."
+msgstr ""
+
+#: src/Rest/BrandRestServiceProvider.php:149
+msgid "The default footer for invoices and receipts."
 msgstr ""
 
 #: src/Rest/CustomerLinksRestServiceProvider.php:59
@@ -871,6 +908,22 @@ msgstr ""
 msgid "Form ID is invalid."
 msgstr ""
 
+#: src/Rest/PortalProtocolRestServiceProvider.php:97
+msgid "Whether or not customers can cancel subscriptions from the customer portal."
+msgstr ""
+
+#: src/Rest/PortalProtocolRestServiceProvider.php:102
+msgid "Whether or not customers can make subscription changes from the customer portal."
+msgstr ""
+
+#: src/Rest/PortalProtocolRestServiceProvider.php:107
+msgid "Whether or not customers can change subscription quantities from the customer portal."
+msgstr ""
+
+#: src/Rest/PortalProtocolRestServiceProvider.php:112
+msgid "The terms of service link that is shown to customers on the customer portal."
+msgstr ""
+
 #: src/Rest/PriceRestServiceProvider.php:53
 #: src/Rest/ProductGroupsRestServiceProvider.php:53
 #: src/Rest/UploadsRestServiceProvider.php:60
@@ -925,136 +978,560 @@ msgstr ""
 msgid "Sorry, you are not allowed to edit products."
 msgstr ""
 
-#: src/Rest/SubscriptionProtocolRestServiceProvider.php:89
+#: src/Rest/SubscriptionProtocolRestServiceProvider.php:96
 msgid "Payment retry window in weeks."
 msgstr ""
 
-#: src/Rest/SubscriptionProtocolRestServiceProvider.php:94
+#: src/Rest/SubscriptionProtocolRestServiceProvider.php:101
 msgid "Cancel behavior. Either pending or immediate."
 msgstr ""
 
-#: src/Rest/SubscriptionProtocolRestServiceProvider.php:98
+#: src/Rest/SubscriptionProtocolRestServiceProvider.php:105
 msgid "Downgrade behavior. Either pending or immediate."
 msgstr ""
 
-#: src/Rest/SubscriptionProtocolRestServiceProvider.php:102
+#: src/Rest/SubscriptionProtocolRestServiceProvider.php:109
 msgid "Upgrade behavior. Either pending or immediate."
 msgstr ""
 
 #: src/Support/Currency.php:240
-msgid "Australia Dollars"
+msgid "Albanian Lek"
 msgstr ""
 
 #: src/Support/Currency.php:241
-msgid "Brazilian Real"
+msgid "Algerian Dinar"
 msgstr ""
 
 #: src/Support/Currency.php:242
-msgid "Canadian Dollars"
+msgid "Angolan Kwanza"
 msgstr ""
 
 #: src/Support/Currency.php:243
-msgid "Chinese Yuan"
+msgid "Argentine Peso"
 msgstr ""
 
 #: src/Support/Currency.php:244
-msgid "Czech Koruna"
+msgid "Armenian Dram"
 msgstr ""
 
 #: src/Support/Currency.php:245
-msgid "Danish Krone"
+msgid "Aruban Florin"
 msgstr ""
 
 #: src/Support/Currency.php:246
-msgid "Euros"
+msgid "Australian Dollar"
 msgstr ""
 
 #: src/Support/Currency.php:247
-msgid "Hong Kong Dollar"
+msgid "Azerbaijani Manat"
 msgstr ""
 
 #: src/Support/Currency.php:248
-msgid "Hungarian Forint"
+msgid "Bahamian Dollar"
 msgstr ""
 
 #: src/Support/Currency.php:249
-msgid "Indian Rupee"
+msgid "Bangladeshi Taka"
 msgstr ""
 
 #: src/Support/Currency.php:250
-msgid "Indonesia Rupiah"
+msgid "Barbadian Dollar"
 msgstr ""
 
 #: src/Support/Currency.php:251
-msgid "Israeli Shekel"
+msgid "Belarusian Ruble"
 msgstr ""
 
 #: src/Support/Currency.php:252
-msgid "Japanese Yen"
+msgid "Belize Dollar"
 msgstr ""
 
 #: src/Support/Currency.php:253
-msgid "Mexican Peso"
+msgid "Bermudian Dollar"
 msgstr ""
 
 #: src/Support/Currency.php:254
-msgid "New Zealand Dollar"
+msgid "Bolivian Boliviano"
 msgstr ""
 
 #: src/Support/Currency.php:255
-msgid "Norwegian Krone"
+msgid "Bosnia and Herzegovina Convertible Mark"
 msgstr ""
 
 #: src/Support/Currency.php:256
-msgid "Philippine Pesos"
+msgid "Botswana Pula"
 msgstr ""
 
 #: src/Support/Currency.php:257
-msgid "Polish Zloty"
+msgid "Brazilian Real"
 msgstr ""
 
 #: src/Support/Currency.php:258
-msgid "Pounds Sterling"
+msgid "British Pound"
 msgstr ""
 
 #: src/Support/Currency.php:259
-msgid "Singapore Dollar"
+msgid "Brunei Dollar"
 msgstr ""
 
 #: src/Support/Currency.php:260
-msgid "South African Rand"
+msgid "Bulgarian Lev"
 msgstr ""
 
 #: src/Support/Currency.php:261
-msgid "South Korean Won"
+msgid "Burundian Franc"
 msgstr ""
 
 #: src/Support/Currency.php:262
-msgid "Swedish Krona"
+msgid "Cambodian Riel"
 msgstr ""
 
 #: src/Support/Currency.php:263
-msgid "Swiss Franc"
+msgid "Canadian Dollar"
 msgstr ""
 
 #: src/Support/Currency.php:264
-msgid "Taiwan New Dollars"
+msgid "Cape Verdean Escudo"
 msgstr ""
 
 #: src/Support/Currency.php:265
-msgid "Thai Baht"
+msgid "Cayman Islands Dollar"
 msgstr ""
 
 #: src/Support/Currency.php:266
-msgid "Turkish Lira"
+msgid "Central African Cfa Franc"
 msgstr ""
 
 #: src/Support/Currency.php:267
-msgid "US Dollars"
+msgid "Cfp Franc"
 msgstr ""
 
 #: src/Support/Currency.php:268
-msgid "Vietnamese Dong"
+msgid "Chilean Peso"
+msgstr ""
+
+#: src/Support/Currency.php:269
+msgid "Chinese Renminbi Yuan"
+msgstr ""
+
+#: src/Support/Currency.php:270
+msgid "Colombian Peso"
+msgstr ""
+
+#: src/Support/Currency.php:271
+msgid "Comorian Franc"
+msgstr ""
+
+#: src/Support/Currency.php:272
+msgid "Congolese Franc"
+msgstr ""
+
+#: src/Support/Currency.php:273
+msgid "Costa Rican Colón"
+msgstr ""
+
+#: src/Support/Currency.php:274
+msgid "Croatian Kuna"
+msgstr ""
+
+#: src/Support/Currency.php:275
+msgid "Czech Koruna"
+msgstr ""
+
+#: src/Support/Currency.php:276
+msgid "Danish Krone"
+msgstr ""
+
+#: src/Support/Currency.php:277
+msgid "Djiboutian Franc"
+msgstr ""
+
+#: src/Support/Currency.php:278
+msgid "Dominican Peso"
+msgstr ""
+
+#: src/Support/Currency.php:279
+msgid "East Caribbean Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:280
+msgid "Egyptian Pound"
+msgstr ""
+
+#: src/Support/Currency.php:281
+msgid "Ethiopian Birr"
+msgstr ""
+
+#: src/Support/Currency.php:282
+msgid "Euro"
+msgstr ""
+
+#: src/Support/Currency.php:283
+msgid "Falkland Pound"
+msgstr ""
+
+#: src/Support/Currency.php:284
+msgid "Fijian Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:285
+msgid "Gambian Dalasi"
+msgstr ""
+
+#: src/Support/Currency.php:286
+msgid "Georgian Lari"
+msgstr ""
+
+#: src/Support/Currency.php:287
+msgid "Gibraltar Pound"
+msgstr ""
+
+#: src/Support/Currency.php:288
+msgid "Guatemalan Quetzal"
+msgstr ""
+
+#: src/Support/Currency.php:289
+msgid "Guinean Franc"
+msgstr ""
+
+#: src/Support/Currency.php:290
+msgid "Guyanese Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:291
+msgid "Haitian Gourde"
+msgstr ""
+
+#: src/Support/Currency.php:292
+msgid "Honduran Lempira"
+msgstr ""
+
+#: src/Support/Currency.php:293
+msgid "Hong Kong Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:294
+msgid "Hungarian Forint"
+msgstr ""
+
+#: src/Support/Currency.php:295
+msgid "Icelandic Króna"
+msgstr ""
+
+#: src/Support/Currency.php:296
+msgid "Indian Rupee"
+msgstr ""
+
+#: src/Support/Currency.php:297
+msgid "Indonesian Rupiah"
+msgstr ""
+
+#: src/Support/Currency.php:298
+msgid "Israeli New Sheqel"
+msgstr ""
+
+#: src/Support/Currency.php:299
+msgid "Jamaican Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:300
+msgid "Japanese Yen"
+msgstr ""
+
+#: src/Support/Currency.php:301
+msgid "Kazakhstani Tenge"
+msgstr ""
+
+#: src/Support/Currency.php:302
+msgid "Kenyan Shilling"
+msgstr ""
+
+#: src/Support/Currency.php:303
+msgid "Kyrgyzstani Som"
+msgstr ""
+
+#: src/Support/Currency.php:304
+msgid "Lao Kip"
+msgstr ""
+
+#: src/Support/Currency.php:305
+msgid "Lebanese Pound"
+msgstr ""
+
+#: src/Support/Currency.php:306
+msgid "Lesotho Loti"
+msgstr ""
+
+#: src/Support/Currency.php:307
+msgid "Liberian Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:308
+msgid "Macanese Pataca"
+msgstr ""
+
+#: src/Support/Currency.php:309
+msgid "Macedonian Denar"
+msgstr ""
+
+#: src/Support/Currency.php:310
+msgid "Malagasy Ariary"
+msgstr ""
+
+#: src/Support/Currency.php:311
+msgid "Malawian Kwacha"
+msgstr ""
+
+#: src/Support/Currency.php:312
+msgid "Malaysian Ringgit"
+msgstr ""
+
+#: src/Support/Currency.php:313
+msgid "Maldivian Rufiyaa"
+msgstr ""
+
+#: src/Support/Currency.php:314
+msgid "Mauritanian Ouguiya"
+msgstr ""
+
+#: src/Support/Currency.php:315
+msgid "Mauritian Rupee"
+msgstr ""
+
+#: src/Support/Currency.php:316
+msgid "Mexican Peso"
+msgstr ""
+
+#: src/Support/Currency.php:317
+msgid "Moldovan Leu"
+msgstr ""
+
+#: src/Support/Currency.php:318
+msgid "Mongolian Tögrög"
+msgstr ""
+
+#: src/Support/Currency.php:319
+msgid "Moroccan Dirham"
+msgstr ""
+
+#: src/Support/Currency.php:320
+msgid "Mozambican Metical"
+msgstr ""
+
+#: src/Support/Currency.php:321
+msgid "Myanmar Kyat"
+msgstr ""
+
+#: src/Support/Currency.php:322
+msgid "Namibian Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:323
+msgid "Nepalese Rupee"
+msgstr ""
+
+#: src/Support/Currency.php:324
+msgid "Netherlands Antillean Gulden"
+msgstr ""
+
+#: src/Support/Currency.php:325
+msgid "New Taiwan Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:326
+msgid "New Zealand Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:327
+msgid "Nicaraguan Córdoba"
+msgstr ""
+
+#: src/Support/Currency.php:328
+msgid "Nigerian Naira"
+msgstr ""
+
+#: src/Support/Currency.php:329
+msgid "Norwegian Krone"
+msgstr ""
+
+#: src/Support/Currency.php:330
+msgid "Pakistani Rupee"
+msgstr ""
+
+#: src/Support/Currency.php:331
+msgid "Panamanian Balboa"
+msgstr ""
+
+#: src/Support/Currency.php:332
+msgid "Papua New Guinean Kina"
+msgstr ""
+
+#: src/Support/Currency.php:333
+msgid "Paraguayan Guaraní"
+msgstr ""
+
+#: src/Support/Currency.php:334
+msgid "Peruvian Sol"
+msgstr ""
+
+#: src/Support/Currency.php:335
+msgid "Philippine Peso"
+msgstr ""
+
+#: src/Support/Currency.php:336
+msgid "Polish Złoty"
+msgstr ""
+
+#: src/Support/Currency.php:337
+msgid "Qatari Riyal"
+msgstr ""
+
+#: src/Support/Currency.php:338
+msgid "Romanian Leu"
+msgstr ""
+
+#: src/Support/Currency.php:339
+msgid "Russian Ruble"
+msgstr ""
+
+#: src/Support/Currency.php:340
+msgid "Rwandan Franc"
+msgstr ""
+
+#: src/Support/Currency.php:341
+msgid "Saint Helenian Pound"
+msgstr ""
+
+#: src/Support/Currency.php:342
+msgid "Samoan Tala"
+msgstr ""
+
+#: src/Support/Currency.php:343
+msgid "Saudi Riyal"
+msgstr ""
+
+#: src/Support/Currency.php:344
+msgid "Serbian Dinar"
+msgstr ""
+
+#: src/Support/Currency.php:345
+msgid "Seychellois Rupee"
+msgstr ""
+
+#: src/Support/Currency.php:346
+msgid "Sierra Leonean Leone"
+msgstr ""
+
+#: src/Support/Currency.php:347
+msgid "Singapore Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:348
+msgid "Solomon Islands Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:349
+msgid "Somali Shilling"
+msgstr ""
+
+#: src/Support/Currency.php:350
+msgid "South African Rand"
+msgstr ""
+
+#: src/Support/Currency.php:351
+msgid "South Korean Won"
+msgstr ""
+
+#: src/Support/Currency.php:352
+msgid "Sri Lankan Rupee"
+msgstr ""
+
+#: src/Support/Currency.php:353
+msgid "Surinamese Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:354
+msgid "Swazi Lilangeni"
+msgstr ""
+
+#: src/Support/Currency.php:355
+msgid "Swedish Krona"
+msgstr ""
+
+#: src/Support/Currency.php:356
+msgid "Swiss Franc"
+msgstr ""
+
+#: src/Support/Currency.php:357
+msgid "São Tomé and Príncipe Dobra"
+msgstr ""
+
+#: src/Support/Currency.php:358
+msgid "Tajikistani Somoni"
+msgstr ""
+
+#: src/Support/Currency.php:359
+msgid "Tanzanian Shilling"
+msgstr ""
+
+#: src/Support/Currency.php:360
+msgid "Thai Baht"
+msgstr ""
+
+#: src/Support/Currency.php:361
+msgid "Tongan Paʻanga"
+msgstr ""
+
+#: src/Support/Currency.php:362
+msgid "Trinidad and Tobago Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:363
+msgid "Turkish Lira"
+msgstr ""
+
+#: src/Support/Currency.php:364
+msgid "Ugandan Shilling"
+msgstr ""
+
+#: src/Support/Currency.php:365
+msgid "Ukrainian Hryvnia"
+msgstr ""
+
+#: src/Support/Currency.php:366
+msgid "United Arab Emirates Dirham"
+msgstr ""
+
+#: src/Support/Currency.php:367
+msgid "United States Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:368
+msgid "Uruguayan Peso"
+msgstr ""
+
+#: src/Support/Currency.php:369
+msgid "Uzbekistan Som"
+msgstr ""
+
+#: src/Support/Currency.php:370
+msgid "Vanuatu Vatu"
+msgstr ""
+
+#: src/Support/Currency.php:371
+msgid "Vietnamese Đồng"
+msgstr ""
+
+#: src/Support/Currency.php:372
+msgid "West African Cfa Franc"
+msgstr ""
+
+#: src/Support/Currency.php:373
+msgid "Yemeni Rial"
+msgstr ""
+
+#: src/Support/Currency.php:374
+msgid "Zambian Kwacha"
 msgstr ""
 
 #. translators: field name.
@@ -1712,7 +2189,7 @@ msgid "Save Settings"
 msgstr ""
 
 #: admin/processors.php:31
-#: layouts/partials/admin-settings-sidebar.php:44
+#: layouts/partials/admin-settings-sidebar.php:39
 msgid "Processors"
 msgstr ""
 
@@ -1798,31 +2275,31 @@ msgstr ""
 msgid "Your API key is incorrect. Please double-check it is correct and update it."
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:8
+#: layouts/partials/admin-settings-sidebar.php:5
 msgid "Store Settings"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:14
+#: layouts/partials/admin-settings-sidebar.php:9
 msgid "Design & Branding"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:20
+#: layouts/partials/admin-settings-sidebar.php:15
 msgid "Customer Notifications"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:32
+#: layouts/partials/admin-settings-sidebar.php:27
 msgid "Customer Portal"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:38
+#: layouts/partials/admin-settings-sidebar.php:33
 msgid "Taxes"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:55
+#: layouts/partials/admin-settings-sidebar.php:50
 msgid "Advanced"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:60
+#: layouts/partials/admin-settings-sidebar.php:55
 msgid "Help"
 msgstr ""
 

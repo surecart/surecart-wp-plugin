@@ -138,32 +138,54 @@ export default () => {
 					`}
 				>
 					<ScFormControl label={__('Terms of Service', 'surecart')}>
-						<LinkControl
-							value={{ url: item?.terms_url }}
-							settings={{}}
-							shownUnlinkControl={true}
-							noURLSuggestion
-							showInitialSuggestions
-							onChange={(nextValue) => {
-								updateItem({
-									terms_url: nextValue.url,
-								});
-							}}
-						/>
+						<div
+							css={css`
+								border: 1px solid var(--sc-color-gray-200);
+								.block-editor-link-control__search-item {
+									box-sizing: border-box;
+								}
+							`}
+						>
+							<LinkControl
+								showInitialSuggestions={true}
+								value={{ url: item?.terms_url }}
+								settings={{}}
+								shownUnlinkControl={true}
+								showSuggestions={true}
+								suggestionsQuery={{
+									type: 'post',
+									subtype: 'page',
+								}}
+								onChange={(nextValue) => {
+									editItem({
+										terms_url: nextValue.url,
+									});
+								}}
+							/>
+						</div>
 					</ScFormControl>
 					<ScFormControl label={__('Privacy Policy', 'surecart')}>
-						<LinkControl
-							value={{ url: item?.privacy_url }}
-							settings={{}}
-							shownUnlinkControl={true}
-							noURLSuggestion
-							showInitialSuggestions
-							onChange={(nextValue) => {
-								updateItem({
-									privacy_url: nextValue.url,
-								});
-							}}
-						/>
+						<div
+							css={css`
+								border: 1px solid var(--sc-color-gray-200);
+								.block-editor-link-control__search-item {
+									box-sizing: border-box;
+								}
+							`}
+						>
+							<LinkControl
+								value={{ url: item?.privacy_url }}
+								settings={{}}
+								shownUnlinkControl={true}
+								noURLSuggestion
+								showInitialSuggestions
+								onChange={(nextValue) => {
+									editItem({
+										privacy_url: nextValue.url,
+									});
+								}}
+							/>
+						</div>
 					</ScFormControl>
 				</div>
 			</SettingsBox>
