@@ -14,7 +14,7 @@ export default () => {
 	const [error, setError] = useState(null);
 	const { save } = useSave();
 	const { item, itemError, editItem, hasLoadedItem } = useEntity(
-		'portal_protocol',
+		'store',
 		'portal_protocol'
 	);
 

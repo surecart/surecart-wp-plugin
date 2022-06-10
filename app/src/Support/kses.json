@@ -5,6 +5,8 @@
     "loading": true,
     "names": true,
     "required": true,
+    "show-line2": true,
+    "show-name": true,
     "style": true,
     "id": true,
     "class": true,

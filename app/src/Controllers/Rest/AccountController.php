@@ -11,7 +11,9 @@ class AccountController {
 	/**
 	 * Find account.
 	 *
-	 * @return Model
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function find( \WP_REST_Request $request ) {
 		return Account::find();

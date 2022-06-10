@@ -8,7 +8,66 @@ use SureCart\Support\Currency;
  * Controls the settings page.
  */
 abstract class BaseSettings {
+	/**
+	 * Script handles for pages
+	 *
+	 * @var array
+	 */
+	protected $scripts = [];
+
+	/**
+	 * The template for the page.
+	 *
+	 * @var string
+	 */
+	protected $template = 'admin/settings-page';
+
+	/**
+	 * Additional dependencies for this page.
+	 *
+	 * @var array
+	 */
+	protected $dependencies = [];
+
+	/**
+	 * Show the page.
+	 *
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
+	 * @return function
+	 */
+	public function show( \SureCartCore\Requests\RequestInterface $request ) {
+		add_action( 'admin_enqueue_scripts', [ $this, 'showScripts' ] );
+
+		return \SureCart::view( $this->template )->with(
+			[
+				'tab'    => $request->query( 'tab' ) ?? '',
+				'status' => $request->query( 'status' ),
+			]
+		);
+	}
+
+	/**
+	 * Enqueue the show scripts.
+	 *
+	 * @return void
+	 */
+	public function showScripts() {
+		if ( ! empty( $this->scripts['show'] ) ) {
+			$this->enqueue( $this->scripts['show'][0], $this->scripts['show'][1] );
+		}
+	}
+
+	/**
+	 * Enqueue a script.
+	 *
+	 * @param string $handle Script handle.
+	 * @param string $path  Path to script.
+	 * @param array  $deps Dependencies.
+	 *
+	 * @return void
+	 */
 	public function enqueue( $handle, $path, $deps = [] ) {
+		$deps = array_merge( $deps, $this->dependencies );
 		$deps = array_merge( $deps, [ 'sc-ui-data' ] );
 
 		wp_enqueue_media();
@@ -32,7 +91,10 @@ abstract class BaseSettings {
 		wp_localize_script(
 			$handle,
 			'scData',
-			[ 'supported_currencies' => Currency::getSupportedCurrencies() ]
+			[
+				'supported_currencies' => Currency::getSupportedCurrencies(),
+				'app_url'              => \SureCart::requests()->getBaseUrl(),
+			]
 		);
 	}
 }

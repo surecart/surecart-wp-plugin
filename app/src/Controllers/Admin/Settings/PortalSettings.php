@@ -7,23 +7,11 @@ namespace SureCart\Controllers\Admin\Settings;
  */
 class PortalSettings extends BaseSettings {
 	/**
-	 * Show the page.
+	 * Script handles for pages
 	 *
-	 * @param \SureCartCore\Requests\RequestInterface $request Request.
-	 * @return function
+	 * @var array
 	 */
-	public function show( \SureCartCore\Requests\RequestInterface $request ) {
-		add_action( 'admin_enqueue_scripts', [ $this, 'showScripts' ] );
-
-		return \SureCart::view( 'admin/page' )->with(
-			[
-				'tab'    => $request->query( 'tab' ) ?? '',
-				'status' => $request->query( 'status' ),
-			]
-		);
-	}
-
-	public function showScripts() {
-		$this->enqueue( 'surecart/scripts/admin/portal', 'admin/settings/portal' );
-	}
+	protected $scripts = [
+		'show' => [ 'surecart/scripts/admin/portal', 'admin/settings/portal' ],
+	];
 }

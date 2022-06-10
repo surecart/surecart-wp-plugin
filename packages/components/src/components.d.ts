@@ -26,6 +26,14 @@ export namespace Components {
           * Is this required?
          */
         "required": boolean;
+        /**
+          * Should we show name field?
+         */
+        "showLine2": boolean;
+        /**
+          * Should we show name field?
+         */
+        "showName": boolean;
     }
     interface ScAlert {
         /**
@@ -3396,9 +3404,21 @@ declare namespace LocalJSX {
          */
         "onScChangeAddress"?: (event: CustomEvent<Partial<Address>>) => void;
         /**
+          * Address change event.
+         */
+        "onScInputAddress"?: (event: CustomEvent<Partial<Address>>) => void;
+        /**
           * Is this required?
          */
         "required"?: boolean;
+        /**
+          * Should we show name field?
+         */
+        "showLine2"?: boolean;
+        /**
+          * Should we show name field?
+         */
+        "showName"?: boolean;
     }
     interface ScAlert {
         /**

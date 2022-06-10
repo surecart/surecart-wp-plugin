@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { css, jsx, Global } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { SnackbarList } from '@wordpress/components';
 import { ScForm } from '@surecart/components-react';
@@ -12,6 +12,19 @@ export default ({ title, onSubmit, children, icon }) => {
 
 	return (
 		<ScForm onScSubmit={onSubmit}>
+			<Global
+				styles={css`
+					:root {
+						--wp-admin-theme-color: var(--sc-color-primary-500);
+						--wp-admin-theme-color-darker-10: var(
+							--sc-color-primary-500
+						);
+						--wp-admin-theme-color-darker-20: var(
+							--sc-color-primary-500
+						);
+					}
+				`}
+			/>
 			<UnsavedChangesWarning></UnsavedChangesWarning>
 			<div
 				css={css`

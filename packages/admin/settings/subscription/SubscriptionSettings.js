@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { ScInput, ScSelect } from '@surecart/components-react';
+import { ScSelect } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
 import useEntity from '../../hooks/useEntity';
@@ -13,7 +13,7 @@ export default () => {
 	const [error, setError] = useState(null);
 	const { save } = useSave();
 	const { item, itemError, editItem, hasLoadedItem } = useEntity(
-		'subscription_protocol',
+		'store',
 		'subscription_protocol'
 	);
 

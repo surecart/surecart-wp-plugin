@@ -1,5 +1,5 @@
 import { render } from '@wordpress/element';
-import './store/register';
+import '../store';
 
 import Settings from './SubscriptionSettings';
 

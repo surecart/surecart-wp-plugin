@@ -16,7 +16,6 @@ export default function useSave() {
 		const dirtyRecords =
 			select(coreStore).__experimentalGetDirtyEntityRecords();
 		const pendingSavedRecords = [];
-		console.log({ dirtyRecords });
 		dirtyRecords.forEach(({ kind, name, key }) => {
 			pendingSavedRecords.push(
 				saveEditedEntityRecord(kind, name, key, {

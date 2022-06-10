@@ -52,9 +52,13 @@ module.exports = {
 			__dirname,
 			'packages/admin/subscriptions/edit/index.js'
 		),
-		['admin/settings/store']: path.resolve(
+
+		/**
+		 * Settings.
+		 */
+		['admin/settings/account']: path.resolve(
 			__dirname,
-			'packages/admin/settings/store/index.js'
+			'packages/admin/settings/account/index.js'
 		),
 		['admin/settings/subscription']: path.resolve(
 			__dirname,
@@ -64,6 +68,14 @@ module.exports = {
 			__dirname,
 			'packages/admin/settings/portal/index.js'
 		),
+		['admin/settings/brand']: path.resolve(
+			__dirname,
+			'packages/admin/settings/brand/index.js'
+		),
+
+		/**
+		 * Data.
+		 */
 		['store/data']: path.resolve(
 			__dirname,
 			'packages/admin/store/data/register/index.js'

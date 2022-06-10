@@ -34,6 +34,12 @@ export class ScAddress {
   /** The label for the field. */
   @Prop() label: string;
 
+  /** Should we show name field? */
+  @Prop() showName: boolean;
+
+  /** Should we show name field? */
+  @Prop() showLine2: boolean;
+
   /** Is this required? */
   @Prop({ reflect: true }) required: boolean = true;
 
@@ -52,6 +58,9 @@ export class ScAddress {
   /** Address change event. */
   @Event() scChangeAddress: EventEmitter<Partial<Address>>;
 
+  /** Address change event. */
+  @Event() scInputAddress: EventEmitter<Partial<Address>>;
+
   /** When the state changes, we want to update city and postal fields. */
   @Watch('address')
   handleAddressChange() {
@@ -60,10 +69,15 @@ export class ScAddress {
     this.showPostal = hasPostal(this.address.country);
     this.showCity = hasCity(this.address.country);
     this.scChangeAddress.emit(this.address);
+    this.scInputAddress.emit(this.address);
   }
 
   updateAddress(address: Partial<Address>) {
     this.address = { ...this.address, ...address };
+  }
+
+  handleAddressInput(address: Partial<Address>) {
+    this.scInputAddress.emit({ ...this.address, ...address });
   }
 
   clearAddress() {
@@ -98,6 +112,19 @@ export class ScAddress {
     return (
       <div class="sc-address">
         <sc-form-control label={this.label} class="sc-address__control" part="control" required={this.required}>
+          {this.showName && (
+            <sc-input
+              value={this?.address?.name}
+              onScChange={(e: any) => this.updateAddress({ name: e.target.value || null })}
+              onScInput={(e: any) => this.handleAddressInput({ name: e.target.value || null })}
+              autocomplete="street-address"
+              placeholder={__('Name', 'surecart')}
+              name={this.names.name}
+              squared-bottom
+              required={this.required}
+            />
+          )}
+
           <sc-select
             value={this.address?.country}
             onScChange={(e: any) => {
@@ -111,12 +138,14 @@ export class ScAddress {
             search
             unselect={false}
             squared-bottom
+            squared={this.showName}
             required={this.required}
           />
 
           <sc-input
             value={this?.address?.line_1}
             onScChange={(e: any) => this.updateAddress({ line_1: e.target.value || null })}
+            onScInput={(e: any) => this.handleAddressInput({ line_1: e.target.value || null })}
             autocomplete="street-address"
             placeholder={__('Address', 'surecart')}
             name={this.names.line_1}
@@ -124,12 +153,26 @@ export class ScAddress {
             required={this.required}
           />
 
+          {this.showLine2 && (
+            <sc-input
+              value={this?.address?.line_2}
+              onScChange={(e: any) => this.updateAddress({ line_2: e.target.value || null })}
+              onScInput={(e: any) => this.handleAddressInput({ line_2: e.target.value || null })}
+              autocomplete="street-address"
+              placeholder={__('Address Line 2', 'surecart')}
+              name={this.names.line_2}
+              squared
+              required={this.required}
+            />
+          )}
+
           <div class="sc-address__columns">
             <sc-input
               placeholder={__('City', 'surecart')}
               name={this.names.city}
               value={this?.address?.city}
               onScChange={(e: any) => this.updateAddress({ city: e.target.value || null })}
+              onScInput={(e: any) => this.handleAddressInput({ city: e.target.value || null })}
               required={this.required && this.showCity}
               hidden={!this.showCity}
               squared={!!this?.regions?.length}
@@ -141,6 +184,7 @@ export class ScAddress {
               placeholder={__('Postal Code/Zip', 'surecart')}
               name={this.names.postal_code}
               onScChange={(e: any) => this.updateAddress({ postal_code: e.target.value || null })}
+              onScInput={(e: any) => this.handleAddressInput({ postal_code: e.target.value || null })}
               autocomplete={'postal-code'}
               required={this.required && this.showPostal}
               hidden={!this.showPostal}

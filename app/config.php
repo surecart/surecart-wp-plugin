@@ -41,6 +41,7 @@ return [
 		// REST providers.
 		\SureCart\Rest\BlockPatternsRestServiceProvider::class,
 		\SureCart\Rest\AccountRestServiceProvider::class,
+		\SureCart\Rest\BrandRestServiceProvider::class,
 		\SureCart\Rest\LoginRestServiceProvider::class,
 		\SureCart\Rest\FilesRestServiceProvider::class,
 		\SureCart\Rest\PurchasesRestServiceProvider::class,

@@ -223,7 +223,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 
 		// Iframed settings.
-		\SureCart::route()->get()->where( 'sc_url_var', false, 'tab' )->name( 'settings.store' )->handle( 'StoreSettings@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'tab' )->name( 'settings.account' )->handle( 'AccountSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'brand', 'tab' )->name( 'settings.brand' )->handle( 'BrandSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'customer_notification_protocol', 'tab' )->name( 'settings.customer' )->handle( 'CustomerSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'subscription_protocol', 'tab' )->name( 'settings.subscription' )->handle( 'SubscriptionSettings@show' );

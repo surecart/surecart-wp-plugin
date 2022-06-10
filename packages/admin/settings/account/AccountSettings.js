@@ -13,7 +13,7 @@ export default () => {
 	const [error, setError] = useState(null);
 	const { save } = useSave();
 	const { item, itemError, editItem, hasLoadedItem } = useEntity(
-		'account',
+		'store',
 		'account'
 	);
 
@@ -62,6 +62,7 @@ export default () => {
 					'The name of your store will be visible to customers, so you should use a name that is recognizable and identifies your store to your customers.',
 					'surecart'
 				)}
+				loading={!hasLoadedItem}
 			>
 				<div
 					css={css`

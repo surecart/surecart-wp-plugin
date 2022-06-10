@@ -5,7 +5,7 @@ import {
 	Popover,
 	Button,
 } from '@wordpress/components';
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { jsx } from '@emotion/core';
 
@@ -20,7 +20,7 @@ export default ({ color, setColor, onFocus }) => {
 	}, [open]);
 
 	return (
-		<span>
+		<Fragment>
 			<ColorIndicator
 				css={{ width: '25px', height: '25px', borderRadius: '9999px' }}
 				colorValue={color}
@@ -86,6 +86,6 @@ export default ({ color, setColor, onFocus }) => {
 					</div>
 				</Popover>
 			)}
-		</span>
+		</Fragment>
 	);
 };
