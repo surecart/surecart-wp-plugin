@@ -26,22 +26,23 @@ export default (type, id, query = {}, name = 'surecart') => {
 		saveError,
 	} = useSelect(
 		(select) => {
+			console.log(select(coreStore).getEditedEntityRecord(...entityData));
 			return {
-				item:
-					id &&
-					select(coreStore).getEditedEntityRecord(...entityData),
-				hasLoadedItem: select(coreStore).hasFinishedResolution(
+				item: select(coreStore)?.getEditedEntityRecord?.(...entityData),
+				hasLoadedItem: select(coreStore)?.hasFinishedResolution?.(
 					'getEditedEntityRecord',
 					[...entityData]
 				),
-				itemError: select(coreStore).getResolutionError(...entityData),
-				savingItem: select(coreStore).isSavingEntityRecord(
+				itemError: select(coreStore)?.getResolutionError?.(
 					...entityData
 				),
-				saveError: select(coreStore).getLastEntitySaveError(
+				savingItem: select(coreStore)?.isSavingEntityRecord?.(
 					...entityData
 				),
-				deletingItem: select(coreStore).isDeletingEntityRecord(
+				saveError: select(coreStore)?.getLastEntitySaveError?.(
+					...entityData
+				),
+				deletingItem: select(coreStore)?.isDeletingEntityRecord?.(
 					...entityData
 				),
 			};
