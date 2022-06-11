@@ -68,6 +68,7 @@ export default () => {
 					css={css`
 						gap: var(--sc-form-row-spacing);
 						display: grid;
+						grid-template-columns: repeat(2, minmax(0, 1fr));
 					`}
 				>
 					<ScInput
@@ -75,7 +76,23 @@ export default () => {
 						label={__('Store Name', 'surecart')}
 						placeholder={__('Store Name', 'surecart')}
 						onScInput={(e) => editItem({ name: e.target.value })}
+						help={__(
+							'This is displayed in the UI and in notifications.',
+							'surecart'
+						)}
 						required
+					></ScInput>
+
+					<ScInput
+						value={item?.url}
+						label={__('Store URL', 'surecart')}
+						placeholder={__('https://example.com', 'surecart')}
+						onScInput={(e) => editItem({ url: e.target.value })}
+						help={__(
+							'This should be your live storefront URL.',
+							'surecart'
+						)}
+						type="url"
 					></ScInput>
 
 					<ScSelect
@@ -94,6 +111,33 @@ export default () => {
 							};
 						})}
 						label={__('Default Currency', 'surecart')}
+						help={__(
+							'The default currency for new products.',
+							'surecart'
+						)}
+						required
+					></ScSelect>
+
+					<ScSelect
+						search
+						value={item?.time_zone}
+						onScChange={(e) =>
+							editItem({ time_zone: e.target.value })
+						}
+						choices={Object.keys(scData?.time_zones || {}).map(
+							(value) => {
+								const label = scData?.time_zones[value];
+								return {
+									label,
+									value,
+								};
+							}
+						)}
+						label={__('Time Zone', 'surecart')}
+						help={__(
+							'Change this if you want the store to be in a different time zone than your server.',
+							'surecart'
+						)}
 						required
 					></ScSelect>
 				</div>

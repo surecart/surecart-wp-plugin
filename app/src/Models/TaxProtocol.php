@@ -11,7 +11,7 @@ class TaxProtocol extends Model {
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'tax_protocols';
+	protected $endpoint = 'tax_protocol';
 
 	/**
 	 * Object name

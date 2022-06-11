@@ -3,6 +3,7 @@
 namespace SureCart\Controllers\Admin\Settings;
 
 use SureCart\Support\Currency;
+use SureCart\Support\TimeDate;
 
 /**
  * Controls the settings page.
@@ -97,6 +98,7 @@ abstract class BaseSettings {
 			[
 				'supported_currencies' => Currency::getSupportedCurrencies(),
 				'app_url'              => \SureCart::requests()->getBaseUrl(),
+				'time_zones'           => TimeDate::timezoneOptions(),
 			]
 		);
 	}

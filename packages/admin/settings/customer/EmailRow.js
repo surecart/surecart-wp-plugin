@@ -12,6 +12,7 @@ export default ({ title, description, model }) => {
 				target="_blank"
 			>
 				{__('Edit', 'surecart')}
+				<sc-icon name="external-link" slot="suffix"></sc-icon>
 			</sc-button>
 		</sc-stacked-list-row>
 	);
