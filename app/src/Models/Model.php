@@ -52,7 +52,6 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 */
 	protected $endpoint = '';
 
-
 	/**
 	 * Object name
 	 *
@@ -95,7 +94,6 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 */
 	protected $limit = 20;
 
-
 	/**
 	 * Default collection offset.
 	 *
@@ -104,11 +102,18 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	protected $offset = 0;
 
 	/**
-	 * The default transient cache time
+	 * Is this cachable?
 	 *
-	 * @var integer
+	 * @var boolean
 	 */
-	protected $transient_cache_time = 5 * MINUTE_IN_SECONDS;
+	protected $cachable = false;
+
+	/**
+	 * Is this cachable?
+	 *
+	 * @var boolean
+	 */
+	protected $cache_key = '';
 
 	/**
 	 * Model constructor
@@ -595,7 +600,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		// add query vars.
 		$args['query'] = $this->query;
 
-		return [ $endpoint, $args ];
+		return [ $endpoint, $args, $this->cachable, $this->cache_key ];
 	}
 
 	/**
@@ -643,6 +648,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @return array|\WP_Error;
 	 */
 	protected function get() {
+		$this->query['limit'] = 100;
+
 		$items = $this->makeRequest();
 
 		if ( $this->isError( $items ) ) {
@@ -695,23 +702,6 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		$this->fill( $attributes );
 
 		return $this;
-	}
-
-	/**
-	 * Return a cached version of the model.
-	 *
-	 * @param string $id Id of the model.
-	 *
-	 * @return $this
-	 */
-	protected function findCached( $id = '' ) {
-		$cache_key = 'sc_cached_request' . wp_json_encode( $this->prepareRequest( [ 'id' => $id ] ) );
-		$value     = get_transient( $cache_key );
-		if ( false === $value ) {
-			$value = $this->find( $id );
-			set_transient( $cache_key, $value, apply_filters( 'sc_cached_request_transient_time', $this->transient_cache_time, $this ) );
-		}
-		return $value;
 	}
 
 	/**
@@ -838,6 +828,11 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		// fire event.
 		$this->fireModelEvent( 'created' );
 
+		// clear cache if cachable.
+		if ( $this->cachable ) {
+			\SureCart::account()->clearCache();
+		}
+
 		return $this;
 	}
 
@@ -879,6 +874,10 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		$this->fill( $updated );
 
 		$this->fireModelEvent( 'updated' );
+
+		if ( $this->cachable ) {
+			\SureCart::account()->clearCache();
+		}
 
 		return $this;
 	}

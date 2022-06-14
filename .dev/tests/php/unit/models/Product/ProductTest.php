@@ -8,6 +8,8 @@ use SureCart\Tests\SureCartUnitTestCase;
 
 class ProductTest extends SureCartUnitTestCase
 {
+	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
 	/**
 	 * Set up a new app instance to use for tests.
 	 */
@@ -19,6 +21,7 @@ class ProductTest extends SureCartUnitTestCase
 		\SureCart::make()->bootstrap([
 			'providers' => [
 				\SureCart\Request\RequestServiceProvider::class,
+				\SureCart\Account\AccountServiceProvider::class
 			]
 		], false);
 
@@ -35,17 +38,25 @@ class ProductTest extends SureCartUnitTestCase
 		$request = json_decode(file_get_contents(dirname(__FILE__) . '/product-create.json'), true);
 		$response = json_decode(file_get_contents(dirname(__FILE__) . '/product-created.json'));
 
-		$this->mock_requests->expects($this->once())
-		->method('makeRequest')
-		->with(
-			$this->equalTo('products'),
-			$this->equalTo([
-				'method' => 'POST',
-				'body' => $request,
-				'query' => []
-			])
-		)
-		->willReturn($response);
+		// mock requests
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		// then make the request./**
+		$requests->shouldReceive('makeRequest')
+			->atLeast()
+			->once()
+			->withSomeOfArgs('products')
+			->andReturn($response);
+
+		// then make the request./**
+		$requests->shouldReceive('makeRequest')
+			->atLeast()
+			->once()
+			->withSomeOfArgs('account')
+			->andReturn((object) ['products_updated_at' => 12345]);
 
 		$instance = new Product($request['product']);
 		$created = $instance->create();
