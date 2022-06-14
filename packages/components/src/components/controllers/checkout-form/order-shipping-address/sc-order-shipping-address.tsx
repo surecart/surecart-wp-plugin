@@ -30,6 +30,9 @@ export class ScOrderShippingAddress {
   /** Is shipping enabled for this order? */
   @Prop() shippingEnabled: boolean;
 
+  /** Show the full address */
+  @Prop() full: boolean;
+
   /** Make a request to update the order. */
   @Event() scUpdateOrder: EventEmitter<{
     data: Partial<Order>;
@@ -100,7 +103,7 @@ export class ScOrderShippingAddress {
   }
 
   render() {
-    if (this.shippingEnabled) {
+    if (this.shippingEnabled || this.full) {
       return (
         <sc-address
           label={__('Shipping Address', 'surecart')}

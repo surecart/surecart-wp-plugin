@@ -1378,6 +1378,10 @@ export namespace Components {
          */
         "customerShippingAddress": Address;
         /**
+          * Show the full address
+         */
+        "full": boolean;
+        /**
           * Label for the field.
          */
         "label": string;
@@ -5021,6 +5025,10 @@ declare namespace LocalJSX {
           * Holds the customer's shipping address
          */
         "customerShippingAddress"?: Address;
+        /**
+          * Show the full address
+         */
+        "full"?: boolean;
         /**
           * Label for the field.
          */

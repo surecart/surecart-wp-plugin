@@ -770,6 +770,7 @@
   },
   "sc-order-shipping-address": {
     "customer-shipping-address": true,
+    "full": true,
     "label": true,
     "loading": true,
     "required": true,
