@@ -131,7 +131,7 @@ export class ScInput {
   @Event() scClear: EventEmitter<void>;
 
   /** Emitted when the control receives input. */
-  @Event() scInput: EventEmitter<void>;
+  @Event({ cancelable: true }) scInput: EventEmitter<void>;
 
   /** Emitted when the control gains focus. */
   @Event() scFocus: EventEmitter<void>;

@@ -20,8 +20,20 @@ export class ScTaxIdInput {
   /** Tax ID Number */
   @Prop({ mutable: true }) number: string = null;
 
+  /** Help text. */
+  @Prop() help: string;
+
   /** Make a request to update the order. */
   @Event() scChange: EventEmitter<{ number: string; number_type: string }>;
+
+  /** Make a request to update the order. */
+  @Event() scInput: EventEmitter<Partial<{ number: string; number_type: string }>>;
+
+  /** Change the number */
+  @Event() scInputNumber: EventEmitter<string>;
+
+  /** Change the Type */
+  @Event() scInputType: EventEmitter<string>;
 
   /** Set the checkout state. */
   @Event() scSetState: EventEmitter<string>;
@@ -49,9 +61,35 @@ export class ScTaxIdInput {
   render() {
     return (
       <Fragment>
-        <input type="hidden" name="tax_identifier.number_type" value={this.type} />
-        <sc-input label={zones?.[this?.type || 'other']?.label} name="tax_identifier.number" value={this.number} onScChange={(e: any) => (this.number = e.target.value)}>
-          <sc-dropdown slot="suffix" position="bottom-right">
+        <input
+          type="hidden"
+          name="tax_identifier.number_type"
+          value={this.type}
+          onInput={(e: any) => {
+            e.stopPropagation();
+            this.scInput.emit({
+              number: this.number,
+              number_type: e.target.value,
+            });
+            this.scInputType.emit(e.target.value);
+          }}
+        />
+        <sc-input
+          label={zones?.[this?.type || 'other']?.label}
+          name="tax_identifier.number"
+          value={this.number}
+          help={this.help}
+          onScChange={(e: any) => (this.number = e.target.value)}
+          onScInput={(e: any) => {
+            e.stopPropagation();
+            this.scInput.emit({
+              number: e.target.value,
+              number_type: this.type,
+            });
+            this.scInputNumber.emit(e.target.value);
+          }}
+        >
+          <sc-dropdown slot="suffix" position="bottom-right" placement="bottom-end">
             <sc-button type="text" slot="trigger" caret loading={false}>
               {zones?.[this?.type || 'other']?.label_small}
             </sc-button>

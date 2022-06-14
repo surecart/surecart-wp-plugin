@@ -7,22 +7,31 @@ use SureCart\Models\ApiToken;
 /**
  * Controls the settings page.
  */
-class ConnectionSettings {
+class ConnectionSettings extends BaseSettings {
+	/**
+	 * Script handles for pages
+	 *
+	 * @var array
+	 */
+	protected $scripts = [
+		'show' => [ 'surecart/scripts/admin/connection', 'admin/settings/connection' ],
+	];
+
 	/**
 	 * Show the page.
 	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
 	 * @return function
 	 */
-	public function show( \SureCartCore\Requests\RequestInterface $request ) {
-		return \SureCart::view( 'admin/connection' )->with(
-			[
-				'tab'       => $request->query( 'tab' ) ?? '',
-				'api_token' => ApiToken::get(),
-				'status'    => $request->query( 'status' ),
-			]
-		);
-	}
+	// public function show( \SureCartCore\Requests\RequestInterface $request ) {
+	// return \SureCart::view( 'admin/connection' )->with(
+	// [
+	// 'tab'       => $request->query( 'tab' ) ?? '',
+	// 'api_token' => ApiToken::get(),
+	// 'status'    => $request->query( 'status' ),
+	// ]
+	// );
+	// }
 
 	/**
 	 * Save the page.

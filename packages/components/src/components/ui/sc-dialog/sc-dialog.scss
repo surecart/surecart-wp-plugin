@@ -18,6 +18,7 @@
   bottom: 0;
   left: 0;
   z-index: var(--sc-z-index-dialog);
+  box-sizing: border-box;
 }
 .dialog__panel {
   display: flex;
@@ -47,6 +48,7 @@
 .dialog__header {
   flex: 0 0 auto;
   display: flex;
+  border-bottom: 1px solid var(--sc-color-gray-300);
 }
 .dialog__title {
   flex: 1 1 auto;
@@ -61,7 +63,8 @@
   display: flex;
   align-items: center;
   font-size: var(--sc-font-size-x-large);
-  padding: 0 var(--header-spacing);
+  padding: 0 calc(var(--header-spacing) / 2);
+  z-index:2;
 }
 .dialog__body {
   flex: 1 1 auto;

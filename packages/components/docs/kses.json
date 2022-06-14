@@ -1038,6 +1038,7 @@
     "choices": true,
     "disabled": true,
     "help": true,
+    "hoist": true,
     "invalid": true,
     "label": true,
     "loading": true,
@@ -1331,6 +1332,7 @@
   },
   "sc-tax-id-input": {
     "country": true,
+    "help": true,
     "number": true,
     "show": true,
     "type": true,

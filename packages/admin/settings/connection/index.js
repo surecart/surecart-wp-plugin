@@ -1,7 +1,6 @@
 import { render } from '@wordpress/element';
 import '../store';
-import './store/register';
 
-import Settings from './TaxRegionSettings';
+import Settings from './ConnectionSettings';
 
 render(<Settings />, document.getElementById('app'));

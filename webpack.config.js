@@ -84,6 +84,14 @@ module.exports = {
 			__dirname,
 			'packages/admin/settings/customer/index.js'
 		),
+		['admin/settings/connection']: path.resolve(
+			__dirname,
+			'packages/admin/settings/connection/index.js'
+		),
+		['admin/settings/advanced']: path.resolve(
+			__dirname,
+			'packages/admin/settings/advanced/index.js'
+		),
 
 		/**
 		 * Data.

@@ -12,11 +12,13 @@
   font-family: var(--sc-font-sans);
   display: flex;
   flex-wrap: wrap;
+  gap: 2em;
   align-items: center;
   justify-content: space-between;
 
   &__text {
     display: grid;
+    flex: 1;
     gap: calc( var(--sc-dashboard-module-spacing, 1em) / 2);
   }
 }

@@ -5,7 +5,7 @@ namespace SureCart\Models;
 /**
  * Price model
  */
-class TaxZones extends Model {
+class TaxZone extends Model {
 	/**
 	 * Rest API endpoint
 	 *

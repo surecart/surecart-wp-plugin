@@ -1916,6 +1916,7 @@ export namespace Components {
           * Some help text for the input.
          */
         "help": string;
+        "hoist": boolean;
         /**
           * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
          */
@@ -2353,6 +2354,10 @@ export namespace Components {
           * Label for the field.
          */
         "country": string;
+        /**
+          * Help text.
+         */
+        "help": string;
         /**
           * Tax ID Number
          */
@@ -5618,6 +5623,7 @@ declare namespace LocalJSX {
           * Some help text for the input.
          */
         "help"?: string;
+        "hoist"?: boolean;
         /**
           * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
          */
@@ -6100,6 +6106,10 @@ declare namespace LocalJSX {
          */
         "country"?: string;
         /**
+          * Help text.
+         */
+        "help"?: string;
+        /**
           * Tax ID Number
          */
         "number"?: string;
@@ -6107,6 +6117,18 @@ declare namespace LocalJSX {
           * Make a request to update the order.
          */
         "onScChange"?: (event: CustomEvent<{ number: string; number_type: string }>) => void;
+        /**
+          * Make a request to update the order.
+         */
+        "onScInput"?: (event: CustomEvent<Partial<{ number: string; number_type: string }>>) => void;
+        /**
+          * Change the number
+         */
+        "onScInputNumber"?: (event: CustomEvent<string>) => void;
+        /**
+          * Change the Type
+         */
+        "onScInputType"?: (event: CustomEvent<string>) => void;
         /**
           * Set the checkout state.
          */

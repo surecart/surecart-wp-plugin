@@ -7,6 +7,7 @@ export default ({
 	description,
 	loading,
 	children,
+	end,
 	wrapperTag = 'sc-card',
 	noButton = false,
 }) => {
@@ -21,6 +22,8 @@ export default ({
 			}}
 		>
 			{!!description && <span slot="description">{description}</span>}
+
+			{!!end && <span slot="end">{end}</span>}
 
 			<TagName>
 				{loading ? (

@@ -7,7 +7,15 @@ import UnsavedChangesWarning from '../templates/UpdateModel/UnsavedChangesWarnin
 import SaveButton from '../templates/SaveButton';
 import useSnackbar from '../hooks/useSnackbar';
 
-export default ({ title, onSubmit, children, icon }) => {
+export default ({
+	title,
+	onSubmit,
+	children,
+	icon,
+	noButton,
+	prefix,
+	suffix,
+}) => {
 	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
 
 	return (
@@ -36,26 +44,36 @@ export default ({ title, onSubmit, children, icon }) => {
 					margin-bottom: 2rem !important;
 				`}
 			>
-				<h3
+				<div
 					css={css`
-						margin: 0;
-						overflow: hidden;
-						text-overflow: ellipsis;
-						white-space: nowrap;
-						font-size: 1.1rem;
-						line-height: 1.75rem;
-						font-weight: 600;
-						color: rgba(17, 24, 39, 1);
 						display: flex;
 						align-items: center;
-						gap: 0.5em;
-						color: var(--sc-color-gray-900);
+						gap: 1em;
 					`}
 				>
-					{icon}
-					<span>{title}</span>
-				</h3>
-				<SaveButton>{__('Save', 'surecart')}</SaveButton>
+					{!!prefix && prefix}
+					<h3
+						css={css`
+							margin: 0;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							white-space: nowrap;
+							font-size: 1.1rem;
+							line-height: 1.75rem;
+							font-weight: 600;
+							color: rgba(17, 24, 39, 1);
+							display: flex;
+							align-items: center;
+							gap: 0.5em;
+							color: var(--sc-color-gray-900);
+						`}
+					>
+						{icon}
+						<span>{title}</span>
+					</h3>
+				</div>
+				{!noButton && <SaveButton>{__('Save', 'surecart')}</SaveButton>}
+				{!!suffix && suffix}
 			</div>
 
 			<div
