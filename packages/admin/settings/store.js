@@ -1,6 +1,6 @@
-import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { dispatch } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
 
 dispatch(coreStore).addEntities([
 	{
@@ -9,6 +9,6 @@ dispatch(coreStore).addEntities([
 		label: __('Store', 'surecart'),
 		baseURL: 'surecart/v1',
 		key: 'object',
-		baseURLParams: { context: 'edit', cached: false },
+		baseURLParams: { context: 'edit', cached: 0 },
 	},
 ]);

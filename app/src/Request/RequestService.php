@@ -48,7 +48,7 @@ class RequestService {
 	 *
 	 * @var string|null
 	 */
-	protected $cache_status = null;
+	protected $cache_status = 'none';
 
 	/**
 	 * Constructor.
@@ -80,6 +80,7 @@ class RequestService {
 	public function shouldFindCache( $cachable, $cache_key, $args = [] ) {
 		// if the args are set, then do what they say.
 		if ( isset( $args['query']['cached'] ) ) {
+			error_log( (bool) $args['query']['cached'] );
 			return (bool) $args['query']['cached'];
 		}
 		return (bool) $cachable && $cache_key;
