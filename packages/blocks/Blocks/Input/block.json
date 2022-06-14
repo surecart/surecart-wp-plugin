@@ -4,7 +4,7 @@
 	"description": "Displays a form text input.",
 	"category": "surecart",
 	"keywords": ["email", "mail"],
-	"parent": ["surecart/form", "surecart/column"],
+	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,
 		"html": false

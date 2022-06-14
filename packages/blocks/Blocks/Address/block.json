@@ -5,7 +5,7 @@
 	"description": "Display an address form.",
 	"category": "surecart",
 	"keywords": ["button", "submit", "checkout", "engine"],
-	"parent": ["surecart/form", "surecart/column"],
+	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,
 		"html": false
