@@ -66,10 +66,38 @@ class RequestService {
 	}
 
 	/**
+	 * Should we get a cached request?
+	 *
+	 * @return boolean
+	 */
+	public function shouldFindCache( $cachable, $cache_key, $args = [] ) {
+		// if the args are set, then do what they say.
+		if ( isset( $args['query']['cached'] ) ) {
+			return (bool) $args['query']['cached'];
+		}
+		return (bool) $cachable && $cache_key;
+	}
+
+	/**
+	 * Respond to the request.
+	 *
+	 * @param array  $response Reponse data.
+	 * @param array  $args    Request arguments.
+	 * @param string $endpoint The endpoint to request.
+	 *
+	 * @return array Response data.
+	 */
+	public function respond( $response, $args, $endpoint ) {
+		return apply_filters( 'surecart/request/response', $response, $args, $endpoint );
+	}
+
+	/**
 	 * Make the request
 	 *
-	 * @param string $endpoint Endpoint to request.
-	 * @param array  $args Arguments for request.
+	 * @param string  $endpoint Endpoint to request.
+	 * @param array   $args Arguments for request.
+	 * @param boolean $cachable Should this request be cached.
+	 * @param string  $cache_key The cache key to use.
 	 *
 	 * @return mixed
 	 */
@@ -80,15 +108,16 @@ class RequestService {
 		// we have an object cache request.
 		$response_body = $cache->getObjectCache();
 		if ( false !== $response_body ) {
-			return apply_filters( 'surecart/request/response', $response_body, $args, $endpoint );
+			return $this->respond( $response_body, $args, $endpoint );
 		}
 
-		// this model can be cached.
-		if ( (bool) $cachable && $cache_key ) {
-			// we have a transient cache request.
+		// check if we should get a cached version of this.
+		if ( $this->shouldFindCache( $cachable, $cache_key, $args ) ) {
+			// get from cache.
 			$response_body = $cache->getTransientCache();
+			// we have a cached response.
 			if ( false !== $response_body ) {
-				return apply_filters( 'surecart/request/response', $response_body, $args, $endpoint );
+				return $this->respond( $response_body, $args, $endpoint );
 			}
 		}
 
@@ -106,7 +135,7 @@ class RequestService {
 		}
 
 		// return response.
-		return apply_filters( 'surecart/request/response', $response_body, $args, $endpoint );
+		return $this->respond( $response_body, $args, $endpoint );
 	}
 
 	/**
