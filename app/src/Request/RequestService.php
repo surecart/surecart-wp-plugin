@@ -78,9 +78,13 @@ class RequestService {
 	 * @return boolean
 	 */
 	public function shouldFindCache( $cachable, $cache_key, $args = [] ) {
+		// only for fetch requests.
+		if ( 'GET' !== $args['method'] ) {
+			return false;
+		}
+
 		// if the args are set, then do what they say.
 		if ( isset( $args['query']['cached'] ) ) {
-			error_log( (bool) $args['query']['cached'] );
 			return (bool) $args['query']['cached'];
 		}
 		return (bool) $cachable && $cache_key;
