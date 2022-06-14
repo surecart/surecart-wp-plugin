@@ -37,6 +37,7 @@ class RequestServiceTest extends SureCartUnitTestCase
 
 	/**
 	 * @dataProvider cacheProvider
+	 * @group failing
 	 */
 	public function test_shouldFindCache(bool $cachable, string $cache_key, array $args =[], bool $expected) {
 		$service = new RequestService();
@@ -45,10 +46,11 @@ class RequestServiceTest extends SureCartUnitTestCase
 
 	public function cacheProvider(): array {
 		return [
-			[true, 'test', [], true],
-			[true, '', [], false],
-			[false, '', ['query' => ['cached' => true]], true],
-			[true, 'string', ['query' => ['cached' => false]], false],
+			[true, 'test', ['method' => 'GET'], true],
+			[true, '', ['method' => 'GET'], false],
+			[false, '', ['method' => 'GET', 'query' => ['cached' => true]], true],
+			[true, 'string', ['method' => 'GET', 'query' => ['cached' => false]], false],
+			[true, 'string', ['method' => 'POST'], false],
 		];
 	}
 }
