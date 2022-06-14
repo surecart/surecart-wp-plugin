@@ -1,15 +1,5 @@
-<?php
-$is_logged_in             = is_user_logged_in();
-$enable_guest_course_cart = tutor_utils()->get_option( 'enable_guest_course_cart' );
-$required_loggedin_class  = '';
-if ( ! $is_logged_in && ! $enable_guest_course_cart ) {
-	$required_loggedin_class = apply_filters( 'tutor_enroll_required_login_class', 'tutor-open-login-modal' );
-}
-?>
-
-
 <?php foreach ( $prices as $price ) : ?>
-		<a class="tutor-btn tutor-btn-primary tutor-btn-lg tutor-btn-block tutor-mt-24 tutor-add-to-cart-button <?php echo sanitize_html_class( $required_loggedin_class ); ?>"
+		<a class="tutor-btn tutor-btn-primary tutor-btn-lg tutor-btn-block tutor-mt-24 tutor-add-to-cart-button"
 			href="
 			<?php
 			echo esc_url(
