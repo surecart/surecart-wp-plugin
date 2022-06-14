@@ -44,6 +44,13 @@ class RequestService {
 	protected $errors_service;
 
 	/**
+	 * What type of cached request is this.
+	 *
+	 * @var string|null
+	 */
+	protected $cache_status = null;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param string $base_path The rest api base path.
@@ -88,7 +95,37 @@ class RequestService {
 	 * @return array Response data.
 	 */
 	public function respond( $response, $args, $endpoint ) {
+		if ( is_array( $response ) ) {
+			foreach ( $response as $item ) {
+				$item->cache_status = $this->cache_status;
+			}
+		}
+
+		if ( is_object( $response ) ) {
+			$response->cache_status = $this->cache_status;
+		}
+
 		return apply_filters( 'surecart/request/response', $response, $args, $endpoint );
+	}
+
+	/**
+	 * Set the response cache status.
+	 *
+	 * @param object $response Response object.
+	 * @param string $status The response status.
+	 *
+	 * @return void
+	 */
+	public function setResponseCacheStatus( $response, $status ) {
+		if ( is_array( $response ) ) {
+			foreach ( $response as $item ) {
+				$item->cached = $status;
+			}
+		} elseif ( is_object( $response ) ) {
+			$response->cached = $status;
+		}
+
+		return $response;
 	}
 
 	/**
@@ -108,6 +145,7 @@ class RequestService {
 		// we have an object cache request.
 		$response_body = $cache->getObjectCache();
 		if ( false !== $response_body ) {
+			$this->cache_status = 'object';
 			return $this->respond( $response_body, $args, $endpoint );
 		}
 
@@ -117,6 +155,7 @@ class RequestService {
 			$response_body = $cache->getTransientCache();
 			// we have a cached response.
 			if ( false !== $response_body ) {
+				$this->cache_status = 'transient';
 				return $this->respond( $response_body, $args, $endpoint );
 			}
 		}

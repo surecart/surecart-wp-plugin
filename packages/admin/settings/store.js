@@ -9,6 +9,6 @@ dispatch(coreStore).addEntities([
 		label: __('Store', 'surecart'),
 		baseURL: 'surecart/v1',
 		key: 'object',
-		baseURLParams: { context: 'edit' },
+		baseURLParams: { context: 'edit', cached: false },
 	},
 ]);

@@ -116,6 +116,13 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	protected $cache_key = '';
 
 	/**
+	 * Cache status for the request.
+	 *
+	 * @param string|null;
+	 */
+	protected $cache_status = null;
+
+	/**
 	 * Model constructor
 	 *
 	 * @param array $attributes Optional attributes.
@@ -132,6 +139,15 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		$this->bootModel();
 		$this->syncOriginal();
 		$this->fill( $attributes );
+	}
+
+	/**
+	 * Get the cache status for the model.
+	 *
+	 * @return string|null;
+	 */
+	public function getCacheStatus() {
+		return $this->cache_status;
 	}
 
 	/**
@@ -424,6 +440,12 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @return mixed|void
 	 */
 	public function setAttribute( $key, $value ) {
+		// we are setting the cache status.
+		if ( 'cache_status' === $key ) {
+			$this->cache_status = $value;
+			return;
+		}
+
 		$setter = $this->getMutator( $key, 'set' );
 
 		if ( $setter ) {
