@@ -45,7 +45,11 @@ abstract class RestController {
 			return $model;
 		}
 
-		return $model->with( $this->with )->where( $request->get_query_params() )->create( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
+		if ( ! empty( $this->with ) ) {
+			$model = $model->with( $this->with );
+		}
+
+		return $model->where( $request->get_query_params() )->create( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
 	}
 
 	/**
@@ -61,7 +65,11 @@ abstract class RestController {
 			return $model;
 		}
 
-		$items = $model->with( $this->with )->where( $request->get_params() )->paginate(
+		if ( ! empty( $this->with ) ) {
+			$model = $model->with( $this->with );
+		}
+
+		$items = $model->where( $request->get_params() )->paginate(
 			[
 				'per_page' => $request->get_param( 'per_page' ),
 				'page'     => $request->get_param( 'page' ),
@@ -94,7 +102,11 @@ abstract class RestController {
 			return $model;
 		}
 
-		return $model->with( $this->with )->where( $request->get_query_params() )->find( $request['id'] );
+		if ( ! empty( $this->with ) ) {
+			$model = $model->with( $this->with );
+		}
+
+		return $model->where( $request->get_query_params() )->find( $request['id'] );
 	}
 
 	/**
@@ -110,7 +122,11 @@ abstract class RestController {
 			return $model;
 		}
 
-		return $model->with( $this->with )->where( $request->get_query_params() )->update( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
+		if ( ! empty( $this->with ) ) {
+			$model = $model->with( $this->with );
+		}
+
+		return $model->where( $request->get_query_params() )->update( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
 	}
 
 	/**
@@ -126,6 +142,10 @@ abstract class RestController {
 			return $model;
 		}
 
-		return $model->with( $this->with )->delete( $request['id'] );
+		if ( ! empty( $this->with ) ) {
+			$model = $model->with( $this->with );
+		}
+
+		return $model->delete( $request['id'] );
 	}
 }
