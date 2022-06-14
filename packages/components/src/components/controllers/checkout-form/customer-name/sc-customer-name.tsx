@@ -115,7 +115,7 @@ export class ScCustomerName {
         autocomplete="name"
         placeholder={this.placeholder}
         readonly={this.readonly}
-        required={true}
+        required={this.required}
         invalid={this.invalid}
         autofocus={this.autofocus}
         hasFocus={this.hasFocus}
