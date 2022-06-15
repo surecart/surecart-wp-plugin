@@ -1,13 +1,14 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
-import { ScFormControl, ScSwitch } from '@surecart/components-react';
+import { ScFormControl, ScInput, ScSwitch } from '@surecart/components-react';
 import { __experimentalLinkControl as LinkControl } from '@wordpress/block-editor';
-import SettingsTemplate from '../SettingsTemplate';
-import SettingsBox from '../SettingsBox';
-import useEntity from '../../hooks/useEntity';
+import { useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+
 import Error from '../../components/Error';
+import useEntity from '../../hooks/useEntity';
+import SettingsBox from '../SettingsBox';
+import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
 
 export default () => {
@@ -137,56 +138,34 @@ export default () => {
 						grid-template-columns: repeat(2, minmax(0, 1fr));
 					`}
 				>
-					<ScFormControl label={__('Terms of Service', 'surecart')}>
-						<div
-							css={css`
-								border: 1px solid var(--sc-color-gray-200);
-								.block-editor-link-control__search-item {
-									box-sizing: border-box;
-								}
-							`}
-						>
-							<LinkControl
-								showInitialSuggestions={true}
-								value={{ url: item?.terms_url }}
-								settings={{}}
-								shownUnlinkControl={true}
-								showSuggestions={true}
-								suggestionsQuery={{
-									type: 'post',
-									subtype: 'page',
-								}}
-								onChange={(nextValue) => {
-									editItem({
-										terms_url: nextValue.url,
-									});
-								}}
-							/>
-						</div>
-					</ScFormControl>
-					<ScFormControl label={__('Privacy Policy', 'surecart')}>
-						<div
-							css={css`
-								border: 1px solid var(--sc-color-gray-200);
-								.block-editor-link-control__search-item {
-									box-sizing: border-box;
-								}
-							`}
-						>
-							<LinkControl
-								value={{ url: item?.privacy_url }}
-								settings={{}}
-								shownUnlinkControl={true}
-								noURLSuggestion
-								showInitialSuggestions
-								onChange={(nextValue) => {
-									editItem({
-										privacy_url: nextValue.url,
-									});
-								}}
-							/>
-						</div>
-					</ScFormControl>
+					<ScInput
+						label={__('Terms of Service', 'surecart')}
+						type="url"
+						value={item?.terms_url}
+						onScInput={(e) => {
+							editItem({
+								terms_url: e.target.value || null,
+							});
+						}}
+						help={__(
+							'A link to your privacy terms page.',
+							'surecart'
+						)}
+					/>
+					<ScInput
+						label={__('Privacy Policy', 'surecart')}
+						type="url"
+						value={item?.privacy_url}
+						onScInput={(e) => {
+							editItem({
+								privacy_url: e.target.value || null,
+							});
+						}}
+						help={__(
+							'A link to your privacy policy page.',
+							'surecart'
+						)}
+					/>
 				</div>
 			</SettingsBox>
 		</SettingsTemplate>
