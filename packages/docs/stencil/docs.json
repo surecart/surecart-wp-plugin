@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-06-10T18:37:27",
+  "timestamp": "2022-06-15T13:06:28",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.15.1",
@@ -7522,7 +7522,7 @@
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
-          "default": "__('every', 'surecart')",
+          "default": "'/'",
           "values": [
             {
               "type": "string"
@@ -7539,7 +7539,7 @@
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
-          "default": "__('once', 'surecart')",
+          "default": "''",
           "values": [
             {
               "type": "string"
@@ -11038,6 +11038,22 @@
           "values": [
             {
               "type": "Address"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "full",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "full",
+          "reflectToAttr": false,
+          "docs": "Show the full address",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -14804,6 +14820,23 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "hoist",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "hoist",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -18795,6 +18828,22 @@
           "required": false
         },
         {
+          "name": "help",
+          "type": "string",
+          "mutable": false,
+          "attr": "help",
+          "reflectToAttr": false,
+          "docs": "Help text.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "number",
           "type": "string",
           "mutable": true,
@@ -18855,6 +18904,33 @@
           "cancelable": true,
           "composed": true,
           "docs": "Make a request to update the order.",
+          "docsTags": []
+        },
+        {
+          "event": "scInput",
+          "detail": "{ number?: string; number_type?: string; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Make a request to update the order.",
+          "docsTags": []
+        },
+        {
+          "event": "scInputNumber",
+          "detail": "string",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Change the number",
+          "docsTags": []
+        },
+        {
+          "event": "scInputType",
+          "detail": "string",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Change the Type",
           "docsTags": []
         },
         {
@@ -19020,6 +19096,7 @@
       "filePath": "./src/components/ui/sc-textarea/sc-textarea.tsx",
       "encapsulation": "shadow",
       "tag": "sc-textarea",
+      "readme": "# sc-textarea\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},

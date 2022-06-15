@@ -10,6 +10,7 @@
 | Property  | Attribute | Description           | Type      | Default     |
 | --------- | --------- | --------------------- | --------- | ----------- |
 | `country` | `country` | Label for the field.  | `string`  | `undefined` |
+| `help`    | `help`    | Help text.            | `string`  | `undefined` |
 | `number`  | `number`  | Tax ID Number         | `string`  | `null`      |
 | `show`    | `show`    | Force show the field. | `boolean` | `false`     |
 | `type`    | `type`    | Type of tax id        | `string`  | `'other'`   |
@@ -17,10 +18,13 @@
 
 ## Events
 
-| Event        | Description                         | Type                                                    |
-| ------------ | ----------------------------------- | ------------------------------------------------------- |
-| `scChange`   | Make a request to update the order. | `CustomEvent<{ number: string; number_type: string; }>` |
-| `scSetState` | Set the checkout state.             | `CustomEvent<string>`                                   |
+| Event           | Description                         | Type                                                      |
+| --------------- | ----------------------------------- | --------------------------------------------------------- |
+| `scChange`      | Make a request to update the order. | `CustomEvent<{ number: string; number_type: string; }>`   |
+| `scInput`       | Make a request to update the order. | `CustomEvent<{ number?: string; number_type?: string; }>` |
+| `scInputNumber` | Change the number                   | `CustomEvent<string>`                                     |
+| `scInputType`   | Change the Type                     | `CustomEvent<string>`                                     |
+| `scSetState`    | Set the checkout state.             | `CustomEvent<string>`                                     |
 
 
 ## Dependencies
