@@ -142,7 +142,7 @@ export class ScSelectDropdown {
     let append = '';
     if (!chosen) {
       if (this.showParentLabel) {
-        append = this.choices.find(choice => choice.choices.some(subChoice => subChoice.value === this.value))?.label;
+        append = this.choices.find(choice => choice?.choices?.some?.(subChoice => subChoice.value === this.value))?.label;
       }
       const subchoices = (this.choices || []).map(choice => choice.choices).flat();
       chosen = subchoices.find(choice => choice?.value == this.value);
