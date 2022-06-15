@@ -14,10 +14,17 @@ export class ScLineItemTax {
 
   renderLabel() {
     if (this?.order?.tax_status === 'calculated') {
-      return this?.order?.tax_label;
+      return `${this?.order?.tax_label} ${this.renderPercent()}`;
     }
     // translators: %s: tax label
-    return sprintf(__('Estimated %s', 'surecart'), this?.order?.tax_label);
+    return `${sprintf(__('Estimated %s', 'surecart'), this?.order?.tax_label)} ${this.renderPercent()}`;
+  }
+
+  renderPercent() {
+    if (this.order?.tax_rate) {
+      return `(${this.order.tax_rate}%)`;
+    }
+    return '';
   }
 
   render() {
