@@ -6,7 +6,7 @@ import { Address, Order } from '../../../../types';
 @Component({
   tag: 'sc-order-tax-id-input',
   styleUrl: 'sc-order-tax-id-input.css',
-  shadow: false,
+  shadow: true,
 })
 export class ScOrderTaxIdInput {
   /** The order */
