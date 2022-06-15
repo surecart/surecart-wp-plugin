@@ -21,6 +21,13 @@ class Brand extends Model {
 	protected $object_name = 'brand';
 
 	/**
+	 * Does an update clear account cache?
+	 *
+	 * @var boolean
+	 */
+	protected $clears_account_cache = true;
+
+	/**
 	 * Finalize the session for checkout.
 	 *
 	 * @return $this|\WP_Error

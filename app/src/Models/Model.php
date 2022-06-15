@@ -123,6 +123,13 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	protected $cache_status = null;
 
 	/**
+	 * Does an update clear account cache?
+	 *
+	 * @var boolean
+	 */
+	protected $clears_account_cache = false;
+
+	/**
 	 * Model constructor
 	 *
 	 * @param array $attributes Optional attributes.
@@ -850,8 +857,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		// fire event.
 		$this->fireModelEvent( 'created' );
 
-		// clear cache if cachable.
-		if ( $this->cachable ) {
+		// clear account cache.
+		if ( $this->cachable || $this->clears_account_cache ) {
 			\SureCart::account()->clearCache();
 		}
 
@@ -897,7 +904,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 
 		$this->fireModelEvent( 'updated' );
 
-		if ( $this->cachable ) {
+		// clear account cache.
+		if ( $this->cachable || $this->clears_account_cache ) {
 			\SureCart::account()->clearCache();
 		}
 
@@ -928,6 +936,11 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		}
 
 		$this->fireModelEvent( 'deleted' );
+
+		// clear account cache.
+		if ( $this->cachable || $this->clears_account_cache ) {
+			\SureCart::account()->clearCache();
+		}
 
 		return $deleted;
 	}

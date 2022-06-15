@@ -15,6 +15,13 @@ class AccountService {
 	protected $account = null;
 
 	/**
+	 * The key for the cache.
+	 *
+	 * @var string
+	 */
+	protected $cache_key = 'surecart_account';
+
+	/**
 	 * We get the account when the service is loaded.
 	 * Since this is loaded in a service container, its
 	 * cached so it only fetches once, no matter how many calls.
@@ -25,25 +32,50 @@ class AccountService {
 	 * @param \SureCart\Support\Server $server The server utility to use.
 	 */
 	public function __construct( \SureCart\Support\Server $server ) {
-		// don't cache on localhost.
+		$cache = defined( 'SURECART_CACHE_ACCOUNT' ) && SURECART_CACHE_ACCOUNT;
+
+		// do not cache requests if specifically set to false.
+		if ( false === $cache ) {
+			return $this->fetchAccount();
+		}
+
+		// cache requests if specifically set to true.
+		if ( true === $cache ) {
+			return $this->fetchCachedAccount();
+		}
+
+		// don't cache on localhost if constant is not set.
 		if ( $server->isLocalHost() ) {
 			return $this->fetchAccount();
 		}
 
-		$this->account = get_transient( 'surecart_account' );
+		// cache requests if not explicitly set.
+		return $this->fetchCachedAccount();
+	}
+
+	/**
+	 * Fetch the cached account.
+	 *
+	 * @return \SureCart\Models\Account
+	 */
+	public function fetchCachedAccount() {
+		$this->account = get_transient( $this->cache_key );
 		if ( false === $this->account ) {
-			$this->fetchAccount();
-			set_transient( 'surecart_account', $this->account, 60 );
+			$this->account = $this->fetchAccount();
+			set_transient( $this->cache_key, $this->account, 60 );
 		}
+		return $this->account;
 	}
 
 	/**
 	 * Fetch the account.
 	 *
-	 * @return void
+	 * @return \SureCart\Models\Account
 	 */
 	protected function fetchAccount() {
+		error_log( 'fetch' );
 		$this->account = Account::with( [ 'brand', 'portal_protocol', 'tax_protocol' ] )->find();
+		return $this->account;
 	}
 
 	/**
@@ -52,7 +84,7 @@ class AccountService {
 	 * @return boolean
 	 */
 	public function clearCache() {
-		return delete_transient( 'surecart_account' );
+		return delete_transient( $this->cache_key );
 	}
 
 	/**

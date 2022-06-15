@@ -19,4 +19,11 @@ class SubscriptionProtocol extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'subscription_protocol';
+
+	/**
+	 * Does an update clear account cache?
+	 *
+	 * @var boolean
+	 */
+	protected $clears_account_cache = true;
 }

@@ -19,4 +19,11 @@ class PortalProtocol extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'portal_protocol';
+
+	/**
+	 * Does an update clear account cache?
+	 *
+	 * @var boolean
+	 */
+	protected $clears_account_cache = true;
 }
