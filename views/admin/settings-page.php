@@ -14,7 +14,7 @@
 			?>
 
 		<div class="sc-container">
-			<div class="sc-content" id="app">Loading...</div>
+			<div class="sc-content" id="app"></div>
 		</div>
 	</div>
 </div>

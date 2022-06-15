@@ -95,4 +95,27 @@
 	.sc-section-heading sc-icon {
 		font-size: 1.3rem;
 	}
+
+	sc-icon {
+		width: 18px;
+		height: 18px;
+	}
+
+	sc-tab, sc-icon, sc-breadcrumbs, sc-breadcrumb, sc-button, sc-card, sc-tag, sc-dashboard-module, sc-form {
+		visibility: hidden;
+		opacity: 0;
+		transition: opacity 0.2s ease-in-out;
+	}
+	sc-tab.hydrated,
+	sc-icon.hydrated,
+	sc-breadcrumbs.hydrated,
+	sc-breadcrumb.hydrated,
+	sc-button.hydrated,
+	sc-card.hydrated,
+	sc-tag.hydrated,
+	sc-dashboard-module.hydrated,
+	sc-form.hydrated {
+		visibility: inherit;
+		opacity: 1;
+	}
 </style>

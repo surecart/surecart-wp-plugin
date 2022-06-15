@@ -30,6 +30,7 @@
   background-color: var(--sc-panel-background-color);
   border-radius: var(--sc-border-radius-medium);
   box-shadow: var(--sc-shadow-x-large);
+  position: relative;
 }
 .dialog__panel:focus {
   outline: none;

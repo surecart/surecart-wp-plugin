@@ -138,41 +138,44 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 				unselect={false}
 				label={zoneName[region] || __('Region', 'surecart')}
 				onScChange={(e) => updateData({ tax_zone: e.target.value })}
-				choices={(zones || [])
-					.map(({ state_name, country_name, id }) => {
+				choices={(zones || []).map(
+					({ state_name, country_name, id }) => {
 						return {
 							label: state_name || country_name,
 							value: id,
 						};
-					})
-					.reverse()}
+					}
+				)}
 				required
 			/>
 
-			<ScTaxIdInput
-				type={type}
-				number={data?.tax_identifier?.number}
-				help={__(
-					"In applicable tax jurisdictions, your tax ID will show on invoices. If you don't have your tax ID number yet, you can enter it later.",
-					'surecart'
-				)}
-				onScInput={(e) => {
-					const tax_identifier = e.detail;
-					let props;
-					if (registration?.tax_identifier?.id) {
-						const { id, ...rest } = registration?.tax_identifier;
-						props = rest;
-					} else {
-						props = registration?.tax_identifier;
-					}
-					updateData({
-						tax_identifier: {
-							...props,
-							...tax_identifier,
-						},
-					});
-				}}
-			/>
+			{region !== 'us' && (
+				<ScTaxIdInput
+					type={type}
+					number={data?.tax_identifier?.number}
+					help={__(
+						"In applicable tax jurisdictions, your tax ID will show on invoices. If you don't have your tax ID number yet, you can enter it later.",
+						'surecart'
+					)}
+					onScInput={(e) => {
+						const tax_identifier = e.detail;
+						let props;
+						if (registration?.tax_identifier?.id) {
+							const { id, ...rest } =
+								registration?.tax_identifier;
+							props = rest;
+						} else {
+							props = registration?.tax_identifier;
+						}
+						updateData({
+							tax_identifier: {
+								...props,
+								...tax_identifier,
+							},
+						});
+					}}
+				/>
+			)}
 
 			<ScAlert type="info" open>
 				{__(
@@ -194,7 +197,16 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 				</ScButton>
 			</sc-flex>
 
-			{(loading || fetching) && <sc-block-ui spinner></sc-block-ui>}
+			{(loading || fetching) && (
+				<sc-block-ui
+					spinner
+					style={{
+						zIndex: 9,
+						'--sc-block-ui-opacity': '0.5',
+						inset: 0,
+					}}
+				></sc-block-ui>
+			)}
 		</ScForm>
 	);
 };
