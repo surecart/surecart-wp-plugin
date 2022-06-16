@@ -72,6 +72,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/settings/tax/index.js'
 		),
+    ['admin/settings/export']: path.resolve(
+			__dirname,
+			'packages/admin/settings/export/index.js'
+		),
 		['admin/settings/tax-region']: path.resolve(
 			__dirname,
 			'packages/admin/settings/tax-region/index.js'

@@ -40,6 +40,11 @@
 		<?php esc_html_e( 'Advanced', 'surecart' ); ?>
 	</sc-tab>
 
+	<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'export' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'export' === $tab ? 'active' : ''; ?> >
+		<sc-icon style="font-size: 18px; width: 22px; stroke-width: 4; opacity: 0.7" name="download-cloud" slot="prefix"></sc-icon>
+		<?php esc_html_e( 'Data Export', 'surecart' ); ?>
+	</sc-tab>
+
 	<sc-tab href="mailto:hello@surecart.com" target="_blank">
 		<sc-icon style="font-size: 18px; width: 22px; stroke-width: 4; opacity: 0.7" name="life-buoy" slot="prefix"></sc-icon>
 		<?php esc_html_e( 'Help', 'surecart' ); ?>

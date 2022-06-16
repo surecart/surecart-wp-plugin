@@ -242,6 +242,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		// Processors.
 		\SureCart::route()->get()->where( 'sc_url_var', 'processors', 'tab' )->name( 'settings.processors' )->handle( 'ProcessorsSettings@show' );
 
+		// Export
+		\SureCart::route()->get()->where( 'sc_url_var', 'export', 'tab' )->name( 'settings.export' )->handle( 'ExportSettings@show' );
+
 		// Cache.
 		\SureCart::route()->post()->where( 'sc_url_var', 'clear', 'cache' )->middleware( 'nonce:update_plugin_settings' )->handle( 'CacheSettings@clear' );
 	}
