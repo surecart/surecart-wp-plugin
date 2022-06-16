@@ -21,8 +21,8 @@ export class ScLineItemTax {
   }
 
   renderPercent() {
-    if (this.order?.tax_rate) {
-      return `(${this.order.tax_rate}%)`;
+    if (this.order?.tax_percent) {
+      return `(${this.order.tax_percent}%)`;
     }
     return '';
   }
