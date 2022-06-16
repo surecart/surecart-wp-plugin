@@ -8,7 +8,7 @@ export default ({ title, description, model }) => {
 			<sc-button
 				size="small"
 				slot="suffix"
-				href={`https://app.surecart.com/notification_templates/:customer_notifications/${model}/notification/edit`}
+				href={`${scData?.app_url}/notification_templates/:customer_notifications/${model}/notification/edit`}
 				target="_blank"
 			>
 				{__('Edit', 'surecart')}

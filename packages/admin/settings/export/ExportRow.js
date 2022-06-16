@@ -7,7 +7,7 @@ export default ({ title, model }) => {
 			<sc-button
 				size="small"
 				slot="suffix"
-				href={`https://app.surecart.com/exports/${model}?hide_sidebar=false`}
+				href={`${scData?.app_url}/exports/${model}?hide_sidebar=false`}
 				target="_blank"
 			>
 				<sc-icon name="download" slot="suffix"></sc-icon>
