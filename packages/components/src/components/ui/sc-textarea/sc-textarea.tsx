@@ -206,10 +206,16 @@ export class ScTextarea {
   }
 
   componentWillLoad() {
-    this.resizeObserver = new ResizeObserver(() => this.setTextareaHeight());
+    if (!window?.ResizeObserver) {
+      return;
+    }
+    this.resizeObserver = new window.ResizeObserver(() => this.setTextareaHeight());
   }
 
   componentDidLoad() {
+    if (!window?.ResizeObserver) {
+      return;
+    }
     this.resizeObserver.observe(this.input);
   }
 

@@ -3972,6 +3972,10 @@ declare namespace LocalJSX {
          */
         "onScChangeAddress"?: (event: CustomEvent<Partial<Address>>) => void;
         /**
+          * Address input event.
+         */
+        "onScInputAddress"?: (event: CustomEvent<Partial<Address>>) => void;
+        /**
           * Is this required?
          */
         "required"?: boolean;

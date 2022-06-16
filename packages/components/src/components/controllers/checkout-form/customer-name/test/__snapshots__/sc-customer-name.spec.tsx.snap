@@ -3,7 +3,7 @@
 exports[`sc-customer-name is disabled when logged in 1`] = `
 <sc-customer-name logged-in="" size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="name" disabled="" help="" name="name" required="" type="text" value=""></sc-input>
+    <sc-input autocomplete="name" disabled="" help="" name="name" type="text" value=""></sc-input>
   </mock:shadow-root>
 </sc-customer-name>
 `;
@@ -11,7 +11,7 @@ exports[`sc-customer-name is disabled when logged in 1`] = `
 exports[`sc-customer-name renders 1`] = `
 <sc-customer-name size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="name" help="" name="name" required="" type="text" value=""></sc-input>
+    <sc-input autocomplete="name" help="" name="name" type="text" value=""></sc-input>
   </mock:shadow-root>
 </sc-customer-name>
 `;

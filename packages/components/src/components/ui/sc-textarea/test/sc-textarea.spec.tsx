@@ -7,12 +7,6 @@ describe('sc-textarea', () => {
       components: [ScTextarea],
       html: `<sc-textarea></sc-textarea>`,
     });
-    expect(page.root).toEqualHtml(`
-      <sc-textarea>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </sc-textarea>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });
