@@ -8,16 +8,6 @@ export function serialize(form: HTMLFormElement) {
 
   formData.forEach((value, key) => {
     object[key] = value;
-    // if (Reflect.has(object, key)) {
-    //   const entry = object[key];
-    //   if (Array.isArray(entry)) {
-    //     entry.push(value);
-    //   } else {
-    //     object[key] = [object[key], value];
-    //   }
-    // } else {
-    //   object[key] = value;
-    // }
   });
 
   return object;

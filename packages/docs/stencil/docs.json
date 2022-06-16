@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-06-10T17:27:28",
+  "timestamp": "2022-06-16T19:27:03",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.15.1",
@@ -8,7 +8,7 @@
   "components": [
     {
       "filePath": "./src/components/ui/address/sc-address.tsx",
-      "encapsulation": "none",
+      "encapsulation": "shadow",
       "tag": "sc-address",
       "readme": "# ce-address\n\n\n",
       "docs": "",
@@ -71,7 +71,23 @@
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
-          "default": "{\n    country: 'shipping_country',\n    city: 'shipping_city',\n    line_1: 'shipping_line_1',\n    line_2: 'shipping_line_2',\n    postal_code: 'shipping_postal_code',\n    state: 'shipping_state',\n  }",
+          "default": "{\n    name: 'shipping_name',\n    country: 'shipping_country',\n    city: 'shipping_city',\n    line_1: 'shipping_line_1',\n    line_2: 'shipping_line_2',\n    postal_code: 'shipping_postal_code',\n    state: 'shipping_state',\n  }",
+          "values": [
+            {
+              "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "placeholders",
+          "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "{\n    name: __('Name or Company Name', 'surecart'),\n    country: __('Country', 'surecart'),\n    city: __('City', 'surecart'),\n    line_1: __('Address', 'surecart'),\n    line_2: __('Address Line 2', 'surecart'),\n    postal_code: __('Postal Code/Zip', 'surecart'),\n    state: __('State/Province/Region', 'surecart'),\n  }",
           "values": [
             {
               "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
@@ -96,12 +112,65 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "showLine2",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-line-2",
+          "reflectToAttr": false,
+          "docs": "Should we show name field?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showName",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-name",
+          "reflectToAttr": false,
+          "docs": "Should we show name field?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
-      "methods": [],
+      "methods": [
+        {
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<boolean>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        }
+      ],
       "events": [
         {
           "event": "scChangeAddress",
+          "detail": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Address change event.",
+          "docsTags": []
+        },
+        {
+          "event": "scInputAddress",
           "detail": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "bubbles": true,
           "cancelable": true,
@@ -125,19 +194,22 @@
       ],
       "dependencies": [
         "sc-form-control",
-        "sc-select",
         "sc-input",
+        "sc-select",
         "sc-block-ui"
       ],
       "dependencyGraph": {
         "sc-address": [
           "sc-form-control",
-          "sc-select",
           "sc-input",
+          "sc-select",
           "sc-block-ui"
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ],
+        "sc-input": [
+          "sc-form-control"
         ],
         "sc-select": [
           "sc-icon",
@@ -148,9 +220,6 @@
           "sc-input",
           "sc-spinner",
           "sc-menu"
-        ],
-        "sc-input": [
-          "sc-form-control"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -2419,12 +2488,15 @@
         ],
         "sc-address": [
           "sc-form-control",
-          "sc-select",
           "sc-input",
+          "sc-select",
           "sc-block-ui"
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ],
+        "sc-input": [
+          "sc-form-control"
         ],
         "sc-select": [
           "sc-icon",
@@ -2435,9 +2507,6 @@
           "sc-input",
           "sc-spinner",
           "sc-menu"
-        ],
-        "sc-input": [
-          "sc-form-control"
         ],
         "sc-compact-address": [
           "sc-form-control",
@@ -3079,7 +3148,7 @@
     },
     {
       "filePath": "./src/components/ui/sc-compact-address/sc-compact-address.tsx",
-      "encapsulation": "none",
+      "encapsulation": "shadow",
       "tag": "sc-compact-address",
       "readme": "# sc-compact-address\n\n\n",
       "docs": "",
@@ -3168,7 +3237,19 @@
           "required": false
         }
       ],
-      "methods": [],
+      "methods": [
+        {
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<boolean>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        }
+      ],
       "events": [
         {
           "event": "scChangeAddress",
@@ -3177,6 +3258,15 @@
           "cancelable": true,
           "composed": true,
           "docs": "Address change event.",
+          "docsTags": []
+        },
+        {
+          "event": "scInputAddress",
+          "detail": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Address input event.",
           "docsTags": []
         }
       ],
@@ -3955,8 +4045,8 @@
         ],
         "sc-address": [
           "sc-form-control",
-          "sc-select",
           "sc-input",
+          "sc-select",
           "sc-block-ui"
         ],
         "sc-select": [
@@ -3973,7 +4063,9 @@
           "sc-spinner"
         ],
         "sc-tax-id-input": [
+          "sc-icon",
           "sc-input",
+          "sc-spinner",
           "sc-dropdown",
           "sc-button",
           "sc-menu",
@@ -3986,7 +4078,7 @@
     },
     {
       "filePath": "./src/components/controllers/checkout-form/customer-email/sc-customer-email.tsx",
-      "encapsulation": "none",
+      "encapsulation": "shadow",
       "tag": "sc-customer-email",
       "readme": "# ce-email\n\n\n",
       "docs": "",
@@ -4266,7 +4358,19 @@
           "required": false
         }
       ],
-      "methods": [],
+      "methods": [
+        {
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<boolean>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        }
+      ],
       "events": [
         {
           "event": "scBlur",
@@ -4345,7 +4449,7 @@
     },
     {
       "filePath": "./src/components/controllers/checkout-form/customer-name/sc-customer-name.tsx",
-      "encapsulation": "none",
+      "encapsulation": "shadow",
       "tag": "sc-customer-name",
       "readme": "# ce-customer-name\n\n\n",
       "docs": "",
@@ -4625,7 +4729,19 @@
           "required": false
         }
       ],
-      "methods": [],
+      "methods": [
+        {
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<boolean>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        }
+      ],
       "events": [
         {
           "event": "scBlur",
@@ -4683,7 +4799,7 @@
         },
         {
           "event": "scUpdateOrderState",
-          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -6540,12 +6656,15 @@
         ],
         "sc-address": [
           "sc-form-control",
-          "sc-select",
           "sc-input",
+          "sc-select",
           "sc-block-ui"
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ],
+        "sc-input": [
+          "sc-form-control"
         ],
         "sc-select": [
           "sc-icon",
@@ -6556,9 +6675,6 @@
           "sc-input",
           "sc-spinner",
           "sc-menu"
-        ],
-        "sc-input": [
-          "sc-form-control"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -6797,7 +6913,8 @@
         "sc-compact-address",
         "sc-input",
         "sc-payment",
-        "sc-select"
+        "sc-select",
+        "sc-textarea"
       ],
       "dependencies": [
         "sc-tooltip"
@@ -6822,6 +6939,9 @@
           "sc-form-control"
         ],
         "sc-select": [
+          "sc-form-control"
+        ],
+        "sc-textarea": [
           "sc-form-control"
         ]
       }
@@ -7477,7 +7597,7 @@
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
-          "default": "__('every', 'surecart')",
+          "default": "'/'",
           "values": [
             {
               "type": "string"
@@ -7494,7 +7614,7 @@
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
-          "default": "__('once', 'surecart')",
+          "default": "''",
           "values": [
             {
               "type": "string"
@@ -8029,6 +8149,7 @@
         "sc-subscription-ad-hoc-confirm",
         "sc-subscription-switch",
         "sc-subscriptions-list",
+        "sc-tax-id-input",
         "sc-toggle",
         "sc-upcoming-invoice",
         "sc-wordpress-user"
@@ -8096,6 +8217,9 @@
           "sc-icon"
         ],
         "sc-subscriptions-list": [
+          "sc-icon"
+        ],
+        "sc-tax-id-input": [
           "sc-icon"
         ],
         "sc-toggle": [
@@ -8696,7 +8820,7 @@
         },
         {
           "name": "type",
-          "type": "\"email\" | \"number\" | \"password\" | \"search\" | \"tel\" | \"text\" | \"url\"",
+          "type": "\"email\" | \"hidden\" | \"number\" | \"password\" | \"search\" | \"tel\" | \"text\" | \"url\"",
           "mutable": false,
           "attr": "type",
           "reflectToAttr": true,
@@ -8706,6 +8830,10 @@
           "values": [
             {
               "value": "email",
+              "type": "string"
+            },
+            {
+              "value": "hidden",
               "type": "string"
             },
             {
@@ -10659,7 +10787,7 @@
     },
     {
       "filePath": "./src/components/controllers/checkout-form/order-password/sc-order-password.tsx",
-      "encapsulation": "none",
+      "encapsulation": "shadow",
       "tag": "sc-order-password",
       "readme": "# ce-email\n\n\n",
       "docs": "",
@@ -10876,7 +11004,19 @@
           "required": false
         }
       ],
-      "methods": [],
+      "methods": [
+        {
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<boolean>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        }
+      ],
       "events": [],
       "listeners": [],
       "styles": [],
@@ -10925,9 +11065,9 @@
         {
           "name": "successUrl",
           "type": "string",
-          "mutable": false,
+          "mutable": true,
           "attr": "success-url",
-          "reflectToAttr": false,
+          "reflectToAttr": true,
           "docs": "The success url.",
           "docsTags": [],
           "values": [
@@ -10976,7 +11116,7 @@
     },
     {
       "filePath": "./src/components/controllers/checkout-form/order-shipping-address/sc-order-shipping-address.tsx",
-      "encapsulation": "none",
+      "encapsulation": "shadow",
       "tag": "sc-order-shipping-address",
       "readme": "# ce-order-shipping-address\n\n\n",
       "docs": "",
@@ -10993,6 +11133,22 @@
           "values": [
             {
               "type": "Address"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "full",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "full",
+          "reflectToAttr": false,
+          "docs": "Show the full address",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -11025,6 +11181,22 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "placeholders",
+          "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Placeholder values.",
+          "docsTags": [],
+          "default": "{\n    name: __('Name or Company Name', 'surecart'),\n    country: __('Country', 'surecart'),\n    city: __('City', 'surecart'),\n    line_1: __('Address', 'surecart'),\n    line_2: __('Address Line 2', 'surecart'),\n    postal_code: __('Postal Code/Zip', 'surecart'),\n    state: __('State/Province/Region', 'surecart'),\n  }",
+          "values": [
+            {
+              "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
             }
           ],
           "optional": false,
@@ -11079,6 +11251,22 @@
           "required": false
         },
         {
+          "name": "showName",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-name",
+          "reflectToAttr": false,
+          "docs": "Show the name field.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "taxStatus",
           "type": "\"address_invalid\" | \"calculated\" | \"disabled\" | \"estimated\" | \"reverse_charged\" | \"tax_registration_not_found\" | \"tax_zone_not_found\"",
           "mutable": false,
@@ -11120,7 +11308,19 @@
           "required": false
         }
       ],
-      "methods": [],
+      "methods": [
+        {
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<boolean>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        }
+      ],
       "events": [
         {
           "event": "scUpdateOrder",
@@ -11150,12 +11350,15 @@
         ],
         "sc-address": [
           "sc-form-control",
-          "sc-select",
           "sc-input",
+          "sc-select",
           "sc-block-ui"
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ],
+        "sc-input": [
+          "sc-form-control"
         ],
         "sc-select": [
           "sc-icon",
@@ -11166,9 +11369,6 @@
           "sc-input",
           "sc-spinner",
           "sc-menu"
-        ],
-        "sc-input": [
-          "sc-form-control"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -11929,7 +12129,7 @@
     },
     {
       "filePath": "./src/components/controllers/checkout-form/order-tax-id-input/sc-order-tax-id-input.tsx",
-      "encapsulation": "none",
+      "encapsulation": "shadow",
       "tag": "sc-order-tax-id-input",
       "readme": "# ce-tax-id-input\n\n\n",
       "docs": "",
@@ -11937,8 +12137,25 @@
       "usage": {},
       "props": [
         {
+          "name": "busy",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "busy",
+          "reflectToAttr": false,
+          "docs": "Is this busy",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "order",
-          "type": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "type": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "The order",
@@ -11955,7 +12172,7 @@
               "type": "\"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string"
             },
             {
-              "type": "Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\""
+              "type": "Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\""
             },
             {
               "value": "address_invalid",
@@ -11966,7 +12183,7 @@
               "type": "string"
             },
             {
-              "type": "\"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string"
+              "type": "\"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string"
             },
             {
               "type": "Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string"
@@ -11993,6 +12210,21 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "taxIdentifier",
+          "type": "TaxIdentifier",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "TaxIdentifier"
             }
           ],
           "optional": false,
@@ -12024,7 +12256,9 @@
           "sc-tax-id-input"
         ],
         "sc-tax-id-input": [
+          "sc-icon",
           "sc-input",
+          "sc-spinner",
           "sc-dropdown",
           "sc-button",
           "sc-menu",
@@ -14765,6 +14999,23 @@
           "required": false
         },
         {
+          "name": "hoist",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "hoist",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "invalid",
           "type": "boolean",
           "mutable": true,
@@ -15802,7 +16053,8 @@
       "dependents": [
         "sc-block-ui",
         "sc-button",
-        "sc-select"
+        "sc-select",
+        "sc-tax-id-input"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -15813,6 +16065,9 @@
           "sc-spinner"
         ],
         "sc-select": [
+          "sc-spinner"
+        ],
+        "sc-tax-id-input": [
           "sc-spinner"
         ]
       }
@@ -18726,7 +18981,7 @@
     },
     {
       "filePath": "./src/components/ui/tax-id-input/sc-tax-id-input.tsx",
-      "encapsulation": "none",
+      "encapsulation": "shadow",
       "tag": "sc-tax-id-input",
       "readme": "# ce-tax-id-input\n\n\n",
       "docs": "",
@@ -18750,9 +19005,41 @@
           "required": false
         },
         {
+          "name": "help",
+          "type": "string",
+          "mutable": false,
+          "attr": "help",
+          "reflectToAttr": false,
+          "docs": "Help text.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "loading",
+          "reflectToAttr": false,
+          "docs": "Is this loading?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "number",
           "type": "string",
-          "mutable": true,
+          "mutable": false,
           "attr": "number",
           "reflectToAttr": false,
           "docs": "Tax ID Number",
@@ -18778,6 +19065,32 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "status",
+          "type": "\"invalid\" | \"unknown\" | \"valid\"",
+          "mutable": false,
+          "attr": "status",
+          "reflectToAttr": false,
+          "docs": "The status",
+          "docsTags": [],
+          "default": "'unknown'",
+          "values": [
+            {
+              "value": "invalid",
+              "type": "string"
+            },
+            {
+              "value": "unknown",
+              "type": "string"
+            },
+            {
+              "value": "valid",
+              "type": "string"
             }
           ],
           "optional": false,
@@ -18813,6 +19126,24 @@
           "docsTags": []
         },
         {
+          "event": "scInput",
+          "detail": "{ number?: string; number_type?: string; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Make a request to update the order.",
+          "docsTags": []
+        },
+        {
+          "event": "scInputType",
+          "detail": "string",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Change the Type",
+          "docsTags": []
+        },
+        {
           "event": "scSetState",
           "detail": "string",
           "bubbles": true,
@@ -18831,7 +19162,9 @@
         "sc-order-tax-id-input"
       ],
       "dependencies": [
+        "sc-icon",
         "sc-input",
+        "sc-spinner",
         "sc-dropdown",
         "sc-button",
         "sc-menu",
@@ -18839,7 +19172,9 @@
       ],
       "dependencyGraph": {
         "sc-tax-id-input": [
+          "sc-icon",
           "sc-input",
+          "sc-spinner",
           "sc-dropdown",
           "sc-button",
           "sc-menu",
@@ -18968,6 +19303,562 @@
         ],
         "sc-upcoming-invoice": [
           "sc-text"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/sc-textarea/sc-textarea.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-textarea",
+      "readme": "# sc-textarea\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "autocapitalize",
+          "type": "\"characters\" | \"none\" | \"off\" | \"on\" | \"sentences\" | \"words\"",
+          "mutable": false,
+          "attr": "autocapitalize",
+          "reflectToAttr": false,
+          "docs": "The textarea's autocapitalize attribute.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "characters",
+              "type": "string"
+            },
+            {
+              "value": "none",
+              "type": "string"
+            },
+            {
+              "value": "off",
+              "type": "string"
+            },
+            {
+              "value": "on",
+              "type": "string"
+            },
+            {
+              "value": "sentences",
+              "type": "string"
+            },
+            {
+              "value": "words",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "autocomplete",
+          "type": "string",
+          "mutable": false,
+          "attr": "autocomplete",
+          "reflectToAttr": false,
+          "docs": "The textarea's autocomplete attribute.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "autocorrect",
+          "type": "string",
+          "mutable": false,
+          "attr": "autocorrect",
+          "reflectToAttr": false,
+          "docs": "The textarea's autocorrect attribute.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "autofocus",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "autofocus",
+          "reflectToAttr": false,
+          "docs": "The textarea's autofocus attribute.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "disabled",
+          "reflectToAttr": true,
+          "docs": "Disables the textarea.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "enterkeyhint",
+          "type": "\"done\" | \"enter\" | \"go\" | \"next\" | \"previous\" | \"search\" | \"send\"",
+          "mutable": false,
+          "attr": "enterkeyhint",
+          "reflectToAttr": false,
+          "docs": "The input's enterkeyhint attribute. This can be used to customize the label or icon of the Enter key on virtual\nkeyboards.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "done",
+              "type": "string"
+            },
+            {
+              "value": "enter",
+              "type": "string"
+            },
+            {
+              "value": "go",
+              "type": "string"
+            },
+            {
+              "value": "next",
+              "type": "string"
+            },
+            {
+              "value": "previous",
+              "type": "string"
+            },
+            {
+              "value": "search",
+              "type": "string"
+            },
+            {
+              "value": "send",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "filled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "filled",
+          "reflectToAttr": true,
+          "docs": "Draws a filled textarea.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "help",
+          "type": "string",
+          "mutable": false,
+          "attr": "help-text",
+          "reflectToAttr": false,
+          "docs": "The textarea's help text. Alternatively, you can use the help-text slot.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "inputmode",
+          "type": "\"decimal\" | \"email\" | \"none\" | \"numeric\" | \"search\" | \"tel\" | \"text\" | \"url\"",
+          "mutable": false,
+          "attr": "inputmode",
+          "reflectToAttr": false,
+          "docs": "The textarea's inputmode attribute.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "decimal",
+              "type": "string"
+            },
+            {
+              "value": "email",
+              "type": "string"
+            },
+            {
+              "value": "none",
+              "type": "string"
+            },
+            {
+              "value": "numeric",
+              "type": "string"
+            },
+            {
+              "value": "search",
+              "type": "string"
+            },
+            {
+              "value": "tel",
+              "type": "string"
+            },
+            {
+              "value": "text",
+              "type": "string"
+            },
+            {
+              "value": "url",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "invalid",
+          "reflectToAttr": true,
+          "docs": "This will be true when the control is in an invalid state. Validity is determined by props such as `type`,\n`required`, `minlength`, and `maxlength` using the browser's constraint validation API.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "The textarea's label. Alternatively, you can use the label slot.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "maxlength",
+          "type": "number",
+          "mutable": false,
+          "attr": "maxlength",
+          "reflectToAttr": false,
+          "docs": "The maximum length of input that will be considered valid.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "minlength",
+          "type": "number",
+          "mutable": false,
+          "attr": "minlength",
+          "reflectToAttr": false,
+          "docs": "The minimum length of input that will be considered valid.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "mutable": false,
+          "attr": "name",
+          "reflectToAttr": false,
+          "docs": "The textarea's name attribute.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "placeholder",
+          "reflectToAttr": false,
+          "docs": "The textarea's placeholder text.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "readonly",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "readonly",
+          "reflectToAttr": true,
+          "docs": "Makes the textarea readonly.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "required",
+          "reflectToAttr": true,
+          "docs": "Makes the textarea a required field.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "resize",
+          "type": "\"auto\" | \"none\" | \"vertical\"",
+          "mutable": false,
+          "attr": "resize",
+          "reflectToAttr": false,
+          "docs": "Controls how the textarea can be resized.",
+          "docsTags": [],
+          "default": "'vertical'",
+          "values": [
+            {
+              "value": "auto",
+              "type": "string"
+            },
+            {
+              "value": "none",
+              "type": "string"
+            },
+            {
+              "value": "vertical",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "rows",
+          "type": "number",
+          "mutable": false,
+          "attr": "rows",
+          "reflectToAttr": false,
+          "docs": "The number of rows to display by default.",
+          "docsTags": [],
+          "default": "4",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showLabel",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-label",
+          "reflectToAttr": false,
+          "docs": "Should we show the label",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The textarea's size.",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "spellcheck",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "spellcheck",
+          "reflectToAttr": false,
+          "docs": "Enables spell checking on the textarea.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "mutable": false,
+          "attr": "value",
+          "reflectToAttr": false,
+          "docs": "The textarea's value attribute.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scBlur",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scChange",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scFocus",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scInput",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        },
+        {
+          "name": "form-control",
+          "docs": ""
+        },
+        {
+          "name": "form-control-input",
+          "docs": ""
+        },
+        {
+          "name": "textarea",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "sc-form-control"
+      ],
+      "dependencyGraph": {
+        "sc-textarea": [
+          "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
         ]
       }
     },

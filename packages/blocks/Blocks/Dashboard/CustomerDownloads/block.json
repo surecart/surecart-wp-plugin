@@ -4,7 +4,7 @@
 	"description": "Displays the customer's downloads.",
 	"category": "surecart",
 	"keywords": ["download", "customer", "dashboard"],
-	"parent": ["surecart/dashboard-page"],
+	"ancestor": ["surecart/dashboard-page"],
 	"supports": {
 		"reusable": false,
 		"html": false,

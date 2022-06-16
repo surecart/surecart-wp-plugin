@@ -25,6 +25,7 @@ export class ScCustomerEdit {
         name,
         phone,
         billing_matches_shipping,
+        shipping_name,
         shipping_city,
         'tax_identifier.number_type': tax_identifier_number_type,
         'tax_identifier.number': tax_identifier_number,
@@ -32,6 +33,7 @@ export class ScCustomerEdit {
         shipping_line_1,
         shipping_postal_code,
         shipping_state,
+        billing_name,
         billing_city,
         billing_country,
         billing_line_1,
@@ -47,6 +49,7 @@ export class ScCustomerEdit {
           phone,
           billing_matches_shipping: billing_matches_shipping === 'on',
           shipping_address: {
+            name: shipping_name,
             city: shipping_city,
             country: shipping_country,
             line_1: shipping_line_1,
@@ -54,6 +57,7 @@ export class ScCustomerEdit {
             state: shipping_state,
           },
           billing_address: {
+            name: billing_name,
             city: billing_city,
             country: billing_country,
             line_1: billing_line_1,
@@ -108,11 +112,13 @@ export class ScCustomerEdit {
             <div>
               <sc-address
                 label={__('Shipping Address', 'surecart')}
+                showName={true}
                 address={{
                   ...(this.customer?.shipping_address as Address),
                 }}
                 required={false}
                 names={{
+                  name: 'shipping_name',
                   country: 'shipping_country',
                   line_1: 'shipping_line_1',
                   line_2: 'shipping_line_2',
@@ -142,10 +148,12 @@ export class ScCustomerEdit {
             <div style={{ display: this.customer?.billing_matches_shipping ? 'none' : 'block' }}>
               <sc-address
                 label={__('Billing Address', 'surecart')}
+                showName={true}
                 address={{
                   ...(this.customer?.billing_address as Address),
                 }}
                 names={{
+                  name: 'billing_name',
                   country: 'billing_country',
                   line_1: 'billing_line_1',
                   line_2: 'billing_line_2',

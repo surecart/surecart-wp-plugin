@@ -77,6 +77,7 @@ export class ScSelectDropdown {
   @Prop({ mutable: true }) open: boolean;
   @Prop() disabled: boolean;
   @Prop() showParentLabel: boolean = true;
+  @Prop() hoist: boolean = false;
 
   @Prop() squared: boolean;
   @Prop() squaredBottom: boolean;
@@ -116,7 +117,7 @@ export class ScSelectDropdown {
     this.open = true;
     this.scOpen.emit();
     setTimeout(() => {
-      this.searchInput.triggerFocus();
+      this.searchInput && this.searchInput.triggerFocus();
     }, 50);
   }
 
@@ -142,7 +143,7 @@ export class ScSelectDropdown {
     let append = '';
     if (!chosen) {
       if (this.showParentLabel) {
-        append = this.choices.find(choice => choice.choices.some(subChoice => subChoice.value === this.value))?.label;
+        append = this.choices.find(choice => choice?.choices?.some?.(subChoice => subChoice.value === this.value))?.label;
       }
       const subchoices = (this.choices || []).map(choice => choice.choices).flat();
       chosen = subchoices.find(choice => choice?.value == this.value);
@@ -223,7 +224,7 @@ export class ScSelectDropdown {
   componentDidLoad() {
     this.formController = new FormSubmitController(this.el).addFormData();
     if (this.open) {
-      this.searchInput.triggerFocus();
+      this.searchInput && this.searchInput.triggerFocus();
     }
   }
 
@@ -352,6 +353,7 @@ export class ScSelectDropdown {
             disabled={this.disabled}
             open={this.open}
             position={this.position}
+            hoist={this.hoist}
             style={{ '--panel-width': '100%' }}
             onScShow={() => this.handleShow()}
             onScHide={() => this.handleHide()}

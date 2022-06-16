@@ -4,7 +4,7 @@
 	"description": "Displays an email form field.",
 	"category": "surecart",
 	"keywords": ["email", "mail"],
-	"parent": ["surecart/form", "surecart/column"],
+	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,
 		"html": false

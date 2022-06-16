@@ -9,12 +9,14 @@ import SelectIntegration from './SelectIntegration';
 import Error from '../../../components/Error';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import useSnackbar from '../../../hooks/useSnackbar';
 
 export default ({ onRequestClose, id }) => {
 	const [provider, setProvider] = useState(null);
 	const [item, setItem] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
+	const { addSnackbarNotice } = useSnackbar();
 
 	const { saveEntityRecord } = useDispatch(coreStore);
 
@@ -33,6 +35,9 @@ export default ({ onRequestClose, id }) => {
 				},
 				{ throwOnError: true }
 			);
+			addSnackbarNotice({
+				content: __('Integration saved.', 'surecart'),
+			});
 			onRequestClose();
 		} catch (e) {
 			console.error(e);

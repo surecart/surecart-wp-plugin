@@ -5,11 +5,13 @@ namespace SureCart\Controllers\Admin\Settings;
 /**
  * Controls the settings page.
  */
-class SubscriptionSettings extends FrameSettings {
+class SubscriptionSettings extends BaseSettings {
 	/**
-	 * The endpoint for the frame.
+	 * Script handles for pages
 	 *
-	 * @var string
+	 * @var array
 	 */
-	protected $endpoint = 'subscription_protocol';
+	protected $scripts = [
+		'show' => [ 'surecart/scripts/admin/subscription', 'admin/settings/subscription' ],
+	];
 }

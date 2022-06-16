@@ -51,8 +51,8 @@ graph TD;
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
   sc-address --> sc-form-control
-  sc-address --> sc-select
   sc-address --> sc-input
+  sc-address --> sc-select
   sc-address --> sc-block-ui
   sc-select --> sc-icon
   sc-select --> sc-menu-label
@@ -63,7 +63,9 @@ graph TD;
   sc-select --> sc-spinner
   sc-select --> sc-menu
   sc-block-ui --> sc-spinner
+  sc-tax-id-input --> sc-icon
   sc-tax-id-input --> sc-input
+  sc-tax-id-input --> sc-spinner
   sc-tax-id-input --> sc-dropdown
   sc-tax-id-input --> sc-button
   sc-tax-id-input --> sc-menu

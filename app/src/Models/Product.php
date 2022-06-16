@@ -26,6 +26,20 @@ class Product extends Model {
 	protected $object_name = 'product';
 
 	/**
+	 * Is this cachable?
+	 *
+	 * @var boolean
+	 */
+	protected $cachable = true;
+
+	/**
+	 * Clear cache when products are updated.
+	 *
+	 * @var string
+	 */
+	protected $cache_key = 'products_updated_at';
+
+	/**
 	 * Set the prices attribute.
 	 *
 	 * @param  object $value Array of price objects.

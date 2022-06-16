@@ -1,5 +1,5 @@
 import { Component, h, Prop, Event, EventEmitter, Watch } from '@stencil/core';
-import { addQueryArgs } from '@wordpress/url';
+import { addQueryArgs, getQueryArg } from '@wordpress/url';
 import { FormStateSetter, Order } from '../../../types';
 import { __ } from '@wordpress/i18n';
 
@@ -15,7 +15,7 @@ export class ScOrderRedirectProvider {
   @Prop() order: Order;
 
   /** The success url. */
-  @Prop() successUrl: string;
+  @Prop({ reflect: true, mutable: true }) successUrl: string;
 
   /** Form state event. */
   @Event() scSetState: EventEmitter<FormStateSetter>;
@@ -32,6 +32,10 @@ export class ScOrderRedirectProvider {
   }
 
   componentDidLoad() {
+    const successUrl = getQueryArg(window.location.href, 'success_url') as string;
+    if (successUrl) {
+      this.successUrl = successUrl;
+    }
     this.handleOrderPaid();
   }
 
