@@ -1,7 +1,8 @@
-import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch } from '@stencil/core';
 import { Address } from '../../../types';
 import { countryChoices, hasState } from '../../../functions/address';
 import { __ } from '@wordpress/i18n';
+import { reportChildrenValidity } from '../../../functions/form-data';
 
 @Component({
   tag: 'sc-compact-address',
@@ -9,6 +10,8 @@ import { __ } from '@wordpress/i18n';
   shadow: true,
 })
 export class ScCompactAddress {
+  @Element() el: HTMLScCompactAddressElement;
+
   /** The address. */
   @Prop({ mutable: true }) address: Partial<Address> = {
     country: null,
@@ -91,6 +94,11 @@ export class ScCompactAddress {
     if (country) {
       this.updateAddress({ country });
     }
+  }
+
+  @Method()
+  async reportValidity() {
+    return reportChildrenValidity(this.el);
   }
 
   render() {

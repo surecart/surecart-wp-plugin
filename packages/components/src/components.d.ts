@@ -22,6 +22,7 @@ export namespace Components {
          */
         "loading": boolean;
         "names": Partial<Address>;
+        "reportValidity": () => Promise<boolean>;
         /**
           * Is this required?
          */
@@ -445,6 +446,7 @@ export namespace Components {
          */
         "loading": boolean;
         "names": Partial<Address>;
+        "reportValidity": () => Promise<boolean>;
         /**
           * Is this required?
          */
@@ -1392,6 +1394,7 @@ export namespace Components {
           * Is this loading.
          */
         "loading": boolean;
+        "reportValidity": () => Promise<boolean>;
         /**
           * Is this required (defaults to true)
          */

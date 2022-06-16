@@ -1,4 +1,4 @@
-import { Component, Prop, h, Watch, State, Event, EventEmitter } from '@stencil/core';
+import { Component, Prop, h, Watch, State, Event, EventEmitter, Method } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 import { Address, Order, TaxStatus } from '../../../../types';
@@ -9,6 +9,8 @@ import { Address, Order, TaxStatus } from '../../../../types';
   shadow: true,
 })
 export class ScOrderShippingAddress {
+  private input: HTMLScAddressElement | HTMLScCompactAddressElement;
+
   /** Label for the field. */
   @Prop() label: string;
 
@@ -99,10 +101,16 @@ export class ScOrderShippingAddress {
     }
   }
 
+  @Method()
+  async reportValidity() {
+    return this.input.reportValidity();
+  }
+
   render() {
     if (this.shippingEnabled || this.full) {
       return (
         <sc-address
+          ref={el => (this.input = el as any)}
           label={__('Shipping Address', 'surecart')}
           required={this.required}
           loading={this.loading}
@@ -112,7 +120,13 @@ export class ScOrderShippingAddress {
       );
     }
     return (
-      <sc-compact-address required={this.required} loading={this.loading} address={this.address} onScChangeAddress={e => this.updateAddressState(e.detail)}></sc-compact-address>
+      <sc-compact-address
+        ref={el => (this.input = el as any)}
+        required={this.required}
+        loading={this.loading}
+        address={this.address}
+        onScChangeAddress={e => this.updateAddressState(e.detail)}
+      ></sc-compact-address>
     );
   }
 }

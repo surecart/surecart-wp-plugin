@@ -1,6 +1,7 @@
-import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { hasState, hasCity, hasPostal, countryChoices } from '../../../functions/address';
+import { reportChildrenValidity } from '../../../functions/form-data';
 import { Address } from '../../../types';
 
 @Component({
@@ -9,6 +10,8 @@ import { Address } from '../../../types';
   shadow: true,
 })
 export class ScAddress {
+  @Element() el: HTMLScAddressElement;
+
   /** The address. */
   @Prop({ mutable: true }) address: Partial<Address> = {
     country: null,
@@ -108,6 +111,11 @@ export class ScAddress {
     this.updateAddress({ country });
   }
 
+  @Method()
+  async reportValidity() {
+    return reportChildrenValidity(this.el);
+  }
+
   render() {
     return (
       <div class="sc-address">
@@ -198,7 +206,7 @@ export class ScAddress {
             )}
           </div>
 
-          {this?.regions?.length && this?.address?.country && (
+          {!!this?.regions?.length && !!this?.address?.country && (
             <sc-select
               placeholder={__('State/Province/Region', 'surecart')}
               name={this.names.state}
