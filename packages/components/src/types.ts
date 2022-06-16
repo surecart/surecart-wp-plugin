@@ -253,6 +253,7 @@ export interface Order extends Object {
   tax_amount: number;
   tax_status: 'disabled' | 'address_invalid' | 'estimated' | 'calculated';
   tax_label: string;
+  tax_rate: number;
   line_items: lineItems;
   metadata?: Object;
   payment_intent?: PaymentIntent;
