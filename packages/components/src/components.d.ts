@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, ChoiceItem, Customer, DiscountResponse, FormState, FormStateSetter, Invoice, LineItem, LineItemData, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
+import { Address, ChoiceItem, Customer, DiscountResponse, FormState, FormStateSetter, Invoice, LineItem, LineItemData, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxIdentifier, TaxStatus, WordPressUser } from "./types";
 import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
 export namespace Components {
     interface ScAddress {
@@ -586,6 +586,7 @@ export namespace Components {
           * Makes the input readonly.
          */
         "readonly": boolean;
+        "reportValidity": () => Promise<boolean>;
         /**
           * Makes the input a required field.
          */
@@ -652,6 +653,7 @@ export namespace Components {
           * Makes the input readonly.
          */
         "readonly": boolean;
+        "reportValidity": () => Promise<boolean>;
         /**
           * Makes the input a required field.
          */
@@ -1165,7 +1167,7 @@ export namespace Components {
         /**
           * The input's type.
          */
-        "type": 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url';
+        "type": 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' | 'hidden';
         /**
           * The input's value attribute.
          */
@@ -1337,6 +1339,7 @@ export namespace Components {
           * Makes the input readonly.
          */
         "readonly": boolean;
+        "reportValidity": () => Promise<boolean>;
         /**
           * Makes the input a required field.
          */
@@ -1496,6 +1499,10 @@ export namespace Components {
     }
     interface ScOrderTaxIdInput {
         /**
+          * Is this busy
+         */
+        "busy": boolean;
+        /**
           * The order
          */
         "order": Partial<Order>;
@@ -1503,6 +1510,7 @@ export namespace Components {
           * Force show the field.
          */
         "show": boolean;
+        "taxIdentifier": TaxIdentifier;
     }
     interface ScOrdersList {
         "allLink": string;
@@ -2346,6 +2354,10 @@ export namespace Components {
          */
         "country": string;
         /**
+          * Is this loading?
+         */
+        "loading": boolean;
+        /**
           * Tax ID Number
          */
         "number": string;
@@ -2353,6 +2365,10 @@ export namespace Components {
           * Force show the field.
          */
         "show": boolean;
+        /**
+          * The status
+         */
+        "status": 'valid' | 'invalid' | 'unknown';
         /**
           * Type of tax id
          */
@@ -4662,7 +4678,7 @@ declare namespace LocalJSX {
         /**
           * The input's type.
          */
-        "type"?: 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url';
+        "type"?: 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' | 'hidden';
         /**
           * The input's value attribute.
          */
@@ -5040,6 +5056,10 @@ declare namespace LocalJSX {
     }
     interface ScOrderTaxIdInput {
         /**
+          * Is this busy
+         */
+        "busy"?: boolean;
+        /**
           * Make a request to update the order.
          */
         "onScUpdateOrder"?: (event: CustomEvent<{
@@ -5054,6 +5074,7 @@ declare namespace LocalJSX {
           * Force show the field.
          */
         "show"?: boolean;
+        "taxIdentifier"?: TaxIdentifier;
     }
     interface ScOrdersList {
         "allLink"?: string;
@@ -5979,6 +6000,10 @@ declare namespace LocalJSX {
          */
         "country"?: string;
         /**
+          * Is this loading?
+         */
+        "loading"?: boolean;
+        /**
           * Tax ID Number
          */
         "number"?: string;
@@ -5994,6 +6019,10 @@ declare namespace LocalJSX {
           * Force show the field.
          */
         "show"?: boolean;
+        /**
+          * The status
+         */
+        "status"?: 'valid' | 'invalid' | 'unknown';
         /**
           * Type of tax id
          */

@@ -1,12 +1,12 @@
 import { Customer, Order } from '../../../../types';
-import { Component, Prop, h, Event, EventEmitter, Watch } from '@stencil/core';
+import { Component, Prop, h, Event, EventEmitter, Watch, Method } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { createOrUpdateOrder } from '../../../../services/session';
 
 @Component({
   tag: 'sc-customer-email',
   styleUrl: 'sc-customer-email.css',
-  shadow: false,
+  shadow: true,
 })
 export class ScCustomerEmail {
   private input: HTMLScInputElement;
@@ -100,6 +100,11 @@ export class ScCustomerEmail {
         this.value = val.email;
       }
     }
+  }
+
+  @Method()
+  async reportValidity() {
+    return this.input.reportValidity();
   }
 
   render() {

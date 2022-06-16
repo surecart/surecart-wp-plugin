@@ -16,7 +16,7 @@ describe('sc-order-shipping-address', () => {
     page.waitForChanges();
 
     // default.
-    let element = await page.find('sc-order-shipping-address sc-compact-address');
+    let element = await page.find('sc-order-shipping-address >>> sc-compact-address');
     let address = await element.getProperty('address');
     expect(address).toEqual({ country: 'US', city: null, line_1: null, line_2: null, postal_code: null, state: null });
 
