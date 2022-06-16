@@ -251,6 +251,8 @@ export interface Order extends Object {
   total_amount?: number;
   subtotal_amount?: number;
   tax_amount: number;
+  tax_inclusive_amount: number;
+  tax_exclusive_amount: number;
   tax_status: 'disabled' | 'address_invalid' | 'estimated' | 'calculated';
   tax_label: string;
   tax_percent: number;
