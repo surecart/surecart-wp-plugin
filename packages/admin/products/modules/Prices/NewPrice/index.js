@@ -16,6 +16,7 @@ import {
 import OneTime from '../../../components/price/OneTime';
 import Multiple from '../../../components/price/Multiple';
 import Subscription from '../../../components/price/Subscription';
+import useSnackbar from '../../../../hooks/useSnackbar';
 
 export default ({ onRequestClose, product }) => {
 	const [error, setError] = useState(null);
@@ -24,6 +25,7 @@ export default ({ onRequestClose, product }) => {
 	const [price, setPrice] = useState({});
 	const [type, setType] = useState('once');
 	const { saveEntityRecord } = useDispatch(coreStore);
+	const { addSnackbarNotice } = useSnackbar();
 
 	// update the price.
 	const updatePrice = (data) => {
@@ -53,6 +55,7 @@ export default ({ onRequestClose, product }) => {
 				},
 				{ throwOnError: true }
 			);
+			addSnackbarNotice({ content: __('Price saved.', 'surecart') });
 			onRequestClose();
 		} catch (e) {
 			console.error(e);
