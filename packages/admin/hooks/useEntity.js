@@ -1,6 +1,7 @@
 /**
  * WordPress dependencies
  */
+import { __ } from '@wordpress/i18n';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 /**
@@ -20,6 +21,7 @@ export default (type, id, query = {}, name = 'surecart') => {
 	const {
 		item,
 		itemError,
+		itemResolutionState,
 		hasLoadedItem,
 		savingItem,
 		deletingItem,
@@ -33,6 +35,11 @@ export default (type, id, query = {}, name = 'surecart') => {
 					[...entityData]
 				),
 				itemError: select(coreStore)?.getResolutionError?.(
+					'getEditedEntityRecord',
+					...entityData
+				),
+				itemResolutionState: select(coreStore)?.getResolutionState?.(
+					'getEditedEntityRecord',
 					...entityData
 				),
 				savingItem: select(coreStore)?.isSavingEntityRecord?.(
@@ -63,6 +70,13 @@ export default (type, id, query = {}, name = 'surecart') => {
 
 	const ucName = camelName(type);
 
+	if (hasLoadedItem && Object.keys(item).length === 0) {
+		throw __(
+			'Fetch failed. Please double-check your API token is correct in the connection tab of your settings.',
+			'surecart'
+		);
+	}
+
 	return {
 		// item.
 		item,
@@ -70,6 +84,9 @@ export default (type, id, query = {}, name = 'surecart') => {
 
 		itemError,
 		[`${ucName}Error`]: itemError,
+
+		itemResolutionState,
+		[`${ucName}ResolutionState`]: itemResolutionState,
 
 		// loaded.
 		hasLoadedItem,
