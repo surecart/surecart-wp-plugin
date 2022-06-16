@@ -10,10 +10,11 @@ import {
 import { ScAddress } from '@surecart/components-react';
 
 export default ({ className, attributes, setAttributes }) => {
-	const { label, full } = attributes;
+	const { label, full, show_name } = attributes;
 
 	const blockProps = useBlockProps({
 		label,
+		showName: show_name,
 	});
 
 	return (
@@ -37,6 +38,20 @@ export default ({ className, attributes, setAttributes }) => {
 							onChange={(full) => setAttributes({ full })}
 						/>
 					</PanelRow>
+					{full && (
+						<PanelRow>
+							<ToggleControl
+								label={__(
+									'Show the "name or company name" field in the form.',
+									'surecart'
+								)}
+								checked={show_name}
+								onChange={(show_name) =>
+									setAttributes({ show_name })
+								}
+							/>
+						</PanelRow>
+					)}
 				</PanelBody>
 			</InspectorControls>
 

@@ -22,6 +22,7 @@ export namespace Components {
          */
         "loading": boolean;
         "names": Partial<Address>;
+        "placeholders": Partial<Address>;
         "reportValidity": () => Promise<boolean>;
         /**
           * Is this required?
@@ -1394,6 +1395,10 @@ export namespace Components {
           * Is this loading.
          */
         "loading": boolean;
+        /**
+          * Placeholder values.
+         */
+        "placeholders": Partial<Address>;
         "reportValidity": () => Promise<boolean>;
         /**
           * Is this required (defaults to true)
@@ -1407,6 +1412,10 @@ export namespace Components {
           * Is shipping enabled for this order?
          */
         "shippingEnabled": boolean;
+        /**
+          * Show the name field.
+         */
+        "showName": boolean;
         /**
           * Tax status of the order
          */
@@ -3536,6 +3545,7 @@ declare namespace LocalJSX {
           * Address change event.
          */
         "onScInputAddress"?: (event: CustomEvent<Partial<Address>>) => void;
+        "placeholders"?: Partial<Address>;
         /**
           * Is this required?
          */
@@ -5068,6 +5078,10 @@ declare namespace LocalJSX {
     options?: { silent?: boolean };
   }>) => void;
         /**
+          * Placeholder values.
+         */
+        "placeholders"?: Partial<Address>;
+        /**
           * Is this required (defaults to true)
          */
         "required"?: boolean;
@@ -5079,6 +5093,10 @@ declare namespace LocalJSX {
           * Is shipping enabled for this order?
          */
         "shippingEnabled"?: boolean;
+        /**
+          * Show the name field.
+         */
+        "showName"?: boolean;
         /**
           * Tax status of the order
          */

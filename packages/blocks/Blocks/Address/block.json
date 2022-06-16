@@ -17,6 +17,9 @@
 		},
 		"full": {
 			"type": "boolean"
+		},
+		"show_name": {
+			"type": "boolean"
 		}
 	}
 }
