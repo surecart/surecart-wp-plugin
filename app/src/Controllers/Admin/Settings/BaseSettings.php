@@ -98,6 +98,7 @@ abstract class BaseSettings {
 			[
 				'supported_currencies' => Currency::getSupportedCurrencies(),
 				'app_url'              => defined( 'SURECART_APP_URL' ) ? untrailingslashit( SURECART_APP_URL ) : 'https://app.surecart.com',
+				'api_url'              => defined( 'SURECART_API_URL' ) ? untrailingslashit( SURECART_API_URL ) : \SureCart::requests()->getBaseUrl(),
 				'time_zones'           => TimeDate::timezoneOptions(),
 			]
 		);
