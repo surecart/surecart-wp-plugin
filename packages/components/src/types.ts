@@ -227,6 +227,16 @@ export interface Charge extends Object {
   status: 'pending' | 'succeeded' | 'failed';
   updated_at: number;
 }
+
+export interface TaxIdentifier {
+  id: string;
+  number: string;
+  number_type: string;
+  object: 'tax_identifier';
+  valid_eu_vat: false;
+  created_at: number;
+  updated_at: number;
+}
 export interface Order extends Object {
   id?: string;
   status?: 'finalized' | 'draft' | 'paid';

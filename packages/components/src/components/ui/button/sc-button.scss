@@ -91,9 +91,9 @@
 
 .button.button--standard {
   &.button--default {
-    background-color: var(--sc-color-white);
-    border-color: var(--sc-color-gray-300);
-    color: var(--sc-color-gray-600);
+    background-color: var(--sc-button-default-background-color, var(--sc-color-white));
+    border-color: var(--sc-button-default-border-color, var(--sc-color-gray-300));
+    color: var(--sc-button-default-color, var(--sc-color-gray-600));
 
     &:hover:not(.button--disabled) {
       background-color: var(--sc-color-white);
@@ -383,6 +383,13 @@
     background-color: transparent;
     border-color: transparent;
     box-shadow: 0; // 0 0 var(--sc-focus-ring-width) var(--sc-focus-ring-color-primary);
+  }
+
+  &.button--caret.button--has-label {
+    padding-right: var(--sc-spacing-xx-small);
+    .button__label {
+      padding: 0 var(--sc-spacing-xx-small) !important;
+    }
   }
 }
 

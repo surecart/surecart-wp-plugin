@@ -833,8 +833,10 @@
     "slot": true
   },
   "sc-order-tax-id-input": {
+    "busy": true,
     "order": true,
     "show": true,
+    "tax-identifier": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1329,8 +1331,10 @@
   },
   "sc-tax-id-input": {
     "country": true,
+    "loading": true,
     "number": true,
     "show": true,
+    "status": true,
     "type": true,
     "style": true,
     "id": true,
