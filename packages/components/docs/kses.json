@@ -1335,6 +1335,7 @@
   },
   "sc-tax-id-input": {
     "country": true,
+    "help": true,
     "loading": true,
     "number": true,
     "show": true,
