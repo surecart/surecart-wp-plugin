@@ -201,6 +201,7 @@ export class ScAddress {
                 value={this?.address?.postal_code}
                 squared={!!this?.regions?.length}
                 squared-top
+                maxlength={this.address?.country === 'US' ? 5 : null}
                 squared-left={this.showCity}
               />
             )}
