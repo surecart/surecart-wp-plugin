@@ -6,7 +6,7 @@ import { Address, Order, TaxStatus } from '../../../../types';
 @Component({
   tag: 'sc-order-shipping-address',
   styleUrl: 'sc-order-shipping-address.scss',
-  shadow: false,
+  shadow: true,
 })
 export class ScOrderShippingAddress {
   /** Label for the field. */
@@ -82,9 +82,6 @@ export class ScOrderShippingAddress {
     this.scUpdateOrder.emit({
       data: {
         shipping_address: this.address as Address,
-      },
-      options: {
-        silent: true,
       },
     });
   }

@@ -22,13 +22,17 @@ describe('sc-compact-address', () => {
 
     // test zip change.
     const changeEvent = await address.spyOnEvent('scChangeAddress');
-    const postal = await page.find('sc-compact-address [name="shipping_postal_code"] >>> input');
+    const postal = await page.find('sc-compact-address >>> [name="shipping_postal_code"] >>> input');
     await postal.press('1');
     await postal.press('2');
     await postal.press('3');
     await postal.press('4');
     await postal.press('5');
-    await page.click('sc-compact-address [name="shipping_country"]');
+    await page.keyboard.up('Shift');
+    // await postal.triggerEvent('scChange', { detail: { postal_code: '12345' } });
+    // const country = await page.find('sc-compact-address >>> [name="shipping_country"]');
+    // await country.triggerEvent('click');
+    // await page.click('sc-compact-address >>> [name="shipping_country"]');
     await page.waitForChanges();
     expect(changeEvent).toHaveReceivedEventDetail({ country: 'US', postal_code: '12345', state: null, line_1: null, line_2: null, city: null });
 
@@ -41,7 +45,7 @@ describe('sc-compact-address', () => {
 
     // change country should clear everything else out.
     const event = await address.spyOnEvent('scChangeAddress');
-    const elm = await page.find(`sc-compact-address [name="shipping_country"] >>> sc-menu-item[value="AF"]`);
+    const elm = await page.find(`sc-compact-address >>> [name="shipping_country"] >>> sc-menu-item[value="AF"]`);
     await elm.triggerEvent('click');
     await page.waitForChanges();
     expect(event).toHaveReceivedEventDetail({ country: 'AF', postal_code: null, state: null, city: null, line_1: null, line_2: null });

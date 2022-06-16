@@ -52,31 +52,48 @@ describe('sc-form', () => {
 
       <sc-select value="CE Select" name="ce_select"></sc-select>
 
-      <!-- Default form fields -->
-      <input name="input" value="Input"></input>
-      <select name="select">
-        <option value="volvo">Volvo</option>
-        <option value="select" selected="selected">Working</option>
-        <option value="mercedes">Mercedes</option>
-        <option value="audi">Audi</option>
-      </select>
-      <input type="radio" name="radio" value="Radio" checked>
-      <input type="checkbox" name="checkbox" value="Checkbox" checked>
-      <textarea name="textarea">Text Area</textarea>
+      <!-- Order form fields -->
+      <sc-customer-name value="Testy McTesterson"></sc-customer-name>
+      <sc-customer-email value="order@email.com"></sc-customer-email>
+      <sc-order-shipping-address></sc-order-shipping-address>
+      <sc-order-tax-id-input></sc-order-tax-id-input>
+      <sc-order-password value="pass"></sc-order-password>
     </sc-form>
     `);
     const form = await page.find('sc-form');
-    const data = await form.callMethod('getFormJson');
 
+    // set shipping value.
+    const shipping = await page.find('sc-order-shipping-address');
+    shipping.setProperty('shippingEnabled', true);
+    shipping.setProperty('shippingAddress', { country: 'US', city: 'Monona', line_1: '303 Park Ave', line_2: null, postal_code: '12345', state: 'WI' });
+
+    // set tax id value.
+    const taxID = await page.find('sc-order-tax-id-input');
+    taxID.setProperty('order', { tax_identifier: { number: '12345', number_type: 'eu_vat' } });
+
+    await page.waitForChanges();
+
+    // serialize form.
+    const data = await form.callMethod('getFormJson');
     expect(data).toEqual({
-      ce_input: 'CE Input',
-      ce_switch: 'switch',
-      ce_radio: 'CE Radio',
-      ce_select: 'CE Select',
-      ce_checkbox: 'CE Checkbox',
-      ce_choice: 'CE Choice',
-      ce_check_choice: 'CE Choice Check',
-      ce_check_choice_1: 'CE Choice Check 1',
+      'ce_input': 'CE Input',
+      'ce_switch': 'switch',
+      'ce_radio': 'CE Radio',
+      'ce_select': 'CE Select',
+      'ce_checkbox': 'CE Checkbox',
+      'ce_choice': 'CE Choice',
+      'ce_check_choice': 'CE Choice Check',
+      'ce_check_choice_1': 'CE Choice Check 1',
+      'email': 'order@email.com',
+      'name': 'Testy McTesterson',
+      'password': 'pass',
+      'shipping_country': 'US',
+      'shipping_postal_code': '12345',
+      'shipping_state': 'WI',
+      'shipping_line_1': '303 Park Ave',
+      'shipping_city': 'Monona',
+      'tax_identifier.number': '12345',
+      'tax_identifier.number_type': 'eu_vat',
     });
   });
 });

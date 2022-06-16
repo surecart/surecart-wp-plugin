@@ -1,11 +1,11 @@
 import { Customer, Order } from '../../../../types';
 import { createOrUpdateOrder } from '../../../../services/session';
-import { Component, Prop, h, Event, EventEmitter, Watch } from '@stencil/core';
+import { Component, Prop, h, Event, EventEmitter, Watch, Method } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 
 @Component({
   tag: 'sc-customer-name',
-  shadow: false,
+  shadow: true,
 })
 export class ScCustomerName {
   private input: HTMLScInputElement;
@@ -79,6 +79,11 @@ export class ScCustomerName {
   @Event() scBlur: EventEmitter<void>;
 
   @Event() scUpdateCustomer: EventEmitter<{ email: string }>;
+
+  @Method()
+  async reportValidity() {
+    return this.input.reportValidity();
+  }
 
   async handleChange() {
     this.value = this.input.value;

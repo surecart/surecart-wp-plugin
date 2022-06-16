@@ -6,7 +6,7 @@ import { Address } from '../../../types';
 @Component({
   tag: 'sc-address',
   styleUrl: 'sc-address.scss',
-  shadow: false,
+  shadow: true,
 })
 export class ScAddress {
   /** The address. */
@@ -167,47 +167,52 @@ export class ScAddress {
           )}
 
           <div class="sc-address__columns">
-            <sc-input
-              placeholder={__('City', 'surecart')}
-              name={this.names.city}
-              value={this?.address?.city}
-              onScChange={(e: any) => this.updateAddress({ city: e.target.value || null })}
-              onScInput={(e: any) => this.handleAddressInput({ city: e.target.value || null })}
-              required={this.required && this.showCity}
-              hidden={!this.showCity}
-              squared={!!this?.regions?.length}
-              style={{ marginRight: this.showPostal ? '-1px' : '0' }}
-              squared-top
-              squared-right={this.showPostal}
-            />
-            <sc-input
-              placeholder={__('Postal Code/Zip', 'surecart')}
-              name={this.names.postal_code}
-              onScChange={(e: any) => this.updateAddress({ postal_code: e.target.value || null })}
-              onScInput={(e: any) => this.handleAddressInput({ postal_code: e.target.value || null })}
-              autocomplete={'postal-code'}
-              required={this.required && this.showPostal}
-              hidden={!this.showPostal}
-              value={this?.address?.postal_code}
-              squared={!!this?.regions?.length}
-              squared-top
-              squared-left={this.showCity}
-            />
+            {this.showCity && (
+              <sc-input
+                placeholder={__('City', 'surecart')}
+                name={this.names.city}
+                value={this?.address?.city}
+                onScChange={(e: any) => this.updateAddress({ city: e.target.value || null })}
+                onScInput={(e: any) => this.handleAddressInput({ city: e.target.value || null })}
+                required={this.required}
+                squared={!!this?.regions?.length}
+                style={{ marginRight: this.showPostal ? '-1px' : '0' }}
+                squared-top
+                squared-right={this.showPostal}
+              />
+            )}
+
+            {this.showPostal && (
+              <sc-input
+                placeholder={__('Postal Code/Zip', 'surecart')}
+                name={this.names.postal_code}
+                onScChange={(e: any) => this.updateAddress({ postal_code: e.target.value || null })}
+                onScInput={(e: any) => this.handleAddressInput({ postal_code: e.target.value || null })}
+                autocomplete={'postal-code'}
+                required={this.required}
+                value={this?.address?.postal_code}
+                squared={!!this?.regions?.length}
+                squared-top
+                squared-left={this.showCity}
+              />
+            )}
           </div>
 
-          <sc-select
-            placeholder={__('State/Province/Region', 'surecart')}
-            name={this.names.state}
-            autocomplete={'address-level1'}
-            value={this?.address?.state}
-            onScChange={(e: any) => this.updateAddress({ state: e.target.value || null })}
-            choices={this.regions}
-            required={this.required && !!this?.regions?.length}
-            hidden={!this?.regions?.length || !this.address?.country}
-            search
-            squared-top
-          />
+          {this?.regions?.length && this?.address?.country && (
+            <sc-select
+              placeholder={__('State/Province/Region', 'surecart')}
+              name={this.names.state}
+              autocomplete={'address-level1'}
+              value={this?.address?.state}
+              onScChange={(e: any) => this.updateAddress({ state: e.target.value || null })}
+              choices={this.regions}
+              required={this.required}
+              search
+              squared-top
+            />
+          )}
         </sc-form-control>
+
         {this.loading && <sc-block-ui></sc-block-ui>}
       </div>
     );

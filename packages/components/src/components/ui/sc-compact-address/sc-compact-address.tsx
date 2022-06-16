@@ -6,7 +6,7 @@ import { __ } from '@wordpress/i18n';
 @Component({
   tag: 'sc-compact-address',
   styleUrl: 'sc-compact-address.scss',
-  shadow: false,
+  shadow: true,
 })
 export class ScCompactAddress {
   /** The address. */
@@ -114,32 +114,34 @@ export class ScCompactAddress {
           />
 
           <div class="sc-address__columns">
-            <sc-select
-              placeholder={this.address.country === 'US' ? __('State', 'surecart') : __('Province/Region', 'surecart')}
-              name={this.names.state}
-              autocomplete={'address-level1'}
-              value={this?.address?.state}
-              onScChange={(e: any) => this.updateAddress({ state: e.target.value || null })}
-              choices={this.regions}
-              required={this.required && !!this.showState}
-              hidden={!this.showState}
-              search
-              squared-top
-              unselect={false}
-              squared-right={this.showPostal}
-            />
-            <sc-input
-              placeholder={__('Postal Code/Zip', 'surecart')}
-              name={this.names.postal_code}
-              onScChange={(e: any) => this.updateAddress({ postal_code: e.target.value || null })}
-              autocomplete={'postal-code'}
-              required={this.required && !!this.showPostal}
-              hidden={!this.showPostal}
-              value={this?.address?.postal_code}
-              squared-top
-              maxlength={5}
-              squared-left={this.showState}
-            />
+            {this.showState && (
+              <sc-select
+                placeholder={this.address.country === 'US' ? __('State', 'surecart') : __('Province/Region', 'surecart')}
+                name={this.names.state}
+                autocomplete={'address-level1'}
+                value={this?.address?.state}
+                onScChange={(e: any) => this.updateAddress({ state: e.target.value || null })}
+                choices={this.regions}
+                required={this.required}
+                search
+                squared-top
+                unselect={false}
+                squared-right={this.showPostal}
+              />
+            )}
+            {this.showPostal && (
+              <sc-input
+                placeholder={__('Postal Code/Zip', 'surecart')}
+                name={this.names.postal_code}
+                onScChange={(e: any) => this.updateAddress({ postal_code: e.target.value || null })}
+                autocomplete={'postal-code'}
+                required={this.required}
+                value={this?.address?.postal_code}
+                squared-top
+                maxlength={5}
+                squared-left={this.showState}
+              />
+            )}
           </div>
         </sc-form-control>
         {this.loading && <sc-block-ui></sc-block-ui>}

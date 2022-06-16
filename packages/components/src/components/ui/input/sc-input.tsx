@@ -37,7 +37,7 @@ export class ScInput {
   @Prop() hidden: boolean = false;
 
   /** The input's type. */
-  @Prop({ reflect: true }) type: 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' = 'text';
+  @Prop({ reflect: true }) type: 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' | 'hidden' = 'text';
 
   /** The input's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
