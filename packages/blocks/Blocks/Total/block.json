@@ -3,7 +3,7 @@
 	"title": "Total",
 	"description": "Displays the total line item.",
 	"category": "surecart",
-	"parent": ["surecart/totals"],
+	"ancestor": ["surecart/totals"],
 	"keywords": ["checkout", "engine", "total", "subtotal"],
 	"supports": {
 		"reusable": false,
