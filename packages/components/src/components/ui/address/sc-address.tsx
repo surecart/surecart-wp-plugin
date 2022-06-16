@@ -23,6 +23,7 @@ export class ScAddress {
   };
 
   @Prop() names: Partial<Address> = {
+    name: 'shipping_name',
     country: 'shipping_country',
     city: 'shipping_city',
     line_1: 'shipping_line_1',
