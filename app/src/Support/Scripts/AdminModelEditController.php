@@ -133,7 +133,7 @@ abstract class AdminModelEditController {
 		wp_localize_script(
 			$this->handle,
 			'scData',
-			$this->data
+			apply_filters( "$this->handle/data", $this->data )
 		);
 
 		// custom localizations.

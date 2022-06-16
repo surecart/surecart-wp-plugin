@@ -2,6 +2,8 @@
 
 namespace Surecart\Integrations\AffiliateWP;
 
+use SureCart\Models\Invoice;
+use SureCart\Models\Order;
 use SureCart\Models\Purchase;
 use SureCart\Support\Currency;
 
@@ -34,12 +36,29 @@ class AffiliateWPIntegration extends \Affiliate_WP_Base {
 	 * @since   2.0
 	 */
 	public function init() {
-		// add pending referrla when the purchase is created.
+		// add pending referral when the purchase is created.
 		add_action( 'surecart/purchase_created', [ $this, 'addPendingReferral' ], 99 );
 		// revoke referral when the purchase is revoked.
 		add_action( 'surecart/purchase_revoked', [ $this, 'revokeReferral' ], 10, 3 );
+		// re-complete referral when the purchase is completed.
+		add_action( 'surecart/purchase_invoked', [ $this, 'invokeReferral' ], 10, 3 );
 		// add a reference link to the referral table.
 		add_filter( 'affwp_referral_reference_column', [ $this, 'referenceLink' ], 10, 2 );
+		// add coupon script data.
+		add_action( 'surecart/scripts/admin/coupon/data', [ $this, 'couponScriptData' ] );
+	}
+
+	/**
+	 * Additional Coupon script data.
+	 *
+	 * @return array
+	 */
+	public function couponScriptData( $data ) {
+		if ( ! $this->is_active() ) {
+			return;
+		}
+		$data['affiliate_wp'] = true;
+		return $data;
 	}
 
 	/**
@@ -51,28 +70,32 @@ class AffiliateWPIntegration extends \Affiliate_WP_Base {
 	 * @return string
 	 */
 	public function referenceLink( $reference, $referral ) {
-		if ( empty( $referral->context ) || 'surecart' != $referral->context ) {
+		if ( empty( $referral->context ) || 'surecart' !== $referral->context ) {
 			return $reference;
 		}
 
-		/** Get the url for the reference. */
-		$purchase = Purchase::find( $reference );
-		if ( $purchase->order ) {
-			$url = esc_url( \SureCart::getUrl()->edit( 'order', $purchase->order ) );
+		$url         = '';
+		$object_name = $referral->custom['object'] ?? 'order';
+
+		if ( 'invoice' === $object_name ) {
+			$object = Invoice::find( $reference );
+		} else {
+			$object = Order::find( $reference );
 		}
-		if ( $purchase->invoice ) {
-			$url = esc_url( \SureCart::getUrl()->edit( 'order', $purchase->order ) );
+
+		if ( $object->id ) {
+			$url = esc_url( \SureCart::getUrl()->edit( $object_name, $object->id ) );
 		}
 
 		if ( ! $url ) {
 			return $reference;
 		}
 
-		return '<a href="' . esc_url( $url ) . '">' . $reference . '</a>';
+		return '<a href="' . esc_url( $url ) . '">#' . $object->number . '</a>';
 	}
 
 	/**
-	 * Revoke purchase on refund.
+	 * Reject referral when purchase is revoked.
 	 *
 	 * @param \SureCart\Models\Purchase $purchase Purchase model.
 	 *
@@ -87,11 +110,27 @@ class AffiliateWPIntegration extends \Affiliate_WP_Base {
 	}
 
 	/**
+	 * Complete referral when purchase is invoked.
+	 *
+	 * @param \SureCart\Models\Purchase $purchase Purchase model.
+	 *
+	 * @return void
+	 */
+	public function invokeReferral( $purchase ) {
+		$this->complete_referral( $purchase->invoice ?? $purchase->order );
+	}
+
+	/**
 	 * Records a pending referral when a pending payment is created
 	 *
 	 * @param \SureCart\Models\Purchase $purchase Purchase model.
 	 */
 	public function addPendingReferral( $purchase ) {
+		// the integration is not active.
+		if ( ! $this->is_active() ) {
+			return;
+		}
+
 		// Check if it was referred.
 		if ( ! $this->was_referred() ) {
 			return false; // Referral not created because affiliate was not referred.
@@ -157,6 +196,7 @@ class AffiliateWPIntegration extends \Affiliate_WP_Base {
 				'description' => $description,
 				'custom'      => array(
 					'livemode' => $mode,
+					'object'   => $reference->object,
 				),
 			)
 		);

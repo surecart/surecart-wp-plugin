@@ -8,14 +8,12 @@ import { useEffect } from 'react';
 
 import ErrorFlash from '../components/ErrorFlash';
 // hocs
-import withConfirm from '../hocs/withConfirm';
 import useCurrentPage from '../mixins/useCurrentPage';
 import useEntities from '../mixins/useEntities';
 import { store as dataStore } from '../store/data';
 import { store as uiStore } from '../store/ui';
 import Logo from '../templates/Logo';
 import Template from '../templates/SingleModel';
-import SaveButton from './components/SaveButton';
 import Codes from './modules/Codes';
 import Limits from './modules/Limits';
 // modules
@@ -229,6 +227,7 @@ export default () => {
 			sidebar={
 				<Sidebar
 					coupon={coupon}
+					updateCoupon={updateCoupon}
 					loading={isLoading}
 					saveCoupon={saveCoupon}
 				/>

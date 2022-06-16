@@ -7,8 +7,9 @@ import { Fragment } from '@wordpress/element';
 
 import Box from '../ui/Box';
 import Definition from '../ui/Definition';
+import Affiliate from './modules/Affiliate';
 
-export default ({ coupon, loading }) => {
+export default ({ coupon, updateCoupon, loading }) => {
 	const formattedDiscount = () => {
 		if (coupon?.percent_off) {
 			return sprintf(__('%s%% off', 'surecart'), coupon?.percent_off);
@@ -116,6 +117,9 @@ export default ({ coupon, loading }) => {
 					)}
 				</Fragment>
 			</Box>
+			{scData?.affiliate_wp && (
+				<Affiliate coupon={coupon} updateCoupon={updateCoupon} />
+			)}
 		</Fragment>
 	);
 };

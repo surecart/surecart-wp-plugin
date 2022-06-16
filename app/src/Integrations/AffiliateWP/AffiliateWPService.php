@@ -2,6 +2,8 @@
 
 namespace SureCart\Integrations\AffiliateWP;
 
+use Surecart\Integrations\AffiliateWP\AffiliateWPIntegration;
+
 /**
  * Controls the LearnDash integration.
  */
@@ -25,10 +27,9 @@ class AffiliateWPService {
 	public function register( $integrations ) {
 		$integrations['surecart'] = [
 			'name'     => __( 'SureCart', 'surecart' ),
-			'class'    => 'Custom_Integration',
-			'file'     => 'path/to/integration/Custom_Integration.php',
-			'enabled'  => true,
-			'supports' => [ 'sales_reporting', 'manual_coupons', 'dynamic_coupons' ], // Only enable sales reporting if your plugin will actually support sales data methods in the base class!
+			'class'    => AffiliateWPIntegration::class,
+			'file'     => dirname( __FILE__ ) . '/AffiliateWPIntegration.php',
+			'supports' => [ 'sales_reporting' ],
 		];
 		return $integrations;
 	}
