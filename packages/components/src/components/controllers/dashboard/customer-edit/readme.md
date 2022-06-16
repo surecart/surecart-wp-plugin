@@ -63,7 +63,9 @@ graph TD;
   sc-select --> sc-spinner
   sc-select --> sc-menu
   sc-block-ui --> sc-spinner
+  sc-tax-id-input --> sc-icon
   sc-tax-id-input --> sc-input
+  sc-tax-id-input --> sc-spinner
   sc-tax-id-input --> sc-dropdown
   sc-tax-id-input --> sc-button
   sc-tax-id-input --> sc-menu

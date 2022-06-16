@@ -39,6 +39,19 @@
 | `scUpdateOrderState` |                                             | `CustomEvent<Order>` |
 
 
+## Methods
+
+### `reportValidity() => Promise<boolean>`
+
+
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+
 ## Dependencies
 
 ### Depends on

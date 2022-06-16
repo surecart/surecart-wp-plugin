@@ -23,6 +23,19 @@
 | `value`       | `value`       | The input's value attribute.                 | `string`                         | `''`        |
 
 
+## Methods
+
+### `reportValidity() => Promise<boolean>`
+
+
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+
 ## Dependencies
 
 ### Depends on
