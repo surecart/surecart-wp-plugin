@@ -122,6 +122,13 @@ module.exports = {
 		new CopyPlugin({
 			patterns: [
 				{
+					from: path.resolve(
+						__dirname,
+						'node_modules/@surecart/components/dist/surecart/icon-assets'
+					),
+					to: path.resolve(__dirname, 'dist/icon-assets'),
+				},
+				{
 					from: './packages/components/dist',
 					to: './components/',
 					toType: 'dir',

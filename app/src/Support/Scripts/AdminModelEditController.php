@@ -136,6 +136,8 @@ abstract class AdminModelEditController {
 			apply_filters( "$this->handle/data", $this->data )
 		);
 
+		wp_localize_script( $this->handle, 'scIconPath', esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) );
+
 		// custom localizations.
 		$this->localize( $this->handle );
 	}
