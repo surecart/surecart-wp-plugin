@@ -7,7 +7,6 @@ import { Fragment } from '@wordpress/element';
 
 import Box from '../ui/Box';
 import Definition from '../ui/Definition';
-import Affiliate from './modules/Affiliate';
 
 export default ({ coupon, updateCoupon, loading }) => {
 	const formattedDiscount = () => {
@@ -117,9 +116,6 @@ export default ({ coupon, updateCoupon, loading }) => {
 					)}
 				</Fragment>
 			</Box>
-			{scData?.affiliate_wp && (
-				<Affiliate coupon={coupon} updateCoupon={updateCoupon} />
-			)}
 		</Fragment>
 	);
 };

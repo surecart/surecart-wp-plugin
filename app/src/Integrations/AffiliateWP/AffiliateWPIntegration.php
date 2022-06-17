@@ -44,21 +44,6 @@ class AffiliateWPIntegration extends \Affiliate_WP_Base {
 		add_action( 'surecart/purchase_invoked', [ $this, 'invokeReferral' ], 10, 3 );
 		// add a reference link to the referral table.
 		add_filter( 'affwp_referral_reference_column', [ $this, 'referenceLink' ], 10, 2 );
-		// add coupon script data.
-		add_action( 'surecart/scripts/admin/coupon/data', [ $this, 'couponScriptData' ] );
-	}
-
-	/**
-	 * Additional Coupon script data.
-	 *
-	 * @return array
-	 */
-	public function couponScriptData( $data ) {
-		if ( ! $this->is_active() ) {
-			return;
-		}
-		$data['affiliate_wp'] = true;
-		return $data;
 	}
 
 	/**
