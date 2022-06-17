@@ -4,7 +4,7 @@
   "description": "The @surecare/components package contains all the core web components that other packages rely on.",
   "main": "dist/index.cjs.js",
   "docs": "docs/docs.json",
-  "module": "dist/custom-elements/index.js",
+  "module": "dist/index.js",
   "es2015": "dist/esm/index.mjs",
   "es2017": "dist/esm/index.mjs",
   "types": "dist/types/index.d.ts",
