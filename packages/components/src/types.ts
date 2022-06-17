@@ -1,3 +1,5 @@
+import { IconLibraryMutator, IconLibraryResolver } from './components/ui/icon/library';
+
 declare global {
   interface Window {
     wp: {
@@ -5,9 +7,13 @@ declare global {
       blocks: any;
       i18n: any;
     };
+    registerSureCartIconPath: (path: string) => void;
+    registerSureCartIconLibrary: (name: string, options: { resolver: IconLibraryResolver; mutator?: IconLibraryMutator }) => void;
+    scIconPath: string;
     scData: {
       root_url: string;
       nonce: string;
+      base_url: string;
       nonce_endpoint: string;
     };
     ceRegisterIconLibrary: any;
