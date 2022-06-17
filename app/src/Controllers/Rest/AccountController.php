@@ -7,28 +7,26 @@ use SureCart\Models\Account;
 /**
  * Handle coupon requests through the REST API
  */
-class AccountController extends RestController {
+class AccountController {
 	/**
 	 * Find account.
 	 *
-	 * @return Model
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function find( \WP_REST_Request $request ) {
 		return Account::find();
 	}
 
-	public function index( \WP_REST_Request $request ) {
-		return Account::find();
-	}
-
 	/**
-	 * Edit account
+	 * Edit model.
 	 *
-	 * @param array $params Params to update.
+	 * @param \WP_REST_Request $request Rest Request.
 	 *
-	 * @return Model
+	 * @return \WP_REST_Response|\WP_Error
 	 */
-	public function edit( $params ) {
-		return Account::update( $params );
+	public function edit( \WP_REST_Request $request ) {
+		return Account::update( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
 	}
 }

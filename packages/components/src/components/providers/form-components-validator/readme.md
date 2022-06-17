@@ -31,10 +31,11 @@ graph TD;
   sc-order-shipping-address --> sc-address
   sc-order-shipping-address --> sc-compact-address
   sc-address --> sc-form-control
-  sc-address --> sc-select
   sc-address --> sc-input
+  sc-address --> sc-select
   sc-address --> sc-block-ui
   sc-form-control --> sc-tooltip
+  sc-input --> sc-form-control
   sc-select --> sc-icon
   sc-select --> sc-menu-label
   sc-select --> sc-menu-item
@@ -43,7 +44,6 @@ graph TD;
   sc-select --> sc-input
   sc-select --> sc-spinner
   sc-select --> sc-menu
-  sc-input --> sc-form-control
   sc-block-ui --> sc-spinner
   sc-compact-address --> sc-form-control
   sc-compact-address --> sc-select

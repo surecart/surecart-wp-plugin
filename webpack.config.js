@@ -40,10 +40,6 @@ module.exports = {
 			__dirname,
 			'packages/admin/invoices/index.js'
 		),
-		['admin/settings']: path.resolve(
-			__dirname,
-			'packages/admin/settings/index.js'
-		),
 		['admin/product-groups']: path.resolve(
 			__dirname,
 			'packages/admin/product-groups/index.js'
@@ -56,6 +52,54 @@ module.exports = {
 			__dirname,
 			'packages/admin/subscriptions/edit/index.js'
 		),
+
+		/**
+		 * Settings.
+		 */
+		['admin/settings/account']: path.resolve(
+			__dirname,
+			'packages/admin/settings/account/index.js'
+		),
+		['admin/settings/subscription']: path.resolve(
+			__dirname,
+			'packages/admin/settings/subscription/index.js'
+		),
+		['admin/settings/portal']: path.resolve(
+			__dirname,
+			'packages/admin/settings/portal/index.js'
+		),
+		['admin/settings/tax']: path.resolve(
+			__dirname,
+			'packages/admin/settings/tax/index.js'
+		),
+    ['admin/settings/export']: path.resolve(
+			__dirname,
+			'packages/admin/settings/export/index.js'
+		),
+		['admin/settings/tax-region']: path.resolve(
+			__dirname,
+			'packages/admin/settings/tax-region/index.js'
+		),
+		['admin/settings/brand']: path.resolve(
+			__dirname,
+			'packages/admin/settings/brand/index.js'
+		),
+		['admin/settings/customer']: path.resolve(
+			__dirname,
+			'packages/admin/settings/customer/index.js'
+		),
+		['admin/settings/connection']: path.resolve(
+			__dirname,
+			'packages/admin/settings/connection/index.js'
+		),
+		['admin/settings/advanced']: path.resolve(
+			__dirname,
+			'packages/admin/settings/advanced/index.js'
+		),
+
+		/**
+		 * Data.
+		 */
 		['store/data']: path.resolve(
 			__dirname,
 			'packages/admin/store/data/register/index.js'
@@ -77,6 +121,13 @@ module.exports = {
 		...defaultConfig.plugins,
 		new CopyPlugin({
 			patterns: [
+				{
+					from: path.resolve(
+						__dirname,
+						'node_modules/@surecart/components/dist/surecart/icon-assets'
+					),
+					to: path.resolve(__dirname, 'dist/icon-assets'),
+				},
 				{
 					from: './packages/components/dist',
 					to: './components/',

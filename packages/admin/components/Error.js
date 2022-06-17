@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { ScAlert } from '@surecart/components-react';
 
-export default ({ error, setError, margin = '0' }) => {
+export default ({ error, setError, margin = '0', children }) => {
 	if (!error || !Object.keys(error).length) {
 		return null;
 	}
@@ -25,6 +25,7 @@ export default ({ error, setError, margin = '0' }) => {
 					))}
 				</ul>
 			)}
+			{children}
 		</ScAlert>
 	);
 };

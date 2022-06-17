@@ -24,4 +24,18 @@ class Promotion extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'promotion';
+
+	/**
+	 * Is this cachable?
+	 *
+	 * @var boolean
+	 */
+	protected $cachable = true;
+
+	/**
+	 * Clear cache when coupons are updated.
+	 *
+	 * @var string
+	 */
+	protected $cache_key = 'coupons_updated_at';
 }

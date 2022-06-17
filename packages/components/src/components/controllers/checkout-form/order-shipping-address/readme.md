@@ -7,15 +7,18 @@
 
 ## Properties
 
-| Property                  | Attribute          | Description                           | Type                                                                                                                                          | Default     |
-| ------------------------- | ------------------ | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `customerShippingAddress` | --                 | Holds the customer's shipping address | `Address`                                                                                                                                     | `undefined` |
-| `label`                   | `label`            | Label for the field.                  | `string`                                                                                                                                      | `undefined` |
-| `loading`                 | `loading`          | Is this loading.                      | `boolean`                                                                                                                                     | `undefined` |
-| `required`                | `required`         | Is this required (defaults to true)   | `boolean`                                                                                                                                     | `true`      |
-| `shippingAddress`         | --                 | Holds the customer's billing address  | `Address`                                                                                                                                     | `undefined` |
-| `shippingEnabled`         | `shipping-enabled` | Is shipping enabled for this order?   | `boolean`                                                                                                                                     | `undefined` |
-| `taxStatus`               | `tax-status`       | Tax status of the order               | `"address_invalid" \| "calculated" \| "disabled" \| "estimated" \| "reverse_charged" \| "tax_registration_not_found" \| "tax_zone_not_found"` | `undefined` |
+| Property                  | Attribute          | Description                           | Type                                                                                                                                                                                                                                                                                                                                                                            | Default                                                                                                                                                                                                                                                                                                                          |
+| ------------------------- | ------------------ | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `customerShippingAddress` | --                 | Holds the customer's shipping address | `Address`                                                                                                                                                                                                                                                                                                                                                                       | `undefined`                                                                                                                                                                                                                                                                                                                      |
+| `full`                    | `full`             | Show the full address                 | `boolean`                                                                                                                                                                                                                                                                                                                                                                       | `undefined`                                                                                                                                                                                                                                                                                                                      |
+| `label`                   | `label`            | Label for the field.                  | `string`                                                                                                                                                                                                                                                                                                                                                                        | `undefined`                                                                                                                                                                                                                                                                                                                      |
+| `loading`                 | `loading`          | Is this loading.                      | `boolean`                                                                                                                                                                                                                                                                                                                                                                       | `undefined`                                                                                                                                                                                                                                                                                                                      |
+| `placeholders`            | --                 | Placeholder values.                   | `{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }` | `{     name: __('Name or Company Name', 'surecart'),     country: __('Country', 'surecart'),     city: __('City', 'surecart'),     line_1: __('Address', 'surecart'),     line_2: __('Address Line 2', 'surecart'),     postal_code: __('Postal Code/Zip', 'surecart'),     state: __('State/Province/Region', 'surecart'),   }` |
+| `required`                | `required`         | Is this required (defaults to true)   | `boolean`                                                                                                                                                                                                                                                                                                                                                                       | `true`                                                                                                                                                                                                                                                                                                                           |
+| `shippingAddress`         | --                 | Holds the customer's billing address  | `Address`                                                                                                                                                                                                                                                                                                                                                                       | `undefined`                                                                                                                                                                                                                                                                                                                      |
+| `shippingEnabled`         | `shipping-enabled` | Is shipping enabled for this order?   | `boolean`                                                                                                                                                                                                                                                                                                                                                                       | `undefined`                                                                                                                                                                                                                                                                                                                      |
+| `showName`                | `show-name`        | Show the name field.                  | `boolean`                                                                                                                                                                                                                                                                                                                                                                       | `undefined`                                                                                                                                                                                                                                                                                                                      |
+| `taxStatus`               | `tax-status`       | Tax status of the order               | `"address_invalid" \| "calculated" \| "disabled" \| "estimated" \| "reverse_charged" \| "tax_registration_not_found" \| "tax_zone_not_found"`                                                                                                                                                                                                                                   | `undefined`                                                                                                                                                                                                                                                                                                                      |
 
 
 ## Events
@@ -23,6 +26,19 @@
 | Event           | Description                         | Type                                                                      |
 | --------------- | ----------------------------------- | ------------------------------------------------------------------------- |
 | `scUpdateOrder` | Make a request to update the order. | `CustomEvent<{ data: Partial<Order>; options?: { silent?: boolean; }; }>` |
+
+
+## Methods
+
+### `reportValidity() => Promise<boolean>`
+
+
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
 
 
 ## Dependencies
@@ -42,10 +58,11 @@ graph TD;
   sc-order-shipping-address --> sc-address
   sc-order-shipping-address --> sc-compact-address
   sc-address --> sc-form-control
-  sc-address --> sc-select
   sc-address --> sc-input
+  sc-address --> sc-select
   sc-address --> sc-block-ui
   sc-form-control --> sc-tooltip
+  sc-input --> sc-form-control
   sc-select --> sc-icon
   sc-select --> sc-menu-label
   sc-select --> sc-menu-item
@@ -54,7 +71,6 @@ graph TD;
   sc-select --> sc-input
   sc-select --> sc-spinner
   sc-select --> sc-menu
-  sc-input --> sc-form-control
   sc-block-ui --> sc-spinner
   sc-compact-address --> sc-form-control
   sc-compact-address --> sc-select
