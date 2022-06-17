@@ -36,6 +36,8 @@ class CouponsController extends AdminController {
 	 * Coupons edit.
 	 */
 	public function edit() {
+		// admin edit page.
+		do_action( 'surecart/admin/coupons/edit' );
 		// enqueue needed script.
 		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( CouponScriptsController::class, 'enqueue' ) );
 		// return view.

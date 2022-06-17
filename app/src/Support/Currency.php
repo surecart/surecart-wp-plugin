@@ -375,13 +375,13 @@ class Currency {
 		];
 	}
 
-		/**
-		 * Determine if this is a zero decimal currency.
-		 *
-		 * @param string $currency The currency code.
-		 *
-		 * @return bool
-		 */
+	/**
+	 * Determine if this is a zero decimal currency.
+	 *
+	 * @param string $currency The currency code.
+	 *
+	 * @return bool
+	 */
 	public static function isZeroDecimal( $currency ) {
 		$is_zero = array(
 			'BIF',
