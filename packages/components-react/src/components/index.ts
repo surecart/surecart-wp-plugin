@@ -5,8 +5,9 @@ import { createReactComponent } from './react-component-lib';
 
 import type { JSX } from '@surecart/components';
 
+import { defineCustomElements } from '@surecart/components/loader';
 
-
+defineCustomElements();
 export const ScAddress = /*@__PURE__*/createReactComponent<JSX.ScAddress, HTMLScAddressElement>('sc-address');
 export const ScAlert = /*@__PURE__*/createReactComponent<JSX.ScAlert, HTMLScAlertElement>('sc-alert');
 export const ScBadgeNotice = /*@__PURE__*/createReactComponent<JSX.ScBadgeNotice, HTMLScBadgeNoticeElement>('sc-badge-notice');
