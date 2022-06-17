@@ -5,7 +5,7 @@
 	"description": "Display a coupon form.",
 	"category": "surecart",
 	"keywords": ["coupon", "promo"],
-	"parent": ["surecart/form", "surecart/column", "surecart/totals"],
+	"ancestor": ["surecart/form", "surecart/totals"],
 	"supports": {
 		"reusable": false,
 		"html": false,

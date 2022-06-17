@@ -23,6 +23,7 @@ class IntegrationsController extends RestController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function create( \WP_REST_Request $request ) {
+		do_action( 'surecart/integrations/create', $request->get_params() );
 		return Integration::create( $request->get_params() );
 	}
 
@@ -114,6 +115,7 @@ class IntegrationsController extends RestController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function delete( \WP_REST_Request $request ) {
+		do_action( 'surecart/integrations/delete', $request->get_params() );
 		return ( new $this->class() )->delete( $request['id'] );
 	}
 }

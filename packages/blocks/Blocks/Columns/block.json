@@ -6,7 +6,7 @@
 	"category": "design",
 	"description": "Display content in multiple columns, with blocks added to each column.",
 	"textdomain": "surecart",
-	"parent": ["surecart/form"],
+	"ancestor": ["surecart/form"],
 	"attributes": {
 		"verticalAlignment": {
 			"type": "string"

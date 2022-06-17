@@ -21,6 +21,13 @@ class Account extends Model {
 	protected $object_name = 'account';
 
 	/**
+	 * Does an update clear account cache?
+	 *
+	 * @var boolean
+	 */
+	protected $clears_account_cache = true;
+
+	/**
 	 * Get processors.
 	 *
 	 * This is cached for performance reasons.

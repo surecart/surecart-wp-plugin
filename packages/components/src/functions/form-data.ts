@@ -126,3 +126,14 @@ export const parseFormData = (data: any) => {
     ...(Object.keys(rest)?.length ? { metadata: rest } : {}),
   };
 };
+
+export const reportChildrenValidity = async (element: HTMLElement) => {
+  const items = ([...element.shadowRoot.querySelectorAll('*')] as HTMLElement[]).filter((el: any) => typeof el.reportValidity === 'function') as any;
+  for (const el of items) {
+    const isValid = await el.reportValidity();
+    if (!isValid) {
+      return false;
+    }
+  }
+  return true;
+};

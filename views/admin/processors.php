@@ -14,6 +14,7 @@
 			?>
 
 		<div class="sc-container">
+		<div class="sc-content">
 			<?php
 			\SureCart::render(
 				'layouts/partials/admin-settings-notices',
@@ -25,9 +26,7 @@
 
 			<div class="sc-section-heading">
 				<h3>
-					<svg stroke="var(--sc-color-gray-900)" xmlns="http://www.w3.org/2000/svg" slot="prefix" fill="none" viewBox="0 0 24 24" role="img" aria-labelledby="ai12f1ydn6kusa0itfwnv692wi78pgld" style="width: 22px; height: 22px;">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"></path>
-					</svg>
+					<sc-icon name="credit-card" style="width: 22px; height: 22px; color: var(--sc-color-gray-900)"></sc-icon>
 					<span><?php esc_html_e( 'Processors', 'surecart' ); ?></span>
 				</h3>
 			</div>
@@ -155,6 +154,7 @@
 						</sc-stacked-list-row>
 				</sc-stacked-list>
 			</sc-card>
+		</div>
 		</div>
 	</div>
 </div>

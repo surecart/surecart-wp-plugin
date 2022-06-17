@@ -1,4 +1,4 @@
-import { Component, Prop, h, Watch, State, Event, EventEmitter } from '@stencil/core';
+import { Component, Prop, h, Watch, State, Event, EventEmitter, Method } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 import { Address, Order, TaxStatus } from '../../../../types';
@@ -9,6 +9,8 @@ import { Address, Order, TaxStatus } from '../../../../types';
   shadow: true,
 })
 export class ScOrderShippingAddress {
+  private input: HTMLScAddressElement | HTMLScCompactAddressElement;
+
   /** Label for the field. */
   @Prop() label: string;
 
@@ -29,6 +31,23 @@ export class ScOrderShippingAddress {
 
   /** Is shipping enabled for this order? */
   @Prop() shippingEnabled: boolean;
+
+  /** Show the full address */
+  @Prop() full: boolean;
+
+  /** Show the name field. */
+  @Prop() showName: boolean;
+
+  /** Placeholder values. */
+  @Prop() placeholders: Partial<Address> = {
+    name: __('Name or Company Name', 'surecart'),
+    country: __('Country', 'surecart'),
+    city: __('City', 'surecart'),
+    line_1: __('Address', 'surecart'),
+    line_2: __('Address Line 2', 'surecart'),
+    postal_code: __('Postal Code/Zip', 'surecart'),
+    state: __('State/Province/Region', 'surecart'),
+  };
 
   /** Make a request to update the order. */
   @Event() scUpdateOrder: EventEmitter<{
@@ -96,20 +115,34 @@ export class ScOrderShippingAddress {
     }
   }
 
+  @Method()
+  async reportValidity() {
+    return this.input.reportValidity();
+  }
+
   render() {
-    if (this.shippingEnabled) {
+    if (this.shippingEnabled || this.full) {
       return (
         <sc-address
+          ref={el => (this.input = el as any)}
           label={__('Shipping Address', 'surecart')}
+          placeholders={this.placeholders}
           required={this.required}
           loading={this.loading}
           address={this.address}
+          show-name={this.showName}
           onScChangeAddress={e => this.updateAddressState(e.detail)}
         ></sc-address>
       );
     }
     return (
-      <sc-compact-address required={this.required} loading={this.loading} address={this.address} onScChangeAddress={e => this.updateAddressState(e.detail)}></sc-compact-address>
+      <sc-compact-address
+        ref={el => (this.input = el as any)}
+        required={this.required}
+        loading={this.loading}
+        address={this.address}
+        onScChangeAddress={e => this.updateAddressState(e.detail)}
+      ></sc-compact-address>
     );
   }
 }

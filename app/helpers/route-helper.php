@@ -8,7 +8,7 @@
  */
 function sc_url_var( $var, $name = 'action' ) {
 	if ( ! $var ) return empty( $_GET[$name] ); // phpcs:ignore
-	return ! empty( $_GET[$name] ) && $var ===  $_GET[$name]; // phpcs:ignore
+	return ! empty( $_GET[$name] ) && $var === $_GET[$name]; // phpcs:ignore
 }
 
 /**

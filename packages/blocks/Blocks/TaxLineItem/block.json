@@ -3,7 +3,7 @@
 	"title": "Tax Line Item",
 	"description": "Displays the order tax. (if there is tax)",
 	"category": "surecart",
-	"parent": ["surecart/totals"],
+	"ancestor": ["surecart/totals"],
 	"keywords": ["tax", "checkout", "total", "subtotal"],
 	"supports": {
 		"reusable": false,

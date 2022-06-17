@@ -26,8 +26,17 @@ export class ScTaxIdInput {
   /** Is this loading? */
   @Prop() loading: boolean;
 
+  /** Help text. */
+  @Prop() help: string;
+
   /** Make a request to update the order. */
   @Event() scChange: EventEmitter<{ number: string; number_type: string }>;
+
+  /** Make a request to update the order. */
+  @Event() scInput: EventEmitter<Partial<{ number: string; number_type: string }>>;
+
+  /** Change the Type */
+  @Event() scInputType: EventEmitter<string>;
 
   /** Set the checkout state. */
   @Event() scSetState: EventEmitter<string>;

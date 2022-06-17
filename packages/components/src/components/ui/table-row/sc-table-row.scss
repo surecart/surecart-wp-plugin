@@ -1,6 +1,9 @@
 :host {
   display: table-row;
 }
+:host([href]) {
+  cursor: pointer;
+}
 :host([href]:hover) {
   background: var(--sc-color-gray-50);
 }

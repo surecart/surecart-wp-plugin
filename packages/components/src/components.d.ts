@@ -22,10 +22,20 @@ export namespace Components {
          */
         "loading": boolean;
         "names": Partial<Address>;
+        "placeholders": Partial<Address>;
+        "reportValidity": () => Promise<boolean>;
         /**
           * Is this required?
          */
         "required": boolean;
+        /**
+          * Should we show name field?
+         */
+        "showLine2": boolean;
+        /**
+          * Should we show name field?
+         */
+        "showName": boolean;
     }
     interface ScAlert {
         /**
@@ -437,6 +447,7 @@ export namespace Components {
          */
         "loading": boolean;
         "names": Partial<Address>;
+        "reportValidity": () => Promise<boolean>;
         /**
           * Is this required?
          */
@@ -1373,6 +1384,10 @@ export namespace Components {
          */
         "customerShippingAddress": Address;
         /**
+          * Show the full address
+         */
+        "full": boolean;
+        /**
           * Label for the field.
          */
         "label": string;
@@ -1380,6 +1395,11 @@ export namespace Components {
           * Is this loading.
          */
         "loading": boolean;
+        /**
+          * Placeholder values.
+         */
+        "placeholders": Partial<Address>;
+        "reportValidity": () => Promise<boolean>;
         /**
           * Is this required (defaults to true)
          */
@@ -1392,6 +1412,10 @@ export namespace Components {
           * Is shipping enabled for this order?
          */
         "shippingEnabled": boolean;
+        /**
+          * Show the name field.
+         */
+        "showName": boolean;
         /**
           * Tax status of the order
          */
@@ -1916,6 +1940,7 @@ export namespace Components {
           * Some help text for the input.
          */
         "help": string;
+        "hoist": boolean;
         /**
           * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
          */
@@ -2354,6 +2379,10 @@ export namespace Components {
          */
         "country": string;
         /**
+          * Help text.
+         */
+        "help": string;
+        /**
           * Is this loading?
          */
         "loading": boolean;
@@ -2377,6 +2406,100 @@ export namespace Components {
     interface ScText {
         "tag": 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
         "truncate": boolean;
+    }
+    interface ScTextarea {
+        /**
+          * The textarea's autocapitalize attribute.
+         */
+        "autocapitalize": 'off' | 'none' | 'on' | 'sentences' | 'words' | 'characters';
+        /**
+          * The textarea's autocomplete attribute.
+         */
+        "autocomplete": string;
+        /**
+          * The textarea's autocorrect attribute.
+         */
+        "autocorrect": string;
+        /**
+          * The textarea's autofocus attribute.
+         */
+        "autofocus": boolean;
+        /**
+          * Disables the textarea.
+         */
+        "disabled": boolean;
+        /**
+          * The input's enterkeyhint attribute. This can be used to customize the label or icon of the Enter key on virtual keyboards.
+         */
+        "enterkeyhint": 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
+        /**
+          * Draws a filled textarea.
+         */
+        "filled": boolean;
+        /**
+          * The textarea's help text. Alternatively, you can use the help-text slot.
+         */
+        "help": string;
+        /**
+          * The textarea's inputmode attribute.
+         */
+        "inputmode": 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url';
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, and `maxlength` using the browser's constraint validation API.
+         */
+        "invalid": boolean;
+        /**
+          * The textarea's label. Alternatively, you can use the label slot.
+         */
+        "label": string;
+        /**
+          * The maximum length of input that will be considered valid.
+         */
+        "maxlength": number;
+        /**
+          * The minimum length of input that will be considered valid.
+         */
+        "minlength": number;
+        /**
+          * The textarea's name attribute.
+         */
+        "name": string;
+        /**
+          * The textarea's placeholder text.
+         */
+        "placeholder": string;
+        /**
+          * Makes the textarea readonly.
+         */
+        "readonly": boolean;
+        /**
+          * Makes the textarea a required field.
+         */
+        "required": boolean;
+        /**
+          * Controls how the textarea can be resized.
+         */
+        "resize": 'none' | 'vertical' | 'auto';
+        /**
+          * The number of rows to display by default.
+         */
+        "rows": number;
+        /**
+          * Should we show the label
+         */
+        "showLabel": boolean;
+        /**
+          * The textarea's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * Enables spell checking on the textarea.
+         */
+        "spellcheck": boolean;
+        /**
+          * The textarea's value attribute.
+         */
+        "value": string;
     }
     interface ScToggle {
         /**
@@ -3212,6 +3335,12 @@ declare global {
         prototype: HTMLScTextElement;
         new (): HTMLScTextElement;
     };
+    interface HTMLScTextareaElement extends Components.ScTextarea, HTMLStencilElement {
+    }
+    var HTMLScTextareaElement: {
+        prototype: HTMLScTextareaElement;
+        new (): HTMLScTextareaElement;
+    };
     interface HTMLScToggleElement extends Components.ScToggle, HTMLStencilElement {
     }
     var HTMLScToggleElement: {
@@ -3382,6 +3511,7 @@ declare global {
         "sc-tag": HTMLScTagElement;
         "sc-tax-id-input": HTMLScTaxIdInputElement;
         "sc-text": HTMLScTextElement;
+        "sc-textarea": HTMLScTextareaElement;
         "sc-toggle": HTMLScToggleElement;
         "sc-toggles": HTMLScTogglesElement;
         "sc-tooltip": HTMLScTooltipElement;
@@ -3412,9 +3542,22 @@ declare namespace LocalJSX {
          */
         "onScChangeAddress"?: (event: CustomEvent<Partial<Address>>) => void;
         /**
+          * Address change event.
+         */
+        "onScInputAddress"?: (event: CustomEvent<Partial<Address>>) => void;
+        "placeholders"?: Partial<Address>;
+        /**
           * Is this required?
          */
         "required"?: boolean;
+        /**
+          * Should we show name field?
+         */
+        "showLine2"?: boolean;
+        /**
+          * Should we show name field?
+         */
+        "showName"?: boolean;
     }
     interface ScAlert {
         /**
@@ -3838,6 +3981,10 @@ declare namespace LocalJSX {
           * Address change event.
          */
         "onScChangeAddress"?: (event: CustomEvent<Partial<Address>>) => void;
+        /**
+          * Address input event.
+         */
+        "onScInputAddress"?: (event: CustomEvent<Partial<Address>>) => void;
         /**
           * Is this required?
          */
@@ -4912,6 +5059,10 @@ declare namespace LocalJSX {
          */
         "customerShippingAddress"?: Address;
         /**
+          * Show the full address
+         */
+        "full"?: boolean;
+        /**
           * Label for the field.
          */
         "label"?: string;
@@ -4927,6 +5078,10 @@ declare namespace LocalJSX {
     options?: { silent?: boolean };
   }>) => void;
         /**
+          * Placeholder values.
+         */
+        "placeholders"?: Partial<Address>;
+        /**
           * Is this required (defaults to true)
          */
         "required"?: boolean;
@@ -4938,6 +5093,10 @@ declare namespace LocalJSX {
           * Is shipping enabled for this order?
          */
         "shippingEnabled"?: boolean;
+        /**
+          * Show the name field.
+         */
+        "showName"?: boolean;
         /**
           * Tax status of the order
          */
@@ -5518,6 +5677,7 @@ declare namespace LocalJSX {
           * Some help text for the input.
          */
         "help"?: string;
+        "hoist"?: boolean;
         /**
           * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
          */
@@ -6000,6 +6160,10 @@ declare namespace LocalJSX {
          */
         "country"?: string;
         /**
+          * Help text.
+         */
+        "help"?: string;
+        /**
           * Is this loading?
          */
         "loading"?: boolean;
@@ -6011,6 +6175,14 @@ declare namespace LocalJSX {
           * Make a request to update the order.
          */
         "onScChange"?: (event: CustomEvent<{ number: string; number_type: string }>) => void;
+        /**
+          * Make a request to update the order.
+         */
+        "onScInput"?: (event: CustomEvent<Partial<{ number: string; number_type: string }>>) => void;
+        /**
+          * Change the Type
+         */
+        "onScInputType"?: (event: CustomEvent<string>) => void;
         /**
           * Set the checkout state.
          */
@@ -6031,6 +6203,104 @@ declare namespace LocalJSX {
     interface ScText {
         "tag"?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
         "truncate"?: boolean;
+    }
+    interface ScTextarea {
+        /**
+          * The textarea's autocapitalize attribute.
+         */
+        "autocapitalize"?: 'off' | 'none' | 'on' | 'sentences' | 'words' | 'characters';
+        /**
+          * The textarea's autocomplete attribute.
+         */
+        "autocomplete"?: string;
+        /**
+          * The textarea's autocorrect attribute.
+         */
+        "autocorrect"?: string;
+        /**
+          * The textarea's autofocus attribute.
+         */
+        "autofocus"?: boolean;
+        /**
+          * Disables the textarea.
+         */
+        "disabled"?: boolean;
+        /**
+          * The input's enterkeyhint attribute. This can be used to customize the label or icon of the Enter key on virtual keyboards.
+         */
+        "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
+        /**
+          * Draws a filled textarea.
+         */
+        "filled"?: boolean;
+        /**
+          * The textarea's help text. Alternatively, you can use the help-text slot.
+         */
+        "help"?: string;
+        /**
+          * The textarea's inputmode attribute.
+         */
+        "inputmode"?: 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url';
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, and `maxlength` using the browser's constraint validation API.
+         */
+        "invalid"?: boolean;
+        /**
+          * The textarea's label. Alternatively, you can use the label slot.
+         */
+        "label"?: string;
+        /**
+          * The maximum length of input that will be considered valid.
+         */
+        "maxlength"?: number;
+        /**
+          * The minimum length of input that will be considered valid.
+         */
+        "minlength"?: number;
+        /**
+          * The textarea's name attribute.
+         */
+        "name"?: string;
+        "onScBlur"?: (event: CustomEvent<void>) => void;
+        "onScChange"?: (event: CustomEvent<void>) => void;
+        "onScFocus"?: (event: CustomEvent<void>) => void;
+        "onScInput"?: (event: CustomEvent<void>) => void;
+        /**
+          * The textarea's placeholder text.
+         */
+        "placeholder"?: string;
+        /**
+          * Makes the textarea readonly.
+         */
+        "readonly"?: boolean;
+        /**
+          * Makes the textarea a required field.
+         */
+        "required"?: boolean;
+        /**
+          * Controls how the textarea can be resized.
+         */
+        "resize"?: 'none' | 'vertical' | 'auto';
+        /**
+          * The number of rows to display by default.
+         */
+        "rows"?: number;
+        /**
+          * Should we show the label
+         */
+        "showLabel"?: boolean;
+        /**
+          * The textarea's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * Enables spell checking on the textarea.
+         */
+        "spellcheck"?: boolean;
+        /**
+          * The textarea's value attribute.
+         */
+        "value"?: string;
     }
     interface ScToggle {
         /**
@@ -6268,6 +6538,7 @@ declare namespace LocalJSX {
         "sc-tag": ScTag;
         "sc-tax-id-input": ScTaxIdInput;
         "sc-text": ScText;
+        "sc-textarea": ScTextarea;
         "sc-toggle": ScToggle;
         "sc-toggles": ScToggles;
         "sc-tooltip": ScTooltip;
@@ -6403,6 +6674,7 @@ declare module "@stencil/core" {
             "sc-tag": LocalJSX.ScTag & JSXBase.HTMLAttributes<HTMLScTagElement>;
             "sc-tax-id-input": LocalJSX.ScTaxIdInput & JSXBase.HTMLAttributes<HTMLScTaxIdInputElement>;
             "sc-text": LocalJSX.ScText & JSXBase.HTMLAttributes<HTMLScTextElement>;
+            "sc-textarea": LocalJSX.ScTextarea & JSXBase.HTMLAttributes<HTMLScTextareaElement>;
             "sc-toggle": LocalJSX.ScToggle & JSXBase.HTMLAttributes<HTMLScToggleElement>;
             "sc-toggles": LocalJSX.ScToggles & JSXBase.HTMLAttributes<HTMLScTogglesElement>;
             "sc-tooltip": LocalJSX.ScTooltip & JSXBase.HTMLAttributes<HTMLScTooltipElement>;
