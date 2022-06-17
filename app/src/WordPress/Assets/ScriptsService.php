@@ -143,7 +143,7 @@ class ScriptsService {
 			]
 		);
 
-		wp_localize_script( $this->handle, 'scIconPath', esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) );
+		wp_localize_script( 'surecart-components', 'scIconPath', esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) );
 	}
 
 	/**
