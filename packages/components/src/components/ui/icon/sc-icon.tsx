@@ -7,6 +7,7 @@ const parser = new DOMParser();
 @Component({
   tag: 'sc-icon',
   styleUrl: 'sc-icon.css',
+  assetsDirs: ['icon-assets'],
   shadow: true,
 })
 export class ScIcon {
