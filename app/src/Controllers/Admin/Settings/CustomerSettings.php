@@ -5,11 +5,13 @@ namespace SureCart\Controllers\Admin\Settings;
 /**
  * Controls the settings page.
  */
-class CustomerSettings extends FrameSettings {
+class CustomerSettings extends BaseSettings {
 	/**
-	 * The endpoint for the frame.
+	 * Script handles for pages
 	 *
-	 * @var string
+	 * @var array
 	 */
-	protected $endpoint = 'customer_notification_protocol';
+	protected $scripts = [
+		'show' => [ 'surecart/scripts/admin/customer', 'admin/settings/customer' ],
+	];
 }

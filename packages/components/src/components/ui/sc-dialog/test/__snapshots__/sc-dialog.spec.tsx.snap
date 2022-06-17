@@ -10,8 +10,8 @@ exports[`sc-dialog renders 1`] = `
           <h2 class="dialog__title" id="title" part="title">
             <slot name="label"></slot>
           </h2>
-          <sc-button circle="" type="text">
-            <sc-icon class="dialog__close" exportparts="base:close-button__base" label="Close" name="x" part="close-button"></sc-icon>
+          <sc-button circle="" class="dialog__close" exportparts="base:close-button__base" part="close-button" type="text">
+            <sc-icon label="Close" name="x"></sc-icon>
           </sc-button>
         </header>
         <div class="dialog__body" part="body">

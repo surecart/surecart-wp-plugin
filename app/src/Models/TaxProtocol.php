@@ -11,7 +11,7 @@ class TaxProtocol extends Model {
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'tax_protocols';
+	protected $endpoint = 'tax_protocol';
 
 	/**
 	 * Object name
@@ -19,4 +19,11 @@ class TaxProtocol extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'tax_protocol';
+
+	/**
+	 * Does an update clear account cache?
+	 *
+	 * @var boolean
+	 */
+	protected $clears_account_cache = true;
 }

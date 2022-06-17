@@ -7,12 +7,12 @@
 
 ## Properties
 
-| Property   | Attribute  | Description           | Type     | Default                   |
-| ---------- | ---------- | --------------------- | -------- | ------------------------- |
-| `every`    | `every`    |                       | `string` | `__('every', 'surecart')` |
-| `fallback` | `fallback` |                       | `string` | `__('once', 'surecart')`  |
-| `interval` | `interval` |                       | `string` | `''`                      |
-| `value`    | `value`    | The number to format. | `number` | `0`                       |
+| Property   | Attribute  | Description           | Type     | Default |
+| ---------- | ---------- | --------------------- | -------- | ------- |
+| `every`    | `every`    |                       | `string` | `'/'`   |
+| `fallback` | `fallback` |                       | `string` | `''`    |
+| `interval` | `interval` |                       | `string` | `''`    |
+| `value`    | `value`    | The number to format. | `number` | `0`     |
 
 
 ----------------------------------------------

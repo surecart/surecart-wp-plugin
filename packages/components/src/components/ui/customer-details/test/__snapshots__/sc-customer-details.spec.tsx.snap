@@ -101,7 +101,8 @@ exports[`sc-customer-details renders 1`] = `
               </strong>
             </div>
             <div>
-              line_1
+              test
+line_1
 line_2
 city line, wi 53716
 undefined

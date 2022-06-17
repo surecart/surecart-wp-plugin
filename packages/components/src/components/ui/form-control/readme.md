@@ -39,6 +39,7 @@
  - [sc-input](../input)
  - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-select](../select)
+ - [sc-textarea](../sc-textarea)
 
 ### Depends on
 
@@ -54,6 +55,7 @@ graph TD;
   sc-input --> sc-form-control
   sc-payment --> sc-form-control
   sc-select --> sc-form-control
+  sc-textarea --> sc-form-control
   style sc-form-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

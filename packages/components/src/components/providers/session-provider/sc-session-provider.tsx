@@ -91,7 +91,7 @@ export class ScSessionProvider {
   @Listen('scUpdateOrder')
   handleUpdateSession(e) {
     const { data, options } = e.detail;
-    if (options.silent) {
+    if (options?.silent) {
       this.update({ ...this.defaultFormData(), ...data });
     } else {
       this.loadUpdate(data);

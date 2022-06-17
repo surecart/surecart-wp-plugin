@@ -44,6 +44,13 @@ class RequestService {
 	protected $errors_service;
 
 	/**
+	 * What type of cached request is this.
+	 *
+	 * @var string|null
+	 */
+	protected $cache_status = 'none';
+
+	/**
 	 * Constructor.
 	 *
 	 * @param string $base_path The rest api base path.
@@ -66,116 +73,202 @@ class RequestService {
 	}
 
 	/**
+	 * Should we get a cached request?
+	 *
+	 * @return boolean
+	 */
+	public function shouldFindCache( $cachable, $cache_key, $args = [] ) {
+		// only for fetch requests.
+		if ( isset( $args['method'] ) && 'GET' !== $args['method'] ) {
+			return false;
+		}
+
+		// if the args are set, then do what they say.
+		if ( isset( $args['query']['cached'] ) ) {
+			return (bool) $args['query']['cached'];
+		}
+
+		return (bool) $cachable && $cache_key;
+	}
+
+	/**
+	 * Respond to the request.
+	 *
+	 * @param array  $response Reponse data.
+	 * @param array  $args    Request arguments.
+	 * @param string $endpoint The endpoint to request.
+	 *
+	 * @return array Response data.
+	 */
+	public function respond( $response, $args, $endpoint ) {
+		if ( is_array( $response ) ) {
+			foreach ( $response as $item ) {
+				$item->cache_status = $this->cache_status;
+			}
+		}
+
+		if ( is_object( $response ) ) {
+			$response->cache_status = $this->cache_status;
+		}
+
+		return apply_filters( 'surecart/request/response', $response, $args, $endpoint );
+	}
+
+	/**
+	 * Set the response cache status.
+	 *
+	 * @param object $response Response object.
+	 * @param string $status The response status.
+	 *
+	 * @return void
+	 */
+	public function setResponseCacheStatus( $response, $status ) {
+		if ( is_array( $response ) ) {
+			foreach ( $response as $item ) {
+				$item->cached = $status;
+			}
+		} elseif ( is_object( $response ) ) {
+			$response->cached = $status;
+		}
+
+		return $response;
+	}
+
+	/**
 	 * Make the request
+	 *
+	 * @param string  $endpoint Endpoint to request.
+	 * @param array   $args Arguments for request.
+	 * @param boolean $cachable Should this request be cached.
+	 * @param string  $cache_key The cache key to use.
+	 *
+	 * @return mixed
+	 */
+	public function makeRequest( $endpoint, $args = [], $cachable = false, $cache_key = '' ) {
+		// use the cache service for this request.
+		$cache = new RequestCacheService( $endpoint, $args, $cache_key );
+
+		// we have an object cache request.
+		$response_body = $cache->getObjectCache();
+		if ( false !== $response_body ) {
+			$this->cache_status = 'object';
+			return $this->respond( $response_body, $args, $endpoint );
+		}
+
+		// check if we should get a cached version of this.
+		if ( $this->shouldFindCache( $cachable, $cache_key, $args ) ) {
+			// get from cache.
+			$response_body = $cache->getTransientCache();
+			// we have a cached response.
+			if ( false !== $response_body ) {
+				$this->cache_status = 'transient';
+				return $this->respond( $response_body, $args, $endpoint );
+			}
+		}
+
+		// make the uncached request.
+		$response_body = $this->makeUncachedRequest( $endpoint, $args );
+
+		if ( is_wp_error( $response_body ) ) {
+			return $response_body;
+		}
+
+		// set in object cache.
+		$cache->setCache( $response_body, 'object' );
+		if ( (bool) $cachable && $cache_key ) {
+			$cache->setCache( $response_body, 'transient' );
+		}
+
+		// return response.
+		return $this->respond( $response_body, $args, $endpoint );
+	}
+
+	/**
+	 * Make the uncached request.
 	 *
 	 * @param string $endpoint Endpoint to request.
 	 * @param array  $args Arguments for request.
 	 *
 	 * @return mixed
 	 */
-	public function makeRequest( $endpoint, $args = [] ) {
-		// we cache this so we can request it several times.
-		$cache_key = $endpoint . wp_json_encode( $args );
-
-		// flush the cache on the first request to clear any redis caching.
-		if ( ! self::$cached ) {
-			wp_cache_flush( $cache_key );
-			self::$cached = true;
+	public function makeUncachedRequest( $endpoint, $args = [] ) {
+		// make sure we send json.
+		if ( empty( $args['headers']['Content-Type'] ) ) {
+			$args['headers']['Content-Type'] = 'application/json';
 		}
 
-		$response_body = wp_cache_get( $cache_key );
-
-		if ( false === $response_body ) {
-			// make sure we send json.
-			if ( empty( $args['headers']['Content-Type'] ) ) {
-				$args['headers']['Content-Type'] = 'application/json';
-			}
-
-			// add auth.
-			if ( empty( $args['headers']['Authorization'] ) ) {
-				$args['headers']['Authorization'] = "Bearer $this->token";
-			}
-
-			// add version header.
-			$args['headers']['X-SURECART-WP-PLUGIN-VERSION'] = \SureCart::plugin()->version();
-
-			// add referer header.
-			if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
-				$args['headers']['X-SURECART-REFERRER'] = $_SERVER['HTTP_REFERER'];
-			}
-
-			// parse args.
-			$args = wp_parse_args(
-				$args,
-				[
-					'timeout'   => 20,
-					'sslverify' => true,
-				]
-			);
-
-			// filter args and endpoint.
-			$args     = apply_filters( 'surecart/request/args', $args, $endpoint );
-			$endpoint = apply_filters( 'surecart/request/endpoint', $endpoint, $args );
-
-			// make url.
-			$url = trailingslashit( $this->base_url ) . untrailingslashit( $endpoint );
-
-			// add query args.
-			if ( ! empty( $args['query'] ) ) {
-				$url = add_query_arg( $this->parseArgs( $args['query'] ), $url );
-				$url = preg_replace( '/%5B[0-9]+%5D/', '%5B%5D', $url );
-				unset( $args['query'] );
-			}
-
-			// json encode body.
-			if ( ! empty( $args['body'] ) ) {
-				if ( 'application/json' === $args['headers']['Content-Type'] ) {
-					$args['body'] = wp_json_encode( $this->parseArgs( $args['body'] ) );
-				}
-			}
-
-			// make request.
-			$response = $this->remoteRequest( $url, $args );
-
-			// bail early if it's a wp_error.
-			if ( is_wp_error( $response ) ) {
-				return $response;
-			}
-
-			$response_code = wp_remote_retrieve_response_code( $response );
-			$response_body = wp_remote_retrieve_body( $response );
-			$admin_notice  = (array) wp_remote_retrieve_header( $response, 'X-SURECART-WP-ADMIN-NOTICE' );
-			$updated_at    = wp_remote_retrieve_header( $response, 'X-SURECART-ACCOUNT-UPDATED-AT' );
-
-			// make sure to clear the account transient if the account is updated.
-			if ( get_option( 'sc_account_updated_at' ) !== $updated_at ) {
-				\delete_transient( 'surecart_account' );
-				\update_option( 'sc_account_updated_at', $updated_at );
-			}
-
-			if ( $admin_notice ) {
-				// we don't care if this fails.
-				try {
-					\SureCart::notices()->showResponseNotice( $admin_notice );
-				} catch ( \Exception $e ) {
-					error_log( $e->getMessage() );
-				}
-			}
-
-			// check for errors.
-			if ( ! in_array( $response_code, [ 200, 201 ], true ) ) {
-				$response_body = json_decode( $response_body, true );
-				return $this->errors_service->translate( $response_body, $response_code );
-			}
-
-			$response_body = json_decode( $response_body );
-			wp_cache_set( $cache_key, $response_body );
+		// add auth.
+		if ( empty( $args['headers']['Authorization'] ) ) {
+			$args['headers']['Authorization'] = "Bearer $this->token";
 		}
 
-		// return response.
-		return apply_filters( 'surecart/request/response', $response_body, $args, $endpoint );
+		// add version header.
+		$args['headers']['X-SURECART-WP-PLUGIN-VERSION'] = \SureCart::plugin()->version();
+
+		// add referer header.
+		if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
+			$args['headers']['X-SURECART-REFERRER'] = $_SERVER['HTTP_REFERER'];
+		}
+
+		// parse args.
+		$args = wp_parse_args(
+			$args,
+			[
+				'timeout'   => 20,
+				'sslverify' => true,
+			]
+		);
+
+		// filter args and endpoint.
+		$args     = apply_filters( 'surecart/request/args', $args, $endpoint );
+		$endpoint = apply_filters( 'surecart/request/endpoint', $endpoint, $args );
+
+		// make url.
+		$url = trailingslashit( $this->base_url ) . untrailingslashit( $endpoint );
+
+		// add query args.
+		if ( ! empty( $args['query'] ) ) {
+			$url = add_query_arg( $this->parseArgs( $args['query'] ), $url );
+			$url = preg_replace( '/%5B[0-9]+%5D/', '%5B%5D', $url );
+			unset( $args['query'] );
+		}
+
+		// json encode body.
+		if ( ! empty( $args['body'] ) ) {
+			if ( 'application/json' === $args['headers']['Content-Type'] ) {
+				$args['body'] = wp_json_encode( $this->parseArgs( $args['body'] ) );
+			}
+		}
+
+		// make request.
+		$response = $this->remoteRequest( $url, $args );
+
+		// bail early if it's a wp_error.
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+
+		$response_code = wp_remote_retrieve_response_code( $response );
+		$response_body = wp_remote_retrieve_body( $response );
+		$admin_notice  = (array) wp_remote_retrieve_header( $response, 'X-SURECART-WP-ADMIN-NOTICE' );
+
+		if ( $admin_notice ) {
+			// we don't care if this fails.
+			try {
+				\SureCart::notices()->showResponseNotice( $admin_notice );
+			} catch ( \Exception $e ) {
+				error_log( $e->getMessage() );
+			}
+		}
+
+		// check for errors.
+		if ( ! in_array( $response_code, [ 200, 201 ], true ) ) {
+			$response_body = json_decode( $response_body, true );
+			return $this->errors_service->translate( $response_body, $response_code );
+		}
+
+		return json_decode( $response_body );
 	}
-
 
 	/**
 	 * Make the remote request.
