@@ -9,7 +9,7 @@ declare global {
     };
     registerSureCartIconPath: (path: string) => void;
     registerSureCartIconLibrary: (name: string, options: { resolver: IconLibraryResolver; mutator?: IconLibraryMutator }) => void;
-    scIconPath: string;
+    scIcons: { path: string };
     scData: {
       root_url: string;
       nonce: string;

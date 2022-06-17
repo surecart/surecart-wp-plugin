@@ -2,7 +2,6 @@
 	"name": "@surecart/components-react",
 	"sideEffects": false,
 	"version": "0.0.3",
-	"private": false,
 	"description": "React specific wrapper for surecart/components",
 	"repository": {
 		"type": "git",
@@ -25,7 +24,7 @@
 		"src/"
 	],
 	"dependencies": {
-		"@surecart/components": "0.0.5"
+		"@surecart/components": "workspace:^"
 	},
 	"devDependencies": {
 		"@types/jest": "23.3.9",

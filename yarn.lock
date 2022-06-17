@@ -5079,6 +5079,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@surecart/components-react@workspace:packages/components-react"
   dependencies:
+    "@surecart/components": "workspace:^"
     "@types/jest": 23.3.9
     "@types/node": ^15.12.2
     "@types/react": ^17.0.34

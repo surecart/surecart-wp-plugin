@@ -1027,12 +1027,6 @@
     "class": true,
     "slot": true
   },
-  "sc-register-icon-library": {
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "sc-secure-notice": {
     "style": true,
     "id": true,

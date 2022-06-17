@@ -1,5 +1,5 @@
 import { Component, Watch, h, Prop, State, Event, EventEmitter } from '@stencil/core';
-import { getIconLibrary, unwatchIcon, watchIcon } from './library';
+import { getIconLibrary } from './library';
 import { requestIcon } from './request';
 
 const parser = new DOMParser();
@@ -38,14 +38,6 @@ export class ScIcon {
 
   componentWillLoad() {
     this.setIcon();
-  }
-
-  connectedCallback() {
-    watchIcon(this);
-  }
-
-  disconnectedCallback() {
-    unwatchIcon(this);
   }
 
   getLabel() {
