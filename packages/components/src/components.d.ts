@@ -6,7 +6,6 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Address, ChoiceItem, Customer, DiscountResponse, FormState, FormStateSetter, Invoice, LineItem, LineItemData, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxIdentifier, TaxStatus, WordPressUser } from "./types";
-import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
 export namespace Components {
     interface ScAddress {
         /**
@@ -1920,10 +1919,6 @@ export namespace Components {
          */
         "label": string;
     }
-    interface ScRegisterIconLibrary {
-        "registerIconLibrary": (name: string, options: { resolver: IconLibraryResolver; mutator?: IconLibraryMutator; }) => Promise<void>;
-        "unregisterIconLibrary": (name: string) => Promise<void>;
-    }
     interface ScSecureNotice {
     }
     interface ScSelect {
@@ -3143,12 +3138,6 @@ declare global {
         prototype: HTMLScRadioGroupElement;
         new (): HTMLScRadioGroupElement;
     };
-    interface HTMLScRegisterIconLibraryElement extends Components.ScRegisterIconLibrary, HTMLStencilElement {
-    }
-    var HTMLScRegisterIconLibraryElement: {
-        prototype: HTMLScRegisterIconLibraryElement;
-        new (): HTMLScRegisterIconLibraryElement;
-    };
     interface HTMLScSecureNoticeElement extends Components.ScSecureNotice, HTMLStencilElement {
     }
     var HTMLScSecureNoticeElement: {
@@ -3479,7 +3468,6 @@ declare global {
         "sc-quantity-select": HTMLScQuantitySelectElement;
         "sc-radio": HTMLScRadioElement;
         "sc-radio-group": HTMLScRadioGroupElement;
-        "sc-register-icon-library": HTMLScRegisterIconLibraryElement;
         "sc-secure-notice": HTMLScSecureNoticeElement;
         "sc-select": HTMLScSelectElement;
         "sc-session-provider": HTMLScSessionProviderElement;
@@ -5659,8 +5647,6 @@ declare namespace LocalJSX {
          */
         "label"?: string;
     }
-    interface ScRegisterIconLibrary {
-    }
     interface ScSecureNotice {
     }
     interface ScSelect {
@@ -6506,7 +6492,6 @@ declare namespace LocalJSX {
         "sc-quantity-select": ScQuantitySelect;
         "sc-radio": ScRadio;
         "sc-radio-group": ScRadioGroup;
-        "sc-register-icon-library": ScRegisterIconLibrary;
         "sc-secure-notice": ScSecureNotice;
         "sc-select": ScSelect;
         "sc-session-provider": ScSessionProvider;
@@ -6642,7 +6627,6 @@ declare module "@stencil/core" {
             "sc-quantity-select": LocalJSX.ScQuantitySelect & JSXBase.HTMLAttributes<HTMLScQuantitySelectElement>;
             "sc-radio": LocalJSX.ScRadio & JSXBase.HTMLAttributes<HTMLScRadioElement>;
             "sc-radio-group": LocalJSX.ScRadioGroup & JSXBase.HTMLAttributes<HTMLScRadioGroupElement>;
-            "sc-register-icon-library": LocalJSX.ScRegisterIconLibrary & JSXBase.HTMLAttributes<HTMLScRegisterIconLibraryElement>;
             "sc-secure-notice": LocalJSX.ScSecureNotice & JSXBase.HTMLAttributes<HTMLScSecureNoticeElement>;
             "sc-select": LocalJSX.ScSelect & JSXBase.HTMLAttributes<HTMLScSelectElement>;
             "sc-session-provider": LocalJSX.ScSessionProvider & JSXBase.HTMLAttributes<HTMLScSessionProviderElement>;

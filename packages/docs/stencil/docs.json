@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-06-17T16:35:37",
+  "timestamp": "2022-06-17T18:47:38",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.15.1",
@@ -14841,48 +14841,6 @@
           "docs": ""
         }
       ],
-      "dependents": [],
-      "dependencies": [],
-      "dependencyGraph": {}
-    },
-    {
-      "filePath": "./src/components/ui/icon/sc-register.tsx",
-      "encapsulation": "none",
-      "tag": "sc-register-icon-library",
-      "readme": "# ce-register-icon-library\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [],
-      "methods": [
-        {
-          "name": "registerIconLibrary",
-          "returns": {
-            "type": "Promise<void>",
-            "docs": ""
-          },
-          "signature": "registerIconLibrary(name: string, options: { resolver: IconLibraryResolver; mutator?: IconLibraryMutator; }) => Promise<void>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        },
-        {
-          "name": "unregisterIconLibrary",
-          "returns": {
-            "type": "Promise<void>",
-            "docs": ""
-          },
-          "signature": "unregisterIconLibrary(name: string) => Promise<void>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        }
-      ],
-      "events": [],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}

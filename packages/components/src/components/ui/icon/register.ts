@@ -1,11 +1,11 @@
 import { registerIconLibrary } from './library';
 const registerIcons = (path = '') => {
-  if (!path && !window?.scIconPath) {
+  if (!path && !window?.scIcons?.path) {
     return;
   }
   return registerIconLibrary('default', {
     resolver: function (name) {
-      const iconPath = path || window?.scIconPath;
+      const iconPath = path || window?.scIcons?.path;
       return `${iconPath?.replace(/\/$/, '')}/${name}.svg`;
     },
     mutator: function (svg) {
