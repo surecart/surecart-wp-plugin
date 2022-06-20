@@ -33,9 +33,9 @@ class UserServiceTest extends SureCartUnitTestCase
 		$this->assertSame('surecart/user-role', $service->getName());
 		$this->assertSame('product', $service->getModel());
 		$this->assertStringContainsString('surecart/images/integrations/wordpress.svg', $service->getLogo());
-		$this->assertSame('Change WordPress User Role', $service->getLabel());
-		$this->assertSame('Change User Role', $service->getItemLabel());
-		$this->assertSame('Change the user role of the user who purchased the product.', $service->getItemHelp());
+		$this->assertSame('Add WordPress User Role', $service->getLabel());
+		$this->assertSame('Add User Role', $service->getItemLabel());
+		$this->assertSame('Add the user role of the user who purchased the product.', $service->getItemHelp());
 	}
 
 	/**

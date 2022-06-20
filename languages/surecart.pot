@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-06-17T19:00:23+00:00\n"
+"POT-Creation-Date: 2022-06-20T18:30:21+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -690,15 +690,15 @@ msgid "Enable access to a TutorLMS course."
 msgstr ""
 
 #: src/Integrations/User/UserService.php:48
-msgid "Change WordPress User Role"
+msgid "Add WordPress User Role"
 msgstr ""
 
 #: src/Integrations/User/UserService.php:57
-msgid "Change User Role"
+msgid "Add User Role"
 msgstr ""
 
 #: src/Integrations/User/UserService.php:66
-msgid "Change the user role of the user who purchased the product."
+msgid "Add the user role of the user who purchased the product."
 msgstr ""
 
 #: src/Middleware/ArchiveModelMiddleware.php:24

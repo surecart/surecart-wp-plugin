@@ -115,6 +115,7 @@ class ScriptsService {
 			true
 		);
 
+		wp_localize_script( 'surecart-blocks', 'scIcons', [ 'path' => esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) ] );
 	}
 
 	/**
