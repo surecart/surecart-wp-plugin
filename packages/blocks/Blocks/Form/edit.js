@@ -29,47 +29,6 @@ import Setup from './components/Setup';
 import { styles } from '../../../admin/styles/admin';
 import ColorPopup from '../../components/ColorPopup';
 
-const ALLOWED_BLOCKS = [
-	'core/spacer',
-	'core/heading',
-	'core/paragraph',
-	'core/code',
-	'core/shortcode',
-	'core/quote',
-	'core/list',
-	'core/pullquote',
-	'core/verse',
-	'core/image',
-	'core/gallery',
-	'core/media-text',
-	'core/button',
-	'core/table',
-	'core/separator',
-	'core/audio',
-	'core/video',
-	'core/embed',
-	'core/preformatted',
-
-	'surecart/columns',
-	'surecart/input',
-	'surecart/password',
-	'surecart/price-selector',
-	'surecart/checkbox',
-	'surecart/divider',
-	'surecart/heading',
-	'surecart/button',
-	'surecart/email',
-	'surecart/switch',
-	'surecart/name',
-	'surecart/payment',
-	'surecart/express-payment',
-	'surecart/pricing-section',
-	'surecart/totals',
-	'surecart/form',
-	'surecart/section-title',
-	'surecart/submit',
-];
-
 export default function edit({ clientId, attributes, setAttributes }) {
 	const [patterns, setPatterns] = useState([]);
 	const UnitControl = __stableUnitControl
@@ -498,10 +457,6 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							`}
 						>
 							<InnerBlocks
-								allowedBlocks={applyFilters(
-									'surecart/form/allowed_blocks',
-									ALLOWED_BLOCKS
-								)}
 								templateLock={false}
 								renderAppender={
 									blockCount
