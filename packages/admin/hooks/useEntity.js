@@ -70,12 +70,12 @@ export default (type, id, query = {}, name = 'surecart') => {
 
 	const ucName = camelName(type);
 
-	if (hasLoadedItem && Object.keys(item).length === 0) {
-		throw __(
-			'Fetch failed. Please double-check your API token is correct in the connection tab of your settings.',
-			'surecart'
-		);
-	}
+	// if (hasLoadedItem && Object.keys(item).length === 0) {
+	// 	throw __(
+	// 		'Fetch failed. Please double-check your API token is correct in the connection tab of your settings.',
+	// 		'surecart'
+	// 	);
+	// }
 
 	return {
 		// item.
