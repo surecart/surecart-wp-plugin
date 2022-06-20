@@ -1,7 +1,7 @@
 {
   "name": "@surecart/components",
-  "version": "0.0.1",
-  "description": "SureCart Components",
+  "version": "0.0.6",
+  "description": "The @surecare/components package contains all the core web components that other packages rely on.",
   "main": "dist/index.cjs.js",
   "docs": "docs/docs.json",
   "module": "dist/custom-elements/index.js",
@@ -12,13 +12,12 @@
   "collection:main": "dist/collection/index.js",
   "unpkg": "dist/ce-components/ce-components.js",
   "repository": {
-    "url": "git@github.com:surecart/surecart-components.git"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "url": "https://github.com/surecart/surecart-wp.git"
   },
   "files": [
-    "dist/"
+    "dist/",
+    "loader/",
+    "src/"
   ],
   "scripts": {
     "stencil": "stencil",

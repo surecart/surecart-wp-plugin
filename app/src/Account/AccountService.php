@@ -15,19 +15,75 @@ class AccountService {
 	protected $account = null;
 
 	/**
+	 * The key for the cache.
+	 *
+	 * @var string
+	 */
+	protected $cache_key = 'surecart_account';
+
+	/**
 	 * We get the account when the service is loaded.
 	 * Since this is loaded in a service container, its
 	 * cached so it only fetches once, no matter how many calls.
 	 *
-	 * This is also cached in a 10 second transient to prevent
+	 * This is also cached in a 60 second transient to prevent
 	 * rate limited calls to the API.
+	 *
+	 * @param \SureCart\Support\Server $server The server utility to use.
 	 */
-	public function __construct() {
-		$this->account = get_transient( 'surecart_account' );
-		if ( false === $this->account ) {
-			$this->account = Account::with( [ 'brand', 'portal_protocol', 'tax_protocol' ] )->find();
-			set_transient( 'surecart_account', $this->account, DAY_IN_SECONDS );
+	public function __construct( \SureCart\Support\Server $server ) {
+		$cache = defined( 'SURECART_CACHE_ACCOUNT' ) && SURECART_CACHE_ACCOUNT;
+
+		// do not cache requests if specifically set to false.
+		if ( false === $cache ) {
+			return $this->fetchAccount();
 		}
+
+		// cache requests if specifically set to true.
+		if ( true === $cache ) {
+			return $this->fetchCachedAccount();
+		}
+
+		// don't cache on localhost if constant is not set.
+		if ( $server->isLocalHost() ) {
+			return $this->fetchAccount();
+		}
+
+		// cache requests if not explicitly set.
+		return $this->fetchCachedAccount();
+	}
+
+	/**
+	 * Fetch the cached account.
+	 *
+	 * @return \SureCart\Models\Account
+	 */
+	public function fetchCachedAccount() {
+		$this->account = get_transient( $this->cache_key );
+		if ( false === $this->account ) {
+			$this->account = $this->fetchAccount();
+			set_transient( $this->cache_key, $this->account, 60 );
+		}
+		return $this->account;
+	}
+
+	/**
+	 * Fetch the account.
+	 *
+	 * @return \SureCart\Models\Account
+	 */
+	protected function fetchAccount() {
+		$this->account = Account::with( [ 'brand', 'portal_protocol', 'tax_protocol' ] )->find();
+		return $this->account;
+	}
+
+	/**
+	 * Clear account cache.
+	 *
+	 * @return boolean
+	 */
+	public function clearCache() {
+		return delete_transient( $this->cache_key );
 	}
 
 	/**

@@ -5,11 +5,13 @@ namespace SureCart\Controllers\Admin\Settings;
 /**
  * Controls the settings page.
  */
-class TaxSettings extends FrameSettings {
+class TaxSettings extends BaseSettings {
 	/**
-	 * The endpoint for the frame.
+	 * Script handles for pages
 	 *
-	 * @var string
+	 * @var array
 	 */
-	protected $endpoint = 'tax_protocol';
+	protected $scripts = [
+		'show' => [ 'surecart/scripts/admin/tax', 'admin/settings/tax' ],
+	];
 }

@@ -7,6 +7,7 @@ const parser = new DOMParser();
 @Component({
   tag: 'sc-icon',
   styleUrl: 'sc-icon.css',
+  assetsDirs: ['icon-assets'],
   shadow: true,
 })
 export class ScIcon {
@@ -110,6 +111,6 @@ export class ScIcon {
   }
 
   render() {
-    return <div part="base" class="icon" role="img" aria-label={this.getLabel()} innerHTML={this.svg} />;
+    return <div part="base" class="icon" role="img" aria-label={this.getLabel()} innerHTML={this.svg}></div>;
   }
 }

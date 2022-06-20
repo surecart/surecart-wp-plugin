@@ -38,21 +38,9 @@ export default class ErrorBoundary extends Component {
 		}
 
 		return (
-			<div>
-				<ScAlert type="danger">
-					{__(
-						'The editor has encountered an unexpected error.',
-						'surecart'
-					)}
-					<ScButton key="recovery" onClick={this.reboot}>
-						{__('Attempt Recovery')}
-					</ScButton>
-					<CopyButton key="copy-error" text={error.stack}>
-						{__('Copy Error')}
-					</CopyButton>
-				</ScAlert>
-				{this.props.children}
-			</div>
+			<sc-alert type="danger" open>
+				{error}
+			</sc-alert>
 		);
 	}
 }

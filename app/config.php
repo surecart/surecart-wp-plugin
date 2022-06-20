@@ -41,6 +41,7 @@ return [
 		// REST providers.
 		\SureCart\Rest\BlockPatternsRestServiceProvider::class,
 		\SureCart\Rest\AccountRestServiceProvider::class,
+		\SureCart\Rest\BrandRestServiceProvider::class,
 		\SureCart\Rest\LoginRestServiceProvider::class,
 		\SureCart\Rest\FilesRestServiceProvider::class,
 		\SureCart\Rest\PurchasesRestServiceProvider::class,
@@ -60,6 +61,12 @@ return [
 		\SureCart\Rest\RefundsRestServiceProvider::class,
 		\SureCart\Rest\SubscriptionRestServiceProvider::class,
 		\SureCart\Rest\SubscriptionProtocolRestServiceProvider::class,
+		\SureCart\Rest\SettingsRestServiceProvider::class,
+		\SureCart\Rest\PortalProtocolRestServiceProvider::class,
+		\SureCart\Rest\TaxProtocolRestServiceProvider::class,
+		\SureCart\Rest\TaxRegistrationRestServiceProvider::class,
+		\SureCart\Rest\TaxZoneRestServiceProvider::class,
+		\SureCart\Rest\CustomerNotificationProtocolRestServiceProvider::class,
 		\SureCart\Rest\OrderRestServiceProvider::class,
 		\SureCart\Rest\InvoicesRestServiceProvider::class,
 		\SureCart\Rest\WebhooksRestServiceProvider::class,
@@ -67,6 +74,7 @@ return [
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,
 		\SureCart\Integrations\LearnDash\LearnDashServiceProvider::class,
+		\SureCart\Integrations\TutorLMS\TutorLMSServiceProvider::class,
 		\SureCart\Integrations\User\UserServiceProvider::class,
 	],
 

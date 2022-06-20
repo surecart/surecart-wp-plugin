@@ -7,6 +7,8 @@ use SureCart\Tests\SureCartUnitTestCase;
 
 class RequestServiceTest extends SureCartUnitTestCase
 {
+	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
 	protected $requests;
 
 	/**
@@ -31,5 +33,24 @@ class RequestServiceTest extends SureCartUnitTestCase
 	{
 		$service = new RequestService();
 		$this->assertSame(SURECART_APP_URL . '/v1/', $service->getBaseUrl());
+	}
+
+	/**
+	 * @dataProvider cacheProvider
+	 * @group failing
+	 */
+	public function test_shouldFindCache(bool $cachable, string $cache_key, array $args =[], bool $expected) {
+		$service = new RequestService();
+		$this->assertSame($service->shouldFindCache($cachable, $cache_key, $args), $expected);
+	}
+
+	public function cacheProvider(): array {
+		return [
+			[true, 'test', ['method' => 'GET'], true],
+			[true, '', ['method' => 'GET'], false],
+			[false, '', ['method' => 'GET', 'query' => ['cached' => true]], true],
+			[true, 'string', ['method' => 'GET', 'query' => ['cached' => false]], false],
+			[true, 'string', ['method' => 'POST'], false],
+		];
 	}
 }

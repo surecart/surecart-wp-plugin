@@ -27,7 +27,7 @@ export class FormSubmitController {
   constructor(input: any, options?: Partial<FormSubmitControllerOptions>) {
     this.input = input;
     this.options = {
-      form: (input: HTMLInputElement) => input?.closest('sc-form')?.shadowRoot?.querySelector('form') || input.closest('form'),
+      form: (input: HTMLInputElement) => this.closestElement('sc-form', input)?.shadowRoot?.querySelector('form') || this.closestElement('form', input),
       name: (input: HTMLInputElement) => input.name,
       value: (input: HTMLInputElement) => input.value,
       disabled: (input: HTMLInputElement) => input.disabled,
@@ -36,6 +36,11 @@ export class FormSubmitController {
 
     this.form = this.options.form(this.input);
     this.handleFormData = this.handleFormData.bind(this);
+  }
+
+  closestElement(selector, el) {
+    if (!el) return null;
+    return (el && el != document && el != window && el.closest(selector)) || this.closestElement(selector, el.getRootNode().host);
   }
 
   addFormData() {
@@ -91,6 +96,8 @@ export const parseFormData = (data: any) => {
     ...rest
   } = data;
 
+  console.log({ data });
+
   const shipping_address = {
     ...(shipping_city ? { city: shipping_city } : {}),
     ...(shipping_country ? { country: shipping_country } : {}),
@@ -118,4 +125,15 @@ export const parseFormData = (data: any) => {
     ...(tax_number_type && tax_number ? { tax_identifier: { number: tax_number, number_type: tax_number_type } } : {}),
     ...(Object.keys(rest)?.length ? { metadata: rest } : {}),
   };
+};
+
+export const reportChildrenValidity = async (element: HTMLElement) => {
+  const items = ([...element.shadowRoot.querySelectorAll('*')] as HTMLElement[]).filter((el: any) => typeof el.reportValidity === 'function') as any;
+  for (const el of items) {
+    const isValid = await el.reportValidity();
+    if (!isValid) {
+      return false;
+    }
+  }
+  return true;
 };

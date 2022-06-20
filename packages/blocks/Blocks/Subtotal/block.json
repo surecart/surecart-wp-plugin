@@ -3,7 +3,7 @@
 	"title": "Subtotal Line Item",
 	"description": "Display a subtotal line item.",
 	"category": "surecart",
-	"parent": ["surecart/totals"],
+	"ancestor": ["surecart/totals"],
 	"keywords": ["submit", "button"],
 	"supports": {
 		"reusable": false,

@@ -12,6 +12,7 @@ import {
 	ScMenuItem,
 } from '@surecart/components-react';
 import useEntity from '../../../hooks/useEntity';
+import useSnackbar from '../../../hooks/useSnackbar';
 
 export default ({ id }) => {
 	const { integration, deleteIntegration, deletingIntegration } = useEntity(
@@ -19,6 +20,7 @@ export default ({ id }) => {
 		id
 	);
 	const { integration_id, provider } = integration;
+	const { addSnackbarNotice } = useSnackbar();
 
 	const { providerData, loading } = useSelect(
 		(select) => {
@@ -69,6 +71,9 @@ export default ({ id }) => {
 		if (!r) return;
 		try {
 			await deleteIntegration({ throwOnError: true });
+			addSnackbarNotice({
+				content: __('Integration deleted.', 'surecart'),
+			});
 		} catch (e) {
 			console.error(e);
 			setError(e?.message || __('An error occurred', 'surecart'));

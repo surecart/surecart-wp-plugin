@@ -4,7 +4,7 @@
 	"description": "Display a name your own price field.",
 	"category": "surecart",
 	"keywords": ["name", "customer"],
-	"parent": ["surecart/form", "surecart/column"],
+	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,
 		"html": false

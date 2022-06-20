@@ -4,7 +4,7 @@
 	"description": "Displays a password field.",
 	"category": "surecart",
 	"keywords": ["password", "input"],
-	"parent": ["surecart/form", "surecart/column"],
+	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,
 		"html": false

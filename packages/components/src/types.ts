@@ -1,3 +1,5 @@
+import { IconLibraryMutator, IconLibraryResolver } from './components/ui/icon/library';
+
 declare global {
   interface Window {
     wp: {
@@ -5,9 +7,13 @@ declare global {
       blocks: any;
       i18n: any;
     };
+    registerSureCartIconPath: (path: string) => void;
+    registerSureCartIconLibrary: (name: string, options: { resolver: IconLibraryResolver; mutator?: IconLibraryMutator }) => void;
+    scIconPath: string;
     scData: {
       root_url: string;
       nonce: string;
+      base_url: string;
       nonce_endpoint: string;
     };
     ceRegisterIconLibrary: any;
@@ -227,6 +233,16 @@ export interface Charge extends Object {
   status: 'pending' | 'succeeded' | 'failed';
   updated_at: number;
 }
+
+export interface TaxIdentifier {
+  id: string;
+  number: string;
+  number_type: string;
+  object: 'tax_identifier';
+  valid_eu_vat: false;
+  created_at: number;
+  updated_at: number;
+}
 export interface Order extends Object {
   id?: string;
   status?: 'finalized' | 'draft' | 'paid';
@@ -241,8 +257,11 @@ export interface Order extends Object {
   total_amount?: number;
   subtotal_amount?: number;
   tax_amount: number;
+  tax_inclusive_amount: number;
+  tax_exclusive_amount: number;
   tax_status: 'disabled' | 'address_invalid' | 'estimated' | 'calculated';
   tax_label: string;
+  tax_percent: number;
   line_items: lineItems;
   metadata?: Object;
   payment_intent?: PaymentIntent;
