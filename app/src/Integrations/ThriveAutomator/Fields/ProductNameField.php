@@ -23,7 +23,7 @@ class ProductNameField extends Data_Field {
 	}
 
 	public static function get_supported_filters() {
-		return [ 'string_contains', 'string_equals' ]; // [ 'autocomplete' ];
+		return [ 'string_ec' ];
 	}
 
 	public static function get_validators() {
@@ -33,30 +33,6 @@ class ProductNameField extends Data_Field {
 	public static function get_placeholder() {
 		return '';
 	}
-
-	// public static function is_ajax_field() {
-	// return true;
-	// }
-
-	// public static function get_options_callback() {
-	// $posts = [];
-	// foreach (
-	// get_posts(
-	// [
-	// 'posts_per_page' => '-1',
-	// 'comment_status' => 'open',
-	// 'post_type'      => get_post_types( '', 'names' ),
-	// ]
-	// ) as $post
-	// ) {
-	// $posts[ $post->ID ] = [
-	// 'label' => $post->post_title,
-	// 'id'    => $post->ID,
-	// ];
-	// }
-
-	// return $posts;
-	// }
 
 	public static function get_field_value_type() {
 		return static::TYPE_STRING;
