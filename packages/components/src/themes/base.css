@@ -64,6 +64,21 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
 }
 
 :root {
+  /** Brand */
+  --sc-color-brand-primary: #08BA4F;
+  --sc-color-brand-secondary: #2CC965;
+  --sc-color-brand-heading: #002E33;
+  --sc-color-brand-body: #45505F;
+  --sc-color-brand-main-background: #F2FAFC;
+  --sc-color-brand-content-background: #FFFFFF;
+  --sc-color-brand-stroke: #E7ECEE;
+  --sc-color-brand-subheading: #9CA7AB;
+  --sc-color-brand-pastel-pink: #FCF2F7;
+  --sc-color-brand-pastel-orange: #FEF9F6;
+  --sc-color-brand-pastel-purple: #F7F6FE;
+  --sc-color-brand-pastel-green: #E6F9EE;
+
+  /** Colors */
   --sc-color-black: #000;
   --sc-color-white: #fff;
   --sc-color-gray-50: #f9fafb;

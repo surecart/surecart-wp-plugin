@@ -61,7 +61,7 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 				name={'password'}
 				label={label}
 				placeholder={placeholder}
-				required={true}
+				required={required}
 				type={'password'}
 				help={help}
 			></ScInput>

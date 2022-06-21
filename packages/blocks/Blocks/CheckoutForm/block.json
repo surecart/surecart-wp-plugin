@@ -9,6 +9,7 @@
 	"supports": {
 		"reusable": false,
 		"html": false,
+		"multiple": false,
 		"align": ["wide", "full"]
 	},
 	"attributes": {

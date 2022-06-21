@@ -5,7 +5,7 @@ import { css, jsx } from '@emotion/core';
 import { ScRadioGroup, ScRadio } from '@surecart/components-react';
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
 import PriceSelector from '../../../components/PriceSelector';
-import { Fragment } from 'react';
+import { Fragment } from '@wordpress/element';
 
 export default ({
 	template,

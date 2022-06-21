@@ -57,8 +57,8 @@ class WPConfigTransformService {
 	/**
 	 * Instantiates the class with a valid wp-config.php.
 	 *
-	 * @throws Exception If the wp-config.php file is missing.
-	 * @throws Exception If the wp-config.php file is not writable.
+	 * @throws \Exception If the wp-config.php file is missing.
+	 * @throws \Exception If the wp-config.php file is not writable.
 	 *
 	 * @param string $wp_config_path Path to a wp-config.php file.
 	 */
@@ -66,11 +66,11 @@ class WPConfigTransformService {
 		$basename = basename( $wp_config_path );
 
 		if ( ! file_exists( $wp_config_path ) ) {
-			throw new Exception( "{$basename} does not exist." );
+			throw new \Exception( "{$basename} does not exist." );
 		}
 
 		if ( ! is_writable( $wp_config_path ) ) {
-			throw new Exception( "{$basename} is not writable." );
+			throw new \Exception( "{$basename} is not writable." );
 		}
 
 		$this->wp_config_path = $wp_config_path;
@@ -79,8 +79,8 @@ class WPConfigTransformService {
 	/**
 	 * Checks if a config exists in the wp-config.php file.
 	 *
-	 * @throws Exception If the wp-config.php file is empty.
-	 * @throws Exception If the requested config type is invalid.
+	 * @throws \Exception If the wp-config.php file is empty.
+	 * @throws \Exception If the requested config type is invalid.
 	 *
 	 * @param string $type Config type (constant or variable).
 	 * @param string $name Config name.
@@ -91,14 +91,14 @@ class WPConfigTransformService {
 		$wp_config_src = file_get_contents( $this->wp_config_path );
 
 		if ( ! trim( $wp_config_src ) ) {
-			throw new Exception( 'Config file is empty.' );
+			throw new \Exception( 'Config file is empty.' );
 		}
 		// Normalize the newline to prevent an issue coming from OSX.
 		$this->wp_config_src = str_replace( array( "\n\r", "\r" ), "\n", $wp_config_src );
 		$this->wp_configs    = $this->parse_wp_config( $this->wp_config_src );
 
 		if ( ! isset( $this->wp_configs[ $type ] ) ) {
-			throw new Exception( "Config type '{$type}' does not exist." );
+			throw new \Exception( "Config type '{$type}' does not exist." );
 		}
 
 		return isset( $this->wp_configs[ $type ][ $name ] );
@@ -107,8 +107,8 @@ class WPConfigTransformService {
 	/**
 	 * Get the value of a config in the wp-config.php file.
 	 *
-	 * @throws Exception If the wp-config.php file is empty.
-	 * @throws Exception If the requested config type is invalid.
+	 * @throws \Exception If the wp-config.php file is empty.
+	 * @throws \Exception If the requested config type is invalid.
 	 *
 	 * @param string $type Config type (constant or variable).
 	 * @param string $name Config name.
@@ -119,14 +119,14 @@ class WPConfigTransformService {
 		$wp_config_src = file_get_contents( $this->wp_config_path );
 
 		if ( ! trim( $wp_config_src ) ) {
-			throw new Exception( 'Config file is empty.' );
+			throw new \Exception( 'Config file is empty.' );
 		}
 
 		$this->wp_config_src = $wp_config_src;
 		$this->wp_configs    = $this->parse_wp_config( $this->wp_config_src );
 
 		if ( ! isset( $this->wp_configs[ $type ] ) ) {
-			throw new Exception( "Config type '{$type}' does not exist." );
+			throw new \Exception( "Config type '{$type}' does not exist." );
 		}
 
 		return $this->wp_configs[ $type ][ $name ]['value'];
@@ -135,8 +135,8 @@ class WPConfigTransformService {
 	/**
 	 * Adds a config to the wp-config.php file.
 	 *
-	 * @throws Exception If the config value provided is not a string.
-	 * @throws Exception If the config placement anchor could not be located.
+	 * @throws \Exception If the config value provided is not a string.
+	 * @throws \Exception If the config placement anchor could not be located.
 	 *
 	 * @param string $type    Config type (constant or variable).
 	 * @param string $name    Config name.
@@ -147,7 +147,7 @@ class WPConfigTransformService {
 	 */
 	public function add( $type, $name, $value, array $options = array() ) {
 		if ( ! is_string( $value ) ) {
-			throw new Exception( 'Config value must be a string.' );
+			throw new \Exception( 'Config value must be a string.' );
 		}
 
 		if ( $this->exists( $type, $name ) ) {
@@ -172,7 +172,7 @@ class WPConfigTransformService {
 			$contents = $this->wp_config_src . $this->normalize( $type, $name, $this->format_value( $value, $raw ) );
 		} else {
 			if ( false === strpos( $this->wp_config_src, $anchor ) ) {
-				throw new Exception( 'Unable to locate placement anchor.' );
+				throw new \Exception( 'Unable to locate placement anchor.' );
 			}
 
 			$new_src  = $this->normalize( $type, $name, $this->format_value( $value, $raw ) );
@@ -186,7 +186,7 @@ class WPConfigTransformService {
 	/**
 	 * Updates an existing config in the wp-config.php file.
 	 *
-	 * @throws Exception If the config value provided is not a string.
+	 * @throws \Exception If the config value provided is not a string.
 	 *
 	 * @param string $type    Config type (constant or variable).
 	 * @param string $name    Config name.
@@ -197,7 +197,7 @@ class WPConfigTransformService {
 	 */
 	public function update( $type, $name, $value, array $options = array() ) {
 		if ( ! is_string( $value ) ) {
-			throw new Exception( 'Config value must be a string.' );
+			throw new \Exception( 'Config value must be a string.' );
 		}
 
 		$defaults = array(
@@ -259,7 +259,7 @@ class WPConfigTransformService {
 	/**
 	 * Applies formatting to a config value.
 	 *
-	 * @throws Exception When a raw value is requested for an empty string.
+	 * @throws \Exception When a raw value is requested for an empty string.
 	 *
 	 * @param string $value Config value.
 	 * @param bool   $raw   Display value in raw format without quotes.
@@ -268,7 +268,7 @@ class WPConfigTransformService {
 	 */
 	protected function format_value( $value, $raw ) {
 		if ( $raw && '' === trim( $value ) ) {
-			throw new Exception( 'Raw value for empty string not supported.' );
+			throw new \Exception( 'Raw value for empty string not supported.' );
 		}
 
 		return ( $raw ) ? $value : var_export( $value, true );
@@ -277,7 +277,7 @@ class WPConfigTransformService {
 	/**
 	 * Normalizes the source output for a name/value pair.
 	 *
-	 * @throws Exception If the requested config type does not support normalization.
+	 * @throws \Exception If the requested config type does not support normalization.
 	 *
 	 * @param string $type  Config type (constant or variable).
 	 * @param string $name  Config name.
@@ -291,7 +291,7 @@ class WPConfigTransformService {
 		} elseif ( 'variable' === $type ) {
 			$placeholder = '$%s = %s;';
 		} else {
-			throw new Exception( "Unable to normalize config type '{$type}'." );
+			throw new \Exception( "Unable to normalize config type '{$type}'." );
 		}
 
 		return sprintf( $placeholder, $name, $value );
@@ -354,8 +354,8 @@ class WPConfigTransformService {
 	/**
 	 * Saves new contents to the wp-config.php file.
 	 *
-	 * @throws Exception If the config file content provided is empty.
-	 * @throws Exception If there is a failure when saving the wp-config.php file.
+	 * @throws \Exception If the config file content provided is empty.
+	 * @throws \Exception If there is a failure when saving the wp-config.php file.
 	 *
 	 * @param string $contents New config contents.
 	 *
@@ -363,7 +363,7 @@ class WPConfigTransformService {
 	 */
 	protected function save( $contents ) {
 		if ( ! trim( $contents ) ) {
-			throw new Exception( 'Cannot save the config file with empty contents.' );
+			throw new \Exception( 'Cannot save the config file with empty contents.' );
 		}
 
 		if ( $contents === $this->wp_config_src ) {
@@ -373,7 +373,7 @@ class WPConfigTransformService {
 		$result = file_put_contents( $this->wp_config_path, $contents, LOCK_EX );
 
 		if ( false === $result ) {
-			throw new Exception( 'Failed to update the config file.' );
+			throw new \Exception( 'Failed to update the config file.' );
 		}
 
 		return true;

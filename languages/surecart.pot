@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-05-05T20:55:31+00:00\n"
+"POT-Creation-Date: 2022-06-20T18:30:21+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -17,6 +17,7 @@ msgstr ""
 
 #: src/BlockLibrary/BlockServiceProvider.php:93
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:39
+#: src/WordPress/Admin/Notices/AdminNoticesService.php:104
 #: admin/user-profile.php:1
 #: error.php:2
 msgid "SureCart"
@@ -24,7 +25,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:48
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:63
-#: src/Controllers/Admin/Products/ProductsListTable.php:65
+#: src/Controllers/Admin/Products/ProductsListTable.php:67
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:60
 msgid "All"
 msgstr ""
@@ -43,15 +44,15 @@ msgid "Search Abanonded Orders"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:102
-#: src/Controllers/Admin/Orders/OrdersListTable.php:107
+#: src/Controllers/Admin/Orders/OrdersListTable.php:126
 msgid "Order"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:103
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:123
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:64
-#: src/Controllers/Admin/Orders/OrdersListTable.php:108
-#: src/Controllers/Admin/Products/ProductsListTable.php:110
+#: src/Controllers/Admin/Orders/OrdersListTable.php:127
+#: src/Controllers/Admin/Products/ProductsListTable.php:113
 msgid "Date"
 msgstr ""
 
@@ -61,15 +62,15 @@ msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:105
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:65
-#: src/Controllers/Admin/Orders/OrdersListTable.php:109
+#: src/Controllers/Admin/Orders/OrdersListTable.php:128
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:104
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:103
 msgid "Status"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:106
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:66
-#: src/Controllers/Admin/Orders/OrdersListTable.php:110
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:67
+#: src/Controllers/Admin/Orders/OrdersListTable.php:131
 msgid "Total"
 msgstr ""
 
@@ -85,6 +86,12 @@ msgstr ""
 msgid "Not Recovered"
 msgstr ""
 
+#: src/Controllers/Admin/Coupons/CouponsController.php:23
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:55
+#: admin/coupons/index.php:6
+msgid "Coupons"
+msgstr ""
+
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:59
 msgid "Search Coupons"
 msgstr ""
@@ -92,7 +99,7 @@ msgstr ""
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:119
 #: src/Controllers/Admin/Customers/CustomersListTable.php:102
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:103
-#: src/Controllers/Admin/Products/ProductsListTable.php:106
+#: src/Controllers/Admin/Products/ProductsListTable.php:108
 #: src/Support/Errors/Translations/attributes.php:11
 msgid "Name"
 msgstr ""
@@ -102,7 +109,7 @@ msgid "Code"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:121
-#: src/Controllers/Admin/Products/ProductsListTable.php:108
+#: src/Controllers/Admin/Products/ProductsListTable.php:110
 msgid "Price"
 msgstr ""
 
@@ -112,18 +119,18 @@ msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:134
 #: src/Controllers/Admin/Customers/CustomersListTable.php:116
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:78
-#: src/Controllers/Admin/Orders/OrdersListTable.php:124
-#: src/Controllers/Admin/Products/ProductsListTable.php:121
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:118
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:79
+#: src/Controllers/Admin/Orders/OrdersListTable.php:145
+#: src/Controllers/Admin/Products/ProductsListTable.php:124
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:121
 msgid "Select comment"
 msgstr ""
 
 #. translators: coupon expiration date.
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:222
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:195
-#: src/Controllers/Admin/Orders/OrdersListTable.php:241
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:248
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:214
+#: src/Controllers/Admin/Orders/OrdersListTable.php:280
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:303
 msgid "Valid until %s"
 msgstr ""
 
@@ -133,31 +140,31 @@ msgid "%d off"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:245
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:212
-#: src/Controllers/Admin/Orders/OrdersListTable.php:258
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:265
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:231
+#: src/Controllers/Admin/Orders/OrdersListTable.php:297
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:320
 msgid "No discount."
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:260
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:227
-#: src/Controllers/Admin/Orders/OrdersListTable.php:273
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:280
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:246
+#: src/Controllers/Admin/Orders/OrdersListTable.php:312
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:335
 msgid "Forever"
 msgstr ""
 
 #. translators: number of months.
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:264
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:231
-#: src/Controllers/Admin/Orders/OrdersListTable.php:277
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:284
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:250
+#: src/Controllers/Admin/Orders/OrdersListTable.php:316
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:339
 msgid "For %d months"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:267
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:234
-#: src/Controllers/Admin/Orders/OrdersListTable.php:280
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:287
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:253
+#: src/Controllers/Admin/Orders/OrdersListTable.php:319
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:342
 msgid "Once"
 msgstr ""
 
@@ -167,16 +174,15 @@ msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:279
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:61
-#: src/Controllers/Admin/Products/ProductsListTable.php:63
+#: src/Controllers/Admin/Products/ProductsListTable.php:65
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:61
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:301
 msgid "Active"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:305
 #: src/Controllers/Admin/Customers/CustomersListTable.php:219
-#: src/Controllers/Admin/Products/ProductsListTable.php:311
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:345
+#: src/Controllers/Admin/Products/ProductsListTable.php:322
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:400
 msgid "Edit"
 msgstr ""
 
@@ -190,13 +196,13 @@ msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:337
 #: src/Controllers/Admin/Customers/CustomersListTable.php:235
-#: src/Controllers/Admin/Products/ProductsListTable.php:330
+#: src/Controllers/Admin/Products/ProductsListTable.php:341
 msgid "Un-Archive"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:337
 #: src/Controllers/Admin/Customers/CustomersListTable.php:235
-#: src/Controllers/Admin/Products/ProductsListTable.php:330
+#: src/Controllers/Admin/Products/ProductsListTable.php:341
 msgid "Archive"
 msgstr ""
 
@@ -242,13 +248,19 @@ msgstr ""
 msgid "Move to Trash"
 msgstr ""
 
-#: src/Controllers/Admin/Customers/CustomersController.php:60
-#: src/Controllers/Admin/Products/ProductsController.php:58
+#: src/Controllers/Admin/Customers/CustomersController.php:24
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:58
+#: admin/customers/index.php:7
+msgid "Customers"
+msgstr ""
+
+#: src/Controllers/Admin/Customers/CustomersController.php:68
+#: src/Controllers/Admin/Products/ProductsController.php:66
 msgid "Product archived."
 msgstr ""
 
-#: src/Controllers/Admin/Customers/CustomersController.php:60
-#: src/Controllers/Admin/Products/ProductsController.php:58
+#: src/Controllers/Admin/Customers/CustomersController.php:68
+#: src/Controllers/Admin/Products/ProductsController.php:66
 msgid "Product restored."
 msgstr ""
 
@@ -262,39 +274,39 @@ msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:104
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:105
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:106
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:109
 msgid "Created"
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:160
-#: src/Controllers/Admin/Products/ProductsListTable.php:172
-msgid "No products found."
+msgid "No customers found."
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:171
-#: src/Controllers/Admin/Products/ProductsListTable.php:221
-#: src/Controllers/Admin/Products/ProductsListTable.php:241
+#: src/Controllers/Admin/Products/ProductsListTable.php:232
+#: src/Controllers/Admin/Products/ProductsListTable.php:252
+#: src/Integrations/TutorLMS/TutorLMSService.php:121
 msgid "No price"
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:190
-#: src/Controllers/Admin/Products/ProductsListTable.php:260
-#: src/Controllers/Admin/Tables/ListTable.php:74
+#: src/Controllers/Admin/Products/ProductsListTable.php:271
+#: src/Controllers/Admin/Tables/ListTable.php:75
 msgid "Updated"
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:236
-#: src/Controllers/Admin/Products/ProductsListTable.php:331
+#: src/Controllers/Admin/Products/ProductsListTable.php:342
 msgid "Are you sure you want to restore this product? This will be be available to purchase."
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:236
-#: src/Controllers/Admin/Products/ProductsListTable.php:331
+#: src/Controllers/Admin/Products/ProductsListTable.php:342
 msgid "Are you sure you want to archive this product? This will be unavailable for purchase."
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:243
-#: src/Controllers/Admin/Products/ProductsListTable.php:338
+#: src/Controllers/Admin/Products/ProductsListTable.php:349
 msgid "Toggle Product Archive"
 msgstr ""
 
@@ -306,52 +318,75 @@ msgstr ""
 msgid "Invoice"
 msgstr ""
 
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:66
+#: src/Controllers/Admin/Orders/OrdersListTable.php:129
+msgid "Method"
+msgstr ""
+
 #. translators: Coupon % off.
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:204
-#: src/Controllers/Admin/Orders/OrdersListTable.php:250
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:257
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:223
+#: src/Controllers/Admin/Orders/OrdersListTable.php:289
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:312
 msgid "%1d%% off"
 msgstr ""
 
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:246
-#: src/Controllers/Admin/Orders/OrdersListTable.php:292
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:265
+#: src/Controllers/Admin/Orders/OrdersListTable.php:331
 msgid "Refunded"
 msgstr ""
 
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:261
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:265
-#: src/Controllers/Admin/Orders/OrdersListTable.php:307
-#: src/Controllers/Admin/Orders/OrdersListTable.php:311
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:280
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:284
+#: src/Controllers/Admin/Orders/OrdersListTable.php:346
+#: src/Controllers/Admin/Orders/OrdersListTable.php:350
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:189
 msgid "Edit Order"
 msgstr ""
 
-#: src/Controllers/Admin/Onboarding.php:34
+#: src/Controllers/Admin/Invoices/InvoicesViewController.php:21
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:57
+#: admin/invoices/index.php:21
+msgid "Invoices"
+msgstr ""
+
+#: src/Controllers/Admin/Onboarding.php:46
 msgid "Donation"
 msgstr ""
 
-#: src/Controllers/Admin/Onboarding.php:93
+#: src/Controllers/Admin/Onboarding.php:105
 msgid "Invalid API Token"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:48
+#: src/Controllers/Admin/Orders/OrdersListTable.php:49
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:46
 msgid "Search Orders"
 msgstr ""
 
+#: src/Controllers/Admin/Orders/OrdersListTable.php:130
+#: src/Controllers/Admin/Products/ProductsListTable.php:112
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:106
+msgid "Integrations"
+msgstr ""
+
 #. translators: Customer name.
-#: src/Controllers/Admin/Orders/OrdersListTable.php:314
+#: src/Controllers/Admin/Orders/OrdersListTable.php:353
 msgid "By %s"
+msgstr ""
+
+#: src/Controllers/Admin/Orders/OrdersViewController.php:21
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:56
+#: admin/orders/index.php:7
+msgid "Orders"
 msgstr ""
 
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:62
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
-#: src/Controllers/Admin/Products/ProductsListTable.php:64
+#: src/Controllers/Admin/Products/ProductsListTable.php:66
 msgid "Archived"
 msgstr ""
 
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
-#: src/WordPress/PostTypes/FormPostTypeService.php:296
+#: src/WordPress/PostTypes/FormPostTypeService.php:321
 msgid "Live"
 msgstr ""
 
@@ -359,45 +394,68 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:48
+#: src/Controllers/Admin/Products/ProductsController.php:24
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:54
+#: admin/products/index.php:29
+msgid "Products"
+msgstr ""
+
+#: src/Controllers/Admin/Products/ProductsListTable.php:50
 msgid "Search Products"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:109
-msgid "Type"
+#: src/Controllers/Admin/Products/ProductsListTable.php:183
+msgid "No products found."
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:192
+#: src/Controllers/Admin/Products/ProductsListTable.php:203
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:220
 msgid "Subscription"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:205
+#: src/Controllers/Admin/Products/ProductsListTable.php:216
 msgid "One-Time"
 msgstr ""
 
 #. translators: Price starting at.
-#: src/Controllers/Admin/Products/ProductsListTable.php:228
+#: src/Controllers/Admin/Products/ProductsListTable.php:239
 msgid "Starting at %s"
 msgstr ""
 
 #. translators: Other prices.
-#: src/Controllers/Admin/Products/ProductsListTable.php:230
+#: src/Controllers/Admin/Products/ProductsListTable.php:241
 msgid "and %d other price."
 msgid_plural "and %d other prices."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:238
+#: src/Controllers/Admin/Products/ProductsListTable.php:249
 msgid "Name your own price"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:298
+#: src/Controllers/Admin/Products/ProductsListTable.php:309
 msgid "Copied!"
 msgstr ""
 
-#: src/Controllers/Admin/Settings.php:25
+#: src/Controllers/Admin/Settings.php:26
 #: src/Controllers/Admin/Settings/FrameSettings.php:85
+#: src/Controllers/Admin/Settings/Settings.php:24
+#: src/Controllers/Admin/Settings/Settings.php:47
 msgid "Could not load settings page."
+msgstr ""
+
+#: src/Controllers/Admin/Settings.php:55
+#: src/Controllers/Admin/Settings/Settings.php:76
+#: layouts/partials/admin-settings-sidebar.php:35
+msgid "Connection"
+msgstr ""
+
+#: src/Controllers/Admin/Subscriptions/SubscriptionsController.php:23
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:59
+#: admin/subscriptions/index.php:23
+#: layouts/partials/admin-settings-sidebar.php:17
+#: web/dashboard/orders/show.php:58
+msgid "Subscriptions"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:45
@@ -405,7 +463,6 @@ msgid "Search Subscriptions"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:62
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:304
 msgid "Canceled"
 msgstr ""
 
@@ -424,52 +481,106 @@ msgstr ""
 msgid "Product"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:125
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:107
+msgid "Remaining Payments"
+msgstr ""
+
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:108
+msgid "Type"
+msgstr ""
+
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:128
 msgid "No product"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:201
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:205
+msgid "None"
+msgstr ""
+
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:222
+msgid "Payment Plan"
+msgstr ""
+
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:240
+msgid "for"
+msgstr ""
+
+#. translators: number of days.
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:250
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: number of days.
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:250
+msgid "day"
+msgid_plural "%d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: number of weeks.
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:256
+msgid "%d week"
+msgid_plural "%d weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: number of weeks.
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:256
 msgid "week"
 msgid_plural "%d weeks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:207
+#. translators: number of months
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:262
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: number of months
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:262
 msgid "month"
 msgid_plural "%d months"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:213
+#. translators: number of yearls
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:268
+msgid "%d year"
+msgid_plural "%d years"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: number of yearls
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:268
 msgid "year"
 msgid_plural "%d years"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:307
-msgid "Trialing"
-msgstr ""
-
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:310
-msgid "Draft"
-msgstr ""
-
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:318
-msgid "Update Pending"
-msgstr ""
-
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:335
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:390
 msgid "No name provided"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:338
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:393
 msgid "Edit Subscription"
 msgstr ""
 
-#: src/Controllers/Admin/Tables/ListTable.php:108
-#: src/WordPress/PostTypes/FormPostTypeService.php:292
+#: src/Controllers/Admin/Tables/ListTable.php:109
+#: src/WordPress/PostTypes/FormPostTypeService.php:317
 #: admin/user-profile.php:13
 msgid "Test"
+msgstr ""
+
+#: src/Controllers/Rest/IntegrationProvidersController.php:35
+msgid "Not Found"
+msgstr ""
+
+#: src/Controllers/Rest/IntegrationProvidersController.php:36
+msgid "The integration has been removed or is unavailable."
 msgstr ""
 
 #: src/Controllers/Web/DashboardController.php:40
@@ -525,11 +636,62 @@ msgctxt "Page title"
 msgid "Dashboard"
 msgstr ""
 
+#. translators: %s: Method name.
+#: src/Integrations/AbstractIntegration.php:21
+#: src/Integrations/AbstractIntegration.php:38
+#: src/Integrations/AbstractIntegration.php:55
+#: src/Integrations/AbstractIntegration.php:87
+msgid "Method '%s' not implemented. Must be overridden in subclass."
+msgstr ""
+
+#: src/Integrations/LearnDash/LearnDashService.php:46
+#: src/Integrations/LearnDash/LearnDashService.php:122
+msgid "LearnDash Course"
+msgstr ""
+
+#: src/Integrations/LearnDash/LearnDashService.php:55
+#: src/Integrations/TutorLMS/TutorLMSService.php:217
+msgid "Course Access"
+msgstr ""
+
+#: src/Integrations/LearnDash/LearnDashService.php:64
+msgid "Enable access to a LearnDash course."
+msgstr ""
+
+#: src/Integrations/TutorLMS/add-to-cart-surecart.php:21
+msgid "Purchase"
+msgstr ""
+
+#: src/Integrations/TutorLMS/TutorLMSService.php:127
+msgid "Custom amount"
+msgstr ""
+
+#: src/Integrations/TutorLMS/TutorLMSService.php:208
+#: src/Integrations/TutorLMS/TutorLMSService.php:290
+msgid "TutorLMS Course"
+msgstr ""
+
+#: src/Integrations/TutorLMS/TutorLMSService.php:226
+msgid "Enable access to a TutorLMS course."
+msgstr ""
+
+#: src/Integrations/User/UserService.php:48
+msgid "Add WordPress User Role"
+msgstr ""
+
+#: src/Integrations/User/UserService.php:57
+msgid "Add User Role"
+msgstr ""
+
+#: src/Integrations/User/UserService.php:66
+msgid "Add the user role of the user who purchased the product."
+msgstr ""
+
 #: src/Middleware/ArchiveModelMiddleware.php:24
 #: src/Middleware/EditModelMiddleware.php:24
 #: src/Middleware/LoginMiddleware.php:14
 #: src/Middleware/NonceMiddleware.php:32
-#: src/WordPress/Admin/Notices/AdminNoticesService.php:60
+#: src/WordPress/Admin/Notices/AdminNoticesService.php:67
 msgid "Your session expired - please try again."
 msgstr ""
 
@@ -558,50 +720,73 @@ msgstr ""
 msgid "SureCart Shop Worker"
 msgstr ""
 
-#: src/Rest/AccountRestServiceProvider.php:46
+#: src/Permissions/RolesService.php:92
+msgid "SureCart Customer"
+msgstr ""
+
+#: src/Rest/AccountRestServiceProvider.php:76
+#: src/Rest/BrandRestServiceProvider.php:90
 #: src/Rest/ChargesRestServiceProvider.php:74
 #: src/Rest/CouponRestServiceProvider.php:46
 #: src/Rest/CustomerLinksRestServiceProvider.php:53
+#: src/Rest/CustomerNotificationProtocolRestServiceProvider.php:81
 #: src/Rest/CustomerRestServiceProvider.php:47
 #: src/Rest/FilesRestServiceProvider.php:54
+#: src/Rest/IntegrationProvidersRestServiceProvider.php:106
+#: src/Rest/IntegrationsRestServiceProvider.php:78
 #: src/Rest/InvoicesRestServiceProvider.php:75
-#: src/Rest/OrderRestServiceProvider.php:77
+#: src/Rest/OrderRestServiceProvider.php:90
+#: src/Rest/PaymentIntentsRestServiceProvider.php:76
 #: src/Rest/PaymentMethodsRestServiceProvider.php:77
+#: src/Rest/PortalProtocolRestServiceProvider.php:83
 #: src/Rest/PriceRestServiceProvider.php:47
 #: src/Rest/ProductGroupsRestServiceProvider.php:47
 #: src/Rest/ProductsRestServiceProvider.php:82
 #: src/Rest/PromotionRestServiceProvider.php:46
 #: src/Rest/PurchasesRestServiceProvider.php:88
 #: src/Rest/RefundsRestServiceProvider.php:54
-#: src/Rest/SubscriptionProtocolRestServiceProvider.php:75
+#: src/Rest/SettingsRestServiceProvider.php:76
+#: src/Rest/SubscriptionProtocolRestServiceProvider.php:82
 #: src/Rest/SubscriptionRestServiceProvider.php:101
+#: src/Rest/TaxProtocolRestServiceProvider.php:81
+#: src/Rest/TaxRegistrationRestServiceProvider.php:46
+#: src/Rest/TaxZoneRestServiceProvider.php:46
 #: src/Rest/UploadsRestServiceProvider.php:54
 #: src/Rest/WebhooksRestServiceProvider.php:46
 msgid "Unique identifier for the object."
 msgstr ""
 
-#: src/Rest/AccountRestServiceProvider.php:52
+#: src/Rest/AccountRestServiceProvider.php:82
+#: src/Rest/BrandRestServiceProvider.php:96
 msgid "Type of object (Account)"
 msgstr ""
 
-#: src/Rest/AccountRestServiceProvider.php:58
-#: src/Rest/AccountRestServiceProvider.php:64
+#: src/Rest/AccountRestServiceProvider.php:88
+#: src/Rest/AccountRestServiceProvider.php:94
+#: src/Rest/BrandRestServiceProvider.php:102
+#: src/Rest/BrandRestServiceProvider.php:108
+#: src/Rest/SettingsRestServiceProvider.php:88
+#: src/Rest/SettingsRestServiceProvider.php:94
 msgid "Created at timestamp"
 msgstr ""
 
-#: src/Rest/AccountRestServiceProvider.php:70
+#: src/Rest/AccountRestServiceProvider.php:100
+#: src/Rest/SettingsRestServiceProvider.php:100
 msgid "The name of the account."
 msgstr ""
 
-#: src/Rest/AccountRestServiceProvider.php:75
+#: src/Rest/AccountRestServiceProvider.php:105
+#: src/Rest/SettingsRestServiceProvider.php:105
 msgid "The default currency for the account."
 msgstr ""
 
-#: src/Rest/AccountRestServiceProvider.php:80
+#: src/Rest/AccountRestServiceProvider.php:110
+#: src/Rest/SettingsRestServiceProvider.php:110
 msgid "Owner data."
 msgstr ""
 
-#: src/Rest/AccountRestServiceProvider.php:85
+#: src/Rest/AccountRestServiceProvider.php:115
+#: src/Rest/SettingsRestServiceProvider.php:115
 msgid "Connected processors"
 msgstr ""
 
@@ -645,6 +830,38 @@ msgstr ""
 msgid "Determines whether the pattern is visible in inserter."
 msgstr ""
 
+#: src/Rest/BrandRestServiceProvider.php:114
+msgid "The brand color."
+msgstr ""
+
+#: src/Rest/BrandRestServiceProvider.php:119
+msgid "The email address that will be shown to customers for support, on invoices, etc."
+msgstr ""
+
+#: src/Rest/BrandRestServiceProvider.php:124
+msgid "The phone number that will be shown to customers for support, on invoices, etc."
+msgstr ""
+
+#: src/Rest/BrandRestServiceProvider.php:129
+msgid "The website that will be shown to customers for support, on invoices, etc."
+msgstr ""
+
+#: src/Rest/BrandRestServiceProvider.php:134
+msgid "The URL of the brand logo."
+msgstr ""
+
+#: src/Rest/BrandRestServiceProvider.php:139
+msgid "The associated address."
+msgstr ""
+
+#: src/Rest/BrandRestServiceProvider.php:144
+msgid "The default memo for invoices and receipts."
+msgstr ""
+
+#: src/Rest/BrandRestServiceProvider.php:149
+msgid "The default footer for invoices and receipts."
+msgstr ""
+
 #: src/Rest/CustomerLinksRestServiceProvider.php:59
 msgid "Email or username for the request"
 msgstr ""
@@ -653,16 +870,60 @@ msgstr ""
 msgid "The URL that the customer should be directed to when the click the link from their email."
 msgstr ""
 
+#: src/Rest/CustomerNotificationProtocolRestServiceProvider.php:95
+msgid "If set to true abandonded order reminder emails will be sent to customers."
+msgstr ""
+
+#: src/Rest/CustomerNotificationProtocolRestServiceProvider.php:100
+msgid "If set to true order confirmation emails will be sent to customers."
+msgstr ""
+
+#: src/Rest/CustomerNotificationProtocolRestServiceProvider.php:105
+msgid "If set to true subscription dunning emails will be sent to customers."
+msgstr ""
+
+#: src/Rest/CustomerNotificationProtocolRestServiceProvider.php:110
+msgid "If set to true refund emails will be sent to customers."
+msgstr ""
+
+#: src/Rest/CustomerNotificationProtocolRestServiceProvider.php:115
+msgid "The from name to use when sending emails to customers."
+msgstr ""
+
+#: src/Rest/CustomerNotificationProtocolRestServiceProvider.php:120
+msgid "The language that will be used for all customer notifications. Current available locales are de, en, es, and fr."
+msgstr ""
+
+#: src/Rest/CustomerNotificationProtocolRestServiceProvider.php:125
+msgid "The reply-to email address to use when sending emails to customers."
+msgstr ""
+
 #: src/Rest/FilesRestServiceProvider.php:73
+#: src/Rest/IntegrationProvidersRestServiceProvider.php:129
+#: src/Rest/IntegrationsRestServiceProvider.php:118
 #: src/Rest/PriceRestServiceProvider.php:98
 #: src/Rest/ProductsRestServiceProvider.php:168
 msgid "The page of items you want returned."
 msgstr ""
 
 #: src/Rest/FilesRestServiceProvider.php:77
+#: src/Rest/IntegrationProvidersRestServiceProvider.php:133
+#: src/Rest/IntegrationsRestServiceProvider.php:122
 #: src/Rest/PriceRestServiceProvider.php:102
 #: src/Rest/ProductsRestServiceProvider.php:172
 msgid "A limit on the number of items to be returned, between 1 and 100."
+msgstr ""
+
+#: src/Rest/IntegrationProvidersRestServiceProvider.php:125
+msgid "The model to get integration providers for."
+msgstr ""
+
+#: src/Rest/IntegrationsRestServiceProvider.php:84
+msgid "The SureCart model name."
+msgstr ""
+
+#: src/Rest/IntegrationsRestServiceProvider.php:103
+msgid "The SureCart model id."
 msgstr ""
 
 #: src/Rest/LoginRestServiceProvider.php:67
@@ -673,36 +934,52 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: src/Rest/OrderRestServiceProvider.php:83
+#: src/Rest/OrderRestServiceProvider.php:96
 msgid "The currency for the session."
 msgstr ""
 
-#: src/Rest/OrderRestServiceProvider.php:87
+#: src/Rest/OrderRestServiceProvider.php:100
 msgid "Metadata for the order."
 msgstr ""
 
-#: src/Rest/OrderRestServiceProvider.php:92
+#: src/Rest/OrderRestServiceProvider.php:105
 msgid "The customer id for the order."
 msgstr ""
 
-#: src/Rest/OrderRestServiceProvider.php:97
+#: src/Rest/OrderRestServiceProvider.php:110
 msgid "The customer for the session."
 msgstr ""
 
-#: src/Rest/OrderRestServiceProvider.php:102
+#: src/Rest/OrderRestServiceProvider.php:115
 msgid "The line items for the session."
 msgstr ""
 
-#: src/Rest/OrderRestServiceProvider.php:106
+#: src/Rest/OrderRestServiceProvider.php:119
 msgid "The discount for the session."
 msgstr ""
 
-#: src/Rest/OrderRestServiceProvider.php:123
+#: src/Rest/OrderRestServiceProvider.php:137
 msgid "Form ID is required."
 msgstr ""
 
-#: src/Rest/OrderRestServiceProvider.php:132
+#: src/Rest/OrderRestServiceProvider.php:146
 msgid "Form ID is invalid."
+msgstr ""
+
+#: src/Rest/PortalProtocolRestServiceProvider.php:97
+msgid "Whether or not customers can cancel subscriptions from the customer portal."
+msgstr ""
+
+#: src/Rest/PortalProtocolRestServiceProvider.php:102
+msgid "Whether or not customers can make subscription changes from the customer portal."
+msgstr ""
+
+#: src/Rest/PortalProtocolRestServiceProvider.php:107
+msgid "Whether or not customers can change subscription quantities from the customer portal."
+msgstr ""
+
+#: src/Rest/PortalProtocolRestServiceProvider.php:112
+msgid "The terms of service link that is shown to customers on the customer portal."
 msgstr ""
 
 #: src/Rest/PriceRestServiceProvider.php:53
@@ -759,136 +1036,597 @@ msgstr ""
 msgid "Sorry, you are not allowed to edit products."
 msgstr ""
 
-#: src/Rest/SubscriptionProtocolRestServiceProvider.php:89
+#: src/Rest/SettingsRestServiceProvider.php:82
+msgid "Type of object (Settings)"
+msgstr ""
+
+#: src/Rest/SubscriptionProtocolRestServiceProvider.php:96
 msgid "Payment retry window in weeks."
 msgstr ""
 
-#: src/Rest/SubscriptionProtocolRestServiceProvider.php:94
+#: src/Rest/SubscriptionProtocolRestServiceProvider.php:101
 msgid "Cancel behavior. Either pending or immediate."
 msgstr ""
 
-#: src/Rest/SubscriptionProtocolRestServiceProvider.php:98
+#: src/Rest/SubscriptionProtocolRestServiceProvider.php:105
 msgid "Downgrade behavior. Either pending or immediate."
 msgstr ""
 
-#: src/Rest/SubscriptionProtocolRestServiceProvider.php:102
+#: src/Rest/SubscriptionProtocolRestServiceProvider.php:109
+#: src/Rest/TaxProtocolRestServiceProvider.php:115
 msgid "Upgrade behavior. Either pending or immediate."
 msgstr ""
 
+#: src/Rest/TaxProtocolRestServiceProvider.php:95
+msgid "If set to true GST taxes will be calculated for all Canadian provinces."
+msgstr ""
+
+#: src/Rest/TaxProtocolRestServiceProvider.php:100
+msgid "If set to true VAT taxes will be calculated using the account's home country VAT rate."
+msgstr ""
+
+#: src/Rest/TaxProtocolRestServiceProvider.php:105
+msgid "If set to true VAT taxes will be calculated for all EU countries."
+msgstr ""
+
+#: src/Rest/TaxProtocolRestServiceProvider.php:110
+msgid "If set to true taxes will be automatically calculated."
+msgstr ""
+
+#: src/Rest/TaxProtocolRestServiceProvider.php:120
+msgid "The associated Canadian tax identifier."
+msgstr ""
+
+#: src/Rest/TaxProtocolRestServiceProvider.php:125
+msgid "The associated EU tax identifier."
+msgstr ""
+
+#: src/Rest/TaxRegistrationRestServiceProvider.php:60
+msgid "The associated tax identifier."
+msgstr ""
+
+#: src/Rest/TaxRegistrationRestServiceProvider.php:65
+msgid "The associated tax zone."
+msgstr ""
+
 #: src/Support/Currency.php:240
-msgid "Australia Dollars"
+msgid "Albanian Lek"
 msgstr ""
 
 #: src/Support/Currency.php:241
-msgid "Brazilian Real"
+msgid "Algerian Dinar"
 msgstr ""
 
 #: src/Support/Currency.php:242
-msgid "Canadian Dollars"
+msgid "Angolan Kwanza"
 msgstr ""
 
 #: src/Support/Currency.php:243
-msgid "Chinese Yuan"
+msgid "Argentine Peso"
 msgstr ""
 
 #: src/Support/Currency.php:244
-msgid "Czech Koruna"
+msgid "Armenian Dram"
 msgstr ""
 
 #: src/Support/Currency.php:245
-msgid "Danish Krone"
+msgid "Aruban Florin"
 msgstr ""
 
 #: src/Support/Currency.php:246
-msgid "Euros"
+msgid "Australian Dollar"
 msgstr ""
 
 #: src/Support/Currency.php:247
-msgid "Hong Kong Dollar"
+msgid "Azerbaijani Manat"
 msgstr ""
 
 #: src/Support/Currency.php:248
-msgid "Hungarian Forint"
+msgid "Bahamian Dollar"
 msgstr ""
 
 #: src/Support/Currency.php:249
-msgid "Indian Rupee"
+msgid "Bangladeshi Taka"
 msgstr ""
 
 #: src/Support/Currency.php:250
-msgid "Indonesia Rupiah"
+msgid "Barbadian Dollar"
 msgstr ""
 
 #: src/Support/Currency.php:251
-msgid "Israeli Shekel"
+msgid "Belarusian Ruble"
 msgstr ""
 
 #: src/Support/Currency.php:252
-msgid "Japanese Yen"
+msgid "Belize Dollar"
 msgstr ""
 
 #: src/Support/Currency.php:253
-msgid "Mexican Peso"
+msgid "Bermudian Dollar"
 msgstr ""
 
 #: src/Support/Currency.php:254
-msgid "New Zealand Dollar"
+msgid "Bolivian Boliviano"
 msgstr ""
 
 #: src/Support/Currency.php:255
-msgid "Norwegian Krone"
+msgid "Bosnia and Herzegovina Convertible Mark"
 msgstr ""
 
 #: src/Support/Currency.php:256
-msgid "Philippine Pesos"
+msgid "Botswana Pula"
 msgstr ""
 
 #: src/Support/Currency.php:257
-msgid "Polish Zloty"
+msgid "Brazilian Real"
 msgstr ""
 
 #: src/Support/Currency.php:258
-msgid "Pounds Sterling"
+msgid "British Pound"
 msgstr ""
 
 #: src/Support/Currency.php:259
-msgid "Singapore Dollar"
+msgid "Brunei Dollar"
 msgstr ""
 
 #: src/Support/Currency.php:260
-msgid "South African Rand"
+msgid "Bulgarian Lev"
 msgstr ""
 
 #: src/Support/Currency.php:261
-msgid "South Korean Won"
+msgid "Burundian Franc"
 msgstr ""
 
 #: src/Support/Currency.php:262
-msgid "Swedish Krona"
+msgid "Cambodian Riel"
 msgstr ""
 
 #: src/Support/Currency.php:263
-msgid "Swiss Franc"
+msgid "Canadian Dollar"
 msgstr ""
 
 #: src/Support/Currency.php:264
-msgid "Taiwan New Dollars"
+msgid "Cape Verdean Escudo"
 msgstr ""
 
 #: src/Support/Currency.php:265
-msgid "Thai Baht"
+msgid "Cayman Islands Dollar"
 msgstr ""
 
 #: src/Support/Currency.php:266
-msgid "Turkish Lira"
+msgid "Central African Cfa Franc"
 msgstr ""
 
 #: src/Support/Currency.php:267
-msgid "US Dollars"
+msgid "Cfp Franc"
 msgstr ""
 
 #: src/Support/Currency.php:268
-msgid "Vietnamese Dong"
+msgid "Chilean Peso"
+msgstr ""
+
+#: src/Support/Currency.php:269
+msgid "Chinese Renminbi Yuan"
+msgstr ""
+
+#: src/Support/Currency.php:270
+msgid "Colombian Peso"
+msgstr ""
+
+#: src/Support/Currency.php:271
+msgid "Comorian Franc"
+msgstr ""
+
+#: src/Support/Currency.php:272
+msgid "Congolese Franc"
+msgstr ""
+
+#: src/Support/Currency.php:273
+msgid "Costa Rican Colón"
+msgstr ""
+
+#: src/Support/Currency.php:274
+msgid "Croatian Kuna"
+msgstr ""
+
+#: src/Support/Currency.php:275
+msgid "Czech Koruna"
+msgstr ""
+
+#: src/Support/Currency.php:276
+msgid "Danish Krone"
+msgstr ""
+
+#: src/Support/Currency.php:277
+msgid "Djiboutian Franc"
+msgstr ""
+
+#: src/Support/Currency.php:278
+msgid "Dominican Peso"
+msgstr ""
+
+#: src/Support/Currency.php:279
+msgid "East Caribbean Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:280
+msgid "Egyptian Pound"
+msgstr ""
+
+#: src/Support/Currency.php:281
+msgid "Ethiopian Birr"
+msgstr ""
+
+#: src/Support/Currency.php:282
+msgid "Euro"
+msgstr ""
+
+#: src/Support/Currency.php:283
+msgid "Falkland Pound"
+msgstr ""
+
+#: src/Support/Currency.php:284
+msgid "Fijian Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:285
+msgid "Gambian Dalasi"
+msgstr ""
+
+#: src/Support/Currency.php:286
+msgid "Georgian Lari"
+msgstr ""
+
+#: src/Support/Currency.php:287
+msgid "Gibraltar Pound"
+msgstr ""
+
+#: src/Support/Currency.php:288
+msgid "Guatemalan Quetzal"
+msgstr ""
+
+#: src/Support/Currency.php:289
+msgid "Guinean Franc"
+msgstr ""
+
+#: src/Support/Currency.php:290
+msgid "Guyanese Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:291
+msgid "Haitian Gourde"
+msgstr ""
+
+#: src/Support/Currency.php:292
+msgid "Honduran Lempira"
+msgstr ""
+
+#: src/Support/Currency.php:293
+msgid "Hong Kong Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:294
+msgid "Hungarian Forint"
+msgstr ""
+
+#: src/Support/Currency.php:295
+msgid "Icelandic Króna"
+msgstr ""
+
+#: src/Support/Currency.php:296
+msgid "Indian Rupee"
+msgstr ""
+
+#: src/Support/Currency.php:297
+msgid "Indonesian Rupiah"
+msgstr ""
+
+#: src/Support/Currency.php:298
+msgid "Israeli New Sheqel"
+msgstr ""
+
+#: src/Support/Currency.php:299
+msgid "Jamaican Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:300
+msgid "Japanese Yen"
+msgstr ""
+
+#: src/Support/Currency.php:301
+msgid "Kazakhstani Tenge"
+msgstr ""
+
+#: src/Support/Currency.php:302
+msgid "Kenyan Shilling"
+msgstr ""
+
+#: src/Support/Currency.php:303
+msgid "Kyrgyzstani Som"
+msgstr ""
+
+#: src/Support/Currency.php:304
+msgid "Lao Kip"
+msgstr ""
+
+#: src/Support/Currency.php:305
+msgid "Lebanese Pound"
+msgstr ""
+
+#: src/Support/Currency.php:306
+msgid "Lesotho Loti"
+msgstr ""
+
+#: src/Support/Currency.php:307
+msgid "Liberian Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:308
+msgid "Macanese Pataca"
+msgstr ""
+
+#: src/Support/Currency.php:309
+msgid "Macedonian Denar"
+msgstr ""
+
+#: src/Support/Currency.php:310
+msgid "Malagasy Ariary"
+msgstr ""
+
+#: src/Support/Currency.php:311
+msgid "Malawian Kwacha"
+msgstr ""
+
+#: src/Support/Currency.php:312
+msgid "Malaysian Ringgit"
+msgstr ""
+
+#: src/Support/Currency.php:313
+msgid "Maldivian Rufiyaa"
+msgstr ""
+
+#: src/Support/Currency.php:314
+msgid "Mauritanian Ouguiya"
+msgstr ""
+
+#: src/Support/Currency.php:315
+msgid "Mauritian Rupee"
+msgstr ""
+
+#: src/Support/Currency.php:316
+msgid "Mexican Peso"
+msgstr ""
+
+#: src/Support/Currency.php:317
+msgid "Moldovan Leu"
+msgstr ""
+
+#: src/Support/Currency.php:318
+msgid "Mongolian Tögrög"
+msgstr ""
+
+#: src/Support/Currency.php:319
+msgid "Moroccan Dirham"
+msgstr ""
+
+#: src/Support/Currency.php:320
+msgid "Mozambican Metical"
+msgstr ""
+
+#: src/Support/Currency.php:321
+msgid "Myanmar Kyat"
+msgstr ""
+
+#: src/Support/Currency.php:322
+msgid "Namibian Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:323
+msgid "Nepalese Rupee"
+msgstr ""
+
+#: src/Support/Currency.php:324
+msgid "Netherlands Antillean Gulden"
+msgstr ""
+
+#: src/Support/Currency.php:325
+msgid "New Taiwan Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:326
+msgid "New Zealand Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:327
+msgid "Nicaraguan Córdoba"
+msgstr ""
+
+#: src/Support/Currency.php:328
+msgid "Nigerian Naira"
+msgstr ""
+
+#: src/Support/Currency.php:329
+msgid "Norwegian Krone"
+msgstr ""
+
+#: src/Support/Currency.php:330
+msgid "Pakistani Rupee"
+msgstr ""
+
+#: src/Support/Currency.php:331
+msgid "Panamanian Balboa"
+msgstr ""
+
+#: src/Support/Currency.php:332
+msgid "Papua New Guinean Kina"
+msgstr ""
+
+#: src/Support/Currency.php:333
+msgid "Paraguayan Guaraní"
+msgstr ""
+
+#: src/Support/Currency.php:334
+msgid "Peruvian Sol"
+msgstr ""
+
+#: src/Support/Currency.php:335
+msgid "Philippine Peso"
+msgstr ""
+
+#: src/Support/Currency.php:336
+msgid "Polish Złoty"
+msgstr ""
+
+#: src/Support/Currency.php:337
+msgid "Qatari Riyal"
+msgstr ""
+
+#: src/Support/Currency.php:338
+msgid "Romanian Leu"
+msgstr ""
+
+#: src/Support/Currency.php:339
+msgid "Russian Ruble"
+msgstr ""
+
+#: src/Support/Currency.php:340
+msgid "Rwandan Franc"
+msgstr ""
+
+#: src/Support/Currency.php:341
+msgid "Saint Helenian Pound"
+msgstr ""
+
+#: src/Support/Currency.php:342
+msgid "Samoan Tala"
+msgstr ""
+
+#: src/Support/Currency.php:343
+msgid "Saudi Riyal"
+msgstr ""
+
+#: src/Support/Currency.php:344
+msgid "Serbian Dinar"
+msgstr ""
+
+#: src/Support/Currency.php:345
+msgid "Seychellois Rupee"
+msgstr ""
+
+#: src/Support/Currency.php:346
+msgid "Sierra Leonean Leone"
+msgstr ""
+
+#: src/Support/Currency.php:347
+msgid "Singapore Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:348
+msgid "Solomon Islands Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:349
+msgid "Somali Shilling"
+msgstr ""
+
+#: src/Support/Currency.php:350
+msgid "South African Rand"
+msgstr ""
+
+#: src/Support/Currency.php:351
+msgid "South Korean Won"
+msgstr ""
+
+#: src/Support/Currency.php:352
+msgid "Sri Lankan Rupee"
+msgstr ""
+
+#: src/Support/Currency.php:353
+msgid "Surinamese Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:354
+msgid "Swazi Lilangeni"
+msgstr ""
+
+#: src/Support/Currency.php:355
+msgid "Swedish Krona"
+msgstr ""
+
+#: src/Support/Currency.php:356
+msgid "Swiss Franc"
+msgstr ""
+
+#: src/Support/Currency.php:357
+msgid "São Tomé and Príncipe Dobra"
+msgstr ""
+
+#: src/Support/Currency.php:358
+msgid "Tajikistani Somoni"
+msgstr ""
+
+#: src/Support/Currency.php:359
+msgid "Tanzanian Shilling"
+msgstr ""
+
+#: src/Support/Currency.php:360
+msgid "Thai Baht"
+msgstr ""
+
+#: src/Support/Currency.php:361
+msgid "Tongan Paʻanga"
+msgstr ""
+
+#: src/Support/Currency.php:362
+msgid "Trinidad and Tobago Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:363
+msgid "Turkish Lira"
+msgstr ""
+
+#: src/Support/Currency.php:364
+msgid "Ugandan Shilling"
+msgstr ""
+
+#: src/Support/Currency.php:365
+msgid "Ukrainian Hryvnia"
+msgstr ""
+
+#: src/Support/Currency.php:366
+msgid "United Arab Emirates Dirham"
+msgstr ""
+
+#: src/Support/Currency.php:367
+msgid "United States Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:368
+msgid "Uruguayan Peso"
+msgstr ""
+
+#: src/Support/Currency.php:369
+msgid "Uzbekistan Som"
+msgstr ""
+
+#: src/Support/Currency.php:370
+msgid "Vanuatu Vatu"
+msgstr ""
+
+#: src/Support/Currency.php:371
+msgid "Vietnamese Đồng"
+msgstr ""
+
+#: src/Support/Currency.php:372
+msgid "West African Cfa Franc"
+msgstr ""
+
+#: src/Support/Currency.php:373
+msgid "Yemeni Rial"
+msgstr ""
+
+#: src/Support/Currency.php:374
+msgid "Zambian Kwacha"
 msgstr ""
 
 #. translators: field name.
@@ -956,7 +1694,7 @@ msgid "Please add at least one product."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:15
-#: src/Support/Errors/Translations/codes.php:21
+#: src/Support/Errors/Translations/codes.php:22
 msgid "Please fill out your address."
 msgstr ""
 
@@ -969,23 +1707,55 @@ msgid "You cannot add a one-time product to a subscription."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:18
-msgid "A price with this currency and recurring interval already exists. Please create a new product to create this price."
+msgid "The price cannot be blank."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:19
-msgid "This promotion code already exists. Please archive the old code or use a different code."
+msgid "A price with this currency and recurring interval already exists. Please create a new product to create this price."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:20
-msgid "This product has prices that are currently being used. Please archive the product instead."
+msgid "This promotion code already exists. Please archive the old code or use a different code."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:22
-msgid "The prices in this checkout session have changed. Please recheck it before submitting again."
+#: src/Support/Errors/Translations/codes.php:21
+msgid "This product has prices that are currently being used. Please archive the product instead if it is not already archived."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:23
+msgid "The prices in this checkout session have changed. Please recheck it before submitting again."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:24
 msgid "This coupon code is invalid."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:25
+msgid "Your postal code is not valid."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:26
+msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:27
+msgid "The maximum price must be smaller."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:28
+msgid "The minimum price must be smaller."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:29
+msgid "The maximum price must be greater than the minimum price."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:30
+msgid "You are already collecting tax for this zone."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:31
+msgid "You cannot enable EU Micro Exemption if your address is outside of the EU."
 msgstr ""
 
 #. translators: attribute.
@@ -1145,6 +1915,694 @@ msgctxt "%s = human-readable time difference"
 msgid "%s ago"
 msgstr ""
 
+#: src/Support/TimeDate.php:85
+msgid "GMT-10:00) America/Adak"
+msgstr ""
+
+#: src/Support/TimeDate.php:86
+msgid "GMT-10:00) Hawaii"
+msgstr ""
+
+#: src/Support/TimeDate.php:87
+msgid "GMT-09:00) Alaska"
+msgstr ""
+
+#: src/Support/TimeDate.php:88
+msgid "GMT-09:00) America/Anchorage"
+msgstr ""
+
+#: src/Support/TimeDate.php:89
+msgid "GMT-09:00) America/Metlakatla"
+msgstr ""
+
+#: src/Support/TimeDate.php:90
+msgid "GMT-09:00) America/Nome"
+msgstr ""
+
+#: src/Support/TimeDate.php:91
+msgid "GMT-09:00) America/Sitka"
+msgstr ""
+
+#: src/Support/TimeDate.php:92
+msgid "GMT-09:00) America/Yakutat"
+msgstr ""
+
+#: src/Support/TimeDate.php:93
+msgid "GMT-08:00) Pacific Time (US & Canada)"
+msgstr ""
+
+#: src/Support/TimeDate.php:94
+msgid "GMT-07:00) America/Boise"
+msgstr ""
+
+#: src/Support/TimeDate.php:95
+msgid "GMT-07:00) Arizona"
+msgstr ""
+
+#: src/Support/TimeDate.php:96
+msgid "GMT-07:00) Mountain Time (US & Canada)"
+msgstr ""
+
+#: src/Support/TimeDate.php:97
+msgid "GMT-06:00) America/Indiana/Knox"
+msgstr ""
+
+#: src/Support/TimeDate.php:98
+msgid "GMT-06:00) America/Indiana/Tell_City"
+msgstr ""
+
+#: src/Support/TimeDate.php:99
+msgid "GMT-06:00) America/Menominee"
+msgstr ""
+
+#: src/Support/TimeDate.php:100
+msgid "GMT-06:00) America/North_Dakota/Beulah"
+msgstr ""
+
+#: src/Support/TimeDate.php:101
+msgid "GMT-06:00) America/North_Dakota/Center"
+msgstr ""
+
+#: src/Support/TimeDate.php:102
+msgid "GMT-06:00) America/North_Dakota/New_Salem"
+msgstr ""
+
+#: src/Support/TimeDate.php:103
+msgid "GMT-06:00) Central Time (US & Canada)"
+msgstr ""
+
+#: src/Support/TimeDate.php:104
+msgid "GMT-05:00) America/Detroit"
+msgstr ""
+
+#: src/Support/TimeDate.php:105
+msgid "GMT-05:00) America/Indiana/Marengo"
+msgstr ""
+
+#: src/Support/TimeDate.php:106
+msgid "GMT-05:00) America/Indiana/Petersburg"
+msgstr ""
+
+#: src/Support/TimeDate.php:107
+msgid "GMT-05:00) America/Indiana/Vevay"
+msgstr ""
+
+#: src/Support/TimeDate.php:108
+msgid "GMT-05:00) America/Indiana/Vincennes"
+msgstr ""
+
+#: src/Support/TimeDate.php:109
+msgid "GMT-05:00) America/Indiana/Winamac"
+msgstr ""
+
+#: src/Support/TimeDate.php:110
+msgid "GMT-05:00) America/Kentucky/Louisville"
+msgstr ""
+
+#: src/Support/TimeDate.php:111
+msgid "GMT-05:00) America/Kentucky/Monticello"
+msgstr ""
+
+#: src/Support/TimeDate.php:112
+msgid "GMT-05:00) Eastern Time (US & Canada)"
+msgstr ""
+
+#: src/Support/TimeDate.php:113
+msgid "GMT-05:00) Indiana (East)"
+msgstr ""
+
+#: src/Support/TimeDate.php:114
+msgid "GMT-12:00) International Date Line West"
+msgstr ""
+
+#: src/Support/TimeDate.php:115
+msgid "GMT-11:00) American Samoa"
+msgstr ""
+
+#: src/Support/TimeDate.php:116
+msgid "GMT-11:00) Midway Island"
+msgstr ""
+
+#: src/Support/TimeDate.php:117
+msgid "GMT-08:00) Tijuana"
+msgstr ""
+
+#: src/Support/TimeDate.php:118
+msgid "GMT-07:00) Chihuahua"
+msgstr ""
+
+#: src/Support/TimeDate.php:119
+msgid "GMT-07:00) Mazatlan"
+msgstr ""
+
+#: src/Support/TimeDate.php:120
+msgid "GMT-06:00) Central America"
+msgstr ""
+
+#: src/Support/TimeDate.php:121
+msgid "GMT-06:00) Guadalajara"
+msgstr ""
+
+#: src/Support/TimeDate.php:122
+msgid "GMT-06:00) Mexico City"
+msgstr ""
+
+#: src/Support/TimeDate.php:123
+msgid "GMT-06:00) Monterrey"
+msgstr ""
+
+#: src/Support/TimeDate.php:124
+msgid "GMT-06:00) Saskatchewan"
+msgstr ""
+
+#: src/Support/TimeDate.php:125
+msgid "GMT-05:00) Bogota"
+msgstr ""
+
+#: src/Support/TimeDate.php:126
+msgid "GMT-05:00) Lima"
+msgstr ""
+
+#: src/Support/TimeDate.php:127
+msgid "GMT-05:00) Quito"
+msgstr ""
+
+#: src/Support/TimeDate.php:128
+msgid "GMT-04:00) Atlantic Time (Canada)"
+msgstr ""
+
+#: src/Support/TimeDate.php:129
+msgid "GMT-04:00) Caracas"
+msgstr ""
+
+#: src/Support/TimeDate.php:130
+msgid "GMT-04:00) Georgetown"
+msgstr ""
+
+#: src/Support/TimeDate.php:131
+msgid "GMT-04:00) La Paz"
+msgstr ""
+
+#: src/Support/TimeDate.php:132
+msgid "GMT-04:00) Puerto Rico"
+msgstr ""
+
+#: src/Support/TimeDate.php:133
+msgid "GMT-04:00) Santiago"
+msgstr ""
+
+#: src/Support/TimeDate.php:134
+msgid "GMT-03:30) Newfoundland"
+msgstr ""
+
+#: src/Support/TimeDate.php:135
+msgid "GMT-03:00) Brasilia"
+msgstr ""
+
+#: src/Support/TimeDate.php:136
+msgid "GMT-03:00) Buenos Aires"
+msgstr ""
+
+#: src/Support/TimeDate.php:137
+msgid "GMT-03:00) Greenland"
+msgstr ""
+
+#: src/Support/TimeDate.php:138
+msgid "GMT-03:00) Montevideo"
+msgstr ""
+
+#: src/Support/TimeDate.php:139
+msgid "GMT-02:00) Mid-Atlantic"
+msgstr ""
+
+#: src/Support/TimeDate.php:140
+msgid "GMT-01:00) Azores"
+msgstr ""
+
+#: src/Support/TimeDate.php:141
+msgid "GMT-01:00) Cape Verde Is."
+msgstr ""
+
+#: src/Support/TimeDate.php:142
+msgid "GMT+00:00) Edinburgh"
+msgstr ""
+
+#: src/Support/TimeDate.php:143
+msgid "GMT+00:00) Lisbon"
+msgstr ""
+
+#: src/Support/TimeDate.php:144
+msgid "GMT+00:00) London"
+msgstr ""
+
+#: src/Support/TimeDate.php:145
+msgid "GMT+00:00) Monrovia"
+msgstr ""
+
+#: src/Support/TimeDate.php:146
+msgid "GMT+00:00) UTC"
+msgstr ""
+
+#: src/Support/TimeDate.php:147
+msgid "GMT+01:00) Amsterdam"
+msgstr ""
+
+#: src/Support/TimeDate.php:148
+msgid "GMT+01:00) Belgrade"
+msgstr ""
+
+#: src/Support/TimeDate.php:149
+msgid "GMT+01:00) Berlin"
+msgstr ""
+
+#: src/Support/TimeDate.php:150
+msgid "GMT+01:00) Bern"
+msgstr ""
+
+#: src/Support/TimeDate.php:151
+msgid "GMT+01:00) Bratislava"
+msgstr ""
+
+#: src/Support/TimeDate.php:152
+msgid "GMT+01:00) Brussels"
+msgstr ""
+
+#: src/Support/TimeDate.php:153
+msgid "GMT+01:00) Budapest"
+msgstr ""
+
+#: src/Support/TimeDate.php:154
+msgid "GMT+01:00) Casablanca"
+msgstr ""
+
+#: src/Support/TimeDate.php:155
+msgid "GMT+01:00) Copenhagen"
+msgstr ""
+
+#: src/Support/TimeDate.php:156
+msgid "GMT+01:00) Dublin"
+msgstr ""
+
+#: src/Support/TimeDate.php:157
+msgid "GMT+01:00) Ljubljana"
+msgstr ""
+
+#: src/Support/TimeDate.php:158
+msgid "GMT+01:00) Madrid"
+msgstr ""
+
+#: src/Support/TimeDate.php:159
+msgid "GMT+01:00) Paris"
+msgstr ""
+
+#: src/Support/TimeDate.php:160
+msgid "GMT+01:00) Prague"
+msgstr ""
+
+#: src/Support/TimeDate.php:161
+msgid "GMT+01:00) Rome"
+msgstr ""
+
+#: src/Support/TimeDate.php:162
+msgid "GMT+01:00) Sarajevo"
+msgstr ""
+
+#: src/Support/TimeDate.php:163
+msgid "GMT+01:00) Skopje"
+msgstr ""
+
+#: src/Support/TimeDate.php:164
+msgid "GMT+01:00) Stockholm"
+msgstr ""
+
+#: src/Support/TimeDate.php:165
+msgid "GMT+01:00) Vienna"
+msgstr ""
+
+#: src/Support/TimeDate.php:166
+msgid "GMT+01:00) Warsaw"
+msgstr ""
+
+#: src/Support/TimeDate.php:167
+msgid "GMT+01:00) West Central Africa"
+msgstr ""
+
+#: src/Support/TimeDate.php:168
+msgid "GMT+01:00) Zagreb"
+msgstr ""
+
+#: src/Support/TimeDate.php:169
+msgid "GMT+01:00) Zurich"
+msgstr ""
+
+#: src/Support/TimeDate.php:170
+msgid "GMT+02:00) Athens"
+msgstr ""
+
+#: src/Support/TimeDate.php:171
+msgid "GMT+02:00) Bucharest"
+msgstr ""
+
+#: src/Support/TimeDate.php:172
+msgid "GMT+02:00) Cairo"
+msgstr ""
+
+#: src/Support/TimeDate.php:173
+msgid "GMT+02:00) Harare"
+msgstr ""
+
+#: src/Support/TimeDate.php:174
+msgid "GMT+02:00) Helsinki"
+msgstr ""
+
+#: src/Support/TimeDate.php:175
+msgid "GMT+02:00) Jerusalem"
+msgstr ""
+
+#: src/Support/TimeDate.php:176
+msgid "GMT+02:00) Kaliningrad"
+msgstr ""
+
+#: src/Support/TimeDate.php:177
+msgid "GMT+02:00) Kyiv"
+msgstr ""
+
+#: src/Support/TimeDate.php:178
+msgid "GMT+02:00) Pretoria"
+msgstr ""
+
+#: src/Support/TimeDate.php:179
+msgid "GMT+02:00) Riga"
+msgstr ""
+
+#: src/Support/TimeDate.php:180
+msgid "GMT+02:00) Sofia"
+msgstr ""
+
+#: src/Support/TimeDate.php:181
+msgid "GMT+02:00) Tallinn"
+msgstr ""
+
+#: src/Support/TimeDate.php:182
+msgid "GMT+02:00) Vilnius"
+msgstr ""
+
+#: src/Support/TimeDate.php:183
+msgid "GMT+03:00) Baghdad"
+msgstr ""
+
+#: src/Support/TimeDate.php:184
+msgid "GMT+03:00) Istanbul"
+msgstr ""
+
+#: src/Support/TimeDate.php:185
+msgid "GMT+03:00) Kuwait"
+msgstr ""
+
+#: src/Support/TimeDate.php:186
+msgid "GMT+03:00) Minsk"
+msgstr ""
+
+#: src/Support/TimeDate.php:187
+msgid "GMT+03:00) Moscow"
+msgstr ""
+
+#: src/Support/TimeDate.php:188
+msgid "GMT+03:00) Nairobi"
+msgstr ""
+
+#: src/Support/TimeDate.php:189
+msgid "GMT+03:00) Riyadh"
+msgstr ""
+
+#: src/Support/TimeDate.php:190
+msgid "GMT+03:00) St. Petersburg"
+msgstr ""
+
+#: src/Support/TimeDate.php:191
+msgid "GMT+03:00) Volgograd"
+msgstr ""
+
+#: src/Support/TimeDate.php:192
+msgid "GMT+03:30) Tehran"
+msgstr ""
+
+#: src/Support/TimeDate.php:193
+msgid "GMT+04:00) Abu Dhabi"
+msgstr ""
+
+#: src/Support/TimeDate.php:194
+msgid "GMT+04:00) Baku"
+msgstr ""
+
+#: src/Support/TimeDate.php:195
+msgid "GMT+04:00) Muscat"
+msgstr ""
+
+#: src/Support/TimeDate.php:196
+msgid "GMT+04:00) Samara"
+msgstr ""
+
+#: src/Support/TimeDate.php:197
+msgid "GMT+04:00) Tbilisi"
+msgstr ""
+
+#: src/Support/TimeDate.php:198
+msgid "GMT+04:00) Yerevan"
+msgstr ""
+
+#: src/Support/TimeDate.php:199
+msgid "GMT+04:30) Kabul"
+msgstr ""
+
+#: src/Support/TimeDate.php:200
+msgid "GMT+05:00) Ekaterinburg"
+msgstr ""
+
+#: src/Support/TimeDate.php:201
+msgid "GMT+05:00) Islamabad"
+msgstr ""
+
+#: src/Support/TimeDate.php:202
+msgid "GMT+05:00) Karachi"
+msgstr ""
+
+#: src/Support/TimeDate.php:203
+msgid "GMT+05:00) Tashkent"
+msgstr ""
+
+#: src/Support/TimeDate.php:204
+msgid "GMT+05:30) Chennai"
+msgstr ""
+
+#: src/Support/TimeDate.php:205
+msgid "GMT+05:30) Kolkata"
+msgstr ""
+
+#: src/Support/TimeDate.php:206
+msgid "GMT+05:30) Mumbai"
+msgstr ""
+
+#: src/Support/TimeDate.php:207
+msgid "GMT+05:30) New Delhi"
+msgstr ""
+
+#: src/Support/TimeDate.php:208
+msgid "GMT+05:30) Sri Jayawardenepura"
+msgstr ""
+
+#: src/Support/TimeDate.php:209
+msgid "GMT+05:45) Kathmandu"
+msgstr ""
+
+#: src/Support/TimeDate.php:210
+msgid "GMT+06:00) Almaty"
+msgstr ""
+
+#: src/Support/TimeDate.php:211
+msgid "GMT+06:00) Astana"
+msgstr ""
+
+#: src/Support/TimeDate.php:212
+msgid "GMT+06:00) Dhaka"
+msgstr ""
+
+#: src/Support/TimeDate.php:213
+msgid "GMT+06:00) Urumqi"
+msgstr ""
+
+#: src/Support/TimeDate.php:214
+msgid "GMT+06:30) Rangoon"
+msgstr ""
+
+#: src/Support/TimeDate.php:215
+msgid "GMT+07:00) Bangkok"
+msgstr ""
+
+#: src/Support/TimeDate.php:216
+msgid "GMT+07:00) Hanoi"
+msgstr ""
+
+#: src/Support/TimeDate.php:217
+msgid "GMT+07:00) Jakarta"
+msgstr ""
+
+#: src/Support/TimeDate.php:218
+msgid "GMT+07:00) Krasnoyarsk"
+msgstr ""
+
+#: src/Support/TimeDate.php:219
+msgid "GMT+07:00) Novosibirsk"
+msgstr ""
+
+#: src/Support/TimeDate.php:220
+msgid "GMT+08:00) Beijing"
+msgstr ""
+
+#: src/Support/TimeDate.php:221
+msgid "GMT+08:00) Chongqing"
+msgstr ""
+
+#: src/Support/TimeDate.php:222
+msgid "GMT+08:00) Hong Kong"
+msgstr ""
+
+#: src/Support/TimeDate.php:223
+msgid "GMT+08:00) Irkutsk"
+msgstr ""
+
+#: src/Support/TimeDate.php:224
+msgid "GMT+08:00) Kuala Lumpur"
+msgstr ""
+
+#: src/Support/TimeDate.php:225
+msgid "GMT+08:00) Perth"
+msgstr ""
+
+#: src/Support/TimeDate.php:226
+msgid "GMT+08:00) Singapore"
+msgstr ""
+
+#: src/Support/TimeDate.php:227
+msgid "GMT+08:00) Taipei"
+msgstr ""
+
+#: src/Support/TimeDate.php:228
+msgid "GMT+08:00) Ulaanbaatar"
+msgstr ""
+
+#: src/Support/TimeDate.php:229
+msgid "GMT+09:00) Osaka"
+msgstr ""
+
+#: src/Support/TimeDate.php:230
+msgid "GMT+09:00) Sapporo"
+msgstr ""
+
+#: src/Support/TimeDate.php:231
+msgid "GMT+09:00) Seoul"
+msgstr ""
+
+#: src/Support/TimeDate.php:232
+msgid "GMT+09:00) Tokyo"
+msgstr ""
+
+#: src/Support/TimeDate.php:233
+msgid "GMT+09:00) Yakutsk"
+msgstr ""
+
+#: src/Support/TimeDate.php:234
+msgid "GMT+09:30) Adelaide"
+msgstr ""
+
+#: src/Support/TimeDate.php:235
+msgid "GMT+09:30) Darwin"
+msgstr ""
+
+#: src/Support/TimeDate.php:236
+msgid "GMT+10:00) Brisbane"
+msgstr ""
+
+#: src/Support/TimeDate.php:237
+msgid "GMT+10:00) Canberra"
+msgstr ""
+
+#: src/Support/TimeDate.php:238
+msgid "GMT+10:00) Guam"
+msgstr ""
+
+#: src/Support/TimeDate.php:239
+msgid "GMT+10:00) Hobart"
+msgstr ""
+
+#: src/Support/TimeDate.php:240
+msgid "GMT+10:00) Melbourne"
+msgstr ""
+
+#: src/Support/TimeDate.php:241
+msgid "GMT+10:00) Port Moresby"
+msgstr ""
+
+#: src/Support/TimeDate.php:242
+msgid "GMT+10:00) Sydney"
+msgstr ""
+
+#: src/Support/TimeDate.php:243
+msgid "GMT+10:00) Vladivostok"
+msgstr ""
+
+#: src/Support/TimeDate.php:244
+msgid "GMT+11:00) Magadan"
+msgstr ""
+
+#: src/Support/TimeDate.php:245
+msgid "GMT+11:00) New Caledonia"
+msgstr ""
+
+#: src/Support/TimeDate.php:246
+msgid "GMT+11:00) Solomon Is."
+msgstr ""
+
+#: src/Support/TimeDate.php:247
+msgid "GMT+11:00) Srednekolymsk"
+msgstr ""
+
+#: src/Support/TimeDate.php:248
+msgid "GMT+12:00) Auckland"
+msgstr ""
+
+#: src/Support/TimeDate.php:249
+msgid "GMT+12:00) Fiji"
+msgstr ""
+
+#: src/Support/TimeDate.php:250
+msgid "GMT+12:00) Kamchatka"
+msgstr ""
+
+#: src/Support/TimeDate.php:251
+msgid "GMT+12:00) Marshall Is."
+msgstr ""
+
+#: src/Support/TimeDate.php:252
+msgid "GMT+12:00) Wellington"
+msgstr ""
+
+#: src/Support/TimeDate.php:253
+msgid "GMT+12:45) Chatham Is."
+msgstr ""
+
+#: src/Support/TimeDate.php:254
+msgid "GMT+13:00) Nuku&#39;alofa"
+msgstr ""
+
+#: src/Support/TimeDate.php:255
+msgid "GMT+13:00) Samoa"
+msgstr ""
+
+#: src/Support/TimeDate.php:256
+msgid "GMT+13:00) Tokelau Is."
+msgstr ""
+
 #: src/Webhooks/WebhooksHistoryService.php:140
 msgid "It looks like this site has moved or has been duplicated. SureCart has created new webhooks for the domain to prevent purchase sync issues. Should we remove the previous webook?"
 msgstr ""
@@ -1175,7 +2633,7 @@ msgstr ""
 msgid "Remove webhook."
 msgstr ""
 
-#: src/Webhooks/WebhooksService.php:117
+#: src/Webhooks/WebhooksService.php:118
 msgid "SureCart webhooks could not be created."
 msgstr ""
 
@@ -1195,49 +2653,16 @@ msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:46
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:63
-msgid "Plugin"
-msgstr ""
-
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:54
-#: admin/products/index.php:29
-msgid "Products"
-msgstr ""
-
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:55
-#: admin/coupons/index.php:5
-msgid "Coupons"
-msgstr ""
-
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:56
-#: admin/orders/index.php:8
-msgid "Orders"
-msgstr ""
-
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:57
-#: admin/invoices/index.php:22
-msgid "Invoices"
-msgstr ""
-
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:58
-#: admin/customers/index.php:7
-msgid "Customers"
-msgstr ""
-
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:59
-#: admin/subscriptions/index.php:21
-#: web/dashboard/orders/show.php:58
-msgid "Subscriptions"
-msgstr ""
-
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:62
-msgid "Forms"
-msgstr ""
-
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:64
+#: layouts/partials/admin-settings-header.php:24
 msgid "Settings"
 msgstr ""
 
-#: src/WordPress/Admin/Notices/AdminNoticesService.php:114
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:62
+#: src/WordPress/PostTypes/FormPostTypeService.php:81
+msgid "Forms"
+msgstr ""
+
+#: src/WordPress/Admin/Notices/AdminNoticesService.php:159
 msgid "Dismiss Notice"
 msgstr ""
 
@@ -1253,102 +2678,102 @@ msgstr ""
 msgid "Order Confirmation"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:104
+#: src/WordPress/PostTypes/FormPostTypeService.php:129
 msgid "Default"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:179
+#: src/WordPress/PostTypes/FormPostTypeService.php:204
 msgctxt "post type general name"
 msgid "Checkout Forms"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:180
+#: src/WordPress/PostTypes/FormPostTypeService.php:205
 msgctxt "post type singular name"
 msgid "Checkout Form"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:181
+#: src/WordPress/PostTypes/FormPostTypeService.php:206
 msgctxt "Checkout Form"
 msgid "Add New"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:182
+#: src/WordPress/PostTypes/FormPostTypeService.php:207
 msgid "Add new Checkout Form"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:183
+#: src/WordPress/PostTypes/FormPostTypeService.php:208
 msgid "New Checkout Form"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:184
+#: src/WordPress/PostTypes/FormPostTypeService.php:209
 msgid "Edit Checkout Form"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:185
+#: src/WordPress/PostTypes/FormPostTypeService.php:210
 msgid "View Checkout Form"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:186
+#: src/WordPress/PostTypes/FormPostTypeService.php:211
 msgid "All Checkout Forms"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:187
+#: src/WordPress/PostTypes/FormPostTypeService.php:212
 msgid "Search Checkout Forms"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:188
+#: src/WordPress/PostTypes/FormPostTypeService.php:213
 msgid "No checkout forms found."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:189
+#: src/WordPress/PostTypes/FormPostTypeService.php:214
 msgid "No checkout forms found in Trash."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:190
+#: src/WordPress/PostTypes/FormPostTypeService.php:215
 msgid "Filter checkout forms list"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:191
+#: src/WordPress/PostTypes/FormPostTypeService.php:216
 msgid "Checkout Forms list navigation"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:192
+#: src/WordPress/PostTypes/FormPostTypeService.php:217
 msgid "Checkout Forms list"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:193
+#: src/WordPress/PostTypes/FormPostTypeService.php:218
 msgid "Checkout Form published."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:194
+#: src/WordPress/PostTypes/FormPostTypeService.php:219
 msgid "Checkout Form published privately."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:195
+#: src/WordPress/PostTypes/FormPostTypeService.php:220
 msgid "Checkout Form reverted to draft."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:196
+#: src/WordPress/PostTypes/FormPostTypeService.php:221
 msgid "Checkout Form scheduled."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:197
+#: src/WordPress/PostTypes/FormPostTypeService.php:222
 msgid "Checkout Form updated."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:249
+#: src/WordPress/PostTypes/FormPostTypeService.php:274
 msgid "Published In"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:250
+#: src/WordPress/PostTypes/FormPostTypeService.php:275
 msgid "Mode"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:251
+#: src/WordPress/PostTypes/FormPostTypeService.php:276
 msgid "Shortcode"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:320
+#: src/WordPress/PostTypes/FormPostTypeService.php:345
 msgid "(no title)"
 msgstr ""
 
@@ -1356,16 +2781,82 @@ msgstr ""
 msgid "This form is not available or has been deleted."
 msgstr ""
 
-#: src/WordPress/Users/UsersService.php:32
+#: src/WordPress/Users/UsersService.php:47
 msgid "Limit result set to users with a customer."
 msgstr ""
 
-#: src/WordPress/Users/UsersService.php:36
+#: src/WordPress/Users/UsersService.php:51
 msgid "Limit result set to users with specific customer ids."
 msgstr ""
 
 #: admin/abandoned-orders/index.php:5
 msgid "Abandoned Orders"
+msgstr ""
+
+#: admin/advanced.php:30
+msgid "Advanced Settings"
+msgstr ""
+
+#: admin/advanced.php:33
+#: admin/connection-invalid.php:28
+#: admin/connection.php:37
+msgid "Save"
+msgstr ""
+
+#: admin/advanced.php:41
+#: admin/plugin.php:95
+msgid "Performance"
+msgstr ""
+
+#: admin/advanced.php:42
+#: admin/plugin.php:96
+msgid "Change your plugin performance settings."
+msgstr ""
+
+#: admin/advanced.php:45
+#: admin/plugin.php:99
+msgid "Use JavaScript ESM Loader"
+msgstr ""
+
+#: admin/advanced.php:46
+#: admin/plugin.php:100
+msgid "This can slightly increase page load speed, but may require you to enable CORS headers for .js files on your CDN. Please check your checkout forms after you enable this option in a private browser window."
+msgstr ""
+
+#: admin/advanced.php:52
+msgid "Beta Features"
+msgstr ""
+
+#: admin/advanced.php:53
+msgid "Opt-in to some beta features of the plugin."
+msgstr ""
+
+#: admin/advanced.php:56
+msgid "Use the Stripe Payment Element"
+msgstr ""
+
+#: admin/advanced.php:57
+msgid "Use Stripe's Payment Element instead of the Card Element in all forms."
+msgstr ""
+
+#: admin/advanced.php:63
+#: admin/plugin.php:106
+msgid "Uninstall"
+msgstr ""
+
+#: admin/advanced.php:64
+#: admin/plugin.php:107
+msgid "Change your plugin uninstall settings."
+msgstr ""
+
+#: admin/advanced.php:67
+#: admin/plugin.php:110
+msgid "Remove Plugin Data"
+msgstr ""
+
+#: admin/advanced.php:68
+#: admin/plugin.php:111
+msgid "Completely remove all plugin data when deleted. This cannot be undone."
 msgstr ""
 
 #: admin/coming-soon.php:48
@@ -1376,72 +2867,107 @@ msgstr ""
 msgid "We are currently working on our Pro features. Please check back once we release new revenue and time saving features."
 msgstr ""
 
-#: admin/invoices/index.php:9
+#: admin/connection-invalid.php:25
+msgid "Update Your Connection"
+msgstr ""
+
+#: admin/connection-invalid.php:36
+#: admin/connection.php:45
+#: admin/plugin.php:79
+msgid "Connection Details"
+msgstr ""
+
+#: admin/connection-invalid.php:37
+msgid "Add your API token to connect to SureCart."
+msgstr ""
+
+#: admin/connection-invalid.php:39
+#: admin/connection.php:48
+#: admin/plugin.php:82
+msgid "Api Token"
+msgstr ""
+
+#: admin/connection-invalid.php:39
+#: admin/connection.php:48
+#: admin/plugin.php:82
+msgid "Enter your api token."
+msgstr ""
+
+#: admin/connection-invalid.php:44
+#: admin/connection.php:53
+#: admin/plugin.php:87
+msgid "Find My Api Token"
+msgstr ""
+
+#: admin/connection.php:34
+msgid "Connection Settings"
+msgstr ""
+
+#: admin/connection.php:46
+#: admin/plugin.php:80
+msgid "Update your api token to change or update the connection to SureCart."
+msgstr ""
+
+#: admin/invoices/index.php:8
 msgid "What are Invoices?"
 msgstr ""
 
-#: admin/invoices/index.php:10
+#: admin/invoices/index.php:9
 msgid "Invoices are similar to orders, but are used for payments and plan changes on active subscriptions. In the future you will be able to create an invoice to send out."
 msgstr ""
 
-#: admin/onboarding/complete.php:47
+#: admin/onboarding/complete.php:48
 #: admin/plugin.php:60
+#: layouts/partials/admin-settings-notices.php:22
 msgid "Please enter an API key."
 msgstr ""
 
-#: admin/onboarding/complete.php:55
+#: admin/onboarding/complete.php:56
 msgid "Just one last step!"
 msgstr ""
 
-#: admin/onboarding/complete.php:66
+#: admin/onboarding/complete.php:67
 msgid "Enter your API Token"
 msgstr ""
 
-#: admin/onboarding/complete.php:66
+#: admin/onboarding/complete.php:67
 msgid "Api token"
 msgstr ""
 
-#: admin/onboarding/complete.php:68
+#: admin/onboarding/complete.php:69
 msgid "Complete Installation"
 msgstr ""
 
-#: admin/onboarding/install.php:47
+#: admin/onboarding/install.php:48
 msgid "Welcome to SureCart!"
 msgstr ""
 
-#: admin/onboarding/install.php:53
+#: admin/onboarding/install.php:54
 msgid "Commerce on WordPress has never been easier, faster, or more flexible."
 msgstr ""
 
-#: admin/onboarding/install.php:56
+#: admin/onboarding/install.php:57
 msgid "Set Up My Store"
 msgstr ""
 
-#: admin/onboarding/show.php:47
-msgid "Getting Started With SureCart"
+#: admin/onboarding/show.php:56
+msgid "Get started by creating your first product or creating a new checkout form."
 msgstr ""
 
-#: admin/onboarding/show.php:53
-msgid "Get started by selecting a creating your first product or creating a new, custom form."
-msgstr ""
-
-#: admin/onboarding/show.php:57
-msgid "Store Settings"
-msgstr ""
-
-#: admin/onboarding/show.php:61
+#: admin/onboarding/show.php:60
 msgid "Create A Product"
 msgstr ""
 
-#: admin/onboarding/show.php:65
+#: admin/onboarding/show.php:64
 msgid "Create A Form"
 msgstr ""
 
-#: admin/onboarding/show.php:70
+#: admin/onboarding/show.php:69
 msgid "Get Help"
 msgstr ""
 
 #: admin/plugin.php:54
+#: layouts/partials/admin-settings-notices.php:16
 msgid "Saved."
 msgstr ""
 
@@ -1453,103 +2979,42 @@ msgstr ""
 msgid "Save Settings"
 msgstr ""
 
-#: admin/plugin.php:79
-msgid "Connection Details"
-msgstr ""
-
-#: admin/plugin.php:80
-msgid "Update your api token to change or update the connection to SureCart."
-msgstr ""
-
-#: admin/plugin.php:82
-msgid "Api Token"
-msgstr ""
-
-#: admin/plugin.php:82
-msgid "Enter your api token."
-msgstr ""
-
-#: admin/plugin.php:87
-msgid "Find My Api Token"
-msgstr ""
-
-#: admin/plugin.php:95
-msgid "Performance"
-msgstr ""
-
-#: admin/plugin.php:96
-msgid "Change your plugin performance settings."
-msgstr ""
-
-#: admin/plugin.php:99
-msgid "Use JavaScript ESM Loader"
-msgstr ""
-
-#: admin/plugin.php:100
-msgid "This can slightly increase page load speed, but may require you to enable CORS headers for .js files on your CDN. Please check your checkout forms after you enable this option in a private browser window."
-msgstr ""
-
-#: admin/plugin.php:106
-msgid "Uninstall"
-msgstr ""
-
-#: admin/plugin.php:107
-msgid "Change your plugin uninstall settings."
-msgstr ""
-
-#: admin/plugin.php:110
-msgid "Uninstall On Delete"
-msgstr ""
-
-#: admin/plugin.php:111
-msgid "Completely remove all plugin data when deleted. This cannot be undone."
-msgstr ""
-
-#: admin/processors.php:31
+#: admin/processors.php:30
+#: layouts/partials/admin-settings-sidebar.php:29
 msgid "Processors"
 msgstr ""
 
-#: admin/processors.php:58
+#: admin/processors.php:57
 msgid "Connect with Stripe to accept credit cards and other payment methods."
 msgstr ""
 
-#: admin/processors.php:63
-#: admin/processors.php:141
-msgid "Connected"
+#: admin/processors.php:62
+#: admin/processors.php:140
+msgid "Test and Live Payments Enabled"
+msgstr ""
+
+#: admin/processors.php:65
+#: admin/processors.php:143
+msgid "Live Payments Enabled"
 msgstr ""
 
 #: admin/processors.php:66
-msgid "Live Payments Allowed"
+#: admin/processors.php:144
+msgid "Test Payment Not Enabled"
 msgstr ""
 
-#: admin/processors.php:67
-msgid "Test Payment Not Allowed"
+#: admin/processors.php:69
+#: admin/processors.php:147
+msgid "Test Payments Enabled"
 msgstr ""
 
 #: admin/processors.php:70
-#: admin/processors.php:215
-msgid "Test Payments Allowed"
+#: admin/processors.php:148
+msgid "Live Payments Not Enabled"
 msgstr ""
 
-#: admin/processors.php:71
-msgid "Live Payments Not Allowed"
-msgstr ""
-
-#: admin/processors.php:136
+#: admin/processors.php:135
 msgid "Connect with PayPal to add a PayPal express button to your checkout."
-msgstr ""
-
-#: admin/processors.php:143
-#: admin/processors.php:217
-msgid "Not Connected"
-msgstr ""
-
-#: admin/processors.php:207
-msgid "Developer"
-msgstr ""
-
-#: admin/processors.php:211
-msgid "Connect with a PayPal sandbox account to test your integration before going live."
 msgstr ""
 
 #: admin/product-groups/index.php:9
@@ -1578,6 +3043,59 @@ msgstr ""
 
 #: layouts/partials/admin-index-header.php:14
 msgid "Add New"
+msgstr ""
+
+#: layouts/partials/admin-settings-header.php:17
+msgid "Cache cleared."
+msgstr ""
+
+#: layouts/partials/admin-settings-header.php:40
+msgid "Clear Account Cache"
+msgstr ""
+
+#: layouts/partials/admin-settings-header.php:43
+msgid "SureCart Status"
+msgstr ""
+
+#. translators: Version number.
+#: layouts/partials/admin-settings-header.php:49
+msgid "Version %s"
+msgstr ""
+
+#: layouts/partials/admin-settings-notices.php:10
+msgid "Your API key is incorrect. Please double-check it is correct and update it."
+msgstr ""
+
+#: layouts/partials/admin-settings-sidebar.php:5
+msgid "Store Settings"
+msgstr ""
+
+#: layouts/partials/admin-settings-sidebar.php:9
+msgid "Design & Branding"
+msgstr ""
+
+#: layouts/partials/admin-settings-sidebar.php:13
+msgid "Customer Notifications"
+msgstr ""
+
+#: layouts/partials/admin-settings-sidebar.php:21
+msgid "Customer Portal"
+msgstr ""
+
+#: layouts/partials/admin-settings-sidebar.php:25
+msgid "Taxes"
+msgstr ""
+
+#: layouts/partials/admin-settings-sidebar.php:40
+msgid "Advanced"
+msgstr ""
+
+#: layouts/partials/admin-settings-sidebar.php:45
+msgid "Data Export"
+msgstr ""
+
+#: layouts/partials/admin-settings-sidebar.php:50
+msgid "Help"
 msgstr ""
 
 #: web/dashboard/orders/show.php:15

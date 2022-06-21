@@ -4,7 +4,7 @@
 	"description": "Display payment options",
 	"category": "surecart",
 	"keywords": ["credit", "card", "paypal", "stripe"],
-	"parent": ["surecart/form", "surecart/column"],
+	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,
 		"html": false,
@@ -18,6 +18,11 @@
 		"label": {
 			"type": "string",
 			"default": "Payment"
+		},
+		"default_processor": {
+			"type": "string",
+			"default": "stripe"
 		}
-	}
+	},
+	"usesContext": ["surecart/form/mode"]
 }

@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property      | Attribute     | Description                           | Type      | Default |
-| ------------- | ------------- | ------------------------------------- | --------- | ------- |
-| `accordion`   | `accordion`   | Should this function as an accordion? | `boolean` | `false` |
-| `collapsible` | `collapsible` | Are these collapsible?                | `boolean` | `true`  |
+| Property      | Attribute     | Description                           | Type                       | Default     |
+| ------------- | ------------- | ------------------------------------- | -------------------------- | ----------- |
+| `accordion`   | `accordion`   | Should this function as an accordion? | `boolean`                  | `false`     |
+| `collapsible` | `collapsible` | Are these collapsible?                | `boolean`                  | `true`      |
+| `theme`       | `theme`       | Theme for the toggles                 | `"container" \| "default"` | `'default'` |
 
 
 ## Shadow Parts
@@ -19,6 +20,19 @@
 | -------- | ----------- |
 | `"base"` |             |
 
+
+## Dependencies
+
+### Used by
+
+ - [sc-payment](../../controllers/checkout-form/payment)
+
+### Graph
+```mermaid
+graph TD;
+  sc-payment --> sc-toggles
+  style sc-toggles fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

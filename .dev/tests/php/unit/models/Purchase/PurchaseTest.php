@@ -19,6 +19,7 @@ class PurchaseTest extends SureCartUnitTestCase
 		\SureCart::make()->bootstrap([
 			'providers' => [
 				\SureCart\Request\RequestServiceProvider::class,
+				\SureCart\WordPress\PluginServiceProvider::class,
 			]
 		], false);
 	}

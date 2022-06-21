@@ -1,5 +1,7 @@
-import { Component, h, Prop, Fragment, Element, Listen, Event, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Fragment, h, Listen, Prop } from '@stencil/core';
+
 import { LineItemData } from '../../../../types';
+
 @Component({
   tag: 'sc-price-choices',
   styleUrl: 'sc-price-choices.css',
@@ -15,7 +17,7 @@ export class ScPriceChoices {
   @Prop() columns: number = 1;
 
   /** Required by default */
-  @Prop() required: boolean = false;
+  @Prop() required: boolean = true;
 
   /** Toggle line item event */
   @Event() scRemoveLineItem: EventEmitter<LineItemData>;
@@ -31,9 +33,7 @@ export class ScPriceChoices {
       if (!choice.checked) {
         this.scRemoveLineItem.emit({ price_id: priceChoice.priceId, quantity: priceChoice.quantity });
       } else {
-        if (!priceChoice?.isAdHoc) {
-          this.scUpdateLineItem.emit({ price_id: priceChoice.priceId, quantity: priceChoice.quantity });
-        }
+        this.scUpdateLineItem.emit({ price_id: priceChoice.priceId, quantity: priceChoice.quantity });
       }
     });
   }

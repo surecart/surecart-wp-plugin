@@ -124,7 +124,7 @@ class ErrorsTranslationService {
 	/**
 	 * Translate Errors
 	 *
-	 * @param array   $response Respons from platform.
+	 * @param array   $response Response from platform.
 	 * @param integer $code Status code.
 	 *
 	 * @return \WP_Error

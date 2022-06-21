@@ -1,4 +1,4 @@
-import { Component, Prop, h } from '@stencil/core';
+import { Component, Prop, h, Fragment } from '@stencil/core';
 import { sprintf, __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 import { Order } from '../../../../types';
@@ -13,11 +13,24 @@ export class ScLineItemTax {
   @Prop() loading: boolean;
 
   renderLabel() {
-    if (this?.order?.tax_status === 'calculated') {
-      return this?.order?.tax_label;
+    return (
+      <Fragment>
+        {this?.order?.tax_status === 'calculated' ? this.order?.tax_label : sprintf(__('Estimated %s', 'surecart'), this?.order?.tax_label)}
+        {this.renderPercent()}
+      </Fragment>
+    );
+  }
+
+  renderPercent() {
+    if (this.order?.tax_percent) {
+      return (
+        <Fragment>
+          {'('}
+          {this.order.tax_percent}%{')'}
+        </Fragment>
+      );
     }
-    // translators: %s: tax label
-    return sprintf(__('Estimated %s', 'surecart'), this?.order?.tax_label);
+    return '';
   }
 
   render() {
@@ -29,9 +42,20 @@ export class ScLineItemTax {
     return (
       <sc-line-item>
         <span slot="description">{this.renderLabel()}</span>
-        <span slot="price">
-          <sc-format-number type="currency" currency={this?.order?.currency || 'usd'} value={this?.order?.tax_amount} />
-        </span>
+
+        {this.order?.tax_exclusive_amount && (
+          <span slot="price">
+            <sc-format-number type="currency" currency={this?.order?.currency || 'usd'} value={this?.order?.tax_exclusive_amount} />
+          </span>
+        )}
+
+        {this.order?.tax_inclusive_amount && (
+          <span slot="price-description">
+            {'('}
+            <sc-format-number type="currency" currency={this?.order?.currency || 'usd'} value={this?.order?.tax_inclusive_amount} /> {__('included', 'surecart')}
+            {')'}
+          </span>
+        )}
       </sc-line-item>
     );
   }

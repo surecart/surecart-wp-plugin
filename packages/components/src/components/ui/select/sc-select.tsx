@@ -3,6 +3,7 @@ import { ChoiceItem } from '../../../types';
 import Fuse from 'fuse.js';
 import { FormSubmitController } from '../../../functions/form-data';
 import { __ } from '@wordpress/i18n';
+import { isValidURL } from '../../../functions/util';
 
 let id = 0;
 
@@ -35,10 +36,13 @@ export class ScSelectDropdown {
   @Prop() searchPlaceholder: string = '';
 
   /** The input's value attribute. */
-  @Prop({ mutable: true }) value = '';
+  @Prop({ mutable: true, reflect: true }) value = '';
 
   /** The input's value attribute. */
   @Prop({ mutable: true }) choices: Array<ChoiceItem> = [];
+
+  /** Can we unselect items. */
+  @Prop() unselect: boolean = true;
 
   /* Is it required */
   @Prop({ reflect: true }) required: boolean;
@@ -50,7 +54,7 @@ export class ScSelectDropdown {
   @Prop() search: boolean;
 
   /** The input's name attribute. */
-  @Prop() name: string;
+  @Prop({ reflect: true }) name: string;
 
   /** Some help text for the input. */
   @Prop() help: string;
@@ -73,6 +77,7 @@ export class ScSelectDropdown {
   @Prop({ mutable: true }) open: boolean;
   @Prop() disabled: boolean;
   @Prop() showParentLabel: boolean = true;
+  @Prop() hoist: boolean = false;
 
   @Prop() squared: boolean;
   @Prop() squaredBottom: boolean;
@@ -112,7 +117,7 @@ export class ScSelectDropdown {
     this.open = true;
     this.scOpen.emit();
     setTimeout(() => {
-      this.searchInput.triggerFocus();
+      this.searchInput && this.searchInput.triggerFocus();
     }, 50);
   }
 
@@ -138,7 +143,7 @@ export class ScSelectDropdown {
     let append = '';
     if (!chosen) {
       if (this.showParentLabel) {
-        append = this.choices.find(choice => choice.choices.some(subChoice => subChoice.value === this.value))?.label;
+        append = this.choices.find(choice => choice?.choices?.some?.(subChoice => subChoice.value === this.value))?.label;
       }
       const subchoices = (this.choices || []).map(choice => choice.choices).flat();
       chosen = subchoices.find(choice => choice?.value == this.value);
@@ -171,7 +176,7 @@ export class ScSelectDropdown {
   }
 
   handleSelect(value) {
-    if (this.value === value) {
+    if (this.value === value && this.unselect) {
       this.value = '';
     } else {
       this.value = value;
@@ -197,7 +202,9 @@ export class ScSelectDropdown {
 
   @Watch('value')
   handleValueChange() {
-    this.invalid = !this.input.checkValidity();
+    if (this.input) {
+      this.invalid = !this.input.checkValidity();
+    }
   }
 
   @Watch('open')
@@ -217,7 +224,7 @@ export class ScSelectDropdown {
   componentDidLoad() {
     this.formController = new FormSubmitController(this.el).addFormData();
     if (this.open) {
-      this.searchInput.triggerFocus();
+      this.searchInput && this.searchInput.triggerFocus();
     }
   }
 
@@ -283,15 +290,23 @@ export class ScSelectDropdown {
     this.formController?.removeFormData();
   }
 
+  renderIcon(icon) {
+    if (isValidURL(icon)) {
+      return <img src={icon} alt="icon" slot="prefix" class="choice__icon--image" />;
+    }
+    return <sc-icon name={icon} slot="prefix" class="choice__icon" />;
+  }
+
   renderItem(choice: ChoiceItem, index: number) {
     if (choice?.choices?.length) {
       return <sc-menu-label key={index}>{choice.label}</sc-menu-label>;
     }
 
     return (
-      <sc-menu-item key={index} checked={this.isChecked(choice)} onClick={() => this.handleSelect(choice.value)} disabled={choice.disabled}>
+      <sc-menu-item key={index} checked={this.isChecked(choice)} value={choice?.value} onClick={() => this.handleSelect(choice.value)} disabled={choice.disabled}>
         {choice.label}
-        {choice?.suffix && <span slot="suffix">{choice.suffix}</span>}
+        {!!choice?.suffix && <span slot="suffix">{choice.suffix}</span>}
+        {!!choice?.icon && this.renderIcon(choice.icon)}
       </sc-menu-item>
     );
   }
@@ -338,6 +353,7 @@ export class ScSelectDropdown {
             disabled={this.disabled}
             open={this.open}
             position={this.position}
+            hoist={this.hoist}
             style={{ '--panel-width': '100%' }}
             onScShow={() => this.handleShow()}
             onScHide={() => this.handleHide()}

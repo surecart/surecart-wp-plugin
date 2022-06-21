@@ -1,0 +1,27 @@
+# Purchase Integrations
+
+SureCart abstracts away many of the complexities of integrating with a purchase. This is done through extending our integrations php class and providing
+the necessary functionality for a purchase's life-cycle events. These events are when a purchase is created, invoked, or revoked.
+
+### Why do we use a "Purchase"?
+We abstract away many of the complexities of integrating with our ecommerce platform. Instead of needing to keep track of subscription changes,
+one-time purchase refunds and needing to sort about how to update your integration on several different models and events, we instead abstract them
+to a [Purchase] model. In short, you do not need to know or even understand how our eCommerce system works. Instead, you can use a **declarative**
+approach, and declare what you want to do when a purchase is created, invoked, or revoked.
+
+### When is a purchase "created"?
+A purchase is created the first time a customer completes an order, or a person upgrades or downgrades a subscription.
+
+### When is a purchase "revoked"?
+A purchase can be revoked either manually by the Merchant, or automatically. A purchase can be manually revoked if it is a 1-time purchase.
+The merchant will see a "Revoke" button next to the purchase in the Merchant's admin panel.
+
+A purchase can also be automatically revoked. This can happen when a subscription is canceled or expired for instance. Merchants cannot
+manually revoke a purchase that is tied to a subscription. They must cancel the subscription instead, which will revoke the purchase.
+
+### When is a purchase "invoked"?
+A purchase is `invoked` when a purchase has been previously revoked, then un-revoked. This is useful for when a merchant wants to run
+a specific action when a purchase is re-instated, but not necessarily when it is first created. A great example of this is a welcome email.
+You typically only want to send a welcome email the first time someone purchases a product, and not when it is re-instated after being revoked.
+
+# Building The Integration

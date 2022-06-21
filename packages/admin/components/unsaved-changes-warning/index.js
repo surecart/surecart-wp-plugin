@@ -18,7 +18,8 @@ export default function UnsavedChangesWarning() {
 			const dirtyEntityRecords = select(coreStore).selectDirty();
 			const draftEntries = select(coreStore).selectAllDrafts();
 			if (draftEntries.length > 0) return true;
-			return Object.keys(dirtyEntityRecords || {}).length > 0;
+			if (Object.keys(dirtyEntityRecords || {}).length > 0) return true;
+			return false;
 		};
 	}, []);
 

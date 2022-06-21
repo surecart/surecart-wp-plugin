@@ -4,7 +4,7 @@
 	"title": "Divider",
 	"description": "Displays a divider.",
 	"category": "surecart",
-	"parent": ["surecart/form", "surecart/column", "surecart/dashboard-page"],
+	"ancestor": ["surecart/form", "surecart/dashboard-page"],
 	"keywords": ["divider", "hr"],
 	"supports": {
 		"reusable": false,

@@ -30,15 +30,11 @@
 ### Used by
 
  - [sc-form-control](../form-control)
- - [sc-payment](../../controllers/checkout-form/payment)
- - [sc-price-choice](../../controllers/checkout-form/price-choice)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-form-control --> sc-tooltip
-  sc-payment --> sc-tooltip
-  sc-price-choice --> sc-tooltip
   style sc-tooltip fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

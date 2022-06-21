@@ -22,7 +22,7 @@ class RolesService {
 	 */
 	public function delete() {
 		$this->removeRoles();
-		$this->removeCaps();
+		// $this->removeCaps();
 	}
 
 	/**
@@ -84,6 +84,14 @@ class RolesService {
 				'edit_posts'   => false,
 				'upload_files' => true,
 				'delete_posts' => false,
+			]
+		);
+
+		add_role(
+			'sc_customer',
+			__( 'SureCart Customer', 'surecart' ),
+			[
+				'read' => true,
 			]
 		);
 	}

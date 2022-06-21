@@ -1,14 +1,16 @@
-import { Component, Prop, h, Watch, State, Event, EventEmitter } from '@stencil/core';
+import { Component, Prop, h, Watch, State, Event, EventEmitter, Method } from '@stencil/core';
+import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
-import { isAddressCompleteEnough } from '../../../../functions/address';
 import { Address, Order, TaxStatus } from '../../../../types';
 
 @Component({
   tag: 'sc-order-shipping-address',
-  styleUrl: 'sc-order-shipping-address.css',
-  shadow: false,
+  styleUrl: 'sc-order-shipping-address.scss',
+  shadow: true,
 })
 export class ScOrderShippingAddress {
+  private input: HTMLScAddressElement | HTMLScCompactAddressElement;
+
   /** Label for the field. */
   @Prop() label: string;
 
@@ -27,70 +29,83 @@ export class ScOrderShippingAddress {
   /** Tax status of the order */
   @Prop() taxStatus: TaxStatus;
 
+  /** Is shipping enabled for this order? */
+  @Prop() shippingEnabled: boolean;
+
+  /** Show the full address */
+  @Prop() full: boolean;
+
+  /** Show the name field. */
+  @Prop() showName: boolean;
+
+  /** Placeholder values. */
+  @Prop() placeholders: Partial<Address> = {
+    name: __('Name or Company Name', 'surecart'),
+    country: __('Country', 'surecart'),
+    city: __('City', 'surecart'),
+    line_1: __('Address', 'surecart'),
+    line_2: __('Address Line 2', 'surecart'),
+    postal_code: __('Postal Code/Zip', 'surecart'),
+    state: __('State/Province/Region', 'surecart'),
+  };
+
   /** Make a request to update the order. */
-  @Event() scUpdateOrder: EventEmitter<Partial<Order>>;
+  @Event() scUpdateOrder: EventEmitter<{
+    data: Partial<Order>;
+    options?: { silent?: boolean };
+  }>;
 
   /** Address to pass to the component */
   @State() address: Partial<Address> = {
-    country: '',
-    city: '',
-    line_1: '',
-    line_2: '',
-    postal_code: '',
-    state: '',
+    country: null,
+    city: null,
+    line_1: null,
+    line_2: null,
+    postal_code: null,
+    state: null,
   };
 
   /** When the customer shipping address changes, we want to use that instead of what's entered, if we have empty fields. */
   @Watch('customerShippingAddress')
   handleCustomerAddressChange(val, old) {
-    if (!Object.keys(this.shippingAddress || {}).length) {
-      // update local address if changes.
-      Object.keys(this.address).forEach(key => {
-        if (val?.[key] !== old?.[key]) {
-          if (!val?.[key]) return; // don't allow resetting to empty.
-          this.address = { ...this.address, [key]: val?.[key] };
-        }
-      });
+    // if the shipping address is blank, use the customer address.
+    if (!Object.keys(this.shippingAddress || {}).length && !old) {
+      this.address = { ...this.address, ...val };
     }
   }
 
   /** When the shipping address changes, we want to update the passed address to match. */
   @Watch('shippingAddress')
   handleShippingChange(val, old) {
-    // update local address if changes.
-    Object.keys(this.address).forEach(key => {
-      if (val?.[key] !== old?.[key]) {
-        if (!val?.[key]) return; // don't allow resetting to empty.
-        this.address = { ...this.address, [key]: val?.[key] };
+    // let's only update it the first time.
+    if (!old) {
+      if (!val?.country) {
+        const country = navigator?.language?.slice(-2).toUpperCase();
+        if (country) {
+          this.address = {
+            ...this.address,
+            country,
+          };
+        }
       }
-    });
+      this.address = { ...this.address, ...val };
+    }
   }
 
   updateAddressState(address: Partial<Address>) {
-    if (address === this.address) return;
+    if (address === this.address) return; // no change, don't update.
     this.address = address;
-    if (isAddressCompleteEnough(this.address) && this.taxStatus !== 'disabled') {
-      this.scUpdateOrder.emit({
+    this.scUpdateOrder.emit({
+      data: {
         shipping_address: this.address as Address,
-      });
-    }
+      },
+    });
   }
 
   componentWillLoad() {
-    // if we have a shipping address on load, update the passed address.
-    if (this.shippingAddress) {
-      this.address = {
-        ...(this.shippingAddress?.country ? { county: this.shippingAddress?.country } : {}),
-        ...(this.shippingAddress?.state ? { state: this.shippingAddress.state } : {}),
-        ...(this.shippingAddress?.city ? { city: this.shippingAddress.city } : {}),
-        ...(this.shippingAddress?.postal_code ? { postal_code: this.shippingAddress.postal_code } : {}),
-        ...(this.shippingAddress?.line_1 ? { line_1: this.shippingAddress.line_1 } : {}),
-      };
-    }
-
     /** Set the country by browser language if not set. */
     if (!this.address?.country) {
-      const country = navigator?.language?.slice(-2);
+      const country = navigator?.language?.slice(-2).toUpperCase();
       if (country) {
         this.address = {
           ...this.address,
@@ -100,25 +115,36 @@ export class ScOrderShippingAddress {
     }
   }
 
+  @Method()
+  async reportValidity() {
+    return this.input.reportValidity();
+  }
+
   render() {
+    if (this.shippingEnabled || this.full) {
+      return (
+        <sc-address
+          ref={el => (this.input = el as any)}
+          label={__('Shipping Address', 'surecart')}
+          placeholders={this.placeholders}
+          required={this.required}
+          loading={this.loading}
+          address={this.address}
+          show-name={this.showName}
+          onScChangeAddress={e => this.updateAddressState(e.detail)}
+        ></sc-address>
+      );
+    }
     return (
-      <sc-address
-        label={this.label}
+      <sc-compact-address
+        ref={el => (this.input = el as any)}
         required={this.required}
         loading={this.loading}
         address={this.address}
         onScChangeAddress={e => this.updateAddressState(e.detail)}
-        names={{
-          country: 'shipping_country',
-          line_1: 'shipping_line_1',
-          line_2: 'shipping_line_2',
-          city: 'shipping_city',
-          postal_code: 'shipping_postal_code',
-          state: 'shipping_state',
-        }}
-      ></sc-address>
+      ></sc-compact-address>
     );
   }
 }
 
-openWormhole(ScOrderShippingAddress, ['shippingAddress', 'loading', 'customerShippingAddress', 'taxStatus'], false);
+openWormhole(ScOrderShippingAddress, ['shippingAddress', 'loading', 'customerShippingAddress', 'taxStatus', 'shippingEnabled'], false);

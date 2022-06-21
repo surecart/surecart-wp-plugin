@@ -35,7 +35,7 @@ class AdminMenuPageService {
 	 * @return void
 	 */
 	public function registerAdminPages() {
-		$logo = file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'images/logo.svg' );
+		$logo = file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'images/icon.svg' );
 		\add_menu_page( __( 'Dashboard', 'surecart' ), __( 'SureCart', 'surecart' ), 'install_plugins', $this->slug, '__return_false', 'data:image/svg+xml;base64,' . base64_encode( $logo ), 30 );
 
 		// not yet installed.
@@ -43,7 +43,7 @@ class AdminMenuPageService {
 			$this->pages = [
 				'get-started'     => \add_submenu_page( $this->slug, __( 'Getting Started', 'surecart' ), __( 'Getting Started', 'surecart' ), 'install_plugins', $this->slug, '__return_false' ),
 				'complete-signup' => \add_submenu_page( null, __( 'Complete Signup', 'surecart' ), __( 'Complete Signup', 'surecart' ), 'install_plugins', 'sc-complete-signup', '__return_false' ),
-				'plugin'          => \add_submenu_page( $this->slug, __( 'Plugin', 'surecart' ), __( 'Plugin', 'surecart' ), 'manage_options', 'sc-plugin', '__return_false' ),
+				'settings'        => \add_submenu_page( $this->slug, __( 'Settings', 'surecart' ), __( 'Settings', 'surecart' ), 'manage_options', 'sc-settings', '__return_false' ),
 			];
 			return;
 		}
@@ -60,7 +60,6 @@ class AdminMenuPageService {
 			// 'upgrade-paths'   => \add_submenu_page( $this->slug, __( 'Upgrade Groups', 'surecart' ), __( 'Upgrade Groups', 'surecart' ), 'edit_sc_products', 'sc-product-groups', '__return_false' ),
 			// 'abandoned'       => \add_submenu_page( $this->slug, __( 'Abandoned Orders', 'surecart' ), __( 'Abandoned Orders', 'surecart' ), 'edit_sc_orders', 'sc-abandoned-orders', '__return_false' ),
 			'forms'           => \add_submenu_page( $this->slug, __( 'Forms', 'surecart' ), __( 'Forms', 'surecart' ), 'edit_posts', 'edit.php?post_type=sc_form', '' ),
-			'plugin'          => \add_submenu_page( $this->slug, __( 'Plugin', 'surecart' ), __( 'Plugin', 'surecart' ), 'manage_options', 'sc-plugin', '__return_false' ),
 			'settings'        => \add_submenu_page( $this->slug, __( 'Settings', 'surecart' ), __( 'Settings', 'surecart' ), 'manage_options', 'sc-settings', '__return_false' ),
 		];
 	}

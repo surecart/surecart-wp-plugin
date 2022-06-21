@@ -14,6 +14,13 @@ class AdminNoticesService {
 	protected $notice_key = 'surecart_dismissed_notice';
 
 	/**
+	 * Showing the response notice?
+	 *
+	 * @var boolean
+	 */
+	protected $showing_response_notice = false;
+
+	/**
 	 * Bootstrap notice dismissal.
 	 *
 	 * @return void
@@ -63,6 +70,44 @@ class AdminNoticesService {
 
 		// notice is dismissed.
 		update_option( $this->notice_key . '_' . sanitize_text_field( $notice ), 1 );
+	}
+
+	/**
+	 * Show the response notice.
+	 *
+	 * @param array $notice Notice data to show.
+	 *
+	 * @return void
+	 */
+	public function showResponseNotice( $notice = [] ) {
+		// already showing it.
+		if ( $this->showing_response_notice ) {
+			return;
+		}
+
+		// phpcs:disable WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
+		$notice_data = json_decode( base64_decode( implode( '', (array) $notice ) ) );
+		if ( empty( $notice_data->message ) ) {
+			return;
+		}
+
+		$this->showing_response_notice = true;
+
+		add_action(
+			'admin_notices',
+			function() use ( $notice_data ) {
+				echo wp_kses_post(
+					$this->render(
+						[
+							'name'  => 'update_notice_' . \SureCart::plugin()->version(),
+							'type'  => sanitize_text_field( $notice_data->type ),
+							'title' => esc_html__( 'SureCart', 'surecart' ),
+							'text'  => esc_html( $notice_data->message ),
+						]
+					)
+				);
+			}
+		);
 	}
 
 	/**

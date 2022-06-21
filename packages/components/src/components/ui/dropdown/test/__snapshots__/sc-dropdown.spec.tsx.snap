@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-dropdown can be positioned 1`] = `
+<sc-dropdown close-on-select="" placement="bottom-start">
+  <mock:shadow-root>
+    <div class="dropdown">
+      <span aria-expanded="true" aria-haspopup="true" class="dropdown__trigger" part="trigger">
+        <slot name="trigger"></slot>
+      </span>
+      <div class="dropdown__positioner">
+        <div aria-labelledby="menu-button" aria-orientation="vertical" class="dropdown__panel position--top-left" part="panel" role="menu" tabindex="-1">
+          <slot></slot>
+        </div>
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-dropdown>
+`;
+
+exports[`sc-dropdown can be positioned 2`] = `
+<sc-dropdown close-on-select="" placement="bottom-start">
+  <mock:shadow-root>
+    <div class="dropdown">
+      <span aria-expanded="true" aria-haspopup="true" class="dropdown__trigger" part="trigger">
+        <slot name="trigger"></slot>
+      </span>
+      <div class="dropdown__positioner">
+        <div aria-labelledby="menu-button" aria-orientation="vertical" class="dropdown__panel position--top-right" part="panel" role="menu" tabindex="-1">
+          <slot></slot>
+        </div>
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-dropdown>
+`;
+
+exports[`sc-dropdown can be positioned 3`] = `
+<sc-dropdown close-on-select="" placement="bottom-start">
+  <mock:shadow-root>
+    <div class="dropdown">
+      <span aria-expanded="true" aria-haspopup="true" class="dropdown__trigger" part="trigger">
+        <slot name="trigger"></slot>
+      </span>
+      <div class="dropdown__positioner">
+        <div aria-labelledby="menu-button" aria-orientation="vertical" class="dropdown__panel position--bottom-left" part="panel" role="menu" tabindex="-1">
+          <slot></slot>
+        </div>
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-dropdown>
+`;
+
+exports[`sc-dropdown can be positioned 4`] = `
+<sc-dropdown close-on-select="" placement="bottom-start">
+  <mock:shadow-root>
+    <div class="dropdown">
+      <span aria-expanded="true" aria-haspopup="true" class="dropdown__trigger" part="trigger">
+        <slot name="trigger"></slot>
+      </span>
+      <div class="dropdown__positioner">
+        <div aria-labelledby="menu-button" aria-orientation="vertical" class="dropdown__panel position--bottom-right" part="panel" role="menu" tabindex="-1">
+          <slot></slot>
+        </div>
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-dropdown>
+`;
+
+exports[`sc-dropdown renders 1`] = `
+<sc-dropdown close-on-select="" placement="bottom-start">
+  <mock:shadow-root>
+    <div class="dropdown">
+      <span aria-expanded="true" aria-haspopup="true" class="dropdown__trigger" part="trigger">
+        <slot name="trigger"></slot>
+      </span>
+      <div class="dropdown__positioner">
+        <div aria-labelledby="menu-button" aria-orientation="vertical" class="dropdown__panel" part="panel" role="menu" tabindex="-1">
+          <slot></slot>
+        </div>
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-dropdown>
+`;

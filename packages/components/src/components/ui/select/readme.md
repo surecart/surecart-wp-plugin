@@ -13,6 +13,7 @@
 | `choices`           | --                   | The input's value attribute.                                                                                                                                                                                  | `ChoiceItem[]`                    | `[]`             |
 | `disabled`          | `disabled`           |                                                                                                                                                                                                               | `boolean`                         | `undefined`      |
 | `help`              | `help`               | Some help text for the input.                                                                                                                                                                                 | `string`                          | `undefined`      |
+| `hoist`             | `hoist`              |                                                                                                                                                                                                               | `boolean`                         | `false`          |
 | `invalid`           | `invalid`            | This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API. | `boolean`                         | `false`          |
 | `label`             | `label`              | The input's label.                                                                                                                                                                                            | `string`                          | `undefined`      |
 | `loading`           | `loading`            |                                                                                                                                                                                                               | `boolean`                         | `undefined`      |
@@ -30,6 +31,7 @@
 | `squaredLeft`       | `squared-left`       |                                                                                                                                                                                                               | `boolean`                         | `undefined`      |
 | `squaredRight`      | `squared-right`      |                                                                                                                                                                                                               | `boolean`                         | `undefined`      |
 | `squaredTop`        | `squared-top`        |                                                                                                                                                                                                               | `boolean`                         | `undefined`      |
+| `unselect`          | `unselect`           | Can we unselect items.                                                                                                                                                                                        | `boolean`                         | `true`           |
 | `value`             | `value`              | The input's value attribute.                                                                                                                                                                                  | `string`                          | `''`             |
 
 
@@ -81,14 +83,15 @@ Type: `Promise<void>`
 ### Used by
 
  - [sc-address](../address)
+ - [sc-compact-address](../sc-compact-address)
 
 ### Depends on
 
+- [sc-icon](../icon)
 - [sc-menu-label](../menu-label)
 - [sc-menu-item](../menu-item)
 - [sc-form-control](../form-control)
 - [sc-dropdown](../dropdown)
-- [sc-icon](../icon)
 - [sc-input](../input)
 - [sc-spinner](../spinner)
 - [sc-menu](../menu)
@@ -96,17 +99,18 @@ Type: `Promise<void>`
 ### Graph
 ```mermaid
 graph TD;
+  sc-select --> sc-icon
   sc-select --> sc-menu-label
   sc-select --> sc-menu-item
   sc-select --> sc-form-control
   sc-select --> sc-dropdown
-  sc-select --> sc-icon
   sc-select --> sc-input
   sc-select --> sc-spinner
   sc-select --> sc-menu
   sc-form-control --> sc-tooltip
   sc-input --> sc-form-control
   sc-address --> sc-select
+  sc-compact-address --> sc-select
   style sc-select fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

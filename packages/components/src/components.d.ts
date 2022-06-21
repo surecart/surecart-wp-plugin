@@ -5,8 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, ChoiceItem, Coupon, Customer, DiscountResponse, LineItem, LineItemData, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
-import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
+import { Address, ChoiceItem, Customer, DiscountResponse, FormState, FormStateSetter, Invoice, LineItem, LineItemData, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxIdentifier, TaxStatus, WordPressUser } from "./types";
 export namespace Components {
     interface ScAddress {
         /**
@@ -22,10 +21,20 @@ export namespace Components {
          */
         "loading": boolean;
         "names": Partial<Address>;
+        "placeholders": Partial<Address>;
+        "reportValidity": () => Promise<boolean>;
         /**
           * Is this required?
          */
         "required": boolean;
+        /**
+          * Should we show name field?
+         */
+        "showLine2": boolean;
+        /**
+          * Should we show name field?
+         */
+        "showName": boolean;
     }
     interface ScAlert {
         /**
@@ -44,6 +53,14 @@ export namespace Components {
           * Indicates whether or not the alert is open. You can use this in lieu of the show/hide methods.
          */
         "open": boolean;
+        /**
+          * Scroll margin
+         */
+        "scrollMargin": string;
+        /**
+          * Scroll into view.
+         */
+        "scrollOnOpen": boolean;
         /**
           * Shows the alert.
          */
@@ -294,10 +311,6 @@ export namespace Components {
          */
         "alignment": 'center' | 'wide' | 'full';
         /**
-          * Optionally pass a coupon.
-         */
-        "coupon": Coupon;
-        /**
           * Currency to use for this checkout.
          */
         "currencyCode": string;
@@ -310,13 +323,13 @@ export namespace Components {
          */
         "disableComponentsValidation": boolean;
         /**
+          * Can we edit line items?
+         */
+        "editLineItems": boolean;
+        /**
           * The checkout form id
          */
         "formId": number;
-        /**
-          * Translation object.
-         */
-        "i18n": Object;
         /**
           * Is this user logged in?
          */
@@ -330,7 +343,7 @@ export namespace Components {
          */
         "modified": string;
         /**
-          * Where to go on success
+          * Whether to persist the session in the browser between visits.
          */
         "persistSession": boolean;
         /**
@@ -338,9 +351,33 @@ export namespace Components {
          */
         "prices": Array<PriceChoice>;
         /**
+          * Processors enabled for this form.
+         */
+        "processors": Processor[];
+        /**
+          * Can we remove line items?
+         */
+        "removeLineItems": boolean;
+        /**
+          * Use the Stripe payment element.
+         */
+        "stripePaymentElement": boolean;
+        /**
+          * Submit the form
+         */
+        "submit": ({ skip_validation }?: { skip_validation: boolean; }) => Promise<Order | CustomEvent<import("/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/types").FormStateSetter>>;
+        /**
           * Where to go on success
          */
         "successUrl": string;
+        /**
+          * Is tax enabled?
+         */
+        "taxEnabled": boolean;
+        /**
+          * Validate the form.
+         */
+        "validate": () => Promise<boolean>;
     }
     interface ScChoice {
         /**
@@ -446,6 +483,26 @@ export namespace Components {
           * The vertical alignment of the columns.
          */
         "verticalAlignment": string;
+    }
+    interface ScCompactAddress {
+        /**
+          * The address.
+         */
+        "address": Partial<Address>;
+        /**
+          * Label for the address
+         */
+        "label": string;
+        /**
+          * Is this loading
+         */
+        "loading": boolean;
+        "names": Partial<Address>;
+        "reportValidity": () => Promise<boolean>;
+        /**
+          * Is this required?
+         */
+        "required": boolean;
     }
     interface ScConsumer {
         "renderer": any;
@@ -591,6 +648,7 @@ export namespace Components {
           * Makes the input readonly.
          */
         "readonly": boolean;
+        "reportValidity": () => Promise<boolean>;
         /**
           * Makes the input a required field.
          */
@@ -657,6 +715,7 @@ export namespace Components {
           * Makes the input readonly.
          */
         "readonly": boolean;
+        "reportValidity": () => Promise<boolean>;
         /**
           * Makes the input a required field.
          */
@@ -693,6 +752,20 @@ export namespace Components {
     interface ScDashboardModule {
         "error": string;
         "heading": string;
+    }
+    interface ScDialog {
+        /**
+          * The dialog's label as displayed in the header. You should always include a relevant label even when using `no-header`, as it is required for proper accessibility.
+         */
+        "label": string;
+        /**
+          * Disables the header. This will also remove the default close button, so please ensure you provide an easy, accessible way for users to dismiss the dialog.
+         */
+        "noHeader": boolean;
+        /**
+          * Indicates whether or not the dialog is open. You can use this in lieu of the show/hide methods.
+         */
+        "open": boolean;
     }
     interface ScDivider {
     }
@@ -767,13 +840,40 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * The distance in pixels from which to offset the panel away from its trigger.
+         */
+        "distance": number;
+        /**
+          * Enable this option to prevent the panel from being clipped when the component is placed inside a container with `overflow: auto|scroll`.
+         */
+        "hoist": boolean;
+        /**
           * Indicates whether or not the dropdown is open. You can use this in lieu of the show/hide methods.
          */
         "open"?: boolean;
         /**
+          * The placement of the dropdown.
+         */
+        "placement": | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end';
+        /**
           * The placement of the dropdown panel
          */
         "position": 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+        /**
+          * The distance in pixels from which to offset the panel along its trigger.
+         */
+        "skidding": number;
     }
     interface ScEmpty {
         "icon": string;
@@ -806,11 +906,18 @@ export namespace Components {
         "validate": () => Promise<boolean>;
     }
     interface ScFormComponentsValidator {
+        /**
+          * Disable validation?
+         */
         "disabled": boolean;
         /**
           * The order
          */
         "order": Order;
+        /**
+          * Is tax enabled.
+         */
+        "taxEnabled": boolean;
     }
     interface ScFormControl {
         /**
@@ -858,7 +965,15 @@ export namespace Components {
          */
         "size": 'small' | 'medium' | 'large';
     }
+    interface ScFormErrorProvider {
+        /**
+          * The current order.
+         */
+        "order": Order;
+    }
     interface ScFormRow {
+    }
+    interface ScFormStateProvider {
     }
     interface ScFormatBytes {
         /**
@@ -1136,7 +1251,7 @@ export namespace Components {
         /**
           * The input's type.
          */
-        "type": 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url';
+        "type": 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' | 'hidden';
         /**
           * The input's value attribute.
          */
@@ -1174,12 +1289,14 @@ export namespace Components {
         "total": 'total' | 'subtotal';
     }
     interface ScLineItems {
+        "editLineItems": boolean;
         "editable": boolean;
         "loading": boolean;
         "lockedChoices": Array<PriceChoice>;
         "order": Order;
         "prices": Prices;
         "removable": boolean;
+        "removeLineItems": boolean;
     }
     interface ScLineItemsProvider {
         /**
@@ -1221,6 +1338,12 @@ export namespace Components {
         "value": string;
     }
     interface ScMenuLabel {
+    }
+    interface ScOrderConfirmProvider {
+        /**
+          * The current order.
+         */
+        "order": Order;
     }
     interface ScOrderConfirmation {
         "order": Order;
@@ -1300,6 +1423,7 @@ export namespace Components {
           * Makes the input readonly.
          */
         "readonly": boolean;
+        "reportValidity": () => Promise<boolean>;
         /**
           * Makes the input a required field.
          */
@@ -1317,11 +1441,25 @@ export namespace Components {
          */
         "value": string;
     }
+    interface ScOrderRedirectProvider {
+        /**
+          * The current order.
+         */
+        "order": Order;
+        /**
+          * The success url.
+         */
+        "successUrl": string;
+    }
     interface ScOrderShippingAddress {
         /**
           * Holds the customer's shipping address
          */
         "customerShippingAddress": Address;
+        /**
+          * Show the full address
+         */
+        "full": boolean;
         /**
           * Label for the field.
          */
@@ -1331,6 +1469,11 @@ export namespace Components {
          */
         "loading": boolean;
         /**
+          * Placeholder values.
+         */
+        "placeholders": Partial<Address>;
+        "reportValidity": () => Promise<boolean>;
+        /**
           * Is this required (defaults to true)
          */
         "required": boolean;
@@ -1338,6 +1481,14 @@ export namespace Components {
           * Holds the customer's billing address
          */
         "shippingAddress": Address;
+        /**
+          * Is shipping enabled for this order?
+         */
+        "shippingEnabled": boolean;
+        /**
+          * Show the name field.
+         */
+        "showName": boolean;
         /**
           * Tax status of the order
          */
@@ -1361,11 +1512,37 @@ export namespace Components {
          */
         "status": OrderStatus;
     }
+    interface ScOrderStripePaymentElement {
+        /**
+          * Should we collect an address?
+         */
+        "address": boolean;
+        /**
+          * The currency code for the payment element.
+         */
+        "currencyCode": string;
+        /**
+          * Payment mode.
+         */
+        "mode": 'test' | 'live';
+        /**
+          * The order.
+         */
+        "order": Order;
+        /**
+          * Available processors
+         */
+        "processors": Processor[];
+    }
     interface ScOrderSubmit {
         /**
           * Is the order busy
          */
         "busy": boolean;
+        /**
+          * Currency Code
+         */
+        "currencyCode": string;
         /**
           * Show a full-width button.
          */
@@ -1379,9 +1556,22 @@ export namespace Components {
          */
         "loading": boolean;
         /**
+          * Is this created in "test" mode
+         */
+        "mode": 'test' | 'live';
+        /**
+          * The current order.
+         */
+        "order": Order;
+        /**
           * Is the order paying.
          */
         "paying": boolean;
+        "processor": 'stripe' | 'paypal' | 'paypal-card';
+        /**
+          * Keys and secrets for processors.
+         */
+        "processors": Processor[];
         /**
           * Show the total.
          */
@@ -1396,13 +1586,19 @@ export namespace Components {
         "type": 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
     }
     interface ScOrderSummary {
+        "closedText": string;
         "collapsed": boolean;
         "collapsible": boolean;
         "empty": boolean;
         "loading": boolean;
+        "openText": string;
         "order": Order;
     }
     interface ScOrderTaxIdInput {
+        /**
+          * Is this busy
+         */
+        "busy": boolean;
         /**
           * The order
          */
@@ -1411,6 +1607,7 @@ export namespace Components {
           * Force show the field.
          */
         "show": boolean;
+        "taxIdentifier": TaxIdentifier;
     }
     interface ScOrdersList {
         "allLink": string;
@@ -1436,6 +1633,18 @@ export namespace Components {
          */
         "busy": boolean;
         /**
+          * The currency code.
+         */
+        "currencyCode": string;
+        /**
+          * Default
+         */
+        "defaultProcessor": ProcessorName;
+        /**
+          * Hide the test mode badge
+         */
+        "hideTestModeBadge": boolean;
+        /**
           * The input's label.
          */
         "label": string;
@@ -1460,9 +1669,17 @@ export namespace Components {
          */
         "processor": string;
         /**
+          * List of available processors.
+         */
+        "processors": Processor[];
+        /**
           * Secure notice
          */
         "secureNotice": string;
+        /**
+          * Use the Stripe payment element.
+         */
+        "stripePaymentElement": boolean;
     }
     interface ScPaymentMethodCreate {
         "clientSecret": string;
@@ -1475,6 +1692,40 @@ export namespace Components {
           * Query to fetch paymentMethods
          */
         "query": object;
+    }
+    interface ScPaypalButtons {
+        /**
+          * Is this busy?
+         */
+        "busy": boolean;
+        /**
+          * Buttons to render
+         */
+        "buttons": string[];
+        /**
+          * Client id for the script.
+         */
+        "clientId": string;
+        /**
+          * Button color.
+         */
+        "color": 'gold' | 'blue' | 'silver' | 'black' | 'white';
+        /**
+          * Label for the button.
+         */
+        "label": 'paypal' | 'checkout' | 'buynow' | 'pay' | 'installment';
+        /**
+          * The merchant id for paypal.
+         */
+        "merchantId": string;
+        /**
+          * Test or live mode.
+         */
+        "mode": 'test' | 'live';
+        /**
+          * The order.
+         */
+        "order": Order;
     }
     interface ScPriceChoice {
         /**
@@ -1742,10 +1993,6 @@ export namespace Components {
          */
         "label": string;
     }
-    interface ScRegisterIconLibrary {
-        "registerIconLibrary": (name: string, options: { resolver: IconLibraryResolver; mutator?: IconLibraryMutator; }) => Promise<void>;
-        "unregisterIconLibrary": (name: string) => Promise<void>;
-    }
     interface ScSecureNotice {
     }
     interface ScSelect {
@@ -1762,6 +2009,7 @@ export namespace Components {
           * Some help text for the input.
          */
         "help": string;
+        "hoist": boolean;
         /**
           * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
          */
@@ -1809,6 +2057,10 @@ export namespace Components {
         "squaredRight": boolean;
         "squaredTop": boolean;
         /**
+          * Can we unselect items.
+         */
+        "unselect": boolean;
+        /**
           * The input's value attribute.
          */
         "value": string;
@@ -1818,6 +2070,11 @@ export namespace Components {
           * Currency Code
          */
         "currencyCode": string;
+        /**
+          * Finalize the order.
+          * @returns
+         */
+        "finalize": () => Promise<Order | CustomEvent<FormStateSetter>>;
         /**
           * The checkout form id
          */
@@ -1839,6 +2096,10 @@ export namespace Components {
          */
         "order": Order;
         /**
+          * Holds all available payment intents.
+         */
+        "paymentIntents": PaymentIntents;
+        /**
           * Should we persist the session.
          */
         "persist": boolean;
@@ -1847,9 +2108,21 @@ export namespace Components {
          */
         "prices": Array<PriceChoice>;
         /**
+          * The processor.
+         */
+        "processor": ProcessorName;
+        /**
           * Set the checkout state
          */
         "setState": (state: string) => void;
+        /**
+          * Are we using the Stripe payment element?
+         */
+        "stripePaymentElement": boolean;
+        /**
+          * Url to redirect upon success.
+         */
+        "successUrl": string;
     }
     interface ScSkeleton {
         /**
@@ -1866,8 +2139,13 @@ export namespace Components {
     interface ScStackedListRow {
         "href": string;
         "mobileSize": number;
+        "target": string;
     }
     interface ScStripeElement {
+        /**
+          * Your stripe connected account id.
+         */
+        "accountId": string;
         /**
           * Confirm card payment
          */
@@ -1912,10 +2190,33 @@ export namespace Components {
           * The input's size.
          */
         "size": 'small' | 'medium' | 'large';
+    }
+    interface ScStripePaymentElement {
         /**
-          * Your stripe connected account id.
+          * The account id.
          */
-        "stripeAccountId": string;
+        "accountId": string;
+        /**
+          * Should we collect an address?
+         */
+        "address": boolean;
+        /**
+          * The client secret to render the payment element
+         */
+        "clientSecret": string;
+        "confirm": (type: any, args?: {}) => Promise<void>;
+        /**
+          * Order to watch
+         */
+        "order": Order | Invoice;
+        /**
+          * The stripe publishable key.
+         */
+        "publishableKey": string;
+        /**
+          * Success url to redirect.
+         */
+        "successUrl": string;
     }
     interface ScStripePaymentRequest {
         /**
@@ -1972,6 +2273,10 @@ export namespace Components {
          */
         "subscriptionId": string;
     }
+    interface ScSubscriptionAdHocConfirm {
+        "heading": string;
+        "price": Price;
+    }
     interface ScSubscriptionCancel {
         "backUrl": string;
         "heading": string;
@@ -2017,11 +2322,12 @@ export namespace Components {
          */
         "status": SubscriptionStatus;
         /**
-          * The tag's statux type.
+          * The tag's status type.
          */
         "subscription": Subscription;
     }
     interface ScSubscriptionSwitch {
+        "filterAbove": number;
         "heading": string;
         "productGroupId": ProductGroup;
         "productId": string;
@@ -2142,6 +2448,14 @@ export namespace Components {
          */
         "country": string;
         /**
+          * Help text.
+         */
+        "help": string;
+        /**
+          * Is this loading?
+         */
+        "loading": boolean;
+        /**
           * Tax ID Number
          */
         "number": string;
@@ -2150,6 +2464,10 @@ export namespace Components {
          */
         "show": boolean;
         /**
+          * The status
+         */
+        "status": 'valid' | 'invalid' | 'unknown';
+        /**
           * Type of tax id
          */
         "type": string;
@@ -2157,6 +2475,100 @@ export namespace Components {
     interface ScText {
         "tag": 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
         "truncate": boolean;
+    }
+    interface ScTextarea {
+        /**
+          * The textarea's autocapitalize attribute.
+         */
+        "autocapitalize": 'off' | 'none' | 'on' | 'sentences' | 'words' | 'characters';
+        /**
+          * The textarea's autocomplete attribute.
+         */
+        "autocomplete": string;
+        /**
+          * The textarea's autocorrect attribute.
+         */
+        "autocorrect": string;
+        /**
+          * The textarea's autofocus attribute.
+         */
+        "autofocus": boolean;
+        /**
+          * Disables the textarea.
+         */
+        "disabled": boolean;
+        /**
+          * The input's enterkeyhint attribute. This can be used to customize the label or icon of the Enter key on virtual keyboards.
+         */
+        "enterkeyhint": 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
+        /**
+          * Draws a filled textarea.
+         */
+        "filled": boolean;
+        /**
+          * The textarea's help text. Alternatively, you can use the help-text slot.
+         */
+        "help": string;
+        /**
+          * The textarea's inputmode attribute.
+         */
+        "inputmode": 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url';
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, and `maxlength` using the browser's constraint validation API.
+         */
+        "invalid": boolean;
+        /**
+          * The textarea's label. Alternatively, you can use the label slot.
+         */
+        "label": string;
+        /**
+          * The maximum length of input that will be considered valid.
+         */
+        "maxlength": number;
+        /**
+          * The minimum length of input that will be considered valid.
+         */
+        "minlength": number;
+        /**
+          * The textarea's name attribute.
+         */
+        "name": string;
+        /**
+          * The textarea's placeholder text.
+         */
+        "placeholder": string;
+        /**
+          * Makes the textarea readonly.
+         */
+        "readonly": boolean;
+        /**
+          * Makes the textarea a required field.
+         */
+        "required": boolean;
+        /**
+          * Controls how the textarea can be resized.
+         */
+        "resize": 'none' | 'vertical' | 'auto';
+        /**
+          * The number of rows to display by default.
+         */
+        "rows": number;
+        /**
+          * Should we show the label
+         */
+        "showLabel": boolean;
+        /**
+          * The textarea's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * Enables spell checking on the textarea.
+         */
+        "spellcheck": boolean;
+        /**
+          * The textarea's value attribute.
+         */
+        "value": string;
     }
     interface ScToggle {
         /**
@@ -2176,6 +2588,18 @@ export namespace Components {
          */
         "open": boolean;
         /**
+          * Is this a shady
+         */
+        "shady": boolean;
+        /**
+          * Should we show a radio control?
+         */
+        "showControl": boolean;
+        /**
+          * Should we show the arrow icon?
+         */
+        "showIcon": boolean;
+        /**
           * The summary to show in the details header. If you need to display HTML, use the `summary` slot instead.
          */
         "summary": string;
@@ -2189,6 +2613,10 @@ export namespace Components {
           * Are these collapsible?
          */
         "collapsible": boolean;
+        /**
+          * Theme for the toggles
+         */
+        "theme": 'default' | 'container';
     }
     interface ScTooltip {
         /**
@@ -2221,6 +2649,7 @@ export namespace Components {
         "total": 'total' | 'subtotal' | 'amount_due';
     }
     interface ScUpcomingInvoice {
+        "adHocAmount": number;
         "discount": {
     promotion_code?: string;
     coupon?: string;
@@ -2375,6 +2804,12 @@ declare global {
         prototype: HTMLScColumnsElement;
         new (): HTMLScColumnsElement;
     };
+    interface HTMLScCompactAddressElement extends Components.ScCompactAddress, HTMLStencilElement {
+    }
+    var HTMLScCompactAddressElement: {
+        prototype: HTMLScCompactAddressElement;
+        new (): HTMLScCompactAddressElement;
+    };
     interface HTMLScConsumerElement extends Components.ScConsumer, HTMLStencilElement {
     }
     var HTMLScConsumerElement: {
@@ -2434,6 +2869,12 @@ declare global {
     var HTMLScDashboardModuleElement: {
         prototype: HTMLScDashboardModuleElement;
         new (): HTMLScDashboardModuleElement;
+    };
+    interface HTMLScDialogElement extends Components.ScDialog, HTMLStencilElement {
+    }
+    var HTMLScDialogElement: {
+        prototype: HTMLScDialogElement;
+        new (): HTMLScDialogElement;
     };
     interface HTMLScDividerElement extends Components.ScDivider, HTMLStencilElement {
     }
@@ -2501,11 +2942,23 @@ declare global {
         prototype: HTMLScFormControlElement;
         new (): HTMLScFormControlElement;
     };
+    interface HTMLScFormErrorProviderElement extends Components.ScFormErrorProvider, HTMLStencilElement {
+    }
+    var HTMLScFormErrorProviderElement: {
+        prototype: HTMLScFormErrorProviderElement;
+        new (): HTMLScFormErrorProviderElement;
+    };
     interface HTMLScFormRowElement extends Components.ScFormRow, HTMLStencilElement {
     }
     var HTMLScFormRowElement: {
         prototype: HTMLScFormRowElement;
         new (): HTMLScFormRowElement;
+    };
+    interface HTMLScFormStateProviderElement extends Components.ScFormStateProvider, HTMLStencilElement {
+    }
+    var HTMLScFormStateProviderElement: {
+        prototype: HTMLScFormStateProviderElement;
+        new (): HTMLScFormStateProviderElement;
     };
     interface HTMLScFormatBytesElement extends Components.ScFormatBytes, HTMLStencilElement {
     }
@@ -2615,6 +3068,12 @@ declare global {
         prototype: HTMLScMenuLabelElement;
         new (): HTMLScMenuLabelElement;
     };
+    interface HTMLScOrderConfirmProviderElement extends Components.ScOrderConfirmProvider, HTMLStencilElement {
+    }
+    var HTMLScOrderConfirmProviderElement: {
+        prototype: HTMLScOrderConfirmProviderElement;
+        new (): HTMLScOrderConfirmProviderElement;
+    };
     interface HTMLScOrderConfirmationElement extends Components.ScOrderConfirmation, HTMLStencilElement {
     }
     var HTMLScOrderConfirmationElement: {
@@ -2657,6 +3116,12 @@ declare global {
         prototype: HTMLScOrderPasswordElement;
         new (): HTMLScOrderPasswordElement;
     };
+    interface HTMLScOrderRedirectProviderElement extends Components.ScOrderRedirectProvider, HTMLStencilElement {
+    }
+    var HTMLScOrderRedirectProviderElement: {
+        prototype: HTMLScOrderRedirectProviderElement;
+        new (): HTMLScOrderRedirectProviderElement;
+    };
     interface HTMLScOrderShippingAddressElement extends Components.ScOrderShippingAddress, HTMLStencilElement {
     }
     var HTMLScOrderShippingAddressElement: {
@@ -2668,6 +3133,12 @@ declare global {
     var HTMLScOrderStatusBadgeElement: {
         prototype: HTMLScOrderStatusBadgeElement;
         new (): HTMLScOrderStatusBadgeElement;
+    };
+    interface HTMLScOrderStripePaymentElementElement extends Components.ScOrderStripePaymentElement, HTMLStencilElement {
+    }
+    var HTMLScOrderStripePaymentElementElement: {
+        prototype: HTMLScOrderStripePaymentElementElement;
+        new (): HTMLScOrderStripePaymentElementElement;
     };
     interface HTMLScOrderSubmitElement extends Components.ScOrderSubmit, HTMLStencilElement {
     }
@@ -2717,6 +3188,12 @@ declare global {
         prototype: HTMLScPaymentMethodsListElement;
         new (): HTMLScPaymentMethodsListElement;
     };
+    interface HTMLScPaypalButtonsElement extends Components.ScPaypalButtons, HTMLStencilElement {
+    }
+    var HTMLScPaypalButtonsElement: {
+        prototype: HTMLScPaypalButtonsElement;
+        new (): HTMLScPaypalButtonsElement;
+    };
     interface HTMLScPriceChoiceElement extends Components.ScPriceChoice, HTMLStencilElement {
     }
     var HTMLScPriceChoiceElement: {
@@ -2764,12 +3241,6 @@ declare global {
     var HTMLScRadioGroupElement: {
         prototype: HTMLScRadioGroupElement;
         new (): HTMLScRadioGroupElement;
-    };
-    interface HTMLScRegisterIconLibraryElement extends Components.ScRegisterIconLibrary, HTMLStencilElement {
-    }
-    var HTMLScRegisterIconLibraryElement: {
-        prototype: HTMLScRegisterIconLibraryElement;
-        new (): HTMLScRegisterIconLibraryElement;
     };
     interface HTMLScSecureNoticeElement extends Components.ScSecureNotice, HTMLStencilElement {
     }
@@ -2825,6 +3296,12 @@ declare global {
         prototype: HTMLScStripeElementElement;
         new (): HTMLScStripeElementElement;
     };
+    interface HTMLScStripePaymentElementElement extends Components.ScStripePaymentElement, HTMLStencilElement {
+    }
+    var HTMLScStripePaymentElementElement: {
+        prototype: HTMLScStripePaymentElementElement;
+        new (): HTMLScStripePaymentElementElement;
+    };
     interface HTMLScStripePaymentRequestElement extends Components.ScStripePaymentRequest, HTMLStencilElement {
     }
     var HTMLScStripePaymentRequestElement: {
@@ -2836,6 +3313,12 @@ declare global {
     var HTMLScSubscriptionElement: {
         prototype: HTMLScSubscriptionElement;
         new (): HTMLScSubscriptionElement;
+    };
+    interface HTMLScSubscriptionAdHocConfirmElement extends Components.ScSubscriptionAdHocConfirm, HTMLStencilElement {
+    }
+    var HTMLScSubscriptionAdHocConfirmElement: {
+        prototype: HTMLScSubscriptionAdHocConfirmElement;
+        new (): HTMLScSubscriptionAdHocConfirmElement;
     };
     interface HTMLScSubscriptionCancelElement extends Components.ScSubscriptionCancel, HTMLStencilElement {
     }
@@ -2945,6 +3428,12 @@ declare global {
         prototype: HTMLScTextElement;
         new (): HTMLScTextElement;
     };
+    interface HTMLScTextareaElement extends Components.ScTextarea, HTMLStencilElement {
+    }
+    var HTMLScTextareaElement: {
+        prototype: HTMLScTextareaElement;
+        new (): HTMLScTextareaElement;
+    };
     interface HTMLScToggleElement extends Components.ScToggle, HTMLStencilElement {
     }
     var HTMLScToggleElement: {
@@ -3015,6 +3504,7 @@ declare global {
         "sc-choices": HTMLScChoicesElement;
         "sc-column": HTMLScColumnElement;
         "sc-columns": HTMLScColumnsElement;
+        "sc-compact-address": HTMLScCompactAddressElement;
         "sc-consumer": HTMLScConsumerElement;
         "sc-coupon-form": HTMLScCouponFormElement;
         "sc-custom-order-price-input": HTMLScCustomOrderPriceInputElement;
@@ -3025,6 +3515,7 @@ declare global {
         "sc-dashboard-customer-details": HTMLScDashboardCustomerDetailsElement;
         "sc-dashboard-downloads-list": HTMLScDashboardDownloadsListElement;
         "sc-dashboard-module": HTMLScDashboardModuleElement;
+        "sc-dialog": HTMLScDialogElement;
         "sc-divider": HTMLScDividerElement;
         "sc-donation-choices": HTMLScDonationChoicesElement;
         "sc-downloads-list": HTMLScDownloadsListElement;
@@ -3036,7 +3527,9 @@ declare global {
         "sc-form": HTMLScFormElement;
         "sc-form-components-validator": HTMLScFormComponentsValidatorElement;
         "sc-form-control": HTMLScFormControlElement;
+        "sc-form-error-provider": HTMLScFormErrorProviderElement;
         "sc-form-row": HTMLScFormRowElement;
+        "sc-form-state-provider": HTMLScFormStateProviderElement;
         "sc-format-bytes": HTMLScFormatBytesElement;
         "sc-format-date": HTMLScFormatDateElement;
         "sc-format-interval": HTMLScFormatIntervalElement;
@@ -3055,6 +3548,7 @@ declare global {
         "sc-menu-divider": HTMLScMenuDividerElement;
         "sc-menu-item": HTMLScMenuItemElement;
         "sc-menu-label": HTMLScMenuLabelElement;
+        "sc-order-confirm-provider": HTMLScOrderConfirmProviderElement;
         "sc-order-confirmation": HTMLScOrderConfirmationElement;
         "sc-order-confirmation-customer": HTMLScOrderConfirmationCustomerElement;
         "sc-order-confirmation-line-items": HTMLScOrderConfirmationLineItemsElement;
@@ -3062,8 +3556,10 @@ declare global {
         "sc-order-coupon-form": HTMLScOrderCouponFormElement;
         "sc-order-detail": HTMLScOrderDetailElement;
         "sc-order-password": HTMLScOrderPasswordElement;
+        "sc-order-redirect-provider": HTMLScOrderRedirectProviderElement;
         "sc-order-shipping-address": HTMLScOrderShippingAddressElement;
         "sc-order-status-badge": HTMLScOrderStatusBadgeElement;
+        "sc-order-stripe-payment-element": HTMLScOrderStripePaymentElementElement;
         "sc-order-submit": HTMLScOrderSubmitElement;
         "sc-order-summary": HTMLScOrderSummaryElement;
         "sc-order-tax-id-input": HTMLScOrderTaxIdInputElement;
@@ -3072,6 +3568,7 @@ declare global {
         "sc-payment": HTMLScPaymentElement;
         "sc-payment-method-create": HTMLScPaymentMethodCreateElement;
         "sc-payment-methods-list": HTMLScPaymentMethodsListElement;
+        "sc-paypal-buttons": HTMLScPaypalButtonsElement;
         "sc-price-choice": HTMLScPriceChoiceElement;
         "sc-price-choices": HTMLScPriceChoicesElement;
         "sc-price-input": HTMLScPriceInputElement;
@@ -3080,7 +3577,6 @@ declare global {
         "sc-quantity-select": HTMLScQuantitySelectElement;
         "sc-radio": HTMLScRadioElement;
         "sc-radio-group": HTMLScRadioGroupElement;
-        "sc-register-icon-library": HTMLScRegisterIconLibraryElement;
         "sc-secure-notice": HTMLScSecureNoticeElement;
         "sc-select": HTMLScSelectElement;
         "sc-session-provider": HTMLScSessionProviderElement;
@@ -3090,8 +3586,10 @@ declare global {
         "sc-stacked-list": HTMLScStackedListElement;
         "sc-stacked-list-row": HTMLScStackedListRowElement;
         "sc-stripe-element": HTMLScStripeElementElement;
+        "sc-stripe-payment-element": HTMLScStripePaymentElementElement;
         "sc-stripe-payment-request": HTMLScStripePaymentRequestElement;
         "sc-subscription": HTMLScSubscriptionElement;
+        "sc-subscription-ad-hoc-confirm": HTMLScSubscriptionAdHocConfirmElement;
         "sc-subscription-cancel": HTMLScSubscriptionCancelElement;
         "sc-subscription-details": HTMLScSubscriptionDetailsElement;
         "sc-subscription-payment": HTMLScSubscriptionPaymentElement;
@@ -3110,6 +3608,7 @@ declare global {
         "sc-tag": HTMLScTagElement;
         "sc-tax-id-input": HTMLScTaxIdInputElement;
         "sc-text": HTMLScTextElement;
+        "sc-textarea": HTMLScTextareaElement;
         "sc-toggle": HTMLScToggleElement;
         "sc-toggles": HTMLScTogglesElement;
         "sc-tooltip": HTMLScTooltipElement;
@@ -3140,9 +3639,22 @@ declare namespace LocalJSX {
          */
         "onScChangeAddress"?: (event: CustomEvent<Partial<Address>>) => void;
         /**
+          * Address change event.
+         */
+        "onScInputAddress"?: (event: CustomEvent<Partial<Address>>) => void;
+        "placeholders"?: Partial<Address>;
+        /**
           * Is this required?
          */
         "required"?: boolean;
+        /**
+          * Should we show name field?
+         */
+        "showLine2"?: boolean;
+        /**
+          * Should we show name field?
+         */
+        "showName"?: boolean;
     }
     interface ScAlert {
         /**
@@ -3165,6 +3677,14 @@ declare namespace LocalJSX {
           * Indicates whether or not the alert is open. You can use this in lieu of the show/hide methods.
          */
         "open"?: boolean;
+        /**
+          * Scroll margin
+         */
+        "scrollMargin"?: string;
+        /**
+          * Scroll into view.
+         */
+        "scrollOnOpen"?: boolean;
         /**
           * The type of alert.
          */
@@ -3415,10 +3935,6 @@ declare namespace LocalJSX {
          */
         "alignment"?: 'center' | 'wide' | 'full';
         /**
-          * Optionally pass a coupon.
-         */
-        "coupon"?: Coupon;
-        /**
           * Currency to use for this checkout.
          */
         "currencyCode"?: string;
@@ -3431,13 +3947,13 @@ declare namespace LocalJSX {
          */
         "disableComponentsValidation"?: boolean;
         /**
+          * Can we edit line items?
+         */
+        "editLineItems"?: boolean;
+        /**
           * The checkout form id
          */
         "formId"?: number;
-        /**
-          * Translation object.
-         */
-        "i18n"?: Object;
         /**
           * Is this user logged in?
          */
@@ -3451,7 +3967,19 @@ declare namespace LocalJSX {
          */
         "modified"?: string;
         /**
-          * Where to go on success
+          * Order has an error.
+         */
+        "onScOrderError"?: (event: CustomEvent<ResponseError>) => void;
+        /**
+          * Order has been finalized.
+         */
+        "onScOrderFinalized"?: (event: CustomEvent<Order>) => void;
+        /**
+          * Order has been updated.
+         */
+        "onScOrderUpdated"?: (event: CustomEvent<Order>) => void;
+        /**
+          * Whether to persist the session in the browser between visits.
          */
         "persistSession"?: boolean;
         /**
@@ -3459,9 +3987,25 @@ declare namespace LocalJSX {
          */
         "prices"?: Array<PriceChoice>;
         /**
+          * Processors enabled for this form.
+         */
+        "processors"?: Processor[];
+        /**
+          * Can we remove line items?
+         */
+        "removeLineItems"?: boolean;
+        /**
+          * Use the Stripe payment element.
+         */
+        "stripePaymentElement"?: boolean;
+        /**
           * Where to go on success
          */
         "successUrl"?: string;
+        /**
+          * Is tax enabled?
+         */
+        "taxEnabled"?: boolean;
     }
     interface ScChoice {
         /**
@@ -3567,6 +4111,33 @@ declare namespace LocalJSX {
           * The vertical alignment of the columns.
          */
         "verticalAlignment"?: string;
+    }
+    interface ScCompactAddress {
+        /**
+          * The address.
+         */
+        "address"?: Partial<Address>;
+        /**
+          * Label for the address
+         */
+        "label"?: string;
+        /**
+          * Is this loading
+         */
+        "loading"?: boolean;
+        "names"?: Partial<Address>;
+        /**
+          * Address change event.
+         */
+        "onScChangeAddress"?: (event: CustomEvent<Partial<Address>>) => void;
+        /**
+          * Address input event.
+         */
+        "onScInputAddress"?: (event: CustomEvent<Partial<Address>>) => void;
+        /**
+          * Is this required?
+         */
+        "required"?: boolean;
     }
     interface ScConsumer {
         "onMountConsumer"?: (event: CustomEvent<any>) => void;
@@ -3867,6 +4438,29 @@ declare namespace LocalJSX {
         "error"?: string;
         "heading"?: string;
     }
+    interface ScDialog {
+        /**
+          * The dialog's label as displayed in the header. You should always include a relevant label even when using `no-header`, as it is required for proper accessibility.
+         */
+        "label"?: string;
+        /**
+          * Disables the header. This will also remove the default close button, so please ensure you provide an easy, accessible way for users to dismiss the dialog.
+         */
+        "noHeader"?: boolean;
+        "onScAfterHide"?: (event: CustomEvent<void>) => void;
+        "onScAfterShow"?: (event: CustomEvent<void>) => void;
+        "onScHide"?: (event: CustomEvent<void>) => void;
+        "onScInitialFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * Request close event
+         */
+        "onScRequestClose"?: (event: CustomEvent<'close-button' | 'keyboard' | 'overlay'>) => void;
+        "onScShow"?: (event: CustomEvent<void>) => void;
+        /**
+          * Indicates whether or not the dialog is open. You can use this in lieu of the show/hide methods.
+         */
+        "open"?: boolean;
+    }
     interface ScDivider {
     }
     interface ScDonationChoices {
@@ -3957,6 +4551,14 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * The distance in pixels from which to offset the panel away from its trigger.
+         */
+        "distance"?: number;
+        /**
+          * Enable this option to prevent the panel from being clipped when the component is placed inside a container with `overflow: auto|scroll`.
+         */
+        "hoist"?: boolean;
+        /**
           * Emitted when the dropdown closes. Calling `event.preventDefault()` will prevent it from being closed.
          */
         "onScHide"?: (event: CustomEvent<void>) => void;
@@ -3969,9 +4571,28 @@ declare namespace LocalJSX {
          */
         "open"?: boolean;
         /**
+          * The placement of the dropdown.
+         */
+        "placement"?: | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end';
+        /**
           * The placement of the dropdown panel
          */
         "position"?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+        /**
+          * The distance in pixels from which to offset the panel along its trigger.
+         */
+        "skidding"?: number;
     }
     interface ScEmpty {
         "icon"?: string;
@@ -4009,11 +4630,18 @@ declare namespace LocalJSX {
         "onScSubmit"?: (event: CustomEvent<void>) => void;
     }
     interface ScFormComponentsValidator {
+        /**
+          * Disable validation?
+         */
         "disabled"?: boolean;
         /**
           * The order
          */
         "order"?: Order;
+        /**
+          * Is tax enabled.
+         */
+        "taxEnabled"?: boolean;
     }
     interface ScFormControl {
         /**
@@ -4061,7 +4689,27 @@ declare namespace LocalJSX {
          */
         "size"?: 'small' | 'medium' | 'large';
     }
+    interface ScFormErrorProvider {
+        /**
+          * Form state event.
+         */
+        "onScSetState"?: (event: CustomEvent<FormStateSetter>) => void;
+        /**
+          * Set the state.
+         */
+        "onScUpdateError"?: (event: CustomEvent<ResponseError>) => void;
+        /**
+          * The current order.
+         */
+        "order"?: Order;
+    }
     interface ScFormRow {
+    }
+    interface ScFormStateProvider {
+        /**
+          * Set the state.
+         */
+        "onScSetCheckoutFormState"?: (event: CustomEvent<FormState>) => void;
     }
     interface ScFormatBytes {
         /**
@@ -4354,7 +5002,7 @@ declare namespace LocalJSX {
         /**
           * The input's type.
          */
-        "type"?: 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url';
+        "type"?: 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' | 'hidden';
         /**
           * The input's value attribute.
          */
@@ -4392,6 +5040,7 @@ declare namespace LocalJSX {
         "total"?: 'total' | 'subtotal';
     }
     interface ScLineItems {
+        "editLineItems"?: boolean;
         "editable"?: boolean;
         "loading"?: boolean;
         "lockedChoices"?: Array<PriceChoice>;
@@ -4406,6 +5055,7 @@ declare namespace LocalJSX {
         "order"?: Order;
         "prices"?: Prices;
         "removable"?: boolean;
+        "removeLineItems"?: boolean;
     }
     interface ScLineItemsProvider {
         /**
@@ -4443,6 +5093,28 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface ScMenuLabel {
+    }
+    interface ScOrderConfirmProvider {
+        /**
+          * The order is confirmed event.
+         */
+        "onScConfirmed"?: (event: CustomEvent<void>) => void;
+        /**
+          * Error event.
+         */
+        "onScError"?: (event: CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
+        /**
+          * The order is paid event.
+         */
+        "onScOrderPaid"?: (event: CustomEvent<Order>) => void;
+        /**
+          * Update the order in the universe store.
+         */
+        "onScUpdateOrderState"?: (event: CustomEvent<Order>) => void;
+        /**
+          * The current order.
+         */
+        "order"?: Order;
     }
     interface ScOrderConfirmation {
         "order"?: Order;
@@ -4540,11 +5212,33 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface ScOrderRedirectProvider {
+        /**
+          * Error event.
+         */
+        "onScError"?: (event: CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
+        /**
+          * Form state event.
+         */
+        "onScSetState"?: (event: CustomEvent<FormStateSetter>) => void;
+        /**
+          * The current order.
+         */
+        "order"?: Order;
+        /**
+          * The success url.
+         */
+        "successUrl"?: string;
+    }
     interface ScOrderShippingAddress {
         /**
           * Holds the customer's shipping address
          */
         "customerShippingAddress"?: Address;
+        /**
+          * Show the full address
+         */
+        "full"?: boolean;
         /**
           * Label for the field.
          */
@@ -4556,7 +5250,14 @@ declare namespace LocalJSX {
         /**
           * Make a request to update the order.
          */
-        "onScUpdateOrder"?: (event: CustomEvent<Partial<Order>>) => void;
+        "onScUpdateOrder"?: (event: CustomEvent<{
+    data: Partial<Order>;
+    options?: { silent?: boolean };
+  }>) => void;
+        /**
+          * Placeholder values.
+         */
+        "placeholders"?: Partial<Address>;
         /**
           * Is this required (defaults to true)
          */
@@ -4565,6 +5266,14 @@ declare namespace LocalJSX {
           * Holds the customer's billing address
          */
         "shippingAddress"?: Address;
+        /**
+          * Is shipping enabled for this order?
+         */
+        "shippingEnabled"?: boolean;
+        /**
+          * Show the name field.
+         */
+        "showName"?: boolean;
         /**
           * Tax status of the order
          */
@@ -4588,11 +5297,40 @@ declare namespace LocalJSX {
          */
         "status"?: OrderStatus;
     }
+    interface ScOrderStripePaymentElement {
+        /**
+          * Should we collect an address?
+         */
+        "address"?: boolean;
+        /**
+          * The currency code for the payment element.
+         */
+        "currencyCode"?: string;
+        /**
+          * Payment mode.
+         */
+        "mode"?: 'test' | 'live';
+        "onScPaid"?: (event: CustomEvent<void>) => void;
+        "onScPayError"?: (event: CustomEvent<any>) => void;
+        "onScSetPaymentIntent"?: (event: CustomEvent<{ processor: 'stripe'; payment_intent: PaymentIntent }>) => void;
+        /**
+          * The order.
+         */
+        "order"?: Order;
+        /**
+          * Available processors
+         */
+        "processors"?: Processor[];
+    }
     interface ScOrderSubmit {
         /**
           * Is the order busy
          */
         "busy"?: boolean;
+        /**
+          * Currency Code
+         */
+        "currencyCode"?: string;
         /**
           * Show a full-width button.
          */
@@ -4606,9 +5344,22 @@ declare namespace LocalJSX {
          */
         "loading"?: boolean;
         /**
+          * Is this created in "test" mode
+         */
+        "mode"?: 'test' | 'live';
+        /**
+          * The current order.
+         */
+        "order"?: Order;
+        /**
           * Is the order paying.
          */
         "paying"?: boolean;
+        "processor"?: 'stripe' | 'paypal' | 'paypal-card';
+        /**
+          * Keys and secrets for processors.
+         */
+        "processors"?: Processor[];
         /**
           * Show the total.
          */
@@ -4623,17 +5374,34 @@ declare namespace LocalJSX {
         "type"?: 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
     }
     interface ScOrderSummary {
+        "closedText"?: string;
         "collapsed"?: boolean;
         "collapsible"?: boolean;
         "empty"?: boolean;
         "loading"?: boolean;
+        /**
+          * Show the toggle
+         */
+        "onScHide"?: (event: CustomEvent<void>) => void;
+        /**
+          * Show the toggle
+         */
+        "onScShow"?: (event: CustomEvent<void>) => void;
+        "openText"?: string;
         "order"?: Order;
     }
     interface ScOrderTaxIdInput {
         /**
+          * Is this busy
+         */
+        "busy"?: boolean;
+        /**
           * Make a request to update the order.
          */
-        "onScUpdateOrder"?: (event: CustomEvent<Partial<Order>>) => void;
+        "onScUpdateOrder"?: (event: CustomEvent<{
+    data: Partial<Order>;
+    options?: { silent?: boolean };
+  }>) => void;
         /**
           * The order
          */
@@ -4642,6 +5410,7 @@ declare namespace LocalJSX {
           * Force show the field.
          */
         "show"?: boolean;
+        "taxIdentifier"?: TaxIdentifier;
     }
     interface ScOrdersList {
         "allLink"?: string;
@@ -4669,6 +5438,18 @@ declare namespace LocalJSX {
          */
         "busy"?: boolean;
         /**
+          * The currency code.
+         */
+        "currencyCode"?: string;
+        /**
+          * Default
+         */
+        "defaultProcessor"?: ProcessorName;
+        /**
+          * Hide the test mode badge
+         */
+        "hideTestModeBadge"?: boolean;
+        /**
           * The input's label.
          */
         "label"?: string;
@@ -4680,6 +5461,10 @@ declare namespace LocalJSX {
           * Is this created in "test" mode
          */
         "mode"?: 'test' | 'live';
+        /**
+          * Set the order procesor.
+         */
+        "onScSetProcessor"?: (event: CustomEvent<ProcessorName>) => void;
         /**
           * Checkout Session from sc-checkout.
          */
@@ -4693,9 +5478,17 @@ declare namespace LocalJSX {
          */
         "processor"?: string;
         /**
+          * List of available processors.
+         */
+        "processors"?: Processor[];
+        /**
           * Secure notice
          */
         "secureNotice"?: string;
+        /**
+          * Use the Stripe payment element.
+         */
+        "stripePaymentElement"?: boolean;
     }
     interface ScPaymentMethodCreate {
         "clientSecret"?: string;
@@ -4708,6 +5501,49 @@ declare namespace LocalJSX {
           * Query to fetch paymentMethods
          */
         "query"?: object;
+    }
+    interface ScPaypalButtons {
+        /**
+          * Is this busy?
+         */
+        "busy"?: boolean;
+        /**
+          * Buttons to render
+         */
+        "buttons"?: string[];
+        /**
+          * Client id for the script.
+         */
+        "clientId"?: string;
+        /**
+          * Button color.
+         */
+        "color"?: 'gold' | 'blue' | 'silver' | 'black' | 'white';
+        /**
+          * Label for the button.
+         */
+        "label"?: 'paypal' | 'checkout' | 'buynow' | 'pay' | 'installment';
+        /**
+          * The merchant id for paypal.
+         */
+        "merchantId"?: string;
+        /**
+          * Test or live mode.
+         */
+        "mode"?: 'test' | 'live';
+        /**
+          * Emit an error
+         */
+        "onScError"?: (event: CustomEvent<object>) => void;
+        "onScPaid"?: (event: CustomEvent<void>) => void;
+        /**
+          * Set the state machine
+         */
+        "onScSetState"?: (event: CustomEvent<string>) => void;
+        /**
+          * The order.
+         */
+        "order"?: Order;
     }
     interface ScPriceChoice {
         /**
@@ -5000,8 +5836,6 @@ declare namespace LocalJSX {
          */
         "label"?: string;
     }
-    interface ScRegisterIconLibrary {
-    }
     interface ScSecureNotice {
     }
     interface ScSelect {
@@ -5018,6 +5852,7 @@ declare namespace LocalJSX {
           * Some help text for the input.
          */
         "help"?: string;
+        "hoist"?: boolean;
         /**
           * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
          */
@@ -5084,6 +5919,10 @@ declare namespace LocalJSX {
         "squaredRight"?: boolean;
         "squaredTop"?: boolean;
         /**
+          * Can we unselect items.
+         */
+        "unselect"?: boolean;
+        /**
           * The input's value attribute.
          */
         "value"?: string;
@@ -5110,17 +5949,13 @@ declare namespace LocalJSX {
          */
         "modified"?: string;
         /**
-          * Update line items event
+          * Error event
          */
         "onScError"?: (event: CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
         /**
-          * Paid event
-         */
-        "onScPaid"?: (event: CustomEvent<void>) => void;
-        /**
           * Set the state
          */
-        "onScSetState"?: (event: CustomEvent<string>) => void;
+        "onScSetState"?: (event: CustomEvent<FormStateSetter>) => void;
         /**
           * Update line items event
          */
@@ -5134,6 +5969,10 @@ declare namespace LocalJSX {
          */
         "order"?: Order;
         /**
+          * Holds all available payment intents.
+         */
+        "paymentIntents"?: PaymentIntents;
+        /**
           * Should we persist the session.
          */
         "persist"?: boolean;
@@ -5142,9 +5981,21 @@ declare namespace LocalJSX {
          */
         "prices"?: Array<PriceChoice>;
         /**
+          * The processor.
+         */
+        "processor"?: ProcessorName;
+        /**
           * Set the checkout state
          */
         "setState"?: (state: string) => void;
+        /**
+          * Are we using the Stripe payment element?
+         */
+        "stripePaymentElement"?: boolean;
+        /**
+          * Url to redirect upon success.
+         */
+        "successUrl"?: string;
     }
     interface ScSkeleton {
         /**
@@ -5161,8 +6012,13 @@ declare namespace LocalJSX {
     interface ScStackedListRow {
         "href"?: string;
         "mobileSize"?: number;
+        "target"?: string;
     }
     interface ScStripeElement {
+        /**
+          * Your stripe connected account id.
+         */
+        "accountId"?: string;
         /**
           * Whether this field is disabled
          */
@@ -5201,10 +6057,40 @@ declare namespace LocalJSX {
           * The input's size.
          */
         "size"?: 'small' | 'medium' | 'large';
+    }
+    interface ScStripePaymentElement {
         /**
-          * Your stripe connected account id.
+          * The account id.
          */
-        "stripeAccountId"?: string;
+        "accountId"?: string;
+        /**
+          * Should we collect an address?
+         */
+        "address"?: boolean;
+        /**
+          * The client secret to render the payment element
+         */
+        "clientSecret"?: string;
+        /**
+          * The order/invoice was paid for.
+         */
+        "onScPaid"?: (event: CustomEvent<void>) => void;
+        /**
+          * There was a payment error.
+         */
+        "onScPayError"?: (event: CustomEvent<any>) => void;
+        /**
+          * Order to watch
+         */
+        "order"?: Order | Invoice;
+        /**
+          * The stripe publishable key.
+         */
+        "publishableKey"?: string;
+        /**
+          * Success url to redirect.
+         */
+        "successUrl"?: string;
     }
     interface ScStripePaymentRequest {
         /**
@@ -5267,6 +6153,10 @@ declare namespace LocalJSX {
          */
         "subscriptionId"?: string;
     }
+    interface ScSubscriptionAdHocConfirm {
+        "heading"?: string;
+        "price"?: Price;
+    }
     interface ScSubscriptionCancel {
         "backUrl"?: string;
         "heading"?: string;
@@ -5312,11 +6202,12 @@ declare namespace LocalJSX {
          */
         "status"?: SubscriptionStatus;
         /**
-          * The tag's statux type.
+          * The tag's status type.
          */
         "subscription"?: Subscription;
     }
     interface ScSubscriptionSwitch {
+        "filterAbove"?: number;
         "heading"?: string;
         "productGroupId"?: ProductGroup;
         "productId"?: string;
@@ -5444,6 +6335,14 @@ declare namespace LocalJSX {
          */
         "country"?: string;
         /**
+          * Help text.
+         */
+        "help"?: string;
+        /**
+          * Is this loading?
+         */
+        "loading"?: boolean;
+        /**
           * Tax ID Number
          */
         "number"?: string;
@@ -5451,6 +6350,14 @@ declare namespace LocalJSX {
           * Make a request to update the order.
          */
         "onScChange"?: (event: CustomEvent<{ number: string; number_type: string }>) => void;
+        /**
+          * Make a request to update the order.
+         */
+        "onScInput"?: (event: CustomEvent<Partial<{ number: string; number_type: string }>>) => void;
+        /**
+          * Change the Type
+         */
+        "onScInputType"?: (event: CustomEvent<string>) => void;
         /**
           * Set the checkout state.
          */
@@ -5460,6 +6367,10 @@ declare namespace LocalJSX {
          */
         "show"?: boolean;
         /**
+          * The status
+         */
+        "status"?: 'valid' | 'invalid' | 'unknown';
+        /**
           * Type of tax id
          */
         "type"?: string;
@@ -5467,6 +6378,104 @@ declare namespace LocalJSX {
     interface ScText {
         "tag"?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
         "truncate"?: boolean;
+    }
+    interface ScTextarea {
+        /**
+          * The textarea's autocapitalize attribute.
+         */
+        "autocapitalize"?: 'off' | 'none' | 'on' | 'sentences' | 'words' | 'characters';
+        /**
+          * The textarea's autocomplete attribute.
+         */
+        "autocomplete"?: string;
+        /**
+          * The textarea's autocorrect attribute.
+         */
+        "autocorrect"?: string;
+        /**
+          * The textarea's autofocus attribute.
+         */
+        "autofocus"?: boolean;
+        /**
+          * Disables the textarea.
+         */
+        "disabled"?: boolean;
+        /**
+          * The input's enterkeyhint attribute. This can be used to customize the label or icon of the Enter key on virtual keyboards.
+         */
+        "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
+        /**
+          * Draws a filled textarea.
+         */
+        "filled"?: boolean;
+        /**
+          * The textarea's help text. Alternatively, you can use the help-text slot.
+         */
+        "help"?: string;
+        /**
+          * The textarea's inputmode attribute.
+         */
+        "inputmode"?: 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url';
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, and `maxlength` using the browser's constraint validation API.
+         */
+        "invalid"?: boolean;
+        /**
+          * The textarea's label. Alternatively, you can use the label slot.
+         */
+        "label"?: string;
+        /**
+          * The maximum length of input that will be considered valid.
+         */
+        "maxlength"?: number;
+        /**
+          * The minimum length of input that will be considered valid.
+         */
+        "minlength"?: number;
+        /**
+          * The textarea's name attribute.
+         */
+        "name"?: string;
+        "onScBlur"?: (event: CustomEvent<void>) => void;
+        "onScChange"?: (event: CustomEvent<void>) => void;
+        "onScFocus"?: (event: CustomEvent<void>) => void;
+        "onScInput"?: (event: CustomEvent<void>) => void;
+        /**
+          * The textarea's placeholder text.
+         */
+        "placeholder"?: string;
+        /**
+          * Makes the textarea readonly.
+         */
+        "readonly"?: boolean;
+        /**
+          * Makes the textarea a required field.
+         */
+        "required"?: boolean;
+        /**
+          * Controls how the textarea can be resized.
+         */
+        "resize"?: 'none' | 'vertical' | 'auto';
+        /**
+          * The number of rows to display by default.
+         */
+        "rows"?: number;
+        /**
+          * Should we show the label
+         */
+        "showLabel"?: boolean;
+        /**
+          * The textarea's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * Enables spell checking on the textarea.
+         */
+        "spellcheck"?: boolean;
+        /**
+          * The textarea's value attribute.
+         */
+        "value"?: string;
     }
     interface ScToggle {
         /**
@@ -5494,6 +6503,18 @@ declare namespace LocalJSX {
          */
         "open"?: boolean;
         /**
+          * Is this a shady
+         */
+        "shady"?: boolean;
+        /**
+          * Should we show a radio control?
+         */
+        "showControl"?: boolean;
+        /**
+          * Should we show the arrow icon?
+         */
+        "showIcon"?: boolean;
+        /**
           * The summary to show in the details header. If you need to display HTML, use the `summary` slot instead.
          */
         "summary"?: string;
@@ -5507,6 +6528,10 @@ declare namespace LocalJSX {
           * Are these collapsible?
          */
         "collapsible"?: boolean;
+        /**
+          * Theme for the toggles
+         */
+        "theme"?: 'default' | 'container';
     }
     interface ScTooltip {
         /**
@@ -5539,6 +6564,7 @@ declare namespace LocalJSX {
         "total"?: 'total' | 'subtotal' | 'amount_due';
     }
     interface ScUpcomingInvoice {
+        "adHocAmount"?: number;
         "discount"?: {
     promotion_code?: string;
     coupon?: string;
@@ -5587,6 +6613,7 @@ declare namespace LocalJSX {
         "sc-choices": ScChoices;
         "sc-column": ScColumn;
         "sc-columns": ScColumns;
+        "sc-compact-address": ScCompactAddress;
         "sc-consumer": ScConsumer;
         "sc-coupon-form": ScCouponForm;
         "sc-custom-order-price-input": ScCustomOrderPriceInput;
@@ -5597,6 +6624,7 @@ declare namespace LocalJSX {
         "sc-dashboard-customer-details": ScDashboardCustomerDetails;
         "sc-dashboard-downloads-list": ScDashboardDownloadsList;
         "sc-dashboard-module": ScDashboardModule;
+        "sc-dialog": ScDialog;
         "sc-divider": ScDivider;
         "sc-donation-choices": ScDonationChoices;
         "sc-downloads-list": ScDownloadsList;
@@ -5608,7 +6636,9 @@ declare namespace LocalJSX {
         "sc-form": ScForm;
         "sc-form-components-validator": ScFormComponentsValidator;
         "sc-form-control": ScFormControl;
+        "sc-form-error-provider": ScFormErrorProvider;
         "sc-form-row": ScFormRow;
+        "sc-form-state-provider": ScFormStateProvider;
         "sc-format-bytes": ScFormatBytes;
         "sc-format-date": ScFormatDate;
         "sc-format-interval": ScFormatInterval;
@@ -5627,6 +6657,7 @@ declare namespace LocalJSX {
         "sc-menu-divider": ScMenuDivider;
         "sc-menu-item": ScMenuItem;
         "sc-menu-label": ScMenuLabel;
+        "sc-order-confirm-provider": ScOrderConfirmProvider;
         "sc-order-confirmation": ScOrderConfirmation;
         "sc-order-confirmation-customer": ScOrderConfirmationCustomer;
         "sc-order-confirmation-line-items": ScOrderConfirmationLineItems;
@@ -5634,8 +6665,10 @@ declare namespace LocalJSX {
         "sc-order-coupon-form": ScOrderCouponForm;
         "sc-order-detail": ScOrderDetail;
         "sc-order-password": ScOrderPassword;
+        "sc-order-redirect-provider": ScOrderRedirectProvider;
         "sc-order-shipping-address": ScOrderShippingAddress;
         "sc-order-status-badge": ScOrderStatusBadge;
+        "sc-order-stripe-payment-element": ScOrderStripePaymentElement;
         "sc-order-submit": ScOrderSubmit;
         "sc-order-summary": ScOrderSummary;
         "sc-order-tax-id-input": ScOrderTaxIdInput;
@@ -5644,6 +6677,7 @@ declare namespace LocalJSX {
         "sc-payment": ScPayment;
         "sc-payment-method-create": ScPaymentMethodCreate;
         "sc-payment-methods-list": ScPaymentMethodsList;
+        "sc-paypal-buttons": ScPaypalButtons;
         "sc-price-choice": ScPriceChoice;
         "sc-price-choices": ScPriceChoices;
         "sc-price-input": ScPriceInput;
@@ -5652,7 +6686,6 @@ declare namespace LocalJSX {
         "sc-quantity-select": ScQuantitySelect;
         "sc-radio": ScRadio;
         "sc-radio-group": ScRadioGroup;
-        "sc-register-icon-library": ScRegisterIconLibrary;
         "sc-secure-notice": ScSecureNotice;
         "sc-select": ScSelect;
         "sc-session-provider": ScSessionProvider;
@@ -5662,8 +6695,10 @@ declare namespace LocalJSX {
         "sc-stacked-list": ScStackedList;
         "sc-stacked-list-row": ScStackedListRow;
         "sc-stripe-element": ScStripeElement;
+        "sc-stripe-payment-element": ScStripePaymentElement;
         "sc-stripe-payment-request": ScStripePaymentRequest;
         "sc-subscription": ScSubscription;
+        "sc-subscription-ad-hoc-confirm": ScSubscriptionAdHocConfirm;
         "sc-subscription-cancel": ScSubscriptionCancel;
         "sc-subscription-details": ScSubscriptionDetails;
         "sc-subscription-payment": ScSubscriptionPayment;
@@ -5682,6 +6717,7 @@ declare namespace LocalJSX {
         "sc-tag": ScTag;
         "sc-tax-id-input": ScTaxIdInput;
         "sc-text": ScText;
+        "sc-textarea": ScTextarea;
         "sc-toggle": ScToggle;
         "sc-toggles": ScToggles;
         "sc-tooltip": ScTooltip;
@@ -5717,6 +6753,7 @@ declare module "@stencil/core" {
             "sc-choices": LocalJSX.ScChoices & JSXBase.HTMLAttributes<HTMLScChoicesElement>;
             "sc-column": LocalJSX.ScColumn & JSXBase.HTMLAttributes<HTMLScColumnElement>;
             "sc-columns": LocalJSX.ScColumns & JSXBase.HTMLAttributes<HTMLScColumnsElement>;
+            "sc-compact-address": LocalJSX.ScCompactAddress & JSXBase.HTMLAttributes<HTMLScCompactAddressElement>;
             "sc-consumer": LocalJSX.ScConsumer & JSXBase.HTMLAttributes<HTMLScConsumerElement>;
             "sc-coupon-form": LocalJSX.ScCouponForm & JSXBase.HTMLAttributes<HTMLScCouponFormElement>;
             "sc-custom-order-price-input": LocalJSX.ScCustomOrderPriceInput & JSXBase.HTMLAttributes<HTMLScCustomOrderPriceInputElement>;
@@ -5727,6 +6764,7 @@ declare module "@stencil/core" {
             "sc-dashboard-customer-details": LocalJSX.ScDashboardCustomerDetails & JSXBase.HTMLAttributes<HTMLScDashboardCustomerDetailsElement>;
             "sc-dashboard-downloads-list": LocalJSX.ScDashboardDownloadsList & JSXBase.HTMLAttributes<HTMLScDashboardDownloadsListElement>;
             "sc-dashboard-module": LocalJSX.ScDashboardModule & JSXBase.HTMLAttributes<HTMLScDashboardModuleElement>;
+            "sc-dialog": LocalJSX.ScDialog & JSXBase.HTMLAttributes<HTMLScDialogElement>;
             "sc-divider": LocalJSX.ScDivider & JSXBase.HTMLAttributes<HTMLScDividerElement>;
             "sc-donation-choices": LocalJSX.ScDonationChoices & JSXBase.HTMLAttributes<HTMLScDonationChoicesElement>;
             "sc-downloads-list": LocalJSX.ScDownloadsList & JSXBase.HTMLAttributes<HTMLScDownloadsListElement>;
@@ -5738,7 +6776,9 @@ declare module "@stencil/core" {
             "sc-form": LocalJSX.ScForm & JSXBase.HTMLAttributes<HTMLScFormElement>;
             "sc-form-components-validator": LocalJSX.ScFormComponentsValidator & JSXBase.HTMLAttributes<HTMLScFormComponentsValidatorElement>;
             "sc-form-control": LocalJSX.ScFormControl & JSXBase.HTMLAttributes<HTMLScFormControlElement>;
+            "sc-form-error-provider": LocalJSX.ScFormErrorProvider & JSXBase.HTMLAttributes<HTMLScFormErrorProviderElement>;
             "sc-form-row": LocalJSX.ScFormRow & JSXBase.HTMLAttributes<HTMLScFormRowElement>;
+            "sc-form-state-provider": LocalJSX.ScFormStateProvider & JSXBase.HTMLAttributes<HTMLScFormStateProviderElement>;
             "sc-format-bytes": LocalJSX.ScFormatBytes & JSXBase.HTMLAttributes<HTMLScFormatBytesElement>;
             "sc-format-date": LocalJSX.ScFormatDate & JSXBase.HTMLAttributes<HTMLScFormatDateElement>;
             "sc-format-interval": LocalJSX.ScFormatInterval & JSXBase.HTMLAttributes<HTMLScFormatIntervalElement>;
@@ -5757,6 +6797,7 @@ declare module "@stencil/core" {
             "sc-menu-divider": LocalJSX.ScMenuDivider & JSXBase.HTMLAttributes<HTMLScMenuDividerElement>;
             "sc-menu-item": LocalJSX.ScMenuItem & JSXBase.HTMLAttributes<HTMLScMenuItemElement>;
             "sc-menu-label": LocalJSX.ScMenuLabel & JSXBase.HTMLAttributes<HTMLScMenuLabelElement>;
+            "sc-order-confirm-provider": LocalJSX.ScOrderConfirmProvider & JSXBase.HTMLAttributes<HTMLScOrderConfirmProviderElement>;
             "sc-order-confirmation": LocalJSX.ScOrderConfirmation & JSXBase.HTMLAttributes<HTMLScOrderConfirmationElement>;
             "sc-order-confirmation-customer": LocalJSX.ScOrderConfirmationCustomer & JSXBase.HTMLAttributes<HTMLScOrderConfirmationCustomerElement>;
             "sc-order-confirmation-line-items": LocalJSX.ScOrderConfirmationLineItems & JSXBase.HTMLAttributes<HTMLScOrderConfirmationLineItemsElement>;
@@ -5764,8 +6805,10 @@ declare module "@stencil/core" {
             "sc-order-coupon-form": LocalJSX.ScOrderCouponForm & JSXBase.HTMLAttributes<HTMLScOrderCouponFormElement>;
             "sc-order-detail": LocalJSX.ScOrderDetail & JSXBase.HTMLAttributes<HTMLScOrderDetailElement>;
             "sc-order-password": LocalJSX.ScOrderPassword & JSXBase.HTMLAttributes<HTMLScOrderPasswordElement>;
+            "sc-order-redirect-provider": LocalJSX.ScOrderRedirectProvider & JSXBase.HTMLAttributes<HTMLScOrderRedirectProviderElement>;
             "sc-order-shipping-address": LocalJSX.ScOrderShippingAddress & JSXBase.HTMLAttributes<HTMLScOrderShippingAddressElement>;
             "sc-order-status-badge": LocalJSX.ScOrderStatusBadge & JSXBase.HTMLAttributes<HTMLScOrderStatusBadgeElement>;
+            "sc-order-stripe-payment-element": LocalJSX.ScOrderStripePaymentElement & JSXBase.HTMLAttributes<HTMLScOrderStripePaymentElementElement>;
             "sc-order-submit": LocalJSX.ScOrderSubmit & JSXBase.HTMLAttributes<HTMLScOrderSubmitElement>;
             "sc-order-summary": LocalJSX.ScOrderSummary & JSXBase.HTMLAttributes<HTMLScOrderSummaryElement>;
             "sc-order-tax-id-input": LocalJSX.ScOrderTaxIdInput & JSXBase.HTMLAttributes<HTMLScOrderTaxIdInputElement>;
@@ -5774,6 +6817,7 @@ declare module "@stencil/core" {
             "sc-payment": LocalJSX.ScPayment & JSXBase.HTMLAttributes<HTMLScPaymentElement>;
             "sc-payment-method-create": LocalJSX.ScPaymentMethodCreate & JSXBase.HTMLAttributes<HTMLScPaymentMethodCreateElement>;
             "sc-payment-methods-list": LocalJSX.ScPaymentMethodsList & JSXBase.HTMLAttributes<HTMLScPaymentMethodsListElement>;
+            "sc-paypal-buttons": LocalJSX.ScPaypalButtons & JSXBase.HTMLAttributes<HTMLScPaypalButtonsElement>;
             "sc-price-choice": LocalJSX.ScPriceChoice & JSXBase.HTMLAttributes<HTMLScPriceChoiceElement>;
             "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
@@ -5782,7 +6826,6 @@ declare module "@stencil/core" {
             "sc-quantity-select": LocalJSX.ScQuantitySelect & JSXBase.HTMLAttributes<HTMLScQuantitySelectElement>;
             "sc-radio": LocalJSX.ScRadio & JSXBase.HTMLAttributes<HTMLScRadioElement>;
             "sc-radio-group": LocalJSX.ScRadioGroup & JSXBase.HTMLAttributes<HTMLScRadioGroupElement>;
-            "sc-register-icon-library": LocalJSX.ScRegisterIconLibrary & JSXBase.HTMLAttributes<HTMLScRegisterIconLibraryElement>;
             "sc-secure-notice": LocalJSX.ScSecureNotice & JSXBase.HTMLAttributes<HTMLScSecureNoticeElement>;
             "sc-select": LocalJSX.ScSelect & JSXBase.HTMLAttributes<HTMLScSelectElement>;
             "sc-session-provider": LocalJSX.ScSessionProvider & JSXBase.HTMLAttributes<HTMLScSessionProviderElement>;
@@ -5792,8 +6835,10 @@ declare module "@stencil/core" {
             "sc-stacked-list": LocalJSX.ScStackedList & JSXBase.HTMLAttributes<HTMLScStackedListElement>;
             "sc-stacked-list-row": LocalJSX.ScStackedListRow & JSXBase.HTMLAttributes<HTMLScStackedListRowElement>;
             "sc-stripe-element": LocalJSX.ScStripeElement & JSXBase.HTMLAttributes<HTMLScStripeElementElement>;
+            "sc-stripe-payment-element": LocalJSX.ScStripePaymentElement & JSXBase.HTMLAttributes<HTMLScStripePaymentElementElement>;
             "sc-stripe-payment-request": LocalJSX.ScStripePaymentRequest & JSXBase.HTMLAttributes<HTMLScStripePaymentRequestElement>;
             "sc-subscription": LocalJSX.ScSubscription & JSXBase.HTMLAttributes<HTMLScSubscriptionElement>;
+            "sc-subscription-ad-hoc-confirm": LocalJSX.ScSubscriptionAdHocConfirm & JSXBase.HTMLAttributes<HTMLScSubscriptionAdHocConfirmElement>;
             "sc-subscription-cancel": LocalJSX.ScSubscriptionCancel & JSXBase.HTMLAttributes<HTMLScSubscriptionCancelElement>;
             "sc-subscription-details": LocalJSX.ScSubscriptionDetails & JSXBase.HTMLAttributes<HTMLScSubscriptionDetailsElement>;
             "sc-subscription-payment": LocalJSX.ScSubscriptionPayment & JSXBase.HTMLAttributes<HTMLScSubscriptionPaymentElement>;
@@ -5812,6 +6857,7 @@ declare module "@stencil/core" {
             "sc-tag": LocalJSX.ScTag & JSXBase.HTMLAttributes<HTMLScTagElement>;
             "sc-tax-id-input": LocalJSX.ScTaxIdInput & JSXBase.HTMLAttributes<HTMLScTaxIdInputElement>;
             "sc-text": LocalJSX.ScText & JSXBase.HTMLAttributes<HTMLScTextElement>;
+            "sc-textarea": LocalJSX.ScTextarea & JSXBase.HTMLAttributes<HTMLScTextareaElement>;
             "sc-toggle": LocalJSX.ScToggle & JSXBase.HTMLAttributes<HTMLScToggleElement>;
             "sc-toggles": LocalJSX.ScToggles & JSXBase.HTMLAttributes<HTMLScTogglesElement>;
             "sc-tooltip": LocalJSX.ScTooltip & JSXBase.HTMLAttributes<HTMLScTooltipElement>;

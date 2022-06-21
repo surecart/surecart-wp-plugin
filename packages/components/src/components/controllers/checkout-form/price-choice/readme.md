@@ -45,7 +45,6 @@
 - [sc-format-number](../../../util/format-number)
 - [sc-choice](../../../ui/choice)
 - [sc-skeleton](../../../ui/skeleton)
-- [sc-tooltip](../../../ui/tooltip)
 
 ### Graph
 ```mermaid
@@ -55,7 +54,6 @@ graph TD;
   sc-price-choice --> sc-format-number
   sc-price-choice --> sc-choice
   sc-price-choice --> sc-skeleton
-  sc-price-choice --> sc-tooltip
   sc-price-input --> sc-input
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip

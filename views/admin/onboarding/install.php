@@ -1,6 +1,7 @@
 <style>
 	#wpwrap {
-		background: var(--sc-color-gray-50);
+		color: var(--sc-color-brand-body);
+		background: var(--sc-color-brand-main-background);
 	}
 
 	.wrap {
@@ -35,7 +36,7 @@
 		display: flex;
 		align-items: center;
 		gap: 0.5em;
-		color: var(--sc-color-gray-900);
+		color: var(--sc-color-brand-heading);
 	}
 </style>
 

@@ -6,16 +6,18 @@
 			"config": {
 				"SURECART_APP_URL": "https://staging.surecart.com",
 				"WP_DEBUG": true
-			}
+			},
+			"port": 8000
 		},
 		"tests": {
 			"config": {
 				"FS_METHOD": "direct",
 				"WP_DEBUG": true,
-				"SURECART_API_TOKEN": "test",
-				"SURECART_APP_URL": "https://staging.surecart.com",
+				"SURECART_API_TOKEN": "14V3yHEcRREf4oMivtjNHnX8",
+				"SURECART_APP_URL": "https://preview.surecart.com",
 				"CE_TESTING": true
-			}
+			},
+			"port": 8009
 		}
 	}
 }

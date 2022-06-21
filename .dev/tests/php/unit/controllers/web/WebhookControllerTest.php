@@ -23,11 +23,6 @@ class WebhookControllerTest extends SureCartUnitTestCase
 		$this->assertSame('surecart/subscription_updated', $controller->createEventName('subscription.updated'));
 	}
 
-	/**
-	 * @group failing
-	 *
-	 * @return void
-	 */
 	public function testGetObjectId()
 	{
 	 	$controller = new WebhookController();

@@ -1,9 +1,6 @@
-import { Coupon, Order, Customer, PriceChoice, Prices, Products, ResponseError } from '../../../../types';
-import { checkoutMachine } from './helpers/checkout-machine';
-import { Component, h, Prop, Element, State, Listen, Watch } from '@stencil/core';
+import { Order, Customer, PriceChoice, Prices, Products, ResponseError, FormState, Processor, PaymentIntents, PaymentIntent } from '../../../../types';
+import { Component, h, Prop, Element, State, Listen, Method, Event, EventEmitter } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
-import { interpret } from '@xstate/fsm';
 import { Universe } from 'stencil-wormhole';
 
 @Component({
@@ -12,11 +9,11 @@ import { Universe } from 'stencil-wormhole';
   shadow: false,
 })
 export class ScCheckout {
-  /** Holds our state machine service */
-  private _stateService = interpret(checkoutMachine);
-
   /** Element */
   @Element() el: HTMLElement;
+
+  /** Holds the session provider reference. */
+  private sessionProvider: HTMLScSessionProviderElement;
 
   /** An array of prices to pre-fill in the form. */
   @Prop() prices: Array<PriceChoice> = [];
@@ -33,14 +30,11 @@ export class ScCheckout {
   /** Currency to use for this checkout. */
   @Prop() currencyCode: string = 'usd';
 
-  /** Where to go on success */
+  /** Whether to persist the session in the browser between visits. */
   @Prop() persistSession: boolean = true;
 
   /** Where to go on success */
   @Prop() successUrl: string = '';
-
-  /** Optionally pass a coupon. */
-  @Prop({ mutable: true }) coupon: Coupon;
 
   /** Stores the current customer */
   @Prop({ mutable: true }) customer: Customer;
@@ -48,14 +42,26 @@ export class ScCheckout {
   /** Alignment */
   @Prop() alignment: 'center' | 'wide' | 'full';
 
-  /** Translation object. */
-  @Prop() i18n: Object;
+  /** Is tax enabled? */
+  @Prop() taxEnabled: boolean;
 
   /** Is this user logged in? */
   @Prop() loggedIn: boolean;
 
   /** Should we disable components validation */
   @Prop() disableComponentsValidation: boolean;
+
+  /** Processors enabled for this form. */
+  @Prop({ mutable: true }) processors: Processor[];
+
+  /** Can we edit line items? */
+  @Prop() editLineItems: boolean = true;
+
+  /** Can we remove line items? */
+  @Prop() removeLineItems: boolean = true;
+
+  /** Use the Stripe payment element. */
+  @Prop() stripePaymentElement: boolean = false;
 
   /** Stores fetched prices for use throughout component.  */
   @State() pricesEntities: Prices = {};
@@ -64,51 +70,42 @@ export class ScCheckout {
   @State() productsEntities: Products = {};
 
   /** Loading states for different parts of the form. */
-  @State() checkoutState = checkoutMachine.initialState;
+  @State() checkoutState: FormState = 'idle';
 
-  /** Stores the current Order */
+  /** Holds the current Order */
   @State() order: Order;
 
   /** Error to display. */
   @State() error: ResponseError | null;
 
-  @State() missingAddress: boolean;
+  /** The currenly selected processor */
+  @State() processor: 'stripe' | 'paypal' = 'stripe';
 
-  /** Payment mode inside individual payment method (i.e. Payment Buttons) */
-  @State() paymentMethod: 'stripe-payment-request' | null;
+  /** Holds the payment intents for the checkout. */
+  @State() paymentIntents: PaymentIntents = {};
 
-  @Watch('order')
-  handleOrderChange() {
-    this.error = null;
+  /** Is this form a duplicate form? (There's another on the page) */
+  @State() isDuplicate: boolean;
+
+  /** Order has been updated. */
+  @Event() scOrderUpdated: EventEmitter<Order>;
+
+  /** Order has been finalized. */
+  @Event() scOrderFinalized: EventEmitter<Order>;
+
+  /** Order has an error. */
+  @Event() scOrderError: EventEmitter<ResponseError>;
+
+  @Listen('scSetPaymentIntent')
+  handleSetPaymentIntent(e) {
+    const paymentIntent = e.detail?.payment_intent as PaymentIntent;
+    const processor = e.detail?.processor;
+    this.paymentIntents[processor] = paymentIntent;
   }
 
-  @Listen('scFormSubmit')
-  handlePaymentModeChange(e) {
-    this.paymentMethod = e?.detail?.payentMethod;
-  }
-
-  @Listen('scPaid')
-  async handlePaid() {
-    window.localStorage.removeItem(this.el.id);
-    window.location.assign(addQueryArgs(this.successUrl, { order: this.order.id }));
-  }
-
-  @Listen('scPayError')
-  handlePayError(e) {
-    this.error = e.detail?.message || {
-      code: '',
-      message: 'Something went wrong with your payment.',
-    };
-  }
-
-  @Listen('scSetState')
-  handleSetStateEvent(e) {
-    this.setState(e.detail);
-  }
-
-  setState(name) {
-    const { send } = this._stateService;
-    return send(name);
+  @Listen('scSetProcessor')
+  handleProcessorChange(e) {
+    this.processor = e.detail;
   }
 
   @Listen('scAddEntities')
@@ -131,58 +128,67 @@ export class ScCheckout {
     }
   }
 
-  componentWillLoad() {
-    // Start state machine.
-    this._stateService.subscribe(state => (this.checkoutState = state));
-    this._stateService.start();
+  /**
+   * Submit the form
+   */
+  @Method()
+  async submit({ skip_validation } = { skip_validation: false }) {
+    if (!skip_validation) {
+      await this.validate();
+    }
+    return await this.sessionProvider.finalize();
+  }
 
+  /**
+   * Validate the form.
+   */
+  @Method()
+  async validate() {
+    const form = this.el.querySelector('sc-form') as HTMLScFormElement;
+    return await form.validate();
+  }
+
+  componentWillLoad() {
     // @ts-ignore
     Universe.create(this, this.state());
   }
 
-  /** Remove state machine on disconnect. */
-  disconnectedCallback() {
-    this._stateService.stop();
-  }
-
-  /** First will display validation error, then main error if no validation errors. */
-  errorMessage() {
-    if (this.error?.additional_errors?.[0]?.message) {
-      return this.getErrorMessage(this.error?.additional_errors?.[0]);
-    } else if (this?.error?.message) {
-      return this.getErrorMessage(this?.error);
-    }
-    return '';
-  }
-
-  getErrorMessage(error) {
-    if (error.code === 'order.line_items.price.blank') {
-      return __('This product is no longer purchasable.', 'surecart');
-    }
-    return error?.message;
+  componentDidLoad() {
+    this.isDuplicate = document.querySelector('sc-checkout') !== this.el;
   }
 
   state() {
     return {
-      processor: 'stripe',
+      processor: this.processor,
+      processors: this.processors,
       processor_data: this.order?.processor_data,
-      state: this.checkoutState.value,
+      state: this.checkoutState,
+      paymentIntents: this.paymentIntents,
+      successUrl: this.successUrl,
+
+      order: this.order,
+      shippingEnabled: this.order?.shipping_enabled,
+      lineItems: this.order?.line_items?.data || [],
+      editLineItems: this.editLineItems,
+      removeLineItems: this.removeLineItems,
 
       // checkout states
-      loading: this.checkoutState.value === 'loading',
-      busy: ['updating', 'finalizing', 'paid'].includes(this.checkoutState.value),
-      paying: ['finalizing', 'paid'].includes(this.checkoutState.value),
-      empty: !['loading', 'updating'].includes(this.checkoutState.value) && !this.order?.line_items?.pagination?.count,
+      loading: this.checkoutState === 'loading',
+      busy: ['updating', 'finalizing', 'paid', 'confirmed'].includes(this.checkoutState),
+      paying: ['finalizing', 'paid', 'confirmed'].includes(this.checkoutState),
+      empty: !['loading', 'updating'].includes(this.checkoutState) && !this.order?.line_items?.pagination?.count,
       // checkout states
+
+      // stripe.
+      stripePaymentElement: this.stripePaymentElement,
 
       error: this.error,
-      order: this.order,
-      lineItems: this.order?.line_items?.data || [],
       customer: this.customer,
       tax_status: this?.order?.tax_status,
       customerShippingAddress: typeof this.order?.customer !== 'string' ? this?.order?.customer?.shipping_address : {},
       shippingAddress: this.order?.shipping_address,
       taxStatus: this.order?.tax_status,
+      taxIdentifier: this.order?.tax_identifier,
       lockedChoices: this.prices,
       products: this.productsEntities,
       prices: this.pricesEntities,
@@ -191,29 +197,13 @@ export class ScCheckout {
       formId: this.formId,
       mode: this.mode,
       currencyCode: this.currencyCode,
-      paymentMethod: this.paymentMethod,
-      i18n: this.i18n,
     };
   }
 
   render() {
-    if (this?.order?.status === 'paid') {
-      return (
-        <sc-alert type="success" open>
-          <span slot="title">{__('You have already paid for this order.', 'surecart')}</span>
-          {__('Please visit your account dashboard to view your order.', 'surecart')}
-        </sc-alert>
-      );
+    if (this.isDuplicate) {
+      return <sc-alert open>{__('Due to processor restrictions, only one checkout form is allowed on the page.', 'surecart')}</sc-alert>;
     }
-
-    if (this.checkoutState.value === 'expired') {
-      return (
-        <sc-block-ui>
-          <div>{__('Please refresh the page.', 'surecart')}</div>
-        </sc-block-ui>
-      );
-    }
-
     return (
       <div
         class={{
@@ -223,40 +213,42 @@ export class ScCheckout {
           'sc-align-full': this.alignment === 'full',
         }}
       >
-        {!!this.errorMessage() && (
-          <sc-alert
-            type="danger"
-            onScShow={e => {
-              const target = e.target as HTMLElement;
-              target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-                inline: 'nearest',
-              });
-            }}
-            open={!!this.errorMessage()}
-          >
-            <span slot="title">{this.errorMessage()}</span>
-          </sc-alert>
-        )}
-
         <Universe.Provider state={this.state()}>
-          <sc-form-components-validator order={this.order} disabled={this.disableComponentsValidation}>
-            <sc-session-provider
-              order={this.order}
-              prices={this.prices}
-              persist={this.persistSession}
-              modified={this.modified}
-              mode={this.mode}
-              form-id={this.formId}
-              group-id={this.el.id}
-              currency-code={this.currencyCode}
-              onScUpdateOrderState={e => (this.order = e.detail)}
-              onScError={e => (this.error = e.detail as ResponseError)}
-            >
-              <slot />
-            </sc-session-provider>
-          </sc-form-components-validator>
+          {/* Handles the current checkout form state. */}
+          <sc-form-state-provider onScSetCheckoutFormState={e => (this.checkoutState = e.detail)}>
+            {/* Handles errors in the form. */}
+            <sc-form-error-provider order={this.order} onScUpdateError={e => (this.error = e.detail)}>
+              {/* Validate components in the form based on order state. */}
+              <sc-form-components-validator order={this.order} disabled={this.disableComponentsValidation} taxEnabled={this.taxEnabled}>
+                {/* Handles the current session. */}
+                <sc-session-provider
+                  ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)}
+                  order={this.order}
+                  prices={this.prices}
+                  stripePaymentElement={this.stripePaymentElement}
+                  paymentIntents={this.paymentIntents}
+                  persist={this.persistSession}
+                  modified={this.modified}
+                  mode={this.mode}
+                  form-id={this.formId}
+                  group-id={this.el.id}
+                  processor={this.processor}
+                  currency-code={this.currencyCode}
+                  onScUpdateOrderState={e => (this.order = e.detail)}
+                  onScError={e => (this.error = e.detail as ResponseError)}
+                >
+                  {/* Maybe redirect to the success url if requirements are met. */}
+                  <sc-order-redirect-provider order={this.order} success-url={this.successUrl}>
+                    {/* Handle confirming of order after it is "Paid" by processors. */}
+                    <sc-order-confirm-provider order={this.order}>
+                      <slot />
+                    </sc-order-confirm-provider>
+                  </sc-order-redirect-provider>
+                </sc-session-provider>
+              </sc-form-components-validator>
+            </sc-form-error-provider>
+          </sc-form-state-provider>
+
           {this.state().busy && <sc-block-ui z-index={9}></sc-block-ui>}
         </Universe.Provider>
       </div>

@@ -1,9 +1,10 @@
-import { translatedInterval } from '../../../../functions/price';
-import { Order, LineItem, LineItemData, PriceChoice, Prices, Product } from '../../../../types';
-import { Component, h, Prop, Event, EventEmitter } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
-import { hasSubscription } from '../../../../functions/line-items';
+import { Component, Event, EventEmitter, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+import { openWormhole } from 'stencil-wormhole';
+
+import { hasSubscription } from '../../../../functions/line-items';
+import { intervalString } from '../../../../functions/price';
+import { LineItem, LineItemData, Order, PriceChoice, Prices, Product } from '../../../../types';
 
 @Component({
   tag: 'sc-line-items',
@@ -14,8 +15,10 @@ export class ScLineItems {
   @Prop() order: Order;
   @Prop() loading: boolean;
   @Prop() prices: Prices;
-  @Prop() editable: boolean = true;
-  @Prop() removable: boolean = true;
+  @Prop() editable: boolean;
+  @Prop() removable: boolean;
+  @Prop() editLineItems: boolean = true;
+  @Prop() removeLineItems: boolean = true;
   @Prop() lockedChoices: Array<PriceChoice> = [];
 
   /** Update the line item. */
@@ -55,6 +58,16 @@ export class ScLineItems {
     return this.lockedChoices.some(choice => choice.id === item.price.id);
   }
 
+  isEditable() {
+    if (this.editable !== null) return this.editable;
+    return this.editLineItems;
+  }
+
+  isRemovable() {
+    if (this.removable !== null) return this.removable;
+    return this.removeLineItems;
+  }
+
   render() {
     if (!!this.loading) {
       return (
@@ -76,13 +89,13 @@ export class ScLineItems {
               key={item.id}
               imageUrl={(item?.price?.product as Product)?.image_url}
               name={(item?.price?.product as Product)?.name}
-              editable={this.editable && !item?.ad_hoc_amount}
-              removable={this.removable}
+              editable={this.isEditable() && !item?.price?.ad_hoc}
+              removable={this.isRemovable()}
               quantity={item.quantity}
               amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount * item.quantity}
               currency={this.order?.currency}
               trialDurationDays={item?.price?.trial_duration_days}
-              interval={translatedInterval(item.price.recurring_interval_count, item.price.recurring_interval, __('every', 'surecart'), hasSubscription(this.order) ? 'once' : '')}
+              interval={!!item?.price && intervalString(item?.price, { showOnce: hasSubscription(this.order) })}
               onScUpdateQuantity={e => this.updateQuantity(item, e.detail)}
               onScRemove={() => this.removeLineItem(item)}
             ></sc-product-line-item>
@@ -93,4 +106,4 @@ export class ScLineItems {
   }
 }
 
-openWormhole(ScLineItems, ['order', 'loading', 'prices', 'lockedChoices'], false);
+openWormhole(ScLineItems, ['order', 'loading', 'prices', 'lockedChoices', 'editLineItems', 'removeLineItems'], false);

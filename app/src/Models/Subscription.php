@@ -5,12 +5,13 @@ namespace SureCart\Models;
 use SureCart\Models\Traits\HasCustomer;
 use SureCart\Models\Traits\HasOrder;
 use SureCart\Models\Traits\HasPrice;
+use SureCart\Models\Traits\HasPurchase;
 
 /**
  * Subscription model
  */
 class Subscription extends Model {
-	use HasCustomer, HasOrder, HasPrice;
+	use HasCustomer, HasOrder, HasPrice, HasPurchase;
 
 	/**
 	 * Rest API endpoint
@@ -25,6 +26,44 @@ class Subscription extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'subscription';
+
+	/**
+	 * Update the model.
+	 *
+	 * @param array $attributes Attributes to update.
+	 * @return $this|false
+	 */
+	protected function update( $attributes = [] ) {
+		// find existing subscription with purchase record.
+		$existing = ( new Subscription() )->with( [ 'purchase' ] )->find( $attributes['id'] ?? $this->attributes['id'] );
+
+		// do the update and also get the purchase record.
+		$this->with( [ 'purchase' ] );
+		$updated = parent::update( $attributes );
+		if ( is_wp_error( $updated ) ) {
+			return $updated;
+		}
+
+		// do the purchase updated event.
+		do_action(
+			'surecart/purchase_updated',
+			$updated->purchase,
+			[
+				'data' => [
+					'object'              => $updated->purchase->toArray(),
+					'previous_attributes' => array_filter(
+						[
+							// conditionally have the previous product and quantity as the previous attributes.
+							'product'  => $updated->purchase->product_id !== $existing->purchase->product_id ? ( $existing->purchase->product_id ?? null ) : null,
+							'quantity' => $updated->purchase->quantity !== $existing->purchase->quantity ? ( $existing->purchase->quantity ?? 1 ) : null,
+						]
+					),
+				],
+			]
+		);
+
+		return $this;
+	}
 
 	/**
 	 * Cancel a subscription
@@ -45,12 +84,16 @@ class Subscription extends Model {
 			return new \WP_Error( 'not_saved', 'Please create the subscription.' );
 		}
 
-		$canceled = \SureCart::request(
-			$this->endpoint . '/' . $this->attributes['id'] . '/cancel/',
+		$canceled = $this->with(
+			[
+				'purchase',
+			]
+		)->makeRequest(
 			[
 				'method' => 'PATCH',
 				'query'  => $this->query,
-			]
+			],
+			$this->endpoint . '/' . $this->attributes['id'] . '/cancel/'
 		);
 
 		if ( is_wp_error( $canceled ) ) {
@@ -62,6 +105,11 @@ class Subscription extends Model {
 		$this->fill( $canceled );
 
 		$this->fireModelEvent( 'canceled' );
+
+		// purchase revoked event.
+		if ( ! empty( $this->purchase->revoked ) ) {
+			do_action( 'surecart/purchase_revoked', $this->purchase );
+		}
 
 		return $this;
 	}

@@ -3,7 +3,7 @@
 exports[`sc-toggles renders 1`] = `
 <sc-toggles>
   <mock:shadow-root>
-    <div class="toggles" part="base">
+    <div class="toggles toggles--theme-default" no-padding="" part="base">
       <slot></slot>
     </div>
   </mock:shadow-root>

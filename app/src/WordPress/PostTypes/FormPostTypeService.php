@@ -56,8 +56,33 @@ class FormPostTypeService {
 		add_action( 'init', [ $this, 'registerPostType' ] );
 
 		add_filter( "manage_{$this->post_type}_posts_columns", [ $this, 'postTypeColumns' ], 1 );
+		add_action( 'in_admin_header', [ $this, 'showHeader' ] );
 		add_action( "manage_{$this->post_type}_posts_custom_column", [ $this, 'postTypeContent' ], 10, 2 );
 		add_action( 'use_block_editor_for_post', [ $this, 'forceGutenberg' ], 999, 2 );
+	}
+
+	/**
+	 * Show the header.
+	 **/
+	public function showHeader() {
+		global $typenow, $pagenow;
+		if ( 'edit.php' !== $pagenow ) {
+			return;
+		}
+		if ( $this->post_type !== $typenow ) {
+			return;
+		}
+
+		return \SureCart::render(
+			'layouts/partials/admin-header',
+			[
+				'breadcrumbs' => [
+					'forms' => [
+						'title' => __( 'Forms', 'surecart' ),
+					],
+				],
+			]
+		);
 	}
 
 	/**

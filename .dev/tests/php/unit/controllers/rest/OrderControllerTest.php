@@ -22,6 +22,7 @@ class OrderControllerTest extends SureCartUnitTestCase
 			'providers' => [
 				\SureCart\Request\RequestServiceProvider::class,
 				\SureCart\Support\Errors\ErrorsServiceProvider::class,
+				\SureCart\WordPress\PluginServiceProvider::class
 			]
 		], false);
 
@@ -92,36 +93,121 @@ class OrderControllerTest extends SureCartUnitTestCase
 		$this->assertTrue($errors->has_errors());
 	}
 
-	public function createOrLoginUser() {
-		$controller = new OrderController();
-		$this->assertFalse($controller->createOrLoginUser('email@email.com', '', null));
-		$this->assertFalse($controller->createOrLoginUser(null, '', 'password'));
+	public function test_maybeLinkCustomer() {
+		$request = new WP_REST_Request('POST', '/surecart/v1/orders/finalize');
+		$request->set_param('email', 'testuser@test.com');
+		$request->set_param('password', 'pass123');
 
-		// create.
-		$created = $controller->createOrLoginUser('email@email.com', null, 'password');
-		$this->assertTrue($created);
-		$this->assertNotFalse(get_user_by('email', 'email@email.com'));
-		$current_user = wp_get_current_user();
-		$this->assertSame($current_user->user_email, 'email@email.com');
+		// non-paid order should just return the order.
+		$this->assertFalse((new OrderController())->maybeLinkCustomer(new Order(['status' => 'finalized']), $request));
 
-		// login fail.
-		$user = $this->factory->user->create_and_get([
-			'password' => 'correctpassword'
-		]);
-		$created = $controller->createOrLoginUser($user->user_email, null, 'notthecorrectpassword');
-		$this->assertWPError($created);
+		// paid order should run linkCustomerID method.
+		$paid_order = new Order(['status' => 'paid']);
+		$controller = \Mockery::mock(OrderController::class)->makePartial();
+		$controller->shouldReceive('linkCustomerId')
+			->with($paid_order, $request)
+			->once();
+	    $controller->maybeLinkCustomer($paid_order, $request);
+	}
 
+	public function test_finalize() {
+		// finalized order
+		$finalized_order = (object) [
+			'id' => 'testid',
+			'object' => 'order',
+			'customer' => 'anybody',
+			'status' => 'finalized'
+		];
 
-		// login success
-		$created = $controller->createOrLoginUser($user->user_email, null, 'correctpassword');
-		$this->assertNotFalse($created);
-		$current_user = wp_get_current_user();
-		$this->assertSame($current_user->user_email, $user->user_email);
+		// set up request.
+		$request = new WP_REST_Request('POST', '/surecart/v1/orders/testorder/finalize');
+		$request->set_param('id', 'test_order');
+		$request->set_param('processor_type', 'stripe');
+
+		// mock controller.
+		$controller = \Mockery::mock(OrderController::class)->makePartial();
+		// mock the requests in the container
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		// validate first.
+		$controller->shouldReceive('validate')
+			->once()
+			->andReturn(new \WP_Error());
+		// then make the request.
+		$requests->shouldReceive('makeRequest')
+			->atLeast()
+			->once()
+			->withSomeOfArgs('orders/test_order/finalize/')
+			->andReturn($finalized_order);
+		// then maybe link the customer.
+		$controller->shouldReceive('maybeLinkCustomer')
+			->once();
+
+		// finalize the order.
+		$controller_order = $controller->finalize($request);
+
+		// assert that the order is the same.
+		$this->assertSame($finalized_order->id, $controller_order->id);
 	}
 
 	/**
-	 * @group failing
+	 * @group rest
+	 * @group integration
 	 */
+	public function test_confirm() {
+		// set up request.
+		$request = new WP_REST_Request('POST', '/surecart/v1/orders/testorder/finalize');
+		$request->set_param('id', 'test_order');
+		$request->set_param('processor_type', 'stripe');
+
+		// mock controller.
+		$controller = \Mockery::mock(OrderController::class)->makePartial();
+		// mock the requests in the container
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		/**
+		 * Finalize responses should error out.
+		 */
+		$requests->shouldReceive('makeRequest')
+			->once()
+			->withSomeOfArgs('orders/test_order')
+			->andReturn((object) [
+				'status' => 'finalized',
+			]);
+
+		// finalize the order.
+		$controller_order = $controller->confirm($request);
+
+		// assert that the order is the same.
+		$this->assertWPError($controller_order);
+
+		/**
+		 * Paid requests should validate.
+		 */
+		$paid_order =  json_decode(file_get_contents(dirname(__FILE__) . '/paid-order.json'));
+
+		$requests->shouldReceive('makeRequest')
+			->once()
+			->withSomeOfArgs('orders/test_order')
+			->andReturn($paid_order);
+
+		// finalize the order.
+		$controller_order = $controller->confirm($request);
+
+		// assert that the order is the same.
+		$this->assertNotWPError($controller_order);
+		$this->assertSame($controller_order->status, 'paid');
+		$this->assertSame($controller_order->email, 'test@test.com');
+		$this->assertSame(1, did_action('surecart/purchase_created'), 'Purchase created action was not called');
+		$this->assertSame(1, did_action('surecart/order_confirmed'), 'Order confirmed action was not called');
+	}
+
 	public function test_linkCustomerId() {
 		$user = User::find(self::factory()->user->create())
 			->setCustomerId('testcustomerid');

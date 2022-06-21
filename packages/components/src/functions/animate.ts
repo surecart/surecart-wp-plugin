@@ -47,7 +47,7 @@ export function prefersReducedMotion() {
 //
 export function stopAnimations(el: HTMLElement) {
   return Promise.all(
-    el.getAnimations().map(animation => {
+    (el?.getAnimations?.() || []).map(animation => {
       return new Promise(resolve => {
         const handleAnimationEvent = requestAnimationFrame(resolve);
 

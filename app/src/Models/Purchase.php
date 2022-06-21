@@ -30,6 +30,8 @@ class Purchase extends Model {
 	/**
 	 * Revoke the purchase.
 	 *
+	 * @param string $id Model id.
+	 *
 	 * @return $this|\WP_Error
 	 */
 	protected function revoke( $id = 0 ) {
@@ -61,11 +63,16 @@ class Purchase extends Model {
 
 		$this->fireModelEvent( 'revoked' );
 
+		// purchase revoked event.
+		do_action( 'surecart/purchase_revoked', $this );
+
 		return $this;
 	}
 
 	/**
 	 * Invoke the purchase.
+	 *
+	 * @param string $id Model id.
 	 *
 	 * @return $this|\WP_Error
 	 */
@@ -97,6 +104,9 @@ class Purchase extends Model {
 		$this->fill( $model );
 
 		$this->fireModelEvent( 'invoked' );
+
+		// purchase invoked event.
+		do_action( 'surecart/purchase_invoked', $this );
 
 		return $this;
 	}

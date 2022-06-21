@@ -2,6 +2,7 @@
 
 namespace SureCart\Controllers\Admin\Subscriptions;
 
+use SureCart\Controllers\Admin\AdminController;
 use SureCart\Controllers\Admin\Subscriptions\SubscriptionsListTable;
 use SureCart\Controllers\Admin\Subscriptions\Scripts\EditScriptsController;
 use SureCart\Controllers\Admin\Subscriptions\Scripts\ShowScriptsController;
@@ -9,13 +10,20 @@ use SureCart\Controllers\Admin\Subscriptions\Scripts\ShowScriptsController;
 /**
  * Handles product admin requests.
  */
-class SubscriptionsController {
+class SubscriptionsController extends AdminController {
 	/**
 	 * Orders index.
 	 */
 	public function index() {
 		$table = new SubscriptionsListTable();
 		$table->prepare_items();
+		$this->withHeader(
+			[
+				'subscriptions' => [
+					'title' => __( 'Subscriptions', 'surecart' ),
+				],
+			]
+		);
 		return \SureCart::view( 'admin/subscriptions/index' )->with(
 			[
 				'table' => $table,

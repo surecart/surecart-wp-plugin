@@ -34,8 +34,8 @@ class AssetsService {
 	 */
 	public function __construct( $loader, $scripts, $styles ) {
 		$this->loader  = $loader;
-		$this->styles  = $scripts;
-		$this->scripts = $styles;
+		$this->scripts = $scripts;
+		$this->styles  = $styles;
 	}
 
 	/**
@@ -75,6 +75,15 @@ class AssetsService {
 	public function enqueueComponents() {
 		$this->scripts->enqueueFront();
 		$this->styles->enqueueFront();
+	}
+
+	/**
+	 * Output brand colors.
+	 *
+	 * @return void
+	 */
+	public function printBrandColors() {
+		$this->styles->addInlineBrandColors( 'surecart-themes-default' );
 	}
 
 	/**
@@ -123,6 +132,7 @@ class AssetsService {
 					echo "\n";
 					echo esc_js( "component.$key = " );
 					echo wp_json_encode( $value );
+					echo ';';
 				}
 				?>
 			})();

@@ -6,6 +6,7 @@ use SureCart\Support\Currency;
 use SureCart\Support\TimeDate;
 use SureCart\Models\Order;
 use SureCart\Controllers\Admin\Tables\ListTable;
+use SureCart\Models\Integration;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -51,6 +52,24 @@ class OrdersListTable extends ListTable {
 			value="1" />
 	</form>
 		<?php
+	}
+
+	/**
+	 * Show any integrations.
+	 *
+	 * @param \SureCart\Models\Order $order Order.
+	 */
+	public function column_integrations( $order ) {
+		$output = '';
+
+		// loop through each purchase.
+		if ( ! empty( $order->purchases->data ) ) {
+			foreach ( $order->purchases->data as $purchase ) {
+				$output .= $this->productIntegrationsList( $purchase->product );
+			}
+		}
+
+		return $output ? $output : '-';
 	}
 
 	/**
@@ -104,11 +123,13 @@ class OrdersListTable extends ListTable {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
 
-			'order'  => __( 'Order', 'surecart' ),
-			'date'   => __( 'Date', 'surecart' ),
-			'status' => __( 'Status', 'surecart' ),
-			'total'  => __( 'Total', 'surecart' ),
-			'mode'   => '',
+			'order'        => __( 'Order', 'surecart' ),
+			'date'         => __( 'Date', 'surecart' ),
+			'status'       => __( 'Status', 'surecart' ),
+			'method'       => __( 'Method', 'surecart' ),
+			'integrations' => __( 'Integrations', 'surecart' ),
+			'total'        => __( 'Total', 'surecart' ),
+			'mode'         => '',
 			// 'usage' => __( 'Usage', 'surecart' ),
 
 		];
@@ -154,7 +175,7 @@ class OrdersListTable extends ListTable {
 			[
 				'status' => $this->getStatus(),
 			]
-		)->with( [ 'charge' ] )
+		)->with( [ 'charge', 'payment_intent', 'payment_intent.payment_method', 'payment_method.card', 'purchases' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'orders' ),
@@ -185,12 +206,30 @@ class OrdersListTable extends ListTable {
 	/**
 	 * Handle the total column
 	 *
-	 * @param \SureCart\Models\Order $order Checkout Session Model.
+	 * @param \SureCart\Models\Order $order The order model.
 	 *
 	 * @return string
 	 */
 	public function column_total( $order ) {
 		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $order->currency ) ) . '" value="' . (float) $order->total_amount . '"></sc-format-number>';
+	}
+
+	/**
+	 * Show the payment method for the order.
+	 *
+	 * @param \SureCart\Models\Order $order The order model.
+	 *
+	 * @return void
+	 */
+	public function column_method( $order ) {
+		if ( ! empty( $order->payment_intent->processor_type ) && 'paypal' === $order->payment_intent->processor_type ) {
+			return '<sc-icon name="paypal" style="font-size: 56px; line-height:1; height: 28px;"></sc-icon>';
+		}
+		if ( ! empty( $order->payment_intent->payment_method->card->brand ) ) {
+			return '<sc-cc-logo style="font-size: 32px; line-height:1;" brand="' . esc_html( $order->payment_intent->payment_method->card->brand ) . '"></sc-cc-logo>';
+		}
+
+		return $order->payment_intent->processor_type ?? '-';
 	}
 
 	/**

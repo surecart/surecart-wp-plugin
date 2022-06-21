@@ -1,5 +1,6 @@
 :host {
   display: block;
+  --sc-tabs-min-width: 225px;
 }
 
 $mobile-size: 750px;
@@ -29,7 +30,7 @@ $mobile-size: 750px;
     flex: 1 0 100%;
 
     @media screen and (min-width: $mobile-size) {
-      min-width: 225px;
+      min-width: var(--sc-tabs-min-width);
       flex: 0 1 auto;
     }
   }

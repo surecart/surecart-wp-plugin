@@ -2,6 +2,40 @@
 
 exports[`sc-order-shipping-address renders 1`] = `
 <sc-order-shipping-address>
-  <sc-address required=""></sc-address>
+  <mock:shadow-root>
+    <sc-compact-address required=""></sc-compact-address>
+  </mock:shadow-root>
+</sc-order-shipping-address>
+`;
+
+exports[`sc-order-shipping-address renders compact fields if shipping is not enabled 1`] = `
+<sc-order-shipping-address>
+  <mock:shadow-root>
+    <sc-compact-address required=""></sc-compact-address>
+  </mock:shadow-root>
+</sc-order-shipping-address>
+`;
+
+exports[`sc-order-shipping-address renders compact fields loading if shipping is not enabled 1`] = `
+<sc-order-shipping-address>
+  <mock:shadow-root>
+    <sc-compact-address loading="" required=""></sc-compact-address>
+  </mock:shadow-root>
+</sc-order-shipping-address>
+`;
+
+exports[`sc-order-shipping-address renders full fields if shipping is enabled 1`] = `
+<sc-order-shipping-address>
+  <mock:shadow-root>
+    <sc-address label="Shipping Address" required=""></sc-address>
+  </mock:shadow-root>
+</sc-order-shipping-address>
+`;
+
+exports[`sc-order-shipping-address renders full fields loading if shipping is enabled 1`] = `
+<sc-order-shipping-address>
+  <mock:shadow-root>
+    <sc-address label="Shipping Address" loading="" required=""></sc-address>
+  </mock:shadow-root>
 </sc-order-shipping-address>
 `;

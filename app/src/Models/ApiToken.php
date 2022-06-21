@@ -17,6 +17,11 @@ class ApiToken {
 	protected $key = 'sc_api_token';
 
 	/**
+	 * Prevent php warnings.
+	 */
+	final public function __construct() {}
+
+	/**
 	 * Save and encrypt the API token.
 	 *
 	 * @param string $value The API token.

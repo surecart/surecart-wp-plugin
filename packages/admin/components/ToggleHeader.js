@@ -19,14 +19,13 @@ export default ({
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				padding: 10px 16px;
 				border-radius: 8px;
 				border: 1px solid transparent;
 				${type === 'warning'
 					? `background-color: var(--sc-color-warning-50);
         border-color: var(--sc-color-warning-200);
         color: var(--sc-color-warning-700);`
-					: `background: var( --sc-color-gray-100, #f9fafb )`}
+					: ``}
 			`}
 		>
 			<div

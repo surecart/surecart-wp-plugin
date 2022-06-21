@@ -9,6 +9,8 @@
  * @package SureCart
  */
 
+use SureCart\Models\ApiToken;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -24,6 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->name( 'onboarding.show' )
 ->middleware( 'user.can:manage_options' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.brand_colors' )
 ->handle( 'Onboarding@show' );
 
 /*
@@ -36,6 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-complete-signup' )
 ->middleware( 'user.can:manage_options' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.brand_colors' )
 ->group(
 	function() {
 		\SureCart::route()->get()->handle( 'Onboarding@complete' );
@@ -194,7 +198,57 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->get()
 ->where( 'admin', 'sc-settings' )
 ->middleware( 'user.can:manage_sc_account_settings' )
-->handle( 'Settings@show' );
+->middleware( 'assets.components' )
+->middleware( 'assets.brand_colors' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Settings\\' )
+->group(
+	function() {
+		// limit menu routes if no API token.
+		if ( ! ApiToken::get() ) {
+			// without the var.
+			\SureCart::route()->get()->where( 'sc_url_var', false, 'tab' )->handle( 'ConnectionSettings@show' );
+			\SureCart::route()->post()->where( 'sc_url_var', false, 'tab' )->middleware( 'nonce:update_plugin_settings' )->handle( 'ConnectionSettings@save' );
+
+			// with the var.
+			\SureCart::route()->get()->where( 'sc_url_var', 'connection', 'tab' )->handle( 'ConnectionSettings@show' );
+			\SureCart::route()->post()->where( 'sc_url_var', 'connection', 'tab' )->middleware( 'nonce:update_plugin_settings' )->handle( 'ConnectionSettings@save' );
+
+			// Advanced.
+			\SureCart::route()->get()->where( 'sc_url_var', 'advanced', 'tab' )->name( 'settings.advanced' )->handle( 'AdvancedSettings@show' );
+			\SureCart::route()->post()->where( 'sc_url_var', 'advanced', 'tab' )->middleware( 'nonce:update_plugin_settings' )->handle( 'AdvancedSettings@save' );
+
+			// Cache.
+			\SureCart::route()->post()->where( 'sc_url_var', 'clear', 'cache' )->middleware( 'nonce:update_plugin_settings' )->handle( 'CacheSettings@clear' );
+			return;
+		}
+
+		// Iframed settings.
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'tab' )->name( 'settings.account' )->handle( 'AccountSettings@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'brand', 'tab' )->name( 'settings.brand' )->handle( 'BrandSettings@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'customer_notification_protocol', 'tab' )->name( 'settings.customer' )->handle( 'CustomerSettings@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'subscription_protocol', 'tab' )->name( 'settings.subscription' )->handle( 'SubscriptionSettings@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'portal_protocol', 'tab' )->name( 'settings.portal' )->handle( 'PortalSettings@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'tax_protocol', 'tab' )->where( 'sc_url_var', 'region', 'type' )->name( 'settings.tax.region' )->handle( 'TaxRegionSettings@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'tax_protocol', 'tab' )->name( 'settings.tax' )->handle( 'TaxSettings@show' );
+
+		// Connection.
+		\SureCart::route()->get()->where( 'sc_url_var', 'connection', 'tab' )->name( 'settings.connection' )->handle( 'ConnectionSettings@show' );
+		\SureCart::route()->post()->where( 'sc_url_var', 'connection', 'tab' )->middleware( 'nonce:update_plugin_settings' )->name( 'settings.connection.save' )->handle( 'ConnectionSettings@save' );
+
+		// Advanced.
+		\SureCart::route()->get()->where( 'sc_url_var', 'advanced', 'tab' )->name( 'settings.advanced' )->handle( 'AdvancedSettings@show' );
+		\SureCart::route()->post()->where( 'sc_url_var', 'advanced', 'tab' )->middleware( 'nonce:update_plugin_settings' )->name( 'settings.advanced.save' )->handle( 'AdvancedSettings@save' );
+
+		// Processors.
+		\SureCart::route()->get()->where( 'sc_url_var', 'processors', 'tab' )->name( 'settings.processors' )->handle( 'ProcessorsSettings@show' );
+
+		// Export
+		\SureCart::route()->get()->where( 'sc_url_var', 'export', 'tab' )->name( 'settings.export' )->handle( 'ExportSettings@show' );
+
+		// Cache.
+		\SureCart::route()->post()->where( 'sc_url_var', 'clear', 'cache' )->middleware( 'nonce:update_plugin_settings' )->handle( 'CacheSettings@clear' );
+	}
+);
 
 /*
 |--------------------------------------------------------------------------

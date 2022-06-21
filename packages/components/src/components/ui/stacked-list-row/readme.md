@@ -11,6 +11,7 @@
 | ------------ | ------------- | ----------- | -------- | ----------- |
 | `href`       | `href`        |             | `string` | `undefined` |
 | `mobileSize` | `mobile-size` |             | `number` | `600`       |
+| `target`     | `target`      |             | `string` | `'_self'`   |
 
 
 ## Dependencies

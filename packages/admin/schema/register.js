@@ -9,6 +9,16 @@ dispatch(dataStore).registerEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'integration',
+		baseURL: 'surecart/v1/integrations',
+		baseURLParams: { context: 'edit', per_page: 100 },
+	},
+	{
+		name: 'integration_provider',
+		baseURL: 'surecart/v1/integration_providers',
+		baseURLParams: { context: 'edit', per_page: 100 },
+	},
+	{
 		name: 'charge',
 		baseURL: 'surecart/v1/charges',
 		baseURLParams: { context: 'edit' },

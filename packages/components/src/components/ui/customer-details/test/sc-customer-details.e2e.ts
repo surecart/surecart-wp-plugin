@@ -1,5 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { setResponses } from '../../../../../testing';
+import { setResponses } from '../../../../testing';
 
 describe('sc-customer-details', () => {
   it('renders', async () => {

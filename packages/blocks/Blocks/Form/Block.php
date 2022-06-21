@@ -47,30 +47,31 @@ class Block extends BaseBlock {
 	public function render( $attributes, $content ) {
 		global $sc_form_id;
 		$post = get_post( $sc_form_id );
-
 		$user = wp_get_current_user();
 
 		return \SureCart::blocks()->render(
 			'blocks/form',
 			[
-				'align'         => $attributes['align'] ?? '',
-				'label'         => $attributes['label'] ?? '',
-				'font_size'     => $attributes['font_size'] ?? 16,
-				'modified'      => $post->post_modified_gmt,
-				'customer'      => [
+				'align'                  => $attributes['align'] ?? '',
+				'label'                  => $attributes['label'] ?? '',
+				'font_size'              => $attributes['font_size'] ?? 16,
+				'modified'               => $post->post_modified_gmt,
+				'customer'               => [
 					'email' => $user->user_email,
 					'name'  => $user->display_name,
 				],
-				'currency_code' => $attributes['currency'] ?? \SureCart::account()->currency,
-				'classes'       => $this->getClasses( $attributes ),
-				'style'         => $this->getStyle( $attributes ),
-				'content'       => $content,
-				'mode'          => apply_filters( 'surecart/payments/mode', $attributes['mode'] ?? 'live' ),
-				'form_id'       => $sc_form_id,
-				'id'            => 'sc-checkout-' . $sc_form_id,
-				'prices'        => $attributes['prices'] ?? [],
-				'success_url'   => ! empty( $attributes['success_url'] ) ? $attributes['success_url'] : \SureCart::pages()->url( 'order-confirmation' ),
-				'i18n'          => $this->getTranslations(),
+				'currency_code'          => $attributes['currency'] ?? \SureCart::account()->currency,
+				'tax_enabled'            => \SureCart::account()->tax_protocol->tax_enabled ?? false,
+				'classes'                => $this->getClasses( $attributes ),
+				'style'                  => $this->getStyle( $attributes ),
+				'content'                => $content,
+				'processors'             => (array) \SureCart::account()->processors ?? [],
+				'stripe_payment_element' => (bool) get_option( 'sc_stripe_payment_element', false ),
+				'mode'                   => apply_filters( 'surecart/payments/mode', $attributes['mode'] ?? 'live' ),
+				'form_id'                => $sc_form_id,
+				'id'                     => 'sc-checkout-' . $sc_form_id,
+				'prices'                 => $attributes['prices'] ?? [],
+				'success_url'            => ! empty( $attributes['success_url'] ) ? $attributes['success_url'] : \SureCart::pages()->url( 'order-confirmation' ),
 			]
 		);
 	}

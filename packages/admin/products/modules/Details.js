@@ -18,7 +18,7 @@ export default ({ product, updateProduct, loading }) => {
 					className="sc-product-name hydrated"
 					help={__('A name for your product.', 'surecart')}
 					value={product?.name}
-					onScChange={(e) => {
+					onScInput={(e) => {
 						updateProduct({ name: e.target.value });
 					}}
 					name="name"

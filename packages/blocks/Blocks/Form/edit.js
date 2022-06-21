@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
+import { applyFilters } from '@wordpress/hooks';
 import { useSelect, useDispatch } from '@wordpress/data';
 import {
 	InnerBlocks,
@@ -27,28 +28,6 @@ import Mode from './components/Mode';
 import Setup from './components/Setup';
 import { styles } from '../../../admin/styles/admin';
 import ColorPopup from '../../components/ColorPopup';
-
-const ALLOWED_BLOCKS = [
-	'core/spacer',
-	'surecart/columns',
-	'surecart/input',
-	'surecart/password',
-	'surecart/price-selector',
-	'surecart/checkbox',
-	'surecart/divider',
-	'surecart/heading',
-	'surecart/button',
-	'surecart/email',
-	'surecart/switch',
-	'surecart/name',
-	'surecart/payment',
-	'surecart/express-payment',
-	'surecart/pricing-section',
-	'surecart/totals',
-	'surecart/form',
-	'surecart/section-title',
-	'surecart/submit',
-];
 
 export default function edit({ clientId, attributes, setAttributes }) {
 	const [patterns, setPatterns] = useState([]);
@@ -441,8 +420,12 @@ export default function edit({ clientId, attributes, setAttributes }) {
 						)}
 					</div>
 					<ScCheckout
-						mode={'test'}
+						mode="test"
 						formId={formId}
+						processors={scBlockData?.processors}
+						stripePaymentElement={
+							scBlockData?.beta?.stripe_payment_element
+						}
 						css={css`
 							margin-top: 2em;
 							font-size: ${font_size}px;
@@ -474,7 +457,6 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							`}
 						>
 							<InnerBlocks
-								allowedBlocks={ALLOWED_BLOCKS}
 								templateLock={false}
 								renderAppender={
 									blockCount

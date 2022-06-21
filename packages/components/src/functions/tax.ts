@@ -23,6 +23,7 @@ export const zones = {
 };
 
 export const getType = key => {
+  key = key ? key.toUpperCase() : key;
   if (key === 'CA') {
     return 'ca_gst';
   }

@@ -1,6 +1,7 @@
-import { Order } from '../../../types';
-import { Component, Prop, Element, State, Watch, h, EventEmitter, Event, Fragment, Method } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Fragment, h, Method, Prop, State, Watch } from '@stencil/core';
 import { loadStripe } from '@stripe/stripe-js/pure';
+
+import { Order } from '../../../types';
 
 @Component({
   tag: 'sc-stripe-element',
@@ -21,7 +22,7 @@ export class ScStripeElement {
   @Prop() order: Order;
 
   /** Your stripe connected account id. */
-  @Prop() stripeAccountId: string;
+  @Prop() accountId: string;
 
   /** Stripe publishable key */
   @Prop() publishableKey: string;
@@ -51,10 +52,10 @@ export class ScStripeElement {
   @State() confirming: boolean;
 
   async componentWillLoad() {
-    if (!this.publishableKey || !this.stripeAccountId) {
+    if (!this.publishableKey || !this.accountId) {
       return;
     }
-    this.stripe = await loadStripe(this.publishableKey, { stripeAccount: this.stripeAccountId });
+    this.stripe = await loadStripe(this.publishableKey, { stripeAccount: this.accountId });
     this.elements = this.stripe.elements();
   }
 

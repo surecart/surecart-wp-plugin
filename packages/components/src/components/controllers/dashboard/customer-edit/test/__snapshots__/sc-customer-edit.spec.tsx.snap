@@ -22,7 +22,7 @@ exports[`sc-customer-edit renders 1`] = `
             </sc-column>
           </sc-columns>
           <div>
-            <sc-address label="Shipping Address"></sc-address>
+            <sc-address label="Shipping Address" showname=""></sc-address>
           </div>
           <div>
             <sc-switch name="billing_matches_shipping" value="on">
@@ -30,7 +30,7 @@ exports[`sc-customer-edit renders 1`] = `
             </sc-switch>
           </div>
           <div style="display: block;">
-            <sc-address label="Billing Address"></sc-address>
+            <sc-address label="Billing Address" showname=""></sc-address>
           </div>
           <sc-tax-id-input show=""></sc-tax-id-input>
           <div>

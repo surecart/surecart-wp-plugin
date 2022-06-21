@@ -28,9 +28,9 @@
 - [sc-subscription-status-badge](../../../ui/subscription-status-badge)
 - [sc-format-date](../../../util/format-date)
 - [sc-skeleton](../../../ui/skeleton)
+- [sc-format-number](../../../util/format-number)
 - [sc-text](../../../ui/text)
 - [sc-tag](../../../ui/tag)
-- [sc-format-number](../../../util/format-number)
 
 ### Graph
 ```mermaid
@@ -38,9 +38,9 @@ graph TD;
   sc-subscription-details --> sc-subscription-status-badge
   sc-subscription-details --> sc-format-date
   sc-subscription-details --> sc-skeleton
+  sc-subscription-details --> sc-format-number
   sc-subscription-details --> sc-text
   sc-subscription-details --> sc-tag
-  sc-subscription-details --> sc-format-number
   sc-subscription-status-badge --> sc-format-date
   sc-subscription-status-badge --> sc-tag
   sc-subscription --> sc-subscription-details

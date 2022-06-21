@@ -3,6 +3,6 @@
 exports[`sc-price-choices renders 1`] = `
 <sc-price-choices>
   <!---->
-  <sc-choices class="loaded price-selector" style="--columns: 1;"></sc-choices>
+  <sc-choices class="loaded price-selector" required="" style="--columns: 1;"></sc-choices>
 </sc-price-choices>
 `;

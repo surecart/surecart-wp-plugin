@@ -1,0 +1,120 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-payment renders no processors 1`] = `
+<sc-payment>
+  <sc-form-control>
+    <sc-alert open="" type="info">
+      Please contact us for payment
+    </sc-alert>
+  </sc-form-control>
+</sc-payment>
+`;
+
+exports[`sc-payment renders paypal only 1`] = `
+<sc-payment>
+  <sc-form-control>
+    <div class="sc-payment-label" slot="label">
+      <div></div>
+    </div>
+    <sc-toggles theme="container">
+      <sc-toggle borderless="" data-test-id="paypal-credit-card-toggle" shady="" show-control="">
+        <span class="sc-payment-toggle-summary" slot="summary">
+          <sc-icon name="credit-card" style="font-size: 24px;"></sc-icon>
+          <span>
+            Credit Card
+          </span>
+        </span>
+        <div class="sc-payment-instructions">
+          You will be prompted to complete your purchase securely.
+        </div>
+      </sc-toggle>
+      <sc-toggle borderless="" data-test-id="paypal-toggle" shady="" show-control="">
+        <span class="sc-payment-toggle-summary" slot="summary">
+          <sc-icon name="paypal" style="width: 80px; font-size: 24px;"></sc-icon>
+        </span>
+        <div class="sc-payment-instructions">
+          You will be prompted by PayPal to complete your purchase securely.
+        </div>
+      </sc-toggle>
+    </sc-toggles>
+  </sc-form-control>
+</sc-payment>
+`;
+
+exports[`sc-payment renders stripe and hides paypal if recurring 1`] = `
+<sc-payment>
+  <sc-form-control>
+    <div class="sc-payment-label" slot="label">
+      <div></div>
+    </div>
+    <sc-toggles theme="container">
+      <sc-toggle borderless="" open="" shady="" show-control="" show-icon="">
+        <span class="sc-payment-toggle-summary" slot="summary">
+          <sc-icon name="credit-card" style="font-size: 24px;"></sc-icon>
+          <span>
+            Credit Card
+          </span>
+        </span>
+        <div class="sc-payment__stripe-card-element">
+          <sc-stripe-element mode="live"></sc-stripe-element>
+          <sc-secure-notice></sc-secure-notice>
+        </div>
+      </sc-toggle>
+      <sc-toggle borderless="" shady="" show-control="">
+        <span class="sc-payment-toggle-summary" slot="summary">
+          <sc-icon name="paypal" style="width: 80px; font-size: 24px;"></sc-icon>
+        </span>
+        <div class="sc-payment-instructions">
+          You will be prompted by PayPal to complete your purchase securely.
+        </div>
+      </sc-toggle>
+    </sc-toggles>
+  </sc-form-control>
+</sc-payment>
+`;
+
+exports[`sc-payment renders stripe and paypal 1`] = `
+<sc-payment>
+  <sc-form-control>
+    <div class="sc-payment-label" slot="label">
+      <div></div>
+    </div>
+    <sc-toggles theme="container">
+      <sc-toggle borderless="" open="" shady="" show-control="" show-icon="">
+        <span class="sc-payment-toggle-summary" slot="summary">
+          <sc-icon name="credit-card" style="font-size: 24px;"></sc-icon>
+          <span>
+            Credit Card
+          </span>
+        </span>
+        <div class="sc-payment__stripe-card-element">
+          <sc-stripe-element mode="live"></sc-stripe-element>
+          <sc-secure-notice></sc-secure-notice>
+        </div>
+      </sc-toggle>
+      <sc-toggle borderless="" shady="" show-control="">
+        <span class="sc-payment-toggle-summary" slot="summary">
+          <sc-icon name="paypal" style="width: 80px; font-size: 24px;"></sc-icon>
+        </span>
+        <div class="sc-payment-instructions">
+          You will be prompted by PayPal to complete your purchase securely.
+        </div>
+      </sc-toggle>
+    </sc-toggles>
+  </sc-form-control>
+</sc-payment>
+`;
+
+exports[`sc-payment renders stripe only 1`] = `
+<sc-payment>
+  <sc-form-control>
+    <div class="sc-payment-label" slot="label">
+      <div></div>
+    </div>
+    <div class="sc-payment__stripe-card-element">
+      <sc-stripe-element mode="live"></sc-stripe-element>
+      <sc-secure-notice></sc-secure-notice>
+    </div>
+  </sc-form-control>
+</sc-payment>
+`;

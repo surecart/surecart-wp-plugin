@@ -1,4 +1,4 @@
-import { Component, Prop, Method, State, Event, EventEmitter, Watch, h } from '@stencil/core';
+import { Component, Prop, Method, State, Event, EventEmitter, Watch, h, Element, Host } from '@stencil/core';
 
 @Component({
   tag: 'sc-alert',
@@ -6,6 +6,8 @@ import { Component, Prop, Method, State, Event, EventEmitter, Watch, h } from '@
   shadow: true,
 })
 export class ScAlert {
+  @Element() el: HTMLScAlertElement;
+
   /** Indicates whether or not the alert is open. You can use this in lieu of the show/hide methods. */
   @Prop({ reflect: true, mutable: true }) open: boolean = false;
 
@@ -21,6 +23,12 @@ export class ScAlert {
    */
   @Prop() duration: number = Infinity;
 
+  /** Scroll into view. */
+  @Prop() scrollOnOpen: boolean;
+
+  /** Scroll margin */
+  @Prop() scrollMargin: string = '0px';
+
   @State() autoHideTimeout: any;
 
   /** When alert is hidden */
@@ -35,7 +43,6 @@ export class ScAlert {
     if (this.open) {
       return;
     }
-
     this.open = true;
   }
 
@@ -65,8 +72,15 @@ export class ScAlert {
 
   /** Emit event when showing or hiding changes */
   @Watch('open')
-  handleOpenChange(val) {
-    val ? this.scShow.emit() : this.scHide.emit();
+  handleOpenChange() {
+    this.open ? this.scShow.emit() : this.scHide.emit();
+    if (this.open && this.scrollOnOpen) {
+      this.el.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  componentDidLoad() {
+    this.handleOpenChange();
   }
 
   iconName() {
@@ -88,47 +102,49 @@ export class ScAlert {
 
   render() {
     return (
-      <div
-        class={{
-          'alert': true,
-          'alert--primary': this.type === 'primary',
-          'alert--success': this.type === 'success',
-          'alert--info': this.type === 'info',
-          'alert--warning': this.type === 'warning',
-          'alert--danger': this.type === 'danger',
-        }}
-        part="base"
-        role="alert"
-        aria-live="assertive"
-        aria-atomic="true"
-        aria-hidden={this.open ? 'false' : 'true'}
-        hidden={this.open ? false : true}
-        onMouseMove={() => this.handleMouseMove()}
-      >
-        <div class="alert__icon" part="icon">
-          <slot name="icon">{this.icon()}</slot>
-        </div>
-        <div class="alert__text" part="text">
-          <div class="alert__title" part="title">
-            <slot name="title" />
+      <Host style={{ 'scroll-margin-top': this.scrollMargin }}>
+        <div
+          class={{
+            'alert': true,
+            'alert--primary': this.type === 'primary',
+            'alert--success': this.type === 'success',
+            'alert--info': this.type === 'info',
+            'alert--warning': this.type === 'warning',
+            'alert--danger': this.type === 'danger',
+          }}
+          part="base"
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+          aria-hidden={this.open ? 'false' : 'true'}
+          hidden={this.open ? false : true}
+          onMouseMove={() => this.handleMouseMove()}
+        >
+          <div class="alert__icon" part="icon">
+            <slot name="icon">{this.icon()}</slot>
           </div>
-          <div class="alert__message" part="message">
-            <slot />
+          <div class="alert__text" part="text">
+            <div class="alert__title" part="title">
+              <slot name="title" />
+            </div>
+            <div class="alert__message" part="message">
+              <slot />
+            </div>
           </div>
+          {this.closable && (
+            <span class="alert__close" onClick={() => this.handleCloseClick()}>
+              <span class="sr-only">Dismiss</span>
+              <svg class="h-5 w-5" x-description="Heroicon name: solid/x" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path
+                  fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </span>
+          )}
         </div>
-        {this.closable && (
-          <span class="alert__close" onClick={() => this.handleCloseClick()}>
-            <span class="sr-only">Dismiss</span>
-            <svg class="h-5 w-5" x-description="Heroicon name: solid/x" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path
-                fill-rule="evenodd"
-                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </span>
-        )}
-      </div>
+      </Host>
     );
   }
 }

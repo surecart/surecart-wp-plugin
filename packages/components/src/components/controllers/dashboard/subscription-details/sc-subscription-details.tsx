@@ -1,8 +1,9 @@
 import { Component, h, Prop, State, Watch } from '@stencil/core';
-import { sprintf, __ } from '@wordpress/i18n';
-import { translatedInterval } from '../../../../functions/price';
+import { __, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+
 import apiFetch from '../../../../functions/fetch';
+import { intervalString } from '../../../../functions/price';
 import { Invoice, Price, Product, Subscription } from '../../../../types';
 
 @Component({
@@ -66,13 +67,32 @@ export class ScSubscriptionDetails {
     }
 
     if (this.hasPendingUpdate) {
-      return this.pendingPrice ? (
+      if (!this.pendingPrice && !this.subscription?.pending_update?.ad_hoc_amount) {
+        return <sc-skeleton></sc-skeleton>;
+      }
+
+      if (this.subscription?.pending_update?.ad_hoc_amount) {
+        return (
+          <span>
+            {__('Your plan switches to', 'surecart')}{' '}
+            <strong>
+              <sc-format-number
+                type="currency"
+                currency={this.pendingPrice?.currency || this.subscription?.price?.currency}
+                value={this.subscription?.pending_update?.ad_hoc_amount}
+              ></sc-format-number>{' '}
+              {intervalString(this.pendingPrice || this.subscription?.price)}
+            </strong>{' '}
+            {__('on', 'surecart')}{' '}
+            <sc-format-date date={this.subscription.current_period_end_at as number} type="timestamp" month="long" day="numeric" year="numeric"></sc-format-date>
+          </span>
+        );
+      }
+      return (
         <span>
           {__('Your plan switches to', 'surecart')} <strong>{(this.pendingPrice.product as Product).name}</strong> {__('on', 'surecart')}{' '}
           <sc-format-date date={this.subscription.current_period_end_at as number} type="timestamp" month="long" day="numeric" year="numeric"></sc-format-date>
         </span>
-      ) : (
-        <sc-skeleton></sc-skeleton>
       );
     }
 
@@ -87,7 +107,7 @@ export class ScSubscriptionDetails {
     if (this.subscription?.status === 'active' && this.subscription?.current_period_end_at) {
       return (
         <span>
-          {tag} {sprintf(__('Your plan renews on', 'surecart'))}{' '}
+          {tag} {this.subscription?.remaining_period_count === null ? __('Your plan renews on', 'surecart') : __('Your next payment is on')}{' '}
           <sc-format-date date={this?.subscription?.current_period_end_at} type="timestamp" month="long" day="numeric" year="numeric"></sc-format-date>
         </span>
       );
@@ -107,8 +127,8 @@ export class ScSubscriptionDetails {
             type="currency"
             currency={(this.subscription?.latest_invoice as Invoice)?.currency}
             value={(this.subscription?.latest_invoice as Invoice)?.total_amount}
-          ></sc-format-number>
-          {translatedInterval(this.subscription?.price?.recurring_interval_count || 0, this.subscription?.price?.recurring_interval, '/', '')}
+          ></sc-format-number>{' '}
+          {intervalString(this.subscription?.price)}
         </div>
         {!this.hideRenewalText && <div>{this.renderRenewalText()}</div>}
       </div>

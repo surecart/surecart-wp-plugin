@@ -24,6 +24,15 @@ export class ScToggle {
   /** Is this a borderless toggle? */
   @Prop({ reflect: true }) borderless: boolean = false;
 
+  /** Is this a shady */
+  @Prop({ reflect: true }) shady: boolean = false;
+
+  /** Should we show a radio control?  */
+  @Prop() showControl: boolean = false;
+
+  /** Should we show the arrow icon? */
+  @Prop() showIcon: boolean = true;
+
   /** Are these collapsible? */
   @Prop() collapsible: boolean = true;
 
@@ -116,6 +125,7 @@ export class ScToggle {
           'details--open': this.open,
           'details--disabled': this.disabled,
           'details--borderless': this.borderless,
+          'details--shady': this.shady,
         }}
       >
         <header
@@ -131,15 +141,29 @@ export class ScToggle {
           onClick={() => this.handleSummaryClick()}
           onKeyDown={e => this.handleSummaryKeyDown(e)}
         >
+          {this.showControl && (
+            <span part="radio" class="details__radio">
+              <svg viewBox="0 0 16 16">
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g fill="currentColor">
+                    <circle cx="8" cy="8" r="3.42857143"></circle>
+                  </g>
+                </g>
+              </svg>
+            </span>
+          )}
+
           <div part="summary" class="details__summary">
             <slot name="summary">{this.summary}</slot>
           </div>
 
-          <span part="summary-icon" class="details__summary-icon">
-            <slot name="icon">
-              <sc-icon name="chevron-right"></sc-icon>
-            </slot>
-          </span>
+          {this.showIcon && (
+            <span part="summary-icon" class="details__summary-icon">
+              <slot name="icon">
+                <sc-icon name="chevron-right"></sc-icon>
+              </slot>
+            </span>
+          )}
         </header>
 
         <div class="details__body" ref={el => (this.body = el as HTMLElement)}>

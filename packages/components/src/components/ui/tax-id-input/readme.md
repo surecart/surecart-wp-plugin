@@ -7,20 +7,25 @@
 
 ## Properties
 
-| Property  | Attribute | Description           | Type      | Default     |
-| --------- | --------- | --------------------- | --------- | ----------- |
-| `country` | `country` | Label for the field.  | `string`  | `undefined` |
-| `number`  | `number`  | Tax ID Number         | `string`  | `null`      |
-| `show`    | `show`    | Force show the field. | `boolean` | `false`     |
-| `type`    | `type`    | Type of tax id        | `string`  | `null`      |
+| Property  | Attribute | Description           | Type                                | Default     |
+| --------- | --------- | --------------------- | ----------------------------------- | ----------- |
+| `country` | `country` | Label for the field.  | `string`                            | `undefined` |
+| `help`    | `help`    | Help text.            | `string`                            | `undefined` |
+| `loading` | `loading` | Is this loading?      | `boolean`                           | `undefined` |
+| `number`  | `number`  | Tax ID Number         | `string`                            | `null`      |
+| `show`    | `show`    | Force show the field. | `boolean`                           | `false`     |
+| `status`  | `status`  | The status            | `"invalid" \| "unknown" \| "valid"` | `'unknown'` |
+| `type`    | `type`    | Type of tax id        | `string`                            | `'other'`   |
 
 
 ## Events
 
-| Event        | Description                         | Type                                                    |
-| ------------ | ----------------------------------- | ------------------------------------------------------- |
-| `scChange`   | Make a request to update the order. | `CustomEvent<{ number: string; number_type: string; }>` |
-| `scSetState` | Set the checkout state.             | `CustomEvent<string>`                                   |
+| Event         | Description                         | Type                                                      |
+| ------------- | ----------------------------------- | --------------------------------------------------------- |
+| `scChange`    | Make a request to update the order. | `CustomEvent<{ number: string; number_type: string; }>`   |
+| `scInput`     | Make a request to update the order. | `CustomEvent<{ number?: string; number_type?: string; }>` |
+| `scInputType` | Change the Type                     | `CustomEvent<string>`                                     |
+| `scSetState`  | Set the checkout state.             | `CustomEvent<string>`                                     |
 
 
 ## Dependencies
@@ -32,7 +37,9 @@
 
 ### Depends on
 
+- [sc-icon](../icon)
 - [sc-input](../input)
+- [sc-spinner](../spinner)
 - [sc-dropdown](../dropdown)
 - [sc-button](../button)
 - [sc-menu](../menu)
@@ -41,7 +48,9 @@
 ### Graph
 ```mermaid
 graph TD;
+  sc-tax-id-input --> sc-icon
   sc-tax-id-input --> sc-input
+  sc-tax-id-input --> sc-spinner
   sc-tax-id-input --> sc-dropdown
   sc-tax-id-input --> sc-button
   sc-tax-id-input --> sc-menu

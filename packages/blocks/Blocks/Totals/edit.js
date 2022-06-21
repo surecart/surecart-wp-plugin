@@ -8,7 +8,12 @@ import {
 	__experimentalUseInnerBlocksProps,
 } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
-import { PanelBody, PanelRow, ToggleControl } from '@wordpress/components';
+import {
+	PanelBody,
+	PanelRow,
+	ToggleControl,
+	TextControl,
+} from '@wordpress/components';
 import { ScOrderSummary } from '@surecart/components-react';
 
 const ALLOWED_BLOCKS = [
@@ -20,12 +25,12 @@ const ALLOWED_BLOCKS = [
 	'surecart/subtotal',
 ];
 
-export default ({ isSelected, attributes, setAttributes }) => {
+export default ({ attributes, setAttributes }) => {
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
 		? __stableUseInnerBlocksProps
 		: __experimentalUseInnerBlocksProps;
 
-	const { collapsible, collapsed } = attributes;
+	const { collapsible, collapsed, closed_text, open_text } = attributes;
 
 	const innerBlocksProps = useInnerBlocksProps(
 		{},
@@ -90,12 +95,32 @@ export default ({ isSelected, attributes, setAttributes }) => {
 							}}
 						/>
 					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Closed Text', 'surecart')}
+							value={closed_text}
+							onChange={(closed_text) =>
+								setAttributes({ closed_text })
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Open Text', 'surecart')}
+							value={open_text}
+							onChange={(open_text) =>
+								setAttributes({ open_text })
+							}
+						/>
+					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 
 			<ScOrderSummary
 				collapsible={collapsible}
 				collapsed={collapsed}
+				closedText={closed_text}
+				openText={open_text}
 				{...innerBlocksProps}
 			></ScOrderSummary>
 		</Fragment>

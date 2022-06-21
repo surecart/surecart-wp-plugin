@@ -4,7 +4,7 @@
 	"description": "Displays checkout line items.",
 	"category": "surecart",
 	"keywords": ["total", "line-items"],
-	"parent": ["surecart/totals"],
+	"ancestor": ["surecart/totals"],
 	"supports": {
 		"reusable": false,
 		"html": false,

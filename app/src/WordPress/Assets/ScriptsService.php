@@ -88,7 +88,7 @@ class ScriptsService {
 			'sc-core-data',
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/store/data.js',
 			array_merge( [ 'surecart-components' ], $asset_file['dependencies'] ),
-			filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/data.js' ),
+			$asset_file['version'],
 			true
 		);
 
@@ -98,7 +98,7 @@ class ScriptsService {
 			'sc-ui-data',
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/store/ui.js',
 			array_merge( [ 'surecart-components' ], $asset_file['dependencies'] ),
-			filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/ui.js' ),
+			$asset_file['version'],
 			true
 		);
 
@@ -111,10 +111,11 @@ class ScriptsService {
 			'surecart-blocks',
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/blocks/library.js',
 			array_merge( [ 'surecart-components' ], $deps ),
-			filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/library.js' ),
+			$asset_file['version'],
 			true
 		);
 
+		wp_localize_script( 'surecart-blocks', 'scIcons', [ 'path' => esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) ] );
 	}
 
 	/**
@@ -133,8 +134,8 @@ class ScriptsService {
 			[
 				'root_url'       => esc_url_raw( get_rest_url() ),
 				'plugin_url'     => \SureCart::core()->assets()->getUrl(),
-				'currency'   => \SureCart::account()->currency,
-				'pages'      => [
+				'currency'       => \SureCart::account()->currency,
+				'pages'          => [
 					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 					'checkout'  => \SureCart::pages()->url( 'checkout' ),
 				],
@@ -142,7 +143,8 @@ class ScriptsService {
 				'nonce_endpoint' => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
 			]
 		);
-		$this->printIconLibraryLoader();
+
+		wp_localize_script( 'surecart-components', 'scIcons', [ 'path' => esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) ] );
 	}
 
 	/**
@@ -169,67 +171,14 @@ class ScriptsService {
 				'processors' => (array) \SureCart::account()->processors ?? [],
 				'plugin_url' => \SureCart::core()->assets()->getUrl(),
 				'currency'   => \SureCart::account()->currency,
+				'beta'       => [
+					'stripe_payment_element' => (bool) get_option( 'sc_stripe_payment_element', false ),
+				],
 				'pages'      => [
 					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 					'checkout'  => \SureCart::pages()->url( 'checkout' ),
 				],
 			]
-		);
-	}
-
-	/**
-	 * Print the icon library loader.
-	 *
-	 * @return void
-	 */
-	public function printIconLibraryLoader() {
-		add_action(
-			'wp_footer',
-			function() {
-				?>
-		<sc-register-icon-library></sc-register-icon-library>
-		<script>
-			(async () => {
-				await customElements.whenDefined('sc-register-icon-library');
-				var library = document.querySelector('sc-register-icon-library');
-				await library.registerIconLibrary(
-					'default', {
-						resolver: function(name) {
-							return '<?php echo esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . "packages/icons/feather/'+name+'.svg" ); ?>';
-						},
-						mutator: function(svg) {
-							return svg.setAttribute('fill', 'none')
-						}
-					}
-				);
-			})();
-		</script>
-				<?php
-			}
-		);
-		add_action(
-			'admin_footer',
-			function() {
-				?>
-		<sc-register-icon-library></sc-register-icon-library>
-		<script>
-			(async () => {
-				await customElements.whenDefined('sc-register-icon-library');
-				var library = document.querySelector('sc-register-icon-library');
-				await library.registerIconLibrary(
-					'default', {
-						resolver: function(name) {
-							return '<?php echo esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . "packages/icons/feather/'+name+'.svg" ); ?>';
-						},
-						mutator: function(svg) {
-							return svg.setAttribute('fill', 'none')
-						}
-					}
-				);
-			})();
-		</script>
-				<?php
-			}
 		);
 	}
 }

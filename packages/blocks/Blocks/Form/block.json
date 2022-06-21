@@ -15,9 +15,9 @@
 			"enum": ["test", "live"],
 			"default": "live"
 		},
-    "success_url": {
-      "type": "string"
-    },
+		"success_url": {
+			"type": "string"
+		},
 		"prices": {
 			"type": "array"
 		},
@@ -28,8 +28,11 @@
 		"currency": {
 			"type": "string"
 		},
-    "color": {
-      "type": "string"
-    }
+		"color": {
+			"type": "string"
+		}
+	},
+	"providesContext": {
+		"surecart/form/mode": "mode"
 	}
 }

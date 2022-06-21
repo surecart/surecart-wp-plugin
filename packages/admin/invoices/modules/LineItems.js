@@ -4,7 +4,7 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import Box from '../../ui/Box';
-import { translateInterval } from '../../util/translations';
+import { intervalString } from '../../util/translations';
 import Definition from '../../ui/Definition';
 import { useSelect } from '@wordpress/data';
 import { store } from '@surecart/data';
@@ -104,10 +104,7 @@ export default ({ invoice, charge: chargeInput, loading }) => {
 								trialDurationDays={
 									item?.price?.trial_duration_days
 								}
-								interval={translateInterval(
-									item?.price?.recurring_interval_count,
-									item?.price?.recurring_interval
-								)}
+								interval={intervalString(item?.price)}
 							></sc-product-line-item>
 						);
 					})}
@@ -147,6 +144,21 @@ export default ({ invoice, charge: chargeInput, loading }) => {
 								type="currency"
 								currency={invoice?.currency}
 								value={invoice?.proration_amount}
+							></sc-format-number>
+						</Definition>
+					)}
+
+					{!!invoice?.tax_amount && (
+						<Definition title={__('Tax', 'surecart')}>
+							<sc-format-number
+								style={{
+									'font-weight':
+										'var(--sc-font-weight-semibold)',
+									color: 'var(--sc-color-gray-800)',
+								}}
+								type="currency"
+								currency={invoice?.currency}
+								value={invoice?.tax_amount}
 							></sc-format-number>
 						</Definition>
 					)}

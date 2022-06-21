@@ -26,7 +26,7 @@ class OrderController extends RestController {
 	 *
 	 * @return \SureCart\Models\Model|\WP_Error
 	 */
-	protected function middleware( \SureCart\Models\Model $class, \WP_REST_Request $request ) {
+	protected function middleware( $class, \WP_REST_Request $request ) {
 		$class = $this->setMode( $class, $request );
 		if ( is_wp_error( $class ) ) {
 			return $class;
@@ -107,7 +107,7 @@ class OrderController extends RestController {
 	 *
 	 * @param \WP_REST_Request $request Rest Request.
 	 *
-	 * @return \WP_REST_Response
+	 * @return \SureCart\Models\Order|\WP_Error
 	 */
 	public function finalize( \WP_REST_Request $request ) {
 		$args = $request->get_params();
@@ -120,36 +120,104 @@ class OrderController extends RestController {
 			return $errors;
 		}
 
-		$order           = new $this->class( [ 'id' => $request['id'] ] );
-		$finalized_order = $order->setProcessor( $request['processor_type'] )
+		$order     = new $this->class( [ 'id' => $request['id'] ] );
+		$finalized = $order->setProcessor( $request['processor_type'] )
 			->where( $request->get_query_params() )
 			->finalize( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
 
-		// return early if errors.
-		if ( is_wp_error( $finalized_order ) ) {
-			return $finalized_order;
+		// bail if error.
+		if ( is_wp_error( $finalized ) ) {
+			return $finalized;
 		}
 
-		// link the customer id to the user.
-		$linked = $this->linkCustomerId( $finalized_order, $request );
+		// the order is paid (probably because of a coupon). Link the customer.
+		$linked = $this->maybeLinkCustomer( $finalized, $request );
 		if ( is_wp_error( $linked ) ) {
 			return $linked;
 		}
 
-		// maybe login the user if a password is sent.
-		$login = $this->maybeLoginUser( $request->get_param( 'email' ), $request->get_param( 'password' ) );
-		if ( is_wp_error( $login ) ) {
-			return $login;
+		// return the order.
+		return $finalized;
+	}
+
+	/**
+	 * Link the customer if the order status is paid only.
+	 *
+	 * @param \SureCart\Models\Order $order
+	 * @param \WP_REST_Request       $request
+	 *
+	 * @return \SureCart\Models\Order|\WP_Error
+	 */
+	public function maybeLinkCustomer( $order, $request ) {
+		if ( 'paid' !== $order->status ) {
+			return false;
+		}
+		return $this->linkCustomerId( $order, $request );
+	}
+
+	/**
+	 * Confirm an order.
+	 *
+	 * This force-fetches the order from the API and
+	 * creates/syncs a WordPress user account if paid.
+	 *
+	 * @param \WP_REST_Request $request  Rest Request.
+	 *
+	 * @return \SureCart\Models\Order|\WP_Error
+	 */
+	public function confirm( \WP_REST_Request $request ) {
+		$order = $this->middleware( new $this->class(), $request );
+		if ( is_wp_error( $order ) ) {
+			return $order;
 		}
 
-		// finalize the order.
-		return $finalized_order;
+		$order = $order->where(
+			array_merge(
+				$request->get_query_params(),
+				[ 'refresh_status' => true ] // Important: This will force syncing with the processor.
+			)
+		)->with(
+			[
+				'purchases', // Important: we need to make sure we expand the purchase to provide access.
+			]
+		)->find( $request['id'] );
+
+		if ( is_wp_error( $order ) ) {
+			return $order;
+		}
+
+		if ( 'paid' !== $order->status ) {
+			return new \WP_Error( 'invalid_status', 'The order is not paid.', [ 'status' => 400 ] );
+		}
+
+		// link the customer id to the user.
+		$linked = $this->maybeLinkCustomer( $order, $request );
+		if ( is_wp_error( $linked ) ) {
+			return $linked;
+		}
+
+		// purchase created.
+		if ( ! empty( $order->purchases->data ) ) {
+			foreach ( $order->purchases->data as $purchase ) {
+				if ( empty( $purchase->revoked ) ) {
+					// broadcast the webhook.
+					do_action( 'surecart/purchase_created', $purchase );
+				}
+			}
+		}
+
+		// the order is confirmed.
+		do_action( 'surecart/order_confirmed', $order, $request );
+
+		// return the order.
+		return $order;
 	}
 
 	/**
 	 * Link the customer id to the order.
 	 *
 	 * @param \SureCart\Models\Order $order Order model.
+	 * @param \WP_REST_Request       $request Request object.
 	 * @return \WP_User|\WP_Error
 	 */
 	public function linkCustomerId( $order, $request ) {

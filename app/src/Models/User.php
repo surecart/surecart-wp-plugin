@@ -127,7 +127,7 @@ class User implements ArrayAccess, JsonSerializable {
 		}
 
 		$current_user = wp_get_current_user();
-		if ( $current_user && $current_user->ID === $this->user->ID) {
+		if ( $current_user && $current_user->ID === $this->user->ID ) {
 			return;
 		}
 
@@ -170,7 +170,7 @@ class User implements ArrayAccess, JsonSerializable {
 		}
 
 		$user = new \WP_User( $user_id );
-		$user->add_role( 'sc-customer' );
+		$user->add_role( 'sc_customer' );
 
 		if ( $user_created ) {
 			wp_update_user( $user );
@@ -263,6 +263,15 @@ class User implements ArrayAccess, JsonSerializable {
 
 		$this->user = $users->results[0];
 		return $this;
+	}
+
+	/**
+	 * Get the WordPress user.
+	 *
+	 * @return \WP_User|null;
+	 */
+	public function getWPUser() {
+		return $this->user;
 	}
 
 	/**

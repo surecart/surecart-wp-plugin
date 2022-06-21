@@ -2,6 +2,7 @@
 
 namespace SureCart\Controllers\Admin\Customers;
 
+use SureCart\Controllers\Admin\AdminController;
 use SureCart\Models\Product;
 use SureCartCore\Responses\RedirectResponse;
 use SureCart\Controllers\Admin\Customers\CustomersListTable;
@@ -9,7 +10,7 @@ use SureCart\Controllers\Admin\Customers\CustomersListTable;
 /**
  * Handles product admin requests.
  */
-class CustomersController {
+class CustomersController extends AdminController {
 
 	/**
 	 * Products index.
@@ -17,6 +18,13 @@ class CustomersController {
 	public function index() {
 		$table = new CustomersListTable();
 		$table->prepare_items();
+		$this->withHeader(
+			[
+				'customers' => [
+					'title' => __( 'Customers', 'surecart' ),
+				],
+			]
+		);
 		return \SureCart::view( 'admin/customers/index' )->with( [ 'table' => $table ] );
 	}
 

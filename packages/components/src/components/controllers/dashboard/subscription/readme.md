@@ -53,9 +53,9 @@ graph TD;
   sc-subscription-details --> sc-subscription-status-badge
   sc-subscription-details --> sc-format-date
   sc-subscription-details --> sc-skeleton
+  sc-subscription-details --> sc-format-number
   sc-subscription-details --> sc-text
   sc-subscription-details --> sc-tag
-  sc-subscription-details --> sc-format-number
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon
   sc-button --> sc-spinner

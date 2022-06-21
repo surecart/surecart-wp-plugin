@@ -3,7 +3,7 @@
  * Plugin Name: SureCart
  * Plugin URI: https://surecart.com/
  * Description:
- * Version: 0.10.0
+ * Version: 0.15.1
  * Requires at least: 5.9
  * Requires PHP: 7.4
  * Author: SureCart
@@ -28,7 +28,7 @@ define( 'SURECART_PLUGIN_FILE', __FILE__ );
 
 // define host url.
 if ( ! defined( 'SURECART_APP_URL' ) ) {
-	define( 'SURECART_APP_URL', 'https://app.surecart.com' );
+	define( 'SURECART_APP_URL', 'https://api.surecart.com' );
 }
 
 // Load composer dependencies.

@@ -51,7 +51,8 @@ class CustomerLinkService {
 			return $email_linked;
 		}
 
-		return $this->createUser();
+		// create a user to link.
+		return $this->linkNewUser();
 	}
 
 	/**
@@ -72,7 +73,7 @@ class CustomerLinkService {
 		// next check if email has a user.
 		$existing = User::getUserBy( 'email', $this->order->email );
 
-		// We have a user.
+		// We have a user, link it.
 		if ( $existing ) {
 			$mode = ! empty( $this->order->live_mode ) ? 'live' : 'test';
 			// maybe add the customer id for the user if it's not yet set.
@@ -90,7 +91,7 @@ class CustomerLinkService {
 	 *
 	 * @return \SureCart\Models\User|\WP_Error
 	 */
-	protected function createUser() {
+	protected function linkNewUser() {
 		// if no user, create one with a password if provided.
 		$created = User::create(
 			[
@@ -100,11 +101,15 @@ class CustomerLinkService {
 			]
 		);
 
+		// bail if error.
 		if ( is_wp_error( $created ) ) {
 			return $created;
 		}
 
+		// get the mode string.
+		$mode = ! empty( $this->order->live_mode ) ? 'live' : 'test';
+
 		// set the customer id for the user.
-		return $created->setCustomerId( $this->order->customer_id, ! empty( $this->order->live_mode ) ? 'live' : 'test' );
+		return $created->setCustomerId( $this->order->customer_id, $mode );
 	}
 }

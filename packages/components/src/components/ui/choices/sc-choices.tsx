@@ -1,4 +1,4 @@
-import { Component, Prop, h, State, Element } from '@stencil/core';
+import { Component, Prop, h, State, Element, Watch } from '@stencil/core';
 
 let id = 0;
 
@@ -43,6 +43,21 @@ export class ScChoices {
   @State() width: number;
 
   componentDidLoad() {
+    this.handleRequiredChange();
+    this.handleResize();
+  }
+
+  @Watch('required')
+  handleRequiredChange() {
+    const choices = this.el.querySelectorAll('sc-choice');
+    if (choices.length) {
+      choices.forEach(choice => {
+        choice.required = this.required;
+      });
+    }
+  }
+
+  handleResize() {
     // Only run if ResizeObserver is supported.
     if ('ResizeObserver' in window) {
       var ro = new window.ResizeObserver(entries => {

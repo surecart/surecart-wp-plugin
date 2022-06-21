@@ -209,7 +209,7 @@ export class ScStripePaymentRequest {
             if (this.debug) {
               this.debugError = __('You do not have any wallets set up in your browser.', 'surecart');
             }
-            console.log('No payment methods available.');
+            console.log('No wallets available.');
           }
           return;
         }
@@ -270,7 +270,6 @@ export class ScStripePaymentRequest {
       ev.complete('fail');
     } finally {
       this.confirming = false;
-      this.scSetState.emit('RESOLVE');
     }
   }
 

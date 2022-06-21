@@ -45,23 +45,36 @@ class PaymentMethodController extends BaseController {
 	public function create() {
 		$output = '';
 
+		if ( isset( $_GET['live_mode'] ) && 'false' === $_GET['live_mode'] ) {
+			if ( ! empty( User::current()->customerId( 'test' ) ) ) {
+				return $this->createTest();
+			}
+		}
+
+		return $this->createLive();
+
 		if ( ! empty( User::current()->customerId( 'live' ) ) ) {
 			$payment_intent_live = PaymentIntent::with( [ 'owner' ] )->create(
 				[
 					'processor_type' => 'stripe',
 					'live_mode'      => true,
+					'currency'       => \SureCart::account()->currency,
 					'customer_id'    => User::current()->customerId( 'live' ),
 				]
 			);
-
-			$output .= $this->renderCreate( $payment_intent_live );
+			$output             .= $this->renderCreate( $payment_intent_live );
 		}
 
-		if ( ! empty( User::current()->customerId( 'test' ) ) ) {
+		if ( User::current()->customerId( 'test' ) ) {
+			$output .= '<br /><sc-button type="default" >' . esc_html__( 'Add a test payment method', 'surecart' ) . '</sc-button>';
+		}
+
+		if ( ! empty( User::current()->customerId( 'test' ) ) && empty( User::current()->customerId( 'live' ) ) ) {
 			$payment_intent_test = PaymentIntent::with( [ 'owner' ] )->create(
 				[
 					'processor_type' => 'stripe',
 					'live_mode'      => false,
+					'currency'       => \SureCart::account()->currency,
 					'customer_id'    => User::current()->customerId( 'test' ),
 				]
 			);
@@ -71,6 +84,42 @@ class PaymentMethodController extends BaseController {
 
 		return $output;
 
+	}
+
+	public function createLive() {
+		$payment_intent_live = PaymentIntent::with( [ 'owner' ] )->create(
+			[
+				'processor_type' => 'stripe',
+				'live_mode'      => true,
+				'currency'       => \SureCart::account()->currency,
+				'customer_id'    => User::current()->customerId( 'live' ),
+			]
+		);
+
+		$output = $this->renderCreate( $payment_intent_live );
+		if ( User::current()->customerId( 'live' ) ) {
+			$output .= '<br /><sc-button type="default" href="' . esc_url_raw( add_query_arg( [ 'live_mode' => 'false' ] ) ) . '">' . esc_html__( 'Add a test payment method', 'surecart' ) . '</sc-button>';
+		}
+
+		return $output;
+	}
+
+	public function createTest() {
+		$payment_intent_test = PaymentIntent::with( [ 'owner' ] )->create(
+			[
+				'processor_type' => 'stripe',
+				'live_mode'      => false,
+				'currency'       => \SureCart::account()->currency,
+				'customer_id'    => User::current()->customerId( 'test' ),
+			]
+		);
+
+		$output = $this->renderCreate( $payment_intent_test );
+		if ( User::current()->customerId( 'live' ) ) {
+			$output .= '<br /><sc-button type="default" href="' . esc_url_raw( remove_query_arg( 'live_mode' ) ) . '">' . esc_html__( 'Add a live payment method', 'surecart' ) . '</sc-button>';
+		}
+
+		return $output;
 	}
 
 	/**
@@ -98,6 +147,7 @@ class PaymentMethodController extends BaseController {
 
 			<sc-heading>
 				<?php esc_html_e( 'Add Payment Method', 'surecart' ); ?>
+				<?php echo ! $payment_intent->live_mode ? '<sc-tag type="warning" slot="end">' . esc_html__( 'Test Mode', 'surecart' ) . '</sc-tag>' : ''; ?>
 			</sc-heading>
 
 			<sc-payment-method-create
@@ -106,23 +156,19 @@ class PaymentMethodController extends BaseController {
 				>
 					<?php
 						echo wp_kses_post(
-							Component::tag( 'sc-stripe-element' )
+							Component::tag( 'sc-stripe-payment-element' )
 							->id( 'customer-payment-method-add' )
 							->with(
 								[
-									'stripeAccountId' => $payment_intent->processor_data->stripe->account_id,
-									'publishableKey'  => $payment_intent->processor_data->stripe->publishable_key,
+									'accountId'      => $payment_intent->processor_data->stripe->account_id,
+									'publishableKey' => $payment_intent->processor_data->stripe->publishable_key,
+									'clientSecret'   => $payment_intent->processor_data->stripe->client_secret,
 								]
 							)->render()
 						);
 					?>
 			</sc-payment-method-create>
 
-			<div>
-				<sc-text style="--color: var(--sc-color-gray-700); --font-size: var(--sc-font-size-small); --line-height: var(--sc-line-height-normal); --text-align: center;">
-					<?php esc_html_e( 'By providing your card information, you allow Sure Cart to charge your card for future payments in accordance with their terms. You can review important information from Sure Cart on their Terms of Service and Privacy Policy pages.', 'surecart' ); ?>
-				</sc-text>
-			</div>
 		</sc-spacing>
 		<?php
 		return ob_get_clean();

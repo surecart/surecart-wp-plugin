@@ -3,8 +3,8 @@
 exports[`sc-order-summary renders 1`] = `
 <sc-order-summary>
   <mock:shadow-root>
-    <div class="summary summary--expanded">
-      <div class="summary__content">
+    <div class="summary summary--open">
+      <div class="summary__content" style="height: auto;">
         <slot></slot>
       </div>
     </div>

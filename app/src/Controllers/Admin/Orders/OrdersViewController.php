@@ -2,18 +2,26 @@
 
 namespace SureCart\Controllers\Admin\Orders;
 
+use SureCart\Controllers\Admin\AdminController;
 use SureCart\Controllers\Admin\Orders\OrdersListTable;
 
 /**
  * Handles product admin requests.
  */
-class OrdersViewController {
+class OrdersViewController extends AdminController {
 	/**
 	 * Orders index.
 	 */
 	public function index() {
 		$table = new OrdersListTable();
 		$table->prepare_items();
+		$this->withHeader(
+			[
+				'orders' => [
+					'title' => __( 'Orders', 'surecart' ),
+				],
+			]
+		);
 		return \SureCart::view( 'admin/orders/index' )->with(
 			[
 				'table' => $table,
