@@ -209,7 +209,7 @@ class MemberPressService extends IntegrationService implements IntegrationInterf
 			$transaction->total      = $this->convertAmount( $object->total, $object->currency );
 			$transaction->tax_amount = $this->convertAmount( $object->tax_amount, $object->currency );
 			$transaction->user_id    = $wp_user->ID;
-			$transaction->product_id = $purchase->product;
+			$transaction->product_id = $membership_id;
 			$transaction->trans_num  = $transaction_num;
 			$transaction->txn_type   = \MeprTransaction::$payment_str;
 			$transaction->gateway    = 'manual';
