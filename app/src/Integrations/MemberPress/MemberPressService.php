@@ -189,6 +189,7 @@ class MemberPressService extends IntegrationService implements IntegrationInterf
 		// get order, invoice needed to sync the purchase.
 		$purchase             = Purchase::with( [ 'order', 'invoice' ] )->find( $this->getPurchaseId() );
 		$status               = $add ? 'completed' : 'failed';
+		$existing             = false;
 		$transaction_num      = $purchase->id;
 		$existing_transaction = \MeprTransaction::get_one_by_trans_num( $transaction_num );
 
@@ -202,10 +203,9 @@ class MemberPressService extends IntegrationService implements IntegrationInterf
 
 		// It doesn't exist.
 		if ( ! isset( $existing_transaction->id ) || empty( $existing_transaction->id ) ) {
-
 			$transaction             = new \MeprTransaction();
 			$transaction->amount     = $this->convertAmount( $object->amount_due, $object->currency );
-			$transaction->total      = $this->convertAmount( $object->total, $object->currency );
+			$transaction->total      = $this->convertAmount( $object->total_amount, $object->currency );
 			$transaction->tax_amount = $this->convertAmount( $object->tax_amount, $object->currency );
 			$transaction->user_id    = $wp_user->ID;
 			$transaction->product_id = $membership_id;
