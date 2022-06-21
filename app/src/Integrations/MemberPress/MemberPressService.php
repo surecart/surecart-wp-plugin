@@ -202,8 +202,7 @@ class MemberPressService extends IntegrationService implements IntegrationInterf
 
 		// It doesn't exist.
 		if ( ! isset( $existing_transaction->id ) || empty( $existing_transaction->id ) ) {
-			$membership              = new \MeprProduct( $membership_id );
-			$expires_at              = $membership->get_expires_at();
+
 			$transaction             = new \MeprTransaction();
 			$transaction->amount     = $this->convertAmount( $object->amount_due, $object->currency );
 			$transaction->total      = $this->convertAmount( $object->total, $object->currency );
@@ -214,7 +213,7 @@ class MemberPressService extends IntegrationService implements IntegrationInterf
 			$transaction->txn_type   = \MeprTransaction::$payment_str;
 			$transaction->gateway    = 'manual';
 			$transaction->created_at = gmdate( 'c' );
-			$transaction->expires_at = ( is_null( $expires_at ) ) ? \MeprUtils::mysql_lifetime() : gmdate( 'c', $expires_at );
+			$transaction->expires_at = \MeprUtils::mysql_lifetime();
 		} else {
 			// It does exist.
 			$transaction = new \MeprTransaction( $existing_transaction->id );
@@ -235,7 +234,7 @@ class MemberPressService extends IntegrationService implements IntegrationInterf
 			$transaction->status = \MeprTransaction::$complete_str;
 		}
 
-		// Finally, let's store this beast!
+		// Store the transaction.
 		return $transaction->store();
 	}
 
