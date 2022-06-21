@@ -52,7 +52,6 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 */
 	protected $endpoint = '';
 
-
 	/**
 	 * Object name
 	 *
@@ -95,7 +94,6 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 */
 	protected $limit = 20;
 
-
 	/**
 	 * Default collection offset.
 	 *
@@ -104,11 +102,32 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	protected $offset = 0;
 
 	/**
-	 * The default transient cache time
+	 * Is this cachable?
 	 *
-	 * @var integer
+	 * @var boolean
 	 */
-	protected $transient_cache_time = 5 * MINUTE_IN_SECONDS;
+	protected $cachable = false;
+
+	/**
+	 * Is this cachable?
+	 *
+	 * @var boolean
+	 */
+	protected $cache_key = '';
+
+	/**
+	 * Cache status for the request.
+	 *
+	 * @param string|null;
+	 */
+	protected $cache_status = null;
+
+	/**
+	 * Does an update clear account cache?
+	 *
+	 * @var boolean
+	 */
+	protected $clears_account_cache = false;
 
 	/**
 	 * Model constructor
@@ -127,6 +146,15 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		$this->bootModel();
 		$this->syncOriginal();
 		$this->fill( $attributes );
+	}
+
+	/**
+	 * Get the cache status for the model.
+	 *
+	 * @return string|null;
+	 */
+	public function getCacheStatus() {
+		return $this->cache_status;
 	}
 
 	/**
@@ -419,6 +447,12 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @return mixed|void
 	 */
 	public function setAttribute( $key, $value ) {
+		// we are setting the cache status.
+		if ( 'cache_status' === $key ) {
+			$this->cache_status = $value;
+			return;
+		}
+
 		$setter = $this->getMutator( $key, 'set' );
 
 		if ( $setter ) {
@@ -595,7 +629,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		// add query vars.
 		$args['query'] = $this->query;
 
-		return [ $endpoint, $args ];
+		return [ $endpoint, $args, $this->cachable, $this->cache_key ];
 	}
 
 	/**
@@ -643,6 +677,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @return array|\WP_Error;
 	 */
 	protected function get() {
+		$this->query['limit'] = 100;
+
 		$items = $this->makeRequest();
 
 		if ( $this->isError( $items ) ) {
@@ -695,23 +731,6 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		$this->fill( $attributes );
 
 		return $this;
-	}
-
-	/**
-	 * Return a cached version of the model.
-	 *
-	 * @param string $id Id of the model.
-	 *
-	 * @return $this
-	 */
-	protected function findCached( $id = '' ) {
-		$cache_key = 'sc_cached_request' . wp_json_encode( $this->prepareRequest( [ 'id' => $id ] ) );
-		$value     = get_transient( $cache_key );
-		if ( false === $value ) {
-			$value = $this->find( $id );
-			set_transient( $cache_key, $value, apply_filters( 'sc_cached_request_transient_time', $this->transient_cache_time, $this ) );
-		}
-		return $value;
 	}
 
 	/**
@@ -838,6 +857,11 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		// fire event.
 		$this->fireModelEvent( 'created' );
 
+		// clear account cache.
+		if ( $this->cachable || $this->clears_account_cache ) {
+			\SureCart::account()->clearCache();
+		}
+
 		return $this;
 	}
 
@@ -880,6 +904,11 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 
 		$this->fireModelEvent( 'updated' );
 
+		// clear account cache.
+		if ( $this->cachable || $this->clears_account_cache ) {
+			\SureCart::account()->clearCache();
+		}
+
 		return $this;
 	}
 
@@ -907,6 +936,11 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		}
 
 		$this->fireModelEvent( 'deleted' );
+
+		// clear account cache.
+		if ( $this->cachable || $this->clears_account_cache ) {
+			\SureCart::account()->clearCache();
+		}
 
 		return $deleted;
 	}

@@ -123,10 +123,19 @@ export const getSessionId = (formId, order, refresh = false) => {
   return window.localStorage.getItem(formId);
 };
 
-/** Check if the checkout is mixed (subscription and one time) */
+/** Check if the order has a subscription */
 export const hasSubscription = (order: Order) => {
   // no line items.
   if (!order?.line_items?.data?.length) return false;
   // has subscription product.
-  return order?.line_items.data?.some(item => (item?.price?.product as Product)?.recurring);
+  return order?.line_items.data?.some(item => item?.price?.recurring_interval_count);
+};
+
+export const hasTrial = (order: Order) => {
+  return order?.trial_amount;
+};
+
+/** Check if the order has a payment plan. */
+export const hasPaymentPlan = (order: Order) => {
+  return hasSubscription(order) && order?.line_items.data?.some(item => item?.price?.recurring_period_count);
 };

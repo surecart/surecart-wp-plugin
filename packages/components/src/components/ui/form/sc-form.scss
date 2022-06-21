@@ -1,7 +1,11 @@
 sc-form {
   display: block;
 }
+:host {
+  display: block;
+}
 
+::slotted(*:not(:last-child)),
 sc-form form > *:not(:last-child) {
   margin-bottom: var(--sc-form-row-spacing, 0.75em);
 

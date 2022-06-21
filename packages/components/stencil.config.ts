@@ -26,7 +26,7 @@ export const config: Config = {
     reactOutputTarget({
       componentCorePackage: '@surecart/components',
       proxiesFile: '../components-react/src/components/index.ts',
-      includeDefineCustomElements: false,
+      includeDefineCustomElements: true,
     }),
     {
       type: 'dist',

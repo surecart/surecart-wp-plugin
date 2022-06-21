@@ -11,7 +11,7 @@ export class ScSubscriptionStatusBadge {
   /** Subscription status */
   @Prop() status: SubscriptionStatus;
 
-  /** The tag's statux type. */
+  /** The tag's status type. */
   @Prop() subscription: Subscription;
 
   /** The tag's size. */
@@ -33,6 +33,8 @@ export class ScSubscriptionStatusBadge {
       case 'trialing':
         return 'info';
       case 'active':
+        return 'success';
+      case 'completed':
         return 'success';
       case 'past_due':
         return 'warning';
@@ -57,11 +59,16 @@ export class ScSubscriptionStatusBadge {
       case 'trialing':
         return __('Trialing', 'surecart');
       case 'active':
+        if (Number.isInteger(this.subscription?.remaining_period_count)) {
+          return __('Payment Plan', 'surecart');
+        }
         return __('Active', 'surecart');
       case 'past_due':
         return __('Past Due', 'surecart');
       case 'canceled':
         return __('Canceled', 'surecart');
+      case 'completed':
+        return __('Completed', 'surecart');
       case 'unpaid':
         return __('Unpaid', 'surecart');
     }

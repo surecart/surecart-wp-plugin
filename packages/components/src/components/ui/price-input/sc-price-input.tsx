@@ -1,6 +1,7 @@
 import { Component, Prop, Event, EventEmitter, h, Method, Watch, Element } from '@stencil/core';
 import { getCurrencySymbol } from '../../../functions/price';
 import { FormSubmitController } from '../../../functions/form-data';
+import { isZeroDecimal, maybeConvertAmount } from '../../util/format-number/functions/utils';
 
 /**
  * @part base - The elements base wrapper.
@@ -120,7 +121,16 @@ export class ScPriceInput {
   }
 
   handleChange() {
-    this.value = this.scInput.value ? (parseFloat(this.scInput.value) * 100).toFixed(2).toString() : '';
+    this.updateValue();
+  }
+
+  handleInput() {
+    this.updateValue();
+  }
+
+  updateValue() {
+    const val = isZeroDecimal(this.currencyCode) ? parseFloat(this.scInput.value) : (parseFloat(this.scInput.value) * 100).toFixed(2);
+    this.value = this.scInput.value ? val.toString() : '';
   }
 
   componentDidLoad() {
@@ -159,16 +169,16 @@ export class ScPriceInput {
           autofocus={this.autofocus}
           inputmode={'decimal'}
           onScChange={() => this.handleChange()}
-          value={(parseFloat(this.value) / 100).toString()}
+          onScInput={() => this.handleInput()}
+          value={maybeConvertAmount(parseFloat(this.value), this.currencyCode).toString()}
         >
           <span style={{ opacity: '0.5' }} slot="prefix">
             {getCurrencySymbol(this.currencyCode)}
           </span>
-          {this.showCode && this?.currencyCode && (
-            <span style={{ opacity: '0.5' }} slot="suffix">
-              {this.currencyCode.toUpperCase()}
-            </span>
-          )}
+
+          <span slot="suffix">
+            <slot name="suffix">{this.showCode && this?.currencyCode && <span style={{ opacity: '0.5' }}>{this.currencyCode.toUpperCase()}</span>}</slot>
+          </span>
         </sc-input>
       </div>
     );

@@ -1,32 +1,22 @@
 import { Component, Prop } from '@stencil/core';
-import { __, _n, sprintf } from '@wordpress/i18n';
+import { __, _n } from '@wordpress/i18n';
+import { translateInterval } from '../../../functions/price';
 
 @Component({
   tag: 'sc-format-interval',
   shadow: false,
 })
-export class ScFormatNumber {
+export class ScFormatInterval {
   /** The number to format. */
   @Prop() value: number = 0;
 
   @Prop() interval: string = '';
 
-  @Prop() every: string = __('every', 'surecart');
+  @Prop() every: string = '/';
 
-  @Prop() fallback: string = __('once', 'surecart');
+  @Prop() fallback: string = '';
 
   render() {
-    switch (this.interval) {
-      case 'day':
-        return `${this.every} ${sprintf(_n('day', '%d days', this.value, 'surecart'), this.value)}`;
-      case 'week':
-        return `${this.every} ${sprintf(_n('week', '%d weeks', this.value, 'surecart'), this.value)}`;
-      case 'month':
-        return `${this.every} ${sprintf(_n('month', '%d months', this.value, 'surecart'), this.value)}`;
-      case 'year':
-        return `${this.every} ${sprintf(_n('year', '%d years', this.value, 'surecart'), this.value)}`;
-      default:
-        return this.fallback;
-    }
+    return translateInterval(this.value, this.interval, ` ${this.every}`, this.fallback);
   }
 }

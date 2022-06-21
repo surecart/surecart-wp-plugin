@@ -19,6 +19,7 @@ class PriceTest extends SureCartUnitTestCase
 		\SureCart::make()->bootstrap([
 			'providers' => [
 				\SureCart\Request\RequestServiceProvider::class,
+				\SureCart\Account\AccountServiceProvider::class
 			]
 		], false);
 
@@ -31,17 +32,25 @@ class PriceTest extends SureCartUnitTestCase
 		$request = json_decode(file_get_contents(dirname(__FILE__) . '/price-create.json'), true);
 		$response = json_decode(file_get_contents(dirname(__FILE__) . '/price-created.json'));
 
-		$this->mock_requests->expects($this->once())
-			->method('makeRequest')
-			->with(
-				$this->equalTo('prices'),
-				$this->equalTo([
-					'method' => 'POST',
-					'body' => $request,
-					'query' => []
-				])
-			)
-			->willReturn($response);
+		// mock requests
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		// then make the request./**
+		$requests->shouldReceive('makeRequest')
+			->atLeast()
+			->once()
+			->withSomeOfArgs('prices')
+			->andReturn($response);
+
+		// then make the request./**
+		$requests->shouldReceive('makeRequest')
+			->atLeast()
+			->once()
+			->withSomeOfArgs('account')
+			->andReturn((object) ['products_updated_at' => 12345]);
 
 		$instance = new Price($request['price']);
 		$created = $instance->create();

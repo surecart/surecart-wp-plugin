@@ -1,5 +1,5 @@
 import { Component, Watch, h, Prop, State, Event, EventEmitter } from '@stencil/core';
-import { getIconLibrary, unwatchIcon, watchIcon } from './library';
+import { getIconLibrary } from './library';
 import { requestIcon } from './request';
 
 const parser = new DOMParser();
@@ -7,6 +7,7 @@ const parser = new DOMParser();
 @Component({
   tag: 'sc-icon',
   styleUrl: 'sc-icon.css',
+  assetsDirs: ['icon-assets'],
   shadow: true,
 })
 export class ScIcon {
@@ -37,14 +38,6 @@ export class ScIcon {
 
   componentWillLoad() {
     this.setIcon();
-  }
-
-  connectedCallback() {
-    watchIcon(this);
-  }
-
-  disconnectedCallback() {
-    unwatchIcon(this);
   }
 
   getLabel() {
@@ -110,6 +103,6 @@ export class ScIcon {
   }
 
   render() {
-    return <div part="base" class="icon" role="img" aria-label={this.getLabel()} innerHTML={this.svg} />;
+    return <div part="base" class="icon" role="img" aria-label={this.getLabel()} innerHTML={this.svg}></div>;
   }
 }

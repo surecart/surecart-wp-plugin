@@ -13,6 +13,7 @@
 | `choices`           | --                   | The input's value attribute.                                                                                                                                                                                  | `ChoiceItem[]`                    | `[]`             |
 | `disabled`          | `disabled`           |                                                                                                                                                                                                               | `boolean`                         | `undefined`      |
 | `help`              | `help`               | Some help text for the input.                                                                                                                                                                                 | `string`                          | `undefined`      |
+| `hoist`             | `hoist`              |                                                                                                                                                                                                               | `boolean`                         | `false`          |
 | `invalid`           | `invalid`            | This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API. | `boolean`                         | `false`          |
 | `label`             | `label`              | The input's label.                                                                                                                                                                                            | `string`                          | `undefined`      |
 | `loading`           | `loading`            |                                                                                                                                                                                                               | `boolean`                         | `undefined`      |
@@ -30,6 +31,7 @@
 | `squaredLeft`       | `squared-left`       |                                                                                                                                                                                                               | `boolean`                         | `undefined`      |
 | `squaredRight`      | `squared-right`      |                                                                                                                                                                                                               | `boolean`                         | `undefined`      |
 | `squaredTop`        | `squared-top`        |                                                                                                                                                                                                               | `boolean`                         | `undefined`      |
+| `unselect`          | `unselect`           | Can we unselect items.                                                                                                                                                                                        | `boolean`                         | `true`           |
 | `value`             | `value`              | The input's value attribute.                                                                                                                                                                                  | `string`                          | `''`             |
 
 
@@ -81,6 +83,7 @@ Type: `Promise<void>`
 ### Used by
 
  - [sc-address](../address)
+ - [sc-compact-address](../sc-compact-address)
 
 ### Depends on
 
@@ -107,6 +110,7 @@ graph TD;
   sc-form-control --> sc-tooltip
   sc-input --> sc-form-control
   sc-address --> sc-select
+  sc-compact-address --> sc-select
   style sc-select fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

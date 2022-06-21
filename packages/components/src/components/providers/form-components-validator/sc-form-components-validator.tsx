@@ -26,13 +26,15 @@ export class ScFormComponentsValidator {
     // bail if we don't have address invalid error or disabled.
     if (this.disabled) return;
     // make sure to add the address field if it's not there.
-    if (this?.order?.tax_status === 'address_invalid') {
+    if (this?.order?.tax_status === 'address_invalid' || this?.order?.shipping_enabled) {
       this.addAddressField();
     }
   }
 
   componentWillLoad() {
-    this.hasAddress = !!this.el.querySelector('sc-address');
+    this.hasAddress = !!this.el.querySelector('sc-order-shipping-address');
+
+    // automatically add address field if tax is enabled.
     if (this.taxEnabled) {
       this.addAddressField();
     }

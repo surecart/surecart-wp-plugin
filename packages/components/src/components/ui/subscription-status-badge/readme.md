@@ -7,13 +7,13 @@
 
 ## Properties
 
-| Property       | Attribute   | Description                                | Type                                                                             | Default     |
-| -------------- | ----------- | ------------------------------------------ | -------------------------------------------------------------------------------- | ----------- |
-| `clearable`    | `clearable` | Makes the tag clearable.                   | `boolean`                                                                        | `false`     |
-| `pill`         | `pill`      | Draws a pill-style tag with rounded edges. | `boolean`                                                                        | `false`     |
-| `size`         | `size`      | The tag's size.                            | `"large" \| "medium" \| "small"`                                                 | `'medium'`  |
-| `status`       | `status`    | Subscription status                        | `"active" \| "canceled" \| "incomplete" \| "past_due" \| "trialing" \| "unpaid"` | `undefined` |
-| `subscription` | --          | The tag's statux type.                     | `Subscription`                                                                   | `undefined` |
+| Property       | Attribute   | Description                                | Type                                                                                            | Default     |
+| -------------- | ----------- | ------------------------------------------ | ----------------------------------------------------------------------------------------------- | ----------- |
+| `clearable`    | `clearable` | Makes the tag clearable.                   | `boolean`                                                                                       | `false`     |
+| `pill`         | `pill`      | Draws a pill-style tag with rounded edges. | `boolean`                                                                                       | `false`     |
+| `size`         | `size`      | The tag's size.                            | `"large" \| "medium" \| "small"`                                                                | `'medium'`  |
+| `status`       | `status`    | Subscription status                        | `"active" \| "canceled" \| "completed" \| "incomplete" \| "past_due" \| "trialing" \| "unpaid"` | `undefined` |
+| `subscription` | --          | The tag's status type.                     | `Subscription`                                                                                  | `undefined` |
 
 
 ## Dependencies

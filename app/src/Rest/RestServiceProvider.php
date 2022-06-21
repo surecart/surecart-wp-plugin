@@ -186,12 +186,23 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 				return $model;
 			}
 
+			// if we are editing, creating, deleting, we are in an edit context. No need to pass the context.
+			if ( in_array( $method, [ 'edit', 'create', 'delete' ], true ) ) {
+				$context = 'edit';
+			}
+
 			// remove wp_created_by to prevent user ids from being leaked.
 			if ( 'edit' !== $context && ! empty( $model->metadata->wp_created_by ) ) {
 				unset( $model->metadata->wp_created_by );
 			}
 
-			return rest_ensure_response( $this->filter_response_by_context( is_a( $model, Model::class ) ? $model->toArray() : $model, $context ) );
+			$response = rest_ensure_response( $this->filter_response_by_context( is_a( $model, Model::class ) ? $model->toArray() : $model, $context ) );
+
+			if ( is_a( $model, Model::class ) ) {
+				$response->header( 'X-SURECART-CACHE-STATUS', $model->getCacheStatus() );
+			}
+
+			return $response;
 		};
 	}
 

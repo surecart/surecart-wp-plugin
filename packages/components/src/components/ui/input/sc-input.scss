@@ -172,11 +172,11 @@
   }
 
   .input__prefix ::slotted(*) {
-    margin-left: var(--sc-input-spacing-medium);
+    margin-left: var(--sc-input-spacing-medium) !important;
   }
 
   .input__suffix ::slotted(*) {
-    margin-right: var(--sc-input-spacing-medium);
+    margin-right: var(--sc-input-spacing-medium) !important;
   }
 
   .input__suffix ::slotted(sc-dropdown) {

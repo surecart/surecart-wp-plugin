@@ -39,16 +39,23 @@ class SubscriptionProtocolRestServiceProvider extends RestServiceProvider implem
 	public function registerRoutes() {
 		register_rest_route(
 			"$this->name/v$this->version",
-			$this->endpoint,
-			[
+			"$this->endpoint",
+			array_filter(
 				[
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => $this->callback( $this->controller, 'find' ),
-					'permission_callback' => [ $this, 'get_item_permissions_check' ],
-				],
-				// Register our schema callback.
-				'schema' => [ $this, 'get_item_schema' ],
-			]
+					[
+						'methods'             => \WP_REST_Server::READABLE,
+						'callback'            => $this->callback( $this->controller, 'find' ),
+						'permission_callback' => [ $this, 'get_item_permissions_check' ],
+						'args'                => $this->get_collection_params(),
+					],
+					[
+						'methods'             => \WP_REST_Server::EDITABLE,
+						'callback'            => $this->callback( $this->controller, 'edit' ),
+						'permission_callback' => [ $this, 'update_item_permissions_check' ],
+					],
+					'schema' => [ $this, 'get_item_schema' ],
+				]
+			)
 		);
 	}
 
@@ -88,7 +95,7 @@ class SubscriptionProtocolRestServiceProvider extends RestServiceProvider implem
 				'payment_retry_window_weeks' => [
 					'description' => esc_html__( 'Payment retry window in weeks.', 'surecart' ),
 					'type'        => 'integer',
-					'context'     => [ 'edit' ],
+					'context'     => [ 'view', 'edit' ],
 				],
 				'cancel_behavior'            => [
 					'description' => esc_html__( 'Cancel behavior. Either pending or immediate.', 'surecart' ),

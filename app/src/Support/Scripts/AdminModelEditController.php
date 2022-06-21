@@ -105,6 +105,7 @@ abstract class AdminModelEditController {
 
 		// pass app url.
 		$this->data['surecart_app_url'] = defined( 'SURECART_APP_URL' ) ? SURECART_APP_URL : '';
+		$this->data['api_url']          = defined( 'SURECART_API_URL' ) ? untrailingslashit( SURECART_API_URL ) : \SureCart::requests()->getBaseUrl();
 		$this->data['plugin_url']       = \SureCart::core()->assets()->getUrl();
 
 		if ( in_array( 'currency', $this->with_data ) ) {
@@ -134,6 +135,8 @@ abstract class AdminModelEditController {
 			'scData',
 			$this->data
 		);
+
+		wp_localize_script( $this->handle, 'scIcons', [ 'path' => esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) ] );
 
 		// custom localizations.
 		$this->localize( $this->handle );

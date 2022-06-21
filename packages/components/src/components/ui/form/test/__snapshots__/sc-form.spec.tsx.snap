@@ -2,9 +2,12 @@
 
 exports[`sc-form renders 1`] = `
 <sc-form>
-  <!---->
-  <div class="form" part="base" role="form">
-    <form></form>
-  </div>
+  <mock:shadow-root>
+    <div class="form" part="base" role="form">
+      <form>
+        <slot></slot>
+      </form>
+    </div>
+  </mock:shadow-root>
 </sc-form>
 `;

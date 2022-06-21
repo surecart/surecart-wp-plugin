@@ -2,6 +2,7 @@
 
 namespace SureCart\Account;
 
+use SureCart\Support\Server;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -16,7 +17,7 @@ class AccountServiceProvider implements ServiceProviderInterface {
 	 */
 	public function register( $container ) {
 		$container['surecart.account'] = function () {
-			return new AccountService();
+			return new AccountService( new Server( get_site_url() ) );
 		};
 
 		$app = $container[ SURECART_APPLICATION_KEY ];

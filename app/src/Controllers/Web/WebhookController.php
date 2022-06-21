@@ -15,7 +15,15 @@ class WebhookController {
 	 * @var array
 	 */
 	protected $models = [
+		'charge'   => \SureCart\Models\Charge::class,
+		'coupon'   => \SureCart\Models\Coupon::class,
+		'customer' => \SureCart\Models\Customer::class,
 		'purchase' => \SureCart\Models\Purchase::class,
+		'price'    => \SureCart\Models\Price::class,
+		'product'  => \SureCart\Models\Product::class,
+		'order'    => \SureCart\Models\Order::class,
+		'refund'   => \SureCart\Models\Refund::class,
+		'invoice'  => \SureCart\Models\Invoice::class,
 	];
 
 	/**
@@ -61,8 +69,14 @@ class WebhookController {
 	 * Recieve webhook
 	 */
 	public function receive( $request ) {
+		// get json if sent.
+		if ( 'application/json' === $request->getHeaderLine( 'Content-Type' ) ) {
+			$body = json_decode( $request->getBody(), true );
+		} else {
+			$body = $request->getParsedBody();
+		}
 		// perform the action.
-		$action = $this->doAction( $request->getParsedBody() );
+		$action = $this->doAction( $body );
 		// handle the response.
 		return $this->handleResponse( $action );
 	}

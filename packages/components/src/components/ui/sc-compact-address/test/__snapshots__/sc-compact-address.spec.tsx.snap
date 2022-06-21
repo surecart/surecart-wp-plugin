@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-compact-address renders 1`] = `
+<sc-compact-address>
+  <mock:shadow-root>
+    <div class="sc-address">
+      <sc-form-control class="sc-address__control" label="Country or region" part="control">
+        <sc-select autocomplete="country-name" name="shipping_country" placeholder="Select Your Country" search=""></sc-select>
+        <div class="sc-address__columns"></div>
+      </sc-form-control>
+    </div>
+  </mock:shadow-root>
+</sc-compact-address>
+`;
+
+exports[`sc-compact-address renders CA address fields 1`] = `
+<sc-compact-address>
+  <mock:shadow-root>
+    <div class="sc-address">
+      <sc-form-control class="sc-address__control" label="Country or region" part="control">
+        <sc-select autocomplete="country-name" name="shipping_country" placeholder="Select Your Country" search="" squared-bottom="" value="CA"></sc-select>
+        <div class="sc-address__columns">
+          <sc-select autocomplete="address-level1" name="shipping_state" placeholder="Province/Region" search="" squared-top="" value="WI"></sc-select>
+        </div>
+      </sc-form-control>
+    </div>
+  </mock:shadow-root>
+</sc-compact-address>
+`;
+
+exports[`sc-compact-address renders EU address fields 1`] = `
+<sc-compact-address>
+  <mock:shadow-root>
+    <div class="sc-address">
+      <sc-form-control class="sc-address__control" label="Country or region" part="control">
+        <sc-select autocomplete="country-name" name="shipping_country" placeholder="Select Your Country" search="" value="UK"></sc-select>
+        <div class="sc-address__columns"></div>
+      </sc-form-control>
+    </div>
+  </mock:shadow-root>
+</sc-compact-address>
+`;
+
+exports[`sc-compact-address renders US address fields 1`] = `
+<sc-compact-address>
+  <mock:shadow-root>
+    <div class="sc-address">
+      <sc-form-control class="sc-address__control" label="Country or region" part="control">
+        <sc-select autocomplete="country-name" name="shipping_country" placeholder="Select Your Country" search="" squared-bottom="" value="US"></sc-select>
+        <div class="sc-address__columns">
+          <sc-select autocomplete="address-level1" name="shipping_state" placeholder="State" search="" squared-right="" squared-top="" value="WI"></sc-select>
+          <sc-input autocomplete="postal-code" maxlength="5" name="shipping_postal_code" placeholder="Postal Code/Zip" squared-left="" squared-top="" value="12345"></sc-input>
+        </div>
+      </sc-form-control>
+    </div>
+  </mock:shadow-root>
+</sc-compact-address>
+`;
+
+exports[`sc-compact-address renders loading 1`] = `
+<sc-compact-address loading="true">
+  <mock:shadow-root>
+    <div class="sc-address">
+      <sc-form-control class="sc-address__control" label="Country or region" part="control">
+        <sc-select autocomplete="country-name" name="shipping_country" placeholder="Select Your Country" search=""></sc-select>
+        <div class="sc-address__columns"></div>
+      </sc-form-control>
+      <sc-block-ui></sc-block-ui>
+    </div>
+  </mock:shadow-root>
+</sc-compact-address>
+`;

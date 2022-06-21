@@ -26,7 +26,9 @@ export class ScToggles {
 
   @Listen('scShow')
   handleShowChange(event) {
-    this.getToggles().map(details => (details.open = event.target === details));
+    if (this.accordion) {
+      this.getToggles().map(details => (details.open = event.target === details));
+    }
   }
 
   @Watch('collapsible')

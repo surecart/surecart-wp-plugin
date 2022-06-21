@@ -1,11 +1,13 @@
-import { Component, Prop, h } from '@stencil/core';
+import { Component, Prop, h, Method } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 
 @Component({
   tag: 'sc-order-password',
-  shadow: false,
+  shadow: true,
 })
 export class ScOrderPassword {
+  private input: HTMLScInputElement;
+
   @Prop() loggedIn: boolean;
 
   /** The input's size. */
@@ -41,6 +43,11 @@ export class ScOrderPassword {
   /** The input's autofocus attribute. */
   @Prop() autofocus: boolean;
 
+  @Method()
+  async reportValidity() {
+    return this.input.reportValidity();
+  }
+
   render() {
     if (this.loggedIn) {
       return null;
@@ -48,6 +55,7 @@ export class ScOrderPassword {
 
     return (
       <sc-input
+        ref={el => (this.input = el as HTMLScInputElement)}
         label={this.label}
         help={this.help}
         autofocus={this.autofocus}

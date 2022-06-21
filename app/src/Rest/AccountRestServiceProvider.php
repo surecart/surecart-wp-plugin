@@ -24,6 +24,36 @@ class AccountRestServiceProvider extends RestServiceProvider implements RestServ
 	protected $controller = AccountController::class;
 
 	/**
+	 * Methods allowed for the model.
+	 *
+	 * @var array
+	 */
+	protected $methods = [];
+
+	public function registerRoutes() {
+		register_rest_route(
+			"$this->name/v$this->version",
+			"$this->endpoint",
+			array_filter(
+				[
+					[
+						'methods'             => \WP_REST_Server::READABLE,
+						'callback'            => $this->callback( $this->controller, 'find' ),
+						'permission_callback' => [ $this, 'get_item_permissions_check' ],
+						'args'                => $this->get_collection_params(),
+					],
+					[
+						'methods'             => \WP_REST_Server::EDITABLE,
+						'callback'            => $this->callback( $this->controller, 'edit' ),
+						'permission_callback' => [ $this, 'update_item_permissions_check' ],
+					],
+					'schema' => [ $this, 'get_item_schema' ],
+				]
+			)
+		);
+	}
+
+	/**
 	 * Get our sample schema for a post.
 	 *
 	 * @return array The sample schema for a post
@@ -98,7 +128,7 @@ class AccountRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
-	public function get_items_permissions_check( $request ) {
+	public function get_item_permissions_check( $request ) {
 		return current_user_can( 'manage_options' );
 	}
 

@@ -1,10 +1,9 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 import { __, sprintf } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
-import { store as dataStore } from '@surecart/data';
 import {
 	ScButton,
 	ScDropdown,
@@ -12,14 +11,16 @@ import {
 	ScMenu,
 	ScMenuItem,
 } from '@surecart/components-react';
-import { useState } from '@wordpress/element';
+import useEntity from '../../../hooks/useEntity';
+import useSnackbar from '../../../hooks/useSnackbar';
 
-export default ({ integration, index }) => {
-	const [deleting, setDeleting] = useState(false);
-	const { integration_id, provider, id } = integration;
-
-	const { deleteEntityRecord } = useDispatch(coreStore);
-	const { removeDraft } = useDispatch(dataStore);
+export default ({ id }) => {
+	const { integration, deleteIntegration, deletingIntegration } = useEntity(
+		'integration',
+		id
+	);
+	const { integration_id, provider } = integration;
+	const { addSnackbarNotice } = useSnackbar();
 
 	const { providerData, loading } = useSelect(
 		(select) => {
@@ -40,7 +41,7 @@ export default ({ integration, index }) => {
 		[integration_id]
 	);
 
-	const { integrationData, loadingIntegrationData } = useSelect(
+	const { integrationData, integrationDataResolved } = useSelect(
 		(select) => {
 			const queryArgs = [
 				'surecart',
@@ -52,19 +53,15 @@ export default ({ integration, index }) => {
 				integrationData: select(coreStore).getEntityRecord(
 					...queryArgs
 				),
-				loadingIntegrationData: select(coreStore).isResolving(
-					'getEntityRecord',
-					queryArgs
-				),
+				integrationDataResolved: select(
+					coreStore
+				).hasFinishedResolution('getEntityRecord', queryArgs),
 			};
 		},
 		[integration_id]
 	);
 
 	const onRemove = async () => {
-		if (!integration?.id) {
-			return removeDraft('integration', index);
-		}
 		const r = confirm(
 			__(
 				'Are you sure you want to remove this integration? This will affect existing customers who have purchased this product.',
@@ -73,19 +70,17 @@ export default ({ integration, index }) => {
 		);
 		if (!r) return;
 		try {
-			setDeleting(true);
-			await deleteEntityRecord('surecart', 'integration', id, {
-				throwOnError: true,
+			await deleteIntegration({ throwOnError: true });
+			addSnackbarNotice({
+				content: __('Integration deleted.', 'surecart'),
 			});
 		} catch (e) {
 			console.error(e);
 			setError(e?.message || __('An error occurred', 'surecart'));
-		} finally {
-			setDeleting(false);
 		}
 	};
 
-	if (!loading && !deleting && !integrationData?.label) {
+	if (integration_id && integrationDataResolved && !integrationData?.label) {
 		return (
 			<sc-stacked-list-row
 				style={{ position: 'relative' }}
@@ -121,7 +116,7 @@ export default ({ integration, index }) => {
 
 	return (
 		<sc-stacked-list-row style={{ position: 'relative' }} mobile-size={0}>
-			{loading || deleting ? (
+			{loading || deletingIntegration ? (
 				<div
 					css={css`
 						display: grid;

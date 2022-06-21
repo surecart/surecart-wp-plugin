@@ -5,11 +5,13 @@ namespace SureCart\Controllers\Admin\Settings;
 /**
  * Controls the settings page.
  */
-class PortalSettings extends FrameSettings {
+class PortalSettings extends BaseSettings {
 	/**
-	 * The endpoint for the frame.
+	 * Script handles for pages
 	 *
-	 * @var string
+	 * @var array
 	 */
-	protected $endpoint = 'portal_protocol';
+	protected $scripts = [
+		'show' => [ 'surecart/scripts/admin/portal', 'admin/settings/portal' ],
+	];
 }

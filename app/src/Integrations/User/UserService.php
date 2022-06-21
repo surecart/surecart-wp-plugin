@@ -45,7 +45,7 @@ class UserService extends IntegrationService implements IntegrationInterface, Pu
 	 * @return string
 	 */
 	public function getLabel() {
-		return __( 'Change WordPress User Role', 'surecart' );
+		return __( 'Add WordPress User Role', 'surecart' );
 	}
 
 	/**
@@ -54,7 +54,7 @@ class UserService extends IntegrationService implements IntegrationInterface, Pu
 	 * @return string
 	 */
 	public function getItemLabel() {
-		return __( 'Change User Role', 'surecart' );
+		return __( 'Add User Role', 'surecart' );
 	}
 
 	/**
@@ -63,7 +63,7 @@ class UserService extends IntegrationService implements IntegrationInterface, Pu
 	 * @return string
 	 */
 	public function getItemHelp() {
-		return __( 'Change the user role of the user who purchased the product.', 'surecart' );
+		return __( 'Add the user role of the user who purchased the product.', 'surecart' );
 	}
 
 	/**

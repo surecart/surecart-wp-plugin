@@ -99,13 +99,15 @@ class SubscriptionsListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return [
-			'customer'     => __( 'Customer', 'surecart' ),
-			'status'       => __( 'Status', 'surecart' ),
-			'plan'         => __( 'Plan', 'surecart' ),
-			'product'      => __( 'Product', 'surecart' ),
-			'integrations' => __( 'Integrations', 'surecart' ),
-			'created'      => __( 'Created', 'surecart' ),
-			'mode'         => '',
+			'customer'           => __( 'Customer', 'surecart' ),
+			'status'             => __( 'Status', 'surecart' ),
+			'plan'               => __( 'Plan', 'surecart' ),
+			'product'            => __( 'Product', 'surecart' ),
+			'integrations'       => __( 'Integrations', 'surecart' ),
+			'remaining_payments' => __( 'Remaining Payments', 'surecart' ),
+			'type'               => __( 'Type', 'surecart' ),
+			'created'            => __( 'Created', 'surecart' ),
+			'mode'               => '',
 		];
 	}
 
@@ -189,6 +191,38 @@ class SubscriptionsListTable extends ListTable {
 	}
 
 	/**
+	 * The remaining payments for the subscription
+	 *
+	 * @param \SureCart\Models\Subscription $subscription The subscription model.
+	 *
+	 * @return string
+	 */
+	public function column_remaining_payments( $subscription ) {
+		if ( null === $subscription->remaining_period_count ) {
+			return '&infin;';
+		}
+		if ( 0 === $subscription->remaining_period_count ) {
+			return __( 'None', 'surecart' );
+		}
+
+		return (int) $subscription->remaining_period_count;
+	}
+
+	/**
+	 * The subscription type
+	 *
+	 * @param \SureCart\Models\Subscription $subscription The subscription model.
+	 *
+	 * @return string
+	 */
+	public function column_type( $subscription ) {
+		if ( null === $subscription->remaining_period_count ) {
+			return '<sc-tag type="success">' . __( 'Subscription', 'surecart' ) . '</sc-tag>';
+		}
+		return '<sc-tag type="info">' . __( 'Payment Plan', 'surecart' ) . '</sc-tag>';
+	}
+
+	/**
 	 * Handle the total column
 	 *
 	 * @param \SureCart\Models\Order $subscription Checkout Session Model.
@@ -196,32 +230,42 @@ class SubscriptionsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_plan( $subscription ) {
-		$interval = $subscription->price->recurring_interval ?? '';
-		$count    = $subscription->price->recurring_interval_count ?? 1;
+		$interval     = $subscription->price->recurring_interval ?? '';
+		$count        = $subscription->price->recurring_interval_count ?? 1;
+		$period_count = $subscription->price->recurring_period_count ?? null;
 		ob_start();
 		echo '<sc-format-number type="currency" currency="' . esc_html( strtoupper( $subscription->latest_invoice->currency ?? 'usd' ) ) . '" value="' . (float) ( $subscription->latest_invoice->total_amount ?? 0 ) . '"></sc-format-number>';
 		echo esc_html( $this->getInterval( $interval, $count ) );
+		if ( null !== $period_count ) {
+			echo esc_html( $this->getInterval( $interval, $period_count, __( 'for', 'surecart' ) ) );
+		}
 		return ob_get_clean();
 	}
 
-	public function getInterval( $interval, $count ) {
+	public function getInterval( $interval, $count, $separator = '/', $show_single = false ) {
 		switch ( $interval ) {
+			case 'day':
+				return " $separator " . sprintf(
+					// translators: number of days.
+					$show_single ? _n( '%d day', '%d days', $count, 'surecart' ) : _n( 'day', '%d days', $count, 'surecart' ),
+					$count
+				);
 			case 'week':
-				return ' / ' . sprintf(
-					// phpcs:ignore
-					_n( 'week', '%d weeks', $count, 'surecart' ),
+				return " $separator " . sprintf(
+					// translators: number of weeks.
+					$show_single ? _n( '%d week', '%d weeks', $count, 'surecart' ) : _n( 'week', '%d weeks', $count, 'surecart' ),
 					$count
 				);
 			case 'month':
-				return ' / ' . sprintf(
-					// phpcs:ignore
-					_n( 'month', '%d months', $count, 'surecart' ),
+				return " $separator " . sprintf(
+					// translators: number of months
+					$show_single ? _n( '%d month', '%d months', $count, 'surecart' ) : _n( 'month', '%d months', $count, 'surecart' ),
 					$count
 				);
 			case 'year':
-				return ' / ' . sprintf(
-					// phpcs:ignore
-					_n( 'year', '%d years', $count, 'surecart' ),
+				return " $separator " . sprintf(
+					// translators: number of yearls
+					$show_single ? _n( '%d year', '%d years', $count, 'surecart' ) : _n( 'year', '%d years', $count, 'surecart' ),
 					$count
 				);
 		}
@@ -306,30 +350,30 @@ class SubscriptionsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_status( $subscription ) {
+		return wp_kses_post( "<sc-subscription-status-badge status='$subscription->status'></sc-subscription-status-badge>" );
+		// switch ( $subscription->status ) {
+		// case 'active':
+		// $status = '<sc-tag type="success">' . __( 'Active', 'surecart' ) . '</sc-tag>';
+		// break;
+		// case 'canceled':
+		// $status = '<sc-tag type="danger">' . __( 'Canceled', 'surecart' ) . '</sc-tag>';
+		// break;
+		// case 'trialing':
+		// $status = '<sc-tag type="primary">' . __( 'Trialing', 'surecart' ) . '</sc-tag>';
+		// break;
+		// case 'draft':
+		// $status = '<sc-tag>' . __( 'Draft', 'surecart' ) . '</sc-tag>';
+		// break;
+		// default:
+		// $status = '<sc-tag>' . $subscription->status . '</sc-tag>';
+		// break;
+		// }
 
-		switch ( $subscription->status ) {
-			case 'active':
-				$status = '<sc-tag type="success">' . __( 'Active', 'surecart' ) . '</sc-tag>';
-				break;
-			case 'canceled':
-				$status = '<sc-tag type="danger">' . __( 'Canceled', 'surecart' ) . '</sc-tag>';
-				break;
-			case 'trialing':
-				$status = '<sc-tag type="primary">' . __( 'Trialing', 'surecart' ) . '</sc-tag>';
-				break;
-			case 'draft':
-				$status = '<sc-tag>' . __( 'Draft', 'surecart' ) . '</sc-tag>';
-				break;
-			default:
-				$status = '<sc-tag>' . $subscription->status . '</sc-tag>';
-				break;
-		}
+		// if ( ! empty( (array) $subscription->pending_update ) ) {
+		// $status .= ' <sc-tag type="info">' . __( 'Update Pending', 'surecart' ) . '</sc-tag>';
+		// }
 
-		if ( ! empty( (array) $subscription->pending_update ) ) {
-			$status .= ' <sc-tag type="info">' . __( 'Update Pending', 'surecart' ) . '</sc-tag>';
-		}
-
-		return $status;
+		// return $status;
 	}
 
 	/**

@@ -1,3 +1,5 @@
+import { IconLibraryMutator, IconLibraryResolver } from './components/ui/icon/library';
+
 declare global {
   interface Window {
     wp: {
@@ -5,9 +7,13 @@ declare global {
       blocks: any;
       i18n: any;
     };
+    registerSureCartIconPath: (path: string) => void;
+    registerSureCartIconLibrary: (name: string, options: { resolver: IconLibraryResolver; mutator?: IconLibraryMutator }) => void;
+    scIcons: { path: string };
     scData: {
       root_url: string;
       nonce: string;
+      base_url: string;
       nonce_endpoint: string;
     };
     ceRegisterIconLibrary: any;
@@ -48,6 +54,7 @@ export interface Price {
   ad_hoc: boolean;
   ad_hoc_max_amount: number;
   ad_hoc_min_amount: number;
+  recurring_period_count: number;
   archived: boolean;
   product_id?: string;
   archived_at?: string;
@@ -226,6 +233,16 @@ export interface Charge extends Object {
   status: 'pending' | 'succeeded' | 'failed';
   updated_at: number;
 }
+
+export interface TaxIdentifier {
+  id: string;
+  number: string;
+  number_type: string;
+  object: 'tax_identifier';
+  valid_eu_vat: false;
+  created_at: number;
+  updated_at: number;
+}
 export interface Order extends Object {
   id?: string;
   status?: 'finalized' | 'draft' | 'paid';
@@ -240,8 +257,11 @@ export interface Order extends Object {
   total_amount?: number;
   subtotal_amount?: number;
   tax_amount: number;
+  tax_inclusive_amount: number;
+  tax_exclusive_amount: number;
   tax_status: 'disabled' | 'address_invalid' | 'estimated' | 'calculated';
   tax_label: string;
+  tax_percent: number;
   line_items: lineItems;
   metadata?: Object;
   payment_intent?: PaymentIntent;
@@ -255,6 +275,7 @@ export interface Order extends Object {
   discount?: DiscountResponse;
   billing_address?: string | Address;
   shipping_address?: string | Address;
+  shipping_enabled?: boolean;
   processor_data?: ProcessorData;
   tax_identifier?: {
     number: string;
@@ -338,15 +359,19 @@ export interface Subscription extends Object {
   customer: Customer;
   discount: DiscountResponse;
   pending_update: {
+    ad_hoc_amount?: number;
     price?: string;
     quantity?: number;
   };
   cancel_at_period_end: number | false;
   current_period_end_at: number | false;
   current_period_start_at: number | false;
+  remaining_period_count: number | null;
   ended_at: number;
+  end_behavior: 'cancel' | 'complete';
   payment_method: PaymentMethod | string;
   price: Price;
+  ad_hoc_amount: number;
   created_at: number;
   updated_at: number;
 }
@@ -362,7 +387,7 @@ export interface SubscriptionProtocol {
   updated_at: number;
 }
 
-export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid';
+export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid' | 'completed';
 
 export type OrderStatus = 'draft' | 'finalized' | 'paid' | 'completed';
 

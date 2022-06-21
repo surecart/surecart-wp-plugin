@@ -25,10 +25,7 @@ export default ({
 	backButtonType,
 	backText,
 	status,
-	notices,
-	removeNotice,
 	onSubmit,
-	onInvalid,
 	loading,
 	sidebar,
 	onError,
@@ -149,6 +146,9 @@ export default ({
 							margin-bottom: 30px;
 							top: 32px;
 							z-index: 4;
+							margin-bottom: var(
+								--sc-spacing-xx-large
+							) !important;
 
 							@media screen and (max-width: 782px) {
 								top: 46px;
@@ -198,7 +198,7 @@ export default ({
 												size="small"
 												href={backUrl}
 											>
-												&larr;
+												<sc-icon name="arrow-left"></sc-icon>
 											</ScButton>
 										)}
 									</Tooltip>

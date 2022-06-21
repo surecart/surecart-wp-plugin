@@ -64,7 +64,7 @@
 						<sc-text style="margin-bottom: 1em; --line-height:1; --color: var(--sc-color-brand-body)"><?php esc_html_e( 'Change your plugin uninstall settings.', 'surecart' ); ?></sc-text>
 						<sc-card>
 							<sc-switch name="uninstall" <?php checked( $uninstall, 1 ); ?> value="on">
-								<?php esc_html_e( 'Uninstall On Delete', 'surecart' ); ?>
+								<?php esc_html_e( 'Remove Plugin Data', 'surecart' ); ?>
 								<span slot="description"><?php esc_html_e( 'Completely remove all plugin data when deleted. This cannot be undone.', 'surecart' ); ?></span>
 							</sc-switch>
 						</sc-card>

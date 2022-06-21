@@ -7,6 +7,13 @@ namespace SureCart\Controllers\Rest;
  */
 abstract class RestController {
 	/**
+	 * Always fetch with these subcollections.
+	 *
+	 * @var array
+	 */
+	protected $with = [];
+
+	/**
 	 * Class to make the requests.
 	 *
 	 * @var string
@@ -21,7 +28,7 @@ abstract class RestController {
 	 *
 	 * @return \SureCart\Models\Model
 	 */
-	protected function middleware( \SureCart\Models\Model $class, \WP_REST_Request $request ) {
+	protected function middleware( $class, \WP_REST_Request $request ) {
 		return apply_filters( 'surecart/request/model', $class, $request );
 	}
 
@@ -38,6 +45,10 @@ abstract class RestController {
 			return $model;
 		}
 
+		if ( ! empty( $this->with ) ) {
+			$model = $model->with( $this->with );
+		}
+
 		return $model->where( $request->get_query_params() )->create( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
 	}
 
@@ -52,6 +63,10 @@ abstract class RestController {
 		$model = $this->middleware( new $this->class(), $request );
 		if ( is_wp_error( $model ) ) {
 			return $model;
+		}
+
+		if ( ! empty( $this->with ) ) {
+			$model = $model->with( $this->with );
 		}
 
 		$items = $model->where( $request->get_params() )->paginate(
@@ -87,6 +102,10 @@ abstract class RestController {
 			return $model;
 		}
 
+		if ( ! empty( $this->with ) ) {
+			$model = $model->with( $this->with );
+		}
+
 		return $model->where( $request->get_query_params() )->find( $request['id'] );
 	}
 
@@ -103,6 +122,10 @@ abstract class RestController {
 			return $model;
 		}
 
+		if ( ! empty( $this->with ) ) {
+			$model = $model->with( $this->with );
+		}
+
 		return $model->where( $request->get_query_params() )->update( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
 	}
 
@@ -117,6 +140,10 @@ abstract class RestController {
 		$model = $this->middleware( new $this->class(), $request );
 		if ( is_wp_error( $model ) ) {
 			return $model;
+		}
+
+		if ( ! empty( $this->with ) ) {
+			$model = $model->with( $this->with );
 		}
 
 		return $model->delete( $request['id'] );

@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-textarea renders 1`] = `
+<sc-textarea size="medium">
+  <mock:shadow-root>
+    <div class="form-control form-control--medium" part="form-control">
+      <sc-form-control help="" helpid="textarea-help-text-1" inputid="textarea-1" label="" labelid="textarea-label-1" showlabel="" size="medium">
+        <div class="form-control-input" part="form-control-input">
+          <div class="textarea textarea--empty textarea--medium textarea--resize-vertical textarea--standard" part="base"><textarea aria-describedby="help-text" class="textarea__control" id="input" part="textarea" rows="4" value=""></textarea>
+          </div>
+        </div>
+      </sc-form-control>
+    </div>
+  </mock:shadow-root>
+</sc-textarea>
+`;

@@ -12,7 +12,7 @@ export default () => {
 		// then upload the file.
 		const directUpload = new DirectUpload(
 			file,
-			`${scData.app_url}uploads/${id}/presign`
+			`${scData.api_url}/uploads/${id}/presign`
 		);
 
 		return new Promise((resolve, reject) => {

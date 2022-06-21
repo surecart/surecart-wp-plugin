@@ -115,6 +115,7 @@ class ScriptsService {
 			true
 		);
 
+		wp_localize_script( 'surecart-blocks', 'scIcons', [ 'path' => esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) ] );
 	}
 
 	/**
@@ -142,7 +143,8 @@ class ScriptsService {
 				'nonce_endpoint' => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
 			]
 		);
-		$this->printIconLibraryLoader();
+
+		wp_localize_script( 'surecart-components', 'scIcons', [ 'path' => esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) ] );
 	}
 
 	/**
@@ -177,62 +179,6 @@ class ScriptsService {
 					'checkout'  => \SureCart::pages()->url( 'checkout' ),
 				],
 			]
-		);
-	}
-
-	/**
-	 * Print the icon library loader.
-	 *
-	 * @return void
-	 */
-	public function printIconLibraryLoader() {
-		add_action(
-			'wp_footer',
-			function() {
-				?>
-		<sc-register-icon-library></sc-register-icon-library>
-		<script>
-			(async () => {
-				await customElements.whenDefined('sc-register-icon-library');
-				var library = document.querySelector('sc-register-icon-library');
-				await library.registerIconLibrary(
-					'default', {
-						resolver: function(name) {
-							return '<?php echo esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . "packages/icons/feather/'+name+'.svg" ); ?>';
-						},
-						mutator: function(svg) {
-							return svg.setAttribute('fill', 'none')
-						}
-					}
-				);
-			})();
-		</script>
-				<?php
-			}
-		);
-		add_action(
-			'admin_footer',
-			function() {
-				?>
-		<sc-register-icon-library></sc-register-icon-library>
-		<script>
-			(async () => {
-				await customElements.whenDefined('sc-register-icon-library');
-				var library = document.querySelector('sc-register-icon-library');
-				await library.registerIconLibrary(
-					'default', {
-						resolver: function(name) {
-							return '<?php echo esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . "packages/icons/feather/'+name+'.svg" ); ?>';
-						},
-						mutator: function(svg) {
-							return svg.setAttribute('fill', 'none')
-						}
-					}
-				);
-			})();
-		</script>
-				<?php
-			}
 		);
 	}
 }

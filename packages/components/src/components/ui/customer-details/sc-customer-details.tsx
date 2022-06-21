@@ -80,7 +80,7 @@ export class ScCustomerDetails {
   }
 
   renderAddress(label: string = 'Address', address: Address) {
-    const { line_1, line_2, city, state, postal_code, country } = address;
+    const { name, line_1, line_2, city, state, postal_code, country } = address;
     const countryName = countryChoices.find(({ value }) => value === country)?.label;
     return (
       <sc-stacked-list-row style={{ '--columns': '3' }} mobileSize={480}>
@@ -89,6 +89,7 @@ export class ScCustomerDetails {
         </div>
         <div>
           {formatAddress({
+            name,
             postalCountry: country,
             administrativeArea: state,
             locality: city,

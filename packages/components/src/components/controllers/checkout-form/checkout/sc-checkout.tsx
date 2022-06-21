@@ -167,6 +167,7 @@ export class ScCheckout {
       successUrl: this.successUrl,
 
       order: this.order,
+      shippingEnabled: this.order?.shipping_enabled,
       lineItems: this.order?.line_items?.data || [],
       editLineItems: this.editLineItems,
       removeLineItems: this.removeLineItems,
@@ -187,6 +188,7 @@ export class ScCheckout {
       customerShippingAddress: typeof this.order?.customer !== 'string' ? this?.order?.customer?.shipping_address : {},
       shippingAddress: this.order?.shipping_address,
       taxStatus: this.order?.tax_status,
+      taxIdentifier: this.order?.tax_identifier,
       lockedChoices: this.prices,
       products: this.productsEntities,
       prices: this.pricesEntities,

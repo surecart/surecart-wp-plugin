@@ -5,8 +5,9 @@ import { createReactComponent } from './react-component-lib';
 
 import type { JSX } from '@surecart/components';
 
+import { defineCustomElements } from '@surecart/components/loader';
 
-
+defineCustomElements();
 export const ScAddress = /*@__PURE__*/createReactComponent<JSX.ScAddress, HTMLScAddressElement>('sc-address');
 export const ScAlert = /*@__PURE__*/createReactComponent<JSX.ScAlert, HTMLScAlertElement>('sc-alert');
 export const ScBadgeNotice = /*@__PURE__*/createReactComponent<JSX.ScBadgeNotice, HTMLScBadgeNoticeElement>('sc-badge-notice');
@@ -24,6 +25,7 @@ export const ScChoice = /*@__PURE__*/createReactComponent<JSX.ScChoice, HTMLScCh
 export const ScChoices = /*@__PURE__*/createReactComponent<JSX.ScChoices, HTMLScChoicesElement>('sc-choices');
 export const ScColumn = /*@__PURE__*/createReactComponent<JSX.ScColumn, HTMLScColumnElement>('sc-column');
 export const ScColumns = /*@__PURE__*/createReactComponent<JSX.ScColumns, HTMLScColumnsElement>('sc-columns');
+export const ScCompactAddress = /*@__PURE__*/createReactComponent<JSX.ScCompactAddress, HTMLScCompactAddressElement>('sc-compact-address');
 export const ScConsumer = /*@__PURE__*/createReactComponent<JSX.ScConsumer, HTMLScConsumerElement>('sc-consumer');
 export const ScCouponForm = /*@__PURE__*/createReactComponent<JSX.ScCouponForm, HTMLScCouponFormElement>('sc-coupon-form');
 export const ScCustomOrderPriceInput = /*@__PURE__*/createReactComponent<JSX.ScCustomOrderPriceInput, HTMLScCustomOrderPriceInputElement>('sc-custom-order-price-input');
@@ -34,6 +36,7 @@ export const ScCustomerName = /*@__PURE__*/createReactComponent<JSX.ScCustomerNa
 export const ScDashboardCustomerDetails = /*@__PURE__*/createReactComponent<JSX.ScDashboardCustomerDetails, HTMLScDashboardCustomerDetailsElement>('sc-dashboard-customer-details');
 export const ScDashboardDownloadsList = /*@__PURE__*/createReactComponent<JSX.ScDashboardDownloadsList, HTMLScDashboardDownloadsListElement>('sc-dashboard-downloads-list');
 export const ScDashboardModule = /*@__PURE__*/createReactComponent<JSX.ScDashboardModule, HTMLScDashboardModuleElement>('sc-dashboard-module');
+export const ScDialog = /*@__PURE__*/createReactComponent<JSX.ScDialog, HTMLScDialogElement>('sc-dialog');
 export const ScDivider = /*@__PURE__*/createReactComponent<JSX.ScDivider, HTMLScDividerElement>('sc-divider');
 export const ScDonationChoices = /*@__PURE__*/createReactComponent<JSX.ScDonationChoices, HTMLScDonationChoicesElement>('sc-donation-choices');
 export const ScDownloadsList = /*@__PURE__*/createReactComponent<JSX.ScDownloadsList, HTMLScDownloadsListElement>('sc-downloads-list');
@@ -94,7 +97,6 @@ export const ScProvider = /*@__PURE__*/createReactComponent<JSX.ScProvider, HTML
 export const ScQuantitySelect = /*@__PURE__*/createReactComponent<JSX.ScQuantitySelect, HTMLScQuantitySelectElement>('sc-quantity-select');
 export const ScRadio = /*@__PURE__*/createReactComponent<JSX.ScRadio, HTMLScRadioElement>('sc-radio');
 export const ScRadioGroup = /*@__PURE__*/createReactComponent<JSX.ScRadioGroup, HTMLScRadioGroupElement>('sc-radio-group');
-export const ScRegisterIconLibrary = /*@__PURE__*/createReactComponent<JSX.ScRegisterIconLibrary, HTMLScRegisterIconLibraryElement>('sc-register-icon-library');
 export const ScSecureNotice = /*@__PURE__*/createReactComponent<JSX.ScSecureNotice, HTMLScSecureNoticeElement>('sc-secure-notice');
 export const ScSelect = /*@__PURE__*/createReactComponent<JSX.ScSelect, HTMLScSelectElement>('sc-select');
 export const ScSessionProvider = /*@__PURE__*/createReactComponent<JSX.ScSessionProvider, HTMLScSessionProviderElement>('sc-session-provider');
@@ -107,6 +109,7 @@ export const ScStripeElement = /*@__PURE__*/createReactComponent<JSX.ScStripeEle
 export const ScStripePaymentElement = /*@__PURE__*/createReactComponent<JSX.ScStripePaymentElement, HTMLScStripePaymentElementElement>('sc-stripe-payment-element');
 export const ScStripePaymentRequest = /*@__PURE__*/createReactComponent<JSX.ScStripePaymentRequest, HTMLScStripePaymentRequestElement>('sc-stripe-payment-request');
 export const ScSubscription = /*@__PURE__*/createReactComponent<JSX.ScSubscription, HTMLScSubscriptionElement>('sc-subscription');
+export const ScSubscriptionAdHocConfirm = /*@__PURE__*/createReactComponent<JSX.ScSubscriptionAdHocConfirm, HTMLScSubscriptionAdHocConfirmElement>('sc-subscription-ad-hoc-confirm');
 export const ScSubscriptionCancel = /*@__PURE__*/createReactComponent<JSX.ScSubscriptionCancel, HTMLScSubscriptionCancelElement>('sc-subscription-cancel');
 export const ScSubscriptionDetails = /*@__PURE__*/createReactComponent<JSX.ScSubscriptionDetails, HTMLScSubscriptionDetailsElement>('sc-subscription-details');
 export const ScSubscriptionPayment = /*@__PURE__*/createReactComponent<JSX.ScSubscriptionPayment, HTMLScSubscriptionPaymentElement>('sc-subscription-payment');
@@ -125,6 +128,7 @@ export const ScTableRow = /*@__PURE__*/createReactComponent<JSX.ScTableRow, HTML
 export const ScTag = /*@__PURE__*/createReactComponent<JSX.ScTag, HTMLScTagElement>('sc-tag');
 export const ScTaxIdInput = /*@__PURE__*/createReactComponent<JSX.ScTaxIdInput, HTMLScTaxIdInputElement>('sc-tax-id-input');
 export const ScText = /*@__PURE__*/createReactComponent<JSX.ScText, HTMLScTextElement>('sc-text');
+export const ScTextarea = /*@__PURE__*/createReactComponent<JSX.ScTextarea, HTMLScTextareaElement>('sc-textarea');
 export const ScToggle = /*@__PURE__*/createReactComponent<JSX.ScToggle, HTMLScToggleElement>('sc-toggle');
 export const ScToggles = /*@__PURE__*/createReactComponent<JSX.ScToggles, HTMLScTogglesElement>('sc-toggles');
 export const ScTooltip = /*@__PURE__*/createReactComponent<JSX.ScTooltip, HTMLScTooltipElement>('sc-tooltip');

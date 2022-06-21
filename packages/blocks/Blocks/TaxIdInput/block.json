@@ -1,10 +1,10 @@
 {
 	"name": "surecart/tax-id-input",
-	"title": "VAT",
+	"title": "VAT or Tax ID Input",
 	"description": "Display a VAT/GST field for VAT collection.",
 	"category": "surecart",
 	"keywords": ["totals", "summary"],
-	"parent": ["surecart/form", "surecart/column"],
+	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,
 		"html": false

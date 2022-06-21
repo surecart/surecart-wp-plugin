@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`sc-alert renders 1`] = `
-<sc-alert type="primary">
+<sc-alert type="primary" style="scroll-margin-top: 0px;">
   <mock:shadow-root>
     <div aria-atomic="true" aria-hidden="true" aria-live="assertive" class="alert alert--primary" hidden="" part="base" role="alert">
       <div class="alert__icon" part="icon">

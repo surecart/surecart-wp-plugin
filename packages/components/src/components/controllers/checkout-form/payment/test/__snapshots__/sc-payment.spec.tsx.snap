@@ -48,7 +48,7 @@ exports[`sc-payment renders stripe and hides paypal if recurring 1`] = `
       <div></div>
     </div>
     <sc-toggles theme="container">
-      <sc-toggle borderless="" open="" shady="">
+      <sc-toggle borderless="" open="" shady="" show-control="" show-icon="">
         <span class="sc-payment-toggle-summary" slot="summary">
           <sc-icon name="credit-card" style="font-size: 24px;"></sc-icon>
           <span>
@@ -58,6 +58,14 @@ exports[`sc-payment renders stripe and hides paypal if recurring 1`] = `
         <div class="sc-payment__stripe-card-element">
           <sc-stripe-element mode="live"></sc-stripe-element>
           <sc-secure-notice></sc-secure-notice>
+        </div>
+      </sc-toggle>
+      <sc-toggle borderless="" shady="" show-control="">
+        <span class="sc-payment-toggle-summary" slot="summary">
+          <sc-icon name="paypal" style="width: 80px; font-size: 24px;"></sc-icon>
+        </span>
+        <div class="sc-payment-instructions">
+          You will be prompted by PayPal to complete your purchase securely.
         </div>
       </sc-toggle>
     </sc-toggles>

@@ -1,0 +1,106 @@
+<?php
+
+namespace SureCart\Controllers\Admin\Settings;
+
+use SureCart\Support\Currency;
+use SureCart\Support\TimeDate;
+
+/**
+ * Controls the settings page.
+ */
+abstract class BaseSettings {
+	/**
+	 * Script handles for pages
+	 *
+	 * @var array
+	 */
+	protected $scripts = [];
+
+	/**
+	 * The template for the page.
+	 *
+	 * @var string
+	 */
+	protected $template = 'admin/settings-page';
+
+	/**
+	 * Additional dependencies for this page.
+	 *
+	 * @var array
+	 */
+	protected $dependencies = [];
+
+	/**
+	 * Show the page.
+	 *
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
+	 * @return function
+	 */
+	public function show( \SureCartCore\Requests\RequestInterface $request ) {
+		add_action( 'admin_enqueue_scripts', [ $this, 'showScripts' ] );
+
+		return \SureCart::view( $this->template )->with(
+			[
+				'tab'    => $request->query( 'tab' ) ?? '',
+				'status' => $request->query( 'status' ),
+			]
+		);
+	}
+
+	/**
+	 * Enqueue the show scripts.
+	 *
+	 * @return void
+	 */
+	public function showScripts() {
+		if ( ! empty( $this->scripts['show'] ) ) {
+			$this->enqueue( $this->scripts['show'][0], $this->scripts['show'][1] );
+		}
+	}
+
+	/**
+	 * Enqueue a script.
+	 *
+	 * @param string $handle Script handle.
+	 * @param string $path  Path to script.
+	 * @param array  $deps Dependencies.
+	 *
+	 * @return void
+	 */
+	public function enqueue( $handle, $path, $deps = [] ) {
+		$deps = array_merge( $deps, $this->dependencies );
+		$deps = array_merge( $deps, [ 'sc-ui-data', 'wp-data', 'wp-core-data' ] );
+
+		wp_enqueue_media();
+		wp_enqueue_style( 'wp-components' );
+		wp_enqueue_style( 'wp-block-editor' );
+		wp_enqueue_style( 'surecart-themes-default' );
+		wp_enqueue_script( 'surecart-components' );
+		wp_enqueue_script( 'wp-format-library' );
+		wp_enqueue_style( 'wp-format-library' );
+
+		// automatically load dependencies and version.
+		$asset_file = include plugin_dir_path( SURECART_PLUGIN_FILE ) . "dist/$path.asset.php";
+
+		// Enqueue scripts.
+		\SureCart::core()->assets()->enqueueScript(
+			$handle,
+			trailingslashit( \SureCart::core()->assets()->getUrl() ) . "dist/$path.js",
+			array_merge( $asset_file['dependencies'], $deps ),
+			$asset_file['version']
+		);
+
+		wp_set_script_translations( $handle, 'surecart', WP_LANG_DIR . '/plugins/' );
+
+		wp_localize_script(
+			$handle,
+			'scData',
+			[
+				'supported_currencies' => Currency::getSupportedCurrencies(),
+				'app_url'              => defined( 'SURECART_APP_URL' ) ? untrailingslashit( SURECART_APP_URL ) : 'https://app.surecart.com',
+				'api_url'              => defined( 'SURECART_API_URL' ) ? untrailingslashit( SURECART_API_URL ) : \SureCart::requests()->getBaseUrl(),
+				'time_zones'           => TimeDate::timezoneOptions(),
+			]
+		);
+	}
+}
