@@ -32,6 +32,7 @@
 
 ### Depends on
 
+- [sc-alert](../../../ui/alert)
 - [sc-skeleton](../../../ui/skeleton)
 - [sc-price-input](../../../ui/price-input)
 - [sc-block-ui](../../../ui/block-ui)
@@ -39,9 +40,11 @@
 ### Graph
 ```mermaid
 graph TD;
+  sc-custom-order-price-input --> sc-alert
   sc-custom-order-price-input --> sc-skeleton
   sc-custom-order-price-input --> sc-price-input
   sc-custom-order-price-input --> sc-block-ui
+  sc-alert --> sc-icon
   sc-price-input --> sc-input
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
