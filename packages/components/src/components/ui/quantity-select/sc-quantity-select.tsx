@@ -11,6 +11,7 @@ export class ScQuantitySelect {
 
   @Prop() clickEl?: HTMLElement;
 
+  @Prop() disabled: boolean;
   @Prop() max: number = 100;
   @Prop() min: number = 1;
   @Prop({ mutable: true, reflect: true }) quantity: number = 0;
@@ -28,32 +29,49 @@ export class ScQuantitySelect {
     }
   }
 
+  decrease() {
+    if (this.disabled) return;
+    this.quantity = Math.max(this.quantity - 1, this.min);
+  }
+
+  increase() {
+    if (this.disabled) return;
+    this.quantity = Math.min(this.quantity + 1, this.max);
+  }
+
   render() {
     return (
-      <sc-dropdown
-        clickEl={this.clickEl || this.el}
+      <div
+        part="base"
         class={{
-          quantity: true,
+          'quantity': true,
+          'input--disabled': this.disabled,
         }}
-        style={{ '--panel-height': '150px' }}
       >
-        <div class="quantity--trigger" slot="trigger">
-          <slot name="prefix">{__('Qty', 'surecart')}</slot> <strong>{this.quantity}</strong>
-          <svg viewBox="0 0 24 24" style={{ width: '10px', height: '10px' }} fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg>
-        </div>
-        <sc-menu>
-          {[...Array(this.max + 1)].map((_, i) => {
-            if (i < this.min) return;
-            return (
-              <sc-menu-item onClick={() => (this.quantity = i)} key={i}>
-                {i}
-              </sc-menu-item>
-            );
-          })}
-        </sc-menu>
-      </sc-dropdown>
+        <span role="button" aria-label="decrease number" class="button__decrease" onClick={() => this.decrease()}>
+          <sc-icon name="minus"></sc-icon>
+        </span>
+
+        <input
+          class="input__control"
+          step="1"
+          type="number"
+          max={this.max}
+          min={this.min}
+          value={this.quantity}
+          autocomplete="off"
+          tabindex="0"
+          role="spinbutton"
+          aria-valuemax={this.max}
+          aria-valuemin={this.min}
+          aria-valuenow={this.quantity}
+          aria-disabled={this.disabled}
+        />
+
+        <span role="button" aria-label="increase number" class="button__increase" onClick={() => this.increase()}>
+          <sc-icon name="plus"></sc-icon>
+        </span>
+      </div>
     );
   }
 }

@@ -1,0 +1,102 @@
+:host {
+  display: block;
+  font-family: var(--sc-font-sans);
+}
+
+.product-item {
+  box-sizing: border-box;
+  margin: 0px;
+  min-width: 0px;
+  display: grid;
+  gap: 6px;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: stretch;
+  align-items: stretch;
+  grid-template-columns: var(--sc-product-line-item-image-size, 4em) 0.66fr 0.33fr;
+  overflow: hidden;
+  padding: 16px 20px;
+  width: 100%;
+  border-bottom: none;
+}
+
+.item__text {
+  box-sizing: border-box;
+  margin: 0px;
+  min-width: 0px;
+  display: flex;
+  gap: 6px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1 1 0%;
+}
+
+.item__title {
+  box-sizing: border-box;
+  min-width: 0px;
+  margin:0;
+  font-weight: var(--sc-font-weight-semibold);
+  font-size: var(--sc-font-size-medium);
+  cursor: pointer;
+}
+
+.item__suffix {
+  box-sizing: border-box;
+  margin: 0px;
+  min-width: 0px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  -webkit-box-pack: start;
+  justify-content: space-between;
+  align-items: flex-end;
+  min-width: 100px;
+}
+
+.item__price {
+  text-align: right;
+}
+
+.item__image {
+  width: var(--sc-product-line-item-image-size, 4em);
+  height: var(--sc-product-line-item-image-size, 4em);
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid var(--sc-color-gray-200);
+  display: block;
+  box-shadow: var(--sc-input-box-shadow);
+}
+
+.product__description {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+}
+
+.price {
+  font-size: var(--sc-font-size-medium);
+  font-weight: var(--sc-font-weight-semibold);
+  color: var(--sc-input-label-color);
+  line-height: var(--sc-line-height-normal);
+}
+
+.price__description {
+  font-size: var(--sc-font-size-small);
+  line-height: var(--sc-line-height-dense);
+  color: var(--sc-color-gray-500);
+}
+
+.price__remove {
+  cursor: pointer;
+  line-height: 0;
+  color: var(--sc-color-gray-500);
+  display: flex;
+  gap: 0.3em;
+  align-items: center;
+}
+
+.actions__divider {
+  opacity: 0.25;
+  margin: 0 0.2em;
+}

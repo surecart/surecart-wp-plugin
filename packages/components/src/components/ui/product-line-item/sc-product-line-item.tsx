@@ -3,7 +3,7 @@ import { __, _n, sprintf } from '@wordpress/i18n';
 
 @Component({
   tag: 'sc-product-line-item',
-  styleUrl: 'sc-product-line-item.css',
+  styleUrl: 'sc-product-line-item.scss',
   shadow: true,
 })
 export class ScProductLineItem {
@@ -45,26 +45,43 @@ export class ScProductLineItem {
   renderPriceAndInterval() {
     if (this.trialDurationDays) {
       return (
-        <Fragment>
-          <span slot="price">{sprintf(_n('%d day free', '%d days free', this.trialDurationDays), this.trialDurationDays)}</span>
-          <span slot="price-description">
+        <div class="item__price">
+          <div class="price">{sprintf(_n('%d day free', '%d days free', this.trialDurationDays), this.trialDurationDays)}</div>
+          <div class="price__description">
             {__('Then', 'surecart')} <sc-format-number type="currency" currency={this.currency} value={this.amount}></sc-format-number> {!!this.interval && this.interval}
-          </span>
-        </Fragment>
+          </div>
+        </div>
       );
     }
 
     return (
-      <Fragment>
-        <span slot="price">
+      <div class="item__price">
+        <div class="price">
           <sc-format-number type="currency" currency={this.currency} value={this.amount}></sc-format-number>
-        </span>
-        {!!this.interval && <span slot="price-description">{this.interval}</span>}
-      </Fragment>
+        </div>
+        {!!this.interval && <div class="price__description">{this.interval}</div>}
+      </div>
     );
   }
 
   render() {
+    return (
+      <div class={{ 'product-item': true }}>
+        {!!this.imageUrl && <img src={this.imageUrl} class="item__image" />}
+        <div class="item__text">
+          <div class="item__title">
+            <slot name="title">{this.name}</slot>
+          </div>
+          {this.editable && <sc-quantity-select clickEl={this.el} quantity={this.quantity} onScChange={e => this.scUpdateQuantity.emit(e.detail)}></sc-quantity-select>}
+        </div>
+        <div class="item__suffix">
+          <sc-icon name="x"></sc-icon>
+          {this.renderPriceAndInterval()}
+        </div>
+      </div>
+    );
+
+    // @ts-ignore
     return (
       <sc-line-item>
         {!!this.imageUrl && <img src={this.imageUrl} slot="image" />}

@@ -1949,6 +1949,7 @@ export namespace Components {
     }
     interface ScQuantitySelect {
         "clickEl"?: HTMLElement;
+        "disabled": boolean;
         "max": number;
         "min": number;
         "quantity": number;
@@ -5787,6 +5788,7 @@ declare namespace LocalJSX {
     }
     interface ScQuantitySelect {
         "clickEl"?: HTMLElement;
+        "disabled"?: boolean;
         "max"?: number;
         "min"?: number;
         "onScChange"?: (event: CustomEvent<number>) => void;

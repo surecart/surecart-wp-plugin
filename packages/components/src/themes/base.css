@@ -222,6 +222,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-card-border: solid 1px var(--sc-input-border-color);
   --sc-choice-border: solid var(--sc-input-border-width) var(--sc-input-border-color);
   --sc-choice-box-shadow: var(--sc-input-box-shadow);
+  --sc-drawer-border: solid var(--sc-input-border-width) var(--sc-input-border-color);
   --sc-input-box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   --sc-input-height-small: 2.35em;
   --sc-input-height-medium: 2.8em;

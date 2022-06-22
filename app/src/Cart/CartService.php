@@ -60,6 +60,6 @@ class CartService {
 	 */
 	public function renderCartComponent() {
 		// This dynamically adds prop data to a component since we cannot pass objects data as a prop.
-		echo '<sc-cart id="sc-cart" always-show form-id="' . \SureCart::forms()->getDefaultId() . '"></sc-cart>';
+		echo '<sc-cart id="sc-cart" always-show form-id="' . \SureCart::forms()->getDefaultId() . '" style="font-size: 16px"></sc-cart>';
 	}
 }

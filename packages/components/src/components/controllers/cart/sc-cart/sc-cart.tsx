@@ -84,19 +84,23 @@ export class ScCart {
               </sc-cart-provider>
             )}
 
-            <sc-line-item-total slot="footer"></sc-line-item-total>
+            <sc-cart-provider style={{ position: 'relative', height: '100%' }} formId={this.formId} slot="footer">
+              <sc-line-item-total order={this.order} loading={this.uiState === 'loading'}>
+                <span slot="title">{__('Subtotal', 'surecart')}</span>
+              </sc-line-item-total>
+              <br />
 
-            <sc-button
-              style={{ position: 'relative', zIndex: '99' }}
-              href={this.checkoutUrl}
-              type="primary"
-              slot="footer"
-              full
-              loading={this.uiState === 'navigating'}
-              onClick={() => (this.uiState = 'navigating')}
-            >
-              {__('Proceed To Checkout', 'surecart')}
-            </sc-button>
+              <sc-button
+                style={{ position: 'relative', zIndex: '99' }}
+                href={this.checkoutUrl}
+                type="primary"
+                full
+                loading={this.uiState === 'navigating'}
+                onClick={() => (this.uiState = 'navigating')}
+              >
+                {__('Proceed To Checkout', 'surecart')}
+              </sc-button>
+            </sc-cart-provider>
           </sc-drawer>
         </sc-cart-context-provider>
       </Fragment>

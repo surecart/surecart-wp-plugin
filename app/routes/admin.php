@@ -171,6 +171,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 );
 
+\SureCart::route()
+->where( 'admin', 'cart' )
+->middleware( 'user.can:manage_options' )
+->middleware( 'assets.components' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Cart\\' )
+->group(
+	function() {
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'CartController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'show', 'action' )->handle( 'CartController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'CartController@edit' );
+	}
+);
+
 /*
 |--------------------------------------------------------------------------
 | Upgrade Paths
