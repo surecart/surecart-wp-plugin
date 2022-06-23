@@ -1,22 +1,25 @@
-import { Component, h, Prop, State } from '@stencil/core';
+import { Component, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../functions/fetch';
 import { baseUrl } from '../../../services/session';
 import { Order, ResponseError } from '../../../types';
 import { removeSessionId } from '../session-provider/helpers/session';
-import { Universe } from 'stencil-wormhole';
+import { Creator, Universe } from 'stencil-wormhole';
 
 @Component({
   tag: 'sc-cart-provider',
   shadow: true,
 })
-export class ScCart {
+export class ScProviderCart {
   /** The form id to use for the cart. */
   @Prop() formId: string;
 
   /** The current UI state. */
   @Prop() uiState: 'loading' | 'busy' | 'navigating' | 'idle' = 'idle';
+
+  /** Should we load the order? */
+  @Prop() load: boolean;
 
   /** The order */
   @State() order: Order;
@@ -29,12 +32,30 @@ export class ScCart {
     return this.formId ? window.localStorage.getItem(`sc-checkout-${this.formId}`) : null;
   }
 
+  // get order from localstorage
+  getCachedOrder() {
+    return (JSON.parse(window.localStorage.getItem(`sc-checkout-order-${this?.formId}`)) as Order) || null;
+  }
+
+  // sync order with localstorage.
+  @Watch('order')
+  handleOrderChange() {
+    window.localStorage.setItem(`sc-checkout-order-${this.formId}`, JSON.stringify(this.order));
+  }
+
+  @Watch('load')
+  handleLoad() {
+    if (!this.load) return;
+    const order = this.getCachedOrder();
+    if (order?.id) {
+      this.fetchOrder(order.id);
+    }
+  }
+
   /** Maybe fetch order on load. */
   componentDidLoad() {
-    const order_id = this.getOrderId();
-    if (order_id) {
-      this.fetchOrder(order_id);
-    }
+    this.order = this.getCachedOrder();
+    this.handleLoad();
   }
 
   /** Fetch the order */
@@ -60,8 +81,7 @@ export class ScCart {
   }
 
   componentWillLoad() {
-    // @ts-ignore
-    Universe.create(this, this.state());
+    Universe.create(this as Creator, this.state());
   }
 
   state() {
@@ -87,8 +107,15 @@ export class ScCart {
   render() {
     return (
       <Universe.Provider state={this.state()}>
-        <slot />
-        {this.state().busy && <sc-block-ui z-index={9}></sc-block-ui>}
+        <sc-cart-session-provider
+          order={this.order}
+          form-id={this.formId}
+          group-id={this.formId}
+          onScUpdateOrderState={e => (this.order = e.detail)}
+          onScError={e => (this.error = e.detail as ResponseError)}
+        >
+          <slot />
+        </sc-cart-session-provider>
       </Universe.Provider>
     );
   }

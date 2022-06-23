@@ -47,7 +47,7 @@ class CartService {
 	public function cartTemplate() {
 		ob_start(); ?>
 			<sc-order-summary>
-				<sc-line-items></sc-line-items>
+				<sc-line-items removable editable></sc-line-items>
 			</sc-order-summary>
 		<?php
 		return apply_filters( 'surecart/templates/cart', ob_get_clean() );
@@ -59,7 +59,16 @@ class CartService {
 	 * @return void
 	 */
 	public function renderCartComponent() {
-		// This dynamically adds prop data to a component since we cannot pass objects data as a prop.
-		echo '<sc-cart id="sc-cart" always-show form-id="' . \SureCart::forms()->getDefaultId() . '" style="font-size: 16px"></sc-cart>';
+		ob_start();
+		?>
+		<sc-cart id="sc-cart" always-show form-id="<?php echo esc_attr( \SureCart::forms()->getDefaultId() ); ?>" style="font-size: 16px">
+			<sc-line-items removable editable></sc-line-items>
+			<sc-total></sc-total>
+			<sc-button type="primary" full>
+				<?php esc_html_e( 'Checkout!', 'surecart' ); ?>
+			</sc-button>
+		</sc-cart>
+		<?php
+		echo wp_kses_post( ob_get_clean() );
 	}
 }

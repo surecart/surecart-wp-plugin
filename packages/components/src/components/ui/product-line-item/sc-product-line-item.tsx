@@ -66,16 +66,16 @@ export class ScProductLineItem {
 
   render() {
     return (
-      <div class={{ 'product-item': true }}>
+      <div class={{ 'item': true, 'item--has-image': !!this.imageUrl }}>
         {!!this.imageUrl && <img src={this.imageUrl} class="item__image" />}
         <div class="item__text">
           <div class="item__title">
             <slot name="title">{this.name}</slot>
           </div>
-          {this.editable && <sc-quantity-select clickEl={this.el} quantity={this.quantity} onScChange={e => this.scUpdateQuantity.emit(e.detail)}></sc-quantity-select>}
+          {this.editable && <sc-quantity-select clickEl={this.el} quantity={this.quantity} onScChange={e => e.detail && this.scUpdateQuantity.emit(e.detail)}></sc-quantity-select>}
         </div>
         <div class="item__suffix">
-          <sc-icon name="x"></sc-icon>
+          {this.removable ? <sc-icon class="item__close" name="x" onClick={() => this.scRemove.emit()}></sc-icon> : <div></div>}
           {this.renderPriceAndInterval()}
         </div>
       </div>

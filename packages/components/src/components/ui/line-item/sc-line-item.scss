@@ -19,11 +19,17 @@
   }
 }
 
+.item__title {
+  color: var(--sc-line-item-title-color);
+}
+.item__price {
+  color: var(--sc-input-label-color);
+}
+
 .item__title,
 .item__price {
   font-size: var(--sc-font-size-medium);
   font-weight: var(--sc-font-weight-semibold);
-  color: var(--sc-input-label-color);
 }
 
 .item__description,

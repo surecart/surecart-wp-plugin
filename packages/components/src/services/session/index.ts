@@ -41,6 +41,14 @@ export const createOrUpdateOrder = async ({ id, data = {}, query = {} }) => {
   });
 };
 
+export const updateOrder = async ({ id, data = {}, query = {} }) => {
+  return await apiFetch({
+    method: 'PATCH',
+    path: addQueryArgs(parsePath(id), query),
+    data,
+  });
+};
+
 /**
  * Finalize a checkout session
  */

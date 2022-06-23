@@ -128,7 +128,15 @@
   },
   "sc-cart-provider": {
     "form-id": true,
+    "load": true,
     "ui-state": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-cart-session-provider": {
+    "order": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1046,6 +1054,8 @@
   },
   "sc-quantity-select": {
     "click-el": true,
+    "disabled": true,
+    "has-focus": true,
     "max": true,
     "min": true,
     "quantity": true,

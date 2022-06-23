@@ -236,9 +236,19 @@ export namespace Components {
          */
         "formId": string;
         /**
+          * Should we load the order?
+         */
+        "load": boolean;
+        /**
           * The current UI state.
          */
         "uiState": 'loading' | 'busy' | 'navigating' | 'idle';
+    }
+    interface ScCartSessionProvider {
+        /**
+          * Order Object
+         */
+        "order": Order;
     }
     interface ScCcLogo {
         "brand": string;
@@ -1950,6 +1960,10 @@ export namespace Components {
     interface ScQuantitySelect {
         "clickEl"?: HTMLElement;
         "disabled": boolean;
+        /**
+          * Inputs focus
+         */
+        "hasFocus": boolean;
         "max": number;
         "min": number;
         "quantity": number;
@@ -2757,6 +2771,12 @@ declare global {
         prototype: HTMLScCartProviderElement;
         new (): HTMLScCartProviderElement;
     };
+    interface HTMLScCartSessionProviderElement extends Components.ScCartSessionProvider, HTMLStencilElement {
+    }
+    var HTMLScCartSessionProviderElement: {
+        prototype: HTMLScCartSessionProviderElement;
+        new (): HTMLScCartSessionProviderElement;
+    };
     interface HTMLScCcLogoElement extends Components.ScCcLogo, HTMLStencilElement {
     }
     var HTMLScCcLogoElement: {
@@ -3497,6 +3517,7 @@ declare global {
         "sc-cart-icon": HTMLScCartIconElement;
         "sc-cart-line-items": HTMLScCartLineItemsElement;
         "sc-cart-provider": HTMLScCartProviderElement;
+        "sc-cart-session-provider": HTMLScCartSessionProviderElement;
         "sc-cc-logo": HTMLScCcLogoElement;
         "sc-charges-list": HTMLScChargesListElement;
         "sc-checkbox": HTMLScCheckboxElement;
@@ -3865,9 +3886,31 @@ declare namespace LocalJSX {
          */
         "formId"?: string;
         /**
+          * Should we load the order?
+         */
+        "load"?: boolean;
+        /**
           * The current UI state.
          */
         "uiState"?: 'loading' | 'busy' | 'navigating' | 'idle';
+    }
+    interface ScCartSessionProvider {
+        /**
+          * Error event
+         */
+        "onScError"?: (event: CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
+        /**
+          * Set the state
+         */
+        "onScSetState"?: (event: CustomEvent<'loading' | 'busy' | 'navigating' | 'idle'>) => void;
+        /**
+          * Update line items event
+         */
+        "onScUpdateOrderState"?: (event: CustomEvent<Order>) => void;
+        /**
+          * Order Object
+         */
+        "order"?: Order;
     }
     interface ScCcLogo {
         "brand"?: string;
@@ -5789,9 +5832,25 @@ declare namespace LocalJSX {
     interface ScQuantitySelect {
         "clickEl"?: HTMLElement;
         "disabled"?: boolean;
+        /**
+          * Inputs focus
+         */
+        "hasFocus"?: boolean;
         "max"?: number;
         "min"?: number;
+        /**
+          * Emitted when the control loses focus.
+         */
+        "onScBlur"?: (event: CustomEvent<void>) => void;
         "onScChange"?: (event: CustomEvent<number>) => void;
+        /**
+          * Emitted when the control gains focus.
+         */
+        "onScFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control receives input.
+         */
+        "onScInput"?: (event: CustomEvent<number>) => void;
         "quantity"?: number;
     }
     interface ScRadio {
@@ -6607,6 +6666,7 @@ declare namespace LocalJSX {
         "sc-cart-icon": ScCartIcon;
         "sc-cart-line-items": ScCartLineItems;
         "sc-cart-provider": ScCartProvider;
+        "sc-cart-session-provider": ScCartSessionProvider;
         "sc-cc-logo": ScCcLogo;
         "sc-charges-list": ScChargesList;
         "sc-checkbox": ScCheckbox;
@@ -6747,6 +6807,7 @@ declare module "@stencil/core" {
             "sc-cart-icon": LocalJSX.ScCartIcon & JSXBase.HTMLAttributes<HTMLScCartIconElement>;
             "sc-cart-line-items": LocalJSX.ScCartLineItems & JSXBase.HTMLAttributes<HTMLScCartLineItemsElement>;
             "sc-cart-provider": LocalJSX.ScCartProvider & JSXBase.HTMLAttributes<HTMLScCartProviderElement>;
+            "sc-cart-session-provider": LocalJSX.ScCartSessionProvider & JSXBase.HTMLAttributes<HTMLScCartSessionProviderElement>;
             "sc-cc-logo": LocalJSX.ScCcLogo & JSXBase.HTMLAttributes<HTMLScCcLogoElement>;
             "sc-charges-list": LocalJSX.ScChargesList & JSXBase.HTMLAttributes<HTMLScChargesListElement>;
             "sc-checkbox": LocalJSX.ScCheckbox & JSXBase.HTMLAttributes<HTMLScCheckboxElement>;

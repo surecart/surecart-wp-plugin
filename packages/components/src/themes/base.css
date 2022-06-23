@@ -224,7 +224,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-choice-box-shadow: var(--sc-input-box-shadow);
   --sc-drawer-border: solid var(--sc-input-border-width) var(--sc-input-border-color);
   --sc-input-box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-  --sc-input-height-small: 2.35em;
+  --sc-input-height-small: 2.25em;
   --sc-input-height-medium: 2.8em;
   --sc-input-height-large: 3.0em;
   --sc-input-background-color: var(--sc-color-white);
@@ -289,6 +289,8 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-tooltip-padding: var(--sc-spacing-xx-small) var(--sc-spacing-x-small);
   --sc-tooltip-arrow-size: 5px;
   --sc-tooltip-arrow-start-end-offset: 8px;
+  --sc-quantity-control-height: 2em;
+  --sc-line-item-title-color: var(--sc-color-gray-800);
   --sc-z-index-drawer: 99999;
   --sc-z-index-dialog: 100000;
   --sc-z-index-dropdown: 900;
