@@ -22,7 +22,7 @@ export class ScLineItemTotal {
 
   render() {
     // loading state
-    if (this.loading) {
+    if (!this.order?.id && this.loading) {
       return (
         <sc-line-item>
           <sc-skeleton slot="title" style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>

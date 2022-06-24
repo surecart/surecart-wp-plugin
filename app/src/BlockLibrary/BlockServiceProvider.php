@@ -62,9 +62,9 @@ class BlockServiceProvider implements ServiceProviderInterface {
 				return array_merge(
 					[
 						'--spacing',
-						'--font - weight',
-						'--line - height',
-						'--font - size',
+						'--font-weight',
+						'--line-height',
+						'--font-size',
 						'--color',
 					],
 					$styles

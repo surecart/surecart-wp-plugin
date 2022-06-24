@@ -193,18 +193,7 @@ export namespace Components {
           * Should we force show the cart, even if there's a form on the page?
          */
         "alwaysShow": boolean;
-        /**
-          * The button text.
-         */
-        "buttonText": string;
-        /**
-          * The template for the pop-out cart.
-         */
         "cartTemplate": string;
-        /**
-          * The title for the cart.
-         */
-        "cartTitle": string;
         /**
           * The checkout url for the button.
          */
@@ -214,9 +203,9 @@ export namespace Components {
          */
         "formId": string;
         /**
-          * The current UI state.
+          * The header for the popout.
          */
-        "uiState": 'loading' | 'busy' | 'navigating' | 'idle';
+        "header": string;
     }
     interface ScCartIcon {
         /**
@@ -228,7 +217,12 @@ export namespace Components {
          */
         "icon": string;
     }
-    interface ScCartLineItems {
+    interface ScCartLoader {
+        /**
+          * The form id to use for the cart.
+         */
+        "formId": string;
+        "template": string;
     }
     interface ScCartProvider {
         /**
@@ -239,6 +233,7 @@ export namespace Components {
           * Should we load the order?
          */
         "load": boolean;
+        "order": Order;
         /**
           * The current UI state.
          */
@@ -1348,6 +1343,14 @@ export namespace Components {
         "value": string;
     }
     interface ScMenuLabel {
+    }
+    interface ScModelCacheProvider {
+        "cacheKey": string;
+        /**
+          * Order Object
+         */
+        "model": object;
+        "syncTabs": boolean;
     }
     interface ScOrderConfirmProvider {
         /**
@@ -2759,11 +2762,11 @@ declare global {
         prototype: HTMLScCartIconElement;
         new (): HTMLScCartIconElement;
     };
-    interface HTMLScCartLineItemsElement extends Components.ScCartLineItems, HTMLStencilElement {
+    interface HTMLScCartLoaderElement extends Components.ScCartLoader, HTMLStencilElement {
     }
-    var HTMLScCartLineItemsElement: {
-        prototype: HTMLScCartLineItemsElement;
-        new (): HTMLScCartLineItemsElement;
+    var HTMLScCartLoaderElement: {
+        prototype: HTMLScCartLoaderElement;
+        new (): HTMLScCartLoaderElement;
     };
     interface HTMLScCartProviderElement extends Components.ScCartProvider, HTMLStencilElement {
     }
@@ -3088,6 +3091,12 @@ declare global {
     var HTMLScMenuLabelElement: {
         prototype: HTMLScMenuLabelElement;
         new (): HTMLScMenuLabelElement;
+    };
+    interface HTMLScModelCacheProviderElement extends Components.ScModelCacheProvider, HTMLStencilElement {
+    }
+    var HTMLScModelCacheProviderElement: {
+        prototype: HTMLScModelCacheProviderElement;
+        new (): HTMLScModelCacheProviderElement;
     };
     interface HTMLScOrderConfirmProviderElement extends Components.ScOrderConfirmProvider, HTMLStencilElement {
     }
@@ -3515,7 +3524,7 @@ declare global {
         "sc-card": HTMLScCardElement;
         "sc-cart": HTMLScCartElement;
         "sc-cart-icon": HTMLScCartIconElement;
-        "sc-cart-line-items": HTMLScCartLineItemsElement;
+        "sc-cart-loader": HTMLScCartLoaderElement;
         "sc-cart-provider": HTMLScCartProviderElement;
         "sc-cart-session-provider": HTMLScCartSessionProviderElement;
         "sc-cc-logo": HTMLScCcLogoElement;
@@ -3570,6 +3579,7 @@ declare global {
         "sc-menu-divider": HTMLScMenuDividerElement;
         "sc-menu-item": HTMLScMenuItemElement;
         "sc-menu-label": HTMLScMenuLabelElement;
+        "sc-model-cache-provider": HTMLScModelCacheProviderElement;
         "sc-order-confirm-provider": HTMLScOrderConfirmProviderElement;
         "sc-order-confirmation": HTMLScOrderConfirmationElement;
         "sc-order-confirmation-customer": HTMLScOrderConfirmationCustomerElement;
@@ -3843,18 +3853,7 @@ declare namespace LocalJSX {
           * Should we force show the cart, even if there's a form on the page?
          */
         "alwaysShow"?: boolean;
-        /**
-          * The button text.
-         */
-        "buttonText"?: string;
-        /**
-          * The template for the pop-out cart.
-         */
         "cartTemplate"?: string;
-        /**
-          * The title for the cart.
-         */
-        "cartTitle"?: string;
         /**
           * The checkout url for the button.
          */
@@ -3864,9 +3863,9 @@ declare namespace LocalJSX {
          */
         "formId"?: string;
         /**
-          * The current UI state.
+          * The header for the popout.
          */
-        "uiState"?: 'loading' | 'busy' | 'navigating' | 'idle';
+        "header"?: string;
     }
     interface ScCartIcon {
         /**
@@ -3878,7 +3877,12 @@ declare namespace LocalJSX {
          */
         "icon"?: string;
     }
-    interface ScCartLineItems {
+    interface ScCartLoader {
+        /**
+          * The form id to use for the cart.
+         */
+        "formId"?: string;
+        "template"?: string;
     }
     interface ScCartProvider {
         /**
@@ -3889,6 +3893,7 @@ declare namespace LocalJSX {
           * Should we load the order?
          */
         "load"?: boolean;
+        "order"?: Order;
         /**
           * The current UI state.
          */
@@ -5137,6 +5142,18 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface ScMenuLabel {
+    }
+    interface ScModelCacheProvider {
+        "cacheKey"?: string;
+        /**
+          * Order Object
+         */
+        "model"?: object;
+        /**
+          * Update line items event
+         */
+        "onScUpdateModel"?: (event: CustomEvent<object>) => void;
+        "syncTabs"?: boolean;
     }
     interface ScOrderConfirmProvider {
         /**
@@ -6664,7 +6681,7 @@ declare namespace LocalJSX {
         "sc-card": ScCard;
         "sc-cart": ScCart;
         "sc-cart-icon": ScCartIcon;
-        "sc-cart-line-items": ScCartLineItems;
+        "sc-cart-loader": ScCartLoader;
         "sc-cart-provider": ScCartProvider;
         "sc-cart-session-provider": ScCartSessionProvider;
         "sc-cc-logo": ScCcLogo;
@@ -6719,6 +6736,7 @@ declare namespace LocalJSX {
         "sc-menu-divider": ScMenuDivider;
         "sc-menu-item": ScMenuItem;
         "sc-menu-label": ScMenuLabel;
+        "sc-model-cache-provider": ScModelCacheProvider;
         "sc-order-confirm-provider": ScOrderConfirmProvider;
         "sc-order-confirmation": ScOrderConfirmation;
         "sc-order-confirmation-customer": ScOrderConfirmationCustomer;
@@ -6805,7 +6823,7 @@ declare module "@stencil/core" {
             "sc-card": LocalJSX.ScCard & JSXBase.HTMLAttributes<HTMLScCardElement>;
             "sc-cart": LocalJSX.ScCart & JSXBase.HTMLAttributes<HTMLScCartElement>;
             "sc-cart-icon": LocalJSX.ScCartIcon & JSXBase.HTMLAttributes<HTMLScCartIconElement>;
-            "sc-cart-line-items": LocalJSX.ScCartLineItems & JSXBase.HTMLAttributes<HTMLScCartLineItemsElement>;
+            "sc-cart-loader": LocalJSX.ScCartLoader & JSXBase.HTMLAttributes<HTMLScCartLoaderElement>;
             "sc-cart-provider": LocalJSX.ScCartProvider & JSXBase.HTMLAttributes<HTMLScCartProviderElement>;
             "sc-cart-session-provider": LocalJSX.ScCartSessionProvider & JSXBase.HTMLAttributes<HTMLScCartSessionProviderElement>;
             "sc-cc-logo": LocalJSX.ScCcLogo & JSXBase.HTMLAttributes<HTMLScCcLogoElement>;
@@ -6860,6 +6878,7 @@ declare module "@stencil/core" {
             "sc-menu-divider": LocalJSX.ScMenuDivider & JSXBase.HTMLAttributes<HTMLScMenuDividerElement>;
             "sc-menu-item": LocalJSX.ScMenuItem & JSXBase.HTMLAttributes<HTMLScMenuItemElement>;
             "sc-menu-label": LocalJSX.ScMenuLabel & JSXBase.HTMLAttributes<HTMLScMenuLabelElement>;
+            "sc-model-cache-provider": LocalJSX.ScModelCacheProvider & JSXBase.HTMLAttributes<HTMLScModelCacheProviderElement>;
             "sc-order-confirm-provider": LocalJSX.ScOrderConfirmProvider & JSXBase.HTMLAttributes<HTMLScOrderConfirmProviderElement>;
             "sc-order-confirmation": LocalJSX.ScOrderConfirmation & JSXBase.HTMLAttributes<HTMLScOrderConfirmationElement>;
             "sc-order-confirmation-customer": LocalJSX.ScOrderConfirmationCustomer & JSXBase.HTMLAttributes<HTMLScOrderConfirmationCustomerElement>;

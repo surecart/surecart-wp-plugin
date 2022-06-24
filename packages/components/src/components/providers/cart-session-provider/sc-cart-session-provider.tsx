@@ -46,6 +46,7 @@ export class ScCartSessionProvider {
   /** Handles coupon updates. */
   @Listen('scApplyCoupon')
   async handleCouponApply(e) {
+    console.log(e);
     const promotion_code = e.detail;
     this.scError.emit({});
     this.loadUpdate({

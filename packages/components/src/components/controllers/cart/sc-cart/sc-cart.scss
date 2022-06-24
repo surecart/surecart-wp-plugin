@@ -1,7 +1,32 @@
 :host {
-
+  --header-spacing: var(--sc-spacing-large);
+  --body-spacing: var(--sc-spacing-large);
+  --footer-spacing: var(--sc-spacing-large);
 }
 
 .cart {
   font-size: 16px;
+}
+
+.cart__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 1em;
+}
+.cart__close {
+  opacity: 0.75;
+  transition: opacity 0.25s ease;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+slot[name='cart-footer']::slotted(*) {
+  border-top: var(--sc-drawer-border);
+  padding: var(--footer-spacing);
+  background:  var(--sc-panel-background-color);
+  position: relative;
 }

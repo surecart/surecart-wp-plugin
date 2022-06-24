@@ -1,5 +1,9 @@
-import { Component, h, Listen, Prop, State, Watch } from '@stencil/core';
+import { Component, Fragment, h, Listen, Prop, State, Watch } from '@stencil/core';
+import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
+import { Creator, Universe } from 'stencil-wormhole';
+import { baseUrl } from '../../../../services/session';
 
 import { Order, ResponseError } from '../../../../types';
 
@@ -10,34 +14,37 @@ import { Order, ResponseError } from '../../../../types';
 })
 export class ScCart {
   /** Is this open or closed? */
-  @State() open: boolean = false;
-
-  /** The template for the pop-out cart. */
-  @Prop() cartTemplate: string;
-
-  /** The title for the cart. */
-  @Prop() cartTitle: string;
-
-  /** The button text. */
-  @Prop() buttonText: string = 'Proceed To Checkout';
+  @State() open: boolean = null;
 
   /** The form id to use for the cart. */
   @Prop({ reflect: true }) formId: string;
 
+  /** The header for the popout. */
+  @Prop() header: string;
+
+  @Prop() cartTemplate: string;
+
   /** The checkout url for the button. */
   @Prop() checkoutUrl: string;
-
-  /** The current UI state. */
-  @Prop() uiState: 'loading' | 'busy' | 'navigating' | 'idle' = 'idle';
 
   /** Should we force show the cart, even if there's a form on the page? */
   @Prop() alwaysShow: boolean;
 
+  /** The current UI state. */
+  @State() uiState: 'loading' | 'busy' | 'navigating' | 'idle' = 'idle';
+
+  /** The order. */
   @State() order: Order;
 
+  /** Error state. */
   @State() error: ResponseError | null;
 
-  @State() loaded: boolean = false;
+  @Watch('open')
+  handleOpenChange() {
+    if (this.open === true) {
+      this.fetchOrder();
+    }
+  }
 
   /**
    * Search for the sc-checkout component on a page to make sure
@@ -47,21 +54,9 @@ export class ScCart {
     return !!document.querySelector('sc-checkout');
   }
 
-  getCount() {
-    return parseInt(window.localStorage.getItem(`sc-checkout-${this.formId}-line-items-count`) || '0');
-  }
-
-  getSessionId() {
-    return this.formId ? window.localStorage.getItem(`sc-checkout-${this.formId}`) : null;
-  }
-
-  // get order from localstorage
-  getCachedOrder() {
-    return (JSON.parse(window.localStorage.getItem(`sc-checkout-order-${this?.formId}`)) as Order) || null;
-  }
-
+  /** Count the number of items in the cart. */
   getItemsCount() {
-    const items = this.getCachedOrder()?.line_items?.data;
+    const items = this.order?.line_items?.data;
     let count = 0;
     items.forEach(item => {
       count = count + item?.quantity;
@@ -69,34 +64,113 @@ export class ScCart {
     return count;
   }
 
-  @Watch('open')
-  handleOpenChange(val) {
-    if (val) this.loaded = true;
-  }
-
   @Listen('scSetState')
   handleSetState(e) {
     this.uiState = e.detail;
   }
 
-  render() {
-    // don't render if we're on a checkout page.
-    if (this.pageHasForm()) return null;
-
-    // if we don't have a cart in storage, don't render anything.
-    if (!this.alwaysShow) {
-      if (!this.getCachedOrder() || this.getCachedOrder()?.line_items?.pagination?.count === 0) return null;
+  /** Fetch the order */
+  async fetchOrder() {
+    try {
+      this.uiState = 'loading';
+      this.order = (await apiFetch({
+        method: 'GET', // create or update
+        path: addQueryArgs(`${baseUrl}${this.order.id}`, {
+          expand: [
+            'line_items',
+            'line_item.price',
+            'price.product',
+            'customer',
+            'customer.shipping_address',
+            'payment_intent',
+            'discount',
+            'discount.promotion',
+            'discount.coupon',
+            'shipping_address',
+            'tax_identifier',
+          ],
+        }),
+      })) as Order;
+    } catch (e) {
+      console.error(e);
+      throw e;
+    } finally {
+      this.uiState = 'idle';
     }
+  }
 
-    // we have a cart, render all necessary components.
+  componentWillLoad() {
+    Universe.create(this as Creator, this.state());
+  }
+
+  state() {
+    return {
+      processor_data: this.order?.processor_data,
+      uiState: this.uiState,
+      loading: this.uiState === 'loading',
+      busy: this.uiState === 'busy',
+      navigating: this.uiState === 'navigating',
+      empty: !this.order?.line_items?.pagination?.count,
+      error: this.error,
+      order: this.order,
+      lineItems: this.order?.line_items?.data || [],
+      tax_status: this?.order?.tax_status,
+      customerShippingAddress: typeof this.order?.customer !== 'string' ? this?.order?.customer?.shipping_address : {},
+      shippingAddress: this.order?.shipping_address,
+      taxStatus: this.order?.tax_status,
+      formId: this.formId,
+    };
+  }
+
+  render() {
     return (
-      <sc-cart-provider load={this.loaded} uiState={this.uiState} formId={this.formId}>
-        <sc-cart-icon count={this.getItemsCount()} onClick={() => (this.open = !this.open)}></sc-cart-icon>
-        <sc-drawer no-header label={this.cartTitle} open={this.open} onScAfterHide={() => (this.open = false)} onScAfterShow={() => (this.open = true)}>
-          <slot />
-          {this.uiState === 'busy' && <sc-block-ui z-index={9}></sc-block-ui>}
-        </sc-drawer>
-      </sc-cart-provider>
+      <Fragment>
+        <sc-model-cache-provider
+          cacheKey={`sc-checkout-order-${this?.formId}`}
+          model={this.order}
+          onScUpdateModel={e => (this.order = e.detail as Order)}
+        ></sc-model-cache-provider>
+        {this.order && this.getItemsCount() && (
+          <Universe.Provider state={this.state()}>
+            <sc-cart-session-provider
+              order={this.order}
+              form-id={this.formId}
+              group-id={this.formId}
+              onScUpdateOrderState={e => (this.order = e.detail)}
+              onScError={e => (this.error = e.detail as ResponseError)}
+            >
+              <sc-cart-icon count={this.getItemsCount()} onClick={() => (this.open = !this.open)}></sc-cart-icon>
+
+              <sc-drawer open={this.open} onScAfterHide={() => (this.open = false)} onScAfterShow={() => (this.open = true)}>
+                {this.open === true && (
+                  <Fragment>
+                    <div class="cart__header" slot="header">
+                      <sc-icon class="cart__close" name="arrow-left" onClick={() => (this.open = false)}></sc-icon>
+                      <slot name="cart-title">{this.header}</slot>
+                      <sc-tag size="small">{this.getItemsCount()}</sc-tag>
+                    </div>
+
+                    <slot />
+
+                    <div class="cart_footer" slot="footer">
+                      <sc-cart-session-provider
+                        order={this.order}
+                        form-id={this.formId}
+                        group-id={this.formId}
+                        onScUpdateOrderState={e => (this.order = e.detail)}
+                        onScError={e => (this.error = e.detail as ResponseError)}
+                      >
+                        <slot name="cart-footer" />
+                      </sc-cart-session-provider>
+                    </div>
+                  </Fragment>
+                )}
+                {this.uiState === 'busy' && <sc-block-ui z-index={9}></sc-block-ui>}
+              </sc-drawer>
+            </sc-cart-session-provider>
+          </Universe.Provider>
+        )}
+      </Fragment>
     );
   }
 }

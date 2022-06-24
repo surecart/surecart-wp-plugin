@@ -101,12 +101,10 @@
   },
   "sc-cart": {
     "always-show": true,
-    "button-text": true,
     "cart-template": true,
-    "cart-title": true,
     "checkout-url": true,
     "form-id": true,
-    "ui-state": true,
+    "header": true,
     "style": true,
     "id": true,
     "class": true,
@@ -120,7 +118,9 @@
     "class": true,
     "slot": true
   },
-  "sc-cart-line-items": {
+  "sc-cart-loader": {
+    "form-id": true,
+    "template": true,
     "style": true,
     "id": true,
     "class": true,
@@ -129,6 +129,7 @@
   "sc-cart-provider": {
     "form-id": true,
     "load": true,
+    "order": true,
     "ui-state": true,
     "style": true,
     "id": true,
@@ -728,6 +729,15 @@
     "slot": true
   },
   "sc-menu-label": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-model-cache-provider": {
+    "cache-key": true,
+    "model": true,
+    "sync-tabs": true,
     "style": true,
     "id": true,
     "class": true,

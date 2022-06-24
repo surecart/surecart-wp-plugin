@@ -154,10 +154,10 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-color-danger-900: #7f1d1d;
   --sc-color-danger-950: #481111;
   --sc-color-danger-text: var(--sc-color-white);
-  --sc-border-radius-small: 0.25em;
-  --sc-border-radius-medium: 0.45em;
-  --sc-border-radius-large: 0.75em;
-  --sc-border-radius-x-large: 1em;
+  --sc-border-radius-small: 0.15em;
+  --sc-border-radius-medium: 0.25em;
+  --sc-border-radius-large: 0.5em;
+  --sc-border-radius-x-large: 0.75em;
   --sc-border-radius-circle: 50%;
   --sc-border-radius-pill: 9999px;
   --sc-shadow-x-small: 0 1px 0 #0d131e0d;

@@ -1,7 +1,7 @@
 import { Order, Customer, PriceChoice, Prices, Products, ResponseError, FormState, Processor, PaymentIntents, PaymentIntent } from '../../../../types';
 import { Component, h, Prop, Element, State, Listen, Method, Event, EventEmitter } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { Universe } from 'stencil-wormhole';
+import { Creator, Universe } from 'stencil-wormhole';
 
 @Component({
   tag: 'sc-checkout',
@@ -149,8 +149,7 @@ export class ScCheckout {
   }
 
   componentWillLoad() {
-    // @ts-ignore
-    Universe.create(this, this.state());
+    Universe.create(this as Creator, this.state());
   }
 
   componentDidLoad() {
@@ -214,6 +213,11 @@ export class ScCheckout {
         }}
       >
         <Universe.Provider state={this.state()}>
+          <sc-model-cache-provider
+            cacheKey={`sc-checkout-order-${this?.formId}`}
+            model={this.order}
+            onScUpdateModel={e => (this.order = e.detail as Order)}
+          ></sc-model-cache-provider>
           {/* Handles the current checkout form state. */}
           <sc-form-state-provider onScSetCheckoutFormState={e => (this.checkoutState = e.detail)}>
             {/* Handles errors in the form. */}

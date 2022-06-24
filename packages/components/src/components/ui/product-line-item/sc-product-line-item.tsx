@@ -1,4 +1,4 @@
-import { Component, h, Prop, Event, EventEmitter, Element, Fragment } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter, Element } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 
 @Component({
@@ -75,37 +75,10 @@ export class ScProductLineItem {
           {this.editable && <sc-quantity-select clickEl={this.el} quantity={this.quantity} onScChange={e => e.detail && this.scUpdateQuantity.emit(e.detail)}></sc-quantity-select>}
         </div>
         <div class="item__suffix">
-          {this.removable ? <sc-icon class="item__close" name="x" onClick={() => this.scRemove.emit()}></sc-icon> : <div></div>}
+          {this.removable ? <sc-icon class="item__remove" name="x" onClick={() => this.scRemove.emit()}></sc-icon> : <div></div>}
           {this.renderPriceAndInterval()}
         </div>
       </div>
-    );
-
-    // @ts-ignore
-    return (
-      <sc-line-item>
-        {!!this.imageUrl && <img src={this.imageUrl} slot="image" />}
-        <span slot="title">{this.name}</span>
-        <span class="product__description" slot="description">
-          {this.editable && <sc-quantity-select clickEl={this.el} quantity={this.quantity} onScChange={e => this.scUpdateQuantity.emit(e.detail)}></sc-quantity-select>}
-          {!this.editable && (
-            <span>
-              {__('Qty:', 'surecart')} {this.quantity}
-            </span>
-          )}
-
-          {this.removable && (
-            <Fragment>
-              <span class="actions__divider">|</span>
-              <div class="price__remove" onClick={() => this.scRemove.emit()}>
-                <sc-icon name="trash-2"></sc-icon>
-                {__('Remove', 'surecart')}
-              </div>
-            </Fragment>
-          )}
-        </span>
-        {this.renderPriceAndInterval()}
-      </sc-line-item>
     );
   }
 }

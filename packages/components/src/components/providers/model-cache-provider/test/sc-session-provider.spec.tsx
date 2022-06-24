@@ -1,4 +1,4 @@
-import { ScSessionProvider } from '../sc-cart-session-provider';
+import { ScSessionProvider } from '../sc-model-cache-provider';
 import { newSpecPage } from '@stencil/core/testing';
 import { parseFormData } from '../../../../functions/form-data';
 

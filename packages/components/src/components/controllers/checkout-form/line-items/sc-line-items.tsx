@@ -69,7 +69,7 @@ export class ScLineItems {
   }
 
   render() {
-    if (!!this.loading) {
+    if (!!this.loading && !this.order?.line_items?.data?.length) {
       return (
         <sc-line-item>
           <sc-skeleton style={{ 'width': '50px', 'height': '50px', '--border-radius': '0' }} slot="image"></sc-skeleton>
@@ -80,8 +80,6 @@ export class ScLineItems {
         </sc-line-item>
       );
     }
-
-    console.log(this.order);
 
     return (
       <div class="line-items">

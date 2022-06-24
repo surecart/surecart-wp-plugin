@@ -21,23 +21,11 @@ export class ScProviderCart {
   /** Should we load the order? */
   @Prop() load: boolean;
 
-  /** The order */
-  @State() order: Order;
+  @Prop({ mutable: true }) order: Order;
 
   /** Error */
   @State() error: ResponseError | null;
 
-  /** Get the order id from storage. */
-  getOrderId() {
-    return this.formId ? window.localStorage.getItem(`sc-checkout-${this.formId}`) : null;
-  }
-
-  // get order from localstorage
-  getCachedOrder() {
-    return (JSON.parse(window.localStorage.getItem(`sc-checkout-order-${this?.formId}`)) as Order) || null;
-  }
-
-  // sync order with localstorage.
   @Watch('order')
   handleOrderChange() {
     window.localStorage.setItem(`sc-checkout-order-${this.formId}`, JSON.stringify(this.order));
@@ -46,15 +34,13 @@ export class ScProviderCart {
   @Watch('load')
   handleLoad() {
     if (!this.load) return;
-    const order = this.getCachedOrder();
-    if (order?.id) {
-      this.fetchOrder(order.id);
+    if (this.order?.id) {
+      this.fetchOrder(this.order.id);
     }
   }
 
   /** Maybe fetch order on load. */
   componentDidLoad() {
-    this.order = this.getCachedOrder();
     this.handleLoad();
   }
 
@@ -80,43 +66,17 @@ export class ScProviderCart {
     }
   }
 
-  componentWillLoad() {
-    Universe.create(this as Creator, this.state());
-  }
-
-  state() {
-    return {
-      processor: 'stripe',
-      processor_data: this.order?.processor_data,
-      uiState: this.uiState,
-      loading: this.uiState === 'loading',
-      busy: this.uiState === 'busy',
-      navigating: this.uiState === 'navigating',
-      empty: !this.order?.line_items?.pagination?.count,
-      error: this.error,
-      order: this.order,
-      lineItems: this.order?.line_items?.data || [],
-      tax_status: this?.order?.tax_status,
-      customerShippingAddress: typeof this.order?.customer !== 'string' ? this?.order?.customer?.shipping_address : {},
-      shippingAddress: this.order?.shipping_address,
-      taxStatus: this.order?.tax_status,
-      formId: this.formId,
-    };
-  }
-
   render() {
     return (
-      <Universe.Provider state={this.state()}>
-        <sc-cart-session-provider
-          order={this.order}
-          form-id={this.formId}
-          group-id={this.formId}
-          onScUpdateOrderState={e => (this.order = e.detail)}
-          onScError={e => (this.error = e.detail as ResponseError)}
-        >
-          <slot />
-        </sc-cart-session-provider>
-      </Universe.Provider>
+      <sc-cart-session-provider
+        order={this.order}
+        form-id={this.formId}
+        group-id={this.formId}
+        onScUpdateOrderState={e => (this.order = e.detail)}
+        onScError={e => (this.error = e.detail as ResponseError)}
+      >
+        <slot />
+      </sc-cart-session-provider>
     );
   }
 }

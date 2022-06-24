@@ -11,7 +11,6 @@
   gap: 18px;
   justify-content: space-between;
   align-items: stretch;
-  overflow: hidden;
   width: 100%;
   border-bottom: none;
 }
@@ -85,13 +84,9 @@
   color: var(--sc-color-gray-500);
 }
 
-.price__remove {
+.item__remove {
   cursor: pointer;
-  line-height: 0;
-  color: var(--sc-color-gray-500);
-  display: flex;
-  gap: 0.3em;
-  align-items: center;
+  color: var(--sc-color-gray-400);
 }
 
 .actions__divider {
