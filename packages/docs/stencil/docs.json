@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-06-20T18:30:14",
+  "timestamp": "2022-06-23T16:37:39",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.15.1",
@@ -432,6 +432,7 @@
       "dependents": [
         "sc-checkout",
         "sc-coupon-form",
+        "sc-custom-order-price-input",
         "sc-dashboard-module",
         "sc-form-error-provider",
         "sc-login-form",
@@ -455,6 +456,9 @@
           "sc-alert"
         ],
         "sc-coupon-form": [
+          "sc-alert"
+        ],
+        "sc-custom-order-price-input": [
           "sc-alert"
         ],
         "sc-dashboard-module": [
@@ -3777,15 +3781,20 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
+        "sc-alert",
         "sc-skeleton",
         "sc-price-input",
         "sc-block-ui"
       ],
       "dependencyGraph": {
         "sc-custom-order-price-input": [
+          "sc-alert",
           "sc-skeleton",
           "sc-price-input",
           "sc-block-ui"
+        ],
+        "sc-alert": [
+          "sc-icon"
         ],
         "sc-price-input": [
           "sc-input"

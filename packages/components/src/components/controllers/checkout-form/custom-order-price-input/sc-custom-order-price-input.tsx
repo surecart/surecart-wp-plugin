@@ -1,7 +1,8 @@
-import { Component, Event, EventEmitter, h, Listen, Prop, State, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Host, Listen, Prop, State, Watch } from '@stencil/core';
 import { LineItem, LineItemData, Price } from '../../../../types';
 import apiFetch from '../../../../functions/fetch';
 import { openWormhole } from 'stencil-wormhole';
+import { __ } from '@wordpress/i18n';
 
 @Component({
   tag: 'sc-custom-order-price-input',
@@ -84,6 +85,17 @@ export class ScCustomOrderPriceInput {
     }
   }
 
+  renderEmpty() {
+    if (window?.wp?.blocks) {
+      return (
+        <sc-alert type="danger" open style={{ margin: '0px' }}>
+          {__('This price has been archived.', 'surecart')}
+        </sc-alert>
+      );
+    }
+    return <Host style={{ display: 'none' }}></Host>;
+  }
+
   render() {
     if (this.loading || this.fetching) {
       return (
@@ -93,6 +105,9 @@ export class ScCustomOrderPriceInput {
         </div>
       );
     }
+
+    // Price needs to be active.
+    if (!this?.price?.id || this.price?.archived) return this.renderEmpty();
 
     return (
       <div class="sc-custom-order-price-input">
