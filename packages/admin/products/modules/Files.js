@@ -6,12 +6,13 @@ import {
 	ScFormControl,
 	ScStackedList,
 } from '@surecart/components-react';
-import { FormFileUpload, DropZone } from '@wordpress/components';
+import { FormFileUpload, DropZone, Button } from '@wordpress/components';
 import SingleFile from './SingleFile';
 import Box from '../../ui/Box';
 import { useEffect, useState } from 'react';
 import { select } from '@wordpress/data';
 import { store } from '../../store/data';
+import MediaLibrary from '../../components/MediaLibrary';
 
 export default ({ id, product, updateProduct, loading }) => {
 	// stores our draft uploads.
@@ -108,25 +109,15 @@ export default ({ id, product, updateProduct, loading }) => {
 			})()}
 
 			<ScFormControl label={__('File', 'surecart')} showLabel={false}>
-				<div
-					css={css`
-						position: relative;
-						border: 2px dashed var(--sc-color-gray-200);
-						border-radius: var(--sc-border-radius-small);
-						padding: 2em;
-						display: grid;
-						gap: 1em;
-						text-align: center;
-					`}
-				>
-					{__('Drag and drop files here', 'surecart')}
-					<sc-divider>{__('Or', 'surecart')}</sc-divider>
-					<FormFileUpload isPrimary multiple onChange={doUpload}>
-						{__('Upload Files', 'surecart')}
-					</FormFileUpload>
-
-					<DropZone onFilesDrop={doUpload} />
-				</div>
+				<MediaLibrary
+					render={({ setOpen }) => {
+						return (
+							<Button isPrimary onClick={() => setOpen(true)}>
+								{__('Select/Upload Downloads', 'surecart')}
+							</Button>
+						);
+					}}
+				></MediaLibrary>
 			</ScFormControl>
 		</Box>
 	);
