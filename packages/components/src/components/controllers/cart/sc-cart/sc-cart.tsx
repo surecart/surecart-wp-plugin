@@ -130,7 +130,7 @@ export class ScCart {
           model={this.order}
           onScUpdateModel={e => (this.order = e.detail as Order)}
         ></sc-model-cache-provider>
-        {this.order && this.getItemsCount() && (
+        {this.order && (
           <Universe.Provider state={this.state()}>
             <sc-cart-session-provider
               order={this.order}
@@ -148,6 +148,9 @@ export class ScCart {
                       <sc-icon class="cart__close" name="arrow-left" onClick={() => (this.open = false)}></sc-icon>
                       <slot name="cart-title">{this.header}</slot>
                       <sc-tag size="small">{this.getItemsCount()}</sc-tag>
+                    </div>
+                    <div class="cart__header-suffix" slot="header-suffix">
+                      <slot name="cart-header" />
                     </div>
 
                     <slot />

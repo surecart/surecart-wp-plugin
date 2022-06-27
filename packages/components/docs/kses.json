@@ -110,6 +110,15 @@
     "class": true,
     "slot": true
   },
+  "sc-cart-form": {
+    "form-id": true,
+    "price-id": true,
+    "quantity": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-cart-icon": {
     "count": true,
     "icon": true,
@@ -121,16 +130,6 @@
   "sc-cart-loader": {
     "form-id": true,
     "template": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "sc-cart-provider": {
-    "form-id": true,
-    "load": true,
-    "order": true,
-    "ui-state": true,
     "style": true,
     "id": true,
     "class": true,

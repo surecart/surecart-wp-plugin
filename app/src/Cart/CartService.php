@@ -25,10 +25,25 @@ class CartService {
 		ob_start();
 		?>
 		<sc-cart id="sc-cart" header="<?php esc_attr_e( 'Cart', 'surecart' ); ?>" form-id="<?php echo esc_attr( \SureCart::forms()->getDefaultId() ); ?>" style="font-size: 16px">
+
+
+
+			<div slot="cart-header" style="position: relative;">
+				<sc-text style="--font-size: var(--sc-font-size-x-small);">We pay for shipping on all orders!</sc-text>
+			</div>
+
+
 			<sc-line-items removable editable></sc-line-items>
 
+			<div slot="cart-footer" style="position: relative;">
+				<sc-text style="--font-size: var(--sc-font-size-x-small);">Add at least $82.00 more to get free shipping!</sc-text>
+				<div style="position: absolute; top: 0; left: 0; right: 0; background: var(--sc-color-gray-300);">
+					<div style="width: 50%; height: 3px; background: var(--sc-color-primary-500);"></div>
+				</div>
+			</div>
+
 			<sc-order-coupon-form label="<?php esc_attr_e( 'Add Coupon Code', 'surecart' ); ?>" slot="cart-footer">
-			<?php esc_html_e( 'Apply Coupon', 'surecart' ); ?>
+				<?php esc_html_e( 'Apply Coupon', 'surecart' ); ?>
 			</sc-order-coupon-form>
 
 			<sc-spacing slot="cart-footer" style="--spacing: var(--sc-spacing-small)">

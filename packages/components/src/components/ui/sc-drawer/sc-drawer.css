@@ -1,8 +1,5 @@
 :host {
   --size: 25rem;
-  --header-spacing: var(--sc-spacing-large);
-  --body-spacing: var(--sc-spacing-large);
-  --footer-spacing: var(--sc-spacing-large);
   display: contents;
 }
 .drawer {
@@ -74,7 +71,7 @@
 .drawer__header {
   display: flex;
   align-items: center;
-  padding: var(--header-spacing);
+  padding: var(--sc-drawer-header-spacing);
   border-bottom: var(--sc-drawer-border);
 }
 
@@ -95,14 +92,14 @@
 }
 .drawer__body {
   flex: 1 1 auto;
-  padding: var(--body-spacing);
+  padding: var(--sc-drawer-body-spacing);
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
 
 /* slot[name='footer']::slotted(*) {
   border-top: var(--sc-drawer-border);
-  padding: var(--footer-spacing);
+  padding: var(--sc-drawer-footer-spacing);
 }
 
 .drawer__footer ::slotted(sl-button:not(:last-of-type)) {

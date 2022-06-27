@@ -21,6 +21,8 @@ export class ScModelCacheProvider {
     if (this.model === null) {
       window.localStorage.removeItem(this.cacheKey);
     } else {
+      console.log(this.cacheKey);
+      console.log(this.model);
       window.localStorage.setItem(this.cacheKey, JSON.stringify(this.model));
     }
     this.scUpdateModel.emit(this.model);
@@ -33,6 +35,7 @@ export class ScModelCacheProvider {
 
     if (this.syncTabs) {
       window.addEventListener('storage', e => {
+        console.log(e);
         if (e.key === this.cacheKey) {
           this.model = JSON.parse(e.newValue);
         }

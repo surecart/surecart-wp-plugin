@@ -24,6 +24,13 @@
     opacity: 1;
   }
 }
+slot[name='cart-header']::slotted(*) {
+  border-bottom: var(--sc-drawer-border);
+  padding: var(--header-spacing);
+  background:  var(--sc-panel-background-color);
+  position: relative;
+}
+
 slot[name='cart-footer']::slotted(*) {
   border-top: var(--sc-drawer-border);
   padding: var(--footer-spacing);

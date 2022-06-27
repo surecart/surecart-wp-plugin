@@ -221,6 +221,9 @@ export class ScDrawer {
               </slot>
             </header>
           )}
+          <footer part="header-suffix" class="drawer__header-suffix">
+            <slot name="header-suffix"></slot>
+          </footer>
           <div part="body" class="drawer__body">
             <slot></slot>
           </div>

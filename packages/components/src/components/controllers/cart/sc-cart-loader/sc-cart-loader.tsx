@@ -17,8 +17,8 @@ export class ScCartLoader {
 
   @Watch('order')
   handleOrderChange() {
-    if (this.pageHasForm()) return null;
-    if (this.order?.id) {
+    if (this.order?.line_items?.pagination?.count) {
+      if (this.pageHasForm()) return null;
       this.loaded = true;
     }
   }
