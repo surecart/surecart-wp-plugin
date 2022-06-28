@@ -66,7 +66,8 @@ export class ScCartForm {
         ...store.state.checkouts,
         [this.formId]: order,
       };
-      uiStore.state.cart.open = true;
+
+      uiStore.set('cart', { ...uiStore.state.cart, ...{ open: true } });
     } catch (e) {
       console.error(e);
       this.error = e?.message || __('Something went wrong', 'surecart');
@@ -79,7 +80,6 @@ export class ScCartForm {
     return (
       <sc-form
         onScSubmit={() => {
-          console.log('submit');
           this.addToCart();
         }}
       >
@@ -89,12 +89,10 @@ export class ScCartForm {
             {this.error}
           </sc-alert>
         )}
-        <sc-model-cache-provider
-          cacheKey={`sc-checkout-order-${this?.formId}`}
-          model={this.order}
-          onScUpdateModel={e => (this.order = e.detail as Order)}
-        ></sc-model-cache-provider>
         <slot />
+        <sc-button type="primary" submit busy={this.busy}>
+          {__('Add To Cart', 'surecart')}
+        </sc-button>
       </sc-form>
     );
   }

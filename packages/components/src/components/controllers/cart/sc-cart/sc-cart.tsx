@@ -4,7 +4,8 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { Creator, Universe } from 'stencil-wormhole';
 import { baseUrl } from '../../../../services/session';
-
+import store from '../../../../store/checkouts';
+import uiStore from '../../../../store/ui';
 import { Order, ResponseError } from '../../../../types';
 
 @Component({
@@ -33,17 +34,23 @@ export class ScCart {
   /** The current UI state. */
   @State() uiState: 'loading' | 'busy' | 'navigating' | 'idle' = 'idle';
 
-  /** The order. */
-  @State() order: Order;
-
   /** Error state. */
   @State() error: ResponseError | null;
 
   @Watch('open')
   handleOpenChange() {
+    uiStore.set('cart', { ...uiStore.state.cart, ...{ open: this.open } });
     if (this.open === true) {
       this.fetchOrder();
     }
+  }
+
+  order() {
+    return store?.state?.checkouts?.[this?.formId];
+  }
+
+  setOrder(data) {
+    store.set('checkouts', { ...store.state.checkouts, [this.formId]: data });
   }
 
   /**
@@ -56,7 +63,7 @@ export class ScCart {
 
   /** Count the number of items in the cart. */
   getItemsCount() {
-    const items = this.order?.line_items?.data;
+    const items = this.order()?.line_items?.data;
     let count = 0;
     items.forEach(item => {
       count = count + item?.quantity;
@@ -73,9 +80,9 @@ export class ScCart {
   async fetchOrder() {
     try {
       this.uiState = 'loading';
-      this.order = (await apiFetch({
+      const order = (await apiFetch({
         method: 'GET', // create or update
-        path: addQueryArgs(`${baseUrl}${this.order.id}`, {
+        path: addQueryArgs(`${baseUrl}${this.order()?.id}`, {
           expand: [
             'line_items',
             'line_item.price',
@@ -91,6 +98,7 @@ export class ScCart {
           ],
         }),
       })) as Order;
+      this.setOrder(order);
     } catch (e) {
       console.error(e);
       throw e;
@@ -101,23 +109,27 @@ export class ScCart {
 
   componentWillLoad() {
     Universe.create(this as Creator, this.state());
+    this.open = !!uiStore.state.cart.open;
+    uiStore.onChange('cart', cart => {
+      this.open = cart.open;
+    });
   }
 
   state() {
     return {
-      processor_data: this.order?.processor_data,
+      processor_data: this.order()?.processor_data,
       uiState: this.uiState,
       loading: this.uiState === 'loading',
       busy: this.uiState === 'busy',
       navigating: this.uiState === 'navigating',
-      empty: !this.order?.line_items?.pagination?.count,
+      empty: !this.order()?.line_items?.pagination?.count,
       error: this.error,
-      order: this.order,
-      lineItems: this.order?.line_items?.data || [],
-      tax_status: this?.order?.tax_status,
-      customerShippingAddress: typeof this.order?.customer !== 'string' ? this?.order?.customer?.shipping_address : {},
-      shippingAddress: this.order?.shipping_address,
-      taxStatus: this.order?.tax_status,
+      order: this.order(),
+      lineItems: this.order()?.line_items?.data || [],
+      tax_status: this.order()?.tax_status,
+      customerShippingAddress: typeof this.order()?.customer !== 'string' ? this.order()?.customer?.shipping_address : {},
+      shippingAddress: this.order()?.shipping_address,
+      taxStatus: this.order()?.tax_status,
       formId: this.formId,
     };
   }
@@ -125,18 +137,13 @@ export class ScCart {
   render() {
     return (
       <Fragment>
-        <sc-model-cache-provider
-          cacheKey={`sc-checkout-order-${this?.formId}`}
-          model={this.order}
-          onScUpdateModel={e => (this.order = e.detail as Order)}
-        ></sc-model-cache-provider>
-        {this.order && (
+        {this.order() && (
           <Universe.Provider state={this.state()}>
             <sc-cart-session-provider
-              order={this.order}
+              order={this.order()}
               form-id={this.formId}
               group-id={this.formId}
-              onScUpdateOrderState={e => (this.order = e.detail)}
+              onScUpdateOrderState={e => this.setOrder(e.detail)}
               onScError={e => (this.error = e.detail as ResponseError)}
             >
               <sc-cart-icon count={this.getItemsCount()} onClick={() => (this.open = !this.open)}></sc-cart-icon>
@@ -157,10 +164,10 @@ export class ScCart {
 
                     <div class="cart_footer" slot="footer">
                       <sc-cart-session-provider
-                        order={this.order}
+                        order={this.order()}
                         form-id={this.formId}
                         group-id={this.formId}
-                        onScUpdateOrderState={e => (this.order = e.detail)}
+                        onScUpdateOrderState={e => this.setOrder(e.detail)}
                         onScError={e => (this.error = e.detail as ResponseError)}
                       >
                         <slot name="cart-footer" />

@@ -1,5 +1,7 @@
-import { Component, Host, h, Prop, State, Watch } from '@stencil/core';
+import { Component, h, Prop, State, Watch } from '@stencil/core';
 import { Order } from '../../../../types';
+import store from '../../../../store/checkouts';
+import uiStore from '../../../../store/ui';
 
 @Component({
   tag: 'sc-cart-loader',
@@ -32,16 +34,7 @@ export class ScCartLoader {
   }
 
   render() {
-    return (
-      <Host>
-        <sc-model-cache-provider
-          cacheKey={`sc-checkout-order-${this?.formId}`}
-          model={this.order}
-          onScUpdateModel={e => (this.order = e.detail as Order)}
-        ></sc-model-cache-provider>
-
-        <div innerHTML={this.loaded ? this.template : ''}></div>
-      </Host>
-    );
+    console.log(uiStore.state.cart);
+    return <div innerHTML={store?.state?.checkouts?.[this?.formId] || uiStore?.state?.cart?.open ? this.template : ''}></div>;
   }
 }
