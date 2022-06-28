@@ -15,9 +15,11 @@ import {
 import Template from './template';
 import { ScEmpty, ScSpinner } from '@surecart/components-react';
 import useFileUpload from '../../mixins/useFileUpload';
+import Error from '../Error';
 
 export default ({
 	render,
+	isPrivate = true,
 	addToGallery = false,
 	allowedTypes,
 	multiple = false,
@@ -25,23 +27,28 @@ export default ({
 	onSelect,
 }) => {
 	const [open, setOpen] = useState(false);
+	const [error, setError] = useState(null);
+	const [page, setPage] = useState(1);
 	const uploadFile = useFileUpload();
 
-	const { medias, fetching } = useSelect((select) => {
-		const queryArgs = [
-			'surecart',
-			'media',
-			{ context: 'edit', per_page: 100 },
-		];
-		const medias = select(coreStore).getEntityRecords(...queryArgs);
-		return {
-			medias,
-			fetching: select(coreStore).isResolving(
-				'getEntityRecords',
-				queryArgs
-			),
-		};
-	}, []);
+	const { medias, fetching } = useSelect(
+		(select) => {
+			const queryArgs = [
+				'surecart',
+				'media',
+				{ context: 'edit', per_page: 10, page },
+			];
+			const medias = select(coreStore).getEntityRecords(...queryArgs);
+			return {
+				medias,
+				fetching: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
+		},
+		[page]
+	);
 
 	const renderMedias = () => {
 		if (fetching) {
@@ -73,8 +80,17 @@ export default ({
 	};
 
 	const addUpload = async (e) => {
+		setError(false);
 		const file = e.target.files[0];
-		uploadFile(file);
+		try {
+			await uploadFile(file);
+		} catch (e) {
+			console.error(e);
+			setError(
+				e?.message ||
+					__('Something went wrong. Please try again.', 'surecart')
+			);
+		}
 	};
 
 	const header = () => {
@@ -126,6 +142,8 @@ export default ({
 						flex-direction: column;
 					`}
 				>
+					<Error error={error} setError={setError} margin="80px" />
+
 					{renderMedias()}
 
 					<DropZone label={'Drop files'} onFilesDrop={addUpload} />

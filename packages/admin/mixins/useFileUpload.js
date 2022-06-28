@@ -15,11 +15,11 @@ export default () => {
 				if (error) {
 					reject(error);
 				}
-				resolve(id);
+				resolve();
 			});
 		});
 
-		console.log({ upload });
+		console.log({ upload, directUpload });
 
 		return await apiFetch({
 			method: 'POST',
