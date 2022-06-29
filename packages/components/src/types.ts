@@ -399,8 +399,20 @@ export interface PaymentMethod extends Object {
   processor_type: 'stripe' | 'paypal';
   type: string;
   payment_intent: PaymentIntent | string;
+  billing_agreement?: BillingAgreement | string;
   card: any;
   customer: Customer | string;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface BillingAgreement {
+  email: string;
+  external_customer_id: string;
+  first_name: string;
+  id: string;
+  last_name: string;
+  object: 'billing_agreement';
   created_at: number;
   updated_at: number;
 }
