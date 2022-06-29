@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 import { Fragment, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
 
 import {
 	DropZoneProvider,
@@ -13,9 +13,18 @@ import {
 } from '@wordpress/components';
 
 import Template from './template';
-import { ScEmpty, ScSpinner } from '@surecart/components-react';
+import {
+	ScBlockUi,
+	ScButton,
+	ScCard,
+	ScEmpty,
+	ScSpinner,
+	ScStackedList,
+	ScTag,
+} from '@surecart/components-react';
 import useFileUpload from '../../mixins/useFileUpload';
 import Error from '../Error';
+import MediaItem from './MediaItem';
 
 export default ({
 	render,
@@ -26,17 +35,22 @@ export default ({
 	onClose,
 	onSelect,
 }) => {
+	const [perPage, setPerPage] = useState(30);
 	const [open, setOpen] = useState(false);
+	const [selected, setSelected] = useState(null);
+	const [uploading, setUploading] = useState(false);
 	const [error, setError] = useState(null);
 	const [page, setPage] = useState(1);
 	const uploadFile = useFileUpload();
+	const { saveEntityRecord } = useDispatch(coreStore);
 
 	const { medias, fetching } = useSelect(
 		(select) => {
+			if (!open) return {}; // must be open.
 			const queryArgs = [
 				'surecart',
 				'media',
-				{ context: 'edit', per_page: 10, page },
+				{ context: 'edit', per_page: perPage, page },
 			];
 			const medias = select(coreStore).getEntityRecords(...queryArgs);
 			return {
@@ -47,14 +61,14 @@ export default ({
 				),
 			};
 		},
-		[page]
+		[page, open]
 	);
 
 	const renderMedias = () => {
-		if (fetching) {
-			return <ScSpinner></ScSpinner>;
-		}
 		if (!medias?.length) {
+			if (fetching) {
+				return null;
+			}
 			return (
 				<div
 					css={css`
@@ -69,9 +83,22 @@ export default ({
 				</div>
 			);
 		}
-		return (medias || []).map((media) => {
-			return <div>{media.filename}</div>;
-		});
+		return (
+			<ScCard noPadding>
+				<ScStackedList>
+					{(medias || []).map((media) => {
+						return (
+							<MediaItem
+								media={media}
+								key={media.id}
+								selected={selected?.id === media?.id}
+								onClick={() => setSelected(media)}
+							/>
+						);
+					})}
+				</ScStackedList>
+			</ScCard>
+		);
 	};
 
 	const onRequestClose = () => {
@@ -79,18 +106,35 @@ export default ({
 		onClose && onClose();
 	};
 
-	const addUpload = async (e) => {
+	const addUploads = async (files) => {
+		console.log({ files });
 		setError(false);
-		const file = e.target.files[0];
+		setUploading(true);
 		try {
-			await uploadFile(file);
+			await Promise.all(
+				Array.from(files || []).map((file) => uploadMedia(file))
+			);
 		} catch (e) {
 			console.error(e);
 			setError(
 				e?.message ||
 					__('Something went wrong. Please try again.', 'surecart')
 			);
+		} finally {
+			setUploading(false);
 		}
+	};
+
+	const uploadMedia = async (file) => {
+		const upload = await uploadFile(file);
+		return await saveEntityRecord(
+			'surecart',
+			'media',
+			{
+				direct_upload_signed_id: upload?.signed_id,
+			},
+			{ throwOnError: true }
+		);
 	};
 
 	const header = () => {
@@ -110,7 +154,7 @@ export default ({
 						if (!e.target.files) {
 							return;
 						}
-						addUpload(e);
+						addUploads(e.target.files);
 					}}
 				>
 					{__('Upload Media', 'presto-player')}
@@ -120,6 +164,9 @@ export default ({
 		);
 	};
 
+	const hasPrevious = page > 1;
+	const hasNext = medias?.length === perPage;
+
 	/**
 	 * Main Content
 	 *
@@ -127,7 +174,7 @@ export default ({
 	 */
 	const mainContent = () => {
 		return (
-			<DropZoneProvider
+			<div
 				css={css`
 					overflow: auto;
 					display: flex;
@@ -140,15 +187,44 @@ export default ({
 						overflow: auto;
 						display: flex;
 						flex-direction: column;
+						gap: 3em;
 					`}
 				>
 					<Error error={error} setError={setError} margin="80px" />
 
 					{renderMedias()}
 
-					<DropZone label={'Drop files'} onFilesDrop={addUpload} />
+					{(hasPrevious || hasNext) && (
+						<div
+							css={css`
+								display: flex;
+								align-items: center;
+								justify-content: space-between;
+								margin-top: auto;
+							`}
+						>
+							<Button
+								isSecondary
+								disabled={!hasPrevious}
+								onClick={() => setPage(page - 1)}
+							>
+								{__('Previous Page', 'surecart')}
+							</Button>
+
+							<Button
+								disabled={!hasNext}
+								isSecondary
+								onClick={() => setPage(page + 1)}
+							>
+								{__('Next Page', 'surecart')}
+							</Button>
+						</div>
+					)}
+
+					<DropZone label={'Drop files'} onFilesDrop={addUploads} />
 				</div>
-			</DropZoneProvider>
+				{(uploading || fetching) && <ScBlockUi spinner></ScBlockUi>}
+			</div>
 		);
 	};
 
@@ -158,16 +234,48 @@ export default ({
 
 			{open && (
 				<Template
-					title={__('SureCart Media', 'surecart')}
+					title={
+						<div
+							css={css`
+								display: flex;
+								align-items: center;
+								gap: 0.5em;
+							`}
+						>
+							<span>{__('SureCart Media', 'surecart')}</span>
+							{isPrivate ? (
+								<ScTag
+									type="warning"
+									style={{ fontSize: '13px' }}
+								>
+									{__('Private', 'surecart')}
+								</ScTag>
+							) : (
+								<ScTag
+									type="success"
+									style={{ fontSize: '13px' }}
+								>
+									{__('Public', 'surecart')}
+								</ScTag>
+							)}
+						</div>
+					}
 					header={header()}
 					mainContent={mainContent()}
-					onClose={() => setOpen(false)}
+					onClose={onRequestClose}
 					footer={
-						<Button isPrimary onClick={() => setOpen(false)}>
+						<Button
+							isPrimary
+							disabled={!selected?.id}
+							onClick={() => {
+								onSelect && onSelect(selected);
+								setOpen(false);
+							}}
+						>
 							{__('Choose', 'presto-player')}
 						</Button>
 					}
-					sidebar={<>sidebar</>}
+					sidebar={selected && <div>{selected.filename}</div>}
 				/>
 				// <Modal
 				// 	title={__('Media Library', 'surecart')}

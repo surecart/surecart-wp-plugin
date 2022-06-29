@@ -264,6 +264,7 @@ class RequestService {
 		// check for errors.
 		if ( ! in_array( $response_code, [ 200, 201 ], true ) ) {
 			$response_body = json_decode( $response_body, true );
+			wp_die( print_r( $response, 1 ) );
 			return $this->errors_service->translate( $response_body, $response_code );
 		}
 

@@ -24,4 +24,11 @@ dispatch(coreStore).addEntities([
 		baseURL: 'surecart/v1/medias',
 		baseURLParams: { context: 'edit', cached: 0 },
 	},
+	{
+		name: 'download',
+		kind: 'surecart',
+		label: __('Download', 'surecart'),
+		baseURL: 'surecart/v1/downloads',
+		baseURLParams: { context: 'edit', cached: 0, expand: ['media'] },
+	},
 ]);

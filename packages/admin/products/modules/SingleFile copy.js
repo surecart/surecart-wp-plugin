@@ -13,69 +13,12 @@ import useFileUpload from '../../mixins/useFileUpload';
 import { css, jsx } from '@emotion/core';
 import useCurrentPage from '../../mixins/useCurrentPage';
 
-export default ({ file, onUploaded, onRemoved }) => {
+export default ({ file, onUploaded, onRemove, onDisable, onEnable }) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
 	const [id, setId] = useState('');
 	const uploadFile = useFileUpload();
 	const { setSaving } = useCurrentPage('product');
-
-	useEffect(() => {
-		if (!file.id) {
-			doUpload();
-		}
-	}, []);
-
-	const doUpload = async () => {
-		if (file.id) return;
-		try {
-			setLoading(true);
-			setSaving(true);
-			setError('');
-			const id = await uploadFile(file);
-			setId(id);
-			onUploaded(id);
-		} catch (e) {
-			setError(
-				__(
-					'There was a problem with the upload. Please try again.',
-					'surecart'
-				)
-			);
-			console.error(e);
-		} finally {
-			setLoading(false);
-			setSaving(false);
-		}
-	};
-
-	const onRemove = async () => {
-		const r = confirm(
-			__(
-				'Are you sure you want to remove this file? This cannot be undone.',
-				'surecart'
-			)
-		);
-		if (!r) return;
-		try {
-			setLoading(true);
-			// first get the unique upload id.
-			if (file.id) {
-				await apiFetch({
-					method: 'DELETE',
-					path: `/surecart/v1/files/${file.id}`,
-				});
-			}
-			onRemoved({
-				file,
-				upload_id: id,
-			});
-		} catch (e) {
-			console.error(e);
-		} finally {
-			setLoading(false);
-		}
-	};
 
 	if (!!error) {
 		return (
@@ -87,7 +30,6 @@ export default ({ file, onUploaded, onRemoved }) => {
 
 	return (
 		<sc-stacked-list-row style={{ position: 'relative' }} mobile-size={0}>
-			{loading && <sc-block-ui spinner></sc-block-ui>}
 			<div
 				css={css`
 					display: flex;
@@ -132,10 +74,20 @@ export default ({ file, onUploaded, onRemoved }) => {
 				</div>
 			</div>
 
-			<ScDropdown slot="suffix" position="bottom-right">
+			<ScDropdown slot="suffix" placement="bottom-end">
 				<ScButton type="text" slot="trigger" circle>
 					<ScIcon name="more-horizontal" />
 				</ScButton>
+				<ScMenu>
+					<ScMenuItem onClick={onEnable}>
+						{__('Enable', 'surecart')}
+					</ScMenuItem>
+				</ScMenu>
+				<ScMenu>
+					<ScMenuItem onClick={onDisable}>
+						{__('Disable', 'surecart')}
+					</ScMenuItem>
+				</ScMenu>
 				<ScMenu>
 					<ScMenuItem onClick={onRemove}>
 						{__('Delete', 'surecart')}

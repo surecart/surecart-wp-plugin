@@ -10,23 +10,13 @@ export default () => {
 		);
 
 		// make the upload
-		const upload = await new Promise((resolve, reject) => {
-			directUpload.create((error) => {
+		return await new Promise((resolve, reject) => {
+			directUpload.create((error, blob) => {
 				if (error) {
 					reject(error);
 				}
-				resolve();
+				resolve(blob);
 			});
-		});
-
-		console.log({ upload, directUpload });
-
-		return await apiFetch({
-			method: 'POST',
-			path: 'surecart/v1/medias',
-			data: {
-				direct_upload_signed_id: upload?.id,
-			},
 		});
 	};
 
