@@ -4,38 +4,29 @@ import { Fragment, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect, useDispatch } from '@wordpress/data';
-
-import {
-	DropZoneProvider,
-	DropZone,
-	Button,
-	FormFileUpload,
-} from '@wordpress/components';
-
+import { DropZone, Button, FormFileUpload } from '@wordpress/components';
 import Template from './template';
 import {
 	ScBlockUi,
-	ScButton,
 	ScCard,
 	ScEmpty,
-	ScSpinner,
 	ScStackedList,
 	ScTag,
 } from '@surecart/components-react';
 import useFileUpload from '../../mixins/useFileUpload';
 import Error from '../Error';
 import MediaItem from './MediaItem';
+import Preview from './Preview';
 
 export default ({
 	render,
 	isPrivate = true,
-	addToGallery = false,
 	allowedTypes,
 	multiple = false,
 	onClose,
 	onSelect,
 }) => {
-	const [perPage, setPerPage] = useState(30);
+	const [perPage, setPerPage] = useState(50);
 	const [open, setOpen] = useState(false);
 	const [selected, setSelected] = useState(null);
 	const [uploading, setUploading] = useState(false);
@@ -50,7 +41,12 @@ export default ({
 			const queryArgs = [
 				'surecart',
 				'media',
-				{ context: 'edit', per_page: perPage, page },
+				{
+					context: 'edit',
+					per_page: perPage,
+					page,
+					public_access: !isPrivate,
+				},
 			];
 			const medias = select(coreStore).getEntityRecords(...queryArgs);
 			return {
@@ -92,7 +88,17 @@ export default ({
 								media={media}
 								key={media.id}
 								selected={selected?.id === media?.id}
-								onClick={() => setSelected(media)}
+								onClick={(e) => {
+									e.preventDefault();
+									if (
+										selected?.id &&
+										media?.id === selected?.id
+									) {
+										setSelected(null);
+									} else {
+										setSelected(media);
+									}
+								}}
 							/>
 						);
 					})}
@@ -107,7 +113,6 @@ export default ({
 	};
 
 	const addUploads = async (files) => {
-		console.log({ files });
 		setError(false);
 		setUploading(true);
 		try {
@@ -126,7 +131,7 @@ export default ({
 	};
 
 	const uploadMedia = async (file) => {
-		const upload = await uploadFile(file);
+		const upload = await uploadFile(file, isPrivate);
 		return await saveEntityRecord(
 			'surecart',
 			'media',
@@ -223,7 +228,12 @@ export default ({
 
 					<DropZone label={'Drop files'} onFilesDrop={addUploads} />
 				</div>
-				{(uploading || fetching) && <ScBlockUi spinner></ScBlockUi>}
+				{(uploading || fetching) && (
+					<ScBlockUi
+						spinner
+						style={{ '--sc-block-ui-opacity': '0.5' }}
+					></ScBlockUi>
+				)}
 			</div>
 		);
 	};
@@ -275,32 +285,21 @@ export default ({
 							{__('Choose', 'presto-player')}
 						</Button>
 					}
-					sidebar={selected && <div>{selected.filename}</div>}
+					sidebar={
+						selected && (
+							<div
+								css={css`
+									padding: 15px 0;
+								`}
+							>
+								<Preview
+									media={selected}
+									onDeleted={() => setSelected(null)}
+								/>
+							</div>
+						)
+					}
 				/>
-				// <Modal
-				// 	title={__('Media Library', 'surecart')}
-				// 	onRequestClose={onRequestClose}
-				// 	isFullScreen
-				// 	shouldCloseOnClickOutside={false}
-				// >
-				// 	<div
-				// 		css={css`
-				// 			display: flex;
-				// 			flex-direction: column;
-				// 		`}
-				// 	>
-				// 		<div></div>
-				// 		<div
-				// 			css={css`
-				// 				margin-top: auto;
-				// 			`}
-				// 		>
-				// 			<Button isPrimary>
-				// 				{__('Choose', 'surecart')}
-				// 			</Button>
-				// 		</div>
-				// 	</div>
-				// </Modal>
 			)}
 		</Fragment>
 	);
