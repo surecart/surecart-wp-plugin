@@ -26,7 +26,7 @@ export default ({ download, className }) => {
 	const onRemove = async () => {
 		const r = confirm(
 			__(
-				'Are you sure you want to delete the download from this product?',
+				'Are you sure you want to remove the download from this product?',
 				'surecart'
 			)
 		);
@@ -41,7 +41,7 @@ export default ({ download, className }) => {
 				{},
 				{ throwOnError: true }
 			);
-			addSnackbarNotice({ content: __('Download deleted.', 'surecart') });
+			addSnackbarNotice({ content: __('Download removed.', 'surecart') });
 		} catch (e) {
 			console.error(e);
 			setError(e?.message || __('Something went wrong', 'surecart'));
@@ -203,7 +203,7 @@ export default ({ download, className }) => {
 
 						<ScMenuItem onClick={onRemove}>
 							<ScIcon name="trash" slot="prefix" />
-							{__('Delete', 'surecart')}
+							{__('Remove', 'surecart')}
 						</ScMenuItem>
 					</ScMenu>
 				</ScDropdown>
