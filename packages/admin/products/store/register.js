@@ -8,7 +8,11 @@ dispatch(coreStore).addEntities([
 		kind: 'surecart',
 		label: __('Product', 'surecart'),
 		baseURL: 'surecart/v1/products',
-		baseURLParams: { context: 'edit', expand: ['files'], cached: 0 },
+		baseURLParams: {
+			context: 'edit',
+			expand: ['files', 'image'],
+			cached: 0,
+		},
 	},
 	{
 		name: 'price',

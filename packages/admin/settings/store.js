@@ -11,4 +11,11 @@ dispatch(coreStore).addEntities([
 		key: 'object',
 		baseURLParams: { context: 'edit', cached: 0 },
 	},
+	{
+		name: 'media',
+		kind: 'surecart',
+		label: __('Media', 'surecart'),
+		baseURL: 'surecart/v1/medias',
+		baseURLParams: { context: 'edit', cached: 0 },
+	},
 ]);

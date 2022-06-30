@@ -29,4 +29,5 @@ return [
 	'price.ad_hoc_max_amount.greater_than_or_equal_to'  => __( 'The maximum price must be greater than the minimum price.', 'surecart' ),
 	'tax_registration.tax_zone_id.taken'                => __( 'You are already collecting tax for this zone.', 'surecart' ),
 	'tax_protocol.eu_micro_exemption_enabled.address_outside_eu' => __( 'You cannot enable EU Micro Exemption if your address is outside of the EU.', 'surecart' ),
+	'media.restrict_dependent_destroy.has_one'          => __( 'You cannot delete this media item because it is currently being used.', 'surecart' ),
 ];

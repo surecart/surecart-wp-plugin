@@ -3,6 +3,7 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
+import { Button } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import {
 	ScBlockUi,
@@ -11,13 +12,13 @@ import {
 	ScStackedList,
 	ScSwitch,
 } from '@surecart/components-react';
-import { Button } from '@wordpress/components';
+
 import SingleDownload from './SingleDownload';
 import Box from '../../ui/Box';
 import MediaLibrary from '../../components/MediaLibrary';
 
 export default ({ id, product, loading }) => {
-	const { saveEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
+	const { saveEntityRecord } = useDispatch(coreStore);
 	const [showArchived, setShowArchived] = useState(false);
 	const { downloads, fetching } = useSelect(
 		(select) => {
@@ -26,7 +27,6 @@ export default ({ id, product, loading }) => {
 				'download',
 				{ context: 'edit', product_ids: [id], per_page: 100 },
 			];
-			const prices = select(coreStore).getEntityRecords(...queryArgs);
 			return {
 				downloads: select(coreStore).getEntityRecords(...queryArgs),
 				fetching: select(coreStore).isResolving(
@@ -55,6 +55,7 @@ export default ({ id, product, loading }) => {
 		}
 	};
 
+	// sort and group.
 	const sorted = (downloads || []).sort(
 		(a, b) => a.created_at - b.created_at
 	);
@@ -65,7 +66,6 @@ export default ({ id, product, loading }) => {
 		<Box title={__('Downloads', 'surecart')} loading={loading}>
 			{(() => {
 				if (!downloads?.length) return null;
-
 				return (
 					<ScCard noPadding>
 						<ScStackedList>
@@ -107,6 +107,7 @@ export default ({ id, product, loading }) => {
 				<ScFormControl label={__('File', 'surecart')} showLabel={false}>
 					<MediaLibrary
 						onSelect={addDownload}
+						multiple={true}
 						render={({ setOpen }) => {
 							return (
 								<Button isPrimary onClick={() => setOpen(true)}>
