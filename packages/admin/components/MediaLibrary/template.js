@@ -36,11 +36,11 @@ export default ({
 			<div
 				css={css`
 					@media screen and (min-width: 780px) {
-						margin: -24px;
+						margin: -24px -32px;
 						display: grid;
 						flex: 1;
 						max-height: calc(100vh - 68px);
-						grid-template-columns: 1fr 1fr minmax(0px, 267px);
+						grid-template-columns: 1fr 1fr minmax(0px, 325px);
 						grid-template-rows: minmax(50px, auto) 1fr 60px;
 						grid-template-areas:
 							'header header sidebar'

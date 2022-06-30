@@ -10,7 +10,8 @@ import {
 	ScBlockUi,
 	ScCard,
 	ScEmpty,
-	ScStackedList,
+	ScTable,
+	ScTableCell,
 	ScTag,
 } from '@surecart/components-react';
 import useFileUpload from '../../mixins/useFileUpload';
@@ -21,7 +22,6 @@ import Preview from './Preview';
 export default ({
 	render,
 	isPrivate = true,
-	allowedTypes,
 	multiple = false,
 	onClose,
 	onSelect,
@@ -81,7 +81,15 @@ export default ({
 		}
 		return (
 			<ScCard noPadding>
-				<ScStackedList>
+				<ScTable>
+					<ScTableCell slot="head">File</ScTableCell>
+					<ScTableCell slot="head">Visibility</ScTableCell>
+					<ScTableCell
+						slot="head"
+						style={{ width: '100px', textAlign: 'right' }}
+					>
+						Added
+					</ScTableCell>
 					{(medias || []).map((media) => {
 						return (
 							<MediaItem
@@ -102,7 +110,7 @@ export default ({
 							/>
 						);
 					})}
-				</ScStackedList>
+				</ScTable>
 			</ScCard>
 		);
 	};

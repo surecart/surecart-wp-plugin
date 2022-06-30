@@ -5,23 +5,25 @@ import {
 	ScFormatBytes,
 	ScFormatDate,
 	ScStackedListRow,
+	ScTableCell,
+	ScTableRow,
 	ScTag,
 } from '@surecart/components-react';
 
 export default ({ media, onClick, selected }) => {
 	return (
-		<ScStackedListRow
-			href="#"
+		<ScTableRow
 			onClick={(e) => onClick && onClick(e)}
 			style={{
 				'--columns': '3',
+				cursor: 'pointer',
 				zIndex: selected ? '2' : '1',
 				outline: selected
 					? '2px solid var(--sc-color-primary-500)'
 					: 'none',
 			}}
 		>
-			<div
+			<ScTableCell
 				css={css`
 					display: flex;
 					align-items: center;
@@ -68,16 +70,16 @@ export default ({ media, onClick, selected }) => {
 						<ScFormatBytes value={media?.byte_size}></ScFormatBytes>
 					</div>
 				</div>
-			</div>
+			</ScTableCell>
 
-			<div>
+			<ScTableCell>
 				{media.public_access ? (
 					<ScTag type="success">{__('Public', 'surecart')}</ScTag>
 				) : (
 					<ScTag type="warning">{__('Private', 'surecart')}</ScTag>
 				)}
-			</div>
-			<div>
+			</ScTableCell>
+			<ScTableCell>
 				<ScFormatDate
 					date={media?.created_at}
 					month="short"
@@ -85,7 +87,7 @@ export default ({ media, onClick, selected }) => {
 					year="numeric"
 					type="timestamp"
 				></ScFormatDate>
-			</div>
-		</ScStackedListRow>
+			</ScTableCell>
+		</ScTableRow>
 	);
 };

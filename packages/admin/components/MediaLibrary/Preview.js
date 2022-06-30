@@ -6,6 +6,7 @@ import { useState } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 import apiFetch from '@wordpress/api-fetch';
 import { useEffect } from '@wordpress/element';
+import { Button } from '@wordpress/components';
 import {
 	ScBlockUi,
 	ScButton,
@@ -146,30 +147,25 @@ export default ({ media, onDeleted }) => {
 				<DownloadMedia
 					media={media}
 					render={({ downloading, onDownload }) => (
-						<ScButton
-							type="primary"
+						<Button
 							slot="title"
-							outline
+							isSecondary
 							onClick={onDownload}
-							loading={downloading}
+							isBusy={downloading}
 						>
-							<ScIcon name="download-cloud" slot="prefix" />
 							{__('Download', 'surecart')}
-						</ScButton>
+						</Button>
 					)}
 				/>
 
-				<ScButton
+				<Button
 					slot="price"
-					type="danger"
-					outline
+					isDestructive
 					onClick={onDelete}
-					busy={loading}
-					disabled={loading}
+					isBusy={loading}
 				>
-					<ScIcon name="trash" slot="prefix" />
 					{__('Delete', 'surecart')}
-				</ScButton>
+				</Button>
 			</ScLineItem>
 			{loading && <ScBlockUi spinner />}
 		</div>
