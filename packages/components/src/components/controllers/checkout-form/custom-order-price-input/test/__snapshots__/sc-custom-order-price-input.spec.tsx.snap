@@ -1,9 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sc-custom-order-price-input renders 1`] = `
-<sc-custom-order-price-input>
-  <div class="sc-custom-order-price-input">
-    <sc-price-input currency-code="usd"></sc-price-input>
-  </div>
-</sc-custom-order-price-input>
-`;
+exports[`sc-custom-order-price-input renders 1`] = `<sc-custom-order-price-input style="display: none;"></sc-custom-order-price-input>`;
