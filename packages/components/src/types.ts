@@ -68,14 +68,27 @@ export type Prices = {
   [id: string]: Price;
 };
 
-export interface File {
+export interface Media {
   id: string;
-  object: 'file';
+  object: 'media';
   byte_size: number;
   content_type: string;
   extension: string;
   filename: string;
-  product: string | 'Product';
+  public_access: boolean;
+  release_json: object;
+  url?: string;
+  url_expires_at?: number;
+  updated_at: number;
+  created_at: number;
+}
+export interface Download {
+  id: string;
+  object: 'download';
+  enabled: boolean;
+  media: string | Media;
+  product: string | Product;
+  update_at: number;
   created_at: number;
 }
 
@@ -98,10 +111,10 @@ export interface Product extends Object {
     pagination: Pagination;
     data: Array<Price>;
   };
-  files: {
+  downloads: {
     object: 'list';
     pagination: Pagination;
-    data: Array<File>;
+    data: Array<Download>;
   };
   created_at: number;
   updated_at: number;
