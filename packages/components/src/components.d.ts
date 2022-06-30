@@ -882,6 +882,12 @@ export namespace Components {
     interface ScEmpty {
         "icon": string;
     }
+    interface ScError {
+        /**
+          * Error to display.
+         */
+        "error": ResponseError | null;
+    }
     interface ScExpressPayment {
         "busy": boolean;
         "debug": boolean;
@@ -2935,6 +2941,12 @@ declare global {
         prototype: HTMLScEmptyElement;
         new (): HTMLScEmptyElement;
     };
+    interface HTMLScErrorElement extends Components.ScError, HTMLStencilElement {
+    }
+    var HTMLScErrorElement: {
+        prototype: HTMLScErrorElement;
+        new (): HTMLScErrorElement;
+    };
     interface HTMLScExpressPaymentElement extends Components.ScExpressPayment, HTMLStencilElement {
     }
     var HTMLScExpressPaymentElement: {
@@ -3552,6 +3564,7 @@ declare global {
         "sc-drawer": HTMLScDrawerElement;
         "sc-dropdown": HTMLScDropdownElement;
         "sc-empty": HTMLScEmptyElement;
+        "sc-error": HTMLScErrorElement;
         "sc-express-payment": HTMLScExpressPaymentElement;
         "sc-flex": HTMLScFlexElement;
         "sc-form": HTMLScFormElement;
@@ -4643,6 +4656,16 @@ declare namespace LocalJSX {
     }
     interface ScEmpty {
         "icon"?: string;
+    }
+    interface ScError {
+        /**
+          * Error to display.
+         */
+        "error"?: ResponseError | null;
+        /**
+          * Set the state.
+         */
+        "onScUpdateError"?: (event: CustomEvent<ResponseError>) => void;
     }
     interface ScExpressPayment {
         "busy"?: boolean;
@@ -6708,6 +6731,7 @@ declare namespace LocalJSX {
         "sc-drawer": ScDrawer;
         "sc-dropdown": ScDropdown;
         "sc-empty": ScEmpty;
+        "sc-error": ScError;
         "sc-express-payment": ScExpressPayment;
         "sc-flex": ScFlex;
         "sc-form": ScForm;
@@ -6850,6 +6874,7 @@ declare module "@stencil/core" {
             "sc-drawer": LocalJSX.ScDrawer & JSXBase.HTMLAttributes<HTMLScDrawerElement>;
             "sc-dropdown": LocalJSX.ScDropdown & JSXBase.HTMLAttributes<HTMLScDropdownElement>;
             "sc-empty": LocalJSX.ScEmpty & JSXBase.HTMLAttributes<HTMLScEmptyElement>;
+            "sc-error": LocalJSX.ScError & JSXBase.HTMLAttributes<HTMLScErrorElement>;
             "sc-express-payment": LocalJSX.ScExpressPayment & JSXBase.HTMLAttributes<HTMLScExpressPaymentElement>;
             "sc-flex": LocalJSX.ScFlex & JSXBase.HTMLAttributes<HTMLScFlexElement>;
             "sc-form": LocalJSX.ScForm & JSXBase.HTMLAttributes<HTMLScFormElement>;

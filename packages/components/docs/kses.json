@@ -455,6 +455,13 @@
     "class": true,
     "slot": true
   },
+  "sc-error": {
+    "error": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-express-payment": {
     "busy": true,
     "debug": true,

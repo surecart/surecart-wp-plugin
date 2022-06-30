@@ -76,6 +76,13 @@ export class ScCart {
     this.uiState = e.detail;
   }
 
+  /** Listen for error events in component. */
+  @Listen('scError')
+  handleErrorEvent(e) {
+    this.error = e.detail as ResponseError;
+    this.uiState = 'idle';
+  }
+
   /** Fetch the order */
   async fetchOrder() {
     try {
@@ -158,6 +165,7 @@ export class ScCart {
                     </div>
                     <div class="cart__header-suffix" slot="header-suffix">
                       <slot name="cart-header" />
+                      <sc-error style={{ '--sc-alert-border-radius': '0' }} slot="header" error={this.error} onScUpdateError={e => (this.error = e.detail)}></sc-error>
                     </div>
 
                     <slot />

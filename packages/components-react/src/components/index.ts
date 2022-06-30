@@ -48,6 +48,7 @@ export const ScDownloadsList = /*@__PURE__*/createReactComponent<JSX.ScDownloads
 export const ScDrawer = /*@__PURE__*/createReactComponent<JSX.ScDrawer, HTMLScDrawerElement>('sc-drawer');
 export const ScDropdown = /*@__PURE__*/createReactComponent<JSX.ScDropdown, HTMLScDropdownElement>('sc-dropdown');
 export const ScEmpty = /*@__PURE__*/createReactComponent<JSX.ScEmpty, HTMLScEmptyElement>('sc-empty');
+export const ScError = /*@__PURE__*/createReactComponent<JSX.ScError, HTMLScErrorElement>('sc-error');
 export const ScExpressPayment = /*@__PURE__*/createReactComponent<JSX.ScExpressPayment, HTMLScExpressPaymentElement>('sc-express-payment');
 export const ScFlex = /*@__PURE__*/createReactComponent<JSX.ScFlex, HTMLScFlexElement>('sc-flex');
 export const ScForm = /*@__PURE__*/createReactComponent<JSX.ScForm, HTMLScFormElement>('sc-form');
