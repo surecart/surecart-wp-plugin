@@ -16,10 +16,12 @@ import {
 import SingleDownload from './SingleDownload';
 import Box from '../../ui/Box';
 import MediaLibrary from '../../components/MediaLibrary';
+import useSnackbar from '../../hooks/useSnackbar';
 
 export default ({ id, product, loading }) => {
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const [showArchived, setShowArchived] = useState(false);
+	const { addSnackbarNotice } = useSnackbar();
 	const { downloads, fetching } = useSelect(
 		(select) => {
 			const queryArgs = [
@@ -40,7 +42,7 @@ export default ({ id, product, loading }) => {
 
 	const addDownload = async (media) => {
 		try {
-			return await saveEntityRecord(
+			await saveEntityRecord(
 				'surecart',
 				'download',
 				{
@@ -50,6 +52,7 @@ export default ({ id, product, loading }) => {
 				},
 				{ throwOnError: true }
 			);
+			addSnackbarNotice({ content: __('Download added.', 'surecart') });
 		} catch (e) {
 			console.error(e);
 		}
