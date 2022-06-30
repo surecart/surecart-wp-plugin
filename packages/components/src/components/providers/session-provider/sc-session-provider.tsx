@@ -1,11 +1,12 @@
-import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { removeQueryArgs } from '@wordpress/url';
 import { parseFormData } from '../../../functions/form-data';
+import store, { clearOrder, getOrder, setOrder } from '../../../store/checkouts';
 
 import { createOrUpdateOrder, finalizeSession } from '../../../services/session';
 import { FormStateSetter, PaymentIntents, ProcessorName, LineItemData, Order, PriceChoice, LineItem } from '../../../types';
-import { getSessionId, getURLCoupon, getURLLineItems, populateInputs, removeSessionId, setSessionId } from './helpers/session';
+import { getSessionId, getURLCoupon, getURLLineItems, removeSessionId } from './helpers/session';
 
 @Component({
   tag: 'sc-session-provider',
@@ -14,9 +15,6 @@ import { getSessionId, getURLCoupon, getURLLineItems, populateInputs, removeSess
 export class ScSessionProvider {
   /** Element */
   @Element() el: HTMLElement;
-
-  /** Order Object */
-  @Prop() order: Order;
 
   /** Group id */
   @Prop() groupId: string;
@@ -66,28 +64,6 @@ export class ScSessionProvider {
   /** Set the state */
   @Event() scSetState: EventEmitter<FormStateSetter>;
 
-  /** Holds the checkout session to update. */
-  @State() session: Order;
-
-  /** Sync this session back to parent. */
-  @Watch('session')
-  handleSessionUpdate(val) {
-    this.scUpdateOrderState.emit(val);
-  }
-
-  /** Store checkout session in localstorage */
-  @Watch('order')
-  handleOrderChange(val) {
-    if (val?.id) {
-      setSessionId(this.groupId, val.id, this.modified, this.session?.line_items?.pagination?.count);
-    }
-    if (val.status === 'paid') {
-      removeSessionId(this.groupId);
-    }
-    /** Populate any inputs from the session */
-    populateInputs(this.el, val);
-  }
-
   @Listen('scUpdateOrder')
   handleUpdateSession(e) {
     const { data, options } = e.detail;
@@ -102,7 +78,6 @@ export class ScSessionProvider {
   handlePricesChange() {
     let line_items = this.addInitialPrices() || [];
     line_items = this.addPriceChoices(line_items);
-
     if (!line_items?.length) {
       return;
     }
@@ -117,6 +92,11 @@ export class ScSessionProvider {
   @Method()
   async finalize() {
     return await this.handleFormSubmit();
+  }
+
+  /** Get the order from the store. */
+  order() {
+    return getOrder(this?.formId);
   }
 
   getProcessor() {
@@ -161,7 +141,7 @@ export class ScSessionProvider {
 
     // Important: Stripe needs a payment intent ahead of time, or the
     // order will not be attached to the payment.
-    if (this.session.total_amount > 0 && !payment_intent && this.getProcessor() === 'stripe' && this.stripePaymentElement) {
+    if (this.order()?.total_amount > 0 && !payment_intent && this.getProcessor() === 'stripe' && this.stripePaymentElement) {
       this.scError.emit({ message: 'Something went wrong. Please try again.' });
       console.error('No payment intent found.');
       return this.scSetState.emit('REJECT');
@@ -170,7 +150,7 @@ export class ScSessionProvider {
     // first validate server-side and get key
     try {
       const order = await finalizeSession({
-        id: this.order.id,
+        id: this.order()?.id,
         data,
         query: {
           ...this.defaultFormQuery(),
@@ -180,19 +160,19 @@ export class ScSessionProvider {
       });
 
       // payment intent must match what we sent to make sure it's attached to an order.
-      if (this.session.total_amount > 0 && payment_intent?.id && order?.payment_intent?.id !== payment_intent?.id) {
+      if (this.order()?.total_amount > 0 && payment_intent?.id && order?.payment_intent?.id !== payment_intent?.id) {
         console.error('Payment intent mismatch', payment_intent?.id, order?.payment_intent?.id);
         this.scError.emit({ message: 'Something went wrong. Please try again.' });
         return this.scSetState.emit('REJECT');
       }
 
-      this.session = order;
-      return this.session;
+      setOrder(order, this.formId);
+      return this.order();
     } catch (e) {
       // handle old price versions by refreshing.
       if (e?.additional_errors?.[0]?.code === 'order.line_items.old_price_versions') {
         await this.loadUpdate({
-          id: this.order.id,
+          id: this.order().id,
           data: {
             status: 'draft',
             refresh_price_versions: true,
@@ -203,7 +183,7 @@ export class ScSessionProvider {
       // make it a draft again and resubmit if status is incorrect.
       if (['order.invalid_status_transition'].includes(e?.code)) {
         await this.loadUpdate({
-          id: this.order.id,
+          id: this.order().id,
           data: {
             status: 'draft',
           },
@@ -272,7 +252,7 @@ export class ScSessionProvider {
   defaultFormData() {
     return {
       return_url: window.top.location.href,
-      currency: this.order?.currency || this.currencyCode,
+      currency: this.order()?.currency || this.currencyCode,
       live_mode: this.mode !== 'test',
       group_key: this.groupId,
     };
@@ -282,6 +262,18 @@ export class ScSessionProvider {
     return {
       form_id: this.formId,
     };
+  }
+
+  componentWillLoad() {
+    // listen for checkout change events and remove any that have been paid.
+    store.onChange('checkouts', checkouts => {
+      Object.keys(checkouts).forEach(formId => {
+        const checkout = checkouts[formId];
+        if (checkout?.status === 'paid') {
+          clearOrder(formId);
+        }
+      });
+    });
   }
 
   /** Find or create session on load. */
@@ -294,15 +286,16 @@ export class ScSessionProvider {
     // get initial data from the url
     const initial_data = this.getInitialDataFromUrl() as { line_items?: LineItem[]; discount?: { promotion_code: string } };
 
-    // remove from window
+    // remove discount from window.
     if (initial_data?.discount?.promotion_code) {
       window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'coupon'));
     }
+    // remove line items from window.
     if (initial_data?.line_items?.length) {
       window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'line_items'));
     }
 
-    // we have line items, don't load any existing session.
+    // we have line items, don't load any existing session (overwrite)
     if (initial_data?.line_items?.length) {
       return this.fetch(initial_data);
     }
@@ -391,8 +384,8 @@ export class ScSessionProvider {
   }
 
   getSessionId() {
-    if (this.order?.id) {
-      return this.order.id;
+    if (this.order()?.id) {
+      return this.order().id;
     }
 
     const id = getSessionId(this.groupId, this.order, this.modified);
@@ -409,7 +402,7 @@ export class ScSessionProvider {
   /** Update a session */
   async update(data = {}, query = {}) {
     try {
-      this.session = (await createOrUpdateOrder({
+      const order = (await createOrUpdateOrder({
         id: this.getSessionId(),
         data: {
           ...this.defaultFormData(),
@@ -420,10 +413,11 @@ export class ScSessionProvider {
           ...query,
         },
       })) as Order;
+      setOrder(order, this.formId);
     } catch (e) {
       // reinitalize if order not found.
       if (['order.not_found'].includes(e?.code)) {
-        removeSessionId(this.groupId);
+        clearOrder(this.formId);
         return this.initialize();
       }
       console.error(e);
@@ -444,7 +438,7 @@ export class ScSessionProvider {
 
   render() {
     return (
-      <sc-line-items-provider order={this.order} onScUpdateLineItems={e => this.loadUpdate({ line_items: e.detail as Array<LineItemData> })}>
+      <sc-line-items-provider order={this.order()} onScUpdateLineItems={e => this.loadUpdate({ line_items: e.detail as Array<LineItemData> })}>
         <slot />
       </sc-line-items-provider>
     );

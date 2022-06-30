@@ -4,6 +4,22 @@ import { createOrUpdateOrder } from '../../../../services/session';
 import { Order } from '../../../../types';
 import store from '../../../../store/checkouts';
 import uiStore from '../../../../store/ui';
+import { convertLineItemsToLineItemData } from '../../../../functions/line-items';
+const query = {
+  expand: [
+    'line_items',
+    'line_item.price',
+    'price.product',
+    'customer',
+    'customer.shipping_address',
+    'payment_intent',
+    'discount',
+    'discount.promotion',
+    'discount.coupon',
+    'shipping_address',
+    'tax_identifier',
+  ],
+};
 
 @Component({
   tag: 'sc-cart-form',
@@ -26,47 +42,24 @@ export class ScCartForm {
   @State() busy: boolean;
   @State() error: string;
 
-  getLineItem(price_id) {
-    return (this.order?.line_items?.data || []).find(item => item.price?.id === price_id);
+  /** Find a line item with this price. */
+  getLineItem() {
+    const order = store?.state?.checkouts?.[this?.formId];
+    if (!order) return null;
+    return (order?.line_items?.data || []).find(item => item.price?.id === this.priceId);
   }
 
-  /**
-   * Add the item to cart.
-   */
+  /** Add the item to cart. */
   async addToCart() {
     try {
       this.busy = true;
-      const order = (await createOrUpdateOrder({
-        id: this.order?.id,
-        data: {
-          line_items: [
-            {
-              price_id: this.priceId,
-              quantity: this.quantity,
-            },
-          ],
-        },
-        query: {
-          expand: [
-            'line_items',
-            'line_item.price',
-            'price.product',
-            'customer',
-            'customer.shipping_address',
-            'payment_intent',
-            'discount',
-            'discount.promotion',
-            'discount.coupon',
-            'shipping_address',
-            'tax_identifier',
-          ],
-        },
-      })) as Order;
-      store.state.checkouts = {
-        ...store.state.checkouts,
-        [this.formId]: order,
-      };
 
+      // add line item or increment quantity.
+      const lineItem = this.getLineItem();
+      const order = lineItem ? await this.addQuantity(lineItem) : await this.addLineItem();
+
+      // store the checkout in localstorage and open the cart
+      store.set('checkouts', { ...store.state.checkouts, [this.formId]: order });
       uiStore.set('cart', { ...uiStore.state.cart, ...{ open: true } });
     } catch (e) {
       console.error(e);
@@ -74,6 +67,42 @@ export class ScCartForm {
     } finally {
       this.busy = false;
     }
+  }
+
+  /** Add a new line item. */
+  async addLineItem() {
+    let existingData = convertLineItemsToLineItemData(store?.state?.checkouts?.[this?.formId]?.line_items || []);
+    return (await createOrUpdateOrder({
+      id: store?.state?.checkouts?.[this?.formId]?.id,
+      data: {
+        line_items: [
+          ...(existingData || []),
+          {
+            price_id: this.priceId,
+            quantity: this.quantity,
+          },
+        ],
+      },
+      query,
+    })) as Order;
+  }
+
+  /** Update a line item quantity */
+  async addQuantity(lineItem) {
+    let existingData = convertLineItemsToLineItemData(store?.state?.checkouts?.[this?.formId]?.line_items || []);
+    return (await createOrUpdateOrder({
+      id: store?.state?.checkouts?.[this?.formId]?.id,
+      data: {
+        line_items: [
+          ...(existingData || []).filter(item => item?.price_id !== lineItem?.price_id),
+          {
+            price_id: lineItem?.price_id,
+            quantity: lineItem?.quantity + 1,
+          },
+        ],
+      },
+      query,
+    })) as Order;
   }
 
   render() {

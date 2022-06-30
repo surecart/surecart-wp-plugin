@@ -369,7 +369,7 @@ export namespace Components {
         /**
           * Submit the form
          */
-        "submit": ({ skip_validation }?: { skip_validation: boolean; }) => Promise<Order | CustomEvent<import("/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/types").FormStateSetter>>;
+        "submit": ({ skip_validation }?: { skip_validation: boolean; }) => Promise<any>;
         /**
           * Where to go on success
          */
@@ -2097,7 +2097,7 @@ export namespace Components {
           * Finalize the order.
           * @returns
          */
-        "finalize": () => Promise<Order | CustomEvent<FormStateSetter>>;
+        "finalize": () => Promise<any>;
         /**
           * The checkout form id
          */
@@ -2114,10 +2114,6 @@ export namespace Components {
           * Whent the post was modified.
          */
         "modified": string;
-        /**
-          * Order Object
-         */
-        "order": Order;
         /**
           * Holds all available payment intents.
          */
@@ -6063,10 +6059,6 @@ declare namespace LocalJSX {
           * Update line items event
          */
         "onScUpdateOrderState"?: (event: CustomEvent<Order>) => void;
-        /**
-          * Order Object
-         */
-        "order"?: Order;
         /**
           * Holds all available payment intents.
          */

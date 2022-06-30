@@ -1141,7 +1141,6 @@
     "group-id": true,
     "mode": true,
     "modified": true,
-    "order": true,
     "payment-intents": true,
     "persist": true,
     "prices": true,

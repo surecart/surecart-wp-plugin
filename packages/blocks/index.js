@@ -10,6 +10,7 @@ import './formats';
 // blocks
 import * as button from '@blocks/Button';
 import * as buyButton from '@blocks/BuyButton';
+import * as addToCartButton from '@blocks/AddToCartButton';
 import * as donation from '@blocks/Donation';
 import * as donationAmount from '@blocks/DonationAmount';
 import * as nameYourPrice from '@blocks/NameYourPrice';
@@ -159,6 +160,7 @@ export const registerSureCartBlocks = () => {
 		taxLineItem,
 		button,
 		buyButton,
+		addToCartButton,
 		customerDashboard,
 		customerDashboardButton,
 		logoutButton,

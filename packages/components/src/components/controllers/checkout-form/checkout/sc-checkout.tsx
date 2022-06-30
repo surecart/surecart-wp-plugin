@@ -2,6 +2,7 @@ import { Order, Customer, PriceChoice, Prices, Products, ResponseError, FormStat
 import { Component, h, Prop, Element, State, Listen, Method, Event, EventEmitter } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
+import { getOrder } from '../../../../store/checkouts';
 
 @Component({
   tag: 'sc-checkout',
@@ -71,9 +72,6 @@ export class ScCheckout {
 
   /** Loading states for different parts of the form. */
   @State() checkoutState: FormState = 'idle';
-
-  /** Holds the current Order */
-  @State() order: Order;
 
   /** Error to display. */
   @State() error: ResponseError | null;
@@ -156,18 +154,22 @@ export class ScCheckout {
     this.isDuplicate = document.querySelector('sc-checkout') !== this.el;
   }
 
+  order() {
+    return getOrder(this?.formId);
+  }
+
   state() {
     return {
       processor: this.processor,
       processors: this.processors,
-      processor_data: this.order?.processor_data,
+      processor_data: this.order()?.processor_data,
       state: this.checkoutState,
       paymentIntents: this.paymentIntents,
       successUrl: this.successUrl,
 
-      order: this.order,
-      shippingEnabled: this.order?.shipping_enabled,
-      lineItems: this.order?.line_items?.data || [],
+      order: this.order(),
+      shippingEnabled: this.order()?.shipping_enabled,
+      lineItems: this.order()?.line_items?.data || [],
       editLineItems: this.editLineItems,
       removeLineItems: this.removeLineItems,
 
@@ -175,7 +177,7 @@ export class ScCheckout {
       loading: this.checkoutState === 'loading',
       busy: ['updating', 'finalizing', 'paid', 'confirmed'].includes(this.checkoutState),
       paying: ['finalizing', 'paid', 'confirmed'].includes(this.checkoutState),
-      empty: !['loading', 'updating'].includes(this.checkoutState) && !this.order?.line_items?.pagination?.count,
+      empty: !['loading', 'updating'].includes(this.checkoutState) && !this.order()?.line_items?.pagination?.count,
       // checkout states
 
       // stripe.
@@ -183,11 +185,11 @@ export class ScCheckout {
 
       error: this.error,
       customer: this.customer,
-      tax_status: this?.order?.tax_status,
-      customerShippingAddress: typeof this.order?.customer !== 'string' ? this?.order?.customer?.shipping_address : {},
-      shippingAddress: this.order?.shipping_address,
-      taxStatus: this.order?.tax_status,
-      taxIdentifier: this.order?.tax_identifier,
+      tax_status: this.order()?.tax_status,
+      customerShippingAddress: typeof this.order()?.customer !== 'string' ? this.order().customer?.shipping_address : {},
+      shippingAddress: this.order()?.shipping_address,
+      taxStatus: this.order()?.tax_status,
+      taxIdentifier: this.order()?.tax_identifier,
       lockedChoices: this.prices,
       products: this.productsEntities,
       prices: this.pricesEntities,
@@ -213,21 +215,15 @@ export class ScCheckout {
         }}
       >
         <Universe.Provider state={this.state()}>
-          <sc-model-cache-provider
-            cacheKey={`sc-checkout-order-${this?.formId}`}
-            model={this.order}
-            onScUpdateModel={e => (this.order = e.detail as Order)}
-          ></sc-model-cache-provider>
           {/* Handles the current checkout form state. */}
           <sc-form-state-provider onScSetCheckoutFormState={e => (this.checkoutState = e.detail)}>
             {/* Handles errors in the form. */}
-            <sc-form-error-provider order={this.order} onScUpdateError={e => (this.error = e.detail)}>
+            <sc-form-error-provider order={this.order()} onScUpdateError={e => (this.error = e.detail)}>
               {/* Validate components in the form based on order state. */}
-              <sc-form-components-validator order={this.order} disabled={this.disableComponentsValidation} taxEnabled={this.taxEnabled}>
+              <sc-form-components-validator order={this.order()} disabled={this.disableComponentsValidation} taxEnabled={this.taxEnabled}>
                 {/* Handles the current session. */}
                 <sc-session-provider
                   ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)}
-                  order={this.order}
                   prices={this.prices}
                   stripePaymentElement={this.stripePaymentElement}
                   paymentIntents={this.paymentIntents}
@@ -238,13 +234,12 @@ export class ScCheckout {
                   group-id={this.el.id}
                   processor={this.processor}
                   currency-code={this.currencyCode}
-                  onScUpdateOrderState={e => (this.order = e.detail)}
                   onScError={e => (this.error = e.detail as ResponseError)}
                 >
                   {/* Maybe redirect to the success url if requirements are met. */}
-                  <sc-order-redirect-provider order={this.order} success-url={this.successUrl}>
+                  <sc-order-redirect-provider order={this.order()} success-url={this.successUrl}>
                     {/* Handle confirming of order after it is "Paid" by processors. */}
-                    <sc-order-confirm-provider order={this.order}>
+                    <sc-order-confirm-provider order={this.order()}>
                       <slot />
                     </sc-order-confirm-provider>
                   </sc-order-redirect-provider>
