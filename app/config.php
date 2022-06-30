@@ -43,7 +43,6 @@ return [
 		\SureCart\Rest\AccountRestServiceProvider::class,
 		\SureCart\Rest\BrandRestServiceProvider::class,
 		\SureCart\Rest\LoginRestServiceProvider::class,
-		\SureCart\Rest\FilesRestServiceProvider::class,
 		\SureCart\Rest\PurchasesRestServiceProvider::class,
 		\SureCart\Rest\IntegrationsRestServiceProvider::class,
 		\SureCart\Rest\IntegrationProvidersRestServiceProvider::class,

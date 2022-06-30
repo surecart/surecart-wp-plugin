@@ -5,7 +5,7 @@ namespace SureCart\Controllers\Rest;
 use SureCart\Models\Download;
 
 /**
- * Handle File requests through the REST API
+ * Handle Download requests through the REST API
  */
 class DownloadsController extends RestController {
 	/**
