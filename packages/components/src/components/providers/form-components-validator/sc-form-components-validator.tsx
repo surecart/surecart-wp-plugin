@@ -38,6 +38,9 @@ export class ScFormComponentsValidator {
     if (this.taxEnabled) {
       this.addAddressField();
     }
+
+    // make sure to check order on load.
+    this.handleOrderChange();
   }
 
   addAddressField() {
