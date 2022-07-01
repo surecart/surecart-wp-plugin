@@ -2,6 +2,8 @@
 
 namespace SureCart\Cart;
 
+use SureCart\Models\Form;
+
 /**
  * The cart service.
  */
@@ -23,8 +25,17 @@ class CartService {
 
 	public function cartTemplate() {
 		ob_start();
+		$form = $this->getForm();
+		if ( empty( $form->ID ) ) {
+			return '';
+		}
 		?>
-		<sc-cart id="sc-cart" header="<?php esc_attr_e( 'Cart', 'surecart' ); ?>" form-id="<?php echo esc_attr( \SureCart::forms()->getDefaultId() ); ?>" style="font-size: 16px">
+		<sc-cart
+			id="sc-cart"
+			header="<?php esc_attr_e( 'Cart', 'surecart' ); ?>"
+			form-id="<?php echo esc_attr( $form->ID ); ?>"
+			mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>"
+			style="font-size: 16px">
 
 			<!--
 			<div slot="cart-header" style="position: relative;">
@@ -67,8 +78,20 @@ class CartService {
 	 * @return void
 	 */
 	public function renderCartComponent() {
+		$form = $this->getForm();
+		if ( empty( $form->ID ) ) {
+			return '';
+		}
 		?>
-		<sc-cart-loader form-id="<?php echo esc_attr( \SureCart::forms()->getDefaultId() ); ?>" template='<?php echo esc_attr( $this->cartTemplate() ); ?>'></sc-cart-loader>
+		<sc-cart-loader
+			form-id="<?php echo esc_attr( $form->ID ); ?>"
+			mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>"
+			template='<?php echo esc_attr( $this->cartTemplate() ); ?>'>
+		</sc-cart-loader>
 		<?php
+	}
+
+	public function getForm() {
+		return \SureCart::forms()->getDefault();
 	}
 }

@@ -96,7 +96,7 @@ export class ScSessionProvider {
 
   /** Get the order from the store. */
   order() {
-    return getOrder(this?.formId);
+    return getOrder(this?.formId, this.mode);
   }
 
   getProcessor() {
@@ -172,7 +172,7 @@ export class ScSessionProvider {
       // handle old price versions by refreshing.
       if (e?.additional_errors?.[0]?.code === 'order.line_items.old_price_versions') {
         await this.loadUpdate({
-          id: this.order().id,
+          id: this.order()?.id,
           data: {
             status: 'draft',
             refresh_price_versions: true,
@@ -183,7 +183,7 @@ export class ScSessionProvider {
       // make it a draft again and resubmit if status is incorrect.
       if (['order.invalid_status_transition'].includes(e?.code)) {
         await this.loadUpdate({
-          id: this.order().id,
+          id: this.order()?.id,
           data: {
             status: 'draft',
           },
@@ -266,11 +266,11 @@ export class ScSessionProvider {
 
   componentWillLoad() {
     // listen for checkout change events and remove any that have been paid.
-    store.onChange('checkouts', checkouts => {
+    store.onChange(this.mode, checkouts => {
       Object.keys(checkouts).forEach(formId => {
         const checkout = checkouts[formId];
         if (checkout?.status === 'paid') {
-          clearOrder(formId);
+          clearOrder(formId, this.mode);
         }
       });
     });
@@ -385,7 +385,7 @@ export class ScSessionProvider {
 
   getSessionId() {
     if (this.order()?.id) {
-      return this.order().id;
+      return this.order()?.id;
     }
 
     const id = getSessionId(this.groupId, this.order, this.modified);
@@ -417,7 +417,7 @@ export class ScSessionProvider {
     } catch (e) {
       // reinitalize if order not found.
       if (['order.not_found'].includes(e?.code)) {
-        clearOrder(this.formId);
+        clearOrder(this.formId, this.mode);
         return this.initialize();
       }
       console.error(e);

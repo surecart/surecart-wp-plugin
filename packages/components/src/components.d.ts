@@ -193,6 +193,9 @@ export namespace Components {
           * Should we force show the cart, even if there's a form on the page?
          */
         "alwaysShow": boolean;
+        /**
+          * The template for the cart to inject when opened.
+         */
         "cartTemplate": string;
         /**
           * The checkout url for the button.
@@ -206,12 +209,20 @@ export namespace Components {
           * The header for the popout.
          */
         "header": string;
+        /**
+          * Are we in test or live mode.
+         */
+        "mode": 'test' | 'live';
     }
     interface ScCartForm {
         /**
           * The form id to use for the cart.
          */
         "formId": string;
+        /**
+          * Are we in test or live mode.
+         */
+        "mode": 'test' | 'live';
         /**
           * The price id to add.
          */
@@ -236,6 +247,7 @@ export namespace Components {
           * The form id to use for the cart.
          */
         "formId": string;
+        "mode": 'live' | 'test';
         "template": string;
     }
     interface ScCartSessionProvider {
@@ -3861,6 +3873,9 @@ declare namespace LocalJSX {
           * Should we force show the cart, even if there's a form on the page?
          */
         "alwaysShow"?: boolean;
+        /**
+          * The template for the cart to inject when opened.
+         */
         "cartTemplate"?: string;
         /**
           * The checkout url for the button.
@@ -3874,12 +3889,20 @@ declare namespace LocalJSX {
           * The header for the popout.
          */
         "header"?: string;
+        /**
+          * Are we in test or live mode.
+         */
+        "mode"?: 'test' | 'live';
     }
     interface ScCartForm {
         /**
           * The form id to use for the cart.
          */
         "formId"?: string;
+        /**
+          * Are we in test or live mode.
+         */
+        "mode"?: 'test' | 'live';
         /**
           * The price id to add.
          */
@@ -3904,6 +3927,7 @@ declare namespace LocalJSX {
           * The form id to use for the cart.
          */
         "formId"?: string;
+        "mode"?: 'live' | 'test';
         "template"?: string;
     }
     interface ScCartSessionProvider {

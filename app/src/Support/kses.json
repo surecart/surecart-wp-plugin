@@ -105,6 +105,7 @@
     "checkout-url": true,
     "form-id": true,
     "header": true,
+    "mode": true,
     "style": true,
     "id": true,
     "class": true,
@@ -112,6 +113,7 @@
   },
   "sc-cart-form": {
     "form-id": true,
+    "mode": true,
     "price-id": true,
     "quantity": true,
     "style": true,
@@ -129,6 +131,7 @@
   },
   "sc-cart-loader": {
     "form-id": true,
+    "mode": true,
     "template": true,
     "style": true,
     "id": true,

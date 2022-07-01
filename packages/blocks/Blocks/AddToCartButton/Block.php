@@ -3,6 +3,7 @@
 namespace SureCartBlocks\Blocks\AddToCartButton;
 
 use SureCart\Models\Component;
+use SureCart\Models\Form;
 use SureCartBlocks\Blocks\BaseBlock;
 /**
  * Logout Button Block.
@@ -22,17 +23,18 @@ class Block extends BaseBlock {
 			return '';
 		}
 
-		return wp_kses_post(
-			Component::tag( 'sc-cart-form' )
-			->id(
-				'cart-form' . sanitize_html_class( $attributes['price_id'] )
-			)
-				->with(
-					[
-						'priceId' => $attributes['price_id'],
-						'formId'  => \SureCart::forms()->getDefaultId(),
-					]
-				)->render()
-		);
+		// need a form for checkout.
+		$form = \SureCart::forms()->getDefault();
+		if ( empty( $form->ID ) ) {
+			return '';
+		}
+		ob_start(); ?>
+		<sc-cart-form
+			price-id="<?php echo esc_attr( $attributes['price_id'] ); ?>"
+			form-id="<?php echo esc_attr( $form->ID ); ?>"
+			mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>">
+		</sc-cart-form>
+		<?php
+		return wp_kses_post( ob_get_clean() );
 	}
 }

@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { Creator, Universe } from 'stencil-wormhole';
 import { baseUrl } from '../../../../services/session';
-import store from '../../../../store/checkouts';
+import { getOrder, setOrder } from '../../../../store/checkouts';
 import uiStore from '../../../../store/ui';
 import { Order, ResponseError } from '../../../../types';
 
@@ -23,7 +23,11 @@ export class ScCart {
   /** The header for the popout. */
   @Prop() header: string;
 
+  /** The template for the cart to inject when opened. */
   @Prop() cartTemplate: string;
+
+  /** Are we in test or live mode. */
+  @Prop() mode: 'test' | 'live' = 'live';
 
   /** The checkout url for the button. */
   @Prop() checkoutUrl: string;
@@ -46,11 +50,11 @@ export class ScCart {
   }
 
   order() {
-    return store?.state?.checkouts?.[this?.formId];
+    return getOrder(this.formId, this.mode);
   }
 
   setOrder(data) {
-    store.set('checkouts', { ...store.state.checkouts, [this.formId]: data });
+    setOrder(data, this.formId);
   }
 
   /**

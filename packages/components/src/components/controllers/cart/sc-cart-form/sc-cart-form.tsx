@@ -2,7 +2,7 @@ import { Component, h, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { createOrUpdateOrder } from '../../../../services/session';
 import { Order } from '../../../../types';
-import store from '../../../../store/checkouts';
+import { getOrder, setOrder } from '../../../../store/checkouts';
 import uiStore from '../../../../store/ui';
 import { convertLineItemsToLineItemData } from '../../../../functions/line-items';
 const query = {
@@ -33,6 +33,9 @@ export class ScCartForm {
   /** The price id to add. */
   @Prop() priceId: string;
 
+  /** Are we in test or live mode. */
+  @Prop() mode: 'test' | 'live' = 'live';
+
   /** The form id to use for the cart. */
   @Prop({ reflect: true }) formId: string;
 
@@ -44,9 +47,13 @@ export class ScCartForm {
 
   /** Find a line item with this price. */
   getLineItem() {
-    const order = store?.state?.checkouts?.[this?.formId];
+    const order = this.getOrder();
     if (!order) return null;
     return (order?.line_items?.data || []).find(item => item.price?.id === this.priceId);
+  }
+
+  getOrder() {
+    return getOrder(this?.formId, this.mode);
   }
 
   /** Add the item to cart. */
@@ -59,7 +66,7 @@ export class ScCartForm {
       const order = lineItem ? await this.addQuantity(lineItem) : await this.addLineItem();
 
       // store the checkout in localstorage and open the cart
-      store.set('checkouts', { ...store.state.checkouts, [this.formId]: order });
+      setOrder(order, this.formId);
       uiStore.set('cart', { ...uiStore.state.cart, ...{ open: true } });
     } catch (e) {
       console.error(e);
@@ -71,10 +78,11 @@ export class ScCartForm {
 
   /** Add a new line item. */
   async addLineItem() {
-    let existingData = convertLineItemsToLineItemData(store?.state?.checkouts?.[this?.formId]?.line_items || []);
+    let existingData = convertLineItemsToLineItemData(this.getOrder()?.line_items || []);
     return (await createOrUpdateOrder({
-      id: store?.state?.checkouts?.[this?.formId]?.id,
+      id: this.getOrder()?.id,
       data: {
+        live_mode: this.mode === 'live',
         line_items: [
           ...(existingData || []),
           {
@@ -83,16 +91,20 @@ export class ScCartForm {
           },
         ],
       },
-      query,
+      query: {
+        ...query,
+        form_id: this.formId,
+      },
     })) as Order;
   }
 
   /** Update a line item quantity */
   async addQuantity(lineItem) {
-    let existingData = convertLineItemsToLineItemData(store?.state?.checkouts?.[this?.formId]?.line_items || []);
+    let existingData = convertLineItemsToLineItemData(this.getOrder()?.line_items || []);
     return (await createOrUpdateOrder({
-      id: store?.state?.checkouts?.[this?.formId]?.id,
+      id: this.getOrder()?.id,
       data: {
+        live_mode: this.mode === 'live',
         line_items: [
           ...(existingData || []).filter(item => item?.price_id !== lineItem?.price_id),
           {
@@ -101,7 +113,10 @@ export class ScCartForm {
           },
         ],
       },
-      query,
+      query: {
+        ...query,
+        form_id: this.formId,
+      },
     })) as Order;
   }
 

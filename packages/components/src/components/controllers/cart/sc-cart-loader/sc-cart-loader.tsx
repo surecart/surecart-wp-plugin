@@ -1,6 +1,6 @@
 import { Component, h, Prop, State } from '@stencil/core';
 import { Order } from '../../../../types';
-import store from '../../../../store/checkouts';
+import { getOrder } from '../../../../store/checkouts';
 import uiStore from '../../../../store/ui';
 
 @Component({
@@ -12,6 +12,8 @@ export class ScCartLoader {
   @Prop({ reflect: true }) formId: string;
 
   @Prop() template: string;
+
+  @Prop() mode: 'live' | 'test' = 'live';
 
   @State() order: Order;
 
@@ -27,6 +29,6 @@ export class ScCartLoader {
 
   render() {
     if (this.pageHasForm()) return null;
-    return <div innerHTML={store?.state?.checkouts?.[this?.formId]?.line_items?.pagination?.count || uiStore?.state?.cart?.open ? this.template : ''}></div>;
+    return <div innerHTML={getOrder(this.formId, this.mode)?.line_items?.pagination?.count || uiStore?.state?.cart?.open ? this.template : ''}></div>;
   }
 }

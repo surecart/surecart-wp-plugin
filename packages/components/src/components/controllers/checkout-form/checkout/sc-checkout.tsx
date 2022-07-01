@@ -155,7 +155,7 @@ export class ScCheckout {
   }
 
   order() {
-    return getOrder(this?.formId);
+    return getOrder(this?.formId, this.mode);
   }
 
   state() {
@@ -186,7 +186,7 @@ export class ScCheckout {
       error: this.error,
       customer: this.customer,
       tax_status: this.order()?.tax_status,
-      customerShippingAddress: typeof this.order()?.customer !== 'string' ? this.order().customer?.shipping_address : {},
+      customerShippingAddress: typeof this.order()?.customer !== 'string' ? this.order()?.customer?.shipping_address : {},
       shippingAddress: this.order()?.shipping_address,
       taxStatus: this.order()?.tax_status,
       taxIdentifier: this.order()?.tax_identifier,
