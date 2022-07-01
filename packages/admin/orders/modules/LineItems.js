@@ -2,6 +2,7 @@
 import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
 import { Fragment } from '@wordpress/element';
 import Box from '../../ui/Box';
 import { intervalString } from '../../util/translations';
@@ -26,7 +27,7 @@ export default ({ order, charge: chargeInput, loading }) => {
 		<Box
 			title={__('Order Details', 'surecart')}
 			header_action={
-				order?.id && (
+				order?.pdf_url && (
 					<div
 						css={css`
 							display: flex;
@@ -37,7 +38,9 @@ export default ({ order, charge: chargeInput, loading }) => {
 						`}
 					>
 						<ScButton
-							href={`${scData?.surecart_app_url}/portal/orders/${order?.id}/generate/receipt.pdf`}
+							href={addQueryArgs(order?.pdf_url, {
+								receipt: true,
+							})}
 							type="default"
 							size="small"
 						>
@@ -45,7 +48,7 @@ export default ({ order, charge: chargeInput, loading }) => {
 							<sc-icon slot="prefix" name="download"></sc-icon>
 						</ScButton>
 						<ScButton
-							href={`${scData?.surecart_app_url}/portal/orders/${order?.id}/generate.pdf`}
+							href={order?.pdf_url}
 							type="primary"
 							size="small"
 						>

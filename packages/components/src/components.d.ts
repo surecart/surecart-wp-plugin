@@ -1374,6 +1374,10 @@ export namespace Components {
           * The current order.
          */
         "order": Order;
+        /**
+          * Success url.
+         */
+        "successUrl": string;
     }
     interface ScOrderConfirmation {
         "order": Order;
@@ -5217,6 +5221,10 @@ declare namespace LocalJSX {
           * The current order.
          */
         "order"?: Order;
+        /**
+          * Success url.
+         */
+        "successUrl"?: string;
     }
     interface ScOrderConfirmation {
         "order"?: Order;

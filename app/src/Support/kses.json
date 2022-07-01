@@ -754,6 +754,7 @@
   },
   "sc-order-confirm-provider": {
     "order": true,
+    "success-url": true,
     "style": true,
     "id": true,
     "class": true,

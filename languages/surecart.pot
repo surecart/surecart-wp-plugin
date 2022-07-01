@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-06-20T18:30:21+00:00\n"
+"POT-Creation-Date: 2022-06-23T16:37:46+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -16,6 +16,7 @@ msgid "Checkout Form"
 msgstr ""
 
 #: src/BlockLibrary/BlockServiceProvider.php:93
+#: src/Integrations/AffiliateWP/AffiliateWPService.php:29
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:39
 #: src/WordPress/Admin/Notices/AdminNoticesService.php:104
 #: admin/user-profile.php:1
@@ -656,6 +657,19 @@ msgstr ""
 
 #: src/Integrations/LearnDash/LearnDashService.php:64
 msgid "Enable access to a LearnDash course."
+msgstr ""
+
+#: src/Integrations/MemberPress/MemberPressService.php:48
+#: src/Integrations/MemberPress/MemberPressService.php:128
+msgid "MemberPress Membership"
+msgstr ""
+
+#: src/Integrations/MemberPress/MemberPressService.php:57
+msgid "Membership Access"
+msgstr ""
+
+#: src/Integrations/MemberPress/MemberPressService.php:66
+msgid "Enable access to a MemberPress membership."
 msgstr ""
 
 #: src/Integrations/TutorLMS/add-to-cart-surecart.php:21
