@@ -21,6 +21,9 @@ export class ScOrderConfirmProvider {
   /** The current order. */
   @Prop() order: Order;
 
+  /** Success url. */
+  @Prop() successUrl: string;
+
   /** Update the order in the universe store. */
   @Event() scUpdateOrderState: EventEmitter<Order>;
 
@@ -58,6 +61,9 @@ export class ScOrderConfirmProvider {
     } catch (e) {
       console.error(e);
       this.scError.emit(e);
+    } finally {
+      // we always want to redirect, regardless of the outcome here.
+      window.location.assign(addQueryArgs(this.successUrl, { order: this.order.id }));
     }
   }
 

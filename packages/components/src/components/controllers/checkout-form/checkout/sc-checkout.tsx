@@ -240,7 +240,7 @@ export class ScCheckout {
                   {/* Maybe redirect to the success url if requirements are met. */}
                   <sc-order-redirect-provider order={this.order} success-url={this.successUrl}>
                     {/* Handle confirming of order after it is "Paid" by processors. */}
-                    <sc-order-confirm-provider order={this.order}>
+                    <sc-order-confirm-provider order={this.order} success-url={this.successUrl}>
                       <slot />
                     </sc-order-confirm-provider>
                   </sc-order-redirect-provider>
