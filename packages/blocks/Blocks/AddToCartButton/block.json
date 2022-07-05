@@ -9,9 +9,13 @@
 		"html": false
 	},
 	"attributes": {
-		"label": {
+		"button_text": {
 			"type": "string",
-			"default": "Name"
+			"default": "Add To Cart"
+		},
+		"ad_hoc_label": {
+			"type": "string",
+			"default": "Amount"
 		},
 		"type": {
 			"type": "string",
@@ -34,8 +38,10 @@
 			"type": "number"
 		},
 		"help": {
-			"type": "string",
-			"default": "Optional"
+			"type": "string"
+		},
+		"placeholder": {
+			"type": "string"
 		},
 		"price_id": {
 			"type": "string"

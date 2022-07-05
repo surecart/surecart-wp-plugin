@@ -256,6 +256,28 @@ export namespace Components {
          */
         "order": Order;
     }
+    interface ScCartSubmit {
+        /**
+          * Is the cart busy
+         */
+        "busy": boolean;
+        /**
+          * Show a full-width button.
+         */
+        "full": boolean;
+        /**
+          * Icon to show.
+         */
+        "icon": string;
+        /**
+          * The button's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The button type.
+         */
+        "type": 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
+    }
     interface ScCcLogo {
         "brand": string;
     }
@@ -2797,6 +2819,12 @@ declare global {
         prototype: HTMLScCartSessionProviderElement;
         new (): HTMLScCartSessionProviderElement;
     };
+    interface HTMLScCartSubmitElement extends Components.ScCartSubmit, HTMLStencilElement {
+    }
+    var HTMLScCartSubmitElement: {
+        prototype: HTMLScCartSubmitElement;
+        new (): HTMLScCartSubmitElement;
+    };
     interface HTMLScCcLogoElement extends Components.ScCcLogo, HTMLStencilElement {
     }
     var HTMLScCcLogoElement: {
@@ -3550,6 +3578,7 @@ declare global {
         "sc-cart-icon": HTMLScCartIconElement;
         "sc-cart-loader": HTMLScCartLoaderElement;
         "sc-cart-session-provider": HTMLScCartSessionProviderElement;
+        "sc-cart-submit": HTMLScCartSubmitElement;
         "sc-cc-logo": HTMLScCcLogoElement;
         "sc-charges-list": HTMLScChargesListElement;
         "sc-checkbox": HTMLScCheckboxElement;
@@ -3951,6 +3980,28 @@ declare namespace LocalJSX {
           * Order Object
          */
         "order"?: Order;
+    }
+    interface ScCartSubmit {
+        /**
+          * Is the cart busy
+         */
+        "busy"?: boolean;
+        /**
+          * Show a full-width button.
+         */
+        "full"?: boolean;
+        /**
+          * Icon to show.
+         */
+        "icon"?: string;
+        /**
+          * The button's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The button type.
+         */
+        "type"?: 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
     }
     interface ScCcLogo {
         "brand"?: string;
@@ -6729,6 +6780,7 @@ declare namespace LocalJSX {
         "sc-cart-icon": ScCartIcon;
         "sc-cart-loader": ScCartLoader;
         "sc-cart-session-provider": ScCartSessionProvider;
+        "sc-cart-submit": ScCartSubmit;
         "sc-cc-logo": ScCcLogo;
         "sc-charges-list": ScChargesList;
         "sc-checkbox": ScCheckbox;
@@ -6872,6 +6924,7 @@ declare module "@stencil/core" {
             "sc-cart-icon": LocalJSX.ScCartIcon & JSXBase.HTMLAttributes<HTMLScCartIconElement>;
             "sc-cart-loader": LocalJSX.ScCartLoader & JSXBase.HTMLAttributes<HTMLScCartLoaderElement>;
             "sc-cart-session-provider": LocalJSX.ScCartSessionProvider & JSXBase.HTMLAttributes<HTMLScCartSessionProviderElement>;
+            "sc-cart-submit": LocalJSX.ScCartSubmit & JSXBase.HTMLAttributes<HTMLScCartSubmitElement>;
             "sc-cc-logo": LocalJSX.ScCcLogo & JSXBase.HTMLAttributes<HTMLScCcLogoElement>;
             "sc-charges-list": LocalJSX.ScChargesList & JSXBase.HTMLAttributes<HTMLScChargesListElement>;
             "sc-checkbox": LocalJSX.ScCheckbox & JSXBase.HTMLAttributes<HTMLScCheckboxElement>;

@@ -1,5 +1,6 @@
 import { Component, h, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+import { Creator, Universe } from 'stencil-wormhole';
 import { createOrUpdateOrder } from '../../../../services/session';
 import { Order } from '../../../../types';
 import { getOrder, setOrder } from '../../../../store/checkouts';
@@ -27,6 +28,8 @@ const query = {
   shadow: false,
 })
 export class ScCartForm {
+  private form: HTMLScFormElement;
+
   /** The quantity */
   @Prop({ mutable: true }) quantity: number = 1;
 
@@ -58,12 +61,18 @@ export class ScCartForm {
 
   /** Add the item to cart. */
   async addToCart() {
+    const { price } = await this.form.getFormJson();
     try {
       this.busy = true;
 
-      // add line item or increment quantity.
-      const lineItem = this.getLineItem();
-      const order = lineItem ? await this.addQuantity(lineItem) : await this.addLineItem();
+      let order;
+      if (price) {
+        order = await this.addLineItem(parseInt(price as string));
+      } else {
+        // add line item or increment quantity.
+        const lineItem = this.getLineItem();
+        order = lineItem ? await this.addQuantity(lineItem) : await this.addLineItem();
+      }
 
       // store the checkout in localstorage and open the cart
       setOrder(order, this.formId);
@@ -77,7 +86,7 @@ export class ScCartForm {
   }
 
   /** Add a new line item. */
-  async addLineItem() {
+  async addLineItem(ad_hoc_amount = null) {
     let existingData = convertLineItemsToLineItemData(this.getOrder()?.line_items || []);
     return (await createOrUpdateOrder({
       id: this.getOrder()?.id,
@@ -88,6 +97,7 @@ export class ScCartForm {
           {
             price_id: this.priceId,
             quantity: this.quantity,
+            ...(ad_hoc_amount ? { ad_hoc_amount } : {}),
           },
         ],
       },
@@ -120,9 +130,22 @@ export class ScCartForm {
     })) as Order;
   }
 
+  componentWillLoad() {
+    Universe.create(this as Creator, this.state());
+  }
+
+  state() {
+    return {
+      busy: this.busy,
+      error: this.error,
+      order: this.getOrder(),
+    };
+  }
+
   render() {
     return (
       <sc-form
+        ref={el => (this.form = el as HTMLScFormElement)}
         onScSubmit={() => {
           this.addToCart();
         }}
@@ -133,10 +156,9 @@ export class ScCartForm {
             {this.error}
           </sc-alert>
         )}
-        <slot />
-        <sc-button type="primary" submit busy={this.busy}>
-          {__('Add To Cart', 'surecart')}
-        </sc-button>
+        <Universe.Provider state={this.state()}>
+          <slot />
+        </Universe.Provider>
       </sc-form>
     );
   }

@@ -145,6 +145,17 @@
     "class": true,
     "slot": true
   },
+  "sc-cart-submit": {
+    "busy": true,
+    "full": true,
+    "icon": true,
+    "size": true,
+    "type": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-cc-logo": {
     "brand": true,
     "style": true,

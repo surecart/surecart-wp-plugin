@@ -18,16 +18,31 @@ import {
 /**
  * Component Dependencies
  */
-import { ScButton } from '@surecart/components-react';
+import { ScButton, ScForm, ScPriceInput } from '@surecart/components-react';
 import PriceSelector from '@scripts/blocks/components/PriceSelector';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 
 export default ({ className, attributes, setAttributes }) => {
-	const { type, label, size, price_id } = attributes;
+	const {
+		type,
+		button_text,
+		size,
+		price_id,
+		ad_hoc_label,
+		placeholder,
+		help,
+	} = attributes;
 	const borderProps = useBorderProps(attributes);
 	const { style: borderStyle } = borderProps;
 	const colorProps = useColorProps(attributes);
 	const { style: colorStyle } = colorProps;
 	const blockProps = useBlockProps();
+	const price = useSelect(
+		(select) =>
+			select(coreStore).getEntityRecord('root', 'price', price_id),
+		[price_id]
+	);
 
 	if (!price_id) {
 		return (
@@ -43,16 +58,47 @@ export default ({ className, attributes, setAttributes }) => {
 		<div className={className}>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
+					{price?.ad_hoc && (
+						<>
+							<PanelRow>
+								<TextControl
+									label={__('Input Label', 'surecart')}
+									value={ad_hoc_label}
+									onChange={(ad_hoc_label) =>
+										setAttributes({ ad_hoc_label })
+									}
+								/>
+							</PanelRow>
+							<PanelRow>
+								<TextControl
+									label={__('Input Help', 'surecart')}
+									value={help}
+									onChange={(help) => setAttributes({ help })}
+								/>
+							</PanelRow>
+							<PanelRow>
+								<TextControl
+									label={__('Input Placeholder', 'surecart')}
+									value={placeholder}
+									onChange={(placeholder) =>
+										setAttributes({ placeholder })
+									}
+								/>
+							</PanelRow>
+						</>
+					)}
 					<PanelRow>
 						<TextControl
 							label={__('Button Text', 'surecart')}
-							value={label}
-							onChange={(label) => setAttributes({ label })}
+							value={button_text}
+							onChange={(button_text) =>
+								setAttributes({ button_text })
+							}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<SelectControl
-							label={__('Size', 'surecart')}
+							label={__('Button Size', 'surecart')}
 							value={size}
 							onChange={(size) => {
 								setAttributes({ size });
@@ -80,7 +126,7 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<SelectControl
-							label={__('Type', 'surecart')}
+							label={__('Button Type', 'surecart')}
 							value={type}
 							onChange={(type) => {
 								setAttributes({ type });
@@ -88,7 +134,11 @@ export default ({ className, attributes, setAttributes }) => {
 							options={[
 								{
 									value: 'primary',
-									label: __('Button', 'surecart'),
+									label: __('Primary Button', 'surecart'),
+								},
+								{
+									value: 'default',
+									label: __('Secondary Button', 'surecart'),
 								},
 								{
 									value: 'text',
@@ -100,33 +150,54 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScButton
-				type={type}
-				size={size}
-				style={{
-					...(colorStyle?.backgroundColor
-						? { '--primary-background': colorStyle.backgroundColor }
-						: {}),
-					...(colorStyle?.background
-						? { '--primary-background': colorStyle.background }
-						: {}),
-					...(colorStyle?.color
-						? { '--primary-color': colorStyle.color }
-						: {}),
-					...(borderStyle?.borderRadius
-						? { '--button-border-radius': borderStyle.borderRadius }
-						: {}),
-				}}
-			>
-				<RichText
-					aria-label={__('Button text')}
-					placeholder={__('Add text…')}
-					value={label}
-					onChange={(label) => setAttributes({ label })}
-					withoutInteractiveFormatting
-					allowedFormats={['core/bold', 'core/italic']}
-				/>
-			</ScButton>
+			<ScForm>
+				{price?.ad_hoc && (
+					<ScPriceInput
+						currencyCode={price.currency}
+						label={ad_hoc_label}
+						placeholder={placeholder}
+						required
+						help={help}
+						name="price"
+					/>
+				)}
+
+				<ScButton
+					type={type}
+					size={size}
+					style={{
+						...(colorStyle?.backgroundColor
+							? {
+									'--primary-background':
+										colorStyle.backgroundColor,
+							  }
+							: {}),
+						...(colorStyle?.background
+							? { '--primary-background': colorStyle.background }
+							: {}),
+						...(colorStyle?.color
+							? { '--primary-color': colorStyle.color }
+							: {}),
+						...(borderStyle?.borderRadius
+							? {
+									'--button-border-radius':
+										borderStyle.borderRadius,
+							  }
+							: {}),
+					}}
+				>
+					<RichText
+						aria-label={__('Button text')}
+						placeholder={__('Add text…')}
+						value={button_text}
+						onChange={(button_text) =>
+							setAttributes({ button_text })
+						}
+						withoutInteractiveFormatting
+						allowedFormats={['core/bold', 'core/italic']}
+					/>
+				</ScButton>
+			</ScForm>
 		</div>
 	);
 };

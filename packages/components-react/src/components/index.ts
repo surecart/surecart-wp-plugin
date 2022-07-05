@@ -22,6 +22,7 @@ export const ScCartForm = /*@__PURE__*/createReactComponent<JSX.ScCartForm, HTML
 export const ScCartIcon = /*@__PURE__*/createReactComponent<JSX.ScCartIcon, HTMLScCartIconElement>('sc-cart-icon');
 export const ScCartLoader = /*@__PURE__*/createReactComponent<JSX.ScCartLoader, HTMLScCartLoaderElement>('sc-cart-loader');
 export const ScCartSessionProvider = /*@__PURE__*/createReactComponent<JSX.ScCartSessionProvider, HTMLScCartSessionProviderElement>('sc-cart-session-provider');
+export const ScCartSubmit = /*@__PURE__*/createReactComponent<JSX.ScCartSubmit, HTMLScCartSubmitElement>('sc-cart-submit');
 export const ScCcLogo = /*@__PURE__*/createReactComponent<JSX.ScCcLogo, HTMLScCcLogoElement>('sc-cc-logo');
 export const ScChargesList = /*@__PURE__*/createReactComponent<JSX.ScChargesList, HTMLScChargesListElement>('sc-charges-list');
 export const ScCheckbox = /*@__PURE__*/createReactComponent<JSX.ScCheckbox, HTMLScCheckboxElement>('sc-checkbox');
