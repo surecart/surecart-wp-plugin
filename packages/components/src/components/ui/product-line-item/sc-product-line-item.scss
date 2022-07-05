@@ -55,6 +55,12 @@
   text-align: right;
 }
 
+.item__description {
+  font-size: var(--sc-font-size-small);
+  line-height: var(--sc-line-height-dense);
+  color: var(--sc-color-gray-500);
+}
+
 .item__image {
   width: var(--sc-product-line-item-image-size, 4em);
   height: var(--sc-product-line-item-image-size, 4em);
