@@ -7,7 +7,8 @@
 	"category": "surecart",
 	"supports": {
 		"reusable": false,
-		"html": false
+		"html": false,
+		"multiple": false
 	},
 	"attributes": {
 		"title": {

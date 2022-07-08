@@ -30,6 +30,7 @@ class CartService {
 			return '';
 		}
 		$cart = \SureCart::cartPost()->get();
+		error_log( print_r( $cart, 1 ) );
 		if ( empty( $cart->post_content ) ) {
 			return '';
 		}
@@ -60,11 +61,12 @@ class CartService {
 		if ( empty( $form->ID ) ) {
 			return '';
 		}
+		$template = $this->cartTemplate();
 		?>
 		<sc-cart-loader
 			form-id="<?php echo esc_attr( $form->ID ); ?>"
 			mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>"
-			template='<?php echo esc_attr( $this->cartTemplate() ); ?>'>
+			template='<?php echo esc_attr( $template ); ?>'>
 		</sc-cart-loader>
 		<?php
 	}

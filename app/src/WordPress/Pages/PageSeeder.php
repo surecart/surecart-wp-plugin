@@ -39,6 +39,7 @@ class PageSeeder {
 	public function seed() {
 		$this->createCheckoutForm();
 		$this->createPages();
+		$this->createCartPost();
 	}
 
 	/**
@@ -48,6 +49,24 @@ class PageSeeder {
 	 */
 	public function delete() {
 		$this->deletePages();
+	}
+
+	public function createCartPost() {
+		$pattern = require plugin_dir_path( SURECART_PLUGIN_FILE ) . 'templates/forms/checkout.php';
+
+		$cart = apply_filters(
+			'surecart/create_cart',
+			[
+				'cart' => [
+					'name'      => _x( 'cart', 'Cart slug', 'surecart' ),
+					'title'     => _x( 'Cart', 'Cart title', 'surecart' ),
+					'content'   => $pattern['content'],
+					'post_type' => 'sc_form',
+				],
+			]
+		);
+
+		$this->createPosts( $cart );
 	}
 
 	/**
