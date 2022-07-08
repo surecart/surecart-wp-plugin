@@ -31,7 +31,7 @@
   box-sizing: border-box;
   min-width: 0px;
   margin:0;
-  color: var(--sc-line-item-title-color);
+  color: var(--sc-line-item-title-color, var(--sc-input-label-color));
   font-weight: var(--sc-font-weight-semibold);
   font-size: var(--sc-font-size-medium);
   line-height: var(--sc-line-height-dense);
@@ -58,7 +58,7 @@
 .item__description {
   font-size: var(--sc-font-size-small);
   line-height: var(--sc-line-height-dense);
-  color: var(--sc-color-gray-500);
+  opacity: 0.75
 }
 
 .item__image {
@@ -87,7 +87,8 @@
 .price__description {
   font-size: var(--sc-font-size-small);
   line-height: var(--sc-line-height-dense);
-  color: var(--sc-color-gray-500);
+  color: var(--sc-input-label-color);
+  opacity: 0.75
 }
 
 .item__remove {

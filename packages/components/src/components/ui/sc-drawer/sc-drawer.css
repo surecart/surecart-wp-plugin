@@ -92,10 +92,6 @@
 }
 .drawer__body {
   flex: 1 1 auto;
-  padding: var(--sc-drawer-body-spacing);
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-  min-height: 200px;
 }
 
 /* slot[name='footer']::slotted(*) {

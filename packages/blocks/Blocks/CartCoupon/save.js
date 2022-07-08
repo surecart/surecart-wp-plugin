@@ -1,8 +1,10 @@
-export default ({ attributes, context }) => {
-	const { text, button_text } = attributes;
-	const slot = context?.['surecart/slot'] || 'footer';
+import useCartStyles from '../../hooks/useCartStyles';
+
+export default ({ attributes }) => {
+	const { text, button_text, className } = attributes;
+	const style = useCartStyles({ attributes });
 	return (
-		<sc-order-coupon-form label={text} slot={`cart-${slot}`}>
+		<sc-order-coupon-form style={style} label={text} className={className}>
 			{button_text}
 		</sc-order-coupon-form>
 	);

@@ -9,10 +9,8 @@
 	"supports": {
 		"reusable": false,
 		"html": false,
-		"multiple": false,
-		"order-summary": true
+		"multiple": false
 	},
-	"usesContext": ["surecart/slot"],
 	"attributes": {
 		"lock": {
 			"remove": true
@@ -31,6 +29,21 @@
 		"border": {
 			"type": "boolean",
 			"default": true
+		},
+		"padding": {
+			"type": "object",
+			"default": {
+				"top": "1.25em",
+				"left": "1.25em",
+				"bottom": "1.25em",
+				"right": "1.25em"
+			}
+		},
+		"backgroundColor": {
+			"type": "string"
+		},
+		"textColor": {
+			"type": "string"
 		}
 	}
 }

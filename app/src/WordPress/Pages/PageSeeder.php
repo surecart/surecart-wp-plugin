@@ -24,7 +24,7 @@ class PageSeeder {
 	 * Constructor.
 	 *
 	 * @param \SureCart\WordPress\PostTypes\FormPostTypeService $forms Forms service.
-	 * @param \SureCart\WordPress\Pages\PageService             $pages Forms service.
+	 * @param \SureCart\WordPress\Pages\PageService             $pages Pages service.
 	 */
 	public function __construct( $forms, $pages ) {
 		$this->forms = $forms;

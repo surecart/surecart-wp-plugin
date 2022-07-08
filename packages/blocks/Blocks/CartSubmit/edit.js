@@ -1,8 +1,11 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { RichText } from '@wordpress/block-editor';
+import {
+	useBlockProps,
+	InspectorControls,
+	RichText,
+} from '@wordpress/block-editor';
 import {
 	PanelBody,
 	PanelRow,
@@ -15,58 +18,29 @@ import {
  * Component Dependencies
  */
 import { ScCartSubmit } from '@surecart/components-react';
+import CartInspectorControls from '../../components/CartInspectorControls';
+import useCartStyles from '../../hooks/useCartStyles';
 
-export default ({ className, attributes, setAttributes, context }) => {
-	const { type, text, full, size, show_icon, border } = attributes;
-	const slot = context?.['surecart/slot'] || 'footer';
-
-	const getPaddingCSS = () => {
-		if (border) {
-			return '';
-		}
-		return slot === 'footer' ? 'padding-top: 0;' : 'padding-bottom: 0;';
-	};
-
-	const getBorderCSS = () => {
-		if (!border) {
-			return;
-		}
-		return slot === 'footer'
-			? 'border-top: var(--sc-drawer-border);'
-			: 'border-bottom: var(--sc-drawer-border);';
-	};
+export default ({ className, attributes, setAttributes }) => {
+	const { text, size, show_icon, border } = attributes;
 
 	const blockProps = useBlockProps({
-		css: css`
-			padding: var(--sc-drawer-${slot}-spacing);
-			${getPaddingCSS()}
-			${getBorderCSS()}
-		`,
+		style: useCartStyles({ attributes }),
 	});
 
 	return (
 		<>
 			<InspectorControls>
+				<CartInspectorControls
+					attributes={attributes}
+					setAttributes={setAttributes}
+				/>
 				<PanelBody title={__('Attributes', 'surecart')}>
-					<PanelRow>
-						<ToggleControl
-							label={__('Border', 'surecart')}
-							checked={border}
-							onChange={(border) => setAttributes({ border })}
-						/>
-					</PanelRow>
 					<PanelRow>
 						<TextControl
 							label={__('Button Text', 'surecart')}
 							value={text}
 							onChange={(text) => setAttributes({ text })}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<ToggleControl
-							label={__('Full', 'surecart')}
-							checked={full}
-							onChange={(full) => setAttributes({ full })}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -112,8 +86,8 @@ export default ({ className, attributes, setAttributes, context }) => {
 			<div {...blockProps}>
 				<ScCartSubmit
 					className={className}
-					type={type}
-					full={full}
+					full={1}
+					type="primary"
 					size={size}
 					icon={show_icon ? 'lock' : false}
 				>

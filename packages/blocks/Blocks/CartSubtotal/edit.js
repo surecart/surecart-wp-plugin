@@ -1,28 +1,32 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
-import { InspectorControls } from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 
 /**
  * Component Dependencies
  */
 import { ScFormatNumber, ScLineItem } from '@surecart/components-react';
-import useCartBlockProps from '../../hooks/useCartBlockProps';
+import CartInspectorControls from '../../components/CartInspectorControls';
+import useCartStyles from '../../hooks/useCartStyles';
 
-export default ({ attributes, setAttributes, context }) => {
-	const { label, border } = attributes;
-	const slot = context?.['surecart/slot'] || 'footer';
-	const blockProps = useCartBlockProps({ slot, border });
+export default ({ attributes, setAttributes }) => {
+	const { label } = attributes;
+
+	const blockProps = useBlockProps({
+		style: useCartStyles({ attributes }),
+	});
 
 	return (
 		<Fragment>
 			<InspectorControls>
+				<CartInspectorControls
+					attributes={attributes}
+					setAttributes={setAttributes}
+				/>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl

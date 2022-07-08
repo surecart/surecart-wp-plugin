@@ -23,6 +23,8 @@ export class ScCart {
   /** The header for the popout. */
   @Prop() header: string;
 
+  @Prop() checkoutLink: string;
+
   /** The template for the cart to inject when opened. */
   @Prop() cartTemplate: string;
 
@@ -135,6 +137,7 @@ export class ScCart {
     return {
       processor_data: this.order()?.processor_data,
       uiState: this.uiState,
+      checkoutLink: this.checkoutLink,
       loading: this.uiState === 'loading',
       busy: this.uiState === 'busy',
       navigating: this.uiState === 'navigating',

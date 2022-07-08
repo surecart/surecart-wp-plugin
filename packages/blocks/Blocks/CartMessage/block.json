@@ -7,19 +7,34 @@
 	"category": "surecart",
 	"supports": {
 		"reusable": false,
-		"html": false
+		"html": false,
+		"typography": true
 	},
-	"ancestor": ["surecart/cart-section"],
-	"usesContext": ["surecart/slot"],
+	"ancestor": ["surecart/cart"],
 	"attributes": {
 		"text": {
 			"type": "string"
 		},
-		"border": {
-			"type": "boolean",
-			"default": true
+		"align": {
+			"type": "string",
+			"default": "left"
 		},
-		"slot": {
+		"border": {
+			"type": "boolean"
+		},
+		"padding": {
+			"type": "object",
+			"default": {
+				"top": "1.25em",
+				"left": "1.25em",
+				"bottom": "1.25em",
+				"right": "1.25em"
+			}
+		},
+		"backgroundColor": {
+			"type": "string"
+		},
+		"textColor": {
 			"type": "string"
 		}
 	}

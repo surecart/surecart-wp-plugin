@@ -19,16 +19,18 @@ export class ScCartSubmit {
   /** Show a full-width button. */
   @Prop() full: boolean = true;
 
+  @Prop() checkoutLink: string;
+
   /** Icon to show. */
   @Prop() icon: string;
 
   render() {
     return (
-      <sc-button submit type={this.type} size={this.size} full={this.full} loading={this.busy} disabled={this.busy}>
+      <sc-button href={this.checkoutLink} type={this.type} size={this.size} full={this.full} loading={this.busy} disabled={this.busy}>
         {!!this.icon && <sc-icon name={this.icon} slot="prefix"></sc-icon>}
         <slot />
       </sc-button>
     );
   }
 }
-openWormhole(ScCartSubmit, ['busy'], false);
+openWormhole(ScCartSubmit, ['busy', 'checkoutLink'], false);

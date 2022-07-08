@@ -240,47 +240,62 @@ class CartPostTypeService {
 						[],
 						[
 							[
-								'surecart/cart-section',
+								'surecart/cart-header',
 								[
-									'slot' => 'header',
-								],
-								[
-									[
-										'surecart/cart-header',
+									'lock' => [
+										'remove' => true,
+										'move'   => false,
 									],
 								],
 							],
 							[
 								'surecart/cart-items',
+								[
+									'lock' => [
+										'remove' => true,
+										'move'   => false,
+									],
+								],
 							],
 							[
-								'surecart/cart-section',
+								'surecart/cart-coupon',
 								[
-									'slot' => 'footer',
+									'lock' => [
+										'remove' => false,
+										'move'   => false,
+									],
 								],
+							],
+							[
+								'surecart/cart-subtotal',
 								[
-									[ 'surecart/cart-coupon' ],
+									'padding' => [
+										'top'    => '1.25em',
+										'left'   => '1.25em',
+										'bottom' => '0',
+										'right'  => '1.25em',
+									],
+									'border'  => false,
 									[
-										'surecart/cart-subtotal',
-										[
-											'border' => true,
+										'lock' => [
+											'remove' => false,
+											'move'   => false,
 										],
 									],
-									[
-										'surecart/cart-submit',
-										[
-											'lock'   => [
-												'remove' => true,
-											],
-											'border' => true,
-										],
+								],
+							],
+							[
+								'surecart/cart-submit',
+								[
+									'lock' => [
+										'remove' => true,
+										'move'   => false,
 									],
 								],
 							],
 						],
 					],
 				],
-				'template_lock'         => 'all',
 				'map_meta_cap'          => true,
 				'supports'              => array(
 					'editor',

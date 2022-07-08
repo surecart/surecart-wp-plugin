@@ -6,50 +6,36 @@ import { css, jsx } from '@emotion/core';
  */
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
-import { InspectorControls } from '@wordpress/block-editor';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	PanelRow,
 	TextControl,
 	ToggleControl,
-	Disabled,
 } from '@wordpress/components';
-import { useBlockProps } from '@wordpress/block-editor';
 
 /**
  * Component Dependencies
  */
 import { ScCouponForm } from '@surecart/components-react';
+import useCartStyles from '../../hooks/useCartStyles';
+import CartInspectorControls from '../../components/CartInspectorControls';
 
-export default ({ attributes, setAttributes, isSelected, context }) => {
+export default ({ attributes, setAttributes, isSelected }) => {
 	const { text, button_text, disabled, border } = attributes;
 
-	const slot = context?.['surecart/slot'] || 'footer';
-
 	const blockProps = useBlockProps({
-		css: css`
-			padding: var(--sc-drawer-${slot}-spacing);
-			padding-top: ${border ? 'var(--sc-drawer-body-spacing)' : 0};
-			border-top: ${slot === 'footer' && border
-				? 'var(--sc-drawer-border);'
-				: 'none'};
-			border-bottom: ${slot === 'header' && border
-				? 'var(--sc-drawer-border);'
-				: 'none'};
-		`,
+		style: useCartStyles({ attributes }),
 	});
 
 	return (
 		<Fragment>
 			<InspectorControls>
+				<CartInspectorControls
+					attributes={attributes}
+					setAttributes={setAttributes}
+				/>
 				<PanelBody title={__('Attributes', 'surecart')}>
-					<PanelRow>
-						<ToggleControl
-							label={__('Disabled', 'surecart')}
-							checked={disabled}
-							onChange={(disabled) => setAttributes({ disabled })}
-						/>
-					</PanelRow>
 					<PanelRow>
 						<TextControl
 							label={__('Text', 'surecart')}

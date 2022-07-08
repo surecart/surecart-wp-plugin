@@ -1,14 +1,17 @@
-export default function save({ attributes, context }) {
-	const slot = context?.['surecart/slot'] || 'footer';
-	const { text, border } = attributes;
+import useCartStyles from '../../hooks/useCartStyles';
+
+export default function save({ attributes }) {
+	const { text, size, show_icon, className } = attributes;
+	const style = useCartStyles({ attributes });
 	return (
-		<sc-button
-			slot={`cart-${slot}`}
-			class={border ? '' : 'sc-no-border'}
-			type="primary"
-			full="1"
+		<sc-cart-submit
+			className={className}
+			style={style}
+			type={'primary'}
+			size={size}
+			icon={show_icon ? 'lock' : false}
 		>
 			{text}
-		</sc-button>
+		</sc-cart-submit>
 	);
 }

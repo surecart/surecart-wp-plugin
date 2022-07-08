@@ -65,7 +65,9 @@ class BlockServiceProvider implements ServiceProviderInterface {
 						'--font-weight',
 						'--line-height',
 						'--font-size',
+						'--text-align',
 						'--color',
+						'--sc-input-label-color',
 					],
 					$styles
 				);

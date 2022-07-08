@@ -7,9 +7,9 @@
 	"category": "surecart",
 	"ancestor": ["surecart/cart"],
 	"supports": {
-		"inserter": false,
 		"reusable": false,
-		"html": false
+		"html": false,
+		"multiple": false
 	},
 	"attributes": {
 		"removable": {
@@ -19,6 +19,24 @@
 		"editable": {
 			"type": "boolean",
 			"default": true
+		},
+		"border": {
+			"type": "boolean"
+		},
+		"padding": {
+			"type": "object",
+			"default": {
+				"top": "1.25em",
+				"left": "1.25em",
+				"bottom": "1.25em",
+				"right": "1.25em"
+			}
+		},
+		"backgroundColor": {
+			"type": "string"
+		},
+		"textColor": {
+			"type": "string"
 		}
 	}
 }

@@ -197,6 +197,7 @@ export namespace Components {
           * The template for the cart to inject when opened.
          */
         "cartTemplate": string;
+        "checkoutLink": string;
         /**
           * The checkout url for the button.
          */
@@ -264,6 +265,7 @@ export namespace Components {
           * Is the cart busy
          */
         "busy": boolean;
+        "checkoutLink": string;
         /**
           * Show a full-width button.
          */
@@ -3921,6 +3923,7 @@ declare namespace LocalJSX {
           * The template for the cart to inject when opened.
          */
         "cartTemplate"?: string;
+        "checkoutLink"?: string;
         /**
           * The checkout url for the button.
          */
@@ -4001,6 +4004,7 @@ declare namespace LocalJSX {
           * Is the cart busy
          */
         "busy"?: boolean;
+        "checkoutLink"?: string;
         /**
           * Show a full-width button.
          */
