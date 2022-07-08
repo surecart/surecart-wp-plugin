@@ -139,6 +139,7 @@ class CartPostTypeService {
 			[
 				'post_type' => $this->post_type,
 				'per_page'  => 1,
+				'status'    => 'publish',
 			]
 		);
 
@@ -235,15 +236,53 @@ class CartPostTypeService {
 				),
 				'template'              => [
 					[
-						'surecart/form',
+						'surecart/cart',
 						[],
-						[],
+						[
+							[
+								'surecart/cart-section',
+								[
+									'slot' => 'header',
+								],
+								[
+									[
+										'surecart/cart-header',
+									],
+								],
+							],
+							[
+								'surecart/cart-items',
+							],
+							[
+								'surecart/cart-section',
+								[
+									'slot' => 'footer',
+								],
+								[
+									[ 'surecart/cart-coupon' ],
+									[
+										'surecart/cart-subtotal',
+										[
+											'border' => true,
+										],
+									],
+									[
+										'surecart/cart-submit',
+										[
+											'lock'   => [
+												'remove' => true,
+											],
+											'border' => true,
+										],
+									],
+								],
+							],
+						],
 					],
 				],
 				'template_lock'         => 'all',
 				'map_meta_cap'          => true,
 				'supports'              => array(
-					'title',
 					'editor',
 					'revisions',
 				),

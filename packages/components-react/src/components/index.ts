@@ -19,6 +19,7 @@ export const ScButtonGroup = /*@__PURE__*/createReactComponent<JSX.ScButtonGroup
 export const ScCard = /*@__PURE__*/createReactComponent<JSX.ScCard, HTMLScCardElement>('sc-card');
 export const ScCart = /*@__PURE__*/createReactComponent<JSX.ScCart, HTMLScCartElement>('sc-cart');
 export const ScCartForm = /*@__PURE__*/createReactComponent<JSX.ScCartForm, HTMLScCartFormElement>('sc-cart-form');
+export const ScCartHeader = /*@__PURE__*/createReactComponent<JSX.ScCartHeader, HTMLScCartHeaderElement>('sc-cart-header');
 export const ScCartIcon = /*@__PURE__*/createReactComponent<JSX.ScCartIcon, HTMLScCartIconElement>('sc-cart-icon');
 export const ScCartLoader = /*@__PURE__*/createReactComponent<JSX.ScCartLoader, HTMLScCartLoaderElement>('sc-cart-loader');
 export const ScCartSessionProvider = /*@__PURE__*/createReactComponent<JSX.ScCartSessionProvider, HTMLScCartSessionProviderElement>('sc-cart-session-provider');

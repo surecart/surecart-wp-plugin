@@ -1,0 +1,24 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"name": "surecart/cart-items",
+	"title": "Cart Items",
+	"description": "The cart",
+	"category": "surecart",
+	"ancestor": ["surecart/cart"],
+	"supports": {
+		"inserter": false,
+		"reusable": false,
+		"html": false
+	},
+	"attributes": {
+		"removable": {
+			"type": "boolean",
+			"default": true
+		},
+		"editable": {
+			"type": "boolean",
+			"default": true
+		}
+	}
+}

@@ -48,6 +48,7 @@
 
 ### Used by
 
+ - [sc-cart-submit](../../controllers/cart/cart-submit)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-coupon-form](../coupon-form)
  - [sc-customer-details](../customer-details)
@@ -83,6 +84,7 @@
 ```mermaid
 graph TD;
   sc-button --> sc-spinner
+  sc-cart-submit --> sc-button
   sc-charges-list --> sc-button
   sc-coupon-form --> sc-button
   sc-customer-details --> sc-button

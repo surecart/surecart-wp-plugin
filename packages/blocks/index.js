@@ -7,6 +7,17 @@ import { __ } from '@wordpress/i18n';
 import './controls';
 import './formats';
 
+// cart
+import * as cart from '@blocks/Cart';
+import * as cartSection from '@blocks/CartSection';
+import * as cartItems from '@blocks/CartItems';
+import * as cartCoupon from '@blocks/CartCoupon';
+import * as cartSubtotal from '@blocks/CartSubtotal';
+import * as cartCTA from '@blocks/CartCTA';
+import * as cartMessage from '@blocks/CartMessage';
+import * as cartHeader from '@blocks/CartHeader';
+import * as cartSubmit from '@blocks/CartSubmit';
+
 // blocks
 import * as button from '@blocks/Button';
 import * as buyButton from '@blocks/BuyButton';
@@ -141,6 +152,15 @@ export const registerSureCartBlocks = () => {
 		totals,
 		submit,
 		card,
+		cart,
+		cartCoupon,
+		cartSection,
+		cartItems,
+		cartSubmit,
+		cartCTA,
+		cartMessage,
+		cartHeader,
+		cartSubtotal,
 		columns,
 		column,
 		confirmation,

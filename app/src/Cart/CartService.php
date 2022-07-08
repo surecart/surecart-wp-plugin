@@ -29,6 +29,10 @@ class CartService {
 		if ( empty( $form->ID ) ) {
 			return '';
 		}
+		$cart = \SureCart::cartPost()->get();
+		if ( empty( $cart->post_content ) ) {
+			return '';
+		}
 		?>
 		<sc-cart
 			id="sc-cart"
@@ -37,6 +41,8 @@ class CartService {
 			mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>"
 			style="font-size: 16px">
 
+			<?php echo wp_kses_post( do_blocks( $cart->post_content ) ); ?>
+
 			<!--
 			<div slot="cart-header" style="position: relative;">
 				<sc-text style="--font-size: var(--sc-font-size-x-small);">We pay for shipping on all orders!</sc-text>
@@ -44,7 +50,7 @@ class CartService {
 			-->
 
 
-			<sc-line-items removable editable></sc-line-items>
+			<!--<sc-line-items removable editable></sc-line-items> -->
 
 			<!-- <div slot="cart-footer" style="position: relative;">
 				<sc-text style="--font-size: var(--sc-font-size-x-small);">Add at least $82.00 more to get free shipping!</sc-text>
@@ -53,19 +59,21 @@ class CartService {
 				</div>
 			</div> -->
 
+			<!--
 			<sc-order-coupon-form label="<?php esc_attr_e( 'Add Coupon Code', 'surecart' ); ?>" slot="cart-footer">
 				<?php esc_html_e( 'Apply Coupon', 'surecart' ); ?>
 			</sc-order-coupon-form>
 
-			<sc-spacing slot="cart-footer" style="--spacing: var(--sc-spacing-small)">
-				<sc-line-item-total>
-					<span slot="title"><?php esc_html_e( 'Subtotal', 'surecart' ); ?></span>
-				</sc-line-item-total>
-			</sc-spacing>
+
+			<sc-line-item-total slot="cart-footer">
+				<span slot="title"><?php esc_html_e( 'Subtotal', 'surecart' ); ?></span>
+			</sc-line-item-total>
+
 
 			<sc-button slot="cart-footer" class="sc-no-border" type="primary" href="<?php echo esc_url_raw( \SureCart::pages()->url( 'checkout' ) ); ?>" full>
 				<?php esc_html_e( 'Checkout', 'surecart' ); ?>
 			</sc-button>
+	-->
 
 		</sc-cart>
 		<?php

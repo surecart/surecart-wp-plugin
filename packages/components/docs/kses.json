@@ -121,6 +121,13 @@
     "class": true,
     "slot": true
   },
+  "sc-cart-header": {
+    "line-items": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-cart-icon": {
     "count": true,
     "icon": true,
@@ -492,6 +499,7 @@
   "sc-flex": {
     "align-items": true,
     "flex-direction": true,
+    "flex-wrap": true,
     "justify-content": true,
     "style": true,
     "id": true,

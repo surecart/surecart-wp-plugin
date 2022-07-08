@@ -57,6 +57,10 @@ export class ScCartSessionProvider {
 
   /** Handle the error response. */
   handleErrorResponse(e) {
+    if (e?.code === 'readonly') {
+      this.scUpdateOrderState.emit(null);
+    }
+
     // expired
     if (e?.code === 'rest_cookie_invalid_nonce') {
       this.scSetState.emit('idle');
@@ -85,7 +89,7 @@ export class ScCartSessionProvider {
   async update(data = {}, query = {}) {
     try {
       this.session = (await updateOrder({
-        id: this.order.id,
+        id: this.order?.id,
         data: {
           ...data,
         },

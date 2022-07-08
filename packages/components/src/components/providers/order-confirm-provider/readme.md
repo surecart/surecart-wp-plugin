@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property | Attribute | Description        | Type    | Default     |
-| -------- | --------- | ------------------ | ------- | ----------- |
-| `order`  | --        | The current order. | `Order` | `undefined` |
+| Property     | Attribute     | Description        | Type     | Default     |
+| ------------ | ------------- | ------------------ | -------- | ----------- |
+| `order`      | --            | The current order. | `Order`  | `undefined` |
+| `successUrl` | `success-url` | Success url.       | `string` | `undefined` |
 
 
 ## Events

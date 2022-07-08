@@ -68,12 +68,12 @@
   width: var(--size);
   height: 100%;
 }
-.drawer__header {
+/* .drawer__header {
   display: flex;
   align-items: center;
   padding: var(--sc-drawer-header-spacing);
   border-bottom: var(--sc-drawer-border);
-}
+} */
 
 .drawer__title {
   flex: 1 1 auto;
@@ -95,6 +95,7 @@
   padding: var(--sc-drawer-body-spacing);
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+  min-height: 200px;
 }
 
 /* slot[name='footer']::slotted(*) {

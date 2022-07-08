@@ -1,0 +1,39 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"name": "surecart/cart-submit",
+	"title": "Cart Submit Button",
+	"description": "The cart submit button",
+	"category": "surecart",
+	"ancestor": ["surecart/cart"],
+	"supports": {
+		"reusable": false,
+		"html": false,
+		"multiple": false
+	},
+	"attributes": {
+		"text": {
+			"type": "string",
+			"default": "Checkout"
+		},
+		"type": {
+			"type": "string",
+			"default": "primary"
+		},
+		"show_icon": {
+			"type": "boolean",
+			"default": true
+		},
+		"full": {
+			"type": "boolean",
+			"default": true
+		},
+		"size": {
+			"type": "string",
+			"default": "medium"
+		},
+		"border": {
+			"type": "boolean"
+		}
+	}
+}

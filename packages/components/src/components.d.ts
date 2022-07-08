@@ -232,6 +232,9 @@ export namespace Components {
          */
         "quantity": number;
     }
+    interface ScCartHeader {
+        "lineItems": Array<LineItem>;
+    }
     interface ScCartIcon {
         /**
           * The count to show in the cart icon.
@@ -934,6 +937,7 @@ export namespace Components {
     interface ScFlex {
         "alignItems": string;
         "flexDirection": string;
+        "flexWrap": string;
         "justifyContent": string;
     }
     interface ScForm {
@@ -2801,6 +2805,12 @@ declare global {
         prototype: HTMLScCartFormElement;
         new (): HTMLScCartFormElement;
     };
+    interface HTMLScCartHeaderElement extends Components.ScCartHeader, HTMLStencilElement {
+    }
+    var HTMLScCartHeaderElement: {
+        prototype: HTMLScCartHeaderElement;
+        new (): HTMLScCartHeaderElement;
+    };
     interface HTMLScCartIconElement extends Components.ScCartIcon, HTMLStencilElement {
     }
     var HTMLScCartIconElement: {
@@ -3575,6 +3585,7 @@ declare global {
         "sc-card": HTMLScCardElement;
         "sc-cart": HTMLScCartElement;
         "sc-cart-form": HTMLScCartFormElement;
+        "sc-cart-header": HTMLScCartHeaderElement;
         "sc-cart-icon": HTMLScCartIconElement;
         "sc-cart-loader": HTMLScCartLoaderElement;
         "sc-cart-session-provider": HTMLScCartSessionProviderElement;
@@ -3944,6 +3955,10 @@ declare namespace LocalJSX {
           * The quantity
          */
         "quantity"?: number;
+    }
+    interface ScCartHeader {
+        "lineItems"?: Array<LineItem>;
+        "onScCloseCart"?: (event: CustomEvent<void>) => void;
     }
     interface ScCartIcon {
         /**
@@ -4754,6 +4769,7 @@ declare namespace LocalJSX {
     interface ScFlex {
         "alignItems"?: string;
         "flexDirection"?: string;
+        "flexWrap"?: string;
         "justifyContent"?: string;
     }
     interface ScForm {
@@ -6777,6 +6793,7 @@ declare namespace LocalJSX {
         "sc-card": ScCard;
         "sc-cart": ScCart;
         "sc-cart-form": ScCartForm;
+        "sc-cart-header": ScCartHeader;
         "sc-cart-icon": ScCartIcon;
         "sc-cart-loader": ScCartLoader;
         "sc-cart-session-provider": ScCartSessionProvider;
@@ -6921,6 +6938,7 @@ declare module "@stencil/core" {
             "sc-card": LocalJSX.ScCard & JSXBase.HTMLAttributes<HTMLScCardElement>;
             "sc-cart": LocalJSX.ScCart & JSXBase.HTMLAttributes<HTMLScCartElement>;
             "sc-cart-form": LocalJSX.ScCartForm & JSXBase.HTMLAttributes<HTMLScCartFormElement>;
+            "sc-cart-header": LocalJSX.ScCartHeader & JSXBase.HTMLAttributes<HTMLScCartHeaderElement>;
             "sc-cart-icon": LocalJSX.ScCartIcon & JSXBase.HTMLAttributes<HTMLScCartIconElement>;
             "sc-cart-loader": LocalJSX.ScCartLoader & JSXBase.HTMLAttributes<HTMLScCartLoaderElement>;
             "sc-cart-session-provider": LocalJSX.ScCartSessionProvider & JSXBase.HTMLAttributes<HTMLScCartSessionProviderElement>;

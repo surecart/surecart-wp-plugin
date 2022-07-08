@@ -37,11 +37,15 @@
  - [sc-alert](../alert)
  - [sc-breadcrumb](../breadcrumb)
  - [sc-breadcrumbs](../breadcrumbs)
+ - [sc-cart-header](../../controllers/cart/cart-header)
+ - [sc-cart-icon](../sc-cart-icon)
+ - [sc-cart-submit](../../controllers/cart/cart-submit)
  - [sc-cc-logo](../cc-logo)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-customer-details](../customer-details)
  - [sc-dialog](../sc-dialog)
  - [sc-downloads-list](../downloads-list)
+ - [sc-drawer](../sc-drawer)
  - [sc-empty](../empty)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-login-form](../../controllers/login)
@@ -50,6 +54,7 @@
  - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-product-line-item](../product-line-item)
+ - [sc-quantity-select](../quantity-select)
  - [sc-select](../select)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
@@ -66,11 +71,15 @@ graph TD;
   sc-alert --> sc-icon
   sc-breadcrumb --> sc-icon
   sc-breadcrumbs --> sc-icon
+  sc-cart-header --> sc-icon
+  sc-cart-icon --> sc-icon
+  sc-cart-submit --> sc-icon
   sc-cc-logo --> sc-icon
   sc-charges-list --> sc-icon
   sc-customer-details --> sc-icon
   sc-dialog --> sc-icon
   sc-downloads-list --> sc-icon
+  sc-drawer --> sc-icon
   sc-empty --> sc-icon
   sc-invoices-list --> sc-icon
   sc-login-form --> sc-icon
@@ -79,6 +88,7 @@ graph TD;
   sc-payment --> sc-icon
   sc-payment-methods-list --> sc-icon
   sc-product-line-item --> sc-icon
+  sc-quantity-select --> sc-icon
   sc-select --> sc-icon
   sc-subscription --> sc-icon
   sc-subscription-ad-hoc-confirm --> sc-icon

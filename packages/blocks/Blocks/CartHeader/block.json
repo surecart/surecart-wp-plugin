@@ -1,0 +1,28 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"name": "surecart/cart-header",
+	"title": "Cart Header",
+	"description": "Display a cart header",
+	"category": "surecart",
+	"supports": {
+		"reusable": false,
+		"html": false,
+		"multiple": false
+	},
+	"ancestor": ["surecart/cart-section"],
+	"usesContext": ["surecart/slot"],
+	"attributes": {
+		"text": {
+			"type": "string",
+			"default": "Cart"
+		},
+		"border": {
+			"type": "boolean",
+			"default": true
+		},
+		"slot": {
+			"type": "string"
+		}
+	}
+}

@@ -87,6 +87,11 @@ export class ScCart {
     this.uiState = 'idle';
   }
 
+  @Listen('scCloseCart')
+  handleCloseCart() {
+    this.open = false;
+  }
+
   /** Fetch the order */
   async fetchOrder() {
     try {
@@ -162,12 +167,7 @@ export class ScCart {
               <sc-drawer open={this.open} onScAfterHide={() => (this.open = false)} onScAfterShow={() => (this.open = true)}>
                 {this.open === true && (
                   <Fragment>
-                    <div class="cart__header" slot="header">
-                      <sc-icon class="cart__close" name="arrow-left" onClick={() => (this.open = false)}></sc-icon>
-                      <slot name="cart-title">{this.header}</slot>
-                      <sc-tag size="small">{this.getItemsCount()}</sc-tag>
-                    </div>
-                    <div class="cart__header-suffix" slot="header-suffix">
+                    <div class="cart__header-suffix" slot="header">
                       <slot name="cart-header" />
                       <sc-error style={{ '--sc-alert-border-radius': '0' }} slot="header" error={this.error} onScUpdateError={e => (this.error = e.detail)}></sc-error>
                     </div>

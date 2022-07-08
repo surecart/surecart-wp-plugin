@@ -38,13 +38,13 @@
 
 ## Methods
 
-### `submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Order | CustomEvent<import("/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/types").FormStateSetter>>`
+### `submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<any>`
 
 Submit the form
 
 #### Returns
 
-Type: `Promise<Order | CustomEvent<FormStateSetter>>`
+Type: `Promise<any>`
 
 
 

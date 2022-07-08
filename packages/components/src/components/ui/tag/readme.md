@@ -35,6 +35,7 @@
 ### Used by
 
  - [sc-badge-notice](../badge-notice)
+ - [sc-cart-header](../../controllers/cart/cart-header)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-coupon-form](../coupon-form)
  - [sc-customer-details](../customer-details)
@@ -53,6 +54,7 @@
 ```mermaid
 graph TD;
   sc-badge-notice --> sc-tag
+  sc-cart-header --> sc-tag
   sc-charges-list --> sc-tag
   sc-coupon-form --> sc-tag
   sc-customer-details --> sc-tag

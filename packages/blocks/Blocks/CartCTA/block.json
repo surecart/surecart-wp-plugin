@@ -1,0 +1,26 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"name": "surecart/cart-cta",
+	"title": "Cart CTA",
+	"description": "Display the cart cta",
+	"category": "surecart",
+	"supports": {
+		"reusable": false,
+		"html": false
+	},
+	"ancestor": ["surecart/cart-section"],
+	"usesContext": ["surecart/slot"],
+	"attributes": {
+		"text": {
+			"type": "string"
+		},
+		"border": {
+			"type": "boolean",
+			"default": true
+		},
+		"slot": {
+			"type": "string"
+		}
+	}
+}

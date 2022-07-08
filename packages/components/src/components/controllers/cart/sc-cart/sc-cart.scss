@@ -1,7 +1,7 @@
 :host {
-  --header-spacing: var(--sc-spacing-large);
-  --body-spacing: var(--sc-spacing-large);
-  --footer-spacing: var(--sc-spacing-large);
+  --sc-drawer-header-spacing: var(--sc-spacing-large);
+  --sc-drawer-body-spacing: var(--sc-spacing-large);
+  --sc-drawer-footer-spacing: var(--sc-spacing-large);
 }
 
 .cart {
@@ -26,7 +26,7 @@
 }
 slot[name='cart-header']::slotted(*) {
   border-bottom: var(--sc-drawer-border);
-  padding: var(--header-spacing);
+  padding: var(--sc-drawer-header-spacing);
   background:  var(--sc-panel-background-color);
   position: relative;
 }
@@ -37,7 +37,7 @@ slot[name='cart-header']::slotted(.sc-no-border) {
 
 slot[name='cart-footer']::slotted(*) {
   border-top: var(--sc-drawer-border);
-  padding: var(--footer-spacing);
+  padding: var(--sc-drawer-footer-spacing);
   background:  var(--sc-panel-background-color);
   position: relative;
 }

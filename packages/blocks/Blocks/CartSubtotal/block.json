@@ -1,0 +1,25 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"name": "surecart/cart-subtotal",
+	"title": "Cart Subtotal",
+	"description": "Display the cart subtotal",
+	"category": "surecart",
+	"supports": {
+		"reusable": false,
+		"html": false,
+		"multiple": false
+	},
+	"ancestor": ["surecart/cart-section"],
+	"usesContext": ["surecart/slot"],
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": "Subtotal"
+		},
+		"border": {
+			"type": "boolean",
+			"default": true
+		}
+	}
+}

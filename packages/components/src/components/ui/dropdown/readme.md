@@ -39,7 +39,6 @@
 ### Used by
 
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
- - [sc-quantity-select](../quantity-select)
  - [sc-select](../select)
  - [sc-tax-id-input](../tax-id-input)
 
@@ -47,7 +46,6 @@
 ```mermaid
 graph TD;
   sc-payment-methods-list --> sc-dropdown
-  sc-quantity-select --> sc-dropdown
   sc-select --> sc-dropdown
   sc-tax-id-input --> sc-dropdown
   style sc-dropdown fill:#f9f,stroke:#333,stroke-width:4px

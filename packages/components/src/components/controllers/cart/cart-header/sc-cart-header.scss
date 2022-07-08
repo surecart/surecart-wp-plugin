@@ -1,0 +1,11 @@
+.cart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 1em;
+}
+
+.cart__close {
+  cursor:pointer;
+}

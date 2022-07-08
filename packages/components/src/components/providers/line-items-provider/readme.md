@@ -23,11 +23,13 @@
 
 ### Used by
 
+ - [sc-cart-session-provider](../cart-session-provider)
  - [sc-session-provider](../session-provider)
 
 ### Graph
 ```mermaid
 graph TD;
+  sc-cart-session-provider --> sc-line-items-provider
   sc-session-provider --> sc-line-items-provider
   style sc-line-items-provider fill:#f9f,stroke:#333,stroke-width:4px
 ```
