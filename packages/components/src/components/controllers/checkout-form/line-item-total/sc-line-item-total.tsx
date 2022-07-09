@@ -15,14 +15,15 @@ export class ScLineItemTotal {
   @Prop() order: Order;
   @Prop() size: 'large' | 'medium';
 
-  session_key = {
+  order_key = {
     total: 'total_amount',
     subtotal: 'subtotal_amount',
+    amount_due: 'amount_due',
   };
 
   render() {
     // loading state
-    if (this.loading) {
+    if (this.loading && !this.order?.[this?.order_key?.[this?.total]]) {
       return (
         <sc-line-item>
           <sc-skeleton slot="title" style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>
