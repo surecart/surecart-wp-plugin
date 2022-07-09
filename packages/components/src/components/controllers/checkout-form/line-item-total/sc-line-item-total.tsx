@@ -22,7 +22,7 @@ export class ScLineItemTotal {
 
   render() {
     // loading state
-    if (!this.order?.id && this.loading) {
+    if (this.loading) {
       return (
         <sc-line-item>
           <sc-skeleton slot="title" style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>
@@ -31,7 +31,7 @@ export class ScLineItemTotal {
       );
     }
 
-    if (!this.order?.currency) return null;
+    if (!this.order?.currency) return;
 
     if (this.total === 'total' && (this.order.trial_amount !== 0 || hasPaymentPlan(this.order))) {
       return (
