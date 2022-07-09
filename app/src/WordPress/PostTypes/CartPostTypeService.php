@@ -226,13 +226,13 @@ class CartPostTypeService {
 					// You need to be able to edit posts, in order to read blocks in their raw form.
 					'read'                   => 'edit_posts',
 					// You need to be able to publish posts, in order to create blocks.
-					'create_posts'           => 'publish_posts',
+					'create_posts'           => false,
 					'edit_posts'             => 'edit_posts',
 					'edit_published_posts'   => 'edit_published_posts',
-					'delete_published_posts' => 'delete_published_posts',
-					'delete_posts'           => 'delete_posts',
+					'delete_published_posts' => false,
+					'delete_posts'           => false,
 					'edit_others_posts'      => 'edit_others_posts',
-					'delete_others_posts'    => 'delete_others_posts',
+					'delete_others_posts'    => false,
 				),
 				'template'              => [
 					[
