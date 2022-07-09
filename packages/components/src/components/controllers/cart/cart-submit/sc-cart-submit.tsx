@@ -26,7 +26,18 @@ export class ScCartSubmit {
 
   render() {
     return (
-      <sc-button href={this.checkoutLink} type={this.type} size={this.size} full={this.full} loading={this.busy} disabled={this.busy}>
+      <sc-button
+        href={this.checkoutLink}
+        type={this.type}
+        size={this.size}
+        full={this.full}
+        loading={this.busy}
+        disabled={this.busy}
+        onClick={() => {
+          this.busy = true;
+          return true;
+        }}
+      >
         {!!this.icon && <sc-icon name={this.icon} slot="prefix"></sc-icon>}
         <slot />
       </sc-button>
