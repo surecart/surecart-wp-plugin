@@ -2,7 +2,7 @@ import { Component, h, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
 import { createOrUpdateOrder } from '../../../../services/session';
-import { Order } from '../../../../types';
+import { LineItemData, Order } from '../../../../types';
 import { getOrder, setOrder } from '../../../../store/checkouts';
 import uiStore from '../../../../store/ui';
 import { convertLineItemsToLineItemData } from '../../../../functions/line-items';
@@ -51,7 +51,19 @@ export class ScCartForm {
   getLineItem() {
     const order = this.getOrder();
     if (!order) return null;
-    return (order?.line_items?.data || []).find(item => item.price?.id === this.priceId);
+    const lineItem = (order?.line_items?.data || []).find(item => item.price?.id === this.priceId);
+    if (!lineItem?.id) {
+      return {
+        price_id: this.priceId,
+        quantity: 1,
+      };
+    }
+
+    return {
+      id: lineItem?.id,
+      price_id: lineItem?.price?.id,
+      quantity: lineItem?.quantity,
+    } as LineItemData;
   }
 
   getOrder() {
@@ -63,16 +75,9 @@ export class ScCartForm {
     const { price } = await this.form.getFormJson();
     try {
       this.busy = true;
-
-      let order;
-      if (price) {
-        order = await this.addLineItem(parseInt(price as string));
-      } else {
-        // add line item or increment quantity.
-        const lineItem = this.getLineItem();
-        order = lineItem ? await this.addQuantity(lineItem) : await this.addLineItem();
-      }
-
+      const lineItem = this.getLineItem();
+      // if it's ad_hoc, update the amount. Otherwise increment the quantity.
+      const order = await this.addOrUpdateLineItem(price ? { ad_hoc_amount: parseInt(price as string) } : { quantity: (lineItem?.quantity || 0) + 1 });
       // store the checkout in localstorage and open the cart
       setOrder(order, this.formId);
       uiStore.set('cart', { ...uiStore.state.cart, ...{ open: true } });
@@ -84,9 +89,13 @@ export class ScCartForm {
     }
   }
 
-  /** Add a new line item. */
-  async addLineItem(ad_hoc_amount = null) {
+  async addOrUpdateLineItem(data = {}) {
+    // get the current line item from the price id.
+    let lineItem = this.getLineItem() as LineItemData;
+
+    // convert line items response to line items post.
     let existingData = convertLineItemsToLineItemData(this.getOrder()?.line_items || []);
+
     return (await createOrUpdateOrder({
       id: this.getOrder()?.id,
       data: {
@@ -94,31 +103,8 @@ export class ScCartForm {
         line_items: [
           ...(existingData || []),
           {
-            price_id: this.priceId,
-            quantity: this.quantity,
-            ...(ad_hoc_amount ? { ad_hoc_amount } : {}),
-          },
-        ],
-      },
-      query: {
-        ...query,
-        form_id: this.formId,
-      },
-    })) as Order;
-  }
-
-  /** Update a line item quantity */
-  async addQuantity(lineItem) {
-    let existingData = convertLineItemsToLineItemData(this.getOrder()?.line_items || []);
-    return (await createOrUpdateOrder({
-      id: this.getOrder()?.id,
-      data: {
-        live_mode: this.mode === 'live',
-        line_items: [
-          ...(existingData || []).filter(item => item?.price_id !== lineItem?.price_id),
-          {
-            price_id: lineItem?.price_id,
-            quantity: lineItem?.quantity + 1,
+            ...lineItem,
+            ...data,
           },
         ],
       },
