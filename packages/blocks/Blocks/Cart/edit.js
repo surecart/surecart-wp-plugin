@@ -19,7 +19,12 @@ const allowedBlocks = [
 ];
 
 export default () => {
-	const blockProps = useBlockProps();
+	const blockProps = useBlockProps({
+		style: {
+			fontSize: '16px',
+			fontFamily: 'var(--sc-font-sans)',
+		},
+	});
 
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
 		? __stableUseInnerBlocksProps
