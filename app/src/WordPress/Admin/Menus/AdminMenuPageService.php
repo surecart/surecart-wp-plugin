@@ -48,7 +48,7 @@ class AdminMenuPageService {
 			return;
 		}
 
-		$cart_page_id = \SureCart::pages()->getId( 'cart' );
+		$cart_page_id = \SureCart::pages()->getId( 'cart', 'sc_cart' );
 
 		$this->pages = [
 			'get-started'     => \add_submenu_page( $this->slug, __( 'Getting Started', 'surecart' ), __( 'Getting Started', 'surecart' ), 'install_plugins', $this->slug, '__return_false' ),
