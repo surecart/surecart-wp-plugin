@@ -15,6 +15,7 @@ return [
 		\SureCartAppCore\AppCore\AppCoreServiceProvider::class,
 		\SureCartAppCore\Config\ConfigServiceProvider::class,
 		\SureCart\Database\MigrationsServiceProvider::class,
+		\SureCart\Database\UpdateMigrationServiceProvider::class,
 		\SureCart\Account\AccountServiceProvider::class,
 		\SureCart\WordPress\PluginServiceProvider::class,
 		\SureCart\WordPress\TranslationsServiceProvider::class,
