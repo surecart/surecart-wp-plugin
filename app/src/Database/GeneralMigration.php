@@ -49,13 +49,8 @@ abstract class GeneralMigration {
 	 * @return boolean
 	 */
 	public function shouldMigrate() {
-		// we've already done this migration.
-		if ( $this->version < $this->getLastMigrationVersion() ) {
-			return false;
-		}
-
-		// we will run it if the migrated version is less than the current version of the plugin.
-		return version_compare( $this->getLastMigrationVersion(), \SureCart::plugin()->version(), '<' );
+		// check if we already have done this migration.
+		return version_compare( $this->version, $this->getLastMigrationVersion(), '>=' );
 	}
 
 	/**
