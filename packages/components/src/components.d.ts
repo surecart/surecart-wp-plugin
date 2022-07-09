@@ -233,6 +233,28 @@ export namespace Components {
          */
         "quantity": number;
     }
+    interface ScCartFormSubmit {
+        /**
+          * Is the cart busy
+         */
+        "busy": boolean;
+        /**
+          * Show a full-width button.
+         */
+        "full": boolean;
+        /**
+          * Icon to show.
+         */
+        "icon": string;
+        /**
+          * The button's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The button type.
+         */
+        "type": 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
+    }
     interface ScCartHeader {
         "lineItems": Array<LineItem>;
     }
@@ -251,7 +273,13 @@ export namespace Components {
           * The form id to use for the cart.
          */
         "formId": string;
+        /**
+          * The mode for the form.
+         */
         "mode": 'live' | 'test';
+        /**
+          * The cart template to inject when opened.
+         */
         "template": string;
     }
     interface ScCartSessionProvider {
@@ -2807,6 +2835,12 @@ declare global {
         prototype: HTMLScCartFormElement;
         new (): HTMLScCartFormElement;
     };
+    interface HTMLScCartFormSubmitElement extends Components.ScCartFormSubmit, HTMLStencilElement {
+    }
+    var HTMLScCartFormSubmitElement: {
+        prototype: HTMLScCartFormSubmitElement;
+        new (): HTMLScCartFormSubmitElement;
+    };
     interface HTMLScCartHeaderElement extends Components.ScCartHeader, HTMLStencilElement {
     }
     var HTMLScCartHeaderElement: {
@@ -3587,6 +3621,7 @@ declare global {
         "sc-card": HTMLScCardElement;
         "sc-cart": HTMLScCartElement;
         "sc-cart-form": HTMLScCartFormElement;
+        "sc-cart-form-submit": HTMLScCartFormSubmitElement;
         "sc-cart-header": HTMLScCartHeaderElement;
         "sc-cart-icon": HTMLScCartIconElement;
         "sc-cart-loader": HTMLScCartLoaderElement;
@@ -3959,6 +3994,28 @@ declare namespace LocalJSX {
          */
         "quantity"?: number;
     }
+    interface ScCartFormSubmit {
+        /**
+          * Is the cart busy
+         */
+        "busy"?: boolean;
+        /**
+          * Show a full-width button.
+         */
+        "full"?: boolean;
+        /**
+          * Icon to show.
+         */
+        "icon"?: string;
+        /**
+          * The button's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The button type.
+         */
+        "type"?: 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
+    }
     interface ScCartHeader {
         "lineItems"?: Array<LineItem>;
         "onScCloseCart"?: (event: CustomEvent<void>) => void;
@@ -3978,7 +4035,13 @@ declare namespace LocalJSX {
           * The form id to use for the cart.
          */
         "formId"?: string;
+        /**
+          * The mode for the form.
+         */
         "mode"?: 'live' | 'test';
+        /**
+          * The cart template to inject when opened.
+         */
         "template"?: string;
     }
     interface ScCartSessionProvider {
@@ -6797,6 +6860,7 @@ declare namespace LocalJSX {
         "sc-card": ScCard;
         "sc-cart": ScCart;
         "sc-cart-form": ScCartForm;
+        "sc-cart-form-submit": ScCartFormSubmit;
         "sc-cart-header": ScCartHeader;
         "sc-cart-icon": ScCartIcon;
         "sc-cart-loader": ScCartLoader;
@@ -6942,6 +7006,7 @@ declare module "@stencil/core" {
             "sc-card": LocalJSX.ScCard & JSXBase.HTMLAttributes<HTMLScCardElement>;
             "sc-cart": LocalJSX.ScCart & JSXBase.HTMLAttributes<HTMLScCartElement>;
             "sc-cart-form": LocalJSX.ScCartForm & JSXBase.HTMLAttributes<HTMLScCartFormElement>;
+            "sc-cart-form-submit": LocalJSX.ScCartFormSubmit & JSXBase.HTMLAttributes<HTMLScCartFormSubmitElement>;
             "sc-cart-header": LocalJSX.ScCartHeader & JSXBase.HTMLAttributes<HTMLScCartHeaderElement>;
             "sc-cart-icon": LocalJSX.ScCartIcon & JSXBase.HTMLAttributes<HTMLScCartIconElement>;
             "sc-cart-loader": LocalJSX.ScCartLoader & JSXBase.HTMLAttributes<HTMLScCartLoaderElement>;
