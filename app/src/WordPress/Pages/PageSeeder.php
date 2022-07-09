@@ -66,7 +66,7 @@ class PageSeeder {
 					'name'      => _x( 'cart', 'Cart slug', 'surecart' ),
 					'title'     => _x( 'Cart', 'Cart title', 'surecart' ),
 					'content'   => $pattern['content'],
-					'post_type' => 'sc_form',
+					'post_type' => 'sc_cart',
 				],
 			]
 		);
