@@ -19,10 +19,8 @@ class CartMigrationsService extends GeneralMigration {
 	 * @return void
 	 */
 	public function run() {
-		error_log( 'run' );
 		// cart page is already created.
 		if ( ! empty( \SureCart::pages()->get( 'cart', 'sc_cart' ) ) ) {
-			error_log( 'already created' );
 			return;
 		}
 
