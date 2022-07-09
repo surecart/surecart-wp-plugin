@@ -122,6 +122,17 @@
     "class": true,
     "slot": true
   },
+  "sc-cart-form-submit": {
+    "busy": true,
+    "full": true,
+    "icon": true,
+    "size": true,
+    "type": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-cart-header": {
     "line-items": true,
     "style": true,
