@@ -24,7 +24,6 @@ const query = {
 
 @Component({
   tag: 'sc-cart-form',
-  styleUrl: 'sc-cart-form.scss',
   shadow: false,
 })
 export class ScCartForm {
@@ -147,6 +146,7 @@ export class ScCartForm {
       <sc-form
         ref={el => (this.form = el as HTMLScFormElement)}
         onScSubmit={() => {
+          console.log('submit');
           this.addToCart();
         }}
       >
