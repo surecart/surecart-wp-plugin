@@ -51,8 +51,13 @@ class PageSeeder {
 		$this->deletePages();
 	}
 
+	/**
+	 * Create the cart post.
+	 *
+	 * @return void
+	 */
 	public function createCartPost() {
-		$pattern = require plugin_dir_path( SURECART_PLUGIN_FILE ) . 'templates/forms/checkout.php';
+		$pattern = require plugin_dir_path( SURECART_PLUGIN_FILE ) . 'templates/cart.php';
 
 		$cart = apply_filters(
 			'surecart/create_cart',

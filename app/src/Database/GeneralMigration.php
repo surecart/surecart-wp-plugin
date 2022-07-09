@@ -50,7 +50,8 @@ abstract class GeneralMigration {
 	 */
 	public function shouldMigrate() {
 		// we've already done this migration.
-		if ( $this->version < $this->getLastMigrationVersion() ) {
+		if ( version_compare( $this->version, $this->getLastMigrationVersion(), '<' ) ) {
+			error_log( $this->version );
 			return false;
 		}
 
