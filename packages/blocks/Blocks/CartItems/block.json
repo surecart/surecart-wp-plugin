@@ -21,7 +21,8 @@
 			"default": true
 		},
 		"border": {
-			"type": "boolean"
+			"type": "boolean",
+			"default": true
 		},
 		"padding": {
 			"type": "object",
