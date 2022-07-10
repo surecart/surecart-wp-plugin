@@ -221,7 +221,7 @@ class InvoicesListTable extends ListTable {
 		ob_start();
 		?>
 		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'invoice', $invoice->id ) ); ?>">
-			<?php echo sanitize_text_field( $invoice->number ?? $invoice->id ); ?>
+			<?php echo esc_html( sanitize_text_field( $invoice->number ?? $invoice->id ) ); ?>
 		</a>
 		<br />
 		<a  aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'invoice', $invoice->id ) ); ?>">
