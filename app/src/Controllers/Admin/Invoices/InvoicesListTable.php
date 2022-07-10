@@ -196,23 +196,6 @@ class InvoicesListTable extends ListTable {
 		return sprintf( __( 'Valid until %s', 'surecart' ), date_i18n( get_option( 'date_format' ), $timestamp / 1000 ) );
 	}
 
-	public function get_price_string( $coupon = '' ) {
-		if ( ! $coupon || empty( $coupon->duration ) ) {
-			return;
-		}
-		if ( ! empty( $coupon->percent_off ) ) {
-			// translators: Coupon % off.
-			return sprintf( esc_html( __( '%1d%% off', 'surecart' ) ), $coupon->percent_off );
-		}
-
-		if ( ! empty( $coupon->amount_off ) ) {
-			// translators: Coupon amount off.
-			return Currency::formatCurrencyNumber( $coupon->amount_off ) . ' <small style="opacity: 0.75;">' . strtoupper( esc_html( $coupon->currency ) ) . '</small>';
-		}
-
-		return esc_html__( 'No discount.', 'surecart' );
-	}
-
 	/**
 	 * Get the duration string
 	 *
