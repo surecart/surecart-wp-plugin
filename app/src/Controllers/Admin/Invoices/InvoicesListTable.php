@@ -197,28 +197,6 @@ class InvoicesListTable extends ListTable {
 	}
 
 	/**
-	 * Get the duration string
-	 *
-	 * @param Coupon|boolean $coupon Coupon object.
-	 * @return string|void;
-	 */
-	public function get_duration_string( $coupon = '' ) {
-		if ( ! $coupon || empty( $coupon->duration ) ) {
-			return;
-		}
-
-		if ( 'forever' === $coupon->duration ) {
-			return __( 'Forever', 'surecart' );
-		}
-		if ( 'repeating' === $coupon->duration ) {
-			// translators: number of months.
-			return sprintf( __( 'For %d months', 'surecart' ), $coupon->duration_in_months ?? 1 );
-		}
-
-		return __( 'Once', 'surecart' );
-	}
-
-	/**
 	 * Handle the status
 	 *
 	 * @param \SureCart\Models\Invoice $invoice Order Model.
