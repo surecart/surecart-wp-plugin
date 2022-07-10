@@ -183,24 +183,6 @@ class InvoicesListTable extends ListTable {
 	}
 
 	/**
-	 * Output the Promo Code
-	 *
-	 * @param Promotion $promotion Promotion model.
-	 *
-	 * @return string
-	 */
-	public function column_usage( $promotion ) {
-		$max = $promotion->max_redemptions ?? '&infin;';
-		ob_start();
-		?>
-		<?php echo \esc_html( "$promotion->times_redeemed / $max" ); ?>
-		<br />
-		<div style="opacity: 0.75"><?php echo \esc_html( $this->get_expiration_string( $promotion->redeem_by ) ); ?></div>
-		<?php
-		return ob_get_clean();
-	}
-
-	/**
 	 * Render the "Redeem By"
 	 *
 	 * @param string $timestamp Redeem timestamp.
