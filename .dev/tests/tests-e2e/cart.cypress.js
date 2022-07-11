@@ -140,7 +140,14 @@ describe('Cart', () => {
 				.find('a')
 				.click({ force: true, waitForAnimations: true });
 
-			cy.get('sc-checkout').should('be.visible');
+			cy.get('sc-checkout sc-line-items')
+				.shadow()
+				.find('sc-product-line-item')
+				.should('have.length', 1)
+				.shadow()
+				.find('sc-quantity-select', { timeout: 10000 })
+				.should('be.visible')
+				.should('have.attr', 'quantity', '3');
 		});
 	});
 });
