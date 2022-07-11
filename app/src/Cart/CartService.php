@@ -30,7 +30,6 @@ class CartService {
 			return '';
 		}
 		$cart = \SureCart::cartPost()->get();
-		error_log( print_r( $cart, 1 ) );
 		if ( empty( $cart->post_content ) ) {
 			return '';
 		}
