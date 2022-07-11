@@ -2,15 +2,10 @@
 
 namespace SureCart\Models;
 
-use SureCart\Models\Traits\CanPurgeFile;
-use SureCart\Models\Traits\CanPurgeImage;
-
 /**
  * Price model
  */
 class Product extends Model {
-	use CanPurgeImage, CanPurgeFile;
-
 	/**
 	 * Rest API endpoint
 	 *

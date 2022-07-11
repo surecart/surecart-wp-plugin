@@ -5,18 +5,18 @@ namespace SureCart\Models;
 /**
  * Price model
  */
-class File extends Model {
+class Media extends Model {
 	/**
 	 * Rest API endpoint
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'files';
+	protected $endpoint = 'medias';
 
 	/**
 	 * Object name
 	 *
 	 * @var string
 	 */
-	protected $object_name = 'file';
+	protected $object_name = 'media';
 }

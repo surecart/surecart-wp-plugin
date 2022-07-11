@@ -3,7 +3,7 @@
 exports[`sc-stacked-list-row renders 1`] = `
 <sc-stacked-list-row>
   <mock:shadow-root>
-    <div class="list-row" target="_self">
+    <div class="list-row" part="base" target="_self">
       <span class="list-row__prefix">
         <slot name="prefix"></slot>
       </span>

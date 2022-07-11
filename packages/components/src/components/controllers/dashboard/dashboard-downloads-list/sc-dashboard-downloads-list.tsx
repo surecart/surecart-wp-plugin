@@ -76,7 +76,7 @@ export class ScDownloadsList {
   async getItems() {
     const response = (await await apiFetch({
       path: addQueryArgs(`surecart/v1/purchases/`, {
-        expand: ['product', 'product.files'],
+        expand: ['product', 'product.downloads', 'download.media'],
         downloadable: true,
         revoked: false,
         ...this.query,

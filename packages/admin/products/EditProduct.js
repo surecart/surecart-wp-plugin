@@ -32,6 +32,7 @@ export default ({ id }) => {
 	const {
 		product,
 		saveProduct,
+		saveProductError,
 		editProduct,
 		deleteProduct,
 		hasLoadedProduct,
@@ -208,7 +209,7 @@ export default ({ id }) => {
 		>
 			<Fragment>
 				<Error
-					error={productError || error}
+					error={saveProductError || productError || error}
 					setError={setError}
 					margin="80px"
 				/>

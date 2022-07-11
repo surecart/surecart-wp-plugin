@@ -2,16 +2,16 @@
 
 namespace SureCart\Controllers\Rest;
 
-use SureCart\Models\File;
+use SureCart\Models\Media;
 
 /**
  * Handle File requests through the REST API
  */
-class FilesController extends RestController {
+class MediasController extends RestController {
 	/**
 	 * Class to make the requests.
 	 *
 	 * @var string
 	 */
-	protected $class = File::class;
+	protected $class = Media::class;
 }

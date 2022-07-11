@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-06-23T16:37:46+00:00\n"
+"POT-Creation-Date: 2022-07-11T15:17:27+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -447,7 +447,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Settings.php:55
 #: src/Controllers/Admin/Settings/Settings.php:76
-#: layouts/partials/admin-settings-sidebar.php:35
+#: layouts/partials/admin-settings-sidebar.php:39
 msgid "Connection"
 msgstr ""
 
@@ -745,17 +745,18 @@ msgstr ""
 #: src/Rest/CustomerLinksRestServiceProvider.php:53
 #: src/Rest/CustomerNotificationProtocolRestServiceProvider.php:81
 #: src/Rest/CustomerRestServiceProvider.php:47
-#: src/Rest/FilesRestServiceProvider.php:54
+#: src/Rest/DownloadRestServiceProvider.php:54
 #: src/Rest/IntegrationProvidersRestServiceProvider.php:106
 #: src/Rest/IntegrationsRestServiceProvider.php:78
 #: src/Rest/InvoicesRestServiceProvider.php:75
+#: src/Rest/MediaRestServiceProvider.php:54
 #: src/Rest/OrderRestServiceProvider.php:90
 #: src/Rest/PaymentIntentsRestServiceProvider.php:76
 #: src/Rest/PaymentMethodsRestServiceProvider.php:77
 #: src/Rest/PortalProtocolRestServiceProvider.php:83
 #: src/Rest/PriceRestServiceProvider.php:47
 #: src/Rest/ProductGroupsRestServiceProvider.php:47
-#: src/Rest/ProductsRestServiceProvider.php:82
+#: src/Rest/ProductsRestServiceProvider.php:47
 #: src/Rest/PromotionRestServiceProvider.php:46
 #: src/Rest/PurchasesRestServiceProvider.php:88
 #: src/Rest/RefundsRestServiceProvider.php:54
@@ -912,19 +913,21 @@ msgstr ""
 msgid "The reply-to email address to use when sending emails to customers."
 msgstr ""
 
-#: src/Rest/FilesRestServiceProvider.php:73
+#: src/Rest/DownloadRestServiceProvider.php:73
 #: src/Rest/IntegrationProvidersRestServiceProvider.php:129
 #: src/Rest/IntegrationsRestServiceProvider.php:118
+#: src/Rest/MediaRestServiceProvider.php:73
 #: src/Rest/PriceRestServiceProvider.php:98
-#: src/Rest/ProductsRestServiceProvider.php:168
+#: src/Rest/ProductsRestServiceProvider.php:133
 msgid "The page of items you want returned."
 msgstr ""
 
-#: src/Rest/FilesRestServiceProvider.php:77
+#: src/Rest/DownloadRestServiceProvider.php:77
 #: src/Rest/IntegrationProvidersRestServiceProvider.php:133
 #: src/Rest/IntegrationsRestServiceProvider.php:122
+#: src/Rest/MediaRestServiceProvider.php:77
 #: src/Rest/PriceRestServiceProvider.php:102
-#: src/Rest/ProductsRestServiceProvider.php:172
+#: src/Rest/ProductsRestServiceProvider.php:137
 msgid "A limit on the number of items to be returned, between 1 and 100."
 msgstr ""
 
@@ -1003,7 +1006,7 @@ msgid "The content for the object."
 msgstr ""
 
 #: src/Rest/PriceRestServiceProvider.php:70
-#: src/Rest/ProductsRestServiceProvider.php:140
+#: src/Rest/ProductsRestServiceProvider.php:105
 msgid "Whether to get archived products or not."
 msgstr ""
 
@@ -1012,12 +1015,12 @@ msgid "Only return prices that allow ad hoc amounts or not."
 msgstr ""
 
 #: src/Rest/PriceRestServiceProvider.php:78
-#: src/Rest/ProductsRestServiceProvider.php:148
+#: src/Rest/ProductsRestServiceProvider.php:113
 msgid "The query to be used for full text search of this collection."
 msgstr ""
 
 #: src/Rest/PriceRestServiceProvider.php:82
-#: src/Rest/ProductsRestServiceProvider.php:152
+#: src/Rest/ProductsRestServiceProvider.php:117
 msgid "Ensure result set excludes specific IDs."
 msgstr ""
 
@@ -1025,28 +1028,28 @@ msgstr ""
 msgid "Only return objects that belong to the given products."
 msgstr ""
 
-#: src/Rest/ProductsRestServiceProvider.php:88
+#: src/Rest/ProductsRestServiceProvider.php:53
 msgid "Files attached to the product."
 msgstr ""
 
-#: src/Rest/ProductsRestServiceProvider.php:96
+#: src/Rest/ProductsRestServiceProvider.php:61
 msgid "Stored product metadata"
 msgstr ""
 
-#: src/Rest/ProductsRestServiceProvider.php:107
+#: src/Rest/ProductsRestServiceProvider.php:72
 msgid "Top level metrics for the product."
 msgstr ""
 
-#: src/Rest/ProductsRestServiceProvider.php:144
+#: src/Rest/ProductsRestServiceProvider.php:109
 msgid "Only return products that are recurring or not recurring (one time)."
 msgstr ""
 
-#: src/Rest/ProductsRestServiceProvider.php:160
+#: src/Rest/ProductsRestServiceProvider.php:125
 msgid "Only return objects that belong to the given product groups."
 msgstr ""
 
-#: src/Rest/ProductsRestServiceProvider.php:188
-#: src/Rest/ProductsRestServiceProvider.php:206
+#: src/Rest/ProductsRestServiceProvider.php:153
+#: src/Rest/ProductsRestServiceProvider.php:171
 msgid "Sorry, you are not allowed to edit products."
 msgstr ""
 
@@ -1708,7 +1711,7 @@ msgid "Please add at least one product."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:15
-#: src/Support/Errors/Translations/codes.php:22
+#: src/Support/Errors/Translations/codes.php:23
 msgid "Please fill out your address."
 msgstr ""
 
@@ -1736,40 +1739,48 @@ msgstr ""
 msgid "This product has prices that are currently being used. Please archive the product instead if it is not already archived."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:23
-msgid "The prices in this checkout session have changed. Please recheck it before submitting again."
+#: src/Support/Errors/Translations/codes.php:22
+msgid "The product image must be an image."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:24
-msgid "This coupon code is invalid."
+msgid "The prices in this checkout session have changed. Please recheck it before submitting again."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:25
-msgid "Your postal code is not valid."
+msgid "This coupon code is invalid."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:26
-msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
+msgid "Your postal code is not valid."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:27
-msgid "The maximum price must be smaller."
+msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:28
-msgid "The minimum price must be smaller."
+msgid "The maximum price must be smaller."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:29
-msgid "The maximum price must be greater than the minimum price."
+msgid "The minimum price must be smaller."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:30
-msgid "You are already collecting tax for this zone."
+msgid "The maximum price must be greater than the minimum price."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:31
+msgid "You are already collecting tax for this zone."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:32
 msgid "You cannot enable EU Micro Exemption if your address is outside of the EU."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:33
+msgid "You cannot delete this media item because it is currently being used."
 msgstr ""
 
 #. translators: attribute.
@@ -3100,15 +3111,15 @@ msgstr ""
 msgid "Taxes"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:40
-msgid "Advanced"
-msgstr ""
-
-#: layouts/partials/admin-settings-sidebar.php:45
+#: layouts/partials/admin-settings-sidebar.php:33
 msgid "Data Export"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:50
+#: layouts/partials/admin-settings-sidebar.php:44
+msgid "Advanced"
+msgstr ""
+
+#: layouts/partials/admin-settings-sidebar.php:49
 msgid "Help"
 msgstr ""
 
