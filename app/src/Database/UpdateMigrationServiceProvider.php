@@ -24,18 +24,19 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		// only run the migration if the version changes.
-		if ( $this->versionChanged() ) {
-			add_action( 'admin_init', [ $this, 'run' ] );
-		}
-
-		// update the migration version on shutdown, after all migrations have run.
-		add_action( 'shutdown', [ $this, 'updateMigrationVersion' ] );
+		add_action( 'admin_init', [ $this, 'run' ] );
+		// update the migration version on admin_init lower priority, after all migrations have run.
+		add_action( 'admin_init', [ $this, 'updateMigrationVersion' ], 9999999 );
 	}
 
 	/**
 	 * Run the migration.
 	 */
 	public function run() {
+		if ( ! $this->versionChanged() ) {
+			return;
+		}
+
 		// flush roles on every update.
 		\SureCart::plugin()->roles()->create();
 	}
@@ -46,9 +47,10 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function updateMigrationVersion() {
-		if ( $this->versionChanged() ) {
-			update_option( 'surecart_migration_version', \SureCart::plugin()->version() );
+		if ( ! $this->versionChanged() ) {
+			return;
 		}
+		update_option( 'surecart_migration_version', \SureCart::plugin()->version() );
 	}
 
 	/**
@@ -57,6 +59,6 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 	 * @return boolean
 	 */
 	public function versionChanged() {
-		return \SureCart::plugin()->version() !== get_option( 'surecart_migration_version', '0.0.0' );
+		return version_compare( \SureCart::plugin()->version(), get_option( 'surecart_migration_version', '0.0.0' ), '!=' );
 	}
 }

@@ -39,8 +39,8 @@ abstract class GeneralMigration {
 		// run the migration.
 		$this->run();
 
-		// update the migration complete on shutdown, after all migrations have run.
-		add_action( 'shutdown', [ $this, 'complete' ] );
+		// update the migration complete on admin_init complete, after all migrations have run.
+		add_action( 'admin_init', [ $this, 'complete' ], 999999 );
 	}
 
 	/**
