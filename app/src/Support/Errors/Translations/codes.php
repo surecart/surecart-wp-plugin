@@ -20,6 +20,7 @@ return [
 	'promotion.code.taken'                              => __( 'This promotion code already exists. Please archive the old code or use a different code.', 'surecart' ),
 	'payment_intent.processor.blank'                    => __( 'There are no processors to make the payment. Please contact us for assistance.', 'surecart' ),
 	'product.restrict_dependent_destroy.has_many'       => __( 'This product has prices that are currently being used. Please archive the product instead if it is not already archived.', 'surecart' ),
+	'product.image.invalid_media_type'                  => __( 'The product image must be an image.', 'surecart' ),
 	'order.shipping_address.invalid_tax_address'        => __( 'Please fill out your address.', 'surecart' ),
 	'order.line_items.old_price_versions'               => __( 'The prices in this checkout session have changed. Please recheck it before submitting again.', 'surecart' ),
 	'order.discount.coupon.blank'                       => __( 'This coupon code is invalid.', 'surecart' ),
@@ -30,4 +31,5 @@ return [
 	'price.ad_hoc_max_amount.greater_than_or_equal_to'  => __( 'The maximum price must be greater than the minimum price.', 'surecart' ),
 	'tax_registration.tax_zone_id.taken'                => __( 'You are already collecting tax for this zone.', 'surecart' ),
 	'tax_protocol.eu_micro_exemption_enabled.address_outside_eu' => __( 'You cannot enable EU Micro Exemption if your address is outside of the EU.', 'surecart' ),
+	'media.restrict_dependent_destroy.has_one'          => __( 'You cannot delete this media item because it is currently being used.', 'surecart' ),
 ];

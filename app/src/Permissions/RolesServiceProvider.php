@@ -26,6 +26,9 @@ class RolesServiceProvider implements ServiceProviderInterface {
 		$container['surecart.permissions.permissions'] = function () {
 			return new PermissionsService();
 		};
+
+		$app = $container[ SURECART_APPLICATION_KEY ];
+		$app->alias( 'roles', 'surecart.permissions.roles' );
 	}
 
 	/**

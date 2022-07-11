@@ -12,6 +12,16 @@ class UserMetaMigrationsService extends GeneralMigration {
 	 * @return void
 	 */
 	public function run() {
+		$this->flushRoles();
+		$this->runUserMetaMigration();
+	}
+
+	/**
+	 * Migrate user meta
+	 *
+	 * @return void
+	 */
+	public function runUserMetaMigration() {
 		$customers = get_users(
 			array(
 				'meta_key' => 'sc_customer_ids',
@@ -27,5 +37,14 @@ class UserMetaMigrationsService extends GeneralMigration {
 		foreach ( $customers as $customer ) {
 			update_user_meta( $customer->ID, 'sc_customer_ids', $customer->sc_customer_ids );
 		}
+	}
+
+	/**
+	 * Always flush roles when version changes.
+	 *
+	 * @return void
+	 */
+	public function flushRoles() {
+		\SureCart::roles()->create();
 	}
 }

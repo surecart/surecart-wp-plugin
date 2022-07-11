@@ -45,7 +45,7 @@ class UserRoleIntegrationServiceTest extends SureCartUnitTestCase
 	public function test_purchaseCreatedTrigger() {
 		[$service, $integration, $wp_user, $purchase] = $this->purchaseTriggerMocks();
 
-		$service->shouldReceive('onPurchaseCreated')->once()->with($integration, $wp_user);
+		$service->shouldReceive('onPurchaseCreated')->once()->withSomeOfArgs($integration, $wp_user);
 		do_action('surecart/purchase_created', $purchase);
 	}
 
@@ -55,7 +55,7 @@ class UserRoleIntegrationServiceTest extends SureCartUnitTestCase
 	public function test_purchaseRevokedTrigger() {
 		[$service, $integration, $wp_user, $purchase] = $this->purchaseTriggerMocks();
 
-		$service->shouldReceive('onPurchaseRevoked')->once()->with($integration, $wp_user);
+		$service->shouldReceive('onPurchaseRevoked')->once()->withSomeOfArgs($integration, $wp_user);
 		do_action('surecart/purchase_revoked', $purchase);
 	}
 
@@ -66,7 +66,7 @@ class UserRoleIntegrationServiceTest extends SureCartUnitTestCase
 	public function test_purchaseInvokedTrigger() {
 		[$service, $integration, $wp_user, $purchase] = $this->purchaseTriggerMocks();
 
-		$service->shouldReceive('onPurchaseInvoked')->once()->with($integration, $wp_user);
+		$service->shouldReceive('onPurchaseInvoked')->once()->withSomeOfArgs($integration, $wp_user);
 		do_action('surecart/purchase_invoked', $purchase);
 	}
 }
