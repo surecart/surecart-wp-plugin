@@ -25,7 +25,7 @@ describe('Cart', () => {
 			.click();
 	};
 
-	it.skip('Can add to cart and proceed to checkout', () => {
+	it('Can add to cart and proceed to checkout', () => {
 		cy.exec(
 			`yarn wp-env run tests-cli "wp post create --post_content='${cartPage}' --post_type=page --post_title='Cart Buttons' --post_status='publish' --porcelain"`
 		).then((response) => {
