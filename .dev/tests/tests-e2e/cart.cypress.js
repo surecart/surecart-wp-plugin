@@ -31,12 +31,12 @@ describe('Cart', () => {
 			// the panel should open with the correct stuff.
 			cy.get('sc-cart-loader')
 				.shadow()
-				.find('sc-line-items')
+				.find('sc-line-items', { timeout: 10000 })
 				.shadow()
 				.find('sc-product-line-item')
 				.should('have.length', 1)
 				.shadow()
-				.find('sc-quantity-select')
+				.find('sc-quantity-select', { timeout: 10000 })
 				.should('be.visible')
 				.should('have.attr', 'quantity', '1');
 
@@ -69,16 +69,16 @@ describe('Cart', () => {
 			// the panel should open with a count of 2
 			cy.get('sc-cart-loader')
 				.shadow()
-				.find('sc-line-items')
+				.find('sc-line-items', { timeout: 10000 })
 				.shadow()
 				.find('sc-product-line-item')
 				.should('have.length', 1)
 				.shadow()
-				.find('sc-quantity-select')
+				.find('sc-quantity-select', { timeout: 10000 })
 				.should('be.visible')
 				.should('have.attr', 'quantity', '2');
 
-			cy.reload();
+			cy.reload(true);
 
 			// the icon and counter should be correct.
 			cy.get('sc-cart-loader')
@@ -87,8 +87,6 @@ describe('Cart', () => {
 				.shadow()
 				.find('sc-cart-icon')
 				.shadow()
-				.find('.cart')
-				.should('be.visible')
 				.find('.cart__counter')
 				.contains('2');
 
@@ -99,6 +97,40 @@ describe('Cart', () => {
 				.shadow()
 				.find('sc-cart-icon')
 				.click({ force: true });
+
+			// click increase,
+			cy.get('sc-cart-loader')
+				.shadow()
+				.find('sc-line-items', { timeout: 10000 })
+				.shadow()
+				.find('sc-product-line-item')
+				.should('have.length', 1)
+				.shadow()
+				.find('sc-quantity-select', { timeout: 10000 })
+				.shadow()
+				.find('.button__increase')
+				.click();
+
+			cy.get('sc-cart-loader')
+				.shadow()
+				.find('sc-cart-submit sc-button')
+				.should('have.attr', 'loading');
+
+			cy.get('sc-cart-loader')
+				.shadow()
+				.find('sc-cart-submit sc-button')
+				.should('not.have.attr', 'loading');
+
+			cy.get('sc-cart-loader')
+				.shadow()
+				.find('sc-line-items', { timeout: 10000 })
+				.shadow()
+				.find('sc-product-line-item')
+				.should('have.length', 1)
+				.shadow()
+				.find('sc-quantity-select', { timeout: 10000 })
+				.should('be.visible')
+				.should('have.attr', 'quantity', '3');
 
 			// go to checkout.
 			cy.get('sc-cart-loader')
