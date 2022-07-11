@@ -39,8 +39,8 @@
 		"test:unit": "wp-scripts test-unit-js"
 	},
 	"dependencies": {
-		"@surecart/components": "workspace:^",
-		"@surecart/components-react": "workspace:^",
+		"@surecart/components": "^0.0.7",
+		"@surecart/components-react": "^0.0.6",
 		"@surecart/docs": "workspace:^"
 	},
 	"devDependencies": {

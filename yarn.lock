@@ -5079,7 +5079,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@surecart/components-react@workspace:packages/components-react"
   dependencies:
-    "@surecart/components": "workspace:^"
+    "@surecart/components": ^0.0.7
     "@types/jest": 23.3.9
     "@types/node": ^15.12.2
     "@types/react": ^17.0.34
@@ -5089,12 +5089,12 @@ __metadata:
     react-dom: ^17.0.2
     typescript: ^3.3.4000
   peerDependencies:
-    react: ^16.7.0
-    react-dom: ^16.7.0
+    react: ^17.0.2
+    react-dom: ^17.0.2
   languageName: unknown
   linkType: soft
 
-"@surecart/components@workspace:^, @surecart/components@workspace:packages/components":
+"@surecart/components@^0.0.7, @surecart/components@workspace:^, @surecart/components@workspace:packages/components":
   version: 0.0.0-use.local
   resolution: "@surecart/components@workspace:packages/components"
   dependencies:
