@@ -37,6 +37,7 @@
  - [sc-alert](../alert)
  - [sc-breadcrumb](../breadcrumb)
  - [sc-breadcrumbs](../breadcrumbs)
+ - [sc-cart-form-submit](../../controllers/cart/cart-form-submit)
  - [sc-cart-header](../../controllers/cart/cart-header)
  - [sc-cart-icon](../sc-cart-icon)
  - [sc-cart-submit](../../controllers/cart/cart-submit)
@@ -71,6 +72,7 @@ graph TD;
   sc-alert --> sc-icon
   sc-breadcrumb --> sc-icon
   sc-breadcrumbs --> sc-icon
+  sc-cart-form-submit --> sc-icon
   sc-cart-header --> sc-icon
   sc-cart-icon --> sc-icon
   sc-cart-submit --> sc-icon

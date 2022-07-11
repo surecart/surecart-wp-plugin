@@ -5099,7 +5099,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@surecart/blocks@workspace:packages/blocks"
   dependencies:
-    "@surecart/components": ^0.0.7
+    "@surecart/components": ^0.0.8
     "@surecart/components-react": ^0.0.6
     "@surecart/docs": "workspace:^"
     "@wordpress/prettier-config": ^1.1.1
@@ -5113,7 +5113,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@surecart/components-react@workspace:packages/components-react"
   dependencies:
-    "@surecart/components": ^0.0.7
+    "@surecart/components": ^0.0.8
     "@types/jest": 23.3.9
     "@types/node": ^15.12.2
     "@types/react": ^17.0.34
@@ -5128,7 +5128,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@surecart/components@^0.0.7, @surecart/components@workspace:^, @surecart/components@workspace:packages/components":
+"@surecart/components@^0.0.8, @surecart/components@workspace:^, @surecart/components@workspace:packages/components":
   version: 0.0.0-use.local
   resolution: "@surecart/components@workspace:packages/components"
   dependencies:

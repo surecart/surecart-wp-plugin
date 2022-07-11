@@ -26,10 +26,10 @@
 ### Graph
 ```mermaid
 graph TD;
-  sc-cart-submit --> sc-button
-  sc-cart-submit --> sc-icon
+  sc-cart-form-submit --> sc-button
+  sc-cart-form-submit --> sc-icon
   sc-button --> sc-spinner
-  style sc-cart-submit fill:#f9f,stroke:#333,stroke-width:4px
+  style sc-cart-form-submit fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

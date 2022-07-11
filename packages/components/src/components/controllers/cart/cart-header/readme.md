@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type     | Default     |
-| -------- | --------- | ----------- | -------- | ----------- |
-| `count`  | `count`   |             | `number` | `undefined` |
+| Property    | Attribute | Description | Type         | Default     |
+| ----------- | --------- | ----------- | ------------ | ----------- |
+| `lineItems` | --        |             | `LineItem[]` | `undefined` |
 
 
 ## Events

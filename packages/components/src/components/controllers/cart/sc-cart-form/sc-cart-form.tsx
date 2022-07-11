@@ -1,11 +1,13 @@
 import { Component, h, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
+
+import { convertLineItemsToLineItemData } from '../../../../functions/line-items';
 import { createOrUpdateOrder } from '../../../../services/session';
-import { LineItemData, Order } from '../../../../types';
 import { getOrder, setOrder } from '../../../../store/checkouts';
 import uiStore from '../../../../store/ui';
-import { convertLineItemsToLineItemData } from '../../../../functions/line-items';
+import { LineItemData, Order } from '../../../../types';
+
 const query = {
   expand: [
     'line_items',
@@ -50,12 +52,11 @@ export class ScCartForm {
   /** Find a line item with this price. */
   getLineItem() {
     const order = this.getOrder();
-    if (!order) return null;
     const lineItem = (order?.line_items?.data || []).find(item => item.price?.id === this.priceId);
     if (!lineItem?.id) {
       return {
         price_id: this.priceId,
-        quantity: 1,
+        quantity: 0,
       };
     }
 
@@ -75,9 +76,8 @@ export class ScCartForm {
     const { price } = await this.form.getFormJson();
     try {
       this.busy = true;
-      const lineItem = this.getLineItem();
       // if it's ad_hoc, update the amount. Otherwise increment the quantity.
-      const order = await this.addOrUpdateLineItem(price ? { ad_hoc_amount: parseInt(price as string) } : { quantity: (lineItem?.quantity || 0) + 1 });
+      const order = await this.addOrUpdateLineItem({ ad_hoc_amount: parseInt(price as string) || null });
       // store the checkout in localstorage and open the cart
       setOrder(order, this.formId);
       uiStore.set('cart', { ...uiStore.state.cart, ...{ open: true } });
@@ -89,12 +89,15 @@ export class ScCartForm {
     }
   }
 
-  async addOrUpdateLineItem(data = {}) {
+  async addOrUpdateLineItem(data = { ad_hoc_amount: null }) {
     // get the current line item from the price id.
     let lineItem = this.getLineItem() as LineItemData;
-
     // convert line items response to line items post.
     let existingData = convertLineItemsToLineItemData(this.getOrder()?.line_items || []);
+
+    if (lineItem && !data?.ad_hoc_amount) {
+      lineItem.quantity = lineItem.quantity + 1;
+    }
 
     return (await createOrUpdateOrder({
       id: this.getOrder()?.id,
