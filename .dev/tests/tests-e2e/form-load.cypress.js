@@ -21,7 +21,7 @@ describe('Form', () => {
 			});
 		});
 
-		it('Loads Paypal and Stripe Processors', () => {
+		it.skip('Loads Paypal and Stripe Payment Element Processors', () => {
 			cy.exec(
 				`yarn wp-env run tests-cli "wp post create --post_content='${defaultForm}' --post_type=page --post_title='Default Form' --post_status='publish' --porcelain"`
 			).then((response) => {
@@ -80,7 +80,7 @@ describe('Form', () => {
 			});
 		});
 
-		it('Loads Paypal Only Processors', () => {
+		it.skip('Loads Paypal Only Processors', () => {
 			cy.exec(
 				`yarn wp-env run tests-cli "wp post create --post_content='${simpleForm}' --post_type=page --post_title='Default Form' --post_status='publish' --porcelain"`
 			).then((response) => {
@@ -142,7 +142,7 @@ describe('Form', () => {
 			});
 		});
 
-		it('Loads Stripe Only Processors', () => {
+		it.skip('Loads Stripe Only Processors', () => {
 			cy.exec(
 				`yarn wp-env run tests-cli "wp post create --post_content='${simpleForm}' --post_type=page --post_title='Default Form' --post_status='publish' --porcelain"`
 			).then((response) => {
