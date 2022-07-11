@@ -21,6 +21,41 @@ describe('Form', () => {
 			});
 		});
 
+		it('Loads Paypal and Stripe Card Processors', () => {
+			cy.exec(
+				`yarn wp-env run tests-cli "wp post create --post_content='${defaultForm}' --post_type=page --post_title='Default Form' --post_status='publish' --porcelain"`
+			).then((response) => {
+				cy.interceptWithFixture('POST', '**surecart**orders*', {
+					fixture: 'orders/one-time',
+					as: 'createOrder',
+				});
+				cy.interceptWithFixture('GET', '**test_price_1*', {
+					fixture: 'price/with-product',
+					as: 'fetchPrice1',
+					callback: (body) => {
+						return body;
+					},
+				});
+				cy.interceptWithFixture('GET', '**test_price_2*', {
+					fixture: 'price/with-product',
+					as: 'fetchPrice2',
+					callback: (body) => {
+						body[0].id = 'test_price_2';
+						body[0].product.id = 'test_product_2';
+						body[0].product.name = 'Test Product 2';
+						return body;
+					},
+				});
+
+				cy.intercept('POST', '**payment_intents*').as(
+					'createPaymentIntent'
+				);
+
+				cy.clearCookies();
+				cy.visit(`?p=${parseInt(response.stdout)}`);
+			});
+		});
+
 		it.skip('Loads Paypal and Stripe Payment Element Processors', () => {
 			cy.exec(
 				`yarn wp-env run tests-cli "wp post create --post_content='${defaultForm}' --post_type=page --post_title='Default Form' --post_status='publish' --porcelain"`
