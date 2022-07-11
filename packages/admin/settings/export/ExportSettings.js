@@ -6,7 +6,7 @@ export default () => {
 	return (
 		<SettingsTemplate
 			title={__('Data Export', 'surecart')}
-			icon={<sc-icon name="download-cloud"></sc-icon>}
+			icon={<sc-icon name="layers"></sc-icon>}
 			noButton
 		>
 			<sc-card no-padding>
