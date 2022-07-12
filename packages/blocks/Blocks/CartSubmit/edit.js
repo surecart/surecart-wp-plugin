@@ -1,23 +1,13 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
-import {
-	useBlockProps,
-	InspectorControls,
-	RichText,
-} from '@wordpress/block-editor';
-import {
-	PanelBody,
-	PanelRow,
-	SelectControl,
-	TextControl,
-	ToggleControl,
-} from '@wordpress/components';
-
 /**
  * Component Dependencies
  */
 import { ScCartSubmit } from '@surecart/components-react';
+import { InspectorControls, RichText, useBlockProps } from '@wordpress/block-editor';
+import { Disabled, PanelBody, PanelRow, SelectControl, TextControl, ToggleControl } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
+
 import CartInspectorControls from '../../components/CartInspectorControls';
 import useCartStyles from '../../hooks/useCartStyles';
 
@@ -84,22 +74,25 @@ export default ({ className, attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				<ScCartSubmit
-					className={className}
-					full={1}
-					type="primary"
-					size={size}
-					icon={show_icon ? 'lock' : false}
-				>
-					<RichText
-						aria-label={__('Button text')}
-						placeholder={__('Add text…')}
-						value={text}
-						onChange={(value) => setAttributes({ text: value })}
-						withoutInteractiveFormatting
-						allowedFormats={['core/bold', 'core/italic']}
-					/>
-				</ScCartSubmit>
+				<Disabled>
+					<ScCartSubmit
+						className={className}
+						full={1}
+						type="primary"
+						size={size}
+						icon={show_icon ? 'lock' : false}
+						busy={false}
+					>
+						<RichText
+							aria-label={__('Button text')}
+							placeholder={__('Add text…')}
+							value={text}
+							onChange={(value) => setAttributes({ text: value })}
+							withoutInteractiveFormatting
+							allowedFormats={['core/bold', 'core/italic']}
+						/>
+					</ScCartSubmit>
+				</Disabled>
 			</div>
 		</>
 	);
