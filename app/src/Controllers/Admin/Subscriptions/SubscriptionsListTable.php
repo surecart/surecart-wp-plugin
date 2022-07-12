@@ -183,7 +183,7 @@ class SubscriptionsListTable extends ListTable {
 	 * @return boolean|null
 	 */
 	public function getStatus() {
-		$status = esc_html( $_GET['status'] ) ?? null;
+		$status = esc_html( $_GET['status'] ?? null );
 		if ( 'all' === $status ) {
 			$status = null;
 		}

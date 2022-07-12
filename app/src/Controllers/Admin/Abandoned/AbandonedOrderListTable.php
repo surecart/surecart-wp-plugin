@@ -133,7 +133,7 @@ class AbandonedOrderListTable extends ListTable {
 	 * @return boolean|null
 	 */
 	public function getStatus() {
-		$status = esc_html( $_GET['status'] ) ?? 'all';
+		$status = esc_html( $_GET['status'] ?? 'all' );
 		if ( $status === 'all' ) {
 			return [ 'not_notified', 'notified' ];
 		}
