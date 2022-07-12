@@ -207,7 +207,7 @@ class RequestService {
 
 		// add referer header.
 		if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
-			$args['headers']['X-SURECART-REFERRER'] = $_SERVER['HTTP_REFERER'];
+			$args['headers']['X-SURECART-REFERRER'] = esc_url_raw( $_SERVER['HTTP_REFERER'] );
 		}
 
 		// parse args.

@@ -359,12 +359,12 @@ class CouponsListTable extends ListTable {
 
 		// If orderby is set, use this as the sort column
 		if ( ! empty( $_GET['orderby'] ) ) {
-			$orderby = $_GET['orderby'];
+			$orderby = esc_html( $_GET['orderby'] );
 		}
 
 		// If order is set use this as the order
 		if ( ! empty( $_GET['order'] ) ) {
-			$order = $_GET['order'];
+			$order = esc_html( $_GET['order'] );
 		}
 
 		$result = strcmp( $a[ $orderby ], $b[ $orderby ] );

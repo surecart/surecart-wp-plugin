@@ -142,7 +142,7 @@ class InvoicesListTable extends ListTable {
 	 * @return boolean|null
 	 */
 	public function getStatus() {
-		$status = $_GET['status'] ?? 'paid';
+		$status = esc_html( $_GET['status'] ) ?? 'paid';
 		if ( 'paid' === $status ) {
 			return [ 'paid', 'completed' ];
 		}
