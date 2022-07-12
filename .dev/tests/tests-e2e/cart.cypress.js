@@ -1,12 +1,6 @@
 describe('Cart', () => {
 	let cartPage, adHocCartPage;
 
-	before(() => {
-		cy.exec(
-			`yarn wp-env run tests-cli "wp eval '\SureCart::page_seeder()->seed();'"`
-		);
-	});
-
 	beforeEach(() => {
 		cy.fixture('cart/add-to-cart-page').then((template) => {
 			cartPage = template.replace(/[\""]/g, '\\"');
@@ -172,7 +166,7 @@ describe('Cart', () => {
 				.find('sc-input')
 				.shadow()
 				.find('input')
-				.type('12345', { force: true });
+				.type('12345', { delay: 100, force: true });
 
 			cy.get('sc-cart-form sc-button')
 				.shadow()
@@ -200,7 +194,7 @@ describe('Cart', () => {
 				.shadow()
 				.find('input')
 				.clear({ force: true })
-				.type('98765', { force: true });
+				.type('98765', { delay: 100, force: true });
 
 			cy.get('sc-cart-form sc-button')
 				.shadow()

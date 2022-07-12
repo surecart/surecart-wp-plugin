@@ -1,10 +1,4 @@
 describe('Checkout', () => {
-	before(() => {
-		cy.exec(
-			`yarn wp-env run tests-cli "wp eval '\SureCart::page_seeder()->seed();'"`
-		);
-	});
-
 	it('Can checkout', () => {
 		cy.exec(
 			`yarn wp-env run tests-cli "wp option get surecart_checkout_page_id"`
@@ -24,13 +18,13 @@ describe('Checkout', () => {
 				.find('sc-input')
 				.shadow()
 				.find('input')
-				.type('John Doe', { force: true });
+				.type('John Doe', { delay: 100, force: true });
 			cy.get('sc-customer-email')
 				.shadow()
 				.find('sc-input')
 				.shadow()
 				.find('input')
-				.type('test@test.com', { force: true });
+				.type('test@test.com', { delay: 100, force: true });
 
 			// fill stripe card element.
 			cy.getStripeCardElement('number').type('4242424242424242', {
@@ -57,9 +51,9 @@ describe('Checkout', () => {
 				.should('not.have.class', 'button--loading')
 				.click({ force: true, waitForAnimations: true });
 
+			// update the order.
 			cy.wait('@updateOrder', { timeout: 30000 }).then(
 				({ request, response }) => {
-					console.log({ request });
 					expect(request.body.email).to.eq('test@test.com');
 					expect(request.body.name).to.eq('John Doe');
 					expect(response.statusCode).to.eq(200);
@@ -67,14 +61,15 @@ describe('Checkout', () => {
 				}
 			);
 
+			// finalize the order.
 			cy.wait('@finalizeOrder', { timeout: 30000 }).then(
-				({ request, response }) => {
-					console.log({ request });
+				({ response }) => {
 					expect(response.statusCode).to.eq(200);
 					expect(response.body.status).to.eq('finalized');
 				}
 			);
 
+			// confirm payment (and run automations)
 			cy.wait('@confirmOrder', { timeout: 30000 }).then(
 				({ response }) => {
 					expect(response.statusCode).to.eq(200);
@@ -82,6 +77,7 @@ describe('Checkout', () => {
 				}
 			);
 
+			// thank you page.
 			cy.get('sc-order-confirmation', { timeout: 30000 }).should(
 				'be.visible'
 			);
