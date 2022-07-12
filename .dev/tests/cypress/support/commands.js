@@ -4,6 +4,9 @@ import 'cypress-file-upload';
 
 before(function () {
 	disableGutenbergFeatures();
+	cy.exec(
+		`yarn wp-env run tests-cli "wp eval '\SureCart::page_seeder()->seed();'"`
+	);
 });
 
 Cypress.Commands.add('getStripeElement', (fieldName) => {
