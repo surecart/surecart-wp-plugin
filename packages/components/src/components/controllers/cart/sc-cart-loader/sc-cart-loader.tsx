@@ -1,5 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
-import { getOrder } from '../../../../store/checkouts';
+
+import { clearOrder, getOrder } from '../../../../store/checkouts';
 import uiStore from '../../../../store/ui';
 
 @Component({
@@ -24,7 +25,14 @@ export class ScCartLoader {
      */
     if (!!document.querySelector('sc-checkout')) return null;
 
+    // clear the order if it's already paid.
+    const order = getOrder(this.formId, this.mode);
+    if (order?.status === 'paid') {
+      clearOrder(this.formId, this.mode);
+      return null;
+    }
+
     // return the loader.
-    return <div innerHTML={getOrder(this.formId, this.mode)?.line_items?.pagination?.count || uiStore?.state?.cart?.open ? this.template : ''}></div>;
+    return <div innerHTML={order?.line_items?.pagination?.count || uiStore?.state?.cart?.open ? this.template : ''}></div>;
   }
 }
