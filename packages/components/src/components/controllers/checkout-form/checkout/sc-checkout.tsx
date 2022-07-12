@@ -1,8 +1,9 @@
-import { Order, Customer, PriceChoice, Prices, Products, ResponseError, FormState, Processor, PaymentIntents, PaymentIntent } from '../../../../types';
-import { Component, h, Prop, Element, State, Listen, Method, Event, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
+
 import { getOrder } from '../../../../store/checkouts';
+import { Customer, FormState, Order, PaymentIntent, PaymentIntents, PriceChoice, Prices, Processor, Products, ResponseError } from '../../../../types';
 
 @Component({
   tag: 'sc-checkout',
@@ -239,7 +240,7 @@ export class ScCheckout {
                   {/* Maybe redirect to the success url if requirements are met. */}
                   <sc-order-redirect-provider order={this.order()} success-url={this.successUrl}>
                     {/* Handle confirming of order after it is "Paid" by processors. */}
-                    <sc-order-confirm-provider order={this.order()} success-url={this.successUrl}>
+                    <sc-order-confirm-provider order={this.order()} success-url={this.successUrl} form-id={this.formId} mode={this.mode}>
                       <slot />
                     </sc-order-confirm-provider>
                   </sc-order-redirect-provider>

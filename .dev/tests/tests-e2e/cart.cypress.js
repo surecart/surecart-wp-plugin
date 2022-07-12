@@ -155,6 +155,8 @@ describe('Cart', () => {
 				.find('sc-quantity-select', { timeout: 10000 })
 				.should('be.visible')
 				.should('have.attr', 'quantity', '3');
+
+			cy.getStripeCardElement('number').should('be.visible');
 		});
 	});
 

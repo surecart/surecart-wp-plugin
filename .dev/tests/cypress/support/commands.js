@@ -1,4 +1,5 @@
-import { loginToSite, disableGutenbergFeatures } from '../helpers';
+import { disableGutenbergFeatures, loginToSite } from '../helpers';
+
 import 'cypress-file-upload';
 
 before(function () {
@@ -16,6 +17,24 @@ Cypress.Commands.add('getStripeElement', (fieldName) => {
 
 	return cy
 		.get('iframe')
+		.its('0.contentDocument.body')
+		.should('not.be.empty')
+		.then(cy.wrap)
+		.find(selector);
+});
+
+Cypress.Commands.add('getStripeCardElement', (fieldName) => {
+	if (Cypress.config('chromeWebSecurity')) {
+		throw new Error(
+			'To get stripe element `chromeWebSecurity` must be disabled'
+		);
+	}
+
+	const selector = `.CardField-${fieldName} input:not([disabled])`;
+
+	return cy
+		.get('.StripeElement')
+		.find('iframe')
 		.its('0.contentDocument.body')
 		.should('not.be.empty')
 		.then(cy.wrap)

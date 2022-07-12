@@ -1427,6 +1427,14 @@ export namespace Components {
     }
     interface ScOrderConfirmProvider {
         /**
+          * The form id
+         */
+        "formId": number;
+        /**
+          * Are we in test or live mode.
+         */
+        "mode": 'test' | 'live';
+        /**
           * The current order.
          */
         "order": Order;
@@ -5336,6 +5344,14 @@ declare namespace LocalJSX {
     }
     interface ScOrderConfirmProvider {
         /**
+          * The form id
+         */
+        "formId"?: number;
+        /**
+          * Are we in test or live mode.
+         */
+        "mode"?: 'test' | 'live';
+        /**
           * The order is confirmed event.
          */
         "onScConfirmed"?: (event: CustomEvent<void>) => void;
@@ -5347,10 +5363,6 @@ declare namespace LocalJSX {
           * The order is paid event.
          */
         "onScOrderPaid"?: (event: CustomEvent<Order>) => void;
-        /**
-          * Update the order in the universe store.
-         */
-        "onScUpdateOrderState"?: (event: CustomEvent<Order>) => void;
         /**
           * The current order.
          */
