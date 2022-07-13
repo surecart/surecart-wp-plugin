@@ -106,6 +106,8 @@ class OrdersListTable extends ListTable {
 	}
 
 	/**
+=======
+>>>>>>> origin/master
 	 * Override the parent columns method. Defines the columns to use in your listing table
 	 *
 	 * @return Array
@@ -178,7 +180,7 @@ class OrdersListTable extends ListTable {
 	 * @return boolean|null
 	 */
 	public function getStatus() {
-		$status = $_GET['status'] ?? 'paid';
+		$status = sanitize_text_field( wp_unslash( $_GET['status'] ?? 'paid' ) );
 		if ( 'paid' === $status ) {
 			return [ 'paid', 'completed', 'requires_approval' ];
 		}
@@ -191,7 +193,7 @@ class OrdersListTable extends ListTable {
 		if ( 'all' === $status ) {
 			return [];
 		}
-		return $status ? [ sanitize_text_field( $status ) ] : [];
+		return $status ? [ esc_html( $status ) ] : [];
 	}
 
 	/**

@@ -90,7 +90,7 @@ class BlockAssetsLoadService {
 	public function isUsingPageBuilder() {
 		// enable on Elementor.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( ! empty( $_GET['action'] ) && 'elementor' === $_GET['action'] ) {
+		if ( ! empty( $_GET['action'] ) && 'elementor' === sanitize_text_field( $_GET['action'] ) ) {
 			return true;
 		}
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended

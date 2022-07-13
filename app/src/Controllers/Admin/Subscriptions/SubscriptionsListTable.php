@@ -183,11 +183,11 @@ class SubscriptionsListTable extends ListTable {
 	 * @return boolean|null
 	 */
 	public function getStatus() {
-		$status = $_GET['status'] ?? null;
+		$status = sanitize_text_field( wp_unslash( $_GET['status'] ?? null ) );
 		if ( 'all' === $status ) {
 			$status = null;
 		}
-		return $status ? [ sanitize_text_field( $_GET['status'] ) ] : [];
+		return $status ? [ esc_html( $status ) ] : [];
 	}
 
 	/**

@@ -83,7 +83,7 @@ abstract class AdminModelEditController {
 		if ( ! empty( $this->url_query ) ) {
 			foreach ( $this->url_query as $param => $value ) {
 				// phpcs:ignore
-				if ( ! isset( $_GET[ $param ] ) || $value !== $_GET[ $param ] ) {
+				if ( ! isset( $_GET[ $param ] ) || $value !== sanitize_text_field( wp_unslash( $_GET[ $param ] ) ) ) {
 					return;
 				}
 			}

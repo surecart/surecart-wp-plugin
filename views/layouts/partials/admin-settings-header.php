@@ -13,7 +13,7 @@
 	}
 </style>
 <div>
-	<?php if ( ! empty( $_GET['status'] ) && 'cache_cleared' === $_GET['status'] ) : ?>
+	<?php if ( ! empty( $_GET['status'] ) && 'cache_cleared' === sanitize_text_field( wp_unslash( $_GET['status'] ) ) ) : ?>
 		<sc-alert open type="info" closable><?php esc_html_e( 'Cache cleared.', 'surecart' ); ?></sc-alert>
 	<?php endif; ?>
 	<div id="sc-settings-header">
