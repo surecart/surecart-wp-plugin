@@ -1,9 +1,10 @@
-import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
-import { Order, PaymentIntent } from '../../../types';
-import { __ } from '@wordpress/i18n';
-import apiFetch from '../../../functions/fetch';
 import { loadScript } from '@paypal/paypal-js';
+import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
+import { __ } from '@wordpress/i18n';
+
+import apiFetch from '../../../functions/fetch';
 import { hasSubscription } from '../../../functions/line-items';
+import { Order, PaymentIntent } from '../../../types';
 
 @Component({
   tag: 'sc-paypal-buttons',
