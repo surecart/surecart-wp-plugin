@@ -71,6 +71,7 @@ Type: `Promise<void>`
  - [sc-error](../error)
  - [sc-form-error-provider](../../providers/form-error-provider)
  - [sc-login-form](../../controllers/login)
+ - [sc-order-confirmation](../../controllers/confirmation/order-confirmation)
  - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-payment-method-create](../../controllers/dashboard/payment-method-create)
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
@@ -96,6 +97,7 @@ graph TD;
   sc-error --> sc-alert
   sc-form-error-provider --> sc-alert
   sc-login-form --> sc-alert
+  sc-order-confirmation --> sc-alert
   sc-payment --> sc-alert
   sc-payment-method-create --> sc-alert
   sc-price-choice --> sc-alert

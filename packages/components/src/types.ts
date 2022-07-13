@@ -258,7 +258,7 @@ export interface TaxIdentifier {
 }
 export interface Order extends Object {
   id?: string;
-  status?: 'finalized' | 'draft' | 'paid';
+  status?: 'finalized' | 'draft' | 'paid' | 'requires_approval';
   number?: string;
   amount_due?: number;
   trial_amount?: number;
