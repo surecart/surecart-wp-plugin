@@ -25,9 +25,9 @@
 - [sc-empty](../../../ui/empty)
 - [sc-flex](../../../ui/flex)
 - [sc-cc-logo](../../../ui/cc-logo)
+- [sc-icon](../../../ui/icon)
 - [sc-tag](../../../ui/tag)
 - [sc-dropdown](../../../ui/dropdown)
-- [sc-icon](../../../ui/icon)
 - [sc-menu](../../../ui/menu)
 - [sc-menu-item](../../../ui/menu-item)
 - [sc-dashboard-module](../../../ui/dashboard-module)
@@ -45,9 +45,9 @@ graph TD;
   sc-payment-methods-list --> sc-empty
   sc-payment-methods-list --> sc-flex
   sc-payment-methods-list --> sc-cc-logo
+  sc-payment-methods-list --> sc-icon
   sc-payment-methods-list --> sc-tag
   sc-payment-methods-list --> sc-dropdown
-  sc-payment-methods-list --> sc-icon
   sc-payment-methods-list --> sc-menu
   sc-payment-methods-list --> sc-menu-item
   sc-payment-methods-list --> sc-dashboard-module

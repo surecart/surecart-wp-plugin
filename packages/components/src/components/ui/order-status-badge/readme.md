@@ -7,12 +7,12 @@
 
 ## Properties
 
-| Property    | Attribute   | Description                                | Type                                              | Default     |
-| ----------- | ----------- | ------------------------------------------ | ------------------------------------------------- | ----------- |
-| `clearable` | `clearable` | Makes the tag clearable.                   | `boolean`                                         | `false`     |
-| `pill`      | `pill`      | Draws a pill-style tag with rounded edges. | `boolean`                                         | `false`     |
-| `size`      | `size`      | The tag's size.                            | `"large" \| "medium" \| "small"`                  | `'medium'`  |
-| `status`    | `status`    | The tag's statux type.                     | `"completed" \| "draft" \| "finalized" \| "paid"` | `undefined` |
+| Property    | Attribute   | Description                                | Type                                                                                                       | Default     |
+| ----------- | ----------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------- | ----------- |
+| `clearable` | `clearable` | Makes the tag clearable.                   | `boolean`                                                                                                  | `false`     |
+| `pill`      | `pill`      | Draws a pill-style tag with rounded edges. | `boolean`                                                                                                  | `false`     |
+| `size`      | `size`      | The tag's size.                            | `"large" \| "medium" \| "small"`                                                                           | `'medium'`  |
+| `status`    | `status`    | The tag's statux type.                     | `"draft" \| "finalized" \| "paid" \| "payment_failed" \| "payment_intent_canceled" \| "requires_approval"` | `undefined` |
 
 
 ## Dependencies
