@@ -52,18 +52,18 @@ class AdminNoticesService {
 		}
 
 		// not our notices, bail.
-		if ( ! isset( $_GET['surecart_action'] ) || 'dismiss_notices' !== $_GET['surecart_action'] ) {
+		if ( ! isset( $_GET['surecart_action'] ) || 'dismiss_notices' !== sanitize_text_field( wp_unslash( $_GET['surecart_action'] ) ) ) {
 			return;
 		}
 
 		// get notice.
-		$notice = ! empty( $_GET['surecart_notice'] ) ? sanitize_text_field( $_GET['surecart_notice'] ) : '';
+		$notice = ! empty( $_GET['surecart_notice'] ) ? sanitize_text_field( wp_unslash( $_GET['surecart_notice'] ) ) : '';
 		if ( ! $notice ) {
 			return;
 		}
 
 		// verify nonce.
-		if ( ! wp_verify_nonce( $_GET['surecart_nonce'], 'surecart_notice_nonce' ) ) {
+		if ( ! wp_verify_nonce( sanitize_text_field( $_GET['surecart_nonce'] ), 'surecart_notice_nonce' ) ) {
 			wp_die( esc_html__( 'Your session expired - please try again.', 'surecart' ) );
 			exit;
 		}

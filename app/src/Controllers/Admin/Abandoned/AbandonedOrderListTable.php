@@ -56,7 +56,7 @@ class AbandonedOrderListTable extends ListTable {
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
-				if ( $status === $_GET['status'] ) {
+				if ( sanitize_text_field( wp_unslash( $_GET['status'] ) ) === $status ) {
 					$current_link_attributes = ' class="current" aria-current="page"';
 				}
 			} elseif ( 'all' === $status ) {
@@ -133,11 +133,11 @@ class AbandonedOrderListTable extends ListTable {
 	 * @return boolean|null
 	 */
 	public function getStatus() {
-		$status = esc_html( $_GET['status'] ?? 'all' );
-		if ( $status === 'all' ) {
+		$status = sanitize_text_field( wp_unslash( $_GET['status'] ?? 'all' ) );
+		if ( 'all' === $status ) {
 			return [ 'not_notified', 'notified' ];
 		}
-		return $status ? [ sanitize_text_field( $status ) ] : [];
+		return $status ? [ esc_html( $status ) ] : [];
 	}
 
 	/**

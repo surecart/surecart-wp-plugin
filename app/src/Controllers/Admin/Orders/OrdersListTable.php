@@ -73,48 +73,6 @@ class OrdersListTable extends ListTable {
 	}
 
 	/**
-	 * @global int $post_id
-	 * @global string $comment_status
-	 * @global string $comment_type
-	 */
-	// protected function get_views() {
-	// $stati = [
-	// 'paid'    => __( 'Paid', 'surecart' ),
-	// 'pending' => __( 'Pending', 'surecart' ),
-	// 'all'     => __( 'All', 'surecart' ),
-	// ];
-
-	// $link = \SureCart::getUrl()->index( 'orders' );
-
-	// foreach ( $stati as $status => $label ) {
-	// $current_link_attributes = '';
-
-	// if ( ! empty( $_GET['status'] ) ) {
-	// if ( $status === $_GET['status'] ) {
-	// $current_link_attributes = ' class="current" aria-current="page"';
-	// }
-	// } elseif ( 'paid' === $status ) {
-	// $current_link_attributes = ' class="current" aria-current="page"';
-	// }
-
-	// $link = add_query_arg( 'status', $status, $link );
-
-	// $status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
-	// }
-
-	// **
-	// * Filters the comment status links.
-	// *
-	// * @since 2.5.0
-	// * @since 5.1.0 The 'Mine' link was added.
-	// *
-	// * @param string[] $status_links An associative array of fully-formed comment status links. Includes 'All', 'Mine',
-	// *                              'Pending', 'Approved', 'Spam', and 'Trash'.
-	// */
-	// return apply_filters( 'comment_status_links', $status_links );
-	// }
-
-	/**
 	 * Override the parent columns method. Defines the columns to use in your listing table
 	 *
 	 * @return Array
@@ -190,7 +148,7 @@ class OrdersListTable extends ListTable {
 	 * @return boolean|null
 	 */
 	public function getStatus() {
-		$status = esc_html( $_GET['status'] ?? 'paid' );
+		$status = sanitize_text_field( wp_unslash( $_GET['status'] ?? 'paid' ) );
 		if ( 'paid' === $status ) {
 			return [ 'paid', 'completed' ];
 		}
@@ -200,7 +158,7 @@ class OrdersListTable extends ListTable {
 		if ( 'all' === $status ) {
 			return [];
 		}
-		return $status ? [ sanitize_text_field( $status ) ] : [];
+		return $status ? [ esc_html( $status ) ] : [];
 	}
 
 	/**

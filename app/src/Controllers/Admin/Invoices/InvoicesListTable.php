@@ -142,7 +142,7 @@ class InvoicesListTable extends ListTable {
 	 * @return boolean|null
 	 */
 	public function getStatus() {
-		$status = esc_html( $_GET['status'] ?? 'paid' );
+		$status = sanitize_text_field( wp_unslash( $_GET['status'] ?? 'paid' ) );
 		if ( 'paid' === $status ) {
 			return [ 'paid', 'completed' ];
 		}
@@ -152,7 +152,7 @@ class InvoicesListTable extends ListTable {
 		if ( 'all' === $status ) {
 			return [];
 		}
-		return $status ? [ sanitize_text_field( $status ) ] : [];
+		return $status ? [ esc_html( $status ) ] : [];
 	}
 
 	/**

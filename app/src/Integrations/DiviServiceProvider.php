@@ -28,8 +28,8 @@ class DiviServiceProvider implements ServiceProviderInterface {
 	 *
 	 * @return boolean
 	 */
-	public function handleDiviShortcode($content, $atts) {
-		if( ! empty( $_GET['et_pb_preview'] ) ) {
+	public function handleDiviShortcode( $content, $atts ) {
+		if ( ! empty( $_GET['et_pb_preview'] ) ) {
 			return '[sc_form id="' . $atts['id'] . '"]';
 		}
 		return $content;
