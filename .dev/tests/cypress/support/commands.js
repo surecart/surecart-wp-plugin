@@ -1,15 +1,29 @@
-import { disableGutenbergFeatures, loginToSite } from '../helpers';
+import { disableGutenbergFeatures } from '../helpers';
 
 import 'cypress-file-upload';
 
 before(function () {
 	disableGutenbergFeatures();
+
+	// make sure to seed pages.
 	cy.exec(
 		`yarn wp-env run tests-cli "wp eval '\SureCart::page_seeder()->seed();'"`
 	);
 });
 
-Cypress.Commands.add('getStripeElement', (fieldName) => {
+/**
+ * Are we using live requests vs a fixture?
+ */
+const usingLiveRequests = () => {
+	return Cypress.env('mockRequests') === false;
+};
+
+/**
+ * Get a stripe payment element.
+ *
+ * @example cy.getStripeCardElement('number').type('4242424242424242');
+ */
+Cypress.Commands.add('getStripePaymentElement', (fieldName) => {
 	if (Cypress.config('chromeWebSecurity')) {
 		throw new Error(
 			'To get stripe element `chromeWebSecurity` must be disabled'
@@ -26,6 +40,11 @@ Cypress.Commands.add('getStripeElement', (fieldName) => {
 		.find(selector);
 });
 
+/**
+ * Get a stripe card element.
+ *
+ * @example cy.getStripeCardElement('number').type('4242424242424242');
+ */
 Cypress.Commands.add('getStripeCardElement', (fieldName) => {
 	if (Cypress.config('chromeWebSecurity')) {
 		throw new Error(
@@ -44,10 +63,24 @@ Cypress.Commands.add('getStripeCardElement', (fieldName) => {
 		.find(selector);
 });
 
-Cypress.Commands.add('getByTestId', (testId) => {
-	return cy.get(`[data-testid=${testId}]`);
+/**
+ * Fetch nonce token.
+ *
+ * @example cy.nonce();
+ */
+Cypress.Commands.add('nonce', () => {
+	return cy
+		.request({
+			method: 'GET',
+			url: '/wp-admin/admin-ajax.php?action=sc-rest-nonce',
+			log: false,
+		})
+		.its('body', { log: false });
 });
 
+/**
+ * Login to WordPress if login cookie not present.
+ */
 Cypress.Commands.add('login', (username, password) => {
 	cy.getCookies().then((cookies) => {
 		let hasMatch = false;
@@ -64,22 +97,9 @@ Cypress.Commands.add('login', (username, password) => {
 	});
 });
 
-const waitForSomething = async (name, res) => {
-	await cy.writeFile(
-		`cypress/fixtures/${name}.json`,
-		JSON.stringify(res.body)
-	);
-	return res;
-};
-
-Cypress.Commands.add('mockBody', (body) => {
-	return Cypress.env('mockRequests') ? body : null;
-});
-
-const usingLiveRequests = () => {
-	return Cypress.env('mockRequests') === false;
-};
-
+/**
+ * Intercept a request with a fixture file.
+ */
 Cypress.Commands.add(
 	'interceptWithFixture',
 	(method, url, { fixture, as = 'request', callback = null }) => {
@@ -96,6 +116,9 @@ Cypress.Commands.add(
 	}
 );
 
+/**
+ * Update the fixture.
+ */
 Cypress.Commands.add('updateFixture', (fixture, content, json = true) => {
 	if (!usingLiveRequests()) return;
 	cy.writeFile(
