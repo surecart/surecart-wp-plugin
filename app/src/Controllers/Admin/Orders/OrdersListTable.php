@@ -106,8 +106,6 @@ class OrdersListTable extends ListTable {
 	}
 
 	/**
-=======
->>>>>>> origin/master
 	 * Override the parent columns method. Defines the columns to use in your listing table
 	 *
 	 * @return Array
