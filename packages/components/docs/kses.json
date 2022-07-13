@@ -812,6 +812,13 @@
     "class": true,
     "slot": true
   },
+  "sc-order-confirmation-details": {
+    "order": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-order-confirmation-line-items": {
     "loading": true,
     "order": true,

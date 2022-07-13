@@ -8,12 +8,8 @@ export default ({ attributes }) => {
 	});
 
 	return (
-		<ScDashboardModule {...blockProps}>
-			<sc-card>
-				<sc-order-confirmation-line-items></sc-order-confirmation-line-items>
-				<sc-divider></sc-divider>
-				<sc-order-confirmation-totals></sc-order-confirmation-totals>
-			</sc-card>
-		</ScDashboardModule>
+		<sc-order-confirmation-details
+			{...blockProps}
+		></sc-order-confirmation-details>
 	);
 };

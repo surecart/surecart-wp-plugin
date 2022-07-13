@@ -82,6 +82,7 @@ export const ScModelCacheProvider = /*@__PURE__*/createReactComponent<JSX.ScMode
 export const ScOrderConfirmProvider = /*@__PURE__*/createReactComponent<JSX.ScOrderConfirmProvider, HTMLScOrderConfirmProviderElement>('sc-order-confirm-provider');
 export const ScOrderConfirmation = /*@__PURE__*/createReactComponent<JSX.ScOrderConfirmation, HTMLScOrderConfirmationElement>('sc-order-confirmation');
 export const ScOrderConfirmationCustomer = /*@__PURE__*/createReactComponent<JSX.ScOrderConfirmationCustomer, HTMLScOrderConfirmationCustomerElement>('sc-order-confirmation-customer');
+export const ScOrderConfirmationDetails = /*@__PURE__*/createReactComponent<JSX.ScOrderConfirmationDetails, HTMLScOrderConfirmationDetailsElement>('sc-order-confirmation-details');
 export const ScOrderConfirmationLineItems = /*@__PURE__*/createReactComponent<JSX.ScOrderConfirmationLineItems, HTMLScOrderConfirmationLineItemsElement>('sc-order-confirmation-line-items');
 export const ScOrderConfirmationTotals = /*@__PURE__*/createReactComponent<JSX.ScOrderConfirmationTotals, HTMLScOrderConfirmationTotalsElement>('sc-order-confirmation-totals');
 export const ScOrderCouponForm = /*@__PURE__*/createReactComponent<JSX.ScOrderCouponForm, HTMLScOrderCouponFormElement>('sc-order-coupon-form');

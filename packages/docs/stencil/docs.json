@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-07-13T20:30:06",
+  "timestamp": "2022-07-13T20:36:54",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.15.1",
@@ -438,7 +438,6 @@
         "sc-error",
         "sc-form-error-provider",
         "sc-login-form",
-        "sc-order-confirmation",
         "sc-payment",
         "sc-payment-method-create",
         "sc-price-choice",
@@ -477,9 +476,6 @@
           "sc-alert"
         ],
         "sc-login-form": [
-          "sc-alert"
-        ],
-        "sc-order-confirmation": [
           "sc-alert"
         ],
         "sc-payment": [
@@ -6015,7 +6011,6 @@
         "sc-customer-edit",
         "sc-downloads-list",
         "sc-invoices-list",
-        "sc-order-confirmation",
         "sc-orders-list",
         "sc-payment-methods-list",
         "sc-subscription",
@@ -6053,9 +6048,6 @@
           "sc-dashboard-module"
         ],
         "sc-invoices-list": [
-          "sc-dashboard-module"
-        ],
-        "sc-order-confirmation": [
           "sc-dashboard-module"
         ],
         "sc-orders-list": [
@@ -11592,21 +11584,11 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
-        "sc-alert",
-        "sc-dashboard-module",
         "sc-heading"
       ],
       "dependencyGraph": {
         "sc-order-confirmation": [
-          "sc-alert",
-          "sc-dashboard-module",
           "sc-heading"
-        ],
-        "sc-alert": [
-          "sc-icon"
-        ],
-        "sc-dashboard-module": [
-          "sc-alert"
         ]
       }
     },

@@ -1468,6 +1468,9 @@ export namespace Components {
          */
         "order": Order;
     }
+    interface ScOrderConfirmationDetails {
+        "order": Order;
+    }
     interface ScOrderConfirmationLineItems {
         "loading": boolean;
         "order": Order;
@@ -3221,6 +3224,12 @@ declare global {
         prototype: HTMLScOrderConfirmationCustomerElement;
         new (): HTMLScOrderConfirmationCustomerElement;
     };
+    interface HTMLScOrderConfirmationDetailsElement extends Components.ScOrderConfirmationDetails, HTMLStencilElement {
+    }
+    var HTMLScOrderConfirmationDetailsElement: {
+        prototype: HTMLScOrderConfirmationDetailsElement;
+        new (): HTMLScOrderConfirmationDetailsElement;
+    };
     interface HTMLScOrderConfirmationLineItemsElement extends Components.ScOrderConfirmationLineItems, HTMLStencilElement {
     }
     var HTMLScOrderConfirmationLineItemsElement: {
@@ -3692,6 +3701,7 @@ declare global {
         "sc-order-confirm-provider": HTMLScOrderConfirmProviderElement;
         "sc-order-confirmation": HTMLScOrderConfirmationElement;
         "sc-order-confirmation-customer": HTMLScOrderConfirmationCustomerElement;
+        "sc-order-confirmation-details": HTMLScOrderConfirmationDetailsElement;
         "sc-order-confirmation-line-items": HTMLScOrderConfirmationLineItemsElement;
         "sc-order-confirmation-totals": HTMLScOrderConfirmationTotalsElement;
         "sc-order-coupon-form": HTMLScOrderCouponFormElement;
@@ -5397,6 +5407,9 @@ declare namespace LocalJSX {
          */
         "order"?: Order;
     }
+    interface ScOrderConfirmationDetails {
+        "order"?: Order;
+    }
     interface ScOrderConfirmationLineItems {
         "loading"?: boolean;
         "order"?: Order;
@@ -6935,6 +6948,7 @@ declare namespace LocalJSX {
         "sc-order-confirm-provider": ScOrderConfirmProvider;
         "sc-order-confirmation": ScOrderConfirmation;
         "sc-order-confirmation-customer": ScOrderConfirmationCustomer;
+        "sc-order-confirmation-details": ScOrderConfirmationDetails;
         "sc-order-confirmation-line-items": ScOrderConfirmationLineItems;
         "sc-order-confirmation-totals": ScOrderConfirmationTotals;
         "sc-order-coupon-form": ScOrderCouponForm;
@@ -7081,6 +7095,7 @@ declare module "@stencil/core" {
             "sc-order-confirm-provider": LocalJSX.ScOrderConfirmProvider & JSXBase.HTMLAttributes<HTMLScOrderConfirmProviderElement>;
             "sc-order-confirmation": LocalJSX.ScOrderConfirmation & JSXBase.HTMLAttributes<HTMLScOrderConfirmationElement>;
             "sc-order-confirmation-customer": LocalJSX.ScOrderConfirmationCustomer & JSXBase.HTMLAttributes<HTMLScOrderConfirmationCustomerElement>;
+            "sc-order-confirmation-details": LocalJSX.ScOrderConfirmationDetails & JSXBase.HTMLAttributes<HTMLScOrderConfirmationDetailsElement>;
             "sc-order-confirmation-line-items": LocalJSX.ScOrderConfirmationLineItems & JSXBase.HTMLAttributes<HTMLScOrderConfirmationLineItemsElement>;
             "sc-order-confirmation-totals": LocalJSX.ScOrderConfirmationTotals & JSXBase.HTMLAttributes<HTMLScOrderConfirmationTotalsElement>;
             "sc-order-coupon-form": LocalJSX.ScOrderCouponForm & JSXBase.HTMLAttributes<HTMLScOrderCouponFormElement>;
