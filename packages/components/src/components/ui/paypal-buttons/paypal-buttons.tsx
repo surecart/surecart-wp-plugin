@@ -1,8 +1,9 @@
-import { Component, Element, Event, EventEmitter, h, Prop, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { Order, PaymentIntent } from '../../../types';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '../../../functions/fetch';
 import { loadScript } from '@paypal/paypal-js';
+import { hasSubscription } from '../../../functions/line-items';
 
 @Component({
   tag: 'sc-paypal-buttons',
@@ -54,15 +55,24 @@ export class ScPaypalButtons {
 
   @Event() scPaid: EventEmitter<void>;
 
+  @Watch('order')
+  handleOrderChange() {
+    this.cardContainer.innerHTML = '';
+    this.paypalContainer.innerHTML = '';
+    this.loadScript();
+  }
+
   /** Load the script */
   async loadScript() {
     if (!this.clientId || !this.merchantId) return;
+    const subscriptionOrder = hasSubscription(this.order);
     try {
       const paypal = await loadScript({
         'client-id': this.clientId.replace(/ /g, ''),
-        'merchant-id': this.merchantId,
+        ...(!subscriptionOrder ? { 'merchant-id': this.merchantId.replace(/ /g, '') } : {}),
         'commit': false,
-        'vault': true,
+        'intent': subscriptionOrder ? 'tokenize' : 'capture',
+        'vault': subscriptionOrder,
         'currency': this.order?.currency.toUpperCase() || 'USD',
       });
       this.renderButtons(paypal);
@@ -78,6 +88,8 @@ export class ScPaypalButtons {
 
   /** Render the buttons. */
   renderButtons(paypal) {
+    const createFunc = hasSubscription(this.order) ? 'createBillingAgreement' : 'createOrder';
+
     const config = {
       /**
        * Validate the form, client-side when the button is clicked.
@@ -94,40 +106,6 @@ export class ScPaypalButtons {
 
       onCancel: () => {
         this.scSetState.emit('REJECT');
-      },
-
-      /**
-       * Create the order.
-       * We finalize the order which generates a payment intent.
-       */
-      createOrder: async () => {
-        return new Promise(async (resolve, reject) => {
-          // get the checkout component.
-          const checkout = this.el.closest('sc-checkout') as HTMLScCheckoutElement;
-
-          // submit and get the finalized order
-          const order = (await checkout.submit()) as Order;
-
-          // an error occurred. reject with the error.
-          if (order instanceof Error) {
-            return reject(order);
-          }
-
-          // assume there was a validation issue here.
-          // that is handled by our fetch function.
-          if (order?.status !== 'finalized') {
-            return reject(new Error('Something went wrong. Please try again.'));
-          }
-
-          // resolve the payment intent id.
-          if (order?.payment_intent?.external_intent_id) {
-            return resolve(order?.payment_intent?.external_intent_id);
-          }
-
-          // we don't have the correct payment intent for some reason.
-          this.scError.emit({ code: 'missing_payment_intent', message: __('Something went wrong. Please contact us for payment.', 'surecart') });
-          return reject();
-        });
       },
 
       /**
@@ -161,6 +139,36 @@ export class ScPaypalButtons {
         this.scError.emit({ code: err?.code, message: err?.message });
         this.scSetState.emit('REJECT');
       },
+    };
+
+    config[createFunc] = async () => {
+      return new Promise(async (resolve, reject) => {
+        // get the checkout component.
+        const checkout = this.el.closest('sc-checkout') as HTMLScCheckoutElement;
+
+        // submit and get the finalized order
+        const order = (await checkout.submit()) as Order;
+
+        // an error occurred. reject with the error.
+        if (order instanceof Error) {
+          return reject(order);
+        }
+
+        // assume there was a validation issue here.
+        // that is handled by our fetch function.
+        if (order?.status !== 'finalized') {
+          return reject(new Error('Something went wrong. Please try again.'));
+        }
+
+        // resolve the payment intent id.
+        if (order?.payment_intent?.external_intent_id) {
+          return resolve(order?.payment_intent?.external_intent_id);
+        }
+
+        // we don't have the correct payment intent for some reason.
+        this.scError.emit({ code: 'missing_payment_intent', message: __('Something went wrong. Please contact us for payment.', 'surecart') });
+        return reject();
+      });
     };
 
     if (paypal.FUNDING.PAYPAL) {

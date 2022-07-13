@@ -402,7 +402,7 @@ export interface SubscriptionProtocol {
 
 export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid' | 'completed';
 
-export type OrderStatus = 'draft' | 'finalized' | 'paid' | 'completed';
+export type OrderStatus = 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'requires_approval';
 
 export interface PaymentMethod extends Object {
   id: string;
@@ -412,8 +412,20 @@ export interface PaymentMethod extends Object {
   processor_type: 'stripe' | 'paypal';
   type: string;
   payment_intent: PaymentIntent | string;
+  billing_agreement?: BillingAgreement | string;
   card: any;
   customer: Customer | string;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface BillingAgreement {
+  email: string;
+  external_customer_id: string;
+  first_name: string;
+  id: string;
+  last_name: string;
+  object: 'billing_agreement';
   created_at: number;
   updated_at: number;
 }

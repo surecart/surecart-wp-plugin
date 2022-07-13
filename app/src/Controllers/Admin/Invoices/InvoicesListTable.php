@@ -174,30 +174,7 @@ class InvoicesListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_date( $invoice ) {
-		return sprintf(
-			'<time datetime="%1$s" title="%2$s">%3$s</time>',
-			esc_attr( $invoice->updated_at ),
-			esc_html( TimeDate::formatDateAndTime( $invoice->updated_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $invoice->updated_at ) )
-		);
-	}
-
-	/**
-	 * Output the Promo Code
-	 *
-	 * @param Promotion $promotion Promotion model.
-	 *
-	 * @return string
-	 */
-	public function column_usage( $promotion ) {
-		$max = $promotion->max_redemptions ?? '&infin;';
-		ob_start();
-		?>
-		<?php echo \esc_html( "$promotion->times_redeemed / $max" ); ?>
-		<br />
-		<div style="opacity: 0.75"><?php echo \esc_html( $this->get_expiration_string( $promotion->redeem_by ) ); ?></div>
-		<?php
-		return ob_get_clean();
+		return '<sc-format-date date="' . (int) $invoice->updated_at . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></sc-format-date>';
 	}
 
 	/**
@@ -212,45 +189,6 @@ class InvoicesListTable extends ListTable {
 		}
 		// translators: coupon expiration date.
 		return sprintf( __( 'Valid until %s', 'surecart' ), date_i18n( get_option( 'date_format' ), $timestamp / 1000 ) );
-	}
-
-	public function get_price_string( $coupon = '' ) {
-		if ( ! $coupon || empty( $coupon->duration ) ) {
-			return;
-		}
-		if ( ! empty( $coupon->percent_off ) ) {
-			// translators: Coupon % off.
-			return sprintf( esc_html( __( '%1d%% off', 'surecart' ) ), $coupon->percent_off );
-		}
-
-		if ( ! empty( $coupon->amount_off ) ) {
-			// translators: Coupon amount off.
-			return Currency::formatCurrencyNumber( $coupon->amount_off ) . ' <small style="opacity: 0.75;">' . strtoupper( esc_html( $coupon->currency ) ) . '</small>';
-		}
-
-		return esc_html__( 'No discount.', 'surecart' );
-	}
-
-	/**
-	 * Get the duration string
-	 *
-	 * @param Coupon|boolean $coupon Coupon object.
-	 * @return string|void;
-	 */
-	public function get_duration_string( $coupon = '' ) {
-		if ( ! $coupon || empty( $coupon->duration ) ) {
-			return;
-		}
-
-		if ( 'forever' === $coupon->duration ) {
-			return __( 'Forever', 'surecart' );
-		}
-		if ( 'repeating' === $coupon->duration ) {
-			// translators: number of months.
-			return sprintf( __( 'For %d months', 'surecart' ), $coupon->duration_in_months ?? 1 );
-		}
-
-		return __( 'Once', 'surecart' );
 	}
 
 	/**
@@ -278,7 +216,7 @@ class InvoicesListTable extends ListTable {
 		ob_start();
 		?>
 		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'invoice', $invoice->id ) ); ?>">
-			<?php echo sanitize_text_field( $invoice->number ?? $invoice->id ); ?>
+			<?php echo esc_html( sanitize_text_field( $invoice->number ?? $invoice->id ) ); ?>
 		</a>
 		<br />
 		<a  aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'invoice', $invoice->id ) ); ?>">
