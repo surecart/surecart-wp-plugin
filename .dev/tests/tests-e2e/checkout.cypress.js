@@ -83,4 +83,82 @@ describe('Checkout', () => {
 			);
 		});
 	});
+
+	it('Can initiate checkout with PayPal', () => {
+		cy.exec(
+			`yarn wp-env run tests-cli "wp option get surecart_checkout_page_id"`
+		).then((response) => {
+			cy.clearLocalStorage();
+			cy.intercept({
+				method: 'POST',
+				path: '**surecart**orders*',
+				times: 1,
+			}).as('createOrder');
+
+			// buy button link
+			cy.visit(
+				`?p=${parseInt(
+					response.stdout
+				)}&line_items[0][price_id]=c6019010-dd0a-4a63-9940-14588416f685&line_items[0][quantity]=1`
+			);
+
+			// wait for order to create.
+			cy.wait('@createOrder');
+
+			// choose paypal.
+			cy.get('.sc-paypal-toggle').shadow().find('.details').click();
+
+			// fill customer name and email
+			cy.get('sc-customer-name').invoke('attr', 'value', 'John Doe');
+			cy.get('sc-customer-email').invoke(
+				'attr',
+				'value',
+				'test@test.com'
+			);
+
+			cy.get('sc-paypal-buttons')
+				.shadow()
+				.find('.sc-paypal-button')
+				.should('be.visible');
+
+			cy.get('sc-paypal-buttons')
+				.find('iframe.visible')
+				.iframe()
+				.find('div[data-funding-source="paypal"]')
+				.last()
+				.click();
+
+			cy.intercept({
+				method: 'POST',
+				path: '**surecart**orders*',
+				times: 1,
+			}).as('updateOrder');
+			cy.intercept('POST', '**surecart**finalize*').as('finalizeOrder');
+
+			// update the order.
+			cy.wait('@updateOrder', { timeout: 30000 }).then(
+				({ request, response }) => {
+					expect(request.body.email).to.eq('test@test.com');
+					expect(request.body.name).to.eq('John Doe');
+					expect(response.statusCode).to.eq(200);
+					expect(response.body.status).to.eq('draft');
+				}
+			);
+
+			// finalize the order.
+			cy.wait('@finalizeOrder', { timeout: 30000 }).then(
+				({ response }) => {
+					expect(response.statusCode).to.eq(200);
+					expect(response.body.status).to.eq('finalized');
+				}
+			);
+
+			// cy.paypalFlow('sb-3xe6d15890862@personal.example.com', 'P@pj0>v3');
+
+			// thank you page.
+			// cy.get('sc-order-confirmation', { timeout: 30000 }).should(
+			// 	'be.visible'
+			// );
+		});
+	});
 });

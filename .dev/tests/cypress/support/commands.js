@@ -1,5 +1,6 @@
 import { disableGutenbergFeatures } from '../helpers';
 
+import './paypal';
 import 'cypress-file-upload';
 
 before(function () {
