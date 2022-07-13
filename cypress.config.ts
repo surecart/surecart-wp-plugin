@@ -11,6 +11,8 @@ export default defineConfig({
 		testURL: 'http://localhost:8009',
 		wpUsername: 'admin',
 		wpPassword: 'password',
+		apiToken: 'HK5eRVENxcgzQzqU4AfFoJXf',
+		apiURL: 'https://staging.surecart.com',
 	},
 	retries: {
 		runMode: 0,

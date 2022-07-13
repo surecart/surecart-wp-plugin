@@ -19,6 +19,13 @@ const usingLiveRequests = () => {
 	return Cypress.env('mockRequests') === false;
 };
 
+Cypress.Commands.add('blockTemplate', (name, json = {}, html = '') => {
+	return `<!-- wp:surecart/${name} ${json} ${html} /-->`.replace(
+		/[\""]/g,
+		'\\"'
+	);
+});
+
 /**
  * Get a stripe payment element.
  *

@@ -50,6 +50,12 @@ export function loginToSite() {
 	cy.get('.block-editor-page').should('exist');
 }
 
+export function blockTemplate(name, json = {}, html = '') {
+	return `<!-- wp:surecart/${name} ${JSON.stringify(
+		json
+	)} ${html} /-->`.replace(/[\""]/g, '\\"');
+}
+
 /**
  * Go to a specific URI.
  *

@@ -13,18 +13,12 @@ describe('Checkout', () => {
 			);
 
 			// fill customer name and email
-			cy.get('sc-customer-name')
-				.shadow()
-				.find('sc-input')
-				.shadow()
-				.find('input')
-				.type('John Doe', { delay: 100, force: true });
-			cy.get('sc-customer-email')
-				.shadow()
-				.find('sc-input')
-				.shadow()
-				.find('input')
-				.type('test@test.com', { delay: 100, force: true });
+			cy.get('sc-customer-name').invoke('attr', 'value', 'John Doe');
+			cy.get('sc-customer-email').invoke(
+				'attr',
+				'value',
+				'test@test.com'
+			);
 
 			// fill stripe card element.
 			cy.getStripeCardElement('number').type('4242424242424242', {

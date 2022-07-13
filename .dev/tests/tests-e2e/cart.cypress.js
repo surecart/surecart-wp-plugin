@@ -1,15 +1,6 @@
+import { blockTemplate } from '../cypress/helpers';
+
 describe('Cart', () => {
-	let cartPage, adHocCartPage;
-
-	beforeEach(() => {
-		cy.fixture('cart/add-to-cart-page').then((template) => {
-			cartPage = template.replace(/[\""]/g, '\\"');
-		});
-		cy.fixture('cart/add-to-cart-ad-hoc-page').then((template) => {
-			adHocCartPage = template.replace(/[\""]/g, '\\"');
-		});
-	});
-
 	const closeCart = () => {
 		cy.get('sc-cart-loader')
 			.shadow()
@@ -20,8 +11,13 @@ describe('Cart', () => {
 	};
 
 	it('Can add to cart and proceed to checkout', () => {
+		const template = blockTemplate('add-to-cart-button', {
+			button_text: 'Add Membership',
+			price_id: 'c6019010-dd0a-4a63-9940-14588416f685',
+		});
+
 		cy.exec(
-			`yarn wp-env run tests-cli "wp post create --post_content='${cartPage}' --post_type=page --post_title='Cart Buttons' --post_status='publish' --porcelain"`
+			`yarn wp-env run tests-cli "wp post create --post_content='${template}' --post_type=page --post_title='Cart Buttons' --post_status='publish' --porcelain"`
 		).then((response) => {
 			cy.clearLocalStorage();
 			cy.visit(`?p=${parseInt(response.stdout)}`);
@@ -155,8 +151,11 @@ describe('Cart', () => {
 	});
 
 	it('Can add an ad_hoc price', () => {
+		const template = blockTemplate('add-to-cart-button', {
+			price_id: '7554bdef-db8f-4066-9eba-fbc423d1428f',
+		});
 		cy.exec(
-			`yarn wp-env run tests-cli "wp post create --post_content='${adHocCartPage}' --post_type=page --post_title='Cart Buttons' --post_status='publish' --porcelain"`
+			`yarn wp-env run tests-cli "wp post create --post_content='${template}' --post_type=page --post_title='Cart Buttons' --post_status='publish' --porcelain"`
 		).then((response) => {
 			cy.clearLocalStorage();
 			cy.visit(`?p=${parseInt(response.stdout)}`);
