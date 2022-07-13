@@ -1469,6 +1469,7 @@ export namespace Components {
         "order": Order;
     }
     interface ScOrderConfirmationDetails {
+        "loading": boolean;
         "order": Order;
     }
     interface ScOrderConfirmationLineItems {
@@ -5408,6 +5409,7 @@ declare namespace LocalJSX {
         "order"?: Order;
     }
     interface ScOrderConfirmationDetails {
+        "loading"?: boolean;
         "order"?: Order;
     }
     interface ScOrderConfirmationLineItems {

@@ -10,6 +10,7 @@ import { openWormhole } from 'stencil-wormhole';
 })
 export class ScOrderConfirmationDetails {
   @Prop() order: Order;
+  @Prop() loading: boolean;
 
   renderOrderStatus() {
     if (this?.order?.status === 'requires_approval') {
@@ -19,6 +20,34 @@ export class ScOrderConfirmationDetails {
   }
 
   render() {
+    if (!!this.loading) {
+      return (
+        <sc-dashboard-module>
+          <sc-skeleton slot="heading" style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>
+          <sc-skeleton slot="end" style={{ width: '60px', display: 'inline-block' }}></sc-skeleton>
+          <sc-card>
+            <sc-line-item>
+              <sc-skeleton style={{ 'width': '50px', 'height': '50px', '--border-radius': '0' }} slot="image"></sc-skeleton>
+              <sc-skeleton slot="title" style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>
+              <sc-skeleton slot="description" style={{ width: '60px', display: 'inline-block' }}></sc-skeleton>
+              <sc-skeleton style={{ width: '120px', display: 'inline-block' }} slot="price"></sc-skeleton>
+              <sc-skeleton style={{ width: '60px', display: 'inline-block' }} slot="price-description"></sc-skeleton>
+            </sc-line-item>
+            <sc-divider></sc-divider>
+            <sc-line-item>
+              <sc-skeleton slot="title" style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>
+              <sc-skeleton style={{ width: '120px', display: 'inline-block' }} slot="price"></sc-skeleton>
+            </sc-line-item>
+            <sc-divider></sc-divider>
+            <sc-line-item>
+              <sc-skeleton slot="title" style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>
+              <sc-skeleton style={{ width: '120px', display: 'inline-block' }} slot="price"></sc-skeleton>
+            </sc-line-item>
+          </sc-card>
+        </sc-dashboard-module>
+      );
+    }
+
     if (!this.order?.number) return;
     return (
       <sc-dashboard-module class="order">
@@ -33,4 +62,4 @@ export class ScOrderConfirmationDetails {
     );
   }
 }
-openWormhole(ScOrderConfirmationDetails, ['order', 'customer', 'loading'], false);
+openWormhole(ScOrderConfirmationDetails, ['order', 'loading'], false);

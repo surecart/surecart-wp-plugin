@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-07-13T20:36:54",
+  "timestamp": "2022-07-13T20:59:07",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.15.1",
@@ -438,6 +438,7 @@
         "sc-error",
         "sc-form-error-provider",
         "sc-login-form",
+        "sc-order-confirmation",
         "sc-payment",
         "sc-payment-method-create",
         "sc-price-choice",
@@ -476,6 +477,9 @@
           "sc-alert"
         ],
         "sc-login-form": [
+          "sc-alert"
+        ],
+        "sc-order-confirmation": [
           "sc-alert"
         ],
         "sc-payment": [
@@ -1597,6 +1601,7 @@
         "sc-downloads-list",
         "sc-invoices-list",
         "sc-login-form",
+        "sc-order-confirmation-details",
         "sc-orders-list",
         "sc-payment",
         "sc-payment-method-create",
@@ -1630,6 +1635,9 @@
           "sc-card"
         ],
         "sc-login-form": [
+          "sc-card"
+        ],
+        "sc-order-confirmation-details": [
           "sc-card"
         ],
         "sc-orders-list": [
@@ -6011,6 +6019,7 @@
         "sc-customer-edit",
         "sc-downloads-list",
         "sc-invoices-list",
+        "sc-order-confirmation-details",
         "sc-orders-list",
         "sc-payment-methods-list",
         "sc-subscription",
@@ -6048,6 +6057,9 @@
           "sc-dashboard-module"
         ],
         "sc-invoices-list": [
+          "sc-dashboard-module"
+        ],
+        "sc-order-confirmation-details": [
           "sc-dashboard-module"
         ],
         "sc-orders-list": [
@@ -6294,6 +6306,7 @@
         "sc-express-payment",
         "sc-invoices-list",
         "sc-login-form",
+        "sc-order-confirmation-details",
         "sc-order-confirmation-totals",
         "sc-orders-list",
         "sc-payment-methods-list",
@@ -6312,6 +6325,9 @@
           "sc-divider"
         ],
         "sc-login-form": [
+          "sc-divider"
+        ],
+        "sc-order-confirmation-details": [
           "sc-divider"
         ],
         "sc-order-confirmation-totals": [
@@ -11584,11 +11600,16 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
+        "sc-alert",
         "sc-heading"
       ],
       "dependencyGraph": {
         "sc-order-confirmation": [
+          "sc-alert",
           "sc-heading"
+        ],
+        "sc-alert": [
+          "sc-icon"
         ]
       }
     },
@@ -11716,6 +11737,96 @@
       }
     },
     {
+      "filePath": "./src/components/controllers/confirmation/order-confirmation-details/sc-order-confirmation-details.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-order-confirmation-details",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "order",
+          "type": "Order",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Order"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-tag",
+        "sc-order-status-badge",
+        "sc-dashboard-module",
+        "sc-card",
+        "sc-order-confirmation-line-items",
+        "sc-divider",
+        "sc-order-confirmation-totals"
+      ],
+      "dependencyGraph": {
+        "sc-order-confirmation-details": [
+          "sc-tag",
+          "sc-order-status-badge",
+          "sc-dashboard-module",
+          "sc-card",
+          "sc-order-confirmation-line-items",
+          "sc-divider",
+          "sc-order-confirmation-totals"
+        ],
+        "sc-order-status-badge": [
+          "sc-tag"
+        ],
+        "sc-dashboard-module": [
+          "sc-alert"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-order-confirmation-line-items": [
+          "sc-line-item",
+          "sc-skeleton",
+          "sc-product-line-item"
+        ],
+        "sc-product-line-item": [
+          "sc-format-number",
+          "sc-quantity-select",
+          "sc-icon"
+        ],
+        "sc-quantity-select": [
+          "sc-icon"
+        ],
+        "sc-order-confirmation-totals": [
+          "sc-line-item",
+          "sc-tag",
+          "sc-format-number",
+          "sc-line-item-total",
+          "sc-divider"
+        ],
+        "sc-line-item-total": [
+          "sc-line-item",
+          "sc-skeleton",
+          "sc-total",
+          "sc-format-number"
+        ],
+        "sc-total": [
+          "sc-format-number"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/controllers/confirmation/order-confirmation-line-items/sc-order-confirmation-line-items.tsx",
       "encapsulation": "shadow",
       "tag": "sc-order-confirmation-line-items",
@@ -11767,7 +11878,9 @@
           "docs": ""
         }
       ],
-      "dependents": [],
+      "dependents": [
+        "sc-order-confirmation-details"
+      ],
       "dependencies": [
         "sc-line-item",
         "sc-skeleton",
@@ -11786,6 +11899,9 @@
         ],
         "sc-quantity-select": [
           "sc-icon"
+        ],
+        "sc-order-confirmation-details": [
+          "sc-order-confirmation-line-items"
         ]
       }
     },
@@ -11820,7 +11936,9 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "sc-order-confirmation-details"
+      ],
       "dependencies": [
         "sc-line-item",
         "sc-tag",
@@ -11844,6 +11962,9 @@
         ],
         "sc-total": [
           "sc-format-number"
+        ],
+        "sc-order-confirmation-details": [
+          "sc-order-confirmation-totals"
         ]
       }
     },
@@ -12853,6 +12974,7 @@
       "parts": [],
       "dependents": [
         "sc-invoices-list",
+        "sc-order-confirmation-details",
         "sc-orders-list"
       ],
       "dependencies": [
@@ -12863,6 +12985,9 @@
           "sc-tag"
         ],
         "sc-invoices-list": [
+          "sc-order-status-badge"
+        ],
+        "sc-order-confirmation-details": [
           "sc-order-status-badge"
         ],
         "sc-orders-list": [
@@ -20295,6 +20420,7 @@
         "sc-customer-details",
         "sc-customer-edit",
         "sc-invoices-list",
+        "sc-order-confirmation-details",
         "sc-order-confirmation-totals",
         "sc-order-status-badge",
         "sc-orders-list",
@@ -20325,6 +20451,9 @@
           "sc-tag"
         ],
         "sc-invoices-list": [
+          "sc-tag"
+        ],
+        "sc-order-confirmation-details": [
           "sc-tag"
         ],
         "sc-order-confirmation-totals": [

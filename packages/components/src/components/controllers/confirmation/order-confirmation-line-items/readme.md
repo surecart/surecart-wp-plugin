@@ -22,6 +22,10 @@
 
 ## Dependencies
 
+### Used by
+
+ - [sc-order-confirmation-details](../order-confirmation-details)
+
 ### Depends on
 
 - [sc-line-item](../../../ui/line-item)
@@ -38,6 +42,7 @@ graph TD;
   sc-product-line-item --> sc-quantity-select
   sc-product-line-item --> sc-icon
   sc-quantity-select --> sc-icon
+  sc-order-confirmation-details --> sc-order-confirmation-line-items
   style sc-order-confirmation-line-items fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -41,6 +41,7 @@
  - [sc-customer-details](../customer-details)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
  - [sc-order-confirmation-totals](../../controllers/confirmation/order-confirmation-totals)
  - [sc-order-status-badge](../order-status-badge)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
@@ -60,6 +61,7 @@ graph TD;
   sc-customer-details --> sc-tag
   sc-customer-edit --> sc-tag
   sc-invoices-list --> sc-tag
+  sc-order-confirmation-details --> sc-tag
   sc-order-confirmation-totals --> sc-tag
   sc-order-status-badge --> sc-tag
   sc-orders-list --> sc-tag

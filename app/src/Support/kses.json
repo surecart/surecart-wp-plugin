@@ -813,6 +813,7 @@
     "slot": true
   },
   "sc-order-confirmation-details": {
+    "loading": true,
     "order": true,
     "style": true,
     "id": true,

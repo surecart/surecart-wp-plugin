@@ -20,6 +20,7 @@
 ### Used by
 
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
 
 ### Depends on
@@ -31,6 +32,7 @@
 graph TD;
   sc-order-status-badge --> sc-tag
   sc-invoices-list --> sc-order-status-badge
+  sc-order-confirmation-details --> sc-order-status-badge
   sc-orders-list --> sc-order-status-badge
   style sc-order-status-badge fill:#f9f,stroke:#333,stroke-width:4px
 ```
