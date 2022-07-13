@@ -1,5 +1,5 @@
 import { useBlockProps } from '@wordpress/block-editor';
-import { ScDashboardModule } from '@surecart/components-react';
+import { ScOrderConfirmationDetails } from '@surecart/components-react';
 
 export default ({ attributes }) => {
 	const { title } = attributes;
@@ -8,8 +8,8 @@ export default ({ attributes }) => {
 	});
 
 	return (
-		<sc-order-confirmation-details
+		<ScOrderConfirmationDetails
 			{...blockProps}
-		></sc-order-confirmation-details>
+		></ScOrderConfirmationDetails>
 	);
 };
