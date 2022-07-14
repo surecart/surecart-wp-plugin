@@ -32,6 +32,8 @@ jobs:
     name: PHP ${{ matrix.php-versions }} / WP ${{ matrix.wp-versions }} Test on ${{ matrix.operating-system }}
     steps:
       - uses: actions/checkout@v2
+        with:
+          path: 'plugins/surecart'
 
       - name: Use Node.js 14.x
         uses: actions/setup-node@v1
@@ -49,47 +51,35 @@ jobs:
       - name: Check PHP Version
         run: php -v
 
-      # - name: Get Composer Cache Directory
-      #   id: composer-cache
-      #   run: |
-      #     echo "::set-output name=dir::$(composer config cache-files-dir)"
-      # - uses: actions/cache@v3
-      #   with:
-      #     path: ${{ steps.composer-cache.outputs.dir }}
-      #     key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-      #     restore-keys: |
-      #      ${{ runner.os }}-composer-
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+           ${{ runner.os }}-composer-
 
+      - if: ${{ steps.composer-cache.outputs.cache-hit == 'false' }}
       - name: Composer Install
-        run: composer install
+        run: cd plugins/surecart && composer install
 
-      # - name: Get yarn cache directory path
-      #   id: yarn-cache-dir-path
-      #   run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-
-      # - uses: actions/cache@v3
-      #   id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-      #   with:
-      #     path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-      #     key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-yarn-
-
-      # - if: ${{ steps.yarn-cache.outputs.cache-hit == 'false' }}
       - name: Yarn Install
-        run: yarn
+        run: cd plugins/surecart && yarn
 
       - name: Bootstrap
-        run: yarn bootstrap
+        run: cd plugins/surecart && yarn bootstrap
 
       - name: Build
-        run: yarn build
+        run: cd plugins/surecart && yarn build
 
       - name: Install WordPress
         run: |
           chmod -R 767 ./ # TODO: Possibly integrate in wp-env
-          yarn wp-env start
+          cd plugins/surecart && yarn wp-env start
 
       - name: Running single site unit tests
-        run: yarn test:php
+        run: cd plugins/surecart && yarn test:php
         if: ${{ success() || failure() }}
