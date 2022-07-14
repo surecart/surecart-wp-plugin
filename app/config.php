@@ -92,6 +92,7 @@ return [
 		\SureCartBlocks\Blocks\AddToCartButton\Block::class,
 		\SureCartBlocks\Blocks\CustomerDashboardButton\Block::class,
 		\SureCartBlocks\Blocks\CheckoutForm\Block::class,
+		\SureCartBlocks\Blocks\OrderConfirmationLineItems\Block::class,
 		\SureCartBlocks\Blocks\Form\Block::class,
 		\SureCartBlocks\Blocks\LogoutButton\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\WordPressAccount\Block::class,
