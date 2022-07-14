@@ -23,7 +23,7 @@ describe('sc-form', () => {
     const scSubmit = await form.spyOnEvent('scSubmit');
 
     const scButton = await page.find('sc-button');
-    scButton.click();
+    await scButton.click();
     await page.waitForChanges();
     expect(scSubmit).toHaveReceivedEventTimes(1);
     expect(scFormSubmit).toHaveReceivedEventTimes(1);
