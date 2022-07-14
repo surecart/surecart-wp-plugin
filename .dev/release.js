@@ -59,7 +59,6 @@ fs.rm(`./${name}`, { recursive: true }, (err) => {
 	}
 
 	zip.extractAllTo(`./${name}`, true);
-	stdout.write(`\nDone. \`${name}\` folder is ready! 🎉\n`);
+	zip.writeZip(`./${name}.zip`);
+	stdout.write(`\nDone. \`${name}\` release is ready! 🎉\n`);
 });
-
-// zip.writeZip(`./${name}.zip`);

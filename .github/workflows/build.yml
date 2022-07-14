@@ -61,10 +61,10 @@ jobs:
       - name: Bootstrap
         run: yarn bootstrap
 
-      - name: Build
+      - name: Release
         run: yarn plugin:release
 
       - uses: actions/upload-artifact@v3
         with:
           name: surecart
-          path: "@surecart/surecart"
+          path: "@surecart/surecart.zip"
