@@ -31,7 +31,7 @@
 		"dev": "composer install && yarn start:workspace",
 		"docs:release": "yarn workspaces foreach run docs:release",
 		"dev:docs": "yarn workspace @surecart/docs run start",
-		"bootstrap": "yarn workspace @surecart/components build && yarn workspace @surecart/components-react build",
+		"bootstrap": "yarn workspace @surecart/components build && yarn workspace @surecart/components-react build && yarn workspace @surecart/blocks build",
 		"i18n": "run-s -cl i18n:textdomain i18n:pot",
 		"i18n:textdomain": "wpi18n addtextdomain --exclude=dist,node_modules,resources,tests,vendor --textdomain=surecart",
 		"i18n:pot": "./vendor/bin/wp i18n make-pot ./app languages/surecart.pot --ignore-domain && ./vendor/bin/wp i18n make-pot ./views languages/surecart.pot --ignore-domain --merge",
