@@ -52,7 +52,7 @@ jobs:
         run: php -v
 
       - name: Bootstrap Core
-        run: cd plugins/surecart && yarn && composer install && yarn build
+        run: cd plugins/surecart && yarn && composer install && yarn bootstrap && yarn build
 
       - name: Install WordPress
         run: |
