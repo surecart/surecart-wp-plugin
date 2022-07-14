@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-07-13T21:10:25",
+  "timestamp": "2022-07-14T12:36:24",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.15.1",
@@ -11363,84 +11363,6 @@
           "sc-menu-label"
         ]
       }
-    },
-    {
-      "filePath": "./src/components/providers/model-cache-provider/sc-model-cache-provider.tsx",
-      "encapsulation": "shadow",
-      "tag": "sc-model-cache-provider",
-      "readme": "# ce-cart-provider\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "cacheKey",
-          "type": "string",
-          "mutable": false,
-          "attr": "cache-key",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "model",
-          "type": "object",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Order Object",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "object"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "syncTabs",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "sync-tabs",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "true",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
-      "methods": [],
-      "events": [
-        {
-          "event": "scUpdateModel",
-          "detail": "object",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Update line items event",
-          "docsTags": []
-        }
-      ],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
-      "dependents": [],
-      "dependencies": [],
-      "dependencyGraph": {}
     },
     {
       "filePath": "./src/components/providers/order-confirm-provider/sc-order-confirm-provider.tsx",
