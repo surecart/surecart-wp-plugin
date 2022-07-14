@@ -2772,6 +2772,230 @@ export namespace Components {
         "user": WordPressUser;
     }
 }
+export interface ScAddressCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScAddressElement;
+}
+export interface ScAlertCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScAlertElement;
+}
+export interface ScButtonCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScButtonElement;
+}
+export interface ScCartHeaderCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCartHeaderElement;
+}
+export interface ScCartSessionProviderCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCartSessionProviderElement;
+}
+export interface ScCheckboxCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCheckboxElement;
+}
+export interface ScCheckoutCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCheckoutElement;
+}
+export interface ScChoiceCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScChoiceElement;
+}
+export interface ScCompactAddressCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCompactAddressElement;
+}
+export interface ScConsumerCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScConsumerElement;
+}
+export interface ScCouponFormCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCouponFormElement;
+}
+export interface ScCustomOrderPriceInputCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCustomOrderPriceInputElement;
+}
+export interface ScCustomerEmailCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCustomerEmailElement;
+}
+export interface ScCustomerNameCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCustomerNameElement;
+}
+export interface ScDialogCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScDialogElement;
+}
+export interface ScDonationChoicesCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScDonationChoicesElement;
+}
+export interface ScDrawerCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScDrawerElement;
+}
+export interface ScDropdownCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScDropdownElement;
+}
+export interface ScErrorCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScErrorElement;
+}
+export interface ScFormCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScFormElement;
+}
+export interface ScFormErrorProviderCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScFormErrorProviderElement;
+}
+export interface ScFormStateProviderCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScFormStateProviderElement;
+}
+export interface ScIconCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScIconElement;
+}
+export interface ScInputCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScInputElement;
+}
+export interface ScLineItemsCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScLineItemsElement;
+}
+export interface ScLineItemsProviderCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScLineItemsProviderElement;
+}
+export interface ScMenuCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScMenuElement;
+}
+export interface ScOrderConfirmProviderCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScOrderConfirmProviderElement;
+}
+export interface ScOrderCouponFormCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScOrderCouponFormElement;
+}
+export interface ScOrderRedirectProviderCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScOrderRedirectProviderElement;
+}
+export interface ScOrderShippingAddressCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScOrderShippingAddressElement;
+}
+export interface ScOrderStripePaymentElementCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScOrderStripePaymentElementElement;
+}
+export interface ScOrderSummaryCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScOrderSummaryElement;
+}
+export interface ScOrderTaxIdInputCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScOrderTaxIdInputElement;
+}
+export interface ScPaginationCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScPaginationElement;
+}
+export interface ScPaymentCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScPaymentElement;
+}
+export interface ScPaypalButtonsCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScPaypalButtonsElement;
+}
+export interface ScPriceChoiceCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScPriceChoiceElement;
+}
+export interface ScPriceChoicesCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScPriceChoicesElement;
+}
+export interface ScPriceInputCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScPriceInputElement;
+}
+export interface ScProductLineItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScProductLineItemElement;
+}
+export interface ScProviderCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScProviderElement;
+}
+export interface ScQuantitySelectCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScQuantitySelectElement;
+}
+export interface ScRadioCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScRadioElement;
+}
+export interface ScSelectCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScSelectElement;
+}
+export interface ScSessionProviderCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScSessionProviderElement;
+}
+export interface ScStripeElementCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScStripeElementElement;
+}
+export interface ScStripePaymentElementCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScStripePaymentElementElement;
+}
+export interface ScStripePaymentRequestCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScStripePaymentRequestElement;
+}
+export interface ScSwitchCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScSwitchElement;
+}
+export interface ScTabCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScTabElement;
+}
+export interface ScTabGroupCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScTabGroupElement;
+}
+export interface ScTagCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScTagElement;
+}
+export interface ScTaxIdInputCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScTaxIdInputElement;
+}
+export interface ScTextareaCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScTextareaElement;
+}
+export interface ScToggleCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScToggleElement;
+}
 declare global {
     interface HTMLScAddressElement extends Components.ScAddress, HTMLStencilElement {
     }
@@ -3774,11 +3998,11 @@ declare namespace LocalJSX {
         /**
           * Address change event.
          */
-        "onScChangeAddress"?: (event: CustomEvent<Partial<Address>>) => void;
+        "onScChangeAddress"?: (event: ScAddressCustomEvent<Partial<Address>>) => void;
         /**
           * Address change event.
          */
-        "onScInputAddress"?: (event: CustomEvent<Partial<Address>>) => void;
+        "onScInputAddress"?: (event: ScAddressCustomEvent<Partial<Address>>) => void;
         "placeholders"?: Partial<Address>;
         /**
           * Is this required?
@@ -3805,11 +4029,11 @@ declare namespace LocalJSX {
         /**
           * When alert is hidden
          */
-        "onScHide"?: (event: CustomEvent<void>) => void;
+        "onScHide"?: (event: ScAlertCustomEvent<void>) => void;
         /**
           * When alert is shown
          */
-        "onScShow"?: (event: CustomEvent<void>) => void;
+        "onScShow"?: (event: ScAlertCustomEvent<void>) => void;
         /**
           * Indicates whether or not the alert is open. You can use this in lieu of the show/hide methods.
          */
@@ -3897,11 +4121,11 @@ declare namespace LocalJSX {
         /**
           * Emitted when the button loses focus.
          */
-        "onScBlur"?: (event: CustomEvent<void>) => void;
+        "onScBlur"?: (event: ScButtonCustomEvent<void>) => void;
         /**
           * Emitted when the button gains focus.
          */
-        "onScFocus"?: (event: CustomEvent<void>) => void;
+        "onScFocus"?: (event: ScButtonCustomEvent<void>) => void;
         /**
           * Draws an outlined button.
          */
@@ -4022,7 +4246,7 @@ declare namespace LocalJSX {
     }
     interface ScCartHeader {
         "lineItems"?: Array<LineItem>;
-        "onScCloseCart"?: (event: CustomEvent<void>) => void;
+        "onScCloseCart"?: (event: ScCartHeaderCustomEvent<void>) => void;
     }
     interface ScCartIcon {
         /**
@@ -4052,15 +4276,15 @@ declare namespace LocalJSX {
         /**
           * Error event
          */
-        "onScError"?: (event: CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
+        "onScError"?: (event: ScCartSessionProviderCustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
         /**
           * Set the state
          */
-        "onScSetState"?: (event: CustomEvent<'loading' | 'busy' | 'navigating' | 'idle'>) => void;
+        "onScSetState"?: (event: ScCartSessionProviderCustomEvent<'loading' | 'busy' | 'navigating' | 'idle'>) => void;
         /**
           * Update line items event
          */
-        "onScUpdateOrderState"?: (event: CustomEvent<Order>) => void;
+        "onScUpdateOrderState"?: (event: ScCartSessionProviderCustomEvent<Order>) => void;
         /**
           * Order Object
          */
@@ -4128,15 +4352,15 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control loses focus.
          */
-        "onScBlur"?: (event: CustomEvent<void>) => void;
+        "onScBlur"?: (event: ScCheckboxCustomEvent<void>) => void;
         /**
           * Emitted when the control's checked state changes.
          */
-        "onScChange"?: (event: CustomEvent<void>) => void;
+        "onScChange"?: (event: ScCheckboxCustomEvent<void>) => void;
         /**
           * Emitted when the control gains focus.
          */
-        "onScFocus"?: (event: CustomEvent<void>) => void;
+        "onScFocus"?: (event: ScCheckboxCustomEvent<void>) => void;
         /**
           * Makes the checkbox a required field.
          */
@@ -4190,15 +4414,15 @@ declare namespace LocalJSX {
         /**
           * Order has an error.
          */
-        "onScOrderError"?: (event: CustomEvent<ResponseError>) => void;
+        "onScOrderError"?: (event: ScCheckoutCustomEvent<ResponseError>) => void;
         /**
           * Order has been finalized.
          */
-        "onScOrderFinalized"?: (event: CustomEvent<Order>) => void;
+        "onScOrderFinalized"?: (event: ScCheckoutCustomEvent<Order>) => void;
         /**
           * Order has been updated.
          */
-        "onScOrderUpdated"?: (event: CustomEvent<Order>) => void;
+        "onScOrderUpdated"?: (event: ScCheckoutCustomEvent<Order>) => void;
         /**
           * Whether to persist the session in the browser between visits.
          */
@@ -4248,15 +4472,15 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control loses focus.
          */
-        "onScBlur"?: (event: CustomEvent<void>) => void;
+        "onScBlur"?: (event: ScChoiceCustomEvent<void>) => void;
         /**
           * Emitted when the control's checked state changes.
          */
-        "onScChange"?: (event: CustomEvent<boolean>) => void;
+        "onScChange"?: (event: ScChoiceCustomEvent<boolean>) => void;
         /**
           * Emitted when the control gains focus.
          */
-        "onScFocus"?: (event: CustomEvent<void>) => void;
+        "onScFocus"?: (event: ScChoiceCustomEvent<void>) => void;
         /**
           * Is this required
          */
@@ -4350,18 +4574,18 @@ declare namespace LocalJSX {
         /**
           * Address change event.
          */
-        "onScChangeAddress"?: (event: CustomEvent<Partial<Address>>) => void;
+        "onScChangeAddress"?: (event: ScCompactAddressCustomEvent<Partial<Address>>) => void;
         /**
           * Address input event.
          */
-        "onScInputAddress"?: (event: CustomEvent<Partial<Address>>) => void;
+        "onScInputAddress"?: (event: ScCompactAddressCustomEvent<Partial<Address>>) => void;
         /**
           * Is this required?
          */
         "required"?: boolean;
     }
     interface ScConsumer {
-        "onMountConsumer"?: (event: CustomEvent<any>) => void;
+        "onMountConsumer"?: (event: ScConsumerCustomEvent<any>) => void;
         "renderer"?: any;
     }
     interface ScCouponForm {
@@ -4400,7 +4624,7 @@ declare namespace LocalJSX {
         /**
           * When the coupon is applied
          */
-        "onScApplyCoupon"?: (event: CustomEvent<string>) => void;
+        "onScApplyCoupon"?: (event: ScCouponFormCustomEvent<string>) => void;
         /**
           * Is it open
          */
@@ -4430,7 +4654,7 @@ declare namespace LocalJSX {
         /**
           * Toggle line item event
          */
-        "onScUpdateLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        "onScUpdateLineItem"?: (event: ScCustomOrderPriceInputCustomEvent<LineItemData>) => void;
         /**
           * Input placeholder.
          */
@@ -4500,24 +4724,24 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control loses focus.
          */
-        "onScBlur"?: (event: CustomEvent<void>) => void;
+        "onScBlur"?: (event: ScCustomerEmailCustomEvent<void>) => void;
         /**
           * Emitted when the control's value changes.
          */
-        "onScChange"?: (event: CustomEvent<void>) => void;
+        "onScChange"?: (event: ScCustomerEmailCustomEvent<void>) => void;
         /**
           * Emitted when the clear button is activated.
          */
-        "onScClear"?: (event: CustomEvent<void>) => void;
+        "onScClear"?: (event: ScCustomerEmailCustomEvent<void>) => void;
         /**
           * Emitted when the control gains focus.
          */
-        "onScFocus"?: (event: CustomEvent<void>) => void;
+        "onScFocus"?: (event: ScCustomerEmailCustomEvent<void>) => void;
         /**
           * Emitted when the control receives input.
          */
-        "onScInput"?: (event: CustomEvent<void>) => void;
-        "onScUpdateOrderState"?: (event: CustomEvent<Order>) => void;
+        "onScInput"?: (event: ScCustomerEmailCustomEvent<void>) => void;
+        "onScUpdateOrderState"?: (event: ScCustomerEmailCustomEvent<Order>) => void;
         /**
           * (passed from the sc-checkout component automatically)
          */
@@ -4587,25 +4811,25 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control loses focus.
          */
-        "onScBlur"?: (event: CustomEvent<void>) => void;
+        "onScBlur"?: (event: ScCustomerNameCustomEvent<void>) => void;
         /**
           * Emitted when the control's value changes.
          */
-        "onScChange"?: (event: CustomEvent<void>) => void;
+        "onScChange"?: (event: ScCustomerNameCustomEvent<void>) => void;
         /**
           * Emitted when the clear button is activated.
          */
-        "onScClear"?: (event: CustomEvent<void>) => void;
+        "onScClear"?: (event: ScCustomerNameCustomEvent<void>) => void;
         /**
           * Emitted when the control gains focus.
          */
-        "onScFocus"?: (event: CustomEvent<void>) => void;
+        "onScFocus"?: (event: ScCustomerNameCustomEvent<void>) => void;
         /**
           * Emitted when the control receives input.
          */
-        "onScInput"?: (event: CustomEvent<void>) => void;
-        "onScUpdateCustomer"?: (event: CustomEvent<{ email: string }>) => void;
-        "onScUpdateOrderState"?: (event: CustomEvent<Partial<Order>>) => void;
+        "onScInput"?: (event: ScCustomerNameCustomEvent<void>) => void;
+        "onScUpdateCustomer"?: (event: ScCustomerNameCustomEvent<{ email: string }>) => void;
+        "onScUpdateOrderState"?: (event: ScCustomerNameCustomEvent<Partial<Order>>) => void;
         /**
           * (passed from the sc-checkout component automatically)
          */
@@ -4668,15 +4892,15 @@ declare namespace LocalJSX {
           * Disables the header. This will also remove the default close button, so please ensure you provide an easy, accessible way for users to dismiss the dialog.
          */
         "noHeader"?: boolean;
-        "onScAfterHide"?: (event: CustomEvent<void>) => void;
-        "onScAfterShow"?: (event: CustomEvent<void>) => void;
-        "onScHide"?: (event: CustomEvent<void>) => void;
-        "onScInitialFocus"?: (event: CustomEvent<void>) => void;
+        "onScAfterHide"?: (event: ScDialogCustomEvent<void>) => void;
+        "onScAfterShow"?: (event: ScDialogCustomEvent<void>) => void;
+        "onScHide"?: (event: ScDialogCustomEvent<void>) => void;
+        "onScInitialFocus"?: (event: ScDialogCustomEvent<void>) => void;
         /**
           * Request close event
          */
-        "onScRequestClose"?: (event: CustomEvent<'close-button' | 'keyboard' | 'overlay'>) => void;
-        "onScShow"?: (event: CustomEvent<void>) => void;
+        "onScRequestClose"?: (event: ScDialogCustomEvent<'close-button' | 'keyboard' | 'overlay'>) => void;
+        "onScShow"?: (event: ScDialogCustomEvent<void>) => void;
         /**
           * Indicates whether or not the dialog is open. You can use this in lieu of the show/hide methods.
          */
@@ -4709,15 +4933,15 @@ declare namespace LocalJSX {
         /**
           * Toggle line item event
          */
-        "onScAddLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        "onScAddLineItem"?: (event: ScDonationChoicesCustomEvent<LineItemData>) => void;
         /**
           * Toggle line item event
          */
-        "onScRemoveLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        "onScRemoveLineItem"?: (event: ScDonationChoicesCustomEvent<LineItemData>) => void;
         /**
           * Toggle line item event
          */
-        "onScUpdateLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        "onScUpdateLineItem"?: (event: ScDonationChoicesCustomEvent<LineItemData>) => void;
         /**
           * The price id for the fields.
          */
@@ -4746,12 +4970,12 @@ declare namespace LocalJSX {
           * Removes the header. This will also remove the default close button, so please ensure you provide an easy, accessible way for users to dismiss the drawer.
          */
         "noHeader"?: boolean;
-        "onScAfterHide"?: (event: CustomEvent<void>) => void;
-        "onScAfterShow"?: (event: CustomEvent<void>) => void;
-        "onScHide"?: (event: CustomEvent<void>) => void;
-        "onScInitialFocus"?: (event: CustomEvent<void>) => void;
-        "onScRequestClose"?: (event: CustomEvent<'close-button' | 'keyboard' | 'overlay'>) => void;
-        "onScShow"?: (event: CustomEvent<void>) => void;
+        "onScAfterHide"?: (event: ScDrawerCustomEvent<void>) => void;
+        "onScAfterShow"?: (event: ScDrawerCustomEvent<void>) => void;
+        "onScHide"?: (event: ScDrawerCustomEvent<void>) => void;
+        "onScInitialFocus"?: (event: ScDrawerCustomEvent<void>) => void;
+        "onScRequestClose"?: (event: ScDrawerCustomEvent<'close-button' | 'keyboard' | 'overlay'>) => void;
+        "onScShow"?: (event: ScDrawerCustomEvent<void>) => void;
         /**
           * Indicates whether or not the drawer is open. You can use this in lieu of the show/hide methods.
          */
@@ -4782,11 +5006,11 @@ declare namespace LocalJSX {
         /**
           * Emitted when the dropdown closes. Calling `event.preventDefault()` will prevent it from being closed.
          */
-        "onScHide"?: (event: CustomEvent<void>) => void;
+        "onScHide"?: (event: ScDropdownCustomEvent<void>) => void;
         /**
           * Emitted when the dropdown opens. Calling `event.preventDefault()` will prevent it from being opened.
          */
-        "onScShow"?: (event: CustomEvent<void>) => void;
+        "onScShow"?: (event: ScDropdownCustomEvent<void>) => void;
         /**
           * Indicates whether or not the dropdown is open. You can use this in lieu of the show/hide methods.
          */
@@ -4826,7 +5050,7 @@ declare namespace LocalJSX {
         /**
           * Set the state.
          */
-        "onScUpdateError"?: (event: CustomEvent<ResponseError>) => void;
+        "onScUpdateError"?: (event: ScErrorCustomEvent<ResponseError>) => void;
     }
     interface ScExpressPayment {
         "busy"?: boolean;
@@ -4851,15 +5075,15 @@ declare namespace LocalJSX {
         /**
           * Emitted when the form is submitted. This event will not be emitted if any form control inside of it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional around the XHR request you use to submit the form's data with.
          */
-        "onScFormChange"?: (event: CustomEvent<Object>) => void;
+        "onScFormChange"?: (event: ScFormCustomEvent<Object>) => void;
         /**
           * Backwards compat.
          */
-        "onScFormSubmit"?: (event: CustomEvent<void>) => void;
+        "onScFormSubmit"?: (event: ScFormCustomEvent<void>) => void;
         /**
           * Emitted when the form is submitted. This event will not be emitted if any form control inside of it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional around the XHR request you use to submit the form's data with.
          */
-        "onScSubmit"?: (event: CustomEvent<void>) => void;
+        "onScSubmit"?: (event: ScFormCustomEvent<void>) => void;
     }
     interface ScFormComponentsValidator {
         /**
@@ -4925,11 +5149,11 @@ declare namespace LocalJSX {
         /**
           * Form state event.
          */
-        "onScSetState"?: (event: CustomEvent<FormStateSetter>) => void;
+        "onScSetState"?: (event: ScFormErrorProviderCustomEvent<FormStateSetter>) => void;
         /**
           * Set the state.
          */
-        "onScUpdateError"?: (event: CustomEvent<ResponseError>) => void;
+        "onScUpdateError"?: (event: ScFormErrorProviderCustomEvent<ResponseError>) => void;
         /**
           * The current order.
          */
@@ -4941,7 +5165,7 @@ declare namespace LocalJSX {
         /**
           * Set the state.
          */
-        "onScSetCheckoutFormState"?: (event: CustomEvent<FormState>) => void;
+        "onScSetCheckoutFormState"?: (event: ScFormStateProviderCustomEvent<FormState>) => void;
     }
     interface ScFormatBytes {
         /**
@@ -5091,11 +5315,11 @@ declare namespace LocalJSX {
         /**
           * Emitted when the icon failed to load.
          */
-        "onScError"?: (event: CustomEvent<{ status: number }>) => void;
+        "onScError"?: (event: ScIconCustomEvent<{ status: number }>) => void;
         /**
           * Emitted when the icon has loaded.
          */
-        "onScLoad"?: (event: CustomEvent<void>) => void;
+        "onScLoad"?: (event: ScIconCustomEvent<void>) => void;
         /**
           * An external URL of an SVG file.
          */
@@ -5169,23 +5393,23 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control loses focus.
          */
-        "onScBlur"?: (event: CustomEvent<void>) => void;
+        "onScBlur"?: (event: ScInputCustomEvent<void>) => void;
         /**
           * Emitted when the control's value changes.
          */
-        "onScChange"?: (event: CustomEvent<void>) => void;
+        "onScChange"?: (event: ScInputCustomEvent<void>) => void;
         /**
           * Emitted when the clear button is activated.
          */
-        "onScClear"?: (event: CustomEvent<void>) => void;
+        "onScClear"?: (event: ScInputCustomEvent<void>) => void;
         /**
           * Emitted when the control gains focus.
          */
-        "onScFocus"?: (event: CustomEvent<void>) => void;
+        "onScFocus"?: (event: ScInputCustomEvent<void>) => void;
         /**
           * Emitted when the control receives input.
          */
-        "onScInput"?: (event: CustomEvent<void>) => void;
+        "onScInput"?: (event: ScInputCustomEvent<void>) => void;
         /**
           * A pattern to validate input against.
          */
@@ -5279,11 +5503,11 @@ declare namespace LocalJSX {
         /**
           * Remove the line item.
          */
-        "onScRemoveLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        "onScRemoveLineItem"?: (event: ScLineItemsCustomEvent<LineItemData>) => void;
         /**
           * Update the line item.
          */
-        "onScUpdateLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        "onScUpdateLineItem"?: (event: ScLineItemsCustomEvent<LineItemData>) => void;
         "order"?: Order;
         "prices"?: Prices;
         "removable"?: boolean;
@@ -5293,7 +5517,7 @@ declare namespace LocalJSX {
         /**
           * Update line items event
          */
-        "onScUpdateLineItems"?: (event: CustomEvent<Array<LineItemData>>) => void;
+        "onScUpdateLineItems"?: (event: ScLineItemsProviderCustomEvent<Array<LineItemData>>) => void;
         /**
           * Order Object
          */
@@ -5302,7 +5526,7 @@ declare namespace LocalJSX {
     interface ScLoginForm {
     }
     interface ScMenu {
-        "onScSelect"?: (event: CustomEvent<{ item: HTMLScMenuItemElement }>) => void;
+        "onScSelect"?: (event: ScMenuCustomEvent<{ item: HTMLScMenuItemElement }>) => void;
     }
     interface ScMenuDivider {
     }
@@ -5338,15 +5562,15 @@ declare namespace LocalJSX {
         /**
           * The order is confirmed event.
          */
-        "onScConfirmed"?: (event: CustomEvent<void>) => void;
+        "onScConfirmed"?: (event: ScOrderConfirmProviderCustomEvent<void>) => void;
         /**
           * Error event.
          */
-        "onScError"?: (event: CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
+        "onScError"?: (event: ScOrderConfirmProviderCustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
         /**
           * The order is paid event.
          */
-        "onScOrderPaid"?: (event: CustomEvent<Order>) => void;
+        "onScOrderPaid"?: (event: ScOrderConfirmProviderCustomEvent<Order>) => void;
         /**
           * The current order.
          */
@@ -5398,7 +5622,7 @@ declare namespace LocalJSX {
         "forceOpen"?: boolean;
         "label"?: string;
         "loading"?: boolean;
-        "onScApplyCoupon"?: (event: CustomEvent<string>) => void;
+        "onScApplyCoupon"?: (event: ScOrderCouponFormCustomEvent<string>) => void;
         "order"?: Order;
     }
     interface ScOrderDetail {
@@ -5460,11 +5684,11 @@ declare namespace LocalJSX {
         /**
           * Error event.
          */
-        "onScError"?: (event: CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
+        "onScError"?: (event: ScOrderRedirectProviderCustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
         /**
           * Form state event.
          */
-        "onScSetState"?: (event: CustomEvent<FormStateSetter>) => void;
+        "onScSetState"?: (event: ScOrderRedirectProviderCustomEvent<FormStateSetter>) => void;
         /**
           * The current order.
          */
@@ -5494,7 +5718,7 @@ declare namespace LocalJSX {
         /**
           * Make a request to update the order.
          */
-        "onScUpdateOrder"?: (event: CustomEvent<{
+        "onScUpdateOrder"?: (event: ScOrderShippingAddressCustomEvent<{
     data: Partial<Order>;
     options?: { silent?: boolean };
   }>) => void;
@@ -5554,9 +5778,9 @@ declare namespace LocalJSX {
           * Payment mode.
          */
         "mode"?: 'test' | 'live';
-        "onScPaid"?: (event: CustomEvent<void>) => void;
-        "onScPayError"?: (event: CustomEvent<any>) => void;
-        "onScSetPaymentIntent"?: (event: CustomEvent<{ processor: 'stripe'; payment_intent: PaymentIntent }>) => void;
+        "onScPaid"?: (event: ScOrderStripePaymentElementCustomEvent<void>) => void;
+        "onScPayError"?: (event: ScOrderStripePaymentElementCustomEvent<any>) => void;
+        "onScSetPaymentIntent"?: (event: ScOrderStripePaymentElementCustomEvent<{ processor: 'stripe'; payment_intent: PaymentIntent }>) => void;
         /**
           * The order.
          */
@@ -5626,11 +5850,11 @@ declare namespace LocalJSX {
         /**
           * Show the toggle
          */
-        "onScHide"?: (event: CustomEvent<void>) => void;
+        "onScHide"?: (event: ScOrderSummaryCustomEvent<void>) => void;
         /**
           * Show the toggle
          */
-        "onScShow"?: (event: CustomEvent<void>) => void;
+        "onScShow"?: (event: ScOrderSummaryCustomEvent<void>) => void;
         "openText"?: string;
         "order"?: Order;
     }
@@ -5642,7 +5866,7 @@ declare namespace LocalJSX {
         /**
           * Make a request to update the order.
          */
-        "onScUpdateOrder"?: (event: CustomEvent<{
+        "onScUpdateOrder"?: (event: ScOrderTaxIdInputCustomEvent<{
     data: Partial<Order>;
     options?: { silent?: boolean };
   }>) => void;
@@ -5668,8 +5892,8 @@ declare namespace LocalJSX {
   };
     }
     interface ScPagination {
-        "onScNextPage"?: (event: CustomEvent<void>) => void;
-        "onScPrevPage"?: (event: CustomEvent<void>) => void;
+        "onScNextPage"?: (event: ScPaginationCustomEvent<void>) => void;
+        "onScPrevPage"?: (event: ScPaginationCustomEvent<void>) => void;
         "page"?: number;
         "perPage"?: number;
         "total"?: number;
@@ -5708,7 +5932,7 @@ declare namespace LocalJSX {
         /**
           * Set the order procesor.
          */
-        "onScSetProcessor"?: (event: CustomEvent<ProcessorName>) => void;
+        "onScSetProcessor"?: (event: ScPaymentCustomEvent<ProcessorName>) => void;
         /**
           * Checkout Session from sc-checkout.
          */
@@ -5778,12 +6002,12 @@ declare namespace LocalJSX {
         /**
           * Emit an error
          */
-        "onScError"?: (event: CustomEvent<object>) => void;
-        "onScPaid"?: (event: CustomEvent<void>) => void;
+        "onScError"?: (event: ScPaypalButtonsCustomEvent<object>) => void;
+        "onScPaid"?: (event: ScPaypalButtonsCustomEvent<void>) => void;
         /**
           * Set the state machine
          */
-        "onScSetState"?: (event: CustomEvent<string>) => void;
+        "onScSetState"?: (event: ScPaypalButtonsCustomEvent<string>) => void;
         /**
           * The order.
          */
@@ -5817,15 +6041,15 @@ declare namespace LocalJSX {
         /**
           * Add entities
          */
-        "onScAddEntities"?: (event: CustomEvent<any>) => void;
+        "onScAddEntities"?: (event: ScPriceChoiceCustomEvent<any>) => void;
         /**
           * Toggle line item event
          */
-        "onScRemoveLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        "onScRemoveLineItem"?: (event: ScPriceChoiceCustomEvent<LineItemData>) => void;
         /**
           * Toggle line item event
          */
-        "onScUpdateLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        "onScUpdateLineItem"?: (event: ScPriceChoiceCustomEvent<LineItemData>) => void;
         /**
           * Session
          */
@@ -5879,11 +6103,11 @@ declare namespace LocalJSX {
         /**
           * Toggle line item event
          */
-        "onScRemoveLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        "onScRemoveLineItem"?: (event: ScPriceChoicesCustomEvent<LineItemData>) => void;
         /**
           * Toggle line item event
          */
-        "onScUpdateLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        "onScUpdateLineItem"?: (event: ScPriceChoicesCustomEvent<LineItemData>) => void;
         /**
           * Required by default
          */
@@ -5945,7 +6169,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control's value changes.
          */
-        "onScChange"?: (event: CustomEvent<void>) => void;
+        "onScChange"?: (event: ScPriceInputCustomEvent<void>) => void;
         /**
           * Draws a pill-style input with rounded edges.
          */
@@ -6007,11 +6231,11 @@ declare namespace LocalJSX {
         /**
           * Emitted when the quantity changes.
          */
-        "onScRemove"?: (event: CustomEvent<void>) => void;
+        "onScRemove"?: (event: ScProductLineItemCustomEvent<void>) => void;
         /**
           * Emitted when the quantity changes.
          */
-        "onScUpdateQuantity"?: (event: CustomEvent<number>) => void;
+        "onScUpdateQuantity"?: (event: ScProductLineItemCustomEvent<number>) => void;
         /**
           * Quantity
          */
@@ -6027,7 +6251,7 @@ declare namespace LocalJSX {
     }
     interface ScProvider {
         "STENCIL_CONTEXT"?: { [key: string]: any };
-        "onMountConsumer"?: (event: CustomEvent<any>) => void;
+        "onMountConsumer"?: (event: ScProviderCustomEvent<any>) => void;
     }
     interface ScQuantitySelect {
         "clickEl"?: HTMLElement;
@@ -6041,16 +6265,16 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control loses focus.
          */
-        "onScBlur"?: (event: CustomEvent<void>) => void;
-        "onScChange"?: (event: CustomEvent<number>) => void;
+        "onScBlur"?: (event: ScQuantitySelectCustomEvent<void>) => void;
+        "onScChange"?: (event: ScQuantitySelectCustomEvent<number>) => void;
         /**
           * Emitted when the control gains focus.
          */
-        "onScFocus"?: (event: CustomEvent<void>) => void;
+        "onScFocus"?: (event: ScQuantitySelectCustomEvent<void>) => void;
         /**
           * Emitted when the control receives input.
          */
-        "onScInput"?: (event: CustomEvent<number>) => void;
+        "onScInput"?: (event: ScQuantitySelectCustomEvent<number>) => void;
         "quantity"?: number;
     }
     interface ScRadio {
@@ -6073,15 +6297,15 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control loses focus.
          */
-        "onScBlur"?: (event: CustomEvent<void>) => void;
+        "onScBlur"?: (event: ScRadioCustomEvent<void>) => void;
         /**
           * Emitted when the control's checked state changes.
          */
-        "onScChange"?: (event: CustomEvent<void>) => void;
+        "onScChange"?: (event: ScRadioCustomEvent<void>) => void;
         /**
           * Emitted when the control gains focus.
          */
-        "onScFocus"?: (event: CustomEvent<void>) => void;
+        "onScFocus"?: (event: ScRadioCustomEvent<void>) => void;
         /**
           * Is this required
          */
@@ -6130,27 +6354,27 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control loses focus.
          */
-        "onScBlur"?: (event: CustomEvent<void>) => void;
+        "onScBlur"?: (event: ScSelectCustomEvent<void>) => void;
         /**
           * Emitted when the control's value changes.
          */
-        "onScChange"?: (event: CustomEvent<void>) => void;
+        "onScChange"?: (event: ScSelectCustomEvent<void>) => void;
         /**
           * Emitted whent the components search query changes
          */
-        "onScClose"?: (event: CustomEvent<string>) => void;
+        "onScClose"?: (event: ScSelectCustomEvent<string>) => void;
         /**
           * Emitted when the control gains focus.
          */
-        "onScFocus"?: (event: CustomEvent<void>) => void;
+        "onScFocus"?: (event: ScSelectCustomEvent<void>) => void;
         /**
           * Emitted whent the components search query changes
          */
-        "onScOpen"?: (event: CustomEvent<string>) => void;
+        "onScOpen"?: (event: ScSelectCustomEvent<string>) => void;
         /**
           * Emitted whent the components search query changes
          */
-        "onScSearch"?: (event: CustomEvent<string>) => void;
+        "onScSearch"?: (event: ScSelectCustomEvent<string>) => void;
         /**
           * Is this open
          */
@@ -6212,19 +6436,19 @@ declare namespace LocalJSX {
         /**
           * Error event
          */
-        "onScError"?: (event: CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
+        "onScError"?: (event: ScSessionProviderCustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
         /**
           * Set the state
          */
-        "onScSetState"?: (event: CustomEvent<FormStateSetter>) => void;
+        "onScSetState"?: (event: ScSessionProviderCustomEvent<FormStateSetter>) => void;
         /**
           * Update line items event
          */
-        "onScUpdateDraftState"?: (event: CustomEvent<Order>) => void;
+        "onScUpdateDraftState"?: (event: ScSessionProviderCustomEvent<Order>) => void;
         /**
           * Update line items event
          */
-        "onScUpdateOrderState"?: (event: CustomEvent<Order>) => void;
+        "onScUpdateOrderState"?: (event: ScSessionProviderCustomEvent<Order>) => void;
         /**
           * Holds all available payment intents.
          */
@@ -6292,8 +6516,8 @@ declare namespace LocalJSX {
           * Mode for the payment
          */
         "mode"?: 'live' | 'test';
-        "onScPaid"?: (event: CustomEvent<void>) => void;
-        "onScPayError"?: (event: CustomEvent<any>) => void;
+        "onScPaid"?: (event: ScStripeElementCustomEvent<void>) => void;
+        "onScPayError"?: (event: ScStripeElementCustomEvent<any>) => void;
         /**
           * The checkout session object for finalizing intents
          */
@@ -6331,11 +6555,11 @@ declare namespace LocalJSX {
         /**
           * The order/invoice was paid for.
          */
-        "onScPaid"?: (event: CustomEvent<void>) => void;
+        "onScPaid"?: (event: ScStripePaymentElementCustomEvent<void>) => void;
         /**
           * There was a payment error.
          */
-        "onScPayError"?: (event: CustomEvent<any>) => void;
+        "onScPayError"?: (event: ScStripePaymentElementCustomEvent<any>) => void;
         /**
           * Order to watch
          */
@@ -6375,12 +6599,12 @@ declare namespace LocalJSX {
           * Label
          */
         "label"?: string;
-        "onScFormSubmit"?: (event: CustomEvent<any>) => void;
-        "onScPaid"?: (event: CustomEvent<void>) => void;
-        "onScPayError"?: (event: CustomEvent<any>) => void;
-        "onScPaymentRequestLoaded"?: (event: CustomEvent<boolean>) => void;
-        "onScSetState"?: (event: CustomEvent<string>) => void;
-        "onScUpdateOrderState"?: (event: CustomEvent<any>) => void;
+        "onScFormSubmit"?: (event: ScStripePaymentRequestCustomEvent<any>) => void;
+        "onScPaid"?: (event: ScStripePaymentRequestCustomEvent<void>) => void;
+        "onScPayError"?: (event: ScStripePaymentRequestCustomEvent<any>) => void;
+        "onScPaymentRequestLoaded"?: (event: ScStripePaymentRequestCustomEvent<boolean>) => void;
+        "onScSetState"?: (event: ScStripePaymentRequestCustomEvent<string>) => void;
+        "onScUpdateOrderState"?: (event: ScStripePaymentRequestCustomEvent<any>) => void;
         /**
           * Checkout Session
          */
@@ -6506,15 +6730,15 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control loses focus.
          */
-        "onScBlur"?: (event: CustomEvent<void>) => void;
+        "onScBlur"?: (event: ScSwitchCustomEvent<void>) => void;
         /**
           * Emitted when the control's checked state changes.
          */
-        "onScChange"?: (event: CustomEvent<void>) => void;
+        "onScChange"?: (event: ScSwitchCustomEvent<void>) => void;
         /**
           * Emitted when the control gains focus.
          */
-        "onScFocus"?: (event: CustomEvent<void>) => void;
+        "onScFocus"?: (event: ScSwitchCustomEvent<void>) => void;
         /**
           * Makes the switch a required field.
          */
@@ -6538,15 +6762,15 @@ declare namespace LocalJSX {
         /**
           * Close event
          */
-        "onScClose"?: (event: CustomEvent<void>) => void;
+        "onScClose"?: (event: ScTabCustomEvent<void>) => void;
         /**
           * The name of the tab panel the tab will control. The panel must be located in the same tab group.
          */
         "panel"?: string;
     }
     interface ScTabGroup {
-        "onScTabHide"?: (event: CustomEvent<string>) => void;
-        "onScTabShow"?: (event: CustomEvent<string>) => void;
+        "onScTabHide"?: (event: ScTabGroupCustomEvent<string>) => void;
+        "onScTabShow"?: (event: ScTabGroupCustomEvent<string>) => void;
     }
     interface ScTabPanel {
         /**
@@ -6572,7 +6796,7 @@ declare namespace LocalJSX {
           * Makes the tag clearable.
          */
         "clearable"?: boolean;
-        "onScClear"?: (event: CustomEvent<ScTag>) => void;
+        "onScClear"?: (event: ScTagCustomEvent<ScTag>) => void;
         /**
           * Draws a pill-style tag with rounded edges.
          */
@@ -6606,19 +6830,19 @@ declare namespace LocalJSX {
         /**
           * Make a request to update the order.
          */
-        "onScChange"?: (event: CustomEvent<{ number: string; number_type: string }>) => void;
+        "onScChange"?: (event: ScTaxIdInputCustomEvent<{ number: string; number_type: string }>) => void;
         /**
           * Make a request to update the order.
          */
-        "onScInput"?: (event: CustomEvent<Partial<{ number: string; number_type: string }>>) => void;
+        "onScInput"?: (event: ScTaxIdInputCustomEvent<Partial<{ number: string; number_type: string }>>) => void;
         /**
           * Change the Type
          */
-        "onScInputType"?: (event: CustomEvent<string>) => void;
+        "onScInputType"?: (event: ScTaxIdInputCustomEvent<string>) => void;
         /**
           * Set the checkout state.
          */
-        "onScSetState"?: (event: CustomEvent<string>) => void;
+        "onScSetState"?: (event: ScTaxIdInputCustomEvent<string>) => void;
         /**
           * Force show the field.
          */
@@ -6693,10 +6917,10 @@ declare namespace LocalJSX {
           * The textarea's name attribute.
          */
         "name"?: string;
-        "onScBlur"?: (event: CustomEvent<void>) => void;
-        "onScChange"?: (event: CustomEvent<void>) => void;
-        "onScFocus"?: (event: CustomEvent<void>) => void;
-        "onScInput"?: (event: CustomEvent<void>) => void;
+        "onScBlur"?: (event: ScTextareaCustomEvent<void>) => void;
+        "onScChange"?: (event: ScTextareaCustomEvent<void>) => void;
+        "onScFocus"?: (event: ScTextareaCustomEvent<void>) => void;
+        "onScInput"?: (event: ScTextareaCustomEvent<void>) => void;
         /**
           * The textarea's placeholder text.
          */
@@ -6750,11 +6974,11 @@ declare namespace LocalJSX {
         /**
           * Show the toggle
          */
-        "onScHide"?: (event: CustomEvent<void>) => void;
+        "onScHide"?: (event: ScToggleCustomEvent<void>) => void;
         /**
           * Show the toggle
          */
-        "onScShow"?: (event: CustomEvent<void>) => void;
+        "onScShow"?: (event: ScToggleCustomEvent<void>) => void;
         /**
           * Indicates whether or not the details is open. You can use this in lieu of the show/hide methods.
          */
