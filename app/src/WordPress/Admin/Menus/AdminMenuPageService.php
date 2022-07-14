@@ -27,6 +27,36 @@ class AdminMenuPageService {
 	 */
 	public function bootstrap() {
 		add_action( 'admin_menu', [ $this, 'registerAdminPages' ] );
+		add_action('admin_head', [$this, 'adminMenuCSS']);
+	}
+
+	public function adminMenuCSS() {
+		echo '<style>
+			#toplevel_page_sc-getting-started li:not(:last-child) a[href^="admin.php?page=sc-customers"]:after {
+				border-bottom: 1px solid hsla(0,0%,100%,.2);
+				display: block;
+				float: left;
+				margin: 13px -15px 8px;
+				content: "";
+				width: calc(100% + 26px);
+			}
+			#toplevel_page_sc-getting-started li:not(:last-child) a[href^="admin.php?page=sc-getting-started"]:after {
+				border-bottom: 1px solid hsla(0,0%,100%,.2);
+				display: block;
+				float: left;
+				margin: 13px -15px 8px;
+				content: "";
+				width: calc(100% + 26px);
+			}
+			#toplevel_page_sc-getting-started li:not(:last-child) a[href^="edit.php?post_type=sc_form"]:after {
+				border-bottom: 1px solid hsla(0,0%,100%,.2);
+				display: block;
+				float: left;
+				margin: 13px -15px 8px;
+				content: "";
+				width: calc(100% + 26px);
+			}
+		</style>';
 	}
 
 	/**
@@ -57,8 +87,8 @@ class AdminMenuPageService {
 			'coupons'         => \add_submenu_page( $this->slug, __( 'Coupons', 'surecart' ), __( 'Coupons', 'surecart' ), 'edit_sc_coupons', 'sc-coupons', '__return_false' ),
 			'orders'          => \add_submenu_page( $this->slug, __( 'Orders', 'surecart' ), __( 'Orders', 'surecart' ), 'edit_sc_orders', 'sc-orders', '__return_false' ),
 			'invoices'        => \add_submenu_page( $this->slug, __( 'Invoices', 'surecart' ), __( 'Invoices', 'surecart' ), 'edit_sc_invoices', 'sc-invoices', '__return_false' ),
-			'customers'       => \add_submenu_page( $this->slug, __( 'Customers', 'surecart' ), __( 'Customers', 'surecart' ), 'edit_sc_customers', 'sc-customers', '__return_false' ),
 			'subscriptions'   => \add_submenu_page( $this->slug, __( 'Subscriptions', 'surecart' ), __( 'Subscriptions', 'surecart' ), 'edit_sc_subscriptions', 'sc-subscriptions', '__return_false' ),
+			'customers'       => \add_submenu_page( $this->slug, __( 'Customers', 'surecart' ), __( 'Customers', 'surecart' ), 'edit_sc_customers', 'sc-customers', '__return_false' ),
 			'cart'            => get_edit_post_link( $cart_page_id ) ? \add_submenu_page( $this->slug, __( 'Cart', 'surecart' ), __( 'Cart', 'surecart' ), 'manage_options', 'post.php?post=' . (int) $cart_page_id . '&action=edit', '' ) : null,
 			// 'upgrade-paths'   => \add_submenu_page( $this->slug, __( 'Upgrade Groups', 'surecart' ), __( 'Upgrade Groups', 'surecart' ), 'edit_sc_products', 'sc-product-groups', '__return_false' ),
 			// 'abandoned'       => \add_submenu_page( $this->slug, __( 'Abandoned Orders', 'surecart' ), __( 'Abandoned Orders', 'surecart' ), 'edit_sc_orders', 'sc-abandoned-orders', '__return_false' ),
