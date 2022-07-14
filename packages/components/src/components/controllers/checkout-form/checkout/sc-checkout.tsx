@@ -149,9 +149,6 @@ export class ScCheckout {
 
   componentWillLoad() {
     Universe.create(this as Creator, this.state());
-  }
-
-  componentDidLoad() {
     this.isDuplicate = document.querySelector('sc-checkout') !== this.el;
   }
 
