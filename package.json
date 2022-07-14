@@ -12,7 +12,7 @@
 		"dist/",
 		"languages/",
 		"packages/icons/",
-		"packages/blocks/",
+		"packages/blocks/**/*.php",
 		"templates/",
 		"images/",
 		"core/",
