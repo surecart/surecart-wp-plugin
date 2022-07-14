@@ -25,8 +25,10 @@ jobs:
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     strategy:
       matrix:
-        php-versions: [ '7.4', '8.0', '8.1' ]
-        wp-versions: [ '5.9', 'trunk' ]
+        php-versions: [ '8.0' ]
+        wp-versions: [ 'trunk' ]
+        # php-versions: [ '7.4', '8.0', '8.1' ]
+        # wp-versions: [ '5.9', 'trunk' ]
     name: PHP ${{ matrix.php-versions }} / WP ${{ matrix.wp-versions }} Test on ${{ matrix.operating-system }}
     steps:
       - uses: actions/checkout@v2
@@ -55,7 +57,7 @@ jobs:
       - name: Install WordPress
         run: |
           chmod -R 767 ./ # TODO: Possibly integrate in wp-env
-          cd plugins/surecart && npm run wp-env start
+          cd plugins/surecart && yarn wp-env start
 
       - name: Running single site unit tests
         run: cd plugins/surecart && yarn test:php
