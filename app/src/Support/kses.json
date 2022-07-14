@@ -775,15 +775,6 @@
     "class": true,
     "slot": true
   },
-  "sc-model-cache-provider": {
-    "cache-key": true,
-    "model": true,
-    "sync-tabs": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "sc-order-confirm-provider": {
     "form-id": true,
     "mode": true,
