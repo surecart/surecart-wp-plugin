@@ -19,7 +19,7 @@
 		"sultann/wp-query-builder": "^1.0"
 	},
 	"require-dev": {
-		"php": "^7.4",
+		"php": "^7.4 | ^8.0 | ^8.1",
 		"filp/whoops": "^2.2",
 		"htmlburger/wpemerge-cli": "~0.16.0",
 		"wp-phpunit/wp-phpunit": "5.8.3",
