@@ -62,8 +62,7 @@ jobs:
           restore-keys: |
            ${{ runner.os }}-composer-
 
-      - if: ${{ steps.composer-cache.outputs.cache-hit == 'false' }}
-        name: Composer Install
+      - name: Composer Install
         run: cd plugins/surecart && composer install
 
       - name: Yarn Install
