@@ -7,12 +7,6 @@ describe('sc-cart-icon', () => {
       components: [ScCartIcon],
       html: `<sc-cart-icon></sc-cart-icon>`,
     });
-    expect(page.root).toEqualHtml(`
-      <sc-cart-icon>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </sc-cart-icon>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

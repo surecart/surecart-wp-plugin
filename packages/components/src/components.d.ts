@@ -1417,14 +1417,6 @@ export namespace Components {
     }
     interface ScMenuLabel {
     }
-    interface ScModelCacheProvider {
-        "cacheKey": string;
-        /**
-          * Order Object
-         */
-        "model": object;
-        "syncTabs": boolean;
-    }
     interface ScOrderConfirmProvider {
         /**
           * The form id
@@ -3201,12 +3193,6 @@ declare global {
         prototype: HTMLScMenuLabelElement;
         new (): HTMLScMenuLabelElement;
     };
-    interface HTMLScModelCacheProviderElement extends Components.ScModelCacheProvider, HTMLStencilElement {
-    }
-    var HTMLScModelCacheProviderElement: {
-        prototype: HTMLScModelCacheProviderElement;
-        new (): HTMLScModelCacheProviderElement;
-    };
     interface HTMLScOrderConfirmProviderElement extends Components.ScOrderConfirmProvider, HTMLStencilElement {
     }
     var HTMLScOrderConfirmProviderElement: {
@@ -3698,7 +3684,6 @@ declare global {
         "sc-menu-divider": HTMLScMenuDividerElement;
         "sc-menu-item": HTMLScMenuItemElement;
         "sc-menu-label": HTMLScMenuLabelElement;
-        "sc-model-cache-provider": HTMLScModelCacheProviderElement;
         "sc-order-confirm-provider": HTMLScOrderConfirmProviderElement;
         "sc-order-confirmation": HTMLScOrderConfirmationElement;
         "sc-order-confirmation-customer": HTMLScOrderConfirmationCustomerElement;
@@ -5341,18 +5326,6 @@ declare namespace LocalJSX {
     }
     interface ScMenuLabel {
     }
-    interface ScModelCacheProvider {
-        "cacheKey"?: string;
-        /**
-          * Order Object
-         */
-        "model"?: object;
-        /**
-          * Update line items event
-         */
-        "onScUpdateModel"?: (event: CustomEvent<object>) => void;
-        "syncTabs"?: boolean;
-    }
     interface ScOrderConfirmProvider {
         /**
           * The form id
@@ -6946,7 +6919,6 @@ declare namespace LocalJSX {
         "sc-menu-divider": ScMenuDivider;
         "sc-menu-item": ScMenuItem;
         "sc-menu-label": ScMenuLabel;
-        "sc-model-cache-provider": ScModelCacheProvider;
         "sc-order-confirm-provider": ScOrderConfirmProvider;
         "sc-order-confirmation": ScOrderConfirmation;
         "sc-order-confirmation-customer": ScOrderConfirmationCustomer;
@@ -7093,7 +7065,6 @@ declare module "@stencil/core" {
             "sc-menu-divider": LocalJSX.ScMenuDivider & JSXBase.HTMLAttributes<HTMLScMenuDividerElement>;
             "sc-menu-item": LocalJSX.ScMenuItem & JSXBase.HTMLAttributes<HTMLScMenuItemElement>;
             "sc-menu-label": LocalJSX.ScMenuLabel & JSXBase.HTMLAttributes<HTMLScMenuLabelElement>;
-            "sc-model-cache-provider": LocalJSX.ScModelCacheProvider & JSXBase.HTMLAttributes<HTMLScModelCacheProviderElement>;
             "sc-order-confirm-provider": LocalJSX.ScOrderConfirmProvider & JSXBase.HTMLAttributes<HTMLScOrderConfirmProviderElement>;
             "sc-order-confirmation": LocalJSX.ScOrderConfirmation & JSXBase.HTMLAttributes<HTMLScOrderConfirmationElement>;
             "sc-order-confirmation-customer": LocalJSX.ScOrderConfirmationCustomer & JSXBase.HTMLAttributes<HTMLScOrderConfirmationCustomerElement>;

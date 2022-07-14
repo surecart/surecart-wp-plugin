@@ -7,12 +7,6 @@ describe('sc-drawer', () => {
       components: [ScDrawer],
       html: `<sc-drawer></sc-drawer>`,
     });
-    expect(page.root).toEqualHtml(`
-      <sc-drawer>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </sc-drawer>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });
