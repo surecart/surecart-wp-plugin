@@ -27,11 +27,14 @@ class AdminMenuPageService {
 	 */
 	public function bootstrap() {
 		add_action( 'admin_menu', [ $this, 'registerAdminPages' ] );
-		add_action('admin_head', [$this, 'adminMenuCSS']);
+		add_action( 'admin_head', [ $this, 'adminMenuCSS' ] );
 	}
 
 	public function adminMenuCSS() {
 		echo '<style>
+			#toplevel_page_sc-getting-started li {
+				clear: both;
+			}
 			#toplevel_page_sc-getting-started li:not(:last-child) a[href^="admin.php?page=sc-customers"]:after {
 				border-bottom: 1px solid hsla(0,0%,100%,.2);
 				display: block;
