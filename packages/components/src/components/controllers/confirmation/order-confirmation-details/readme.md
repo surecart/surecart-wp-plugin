@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type    | Default     |
-| -------- | --------- | ----------- | ------- | ----------- |
-| `order`  | --        |             | `Order` | `undefined` |
+| Property  | Attribute | Description | Type      | Default     |
+| --------- | --------- | ----------- | --------- | ----------- |
+| `loading` | `loading` |             | `boolean` | `undefined` |
+| `order`   | --        |             | `Order`   | `undefined` |
 
 
 ## Dependencies
@@ -19,9 +20,11 @@
 - [sc-tag](../../../ui/tag)
 - [sc-order-status-badge](../../../ui/order-status-badge)
 - [sc-dashboard-module](../../../ui/dashboard-module)
+- [sc-skeleton](../../../ui/skeleton)
 - [sc-card](../../../ui/card)
-- [sc-order-confirmation-line-items](../order-confirmation-line-items)
+- [sc-line-item](../../../ui/line-item)
 - [sc-divider](../../../ui/divider)
+- [sc-order-confirmation-line-items](../order-confirmation-line-items)
 - [sc-order-confirmation-totals](../order-confirmation-totals)
 
 ### Graph
@@ -30,9 +33,11 @@ graph TD;
   sc-order-confirmation-details --> sc-tag
   sc-order-confirmation-details --> sc-order-status-badge
   sc-order-confirmation-details --> sc-dashboard-module
+  sc-order-confirmation-details --> sc-skeleton
   sc-order-confirmation-details --> sc-card
-  sc-order-confirmation-details --> sc-order-confirmation-line-items
+  sc-order-confirmation-details --> sc-line-item
   sc-order-confirmation-details --> sc-divider
+  sc-order-confirmation-details --> sc-order-confirmation-line-items
   sc-order-confirmation-details --> sc-order-confirmation-totals
   sc-order-status-badge --> sc-tag
   sc-dashboard-module --> sc-alert

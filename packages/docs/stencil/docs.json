@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-07-13T20:59:07",
+  "timestamp": "2022-07-13T21:10:25",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.15.1",
@@ -10587,6 +10587,7 @@
         "sc-line-item-tax",
         "sc-line-item-total",
         "sc-line-items",
+        "sc-order-confirmation-details",
         "sc-order-confirmation-line-items",
         "sc-order-confirmation-totals",
         "sc-order-summary",
@@ -10604,6 +10605,9 @@
           "sc-line-item"
         ],
         "sc-line-items": [
+          "sc-line-item"
+        ],
+        "sc-order-confirmation-details": [
           "sc-line-item"
         ],
         "sc-order-confirmation-line-items": [
@@ -11740,10 +11744,27 @@
       "filePath": "./src/components/controllers/confirmation/order-confirmation-details/sc-order-confirmation-details.tsx",
       "encapsulation": "shadow",
       "tag": "sc-order-confirmation-details",
+      "readme": "# sc-order-confirmation-details\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "loading",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "loading",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
         {
           "name": "order",
           "type": "Order",
@@ -11771,9 +11792,11 @@
         "sc-tag",
         "sc-order-status-badge",
         "sc-dashboard-module",
+        "sc-skeleton",
         "sc-card",
-        "sc-order-confirmation-line-items",
+        "sc-line-item",
         "sc-divider",
+        "sc-order-confirmation-line-items",
         "sc-order-confirmation-totals"
       ],
       "dependencyGraph": {
@@ -11781,9 +11804,11 @@
           "sc-tag",
           "sc-order-status-badge",
           "sc-dashboard-module",
+          "sc-skeleton",
           "sc-card",
-          "sc-order-confirmation-line-items",
+          "sc-line-item",
           "sc-divider",
+          "sc-order-confirmation-line-items",
           "sc-order-confirmation-totals"
         ],
         "sc-order-status-badge": [
@@ -17379,6 +17404,7 @@
         "sc-invoices-list",
         "sc-line-item-total",
         "sc-line-items",
+        "sc-order-confirmation-details",
         "sc-order-confirmation-line-items",
         "sc-order-detail",
         "sc-order-summary",
@@ -17424,6 +17450,9 @@
           "sc-skeleton"
         ],
         "sc-line-items": [
+          "sc-skeleton"
+        ],
+        "sc-order-confirmation-details": [
           "sc-skeleton"
         ],
         "sc-order-confirmation-line-items": [
