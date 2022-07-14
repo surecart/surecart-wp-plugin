@@ -1,0 +1,62 @@
+name: PHP Unit test
+
+on:
+  push:
+    branches:
+    - master
+    - paypal-cart
+  pull_request:
+    branches:
+    - master
+
+jobs:
+
+  test:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: wordpress_test
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    strategy:
+      matrix:
+        php-versions: [ '7.4', '8.0', '8.1' ]
+        wp-versions: [ '5.9', 'trunk' ]
+    name: PHP ${{ matrix.php-versions }} / WP ${{ matrix.wp-versions }} Test on ${{ matrix.operating-system }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          path: 'plugins/surecart'
+
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: mbstring, intl #optional, setup extensions
+          ini-values: post_max_size=256M, short_open_tag=On #optional, setup php.ini configuration
+          coverage: xdebug #optional, setup coverage driver
+
+      - name: Check PHP Version
+        run: php -v
+
+      - name: Bootstrap Core
+        run: cd plugins/surecart && yarn && composer install && yarn build
+
+      - name: Install WordPress
+        run: |
+          chmod -R 767 ./ # TODO: Possibly integrate in wp-env
+          cd plugins/surecart && npm run wp-env start
+
+      - name: Running single site unit tests
+        run: cd plugins/surecart && yarn test:php
+        if: ${{ success() || failure() }}

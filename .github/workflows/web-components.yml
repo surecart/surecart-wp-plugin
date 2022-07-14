@@ -1,0 +1,23 @@
+
+name: Web Components Tests
+
+on:
+  push:
+    branches:
+    - master
+    - paypal-cart
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Install Dependencies
+        run: yarn
+      - name: Tests
+        run: cd packages/components && yarn run test --spec --e2e
