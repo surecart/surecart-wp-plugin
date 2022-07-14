@@ -28,8 +28,39 @@ class AdminMenuPageService {
 	public function bootstrap() {
 		add_action( 'admin_menu', [ $this, 'registerAdminPages' ] );
 		add_action( 'admin_head', [ $this, 'adminMenuCSS' ] );
+		add_filter( 'parent_file', [ $this, 'forceSelect' ] );
 	}
 
+	/**
+	 * Make sure these menu items get selected.
+	 *
+	 * @param string $file The file string.
+	 *
+	 * @return string
+	 */
+	public function forceSelect( $file ) {
+		global $submenu_file;
+		$cart_page_id = \SureCart::pages()->getId( 'cart', 'sc_cart' );
+
+		if ( 'edit.php?post_type=sc_cart' === $submenu_file ) {
+			$file = 'sc-getting-started';
+			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+			$submenu_file = 'post.php?post=' . (int) $cart_page_id . '&action=edit';
+		}
+		if ( 'edit.php?post_type=sc_form' === $submenu_file ) {
+			$file = 'sc-getting-started';
+			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+			$submenu_file = 'edit.php?post_type=sc_form';
+		}
+
+		return $file;
+	}
+
+	/**
+	 * Add some divider css.
+	 *
+	 * @return string
+	 */
 	public function adminMenuCSS() {
 		echo '<style>
 			#toplevel_page_sc-getting-started li {
