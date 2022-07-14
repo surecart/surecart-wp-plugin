@@ -21,9 +21,6 @@ class MigrationsServiceProvider implements ServiceProviderInterface {
 		$container['surecart.migrations.usermeta'] = function() {
 			return new UserMetaMigrationsService();
 		};
-		$container['surecart.migrations.cart']     = function() {
-			return new CartMigrationsService();
-		};
 	}
 
 	/**
@@ -34,6 +31,5 @@ class MigrationsServiceProvider implements ServiceProviderInterface {
 	public function bootstrap( $container ) {
 		$container['surecart.tables.integrations']->install();
 		$container['surecart.migrations.usermeta']->bootstrap();
-		$container['surecart.migrations.cart']->bootstrap();
 	}
 }
