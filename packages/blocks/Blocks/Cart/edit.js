@@ -1,13 +1,14 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { RichText } from '@wordpress/block-editor';
 import {
 	useInnerBlocksProps as __stableUseInnerBlocksProps,
 	useBlockProps,
 	InnerBlocks,
 	__experimentalUseInnerBlocksProps,
 } from '@wordpress/block-editor';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { useEffect } from 'react';
 
 const allowedBlocks = [
 	'surecart/cart-coupon',
@@ -25,6 +26,16 @@ export default () => {
 			fontFamily: 'var(--sc-font-sans)',
 		},
 	});
+
+	const { toggleFeature } = useDispatch('core/edit-post');
+	const isFullScreenActive = useSelect((select) =>
+		select('core/edit-post').isFeatureActive('fullscreenMode')
+	);
+	useEffect(() => {
+		if (isFullScreenActive) {
+			toggleFeature('fullscreenMode');
+		}
+	}, [isFullScreenActive]);
 
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
 		? __stableUseInnerBlocksProps
