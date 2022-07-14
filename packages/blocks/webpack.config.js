@@ -24,6 +24,7 @@ module.exports = {
 	},
 	entry: {
 		library: path.resolve(__dirname, 'index.js'),
+		cart: path.resolve(__dirname, 'cart.js'),
 		cloak: path.resolve(__dirname, 'styles/cloak.js'),
 	},
 	output: {

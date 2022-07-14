@@ -1,20 +1,10 @@
 /**
  * WordPress dependencies
  */
-import { registerBlockType } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
 
 import './controls';
 import './formats';
-
-// cart
-import * as cart from '@blocks/Cart';
-import * as cartItems from '@blocks/CartItems';
-import * as cartCoupon from '@blocks/CartCoupon';
-import * as cartSubtotal from '@blocks/CartSubtotal';
-import * as cartMessage from '@blocks/CartMessage';
-import * as cartHeader from '@blocks/CartHeader';
-import * as cartSubmit from '@blocks/CartSubmit';
 
 // blocks
 import * as button from '@blocks/Button';
@@ -71,6 +61,7 @@ import * as subtotal from '@blocks/Subtotal';
 import * as switchBlock from '@blocks/Switch';
 import * as total from '@blocks/Total';
 import * as totals from '@blocks/Totals';
+import { registerBlocks } from './register-block';
 
 const dashboardComponents = [
 	customerDashboard,
@@ -113,84 +104,43 @@ export const ALLOWED_BLOCKS = [
 	'surecart/submit',
 ];
 
-/**
- * Function to register an individual block.
- *
- * @param {Object} block The block to be registered.
- *
- */
-const registerBlock = (block) => {
-	if (!block) {
-		return;
-	}
-
-	const { metadata, settings } = block;
-
-	registerBlockType(
-		{
-			...metadata,
-			text_domain: 'surecart', // set our textdomain for everything.
-		},
-		{
-			...settings,
-			title: metadata.title || settings.title,
-		}
-	);
-};
-
-/**
- * Function to register blocks provided by SureCart.
- */
-export const registerSureCartBlocks = () => {
-	[
-		address,
-		checkout,
-		totals,
-		submit,
-		card,
-		cart,
-		cartCoupon,
-		cartItems,
-		cartSubmit,
-		cartMessage,
-		cartHeader,
-		cartSubtotal,
-		columns,
-		column,
-		confirmation,
-		donation,
-		donationAmount,
-		confirmationLineItems,
-		nameYourPrice,
-		// confirmationCustomer,
-		heading,
-		// sessionDetail,
-		payment,
-		expressPayment,
-		priceSelector,
-		priceChoice,
-		coupon,
-		lineItems,
-		taxLineItem,
-		button,
-		buyButton,
-		addToCartButton,
-		customerDashboard,
-		customerDashboardButton,
-		logoutButton,
-		form,
-		input,
-		password,
-		divider,
-		switchBlock,
-		checkbox,
-		total,
-		subtotal,
-		name,
-		email,
-		taxIdInput,
-		...dashboardComponents,
-	].forEach(registerBlock);
-};
-
-registerSureCartBlocks();
+registerBlocks([
+	address,
+	checkout,
+	totals,
+	submit,
+	card,
+	columns,
+	column,
+	confirmation,
+	donation,
+	donationAmount,
+	confirmationLineItems,
+	nameYourPrice,
+	heading,
+	payment,
+	expressPayment,
+	priceSelector,
+	priceChoice,
+	coupon,
+	lineItems,
+	taxLineItem,
+	button,
+	buyButton,
+	addToCartButton,
+	customerDashboard,
+	customerDashboardButton,
+	logoutButton,
+	form,
+	input,
+	password,
+	divider,
+	switchBlock,
+	checkbox,
+	total,
+	subtotal,
+	name,
+	email,
+	taxIdInput,
+	...dashboardComponents,
+]);
