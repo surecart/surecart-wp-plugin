@@ -61,7 +61,7 @@ jobs:
       #      ${{ runner.os }}-composer-
 
       - name: Composer Install
-        run: cd plugins/surecart && yarn && composer install
+        run: composer install
 
       # - name: Get yarn cache directory path
       #   id: yarn-cache-dir-path
