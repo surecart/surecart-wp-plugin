@@ -54,11 +54,11 @@ jobs:
       - name: Get Composer Cache Directory
         id: composer-cache
         run: |
-          echo "::set-output name=dir::$(composer config cache-files-dir)"
+          echo "::set-output name=dir::$(composer config cache-files-dir -d plugins/surecart)"
       - uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('plugins/surecart/**/composer.lock') }}
           restore-keys: |
            ${{ runner.os }}-composer-
 
@@ -67,12 +67,12 @@ jobs:
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+        run: echo "::set-output name=dir::$(yarn --cwd plugins/surecart config get cacheFolder)"
       - uses: actions/cache@v3
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('plugins/surecart/**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
 
