@@ -55,9 +55,7 @@ jobs:
         id: composer-cache
         run: |
           echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-      - name: Cache Composer
-        uses: actions/cache@v3
+      - uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -65,7 +63,7 @@ jobs:
            ${{ runner.os }}-composer-
 
       - if: ${{ steps.composer-cache.outputs.cache-hit == 'false' }}
-      - name: Composer Install
+        name: Composer Install
         run: cd plugins/surecart && composer install
 
       - name: Yarn Install
