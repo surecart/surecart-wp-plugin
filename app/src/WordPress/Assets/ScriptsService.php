@@ -115,6 +115,33 @@ class ScriptsService {
 			true
 		);
 
+		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/checkout.asset.php';
+		$deps       = $asset_file['dependencies'];
+		// fix bug in deps array.
+		$deps[ array_search( 'wp-blockEditor', $deps ) ] = 'wp-block-editor';
+		wp_register_script(
+			'surecart-checkout-blocks',
+			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/blocks/checkout.js',
+			array_merge( [ 'surecart-components' ], $deps ),
+			$asset_file['version'],
+			true
+		);
+
+		wp_localize_script( 'surecart-cart-blocks', 'scIcons', [ 'path' => esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) ] );
+		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/cart.asset.php';
+		$deps       = $asset_file['dependencies'];
+		// fix bug in deps array.
+		$deps[ array_search( 'wp-blockEditor', $deps ) ] = 'wp-block-editor';
+		wp_register_script(
+			'surecart-cart-blocks',
+			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/blocks/cart.js',
+			array_merge( [ 'surecart-components' ], $deps ),
+			$asset_file['version'],
+			true
+		);
+
+		wp_localize_script( 'surecart-cart-blocks', 'scIcons', [ 'path' => esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) ] );
+
 		// cart.
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/cart.asset.php';
 		$deps       = $asset_file['dependencies'];
@@ -169,6 +196,7 @@ class ScriptsService {
 		$this->enqueueFront();
 		$this->enqueueBlocks();
 		$this->enqueueCartBlocks();
+		$this->enqueueCheckoutBlocks();
 	}
 
 	/**
@@ -188,6 +216,31 @@ class ScriptsService {
 			'scBlockData',
 			[
 				'currency' => \SureCart::account()->currency,
+			]
+		);
+	}
+
+	/**
+	 * Enqueue Checkout blocks.
+	 *
+	 * @return void
+	 */
+	public function enqueueCheckoutBlocks() {
+		wp_enqueue_script( 'surecart-checkout-blocks' );
+		wp_localize_script(
+			'surecart-checkout-blocks',
+			'scBlockData',
+			[
+				'processors' => (array) \SureCart::account()->processors ?? [],
+				'plugin_url' => \SureCart::core()->assets()->getUrl(),
+				'currency'   => \SureCart::account()->currency,
+				'beta'       => [
+					'stripe_payment_element' => (bool) get_option( 'sc_stripe_payment_element', false ),
+				],
+				'pages'      => [
+					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
+					'checkout'  => \SureCart::pages()->url( 'checkout' ),
+				],
 			]
 		);
 	}
