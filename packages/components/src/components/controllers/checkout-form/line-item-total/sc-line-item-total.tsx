@@ -39,7 +39,7 @@ export class ScLineItemTotal {
         <div class="line-item-total__group">
           <sc-line-item>
             <span slot="description">
-              <slot name="description" />
+              <slot name="title" />
             </span>
             <span slot="price">
               <sc-total order={this.order} total={this.total}></sc-total>
