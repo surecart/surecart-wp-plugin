@@ -115,6 +115,50 @@ class Subscription extends Model {
 	}
 
 	/**
+	 * Complete a subscription
+	 *
+	 * @param string $id Model id.
+	 * @return $this|\WP_Error
+	 */
+	protected function complete( $id = null ) {
+		if ( $id ) {
+			$this->setAttribute( 'id', $id );
+		}
+
+		if ( $this->fireModelEvent( 'completeing' ) === false ) {
+			return false;
+		}
+
+		if ( empty( $this->attributes['id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please create the subscription.' );
+		}
+
+		$completed = $this->with(
+			[
+				'purchase',
+			]
+		)->makeRequest(
+			[
+				'method' => 'PATCH',
+				'query'  => $this->query,
+			],
+			$this->endpoint . '/' . $this->attributes['id'] . '/complete/'
+		);
+
+		if ( is_wp_error( $completed ) ) {
+			return $completed;
+		}
+
+		$this->resetAttributes();
+
+		$this->fill( $completed );
+
+		$this->fireModelEvent( 'completed' );
+
+		return $this;
+	}
+
+	/**
 	 * Renew a subscription.
 	 *
 	 * @param string $id Model id.

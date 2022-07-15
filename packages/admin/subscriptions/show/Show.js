@@ -124,6 +124,48 @@ export default () => {
 		);
 	};
 
+	const renderCompleteButton = () => {
+		if (!subscription?.remaining_period_count) return null;
+		if (subscription?.status !== 'active') return null;
+
+		return (
+			<ScMenuItem
+				onClick={async () => {
+					const r = confirm(
+						__(
+							'Are you sure you want to complete this payment plan? You cannot undo this.',
+							'surecart'
+						)
+					);
+					if (!r) return;
+					try {
+						setSaving(true);
+						await saveSubscription({
+							path: `subscriptions/${id}/complete`,
+							query: {
+								expand: [
+									'price',
+									'price.product',
+									'latest_invoice',
+									'purchase',
+								],
+							},
+						});
+						addSnackbarNotice({
+							content: __('Completed.'),
+						});
+					} catch (e) {
+						console.error(e);
+					} finally {
+						setSaving(false);
+					}
+				}}
+			>
+				{__('Complete Subscription', 'surecart')}
+			</ScMenuItem>
+		);
+	};
+
 	return (
 		<Template
 			pageModelName={'subscriptions'}
@@ -155,7 +197,10 @@ export default () => {
 						}}
 					></sc-skeleton>
 				) : (
-					<ScDropdown position="bottom-right">
+					<ScDropdown
+						position="bottom-right"
+						style={{ '--panel-width': '14em' }}
+					>
 						<ScButton
 							type="primary"
 							slot="trigger"
@@ -192,6 +237,7 @@ export default () => {
 									</ScMenuItem>
 								)
 							)}
+							{renderCompleteButton()}
 							{renderCancelButton()}
 						</ScMenu>
 					</ScDropdown>
