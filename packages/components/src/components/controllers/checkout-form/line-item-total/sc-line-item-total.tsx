@@ -40,15 +40,15 @@ export class ScLineItemTotal {
           <sc-line-item>
             <span slot="description">
               <slot name="title" />
+              <slot name="description" />
             </span>
             <span slot="price">
               <sc-total order={this.order} total={this.total}></sc-total>
             </span>
           </sc-line-item>
           <sc-line-item style={{ '--price-size': 'var(--sc-font-size-x-large)' }}>
-            <span slot="title">{__('Total Due Today', 'surecart')}</span>
-            <span slot="description">
-              <slot name="description" />
+            <span slot="title">
+              <slot name="subscription-title">{__('Total Due Today', 'surecart')}</slot>
             </span>
             <span slot="price">
               <sc-format-number type="currency" currency={this.order?.currency} value={this.order?.amount_due}></sc-format-number>
