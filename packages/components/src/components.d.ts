@@ -13,6 +13,10 @@ export namespace Components {
          */
         "address": Partial<Address>;
         /**
+          * Is this disabled?
+         */
+        "disabled": boolean;
+        /**
           * The label for the field.
          */
         "label": string;
@@ -3986,6 +3990,10 @@ declare namespace LocalJSX {
           * The address.
          */
         "address"?: Partial<Address>;
+        /**
+          * Is this disabled?
+         */
+        "disabled"?: boolean;
         /**
           * The label for the field.
          */

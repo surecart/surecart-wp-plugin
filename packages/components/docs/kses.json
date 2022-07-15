@@ -1,6 +1,7 @@
 {
   "sc-address": {
     "address": true,
+    "disabled": true,
     "label": true,
     "loading": true,
     "names": true,

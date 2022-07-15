@@ -45,6 +45,9 @@ export class ScAddress {
   /** Is this loading?  */
   @Prop() loading: boolean = false;
 
+  /** Is this disabled? */
+  @Prop() disabled: boolean;
+
   /** The label for the field. */
   @Prop() label: string;
 
@@ -140,6 +143,7 @@ export class ScAddress {
               placeholder={this.placeholders.name}
               name={this.names.name}
               squared-bottom
+              disabled={this.disabled}
               required={this.required}
             />
           )}
@@ -158,6 +162,7 @@ export class ScAddress {
             unselect={false}
             squared-bottom
             squared={this.showName}
+            disabled={this.disabled}
             required={this.required}
           />
 
@@ -169,6 +174,7 @@ export class ScAddress {
             placeholder={this.placeholders.line_1}
             name={this.names.line_1}
             squared
+            disabled={this.disabled}
             required={this.required}
           />
 
@@ -181,6 +187,7 @@ export class ScAddress {
               placeholder={this.placeholders.line_2}
               name={this.names.line_2}
               squared
+              disabled={this.disabled}
               required={this.required}
             />
           )}
@@ -197,6 +204,7 @@ export class ScAddress {
                 squared={!!this?.regions?.length}
                 style={{ marginRight: this.showPostal ? '-1px' : '0' }}
                 squared-top
+                disabled={this.disabled}
                 squared-right={this.showPostal}
               />
             )}
@@ -212,6 +220,7 @@ export class ScAddress {
                 value={this?.address?.postal_code}
                 squared={!!this?.regions?.length}
                 squared-top
+                disabled={this.disabled}
                 maxlength={this.address?.country === 'US' ? 5 : null}
                 squared-left={this.showCity}
               />
@@ -227,6 +236,7 @@ export class ScAddress {
               onScChange={(e: any) => this.updateAddress({ state: e.target.value || null })}
               choices={this.regions}
               required={this.required}
+              disabled={this.disabled}
               search
               squared-top
             />

@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-07-14T20:20:59+00:00\n"
+"POT-Creation-Date: 2022-07-15T18:55:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -17,7 +17,7 @@ msgstr ""
 
 #: src/BlockLibrary/BlockServiceProvider.php:95
 #: src/Integrations/AffiliateWP/AffiliateWPService.php:29
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:72
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:103
 #: src/WordPress/Admin/Notices/AdminNoticesService.php:104
 #: src/WordPress/ThemeServiceProvider.php:57
 #: admin/user-profile.php:1
@@ -26,7 +26,7 @@ msgid "SureCart"
 msgstr ""
 
 #: src/Cart/CartService.php:40
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:95
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:126
 msgid "Cart"
 msgstr ""
 
@@ -94,7 +94,7 @@ msgid "Not Recovered"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsController.php:23
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:90
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:121
 #: admin/coupons/index.php:6
 msgid "Coupons"
 msgstr ""
@@ -252,7 +252,7 @@ msgid "Move to Trash"
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersController.php:24
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:94
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:125
 #: admin/customers/index.php:7
 msgid "Customers"
 msgstr ""
@@ -334,7 +334,7 @@ msgid "Edit Order"
 msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesViewController.php:21
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:92
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:123
 #: admin/invoices/index.php:21
 msgid "Invoices"
 msgstr ""
@@ -382,7 +382,7 @@ msgid "By %s"
 msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersViewController.php:21
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:91
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:122
 #: admin/orders/index.php:7
 msgid "Orders"
 msgstr ""
@@ -403,7 +403,7 @@ msgid "View"
 msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsController.php:24
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:89
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:120
 #: admin/products/index.php:29
 msgid "Products"
 msgstr ""
@@ -451,7 +451,7 @@ msgid "Copied!"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsController.php:23
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:93
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:124
 #: admin/subscriptions/index.php:23
 #: layouts/partials/admin-settings-sidebar.php:17
 #: web/dashboard/orders/show.php:58
@@ -2669,27 +2669,27 @@ msgstr ""
 msgid "SureCart webhooks could not be created."
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:72
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:103
 msgid "Dashboard"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:77
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:87
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:108
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:118
 msgid "Getting Started"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:78
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:88
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:109
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:119
 msgid "Complete Signup"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:79
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:99
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:110
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:130
 #: layouts/partials/admin-settings-header.php:24
 msgid "Settings"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:98
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:129
 #: src/WordPress/PostTypes/CartPostTypeService.php:110
 #: src/WordPress/PostTypes/FormPostTypeService.php:81
 msgid "Forms"

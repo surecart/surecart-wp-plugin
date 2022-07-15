@@ -13,6 +13,7 @@
 		"languages/",
 		"packages/icons/",
 		"packages/blocks/**/*.php",
+		"packages/blocks/**/*.json",
 		"templates/",
 		"images/",
 		"core/",
