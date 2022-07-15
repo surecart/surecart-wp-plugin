@@ -297,6 +297,7 @@ export class ScSessionProvider {
 
     // we have line items, don't load any existing session (overwrite)
     if (initial_data?.line_items?.length) {
+      clearOrder(this.formId, this.mode);
       return this.fetch(initial_data);
     }
 
