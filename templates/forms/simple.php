@@ -45,6 +45,10 @@ return [
 		<sc-order-coupon-form label="Add Coupon Code">Apply Coupon</sc-order-coupon-form>
 		<!-- /wp:surecart/coupon -->
 
+		<!-- wp:surecart/tax-line-item -->
+		<sc-line-item-tax class="wp-block-surecart-tax-line-item"></sc-line-item-tax>
+		<!-- /wp:surecart/tax-line-item -->
+
 		<!-- wp:surecart/divider -->
 		<sc-divider></sc-divider>
 		<!-- /wp:surecart/divider -->

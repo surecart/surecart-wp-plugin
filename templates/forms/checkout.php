@@ -45,13 +45,13 @@ return [
 	<sc-line-item-total class="sc-subtotal" total="subtotal" class="wp-block-surecart-subtotal ce-subtotal"><span slot="description">Subtotal</span></sc-line-item-total>
 	<!-- /wp:surecart/subtotal -->
 
-	<!-- wp:surecart/tax-line-item -->
-	<sc-line-item-tax class="wp-block-surecart-tax-line-item"></sc-line-item-tax>
-	<!-- /wp:surecart/tax-line-item -->
-
 	<!-- wp:surecart/coupon -->
 	<sc-order-coupon-form label="Add Coupon Code">Apply Coupon</sc-order-coupon-form>
 	<!-- /wp:surecart/coupon -->
+
+	<!-- wp:surecart/tax-line-item -->
+	<sc-line-item-tax class="wp-block-surecart-tax-line-item"></sc-line-item-tax>
+	<!-- /wp:surecart/tax-line-item -->
 
 	<!-- wp:surecart/divider -->
 	<sc-divider></sc-divider>
