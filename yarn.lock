@@ -5065,8 +5065,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@surecart/blocks@workspace:packages/blocks"
   dependencies:
-    "@surecart/components": "workspace:^"
-    "@surecart/components-react": "workspace:^"
+    "@surecart/components": ^0.0.7
+    "@surecart/components-react": ^0.0.6
     "@surecart/docs": "workspace:^"
     "@wordpress/prettier-config": ^1.1.1
     "@wordpress/scripts": ^21.0.2
@@ -5075,7 +5075,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@surecart/components-react@workspace:^, @surecart/components-react@workspace:packages/components-react":
+"@surecart/components-react@^0.0.6, @surecart/components-react@workspace:^, @surecart/components-react@workspace:packages/components-react":
   version: 0.0.0-use.local
   resolution: "@surecart/components-react@workspace:packages/components-react"
   dependencies:

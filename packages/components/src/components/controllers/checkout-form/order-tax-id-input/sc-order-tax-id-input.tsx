@@ -15,6 +15,7 @@ export class ScOrderTaxIdInput {
   /** Force show the field. */
   @Prop() show: boolean = false;
 
+  /** Tax identifier */
   @Prop() taxIdentifier: TaxIdentifier;
 
   /** Is this busy */

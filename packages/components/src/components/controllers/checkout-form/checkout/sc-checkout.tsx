@@ -1,4 +1,4 @@
-import { Order, Customer, PriceChoice, Prices, Products, ResponseError, FormState, Processor, PaymentIntents, PaymentIntent } from '../../../../types';
+import { Order, Customer, PriceChoice, Prices, Products, ResponseError, FormState, Processor, PaymentIntents, PaymentIntent, TaxProtocol } from '../../../../types';
 import { Component, h, Prop, Element, State, Listen, Method, Event, EventEmitter } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Universe } from 'stencil-wormhole';
@@ -42,8 +42,8 @@ export class ScCheckout {
   /** Alignment */
   @Prop() alignment: 'center' | 'wide' | 'full';
 
-  /** Is tax enabled? */
-  @Prop() taxEnabled: boolean;
+  /** The account tax protocol */
+  @Prop() taxProtocol: TaxProtocol;
 
   /** Is this user logged in? */
   @Prop() loggedIn: boolean;
@@ -219,7 +219,7 @@ export class ScCheckout {
             {/* Handles errors in the form. */}
             <sc-form-error-provider order={this.order} onScUpdateError={e => (this.error = e.detail)}>
               {/* Validate components in the form based on order state. */}
-              <sc-form-components-validator order={this.order} disabled={this.disableComponentsValidation} taxEnabled={this.taxEnabled}>
+              <sc-form-components-validator order={this.order} disabled={this.disableComponentsValidation} taxProtocol={this.taxProtocol}>
                 {/* Handles the current session. */}
                 <sc-session-provider
                   ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)}

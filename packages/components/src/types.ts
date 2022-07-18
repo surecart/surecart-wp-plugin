@@ -252,7 +252,24 @@ export interface TaxIdentifier {
   number: string;
   number_type: string;
   object: 'tax_identifier';
-  valid_eu_vat: false;
+  eu_vat_verified: boolean;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface TaxProtocol {
+  id: string;
+  object: 'tax_protocol';
+  ca_tax_enabled: boolean;
+  eu_micro_exemption_enabled: boolean;
+  eu_tax_enabled: boolean;
+  eu_vat_required: boolean;
+  eu_vat_unverified_behavior: 'error' | 'apply_reverse_charge' | 'skip_reverse_charge';
+  eu_vat_local_reverse_charge: boolean;
+  tax_enabled: boolean;
+  address: string | Address;
+  ca_tax_identifier: string | TaxIdentifier;
+  eu_tax_identifier: string | TaxIdentifier;
   created_at: number;
   updated_at: number;
 }

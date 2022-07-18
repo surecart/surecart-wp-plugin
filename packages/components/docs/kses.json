@@ -146,7 +146,7 @@
     "remove-line-items": true,
     "stripe-payment-element": true,
     "success-url": true,
-    "tax-enabled": true,
+    "tax-protocol": true,
     "style": true,
     "id": true,
     "class": true,
@@ -433,7 +433,7 @@
   "sc-form-components-validator": {
     "disabled": true,
     "order": true,
-    "tax-enabled": true,
+    "tax-protocol": true,
     "style": true,
     "id": true,
     "class": true,

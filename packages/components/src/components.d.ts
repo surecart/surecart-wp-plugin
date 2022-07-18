@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, ChoiceItem, Customer, DiscountResponse, FormState, FormStateSetter, Invoice, LineItem, LineItemData, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxIdentifier, TaxStatus, WordPressUser } from "./types";
+import { Address, ChoiceItem, Customer, DiscountResponse, FormState, FormStateSetter, Invoice, LineItem, LineItemData, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export namespace Components {
     interface ScAddress {
         /**
@@ -319,9 +319,9 @@ export namespace Components {
          */
         "successUrl": string;
         /**
-          * Is tax enabled?
+          * The account tax protocol
          */
-        "taxEnabled": boolean;
+        "taxProtocol": TaxProtocol;
         /**
           * Validate the form.
          */
@@ -841,9 +841,9 @@ export namespace Components {
          */
         "order": Order;
         /**
-          * Is tax enabled.
+          * The tax protocol
          */
-        "taxEnabled": boolean;
+        "taxProtocol": TaxProtocol;
     }
     interface ScFormControl {
         /**
@@ -1533,6 +1533,9 @@ export namespace Components {
           * Force show the field.
          */
         "show": boolean;
+        /**
+          * Tax identifier
+         */
         "taxIdentifier": TaxIdentifier;
     }
     interface ScOrdersList {
@@ -3842,9 +3845,9 @@ declare namespace LocalJSX {
          */
         "successUrl"?: string;
         /**
-          * Is tax enabled?
+          * The account tax protocol
          */
-        "taxEnabled"?: boolean;
+        "taxProtocol"?: TaxProtocol;
     }
     interface ScChoice {
         /**
@@ -4450,9 +4453,9 @@ declare namespace LocalJSX {
          */
         "order"?: Order;
         /**
-          * Is tax enabled.
+          * The tax protocol
          */
-        "taxEnabled"?: boolean;
+        "taxProtocol"?: TaxProtocol;
     }
     interface ScFormControl {
         /**
@@ -5221,6 +5224,9 @@ declare namespace LocalJSX {
           * Force show the field.
          */
         "show"?: boolean;
+        /**
+          * Tax identifier
+         */
         "taxIdentifier"?: TaxIdentifier;
     }
     interface ScOrdersList {
