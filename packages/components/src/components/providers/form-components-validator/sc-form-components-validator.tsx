@@ -39,13 +39,13 @@ export class ScFormComponentsValidator {
     this.hasTaxIDField = !!this.el.querySelector('sc-order-tax-id-input');
 
     // automatically add address field if tax is enabled.
-    if (this.taxProtocol.tax_enabled) {
+    if (this.taxProtocol?.tax_enabled) {
       this.addAddressField();
-    }
 
-    // if eu vat is required, add the tax id field.
-    if (this?.taxProtocol?.eu_vat_required) {
-      this.addTaxIDField();
+      // if eu vat is required, add the tax id field.
+      if (this.taxProtocol?.eu_vat_required) {
+        this.addTaxIDField();
+      }
     }
 
     // make sure to check order on load.
@@ -65,7 +65,7 @@ export class ScFormComponentsValidator {
     if (this.hasTaxIDField) return;
     const payment = this.el.querySelector('sc-payment');
     const taxInput = document.createElement('sc-order-tax-id-input');
-    taxInput.taxIdentifier.number_type === 'eu_vat';
+    taxInput.taxIdentifier?.number_type === 'eu_vat';
     payment.parentNode.insertBefore(taxInput, payment);
     this.hasTaxIDField = true;
   }
