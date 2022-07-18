@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { ScAddress, ScSwitch } from '@surecart/components-react';
+import { ScAddress, ScSelect, ScSwitch } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
 import useEntity from '../../hooks/useEntity';
@@ -77,6 +77,88 @@ export default () => {
 					names={{}}
 					onScInputAddress={(e) => editItem({ address: e.detail })}
 				/>
+			</SettingsBox>
+
+			<SettingsBox
+				title={__('EU VAT Settings', 'surecart')}
+				description={__(
+					'Change how your store manages EU VAT collection and validation.',
+					'surecart'
+				)}
+				loading={!hasLoadedItem}
+			>
+				<ScSwitch
+					checked={item?.eu_vat_required}
+					onClick={(e) => {
+						e.preventDefault();
+						editItem({
+							eu_vat_required: !item?.eu_vat_required,
+						});
+					}}
+				>
+					{__('Require VAT Number', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'If enabled, require all customer’s in the EU to enter a EU VAT number when checking out.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				<ScSwitch
+					checked={item?.eu_vat_local_reverse_charge}
+					onClick={(e) => {
+						e.preventDefault();
+						editItem({
+							eu_vat_local_reverse_charge:
+								!item?.eu_vat_local_reverse_charge,
+						});
+					}}
+				>
+					{__('Local Reverse Charge', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'If enabled, apply reverse charge when applicable even when customers are in your home country.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				<ScSelect
+					label={__('VAT Number Verification Failure', 'surecart')}
+					value={item?.eu_vat_unverified_behavior}
+					onScChange={(e) =>
+						editItem({ eu_vat_unverified_behavior: e.target.value })
+					}
+					help={__(
+						'Choose the checkout behavior when VAT verification fails.',
+						'surecart'
+					)}
+					choices={[
+						{
+							value: 'error',
+							label: __(
+								'Reject the order and show an error.',
+								'surecart'
+							),
+						},
+						{
+							value: 'skip_reverse_charge',
+							label: __(
+								'Accept the order but don’t apply reverse charge.',
+								'surecart'
+							),
+						},
+						{
+							value: 'apply_reverse_charge',
+							label: __(
+								'Accept the order and apply reverse charge.',
+								'surecart'
+							),
+						},
+					]}
+					required
+				></ScSelect>
 			</SettingsBox>
 
 			<SettingsBox

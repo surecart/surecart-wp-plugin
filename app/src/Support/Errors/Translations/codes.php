@@ -22,6 +22,7 @@ return [
 	'product.restrict_dependent_destroy.has_many'       => __( 'This product has prices that are currently being used. Please archive the product instead if it is not already archived.', 'surecart' ),
 	'product.image.invalid_media_type'                  => __( 'The product image must be an image.', 'surecart' ),
 	'order.shipping_address.invalid_tax_address'        => __( 'Please fill out your address.', 'surecart' ),
+	'order.tax_identifier.invalid_tax_identifier'       => __( 'Please enter a valid tax number.', 'surecart' ),
 	'order.line_items.old_price_versions'               => __( 'The prices in this checkout session have changed. Please recheck it before submitting again.', 'surecart' ),
 	'order.discount.coupon.blank'                       => __( 'This coupon code is invalid.', 'surecart' ),
 	'order.shipping_address.postal_code.invalid'        => __( 'Your postal code is not valid.', 'surecart' ),

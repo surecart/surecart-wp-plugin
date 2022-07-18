@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
 
 import { getOrder } from '../../../../store/checkouts';
-import { Customer, FormState, Order, PaymentIntent, PaymentIntents, PriceChoice, Prices, Processor, Products, ResponseError } from '../../../../types';
+import { Customer, FormState, Order, PaymentIntent, PaymentIntents, PriceChoice, Prices, Processor, Products, ResponseError, TaxProtocol } from '../../../../types';
 
 @Component({
   tag: 'sc-checkout',
@@ -44,8 +44,8 @@ export class ScCheckout {
   /** Alignment */
   @Prop() alignment: 'center' | 'wide' | 'full';
 
-  /** Is tax enabled? */
-  @Prop() taxEnabled: boolean;
+  /** The account tax protocol */
+  @Prop() taxProtocol: TaxProtocol;
 
   /** Is this user logged in? */
   @Prop() loggedIn: boolean;
@@ -188,6 +188,7 @@ export class ScCheckout {
       shippingAddress: this.order()?.shipping_address,
       taxStatus: this.order()?.tax_status,
       taxIdentifier: this.order()?.tax_identifier,
+      taxProtocol: this.taxProtocol,
       lockedChoices: this.prices,
       products: this.productsEntities,
       prices: this.pricesEntities,
@@ -218,7 +219,7 @@ export class ScCheckout {
             {/* Handles errors in the form. */}
             <sc-form-error-provider order={this.order()} onScUpdateError={e => (this.error = e.detail)}>
               {/* Validate components in the form based on order state. */}
-              <sc-form-components-validator order={this.order()} disabled={this.disableComponentsValidation} taxEnabled={this.taxEnabled}>
+              <sc-form-components-validator order={this.order()} disabled={this.disableComponentsValidation} taxProtocol={this.taxProtocol}>
                 {/* Handles the current session. */}
                 <sc-session-provider
                   ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)}
