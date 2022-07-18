@@ -61,7 +61,8 @@ class CartPostTypeService {
 	public function redirectFromListPage() {
 		global $pagenow, $typenow;
 		if ( 'sc_cart' === $typenow && 'edit.php' === $pagenow ) {
-			wp_safe_redirect( admin_url( 'edit.php?post_type=sc_form' ) );
+			wp_safe_redirect( esc_url_raw( admin_url( 'edit.php?post_type=sc_form' ) ) );
+			die();
 		}
 	}
 
