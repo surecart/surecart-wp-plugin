@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-07-15T18:55:59+00:00\n"
+"POT-Creation-Date: 2022-07-18T18:27:37+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -137,7 +137,7 @@ msgstr ""
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:178
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:191
 #: src/Controllers/Admin/Orders/OrdersListTable.php:271
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:303
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:307
 msgid "Valid until %s"
 msgstr ""
 
@@ -148,26 +148,26 @@ msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:201
 #: src/Controllers/Admin/Orders/OrdersListTable.php:288
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:320
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:324
 msgid "No discount."
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:216
 #: src/Controllers/Admin/Orders/OrdersListTable.php:303
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:335
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:339
 msgid "Forever"
 msgstr ""
 
 #. translators: number of months.
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:220
 #: src/Controllers/Admin/Orders/OrdersListTable.php:307
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:339
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:343
 msgid "For %d months"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:223
 #: src/Controllers/Admin/Orders/OrdersListTable.php:310
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:342
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:346
 msgid "Once"
 msgstr ""
 
@@ -185,7 +185,7 @@ msgstr ""
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:261
 #: src/Controllers/Admin/Customers/CustomersListTable.php:160
 #: src/Controllers/Admin/Products/ProductsListTable.php:322
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:400
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:404
 msgid "Edit"
 msgstr ""
 
@@ -368,7 +368,7 @@ msgstr ""
 
 #. translators: Coupon % off.
 #: src/Controllers/Admin/Orders/OrdersListTable.php:280
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:312
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:316
 msgid "%1d%% off"
 msgstr ""
 
@@ -417,7 +417,7 @@ msgid "No products found."
 msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsListTable.php:203
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:220
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:224
 msgid "Subscription"
 msgstr ""
 
@@ -493,79 +493,79 @@ msgstr ""
 msgid "No product"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:205
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:209
 msgid "None"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:222
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:226
 msgid "Payment Plan"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:240
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:244
 msgid "for"
 msgstr ""
 
 #. translators: number of days.
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:250
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:254
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of days.
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:250
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:254
 msgid "day"
 msgid_plural "%d days"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of weeks.
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:256
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:260
 msgid "%d week"
 msgid_plural "%d weeks"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of weeks.
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:256
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:260
 msgid "week"
 msgid_plural "%d weeks"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of months
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:262
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:266
 msgid "%d month"
 msgid_plural "%d months"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of months
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:262
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:266
 msgid "month"
 msgid_plural "%d months"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of yearls
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:268
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:272
 msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of yearls
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:268
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:272
 msgid "year"
 msgid_plural "%d years"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:390
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:394
 msgid "No name provided"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:393
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:397
 msgid "Edit Subscription"
 msgstr ""
 
@@ -761,7 +761,7 @@ msgstr ""
 #: src/Rest/RefundsRestServiceProvider.php:54
 #: src/Rest/SettingsRestServiceProvider.php:76
 #: src/Rest/SubscriptionProtocolRestServiceProvider.php:82
-#: src/Rest/SubscriptionRestServiceProvider.php:101
+#: src/Rest/SubscriptionRestServiceProvider.php:115
 #: src/Rest/TaxProtocolRestServiceProvider.php:81
 #: src/Rest/TaxRegistrationRestServiceProvider.php:46
 #: src/Rest/TaxZoneRestServiceProvider.php:46
@@ -2690,7 +2690,7 @@ msgid "Settings"
 msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:129
-#: src/WordPress/PostTypes/CartPostTypeService.php:110
+#: src/WordPress/PostTypes/CartPostTypeService.php:124
 #: src/WordPress/PostTypes/FormPostTypeService.php:81
 msgid "Forms"
 msgstr ""
@@ -2700,13 +2700,13 @@ msgid "Dismiss Notice"
 msgstr ""
 
 #: src/WordPress/Pages/PageSeeder.php:66
-#: src/WordPress/PostTypes/CartPostTypeService.php:175
+#: src/WordPress/PostTypes/CartPostTypeService.php:189
 msgctxt "Cart slug"
 msgid "cart"
 msgstr ""
 
 #: src/WordPress/Pages/PageSeeder.php:67
-#: src/WordPress/PostTypes/CartPostTypeService.php:176
+#: src/WordPress/PostTypes/CartPostTypeService.php:190
 msgctxt "Cart title"
 msgid "Cart"
 msgstr ""
@@ -2723,85 +2723,85 @@ msgstr ""
 msgid "Order Confirmation"
 msgstr ""
 
-#: src/WordPress/PostTypes/CartPostTypeService.php:197
+#: src/WordPress/PostTypes/CartPostTypeService.php:211
 msgctxt "post type general name"
 msgid "Carts"
 msgstr ""
 
-#: src/WordPress/PostTypes/CartPostTypeService.php:198
+#: src/WordPress/PostTypes/CartPostTypeService.php:212
 msgctxt "post type singular name"
 msgid "Cart"
 msgstr ""
 
-#: src/WordPress/PostTypes/CartPostTypeService.php:199
+#: src/WordPress/PostTypes/CartPostTypeService.php:213
 msgctxt "Cart"
 msgid "Add New"
 msgstr ""
 
-#: src/WordPress/PostTypes/CartPostTypeService.php:200
+#: src/WordPress/PostTypes/CartPostTypeService.php:214
 msgid "Add new Cart"
 msgstr ""
 
-#: src/WordPress/PostTypes/CartPostTypeService.php:201
+#: src/WordPress/PostTypes/CartPostTypeService.php:215
 msgid "New Cart"
 msgstr ""
 
-#: src/WordPress/PostTypes/CartPostTypeService.php:202
+#: src/WordPress/PostTypes/CartPostTypeService.php:216
 msgid "Edit Cart"
 msgstr ""
 
-#: src/WordPress/PostTypes/CartPostTypeService.php:203
+#: src/WordPress/PostTypes/CartPostTypeService.php:217
 msgid "View Cart"
 msgstr ""
 
-#: src/WordPress/PostTypes/CartPostTypeService.php:204
+#: src/WordPress/PostTypes/CartPostTypeService.php:218
 msgid "All Carts"
 msgstr ""
 
-#: src/WordPress/PostTypes/CartPostTypeService.php:205
+#: src/WordPress/PostTypes/CartPostTypeService.php:219
 msgid "Search Carts"
 msgstr ""
 
-#: src/WordPress/PostTypes/CartPostTypeService.php:206
+#: src/WordPress/PostTypes/CartPostTypeService.php:220
 #: src/WordPress/PostTypes/FormPostTypeService.php:213
 msgid "No checkout forms found."
 msgstr ""
 
-#: src/WordPress/PostTypes/CartPostTypeService.php:207
+#: src/WordPress/PostTypes/CartPostTypeService.php:221
 #: src/WordPress/PostTypes/FormPostTypeService.php:214
 msgid "No checkout forms found in Trash."
 msgstr ""
 
-#: src/WordPress/PostTypes/CartPostTypeService.php:208
+#: src/WordPress/PostTypes/CartPostTypeService.php:222
 #: src/WordPress/PostTypes/FormPostTypeService.php:215
 msgid "Filter checkout forms list"
 msgstr ""
 
-#: src/WordPress/PostTypes/CartPostTypeService.php:209
+#: src/WordPress/PostTypes/CartPostTypeService.php:223
 msgid "Carts list navigation"
 msgstr ""
 
-#: src/WordPress/PostTypes/CartPostTypeService.php:210
+#: src/WordPress/PostTypes/CartPostTypeService.php:224
 msgid "Carts list"
 msgstr ""
 
-#: src/WordPress/PostTypes/CartPostTypeService.php:211
+#: src/WordPress/PostTypes/CartPostTypeService.php:225
 msgid "Cart published."
 msgstr ""
 
-#: src/WordPress/PostTypes/CartPostTypeService.php:212
+#: src/WordPress/PostTypes/CartPostTypeService.php:226
 msgid "Cart published privately."
 msgstr ""
 
-#: src/WordPress/PostTypes/CartPostTypeService.php:213
+#: src/WordPress/PostTypes/CartPostTypeService.php:227
 msgid "Cart reverted to draft."
 msgstr ""
 
-#: src/WordPress/PostTypes/CartPostTypeService.php:214
+#: src/WordPress/PostTypes/CartPostTypeService.php:228
 msgid "Cart scheduled."
 msgstr ""
 
-#: src/WordPress/PostTypes/CartPostTypeService.php:215
+#: src/WordPress/PostTypes/CartPostTypeService.php:229
 msgid "Cart updated."
 msgstr ""
 
