@@ -189,6 +189,7 @@ export class ScCheckout {
       shippingAddress: this.order?.shipping_address,
       taxStatus: this.order?.tax_status,
       taxIdentifier: this.order?.tax_identifier,
+      taxProtocol: this.taxProtocol,
       lockedChoices: this.prices,
       products: this.productsEntities,
       prices: this.pricesEntities,

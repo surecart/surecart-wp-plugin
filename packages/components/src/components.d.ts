@@ -1537,6 +1537,10 @@ export namespace Components {
           * Tax identifier
          */
         "taxIdentifier": TaxIdentifier;
+        /**
+          * The tax protocol.
+         */
+        "taxProtocol": TaxProtocol;
     }
     interface ScOrdersList {
         "allLink": string;
@@ -5228,6 +5232,10 @@ declare namespace LocalJSX {
           * Tax identifier
          */
         "taxIdentifier"?: TaxIdentifier;
+        /**
+          * The tax protocol.
+         */
+        "taxProtocol"?: TaxProtocol;
     }
     interface ScOrdersList {
         "allLink"?: string;

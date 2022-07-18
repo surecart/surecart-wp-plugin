@@ -843,6 +843,7 @@
     "order": true,
     "show": true,
     "tax-identifier": true,
+    "tax-protocol": true,
     "style": true,
     "id": true,
     "class": true,
