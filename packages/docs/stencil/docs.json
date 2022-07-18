@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-07-18T18:27:03",
+  "timestamp": "2022-07-18T19:06:30",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -3294,16 +3294,15 @@
           "required": false
         },
         {
-          "name": "taxEnabled",
-          "type": "boolean",
+          "name": "taxProtocol",
+          "type": "TaxProtocol",
           "mutable": false,
-          "attr": "tax-enabled",
           "reflectToAttr": false,
-          "docs": "Is tax enabled?",
+          "docs": "The account tax protocol",
           "docsTags": [],
           "values": [
             {
-              "type": "boolean"
+              "type": "TaxProtocol"
             }
           ],
           "optional": false,
@@ -3418,7 +3417,8 @@
           "sc-alert"
         ],
         "sc-form-components-validator": [
-          "sc-order-shipping-address"
+          "sc-order-shipping-address",
+          "sc-order-tax-id-input"
         ],
         "sc-order-shipping-address": [
           "sc-address",
@@ -3451,6 +3451,21 @@
           "sc-select",
           "sc-input",
           "sc-block-ui"
+        ],
+        "sc-order-tax-id-input": [
+          "sc-tax-id-input"
+        ],
+        "sc-tax-id-input": [
+          "sc-icon",
+          "sc-input",
+          "sc-spinner",
+          "sc-dropdown",
+          "sc-button",
+          "sc-menu",
+          "sc-menu-item"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-session-provider": [
           "sc-line-items-provider"
@@ -7871,16 +7886,15 @@
           "required": false
         },
         {
-          "name": "taxEnabled",
-          "type": "boolean",
+          "name": "taxProtocol",
+          "type": "TaxProtocol",
           "mutable": false,
-          "attr": "tax-enabled",
           "reflectToAttr": false,
-          "docs": "Is tax enabled.",
+          "docs": "The tax protocol",
           "docsTags": [],
           "values": [
             {
-              "type": "boolean"
+              "type": "TaxProtocol"
             }
           ],
           "optional": false,
@@ -7897,11 +7911,13 @@
         "sc-checkout"
       ],
       "dependencies": [
-        "sc-order-shipping-address"
+        "sc-order-shipping-address",
+        "sc-order-tax-id-input"
       ],
       "dependencyGraph": {
         "sc-form-components-validator": [
-          "sc-order-shipping-address"
+          "sc-order-shipping-address",
+          "sc-order-tax-id-input"
         ],
         "sc-order-shipping-address": [
           "sc-address",
@@ -7937,6 +7953,21 @@
           "sc-select",
           "sc-input",
           "sc-block-ui"
+        ],
+        "sc-order-tax-id-input": [
+          "sc-tax-id-input"
+        ],
+        "sc-tax-id-input": [
+          "sc-icon",
+          "sc-input",
+          "sc-spinner",
+          "sc-dropdown",
+          "sc-button",
+          "sc-menu",
+          "sc-menu-item"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-checkout": [
           "sc-form-components-validator"
@@ -13674,11 +13705,26 @@
           "type": "TaxIdentifier",
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Tax identifier",
           "docsTags": [],
           "values": [
             {
               "type": "TaxIdentifier"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "taxProtocol",
+          "type": "TaxProtocol",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "The tax protocol.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "TaxProtocol"
             }
           ],
           "optional": false,
@@ -13701,7 +13747,9 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "sc-form-components-validator"
+      ],
       "dependencies": [
         "sc-tax-id-input"
       ],
@@ -13726,6 +13774,9 @@
         ],
         "sc-button": [
           "sc-spinner"
+        ],
+        "sc-form-components-validator": [
+          "sc-order-tax-id-input"
         ]
       }
     },

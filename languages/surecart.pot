@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-07-18T18:27:37+00:00\n"
+"POT-Creation-Date: 2022-07-18T19:07:04+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -1747,46 +1747,50 @@ msgid "The product image must be an image."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:25
-msgid "The prices in this checkout session have changed. Please recheck it before submitting again."
+msgid "Please enter a valid tax number."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:26
-msgid "This coupon code is invalid."
+msgid "The prices in this checkout session have changed. Please recheck it before submitting again."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:27
-msgid "Your postal code is not valid."
+msgid "This coupon code is invalid."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:28
-msgid "This discount code does not apply to this currency."
+msgid "Your postal code is not valid."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:29
-msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
+msgid "This discount code does not apply to this currency."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:30
-msgid "The maximum price must be smaller."
+msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:31
-msgid "The minimum price must be smaller."
+msgid "The maximum price must be smaller."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:32
-msgid "The maximum price must be greater than the minimum price."
+msgid "The minimum price must be smaller."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:33
-msgid "You are already collecting tax for this zone."
+msgid "The maximum price must be greater than the minimum price."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:34
-msgid "You cannot enable EU Micro Exemption if your address is outside of the EU."
+msgid "You are already collecting tax for this zone."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:35
+msgid "You cannot enable EU Micro Exemption if your address is outside of the EU."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:36
 msgid "You cannot delete this media item because it is currently being used."
 msgstr ""
 
