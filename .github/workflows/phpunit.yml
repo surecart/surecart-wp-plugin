@@ -83,7 +83,7 @@ jobs:
         run: cd plugins/surecart && yarn bootstrap
 
       - name: Build
-        run: cd plugins/surecart && yarn build
+        run: cd plugins/surecart && yarn wp-scripts build
 
       - name: Install WordPress
         run: |
