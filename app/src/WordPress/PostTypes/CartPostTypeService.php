@@ -47,9 +47,22 @@ class CartPostTypeService {
 	public function bootstrap() {
 		add_action( 'init', [ $this, 'registerPostType' ] );
 		add_action( 'use_block_editor_for_post', [ $this, 'forceGutenberg' ], 999, 2 );
+		add_action( 'admin_init', [ $this, 'redirectFromListPage' ] );
 		// cannot delete cart post.
 		add_filter( 'map_meta_cap', [ $this, 'disallowDelete' ], 10, 4 );
 		add_filter( 'wp_insert_post_data', [ $this, 'forcePublish' ], 10, 4 );
+	}
+
+	/**
+	 * Redirect to forms post type from cart list page.
+	 *
+	 * @return void
+	 */
+	public function redirectFromListPage() {
+		global $pagenow, $typenow;
+		if ( 'sc_cart' === $typenow && 'edit.php' === $pagenow ) {
+			wp_safe_redirect( admin_url( 'edit.php?post_type=sc_form' ) );
+		}
 	}
 
 	/**
