@@ -30,7 +30,7 @@ export class ScOrderTaxIdInput {
     if (this.taxIdentifier?.number_type !== 'eu_vat') {
       return 'unknown';
     }
-    return this.taxIdentifier?.valid_eu_vat ? 'valid' : 'invalid';
+    return this.taxIdentifier?.eu_vat_verified ? 'valid' : 'invalid';
   }
 
   render() {
