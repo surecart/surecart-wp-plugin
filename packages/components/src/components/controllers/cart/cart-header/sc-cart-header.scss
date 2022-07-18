@@ -6,6 +6,14 @@
   font-size: 1em;
 }
 
+.cart-title {
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 var(--sc-spacing-small);
+}
+
 .cart__close {
   cursor:pointer;
 }

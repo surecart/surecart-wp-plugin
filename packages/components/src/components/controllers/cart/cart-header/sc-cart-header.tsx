@@ -25,7 +25,9 @@ export class ScCartHeader {
     return (
       <div class="cart-header">
         <sc-icon class="cart__close" name="arrow-left" onClick={() => this.scCloseCart.emit()}></sc-icon>
-        <slot />
+        <div class="cart-title">
+          <slot />
+        </div>
         <sc-tag size="small">{this?.getItemsCount?.() || 0}</sc-tag>
       </div>
     );
