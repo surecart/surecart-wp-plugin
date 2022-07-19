@@ -92,7 +92,7 @@ export class ScLineItems {
               editable={this.isEditable() && !item?.price?.ad_hoc}
               removable={this.isRemovable()}
               quantity={item.quantity}
-              amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount * item.quantity}
+              amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item?.subtotal_amount}
               currency={this.order?.currency}
               trialDurationDays={item?.price?.trial_duration_days}
               interval={!!item?.price && intervalString(item?.price, { showOnce: hasSubscription(this.order) })}

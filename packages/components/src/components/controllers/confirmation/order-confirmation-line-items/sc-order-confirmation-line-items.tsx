@@ -40,7 +40,7 @@ export class ScOrderConfirmationLineItems {
                 editable={false}
                 removable={false}
                 quantity={item.quantity}
-                amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount}
+                amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.subtotal_amount}
                 currency={this.order?.currency}
                 trialDurationDays={item?.price?.trial_duration_days}
                 interval={intervalString(item?.price, { showOnce: hasSubscription(this.order) })}
