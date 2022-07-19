@@ -127,6 +127,9 @@ abstract class AdminModelEditController {
 			}
 		}
 
+		// pass entitlements to page.
+		$this->data['entitlements'] = \SureCart::account()->entitlements;
+
 		wp_set_script_translations( $this->handle, 'surecart', WP_LANG_DIR . '/plugins/' );
 
 		// common localizations.
