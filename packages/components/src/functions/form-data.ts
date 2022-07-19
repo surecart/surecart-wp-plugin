@@ -95,8 +95,6 @@ export const parseFormData = (data: any) => {
     ...rest
   } = data;
 
-  console.log({ data });
-
   const shipping_address = {
     ...(shipping_city ? { city: shipping_city } : {}),
     ...(shipping_country ? { country: shipping_country } : {}),

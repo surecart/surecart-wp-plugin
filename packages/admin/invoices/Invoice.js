@@ -46,6 +46,7 @@ export default () => {
 						'subscription.price',
 						'charge',
 						'charge.payment_method',
+						'shipping_address',
 						'payment_method.card',
 						'customer',
 					],
@@ -79,7 +80,13 @@ export default () => {
 					</sc-breadcrumb>
 				</sc-breadcrumbs>
 			}
-			sidebar={<Sidebar customer={customer} loading={isLoading} />}
+			sidebar={
+				<Sidebar
+					customer={customer}
+					loading={isLoading}
+					invoice={invoice}
+				/>
+			}
 		>
 			<Fragment>
 				<FlashError path="invoices" scrollIntoView />

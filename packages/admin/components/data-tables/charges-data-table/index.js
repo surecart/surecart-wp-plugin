@@ -102,6 +102,10 @@ export default ({
 		return charge?.payment_intent?.processor_type;
 	};
 
+	if (Object.keys(data?.[0] || {}).length === 0) {
+		return null;
+	}
+
 	return (
 		<Fragment>
 			<DataTable

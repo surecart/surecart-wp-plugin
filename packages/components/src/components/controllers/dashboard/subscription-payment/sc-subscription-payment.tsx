@@ -29,7 +29,7 @@ export class ScSubscriptionPayment {
       this.loading = true;
       await Promise.all([this.fetchSubscription(), this.fetchPaymentMethods()]);
     } catch (e) {
-      console.error(this.error);
+      console.error(e);
       this.error = e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.loading = false;

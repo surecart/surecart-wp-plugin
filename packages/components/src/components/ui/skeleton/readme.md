@@ -42,6 +42,7 @@
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-line-item-total](../../controllers/checkout-form/line-item-total)
  - [sc-line-items](../../controllers/checkout-form/line-items)
+ - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
  - [sc-order-confirmation-line-items](../../controllers/confirmation/order-confirmation-line-items)
  - [sc-order-detail](../../controllers/confirmation/order-detail)
  - [sc-order-summary](../../controllers/checkout-form/order-summary)
@@ -72,6 +73,7 @@ graph TD;
   sc-invoices-list --> sc-skeleton
   sc-line-item-total --> sc-skeleton
   sc-line-items --> sc-skeleton
+  sc-order-confirmation-details --> sc-skeleton
   sc-order-confirmation-line-items --> sc-skeleton
   sc-order-detail --> sc-skeleton
   sc-order-summary --> sc-skeleton

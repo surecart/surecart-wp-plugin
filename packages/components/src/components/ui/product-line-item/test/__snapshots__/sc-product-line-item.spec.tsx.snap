@@ -3,15 +3,22 @@
 exports[`sc-product-line-item renders 1`] = `
 <sc-product-line-item amount="1000" currency="CAD">
   <mock:shadow-root>
-    <sc-line-item>
-      <span slot="title"></span>
-      <span class="product__description" slot="description">
+    <div class="item">
+      <div class="item__text">
+        <div class="item__title">
+          <slot name="title"></slot>
+        </div>
         <sc-quantity-select></sc-quantity-select>
-      </span>
-      <span slot="price">
-        <sc-format-number currency="CAD" type="currency" value="1000"></sc-format-number>
-      </span>
-    </sc-line-item>
+      </div>
+      <div class="item__suffix">
+        <div></div>
+        <div class="item__price">
+          <div class="price">
+            <sc-format-number currency="CAD" type="currency" value="1000"></sc-format-number>
+          </div>
+        </div>
+      </div>
+    </div>
   </mock:shadow-root>
 </sc-product-line-item>
 `;

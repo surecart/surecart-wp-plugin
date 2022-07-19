@@ -7,7 +7,7 @@ jest.mock('../../../../services/session', () => ({
   finalizeSession: () => Promise.resolve(),
 }));
 
-describe('sc-cart-provider', () => {
+describe('sc-session-provider', () => {
   it('renders', async () => {
     const page = await newSpecPage({
       components: [ScSessionProvider],
@@ -33,12 +33,6 @@ describe('sc-cart-provider', () => {
         name: 'test',
         metadata: { meta_item: 'test' },
       });
-    });
-
-    it('getSessionId', async () => {
-      const provider = new ScSessionProvider() as any;
-      provider.order = { id: 'test' };
-      expect(provider.getSessionId()).toEqual('test');
     });
   });
 });

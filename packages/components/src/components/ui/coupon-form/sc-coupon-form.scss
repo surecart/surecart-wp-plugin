@@ -42,7 +42,7 @@
 .trigger {
   cursor: pointer;
   font-size: var(--sc-font-size-small);
-  color: var(--sc-color-gray-500);
+  color: var(--sc-input-label-color);
   user-select: none;
 
   &:hover {

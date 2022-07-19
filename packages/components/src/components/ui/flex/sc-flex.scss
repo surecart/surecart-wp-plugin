@@ -16,6 +16,13 @@ $justify: flex-start, flex-end, center, space-between, space-around, space-evenl
   }
 }
 
+$wrap: wrap, no-wrap;
+@each $value in $wrap {
+  .wrap-#{$value} {
+    flex-wrap: $value;
+  }
+}
+
 $align: flex-start, flex-end, center, baseline, stretch;
 @each $value in $align {
   .align-#{$value} {

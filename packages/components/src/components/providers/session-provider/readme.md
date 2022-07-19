@@ -14,7 +14,6 @@
 | `groupId`              | `group-id`               | Group id                                    | `string`                                | `undefined` |
 | `mode`                 | `mode`                   | Are we in test or live mode.                | `"live" \| "test"`                      | `'live'`    |
 | `modified`             | `modified`               | Whent the post was modified.                | `string`                                | `undefined` |
-| `order`                | --                       | Order Object                                | `Order`                                 | `undefined` |
 | `paymentIntents`       | --                       | Holds all available payment intents.        | `PaymentIntents`                        | `undefined` |
 | `persist`              | `persist`                | Should we persist the session.              | `boolean`                               | `undefined` |
 | `prices`               | --                       | An array of prices to pre-fill in the form. | `PriceChoice[]`                         | `[]`        |
@@ -36,13 +35,13 @@
 
 ## Methods
 
-### `finalize() => Promise<Order | CustomEvent<FormStateSetter>>`
+### `finalize() => Promise<any>`
 
 Finalize the order.
 
 #### Returns
 
-Type: `Promise<Order | CustomEvent<FormStateSetter>>`
+Type: `Promise<any>`
 
 
 

@@ -9,7 +9,7 @@ exports[`sc-checkout renders 1`] = `
         <sc-form-components-validator>
           <sc-session-provider currency-code="usd" group-id="" mode="live" persist="" processor="stripe">
             <sc-order-redirect-provider success-url="">
-              <sc-order-confirm-provider></sc-order-confirm-provider>
+              <sc-order-confirm-provider mode="live" success-url=""></sc-order-confirm-provider>
             </sc-order-redirect-provider>
           </sc-session-provider>
         </sc-form-components-validator>

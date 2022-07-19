@@ -7,19 +7,31 @@
 
 ## Properties
 
-| Property   | Attribute  | Description | Type          | Default     |
-| ---------- | ---------- | ----------- | ------------- | ----------- |
-| `clickEl`  | --         |             | `HTMLElement` | `undefined` |
-| `max`      | `max`      |             | `number`      | `100`       |
-| `min`      | `min`      |             | `number`      | `1`         |
-| `quantity` | `quantity` |             | `number`      | `0`         |
+| Property   | Attribute   | Description  | Type          | Default     |
+| ---------- | ----------- | ------------ | ------------- | ----------- |
+| `clickEl`  | --          |              | `HTMLElement` | `undefined` |
+| `disabled` | `disabled`  |              | `boolean`     | `undefined` |
+| `hasFocus` | `has-focus` | Inputs focus | `boolean`     | `undefined` |
+| `max`      | `max`       |              | `number`      | `100`       |
+| `min`      | `min`       |              | `number`      | `1`         |
+| `quantity` | `quantity`  |              | `number`      | `0`         |
 
 
 ## Events
 
-| Event      | Description | Type                  |
-| ---------- | ----------- | --------------------- |
-| `scChange` |             | `CustomEvent<number>` |
+| Event      | Description                              | Type                  |
+| ---------- | ---------------------------------------- | --------------------- |
+| `scBlur`   | Emitted when the control loses focus.    | `CustomEvent<void>`   |
+| `scChange` |                                          | `CustomEvent<number>` |
+| `scFocus`  | Emitted when the control gains focus.    | `CustomEvent<void>`   |
+| `scInput`  | Emitted when the control receives input. | `CustomEvent<number>` |
+
+
+## Shadow Parts
+
+| Part     | Description |
+| -------- | ----------- |
+| `"base"` |             |
 
 
 ## Dependencies
@@ -30,16 +42,12 @@
 
 ### Depends on
 
-- [sc-dropdown](../dropdown)
-- [sc-menu](../menu)
-- [sc-menu-item](../menu-item)
+- [sc-icon](../icon)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-quantity-select --> sc-dropdown
-  sc-quantity-select --> sc-menu
-  sc-quantity-select --> sc-menu-item
+  sc-quantity-select --> sc-icon
   sc-product-line-item --> sc-quantity-select
   style sc-quantity-select fill:#f9f,stroke:#333,stroke-width:4px
 ```

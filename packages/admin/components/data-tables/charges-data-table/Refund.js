@@ -1,6 +1,4 @@
-/** @jsx jsx */
-import { __ } from '@wordpress/i18n';
-import { Modal, Button } from '@wordpress/components';
+import { css, jsx } from '@emotion/core';
 import {
 	ScAlert,
 	ScButton,
@@ -9,8 +7,11 @@ import {
 	ScPriceInput,
 	ScSelect,
 } from '@surecart/components-react';
-import { css, jsx } from '@emotion/core';
+import { Button, Modal } from '@wordpress/components';
 import { useState } from '@wordpress/element';
+/** @jsx jsx */
+import { __ } from '@wordpress/i18n';
+
 import useEntity from '../../../mixins/useEntity';
 
 export default ({ charge, onRequestClose }) => {
@@ -28,7 +29,7 @@ export default ({ charge, onRequestClose }) => {
 		setLoading(true);
 
 		try {
-			await saveRefund({
+			const refund = await saveRefund({
 				query: {
 					expand: [
 						'charge',
@@ -43,6 +44,14 @@ export default ({ charge, onRequestClose }) => {
 					charge: charge?.id,
 				},
 			});
+			if (refund?.status === 'failed') {
+				throw {
+					message: __(
+						'Could not refund the charge. Please check with the processor for more details.',
+						'surecart'
+					),
+				};
+			}
 			onRequestClose();
 		} catch (e) {
 			console.error(e);

@@ -130,29 +130,12 @@ class CustomersListTable extends ListTable {
 	}
 
 	/**
-	 * Handle the status
+	 * The customer email.
 	 *
-	 * @param \SureCart\Models\Price $product Product model.
+	 * @param \SureCart\Models\Customer $customer The customer model.
 	 *
 	 * @return string
 	 */
-	public function column_date( $product ) {
-		$created = sprintf(
-			'<time datetime="%1$s" title="%2$s">%3$s</time>',
-			esc_attr( $product->created_at ),
-			esc_html( TimeDate::formatDateAndTime( $product->created_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $product->created_at ) )
-		);
-		$updated = sprintf(
-			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
-			__( 'Updated', 'surecart' ),
-			esc_attr( $product->updated_at ),
-			esc_html( TimeDate::formatDateAndTime( $product->updated_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $product->updated_at ) )
-		);
-		return $created . '<br /><small style="opacity: 0.75">' . $updated . '</small>';
-	}
-
 	public function column_email( $customer ) {
 		return sanitize_email( $customer->email );
 	}

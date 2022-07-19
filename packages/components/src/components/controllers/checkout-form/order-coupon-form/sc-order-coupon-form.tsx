@@ -32,7 +32,7 @@ export class ScOrderCouponForm {
     return (
       <sc-coupon-form
         label={this.label}
-        loading={this.loading}
+        loading={this.loading && !this.order?.id}
         busy={this.busy}
         error={this.errorMessage}
         discount={this?.order?.discount}

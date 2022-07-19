@@ -94,6 +94,7 @@ export default ({ className, attributes, setAttributes }) => {
 			<ScButton
 				type={type}
 				submit={submit}
+				icon={show_icon ? 'lock' : false}
 				{...(full ? { full: true } : {})}
 				size={size}
 			>

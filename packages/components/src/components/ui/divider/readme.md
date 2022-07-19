@@ -22,6 +22,7 @@
  - [sc-express-payment](../../controllers/checkout-form/express-payment)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-login-form](../../controllers/login)
+ - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
  - [sc-order-confirmation-totals](../../controllers/confirmation/order-confirmation-totals)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
@@ -35,6 +36,7 @@ graph TD;
   sc-express-payment --> sc-divider
   sc-invoices-list --> sc-divider
   sc-login-form --> sc-divider
+  sc-order-confirmation-details --> sc-divider
   sc-order-confirmation-totals --> sc-divider
   sc-orders-list --> sc-divider
   sc-payment-methods-list --> sc-divider
