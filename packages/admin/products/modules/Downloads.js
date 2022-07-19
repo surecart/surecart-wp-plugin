@@ -18,7 +18,7 @@ import Box from '../../ui/Box';
 import MediaLibrary from '../../components/MediaLibrary';
 import useSnackbar from '../../hooks/useSnackbar';
 
-export default ({ id, product, loading }) => {
+export default ({ id, product, updateProduct, loading }) => {
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const [showArchived, setShowArchived] = useState(false);
 	const { addSnackbarNotice } = useSnackbar();
@@ -78,6 +78,8 @@ export default ({ id, product, loading }) => {
 									<SingleDownload
 										download={download}
 										key={download.id}
+										product={product}
+										updateProduct={updateProduct}
 									/>
 								))}
 

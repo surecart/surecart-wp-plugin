@@ -24,6 +24,9 @@ import Error from '../components/Error';
 import useEntity from '../hooks/useEntity';
 import useSnackbar from '../hooks/useSnackbar';
 import { ScButton } from '@surecart/components-react';
+import Downloads from './modules/Downloads';
+import Licensing from './modules/Licensing';
+import Integrations from './modules/integrations/Integrations';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
@@ -222,6 +225,21 @@ export default ({ id }) => {
 
 				<Prices
 					productId={id}
+					product={product}
+					updateProduct={editProduct}
+					loading={!hasLoadedProduct}
+				/>
+
+				<Integrations id={id} />
+
+				<Downloads
+					id={id}
+					product={product}
+					updateProduct={editProduct}
+					loading={!hasLoadedProduct}
+				/>
+
+				<Licensing
 					product={product}
 					updateProduct={editProduct}
 					loading={!hasLoadedProduct}

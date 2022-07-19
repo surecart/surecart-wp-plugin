@@ -165,7 +165,7 @@ export default ({
 							css={css`
 								margin-bottom: 3em;
 								> * ~ * {
-									margin-top: var(--sc-spacing-xxx-large);
+									margin-top: var(--sc-spacing-x-large);
 								}
 							`}
 						>
@@ -186,7 +186,7 @@ export default ({
 								css={css`
 									margin-bottom: 3em;
 									> * ~ * {
-										margin-top: 1em;
+										margin-top: var(--sc-spacing-x-large);
 									}
 								`}
 							>

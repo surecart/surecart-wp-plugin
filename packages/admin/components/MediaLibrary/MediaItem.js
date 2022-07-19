@@ -26,7 +26,7 @@ export default ({ media, onClick, selected }) => {
 			<ScTableCell
 				css={css`
 					display: flex;
-					align-items: center;
+					align-items: flex-start;
 					gap: 0.75em;
 					overflow: hidden;
 					min-width: 0;
@@ -64,10 +64,24 @@ export default ({ media, onClick, selected }) => {
 					<div
 						css={css`
 							display: flex;
+							align-items: center;
 							gap: 0.5em;
 						`}
 					>
 						<ScFormatBytes value={media?.byte_size}></ScFormatBytes>
+						{!!media?.release_json?.version && (
+							<ScTag
+								size="small"
+								type="primary"
+								style={{
+									'--sc-tag-primary-background-color':
+										'#f3e8ff',
+									'--sc-tag-primary-color': '#6b21a8',
+								}}
+							>
+								v{media?.release_json?.version}
+							</ScTag>
+						)}
 					</div>
 				</div>
 			</ScTableCell>

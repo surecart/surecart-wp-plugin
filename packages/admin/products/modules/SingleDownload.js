@@ -5,8 +5,10 @@ import {
 	ScBlockUi,
 	ScButton,
 	ScDropdown,
+	ScFormatBytes,
 	ScIcon,
 	ScMenu,
+	ScMenuDivider,
 	ScMenuItem,
 	ScStackedListRow,
 	ScTag,
@@ -16,12 +18,30 @@ import { useDispatch, select } from '@wordpress/data';
 import { useState, Fragment } from '@wordpress/element';
 import useSnackbar from '../../hooks/useSnackbar';
 import apiFetch from '@wordpress/api-fetch';
+import MediaLibrary from '../../components/MediaLibrary';
 
-export default ({ download, className }) => {
+export default ({ download, product, updateProduct, className }) => {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const { addSnackbarNotice } = useSnackbar();
 	const { saveEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
+
+	const setRelease = () => {
+		updateProduct({
+			current_release_download: download.id,
+		});
+	};
+
+	const unSetRelease = () => {
+		updateProduct({
+			current_release_download: null,
+		});
+	};
+
+	const replaceItem = () => {};
+
+	// Is this the current release.
+	const isCurrentRelease = product?.current_release_download === download?.id;
 
 	const onRemove = async () => {
 		const r = confirm(
@@ -141,7 +161,7 @@ export default ({ download, className }) => {
 							display: flex;
 							align-items: center;
 							justify-content: center;
-							padding: 1em;
+							padding: 1.25em;
 							background: var(--sc-color-gray-200);
 							border-radius: var(--sc-border-radius-small);
 						`}
@@ -155,6 +175,11 @@ export default ({ download, className }) => {
 							white-space: nowrap;
 						`}
 					>
+						{isCurrentRelease && (
+							<ScTag type="info" size="small">
+								{__('Current Release', 'surecart')}
+							</ScTag>
+						)}
 						<div
 							css={css`
 								overflow: hidden;
@@ -168,12 +193,24 @@ export default ({ download, className }) => {
 						<div
 							css={css`
 								display: flex;
+								align-items: center;
 								gap: 0.5em;
 							`}
 						>
-							<sc-format-bytes
-								value={download?.media?.byte_size}
-							></sc-format-bytes>
+							<ScFormatBytes value={download?.media?.byte_size} />
+							{!!download?.media?.release_json?.version && (
+								<ScTag
+									type="primary"
+									size="small"
+									style={{
+										'--sc-tag-primary-background-color':
+											'#f3e8ff',
+										'--sc-tag-primary-color': '#6b21a8',
+									}}
+								>
+									v{download?.media?.release_json?.version}
+								</ScTag>
+							)}
 							{download?.archived && (
 								<div>
 									<ScTag type="warning" size="small">
@@ -190,10 +227,42 @@ export default ({ download, className }) => {
 						<ScIcon name="more-horizontal" />
 					</ScButton>
 					<ScMenu>
+						{isCurrentRelease ? (
+							<ScMenuItem onClick={unSetRelease}>
+								<ScIcon name="truck" slot="prefix" />
+								{__('Unset Release', 'surecart')}
+							</ScMenuItem>
+						) : (
+							!!product?.licensing_enabled && (
+								<ScMenuItem onClick={setRelease}>
+									<ScIcon name="truck" slot="prefix" />
+									{__('Set As Release', 'surecart')}
+								</ScMenuItem>
+							)
+						)}
+
+						<MediaLibrary
+							onSelect={replaceItem}
+							multiple={false}
+							render={({ setOpen }) => {
+								return (
+									<ScMenuItem onClick={() => setOpen(true)}>
+										<ScIcon name="repeat" slot="prefix" />
+										{__('Replace', 'surecart')}
+									</ScMenuItem>
+								);
+							}}
+						></MediaLibrary>
+
+						<ScMenuDivider></ScMenuDivider>
+
 						<ScMenuItem onClick={downloadItem}>
 							<ScIcon name="download-cloud" slot="prefix" />
 							{__('Download', 'surecart')}
 						</ScMenuItem>
+
+						<ScMenuDivider></ScMenuDivider>
+
 						<ScMenuItem onClick={toggleDisable}>
 							<ScIcon name="archive" slot="prefix" />
 							{download?.archived
