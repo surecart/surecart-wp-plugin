@@ -182,6 +182,7 @@ jobs:
           SLUG: surecart
           BUILD_DIR: '@surecart/surecart'
       - name: Upload release asset
+        if: ${{ github.event_name == 'release' && github.event.ref_type == 'published' }}
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
