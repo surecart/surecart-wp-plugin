@@ -10,7 +10,7 @@ on:
     - master
 
 jobs:
-  test:
+  unit:
     runs-on: ubuntu-latest
     services:
       mysql:
@@ -91,12 +91,21 @@ jobs:
         run: cd plugins/surecart && yarn test:php
         if: ${{ success() || failure() }}
 
-      - name: Running component tests
-        run: cd plugins/surecart/packages/components && yarn run test --spec --e2e
+  web_components:
+    name: Web Components Test
+    needs: unit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Install Dependencies
+        run: yarn
+      - name: Tests
+        run: cd packages/components && yarn run test --spec --e2e
 
   build:
     name: "Build"
-    needs: test
+    needs: web_components
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
