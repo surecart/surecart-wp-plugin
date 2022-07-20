@@ -11,7 +11,6 @@ on:
 
 jobs:
   test:
-    name: "Test"
     runs-on: ubuntu-latest
     services:
       mysql:
@@ -27,8 +26,6 @@ jobs:
       matrix:
         php-versions: [ '7.4' ]
         wp-versions: [ 'trunk' ]
-        # php-versions: [ '7.4', '8.0', '8.1' ]
-        # wp-versions: [ '5.9', 'trunk' ]
     name: PHP ${{ matrix.php-versions }} / WP ${{ matrix.wp-versions }} Test on ${{ matrix.operating-system }}
     steps:
       - uses: actions/checkout@v2
@@ -75,7 +72,6 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('plugins/surecart/**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-
 
       - name: Yarn Install
         run: cd plugins/surecart && yarn
