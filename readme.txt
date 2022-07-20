@@ -36,12 +36,14 @@ The platform is built with the same technology that Shopify, Basecamp, GitHub, T
 
 The plugin connects to the platform in real-time taking all the load away from your website and onto our platform that was built and optimized for Ecommerce.
 
-This way you get everything you want with none of the stuff you don’t want. SureCart will not slow down your website, it won’t bloat your database, it’s less likely to have plugin conflicts, and it’s made to work with your caching setup. But the real benefit here is you get assurance and peace of mind because you don’t have to worry as much about security, storage, or backups.
+This way you get everything you want with none of the stuff you don’t want. SureCart will not slow down your website, it won’t bloat your database, it’s less likely to have plugin conflicts, and it’s made to work with your caching setup. But the real benefit here is you get assurance and peace of mind because you don’t have to worry about security, storage, or backups.
 
 ## Who Is SureCart For? ##
 Currently SureCart is ideally suited for selling non-physical goods. This would be selling online courses, memberships, subscriptions, selling services, selling event tickets, accepting donations, selling digital downloads, etc. These are no non-physical goods.
 
 However you can still sell physical products with SureCart and we have merchants selling physical goods currently, but we have yet to launch some essential features for selling physical goods. These are inventory control, shipping calculations, and country buying restrictions. These are planned by the end of the year.
+
+## Now let me tell you what SureCart can do, then why you could consider using it. ##
 
 ## SureCart Features ##
 These are just some of the features that make SureCart the perfect ecommerce platform for everyone.
@@ -83,10 +85,6 @@ With other ecommerce plugins, if you get an influx of buyers for that big sale o
 Other ecommerce platforms let you integrate with expensive tax calculation services, usually costing $50 per month and up. Not with SureCart, we are fully integrated with TaxJar and we pay for the calculations so you don’t have to. And the setup is a breeze.
 
 SureCart is the Ecommerce platform of your dreams. It delivers a complete Ecommerce experience with everything needed for modern commerce online.
-It starts with our payment forms
-Forms are easy enough for non-techies, just point and click, yet they also have everything the more demanding power user would want. All without touching a single line of code.
-You can have individual forms anywhere on your website, as well as having the traditional Ecommerce structure with a central checkout page. The choice is yours
-And As a merchant, there are multiple ways to take payments and with multiple processors.
 
 ## What Is Unique About SureCart? ##
 SureCart was made to give WordPress users a better option for taking payments. Currently most merchants use WooCommerce, which was made over 10 years ago for building big commerce stores like Amazon, Walmart, etc.
@@ -127,79 +125,82 @@ Of course we have to keep the lights on, so at some point in the future we will 
 
 ### Page Builders ###
 SureCart works with all WordPress page builders, including:
-Elementor
-Beaver Builder
-Brizy Builder
-Divi Builder
-Thrive Architect
-Gutenberg
-Spectra Website Builder
-Oxygen Builder
-Bricks Builder
-And others
+
+* Elementor
+* Beaver Builder
+* Brizy Builder
+* Divi Builder
+* Thrive Architect
+* Gutenberg
+* Spectra Website Builder
+* Oxygen Builder
+* Bricks Builder
+* And others
 
 ### WooCommerce Themes ###
 SureCart works with any theme, including:
-Astra
-Avada
-Blocksy
-Divi
-Flatsome
-GeneratePress
-Hello Elementor
-Hestia
-Kadence
-Neve
-OceanWP
-Zakra
+
+* Astra
+* Avada
+* Blocksy
+* Divi
+* Flatsome
+* GeneratePress
+* Hello Elementor
+* Hestia
+* Kadence
+* Neve
+* OceanWP
 
 ### WordPress Plugins ###
 SureCart has 2 types of integrations. The first is available directly in the plugin, we call these purchase syncing integrations and they currently include:
-SureMembers
-LearnDash
-AffiliateWP
-MemberPress
-And more are coming
+
+* SureMembers
+* LearnDash
+* AffiliateWP
+* MemberPress
+* And more are coming
 
 The second type of integrations are done with SureTriggers, which is like Zapier for WordPress. These will require you to add the SureTriggers plugin to your website to integrate with:
-ActiveCampaign
-BeaverBuilder
-CartFlows
-Convert Pro
-ConvertKit
-Divi
-Easy Digital Downloads
-Elementor
-Facebook
-FluentCRM
-FluentForm
-GiveWP
-Google Sheets
-GravityForms
-LearnDash
-LifterLMS
-MailChimp
-MailGun
-MemberPress
-PayPal
-PrestoPlayer
-Restrict Content Pro
-SendinBlue
-Slack
-Spectra Website Builder
-Stripe
-SureMembers
-The Events Calendar
-TutorLMS
-Twilio
-Twitter
-Webhooks
-WhatsApp
-Wishlist Member
-WooCommerce
-WPForms
-Zoom
-And more being added each week
+
+* ActiveCampaign
+* BeaverBuilder
+* CartFlows
+* Convert Pro
+* ConvertKit
+* Divi
+* Easy Digital Downloads
+* Elementor
+* Facebook
+* FluentCRM
+* FluentForm
+* GiveWP
+* Google Sheets
+* GravityForms
+* LearnDash
+* LifterLMS
+* MailChimp
+* MailGun
+* MemberPress
+* PayPal
+* PrestoPlayer
+* Restrict Content Pro
+* SendinBlue
+* Slack
+* Spectra Website Builder
+* Stripe
+* SureMembers
+* The Events Calendar
+* TutorLMS
+* Twilio
+* Twitter
+* Webhooks
+* WhatsApp
+* Wishlist Member
+* WooCommerce
+* WPForms
+* Zoom
+* And more being added each week
 
 There are also some special features for site to site connections. So you can sell products on one site with SureCart then add the user to another site where your content may be. This is great for online courses or membership setups.
 
@@ -242,7 +243,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.0.0 - July 9, 2022 =
+= 1.0.0 - July 20, 2022 =
 * Initial release
 
 
