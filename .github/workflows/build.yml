@@ -92,7 +92,7 @@ jobs:
         if: ${{ success() || failure() }}
 
       - name: Running component tests
-        run: cd plugins/packages/components && yarn run test --spec --e2e
+        run: cd plugins/surecart/packages/components && yarn run test --spec --e2e
 
   build:
     name: "Build"
