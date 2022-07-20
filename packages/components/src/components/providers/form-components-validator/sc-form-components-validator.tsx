@@ -1,6 +1,6 @@
 import { Component, h, Prop, Watch, Element, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { Order } from '../../../types';
+import { Order, TaxProtocol } from '../../../types';
 
 @Component({
   tag: 'sc-form-components-validator',
@@ -15,11 +15,14 @@ export class ScFormComponentsValidator {
   /** The order */
   @Prop() order: Order;
 
-  /** Is tax enabled. */
-  @Prop() taxEnabled: boolean;
+  /** The tax protocol */
+  @Prop() taxProtocol: TaxProtocol;
 
   /** Is there an address field? */
   @State() hasAddress: boolean;
+
+  /** Is there a tax id field? */
+  @State() hasTaxIDField: boolean;
 
   @Watch('order')
   handleOrderChange() {
@@ -33,11 +36,20 @@ export class ScFormComponentsValidator {
 
   componentWillLoad() {
     this.hasAddress = !!this.el.querySelector('sc-order-shipping-address');
+    this.hasTaxIDField = !!this.el.querySelector('sc-order-tax-id-input');
 
     // automatically add address field if tax is enabled.
-    if (this.taxEnabled) {
+    if (this.taxProtocol?.tax_enabled) {
       this.addAddressField();
+
+      // if eu vat is required, add the tax id field.
+      if (this.taxProtocol?.eu_vat_required) {
+        this.addTaxIDField();
+      }
     }
+
+    // make sure to check order on load.
+    this.handleOrderChange();
   }
 
   addAddressField() {
@@ -47,6 +59,15 @@ export class ScFormComponentsValidator {
     address.label = __('Address', 'surecart');
     payment.parentNode.insertBefore(address, payment);
     this.hasAddress = true;
+  }
+
+  addTaxIDField() {
+    if (this.hasTaxIDField) return;
+    const payment = this.el.querySelector('sc-payment');
+    const taxInput = document.createElement('sc-order-tax-id-input');
+    taxInput.taxIdentifier?.number_type === 'eu_vat';
+    payment.parentNode.insertBefore(taxInput, payment);
+    this.hasTaxIDField = true;
   }
 
   render() {

@@ -1,5 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+
 import { OrderStatus } from '../../../types';
 
 @Component({
@@ -24,11 +25,14 @@ export class ScOrderStatusBadge {
     switch (this.status) {
       case 'draft':
         return 'info';
+      case 'requires_approval':
       case 'finalized':
         return 'warning';
-      case 'completed':
       case 'paid':
         return 'success';
+      case 'payment_intent_canceled':
+      case 'payment_failed':
+        return 'danger';
     }
   }
 
@@ -40,8 +44,12 @@ export class ScOrderStatusBadge {
         return __('Pending Payment', 'surecart');
       case 'paid':
         return __('Paid', 'surecart');
-      case 'completed':
-        return __('Completed', 'surecart');
+      case 'payment_intent_canceled':
+        return __('Cancelled', 'surecart');
+      case 'payment_failed':
+        return __('Failed', 'surecart');
+      case 'requires_approval':
+        return __('Requires Approval', 'surecart');
       default:
         return this.status;
     }

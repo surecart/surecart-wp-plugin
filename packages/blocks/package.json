@@ -39,7 +39,7 @@
 		"test:unit": "wp-scripts test-unit-js"
 	},
 	"dependencies": {
-		"@surecart/components": "^0.0.7",
+		"@surecart/components": "^0.0.8",
 		"@surecart/components-react": "^0.0.6",
 		"@surecart/docs": "workspace:^"
 	},

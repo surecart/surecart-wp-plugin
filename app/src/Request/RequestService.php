@@ -53,7 +53,7 @@ class RequestService {
 	/**
 	 * Constructor.
 	 *
-	 * @param string $base_path The rest api base path.
+	 * @param string $token The rest api base path.
 	 */
 	public function __construct( $token = '', $base_path = '/v1', $errors_service = null ) {
 		// error handing service.

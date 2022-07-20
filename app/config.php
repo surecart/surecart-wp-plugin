@@ -19,6 +19,7 @@ return [
 		\SureCart\Account\AccountServiceProvider::class,
 		\SureCart\WordPress\PluginServiceProvider::class,
 		\SureCart\WordPress\TranslationsServiceProvider::class,
+		\SureCart\WordPress\ThemeServiceProvider::class,
 		\SureCart\WordPress\Pages\PageServiceProvider::class,
 		\SureCart\WordPress\Users\UsersServiceProvider::class,
 		\SureCart\WordPress\Admin\Profile\UserProfileServiceProvider::class,
@@ -34,6 +35,7 @@ return [
 		\SureCart\Settings\SettingsServiceProvider::class,
 		\SureCart\Request\RequestServiceProvider::class,
 		\SureCart\View\ViewServiceProvider::class,
+		\SureCart\Cart\CartServiceProvider::class,
 		\SureCart\Webhooks\WebhooksServiceProvider::class,
 		\SureCart\BlockLibrary\BlockServiceProvider::class,
 		\SureCart\Support\Errors\ErrorsServiceProvider::class,
@@ -87,8 +89,11 @@ return [
 	*/
 	'blocks'                 => [
 		\SureCartBlocks\Blocks\BuyButton\Block::class,
+		\SureCartBlocks\Blocks\AddToCartButton\Block::class,
 		\SureCartBlocks\Blocks\CustomerDashboardButton\Block::class,
 		\SureCartBlocks\Blocks\CheckoutForm\Block::class,
+		\SureCartBlocks\Blocks\CartSubtotal\Block::class,
+		\SureCartBlocks\Blocks\OrderConfirmationLineItems\Block::class,
 		\SureCartBlocks\Blocks\Form\Block::class,
 		\SureCartBlocks\Blocks\LogoutButton\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\WordPressAccount\Block::class,

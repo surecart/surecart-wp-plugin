@@ -1,4 +1,5 @@
 {
+	"apiVersion": 2,
 	"name": "surecart/customer-dashboard-button",
 	"title": "Customer Dashboard Button",
 	"description": "Display a button to link the user to their customer dashboard.",
@@ -17,6 +18,10 @@
 		"type": {
 			"type": "string",
 			"default": "primary"
+		},
+		"full": {
+			"type": "boolean",
+			"default": true
 		},
 		"size": {
 			"type": "string",

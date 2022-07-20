@@ -30,7 +30,7 @@ export class ScSubscriptionCancel {
       this.loading = true;
       await Promise.all([this.fetchProtocol(), this.fetchSubscription()]);
     } catch (e) {
-      console.error(this.error);
+      console.error(e);
       this.error = e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.loading = false;

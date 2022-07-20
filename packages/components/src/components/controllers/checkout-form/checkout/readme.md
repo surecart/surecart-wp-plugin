@@ -24,7 +24,7 @@
 | `removeLineItems`             | `remove-line-items`             | Can we remove line items?                                     | `boolean`                      | `true`      |
 | `stripePaymentElement`        | `stripe-payment-element`        | Use the Stripe payment element.                               | `boolean`                      | `false`     |
 | `successUrl`                  | `success-url`                   | Where to go on success                                        | `string`                       | `''`        |
-| `taxEnabled`                  | `tax-enabled`                   | Is tax enabled?                                               | `boolean`                      | `undefined` |
+| `taxProtocol`                 | --                              | The account tax protocol                                      | `TaxProtocol`                  | `undefined` |
 
 
 ## Events
@@ -38,13 +38,13 @@
 
 ## Methods
 
-### `submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Order | CustomEvent<import("/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/types").FormStateSetter>>`
+### `submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<any>`
 
 Submit the form
 
 #### Returns
 
-Type: `Promise<Order | CustomEvent<FormStateSetter>>`
+Type: `Promise<any>`
 
 
 
@@ -88,6 +88,7 @@ graph TD;
   sc-block-ui --> sc-spinner
   sc-form-error-provider --> sc-alert
   sc-form-components-validator --> sc-order-shipping-address
+  sc-form-components-validator --> sc-order-tax-id-input
   sc-order-shipping-address --> sc-address
   sc-order-shipping-address --> sc-compact-address
   sc-address --> sc-form-control
@@ -108,6 +109,15 @@ graph TD;
   sc-compact-address --> sc-select
   sc-compact-address --> sc-input
   sc-compact-address --> sc-block-ui
+  sc-order-tax-id-input --> sc-tax-id-input
+  sc-tax-id-input --> sc-icon
+  sc-tax-id-input --> sc-input
+  sc-tax-id-input --> sc-spinner
+  sc-tax-id-input --> sc-dropdown
+  sc-tax-id-input --> sc-button
+  sc-tax-id-input --> sc-menu
+  sc-tax-id-input --> sc-menu-item
+  sc-button --> sc-spinner
   sc-session-provider --> sc-line-items-provider
   style sc-checkout fill:#f9f,stroke:#333,stroke-width:4px
 ```

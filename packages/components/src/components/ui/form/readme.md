@@ -75,6 +75,7 @@ Type: `Promise<boolean>`
 
 ### Used by
 
+ - [sc-cart-form](../../controllers/cart/sc-cart-form)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-login-form](../../controllers/login)
  - [sc-payment-method-create](../../controllers/dashboard/payment-method-create)
@@ -88,6 +89,7 @@ Type: `Promise<boolean>`
 ### Graph
 ```mermaid
 graph TD;
+  sc-cart-form --> sc-form
   sc-customer-edit --> sc-form
   sc-login-form --> sc-form
   sc-payment-method-create --> sc-form

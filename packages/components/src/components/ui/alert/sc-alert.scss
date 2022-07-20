@@ -22,7 +22,7 @@
   font-weight: var(--sc-font-weight-normal);
   font-size: var(--sc-button-font-size-medium);
   line-height: var(--sc-line-height-dense);
-  border-radius: var(--sc-border-radius-medium);
+  border-radius: var(--sc-alert-border-radius, var(--sc-border-radius-medium));
   padding: var(--sc-spacing-large);
   display: flex;
   align-items: flex-start;

@@ -19,23 +19,29 @@
   }
 }
 
+.item__title {
+  color: var(--sc-line-item-title-color);
+}
+.item__price {
+  color: var(--sc-input-label-color);
+}
+
 .item__title,
 .item__price {
   font-size: var(--sc-font-size-medium);
   font-weight: var(--sc-font-weight-semibold);
-  color: var(--sc-input-label-color);
 }
 
 .item__description,
 .item__price-description {
   font-size: var(--sc-font-size-small);
   line-height: var(--sc-line-height-normal);
-  color: var(--sc-color-gray-500);
+  color: var(--sc-input-label-color);
 }
 
 ::slotted([slot="price-description"]) {
   margin-top: var(--sc-line-item-text-margin, 5px);
-  color: var(--sc-color-gray-500);
+  color: var(--sc-input-label-color);
   text-decoration: none;
 }
 
@@ -63,7 +69,7 @@
 
 .item__price-currency {
   font-size: var(--sc-font-size-small);
-  color: var(--sc-color-gray-500);
+  color: var(--sc-input-label-color);
   text-transform: var(--sc-currency-transform, uppercase);
   margin-right: 8px;
 }
@@ -108,7 +114,7 @@
 .item_currency {
   font-weight: var(--sc-font-weight-normal);
   font-size: var(--sc-font-size-xx-small);
-  color: var(--sc-color-gray-500);
+  color: var(--sc-input-label-color);
   margin-right: var(--sc-spacing-small);
   text-transform: var(--sc-currency-text-transform, uppercase);
 }

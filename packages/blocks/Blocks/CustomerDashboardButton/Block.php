@@ -20,12 +20,14 @@ class Block extends BaseBlock {
 
 		ob_start(); ?>
 
-		<sc-button href="<?php echo esc_url( $href ); ?>" type="<?php echo esc_attr( $attributes['type'] ?? 'primary' ); ?>" size="<?php echo esc_attr( $attributes['size'] ?? 'medium' ); ?>">
-			<?php if ( ! empty( $attributes['show_icon'] ) ) : ?>
-				<sc-icon name="user" style="font-size: 18px" slot="prefix"></sc-icon>
-			<?php endif; ?>
-			<?php echo esc_html( $attributes['label'] ?? __( 'Dashboard', 'surecart' ) ); ?>
-		</sc-button>
+		<div>
+			<sc-button href="<?php echo esc_url( $href ); ?>" type="<?php echo esc_attr( $attributes['type'] ?? 'primary' ); ?>" size="<?php echo esc_attr( $attributes['size'] ?? 'medium' ); ?>">
+				<?php if ( ! empty( $attributes['show_icon'] ) ) : ?>
+					<sc-icon name="user" style="font-size: 18px" slot="prefix"></sc-icon>
+				<?php endif; ?>
+				<?php echo esc_html( $attributes['label'] ?? __( 'Dashboard', 'surecart' ) ); ?>
+			</sc-button>
+		</div>
 
 		<?php
 		return ob_get_clean();

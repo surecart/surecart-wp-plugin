@@ -2,9 +2,9 @@
 
 namespace SureCartBlocks\Blocks\Dashboard\OrderDownloads;
 
+use SureCart\Models\Component;
 use SureCart\Models\User;
 use SureCartBlocks\Blocks\Dashboard\DashboardPage;
-use SureCartBlocks\Controllers\DownloadController;
 
 /**
  * Checkout block
@@ -42,6 +42,6 @@ class Block extends DashboardPage {
 						'per_page'  => 10,
 					],
 				]
-			)->render( $attributes['title'] ? "<span slot='heading'>" . $attributes['title'] . '</span>' : '' )
+			)->render( $attributes['title'] ? "<span slot='heading'>" . $attributes['title'] . '</span>' : '' ) );
 	}
 }

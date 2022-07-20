@@ -47,9 +47,10 @@ export const getSessionId = (formId, order, modified) => {
   return '';
 };
 
-export const setSessionId = (formId, sessionId, modified) => {
+export const setSessionId = (formId, sessionId, modified, count) => {
   window.localStorage.setItem(formId, sessionId);
   window.localStorage.setItem(`${formId}-modified`, modified);
+  window.localStorage.setItem(`${formId}-line-items-count`, count);
 };
 
 export const removeSessionId = formId => {

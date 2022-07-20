@@ -48,7 +48,7 @@ exports[`sc-payment renders stripe and hides paypal if recurring 1`] = `
       <div></div>
     </div>
     <sc-toggles theme="container">
-      <sc-toggle borderless="" open="" shady="" show-control="" show-icon="">
+      <sc-toggle borderless="" class="sc-stripe-toggle" open="" shady="" show-control="">
         <span class="sc-payment-toggle-summary" slot="summary">
           <sc-icon name="credit-card" style="font-size: 24px;"></sc-icon>
           <span>
@@ -60,7 +60,7 @@ exports[`sc-payment renders stripe and hides paypal if recurring 1`] = `
           <sc-secure-notice></sc-secure-notice>
         </div>
       </sc-toggle>
-      <sc-toggle borderless="" shady="" show-control="">
+      <sc-toggle borderless="" class="sc-paypal-toggle" shady="" show-control="">
         <span class="sc-payment-toggle-summary" slot="summary">
           <sc-icon name="paypal" style="width: 80px; font-size: 24px;"></sc-icon>
         </span>
@@ -80,7 +80,7 @@ exports[`sc-payment renders stripe and paypal 1`] = `
       <div></div>
     </div>
     <sc-toggles theme="container">
-      <sc-toggle borderless="" open="" shady="" show-control="" show-icon="">
+      <sc-toggle borderless="" class="sc-stripe-toggle" open="" shady="" show-control="">
         <span class="sc-payment-toggle-summary" slot="summary">
           <sc-icon name="credit-card" style="font-size: 24px;"></sc-icon>
           <span>
@@ -92,7 +92,7 @@ exports[`sc-payment renders stripe and paypal 1`] = `
           <sc-secure-notice></sc-secure-notice>
         </div>
       </sc-toggle>
-      <sc-toggle borderless="" shady="" show-control="">
+      <sc-toggle borderless="" class="sc-paypal-toggle" shady="" show-control="">
         <span class="sc-payment-toggle-summary" slot="summary">
           <sc-icon name="paypal" style="width: 80px; font-size: 24px;"></sc-icon>
         </span>

@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
 import {
 	ScTag,
 	ScButton,
@@ -170,7 +169,7 @@ export default ({
 				<ScTag type="warning">{__('Archived', 'surecart')}</ScTag>
 			) : (
 				<>
-					{!!scData?.checkout_page_url && (
+					{!!scData?.checkout_page_url && price?.id && (
 						<Copy
 							className={'sc-price-copy'}
 							url={addQueryArgs(scData?.checkout_page_url, {

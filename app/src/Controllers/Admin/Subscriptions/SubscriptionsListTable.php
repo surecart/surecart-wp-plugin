@@ -199,7 +199,11 @@ class SubscriptionsListTable extends ListTable {
 	 */
 	public function column_remaining_payments( $subscription ) {
 		if ( null === $subscription->remaining_period_count ) {
-			return '&infin;';
+			if ( 'completed' === $subscription->status ) {
+				return '-';
+			} else {
+				return '&infin;';
+			}
 		}
 		if ( 0 === $subscription->remaining_period_count ) {
 			return __( 'None', 'surecart' );

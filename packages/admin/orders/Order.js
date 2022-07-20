@@ -1,7 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import { dispatch } from '@wordpress/data';
-import { store } from './store';
 import Sidebar from './Sidebar';
 import FlashError from '../components/FlashError';
 
@@ -15,21 +14,44 @@ import Charges from './modules/Charges';
 import Subscriptions from './modules/Subscriptions';
 import useCurrentPage from '../mixins/useCurrentPage';
 import { useEffect } from 'react';
+import { ScSkeleton } from '@surecart/components-react';
+import SaveButton from './components/SaveButton';
 
 export default () => {
+	const {
+		id,
+		order,
+		updateOrder,
+		saveOrder,
+		isLoading,
+		error,
+		isSaving,
+		setSaving,
+		fetchOrder,
+		getRelation,
+	} = useCurrentPage('order');
+	const customer = getRelation('customer');
+	const charge = getRelation('charge');
+
 	const onSubmit = async (e) => {
 		e.preventDefault();
-		dispatch(store).save();
+		try {
+			setSaving(true);
+			await saveOrder();
+			addSnackbarNotice({
+				content: __('Saved.'),
+			});
+		} catch (e) {
+			console.error(e);
+			addModelErrors('order', e);
+		} finally {
+			setSaving(false);
+		}
 	};
 
 	const onInvalid = () => {
 		dispatch(uiStore).setInvalid(true);
 	};
-
-	const { id, order, isLoading, error, fetchOrder, getRelation } =
-		useCurrentPage('order');
-	const customer = getRelation('customer');
-	const charge = getRelation('charge');
 
 	useEffect(() => {
 		if (id) {
@@ -47,6 +69,8 @@ export default () => {
 						'charge.payment_intent',
 						'payment_method.card',
 						'customer',
+						'billing_address',
+						'shipping_address',
 					],
 				},
 			});
@@ -59,6 +83,21 @@ export default () => {
 			pageModelName={'orders'}
 			onSubmit={onSubmit}
 			onInvalid={onInvalid}
+			// button={
+			// 	isLoading ? (
+			// 		<ScSkeleton
+			// 			style={{
+			// 				width: '120px',
+			// 				height: '35px',
+			// 				display: 'inline-block',
+			// 			}}
+			// 		></ScSkeleton>
+			// 	) : (
+			// 		<SaveButton isSaving={isSaving}>
+			// 			{__('Update Order', 'surecart')}
+			// 		</SaveButton>
+			// 	)
+			// }
 			backUrl={'admin.php?page=sc-orders'}
 			backText={__('Back to All Orders', 'surecart')}
 			title={
@@ -69,6 +108,7 @@ export default () => {
 			sidebar={
 				<Sidebar
 					order={order}
+					updateOrder={updateOrder}
 					customer={customer}
 					loading={isLoading}
 				/>

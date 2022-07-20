@@ -31,7 +31,7 @@ class OrderController extends BaseController {
 					),
 					'query'   => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
-						'status'       => [ 'paid' ],
+						'status'       => [ 'paid', 'requires_approval', 'pending' ],
 						'page'         => 1,
 						'per_page'     => 5,
 					],

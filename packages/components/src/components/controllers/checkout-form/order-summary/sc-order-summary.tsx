@@ -41,7 +41,7 @@ export class ScOrderSummary {
 
   renderHeader() {
     // loading state
-    if (this.loading) {
+    if (this.loading && !this.order?.id) {
       return (
         <sc-line-item>
           <sc-skeleton slot="title" style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>

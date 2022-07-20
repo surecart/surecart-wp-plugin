@@ -9,7 +9,7 @@ import {
 } from '@wordpress/components';
 import { ScAddress } from '@surecart/components-react';
 
-export default ({ className, attributes, setAttributes }) => {
+export default ({ attributes, setAttributes }) => {
 	const { label, full, show_name } = attributes;
 
 	const blockProps = useBlockProps({
