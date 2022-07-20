@@ -171,13 +171,8 @@ jobs:
       - name: Release
         run: yarn plugin:release
 
-      - uses: actions/upload-artifact@v3
-        with:
-          name: surecart
-          path: "@surecart/surecart.zip"
-
       - name: WordPress Plugin Deploy
-      - if: ${{ github.event_name == 'release' && github.event.ref_type == 'published' }}
+        if: ${{ github.event_name == 'release' && github.event.ref_type == 'published' }}
         uses: 10up/action-wordpress-plugin-deploy@stable
         with:
           generate-zip: true
