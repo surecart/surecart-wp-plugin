@@ -11,7 +11,7 @@ on:
     types: [published]
 
 jobs:
-  unit:
+  test:
     runs-on: ubuntu-latest
     services:
       mysql:
@@ -97,7 +97,7 @@ jobs:
 
   build:
     name: "Build"
-    needs: web_components
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
