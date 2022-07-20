@@ -92,27 +92,8 @@ jobs:
         run: cd plugins/surecart && yarn test:php
         if: ${{ success() || failure() }}
 
-  web_components:
-    name: Web Components Test
-    needs: unit
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@master
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-      - uses: actions/cache@v3
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: Install Dependencies
-        run: yarn
-      - name: Tests
-        run: cd packages/components && yarn run test --spec --e2e
+      - name: Web Component Tests
+        run: cd plugins/surecart/packages/components && yarn run test --spec --e2e
 
   build:
     name: "Build"
