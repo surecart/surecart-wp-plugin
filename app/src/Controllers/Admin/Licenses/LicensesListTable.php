@@ -57,9 +57,12 @@ class LicensesListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return [
-			'key'     => __( 'Key', 'surecart' ),
-			'created' => __( 'Created', 'surecart' ),
-			'mode'    => '',
+			'key'      => __( 'Key', 'surecart' ),
+			'customer' => __( 'Customer', 'surecart' ),
+			'purchase' => __( 'Purchase', 'surecart' ),
+			'status'   => __( 'Status', 'surecart' ),
+			'created'  => __( 'Created', 'surecart' ),
+			'mode'     => '',
 		];
 	}
 
@@ -69,7 +72,7 @@ class LicensesListTable extends ListTable {
 	 * @return Array
 	 */
 	private function table_data() {
-		return License::with( [ 'purchase', 'purchase.license' ] )
+		return License::with( [ 'purchase', 'purchase.customer', 'purchase.product' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'surecart_licenses' ),
@@ -109,6 +112,45 @@ class LicensesListTable extends ListTable {
 		);
 		?>
 
+		<?php
+		return ob_get_clean();
+	}
+
+	public function column_status( $license ) {
+		$status = $license->status ?? 'inactive';
+		switch ( $status ) {
+			case 'active':
+				return '<sc-tag type="success">' . __( 'Active', 'surecart' ) . '</sc-tag>';
+			case 'revoked':
+				return '<sc-tag type="danger">' . __( 'Revoked', 'surecart' ) . '</sc-tag>';
+			default:
+				return '<sc-tag type="info">' . __( 'Inactive', 'surecart' ) . '</sc-tag>';
+		}
+	}
+
+	public function column_customer( $license ) {
+		ob_start();
+		?>
+		<a aria-label="<?php echo esc_attr( 'Edit Customer', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'customers', $license->purchase->customer->id ) ); ?>">
+			<?php echo wp_kses_post( $license->purchase->customer->name ?? $license->purchase->customer->email ); ?>
+			<?php if ( ! empty( $license->purchase->customer->name ) ) : ?>
+				&mdash;
+				<?php echo esc_html( $license->purchase->customer->email ); ?>
+			<?php endif; ?>
+		</a>
+		<?php
+		return ob_get_clean();
+	}
+
+	public function column_purchase( $license ) {
+		if ( empty( $license->purchase->product->name ) ) {
+			return '-';
+		}
+		ob_start();
+		?>
+		<a aria-label="<?php echo esc_attr( 'Edit Product', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product', $license->purchase->product->id ) ); ?>">
+			<?php echo wp_kses_post( $license->purchase->product->name ); ?>
+		</a>
 		<?php
 		return ob_get_clean();
 	}

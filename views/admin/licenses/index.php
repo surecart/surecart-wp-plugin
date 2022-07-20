@@ -4,8 +4,7 @@
 	\SureCart::render(
 		'layouts/partials/admin-index-header',
 		[
-			'title'    => __( 'Licenses', 'surecart' ),
-			'new_link' => \SureCart::getUrl()->edit( 'customers' ),
+			'title' => __( 'Licenses', 'surecart' ),
 		]
 	);
 	?>
