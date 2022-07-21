@@ -23,13 +23,16 @@ runs:
         ini-values: post_max_size=256M, short_open_tag=On #optional, setup php.ini configuration
 
     - name: Check PHP Version
+      shell: bash
       run: php -v
 
     - name: Get Composer Cache Directory
+      shell: bash
       id: composer-cache
       run: |
         echo "::set-output name=dir::$(composer config cache-files-dir)"
     - uses: actions/cache@v3
+      shell: bash
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -37,9 +40,11 @@ runs:
           ${{ runner.os }}-composer-
 
     - name: Composer Install
+      shell: bash
       run: composer install
 
     - name: Get yarn cache directory path
+      shell: bash
       id: yarn-cache-dir-path
       run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
 
@@ -52,12 +57,15 @@ runs:
           ${{ runner.os }}-yarn-
 
     - name: Yarn Install
+      shell: bash
       run: yarn
 
     - name: Bootstrap
+      shell: bash
       if: ${{ inputs.bootstrap || inputs.package }}
       run: yarn bootstrap
 
     - name: Package
+      shell: bash
       if: ${{ inputs.package }}
       run: yarn plugin:release
