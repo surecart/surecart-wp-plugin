@@ -42,12 +42,9 @@ jobs:
           chmod -R 767 ./ # TODO: Possibly integrate in wp-env
           yarn wp-env start
 
-      - name: Composer Install
-        run: composer install
+      - name: Web Component Tests
+        run: cd packages/components && yarn run test --spec --e2e
 
       - name: Running single site unit tests
         run: yarn wp-env run phpunit phpunit -c /var/www/html/wp-content/plugins/surecart-wp/phpunit.xml
         if: ${{ success() || failure() }}
-
-      - name: Web Component Tests
-        run: cd packages/components && yarn run test --spec --e2e
