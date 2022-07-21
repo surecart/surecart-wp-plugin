@@ -27,9 +27,7 @@ jobs:
         wp-versions: [ 'trunk' ]
     name: PHP ${{ matrix.php-versions }} / WP ${{ matrix.wp-versions }} Test on ${{ matrix.operating-system }}
     steps:
-      - uses: actions/checkout@v2
-
-      - uses: ./.github/workflows/build
+      - uses: ./.github/workflows/build.yml
         with:
           bootstrap: true
 
