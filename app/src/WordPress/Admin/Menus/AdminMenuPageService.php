@@ -13,7 +13,7 @@ class AdminMenuPageService {
 	 *
 	 * @var string
 	 */
-	protected $slug = 'sc-getting-started';
+	protected $slug = 'sc-dashboard';
 
 	/**
 	 * Pages
@@ -41,7 +41,7 @@ class AdminMenuPageService {
 		// not yet installed.
 		if ( ! ApiToken::get() ) {
 			$this->pages = [
-				'get-started'     => \add_submenu_page( $this->slug, __( 'Getting Started', 'surecart' ), __( 'Getting Started', 'surecart' ), 'install_plugins', $this->slug, '__return_false' ),
+				'get-started'     => \add_submenu_page( $this->slug, __( 'Dashboard', 'surecart' ), __( 'Dashboard', 'surecart' ), 'install_plugins', $this->slug, '__return_false' ),
 				'complete-signup' => \add_submenu_page( null, __( 'Complete Signup', 'surecart' ), __( 'Complete Signup', 'surecart' ), 'install_plugins', 'sc-complete-signup', '__return_false' ),
 				'settings'        => \add_submenu_page( $this->slug, __( 'Settings', 'surecart' ), __( 'Settings', 'surecart' ), 'manage_options', 'sc-settings', '__return_false' ),
 			];
@@ -49,7 +49,7 @@ class AdminMenuPageService {
 		}
 
 		$this->pages = [
-			'get-started'     => \add_submenu_page( $this->slug, __( 'Getting Started', 'surecart' ), __( 'Getting Started', 'surecart' ), 'install_plugins', $this->slug, '__return_false' ),
+			'get-started'     => \add_submenu_page( $this->slug, __( 'Dashboard', 'surecart' ), __( 'Dashboard', 'surecart' ), 'install_plugins', $this->slug, '__return_false' ),
 			'complete-signup' => \add_submenu_page( null, __( 'Complete Signup', 'surecart' ), __( 'Complete Signup', 'surecart' ), 'install_plugins', 'sc-complete-signup', '__return_false' ),
 			'products'        => \add_submenu_page( $this->slug, __( 'Products', 'surecart' ), __( 'Products', 'surecart' ), 'edit_sc_products', 'sc-products', '__return_false' ),
 			'coupons'         => \add_submenu_page( $this->slug, __( 'Coupons', 'surecart' ), __( 'Coupons', 'surecart' ), 'edit_sc_coupons', 'sc-coupons', '__return_false' ),

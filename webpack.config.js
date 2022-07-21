@@ -20,6 +20,10 @@ module.exports = {
 		},
 	},
 	entry: {
+		['admin/dashboard']: path.resolve(
+			__dirname,
+			'packages/admin/dashboard/index.js'
+		),
 		['admin/coupons']: path.resolve(
 			__dirname,
 			'packages/admin/coupons/index.js'
