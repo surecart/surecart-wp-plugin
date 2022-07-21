@@ -27,11 +27,12 @@ jobs:
         wp-versions: [ 'trunk' ]
     name: PHP ${{ matrix.php-versions }} / WP ${{ matrix.wp-versions }} Test on ${{ matrix.operating-system }}
     steps:
-      - uses: ./.github/workflows/build.yml
+      - name: "Build"
+        uses: ./.github/actions/build
         with:
           bootstrap: true
 
-      - name: Build
+      - name: Build Scripts
         run: yarn wp-scripts build
 
       - name: Install WordPress

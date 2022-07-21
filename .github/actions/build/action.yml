@@ -1,0 +1,63 @@
+name: 'Build'
+description: 'Build the SureCart Plugin'
+inputs:
+  bootstrap:
+    required: false
+    type: boolean
+  package:
+    required: false
+    type: boolean
+runs:
+  using: "composite"
+  steps:
+    - name: Use Node.js 14.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.4'
+        extensions: mbstring, intl #optional, setup extensions
+        ini-values: post_max_size=256M, short_open_tag=On #optional, setup php.ini configuration
+
+    - name: Check PHP Version
+      run: php -v
+
+    - name: Get Composer Cache Directory
+      id: composer-cache
+      run: |
+        echo "::set-output name=dir::$(composer config cache-files-dir)"
+    - uses: actions/cache@v3
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-
+
+    - name: Composer Install
+      run: composer install
+
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+
+    - uses: actions/cache@v3
+      id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+      with:
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+
+    - name: Yarn Install
+      run: yarn
+
+    - name: Bootstrap
+      if: ${{ inputs.bootstrap || inputs.package }}
+      run: yarn bootstrap
+
+    - name: Package
+      if: ${{ inputs.package }}
+      run: yarn plugin:release
