@@ -243,6 +243,10 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.0.1 - July 21, 2022 =
+* Fix quantity control style issue in Firefox.
+* Attempt to fix script caching issues upon updating
+
 = 1.0.0 - July 20, 2022 =
 * Initial release
 
