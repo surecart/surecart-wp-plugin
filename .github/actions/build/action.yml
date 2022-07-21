@@ -3,10 +3,10 @@ description: 'Build the SureCart Plugin'
 inputs:
   bootstrap:
     required: false
-    type: boolean
+    description: "Do you want to bootstrap the files?"
   package:
     required: false
-    type: boolean
+    description: "Do you want to package the files?"
 runs:
   using: "composite"
   steps:
