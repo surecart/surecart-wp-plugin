@@ -1,16 +1,19 @@
-name: Build Plugin
+name:  Build
 
 on:
-  push:
-    branches:
-    - master
-  pull_request:
-    branches:
-    - master
+  workflow_call:
+    inputs:
+        bootstrap:
+          required: false
+          type: boolean
+        package:
+          required: false
+          type: boolean
 
 jobs:
-  test:
+  build:
     name: "Build"
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -26,7 +29,6 @@ jobs:
           php-version: '7.4'
           extensions: mbstring, intl #optional, setup extensions
           ini-values: post_max_size=256M, short_open_tag=On #optional, setup php.ini configuration
-          coverage: xdebug #optional, setup coverage driver
 
       - name: Check PHP Version
         run: php -v
@@ -48,6 +50,7 @@ jobs:
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+
       - uses: actions/cache@v3
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
@@ -60,12 +63,10 @@ jobs:
         run: yarn
 
       - name: Bootstrap
+        if: ${{ inputs.bootstrap || inputs.package }}
         run: yarn bootstrap
 
-      - name: Release
+      - name: Package
+        if: ${{ inputs.package }}
         run: yarn plugin:release
 
-      - uses: actions/upload-artifact@v3
-        with:
-          name: surecart
-          path: "@surecart/surecart.zip"

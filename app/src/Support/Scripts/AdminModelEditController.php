@@ -100,7 +100,7 @@ abstract class AdminModelEditController {
 			$this->handle,
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . "dist/$this->path.js",
 			array_merge( $asset_file['dependencies'], $this->dependencies ),
-			$asset_file['version']
+			$asset_file['version'] . '-' . \SureCart::plugin()->version()
 		);
 
 		// pass app url.

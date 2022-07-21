@@ -97,7 +97,7 @@ class CustomersListTable extends ListTable {
 	/**
 	 * Get the table data
 	 *
-	 * @return Array
+	 * @return Object
 	 */
 	private function table_data() {
 		return Customer::with( [ 'orders' ] )

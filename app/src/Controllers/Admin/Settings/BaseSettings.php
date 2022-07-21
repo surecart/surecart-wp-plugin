@@ -87,7 +87,7 @@ abstract class BaseSettings {
 			$handle,
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . "dist/$path.js",
 			array_merge( $asset_file['dependencies'], $deps ),
-			$asset_file['version']
+			$asset_file['version'] . '-' . \SureCart::plugin()->version()
 		);
 
 		wp_set_script_translations( $handle, 'surecart', WP_LANG_DIR . '/plugins/' );
