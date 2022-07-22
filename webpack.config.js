@@ -40,6 +40,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/invoices/index.js'
 		),
+		['admin/licenses']: path.resolve(
+			__dirname,
+			'packages/admin/licenses/index.js'
+		),
 		['admin/product-groups']: path.resolve(
 			__dirname,
 			'packages/admin/product-groups/index.js'

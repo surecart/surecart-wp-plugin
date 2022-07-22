@@ -10,6 +10,7 @@ import ErrorBoundary from '../../components/error-boundary';
 import { ScForm } from '@surecart/components-react';
 import useSnackbar from '../../hooks/useSnackbar';
 import admin from '../../styles/admin';
+import Notifications from '../../components/Notifications';
 
 export default ({
 	children,
@@ -208,6 +209,19 @@ export default ({
 						`}
 						notices={snackbarNotices}
 						onRemove={removeSnackbarNotice}
+					/>
+					<Notifications
+						css={css`
+							position: fixed !important;
+							left: auto !important;
+							right: 40px;
+							bottom: 40px;
+							width: auto !important;
+
+							:first-letter {
+								text-transform: uppercase;
+							}
+						`}
 					/>
 				</ScForm>
 			</ErrorBoundary>

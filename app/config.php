@@ -62,6 +62,8 @@ return [
 		\SureCart\Rest\ChargesRestServiceProvider::class,
 		\SureCart\Rest\RefundsRestServiceProvider::class,
 		\SureCart\Rest\DownloadRestServiceProvider::class,
+		\SureCart\Rest\LicenseRestServiceProvider::class,
+		\SureCart\Rest\ActivationRestServiceProvider::class,
 		\SureCart\Rest\MediaRestServiceProvider::class,
 		\SureCart\Rest\SubscriptionRestServiceProvider::class,
 		\SureCart\Rest\SubscriptionProtocolRestServiceProvider::class,
