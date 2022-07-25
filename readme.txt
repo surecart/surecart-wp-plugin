@@ -243,9 +243,15 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.0.2 - July 25, 2022 =
+* Improvement: Allow changing of "secure text" in payment block.
+* Improvement: Only show "Amount Due Today" if the amount due is different than the total.
+* Fix: Issue with tax registration validation on admin settings page.
+* Fix: Make sure label is passed to shipping address.
+
 = 1.0.1 - July 21, 2022 =
-* Fix quantity control style issue in Firefox.
-* Attempt to fix script caching issues upon updating
+* Fix: quantity control style issue in Firefox.
+* Fix: script caching issues upon updating
 
 = 1.0.0 - July 20, 2022 =
 * Initial release
