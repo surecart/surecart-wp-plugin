@@ -1,10 +1,10 @@
 {
 	"apiVersion": 2,
 	"name": "surecart/address",
-	"title": "Address",
-	"description": "Display an address form.",
+	"title": "Shipping Address",
+	"description": "Display an shipping address form. This is used for shipping and tax calculations.",
 	"category": "surecart",
-	"keywords": ["button", "submit", "checkout", "engine"],
+	"keywords": ["address", "shipping", "tax"],
 	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,

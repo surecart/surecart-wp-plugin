@@ -2,7 +2,6 @@ import { Order } from '../../../../types';
 import { Component, h, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { __ } from '@wordpress/i18n';
-import { hasPaymentPlan } from '../../../../functions/line-items';
 
 @Component({
   tag: 'sc-line-item-total',
@@ -34,7 +33,8 @@ export class ScLineItemTotal {
 
     if (!this.order?.currency) return;
 
-    if (this.total === 'total' && (this.order.trial_amount !== 0 || hasPaymentPlan(this.order))) {
+    // if the total amount is different than the amount due.
+    if (this.total === 'total' && this.order?.total_amount !== this.order?.amount_due) {
       return (
         <div class="line-item-total__group">
           <sc-line-item>

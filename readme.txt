@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -243,9 +243,15 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.0.2 - July 25, 2022 =
+* Improvement: Allow changing of "secure text" in payment block.
+* Improvement: Only show "Amount Due Today" if the amount due is different than the total.
+* Fix: Issue with tax registration validation on admin settings page.
+* Fix: Make sure label is passed to shipping address.
+
 = 1.0.1 - July 21, 2022 =
-* Fix quantity control style issue in Firefox.
-* Attempt to fix script caching issues upon updating
+* Fix: quantity control style issue in Firefox.
+* Fix: script caching issues upon updating
 
 = 1.0.0 - July 20, 2022 =
 * Initial release
