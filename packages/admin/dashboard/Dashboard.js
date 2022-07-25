@@ -7,6 +7,7 @@ import DashboardModel from '../templates/DashboardModel';
 import { __ } from '@wordpress/i18n';
 import { Fragment, useState } from '@wordpress/element';
 import Logo from '../templates/Logo';
+import { ScFlex, ScDivider } from '@surecart/components-react';
 
 import GetStarted from './components/GetStarted';
 import RecentOrders from './components/RecentOrders';
@@ -37,23 +38,12 @@ export default () => {
         >
             <Fragment>
                 <GetStarted />
-                <hr/>
                 <Overview />
-                <hr/>
-
-                <div
-                    css={css`
-                        display: flex;
-                        column-gap: 2em;
-                        
-                        @media screen and (max-width: 782px) {
-                            display: inherit;
-                        }
-                    `}
-                >
+                <ScDivider style={{"--spacing": "1em"}} />
+                <ScFlex>
                     <RecentOrders />
                     <LearnMore />
-                </div>
+                </ScFlex>
             </Fragment>
         </DashboardModel>
     );
