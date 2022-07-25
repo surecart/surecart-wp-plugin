@@ -125,7 +125,7 @@ export class ScOrderShippingAddress {
       return (
         <sc-address
           ref={el => (this.input = el as any)}
-          label={__('Shipping Address', 'surecart')}
+          label={this.label || __('Shipping Address', 'surecart')}
           placeholders={this.placeholders}
           required={this.required}
           loading={this.loading}
