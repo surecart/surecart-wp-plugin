@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
+import { sprintf, __ } from '@wordpress/i18n';
 import Chart from "react-apexcharts";
 import { useEffect, useState } from 'react';
 
@@ -9,21 +9,25 @@ import {
     ScDashboardModule,
 } from '@surecart/components-react';
 
-
 export default () => {
     const [series, setSeries] = useState([
         {
-            name: 'series1',
-            data: [31, 40, 408, 51, 52, 109, 300]
+            name: 'Demo',
+            data: [99, 770, 408, 51, 52, 109, 300]
         },
     ]);
 
     const chart = {
         options: {
             chart: {
-              height: 350,
-              type: 'area',
-              width: 516,
+                height: 350,
+                width: '100%',
+                type: 'area',
+                events: {
+                    mounted: (chart) => {
+                      chart.windowResizeHandler();
+                    }
+                }
             },
             dataLabels: {
               enabled: false
@@ -41,30 +45,52 @@ export default () => {
                 format: 'dd/MM/yy HH:mm'
               },
             },
+            fill: {
+                type: "gradient",
+                gradient: {
+                  shadeIntensity: 1,
+                  opacityFrom: 0.7,
+                  opacityTo: 0.9,
+                  stops: [0, 90, 100],
+                },
+            },
         },
     };
+
+    useEffect( () => {
+        setSeries(
+            [
+                {
+                    name: 'View',
+                    data: [993, 770, 408, 51, 52, 109, 300]
+                },
+            ]
+        );
+    } );
 
     return (
         <ScDashboardModule    
             css={css`
                 width: 33%;
 
+                .sc-overview-card__title {
+                    font-size: 16px;
+                }
                 @media screen and (max-width: 782px) {
                     width: 100%;
                 }
             `}
         >
             <span slot="heading">{__('Revenue', 'surecart')}</span>
-            <ScCard
-                css={css`
-                    overflow: hidden;
-                    width: 516px;
-                `}
-            >   
+            <ScCard>   
+                <div className="sc-overview-card__title">
+                $1,080.12 <span style={{'color':'#64748B', 'font-size': '14px'}}>{sprintf(__("vs $%d last period", "presto-player"), 432)}</span>
+                </div>
                 <div id="chart">
                     <Chart options={chart.options} series={series} type="area" height={280} />
                 </div>
             </ScCard>
+            
         </ScDashboardModule>
     );
 };

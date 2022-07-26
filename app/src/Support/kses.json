@@ -416,6 +416,7 @@
   },
   "sc-flex": {
     "align-items": true,
+    "column-gap": true,
     "flex-direction": true,
     "justify-content": true,
     "style": true,

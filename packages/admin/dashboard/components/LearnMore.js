@@ -37,14 +37,17 @@ export default () => {
                     color: #334155; 
                     margin: 0.4em 0;  
                 }
+                .sc-learn-more-title {
+                    line-height: 32px;
+                }
             `}
         >
-            <span slot="heading">{__('Learn More', 'surecart')}</span>
+            <span className='sc-learn-more-title' slot="heading">{__('Learn More', 'surecart')}</span>
             <ScCard noPadding>
                 <ScStackedList>
                     <ScStackedListRow href="#" style={{ '--columns': '2' }}>
-                        <ScFlex>
-                            <ScIcon name="film" style={{fontSize: "64px", color: "#08BA4F"}} />
+                        <ScFlex justifyContent="center" alignItems="center">
+                            <ScIcon name="film" style={{fontSize: "60px", color: "#08BA4F"}} />
                             <LearnMoreDetails
                                 title={__('Tutorial Videos', 'surecart')} 
                                 descriptions={__('Learn more about SureCart', 'surecart')} 
@@ -53,8 +56,8 @@ export default () => {
                         </ScFlex>
                     </ScStackedListRow>
                     <ScStackedListRow href="#" style={{ '--columns': '2' }}>
-                        <ScFlex>
-                            <ScIcon name="users" style={{fontSize: "64px", color: "#08BA4F"}} />
+                        <ScFlex justifyContent="center" alignItems="center">
+                            <ScIcon name="users" style={{fontSize: "60px", color: "#08BA4F"}} />
                             <LearnMoreDetails
                                 title={__('Join Our Community', 'surecart')} 
                                 descriptions={__('Connect with others in on Facebook', 'surecart')} 
@@ -63,8 +66,8 @@ export default () => {
                         </ScFlex>
                     </ScStackedListRow>
                     <ScStackedListRow href="#" style={{ '--columns': '2' }}>
-                        <ScFlex>
-                            <ScIcon name="life-buoy" style={{fontSize: "64px", color: "#08BA4F"}} />
+                        <ScFlex justifyContent="center" alignItems="center">
+                            <ScIcon name="life-buoy" style={{fontSize: "60px", color: "#08BA4F"}} />
                             <LearnMoreDetails
                                 title={__('Get Help', 'surecart')} 
                                 descriptions={__('Contact our support for additional help', 'surecart')} 

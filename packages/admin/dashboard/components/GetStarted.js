@@ -9,7 +9,7 @@ export default () => {
         <ScCard
             css={css`
                 position: relative;
-                .card{
+                .sc-getstarted-inner-wrap{
                     padding: 20px;
                 }
                 .sc-get-started-main-title{
@@ -21,7 +21,8 @@ export default () => {
                 }
                 .sc-getstarted-close-icon {
                     position: absolute;
-                    right: 20px;
+                    right: 30px;
+                    top: 30px;
                 }
                 .sc-getstarted-box-title {
                     font-weight: 600;
@@ -39,36 +40,38 @@ export default () => {
                 }
             `}
         >
-            <ScIcon className='sc-getstarted-close-icon' name="x" />
-            <h3 className='sc-get-started-main-title'>
-                { __( 'Get started with SureCart', 'surecart' ) }
-            </h3>
-            <ScFlex>
-                <GetStartedBox
-                    infoType = 'info'
-                    infoText = { __( 'Setup', 'surecart' ) }
-                    title = { __( 'Create products', 'surecart' ) }
-                    description = { __( 'Customize your checkout forms with a no-code experience.', 'surecart' ) }
-                    buttonLabel = { __( 'Create A Product', 'surecart' ) }
-                    buttonUrl = '#'
-                />
-                <GetStartedBox
-                    infoType = 'success'
-                    infoText = { __( 'Tutorial', 'surecart' ) }
-                    title = { __( 'Add buy and cart buttons', 'surecart' ) }
-                    description = { __( 'Customize your checkout forms with a no-code experience.', 'surecart' ) }
-                    buttonLabel = { __( 'How To Add Buttons', 'surecart' ) }
-                    buttonUrl = '#'
-                />
-                <GetStartedBox
-                    infoType = 'primary'
-                    infoText = { __( 'Customize', 'surecart' ) }
-                    title = { __( 'Customize forms', 'surecart' ) }
-                    description = { __( 'Customize your checkout forms with a no-code experience.', 'surecart' ) }
-                    buttonLabel = { __( 'Customize', 'surecart' ) }
-                    buttonUrl = '#'
-                />
-            </ScFlex>
+            <div className='sc-getstarted-inner-wrap'>
+                <ScIcon className='sc-getstarted-close-icon' name="x" />
+                <h3 className='sc-get-started-main-title'>
+                    { __( 'Get started with SureCart', 'surecart' ) }
+                </h3>
+                <ScFlex>
+                    <GetStartedBox
+                        infoType = 'info'
+                        infoText = { __( 'Setup', 'surecart' ) }
+                        title = { __( 'Create products', 'surecart' ) }
+                        description = { __( 'Customize your checkout forms with a no-code experience.', 'surecart' ) }
+                        buttonLabel = { __( 'Create A Product', 'surecart' ) }
+                        buttonUrl = '#'
+                    />
+                    <GetStartedBox
+                        infoType = 'success'
+                        infoText = { __( 'Tutorial', 'surecart' ) }
+                        title = { __( 'Add buy and cart buttons', 'surecart' ) }
+                        description = { __( 'Customize your checkout forms with a no-code experience.', 'surecart' ) }
+                        buttonLabel = { __( 'How To Add Buttons', 'surecart' ) }
+                        buttonUrl = '#'
+                    />
+                    <GetStartedBox
+                        infoType = 'primary'
+                        infoText = { __( 'Customize', 'surecart' ) }
+                        title = { __( 'Customize forms', 'surecart' ) }
+                        description = { __( 'Customize your checkout forms with a no-code experience.', 'surecart' ) }
+                        buttonLabel = { __( 'Customize', 'surecart' ) }
+                        buttonUrl = '#'
+                    />
+                </ScFlex>
+            </div>
         </ScCard>
     );
 };

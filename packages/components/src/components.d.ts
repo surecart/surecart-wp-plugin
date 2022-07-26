@@ -815,6 +815,7 @@ export namespace Components {
     }
     interface ScFlex {
         "alignItems": string;
+        "columnGap": string;
         "flexDirection": string;
         "justifyContent": string;
     }
@@ -4419,6 +4420,7 @@ declare namespace LocalJSX {
     }
     interface ScFlex {
         "alignItems"?: string;
+        "columnGap"?: string;
         "flexDirection"?: string;
         "justifyContent"?: string;
     }

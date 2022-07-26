@@ -9,6 +9,7 @@ export class ScFlex {
   @Prop() alignItems: string;
   @Prop() justifyContent: string;
   @Prop() flexDirection: string;
+  @Prop() columnGap: string;
 
   render() {
     return (
@@ -18,6 +19,7 @@ export class ScFlex {
           ...(this.justifyContent ? { [`justify-${this.justifyContent}`]: true } : {}),
           ...(this.alignItems ? { [`align-${this.alignItems}`]: true } : {}),
           ...(this.flexDirection ? { [`direction-${this.flexDirection}`]: true } : {}),
+          ...(this.columnGap ? { [`column-gap-${this.columnGap}`]: true } : {}),
         }}
       >
         <slot></slot>

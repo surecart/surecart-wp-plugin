@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { sprintf, _n, __ } from '@wordpress/i18n';
+import { _n, __ } from '@wordpress/i18n';
 import { useEffect, useState } from 'react';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
@@ -32,7 +32,7 @@ export default () => {
     async function getOrderList () {
         const response = await apiFetch({
             path: addQueryArgs(`surecart/v1/orders/`, {
-              expand: ['line_items', 'charge'],
+              expand: ['line_items', 'charge', 'payment_method', 'payment_intent', 'payment_method.card'],
               status: ['paid'],
             }),
             parse: false,
@@ -92,34 +92,34 @@ export default () => {
           const { email, name, created_at, url } = order;
           return (
             <ScStackedListRow style={{ '--columns': '5' }}>
-              <div>
-                <ScFormatDate 
-                    date={created_at}
-                    month="short"
-                    day="numeric"
-                    year="numeric"
-                    type="timestamp" 
-                />
-                <br/>
-                <ScFormatDate 
-                    date={created_at}
-                    hour="numeric"						
-                    minute="numeric"										
-                    type="timestamp"
-                />
-              </div>
-              <div>
-                {name}
-                <br/>
-                {email}
-              </div>
-              <div>{renderStatusBadge(order)}</div>
-              <div>
-                <ScCcLogo style={{fontSize: "32px", lineHeight: "1"}} brand={order?.payment_intent?.payment_method?.card?.brand} />
-              </div>
-              <div>
-                <ScFormatNumber type="currency" currency={order?.currency} value={order?.amount_due} />
-              </div>
+                <div>
+                  <ScFormatDate 
+                      date={created_at}
+                      month="short"
+                      day="numeric"
+                      year="numeric"
+                      type="timestamp" 
+                  />
+                  <br/>
+                  <span style={{'color':'#6C727F', 'font-size': '14px'}}> at <ScFormatDate 
+                      date={created_at}
+                      hour="numeric"						
+                      minute="numeric"										
+                      type="timestamp"
+                  /></span>
+                </div>
+                <div>
+                  {name}
+                  <br/>
+                  <span style={{'color':'#6C727F', 'font-size': '14px'}}>{email}</span>
+                </div>
+                <div>{renderStatusBadge(order)}</div>
+                <div>
+                  <ScCcLogo style={{fontSize: "32px", lineHeight: "1"}} brand={order?.payment_method?.card?.brand} />
+                </div>
+                <div>
+                  <ScFormatNumber type="currency" currency={order?.currency} value={order?.amount_due} />
+                </div>
             </ScStackedListRow>
           );
         });
@@ -128,7 +128,7 @@ export default () => {
     function renderContent() {
         return (
             <ScCard noPadding>
-                <ScStackedList>
+                <ScStackedList style={{'--sc-stacked-list-row-align-items':'center'}}>
                     {renderList()}
                 </ScStackedList>
             </ScCard>
@@ -139,17 +139,20 @@ export default () => {
         <ScDashboardModule
             css={css`
                 width: 67%;
+                
+                .sc-recent-orders-wrap{
+                  border-radius: 5px;
+                }
                 @media screen and (max-width: 782px) {
                     width: 100%;
                 }
             `}
         >
-            <span slot="heading">Recent Orders</span>
+            <span slot="heading">{__('Recent Orders', 'surecart')}</span>
             <ScButton slot="end" type="link" href={'admin.php?page=sc-orders'}>
                 {__('View All', 'surecart')}
                 <ScIcon  slot="suffix" name="chevron-right" />
             </ScButton>
-
             {renderContent()}
         </ScDashboardModule>
     );

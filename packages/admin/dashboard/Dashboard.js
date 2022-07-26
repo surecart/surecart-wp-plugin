@@ -40,7 +40,7 @@ export default () => {
                 <GetStarted />
                 <Overview />
                 <ScDivider style={{"--spacing": "1em"}} />
-                <ScFlex>
+                <ScFlex columnGap="xx-large">
                     <RecentOrders />
                     <LearnMore />
                 </ScFlex>

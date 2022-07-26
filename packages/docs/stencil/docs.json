@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-07-25T12:58:58",
+  "timestamp": "2022-07-26T13:20:19",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.15.1",
@@ -6347,6 +6347,22 @@
           "type": "string",
           "mutable": false,
           "attr": "align-items",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "columnGap",
+          "type": "string",
+          "mutable": false,
+          "attr": "column-gap",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
