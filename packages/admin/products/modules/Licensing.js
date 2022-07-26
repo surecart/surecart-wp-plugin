@@ -1,14 +1,34 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { ScInput, ScSwitch } from '@surecart/components-react';
+import { ScInput, ScSelect, ScSwitch } from '@surecart/components-react';
 
 import Box from '../../ui/Box';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 
-export default ({ loading, product, updateProduct }) => {
+export default ({ loading, id, product, updateProduct }) => {
 	if (!scData?.entitlements?.licensing) {
 		return null;
 	}
+
+	const { downloads, fetching } = useSelect(
+		(select) => {
+			const queryArgs = [
+				'surecart',
+				'download',
+				{ context: 'edit', product_ids: [id], per_page: 100 },
+			];
+			return {
+				downloads: select(coreStore).getEntityRecords(...queryArgs),
+				fetching: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
+		},
+		[id]
+	);
 
 	return (
 		<Box
@@ -37,19 +57,38 @@ export default ({ loading, product, updateProduct }) => {
 			</ScSwitch>
 
 			{!!product?.licensing_enabled && (
-				<ScInput
-					type="number"
-					label={__('Activation Limit', 'surecart')}
-					help={__(
-						'Enter the number of unique activations per license key. Leave blank for infinite.',
-						'surecart'
-					)}
-					onScUpdate={(e) => {
-						updateProduct({
-							license_activation_limit: e.target.value || null,
-						});
-					}}
-				/>
+				<>
+					<ScInput
+						type="number"
+						label={__('Activation Limit', 'surecart')}
+						help={__(
+							'Enter the number of unique activations per license key. Leave blank for infinite.',
+							'surecart'
+						)}
+						onScInput={(e) => {
+							updateProduct({
+								license_activation_limit:
+									e.target.value || null,
+							});
+						}}
+					/>
+					<ScSelect
+						label={__('Current Release', 'surecart')}
+						loading={fetching}
+						value={product?.current_release_download}
+						onScChange={(e) => {
+							updateProduct({
+								current_release_download: e.target.value,
+							});
+						}}
+						choices={(downloads || []).map((download) => {
+							return {
+								value: download?.id,
+								label: download?.media?.filename,
+							};
+						})}
+					/>
+				</>
 			)}
 		</Box>
 	);

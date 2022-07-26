@@ -11,6 +11,7 @@ import { ScForm } from '@surecart/components-react';
 import useSnackbar from '../../hooks/useSnackbar';
 import admin from '../../styles/admin';
 import Notifications from '../../components/Notifications';
+import Notices from '../../components/Notices';
 
 export default ({
 	children,
@@ -170,6 +171,7 @@ export default ({
 								}
 							`}
 						>
+							<Notices />
 							{children}
 							{footer && (
 								<div>

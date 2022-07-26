@@ -14,16 +14,16 @@ import {
 	ScTag,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch, select } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
+import { store as noticesStore } from '@wordpress/notices';
 import { useState, Fragment } from '@wordpress/element';
-import useSnackbar from '../../hooks/useSnackbar';
 import apiFetch from '@wordpress/api-fetch';
 import MediaLibrary from '../../components/MediaLibrary';
 
 export default ({ download, product, updateProduct, className }) => {
+	const { createSuccessNotice } = useDispatch(noticesStore);
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
-	const { addSnackbarNotice } = useSnackbar();
 	const { saveEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
 
 	const setRelease = () => {
@@ -38,7 +38,19 @@ export default ({ download, product, updateProduct, className }) => {
 		});
 	};
 
-	const replaceItem = () => {};
+	const replaceItem = async (media) => {
+		const r = confirm(
+			__(
+				'Are you sure you want to replace the file in this download? This may push out a new release to everyone.',
+				'surecart'
+			)
+		);
+		if (!r) return;
+		await saveEntityRecord('surecart', 'download', {
+			id: download?.id,
+			media: media?.id,
+		});
+	};
 
 	// Is this the current release.
 	const isCurrentRelease = product?.current_release_download === download?.id;
@@ -61,7 +73,9 @@ export default ({ download, product, updateProduct, className }) => {
 				{},
 				{ throwOnError: true }
 			);
-			addSnackbarNotice({ content: __('Download removed.', 'surecart') });
+			createSuccessNotice(__('Download removed.', 'surecart'), {
+				type: 'snackbar',
+			});
 		} catch (e) {
 			console.error(e);
 			setError(e?.message || __('Something went wrong', 'surecart'));
@@ -82,11 +96,14 @@ export default ({ download, product, updateProduct, className }) => {
 				},
 				{ throwOnError: true }
 			);
-			addSnackbarNotice({
-				content: download?.archived
+			createSuccessNotice(
+				download?.archived
 					? __('Download un-archived.', 'surecart')
 					: __('Download archived.', 'surecart'),
-			});
+				{
+					type: 'snackbar',
+				}
+			);
 		} catch (e) {
 			console.error(e);
 			setError(e?.message || __('Something went wrong', 'surecart'));

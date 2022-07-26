@@ -240,6 +240,7 @@ export default ({ id }) => {
 				/>
 
 				<Licensing
+					id={id}
 					product={product}
 					updateProduct={editProduct}
 					loading={!hasLoadedProduct}

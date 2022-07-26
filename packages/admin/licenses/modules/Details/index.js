@@ -1,11 +1,6 @@
 import { __, sprintf } from '@wordpress/i18n';
 import { formatTime } from '../../../util/time';
-import {
-	ScTag,
-	ScSkeleton,
-	ScInput,
-	ScButton,
-} from '@surecart/components-react';
+import { ScTag, ScSkeleton, ScInput } from '@surecart/components-react';
 import Box from '../../../ui/Box';
 import Copy from './Copy';
 

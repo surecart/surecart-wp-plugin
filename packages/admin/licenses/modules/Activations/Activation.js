@@ -1,12 +1,12 @@
 /** @jsx jsx */
 import { css, jsx, Global } from '@emotion/core';
-import { sprintf, __ } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import {
+	ScAlert,
 	ScBlockUi,
 	ScButton,
 	ScDropdown,
 	ScForm,
-	ScFormatDate,
 	ScIcon,
 	ScInput,
 	ScMenu,
@@ -19,14 +19,21 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { formatTime } from '../../../util/time';
 import useSnackbar from '../../../hooks/useSnackbar';
-import { Button, Modal } from '@wordpress/components';
+import { Modal } from '@wordpress/components';
 
-export default ({ activation, onEdit }) => {
+export default ({ activation }) => {
 	const [openModal, setOpenModal] = useState();
+	const [busy, setBusy] = useState(false);
+	const [error, setError] = useState(false);
+	const [activationState, setActivationState] = useState(activation);
 	const { addSnackbarNotice } = useSnackbar();
 	const { deleteEntityRecord, saveEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
+
+	useEffect(() => {
+		setActivationState(activation);
+	}, [activation]);
 
 	const { isDeleting, deleteError } = useSelect((select) => ({
 		isDeleting: select(coreStore).isDeletingEntityRecord(
@@ -85,7 +92,18 @@ export default ({ activation, onEdit }) => {
 		);
 	};
 
-	const onSaveEdits = () => {};
+	const onSaveEdits = async () => {
+		try {
+			setBusy(true);
+			setError(false);
+			await saveEntityRecord('surecart', 'activation', activationState);
+			setOpenModal(false);
+		} catch (e) {
+			setError(e?.message || __('Something went wrong.', 'surecart'));
+		} finally {
+			setBusy(false);
+		}
+	};
 
 	return (
 		<>
@@ -121,10 +139,17 @@ export default ({ activation, onEdit }) => {
 					shouldCloseOnClickOutside={false}
 				>
 					<ScForm onScSubmit={onSaveEdits}>
+						{!!error && <ScAlert type="danger">{error}</ScAlert>}
 						<ScInput
 							label={__('Name', 'surecart')}
 							type="text"
-							value={activation?.name}
+							value={activationState?.name}
+							onScInput={(e) =>
+								setActivationState({
+									...activationState,
+									...{ name: e.target.value },
+								})
+							}
 						/>
 						<ScInput
 							label={__('Fingerprint', 'surecart')}
@@ -134,9 +159,20 @@ export default ({ activation, onEdit }) => {
 								'surecart'
 							)}
 							type="text"
-							value={activation?.fingerprint}
+							value={activationState?.fingerprint}
+							onScInput={(e) =>
+								setActivationState({
+									...activationState,
+									...{ fingerprint: e.target.value },
+								})
+							}
 						/>
-						<ScButton type="primary" submit>
+						<ScButton
+							type="primary"
+							busy={busy}
+							disabled={busy}
+							submit
+						>
 							{__('Update', 'surecart')}
 						</ScButton>
 					</ScForm>

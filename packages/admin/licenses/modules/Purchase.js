@@ -6,7 +6,6 @@ import { __ } from '@wordpress/i18n';
 
 import Box from '../../ui/Box';
 import { addQueryArgs } from '@wordpress/url';
-import PurchaseItem from '../../components/data-tables/purchases-data-table/purchase-item';
 
 export default ({ purchase, loading }) => {
 	return (

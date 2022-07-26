@@ -17,7 +17,7 @@ import {
 	ScBreadcrumbs,
 	ScButton,
 } from '@surecart/components-react';
-import { useSelect, select, useDispatch } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
 
 import Details from './modules/Details';
@@ -27,15 +27,13 @@ import Purchase from './modules/Purchase';
 import SaveButton from '../templates/SaveButton';
 
 export default () => {
-	const { createSuccessNotice, createErrorNotice } =
-		useDispatch(noticesStore);
-	const { saveEditedEntityRecord, editEntityRecord } = useDispatch(coreStore);
+	const { createSuccessNotice } = useDispatch(noticesStore);
 	const id = useSelect((select) => select(store).selectPageId());
 	const {
 		license,
-		hasLoadedLicense,
 		editLicense,
-		saveLicense,
+		hasLoadedLicense,
+		saveEditedLicense,
 		savingLicense,
 		saveLicenseError,
 		licenseError,
@@ -45,30 +43,11 @@ export default () => {
 	 * Handle the form submission
 	 */
 	const onSubmit = async () => {
-		try {
-			// build up pending records to save.
-			const dirtyRecords =
-				select(coreStore).__experimentalGetDirtyEntityRecords();
-			const pendingSavedRecords = [];
-			dirtyRecords.forEach(({ kind, name, key }) => {
-				pendingSavedRecords.push(
-					saveEditedEntityRecord(kind, name, key)
-				);
-			});
-
-			// check values.
-			const values = await Promise.all(pendingSavedRecords);
-			if (values.some((value) => typeof value === 'undefined')) {
-				throw new Error('Saving failed.');
-			}
-
-			// save success.
-			createSuccessNotice(__('License updated.', 'surecart'), {
-				type: 'snackbar',
-			});
-		} catch (e) {
-			console.error(e);
-		}
+		const license = await saveEditedLicense();
+		if (!license) return;
+		createSuccessNotice(__('License updated.', 'surecart'), {
+			type: 'snackbar',
+		});
 	};
 
 	return (
@@ -122,21 +101,12 @@ export default () => {
 		>
 			<>
 				<Error error={saveLicenseError || licenseError} margin="80px" />
-
 				<Details
 					license={license}
-					updateLicense={(data) => {
-						editEntityRecord(
-							'surecart',
-							'license',
-							license?.id,
-							data
-						);
-					}}
+					updateLicense={(data) => editLicense(data)}
 					loading={!hasLoadedLicense}
 				/>
-
-				<Activations id={id} />
+				<Activations id={id} license={license} />
 			</>
 		</UpdateModel>
 	);

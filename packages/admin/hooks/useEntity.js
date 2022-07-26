@@ -11,8 +11,12 @@ import { camelName } from '../util';
 
 export default (type, id, query = {}, name = 'surecart') => {
 	// dispatchers.
-	const { editEntityRecord, deleteEntityRecord, saveEntityRecord } =
-		useDispatch(coreStore);
+	const {
+		editEntityRecord,
+		deleteEntityRecord,
+		saveEntityRecord,
+		saveEditedEntityRecord,
+	} = useDispatch(coreStore);
 
 	// the entity data.
 	const entityData = [name, type, id, query];
@@ -68,6 +72,9 @@ export default (type, id, query = {}, name = 'surecart') => {
 	const saveEntity = (data, options) =>
 		saveEntityRecord(name, type, { ...item, ...data }, options);
 
+	const saveEditedEntity = (options = {}) =>
+		saveEditedEntityRecord(name, type, id, options);
+
 	const ucName = camelName(type);
 
 	return {
@@ -103,6 +110,9 @@ export default (type, id, query = {}, name = 'surecart') => {
 		// save.
 		saveItem: saveEntity,
 		[`save${ucName}`]: saveEntity,
+
+		saveEditedEntity,
+		[`saveEdited${ucName}`]: saveEditedEntity,
 
 		// edit
 		editItem: editEntity,

@@ -9,6 +9,7 @@ import {
 	ScBlockUi,
 	ScCard,
 	ScFormControl,
+	ScSelect,
 	ScStackedList,
 	ScSwitch,
 } from '@surecart/components-react';
@@ -70,35 +71,40 @@ export default ({ id, product, updateProduct, loading }) => {
 			{(() => {
 				if (!downloads?.length) return null;
 				return (
-					<ScCard noPadding>
-						<ScStackedList>
-							{(unArchived || [])
-								.sort((a, b) => a.created_at - b.created_at)
-								.map((download) => (
-									<SingleDownload
-										download={download}
-										key={download.id}
-										product={product}
-										updateProduct={updateProduct}
-									/>
-								))}
-
-							{showArchived &&
-								(archived || [])
+					<>
+						<ScCard noPadding>
+							<ScStackedList>
+								{(unArchived || [])
 									.sort((a, b) => a.created_at - b.created_at)
 									.map((download) => (
 										<SingleDownload
-											css={css`
-												--sc-list-row-background-color: var(
-													--sc-color-warning-50
-												);
-											`}
 											download={download}
 											key={download.id}
+											product={product}
+											updateProduct={updateProduct}
 										/>
 									))}
-						</ScStackedList>
-					</ScCard>
+
+								{showArchived &&
+									(archived || [])
+										.sort(
+											(a, b) =>
+												a.created_at - b.created_at
+										)
+										.map((download) => (
+											<SingleDownload
+												css={css`
+													--sc-list-row-background-color: var(
+														--sc-color-warning-50
+													);
+												`}
+												download={download}
+												key={download.id}
+											/>
+										))}
+							</ScStackedList>
+						</ScCard>
+					</>
 				);
 			})()}
 

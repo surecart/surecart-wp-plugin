@@ -1,4 +1,4 @@
-import { __ } from '@wordpress/i18n';
+import { sprintf, __ } from '@wordpress/i18n';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import Box from '../../../ui/Box';
@@ -88,9 +88,12 @@ export default ({ id, license }) => {
 			loading={loading && !activations?.length}
 			header_action={
 				!loading && (
-					<ScTag type="default">
-						{activations?.length || 0} /{' '}
-						{license?.activation?.limit || '∞'}
+					<ScTag type="info">
+						{sprintf(
+							__('%1s of %2s Activations Used'),
+							parseInt(activations?.length || 0),
+							parseInt(license?.activation_limit) || '∞'
+						)}
 					</ScTag>
 				)
 			}
