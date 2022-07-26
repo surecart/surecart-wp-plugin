@@ -313,7 +313,7 @@ export namespace Components {
         /**
           * Submit the form
          */
-        "submit": ({ skip_validation }?: { skip_validation: boolean; }) => Promise<Order | CustomEvent<import("/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/types").FormStateSetter>>;
+        "submit": ({ skip_validation }?: { skip_validation: boolean; }) => Promise<Order | CustomEvent<import("/Users/alamgircse.bd/Local Sites/surecart/app/public/wp-content/plugins/surecart-wp/packages/components/src/types").FormStateSetter>>;
         /**
           * Where to go on success
          */

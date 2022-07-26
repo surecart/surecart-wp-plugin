@@ -85,6 +85,8 @@ export class ScOrdersList {
       total_pages: parseInt(response.headers.get('X-WP-TotalPages')),
     };
     this.orders = (await response.json()) as Order[];
+    console.log( 'My Order:' );
+    console.log( this.orders );
     return this.orders;
   }
 
@@ -186,7 +188,7 @@ export class ScOrdersList {
     return (
       <sc-dashboard-module class="orders-list" error={this.error}>
         <span slot="heading">
-          <slot name="heading">{this.heading || __('Order History', 'surecart')}</slot>
+          <slot name="heading">{ __('Order History', 'surecart')}</slot>
         </span>
 
         {!!this.allLink && !!this.orders?.length && (

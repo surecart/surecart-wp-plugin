@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-07-11T18:03:30",
+  "timestamp": "2022-07-25T12:58:58",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.15.1",
@@ -2383,7 +2383,7 @@
             "type": "Promise<Order | CustomEvent<FormStateSetter>>",
             "docs": ""
           },
-          "signature": "submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Order | CustomEvent<import(\"/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/types\").FormStateSetter>>",
+          "signature": "submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Order | CustomEvent<import(\"/Users/alamgircse.bd/Local Sites/surecart/app/public/wp-content/plugins/surecart-wp/packages/components/src/types\").FormStateSetter>>",
           "parameters": [],
           "docs": "Submit the form",
           "docsTags": []
