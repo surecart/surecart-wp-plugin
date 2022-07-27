@@ -225,7 +225,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 				<PanelBody title={__('Style', 'surecart')}>
 					<PanelRow>
 						<BaseControl.VisualLabel>
-							{__('Form Highlight Color', 'presto-player')}
+							{__('Form Highlight Color', 'surecart')}
 						</BaseControl.VisualLabel>
 						<ColorPopup
 							color={color}
