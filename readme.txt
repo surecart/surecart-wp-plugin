@@ -243,6 +243,12 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.0.3 - July 27, 2022 =
+* Improvement: Add ability to turn off slide-out cart.
+* Fix: Issue with purchases that do not require a payment method not triggering integrations.
+* Fix: Donation block sometimes removing choices when no maximum is set.
+* Fix: Missing translations.
+
 = 1.0.2 - July 25, 2022 =
 * Improvement: Allow changing of "secure text" in payment block.
 * Improvement: Only show "Amount Due Today" if the amount due is different than the total.
