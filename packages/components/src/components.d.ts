@@ -1539,16 +1539,6 @@ export namespace Components {
          */
         "value": string;
     }
-    interface ScOrderRedirectProvider {
-        /**
-          * The current order.
-         */
-        "order": Order;
-        /**
-          * The success url.
-         */
-        "successUrl": string;
-    }
     interface ScOrderShippingAddress {
         /**
           * Holds the customer's shipping address
@@ -2899,10 +2889,6 @@ export interface ScOrderCouponFormCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScOrderCouponFormElement;
 }
-export interface ScOrderRedirectProviderCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScOrderRedirectProviderElement;
-}
 export interface ScOrderShippingAddressCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScOrderShippingAddressElement;
@@ -3482,12 +3468,6 @@ declare global {
         prototype: HTMLScOrderPasswordElement;
         new (): HTMLScOrderPasswordElement;
     };
-    interface HTMLScOrderRedirectProviderElement extends Components.ScOrderRedirectProvider, HTMLStencilElement {
-    }
-    var HTMLScOrderRedirectProviderElement: {
-        prototype: HTMLScOrderRedirectProviderElement;
-        new (): HTMLScOrderRedirectProviderElement;
-    };
     interface HTMLScOrderShippingAddressElement extends Components.ScOrderShippingAddress, HTMLStencilElement {
     }
     var HTMLScOrderShippingAddressElement: {
@@ -3928,7 +3908,6 @@ declare global {
         "sc-order-coupon-form": HTMLScOrderCouponFormElement;
         "sc-order-detail": HTMLScOrderDetailElement;
         "sc-order-password": HTMLScOrderPasswordElement;
-        "sc-order-redirect-provider": HTMLScOrderRedirectProviderElement;
         "sc-order-shipping-address": HTMLScOrderShippingAddressElement;
         "sc-order-status-badge": HTMLScOrderStatusBadgeElement;
         "sc-order-stripe-payment-element": HTMLScOrderStripePaymentElementElement;
@@ -5695,24 +5674,6 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface ScOrderRedirectProvider {
-        /**
-          * Error event.
-         */
-        "onScError"?: (event: ScOrderRedirectProviderCustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
-        /**
-          * Form state event.
-         */
-        "onScSetState"?: (event: ScOrderRedirectProviderCustomEvent<FormStateSetter>) => void;
-        /**
-          * The current order.
-         */
-        "order"?: Order;
-        /**
-          * The success url.
-         */
-        "successUrl"?: string;
-    }
     interface ScOrderShippingAddress {
         /**
           * Holds the customer's shipping address
@@ -6459,6 +6420,7 @@ declare namespace LocalJSX {
           * Error event
          */
         "onScError"?: (event: ScSessionProviderCustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
+        "onScPaid"?: (event: ScSessionProviderCustomEvent<void>) => void;
         /**
           * Set the state
          */
@@ -7174,7 +7136,6 @@ declare namespace LocalJSX {
         "sc-order-coupon-form": ScOrderCouponForm;
         "sc-order-detail": ScOrderDetail;
         "sc-order-password": ScOrderPassword;
-        "sc-order-redirect-provider": ScOrderRedirectProvider;
         "sc-order-shipping-address": ScOrderShippingAddress;
         "sc-order-status-badge": ScOrderStatusBadge;
         "sc-order-stripe-payment-element": ScOrderStripePaymentElement;
@@ -7320,7 +7281,6 @@ declare module "@stencil/core" {
             "sc-order-coupon-form": LocalJSX.ScOrderCouponForm & JSXBase.HTMLAttributes<HTMLScOrderCouponFormElement>;
             "sc-order-detail": LocalJSX.ScOrderDetail & JSXBase.HTMLAttributes<HTMLScOrderDetailElement>;
             "sc-order-password": LocalJSX.ScOrderPassword & JSXBase.HTMLAttributes<HTMLScOrderPasswordElement>;
-            "sc-order-redirect-provider": LocalJSX.ScOrderRedirectProvider & JSXBase.HTMLAttributes<HTMLScOrderRedirectProviderElement>;
             "sc-order-shipping-address": LocalJSX.ScOrderShippingAddress & JSXBase.HTMLAttributes<HTMLScOrderShippingAddressElement>;
             "sc-order-status-badge": LocalJSX.ScOrderStatusBadge & JSXBase.HTMLAttributes<HTMLScOrderStatusBadgeElement>;
             "sc-order-stripe-payment-element": LocalJSX.ScOrderStripePaymentElement & JSXBase.HTMLAttributes<HTMLScOrderStripePaymentElementElement>;

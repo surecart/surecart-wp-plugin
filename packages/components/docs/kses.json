@@ -869,14 +869,6 @@
     "class": true,
     "slot": true
   },
-  "sc-order-redirect-provider": {
-    "order": true,
-    "success-url": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "sc-order-shipping-address": {
     "customer-shipping-address": true,
     "full": true,

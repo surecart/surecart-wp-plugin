@@ -155,4 +155,81 @@ describe('Checkout', () => {
 			// );
 		});
 	});
+
+	it('Can checkout with a free product', () => {
+		cy.exec(
+			`yarn wp-env run tests-cli "wp option get surecart_checkout_page_id"`
+		).then((response) => {
+			cy.clearLocalStorage();
+			cy.intercept({
+				method: 'POST',
+				path: '**surecart**orders*',
+				times: 1,
+			}).as('createOrder');
+
+			// buy button link
+			cy.visit(
+				`?p=${parseInt(
+					response.stdout
+				)}&line_items[0][price_id]=49f4f9ca-7fb6-4a51-82b3-9f9aeed7b1c0&line_items[0][quantity]=1&coupon=DEVTEST`
+			);
+
+			// wait for order to create.
+			cy.wait('@createOrder');
+
+			// fill customer name and email
+			cy.get('sc-customer-name').invoke('attr', 'value', 'John Doe');
+			cy.get('sc-customer-email').invoke(
+				'attr',
+				'value',
+				'test@test.com'
+			);
+
+			// we will intercept confirm order.
+			cy.intercept({
+				method: 'POST',
+				path: '**surecart**orders*',
+				times: 1,
+			}).as('updateOrder');
+			cy.intercept('POST', '**surecart**finalize*').as('finalizeOrder');
+			cy.intercept('POST', '**surecart**confirm*').as('confirmOrder');
+
+			cy.get('sc-order-submit sc-button')
+				.shadow()
+				.find('.button')
+				.should('not.have.class', 'button--loading')
+				.click({ force: true, waitForAnimations: true });
+
+			// update the order.
+			cy.wait('@updateOrder', { timeout: 30000 }).then(
+				({ request, response }) => {
+					expect(request.body.email).to.eq('test@test.com');
+					expect(request.body.name).to.eq('John Doe');
+					expect(response.statusCode).to.eq(200);
+					expect(response.body.status).to.eq('draft');
+				}
+			);
+
+			// finalize the order.
+			cy.wait('@finalizeOrder', { timeout: 30000 }).then(
+				({ response }) => {
+					expect(response.statusCode).to.eq(200);
+					expect(response.body.status).to.eq('paid');
+				}
+			);
+
+			// confirm payment (and run automations)
+			cy.wait('@confirmOrder', { timeout: 30000 }).then(
+				({ response }) => {
+					expect(response.statusCode).to.eq(200);
+					expect(response.body.status).to.eq('paid');
+				}
+			);
+
+			// thank you page.
+			cy.get('sc-order-confirmation', { timeout: 30000 }).should(
+				'be.visible'
+			);
+		});
+	});
 });
