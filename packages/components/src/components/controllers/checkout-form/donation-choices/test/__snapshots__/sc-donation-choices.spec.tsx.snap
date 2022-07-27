@@ -11,3 +11,30 @@ exports[`sc-donation-choices renders 1`] = `
   </mock:shadow-root>
 </sc-donation-choices>
 `;
+
+exports[`sc-donation-choices renders 2`] = `
+<sc-donation-choices price-id="test_price">
+  <mock:shadow-root>
+    <div class="sc-donation-choices">
+      <sc-choices auto-width="">
+        <slot></slot>
+      </sc-choices>
+    </div>
+  </mock:shadow-root>
+  <sc-choice value="100" style="display: flex;">
+    $1
+  </sc-choice>
+  <sc-choice value="500" style="display: flex;">
+    $5
+  </sc-choice>
+  <sc-choice value="1000" style="display: flex;">
+    $10
+  </sc-choice>
+  <sc-choice value="1500" style="display: flex;">
+    $15
+  </sc-choice>
+  <sc-choice value="ad_hoc" style="display: flex;">
+    Other
+  </sc-choice>
+</sc-donation-choices>
+`;
