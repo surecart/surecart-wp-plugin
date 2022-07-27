@@ -18,7 +18,7 @@ abstract class AbstractIntegration {
 		return new \WP_Error(
 			'invalid-method',
 			/* translators: %s: Method name. */
-			sprintf( __( "Method '%s' not implemented. Must be overridden in subclass." ), __METHOD__ ),
+			sprintf( __( "Method '%s' not implemented. Must be overridden in subclass.", 'surecart' ), __METHOD__ ),
 			array( 'status' => 405 )
 		);
 	}
@@ -35,7 +35,7 @@ abstract class AbstractIntegration {
 		return new \WP_Error(
 			'invalid-method',
 			/* translators: %s: Method name. */
-			sprintf( __( "Method '%s' not implemented. Must be overridden in subclass." ), __METHOD__ ),
+			sprintf( __( "Method '%s' not implemented. Must be overridden in subclass.", 'surecart' ), __METHOD__ ),
 			array( 'status' => 405 )
 		);
 	}
@@ -52,7 +52,7 @@ abstract class AbstractIntegration {
 		return new \WP_Error(
 			'invalid-method',
 			/* translators: %s: Method name. */
-			sprintf( __( "Method '%s' not implemented. Must be overridden in subclass." ), __METHOD__ ),
+			sprintf( __( "Method '%s' not implemented. Must be overridden in subclass.", 'surecart' ), __METHOD__ ),
 			array( 'status' => 405 )
 		);
 	}
@@ -84,7 +84,7 @@ abstract class AbstractIntegration {
 		return new \WP_Error(
 			'invalid-method',
 			/* translators: %s: Method name. */
-			sprintf( __( "Method '%s' not implemented. Must be overridden in subclass." ), __METHOD__ ),
+			sprintf( __( "Method '%s' not implemented. Must be overridden in subclass.", 'surecart' ), __METHOD__ ),
 			array( 'status' => 405 )
 		);
 	}
