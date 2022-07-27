@@ -220,29 +220,26 @@ export class ScCheckout {
             <sc-form-error-provider order={this.order()} onScUpdateError={e => (this.error = e.detail)}>
               {/* Validate components in the form based on order state. */}
               <sc-form-components-validator order={this.order()} disabled={this.disableComponentsValidation} taxProtocol={this.taxProtocol}>
-                {/* Handles the current session. */}
-                <sc-session-provider
-                  ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)}
-                  prices={this.prices}
-                  stripePaymentElement={this.stripePaymentElement}
-                  paymentIntents={this.paymentIntents}
-                  persist={this.persistSession}
-                  modified={this.modified}
-                  mode={this.mode}
-                  form-id={this.formId}
-                  group-id={this.el.id}
-                  processor={this.processor}
-                  currency-code={this.currencyCode}
-                  onScError={e => (this.error = e.detail as ResponseError)}
-                >
-                  {/* Maybe redirect to the success url if requirements are met. */}
-                  <sc-order-redirect-provider order={this.order()} success-url={this.successUrl}>
-                    {/* Handle confirming of order after it is "Paid" by processors. */}
-                    <sc-order-confirm-provider order={this.order()} success-url={this.successUrl} form-id={this.formId} mode={this.mode}>
-                      <slot />
-                    </sc-order-confirm-provider>
-                  </sc-order-redirect-provider>
-                </sc-session-provider>
+                {/* Handle confirming of order after it is "Paid" by processors. */}
+                <sc-order-confirm-provider order={this.order()} success-url={this.successUrl} form-id={this.formId} mode={this.mode}>
+                  {/* Handles the current session. */}
+                  <sc-session-provider
+                    ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)}
+                    prices={this.prices}
+                    stripePaymentElement={this.stripePaymentElement}
+                    paymentIntents={this.paymentIntents}
+                    persist={this.persistSession}
+                    modified={this.modified}
+                    mode={this.mode}
+                    form-id={this.formId}
+                    group-id={this.el.id}
+                    processor={this.processor}
+                    currency-code={this.currencyCode}
+                    onScError={e => (this.error = e.detail as ResponseError)}
+                  >
+                    <slot />
+                  </sc-session-provider>
+                </sc-order-confirm-provider>
               </sc-form-components-validator>
             </sc-form-error-provider>
           </sc-form-state-provider>
