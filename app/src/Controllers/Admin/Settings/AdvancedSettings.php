@@ -18,24 +18,6 @@ class AdvancedSettings extends BaseSettings {
 	];
 
 	/**
-	 * Show the page.
-	 *
-	 * @param \SureCartCore\Requests\RequestInterface $request Request.
-	 * @return function
-	 */
-	// public function show( \SureCartCore\Requests\RequestInterface $request ) {
-	// return \SureCart::view( 'admin/advanced' )->with(
-	// [
-	// 'tab'                    => $request->query( 'tab' ) ?? '',
-	// 'uninstall'              => get_option( 'sc_uninstall', false ),
-	// 'stripe_payment_element' => get_option( 'sc_stripe_payment_element' ),
-	// 'use_esm_loader'         => get_option( 'surecart_use_esm_loader', false ),
-	// 'status'                 => $request->query( 'status' ),
-	// ]
-	// );
-	// }
-
-	/**
 	 * Save the page.
 	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.

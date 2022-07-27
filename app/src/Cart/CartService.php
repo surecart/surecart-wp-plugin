@@ -14,6 +14,12 @@ class CartService {
 	 * @return void
 	 */
 	public function bootstrap() {
+		// Slide-out is disabled. Do not load scripts.
+		if ( (bool) get_option( 'sc_slide_out_cart_disabled', false ) ) {
+			return;
+		}
+
+		// enqueue scripts needed for slide out cart.
 		add_action(
 			'wp_enqueue_scripts',
 			function() {
@@ -23,6 +29,11 @@ class CartService {
 		add_action( 'wp_footer', [ $this, 'renderCartComponent' ] );
 	}
 
+	/**
+	 * Get the cart template.
+	 *
+	 * @return string
+	 */
 	public function cartTemplate() {
 		ob_start();
 		$form = $this->getForm();
@@ -58,7 +69,7 @@ class CartService {
 	public function renderCartComponent() {
 		$form = $this->getForm();
 		if ( empty( $form->ID ) ) {
-			return '';
+			return;
 		}
 		$template = $this->cartTemplate();
 		?>
@@ -70,6 +81,11 @@ class CartService {
 		<?php
 	}
 
+	/**
+	 * Get the form
+	 *
+	 * @return \WP_Post The default form post.
+	 */
 	public function getForm() {
 		return \SureCart::forms()->getDefault();
 	}

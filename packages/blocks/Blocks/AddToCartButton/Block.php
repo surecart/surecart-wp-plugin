@@ -2,14 +2,12 @@
 
 namespace SureCartBlocks\Blocks\AddToCartButton;
 
-use SureCart\Models\Component;
 use SureCart\Models\Form;
 use SureCart\Models\Price;
-use SureCartBlocks\Blocks\BaseBlock;
 /**
  * Logout Button Block.
  */
-class Block extends BaseBlock {
+class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 	/**
 	 * Render the block
 	 *
@@ -34,6 +32,28 @@ class Block extends BaseBlock {
 		if ( empty( $form->ID ) ) {
 			return '';
 		}
+
+		// Slide-out is disabled, go directly to checkout.
+		if ( (bool) get_option( 'sc_slide_out_cart_disabled', false ) ) {
+			return \SureCart::blocks()->render(
+				'blocks/buy-button',
+				[
+					'type'  => $attributes['type'] ?? 'primary',
+					'size'  => $attributes['size'] ?? 'medium',
+					'style' => '',
+					'href'  => $this->href(
+						[
+							[
+								'id'       => $price->id,
+								'quantity' => 1,
+							],
+						]
+					),
+					'label' => $attributes['button_text'] ?? __( 'Buy Now', 'order' ),
+				]
+			);
+		}
+
 		ob_start(); ?>
 
 		<sc-cart-form
