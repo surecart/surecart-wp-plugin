@@ -18,5 +18,5 @@ shell.exec(
 );
 // components directory
 shell.exec(
-	'./vendor/bin/wp i18n make-pot ./dist/components/surecart languages/surecart.pot --ignore-domain --merge --skip-audit'
+	'./vendor/bin/wp i18n make-pot ./packages/components/dist/components --exclude=sc-*.js, languages/surecart.pot --ignore-domain --merge --skip-audit'
 );
