@@ -87,7 +87,7 @@ class CouponsListTable extends ListTable {
 	 */
 	public function column_cb( $product ) {
 		?>
-		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php esc_html_e( 'Select comment' ); ?></label>
+		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php esc_html_e( 'Select comment', 'surecart' ); ?></label>
 		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
 			<?php
 	}
@@ -252,7 +252,7 @@ class CouponsListTable extends ListTable {
 		ob_start();
 		?>
 		<a class="row-title" aria-label="Edit Coupon" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'coupon', $coupon->id ) ); ?>">
-			<?php echo esc_html_e( $coupon->name ); ?>
+			<?php echo esc_html_e( $coupon->name, 'surecart' ); ?>
 		</a>
 
 		<?php
@@ -343,25 +343,25 @@ class CouponsListTable extends ListTable {
 
 		$actions = array();
 		if ( in_array( $comment_status, array( 'all', 'approved' ), true ) ) {
-			$actions['unapprove'] = __( 'Unapprove' );
+			$actions['unapprove'] = __( 'Unapprove', 'surecart' );
 		}
 		if ( in_array( $comment_status, array( 'all', 'moderated' ), true ) ) {
-			$actions['approve'] = __( 'Approve' );
+			$actions['approve'] = __( 'Approve', 'surecart' );
 		}
 		if ( in_array( $comment_status, array( 'all', 'moderated', 'approved', 'trash' ), true ) ) {
-			$actions['spam'] = _x( 'Mark as spam', 'comment' );
+			$actions['spam'] = _x( 'Mark as spam', 'comment', 'surecart' );
 		}
 
 		if ( 'trash' === $comment_status ) {
-			$actions['untrash'] = __( 'Restore' );
+			$actions['untrash'] = __( 'Restore', 'surecart' );
 		} elseif ( 'spam' === $comment_status ) {
-			$actions['unspam'] = _x( 'Not spam', 'comment' );
+			$actions['unspam'] = _x( 'Not spam', 'comment', 'surecart' );
 		}
 
 		if ( in_array( $comment_status, array( 'trash', 'spam' ), true ) || ! EMPTY_TRASH_DAYS ) {
-			$actions['delete'] = __( 'Delete permanently' );
+			$actions['delete'] = __( 'Delete permanently', 'surecart' );
 		} else {
-			$actions['trash'] = __( 'Move to Trash' );
+			$actions['trash'] = __( 'Move to Trash', 'surecart' );
 		}
 
 		return $actions;
