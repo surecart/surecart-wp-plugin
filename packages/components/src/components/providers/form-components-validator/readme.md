@@ -7,11 +7,11 @@
 
 ## Properties
 
-| Property     | Attribute     | Description         | Type      | Default     |
-| ------------ | ------------- | ------------------- | --------- | ----------- |
-| `disabled`   | `disabled`    | Disable validation? | `boolean` | `undefined` |
-| `order`      | --            | The order           | `Order`   | `undefined` |
-| `taxEnabled` | `tax-enabled` | Is tax enabled.     | `boolean` | `undefined` |
+| Property      | Attribute  | Description         | Type          | Default     |
+| ------------- | ---------- | ------------------- | ------------- | ----------- |
+| `disabled`    | `disabled` | Disable validation? | `boolean`     | `undefined` |
+| `order`       | --         | The order           | `Order`       | `undefined` |
+| `taxProtocol` | --         | The tax protocol    | `TaxProtocol` | `undefined` |
 
 
 ## Dependencies
@@ -23,11 +23,13 @@
 ### Depends on
 
 - [sc-order-shipping-address](../../controllers/checkout-form/order-shipping-address)
+- [sc-order-tax-id-input](../../controllers/checkout-form/order-tax-id-input)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-form-components-validator --> sc-order-shipping-address
+  sc-form-components-validator --> sc-order-tax-id-input
   sc-order-shipping-address --> sc-address
   sc-order-shipping-address --> sc-compact-address
   sc-address --> sc-form-control
@@ -49,6 +51,15 @@ graph TD;
   sc-compact-address --> sc-select
   sc-compact-address --> sc-input
   sc-compact-address --> sc-block-ui
+  sc-order-tax-id-input --> sc-tax-id-input
+  sc-tax-id-input --> sc-icon
+  sc-tax-id-input --> sc-input
+  sc-tax-id-input --> sc-spinner
+  sc-tax-id-input --> sc-dropdown
+  sc-tax-id-input --> sc-button
+  sc-tax-id-input --> sc-menu
+  sc-tax-id-input --> sc-menu-item
+  sc-button --> sc-spinner
   sc-checkout --> sc-form-components-validator
   style sc-form-components-validator fill:#f9f,stroke:#333,stroke-width:4px
 ```

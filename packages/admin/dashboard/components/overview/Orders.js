@@ -3,6 +3,8 @@ import { css, jsx } from '@emotion/core';
 import { sprintf, __ } from '@wordpress/i18n';
 import Chart from "react-apexcharts";
 import { useEffect, useState } from 'react';
+import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
 
 import {
     ScCard, 
@@ -58,6 +60,7 @@ export default () => {
     };
 
     useEffect( () => {
+        //getOrderStates();
         setSeries(
             [
                 {
@@ -66,7 +69,21 @@ export default () => {
                 },
             ]
         );
-    } );
+    }, [] );
+
+    async function getOrderStates () {
+        const response = await apiFetch({
+            path: addQueryArgs(`surecart/v1/stats/orders/`, {
+                start_at: '2022-07-01',
+                end_at: '2022-07-27',
+                interval: 'day',
+            }),
+            parse: false,
+        });
+        const ordersStates = await ( response.json() );
+        console.log( "ordersStates:" );
+        console.log( ordersStates );
+    }
 
     return (
         <ScDashboardModule    

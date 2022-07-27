@@ -31,6 +31,21 @@ class SubscriptionsController extends RestController {
 	}
 
 	/**
+	 * Complete a subscription.
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \WP_REST_Response
+	 */
+	public function complete( \WP_REST_Request $request ) {
+		$model = $this->middleware( new $this->class(), $request );
+		if ( is_wp_error( $model ) ) {
+			return $model;
+		}
+		return $model->where( $request->get_query_params() )->complete( $request['id'] );
+	}
+
+	/**
 	 * Renew a subscription.
 	 *
 	 * @param \WP_REST_Request $request Rest Request.

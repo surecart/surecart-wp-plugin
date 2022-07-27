@@ -13,6 +13,7 @@ import {
 	TextControl,
 	ToggleControl,
 } from '@wordpress/components';
+import { useBlockProps } from '@wordpress/block-editor';
 
 /**
  * Component Dependencies
@@ -21,6 +22,8 @@ import { ScButton } from '@surecart/components-react';
 
 export default ({ className, attributes, setAttributes }) => {
 	const { type, label, submit, size, show_icon, full } = attributes;
+
+	const blockProps = useBlockProps();
 
 	return (
 		<div className={className} css={css``}>
@@ -99,24 +102,31 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScButton type={type} submit={submit} size={size} full={full}>
-				{show_icon && (
-					<sc-icon
-						name="user"
-						style={{ fontSize: '18px' }}
-						slot="prefix"
-					></sc-icon>
-				)}
+			<div {...blockProps}>
+				<ScButton
+					type={type}
+					submit={submit}
+					size={size}
+					full={full ? true : null}
+				>
+					{show_icon && (
+						<sc-icon
+							name="user"
+							style={{ fontSize: '18px' }}
+							slot="prefix"
+						></sc-icon>
+					)}
 
-				<RichText
-					aria-label={__('Button text')}
-					placeholder={__('Add text…')}
-					value={label}
-					onChange={(label) => setAttributes({ label })}
-					withoutInteractiveFormatting
-					allowedFormats={['core/bold', 'core/italic']}
-				/>
-			</ScButton>
+					<RichText
+						aria-label={__('Button text')}
+						placeholder={__('Add text…')}
+						value={label}
+						onChange={(label) => setAttributes({ label })}
+						withoutInteractiveFormatting
+						allowedFormats={['core/bold', 'core/italic']}
+					/>
+				</ScButton>
+			</div>
 		</div>
 	);
 };

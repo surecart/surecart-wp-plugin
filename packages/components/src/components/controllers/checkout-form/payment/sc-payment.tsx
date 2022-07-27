@@ -62,11 +62,6 @@ export class ScPayment {
 
   @Watch('order')
   handleOrderChange(_, prev) {
-    if (hasSubscription(this.order) || !this.defaultProcessor) {
-      return setTimeout(() => {
-        this.scSetProcessor.emit('stripe');
-      });
-    }
     if (!prev) {
       this.handleDefaultChange();
     }
@@ -113,16 +108,6 @@ export class ScPayment {
     );
   }
 
-  /** Should we show the processor */
-  showProcessor(processor: Processor) {
-    // does the order have a subscription?
-    // If so, it must have a recurring processor.
-    if (hasSubscription(this.order)) {
-      return processor?.processor_data?.recurring_enabled;
-    }
-    return true;
-  }
-
   renderTestModeBadge() {
     if (this.hideTestModeBadge) return null;
     return (
@@ -138,7 +123,6 @@ export class ScPayment {
    * Render Stripe and Paypal radio buttons.
    */
   renderStripeAndPayPal() {
-    const showPayPal = this.showProcessor(this.paypal);
     return (
       <sc-form-control label={this.label}>
         <div class="sc-payment-label" slot="label">
@@ -146,21 +130,20 @@ export class ScPayment {
           {this.renderTestModeBadge()}
         </div>
         <sc-toggles collapsible={false} theme="container">
-          <sc-toggle show-control={showPayPal} show-icon={showPayPal} shady borderless open={this.processor === 'stripe'} onScShow={() => this.scSetProcessor.emit('stripe')}>
+          <sc-toggle class="sc-stripe-toggle" show-control shady borderless open={this.processor === 'stripe'} onScShow={() => this.scSetProcessor.emit('stripe')}>
             <span slot="summary" class="sc-payment-toggle-summary">
               <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
               <span>{__('Credit Card', 'surecart')}</span>
             </span>
             {this.renderStripePaymentElement()}
           </sc-toggle>
-          {showPayPal && (
-            <sc-toggle show-control shady borderless open={this.processor === 'paypal'} onScShow={() => this.scSetProcessor.emit('paypal')}>
-              <span slot="summary" class="sc-payment-toggle-summary">
-                <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
-              </span>
-              <div class="sc-payment-instructions">{__('You will be prompted by PayPal to complete your purchase securely.', 'surecart')}</div>
-            </sc-toggle>
-          )}
+
+          <sc-toggle class="sc-paypal-toggle" show-control shady borderless open={this.processor === 'paypal'} onScShow={() => this.scSetProcessor.emit('paypal')}>
+            <span slot="summary" class="sc-payment-toggle-summary">
+              <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
+            </span>
+            <div class="sc-payment-instructions">{__('You will be prompted by PayPal to complete your purchase securely.', 'surecart')}</div>
+          </sc-toggle>
         </sc-toggles>
       </sc-form-control>
     );
@@ -265,7 +248,7 @@ export class ScPayment {
     }
 
     // we have paypal.
-    if (this.paypal && this.showProcessor(this.paypal)) {
+    if (this.paypal) {
       return this.renderPayPal();
     }
 

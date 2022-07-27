@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+const fs = require('fs');
 const AdmZip = require('adm-zip');
 const { sync: glob } = require('fast-glob');
 const { sync: packlist } = require('npm-packlist');
@@ -50,5 +51,14 @@ files.forEach((file) => {
 	zip.addLocalFile(file, dirname(file));
 });
 
-zip.writeZip(`./${name}.zip`);
-stdout.write(`\nDone. \`${name}.zip\` is ready! 🎉\n`);
+fs.rm(`./${name}`, { recursive: true }, (err) => {
+	if (err) {
+		stdout.write(`\nDirectory does not exist, so it did not delete.\n`);
+	} else {
+		stdout.write(`\nExisting \`${name}\` folder deleted.\n`);
+	}
+
+	zip.extractAllTo(`./${name}`, true);
+	zip.writeZip(`./${name}.zip`);
+	stdout.write(`\nDone. \`${name}\` release is ready! 🎉\n`);
+});

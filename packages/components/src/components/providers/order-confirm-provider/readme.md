@@ -7,19 +7,21 @@
 
 ## Properties
 
-| Property | Attribute | Description        | Type    | Default     |
-| -------- | --------- | ------------------ | ------- | ----------- |
-| `order`  | --        | The current order. | `Order` | `undefined` |
+| Property     | Attribute     | Description                  | Type               | Default     |
+| ------------ | ------------- | ---------------------------- | ------------------ | ----------- |
+| `formId`     | `form-id`     | The form id                  | `number`           | `undefined` |
+| `mode`       | `mode`        | Are we in test or live mode. | `"live" \| "test"` | `'live'`    |
+| `order`      | --            | The current order.           | `Order`            | `undefined` |
+| `successUrl` | `success-url` | Success url.                 | `string`           | `undefined` |
 
 
 ## Events
 
-| Event                | Description                             | Type                                                                                          |
-| -------------------- | --------------------------------------- | --------------------------------------------------------------------------------------------- |
-| `scConfirmed`        | The order is confirmed event.           | `CustomEvent<void>`                                                                           |
-| `scError`            | Error event.                            | `CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any; } \| {}>` |
-| `scOrderPaid`        | The order is paid event.                | `CustomEvent<Order>`                                                                          |
-| `scUpdateOrderState` | Update the order in the universe store. | `CustomEvent<Order>`                                                                          |
+| Event         | Description                   | Type                                                                                          |
+| ------------- | ----------------------------- | --------------------------------------------------------------------------------------------- |
+| `scConfirmed` | The order is confirmed event. | `CustomEvent<void>`                                                                           |
+| `scError`     | Error event.                  | `CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any; } \| {}>` |
+| `scOrderPaid` | The order is paid event.      | `CustomEvent<Order>`                                                                          |
 
 
 ## Dependencies

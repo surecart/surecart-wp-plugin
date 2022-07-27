@@ -45,9 +45,9 @@ export default () => {
             <span className='sc-learn-more-title' slot="heading">{__('Learn More', 'surecart')}</span>
             <ScCard noPadding>
                 <ScStackedList>
-                    <ScStackedListRow href="#" style={{ '--columns': '2' }}>
+                    <ScStackedListRow href="#" style={{ '--columns': '2', '--sc-list-row-background-color': 'transparent' }}>
                         <ScFlex justifyContent="center" alignItems="center">
-                            <ScIcon name="film" style={{fontSize: "60px", color: "#08BA4F"}} />
+                            <ScIcon name="film" style={{fontSize: "60px", 'margin-right':'15px', color: "#08BA4F"}} />
                             <LearnMoreDetails
                                 title={__('Tutorial Videos', 'surecart')} 
                                 descriptions={__('Learn more about SureCart', 'surecart')} 
@@ -55,9 +55,9 @@ export default () => {
                             <ScIcon name="chevron-right" style={{fontSize: "20px", color: "#334155"}} />
                         </ScFlex>
                     </ScStackedListRow>
-                    <ScStackedListRow href="#" style={{ '--columns': '2' }}>
+                    <ScStackedListRow href="#" style={{ '--columns': '2', '--sc-list-row-background-color': 'transparent' }}>
                         <ScFlex justifyContent="center" alignItems="center">
-                            <ScIcon name="users" style={{fontSize: "60px", color: "#08BA4F"}} />
+                            <ScIcon name="users" style={{fontSize: "60px", 'margin-right':'15px', color: "#08BA4F"}} />
                             <LearnMoreDetails
                                 title={__('Join Our Community', 'surecart')} 
                                 descriptions={__('Connect with others in on Facebook', 'surecart')} 
@@ -65,9 +65,9 @@ export default () => {
                             <ScIcon name="chevron-right" style={{fontSize: "20px", color: "#334155"}} />
                         </ScFlex>
                     </ScStackedListRow>
-                    <ScStackedListRow href="#" style={{ '--columns': '2' }}>
+                    <ScStackedListRow href="#" style={{ '--columns': '2', '--sc-list-row-background-color': 'transparent' }}>
                         <ScFlex justifyContent="center" alignItems="center">
-                            <ScIcon name="life-buoy" style={{fontSize: "60px", color: "#08BA4F"}} />
+                            <ScIcon name="life-buoy" style={{fontSize: "60px", 'margin-right':'15px', color: "#08BA4F"}} />
                             <LearnMoreDetails
                                 title={__('Get Help', 'surecart')} 
                                 descriptions={__('Contact our support for additional help', 'surecart')} 

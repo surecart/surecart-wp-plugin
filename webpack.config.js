@@ -56,6 +56,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/subscriptions/edit/index.js'
 		),
+		['admin/cart/edit']: path.resolve(
+			__dirname,
+			'packages/admin/cart/edit/index.js'
+		),
 
 		/**
 		 * Settings.
@@ -76,7 +80,7 @@ module.exports = {
 			__dirname,
 			'packages/admin/settings/tax/index.js'
 		),
-    ['admin/settings/export']: path.resolve(
+		['admin/settings/export']: path.resolve(
 			__dirname,
 			'packages/admin/settings/export/index.js'
 		),
@@ -120,6 +124,7 @@ module.exports = {
 	output: {
 		filename: '[name].js',
 		path: path.resolve(__dirname, 'dist'),
+		clean: true,
 	},
 	plugins: [
 		...defaultConfig.plugins,

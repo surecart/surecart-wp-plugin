@@ -12,6 +12,7 @@
 | `alignItems`     | `align-items`     |             | `string` | `undefined` |
 | `columnGap`      | `column-gap`      |             | `string` | `undefined` |
 | `flexDirection`  | `flex-direction`  |             | `string` | `undefined` |
+| `flexWrap`       | `flex-wrap`       |             | `string` | `undefined` |
 | `justifyContent` | `justify-content` |             | `string` | `undefined` |
 
 

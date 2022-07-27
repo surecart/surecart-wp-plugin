@@ -100,9 +100,9 @@ export class ScCustomerName {
   /** Sync customer email with session if it's updated by other means */
   @Watch('order')
   handleSessionChange(val) {
-    if (val.name) {
+    if (val?.name) {
       if (val.name !== this.value) {
-        this.value = val.name;
+        this.value = val?.name;
       }
     }
   }

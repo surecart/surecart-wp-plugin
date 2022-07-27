@@ -6,16 +6,14 @@ export default ({
 	title,
 	description,
     buttonLabel,
-    buttonURL,
+    buttonUrl,
 }) => {
 	return (
 		<div>
             <ScTag type={infoType} style={{'--sc-tag-primary-background-color': '#f3e8ff','--sc-tag-primary-color': '#6b21a8'}}>{infoText}</ScTag>
             <p className='sc-getstarted-box-title'>{title}</p>
             <p className='sc-getstarted-box-descritions'>{description}</p>
-            <a href={buttonURL}>
-                <ScButton type="primary" style={{"--primary-background": "#002529"}}>{buttonLabel} &#8594;</ScButton>
-            </a>
+            <ScButton type="primary" href={buttonUrl} style={{"--primary-background": "#002529"}}>{buttonLabel} &#8594;</ScButton>
         </div>
 	);
 };

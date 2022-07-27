@@ -91,7 +91,7 @@ export default () => {
         return orders.map(order => {
           const { email, name, created_at, url } = order;
           return (
-            <ScStackedListRow style={{ '--columns': '5' }}>
+            <ScStackedListRow style={{ '--columns': '5', '--sc-list-row-background-color': 'transparent' }}>
                 <div>
                   <ScFormatDate 
                       date={created_at}

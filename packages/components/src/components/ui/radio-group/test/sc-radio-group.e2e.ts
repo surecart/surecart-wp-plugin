@@ -24,7 +24,7 @@ describe('sc-radio-group', () => {
     expect(first).toHaveAttribute('checked');
     expect(second).not.toHaveAttribute('checked');
 
-    second.click();
+    await second.click();
     await page.waitForChanges();
 
     expect(first).not.toHaveAttribute('checked');

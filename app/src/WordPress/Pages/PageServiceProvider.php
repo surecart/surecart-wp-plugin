@@ -25,6 +25,7 @@ class PageServiceProvider implements ServiceProviderInterface {
 
 		$app = $container[ SURECART_APPLICATION_KEY ];
 		$app->alias( 'pages', 'surecart.pages' );
+		$app->alias( 'page_seeder', 'surecart.pages.seeder' );
 	}
 
 	/**

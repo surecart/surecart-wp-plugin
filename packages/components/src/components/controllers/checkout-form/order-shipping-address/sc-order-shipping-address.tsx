@@ -93,7 +93,7 @@ export class ScOrderShippingAddress {
   }
 
   updateAddressState(address: Partial<Address>) {
-    if (address === this.address) return; // no change, don't update.
+    if (JSON.stringify(address) === JSON.stringify(this.address)) return; // no change, don't update.
     this.address = address;
     this.scUpdateOrder.emit({
       data: {
@@ -125,7 +125,7 @@ export class ScOrderShippingAddress {
       return (
         <sc-address
           ref={el => (this.input = el as any)}
-          label={__('Shipping Address', 'surecart')}
+          label={this.label || __('Shipping Address', 'surecart')}
           placeholders={this.placeholders}
           required={this.required}
           loading={this.loading}

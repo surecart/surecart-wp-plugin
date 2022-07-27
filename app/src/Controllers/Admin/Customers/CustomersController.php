@@ -42,7 +42,7 @@ class CustomersController extends AdminController {
 	 * Change the archived attribute in the model
 	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
-	 * @return void
+	 * @return function
 	 */
 	public function toggleArchive( $request ) {
 		$product = Product::find( $request->query( 'id' ) );

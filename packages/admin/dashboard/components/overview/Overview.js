@@ -25,7 +25,7 @@ export default () => {
                         font-weight: 600;
                         font-size: 28px;
                         line-height: 28px;
-                        margin-top: 50px;
+                        margin-top: 0px;
                         color: #334155;               
                     `}
                 >

@@ -10,7 +10,6 @@ import Template from '../../templates/SingleModel';
 import useCurrentPage from '../../mixins/useCurrentPage';
 
 // modules
-import Customer from './modules/Customer';
 import Price from './modules/Price';
 import PaymentMethod from './modules/PaymentMethod';
 import Schedule from './modules/Schedule';
@@ -19,7 +18,6 @@ import Sidebar from './Sidebar';
 // components
 import ErrorFlash from '../../components/ErrorFlash';
 import { ScButton, ScFormatDate, ScSwitch } from '@surecart/components-react';
-import PendingUpdate from '../show/modules/PendingUpdate';
 
 export default () => {
 	const [skip_proration, setSkipProration] = useState(true);

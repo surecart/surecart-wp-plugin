@@ -3,12 +3,35 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { ScCard, ScIcon, ScFlex } from '@surecart/components-react';
 import GetStartedBox from '../GetStartedBox';
+import { useEffect, useState } from 'react';
+import { dispatch } from '@wordpress/data';
+import { store as preferencesStore } from '@wordpress/preferences';
 
 export default () => {
+    const [showGetStarted, setShowGetStarted] = useState(1);
+
+    const removeGetStarted = () => {
+        wp.data
+        .dispatch( 'core/preferences' )
+        .set( 'surecart/dashboard-get-started', 'ScShowGetStartedStatus7', 0 );
+        setShowGetStarted(0);
+    }
+
+    useEffect(() => {
+        setShowGetStarted( wp.data
+        .select( 'core/preferences' )
+        .get( 'surecart/dashboard-get-started', 'ScShowGetStartedStatus7' ) );
+    });
+
+    if ( 0 === showGetStarted ) {
+        return '';
+    }
+
     return (
         <ScCard
             css={css`
                 position: relative;
+                margin-bottom: 50px;
                 .sc-getstarted-inner-wrap{
                     padding: 20px;
                 }
@@ -23,6 +46,7 @@ export default () => {
                     position: absolute;
                     right: 30px;
                     top: 30px;
+                    cursor: pointer;
                 }
                 .sc-getstarted-box-title {
                     font-weight: 600;
@@ -41,7 +65,7 @@ export default () => {
             `}
         >
             <div className='sc-getstarted-inner-wrap'>
-                <ScIcon className='sc-getstarted-close-icon' name="x" />
+                <ScIcon className='sc-getstarted-close-icon' onClick={removeGetStarted} name="x" />
                 <h3 className='sc-get-started-main-title'>
                     { __( 'Get started with SureCart', 'surecart' ) }
                 </h3>
@@ -52,7 +76,7 @@ export default () => {
                         title = { __( 'Create products', 'surecart' ) }
                         description = { __( 'Customize your checkout forms with a no-code experience.', 'surecart' ) }
                         buttonLabel = { __( 'Create A Product', 'surecart' ) }
-                        buttonUrl = '#'
+                        buttonUrl = {'admin.php?page=sc-products&action=edit'}
                     />
                     <GetStartedBox
                         infoType = 'success'
@@ -60,7 +84,7 @@ export default () => {
                         title = { __( 'Add buy and cart buttons', 'surecart' ) }
                         description = { __( 'Customize your checkout forms with a no-code experience.', 'surecart' ) }
                         buttonLabel = { __( 'How To Add Buttons', 'surecart' ) }
-                        buttonUrl = '#'
+                        buttonUrl = {'admin.php?page=sc-products'}
                     />
                     <GetStartedBox
                         infoType = 'primary'
@@ -68,7 +92,7 @@ export default () => {
                         title = { __( 'Customize forms', 'surecart' ) }
                         description = { __( 'Customize your checkout forms with a no-code experience.', 'surecart' ) }
                         buttonLabel = { __( 'Customize', 'surecart' ) }
-                        buttonUrl = '#'
+                        buttonUrl = {'edit.php?post_type=sc_form'}
                     />
                 </ScFlex>
             </div>

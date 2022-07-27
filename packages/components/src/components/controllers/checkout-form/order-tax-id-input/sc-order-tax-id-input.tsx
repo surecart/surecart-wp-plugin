@@ -1,7 +1,7 @@
 import { Component, h, Prop, Event, EventEmitter } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
-import { Address, Order, TaxIdentifier } from '../../../../types';
+import { Address, Order, TaxIdentifier, TaxProtocol } from '../../../../types';
 
 @Component({
   tag: 'sc-order-tax-id-input',
@@ -15,7 +15,11 @@ export class ScOrderTaxIdInput {
   /** Force show the field. */
   @Prop() show: boolean = false;
 
+  /** Tax identifier */
   @Prop() taxIdentifier: TaxIdentifier;
+
+  /** The tax protocol. */
+  @Prop() taxProtocol: TaxProtocol;
 
   /** Is this busy */
   @Prop() busy: boolean = false;
@@ -30,7 +34,19 @@ export class ScOrderTaxIdInput {
     if (this.taxIdentifier?.number_type !== 'eu_vat') {
       return 'unknown';
     }
-    return this.taxIdentifier?.valid_eu_vat ? 'valid' : 'invalid';
+    if (this.taxProtocol?.eu_vat_unverified_behavior === 'apply_reverse_charge') {
+      return 'unknown';
+    }
+    return this.taxIdentifier?.eu_vat_verified ? 'valid' : 'invalid';
+  }
+
+  maybeUpdateOrder(tax_identifier) {
+    if (this.taxProtocol?.eu_vat_unverified_behavior === 'apply_reverse_charge') {
+      return;
+    }
+    this.scUpdateOrder.emit({
+      data: { tax_identifier },
+    });
   }
 
   render() {
@@ -44,14 +60,11 @@ export class ScOrderTaxIdInput {
         loading={this.busy}
         onScChange={e => {
           e.stopImmediatePropagation();
-          const tax_identifier = e.detail;
-          this.scUpdateOrder.emit({
-            data: { tax_identifier },
-          });
+          this.maybeUpdateOrder(e.detail);
         }}
       ></sc-tax-id-input>
     );
   }
 }
 
-openWormhole(ScOrderTaxIdInput, ['draft', 'order', 'tax_status', 'taxIdentifier', 'busy'], false);
+openWormhole(ScOrderTaxIdInput, ['draft', 'order', 'tax_status', 'taxIdentifier', 'taxProtocol', 'busy'], false);
