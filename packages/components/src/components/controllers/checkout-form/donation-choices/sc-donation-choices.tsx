@@ -120,9 +120,7 @@ export class ScDonationChoices {
   removeInvalidPrices() {
     if (!this.lineItem) return;
 
-    console.log(this.el.querySelectorAll('*'));
     this.getChoices().forEach((el: HTMLScChoiceElement) => {
-      console.log(el.value);
       // we have a max and the value is more.
       if (this.lineItem?.price?.ad_hoc_max_amount && parseInt(el.value) > this.lineItem?.price?.ad_hoc_max_amount) {
         el.style.display = 'none';
