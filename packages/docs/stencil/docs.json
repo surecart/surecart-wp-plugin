@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-07-18T19:06:30",
+  "timestamp": "2022-07-27T18:33:28",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -3388,9 +3388,9 @@
         "sc-form-state-provider",
         "sc-form-error-provider",
         "sc-form-components-validator",
-        "sc-session-provider",
         "sc-order-redirect-provider",
         "sc-order-confirm-provider",
+        "sc-session-provider",
         "sc-block-ui"
       ],
       "dependencyGraph": {
@@ -3399,9 +3399,9 @@
           "sc-form-state-provider",
           "sc-form-error-provider",
           "sc-form-components-validator",
-          "sc-session-provider",
           "sc-order-redirect-provider",
           "sc-order-confirm-provider",
+          "sc-session-provider",
           "sc-block-ui"
         ],
         "sc-alert": [
@@ -12569,7 +12569,13 @@
           "docsTags": []
         }
       ],
-      "listeners": [],
+      "listeners": [
+        {
+          "event": "scOrderPaid",
+          "capture": false,
+          "passive": false
+        }
+      ],
       "styles": [],
       "slots": [],
       "parts": [],
@@ -17241,6 +17247,15 @@
           "cancelable": true,
           "composed": true,
           "docs": "Error event",
+          "docsTags": []
+        },
+        {
+          "event": "scPaid",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
           "docsTags": []
         },
         {

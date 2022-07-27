@@ -36,7 +36,7 @@ class Block extends BaseBlock {
 
 			return $is_debug ?
 			// translators: Visible only in the front end, this warning takes the place of a faulty block.
-			__( '[block rendering halted]' ) :
+			__( '[block rendering halted]', 'surecart' ) :
 			'';
 		}
 

@@ -61,4 +61,16 @@ class Order extends Model {
 	public function setLineItemsAttribute( $value ) {
 		$this->setCollection( 'line_items', $value, LineItem::class );
 	}
+
+	/**
+	 * Get stats for the order.
+	 *
+	 * @param array $args Array of arguments for the statistics.
+	 *
+	 * @return \SureCart\Models\Statistic;
+	 */
+	protected function stats( $args = [] ) {
+		$stat = new Statistic();
+		return $stat->where( $args )->find( 'orders' );
+	}
 }

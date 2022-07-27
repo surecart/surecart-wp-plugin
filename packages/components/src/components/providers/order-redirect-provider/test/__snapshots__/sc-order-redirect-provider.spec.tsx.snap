@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`sc-order-redirect-provider renders 1`] = `
-<sc-order-redirect-provider>
-  <mock:shadow-root>
-    <slot></slot>
-  </mock:shadow-root>
-</sc-order-redirect-provider>
-`;

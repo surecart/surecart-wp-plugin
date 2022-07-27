@@ -24,7 +24,7 @@ class Block extends BaseBlock {
 				'size'  => $attributes['size'] ?? 'medium',
 				'style' => '',
 				'href'  => $this->href( $attributes['line_items'] ?? [] ),
-				'label' => $attributes['label'] ?? __( 'Buy Now', 'order' ),
+				'label' => $attributes['label'] ?? __( 'Buy Now', 'surecart' ),
 			]
 		);
 	}

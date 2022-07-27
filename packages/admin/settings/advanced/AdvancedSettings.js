@@ -67,6 +67,24 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
+				<ScSwitch
+					checked={!item?.slide_out_cart_disabled}
+					onClick={(e) => {
+						e.preventDefault();
+						editItem({
+							slide_out_cart_disabled:
+								!item?.slide_out_cart_disabled,
+						});
+					}}
+				>
+					{__('Enable Slide-Out Cart', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'If you do not wish to use the slide-out cart, you can disable this to prevent scripts from loading on your pages.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
 			</SettingsBox>
 
 			<SettingsBox
