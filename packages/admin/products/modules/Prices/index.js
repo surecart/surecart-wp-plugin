@@ -1,24 +1,23 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-
-// wordpress.
-import { __ } from '@wordpress/i18n';
-import { useState, Fragment } from '@wordpress/element';
-import { useSelect } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
-
 // components.
 import { ScButton } from '@surecart/components-react';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
+import { Fragment, useState } from '@wordpress/element';
+// wordpress.
+import { __ } from '@wordpress/i18n';
+
 import Box from '../../../ui/Box';
-import NewPrice from './NewPrice';
 import List from './List';
+import NewPrice from './NewPrice';
 import ShowArchivedToggle from './ShowArchivedToggle';
 
-export default ({ product, productId, loading }) => {
+export default ({ product, productId }) => {
 	const [newPriceModal, setNewPriceModal] = useState(false);
 	const [showArchived, setShowArchived] = useState(false);
 
-	const { activePrices, archivedPrices, fetching } = useSelect(
+	const { activePrices, archivedPrices, updating, loading } = useSelect(
 		(select) => {
 			const queryArgs = [
 				'surecart',
@@ -26,15 +25,17 @@ export default ({ product, productId, loading }) => {
 				{ context: 'edit', product_ids: [productId], per_page: 100 },
 			];
 			const prices = select(coreStore).getEntityRecords(...queryArgs);
+			const loading = select(coreStore).isResolving(
+				'getEntityRecords',
+				queryArgs
+			);
 			return {
 				activePrices: (prices || []).filter((price) => !price.archived),
 				archivedPrices: (prices || []).filter(
 					(price) => price.archived
 				),
-				fetching: select(coreStore).isResolving(
-					'getEntityRecords',
-					queryArgs
-				),
+				loading: loading && !prices?.length,
+				updating: loading && prices?.length,
 			};
 		},
 		[productId]
@@ -121,7 +122,7 @@ export default ({ product, productId, loading }) => {
 						</div>
 					)}
 				</div>
-				{fetching && <sc-block-ui spinner></sc-block-ui>}
+				{updating && <sc-block-ui spinner></sc-block-ui>}
 			</Box>
 
 			{!!newPriceModal && product?.id && (
