@@ -67,7 +67,7 @@ Type: `Promise<boolean>`
 - [sc-form-state-provider](../../../providers/form-state-provider)
 - [sc-form-error-provider](../../../providers/form-error-provider)
 - [sc-form-components-validator](../../../providers/form-components-validator)
-[sc-order-redirect-provider](../../../providers/order-redirect-provider)
+- [sc-order-redirect-provider](../../../providers/order-redirect-provider)
 - [sc-order-confirm-provider](../../../providers/order-confirm-provider)
 - [sc-session-provider](../../../providers/session-provider)
 - [sc-block-ui](../../../ui/block-ui)
