@@ -1,15 +1,22 @@
+import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch, useSelect } from '@wordpress/data';
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { useSelect, useDispatch } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
+
 /**
  * Internal dependencies
  */
 import { camelName } from '../util';
 
-export default (type, id, query = {}, name = 'surecart') => {
+export default (
+	type,
+	id,
+	query = {},
+	additionalItems = [],
+	name = 'surecart'
+) => {
 	// dispatchers.
 	const {
 		editEntityRecord,
@@ -57,7 +64,7 @@ export default (type, id, query = {}, name = 'surecart') => {
 				),
 			};
 		},
-		[id]
+		[id, ...additionalItems]
 	);
 
 	/** Edit the entity. */

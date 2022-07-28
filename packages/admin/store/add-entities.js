@@ -61,6 +61,13 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'integration_provider_item',
+		kind: 'surecart',
+		label: __('Integration Provider Items', 'surecart'),
+		baseURL: 'surecart/v1/integration_provider_items',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'invoice',
 		kind: 'surecart',
 		label: __('Invoice', 'surecart'),

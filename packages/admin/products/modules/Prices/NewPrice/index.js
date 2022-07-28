@@ -49,7 +49,7 @@ export default ({ onRequestClose, product }) => {
 				},
 				{ throwOnError: true }
 			);
-			createSuccessNotice(__('Prices saved.', 'surecart'), {
+			createSuccessNotice(__('Price created.', 'surecart'), {
 				type: 'snackbar',
 			});
 			onRequestClose();
