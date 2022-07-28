@@ -13,7 +13,6 @@ import MediaLibrary from '../../components/MediaLibrary';
 export default ({ download, product, updateProduct, className }) => {
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
-	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const { saveEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
 
@@ -40,6 +39,19 @@ export default ({ download, product, updateProduct, className }) => {
 		await saveEntityRecord('surecart', 'download', {
 			id: download?.id,
 			media: media?.id,
+		});
+	};
+
+	const handleError = (e) => {
+		createErrorNotice(
+			e?.message || __('Something went wrong', 'surecart'),
+			{ type: 'snackbar', explicitDismiss: true }
+		);
+		e?.additional_errors.forEach((e) => {
+			createErrorNotice(e?.message, {
+				type: 'snackbar',
+				explicitDismiss: true,
+			});
 		});
 	};
 
@@ -70,14 +82,7 @@ export default ({ download, product, updateProduct, className }) => {
 			});
 		} catch (e) {
 			console.error(e);
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart')
-			);
-			e?.additional_errors.forEach((e) => {
-				createErrorNotice(e?.message);
-			});
-
-			// setError(e?.message || __('Something went wrong', 'surecart'));
+			handleError(e);
 		} finally {
 			setLoading(false);
 		}
@@ -106,7 +111,7 @@ export default ({ download, product, updateProduct, className }) => {
 			);
 		} catch (e) {
 			console.error(e);
-			setError(e?.message || __('Something went wrong', 'surecart'));
+			handleError(e);
 		} finally {
 			setLoading(false);
 		}
@@ -126,7 +131,7 @@ export default ({ download, product, updateProduct, className }) => {
 			downloadFile(media?.url, media.filename);
 		} catch (e) {
 			console.error(e);
-			setError(e?.message || __('Something went wrong', 'surecart'));
+			handleError(e);
 		} finally {
 			setLoading(false);
 		}
@@ -154,11 +159,6 @@ export default ({ download, product, updateProduct, className }) => {
 
 	return (
 		<Fragment>
-			{!!error && (
-				<sc-alert open={!!error} type="danger">
-					{error}
-				</sc-alert>
-			)}
 			<ScStackedListRow
 				className={className}
 				style={{ position: 'relative' }}
