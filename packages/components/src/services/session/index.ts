@@ -2,7 +2,7 @@ import apiFetch from '../../functions/fetch';
 import { Order } from '../../types';
 import { addQueryArgs } from '@wordpress/url';
 
-export const baseUrl = 'surecart/v1/orders/';
+export const baseUrl = 'surecart/v1/checkouts/';
 export const expand = [
   'line_items',
   'line_item.price',
