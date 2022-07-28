@@ -27,9 +27,9 @@ export default () => {
 
     useEffect( () => {
         getOrderList();
-    } );
+    }, [] );
 
-    async function getOrderList () {
+    const getOrderList = async () => {
         const response = await apiFetch({
             path: addQueryArgs(`surecart/v1/orders/`, {
               expand: ['line_items', 'charge', 'payment_method', 'payment_intent', 'payment_method.card'],
@@ -38,7 +38,6 @@ export default () => {
             parse: false,
         });
         const ordersList = await ( response.json() );
-        console.log( ordersList );
         setOrders( ordersList );
     }
 

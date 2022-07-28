@@ -60,18 +60,10 @@ export default () => {
     };
 
     useEffect( () => {
-        //getOrderStates();
-        setSeries(
-            [
-                {
-                    name: 'View',
-                    data: [334, 446, 408, 356, 52, 909, 300]
-                },
-            ]
-        );
+        getOrderStates();
     }, [] );
 
-    async function getOrderStates () {
+    const getOrderStates = async () => {
         const response = await apiFetch({
             path: addQueryArgs(`surecart/v1/stats/orders/`, {
                 start_at: '2022-07-01',

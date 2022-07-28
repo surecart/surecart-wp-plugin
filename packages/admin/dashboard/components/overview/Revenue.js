@@ -57,17 +57,6 @@ export default () => {
         },
     };
 
-    useEffect( () => {
-        setSeries(
-            [
-                {
-                    name: 'View',
-                    data: [993, 770, 408, 51, 52, 109, 300]
-                },
-            ]
-        );
-    } );
-
     return (
         <ScDashboardModule    
             css={css`
