@@ -1,11 +1,9 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-// components.
-import { ScButton } from '@surecart/components-react';
+import { ScBlockUi, ScButton, ScEmpty, ScIcon, ScSpacing } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
-import { Fragment, useState } from '@wordpress/element';
-// wordpress.
+import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 import Box from '../../../ui/Box';
@@ -50,7 +48,7 @@ export default ({ product, productId }) => {
 			<>
 				{!!activePrices?.length && (
 					<ScButton onClick={() => setNewPriceModal(true)}>
-						<sc-icon name="plus" slot="prefix"></sc-icon>
+						<ScIcon name="plus" slot="prefix"></ScIcon>
 						{__('Add Another Price', 'surecart')}
 					</ScButton>
 				)}
@@ -80,8 +78,8 @@ export default ({ product, productId }) => {
 					`}
 				>
 					<List prices={activePrices} product={product}>
-						<sc-empty icon="shopping-bag">
-							<sc-spacing>
+						<ScEmpty icon="shopping-bag">
+							<ScSpacing>
 								<p
 									css={css`
 										font-size: 14px;
@@ -95,14 +93,11 @@ export default ({ product, productId }) => {
 								<ScButton
 									onClick={() => setNewPriceModal(true)}
 								>
-									<sc-icon
-										name="plus"
-										slot="prefix"
-									></sc-icon>
+									<ScIcon name="plus" slot="prefix"></ScIcon>
 									{__('Add A Price', 'surecart')}
 								</ScButton>
-							</sc-spacing>
-						</sc-empty>
+							</ScSpacing>
+						</ScEmpty>
 					</List>
 
 					{!!archivedPrices?.length && (
@@ -122,7 +117,7 @@ export default ({ product, productId }) => {
 						</div>
 					)}
 				</div>
-				{updating && <sc-block-ui spinner></sc-block-ui>}
+				{updating && <ScBlockUi spinner></ScBlockUi>}
 			</Box>
 
 			{!!newPriceModal && product?.id && (
