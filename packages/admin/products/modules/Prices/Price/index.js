@@ -55,7 +55,6 @@ export default ({ id, prices, product }) => {
 					: __('Price archived.'),
 				{
 					type: 'snackbar',
-					explicitDismiss: true,
 				}
 			);
 		} catch (e) {

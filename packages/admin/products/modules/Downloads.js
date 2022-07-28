@@ -48,7 +48,6 @@ export default ({ id, product, updateProduct, loading }) => {
 			);
 			createSuccessNotice(__('Download added.', 'surecart'), {
 				type: 'snackbar',
-				explicitDismiss: true,
 			});
 		} catch (e) {
 			console.error(e);

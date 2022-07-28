@@ -45,12 +45,11 @@ export default ({ download, product, updateProduct, className }) => {
 	const handleError = (e) => {
 		createErrorNotice(
 			e?.message || __('Something went wrong', 'surecart'),
-			{ type: 'snackbar', explicitDismiss: true }
+			{ type: 'snackbar' }
 		);
 		e?.additional_errors.forEach((e) => {
 			createErrorNotice(e?.message, {
 				type: 'snackbar',
-				explicitDismiss: true,
 			});
 		});
 	};
@@ -78,7 +77,6 @@ export default ({ download, product, updateProduct, className }) => {
 			);
 			createSuccessNotice(__('Download removed.', 'surecart'), {
 				type: 'snackbar',
-				explicitDismiss: true,
 			});
 		} catch (e) {
 			console.error(e);
@@ -106,7 +104,6 @@ export default ({ download, product, updateProduct, className }) => {
 					: __('Download archived.', 'surecart'),
 				{
 					type: 'snackbar',
-					explicitDismiss: true,
 				}
 			);
 		} catch (e) {

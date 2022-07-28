@@ -51,7 +51,6 @@ export default ({ onRequestClose, product }) => {
 			);
 			createSuccessNotice(__('Prices saved.', 'surecart'), {
 				type: 'snackbar',
-				explicitDismiss: true,
 			});
 			onRequestClose();
 		} catch (e) {
