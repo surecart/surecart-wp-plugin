@@ -1,32 +1,20 @@
 /** @jsx jsx */
-import { css, jsx, Global } from '@emotion/core';
+import { css, Global, jsx } from '@emotion/core';
+import { ScAlert, ScBlockUi, ScButton, ScDropdown, ScForm, ScIcon, ScInput, ScMenu, ScMenuItem, ScStackedListRow } from '@surecart/components-react';
+import { Modal } from '@wordpress/components';
+import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
-import {
-	ScAlert,
-	ScBlockUi,
-	ScButton,
-	ScDropdown,
-	ScForm,
-	ScIcon,
-	ScInput,
-	ScMenu,
-	ScMenuItem,
-	ScStackedListRow,
-} from '@surecart/components-react';
 import { store as noticesStore } from '@wordpress/notices';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelect } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
+
 import { formatTime } from '../../../util/time';
-import useSnackbar from '../../../hooks/useSnackbar';
-import { Modal } from '@wordpress/components';
 
 export default ({ activation }) => {
 	const [openModal, setOpenModal] = useState();
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState(false);
 	const [activationState, setActivationState] = useState(activation);
-	const { addSnackbarNotice } = useSnackbar();
 	const { deleteEntityRecord, saveEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
@@ -50,8 +38,8 @@ export default ({ activation }) => {
 
 	useEffect(() => {
 		if (deleteError) {
-			addSnackbarNotice({
-				content: deleteError?.message,
+			createErrorNotice(deleteError?.message, {
+				type: 'snackbar',
 			});
 		}
 	}, [deleteError]);
@@ -75,7 +63,7 @@ export default ({ activation }) => {
 
 		// notice.
 		if (success) {
-			createSuccessNotice(__('The activation was deleted.', 'surecart'), {
+			createSuccessNotice(__('Activation deleted.', 'surecart'), {
 				type: 'snackbar',
 			});
 			return;
@@ -96,7 +84,12 @@ export default ({ activation }) => {
 		try {
 			setBusy(true);
 			setError(false);
-			await saveEntityRecord('surecart', 'activation', activationState);
+			await saveEntityRecord('surecart', 'activation', activationState, {
+				throwOnError: true,
+			});
+			createSuccessNotice(__('Activation updated.', 'surecart'), {
+				type: 'snackbar',
+			});
 			setOpenModal(false);
 		} catch (e) {
 			setError(e?.message || __('Something went wrong.', 'surecart'));
