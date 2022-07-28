@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-07-27T15:06:46+00:00\n"
+"POT-Creation-Date: 2022-07-28T19:47:20+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -17,7 +17,7 @@ msgstr ""
 
 #: src/BlockLibrary/BlockServiceProvider.php:95
 #: src/Integrations/AffiliateWP/AffiliateWPService.php:29
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:103
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:105
 #: src/WordPress/Admin/Notices/AdminNoticesService.php:104
 #: src/WordPress/ThemeServiceProvider.php:57
 #: admin/user-profile.php:1
@@ -25,8 +25,8 @@ msgstr ""
 msgid "SureCart"
 msgstr ""
 
-#: src/Cart/CartService.php:40
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:126
+#: src/Cart/CartService.php:51
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:129
 msgid "Cart"
 msgstr ""
 
@@ -52,6 +52,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:102
 #: src/Controllers/Admin/Orders/OrdersListTable.php:116
+#: store/add-entities.js:94
 #: subscriptions/show/modules/Orders.js:15
 msgid "Order"
 msgstr ""
@@ -76,6 +77,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:105
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:65
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:63
 #: src/Controllers/Admin/Orders/OrdersListTable.php:118
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:104
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:103
@@ -122,7 +124,7 @@ msgid "Not Recovered"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsController.php:23
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:121
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:123
 #: admin/coupons/index.php:6
 #: coupons/Coupons.js:189
 #: settings/export/ExportSettings.js:19
@@ -139,6 +141,7 @@ msgstr ""
 #: src/Controllers/Admin/Products/ProductsListTable.php:108
 #: src/Support/Errors/Translations/attributes.php:11
 #: customers/modules/Details.js:48
+#: licenses/modules/Activations/Activation.js:137
 #: products/modules/Details.js:17
 #: Blocks/Checkbox/components/Inspector.js:16
 #: Blocks/Checkbox/edit.js:38
@@ -158,7 +161,7 @@ msgstr ""
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:77
 #: src/Controllers/Admin/Products/ProductsListTable.php:110
 #: products/components/price/parts/SingleAmount.js:11
-#: products/store/register.js:20
+#: store/add-entities.js:122
 #: subscriptions/edit/modules/Price.js:22
 #: Blocks/CheckoutForm/entities.js:19
 msgid "Price"
@@ -226,17 +229,21 @@ msgid "Expired"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:235
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:123
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:61
 #: src/Controllers/Admin/Products/ProductsListTable.php:65
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:61
+#: licenses/modules/Details/index.js:14
 #: util.js:48
 msgid "Active"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:261
 #: src/Controllers/Admin/Customers/CustomersListTable.php:160
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:110
 #: src/Controllers/Admin/Products/ProductsListTable.php:322
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:404
+#: licenses/modules/Activations/Activation.js:204
 #: settings/customer/EmailRow.js:14
 msgid "Edit"
 msgstr ""
@@ -251,6 +258,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:293
 #: src/Controllers/Admin/Customers/CustomersListTable.php:176
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:165
 #: src/Controllers/Admin/Products/ProductsListTable.php:341
 #: coupons/components/coupon/ActionsDropdown.js:29
 #: coupons/components/CouponActionsDropdown.js:96
@@ -258,12 +266,13 @@ msgstr ""
 #: product-groups/Show.js:159
 #: products/components/product/ActionsDropdown.js:29
 #: products/modules/Prices/Price/Header.js:143
-#: products/modules/SingleDownload.js:200
+#: products/modules/SingleDownload.js:257
 msgid "Un-Archive"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:293
 #: src/Controllers/Admin/Customers/CustomersListTable.php:176
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:165
 #: src/Controllers/Admin/Products/ProductsListTable.php:341
 #: coupons/components/coupon/ActionsDropdown.js:30
 #: coupons/components/CouponActionsDropdown.js:97
@@ -271,7 +280,7 @@ msgstr ""
 #: product-groups/Show.js:160
 #: products/components/product/ActionsDropdown.js:30
 #: products/modules/Prices/Price/Header.js:144
-#: products/modules/SingleDownload.js:201
+#: products/modules/SingleDownload.js:258
 msgid "Archive"
 msgstr ""
 
@@ -318,7 +327,7 @@ msgid "Move to Trash"
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersController.php:24
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:125
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:128
 #: admin/customers/index.php:7
 #: customers/Customers.js:90
 #: settings/export/ExportSettings.js:23
@@ -326,11 +335,13 @@ msgid "Customers"
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersController.php:68
+#: src/Controllers/Admin/Licenses/LicensesController.php:68
 #: src/Controllers/Admin/Products/ProductsController.php:66
 msgid "Product archived."
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersController.php:68
+#: src/Controllers/Admin/Licenses/LicensesController.php:68
 #: src/Controllers/Admin/Products/ProductsController.php:66
 msgid "Product restored."
 msgstr ""
@@ -346,6 +357,7 @@ msgid "Email"
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:62
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:64
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:105
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:109
 #: coupons/Sidebar.js:97
@@ -369,16 +381,19 @@ msgid "No price"
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:177
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:166
 #: src/Controllers/Admin/Products/ProductsListTable.php:342
 msgid "Are you sure you want to restore this product? This will be be available to purchase."
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:177
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:166
 #: src/Controllers/Admin/Products/ProductsListTable.php:342
 msgid "Are you sure you want to archive this product? This will be unavailable for purchase."
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:184
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:173
 #: src/Controllers/Admin/Products/ProductsListTable.php:349
 msgid "Toggle Product Archive"
 msgstr ""
@@ -390,6 +405,7 @@ msgstr ""
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:63
 #: invoices/store/entities.js:62
 #: orders/store/entities.js:62
+#: store/add-entities.js:73
 msgid "Invoice"
 msgstr ""
 
@@ -424,12 +440,65 @@ msgid "Edit Order"
 msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesViewController.php:21
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:123
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:125
 #: admin/invoices/index.php:21
 #: invoices/Invoice.js:72
 #: settings/export/ExportSettings.js:27
 #: subscriptions/show/modules/Invoices.js:39
 msgid "Invoices"
+msgstr ""
+
+#: src/Controllers/Admin/Licenses/LicensesController.php:24
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:126
+#: admin/licenses/index.php:7
+#: licenses/License.js:74
+msgid "Licenses"
+msgstr ""
+
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:45
+msgid "Search Licenses"
+msgstr ""
+
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:60
+msgid "Key"
+msgstr ""
+
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:61
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:102
+#: admin/user-profile.php:5
+#: invoices/modules/Customer.js:17
+#: invoices/store/entities.js:94
+#: licenses/modules/Customer.js:41
+#: orders/modules/Customer.js:17
+#: orders/store/entities.js:94
+#: store/add-entities.js:38
+#: subscriptions/edit/modules/Customer.js:12
+msgid "Customer"
+msgstr ""
+
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:62
+#: src/Integrations/TutorLMS/add-to-cart-surecart.php:21
+#: invoices/store/entities.js:86
+#: licenses/modules/Purchase.js:39
+#: orders/store/entities.js:86
+#: store/add-entities.js:136
+msgid "Purchase"
+msgstr ""
+
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:90
+msgid "No licenses found."
+msgstr ""
+
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:125
+#: components/data-tables/purchases-data-table/purchase-item.js:25
+#: licenses/modules/Details/index.js:17
+#: licenses/modules/Purchase.js:66
+msgid "Revoked"
+msgstr ""
+
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:127
+#: licenses/modules/Details/index.js:20
+msgid "Inactive"
 msgstr ""
 
 #: src/Controllers/Admin/Onboarding.php:46
@@ -479,7 +548,7 @@ msgid "By %s"
 msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersViewController.php:21
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:122
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:124
 #: admin/orders/index.php:7
 #: components/data-tables/OrdersDataTable.js:21
 #: settings/export/ExportSettings.js:31
@@ -491,9 +560,9 @@ msgstr ""
 #: src/Controllers/Admin/Products/ProductsListTable.php:66
 #: coupons/modules/Code.js:92
 #: product-groups/Show.js:135
-#: products/EditProduct.js:189
+#: products/EditProduct.js:184
 #: products/modules/Prices/Price/Header.js:169
-#: products/modules/SingleDownload.js:180
+#: products/modules/SingleDownload.js:219
 #: util.js:46
 msgid "Archived"
 msgstr ""
@@ -514,10 +583,10 @@ msgid "View"
 msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsController.php:24
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:120
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:122
 #: admin/products/index.php:29
 #: product-groups/modules/Products.js:37
-#: products/EditProduct.js:180
+#: products/EditProduct.js:175
 #: Blocks/CheckoutForm/components/Setup.js:115
 #: Blocks/Form/components/SelectPrices.js:84
 msgid "Products"
@@ -535,8 +604,10 @@ msgstr ""
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:224
 #: invoices/store/entities.js:70
 #: orders/store/entities.js:70
-#: products/modules/Prices/NewPrice/index.js:156
+#: products/modules/Prices/NewPrice/index.js:152
 #: products/modules/Prices/Price/Header.js:61
+#: store/add-entities.js:157
+#: store/add-entities.js:164
 #: subscriptions/show/Show.js:184
 #: Blocks/Dashboard/CustomerSubscriptions/Block.php:79
 #: Controllers/SubscriptionController.php:97
@@ -575,12 +646,13 @@ msgid "Updated"
 msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsListTable.php:309
+#: licenses/modules/Details/Copy.js:10
 #: products/modules/Prices/Price/Copy.js:10
 msgid "Copied!"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsController.php:23
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:124
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:127
 #: admin/subscriptions/index.php:23
 #: layouts/partials/admin-settings-sidebar.php:17
 #: web/dashboard/orders/show.php:58
@@ -601,16 +673,6 @@ msgstr ""
 msgid "Canceled"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:102
-#: admin/user-profile.php:5
-#: invoices/modules/Customer.js:17
-#: invoices/store/entities.js:94
-#: orders/modules/Customer.js:17
-#: orders/store/entities.js:94
-#: subscriptions/edit/modules/Customer.js:12
-msgid "Customer"
-msgstr ""
-
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:104
 #: invoices/modules/Subscriptions.js:16
 #: orders/modules/Subscriptions.js:34
@@ -625,7 +687,7 @@ msgstr ""
 #: invoices/store/entities.js:78
 #: orders/modules/Subscriptions.js:31
 #: orders/store/entities.js:78
-#: products/store/register.js:9
+#: store/add-entities.js:115
 #: subscriptions/edit/modules/Price.js:19
 #: subscriptions/show/modules/PendingUpdate.js:36
 #: subscriptions/show/modules/Pricing.js:12
@@ -656,7 +718,7 @@ msgid "None"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:226
-#: products/modules/Prices/NewPrice/index.js:152
+#: products/modules/Prices/NewPrice/index.js:148
 #: products/modules/Prices/Price/Header.js:55
 msgid "Payment Plan"
 msgstr ""
@@ -851,12 +913,6 @@ msgstr ""
 msgid "Enable access to a MemberPress membership."
 msgstr ""
 
-#: src/Integrations/TutorLMS/add-to-cart-surecart.php:21
-#: invoices/store/entities.js:86
-#: orders/store/entities.js:86
-msgid "Purchase"
-msgstr ""
-
 #: src/Integrations/TutorLMS/TutorLMSService.php:127
 msgid "Custom amount"
 msgstr ""
@@ -920,6 +976,7 @@ msgid "SureCart Customer"
 msgstr ""
 
 #: src/Rest/AccountRestServiceProvider.php:76
+#: src/Rest/ActivationRestServiceProvider.php:53
 #: src/Rest/BrandRestServiceProvider.php:90
 #: src/Rest/ChargesRestServiceProvider.php:74
 #: src/Rest/CouponRestServiceProvider.php:46
@@ -930,6 +987,7 @@ msgstr ""
 #: src/Rest/IntegrationProvidersRestServiceProvider.php:106
 #: src/Rest/IntegrationsRestServiceProvider.php:78
 #: src/Rest/InvoicesRestServiceProvider.php:75
+#: src/Rest/LicenseRestServiceProvider.php:54
 #: src/Rest/MediaRestServiceProvider.php:54
 #: src/Rest/OrderRestServiceProvider.php:90
 #: src/Rest/PaymentIntentsRestServiceProvider.php:76
@@ -942,6 +1000,7 @@ msgstr ""
 #: src/Rest/PurchasesRestServiceProvider.php:88
 #: src/Rest/RefundsRestServiceProvider.php:54
 #: src/Rest/SettingsRestServiceProvider.php:76
+#: src/Rest/StatisticRestServiceProvider.php:53
 #: src/Rest/SubscriptionProtocolRestServiceProvider.php:82
 #: src/Rest/SubscriptionRestServiceProvider.php:115
 #: src/Rest/TaxProtocolRestServiceProvider.php:81
@@ -984,6 +1043,52 @@ msgstr ""
 #: src/Rest/AccountRestServiceProvider.php:115
 #: src/Rest/SettingsRestServiceProvider.php:115
 msgid "Connected processors"
+msgstr ""
+
+#: src/Rest/ActivationRestServiceProvider.php:59
+msgid "The unique identifier for this activation. For example a URL, a machine fingerprint, etc."
+msgstr ""
+
+#: src/Rest/ActivationRestServiceProvider.php:65
+msgid "The name of this activation."
+msgstr ""
+
+#: src/Rest/ActivationRestServiceProvider.php:70
+msgid "The UUID of the license."
+msgstr ""
+
+#: src/Rest/ActivationRestServiceProvider.php:89
+#: src/Rest/DownloadRestServiceProvider.php:73
+#: src/Rest/IntegrationProvidersRestServiceProvider.php:129
+#: src/Rest/IntegrationsRestServiceProvider.php:118
+#: src/Rest/LicenseRestServiceProvider.php:73
+#: src/Rest/MediaRestServiceProvider.php:73
+#: src/Rest/PriceRestServiceProvider.php:98
+#: src/Rest/ProductsRestServiceProvider.php:133
+#: src/Rest/StatisticRestServiceProvider.php:72
+msgid "The page of items you want returned."
+msgstr ""
+
+#: src/Rest/ActivationRestServiceProvider.php:93
+#: src/Rest/DownloadRestServiceProvider.php:77
+#: src/Rest/IntegrationProvidersRestServiceProvider.php:133
+#: src/Rest/IntegrationsRestServiceProvider.php:122
+#: src/Rest/LicenseRestServiceProvider.php:77
+#: src/Rest/MediaRestServiceProvider.php:77
+#: src/Rest/PriceRestServiceProvider.php:102
+#: src/Rest/ProductsRestServiceProvider.php:137
+#: src/Rest/StatisticRestServiceProvider.php:76
+msgid "A limit on the number of items to be returned, between 1 and 100."
+msgstr ""
+
+#: src/Rest/ActivationRestServiceProvider.php:97
+#: src/Rest/PriceRestServiceProvider.php:82
+#: src/Rest/ProductsRestServiceProvider.php:117
+msgid "Ensure result set excludes specific IDs."
+msgstr ""
+
+#: src/Rest/ActivationRestServiceProvider.php:105
+msgid "Ensure result set excludes specific license IDs."
 msgstr ""
 
 #: src/Rest/BlockPatternsRestServiceProvider.php:93
@@ -1094,24 +1199,6 @@ msgstr ""
 msgid "The reply-to email address to use when sending emails to customers."
 msgstr ""
 
-#: src/Rest/DownloadRestServiceProvider.php:73
-#: src/Rest/IntegrationProvidersRestServiceProvider.php:129
-#: src/Rest/IntegrationsRestServiceProvider.php:118
-#: src/Rest/MediaRestServiceProvider.php:73
-#: src/Rest/PriceRestServiceProvider.php:98
-#: src/Rest/ProductsRestServiceProvider.php:133
-msgid "The page of items you want returned."
-msgstr ""
-
-#: src/Rest/DownloadRestServiceProvider.php:77
-#: src/Rest/IntegrationProvidersRestServiceProvider.php:133
-#: src/Rest/IntegrationsRestServiceProvider.php:122
-#: src/Rest/MediaRestServiceProvider.php:77
-#: src/Rest/PriceRestServiceProvider.php:102
-#: src/Rest/ProductsRestServiceProvider.php:137
-msgid "A limit on the number of items to be returned, between 1 and 100."
-msgstr ""
-
 #: src/Rest/IntegrationProvidersRestServiceProvider.php:125
 msgid "The model to get integration providers for."
 msgstr ""
@@ -1200,11 +1287,6 @@ msgstr ""
 msgid "The query to be used for full text search of this collection."
 msgstr ""
 
-#: src/Rest/PriceRestServiceProvider.php:82
-#: src/Rest/ProductsRestServiceProvider.php:117
-msgid "Ensure result set excludes specific IDs."
-msgstr ""
-
 #: src/Rest/PriceRestServiceProvider.php:90
 msgid "Only return objects that belong to the given products."
 msgstr ""
@@ -1236,6 +1318,22 @@ msgstr ""
 
 #: src/Rest/SettingsRestServiceProvider.php:82
 msgid "Type of object (Settings)"
+msgstr ""
+
+#: src/Rest/StatisticRestServiceProvider.php:80
+msgid "Only return objects that have this currency. If not set, this will fallback to the account's default currency."
+msgstr ""
+
+#: src/Rest/StatisticRestServiceProvider.php:85
+msgid "The end of the date range to query."
+msgstr ""
+
+#: src/Rest/StatisticRestServiceProvider.php:91
+msgid "The interval to group statistics on – one of hour, day, week, month, or year."
+msgstr ""
+
+#: src/Rest/StatisticRestServiceProvider.php:97
+msgid "The start of the date range to query."
 msgstr ""
 
 #: src/Rest/SubscriptionProtocolRestServiceProvider.php:96
@@ -1866,7 +1964,7 @@ msgstr ""
 #: orders/modules/Refunds.js:14
 #: subscriptions/show/modules/Invoices.js:57
 #: subscriptions/show/modules/Orders.js:18
-#: Blocks/AddToCartButton/Block.php:47
+#: Blocks/AddToCartButton/Block.php:67
 #: Blocks/Donation/edit.js:258
 #: Blocks/DonationAmount/edit.js:22
 msgid "Amount"
@@ -1905,87 +2003,95 @@ msgid "Please add at least one product."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:15
-#: src/Support/Errors/Translations/codes.php:24
+#: src/Support/Errors/Translations/codes.php:25
 msgid "Please fill out your address."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:16
-msgid "The refund amount is greater than the refundable amount."
+msgid "This download cannot be removed or archived when it is set as the current release."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:17
-msgid "You cannot add a one-time product to a subscription."
+msgid "The refund amount is greater than the refundable amount."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:18
-msgid "The price cannot be blank."
+msgid "You cannot add a one-time product to a subscription."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:19
-msgid "A price with this currency and recurring interval already exists. Please create a new product to create this price."
+msgid "The price cannot be blank."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:20
-msgid "This promotion code already exists. Please archive the old code or use a different code."
+msgid "A price with this currency and recurring interval already exists. Please create a new product to create this price."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:21
-msgid "There are no processors to make the payment. Please contact us for assistance."
+msgid "This promotion code already exists. Please archive the old code or use a different code."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:22
-msgid "This product has prices that are currently being used. Please archive the product instead if it is not already archived."
+msgid "There are no processors to make the payment. Please contact us for assistance."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:23
+msgid "This product has prices that are currently being used. Please archive the product instead if it is not already archived."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:24
 msgid "The product image must be an image."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:25
+#: src/Support/Errors/Translations/codes.php:26
 msgid "Please enter a valid tax number."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:26
+#: src/Support/Errors/Translations/codes.php:27
 msgid "The prices in this checkout session have changed. Please recheck it before submitting again."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:27
+#: src/Support/Errors/Translations/codes.php:28
 msgid "This coupon code is invalid."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:28
+#: src/Support/Errors/Translations/codes.php:29
 msgid "Your postal code is not valid."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:29
-msgid "This discount code does not apply to this currency."
-msgstr ""
-
 #: src/Support/Errors/Translations/codes.php:30
-msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
+msgid "This coupon has expired."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:31
-msgid "The maximum price must be smaller."
+msgid "This discount code does not apply to this currency."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:32
-msgid "The minimum price must be smaller."
+msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:33
-msgid "The maximum price must be greater than the minimum price."
+msgid "The maximum price must be smaller."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:34
-msgid "You are already collecting tax for this zone."
+msgid "The minimum price must be smaller."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:35
-msgid "You cannot enable EU Micro Exemption if your address is outside of the EU."
+msgid "The maximum price must be greater than the minimum price."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:36
+msgid "You are already collecting tax for this zone."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:37
+msgid "You cannot enable EU Micro Exemption if your address is outside of the EU."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:38
 msgid "You cannot delete this media item because it is currently being used."
 msgstr ""
 
@@ -2869,7 +2975,7 @@ msgstr ""
 msgid "SureCart webhooks could not be created."
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:103
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:105
 #: Blocks/CustomerDashboardButton/Block.php:28
 #: Blocks/Dashboard/CustomerSubscriptions/Block.php:76
 #: Controllers/ChargeController.php:19
@@ -2885,23 +2991,23 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:108
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:118
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:110
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:120
 msgid "Getting Started"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:109
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:119
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:111
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:121
 msgid "Complete Signup"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:110
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:130
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:112
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:133
 #: layouts/partials/admin-settings-header.php:24
 msgid "Settings"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:129
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:132
 #: src/WordPress/PostTypes/CartPostTypeService.php:124
 #: src/WordPress/PostTypes/FormPostTypeService.php:81
 msgid "Forms"
@@ -3161,46 +3267,46 @@ msgid "This can slightly increase page load speed, but may require you to enable
 msgstr ""
 
 #: admin/advanced.php:52
-#: settings/advanced/AdvancedSettings.js:73
+#: settings/advanced/AdvancedSettings.js:91
 msgid "Beta Features"
 msgstr ""
 
 #: admin/advanced.php:53
-#: settings/advanced/AdvancedSettings.js:74
+#: settings/advanced/AdvancedSettings.js:92
 msgid "Opt-in to some beta features of the plugin."
 msgstr ""
 
 #: admin/advanced.php:56
-#: settings/advanced/AdvancedSettings.js:90
+#: settings/advanced/AdvancedSettings.js:108
 msgid "Use the Stripe Payment Element"
 msgstr ""
 
 #: admin/advanced.php:57
-#: settings/advanced/AdvancedSettings.js:92
+#: settings/advanced/AdvancedSettings.js:110
 msgid "Use Stripe's Payment Element instead of the Card Element in all forms."
 msgstr ""
 
 #: admin/advanced.php:63
 #: admin/plugin.php:106
-#: settings/advanced/AdvancedSettings.js:101
+#: settings/advanced/AdvancedSettings.js:119
 msgid "Uninstall"
 msgstr ""
 
 #: admin/advanced.php:64
 #: admin/plugin.php:107
-#: settings/advanced/AdvancedSettings.js:102
+#: settings/advanced/AdvancedSettings.js:120
 msgid "Change your plugin uninstall settings."
 msgstr ""
 
 #: admin/advanced.php:67
 #: admin/plugin.php:110
-#: settings/advanced/AdvancedSettings.js:117
+#: settings/advanced/AdvancedSettings.js:135
 msgid "Remove Plugin Data"
 msgstr ""
 
 #: admin/advanced.php:68
 #: admin/plugin.php:111
-#: settings/advanced/AdvancedSettings.js:119
+#: settings/advanced/AdvancedSettings.js:137
 msgid "Completely remove all plugin data when deleted. This cannot be undone."
 msgstr ""
 
@@ -3531,6 +3637,7 @@ msgstr ""
 #: components/data-tables/charges-data-table/Refund.js:95
 #: components/data-tables/charges-data-table/Refund.js:144
 #: settings/customer/CustomerSettings.js:219
+#: store/add-entities.js:143
 msgid "Refund"
 msgstr ""
 
@@ -3596,7 +3703,7 @@ msgstr ""
 #: product-groups/Create.js:72
 #: products/CreateProduct.js:76
 #: products/modules/integrations/NewIntegration.js:106
-#: products/modules/Prices/NewPrice/index.js:197
+#: products/modules/Prices/NewPrice/index.js:193
 #: products/modules/Upgrades.js:130
 #: Controllers/SubscriptionController.php:315
 #: Blocks/CheckoutForm/components/Empty.js:117
@@ -3638,10 +3745,6 @@ msgstr ""
 
 #: components/data-tables/purchases-data-table/index.js:20
 msgid "Purchases"
-msgstr ""
-
-#: components/data-tables/purchases-data-table/purchase-item.js:25
-msgid "Revoked"
 msgstr ""
 
 #: components/data-tables/purchases-data-table/RevokeToggleButton.js:15
@@ -3769,10 +3872,11 @@ msgstr ""
 msgid "Choose"
 msgstr ""
 
-#: components/Error.js:19
+#: components/Error.js:25
 #: hooks/useDataApi/index.js:53
+#: licenses/modules/Activations/Activation.js:95
 #: products/CreateProduct.js:34
-#: products/modules/Prices/NewPrice/index.js:62
+#: products/modules/Prices/NewPrice/index.js:58
 #: settings/tax-region/RegistrationForm.js:103
 #: settings/tax-region/RegistrationForm.js:126
 #: store/notices/reducer.js:25
@@ -3781,14 +3885,13 @@ msgid "Something went wrong."
 msgstr ""
 
 #: components/MediaLibrary/DownloadMedia.js:24
-#: products/modules/SingleDownload.js:86
+#: products/modules/SingleDownload.js:113
 msgid "Could not download the file."
 msgstr ""
 
 #: components/MediaLibrary/DownloadMedia.js:30
-#: products/modules/SingleDownload.js:47
-#: products/modules/SingleDownload.js:72
-#: products/modules/SingleDownload.js:92
+#: licenses/modules/Activations/index.js:59
+#: products/modules/SingleDownload.js:35
 #: subscriptions/show/Show.js:108
 msgid "Something went wrong"
 msgstr ""
@@ -3823,12 +3926,12 @@ msgid "SureCart Media"
 msgstr ""
 
 #: components/MediaLibrary/index.js:269
-#: components/MediaLibrary/MediaItem.js:79
+#: components/MediaLibrary/MediaItem.js:93
 msgid "Private"
 msgstr ""
 
 #: components/MediaLibrary/index.js:276
-#: components/MediaLibrary/MediaItem.js:77
+#: components/MediaLibrary/MediaItem.js:91
 msgid "Public"
 msgstr ""
 
@@ -3853,8 +3956,8 @@ msgid "Added"
 msgstr ""
 
 #: components/MediaLibrary/Preview.js:156
-#: products/modules/SingleDownload.js:195
-#: products/store/register.js:34
+#: products/modules/SingleDownload.js:249
+#: store/add-entities.js:45
 msgid "Download"
 msgstr ""
 
@@ -3862,8 +3965,9 @@ msgstr ""
 #: coupons/components/coupon/ActionsDropdown.js:40
 #: coupons/components/CouponActionsDropdown.js:125
 #: coupons/modules/Code.js:126
+#: licenses/modules/Activations/Activation.js:208
 #: products/components/product/ActionsDropdown.js:40
-#: products/modules/integrations/Integration.js:210
+#: products/modules/integrations/Integration.js:204
 #: products/modules/Prices/Price/Header.js:157
 #: settings/tax-region/RegistrationForm.js:201
 msgid "Delete"
@@ -3956,7 +4060,7 @@ msgid "This coupon will not be usable and all unsaved changes will be lost."
 msgstr ""
 
 #: coupons/components/CouponActionsDropdown.js:36
-#: products/EditProduct.js:82
+#: products/EditProduct.js:77
 msgid "Permanently delete %s? You cannot undo this action."
 msgstr ""
 
@@ -4098,7 +4202,7 @@ msgid "%d months"
 msgstr ""
 
 #: coupons/Sidebar.js:52
-#: products/Sidebar.js:35
+#: products/Sidebar.js:36
 #: subscriptions/edit/modules/Summary.js:8
 msgid "Summary"
 msgstr ""
@@ -4120,17 +4224,18 @@ msgid "Redeem By"
 msgstr ""
 
 #: coupons/Sidebar.js:88
-#: products/Sidebar.js:68
+#: products/Sidebar.js:69
 msgid "Last Updated"
 msgstr ""
 
 #: coupons/Sidebar.js:109
-#: products/Sidebar.js:58
+#: products/Sidebar.js:59
 msgid "Archived On"
 msgstr ""
 
 #: customers/Customers.js:74
 #: invoices/modules/Customer.js:27
+#: licenses/modules/Customer.js:53
 #: orders/modules/Customer.js:27
 #: subscriptions/edit/modules/Customer.js:24
 msgid "Edit Customer"
@@ -4250,10 +4355,12 @@ msgstr ""
 #: invoices/store/entities.js:54
 #: orders/modules/Charges.js:14
 #: orders/store/entities.js:54
+#: store/add-entities.js:24
 msgid "Charge"
 msgstr ""
 
 #: invoices/modules/Details.js:70
+#: licenses/modules/Details/index.js:39
 #: orders/modules/Details.js:70
 #: subscriptions/show/modules/Details.js:137
 msgid "Created on %s"
@@ -4318,6 +4425,97 @@ msgstr ""
 msgid "Shipping Address"
 msgstr ""
 
+#: licenses/License.js:41
+msgid "License updated."
+msgstr ""
+
+#: licenses/License.js:51
+msgid "Save License"
+msgstr ""
+
+#: licenses/License.js:77
+msgid "View License"
+msgstr ""
+
+#: licenses/modules/Activations/Activation.js:50
+#: licenses/modules/Activations/index.js:42
+msgid "Are you sure you want to remove this activation? This site will no longer get updates."
+msgstr ""
+
+#: licenses/modules/Activations/Activation.js:66
+msgid "Activation deleted."
+msgstr ""
+
+#: licenses/modules/Activations/Activation.js:73
+msgid "Please refresh the page and try again."
+msgstr ""
+
+#: licenses/modules/Activations/Activation.js:90
+msgid "Activation updated."
+msgstr ""
+
+#: licenses/modules/Activations/Activation.js:125
+msgid "Edit Activation"
+msgstr ""
+
+#: licenses/modules/Activations/Activation.js:148
+msgid "Fingerprint"
+msgstr ""
+
+#: licenses/modules/Activations/Activation.js:150
+msgid "This is a unique identifier for the license. For example, a website url."
+msgstr ""
+
+#: licenses/modules/Activations/Activation.js:169
+#: product-groups/Show.js:163
+#: Blocks/Dashboard/CustomerBillingDetails/edit.js:44
+#: Blocks/Dashboard/WordPressAccount/edit.js:44
+msgid "Update"
+msgstr ""
+
+#: licenses/modules/Activations/index.js:67
+msgid "This license has not been activated."
+msgstr ""
+
+#: licenses/modules/Activations/index.js:88
+msgid "Activations"
+msgstr ""
+
+#: licenses/modules/Activations/index.js:94
+msgid "%1s of %2s Activations Used"
+msgstr ""
+
+#: licenses/modules/Details/Copy.js:16
+#: products/modules/Prices/Price/Copy.js:16
+msgid "Error copying to clipboard"
+msgstr ""
+
+#: licenses/modules/Details/Copy.js:21
+msgid "Copy"
+msgstr ""
+
+#: licenses/modules/Details/index.js:28
+#: store/add-entities.js:80
+msgid "License"
+msgstr ""
+
+#: licenses/modules/Details/index.js:33
+msgid "License Key"
+msgstr ""
+
+#: licenses/modules/Details/index.js:47
+#: products/modules/Licensing.js:63
+msgid "Activation Limit"
+msgstr ""
+
+#: licenses/modules/Details/index.js:56
+msgid "Enter the number of unique activations for this key. Leave blank for infinite."
+msgstr ""
+
+#: licenses/modules/Purchase.js:51
+msgid "View Product"
+msgstr ""
+
 #: orders/modules/MetaData.js:18
 msgid "Metadata"
 msgstr ""
@@ -4375,7 +4573,7 @@ msgstr ""
 
 #: product-groups/modules/Product.js:54
 #: products/modules/Image.js:69
-#: products/modules/SingleDownload.js:206
+#: products/modules/SingleDownload.js:263
 #: settings/brand/Logo.js:81
 #: Blocks/CheckoutForm/components/PriceChoice.js:82
 #: components/PriceChoice.js:116
@@ -4412,12 +4610,6 @@ msgstr ""
 
 #: product-groups/Show.js:132
 msgid "Create Upgrade Group"
-msgstr ""
-
-#: product-groups/Show.js:163
-#: Blocks/Dashboard/CustomerBillingDetails/edit.js:44
-#: Blocks/Dashboard/WordPressAccount/edit.js:44
-msgid "Update"
 msgstr ""
 
 #: products/components/price/Multiple.js:18
@@ -4468,7 +4660,7 @@ msgid "Default Price"
 msgstr ""
 
 #: products/components/price/parts/Tax.js:20
-#: products/modules/Prices/NewPrice/index.js:217
+#: products/modules/Prices/NewPrice/index.js:213
 msgid "Tax is included"
 msgstr ""
 
@@ -4493,48 +4685,49 @@ msgstr ""
 msgid "A name for your product."
 msgstr ""
 
-#: products/EditProduct.js:69
+#: products/EditProduct.js:63
 msgid "Product updated."
 msgstr ""
 
-#: products/EditProduct.js:106
+#: products/EditProduct.js:101
 msgid "Un-Archive %s? This will make the product purchaseable again."
 msgstr ""
 
-#: products/EditProduct.js:113
+#: products/EditProduct.js:108
 msgid "Archive %s? This product will not be purchaseable and all unsaved changes will be lost."
 msgstr ""
 
-#: products/EditProduct.js:152
+#: products/EditProduct.js:147
 msgid "Save Product"
 msgstr ""
 
-#: products/EditProduct.js:184
+#: products/EditProduct.js:179
 #: Blocks/PriceChoice/components/PriceInfo.js:75
 msgid "Edit Product"
 msgstr ""
 
-#: products/modules/Downloads.js:55
+#: products/modules/Downloads.js:49
 msgid "Download added."
 msgstr ""
 
-#: products/modules/Downloads.js:69
+#: products/modules/Downloads.js:65
 msgid "Downloads"
 msgstr ""
 
-#: products/modules/Downloads.js:110
+#: products/modules/Downloads.js:113
 msgid "File"
 msgstr ""
 
-#: products/modules/Downloads.js:117
+#: products/modules/Downloads.js:120
 msgid "Add Downloads"
 msgstr ""
 
-#: products/modules/Downloads.js:130
+#: products/modules/Downloads.js:133
 msgid "Show Archived"
 msgstr ""
 
 #: products/modules/Image.js:63
+#: products/modules/SingleDownload.js:239
 #: settings/brand/Logo.js:75
 msgid "Replace"
 msgstr ""
@@ -4551,23 +4744,23 @@ msgstr ""
 msgid "Add Image"
 msgstr ""
 
-#: products/modules/integrations/Integration.js:66
+#: products/modules/integrations/Integration.js:60
 msgid "Are you sure you want to remove this integration? This will affect existing customers who have purchased this product."
 msgstr ""
 
-#: products/modules/integrations/Integration.js:75
+#: products/modules/integrations/Integration.js:68
 msgid "Integration deleted."
 msgstr ""
 
-#: products/modules/integrations/Integration.js:79
+#: products/modules/integrations/Integration.js:73
 msgid "An error occurred"
 msgstr ""
 
-#: products/modules/integrations/Integration.js:104
+#: products/modules/integrations/Integration.js:98
 msgid "Not found"
 msgstr ""
 
-#: products/modules/integrations/Integration.js:107
+#: products/modules/integrations/Integration.js:101
 msgid "The provider is not installed or unavailable."
 msgstr ""
 
@@ -4603,7 +4796,7 @@ msgstr ""
 msgid "To sync purchases of this product, add an integration."
 msgstr ""
 
-#: products/modules/integrations/NewIntegration.js:39
+#: products/modules/integrations/NewIntegration.js:38
 msgid "Integration saved."
 msgstr ""
 
@@ -4617,6 +4810,7 @@ msgid "A product purchase will be automatically synced with this item."
 msgstr ""
 
 #: products/modules/integrations/SelectIntegration.js:76
+#: store/add-entities.js:52
 #: store/integration/register/index.js:9
 #: store/integration/register/index.js:16
 msgid "Integration"
@@ -4630,46 +4824,63 @@ msgstr ""
 msgid "Select an Item"
 msgstr ""
 
-#: products/modules/Prices/index.js:53
+#: products/modules/Licensing.js:44
+msgid "Licensing"
+msgstr ""
+
+#: products/modules/Licensing.js:56
+msgid "Enable license creation"
+msgstr ""
+
+#: products/modules/Licensing.js:64
+msgid "Enter the number of unique activations per license key. Leave blank for infinite."
+msgstr ""
+
+#: products/modules/Licensing.js:76
+#: products/modules/SingleDownload.js:182
+msgid "Current Release"
+msgstr ""
+
+#: products/modules/Licensing.js:77
+msgid "This is the current release zip of your software."
+msgstr ""
+
+#: products/modules/Prices/index.js:52
 msgid "Add Another Price"
 msgstr ""
 
-#: products/modules/Prices/index.js:71
+#: products/modules/Prices/index.js:70
 msgid "Pricing"
 msgstr ""
 
-#: products/modules/Prices/index.js:89
+#: products/modules/Prices/index.js:88
 msgid "Set up pricing for your product."
 msgstr ""
 
-#: products/modules/Prices/index.js:101
-#: products/modules/Prices/NewPrice/index.js:102
+#: products/modules/Prices/index.js:97
+#: products/modules/Prices/NewPrice/index.js:98
 msgid "Add A Price"
 msgstr ""
 
-#: products/modules/Prices/NewPrice/index.js:38
+#: products/modules/Prices/NewPrice/index.js:32
 msgid "Are you sure you want to discard this price?"
 msgstr ""
 
-#: products/modules/Prices/NewPrice/index.js:58
-msgid "Price saved."
+#: products/modules/Prices/NewPrice/index.js:52
+msgid "Price created."
 msgstr ""
 
-#: products/modules/Prices/NewPrice/index.js:140
+#: products/modules/Prices/NewPrice/index.js:136
 msgid "Payment Type"
 msgstr ""
 
-#: products/modules/Prices/NewPrice/index.js:148
+#: products/modules/Prices/NewPrice/index.js:144
 #: products/modules/Prices/Price/Header.js:67
 msgid "One Time"
 msgstr ""
 
-#: products/modules/Prices/NewPrice/index.js:194
+#: products/modules/Prices/NewPrice/index.js:190
 msgid "Create Price"
-msgstr ""
-
-#: products/modules/Prices/Price/Copy.js:16
-msgid "Error copying to clipboard"
 msgstr ""
 
 #: products/modules/Prices/Price/Copy.js:21
@@ -4693,16 +4904,28 @@ msgstr ""
 msgid "every"
 msgstr ""
 
-#: products/modules/Prices/Price/index.js:36
+#: products/modules/Prices/Price/index.js:37
 msgid "Un-Archive this price? This will make the product purchaseable again."
 msgstr ""
 
-#: products/modules/Prices/Price/index.js:40
+#: products/modules/Prices/Price/index.js:41
 msgid "Archive this price? This product will not be purchaseable and all unsaved changes will be lost."
 msgstr ""
 
-#: products/modules/Prices/Price/index.js:63
+#: products/modules/Prices/Price/index.js:55
+msgid "Price unarchived."
+msgstr ""
+
+#: products/modules/Prices/Price/index.js:56
+msgid "Price archived."
+msgstr ""
+
+#: products/modules/Prices/Price/index.js:72
 msgid "Permanently delete this price? You cannot undo this action."
+msgstr ""
+
+#: products/modules/Prices/Price/index.js:82
+msgid "Price deleted."
 msgstr ""
 
 #: products/modules/Prices/ShowArchivedToggle.js:19
@@ -4713,19 +4936,23 @@ msgstr ""
 msgid "Hide %d Archived Prices"
 msgstr ""
 
-#: products/modules/SingleDownload.js:28
+#: products/modules/SingleDownload.js:21
+msgid "Are you sure you want to replace the file in this download? This may push out a new release to everyone."
+msgstr ""
+
+#: products/modules/SingleDownload.js:50
 msgid "Are you sure you want to remove the download from this product?"
 msgstr ""
 
-#: products/modules/SingleDownload.js:44
+#: products/modules/SingleDownload.js:66
 msgid "Download removed."
 msgstr ""
 
-#: products/modules/SingleDownload.js:67
+#: products/modules/SingleDownload.js:91
 msgid "Download un-archived."
 msgstr ""
 
-#: products/modules/SingleDownload.js:68
+#: products/modules/SingleDownload.js:92
 msgid "Download archived."
 msgstr ""
 
@@ -4766,17 +4993,12 @@ msgstr ""
 msgid "This is not shown to the customer, but is used help you identify the group."
 msgstr ""
 
-#: products/Sidebar.js:41
+#: products/Sidebar.js:42
 msgid "Available for purchase"
 msgstr ""
 
-#: products/Sidebar.js:77
+#: products/Sidebar.js:78
 msgid "Created On"
-msgstr ""
-
-#: products/store/register.js:27
-#: settings/store.js:17
-msgid "Media"
 msgstr ""
 
 #: settings/account/AccountSettings.js:27
@@ -4835,6 +5057,14 @@ msgstr ""
 
 #: settings/account/AccountSettings.js:137
 msgid "Change this if you want the store to be in a different time zone than your server."
+msgstr ""
+
+#: settings/advanced/AdvancedSettings.js:80
+msgid "Enable Slide-Out Cart"
+msgstr ""
+
+#: settings/advanced/AdvancedSettings.js:82
+msgid "If you do not wish to use the slide-out cart, you can disable this to prevent scripts from loading on your pages."
 msgstr ""
 
 #: settings/brand/BrandSettings.js:56
@@ -5098,7 +5328,13 @@ msgid "A link to your privacy policy page."
 msgstr ""
 
 #: settings/store.js:9
+#: store/add-entities.js:9
 msgid "Store"
+msgstr ""
+
+#: settings/store.js:17
+#: store/add-entities.js:87
+msgid "Media"
 msgstr ""
 
 #: settings/subscription/SubscriptionSettings.js:59
@@ -5403,6 +5639,41 @@ msgstr ""
 msgid "Manage how your store charges sales tax within each tax region. Check with a tax expert to understand your tax obligations."
 msgstr ""
 
+#: store/add-entities.js:17
+msgid "Activation"
+msgstr ""
+
+#: store/add-entities.js:31
+msgid "Coupon"
+msgstr ""
+
+#: store/add-entities.js:59
+msgid "Integration Provider"
+msgstr ""
+
+#: store/add-entities.js:66
+#: store/integration/register/index.js:31
+msgid "Integration Provider Items"
+msgstr ""
+
+#: store/add-entities.js:101
+msgid "Payment Intent"
+msgstr ""
+
+#: store/add-entities.js:108
+#: subscriptions/edit/modules/PaymentMethod.js:28
+#: Controllers/SubscriptionController.php:434
+msgid "Payment Method"
+msgstr ""
+
+#: store/add-entities.js:129
+msgid "Promotion"
+msgstr ""
+
+#: store/add-entities.js:150
+msgid "Statistic"
+msgstr ""
+
 #: store/data/actions.js:160
 msgid "Deleted."
 msgstr ""
@@ -5415,10 +5686,6 @@ msgstr ""
 
 #: store/integration/register/index.js:23
 msgid "Integration Providers"
-msgstr ""
-
-#: store/integration/register/index.js:31
-msgid "Integration Provider Items"
 msgstr ""
 
 #: subscriptions/edit/Edit.js:99
@@ -5446,11 +5713,6 @@ msgstr ""
 
 #: subscriptions/edit/Edit.js:166
 msgid "Update Now"
-msgstr ""
-
-#: subscriptions/edit/modules/PaymentMethod.js:28
-#: Controllers/SubscriptionController.php:434
-msgid "Payment Method"
 msgstr ""
 
 #: subscriptions/edit/modules/PaymentMethod.js:29
@@ -5578,12 +5840,13 @@ msgstr ""
 msgid "once"
 msgstr ""
 
-#: Blocks/AddToCartButton/Block.php:58
-msgid "Add To Cart"
-msgstr ""
-
+#: Blocks/AddToCartButton/Block.php:52
 #: Blocks/BuyButton/Block.php:27
 msgid "Buy Now"
+msgstr ""
+
+#: Blocks/AddToCartButton/Block.php:78
+msgid "Add To Cart"
 msgstr ""
 
 #. translators: Visible only in the front end, this warning takes the place of a faulty block.
@@ -5969,7 +6232,7 @@ msgstr ""
 #: Blocks/BuyButton/edit.js:73
 #: Blocks/Card/edit.js:25
 #: Blocks/CartCoupon/edit.js:38
-#: Blocks/CartItems/edit.js:25
+#: Blocks/CartItems/edit.js:28
 #: Blocks/CartSubmit/edit.js:28
 #: Blocks/CartSubtotal/edit.js:30
 #: Blocks/Checkbox/components/Inspector.js:13
@@ -6210,32 +6473,32 @@ msgstr ""
 msgid "Add a title…"
 msgstr ""
 
-#: Blocks/CartItems/edit.js:28
+#: Blocks/CartItems/edit.js:31
 #: Blocks/LineItems/edit.js:23
 msgid "Removable"
 msgstr ""
 
-#: Blocks/CartItems/edit.js:29
+#: Blocks/CartItems/edit.js:32
 #: Blocks/LineItems/edit.js:24
 msgid "Allow line items to be removed."
 msgstr ""
 
-#: Blocks/CartItems/edit.js:41
+#: Blocks/CartItems/edit.js:44
 #: Blocks/LineItems/edit.js:36
 msgid "Editable"
 msgstr ""
 
-#: Blocks/CartItems/edit.js:42
+#: Blocks/CartItems/edit.js:45
 #: Blocks/LineItems/edit.js:37
 msgid "Allow line item quantities to be editable."
 msgstr ""
 
-#: Blocks/CartItems/edit.js:69
-#: Blocks/CartItems/edit.js:78
+#: Blocks/CartItems/edit.js:72
+#: Blocks/CartItems/edit.js:81
 msgid "Example Product"
 msgstr ""
 
-#: Blocks/CartItems/edit.js:75
+#: Blocks/CartItems/edit.js:78
 msgid "every month"
 msgstr ""
 
@@ -8888,24 +9151,24 @@ msgid "Åland Islands"
 msgstr ""
 
 #: default-i18n.js:470
-#: fetch.js:444
+#: fetch.js:443
 msgctxt "text direction"
 msgid "ltr"
 msgstr ""
 
-#: fetch.js:1080
+#: fetch.js:1108
 msgid "The response is not a valid JSON response."
 msgstr ""
 
-#: fetch.js:1123
+#: fetch.js:1151
 msgid "An unknown error occurred."
 msgstr ""
 
-#: fetch.js:1193
+#: fetch.js:1221
 msgid "Media upload failed. If this is a photo or a large image, please scale it down and try again."
 msgstr ""
 
-#: fetch.js:1311
+#: fetch.js:1339
 msgid "You are probably offline."
 msgstr ""
 
