@@ -107,7 +107,7 @@ class CheckoutsController extends RestController {
 	 *
 	 * @param \WP_REST_Request $request Rest Request.
 	 *
-	 * @return \SureCart\Models\Order|\WP_Error
+	 * @return \SureCart\Models\Checkout|\WP_Error
 	 */
 	public function finalize( \WP_REST_Request $request ) {
 		$args = $request->get_params();
@@ -120,8 +120,8 @@ class CheckoutsController extends RestController {
 			return $errors;
 		}
 
-		$order     = new $this->class( [ 'id' => $request['id'] ] );
-		$finalized = $order->setProcessor( $request['processor_type'] )
+		$checkout  = new $this->class( [ 'id' => $request['id'] ] );
+		$finalized = $checkout->setProcessor( $request['processor_type'] )
 			->where( $request->get_query_params() )
 			->finalize( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
 
@@ -143,16 +143,16 @@ class CheckoutsController extends RestController {
 	/**
 	 * Link the customer if the order status is paid only.
 	 *
-	 * @param \SureCart\Models\Order $order
-	 * @param \WP_REST_Request       $request
+	 * @param \SureCart\Models\Checkout $checkout
+	 * @param \WP_REST_Request          $request
 	 *
-	 * @return \SureCart\Models\Order|\WP_Error
+	 * @return \SureCart\Models\Checkout|\WP_Error
 	 */
-	public function maybeLinkCustomer( $order, $request ) {
-		if ( 'paid' !== $order->status ) {
+	public function maybeLinkCustomer( $checkout, $request ) {
+		if ( 'paid' !== $checkout->status ) {
 			return false;
 		}
-		return $this->linkCustomerId( $order, $request );
+		return $this->linkCustomerId( $checkout, $request );
 	}
 
 	/**
@@ -163,15 +163,15 @@ class CheckoutsController extends RestController {
 	 *
 	 * @param \WP_REST_Request $request  Rest Request.
 	 *
-	 * @return \SureCart\Models\Order|\WP_Error
+	 * @return \SureCart\Models\Checkout|\WP_Error
 	 */
 	public function confirm( \WP_REST_Request $request ) {
-		$order = $this->middleware( new $this->class(), $request );
-		if ( is_wp_error( $order ) ) {
-			return $order;
+		$checkout = $this->middleware( new $this->class(), $request );
+		if ( is_wp_error( $checkout ) ) {
+			return $checkout;
 		}
 
-		$order = $order->where(
+		$checkout = $checkout->where(
 			array_merge(
 				$request->get_query_params(),
 				[ 'refresh_status' => true ] // Important: This will force syncing with the processor.
@@ -182,23 +182,23 @@ class CheckoutsController extends RestController {
 			]
 		)->find( $request['id'] );
 
-		if ( is_wp_error( $order ) ) {
-			return $order;
+		if ( is_wp_error( $checkout ) ) {
+			return $checkout;
 		}
 
-		if ( 'paid' !== $order->status ) {
-			return new \WP_Error( 'invalid_status', 'The order is not paid.', [ 'status' => 400 ] );
+		if ( 'paid' !== $checkout->status ) {
+			return new \WP_Error( 'invalid_status', 'The checkout is not paid.', [ 'status' => 400 ] );
 		}
 
 		// link the customer id to the user.
-		$linked = $this->maybeLinkCustomer( $order, $request );
+		$linked = $this->maybeLinkCustomer( $checkout, $request );
 		if ( is_wp_error( $linked ) ) {
 			return $linked;
 		}
 
 		// purchase created.
-		if ( ! empty( $order->purchases->data ) ) {
-			foreach ( $order->purchases->data as $purchase ) {
+		if ( ! empty( $checkout->purchases->data ) ) {
+			foreach ( $checkout->purchases->data as $purchase ) {
 				if ( empty( $purchase->revoked ) ) {
 					// broadcast the webhook.
 					do_action( 'surecart/purchase_created', $purchase );
@@ -207,21 +207,21 @@ class CheckoutsController extends RestController {
 		}
 
 		// the order is confirmed.
-		do_action( 'surecart/order_confirmed', $order, $request );
+		do_action( 'surecart/order_confirmed', $checkout, $request );
 
 		// return the order.
-		return $order;
+		return $checkout;
 	}
 
 	/**
 	 * Link the customer id to the order.
 	 *
-	 * @param \SureCart\Models\Order $order Order model.
-	 * @param \WP_REST_Request       $request Request object.
+	 * @param \SureCart\Models\Checkout $checkout Checkout model.
+	 * @param \WP_REST_Request          $request Request object.
 	 * @return \WP_User|\WP_Error
 	 */
-	public function linkCustomerId( $order, $request ) {
-		$service = new CustomerLinkService( $order, $request->get_param( 'password' ) );
+	public function linkCustomerId( $checkout, $request ) {
+		$service = new CustomerLinkService( $checkout, $request->get_param( 'password' ) );
 		return $service->link();
 	}
 
