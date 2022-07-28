@@ -65,6 +65,7 @@ export default ({ activation }) => {
 		if (success) {
 			createSuccessNotice(__('Activation deleted.', 'surecart'), {
 				type: 'snackbar',
+				explicitDismiss: true,
 			});
 			return;
 		}
@@ -89,6 +90,7 @@ export default ({ activation }) => {
 			});
 			createSuccessNotice(__('Activation updated.', 'surecart'), {
 				type: 'snackbar',
+				explicitDismiss: true,
 			});
 			setOpenModal(false);
 		} catch (e) {

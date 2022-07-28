@@ -1,6 +1,6 @@
-import { __ } from '@wordpress/i18n';
 import { ScAlert } from '@surecart/components-react';
 import { useDispatch, useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 
 export default ({ margin = '0', scrollOnOpen = true, type: noticeType }) => {
@@ -25,12 +25,12 @@ export default ({ margin = '0', scrollOnOpen = true, type: noticeType }) => {
 			open={true}
 			type={alertType[noticeType]}
 			key={notice?.id}
-			closable
+			closable={notice.isDissmissible}
 			scrollOnOpen={scrollOnOpen}
 			scrollMargin={margin}
 			onScHide={() => removeNotice(notice?.id)}
 		>
-			{notice.content}
+			<span slot="title">{notice.content}</span>
 		</ScAlert>
 	));
 };

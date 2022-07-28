@@ -37,6 +37,7 @@ export default ({ onRequestClose, id }) => {
 			);
 			createSuccessNotice(__('Integration saved.', 'surecart'), {
 				type: 'snackbar',
+				explicitDismiss: true,
 			});
 			onRequestClose();
 		} catch (e) {

@@ -62,6 +62,7 @@ export default ({ id }) => {
 			// save success.
 			createSuccessNotice(__('Product updated.', 'surecart'), {
 				type: 'snackbar',
+				explicitDismiss: true,
 			});
 		} catch (e) {
 			setError(e);

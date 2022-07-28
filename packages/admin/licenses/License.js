@@ -40,6 +40,7 @@ export default () => {
 		if (!license) return;
 		createSuccessNotice(__('License updated.', 'surecart'), {
 			type: 'snackbar',
+			explicitDismiss: true,
 		});
 	};
 

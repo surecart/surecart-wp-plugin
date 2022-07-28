@@ -67,6 +67,7 @@ export default ({ id }) => {
 			await deleteIntegration({ throwOnError: true });
 			createSuccessNotice(__('Integration deleted.', 'surecart'), {
 				type: 'snackbar',
+				explicitDismiss: true,
 			});
 		} catch (e) {
 			console.error(e);

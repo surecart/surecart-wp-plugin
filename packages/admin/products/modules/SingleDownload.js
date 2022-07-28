@@ -1,27 +1,18 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
-import {
-	ScBlockUi,
-	ScButton,
-	ScDropdown,
-	ScFormatBytes,
-	ScIcon,
-	ScMenu,
-	ScMenuDivider,
-	ScMenuItem,
-	ScStackedListRow,
-	ScTag,
-} from '@surecart/components-react';
+import { ScBlockUi, ScButton, ScDropdown, ScFormatBytes, ScIcon, ScMenu, ScMenuDivider, ScMenuItem, ScStackedListRow, ScTag } from '@surecart/components-react';
+import apiFetch from '@wordpress/api-fetch';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
+import { Fragment, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
-import { useState, Fragment } from '@wordpress/element';
-import apiFetch from '@wordpress/api-fetch';
+
 import MediaLibrary from '../../components/MediaLibrary';
 
 export default ({ download, product, updateProduct, className }) => {
-	const { createSuccessNotice } = useDispatch(noticesStore);
+	const { createSuccessNotice, createErrorNotice } =
+		useDispatch(noticesStore);
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const { saveEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
@@ -75,10 +66,18 @@ export default ({ download, product, updateProduct, className }) => {
 			);
 			createSuccessNotice(__('Download removed.', 'surecart'), {
 				type: 'snackbar',
+				explicitDismiss: true,
 			});
 		} catch (e) {
 			console.error(e);
-			setError(e?.message || __('Something went wrong', 'surecart'));
+			createErrorNotice(
+				e?.message || __('Something went wrong', 'surecart')
+			);
+			e?.additional_errors.forEach((e) => {
+				createErrorNotice(e?.message);
+			});
+
+			// setError(e?.message || __('Something went wrong', 'surecart'));
 		} finally {
 			setLoading(false);
 		}
@@ -102,6 +101,7 @@ export default ({ download, product, updateProduct, className }) => {
 					: __('Download archived.', 'surecart'),
 				{
 					type: 'snackbar',
+					explicitDismiss: true,
 				}
 			);
 		} catch (e) {
