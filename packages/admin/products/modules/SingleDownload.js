@@ -10,23 +10,11 @@ import { store as noticesStore } from '@wordpress/notices';
 
 import MediaLibrary from '../../components/MediaLibrary';
 
-export default ({ download, product, updateProduct, className }) => {
+export default ({ download, product, className }) => {
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 	const [loading, setLoading] = useState(false);
 	const { saveEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
-
-	const setRelease = () => {
-		updateProduct({
-			current_release_download: download.id,
-		});
-	};
-
-	const unSetRelease = () => {
-		updateProduct({
-			current_release_download: null,
-		});
-	};
 
 	const replaceItem = async (media) => {
 		const r = confirm(
@@ -241,20 +229,6 @@ export default ({ download, product, updateProduct, className }) => {
 						<ScIcon name="more-horizontal" />
 					</ScButton>
 					<ScMenu>
-						{isCurrentRelease ? (
-							<ScMenuItem onClick={unSetRelease}>
-								<ScIcon name="truck" slot="prefix" />
-								{__('Unset Release', 'surecart')}
-							</ScMenuItem>
-						) : (
-							!!product?.licensing_enabled && (
-								<ScMenuItem onClick={setRelease}>
-									<ScIcon name="truck" slot="prefix" />
-									{__('Set As Release', 'surecart')}
-								</ScMenuItem>
-							)
-						)}
-
 						<MediaLibrary
 							onSelect={replaceItem}
 							multiple={false}
