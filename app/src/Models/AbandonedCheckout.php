@@ -8,7 +8,7 @@ use SureCart\Models\Order;
 /**
  * Order model
  */
-class AbandonedOrder extends Order {
+class AbandonedCheckout extends Order {
 	use HasCustomer;
 
 	/**
@@ -31,8 +31,8 @@ class AbandonedOrder extends Order {
 	 * @param  array $value Checkout session properties.
 	 * @return void
 	 */
-	protected function setLatestOrderAttribute( $value ) {
-		$this->setRelation( 'latest_order', $value, Order::class );
+	protected function setLatestRecoverableCheckoutAttribute( $value ) {
+		$this->setRelation( 'latest_recoverable_checkout', $value, Checkout::class );
 	}
 
 	/**
@@ -40,7 +40,7 @@ class AbandonedOrder extends Order {
 	 *
 	 * @return string
 	 */
-	public function getLatestOrderIdAttribute() {
-		return $this->getRelationId( 'latest_order' );
+	public function getLatestRecoverableCheckoutIdAttribute() {
+		return $this->getRelationId( 'latest_recoverable_checkout' );
 	}
 }
