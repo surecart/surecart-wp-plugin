@@ -9,7 +9,6 @@ import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 
 import MediaLibrary from '../../components/MediaLibrary';
-import useSnackbar from '../../hooks/useSnackbar';
 import Box from '../../ui/Box';
 import SingleDownload from './SingleDownload';
 

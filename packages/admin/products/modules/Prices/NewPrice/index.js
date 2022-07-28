@@ -1,22 +1,16 @@
 /** @jsx jsx */
 import { css, Global, jsx } from '@emotion/core';
-
-import { __ } from '@wordpress/i18n';
+import { ScButton, ScForm, ScSelect, ScSwitch } from '@surecart/components-react';
 import { Modal } from '@wordpress/components';
-import { useState, useEffect } from '@wordpress/element';
-import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch } from '@wordpress/data';
+import { useEffect, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { store as noticesStore } from '@wordpress/notices';
 
-import {
-	ScButton,
-	ScForm,
-	ScSelect,
-	ScSwitch,
-} from '@surecart/components-react';
-import OneTime from '../../../components/price/OneTime';
 import Multiple from '../../../components/price/Multiple';
+import OneTime from '../../../components/price/OneTime';
 import Subscription from '../../../components/price/Subscription';
-import useSnackbar from '../../../../hooks/useSnackbar';
 
 export default ({ onRequestClose, product }) => {
 	const [error, setError] = useState(null);
@@ -25,7 +19,7 @@ export default ({ onRequestClose, product }) => {
 	const [price, setPrice] = useState({});
 	const [type, setType] = useState('once');
 	const { saveEntityRecord } = useDispatch(coreStore);
-	const { addSnackbarNotice } = useSnackbar();
+	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	// update the price.
 	const updatePrice = (data) => {
@@ -55,7 +49,9 @@ export default ({ onRequestClose, product }) => {
 				},
 				{ throwOnError: true }
 			);
-			addSnackbarNotice({ content: __('Price saved.', 'surecart') });
+			createSuccessNotice(__('Prices saved.', 'surecart'), {
+				type: 'snackbar',
+			});
 			onRequestClose();
 		} catch (e) {
 			console.error(e);
