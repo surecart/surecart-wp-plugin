@@ -1,36 +1,28 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-
-import { __ } from '@wordpress/i18n';
-import { Fragment, useState } from '@wordpress/element';
+import { ScButton } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch, select } from '@wordpress/data';
+import { select, useDispatch } from '@wordpress/data';
+import { Fragment, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { store as noticesStore } from '@wordpress/notices';
 
-// template
+import Error from '../components/Error';
+import useEntity from '../hooks/useEntity';
+import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
-
-// modules
-import Details from './modules/Details';
-import Prices from './modules/Prices';
-
-// components
-import Sidebar from './Sidebar';
 import ActionsDropdown from './components/product/ActionsDropdown';
 import SaveButton from './components/product/SaveButton';
-import Logo from '../templates/Logo';
-import Error from '../components/Error';
-
-// hocs
-import useEntity from '../hooks/useEntity';
-import useSnackbar from '../hooks/useSnackbar';
-import { ScButton } from '@surecart/components-react';
+import Details from './modules/Details';
 import Downloads from './modules/Downloads';
-import Licensing from './modules/Licensing';
 import Integrations from './modules/integrations/Integrations';
+import Licensing from './modules/Licensing';
+import Prices from './modules/Prices';
+import Sidebar from './Sidebar';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
-	const { addSnackbarNotice } = useSnackbar();
+	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { saveEditedEntityRecord } = useDispatch(coreStore);
 	const {
 		product,
@@ -68,8 +60,8 @@ export default ({ id }) => {
 			}
 
 			// save success.
-			addSnackbarNotice({
-				content: __('Product updated.', 'surecart'),
+			createSuccessNotice(__('Product updated.', 'surecart'), {
+				type: 'snackbar',
 			});
 		} catch (e) {
 			setError(e);
