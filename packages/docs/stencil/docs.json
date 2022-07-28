@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-07-27T18:33:28",
+  "timestamp": "2022-07-28T11:14:17",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -3388,7 +3388,6 @@
         "sc-form-state-provider",
         "sc-form-error-provider",
         "sc-form-components-validator",
-        "sc-order-redirect-provider",
         "sc-order-confirm-provider",
         "sc-session-provider",
         "sc-block-ui"
@@ -3399,7 +3398,6 @@
           "sc-form-state-provider",
           "sc-form-error-provider",
           "sc-form-components-validator",
-          "sc-order-redirect-provider",
           "sc-order-confirm-provider",
           "sc-session-provider",
           "sc-block-ui"
@@ -12520,88 +12518,6 @@
         ],
         "sc-form-control": [
           "sc-tooltip"
-        ]
-      }
-    },
-    {
-      "filePath": "./src/components/providers/order-redirect-provider/sc-order-redirect-provider.tsx",
-      "encapsulation": "shadow",
-      "tag": "sc-order-redirect-provider",
-      "readme": "# sc-order-redirect-provider\n\n\n",
-      "docs": "This component listens for a confirmed event and redirects to the success url.",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "order",
-          "type": "Order",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "The current order.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Order"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "successUrl",
-          "type": "string",
-          "mutable": true,
-          "attr": "success-url",
-          "reflectToAttr": true,
-          "docs": "The success url.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
-      "methods": [],
-      "events": [
-        {
-          "event": "scError",
-          "detail": "{ message: string; code?: string; data?: any; additional_errors?: any; } | {}",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Error event.",
-          "docsTags": []
-        },
-        {
-          "event": "scSetState",
-          "detail": "\"EXPIRE\" | \"FETCH\" | \"FINALIZE\" | \"PAID\" | \"REJECT\" | \"RESOLVE\"",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Form state event.",
-          "docsTags": []
-        }
-      ],
-      "listeners": [
-        {
-          "event": "scOrderPaid",
-          "capture": false,
-          "passive": false
-        }
-      ],
-      "styles": [],
-      "slots": [],
-      "parts": [],
-      "dependents": [
-        "sc-checkout"
-      ],
-      "dependencies": [],
-      "dependencyGraph": {
-        "sc-checkout": [
-          "sc-order-redirect-provider"
         ]
       }
     },
