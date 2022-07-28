@@ -1,28 +1,22 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
+import { ScBlockUi, ScCard, ScFormControl, ScSelect, ScStackedList, ScSwitch } from '@surecart/components-react';
+import { Button } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { Button } from '@wordpress/components';
 import { useState } from '@wordpress/element';
-import {
-	ScBlockUi,
-	ScCard,
-	ScFormControl,
-	ScSelect,
-	ScStackedList,
-	ScSwitch,
-} from '@surecart/components-react';
+import { __ } from '@wordpress/i18n';
+import { store as noticesStore } from '@wordpress/notices';
 
-import SingleDownload from './SingleDownload';
-import Box from '../../ui/Box';
 import MediaLibrary from '../../components/MediaLibrary';
 import useSnackbar from '../../hooks/useSnackbar';
+import Box from '../../ui/Box';
+import SingleDownload from './SingleDownload';
 
 export default ({ id, product, updateProduct, loading }) => {
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const [showArchived, setShowArchived] = useState(false);
-	const { addSnackbarNotice } = useSnackbar();
+	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { downloads, fetching } = useSelect(
 		(select) => {
 			const queryArgs = [
@@ -53,7 +47,9 @@ export default ({ id, product, updateProduct, loading }) => {
 				},
 				{ throwOnError: true }
 			);
-			addSnackbarNotice({ content: __('Download added.', 'surecart') });
+			createSuccessNotice(__('Download added.', 'surecart'), {
+				type: 'snackbar',
+			});
 		} catch (e) {
 			console.error(e);
 		}
