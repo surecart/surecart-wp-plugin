@@ -43,12 +43,12 @@ class AdminMenuPageService {
 		$cart_page_id = \SureCart::pages()->getId( 'cart', 'sc_cart' );
 
 		if ( 'edit.php?post_type=sc_cart' === $submenu_file ) {
-			$file = 'sc-getting-started';
+			$file = 'sc-dashboard';
 			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			$submenu_file = 'post.php?post=' . (int) $cart_page_id . '&action=edit';
 		}
 		if ( 'edit.php?post_type=sc_form' === $submenu_file ) {
-			$file = 'sc-getting-started';
+			$file = 'sc-dashboard';
 			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			$submenu_file = 'edit.php?post_type=sc_form';
 		}
@@ -63,10 +63,10 @@ class AdminMenuPageService {
 	 */
 	public function adminMenuCSS() {
 		echo '<style>
-			#toplevel_page_sc-getting-started li {
+			#toplevel_page_sc-dashboard li {
 				clear: both;
 			}
-			#toplevel_page_sc-getting-started li:not(:last-child) a[href^="admin.php?page=sc-customers"]:after {
+			#toplevel_page_sc-dashboard li:not(:last-child) a[href^="admin.php?page=sc-customers"]:after {
 				border-bottom: 1px solid hsla(0,0%,100%,.2);
 				display: block;
 				float: left;
@@ -74,7 +74,7 @@ class AdminMenuPageService {
 				content: "";
 				width: calc(100% + 26px);
 			}
-			#toplevel_page_sc-getting-started li:not(:last-child) a[href^="admin.php?page=sc-getting-started"]:after {
+			#toplevel_page_sc-dashboard li:not(:last-child) a[href^="admin.php?page=sc-dashboard"]:after {
 				border-bottom: 1px solid hsla(0,0%,100%,.2);
 				display: block;
 				float: left;
@@ -82,7 +82,7 @@ class AdminMenuPageService {
 				content: "";
 				width: calc(100% + 26px);
 			}
-			#toplevel_page_sc-getting-started li:not(:last-child) a[href^="edit.php?post_type=sc_form"]:after {
+			#toplevel_page_sc-dashboard li:not(:last-child) a[href^="edit.php?post_type=sc_form"]:after {
 				border-bottom: 1px solid hsla(0,0%,100%,.2);
 				display: block;
 				float: left;
