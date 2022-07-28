@@ -32,14 +32,14 @@ class Checkout extends Model {
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'orders';
+	protected $endpoint = 'checkouts';
 
 	/**
 	 * Object name
 	 *
 	 * @var string
 	 */
-	protected $object_name = 'order';
+	protected $object_name = 'checkout';
 
 	/**
 	 * Need to pass the processor type on create
