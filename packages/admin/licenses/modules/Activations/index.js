@@ -1,32 +1,33 @@
-import { sprintf, __ } from '@wordpress/i18n';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { ScBlockUi, ScCard, ScEmpty, ScStackedList, ScTag } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
-import Box from '../../../ui/Box';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { __, sprintf } from '@wordpress/i18n';
+
 import Error from '../../../components/Error';
-import {
-	ScCard,
-	ScEmpty,
-	ScStackedList,
-	ScTag,
-} from '@surecart/components-react';
+import Box from '../../../ui/Box';
 import Activation from './Activation';
 
 export default ({ id, license }) => {
 	const { deleteEntityRecord, saveEntityRecord } = useDispatch(coreStore);
 
-	const { activations, loading, loadingError } = useSelect(
+	const { activations, loading, updating, loadingError } = useSelect(
 		(select) => {
 			const queryArgs = [
 				'surecart',
 				'activation',
 				{ context: 'edit', license_ids: [id], per_page: 100 },
 			];
+			const loading = select(coreStore).isResolving(
+				'getEntityRecords',
+				queryArgs
+			);
+			const activations = select(coreStore).getEntityRecords(
+				...queryArgs
+			);
 			return {
-				activations: select(coreStore).getEntityRecords(...queryArgs),
-				loading: select(coreStore).isResolving(
-					'getEntityRecords',
-					queryArgs
-				),
+				activations,
+				loading: loading && !activations?.length,
+				updating: loading && activations?.length,
 				loadingError: select(coreStore)?.getResolutionError?.(
 					'getEntityRecords',
 					queryArgs
@@ -85,7 +86,7 @@ export default ({ id, license }) => {
 	return (
 		<Box
 			title={__('Activations', 'surecart')}
-			loading={loading && !activations?.length}
+			loading={loading}
 			header_action={
 				!loading && (
 					<ScTag type="info">
@@ -100,6 +101,7 @@ export default ({ id, license }) => {
 		>
 			<Error error={loadingError} scrollOnOpen={false} />
 			{renderActivationsList()}
+			{updating && <ScBlockUi spinner />}
 		</Box>
 	);
 };
