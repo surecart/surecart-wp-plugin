@@ -73,6 +73,7 @@ return [
 		\SureCart\Rest\TaxZoneRestServiceProvider::class,
 		\SureCart\Rest\CustomerNotificationProtocolRestServiceProvider::class,
 		\SureCart\Rest\OrderRestServiceProvider::class,
+		\SureCart\Rest\CheckoutRestServiceProvider::class,
 		\SureCart\Rest\InvoicesRestServiceProvider::class,
 		\SureCart\Rest\WebhooksRestServiceProvider::class,
 
