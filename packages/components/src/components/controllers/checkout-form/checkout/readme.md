@@ -38,11 +38,7 @@
 
 ## Methods
 
-<<<<<<< HEAD
-### `submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Order | CustomEvent<import("/Users/alamgircse.bd/Local Sites/surecart/app/public/wp-content/plugins/surecart-wp/packages/components/src/types").FormStateSetter>>`
-=======
 ### `submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<any>`
->>>>>>> ceac0b9d3ce4de62cec4da7976f7bf81b31d85b0
 
 Submit the form
 
@@ -71,9 +67,9 @@ Type: `Promise<boolean>`
 - [sc-form-state-provider](../../../providers/form-state-provider)
 - [sc-form-error-provider](../../../providers/form-error-provider)
 - [sc-form-components-validator](../../../providers/form-components-validator)
-- [sc-session-provider](../../../providers/session-provider)
 - [sc-order-redirect-provider](../../../providers/order-redirect-provider)
 - [sc-order-confirm-provider](../../../providers/order-confirm-provider)
+- [sc-session-provider](../../../providers/session-provider)
 - [sc-block-ui](../../../ui/block-ui)
 
 ### Graph
@@ -83,9 +79,9 @@ graph TD;
   sc-checkout --> sc-form-state-provider
   sc-checkout --> sc-form-error-provider
   sc-checkout --> sc-form-components-validator
-  sc-checkout --> sc-session-provider
   sc-checkout --> sc-order-redirect-provider
   sc-checkout --> sc-order-confirm-provider
+  sc-checkout --> sc-session-provider
   sc-checkout --> sc-block-ui
   sc-alert --> sc-icon
   sc-form-state-provider --> sc-block-ui

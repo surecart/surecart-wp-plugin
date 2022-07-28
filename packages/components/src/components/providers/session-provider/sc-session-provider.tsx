@@ -2,7 +2,7 @@ import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, Watch
 import { __ } from '@wordpress/i18n';
 import { removeQueryArgs } from '@wordpress/url';
 import { parseFormData } from '../../../functions/form-data';
-import store, { clearOrder, getOrder, setOrder } from '../../../store/checkouts';
+import { clearOrder, getOrder, setOrder } from '../../../store/checkouts';
 
 import { createOrUpdateOrder, finalizeSession } from '../../../services/session';
 import { FormStateSetter, PaymentIntents, ProcessorName, LineItemData, Order, PriceChoice, LineItem } from '../../../types';
@@ -57,6 +57,8 @@ export class ScSessionProvider {
 
   /** Update line items event */
   @Event() scUpdateDraftState: EventEmitter<Order>;
+
+  @Event() scPaid: EventEmitter<void>;
 
   /** Error event */
   @Event() scError: EventEmitter<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>;
@@ -166,6 +168,11 @@ export class ScSessionProvider {
         return this.scSetState.emit('REJECT');
       }
 
+      // the order is paid
+      if (order?.status === 'paid') {
+        this.scPaid.emit();
+      }
+
       setOrder(order, this.formId);
       return this.order();
     } catch (e) {
@@ -262,18 +269,6 @@ export class ScSessionProvider {
     return {
       form_id: this.formId,
     };
-  }
-
-  componentWillLoad() {
-    // listen for checkout change events and remove any that have been paid.
-    store.onChange(this.mode, checkouts => {
-      Object.keys(checkouts).forEach(formId => {
-        const checkout = checkouts[formId];
-        if (checkout?.status === 'paid') {
-          clearOrder(formId, this.mode);
-        }
-      });
-    });
   }
 
   /** Find or create session on load. */

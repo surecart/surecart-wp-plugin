@@ -90,7 +90,7 @@ class BlockPatternsRestServiceProvider extends \WP_REST_Controller implements Se
 
 		return new \WP_Error(
 			'rest_cannot_view',
-			__( 'Sorry, you are not allowed to view the registered form patterns.' ),
+			__( 'Sorry, you are not allowed to view the registered form patterns.', 'surecart' ),
 			array( 'status' => rest_authorization_required_code() )
 		);
 	}
@@ -168,55 +168,55 @@ class BlockPatternsRestServiceProvider extends \WP_REST_Controller implements Se
 			'type'       => 'object',
 			'properties' => array(
 				'name'           => array(
-					'description' => __( 'The pattern name.' ),
+					'description' => __( 'The pattern name.', 'surecart' ),
 					'type'        => 'string',
 					'readonly'    => true,
 					'context'     => array( 'view', 'edit', 'embed' ),
 				),
 				'title'          => array(
-					'description' => __( 'The pattern title, in human readable format.' ),
+					'description' => __( 'The pattern title, in human readable format.', 'surecart' ),
 					'type'        => 'string',
 					'readonly'    => true,
 					'context'     => array( 'view', 'edit', 'embed' ),
 				),
 				'description'    => array(
-					'description' => __( 'The pattern detailed description.' ),
+					'description' => __( 'The pattern detailed description.', 'surecart' ),
 					'type'        => 'string',
 					'readonly'    => true,
 					'context'     => array( 'view', 'edit', 'embed' ),
 				),
 				'viewport_width' => array(
-					'description' => __( 'The pattern viewport width for inserter preview.' ),
+					'description' => __( 'The pattern viewport width for inserter preview.', 'surecart' ),
 					'type'        => 'number',
 					'readonly'    => true,
 					'context'     => array( 'view', 'edit', 'embed' ),
 				),
 				'block_types'    => array(
-					'description' => __( 'Block types that the pattern is intended to be used with.' ),
+					'description' => __( 'Block types that the pattern is intended to be used with.', 'surecart' ),
 					'type'        => 'array',
 					'readonly'    => true,
 					'context'     => array( 'view', 'edit', 'embed' ),
 				),
 				'categories'     => array(
-					'description' => __( 'The pattern category slugs.' ),
+					'description' => __( 'The pattern category slugs.', 'surecart' ),
 					'type'        => 'array',
 					'readonly'    => true,
 					'context'     => array( 'view', 'edit', 'embed' ),
 				),
 				'keywords'       => array(
-					'description' => __( 'The pattern keywords.' ),
+					'description' => __( 'The pattern keywords.', 'surecart' ),
 					'type'        => 'array',
 					'readonly'    => true,
 					'context'     => array( 'view', 'edit', 'embed' ),
 				),
 				'content'        => array(
-					'description' => __( 'The pattern content.' ),
+					'description' => __( 'The pattern content.', 'surecart' ),
 					'type'        => 'string',
 					'readonly'    => true,
 					'context'     => array( 'view', 'edit', 'embed' ),
 				),
 				'inserter'       => array(
-					'description' => __( 'Determines whether the pattern is visible in inserter.' ),
+					'description' => __( 'Determines whether the pattern is visible in inserter.', 'surecart' ),
 					'type'        => 'boolean',
 					'readonly'    => true,
 					'context'     => array( 'view', 'edit', 'embed' ),

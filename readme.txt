@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,12 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.0.3 - July 27, 2022 =
+* Improvement: Add ability to turn off slide-out cart.
+* Fix: Issue with purchases that do not require a payment method not triggering integrations.
+* Fix: Donation block sometimes removing choices when no maximum is set.
+* Fix: Missing translations.
 
 = 1.0.2 - July 25, 2022 =
 * Improvement: Allow changing of "secure text" in payment block.

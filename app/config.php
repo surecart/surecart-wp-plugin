@@ -47,6 +47,7 @@ return [
 		\SureCart\Rest\BrandRestServiceProvider::class,
 		\SureCart\Rest\LoginRestServiceProvider::class,
 		\SureCart\Rest\PurchasesRestServiceProvider::class,
+		\SureCart\Rest\StatisticRestServiceProvider::class,
 		\SureCart\Rest\IntegrationsRestServiceProvider::class,
 		\SureCart\Rest\IntegrationProvidersRestServiceProvider::class,
 		\SureCart\Rest\CustomerRestServiceProvider::class,

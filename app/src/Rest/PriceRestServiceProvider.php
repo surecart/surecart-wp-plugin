@@ -75,11 +75,11 @@ class PriceRestServiceProvider extends RestServiceProvider implements RestServic
 				'type'        => 'boolean',
 			],
 			'query'       => [
-				'description' => __( 'The query to be used for full text search of this collection.' ),
+				'description' => __( 'The query to be used for full text search of this collection.', 'surecart' ),
 				'type'        => 'string',
 			],
 			'ids'         => [
-				'description' => __( 'Ensure result set excludes specific IDs.' ),
+				'description' => __( 'Ensure result set excludes specific IDs.', 'surecart' ),
 				'type'        => 'array',
 				'items'       => [
 					'type' => 'string',
@@ -87,7 +87,7 @@ class PriceRestServiceProvider extends RestServiceProvider implements RestServic
 				'default'     => [],
 			],
 			'product_ids' => [
-				'description' => __( 'Only return objects that belong to the given products.' ),
+				'description' => __( 'Only return objects that belong to the given products.', 'surecart' ),
 				'type'        => 'array',
 				'items'       => [
 					'type' => 'string',

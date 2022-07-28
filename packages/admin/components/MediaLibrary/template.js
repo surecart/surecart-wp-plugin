@@ -18,7 +18,7 @@ export default ({
 }) => {
 	return (
 		<Modal
-			title={title ? title : __('Add Media', 'presto-player')}
+			title={title ? title : __('Add Media', 'surecart')}
 			onRequestClose={onClose}
 			css={css`
 				width: 100%;
@@ -31,7 +31,7 @@ export default ({
 					flex-direction: column;
 				}
 			`}
-			overlayClassName="presto-player__modal-overlay"
+			overlayClassName="surecart__modal-overlay"
 		>
 			<div
 				css={css`

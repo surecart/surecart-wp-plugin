@@ -170,7 +170,7 @@ export default ({
 						addUploads(e.target.files);
 					}}
 				>
-					{__('Upload Media', 'presto-player')}
+					{__('Upload Media', 'surecart')}
 				</FormFileUpload>{' '}
 				{__('or drag and drop a file to upload.')}
 			</div>
@@ -290,7 +290,7 @@ export default ({
 								setOpen(false);
 							}}
 						>
-							{__('Choose', 'presto-player')}
+							{__('Choose', 'surecart')}
 						</Button>
 					}
 					sidebar={

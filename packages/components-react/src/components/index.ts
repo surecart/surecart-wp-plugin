@@ -87,7 +87,6 @@ export const ScOrderConfirmationTotals = /*@__PURE__*/createReactComponent<JSX.S
 export const ScOrderCouponForm = /*@__PURE__*/createReactComponent<JSX.ScOrderCouponForm, HTMLScOrderCouponFormElement>('sc-order-coupon-form');
 export const ScOrderDetail = /*@__PURE__*/createReactComponent<JSX.ScOrderDetail, HTMLScOrderDetailElement>('sc-order-detail');
 export const ScOrderPassword = /*@__PURE__*/createReactComponent<JSX.ScOrderPassword, HTMLScOrderPasswordElement>('sc-order-password');
-export const ScOrderRedirectProvider = /*@__PURE__*/createReactComponent<JSX.ScOrderRedirectProvider, HTMLScOrderRedirectProviderElement>('sc-order-redirect-provider');
 export const ScOrderShippingAddress = /*@__PURE__*/createReactComponent<JSX.ScOrderShippingAddress, HTMLScOrderShippingAddressElement>('sc-order-shipping-address');
 export const ScOrderStatusBadge = /*@__PURE__*/createReactComponent<JSX.ScOrderStatusBadge, HTMLScOrderStatusBadgeElement>('sc-order-status-badge');
 export const ScOrderStripePaymentElement = /*@__PURE__*/createReactComponent<JSX.ScOrderStripePaymentElement, HTMLScOrderStripePaymentElementElement>('sc-order-stripe-payment-element');
