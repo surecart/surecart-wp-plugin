@@ -49,6 +49,15 @@ export default ({ id, prices, product }) => {
 				{ archived: !price?.archived },
 				{ throwOnError: true }
 			);
+			createSuccesNotice(
+				download?.archived
+					? __('Price unarchived.', 'surecart')
+					: __('Price archived.'),
+				{
+					type: 'snackbar',
+					explicitDismiss: true,
+				}
+			);
 		} catch (e) {
 			console.error(e);
 			setError(e);
