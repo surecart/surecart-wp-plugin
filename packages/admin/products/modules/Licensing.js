@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
 import { ScInput, ScSelect, ScSwitch } from '@surecart/components-react';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
 
 import Box from '../../ui/Box';
-import { useSelect } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
 
 export default ({ loading, id, product, updateProduct }) => {
 	if (!scData?.entitlements?.licensing) {
@@ -81,12 +81,18 @@ export default ({ loading, id, product, updateProduct }) => {
 								current_release_download: e.target.value,
 							});
 						}}
-						choices={(downloads || []).map((download) => {
-							return {
-								value: download?.id,
-								label: download?.media?.filename,
-							};
-						})}
+						choices={(downloads || [])
+							.filter(
+								(download) =>
+									download?.media?.content_type ===
+									'application/zip'
+							)
+							.map((download) => {
+								return {
+									value: download?.id,
+									label: download?.media?.filename,
+								};
+							})}
 					/>
 				</>
 			)}
