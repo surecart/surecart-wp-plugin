@@ -68,7 +68,7 @@ export class ScDonationChoices {
   handleCustomAmountToggle(val) {
     if (val) {
       setTimeout(() => {
-        this.input.triggerFocus();
+        this.input?.triggerFocus?.();
       }, 50);
     }
   }
@@ -103,7 +103,7 @@ export class ScDonationChoices {
     }
   }
 
-  componentDidLoad() {
+  componentWillLoad() {
     this.handleLineItemsChange();
   }
 
@@ -114,26 +114,29 @@ export class ScDonationChoices {
   }
 
   getChoices() {
-    return this.el.querySelectorAll('sc-choice');
+    return (this.el.querySelectorAll('sc-choice') as NodeListOf<HTMLScChoiceElement>) || [];
   }
 
   removeInvalidPrices() {
     if (!this.lineItem) return;
-    // bail if no min or max.
-    if (!this.lineItem.price?.ad_hoc_min_amount && !this.lineItem?.price?.ad_hoc_min_amount) {
-      return;
-    }
 
-    const choices = this.el.querySelectorAll('sc-choice') as NodeListOf<HTMLScChoiceElement>;
-
-    choices.forEach((el: HTMLScChoiceElement) => {
-      if (parseInt(el.value) > this.lineItem?.price?.ad_hoc_max_amount || parseInt(el.value) < this.lineItem?.price?.ad_hoc_min_amount) {
+    this.getChoices().forEach((el: HTMLScChoiceElement) => {
+      // we have a max and the value is more.
+      if (this.lineItem?.price?.ad_hoc_max_amount && parseInt(el.value) > this.lineItem?.price?.ad_hoc_max_amount) {
         el.style.display = 'none';
         el.disabled = true;
-      } else {
-        el.style.display = 'flex';
-        el.disabled = false;
+        return;
       }
+
+      // we have a min and the value is less.
+      if (this.lineItem?.price?.ad_hoc_min_amount && parseInt(el.value) < this.lineItem?.price?.ad_hoc_min_amount) {
+        el.style.display = 'none';
+        el.disabled = true;
+        return;
+      }
+
+      el.style.display = 'flex';
+      el.disabled = false;
     });
   }
 

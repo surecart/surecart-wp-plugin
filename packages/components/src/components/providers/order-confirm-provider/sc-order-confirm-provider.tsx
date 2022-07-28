@@ -65,10 +65,11 @@ export class ScOrderConfirmProvider {
       console.error(e);
       this.scError.emit(e);
     } finally {
+      const order = this.order?.id;
       // make sure we clear the order state no matter what.
       clearOrder(this.formId, this.mode);
       // we always want to redirect, regardless of the outcome here.
-      window.location.assign(addQueryArgs(this.successUrl, { order: this.order.id }));
+      window.location.assign(addQueryArgs(this.successUrl, { order }));
     }
   }
 

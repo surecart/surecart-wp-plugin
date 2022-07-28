@@ -42,7 +42,7 @@ class CustomersListTable extends ListTable {
 	public function search() { ?>
 	<form class="search-form"
 		method="get">
-		<?php $this->search_box( __( 'Search Customers' ), 'user' ); ?>
+		<?php $this->search_box( __( 'Search Customers', 'surecart' ), 'user' ); ?>
 		<input type="hidden"
 			name="id"
 			value="1" />
@@ -71,7 +71,7 @@ class CustomersListTable extends ListTable {
 	 */
 	public function column_cb( $product ) {
 		?>
-		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment' ); ?></label>
+		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
 		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
 			<?php
 	}
