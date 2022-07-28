@@ -74,6 +74,10 @@ export default ({ loading, id, product, updateProduct }) => {
 					/>
 					<ScSelect
 						label={__('Current Release', 'surecart')}
+						help={__(
+							'This is the current release zip of your software.',
+							'surecart'
+						)}
 						loading={fetching}
 						value={product?.current_release_download}
 						onScChange={(e) => {
