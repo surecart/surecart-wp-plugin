@@ -1,30 +1,23 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-
-import { __ } from '@wordpress/i18n';
+import { ScBreadcrumb, ScBreadcrumbs, ScButton } from '@surecart/components-react';
 import { store } from '@surecart/data';
 import { store as coreStore } from '@wordpress/core-data';
-
-// template
-import UpdateModel from '../templates/UpdateModel';
-import Logo from '../templates/Logo';
-import Error from '../components/Error';
-
-// hocs
-import useEntity from '../hooks/useEntity';
-import {
-	ScBreadcrumb,
-	ScBreadcrumbs,
-	ScButton,
-} from '@surecart/components-react';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 
-import Details from './modules/Details';
+import Error from '../components/Error';
+// hocs
+import useEntity from '../hooks/useEntity';
+import Logo from '../templates/Logo';
+import SaveButton from '../templates/SaveButton';
+// template
+import UpdateModel from '../templates/UpdateModel';
 import Activations from './modules/Activations';
 import Customer from './modules/Customer';
+import Details from './modules/Details';
 import Purchase from './modules/Purchase';
-import SaveButton from '../templates/SaveButton';
 
 export default () => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
@@ -88,14 +81,8 @@ export default () => {
 			}
 			sidebar={
 				<>
-					<Customer
-						loading={!hasLoadedLicense}
-						customer={license?.purchase?.customer}
-					/>
-					<Purchase
-						loading={!hasLoadedLicense}
-						purchase={license?.purchase}
-					/>
+					<Customer licenseId={id} />
+					<Purchase licenseId={id} />
 				</>
 			}
 		>

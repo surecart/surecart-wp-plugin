@@ -1,13 +1,41 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-
 import { ScButton, ScText } from '@surecart/components-react';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
-
-import Box from '../../ui/Box';
 import { addQueryArgs } from '@wordpress/url';
 
-export default ({ customer, loading }) => {
+import Box from '../../ui/Box';
+
+export default ({ licenseId }) => {
+	const { customer, loading, loadingError } = useSelect(
+		(select) => {
+			const queryArgs = [
+				'surecart',
+				'customer',
+				{
+					context: 'edit',
+					license_ids: [licenseId],
+					expand: ['product'],
+					per_page: 100,
+				},
+			];
+			return {
+				customer: select(coreStore).getEntityRecords(...queryArgs)?.[0],
+				loading: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
+				),
+				loadingError: select(coreStore)?.getResolutionError?.(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
+		},
+		[licenseId]
+	);
+
 	return (
 		<Box
 			title={__('Customer', 'surecart')}
