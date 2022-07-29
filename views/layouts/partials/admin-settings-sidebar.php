@@ -8,6 +8,10 @@
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="pen-tool"></sc-icon>
 			<?php esc_html_e( 'Design & Branding', 'surecart' ); ?>
 		</sc-tab>
+		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'order' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'order' === $tab ? 'active' : ''; ?>>
+			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="shopping-bag"></sc-icon>
+			<?php esc_html_e( 'Order Settings', 'surecart' ); ?>
+		</sc-tab>
 		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'customer_notification_protocol' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'customer_notification_protocol' === $tab ? 'active' : ''; ?>>
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="bell"></sc-icon>
 			<?php esc_html_e( 'Customer Notifications', 'surecart' ); ?>
