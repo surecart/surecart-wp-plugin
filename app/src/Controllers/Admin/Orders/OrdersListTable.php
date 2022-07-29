@@ -2,18 +2,14 @@
 
 namespace SureCart\Controllers\Admin\Orders;
 
-use SureCart\Support\Currency;
 use SureCart\Support\TimeDate;
 use SureCart\Models\Order;
 use SureCart\Controllers\Admin\Tables\ListTable;
-use SureCart\Models\Integration;
 
 /**
  * Create a new table class that will extend the WP_List_Table
  */
 class OrdersListTable extends ListTable {
-	public $checkbox = true;
-
 	/**
 	 * Prepare the items for the table to process
 	 *
@@ -63,8 +59,8 @@ class OrdersListTable extends ListTable {
 		$output = '';
 
 		// loop through each purchase.
-		if ( ! empty( $order->purchases->data ) ) {
-			foreach ( $order->purchases->data as $purchase ) {
+		if ( ! empty( $order->checkout->purchases->data ) ) {
+			foreach ( $order->checkout->purchases->data as $purchase ) {
 				$output .= $this->productIntegrationsList( $purchase->product );
 			}
 		}
@@ -163,7 +159,7 @@ class OrdersListTable extends ListTable {
 			[
 				'status' => $this->getStatus(),
 			]
-		)->with( [ 'charge', 'payment_intent', 'payment_intent.payment_method', 'payment_method.card', 'purchases' ] )
+		)->with( [ 'checkout', 'checkout.charge', 'checkout.payment_intent', 'payment_intent.payment_method', 'payment_method.card', 'checkout.purchases' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'orders' ),
@@ -202,7 +198,7 @@ class OrdersListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_total( $order ) {
-		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $order->currency ) ) . '" value="' . (float) $order->total_amount . '"></sc-format-number>';
+		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $order->checkout->currency ) ) . '" value="' . (float) $order->checkout->total_amount . '"></sc-format-number>';
 	}
 
 	/**
@@ -213,14 +209,14 @@ class OrdersListTable extends ListTable {
 	 * @return void
 	 */
 	public function column_method( $order ) {
-		if ( ! empty( $order->payment_intent->processor_type ) && 'paypal' === $order->payment_intent->processor_type ) {
+		if ( ! empty( $order->checkout->payment_intent->processor_type ) && 'paypal' === $order->checkout->payment_intent->processor_type ) {
 			return '<sc-icon name="paypal" style="font-size: 56px; line-height:1; height: 28px;"></sc-icon>';
 		}
-		if ( ! empty( $order->payment_intent->payment_method->card->brand ) ) {
-			return '<sc-cc-logo style="font-size: 32px; line-height:1;" brand="' . esc_html( $order->payment_intent->payment_method->card->brand ) . '"></sc-cc-logo>';
+		if ( ! empty( $order->checkout->payment_intent->payment_method->card->brand ) ) {
+			return '<sc-cc-logo style="font-size: 32px; line-height:1;" brand="' . esc_html( $order->checkout->payment_intent->payment_method->card->brand ) . '"></sc-cc-logo>';
 		}
 
-		return $order->payment_intent->processor_type ?? '-';
+		return $order->checkout->payment_intent->processor_type ?? '-';
 	}
 
 	/**
@@ -240,77 +236,6 @@ class OrdersListTable extends ListTable {
 	}
 
 	/**
-	 * Output the Promo Code
-	 *
-	 * @param Promotion $promotion Promotion model.
-	 *
-	 * @return string
-	 */
-	public function column_usage( $promotion ) {
-		$max = $promotion->max_redemptions ?? '&infin;';
-		ob_start();
-		?>
-		<?php echo \esc_html( "$promotion->times_redeemed / $max" ); ?>
-		<br />
-		<div style="opacity: 0.75"><?php echo \esc_html( $this->get_expiration_string( $promotion->redeem_by ) ); ?></div>
-		<?php
-		return ob_get_clean();
-	}
-
-	/**
-	 * Render the "Redeem By"
-	 *
-	 * @param string $timestamp Redeem timestamp.
-	 * @return string
-	 */
-	public function get_expiration_string( $timestamp = '' ) {
-		if ( ! $timestamp ) {
-			return '';
-		}
-		// translators: coupon expiration date.
-		return sprintf( __( 'Valid until %s', 'surecart' ), date_i18n( get_option( 'date_format' ), $timestamp / 1000 ) );
-	}
-
-	public function get_price_string( $coupon = '' ) {
-		if ( ! $coupon || empty( $coupon->duration ) ) {
-			return;
-		}
-		if ( ! empty( $coupon->percent_off ) ) {
-			// translators: Coupon % off.
-			return sprintf( esc_html( __( '%1d%% off', 'surecart' ) ), $coupon->percent_off );
-		}
-
-		if ( ! empty( $coupon->amount_off ) ) {
-			// translators: Coupon amount off.
-			return Currency::formatCurrencyNumber( $coupon->amount_off ) . ' <small style="opacity: 0.75;">' . strtoupper( esc_html( $coupon->currency ) ) . '</small>';
-		}
-
-		return esc_html__( 'No discount.', 'surecart' );
-	}
-
-	/**
-	 * Get the duration string
-	 *
-	 * @param Coupon|boolean $coupon Coupon object.
-	 * @return string|void;
-	 */
-	public function get_duration_string( $coupon = '' ) {
-		if ( ! $coupon || empty( $coupon->duration ) ) {
-			return;
-		}
-
-		if ( 'forever' === $coupon->duration ) {
-			return __( 'Forever', 'surecart' );
-		}
-		if ( 'repeating' === $coupon->duration ) {
-			// translators: number of months.
-			return sprintf( __( 'For %d months', 'surecart' ), $coupon->duration_in_months ?? 1 );
-		}
-
-		return __( 'Once', 'surecart' );
-	}
-
-	/**
 	 * Handle the status
 	 *
 	 * @param \SureCart\Models\Order $order Order Model.
@@ -318,17 +243,17 @@ class OrdersListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_status( $order ) {
-		if ( ! empty( $order->charge->fully_refunded ) ) {
+		if ( ! empty( $order->checkout->charge->fully_refunded ) ) {
 			return '<sc-tag type="danger">' . __( 'Refunded', 'surecart' ) . '</sc-tag>';
 		}
 
-		if ( ! empty( $order->payment_intent->processor_type ) && 'paypal' === $order->payment_intent->processor_type ) {
+		if ( ! empty( $order->checkout->payment_intent->processor_type ) && 'paypal' === $order->checkout->payment_intent->processor_type ) {
 			if ( 'requires_approval' === $order->status ) {
 				return '<sc-tooltip text="' . __( 'Paypal is taking a closer look at this payment. It’s required for some payments and normally takes up to 3 business days.', 'surecart' ) . '" type="warning"><sc-order-status-badge status="' . esc_attr( $order->status ) . '"></sc-order-status-badge></sc-tooltip>';
 			}
 		}
 
-		return '<sc-order-status-badge status="' . esc_attr( $order->status ) . '"></sc-order-status-badge>';
+		return '<sc-order-status-badge status="' . esc_attr( $order->checkout->status ) . '"></sc-order-status-badge>';
 	}
 
 	/**
@@ -348,7 +273,7 @@ class OrdersListTable extends ListTable {
 		<a  aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $order->id ) ); ?>">
 			<?php
 			// translators: Customer name.
-			echo sprintf( esc_html__( 'By %s', 'surecart' ), esc_html( $order->name ?? $order->email ) );
+			echo sprintf( esc_html__( 'By %s', 'surecart' ), esc_html( $order->checkout->name ?? $order->checkout->email ) );
 			?>
 		</a>
 		<?php
