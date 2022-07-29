@@ -3,7 +3,6 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasCustomer;
-use SureCart\Models\Traits\HasOrder;
 use SureCart\Models\Traits\HasPrice;
 use SureCart\Models\Traits\HasPurchase;
 
@@ -11,7 +10,7 @@ use SureCart\Models\Traits\HasPurchase;
  * Subscription model
  */
 class Subscription extends Model {
-	use HasCustomer, HasOrder, HasPrice, HasPurchase;
+	use HasCustomer, HasPrice, HasPurchase;
 
 	/**
 	 * Rest API endpoint
