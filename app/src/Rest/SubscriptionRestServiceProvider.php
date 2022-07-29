@@ -79,11 +79,11 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 
 		register_rest_route(
 			"$this->name/v$this->version",
-			$this->endpoint . '/(?P<id>\S+)/upcoming_invoice/',
+			$this->endpoint . '/(?P<id>\S+)/upcoming_period/',
 			[
 				[
 					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => $this->callback( $this->controller, 'upcomingInvoice' ),
+					'callback'            => $this->callback( $this->controller, 'upcomingPeriod' ),
 					'permission_callback' => [ $this, 'get_item_permissions_check' ],
 				],
 				// Register our schema callback.
