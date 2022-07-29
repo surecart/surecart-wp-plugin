@@ -54,7 +54,7 @@ export class ScOrderConfirmProvider {
     try {
       const confirmed = (await apiFetch({
         method: 'PATCH',
-        path: addQueryArgs(`surecart/v1/orders/${this.order?.id}/confirm`, [expand]),
+        path: addQueryArgs(`surecart/v1/checkouts/${this.order?.id}/confirm`, [expand]),
         data,
       })) as Order;
       // emit the confirmed event to trigger listeners to redirect to the success url, etc.

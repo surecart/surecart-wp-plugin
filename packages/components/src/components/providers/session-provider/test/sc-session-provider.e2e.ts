@@ -7,7 +7,7 @@ describe('sc-session-provider', () => {
     setResponses(
       [
         {
-          path: '/surecart/v1/orders',
+          path: '/surecart/v1/checkouts',
           data: {},
         },
       ],
