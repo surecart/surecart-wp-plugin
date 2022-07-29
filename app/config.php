@@ -69,6 +69,7 @@ return [
 		\SureCart\Rest\SettingsRestServiceProvider::class,
 		\SureCart\Rest\PortalProtocolRestServiceProvider::class,
 		\SureCart\Rest\TaxProtocolRestServiceProvider::class,
+		\SureCart\Rest\OrderProtocolRestServiceProvider::class,
 		\SureCart\Rest\TaxRegistrationRestServiceProvider::class,
 		\SureCart\Rest\TaxZoneRestServiceProvider::class,
 		\SureCart\Rest\CustomerNotificationProtocolRestServiceProvider::class,
