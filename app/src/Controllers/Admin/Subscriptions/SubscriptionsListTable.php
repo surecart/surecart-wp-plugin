@@ -229,7 +229,7 @@ class SubscriptionsListTable extends ListTable {
 	/**
 	 * Handle the total column
 	 *
-	 * @param \SureCart\Models\Order $subscription Checkout Session Model.
+	 * @param \SureCart\Models\Subscription $subscription Checkout Session Model.
 	 *
 	 * @return string
 	 */
