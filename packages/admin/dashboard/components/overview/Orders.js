@@ -9,9 +9,16 @@ import { addQueryArgs } from '@wordpress/url';
 import {
     ScCard, 
     ScDashboardModule,
+    ScSkeleton,
+    ScDivider,
+    ScEmpty,
 } from '@surecart/components-react';
 
-export default () => {
+export default (props) => {
+    const {startDate, endDate, reportBy}  = props;
+    const [ordersStates, setOrdersStates] = useState(0);
+    const [lastPeriodDate, setLastPeriodDate] = '2022-07-15';
+    const [lastPeriodOrder, setlastPeriodOrder] = useState(0);
     const [series, setSeries] = useState([
         {
             name: 'Demo',
@@ -61,20 +68,81 @@ export default () => {
 
     useEffect( () => {
         getOrderStates();
-    }, [] );
+        getLastOrderStates();
+    }, [startDate, reportBy] );
 
     const getOrderStates = async () => {
         const response = await apiFetch({
             path: addQueryArgs(`surecart/v1/stats/orders/`, {
-                start_at: '2022-07-01',
-                end_at: '2022-07-27',
-                interval: 'day',
+                start_at: new Date(startDate).toISOString().slice(0, 10),
+                end_at: new Date(endDate).toISOString().slice(0, 10),
+                interval: reportBy,
             }),
             parse: false,
         });
         const ordersStates = await ( response.json() );
-        console.log( "ordersStates:" );
-        console.log( ordersStates );
+        setOrdersStates( ordersStates );
+    }
+
+    const getLastOrderStates = async () => {
+        const response = await apiFetch({
+            path: addQueryArgs(`surecart/v1/stats/orders/`, {
+                start_at: lastPeriodDate,
+                end_at: new Date(startDate).toISOString().slice(0, 10),
+                interval: reportBy,
+            }),
+            parse: false,
+        });
+        const lastOrdersStates = await ( response.json() );
+
+        if ( lastOrdersStates?.data?.length !== 0 ) {
+            setlastPeriodOrder( lastOrdersStates?.data[0].count );
+        }   
+    }
+
+    function renderEmpty() {
+        return (
+          <div>
+            <ScDivider style={{ '--spacing': '0' }}></ScDivider>
+            <slot name="empty">
+            <ScEmpty icon="shopping-bag">{__("You don't have any orders.", 'surecart')}</ScEmpty>
+            </slot>
+          </div>
+        );
+    }
+
+    function renderLoading() {
+        return (
+            <ScCard css={css`
+                height: 360px;
+            `}
+            >
+                {[...Array(3)].map(() => (
+                    <ScSkeleton style={{ 'margin': '50px 2% 0px 2%', 'padding-bottom': '43px', width: '96%', display: 'inline-block' }}></ScSkeleton>
+                ))}
+            </ScCard>
+        );
+    }
+    
+    function orderChart() {
+        if ( ordersStates === 0 ) {
+            return renderLoading();
+        }
+    
+        if ( ordersStates?.data?.length === 0 ) {
+            return renderEmpty();
+        }
+
+        return (
+            <ScCard>   
+                <div className="sc-overview-card__title">
+                    {ordersStates.data[0].count} <span style={{'color':'#64748B', 'font-size': '14px'}}>{sprintf(__("vs %s last period - %s", "surecart"), lastPeriodOrder, reportBy)}</span>
+                </div>
+                <div id="chart">
+                    <Chart options={chart.options} series={series} type="area" height={280} />
+                </div>
+            </ScCard>
+        );
     }
 
     return (
@@ -91,15 +159,7 @@ export default () => {
             `}
         >
             <span slot="heading">{__('Orders', 'surecart')}</span>
-            <ScCard>   
-                <div className="sc-overview-card__title">
-                6 <span style={{'color':'#64748B', 'font-size': '14px'}}>{sprintf(__("vs %d last period", "presto-player"), 4)}</span>
-                </div>
-                <div id="chart">
-                    <Chart options={chart.options} series={series} type="area" height={280} />
-                </div>
-            </ScCard>
-            
+            {orderChart()}
         </ScDashboardModule>
     );
 };

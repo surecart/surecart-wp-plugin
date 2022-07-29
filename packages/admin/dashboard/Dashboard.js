@@ -7,12 +7,18 @@ import DashboardModel from '../templates/DashboardModel';
 import { __ } from '@wordpress/i18n';
 import { Fragment, useState } from '@wordpress/element';
 import Logo from '../templates/Logo';
-import { ScFlex, ScDivider } from '@surecart/components-react';
 
 import GetStarted from './components/GetStarted';
 import RecentOrders from './components/RecentOrders';
 import LearnMore from './components/LearnMore';
 import Overview from './components/overview/Overview';
+
+import {
+    ScFlex,
+    ScDivider,
+    ScBreadcrumbs,
+    ScBreadcrumb,
+} from '@surecart/components-react';
 
 export default () => {
     return (
@@ -25,14 +31,14 @@ export default () => {
                         gap: 1em;
                     `}
                 >
-                    <sc-breadcrumbs>
-                        <sc-breadcrumb>
+                    <ScBreadcrumbs>
+                        <ScBreadcrumb>
                             <Logo display="block" />
-                        </sc-breadcrumb>
-                        <sc-breadcrumb href="admin.php?page=sc-dashboard">
+                        </ScBreadcrumb>
+                        <ScBreadcrumb href="admin.php?page=sc-dashboard">
                             {__('Dashboard', 'surecart')}
-                        </sc-breadcrumb>
-                    </sc-breadcrumbs>
+                        </ScBreadcrumb>
+                    </ScBreadcrumbs>
                 </div>
             }
         >
@@ -40,7 +46,7 @@ export default () => {
                 <GetStarted />
                 <Overview />
                 <ScDivider style={{"--spacing": "1em"}} />
-                <ScFlex columnGap="xx-large">
+                <ScFlex columnGap="2em">
                     <RecentOrders />
                     <LearnMore />
                 </ScFlex>

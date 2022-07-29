@@ -37,10 +37,7 @@ $direction: row, row-reverse, column, column-reverse;
   }
 }
 
-$gaps: small, medium, large, x-large, xx-large;
-@each $value in $gaps {
-  .column-gap-#{$value} {
-    column-gap: 2em;
-  }
+.column-gap-2em {
+  column-gap: 2em;
 }
 
