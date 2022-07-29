@@ -5,8 +5,8 @@
 
 .flex {
   display: flex;
-  gap: var(--spacing);
-  justify-content: space-between;
+  gap: var(--sc-flex-column-gap, var(--spacing) );
+  justify-content: var(--sc-flex-space-between, space-between );
 }
 
 $justify: flex-start, flex-end, center, space-between, space-around, space-evenly;
@@ -35,9 +35,5 @@ $direction: row, row-reverse, column, column-reverse;
   .direction-#{$value} {
     flex-direction: $value;
   }
-}
-
-.column-gap-2em {
-  column-gap: 2em;
 }
 
