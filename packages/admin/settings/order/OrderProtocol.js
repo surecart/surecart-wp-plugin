@@ -34,7 +34,7 @@ export default () => {
 
 	return (
 		<SettingsTemplate
-			title={__('Order Settings', 'surecart')}
+			title={__('Orders & Receipts', 'surecart')}
 			icon={<sc-icon name="shopping-bag"></sc-icon>}
 			onSubmit={onSubmit}
 		>
@@ -45,9 +45,9 @@ export default () => {
 			/>
 
 			<SettingsBox
-				title={__('Invoices & Receipts', 'surecart')}
+				title={__('Order Numbering', 'surecart')}
 				description={__(
-					'Configure how invoices and receipts are displayed to your customers.',
+					'Configure your order numbering style.',
 					'surecart'
 				)}
 				loading={!hasLoadedItem}
@@ -81,6 +81,16 @@ export default () => {
 						},
 					]}
 				/>
+			</SettingsBox>
+
+			<SettingsBox
+				title={__('Invoices & Receipts', 'surecart')}
+				description={__(
+					'Add additional information to receipts and invoices.',
+					'surecart'
+				)}
+				loading={!hasLoadedItem}
+			>
 				<ScTextarea
 					label={__('Memo', 'surecart')}
 					value={item?.memo}
