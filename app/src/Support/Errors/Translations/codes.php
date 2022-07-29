@@ -28,6 +28,8 @@ return [
 	'order.shipping_address.postal_code.invalid'        => __( 'Your postal code is not valid.', 'surecart' ),
 	'order.discount.coupon.expired'                     => __( 'This coupon has expired.', 'surecart' ),
 	'order.discount.coupon.currency_mismatch'           => __( 'This discount code does not apply to this currency.', 'surecart' ),
+	'order_protocol.number_prefix.invalid'              => __( 'Please double-check your prefix does not contain any spaces, underscores, dashes or special characters.', 'surecart' ),
+	'order_protocol.number_prefix.too_long'             => __( 'This prefix is too long. Please enter a shorter prefix.', 'surecart' ),
 	'price_version.restrict_dependent_destroy.has_many' => __( 'This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one.', 'surecart' ),
 	'price.ad_hoc_max_amount.less_than'                 => __( 'The maximum price must be smaller.', 'surecart' ),
 	'price.ad_hoc_min_amount.less_than'                 => __( 'The minimum price must be smaller.', 'surecart' ),
