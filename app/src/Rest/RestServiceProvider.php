@@ -4,7 +4,6 @@ namespace SureCart\Rest;
 
 use SureCart\Models\Model;
 use SureCart\Rest\RestServiceInterface;
-use SureCart\Controllers\Rest\OrderController;
 
 /**
  * Abstract Rest Service Provider interface
