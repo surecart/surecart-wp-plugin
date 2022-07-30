@@ -1,126 +1,81 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+
+import { store as dataStore } from '@surecart/data';
 import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
-import { dispatch } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 import Sidebar from './Sidebar';
-import FlashError from '../components/FlashError';
 
 // template
-import Template from '../templates/SingleModel';
+import UpdateModel from '../templates/UpdateModel';
 
 import Details from './modules/Details';
 
 import LineItems from './modules/LineItems';
 import Charges from './modules/Charges';
 import Subscriptions from './modules/Subscriptions';
-import useCurrentPage from '../mixins/useCurrentPage';
-import { useEffect } from 'react';
-import { ScSkeleton } from '@surecart/components-react';
-import SaveButton from './components/SaveButton';
+import Logo from '../templates/Logo';
+import Error from '../components/Error';
+import {
+	ScBreadcrumbs,
+	ScBreadcrumb,
+	ScButton,
+	ScFlex,
+	ScIcon,
+} from '@surecart/components-react';
+import useEntity from '../hooks/useEntity';
 
 export default () => {
-	const {
-		id,
-		order,
-		updateOrder,
-		saveOrder,
-		isLoading,
-		error,
-		isSaving,
-		setSaving,
-		fetchOrder,
-		getRelation,
-	} = useCurrentPage('order');
-	const customer = getRelation('customer');
-	const charge = getRelation('charge');
-
-	const onSubmit = async (e) => {
-		e.preventDefault();
-		try {
-			setSaving(true);
-			await saveOrder();
-			addSnackbarNotice({
-				content: __('Saved.'),
-			});
-		} catch (e) {
-			console.error(e);
-			addModelErrors('order', e);
-		} finally {
-			setSaving(false);
-		}
-	};
-
-	const onInvalid = () => {
-		dispatch(uiStore).setInvalid(true);
-	};
-
-	useEffect(() => {
-		if (id) {
-			fetchOrder({
-				query: {
-					context: 'edit',
-					expand: [
-						'line_items',
-						'line_item.price',
-						'price.product',
-						'subscription',
-						'subscription.price',
-						'charge',
-						'charge.payment_method',
-						'charge.payment_intent',
-						'payment_method.card',
-						'customer',
-						'billing_address',
-						'shipping_address',
-					],
-				},
-			});
-		}
-	}, [id]);
+	const id = useSelect((select) => select(dataStore).selectPageId());
+	const { order, hasLoadedOrder, orderError } = useEntity('order', id, {
+		expand: ['line_items', 'line_item.price', 'price.product'],
+	});
 
 	return (
-		<Template
-			status={status}
-			pageModelName={'orders'}
-			onSubmit={onSubmit}
-			onInvalid={onInvalid}
-			// button={
-			// 	isLoading ? (
-			// 		<ScSkeleton
-			// 			style={{
-			// 				width: '120px',
-			// 				height: '35px',
-			// 				display: 'inline-block',
-			// 			}}
-			// 		></ScSkeleton>
-			// 	) : (
-			// 		<SaveButton isSaving={isSaving}>
-			// 			{__('Update Order', 'surecart')}
-			// 		</SaveButton>
-			// 	)
-			// }
-			backUrl={'admin.php?page=sc-orders'}
-			backText={__('Back to All Orders', 'surecart')}
+		<UpdateModel
 			title={
-				id
-					? __('Edit Order', 'surecart')
-					: __('Create Order', 'surecart')
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: 1em;
+					`}
+				>
+					<ScButton
+						circle
+						size="small"
+						href="admin.php?page=sc-orders"
+					>
+						<ScIcon name="arrow-left"></ScIcon>
+					</ScButton>
+					<ScBreadcrumbs>
+						<ScBreadcrumb>
+							<Logo display="block" />
+						</ScBreadcrumb>
+						<ScBreadcrumb href="admin.php?page=sc-orders">
+							{__('Orders', 'surecart')}
+						</ScBreadcrumb>
+						<ScBreadcrumb>
+							<ScFlex style={{ gap: '1em' }}>
+								{__('View Order', 'surecart')}
+							</ScFlex>
+						</ScBreadcrumb>
+					</ScBreadcrumbs>
+				</div>
 			}
-			sidebar={
-				<Sidebar
-					order={order}
-					updateOrder={updateOrder}
-					customer={customer}
-					loading={isLoading}
-				/>
-			}
+			sidebar={<Sidebar id={id} />}
 		>
-			<Fragment>
-				<FlashError path="orders" scrollIntoView />
-				<Details order={order} loading={isLoading} />
-				<LineItems order={order} charge={charge} loading={isLoading} />
-				<Charges charge={charge} loading={isLoading} />
+			<>
+				<Error error={orderError} margin="80px" />
+				<Details order={order} loading={!hasLoadedOrder} />
+				<LineItems
+					order={order}
+					charge={order?.charge}
+					loading={!hasLoadedOrder}
+				/>
+				<Charges />
 				<Subscriptions />
-			</Fragment>
-		</Template>
+			</>
+		</UpdateModel>
 	);
 };
