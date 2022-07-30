@@ -6,11 +6,10 @@ import { store as noticesStore } from '@wordpress/notices';
 export default ({ margin = '0', scrollOnOpen = true, type: noticeType }) => {
 	const notices = useSelect((select) => select(noticesStore).getNotices());
 	const { removeNotice } = useDispatch(noticesStore);
-	const errorNotices = notices.filter(
+	const filteredNotices = notices.filter(
 		({ type, status }) => type === 'default' && status === noticeType
 	);
-
-	if (!errorNotices?.length) {
+	if (!filteredNotices?.length) {
 		return null;
 	}
 
@@ -20,17 +19,25 @@ export default ({ margin = '0', scrollOnOpen = true, type: noticeType }) => {
 		warning: 'warning',
 	};
 
-	return errorNotices.map((notice) => (
+	return (
 		<ScAlert
 			open={true}
 			type={alertType[noticeType]}
-			key={notice?.id}
-			closable={notice.isDissmissible}
+			closable={true}
 			scrollOnOpen={scrollOnOpen}
 			scrollMargin={margin}
-			onScHide={() => removeNotice(notice?.id)}
+			onScHide={() => {
+				filteredNotices.forEach((notice) => {
+					removeNotice(notice?.id);
+				});
+			}}
 		>
-			<span slot="title">{notice.content}</span>
+			{filteredNotices.map((notice, index) => {
+				if (0 === index) {
+					return <span slot="title">{notice.content}</span>;
+				}
+				return notice.content;
+			})}
 		</ScAlert>
-	));
+	);
 };

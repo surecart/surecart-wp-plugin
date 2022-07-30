@@ -4,20 +4,13 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { Fragment } from '@wordpress/element';
-import Box from '../../ui/Box';
-import { intervalString } from '../../util/translations';
-import Definition from '../../ui/Definition';
-import { useSelect } from '@wordpress/data';
-import { store } from '@surecart/data';
-import { ScButton } from '@surecart/components-react';
+import Box from '../../../ui/Box';
+import { intervalString } from '../../../util/translations';
+import { ScButton, ScLineItem } from '@surecart/components-react';
+import LineItem from './LineItem';
 
-export default ({ order, charge: chargeInput, loading }) => {
-	const line_items = order?.line_items?.data;
-
-	const charge = useSelect(
-		(select) => select(store).selectModel('charge', chargeInput?.id) || {},
-		[chargeInput]
-	);
+export default ({ order, checkout, charge, loading }) => {
+	const line_items = checkout?.line_items?.data;
 
 	const renderLoading = () => {
 		return <sc-skeleton></sc-skeleton>;
@@ -114,42 +107,47 @@ export default ({ order, charge: chargeInput, loading }) => {
 
 					<hr />
 
-					<Definition title={__('Subtotal', 'surecart')}>
-						<sc-format-number
-							style={{
-								'font-weight': 'var(--sc-font-weight-semibold)',
-								color: 'var(--sc-color-gray-800)',
-							}}
-							type="currency"
-							currency={order?.currency}
-							value={order?.subtotal_amount}
-						></sc-format-number>
-					</Definition>
-					<Definition title={__('Discounts', 'surecart')}>
-						<sc-format-number
-							style={{
-								'font-weight': 'var(--sc-font-weight-semibold)',
-								color: 'var(--sc-color-gray-800)',
-							}}
-							type="currency"
-							currency={order?.currency}
-							value={order?.discount_amount}
-						></sc-format-number>
-					</Definition>
+					<LineItem
+						label={__('Subtotal', 'surecart')}
+						currency={checkout?.currency}
+						value={checkout?.subtotal_amount}
+					/>
 
-					{!!order?.tax_amount && (
-						<Definition title={__('Tax', 'surecart')}>
-							<sc-format-number
-								style={{
-									'font-weight':
-										'var(--sc-font-weight-semibold)',
-									color: 'var(--sc-color-gray-800)',
-								}}
-								type="currency"
-								currency={order?.currency}
-								value={order?.tax_amount}
-							></sc-format-number>
-						</Definition>
+					{!!checkout?.proration_amount && (
+						<LineItem
+							label={__('Proration', 'surecart')}
+							currency={checkout?.currency}
+							value={checkout?.proration_amount}
+						/>
+					)}
+
+					{!!checkout?.applied_balance_amount && (
+						<LineItem
+							label={__('Applied Balance', 'surecart')}
+							currency={checkout?.currency}
+							value={checkout?.applied_balance_amount}
+						/>
+					)}
+
+					{!!checkout?.discounts && (
+						<LineItem
+							label={__('Discounts', 'surecart')}
+							currency={checkout?.currency}
+							value={checkout?.discount_amount}
+						/>
+					)}
+
+					{!!checkout?.tax && (
+						<LineItem
+							label={
+								<>
+									{__('Tax', 'surecart')} -{' '}
+									{checkout?.tax_percent}%
+								</>
+							}
+							currency={checkout?.currency}
+							value={checkout?.tax_amount}
+						/>
 					)}
 
 					<hr />
@@ -164,11 +162,11 @@ export default ({ order, charge: chargeInput, loading }) => {
 						<span slot="price">
 							<sc-format-number
 								type="currency"
-								currency={order?.currency}
-								value={order?.amount_due}
+								currency={checkout?.currency}
+								value={checkout?.amount_due}
 							></sc-format-number>
 						</span>
-						<span slot="currency">{order?.currency}</span>
+						<span slot="currency">{checkout?.currency}</span>
 					</sc-line-item>
 
 					{!!charge?.refunded_amount && (

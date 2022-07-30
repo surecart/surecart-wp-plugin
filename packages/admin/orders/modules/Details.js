@@ -5,7 +5,8 @@ import { __, sprintf } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
 import { formatTime } from '../../util/time';
 
-export default ({ order, loading }) => {
+export default ({ order, checkout, loading }) => {
+	console.log({ order });
 	if (loading) {
 		return (
 			<div
@@ -58,12 +59,12 @@ export default ({ order, loading }) => {
 					<h1>
 						<sc-format-number
 							type="currency"
-							currency={order?.currency}
-							value={order?.amount_due}
+							currency={checkout?.currency}
+							value={checkout?.amount_due}
 						></sc-format-number>
 					</h1>
 					<sc-order-status-badge
-						status={order?.status}
+						status={order?.status || checkout?.status}
 					></sc-order-status-badge>
 				</div>
 				{sprintf(
@@ -72,7 +73,7 @@ export default ({ order, loading }) => {
 				)}
 			</div>
 			<div>
-				{!order?.live_mode && (
+				{!checkout?.live_mode && (
 					<sc-tag type="warning">
 						{__('Test Mode', 'surecart')}
 					</sc-tag>

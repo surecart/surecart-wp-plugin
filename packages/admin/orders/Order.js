@@ -3,7 +3,15 @@ import { css, jsx } from '@emotion/core';
 
 import { store as dataStore } from '@surecart/data';
 import { __ } from '@wordpress/i18n';
-import { useSelect } from '@wordpress/data';
+import { store as noticesStore } from '@wordpress/notices';
+import {
+	ScBreadcrumbs,
+	ScBreadcrumb,
+	ScButton,
+	ScFlex,
+	ScIcon,
+} from '@surecart/components-react';
+import { useDispatch, useSelect } from '@wordpress/data';
 import Sidebar from './Sidebar';
 
 // template
@@ -15,21 +23,30 @@ import LineItems from './modules/LineItems';
 import Charges from './modules/Charges';
 import Subscriptions from './modules/Subscriptions';
 import Logo from '../templates/Logo';
-import Error from '../components/Error';
-import {
-	ScBreadcrumbs,
-	ScBreadcrumb,
-	ScButton,
-	ScFlex,
-	ScIcon,
-} from '@surecart/components-react';
+
 import useEntity from '../hooks/useEntity';
+import { useEffect } from 'react';
 
 export default () => {
+	const { createErrorNotice } = useDispatch(noticesStore);
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const { order, hasLoadedOrder, orderError } = useEntity('order', id, {
-		expand: ['line_items', 'line_item.price', 'price.product'],
+		expand: [
+			'checkout',
+			'checkout.line_items',
+			'checkout.charge',
+			'line_item.price',
+			'price.product',
+		],
 	});
+
+	useEffect(() => {
+		if (orderError) {
+			createErrorNotice(
+				orderError?.message || __('Something went wrong', 'surecart')
+			);
+		}
+	}, [orderError]);
 
 	return (
 		<UpdateModel
@@ -66,11 +83,15 @@ export default () => {
 			sidebar={<Sidebar id={id} />}
 		>
 			<>
-				<Error error={orderError} margin="80px" />
-				<Details order={order} loading={!hasLoadedOrder} />
+				<Details
+					order={order}
+					checkout={order?.checkout}
+					loading={!hasLoadedOrder}
+				/>
 				<LineItems
 					order={order}
-					charge={order?.charge}
+					checkout={order?.checkout}
+					charge={order?.checkout?.charge}
 					loading={!hasLoadedOrder}
 				/>
 				<Charges />

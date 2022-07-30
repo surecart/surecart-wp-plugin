@@ -197,21 +197,6 @@ export default ({
 							</div>
 						</div>
 					</div>
-					<SnackbarList
-						css={css`
-							position: fixed !important;
-							left: auto !important;
-							right: 40px;
-							bottom: 40px;
-							width: auto !important;
-
-							:first-letter {
-								text-transform: uppercase;
-							}
-						`}
-						notices={snackbarNotices}
-						onRemove={removeSnackbarNotice}
-					/>
 					<Notifications
 						css={css`
 							position: fixed !important;
