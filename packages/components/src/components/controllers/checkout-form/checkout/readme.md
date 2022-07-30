@@ -67,7 +67,6 @@ Type: `Promise<boolean>`
 - [sc-form-state-provider](../../../providers/form-state-provider)
 - [sc-form-error-provider](../../../providers/form-error-provider)
 - [sc-form-components-validator](../../../providers/form-components-validator)
-- [sc-order-redirect-provider](../../../providers/order-redirect-provider)
 - [sc-order-confirm-provider](../../../providers/order-confirm-provider)
 - [sc-session-provider](../../../providers/session-provider)
 - [sc-block-ui](../../../ui/block-ui)
@@ -79,7 +78,6 @@ graph TD;
   sc-checkout --> sc-form-state-provider
   sc-checkout --> sc-form-error-provider
   sc-checkout --> sc-form-components-validator
-  sc-checkout --> sc-order-redirect-provider
   sc-checkout --> sc-order-confirm-provider
   sc-checkout --> sc-session-provider
   sc-checkout --> sc-block-ui

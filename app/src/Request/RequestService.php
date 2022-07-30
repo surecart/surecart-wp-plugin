@@ -88,6 +88,11 @@ class RequestService {
 			return (bool) $args['query']['cached'];
 		}
 
+		// don't cache edit context.
+		if ( isset( $args['query']['context'] ) && 'edit' === $args['query']['context'] ) {
+			return false;
+		}
+
 		return (bool) $cachable && $cache_key;
 	}
 

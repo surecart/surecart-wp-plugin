@@ -15,20 +15,7 @@ $_tests_dir = getenv('WP_TESTS_DIR');
 
 // Next, try the WP_PHPUNIT composer package.
 if (!$_tests_dir) {
-$_tests_dir = getenv('WP_PHPUNIT__DIR');
-}
-
-// See if we're installed inside an existing WP dev instance.
-if (!$_tests_dir) {
-    $_try_tests_dir = dirname(__FILE__) . '/../../../../../tests/phpunit';
-    if (file_exists($_try_tests_dir . '/includes/functions.php')) {
-        $_tests_dir = $_try_tests_dir;
-    }
-}
-
-// Fallback.
-if (!$_tests_dir) {
-    $_tests_dir = '/tmp/wordpress-tests-lib';
+    $_tests_dir = getenv('WP_PHPUNIT__DIR');
 }
 
 // Give access to tests_add_filter() function.

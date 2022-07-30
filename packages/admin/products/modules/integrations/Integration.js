@@ -1,26 +1,20 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-
-import { useSelect } from '@wordpress/data';
-import { __, sprintf } from '@wordpress/i18n';
+import { ScButton, ScDropdown, ScIcon, ScMenu, ScMenuItem } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
-import {
-	ScButton,
-	ScDropdown,
-	ScIcon,
-	ScMenu,
-	ScMenuItem,
-} from '@surecart/components-react';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { __, sprintf } from '@wordpress/i18n';
+import { store as noticesStore } from '@wordpress/notices';
+
 import useEntity from '../../../hooks/useEntity';
-import useSnackbar from '../../../hooks/useSnackbar';
 
 export default ({ id }) => {
+	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { integration, deleteIntegration, deletingIntegration } = useEntity(
 		'integration',
 		id
 	);
 	const { integration_id, provider } = integration;
-	const { addSnackbarNotice } = useSnackbar();
 
 	const { providerData, loading } = useSelect(
 		(select) => {
@@ -71,8 +65,8 @@ export default ({ id }) => {
 		if (!r) return;
 		try {
 			await deleteIntegration({ throwOnError: true });
-			addSnackbarNotice({
-				content: __('Integration deleted.', 'surecart'),
+			createSuccessNotice(__('Integration deleted.', 'surecart'), {
+				type: 'snackbar',
 			});
 		} catch (e) {
 			console.error(e);

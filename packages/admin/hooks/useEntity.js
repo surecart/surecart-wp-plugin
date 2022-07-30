@@ -1,18 +1,29 @@
+import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch, useSelect } from '@wordpress/data';
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { useSelect, useDispatch } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
+
 /**
  * Internal dependencies
  */
 import { camelName } from '../util';
 
-export default (type, id, query = {}, name = 'surecart') => {
+export default (
+	type,
+	id,
+	query = {},
+	additionalItems = [],
+	name = 'surecart'
+) => {
 	// dispatchers.
-	const { editEntityRecord, deleteEntityRecord, saveEntityRecord } =
-		useDispatch(coreStore);
+	const {
+		editEntityRecord,
+		deleteEntityRecord,
+		saveEntityRecord,
+		saveEditedEntityRecord,
+	} = useDispatch(coreStore);
 
 	// the entity data.
 	const entityData = [name, type, id, query];
@@ -53,7 +64,7 @@ export default (type, id, query = {}, name = 'surecart') => {
 				),
 			};
 		},
-		[id]
+		[id, ...additionalItems]
 	);
 
 	/** Edit the entity. */
@@ -67,6 +78,9 @@ export default (type, id, query = {}, name = 'surecart') => {
 	/** Save the entity. */
 	const saveEntity = (data, options) =>
 		saveEntityRecord(name, type, { ...item, ...data }, options);
+
+	const saveEditedEntity = (options = {}) =>
+		saveEditedEntityRecord(name, type, id, options);
 
 	const ucName = camelName(type);
 
@@ -103,6 +117,9 @@ export default (type, id, query = {}, name = 'surecart') => {
 		// save.
 		saveItem: saveEntity,
 		[`save${ucName}`]: saveEntity,
+
+		saveEditedEntity,
+		[`saveEdited${ucName}`]: saveEditedEntity,
 
 		// edit
 		editItem: editEntity,

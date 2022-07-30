@@ -162,7 +162,7 @@ export class ScStripePaymentRequest {
     const displayItems = (order?.line_items?.data || []).map(item => {
       return {
         label: this.getName(item),
-        amount: item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount,
+        amount: item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.subtotal_amount,
       };
     });
 
