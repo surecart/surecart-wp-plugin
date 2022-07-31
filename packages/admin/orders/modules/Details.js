@@ -11,24 +11,13 @@ export default ({ order, checkout, loading }) => {
 			<div
 				css={css`
 					display: flex;
-					justify-content: space-between;
-					align-items: center;
-					gap: 2em;
+					flex-direction: column;
+					gap: 1.5em;
 					margin-bottom: 2em;
 				`}
 			>
-				<div>
-					<div
-						css={css`
-							display: flex;
-							align-items: center;
-							gap: 0.5em;
-						`}
-					>
-						<sc-skeleton style={{ flex: 1 }}></sc-skeleton>
-					</div>
-					<sc-skeleton></sc-skeleton>
-				</div>
+				<sc-skeleton style={{ width: '45%' }}></sc-skeleton>
+				<sc-skeleton style={{ width: '65%' }}></sc-skeleton>
 			</div>
 		);
 	}
