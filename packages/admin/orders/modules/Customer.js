@@ -1,17 +1,13 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-import { ScButton } from '@surecart/components-react';
+import { ScButton, ScText } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
 import Box from '../../ui/Box';
 import { addQueryArgs } from '@wordpress/url';
 
 export default ({ customer, loading }) => {
-	const renderLoading = () => {
-		return <sc-skeleton></sc-skeleton>;
-	};
-
 	return (
 		<Box
 			title={__('Customer', 'surecart')}
@@ -37,7 +33,7 @@ export default ({ customer, loading }) => {
 					gap: 0.5em;
 				`}
 			>
-				<sc-text
+				<ScText
 					tag="h3"
 					style={{
 						'--font-weight': 'var(--sc-font-weight-bold)',
@@ -45,7 +41,7 @@ export default ({ customer, loading }) => {
 					}}
 				>
 					{customer?.name}
-				</sc-text>
+				</ScText>
 				<div>{customer?.email}</div>
 				<div>{customer?.billing_address}</div>
 			</div>

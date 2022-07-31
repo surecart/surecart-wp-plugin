@@ -4,6 +4,11 @@ import { __, sprintf } from '@wordpress/i18n';
 
 import { css, jsx } from '@emotion/core';
 import { formatTime } from '../../util/time';
+import {
+	ScOrderStatusBadge,
+	ScSkeleton,
+	ScTag,
+} from '@surecart/components-react';
 
 export default ({ order, checkout, loading }) => {
 	if (loading) {
@@ -16,8 +21,8 @@ export default ({ order, checkout, loading }) => {
 					margin-bottom: 2em;
 				`}
 			>
-				<sc-skeleton style={{ width: '45%' }}></sc-skeleton>
-				<sc-skeleton style={{ width: '65%' }}></sc-skeleton>
+				<ScSkeleton style={{ width: '45%' }}></ScSkeleton>
+				<ScSkeleton style={{ width: '65%' }}></ScSkeleton>
 			</div>
 		);
 	}
@@ -46,9 +51,9 @@ export default ({ order, checkout, loading }) => {
 				>
 					<h1>#{order?.number}</h1>
 					{!checkout?.live_mode && (
-						<sc-tag type="warning">
+						<ScTag type="warning">
 							{__('Test Mode', 'surecart')}
-						</sc-tag>
+						</ScTag>
 					)}
 				</div>
 				{sprintf(
@@ -57,9 +62,9 @@ export default ({ order, checkout, loading }) => {
 				)}
 			</div>
 			<div>
-				<sc-order-status-badge
+				<ScOrderStatusBadge
 					status={order?.status || checkout?.status}
-				></sc-order-status-badge>
+				></ScOrderStatusBadge>
 			</div>
 		</div>
 	);
