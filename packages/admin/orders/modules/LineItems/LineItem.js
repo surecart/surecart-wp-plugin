@@ -1,10 +1,10 @@
-import { ScLineItem } from '@surecart/components-react';
+import { ScFormatNumber, ScLineItem } from '@surecart/components-react';
 
 export default ({ label, currency, value }) => {
 	return (
 		<ScLineItem>
 			<span slot="description">{label}</span>
-			<sc-format-number
+			<ScFormatNumber
 				slot="price"
 				style={{
 					'font-weight': 'var(--sc-font-weight-semibold)',
@@ -13,7 +13,7 @@ export default ({ label, currency, value }) => {
 				type="currency"
 				currency={currency}
 				value={value}
-			></sc-format-number>
+			></ScFormatNumber>
 		</ScLineItem>
 	);
 };
