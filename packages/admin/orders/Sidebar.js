@@ -6,20 +6,20 @@ import MetaData from './modules/MetaData';
 import Purchases from './modules/Purchases';
 import TaxInfo from './modules/TaxInfo';
 
-export default ({ order, customer, loading }) => {
+export default ({ order, checkout, customer, loading }) => {
 	return (
 		<Fragment>
 			<Customer customer={customer} loading={loading} />
-			<Purchases checkoutId={order?.checkout?.id} />
-			{!!order?.checkout?.shipping_address && (
+			<Purchases checkoutId={checkout?.id} />
+			{!!checkout?.shipping_address && (
 				<Address
-					address={order?.checkout?.shipping_address}
+					address={checkout?.shipping_address}
 					label={__('Shipping Address', 'surecart')}
 				/>
 			)}
-			{!!order?.checkout?.tax_identifier && (
+			{!!checkout?.tax_identifier && (
 				<TaxInfo
-					taxIdentifier={order?.checkout?.tax_identifier}
+					taxIdentifier={checkout?.tax_identifier}
 					loading={loading}
 				/>
 			)}

@@ -123,6 +123,7 @@ export default () => {
 			sidebar={
 				<Sidebar
 					order={order}
+					checkout={order?.checkout}
 					customer={order?.checkout?.customer}
 					loading={!hasLoadedOrder}
 				/>
