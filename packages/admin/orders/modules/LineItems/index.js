@@ -3,14 +3,53 @@ import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 import { Fragment } from '@wordpress/element';
 import Box from '../../../ui/Box';
 import { intervalString } from '../../../util/translations';
-import { ScButton, ScLineItem } from '@surecart/components-react';
+import {
+	ScButton,
+	ScCcLogo,
+	ScDivider,
+	ScFlex,
+	ScFormatNumber,
+	ScLineItem,
+	ScSkeleton,
+} from '@surecart/components-react';
 import LineItem from './LineItem';
 
-export default ({ order, checkout, charge, loading }) => {
+export default ({ order, checkout, loading }) => {
 	const line_items = checkout?.line_items?.data;
+
+	const { charge, loadedCharge } = useSelect(
+		(select) => {
+			if (!checkout?.id) {
+				return {
+					charge: {},
+					loading: true,
+				};
+			}
+			const entityData = [
+				'surecart',
+				'charge',
+				{
+					checkout_ids: checkout?.id ? [checkout?.id] : null,
+					expand: ['payment_method', 'payment_method.card'],
+				},
+			];
+			return {
+				charge: select(coreStore)?.getEntityRecords?.(
+					...entityData
+				)?.[0],
+				loadedCharge: select(coreStore)?.hasFinishedResolution?.(
+					'getEntityRecords',
+					[...entityData]
+				),
+			};
+		},
+		[checkout?.id]
+	);
 
 	const renderLoading = () => {
 		return <sc-skeleton></sc-skeleton>;
@@ -52,31 +91,36 @@ export default ({ order, checkout, charge, loading }) => {
 				)
 			}
 			footer={
-				!loading &&
-				!!charge && (
-					<sc-line-item
+				!loadedCharge ? (
+					<ScLineItem
+						style={{
+							width: '100%',
+						}}
+					>
+						<ScSkeleton slot="title"></ScSkeleton>
+						<ScSkeleton slot="price"></ScSkeleton>
+					</ScLineItem>
+				) : (
+					<ScLineItem
 						style={{
 							width: '100%',
 							'--price-size': 'var(--sc-font-size-x-large)',
 						}}
 					>
-						<span slot="title">
-							{__('Amount Paid', 'surecart')}
-						</span>
-						<span slot="price">
-							<sc-format-number
-								type="currency"
-								currency={charge?.currency}
-								value={
-									charge?.amount
-										? charge?.amount -
-										  charge?.refunded_amount
-										: 0
-								}
-							></sc-format-number>
-						</span>
+						<span slot="title">{__('Paid', 'surecart')}</span>
+
+						<ScFormatNumber
+							slot="price"
+							type="currency"
+							currency={charge?.currency}
+							value={
+								charge?.amount
+									? charge?.amount - charge?.refunded_amount
+									: 0
+							}
+						></ScFormatNumber>
 						<span slot="currency">{charge?.currency}</span>
-					</sc-line-item>
+					</ScLineItem>
 				)
 			}
 		>
@@ -105,7 +149,9 @@ export default ({ order, checkout, charge, loading }) => {
 						);
 					})}
 
-					<hr />
+					<ScDivider
+						style={{ '--spacing': 'var(--sc-spacing-x-small)' }}
+					/>
 
 					<LineItem
 						label={__('Subtotal', 'surecart')}
@@ -150,27 +196,29 @@ export default ({ order, checkout, charge, loading }) => {
 						/>
 					)}
 
-					<hr />
+					<ScDivider
+						style={{ '--spacing': 'var(--sc-spacing-small)' }}
+					/>
 
-					<sc-line-item
+					<ScLineItem
 						style={{
 							width: '100%',
 							'--price-size': 'var(--sc-font-size-x-large)',
 						}}
 					>
-						<span slot="title">{__('Total Due', 'surecart')}</span>
+						<span slot="title">{__('Total', 'surecart')}</span>
 						<span slot="price">
-							<sc-format-number
+							<ScFormatNumber
 								type="currency"
 								currency={checkout?.currency}
 								value={checkout?.amount_due}
-							></sc-format-number>
+							></ScFormatNumber>
 						</span>
 						<span slot="currency">{checkout?.currency}</span>
-					</sc-line-item>
+					</ScLineItem>
 
 					{!!charge?.refunded_amount && (
-						<sc-line-item
+						<ScLineItem
 							style={{
 								width: '100%',
 							}}
@@ -180,13 +228,13 @@ export default ({ order, checkout, charge, loading }) => {
 							</span>
 							<span slot="price">
 								-
-								<sc-format-number
+								<ScFormatNumber
 									type="currency"
 									currency={charge?.currency}
 									value={charge?.refunded_amount}
-								></sc-format-number>
+								></ScFormatNumber>
 							</span>
-						</sc-line-item>
+						</ScLineItem>
 					)}
 				</Fragment>
 			)}

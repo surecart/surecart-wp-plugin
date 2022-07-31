@@ -15,9 +15,11 @@ export default ({ customer, loading }) => {
 	return (
 		<Box
 			title={__('Customer', 'surecart')}
+			loading={loading}
 			footer={
 				<div>
 					<ScButton
+						size="small"
 						href={addQueryArgs('admin.php', {
 							page: 'sc-customers',
 							action: 'edit',
@@ -29,28 +31,24 @@ export default ({ customer, loading }) => {
 				</div>
 			}
 		>
-			{loading ? (
-				renderLoading()
-			) : (
-				<div
-					css={css`
-						display: grid;
-						gap: 0.5em;
-					`}
+			<div
+				css={css`
+					display: grid;
+					gap: 0.5em;
+				`}
+			>
+				<sc-text
+					tag="h3"
+					style={{
+						'--font-weight': 'var(--sc-font-weight-bold)',
+						'--font-size': 'var(--sc-font-size-medium)',
+					}}
 				>
-					<sc-text
-						tag="h3"
-						style={{
-							'--font-weight': 'var(--sc-font-weight-bold)',
-							'--font-size': 'var(--sc-font-size-medium)',
-						}}
-					>
-						{customer?.name}
-					</sc-text>
-					<div>{customer?.email}</div>
-					<div>{customer?.billing_address}</div>
-				</div>
-			)}
+					{customer?.name}
+				</sc-text>
+				<div>{customer?.email}</div>
+				<div>{customer?.billing_address}</div>
+			</div>
 		</Box>
 	);
 };

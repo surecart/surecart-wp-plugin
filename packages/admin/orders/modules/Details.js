@@ -6,7 +6,6 @@ import { css, jsx } from '@emotion/core';
 import { formatTime } from '../../util/time';
 
 export default ({ order, checkout, loading }) => {
-	console.log({ order });
 	if (loading) {
 		return (
 			<div
@@ -56,16 +55,12 @@ export default ({ order, checkout, loading }) => {
 						gap: 0.5em;
 					`}
 				>
-					<h1>
-						<sc-format-number
-							type="currency"
-							currency={checkout?.currency}
-							value={checkout?.amount_due}
-						></sc-format-number>
-					</h1>
-					<sc-order-status-badge
-						status={order?.status || checkout?.status}
-					></sc-order-status-badge>
+					<h1>#{order?.number}</h1>
+					{!checkout?.live_mode && (
+						<sc-tag type="warning">
+							{__('Test Mode', 'surecart')}
+						</sc-tag>
+					)}
 				</div>
 				{sprintf(
 					__('Created on %s', 'surecart'),
@@ -73,11 +68,9 @@ export default ({ order, checkout, loading }) => {
 				)}
 			</div>
 			<div>
-				{!checkout?.live_mode && (
-					<sc-tag type="warning">
-						{__('Test Mode', 'surecart')}
-					</sc-tag>
-				)}
+				<sc-order-status-badge
+					status={order?.status || checkout?.status}
+				></sc-order-status-badge>
 			</div>
 		</div>
 	);

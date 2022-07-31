@@ -11,16 +11,10 @@ import {
 } from '@surecart/components-react';
 import Cancel from './Cancel';
 import UnCancel from './UnCancel';
-import { select } from '@wordpress/data';
-import { store } from '../../../store/data';
 import StartPlan from './StartPlan';
 
 export default (subscription) => {
-	const product = select(store).selectRelation(
-		'subscription',
-		subscription?.id,
-		'price.product'
-	);
+	const product = subscription?.price?.product;
 
 	const renderPlan = (subscription) => {
 		if (

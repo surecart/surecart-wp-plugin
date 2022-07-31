@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { ScCard, ScDashboardModule } from '@surecart/components-react';
 
 import { Card, CardBody, CardFooter, CardHeader } from '@wordpress/components';
 

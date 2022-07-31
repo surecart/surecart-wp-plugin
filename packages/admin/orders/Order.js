@@ -26,19 +26,58 @@ import Logo from '../templates/Logo';
 
 import useEntity from '../hooks/useEntity';
 import { useEffect } from 'react';
+import { store as coreStore } from '@wordpress/core-data';
 
 export default () => {
 	const { createErrorNotice } = useDispatch(noticesStore);
+	const { receiveEntityRecords } = useDispatch(coreStore);
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const { order, hasLoadedOrder, orderError } = useEntity('order', id, {
 		expand: [
 			'checkout',
 			'checkout.line_items',
 			'checkout.charge',
+			'checkout.customer',
+			'charge.payment_method',
+			'checkout.tax_identifier',
+			'payment_method.card',
 			'line_item.price',
 			'price.product',
 		],
 	});
+
+	useEffect(() => {
+		if (order?.checkout) {
+			receiveEntityRecords(
+				'surecart',
+				'checkout',
+				order?.checkout,
+				{
+					expand: [
+						'line_items',
+						'line_item.price',
+						'price.product',
+						'charge',
+						'charge.payment_method',
+						'payment_method.card',
+					],
+				},
+				true
+			);
+		}
+		if (order?.checkout?.charge) {
+			receiveEntityRecords(
+				'surecart',
+				'charge',
+				order?.checkout?.charge,
+				{
+					checkout_ids: [order?.checkout?.id],
+					expand: ['payment_method', 'payment_method.card'],
+				},
+				true
+			);
+		}
+	}, [order]);
 
 	useEffect(() => {
 		if (orderError) {
@@ -80,7 +119,13 @@ export default () => {
 					</ScBreadcrumbs>
 				</div>
 			}
-			sidebar={<Sidebar id={id} />}
+			sidebar={
+				<Sidebar
+					order={order}
+					customer={order?.checkout?.customer}
+					loading={!hasLoadedOrder}
+				/>
+			}
 		>
 			<>
 				<Details
@@ -94,8 +139,8 @@ export default () => {
 					charge={order?.checkout?.charge}
 					loading={!hasLoadedOrder}
 				/>
-				<Charges />
-				<Subscriptions />
+				<Charges checkoutId={order?.checkout?.id} />
+				<Subscriptions checkoutId={order?.checkout?.id} />
 			</>
 		</UpdateModel>
 	);

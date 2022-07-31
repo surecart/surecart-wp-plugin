@@ -8,20 +8,19 @@ import { useState } from '@wordpress/element';
 import PaginationFooter from '../PaginationFooter';
 
 export default ({
-	data,
+	data = [],
 	isLoading,
 	title,
 	error,
 	isFetching,
 	page,
+	onRefundClick,
 	setPage,
 	pagination,
 	columns,
 	empty,
 	...props
 }) => {
-	const [confirmRefund, setConfirmRefund] = useState(false);
-
 	const renderStatusTag = (charge) => {
 		if (charge?.fully_refunded) {
 			return <sc-tag type="danger">{__('Refunded', 'surecart')}</sc-tag>;
@@ -42,16 +41,12 @@ export default ({
 		if (charge?.fully_refunded) {
 			return null;
 		}
+		if (!onRefundClick) {
+			return null;
+		}
 
 		return (
-			<sc-button
-				onClick={() =>
-					setConfirmRefund({
-						charge,
-					})
-				}
-				size="small"
-			>
+			<sc-button onClick={() => onRefundClick(charge)} size="small">
 				{__('Refund', 'surecart')}
 			</sc-button>
 		);
@@ -75,7 +70,6 @@ export default ({
 				</div>
 			);
 		}
-		console.log(charge?.payment_intent);
 
 		if (charge?.payment_intent?.processor_type === 'paypal') {
 			return (
@@ -102,26 +96,17 @@ export default ({
 		return charge?.payment_intent?.processor_type;
 	};
 
-	if (Object.keys(data?.[0] || {}).length === 0) {
-		return null;
-	}
-
 	return (
 		<Fragment>
 			<DataTable
+				loading={isLoading}
 				title={title || __('Charges', 'surecart')}
 				columns={columns}
 				empty={empty || __('No charges', 'surecart')}
 				items={(data || [])
 					.sort((a, b) => b.created_at - a.created_at)
 					.map((charge) => {
-						const {
-							currency,
-							amount,
-							id,
-							created_at,
-							payment_method,
-						} = charge;
+						const { currency, amount, created_at } = charge;
 						return {
 							amount: (
 								<sc-text
@@ -166,7 +151,6 @@ export default ({
 							refund: renderRefundButton(charge),
 						};
 					})}
-				loading={isLoading}
 				footer={
 					pagination ? (
 						<PaginationFooter
@@ -180,13 +164,7 @@ export default ({
 					) : null
 				}
 				{...props}
-			></DataTable>
-			{confirmRefund && (
-				<Refund
-					charge={confirmRefund?.charge}
-					onRequestClose={() => setConfirmRefund(false)}
-				/>
-			)}
+			/>
 		</Fragment>
 	);
 };
