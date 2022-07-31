@@ -38,6 +38,7 @@ export default () => {
 			'checkout.line_items',
 			'checkout.charge',
 			'checkout.customer',
+			'checkout.shipping_address',
 			'charge.payment_method',
 			'checkout.tax_identifier',
 			'payment_method.card',

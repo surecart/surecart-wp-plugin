@@ -11,9 +11,9 @@ export default ({ order, customer, loading }) => {
 		<Fragment>
 			<Customer customer={customer} loading={loading} />
 			<Purchases checkoutId={order?.checkout?.id} />
-			{!!order?.shipping_address && (
+			{!!order?.checkout?.shipping_address && (
 				<Address
-					address={order?.shipping_address}
+					address={order?.checkout?.shipping_address}
 					label={__('Shipping Address', 'surecart')}
 				/>
 			)}
