@@ -107,7 +107,11 @@ export default ({ order, checkout, loading }) => {
 							'--price-size': 'var(--sc-font-size-x-large)',
 						}}
 					>
-						<span slot="title">{__('Paid', 'surecart')}</span>
+						<span slot="title">
+							{charge?.refunded_amount
+								? __('Net Payment', 'surecart')
+								: __('Paid', 'surecart')}
+						</span>
 
 						<ScFormatNumber
 							slot="price"
