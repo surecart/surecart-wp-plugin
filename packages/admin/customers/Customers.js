@@ -1,144 +1,154 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import { ScButton } from '@surecart/components-react';
-import { useDispatch } from '@wordpress/data';
-import { Fragment } from '@wordpress/element';
+import {
+	ScButton,
+	ScIcon,
+	ScBreadcrumbs,
+	ScBreadcrumb,
+	ScFlex,
+} from '@surecart/components-react';
+import { store as dataStore } from '@surecart/data';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { store as noticesStore } from '@wordpress/notices';
 import { __ } from '@wordpress/i18n';
-import { useEffect } from 'react';
 
-import FlashError from '../components/FlashError';
-import useCurrentPage from '../mixins/useCurrentPage';
-import { store as uiStore } from '../store/ui';
+import useEntity from '../hooks/useEntity';
 import Logo from '../templates/Logo';
-// hooks
-import Template from '../templates/SingleModel';
+
 import Charges from './modules/Charges';
 import Details from './modules/Details';
 import Orders from './modules/Orders';
 import Subscriptions from './modules/Subscriptions';
-// parts
-import Sidebar from './Sidebar';
+import Purchases from './modules/Purchases';
+import Notifications from './modules/Notifications';
+import User from './modules/User';
+
+import SaveButton from '../templates/SaveButton';
+import UpdateModel from '../templates/UpdateModel';
+import useDirty from '../hooks/useDirty';
 
 export default () => {
+	const { createSuccessNotice, createErrorNotice } =
+		useDispatch(noticesStore);
+	const { saveDirtyRecords } = useDirty();
+	const id = useSelect((select) => select(dataStore).selectPageId());
 	const {
-		id,
 		customer,
-		fetchCustomer,
-		updateCustomer,
-		saveCustomer,
-		setSaving,
-		isSaving,
-		isLoading,
-	} = useCurrentPage('customer');
+		editCustomer,
+		hasLoadedCustomer,
+		deletingCustomer,
+		savingCustomer,
+	} = useEntity('customer', id);
 
-	const { addSnackbarNotice, addModelErrors } = useDispatch(uiStore);
-	useEffect(() => {
-		if (id) {
-			fetchCustomer({
-				query: {
-					context: 'edit',
-				},
-			});
-		}
-	}, []);
-
-	const onSubmit = async (e) => {
-		e.preventDefault();
+	/**
+	 * Handle the form submission
+	 */
+	const onSubmit = async () => {
 		try {
-			setSaving(true);
-			await saveCustomer();
-			addSnackbarNotice({
-				content: __('Saved.'),
+			await saveDirtyRecords();
+			// save success.
+			createSuccessNotice(__('Customer updated.', 'surecart'), {
+				type: 'snackbar',
 			});
 		} catch (e) {
-			console.error(e);
-			addModelErrors('customer', e);
-		} finally {
-			setSaving(false);
-		}
-	};
-
-	const title = () => {
-		if (isLoading) {
-			return (
-				<sc-skeleton
-					style={{
-						width: '120px',
-						display: 'inline-block',
-					}}
-				></sc-skeleton>
+			createErrorNotice(
+				e?.message || __('Something went wrong', 'surecart')
 			);
+			if (e?.additional_errors?.length) {
+				e?.additional_errors.forEach((e) => {
+					if (e?.message) {
+						createErrorNotice(e?.message);
+					}
+				});
+			}
 		}
-
-		return id
-			? __('Edit Customer', 'surecart')
-			: __('Add Customer', 'surecart');
 	};
 
 	return (
-		<Template
-			pageModelName={'customers'}
+		<UpdateModel
 			onSubmit={onSubmit}
-			backUrl={'admin.php?page=sc-customers'}
-			backText={__('Back to All Customers', 'surecart')}
 			title={
-				<sc-breadcrumbs>
-					<sc-breadcrumb>
-						<Logo display="block" />
-					</sc-breadcrumb>
-					<sc-breadcrumb href="admin.php?page=sc-customers">
-						{__('Customers', 'surecart')}
-					</sc-breadcrumb>
-					<sc-breadcrumb>
-						<sc-flex style={{ gap: '1em' }}>{title()}</sc-flex>
-					</sc-breadcrumb>
-				</sc-breadcrumbs>
+				<ScFlex style={{ gap: '1em' }} align-items="center">
+					<ScButton
+						circle
+						size="small"
+						href="admin.php?page=sc-customers"
+					>
+						<ScIcon name="arrow-left"></ScIcon>
+					</ScButton>
+					<ScBreadcrumbs>
+						<ScBreadcrumb>
+							<Logo display="block" />
+						</ScBreadcrumb>
+						<ScBreadcrumb href="admin.php?page=sc-customers">
+							{__('Customers', 'surecart')}
+						</ScBreadcrumb>
+						<ScBreadcrumb>
+							<ScFlex style={{ gap: '1em' }}>
+								{__('Edit Customer', 'surecart')}
+							</ScFlex>
+						</ScBreadcrumb>
+					</ScBreadcrumbs>
+				</ScFlex>
 			}
 			button={
-				isLoading ? (
-					<sc-skeleton
-						style={{
-							width: '120px',
-							height: '35px',
-							display: 'inline-block',
-						}}
-					></sc-skeleton>
-				) : (
-					<div
-						css={css`
-							display: flex;
-							align-items: center;
-							gap: 0.5em;
-						`}
-					>
-						<ScButton type="primary" loading={isSaving} submit>
-							{id
-								? __('Update Customer', 'surecart')
-								: __('Create Customer', 'surecart')}
-						</ScButton>
-					</div>
-				)
+				<SaveButton
+					loading={!hasLoadedCustomer}
+					busy={deletingCustomer || savingCustomer}
+				>
+					{__('Save Customer', 'surecart')}
+				</SaveButton>
 			}
 			sidebar={
-				<Sidebar
-					id={id}
-					customer={customer}
-					updateCustomer={updateCustomer}
-					loading={isLoading}
-				/>
+				<>
+					<Purchases customerId={id} />
+					<User customerId={id} />
+					<Notifications
+						customer={customer}
+						updateCustomer={editCustomer}
+						loading={!hasLoadedCustomer}
+					/>
+				</>
 			}
 		>
-			<Fragment>
-				<FlashError path="customers" scrollIntoView />
+			<Details
+				customer={customer}
+				updateCustomer={editCustomer}
+				loading={!hasLoadedCustomer}
+			/>
+
+			<Orders customerId={id} />
+			<Charges customerId={id} />
+			<Subscriptions customerId={id} />
+
+			{/* <Fragment>
 				<Details
-					customer={customer}
-					updateCustomer={updateCustomer}
-					loading={isLoading}
+					product={product}
+					updateProduct={editProduct}
+					loading={!hasLoadedProduct}
 				/>
-				{!!id && <Orders id={id} />}
-				{!!id && <Charges id={id} />}
-				{!!id && <Subscriptions id={id} />}
-			</Fragment>
-		</Template>
+
+				<Prices
+					productId={id}
+					product={product}
+					updateProduct={editProduct}
+					loading={!hasLoadedProduct}
+				/>
+
+				<Integrations id={id} />
+
+				<Downloads
+					id={id}
+					product={product}
+					updateProduct={editProduct}
+					loading={!hasLoadedProduct}
+				/>
+
+				<Licensing
+					id={id}
+					product={product}
+					updateProduct={editProduct}
+					loading={!hasLoadedProduct}
+				/>
+			</Fragment> */}
+		</UpdateModel>
 	);
 };

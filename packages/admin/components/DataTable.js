@@ -3,6 +3,7 @@ import { __, _n } from '@wordpress/i18n';
 
 import Box from '../ui/Box';
 import { css, jsx } from '@emotion/core';
+import { ScTable, ScTableRow, ScTableCell } from '@surecart/components-react';
 
 export default ({
 	title = '',
@@ -13,102 +14,69 @@ export default ({
 	children,
 	empty = '',
 	loading,
+	updating,
 }) => {
-	const renderLoading = () => {
+	if ((items || []).length === 0 && !loading && !updating) {
 		return (
-			<sc-table
-				style={{
-					'--shadow': 'none',
-					'--border-radius': '0',
-					borderLeft: '0',
-					borderRight: '0',
-				}}
-			>
-				{!hideHeader &&
-					Object.keys(columns).map((key) => (
-						<sc-table-cell
-							slot="head"
-							style={{ width: columns[key]?.width }}
-							key={key}
-						>
-							{columns[key]?.label}
-						</sc-table-cell>
-					))}
-
-				<sc-table-row>
-					{Object.keys(columns).map((key) => (
-						<sc-table-cell key={key}>
-							<sc-skeleton></sc-skeleton>
-						</sc-table-cell>
-					))}
-				</sc-table-row>
-			</sc-table>
+			<Box title={title} loading={loading} footer={footer}>
+				{empty}
+			</Box>
 		);
-	};
-
-	if ((items || []).length === 0 && !loading) {
-		return <Box title={title}>{empty}</Box>;
 	}
 
 	return (
 		<div
-			css={css`
-				sc-table-cell:first-of-type {
-					padding-left: 30px;
-				}
-				sc-table-cell:last-of-type {
-					padding-right: 30px;
-				}
-				.components-card__body {
-					padding: 0 !important;
-				}
-				--sc-table-cell-spacing: var(--sc-spacing-large);
-			`}
+			css={
+				!loading &&
+				!updating &&
+				css`
+					sc-table-cell:first-of-type {
+						padding-left: 30px;
+					}
+					sc-table-cell:last-of-type {
+						padding-right: 30px;
+					}
+					.components-card__body {
+						padding: 0 !important;
+					}
+					--sc-table-cell-spacing: var(--sc-spacing-large);
+				`
+			}
 		>
 			<Box
 				title={title}
 				noPadding={true}
-				footer={
-					!!(loading && footer) ? (
-						<sc-skeleton style={{ width: '70px' }}></sc-skeleton>
-					) : (
-						footer
-					)
-				}
+				loading={loading || updating}
+				footer={footer}
 			>
-				{loading ? (
-					renderLoading()
-				) : (
-					<sc-table
-						style={{
-							'--shadow': 'none',
-							'--border-radius': '0',
-							borderLeft: '0',
-							borderRight: '0',
-						}}
-					>
-						{!hideHeader &&
-							Object.keys(columns).map((key) => (
-								<sc-table-cell
-									slot="head"
-									style={{ width: columns[key]?.width }}
-									key={key}
-								>
-									{columns[key]?.label}
-								</sc-table-cell>
-							))}
-
-						{(items || []).map((item) => (
-							<sc-table-row key={item.id}>
-								{Object.keys(columns).map((key) => (
-									<sc-table-cell key={key}>
-										{item[key]}
-									</sc-table-cell>
-								))}
-							</sc-table-row>
+				<ScTable
+					style={{
+						'--shadow': 'none',
+						'--border-radius': '0',
+						borderLeft: '0',
+						borderRight: '0',
+					}}
+				>
+					{!hideHeader &&
+						Object.keys(columns).map((key) => (
+							<ScTableCell
+								slot="head"
+								style={{ width: columns[key]?.width }}
+								key={key}
+							>
+								{columns[key]?.label}
+							</ScTableCell>
 						))}
-					</sc-table>
-				)}
+
+					{(items || []).map((item) => (
+						<ScTableRow key={item.id}>
+							{Object.keys(columns).map((key) => (
+								<ScTableCell key={key}>{item[key]}</ScTableCell>
+							))}
+						</ScTableRow>
+					))}
+				</ScTable>
+
 				{children}
 			</Box>
 		</div>

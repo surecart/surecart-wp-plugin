@@ -35,20 +35,7 @@ export default ({
 						'--font-weight': 'var(--sc-font-weight-bold)',
 					}}
 				>
-					{title && (
-						<span>
-							{loading ? (
-								<sc-skeleton
-									style={{
-										width: '120px',
-										display: 'inline-block',
-									}}
-								></sc-skeleton>
-							) : (
-								title
-							)}
-						</span>
-					)}
+					{title}
 				</sc-text>
 				{header_action}
 			</CardHeader>

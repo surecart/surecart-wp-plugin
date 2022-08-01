@@ -2,15 +2,15 @@
 import { __, _n } from '@wordpress/i18n';
 import DataTable from '../../DataTable';
 import { css, jsx } from '@emotion/core';
-import Refund from './Refund';
+import { addQueryArgs } from '@wordpress/url';
 import { Fragment } from '@wordpress/element';
-import { useState } from '@wordpress/element';
-import PaginationFooter from '../PaginationFooter';
+import { ScButton } from '@surecart/components-react';
 
 export default ({
 	data = [],
 	isLoading,
 	title,
+	footer,
 	error,
 	isFetching,
 	page,
@@ -99,7 +99,6 @@ export default ({
 	return (
 		<Fragment>
 			<DataTable
-				loading={isLoading}
 				title={title || __('Charges', 'surecart')}
 				columns={columns}
 				empty={empty || __('No charges', 'surecart')}
@@ -149,20 +148,23 @@ export default ({
 							method: renderMethod(charge),
 							status: renderStatusTag(charge),
 							refund: renderRefundButton(charge),
+							order: charge?.checkout?.order?.id && (
+								<ScButton
+									href={addQueryArgs('admin.php', {
+										page: 'sc-orders',
+										action: 'edit',
+										id: charge?.checkout?.order?.id,
+									})}
+									size="small"
+								>
+									{__('View Order', 'surecart')}
+								</ScButton>
+							),
 						};
 					})}
-				footer={
-					pagination ? (
-						<PaginationFooter
-							showing={data?.length}
-							total={pagination?.total}
-							total_pages={pagination?.total_pages}
-							page={page}
-							isFetching={isFetching}
-							setPage={setPage}
-						/>
-					) : null
-				}
+				loading={isLoading}
+				updating={isFetching}
+				footer={!!footer && footer}
 				{...props}
 			/>
 		</Fragment>
