@@ -40,20 +40,20 @@ export default () => {
 						)}
 					/>
 					<LearnMoreDetails
-						icon="film"
+						icon="users"
 						href="#"
-						title={__('Tutorial Videos', 'surecart')}
+						title={__('Join Our Community', 'surecart')}
 						descriptions={__(
-							'Learn more about SureCart',
+							'Connect with others in on Facebook',
 							'surecart'
 						)}
 					/>
 					<LearnMoreDetails
-						icon="film"
+						icon="life-buoy"
 						href="#"
-						title={__('Tutorial Videos', 'surecart')}
+						title={__('Get Help', 'surecart')}
 						descriptions={__(
-							'Learn more about SureCart',
+							'Contact our support for additional help',
 							'surecart'
 						)}
 					/>

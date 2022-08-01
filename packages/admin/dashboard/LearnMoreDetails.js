@@ -25,6 +25,7 @@ export default ({ icon, href = '#', title, descriptions }) => {
 				/>
 				<div
 					css={css`
+						width: 70%;
 						.sc-learn-details-title {
 							font-weight: 700;
 							font-size: 16px;
@@ -47,6 +48,10 @@ export default ({ icon, href = '#', title, descriptions }) => {
 					<p className="sc-learn-details-title">{title}</p>
 					<p className="sc-learn-details-desc">{descriptions}</p>
 				</div>
+				<ScIcon
+					name="chevron-right"
+					style={{ fontSize: '20px', color: '#334155' }}
+				/>
 			</ScFlex>
 		</ScStackedListRow>
 	);

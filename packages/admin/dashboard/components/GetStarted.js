@@ -48,20 +48,6 @@ export default () => {
                     top: 30px;
                     cursor: pointer;
                 }
-                .sc-getstarted-box-title {
-                    font-weight: 600;
-                    font-size: 20px;
-                    line-height: 28px;
-                    color: #334155;
-                    margin: 0.4em 0;    
-                }
-                .sc-getstarted-box-descritions {
-                    font-weight: 400;
-                    font-size: 14px;
-                    line-height: 28px;
-                    color: #334155;
-                    margin: 0.4em 0 1em 0;   
-                }
             `}
         >
             <div className='sc-getstarted-inner-wrap'>

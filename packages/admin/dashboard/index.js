@@ -6,8 +6,6 @@ import { __ } from '@wordpress/i18n';
  */
 import Dashboard from './Dashboard';
 
-import './style.scss';
-
 /**
  * Render
  */

@@ -15,16 +15,16 @@ import {
 } from '@surecart/components-react';
 
 export default (props) => {
-    const {startDate, endDate, reportBy}  = props;
-    const [ordersStates, setOrdersStates] = useState(0);
-    const [lastPeriodDate, setLastPeriodDate] = '2022-07-15';
-    const [lastPeriodOrder, setlastPeriodOrder] = useState(0);
+    const {ordersStates, lastPeriodOrder, reportBy, dateRangs, getDataArray} = props;
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const [series, setSeries] = useState([
         {
-            name: 'Demo',
-            data: [99, 770, 408, 51, 52, 109, 300]
+            name: __( 'Value', 'surecart' ),
+            data: []
         },
     ]);
+
+    console.log(getDataArray);
 
     const chart = {
         options: {
@@ -44,9 +44,22 @@ export default (props) => {
             stroke: {
               curve: 'smooth'
             },
+            yaxis: {
+                labels: {
+                    formatter: function (value) {
+                      return value;
+                    }
+                }
+            },
             xaxis: {
-              type: 'datetime',
-              categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+              type: 'date',
+              categories: dateRangs,
+              labels: {
+                formatter: function (value) {
+                    let dateObj = new Date(value);
+                    return dateObj.getDate() + ' ' + months[dateObj.getMonth()];
+                }
+              } 
             },
             colors: ["#08BA4F"],
             tooltip: {
@@ -67,47 +80,28 @@ export default (props) => {
     };
 
     useEffect( () => {
-        getOrderStates();
-        getLastOrderStates();
-    }, [startDate, reportBy] );
-
-    const getOrderStates = async () => {
-        const response = await apiFetch({
-            path: addQueryArgs(`surecart/v1/stats/orders/`, {
-                start_at: new Date(startDate).toISOString().slice(0, 10),
-                end_at: new Date(endDate).toISOString().slice(0, 10),
-                interval: reportBy,
-            }),
-            parse: false,
-        });
-        const ordersStates = await ( response.json() );
-        setOrdersStates( ordersStates );
-    }
-
-    const getLastOrderStates = async () => {
-        const response = await apiFetch({
-            path: addQueryArgs(`surecart/v1/stats/orders/`, {
-                start_at: lastPeriodDate,
-                end_at: new Date(startDate).toISOString().slice(0, 10),
-                interval: reportBy,
-            }),
-            parse: false,
-        });
-        const lastOrdersStates = await ( response.json() );
-
-        if ( lastOrdersStates?.data?.length !== 0 ) {
-            setlastPeriodOrder( lastOrdersStates?.data[0].count );
-        }   
-    }
+        console.log('getDataArray');
+        console.log(getDataArray);
+        setSeries([
+            {
+              name: __( 'Value', 'surecart' ),
+              data: getDataArray,
+            },
+        ]);
+    }, [getDataArray] );
 
     function renderEmpty() {
         return (
-          <div>
-            <ScDivider style={{ '--spacing': '0' }}></ScDivider>
-            <slot name="empty">
-            <ScEmpty icon="shopping-bag">{__("You don't have any orders.", 'surecart')}</ScEmpty>
-            </slot>
-          </div>
+            <ScCard css={css`
+                .shopping-bag-empty {
+                    padding: 100px 0px;
+                }
+            `}
+            >
+                <slot name="empty">
+                    <ScEmpty className='shopping-bag-empty' icon="bar-chart-2">{__("You don't have any data for report.", 'surecart')}</ScEmpty>
+                </slot>
+            </ScCard>
         );
     }
 
