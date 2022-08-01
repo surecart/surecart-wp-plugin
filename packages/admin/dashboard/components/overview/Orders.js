@@ -59,7 +59,8 @@ export default (props) => {
                     let dateObj = new Date(value);
                     return dateObj.getDate() + ' ' + months[dateObj.getMonth()];
                 }
-              } 
+              },
+              tickAmount: 7,
             },
             colors: ["#08BA4F"],
             tooltip: {

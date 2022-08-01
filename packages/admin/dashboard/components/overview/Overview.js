@@ -99,13 +99,11 @@ export default () => {
         }
 
         let ordersStatesApiData = [];
+        let reportObj = {};
         ordersStates.data.map( ordersstates => {
-            let dateObj = new Date(ordersstates.interval_at);
-            let reportObj = {
-                '2022-7-26' : {
-                    ordersstates
-                }
-            };
+            let dateObj   = new Date(ordersstates.interval_at * 1000);
+            let rangeDate = dateObj.getFullYear() + '-' + (dateObj.getMonth() + 1) + '-' + dateObj.getDate();
+            reportObj[rangeDate] = ordersstates;
             ordersStatesApiData.push( reportObj );
         });
 
@@ -116,11 +114,11 @@ export default () => {
             let rangeDate = dateObj.getFullYear() + '-' + (dateObj.getMonth() + 1) + '-' + dateObj.getDate();
             if ( ordersStatesApiData[0][rangeDate] ) {
                 if ( types === 'orders' ) {
-                    return ordersStatesApiData[0][rangeDate].ordersstates.count;
+                    return ordersStatesApiData[0][rangeDate].count;
                 } else if ( types === 'revenue' ) {
-                    return ordersStatesApiData[0][rangeDate].ordersstates.amount;
+                    return ordersStatesApiData[0][rangeDate].amount;
                 } else if ( types === 'average' ) {
-                    return ordersStatesApiData[0][rangeDate].ordersstates.average_amount;
+                    return ordersStatesApiData[0][rangeDate].average_amount;
                 }
             } else {
                 return 0;
@@ -168,7 +166,7 @@ export default () => {
                 <ScDivider style={{"--spacing": "0.5em"}} />
             </Fragment>
 
-            <ScFlex columnGap="2em">
+            <ScFlex style={{ '--sc-flex-column-gap': '2em' }}>
                 <Revenue ordersStates={ordersStates} lastPeriodOrder={lastPeriodOrder} reportBy={reportBy} dateRangs={getDatesArray(startDate, endDate)} getDataArray={getDataArray(ordersStates, startDate, endDate,'revenue')} />
                 <Orders ordersStates={ordersStates} lastPeriodOrder={lastPeriodOrder} reportBy={reportBy} dateRangs={getDatesArray(startDate, endDate)} getDataArray={getDataArray(ordersStates, startDate, endDate,'orders')} />
                 <AverageOrderValue ordersStates={ordersStates} lastPeriodOrder={lastPeriodOrder} reportBy={reportBy} dateRangs={getDatesArray(startDate, endDate)} getDataArray={getDataArray(ordersStates, startDate, endDate,'average')} />
