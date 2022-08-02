@@ -1,7 +1,7 @@
 {
   "name": "@surecart/components",
   "version": "0.0.8",
-  "description": "The @surecare/components package contains all the core web components that other packages rely on.",
+  "description": "The @surecart/components package contains all the core web components that other packages rely on.",
   "main": "dist/index.cjs.js",
   "docs": "docs/docs.json",
   "module": "dist/index.js",
@@ -46,7 +46,7 @@
     "@storybook/addon-interactions": "^6.5.6",
     "@storybook/testing-library": "^0.0.11",
     "@stripe/stripe-js": "^1.32.0",
-    "@wordpress/api-fetch": "^5.1.1",
+    "@wordpress/api-fetch": "^6.11.0",
     "@wordpress/hooks": "^3.2.1",
     "@wordpress/i18n": "^4.2.3",
     "@wordpress/url": "^3.1.1",
