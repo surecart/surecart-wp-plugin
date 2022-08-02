@@ -82,9 +82,9 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 			$this->endpoint . '/(?P<id>\S+)/upcoming_period/',
 			[
 				[
-					'methods'             => \WP_REST_Server::READABLE,
+					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => $this->callback( $this->controller, 'upcomingPeriod' ),
-					'permission_callback' => [ $this, 'get_item_permissions_check' ],
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
 				],
 				// Register our schema callback.
 				'schema' => [ $this, 'get_item_schema' ],

@@ -1,16 +1,16 @@
 import { render } from '@wordpress/element';
 
 /**
- * register store entities.
+ * register store and entities.
  */
-import '@admin/schema/register';
+import '../../store/add-entities';
 
 /**
  * App
  */
-import Edit from './Edit';
+import EditSubscription from './EditSubscription';
 
 /**
  * Render
  */
-render(<Edit />, document.getElementById('app'));
+render(<EditSubscription />, document.getElementById('app'));

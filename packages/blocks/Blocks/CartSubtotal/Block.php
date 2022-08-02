@@ -30,7 +30,6 @@ class Block extends CartBlock {
 		</sc-line-item-total>
 
 		<?php
-		error_log( $this->getStyle( $attributes ) );
 		return ob_get_clean();
 	}
 }

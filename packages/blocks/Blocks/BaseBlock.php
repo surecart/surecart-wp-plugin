@@ -55,7 +55,6 @@ abstract class BaseBlock {
 	 * @return function
 	 */
 	public function preRender( $attributes, $content, $block ) {
-		error_log( print_r( $block->context, 1 ) );
 		// run middlware.
 		$render = $this->middleware( $attributes, $content );
 

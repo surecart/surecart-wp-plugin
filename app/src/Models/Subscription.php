@@ -205,14 +205,16 @@ class Subscription extends Model {
 	/**
 	 * Preview the upcoming invoice.
 	 *
+	 * @param string $args Arguments
 	 * @return $this|\WP_Error
 	 */
-	protected function upcomingInvoice( $id = null ) {
-		if ( $id ) {
-			$this->setAttribute( 'id', $id );
+	protected function upcomingPeriod( $args = [] ) {
+		if ( $args['id'] ) {
+			$this->setAttribute( 'id', $args['id'] );
+			unset( $args['id'] );
 		}
 
-		if ( $this->fireModelEvent( 'previewingUpcomingInvoice' ) === false ) {
+		if ( $this->fireModelEvent( 'previewingUpcomingPeriod' ) === false ) {
 			return false;
 		}
 
@@ -220,26 +222,28 @@ class Subscription extends Model {
 			return new \WP_Error( 'not_saved', 'Please create the subscription' );
 		}
 
-		$invoice = \SureCart::request(
-			$this->endpoint . '/' . $this->attributes['id'] . '/upcoming_invoice/',
+		$upcoming_period = \SureCart::request(
+			$this->endpoint . '/' . $this->attributes['id'] . '/upcoming_period/',
 			[
-				'method' => 'GET',
+				'method' => 'PATCH',
 				'query'  => array_merge(
 					$this->query,
-					$this->attributes
 				),
+				'body'   => [
+					$this->object_name => $args,
+				],
 			]
 		);
 
-		if ( is_wp_error( $invoice ) ) {
-			return $invoice;
+		if ( is_wp_error( $upcoming_period ) ) {
+			return $upcoming_period;
 		}
 
 		$this->resetAttributes();
 
-		$this->fill( $invoice );
+		$this->fill( $upcoming_period );
 
-		$this->fireModelEvent( 'previewedUpcomingInvoice' );
+		$this->fireModelEvent( 'previewedUpcomingPeriod' );
 
 		return $this;
 	}

@@ -68,10 +68,10 @@ class SubscriptionsController extends RestController {
 	 * @return \WP_REST_Response
 	 */
 	public function upcomingPeriod( \WP_REST_Request $request ) {
-		$model = $this->middleware( new $this->class(), $request );
+		$model = $this->middleware( new $this->class( $request['id'] ), $request );
 		if ( is_wp_error( $model ) ) {
 			return $model;
 		}
-		return $model->where( $request->get_query_params() )->upcomingPeriod( $request['id'] );
+		return $model->where( $request->get_query_params() )->upcomingPeriod( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
 	}
 }
