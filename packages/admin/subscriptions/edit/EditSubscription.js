@@ -12,7 +12,7 @@ import Template from '../../templates/SingleModel';
 // modules
 import Price from './modules/Price';
 import PaymentMethod from './modules/PaymentMethod';
-import Schedule from './modules/Schedule';
+import Schedule from './modules/Trial';
 import Sidebar from './Sidebar';
 
 // components
@@ -35,6 +35,7 @@ import Logo from '../../templates/Logo';
 import useEntity from '../../hooks/useEntity';
 import UpcomingPeriod from './modules/UpcomingPeriod';
 import SaveButton from '../../templates/SaveButton';
+import Trial from './modules/Trial';
 
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
@@ -86,6 +87,7 @@ export default () => {
 							'period.checkout',
 							'checkout.line_items',
 							'line_item.price',
+							'price.product',
 							'period.subscription',
 						],
 					}
@@ -103,6 +105,7 @@ export default () => {
 			setUpcoming(response);
 		} catch (e) {
 			console.error(e);
+			handleError(e);
 		} finally {
 			setLoadingUpcoming(false);
 		}
@@ -119,17 +122,16 @@ export default () => {
 				type: 'snackbar',
 			});
 		} catch (e) {
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart')
-			);
-			if (e?.additional_errors?.length) {
-				e?.additional_errors.forEach((e) => {
-					if (e?.message) {
-						createErrorNotice(e?.message);
-					}
-				});
-			}
+			handleError(e);
 		}
+	};
+
+	const handleError = (e) => {
+		console.error(e);
+		createErrorNotice(e?.message || __('Something went wrong', 'surecart'));
+		e?.additional_errors.forEach((e) => {
+			createErrorNotice(e?.message);
+		});
 	};
 
 	return (
@@ -205,9 +207,15 @@ export default () => {
 			<>
 				<Price
 					subscription={subscription}
-					upcoming={upcoming}
 					updateSubscription={editSubscription}
+					upcoming={upcoming}
+					loading={loadingUpcoming}
 					priceId={subscription?.price?.id || subscription?.price}
+				/>
+				<Trial
+					subscription={subscription}
+					updateSubscription={editSubscription}
+					loading={!hasLoadedSubscription}
 				/>
 			</>
 		</UpdateModel>

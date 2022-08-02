@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
 import DatePicker from '../../../components/DatePicker';
-import { ScFormControl } from '@surecart/components-react';
+import { ScButton, ScFormControl } from '@surecart/components-react';
 
 export default ({ subscription, updateSubscription, loading }) => {
 	return (
@@ -29,6 +29,10 @@ export default ({ subscription, updateSubscription, loading }) => {
 						}}
 					/>
 				</ScFormControl>
+
+				{!!subscription?.trial_end_at && (
+					<ScButton type="text">{__('Clear', 'surecart')}</ScButton>
+				)}
 			</div>
 		</Box>
 	);

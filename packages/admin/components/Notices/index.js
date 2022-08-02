@@ -3,7 +3,7 @@ import { useSelect } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
 import NoticesList from './NoticesList';
 
-export default () => {
+export default (props) => {
 	const notices = useSelect((select) => select(noticesStore).getNotices());
 
 	return (
@@ -15,6 +15,7 @@ export default () => {
 					({ type, status }) =>
 						type === 'default' && status === 'error'
 				)}
+				{...props}
 			/>
 
 			{/* Notices */}
@@ -24,6 +25,7 @@ export default () => {
 					({ type, status }) =>
 						type === 'default' && status === 'info'
 				)}
+				{...props}
 			/>
 		</>
 	);

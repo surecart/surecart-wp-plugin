@@ -171,7 +171,7 @@ export default ({
 								}
 							`}
 						>
-							<Notices />
+							<Notices margin="80px" />
 							{children}
 							{footer && (
 								<div>
