@@ -15,13 +15,13 @@ import {
 } from '@surecart/components-react';
 
 export default (props) => {
-    const {ordersStates, currentTotalOrder, lastTotalOrder, dateRangs, getDataArray} = props;
+    const {ordersStates, currentTotalOrder, lastTotalOrder, dateRangs, getDataArray, reportBy} = props;
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const [currentAverage, setCurrentAverage] = useState(0);
     const [lastAverage, setLastAverage] = useState(0);
     const [series, setSeries] = useState([
         {
-            name: __( 'Value', 'surecart' ),
+            name: __( 'Total Average', 'surecart' ),
             data: []
         },
     ]);
@@ -29,7 +29,6 @@ export default (props) => {
     const chart = {
         options: {
             chart: {
-                height: 350,
                 width: '100%',
                 type: 'area',
                 events: {
@@ -57,6 +56,11 @@ export default (props) => {
               labels: {
                 formatter: function (value) {
                     let dateObj = new Date(value);
+                    if ( 'month' === reportBy ) {
+                        return months[dateObj.getMonth()];
+                    } else if ( 'year' === reportBy ) {
+                        return dateObj.getFullYear();
+                    }
                     return dateObj.getDate() + ' ' + months[dateObj.getMonth()];
                 }
               },
@@ -83,7 +87,7 @@ export default (props) => {
     useEffect( () => {
         setSeries([
             {
-              name: __( 'Value', 'surecart' ),
+              name: __( 'Total Average', 'surecart' ),
               data: getDataArray,
             },
         ]);
@@ -140,7 +144,7 @@ export default (props) => {
                     ${currentAverage} <span style={{'color':'#64748B', 'font-size': '14px'}}>{sprintf(__("vs $%s last period", "surecart"), lastAverage)}</span>
                 </div>
                 <div id="chart">
-                    <Chart options={chart.options} series={series} type="area" height={280} />
+                    <Chart options={chart.options} series={series} type="area" height={295} />
                 </div>
             </ScCard>
         );
