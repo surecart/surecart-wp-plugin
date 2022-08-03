@@ -21,14 +21,13 @@ import {
 
 export default () => {
     const [startDate, setStartDate] = useState(
-        new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+        new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
     );
     const [endDate, setEndDate] = useState(new Date());
     const [reportBy, setReportBy] = useState('day');
     const [ordersStates, setOrdersStates] = useState(0);
-    const [reportDataArray, setReportDataArray] = useState(0);
-    const [lastPeriodDate, setLastPeriodDate] = '2022-07-15';
-    const [lastPeriodOrder, setlastPeriodOrder] = useState(0);
+    const [currentTotalOrder, setCurrentTotalOrder] = useState(0);
+    const [lastTotalOrder, setLastTotalOrder] = useState(0);
 
     const reportOrderByList = {
         day: __('Daily', 'surecart'),
@@ -37,42 +36,79 @@ export default () => {
         year: __('Yearly', 'surecart'),
     }
 
+    const defaultTotalOrders = {
+        count: 0,
+        revenue: 0,
+        average: 0,
+        currency: '',
+    }
+
     useEffect( () => {
         getOrderStates();
-        //getLastOrderStates();
-    }, [startDate, reportBy] );
+        getLastOrderStates();
+    }, [endDate, reportBy] );
 
     const getOrderStates = async () => {
+        let startDateObj = new Date(startDate);
+        let endDateObj = new Date(endDate);
         setOrdersStates(0);
         const response = await apiFetch({
             path: addQueryArgs(`surecart/v1/stats/orders/`, {
-                start_at: new Date(startDate).toISOString().slice(0, 10),
-                end_at: new Date(endDate).toISOString().slice(0, 10),
+                start_at: startDateObj.getFullYear() + '-' + (startDateObj.getMonth() + 1) + '-' + startDateObj.getDate(),
+                end_at: endDateObj.getFullYear() + '-' + (endDateObj.getMonth() + 1) + '-' + (endDateObj.getDate() + 1 ),
                 interval: reportBy,
             }),
             parse: false,
         });
         const ordersStates = await ( response.json() );
-        console.log('ordersStates:');
-        console.log(ordersStates);
         setOrdersStates( ordersStates );
-        setReportDataArray( getDataArray(ordersStates, startDate, endDate) );
+        setCurrentTotalOrder( getTotalOrdersData(ordersStates) );
     }
 
     const getLastOrderStates = async () => {
+        let startDateObj = new Date(startDate);
+        let lastStartDateObj = new Date(startDate);
+        let endDateObj = new Date(endDate);
+        let diffDays = ( endDateObj.getTime() - startDateObj.getTime() ) / (1000 * 3600 * 24) + 1;
+        lastStartDateObj.setDate( startDateObj.getDate() - diffDays );
         const response = await apiFetch({
             path: addQueryArgs(`surecart/v1/stats/orders/`, {
-                start_at: '2022-07-15',
-                end_at: new Date(startDate).toISOString().slice(0, 10),
+                start_at: lastStartDateObj.getFullYear() + '-' + (lastStartDateObj.getMonth() + 1) + '-' + lastStartDateObj.getDate(),
+                end_at: startDateObj.getFullYear() + '-' + (startDateObj.getMonth() + 1) + '-' + ( startDateObj.getDate() + 1 ),
                 interval: reportBy,
             }),
             parse: false,
         });
         const lastOrdersStates = await ( response.json() );
+        setLastTotalOrder( getTotalOrdersData(lastOrdersStates) );   
+    }
 
-        if ( lastOrdersStates?.data?.length !== 0 ) {
-            setlastPeriodOrder( lastOrdersStates?.data[0].count );
-        }   
+    function getTotalOrdersData (ordersStates) {
+        if ( ordersStates === 0 ) {
+            return defaultTotalOrders;
+        }
+
+        if ( ordersStates?.data?.length === 0 ) {
+            return defaultTotalOrders;
+        }
+
+        let reportCount = 0;
+        let reportRevenue = 0;
+        let reportAverage = 0;
+        let reportCurrency = '';
+        ordersStates.data.map( states => {
+            reportCount = reportCount + parseInt( states.count );
+            reportRevenue = reportRevenue + parseInt( states.amount / 100 );
+            reportAverage = reportAverage + parseInt( states.average_amount / 100 );
+            reportCurrency = states.currency;
+        });            
+
+        return {
+            count: reportCount,
+            revenue: reportRevenue,
+            average: reportAverage,
+            currency: reportCurrency,
+        }
     }
 
     function getDatesArray (startDate, endDate) {
@@ -86,7 +122,7 @@ export default () => {
                 s.getDate() + 1
             ))
         }
-        return a;  
+        return a;
     }
 
     function getDataArray (ordersStates, startDate, endDate, types) {
@@ -105,7 +141,7 @@ export default () => {
             let rangeDate = dateObj.getFullYear() + '-' + (dateObj.getMonth() + 1) + '-' + dateObj.getDate();
             reportObj[rangeDate] = ordersstates;
             ordersStatesApiData.push( reportObj );
-        });
+        });            
 
         let getDatesRangs = getDatesArray(startDate, endDate);
 
@@ -167,9 +203,9 @@ export default () => {
             </Fragment>
 
             <ScFlex style={{ '--sc-flex-column-gap': '2em' }}>
-                <Revenue ordersStates={ordersStates} lastPeriodOrder={lastPeriodOrder} reportBy={reportBy} dateRangs={getDatesArray(startDate, endDate)} getDataArray={getDataArray(ordersStates, startDate, endDate,'revenue')} />
-                <Orders ordersStates={ordersStates} lastPeriodOrder={lastPeriodOrder} reportBy={reportBy} dateRangs={getDatesArray(startDate, endDate)} getDataArray={getDataArray(ordersStates, startDate, endDate,'orders')} />
-                <AverageOrderValue ordersStates={ordersStates} lastPeriodOrder={lastPeriodOrder} reportBy={reportBy} dateRangs={getDatesArray(startDate, endDate)} getDataArray={getDataArray(ordersStates, startDate, endDate,'average')} />
+                <Revenue ordersStates={ordersStates} currentTotalOrder={currentTotalOrder} lastTotalOrder={lastTotalOrder} dateRangs={getDatesArray(startDate, endDate)} getDataArray={getDataArray(ordersStates, startDate, endDate,'revenue')} />
+                <Orders ordersStates={ordersStates} currentTotalOrder={currentTotalOrder} lastTotalOrder={lastTotalOrder} dateRangs={getDatesArray(startDate, endDate)} getDataArray={getDataArray(ordersStates, startDate, endDate,'orders')} />
+                <AverageOrderValue ordersStates={ordersStates} currentTotalOrder={currentTotalOrder} lastTotalOrder={lastTotalOrder} dateRangs={getDatesArray(startDate, endDate)} getDataArray={getDataArray(ordersStates, startDate, endDate,'average')} />
             </ScFlex>
         </Fragment>
     );

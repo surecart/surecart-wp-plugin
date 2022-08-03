@@ -13,14 +13,14 @@ export default () => {
     const removeGetStarted = () => {
         wp.data
         .dispatch( 'core/preferences' )
-        .set( 'surecart/dashboard-get-started', 'ScShowGetStartedStatus7', 0 );
+        .set( 'surecart/dashboard-get-started', 'ScShowGetStartedStatus8', 0 );
         setShowGetStarted(0);
     }
 
     useEffect(() => {
         setShowGetStarted( wp.data
         .select( 'core/preferences' )
-        .get( 'surecart/dashboard-get-started', 'ScShowGetStartedStatus7' ) );
+        .get( 'surecart/dashboard-get-started', 'ScShowGetStartedStatus8' ) );
     });
 
     if ( 0 === showGetStarted ) {

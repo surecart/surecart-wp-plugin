@@ -15,16 +15,16 @@ import {
 } from '@surecart/components-react';
 
 export default (props) => {
-    const {ordersStates, lastPeriodOrder, reportBy, dateRangs, getDataArray} = props;
+    const {ordersStates, currentTotalOrder, lastTotalOrder, dateRangs, getDataArray} = props;
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const [currentRevenue, setCurrentRevenue] = useState(0);
+    const [lastRevenue, setLastRevenue] = useState(0);
     const [series, setSeries] = useState([
         {
             name: __( 'Value', 'surecart' ),
             data: []
         },
     ]);
-
-    console.log(getDataArray);
 
     const chart = {
         options: {
@@ -47,7 +47,7 @@ export default (props) => {
             yaxis: {
                 labels: {
                     formatter: function (value) {
-                      return '$'+value;
+                      return '$'+(value/100);
                     }
                 }
             },
@@ -81,15 +81,25 @@ export default (props) => {
     };
 
     useEffect( () => {
-        console.log('getDataArray');
-        console.log(getDataArray);
         setSeries([
             {
               name: __( 'Value', 'surecart' ),
               data: getDataArray,
             },
         ]);
-    }, [getDataArray] );
+
+        if ( currentTotalOrder.length !== 0 ) {
+            setCurrentRevenue( currentTotalOrder.revenue );
+        } else {
+            setCurrentRevenue( 0 );
+        }
+
+        if ( lastTotalOrder.length !== 0 ) {
+            setLastRevenue( lastTotalOrder.revenue );
+        } else {
+            setLastRevenue( 0 );
+        }
+    }, [ordersStates, currentTotalOrder, lastTotalOrder] );
 
     function renderEmpty() {
         return (
@@ -123,15 +133,11 @@ export default (props) => {
         if ( ordersStates === 0 ) {
             return renderLoading();
         }
-    
-        if ( ordersStates?.data?.length === 0 ) {
-            return renderEmpty();
-        }
 
         return (
             <ScCard>   
                 <div className="sc-overview-card__title">
-                    ${ordersStates.data[0].amount} <span style={{'color':'#64748B', 'font-size': '14px'}}>{sprintf(__("vs $%s last period - %s", "surecart"), lastPeriodOrder, reportBy)}</span>
+                    ${currentRevenue} <span style={{'color':'#64748B', 'font-size': '14px'}}>{sprintf(__("vs $%s last period", "surecart"), lastRevenue)}</span>
                 </div>
                 <div id="chart">
                     <Chart options={chart.options} series={series} type="area" height={280} />
