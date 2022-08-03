@@ -8,11 +8,56 @@ SureCart. Based on the [WP Emerge](https://github.com/htmlburger/wpemerge) frame
 
 ## Requirements
 
--   [PHP](http://php.net/) >= 5.5
--   [WordPress](https://wordpress.org/) >= 4.7
+-   [PHP](http://php.net/) >= 7.4
+-   [WordPress](https://wordpress.org/) >= 5.9
 -   [Composer](https://getcomposer.org/)
--   [Node.js](https://nodejs.org/en/) >= 12
--   [Yarn](https://yarnpkg.com/en/) or NPM
+-   [Node.js](https://nodejs.org/en/) >= 18
+-   [Yarn](https://yarnpkg.com/en/)
+
+## Getting Started
+
+### Composer Install
+Be sure you have composer installed on your machine, then install 
+composer dependencies.
+
+```
+composer install
+```
+
+### Installing Yarn
+Be sure you are running Node.js >=16.10. The preferred way to manage Yarn is through Corepack, a new binary shipped with all Node.js releases starting from 16.10. It acts as an intermediary between you and Yarn, and lets you use different package manager versions across multiple projects without having to check-in the Yarn binary anymore.
+
+To enable it, run the following command:
+```
+corepack enable
+```
+
+### Install JavaScript Dependencies
+Run `yarn` to install javascript dependencies across the monorepo.
+```
+yarn
+```
+
+### Bootstrap files
+This will initialize the build.
+```
+yarn bootstrap
+```
+
+### Developing
+Running `yarn dev` will start a development process to watch files and build 
+them without needing to run additional commands.
+```
+yarn dev
+```
+
+### Building
+Running `yarn plugin:release` will build the files for production and copy
+them to a subfolder called @surecart.
+
+```
+yarn plugin:release
+```
 
 ## Directory structure
 
