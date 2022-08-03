@@ -33,7 +33,7 @@ corepack enable
 ```
 
 ### Install JavaScript Dependencies
-Run `yarn` to install javascript dependencies across the monorepo.
+Run `yarn` in the plugin root directory to install javascript dependencies across the monorepo.
 ```
 yarn
 ```
