@@ -11,7 +11,7 @@ SureCart. Based on the [WP Emerge](https://github.com/htmlburger/wpemerge) frame
 -   [PHP](http://php.net/) >= 7.4
 -   [WordPress](https://wordpress.org/) >= 5.9
 -   [Composer](https://getcomposer.org/)
--   [Node.js](https://nodejs.org/en/) >= 18
+-   [Node.js](https://nodejs.org/en/) >= 16.10
 -   [Yarn](https://yarnpkg.com/en/)
 
 ## Getting Started
