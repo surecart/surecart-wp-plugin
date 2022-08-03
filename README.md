@@ -59,6 +59,27 @@ them to a subfolder called @surecart.
 yarn plugin:release
 ```
 
+## Troubleshooting
+
+### Error running `yarn dev` even after running `yarn bootstrap`.
+- Navigate to `packages/components` and run `yarn build`.
+- Navigate to `packages/components-react` and run `yarn build`.
+
+### `Error: error:0308010C:digital envelope routines::unsupported`
+This can happen if you are running OpenSSL and node v17+ ([see issue](https://github.com/webpack/webpack/issues/14532))
+
+Linux & Mac OS (windows git bash)-
+
+```
+export NODE_OPTIONS=--openssl-legacy-provider
+```
+
+Windows command prompt-
+
+```
+set NODE_OPTIONS=--openssl-legacy-provider
+```
+
 ## Directory structure
 
 ```
