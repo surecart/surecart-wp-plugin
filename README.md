@@ -8,11 +8,77 @@ SureCart. Based on the [WP Emerge](https://github.com/htmlburger/wpemerge) frame
 
 ## Requirements
 
--   [PHP](http://php.net/) >= 5.5
--   [WordPress](https://wordpress.org/) >= 4.7
+-   [PHP](http://php.net/) >= 7.4
+-   [WordPress](https://wordpress.org/) >= 5.9
 -   [Composer](https://getcomposer.org/)
--   [Node.js](https://nodejs.org/en/) >= 12
--   [Yarn](https://yarnpkg.com/en/) or NPM
+-   [Node.js](https://nodejs.org/en/) >= 16.10
+-   [Yarn](https://yarnpkg.com/en/)
+
+## Getting Started
+
+### Composer Install
+Be sure you have composer installed on your machine, then install 
+composer dependencies.
+
+```
+composer install
+```
+
+### Installing Yarn
+Be sure you are running Node.js >=16.10. The preferred way to manage Yarn is through Corepack, a new binary shipped with all Node.js releases starting from 16.10. It acts as an intermediary between you and Yarn, and lets you use different package manager versions across multiple projects without having to check-in the Yarn binary anymore.
+
+To enable it, run the following command:
+```
+corepack enable
+```
+
+### Install JavaScript Dependencies
+Run `yarn` in the plugin root directory to install javascript dependencies across the monorepo.
+```
+yarn
+```
+
+### Bootstrap files
+This will initialize the build.
+```
+yarn bootstrap
+```
+
+### Developing
+Running `yarn dev` will start a development process to watch files and build 
+them without needing to run additional commands.
+```
+yarn dev
+```
+
+### Building
+Running `yarn plugin:release` will build the files for production and copy
+them to a subfolder called @surecart.
+
+```
+yarn plugin:release
+```
+
+## Troubleshooting
+
+### Error running `yarn dev` even after running `yarn bootstrap`.
+- Navigate to `packages/components` and run `yarn build`.
+- Navigate to `packages/components-react` and run `yarn build`.
+
+### `Error: error:0308010C:digital envelope routines::unsupported`
+This can happen if you are running OpenSSL and node v17+ ([see issue](https://github.com/webpack/webpack/issues/14532))
+
+Linux & Mac OS (windows git bash)-
+
+```
+export NODE_OPTIONS=--openssl-legacy-provider
+```
+
+Windows command prompt-
+
+```
+set NODE_OPTIONS=--openssl-legacy-provider
+```
 
 ## Directory structure
 

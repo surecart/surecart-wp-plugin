@@ -24,7 +24,7 @@
 		"src/"
 	],
 	"dependencies": {
-		"@surecart/components": "^0.0.8"
+		"@surecart/components": "^0.0.9"
 	},
 	"devDependencies": {
 		"@types/jest": "23.3.9",

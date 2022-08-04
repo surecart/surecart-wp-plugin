@@ -29,7 +29,7 @@ export default ({
 			`}
 		>
 			<div
-				onClick={() => setIsOpen(!isOpen)}
+				onClick={() => setIsOpen && setIsOpen(!isOpen)}
 				css={css`
 					cursor: pointer;
 					flex: 1;
@@ -55,13 +55,13 @@ export default ({
 						align-items: center;
 					`}
 				>
-					{buttons}
+					{!!buttons && buttons}
 				</div>
 				{collapsible && (
 					<ScButton
 						type="text"
 						circle
-						onClick={() => setIsOpen(!isOpen)}
+						onClick={() => setIsOpen && setIsOpen(!isOpen)}
 					>
 						<svg
 							css={css`

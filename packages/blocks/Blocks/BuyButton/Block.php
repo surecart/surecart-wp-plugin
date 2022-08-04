@@ -15,7 +15,7 @@ class Block extends BaseBlock {
 	 *
 	 * @return string
 	 */
-	public function render( $attributes, $content ) {
+	public function render( $attributes, $content = '' ) {
 
 		return \SureCart::blocks()->render(
 			'blocks/buy-button',

@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,15 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.0.4 - August 4, 2022 =
+* Improvement: Add To Cart and Buy Button Shortcodes.
+* Improvement: Ability to copy shortcodes on product pricing page.
+* Improvement: Compatibility with Litespeed "Cache REST API" option.
+* Fix: Missing translations.
+* Fix: PHP development logging notices.
+* Fix: Console block validation logging.
+* Fix: Update dependencies to resolve security issue in fetch library.
 
 = 1.0.3 - July 27, 2022 =
 * Improvement: Add ability to turn off slide-out cart.

@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-07-30T14:18:55+00:00\n"
+"POT-Creation-Date: 2022-08-04T14:45:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -263,7 +263,7 @@ msgstr ""
 #: coupons/modules/Code.js:113
 #: product-groups/Show.js:159
 #: products/components/product/ActionsDropdown.js:29
-#: products/modules/Prices/Price/Header.js:143
+#: products/modules/Prices/Price/Header.js:171
 #: products/modules/SingleDownload.js:200
 msgid "Un-Archive"
 msgstr ""
@@ -276,7 +276,7 @@ msgstr ""
 #: coupons/modules/Code.js:114
 #: product-groups/Show.js:160
 #: products/components/product/ActionsDropdown.js:30
-#: products/modules/Prices/Price/Header.js:144
+#: products/modules/Prices/Price/Header.js:172
 #: products/modules/SingleDownload.js:201
 msgid "Archive"
 msgstr ""
@@ -482,7 +482,7 @@ msgid "%1d%% off"
 msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersListTable.php:327
-#: sc-order-confirmation.js:88
+#: sc-order-confirmation.js:89
 msgid "Paypal is taking a closer look at this payment. It’s required for some payments and normally takes up to 3 business days."
 msgstr ""
 
@@ -505,7 +505,7 @@ msgstr ""
 #: coupons/modules/Code.js:92
 #: product-groups/Show.js:135
 #: products/EditProduct.js:189
-#: products/modules/Prices/Price/Header.js:169
+#: products/modules/Prices/Price/Header.js:196
 #: products/modules/SingleDownload.js:180
 #: util.js:46
 msgid "Archived"
@@ -549,7 +549,7 @@ msgstr ""
 #: invoices/store/entities.js:70
 #: orders/store/entities.js:70
 #: products/modules/Prices/NewPrice/index.js:156
-#: products/modules/Prices/Price/Header.js:61
+#: products/modules/Prices/Price/Header.js:74
 #: subscriptions/show/Show.js:184
 #: Blocks/Dashboard/CustomerSubscriptions/Block.php:79
 #: Controllers/SubscriptionController.php:97
@@ -675,7 +675,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:226
 #: products/modules/Prices/NewPrice/index.js:152
-#: products/modules/Prices/Price/Header.js:55
+#: products/modules/Prices/Price/Header.js:68
 #: sc-subscription-status-badge2.js:55
 #: sc-subscription-switch.js:134
 msgid "Payment Plan"
@@ -3156,7 +3156,7 @@ msgstr ""
 msgid "(no title)"
 msgstr ""
 
-#: src/WordPress/ShortcodesServiceProvider.php:61
+#: src/WordPress/ShortcodesServiceProvider.php:66
 msgid "This form is not available or has been deleted."
 msgstr ""
 
@@ -3859,7 +3859,7 @@ msgstr ""
 #: sc-invoices-list.js:71
 #: sc-login-form.js:58
 #: sc-login-form.js:91
-#: sc-order-confirmation.js:66
+#: sc-order-confirmation.js:67
 #: sc-orders-list.js:58
 #: sc-orders-list.js:71
 #: sc-payment-method-create.js:26
@@ -3958,7 +3958,7 @@ msgstr ""
 #: coupons/modules/Code.js:126
 #: products/components/product/ActionsDropdown.js:40
 #: products/modules/integrations/Integration.js:210
-#: products/modules/Prices/Price/Header.js:157
+#: products/modules/Prices/Price/Header.js:184
 #: settings/tax-region/RegistrationForm.js:201
 #: sc-payment-methods-list.js:126
 msgid "Delete"
@@ -4775,7 +4775,7 @@ msgid "Payment Type"
 msgstr ""
 
 #: products/modules/Prices/NewPrice/index.js:148
-#: products/modules/Prices/Price/Header.js:67
+#: products/modules/Prices/Price/Header.js:80
 msgid "One Time"
 msgstr ""
 
@@ -4784,6 +4784,7 @@ msgid "Create Price"
 msgstr ""
 
 #: products/modules/Prices/Price/Copy.js:16
+#: products/modules/Prices/Price/CopyInput.js:16
 msgid "Error copying to clipboard"
 msgstr ""
 
@@ -4791,16 +4792,24 @@ msgstr ""
 msgid "Copy Buy Link"
 msgstr ""
 
-#: products/modules/Prices/Price/Header.js:35
+#: products/modules/Prices/Price/CopyInput.js:11
+msgid "Copied to clipboard."
+msgstr ""
+
+#: products/modules/Prices/Price/CopyInput.js:29
+msgid "Copy"
+msgstr ""
+
+#: products/modules/Prices/Price/Header.js:47
 #: subscriptions/edit/modules/Schedule.js:14
 msgid "Free Trial"
 msgstr ""
 
-#: products/modules/Prices/Price/Header.js:94
+#: products/modules/Prices/Price/Header.js:107
 msgid "Custom Amount"
 msgstr ""
 
-#: products/modules/Prices/Price/Header.js:113
+#: products/modules/Prices/Price/Header.js:126
 #: util/translations.js:6
 #: util/translations.js:50
 #: price.js:32
@@ -4808,15 +4817,54 @@ msgstr ""
 msgid "every"
 msgstr ""
 
-#: products/modules/Prices/Price/index.js:36
+#: products/modules/Prices/Price/Header.js:157
+msgid "Links..."
+msgstr ""
+
+#: products/modules/Prices/Price/Header.js:243
+msgid "Links and Shortcodes"
+msgstr ""
+
+#: products/modules/Prices/Price/Header.js:249
+msgid "Price ID"
+msgstr ""
+
+#: products/modules/Prices/Price/Header.js:254
+msgid "Links"
+msgstr ""
+
+#: products/modules/Prices/Price/Header.js:258
+#: controls/index.js:82
+#: formats/index.js:24
+#: formats/ShowPrice.js:87
+msgid "Buy Link"
+msgstr ""
+
+#: products/modules/Prices/Price/Header.js:265
+msgid "Shortcodes"
+msgstr ""
+
+#: products/modules/Prices/Price/Header.js:269
+msgid "Add To Cart Button Shortcode"
+msgstr ""
+
+#: products/modules/Prices/Price/Header.js:273
+msgid "Buy Button Shortcode"
+msgstr ""
+
+#: products/modules/Prices/Price/Header.js:278
+msgid "Done"
+msgstr ""
+
+#: products/modules/Prices/Price/index.js:37
 msgid "Un-Archive this price? This will make the product purchaseable again."
 msgstr ""
 
-#: products/modules/Prices/Price/index.js:40
+#: products/modules/Prices/Price/index.js:41
 msgid "Archive this price? This product will not be purchaseable and all unsaved changes will be lost."
 msgstr ""
 
-#: products/modules/Prices/Price/index.js:63
+#: products/modules/Prices/Price/index.js:64
 msgid "Permanently delete this price? You cannot undo this action."
 msgstr ""
 
@@ -7120,12 +7168,6 @@ msgstr ""
 msgid "Update Link"
 msgstr ""
 
-#: controls/index.js:82
-#: formats/index.js:24
-#: formats/ShowPrice.js:87
-msgid "Buy Link"
-msgstr ""
-
 #: formats/AddPriceUI.js:83
 msgid "Create A Buy Link"
 msgstr ""
@@ -9056,24 +9098,24 @@ msgid "Åland Islands"
 msgstr ""
 
 #: default-i18n.js:470
-#: fetch.js:443
+#: fetch.js:442
 msgctxt "text direction"
 msgid "ltr"
 msgstr ""
 
-#: fetch.js:1108
+#: fetch.js:1845
 msgid "The response is not a valid JSON response."
 msgstr ""
 
-#: fetch.js:1151
+#: fetch.js:1888
 msgid "An unknown error occurred."
 msgstr ""
 
-#: fetch.js:1221
+#: fetch.js:1958
 msgid "Media upload failed. If this is a photo or a large image, please scale it down and try again."
 msgstr ""
 
-#: fetch.js:1339
+#: fetch.js:2076
 msgid "You are probably offline."
 msgstr ""
 
@@ -9226,11 +9268,11 @@ msgstr ""
 msgid "On Hold"
 msgstr ""
 
-#: sc-order-confirmation.js:97
+#: sc-order-confirmation.js:98
 msgid "Order not found."
 msgstr ""
 
-#: sc-order-confirmation.js:97
+#: sc-order-confirmation.js:98
 msgid "This order could not be found. Please try again."
 msgstr ""
 
