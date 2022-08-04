@@ -1,5 +1,12 @@
-import { __, _n } from '@wordpress/i18n';
 import DataTable from '../DataTable';
+import {
+	ScButton,
+	ScFormatDate,
+	ScFormatNumber,
+	ScOrderStatusBadge,
+	ScText,
+} from '@surecart/components-react';
+import { __, _n } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
 export default ({
@@ -24,22 +31,22 @@ export default ({
 			items={(data || [])
 				.sort((a, b) => b.created_at - a.created_at)
 				.map(({ checkout, number, id, created_at }) => {
-					const { line_items, total_amount, currency, status } =
+					const { line_items, amount_due, currency, status } =
 						checkout;
 					return {
 						number: (
-							<sc-text
+							<ScText
 								truncate
 								style={{
 									'--font-weight':
 										'var(--sc-font-weight-semibold)',
 								}}
 							>
-								{number || id}
-							</sc-text>
+								#{number || id}
+							</ScText>
 						),
 						items: (
-							<sc-text
+							<ScText
 								truncate
 								style={{
 									'--color': 'var(--sc-color-gray-500)',
@@ -54,31 +61,31 @@ export default ({
 									),
 									line_items?.pagination?.count || 0
 								)}
-							</sc-text>
+							</ScText>
 						),
 						total: (
-							<sc-format-number
+							<ScFormatNumber
 								type="currency"
 								currency={currency}
-								value={total_amount}
-							></sc-format-number>
+								value={amount_due}
+							></ScFormatNumber>
 						),
 						status: (
-							<sc-order-status-badge
+							<ScOrderStatusBadge
 								status={status}
-							></sc-order-status-badge>
+							></ScOrderStatusBadge>
 						),
 						date: (
-							<sc-format-date
+							<ScFormatDate
 								type="timestamp"
 								month="short"
 								day="numeric"
 								year="numeric"
 								date={created_at}
-							></sc-format-date>
+							></ScFormatDate>
 						),
 						actions: (
-							<sc-button
+							<ScButton
 								href={addQueryArgs('admin.php', {
 									page: 'sc-orders',
 									action: 'edit',
@@ -87,7 +94,7 @@ export default ({
 								size="small"
 							>
 								{__('View', 'surecart')}
-							</sc-button>
+							</ScButton>
 						),
 					};
 				})}
