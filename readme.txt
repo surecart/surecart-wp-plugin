@@ -246,6 +246,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 = 1.0.4 - August 4, 2022 =
 * Improvement: Add To Cart and Buy Button Shortcodes.
 * Improvement: Ability to copy shortcodes on product pricing page.
+* Improvement: Compatibility with Litespeed "Cache REST API" option.
 * Fix: Missing translations.
 * Fix: PHP development notices
 * Fix: Console block validation logging.
