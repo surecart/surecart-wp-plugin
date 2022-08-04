@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { css, jsx, Global } from '@emotion/core';
 import { useRef, useEffect, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 import Litepicker from "litepicker";
@@ -41,8 +41,8 @@ export default ({ startDate, setStartDate, endDate, setEndDate }) => {
   }, [dateRef]);
 
   return (
-    <div
-      css={css`
+    <div>
+      <Global styles={css`
         .litepicker {
           font-size: 1em;
         }
@@ -128,8 +128,7 @@ export default ({ startDate, setStartDate, endDate, setEndDate }) => {
           font-size: 16px;
           line-height: 28px;
         }
-      `}
-    >
+      `} />
       <div className="component-base-control">
         <div className="components-base-control__field">
           <input

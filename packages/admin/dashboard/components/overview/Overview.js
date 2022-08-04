@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
+import { dateI18n, date } from '@wordpress/date';
 import { Fragment, useState, useEffect } from '@wordpress/element';
 
 import Revenue from './Revenue';
@@ -28,6 +29,12 @@ export default () => {
     const [ordersStates, setOrdersStates] = useState(0);
     const [currentTotalOrder, setCurrentTotalOrder] = useState(0);
     const [lastTotalOrder, setLastTotalOrder] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const [dateRangs, setDateRangs] = useState(null);
+    const [dataArrayAvenue, setDataArrayAvenue] = useState(null);
+    const [dataArrayOrders, setDataArrayOrders] = useState(null);
+    const [dataArrayAverage, setDataArrayAverage] = useState(null);
+    const [error, setError] = useState( __('You don\'t have any data for report.', 'surecart') );
 
     const reportOrderByList = {
         day: __('Daily', 'surecart'),
@@ -53,23 +60,44 @@ export default () => {
     useEffect( () => {
         getOrderStates();
         getLastOrderStates();
+        setDateRangs( getDatesArray(startDate, endDate, reportBy) );
     }, [endDate, reportBy] );
+
+    useEffect( () => {
+        setDataArrayAvenue( getDataArray(ordersStates,'revenue') );
+        setDataArrayOrders( getDataArray(ordersStates, 'orders') );
+        setDataArrayAverage( getDataArray(ordersStates, 'average') );
+    }, [ordersStates] );
 
     const getOrderStates = async () => {
         let startDateObj = new Date(startDate);
         let endDateObj = new Date(endDate);
         setOrdersStates(0);
-        const response = await apiFetch({
-            path: addQueryArgs(`surecart/v1/stats/orders/`, {
-                start_at: startDateObj.getFullYear() + '-' + (startDateObj.getMonth() + 1) + '-' + startDateObj.getDate(),
-                end_at: endDateObj.getFullYear() + '-' + (endDateObj.getMonth() + 1) + '-' + endDateObj.getDate(),
-                interval: reportBy,
-            }),
-            parse: false,
-        });
-        const ordersStates = await ( response.json() );
-        setOrdersStates( ordersStates );
-        setCurrentTotalOrder( getTotalOrdersData(ordersStates) );
+
+        setError(false);
+		setLoading(true);
+		try {
+			const response = await apiFetch({
+                path: addQueryArgs(`surecart/v1/stats/orders/`, {
+                    start_at: dateI18n('Y-m-d H:i:s a', startDateObj.getTime(), true),
+                    end_at: dateI18n('Y-m-d H:i:s a', endDateObj.getTime(), true),
+                    interval: reportBy,
+                }),
+                parse: false,
+            });
+            const ordersStates = await ( response.json() );
+            setOrdersStates( ordersStates );
+            setCurrentTotalOrder( getTotalOrdersData(ordersStates) );
+		} catch (e) {
+            const errorObj = await ( e.json() );
+            setOrdersStates(1);
+            setError(
+                errorObj?.message ||
+                    __('You don\'t have any data for report.', 'surecart')
+            );
+		} finally {
+			setLoading(false);
+		}
     }
 
     const getLastOrderStates = async () => {
@@ -78,16 +106,34 @@ export default () => {
         let endDateObj = new Date(endDate);
         let diffDays = ( endDateObj.getTime() - startDateObj.getTime() ) / (1000 * 3600 * 24) + 1;
         lastStartDateObj.setDate( startDateObj.getDate() - diffDays );
-        const response = await apiFetch({
-            path: addQueryArgs(`surecart/v1/stats/orders/`, {
-                start_at: lastStartDateObj.getFullYear() + '-' + (lastStartDateObj.getMonth() + 1) + '-' + lastStartDateObj.getDate(),
-                end_at: startDateObj.getFullYear() + '-' + (startDateObj.getMonth() + 1) + '-' + startDateObj.getDate(),
-                interval: reportBy,
-            }),
-            parse: false,
-        });
-        const lastOrdersStates = await ( response.json() );
-        setLastTotalOrder( getTotalOrdersData(lastOrdersStates) );   
+
+        setError(false);
+		setLoading(true);
+		try {
+			const response = await apiFetch({
+                path: addQueryArgs(`surecart/v1/stats/orders/`, {
+                    start_at: dateI18n('Y-m-d H:i:s a', lastStartDateObj, true),
+                    end_at: dateI18n('Y-m-d H:i:s a', startDateObj, true),
+                    interval: reportBy,
+                }),
+                parse: false,
+            });
+            if (response) {
+                const lastOrdersStates = await ( response.json() );
+                setLastTotalOrder( getTotalOrdersData(lastOrdersStates) );
+			} else {
+				setLastTotalOrder(0);
+			}
+		} catch (e) {
+            const errorObj = await ( e.json() );
+            setError(
+                errorObj?.message ||
+                    __('You don\'t have any data for report.', 'surecart')
+            );
+			setLastTotalOrder(0);
+		} finally {
+			setLoading(false);
+		} 
     }
 
     function getTotalOrdersData (ordersStates) {
@@ -132,8 +178,8 @@ export default () => {
         return a;
     }
 
-    function getDataArray (ordersStates, startDate, endDate, types) {
-        if ( ordersStates === 0 ) {
+    function getDataArray (ordersStates, types) {
+        if ( ordersStates === 0 || ordersStates === 1 ) {
             return;
         }
 
@@ -141,35 +187,42 @@ export default () => {
             return;
         }
 
+        console.log('ordersStatesApiData:');
+        console.log(ordersStates);
         let ordersStatesApiData = [];
         let reportObj = {};
         ordersStates.data.map( ordersstates => {
             let dateObj   = new Date(ordersstates.interval_at * 1000);
-            let rangeDate = dateObj.getFullYear() + '-' + (dateObj.getMonth() + 1) + '-' + dateObj.getDate();
+            let rangeDate = date('Y-m-d', dateObj);
 
             if ( 'week' === reportBy ) {
-                rangeDate = dateObj.getFullYear() + '-' + (dateObj.getMonth() + 1) + '-' + dateObj.getDate();
+                rangeDate = date('Y-m-d', dateObj);
             } else if ( 'month' === reportBy ) {
-                rangeDate = dateObj.getFullYear() + '-' + (dateObj.getMonth() + 1);
+                rangeDate = date('Y-m', dateObj);
             } else if ( 'year' === reportBy ) {
                 rangeDate = dateObj.getFullYear();
             }
 
             reportObj[rangeDate] = ordersstates;
             ordersStatesApiData.push( reportObj );
-        });            
+        });
 
-        let getDatesRangs = getDatesArray(startDate, endDate, reportBy);
+        //console.log('getDatesRangs:');
+        //console.log(dateRangs);
 
-        return getDatesRangs.map(function(getDatesRang){
+        return dateRangs.map(function(getDatesRang){
             let dateObj   = new Date(getDatesRang);
-            let rangeDate = dateObj.getFullYear() + '-' + (dateObj.getMonth() + 1) + '-' + dateObj.getDate();
+            let rangeDate = date('Y-m-d', dateObj);
             let isCorrectRange = 0;
+            let rangeDateEnd = '';
 
             if ( 'week' === reportBy ) {
-                rangeDate = dateObj.getFullYear() + '-' + (dateObj.getMonth() + 1) + '-' + dateObj.getDate();
+                rangeDate    = date('Y-m-d', dateObj);
+                rangeDateEnd = new Date(getDatesRang).getDate() + 7;
+                rangeDateEnd = date('Y-m-d', rangeDateEnd);
             } else if ( 'month' === reportBy ) {
-                rangeDate = dateObj.getFullYear() + '-' + (dateObj.getMonth() + 1);
+                dateObj   = new Date(getDatesRang);
+                rangeDate = date('Y-m', dateObj);
             } else if ( 'year' === reportBy ) {
                 rangeDate = dateObj.getFullYear();
             }
@@ -237,9 +290,9 @@ export default () => {
             </Fragment>
 
             <ScFlex style={{ '--sc-flex-column-gap': '2em' }}>
-                <Revenue ordersStates={ordersStates} currentTotalOrder={currentTotalOrder} lastTotalOrder={lastTotalOrder} dateRangs={getDatesArray(startDate, endDate, reportBy)} getDataArray={getDataArray(ordersStates, startDate, endDate,'revenue')} reportBy={reportBy} />
-                <Orders ordersStates={ordersStates} currentTotalOrder={currentTotalOrder} lastTotalOrder={lastTotalOrder} dateRangs={getDatesArray(startDate, endDate, reportBy)} getDataArray={getDataArray(ordersStates, startDate, endDate,'orders')} reportBy={reportBy} />
-                <AverageOrderValue ordersStates={ordersStates} currentTotalOrder={currentTotalOrder} lastTotalOrder={lastTotalOrder} dateRangs={getDatesArray(startDate, endDate, reportBy)} getDataArray={getDataArray(ordersStates, startDate, endDate,'average')} reportBy={reportBy} />
+                <Revenue ordersStates={ordersStates} currentTotalOrder={currentTotalOrder} lastTotalOrder={lastTotalOrder} dateRangs={dateRangs} getDataArray={dataArrayAvenue} reportBy={reportBy} errorMsg={error} />
+                <Orders ordersStates={ordersStates} currentTotalOrder={currentTotalOrder} lastTotalOrder={lastTotalOrder} dateRangs={dateRangs} getDataArray={dataArrayOrders} reportBy={reportBy} errorMsg={error} />
+                <AverageOrderValue ordersStates={ordersStates} currentTotalOrder={currentTotalOrder} lastTotalOrder={lastTotalOrder} dateRangs={dateRangs} getDataArray={dataArrayAverage} reportBy={reportBy} errorMsg={error} />
             </ScFlex>
         </Fragment>
     );

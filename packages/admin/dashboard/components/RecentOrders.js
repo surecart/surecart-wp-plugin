@@ -39,7 +39,6 @@ export default () => {
         });
         const ordersList = await ( response.json() );
         setOrders( ordersList );
-        console.log( ordersList );
     }
 
     function renderEmpty() {

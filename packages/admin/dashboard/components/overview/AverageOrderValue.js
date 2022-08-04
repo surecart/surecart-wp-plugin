@@ -3,19 +3,24 @@ import { css, jsx } from '@emotion/core';
 import { sprintf, __ } from '@wordpress/i18n';
 import Chart from "react-apexcharts";
 import { useEffect, useState } from 'react';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
 
 import {
     ScCard, 
     ScDashboardModule,
     ScSkeleton,
-    ScDivider,
     ScEmpty,
 } from '@surecart/components-react';
 
 export default (props) => {
-    const {ordersStates, currentTotalOrder, lastTotalOrder, dateRangs, getDataArray, reportBy} = props;
+    const {
+        ordersStates,
+        currentTotalOrder,
+        lastTotalOrder,
+        dateRangs,
+        getDataArray,
+        reportBy,
+        errorMsg
+    } = props;
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const [currentAverage, setCurrentAverage] = useState(0);
     const [lastAverage, setLastAverage] = useState(0);
@@ -114,7 +119,7 @@ export default (props) => {
             `}
             >
                 <slot name="empty">
-                    <ScEmpty className='shopping-bag-empty' icon="bar-chart-2">{__("You don't have any data for report.", 'surecart')}</ScEmpty>
+                    <ScEmpty className='shopping-bag-empty' icon="bar-chart-2">{errorMsg}</ScEmpty>
                 </slot>
             </ScCard>
         );
@@ -134,8 +139,12 @@ export default (props) => {
     }
     
     function orderChart() {
-        if ( ordersStates === 0 ) {
+        if ( ordersStates === 0 || currentTotalOrder === 0 ) {
             return renderLoading();
+        }
+
+        if ( ordersStates === 1 ) {
+            return renderEmpty();
         }
 
         return (
