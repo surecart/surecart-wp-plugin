@@ -8,21 +8,17 @@ import {
 	ScMenu,
 	ScMenuItem,
 	ScFormatNumber,
-	ScMenuDivider,
 	ScIcon,
 	ScDialog,
-	ScInput,
 	ScForm,
 	ScDivider,
 	ScSkeleton,
 	ScFlex,
 } from '@surecart/components-react';
-import { Icon, moreHorizontalMobile } from '@wordpress/icons';
 import { addQueryArgs } from '@wordpress/url';
 
 import ToggleHeader from '../../../../components/ToggleHeader';
 import { intervalString } from '../../../../util/translations';
-import Copy from './Copy';
 import { useState } from 'react';
 import CopyInput from './CopyInput';
 
@@ -145,19 +141,6 @@ export default ({
 					/>
 				</ScButton>
 				<ScMenu>
-					{price?.id && (
-						<ScMenuItem onClick={() => setCopyDialog(true)}>
-							<ScIcon
-								slot="prefix"
-								style={{
-									opacity: 0.5,
-								}}
-								name="clipboard"
-							/>
-							{__('Links...', 'surecart')}
-						</ScMenuItem>
-					)}
-					<ScMenuDivider />
 					{price?.id && !!onArchive && (
 						<ScMenuItem onClick={onArchive}>
 							<ScIcon
@@ -197,14 +180,14 @@ export default ({
 			) : (
 				<>
 					{!!scData?.checkout_page_url && price?.id && (
-						<Copy
+						<ScButton
 							className={'sc-price-copy'}
-							url={addQueryArgs(scData?.checkout_page_url, {
-								line_items: [
-									{ price_id: price?.id, quantity: 1 },
-								],
-							})}
-						></Copy>
+							size="small"
+							onClick={() => setCopyDialog(true)}
+						>
+							<ScIcon name="clipboard" slot="prefix" />
+							{__('Copy Links', 'surecart')}
+						</ScButton>
 					)}
 				</>
 			)}
@@ -244,16 +227,7 @@ export default ({
 				open={copyDialog}
 				onScRequestClose={() => setCopyDialog(false)}
 			>
-				<ScForm>
-					<CopyInput
-						label={__('Price ID', 'surecart')}
-						text={price?.id}
-					/>
-
-					<ScDivider style={{ '--spacing': '1em' }}>
-						{__('Links', 'surecart')}
-					</ScDivider>
-
+				<ScForm style={{ '--sc-form-row-spacing': '1.25em' }}>
 					<CopyInput
 						label={__('Buy Link', 'surecart')}
 						text={addQueryArgs(scData?.checkout_page_url, {
@@ -261,9 +235,7 @@ export default ({
 						})}
 					/>
 
-					<ScDivider style={{ '--spacing': '1em' }}>
-						{__('Shortcodes', 'surecart')}
-					</ScDivider>
+					<ScDivider>{__('Shortcodes', 'surecart')}</ScDivider>
 
 					<CopyInput
 						label={__('Add To Cart Button Shortcode', 'surecart')}
@@ -273,7 +245,15 @@ export default ({
 						label={__('Buy Button Shortcode', 'surecart')}
 						text={`[sc_buy_button]Buy Now [sc_line_item price_id=${price?.id} quantity=1][/sc_buy_button]`}
 					/>
+
+					<ScDivider>{__('Miscellaneous', 'surecart')}</ScDivider>
+
+					<CopyInput
+						label={__('Price ID', 'surecart')}
+						text={price?.id}
+					/>
 				</ScForm>
+
 				<ScButton
 					onClick={() => setCopyDialog(false)}
 					type="primary"
