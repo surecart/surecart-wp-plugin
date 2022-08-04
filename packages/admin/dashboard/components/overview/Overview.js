@@ -79,7 +79,7 @@ export default () => {
 		setError(false);
 		setLoading(true);
 		try {
-			const response = await apiFetch({
+			const ordersStates = await apiFetch({
 				path: addQueryArgs(`surecart/v1/stats/orders/`, {
 					start_at: dateI18n(
 						'Y-m-d H:i:s a',
@@ -93,9 +93,7 @@ export default () => {
 					),
 					interval: reportBy,
 				}),
-				parse: false,
 			});
-			const ordersStates = await response.json();
 			setOrdersStates(ordersStates);
 			setCurrentTotalOrder(getTotalOrdersData(ordersStates));
 		} catch (e) {
