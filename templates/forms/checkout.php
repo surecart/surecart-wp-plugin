@@ -58,7 +58,7 @@ return [
 	<!-- /wp:surecart/divider -->
 
 	<!-- wp:surecart/total -->
-	<sc-line-item-total total="total" size="large" show-currency="1" class="wp-block-surecart-total"><span slot="description">Total</span><span slot="subscription-title">Total Due Today</span></sc-line-item-total>
+	<sc-line-item-total total="total" size="large" show-currency="1" class="wp-block-surecart-total"><span slot="title">Total</span><span slot="subscription-title">Total Due Today</span></sc-line-item-total>
 	<!-- /wp:surecart/total --></sc-order-summary>
 	<!-- /wp:surecart/totals -->
 

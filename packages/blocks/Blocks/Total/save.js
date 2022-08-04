@@ -2,7 +2,7 @@ export default ({ attributes }) => {
 	const { text, subscription_text, className } = attributes;
 	return (
 		<sc-line-item-total
-			class={`sc-line-item-total ${className}`}
+			class={className}
 			total="total"
 			size="large"
 			show-currency="1"
