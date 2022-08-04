@@ -243,6 +243,14 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.0.4 - August 4, 2022 =
+* Improvement: Add To Cart and Buy Button Shortcodes.
+* Improvement: Ability to copy shortcodes on product pricing page.
+* Fix: Missing translations.
+* Fix: PHP development notices
+* Fix: Console block validation logging.
+* Fix: Update dependencies to resolve security issue in fetch.
+
 = 1.0.3 - July 27, 2022 =
 * Improvement: Add ability to turn off slide-out cart.
 * Fix: Issue with purchases that do not require a payment method not triggering integrations.
