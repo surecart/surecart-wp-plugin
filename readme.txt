@@ -248,9 +248,9 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * Improvement: Ability to copy shortcodes on product pricing page.
 * Improvement: Compatibility with Litespeed "Cache REST API" option.
 * Fix: Missing translations.
-* Fix: PHP development notices
+* Fix: PHP development logging notices.
 * Fix: Console block validation logging.
-* Fix: Update dependencies to resolve security issue in fetch.
+* Fix: Update dependencies to resolve security issue in fetch library.
 
 = 1.0.3 - July 27, 2022 =
 * Improvement: Add ability to turn off slide-out cart.
