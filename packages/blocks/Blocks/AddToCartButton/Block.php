@@ -49,7 +49,7 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 							],
 						]
 					),
-					'label' => $attributes['button_text'] ?? __( 'Buy Now', 'order' ),
+					'label' => $attributes['button_text'] ?? __( 'Buy Now', 'surecart' ),
 				]
 			);
 		}
