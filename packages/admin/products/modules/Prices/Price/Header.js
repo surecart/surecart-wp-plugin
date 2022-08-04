@@ -227,7 +227,7 @@ export default ({
 				open={copyDialog}
 				onScRequestClose={() => setCopyDialog(false)}
 			>
-				<ScForm>
+				<ScForm style={{ '--sc-form-row-spacing': '1.25em' }}>
 					<CopyInput
 						label={__('Buy Link', 'surecart')}
 						text={addQueryArgs(scData?.checkout_page_url, {
@@ -235,9 +235,7 @@ export default ({
 						})}
 					/>
 
-					<ScDivider style={{ '--spacing': '1em' }}>
-						{__('Shortcodes', 'surecart')}
-					</ScDivider>
+					<ScDivider>{__('Shortcodes', 'surecart')}</ScDivider>
 
 					<CopyInput
 						label={__('Add To Cart Button Shortcode', 'surecart')}
@@ -248,9 +246,7 @@ export default ({
 						text={`[sc_buy_button]Buy Now [sc_line_item price_id=${price?.id} quantity=1][/sc_buy_button]`}
 					/>
 
-					<ScDivider style={{ '--spacing': '1em' }}>
-						{__('Miscellaneous', 'surecart')}
-					</ScDivider>
+					<ScDivider>{__('Miscellaneous', 'surecart')}</ScDivider>
 
 					<CopyInput
 						label={__('Price ID', 'surecart')}
