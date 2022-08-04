@@ -1,11 +1,10 @@
-import { __, _n } from '@wordpress/i18n';
-import { store as coreStore } from '@wordpress/core-data';
-import { useState } from '@wordpress/element';
-import { useSelect } from '@wordpress/data';
-
 import OrdersDataTable from '../../components/data-tables/OrdersDataTable';
-import PrevNextButtons from '../../ui/PrevNextButtons';
 import usePagination from '../../hooks/usePagination';
+import PrevNextButtons from '../../ui/PrevNextButtons';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
+import { useState } from '@wordpress/element';
+import { __, _n } from '@wordpress/i18n';
 
 export default ({ customerId }) => {
 	const [page, setPage] = useState(1);
@@ -46,7 +45,7 @@ export default ({ customerId }) => {
 
 	return (
 		<OrdersDataTable
-			title={__('Customer Orders', 'surecart')}
+			title={__('Orders', 'surecart')}
 			columns={{
 				number: {
 					label: __('Number', 'surecart'),
