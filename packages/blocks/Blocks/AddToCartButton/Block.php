@@ -16,7 +16,7 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 	 *
 	 * @return string
 	 */
-	public function render( $attributes, $content ) {
+	public function render( $attributes, $content = '' ) {
 		// need a price id.
 		if ( empty( $attributes['price_id'] ) ) {
 			return '';
