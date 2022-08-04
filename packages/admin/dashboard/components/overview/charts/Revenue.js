@@ -22,7 +22,7 @@ export default (props) => {
 			className={className}
 		>
 			<ScCard
-				style={{ '--sc-card-padding': 'var(--sc-spacing-x-large)' }}
+				style={{ '--sc-card-padding': 'var(--sc-spacing-xx-large)' }}
 			>
 				<ChartSummary
 					loading={loading}

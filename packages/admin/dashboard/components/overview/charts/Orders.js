@@ -21,7 +21,9 @@ export default (props) => {
 			heading={__('Orders', 'surecart')}
 			className={className}
 		>
-			<ScCard>
+			<ScCard
+				style={{ '--sc-card-padding': 'var(--sc-spacing-xx-large)' }}
+			>
 				<ChartSummary
 					loading={loading}
 					data={data.map(formatData)}
