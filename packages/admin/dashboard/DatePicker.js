@@ -44,6 +44,20 @@ export default ({ startDate, setStartDate, endDate, setEndDate }) => {
 		<div>
 			<Global
 				styles={css`
+					:root {
+						--litepicker-day-color-hover: var(
+							--sc-color-primary-500
+						);
+						--litepicker-is-start-color-bg: var(
+							--sc-color-primary-500
+						);
+						--litepicker-is-end-color-bg: var(
+							--sc-color-primary-500
+						);
+						--litepicker-is-in-range-color: var(
+							--sc-color-brand-pastel-green
+						);
+					}
 					.litepicker {
 						font-size: 1em;
 					}
@@ -123,7 +137,7 @@ export default ({ startDate, setStartDate, endDate, setEndDate }) => {
 
 					.litepicker .container__footer .button-apply {
 						background: #007cba;
-						background: var(--wp-admin-theme-color);
+						background: var(--sc-color-primary-500);
 						color: #fff;
 						text-decoration: none;
 						text-shadow: none;

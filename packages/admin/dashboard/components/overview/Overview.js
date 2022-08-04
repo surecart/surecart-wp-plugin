@@ -7,6 +7,7 @@ import { Fragment, useState, useEffect } from '@wordpress/element';
 import Revenue from './charts/Revenue';
 import Orders from './charts/Orders';
 import AverageOrderValue from './charts/AverageOrderValue';
+import Error from '../../../components/Error';
 import DatePicker from '../../DatePicker';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
@@ -59,7 +60,8 @@ export default () => {
 			});
 			setData(data);
 		} catch (e) {
-			setError(e?.message || __('Something went wrong', 'surecart'));
+			console.error(e);
+			setError(e);
 		} finally {
 			setLoading(false);
 		}
@@ -90,7 +92,8 @@ export default () => {
 			});
 			setPreviousData(data);
 		} catch (e) {
-			setError(e?.message || __('Something went wrong', 'surecart'));
+			console.error(e);
+			setError(e);
 		} finally {
 			setLoading(false);
 		}
@@ -130,6 +133,8 @@ export default () => {
 				<ScDivider style={{ '--spacing': '0.5em' }} />
 			</Fragment>
 
+			<Error error={error} setError={setError} margin="80px" />
+
 			<ScFlex style={{ '--sc-flex-column-gap': '2em' }} flexWrap="wrap">
 				<Revenue
 					css={chartCSS}
@@ -152,35 +157,6 @@ export default () => {
 					data={data}
 					previousData={previousData}
 				/>
-				{/* <Revenue
-					loading={loading}
-					currentTotalOrder={currentTotalOrder}
-					lastTotalOrder={lastTotalOrder}
-					dateRangs={dateRangs}
-					getDataArray={dataArrayAvenue}
-					reportBy={reportBy}
-					errorMsg={error}
-				/>
-				<Orders
-					loading={loading}
-					ordersStates={ordersStates}
-					currentTotalOrder={currentTotalOrder}
-					lastTotalOrder={lastTotalOrder}
-					dateRangs={dateRangs}
-					getDataArray={dataArrayOrders}
-					reportBy={reportBy}
-					errorMsg={error}
-				/>
-				<AverageOrderValue
-					loading={loading}
-					ordersStates={ordersStates}
-					currentTotalOrder={currentTotalOrder}
-					lastTotalOrder={lastTotalOrder}
-					dateRangs={dateRangs}
-					getDataArray={dataArrayAverage}
-					reportBy={reportBy}
-					errorMsg={error}
-				/> */}
 			</ScFlex>
 		</Fragment>
 	);

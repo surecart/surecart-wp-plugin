@@ -35,11 +35,13 @@ export default () => {
 				expand: [
 					'line_items',
 					'charge',
+					'customer',
 					'payment_method',
 					'payment_intent',
 					'payment_method.card',
 				],
 				status: ['paid'],
+				per_page: 10,
 			}),
 			parse: false,
 		});
@@ -109,13 +111,18 @@ export default () => {
 		}
 
 		return orders.map((order) => {
-			const { email, name, created_at, url } = order;
+			const { email, name, created_at, id, customer } = order;
 			return (
 				<ScStackedListRow
 					style={{
 						'--columns': '5',
 						'--sc-list-row-background-color': 'transparent',
 					}}
+					href={addQueryArgs('admin.php', {
+						page: 'sc-orders',
+						action: 'edit',
+						id: id,
+					})}
 				>
 					<div>
 						<ScFormatDate
@@ -138,10 +145,10 @@ export default () => {
 						</span>
 					</div>
 					<div>
-						{name}
+						{customer?.name}
 						<br />
 						<span style={{ color: '#6C727F', 'font-size': '14px' }}>
-							{email}
+							{customer?.email}
 						</span>
 					</div>
 					<div>{renderStatusBadge(order)}</div>
@@ -189,7 +196,7 @@ export default () => {
 			`}
 		>
 			<span slot="heading">{__('Recent Orders', 'surecart')}</span>
-			<ScButton slot="end" type="link" href={'admin.php?page=sc-orders'}>
+			<ScButton slot="end" type="text" href={'admin.php?page=sc-orders'}>
 				{__('View All', 'surecart')}
 				<ScIcon slot="suffix" name="chevron-right" />
 			</ScButton>

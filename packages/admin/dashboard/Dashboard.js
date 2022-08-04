@@ -5,7 +5,7 @@ import { css, jsx } from '@emotion/core';
 import DashboardModel from '../templates/DashboardModel';
 
 import { __ } from '@wordpress/i18n';
-import { Fragment, useState } from '@wordpress/element';
+import { Fragment } from '@wordpress/element';
 import Logo from '../templates/Logo';
 
 import GetStarted from './components/GetStarted';
