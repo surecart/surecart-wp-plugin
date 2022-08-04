@@ -1,11 +1,11 @@
 /** @jsx jsx */
-import { __ } from '@wordpress/i18n';
 import DataTable from '../../../components/DataTable';
+import { intervalString } from '../../../util/translations';
+import PriceSelector from '@admin/components/PriceSelector';
 import { css, jsx } from '@emotion/core';
 import { ScBlockUi, ScInput, ScPriceInput } from '@surecart/components-react';
-import PriceSelector from '@admin/components/PriceSelector';
-import { intervalString } from '../../../util/translations';
 import { useEffect, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 export default ({ subscription, updateSubscription, upcoming, loading }) => {
 	const [price, setPrice] = useState(null);
@@ -18,7 +18,6 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 		}
 	}, [lineItem]);
 
-	console.log({ price });
 	return (
 		<div
 			css={css`

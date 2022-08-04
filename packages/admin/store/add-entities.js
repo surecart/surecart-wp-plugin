@@ -117,6 +117,13 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'period',
+		kind: 'surecart',
+		label: __('Billing Period', 'surecart'),
+		baseURL: 'surecart/v1/periods',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'product',
 		kind: 'surecart',
 		label: __('Product', 'surecart'),

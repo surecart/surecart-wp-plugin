@@ -1,25 +1,22 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-
-import { __ } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
-import { useSelect } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
-import { Fragment } from '@wordpress/element';
 import Box from '../../../ui/Box';
 import { intervalString } from '../../../util/translations';
+import LineItem from './LineItem';
+import { css, jsx } from '@emotion/core';
 import {
 	ScButton,
-	ScCcLogo,
 	ScDivider,
-	ScFlex,
 	ScFormatNumber,
 	ScIcon,
 	ScLineItem,
 	ScProductLineItem,
 	ScSkeleton,
 } from '@surecart/components-react';
-import LineItem from './LineItem';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
+import { Fragment } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
 
 export default ({ order, checkout, loading }) => {
 	const line_items = checkout?.line_items?.data;

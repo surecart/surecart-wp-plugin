@@ -1,35 +1,27 @@
 /** @jsx jsx */
-import { __ } from '@wordpress/i18n';
 import DataTable from '../../../components/DataTable';
-import { css, jsx } from '@emotion/core';
-import { useEffect } from 'react';
-import useEntity from '../../../mixins/useEntity';
-import { ScFormatDate } from '@surecart/components-react';
+import useEntity from '../../../hooks/useEntity';
 import { intervalString } from '../../../util/translations';
+import { css, jsx } from '@emotion/core';
+import { ScFormatDate } from '@surecart/components-react';
+import { __ } from '@wordpress/i18n';
+import { useEffect } from 'react';
 
 export default ({ subscription }) => {
 	const { pending_update } = subscription || {};
 	const { price: price_id } = pending_update || {};
 
-	const { price, fetchPrice, getRelation, isLoading } = useEntity(
+	const { price, hasLoadedPrice } = useEntity(
 		'price',
-		price_id || subscription?.price
-	);
-	const product = getRelation('product');
-
-	useEffect(() => {
-		if (price_id) {
-			fetchPrice({
-				query: {
-					expand: ['product'],
-				},
-			});
+		price_id || subscription?.price,
+		{
+			expand: ['product'],
 		}
-	}, [price_id]);
+	);
 
 	return (
 		<DataTable
-			loading={isLoading}
+			loading={!hasLoadedPrice}
 			title={__('Pending Update', 'surecart')}
 			columns={{
 				product: {
@@ -56,7 +48,7 @@ export default ({ subscription }) => {
 				{
 					product: (
 						<div>
-							{product?.name}
+							{price?.product?.name}
 							<div
 								css={css`
 									opacity: 0.5;

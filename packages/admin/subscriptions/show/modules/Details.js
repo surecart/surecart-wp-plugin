@@ -1,12 +1,11 @@
 /** @jsx jsx */
-
-import { __, sprintf } from '@wordpress/i18n';
-import { css, jsx } from '@emotion/core';
 import { formatTime } from '../../../util/time';
+import { css, jsx } from '@emotion/core';
 import {
 	ScFormatDate,
 	ScSubscriptionStatusBadge,
 } from '@surecart/components-react';
+import { __, sprintf } from '@wordpress/i18n';
 
 export default ({ subscription, customer, product, loading }) => {
 	if (!subscription?.id) {
@@ -125,13 +124,6 @@ export default ({ subscription, customer, product, loading }) => {
 						`}
 					>
 						<h1>{customer?.email} </h1>
-						<p>
-							{!!product &&
-								sprintf(
-									__('for %s', 'surecart'),
-									product?.name
-								)}
-						</p>
 					</div>
 					{sprintf(
 						__('Created on %s', 'surecart'),

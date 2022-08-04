@@ -68,6 +68,7 @@ return [
 		\SureCart\Rest\MediaRestServiceProvider::class,
 		\SureCart\Rest\SubscriptionRestServiceProvider::class,
 		\SureCart\Rest\SubscriptionProtocolRestServiceProvider::class,
+		\SureCart\Rest\PeriodRestServiceProvider::class,
 		\SureCart\Rest\SettingsRestServiceProvider::class,
 		\SureCart\Rest\PortalProtocolRestServiceProvider::class,
 		\SureCart\Rest\TaxProtocolRestServiceProvider::class,

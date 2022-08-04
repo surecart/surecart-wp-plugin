@@ -159,7 +159,7 @@ class OrdersListTable extends ListTable {
 			[
 				'status' => $this->getStatus(),
 			]
-		)->with( [ 'checkout', 'checkout.charge', 'checkout.payment_intent', 'payment_intent.payment_method', 'payment_method.card', 'checkout.purchases' ] )
+		)->with( [ 'checkout', 'checkout.charge', 'checkout.customer', 'checkout.payment_intent', 'payment_intent.payment_method', 'payment_method.card', 'checkout.purchases' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'orders' ),
@@ -176,13 +176,10 @@ class OrdersListTable extends ListTable {
 	public function getStatus() {
 		$status = sanitize_text_field( wp_unslash( $_GET['status'] ?? 'paid' ) );
 		if ( 'paid' === $status ) {
-			return [ 'paid', 'completed', 'requires_approval' ];
+			return [ 'paid' ];
 		}
 		if ( 'failed' === $status ) {
-			return [ 'payment_failed', 'payment_intent_canceled' ];
-		}
-		if ( 'incomplete' === $status ) {
-			return [ 'finalized' ];
+			return [ 'payment_failed' ];
 		}
 		if ( 'all' === $status ) {
 			return [];
@@ -198,7 +195,7 @@ class OrdersListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_total( $order ) {
-		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $order->checkout->currency ) ) . '" value="' . (float) $order->checkout->total_amount . '"></sc-format-number>';
+		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $order->checkout->currency ) ) . '" value="' . (float) $order->checkout->amount_due . '"></sc-format-number>';
 	}
 
 	/**
@@ -267,13 +264,13 @@ class OrdersListTable extends ListTable {
 		ob_start();
 		?>
 		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $order->id ) ); ?>">
-			<?php echo sanitize_text_field( $order->number ?? $order->id ); ?>
+			#<?php echo sanitize_text_field( $order->number ?? $order->id ); ?>
 		</a>
 		<br />
 		<a  aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $order->id ) ); ?>">
 			<?php
 			// translators: Customer name.
-			echo sprintf( esc_html__( 'By %s', 'surecart' ), esc_html( $order->checkout->name ?? $order->checkout->email ) );
+			echo sprintf( esc_html__( 'By %s', 'surecart' ), esc_html( $order->checkout->customer->name ?? $order->checkout->customer->email ) );
 			?>
 		</a>
 		<?php

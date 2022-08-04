@@ -1,11 +1,35 @@
-import { __ } from '@wordpress/i18n';
-import { useEffect, useState } from 'react';
 import PurchasesDataTable from '../../../components/data-tables/purchases-data-table';
-import useEntities from '../../../mixins/useEntities';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
+import { __, _n } from '@wordpress/i18n';
 
-export default ({ loading }) => {
-	const [page, setPage] = useState(1);
-	const { purchases } = useEntities('purchase');
+export default ({ subscriptionId }) => {
+	const { purchases, loading } = useSelect(
+		(select) => {
+			if (!subscriptionId) {
+				return {
+					purchases: [],
+					loading: true,
+				};
+			}
+			const entityData = [
+				'surecart',
+				'purchase',
+				{
+					subscription_ids: subscriptionId ? [subscriptionId] : null,
+					expand: ['product'],
+				},
+			];
+			return {
+				purchases: select(coreStore)?.getEntityRecords?.(...entityData),
+				loading: !select(coreStore)?.hasFinishedResolution?.(
+					'getEntityRecords',
+					[...entityData]
+				),
+			};
+		},
+		[subscriptionId]
+	);
 
 	return (
 		<PurchasesDataTable
@@ -18,8 +42,6 @@ export default ({ loading }) => {
 				},
 			}}
 			data={purchases}
-			page={page}
-			setPage={setPage}
 			isLoading={loading}
 		/>
 	);

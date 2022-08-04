@@ -41,7 +41,7 @@ export default (props) => {
 				display: inline-block;
 			`}
 		>
-			<ScButton onClick={toggleVisible}>
+			<ScButton onClick={toggleVisible} caret>
 				{currentDate ? (
 					<ScFormatDate
 						date={currentDate}

@@ -1,16 +1,15 @@
-import { render } from '@wordpress/element';
-
 /**
- * register store entities.
+ * register store and entities.
  */
-import '@admin/schema/register';
+import '../../store/add-entities';
 
 /**
  * App
  */
-import Show from './Show';
+import ShowSubscription from './ShowSubscription';
+import { render } from '@wordpress/element';
 
 /**
  * Render
  */
-render(<Show />, document.getElementById('app'));
+render(<ShowSubscription />, document.getElementById('app'));

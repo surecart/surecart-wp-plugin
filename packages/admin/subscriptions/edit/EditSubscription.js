@@ -1,23 +1,18 @@
 /** @jsx jsx */
-import { __ } from '@wordpress/i18n';
-import { Fragment, useEffect, useState } from '@wordpress/element';
-import { addQueryArgs } from '@wordpress/url';
-import { store as noticesStore } from '@wordpress/notices';
-import { css, jsx } from '@emotion/react';
-import apiFetch from '@wordpress/api-fetch';
-
-// template
-import Template from '../../templates/SingleModel';
-
-// modules
-import Price from './modules/Price';
-import PaymentMethod from './modules/PaymentMethod';
-import Schedule from './modules/Trial';
-import Sidebar from './Sidebar';
-
-// components
 import ErrorFlash from '../../components/ErrorFlash';
-import { store as dataStore } from '@surecart/data';
+import useDirty from '../../hooks/useDirty';
+import useEntity from '../../hooks/useEntity';
+import Logo from '../../templates/Logo';
+import SaveButton from '../../templates/SaveButton';
+import Template from '../../templates/SingleModel';
+import UpdateModel from '../../templates/UpdateModel';
+import Sidebar from './Sidebar';
+import PaymentMethod from './modules/PaymentMethod';
+import Price from './modules/Price';
+import Schedule from './modules/Trial';
+import Trial from './modules/Trial';
+import UpcomingPeriod from './modules/UpcomingPeriod';
+import { css, jsx } from '@emotion/react';
 import {
 	ScBreadcrumb,
 	ScBreadcrumbs,
@@ -25,20 +20,20 @@ import {
 	ScFlex,
 	ScFormatDate,
 	ScIcon,
-	ScSkeleton,
 	ScSwitch,
 } from '@surecart/components-react';
-import useDirty from '../../hooks/useDirty';
+import { store as dataStore } from '@surecart/data';
+import apiFetch from '@wordpress/api-fetch';
+import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
-import UpdateModel from '../../templates/UpdateModel';
-import Logo from '../../templates/Logo';
-import useEntity from '../../hooks/useEntity';
-import UpcomingPeriod from './modules/UpcomingPeriod';
-import SaveButton from '../../templates/SaveButton';
-import Trial from './modules/Trial';
+import { Fragment, useEffect, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { store as noticesStore } from '@wordpress/notices';
+import { addQueryArgs } from '@wordpress/url';
 
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
+	const { receiveEntityRecords } = useDispatch(coreStore);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 	const { saveDirtyRecords } = useDirty();
@@ -64,6 +59,55 @@ export default () => {
 
 	const fetchUpcomingPeriod = async () => {
 		setLoadingUpcoming(true);
+
+		try {
+			const response = await makeRequest({ preview: true });
+			setUpcoming(response);
+		} catch (e) {
+			console.error(e);
+			handleError(e);
+		} finally {
+			setLoadingUpcoming(false);
+		}
+	};
+
+	const onSubmit = async () => {
+		setLoadingUpcoming(true);
+
+		try {
+			const subscription = await makeRequest({ preview: false });
+			await receiveEntityRecords(
+				'surecart',
+				'subscription',
+				subscription,
+				undefined,
+				true,
+				subscription
+			);
+			createSuccessNotice(__('Subscription updated.', 'surecart'), {
+				type: 'snackbar',
+			});
+			window.location.assign(
+				addQueryArgs('admin.php', {
+					page: 'sc-subscriptions',
+					action: 'show',
+					id: id,
+				})
+			);
+		} catch (e) {
+			console.error(e);
+			handleError(e);
+		} finally {
+			setLoadingUpcoming(false);
+		}
+	};
+
+	/**
+	 * Make the request
+	 */
+	const makeRequest = ({ preview = true }) => {
+		if (!subscription?.id) return;
+
 		const {
 			id,
 			ad_hoc_amount,
@@ -74,56 +118,35 @@ export default () => {
 			price,
 		} = subscription;
 
-		try {
-			const response = await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(
-					`surecart/v1/subscriptions/${id}/upcoming_period`,
-					{
-						skip_proration: skipProration,
-						update_behavior: updateBehavior,
-						skip_product_group_validation: true,
-						expand: [
-							'period.checkout',
-							'checkout.line_items',
-							'line_item.price',
-							'price.product',
-							'period.subscription',
-						],
-					}
-				),
-				data: {
-					...(ad_hoc_amount ? { ad_hoc_amount } : {}),
-					...(cancel_at_period_end ? { cancel_at_period_end } : {}),
-					...(trial_end_at ? { trial_end_at } : {}),
-					...(discount ? { discount } : {}),
-					quantity,
-					purge_pending_update: true,
-					price,
-				},
-			});
-			setUpcoming(response);
-		} catch (e) {
-			console.error(e);
-			handleError(e);
-		} finally {
-			setLoadingUpcoming(false);
-		}
-	};
-
-	/**
-	 * Handle the form submission
-	 */
-	const onSubmit = async () => {
-		try {
-			await saveDirtyRecords();
-			// save success.
-			createSuccessNotice(__('Subscription updated.', 'surecart'), {
-				type: 'snackbar',
-			});
-		} catch (e) {
-			handleError(e);
-		}
+		return apiFetch({
+			method: 'PATCH',
+			path: addQueryArgs(
+				`surecart/v1/subscriptions/${id}/${
+					preview ? 'upcoming_period' : ''
+				}`,
+				{
+					skip_proration: skipProration,
+					update_behavior: updateBehavior,
+					skip_product_group_validation: true,
+					expand: [
+						'period.checkout',
+						'checkout.line_items',
+						'line_item.price',
+						'price.product',
+						'period.subscription',
+					],
+				}
+			),
+			data: {
+				...(ad_hoc_amount ? { ad_hoc_amount } : {}),
+				...(cancel_at_period_end ? { cancel_at_period_end } : {}),
+				...(discount ? { discount } : {}),
+				trial_end_at,
+				quantity,
+				purge_pending_update: true,
+				price,
+			},
+		});
 	};
 
 	const handleError = (e) => {
@@ -136,6 +159,7 @@ export default () => {
 
 	return (
 		<UpdateModel
+			onSubmit={onSubmit}
 			title={
 				<div
 					css={css`
@@ -160,7 +184,16 @@ export default () => {
 							<Logo display="block" />
 						</ScBreadcrumb>
 						<ScBreadcrumb href="admin.php?page=sc-subscriptions">
-							{__('Orders', 'surecart')}
+							{__('Subscription', 'surecart')}
+						</ScBreadcrumb>
+						<ScBreadcrumb
+							href={addQueryArgs('admin.php', {
+								page: 'sc-subscriptions',
+								action: 'show',
+								id: id,
+							})}
+						>
+							{__('Subscription Details', 'surecart')}
 						</ScBreadcrumb>
 						<ScBreadcrumb>
 							<ScFlex style={{ gap: '1em' }}>
@@ -187,7 +220,7 @@ export default () => {
 						busy={savingSubscription}
 					>
 						{updateBehavior === 'immediate'
-							? __('Update and Charge Now', 'surecart')
+							? __('Update Subscription', 'surecart')
 							: __('Schedule Update', 'surecart')}
 					</SaveButton>
 				</ScFlex>
@@ -196,7 +229,7 @@ export default () => {
 				<>
 					<UpcomingPeriod
 						upcoming={upcoming}
-						loading={loadingUpcoming}
+						loading={!hasLoadedSubscription || loadingUpcoming}
 						skipProration={skipProration}
 						setSkipProration={setSkipProration}
 						updateBehavior={updateBehavior}
@@ -213,6 +246,11 @@ export default () => {
 					priceId={subscription?.price?.id || subscription?.price}
 				/>
 				<Trial
+					subscription={subscription}
+					updateSubscription={editSubscription}
+					loading={!hasLoadedSubscription}
+				/>
+				<PaymentMethod
 					subscription={subscription}
 					updateSubscription={editSubscription}
 					loading={!hasLoadedSubscription}

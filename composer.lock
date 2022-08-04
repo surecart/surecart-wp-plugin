@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d7241048ca2066c6a92205d13597086e",
+    "content-hash": "af22cc195c851c565dddd4e3e0767d95",
     "packages": [
         {
             "name": "composer/installers",
@@ -469,6 +469,51 @@
                 "source": "https://github.com/ralouphie/getallheaders/tree/develop"
             },
             "time": "2019-03-08T08:55:37+00:00"
+        },
+        {
+            "name": "sultann/wp-query-builder",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sultann/wp-query-builder.git",
+                "reference": "2710ae36d33edd4c10dca7290a2e43125243af79"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sultann/wp-query-builder/zipball/2710ae36d33edd4c10dca7290a2e43125243af79",
+                "reference": "2710ae36d33edd4c10dca7290a2e43125243af79",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PluginEver\\QueryBuilder\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "MD Sultan Nasir Uddin",
+                    "email": "manikdrmc@gmail.com"
+                }
+            ],
+            "description": "WP Query Builder is a lightweight and efficient SQL Query Builder based on wpdb for WordPress. It supports complicated query generation.",
+            "keywords": [
+                "database",
+                "query builder",
+                "wordpress"
+            ],
+            "support": {
+                "issues": "https://github.com/sultann/wp-query-builder/issues",
+                "source": "https://github.com/sultann/wp-query-builder/tree/v1.0.2"
+            },
+            "time": "2020-06-14T15:12:46+00:00"
         },
         {
             "name": "typisttech/imposter",

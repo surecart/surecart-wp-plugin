@@ -1,18 +1,22 @@
-import { __ } from '@wordpress/i18n';
-import Box from '../../../ui/Box';
 import DatePicker from '../../../components/DatePicker';
-import { ScButton, ScFormControl } from '@surecart/components-react';
+import Box from '../../../ui/Box';
+import { ScButton, ScFlex, ScFormControl } from '@surecart/components-react';
+import { __ } from '@wordpress/i18n';
 
 export default ({ subscription, updateSubscription, loading }) => {
 	return (
 		<Box title={__('Trial', 'surecart')} loading={loading}>
-			<div className="trial-ends">
-				<ScFormControl
-					label={
-						subscription?.trial_end_at
-							? __('Free Trial Ends', 'surecart')
-							: __('Free Trial', 'surecart')
-					}
+			<ScFormControl
+				label={
+					subscription?.trial_end_at
+						? __('Free Trial Ends', 'surecart')
+						: __('Free Trial', 'surecart')
+				}
+			>
+				<ScFlex
+					className="trial-ends"
+					alignItems="center"
+					justifyContent="flex-start"
 				>
 					<DatePicker
 						placeholder={__('Add Free Trial', 'surecart')}
@@ -28,12 +32,18 @@ export default ({ subscription, updateSubscription, loading }) => {
 							});
 						}}
 					/>
-				</ScFormControl>
-
-				{!!subscription?.trial_end_at && (
-					<ScButton type="text">{__('Clear', 'surecart')}</ScButton>
-				)}
-			</div>
+					{!!subscription?.trial_end_at && (
+						<ScButton
+							type="text"
+							onClick={() =>
+								updateSubscription({ trial_end_at: null })
+							}
+						>
+							{__('Remove Trial', 'surecart')}
+						</ScButton>
+					)}
+				</ScFlex>
+			</ScFormControl>
 		</Box>
 	);
 };
