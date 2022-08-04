@@ -274,7 +274,11 @@ export default ({
 						text={`[sc_buy_button]Buy Now [sc_line_item price_id=${price?.id} quantity=1][/sc_buy_button]`}
 					/>
 				</ScForm>
-				<ScButton type="primary" slot="footer">
+				<ScButton
+					onClick={() => setCopyDialog(false)}
+					type="primary"
+					slot="footer"
+				>
 					{__('Done', 'surecart')}
 				</ScButton>
 			</ScDialog>
