@@ -44,16 +44,8 @@ export default () => {
 			setLoading(true);
 			const { data } = await apiFetch({
 				path: addQueryArgs(`surecart/v1/stats/orders/`, {
-					start_at: dateI18n(
-						'Y-m-d H:i:s a',
-						startDateObj.getTime(),
-						true
-					),
-					end_at: dateI18n(
-						'Y-m-d H:i:s a',
-						endDateObj.getTime(),
-						true
-					),
+					start_at: new Date(startDateObj).toISOString(),
+					end_at: new Date(endDateObj).toISOString(),
 					interval: reportBy,
 					currency,
 				}),
@@ -85,8 +77,8 @@ export default () => {
 			setLoading(true);
 			const { data } = await apiFetch({
 				path: addQueryArgs(`surecart/v1/stats/orders/`, {
-					start_at: dateI18n('Y-m-d H:i:s a', lastStartDateObj, true),
-					end_at: dateI18n('Y-m-d H:i:s a', startDateObj, true),
+					start_at: new Date(lastStartDateObj).toISOString(),
+					end_at: new Date(startDateObj).toISOString(),
 					interval: reportBy,
 				}),
 			});
@@ -141,6 +133,7 @@ export default () => {
 					loading={loading}
 					currency={currency}
 					data={data}
+					reportBy={reportBy}
 					previousData={previousData}
 				/>
 				<Orders
@@ -148,6 +141,7 @@ export default () => {
 					loading={loading}
 					currency={currency}
 					data={data}
+					reportBy={reportBy}
 					previousData={previousData}
 				/>
 				<AverageOrderValue
@@ -155,6 +149,7 @@ export default () => {
 					loading={loading}
 					currency={currency}
 					data={data}
+					reportBy={reportBy}
 					previousData={previousData}
 				/>
 			</ScFlex>
