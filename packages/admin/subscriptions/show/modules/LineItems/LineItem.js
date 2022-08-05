@@ -7,7 +7,7 @@ export default ({ label, currency, value }) => {
 			<ScFormatNumber
 				slot="price"
 				style={{
-					'font-weight': 'var(--sc-font-weight-semibold)',
+					fontWeight: 'var(--sc-font-weight-semibold)',
 					color: 'var(--sc-color-gray-800)',
 				}}
 				type="currency"

@@ -3,7 +3,12 @@ import DataTable from '../../../components/DataTable';
 import { intervalString } from '../../../util/translations';
 import PriceSelector from '@admin/components/PriceSelector';
 import { css, jsx } from '@emotion/core';
-import { ScBlockUi, ScInput, ScPriceInput } from '@surecart/components-react';
+import {
+	ScBlockUi,
+	ScInput,
+	ScPriceInput,
+	ScFormatNumber,
+} from '@surecart/components-react';
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
@@ -77,7 +82,7 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 										<div>
 											{price?.product?.name}
 											<div style={{ opacity: 0.5 }}>
-												<sc-format-number
+												<ScFormatNumber
 													type="currency"
 													value={
 														subscription?.ad_hoc_amount ||
@@ -110,7 +115,10 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 								value={price?.id}
 								onSelect={(price) => {
 									if (price) {
-										updateSubscription({ price });
+										updateSubscription({
+											price,
+											ad_hoc_amount: 500,
+										});
 									}
 								}}
 								requestQuery={{
@@ -140,7 +148,7 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 								`}
 							>
 								<div>
-									<sc-format-number
+									<ScFormatNumber
 										type="currency"
 										value={lineItem?.total_amount}
 										currency={lineItem?.price?.currency}

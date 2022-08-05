@@ -34,7 +34,7 @@ export default ({ subscription, updateSubscription, loading }) => {
 					/>
 					{!!subscription?.trial_end_at && (
 						<ScButton
-							type="text"
+							type="default"
 							onClick={() =>
 								updateSubscription({ trial_end_at: null })
 							}

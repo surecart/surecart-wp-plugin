@@ -4,6 +4,7 @@ import Logo from '../../templates/Logo';
 import Template from '../../templates/UpdateModel';
 import Cancel from './modules/Cancel';
 import CurrentPlan from './modules/CurrentPlan';
+import Customer from './modules/Customer';
 import Details from './modules/Details';
 import PendingUpdate from './modules/PendingUpdate';
 import Periods from './modules/Periods';
@@ -43,9 +44,10 @@ export default () => {
 				'period.checkout',
 				'checkout.line_items',
 				'line_item.price',
-				'customer',
 				'price',
 				'price.product',
+				'customer',
+				// 'customer.balances',
 				'purchase',
 				'order',
 				'payment_method',
@@ -174,7 +176,15 @@ export default () => {
 					</ScBreadcrumbs>
 				</div>
 			}
-			sidebar={<Purchases subscriptionId={id} />}
+			sidebar={
+				<>
+					<Customer
+						customer={subscription?.customer}
+						loading={!hasLoadedSubscription}
+					/>
+					<Purchases subscriptionId={id} />
+				</>
+			}
 			button={
 				<ScDropdown
 					position="bottom-right"
