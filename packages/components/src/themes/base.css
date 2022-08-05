@@ -345,8 +345,8 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-input-icon-color: var(--sc-color-gray-500);
   --sc-input-icon-color-hover: var(--sc-color-gray-300);
   --sc-input-icon-color-focus: var(--sc-color-gray-300);
-  --sc-input-placeholder-color: var(--sc-color-gray-600);
-  --sc-input-placeholder-color-disabled: var(--sc-color-gray-500);
+  --sc-input-placeholder-color: var(--sc-color-gray-500);
+  --sc-input-placeholder-color-disabled: var(--sc-color-gray-400);
   --sc-input-help-text-color: var(--sc-color-gray-400);
   --sc-input-label-color: var(--sc-color-gray-400);
 
@@ -413,6 +413,16 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   background-color: var(--sc-color-primary-900);
   border-color: var(--sc-color-primary-700);
   color: var(--sc-color-primary-300);
+}
+
+[data-theme='dark'] sc-button[type='text']::part(base) {
+  color: var(--sc-color-gray-400);
+}
+
+[data-theme='dark'] sc-button[type='text']:not([disabled])::part(base):active,
+[data-theme='dark'] sc-button[type='text']:not([disabled])::part(base):hover,
+[data-theme='dark'] sc-button[type='text']:not([disabled])::part(base):focus {
+  color: var(--sc-color-gray-300);
 }
 
 /* Card */

@@ -303,20 +303,20 @@
   background-color: var(--sc-color-success-700);
   color: var(--sc-color-white);
 }
-/* gray */
-.button--outline.button--gray {
+/* Info */
+.button--outline.button--info {
   border-color: var(--sc-color-gray-500);
   color: var(--sc-color-gray-500);
 }
-.button--outline.button--gray:hover:not(.button--disabled) {
+.button--outline.button--info:hover:not(.button--disabled) {
   background-color: var(--sc-color-gray-500);
   color: var(--sc-color-white);
 }
-.button--outline.button--gray:focus:not(.button--disabled) {
+.button--outline.button--info:focus:not(.button--disabled) {
   border-color: var(--sc-color-gray-500);
   box-shadow: 0 0 0 var(--sc-focus-ring-width) var(--sc-color-gray-500) / var(--sc-focus-ring-alpha);
 }
-.button--outline.button--gray:active:not(.button--disabled) {
+.button--outline.button--info:active:not(.button--disabled) {
   border-color: var(--sc-color-gray-700);
   background-color: var(--sc-color-gray-700);
   color: var(--sc-color-white);
