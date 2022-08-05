@@ -1,10 +1,18 @@
 export default {
   title: 'Components/Themes',
+  argTypes: {
+    theme: {
+      control: {
+        type: 'select',
+      },
+      options: ['dark', 'light'],
+    },
+  },
 };
 
 const Template = ({ theme }) => {
   localStorage.clear();
-  return `<div data-theme="${theme}" style="background: var(--sc-color-gray-900); height: 100%; padding: 40px;">
+  return `<div data-theme="${theme}" style="${theme === 'dark' && 'background: var(--sc-color-gray-900);'} height: 100%; padding: 40px;">
   <sc-form>
     <sc-input label="Test" help="Help text" placeholder="placeholder"><span slot="prefix">Prefix</span><span slot="suffix">Suffix</span></sc-input>
     <sc-input label="Test" help="Help text" value="test" placeholder="placeholder" clearable name="name" type="text"><span slot="prefix">Prefix</span><span slot="suffix">Suffix</span></sc-input>
