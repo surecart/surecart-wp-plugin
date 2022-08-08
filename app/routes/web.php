@@ -25,6 +25,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 	->middleware( 'webhooks' )
 	->handle( 'WebhookController@receive' );
 
+	/*
+|--------------------------------------------------------------------------
+| Receive Webhooks
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+->get()
+->url( '/surecart/redirect' )
+->name( 'redirect' )
+->middleware( LoginLinkMiddleware::class )
+->middleware()
+->handle( 'DashboardController@show' );
+
 /*
 |--------------------------------------------------------------------------
 | Dashboard
