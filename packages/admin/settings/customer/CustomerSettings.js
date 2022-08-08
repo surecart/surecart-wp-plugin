@@ -5,8 +5,8 @@ import { useState } from '@wordpress/element';
 import {
 	ScInput,
 	ScStackedList,
-	ScStackedListRow,
 	ScSwitch,
+	ScTag,
 } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
@@ -133,6 +133,76 @@ export default () => {
 				</ScSwitch>
 
 				<ScSwitch
+					checked={
+						scData?.entitlements?.abandoned_orders
+							? item?.abandoned_order_enabled
+							: false
+					}
+					disabled={!scData?.entitlements?.abandoned_orders}
+					onScChange={(e) => {
+						e.preventDefault();
+						editItem({
+							abandoned_order_enabled:
+								!item?.abandoned_order_enabled,
+						});
+					}}
+					css={css`
+						::part(base) {
+							opacity: 1;
+						}
+					`}
+				>
+					{__('Abandoned Order Emails', 'surecart')}{' '}
+					{!scData?.entitlements?.abandoned_orders && (
+						<ScTag type="success" size="small" pill>
+							{__('Pro', 'surecart')}
+						</ScTag>
+					)}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Sometimes your customers will need just a little nudge in their inbox to come back and finish checking out. Turn on abandoned order emails to remind your customers of incomplete orders. Abandoned order emails are sent 4 hours after abandonment. If the order is still abandoned after 24 hours another email will be sent.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				<ScSwitch
+					checked={
+						scData?.entitlements?.payment_failure_notifications
+							? item?.payment_failure_enabled
+							: false
+					}
+					disabled={
+						!scData?.entitlements?.payment_failure_notifications
+					}
+					onScChange={(e) => {
+						e.preventDefault();
+						editItem({
+							payment_failure_enabled:
+								!item?.payment_failure_enabled,
+						});
+					}}
+					css={css`
+						::part(base) {
+							opacity: 1;
+						}
+					`}
+				>
+					{__('Subscription Dunning Emails', 'surecart')}{' '}
+					{!scData?.entitlements?.abandoned_orders && (
+						<ScTag type="success" size="small" pill>
+							{__('Pro', 'surecart')}
+						</ScTag>
+					)}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							"Subscription payments fail all the time. Don't leave your recurring revenue to chance - turn on dunning emails to increase your chances of recovering subscriptions with failed payments.",
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				{/* <ScSwitch
 					checked={item?.abandoned_order_enabled}
 					onClick={(e) => {
 						e.preventDefault();
@@ -149,9 +219,9 @@ export default () => {
 							'surecart'
 						)}
 					</span>
-				</ScSwitch>
+				</ScSwitch> */}
 
-				<ScSwitch
+				{/* <ScSwitch
 					checked={item?.payment_failure_enabled}
 					onClick={(e) => {
 						e.preventDefault();
@@ -168,7 +238,7 @@ export default () => {
 							'surecart'
 						)}
 					</span>
-				</ScSwitch>
+				</ScSwitch> */}
 			</SettingsBox>
 
 			<SettingsBox
