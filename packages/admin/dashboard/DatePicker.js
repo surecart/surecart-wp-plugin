@@ -5,7 +5,7 @@ import { __ } from '@wordpress/i18n';
 import Litepicker from 'litepicker';
 import 'litepicker/dist/plugins/ranges';
 
-export default ({ startDate, setStartDate, endDate, setEndDate }) => {
+export default ({ startDate, setStartDate, endDate, setEndDate, defaultDay }) => {
 	const dateRef = useRef();
 	const [inputSize, setInputSize] = useState(25);
 
@@ -30,7 +30,7 @@ export default ({ startDate, setStartDate, endDate, setEndDate }) => {
 				years: true,
 			},
 			setup: (picker) => {
-				picker.setDateRange(startDate, endDate);
+				picker.setDateRange( new Date(Date.now() - defaultDay * 24 * 60 * 60 * 1000) , endDate);
 				picker.on('button:apply', (start, end) => {
 					setStartDate(start.dateInstance);
 					setEndDate(end.dateInstance);
@@ -38,7 +38,7 @@ export default ({ startDate, setStartDate, endDate, setEndDate }) => {
 				});
 			},
 		});
-	}, [dateRef]);
+	}, [dateRef, defaultDay]);
 
 	return (
 		<div>
