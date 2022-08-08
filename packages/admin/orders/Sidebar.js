@@ -1,10 +1,10 @@
-import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
 import Address from './modules/Address';
 import Customer from './modules/Customer';
 import MetaData from './modules/MetaData';
 import Purchases from './modules/Purchases';
 import TaxInfo from './modules/TaxInfo';
+import { Fragment } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 export default ({ order, checkout, customer, loading }) => {
 	return (

@@ -1,9 +1,14 @@
 /** @jsx jsx */
+import useEntity from '../hooks/useEntity';
+import Logo from '../templates/Logo';
+// template
+import UpdateModel from '../templates/UpdateModel';
+import Sidebar from './Sidebar';
+import Charges from './modules/Charges';
+import Details from './modules/Details';
+import LineItems from './modules/LineItems';
+import Subscriptions from './modules/Subscriptions';
 import { css, jsx } from '@emotion/core';
-
-import { store as dataStore } from '@surecart/data';
-import { __ } from '@wordpress/i18n';
-import { store as noticesStore } from '@wordpress/notices';
 import {
 	ScBreadcrumbs,
 	ScBreadcrumb,
@@ -11,22 +16,12 @@ import {
 	ScFlex,
 	ScIcon,
 } from '@surecart/components-react';
-import { useDispatch, useSelect } from '@wordpress/data';
-import Sidebar from './Sidebar';
-
-// template
-import UpdateModel from '../templates/UpdateModel';
-
-import Details from './modules/Details';
-
-import LineItems from './modules/LineItems';
-import Charges from './modules/Charges';
-import Subscriptions from './modules/Subscriptions';
-import Logo from '../templates/Logo';
-
-import useEntity from '../hooks/useEntity';
-import { useEffect } from 'react';
+import { store as dataStore } from '@surecart/data';
 import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
+import { store as noticesStore } from '@wordpress/notices';
+import { useEffect } from 'react';
 
 export default () => {
 	const { createErrorNotice } = useDispatch(noticesStore);
@@ -38,6 +33,7 @@ export default () => {
 			'checkout.line_items',
 			'checkout.charge',
 			'checkout.customer',
+			'customer.balances',
 			'checkout.shipping_address',
 			'charge.payment_method',
 			'checkout.tax_identifier',

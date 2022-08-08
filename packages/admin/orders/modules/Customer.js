@@ -1,10 +1,13 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-
-import { ScButton, ScText } from '@surecart/components-react';
-import { __ } from '@wordpress/i18n';
-
 import Box from '../../ui/Box';
+import { css, jsx } from '@emotion/core';
+import {
+	ScButton,
+	ScDivider,
+	ScFormatNumber,
+	ScLineItem,
+} from '@surecart/components-react';
+import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
 export default ({ customer, loading }) => {
@@ -30,20 +33,37 @@ export default ({ customer, loading }) => {
 			<div
 				css={css`
 					display: grid;
-					gap: 0.5em;
+					gap: 1em;
 				`}
 			>
-				<ScText
-					tag="h3"
-					style={{
-						'--font-weight': 'var(--sc-font-weight-bold)',
-						'--font-size': 'var(--sc-font-size-medium)',
-					}}
-				>
-					{customer?.name}
-				</ScText>
-				<div>{customer?.email}</div>
-				<div>{customer?.billing_address}</div>
+				<ScLineItem>
+					<span slot="title">{customer?.name}</span>
+					<span slot="description">{customer?.email}</span>
+				</ScLineItem>
+
+				{customer?.balances?.data?.length && (
+					<>
+						<ScDivider style={{ '--spacing': '0.5em' }} />
+						<ScLineItem>
+							<span slot="title">
+								{__('Credit Balance', 'surecart')}
+							</span>
+							<span slot="price">
+								{customer?.balances?.data.map(
+									({ amount, currency }) => {
+										return (
+											<ScFormatNumber
+												type="currency"
+												currency={currency}
+												value={-amount}
+											/>
+										);
+									}
+								)}
+							</span>
+						</ScLineItem>
+					</>
+				)}
 			</div>
 		</Box>
 	);

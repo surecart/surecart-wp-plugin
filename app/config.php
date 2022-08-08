@@ -60,6 +60,7 @@ return [
 		\SureCart\Rest\CouponRestServiceProvider::class,
 		\SureCart\Rest\PromotionRestServiceProvider::class,
 		\SureCart\Rest\UploadsRestServiceProvider::class,
+		\SureCart\Rest\BalanceTransactionRestServiceProvider::class,
 		\SureCart\Rest\ChargesRestServiceProvider::class,
 		\SureCart\Rest\RefundsRestServiceProvider::class,
 		\SureCart\Rest\DownloadRestServiceProvider::class,
@@ -119,6 +120,7 @@ return [
 	* Permission Controllers
 	*/
 	'permission_controllers' => [
+		\SureCart\Permissions\Models\BalanceTransactionPermissionsController::class,
 		\SureCart\Permissions\Models\ChargePermissionsController::class,
 		\SureCart\Permissions\Models\CustomerPermissionsController::class,
 		\SureCart\Permissions\Models\OrderPermissionsController::class,

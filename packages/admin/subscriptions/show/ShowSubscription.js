@@ -47,7 +47,7 @@ export default () => {
 				'price',
 				'price.product',
 				'customer',
-				// 'customer.balances',
+				'customer.balances',
 				'purchase',
 				'order',
 				'payment_method',

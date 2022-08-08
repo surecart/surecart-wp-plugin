@@ -1,5 +1,5 @@
 :host {
-  --size: 25rem;
+  --sc-drawer-size: 25rem;
   display: contents;
 }
 .drawer {
@@ -42,14 +42,14 @@
   bottom: auto;
   left: 0;
   width: 100%;
-  height: var(--size);
+  height: var(--sc-drawer-size);
 }
 .drawer--end .drawer__panel {
   top: 0;
   right: 0;
   bottom: auto;
   left: auto;
-  width: var(--size);
+  width: var(--sc-drawer-size);
   height: 100%;
 }
 .drawer--bottom .drawer__panel {
@@ -58,14 +58,14 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: var(--size);
+  height: var(--sc-drawer-size);
 }
 .drawer--start .drawer__panel {
   top: 0;
   right: auto;
   bottom: auto;
   left: 0;
-  width: var(--size);
+  width: var(--sc-drawer-size);
   height: 100%;
 }
 /* .drawer__header {

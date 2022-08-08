@@ -1,3 +1,16 @@
+import useDirty from '../hooks/useDirty';
+import useEntity from '../hooks/useEntity';
+import Logo from '../templates/Logo';
+import SaveButton from '../templates/SaveButton';
+import UpdateModel from '../templates/UpdateModel';
+import Balance from './modules/Balance';
+import Charges from './modules/Charges';
+import Details from './modules/Details';
+import Notifications from './modules/Notifications';
+import Orders from './modules/Orders';
+import Purchases from './modules/Purchases';
+import Subscriptions from './modules/Subscriptions';
+import User from './modules/User';
 import {
 	ScButton,
 	ScIcon,
@@ -7,23 +20,8 @@ import {
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { store as noticesStore } from '@wordpress/notices';
 import { __ } from '@wordpress/i18n';
-
-import useEntity from '../hooks/useEntity';
-import Logo from '../templates/Logo';
-
-import Charges from './modules/Charges';
-import Details from './modules/Details';
-import Orders from './modules/Orders';
-import Subscriptions from './modules/Subscriptions';
-import Purchases from './modules/Purchases';
-import Notifications from './modules/Notifications';
-import User from './modules/User';
-
-import SaveButton from '../templates/SaveButton';
-import UpdateModel from '../templates/UpdateModel';
-import useDirty from '../hooks/useDirty';
+import { store as noticesStore } from '@wordpress/notices';
 
 export default () => {
 	const { createSuccessNotice, createErrorNotice } =
@@ -36,7 +34,7 @@ export default () => {
 		hasLoadedCustomer,
 		deletingCustomer,
 		savingCustomer,
-	} = useEntity('customer', id);
+	} = useEntity('customer', id, { expand: ['balances'] });
 
 	/**
 	 * Handle the form submission
@@ -99,6 +97,7 @@ export default () => {
 			}
 			sidebar={
 				<>
+					<Balance customer={customer} loading={!hasLoadedCustomer} />
 					<Purchases customerId={id} />
 					<User customerId={id} />
 					<Notifications
