@@ -5,13 +5,7 @@ import { __ } from '@wordpress/i18n';
 import Litepicker from 'litepicker';
 import 'litepicker/dist/plugins/ranges';
 
-export default ({
-	startDate,
-	setStartDate,
-	endDate,
-	setEndDate,
-	defaultDay,
-}) => {
+export default ({ startDate, setStartDate, endDate, setEndDate }) => {
 	const dateRef = useRef();
 	const [inputSize, setInputSize] = useState(25);
 	const [datePicker, setDatePicker] = useState();

@@ -26,7 +26,6 @@ export default () => {
 	const [reportBy, setReportBy] = useState('day');
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState();
-	const [defaultDay, setDefaultDay] = useState(30);
 
 	useEffect(() => {
 		let startDateObj = new Date(startDate);
@@ -36,15 +35,12 @@ export default () => {
 				(1000 * 3600 * 24) +
 			1;
 
-		if ( diffDays < 366 && 'year' === reportBy ) {
-			setStartDate( startDateObj.getTime() - 365 * 24 * 60 * 60 * 1000 );
-			setDefaultDay(365);
-		} else if ( diffDays < 32 && 'month' === reportBy ) {
-			setStartDate( startDateObj.getTime() - 60 * 24 * 60 * 60 * 1000 );
-			setDefaultDay(60);
-		} else if ( diffDays > 201 && 'day' === reportBy ) {
-			setStartDate( new Date(Date.now() - 200 * 24 * 60 * 60 * 1000) );
-			setDefaultDay(200);
+		if (diffDays < 366 && 'year' === reportBy) {
+			setStartDate(startDateObj.getTime() - 365 * 24 * 60 * 60 * 1000);
+		} else if (diffDays < 32 && 'month' === reportBy) {
+			setStartDate(startDateObj.getTime() - 60 * 24 * 60 * 60 * 1000);
+		} else if (diffDays > 200 && 'day' === reportBy) {
+			setStartDate(new Date(Date.now() - 199 * 24 * 60 * 60 * 1000));
 		} else {
 			getOrderStats();
 			getPreviousOrderStats();
@@ -138,7 +134,6 @@ export default () => {
 						setStartDate={setStartDate}
 						endDate={endDate}
 						setEndDate={setEndDate}
-						defaultDay={defaultDay}
 					/>
 					<ReportByDropdown value={reportBy} setValue={setReportBy} />
 				</ScFlex>
