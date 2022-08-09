@@ -158,6 +158,7 @@ export default ({ startDate, setStartDate, endDate, setEndDate }) => {
 						font-weight: 400;
 						font-size: 16px;
 						line-height: 28px;
+						width: 250px;
 					}
 				`}
 			/>
