@@ -41,7 +41,7 @@ export default ({ customer, loading }) => {
 					<span slot="description">{customer?.email}</span>
 				</ScLineItem>
 
-				{customer?.balances?.data?.length && (
+				{!!customer?.balances?.data?.length && (
 					<>
 						<ScDivider style={{ '--spacing': '0.5em' }} />
 						<ScLineItem>
