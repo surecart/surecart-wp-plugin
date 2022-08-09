@@ -5,7 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 
 import { createOrUpdateOrder, finalizeSession } from '../../../services/session';
-import { LineItem, Order, Prices, Product, ResponseError } from '../../../types';
+import { LineItem, Checkout, Prices, Product, ResponseError } from '../../../types';
 
 @Component({
   tag: 'sc-stripe-payment-request',
@@ -32,7 +32,7 @@ export class ScStripePaymentRequest {
   @Prop() currencyCode: string = 'usd';
 
   /** Checkout Session */
-  @Prop() order: Order;
+  @Prop() order: Checkout;
 
   @Prop() prices: Prices;
 
@@ -127,7 +127,7 @@ export class ScStripePaymentRequest {
             ...(shippingAddress?.region ? { state: shippingAddress?.region } : {}),
           },
         },
-      })) as Order;
+      })) as Checkout;
       updateWith({
         status: 'success',
         total: {
@@ -158,7 +158,7 @@ export class ScStripePaymentRequest {
     return name;
   }
 
-  getRequestObject(order: Order) {
+  getRequestObject(order: Checkout) {
     const displayItems = (order?.line_items?.data || []).map(item => {
       return {
         label: this.getName(item),
@@ -244,7 +244,7 @@ export class ScStripePaymentRequest {
             ...(shippingAddress?.region ? { state: shippingAddress?.region } : {}),
           },
         },
-      })) as Order;
+      })) as Checkout;
 
       // finalize
       const session = (await finalizeSession({
@@ -253,7 +253,7 @@ export class ScStripePaymentRequest {
         query: {
           form_id: this.formId,
         },
-      })) as Order;
+      })) as Checkout;
 
       // confirm payment
       await this.confirmPayment(session, ev);
@@ -273,7 +273,7 @@ export class ScStripePaymentRequest {
     }
   }
 
-  async confirmPayment(val: Order, ev) {
+  async confirmPayment(val: Checkout, ev) {
     // must be finalized
     if (val?.status !== 'finalized') return;
     // must have a secret

@@ -4,7 +4,7 @@ import { openWormhole } from 'stencil-wormhole';
 
 import { hasSubscription } from '../../../../functions/line-items';
 import { intervalString } from '../../../../functions/price';
-import { Order, Product } from '../../../../types';
+import { Checkout, Product } from '../../../../types';
 
 @Component({
   tag: 'sc-order-confirmation-line-items',
@@ -12,7 +12,7 @@ import { Order, Product } from '../../../../types';
   shadow: true,
 })
 export class ScOrderConfirmationLineItems {
-  @Prop() order: Order;
+  @Prop() order: Checkout;
   @Prop() loading: boolean;
 
   render() {

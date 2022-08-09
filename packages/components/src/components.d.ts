@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, ChoiceItem, Customer, DiscountResponse, FormState, FormStateSetter, Invoice, LineItem, LineItemData, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Address, Checkout, ChoiceItem, Customer, DiscountResponse, FormState, FormStateSetter, LineItem, LineItemData, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export namespace Components {
     interface ScAddress {
         /**
@@ -290,7 +290,7 @@ export namespace Components {
         /**
           * Order Object
          */
-        "order": Order;
+        "order": Checkout;
     }
     interface ScCartSubmit {
         /**
@@ -710,7 +710,7 @@ export namespace Components {
         /**
           * (passed from the sc-checkout component automatically)
          */
-        "order": Order;
+        "order": Checkout;
         /**
           * Draws a pill-style input with rounded edges.
          */
@@ -777,7 +777,7 @@ export namespace Components {
         /**
           * (passed from the sc-checkout component automatically)
          */
-        "order": Order;
+        "order": Checkout;
         /**
           * Draws a pill-style input with rounded edges.
          */
@@ -966,7 +966,7 @@ export namespace Components {
         "dividerText": string;
         "formId": number | string;
         "hasPaymentOptions": boolean;
-        "order": Order;
+        "order": Checkout;
         "processor": 'stripe' | 'paypal';
     }
     interface ScFlex {
@@ -996,7 +996,7 @@ export namespace Components {
         /**
           * The order
          */
-        "order": Order;
+        "order": Checkout;
         /**
           * The tax protocol
          */
@@ -1363,11 +1363,11 @@ export namespace Components {
     }
     interface ScLineItemTax {
         "loading": boolean;
-        "order": Order;
+        "order": Checkout;
     }
     interface ScLineItemTotal {
         "loading": boolean;
-        "order": Order;
+        "order": Checkout;
         "size": 'large' | 'medium';
         "total": 'total' | 'subtotal';
     }
@@ -1376,7 +1376,7 @@ export namespace Components {
         "editable": boolean;
         "loading": boolean;
         "lockedChoices": Array<PriceChoice>;
-        "order": Order;
+        "order": Checkout;
         "prices": Prices;
         "removable": boolean;
         "removeLineItems": boolean;
@@ -1385,7 +1385,7 @@ export namespace Components {
         /**
           * Order Object
          */
-        "order": Order;
+        "order": Checkout;
     }
     interface ScLoginForm {
     }
@@ -1445,7 +1445,7 @@ export namespace Components {
         "successUrl": string;
     }
     interface ScOrderConfirmation {
-        "order": Order;
+        "order": Checkout;
     }
     interface ScOrderConfirmationCustomer {
         /**
@@ -1467,18 +1467,18 @@ export namespace Components {
         /**
           * The Order
          */
-        "order": Order;
+        "order": Checkout;
     }
     interface ScOrderConfirmationDetails {
         "loading": boolean;
-        "order": Order;
+        "order": Checkout;
     }
     interface ScOrderConfirmationLineItems {
         "loading": boolean;
-        "order": Order;
+        "order": Checkout;
     }
     interface ScOrderConfirmationTotals {
-        "order": Order;
+        "order": Checkout;
     }
     interface ScOrderCouponForm {
         "busy": boolean;
@@ -1486,14 +1486,14 @@ export namespace Components {
         "forceOpen": boolean;
         "label": string;
         "loading": boolean;
-        "order": Order;
+        "order": Checkout;
     }
     interface ScOrderDetail {
         "fallback": string;
         "label": string;
         "loading": boolean;
         "metaKey": string;
-        "order": Order;
+        "order": Checkout;
         "value": string;
     }
     interface ScOrderPassword {
@@ -1621,7 +1621,7 @@ export namespace Components {
         /**
           * The order.
          */
-        "order": Order;
+        "order": Checkout;
         /**
           * Available processors
          */
@@ -1655,7 +1655,7 @@ export namespace Components {
         /**
           * The current order.
          */
-        "order": Order;
+        "order": Checkout;
         /**
           * Is the order paying.
          */
@@ -1685,7 +1685,7 @@ export namespace Components {
         "empty": boolean;
         "loading": boolean;
         "openText": string;
-        "order": Order;
+        "order": Checkout;
     }
     interface ScOrderTaxIdInput {
         /**
@@ -1695,7 +1695,7 @@ export namespace Components {
         /**
           * The order
          */
-        "order": Partial<Order>;
+        "order": Partial<Checkout>;
         /**
           * Force show the field.
          */
@@ -1759,7 +1759,7 @@ export namespace Components {
         /**
           * Checkout Session from sc-checkout.
          */
-        "order": Order;
+        "order": Checkout;
         /**
           * Payment mode inside individual payment method (i.e. Payment Buttons)
          */
@@ -1825,7 +1825,7 @@ export namespace Components {
         /**
           * The order.
          */
-        "order": Order;
+        "order": Checkout;
     }
     interface ScPriceChoice {
         /**
@@ -1855,7 +1855,7 @@ export namespace Components {
         /**
           * Session
          */
-        "order": Order;
+        "order": Checkout;
         /**
           * Stores the price
          */
@@ -2274,7 +2274,7 @@ export namespace Components {
         /**
           * The checkout session object for finalizing intents
          */
-        "order": Order;
+        "order": Checkout;
         /**
           * Stripe publishable key
          */
@@ -2309,7 +2309,7 @@ export namespace Components {
         /**
           * Order to watch
          */
-        "order": Order | Invoice;
+        "order": Checkout;
         /**
           * The stripe publishable key.
          */
@@ -2348,7 +2348,7 @@ export namespace Components {
         /**
           * Checkout Session
          */
-        "order": Order;
+        "order": Checkout;
         "paymentMethod": string;
         "prices": Prices;
         /**
@@ -2746,7 +2746,7 @@ export namespace Components {
         "width": string;
     }
     interface ScTotal {
-        "order": Order;
+        "order": Checkout;
         "total": 'total' | 'subtotal' | 'amount_due';
     }
     interface ScUpcomingInvoice {
@@ -4290,11 +4290,11 @@ declare namespace LocalJSX {
         /**
           * Update line items event
          */
-        "onScUpdateOrderState"?: (event: ScCartSessionProviderCustomEvent<Order>) => void;
+        "onScUpdateOrderState"?: (event: ScCartSessionProviderCustomEvent<Checkout>) => void;
         /**
           * Order Object
          */
-        "order"?: Order;
+        "order"?: Checkout;
     }
     interface ScCartSubmit {
         /**
@@ -4418,17 +4418,17 @@ declare namespace LocalJSX {
          */
         "modified"?: string;
         /**
-          * Order has an error.
+          * Checkout has an error.
          */
         "onScOrderError"?: (event: ScCheckoutCustomEvent<ResponseError>) => void;
         /**
-          * Order has been finalized.
+          * Checkout has been finalized.
          */
-        "onScOrderFinalized"?: (event: ScCheckoutCustomEvent<Order>) => void;
+        "onScOrderFinalized"?: (event: ScCheckoutCustomEvent<Checkout>) => void;
         /**
-          * Order has been updated.
+          * Checkout has been updated.
          */
-        "onScOrderUpdated"?: (event: ScCheckoutCustomEvent<Order>) => void;
+        "onScOrderUpdated"?: (event: ScCheckoutCustomEvent<Checkout>) => void;
         /**
           * Whether to persist the session in the browser between visits.
          */
@@ -4747,11 +4747,11 @@ declare namespace LocalJSX {
           * Emitted when the control receives input.
          */
         "onScInput"?: (event: ScCustomerEmailCustomEvent<void>) => void;
-        "onScUpdateOrderState"?: (event: ScCustomerEmailCustomEvent<Order>) => void;
+        "onScUpdateOrderState"?: (event: ScCustomerEmailCustomEvent<Checkout>) => void;
         /**
           * (passed from the sc-checkout component automatically)
          */
-        "order"?: Order;
+        "order"?: Checkout;
         /**
           * Draws a pill-style input with rounded edges.
          */
@@ -4835,11 +4835,11 @@ declare namespace LocalJSX {
          */
         "onScInput"?: (event: ScCustomerNameCustomEvent<void>) => void;
         "onScUpdateCustomer"?: (event: ScCustomerNameCustomEvent<{ email: string }>) => void;
-        "onScUpdateOrderState"?: (event: ScCustomerNameCustomEvent<Partial<Order>>) => void;
+        "onScUpdateOrderState"?: (event: ScCustomerNameCustomEvent<Partial<Checkout>>) => void;
         /**
           * (passed from the sc-checkout component automatically)
          */
-        "order"?: Order;
+        "order"?: Checkout;
         /**
           * Draws a pill-style input with rounded edges.
          */
@@ -5065,7 +5065,7 @@ declare namespace LocalJSX {
         "dividerText"?: string;
         "formId"?: number | string;
         "hasPaymentOptions"?: boolean;
-        "order"?: Order;
+        "order"?: Checkout;
         "processor"?: 'stripe' | 'paypal';
     }
     interface ScFlex {
@@ -5100,7 +5100,7 @@ declare namespace LocalJSX {
         /**
           * The order
          */
-        "order"?: Order;
+        "order"?: Checkout;
         /**
           * The tax protocol
          */
@@ -5494,11 +5494,11 @@ declare namespace LocalJSX {
     }
     interface ScLineItemTax {
         "loading"?: boolean;
-        "order"?: Order;
+        "order"?: Checkout;
     }
     interface ScLineItemTotal {
         "loading"?: boolean;
-        "order"?: Order;
+        "order"?: Checkout;
         "size"?: 'large' | 'medium';
         "total"?: 'total' | 'subtotal';
     }
@@ -5515,7 +5515,7 @@ declare namespace LocalJSX {
           * Update the line item.
          */
         "onScUpdateLineItem"?: (event: ScLineItemsCustomEvent<LineItemData>) => void;
-        "order"?: Order;
+        "order"?: Checkout;
         "prices"?: Prices;
         "removable"?: boolean;
         "removeLineItems"?: boolean;
@@ -5528,7 +5528,7 @@ declare namespace LocalJSX {
         /**
           * Order Object
          */
-        "order"?: Order;
+        "order"?: Checkout;
     }
     interface ScLoginForm {
     }
@@ -5592,7 +5592,7 @@ declare namespace LocalJSX {
         "successUrl"?: string;
     }
     interface ScOrderConfirmation {
-        "order"?: Order;
+        "order"?: Checkout;
     }
     interface ScOrderConfirmationCustomer {
         /**
@@ -5614,18 +5614,18 @@ declare namespace LocalJSX {
         /**
           * The Order
          */
-        "order"?: Order;
+        "order"?: Checkout;
     }
     interface ScOrderConfirmationDetails {
         "loading"?: boolean;
-        "order"?: Order;
+        "order"?: Checkout;
     }
     interface ScOrderConfirmationLineItems {
         "loading"?: boolean;
-        "order"?: Order;
+        "order"?: Checkout;
     }
     interface ScOrderConfirmationTotals {
-        "order"?: Order;
+        "order"?: Checkout;
     }
     interface ScOrderCouponForm {
         "busy"?: boolean;
@@ -5634,14 +5634,14 @@ declare namespace LocalJSX {
         "label"?: string;
         "loading"?: boolean;
         "onScApplyCoupon"?: (event: ScOrderCouponFormCustomEvent<string>) => void;
-        "order"?: Order;
+        "order"?: Checkout;
     }
     interface ScOrderDetail {
         "fallback"?: string;
         "label"?: string;
         "loading"?: boolean;
         "metaKey"?: string;
-        "order"?: Order;
+        "order"?: Checkout;
         "value"?: string;
     }
     interface ScOrderPassword {
@@ -5712,7 +5712,7 @@ declare namespace LocalJSX {
           * Make a request to update the order.
          */
         "onScUpdateOrder"?: (event: ScOrderShippingAddressCustomEvent<{
-    data: Partial<Order>;
+    data: Partial<Checkout>;
     options?: { silent?: boolean };
   }>) => void;
         /**
@@ -5777,7 +5777,7 @@ declare namespace LocalJSX {
         /**
           * The order.
          */
-        "order"?: Order;
+        "order"?: Checkout;
         /**
           * Available processors
          */
@@ -5811,7 +5811,7 @@ declare namespace LocalJSX {
         /**
           * The current order.
          */
-        "order"?: Order;
+        "order"?: Checkout;
         /**
           * Is the order paying.
          */
@@ -5849,7 +5849,7 @@ declare namespace LocalJSX {
          */
         "onScShow"?: (event: ScOrderSummaryCustomEvent<void>) => void;
         "openText"?: string;
-        "order"?: Order;
+        "order"?: Checkout;
     }
     interface ScOrderTaxIdInput {
         /**
@@ -5860,13 +5860,13 @@ declare namespace LocalJSX {
           * Make a request to update the order.
          */
         "onScUpdateOrder"?: (event: ScOrderTaxIdInputCustomEvent<{
-    data: Partial<Order>;
+    data: Partial<Checkout>;
     options?: { silent?: boolean };
   }>) => void;
         /**
           * The order
          */
-        "order"?: Partial<Order>;
+        "order"?: Partial<Checkout>;
         /**
           * Force show the field.
          */
@@ -5936,7 +5936,7 @@ declare namespace LocalJSX {
         /**
           * Checkout Session from sc-checkout.
          */
-        "order"?: Order;
+        "order"?: Checkout;
         /**
           * Payment mode inside individual payment method (i.e. Payment Buttons)
          */
@@ -6011,7 +6011,7 @@ declare namespace LocalJSX {
         /**
           * The order.
          */
-        "order"?: Order;
+        "order"?: Checkout;
     }
     interface ScPriceChoice {
         /**
@@ -6053,7 +6053,7 @@ declare namespace LocalJSX {
         /**
           * Session
          */
-        "order"?: Order;
+        "order"?: Checkout;
         /**
           * Stores the price
          */
@@ -6445,11 +6445,11 @@ declare namespace LocalJSX {
         /**
           * Update line items event
          */
-        "onScUpdateDraftState"?: (event: ScSessionProviderCustomEvent<Order>) => void;
+        "onScUpdateDraftState"?: (event: ScSessionProviderCustomEvent<Checkout>) => void;
         /**
           * Update line items event
          */
-        "onScUpdateOrderState"?: (event: ScSessionProviderCustomEvent<Order>) => void;
+        "onScUpdateOrderState"?: (event: ScSessionProviderCustomEvent<Checkout>) => void;
         /**
           * Holds all available payment intents.
          */
@@ -6522,7 +6522,7 @@ declare namespace LocalJSX {
         /**
           * The checkout session object for finalizing intents
          */
-        "order"?: Order;
+        "order"?: Checkout;
         /**
           * Stripe publishable key
          */
@@ -6564,7 +6564,7 @@ declare namespace LocalJSX {
         /**
           * Order to watch
          */
-        "order"?: Order | Invoice;
+        "order"?: Checkout;
         /**
           * The stripe publishable key.
          */
@@ -6609,7 +6609,7 @@ declare namespace LocalJSX {
         /**
           * Checkout Session
          */
-        "order"?: Order;
+        "order"?: Checkout;
         "paymentMethod"?: string;
         "prices"?: Prices;
         /**
@@ -7042,7 +7042,7 @@ declare namespace LocalJSX {
         "width"?: string;
     }
     interface ScTotal {
-        "order"?: Order;
+        "order"?: Checkout;
         "total"?: 'total' | 'subtotal' | 'amount_due';
     }
     interface ScUpcomingInvoice {

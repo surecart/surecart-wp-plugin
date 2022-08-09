@@ -2,7 +2,7 @@ import { Component, Element, h, Prop, State } from '@stencil/core';
 import { sprintf, _n, __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
-import { Order } from '../../../../types';
+import { Checkout } from '../../../../types';
 import { onFirstVisible } from '../../../../functions/lazy';
 
 @Component({
@@ -23,7 +23,7 @@ export class ScOrdersList {
   @Prop() allLink: string;
   @Prop() heading: string;
 
-  @State() orders: Array<Order> = [];
+  @State() orders: Array<Checkout> = [];
 
   /** Loading state */
   @State() loading: boolean;
@@ -84,7 +84,7 @@ export class ScOrdersList {
       total: parseInt(response.headers.get('X-WP-Total')),
       total_pages: parseInt(response.headers.get('X-WP-TotalPages')),
     };
-    this.orders = (await response.json()) as Order[];
+    this.orders = (await response.json()) as Checkout[];
     return this.orders;
   }
 
@@ -98,7 +98,7 @@ export class ScOrdersList {
     this.fetchOrders();
   }
 
-  renderStatusBadge(order: Order) {
+  renderStatusBadge(order: Checkout) {
     const { status, charge } = order;
     if (charge && typeof charge === 'object') {
       if (charge?.fully_refunded) {

@@ -2,7 +2,7 @@ import { Component, Element, h, Prop, State } from '@stencil/core';
 import { sprintf, __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
-import { Charge, Invoice, Order } from '../../../../types';
+import { Charge } from '../../../../types';
 import { onFirstVisible } from '../../../../functions/lazy';
 
 @Component({
@@ -131,7 +131,7 @@ export class ScChargesList {
     return this.charges.map(charge => {
       const { currency, amount, created_at } = charge;
       return (
-        <sc-stacked-list-row style={{ '--columns': '4' }} mobile-size={600} href={(charge?.order as Order)?.url || (charge?.invoice as Invoice)?.url}>
+        <sc-stacked-list-row style={{ '--columns': '4' }} mobile-size={600} href={'#'}>
           <strong>
             <sc-format-date date={created_at} type="timestamp" month="short" day="numeric" year="numeric"></sc-format-date>
           </strong>

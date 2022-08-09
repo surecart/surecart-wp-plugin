@@ -2,7 +2,7 @@ import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch 
 import { Stripe } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js/pure';
 
-import { Invoice, Order } from '../../../types';
+import { Checkout } from '../../../types';
 
 @Component({
   tag: 'sc-stripe-payment-element',
@@ -30,7 +30,7 @@ export class ScStripePaymentElement {
   @Prop() accountId: string;
 
   /** Order to watch */
-  @Prop() order: Order | Invoice;
+  @Prop() order: Checkout;
 
   /** Should we collect an address? */
   @Prop() address: boolean;

@@ -1,4 +1,4 @@
-import { Order } from '../../../../types';
+import { Checkout } from '../../../../types';
 import { Component, h, Prop } from '@stencil/core';
 import { sprintf, __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
@@ -9,7 +9,7 @@ import { openWormhole } from 'stencil-wormhole';
   shadow: true,
 })
 export class ScOrderConfirmationDetails {
-  @Prop() order: Order;
+  @Prop() order: Checkout;
   @Prop() loading: boolean;
 
   renderOrderStatus() {

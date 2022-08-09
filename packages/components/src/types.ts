@@ -273,7 +273,19 @@ export interface TaxProtocol {
   created_at: number;
   updated_at: number;
 }
+
 export interface Order extends Object {
+  id?: string;
+  object: 'order';
+  number?: string;
+  order_type?: 'checkout' | 'subscription';
+  pdf_url?: string;
+  status?: 'paid' | 'payment_failed' | 'processing';
+  checkout?: Checkout | string;
+  created_at: number;
+  updated_at: number;
+}
+export interface Checkout extends Object {
   id?: string;
   status?: 'finalized' | 'draft' | 'paid' | 'requires_approval';
   number?: string;

@@ -1,9 +1,10 @@
-import { Component, Element, h, Prop, State } from '@stencil/core';
+import { Component, Element,  Fragment,  h, Prop, State } from '@stencil/core';
 import {  _n, __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
-import { Order } from '../../../../types';
+import { Checkout, Order, Product } from '../../../../types';
 import { onFirstVisible } from '../../../../functions/lazy';
+import { intervalString } from '../../../../functions/price';
 
 @Component({
   tag: 'sc-order',
@@ -59,29 +60,24 @@ export class ScOrder {
   async getOrder() {
     this.order = (await await apiFetch({
       path: addQueryArgs(`surecart/v1/orders/${this.orderId}`, {
-        expand: ['checkout', 'checkout.line_items', 'charge'],
+        expand: ['checkout', 'checkout.line_items', 'line_item.price', 'price.product', 'charge'],
       }),
     })) as Order;
   }
 
   renderLoading() {
     return (
-      <sc-card>
-          {[...Array(4)].map(() => (
-            <sc-skeleton style={{ width: '100px', display: 'inline-block' }}></sc-skeleton>
-          ))}
-      </sc-card>
+      <sc-flex flexDirection='column' style={{'gap': '1em'}}>
+        <sc-skeleton style={{ width: '20%', display: 'inline-block' }}></sc-skeleton>
+        <sc-skeleton style={{ width: '60%', display: 'inline-block' }}></sc-skeleton>
+        <sc-skeleton style={{ width: '40%', display: 'inline-block' }}></sc-skeleton>
+      </sc-flex>
     );
   }
 
   renderEmpty() {
     return (
-      <div>
-        <sc-divider style={{ '--spacing': '0' }}></sc-divider>
-        <slot name="empty">
-          <sc-empty icon="shopping-bag">{__("Order not found.", 'surecart')}</sc-empty>
-        </slot>
-      </div>
+      <sc-empty icon="shopping-bag">{__("Order not found.", 'surecart')}</sc-empty>
     );
   }
 
@@ -94,19 +90,38 @@ export class ScOrder {
       return this.renderEmpty();
     }
 
-    return (
-      <sc-card>
+    return <Fragment>
+      {((this?.order?.checkout as Checkout)?.line_items?.data || []).map((item) => {
+					return (
+						<sc-product-line-item
+							key={item.id}
+							imageUrl={item?.price?.metadata?.wp_attachment_src}
+							name={(item?.price?.product as Product)?.name}
+							editable={false}
+							removable={false}
+							quantity={item.quantity}
+							amount={item.subtotal_amount}
+							currency={item?.price?.currency}
+							trialDurationDays={item?.price?.trial_duration_days}
+							interval={intervalString(item?.price)}
+						></sc-product-line-item>
+					);
+				})}
+    </Fragment>
+    // return (
+    //   <sc-card>
 
-      </sc-card>
-    );
+    //   </sc-card>
+    // );
   }
 
   render() {
     return (
       <sc-dashboard-module class="orders-list" error={this.error}>
-        <span slot="heading">
-          {this.loading ? <sc-skeleton></sc-skeleton> : <span>#{this.order?.number}</span>}
-        </span>
+        <span slot="heading">{__('Order Details', 'surecart')}</span>
+        <sc-card>
+          {this.renderContent()}
+        </sc-card>
       </sc-dashboard-module>
     );
   }

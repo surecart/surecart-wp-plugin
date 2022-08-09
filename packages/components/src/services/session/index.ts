@@ -1,5 +1,5 @@
 import apiFetch from '../../functions/fetch';
-import { Order } from '../../types';
+import { Checkout } from '../../types';
 import { addQueryArgs } from '@wordpress/url';
 
 export const baseUrl = 'surecart/v1/checkouts/';
@@ -60,13 +60,13 @@ export const finalizeSession = async ({ id, data = {}, query = {}, processor }) 
       ...query,
     }),
     data,
-  })) as Order;
+  })) as Checkout;
 };
 
 export const getSession = async id => {
   return (await apiFetch({
     path: parsePath(id),
-  })) as Order;
+  })) as Checkout;
 };
 
 export const requestSession = async ({ id, query = {} }) => {

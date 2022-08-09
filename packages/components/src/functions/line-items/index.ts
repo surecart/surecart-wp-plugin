@@ -1,4 +1,4 @@
-import { RecursivePartial, ChoiceType, lineItems, Product, Order, Price, PriceChoice, LineItemData } from '../../types';
+import { RecursivePartial, ChoiceType, lineItems, Product, Checkout, Price, PriceChoice, LineItemData } from '../../types';
 import { getQueryArg } from '@wordpress/url';
 
 // Get only enabled price choices.
@@ -79,7 +79,7 @@ export const getLineItemByPriceId = (line_items: RecursivePartial<lineItems>, pr
 /**
  * Is this product in the checkout session?
  */
-export const isProductInOrder = (product: RecursivePartial<Product>, order: Order) => {
+export const isProductInOrder = (product: RecursivePartial<Product>, order: Checkout) => {
   const prices = getLineItemPrices(order?.line_items);
   if (!prices?.length) return false;
   return !!prices.find(price => (price?.product as Product)?.id === product.id);
@@ -88,7 +88,7 @@ export const isProductInOrder = (product: RecursivePartial<Product>, order: Orde
 /**
  * Is the price in a checkout session
  */
-export const isPriceInOrder = (price: RecursivePartial<Price>, order: Order) => {
+export const isPriceInOrder = (price: RecursivePartial<Price>, order: Checkout) => {
   const priceIds = getLineItemPriceIds(order?.line_items);
   return !!priceIds.find(id => price?.id === id);
 };
@@ -124,18 +124,18 @@ export const getSessionId = (formId, order, refresh = false) => {
 };
 
 /** Check if the order has a subscription */
-export const hasSubscription = (order: Order) => {
+export const hasSubscription = (order: Checkout) => {
   // no line items.
   if (!order?.line_items?.data?.length) return false;
   // has subscription product.
   return order?.line_items.data?.some(item => item?.price?.recurring_interval_count);
 };
 
-export const hasTrial = (order: Order) => {
+export const hasTrial = (order: Checkout) => {
   return order?.trial_amount;
 };
 
 /** Check if the order has a payment plan. */
-export const hasPaymentPlan = (order: Order) => {
+export const hasPaymentPlan = (order: Checkout) => {
   return hasSubscription(order) && order?.line_items.data?.some(item => item?.price?.recurring_period_count);
 };

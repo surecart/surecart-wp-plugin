@@ -5,7 +5,7 @@ import { parseFormData } from '../../../functions/form-data';
 import { clearOrder, getOrder, setOrder } from '../../../store/checkouts';
 
 import { createOrUpdateOrder, finalizeSession } from '../../../services/session';
-import { FormStateSetter, PaymentIntents, ProcessorName, LineItemData, Order, PriceChoice, LineItem } from '../../../types';
+import { FormStateSetter, PaymentIntents, ProcessorName, LineItemData,  PriceChoice, LineItem, Checkout } from '../../../types';
 import { getSessionId, getURLCoupon, getURLLineItems, removeSessionId } from './helpers/session';
 
 @Component({
@@ -53,10 +53,10 @@ export class ScSessionProvider {
   @Prop() stripePaymentElement: boolean;
 
   /** Update line items event */
-  @Event() scUpdateOrderState: EventEmitter<Order>;
+  @Event() scUpdateOrderState: EventEmitter<Checkout>;
 
   /** Update line items event */
-  @Event() scUpdateDraftState: EventEmitter<Order>;
+  @Event() scUpdateDraftState: EventEmitter<Checkout>;
 
   @Event() scPaid: EventEmitter<void>;
 
@@ -408,7 +408,7 @@ export class ScSessionProvider {
           ...this.defaultFormQuery(),
           ...query,
         },
-      })) as Order;
+      })) as Checkout;
       setOrder(order, this.formId);
     } catch (e) {
       // reinitalize if order not found.

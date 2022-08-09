@@ -1,5 +1,6 @@
-import { Order } from '../types';
+import { Checkout } from '../types';
 import { createLocalStore } from './local';
+
 const store = createLocalStore<any>(
   'surecart-local-storage',
   () => ({
@@ -16,7 +17,7 @@ export const getOrder = (formId: number | string, mode: 'live' | 'test') => {
 };
 
 /** Set the order. */
-export const setOrder = (data: Order, formId: number | string) => {
+export const setOrder = (data: Checkout, formId: number | string) => {
   const mode = data?.live_mode ? 'live' : 'test';
   store.set(mode, { ...store.state[mode], [formId]: data });
 };

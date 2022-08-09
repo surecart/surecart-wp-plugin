@@ -4,7 +4,7 @@ import { openWormhole } from 'stencil-wormhole';
 
 import { animateTo, shimKeyframesHeightAuto, stopAnimations } from '../../../../functions/animate';
 import { getAnimation, setDefaultAnimation } from '../../../../functions/animation-registry';
-import { Order } from '../../../../types';
+import { Checkout } from '../../../../types';
 
 @Component({
   tag: 'sc-order-summary',
@@ -14,7 +14,7 @@ import { Order } from '../../../../types';
 export class ScOrderSummary {
   private body: HTMLElement;
   @Element() el: HTMLScOrderSummaryElement;
-  @Prop() order: Order;
+  @Prop() order: Checkout;
   @Prop() loading: boolean;
   @Prop() empty: boolean;
   @Prop() closedText: string = __('Show Summary', 'surecart');

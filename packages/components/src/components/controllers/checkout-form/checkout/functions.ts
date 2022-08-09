@@ -1,4 +1,4 @@
-import { Order } from '../../../../types';
+import { Checkout } from '../../../../types';
 
 // find the input based on the unique name.
 export const findInput = (el, name) => {
@@ -10,7 +10,7 @@ export const findInput = (el, name) => {
     .find((el: HTMLInputElement) => el.name === name) as HTMLElement;
 };
 
-export const handleInputs = (el, order: Order) => {
+export const handleInputs = (el, order: Checkout) => {
   // handle our own built-in inputs.
   const names = ['name', 'email'];
 

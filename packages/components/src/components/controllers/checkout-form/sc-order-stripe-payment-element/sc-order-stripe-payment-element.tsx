@@ -3,7 +3,7 @@ import { Stripe } from '@stripe/stripe-js';
 
 import apiFetch from '../../../../functions/fetch';
 import { getProcessorData } from '../../../../functions/processor';
-import { Order, PaymentIntent, Processor } from '../../../../types';
+import { Checkout, PaymentIntent, Processor } from '../../../../types';
 import { shouldReloadElement } from './functions';
 
 @Component({
@@ -22,7 +22,7 @@ export class ScOrderStripePaymentElement {
   @Prop() currencyCode: string = 'usd';
 
   /** The order. */
-  @Prop() order: Order;
+  @Prop() order: Checkout;
 
   /** Should we collect an address? */
   @Prop() address: boolean;

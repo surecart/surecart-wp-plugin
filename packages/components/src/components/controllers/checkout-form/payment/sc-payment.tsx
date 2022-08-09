@@ -4,7 +4,7 @@ import { openWormhole } from 'stencil-wormhole';
 
 import { hasSubscription } from '../../../../functions/line-items';
 import { getProcessorData } from '../../../../functions/processor';
-import { Order, Processor, ProcessorName } from '../../../../types';
+import { Checkout, Processor, ProcessorName } from '../../../../types';
 
 @Component({
   tag: 'sc-payment',
@@ -19,7 +19,7 @@ export class ScPayment {
   @Prop() processors: Processor[] = [];
 
   /** Checkout Session from sc-checkout. */
-  @Prop() order: Order;
+  @Prop() order: Checkout;
 
   /** Is this loading. */
   @Prop() loading: boolean;

@@ -1,4 +1,4 @@
-import { Order } from '../../../../../types';
+import { Checkout } from '../../../../../types';
 import { getQueryArg } from '@wordpress/url';
 
 export const getURLLineItems = () => {
@@ -68,7 +68,7 @@ export const findInput = (el, name) => {
     .find((el: HTMLInputElement) => el.name === name) as HTMLElement;
 };
 
-export const populateInputs = (el, order: Order) => {
+export const populateInputs = (el, order: Checkout) => {
   // handle our own built-in inputs.
   const names = ['name', 'email'];
 

@@ -1,4 +1,4 @@
-import { Customer, Order } from '../../../../types';
+import { Customer, Checkout } from '../../../../types';
 import { Component, Prop, h, Event, EventEmitter, Watch, Method } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { createOrUpdateOrder } from '../../../../services/session';
@@ -15,7 +15,7 @@ export class ScCustomerEmail {
   @Prop() loggedIn: boolean;
 
   /** (passed from the sc-checkout component automatically) */
-  @Prop() order: Order;
+  @Prop() order: Checkout;
 
   /** Force a customer.  */
   @Prop() customer: Customer;
@@ -77,7 +77,7 @@ export class ScCustomerEmail {
   /** Emitted when the control loses focus. */
   @Event() scBlur: EventEmitter<void>;
 
-  @Event() scUpdateOrderState: EventEmitter<Order>;
+  @Event() scUpdateOrderState: EventEmitter<Checkout>;
 
   async handleChange() {
     this.value = this.input.value;
@@ -85,7 +85,7 @@ export class ScCustomerEmail {
 
     // update order state.
     try {
-      const order = (await createOrUpdateOrder({ id: this.order?.id, data: { email: this.input.value } })) as Order;
+      const order = (await createOrUpdateOrder({ id: this.order?.id, data: { email: this.input.value } })) as Checkout;
       this.scUpdateOrderState.emit(order);
     } catch (error) {
       console.error(error);

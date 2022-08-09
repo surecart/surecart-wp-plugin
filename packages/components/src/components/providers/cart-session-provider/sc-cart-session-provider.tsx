@@ -2,7 +2,7 @@ import { Component, Element, Event, EventEmitter, h, Listen, Prop, State, Watch 
 import { __ } from '@wordpress/i18n';
 
 import { updateOrder } from '../../../services/session';
-import { LineItemData, Order } from '../../../types';
+import { Checkout, LineItemData } from '../../../types';
 
 @Component({
   tag: 'sc-cart-session-provider',
@@ -13,10 +13,10 @@ export class ScCartSessionProvider {
   @Element() el: HTMLElement;
 
   /** Order Object */
-  @Prop() order: Order;
+  @Prop() order: Checkout;
 
   /** Update line items event */
-  @Event() scUpdateOrderState: EventEmitter<Order>;
+  @Event() scUpdateOrderState: EventEmitter<Checkout>;
 
   /** Error event */
   @Event() scError: EventEmitter<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>;
@@ -25,7 +25,7 @@ export class ScCartSessionProvider {
   @Event() scSetState: EventEmitter<'loading' | 'busy' | 'navigating' | 'idle'>;
 
   /** Holds the checkout session to update. */
-  @State() session: Order;
+  @State() session: Checkout;
 
   /** Sync this session back to parent. */
   @Watch('session')
@@ -96,7 +96,7 @@ export class ScCartSessionProvider {
         query: {
           ...query,
         },
-      })) as Order;
+      })) as Checkout;
     } catch (e) {
       console.error(e);
       throw e;

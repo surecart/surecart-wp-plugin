@@ -6,7 +6,7 @@ import { convertLineItemsToLineItemData } from '../../../../functions/line-items
 import { createOrUpdateOrder } from '../../../../services/session';
 import { getOrder, setOrder } from '../../../../store/checkouts';
 import uiStore from '../../../../store/ui';
-import { LineItemData, Order } from '../../../../types';
+import { Checkout, LineItemData } from '../../../../types';
 
 const query = {
   expand: [
@@ -44,7 +44,7 @@ export class ScCartForm {
   /** The form id to use for the cart. */
   @Prop({ reflect: true }) formId: string;
 
-  @State() order: Order;
+  @State() order: Checkout;
 
   /** Is it busy */
   @State() busy: boolean;
@@ -116,7 +116,7 @@ export class ScCartForm {
         ...query,
         form_id: this.formId,
       },
-    })) as Order;
+    })) as Checkout;
   }
 
   componentWillLoad() {
