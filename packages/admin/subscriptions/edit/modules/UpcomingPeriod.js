@@ -1,4 +1,3 @@
-import { __, _n, sprintf } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
 import {
 	ScBlockUi,
@@ -7,6 +6,7 @@ import {
 	ScLineItem,
 	ScSwitch,
 } from '@surecart/components-react';
+import { __, _n, sprintf } from '@wordpress/i18n';
 
 export default ({
 	upcoming,
@@ -16,7 +16,8 @@ export default ({
 	updateBehavior,
 }) => {
 	const renderPreview = () => {
-		const { currency, amount_due } = upcoming?.checkout || {};
+		const { currency, amount_due, credited_balance_amount } =
+			upcoming?.checkout || {};
 		if (amount_due === null) return;
 
 		const hasTrial = upcoming?.checkout?.trial_amount < 0;
@@ -51,19 +52,26 @@ export default ({
 									day="numeric"
 									year="numeric"
 								/>
-								{/* <ScFormatDate
-								date={upcoming?.end_at}
-								type="timestamp"
-								month="long"
-								day="numeric"
-								year="numeric"
-								hour="numeric"
-								minute="numeric"
-							/> */}
 							</>
 						)}
 					</span>
 				</ScLineItem>
+				{!!credited_balance_amount && (
+					<ScLineItem>
+						<span slot="title">
+							{__('Customer Credit', 'surecart')}
+						</span>
+						<span slot="description">
+							{__('Applied to balance', 'surecart')}
+						</span>
+						<ScFormatNumber
+							slot="price"
+							type="currency"
+							currency={currency}
+							value={credited_balance_amount}
+						/>
+					</ScLineItem>
+				)}
 				{!!hasTrial && (
 					<ScLineItem>
 						<span slot="title">{__('Free Trial', 'surecart')}</span>
