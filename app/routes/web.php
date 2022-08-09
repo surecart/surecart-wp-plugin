@@ -8,6 +8,7 @@
  */
 
 use SureCart\Middleware\CustomerDashboardMiddleware;
+use SureCart\Middleware\SubscriptionRedirectMiddleware;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -35,7 +36,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->url( '/surecart/redirect' )
 ->name( 'redirect' )
 ->middleware( LoginLinkMiddleware::class )
-->middleware()
+->middleware( OrderRedirectMiddleware::class )
+->middleware( SubscriptionRedirectMiddleware::class )
 ->handle( 'DashboardController@show' );
 
 /*
