@@ -5,13 +5,19 @@ import { __ } from '@wordpress/i18n';
 import Litepicker from 'litepicker';
 import 'litepicker/dist/plugins/ranges';
 
-export default ({ startDate, setStartDate, endDate, setEndDate, defaultDay }) => {
+export default ({
+	startDate,
+	setStartDate,
+	endDate,
+	setEndDate,
+	defaultDay,
+}) => {
 	const dateRef = useRef();
 	const [inputSize, setInputSize] = useState(25);
+	const [datePicker, setDatePicker] = useState();
 
-	let datepicker;
 	useEffect(() => {
-		datepicker = new Litepicker({
+		const picker = new Litepicker({
 			element: dateRef?.current,
 			singleMode: false,
 			format: 'MMMM D YYYY',
@@ -30,7 +36,7 @@ export default ({ startDate, setStartDate, endDate, setEndDate, defaultDay }) =>
 				years: true,
 			},
 			setup: (picker) => {
-				picker.setDateRange( new Date(Date.now() - defaultDay * 24 * 60 * 60 * 1000) , endDate);
+				picker.setDateRange(startDate, endDate);
 				picker.on('button:apply', (start, end) => {
 					setStartDate(start.dateInstance);
 					setEndDate(end.dateInstance);
@@ -38,7 +44,15 @@ export default ({ startDate, setStartDate, endDate, setEndDate, defaultDay }) =>
 				});
 			},
 		});
-	}, [dateRef, defaultDay]);
+		setDatePicker(picker);
+	}, [dateRef]);
+
+	useEffect(() => {
+		if (!datePicker) {
+			return;
+		}
+		datePicker.setDateRange(startDate, endDate);
+	}, [startDate, endDate]);
 
 	return (
 		<div>
