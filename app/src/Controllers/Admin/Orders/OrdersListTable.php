@@ -110,11 +110,11 @@ class OrdersListTable extends ListTable {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
 			'order'        => __( 'Order', 'surecart' ),
-			'date'         => __( 'Date', 'surecart' ),
 			'status'       => __( 'Status', 'surecart' ),
 			'method'       => __( 'Method', 'surecart' ),
 			'integrations' => __( 'Integrations', 'surecart' ),
 			'total'        => __( 'Total', 'surecart' ),
+			'created'      => __( 'Date', 'surecart' ),
 			'mode'         => '',
 		];
 	}
@@ -214,22 +214,6 @@ class OrdersListTable extends ListTable {
 		}
 
 		return $order->checkout->payment_intent->processor_type ?? '-';
-	}
-
-	/**
-	 * Handle the total column
-	 *
-	 * @param \SureCart\Models\Order $order Checkout Session Model.
-	 *
-	 * @return string
-	 */
-	public function column_date( $order ) {
-		return sprintf(
-			'<time datetime="%1$s" title="%2$s">%3$s</time>',
-			esc_attr( $order->updated_at ),
-			esc_html( TimeDate::formatDateAndTime( $order->updated_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $order->updated_at ) )
-		);
 	}
 
 	/**
