@@ -9,6 +9,7 @@ import { __ } from '@wordpress/i18n';
 export class ScDashboardModule {
   @Prop() heading: string;
   @Prop() error: string;
+  @Prop() loading: boolean;
 
   render() {
     return (

@@ -410,6 +410,7 @@
   "sc-dashboard-module": {
     "error": true,
     "heading": true,
+    "loading": true,
     "style": true,
     "id": true,
     "class": true,
@@ -771,6 +772,14 @@
     "slot": true
   },
   "sc-menu-label": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-order": {
+    "heading": true,
+    "order-id": true,
     "style": true,
     "id": true,
     "class": true,

@@ -827,6 +827,7 @@ export namespace Components {
     interface ScDashboardModule {
         "error": string;
         "heading": string;
+        "loading": boolean;
     }
     interface ScDialog {
         /**
@@ -1420,6 +1421,10 @@ export namespace Components {
         "value": string;
     }
     interface ScMenuLabel {
+    }
+    interface ScOrder {
+        "heading": string;
+        "orderId": string;
     }
     interface ScOrderConfirmProvider {
         /**
@@ -3414,6 +3419,12 @@ declare global {
         prototype: HTMLScMenuLabelElement;
         new (): HTMLScMenuLabelElement;
     };
+    interface HTMLScOrderElement extends Components.ScOrder, HTMLStencilElement {
+    }
+    var HTMLScOrderElement: {
+        prototype: HTMLScOrderElement;
+        new (): HTMLScOrderElement;
+    };
     interface HTMLScOrderConfirmProviderElement extends Components.ScOrderConfirmProvider, HTMLStencilElement {
     }
     var HTMLScOrderConfirmProviderElement: {
@@ -3899,6 +3910,7 @@ declare global {
         "sc-menu-divider": HTMLScMenuDividerElement;
         "sc-menu-item": HTMLScMenuItemElement;
         "sc-menu-label": HTMLScMenuLabelElement;
+        "sc-order": HTMLScOrderElement;
         "sc-order-confirm-provider": HTMLScOrderConfirmProviderElement;
         "sc-order-confirmation": HTMLScOrderConfirmationElement;
         "sc-order-confirmation-customer": HTMLScOrderConfirmationCustomerElement;
@@ -4876,6 +4888,7 @@ declare namespace LocalJSX {
     interface ScDashboardModule {
         "error"?: string;
         "heading"?: string;
+        "loading"?: boolean;
     }
     interface ScDialog {
         /**
@@ -5543,6 +5556,10 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface ScMenuLabel {
+    }
+    interface ScOrder {
+        "heading"?: string;
+        "orderId"?: string;
     }
     interface ScOrderConfirmProvider {
         /**
@@ -7127,6 +7144,7 @@ declare namespace LocalJSX {
         "sc-menu-divider": ScMenuDivider;
         "sc-menu-item": ScMenuItem;
         "sc-menu-label": ScMenuLabel;
+        "sc-order": ScOrder;
         "sc-order-confirm-provider": ScOrderConfirmProvider;
         "sc-order-confirmation": ScOrderConfirmation;
         "sc-order-confirmation-customer": ScOrderConfirmationCustomer;
@@ -7272,6 +7290,7 @@ declare module "@stencil/core" {
             "sc-menu-divider": LocalJSX.ScMenuDivider & JSXBase.HTMLAttributes<HTMLScMenuDividerElement>;
             "sc-menu-item": LocalJSX.ScMenuItem & JSXBase.HTMLAttributes<HTMLScMenuItemElement>;
             "sc-menu-label": LocalJSX.ScMenuLabel & JSXBase.HTMLAttributes<HTMLScMenuLabelElement>;
+            "sc-order": LocalJSX.ScOrder & JSXBase.HTMLAttributes<HTMLScOrderElement>;
             "sc-order-confirm-provider": LocalJSX.ScOrderConfirmProvider & JSXBase.HTMLAttributes<HTMLScOrderConfirmProviderElement>;
             "sc-order-confirmation": LocalJSX.ScOrderConfirmation & JSXBase.HTMLAttributes<HTMLScOrderConfirmationElement>;
             "sc-order-confirmation-customer": LocalJSX.ScOrderConfirmationCustomer & JSXBase.HTMLAttributes<HTMLScOrderConfirmationCustomerElement>;

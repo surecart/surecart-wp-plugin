@@ -139,9 +139,13 @@ export class ScOrdersList {
 
   renderList() {
     return this.orders.map(order => {
-      const { line_items, total_amount, currency, charge, created_at, url } = order;
+      const { line_items, total_amount, currency, charge, created_at, id } = order;
       return (
-        <sc-stacked-list-row href={url} style={{ '--columns': '4' }} mobile-size={500}>
+        <sc-stacked-list-row href={addQueryArgs(window.location.href, {
+          action: 'view',
+          model: 'order',
+          id,
+        })} style={{ '--columns': '4' }} mobile-size={500}>
           <div>
             {typeof charge !== 'string' && (
               <sc-format-date class="order__date" date={(charge?.created_at || created_at) * 1000} month="short" day="numeric" year="numeric"></sc-format-date>

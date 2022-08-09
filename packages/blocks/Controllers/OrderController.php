@@ -64,4 +64,23 @@ class OrderController extends BaseController {
 			)->render()
 		);
 	}
+
+	/**
+	 * Index.
+	 */
+	public function show() {
+		if ( ! User::current()->isCustomer() ) {
+			return;
+		}
+
+		return wp_kses_post(
+			Component::tag( 'sc-order' )
+			->id( 'customer-orders-index' )
+			->with(
+				[
+					'orderId' => $this->getId(),
+				]
+			)->render()
+		);
+	}
 }
