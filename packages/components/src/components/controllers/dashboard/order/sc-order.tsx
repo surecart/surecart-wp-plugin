@@ -90,8 +90,10 @@ export class ScOrder {
       return this.renderEmpty();
     }
 
+    const checkout = this.order?.checkout as Checkout;
+
     return <Fragment>
-      {((this?.order?.checkout as Checkout)?.line_items?.data || []).map((item) => {
+      {(checkout?.line_items?.data || []).map((item) => {
 					return (
 						<sc-product-line-item
 							key={item.id}
@@ -107,12 +109,24 @@ export class ScOrder {
 						></sc-product-line-item>
 					);
 				})}
-    </Fragment>
-    // return (
-    //   <sc-card>
 
-    //   </sc-card>
-    // );
+        <sc-divider style={{ '--spacing': 'var(--sc-spacing-x-small)' }}></sc-divider>
+
+				<sc-line-item>
+          <span slot="description">{__('Subtotal', 'surecart')}</span>
+          <sc-format-number
+				    slot="price"
+            style={{
+              'font-weight': 'var(--sc-font-weight-semibold)',
+              color: 'var(--sc-color-gray-800)',
+            }}
+            type="currency"
+            currency={checkout?.currency}
+            value={checkout?.subtotal_amount}
+			    ></sc-format-number>
+      </sc-line-item>
+    </Fragment>
+
   }
 
   render() {
