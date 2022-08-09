@@ -268,7 +268,9 @@ class RequestService {
 
 		// check for errors.
 		if ( ! in_array( $response_code, [ 200, 201 ], true ) ) {
-			return $this->errors_service->translate( $response_body, $response_code );
+			error_log( print_r( $response_body, 1 ) );
+			$body = json_decode( $response_body, true );
+			return $this->errors_service->translate( $body, $response_code );
 		}
 
 		return json_decode( $response_body );
