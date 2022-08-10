@@ -1,4 +1,4 @@
-import { Checkout } from '../../../../types';
+import { Order } from '../../../../types';
 import { Component, h, Prop } from '@stencil/core';
 import { sprintf, __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
@@ -9,11 +9,11 @@ import { openWormhole } from 'stencil-wormhole';
   shadow: true,
 })
 export class ScOrderConfirmationDetails {
-  @Prop() order: Checkout;
+  @Prop() order: Order;
   @Prop() loading: boolean;
 
   renderOrderStatus() {
-    if (this?.order?.status === 'requires_approval') {
+    if (this?.order?.status === 'processing') {
       return <sc-tag type="warning">{__('On Hold', 'surecart')}</sc-tag>;
     }
     return <sc-order-status-badge status={this.order?.status}></sc-order-status-badge>;

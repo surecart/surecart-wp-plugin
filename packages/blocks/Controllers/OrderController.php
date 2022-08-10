@@ -72,15 +72,23 @@ class OrderController extends BaseController {
 		if ( ! User::current()->isCustomer() ) {
 			return;
 		}
+		ob_start(); ?>
 
-		return wp_kses_post(
-			Component::tag( 'sc-order' )
-			->id( 'customer-orders-index' )
-			->with(
-				[
-					'orderId' => $this->getId(),
-				]
-			)->render()
-		);
+		<sc-spacing style="--spacing: var(--sc-spacing-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
+					<?php esc_html_e( 'Order', 'surecart' ); ?>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
+
+			<sc-order order-id="<?php echo esc_attr( $this->getId() ); ?>"></sc-order>
+
+		</sc-spacing>
+
+		<?php
+		return ob_get_clean();
 	}
 }

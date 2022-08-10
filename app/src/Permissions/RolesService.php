@@ -159,6 +159,7 @@ class RolesService {
 			'sc_purchase',
 			'sc_webhook',
 			'sc_product',
+			'sc_license',
 			'sc_customer',
 			'sc_order',
 			'sc_invoice',

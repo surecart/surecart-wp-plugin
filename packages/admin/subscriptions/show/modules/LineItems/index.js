@@ -87,7 +87,7 @@ export default ({ period, loading }) => {
 					/>
 				)}
 
-				{!!checkout?.tax && (
+				{!!checkout?.tax_amount && (
 					<LineItem
 						label={
 							<>

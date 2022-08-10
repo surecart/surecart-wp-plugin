@@ -446,13 +446,8 @@
     "slot": true
   },
   "sc-downloads-list": {
-    "all-link": true,
-    "busy": true,
-    "error": true,
+    "downloads": true,
     "heading": true,
-    "loading": true,
-    "purchases": true,
-    "request-nonce": true,
     "style": true,
     "id": true,
     "class": true,
@@ -691,6 +686,16 @@
     "all-link": true,
     "heading": true,
     "query": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-licenses-list": {
+    "activations": true,
+    "copied": true,
+    "heading": true,
+    "licenses": true,
     "style": true,
     "id": true,
     "class": true,
@@ -997,6 +1002,13 @@
     "class": true,
     "slot": true
   },
+  "sc-payment-method": {
+    "payment-method": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-payment-method-create": {
     "client-secret": true,
     "error": true,
@@ -1103,6 +1115,19 @@
   },
   "sc-provider": {
     "-s-t-e-n-c-i-l_-c-o-n-t-e-x-t": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-purchase-downloads-list": {
+    "all-link": true,
+    "busy": true,
+    "error": true,
+    "heading": true,
+    "loading": true,
+    "purchases": true,
+    "request-nonce": true,
     "style": true,
     "id": true,
     "class": true,

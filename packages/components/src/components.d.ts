@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, Checkout, ChoiceItem, Customer, DiscountResponse, FormState, FormStateSetter, LineItem, LineItemData, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export namespace Components {
     interface ScAddress {
         /**
@@ -818,10 +818,7 @@ export namespace Components {
         /**
           * Customer id to fetch subscriptions
          */
-        "query": {
-    page: number;
-    per_page: number;
-  };
+        "query": any;
         "requestNonce": string;
     }
     interface ScDashboardModule {
@@ -875,13 +872,8 @@ export namespace Components {
         "reportValidity": () => Promise<boolean>;
     }
     interface ScDownloadsList {
-        "allLink": string;
-        "busy": boolean;
-        "error": string;
+        "downloads": Download[];
         "heading": string;
-        "loading": boolean;
-        "purchases": Array<Purchase>;
-        "requestNonce": string;
     }
     interface ScDrawer {
         /**
@@ -1351,6 +1343,12 @@ export namespace Components {
     per_page: number;
   };
     }
+    interface ScLicensesList {
+        "activations": Activation[];
+        "copied": boolean;
+        "heading": string;
+        "licenses": License[];
+    }
     interface ScLineItem {
         /**
           * Currency symbol
@@ -1471,7 +1469,7 @@ export namespace Components {
     }
     interface ScOrderConfirmationDetails {
         "loading": boolean;
-        "order": Checkout;
+        "order": Order;
     }
     interface ScOrderConfirmationLineItems {
         "loading": boolean;
@@ -1781,6 +1779,9 @@ export namespace Components {
          */
         "stripePaymentElement": boolean;
     }
+    interface ScPaymentMethod {
+        "paymentMethod": PaymentMethod;
+    }
     interface ScPaymentMethodCreate {
         "clientSecret": string;
         "error": string;
@@ -2046,6 +2047,15 @@ export namespace Components {
     }
     interface ScProvider {
         "STENCIL_CONTEXT": { [key: string]: any };
+    }
+    interface ScPurchaseDownloadsList {
+        "allLink": string;
+        "busy": boolean;
+        "error": string;
+        "heading": string;
+        "loading": boolean;
+        "purchases": Array<Purchase>;
+        "requestNonce": string;
     }
     interface ScQuantitySelect {
         "clickEl"?: HTMLElement;
@@ -3359,6 +3369,12 @@ declare global {
         prototype: HTMLScInvoicesListElement;
         new (): HTMLScInvoicesListElement;
     };
+    interface HTMLScLicensesListElement extends Components.ScLicensesList, HTMLStencilElement {
+    }
+    var HTMLScLicensesListElement: {
+        prototype: HTMLScLicensesListElement;
+        new (): HTMLScLicensesListElement;
+    };
     interface HTMLScLineItemElement extends Components.ScLineItem, HTMLStencilElement {
     }
     var HTMLScLineItemElement: {
@@ -3533,6 +3549,12 @@ declare global {
         prototype: HTMLScPaymentElement;
         new (): HTMLScPaymentElement;
     };
+    interface HTMLScPaymentMethodElement extends Components.ScPaymentMethod, HTMLStencilElement {
+    }
+    var HTMLScPaymentMethodElement: {
+        prototype: HTMLScPaymentMethodElement;
+        new (): HTMLScPaymentMethodElement;
+    };
     interface HTMLScPaymentMethodCreateElement extends Components.ScPaymentMethodCreate, HTMLStencilElement {
     }
     var HTMLScPaymentMethodCreateElement: {
@@ -3580,6 +3602,12 @@ declare global {
     var HTMLScProviderElement: {
         prototype: HTMLScProviderElement;
         new (): HTMLScProviderElement;
+    };
+    interface HTMLScPurchaseDownloadsListElement extends Components.ScPurchaseDownloadsList, HTMLStencilElement {
+    }
+    var HTMLScPurchaseDownloadsListElement: {
+        prototype: HTMLScPurchaseDownloadsListElement;
+        new (): HTMLScPurchaseDownloadsListElement;
     };
     interface HTMLScQuantitySelectElement extends Components.ScQuantitySelect, HTMLStencilElement {
     }
@@ -3900,6 +3928,7 @@ declare global {
         "sc-icon": HTMLScIconElement;
         "sc-input": HTMLScInputElement;
         "sc-invoices-list": HTMLScInvoicesListElement;
+        "sc-licenses-list": HTMLScLicensesListElement;
         "sc-line-item": HTMLScLineItemElement;
         "sc-line-item-tax": HTMLScLineItemTaxElement;
         "sc-line-item-total": HTMLScLineItemTotalElement;
@@ -3929,6 +3958,7 @@ declare global {
         "sc-orders-list": HTMLScOrdersListElement;
         "sc-pagination": HTMLScPaginationElement;
         "sc-payment": HTMLScPaymentElement;
+        "sc-payment-method": HTMLScPaymentMethodElement;
         "sc-payment-method-create": HTMLScPaymentMethodCreateElement;
         "sc-payment-methods-list": HTMLScPaymentMethodsListElement;
         "sc-paypal-buttons": HTMLScPaypalButtonsElement;
@@ -3937,6 +3967,7 @@ declare global {
         "sc-price-input": HTMLScPriceInputElement;
         "sc-product-line-item": HTMLScProductLineItemElement;
         "sc-provider": HTMLScProviderElement;
+        "sc-purchase-downloads-list": HTMLScPurchaseDownloadsListElement;
         "sc-quantity-select": HTMLScQuantitySelectElement;
         "sc-radio": HTMLScRadioElement;
         "sc-radio-group": HTMLScRadioGroupElement;
@@ -4879,10 +4910,7 @@ declare namespace LocalJSX {
         /**
           * Customer id to fetch subscriptions
          */
-        "query"?: {
-    page: number;
-    per_page: number;
-  };
+        "query"?: any;
         "requestNonce"?: string;
     }
     interface ScDashboardModule {
@@ -4956,13 +4984,8 @@ declare namespace LocalJSX {
         "removeInvalid"?: boolean;
     }
     interface ScDownloadsList {
-        "allLink"?: string;
-        "busy"?: boolean;
-        "error"?: string;
+        "downloads"?: Download[];
         "heading"?: string;
-        "loading"?: boolean;
-        "purchases"?: Array<Purchase>;
-        "requestNonce"?: string;
     }
     interface ScDrawer {
         /**
@@ -5482,6 +5505,12 @@ declare namespace LocalJSX {
     per_page: number;
   };
     }
+    interface ScLicensesList {
+        "activations"?: Activation[];
+        "copied"?: boolean;
+        "heading"?: string;
+        "licenses"?: License[];
+    }
     interface ScLineItem {
         /**
           * Currency symbol
@@ -5618,7 +5647,7 @@ declare namespace LocalJSX {
     }
     interface ScOrderConfirmationDetails {
         "loading"?: boolean;
-        "order"?: Checkout;
+        "order"?: Order;
     }
     interface ScOrderConfirmationLineItems {
         "loading"?: boolean;
@@ -5958,6 +5987,9 @@ declare namespace LocalJSX {
          */
         "stripePaymentElement"?: boolean;
     }
+    interface ScPaymentMethod {
+        "paymentMethod"?: PaymentMethod;
+    }
     interface ScPaymentMethodCreate {
         "clientSecret"?: string;
         "error"?: string;
@@ -6252,6 +6284,15 @@ declare namespace LocalJSX {
     interface ScProvider {
         "STENCIL_CONTEXT"?: { [key: string]: any };
         "onMountConsumer"?: (event: ScProviderCustomEvent<any>) => void;
+    }
+    interface ScPurchaseDownloadsList {
+        "allLink"?: string;
+        "busy"?: boolean;
+        "error"?: string;
+        "heading"?: string;
+        "loading"?: boolean;
+        "purchases"?: Array<Purchase>;
+        "requestNonce"?: string;
     }
     interface ScQuantitySelect {
         "clickEl"?: HTMLElement;
@@ -7134,6 +7175,7 @@ declare namespace LocalJSX {
         "sc-icon": ScIcon;
         "sc-input": ScInput;
         "sc-invoices-list": ScInvoicesList;
+        "sc-licenses-list": ScLicensesList;
         "sc-line-item": ScLineItem;
         "sc-line-item-tax": ScLineItemTax;
         "sc-line-item-total": ScLineItemTotal;
@@ -7163,6 +7205,7 @@ declare namespace LocalJSX {
         "sc-orders-list": ScOrdersList;
         "sc-pagination": ScPagination;
         "sc-payment": ScPayment;
+        "sc-payment-method": ScPaymentMethod;
         "sc-payment-method-create": ScPaymentMethodCreate;
         "sc-payment-methods-list": ScPaymentMethodsList;
         "sc-paypal-buttons": ScPaypalButtons;
@@ -7171,6 +7214,7 @@ declare namespace LocalJSX {
         "sc-price-input": ScPriceInput;
         "sc-product-line-item": ScProductLineItem;
         "sc-provider": ScProvider;
+        "sc-purchase-downloads-list": ScPurchaseDownloadsList;
         "sc-quantity-select": ScQuantitySelect;
         "sc-radio": ScRadio;
         "sc-radio-group": ScRadioGroup;
@@ -7280,6 +7324,7 @@ declare module "@stencil/core" {
             "sc-icon": LocalJSX.ScIcon & JSXBase.HTMLAttributes<HTMLScIconElement>;
             "sc-input": LocalJSX.ScInput & JSXBase.HTMLAttributes<HTMLScInputElement>;
             "sc-invoices-list": LocalJSX.ScInvoicesList & JSXBase.HTMLAttributes<HTMLScInvoicesListElement>;
+            "sc-licenses-list": LocalJSX.ScLicensesList & JSXBase.HTMLAttributes<HTMLScLicensesListElement>;
             "sc-line-item": LocalJSX.ScLineItem & JSXBase.HTMLAttributes<HTMLScLineItemElement>;
             "sc-line-item-tax": LocalJSX.ScLineItemTax & JSXBase.HTMLAttributes<HTMLScLineItemTaxElement>;
             "sc-line-item-total": LocalJSX.ScLineItemTotal & JSXBase.HTMLAttributes<HTMLScLineItemTotalElement>;
@@ -7309,6 +7354,7 @@ declare module "@stencil/core" {
             "sc-orders-list": LocalJSX.ScOrdersList & JSXBase.HTMLAttributes<HTMLScOrdersListElement>;
             "sc-pagination": LocalJSX.ScPagination & JSXBase.HTMLAttributes<HTMLScPaginationElement>;
             "sc-payment": LocalJSX.ScPayment & JSXBase.HTMLAttributes<HTMLScPaymentElement>;
+            "sc-payment-method": LocalJSX.ScPaymentMethod & JSXBase.HTMLAttributes<HTMLScPaymentMethodElement>;
             "sc-payment-method-create": LocalJSX.ScPaymentMethodCreate & JSXBase.HTMLAttributes<HTMLScPaymentMethodCreateElement>;
             "sc-payment-methods-list": LocalJSX.ScPaymentMethodsList & JSXBase.HTMLAttributes<HTMLScPaymentMethodsListElement>;
             "sc-paypal-buttons": LocalJSX.ScPaypalButtons & JSXBase.HTMLAttributes<HTMLScPaypalButtonsElement>;
@@ -7317,6 +7363,7 @@ declare module "@stencil/core" {
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
             "sc-product-line-item": LocalJSX.ScProductLineItem & JSXBase.HTMLAttributes<HTMLScProductLineItemElement>;
             "sc-provider": LocalJSX.ScProvider & JSXBase.HTMLAttributes<HTMLScProviderElement>;
+            "sc-purchase-downloads-list": LocalJSX.ScPurchaseDownloadsList & JSXBase.HTMLAttributes<HTMLScPurchaseDownloadsListElement>;
             "sc-quantity-select": LocalJSX.ScQuantitySelect & JSXBase.HTMLAttributes<HTMLScQuantitySelectElement>;
             "sc-radio": LocalJSX.ScRadio & JSXBase.HTMLAttributes<HTMLScRadioElement>;
             "sc-radio-group": LocalJSX.ScRadioGroup & JSXBase.HTMLAttributes<HTMLScRadioGroupElement>;

@@ -76,7 +76,7 @@ export interface Media {
   extension: string;
   filename: string;
   public_access: boolean;
-  release_json: object;
+  release_json: any;
   url?: string;
   url_expires_at?: number;
   updated_at: number;
@@ -94,6 +94,53 @@ export interface Download {
 
 export type FormState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalizing' | 'paid' | 'failure' | 'expired';
 export type FormStateSetter = 'RESOLVE' | 'REJECT' | 'FINALIZE' | 'PAID' | 'EXPIRE' | 'FETCH';
+
+export interface License {
+  id: string;
+  object: 'license';
+  activation_limit: number;
+  key: string;
+  activations?: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Activation>;
+  };
+  status: 'inactive' | 'active' | 'revoked';
+  purchase: string | Purchase;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface Period {
+  id: string;
+  object: 'period';
+  ad_hoc_amount?: number;
+  checkout: string | Checkout;
+  customer_id: string | Customer;
+  end_at?: number;
+  next_payment_retry_at: number;
+  payment_retry_count: number;
+  price: string | Price;
+  purchase_id: string | Purchase;
+  quantity: number;
+  renewal: boolean;
+  skip_proration: boolean;
+  start_at: number;
+  status: 'draft';
+  subscription: string | Subscription;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface Activation {
+  id: string;
+  object: 'activation';
+  name: string;
+  fingerprint: string;
+  license: string | License;
+  created_at: number;
+  updated_at: number;
+}
 
 export interface Product extends Object {
   id: string;
@@ -280,7 +327,7 @@ export interface Order extends Object {
   number?: string;
   order_type?: 'checkout' | 'subscription';
   pdf_url?: string;
-  status?: 'paid' | 'payment_failed' | 'processing';
+  status?: OrderStatus;
   checkout?: Checkout | string;
   created_at: number;
   updated_at: number;
@@ -298,6 +345,9 @@ export interface Checkout extends Object {
   currency?: string;
   total_amount?: number;
   subtotal_amount?: number;
+  proration_amount?: number;
+  applied_balance_amount?: number;
+  discounts?: number;
   tax_amount: number;
   tax_inclusive_amount: number;
   tax_exclusive_amount: number;
@@ -307,6 +357,7 @@ export interface Checkout extends Object {
   line_items: lineItems;
   metadata?: Object;
   payment_intent?: PaymentIntent;
+  payment_method?: PaymentMethod;
   customer: string | Customer;
   subscriptions: {
     object: 'list';
@@ -431,7 +482,8 @@ export interface SubscriptionProtocol {
 
 export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid' | 'completed';
 
-export type OrderStatus = 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'requires_approval';
+export type CheckoutStatus = 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'requires_approval';
+export type OrderStatus = 'paid' | 'payment_failed' | 'processing';
 
 export interface PaymentMethod extends Object {
   id: string;
@@ -439,6 +491,8 @@ export interface PaymentMethod extends Object {
   live_mode: boolean;
   external_payment_method_id: string;
   processor_type: 'stripe' | 'paypal';
+  paypal_account: any;
+  bank_account: any;
   type: string;
   payment_intent: PaymentIntent | string;
   billing_agreement?: BillingAgreement | string;

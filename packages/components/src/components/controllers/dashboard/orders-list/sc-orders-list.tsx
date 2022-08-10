@@ -1,9 +1,10 @@
 import { Component, Element, h, Prop, State } from '@stencil/core';
-import { sprintf, _n, __ } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+
 import apiFetch from '../../../../functions/fetch';
-import { Checkout } from '../../../../types';
 import { onFirstVisible } from '../../../../functions/lazy';
+import { Checkout, Order } from '../../../../types';
 
 @Component({
   tag: 'sc-orders-list',
@@ -23,7 +24,7 @@ export class ScOrdersList {
   @Prop() allLink: string;
   @Prop() heading: string;
 
-  @State() orders: Array<Checkout> = [];
+  @State() orders: Array<Order> = [];
 
   /** Loading state */
   @State() loading: boolean;
@@ -75,7 +76,7 @@ export class ScOrdersList {
   async getOrders() {
     const response = (await await apiFetch({
       path: addQueryArgs(`surecart/v1/orders/`, {
-        expand: ['line_items', 'charge'],
+        expand: ['checkout', 'checkout.line_items', 'checkout.charge'],
         ...this.query,
       }),
       parse: false,
@@ -84,7 +85,7 @@ export class ScOrdersList {
       total: parseInt(response.headers.get('X-WP-Total')),
       total_pages: parseInt(response.headers.get('X-WP-TotalPages')),
     };
-    this.orders = (await response.json()) as Checkout[];
+    this.orders = (await response.json()) as Order[];
     return this.orders;
   }
 
@@ -98,8 +99,9 @@ export class ScOrdersList {
     this.fetchOrders();
   }
 
-  renderStatusBadge(order: Checkout) {
-    const { status, charge } = order;
+  renderStatusBadge(order: Order) {
+    const { status, checkout} = order;
+    const { charge } = checkout as Checkout;
     if (charge && typeof charge === 'object') {
       if (charge?.fully_refunded) {
         return <sc-tag type="danger">{__('Refunded', 'surecart')}</sc-tag>;
@@ -139,10 +141,11 @@ export class ScOrdersList {
 
   renderList() {
     return this.orders.map(order => {
-      const { line_items, total_amount, currency, charge, created_at, id } = order;
+      const { checkout, created_at, id} = order;
+      const { line_items, total_amount, currency, charge } = checkout as Checkout;
       return (
         <sc-stacked-list-row href={addQueryArgs(window.location.href, {
-          action: 'view',
+          action: 'show',
           model: 'order',
           id,
         })} style={{ '--columns': '4' }} mobile-size={500}>
