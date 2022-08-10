@@ -33,6 +33,7 @@
 ### Used by
 
  - [sc-line-items](../../controllers/checkout-form/line-items)
+ - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirmation-line-items](../../controllers/confirmation/order-confirmation-line-items)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
@@ -50,6 +51,7 @@ graph TD;
   sc-product-line-item --> sc-icon
   sc-quantity-select --> sc-icon
   sc-line-items --> sc-product-line-item
+  sc-order --> sc-product-line-item
   sc-order-confirmation-line-items --> sc-product-line-item
   sc-upcoming-invoice --> sc-product-line-item
   style sc-product-line-item fill:#f9f,stroke:#333,stroke-width:4px

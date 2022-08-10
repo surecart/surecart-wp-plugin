@@ -909,18 +909,6 @@
     "class": true,
     "slot": true
   },
-  "sc-order-stripe-payment-element": {
-    "address": true,
-    "currency-code": true,
-    "mode": true,
-    "order": true,
-    "payment-intent": true,
-    "processors": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "sc-order-submit": {
     "busy": true,
     "currency-code": true,
@@ -994,6 +982,7 @@
     "mode": true,
     "order": true,
     "payment-method": true,
+    "preview-stripe-payment-element": true,
     "processor": true,
     "processors": true,
     "secure-notice": true,
@@ -1023,6 +1012,14 @@
   "sc-payment-methods-list": {
     "heading": true,
     "query": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-payment-selected": {
+    "icon-name": true,
+    "label": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1271,13 +1268,10 @@
     "slot": true
   },
   "sc-stripe-payment-element": {
-    "account-id": true,
     "address": true,
-    "client-secret": true,
     "order": true,
-    "publishable-key": true,
+    "payment-intent": true,
     "success-url": true,
-    "updated": true,
     "style": true,
     "id": true,
     "class": true,

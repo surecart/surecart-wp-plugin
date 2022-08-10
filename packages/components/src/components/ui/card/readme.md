@@ -29,14 +29,18 @@
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-customer-details](../customer-details)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
- - [sc-downloads-list](../downloads-list)
+ - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-login-form](../../controllers/login)
+ - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-payment-method-create](../../controllers/dashboard/payment-method-create)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-payment-selected](../payment-selected)
+ - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
@@ -56,12 +60,16 @@ graph TD;
   sc-customer-edit --> sc-card
   sc-downloads-list --> sc-card
   sc-invoices-list --> sc-card
+  sc-licenses-list --> sc-card
   sc-login-form --> sc-card
+  sc-order --> sc-card
   sc-order-confirmation-details --> sc-card
   sc-orders-list --> sc-card
   sc-payment --> sc-card
   sc-payment-method-create --> sc-card
   sc-payment-methods-list --> sc-card
+  sc-payment-selected --> sc-card
+  sc-purchase-downloads-list --> sc-card
   sc-subscription --> sc-card
   sc-subscription-ad-hoc-confirm --> sc-card
   sc-subscription-cancel --> sc-card

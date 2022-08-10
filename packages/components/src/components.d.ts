@@ -1740,6 +1740,7 @@ export namespace Components {
           * Payment mode inside individual payment method (i.e. Payment Buttons)
          */
         "paymentMethod": 'stripe-payment-request' | null;
+        "previewStripePaymentElement": boolean;
         /**
           * The current payment method for the payment
          */
@@ -1775,6 +1776,10 @@ export namespace Components {
           * Query to fetch paymentMethods
          */
         "query": object;
+    }
+    interface ScPaymentSelected {
+        "iconName": string;
+        "label": string;
     }
     interface ScPaypalButtons {
         /**
@@ -2286,31 +2291,22 @@ export namespace Components {
     }
     interface ScStripePaymentElement {
         /**
-          * The account id.
-         */
-        "accountId": string;
-        /**
           * Should we collect an address?
          */
         "address": boolean;
-        /**
-          * The client secret to render the payment element
-         */
-        "clientSecret": string;
         "confirm": (type: any, args?: {}) => Promise<void>;
         /**
           * Order to watch
          */
         "order": Checkout;
         /**
-          * The stripe publishable key.
+          * The Payment Intent
          */
-        "publishableKey": string;
+        "paymentIntent": PaymentIntent;
         /**
           * Success url to redirect.
          */
         "successUrl": string;
-        "updated": number;
     }
     interface ScStripePaymentRequest {
         /**
@@ -3540,6 +3536,12 @@ declare global {
         prototype: HTMLScPaymentMethodsListElement;
         new (): HTMLScPaymentMethodsListElement;
     };
+    interface HTMLScPaymentSelectedElement extends Components.ScPaymentSelected, HTMLStencilElement {
+    }
+    var HTMLScPaymentSelectedElement: {
+        prototype: HTMLScPaymentSelectedElement;
+        new (): HTMLScPaymentSelectedElement;
+    };
     interface HTMLScPaypalButtonsElement extends Components.ScPaypalButtons, HTMLStencilElement {
     }
     var HTMLScPaypalButtonsElement: {
@@ -3933,6 +3935,7 @@ declare global {
         "sc-payment-method": HTMLScPaymentMethodElement;
         "sc-payment-method-create": HTMLScPaymentMethodCreateElement;
         "sc-payment-methods-list": HTMLScPaymentMethodsListElement;
+        "sc-payment-selected": HTMLScPaymentSelectedElement;
         "sc-paypal-buttons": HTMLScPaypalButtonsElement;
         "sc-price-choice": HTMLScPriceChoiceElement;
         "sc-price-choices": HTMLScPriceChoicesElement;
@@ -5583,6 +5586,7 @@ declare namespace LocalJSX {
           * The order is paid event.
          */
         "onScOrderPaid"?: (event: ScOrderConfirmProviderCustomEvent<Order>) => void;
+        "onScSetState"?: (event: ScOrderConfirmProviderCustomEvent<string>) => void;
         /**
           * The current order.
          */
@@ -5917,6 +5921,7 @@ declare namespace LocalJSX {
           * Payment mode inside individual payment method (i.e. Payment Buttons)
          */
         "paymentMethod"?: 'stripe-payment-request' | null;
+        "previewStripePaymentElement"?: boolean;
         /**
           * The current payment method for the payment
          */
@@ -5952,6 +5957,10 @@ declare namespace LocalJSX {
           * Query to fetch paymentMethods
          */
         "query"?: object;
+    }
+    interface ScPaymentSelected {
+        "iconName"?: string;
+        "label"?: string;
     }
     interface ScPaypalButtons {
         /**
@@ -6534,17 +6543,9 @@ declare namespace LocalJSX {
     }
     interface ScStripePaymentElement {
         /**
-          * The account id.
-         */
-        "accountId"?: string;
-        /**
           * Should we collect an address?
          */
         "address"?: boolean;
-        /**
-          * The client secret to render the payment element
-         */
-        "clientSecret"?: string;
         /**
           * The order/invoice was paid for.
          */
@@ -6558,14 +6559,13 @@ declare namespace LocalJSX {
          */
         "order"?: Checkout;
         /**
-          * The stripe publishable key.
+          * The Payment Intent
          */
-        "publishableKey"?: string;
+        "paymentIntent"?: PaymentIntent;
         /**
           * Success url to redirect.
          */
         "successUrl"?: string;
-        "updated"?: number;
     }
     interface ScStripePaymentRequest {
         /**
@@ -7159,6 +7159,7 @@ declare namespace LocalJSX {
         "sc-payment-method": ScPaymentMethod;
         "sc-payment-method-create": ScPaymentMethodCreate;
         "sc-payment-methods-list": ScPaymentMethodsList;
+        "sc-payment-selected": ScPaymentSelected;
         "sc-paypal-buttons": ScPaypalButtons;
         "sc-price-choice": ScPriceChoice;
         "sc-price-choices": ScPriceChoices;
@@ -7307,6 +7308,7 @@ declare module "@stencil/core" {
             "sc-payment-method": LocalJSX.ScPaymentMethod & JSXBase.HTMLAttributes<HTMLScPaymentMethodElement>;
             "sc-payment-method-create": LocalJSX.ScPaymentMethodCreate & JSXBase.HTMLAttributes<HTMLScPaymentMethodCreateElement>;
             "sc-payment-methods-list": LocalJSX.ScPaymentMethodsList & JSXBase.HTMLAttributes<HTMLScPaymentMethodsListElement>;
+            "sc-payment-selected": LocalJSX.ScPaymentSelected & JSXBase.HTMLAttributes<HTMLScPaymentSelectedElement>;
             "sc-paypal-buttons": LocalJSX.ScPaypalButtons & JSXBase.HTMLAttributes<HTMLScPaypalButtonsElement>;
             "sc-price-choice": LocalJSX.ScPriceChoice & JSXBase.HTMLAttributes<HTMLScPriceChoiceElement>;
             "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;

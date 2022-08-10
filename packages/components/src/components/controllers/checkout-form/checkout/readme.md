@@ -29,11 +29,11 @@
 
 ## Events
 
-| Event              | Description               | Type                         |
-| ------------------ | ------------------------- | ---------------------------- |
-| `scOrderError`     | Order has an error.       | `CustomEvent<ResponseError>` |
-| `scOrderFinalized` | Order has been finalized. | `CustomEvent<Order>`         |
-| `scOrderUpdated`   | Order has been updated.   | `CustomEvent<Order>`         |
+| Event              | Description                  | Type                         |
+| ------------------ | ---------------------------- | ---------------------------- |
+| `scOrderError`     | Checkout has an error.       | `CustomEvent<ResponseError>` |
+| `scOrderFinalized` | Checkout has been finalized. | `CustomEvent<Checkout>`      |
+| `scOrderUpdated`   | Checkout has been updated.   | `CustomEvent<Checkout>`      |
 
 
 ## Methods

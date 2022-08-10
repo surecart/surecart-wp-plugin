@@ -14,7 +14,7 @@
 | `hasFocus`       | `has-focus`       | Inputs focus                                                          | `boolean`                        | `undefined` |
 | `label`          | `label`           | The input's label. Alternatively, you can use the label slot.         | `string`                         | `undefined` |
 | `mode`           | `mode`            | Mode for the payment                                                  | `"live" \| "test"`               | `'live'`    |
-| `order`          | --                | The checkout session object for finalizing intents                    | `Order`                          | `undefined` |
+| `order`          | --                | The checkout session object for finalizing intents                    | `Checkout`                       | `undefined` |
 | `publishableKey` | `publishable-key` | Stripe publishable key                                                | `string`                         | `undefined` |
 | `secureText`     | `secure-text`     | The input's help text. Alternatively, you can use the help-text slot. | `string`                         | `''`        |
 | `showLabel`      | `show-label`      | Should we show the label                                              | `boolean`                        | `true`      |
