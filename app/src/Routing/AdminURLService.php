@@ -133,11 +133,16 @@ class AdminURLService {
 	 * @return string url
 	 */
 	public function checkout( $line_items = [] ) {
+		$checkout = \SureCart::pages()->url( 'checkout' );
+		if ( ! $checkout ) {
+			return '';
+		}
+
 		return add_query_arg(
 			[
 				...( $line_items ? [ 'line_items' => $this->lineItems( $line_items ?? [] ) ] : [] ),
 			],
-			\SureCart::pages()->url( 'checkout' )
+			$checkout
 		);
 	}
 

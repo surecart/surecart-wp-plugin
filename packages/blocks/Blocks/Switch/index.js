@@ -8,6 +8,7 @@ import { __ } from '@wordpress/i18n';
  */
 import edit from './edit';
 import save from './save';
+import deprecated from './deprecated';
 import metadata from './block.json';
 
 const { name } = metadata;
@@ -26,7 +27,7 @@ export const settings = {
 			strokeWidth="2"
 			strokeLinecap="round"
 			strokeLinejoin="round"
-			style={ { fill: 'none' } }
+			style={{ fill: 'none' }}
 		>
 			<rect x="1" y="5" width="22" height="14" rx="7" ry="7"></rect>
 			<circle cx="8" cy="12" r="3"></circle>
@@ -34,4 +35,5 @@ export const settings = {
 	),
 	edit,
 	save,
+	deprecated,
 };

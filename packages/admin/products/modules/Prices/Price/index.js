@@ -26,6 +26,7 @@ export default ({ id, prices, product }) => {
 		deletePrice,
 		savePrice,
 		savingPrice,
+		hasLoadedPrice,
 		deletingPrice,
 		savePriceError,
 	} = useEntity('price', id);
@@ -114,6 +115,7 @@ export default ({ id, prices, product }) => {
 				price={price}
 				onArchive={toggleArchive}
 				onDelete={onDelete}
+				loading={!hasLoadedPrice}
 				css={css`
 					padding: var(--sc-spacing-large);
 				`}
