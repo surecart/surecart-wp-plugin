@@ -2917,10 +2917,6 @@ export interface ScOrderShippingAddressCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScOrderShippingAddressElement;
 }
-export interface ScOrderStripePaymentElementCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScOrderStripePaymentElementElement;
-}
 export interface ScOrderSummaryCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScOrderSummaryElement;
@@ -5809,9 +5805,6 @@ declare namespace LocalJSX {
           * Payment mode.
          */
         "mode"?: 'test' | 'live';
-        "onScPaid"?: (event: ScOrderStripePaymentElementCustomEvent<void>) => void;
-        "onScPayError"?: (event: ScOrderStripePaymentElementCustomEvent<any>) => void;
-        "onScSetPaymentIntent"?: (event: ScOrderStripePaymentElementCustomEvent<{ processor: 'stripe'; payment_intent: PaymentIntent }>) => void;
         /**
           * The order.
          */
