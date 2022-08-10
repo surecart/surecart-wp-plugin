@@ -213,10 +213,6 @@ export class ScUpcomingInvoice {
     );
   }
 
-  renderPrice(key: string) {
-    return <sc-format-number type="currency" currency={(this.invoice.checkout as Checkout)?.currency} value={this.invoice?.[key]}></sc-format-number>;
-  }
-
   renderSummary() {
     if (this.loading) {
       return this.renderLoading();
@@ -245,7 +241,7 @@ export class ScUpcomingInvoice {
 
         <sc-line-item>
           <span slot="description">{__('Subtotal', 'surecart')}</span>
-          <span slot="price">{this.renderPrice('subtotal_amount')}</span>
+          <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={checkout?.subtotal_amount}></sc-format-number>
         </sc-line-item>
 
         {!!checkout.proration_amount && (

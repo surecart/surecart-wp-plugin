@@ -457,6 +457,7 @@ export interface Subscription extends Object {
     quantity?: number;
   };
   cancel_at_period_end: number | false;
+  current_period: string | Period;
   current_period_end_at: number | false;
   current_period_start_at: number | false;
   remaining_period_count: number | null;
