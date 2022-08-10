@@ -2,7 +2,6 @@ import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 
-import { hasSubscription } from '../../../../functions/line-items';
 import { getProcessorData } from '../../../../functions/processor';
 import { Checkout, PaymentIntent, Processor, ProcessorName } from '../../../../types';
 
@@ -54,7 +53,7 @@ export class ScPayment {
   /** The stripe payment intent. */
   @Prop() stripePaymentIntent: PaymentIntent;
 
-  @Prop() debug: boolean;
+  @Prop() previewStripePaymentElement: boolean;
 
   /** Hold the stripe processor */
   @State() stripe: Processor;
@@ -96,7 +95,7 @@ export class ScPayment {
    */
   renderStripePaymentElement() {
     if (this.stripePaymentElement) {
-      if (!this.stripePaymentIntent && this.debug) {
+      if (this.previewStripePaymentElement) {
         return <sc-card>{__('The Stripe Payment element will appear here when something is added to the checkout.', 'surecart')}</sc-card>;
       }
       return <sc-stripe-payment-element order={this.order} paymentIntent={this.stripePaymentIntent} />
@@ -152,15 +151,17 @@ export class ScPayment {
               <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
             </span>
             <sc-card>
-              <sc-flex flex-direction="column" style={{'--spacing': '0.3em'}}>
-              <div><sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon></div>
-              <div style={{color: 'var(--sc-color-gray-600)'}}>{__('PayPal selected for check out.', 'surecart')}</div>
-              <sc-divider></sc-divider>
-              <sc-flex justifyContent='flex-start' style={{'---spacing': '1em'}} alignItems="center">
-                <svg style={{width: '48px', height: '48px', 'flex-shrink': '1'}} viewBox="0 0 48 40" fill="var(--sc-color-gray-500)" xmlns="http://www.w3.org/2000/svg" role="presentation"><path opacity=".6" fill-rule="evenodd" clip-rule="evenodd" d="M43 5a4 4 0 00-4-4H17a4 4 0 00-4 4v11a1 1 0 102 0V5a2 2 0 012-2h22a2 2 0 012 2v30a2 2 0 01-2 2H17a2 2 0 01-2-2v-9a1 1 0 10-2 0v9a4 4 0 004 4h22a4 4 0 004-4V5zM17.992 16.409L21.583 20H6a1 1 0 100 2h15.583l-3.591 3.591a1 1 0 101.415 1.416l5.3-5.3a1 1 0 000-1.414l-5.3-5.3a1 1 0 10-1.415 1.416zM17 6a1 1 0 011-1h15a1 1 0 011 1v2a1 1 0 01-1 1H18a1 1 0 01-1-1V6zm21-1a1 1 0 100 2 1 1 0 000-2z"></path></svg>
-                <div class="sc-payment-instructions">{__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}</div>
-              </sc-flex>
-              </sc-flex>
+              <sc-payment-selected
+                iconName="paypal"
+                label={__(
+                  'PayPal selected for check out.',
+                  'surecart'
+                )}>
+                  {__(
+                    'Another step will appear after submitting your order to complete your purchase details.',
+                    'surecart'
+                  )}
+              </sc-payment-selected>
             </sc-card>
           </sc-toggle>
         </sc-toggles>
@@ -235,15 +236,9 @@ export class ScPayment {
   }
 
   render() {
-    // if ( !this.order?.line_items?.pagination?.count && !this.loading ) {
-    //   return null;
-    // }
-
-    // no payment is required if we dont have a subscription and the total amount is 0.
-    if (!hasSubscription(this.order)) {
-      if (this.order?.line_items?.pagination?.count >= 1 && this.order?.total_amount === 0) {
-        return null;
-      }
+    // payment is not required for this order.
+    if (this.order.payment_required === false) {
+      return null;
     }
 
     // we don't have any processors.
