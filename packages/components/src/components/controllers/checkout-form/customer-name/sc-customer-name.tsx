@@ -82,7 +82,7 @@ export class ScCustomerName {
 
   @Method()
   async reportValidity() {
-    return this.input.reportValidity();
+    return this.input?.reportValidity?.();
   }
 
   async handleChange() {

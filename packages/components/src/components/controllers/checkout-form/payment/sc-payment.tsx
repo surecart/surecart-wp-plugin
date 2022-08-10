@@ -4,7 +4,7 @@ import { openWormhole } from 'stencil-wormhole';
 
 import { hasSubscription } from '../../../../functions/line-items';
 import { getProcessorData } from '../../../../functions/processor';
-import { Checkout, Processor, ProcessorName } from '../../../../types';
+import { Checkout, PaymentIntent, Processor, ProcessorName } from '../../../../types';
 
 @Component({
   tag: 'sc-payment',
@@ -51,6 +51,9 @@ export class ScPayment {
   /** Use the Stripe payment element. */
   @Prop() stripePaymentElement: boolean;
 
+  /** The stripe payment intent. */
+  @Prop() stripePaymentIntent: PaymentIntent;
+
   /** Hold the stripe processor */
   @State() stripe: Processor;
 
@@ -91,7 +94,13 @@ export class ScPayment {
    */
   renderStripePaymentElement() {
     if (this.stripePaymentElement) {
-      return <sc-order-stripe-payment-element order={this.order} mode={this.mode} processors={this.processors} currency-code={this.currencyCode}></sc-order-stripe-payment-element>;
+      return <sc-stripe-payment-element
+        order={this.order}
+        client-secret={this.stripePaymentIntent?.processor_data?.stripe?.client_secret}
+        publishableKey={this.stripePaymentIntent?.processor_data?.stripe?.publishable_key}
+        accountId={this.stripePaymentIntent?.processor_data?.stripe?.account_id}
+        updated={this.stripePaymentIntent?.updated_at}
+      ></sc-stripe-payment-element>
     }
     const data = getProcessorData(this.processors, 'stripe', this.mode);
     return (
@@ -216,6 +225,10 @@ export class ScPayment {
   }
 
   render() {
+    if ( !this.order?.line_items?.pagination?.count && !this.loading ) {
+      return null;
+    }
+
     // no payment is required if we dont have a subscription and the total amount is 0.
     if (!hasSubscription(this.order)) {
       if (this.order?.line_items?.pagination?.count >= 1 && this.order?.total_amount === 0) {
@@ -258,4 +271,4 @@ export class ScPayment {
   }
 }
 
-openWormhole(ScPayment, ['processor', 'processors', 'order', 'mode', 'paymentMethod', 'loading', 'busy', 'currencyCode', 'stripePaymentElement'], false);
+openWormhole(ScPayment, ['processor', 'processors', 'order', 'mode', 'paymentMethod', 'loading', 'busy', 'currencyCode', 'stripePaymentElement', 'stripePaymentIntent'], false);

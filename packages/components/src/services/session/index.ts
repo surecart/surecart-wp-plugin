@@ -14,6 +14,7 @@ export const expand = [
   'discount.promotion',
   'discount.coupon',
   'shipping_address',
+  'staged_payment_intents',
   'tax_identifier',
 ];
 

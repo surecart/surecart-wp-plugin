@@ -1621,6 +1621,10 @@ export namespace Components {
          */
         "order": Checkout;
         /**
+          * Payment intent
+         */
+        "paymentIntent": PaymentIntent;
+        /**
           * Available processors
          */
         "processors": Processor[];
@@ -1778,6 +1782,10 @@ export namespace Components {
           * Use the Stripe payment element.
          */
         "stripePaymentElement": boolean;
+        /**
+          * The stripe payment intent.
+         */
+        "stripePaymentIntent": PaymentIntent;
     }
     interface ScPaymentMethod {
         "paymentMethod": PaymentMethod;
@@ -2328,6 +2336,7 @@ export namespace Components {
           * Success url to redirect.
          */
         "successUrl": string;
+        "updated": number;
     }
     interface ScStripePaymentRequest {
         /**
@@ -5808,6 +5817,10 @@ declare namespace LocalJSX {
          */
         "order"?: Checkout;
         /**
+          * Payment intent
+         */
+        "paymentIntent"?: PaymentIntent;
+        /**
           * Available processors
          */
         "processors"?: Processor[];
@@ -5986,6 +5999,10 @@ declare namespace LocalJSX {
           * Use the Stripe payment element.
          */
         "stripePaymentElement"?: boolean;
+        /**
+          * The stripe payment intent.
+         */
+        "stripePaymentIntent"?: PaymentIntent;
     }
     interface ScPaymentMethod {
         "paymentMethod"?: PaymentMethod;
@@ -6614,6 +6631,7 @@ declare namespace LocalJSX {
           * Success url to redirect.
          */
         "successUrl"?: string;
+        "updated"?: number;
     }
     interface ScStripePaymentRequest {
         /**

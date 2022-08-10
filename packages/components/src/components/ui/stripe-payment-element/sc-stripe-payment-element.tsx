@@ -26,6 +26,8 @@ export class ScStripePaymentElement {
   /** The stripe publishable key. */
   @Prop() publishableKey: string;
 
+  @Prop() updated: number;
+
   /** The account id. */
   @Prop() accountId: string;
 
@@ -60,11 +62,9 @@ export class ScStripePaymentElement {
     this.loadElement();
   }
 
-  /** Reload element if client secret changes. */
-  @Watch('clientSecret')
-  handleClientSecretChange(val, prev) {
+  @Watch('updated')
+  handleUpdatedChange(val, prev) {
     if (val !== prev) {
-      this.loaded = false;
       this.loadElement();
     }
   }
@@ -89,7 +89,7 @@ export class ScStripePaymentElement {
     const confirmArgs = {
       elements: this.elements,
       confirmParams: {
-        return_url: this.successUrl,
+        return_url: window.location.href,
       },
       redirect: 'if_required',
       ...args,
@@ -149,13 +149,10 @@ export class ScStripePaymentElement {
 
     // create the payment element.
     this.elements
-      .create('payment', {
-        wallets: {
-          applePay: 'never',
-          googlePay: 'never',
-        },
-      })
+      .create('payment')
       .mount('.sc-payment-element-container');
+
+    console.log('mounted', this.elements);
 
     this.element = this.elements.getElement('payment');
     this.element.on('ready', () => (this.loaded = true));

@@ -45,7 +45,7 @@ export class ScOrderPassword {
 
   @Method()
   async reportValidity() {
-    return this.input.reportValidity();
+    return this.input?.reportValidity?.();
   }
 
   render() {

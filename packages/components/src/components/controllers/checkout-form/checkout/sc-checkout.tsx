@@ -180,6 +180,7 @@ export class ScCheckout {
 
       // stripe.
       stripePaymentElement: this.stripePaymentElement,
+      stripePaymentIntent: (this.order()?.staged_payment_intents?.data || []).find(intent => intent.processor_type === 'stripe'),
 
       error: this.error,
       customer: this.customer,

@@ -141,14 +141,6 @@ export class ScSessionProvider {
       this.handleErrorResponse(e);
     }
 
-    // Important: Stripe needs a payment intent ahead of time, or the
-    // order will not be attached to the payment.
-    if (this.order()?.total_amount > 0 && !payment_intent && this.getProcessor() === 'stripe' && this.stripePaymentElement) {
-      this.scError.emit({ message: 'Something went wrong. Please try again.' });
-      console.error('No payment intent found.');
-      return this.scSetState.emit('REJECT');
-    }
-
     // first validate server-side and get key
     try {
       const order = await finalizeSession({
@@ -156,7 +148,6 @@ export class ScSessionProvider {
         data,
         query: {
           ...this.defaultFormQuery(),
-          ...(payment_intent?.id ? { payment_intent_id: payment_intent?.id } : {}),
         },
         processor: this.getProcessor(),
       });
@@ -268,6 +259,7 @@ export class ScSessionProvider {
   defaultFormQuery() {
     return {
       form_id: this.formId,
+      ...(this.stripePaymentElement && this.processor === 'stripe' ? {stage_processor_type: 'stripe'} : {})
     };
   }
 
