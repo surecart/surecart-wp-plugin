@@ -186,10 +186,6 @@ class CheckoutsController extends RestController {
 			return $checkout;
 		}
 
-		if ( 'paid' !== $checkout->status ) {
-			return new \WP_Error( 'invalid_status', 'The checkout is not paid.', [ 'status' => 400 ] );
-		}
-
 		// link the customer id to the user.
 		$linked = $this->maybeLinkCustomer( $checkout, $request );
 		if ( is_wp_error( $linked ) ) {
