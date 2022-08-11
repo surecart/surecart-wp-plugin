@@ -243,6 +243,11 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.0.6 - August 11, 2022 =
+* Fix: Issue with tax not being calculated when shipping address country is prefilled and only country field is displayed.
+* Fix: Issue with password field not allowing form to submit when hidden.
+* Fix: Added missing tags to settings that are coming soon.
+
 = 1.0.5 - August 4, 2022 =
 * Improvement: Copy links button and popup.
 * Fix: Don't show copy links if checkout page is trashed or deleted.
