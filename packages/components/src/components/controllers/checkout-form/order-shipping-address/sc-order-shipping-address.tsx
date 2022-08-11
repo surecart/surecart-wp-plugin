@@ -74,24 +74,6 @@ export class ScOrderShippingAddress {
     }
   }
 
-  /** When the shipping address changes, we want to update the passed address to match. */
-  @Watch('shippingAddress')
-  handleShippingChange(val, old) {
-    // let's only update it the first time.
-    if (!old) {
-      if (!val?.country) {
-        const country = navigator?.language?.slice(-2).toUpperCase();
-        if (country) {
-          this.address = {
-            ...this.address,
-            country,
-          };
-        }
-      }
-      this.address = { ...this.address, ...val };
-    }
-  }
-
   updateAddressState(address: Partial<Address>) {
     if (JSON.stringify(address) === JSON.stringify(this.address)) return; // no change, don't update.
     this.address = address;
@@ -100,19 +82,6 @@ export class ScOrderShippingAddress {
         shipping_address: this.address as Address,
       },
     });
-  }
-
-  componentWillLoad() {
-    /** Set the country by browser language if not set. */
-    if (!this.address?.country) {
-      const country = navigator?.language?.slice(-2).toUpperCase();
-      if (country) {
-        this.address = {
-          ...this.address,
-          country,
-        };
-      }
-    }
   }
 
   @Method()
