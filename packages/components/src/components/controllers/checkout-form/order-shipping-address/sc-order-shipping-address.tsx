@@ -20,9 +20,6 @@ export class ScOrderShippingAddress {
   /** Is this loading. */
   @Prop() loading: boolean;
 
-  /** Holds the customer's shipping address */
-  @Prop() customerShippingAddress: Address;
-
   /** Holds the customer's billing address */
   @Prop() shippingAddress: Address;
 
@@ -65,11 +62,10 @@ export class ScOrderShippingAddress {
     state: null,
   };
 
-  /** When the customer shipping address changes, we want to use that instead of what's entered, if we have empty fields. */
-  @Watch('customerShippingAddress')
+  /** When the shipping address changes, we want to use that instead of what's entered, if we have empty fields. */
+  @Watch('shippingAddress')
   handleCustomerAddressChange(val, old) {
-    // if the shipping address is blank, use the customer address.
-    if (!Object.keys(this.shippingAddress || {}).length && !old) {
+    if (val?.id && !old) {
       this.address = { ...this.address, ...val };
     }
   }
@@ -116,4 +112,4 @@ export class ScOrderShippingAddress {
   }
 }
 
-openWormhole(ScOrderShippingAddress, ['shippingAddress', 'loading', 'customerShippingAddress', 'taxStatus', 'shippingEnabled'], false);
+openWormhole(ScOrderShippingAddress, ['shippingAddress', 'loading', 'taxStatus', 'shippingEnabled'], false);
