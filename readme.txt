@@ -247,6 +247,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * Fix: Issue with tax not being calculated when shipping address country is prefilled and only country field is displayed.
 * Fix: Issue with password field not allowing form to submit when hidden.
 * Fix: Added missing tags to settings that are coming soon.
+* Improvement: Update "Password" default text to "Set A Password".
 
 = 1.0.5 - August 4, 2022 =
 * Improvement: Copy links button and popup.

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-08-04T14:45:20",
+  "timestamp": "2022-08-11T22:43:27",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -12514,21 +12514,6 @@
       "docsTags": [],
       "usage": {},
       "props": [
-        {
-          "name": "customerShippingAddress",
-          "type": "Address",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Holds the customer's shipping address",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Address"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
         {
           "name": "full",
           "type": "boolean",
