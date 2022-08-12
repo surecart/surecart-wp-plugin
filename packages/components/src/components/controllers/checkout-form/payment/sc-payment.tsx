@@ -152,11 +152,15 @@ export class ScPayment {
             </span>
             <sc-card>
               <sc-payment-selected
-                iconName="paypal"
                 label={__(
                   'PayPal selected for check out.',
                   'surecart'
                 )}>
+                  <sc-icon
+										slot="icon"
+										name="paypal"
+										style={{ width: '80px' }}
+									/>
                   {__(
                     'Another step will appear after submitting your order to complete your purchase details.',
                     'surecart'
