@@ -22,6 +22,7 @@
 | `scConfirmed` | The order is confirmed event. | `CustomEvent<void>`                                                                           |
 | `scError`     | Error event.                  | `CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any; } \| {}>` |
 | `scOrderPaid` | The order is paid event.      | `CustomEvent<Order>`                                                                          |
+| `scSetState`  |                               | `CustomEvent<string>`                                                                         |
 
 
 ## Dependencies

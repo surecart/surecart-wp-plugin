@@ -13,22 +13,28 @@
 | `label`    | `label`     |             | `string` | `undefined` |
 
 
+## Shadow Parts
+
+| Part     | Description |
+| -------- | ----------- |
+| `"base"` |             |
+
+
 ## Dependencies
+
+### Used by
+
+ - [sc-payment](../../controllers/checkout-form/payment)
 
 ### Depends on
 
-- [sc-card](../card)
-- [sc-flex](../flex)
-- [sc-icon](../icon)
 - [sc-divider](../divider)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-payment-selected --> sc-card
-  sc-payment-selected --> sc-flex
-  sc-payment-selected --> sc-icon
   sc-payment-selected --> sc-divider
+  sc-payment --> sc-payment-selected
   style sc-payment-selected fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

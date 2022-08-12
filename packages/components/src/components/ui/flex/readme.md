@@ -22,9 +22,7 @@
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-pagination](../pagination)
- - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
- - [sc-payment-selected](../payment-selected)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
@@ -36,9 +34,7 @@ graph TD;
   sc-downloads-list --> sc-flex
   sc-order --> sc-flex
   sc-pagination --> sc-flex
-  sc-payment --> sc-flex
   sc-payment-methods-list --> sc-flex
-  sc-payment-selected --> sc-flex
   sc-subscription --> sc-flex
   sc-subscription-payment --> sc-flex
   sc-subscription-switch --> sc-flex

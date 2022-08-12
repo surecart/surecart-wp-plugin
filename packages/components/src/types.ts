@@ -342,6 +342,7 @@ export interface Checkout extends Object {
     data: Array<PaymentIntent>;
   };
   payment_required?: boolean;
+  reusable_payment_method_required?: boolean;
   number?: string;
   amount_due?: number;
   trial_amount?: number;

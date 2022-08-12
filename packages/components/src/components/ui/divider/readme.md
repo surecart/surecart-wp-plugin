@@ -25,7 +25,6 @@
  - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
  - [sc-order-confirmation-totals](../../controllers/confirmation/order-confirmation-totals)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
- - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-payment-selected](../payment-selected)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
@@ -42,7 +41,6 @@ graph TD;
   sc-order-confirmation-details --> sc-divider
   sc-order-confirmation-totals --> sc-divider
   sc-orders-list --> sc-divider
-  sc-payment --> sc-divider
   sc-payment-methods-list --> sc-divider
   sc-payment-selected --> sc-divider
   sc-purchase-downloads-list --> sc-divider

@@ -39,7 +39,6 @@
  - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-payment-method-create](../../controllers/dashboard/payment-method-create)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
- - [sc-payment-selected](../payment-selected)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
@@ -68,7 +67,6 @@ graph TD;
   sc-payment --> sc-card
   sc-payment-method-create --> sc-card
   sc-payment-methods-list --> sc-card
-  sc-payment-selected --> sc-card
   sc-purchase-downloads-list --> sc-card
   sc-subscription --> sc-card
   sc-subscription-ad-hoc-confirm --> sc-card

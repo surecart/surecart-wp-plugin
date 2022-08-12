@@ -46,8 +46,7 @@
 - [sc-toggles](../../../ui/sc-toggles)
 - [sc-toggle](../../../ui/sc-toggle)
 - [sc-icon](../../../ui/icon)
-- [sc-flex](../../../ui/flex)
-- [sc-divider](../../../ui/divider)
+- [sc-payment-selected](../../../ui/payment-selected)
 - [sc-skeleton](../../../ui/skeleton)
 - [sc-alert](../../../ui/alert)
 
@@ -63,8 +62,7 @@ graph TD;
   sc-payment --> sc-toggles
   sc-payment --> sc-toggle
   sc-payment --> sc-icon
-  sc-payment --> sc-flex
-  sc-payment --> sc-divider
+  sc-payment --> sc-payment-selected
   sc-payment --> sc-skeleton
   sc-payment --> sc-alert
   sc-stripe-payment-element --> sc-text
@@ -74,6 +72,7 @@ graph TD;
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
   sc-toggle --> sc-icon
+  sc-payment-selected --> sc-divider
   sc-alert --> sc-icon
   style sc-payment fill:#f9f,stroke:#333,stroke-width:4px
 ```

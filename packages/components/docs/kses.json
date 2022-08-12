@@ -1096,6 +1096,15 @@
     "class": true,
     "slot": true
   },
+  "sc-processor-provider": {
+    "checkout": true,
+    "processor": true,
+    "processors": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-product-line-item": {
     "amount": true,
     "currency": true,

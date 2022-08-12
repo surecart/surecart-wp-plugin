@@ -50,6 +50,12 @@ export const updateOrder = async ({ id, data = {}, query = {} }) => {
   });
 };
 
+export const getCheckout = async ({ id, query }) => {
+  return await apiFetch({
+    path: addQueryArgs(parsePath(id), query),
+  });
+};
+
 /**
  * Finalize a checkout session
  */
