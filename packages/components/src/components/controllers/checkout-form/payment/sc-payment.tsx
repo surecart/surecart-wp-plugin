@@ -53,8 +53,6 @@ export class ScPayment {
   /** The stripe payment intent. */
   @Prop() stripePaymentIntent: PaymentIntent;
 
-  @Prop() previewStripePaymentElement: boolean;
-
   /** Hold the stripe processor */
   @State() stripe: Processor;
 
@@ -95,9 +93,6 @@ export class ScPayment {
    */
   renderStripePaymentElement() {
     if (this.stripePaymentElement) {
-      if (this.previewStripePaymentElement) {
-        return <sc-card>{__('The Stripe Payment element will appear here when something is added to the checkout.', 'surecart')}</sc-card>;
-      }
       return <sc-stripe-payment-element order={this.order} paymentIntent={this.stripePaymentIntent} />
     }
 
