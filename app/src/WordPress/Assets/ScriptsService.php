@@ -42,8 +42,15 @@ class ScriptsService {
 		if ( ! \SureCart::assets()->usesEsmLoader() ) {
 			return $tag;
 		}
+
+		// make sure our translations do not get stripped.
+		$translations = wp_scripts()->print_translations( $handle, false );
+		if ( $translations ) {
+			$translations = sprintf( "<script%s id='%s-js-translations'>\n%s\n</script>\n", " type='text/javascript'", esc_attr( $handle ), $translations );
+		}
+
 		// phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
-		return '<script src="' . esc_url_raw( $source ) . '" type="module"></script>';
+		return '<script src="' . esc_url_raw( $source ) . '" type="module"></script>' . $translations;
 	}
 
 	/**
@@ -80,7 +87,7 @@ class ScriptsService {
 			);
 		}
 
-		wp_set_script_translations( 'surecart-components', 'surecart', WP_LANG_DIR . '/plugins/' );
+		wp_set_script_translations( 'surecart-components', 'surecart' );
 
 		// core-data.
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/data.asset.php';
