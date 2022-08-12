@@ -4,11 +4,11 @@ import { addQueryArgs } from '@wordpress/url';
 import { Media, Product, Purchase } from '../../../types';
 
 @Component({
-  tag: 'sc-downloads-list',
-  styleUrl: 'sc-downloads-list.scss',
+  tag: 'sc-purchase-downloads-list',
+  styleUrl: 'sc-purchase-downloads-list.scss',
   shadow: true,
 })
-export class ScDownloadsList {
+export class ScPurchaseDownloadsList {
   @Element() el: HTMLScDownloadsListElement;
 
   @Prop() allLink: string;
@@ -52,7 +52,7 @@ export class ScDownloadsList {
           href={
             !purchase?.revoked
               ? addQueryArgs(window.location.href, {
-                  action: 'edit',
+                  action: 'show',
                   model: 'download',
                   id: purchase.id,
                   nonce: this.requestNonce,

@@ -176,7 +176,7 @@ export default ({ order, checkout, loading }) => {
 					/>
 				)}
 
-				{!!checkout?.tax && (
+				{!!checkout?.tax_amount && (
 					<LineItem
 						label={
 							<>

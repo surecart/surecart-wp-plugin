@@ -1,5 +1,5 @@
 import { Component, State, h, Watch, Prop, Event, EventEmitter } from '@stencil/core';
-import { Order } from '../../../../types';
+import { Checkout } from '../../../../types';
 import { openWormhole } from 'stencil-wormhole';
 import { __ } from '@wordpress/i18n';
 
@@ -13,7 +13,7 @@ export class ScOrderCouponForm {
   @Prop() loading: boolean;
   @Prop() busy: boolean;
   @Prop() error: any;
-  @Prop() order: Order;
+  @Prop() order: Checkout;
   @Prop() forceOpen: boolean;
 
   @State() open: boolean;

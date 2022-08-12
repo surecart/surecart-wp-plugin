@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Fragment, h, Method, Prop, State, Watch } from '@stencil/core';
 import { loadStripe } from '@stripe/stripe-js/pure';
 
-import { Order } from '../../../types';
+import { Checkout } from '../../../types';
 
 @Component({
   tag: 'sc-stripe-element',
@@ -19,7 +19,7 @@ export class ScStripeElement {
   @Prop() disabled: boolean;
 
   /** The checkout session object for finalizing intents */
-  @Prop() order: Order;
+  @Prop() order: Checkout;
 
   /** Your stripe connected account id. */
   @Prop() accountId: string;
@@ -60,7 +60,7 @@ export class ScStripeElement {
   }
 
   @Watch('order')
-  async confirmPayment(val: Order) {
+  async confirmPayment(val: Checkout) {
     // needs to be enabled
     if (this.disabled) return;
     // must be finalized

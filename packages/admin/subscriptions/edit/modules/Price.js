@@ -67,10 +67,7 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 									{price?.ad_hoc ? (
 										<ScPriceInput
 											label={price?.product?.name}
-											value={
-												subscription?.ad_hoc_amount ||
-												price?.amount
-											}
+											value={lineItem?.total_amount}
 											onScChange={(e) =>
 												updateSubscription({
 													ad_hoc_amount:
@@ -84,10 +81,7 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 											<div style={{ opacity: 0.5 }}>
 												<ScFormatNumber
 													type="currency"
-													value={
-														subscription?.ad_hoc_amount ||
-														price?.amount
-													}
+													value={price?.amount}
 													currency={price?.currency}
 												/>
 												{intervalString(price, {
@@ -117,7 +111,6 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 									if (price) {
 										updateSubscription({
 											price,
-											ad_hoc_amount: 500,
 										});
 									}
 								}}
@@ -133,7 +126,7 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 								value={subscription?.quantity}
 								onScChange={(e) => {
 									updateSubscription({
-										price,
+										price: price?.id,
 										quantity: e.target.value,
 									});
 								}}

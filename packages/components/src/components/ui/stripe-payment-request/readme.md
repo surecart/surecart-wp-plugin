@@ -16,7 +16,7 @@
 | `error`           | --                  |                                                     | `ResponseError`            | `undefined` |
 | `formId`          | `form-id`           | This is required to validate the form on the server | `number \| string`         | `undefined` |
 | `label`           | `label`             | Label                                               | `string`                   | `'total'`   |
-| `order`           | --                  | Checkout Session                                    | `Order`                    | `undefined` |
+| `order`           | --                  | Checkout Session                                    | `Checkout`                 | `undefined` |
 | `paymentMethod`   | `payment-method`    |                                                     | `string`                   | `undefined` |
 | `prices`          | --                  |                                                     | `{ [id: string]: Price; }` | `undefined` |
 | `publishableKey`  | `publishable-key`   | Stripe publishable key                              | `string`                   | `undefined` |

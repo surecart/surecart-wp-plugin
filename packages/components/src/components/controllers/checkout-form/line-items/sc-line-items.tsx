@@ -4,7 +4,7 @@ import { openWormhole } from 'stencil-wormhole';
 
 import { hasSubscription } from '../../../../functions/line-items';
 import { intervalString } from '../../../../functions/price';
-import { LineItem, LineItemData, Order, PriceChoice, Prices, Product } from '../../../../types';
+import { LineItem, LineItemData, Checkout, PriceChoice, Prices, Product } from '../../../../types';
 
 @Component({
   tag: 'sc-line-items',
@@ -12,7 +12,7 @@ import { LineItem, LineItemData, Order, PriceChoice, Prices, Product } from '../
   shadow: true,
 })
 export class ScLineItems {
-  @Prop() order: Order;
+  @Prop() order: Checkout;
   @Prop() loading: boolean;
   @Prop() prices: Prices;
   @Prop() editable: boolean;

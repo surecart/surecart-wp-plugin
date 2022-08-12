@@ -30,8 +30,8 @@
 | `scError`            | Error event             | `CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any; } \| {}>` |
 | `scPaid`             |                         | `CustomEvent<void>`                                                                           |
 | `scSetState`         | Set the state           | `CustomEvent<"EXPIRE" \| "FETCH" \| "FINALIZE" \| "PAID" \| "REJECT" \| "RESOLVE">`           |
-| `scUpdateDraftState` | Update line items event | `CustomEvent<Order>`                                                                          |
-| `scUpdateOrderState` | Update line items event | `CustomEvent<Order>`                                                                          |
+| `scUpdateDraftState` | Update line items event | `CustomEvent<Checkout>`                                                                       |
+| `scUpdateOrderState` | Update line items event | `CustomEvent<Checkout>`                                                                       |
 
 
 ## Methods

@@ -1,11 +1,10 @@
-import { __, _n } from '@wordpress/i18n';
-import { store as coreStore } from '@wordpress/core-data';
-import { useState } from '@wordpress/element';
-import { useSelect } from '@wordpress/data';
-
-import PrevNextButtons from '../../ui/PrevNextButtons';
-import usePagination from '../../hooks/usePagination';
 import ChargesDataTable from '../../components/data-tables/charges-data-table';
+import usePagination from '../../hooks/usePagination';
+import PrevNextButtons from '../../ui/PrevNextButtons';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
+import { useState } from '@wordpress/element';
+import { __, _n } from '@wordpress/i18n';
 
 export default ({ customerId }) => {
 	const [page, setPage] = useState(1);
@@ -23,6 +22,7 @@ export default ({ customerId }) => {
 					expand: [
 						'payment_method',
 						'payment_method.card',
+						'payment_method.payment_instrument',
 						'payment_intent',
 						'checkout',
 						'checkout.order',

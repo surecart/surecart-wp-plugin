@@ -19,6 +19,8 @@
 
 ### Used by
 
+ - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
+ - [sc-order](../../controllers/dashboard/order)
  - [sc-pagination](../pagination)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-subscription](../../controllers/dashboard/subscription)
@@ -29,6 +31,8 @@
 ### Graph
 ```mermaid
 graph TD;
+  sc-downloads-list --> sc-flex
+  sc-order --> sc-flex
   sc-pagination --> sc-flex
   sc-payment-methods-list --> sc-flex
   sc-subscription --> sc-flex

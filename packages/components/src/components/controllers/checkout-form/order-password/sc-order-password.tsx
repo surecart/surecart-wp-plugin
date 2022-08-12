@@ -45,6 +45,7 @@ export class ScOrderPassword {
 
   @Method()
   async reportValidity() {
+    if (this.loggedIn) return true;
     return this.input.reportValidity();
   }
 

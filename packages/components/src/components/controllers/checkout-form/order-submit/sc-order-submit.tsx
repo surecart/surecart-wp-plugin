@@ -1,7 +1,7 @@
 import { Component, Fragment, h, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { getProcessorData } from '../../../../functions/processor';
-import { Order, Processor } from '../../../../types';
+import { Checkout, Processor } from '../../../../types';
 
 @Component({
   tag: 'sc-order-submit',
@@ -40,7 +40,7 @@ export class ScOrderSubmit {
   @Prop() processors: Processor[];
 
   /** The current order. */
-  @Prop() order: Order;
+  @Prop() order: Checkout;
 
   /** Currency Code */
   @Prop() currencyCode: string = 'usd';

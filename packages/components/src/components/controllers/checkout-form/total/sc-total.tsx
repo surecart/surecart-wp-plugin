@@ -1,4 +1,4 @@
-import { Order } from '../../../../types';
+import { Checkout } from '../../../../types';
 import { Component, h, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 
@@ -9,7 +9,7 @@ import { openWormhole } from 'stencil-wormhole';
 })
 export class ScTotal {
   @Prop() total: 'total' | 'subtotal' | 'amount_due' = 'amount_due';
-  @Prop() order: Order;
+  @Prop() order: Checkout;
 
   order_key = {
     total: 'total_amount',

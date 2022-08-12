@@ -1,7 +1,7 @@
 import { Component, h, Prop, Event, EventEmitter } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
-import { Address, Order, TaxIdentifier, TaxProtocol } from '../../../../types';
+import { Address, Checkout, TaxIdentifier, TaxProtocol } from '../../../../types';
 
 @Component({
   tag: 'sc-order-tax-id-input',
@@ -10,7 +10,7 @@ import { Address, Order, TaxIdentifier, TaxProtocol } from '../../../../types';
 })
 export class ScOrderTaxIdInput {
   /** The order */
-  @Prop() order: Partial<Order>;
+  @Prop() order: Partial<Checkout>;
 
   /** Force show the field. */
   @Prop() show: boolean = false;
@@ -26,7 +26,7 @@ export class ScOrderTaxIdInput {
 
   /** Make a request to update the order. */
   @Event() scUpdateOrder: EventEmitter<{
-    data: Partial<Order>;
+    data: Partial<Checkout>;
     options?: { silent?: boolean };
   }>;
 

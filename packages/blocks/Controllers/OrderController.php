@@ -64,4 +64,31 @@ class OrderController extends BaseController {
 			)->render()
 		);
 	}
+
+	/**
+	 * Index.
+	 */
+	public function show() {
+		if ( ! User::current()->isCustomer() ) {
+			return;
+		}
+		ob_start(); ?>
+
+		<sc-spacing style="--spacing: var(--sc-spacing-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
+					<?php esc_html_e( 'Order', 'surecart' ); ?>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
+
+			<sc-order order-id="<?php echo esc_attr( $this->getId() ); ?>"></sc-order>
+
+		</sc-spacing>
+
+		<?php
+		return ob_get_clean();
+	}
 }

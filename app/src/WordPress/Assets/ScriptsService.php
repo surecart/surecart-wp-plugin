@@ -160,15 +160,16 @@ class ScriptsService {
 			'surecart-components',
 			'scData',
 			[
-				'root_url'       => esc_url_raw( get_rest_url() ),
-				'plugin_url'     => \SureCart::core()->assets()->getUrl(),
-				'currency'       => \SureCart::account()->currency,
-				'pages'          => [
+				'root_url'            => esc_url_raw( get_rest_url() ),
+				'plugin_url'          => \SureCart::core()->assets()->getUrl(),
+				'currency'            => \SureCart::account()->currency,
+				'do_not_persist_cart' => is_admin(),
+				'pages'               => [
 					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 					'checkout'  => \SureCart::pages()->url( 'checkout' ),
 				],
-				'nonce'          => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
-				'nonce_endpoint' => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
+				'nonce'               => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
+				'nonce_endpoint'      => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
 			]
 		);
 

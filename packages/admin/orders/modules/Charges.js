@@ -1,9 +1,9 @@
+import ChargesDataTable from '../../components/data-tables/charges-data-table';
+import Refund from '../../components/data-tables/charges-data-table/Refund';
+import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __, _n } from '@wordpress/i18n';
-import { store as coreStore } from '@wordpress/core-data';
-import ChargesDataTable from '../../components/data-tables/charges-data-table';
 import { useState } from 'react';
-import Refund from '../../components/data-tables/charges-data-table/Refund';
 
 export default ({ checkoutId }) => {
 	const [refundCharge, setRefundCharge] = useState(false);
@@ -21,7 +21,11 @@ export default ({ checkoutId }) => {
 				'charge',
 				{
 					checkout_ids: checkoutId ? [checkoutId] : null,
-					expand: ['payment_method', 'payment_method.card'],
+					expand: [
+						'payment_method',
+						'payment_method.card',
+						'payment_method.payment_instrument',
+					],
 				},
 			];
 			return {

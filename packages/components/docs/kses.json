@@ -410,6 +410,7 @@
   "sc-dashboard-module": {
     "error": true,
     "heading": true,
+    "loading": true,
     "style": true,
     "id": true,
     "class": true,
@@ -445,13 +446,8 @@
     "slot": true
   },
   "sc-downloads-list": {
-    "all-link": true,
-    "busy": true,
-    "error": true,
+    "downloads": true,
     "heading": true,
-    "loading": true,
-    "purchases": true,
-    "request-nonce": true,
     "style": true,
     "id": true,
     "class": true,
@@ -695,6 +691,16 @@
     "class": true,
     "slot": true
   },
+  "sc-licenses-list": {
+    "activations": true,
+    "copied": true,
+    "heading": true,
+    "licenses": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-line-item": {
     "currency": true,
     "price": true,
@@ -771,6 +777,14 @@
     "slot": true
   },
   "sc-menu-label": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-order": {
+    "heading": true,
+    "order-id": true,
     "style": true,
     "id": true,
     "class": true,
@@ -870,7 +884,6 @@
     "slot": true
   },
   "sc-order-shipping-address": {
-    "customer-shipping-address": true,
     "full": true,
     "label": true,
     "loading": true,
@@ -890,17 +903,6 @@
     "pill": true,
     "size": true,
     "status": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "sc-order-stripe-payment-element": {
-    "address": true,
-    "currency-code": true,
-    "mode": true,
-    "order": true,
-    "processors": true,
     "style": true,
     "id": true,
     "class": true,
@@ -979,10 +981,19 @@
     "mode": true,
     "order": true,
     "payment-method": true,
+    "preview-stripe-payment-element": true,
     "processor": true,
     "processors": true,
     "secure-notice": true,
     "stripe-payment-element": true,
+    "stripe-payment-intent": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-payment-method": {
+    "payment-method": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1000,6 +1011,14 @@
   "sc-payment-methods-list": {
     "heading": true,
     "query": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-payment-selected": {
+    "icon-name": true,
+    "label": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1077,6 +1096,15 @@
     "class": true,
     "slot": true
   },
+  "sc-processor-provider": {
+    "checkout": true,
+    "processor": true,
+    "processors": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-product-line-item": {
     "amount": true,
     "currency": true,
@@ -1094,6 +1122,19 @@
   },
   "sc-provider": {
     "-s-t-e-n-c-i-l_-c-o-n-t-e-x-t": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-purchase-downloads-list": {
+    "all-link": true,
+    "busy": true,
+    "error": true,
+    "heading": true,
+    "loading": true,
+    "purchases": true,
+    "request-nonce": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1235,11 +1276,9 @@
     "slot": true
   },
   "sc-stripe-payment-element": {
-    "account-id": true,
     "address": true,
-    "client-secret": true,
     "order": true,
-    "publishable-key": true,
+    "payment-intent": true,
     "success-url": true,
     "style": true,
     "id": true,

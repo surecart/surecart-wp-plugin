@@ -87,7 +87,7 @@ class LicenseRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return current_user_can( 'read_sc_products' );
+		return current_user_can( 'read_sc_license', $request->get_params() );
 	}
 
 	/**
@@ -97,7 +97,7 @@ class LicenseRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		return current_user_can( 'read_sc_products' );
+		return current_user_can( 'read_sc_licenses', $request->get_params() );
 	}
 
 	/**
@@ -107,7 +107,7 @@ class LicenseRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function create_item_permissions_check( $request ) {
-		return current_user_can( 'publish_sc_products' );
+		return current_user_can( 'publish_sc_licenses' );
 	}
 
 	/**
@@ -117,7 +117,7 @@ class LicenseRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		return current_user_can( 'edit_sc_products' );
+		return current_user_can( 'edit_sc_licenses' );
 	}
 
 	/**
@@ -127,6 +127,6 @@ class LicenseRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function delete_item_permissions_check( $request ) {
-		return current_user_can( 'delete_sc_products' );
+		return current_user_can( 'delete_sc_licenses' );
 	}
 }

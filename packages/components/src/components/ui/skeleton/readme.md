@@ -38,10 +38,10 @@
  - [sc-custom-order-price-input](../../controllers/checkout-form/custom-order-price-input)
  - [sc-customer-details](../customer-details)
  - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
- - [sc-downloads-list](../downloads-list)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-line-item-total](../../controllers/checkout-form/line-item-total)
  - [sc-line-items](../../controllers/checkout-form/line-items)
+ - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
  - [sc-order-confirmation-line-items](../../controllers/confirmation/order-confirmation-line-items)
  - [sc-order-detail](../../controllers/confirmation/order-detail)
@@ -51,6 +51,7 @@
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-paypal-buttons](../paypal-buttons)
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
+ - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-stripe-payment-element](../stripe-payment-element)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
@@ -69,10 +70,10 @@ graph TD;
   sc-custom-order-price-input --> sc-skeleton
   sc-customer-details --> sc-skeleton
   sc-donation-choices --> sc-skeleton
-  sc-downloads-list --> sc-skeleton
   sc-invoices-list --> sc-skeleton
   sc-line-item-total --> sc-skeleton
   sc-line-items --> sc-skeleton
+  sc-order --> sc-skeleton
   sc-order-confirmation-details --> sc-skeleton
   sc-order-confirmation-line-items --> sc-skeleton
   sc-order-detail --> sc-skeleton
@@ -82,6 +83,7 @@ graph TD;
   sc-payment-methods-list --> sc-skeleton
   sc-paypal-buttons --> sc-skeleton
   sc-price-choice --> sc-skeleton
+  sc-purchase-downloads-list --> sc-skeleton
   sc-stripe-payment-element --> sc-skeleton
   sc-subscription --> sc-skeleton
   sc-subscription-cancel --> sc-skeleton

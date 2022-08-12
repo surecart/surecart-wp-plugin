@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
 
 import { getOrder } from '../../../../store/checkouts';
-import { Customer, FormState, Order, PaymentIntent, PaymentIntents, PriceChoice, Prices, Processor, Products, ResponseError, TaxProtocol } from '../../../../types';
+import { Customer, FormState, Checkout, PaymentIntent, PaymentIntents, PriceChoice, Prices, Processor, Products, ResponseError, TaxProtocol } from '../../../../types';
 
 @Component({
   tag: 'sc-checkout',
@@ -86,13 +86,13 @@ export class ScCheckout {
   /** Is this form a duplicate form? (There's another on the page) */
   @State() isDuplicate: boolean;
 
-  /** Order has been updated. */
-  @Event() scOrderUpdated: EventEmitter<Order>;
+  /** Checkout has been updated. */
+  @Event() scOrderUpdated: EventEmitter<Checkout>;
 
-  /** Order has been finalized. */
-  @Event() scOrderFinalized: EventEmitter<Order>;
+  /** Checkout has been finalized. */
+  @Event() scOrderFinalized: EventEmitter<Checkout>;
 
-  /** Order has an error. */
+  /** Checkout has an error. */
   @Event() scOrderError: EventEmitter<ResponseError>;
 
   @Listen('scSetPaymentIntent')
@@ -159,7 +159,9 @@ export class ScCheckout {
   state() {
     return {
       processor: this.processor,
-      processors: this.processors,
+      processors: this.processors.filter(processor => {
+        return !(this?.order().reusable_payment_method_required && !processor?.recurring_enabled);
+      }),
       processor_data: this.order()?.processor_data,
       state: this.checkoutState,
       paymentIntents: this.paymentIntents,
@@ -180,6 +182,7 @@ export class ScCheckout {
 
       // stripe.
       stripePaymentElement: this.stripePaymentElement,
+      stripePaymentIntent: (this.order()?.staged_payment_intents?.data || []).find(intent => intent.processor_type === 'stripe'),
 
       error: this.error,
       customer: this.customer,
@@ -214,6 +217,8 @@ export class ScCheckout {
         }}
       >
         <Universe.Provider state={this.state()}>
+          {/* Handles the automatic filtering and selection of processors */}
+          <sc-processor-provider checkout={this.order()} processors={this.processors} processor={this.processor} />
           {/* Handles the current checkout form state. */}
           <sc-form-state-provider onScSetCheckoutFormState={e => (this.checkoutState = e.detail)}>
             {/* Handles errors in the form. */}

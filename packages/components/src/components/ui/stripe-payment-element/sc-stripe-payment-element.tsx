@@ -2,7 +2,7 @@ import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch 
 import { Stripe } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js/pure';
 
-import { Invoice, Order } from '../../../types';
+import { Checkout, PaymentIntent } from '../../../types';
 
 @Component({
   tag: 'sc-stripe-payment-element',
@@ -20,17 +20,11 @@ export class ScStripePaymentElement {
   // holds the stripe instance.
   private stripe: Stripe;
 
-  /** The client secret to render the payment element */
-  @Prop() clientSecret: string;
-
-  /** The stripe publishable key. */
-  @Prop() publishableKey: string;
-
-  /** The account id. */
-  @Prop() accountId: string;
+  /** The Payment Intent */
+  @Prop() paymentIntent: PaymentIntent;
 
   /** Order to watch */
-  @Prop() order: Order | Invoice;
+  @Prop() order: Checkout;
 
   /** Should we collect an address? */
   @Prop() address: boolean;
@@ -55,18 +49,35 @@ export class ScStripePaymentElement {
 
   /** Maybe load the stripe element on load. */
   async componentDidLoad() {
-    if (!this.publishableKey || !this.accountId) return;
-    this.stripe = await loadStripe(this.publishableKey, { stripeAccount: this.accountId });
-    this.loadElement();
+    this.initialize();
   }
 
-  /** Reload element if client secret changes. */
-  @Watch('clientSecret')
-  handleClientSecretChange(val, prev) {
-    if (val !== prev) {
-      this.loaded = false;
-      this.loadElement();
+  @Watch('paymentIntent')
+  handleUpdatedChange(val, prev) {
+    this.error = '';
+
+    // client secret changed, reload the element
+    if (val?.processor_data?.stripe?.client_secret !== prev?.processor_data?.stripe?.client_secret) {
+      return this.initialize();
     }
+
+    // otherwise, fetch element updates.
+    this.elements.fetchUpdates();
+  }
+
+  async initialize() {
+    // we need this data.
+    if (!this.paymentIntent?.processor_data?.stripe?.publishable_key || !this.paymentIntent?.processor_data?.stripe?.account_id) return;
+
+    // check if stripe has been initialized
+    if (!this.stripe) {
+      this.stripe = await loadStripe(this.paymentIntent?.processor_data?.stripe?.publishable_key,
+        { stripeAccount: this.paymentIntent?.processor_data?.stripe?.account_id }
+      );
+    }
+
+    // load the element.
+    this.loadElement();
   }
 
   /**
@@ -89,7 +100,7 @@ export class ScStripePaymentElement {
     const confirmArgs = {
       elements: this.elements,
       confirmParams: {
-        return_url: this.successUrl,
+        return_url: window.location.href,
       },
       redirect: 'if_required',
       ...args,
@@ -118,7 +129,8 @@ export class ScStripePaymentElement {
 
   loadElement() {
     // we need a stripe instance and client secret.
-    if (!this.stripe || !this.clientSecret || !this.container) {
+    if (!this.stripe || !this.paymentIntent?.processor_data?.stripe?.client_secret || !this.container) {
+      console.log('do not have stripe or');
       return;
     }
 
@@ -127,7 +139,7 @@ export class ScStripePaymentElement {
 
     // we have what we need, load elements.
     this.elements = this.stripe.elements({
-      clientSecret: this.clientSecret,
+      clientSecret: this.paymentIntent?.processor_data?.stripe?.client_secret,
       appearance: {
         variables: {
           colorPrimary: styles.getPropertyValue('--sc-color-primary-500'),
@@ -149,12 +161,7 @@ export class ScStripePaymentElement {
 
     // create the payment element.
     this.elements
-      .create('payment', {
-        wallets: {
-          applePay: 'never',
-          googlePay: 'never',
-        },
-      })
+      .create('payment')
       .mount('.sc-payment-element-container');
 
     this.element = this.elements.getElement('payment');

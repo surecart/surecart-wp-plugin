@@ -4,7 +4,7 @@ import { addQueryArgs } from '@wordpress/url';
 
 import apiFetch from '../../../../functions/fetch';
 import { intervalString } from '../../../../functions/price';
-import { Invoice, Price, Product, Subscription } from '../../../../types';
+import { Checkout, Period, Price, Product, Subscription } from '../../../../types';
 
 @Component({
   tag: 'sc-subscription-details',
@@ -125,8 +125,8 @@ export class ScSubscriptionDetails {
         <div>
           <sc-format-number
             type="currency"
-            currency={(this.subscription?.latest_invoice as Invoice)?.currency}
-            value={(this.subscription?.latest_invoice as Invoice)?.total_amount}
+            currency={((this.subscription?.current_period as Period)?.checkout as Checkout)?.currency}
+            value={((this.subscription?.current_period as Period)?.checkout as Checkout)?.total_amount}
           ></sc-format-number>{' '}
           {intervalString(this.subscription?.price)}
         </div>

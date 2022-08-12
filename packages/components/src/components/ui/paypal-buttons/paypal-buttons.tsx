@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 
 import apiFetch from '../../../functions/fetch';
 import { hasSubscription } from '../../../functions/line-items';
-import { Order, PaymentIntent } from '../../../types';
+import { Checkout, PaymentIntent } from '../../../types';
 
 @Component({
   tag: 'sc-paypal-buttons',
@@ -34,7 +34,7 @@ export class ScPaypalButtons {
   @Prop() mode: 'test' | 'live';
 
   /** The order. */
-  @Prop() order: Order;
+  @Prop() order: Checkout;
 
   /** Buttons to render */
   @Prop() buttons: string[] = ['paypal', 'card'];
@@ -148,7 +148,7 @@ export class ScPaypalButtons {
         const checkout = this.el.closest('sc-checkout') as HTMLScCheckoutElement;
 
         // submit and get the finalized order
-        const order = (await checkout.submit()) as Order;
+        const order = (await checkout.submit()) as Checkout;
 
         // an error occurred. reject with the error.
         if (order instanceof Error) {

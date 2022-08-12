@@ -94,6 +94,8 @@ abstract class ListTable extends \WP_List_Table {
 				month="long"
 				day="numeric"
 				year="numeric"
+				hour="numeric"
+				minute="numeric"
 				type="timestamp"></sc-format-date>',
 			esc_attr( $model->created_at )
 		);

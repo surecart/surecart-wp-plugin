@@ -75,8 +75,10 @@ class OrdersListTable extends ListTable {
 	 */
 	protected function get_views() {
 		$stati = [
-			'paid'   => __( 'Paid', 'surecart' ),
-			'failed' => __( 'Failed', 'surecart' ),
+			'paid'           => __( 'Paid', 'surecart' ),
+			'processing'     => __( 'Processing', 'surecart' ),
+			'payment_failed' => __( 'Failed', 'surecart' ),
+			'all'            => __( 'All', 'surecart' ),
 		];
 
 		$link = \SureCart::getUrl()->index( 'orders' );
@@ -110,11 +112,11 @@ class OrdersListTable extends ListTable {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
 			'order'        => __( 'Order', 'surecart' ),
-			'date'         => __( 'Date', 'surecart' ),
 			'status'       => __( 'Status', 'surecart' ),
 			'method'       => __( 'Method', 'surecart' ),
 			'integrations' => __( 'Integrations', 'surecart' ),
 			'total'        => __( 'Total', 'surecart' ),
+			'created'      => __( 'Date', 'surecart' ),
 			'mode'         => '',
 		];
 	}
@@ -159,7 +161,7 @@ class OrdersListTable extends ListTable {
 			[
 				'status' => $this->getStatus(),
 			]
-		)->with( [ 'checkout', 'checkout.charge', 'checkout.customer', 'checkout.payment_intent', 'payment_intent.payment_method', 'payment_method.card', 'checkout.purchases' ] )
+		)->with( [ 'checkout', 'checkout.charge', 'checkout.customer', 'checkout.payment_intent', 'payment_intent.payment_method', 'payment_method.card', 'checkout.purchases', 'payment_method.payment_instrument' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'orders' ),
@@ -178,8 +180,11 @@ class OrdersListTable extends ListTable {
 		if ( 'paid' === $status ) {
 			return [ 'paid' ];
 		}
-		if ( 'failed' === $status ) {
+		if ( 'payment_failed' === $status ) {
 			return [ 'payment_failed' ];
+		}
+		if ( 'processing' === $status ) {
+			return [ 'processing' ];
 		}
 		if ( 'all' === $status ) {
 			return [];
@@ -203,9 +208,12 @@ class OrdersListTable extends ListTable {
 	 *
 	 * @param \SureCart\Models\Order $order The order model.
 	 *
-	 * @return void
+	 * @return string
 	 */
 	public function column_method( $order ) {
+		if ( ! empty( $order->checkout->payment_intent->payment_method->payment_instrument->instrument_type ) ) {
+			return '<sc-tag type="info" pill>' . ucwords( $order->checkout->payment_intent->payment_method->payment_instrument->instrument_type ) . '</sc-tag>';
+		}
 		if ( ! empty( $order->checkout->payment_intent->processor_type ) && 'paypal' === $order->checkout->payment_intent->processor_type ) {
 			return '<sc-icon name="paypal" style="font-size: 56px; line-height:1; height: 28px;"></sc-icon>';
 		}
@@ -214,22 +222,6 @@ class OrdersListTable extends ListTable {
 		}
 
 		return $order->checkout->payment_intent->processor_type ?? '-';
-	}
-
-	/**
-	 * Handle the total column
-	 *
-	 * @param \SureCart\Models\Order $order Checkout Session Model.
-	 *
-	 * @return string
-	 */
-	public function column_date( $order ) {
-		return sprintf(
-			'<time datetime="%1$s" title="%2$s">%3$s</time>',
-			esc_attr( $order->updated_at ),
-			esc_html( TimeDate::formatDateAndTime( $order->updated_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $order->updated_at ) )
-		);
 	}
 
 	/**
@@ -250,7 +242,7 @@ class OrdersListTable extends ListTable {
 			}
 		}
 
-		return '<sc-order-status-badge status="' . esc_attr( $order->checkout->status ) . '"></sc-order-status-badge>';
+		return '<sc-order-status-badge status="' . esc_attr( $order->status ) . '"></sc-order-status-badge>';
 	}
 
 	/**

@@ -1,7 +1,7 @@
 import { Component, Prop, h, Fragment } from '@stencil/core';
 import { sprintf, __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
-import { Order } from '../../../../types';
+import { Checkout } from '../../../../types';
 
 @Component({
   tag: 'sc-line-item-tax',
@@ -9,7 +9,7 @@ import { Order } from '../../../../types';
   shadow: true,
 })
 export class ScLineItemTax {
-  @Prop() order: Order;
+  @Prop() order: Checkout;
   @Prop() loading: boolean;
 
   renderLabel() {

@@ -19,12 +19,14 @@
 
 ### Used by
 
- - [sc-downloads-list](../../ui/downloads-list)
+ - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
+ - [sc-purchase-downloads-list](../../ui/purchase-downloads-list)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-downloads-list --> sc-format-bytes
+  sc-purchase-downloads-list --> sc-format-bytes
   style sc-format-bytes fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

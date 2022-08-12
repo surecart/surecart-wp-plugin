@@ -1,13 +1,13 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
-import SettingsTemplate from '../SettingsTemplate';
-import SettingsBox from '../SettingsBox';
-import useEntity from '../../hooks/useEntity';
 import Error from '../../components/Error';
+import useEntity from '../../hooks/useEntity';
+import SettingsBox from '../SettingsBox';
+import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
+import { css, jsx } from '@emotion/core';
 import { ScInput, ScSelect, ScTextarea } from '@surecart/components-react';
+import { useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -56,7 +56,7 @@ export default () => {
 					label={__('Order Number Prefix', 'surecart')}
 					value={item?.number_prefix}
 					onScInput={(e) =>
-						editItem({ number_prefix: e.target.value })
+						editItem({ number_prefix: e.target.value || null })
 					}
 					help={__(
 						'If you would like your order numbers to have a special prefix, you can enter it here. It must not contain underscores, spaces or dashes.',

@@ -1,10 +1,10 @@
 /** @jsx jsx */
-import { __, _n } from '@wordpress/i18n';
 import DataTable from '../../DataTable';
 import { css, jsx } from '@emotion/core';
-import { addQueryArgs } from '@wordpress/url';
-import { Fragment } from '@wordpress/element';
 import { ScButton } from '@surecart/components-react';
+import { Fragment } from '@wordpress/element';
+import { __, _n } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
 
 export default ({
 	data = [],
@@ -53,6 +53,18 @@ export default ({
 	};
 
 	const renderMethod = (charge) => {
+		if (charge?.payment_method?.payment_instrument?.instrument_type) {
+			return (
+				<sc-tag type="info" pill>
+					<span style={{ textTransform: 'capitalize' }}>
+						{
+							charge?.payment_method?.payment_instrument
+								?.instrument_type
+						}{' '}
+					</span>
+				</sc-tag>
+			);
+		}
 		if (charge?.payment_method?.card?.brand) {
 			return (
 				<div
