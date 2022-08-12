@@ -159,7 +159,9 @@ export class ScCheckout {
   state() {
     return {
       processor: this.processor,
-      processors: this.processors,
+      processors: this.processors.filter(processor => {
+        return !(this?.order().reusable_payment_method_required && !processor?.recurring_enabled);
+      }),
       processor_data: this.order()?.processor_data,
       state: this.checkoutState,
       paymentIntents: this.paymentIntents,
@@ -215,6 +217,8 @@ export class ScCheckout {
         }}
       >
         <Universe.Provider state={this.state()}>
+          {/* Handles the automatic filtering and selection of processors */}
+          <sc-processor-provider checkout={this.order()} processors={this.processors} processor={this.processor} />
           {/* Handles the current checkout form state. */}
           <sc-form-state-provider onScSetCheckoutFormState={e => (this.checkoutState = e.detail)}>
             {/* Handles errors in the form. */}
