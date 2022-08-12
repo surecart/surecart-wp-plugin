@@ -38,9 +38,6 @@ export const config: Config = {
       autoDefineCustomElements: true,
     },
     {
-      type: 'dist-custom-elements-bundle',
-    },
-    {
       type: 'www',
       serviceWorker: null, // disable service workers
     },
