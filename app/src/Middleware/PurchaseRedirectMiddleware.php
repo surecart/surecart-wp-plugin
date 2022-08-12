@@ -9,8 +9,7 @@ use SureCartCore\Responses\RedirectResponse;
 /**
  * Middleware for handling model archiving.
  */
-class OrderRedirectMiddleware {
-
+class PurchaseRedirectMiddleware {
 	/**
 	 * Enqueue component assets.
 	 *
@@ -19,14 +18,14 @@ class OrderRedirectMiddleware {
 	 * @return function
 	 */
 	public function handle( RequestInterface $request, Closure $next ) {
-		$id = $request->query( 'order_id' );
+		$id = $request->query( 'purchase_id' );
 
 		if ( $id ) {
 			return ( new RedirectResponse( $request ) )->to(
 				add_query_arg(
 					[
 						'action' => 'show',
-						'model'  => 'order',
+						'model'  => 'download',
 						'id'     => $id,
 					],
 					\SureCart::pages()->url( 'dashboard' )

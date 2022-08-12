@@ -241,7 +241,7 @@ export class ScPayment {
 
   render() {
     // payment is not required for this order.
-    if (this.order.payment_required === false) {
+    if (this.order.payment_method_required === false) {
       return null;
     }
 

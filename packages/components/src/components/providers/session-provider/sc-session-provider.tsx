@@ -70,7 +70,7 @@ export class ScSessionProvider {
   handleUpdateSession(e) {
     const { data, options } = e.detail;
     if (options?.silent) {
-      this.update({ ...this.defaultFormData(), ...data });
+      this.update(data);
     } else {
       this.loadUpdate(data);
     }
@@ -134,7 +134,7 @@ export class ScSessionProvider {
 
     // first lets make sure the session is updated before we process it.
     try {
-      await this.update({ ...this.defaultFormData(), ...data });
+      await this.update(data);
     } catch (e) {
       console.error(e);
       this.scSetState.emit('REJECT');
@@ -275,6 +275,12 @@ export class ScSessionProvider {
       return this.fetch();
     };
 
+    // we have a checkout id in the url, so clear any saved order.
+    const checkoutId = getQueryArg(window.location.href, 'checkout_id');
+    if ( !!checkoutId) {
+      clearOrder(this.formId, this.mode);
+    }
+
     // get initial data from the url
     const initial_data = this.getInitialDataFromUrl() as { line_items?: LineItem[]; discount?: { promotion_code: string } };
 
@@ -405,13 +411,18 @@ export class ScSessionProvider {
   }
 
   /** Update a session */
-  async update(data = {}, query = {}) {
+  async update(data: any = {}, query = {}) {
     try {
       const order = (await createOrUpdateOrder({
         id: this.getSessionId(),
         data: {
           ...this.defaultFormData(),
           ...data,
+          metadata: {
+            ...data?.metadata || {},
+            page_url: window.location.href,
+            page_id: window?.scData?.page_id
+          }
         },
         query: {
           ...this.defaultFormQuery(),
@@ -434,7 +445,7 @@ export class ScSessionProvider {
   async loadUpdate(data = {}) {
     try {
       this.scSetState.emit('FETCH');
-      await this.update({ ...this.defaultFormData(), ...data });
+      await this.update(data);
       this.scSetState.emit('RESOLVE');
     } catch (e) {
       this.handleErrorResponse(e);

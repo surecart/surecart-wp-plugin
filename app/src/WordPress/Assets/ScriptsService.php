@@ -168,6 +168,7 @@ class ScriptsService {
 					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 					'checkout'  => \SureCart::pages()->url( 'checkout' ),
 				],
+				'page_id'             => get_the_ID(),
 				'nonce'               => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 				'nonce_endpoint'      => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
 			]
