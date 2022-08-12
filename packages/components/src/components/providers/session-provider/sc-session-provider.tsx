@@ -270,6 +270,7 @@ export class ScSessionProvider {
 
   /** Find or create an order */
   findOrCreateOrder() {
+    /** Redirect status has succeeded. */
     const status = getQueryArg(window.location.href, 'redirect_status');
     if (status === 'succeeded') {
       return this.fetch();
@@ -277,8 +278,9 @@ export class ScSessionProvider {
 
     // we have a checkout id in the url, so clear any saved order.
     const checkoutId = getQueryArg(window.location.href, 'checkout_id');
-    if ( !!checkoutId) {
+    if (!!checkoutId) {
       clearOrder(this.formId, this.mode);
+      return this.initialize();
     }
 
     // get initial data from the url
@@ -397,13 +399,14 @@ export class ScSessionProvider {
   async fetch(query = {}) {
     try {
       this.scSetState.emit('FETCH');
-      await getCheckout({
+      const checkout = await getCheckout({
         id: this.getSessionId(),
         query: {
           ...this.defaultFormQuery(),
           ...query,
         }
-      });
+      }) as Checkout;
+      setOrder(checkout, this.formId);
       this.scSetState.emit('RESOLVE');
     } catch (e) {
       this.handleErrorResponse(e);
