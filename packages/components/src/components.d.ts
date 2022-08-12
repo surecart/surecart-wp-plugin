@@ -1544,10 +1544,6 @@ export namespace Components {
     }
     interface ScOrderShippingAddress {
         /**
-          * Holds the customer's shipping address
-         */
-        "customerShippingAddress": Address;
-        /**
           * Show the full address
          */
         "full": boolean;
@@ -5697,10 +5693,6 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface ScOrderShippingAddress {
-        /**
-          * Holds the customer's shipping address
-         */
-        "customerShippingAddress"?: Address;
         /**
           * Show the full address
          */

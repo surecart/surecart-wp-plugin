@@ -271,7 +271,7 @@ msgstr ""
 #: coupons/modules/Code.js:113
 #: product-groups/Show.js:159
 #: products/components/product/ActionsDropdown.js:29
-#: products/modules/Prices/Price/Header.js:171
+#: products/modules/Prices/Price/Header.js:154
 #: products/modules/SingleDownload.js:200
 msgid "Un-Archive"
 msgstr ""
@@ -285,7 +285,7 @@ msgstr ""
 #: coupons/modules/Code.js:114
 #: product-groups/Show.js:160
 #: products/components/product/ActionsDropdown.js:30
-#: products/modules/Prices/Price/Header.js:172
+#: products/modules/Prices/Price/Header.js:155
 #: products/modules/SingleDownload.js:201
 msgid "Archive"
 msgstr ""
@@ -574,7 +574,7 @@ msgstr ""
 #: coupons/modules/Code.js:92
 #: product-groups/Show.js:135
 #: products/EditProduct.js:189
-#: products/modules/Prices/Price/Header.js:196
+#: products/modules/Prices/Price/Header.js:179
 #: products/modules/SingleDownload.js:180
 #: util.js:46
 msgid "Archived"
@@ -618,7 +618,7 @@ msgstr ""
 #: invoices/store/entities.js:70
 #: orders/store/entities.js:70
 #: products/modules/Prices/NewPrice/index.js:156
-#: products/modules/Prices/Price/Header.js:74
+#: products/modules/Prices/Price/Header.js:70
 #: subscriptions/show/Show.js:184
 #: Blocks/Dashboard/CustomerSubscriptions/Block.php:79
 #: Controllers/SubscriptionController.php:97
@@ -735,7 +735,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:226
 #: products/modules/Prices/NewPrice/index.js:152
-#: products/modules/Prices/Price/Header.js:68
+#: products/modules/Prices/Price/Header.js:64
 #: sc-subscription-status-badge2.js:55
 #: sc-subscription-switch.js:134
 msgid "Payment Plan"
@@ -3075,7 +3075,7 @@ msgid "Customer Dashboard"
 msgstr ""
 
 #: src/WordPress/Pages/PageService.php:69
-#: settings/customer/CustomerSettings.js:195
+#: settings/customer/CustomerSettings.js:227
 msgid "Order Confirmation"
 msgstr ""
 
@@ -4051,7 +4051,7 @@ msgstr ""
 #: licenses/modules/Activations/Activation.js:208
 #: products/components/product/ActionsDropdown.js:40
 #: products/modules/integrations/Integration.js:210
-#: products/modules/Prices/Price/Header.js:184
+#: products/modules/Prices/Price/Header.js:167
 #: settings/tax-region/RegistrationForm.js:201
 #: sc-payment-methods-list.js:126
 msgid "Delete"
@@ -4521,7 +4521,7 @@ msgstr ""
 #: orders/Sidebar.js:16
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:60
 #: sc-customer-edit.js:90
-#: sc-order-shipping-address2.js:101
+#: sc-order-shipping-address2.js:70
 msgid "Shipping Address"
 msgstr ""
 
@@ -4981,7 +4981,7 @@ msgid "Payment Type"
 msgstr ""
 
 #: products/modules/Prices/NewPrice/index.js:148
-#: products/modules/Prices/Price/Header.js:80
+#: products/modules/Prices/Price/Header.js:76
 msgid "One Time"
 msgstr ""
 
@@ -4989,33 +4989,28 @@ msgstr ""
 msgid "Create Price"
 msgstr ""
 
-#: products/modules/Prices/Price/Copy.js:16
-#: products/modules/Prices/Price/CopyInput.js:16
-msgid "Error copying to clipboard"
-msgstr ""
-
-#: products/modules/Prices/Price/Copy.js:21
-msgid "Copy Buy Link"
-msgstr ""
-
 #: products/modules/Prices/Price/CopyInput.js:11
 msgid "Copied to clipboard."
+msgstr ""
+
+#: products/modules/Prices/Price/CopyInput.js:16
+msgid "Error copying to clipboard"
 msgstr ""
 
 #: products/modules/Prices/Price/CopyInput.js:29
 msgid "Copy"
 msgstr ""
 
-#: products/modules/Prices/Price/Header.js:47
+#: products/modules/Prices/Price/Header.js:43
 #: subscriptions/edit/modules/Schedule.js:14
 msgid "Free Trial"
 msgstr ""
 
-#: products/modules/Prices/Price/Header.js:107
+#: products/modules/Prices/Price/Header.js:103
 msgid "Custom Amount"
 msgstr ""
 
-#: products/modules/Prices/Price/Header.js:126
+#: products/modules/Prices/Price/Header.js:122
 #: util/translations.js:6
 #: util/translations.js:50
 #: price.js:32
@@ -5023,42 +5018,42 @@ msgstr ""
 msgid "every"
 msgstr ""
 
-#: products/modules/Prices/Price/Header.js:157
-msgid "Links..."
+#: products/modules/Prices/Price/Header.js:189
+msgid "Copy Links"
 msgstr ""
 
-#: products/modules/Prices/Price/Header.js:243
+#: products/modules/Prices/Price/Header.js:226
 msgid "Links and Shortcodes"
 msgstr ""
 
-#: products/modules/Prices/Price/Header.js:249
-msgid "Price ID"
-msgstr ""
-
-#: products/modules/Prices/Price/Header.js:254
-msgid "Links"
-msgstr ""
-
-#: products/modules/Prices/Price/Header.js:258
+#: products/modules/Prices/Price/Header.js:232
 #: controls/index.js:82
 #: formats/index.js:24
 #: formats/ShowPrice.js:87
 msgid "Buy Link"
 msgstr ""
 
-#: products/modules/Prices/Price/Header.js:265
+#: products/modules/Prices/Price/Header.js:238
 msgid "Shortcodes"
 msgstr ""
 
-#: products/modules/Prices/Price/Header.js:269
+#: products/modules/Prices/Price/Header.js:241
 msgid "Add To Cart Button Shortcode"
 msgstr ""
 
-#: products/modules/Prices/Price/Header.js:273
+#: products/modules/Prices/Price/Header.js:245
 msgid "Buy Button Shortcode"
 msgstr ""
 
-#: products/modules/Prices/Price/Header.js:278
+#: products/modules/Prices/Price/Header.js:249
+msgid "Miscellaneous"
+msgstr ""
+
+#: products/modules/Prices/Price/Header.js:252
+msgid "Price ID"
+msgstr ""
+
+#: products/modules/Prices/Price/Header.js:262
 msgid "Done"
 msgstr ""
 
@@ -5347,59 +5342,64 @@ msgstr ""
 msgid "Send a quick reminder when a refund is created for a customer. These emails contain the amount and payment method being refunded."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:145
+#: settings/customer/CustomerSettings.js:155
 msgid "Abandoned Order Emails"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:147
+#: settings/customer/CustomerSettings.js:158
+#: settings/customer/CustomerSettings.js:194
+msgid "Pro"
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:162
 msgid "Sometimes your customers will need just a little nudge in their inbox to come back and finish checking out. Turn on abandoned order emails to remind your customers of incomplete orders. Abandoned order emails are sent 4 hours after abandonment. If the order is still abandoned after 24 hours another email will be sent."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:164
+#: settings/customer/CustomerSettings.js:191
 msgid "Subscription Dunning Emails"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:166
+#: settings/customer/CustomerSettings.js:198
 msgid "Subscription payments fail all the time. Don't leave your recurring revenue to chance - turn on dunning emails to increase your chances of recovering subscriptions with failed payments."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:175
+#: settings/customer/CustomerSettings.js:207
 msgid "Customize Notification Emails"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:176
+#: settings/customer/CustomerSettings.js:208
 msgid "Customize the content of each notification that is sent to your customers."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:187
+#: settings/customer/CustomerSettings.js:219
 msgid "Magic Sign In"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:188
+#: settings/customer/CustomerSettings.js:220
 msgid "Sent to customers to login to the customer portal without a password."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:196
+#: settings/customer/CustomerSettings.js:228
 msgid "Sent to customers after they place an order."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:203
+#: settings/customer/CustomerSettings.js:235
 msgid "Subscription Dunning"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:204
+#: settings/customer/CustomerSettings.js:236
 msgid "Sent to customers when their subscription's payment method fails."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:211
+#: settings/customer/CustomerSettings.js:243
 msgid "Download Verification"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:212
+#: settings/customer/CustomerSettings.js:244
 msgid "Sent to customers to verify their email address before downloading files."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:220
+#: settings/customer/CustomerSettings.js:252
 msgid "Sent to customers when a charge is refunded."
 msgstr ""
 
@@ -8179,7 +8179,7 @@ msgstr ""
 
 #: Blocks/Password/block.json
 msgctxt "block description"
-msgid "Displays a password field."
+msgid "Displays a password field to let a new user set a password."
 msgstr ""
 
 #: Blocks/Password/block.json
