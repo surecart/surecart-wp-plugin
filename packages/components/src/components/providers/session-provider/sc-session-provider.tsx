@@ -1,11 +1,11 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { removeQueryArgs } from '@wordpress/url';
+import { getQueryArg, removeQueryArgs } from '@wordpress/url';
 import { parseFormData } from '../../../functions/form-data';
 import { clearOrder, getOrder, setOrder } from '../../../store/checkouts';
 
-import { createOrUpdateOrder, finalizeSession } from '../../../services/session';
-import { FormStateSetter, PaymentIntents, ProcessorName, LineItemData,  PriceChoice, LineItem, Checkout } from '../../../types';
+import { createOrUpdateOrder, finalizeSession, getCheckout } from '../../../services/session';
+import { FormStateSetter, PaymentIntents, ProcessorName, LineItemData, PriceChoice, LineItem, Checkout } from '../../../types';
 import { getSessionId, getURLCoupon, getURLLineItems, removeSessionId } from './helpers/session';
 
 @Component({
@@ -259,7 +259,7 @@ export class ScSessionProvider {
   defaultFormQuery() {
     return {
       form_id: this.formId,
-      ...(this.stripePaymentElement && this.processor === 'stripe' ? {stage_processor_type: 'stripe'} : {})
+      ...(this.stripePaymentElement ? { stage_processor_type: 'stripe' } : {})
     };
   }
 
@@ -270,6 +270,11 @@ export class ScSessionProvider {
 
   /** Find or create an order */
   findOrCreateOrder() {
+    const status = getQueryArg(window.location.href, 'redirect_status');
+    if (status === 'succeeded') {
+      return this.fetch();
+    };
+
     // get initial data from the url
     const initial_data = this.getInitialDataFromUrl() as { line_items?: LineItem[]; discount?: { promotion_code: string } };
 
@@ -285,14 +290,14 @@ export class ScSessionProvider {
     // we have line items, don't load any existing session (overwrite)
     if (initial_data?.line_items?.length) {
       clearOrder(this.formId, this.mode);
-      return this.fetch(initial_data);
+      return this.update(initial_data);
     }
 
     // check if we have an existing session.
     const id = getSessionId(this.groupId, this.order, this.modified);
 
-    // fetch or initialize a session.
-    return id && this.persist ? this.fetch(initial_data) : this.initialize(initial_data);
+    // update or initialize a session.
+    return id && this.persist ? this.update(initial_data) : this.initialize(initial_data);
   }
 
   getInitialDataFromUrl() {
@@ -383,8 +388,20 @@ export class ScSessionProvider {
   }
 
   /** Fetch a session. */
-  async fetch(args = {}) {
-    this.loadUpdate({ status: 'draft', ...args });
+  async fetch(query = {}) {
+    try {
+      this.scSetState.emit('FETCH');
+      await getCheckout({
+        id: this.getSessionId(),
+        query: {
+          ...this.defaultFormQuery(),
+          ...query,
+        }
+      });
+      this.scSetState.emit('RESOLVE');
+    } catch (e) {
+      this.handleErrorResponse(e);
+    }
   }
 
   /** Update a session */
