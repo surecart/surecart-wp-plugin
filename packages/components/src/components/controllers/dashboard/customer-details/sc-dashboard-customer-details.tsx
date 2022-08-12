@@ -12,6 +12,7 @@ import { Customer } from '../../../../types';
 })
 export class ScDashboardCustomerDetails {
   @Element() el: HTMLScCustomerDetailsElement;
+  @Prop() theme: string;
   @Prop() customerId: string;
   @Prop() heading: string;
   @State() customer: Customer;
@@ -50,6 +51,7 @@ export class ScDashboardCustomerDetails {
         customer={this.customer}
         loading={this.loading}
         error={this.error}
+        data-theme={this.theme}
         edit-link={addQueryArgs(window.location.href, {
           action: 'edit',
           model: 'customer',

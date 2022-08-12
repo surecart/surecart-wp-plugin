@@ -6,7 +6,7 @@ import {
 	RichText,
 	useBlockProps,
 } from '@wordpress/block-editor';
-import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
+import { PanelBody, PanelRow, TextControl, SelectControl } from '@wordpress/components';
 import {
 	ScSubscriptionDetails,
 	ScDashboardModule,
@@ -15,7 +15,7 @@ import { Fragment } from '@wordpress/element';
 import OverlayLabel from '../../../components/OverlayLabel';
 
 export default ({ attributes, setAttributes }) => {
-	const { title } = attributes;
+	const { title, theme } = attributes;
 
 	const blockProps = useBlockProps();
 
@@ -31,6 +31,17 @@ export default ({ attributes, setAttributes }) => {
 							label={__('Title', 'surecart')}
 							value={title}
 							onChange={(title) => setAttributes({ title })}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<SelectControl
+							label={__('Select Theme', 'surecart')}
+							value={ theme }
+							options={ [
+								{ label: 'Light', value: 'light' },
+								{ label: 'Dark', value: 'dark' },
+							] }
+							onChange={(theme) => setAttributes({ theme })}
 						/>
 					</PanelRow>
 				</PanelBody>

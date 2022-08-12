@@ -26,11 +26,11 @@ class CustomerController extends BaseController {
 
 		// show test.
 		if ( ! empty( User::current()->customerId( 'test' ) ) ) {
-			$output .= '<sc-dashboard-customer-details customer-id="' . User::current()->customerId( 'test' ) . '"></sc-dashboard-customer-details>';
+			$output .= '<sc-dashboard-customer-details theme="' . $attributes['theme'] . '" customer-id="' . User::current()->customerId( 'test' ) . '"></sc-dashboard-customer-details>';
 		}
 		// show live.
 		if ( ! empty( User::current()->customerId( 'live' ) ) ) {
-			$output .= '<sc-dashboard-customer-details customer-id="' . User::current()->customerId( 'live' ) . '"></sc-dashboard-customer-details>';
+			$output .= '<sc-dashboard-customer-details theme="' . $attributes['theme'] . '" customer-id="' . User::current()->customerId( 'live' ) . '"></sc-dashboard-customer-details>';
 		}
 
 		return $output;

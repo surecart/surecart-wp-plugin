@@ -811,6 +811,7 @@ export namespace Components {
     interface ScDashboardCustomerDetails {
         "customerId": string;
         "heading": string;
+        "theme": string;
     }
     interface ScDashboardDownloadsList {
         "allLink": string;
@@ -827,6 +828,7 @@ export namespace Components {
     interface ScDashboardModule {
         "error": string;
         "heading": string;
+        "theme": string;
     }
     interface ScDialog {
         /**
@@ -4861,6 +4863,7 @@ declare namespace LocalJSX {
     interface ScDashboardCustomerDetails {
         "customerId"?: string;
         "heading"?: string;
+        "theme"?: string;
     }
     interface ScDashboardDownloadsList {
         "allLink"?: string;
@@ -4877,6 +4880,7 @@ declare namespace LocalJSX {
     interface ScDashboardModule {
         "error"?: string;
         "heading"?: string;
+        "theme"?: string;
     }
     interface ScDialog {
         /**

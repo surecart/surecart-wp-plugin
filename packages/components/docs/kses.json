@@ -392,6 +392,7 @@
   "sc-dashboard-customer-details": {
     "customer-id": true,
     "heading": true,
+    "theme": true,
     "style": true,
     "id": true,
     "class": true,
@@ -410,6 +411,7 @@
   "sc-dashboard-module": {
     "error": true,
     "heading": true,
+    "theme": true,
     "style": true,
     "id": true,
     "class": true,

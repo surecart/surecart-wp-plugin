@@ -4,12 +4,12 @@ import {
 	RichText,
 	useBlockProps,
 } from '@wordpress/block-editor';
-import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
+import { PanelBody, PanelRow, TextContro, SelectControll } from '@wordpress/components';
 import { ScDashboardModule } from '@surecart/components-react';
 import { Fragment } from '@wordpress/element';
 
 export default ({ attributes, setAttributes }) => {
-	const { title } = attributes;
+	const { title, theme } = attributes;
 	const blockProps = useBlockProps();
 
 	return (
@@ -21,6 +21,17 @@ export default ({ attributes, setAttributes }) => {
 							label={__('Title', 'surecart')}
 							value={title}
 							onChange={(title) => setAttributes({ title })}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<SelectControl
+							label={__('Select Theme', 'surecart')}
+							value={ theme }
+							options={ [
+								{ label: 'Light', value: 'light' },
+								{ label: 'Dark', value: 'dark' },
+							] }
+							onChange={(theme) => setAttributes({ theme })}
 						/>
 					</PanelRow>
 				</PanelBody>

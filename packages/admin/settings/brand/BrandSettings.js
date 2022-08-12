@@ -40,6 +40,17 @@ export default () => {
 		}
 	};
 
+	const choices = [
+		{
+			label: __('Light', 'surecart'),
+			value: 'light',
+		},
+		{
+			label: __('Dark', 'surecart'),
+			value: 'dark',
+		},
+	];
+
 	return (
 		<SettingsTemplate
 			title={__('Design & Branding', 'surecart')}
@@ -109,6 +120,17 @@ export default () => {
 							</ScInput>
 						</div>
 					</ScFormControl>
+
+						<ScSelect
+							label={__('Select Theme', 'surecart')}
+							placeholder={__('Select Theme', 'surecart')}
+							value={item?.site_theme}
+							onScChange={(e) =>
+								editItem({ site_theme: e.target.value })
+							}
+							choices={choices}
+							required
+						></ScSelect>
 				</div>
 			</SettingsBox>
 
