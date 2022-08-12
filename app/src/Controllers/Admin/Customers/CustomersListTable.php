@@ -42,55 +42,13 @@ class CustomersListTable extends ListTable {
 	public function search() { ?>
 	<form class="search-form"
 		method="get">
-		<?php $this->search_box( __( 'Search Customers' ), 'user' ); ?>
+		<?php $this->search_box( __( 'Search Customers', 'surecart' ), 'user' ); ?>
 		<input type="hidden"
 			name="id"
 			value="1" />
 	</form>
 		<?php
 	}
-
-	/**
-	 * @global int $post_id
-	 * @global string $comment_status
-	 * @global string $comment_type
-	 */
-	// protected function get_views() {
-	// 	$stati = [
-	// 		'active'   => __( 'Active', 'surecart' ),
-	// 		'archived' => __( 'Archived', 'surecart' ),
-	// 		'all'      => __( 'All', 'surecart' ),
-	// 	];
-
-	// 	$link = admin_url( 'admin.php?page=sc-customers' );
-
-	// 	foreach ( $stati as $status => $label ) {
-	// 		$current_link_attributes = '';
-
-	// 		if ( ! empty( $_GET['status'] ) ) {
-	// 			if ( $status === $_GET['status'] ) {
-	// 				$current_link_attributes = ' class="current" aria-current="page"';
-	// 			}
-	// 		} elseif ( 'active' === $status ) {
-	// 			$current_link_attributes = ' class="current" aria-current="page"';
-	// 		}
-
-	// 		$link = add_query_arg( 'status', $status, $link );
-
-	// 		$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
-	// 	}
-
-	// 	/**
-	// 	 * Filters the comment status links.
-	// 	 *
-	// 	 * @since 2.5.0
-	// 	 * @since 5.1.0 The 'Mine' link was added.
-	// 	 *
-	// 	 * @param string[] $status_links An associative array of fully-formed comment status links. Includes 'All', 'Mine',
-	// 	 *                              'Pending', 'Approved', 'Spam', and 'Trash'.
-	// 	 */
-	// 	return apply_filters( 'comment_status_links', $status_links );
-	// }
 
 	/**
 	 * Override the parent columns method. Defines the columns to use in your listing table
@@ -113,7 +71,7 @@ class CustomersListTable extends ListTable {
 	 */
 	public function column_cb( $product ) {
 		?>
-		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment' ); ?></label>
+		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
 		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
 			<?php
 	}
@@ -139,7 +97,7 @@ class CustomersListTable extends ListTable {
 	/**
 	 * Get the table data
 	 *
-	 * @return Array
+	 * @return Object
 	 */
 	private function table_data() {
 		return Customer::with( [ 'orders' ] )
@@ -172,29 +130,12 @@ class CustomersListTable extends ListTable {
 	}
 
 	/**
-	 * Handle the status
+	 * The customer email.
 	 *
-	 * @param \SureCart\Models\Price $product Product model.
+	 * @param \SureCart\Models\Customer $customer The customer model.
 	 *
 	 * @return string
 	 */
-	public function column_date( $product ) {
-		$created = sprintf(
-			'<time datetime="%1$s" title="%2$s">%3$s</time>',
-			esc_attr( $product->created_at ),
-			esc_html( TimeDate::formatDateAndTime( $product->created_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $product->created_at ) )
-		);
-		$updated = sprintf(
-			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
-			__( 'Updated', 'surecart' ),
-			esc_attr( $product->updated_at ),
-			esc_html( TimeDate::formatDateAndTime( $product->updated_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $product->updated_at ) )
-		);
-		return $created . '<br /><small style="opacity: 0.75">' . $updated . '</small>';
-	}
-
 	public function column_email( $customer ) {
 		return sanitize_email( $customer->email );
 	}

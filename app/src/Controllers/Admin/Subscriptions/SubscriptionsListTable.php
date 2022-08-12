@@ -118,7 +118,7 @@ class SubscriptionsListTable extends ListTable {
 	 */
 	public function column_cb( $product ) {
 		?>
-		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment' ); ?></label>
+		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
 		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
 			<?php
 	}
@@ -183,11 +183,11 @@ class SubscriptionsListTable extends ListTable {
 	 * @return boolean|null
 	 */
 	public function getStatus() {
-		$status = $_GET['status'] ?? null;
+		$status = sanitize_text_field( wp_unslash( $_GET['status'] ?? null ) );
 		if ( 'all' === $status ) {
 			$status = null;
 		}
-		return $status ? [ sanitize_text_field( $_GET['status'] ) ] : [];
+		return $status ? [ esc_html( $status ) ] : [];
 	}
 
 	/**
@@ -199,7 +199,11 @@ class SubscriptionsListTable extends ListTable {
 	 */
 	public function column_remaining_payments( $subscription ) {
 		if ( null === $subscription->remaining_period_count ) {
-			return '&infin;';
+			if ( 'completed' === $subscription->status ) {
+				return '-';
+			} else {
+				return '&infin;';
+			}
 		}
 		if ( 0 === $subscription->remaining_period_count ) {
 			return __( 'None', 'surecart' );

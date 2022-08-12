@@ -2,25 +2,20 @@ import apiFetch from '@wordpress/api-fetch';
 import { DirectUpload } from '@rails/activestorage';
 
 export default () => {
-	const uploadFile = async (file) => {
-		// first get the unique upload id.
-		const { id } = await apiFetch({
-			method: 'POST',
-			path: '/surecart/v1/uploads',
-		});
-
+	const uploadFile = async (file, isPrivate = true) => {
 		// then upload the file.
 		const directUpload = new DirectUpload(
 			file,
-			`${scData.api_url}/uploads/${id}/presign`
+			`${scData.api_url}direct_upload/${isPrivate ? 'private' : 'public'}`
 		);
 
-		return new Promise((resolve, reject) => {
-			directUpload.create((error) => {
+		// make the upload
+		return await new Promise((resolve, reject) => {
+			directUpload.create((error, blob) => {
 				if (error) {
 					reject(error);
 				}
-				resolve(id);
+				resolve(blob);
 			});
 		});
 	};

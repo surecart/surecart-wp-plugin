@@ -83,7 +83,7 @@ abstract class AdminModelEditController {
 		if ( ! empty( $this->url_query ) ) {
 			foreach ( $this->url_query as $param => $value ) {
 				// phpcs:ignore
-				if ( ! isset( $_GET[ $param ] ) || $value !== $_GET[ $param ] ) {
+				if ( ! isset( $_GET[ $param ] ) || $value !== sanitize_text_field( wp_unslash( $_GET[ $param ] ) ) ) {
 					return;
 				}
 			}
@@ -100,7 +100,7 @@ abstract class AdminModelEditController {
 			$this->handle,
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . "dist/$this->path.js",
 			array_merge( $asset_file['dependencies'], $this->dependencies ),
-			$asset_file['version']
+			$asset_file['version'] . '-' . \SureCart::plugin()->version()
 		);
 
 		// pass app url.
@@ -133,7 +133,7 @@ abstract class AdminModelEditController {
 		wp_localize_script(
 			$this->handle,
 			'scData',
-			$this->data
+			apply_filters( "$this->handle/data", $this->data )
 		);
 
 		wp_localize_script( $this->handle, 'scIcons', [ 'path' => esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) ] );

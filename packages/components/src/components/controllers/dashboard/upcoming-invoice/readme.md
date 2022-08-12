@@ -61,12 +61,9 @@ graph TD;
   sc-upcoming-invoice --> sc-text
   sc-upcoming-invoice --> sc-block-ui
   sc-product-line-item --> sc-format-number
-  sc-product-line-item --> sc-line-item
   sc-product-line-item --> sc-quantity-select
   sc-product-line-item --> sc-icon
-  sc-quantity-select --> sc-dropdown
-  sc-quantity-select --> sc-menu
-  sc-quantity-select --> sc-menu-item
+  sc-quantity-select --> sc-icon
   sc-coupon-form --> sc-skeleton
   sc-coupon-form --> sc-line-item
   sc-coupon-form --> sc-tag

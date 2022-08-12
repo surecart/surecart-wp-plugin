@@ -1,6 +1,7 @@
 {
   "sc-address": {
     "address": true,
+    "disabled": true,
     "label": true,
     "loading": true,
     "names": true,
@@ -99,6 +100,83 @@
     "class": true,
     "slot": true
   },
+  "sc-cart": {
+    "always-show": true,
+    "cart-template": true,
+    "checkout-link": true,
+    "checkout-url": true,
+    "form-id": true,
+    "header": true,
+    "mode": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-cart-form": {
+    "form-id": true,
+    "mode": true,
+    "price-id": true,
+    "quantity": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-cart-form-submit": {
+    "busy": true,
+    "full": true,
+    "icon": true,
+    "size": true,
+    "type": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-cart-header": {
+    "line-items": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-cart-icon": {
+    "count": true,
+    "icon": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-cart-loader": {
+    "form-id": true,
+    "mode": true,
+    "template": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-cart-session-provider": {
+    "order": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-cart-submit": {
+    "busy": true,
+    "checkout-link": true,
+    "full": true,
+    "icon": true,
+    "size": true,
+    "type": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-cc-logo": {
     "brand": true,
     "style": true,
@@ -146,7 +224,7 @@
     "remove-line-items": true,
     "stripe-payment-element": true,
     "success-url": true,
-    "tax-enabled": true,
+    "tax-protocol": true,
     "style": true,
     "id": true,
     "class": true,
@@ -379,6 +457,17 @@
     "class": true,
     "slot": true
   },
+  "sc-drawer": {
+    "contained": true,
+    "label": true,
+    "no-header": true,
+    "open": true,
+    "placement": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-dropdown": {
     "click-el": true,
     "close-on-select": true,
@@ -401,6 +490,13 @@
     "class": true,
     "slot": true
   },
+  "sc-error": {
+    "error": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-express-payment": {
     "busy": true,
     "debug": true,
@@ -417,6 +513,7 @@
   "sc-flex": {
     "align-items": true,
     "flex-direction": true,
+    "flex-wrap": true,
     "justify-content": true,
     "style": true,
     "id": true,
@@ -433,7 +530,7 @@
   "sc-form-components-validator": {
     "disabled": true,
     "order": true,
-    "tax-enabled": true,
+    "tax-protocol": true,
     "style": true,
     "id": true,
     "class": true,
@@ -680,7 +777,10 @@
     "slot": true
   },
   "sc-order-confirm-provider": {
+    "form-id": true,
+    "mode": true,
     "order": true,
+    "success-url": true,
     "style": true,
     "id": true,
     "class": true,
@@ -697,6 +797,14 @@
     "customer": true,
     "error": true,
     "heading": true,
+    "loading": true,
+    "order": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-order-confirmation-details": {
     "loading": true,
     "order": true,
     "style": true,
@@ -761,16 +869,7 @@
     "class": true,
     "slot": true
   },
-  "sc-order-redirect-provider": {
-    "order": true,
-    "success-url": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "sc-order-shipping-address": {
-    "customer-shipping-address": true,
     "full": true,
     "label": true,
     "loading": true,
@@ -843,6 +942,7 @@
     "order": true,
     "show": true,
     "tax-identifier": true,
+    "tax-protocol": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1000,6 +1100,8 @@
   },
   "sc-quantity-select": {
     "click-el": true,
+    "disabled": true,
+    "has-focus": true,
     "max": true,
     "min": true,
     "quantity": true,
@@ -1069,7 +1171,6 @@
     "group-id": true,
     "mode": true,
     "modified": true,
-    "order": true,
     "payment-intents": true,
     "persist": true,
     "prices": true,

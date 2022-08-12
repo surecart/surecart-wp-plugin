@@ -174,6 +174,9 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 	 * @return callback
 	 */
 	public function callback( $class, $method ) {
+		// litespeed caching bypass.
+		do_action( 'litespeed_control_set_nocache', 'surecart api request' );
+
 		return function ( $request ) use ( $class, $method ) {
 			// get and call controller with request.
 			$controller = \SureCart::closure()->method( $class, $method );

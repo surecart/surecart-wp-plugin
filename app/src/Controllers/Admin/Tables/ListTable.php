@@ -43,7 +43,7 @@ abstract class ListTable extends \WP_List_Table {
 	 * @return boolean|null
 	 */
 	public function getArchiveStatus( $default = 'active' ) {
-		$status = sanitize_text_field( $_GET['status'] ?? $default );
+		$status = sanitize_text_field( wp_unslash( $_GET['status'] ?? $default ) );
 
 		$archived = false;
 		if ( 'archived' === $status ) {
@@ -53,7 +53,7 @@ abstract class ListTable extends \WP_List_Table {
 			$archived = null;
 		}
 
-		return $archived;
+		return (bool) $archived;
 	}
 
 	/**

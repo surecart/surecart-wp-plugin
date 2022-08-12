@@ -58,7 +58,7 @@ class ScriptsService {
 				'surecart-components',
 				trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/surecart/surecart.esm.js',
 				[],
-				filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.esm.js' ),
+				filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.esm.js' ) . '-' . \SureCart::plugin()->version(),
 				false
 			);
 		} else {
@@ -68,7 +68,7 @@ class ScriptsService {
 				'surecart-components',
 				trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/static-loader.js',
 				$static_assets['dependencies'],
-				$static_assets['version'],
+				$static_assets['version'] . '-' . \SureCart::plugin()->version(),
 				true
 			);
 			wp_localize_script(
@@ -88,7 +88,7 @@ class ScriptsService {
 			'sc-core-data',
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/store/data.js',
 			array_merge( [ 'surecart-components' ], $asset_file['dependencies'] ),
-			$asset_file['version'],
+			$asset_file['version'] . '-' . \SureCart::plugin()->version(),
 			true
 		);
 
@@ -98,7 +98,7 @@ class ScriptsService {
 			'sc-ui-data',
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/store/ui.js',
 			array_merge( [ 'surecart-components' ], $asset_file['dependencies'] ),
-			$asset_file['version'],
+			$asset_file['version'] . '-' . \SureCart::plugin()->version(),
 			true
 		);
 
@@ -111,11 +111,39 @@ class ScriptsService {
 			'surecart-blocks',
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/blocks/library.js',
 			array_merge( [ 'surecart-components' ], $deps ),
-			$asset_file['version'],
+			$asset_file['version'] . '-' . \SureCart::plugin()->version(),
 			true
 		);
 
-		wp_localize_script( 'surecart-blocks', 'scIcons', [ 'path' => esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) ] );
+		wp_localize_script( 'surecart-cart-blocks', 'scIcons', [ 'path' => esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) ] );
+		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/cart.asset.php';
+		$deps       = $asset_file['dependencies'];
+		// fix bug in deps array.
+		$deps[ array_search( 'wp-blockEditor', $deps ) ] = 'wp-block-editor';
+		wp_register_script(
+			'surecart-cart-blocks',
+			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/blocks/cart.js',
+			array_merge( [ 'surecart-components' ], $deps ),
+			$asset_file['version'] . '-' . \SureCart::plugin()->version(),
+			true
+		);
+
+		wp_localize_script( 'surecart-cart-blocks', 'scIcons', [ 'path' => esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) ] );
+
+		// cart.
+		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/cart.asset.php';
+		$deps       = $asset_file['dependencies'];
+		// fix bug in deps array.
+		$deps[ array_search( 'wp-blockEditor', $deps ) ] = 'wp-block-editor';
+		wp_register_script(
+			'surecart-cart-blocks',
+			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/blocks/cart.js',
+			array_merge( [ 'surecart-components' ], $deps ),
+			$asset_file['version'] . '-' . \SureCart::plugin()->version(),
+			true
+		);
+
+		wp_localize_script( 'surecart-cart-blocks', 'scIcons', [ 'path' => esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) ] );
 	}
 
 	/**
@@ -155,6 +183,28 @@ class ScriptsService {
 	public function enqueueEditor() {
 		$this->enqueueFront();
 		$this->enqueueBlocks();
+		$this->enqueueCartBlocks();
+	}
+
+	/**
+	 * Enqueue Cart Blocks.
+	 *
+	 * @return void
+	 */
+	public function enqueueCartBlocks() {
+		// not our post type.
+		if ( 'sc_cart' !== get_post_type() ) {
+			return;
+		}
+
+		wp_enqueue_script( 'surecart-cart-blocks' );
+		wp_localize_script(
+			'surecart-cart-blocks',
+			'scBlockData',
+			[
+				'currency' => \SureCart::account()->currency,
+			]
+		);
 	}
 
 	/**

@@ -1,7 +1,7 @@
 import { Component, Element, h, Prop } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
-import { Product, Purchase } from '../../../types';
+import { Media, Product, Purchase } from '../../../types';
 
 @Component({
   tag: 'sc-downloads-list',
@@ -71,8 +71,14 @@ export class ScDownloadsList {
               <strong>{(purchase?.product as Product)?.name}</strong>
             </div>
             <div class="download__details">
-              {sprintf(_n('%s file', '%s files', (purchase?.product as Product)?.files?.pagination?.count, 'surecart'), (purchase?.product as Product)?.files?.pagination?.count)}{' '}
-              &bull; <sc-format-bytes value={(purchase?.product as Product)?.files?.data.map(item => item.byte_size).reduce((prev, curr) => prev + curr, 0)}></sc-format-bytes>
+              {sprintf(
+                _n('%s file', '%s files', (purchase?.product as Product)?.downloads?.pagination?.count, 'surecart'),
+                (purchase?.product as Product)?.downloads?.pagination?.count,
+              )}{' '}
+              &bull;{' '}
+              <sc-format-bytes
+                value={(purchase?.product as Product)?.downloads?.data.map(item => (item?.media as Media)?.byte_size).reduce((prev, curr) => prev + curr, 0)}
+              ></sc-format-bytes>
             </div>
           </sc-spacing>
 

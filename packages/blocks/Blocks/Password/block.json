@@ -1,7 +1,7 @@
 {
 	"name": "surecart/password",
 	"title": "Password",
-	"description": "Displays a password field.",
+	"description": "Displays a password field to let a new user set a password.",
 	"category": "surecart",
 	"keywords": ["password", "input"],
 	"ancestor": ["surecart/form"],
@@ -31,7 +31,7 @@
 		},
 		"label": {
 			"type": "string",
-			"default": "Password"
+			"default": "Set A Password"
 		},
 		"help": {
 			"type": "string"

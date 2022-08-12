@@ -14,6 +14,10 @@
 
 ## Dependencies
 
+### Used by
+
+ - [sc-order-confirmation-details](../order-confirmation-details)
+
 ### Depends on
 
 - [sc-line-item](../../../ui/line-item)
@@ -35,6 +39,7 @@ graph TD;
   sc-line-item-total --> sc-total
   sc-line-item-total --> sc-format-number
   sc-total --> sc-format-number
+  sc-order-confirmation-details --> sc-order-confirmation-totals
   style sc-order-confirmation-totals fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

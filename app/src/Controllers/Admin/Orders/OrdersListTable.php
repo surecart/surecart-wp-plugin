@@ -77,42 +77,33 @@ class OrdersListTable extends ListTable {
 	 * @global string $comment_status
 	 * @global string $comment_type
 	 */
-	// protected function get_views() {
-	// $stati = [
-	// 'paid'    => __( 'Paid', 'surecart' ),
-	// 'pending' => __( 'Pending', 'surecart' ),
-	// 'all'     => __( 'All', 'surecart' ),
-	// ];
+	protected function get_views() {
+		$stati = [
+			'paid'   => __( 'Paid', 'surecart' ),
+			'failed' => __( 'Failed', 'surecart' ),
+		];
 
-	// $link = \SureCart::getUrl()->index( 'orders' );
+		$link = \SureCart::getUrl()->index( 'orders' );
 
-	// foreach ( $stati as $status => $label ) {
-	// $current_link_attributes = '';
+		foreach ( $stati as $status => $label ) {
+			$current_link_attributes = '';
 
-	// if ( ! empty( $_GET['status'] ) ) {
-	// if ( $status === $_GET['status'] ) {
-	// $current_link_attributes = ' class="current" aria-current="page"';
-	// }
-	// } elseif ( 'paid' === $status ) {
-	// $current_link_attributes = ' class="current" aria-current="page"';
-	// }
+			if ( ! empty( $_GET['status'] ) ) {
+				if ( $status === $_GET['status'] ) {
+					$current_link_attributes = ' class="current" aria-current="page"';
+				}
+			} elseif ( 'paid' === $status ) {
+				$current_link_attributes = ' class="current" aria-current="page"';
+			}
 
-	// $link = add_query_arg( 'status', $status, $link );
+			$link = add_query_arg( 'status', $status, $link );
 
-	// $status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
-	// }
+			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
+		}
 
-	// **
-	// * Filters the comment status links.
-	// *
-	// * @since 2.5.0
-	// * @since 5.1.0 The 'Mine' link was added.
-	// *
-	// * @param string[] $status_links An associative array of fully-formed comment status links. Includes 'All', 'Mine',
-	// *                              'Pending', 'Approved', 'Spam', and 'Trash'.
-	// */
-	// return apply_filters( 'comment_status_links', $status_links );
-	// }
+		// filter links
+		return apply_filters( 'sc_order_status_links', $status_links );
+	}
 
 	/**
 	 * Override the parent columns method. Defines the columns to use in your listing table
@@ -122,7 +113,6 @@ class OrdersListTable extends ListTable {
 	public function get_columns() {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
-
 			'order'        => __( 'Order', 'surecart' ),
 			'date'         => __( 'Date', 'surecart' ),
 			'status'       => __( 'Status', 'surecart' ),
@@ -130,8 +120,6 @@ class OrdersListTable extends ListTable {
 			'integrations' => __( 'Integrations', 'surecart' ),
 			'total'        => __( 'Total', 'surecart' ),
 			'mode'         => '',
-			// 'usage' => __( 'Usage', 'surecart' ),
-
 		];
 	}
 
@@ -142,7 +130,7 @@ class OrdersListTable extends ListTable {
 	 */
 	public function column_cb( $product ) {
 		?>
-		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment' ); ?></label>
+		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
 		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
 			<?php
 	}
@@ -190,9 +178,12 @@ class OrdersListTable extends ListTable {
 	 * @return boolean|null
 	 */
 	public function getStatus() {
-		$status = $_GET['status'] ?? 'paid';
+		$status = sanitize_text_field( wp_unslash( $_GET['status'] ?? 'paid' ) );
 		if ( 'paid' === $status ) {
-			return [ 'paid', 'completed' ];
+			return [ 'paid', 'completed', 'requires_approval' ];
+		}
+		if ( 'failed' === $status ) {
+			return [ 'payment_failed', 'payment_intent_canceled' ];
 		}
 		if ( 'incomplete' === $status ) {
 			return [ 'finalized' ];
@@ -200,7 +191,7 @@ class OrdersListTable extends ListTable {
 		if ( 'all' === $status ) {
 			return [];
 		}
-		return $status ? [ sanitize_text_field( $status ) ] : [];
+		return $status ? [ esc_html( $status ) ] : [];
 	}
 
 	/**
@@ -330,6 +321,13 @@ class OrdersListTable extends ListTable {
 		if ( ! empty( $order->charge->fully_refunded ) ) {
 			return '<sc-tag type="danger">' . __( 'Refunded', 'surecart' ) . '</sc-tag>';
 		}
+
+		if ( ! empty( $order->payment_intent->processor_type ) && 'paypal' === $order->payment_intent->processor_type ) {
+			if ( 'requires_approval' === $order->status ) {
+				return '<sc-tooltip text="' . __( 'Paypal is taking a closer look at this payment. It’s required for some payments and normally takes up to 3 business days.', 'surecart' ) . '" type="warning"><sc-order-status-badge status="' . esc_attr( $order->status ) . '"></sc-order-status-badge></sc-tooltip>';
+			}
+		}
+
 		return '<sc-order-status-badge status="' . esc_attr( $order->status ) . '"></sc-order-status-badge>';
 	}
 

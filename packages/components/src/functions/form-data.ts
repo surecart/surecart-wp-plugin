@@ -54,11 +54,10 @@ export class FormSubmitController {
   }
 
   handleFormData(event: FormDataEvent) {
-    const disabled = this.options.disabled(this.input);
     const name = this.options.name(this.input);
     const value = this.options.value(this.input);
 
-    if (!disabled && typeof name === 'string' && typeof value !== 'undefined') {
+    if (typeof name === 'string' && typeof value !== 'undefined') {
       if (Array.isArray(value)) {
         (value as unknown[]).forEach(val => {
           if (val) {
@@ -95,8 +94,6 @@ export const parseFormData = (data: any) => {
     'tax_identifier.number': tax_number,
     ...rest
   } = data;
-
-  console.log({ data });
 
   const shipping_address = {
     ...(shipping_city ? { city: shipping_city } : {}),

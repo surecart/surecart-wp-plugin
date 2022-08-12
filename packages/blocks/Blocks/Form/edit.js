@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { applyFilters } from '@wordpress/hooks';
 import { useSelect, useDispatch } from '@wordpress/data';
 import {
 	InnerBlocks,
@@ -226,7 +225,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 				<PanelBody title={__('Style', 'surecart')}>
 					<PanelRow>
 						<BaseControl.VisualLabel>
-							{__('Form Highlight Color', 'presto-player')}
+							{__('Form Highlight Color', 'surecart')}
 						</BaseControl.VisualLabel>
 						<ColorPopup
 							color={color}

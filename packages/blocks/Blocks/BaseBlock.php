@@ -54,7 +54,7 @@ abstract class BaseBlock {
 	 *
 	 * @return function
 	 */
-	public function preRender( $attributes, $content ) {
+	public function preRender( $attributes, $content, $block ) {
 		// run middlware.
 		$render = $this->middleware( $attributes, $content );
 
@@ -69,7 +69,7 @@ abstract class BaseBlock {
 		$attributes = $this->getAttributes( $attributes );
 
 		// render.
-		return $this->render( $attributes, $content );
+		return $this->render( $attributes, $content, $block );
 	}
 
 	/**

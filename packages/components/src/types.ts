@@ -68,14 +68,27 @@ export type Prices = {
   [id: string]: Price;
 };
 
-export interface File {
+export interface Media {
   id: string;
-  object: 'file';
+  object: 'media';
   byte_size: number;
   content_type: string;
   extension: string;
   filename: string;
-  product: string | 'Product';
+  public_access: boolean;
+  release_json: object;
+  url?: string;
+  url_expires_at?: number;
+  updated_at: number;
+  created_at: number;
+}
+export interface Download {
+  id: string;
+  object: 'download';
+  enabled: boolean;
+  media: string | Media;
+  product: string | Product;
+  update_at: number;
   created_at: number;
 }
 
@@ -98,10 +111,10 @@ export interface Product extends Object {
     pagination: Pagination;
     data: Array<Price>;
   };
-  files: {
+  downloads: {
     object: 'list';
     pagination: Pagination;
-    data: Array<File>;
+    data: Array<Download>;
   };
   created_at: number;
   updated_at: number;
@@ -239,13 +252,30 @@ export interface TaxIdentifier {
   number: string;
   number_type: string;
   object: 'tax_identifier';
-  valid_eu_vat: false;
+  eu_vat_verified: boolean;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface TaxProtocol {
+  id: string;
+  object: 'tax_protocol';
+  ca_tax_enabled: boolean;
+  eu_micro_exemption_enabled: boolean;
+  eu_tax_enabled: boolean;
+  eu_vat_required: boolean;
+  eu_vat_unverified_behavior: 'error' | 'apply_reverse_charge' | 'skip_reverse_charge';
+  eu_vat_local_reverse_charge: boolean;
+  tax_enabled: boolean;
+  address: string | Address;
+  ca_tax_identifier: string | TaxIdentifier;
+  eu_tax_identifier: string | TaxIdentifier;
   created_at: number;
   updated_at: number;
 }
 export interface Order extends Object {
   id?: string;
-  status?: 'finalized' | 'draft' | 'paid';
+  status?: 'finalized' | 'draft' | 'paid' | 'requires_approval';
   number?: string;
   amount_due?: number;
   trial_amount?: number;
@@ -389,7 +419,7 @@ export interface SubscriptionProtocol {
 
 export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid' | 'completed';
 
-export type OrderStatus = 'draft' | 'finalized' | 'paid' | 'completed';
+export type OrderStatus = 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'requires_approval';
 
 export interface PaymentMethod extends Object {
   id: string;
@@ -399,8 +429,20 @@ export interface PaymentMethod extends Object {
   processor_type: 'stripe' | 'paypal';
   type: string;
   payment_intent: PaymentIntent | string;
+  billing_agreement?: BillingAgreement | string;
   card: any;
   customer: Customer | string;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface BillingAgreement {
+  email: string;
+  external_customer_id: string;
+  first_name: string;
+  id: string;
+  last_name: string;
+  object: 'billing_agreement';
   created_at: number;
   updated_at: number;
 }

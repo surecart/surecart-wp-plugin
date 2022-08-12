@@ -76,6 +76,18 @@ export class ScOrderConfirmation {
     };
   }
 
+  renderOnHold() {
+    if (this.order?.status !== 'requires_approval') return null;
+    if (this?.order?.payment_intent?.processor_type === 'paypal') {
+      return (
+        <sc-alert type="warning" open={true}>
+          {__('Paypal is taking a closer look at this payment. It’s required for some payments and normally takes up to 3 business days.', 'surecart')}
+        </sc-alert>
+      );
+    }
+    return 'asdf';
+  }
+
   render() {
     return (
       <Universe.Provider state={this.state()}>
@@ -86,8 +98,10 @@ export class ScOrderConfirmation {
               'hidden': !this.order?.id && !this.loading,
             }}
           >
+            {this.renderOnHold()}
             <slot />
           </div>
+
           {!this.order?.id && !this.loading && (
             <sc-heading>
               {__('Order not found.', 'surecart')}

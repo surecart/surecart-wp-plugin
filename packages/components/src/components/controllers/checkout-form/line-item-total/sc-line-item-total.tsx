@@ -2,7 +2,6 @@ import { Order } from '../../../../types';
 import { Component, h, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { __ } from '@wordpress/i18n';
-import { hasPaymentPlan } from '../../../../functions/line-items';
 
 @Component({
   tag: 'sc-line-item-total',
@@ -15,14 +14,15 @@ export class ScLineItemTotal {
   @Prop() order: Order;
   @Prop() size: 'large' | 'medium';
 
-  session_key = {
+  order_key = {
     total: 'total_amount',
     subtotal: 'subtotal_amount',
+    amount_due: 'amount_due',
   };
 
   render() {
     // loading state
-    if (this.loading) {
+    if (this.loading && !this.order?.[this?.order_key?.[this?.total]]) {
       return (
         <sc-line-item>
           <sc-skeleton slot="title" style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>
@@ -33,11 +33,13 @@ export class ScLineItemTotal {
 
     if (!this.order?.currency) return;
 
-    if (this.total === 'total' && (this.order.trial_amount !== 0 || hasPaymentPlan(this.order))) {
+    // if the total amount is different than the amount due.
+    if (this.total === 'total' && this.order?.total_amount !== this.order?.amount_due) {
       return (
         <div class="line-item-total__group">
           <sc-line-item>
             <span slot="description">
+              <slot name="title" />
               <slot name="description" />
             </span>
             <span slot="price">
@@ -45,9 +47,8 @@ export class ScLineItemTotal {
             </span>
           </sc-line-item>
           <sc-line-item style={{ '--price-size': 'var(--sc-font-size-x-large)' }}>
-            <span slot="title">{__('Total Due Today', 'surecart')}</span>
-            <span slot="description">
-              <slot name="description" />
+            <span slot="title">
+              <slot name="subscription-title">{__('Total Due Today', 'surecart')}</slot>
             </span>
             <span slot="price">
               <sc-format-number type="currency" currency={this.order?.currency} value={this.order?.amount_due}></sc-format-number>

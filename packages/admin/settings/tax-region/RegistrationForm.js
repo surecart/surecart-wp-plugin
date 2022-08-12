@@ -65,7 +65,12 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 		if (!zones) return;
 		if (region === 'au') {
 			const tax_zone = zones.find((z) => z.country === 'AU')?.id;
-			console.log({ tax_zone });
+			if (tax_zone) {
+				setData({ ...data, tax_zone });
+			}
+		}
+		if (region === 'uk') {
+			const tax_zone = zones.find((z) => z.country === 'GB')?.id;
 			if (tax_zone) {
 				setData({ ...data, tax_zone });
 			}
@@ -73,6 +78,7 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 	}, [zones]);
 
 	const onSubmit = async (e) => {
+		const json = await e.target.getFormJson();
 		e.preventDefault();
 		try {
 			setLoading(true);
@@ -81,7 +87,11 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 				'tax_registration',
 				{
 					...(registration?.id ? { id: registration?.id } : {}),
-					...data,
+					tax_identifier: {
+						number: json?.['tax_identifier.number'],
+						number_type: json?.['tax_identifier.number_type'],
+					},
+					tax_zone: data?.tax_zone,
 				},
 				{
 					throwOnError: true,

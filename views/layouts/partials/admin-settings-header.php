@@ -13,7 +13,7 @@
 	}
 </style>
 <div>
-	<?php if ( ! empty( $_GET['status'] ) && 'cache_cleared' === $_GET['status'] ) : ?>
+	<?php if ( ! empty( $_GET['status'] ) && 'cache_cleared' === sanitize_text_field( wp_unslash( $_GET['status'] ) ) ) : ?>
 		<sc-alert open type="info" closable><?php esc_html_e( 'Cache cleared.', 'surecart' ); ?></sc-alert>
 	<?php endif; ?>
 	<div id="sc-settings-header">
@@ -21,7 +21,7 @@
 			<sc-breadcrumb>
 				<img style="display: block" src="<?php echo esc_url( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/logo.svg' ); ?>" alt="SureCart" width="125">
 			</sc-breadcrumb>
-			<sc-breadcrumb><?php esc_html_e( 'Settings' ); ?></sc-breadcrumb>
+			<sc-breadcrumb><?php esc_html_e( 'Settings', 'surecart' ); ?></sc-breadcrumb>
 		</sc-breadcrumbs>
 
 		<sc-flex>
@@ -40,7 +40,7 @@
 				<sc-button type="default" size="small" outline submit><?php esc_html_e( 'Clear Account Cache', 'surecart' ); ?></sc-button>
 			</form>
 			<sc-button type="text" size="small" href="https://status.surecart.com" target="_blank">
-				<?php esc_html_e( 'SureCart Status' ); ?>
+				<?php esc_html_e( 'SureCart Status', 'surecart' ); ?>
 				<sc-icon name="external-link" slot="suffix"></sc-icon>
 			</sc-button>
 			<sc-tag>

@@ -6,7 +6,7 @@
 
 namespace SureCartBlocks\Blocks;
 
-use 'SureCartBlocks\Blocks\BlockService;
+use SureCartBlocks\Blocks\BlockService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**

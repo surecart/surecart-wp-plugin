@@ -24,7 +24,7 @@ class PageSeeder {
 	 * Constructor.
 	 *
 	 * @param \SureCart\WordPress\PostTypes\FormPostTypeService $forms Forms service.
-	 * @param \SureCart\WordPress\Pages\PageService             $pages Forms service.
+	 * @param \SureCart\WordPress\Pages\PageService             $pages Pages service.
 	 */
 	public function __construct( $forms, $pages ) {
 		$this->forms = $forms;
@@ -39,6 +39,7 @@ class PageSeeder {
 	public function seed() {
 		$this->createCheckoutForm();
 		$this->createPages();
+		$this->createCartPost();
 	}
 
 	/**
@@ -48,6 +49,29 @@ class PageSeeder {
 	 */
 	public function delete() {
 		$this->deletePages();
+	}
+
+	/**
+	 * Create the cart post.
+	 *
+	 * @return void
+	 */
+	public function createCartPost() {
+		$pattern = require plugin_dir_path( SURECART_PLUGIN_FILE ) . 'templates/cart.php';
+
+		$cart = apply_filters(
+			'surecart/create_cart',
+			[
+				'cart' => [
+					'name'      => _x( 'cart', 'Cart slug', 'surecart' ),
+					'title'     => _x( 'Cart', 'Cart title', 'surecart' ),
+					'content'   => $pattern['content'],
+					'post_type' => 'sc_cart',
+				],
+			]
+		);
+
+		$this->createPosts( $cart );
 	}
 
 	/**

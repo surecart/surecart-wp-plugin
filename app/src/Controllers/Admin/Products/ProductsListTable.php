@@ -47,7 +47,7 @@ class ProductsListTable extends ListTable {
 	public function search() { ?>
 	<form class="search-form"
 		method="get">
-		<?php $this->search_box( __( 'Search Products' ), 'user' ); ?>
+		<?php $this->search_box( __( 'Search Products', 'surecart' ), 'user' ); ?>
 		<input type="hidden"
 			name="id"
 			value="1" />
@@ -121,7 +121,7 @@ class ProductsListTable extends ListTable {
 	 */
 	public function column_cb( $product ) {
 		?>
-		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment' ); ?></label>
+		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
 		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
 			<?php
 	}
@@ -300,7 +300,7 @@ class ProductsListTable extends ListTable {
 
 	  <div>
 		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Product', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ); ?>">
-			<?php echo esc_html_e( $product->name ); ?>
+			<?php echo esc_html_e( $product->name, 'surecart' ); ?>
 		</a>
 
 		<script> function copyClick(e, content){

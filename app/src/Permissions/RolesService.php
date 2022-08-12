@@ -163,6 +163,7 @@ class RolesService {
 			'sc_price',
 			'sc_refund',
 			'sc_charge',
+			'sc_media',
 			'sc_payment_method',
 			'sc_subscription',
 		];

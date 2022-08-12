@@ -28,6 +28,10 @@
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="credit-card"></sc-icon>
 			<?php esc_html_e( 'Processors', 'surecart' ); ?>
 		</sc-tab>
+		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'export' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'export' === $tab ? 'active' : ''; ?> >
+			<sc-icon style="font-size: 18px; width: 22px; stroke-width: 4; opacity: 0.7" name="layers" slot="prefix"></sc-icon>
+			<?php esc_html_e( 'Data Export', 'surecart' ); ?>
+		</sc-tab>
 	<?php endif; ?>
 
 	<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'connection' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'connection' === $tab ? 'active' : ''; ?> >
@@ -38,11 +42,6 @@
 	<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'advanced' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'advanced' === $tab ? 'active' : ''; ?> >
 		<sc-icon style="font-size: 18px; width: 22px; stroke-width: 4; opacity: 0.7" name="sliders" slot="prefix"></sc-icon>
 		<?php esc_html_e( 'Advanced', 'surecart' ); ?>
-	</sc-tab>
-
-	<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'export' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'export' === $tab ? 'active' : ''; ?> >
-		<sc-icon style="font-size: 18px; width: 22px; stroke-width: 4; opacity: 0.7" name="download-cloud" slot="prefix"></sc-icon>
-		<?php esc_html_e( 'Data Export', 'surecart' ); ?>
 	</sc-tab>
 
 	<sc-tab href="mailto:hello@surecart.com" target="_blank">

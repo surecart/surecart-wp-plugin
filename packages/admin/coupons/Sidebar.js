@@ -8,7 +8,7 @@ import { Fragment } from '@wordpress/element';
 import Box from '../ui/Box';
 import Definition from '../ui/Definition';
 
-export default ({ coupon, loading }) => {
+export default ({ coupon, updateCoupon, loading }) => {
 	const formattedDiscount = () => {
 		if (coupon?.percent_off) {
 			return sprintf(__('%s%% off', 'surecart'), coupon?.percent_off);

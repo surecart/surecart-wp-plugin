@@ -3,8 +3,6 @@
 namespace SureCart\Tests\Integrations;
 
 use SureCart\Integrations\LearnDash\LearnDashService;
-use SureCart\Models\Integration;
-use SureCart\Models\User;
 use SureCart\Tests\SureCartUnitTestCase;
 
 class LearnDashServiceTest extends SureCartUnitTestCase
@@ -26,6 +24,7 @@ class LearnDashServiceTest extends SureCartUnitTestCase
 		parent::setUp();
 	}
 
+
 	public function purchaseTriggerMocks() {
 		$service = \Mockery::mock(LearnDashService::class)->makePartial();
 		$wp_user = self::factory()->user->create_and_get();
@@ -45,7 +44,7 @@ class LearnDashServiceTest extends SureCartUnitTestCase
 	public function test_purchaseCreatedTrigger() {
 		[$service, $integration, $wp_user, $purchase] = $this->purchaseTriggerMocks();
 
-		$service->shouldReceive('onPurchaseCreated')->once()->with($integration, $wp_user);
+		$service->shouldReceive('onPurchaseCreated')->once()->withSomeOfArgs($integration, $wp_user);
 		do_action('surecart/purchase_created', $purchase);
 	}
 
@@ -55,7 +54,7 @@ class LearnDashServiceTest extends SureCartUnitTestCase
 	public function test_purchaseRevokedTrigger() {
 		[$service, $integration, $wp_user, $purchase] = $this->purchaseTriggerMocks();
 
-		$service->shouldReceive('onPurchaseRevoked')->once()->with($integration, $wp_user);
+		$service->shouldReceive('onPurchaseRevoked')->once()->withSomeOfArgs($integration, $wp_user);
 		do_action('surecart/purchase_revoked', $purchase);
 	}
 
@@ -66,7 +65,7 @@ class LearnDashServiceTest extends SureCartUnitTestCase
 	public function test_purchaseInvokedTrigger() {
 		[$service, $integration, $wp_user, $purchase] = $this->purchaseTriggerMocks();
 
-		$service->shouldReceive('onPurchaseInvoked')->once()->with($integration, $wp_user);
+		$service->shouldReceive('onPurchaseInvoked')->once()->withSomeOfArgs($integration, $wp_user);
 		do_action('surecart/purchase_invoked', $purchase);
 	}
 }

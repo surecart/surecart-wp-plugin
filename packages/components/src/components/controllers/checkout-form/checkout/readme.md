@@ -24,7 +24,7 @@
 | `removeLineItems`             | `remove-line-items`             | Can we remove line items?                                     | `boolean`                      | `true`      |
 | `stripePaymentElement`        | `stripe-payment-element`        | Use the Stripe payment element.                               | `boolean`                      | `false`     |
 | `successUrl`                  | `success-url`                   | Where to go on success                                        | `string`                       | `''`        |
-| `taxEnabled`                  | `tax-enabled`                   | Is tax enabled?                                               | `boolean`                      | `undefined` |
+| `taxProtocol`                 | --                              | The account tax protocol                                      | `TaxProtocol`                  | `undefined` |
 
 
 ## Events
@@ -38,13 +38,13 @@
 
 ## Methods
 
-### `submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Order | CustomEvent<import("/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/types").FormStateSetter>>`
+### `submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<any>`
 
 Submit the form
 
 #### Returns
 
-Type: `Promise<Order | CustomEvent<FormStateSetter>>`
+Type: `Promise<any>`
 
 
 
@@ -67,9 +67,8 @@ Type: `Promise<boolean>`
 - [sc-form-state-provider](../../../providers/form-state-provider)
 - [sc-form-error-provider](../../../providers/form-error-provider)
 - [sc-form-components-validator](../../../providers/form-components-validator)
-- [sc-session-provider](../../../providers/session-provider)
-- [sc-order-redirect-provider](../../../providers/order-redirect-provider)
 - [sc-order-confirm-provider](../../../providers/order-confirm-provider)
+- [sc-session-provider](../../../providers/session-provider)
 - [sc-block-ui](../../../ui/block-ui)
 
 ### Graph
@@ -79,15 +78,15 @@ graph TD;
   sc-checkout --> sc-form-state-provider
   sc-checkout --> sc-form-error-provider
   sc-checkout --> sc-form-components-validator
-  sc-checkout --> sc-session-provider
-  sc-checkout --> sc-order-redirect-provider
   sc-checkout --> sc-order-confirm-provider
+  sc-checkout --> sc-session-provider
   sc-checkout --> sc-block-ui
   sc-alert --> sc-icon
   sc-form-state-provider --> sc-block-ui
   sc-block-ui --> sc-spinner
   sc-form-error-provider --> sc-alert
   sc-form-components-validator --> sc-order-shipping-address
+  sc-form-components-validator --> sc-order-tax-id-input
   sc-order-shipping-address --> sc-address
   sc-order-shipping-address --> sc-compact-address
   sc-address --> sc-form-control
@@ -108,6 +107,15 @@ graph TD;
   sc-compact-address --> sc-select
   sc-compact-address --> sc-input
   sc-compact-address --> sc-block-ui
+  sc-order-tax-id-input --> sc-tax-id-input
+  sc-tax-id-input --> sc-icon
+  sc-tax-id-input --> sc-input
+  sc-tax-id-input --> sc-spinner
+  sc-tax-id-input --> sc-dropdown
+  sc-tax-id-input --> sc-button
+  sc-tax-id-input --> sc-menu
+  sc-tax-id-input --> sc-menu-item
+  sc-button --> sc-spinner
   sc-session-provider --> sc-line-items-provider
   style sc-checkout fill:#f9f,stroke:#333,stroke-width:4px
 ```

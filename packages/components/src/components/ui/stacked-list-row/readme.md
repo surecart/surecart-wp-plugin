@@ -14,6 +14,13 @@
 | `target`     | `target`      |             | `string` | `'_self'`   |
 
 
+## Shadow Parts
+
+| Part     | Description |
+| -------- | ----------- |
+| `"base"` |             |
+
+
 ## Dependencies
 
 ### Used by

@@ -72,6 +72,15 @@ export default ({ className, attributes, setAttributes, context }) => {
 							onChange={(label) => setAttributes({ label })}
 						/>
 					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Secure Credit Card Notice', 'surecart')}
+							value={secure_notice}
+							onChange={(secure_notice) =>
+								setAttributes({ secure_notice })
+							}
+						/>
+					</PanelRow>
 					{options?.length > 1 && (
 						<PanelRow>
 							<RadioControl

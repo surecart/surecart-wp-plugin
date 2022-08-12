@@ -1,10 +1,12 @@
-import { Component, h, Prop, Event, EventEmitter, Listen, Element } from '@stencil/core';
-import { addQueryArgs } from '@wordpress/url';
-import { Order } from '../../../types';
-import apiFetch from '../../../functions/fetch';
-import { expand } from '../../../services/session';
+import { Component, Element, Event, EventEmitter, h, Listen, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
+
+import apiFetch from '../../../functions/fetch';
 import { parseFormData } from '../../../functions/form-data';
+import { expand } from '../../../services/session';
+import { clearOrder } from '../../../store/checkouts';
+import { Order } from '../../../types';
 
 /**
  * This component listens to the order status
@@ -18,11 +20,17 @@ export class ScOrderConfirmProvider {
   /** The order confirm provider element */
   @Element() el: HTMLScOrderConfirmProviderElement;
 
+  /** The form id */
+  @Prop() formId: number;
+
+  /** Are we in test or live mode. */
+  @Prop() mode: 'test' | 'live' = 'live';
+
   /** The current order. */
   @Prop() order: Order;
 
-  /** Update the order in the universe store. */
-  @Event() scUpdateOrderState: EventEmitter<Order>;
+  /** Success url. */
+  @Prop() successUrl: string;
 
   /** The order is confirmed event. */
   @Event() scConfirmed: EventEmitter<void>;
@@ -49,8 +57,6 @@ export class ScOrderConfirmProvider {
         path: addQueryArgs(`surecart/v1/orders/${this.order?.id}/confirm`, [expand]),
         data,
       })) as Order;
-      // make sure we update the state in the central store.
-      this.scUpdateOrderState.emit(confirmed);
       // emit the confirmed event to trigger listeners to redirect to the success url, etc.
       this.scConfirmed.emit();
       // emit the order paid event for tracking scripts.
@@ -58,6 +64,12 @@ export class ScOrderConfirmProvider {
     } catch (e) {
       console.error(e);
       this.scError.emit(e);
+    } finally {
+      const order = this.order?.id;
+      // make sure we clear the order state no matter what.
+      clearOrder(this.formId, this.mode);
+      // we always want to redirect, regardless of the outcome here.
+      window.location.assign(addQueryArgs(this.successUrl, { order }));
     }
   }
 

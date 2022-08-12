@@ -374,4 +374,33 @@ class Currency {
 			'zmw' => __( 'Zambian Kwacha', 'surecart' ),
 		];
 	}
+
+	/**
+	 * Determine if this is a zero decimal currency.
+	 *
+	 * @param string $currency The currency code.
+	 *
+	 * @return bool
+	 */
+	public static function isZeroDecimal( $currency ) {
+		$is_zero = array(
+			'BIF',
+			'CLP',
+			'DJF',
+			'GNF',
+			'JPY',
+			'KMF',
+			'KRW',
+			'MGA',
+			'PYG',
+			'RWF',
+			'VND',
+			'VUV',
+			'XAF',
+			'XOF',
+			'XPF',
+		);
+
+		return in_array( strtoupper( $currency ), $is_zero );
+	}
 }

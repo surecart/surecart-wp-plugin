@@ -9,6 +9,7 @@ export class ScFlex {
   @Prop() alignItems: string;
   @Prop() justifyContent: string;
   @Prop() flexDirection: string;
+  @Prop() flexWrap: string;
 
   render() {
     return (
@@ -18,6 +19,7 @@ export class ScFlex {
           ...(this.justifyContent ? { [`justify-${this.justifyContent}`]: true } : {}),
           ...(this.alignItems ? { [`align-${this.alignItems}`]: true } : {}),
           ...(this.flexDirection ? { [`direction-${this.flexDirection}`]: true } : {}),
+          ...(this.flexWrap ? { [`wrap-${this.flexWrap}`]: true } : {}),
         }}
       >
         <slot></slot>

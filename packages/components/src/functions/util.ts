@@ -19,10 +19,8 @@ export function closestElement(selector, base) {
 
 export function findElements(selector, base) {
   function __findFrom(el) {
-    console.log({ el });
     if (!el) return null;
     let found = el.querySelectorAll(selector);
-    console.log({ found: found.length });
     return found && found?.length ? found : __findFrom(el?.shadowRoot);
   }
   return __findFrom(base);

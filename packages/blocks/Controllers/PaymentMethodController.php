@@ -45,7 +45,7 @@ class PaymentMethodController extends BaseController {
 	public function create() {
 		$output = '';
 
-		if ( isset( $_GET['live_mode'] ) && 'false' === $_GET['live_mode'] ) {
+		if ( isset( $_GET['live_mode'] ) && 'false' === sanitize_text_field( wp_unslash( $_GET['live_mode'] ) ) ) {
 			if ( ! empty( User::current()->customerId( 'test' ) ) ) {
 				return $this->createTest();
 			}

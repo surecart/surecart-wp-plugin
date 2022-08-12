@@ -130,7 +130,7 @@ class ProductGroupsListTable extends ListTable {
 	 * @return boolean|null
 	 */
 	public function getStatus() {
-		$status = $_GET['status'] ?? 'active';
+		$status = sanitize_text_field( wp_unslash( $_GET['status'] ?? 'active' ) );
 		if ( 'active' === $status ) {
 			return [ 'archived' => false ];
 		}
@@ -140,7 +140,7 @@ class ProductGroupsListTable extends ListTable {
 		if ( 'all' === $status ) {
 			return [];
 		}
-		return $status;
+		return esc_html( $status );
 	}
 
 	/**

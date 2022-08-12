@@ -69,7 +69,7 @@ export class ScLineItems {
   }
 
   render() {
-    if (!!this.loading) {
+    if (!!this.loading && !this.order?.line_items?.data?.length) {
       return (
         <sc-line-item>
           <sc-skeleton style={{ 'width': '50px', 'height': '50px', '--border-radius': '0' }} slot="image"></sc-skeleton>
@@ -83,24 +83,29 @@ export class ScLineItems {
 
     return (
       <div class="line-items">
-        {this.order?.line_items?.data.map(item => {
-          return (
-            <sc-product-line-item
-              key={item.id}
-              imageUrl={(item?.price?.product as Product)?.image_url}
-              name={(item?.price?.product as Product)?.name}
-              editable={this.isEditable() && !item?.price?.ad_hoc}
-              removable={this.isRemovable()}
-              quantity={item.quantity}
-              amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount * item.quantity}
-              currency={this.order?.currency}
-              trialDurationDays={item?.price?.trial_duration_days}
-              interval={!!item?.price && intervalString(item?.price, { showOnce: hasSubscription(this.order) })}
-              onScUpdateQuantity={e => this.updateQuantity(item, e.detail)}
-              onScRemove={() => this.removeLineItem(item)}
-            ></sc-product-line-item>
-          );
-        })}
+        {(this.order?.line_items?.data || [])
+          .sort((a, b) => {
+            if (a.price?.id < b.price?.id) return -1;
+            return a.price?.id > b.price?.id ? 1 : 0;
+          })
+          .map(item => {
+            return (
+              <sc-product-line-item
+                key={item.id}
+                imageUrl={(item?.price?.product as Product)?.image_url}
+                name={(item?.price?.product as Product)?.name}
+                editable={this.isEditable() && !item?.price?.ad_hoc}
+                removable={this.isRemovable()}
+                quantity={item.quantity}
+                amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount * item.quantity}
+                currency={this.order?.currency}
+                trialDurationDays={item?.price?.trial_duration_days}
+                interval={!!item?.price && intervalString(item?.price, { showOnce: hasSubscription(this.order) })}
+                onScUpdateQuantity={e => this.updateQuantity(item, e.detail)}
+                onScRemove={() => this.removeLineItem(item)}
+              ></sc-product-line-item>
+            );
+          })}
       </div>
     );
   }

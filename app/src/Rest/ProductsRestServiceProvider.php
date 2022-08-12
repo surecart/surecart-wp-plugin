@@ -25,41 +25,6 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	protected $controller = ProductsController::class;
 
 	/**
-	 * Register Additional REST Routes
-	 *
-	 * @return void
-	 */
-	public function registerRoutes() {
-		register_rest_route(
-			"$this->name/v$this->version",
-			$this->endpoint . '/(?P<id>\S+)/purge_image/',
-			[
-				[
-					'methods'             => \WP_REST_Server::DELETABLE,
-					'callback'            => $this->callback( $this->controller, 'purgeImage' ),
-					'permission_callback' => [ $this, 'update_item_permissions_check' ],
-				],
-				// Register our schema callback.
-				'schema' => [ $this, 'get_item_schema' ],
-			]
-		);
-
-		register_rest_route(
-			"$this->name/v$this->version",
-			$this->endpoint . '/(?P<id>\S+)/purge_file/(?P<file_id>\S+)',
-			[
-				[
-					'methods'             => \WP_REST_Server::DELETABLE,
-					'callback'            => $this->callback( $this->controller, 'purgeFile' ),
-					'permission_callback' => [ $this, 'update_item_permissions_check' ],
-				],
-				// Register our schema callback.
-				'schema' => [ $this, 'get_item_schema' ],
-			]
-		);
-	}
-
-	/**
 	 * Get our sample schema for a post.
 	 *
 	 * @return array The sample schema for a post
@@ -145,11 +110,11 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 				'type'        => 'boolean',
 			],
 			'query'             => [
-				'description' => __( 'The query to be used for full text search of this collection.' ),
+				'description' => __( 'The query to be used for full text search of this collection.', 'surecart' ),
 				'type'        => 'string',
 			],
 			'ids'               => [
-				'description' => __( 'Ensure result set excludes specific IDs.' ),
+				'description' => __( 'Ensure result set excludes specific IDs.', 'surecart' ),
 				'type'        => 'array',
 				'items'       => [
 					'type' => 'string',
@@ -157,7 +122,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 				'default'     => [],
 			],
 			'product_group_ids' => [
-				'description' => __( 'Only return objects that belong to the given product groups.' ),
+				'description' => __( 'Only return objects that belong to the given product groups.', 'surecart' ),
 				'type'        => 'array',
 				'items'       => [
 					'type' => 'string',

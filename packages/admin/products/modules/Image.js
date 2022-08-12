@@ -1,114 +1,28 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-
 import { __ } from '@wordpress/i18n';
-
+import { Button } from '@wordpress/components';
 import { ScFormControl } from '@surecart/components-react';
-import { useState, useEffect } from '@wordpress/element';
-import {
-	FormFileUpload,
-	DropZone,
-	Spinner,
-	Button,
-} from '@wordpress/components';
-import apiFetch from '@wordpress/api-fetch';
 import Box from '../../ui/Box';
-import useFileUpload from '../../mixins/useFileUpload';
+import MediaLibrary from '../../components/MediaLibrary';
 
 export default ({ product, updateProduct, loading }) => {
-	const [busy, setBusy] = useState(false);
-	const [error, setError] = useState('');
-	const uploadFile = useFileUpload();
-	const [src, setSrc] = useState('');
-
-	useEffect(() => {
-		if (product?.image_url) {
-			setSrc(product.image_url);
-		}
-	}, [product?.image_url]);
-
-	const onRemove = async () => {
-		const r = confirm(
-			__('Are you sure you want to remove this image?', 'surecart')
-		);
-		if (!r) return;
-		try {
-			setBusy(true);
-			// first get the unique upload id.
-			if (product?.id) {
-				await apiFetch({
-					method: 'DELETE',
-					path: `/surecart/v1/products/${product.id}/purge_image`,
-				});
-			}
-			updateProduct({
-				image_url: '',
-				image_upload_id: null,
-			});
-			setSrc('');
-		} catch (e) {
-			console.log(e);
-		} finally {
-			setBusy(false);
-		}
+	const onSelectMedia = (media) => {
+		return updateProduct({
+			image: media?.id,
+			image_url: media?.url,
+		});
 	};
 
-	const uploadImage = async (e) => {
-		// set uploads from file input.
-		const files = [...(e?.currentTarget?.files || e)];
-		const file = files[0];
-
-		// set the preview in the browser.
-		try {
-			setSrc(URL.createObjectURL(file));
-		} catch (e) {
-			console.error(e);
-			setError(
-				__(
-					'There was a problem with the upload. Please try again.',
-					'surecart'
-				)
-			);
-			return;
-		}
-
-		if (!file) return;
-
-		try {
-			setBusy(true);
-			setError('');
-			const id = await uploadFile(file);
-			updateProduct({ image_upload_id: id });
-		} catch (e) {
-			console.error(e);
-			setSrc('');
-			setError(
-				__(
-					'There was a problem with the upload. Please try again.',
-					'surecart'
-				)
-			);
-		} finally {
-			setBusy(false);
-		}
+	const onRemoveMedia = (media) => {
+		return updateProduct({
+			image: null,
+			image_url: null,
+		});
 	};
 
 	const renderContent = () => {
-		if (busy || loading) {
-			return (
-				<div
-					css={css`
-						display: flex;
-						align-items: center;
-						justify-content: center;
-					`}
-				>
-					<Spinner />
-				</div>
-			);
-		}
-
-		if (src) {
+		if (product?.image_url) {
 			return (
 				<div
 					css={css`
@@ -117,7 +31,7 @@ export default ({ product, updateProduct, loading }) => {
 					`}
 				>
 					<img
-						src={src}
+						src={product?.image_url}
 						alt="product image"
 						css={css`
 							max-width: 100%;
@@ -129,7 +43,6 @@ export default ({ product, updateProduct, loading }) => {
 							border-radius: var(--sc-border-radius-medium);
 							background: #f3f3f3;
 						`}
-						onLoad={() => URL.revokeObjectURL(src)}
 					/>
 					<div
 						css={css`
@@ -138,14 +51,21 @@ export default ({ product, updateProduct, loading }) => {
 							gap: 0.5em;
 						`}
 					>
-						<FormFileUpload
-							isSecondary
-							accept="image/*"
-							onChange={uploadImage}
-						>
-							{__('Replace', 'surecart')}
-						</FormFileUpload>
-						<Button isTertiary onClick={onRemove}>
+						<MediaLibrary
+							onSelect={onSelectMedia}
+							isPrivate={false}
+							render={({ setOpen }) => {
+								return (
+									<Button
+										isPrimary
+										onClick={() => setOpen(true)}
+									>
+										{__('Replace', 'surecart')}
+									</Button>
+								);
+							}}
+						></MediaLibrary>
+						<Button isTertiary onClick={onRemoveMedia}>
 							{__('Remove', 'surecart')}
 						</Button>
 					</div>
@@ -154,28 +74,22 @@ export default ({ product, updateProduct, loading }) => {
 		}
 
 		return (
-			<div
-				css={css`
-					position: relative;
-					border: 2px dashed var(--sc-color-gray-200);
-					border-radius: var(--sc-border-radius-small);
-					padding: 2em;
-					display: grid;
-					gap: 1em;
-					text-align: center;
-				`}
+			<ScFormControl
+				label={__('Product Image', 'surecart')}
+				showLabel={false}
 			>
-				{__('Drag and drop an image here', 'surecart')}
-				<sc-divider>{__('Or', 'surecart')}</sc-divider>
-				<FormFileUpload
-					isPrimary
-					accept="image/*"
-					onChange={uploadImage}
-				>
-					{__('Upload Image', 'surecart')}
-				</FormFileUpload>
-				<DropZone onFilesDrop={uploadImage} />
-			</div>
+				<MediaLibrary
+					onSelect={onSelectMedia}
+					isPrivate={false}
+					render={({ setOpen }) => {
+						return (
+							<Button isPrimary onClick={() => setOpen(true)}>
+								{__('Add Image', 'surecart')}
+							</Button>
+						);
+					}}
+				></MediaLibrary>
+			</ScFormControl>
 		);
 	};
 
@@ -185,11 +99,6 @@ export default ({ product, updateProduct, loading }) => {
 				label={__('Product Image', 'surecart')}
 				showLabel={false}
 			>
-				{!!error && (
-					<sc-alert open={!!error} type="danger">
-						{error}
-					</sc-alert>
-				)}
 				{renderContent()}
 			</ScFormControl>
 		</Box>

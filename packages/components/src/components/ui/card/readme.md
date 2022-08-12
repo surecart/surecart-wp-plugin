@@ -32,6 +32,7 @@
  - [sc-downloads-list](../downloads-list)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-login-form](../../controllers/login)
+ - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-payment-method-create](../../controllers/dashboard/payment-method-create)
@@ -56,6 +57,7 @@ graph TD;
   sc-downloads-list --> sc-card
   sc-invoices-list --> sc-card
   sc-login-form --> sc-card
+  sc-order-confirmation-details --> sc-card
   sc-orders-list --> sc-card
   sc-payment --> sc-card
   sc-payment-method-create --> sc-card

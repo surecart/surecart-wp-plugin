@@ -12,6 +12,20 @@ use SureCart\Models\Purchase;
  */
 abstract class IntegrationService extends AbstractIntegration implements IntegrationInterface {
 	/**
+	 * Purchase model for the integration.
+	 *
+	 * @var \SureCart\Models\Purchase
+	 */
+	protected $purchase = null;
+
+	/**
+	 * The current user for the integration.
+	 *
+	 * @var \WP_User
+	 */
+	protected $user = null;
+
+	/**
 	 * Get the slug for the integration.
 	 *
 	 * @return string
@@ -131,6 +145,28 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	}
 
 	/**
+	 * Get the current purchase.
+	 *
+	 * @return \SureCart\Models\Purchase|null;
+	 */
+	public function getPurchase() {
+		return $this->purchase;
+	}
+
+	public function getPurchaseId() {
+		return $this->purchase->id ?? null;
+	}
+
+	/**
+	 * Get the user.
+	 *
+	 * @return \WP_User|null;
+	 */
+	public function getUser() {
+		return $this->purchase->getWPUser();
+	}
+
+	/**
 	 * The purchase has been updated.
 	 * This is extendable, but is also abtracted into
 	 * invoke/revoke and quantity update methods.
@@ -141,6 +177,8 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	 * @return void
 	 */
 	public function onPurchaseUpdated( Purchase $purchase, $request ) {
+		$this->purchase = $purchase;
+
 		$data     = $request['data']['object'] ?? null;
 		$previous = $request['data']['previous_attributes'] ?? null;
 
@@ -190,13 +228,15 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	 * @return void
 	 */
 	public function onPurchaseProductUpdated( \SureCart\Models\Purchase $purchase, \SureCart\Models\Purchase $previous_purchase, $request ) {
+		$this->purchase = $purchase;
+
 		// product added.
 		$integrations = (array) $this->getIntegrationData( $purchase ) ?? [];
 		foreach ( $integrations as $integration ) {
 			if ( ! $integration->id ) {
 				continue;
 			}
-			$this->onPurchaseProductAdded( $integration, $purchase->getWPUser() );
+			$this->onPurchaseProductAdded( $integration, $purchase->getWPUser(), $purchase );
 		}
 
 		// product removed.
@@ -205,7 +245,7 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 			if ( ! $integration->id ) {
 				continue;
 			}
-			$this->onPurchaseProductRemoved( $integration, $previous_purchase->getWPUser() );
+			$this->onPurchaseProductRemoved( $integration, $previous_purchase->getWPUser(), $previous_purchase );
 		}
 	}
 
@@ -220,6 +260,7 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	 * @return void
 	 */
 	public function onPurchaseQuantityUpdated( $quantity, $previous, $purchase, $request ) {
+		$this->purchase = $purchase;
 		// Allow this to be extended to provide functionality. Do nothing by default.
 	}
 
@@ -244,6 +285,9 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	 * @return void
 	 */
 	public function callMethod( $purchase ) {
+		// store the current purchase.
+		$this->purchase = $purchase;
+
 		$method = $this->methods_map[ $this->getCurrentAction() ] ?? null;
 		if ( ! $method || ! method_exists( $this, $method ) ) {
 			return;
@@ -254,7 +298,8 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 			if ( ! $integration->id ) {
 				continue;
 			}
-			$this->$method( $integration, $purchase->getWPUser() );
+
+			$this->$method( $integration, $purchase->getWPUser(), $purchase );
 		}
 	}
 

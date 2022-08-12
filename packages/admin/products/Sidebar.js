@@ -5,10 +5,9 @@ import { format } from '@wordpress/date';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
-import useCurrentPage from '../mixins/useCurrentPage';
 import Box from '../ui/Box';
 import Definition from '../ui/Definition';
-import Files from './modules/Files';
+import Downloads from './modules/Downloads';
 import Image from './modules/Image';
 import Integrations from './modules/integrations/Integrations';
 import Taxes from './modules/Tax';
@@ -97,7 +96,7 @@ export default ({
 				loading={loading}
 			/>
 
-			<Files
+			<Downloads
 				id={id}
 				product={product}
 				updateProduct={updateProduct}

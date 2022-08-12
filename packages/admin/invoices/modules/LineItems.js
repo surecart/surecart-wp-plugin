@@ -3,6 +3,7 @@ import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
+import { addQueryArgs } from '@wordpress/url';
 import Box from '../../ui/Box';
 import { intervalString } from '../../util/translations';
 import Definition from '../../ui/Definition';
@@ -37,7 +38,9 @@ export default ({ invoice, charge: chargeInput, loading }) => {
 						`}
 					>
 						<ScButton
-							href={`${scData?.surecart_app_url}/portal/invoices/${invoice?.id}/generate/receipt.pdf`}
+							href={addQueryArgs(invoice?.pdf_url, {
+								receipt: true,
+							})}
 							type="default"
 							size="small"
 						>
@@ -45,7 +48,7 @@ export default ({ invoice, charge: chargeInput, loading }) => {
 							<sc-icon slot="prefix" name="download"></sc-icon>
 						</ScButton>
 						<ScButton
-							href={`${scData?.surecart_app_url}/portal/invoices/${invoice?.id}/generate.pdf`}
+							href={invoice?.pdf_url}
 							type="primary"
 							size="small"
 						>
