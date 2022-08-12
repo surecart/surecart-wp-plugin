@@ -64,7 +64,7 @@ class ScriptsService {
 			wp_register_script(
 				'surecart-components',
 				trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/surecart/surecart.esm.js',
-				[],
+				[ 'wp-i18n' ],
 				filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.esm.js' ) . '-' . \SureCart::plugin()->version(),
 				false
 			);
@@ -74,7 +74,7 @@ class ScriptsService {
 			wp_register_script(
 				'surecart-components',
 				trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/static-loader.js',
-				$static_assets['dependencies'],
+				array_merge( [ 'wp-i18n' ], $static_assets['dependencies'] ),
 				$static_assets['version'] . '-' . \SureCart::plugin()->version(),
 				true
 			);
