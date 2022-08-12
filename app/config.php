@@ -79,7 +79,7 @@ return [
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,
 		\SureCart\Integrations\LearnDash\LearnDashServiceProvider::class,
-		\SureCart\Integrations\LearnDash\LearnDashGroupServiceProvider::class,
+		\SureCart\Integrations\LearnDashGroup\LearnDashGroupServiceProvider::class,
 		\SureCart\Integrations\AffiliateWP\AffiliateWPServiceProvider::class,
 		\SureCart\Integrations\TutorLMS\TutorLMSServiceProvider::class,
 		\SureCart\Integrations\User\UserServiceProvider::class,

@@ -161,20 +161,20 @@ class LearnDashGroupService extends IntegrationService implements IntegrationInt
 	}
 
 	/**
-	 * Update access to a course.
+	 * Update access to a group.
 	 *
-	 * @param integer  $course_id The course id.
+	 * @param integer  $group_id The group id.
 	 * @param \WP_User $wp_user The user.
-	 * @param boolean  $add True to add the user to the course, false to remove.
+	 * @param boolean  $add True to add the user to the group, false to remove.
 	 *
-	 * @return boolean|void Returns true if the user course access updation was successful otherwise false.
+	 * @return boolean|void Returns true if the user group access updation was successful otherwise false.
 	 */
-	public function updateAccess( $course_id, $wp_user, $add = true ) {
+	public function updateAccess( $group_id, $wp_user, $add = true ) {
 		// we don't have learndash installed.
-		if ( ! function_exists( 'ld_update_course_access' ) ) {
+		if ( ! function_exists( 'ld_update_group_access' ) ) {
 			return;
 		}
-		// update course access.
-		return \ld_update_course_access( $wp_user->ID, $course_id, ! $add );
+		// update group access.
+		return \ld_update_group_access( $wp_user->ID, $group_id, ! $add );
 	}
 }

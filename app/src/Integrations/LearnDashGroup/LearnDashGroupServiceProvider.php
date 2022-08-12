@@ -5,7 +5,7 @@ namespace SureCart\Integrations\LearnDashGroup;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
- * Handles the learnDash Service.
+ * Handles the learnDash Group Service.
  */
 class LearnDashGroupServiceProvider implements ServiceProviderInterface {
 	/**
@@ -15,17 +15,17 @@ class LearnDashGroupServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.learndash.sync'] = function () {
+		$container['surecart.learndash.group'] = function () {
 			return new LearnDashGroupService();
 		};
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Bootstrap the service
 	 *
 	 * @param  \Pimple\Container $container Service Container.
 	 */
 	public function bootstrap( $container ) {
-		$container['surecart.learndash.sync']->bootstrap();
+		$container['surecart.learndash.group']->bootstrap();
 	}
 }
