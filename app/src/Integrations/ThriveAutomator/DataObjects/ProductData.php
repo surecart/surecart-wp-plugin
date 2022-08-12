@@ -20,7 +20,7 @@ class ProductData extends Data_Object {
 	 * @return string
 	 */
 	public static function get_id() {
-		return 'surecart/product_data';
+		return 'surecart_product_data';
 	}
 
 	/**

@@ -61,7 +61,7 @@ class ProductsField extends Action_Field {
 	}
 
 	public static function get_id() {
-		return 'surecart/products';
+		return 'surecart_products';
 	}
 
 	public static function get_type() {

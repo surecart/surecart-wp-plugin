@@ -21,7 +21,7 @@ class OrderStatusUpdate {
 	 * @return string
 	 */
 	public static function get_id() {
-		return 'surecart/orderstatus';
+		return 'surecart_orderstatus';
 	}
 
 	/**
@@ -66,7 +66,7 @@ class OrderStatusUpdate {
 	 * @return array
 	 */
 	public static function get_required_action_fields() {
-		return array( 'surecart/products' );
+		return array( 'surecart_products' );
 	}
 
 	/**
@@ -75,7 +75,7 @@ class OrderStatusUpdate {
 	 * @return array
 	 */
 	public static function get_required_data_objects() {
-		return array( 'surecart/product_data' );
+		return array( 'surecart_product_data' );
 	}
 
 	public function prepare_data( $data = array() ) {

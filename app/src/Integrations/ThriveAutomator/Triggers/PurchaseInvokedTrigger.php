@@ -16,7 +16,7 @@ class PurchaseInvokedTrigger extends Trigger {
 	 * @return string
 	 */
 	public static function get_id() {
-		return 'surecart/purchase_invoked';
+		return 'surecart_purchase_invoked';
 	}
 
 	/**

@@ -17,7 +17,7 @@ class PurchaseCreatedTrigger extends Trigger {
 	 * @return string
 	 */
 	public static function get_id() {
-		return 'surecart/purchase_created';
+		return 'surecart_purchase_created';
 	}
 
 	/**
@@ -93,7 +93,7 @@ class PurchaseCreatedTrigger extends Trigger {
 
 			list ( $product, $user ) = $params;
 
-			$data['surecart/product_data'] = empty( $data_object_classes['surecart/product_data'] ) ? $product : new $data_object_classes['surecart/product_data']( $product );
+			$data['surecart_product_data'] = empty( $data_object_classes['surecart_product_data'] ) ? $product : new $data_object_classes['surecart_product_data']( $product );
 			$data['user_data']             = empty( $data_object_classes['user_data'] ) ? null : new $data_object_classes['user_data']( $user );
 		}
 

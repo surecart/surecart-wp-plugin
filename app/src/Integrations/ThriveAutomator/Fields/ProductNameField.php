@@ -11,7 +11,7 @@ use Thrive\Automator\Items\Data_Field;
 /** Product name field. */
 class ProductNameField extends Data_Field {
 	public static function get_id() {
-		return 'surecart/product_name';
+		return 'surecart_product_name';
 	}
 
 	public static function get_name() {

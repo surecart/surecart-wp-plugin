@@ -16,7 +16,7 @@ class PurchaseRevokedTrigger extends Trigger {
 	 * @return string
 	 */
 	public static function get_id() {
-		return 'surecart/purchase_revoked';
+		return 'surecart_purchase_revoked';
 	}
 
 	/**
