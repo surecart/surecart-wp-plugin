@@ -58,7 +58,7 @@ export default () => {
 						infoText={__('Setup', 'surecart')}
 						title={__('Create products', 'surecart')}
 						description={__(
-							'Customize your checkout forms with a no-code experience.',
+							'Create products to start selling.',
 							'surecart'
 						)}
 						buttonLabel={__('Create A Product', 'surecart')}
@@ -69,7 +69,7 @@ export default () => {
 						infoText={__('Tutorial', 'surecart')}
 						title={__('Add buy and cart buttons', 'surecart')}
 						description={__(
-							'Customize your checkout forms with a no-code experience.',
+							'Add cart and buy buttons to your site.',
 							'surecart'
 						)}
 						buttonLabel={__('How To Add Buttons', 'surecart')}
