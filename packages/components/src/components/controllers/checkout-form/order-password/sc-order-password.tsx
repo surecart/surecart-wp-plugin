@@ -3,6 +3,7 @@ import { openWormhole } from 'stencil-wormhole';
 
 @Component({
   tag: 'sc-order-password',
+  styleUrl: 'sc-order-password.scss',
   shadow: true,
 })
 export class ScOrderPassword {
