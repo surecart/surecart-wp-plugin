@@ -161,7 +161,7 @@ class OrdersListTable extends ListTable {
 			[
 				'status' => $this->getStatus(),
 			]
-		)->with( [ 'checkout', 'checkout.charge', 'checkout.customer', 'checkout.payment_intent', 'payment_intent.payment_method', 'payment_method.card', 'checkout.purchases', 'payment_method.payment_instrument' ] )
+		)->with( [ 'checkout', 'checkout.charge', 'checkout.customer', 'checkout.payment_method', 'payment_method.card', 'checkout.purchases', 'payment_method.payment_instrument' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'orders' ),
@@ -211,17 +211,14 @@ class OrdersListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_method( $order ) {
-		if ( ! empty( $order->checkout->payment_intent->payment_method->payment_instrument->instrument_type ) ) {
-			return '<sc-tag type="info" pill>' . ucwords( $order->checkout->payment_intent->payment_method->payment_instrument->instrument_type ) . '</sc-tag>';
-		}
-		if ( ! empty( $order->checkout->payment_intent->processor_type ) && 'paypal' === $order->checkout->payment_intent->processor_type ) {
-			return '<sc-icon name="paypal" style="font-size: 56px; line-height:1; height: 28px;"></sc-icon>';
-		}
-		if ( ! empty( $order->checkout->payment_intent->payment_method->card->brand ) ) {
-			return '<sc-cc-logo style="font-size: 32px; line-height:1;" brand="' . esc_html( $order->checkout->payment_intent->payment_method->card->brand ) . '"></sc-cc-logo>';
-		}
-
-		return $order->checkout->payment_intent->processor_type ?? '-';
+		ob_start();
+		?>
+			<sc-payment-method id="sc-method-<?php echo esc_attr( $order->id ); ?>"></sc-payment-method>
+			<script>
+				document.getElementById('sc-method-<?php echo esc_attr( $order->id ); ?>').paymentMethod = <?php echo wp_json_encode( $order->checkout->payment_method ); ?>;
+			</script>
+		<?php
+		return ob_get_clean();
 	}
 
 	/**
