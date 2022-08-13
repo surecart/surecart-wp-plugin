@@ -1,7 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
-import { PaymentMethod } from '../../../types';
+import { PaymentInstrument, PaymentMethod } from '../../../types';
 
 @Component({
   tag: 'sc-payment-method',
@@ -12,6 +12,18 @@ export class ScPaymentMethod {
   @Prop() paymentMethod: PaymentMethod;
 
   render() {
+    if ((this?.paymentMethod?.payment_instrument as PaymentInstrument)?.instrument_type) {
+			return (
+				<sc-tag type="info" pill>
+					<span style={{ textTransform: 'capitalize' }}>
+						{
+							(this?.paymentMethod?.payment_instrument as PaymentInstrument)?.instrument_type
+						}{' '}
+					</span>
+				</sc-tag>
+			);
+		}
+
     if (this.paymentMethod?.card?.brand) {
       return (
         <div class="payment-method" part="base">
