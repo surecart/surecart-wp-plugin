@@ -508,6 +508,7 @@
   },
   "sc-flex": {
     "align-items": true,
+    "column-gap": true,
     "flex-direction": true,
     "flex-wrap": true,
     "justify-content": true,
