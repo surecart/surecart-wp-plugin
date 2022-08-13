@@ -1,7 +1,7 @@
 import { Component, Element, h, Prop } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
-import { Media, Product, Purchase } from '../../../types';
+import { Download, Media, Product, Purchase } from '../../../types';
 
 @Component({
   tag: 'sc-purchase-downloads-list',
@@ -47,6 +47,7 @@ export class ScPurchaseDownloadsList {
 
   renderList() {
     return this.purchases.map(purchase => {
+      const downloads = (purchase?.product as Product)?.downloads?.data.filter((d: Download) =>!d.archived);
       return (
         <sc-stacked-list-row
           href={
@@ -72,12 +73,12 @@ export class ScPurchaseDownloadsList {
             </div>
             <div class="download__details">
               {sprintf(
-                _n('%s file', '%s files', (purchase?.product as Product)?.downloads?.pagination?.count, 'surecart'),
-                (purchase?.product as Product)?.downloads?.pagination?.count,
+                _n('%s file', '%s files', downloads?.length, 'surecart'),
+                downloads?.length,
               )}{' '}
               &bull;{' '}
               <sc-format-bytes
-                value={(purchase?.product as Product)?.downloads?.data.map(item => (item?.media as Media)?.byte_size).reduce((prev, curr) => prev + curr, 0)}
+                value={(downloads || []).map(item => (item?.media as Media)?.byte_size).reduce((prev, curr) => prev + curr, 0)}
               ></sc-format-bytes>
             </div>
           </sc-spacing>

@@ -87,7 +87,7 @@ export interface Media {
 export interface Download {
   id: string;
   object: 'download';
-  enabled: boolean;
+  archived: boolean;
   media: string | Media;
   product: string | Product;
   update_at: number;
@@ -289,7 +289,7 @@ export interface Charge extends Object {
   invoice: string | Invoice;
   live_mode: boolean;
   object: 'charge';
-  order: string | Order;
+  checkout: string | Checkout;
   payment_method: string | PaymentMethod;
   refunded_amount: number;
   status: 'pending' | 'succeeded' | 'failed';
@@ -367,11 +367,17 @@ export interface Checkout extends Object {
   metadata?: Object;
   payment_intent?: PaymentIntent;
   payment_method?: PaymentMethod;
+  order?: string | Order;
   customer: string | Customer;
   subscriptions: {
     object: 'list';
     pagination: Pagination;
     data: Array<Subscription>;
+  };
+  purchases: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Purchase>;
   };
   discount_amount?: number;
   discount?: DiscountResponse;

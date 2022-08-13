@@ -84,8 +84,17 @@ class OrderController extends BaseController {
 				</sc-breadcrumb>
 			</sc-breadcrumbs>
 
-			<sc-order order-id="<?php echo esc_attr( $this->getId() ); ?>"></sc-order>
-
+			<?php
+			echo wp_kses_post(
+				Component::tag( 'sc-order' )
+				->id( 'sc-customer-order' )
+				->with(
+					[
+						'orderId' => $this->getId(),
+					]
+				)->render()
+			);
+			?>
 		</sc-spacing>
 
 		<?php

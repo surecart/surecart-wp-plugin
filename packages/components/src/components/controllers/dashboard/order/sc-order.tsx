@@ -61,7 +61,7 @@ export class ScOrder {
   async getOrder() {
     this.order = (await await apiFetch({
       path: addQueryArgs(`surecart/v1/orders/${this.orderId}`, {
-        expand: ['checkout', 'checkout.line_items', 'checkout.payment_method', 'payment_method.card', 'line_item.price', 'price.product', 'charge'],
+        expand: ['checkout', 'checkout.purchases', 'purchase.product', 'product', 'product.downloads', 'download.media', 'checkout.line_items', 'checkout.payment_method', 'payment_method.card', 'line_item.price', 'price.product', 'charge'],
       }),
     })) as Order;
   }
@@ -167,71 +167,71 @@ export class ScOrder {
           currency={checkout?.currency}
           value={checkout?.discounts}
         ></sc-format-number>
-        </sc-line-item>}
+      </sc-line-item>}
 
-        {!!checkout?.tax_amount && <sc-line-item>
-          <span slot="description">{__('Tax', 'surecart')}</span>
+      {!!checkout?.tax_amount && <sc-line-item>
+        <span slot="description">{__('Tax', 'surecart')}</span>
+        <sc-format-number
+          slot="price"
+          style={{
+            'font-weight': 'var(--sc-font-weight-semibold)',
+            color: 'var(--sc-color-gray-800)',
+          }}
+          type="currency"
+          currency={checkout?.currency}
+          value={checkout?.tax_amount}
+        ></sc-format-number>
+      </sc-line-item>}
+
+      <sc-divider style={{ '--spacing': 'var(--sc-spacing-x-small)' }}></sc-divider>
+
+      <sc-line-item
+        style={{
+          width: '100%',
+          '--price-size': 'var(--sc-font-size-x-large)',
+        }}
+      >
+        <span slot="title">{__('Total', 'surecart')}</span>
+        <span slot="price">
           <sc-format-number
-            slot="price"
-            style={{
-              'font-weight': 'var(--sc-font-weight-semibold)',
-              color: 'var(--sc-color-gray-800)',
-            }}
             type="currency"
             currency={checkout?.currency}
-            value={checkout?.tax_amount}
+            value={checkout?.amount_due}
           ></sc-format-number>
-        </sc-line-item>}
+        </span>
+        <span slot="currency">{checkout?.currency}</span>
+      </sc-line-item>
 
-        <sc-divider style={{ '--spacing': 'var(--sc-spacing-x-small)' }}></sc-divider>
-
-        <sc-line-item
-					style={{
-						width: '100%',
-						'--price-size': 'var(--sc-font-size-x-large)',
-					}}
-				>
-					<span slot="title">{__('Total', 'surecart')}</span>
-					<span slot="price">
-						<sc-format-number
-							type="currency"
-							currency={checkout?.currency}
-							value={checkout?.amount_due}
-						></sc-format-number>
-					</span>
-					<span slot="currency">{checkout?.currency}</span>
-				</sc-line-item>
-
-      </Fragment>
+    </Fragment>
   }
 
   render() {
-    const checkout = this?.order?.checkout  as Checkout;
+    const checkout = this?.order?.checkout as Checkout;
     return (
-      <sc-spacing style={{'--spacing': 'var(--sc-spacing-large)'}}>
-        <sc-dashboard-module  error={this.error}>
+      <sc-spacing style={{ '--spacing': 'var(--sc-spacing-large)' }}>
+        <sc-dashboard-module error={this.error}>
 
-          <span slot="heading">{this.loading ? <sc-skeleton style={{'width': '120px'}}></sc-skeleton> : `#${this?.order?.number}`}</span>
-          {!this.loading && !checkout?.live_mode && <sc-tag type="warning" slot="end">{__('Test Mode', 'surecart')}</sc-tag> }
+          <span slot="heading">{this.loading ? <sc-skeleton style={{ 'width': '120px' }}></sc-skeleton> : `#${this?.order?.number}`}</span>
+          {!this.loading && !checkout?.live_mode && <sc-tag type="warning" slot="end">{__('Test Mode', 'surecart')}</sc-tag>}
 
           <sc-card no-padding={!this.loading}>
-          {this.loading ? this.renderLoading() :
-            <sc-stacked-list>
-              <sc-stacked-list-row style={{'--columns': '2'}}>
-                <div>{__('Order Status', 'surecart')}</div>
-                <sc-order-status-badge status={this?.order?.status}></sc-order-status-badge>
-              </sc-stacked-list-row>
-              <sc-stacked-list-row style={{'--columns': '2'}}>
-                <div>{__('Date', 'surecart')}</div>
-                <sc-format-date type="timestamp" date={this.order?.created_at} month="short" day="numeric" year="numeric"></sc-format-date>
-              </sc-stacked-list-row>
+            {this.loading ? this.renderLoading() :
+              <sc-stacked-list>
+                <sc-stacked-list-row style={{ '--columns': '2' }}>
+                  <div>{__('Order Status', 'surecart')}</div>
+                  <sc-order-status-badge status={this?.order?.status}></sc-order-status-badge>
+                </sc-stacked-list-row>
+                <sc-stacked-list-row style={{ '--columns': '2' }}>
+                  <div>{__('Date', 'surecart')}</div>
+                  <sc-format-date type="timestamp" date={this.order?.created_at} month="short" day="numeric" year="numeric"></sc-format-date>
+                </sc-stacked-list-row>
 
-              <sc-stacked-list-row style={{'--columns': '2'}}>
-                <div>{__('Payment Method', 'surecart')}</div>
-                <sc-payment-method paymentMethod={checkout?.payment_method}></sc-payment-method>
-              </sc-stacked-list-row>
-            </sc-stacked-list>
-  }
+                <sc-stacked-list-row style={{ '--columns': '2' }}>
+                  <div>{__('Payment Method', 'surecart')}</div>
+                  <sc-payment-method paymentMethod={checkout?.payment_method}></sc-payment-method>
+                </sc-stacked-list-row>
+              </sc-stacked-list>
+            }
           </sc-card>
 
         </sc-dashboard-module>
@@ -242,10 +242,9 @@ export class ScOrder {
           {__('Download Receipt/Invoice', 'surecart')}
         </sc-button>}
 
+        {(this.order?.checkout as Checkout)?.purchases?.data?.length &&
+          <sc-purchase-downloads-list heading={__('Downloads', 'surecart')} purchases={(this.order?.checkout as Checkout)?.purchases?.data}></sc-purchase-downloads-list>}
 
-        {checkout?.id && <sc-dashboard-downloads-list query={{
-          checkout_ids: [checkout?.id]
-        }}></sc-dashboard-downloads-list>}
       </sc-spacing>
     );
   }
