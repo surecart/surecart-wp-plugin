@@ -982,7 +982,6 @@
     "mode": true,
     "order": true,
     "payment-method": true,
-    "preview-stripe-payment-element": true,
     "processor": true,
     "processors": true,
     "secure-notice": true,

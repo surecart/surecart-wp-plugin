@@ -1737,7 +1737,6 @@ export namespace Components {
           * Payment mode inside individual payment method (i.e. Payment Buttons)
          */
         "paymentMethod": 'stripe-payment-request' | null;
-        "previewStripePaymentElement": boolean;
         /**
           * The current payment method for the payment
          */
@@ -5940,7 +5939,6 @@ declare namespace LocalJSX {
           * Payment mode inside individual payment method (i.e. Payment Buttons)
          */
         "paymentMethod"?: 'stripe-payment-request' | null;
-        "previewStripePaymentElement"?: boolean;
         /**
           * The current payment method for the payment
          */
