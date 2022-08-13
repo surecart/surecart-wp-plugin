@@ -503,10 +503,20 @@ export interface PaymentMethod extends Object {
   paypal_account: any;
   bank_account: any;
   type: string;
+  payment_instrument: PaymentInstrument | string;
   payment_intent: PaymentIntent | string;
   billing_agreement?: BillingAgreement | string;
   card: any;
   customer: Customer | string;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface PaymentInstrument {
+  id: string;
+  instrument_type: string;
+  metadata: any;
+  object: 'payment_instrument';
   created_at: number;
   updated_at: number;
 }
