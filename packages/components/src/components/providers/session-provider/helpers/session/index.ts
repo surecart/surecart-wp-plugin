@@ -1,5 +1,5 @@
 import { Checkout } from '../../../../../types';
-import { getQueryArg } from '@wordpress/url';
+import { getQueryArg, removeQueryArgs } from '@wordpress/url';
 
 export const getURLLineItems = () => {
   // check the url query first
@@ -27,8 +27,9 @@ export const getSessionId = (formId, order, modified) => {
   }
 
   // check the url query first
-  const urlId = getQueryArg(window.location.href, 'order');
+  const urlId = getQueryArg(window.location.href, 'checkout_id');
   if (urlId) {
+    window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'checkout_id'));
     return urlId;
   }
 

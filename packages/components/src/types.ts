@@ -12,6 +12,7 @@ declare global {
     scIcons: { path: string };
     scData: {
       root_url: string;
+      page_id: string;
       do_not_persist_cart: string;
       nonce: string;
       base_url: string;
@@ -341,7 +342,7 @@ export interface Checkout extends Object {
     pagination: Pagination;
     data: Array<PaymentIntent>;
   };
-  payment_required?: boolean;
+  payment_method_required?: boolean;
   reusable_payment_method_required?: boolean;
   number?: string;
   amount_due?: number;
