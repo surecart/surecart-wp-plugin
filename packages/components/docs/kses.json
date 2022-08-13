@@ -551,7 +551,7 @@
     "slot": true
   },
   "sc-form-error-provider": {
-    "order": true,
+    "checkout-state": true,
     "style": true,
     "id": true,
     "class": true,

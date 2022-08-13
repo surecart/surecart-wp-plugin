@@ -6,7 +6,7 @@ import { clearOrder, getOrder, setOrder } from '../../../store/checkouts';
 
 import { createOrUpdateOrder, finalizeSession, getCheckout } from '../../../services/session';
 import { FormStateSetter, PaymentIntents, ProcessorName, LineItemData, PriceChoice, LineItem, Checkout } from '../../../types';
-import { getSessionId, getURLCoupon, getURLLineItems, removeSessionId } from './helpers/session';
+import { getSessionId, getURLCoupon, getURLLineItems } from './helpers/session';
 
 @Component({
   tag: 'sc-session-provider',
@@ -167,28 +167,6 @@ export class ScSessionProvider {
       setOrder(order, this.formId);
       return this.order();
     } catch (e) {
-      // handle old price versions by refreshing.
-      if (e?.additional_errors?.[0]?.code === 'order.line_items.old_price_versions') {
-        await this.loadUpdate({
-          id: this.order()?.id,
-          data: {
-            status: 'draft',
-            refresh_price_versions: true,
-          },
-        });
-        return;
-      }
-      // make it a draft again and resubmit if status is incorrect.
-      if (['order.invalid_status_transition'].includes(e?.code)) {
-        await this.loadUpdate({
-          id: this.order()?.id,
-          data: {
-            status: 'draft',
-          },
-        });
-        this.handleFormSubmit();
-        return;
-      }
       this.handleErrorResponse(e);
     }
   }
@@ -219,7 +197,29 @@ export class ScSessionProvider {
   }
 
   /** Handle the error response. */
-  handleErrorResponse(e) {
+  async handleErrorResponse(e) {
+    if (e?.additional_errors?.[0]?.code === 'order.line_items.old_price_versions') {
+      await this.loadUpdate({
+        id: this.order()?.id,
+        data: {
+          status: 'draft',
+          refresh_price_versions: true,
+        },
+      });
+      return;
+    }
+
+    if (['order.invalid_status_transition'].includes(e?.code)) {
+      await this.loadUpdate({
+        id: this.order()?.id,
+        data: {
+          status: 'draft',
+        },
+      });
+      this.handleFormSubmit();
+      return;
+    }
+
     // expired
     if (e?.code === 'rest_cookie_invalid_nonce') {
       this.scSetState.emit('EXPIRE');
@@ -228,21 +228,13 @@ export class ScSessionProvider {
 
     // paid
     if (e?.code === 'readonly') {
-      removeSessionId(this.groupId);
+      clearOrder(this.formId, this.mode);
       window.location.assign(removeQueryArgs(window.location.href, 'order'));
       return;
     }
 
-    // something went wrong
-    if (e?.message) {
-      this.scError.emit(e);
-    }
-
-    // handle curl timeout errors.
-    if (e?.code === 'http_request_failed') {
-      this.scError.emit({ message: 'Something went wrong. Please reload the page and try again.' });
-    }
-
+    console.log('emit', e);
+    this.scError.emit(e);
     this.scSetState.emit('REJECT');
   }
 

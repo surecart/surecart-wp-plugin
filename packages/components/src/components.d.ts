@@ -1045,7 +1045,7 @@ export namespace Components {
         /**
           * The current order.
          */
-        "order": Order;
+        "checkoutState": FormState;
     }
     interface ScFormRow {
     }
@@ -5174,6 +5174,10 @@ declare namespace LocalJSX {
     }
     interface ScFormErrorProvider {
         /**
+          * The current order.
+         */
+        "checkoutState"?: FormState;
+        /**
           * Form state event.
          */
         "onScSetState"?: (event: ScFormErrorProviderCustomEvent<FormStateSetter>) => void;
@@ -5181,10 +5185,6 @@ declare namespace LocalJSX {
           * Set the state.
          */
         "onScUpdateError"?: (event: ScFormErrorProviderCustomEvent<ResponseError>) => void;
-        /**
-          * The current order.
-         */
-        "order"?: Order;
     }
     interface ScFormRow {
     }
