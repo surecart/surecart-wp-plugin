@@ -1,10 +1,5 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { _n, __ } from '@wordpress/i18n';
-import { useEffect, useState } from 'react';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
-
 import {
 	ScCard,
 	ScDashboardModule,
@@ -20,7 +15,12 @@ import {
 	ScEmpty,
 	ScTag,
 	ScOrderStatusBadge,
+	ScPaymentMethod,
 } from '@surecart/components-react';
+import apiFetch from '@wordpress/api-fetch';
+import { _n, __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
+import { useEffect, useState } from 'react';
 
 export default () => {
 	const [orders, setOrders] = useState(0);
@@ -33,12 +33,13 @@ export default () => {
 		const response = await apiFetch({
 			path: addQueryArgs(`surecart/v1/orders/`, {
 				expand: [
-					'line_items',
-					'charge',
-					'customer',
-					'payment_method',
-					'payment_intent',
+					'checkout',
+					'checkout.line_items',
+					'checkout.charge',
+					'checkout.customer',
+					'checkout.payment_method',
 					'payment_method.card',
+					'payment_method.payment_instrument',
 				],
 				status: ['paid'],
 				per_page: 10,
@@ -111,7 +112,8 @@ export default () => {
 		}
 
 		return orders.map((order) => {
-			const { email, name, created_at, id, customer } = order;
+			const { checkout, created_at, id } = order;
+			const { customer } = checkout;
 			return (
 				<ScStackedListRow
 					style={{
@@ -151,18 +153,17 @@ export default () => {
 							{customer?.email}
 						</span>
 					</div>
-					<div>{renderStatusBadge(order)}</div>
+					<div>{<ScOrderStatusBadge status={order?.status} />}</div>
 					<div>
-						<ScCcLogo
-							style={{ fontSize: '32px', lineHeight: '1' }}
-							brand={order?.payment_method?.card?.brand}
+						<ScPaymentMethod
+							paymentMethod={checkout?.payment_method}
 						/>
 					</div>
 					<div>
 						<ScFormatNumber
 							type="currency"
-							currency={order?.currency}
-							value={order?.amount_due}
+							currency={checkout?.currency}
+							value={checkout?.amount_due}
 						/>
 					</div>
 				</ScStackedListRow>
