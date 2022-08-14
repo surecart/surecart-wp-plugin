@@ -47,8 +47,21 @@ class OrderController extends BaseController {
 		if ( ! User::current()->isCustomer() ) {
 			return;
 		}
+		ob_start();
+		?>
 
-		return wp_kses_post(
+		<sc-spacing style="--spacing: var(--sc-spacing-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
+					<?php esc_html_e( 'Orders', 'surecart' ); ?>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
+
+		<?php
+		echo wp_kses_post(
 			Component::tag( 'sc-orders-list' )
 			->id( 'customer-orders-index' )
 			->with(
@@ -63,6 +76,11 @@ class OrderController extends BaseController {
 				]
 			)->render()
 		);
+		?>
+		</sc-spacing>
+
+		<?php
+		return ob_get_clean();
 	}
 
 	/**
@@ -72,12 +90,29 @@ class OrderController extends BaseController {
 		if ( ! User::current()->isCustomer() ) {
 			return;
 		}
-		ob_start(); ?>
+		ob_start();
+		?>
 
 		<sc-spacing style="--spacing: var(--sc-spacing-large)">
 			<sc-breadcrumbs>
 				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb href="
+					<?php
+					echo esc_url(
+						add_query_arg(
+							[
+								'tab'    => $this->getTab(),
+								'model'  => 'order',
+								'action' => 'index',
+							],
+							\SureCart::pages()->url( 'dashboard' )
+						)
+					);
+					?>
+				 ">
+					<?php esc_html_e( 'Orders', 'surecart' ); ?>
 				</sc-breadcrumb>
 				<sc-breadcrumb>
 					<?php esc_html_e( 'Order', 'surecart' ); ?>
