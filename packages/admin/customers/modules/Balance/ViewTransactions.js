@@ -65,16 +65,32 @@ export default ({ open, customerId, onRequestClose }) => {
 
 	const renderContent = () => {
 		if (loading) {
-			return <ScSkeleton></ScSkeleton>;
+			return (
+				<div
+					css={css`
+						display: grid;
+						gap: 0.5em;
+						padding: var(--sc-drawer-body-spacing);
+					`}
+				>
+					<ScSkeleton style={{ width: '40%' }}></ScSkeleton>
+					<ScSkeleton style={{ width: '60%' }}></ScSkeleton>
+					<ScSkeleton style={{ width: '30%' }}></ScSkeleton>
+				</div>
+			);
 		}
-
-		console.log({ transactions });
 
 		if (!transactions?.length) {
 			return (
-				<ScEmpty icon="activity">
-					{__('There are no transactions', 'surecart')}
-				</ScEmpty>
+				<div
+					css={css`
+						padding: var(--sc-drawer-body-spacing);
+					`}
+				>
+					<ScEmpty icon="activity">
+						{__('There are no transactions', 'surecart')}
+					</ScEmpty>
+				</div>
 			);
 		}
 
