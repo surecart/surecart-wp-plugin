@@ -29,7 +29,7 @@ export default ({ subscription, children }) => {
 						expand: [
 							'price',
 							'price.product',
-							'latest_period',
+							'current_period',
 							'purchase',
 						],
 					}

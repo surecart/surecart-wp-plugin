@@ -62,7 +62,7 @@ export const selectRelation = (state, name, id, relation) => {
 
 export const selectSingleRelation = (state, model, relation) => {
 	let collection = relation;
-	if ('latest_period' === relation) {
+	if ('current_period' === relation) {
 		collection = 'period';
 	}
 	return Object.values(state?.entities?.[collection] || {}).find((item) => {

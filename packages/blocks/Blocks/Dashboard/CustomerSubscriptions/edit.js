@@ -62,7 +62,7 @@ export default ({ attributes, setAttributes }) => {
 									status: 'active',
 									current_period_end_at:
 										oneYearFromNow.getTime() / 1000,
-									latest_period: {
+									current_period: {
 										total_amount: 2000,
 										currency: scBlockData?.currency,
 									},
@@ -87,7 +87,7 @@ export default ({ attributes, setAttributes }) => {
 									status: 'trialing',
 									trial_end_at:
 										oneYearFromNow.getTime() / 1000,
-									latest_period: {
+									current_period: {
 										total_amount: 2000,
 										currency: scBlockData?.currency,
 									},

@@ -1,5 +1,5 @@
-import { normalize, schema } from 'normalizr';
 import entities from './entities';
+import { normalize, schema } from 'normalizr';
 
 const {
 	price,
@@ -54,7 +54,7 @@ charge.define({
 });
 
 subscription.define({
-	latest_invoice: invoice,
+	current_period: invoice,
 	purchase,
 	price,
 	payment_method,

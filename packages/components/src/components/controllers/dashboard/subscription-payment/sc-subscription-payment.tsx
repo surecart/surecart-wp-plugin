@@ -40,7 +40,7 @@ export class ScSubscriptionPayment {
     if (!this.subscriptionId) return;
     this.subscription = (await apiFetch({
       path: addQueryArgs(`/surecart/v1/subscriptions/${this.subscriptionId}`, {
-        expand: ['price', 'price.product', 'latest_period', 'product'],
+        expand: ['price', 'price.product', 'current_period', 'product'],
       }),
     })) as Subscription;
   }

@@ -16,7 +16,12 @@ export default ({ children }) => {
 				purge_pending_update: true,
 			},
 			query: {
-				expand: ['price', 'price.product', 'latest_period', 'purchase'],
+				expand: [
+					'price',
+					'price.product',
+					'current_period',
+					'purchase',
+				],
 			},
 		});
 	};

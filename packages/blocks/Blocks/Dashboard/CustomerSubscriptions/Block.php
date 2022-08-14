@@ -50,7 +50,7 @@ class Block extends DashboardPage {
 	public function edit() {
 		$id           = isset( $_GET['id'] ) ? sanitize_text_field( wp_unslash( $_GET['id'] ) ) : false;
 		$tab          = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : false;
-		$subscription = Subscription::with( [ 'price', 'price.product', 'latest_period', 'product.product_group' ] )->find( $id );
+		$subscription = Subscription::with( [ 'price', 'price.product', 'current_period', 'product.product_group' ] )->find( $id );
 
 		\SureCart::assets()->addComponentData(
 			'sc-subscription',

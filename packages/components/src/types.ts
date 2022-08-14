@@ -463,7 +463,6 @@ export interface Subscription extends Object {
   trial_end_at: number;
   processor_type: 'stripe' | 'paypal';
   order: Order;
-  latest_period: string | Period;
   customer: Customer;
   discount: DiscountResponse;
   pending_update: {
