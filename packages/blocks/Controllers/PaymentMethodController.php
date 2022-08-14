@@ -31,6 +31,7 @@ class PaymentMethodController extends BaseController {
 						'customer_ids' => array_values( User::current()->customerIds() ),
 						'page'         => 1,
 						'per_page'     => 100,
+						'reusable'     => true,
 					],
 				]
 			)->render( $attributes['title'] ? "<span slot='heading'>" . $attributes['title'] . '</span>' : '' )
