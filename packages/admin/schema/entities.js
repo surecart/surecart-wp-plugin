@@ -10,7 +10,7 @@ export default {
 	payment_method: new schema.Entity('payment_method'),
 	card: new schema.Entity('card'),
 	invoice: new schema.Entity('invoice'),
-	latest_invoice: new schema.Entity('latest_invoice'),
+	latest_period: new schema.Entity('latest_period'),
 	refund: new schema.Entity('refund'),
 	charge: new schema.Entity('charge'),
 	coupon: new schema.Entity('coupon'),

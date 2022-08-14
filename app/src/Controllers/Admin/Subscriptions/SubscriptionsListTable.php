@@ -169,7 +169,7 @@ class SubscriptionsListTable extends ListTable {
 			[
 				'status' => $this->getStatus(),
 			]
-		)->with( [ 'customer', 'price', 'price.product', 'latest_invoice', 'purchase' ] )
+		)->with( [ 'customer', 'price', 'price.product', 'latest_period', 'purchase' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'subscriptions' ),

@@ -89,7 +89,20 @@ class DownloadController extends BaseController {
 				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</sc-breadcrumb>
-				<sc-breadcrumb>
+				<sc-breadcrumb href="
+					<?php
+					echo esc_url(
+						add_query_arg(
+							[
+								'tab'    => $this->getTab(),
+								'model'  => 'order',
+								'action' => 'index',
+							],
+							\SureCart::pages()->url( 'dashboard' )
+						)
+					);
+					?>
+				 ">
 					<?php esc_html_e( 'Orders', 'surecart' ); ?>
 				</sc-breadcrumb>
 				<sc-breadcrumb>
@@ -97,25 +110,25 @@ class DownloadController extends BaseController {
 				</sc-breadcrumb>
 			</sc-breadcrumbs>
 
-			<?php
-			echo wp_kses_post(
-				Component::tag( 'sc-downloads-list' )
-				->id( 'customer-purchase' )
-				->with(
-					[
-						'heading'   => __( 'Downloads', 'surecart' ),
-						'downloads' => array_values(
-							array_filter(
-								$purchase->product->downloads->data ?? [],
-								function( $download ) {
-									return ! $download->archived;
-								}
-							)
-						),
-					]
-				)->render()
-			);
-			?>
+				<?php
+				echo wp_kses_post(
+					Component::tag( 'sc-downloads-list' )
+					->id( 'customer-purchase' )
+					->with(
+						[
+							'heading'   => __( 'Downloads', 'surecart' ),
+							'downloads' => array_values(
+								array_filter(
+									$purchase->product->downloads->data ?? [],
+									function( $download ) {
+										return ! $download->archived;
+									}
+								)
+							),
+						]
+					)->render()
+				);
+				?>
 
 			<?php
 			if ( $purchase->license ) :
@@ -129,12 +142,12 @@ class DownloadController extends BaseController {
 						]
 					)->render()
 				);
-			 endif;
+				 endif;
 			?>
 
 		</sc-spacing>
 
-		<?php
-		return ob_get_clean();
+			<?php
+			return ob_get_clean();
 	}
 }

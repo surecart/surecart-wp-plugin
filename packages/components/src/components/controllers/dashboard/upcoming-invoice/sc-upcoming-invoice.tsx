@@ -287,7 +287,7 @@ export class ScUpcomingInvoice {
         </sc-line-item>
 
         <sc-line-item style={{ '--price-size': 'var(--sc-font-size-x-large)' }}>
-          <span slot="title">{__('Total Due Today', 'surecart')}</span>
+          <span slot="title">{__('Total Due', 'surecart')}</span>
           <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={checkout?.amount_due}></sc-format-number>
           <span slot="currency">{checkout.currency}</span>
         </sc-line-item>

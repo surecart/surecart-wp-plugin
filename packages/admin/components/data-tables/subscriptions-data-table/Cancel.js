@@ -1,13 +1,13 @@
 /** @jsx jsx */
-import { __ } from '@wordpress/i18n';
-import { Modal, Button } from '@wordpress/components';
-import { ScButton, ScForm } from '@surecart/components-react';
-import { css, jsx } from '@emotion/core';
-import apiFetch from '@wordpress/api-fetch';
-import { useState } from '@wordpress/element';
-import { addQueryArgs } from '@wordpress/url';
-import { Fragment } from '@wordpress/element';
 import useEntity from '../../../mixins/useEntity';
+import { css, jsx } from '@emotion/core';
+import { ScButton, ScForm } from '@surecart/components-react';
+import apiFetch from '@wordpress/api-fetch';
+import { Modal, Button } from '@wordpress/components';
+import { useState } from '@wordpress/element';
+import { Fragment } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
 
 export default ({ subscription, children }) => {
 	const [loading, setLoading] = useState(false);
@@ -29,7 +29,7 @@ export default ({ subscription, children }) => {
 						expand: [
 							'price',
 							'price.product',
-							'latest_invoice',
+							'latest_period',
 							'purchase',
 						],
 					}

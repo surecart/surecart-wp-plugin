@@ -1,19 +1,23 @@
-import { __ } from '@wordpress/i18n';
-import { ScButton, ScIcon, ScInput } from '@surecart/components-react';
 import useSnackbar from '../../../../hooks/useSnackbar';
+import { ScButton, ScIcon, ScInput } from '@surecart/components-react';
+import { useDispatch } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
+import { store as noticesStore } from '@wordpress/notices';
 
 export default ({ label, text }) => {
 	const { addSnackbarNotice } = useSnackbar();
+	const { createSuccessNotice, createErrorNotice } =
+		useDispatch(noticesStore);
 	const copy = async () => {
 		try {
 			await navigator.clipboard.writeText(text);
-			addSnackbarNotice({
-				content: __('Copied to clipboard.', 'surecart'),
+			createSuccessNotice(__('Copied to clipboard.', 'surecart'), {
+				type: 'snackbar',
 			});
 		} catch (err) {
 			console.error(err);
-			addSnackbarNotice({
-				content: __('Error copying to clipboard', 'surecart'),
+			createErrorNotice(__('Error copying to clipboard.', 'surecart'), {
+				type: 'snackbar',
 			});
 		}
 	};

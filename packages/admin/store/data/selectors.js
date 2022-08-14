@@ -1,7 +1,7 @@
-import { get } from 'dot-prop-immutable';
+import { store as uiStore } from '../ui';
 import { createRegistrySelector } from '@wordpress/data';
 import { getQueryArg, addQueryArgs } from '@wordpress/url';
-import { store as uiStore } from '../ui';
+import { get } from 'dot-prop-immutable';
 
 export const getEntity = (state, name) => {
 	return state.config.find((item) => item.name === name);
@@ -62,8 +62,8 @@ export const selectRelation = (state, name, id, relation) => {
 
 export const selectSingleRelation = (state, model, relation) => {
 	let collection = relation;
-	if ('latest_invoice' === relation) {
-		collection = 'invoice';
+	if ('latest_period' === relation) {
+		collection = 'period';
 	}
 	return Object.values(state?.entities?.[collection] || {}).find((item) => {
 		return item.id === model?.[relation];

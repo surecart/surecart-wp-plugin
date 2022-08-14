@@ -120,7 +120,7 @@ export default () => {
 								expand: [
 									'price',
 									'price.product',
-									'latest_invoice',
+									'latest_period',
 									'purchase',
 								],
 							},

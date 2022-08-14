@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import CancelPendingUpdate from '../../../components/subscriptions/CancelPendingUpdate';
 import useCurrentPage from '../../../mixins/useCurrentPage';
+import { useState } from 'react';
 
 export default ({ children }) => {
 	const [open, setOpen] = useState();
@@ -16,12 +16,7 @@ export default ({ children }) => {
 				purge_pending_update: true,
 			},
 			query: {
-				expand: [
-					'price',
-					'price.product',
-					'latest_invoice',
-					'purchase',
-				],
+				expand: ['price', 'price.product', 'latest_period', 'purchase'],
 			},
 		});
 	};

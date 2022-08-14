@@ -241,7 +241,6 @@ export class ScSessionProvider {
   /** Default data always sent with the session. */
   defaultFormData() {
     return {
-      return_url: window.top.location.href,
       currency: this.order()?.currency || this.currencyCode,
       live_mode: this.mode !== 'test',
       group_key: this.groupId,

@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { __ } from '@wordpress/i18n';
 import Cancel from '../../../components/subscriptions/Cancel';
 import useCurrentPage from '../../../mixins/useCurrentPage';
-import { useDispatch } from '@wordpress/data';
 import { store as uiStore } from '@surecart/ui-data';
+import { useDispatch } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
+import { useState } from 'react';
 
 export default ({ children }) => {
 	const [open, setOpen] = useState();
@@ -23,7 +23,7 @@ export default ({ children }) => {
 					expand: [
 						'price',
 						'price.product',
-						'latest_invoice',
+						'latest_period',
 						'purchase',
 					],
 				},
