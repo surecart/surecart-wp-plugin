@@ -31,6 +31,7 @@ Cypress.Commands.add('surecartRequest', ({ path, method, body }) => {
 		method,
 		headers: {
 			Authorization: 'Bearer ' + Cypress.env('api_token'),
+			ContentType: 'application/json',
 		},
 		body,
 	});

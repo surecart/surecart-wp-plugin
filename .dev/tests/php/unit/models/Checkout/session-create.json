@@ -1,6 +1,6 @@
 {
-	"order": {
-		"id": "test_order",
+	"checkout": {
+		"id": "test_checkout",
 		"customer_first_name": "Joey",
 		"customer_last_name": "Smithy",
 		"customer_email": "joe@gmail.com",

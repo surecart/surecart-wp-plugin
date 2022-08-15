@@ -2,13 +2,13 @@
 
 namespace SureCart\Tests\Controllers\Rest;
 
-use SureCart\Controllers\Rest\OrderController;
-use SureCart\Models\Order;
+use SureCart\Controllers\Rest\CheckoutsController;
+use SureCart\Models\Checkout;
 use SureCart\Models\User;
 use SureCart\Tests\SureCartUnitTestCase;
 use WP_REST_Request;
 
-class OrderControllerTest extends SureCartUnitTestCase
+class CheckoutsControllerTest extends SureCartUnitTestCase
 {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
@@ -34,15 +34,15 @@ class OrderControllerTest extends SureCartUnitTestCase
 	 */
 	public function test_middlewareGetsCalled()
 	{
-		$request = new WP_REST_Request('POST', '/surecart/v1/orders', [
+		$request = new WP_REST_Request('POST', '/surecart/v1/checkouts', [
 			'form_id' => 1,
 		]);
 
-		$model = \Mockery::mock(Order::class)->makePartial();
+		$model = \Mockery::mock(Checkout::class)->makePartial();
 		$model->shouldAllowMockingProtectedMethods()->shouldReceive('where')->once()->andReturn($model);
 		$model->shouldAllowMockingProtectedMethods()->shouldReceive('create')->once()->andReturn($model);
 
-		$controller = \Mockery::mock(OrderController::class)->makePartial();
+		$controller = \Mockery::mock(CheckoutsController::class)->makePartial();
 		$controller->shouldAllowMockingProtectedMethods()->shouldReceive('middleware')->once()->andReturn($model);
 		$controller->create($request);
 	}
@@ -57,10 +57,10 @@ class OrderControllerTest extends SureCartUnitTestCase
 			'user_pass' => 'testpassword',
 		]);
 
-		$is_valid = (new OrderController())->maybeValidateLoginCreds('testuser@test.com', 'incorrectpassword');
+		$is_valid = (new CheckoutsController())->maybeValidateLoginCreds('testuser@test.com', 'incorrectpassword');
 		$this->assertWPError($is_valid);
 
-		$is_valid = (new OrderController())->maybeValidateLoginCreds('testuser@test.com', 'testpassword');
+		$is_valid = (new CheckoutsController())->maybeValidateLoginCreds('testuser@test.com', 'testpassword');
 		$this->assertNotWPError($is_valid);
 	}
 
@@ -68,11 +68,11 @@ class OrderControllerTest extends SureCartUnitTestCase
 	 * Test validation.
 	 */
 	public function test_validate() {
-		$request = new WP_REST_Request('POST', '/surecart/v1/orders/finalize');
+		$request = new WP_REST_Request('POST', '/surecart/v1/checkouts/finalize');
 		$request->set_param('email', 'testuser@test.com');
 		$request->set_param('password', 'pass123');
 
-		$controller = \Mockery::mock(OrderController::class)->makePartial();
+		$controller = \Mockery::mock(CheckoutsController::class)->makePartial();
 		$controller->shouldReceive('maybeValidateLoginCreds')
 			->with('testuser@test.com', 'pass123')
 			->once()
@@ -94,38 +94,38 @@ class OrderControllerTest extends SureCartUnitTestCase
 	}
 
 	public function test_maybeLinkCustomer() {
-		$request = new WP_REST_Request('POST', '/surecart/v1/orders/finalize');
+		$request = new WP_REST_Request('POST', '/surecart/v1/checkouts/finalize');
 		$request->set_param('email', 'testuser@test.com');
 		$request->set_param('password', 'pass123');
 
-		// non-paid order should just return the order.
-		$this->assertFalse((new OrderController())->maybeLinkCustomer(new Order(['status' => 'finalized']), $request));
+		// non-paid checkout should just return the checkout.
+		$this->assertFalse((new CheckoutsController())->maybeLinkCustomer(new Checkout(['status' => 'finalized']), $request));
 
-		// paid order should run linkCustomerID method.
-		$paid_order = new Order(['status' => 'paid']);
-		$controller = \Mockery::mock(OrderController::class)->makePartial();
+		// paid checkout should run linkCustomerID method.
+		$paid_checkout = new Checkout(['status' => 'paid']);
+		$controller = \Mockery::mock(CheckoutsController::class)->makePartial();
 		$controller->shouldReceive('linkCustomerId')
-			->with($paid_order, $request)
+			->with($paid_checkout, $request)
 			->once();
-	    $controller->maybeLinkCustomer($paid_order, $request);
+	    $controller->maybeLinkCustomer($paid_checkout, $request);
 	}
 
 	public function test_finalize() {
-		// finalized order
-		$finalized_order = (object) [
+		// finalized checkout
+		$finalized_checkout = (object) [
 			'id' => 'testid',
-			'object' => 'order',
+			'object' => 'checkout',
 			'customer' => 'anybody',
 			'status' => 'finalized'
 		];
 
 		// set up request.
-		$request = new WP_REST_Request('POST', '/surecart/v1/orders/testorder/finalize');
-		$request->set_param('id', 'test_order');
+		$request = new WP_REST_Request('POST', '/surecart/v1/checkouts/testcheckout/finalize');
+		$request->set_param('id', 'test_checkout');
 		$request->set_param('processor_type', 'stripe');
 
 		// mock controller.
-		$controller = \Mockery::mock(OrderController::class)->makePartial();
+		$controller = \Mockery::mock(CheckoutsController::class)->makePartial();
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
 		\SureCart::alias('request', function () use ($requests) {
@@ -140,17 +140,17 @@ class OrderControllerTest extends SureCartUnitTestCase
 		$requests->shouldReceive('makeRequest')
 			->atLeast()
 			->once()
-			->withSomeOfArgs('orders/test_order/finalize/')
-			->andReturn($finalized_order);
+			->withSomeOfArgs('checkouts/test_checkout/finalize/')
+			->andReturn($finalized_checkout);
 		// then maybe link the customer.
 		$controller->shouldReceive('maybeLinkCustomer')
 			->once();
 
-		// finalize the order.
-		$controller_order = $controller->finalize($request);
+		// finalize the checkout.
+		$controller_checkout = $controller->finalize($request);
 
-		// assert that the order is the same.
-		$this->assertSame($finalized_order->id, $controller_order->id);
+		// assert that the checkout is the same.
+		$this->assertSame($finalized_checkout->id, $controller_checkout->id);
 	}
 
 	/**
@@ -159,12 +159,12 @@ class OrderControllerTest extends SureCartUnitTestCase
 	 */
 	public function test_confirm() {
 		// set up request.
-		$request = new WP_REST_Request('POST', '/surecart/v1/orders/testorder/finalize');
-		$request->set_param('id', 'test_order');
+		$request = new WP_REST_Request('POST', '/surecart/v1/checkouts/testcheckout/finalize');
+		$request->set_param('id', 'test_checkout');
 		$request->set_param('processor_type', 'stripe');
 
 		// mock controller.
-		$controller = \Mockery::mock(OrderController::class)->makePartial();
+		$controller = \Mockery::mock(CheckoutsController::class)->makePartial();
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
 		\SureCart::alias('request', function () use ($requests) {
@@ -172,61 +172,45 @@ class OrderControllerTest extends SureCartUnitTestCase
 		});
 
 		/**
-		 * Finalize responses should error out.
-		 */
-		$requests->shouldReceive('makeRequest')
-			->once()
-			->withSomeOfArgs('orders/test_order')
-			->andReturn((object) [
-				'status' => 'finalized',
-			]);
-
-		// finalize the order.
-		$controller_order = $controller->confirm($request);
-
-		// assert that the order is the same.
-		$this->assertWPError($controller_order);
-
-		/**
 		 * Paid requests should validate.
 		 */
-		$paid_order =  json_decode(file_get_contents(dirname(__FILE__) . '/paid-order.json'));
+		$paid_checkout =  json_decode(file_get_contents(dirname(__FILE__) . '/fixtures/paid-checkout.json'));
 
 		$requests->shouldReceive('makeRequest')
 			->once()
-			->withSomeOfArgs('orders/test_order')
-			->andReturn($paid_order);
+			->withSomeOfArgs('checkouts/test_checkout')
+			->andReturn($paid_checkout);
 
-		// finalize the order.
-		$controller_order = $controller->confirm($request);
+		// finalize the checkout.
+		$controller_checkout = $controller->confirm($request);
 
-		// assert that the order is the same.
-		$this->assertNotWPError($controller_order);
-		$this->assertSame($controller_order->status, 'paid');
-		$this->assertSame($controller_order->email, 'test@test.com');
+		// assert that the checkout is the same.
+		$this->assertNotWPError($controller_checkout);
+		$this->assertSame($controller_checkout->status, 'paid');
+		$this->assertSame($controller_checkout->email, 'test@test.com');
 		$this->assertSame(1, did_action('surecart/purchase_created'), 'Purchase created action was not called');
-		$this->assertSame(1, did_action('surecart/order_confirmed'), 'Order confirmed action was not called');
+		$this->assertSame(1, did_action('surecart/checkout_confirmed'), 'Checkout confirmed action was not called');
 	}
 
 	public function test_linkCustomerId() {
 		$user = User::find(self::factory()->user->create())
 			->setCustomerId('testcustomerid');
-		$wrong = (new OrderController())->linkCustomerId(new Order(['customer'=> 'wrong', 'email' => 'wrong@email.com', 'live_mode' => true]), new WP_REST_Request());
+		$wrong = (new CheckoutsController())->linkCustomerId(new Checkout(['customer'=> 'wrong', 'email' => 'wrong@email.com', 'live_mode' => true]), new WP_REST_Request());
 		$this->assertNotSame($wrong->ID, $user->ID);
-		$correct = (new OrderController())->linkCustomerId(new Order(['customer'=> 'testcustomerid', 'email' => 'any@email.com', 'live_mode' => true]), new WP_REST_Request());
-		$this->assertSame($correct->ID, $user->ID , 'User should be linked to order based on customer id.');
+		$correct = (new CheckoutsController())->linkCustomerId(new Checkout(['customer'=> 'testcustomerid', 'email' => 'any@email.com', 'live_mode' => true]), new WP_REST_Request());
+		$this->assertSame($correct->ID, $user->ID , 'User should be linked to checkout based on customer id.');
 
 		// a user should be given a customer id if they don't have one.
 		$user_not_yet_customer = User::find(self::factory()->user->create([
 			'user_email' => 'usernotyetcustomer@email.com'
 		]));
 		$this->assertNotEmpty($user_not_yet_customer->user_email);
-		$user = (new OrderController())->linkCustomerId(new Order(['customer'=> 'anewcustomerid', 'email' => $user_not_yet_customer->user_email, 'live_mode' => true]), new WP_REST_Request());
-		$this->assertSame($user_not_yet_customer->ID, $user->ID, 'An existing user should be linked to an order based on email.');
+		$user = (new CheckoutsController())->linkCustomerId(new Checkout(['customer'=> 'anewcustomerid', 'email' => $user_not_yet_customer->user_email, 'live_mode' => true]), new WP_REST_Request());
+		$this->assertSame($user_not_yet_customer->ID, $user->ID, 'An existing user should be linked to an checkout based on email.');
 		$this->assertSame($user_not_yet_customer->customerId(), 'anewcustomerid', 'An existing user is not given a customer id.');
 
 		// new user
-		$user = (new OrderController())->linkCustomerId(new Order(['customer'=> 'usernotexists', 'email' => 'user_not_exist', 'live_mode' => true]), new WP_REST_Request());
+		$user = (new CheckoutsController())->linkCustomerId(new Checkout(['customer'=> 'usernotexists', 'email' => 'user_not_exist', 'live_mode' => true]), new WP_REST_Request());
 		$this->assertNotEmpty($user, 'A new user should be created.');
 		$this->assertNotEmpty($user->customerId(), 'A new user should be given a customer id.');
 	}

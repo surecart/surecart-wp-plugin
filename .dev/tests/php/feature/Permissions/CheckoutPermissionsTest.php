@@ -6,7 +6,7 @@ use SureCart\Request\RequestService;
 use SureCart\Tests\SureCartUnitTestCase;
 
 
-class OrderPermissionsTest extends SureCartUnitTestCase {
+class CheckoutPermissionsTest extends SureCartUnitTestCase {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 	/**
 	 * Set up a new app instance to use for tests.
@@ -41,19 +41,19 @@ class OrderPermissionsTest extends SureCartUnitTestCase {
 		$requests->shouldReceive('makeRequest')
 			->atLeast()
 			->once()
-			->withSomeOfArgs('orders/testid')
+			->withSomeOfArgs('checkouts/testid')
 			->andReturn((object) [
 				'id' => 'testid',
-				'object' => 'order',
+				'object' => 'checkout',
 				'customer' => 'anybody',
 				'status' => 'draft'
 			]);
 
 		$user = self::factory()->user->create_and_get();
 
-		$this->assertFalse(user_can($user, 'read_sc_orders', 'Users should not be able to read orders by default'));
-		$this->assertTrue(user_can($user, 'edit_sc_order', 'testid'), 'Anyone can edit a draft order.');
-		$this->assertTrue(user_can($user, 'read_sc_order', 'testid', 'Anyone can read a draft order.'));
+		$this->assertFalse(user_can($user, 'read_sc_checkouts', 'Users should not be able to read checkouts by default'));
+		$this->assertTrue(user_can($user, 'edit_sc_checkout', 'testid'), 'Anyone can edit a draft checkout.');
+		$this->assertTrue(user_can($user, 'read_sc_checkout', 'testid', 'Anyone can read a draft checkout.'));
 	}
 
 	public function test_edit_and_view_paid_completed_permissions() {
@@ -66,10 +66,10 @@ class OrderPermissionsTest extends SureCartUnitTestCase {
 		});
 
 		$requests->shouldReceive('makeRequest')
-			->withSomeOfArgs('orders/testid')
+			->withSomeOfArgs('checkouts/testid')
 			->andReturn((object) [
 				'id' => 'testid',
-				'object' => 'order',
+				'object' => 'checkout',
 				'customer' => 'testcustomerid',
 				'status' => 'completed'
 			]);
@@ -77,22 +77,22 @@ class OrderPermissionsTest extends SureCartUnitTestCase {
 		$user = User::find(self::factory()->user->create());
 		$user->setCustomerId('testcustomerid');
 
-		$this->assertFalse(user_can($user->ID, 'read_sc_orders'));
-		$this->assertFalse(user_can($user->ID, 'edit_sc_order', 'testid'));
-		$this->assertTrue(user_can($user->ID, 'read_sc_order', 'testid'));
+		$this->assertFalse(user_can($user->ID, 'read_sc_checkouts'));
+		$this->assertFalse(user_can($user->ID, 'edit_sc_checkout', 'testid'));
+		$this->assertTrue(user_can($user->ID, 'read_sc_checkout', 'testid'));
 
 		$requests->shouldReceive('makeRequest')
-		->withSomeOfArgs('orders/testid')
+		->withSomeOfArgs('checkouts/testid')
 		->andReturn((object) [
 			'id' => 'testid',
-			'object' => 'order',
+			'object' => 'checkout',
 			'customer' => 'testcustomerid',
 			'status' => 'paid'
 		]);
 
-		$this->assertFalse(user_can($user->ID, 'read_sc_orders'));
-		$this->assertFalse(user_can($user->ID, 'edit_sc_order', 'testid'));
-		$this->assertTrue(user_can($user->ID, 'read_sc_order', 'testid'));
+		$this->assertFalse(user_can($user->ID, 'read_sc_checkouts'));
+		$this->assertFalse(user_can($user->ID, 'edit_sc_checkout', 'testid'));
+		$this->assertTrue(user_can($user->ID, 'read_sc_checkout', 'testid'));
 	}
 
 }

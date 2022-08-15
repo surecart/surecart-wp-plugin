@@ -203,7 +203,7 @@ class CheckoutsController extends RestController {
 		}
 
 		// the order is confirmed.
-		do_action( 'surecart/order_confirmed', $checkout, $request );
+		do_action( 'surecart/checkout_confirmed', $checkout, $request );
 
 		// return the order.
 		return $checkout;

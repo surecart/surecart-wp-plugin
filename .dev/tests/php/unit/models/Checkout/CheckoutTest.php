@@ -1,11 +1,11 @@
 <?php
 
-namespace SureCart\Tests\Models\Order;
+namespace SureCart\Tests\Models\Checkout;
 
-use SureCart\Models\Order;
+use SureCart\Models\Checkout;
 use SureCart\Tests\SureCartUnitTestCase;
 
-class OrderTest extends SureCartUnitTestCase
+class CheckoutTest extends SureCartUnitTestCase
 {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
@@ -29,8 +29,8 @@ class OrderTest extends SureCartUnitTestCase
 		parent::setUp();
 	}
 
-	public function test_orderHasPurchases() {
-		$order = new Order([
+	public function test_checkoutHasPurchases() {
+		$checkout = new Checkout([
 			'id' => 'test',
 			'purchases' => (object)[
 				'data' => [
@@ -40,23 +40,23 @@ class OrderTest extends SureCartUnitTestCase
 				]
 			]
 		]);
-		$this->assertInstanceOf(\SureCart\Models\Purchase::class,$order->purchases->data[0]);
+		$this->assertInstanceOf(\SureCart\Models\Purchase::class,$checkout->purchases->data[0]);
 	}
 
 	/**
 	 * @group session
 	 * @group models
 	 */
-	public function test_can_create_draft_order()
+	public function test_can_create_draft_checkout()
 	{
 		$this->mock_requests->expects($this->once())
 			->method('makeRequest')
 			->with(
-				$this->equalTo('orders'),
+				$this->equalTo('checkouts'),
 				$this->equalTo([
 					'method' => 'POST',
 					'body' => [
-						'order' => [
+						'checkout' => [
 							"currency" => "usd",
 							"line_items" => [
 								[
@@ -79,7 +79,7 @@ class OrderTest extends SureCartUnitTestCase
 				]
 			]);
 
-		$created = (new Order([
+		$created = (new Checkout([
 			"currency" => "usd",
 			"line_items" => [
 				[
@@ -89,7 +89,7 @@ class OrderTest extends SureCartUnitTestCase
 			]
 		]))->save();
 
-		// we don't care about the order.
+		// we don't care about the checkout.
 		$this->assertEqualsCanonicalizing($created->getAttributes(), [
 			"currency" => "usd",
 			"line_items" => [
@@ -105,7 +105,7 @@ class OrderTest extends SureCartUnitTestCase
 	 * @group session
 	 * @group models
 	 */
-	public function test_finalize_order()
+	public function test_finalize_checkout()
 	{
 		$request = json_decode(file_get_contents(dirname(__FILE__) . '/session-create.json'), true);
 		$response = json_decode(file_get_contents(dirname(__FILE__) . '/session-finalized.json'), true);
@@ -113,12 +113,12 @@ class OrderTest extends SureCartUnitTestCase
 		$this->mock_requests->expects($this->once())
 			->method('makeRequest')
 			->with(
-				$this->equalTo('orders/test_order/finalize/'),
+				$this->equalTo('checkouts/test_checkout/finalize/'),
 				$this->equalTo([
 					'method' => 'PATCH',
 					'body' => [
-						"order" => [
-							"id" => "test_order",
+						"checkout" => [
+							"id" => "test_checkout",
 							"customer_first_name" => "Joey",
 							"customer_last_name" => "Smithy",
 							"customer_email" => "joe@gmail.com",
@@ -137,7 +137,7 @@ class OrderTest extends SureCartUnitTestCase
 			)
 			->willReturn($response);
 
-		$instance = new Order($request['order'], 'custom');
+		$instance = new Checkout($request['checkout'], 'custom');
 		$prepared = $instance->finalize();
 
 		// make sure attriutes page
