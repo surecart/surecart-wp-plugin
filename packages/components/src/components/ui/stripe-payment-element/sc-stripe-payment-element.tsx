@@ -2,7 +2,7 @@ import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch 
 import { Stripe } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js/pure';
 
-import { Checkout, FormStateSetter, PaymentIntent, ShippingAddress } from '../../../types';
+import { Checkout, FormStateSetter, PaymentIntent } from '../../../types';
 
 @Component({
   tag: 'sc-stripe-payment-element',
@@ -87,20 +87,10 @@ export class ScStripePaymentElement {
   handleUpdateElement() {
     if (!this.element) return;
     if (this.order?.status !== 'draft') return;
-    const shippingAddress = this.order?.shipping_address as ShippingAddress;
     this.element.update({
       fields: {
         billingDetails: {
           email: 'never',
-          name: this.order?.name ? 'never' : 'auto',
-          address: {
-            line1: shippingAddress?.line_1 ? 'never' : 'auto',
-            line2: shippingAddress?.line_2 ? 'never' : 'auto',
-            city: shippingAddress?.city ? 'never' : 'auto',
-            state: shippingAddress?.state ? 'never' : 'auto',
-            country: shippingAddress?.country ? 'never' : 'auto',
-            postalCode: shippingAddress?.postal_code ? 'never' : 'auto',
-          }
         }
       }
     });
@@ -125,7 +115,6 @@ export class ScStripePaymentElement {
 
   @Method()
   async confirm(type, args = {}) {
-    const shippingAddress = this.order?.shipping_address as ShippingAddress;
     const confirmArgs = {
       elements: this.elements,
       confirmParams: {
@@ -133,15 +122,6 @@ export class ScStripePaymentElement {
         payment_method_data: {
           billing_details: {
             email: this.order.email,
-            ...(this.order?.name ? {name: this.order?.name} : {}),
-            address: {
-              ...(shippingAddress?.line_1 ? {line1: shippingAddress?.line_1} : {}),
-              ...(shippingAddress?.line_2 ? {line2: shippingAddress?.line_2} : {}),
-              ...(shippingAddress?.city ? {city: shippingAddress?.city} : {}),
-              ...(shippingAddress?.state ? {state: shippingAddress?.state} : {}),
-              ...(shippingAddress?.country ? {country: shippingAddress?.country} : {}),
-              ...(shippingAddress?.postal_code ? {postalCode: shippingAddress?.postal_code} : {})
-            }
           }
         },
       },
@@ -168,23 +148,6 @@ export class ScStripePaymentElement {
       if (e.message) {
         this.error = e.message;
       }
-
-      this.element.update({
-        fields: {
-          billingDetails: {
-            email: 'auto',
-            name: 'auto',
-            address: {
-              line1: 'auto',
-              line2: 'auto',
-              city:  'auto',
-              state:  'auto',
-              country: 'auto',
-              postalCode: 'auto',
-            }
-          }
-        }
-      });
     } finally {
       this.confirming = false;
     }
@@ -222,23 +185,12 @@ export class ScStripePaymentElement {
       },
     });
 
-    const shippingAddress = this.order?.shipping_address as ShippingAddress;
-
     // create the payment element.
     this.elements
       .create('payment', {
         fields: {
           billingDetails: {
-            email: 'never',
-            name: this.order?.name ? 'never' : 'auto',
-            address: {
-              line1: shippingAddress?.line_1 ? 'never' : 'auto',
-              line2: shippingAddress?.line_2 ? 'never' : 'auto',
-              city: shippingAddress?.city ? 'never' : 'auto',
-              state: shippingAddress?.state ? 'never' : 'auto',
-              country: shippingAddress?.country ? 'never' : 'auto',
-              postalCode: shippingAddress?.postal_code ? 'never' : 'auto',
-            }
+            email: 'never'
           }
         }
       })

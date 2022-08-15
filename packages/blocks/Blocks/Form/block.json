@@ -30,6 +30,15 @@
 		},
 		"color": {
 			"type": "string"
+		},
+		"loading_text": {
+			"type": "object",
+			"default": {
+				"finalizing": "",
+				"paying": "",
+				"confirming": "",
+				"confirmed": ""
+			}
 		}
 	},
 	"providesContext": {

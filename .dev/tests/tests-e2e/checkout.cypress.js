@@ -1,235 +1,211 @@
 describe('Checkout', () => {
-	it('Can checkout', () => {
+	beforeEach(() => {
+		let checkoutPageId, priceId;
+		cy.intercept({
+			method: 'POST',
+			path: '**surecart**checkout*',
+			times: 1,
+		}).as('createCheckout');
+
+		// get the checkout page id.
 		cy.exec(
 			`yarn wp-env run tests-cli "wp option get surecart_checkout_page_id"`
 		).then((response) => {
+			checkoutPageId = response.stdout;
+
 			cy.clearLocalStorage();
 
-			// buy button link
-			cy.visit(
-				`?p=${parseInt(
-					response.stdout
-				)}&line_items[0][price_id]=c6019010-dd0a-4a63-9940-14588416f685&line_items[0][quantity]=1`
-			);
-
-			// fill customer name and email
-			cy.get('sc-customer-name').invoke('attr', 'value', 'John Doe');
-			cy.get('sc-customer-email').invoke(
-				'attr',
-				'value',
-				'test@test.com'
-			);
-
-			// fill stripe card element.
-			cy.getStripeCardElement('number').type('4242424242424242', {
-				force: true,
-			});
-			cy.getStripeCardElement('expiry').type('430', { force: true });
-			cy.getStripeCardElement('cvc').type('123', { force: true });
-			cy.getStripeCardElement('postalCode').type('12345', {
-				force: true,
-			});
-
-			// we will intercept confirm order.
-			cy.intercept({
+			// create price for these tests.
+			cy.surecartRequest({
+				path: 'products?expand[]=prices',
 				method: 'POST',
-				path: '**surecart**orders*',
-				times: 1,
-			}).as('updateOrder');
-			cy.intercept('POST', '**surecart**finalize*').as('finalizeOrder');
-			cy.intercept('POST', '**surecart**confirm*').as('confirmOrder');
+				body: {
+					product: {
+						name: 'Test Product',
+						prices: [
+							{
+								amount: 900,
+							},
+						],
+					},
+				},
+			}).then((response) => {
+				expect(response.body.prices.data[0].id).to.be.a('string');
+				priceId = response.body.prices.data[0].id;
 
-			cy.get('sc-order-submit sc-button')
-				.shadow()
-				.find('.button')
-				.should('not.have.class', 'button--loading')
-				.click({ force: true, waitForAnimations: true });
-
-			// update the order.
-			cy.wait('@updateOrder', { timeout: 30000 }).then(
-				({ request, response }) => {
-					expect(request.body.email).to.eq('test@test.com');
-					expect(request.body.name).to.eq('John Doe');
-					expect(response.statusCode).to.eq(200);
-					expect(response.body.status).to.eq('draft');
-				}
-			);
-
-			// finalize the order.
-			cy.wait('@finalizeOrder', { timeout: 30000 }).then(
-				({ response }) => {
-					expect(response.statusCode).to.eq(200);
-					expect(response.body.status).to.eq('finalized');
-				}
-			);
-
-			// confirm payment (and run automations)
-			cy.wait('@confirmOrder', { timeout: 30000 }).then(
-				({ response }) => {
-					expect(response.statusCode).to.eq(200);
-					expect(response.body.status).to.eq('paid');
-				}
-			);
-
-			// thank you page.
-			cy.get('sc-order-confirmation', { timeout: 30000 }).should(
-				'be.visible'
-			);
+				// buy button link
+				cy.visit(
+					`?p=${parseInt(
+						checkoutPageId
+					)}&line_items[0][price_id]=${priceId}`
+				);
+			});
 		});
+	});
+
+	it('Can checkout', () => {
+		// fill customer name and email
+		cy.get('sc-customer-name').invoke('attr', 'value', 'John Doe');
+		cy.get('sc-customer-email').invoke('attr', 'value', 'test@test.com');
+
+		// fill stripe card element.
+		cy.getStripeCardElement('number').type('4242424242424242', {
+			force: true,
+		});
+		cy.getStripeCardElement('expiry').type('430', { force: true });
+		cy.getStripeCardElement('cvc').type('123', { force: true });
+		cy.getStripeCardElement('postalCode').type('12345', {
+			force: true,
+		});
+
+		// we will intercept confirm order.
+		cy.intercept({
+			method: 'POST',
+			path: '**surecart**checkouts*',
+			times: 1,
+		}).as('updateCheckout');
+		cy.intercept('POST', '**surecart**finalize*').as('finalizeOrder');
+		cy.intercept('POST', '**surecart**confirm*').as('confirmOrder');
+
+		cy.get('sc-order-submit sc-button')
+			.shadow()
+			.find('.button')
+			.should('not.have.class', 'button--loading')
+			.click({ force: true, waitForAnimations: true });
+
+		// update the order.
+		cy.wait('@updateCheckout', { timeout: 30000 }).then(
+			({ request, response }) => {
+				expect(request.body.email).to.eq('test@test.com');
+				expect(request.body.name).to.eq('John Doe');
+				expect(response.statusCode).to.eq(200);
+				expect(response.body.status).to.eq('draft');
+			}
+		);
+
+		// finalize the order.
+		cy.wait('@finalizeOrder', { timeout: 30000 }).then(({ response }) => {
+			expect(response.statusCode).to.eq(200);
+			expect(response.body.status).to.eq('finalized');
+		});
+
+		// confirm payment (and run automations)
+		cy.wait('@confirmOrder', { timeout: 30000 }).then(({ response }) => {
+			expect(response.statusCode).to.eq(200);
+			expect(response.body.status).to.eq('paid');
+		});
+
+		// thank you page.
+		cy.get('sc-order-confirmation', { timeout: 30000 }).should(
+			'be.visible'
+		);
 	});
 
 	it('Can initiate checkout with PayPal', () => {
-		cy.exec(
-			`yarn wp-env run tests-cli "wp option get surecart_checkout_page_id"`
-		).then((response) => {
-			cy.clearLocalStorage();
-			cy.intercept({
-				method: 'POST',
-				path: '**surecart**orders*',
-				times: 1,
-			}).as('createOrder');
+		// choose paypal.
+		cy.get('.sc-paypal-toggle').shadow().find('.details').click();
 
-			// buy button link
-			cy.visit(
-				`?p=${parseInt(
-					response.stdout
-				)}&line_items[0][price_id]=c6019010-dd0a-4a63-9940-14588416f685&line_items[0][quantity]=1`
-			);
+		// fill customer name and email
+		cy.get('sc-customer-name').invoke('attr', 'value', 'John Doe');
+		cy.get('sc-customer-email').invoke('attr', 'value', 'test@test.com');
 
-			// wait for order to create.
-			cy.wait('@createOrder');
+		cy.get('sc-paypal-buttons')
+			.shadow()
+			.find('.sc-paypal-button')
+			.should('be.visible');
 
-			// choose paypal.
-			cy.get('.sc-paypal-toggle').shadow().find('.details').click();
+		cy.get('sc-paypal-buttons')
+			.find('iframe.visible')
+			.iframe()
+			.find('div[data-funding-source="paypal"]')
+			.last()
+			.click();
 
-			// fill customer name and email
-			cy.get('sc-customer-name').invoke('attr', 'value', 'John Doe');
-			cy.get('sc-customer-email').invoke(
-				'attr',
-				'value',
-				'test@test.com'
-			);
+		cy.intercept({
+			method: 'POST',
+			path: '**surecart**checkouts*',
+			times: 1,
+		}).as('updateCheckout');
+		cy.intercept('POST', '**surecart**finalize*').as('finalizeOrder');
 
-			cy.get('sc-paypal-buttons')
-				.shadow()
-				.find('.sc-paypal-button')
-				.should('be.visible');
+		// update the order.
+		cy.wait('@updateCheckout', { timeout: 30000 }).then(
+			({ request, response }) => {
+				expect(request.body.email).to.eq('test@test.com');
+				expect(request.body.name).to.eq('John Doe');
+				expect(response.statusCode).to.eq(200);
+				expect(response.body.status).to.eq('draft');
+			}
+		);
 
-			cy.get('sc-paypal-buttons')
-				.find('iframe.visible')
-				.iframe()
-				.find('div[data-funding-source="paypal"]')
-				.last()
-				.click();
-
-			cy.intercept({
-				method: 'POST',
-				path: '**surecart**orders*',
-				times: 1,
-			}).as('updateOrder');
-			cy.intercept('POST', '**surecart**finalize*').as('finalizeOrder');
-
-			// update the order.
-			cy.wait('@updateOrder', { timeout: 30000 }).then(
-				({ request, response }) => {
-					expect(request.body.email).to.eq('test@test.com');
-					expect(request.body.name).to.eq('John Doe');
-					expect(response.statusCode).to.eq(200);
-					expect(response.body.status).to.eq('draft');
-				}
-			);
-
-			// finalize the order.
-			cy.wait('@finalizeOrder', { timeout: 30000 }).then(
-				({ response }) => {
-					expect(response.statusCode).to.eq(200);
-					expect(response.body.status).to.eq('finalized');
-				}
-			);
-
-			// cy.paypalFlow('sb-3xe6d15890862@personal.example.com', 'P@pj0>v3');
-
-			// thank you page.
-			// cy.get('sc-order-confirmation', { timeout: 30000 }).should(
-			// 	'be.visible'
-			// );
+		// finalize the order.
+		cy.wait('@finalizeOrder', { timeout: 30000 }).then(({ response }) => {
+			expect(response.statusCode).to.eq(200);
+			expect(response.body.status).to.eq('finalized');
 		});
+
+		// cy.paypalFlow('sb-3xe6d15890862@personal.example.com', 'P@pj0>v3');
+
+		// thank you page.
+		// cy.get('sc-order-confirmation', { timeout: 30000 }).should(
+		// 	'be.visible'
+		// );
 	});
 
 	it('Can checkout with a free product', () => {
-		cy.exec(
-			`yarn wp-env run tests-cli "wp option get surecart_checkout_page_id"`
-		).then((response) => {
-			cy.clearLocalStorage();
-			cy.intercept({
-				method: 'POST',
-				path: '**surecart**orders*',
-				times: 1,
-			}).as('createOrder');
+		cy.intercept({
+			method: 'POST',
+			path: '**surecart**checkouts*',
+			times: 1,
+		}).as('createCheckout');
 
-			// buy button link
-			cy.visit(
-				`?p=${parseInt(
-					response.stdout
-				)}&line_items[0][price_id]=49f4f9ca-7fb6-4a51-82b3-9f9aeed7b1c0&line_items[0][quantity]=1&coupon=DEVTEST`
-			);
+		// wait for order to create.
+		cy.wait('@createCheckout');
 
-			// wait for order to create.
-			cy.wait('@createOrder');
+		// fill customer name and email
+		cy.get('sc-customer-name').invoke('attr', 'value', 'John Doe');
+		cy.get('sc-customer-email').invoke('attr', 'value', 'test@test.com');
 
-			// fill customer name and email
-			cy.get('sc-customer-name').invoke('attr', 'value', 'John Doe');
-			cy.get('sc-customer-email').invoke(
-				'attr',
-				'value',
-				'test@test.com'
-			);
+		// we will intercept confirm order.
+		cy.intercept({
+			method: 'POST',
+			path: '**surecart**checkouts*',
+			times: 1,
+		}).as('updateCheckout');
+		cy.intercept('POST', '**surecart**finalize*').as('finalizeOrder');
+		cy.intercept('POST', '**surecart**confirm*').as('confirmOrder');
 
-			// we will intercept confirm order.
-			cy.intercept({
-				method: 'POST',
-				path: '**surecart**orders*',
-				times: 1,
-			}).as('updateOrder');
-			cy.intercept('POST', '**surecart**finalize*').as('finalizeOrder');
-			cy.intercept('POST', '**surecart**confirm*').as('confirmOrder');
+		cy.get('sc-order-submit sc-button')
+			.shadow()
+			.find('.button')
+			.should('not.have.class', 'button--loading')
+			.click({ force: true, waitForAnimations: true });
 
-			cy.get('sc-order-submit sc-button')
-				.shadow()
-				.find('.button')
-				.should('not.have.class', 'button--loading')
-				.click({ force: true, waitForAnimations: true });
+		// update the order.
+		cy.wait('@updateCheckout', { timeout: 30000 }).then(
+			({ request, response }) => {
+				expect(request.body.email).to.eq('test@test.com');
+				expect(request.body.name).to.eq('John Doe');
+				expect(response.statusCode).to.eq(200);
+				expect(response.body.status).to.eq('draft');
+			}
+		);
 
-			// update the order.
-			cy.wait('@updateOrder', { timeout: 30000 }).then(
-				({ request, response }) => {
-					expect(request.body.email).to.eq('test@test.com');
-					expect(request.body.name).to.eq('John Doe');
-					expect(response.statusCode).to.eq(200);
-					expect(response.body.status).to.eq('draft');
-				}
-			);
-
-			// finalize the order.
-			cy.wait('@finalizeOrder', { timeout: 30000 }).then(
-				({ response }) => {
-					expect(response.statusCode).to.eq(200);
-					expect(response.body.status).to.eq('paid');
-				}
-			);
-
-			// confirm payment (and run automations)
-			cy.wait('@confirmOrder', { timeout: 30000 }).then(
-				({ response }) => {
-					expect(response.statusCode).to.eq(200);
-					expect(response.body.status).to.eq('paid');
-				}
-			);
-
-			// thank you page.
-			cy.get('sc-order-confirmation', { timeout: 30000 }).should(
-				'be.visible'
-			);
+		// finalize the order.
+		cy.wait('@finalizeOrder', { timeout: 30000 }).then(({ response }) => {
+			expect(response.statusCode).to.eq(200);
+			expect(response.body.status).to.eq('paid');
 		});
+
+		// confirm payment (and run automations)
+		cy.wait('@confirmOrder', { timeout: 30000 }).then(({ response }) => {
+			expect(response.statusCode).to.eq(200);
+			expect(response.body.status).to.eq('paid');
+		});
+
+		// thank you page.
+		cy.get('sc-order-confirmation', { timeout: 30000 }).should(
+			'be.visible'
+		);
 	});
 });

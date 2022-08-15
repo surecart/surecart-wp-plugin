@@ -1,5 +1,4 @@
 import { disableGutenbergFeatures } from '../helpers';
-
 import './paypal';
 import 'cypress-file-upload';
 
@@ -24,6 +23,17 @@ Cypress.Commands.add('blockTemplate', (name, json = {}, html = '') => {
 		/[\""]/g,
 		'\\"'
 	);
+});
+
+Cypress.Commands.add('surecartRequest', ({ path, method, body }) => {
+	return cy.request({
+		url: Cypress.env('host') + '/v1/' + path,
+		method,
+		headers: {
+			Authorization: 'Bearer ' + Cypress.env('api_token'),
+		},
+		body,
+	});
 });
 
 /**

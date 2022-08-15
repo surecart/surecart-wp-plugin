@@ -231,6 +231,13 @@
     "class": true,
     "slot": true
   },
+  "sc-checkout-unsaved-changes-warning": {
+    "state": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-choice": {
     "checked": true,
     "disabled": true,

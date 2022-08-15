@@ -180,11 +180,7 @@
 	},
 	"wp-env": {
 		"plugin-dir": "surecart",
-		"plugin-name": "SureCart",
-		"welcome-logo": [
-			"E2E Tests Example"
-		],
-		"welcome-build-command": "npm run dev"
+		"plugin-name": "SureCart"
 	},
 	"packageManager": "yarn@3.2.2",
 	"version": "0.0.1"

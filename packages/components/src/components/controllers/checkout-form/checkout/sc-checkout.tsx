@@ -70,11 +70,6 @@ export class ScCheckout {
     'paying': string;
     'confirming': string;
     'confirmed': string;
-  } = {
-    'finalizing': __('Submitting order...', 'surecart'),
-    'paying': __('Processing payment...', 'surecart'),
-    'confirming': __('Confirming payment', 'surecart'),
-    'confirmed': __('Payment successful! Redirecting...', 'surecart')
   };
 
   /** Stores fetched prices for use throughout component.  */
@@ -224,6 +219,7 @@ export class ScCheckout {
     if (this.isDuplicate) {
       return <sc-alert open>{__('Due to processor restrictions, only one checkout form is allowed on the page.', 'surecart')}</sc-alert>;
     }
+
     return (
       <div
         class={{
@@ -233,6 +229,9 @@ export class ScCheckout {
           'sc-align-full': this.alignment === 'full',
         }}
       >
+        {/* Handles unsaved changes warning depending on checkout state */}
+        <sc-checkout-unsaved-changes-warning state={this.checkoutState} />
+        {/* Univers provider */}
         <Universe.Provider state={this.state()}>
           {/* Handles the automatic filtering and selection of processors */}
           <sc-processor-provider checkout={this.order()} processors={this.processors} processor={this.processor} />
@@ -267,10 +266,10 @@ export class ScCheckout {
           </sc-form-state-provider>
 
           {this.state().busy && <sc-block-ui z-index={9}></sc-block-ui>}
-          {this.checkoutState === 'finalizing' && <sc-block-ui z-index={9} spinner style={{'--sc-block-ui-opacity': '0.75'}}>{this.loadingText.finalizing}</sc-block-ui>}
-          {this.checkoutState === 'paying' && <sc-block-ui z-index={9} spinner style={{'--sc-block-ui-opacity': '0.75'}}>{this.loadingText.paying}</sc-block-ui>}
-          {this.checkoutState === 'confirming' && <sc-block-ui z-index={9} spinner style={{'--sc-block-ui-opacity': '0.75'}}>{this.loadingText.confirming}</sc-block-ui>}
-          {this.checkoutState === 'confirmed' && <sc-block-ui z-index={9} spinner style={{'--sc-block-ui-opacity': '0.75'}}>{this.loadingText.confirmed}</sc-block-ui>}
+          {this.checkoutState === 'finalizing' && <sc-block-ui z-index={9} spinner style={{'--sc-block-ui-opacity': '0.75'}}>{this.loadingText?.finalizing || __('Submitting order...', 'surecart')}</sc-block-ui>}
+          {this.checkoutState === 'paying' && <sc-block-ui z-index={9} spinner style={{'--sc-block-ui-opacity': '0.75'}}>{this.loadingText?.paying || __('Processing payment...', 'surecart')}</sc-block-ui>}
+          {this.checkoutState === 'confirming' && <sc-block-ui z-index={9} spinner style={{'--sc-block-ui-opacity': '0.75'}}>{this.loadingText?.confirming || __('Finalizing order...', 'surecart')}</sc-block-ui>}
+          {this.checkoutState === 'confirmed' && <sc-block-ui z-index={9} spinner style={{'--sc-block-ui-opacity': '0.75'}}>{this.loadingText?.confirmed || __('Payment successful! Redirecting...', 'surecart')}</sc-block-ui>}
         </Universe.Provider>
       </div>
     );
