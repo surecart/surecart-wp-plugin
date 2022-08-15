@@ -20,7 +20,7 @@ export class ScCheckoutUnsavedChangesWarning {
    * Warn if status is updaing, finalizing, paying or confirming.
    */
   warnIfUnsavedChanges(e) {
-    if ( ['updating', 'finalizing', 'paying', 'confirming' ].includes(this.state)) {
+    if (['updating', 'finalizing', 'paying', 'confirming'].includes(this.state)) {
       e.preventDefault();
       e.returnValue = __("Your payment is processing. Exiting this page could cause an error in your order. Please do not navigate away from this page.", 'surecart');
       return e.returnValue;
