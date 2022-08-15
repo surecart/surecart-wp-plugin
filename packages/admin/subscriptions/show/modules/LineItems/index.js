@@ -79,6 +79,14 @@ export default ({ period, loading }) => {
 					/>
 				)}
 
+				{!!checkout?.trial_amount && (
+					<LineItem
+						label={__('Trial', 'surecart')}
+						currency={checkout?.currency}
+						value={checkout?.trial_amount}
+					/>
+				)}
+
 				{!!checkout?.discounts && (
 					<LineItem
 						label={__('Discounts', 'surecart')}

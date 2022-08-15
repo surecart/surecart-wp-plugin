@@ -258,6 +258,13 @@ export class ScUpcomingInvoice {
             </sc-line-item>
         )}
 
+        {!!checkout.trial_amount && (
+            <sc-line-item>
+              <span slot="description">{__('Free Trial', 'surecart')}</span>
+              <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={checkout?.trial_amount}></sc-format-number>
+            </sc-line-item>
+        )}
+
         <sc-coupon-form discount={checkout?.discount} label={__('Add Coupon Code')} onScApplyCoupon={e => this.applyCoupon(e)} error={this.couponError}>
           {__('Add Coupon Code')}
         </sc-coupon-form>
