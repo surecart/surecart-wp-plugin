@@ -120,41 +120,6 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase {
 		$this->assertSame($response->get_status(), 400);
 	}
 
-	public function test_form_test_mode_bypasses_with_capability()
-	{
-		$live_form = self::factory()->post->create_and_get( array(
-			'post_type' => 'sc_form',
-			'post_content' => '<!-- wp:surecart/form {"mode":"live"} --><!-- /wp:surecart/form -->'
-		) );
-
-		// mock the requests in the container
-		$requests =  \Mockery::mock(RequestService::class);
-		\SureCart::alias('request', function () use ($requests) {
-			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
-		});
-
-		$requests->shouldReceive('makeRequest')->andReturn([]);
-
-		// users with edit session permissions can do this, though.
-		$request = new WP_REST_Request('POST', '/surecart/v1/checkouts');
-		$request->set_param('live_mode', false);
-		$request->set_query_params(['form_id'=> $live_form->ID]);
-		$response = rest_do_request( $request );
-		$this->assertSame($response->get_status(), 400);
-
-		$user = self::factory()->user->create_and_get();
-		$user->add_cap('edit_sc_checkouts');
-		wp_set_current_user($user->ID);
-
-		// users with edit session permissions can do this, though.
-		$request = new WP_REST_Request('POST', '/surecart/v1/checkouts');
-		$request->set_param('live_mode', false);
-		$request->set_query_params(['form_id'=> $live_form->ID]);
-		$response = rest_do_request( $request );
-		var_dump($response);
-		$this->assertSame($response->get_status(), 200);
-	}
-
 	public function test_live_payments_are_always_allowed()
 	{
 		// mock the requests in the container
