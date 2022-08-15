@@ -94,8 +94,8 @@ export interface Download {
   created_at: number;
 }
 
-export type FormState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalizing' | 'paid' | 'failure' | 'expired';
-export type FormStateSetter = 'RESOLVE' | 'REJECT' | 'FINALIZE' | 'PAID' | 'EXPIRE' | 'FETCH';
+export type FormState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalizing' | 'paying' | 'confirming' | 'confirmed' | 'paid' | 'failure' | 'expired';
+export type FormStateSetter = 'RESOLVE' | 'REJECT' | 'FINALIZE' | 'PAYING' | 'PAID' | 'EXPIRE' | 'FETCH';
 
 export interface License {
   id: string;
@@ -266,8 +266,8 @@ export interface Invoice extends Object {
   updated_at: number;
 }
 
-export interface BillingAddress extends Object {}
-export interface ShippingAddress extends Object {}
+export interface BillingAddress extends Address {}
+export interface ShippingAddress extends Address {}
 export interface ProductGroup {
   id: string;
   object: 'product_group';

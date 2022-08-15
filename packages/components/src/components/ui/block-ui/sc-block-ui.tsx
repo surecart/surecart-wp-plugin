@@ -12,7 +12,10 @@ export class ScBlockUi {
   render() {
     return (
       <div class={{ overlay: true, transparent: this.transparent }} style={{ 'z-index': this.zIndex.toString() }}>
-        <slot>{!this.transparent && this.spinner && <sc-spinner></sc-spinner>}</slot>
+        <div class="overlay__content">
+          <slot name="spinner">{!this.transparent && this.spinner && <sc-spinner></sc-spinner>}</slot>
+          <slot></slot>
+        </div>
       </div>
     );
   }

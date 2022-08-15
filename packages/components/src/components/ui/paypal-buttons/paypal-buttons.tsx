@@ -115,11 +115,13 @@ export class ScPaypalButtons {
        */
       onApprove: async () => {
         try {
+          this.scSetState.emit('PAYING');
           const intent = (await apiFetch({
             method: 'PATCH',
             path: `surecart/v1/payment_intents/${this.order?.payment_intent?.id}/capture`,
           })) as PaymentIntent;
           if (['succeeded', 'pending', 'requires_approval'].includes(intent?.status)) {
+            this.scSetState.emit('PAID');
             this.scPaid.emit();
           } else {
             this.scError.emit({ code: 'could_not_capture', message: __('The payment did not process. Please try again.', 'surecart') });

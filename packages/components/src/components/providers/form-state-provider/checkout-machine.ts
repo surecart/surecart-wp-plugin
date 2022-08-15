@@ -36,8 +36,19 @@ export const checkoutMachine = createMachine({
     },
     finalizing: {
       on: {
-        PAID: 'paid',
+        PAYING: 'paying',
         REJECT: 'draft',
+      },
+    },
+    paying: {
+      on: {
+        PAID: 'confirming',
+        REJECT: 'draft',
+      },
+    },
+    confirming: {
+      on: {
+        CONFIRMED: 'confirmed',
       },
     },
     paid: {

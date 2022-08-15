@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Fragment, h, Method, Prop, State, Watch } from '@stencil/core';
 import { loadStripe } from '@stripe/stripe-js/pure';
 
-import { Checkout } from '../../../types';
+import { Checkout, FormStateSetter } from '../../../types';
 
 @Component({
   tag: 'sc-stripe-element',
@@ -47,6 +47,8 @@ export class ScStripeElement {
 
   @Event() scPaid: EventEmitter<void>;
   @Event() scPayError: EventEmitter<any>;
+  /** Set the state */
+  @Event() scSetState: EventEmitter<FormStateSetter>;
 
   @State() error: string;
   @State() confirming: boolean;
@@ -80,6 +82,7 @@ export class ScStripeElement {
 
     this.confirming = true;
     try {
+      this.scSetState.emit('PAYING');
       let response;
       if (val?.payment_intent?.processor_data?.stripe?.type == 'setup') {
         response = await this.confirmCardSetup(val?.payment_intent?.processor_data?.stripe.client_secret);
@@ -90,6 +93,7 @@ export class ScStripeElement {
         this.error = response.error.message;
         throw response.error;
       }
+      this.scSetState.emit('PAID');
       // paid
       this.scPaid.emit();
     } catch (e) {

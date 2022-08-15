@@ -215,6 +215,7 @@
     "disable-components-validation": true,
     "edit-line-items": true,
     "form-id": true,
+    "loading-text": true,
     "logged-in": true,
     "mode": true,
     "modified": true,

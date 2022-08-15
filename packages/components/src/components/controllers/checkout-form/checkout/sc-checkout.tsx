@@ -2,7 +2,7 @@ import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State
 import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
 
-import { getOrder } from '../../../../store/checkouts';
+import { getOrder, setOrder } from '../../../../store/checkouts';
 import { Customer, FormState, Checkout, PaymentIntent, PaymentIntents, PriceChoice, Prices, Processor, Products, ResponseError, TaxProtocol } from '../../../../types';
 
 @Component({
@@ -65,6 +65,18 @@ export class ScCheckout {
   /** Use the Stripe payment element. */
   @Prop() stripePaymentElement: boolean = false;
 
+  @Prop() loadingText: {
+    'finalizing': string,
+    'paying': string;
+    'confirming': string;
+    'confirmed': string;
+  } = {
+    'finalizing': __('Submitting order...', 'surecart'),
+    'paying': __('Processing payment...', 'surecart'),
+    'confirming': __('Confirming payment', 'surecart'),
+    'confirmed': __('Payment successful! Redirecting...', 'surecart')
+  };
+
   /** Stores fetched prices for use throughout component.  */
   @State() pricesEntities: Prices = {};
 
@@ -100,6 +112,11 @@ export class ScCheckout {
     const paymentIntent = e.detail?.payment_intent as PaymentIntent;
     const processor = e.detail?.processor;
     this.paymentIntents[processor] = paymentIntent;
+  }
+
+  @Listen('scUpdateOrderState')
+  handleOrderStateUpdate(e: {detail: Checkout}) {
+    setOrder(e?.detail, this?.formId);
   }
 
   @Listen('scSetProcessor')
@@ -204,6 +221,7 @@ export class ScCheckout {
   }
 
   render() {
+    console.log(this.checkoutState);
     if (this.isDuplicate) {
       return <sc-alert open>{__('Due to processor restrictions, only one checkout form is allowed on the page.', 'surecart')}</sc-alert>;
     }
@@ -250,6 +268,10 @@ export class ScCheckout {
           </sc-form-state-provider>
 
           {this.state().busy && <sc-block-ui z-index={9}></sc-block-ui>}
+          {this.checkoutState === 'finalizing' && <sc-block-ui z-index={9} spinner style={{'--sc-block-ui-opacity': '0.75'}}>{this.loadingText.finalizing}</sc-block-ui>}
+          {this.checkoutState === 'paying' && <sc-block-ui z-index={9} spinner style={{'--sc-block-ui-opacity': '0.75'}}>{this.loadingText.paying}</sc-block-ui>}
+          {this.checkoutState === 'confirming' && <sc-block-ui z-index={9} spinner style={{'--sc-block-ui-opacity': '0.75'}}>{this.loadingText.confirming}</sc-block-ui>}
+          {this.checkoutState === 'confirmed' && <sc-block-ui z-index={9} spinner style={{'--sc-block-ui-opacity': '0.75'}}>{this.loadingText.confirmed}</sc-block-ui>}
         </Universe.Provider>
       </div>
     );

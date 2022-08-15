@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, ShippingAddress, Subscription, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export namespace Components {
     interface ScAddress {
         /**
@@ -405,6 +405,12 @@ export namespace Components {
           * The checkout form id
          */
         "formId": number;
+        "loadingText": {
+    'finalizing': string,
+    'paying': string;
+    'confirming': string;
+    'confirmed': string;
+  };
         /**
           * Is this user logged in?
          */
@@ -4432,6 +4438,12 @@ declare namespace LocalJSX {
           * The checkout form id
          */
         "formId"?: number;
+        "loadingText"?: {
+    'finalizing': string,
+    'paying': string;
+    'confirming': string;
+    'confirmed': string;
+  };
         /**
           * Is this user logged in?
          */
@@ -6556,6 +6568,10 @@ declare namespace LocalJSX {
         "onScPaid"?: (event: ScStripeElementCustomEvent<void>) => void;
         "onScPayError"?: (event: ScStripeElementCustomEvent<any>) => void;
         /**
+          * Set the state
+         */
+        "onScSetState"?: (event: ScStripeElementCustomEvent<FormStateSetter>) => void;
+        /**
           * The checkout session object for finalizing intents
          */
         "order"?: Checkout;
@@ -6589,6 +6605,10 @@ declare namespace LocalJSX {
           * There was a payment error.
          */
         "onScPayError"?: (event: ScStripePaymentElementCustomEvent<any>) => void;
+        /**
+          * Set the state
+         */
+        "onScSetState"?: (event: ScStripePaymentElementCustomEvent<FormStateSetter>) => void;
         /**
           * Order to watch
          */
