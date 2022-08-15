@@ -1,20 +1,19 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
-import { Fragment, useState, useEffect } from '@wordpress/element';
-
-import Revenue from './charts/Revenue';
-import Orders from './charts/Orders';
-import AverageOrderValue from './charts/AverageOrderValue';
 import Error from '../../../components/Error';
 import DatePicker from '../../DatePicker';
+import AverageOrderValue from './charts/AverageOrderValue';
+import Orders from './charts/Orders';
+import Revenue from './charts/Revenue';
+import ReportByDropdown from './parts/ReportByDropdown';
+import { css, jsx } from '@emotion/core';
+import { ScDivider, ScFlex } from '@surecart/components-react';
+import { ScSwitch } from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
+import { Fragment, useState, useEffect } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
-import { ScDivider, ScFlex } from '@surecart/components-react';
-import ReportByDropdown from './parts/ReportByDropdown';
-
-export default () => {
+export default ({ liveMode, setLiveMode }) => {
 	const [startDate, setStartDate] = useState(
 		new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
 	);
@@ -44,7 +43,7 @@ export default () => {
 			getOrderStats();
 			getPreviousOrderStats();
 		}
-	}, [startDate, endDate, reportBy]);
+	}, [startDate, endDate, reportBy, liveMode]);
 
 	/**
 	 * Get order stats for the range.
@@ -61,6 +60,7 @@ export default () => {
 					start_at: new Date(startDateObj).toISOString(),
 					end_at: new Date(endDateObj).toISOString(),
 					interval: reportBy,
+					live_mode: liveMode,
 					currency,
 				}),
 			});
@@ -93,6 +93,7 @@ export default () => {
 				path: addQueryArgs(`surecart/v1/stats/orders/`, {
 					start_at: new Date(lastStartDateObj).toISOString(),
 					end_at: new Date(startDateObj).toISOString(),
+					live_mode: liveMode,
 					interval: reportBy,
 				}),
 			});
@@ -134,7 +135,22 @@ export default () => {
 						endDate={endDate}
 						setEndDate={setEndDate}
 					/>
-					<ReportByDropdown value={reportBy} setValue={setReportBy} />
+
+					<ScFlex alignItems={'center'}>
+						<ScSwitch
+							checked={!liveMode}
+							onClick={(e) => {
+								e.preventDefault();
+								setLiveMode(!liveMode);
+							}}
+						>
+							{__('Test Mode', 'surecart')}
+						</ScSwitch>
+						<ReportByDropdown
+							value={reportBy}
+							setValue={setReportBy}
+						/>
+					</ScFlex>
 				</ScFlex>
 				<ScDivider style={{ '--spacing': '0.5em' }} />
 			</Fragment>

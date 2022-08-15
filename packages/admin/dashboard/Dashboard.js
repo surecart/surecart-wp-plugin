@@ -1,26 +1,24 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-
 // template
 import DashboardModel from '../templates/DashboardModel';
-
-import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
 import Logo from '../templates/Logo';
-
 import GetStarted from './components/GetStarted';
-import RecentOrders from './components/RecentOrders';
 import LearnMore from './components/LearnMore';
+import RecentOrders from './components/RecentOrders';
 import Overview from './components/overview/Overview';
-
+import { css, jsx } from '@emotion/core';
 import {
 	ScFlex,
 	ScDivider,
 	ScBreadcrumbs,
 	ScBreadcrumb,
 } from '@surecart/components-react';
+import { Fragment } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { useState } from 'react';
 
 export default () => {
+	const [liveMode, setLiveMode] = useState(true);
 	return (
 		<DashboardModel
 			title={
@@ -44,10 +42,10 @@ export default () => {
 		>
 			<Fragment>
 				<GetStarted />
-				<Overview />
+				<Overview liveMode={liveMode} setLiveMode={setLiveMode} />
 				<ScDivider style={{ '--spacing': '1em' }} />
 				<ScFlex style={{ '--sc-flex-column-gap': '2em' }}>
-					<RecentOrders />
+					<RecentOrders liveMode={liveMode} />
 					<LearnMore />
 				</ScFlex>
 			</Fragment>

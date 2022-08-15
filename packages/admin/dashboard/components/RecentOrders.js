@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { ScFlex } from '@surecart/components-react';
 import {
 	ScCard,
 	ScDashboardModule,
@@ -22,32 +23,38 @@ import { _n, __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { useEffect, useState } from 'react';
 
-export default () => {
+export default ({ liveMode }) => {
 	const [orders, setOrders] = useState(0);
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		getOrderList();
-	}, []);
+	}, [liveMode]);
 
 	const getOrderList = async () => {
-		const response = await apiFetch({
-			path: addQueryArgs(`surecart/v1/orders/`, {
-				expand: [
-					'checkout',
-					'checkout.line_items',
-					'checkout.charge',
-					'checkout.customer',
-					'checkout.payment_method',
-					'payment_method.card',
-					'payment_method.payment_instrument',
-				],
-				status: ['paid'],
-				per_page: 10,
-			}),
-			parse: false,
-		});
-		const ordersList = await response.json();
-		setOrders(ordersList);
+		try {
+			setLoading(true);
+			const ordersList = await apiFetch({
+				path: addQueryArgs(`surecart/v1/orders/`, {
+					expand: [
+						'checkout',
+						'checkout.line_items',
+						'checkout.charge',
+						'checkout.customer',
+						'checkout.payment_method',
+						'payment_method.card',
+						'payment_method.payment_instrument',
+					],
+					status: ['paid'],
+					live_mode: liveMode,
+					per_page: 10,
+				}),
+			});
+			setOrders(ordersList);
+		} catch (e) {
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	function renderEmpty() {
@@ -65,45 +72,43 @@ export default () => {
 
 	function renderLoading() {
 		return (
-			<ScCard>
-				<ScStackedList>
-					{[...Array(5)].map((id) => (
+			<ScStackedList>
+				<ScStackedListRow
+					style={{
+						'--columns': '1',
+						'--sc-list-row-background-color': 'transparent',
+					}}
+				>
+					<ScFlex
+						flexDirection="column"
+						style={{ '--sc-flex-column-gap': '1em' }}
+					>
 						<ScSkeleton
-							key={id}
 							style={{
-								margin: '0 2%',
-								width: '16%',
+								width: '40%',
 								display: 'inline-block',
 							}}
 						></ScSkeleton>
-					))}
-				</ScStackedList>
-			</ScCard>
+						<ScSkeleton
+							style={{
+								width: '60%',
+								display: 'inline-block',
+							}}
+						></ScSkeleton>
+						<ScSkeleton
+							style={{
+								width: '30%',
+								display: 'inline-block',
+							}}
+						></ScSkeleton>
+					</ScFlex>
+				</ScStackedListRow>
+			</ScStackedList>
 		);
 	}
 
-	function renderStatusBadge(order) {
-		const { status, charge } = order;
-		if (charge && typeof charge === 'object') {
-			if (charge?.fully_refunded) {
-				return (
-					<ScTag type="danger">{__('Refunded', 'surecart')}</ScTag>
-				);
-			}
-			if (charge?.refunded_amount) {
-				return (
-					<ScTag type="info">
-						{__('Partially Refunded', 'surecart')}
-					</ScTag>
-				);
-			}
-		}
-
-		return <ScOrderStatusBadge status={status}></ScOrderStatusBadge>;
-	}
-
 	function renderList() {
-		if (orders === 0) {
+		if (loading) {
 			return renderLoading();
 		}
 
@@ -111,7 +116,7 @@ export default () => {
 			return renderEmpty();
 		}
 
-		return orders.map((order) => {
+		return (orders || []).map((order) => {
 			const { checkout, created_at, id } = order;
 			const { customer } = checkout;
 			return (
@@ -159,13 +164,18 @@ export default () => {
 							paymentMethod={checkout?.payment_method}
 						/>
 					</div>
-					<div>
+					<ScFlex style={{ '--sc-flex-column-gap': '0.35em' }}>
 						<ScFormatNumber
 							type="currency"
 							currency={checkout?.currency}
 							value={checkout?.amount_due}
 						/>
-					</div>
+						{!order?.checkout?.live_mode && (
+							<ScTag type="warning" size="small">
+								{__('Test', 'surecart')}
+							</ScTag>
+						)}
+					</ScFlex>
 				</ScStackedListRow>
 			);
 		});
