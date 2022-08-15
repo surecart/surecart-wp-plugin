@@ -243,7 +243,15 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.0.7 - August 12, 2022 =
+= 1.1.0 - August 12, 2022 =
+* New: PayPal Payment Gateway for one-time purchases.
+* New: Admin dashboard page.
+* New: Checkout Form Loading Messsages.
+* Improvement: Admin subscription update screen now displays future charge.
+* Improvement: Customer dashboard improvements.
+* Improvement: Invoices and Orders are combined into Orders for easier fulfillment.
+* Improvement: SureCart emails now redirect to your site instead of hosted pages.
+* Fix: Caching javascript in admin screen issues after update.
 * Fix: Issue with Loco Translate not generating files for JavaScript translations.
 
 = 1.0.6 - August 11, 2022 =
