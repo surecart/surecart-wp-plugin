@@ -243,7 +243,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.1.0 - August 12, 2022 =
+= 1.1.0 - August 16, 2022 =
 * New: PayPal Payment Gateway for one-time purchases.
 * New: Admin dashboard page.
 * New: Checkout Form Loading Messsages.
