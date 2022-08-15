@@ -60,11 +60,13 @@ export class ScStripeElement {
   }
 
   @Watch('order')
-  async confirmPayment(val: Checkout) {
+  async confirmPayment(val: Checkout, prev: Checkout) {
     // needs to be enabled
     if (this.disabled) return;
     // must be finalized
     if (val?.status !== 'finalized') return;
+    // the status didn't change.
+    if (prev?.status === 'finalized') return;
     // must be a stripe session
     if (val?.payment_intent?.processor_type !== 'stripe') return;
     // must have an external intent id
@@ -95,7 +97,6 @@ export class ScStripeElement {
       if (e.message) {
         this.error = e.message;
       }
-    } finally {
       this.confirming = false;
     }
   }
