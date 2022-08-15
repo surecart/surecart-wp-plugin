@@ -225,9 +225,9 @@ export class ScStripePaymentRequest {
   async handlePaymentMethod(ev) {
     const { billing_details } = ev?.paymentMethod;
     const { shippingAddress } = ev;
-    this.scSetState.emit('FETCH');
 
     try {
+      this.scSetState.emit('FINALIZE');
       // update session with shipping/billing
       (await createOrUpdateOrder({
         id: this.order?.id,
@@ -256,13 +256,14 @@ export class ScStripePaymentRequest {
       })) as Checkout;
 
       // confirm payment
+      this.scSetState.emit('PAYING');
       await this.confirmPayment(session, ev);
+      this.scSetState.emit('PAID');
       // paid.
       console.log('paid');
       this.scPaid.emit();
       // Report to the browser that the confirmation was successful, prompting
       // it to close the browser payment method collection interface.
-      console.log('complete');
       ev.complete('success');
     } catch (e) {
       console.error(e);
