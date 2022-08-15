@@ -57,7 +57,10 @@ export class ScPaypalButtons {
   @Event() scPaid: EventEmitter<void>;
 
   @Watch('order')
-  handleOrderChange() {
+  handleOrderChange(val, prev) {
+    if ( val?.updated_at === prev?.updated_at) {
+      return;
+    }
     this.cardContainer.innerHTML = '';
     this.paypalContainer.innerHTML = '';
     this.loadScript();
@@ -139,6 +142,7 @@ export class ScPaypalButtons {
        * @param err
        */
       onError: err => {
+        console.error(err);
         this.scError.emit({ code: err?.code, message: err?.message });
         this.scSetState.emit('REJECT');
       },
