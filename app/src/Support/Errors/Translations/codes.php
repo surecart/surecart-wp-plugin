@@ -26,6 +26,7 @@ return [
 	'order.tax_identifier.invalid_tax_identifier'       => __( 'Please enter a valid tax number.', 'surecart' ),
 	'order.line_items.old_price_versions'               => __( 'The prices in this checkout session have changed. Please recheck it before submitting again.', 'surecart' ),
 	'order.discount.coupon.blank'                       => __( 'This coupon code is invalid.', 'surecart' ),
+	'customer_notification_protocol.abandoned_checkout_enabled.invalid_address' => __( 'You cannot enable abandoned checkouts until you have updated your business contact address. Please add an address to your store branding.' ),
 	'order.shipping_address.postal_code.invalid'        => __( 'Your postal code is not valid.', 'surecart' ),
 	'order.discount.coupon.expired'                     => __( 'This coupon has expired.', 'surecart' ),
 	'order.discount.coupon.currency_mismatch'           => __( 'This discount code does not apply to this currency.', 'surecart' ),
