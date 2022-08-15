@@ -242,7 +242,7 @@ export class ScStripePaymentElement {
           }
         }
       })
-      .mount('.sc-payment-element-container');\
+      .mount('.sc-payment-element-container');
 
     this.element = this.elements.getElement('payment');
     this.element.on('ready', () => (this.loaded = true));
