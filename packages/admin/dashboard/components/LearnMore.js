@@ -43,7 +43,7 @@ export default () => {
 						href="post-new.php?post_type=sc_form"
 						title={__('Create A Form', 'surecart')}
 						descriptions={__(
-							'Create a new checkout form with a no-code experience.',
+							'Create a new checkout form.',
 							'surecart'
 						)}
 					/>
