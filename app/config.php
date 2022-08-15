@@ -125,6 +125,7 @@ return [
 		\SureCart\Permissions\Models\LicensePermissionsController::class,
 		\SureCart\Permissions\Models\CustomerPermissionsController::class,
 		\SureCart\Permissions\Models\OrderPermissionsController::class,
+		\SureCart\Permissions\Models\CheckoutPermissionsController::class,
 		\SureCart\Permissions\Models\InvoicePermissionsController::class,
 		\SureCart\Permissions\Models\PaymentMethodPermissionsController::class,
 		\SureCart\Permissions\Models\PurchasePermissionsController::class,
