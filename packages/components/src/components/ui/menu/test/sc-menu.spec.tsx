@@ -1,5 +1,5 @@
-import { newSpecPage } from '@stencil/core/testing';
 import { ScMenu } from '../sc-menu';
+import { newSpecPage } from '@stencil/core/testing';
 
 describe('sc-menu', () => {
   it('renders', async () => {
@@ -7,14 +7,6 @@ describe('sc-menu', () => {
       components: [ScMenu],
       html: `<sc-menu></sc-menu>`,
     });
-    expect(page.root).toEqualHtml(`
-      <sc-menu>
-        <mock:shadow-root>
-          <div part="base" class="menu" role="menu" tabindex="0">
-            <slot></slot>
-          </div>
-        </mock:shadow-root>
-      </sc-menu>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

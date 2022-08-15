@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-skeleton renders 1`] = `
+<sc-skeleton>
+  <mock:shadow-root>
+    <div aria-busy="true" aria-live="polite" class="skeleton skeleton--sheen" part="base">
+      <div class="skeleton__indicator" part="indicator"></div>
+    </div>
+  </mock:shadow-root>
+</sc-skeleton>
+`;
