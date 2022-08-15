@@ -1,5 +1,5 @@
-import { newSpecPage } from '@stencil/core/testing';
 import { ScPaymentMethod } from '../sc-payment-method';
+import { newSpecPage } from '@stencil/core/testing';
 
 describe('sc-payment-method', () => {
   it('renders', async () => {
@@ -7,12 +7,6 @@ describe('sc-payment-method', () => {
       components: [ScPaymentMethod],
       html: `<sc-payment-method></sc-payment-method>`,
     });
-    expect(page.root).toEqualHtml(`
-      <sc-payment-method>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </sc-payment-method>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });
