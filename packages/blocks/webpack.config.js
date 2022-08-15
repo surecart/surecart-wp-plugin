@@ -1,5 +1,6 @@
 const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
 	...defaultConfig,
@@ -31,4 +32,10 @@ module.exports = {
 		...defaultConfig.output,
 		path: path.resolve(__dirname, 'dist'),
 	},
+	plugins: [
+		...defaultConfig.plugins,
+		new webpack.optimize.LimitChunkCountPlugin({
+			maxChunks: 1,
+		}),
+	],
 };

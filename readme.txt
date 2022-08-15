@@ -243,6 +243,9 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.0.7 - August 12, 2022 =
+* Fix: Issue with Loco Translate not generating files for JavaScript translations.
+
 = 1.0.6 - August 11, 2022 =
 * Fix: Issue with tax not being calculated when shipping address country is prefilled and only country field is displayed.
 * Fix: Issue with password field not allowing form to submit when hidden.
