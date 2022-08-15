@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-08-15T20:25:48+00:00\n"
+"POT-Creation-Date: 2022-08-15T20:42:45+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -7644,7 +7644,7 @@ msgid "Processing Payment"
 msgstr ""
 
 #: Blocks/Form/edit.js:322
-#: sc-checkout.js:172
+#: sc-checkout.js:173
 msgid "Processing payment..."
 msgstr ""
 
@@ -7653,7 +7653,7 @@ msgid "Confirming Payment"
 msgstr ""
 
 #: Blocks/Form/edit.js:340
-#: sc-checkout.js:172
+#: sc-checkout.js:173
 msgid "Finalizing order..."
 msgstr ""
 
@@ -7662,7 +7662,7 @@ msgid "Success Text"
 msgstr ""
 
 #: Blocks/Form/edit.js:355
-#: sc-checkout.js:172
+#: sc-checkout.js:173
 msgid "Payment successful! Redirecting..."
 msgstr ""
 
@@ -9897,11 +9897,11 @@ msgstr ""
 msgid "Your payment is processing. Exiting this page could cause an error in your order. Please do not navigate away from this page."
 msgstr ""
 
-#: sc-checkout.js:165
+#: sc-checkout.js:166
 msgid "Due to processor restrictions, only one checkout form is allowed on the page."
 msgstr ""
 
-#: sc-checkout.js:172
+#: sc-checkout.js:173
 msgid "Submitting order..."
 msgstr ""
 
