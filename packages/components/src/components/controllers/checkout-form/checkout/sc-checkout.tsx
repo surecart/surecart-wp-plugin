@@ -221,7 +221,6 @@ export class ScCheckout {
   }
 
   render() {
-    console.log(this.checkoutState);
     if (this.isDuplicate) {
       return <sc-alert open>{__('Due to processor restrictions, only one checkout form is allowed on the page.', 'surecart')}</sc-alert>;
     }
