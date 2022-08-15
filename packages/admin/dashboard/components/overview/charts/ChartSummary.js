@@ -1,9 +1,9 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
-import { ScBlockUi } from '@surecart/components-react';
-import Chart from 'react-apexcharts';
 import { getFormattedPrice } from '../../../../util';
+import { css, jsx } from '@emotion/core';
+import { ScBlockUi } from '@surecart/components-react';
+import { __ } from '@wordpress/i18n';
+import Chart from 'react-apexcharts';
 
 export default ({
 	loading,
@@ -98,13 +98,14 @@ export default ({
 						type: 'date',
 						labels: {
 							formatter: function (value) {
-								if (isNaN(value) || data?.length === 0) return 0;
+								if (isNaN(value) || data?.length === 0)
+									return 0;
 
-								if ( 'month' === reportBy ) {
+								if ('month' === reportBy) {
 									return new Intl.DateTimeFormat('default', {
 										month: 'short',
 									}).format(parseInt(value) * 1000);
-								} else if ( 'year' === reportBy ) {
+								} else if ('year' === reportBy) {
 									return new Intl.DateTimeFormat('default', {
 										year: 'numeric',
 									}).format(parseInt(value) * 1000);
@@ -133,12 +134,12 @@ export default ({
 						},
 					},
 					markers: {
-						size: [4, 7]
-					}
+						size: [4, 7],
+					},
 				}}
 				series={[
 					{
-						name: __( 'Current', 'surecart' ),
+						name: __('Total', 'surecart'),
 						data,
 					},
 				]}
