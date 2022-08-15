@@ -7,23 +7,22 @@
 
 ## Properties
 
-| Property                      | Attribute                        | Description                                                          | Type                                    | Default     |
-| ----------------------------- | -------------------------------- | -------------------------------------------------------------------- | --------------------------------------- | ----------- |
-| `busy`                        | `busy`                           | Is this busy.                                                        | `boolean`                               | `undefined` |
-| `currencyCode`                | `currency-code`                  | The currency code.                                                   | `string`                                | `'usd'`     |
-| `defaultProcessor`            | `default-processor`              | Default                                                              | `"paypal" \| "paypal-card" \| "stripe"` | `'stripe'`  |
-| `hideTestModeBadge`           | `hide-test-mode-badge`           | Hide the test mode badge                                             | `boolean`                               | `undefined` |
-| `label`                       | `label`                          | The input's label.                                                   | `string`                                | `undefined` |
-| `loading`                     | `loading`                        | Is this loading.                                                     | `boolean`                               | `undefined` |
-| `mode`                        | `mode`                           | Is this created in "test" mode                                       | `"live" \| "test"`                      | `'live'`    |
-| `order`                       | --                               | Checkout Session from sc-checkout.                                   | `Checkout`                              | `undefined` |
-| `paymentMethod`               | `payment-method`                 | Payment mode inside individual payment method (i.e. Payment Buttons) | `"stripe-payment-request"`              | `undefined` |
-| `previewStripePaymentElement` | `preview-stripe-payment-element` |                                                                      | `boolean`                               | `undefined` |
-| `processor`                   | `processor`                      | The current payment method for the payment                           | `string`                                | `'stripe'`  |
-| `processors`                  | --                               | List of available processors.                                        | `Processor[]`                           | `[]`        |
-| `secureNotice`                | `secure-notice`                  | Secure notice                                                        | `string`                                | `undefined` |
-| `stripePaymentElement`        | `stripe-payment-element`         | Use the Stripe payment element.                                      | `boolean`                               | `undefined` |
-| `stripePaymentIntent`         | --                               | The stripe payment intent.                                           | `PaymentIntent`                         | `undefined` |
+| Property               | Attribute                | Description                                                          | Type                                    | Default     |
+| ---------------------- | ------------------------ | -------------------------------------------------------------------- | --------------------------------------- | ----------- |
+| `busy`                 | `busy`                   | Is this busy.                                                        | `boolean`                               | `undefined` |
+| `currencyCode`         | `currency-code`          | The currency code.                                                   | `string`                                | `'usd'`     |
+| `defaultProcessor`     | `default-processor`      | Default                                                              | `"paypal" \| "paypal-card" \| "stripe"` | `'stripe'`  |
+| `hideTestModeBadge`    | `hide-test-mode-badge`   | Hide the test mode badge                                             | `boolean`                               | `undefined` |
+| `label`                | `label`                  | The input's label.                                                   | `string`                                | `undefined` |
+| `loading`              | `loading`                | Is this loading.                                                     | `boolean`                               | `undefined` |
+| `mode`                 | `mode`                   | Is this created in "test" mode                                       | `"live" \| "test"`                      | `'live'`    |
+| `order`                | --                       | Checkout Session from sc-checkout.                                   | `Checkout`                              | `undefined` |
+| `paymentMethod`        | `payment-method`         | Payment mode inside individual payment method (i.e. Payment Buttons) | `"stripe-payment-request"`              | `undefined` |
+| `processor`            | `processor`              | The current payment method for the payment                           | `string`                                | `'stripe'`  |
+| `processors`           | --                       | List of available processors.                                        | `Processor[]`                           | `[]`        |
+| `secureNotice`         | `secure-notice`          | Secure notice                                                        | `string`                                | `undefined` |
+| `stripePaymentElement` | `stripe-payment-element` | Use the Stripe payment element.                                      | `boolean`                               | `undefined` |
+| `stripePaymentIntent`  | --                       | The stripe payment intent.                                           | `PaymentIntent`                         | `undefined` |
 
 
 ## Events
@@ -37,7 +36,6 @@
 
 ### Depends on
 
-- [sc-card](../../../ui/card)
 - [sc-stripe-payment-element](../../../ui/stripe-payment-element)
 - [sc-stripe-element](../../../ui/stripe-element)
 - [sc-secure-notice](../../../ui/secure-notice)
@@ -46,6 +44,7 @@
 - [sc-toggles](../../../ui/sc-toggles)
 - [sc-toggle](../../../ui/sc-toggle)
 - [sc-icon](../../../ui/icon)
+- [sc-card](../../../ui/card)
 - [sc-payment-selected](../../../ui/payment-selected)
 - [sc-skeleton](../../../ui/skeleton)
 - [sc-alert](../../../ui/alert)
@@ -53,7 +52,6 @@
 ### Graph
 ```mermaid
 graph TD;
-  sc-payment --> sc-card
   sc-payment --> sc-stripe-payment-element
   sc-payment --> sc-stripe-element
   sc-payment --> sc-secure-notice
@@ -62,6 +60,7 @@ graph TD;
   sc-payment --> sc-toggles
   sc-payment --> sc-toggle
   sc-payment --> sc-icon
+  sc-payment --> sc-card
   sc-payment --> sc-payment-selected
   sc-payment --> sc-skeleton
   sc-payment --> sc-alert

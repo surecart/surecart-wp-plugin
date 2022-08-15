@@ -23,11 +23,11 @@
 - [sc-skeleton](../../../ui/skeleton)
 - [sc-divider](../../../ui/divider)
 - [sc-empty](../../../ui/empty)
+- [sc-payment-method](../../../ui/sc-payment-method)
 - [sc-flex](../../../ui/flex)
-- [sc-cc-logo](../../../ui/cc-logo)
-- [sc-icon](../../../ui/icon)
 - [sc-tag](../../../ui/tag)
 - [sc-dropdown](../../../ui/dropdown)
+- [sc-icon](../../../ui/icon)
 - [sc-menu](../../../ui/menu)
 - [sc-menu-item](../../../ui/menu-item)
 - [sc-dashboard-module](../../../ui/dashboard-module)
@@ -43,17 +43,21 @@ graph TD;
   sc-payment-methods-list --> sc-skeleton
   sc-payment-methods-list --> sc-divider
   sc-payment-methods-list --> sc-empty
+  sc-payment-methods-list --> sc-payment-method
   sc-payment-methods-list --> sc-flex
-  sc-payment-methods-list --> sc-cc-logo
-  sc-payment-methods-list --> sc-icon
   sc-payment-methods-list --> sc-tag
   sc-payment-methods-list --> sc-dropdown
+  sc-payment-methods-list --> sc-icon
   sc-payment-methods-list --> sc-menu
   sc-payment-methods-list --> sc-menu-item
   sc-payment-methods-list --> sc-dashboard-module
   sc-payment-methods-list --> sc-button
   sc-payment-methods-list --> sc-block-ui
   sc-empty --> sc-icon
+  sc-payment-method --> sc-tag
+  sc-payment-method --> sc-cc-logo
+  sc-payment-method --> sc-tooltip
+  sc-payment-method --> sc-icon
   sc-cc-logo --> sc-icon
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon

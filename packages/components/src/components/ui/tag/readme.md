@@ -49,6 +49,7 @@
  - [sc-order-status-badge](../order-status-badge)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-payment](../../controllers/checkout-form/payment)
+ - [sc-payment-method](../sc-payment-method)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
  - [sc-subscription-status-badge](../subscription-status-badge)
@@ -72,6 +73,7 @@ graph TD;
   sc-order-status-badge --> sc-tag
   sc-orders-list --> sc-tag
   sc-payment --> sc-tag
+  sc-payment-method --> sc-tag
   sc-payment-methods-list --> sc-tag
   sc-subscription-details --> sc-tag
   sc-subscription-status-badge --> sc-tag

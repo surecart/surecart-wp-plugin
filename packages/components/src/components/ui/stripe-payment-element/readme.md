@@ -17,10 +17,11 @@
 
 ## Events
 
-| Event        | Description                     | Type                |
-| ------------ | ------------------------------- | ------------------- |
-| `scPaid`     | The order/invoice was paid for. | `CustomEvent<void>` |
-| `scPayError` | There was a payment error.      | `CustomEvent<any>`  |
+| Event        | Description                     | Type                                                                                            |
+| ------------ | ------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `scPaid`     | The order/invoice was paid for. | `CustomEvent<void>`                                                                             |
+| `scPayError` | There was a payment error.      | `CustomEvent<any>`                                                                              |
+| `scSetState` | Set the state                   | `CustomEvent<"EXPIRE" \| "FETCH" \| "FINALIZE" \| "PAID" \| "PAYING" \| "REJECT" \| "RESOLVE">` |
 
 
 ## Methods

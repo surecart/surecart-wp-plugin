@@ -35,7 +35,7 @@
 - [sc-payment-method](../../../ui/sc-payment-method)
 - [sc-button](../../../ui/button)
 - [sc-icon](../../../ui/icon)
-- [sc-dashboard-downloads-list](../dashboard-downloads-list)
+- [sc-purchase-downloads-list](../../../ui/purchase-downloads-list)
 
 ### Graph
 ```mermaid
@@ -58,7 +58,7 @@ graph TD;
   sc-order --> sc-payment-method
   sc-order --> sc-button
   sc-order --> sc-icon
-  sc-order --> sc-dashboard-downloads-list
+  sc-order --> sc-purchase-downloads-list
   sc-empty --> sc-icon
   sc-product-line-item --> sc-format-number
   sc-product-line-item --> sc-quantity-select
@@ -67,13 +67,12 @@ graph TD;
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon
   sc-order-status-badge --> sc-tag
+  sc-payment-method --> sc-tag
   sc-payment-method --> sc-cc-logo
   sc-payment-method --> sc-tooltip
   sc-payment-method --> sc-icon
   sc-cc-logo --> sc-icon
   sc-button --> sc-spinner
-  sc-dashboard-downloads-list --> sc-purchase-downloads-list
-  sc-dashboard-downloads-list --> sc-pagination
   sc-purchase-downloads-list --> sc-divider
   sc-purchase-downloads-list --> sc-empty
   sc-purchase-downloads-list --> sc-card
@@ -87,8 +86,6 @@ graph TD;
   sc-purchase-downloads-list --> sc-button
   sc-purchase-downloads-list --> sc-block-ui
   sc-block-ui --> sc-spinner
-  sc-pagination --> sc-flex
-  sc-pagination --> sc-button
   style sc-order fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

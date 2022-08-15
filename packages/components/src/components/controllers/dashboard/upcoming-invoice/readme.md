@@ -79,6 +79,7 @@ graph TD;
   sc-alert --> sc-icon
   sc-button --> sc-spinner
   sc-block-ui --> sc-spinner
+  sc-payment-method --> sc-tag
   sc-payment-method --> sc-cc-logo
   sc-payment-method --> sc-tooltip
   sc-payment-method --> sc-icon

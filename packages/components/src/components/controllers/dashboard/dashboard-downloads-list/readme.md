@@ -17,10 +17,6 @@
 
 ## Dependencies
 
-### Used by
-
- - [sc-order](../order)
-
 ### Depends on
 
 - [sc-purchase-downloads-list](../../../ui/purchase-downloads-list)
@@ -50,7 +46,6 @@ graph TD;
   sc-block-ui --> sc-spinner
   sc-pagination --> sc-flex
   sc-pagination --> sc-button
-  sc-order --> sc-dashboard-downloads-list
   style sc-dashboard-downloads-list fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
