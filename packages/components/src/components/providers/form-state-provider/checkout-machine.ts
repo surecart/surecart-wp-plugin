@@ -10,6 +10,7 @@ export const checkoutMachine = createMachine({
     idle: {
       on: {
         FETCH: 'loading',
+        PAID: 'confirming',
       },
     },
     loading: {
@@ -17,7 +18,7 @@ export const checkoutMachine = createMachine({
         RESOLVE: 'draft',
         REJECT: 'failure',
         EXPIRE: 'expired',
-        PAID: 'paid',
+        PAID: 'confirming',
       },
     },
     draft: {

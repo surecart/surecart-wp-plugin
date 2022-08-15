@@ -5622,10 +5622,6 @@ declare namespace LocalJSX {
          */
         "mode"?: 'test' | 'live';
         /**
-          * The order is confirmed event.
-         */
-        "onScConfirmed"?: (event: ScOrderConfirmProviderCustomEvent<void>) => void;
-        /**
           * Error event.
          */
         "onScError"?: (event: ScOrderConfirmProviderCustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;

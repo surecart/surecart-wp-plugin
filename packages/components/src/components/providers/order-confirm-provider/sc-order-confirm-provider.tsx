@@ -32,9 +32,6 @@ export class ScOrderConfirmProvider {
   /** Success url. */
   @Prop() successUrl: string;
 
-  /** The order is confirmed event. */
-  @Event() scConfirmed: EventEmitter<void>;
-
   /** The order is paid event. */
   @Event() scOrderPaid: EventEmitter<Order>;
 
@@ -55,11 +52,11 @@ export class ScOrderConfirmProvider {
 
   checkRedirectParams() {
     const status = getQueryArg(window.location.href, 'redirect_status');
-    if ( status === 'succeeded') {
+    if (status === 'succeeded') {
+      // paid state.
+      this.scSetState.emit('PAID');
       // so the back button does not re-confirm.
       window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'redirect_status'));
-      // finalize status
-      this.scSetState.emit('FINALIZE');
       // confirm order
       this.confirmOrder();
     }
@@ -75,8 +72,7 @@ export class ScOrderConfirmProvider {
         path: addQueryArgs(`surecart/v1/checkouts/${this.order?.id}/confirm`, [expand]),
         data,
       })) as Order;
-      // emit the confirmed event to trigger listeners to redirect to the success url, etc.
-      this.scConfirmed.emit();
+      this.scSetState.emit('CONFIRMED');
       // emit the order paid event for tracking scripts.
       this.scOrderPaid.emit(confirmed);
     } catch (e) {
@@ -91,7 +87,6 @@ export class ScOrderConfirmProvider {
         clearOrder(this.formId, this.mode);
         window.location.assign(addQueryArgs(this.successUrl, { order }));
       }, 50);
-
     }
   }
 

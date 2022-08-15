@@ -57,12 +57,6 @@ export class ScFormStateProvider {
     this.setState('PAID');
   }
 
-  /** Update the state when the order is paid. */
-  @Listen('scConfirmed')
-  async handleConfirmed() {
-    this.setState('CONFIRMED');
-  }
-
   render() {
     // handle expired.
     if (this.checkoutState.value === 'expired') {
