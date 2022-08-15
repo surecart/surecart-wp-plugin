@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-purchase renders 1`] = `
+<sc-downloads-list>
+  <mock:shadow-root>
+    <sc-dashboard-module class="purchase" heading="Downloads" part="base">
+      <span slot="heading">
+        <slot name="heading">
+          Downloads
+        </slot>
+      </span>
+      <sc-card no-padding="">
+        <sc-stacked-list></sc-stacked-list>
+      </sc-card>
+    </sc-dashboard-module>
+  </mock:shadow-root>
+</sc-downloads-list>
+`;
