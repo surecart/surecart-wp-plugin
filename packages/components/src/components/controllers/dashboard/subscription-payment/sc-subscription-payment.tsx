@@ -50,6 +50,7 @@ export class ScSubscriptionPayment {
       path: addQueryArgs(`/surecart/v1/payment_methods`, {
         expand: ['card'],
         customer_ids: this.customerIds,
+        reusable: true,
         ...(this.subscription?.live_mode !== null ? { live_mode: this.subscription.live_mode } : {}),
       }),
     })) as PaymentMethod[];
