@@ -171,7 +171,7 @@ export class ScCheckout {
   state() {
     return {
       processor: this.processor,
-      processors: this.processors.filter(processor => {
+      processors: (this.processors || []).filter(processor => {
         return !(this?.order().reusable_payment_method_required && !processor?.recurring_enabled);
       }),
       processor_data: this.order()?.processor_data,
