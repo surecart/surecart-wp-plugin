@@ -271,7 +271,7 @@ export default () => {
 							model="order"
 						/>
 						<EmailRow
-							title={__('Subscription Dunning', 'surecart')}
+							title={__('Subscription Recovery', 'surecart')}
 							description={__(
 								"Sent to customers when their subscription's payment method fails.",
 								'surecart'
@@ -279,9 +279,18 @@ export default () => {
 							model="payment_failure"
 						/>
 						<EmailRow
-							title={__('Download Verification', 'surecart')}
+							title={__('Subscription Reminder', 'surecart')}
 							description={__(
-								'Sent to customers to verify their email address before downloading files.',
+								'Sent to customers 3 days before a subscription renews.',
+								'surecart'
+							)}
+							model="subscription"
+							action="reminder_notification"
+						/>
+						<EmailRow
+							title={__('Product Access', 'surecart')}
+							description={__(
+								'Sent to customers when a purchase is downloadable or has a license.',
 								'surecart'
 							)}
 							model="purchase"
