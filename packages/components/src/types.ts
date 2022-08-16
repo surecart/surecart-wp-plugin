@@ -507,13 +507,23 @@ export interface PaymentMethod extends Object {
   external_payment_method_id: string;
   processor_type: 'stripe' | 'paypal';
   paypal_account: any;
-  bank_account: any;
   type: string;
+  bank_account: BankAccount | string;
   payment_instrument: PaymentInstrument | string;
   payment_intent: PaymentIntent | string;
   billing_agreement?: BillingAgreement | string;
   card: any;
   customer: Customer | string;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface BankAccount {
+  id: string;
+  account_type: 'checking' | 'savings';
+  account_holder_type: 'individual' | 'company';
+  bank_name: string;
+  last4: string;
   created_at: number;
   updated_at: number;
 }
