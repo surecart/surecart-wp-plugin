@@ -5,7 +5,7 @@ import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
 import { intervalString } from '../../../../functions/price';
-import { Checkout, Order, Product } from '../../../../types';
+import { Checkout, Order, Product, Purchase } from '../../../../types';
 
 @Component({
   tag: 'sc-order',
@@ -18,6 +18,7 @@ export class ScOrder {
   @Prop() heading: string;
 
   @State() order: Order;
+  @State() purchases: Purchase[];
 
   /** Loading state */
   @State() loading: boolean;
@@ -29,11 +30,12 @@ export class ScOrder {
   /** Only fetch if visible */
   componentDidLoad() {
     onFirstVisible(this.el, () => {
-      this.initialFetch();
+      this.fetchOrder();
+      this.fetchDownloads();
     });
   }
 
-  async initialFetch() {
+  async fetchOrder() {
     try {
       this.loading = true;
       await this.getOrder();
@@ -45,10 +47,16 @@ export class ScOrder {
     }
   }
 
-  async fetchOrder() {
+  async fetchDownloads() {
     try {
       this.busy = true;
-      await this.getOrder();
+      this.purchases = (await apiFetch({
+        path: addQueryArgs(`surecart/v1/purchases`, {
+          expand: ['product', 'product.downloads', 'download.media'],
+          order_ids: [this.orderId],
+          downloadable: true
+        }),
+      })) as Purchase[];
     } catch (e) {
       console.error(this.error);
       this.error = e?.message || __('Something went wrong', 'surecart');
@@ -61,7 +69,7 @@ export class ScOrder {
   async getOrder() {
     this.order = (await await apiFetch({
       path: addQueryArgs(`surecart/v1/orders/${this.orderId}`, {
-        expand: ['checkout', 'checkout.purchases', 'purchase.product', 'product', 'product.downloads', 'download.media', 'checkout.line_items', 'checkout.payment_method', 'payment_method.card', 'payment_method.payment_instrument', 'payment_method.paypal_account', 'payment_method.bank_account', 'line_item.price', 'price.product', 'charge'],
+        expand: ['checkout', 'checkout.line_items', 'checkout.payment_method', 'payment_method.card', 'payment_method.payment_instrument', 'payment_method.paypal_account', 'payment_method.bank_account'],
       }),
     })) as Order;
   }
@@ -242,8 +250,8 @@ export class ScOrder {
           {__('Download Receipt/Invoice', 'surecart')}
         </sc-button>}
 
-        {!!(this.order?.checkout as Checkout)?.purchases?.data?.length &&
-          <sc-purchase-downloads-list heading={__('Downloads', 'surecart')} purchases={(this.order?.checkout as Checkout)?.purchases?.data}></sc-purchase-downloads-list>}
+        {!!this.purchases?.length &&
+          <sc-purchase-downloads-list heading={__('Downloads', 'surecart')} purchases={this.purchases}></sc-purchase-downloads-list>}
 
       </sc-spacing>
     );
