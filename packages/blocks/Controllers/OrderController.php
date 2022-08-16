@@ -31,7 +31,7 @@ class OrderController extends BaseController {
 					),
 					'query'   => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
-						'status'       => [ 'paid', 'requires_approval', 'pending' ],
+						'status'       => [ 'paid', 'processing', 'payment_failed' ],
 						'page'         => 1,
 						'per_page'     => 5,
 					],
@@ -69,7 +69,7 @@ class OrderController extends BaseController {
 					'heading' => __( 'Order History', 'surecart' ),
 					'query'   => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
-						'status'       => [ 'paid' ],
+						'status'       => [ 'paid', 'processing', 'payment_failed' ],
 						'page'         => 1,
 						'per_page'     => 10,
 					],
