@@ -89,30 +89,33 @@ export default ({ order, checkout, loading }) => {
 						<ScSkeleton slot="price"></ScSkeleton>
 					</ScLineItem>
 				) : (
-					<ScLineItem
-						style={{
-							width: '100%',
-							'--price-size': 'var(--sc-font-size-x-large)',
-						}}
-					>
-						<span slot="title">
-							{charge?.refunded_amount
-								? __('Net Payment', 'surecart')
-								: __('Paid', 'surecart')}
-						</span>
+					(!!charge?.amount || !!charge?.refunded_amount) && (
+						<ScLineItem
+							style={{
+								width: '100%',
+								'--price-size': 'var(--sc-font-size-x-large)',
+							}}
+						>
+							<span slot="title">
+								{charge?.refunded_amount
+									? __('Net Payment', 'surecart')
+									: __('Paid', 'surecart')}
+							</span>
 
-						<ScFormatNumber
-							slot="price"
-							type="currency"
-							currency={charge?.currency}
-							value={
-								charge?.amount
-									? charge?.amount - charge?.refunded_amount
-									: 0
-							}
-						></ScFormatNumber>
-						<span slot="currency">{charge?.currency}</span>
-					</ScLineItem>
+							<ScFormatNumber
+								slot="price"
+								type="currency"
+								currency={charge?.currency}
+								value={
+									charge?.amount
+										? charge?.amount -
+										  charge?.refunded_amount
+										: 0
+								}
+							></ScFormatNumber>
+							<span slot="currency">{charge?.currency}</span>
+						</ScLineItem>
+					)
 				)
 			}
 		>
