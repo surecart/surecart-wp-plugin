@@ -10,6 +10,7 @@ use SureCart\Integrations\ThriveAutomator\Triggers\PurchaseRevokedTrigger;
 use SureCart\Integrations\ThriveAutomator\Triggers\PurchaseInvokedTrigger;
 use SureCart\Integrations\ThriveAutomator\Triggers\OrderCreatedTrigger;
 use SureCart\Integrations\ThriveAutomator\Triggers\PeriodPaidTrigger;
+use SureCart\Integrations\ThriveAutomator\Triggers\PurchaseUpdatedTrigger;
 
 /**
  * Bootstrap the Thrive Automator integration.
@@ -33,6 +34,7 @@ class ThriveAutomatorService {
 		thrive_automator_register_trigger( PurchaseInvokedTrigger::class );
 		thrive_automator_register_trigger( OrderCreatedTrigger::class );
 		thrive_automator_register_trigger( PeriodPaidTrigger::class );
+		thrive_automator_register_trigger( PurchaseUpdatedTrigger::class );
 
 		// fields.
 		thrive_automator_register_data_field( ProductNameField::class );
