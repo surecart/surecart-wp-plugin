@@ -15,7 +15,7 @@ export class ScOrderSummary {
   private body: HTMLElement;
   @Element() el: HTMLScOrderSummaryElement;
   @Prop() order: Checkout;
-  @Prop() loading: boolean;
+  @Prop() busy: boolean;
   @Prop() empty: boolean;
   @Prop() closedText: string = __('Show Summary', 'surecart');
   @Prop() openText: string = __('Summary', 'surecart');
@@ -35,13 +35,13 @@ export class ScOrderSummary {
 
   handleClick(e) {
     e.preventDefault();
-    if (this.empty && !this.loading) return;
+    if (this.empty && !this.busy) return;
     this.collapsed = !this.collapsed;
   }
 
   renderHeader() {
-    // loading state
-    if (this.loading && !this.order?.id) {
+    // busy state
+    if (this.busy && !this.order?.line_items?.data?.length) {
       return (
         <sc-line-item>
           <sc-skeleton slot="title" style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>
@@ -96,12 +96,12 @@ export class ScOrderSummary {
           ref={el => (this.body = el as HTMLElement)}
           class={{
             'summary__content': true,
-            'summary__content--empty': this.empty && !this.loading,
+            'summary__content--empty': this.empty && !this.busy,
           }}
         >
           <slot />
         </div>
-        {this.empty && !this.loading && <p class="empty">{__('Your cart is empty.', 'surecart')}</p>}
+        {this.empty && !this.busy && <p class="empty">{__('Your cart is empty.', 'surecart')}</p>}
       </div>
     );
   }
@@ -123,4 +123,4 @@ setDefaultAnimation('summary.hide', {
   options: { duration: 250, easing: 'ease' },
 });
 
-openWormhole(ScOrderSummary, ['order', 'loading', 'empty'], false);
+openWormhole(ScOrderSummary, ['order', 'busy', 'empty'], false);

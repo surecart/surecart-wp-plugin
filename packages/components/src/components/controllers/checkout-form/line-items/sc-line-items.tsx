@@ -13,7 +13,7 @@ import { LineItem, LineItemData, Checkout, PriceChoice, Prices, Product } from '
 })
 export class ScLineItems {
   @Prop() order: Checkout;
-  @Prop() loading: boolean;
+  @Prop() busy: boolean;
   @Prop() prices: Prices;
   @Prop() editable: boolean;
   @Prop() removable: boolean;
@@ -69,7 +69,7 @@ export class ScLineItems {
   }
 
   render() {
-    if (!!this.loading && !this.order?.line_items?.data?.length) {
+    if (!!this.busy && !this.order?.line_items?.data?.length) {
       return (
         <sc-line-item>
           <sc-skeleton style={{ 'width': '50px', 'height': '50px', '--border-radius': '0' }} slot="image"></sc-skeleton>
@@ -111,4 +111,4 @@ export class ScLineItems {
   }
 }
 
-openWormhole(ScLineItems, ['order', 'loading', 'prices', 'lockedChoices', 'editLineItems', 'removeLineItems'], false);
+openWormhole(ScLineItems, ['order', 'busy', 'prices', 'lockedChoices', 'editLineItems', 'removeLineItems'], false);
