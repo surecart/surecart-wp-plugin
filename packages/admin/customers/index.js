@@ -1,5 +1,3 @@
-import { render } from '@wordpress/element';
-
 /**
  * register store and entities.
  */
@@ -8,9 +6,10 @@ import '../store/add-entities';
 /**
  * App
  */
-import Customers from './Customers';
+import Customer from './Customer';
+import { render } from '@wordpress/element';
 
 /**
  * Render
  */
-render(<Customers />, document.getElementById('app'));
+render(<Customer />, document.getElementById('app'));
