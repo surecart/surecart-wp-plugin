@@ -242,7 +242,7 @@ export class ScOrder {
           {__('Download Receipt/Invoice', 'surecart')}
         </sc-button>}
 
-        {(this.order?.checkout as Checkout)?.purchases?.data?.length &&
+        {!!(this.order?.checkout as Checkout)?.purchases?.data?.length &&
           <sc-purchase-downloads-list heading={__('Downloads', 'surecart')} purchases={(this.order?.checkout as Checkout)?.purchases?.data}></sc-purchase-downloads-list>}
 
       </sc-spacing>
