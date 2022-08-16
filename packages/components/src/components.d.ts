@@ -1381,9 +1381,9 @@ export namespace Components {
         "total": 'total' | 'subtotal';
     }
     interface ScLineItems {
+        "busy": boolean;
         "editLineItems": boolean;
         "editable": boolean;
-        "loading": boolean;
         "lockedChoices": Array<PriceChoice>;
         "order": Checkout;
         "prices": Prices;
@@ -1662,11 +1662,11 @@ export namespace Components {
         "type": 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
     }
     interface ScOrderSummary {
+        "busy": boolean;
         "closedText": string;
         "collapsed": boolean;
         "collapsible": boolean;
         "empty": boolean;
-        "loading": boolean;
         "openText": string;
         "order": Checkout;
     }
@@ -5558,9 +5558,9 @@ declare namespace LocalJSX {
         "total"?: 'total' | 'subtotal';
     }
     interface ScLineItems {
+        "busy"?: boolean;
         "editLineItems"?: boolean;
         "editable"?: boolean;
-        "loading"?: boolean;
         "lockedChoices"?: Array<PriceChoice>;
         /**
           * Remove the line item.
@@ -5858,11 +5858,11 @@ declare namespace LocalJSX {
         "type"?: 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
     }
     interface ScOrderSummary {
+        "busy"?: boolean;
         "closedText"?: string;
         "collapsed"?: boolean;
         "collapsible"?: boolean;
         "empty"?: boolean;
-        "loading"?: boolean;
         /**
           * Show the toggle
          */

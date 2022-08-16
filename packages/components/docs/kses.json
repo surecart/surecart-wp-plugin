@@ -738,9 +738,9 @@
     "slot": true
   },
   "sc-line-items": {
+    "busy": true,
     "edit-line-items": true,
     "editable": true,
-    "loading": true,
     "locked-choices": true,
     "order": true,
     "prices": true,
@@ -938,11 +938,11 @@
     "slot": true
   },
   "sc-order-summary": {
+    "busy": true,
     "closed-text": true,
     "collapsed": true,
     "collapsible": true,
     "empty": true,
-    "loading": true,
     "open-text": true,
     "order": true,
     "style": true,
