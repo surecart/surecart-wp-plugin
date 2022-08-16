@@ -426,7 +426,7 @@ export class ScSessionProvider {
       setOrder(order, this.formId);
     } catch (e) {
       // reinitalize if order not found.
-      if (['order.not_found'].includes(e?.code)) {
+      if (['checkout.not_found'].includes(e?.code)) {
         clearOrder(this.formId, this.mode);
         return this.initialize();
       }
