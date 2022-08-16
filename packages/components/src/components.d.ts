@@ -881,6 +881,7 @@ export namespace Components {
         "reportValidity": () => Promise<boolean>;
     }
     interface ScDownloadsList {
+        "customerId": string;
         "downloads": Download[];
         "heading": string;
     }
@@ -5006,6 +5007,7 @@ declare namespace LocalJSX {
         "removeInvalid"?: boolean;
     }
     interface ScDownloadsList {
+        "customerId"?: string;
         "downloads"?: Download[];
         "heading"?: string;
     }

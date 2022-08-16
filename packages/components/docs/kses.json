@@ -454,6 +454,7 @@
     "slot": true
   },
   "sc-downloads-list": {
+    "customer-id": true,
     "downloads": true,
     "heading": true,
     "style": true,
