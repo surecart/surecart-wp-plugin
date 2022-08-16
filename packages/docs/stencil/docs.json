@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-08-16T17:52:16",
+  "timestamp": "2022-08-16T21:40:40",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -11150,6 +11150,22 @@
       "usage": {},
       "props": [
         {
+          "name": "busy",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "busy",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "editLineItems",
           "type": "boolean",
           "mutable": false,
@@ -11171,22 +11187,6 @@
           "type": "boolean",
           "mutable": false,
           "attr": "editable",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "loading",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "loading",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
@@ -13643,6 +13643,22 @@
       "usage": {},
       "props": [
         {
+          "name": "busy",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "busy",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "closedText",
           "type": "string",
           "mutable": false,
@@ -13697,22 +13713,6 @@
           "type": "boolean",
           "mutable": false,
           "attr": "empty",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "loading",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "loading",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
