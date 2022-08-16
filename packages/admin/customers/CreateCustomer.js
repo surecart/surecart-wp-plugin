@@ -65,7 +65,7 @@ export default ({ id, setId }) => {
 								label={__('Customer Name', 'surecart')}
 								className="sc-customer-name"
 								help={__(
-									'A name for your product.',
+									"Your customer's full name.",
 									'surecart'
 								)}
 								onScChange={(e) => {
