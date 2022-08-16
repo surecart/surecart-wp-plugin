@@ -1,10 +1,9 @@
 /** @jsx jsx */
 import { css, jsx, Global } from '@emotion/core';
-
-import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
-export default ({ children, title }) => {
+export default ({ children, title, end }) => {
 	return (
 		<Fragment>
 			<Global
@@ -66,6 +65,7 @@ export default ({ children, title }) => {
 								{title}
 							</h1>
 						</div>
+						{!!end && end}
 					</div>
 				</div>
 
