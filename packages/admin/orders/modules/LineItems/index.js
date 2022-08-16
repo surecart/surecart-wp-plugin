@@ -69,18 +69,10 @@ export default ({ order, checkout, loading }) => {
 							href={addQueryArgs(order?.pdf_url, {
 								receipt: true,
 							})}
-							type="default"
-							size="small"
-						>
-							{__('Download Receipt', 'surecart')}
-							<ScIcon slot="prefix" name="download"></ScIcon>
-						</ScButton>
-						<ScButton
-							href={order?.pdf_url}
 							type="primary"
 							size="small"
 						>
-							{__('Download Invoice', 'surecart')}
+							{__('Download Receipt / Invoice', 'surecart')}
 							<ScIcon slot="prefix" name="download"></ScIcon>
 						</ScButton>
 					</div>
