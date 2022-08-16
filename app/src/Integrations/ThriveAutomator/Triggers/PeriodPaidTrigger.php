@@ -7,16 +7,16 @@ use SureCart\Integrations\ThriveAutomator\ThriveAutomatorApp;
 use Thrive\Automator\Items\Trigger;
 
 /**
- * Handles the order created event.
+ * Handles the period paid event.
  */
-class OrderCreatedTrigger extends Trigger {
+class PeriodPaidTrigger extends Trigger {
 	/**
 	 * Get the trigger identifier
 	 *
 	 * @return string
 	 */
 	public static function get_id() {
-		return 'surecart_order_created';
+		return 'surecart_period_paid';
 	}
 
 	/**
@@ -25,7 +25,7 @@ class OrderCreatedTrigger extends Trigger {
 	 * @return string
 	 */
 	public static function get_wp_hook() {
-		return 'surecart/order_created';
+		return 'surecart/period_paid';
 	}
 
 	/**
@@ -43,7 +43,7 @@ class OrderCreatedTrigger extends Trigger {
 	 * @return array
 	 */
 	public static function get_provided_data_objects() {
-		return [ ProductData::get_id(), 'user_data' ];
+		return [ ProductData::get_id() ];
 	}
 
 	/**
@@ -61,7 +61,7 @@ class OrderCreatedTrigger extends Trigger {
 	 * @return string
 	 */
 	public static function get_name() {
-		return __( 'Order Created', 'surecart' );
+		return __( 'Period Paid', 'surecart' );
 	}
 
 	/**
@@ -70,7 +70,7 @@ class OrderCreatedTrigger extends Trigger {
 	 * @return string
 	 */
 	public static function get_description() {
-		return 'This trigger will be fired when order created.';
+		return 'This trigger will be fired when a period paid.';
 	}
 
 	/**
