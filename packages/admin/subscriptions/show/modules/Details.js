@@ -125,14 +125,10 @@ export default ({ subscription, customer, product, loading }) => {
 					>
 						<h1>{customer?.email} </h1>
 					</div>
-					{__('Created on', 'surecart')}{' '}
-					<ScFormatDate
-						date={subscription.created_at}
-						type="timestamp"
-						month="long"
-						day="numeric"
-						year="numeric"
-					></ScFormatDate>
+					{sprintf(
+						__('Created on %s', 'surecart'),
+						formatTime(subscription.created_at)
+					)}
 				</div>
 				<div>
 					<ScSubscriptionStatusBadge subscription={subscription} />
