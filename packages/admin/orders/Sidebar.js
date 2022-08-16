@@ -14,7 +14,7 @@ export default ({ order, checkout, customer, loading }) => {
 			{!!checkout?.shipping_address && (
 				<Address
 					address={checkout?.shipping_address}
-					label={__('Shipping Address', 'surecart')}
+					label={__('Shipping & Tax Address', 'surecart')}
 				/>
 			)}
 			{!!checkout?.tax_identifier && (
