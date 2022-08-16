@@ -111,11 +111,6 @@ export class ScSessionProvider {
     }
   }
 
-  getPaymentIntent() {
-    const processor_type = this.getProcessor();
-    return this.paymentIntents?.[processor_type];
-  }
-
   /**
    * Handles the form submission.
    * @param e
@@ -123,8 +118,6 @@ export class ScSessionProvider {
   @Listen('scFormSubmit')
   async handleFormSubmit() {
     this.scError.emit({});
-
-    const payment_intent = this.getPaymentIntent();
 
     this.scSetState.emit('FINALIZE');
 
@@ -153,20 +146,22 @@ export class ScSessionProvider {
       });
 
       // payment intent must match what we sent to make sure it's attached to an order.
-      if (this.order()?.total_amount > 0 && payment_intent?.id && order?.payment_intent?.id !== payment_intent?.id) {
-        console.error('Payment intent mismatch', payment_intent?.id, order?.payment_intent?.id);
-        this.scError.emit({ message: 'Something went wrong. Please try again.' });
-        return this.scSetState.emit('REJECT');
-      }
+      // if (this.order()?.total_amount > 0 && payment_intent?.id && order?.payment_intent?.id !== payment_intent?.id) {
+      //   console.error('Payment intent mismatch', payment_intent?.id, order?.payment_intent?.id);
+      //   this.scError.emit({ message: 'Something went wrong. Please try again.' });
+      //   return this.scSetState.emit('REJECT');
+      // }
 
       // the order is paid
       if (order?.status === 'paid') {
         this.scPaid.emit();
       }
 
+      console.log(order);
       setOrder(order, this.formId);
       return this.order();
     } catch (e) {
+      console.error(e);
       this.handleErrorResponse(e);
     }
   }
