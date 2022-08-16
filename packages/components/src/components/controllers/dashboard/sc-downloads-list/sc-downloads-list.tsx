@@ -1,5 +1,5 @@
 import { Component, h, Prop, State } from '@stencil/core';
-import apiFetch from '@wordpress/api-fetch';
+import apiFetch from '../../../../functions/fetch';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
