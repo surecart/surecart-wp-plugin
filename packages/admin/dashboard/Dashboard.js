@@ -12,6 +12,7 @@ import {
 	ScDivider,
 	ScBreadcrumbs,
 	ScBreadcrumb,
+	ScSwitch,
 } from '@surecart/components-react';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -38,6 +39,17 @@ export default () => {
 						</ScBreadcrumb>
 					</ScBreadcrumbs>
 				</div>
+			}
+			end={
+				<ScSwitch
+					checked={!liveMode}
+					onScChange={(e) => {
+						setLiveMode(!e.target.checked);
+					}}
+					reversed
+				>
+					{__('Test Mode', 'surecart')}
+				</ScSwitch>
 			}
 		>
 			<Fragment>

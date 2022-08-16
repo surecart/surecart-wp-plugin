@@ -7,13 +7,12 @@ import Revenue from './charts/Revenue';
 import ReportByDropdown from './parts/ReportByDropdown';
 import { css, jsx } from '@emotion/core';
 import { ScDivider, ScFlex } from '@surecart/components-react';
-import { ScSwitch } from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
 import { Fragment, useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
-export default ({ liveMode, setLiveMode }) => {
+export default ({ liveMode }) => {
 	const [startDate, setStartDate] = useState(
 		new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
 	);
@@ -137,15 +136,6 @@ export default ({ liveMode, setLiveMode }) => {
 					/>
 
 					<ScFlex alignItems={'center'}>
-						<ScSwitch
-							checked={!liveMode}
-							onClick={(e) => {
-								e.preventDefault();
-								setLiveMode(!liveMode);
-							}}
-						>
-							{__('Test Mode', 'surecart')}
-						</ScSwitch>
 						<ReportByDropdown
 							value={reportBy}
 							setValue={setReportBy}
