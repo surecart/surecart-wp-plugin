@@ -73,7 +73,9 @@ export default () => {
 							'surecart'
 						)}
 						buttonLabel={__('How To Add Buttons', 'surecart')}
-						buttonUrl={'admin.php?page=sc-products'}
+						buttonUrl={
+							'https://www.youtube.com/channel/UCeD_xj7F6bmSaHqu35gVO-A/featured'
+						}
 					/>
 					<GetStartedBox
 						infoType="primary"
