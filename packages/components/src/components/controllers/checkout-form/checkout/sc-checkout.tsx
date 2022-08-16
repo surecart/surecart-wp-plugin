@@ -187,8 +187,8 @@ export class ScCheckout {
 
       // checkout states
       loading: this.checkoutState === 'loading',
-      busy: ['updating', 'finalizing', 'paid', 'confirmed'].includes(this.checkoutState),
-      paying: ['finalizing', 'paid', 'confirmed'].includes(this.checkoutState),
+      busy: ['updating', 'finalizing', 'paying', 'confirming', 'confirmed'].includes(this?.checkoutState),
+      paying: ['finalizing', 'paying', 'confirming', 'confirmed'].includes(this?.checkoutState),
       empty: !['loading', 'updating'].includes(this.checkoutState) && !this.order()?.line_items?.pagination?.count,
       // checkout states
 
