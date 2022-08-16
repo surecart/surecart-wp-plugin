@@ -1,3 +1,7 @@
+import useEntity from '../../../../hooks/useEntity';
+import Box from '../../../../ui/Box';
+import EditPaymentMethod from './EditPaymentMethod';
+import PaymentMethod from './PaymentMethod';
 import {
 	ScButton,
 	ScCcLogo,
@@ -7,11 +11,7 @@ import {
 	ScIcon,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
-import Box from '../../../../ui/Box';
-import useEntity from '../../../../hooks/useEntity';
 import { useState } from 'react';
-import EditPaymentMethod from './EditPaymentMethod';
-import PaymentMethod from './PaymentMethod';
 
 export default ({ subscription, updateSubscription, loading }) => {
 	const id = subscription?.payment_method?.id || subscription?.payment_method;
@@ -20,7 +20,12 @@ export default ({ subscription, updateSubscription, loading }) => {
 		'payment_method',
 		id,
 		{
-			expand: ['card'],
+			expand: [
+				'card',
+				'bank_account',
+				'paypal_acount',
+				'payment_instrument',
+			],
 		}
 	);
 
