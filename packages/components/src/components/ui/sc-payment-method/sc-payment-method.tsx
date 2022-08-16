@@ -10,6 +10,7 @@ import { BankAccount, PaymentInstrument, PaymentMethod } from '../../../types';
 })
 export class ScPaymentMethod {
   @Prop() paymentMethod: PaymentMethod;
+  @Prop() full: boolean;
 
   renderBankAccountType(type) {
     if (type === 'checking') {
@@ -53,15 +54,8 @@ export class ScPaymentMethod {
       );
     }
 
-    if (this.paymentMethod?.processor_type === 'paypal') {
-      return <sc-tooltip
-        class="payment-method" part="base"
-        type="text"
-        style={{ display: 'inline-block' }}
-        text={
-          this?.paymentMethod?.paypal_account?.payer_email || __('Unknown email', 'surecart')
-        }
-      >
+    if (this.paymentMethod?.paypal_account?.id) {
+      return <div class="payment-method" part="base" style={{ gap: 'var(--sc-spacing-small)'}}>
         <sc-icon
           name="paypal"
           style={{
@@ -70,7 +64,8 @@ export class ScPaymentMethod {
             height: '28px',
           }}
         ></sc-icon>
-      </sc-tooltip>;
+        {this.full && <sc-text style={{'--font-size': 'var(--sc-font-size-small)'}} truncate>{this.paymentMethod?.paypal_account?.email}</sc-text>}
+      </div>;
     }
 
     return this?.paymentMethod?.processor_type;
