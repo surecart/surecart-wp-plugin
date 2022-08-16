@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property    | Attribute | Description | Type         | Default     |
-| ----------- | --------- | ----------- | ------------ | ----------- |
-| `downloads` | --        |             | `Download[]` | `undefined` |
-| `heading`   | `heading` |             | `string`     | `undefined` |
+| Property     | Attribute     | Description | Type         | Default     |
+| ------------ | ------------- | ----------- | ------------ | ----------- |
+| `customerId` | `customer-id` |             | `string`     | `undefined` |
+| `downloads`  | --            |             | `Download[]` | `undefined` |
+| `heading`    | `heading`     |             | `string`     | `undefined` |
 
 
 ## Shadow Parts

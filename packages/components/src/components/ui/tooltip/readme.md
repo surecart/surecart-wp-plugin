@@ -30,13 +30,11 @@
 ### Used by
 
  - [sc-form-control](../form-control)
- - [sc-payment-method](../sc-payment-method)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-form-control --> sc-tooltip
-  sc-payment-method --> sc-tooltip
   style sc-tooltip fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

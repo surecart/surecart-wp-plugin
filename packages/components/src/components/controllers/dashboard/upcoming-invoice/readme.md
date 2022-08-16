@@ -81,8 +81,8 @@ graph TD;
   sc-block-ui --> sc-spinner
   sc-payment-method --> sc-tag
   sc-payment-method --> sc-cc-logo
-  sc-payment-method --> sc-tooltip
   sc-payment-method --> sc-icon
+  sc-payment-method --> sc-text
   sc-cc-logo --> sc-icon
   sc-dashboard-module --> sc-alert
   style sc-upcoming-invoice fill:#f9f,stroke:#333,stroke-width:4px

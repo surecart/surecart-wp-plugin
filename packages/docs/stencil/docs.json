@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-08-15T20:42:09",
+  "timestamp": "2022-08-16T17:52:16",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -2652,8 +2652,7 @@
         }
       ],
       "dependents": [
-        "sc-payment-method",
-        "sc-subscription-payment"
+        "sc-payment-method"
       ],
       "dependencies": [
         "sc-icon"
@@ -2663,9 +2662,6 @@
           "sc-icon"
         ],
         "sc-payment-method": [
-          "sc-cc-logo"
-        ],
-        "sc-subscription-payment": [
           "sc-cc-logo"
         ]
       }
@@ -6782,6 +6778,22 @@
       "usage": {},
       "props": [
         {
+          "name": "customerId",
+          "type": "string",
+          "mutable": false,
+          "attr": "customer-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "downloads",
           "type": "Download[]",
           "mutable": false,
@@ -7749,7 +7761,6 @@
         "sc-pagination",
         "sc-payment-methods-list",
         "sc-subscription",
-        "sc-subscription-payment",
         "sc-subscription-switch",
         "sc-upcoming-invoice"
       ],
@@ -7768,9 +7779,6 @@
           "sc-flex"
         ],
         "sc-subscription": [
-          "sc-flex"
-        ],
-        "sc-subscription-payment": [
           "sc-flex"
         ],
         "sc-subscription-switch": [
@@ -11814,8 +11822,8 @@
         "sc-payment-method": [
           "sc-tag",
           "sc-cc-logo",
-          "sc-tooltip",
-          "sc-icon"
+          "sc-icon",
+          "sc-text"
         ],
         "sc-cc-logo": [
           "sc-icon"
@@ -14580,6 +14588,22 @@
       "usage": {},
       "props": [
         {
+          "name": "full",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "full",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "paymentMethod",
           "type": "PaymentMethod",
           "mutable": false,
@@ -14609,20 +14633,21 @@
       "dependents": [
         "sc-order",
         "sc-payment-methods-list",
+        "sc-subscription-payment",
         "sc-upcoming-invoice"
       ],
       "dependencies": [
         "sc-tag",
         "sc-cc-logo",
-        "sc-tooltip",
-        "sc-icon"
+        "sc-icon",
+        "sc-text"
       ],
       "dependencyGraph": {
         "sc-payment-method": [
           "sc-tag",
           "sc-cc-logo",
-          "sc-tooltip",
-          "sc-icon"
+          "sc-icon",
+          "sc-text"
         ],
         "sc-cc-logo": [
           "sc-icon"
@@ -14631,6 +14656,9 @@
           "sc-payment-method"
         ],
         "sc-payment-methods-list": [
+          "sc-payment-method"
+        ],
+        "sc-subscription-payment": [
           "sc-payment-method"
         ],
         "sc-upcoming-invoice": [
@@ -14820,8 +14848,8 @@
         "sc-payment-method": [
           "sc-tag",
           "sc-cc-logo",
-          "sc-tooltip",
-          "sc-icon"
+          "sc-icon",
+          "sc-text"
         ],
         "sc-cc-logo": [
           "sc-icon"
@@ -19713,8 +19741,7 @@
         "sc-button",
         "sc-empty",
         "sc-choices",
-        "sc-flex",
-        "sc-cc-logo",
+        "sc-payment-method",
         "sc-dashboard-module",
         "sc-form",
         "sc-card",
@@ -19727,8 +19754,7 @@
           "sc-button",
           "sc-empty",
           "sc-choices",
-          "sc-flex",
-          "sc-cc-logo",
+          "sc-payment-method",
           "sc-dashboard-module",
           "sc-form",
           "sc-card",
@@ -19745,6 +19771,12 @@
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ],
+        "sc-payment-method": [
+          "sc-tag",
+          "sc-cc-logo",
+          "sc-icon",
+          "sc-text"
         ],
         "sc-cc-logo": [
           "sc-icon"
@@ -20450,6 +20482,22 @@
           "docs": "Makes the switch a required field.",
           "docsTags": [],
           "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "reversed",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "reversed",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
           "values": [
             {
               "type": "boolean"
@@ -21462,6 +21510,7 @@
         "sc-charges-list",
         "sc-invoices-list",
         "sc-orders-list",
+        "sc-payment-method",
         "sc-stripe-element",
         "sc-stripe-payment-element",
         "sc-subscription-details",
@@ -21476,6 +21525,9 @@
           "sc-text"
         ],
         "sc-orders-list": [
+          "sc-text"
+        ],
+        "sc-payment-method": [
           "sc-text"
         ],
         "sc-stripe-element": [
@@ -22509,15 +22561,11 @@
         }
       ],
       "dependents": [
-        "sc-form-control",
-        "sc-payment-method"
+        "sc-form-control"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-form-control": [
-          "sc-tooltip"
-        ],
-        "sc-payment-method": [
           "sc-tooltip"
         ]
       }
@@ -22837,8 +22885,8 @@
         "sc-payment-method": [
           "sc-tag",
           "sc-cc-logo",
-          "sc-tooltip",
-          "sc-icon"
+          "sc-icon",
+          "sc-text"
         ],
         "sc-cc-logo": [
           "sc-icon"
