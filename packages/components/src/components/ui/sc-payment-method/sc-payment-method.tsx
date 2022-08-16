@@ -1,7 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
-import { PaymentInstrument, PaymentMethod } from '../../../types';
+import { BankAccount, PaymentInstrument, PaymentMethod } from '../../../types';
 
 @Component({
   tag: 'sc-payment-method',
@@ -11,18 +11,35 @@ import { PaymentInstrument, PaymentMethod } from '../../../types';
 export class ScPaymentMethod {
   @Prop() paymentMethod: PaymentMethod;
 
+  renderBankAccountType(type) {
+    if (type === 'checking') {
+      return __('Checking', 'surecart');
+    }
+    if (type === 'savings') {
+      return __('Savings', 'surecart');
+    }
+  }
+
   render() {
+    if ((this.paymentMethod?.bank_account as BankAccount)?.id) {
+      const account = (this.paymentMethod?.bank_account as BankAccount);
+      return <div class="payment-method" part="base">
+        <span>{this.renderBankAccountType(account?.account_type)}</span>
+        **** {account?.last4}
+      </div>
+    }
+
     if ((this?.paymentMethod?.payment_instrument as PaymentInstrument)?.instrument_type) {
-			return (
-				<sc-tag type="info" pill>
-					<span style={{ textTransform: 'capitalize' }}>
-						{
-							(this?.paymentMethod?.payment_instrument as PaymentInstrument)?.instrument_type
-						}{' '}
-					</span>
-				</sc-tag>
-			);
-		}
+      return (
+        <sc-tag type="info" pill>
+          <span style={{ textTransform: 'capitalize' }}>
+            {
+              (this?.paymentMethod?.payment_instrument as PaymentInstrument)?.instrument_type
+            }{' '}
+          </span>
+        </sc-tag>
+      );
+    }
 
     if (this.paymentMethod?.card?.brand) {
       return (
