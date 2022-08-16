@@ -38,6 +38,9 @@ export default ({ subscriptionId }) => {
 						'checkout.charge',
 						'checkout.payment_method',
 						'payment_method.card',
+						'payment_method.payment_instrument',
+						'payment_method.paypal_account',
+						'payment_method.bank_account',
 					],
 				},
 			];

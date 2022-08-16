@@ -1002,6 +1002,7 @@
     "slot": true
   },
   "sc-payment-method": {
+    "full": true,
     "payment-method": true,
     "style": true,
     "id": true,

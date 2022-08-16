@@ -34,7 +34,13 @@ export default ({ order, checkout, loading }) => {
 				'charge',
 				{
 					checkout_ids: checkout?.id ? [checkout?.id] : null,
-					expand: ['payment_method', 'payment_method.card'],
+					expand: [
+						'payment_method',
+						'payment_method.card',
+						'payment_method.payment_instrument',
+						'payment_method.paypal_account',
+						'payment_method.bank_account',
+					],
 				},
 			];
 			return {

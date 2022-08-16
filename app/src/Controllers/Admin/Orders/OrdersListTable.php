@@ -161,7 +161,7 @@ class OrdersListTable extends ListTable {
 			[
 				'status' => $this->getStatus(),
 			]
-		)->with( [ 'checkout', 'checkout.charge', 'checkout.customer', 'checkout.payment_method', 'payment_method.card', 'checkout.purchases', 'payment_method.payment_instrument' ] )
+		)->with( [ 'checkout', 'checkout.charge', 'checkout.customer', 'checkout.payment_method', 'checkout.purchases', 'payment_method.card', 'payment_method.payment_instrument', 'payment_method.paypal_account', 'payment_method.bank_account' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'orders' ),

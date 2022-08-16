@@ -61,7 +61,7 @@ export class ScOrder {
   async getOrder() {
     this.order = (await await apiFetch({
       path: addQueryArgs(`surecart/v1/orders/${this.orderId}`, {
-        expand: ['checkout', 'checkout.purchases', 'purchase.product', 'product', 'product.downloads', 'download.media', 'checkout.line_items', 'checkout.payment_method', 'payment_method.card', 'payment_method.bank_account', 'line_item.price', 'price.product', 'charge'],
+        expand: ['checkout', 'checkout.purchases', 'purchase.product', 'product', 'product.downloads', 'download.media', 'checkout.line_items', 'checkout.payment_method', 'payment_method.card', 'payment_method.payment_instrument', 'payment_method.paypal_account', 'payment_method.bank_account', 'line_item.price', 'price.product', 'charge'],
       }),
     })) as Order;
   }

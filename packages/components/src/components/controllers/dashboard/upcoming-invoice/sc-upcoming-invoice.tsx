@@ -84,6 +84,9 @@ export class ScUpcomingInvoice {
           'discount.promotion',
           'discount.coupon',
           'payment_method.card',
+          'payment_method.payment_instrument',
+          'payment_method.paypal_account',
+          'payment_method.bank_account'
         ],
         subscription: {
           price: this.priceId,

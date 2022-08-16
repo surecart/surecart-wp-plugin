@@ -1769,6 +1769,7 @@ export namespace Components {
         "stripePaymentIntent": PaymentIntent;
     }
     interface ScPaymentMethod {
+        "full": boolean;
         "paymentMethod": PaymentMethod;
     }
     interface ScPaymentMethodCreate {
@@ -5985,6 +5986,7 @@ declare namespace LocalJSX {
         "stripePaymentIntent"?: PaymentIntent;
     }
     interface ScPaymentMethod {
+        "full"?: boolean;
         "paymentMethod"?: PaymentMethod;
     }
     interface ScPaymentMethodCreate {

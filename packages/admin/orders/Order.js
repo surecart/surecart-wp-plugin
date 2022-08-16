@@ -38,6 +38,9 @@ export default () => {
 			'charge.payment_method',
 			'checkout.tax_identifier',
 			'payment_method.card',
+			'payment_method.payment_instrument',
+			'payment_method.paypal_account',
+			'payment_method.bank_account',
 			'line_item.price',
 			'price.product',
 		],
@@ -57,6 +60,9 @@ export default () => {
 						'charge',
 						'charge.payment_method',
 						'payment_method.card',
+						'payment_method.payment_instrument',
+						'payment_method.paypal_account',
+						'payment_method.bank_account',
 					],
 				},
 				true
@@ -69,7 +75,13 @@ export default () => {
 				order?.checkout?.charge,
 				{
 					checkout_ids: [order?.checkout?.id],
-					expand: ['payment_method', 'payment_method.card'],
+					expand: [
+						'payment_method',
+						'payment_method.card',
+						'payment_method.payment_instrument',
+						'payment_method.paypal_account',
+						'payment_method.bank_account',
+					],
 				},
 				true
 			);

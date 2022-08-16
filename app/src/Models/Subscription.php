@@ -44,22 +44,24 @@ class Subscription extends Model {
 		}
 
 		// do the purchase updated event.
-		do_action(
-			'surecart/purchase_updated',
-			$updated->purchase,
-			[
-				'data' => [
-					'object'              => $updated->purchase->toArray(),
-					'previous_attributes' => array_filter(
-						[
-							// conditionally have the previous product and quantity as the previous attributes.
-							'product'  => $updated->purchase->product_id !== $existing->purchase->product_id ? ( $existing->purchase->product_id ?? null ) : null,
-							'quantity' => $updated->purchase->quantity !== $existing->purchase->quantity ? ( $existing->purchase->quantity ?? 1 ) : null,
-						]
-					),
-				],
-			]
-		);
+		if ( ! empty( $updated->purchase ) ) {
+			do_action(
+				'surecart/purchase_updated',
+				$updated->purchase,
+				[
+					'data' => [
+						'object'              => $updated->purchase->toArray(),
+						'previous_attributes' => array_filter(
+							[
+								// conditionally have the previous product and quantity as the previous attributes.
+								'product'  => $updated->purchase->product_id !== $existing->purchase->product_id ? ( $existing->purchase->product_id ?? null ) : null,
+								'quantity' => $updated->purchase->quantity !== $existing->purchase->quantity ? ( $existing->purchase->quantity ?? 1 ) : null,
+							]
+						),
+					],
+				]
+			);
+		}
 
 		return $this;
 	}
