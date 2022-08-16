@@ -14,12 +14,17 @@
 .switch {
   display: inline-flex;
   align-items: flex-start;
+  gap: 0.7em;
   font-family: var(--sc-input-font-family);
   font-size: var(--sc-input-font-size-medium);
   font-weight: var(--sc-input-font-weight);
   color: var(--sc-input-color);
   vertical-align: middle;
   cursor: pointer;
+
+  &--reversed {
+    flex-direction: row-reverse;
+  }
 }
 
 .switch__control {
@@ -115,7 +120,6 @@
 }
 
 .switch__label {
-  margin-left: 0.7em;
   user-select: none;
   line-height: var(--height);
 }
