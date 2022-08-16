@@ -1,8 +1,8 @@
-import { __, sprintf } from '@wordpress/i18n';
-import { formatTime } from '../../../util/time';
-import { ScTag, ScSkeleton, ScInput } from '@surecart/components-react';
 import Box from '../../../ui/Box';
+import { formatTime } from '../../../util/time';
 import Copy from './Copy';
+import { ScTag, ScSkeleton, ScInput } from '@surecart/components-react';
+import { __, sprintf } from '@wordpress/i18n';
 
 export default ({ license, updateLicense, loading }) => {
 	const renderTag = () => {
