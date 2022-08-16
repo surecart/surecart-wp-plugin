@@ -1,6 +1,7 @@
 import { Component, h, Prop, State } from '@stencil/core';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
 
 import { Download, Media } from '../../../../types';
 
@@ -11,6 +12,7 @@ import { Download, Media } from '../../../../types';
 })
 export class ScDownloadsList {
   @Prop() downloads: Download[];
+  @Prop() customerId: string;
   @Prop() heading: string;
   @State() busy: boolean;
   @State() error: string;
@@ -19,7 +21,9 @@ export class ScDownloadsList {
 		try {
       this.busy = true;
 			const media = await apiFetch({
-				path: `surecart/v1/medias/${id}?expose_for=60`,
+				path: addQueryArgs(`surecart/v1/customers/${this.customerId}/expose/${id}`, {
+          expose_for: 60,
+        }),
 			}) as Media;
 			if (!media?.url) {
 				throw {

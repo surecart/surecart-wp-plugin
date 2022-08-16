@@ -116,8 +116,9 @@ class DownloadController extends BaseController {
 					->id( 'customer-purchase' )
 					->with(
 						[
-							'heading'   => __( 'Downloads', 'surecart' ),
-							'downloads' => array_values(
+							'heading'    => __( 'Downloads', 'surecart' ),
+							'customerId' => $purchase->customer->id ?? '',
+							'downloads'  => array_values(
 								array_filter(
 									$purchase->product->downloads->data ?? [],
 									function( $download ) {
