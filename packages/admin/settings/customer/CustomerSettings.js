@@ -199,7 +199,7 @@ export default () => {
 					)}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							'Send an reminding your subscribers that their reorders are coming up.',
+							'Send a reminder to your subscribers 3 days before their subscription renews.',
 							'surecart'
 						)}
 					</span>
