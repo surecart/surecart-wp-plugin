@@ -2483,6 +2483,7 @@ export namespace Components {
           * Makes the switch a required field.
          */
         "required": boolean;
+        "reversed": boolean;
         /**
           * The switch's value attribute.
          */
@@ -6801,6 +6802,7 @@ declare namespace LocalJSX {
           * Makes the switch a required field.
          */
         "required"?: boolean;
+        "reversed"?: boolean;
         /**
           * The switch's value attribute.
          */

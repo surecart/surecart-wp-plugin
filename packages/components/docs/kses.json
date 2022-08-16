@@ -1413,6 +1413,7 @@
     "invalid": true,
     "name": true,
     "required": true,
+    "reversed": true,
     "value": true,
     "style": true,
     "id": true,
