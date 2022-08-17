@@ -6,6 +6,7 @@ namespace SureCart\Integrations\ThriveAutomator;
 // use SureCart\Integrations\ThriveAutomator\Actions\OrderStatusUpdate;
 
 use SureCart\Integrations\ThriveAutomator\Actions\InvokePurchaseAction;
+use SureCart\Integrations\ThriveAutomator\Actions\RevokePurchaseAction;
 use SureCart\Integrations\ThriveAutomator\DataObjects\ProductData;
 use SureCart\Integrations\ThriveAutomator\Fields\ProductIDField;
 use SureCart\Integrations\ThriveAutomator\Fields\ProductNameField;
@@ -44,6 +45,7 @@ class ThriveAutomatorService {
 
 		// actions
 		thrive_automator_register_action( InvokePurchaseAction::class );
+		thrive_automator_register_action( RevokePurchaseAction::class );
 
 		// fields.
 		thrive_automator_register_data_field( ProductNameField::class );
