@@ -4,6 +4,8 @@ namespace SureCart\Integrations\ThriveAutomator;
 
 // use SureCart\Integrations\ThriveAutomator\ActionFields\ProductsField;
 // use SureCart\Integrations\ThriveAutomator\Actions\OrderStatusUpdate;
+
+use SureCart\Integrations\ThriveAutomator\Actions\InvokePurchaseAction;
 use SureCart\Integrations\ThriveAutomator\DataObjects\ProductData;
 use SureCart\Integrations\ThriveAutomator\Fields\ProductIDField;
 use SureCart\Integrations\ThriveAutomator\Fields\ProductNameField;
@@ -39,6 +41,9 @@ class ThriveAutomatorService {
 		thrive_automator_register_trigger( PeriodPaidTrigger::class );
 		thrive_automator_register_trigger( PurchaseUpdatedTrigger::class );
 		thrive_automator_register_trigger( RefundSucceededTrigger::class );
+
+		// actions
+		thrive_automator_register_action( InvokePurchaseAction::class );
 
 		// fields.
 		thrive_automator_register_data_field( ProductNameField::class );

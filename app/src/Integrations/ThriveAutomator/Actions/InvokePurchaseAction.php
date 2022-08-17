@@ -35,6 +35,6 @@ class InvokePurchaseAction extends Action {
 	}
 
 	public function do_action( $data ) {
-		return false;
+		return true;
 	}
 }
