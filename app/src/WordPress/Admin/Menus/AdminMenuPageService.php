@@ -100,6 +100,9 @@ class AdminMenuPageService {
 	 */
 	public function registerAdminPages() {
 		$entitlements = \SureCart::account()->entitlements;
+		if ( ! ApiToken::get() ) {
+			$this->slug = 'sc-getting-started';
+		}
 
 		$logo = file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'images/icon.svg' );
 		\add_menu_page( __( 'Dashboard', 'surecart' ), __( 'SureCart', 'surecart' ), 'install_plugins', $this->slug, '__return_false', 'data:image/svg+xml;base64,' . base64_encode( $logo ), 30 );
@@ -107,7 +110,7 @@ class AdminMenuPageService {
 		// not yet installed.
 		if ( ! ApiToken::get() ) {
 			$this->pages = [
-				'get-started'     => \add_submenu_page( $this->slug, __( 'Dashboard', 'surecart' ), __( 'Dashboard', 'surecart' ), 'install_plugins', $this->slug, '__return_false' ),
+				'get-started'     => \add_submenu_page( $this->slug, __( 'Get Started', 'surecart' ), __( 'Get Started', 'surecart' ), 'install_plugins', $this->slug, '__return_false' ),
 				'complete-signup' => \add_submenu_page( null, __( 'Complete Signup', 'surecart' ), __( 'Complete Signup', 'surecart' ), 'install_plugins', 'sc-complete-signup', '__return_false' ),
 				'settings'        => \add_submenu_page( $this->slug, __( 'Settings', 'surecart' ), __( 'Settings', 'surecart' ), 'manage_options', 'sc-settings', '__return_false' ),
 			];
