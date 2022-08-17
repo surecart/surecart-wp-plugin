@@ -2,6 +2,7 @@
 
 namespace SureCart\Integrations\ThriveAutomator\DataObjects;
 
+use SureCart\Integrations\ThriveAutomator\Fields\ProductIDField;
 use SureCart\Integrations\ThriveAutomator\Fields\ProductNameField;
 use Thrive\Automator\Items\Data_Object;
 use SureCart\Models\Product;
@@ -40,6 +41,7 @@ class ProductData extends Data_Object {
 	public static function get_fields() {
 		return [
 			ProductNameField::get_id(),
+			ProductIDField::get_id(),
 			'archived',
 			'shipping_enabled',
 			'tax_category',

@@ -1,9 +1,11 @@
 <?php
+
 namespace SureCart\Integrations\ThriveAutomator;
 
 // use SureCart\Integrations\ThriveAutomator\ActionFields\ProductsField;
 // use SureCart\Integrations\ThriveAutomator\Actions\OrderStatusUpdate;
 use SureCart\Integrations\ThriveAutomator\DataObjects\ProductData;
+use SureCart\Integrations\ThriveAutomator\Fields\ProductIDField;
 use SureCart\Integrations\ThriveAutomator\Fields\ProductNameField;
 use SureCart\Integrations\ThriveAutomator\Triggers\PurchaseCreatedTrigger;
 use SureCart\Integrations\ThriveAutomator\Triggers\PurchaseRevokedTrigger;
@@ -40,6 +42,7 @@ class ThriveAutomatorService {
 
 		// fields.
 		thrive_automator_register_data_field( ProductNameField::class );
+		thrive_automator_register_data_field( ProductIDField::class );
 
 		// data objects.
 		thrive_automator_register_data_object( ProductData::class );
