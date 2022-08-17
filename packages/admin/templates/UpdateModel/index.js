@@ -1,17 +1,14 @@
 /** @jsx jsx */
-import { css, jsx, Global } from '@emotion/core';
-
-import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
-import { SnackbarList } from '@wordpress/components';
-import { PostLockedModal } from '@wordpress/editor';
-import UnsavedChangesWarning from './UnsavedChangesWarning';
-import ErrorBoundary from '../../components/error-boundary';
-import { ScForm } from '@surecart/components-react';
-import useSnackbar from '../../hooks/useSnackbar';
-import admin from '../../styles/admin';
-import Notifications from '../../components/Notifications';
 import Notices from '../../components/Notices';
+import Notifications from '../../components/Notifications';
+import ErrorBoundary from '../../components/error-boundary';
+import admin from '../../styles/admin';
+import UnsavedChangesWarning from './UnsavedChangesWarning';
+import { css, jsx, Global } from '@emotion/core';
+import { ScForm } from '@surecart/components-react';
+import { PostLockedModal } from '@wordpress/editor';
+import { Fragment } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 export default ({
 	children,
@@ -22,8 +19,6 @@ export default ({
 	sidebar,
 	onError,
 }) => {
-	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
-
 	return (
 		<Fragment>
 			<Global

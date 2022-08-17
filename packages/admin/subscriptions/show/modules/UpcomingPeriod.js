@@ -6,6 +6,7 @@ import { addQueryArgs } from '@wordpress/url';
 
 export default ({ subscriptionId }) => {
 	const [upcoming, setUpcoming] = useState();
+	const [error, setError] = useState();
 	const [loadingUpcoming, setLoadingUpcoming] = useState(false);
 
 	useEffect(() => {
@@ -41,11 +42,13 @@ export default ({ subscriptionId }) => {
 			setUpcoming(response);
 		} catch (e) {
 			console.error(e);
-			handleError(e);
+			setError(e);
 		} finally {
 			setLoadingUpcoming(false);
 		}
 	};
+
+	if (error) return null;
 
 	return <LineItems period={upcoming} loading={loadingUpcoming} />;
 };
