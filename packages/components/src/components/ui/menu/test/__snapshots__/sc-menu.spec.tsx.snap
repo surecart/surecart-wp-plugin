@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-menu renders 1`] = `
+<sc-menu>
+  <mock:shadow-root>
+    <div class="menu" part="base" role="menu" tabindex="0">
+      <slot></slot>
+    </div>
+  </mock:shadow-root>
+</sc-menu>
+`;

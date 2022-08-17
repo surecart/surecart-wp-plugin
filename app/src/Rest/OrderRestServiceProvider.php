@@ -4,8 +4,6 @@ namespace SureCart\Rest;
 
 use SureCart\Rest\RestServiceInterface;
 use SureCart\Controllers\Rest\OrderController;
-use SureCart\Form\FormValidationService;
-use SureCart\Models\Form;
 use SureCart\Models\User;
 
 /**
@@ -31,41 +29,7 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 	 *
 	 * @var array
 	 */
-	protected $methods = [ 'index', 'create', 'find', 'edit' ];
-
-	/**
-	 * Register Additional REST Routes
-	 *
-	 * @return void
-	 */
-	public function registerRoutes() {
-		register_rest_route(
-			"$this->name/v$this->version",
-			$this->endpoint . '/(?P<id>\S+)/finalize/',
-			[
-				[
-					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => $this->callback( $this->controller, 'finalize' ),
-					'permission_callback' => [ $this, 'finalize_permissions_check' ],
-				],
-				// Register our schema callback.
-				'schema' => [ $this, 'get_item_schema' ],
-			]
-		);
-		register_rest_route(
-			"$this->name/v$this->version",
-			$this->endpoint . '/(?P<id>\S+)/confirm/',
-			[
-				[
-					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => $this->callback( $this->controller, 'confirm' ),
-					'permission_callback' => [ $this, 'confirm_permissions_check' ],
-				],
-				// Register our schema callback.
-				'schema' => [ $this, 'get_item_schema' ],
-			]
-		);
-	}
+	protected $methods = [ 'index', 'find' ];
 
 	/**
 	 * Get our sample schema for a post.
@@ -86,38 +50,11 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 			'type'       => 'object',
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
-				'id'          => [
+				'id' => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
-				],
-				'currency'    => [
-					'description' => esc_html__( 'The currency for the session.', 'surecart' ),
-					'type'        => 'string',
-				],
-				'metadata'    => [
-					'description' => esc_html__( 'Metadata for the order.', 'surecart' ),
-					'type'        => 'object',
-					'context'     => [ 'edit' ],
-				],
-				'customer_id' => [
-					'description' => esc_html__( 'The customer id for the order.', 'surecart' ),
-					'type'        => 'string',
-					'context'     => [ 'edit' ],
-				],
-				'customer'    => [
-					'description' => esc_html__( 'The customer for the session.', 'surecart' ),
-					'type'        => 'object',
-					'context'     => [ 'edit' ],
-				],
-				'line_items'  => [
-					'description' => esc_html__( 'The line items for the session.', 'surecart' ),
-					'type'        => 'object',
-				],
-				'discount'    => [
-					'description' => esc_html__( 'The discount for the session.', 'surecart' ),
-					'type'        => 'object',
 				],
 			],
 		];
@@ -126,53 +63,12 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 	}
 
 	/**
-	 * Finalizing an order requires some server side form validation.
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
-	 */
-	public function finalize_permissions_check( \WP_REST_Request $request ) {
-		// form id is required.
-		if ( empty( $request['form_id'] ) ) {
-			return new \WP_Error( 'form_id_required', esc_html__( 'Form ID is required.', 'surecart' ), [ 'status' => 400 ] );
-		}
-
-		// get form.
-		$form = get_post( $request['form_id'] );
-
-		if ( ! $form || 'sc_form' !== Form::getPostType() ) {
-			// TODO: check form manual registration on server here. (ce_register_form)
-			// form not found.
-			return new \WP_Error( 'form_id_invalid', esc_html__( 'Form ID is invalid.', 'surecart' ), [ 'status' => 400 ] );
-		}
-
-		// validate form input.
-		$validator = new FormValidationService( $form->post_content, $request->get_body_params() );
-		$validated = $validator->validate();
-		if ( is_wp_error( $validated ) ) {
-			return $validated;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Confirming an order was paid for.
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
-	 */
-	public function confirm_permissions_check( \WP_REST_Request $request ) {
-		return $this->get_item_permissions_check( $request );
-	}
-
-	/**
 	 * Filters a response based on the context defined in the schema.
 	 *
 	 * @since 4.7.0
 	 *
-	 * @param array  $data    Response data to filter.
-	 * @param string $context Context defined in the schema.
+	 * @param array|\WP_REST_Response $data    Response data to filter.
+	 * @param string                  $context Context defined in the schema.
 	 * @return array Filtered response.
 	 */
 	public function filter_response_by_context( $data, $context ) {
@@ -205,7 +101,7 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'read_sc_order', $request->get_params() );
 	}
 
 	/**
@@ -216,35 +112,5 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 	 */
 	public function get_items_permissions_check( $request ) {
 		return current_user_can( 'read_sc_orders', $request->get_params() );
-	}
-
-	/**
-	 * Anyone can create.
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
-	 */
-	public function create_item_permissions_check( $request ) {
-		return true;
-	}
-
-	/**
-	 * Update permissions.
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
-	 */
-	public function update_item_permissions_check( $request ) {
-		return true;
-	}
-
-	/**
-	 * Nobody can delete.
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return false
-	 */
-	public function delete_item_permissions_check( $request ) {
-		return false;
 	}
 }

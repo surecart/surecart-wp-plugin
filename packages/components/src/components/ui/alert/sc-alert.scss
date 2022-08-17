@@ -42,6 +42,10 @@
     background-color: var(--sc-color-info-100);
     color: var(--sc-color-info-800);
 
+    a {
+      color: var(--sc-color-info-900);
+    }
+
     .alert__title {
       color: var(--sc-color-info-900);
     }
@@ -49,6 +53,10 @@
   &.alert--danger {
     background-color: var(--sc-color-danger-100);
     color: var(--sc-color-danger-800);
+
+    a {
+      color: var(--sc-color-danger-900);
+    }
 
     .alert__title {
       color: var(--sc-color-danger-900);

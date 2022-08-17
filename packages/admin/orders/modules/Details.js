@@ -4,31 +4,25 @@ import { __, sprintf } from '@wordpress/i18n';
 
 import { css, jsx } from '@emotion/core';
 import { formatTime } from '../../util/time';
+import {
+	ScOrderStatusBadge,
+	ScSkeleton,
+	ScTag,
+} from '@surecart/components-react';
 
-export default ({ order, loading }) => {
+export default ({ order, checkout, loading }) => {
 	if (loading) {
 		return (
 			<div
 				css={css`
 					display: flex;
-					justify-content: space-between;
-					align-items: center;
-					gap: 2em;
+					flex-direction: column;
+					gap: 1.5em;
 					margin-bottom: 2em;
 				`}
 			>
-				<div>
-					<div
-						css={css`
-							display: flex;
-							align-items: center;
-							gap: 0.5em;
-						`}
-					>
-						<sc-skeleton style={{ flex: 1 }}></sc-skeleton>
-					</div>
-					<sc-skeleton></sc-skeleton>
-				</div>
+				<ScSkeleton style={{ width: '45%' }}></ScSkeleton>
+				<ScSkeleton style={{ width: '65%' }}></ScSkeleton>
 			</div>
 		);
 	}
@@ -55,16 +49,12 @@ export default ({ order, loading }) => {
 						gap: 0.5em;
 					`}
 				>
-					<h1>
-						<sc-format-number
-							type="currency"
-							currency={order?.currency}
-							value={order?.amount_due}
-						></sc-format-number>
-					</h1>
-					<sc-order-status-badge
-						status={order?.status}
-					></sc-order-status-badge>
+					<h1>#{order?.number}</h1>
+					{!checkout?.live_mode && (
+						<ScTag type="warning">
+							{__('Test Mode', 'surecart')}
+						</ScTag>
+					)}
 				</div>
 				{sprintf(
 					__('Created on %s', 'surecart'),
@@ -72,11 +62,9 @@ export default ({ order, loading }) => {
 				)}
 			</div>
 			<div>
-				{!order?.live_mode && (
-					<sc-tag type="warning">
-						{__('Test Mode', 'surecart')}
-					</sc-tag>
-				)}
+				<ScOrderStatusBadge
+					status={order?.status || checkout?.status}
+				></ScOrderStatusBadge>
 			</div>
 		</div>
 	);

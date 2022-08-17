@@ -1,6 +1,6 @@
 import { Component, h, Prop, Watch, Element, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { Order, TaxProtocol } from '../../../types';
+import { Checkout, TaxProtocol } from '../../../types';
 
 @Component({
   tag: 'sc-form-components-validator',
@@ -13,7 +13,7 @@ export class ScFormComponentsValidator {
   @Prop() disabled: boolean;
 
   /** The order */
-  @Prop() order: Order;
+  @Prop() order: Checkout;
 
   /** The tax protocol */
   @Prop() taxProtocol: TaxProtocol;

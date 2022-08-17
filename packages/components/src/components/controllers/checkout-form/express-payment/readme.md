@@ -14,7 +14,7 @@
 | `dividerText`       | `divider-text`        |             | `string`               | `undefined` |
 | `formId`            | `form-id`             |             | `number \| string`     | `undefined` |
 | `hasPaymentOptions` | `has-payment-options` |             | `boolean`              | `undefined` |
-| `order`             | --                    |             | `Order`                | `undefined` |
+| `order`             | --                    |             | `Checkout`             | `undefined` |
 | `processor`         | `processor`           |             | `"paypal" \| "stripe"` | `undefined` |
 
 

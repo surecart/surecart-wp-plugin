@@ -23,8 +23,6 @@ class LoginController extends RestController {
 			return $user;
 		}
 
-		$redirect = $request->get_param( 'redirect_url' );
-
-		return [ 'redirect_url' => $redirect ?? \SureCart::pages()->url( 'dashboard' ) ];
+		return [ 'redirect_url' => $request->get_param( 'redirect_url' ) ];
 	}
 }

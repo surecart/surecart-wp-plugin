@@ -115,7 +115,7 @@ Default.parameters = {
           order: '5f4810d9-04aa-4bd0-a2be-8c2eb7b3ffd5',
           customer: '7ec4178c-8da0-4634-b383-539e41d00d66',
           discount: null,
-          latest_invoice: '15f9cbe9-326a-4394-92ed-8d3237dcf505',
+          current_period: '15f9cbe9-326a-4394-92ed-8d3237dcf505',
           payment_method: {
             id: 'f8377938-5a5c-4503-abf5-c03c5d655523',
             object: 'payment_method',

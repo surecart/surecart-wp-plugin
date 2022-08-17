@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { ScText } from '@surecart/components-react';
 
 import { __ } from '@wordpress/i18n';
 
@@ -24,7 +25,7 @@ export default ({ order, loading }) => {
 			>
 				{Object.keys(order?.metadata).map((key) => (
 					<div>
-						<sc-text
+						<ScText
 							tag="h3"
 							style={{
 								'--font-weight': 'var(--sc-font-weight-bold)',
@@ -32,7 +33,7 @@ export default ({ order, loading }) => {
 							}}
 						>
 							{key.toUpperCase()}
-						</sc-text>
+						</ScText>
 						<div>{order?.metadata[key]}</div>
 					</div>
 				))}

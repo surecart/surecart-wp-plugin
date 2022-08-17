@@ -2,9 +2,8 @@ import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 
-import { hasSubscription } from '../../../../functions/line-items';
 import { getProcessorData } from '../../../../functions/processor';
-import { Order, Processor, ProcessorName } from '../../../../types';
+import { Checkout, PaymentIntent, Processor, ProcessorName } from '../../../../types';
 
 @Component({
   tag: 'sc-payment',
@@ -19,7 +18,7 @@ export class ScPayment {
   @Prop() processors: Processor[] = [];
 
   /** Checkout Session from sc-checkout. */
-  @Prop() order: Order;
+  @Prop() order: Checkout;
 
   /** Is this loading. */
   @Prop() loading: boolean;
@@ -50,6 +49,9 @@ export class ScPayment {
 
   /** Use the Stripe payment element. */
   @Prop() stripePaymentElement: boolean;
+
+  /** The stripe payment intent. */
+  @Prop() stripePaymentIntent: PaymentIntent;
 
   /** Hold the stripe processor */
   @State() stripe: Processor;
@@ -91,8 +93,9 @@ export class ScPayment {
    */
   renderStripePaymentElement() {
     if (this.stripePaymentElement) {
-      return <sc-order-stripe-payment-element order={this.order} mode={this.mode} processors={this.processors} currency-code={this.currencyCode}></sc-order-stripe-payment-element>;
+      return <sc-stripe-payment-element order={this.order} paymentIntent={this.stripePaymentIntent} />
     }
+
     const data = getProcessorData(this.processors, 'stripe', this.mode);
     return (
       <div class="sc-payment__stripe-card-element">
@@ -102,7 +105,7 @@ export class ScPayment {
           publishableKey={data?.publishable_key}
           accountId={data?.account_id}
           secureText={this.secureNotice}
-        ></sc-stripe-element>
+        />
         <sc-secure-notice>{this.secureNotice}</sc-secure-notice>
       </div>
     );
@@ -142,7 +145,23 @@ export class ScPayment {
             <span slot="summary" class="sc-payment-toggle-summary">
               <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
             </span>
-            <div class="sc-payment-instructions">{__('You will be prompted by PayPal to complete your purchase securely.', 'surecart')}</div>
+            <sc-card>
+              <sc-payment-selected
+                label={__(
+                  'PayPal selected for check out.',
+                  'surecart'
+                )}>
+                  <sc-icon
+										slot="icon"
+										name="paypal"
+										style={{ width: '80px' }}
+									/>
+                  {__(
+                    'Another step will appear after submitting your order to complete your purchase details.',
+                    'surecart'
+                  )}
+              </sc-payment-selected>
+            </sc-card>
           </sc-toggle>
         </sc-toggles>
       </sc-form-control>
@@ -216,11 +235,9 @@ export class ScPayment {
   }
 
   render() {
-    // no payment is required if we dont have a subscription and the total amount is 0.
-    if (!hasSubscription(this.order)) {
-      if (this.order?.line_items?.pagination?.count >= 1 && this.order?.total_amount === 0) {
-        return null;
-      }
+    // payment is not required for this order.
+    if (this.order?.payment_method_required === false) {
+      return null;
     }
 
     // we don't have any processors.
@@ -258,4 +275,4 @@ export class ScPayment {
   }
 }
 
-openWormhole(ScPayment, ['processor', 'processors', 'order', 'mode', 'paymentMethod', 'loading', 'busy', 'currencyCode', 'stripePaymentElement'], false);
+openWormhole(ScPayment, ['processor', 'processors', 'order', 'mode', 'paymentMethod', 'loading', 'busy', 'currencyCode', 'stripePaymentElement', 'stripePaymentIntent'], false);

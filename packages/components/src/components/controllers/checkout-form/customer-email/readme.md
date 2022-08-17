@@ -17,7 +17,7 @@
 | `invalid`     | `invalid`     | This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API. | `boolean`                        | `false`     |
 | `label`       | `label`       | The input's label.                                                                                                                                                                                            | `string`                         | `undefined` |
 | `loggedIn`    | `logged-in`   | Is the user logged in.                                                                                                                                                                                        | `boolean`                        | `undefined` |
-| `order`       | --            | (passed from the sc-checkout component automatically)                                                                                                                                                         | `Order`                          | `undefined` |
+| `order`       | --            | (passed from the sc-checkout component automatically)                                                                                                                                                         | `Checkout`                       | `undefined` |
 | `pill`        | `pill`        | Draws a pill-style input with rounded edges.                                                                                                                                                                  | `boolean`                        | `false`     |
 | `placeholder` | `placeholder` | The input's placeholder text.                                                                                                                                                                                 | `string`                         | `undefined` |
 | `readonly`    | `readonly`    | Makes the input readonly.                                                                                                                                                                                     | `boolean`                        | `false`     |
@@ -29,14 +29,14 @@
 
 ## Events
 
-| Event                | Description                                 | Type                 |
-| -------------------- | ------------------------------------------- | -------------------- |
-| `scBlur`             | Emitted when the control loses focus.       | `CustomEvent<void>`  |
-| `scChange`           | Emitted when the control's value changes.   | `CustomEvent<void>`  |
-| `scClear`            | Emitted when the clear button is activated. | `CustomEvent<void>`  |
-| `scFocus`            | Emitted when the control gains focus.       | `CustomEvent<void>`  |
-| `scInput`            | Emitted when the control receives input.    | `CustomEvent<void>`  |
-| `scUpdateOrderState` |                                             | `CustomEvent<Order>` |
+| Event                | Description                                 | Type                    |
+| -------------------- | ------------------------------------------- | ----------------------- |
+| `scBlur`             | Emitted when the control loses focus.       | `CustomEvent<void>`     |
+| `scChange`           | Emitted when the control's value changes.   | `CustomEvent<void>`     |
+| `scClear`            | Emitted when the clear button is activated. | `CustomEvent<void>`     |
+| `scFocus`            | Emitted when the control gains focus.       | `CustomEvent<void>`     |
+| `scInput`            | Emitted when the control receives input.    | `CustomEvent<void>`     |
+| `scUpdateOrderState` |                                             | `CustomEvent<Checkout>` |
 
 
 ## Methods

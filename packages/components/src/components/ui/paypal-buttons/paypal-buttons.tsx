@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 
 import apiFetch from '../../../functions/fetch';
 import { hasSubscription } from '../../../functions/line-items';
-import { Order, PaymentIntent } from '../../../types';
+import { Checkout, PaymentIntent } from '../../../types';
 
 @Component({
   tag: 'sc-paypal-buttons',
@@ -34,7 +34,7 @@ export class ScPaypalButtons {
   @Prop() mode: 'test' | 'live';
 
   /** The order. */
-  @Prop() order: Order;
+  @Prop() order: Checkout;
 
   /** Buttons to render */
   @Prop() buttons: string[] = ['paypal', 'card'];
@@ -57,7 +57,10 @@ export class ScPaypalButtons {
   @Event() scPaid: EventEmitter<void>;
 
   @Watch('order')
-  handleOrderChange() {
+  handleOrderChange(val, prev) {
+    if ( val?.updated_at === prev?.updated_at) {
+      return;
+    }
     this.cardContainer.innerHTML = '';
     this.paypalContainer.innerHTML = '';
     this.loadScript();
@@ -115,11 +118,13 @@ export class ScPaypalButtons {
        */
       onApprove: async () => {
         try {
+          this.scSetState.emit('PAYING');
           const intent = (await apiFetch({
             method: 'PATCH',
             path: `surecart/v1/payment_intents/${this.order?.payment_intent?.id}/capture`,
           })) as PaymentIntent;
           if (['succeeded', 'pending', 'requires_approval'].includes(intent?.status)) {
+            this.scSetState.emit('PAID');
             this.scPaid.emit();
           } else {
             this.scError.emit({ code: 'could_not_capture', message: __('The payment did not process. Please try again.', 'surecart') });
@@ -137,6 +142,7 @@ export class ScPaypalButtons {
        * @param err
        */
       onError: err => {
+        console.error(err);
         this.scError.emit({ code: err?.code, message: err?.message });
         this.scSetState.emit('REJECT');
       },
@@ -148,7 +154,7 @@ export class ScPaypalButtons {
         const checkout = this.el.closest('sc-checkout') as HTMLScCheckoutElement;
 
         // submit and get the finalized order
-        const order = (await checkout.submit()) as Order;
+        const order = (await checkout.submit()) as Checkout;
 
         // an error occurred. reject with the error.
         if (order instanceof Error) {

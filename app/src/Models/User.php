@@ -79,6 +79,22 @@ class User implements ArrayAccess, JsonSerializable {
 	}
 
 	/**
+	 * Does the user have this customer id?
+	 *
+	 * @param string $id The customer id.
+	 *
+	 * @return boolean
+	 */
+	protected function hasCustomerId( $id ) {
+		foreach ( (array) $this->customerIds() as $saved_id ) {
+			if ( $saved_id === $id ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Set the customer id in the user meta.
 	 *
 	 * @param string $id Customer id.

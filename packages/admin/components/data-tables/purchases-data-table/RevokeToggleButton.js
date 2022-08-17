@@ -1,13 +1,12 @@
+import useEntity from '../../../mixins/useEntity';
+import { ScButton, ScTooltip } from '@surecart/components-react';
+import apiFetch from '@wordpress/api-fetch';
+import { useState } from '@wordpress/element';
 import { __, _n } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
-import { useState } from '@wordpress/element';
-import apiFetch from '@wordpress/api-fetch';
-import { ScButton, ScTooltip } from '@surecart/components-react';
-import useEntity from '../../../mixins/useEntity';
 
 export default ({ purchase }) => {
 	const [loading, setLoading] = useState(false);
-	const { receivePurchase } = useEntity('purchase', purchase?.id);
 
 	const toggleRevoke = async (id, revoke) => {
 		const r = confirm(

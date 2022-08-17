@@ -57,7 +57,7 @@ export default () => {
 								amount={
 									item.ad_hoc_amount !== null
 										? item.ad_hoc_amount
-										: item.price.amount
+										: item.subtotal_amount
 								}
 								currency={item?.price?.currency}
 								trialDurationDays={

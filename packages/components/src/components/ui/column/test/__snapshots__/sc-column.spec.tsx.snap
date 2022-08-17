@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-column renders 1`] = `
+<sc-column>
+  <mock:shadow-root>
+    <slot></slot>
+  </mock:shadow-root>
+</sc-column>
+`;

@@ -1,5 +1,5 @@
-import { Order } from '../../../../../types';
-import { getQueryArg } from '@wordpress/url';
+import { Checkout } from '../../../../../types';
+import { getQueryArg, removeQueryArgs } from '@wordpress/url';
 
 export const getURLLineItems = () => {
   // check the url query first
@@ -27,8 +27,9 @@ export const getSessionId = (formId, order, modified) => {
   }
 
   // check the url query first
-  const urlId = getQueryArg(window.location.href, 'order');
+  const urlId = getQueryArg(window.location.href, 'checkout_id');
   if (urlId) {
+    window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'checkout_id'));
     return urlId;
   }
 
@@ -68,7 +69,7 @@ export const findInput = (el, name) => {
     .find((el: HTMLInputElement) => el.name === name) as HTMLElement;
 };
 
-export const populateInputs = (el, order: Order) => {
+export const populateInputs = (el, order: Checkout) => {
   // handle our own built-in inputs.
   const names = ['name', 'email'];
 

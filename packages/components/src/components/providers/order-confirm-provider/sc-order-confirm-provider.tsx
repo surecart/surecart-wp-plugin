@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
+import { addQueryArgs, getQueryArg, removeQueryArgs } from '@wordpress/url';
 
 import apiFetch from '../../../functions/fetch';
 import { parseFormData } from '../../../functions/form-data';
@@ -32,11 +32,10 @@ export class ScOrderConfirmProvider {
   /** Success url. */
   @Prop() successUrl: string;
 
-  /** The order is confirmed event. */
-  @Event() scConfirmed: EventEmitter<void>;
-
   /** The order is paid event. */
   @Event() scOrderPaid: EventEmitter<Order>;
+
+  @Event() scSetState: EventEmitter<string>;
 
   /** Error event. */
   @Event() scError: EventEmitter<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>;
@@ -47,6 +46,22 @@ export class ScOrderConfirmProvider {
     this.confirmOrder();
   }
 
+  componentDidLoad() {
+    this.checkRedirectParams();
+  }
+
+  checkRedirectParams() {
+    const status = getQueryArg(window.location.href, 'redirect_status');
+    if (status === 'succeeded') {
+      // paid state.
+      this.scSetState.emit('PAID');
+      // so the back button does not re-confirm.
+      window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'redirect_status'));
+      // confirm order
+      this.confirmOrder();
+    }
+  }
+
   /** Confirm the order. */
   async confirmOrder() {
     const json = await this.el.querySelector('sc-form').getFormJson();
@@ -54,22 +69,24 @@ export class ScOrderConfirmProvider {
     try {
       const confirmed = (await apiFetch({
         method: 'PATCH',
-        path: addQueryArgs(`surecart/v1/orders/${this.order?.id}/confirm`, [expand]),
+        path: addQueryArgs(`surecart/v1/checkouts/${this.order?.id}/confirm`, [expand]),
         data,
       })) as Order;
-      // emit the confirmed event to trigger listeners to redirect to the success url, etc.
-      this.scConfirmed.emit();
+      this.scSetState.emit('CONFIRMED');
       // emit the order paid event for tracking scripts.
       this.scOrderPaid.emit(confirmed);
     } catch (e) {
       console.error(e);
       this.scError.emit(e);
     } finally {
+       // we always want to redirect, regardless of the outcome here.
       const order = this.order?.id;
-      // make sure we clear the order state no matter what.
-      clearOrder(this.formId, this.mode);
-      // we always want to redirect, regardless of the outcome here.
-      window.location.assign(addQueryArgs(this.successUrl, { order }));
+      // make sure form state changes before redirecting
+      setTimeout(() => {
+        // make sure we clear the order state no matter what.
+        clearOrder(this.formId, this.mode);
+        window.location.assign(addQueryArgs(this.successUrl, { order }));
+      }, 50);
     }
   }
 

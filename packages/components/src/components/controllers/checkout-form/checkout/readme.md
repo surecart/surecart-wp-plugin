@@ -7,33 +7,34 @@
 
 ## Properties
 
-| Property                      | Attribute                       | Description                                                   | Type                           | Default     |
-| ----------------------------- | ------------------------------- | ------------------------------------------------------------- | ------------------------------ | ----------- |
-| `alignment`                   | `alignment`                     | Alignment                                                     | `"center" \| "full" \| "wide"` | `undefined` |
-| `currencyCode`                | `currency-code`                 | Currency to use for this checkout.                            | `string`                       | `'usd'`     |
-| `customer`                    | --                              | Stores the current customer                                   | `Customer`                     | `undefined` |
-| `disableComponentsValidation` | `disable-components-validation` | Should we disable components validation                       | `boolean`                      | `undefined` |
-| `editLineItems`               | `edit-line-items`               | Can we edit line items?                                       | `boolean`                      | `true`      |
-| `formId`                      | `form-id`                       | The checkout form id                                          | `number`                       | `undefined` |
-| `loggedIn`                    | `logged-in`                     | Is this user logged in?                                       | `boolean`                      | `undefined` |
-| `mode`                        | `mode`                          | Are we in test or live mode.                                  | `"live" \| "test"`             | `'live'`    |
-| `modified`                    | `modified`                      | When the form was modified.                                   | `string`                       | `undefined` |
-| `persistSession`              | `persist-session`               | Whether to persist the session in the browser between visits. | `boolean`                      | `true`      |
-| `prices`                      | --                              | An array of prices to pre-fill in the form.                   | `PriceChoice[]`                | `[]`        |
-| `processors`                  | --                              | Processors enabled for this form.                             | `Processor[]`                  | `undefined` |
-| `removeLineItems`             | `remove-line-items`             | Can we remove line items?                                     | `boolean`                      | `true`      |
-| `stripePaymentElement`        | `stripe-payment-element`        | Use the Stripe payment element.                               | `boolean`                      | `false`     |
-| `successUrl`                  | `success-url`                   | Where to go on success                                        | `string`                       | `''`        |
-| `taxProtocol`                 | --                              | The account tax protocol                                      | `TaxProtocol`                  | `undefined` |
+| Property                      | Attribute                       | Description                                                   | Type                                                                             | Default     |
+| ----------------------------- | ------------------------------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------- | ----------- |
+| `alignment`                   | `alignment`                     | Alignment                                                     | `"center" \| "full" \| "wide"`                                                   | `undefined` |
+| `currencyCode`                | `currency-code`                 | Currency to use for this checkout.                            | `string`                                                                         | `'usd'`     |
+| `customer`                    | --                              | Stores the current customer                                   | `Customer`                                                                       | `undefined` |
+| `disableComponentsValidation` | `disable-components-validation` | Should we disable components validation                       | `boolean`                                                                        | `undefined` |
+| `editLineItems`               | `edit-line-items`               | Can we edit line items?                                       | `boolean`                                                                        | `true`      |
+| `formId`                      | `form-id`                       | The checkout form id                                          | `number`                                                                         | `undefined` |
+| `loadingText`                 | --                              |                                                               | `{ finalizing: string; paying: string; confirming: string; confirmed: string; }` | `undefined` |
+| `loggedIn`                    | `logged-in`                     | Is this user logged in?                                       | `boolean`                                                                        | `undefined` |
+| `mode`                        | `mode`                          | Are we in test or live mode.                                  | `"live" \| "test"`                                                               | `'live'`    |
+| `modified`                    | `modified`                      | When the form was modified.                                   | `string`                                                                         | `undefined` |
+| `persistSession`              | `persist-session`               | Whether to persist the session in the browser between visits. | `boolean`                                                                        | `true`      |
+| `prices`                      | --                              | An array of prices to pre-fill in the form.                   | `PriceChoice[]`                                                                  | `[]`        |
+| `processors`                  | --                              | Processors enabled for this form.                             | `Processor[]`                                                                    | `undefined` |
+| `removeLineItems`             | `remove-line-items`             | Can we remove line items?                                     | `boolean`                                                                        | `true`      |
+| `stripePaymentElement`        | `stripe-payment-element`        | Use the Stripe payment element.                               | `boolean`                                                                        | `false`     |
+| `successUrl`                  | `success-url`                   | Where to go on success                                        | `string`                                                                         | `''`        |
+| `taxProtocol`                 | --                              | The account tax protocol                                      | `TaxProtocol`                                                                    | `undefined` |
 
 
 ## Events
 
-| Event              | Description               | Type                         |
-| ------------------ | ------------------------- | ---------------------------- |
-| `scOrderError`     | Order has an error.       | `CustomEvent<ResponseError>` |
-| `scOrderFinalized` | Order has been finalized. | `CustomEvent<Order>`         |
-| `scOrderUpdated`   | Order has been updated.   | `CustomEvent<Order>`         |
+| Event              | Description                  | Type                         |
+| ------------------ | ---------------------------- | ---------------------------- |
+| `scOrderError`     | Checkout has an error.       | `CustomEvent<ResponseError>` |
+| `scOrderFinalized` | Checkout has been finalized. | `CustomEvent<Checkout>`      |
+| `scOrderUpdated`   | Checkout has been updated.   | `CustomEvent<Checkout>`      |
 
 
 ## Methods
@@ -64,6 +65,8 @@ Type: `Promise<boolean>`
 ### Depends on
 
 - [sc-alert](../../../ui/alert)
+- [sc-checkout-unsaved-changes-warning](../../../providers/checkout-unsaved-changes-warning)
+- [sc-processor-provider](../../../providers/processor-provider)
 - [sc-form-state-provider](../../../providers/form-state-provider)
 - [sc-form-error-provider](../../../providers/form-error-provider)
 - [sc-form-components-validator](../../../providers/form-components-validator)
@@ -75,6 +78,8 @@ Type: `Promise<boolean>`
 ```mermaid
 graph TD;
   sc-checkout --> sc-alert
+  sc-checkout --> sc-checkout-unsaved-changes-warning
+  sc-checkout --> sc-processor-provider
   sc-checkout --> sc-form-state-provider
   sc-checkout --> sc-form-error-provider
   sc-checkout --> sc-form-components-validator

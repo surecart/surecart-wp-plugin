@@ -11,6 +11,7 @@ export default ({
 	empty,
 	columns,
 	isFetching,
+	footer,
 	page,
 	setPage,
 	...props
@@ -23,20 +24,10 @@ export default ({
 			items={(data || [])
 				.sort((a, b) => b.created_at - a.created_at)
 				.map((subscription) => subscriptionItem(subscription))}
-			loading={isLoading}
 			error={error}
-			footer={
-				pagination ? (
-					<PaginationFooter
-						showing={data?.length}
-						total={pagination?.total}
-						total_pages={pagination?.total_pages}
-						page={page}
-						isFetching={isFetching}
-						setPage={setPage}
-					/>
-				) : null
-			}
+			loading={isLoading}
+			updating={isFetching}
+			footer={!!footer && footer}
 			{...props}
 		/>
 	);

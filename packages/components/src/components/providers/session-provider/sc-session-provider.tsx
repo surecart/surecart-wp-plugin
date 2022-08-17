@@ -1,12 +1,12 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { removeQueryArgs } from '@wordpress/url';
+import { getQueryArg, removeQueryArgs } from '@wordpress/url';
 import { parseFormData } from '../../../functions/form-data';
 import { clearOrder, getOrder, setOrder } from '../../../store/checkouts';
 
-import { createOrUpdateOrder, finalizeSession } from '../../../services/session';
-import { FormStateSetter, PaymentIntents, ProcessorName, LineItemData, Order, PriceChoice, LineItem } from '../../../types';
-import { getSessionId, getURLCoupon, getURLLineItems, removeSessionId } from './helpers/session';
+import { createOrUpdateOrder, finalizeSession, getCheckout } from '../../../services/session';
+import { FormStateSetter, PaymentIntents, ProcessorName, LineItemData, PriceChoice, LineItem, Checkout } from '../../../types';
+import { getSessionId, getURLCoupon, getURLLineItems } from './helpers/session';
 
 @Component({
   tag: 'sc-session-provider',
@@ -53,10 +53,10 @@ export class ScSessionProvider {
   @Prop() stripePaymentElement: boolean;
 
   /** Update line items event */
-  @Event() scUpdateOrderState: EventEmitter<Order>;
+  @Event() scUpdateOrderState: EventEmitter<Checkout>;
 
   /** Update line items event */
-  @Event() scUpdateDraftState: EventEmitter<Order>;
+  @Event() scUpdateDraftState: EventEmitter<Checkout>;
 
   @Event() scPaid: EventEmitter<void>;
 
@@ -70,7 +70,7 @@ export class ScSessionProvider {
   handleUpdateSession(e) {
     const { data, options } = e.detail;
     if (options?.silent) {
-      this.update({ ...this.defaultFormData(), ...data });
+      this.update(data);
     } else {
       this.loadUpdate(data);
     }
@@ -111,11 +111,6 @@ export class ScSessionProvider {
     }
   }
 
-  getPaymentIntent() {
-    const processor_type = this.getProcessor();
-    return this.paymentIntents?.[processor_type];
-  }
-
   /**
    * Handles the form submission.
    * @param e
@@ -123,8 +118,6 @@ export class ScSessionProvider {
   @Listen('scFormSubmit')
   async handleFormSubmit() {
     this.scError.emit({});
-
-    const payment_intent = this.getPaymentIntent();
 
     this.scSetState.emit('FINALIZE');
 
@@ -134,19 +127,11 @@ export class ScSessionProvider {
 
     // first lets make sure the session is updated before we process it.
     try {
-      await this.update({ ...this.defaultFormData(), ...data });
+      await this.update(data);
     } catch (e) {
       console.error(e);
       this.scSetState.emit('REJECT');
       this.handleErrorResponse(e);
-    }
-
-    // Important: Stripe needs a payment intent ahead of time, or the
-    // order will not be attached to the payment.
-    if (this.order()?.total_amount > 0 && !payment_intent && this.getProcessor() === 'stripe' && this.stripePaymentElement) {
-      this.scError.emit({ message: 'Something went wrong. Please try again.' });
-      console.error('No payment intent found.');
-      return this.scSetState.emit('REJECT');
     }
 
     // first validate server-side and get key
@@ -156,48 +141,27 @@ export class ScSessionProvider {
         data,
         query: {
           ...this.defaultFormQuery(),
-          ...(payment_intent?.id ? { payment_intent_id: payment_intent?.id } : {}),
         },
         processor: this.getProcessor(),
       });
 
       // payment intent must match what we sent to make sure it's attached to an order.
-      if (this.order()?.total_amount > 0 && payment_intent?.id && order?.payment_intent?.id !== payment_intent?.id) {
-        console.error('Payment intent mismatch', payment_intent?.id, order?.payment_intent?.id);
-        this.scError.emit({ message: 'Something went wrong. Please try again.' });
-        return this.scSetState.emit('REJECT');
-      }
+      // if (this.order()?.total_amount > 0 && payment_intent?.id && order?.payment_intent?.id !== payment_intent?.id) {
+      //   console.error('Payment intent mismatch', payment_intent?.id, order?.payment_intent?.id);
+      //   this.scError.emit({ message: 'Something went wrong. Please try again.' });
+      //   return this.scSetState.emit('REJECT');
+      // }
 
       // the order is paid
       if (order?.status === 'paid') {
         this.scPaid.emit();
       }
 
+      console.log(order);
       setOrder(order, this.formId);
       return this.order();
     } catch (e) {
-      // handle old price versions by refreshing.
-      if (e?.additional_errors?.[0]?.code === 'order.line_items.old_price_versions') {
-        await this.loadUpdate({
-          id: this.order()?.id,
-          data: {
-            status: 'draft',
-            refresh_price_versions: true,
-          },
-        });
-        return;
-      }
-      // make it a draft again and resubmit if status is incorrect.
-      if (['order.invalid_status_transition'].includes(e?.code)) {
-        await this.loadUpdate({
-          id: this.order()?.id,
-          data: {
-            status: 'draft',
-          },
-        });
-        this.handleFormSubmit();
-        return;
-      }
+      console.error(e);
       this.handleErrorResponse(e);
     }
   }
@@ -228,7 +192,29 @@ export class ScSessionProvider {
   }
 
   /** Handle the error response. */
-  handleErrorResponse(e) {
+  async handleErrorResponse(e) {
+    if (e?.additional_errors?.[0]?.code === 'order.line_items.old_price_versions') {
+      await this.loadUpdate({
+        id: this.order()?.id,
+        data: {
+          status: 'draft',
+          refresh_price_versions: true,
+        },
+      });
+      return;
+    }
+
+    if (['order.invalid_status_transition'].includes(e?.code)) {
+      await this.loadUpdate({
+        id: this.order()?.id,
+        data: {
+          status: 'draft',
+        },
+      });
+      this.handleFormSubmit();
+      return;
+    }
+
     // expired
     if (e?.code === 'rest_cookie_invalid_nonce') {
       this.scSetState.emit('EXPIRE');
@@ -237,28 +223,19 @@ export class ScSessionProvider {
 
     // paid
     if (e?.code === 'readonly') {
-      removeSessionId(this.groupId);
+      clearOrder(this.formId, this.mode);
       window.location.assign(removeQueryArgs(window.location.href, 'order'));
       return;
     }
 
-    // something went wrong
-    if (e?.message) {
-      this.scError.emit(e);
-    }
-
-    // handle curl timeout errors.
-    if (e?.code === 'http_request_failed') {
-      this.scError.emit({ message: 'Something went wrong. Please reload the page and try again.' });
-    }
-
+    console.log('emit', e);
+    this.scError.emit(e);
     this.scSetState.emit('REJECT');
   }
 
   /** Default data always sent with the session. */
   defaultFormData() {
     return {
-      return_url: window.top.location.href,
       currency: this.order()?.currency || this.currencyCode,
       live_mode: this.mode !== 'test',
       group_key: this.groupId,
@@ -268,6 +245,7 @@ export class ScSessionProvider {
   defaultFormQuery() {
     return {
       form_id: this.formId,
+      ...(this.stripePaymentElement ? { stage_processor_type: 'stripe' } : {})
     };
   }
 
@@ -278,6 +256,19 @@ export class ScSessionProvider {
 
   /** Find or create an order */
   findOrCreateOrder() {
+    /** Redirect status has succeeded. */
+    const status = getQueryArg(window.location.href, 'redirect_status');
+    if (status === 'succeeded') {
+      return this.fetch();
+    };
+
+    // we have a checkout id in the url, so clear any saved order.
+    const checkoutId = getQueryArg(window.location.href, 'checkout_id');
+    if (!!checkoutId) {
+      clearOrder(this.formId, this.mode);
+      return this.initialize();
+    }
+
     // get initial data from the url
     const initial_data = this.getInitialDataFromUrl() as { line_items?: LineItem[]; discount?: { promotion_code: string } };
 
@@ -293,14 +284,14 @@ export class ScSessionProvider {
     // we have line items, don't load any existing session (overwrite)
     if (initial_data?.line_items?.length) {
       clearOrder(this.formId, this.mode);
-      return this.fetch(initial_data);
+      return this.loadUpdate(initial_data);
     }
 
     // check if we have an existing session.
     const id = getSessionId(this.groupId, this.order, this.modified);
 
-    // fetch or initialize a session.
-    return id && this.persist ? this.fetch(initial_data) : this.initialize(initial_data);
+    // update or initialize a session.
+    return id && this.persist ? this.update(initial_data) : this.initialize(initial_data);
   }
 
   getInitialDataFromUrl() {
@@ -391,28 +382,46 @@ export class ScSessionProvider {
   }
 
   /** Fetch a session. */
-  async fetch(args = {}) {
-    this.loadUpdate({ status: 'draft', ...args });
+  async fetch(query = {}) {
+    try {
+      this.scSetState.emit('FETCH');
+      const checkout = await getCheckout({
+        id: this.getSessionId(),
+        query: {
+          ...this.defaultFormQuery(),
+          ...query,
+        }
+      }) as Checkout;
+      setOrder(checkout, this.formId);
+      this.scSetState.emit('RESOLVE');
+    } catch (e) {
+      this.handleErrorResponse(e);
+    }
   }
 
   /** Update a session */
-  async update(data = {}, query = {}) {
+  async update(data: any = {}, query = {}) {
     try {
       const order = (await createOrUpdateOrder({
         id: this.getSessionId(),
         data: {
           ...this.defaultFormData(),
           ...data,
+          metadata: {
+            ...data?.metadata || {},
+            page_url: window.location.href,
+            page_id: window?.scData?.page_id
+          }
         },
         query: {
           ...this.defaultFormQuery(),
           ...query,
         },
-      })) as Order;
+      })) as Checkout;
       setOrder(order, this.formId);
     } catch (e) {
       // reinitalize if order not found.
-      if (['order.not_found'].includes(e?.code)) {
+      if (['checkout.not_found'].includes(e?.code)) {
         clearOrder(this.formId, this.mode);
         return this.initialize();
       }
@@ -425,7 +434,7 @@ export class ScSessionProvider {
   async loadUpdate(data = {}) {
     try {
       this.scSetState.emit('FETCH');
-      await this.update({ ...this.defaultFormData(), ...data });
+      await this.update(data);
       this.scSetState.emit('RESOLVE');
     } catch (e) {
       this.handleErrorResponse(e);

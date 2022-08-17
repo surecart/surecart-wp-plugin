@@ -15,7 +15,7 @@
 | `icon`         | `icon`          | Icon to show.                    | `string`                                                                                     | `undefined` |
 | `loading`      | `loading`       | Is the order loading.            | `boolean`                                                                                    | `undefined` |
 | `mode`         | `mode`          | Is this created in "test" mode   | `"live" \| "test"`                                                                           | `'live'`    |
-| `order`        | --              | The current order.               | `Order`                                                                                      | `undefined` |
+| `order`        | --              | The current order.               | `Checkout`                                                                                   | `undefined` |
 | `paying`       | `paying`        | Is the order paying.             | `boolean`                                                                                    | `undefined` |
 | `processor`    | `processor`     |                                  | `"paypal" \| "paypal-card" \| "stripe"`                                                      | `undefined` |
 | `processors`   | --              | Keys and secrets for processors. | `Processor[]`                                                                                | `undefined` |

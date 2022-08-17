@@ -1,27 +1,49 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
-import {
-	ScBlockUi,
-	ScButton,
-	ScDropdown,
-	ScIcon,
-	ScMenu,
-	ScMenuItem,
-	ScStackedListRow,
-	ScTag,
-} from '@surecart/components-react';
-import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch, select } from '@wordpress/data';
-import { useState, Fragment } from '@wordpress/element';
-import useSnackbar from '../../hooks/useSnackbar';
+import { ScBlockUi, ScButton, ScDropdown, ScFormatBytes, ScIcon, ScMenu, ScMenuDivider, ScMenuItem, ScStackedListRow, ScTag } from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
+import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch } from '@wordpress/data';
+import { Fragment, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { store as noticesStore } from '@wordpress/notices';
 
-export default ({ download, className }) => {
-	const [error, setError] = useState(null);
+import MediaLibrary from '../../components/MediaLibrary';
+
+export default ({ download, product, className }) => {
+	const { createSuccessNotice, createErrorNotice } =
+		useDispatch(noticesStore);
 	const [loading, setLoading] = useState(false);
-	const { addSnackbarNotice } = useSnackbar();
 	const { saveEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
+
+	const replaceItem = async (media) => {
+		const r = confirm(
+			__(
+				'Are you sure you want to replace the file in this download? This may push out a new release to everyone.',
+				'surecart'
+			)
+		);
+		if (!r) return;
+		await saveEntityRecord('surecart', 'download', {
+			id: download?.id,
+			media: media?.id,
+		});
+	};
+
+	const handleError = (e) => {
+		createErrorNotice(
+			e?.message || __('Something went wrong', 'surecart'),
+			{ type: 'snackbar' }
+		);
+		e?.additional_errors.forEach((e) => {
+			createErrorNotice(e?.message, {
+				type: 'snackbar',
+			});
+		});
+	};
+
+	// Is this the current release.
+	const isCurrentRelease = product?.current_release_download === download?.id;
 
 	const onRemove = async () => {
 		const r = confirm(
@@ -41,10 +63,12 @@ export default ({ download, className }) => {
 				{},
 				{ throwOnError: true }
 			);
-			addSnackbarNotice({ content: __('Download removed.', 'surecart') });
+			createSuccessNotice(__('Download removed.', 'surecart'), {
+				type: 'snackbar',
+			});
 		} catch (e) {
 			console.error(e);
-			setError(e?.message || __('Something went wrong', 'surecart'));
+			handleError(e);
 		} finally {
 			setLoading(false);
 		}
@@ -62,14 +86,17 @@ export default ({ download, className }) => {
 				},
 				{ throwOnError: true }
 			);
-			addSnackbarNotice({
-				content: download?.archived
+			createSuccessNotice(
+				download?.archived
 					? __('Download un-archived.', 'surecart')
 					: __('Download archived.', 'surecart'),
-			});
+				{
+					type: 'snackbar',
+				}
+			);
 		} catch (e) {
 			console.error(e);
-			setError(e?.message || __('Something went wrong', 'surecart'));
+			handleError(e);
 		} finally {
 			setLoading(false);
 		}
@@ -89,7 +116,7 @@ export default ({ download, className }) => {
 			downloadFile(media?.url, media.filename);
 		} catch (e) {
 			console.error(e);
-			setError(e?.message || __('Something went wrong', 'surecart'));
+			handleError(e);
 		} finally {
 			setLoading(false);
 		}
@@ -117,11 +144,6 @@ export default ({ download, className }) => {
 
 	return (
 		<Fragment>
-			{!!error && (
-				<sc-alert open={!!error} type="danger">
-					{error}
-				</sc-alert>
-			)}
 			<ScStackedListRow
 				className={className}
 				style={{ position: 'relative' }}
@@ -141,7 +163,7 @@ export default ({ download, className }) => {
 							display: flex;
 							align-items: center;
 							justify-content: center;
-							padding: 1em;
+							padding: 1.25em;
 							background: var(--sc-color-gray-200);
 							border-radius: var(--sc-border-radius-small);
 						`}
@@ -155,6 +177,11 @@ export default ({ download, className }) => {
 							white-space: nowrap;
 						`}
 					>
+						{isCurrentRelease && (
+							<ScTag type="info" size="small">
+								{__('Current Release', 'surecart')}
+							</ScTag>
+						)}
 						<div
 							css={css`
 								overflow: hidden;
@@ -168,12 +195,24 @@ export default ({ download, className }) => {
 						<div
 							css={css`
 								display: flex;
+								align-items: center;
 								gap: 0.5em;
 							`}
 						>
-							<sc-format-bytes
-								value={download?.media?.byte_size}
-							></sc-format-bytes>
+							<ScFormatBytes value={download?.media?.byte_size} />
+							{!!download?.media?.release_json?.version && (
+								<ScTag
+									type="primary"
+									size="small"
+									style={{
+										'--sc-tag-primary-background-color':
+											'#f3e8ff',
+										'--sc-tag-primary-color': '#6b21a8',
+									}}
+								>
+									v{download?.media?.release_json?.version}
+								</ScTag>
+							)}
 							{download?.archived && (
 								<div>
 									<ScTag type="warning" size="small">
@@ -190,10 +229,28 @@ export default ({ download, className }) => {
 						<ScIcon name="more-horizontal" />
 					</ScButton>
 					<ScMenu>
+						<MediaLibrary
+							onSelect={replaceItem}
+							multiple={false}
+							render={({ setOpen }) => {
+								return (
+									<ScMenuItem onClick={() => setOpen(true)}>
+										<ScIcon name="repeat" slot="prefix" />
+										{__('Replace', 'surecart')}
+									</ScMenuItem>
+								);
+							}}
+						></MediaLibrary>
+
+						<ScMenuDivider></ScMenuDivider>
+
 						<ScMenuItem onClick={downloadItem}>
 							<ScIcon name="download-cloud" slot="prefix" />
 							{__('Download', 'surecart')}
 						</ScMenuItem>
+
+						<ScMenuDivider></ScMenuDivider>
+
 						<ScMenuItem onClick={toggleDisable}>
 							<ScIcon name="archive" slot="prefix" />
 							{download?.archived

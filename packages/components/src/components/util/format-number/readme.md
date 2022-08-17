@@ -32,6 +32,7 @@
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-line-item-tax](../../controllers/checkout-form/line-item-tax)
  - [sc-line-item-total](../../controllers/checkout-form/line-item-total)
+ - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirmation-totals](../../controllers/confirmation/order-confirmation-totals)
  - [sc-order-detail](../../controllers/confirmation/order-detail)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
@@ -50,6 +51,7 @@ graph TD;
   sc-invoices-list --> sc-format-number
   sc-line-item-tax --> sc-format-number
   sc-line-item-total --> sc-format-number
+  sc-order --> sc-format-number
   sc-order-confirmation-totals --> sc-format-number
   sc-order-detail --> sc-format-number
   sc-orders-list --> sc-format-number

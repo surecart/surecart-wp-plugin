@@ -1,11 +1,11 @@
 /** @jsx jsx */
-import { css, jsx, Global } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
-import { SnackbarList } from '@wordpress/components';
-import { ScForm } from '@surecart/components-react';
-import UnsavedChangesWarning from '../templates/UpdateModel/UnsavedChangesWarning';
-import SaveButton from '../templates/SaveButton';
 import useSnackbar from '../hooks/useSnackbar';
+import SaveButton from '../templates/SaveButton';
+import UnsavedChangesWarning from '../templates/UpdateModel/UnsavedChangesWarning';
+import { css, jsx, Global } from '@emotion/core';
+import { ScForm } from '@surecart/components-react';
+import { SnackbarList } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
 
 export default ({
 	title,
@@ -81,6 +81,7 @@ export default ({
 					display: grid;
 					gap: 3em;
 				`}
+				style={{ '--sc-form-row-spacing': 'var(--sc-spacing-large)' }}
 			>
 				{children}
 			</div>

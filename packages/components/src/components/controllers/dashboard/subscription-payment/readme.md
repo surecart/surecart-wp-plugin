@@ -26,8 +26,7 @@
 - [sc-button](../../../ui/button)
 - [sc-empty](../../../ui/empty)
 - [sc-choices](../../../ui/choices)
-- [sc-flex](../../../ui/flex)
-- [sc-cc-logo](../../../ui/cc-logo)
+- [sc-payment-method](../../../ui/sc-payment-method)
 - [sc-dashboard-module](../../../ui/dashboard-module)
 - [sc-form](../../../ui/form)
 - [sc-card](../../../ui/card)
@@ -41,8 +40,7 @@ graph TD;
   sc-subscription-payment --> sc-button
   sc-subscription-payment --> sc-empty
   sc-subscription-payment --> sc-choices
-  sc-subscription-payment --> sc-flex
-  sc-subscription-payment --> sc-cc-logo
+  sc-subscription-payment --> sc-payment-method
   sc-subscription-payment --> sc-dashboard-module
   sc-subscription-payment --> sc-form
   sc-subscription-payment --> sc-card
@@ -51,6 +49,10 @@ graph TD;
   sc-empty --> sc-icon
   sc-choices --> sc-form-control
   sc-form-control --> sc-tooltip
+  sc-payment-method --> sc-tag
+  sc-payment-method --> sc-cc-logo
+  sc-payment-method --> sc-icon
+  sc-payment-method --> sc-text
   sc-cc-logo --> sc-icon
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon

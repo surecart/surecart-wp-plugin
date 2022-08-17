@@ -1,41 +1,55 @@
-import { __, _n } from '@wordpress/i18n';
-import { useEffect } from '@wordpress/element';
 import OrdersDataTable from '../../components/data-tables/OrdersDataTable';
-import useEntities from '../../mixins/useEntities';
-import { useState } from 'react';
+import usePagination from '../../hooks/usePagination';
+import PrevNextButtons from '../../ui/PrevNextButtons';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
+import { useState } from '@wordpress/element';
+import { __, _n } from '@wordpress/i18n';
 
-export default ({ id }) => {
+export default ({ customerId }) => {
 	const [page, setPage] = useState(1);
-	const { orders, fetchOrders, pagination, isLoading, isFetching } =
-		useEntities('order');
+	const [perPage, setPerPage] = useState(10);
 
-	useEffect(() => {
-		if (id) {
-			fetchOrders({
-				query: {
+	const { orders, updating, loading } = useSelect(
+		(select) => {
+			const queryArgs = [
+				'surecart',
+				'order',
+				{
 					context: 'edit',
-					customer_ids: [id],
-					status: [
-						'paid',
-						'canceled',
-						'payment_failed',
-						'payment_intent_canceled',
-					],
-					expand: ['line_items'],
+					customer_ids: [customerId],
+					expand: ['checkout', 'checkout.line_items'],
 					page,
-					per_page: 5,
+					per_page: perPage,
 				},
-			});
-		}
-	}, [id, page]);
+			];
+			const orders = select(coreStore).getEntityRecords(...queryArgs);
+			const loading = select(coreStore).isResolving(
+				'getEntityRecords',
+				queryArgs
+			);
+			return {
+				orders,
+				loading: loading && page === 1,
+				updating: loading && page !== 1,
+			};
+		},
+		[customerId, page, perPage]
+	);
+
+	const { hasPagination } = usePagination({
+		data: orders,
+		page,
+		perPage,
+	});
 
 	return (
 		<OrdersDataTable
-			hideHeader={true}
-			title={__('Customer Orders', 'surecart')}
+			title={__('Orders', 'surecart')}
 			columns={{
 				number: {
 					label: __('Number', 'surecart'),
+					width: '150px',
 				},
 				items: {
 					label: __('Items', 'surecart'),
@@ -49,17 +63,34 @@ export default ({ id }) => {
 				},
 				date: {
 					label: __('Date', 'surecart'),
+					width: '100px',
 				},
 				actions: {
-					width: '100px',
+					width: '50px',
 				},
 			}}
 			data={orders}
-			isLoading={isLoading}
-			isFetching={isFetching}
+			isLoading={loading}
+			isFetching={updating}
+			perPage={perPage}
 			page={page}
 			setPage={setPage}
-			pagination={pagination}
+			empty={
+				page > 1
+					? __('No more orders.', 'surecart')
+					: __('None found.', 'surecart')
+			}
+			footer={
+				hasPagination && (
+					<PrevNextButtons
+						data={orders}
+						page={page}
+						setPage={setPage}
+						perPage={perPage}
+						loading={updating}
+					/>
+				)
+			}
 		/>
 	);
 };

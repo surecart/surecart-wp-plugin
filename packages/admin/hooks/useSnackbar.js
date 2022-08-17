@@ -2,9 +2,9 @@ const { useSelect, useDispatch } = wp.data;
 import { store } from '../store/ui';
 
 export default function useSnackbar() {
-	const { addSnackbarNotice, removeSnackbarNotice } = useDispatch( store );
-	const snackbarNotices = useSelect( ( select ) =>
-		select( store ).snackbarNotices()
+	const { addSnackbarNotice, removeSnackbarNotice } = useDispatch(store);
+	const snackbarNotices = useSelect((select) =>
+		select(store).snackbarNotices()
 	);
 
 	return {

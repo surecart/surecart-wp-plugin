@@ -7,9 +7,9 @@
 
 ## Events
 
-| Event                    | Description    | Type                                                                                                            |
-| ------------------------ | -------------- | --------------------------------------------------------------------------------------------------------------- |
-| `scSetCheckoutFormState` | Set the state. | `CustomEvent<"draft" \| "expired" \| "failure" \| "finalizing" \| "idle" \| "loading" \| "paid" \| "updating">` |
+| Event                    | Description    | Type                                                                                                                                                       |
+| ------------------------ | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `scSetCheckoutFormState` | Set the state. | `CustomEvent<"confirmed" \| "confirming" \| "draft" \| "expired" \| "failure" \| "finalizing" \| "idle" \| "loading" \| "paid" \| "paying" \| "updating">` |
 
 
 ## Dependencies

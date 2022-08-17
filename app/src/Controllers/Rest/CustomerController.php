@@ -40,4 +40,20 @@ class CustomerController extends RestController {
 		return rest_ensure_response( $controller->prepare_item_for_response( $user->getUser(), $request ) );
 
 	}
+
+	/**
+	 * Expose media for a customer.
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \SureCart\Models\Media|false
+	 */
+	public function exposeMedia( \WP_REST_Request $request ) {
+		$customer = $this->middleware( new $this->class( $request['id'] ), $request );
+		if ( is_wp_error( $customer ) ) {
+			return $customer;
+		}
+
+		return $customer->where( $request->get_query_params() )->exposeMedia( $request['media_id'] );
+	}
 }

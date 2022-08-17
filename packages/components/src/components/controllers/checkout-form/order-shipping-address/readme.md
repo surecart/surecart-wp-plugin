@@ -22,9 +22,9 @@
 
 ## Events
 
-| Event           | Description                         | Type                                                                      |
-| --------------- | ----------------------------------- | ------------------------------------------------------------------------- |
-| `scUpdateOrder` | Make a request to update the order. | `CustomEvent<{ data: Partial<Order>; options?: { silent?: boolean; }; }>` |
+| Event           | Description                         | Type                                                                         |
+| --------------- | ----------------------------------- | ---------------------------------------------------------------------------- |
+| `scUpdateOrder` | Make a request to update the order. | `CustomEvent<{ data: Partial<Checkout>; options?: { silent?: boolean; }; }>` |
 
 
 ## Methods

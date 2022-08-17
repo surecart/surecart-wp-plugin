@@ -7,7 +7,7 @@ namespace SureCart\Controllers\Admin\ProductGroups;
  */
 class ProductGroupsController {
 	/**
-	 * Orders index.
+	 * Index.
 	 */
 	public function index() {
 		$table = new ProductGroupsListTable();

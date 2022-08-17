@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property  | Attribute | Description | Type     | Default     |
-| --------- | --------- | ----------- | -------- | ----------- |
-| `error`   | `error`   |             | `string` | `undefined` |
-| `heading` | `heading` |             | `string` | `undefined` |
+| Property  | Attribute | Description | Type      | Default     |
+| --------- | --------- | ----------- | --------- | ----------- |
+| `error`   | `error`   |             | `string`  | `undefined` |
+| `heading` | `heading` |             | `string`  | `undefined` |
+| `loading` | `loading` |             | `boolean` | `undefined` |
 
 
 ## Shadow Parts
@@ -28,11 +29,14 @@
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-customer-details](../customer-details)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
- - [sc-downloads-list](../downloads-list)
+ - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
+ - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
@@ -59,9 +63,12 @@ graph TD;
   sc-customer-edit --> sc-dashboard-module
   sc-downloads-list --> sc-dashboard-module
   sc-invoices-list --> sc-dashboard-module
+  sc-licenses-list --> sc-dashboard-module
+  sc-order --> sc-dashboard-module
   sc-order-confirmation-details --> sc-dashboard-module
   sc-orders-list --> sc-dashboard-module
   sc-payment-methods-list --> sc-dashboard-module
+  sc-purchase-downloads-list --> sc-dashboard-module
   sc-subscription --> sc-dashboard-module
   sc-subscription-ad-hoc-confirm --> sc-dashboard-module
   sc-subscription-cancel --> sc-dashboard-module

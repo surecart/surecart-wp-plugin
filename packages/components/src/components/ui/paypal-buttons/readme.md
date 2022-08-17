@@ -16,7 +16,7 @@
 | `label`      | `label`       | Label for the button.       | `"buynow" \| "checkout" \| "installment" \| "pay" \| "paypal"` | `'paypal'`           |
 | `merchantId` | `merchant-id` | The merchant id for paypal. | `string`                                                       | `undefined`          |
 | `mode`       | `mode`        | Test or live mode.          | `"live" \| "test"`                                             | `undefined`          |
-| `order`      | --            | The order.                  | `Order`                                                        | `undefined`          |
+| `order`      | --            | The order.                  | `Checkout`                                                     | `undefined`          |
 
 
 ## Events

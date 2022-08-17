@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 1.0.6
+Stable tag: 1.1.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,17 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.1.0 - August 16, 2022 =
+* New: PayPal Payment Gateway for one-time purchases.
+* New: Admin dashboard page.
+* New: Checkout Form Loading Messsages.
+* Improvement: Admin subscription update screen now displays future charge.
+* Improvement: Customer dashboard improvements.
+* Improvement: Invoices and Orders are combined into Orders for easier fulfillment.
+* Improvement: SureCart emails now redirect to your site instead of hosted pages.
+* Fix: Caching javascript in admin screen issues after update.
+* Fix: Issue with Loco Translate not generating files for JavaScript translations.
 
 = 1.0.6 - August 11, 2022 =
 * Fix: Issue with tax not being calculated when shipping address country is prefilled and only country field is displayed.

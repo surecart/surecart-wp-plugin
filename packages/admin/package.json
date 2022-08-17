@@ -23,6 +23,7 @@
 	"module": "build-module/index.js",
 	"prettier": "@wordpress/prettier-config",
 	"devDependencies": {
+		"@trivago/prettier-plugin-sort-imports": "^3.3.0",
 		"@wordpress/prettier-config": "^1.1.1",
 		"prettier": "^2.5.1"
 	},

@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import CancelPendingUpdate from '../../../components/subscriptions/CancelPendingUpdate';
 import useCurrentPage from '../../../mixins/useCurrentPage';
+import { useState } from 'react';
 
 export default ({ children }) => {
 	const [open, setOpen] = useState();
@@ -19,7 +19,7 @@ export default ({ children }) => {
 				expand: [
 					'price',
 					'price.product',
-					'latest_invoice',
+					'current_period',
 					'purchase',
 				],
 			},

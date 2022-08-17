@@ -10,6 +10,8 @@ import ErrorBoundary from '../../components/error-boundary';
 import { ScForm } from '@surecart/components-react';
 import useSnackbar from '../../hooks/useSnackbar';
 import admin from '../../styles/admin';
+import Notifications from '../../components/Notifications';
+import Notices from '../../components/Notices';
 
 export default ({
 	children,
@@ -165,10 +167,11 @@ export default ({
 							css={css`
 								margin-bottom: 3em;
 								> * ~ * {
-									margin-top: var(--sc-spacing-xxx-large);
+									margin-top: var(--sc-spacing-x-large);
 								}
 							`}
 						>
+							<Notices margin="80px" />
 							{children}
 							{footer && (
 								<div>
@@ -186,7 +189,7 @@ export default ({
 								css={css`
 									margin-bottom: 3em;
 									> * ~ * {
-										margin-top: 1em;
+										margin-top: var(--sc-spacing-x-large);
 									}
 								`}
 							>
@@ -194,7 +197,7 @@ export default ({
 							</div>
 						</div>
 					</div>
-					<SnackbarList
+					<Notifications
 						css={css`
 							position: fixed !important;
 							left: auto !important;
@@ -206,8 +209,6 @@ export default ({
 								text-transform: uppercase;
 							}
 						`}
-						notices={snackbarNotices}
-						onRemove={removeSnackbarNotice}
 					/>
 				</ScForm>
 			</ErrorBoundary>

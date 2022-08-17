@@ -2,8 +2,8 @@ import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State
 import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
 
-import { getOrder } from '../../../../store/checkouts';
-import { Customer, FormState, Order, PaymentIntent, PaymentIntents, PriceChoice, Prices, Processor, Products, ResponseError, TaxProtocol } from '../../../../types';
+import { getOrder, setOrder } from '../../../../store/checkouts';
+import { Customer, FormState, Checkout, PaymentIntent, PaymentIntents, PriceChoice, Prices, Processor, Products, ResponseError, TaxProtocol } from '../../../../types';
 
 @Component({
   tag: 'sc-checkout',
@@ -65,6 +65,13 @@ export class ScCheckout {
   /** Use the Stripe payment element. */
   @Prop() stripePaymentElement: boolean = false;
 
+  @Prop() loadingText: {
+    'finalizing': string,
+    'paying': string;
+    'confirming': string;
+    'confirmed': string;
+  };
+
   /** Stores fetched prices for use throughout component.  */
   @State() pricesEntities: Prices = {};
 
@@ -86,13 +93,13 @@ export class ScCheckout {
   /** Is this form a duplicate form? (There's another on the page) */
   @State() isDuplicate: boolean;
 
-  /** Order has been updated. */
-  @Event() scOrderUpdated: EventEmitter<Order>;
+  /** Checkout has been updated. */
+  @Event() scOrderUpdated: EventEmitter<Checkout>;
 
-  /** Order has been finalized. */
-  @Event() scOrderFinalized: EventEmitter<Order>;
+  /** Checkout has been finalized. */
+  @Event() scOrderFinalized: EventEmitter<Checkout>;
 
-  /** Order has an error. */
+  /** Checkout has an error. */
   @Event() scOrderError: EventEmitter<ResponseError>;
 
   @Listen('scSetPaymentIntent')
@@ -100,6 +107,11 @@ export class ScCheckout {
     const paymentIntent = e.detail?.payment_intent as PaymentIntent;
     const processor = e.detail?.processor;
     this.paymentIntents[processor] = paymentIntent;
+  }
+
+  @Listen('scUpdateOrderState')
+  handleOrderStateUpdate(e: {detail: Checkout}) {
+    setOrder(e?.detail, this?.formId);
   }
 
   @Listen('scSetProcessor')
@@ -159,7 +171,9 @@ export class ScCheckout {
   state() {
     return {
       processor: this.processor,
-      processors: this.processors,
+      processors: (this.processors || []).filter(processor => {
+        return !(this?.order().reusable_payment_method_required && !processor?.recurring_enabled);
+      }),
       processor_data: this.order()?.processor_data,
       state: this.checkoutState,
       paymentIntents: this.paymentIntents,
@@ -173,13 +187,14 @@ export class ScCheckout {
 
       // checkout states
       loading: this.checkoutState === 'loading',
-      busy: ['updating', 'finalizing', 'paid', 'confirmed'].includes(this.checkoutState),
-      paying: ['finalizing', 'paid', 'confirmed'].includes(this.checkoutState),
+      busy: ['updating', 'finalizing', 'paying', 'confirming', 'confirmed'].includes(this?.checkoutState),
+      paying: ['finalizing', 'paying', 'confirming', 'confirmed'].includes(this?.checkoutState),
       empty: !['loading', 'updating'].includes(this.checkoutState) && !this.order()?.line_items?.pagination?.count,
       // checkout states
 
       // stripe.
       stripePaymentElement: this.stripePaymentElement,
+      stripePaymentIntent: (this.order()?.staged_payment_intents?.data || []).find(intent => intent.processor_type === 'stripe'),
 
       error: this.error,
       customer: this.customer,
@@ -204,6 +219,7 @@ export class ScCheckout {
     if (this.isDuplicate) {
       return <sc-alert open>{__('Due to processor restrictions, only one checkout form is allowed on the page.', 'surecart')}</sc-alert>;
     }
+
     return (
       <div
         class={{
@@ -213,11 +229,16 @@ export class ScCheckout {
           'sc-align-full': this.alignment === 'full',
         }}
       >
+        {/* Handles unsaved changes warning depending on checkout state */}
+        <sc-checkout-unsaved-changes-warning state={this.checkoutState} />
+        {/* Univers provider */}
         <Universe.Provider state={this.state()}>
+          {/* Handles the automatic filtering and selection of processors */}
+          <sc-processor-provider checkout={this.order()} processors={this.processors} processor={this.processor} />
           {/* Handles the current checkout form state. */}
           <sc-form-state-provider onScSetCheckoutFormState={e => (this.checkoutState = e.detail)}>
             {/* Handles errors in the form. */}
-            <sc-form-error-provider order={this.order()} onScUpdateError={e => (this.error = e.detail)}>
+            <sc-form-error-provider checkoutState={this.checkoutState} onScUpdateError={e => (this.error = e.detail)}>
               {/* Validate components in the form based on order state. */}
               <sc-form-components-validator order={this.order()} disabled={this.disableComponentsValidation} taxProtocol={this.taxProtocol}>
                 {/* Handle confirming of order after it is "Paid" by processors. */}
@@ -245,6 +266,10 @@ export class ScCheckout {
           </sc-form-state-provider>
 
           {this.state().busy && <sc-block-ui z-index={9}></sc-block-ui>}
+          {this.checkoutState === 'finalizing' && <sc-block-ui z-index={9} spinner style={{'--sc-block-ui-opacity': '0.75'}}>{this.loadingText?.finalizing || __('Submitting order...', 'surecart')}</sc-block-ui>}
+          {this.checkoutState === 'paying' && <sc-block-ui z-index={9} spinner style={{'--sc-block-ui-opacity': '0.75'}}>{this.loadingText?.paying || __('Processing payment...', 'surecart')}</sc-block-ui>}
+          {this.checkoutState === 'confirming' && <sc-block-ui z-index={9} spinner style={{'--sc-block-ui-opacity': '0.75'}}>{this.loadingText?.confirming || __('Finalizing order...', 'surecart')}</sc-block-ui>}
+          {this.checkoutState === 'confirmed' && <sc-block-ui z-index={9} spinner style={{'--sc-block-ui-opacity': '0.75'}}>{this.loadingText?.confirmed || __('Payment successful! Redirecting...', 'surecart')}</sc-block-ui>}
         </Universe.Provider>
       </div>
     );

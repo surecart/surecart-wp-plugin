@@ -1,5 +1,5 @@
 import { convertLineItemsToLineItemData } from '../../../functions/line-items';
-import { Order, LineItemData } from '../../../types';
+import { Checkout, LineItemData } from '../../../types';
 import { Component, h, State, Prop, Watch, Event, EventEmitter, Listen } from '@stencil/core';
 
 @Component({
@@ -8,7 +8,7 @@ import { Component, h, State, Prop, Watch, Event, EventEmitter, Listen } from '@
 })
 export class ScLineItemsProvider {
   /** Order Object */
-  @Prop() order: Order;
+  @Prop() order: Checkout;
 
   /** Holds items to sync */
   @State() syncItems: Array<{ type: 'toggle' | 'add' | 'remove' | 'update'; payload: LineItemData }> = [];

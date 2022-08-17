@@ -1,16 +1,20 @@
 /** @jsx jsx */
+import { styles } from '../../../admin/styles/admin';
+import ColorPopup from '../../components/ColorPopup';
+import Cart from './components/Cart';
+import Mode from './components/Mode';
+import Setup from './components/Setup';
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { ScCheckout } from '@surecart/components-react';
+import apiFetch from '@wordpress/api-fetch';
 import {
 	InnerBlocks,
 	InspectorControls,
 	store as blockEditorStore,
 	__experimentalLinkControl as LinkControl,
 } from '@wordpress/block-editor';
-import { ScCheckout } from '@surecart/components-react';
-import { Fragment, useState, useEffect } from '@wordpress/element';
 import { parse } from '@wordpress/blocks';
+import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
 import {
 	PanelRow,
 	PanelBody,
@@ -19,14 +23,11 @@ import {
 	ToggleControl,
 	UnitControl as __stableUnitControl,
 	__experimentalUnitControl,
+	TextControl,
 } from '@wordpress/components';
-import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
-import apiFetch from '@wordpress/api-fetch';
-import Cart from './components/Cart';
-import Mode from './components/Mode';
-import Setup from './components/Setup';
-import { styles } from '../../../admin/styles/admin';
-import ColorPopup from '../../components/ColorPopup';
+import { useSelect, useDispatch } from '@wordpress/data';
+import { Fragment, useState, useEffect } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 export default function edit({ clientId, attributes, setAttributes }) {
 	const [patterns, setPatterns] = useState([]);
@@ -39,6 +40,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 		className,
 		prices,
 		font_size,
+		loading_text,
 		choice_type,
 		mode,
 		gap,
@@ -293,6 +295,77 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							</div>
 						</PanelRow>
 					)}
+				</PanelBody>
+				<PanelBody
+					title={__('Loading Text', 'surecart')}
+					initialOpen={false}
+				>
+					<PanelRow>
+						<TextControl
+							label={__('Submitting Order', 'surecart')}
+							value={loading_text?.finalizing}
+							placeholder={__('Submitting Order...', 'surecart')}
+							onChange={(finalizing) =>
+								setAttributes({
+									loading_text: {
+										...loading_text,
+										finalizing,
+									},
+								})
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Processing Payment', 'surecart')}
+							value={loading_text?.paying}
+							placeholder={__(
+								'Processing payment...',
+								'surecart'
+							)}
+							onChange={(paying) =>
+								setAttributes({
+									loading_text: {
+										...loading_text,
+										paying,
+									},
+								})
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Confirming Payment', 'surecart')}
+							value={loading_text?.confirming}
+							placeholder={__('Finalizing order...', 'surecart')}
+							onChange={(confirming) =>
+								setAttributes({
+									loading_text: {
+										...loading_text,
+										confirming,
+									},
+								})
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Success Text', 'surecart')}
+							value={loading_text?.confirmed}
+							placeholder={__(
+								'Payment successful! Redirecting...',
+								'surecart'
+							)}
+							onChange={(confirmed) =>
+								setAttributes({
+									loading_text: {
+										...loading_text,
+										confirmed,
+									},
+								})
+							}
+						/>
+					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 

@@ -1,19 +1,19 @@
 /** @jsx jsx */
+import Error from '../../components/Error';
+import useEntity from '../../hooks/useEntity';
+import SettingsBox from '../SettingsBox';
+import SettingsTemplate from '../SettingsTemplate';
+import useSave from '../UseSave';
+import EmailRow from './EmailRow';
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
 import {
 	ScInput,
 	ScStackedList,
 	ScSwitch,
 	ScTag,
 } from '@surecart/components-react';
-import SettingsTemplate from '../SettingsTemplate';
-import SettingsBox from '../SettingsBox';
-import useEntity from '../../hooks/useEntity';
-import Error from '../../components/Error';
-import useSave from '../UseSave';
-import EmailRow from './EmailRow';
+import { useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -134,16 +134,16 @@ export default () => {
 
 				<ScSwitch
 					checked={
-						scData?.entitlements?.abandoned_orders
-							? item?.abandoned_order_enabled
+						scData?.entitlements?.abandoned_checkouts
+							? item?.abandoned_checkout_enabled
 							: false
 					}
-					disabled={!scData?.entitlements?.abandoned_orders}
+					disabled={!scData?.entitlements?.abandoned_checkouts}
 					onScChange={(e) => {
 						e.preventDefault();
 						editItem({
-							abandoned_order_enabled:
-								!item?.abandoned_order_enabled,
+							abandoned_checkout_enabled:
+								!item?.abandoned_checkout_enabled,
 						});
 					}}
 					css={css`
@@ -152,15 +152,54 @@ export default () => {
 						}
 					`}
 				>
-					{__('Abandoned Order Emails', 'surecart')}{' '}
-					{!scData?.entitlements?.abandoned_orders && (
+					{__('Abandoned Checkout Emails', 'surecart')}{' '}
+					{!scData?.entitlements?.abandoned_checkouts && (
 						<ScTag type="success" size="small" pill>
 							{__('Pro', 'surecart')}
 						</ScTag>
 					)}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							'Sometimes your customers will need just a little nudge in their inbox to come back and finish checking out. Turn on abandoned order emails to remind your customers of incomplete orders. Abandoned order emails are sent 4 hours after abandonment. If the order is still abandoned after 24 hours another email will be sent.',
+							'Turn on abandoned order emails to remind your customers of incomplete orders. Abandoned order emails are sent 4 hours after abandonment. If the order is still abandoned after 24 hours another email will be sent.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				<ScSwitch
+					checked={
+						scData?.entitlements
+							?.subscription_reminder_notifications
+							? item?.subscription_reminder_enabled
+							: false
+					}
+					disabled={
+						!scData?.entitlements
+							?.subscription_reminder_notifications
+					}
+					onScChange={(e) => {
+						e.preventDefault();
+						editItem({
+							subscription_reminder_enabled:
+								!item?.subscription_reminder_enabled,
+						});
+					}}
+					css={css`
+						::part(base) {
+							opacity: 1;
+						}
+					`}
+				>
+					{__('Subscription Reminder Notifications', 'surecart')}{' '}
+					{!scData?.entitlements
+						?.subscription_reminder_notifications && (
+						<ScTag type="success" size="small" pill>
+							{__('Pro', 'surecart')}
+						</ScTag>
+					)}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Send a reminder to your subscribers 3 days before their subscription renews.',
 							'surecart'
 						)}
 					</span>
@@ -188,15 +227,15 @@ export default () => {
 						}
 					`}
 				>
-					{__('Subscription Dunning Emails', 'surecart')}{' '}
-					{!scData?.entitlements?.abandoned_orders && (
+					{__('Subscription Recovery Emails', 'surecart')}{' '}
+					{!scData?.entitlements?.payment_failure_notifications && (
 						<ScTag type="success" size="small" pill>
 							{__('Pro', 'surecart')}
 						</ScTag>
 					)}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							"Subscription payments fail all the time. Don't leave your recurring revenue to chance - turn on dunning emails to increase your chances of recovering subscriptions with failed payments.",
+							"Subscription payments fail all the time. Don't leave your recurring revenue to chance - turn on recovery emails to increase your chances of recovering subscriptions with failed payments.",
 							'surecart'
 						)}
 					</span>
@@ -232,7 +271,7 @@ export default () => {
 							model="order"
 						/>
 						<EmailRow
-							title={__('Subscription Dunning', 'surecart')}
+							title={__('Subscription Recovery', 'surecart')}
 							description={__(
 								"Sent to customers when their subscription's payment method fails.",
 								'surecart'
@@ -240,9 +279,18 @@ export default () => {
 							model="payment_failure"
 						/>
 						<EmailRow
-							title={__('Download Verification', 'surecart')}
+							title={__('Subscription Reminder', 'surecart')}
 							description={__(
-								'Sent to customers to verify their email address before downloading files.',
+								'Sent to customers 3 days before a subscription renews.',
+								'surecart'
+							)}
+							model="subscription"
+							action="reminder_notification"
+						/>
+						<EmailRow
+							title={__('Product Access', 'surecart')}
+							description={__(
+								'Sent to customers when a purchase is downloadable or has a license.',
 								'surecart'
 							)}
 							model="purchase"
