@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-08-16T21:41:17+00:00\n"
+"POT-Creation-Date: 2022-08-17T15:07:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -17,7 +17,7 @@ msgstr ""
 
 #: src/BlockLibrary/BlockServiceProvider.php:95
 #: src/Integrations/AffiliateWP/AffiliateWPService.php:29
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:105
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:108
 #: src/WordPress/Admin/Notices/AdminNoticesService.php:104
 #: src/WordPress/ThemeServiceProvider.php:57
 #: admin/user-profile.php:1
@@ -26,7 +26,7 @@ msgid "SureCart"
 msgstr ""
 
 #: src/Cart/CartService.php:51
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:128
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:131
 msgid "Cart"
 msgstr ""
 
@@ -134,7 +134,7 @@ msgid "Not Recovered"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsController.php:23
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:124
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:127
 #: admin/coupons/index.php:6
 #: coupons/Coupons.js:189
 #: settings/export/ExportSettings.js:19
@@ -336,7 +336,7 @@ msgid "Move to Trash"
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersController.php:24
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:127
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:130
 #: admin/customers/index.php:7
 #: customers/EditCustomer.js:80
 #: settings/export/ExportSettings.js:23
@@ -456,7 +456,7 @@ msgid "Invoices"
 msgstr ""
 
 #: src/Controllers/Admin/Licenses/LicensesController.php:24
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:125
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:128
 #: admin/licenses/index.php:7
 #: licenses/License.js:74
 msgid "Licenses"
@@ -560,7 +560,7 @@ msgid "By %s"
 msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersViewController.php:21
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:122
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:125
 #: admin/orders/index.php:7
 #: components/data-tables/OrdersDataTable.js:28
 #: customers/modules/Orders.js:48
@@ -601,7 +601,7 @@ msgid "View"
 msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsController.php:24
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:123
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:126
 #: admin/products/index.php:29
 #: product-groups/modules/Products.js:37
 #: products/EditProduct.js:175
@@ -625,7 +625,7 @@ msgstr ""
 #: products/modules/Prices/Price/Header.js:70
 #: store/add-entities.js:172
 #: store/add-entities.js:179
-#: subscriptions/edit/EditSubscription.js:187
+#: subscriptions/edit/EditSubscription.js:182
 #: Blocks/Dashboard/CustomerSubscriptions/Block.php:79
 #: Controllers/SubscriptionController.php:97
 #: Controllers/SubscriptionController.php:192
@@ -671,7 +671,7 @@ msgid "Copied!"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsController.php:23
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:126
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:129
 #: admin/subscriptions/index.php:23
 #: layouts/partials/admin-settings-sidebar.php:21
 #: web/dashboard/orders/show.php:58
@@ -679,7 +679,7 @@ msgstr ""
 #: customers/modules/Subscriptions.js:51
 #: settings/export/ExportSettings.js:43
 #: settings/subscription/SubscriptionSettings.js:48
-#: subscriptions/show/ShowSubscription.js:172
+#: subscriptions/show/ShowSubscription.js:124
 #: Blocks/Dashboard/CustomerSubscriptions/Block.php:106
 #: Controllers/SubscriptionController.php:55
 #: sc-subscriptions-list.js:129
@@ -834,7 +834,7 @@ msgid "No name provided"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:399
-#: subscriptions/edit/EditSubscription.js:200
+#: subscriptions/edit/EditSubscription.js:195
 msgid "Edit Subscription"
 msgstr ""
 
@@ -943,6 +943,10 @@ msgstr ""
 
 #: src/Integrations/MemberPress/MemberPressService.php:66
 msgid "Enable access to a MemberPress membership."
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/DataObjects/ProductData.php:32
+msgid "SureCart product"
 msgstr ""
 
 #: src/Integrations/TutorLMS/TutorLMSService.php:127
@@ -3051,9 +3055,8 @@ msgstr ""
 msgid "SureCart webhooks could not be created."
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:105
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:110
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:120
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:108
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:123
 #: dashboard/Dashboard.js:38
 #: Blocks/CustomerDashboardButton/Block.php:28
 #: Blocks/Dashboard/CustomerSubscriptions/Block.php:76
@@ -3073,18 +3076,22 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:111
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:121
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:113
+msgid "Get Started"
+msgstr ""
+
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:114
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:124
 msgid "Complete Signup"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:112
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:132
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:115
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:135
 #: layouts/partials/admin-settings-header.php:24
 msgid "Settings"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:131
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:134
 #: src/WordPress/PostTypes/CartPostTypeService.php:124
 #: src/WordPress/PostTypes/FormPostTypeService.php:81
 msgid "Forms"
@@ -3508,7 +3515,6 @@ msgstr ""
 #: layouts/partials/admin-settings-notices.php:16
 #: coupons/Coupons.js:78
 #: product-groups/Show.js:49
-#: subscriptions/show/ShowSubscription.js:79
 msgid "Saved."
 msgstr ""
 
@@ -3801,6 +3807,7 @@ msgstr ""
 #: products/modules/Prices/NewPrice/index.js:193
 #: products/modules/Upgrades.js:130
 #: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:92
+#: subscriptions/show/modules/modals/CancelUpdateModal.js:95
 #: Controllers/SubscriptionController.php:315
 #: Blocks/CheckoutForm/components/Empty.js:117
 #: Blocks/CheckoutForm/components/Empty.js:157
@@ -3888,12 +3895,14 @@ msgstr ""
 #: components/data-tables/subscriptions-data-table/Cancel.js:124
 #: components/subscriptions/Cancel.js:37
 #: components/subscriptions/Cancel.js:86
-#: subscriptions/show/ShowSubscription.js:99
+#: subscriptions/show/modules/modals/CancelSubscriptionModal.js:139
+#: subscriptions/show/ShowSubscription.js:82
 msgid "Cancel Subscription"
 msgstr ""
 
 #: components/data-tables/subscriptions-data-table/Cancel.js:101
 #: components/subscriptions/Cancel.js:69
+#: subscriptions/show/modules/modals/CancelSubscriptionModal.js:120
 msgid "\tAt end of current period"
 msgstr ""
 
@@ -3901,6 +3910,7 @@ msgstr ""
 #: components/subscriptions/Cancel.js:61
 #: settings/portal/PortalSettings.js:39
 #: settings/subscription/SubscriptionSettings.js:37
+#: subscriptions/show/modules/modals/CancelSubscriptionModal.js:111
 msgid "Immediately"
 msgstr ""
 
@@ -3908,7 +3918,7 @@ msgstr ""
 #: components/data-tables/subscriptions-data-table/subscription-item.js:117
 #: components/data-tables/subscriptions-data-table/UnCancel.js:58
 #: components/subscriptions/Cancel.js:92
-#: subscriptions/show/ShowSubscription.js:92
+#: subscriptions/show/ShowSubscription.js:76
 msgid "Don't Cancel"
 msgstr ""
 
@@ -3997,8 +4007,7 @@ msgstr ""
 #: licenses/modules/Activations/index.js:59
 #: orders/Order.js:94
 #: products/modules/SingleDownload.js:35
-#: subscriptions/edit/EditSubscription.js:154
-#: subscriptions/show/ShowSubscription.js:85
+#: subscriptions/edit/EditSubscription.js:149
 #: sc-cart-form.js:68
 #: sc-charges-list.js:69
 #: sc-customer-edit.js:82
@@ -4681,6 +4690,10 @@ msgid "Okay"
 msgstr ""
 
 #: hocs/withConfirm.js:51
+#: subscriptions/show/modules/modals/CancelSubscriptionModal.js:91
+#: subscriptions/show/modules/modals/CancelUpdateModal.js:71
+#: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:68
+#: subscriptions/show/modules/modals/DontCancelModal.js:71
 #: Controllers/SubscriptionController.php:252
 #: Controllers/SubscriptionController.php:431
 #: sc-upcoming-invoice.js:206
@@ -6247,50 +6260,29 @@ msgstr ""
 msgid "Integration Providers"
 msgstr ""
 
-#: subscriptions/edit/EditSubscription.js:87
+#: subscriptions/edit/EditSubscription.js:82
 msgid "Subscription updated."
 msgstr ""
 
-#: subscriptions/edit/EditSubscription.js:196
+#: subscriptions/edit/EditSubscription.js:191
 #: subscriptions/show/modules/SubscriptionItems.js:39
-#: subscriptions/show/ShowSubscription.js:176
+#: subscriptions/show/ShowSubscription.js:128
 msgid "Subscription Details"
 msgstr ""
 
-#: subscriptions/edit/EditSubscription.js:216
+#: subscriptions/edit/EditSubscription.js:211
 msgid "Update Immediately"
 msgstr ""
 
-#: subscriptions/edit/EditSubscription.js:223
-#: subscriptions/edit/EditSubscription.js:278
-#: subscriptions/show/ShowSubscription.js:224
+#: subscriptions/edit/EditSubscription.js:219
+#: subscriptions/show/ShowSubscription.js:175
 #: Blocks/Dashboard/CustomerSubscriptions/Block.php:59
 #: Blocks/Dashboard/CustomerSubscriptions/Block.php:67
 msgid "Update Subscription"
 msgstr ""
 
-#: subscriptions/edit/EditSubscription.js:224
+#: subscriptions/edit/EditSubscription.js:220
 msgid "Schedule Update"
-msgstr ""
-
-#: subscriptions/edit/EditSubscription.js:275
-msgid "Cancel Editing"
-msgstr ""
-
-#: subscriptions/edit/EditSubscription.js:279
-msgid "Create Subscription"
-msgstr ""
-
-#: subscriptions/edit/EditSubscription.js:307
-msgid "Skip Proration"
-msgstr ""
-
-#: subscriptions/edit/EditSubscription.js:321
-msgid "Schedule for"
-msgstr ""
-
-#: subscriptions/edit/EditSubscription.js:342
-msgid "Update Now"
 msgstr ""
 
 #: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:53
@@ -6395,16 +6387,67 @@ msgstr ""
 msgid "Renews on"
 msgstr ""
 
-#: subscriptions/show/modules/Cancel.js:32
-msgid "Canceled."
-msgstr ""
-
 #: subscriptions/show/modules/LineItems/index.js:21
 msgid "Upcoming Billing Period"
 msgstr ""
 
 #: subscriptions/show/modules/LineItems/index.js:119
 msgid "Amount Due"
+msgstr ""
+
+#: subscriptions/show/modules/modals/CancelSubscriptionModal.js:68
+msgid "Subscription canceled."
+msgstr ""
+
+#: subscriptions/show/modules/modals/CancelSubscriptionModal.js:69
+msgid "Subscription scheduled for cancelation"
+msgstr ""
+
+#: subscriptions/show/modules/modals/CancelSubscriptionModal.js:99
+msgid "When do you want to cancel the subscription?"
+msgstr ""
+
+#: subscriptions/show/modules/modals/CancelSubscriptionModal.js:131
+#: subscriptions/show/modules/modals/CancelUpdateModal.js:88
+msgid "Don't cancel"
+msgstr ""
+
+#: subscriptions/show/modules/modals/CancelUpdateModal.js:57
+msgid "Update canceled."
+msgstr ""
+
+#: subscriptions/show/modules/modals/CancelUpdateModal.js:78
+msgid "Are you sure you wish to cancel the pending update?"
+msgstr ""
+
+#: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:54
+msgid "Subscription completed."
+msgstr ""
+
+#: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:75
+msgid "Are you sure you want to complete this payment plan? This will eliminate any additional payments and mark the plan as complete. You cannot undo this."
+msgstr ""
+
+#: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:85
+#: subscriptions/show/modules/modals/DontCancelModal.js:88
+msgid "Nevermind"
+msgstr ""
+
+#: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:92
+#: subscriptions/show/ShowSubscription.js:93
+msgid "Complete Subscription"
+msgstr ""
+
+#: subscriptions/show/modules/modals/DontCancelModal.js:57
+msgid "Subscription resumed."
+msgstr ""
+
+#: subscriptions/show/modules/modals/DontCancelModal.js:78
+msgid "Are you sure you wish to resume this subscription?"
+msgstr ""
+
+#: subscriptions/show/modules/modals/DontCancelModal.js:95
+msgid "Resume Subscription"
 msgstr ""
 
 #: subscriptions/show/modules/PendingUpdate.js:25
@@ -6428,24 +6471,20 @@ msgstr ""
 msgid "No billing periods"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:112
-msgid "Are you sure you want to complete this payment plan? You cannot undo this."
-msgstr ""
-
-#: subscriptions/show/ShowSubscription.js:132
-msgid "Completed."
-msgstr ""
-
-#: subscriptions/show/ShowSubscription.js:141
-msgid "Complete Subscription"
-msgstr ""
-
-#: subscriptions/show/ShowSubscription.js:202
+#: subscriptions/show/ShowSubscription.js:155
 msgid "Actions"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:212
-msgid "Manage Pending Update"
+#: subscriptions/show/ShowSubscription.js:163
+msgid "Cancel Pending Update"
+msgstr ""
+
+#: subscriptions/show/ShowSubscription.js:186
+msgid "Subscription Completed"
+msgstr ""
+
+#: subscriptions/show/ShowSubscription.js:188
+msgid "Subscription Canceled"
 msgstr ""
 
 #: templates/Model.js:177
