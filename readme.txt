@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -243,7 +243,10 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.1.1 - August 16, 2022 =
+= 1.1.2 - August 17, 2022 =
+* Hotfix: Order metadata not appearing on orders page.
+
+= 1.1.1 - August 17, 2022 =
 * Fix: Broken onboarding flow.
 * Fix: Merchant subscription update actions not working.
 

@@ -1,19 +1,16 @@
 /** @jsx jsx */
+import Box from '../../ui/Box';
 import { css, jsx } from '@emotion/core';
 import { ScText } from '@surecart/components-react';
-
 import { __ } from '@wordpress/i18n';
 
-import Box from '../../ui/Box';
-
 export default ({ order, loading }) => {
-	if (!Object.keys(order?.metadata || {}).length || loading) {
+	if (!Object.keys(order?.checkout?.metadata || {}).length || loading) {
 		return null;
 	}
 
-	if (order?.metadata?.wp_created_by) {
-		delete order.metadata.wp_created_by;
-	}
+	const { wp_created_by, page_id, page_url, ...metadata } =
+		order?.checkout?.metadata || {};
 
 	return (
 		<Box title={__('Metadata', 'surecart')}>
@@ -23,7 +20,7 @@ export default ({ order, loading }) => {
 					gap: 0.5em;
 				`}
 			>
-				{Object.keys(order?.metadata).map((key) => (
+				{Object.keys(metadata).map((key) => (
 					<div>
 						<ScText
 							tag="h3"
@@ -32,9 +29,9 @@ export default ({ order, loading }) => {
 								'--font-size': 'var(--sc-font-size-medium)',
 							}}
 						>
-							{key.toUpperCase()}
+							{key}
 						</ScText>
-						<div>{order?.metadata[key]}</div>
+						<div>{metadata[key]}</div>
 					</div>
 				))}
 			</div>
