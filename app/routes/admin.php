@@ -39,6 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-dashboard' )
 ->middleware( 'user.can:manage_options' )
 ->middleware( 'assets.components' )
+->name( 'dashboard.show' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Dashboard\\' )
 ->handle( 'DashboardController@index' );
 

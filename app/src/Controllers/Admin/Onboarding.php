@@ -105,6 +105,6 @@ class Onboarding {
 			wp_die( esc_html__( 'Invalid API Token', 'surecart' ) );
 		}
 
-		return \SureCart::redirect()->to( \SureCart::routeUrl( 'onboarding.show' ) );
+		return \SureCart::redirect()->to( esc_url( admin_url( 'admin.php?page=sc-dashboard' ) ) );
 	}
 }
