@@ -1,15 +1,10 @@
 /** @jsx jsx */
-import ErrorFlash from '../../components/ErrorFlash';
-import useDirty from '../../hooks/useDirty';
 import useEntity from '../../hooks/useEntity';
 import Logo from '../../templates/Logo';
 import SaveButton from '../../templates/SaveButton';
-import Template from '../../templates/SingleModel';
 import UpdateModel from '../../templates/UpdateModel';
-import Sidebar from './Sidebar';
 import PaymentMethod from './modules/PaymentMethod';
 import Price from './modules/Price';
-import Schedule from './modules/Trial';
 import Trial from './modules/Trial';
 import UpcomingPeriod from './modules/UpcomingPeriod';
 import { css, jsx } from '@emotion/react';
@@ -18,7 +13,6 @@ import {
 	ScBreadcrumbs,
 	ScButton,
 	ScFlex,
-	ScFormatDate,
 	ScIcon,
 	ScSwitch,
 } from '@surecart/components-react';
@@ -26,7 +20,7 @@ import { store as dataStore } from '@surecart/data';
 import apiFetch from '@wordpress/api-fetch';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { Fragment, useEffect, useState } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
@@ -36,17 +30,18 @@ export default () => {
 	const { receiveEntityRecords } = useDispatch(coreStore);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
-	const { saveDirtyRecords } = useDirty();
 	const [upcoming, setUpcoming] = useState();
 	const [loadingUpcoming, setLoadingUpcoming] = useState(false);
 	const [skipProration, setSkipProration] = useState(false);
+	const [savingSubscription, setSavingSubscription] = useState(false);
 	const [updateBehavior, setUpdateBehavior] = useState('pending');
 
 	const {
 		subscription,
-		savingSubscription,
 		hasLoadedSubscription,
 		editSubscription,
+		hasEdits,
+		edits,
 	} = useEntity('subscription', id, {
 		expand: ['current_period', 'current_period.checkout'],
 	});
@@ -72,18 +67,18 @@ export default () => {
 	};
 
 	const onSubmit = async () => {
-		setLoadingUpcoming(true);
-
 		try {
+			setSavingSubscription(true);
 			const subscription = await makeRequest({ preview: false });
-			await receiveEntityRecords(
+			receiveEntityRecords(
 				'surecart',
 				'subscription',
 				subscription,
 				undefined,
-				true,
-				subscription
+				false,
+				edits
 			);
+
 			createSuccessNotice(__('Subscription updated.', 'surecart'), {
 				type: 'snackbar',
 			});
@@ -98,7 +93,7 @@ export default () => {
 			console.error(e);
 			handleError(e);
 		} finally {
-			setLoadingUpcoming(false);
+			setSavingSubscription(false);
 		}
 	};
 
@@ -218,6 +213,7 @@ export default () => {
 					<SaveButton
 						loading={!hasLoadedSubscription}
 						busy={savingSubscription}
+						disabled={!hasEdits}
 					>
 						{updateBehavior === 'immediate'
 							? __('Update Subscription', 'surecart')
@@ -259,126 +255,5 @@ export default () => {
 				)}
 			</>
 		</UpdateModel>
-	);
-
-	return (
-		<Template
-			pageModelName={'subscriptions'}
-			onSubmit={onSubmit}
-			onInvalid={onInvalid}
-			backButtonType="icon"
-			backUrl={addQueryArgs('admin.php', {
-				page: 'sc-subscriptions',
-				action: 'show',
-				id: id,
-			})}
-			backText={__('Cancel Editing', 'surecart')}
-			title={
-				id
-					? __('Update Subscription', 'surecart')
-					: __('Create Subscription', 'surecart')
-			}
-			sidebar={
-				<Sidebar subscription={subscription} loading={isLoading} />
-			}
-			button={
-				isLoading ? (
-					<sc-skeleton
-						style={{
-							width: '120px',
-							height: '35px',
-							display: 'inline-block',
-						}}
-					></sc-skeleton>
-				) : (
-					<div
-						css={css`
-							display: flex;
-							gap: 1em;
-							align-items: center;
-						`}
-					>
-						<ScSwitch
-							checked={skipProration}
-							onScChange={(e) =>
-								setSkipProration(e.target.checked)
-							}
-						>
-							{__('Skip Proration', 'surecart')}
-						</ScSwitch>
-						<ScButton
-							className={'sc-schedule-model'}
-							disabled={isSaving}
-							loading={isSaving}
-							submit
-							onClick={(e) => {
-								e.preventDefault();
-								// setUpdateBehavior('pending');
-								update_behavior = 'pending';
-								console.log({ update_behavior });
-							}}
-						>
-							{__('Schedule for', 'surecart')}
-							{'\u00A0'}
-							<ScFormatDate
-								date={subscription?.current_period_end_at}
-								month="short"
-								day="numeric"
-								year="numeric"
-								type="timestamp"
-							></ScFormatDate>
-						</ScButton>
-						<ScButton
-							type="primary"
-							className={'sc-save-model'}
-							disabled={isSaving}
-							loading={isSaving}
-							submit
-							onClick={(e) => {
-								e.preventDefault();
-								update_behavior = 'immediate';
-							}}
-						>
-							{__('Update Now', 'surecart')}
-						</ScButton>
-					</div>
-				)
-			}
-		>
-			<Fragment>
-				<ErrorFlash
-					errors={subscriptionErrors}
-					onHide={clearSubscriptionErrors}
-				/>
-
-				<Price
-					subscription={subscription}
-					updateSubscription={updateSubscription}
-					customer={customer}
-					price={price}
-					product={product}
-					loading={isLoading}
-				/>
-
-				<Schedule
-					subscription={subscription}
-					updateSubscription={updateSubscription}
-					loading={isLoading}
-				/>
-
-				<PaymentMethod
-					subscription={subscription}
-					updateSubscription={updateSubscription}
-					loading={isLoading}
-				/>
-
-				{isSaving && (
-					<sc-block-ui
-						spinner
-						style={{ zIndex: 9, margin: 0 }}
-					></sc-block-ui>
-				)}
-			</Fragment>
-		</Template>
 	);
 };

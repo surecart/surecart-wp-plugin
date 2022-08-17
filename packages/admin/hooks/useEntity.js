@@ -1,14 +1,14 @@
-import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch, useSelect } from '@wordpress/data';
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
 /**
  * Internal dependencies
  */
 import { camelName } from '../util';
+import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch, useSelect } from '@wordpress/data';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 export default (
 	type,
@@ -36,6 +36,8 @@ export default (
 		hasLoadedItem,
 		savingItem,
 		deletingItem,
+		hasEdits,
+		edits,
 		saveError,
 	} = useSelect(
 		(select) => {
@@ -62,6 +64,10 @@ export default (
 				deletingItem: select(coreStore)?.isDeletingEntityRecord?.(
 					...entityData
 				),
+				hasEdits: select(coreStore).hasEditsForEntityRecord(
+					...entityData
+				),
+				edits: select(coreStore).getEntityRecordEdits(...entityData),
 			};
 		},
 		[id, ...additionalItems]
@@ -98,6 +104,8 @@ export default (
 		// loaded.
 		hasLoadedItem,
 		[`hasLoaded${ucName}`]: hasLoadedItem,
+
+		edits,
 
 		// updating.
 		savingItem,
