@@ -1,5 +1,5 @@
 import CreateCustomer from './CreateCustomer';
-import EditCustomer from './EditCustomer';
+import EditCustomer from './Customers';
 import { store } from '@surecart/data';
 import { useSelect } from '@wordpress/data';
 import { addQueryArgs } from '@wordpress/url';
