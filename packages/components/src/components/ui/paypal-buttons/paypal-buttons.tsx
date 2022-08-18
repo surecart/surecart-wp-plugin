@@ -58,7 +58,7 @@ export class ScPaypalButtons {
 
   @Watch('order')
   handleOrderChange(val, prev) {
-    if ( val?.updated_at === prev?.updated_at) {
+    if (val?.updated_at === prev?.updated_at) {
       return;
     }
     this.cardContainer.innerHTML = '';
@@ -76,7 +76,7 @@ export class ScPaypalButtons {
         ...(!subscriptionOrder ? { 'merchant-id': this.merchantId.replace(/ /g, '') } : {}),
         'commit': false,
         'intent': subscriptionOrder ? 'tokenize' : 'capture',
-        'vault': subscriptionOrder,
+        'vault': true,
         'currency': this.order?.currency.toUpperCase() || 'USD',
       });
       this.renderButtons(paypal);
