@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,13 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.1.3 - August 17, 2022 =
+* Improvemnt: Ability to select default credit card or paypal with PayPal only processor.
+* Improvement: Better preview of PayPal only processors on form edit screen.
+* Improvement: Add additional css variables for cart icon customizations.
+* Fix: Issue with PayPal Credit Card popup sometimes not appearing.
+* Fix: Compatibility issue with WPMU Dev Hosting and PHP8.0 with Memcaching enabled.
 
 = 1.1.2 - August 17, 2022 =
 * Hotfix: Order metadata not appearing on orders page.
