@@ -79,19 +79,13 @@ export class ScPayment {
    */
   renderStripePaymentElement() {
     if (this.stripePaymentElement) {
-      return <sc-stripe-payment-element order={this.order} paymentIntent={this.stripePaymentIntent} />
+      return <sc-stripe-payment-element order={this.order} paymentIntent={this.stripePaymentIntent} />;
     }
 
     const data = getProcessorData(this.processors, 'stripe', this.mode);
     return (
       <div class="sc-payment__stripe-card-element">
-        <sc-stripe-element
-          order={this.order}
-          mode={this.mode}
-          publishableKey={data?.publishable_key}
-          accountId={data?.account_id}
-          secureText={this.secureNotice}
-        />
+        <sc-stripe-element order={this.order} mode={this.mode} publishableKey={data?.publishable_key} accountId={data?.account_id} secureText={this.secureNotice} />
         <sc-secure-notice>{this.secureNotice}</sc-secure-notice>
       </div>
     );
@@ -132,20 +126,9 @@ export class ScPayment {
               <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
             </span>
             <sc-card>
-              <sc-payment-selected
-                label={__(
-                  'PayPal selected for check out.',
-                  'surecart'
-                )}>
-                  <sc-icon
-										slot="icon"
-										name="paypal"
-										style={{ width: '80px' }}
-									/>
-                  {__(
-                    'Another step will appear after submitting your order to complete your purchase details.',
-                    'surecart'
-                  )}
+              <sc-payment-selected label={__('PayPal selected for check out.', 'surecart')}>
+                <sc-icon slot="icon" name="paypal" style={{ width: '80px' }} />
+                {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
               </sc-payment-selected>
             </sc-card>
           </sc-toggle>
@@ -178,44 +161,22 @@ export class ScPayment {
               <span>{__('Credit Card', 'surecart')}</span>
             </span>
             <sc-card>
-              <sc-payment-selected
-                  label={__(
-                    'Credit Card selected for check out.',
-                    'surecart'
-                  )}>
-                    <sc-icon
-                      slot="icon"
-                      name="paypal"
-                      style={{ width: '80px' }}
-                    />
-                    {__(
-                      'Another step will appear after submitting your order to complete your purchase details.',
-                      'surecart'
-                    )}
-                </sc-payment-selected>
-              </sc-card>
+              <sc-payment-selected label={__('Credit Card selected for check out.', 'surecart')}>
+                <sc-icon slot="icon" name="paypal" style={{ width: '80px' }} />
+                {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
+              </sc-payment-selected>
+            </sc-card>
           </sc-toggle>
           <sc-toggle data-test-id="paypal-toggle" show-control shady borderless open={this.processor === 'paypal'} onScShow={() => this.scSetProcessor.emit('paypal')}>
             <span slot="summary" class="sc-payment-toggle-summary">
               <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
             </span>
             <sc-card>
-              <sc-payment-selected
-                  label={__(
-                    'PayPal selected for check out.',
-                    'surecart'
-                  )}>
-                    <sc-icon
-                      slot="icon"
-                      name="paypal"
-                      style={{ width: '80px' }}
-                    />
-                    {__(
-                      'Another step will appear after submitting your order to complete your purchase details.',
-                      'surecart'
-                    )}
-                </sc-payment-selected>
-              </sc-card>
+              <sc-payment-selected label={__('PayPal selected for check out.', 'surecart')}>
+                <sc-icon slot="icon" name="paypal" style={{ width: '80px' }} />
+                {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
+              </sc-payment-selected>
+            </sc-card>
           </sc-toggle>
         </sc-toggles>
       </sc-form-control>
