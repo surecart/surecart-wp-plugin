@@ -64,6 +64,10 @@ export default ({ className, attributes, setAttributes, context }) => {
 		);
 	};
 
+	const hasProcessor = (type) => {
+		return scBlockData?.processors.some((p) => p.processor_type === type);
+	};
+
 	useEffect(() => {
 		setActiveProcessors(
 			(scBlockData?.processors || [])
@@ -102,18 +106,45 @@ export default ({ className, attributes, setAttributes, context }) => {
 							}
 						/>
 					</PanelRow>
-					{options?.length > 1 && (
-						<PanelRow>
-							<RadioControl
-								selected={default_processor || 'stripe'}
-								label={__('Default Processor', 'surecart')}
-								options={processorOptions()}
-								onChange={(default_processor) =>
-									setAttributes({ default_processor })
-								}
-							/>
-						</PanelRow>
-					)}
+					<PanelRow>
+						<RadioControl
+							selected={default_processor || 'stripe'}
+							label={__('Default Processor', 'surecart')}
+							options={[
+								...(hasProcessor('stripe')
+									? [
+											{
+												label: __('Stripe', 'surecart'),
+												value: 'stripe',
+											},
+									  ]
+									: []),
+								...(hasProcessor('paypal')
+									? [
+											{
+												label: __('PayPal', 'surecart'),
+												value: 'paypal',
+											},
+									  ]
+									: []),
+								...(hasProcessor('paypal') &&
+								!hasProcessor('stripe')
+									? [
+											{
+												label: __(
+													'PayPal Card',
+													'surecart'
+												),
+												value: 'paypal-card',
+											},
+									  ]
+									: []),
+							]}
+							onChange={(default_processor) =>
+								setAttributes({ default_processor })
+							}
+						/>
+					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 
@@ -142,63 +173,113 @@ export default ({ className, attributes, setAttributes, context }) => {
 						)}
 					</div>
 					<ScToggles collapsible={false} theme="container">
-						<ScToggle
-							class="sc-stripe-toggle"
-							show-control
-							shady
-							borderless
-							open={processor === 'stripe'}
-							onScShow={() => setProcessor('stripe')}
-						>
-							<span
-								slot="summary"
-								css={css`
-									line-height: 1;
-									display: flex;
-									align-items: center;
-									gap: 0.5em;
-								`}
+						{hasProcessor('stripe') && (
+							<ScToggle
+								class="sc-stripe-toggle"
+								show-control
+								shady
+								borderless
+								open={processor === 'stripe'}
+								onScShow={() => setProcessor('stripe')}
 							>
-								<ScIcon
-									name="credit-card"
-									style={{ fontSize: '24px' }}
-								></ScIcon>
-								<span>{__('Credit Card', 'surecart')}</span>
-							</span>
+								<span
+									slot="summary"
+									css={css`
+										line-height: 1;
+										display: flex;
+										align-items: center;
+										gap: 0.5em;
+									`}
+								>
+									<ScIcon
+										name="credit-card"
+										style={{ fontSize: '24px' }}
+									></ScIcon>
+									<span>{__('Credit Card', 'surecart')}</span>
+								</span>
 
-							{!!scBlockData?.beta?.stripe_payment_element ? (
+								{!!scBlockData?.beta?.stripe_payment_element ? (
+									<ScCard>
+										<ScAlert open type="info">
+											{__(
+												'Please preview the form on the front-end to load the Stripe payment element fields.',
+												'surecart'
+											)}
+										</ScAlert>
+									</ScCard>
+								) : (
+									!!stripeProcessor?.processor_data
+										?.publishable_key &&
+									stripeProcessor?.processor_data
+										?.account_id && (
+										<div class="sc-payment__stripe-card-element">
+											<ScStripeElement
+												mode={'test'}
+												publishableKey={
+													stripeProcessor
+														?.processor_data
+														?.publishable_key
+												}
+												accountId={
+													stripeProcessor
+														?.processor_data
+														?.account_id
+												}
+												secureText={secure_notice}
+											/>
+											<ScSecureNotice>
+												{secure_notice}
+											</ScSecureNotice>
+										</div>
+									)
+								)}
+							</ScToggle>
+						)}
+
+						{hasProcessor('paypal') && !hasProcessor('stripe') && (
+							<ScToggle
+								class="sc-paypal-card"
+								show-control
+								shady
+								borderless
+								open={processor === 'paypal-card'}
+								onScShow={() => setProcessor('paypal-card')}
+							>
+								<span
+									slot="summary"
+									css={css`
+										line-height: 1;
+										display: flex;
+										align-items: center;
+										gap: 0.5em;
+									`}
+								>
+									<ScIcon
+										name="credit-card"
+										style={{ fontSize: '24px' }}
+									></ScIcon>
+									<span>{__('Credit Card', 'surecart')}</span>
+								</span>
+
 								<ScCard>
-									<ScAlert open type="info">
-										{__(
-											'Please preview the form on the front-end to load the Stripe payment element fields.',
+									<ScPaymentSelected
+										label={__(
+											'Credit Card selected for check out.',
 											'surecart'
 										)}
-									</ScAlert>
-								</ScCard>
-							) : (
-								!!stripeProcessor?.processor_data
-									?.publishable_key &&
-								stripeProcessor?.processor_data?.account_id && (
-									<div class="sc-payment__stripe-card-element">
-										<ScStripeElement
-											mode={'test'}
-											publishableKey={
-												stripeProcessor?.processor_data
-													?.publishable_key
-											}
-											accountId={
-												stripeProcessor?.processor_data
-													?.account_id
-											}
-											secureText={secure_notice}
+									>
+										<ScIcon
+											slot="icon"
+											name="credit-card"
 										/>
-										<ScSecureNotice>
-											{secure_notice}
-										</ScSecureNotice>
-									</div>
-								)
-							)}
-						</ScToggle>
+										{__(
+											'Another step will appear after submitting your order to complete your purchase details.',
+											'surecart'
+										)}
+									</ScPaymentSelected>
+								</ScCard>
+							</ScToggle>
+						)}
 
 						<ScToggle
 							class="sc-paypal-toggle"
