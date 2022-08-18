@@ -1,4 +1,4 @@
-import { Checkout } from '../../../../types';
+import { Checkout, ProcessorName } from '../../../../types';
 import { Component, Host, h, Listen, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 
@@ -8,7 +8,7 @@ import { openWormhole } from 'stencil-wormhole';
   shadow: false,
 })
 export class ScExpressPayment {
-  @Prop() processor: 'stripe' | 'paypal';
+  @Prop() processor: ProcessorName;
   @Prop() formId: number | string;
   @Prop() busy: boolean;
   @Prop() order: Checkout;

@@ -1,7 +1,7 @@
 import { Component, Fragment, h, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { getProcessorData } from '../../../../functions/processor';
-import { Checkout, Processor } from '../../../../types';
+import { Checkout, Processor, ProcessorName } from '../../../../types';
 
 @Component({
   tag: 'sc-order-submit',
@@ -45,7 +45,7 @@ export class ScOrderSubmit {
   /** Currency Code */
   @Prop() currencyCode: string = 'usd';
 
-  @Prop() processor: 'stripe' | 'paypal' | 'paypal-card';
+  @Prop() processor: ProcessorName;
 
   renderPayPalButton(buttons) {
     const { client_id, account_id } = getProcessorData(this.processors, 'paypal', this.mode);

@@ -3,7 +3,20 @@ import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
 
 import { getOrder, setOrder } from '../../../../store/checkouts';
-import { Customer, FormState, Checkout, PaymentIntent, PaymentIntents, PriceChoice, Prices, Processor, Products, ResponseError, TaxProtocol } from '../../../../types';
+import {
+  Customer,
+  FormState,
+  Checkout,
+  PaymentIntent,
+  PaymentIntents,
+  PriceChoice,
+  Prices,
+  Processor,
+  Products,
+  ResponseError,
+  TaxProtocol,
+  ProcessorName,
+} from '../../../../types';
 
 @Component({
   tag: 'sc-checkout',
@@ -66,10 +79,10 @@ export class ScCheckout {
   @Prop() stripePaymentElement: boolean = false;
 
   @Prop() loadingText: {
-    'finalizing': string,
-    'paying': string;
-    'confirming': string;
-    'confirmed': string;
+    finalizing: string;
+    paying: string;
+    confirming: string;
+    confirmed: string;
   };
 
   /** Stores fetched prices for use throughout component.  */
@@ -85,7 +98,7 @@ export class ScCheckout {
   @State() error: ResponseError | null;
 
   /** The currenly selected processor */
-  @State() processor: 'stripe' | 'paypal' = 'stripe';
+  @State() processor: ProcessorName = 'stripe';
 
   /** Holds the payment intents for the checkout. */
   @State() paymentIntents: PaymentIntents = {};
@@ -110,7 +123,7 @@ export class ScCheckout {
   }
 
   @Listen('scUpdateOrderState')
-  handleOrderStateUpdate(e: {detail: Checkout}) {
+  handleOrderStateUpdate(e: { detail: Checkout }) {
     setOrder(e?.detail, this?.formId);
   }
 
@@ -266,10 +279,26 @@ export class ScCheckout {
           </sc-form-state-provider>
 
           {this.state().busy && <sc-block-ui z-index={9}></sc-block-ui>}
-          {this.checkoutState === 'finalizing' && <sc-block-ui z-index={9} spinner style={{'--sc-block-ui-opacity': '0.75'}}>{this.loadingText?.finalizing || __('Submitting order...', 'surecart')}</sc-block-ui>}
-          {this.checkoutState === 'paying' && <sc-block-ui z-index={9} spinner style={{'--sc-block-ui-opacity': '0.75'}}>{this.loadingText?.paying || __('Processing payment...', 'surecart')}</sc-block-ui>}
-          {this.checkoutState === 'confirming' && <sc-block-ui z-index={9} spinner style={{'--sc-block-ui-opacity': '0.75'}}>{this.loadingText?.confirming || __('Finalizing order...', 'surecart')}</sc-block-ui>}
-          {this.checkoutState === 'confirmed' && <sc-block-ui z-index={9} spinner style={{'--sc-block-ui-opacity': '0.75'}}>{this.loadingText?.confirmed || __('Payment successful! Redirecting...', 'surecart')}</sc-block-ui>}
+          {this.checkoutState === 'finalizing' && (
+            <sc-block-ui z-index={9} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
+              {this.loadingText?.finalizing || __('Submitting order...', 'surecart')}
+            </sc-block-ui>
+          )}
+          {this.checkoutState === 'paying' && (
+            <sc-block-ui z-index={9} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
+              {this.loadingText?.paying || __('Processing payment...', 'surecart')}
+            </sc-block-ui>
+          )}
+          {this.checkoutState === 'confirming' && (
+            <sc-block-ui z-index={9} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
+              {this.loadingText?.confirming || __('Finalizing order...', 'surecart')}
+            </sc-block-ui>
+          )}
+          {this.checkoutState === 'confirmed' && (
+            <sc-block-ui z-index={9} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
+              {this.loadingText?.confirmed || __('Payment successful! Redirecting...', 'surecart')}
+            </sc-block-ui>
+          )}
         </Universe.Provider>
       </div>
     );
