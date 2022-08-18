@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-08-17T15:07:57+00:00\n"
+"POT-Creation-Date: 2022-08-18T18:41:35+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -2047,131 +2047,135 @@ msgid "Failed to save coupon."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:11
-msgid "The price is already being used in subscriptions or checkout sessions. Please archive the price and create another one."
+msgid "This coupon is for a different currency and cannot be applied."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:12
-msgid "Invalid promotion code."
+msgid "The price is already being used in subscriptions or checkout sessions. Please archive the price and create another one."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:13
-msgid "Failed to update. Please check for errors and try again."
+msgid "Invalid promotion code."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:14
-msgid "Please add at least one product."
+msgid "Failed to update. Please check for errors and try again."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:15
-#: src/Support/Errors/Translations/codes.php:25
-msgid "Please fill out your address."
+msgid "Please add at least one product."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:16
-msgid "This download cannot be removed or archived when it is set as the current release."
+#: src/Support/Errors/Translations/codes.php:26
+msgid "Please fill out your address."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:17
-msgid "The refund amount is greater than the refundable amount."
+msgid "This download cannot be removed or archived when it is set as the current release."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:18
-msgid "You cannot add a one-time product to a subscription."
+msgid "The refund amount is greater than the refundable amount."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:19
-msgid "The price cannot be blank."
+msgid "You cannot add a one-time product to a subscription."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:20
-msgid "A price with this currency and recurring interval already exists. Please create a new product to create this price."
+msgid "The price cannot be blank."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:21
-msgid "This promotion code already exists. Please archive the old code or use a different code."
+msgid "A price with this currency and recurring interval already exists. Please create a new product to create this price."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:22
-msgid "There are no processors to make the payment. Please contact us for assistance."
+msgid "This promotion code already exists. Please archive the old code or use a different code."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:23
-msgid "This product has prices that are currently being used. Please archive the product instead if it is not already archived."
+msgid "There are no processors to make the payment. Please contact us for assistance."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:24
+msgid "This product has prices that are currently being used. Please archive the product instead if it is not already archived."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:25
 msgid "The product image must be an image."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:26
+#: src/Support/Errors/Translations/codes.php:27
 msgid "Please enter a valid tax number."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:27
+#: src/Support/Errors/Translations/codes.php:28
 msgid "The prices in this checkout session have changed. Please recheck it before submitting again."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:28
+#: src/Support/Errors/Translations/codes.php:29
 msgid "This coupon code is invalid."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:29
+#: src/Support/Errors/Translations/codes.php:30
 msgid "You cannot enable abandoned checkouts until you have updated your business contact address. Please add an address to your store branding."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:30
+#: src/Support/Errors/Translations/codes.php:31
 msgid "Your postal code is not valid."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:31
+#: src/Support/Errors/Translations/codes.php:32
 msgid "This coupon has expired."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:32
+#: src/Support/Errors/Translations/codes.php:33
 msgid "This discount code does not apply to this currency."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:33
+#: src/Support/Errors/Translations/codes.php:34
 msgid "Please double-check your prefix does not contain any spaces, underscores, dashes or special characters."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:34
+#: src/Support/Errors/Translations/codes.php:35
 msgid "This prefix is too long. Please enter a shorter prefix."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:35
+#: src/Support/Errors/Translations/codes.php:36
 msgid "This prefix is too short. Please enter a longer prefix."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:36
+#: src/Support/Errors/Translations/codes.php:37
 msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:37
+#: src/Support/Errors/Translations/codes.php:38
 msgid "The maximum price must be smaller."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:38
+#: src/Support/Errors/Translations/codes.php:39
 msgid "The minimum price must be smaller."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:39
+#: src/Support/Errors/Translations/codes.php:40
 msgid "The maximum price must be greater than the minimum price."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:40
+#: src/Support/Errors/Translations/codes.php:41
 msgid "You are already collecting tax for this zone."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:41
+#: src/Support/Errors/Translations/codes.php:42
 msgid "You cannot enable EU Micro Exemption if your address is outside of the EU."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:42
+#: src/Support/Errors/Translations/codes.php:43
 msgid "You cannot enable taxes unless a valid tax address is provided"
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:43
+#: src/Support/Errors/Translations/codes.php:44
 msgid "You cannot delete this media item because it is currently being used."
 msgstr ""
 
@@ -4422,9 +4426,9 @@ msgstr ""
 #: orders/modules/Details.js:55
 #: subscriptions/show/modules/Details.js:137
 #: Controllers/PaymentMethodController.php:119
-#: Blocks/Payment/edit.js:140
+#: Blocks/Payment/edit.js:171
 #: sc-order.js:129
-#: sc-payment.js:70
+#: sc-payment.js:63
 msgid "Test Mode"
 msgstr ""
 
@@ -4914,7 +4918,7 @@ msgstr ""
 msgid "Applied Balance"
 msgstr ""
 
-#: orders/modules/MetaData.js:19
+#: orders/modules/MetaData.js:16
 msgid "Metadata"
 msgstr ""
 
@@ -6952,7 +6956,7 @@ msgstr ""
 #: Blocks/Password/components/Inspector.js:13
 #: Blocks/Password/edit.js:25
 #: Blocks/Payment/components/Inspector.js:13
-#: Blocks/Payment/edit.js:88
+#: Blocks/Payment/edit.js:92
 #: Blocks/PriceChoice/edit.js:51
 #: Blocks/PriceSelector/edit.js:88
 #: Blocks/SessionDetail/edit.js:17
@@ -6978,7 +6982,7 @@ msgstr ""
 #: Blocks/Password/components/Inspector.js:23
 #: Blocks/Password/edit.js:35
 #: Blocks/Payment/components/Inspector.js:23
-#: Blocks/Payment/edit.js:91
+#: Blocks/Payment/edit.js:95
 #: Blocks/PriceChoice/edit.js:54
 #: Blocks/PriceSelector/edit.js:91
 #: Blocks/SessionDetail/edit.js:72
@@ -7714,7 +7718,7 @@ msgid "Processing Payment"
 msgstr ""
 
 #: Blocks/Form/edit.js:322
-#: sc-checkout.js:172
+#: sc-checkout.js:171
 msgid "Processing payment..."
 msgstr ""
 
@@ -7723,7 +7727,7 @@ msgid "Confirming Payment"
 msgstr ""
 
 #: Blocks/Form/edit.js:340
-#: sc-checkout.js:172
+#: sc-checkout.js:171
 msgid "Finalizing order..."
 msgstr ""
 
@@ -7732,7 +7736,7 @@ msgid "Success Text"
 msgstr ""
 
 #: Blocks/Form/edit.js:355
-#: sc-checkout.js:172
+#: sc-checkout.js:171
 msgid "Payment successful! Redirecting..."
 msgstr ""
 
@@ -7785,47 +7789,62 @@ msgid "Show Currency Code"
 msgstr ""
 
 #: Blocks/Payment/edit.js:45
+#: Blocks/Payment/edit.js:117
 msgid "Stripe"
 msgstr ""
 
 #: Blocks/Payment/edit.js:51
+#: Blocks/Payment/edit.js:125
 msgid "PayPal"
 msgstr ""
 
-#: Blocks/Payment/edit.js:98
+#: Blocks/Payment/edit.js:102
 msgid "Secure Credit Card Notice"
 msgstr ""
 
-#: Blocks/Payment/edit.js:109
+#: Blocks/Payment/edit.js:112
 msgid "Default Processor"
 msgstr ""
 
-#: Blocks/Payment/edit.js:123
+#: Blocks/Payment/edit.js:134
+msgid "PayPal Card"
+msgstr ""
+
+#: Blocks/Payment/edit.js:154
 msgid "Admin Notice"
 msgstr ""
 
-#: Blocks/Payment/edit.js:125
+#: Blocks/Payment/edit.js:156
 msgid "There is no payment method for %1s payments. You will need to connect and verify your account with at least one processor in order to process %2s payments."
 msgstr ""
 
-#: Blocks/Payment/edit.js:166
-#: sc-payment.js:76
-#: sc-payment.js:82
+#: Blocks/Payment/edit.js:198
+#: Blocks/Payment/edit.js:261
+#: sc-payment.js:69
+#: sc-payment.js:75
 msgid "Credit Card"
 msgstr ""
 
-#: Blocks/Payment/edit.js:172
+#: Blocks/Payment/edit.js:204
 msgid "Please preview the form on the front-end to load the Stripe payment element fields."
 msgstr ""
 
-#: Blocks/Payment/edit.js:228
-#: sc-payment.js:76
-msgid "PayPal selected for check out."
+#: Blocks/Payment/edit.js:266
+#: sc-payment.js:75
+msgid "Credit Card selected for check out."
 msgstr ""
 
-#: Blocks/Payment/edit.js:239
-#: sc-payment.js:76
+#: Blocks/Payment/edit.js:275
+#: Blocks/Payment/edit.js:320
+#: sc-payment.js:69
+#: sc-payment.js:75
 msgid "Another step will appear after submitting your order to complete your purchase details."
+msgstr ""
+
+#: Blocks/Payment/edit.js:309
+#: sc-payment.js:69
+#: sc-payment.js:75
+msgid "PayPal selected for check out."
 msgstr ""
 
 #: Blocks/PriceChoice/components/PriceInfo.js:55
@@ -9967,11 +9986,11 @@ msgstr ""
 msgid "Your payment is processing. Exiting this page could cause an error in your order. Please do not navigate away from this page."
 msgstr ""
 
-#: sc-checkout.js:165
+#: sc-checkout.js:164
 msgid "Due to processor restrictions, only one checkout form is allowed on the page."
 msgstr ""
 
-#: sc-checkout.js:172
+#: sc-checkout.js:171
 msgid "Submitting order..."
 msgstr ""
 
@@ -10013,7 +10032,7 @@ msgstr ""
 msgid "This product is no longer purchasable."
 msgstr ""
 
-#: sc-form-state-provider2.js:122
+#: sc-form-state-provider2.js:123
 msgid "Please refresh the page."
 msgstr ""
 
@@ -10122,15 +10141,7 @@ msgstr ""
 msgid "Payment Methods"
 msgstr ""
 
-#: sc-payment.js:82
-msgid "You will be prompted to complete your purchase securely."
-msgstr ""
-
-#: sc-payment.js:82
-msgid "You will be prompted by PayPal to complete your purchase securely."
-msgstr ""
-
-#: sc-payment.js:97
+#: sc-payment.js:90
 msgid "Please contact us for payment"
 msgstr ""
 

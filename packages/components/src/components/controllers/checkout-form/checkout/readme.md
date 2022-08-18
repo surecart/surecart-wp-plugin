@@ -66,7 +66,6 @@ Type: `Promise<boolean>`
 
 - [sc-alert](../../../ui/alert)
 - [sc-checkout-unsaved-changes-warning](../../../providers/checkout-unsaved-changes-warning)
-- [sc-processor-provider](../../../providers/processor-provider)
 - [sc-form-state-provider](../../../providers/form-state-provider)
 - [sc-form-error-provider](../../../providers/form-error-provider)
 - [sc-form-components-validator](../../../providers/form-components-validator)
@@ -79,7 +78,6 @@ Type: `Promise<boolean>`
 graph TD;
   sc-checkout --> sc-alert
   sc-checkout --> sc-checkout-unsaved-changes-warning
-  sc-checkout --> sc-processor-provider
   sc-checkout --> sc-form-state-provider
   sc-checkout --> sc-form-error-provider
   sc-checkout --> sc-form-components-validator

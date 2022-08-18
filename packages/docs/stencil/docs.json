@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-08-17T15:07:22",
+  "timestamp": "2022-08-18T18:40:54",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -3426,7 +3426,6 @@
       "dependencies": [
         "sc-alert",
         "sc-checkout-unsaved-changes-warning",
-        "sc-processor-provider",
         "sc-form-state-provider",
         "sc-form-error-provider",
         "sc-form-components-validator",
@@ -3438,7 +3437,6 @@
         "sc-checkout": [
           "sc-alert",
           "sc-checkout-unsaved-changes-warning",
-          "sc-processor-provider",
           "sc-form-state-provider",
           "sc-form-error-provider",
           "sc-form-components-validator",
@@ -7604,7 +7602,7 @@
         },
         {
           "name": "processor",
-          "type": "\"paypal\" | \"stripe\"",
+          "type": "\"paypal\" | \"paypal-card\" | \"stripe\"",
           "mutable": false,
           "attr": "processor",
           "reflectToAttr": false,
@@ -7613,6 +7611,10 @@
           "values": [
             {
               "value": "paypal",
+              "type": "string"
+            },
+            {
+              "value": "paypal-card",
               "type": "string"
             },
             {
@@ -14536,7 +14538,8 @@
         "sc-card",
         "sc-payment-selected",
         "sc-skeleton",
-        "sc-alert"
+        "sc-alert",
+        "sc-processor-provider"
       ],
       "dependencyGraph": {
         "sc-payment": [
@@ -14551,7 +14554,8 @@
           "sc-card",
           "sc-payment-selected",
           "sc-skeleton",
-          "sc-alert"
+          "sc-alert",
+          "sc-processor-provider"
         ],
         "sc-stripe-payment-element": [
           "sc-text",
@@ -16187,11 +16191,11 @@
       "slots": [],
       "parts": [],
       "dependents": [
-        "sc-checkout"
+        "sc-payment"
       ],
       "dependencies": [],
       "dependencyGraph": {
-        "sc-checkout": [
+        "sc-payment": [
           "sc-processor-provider"
         ]
       }

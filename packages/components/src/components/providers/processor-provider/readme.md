@@ -25,12 +25,12 @@
 
 ### Used by
 
- - [sc-checkout](../../controllers/checkout-form/checkout)
+ - [sc-payment](../../controllers/checkout-form/payment)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-checkout --> sc-processor-provider
+  sc-payment --> sc-processor-provider
   style sc-processor-provider fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -48,6 +48,7 @@
 - [sc-payment-selected](../../../ui/payment-selected)
 - [sc-skeleton](../../../ui/skeleton)
 - [sc-alert](../../../ui/alert)
+- [sc-processor-provider](../../../providers/processor-provider)
 
 ### Graph
 ```mermaid
@@ -64,6 +65,7 @@ graph TD;
   sc-payment --> sc-payment-selected
   sc-payment --> sc-skeleton
   sc-payment --> sc-alert
+  sc-payment --> sc-processor-provider
   sc-stripe-payment-element --> sc-text
   sc-stripe-payment-element --> sc-skeleton
   sc-stripe-element --> sc-input
