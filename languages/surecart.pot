@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-08-18T18:41:35+00:00\n"
+"POT-Creation-Date: 2022-08-18T20:14:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -70,7 +70,7 @@ msgstr ""
 #: invoices/modules/Charges.js:19
 #: invoices/modules/Refunds.js:17
 #: orders/modules/Charges.js:60
-#: sc-order.js:130
+#: sc-order.js:137
 msgid "Date"
 msgstr ""
 
@@ -115,7 +115,7 @@ msgstr ""
 #: Blocks/Totals/edit.js:60
 #: components/PriceChoices.js:20
 #: sc-order-confirmation-totals2.js:32
-#: sc-order.js:124
+#: sc-order.js:132
 #: sc-stripe-payment-request2.js:93
 #: sc-stripe-payment-request2.js:131
 msgid "Total"
@@ -4116,7 +4116,7 @@ msgstr ""
 #: products/modules/SingleDownload.js:249
 #: store/add-entities.js:52
 #: Controllers/DownloadController.php:109
-#: sc-downloads-list.js:73
+#: sc-downloads-list.js:72
 msgid "Download"
 msgstr ""
 
@@ -4373,7 +4373,7 @@ msgstr ""
 #: coupons/Sidebar.js:61
 #: sc-coupon-form2.js:52
 #: sc-order-confirmation-totals2.js:29
-#: sc-order.js:115
+#: sc-order.js:123
 msgid "Discount"
 msgstr ""
 
@@ -4427,7 +4427,7 @@ msgstr ""
 #: subscriptions/show/modules/Details.js:137
 #: Controllers/PaymentMethodController.php:119
 #: Blocks/Payment/edit.js:171
-#: sc-order.js:129
+#: sc-order.js:137
 #: sc-payment.js:63
 msgid "Test Mode"
 msgstr ""
@@ -4762,7 +4762,7 @@ msgstr ""
 #: subscriptions/show/modules/SubscriptionItems.js:73
 #: Blocks/Totals/edit.js:45
 #: sc-order-confirmation-totals2.js:32
-#: sc-order.js:106
+#: sc-order.js:114
 #: sc-upcoming-invoice.js:201
 msgid "Subtotal"
 msgstr ""
@@ -4782,7 +4782,7 @@ msgstr ""
 #: invoices/modules/LineItems.js:155
 #: orders/modules/LineItems/index.js:184
 #: subscriptions/show/modules/LineItems/index.js:102
-#: sc-order.js:118
+#: sc-order.js:126
 #: sc-upcoming-invoice.js:201
 msgid "Tax"
 msgstr ""
@@ -4907,13 +4907,13 @@ msgstr ""
 
 #: orders/modules/LineItems/index.js:158
 #: subscriptions/show/modules/LineItems/index.js:68
-#: sc-order.js:109
+#: sc-order.js:117
 msgid "Proration"
 msgstr ""
 
 #: orders/modules/LineItems/index.js:166
 #: subscriptions/show/modules/LineItems/index.js:76
-#: sc-order.js:112
+#: sc-order.js:120
 #: sc-upcoming-invoice.js:201
 msgid "Applied Balance"
 msgstr ""
@@ -5160,8 +5160,8 @@ msgstr ""
 #: products/modules/Downloads.js:65
 #: Controllers/DownloadController.php:119
 #: sc-dashboard-downloads-list.js:100
-#: sc-downloads-list.js:66
-#: sc-order.js:131
+#: sc-downloads-list.js:65
+#: sc-order.js:137
 msgid "Downloads"
 msgstr ""
 
@@ -6234,7 +6234,7 @@ msgstr ""
 #: subscriptions/edit/modules/PaymentMethod/index.js:34
 #: subscriptions/edit/modules/PaymentMethod/index.js:37
 #: Controllers/SubscriptionController.php:434
-#: sc-order.js:130
+#: sc-order.js:137
 msgid "Payment Method"
 msgstr ""
 
@@ -10081,7 +10081,7 @@ msgid "Order #%s"
 msgstr ""
 
 #: sc-order-confirmation.js:96
-#: sc-order.js:92
+#: sc-order.js:100
 msgid "Order not found."
 msgstr ""
 
@@ -10101,11 +10101,11 @@ msgstr ""
 msgid "Your cart is empty."
 msgstr ""
 
-#: sc-order.js:130
+#: sc-order.js:137
 msgid "Order Status"
 msgstr ""
 
-#: sc-order.js:130
+#: sc-order.js:137
 msgid "Download Receipt/Invoice"
 msgstr ""
 
