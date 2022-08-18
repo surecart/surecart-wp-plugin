@@ -1,0 +1,13 @@
+# Billing Period Actions Reference
+
+### surecart/period_paid
+
+Occurs whenever an billing period is paid. A common use-case is for when a subscription renews.
+
+```php
+do_action(
+	'surecart/period_paid',
+	(\SureCart\Models\Period::class) $period,
+	(array) $webhook_data
+)
+```
