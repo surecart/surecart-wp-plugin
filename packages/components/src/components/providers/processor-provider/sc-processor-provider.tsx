@@ -29,7 +29,7 @@ export class ScProcessorProvider {
   /** Update the processor if the selected processor is not valid anymore. */
   @Watch('filteredProcessors')
   handleProcessorChange() {
-    if(!this.filteredProcessors.some(processor =>  processor?.processor_type === this.processor)) {
+    if(!this.filteredProcessors.some(processor =>  processor?.processor_type === this.processor || (this.processor === 'paypal-card' && processor?.processor_type === 'paypal'))) {
       this.scSetProcessor.emit(this.filteredProcessors?.[0]?.processor_type);
     }
   }
