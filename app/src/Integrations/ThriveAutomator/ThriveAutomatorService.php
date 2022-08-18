@@ -10,6 +10,7 @@ use SureCart\Integrations\ThriveAutomator\Actions\RevokePurchaseAction;
 use SureCart\Integrations\ThriveAutomator\DataObjects\ProductData;
 use SureCart\Integrations\ThriveAutomator\Fields\ProductIDField;
 use SureCart\Integrations\ThriveAutomator\Fields\ProductNameField;
+use SureCart\Integrations\ThriveAutomator\TriggerFields\PriceField;
 use SureCart\Integrations\ThriveAutomator\TriggerFields\ProductField;
 use SureCart\Integrations\ThriveAutomator\Triggers\PurchaseCreatedTrigger;
 use SureCart\Integrations\ThriveAutomator\Triggers\PurchaseRevokedTrigger;
@@ -46,6 +47,7 @@ class ThriveAutomatorService {
 
 		// trigger fields
 		thrive_automator_register_trigger_field( ProductField::class );
+		thrive_automator_register_trigger_field( PriceField::class );
 
 		// actions
 		thrive_automator_register_action( InvokePurchaseAction::class );
