@@ -145,19 +145,11 @@ export class ScSessionProvider {
         processor: this.getProcessor(),
       });
 
-      // payment intent must match what we sent to make sure it's attached to an order.
-      // if (this.order()?.total_amount > 0 && payment_intent?.id && order?.payment_intent?.id !== payment_intent?.id) {
-      //   console.error('Payment intent mismatch', payment_intent?.id, order?.payment_intent?.id);
-      //   this.scError.emit({ message: 'Something went wrong. Please try again.' });
-      //   return this.scSetState.emit('REJECT');
-      // }
-
       // the order is paid
       if (order?.status === 'paid') {
         this.scPaid.emit();
       }
 
-      console.log(order);
       setOrder(order, this.formId);
       return this.order();
     } catch (e) {
@@ -245,7 +237,7 @@ export class ScSessionProvider {
   defaultFormQuery() {
     return {
       form_id: this.formId,
-      ...(this.stripePaymentElement ? { stage_processor_type: 'stripe' } : {})
+      ...(this.stripePaymentElement ? { stage_processor_type: 'stripe' } : {}),
     };
   }
 
@@ -260,7 +252,7 @@ export class ScSessionProvider {
     const status = getQueryArg(window.location.href, 'redirect_status');
     if (status === 'succeeded') {
       return this.fetch();
-    };
+    }
 
     // we have a checkout id in the url, so clear any saved order.
     const checkoutId = getQueryArg(window.location.href, 'checkout_id');
@@ -385,13 +377,13 @@ export class ScSessionProvider {
   async fetch(query = {}) {
     try {
       this.scSetState.emit('FETCH');
-      const checkout = await getCheckout({
+      const checkout = (await getCheckout({
         id: this.getSessionId(),
         query: {
           ...this.defaultFormQuery(),
           ...query,
-        }
-      }) as Checkout;
+        },
+      })) as Checkout;
       setOrder(checkout, this.formId);
       this.scSetState.emit('RESOLVE');
     } catch (e) {
@@ -408,10 +400,10 @@ export class ScSessionProvider {
           ...this.defaultFormData(),
           ...data,
           metadata: {
-            ...data?.metadata || {},
+            ...(data?.metadata || {}),
             page_url: window.location.href,
-            page_id: window?.scData?.page_id
-          }
+            page_id: window?.scData?.page_id,
+          },
         },
         query: {
           ...this.defaultFormQuery(),
