@@ -246,8 +246,6 @@ export class ScCheckout {
         <sc-checkout-unsaved-changes-warning state={this.checkoutState} />
         {/* Univers provider */}
         <Universe.Provider state={this.state()}>
-          {/* Handles the automatic filtering and selection of processors */}
-          <sc-processor-provider checkout={this.order()} processors={this.processors} processor={this.processor} />
           {/* Handles the current checkout form state. */}
           <sc-form-state-provider onScSetCheckoutFormState={e => (this.checkoutState = e.detail)}>
             {/* Handles errors in the form. */}

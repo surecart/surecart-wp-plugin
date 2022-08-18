@@ -1,4 +1,4 @@
-import { Component,Event,EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Checkout, Processor } from '../../../types';
 
@@ -26,10 +26,16 @@ export class ScProcessorProvider {
   /** Event to set a processor in the checkout. */
   @Event() scSetProcessor: EventEmitter<string>;
 
+  private processorName = {
+    'paypal': 'paypal',
+    'paypal-card': 'paypal',
+    'stripe': 'stripe',
+  };
+
   /** Update the processor if the selected processor is not valid anymore. */
   @Watch('filteredProcessors')
   handleProcessorChange() {
-    if(!this.filteredProcessors.some(processor =>  processor?.processor_type === this.processor || (this.processor === 'paypal-card' && processor?.processor_type === 'paypal'))) {
+    if (!this.filteredProcessors.some(processor => processor?.processor_type === this.processorName?.[this.processor])) {
       this.scSetProcessor.emit(this.filteredProcessors?.[0]?.processor_type);
     }
   }
@@ -39,7 +45,7 @@ export class ScProcessorProvider {
   handleCheckoutChange() {
     this.filteredProcessors = this.processors.filter(processor => {
       return !(this?.checkout?.reusable_payment_method_required && !processor?.recurring_enabled);
-    })
+    });
   }
 
   render() {
