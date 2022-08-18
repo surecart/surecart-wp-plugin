@@ -406,10 +406,10 @@ export namespace Components {
          */
         "formId": number;
         "loadingText": {
-    'finalizing': string,
-    'paying': string;
-    'confirming': string;
-    'confirmed': string;
+    finalizing: string;
+    paying: string;
+    confirming: string;
+    confirmed: string;
   };
         /**
           * Is this user logged in?
@@ -969,7 +969,7 @@ export namespace Components {
         "formId": number | string;
         "hasPaymentOptions": boolean;
         "order": Checkout;
-        "processor": 'stripe' | 'paypal';
+        "processor": ProcessorName;
     }
     interface ScFlex {
         "alignItems": string;
@@ -1643,7 +1643,7 @@ export namespace Components {
           * Is the order paying.
          */
         "paying": boolean;
-        "processor": 'stripe' | 'paypal' | 'paypal-card';
+        "processor": ProcessorName;
         /**
           * Keys and secrets for processors.
          */
@@ -4452,10 +4452,10 @@ declare namespace LocalJSX {
          */
         "formId"?: number;
         "loadingText"?: {
-    'finalizing': string,
-    'paying': string;
-    'confirming': string;
-    'confirmed': string;
+    finalizing: string;
+    paying: string;
+    confirming: string;
+    confirmed: string;
   };
         /**
           * Is this user logged in?
@@ -5114,7 +5114,7 @@ declare namespace LocalJSX {
         "formId"?: number | string;
         "hasPaymentOptions"?: boolean;
         "order"?: Checkout;
-        "processor"?: 'stripe' | 'paypal';
+        "processor"?: ProcessorName;
     }
     interface ScFlex {
         "alignItems"?: string;
@@ -5839,7 +5839,7 @@ declare namespace LocalJSX {
           * Is the order paying.
          */
         "paying"?: boolean;
-        "processor"?: 'stripe' | 'paypal' | 'paypal-card';
+        "processor"?: ProcessorName;
         /**
           * Keys and secrets for processors.
          */

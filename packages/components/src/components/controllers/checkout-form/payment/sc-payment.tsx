@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Host, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 
@@ -63,6 +63,8 @@ export class ScPayment {
   @Event() scSetProcessor: EventEmitter<ProcessorName>;
 
   componentWillLoad() {
+    this.scSetProcessor.emit(this.defaultProcessor);
+    this.processor = this.defaultProcessor;
     this.setProcessors();
   }
 
@@ -213,7 +215,7 @@ export class ScPayment {
     );
   }
 
-  render() {
+  renderProcessors() {
     // payment is not required for this order.
     if (this.order?.payment_method_required === false) {
       return null;
@@ -251,6 +253,16 @@ export class ScPayment {
     console.warn(`No processors are configured for the current cart items and mode. (${this.mode})`);
     // render no processors message.
     return this.renderNoProcessors();
+  }
+
+  render() {
+    return (
+      <Host>
+        {/* Handles the automatic filtering and selection of processors */}
+        <sc-processor-provider checkout={this.order} processors={this.processors} processor={this.processor} />
+        {this.renderProcessors()}
+      </Host>
+    );
   }
 }
 
