@@ -244,7 +244,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 == Changelog ==
 
 = 1.1.3 - August 17, 2022 =
-* Improvemnt: Ability to select default credit card or paypal with PayPal only processor.
+* Improvement: Ability to select default credit card or paypal with PayPal only processor.
 * Improvement: Better preview of PayPal only processors on form edit screen.
 * Improvement: Add additional css variables for cart icon customizations.
 * Fix: Issue with PayPal Credit Card popup sometimes not appearing.
