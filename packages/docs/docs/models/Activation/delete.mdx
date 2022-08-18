@@ -1,0 +1,24 @@
+# Delete
+import MethodText from '../../../components/MethodText.js';
+
+<p><MethodText path={'activations/{id}'} method={'delete'}  /></p>
+
+## Examples
+
+Delete a model by id:
+```php
+\SureCart\Models\Activation::delete('8ba8d60f-5277-4e6b-807c-dee8166446d5');
+```
+
+Delete a model directly.
+```php
+$activation = \SureCart\Models\Activation::find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
+$activation->delete();
+```
+
+## Response Attributes
+
+import ModelResponse from '../../../components/ModelResponse.js';
+
+<ModelResponse path={'activations/{id}'} method={'delete'} model={'activation'} />
+

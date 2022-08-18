@@ -1,10 +1,10 @@
 # Find with ID
-Returns a single abandoned order by id.
+Returns a single abandoned checkout by id.
 
 ## Examples
 
 ```php
-\SureCart\Models\AbandonedOrder::with([
+\SureCart\Models\AbandonedCheckout::with([
 	'customer'
 ])->find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
 ```
@@ -12,10 +12,10 @@ Returns a single abandoned order by id.
 ## Parameters
 import ModelParameters from '../../../components/ModelParameters.js';
 
-<ModelParameters path={'abandoned_orders/{id}'} method={'get'} />
+<ModelParameters path={'abandoned_checkouts/{id}'} method={'get'} />
 
 ## Response Attributes
 
 import ModelResponse from '../../../components/ModelResponse.js';
 
-<ModelResponse path={'abandoned_orders/{id}'} method={'get'} model={'abandoned_order'} />
+<ModelResponse path={'abandoned_checkouts/{id}'} method={'get'} model={'abandoned_checkout'} />
