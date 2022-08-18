@@ -62,20 +62,6 @@ export class ScPayment {
   /** Set the order procesor. */
   @Event() scSetProcessor: EventEmitter<ProcessorName>;
 
-  @Watch('order')
-  handleOrderChange(_, prev) {
-    if (!prev) {
-      this.handleDefaultChange();
-    }
-  }
-
-  @Watch('defaultProcessor')
-  handleDefaultChange() {
-    if (this.defaultProcessor) {
-      this.scSetProcessor.emit(this.defaultProcessor);
-    }
-  }
-
   componentWillLoad() {
     this.setProcessors();
   }
