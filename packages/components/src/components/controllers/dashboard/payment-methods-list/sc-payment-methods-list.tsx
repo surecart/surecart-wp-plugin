@@ -136,14 +136,15 @@ export class ScPaymentMethodsList {
         <sc-stacked-list-row style={{ '--columns': billing_agreement ? '2' : '3' }}>
           <sc-payment-method paymentMethod={paymentMethod} />
 
-
-            <div>
-              {!!card?.exp_month && (
-                <span>{__('Exp.', 'surecart')}{card?.exp_month}/{card?.exp_year}</span>
-              )}
-              {!!paypal_account && (paypal_account?.email)}
-            </div>
-
+          <div>
+            {!!card?.exp_month && (
+              <span>
+                {__('Exp.', 'surecart')}
+                {card?.exp_month}/{card?.exp_year}
+              </span>
+            )}
+            {!!paypal_account && paypal_account?.email}
+          </div>
 
           <sc-flex justify-content="flex-start" align-items="center" style={{ '--spacing': '0.5em', 'marginLeft': 'auto' }}>
             {typeof customer !== 'string' && customer?.default_payment_method === id && <sc-tag type="info">{__('Default', 'surecart')}</sc-tag>}

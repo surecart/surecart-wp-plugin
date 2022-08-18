@@ -100,7 +100,7 @@ export class ScOrdersList {
   }
 
   renderStatusBadge(order: Order) {
-    const { status, checkout} = order;
+    const { status, checkout } = order;
     const { charge } = checkout as Checkout;
     if (charge && typeof charge === 'object') {
       if (charge?.fully_refunded) {
@@ -141,14 +141,18 @@ export class ScOrdersList {
 
   renderList() {
     return this.orders.map(order => {
-      const { checkout, created_at, id} = order;
+      const { checkout, created_at, id } = order;
       const { line_items, total_amount, currency, charge } = checkout as Checkout;
       return (
-        <sc-stacked-list-row href={addQueryArgs(window.location.href, {
-          action: 'show',
-          model: 'order',
-          id,
-        })} style={{ '--columns': '4' }} mobile-size={500}>
+        <sc-stacked-list-row
+          href={addQueryArgs(window.location.href, {
+            action: 'show',
+            model: 'order',
+            id,
+          })}
+          style={{ '--columns': '4' }}
+          mobile-size={500}
+        >
           <div>
             {typeof charge !== 'string' && (
               <sc-format-date class="order__date" date={(charge?.created_at || created_at) * 1000} month="short" day="numeric" year="numeric"></sc-format-date>

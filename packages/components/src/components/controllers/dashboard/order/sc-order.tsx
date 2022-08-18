@@ -54,7 +54,7 @@ export class ScOrder {
         path: addQueryArgs(`surecart/v1/purchases`, {
           expand: ['product', 'product.downloads', 'download.media'],
           order_ids: [this.orderId],
-          downloadable: true
+          downloadable: true,
         }),
       })) as Purchase[];
     } catch (e) {
@@ -69,14 +69,22 @@ export class ScOrder {
   async getOrder() {
     this.order = (await await apiFetch({
       path: addQueryArgs(`surecart/v1/orders/${this.orderId}`, {
-        expand: ['checkout', 'checkout.line_items', 'checkout.payment_method', 'payment_method.card', 'payment_method.payment_instrument', 'payment_method.paypal_account', 'payment_method.bank_account'],
+        expand: [
+          'checkout',
+          'checkout.line_items',
+          'checkout.payment_method',
+          'payment_method.card',
+          'payment_method.payment_instrument',
+          'payment_method.paypal_account',
+          'payment_method.bank_account',
+        ],
       }),
     })) as Order;
   }
 
   renderLoading() {
     return (
-      <sc-flex flexDirection='column' style={{ 'gap': '1em' }}>
+      <sc-flex flexDirection="column" style={{ gap: '1em' }}>
         <sc-skeleton style={{ width: '20%', display: 'inline-block' }}></sc-skeleton>
         <sc-skeleton style={{ width: '60%', display: 'inline-block' }}></sc-skeleton>
         <sc-skeleton style={{ width: '40%', display: 'inline-block' }}></sc-skeleton>
@@ -85,9 +93,7 @@ export class ScOrder {
   }
 
   renderEmpty() {
-    return (
-      <sc-empty icon="shopping-bag">{__("Order not found.", 'surecart')}</sc-empty>
-    );
+    return <sc-empty icon="shopping-bag">{__('Order not found.', 'surecart')}</sc-empty>;
   }
 
   renderContent() {
@@ -101,116 +107,121 @@ export class ScOrder {
 
     const checkout = this.order?.checkout as Checkout;
 
-    return <Fragment>
-      {(checkout?.line_items?.data || []).map((item) => {
-        return (
-          <sc-product-line-item
-            key={item.id}
-            imageUrl={item?.price?.metadata?.wp_attachment_src}
-            name={(item?.price?.product as Product)?.name}
-            editable={false}
-            removable={false}
-            quantity={item.quantity}
-            amount={item.subtotal_amount}
-            currency={item?.price?.currency}
-            trialDurationDays={item?.price?.trial_duration_days}
-            interval={intervalString(item?.price)}
-          ></sc-product-line-item>
-        );
-      })}
+    return (
+      <Fragment>
+        {(checkout?.line_items?.data || []).map(item => {
+          return (
+            <sc-product-line-item
+              key={item.id}
+              imageUrl={item?.price?.metadata?.wp_attachment_src}
+              name={(item?.price?.product as Product)?.name}
+              editable={false}
+              removable={false}
+              quantity={item.quantity}
+              amount={item.subtotal_amount}
+              currency={item?.price?.currency}
+              trialDurationDays={item?.price?.trial_duration_days}
+              interval={intervalString(item?.price)}
+            ></sc-product-line-item>
+          );
+        })}
 
-      <sc-divider style={{ '--spacing': 'var(--sc-spacing-x-small)' }}></sc-divider>
+        <sc-divider style={{ '--spacing': 'var(--sc-spacing-x-small)' }}></sc-divider>
 
-      <sc-line-item>
-        <span slot="description">{__('Subtotal', 'surecart')}</span>
-        <sc-format-number
-          slot="price"
-          style={{
-            'font-weight': 'var(--sc-font-weight-semibold)',
-            color: 'var(--sc-color-gray-800)',
-          }}
-          type="currency"
-          currency={checkout?.currency}
-          value={checkout?.subtotal_amount}
-        ></sc-format-number>
-      </sc-line-item>
-
-      {!!checkout?.proration_amount && <sc-line-item>
-        <span slot="description">{__('Proration', 'surecart')}</span>
-        <sc-format-number
-          slot="price"
-          style={{
-            'font-weight': 'var(--sc-font-weight-semibold)',
-            color: 'var(--sc-color-gray-800)',
-          }}
-          type="currency"
-          currency={checkout?.currency}
-          value={checkout?.proration_amount}
-        ></sc-format-number>
-      </sc-line-item>}
-
-      {!!checkout?.applied_balance_amount && <sc-line-item>
-        <span slot="description">{__('Applied Balance', 'surecart')}</span>
-        <sc-format-number
-          slot="price"
-          style={{
-            'font-weight': 'var(--sc-font-weight-semibold)',
-            color: 'var(--sc-color-gray-800)',
-          }}
-          type="currency"
-          currency={checkout?.currency}
-          value={checkout?.applied_balance_amount}
-        ></sc-format-number>
-      </sc-line-item>}
-
-      {!!checkout?.discounts && <sc-line-item>
-        <span slot="description">{__('Discount', 'surecart')}</span>
-        <sc-format-number
-          slot="price"
-          style={{
-            'font-weight': 'var(--sc-font-weight-semibold)',
-            color: 'var(--sc-color-gray-800)',
-          }}
-          type="currency"
-          currency={checkout?.currency}
-          value={checkout?.discounts}
-        ></sc-format-number>
-      </sc-line-item>}
-
-      {!!checkout?.tax_amount && <sc-line-item>
-        <span slot="description">{__('Tax', 'surecart')}</span>
-        <sc-format-number
-          slot="price"
-          style={{
-            'font-weight': 'var(--sc-font-weight-semibold)',
-            color: 'var(--sc-color-gray-800)',
-          }}
-          type="currency"
-          currency={checkout?.currency}
-          value={checkout?.tax_amount}
-        ></sc-format-number>
-      </sc-line-item>}
-
-      <sc-divider style={{ '--spacing': 'var(--sc-spacing-x-small)' }}></sc-divider>
-
-      <sc-line-item
-        style={{
-          width: '100%',
-          '--price-size': 'var(--sc-font-size-x-large)',
-        }}
-      >
-        <span slot="title">{__('Total', 'surecart')}</span>
-        <span slot="price">
+        <sc-line-item>
+          <span slot="description">{__('Subtotal', 'surecart')}</span>
           <sc-format-number
+            slot="price"
+            style={{
+              'font-weight': 'var(--sc-font-weight-semibold)',
+              'color': 'var(--sc-color-gray-800)',
+            }}
             type="currency"
             currency={checkout?.currency}
-            value={checkout?.amount_due}
+            value={checkout?.subtotal_amount}
           ></sc-format-number>
-        </span>
-        <span slot="currency">{checkout?.currency}</span>
-      </sc-line-item>
+        </sc-line-item>
 
-    </Fragment>
+        {!!checkout?.proration_amount && (
+          <sc-line-item>
+            <span slot="description">{__('Proration', 'surecart')}</span>
+            <sc-format-number
+              slot="price"
+              style={{
+                'font-weight': 'var(--sc-font-weight-semibold)',
+                'color': 'var(--sc-color-gray-800)',
+              }}
+              type="currency"
+              currency={checkout?.currency}
+              value={checkout?.proration_amount}
+            ></sc-format-number>
+          </sc-line-item>
+        )}
+
+        {!!checkout?.applied_balance_amount && (
+          <sc-line-item>
+            <span slot="description">{__('Applied Balance', 'surecart')}</span>
+            <sc-format-number
+              slot="price"
+              style={{
+                'font-weight': 'var(--sc-font-weight-semibold)',
+                'color': 'var(--sc-color-gray-800)',
+              }}
+              type="currency"
+              currency={checkout?.currency}
+              value={checkout?.applied_balance_amount}
+            ></sc-format-number>
+          </sc-line-item>
+        )}
+
+        {!!checkout?.discounts && (
+          <sc-line-item>
+            <span slot="description">{__('Discount', 'surecart')}</span>
+            <sc-format-number
+              slot="price"
+              style={{
+                'font-weight': 'var(--sc-font-weight-semibold)',
+                'color': 'var(--sc-color-gray-800)',
+              }}
+              type="currency"
+              currency={checkout?.currency}
+              value={checkout?.discounts}
+            ></sc-format-number>
+          </sc-line-item>
+        )}
+
+        {!!checkout?.tax_amount && (
+          <sc-line-item>
+            <span slot="description">{__('Tax', 'surecart')}</span>
+            <sc-format-number
+              slot="price"
+              style={{
+                'font-weight': 'var(--sc-font-weight-semibold)',
+                'color': 'var(--sc-color-gray-800)',
+              }}
+              type="currency"
+              currency={checkout?.currency}
+              value={checkout?.tax_amount}
+            ></sc-format-number>
+          </sc-line-item>
+        )}
+
+        <sc-divider style={{ '--spacing': 'var(--sc-spacing-x-small)' }}></sc-divider>
+
+        <sc-line-item
+          style={{
+            'width': '100%',
+            '--price-size': 'var(--sc-font-size-x-large)',
+          }}
+        >
+          <span slot="title">{__('Total', 'surecart')}</span>
+          <span slot="price">
+            <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.amount_due}></sc-format-number>
+          </span>
+          <span slot="currency">{checkout?.currency}</span>
+        </sc-line-item>
+      </Fragment>
+    );
   }
 
   render() {
@@ -218,12 +229,17 @@ export class ScOrder {
     return (
       <sc-spacing style={{ '--spacing': 'var(--sc-spacing-large)' }}>
         <sc-dashboard-module error={this.error}>
-
-          <span slot="heading">{this.loading ? <sc-skeleton style={{ 'width': '120px' }}></sc-skeleton> : `#${this?.order?.number}`}</span>
-          {!this.loading && !checkout?.live_mode && <sc-tag type="warning" slot="end">{__('Test Mode', 'surecart')}</sc-tag>}
+          <span slot="heading">{this.loading ? <sc-skeleton style={{ width: '120px' }}></sc-skeleton> : `#${this?.order?.number}`}</span>
+          {!this.loading && !checkout?.live_mode && (
+            <sc-tag type="warning" slot="end">
+              {__('Test Mode', 'surecart')}
+            </sc-tag>
+          )}
 
           <sc-card no-padding={!this.loading}>
-            {this.loading ? this.renderLoading() :
+            {this.loading ? (
+              this.renderLoading()
+            ) : (
               <sc-stacked-list>
                 <sc-stacked-list-row style={{ '--columns': '2' }}>
                   <div>{__('Order Status', 'surecart')}</div>
@@ -239,20 +255,18 @@ export class ScOrder {
                   <sc-payment-method paymentMethod={checkout?.payment_method}></sc-payment-method>
                 </sc-stacked-list-row>
               </sc-stacked-list>
-            }
+            )}
           </sc-card>
-
         </sc-dashboard-module>
 
+        {this.order?.pdf_url && (
+          <sc-button type="primary" href={this.order?.pdf_url} target="_blank">
+            <sc-icon name="inbox" slot="prefix"></sc-icon>
+            {__('Download Receipt/Invoice', 'surecart')}
+          </sc-button>
+        )}
 
-        {this.order?.pdf_url && <sc-button type="primary" href={this.order?.pdf_url} target="_blank">
-          <sc-icon name="inbox" slot="prefix"></sc-icon>
-          {__('Download Receipt/Invoice', 'surecart')}
-        </sc-button>}
-
-        {!!this.purchases?.length &&
-          <sc-purchase-downloads-list heading={__('Downloads', 'surecart')} purchases={this.purchases}></sc-purchase-downloads-list>}
-
+        {!!this.purchases?.length && <sc-purchase-downloads-list heading={__('Downloads', 'surecart')} purchases={this.purchases}></sc-purchase-downloads-list>}
       </sc-spacing>
     );
   }

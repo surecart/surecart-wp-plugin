@@ -5,7 +5,7 @@ import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
 import { intervalString } from '../../../../functions/price';
-import { Checkout,  PaymentMethod, Period, Price, Product } from '../../../../types';
+import { Checkout, PaymentMethod, Period, Price, Product } from '../../../../types';
 
 @Component({
   tag: 'sc-upcoming-invoice',
@@ -86,7 +86,7 @@ export class ScUpcomingInvoice {
           'payment_method.card',
           'payment_method.payment_instrument',
           'payment_method.paypal_account',
-          'payment_method.bank_account'
+          'payment_method.bank_account',
         ],
         subscription: {
           price: this.priceId,
@@ -208,8 +208,7 @@ export class ScUpcomingInvoice {
       <div class="new-plan">
         <div class="new-plan__heading">{this.renderName(this.price)}</div>
         <div>
-          <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.total_amount}></sc-format-number>{' '}
-          {intervalString(this.price)}
+          <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.total_amount}></sc-format-number> {intervalString(this.price)}
         </div>
         <div style={{ fontSize: 'var(--sc-font-size-small)' }}>{this.renderRenewalText()}</div>
       </div>
@@ -248,24 +247,24 @@ export class ScUpcomingInvoice {
         </sc-line-item>
 
         {!!checkout.proration_amount && (
-            <sc-line-item>
-              <span slot="description">{__('Proration Credit', 'surecart')}</span>
-              <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={-checkout?.proration_amount}></sc-format-number>
-            </sc-line-item>
+          <sc-line-item>
+            <span slot="description">{__('Proration Credit', 'surecart')}</span>
+            <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={-checkout?.proration_amount}></sc-format-number>
+          </sc-line-item>
         )}
 
         {!!checkout.applied_balance_amount && (
-            <sc-line-item>
-              <span slot="description">{__('Applied Balance', 'surecart')}</span>
-              <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={-checkout?.applied_balance_amount}></sc-format-number>
-            </sc-line-item>
+          <sc-line-item>
+            <span slot="description">{__('Applied Balance', 'surecart')}</span>
+            <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={-checkout?.applied_balance_amount}></sc-format-number>
+          </sc-line-item>
         )}
 
         {!!checkout.trial_amount && (
-            <sc-line-item>
-              <span slot="description">{__('Free Trial', 'surecart')}</span>
-              <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={checkout?.trial_amount}></sc-format-number>
-            </sc-line-item>
+          <sc-line-item>
+            <span slot="description">{__('Free Trial', 'surecart')}</span>
+            <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={checkout?.trial_amount}></sc-format-number>
+          </sc-line-item>
         )}
 
         <sc-coupon-form discount={checkout?.discount} label={__('Add Coupon Code')} onScApplyCoupon={e => this.applyCoupon(e)} error={this.couponError}>

@@ -17,9 +17,9 @@ export class ScChargesList {
     page: number;
     per_page: number;
   } = {
-      page: 1,
-      per_page: 10,
-    };
+    page: 1,
+    per_page: 10,
+  };
 
   @Prop() heading: string;
   @Prop() showPagination: boolean = true;
@@ -37,9 +37,9 @@ export class ScChargesList {
     total: number;
     total_pages: number;
   } = {
-      total: 0,
-      total_pages: 0,
-    };
+    total: 0,
+    total_pages: 0,
+  };
 
   /** Only fetch if visible */
   componentWillLoad() {
@@ -126,12 +126,12 @@ export class ScChargesList {
         <sc-stacked-list-row
           style={{ '--columns': '4' }}
           mobile-size={600}
-          href={
-            addQueryArgs(window.location.href, {
-              action: 'show',
-              model: 'order',
-              id: ((charge.checkout as Checkout).order as Order)?.id,
-          })}>
+          href={addQueryArgs(window.location.href, {
+            action: 'show',
+            model: 'order',
+            id: ((charge.checkout as Checkout).order as Order)?.id,
+          })}
+        >
           <strong>
             <sc-format-date date={created_at} type="timestamp" month="short" day="numeric" year="numeric"></sc-format-date>
           </strong>

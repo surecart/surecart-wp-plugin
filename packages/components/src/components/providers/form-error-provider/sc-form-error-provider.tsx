@@ -75,7 +75,7 @@ export class ScFormErrorProvider {
     return (
       <Host>
         {!!this.errorMessage() && (
-          <sc-alert type="danger" scrollOnOpen={true} style={{marginBottom: 'var(--sc-form-row-spacing)'}} open={!!this.errorMessage()}>
+          <sc-alert type="danger" scrollOnOpen={true} style={{ marginBottom: 'var(--sc-form-row-spacing)' }} open={!!this.errorMessage()}>
             <span slot="title">{this.errorMessage()}</span>
           </sc-alert>
         )}

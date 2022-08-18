@@ -18,26 +18,26 @@ export class ScDownloadsList {
   @State() error: string;
 
   async downloadItem(id) {
-		try {
+    try {
       this.busy = true;
-			const media = await apiFetch({
-				path: addQueryArgs(`surecart/v1/customers/${this.customerId}/expose/${id}`, {
+      const media = (await apiFetch({
+        path: addQueryArgs(`surecart/v1/customers/${this.customerId}/expose/${id}`, {
           expose_for: 60,
         }),
-			}) as Media;
-			if (!media?.url) {
-				throw {
-					message: __('Could not download the file.', 'surecart'),
-				};
-			}
-			this.downloadFile(media?.url, media.filename);
-		} catch (e) {
-			console.error(e);
-			this.error = e?.message || __('Something went wrong', 'surecart');
-		} finally {
-			this.busy = false;
-		}
-	};
+      })) as Media;
+      if (!media?.url) {
+        throw {
+          message: __('Could not download the file.', 'surecart'),
+        };
+      }
+      this.downloadFile(media?.url, media.filename);
+    } catch (e) {
+      console.error(e);
+      this.error = e?.message || __('Something went wrong', 'surecart');
+    } finally {
+      this.busy = false;
+    }
+  }
 
   downloadFile(path, filename) {
     // Create a new link
@@ -70,37 +70,38 @@ export class ScDownloadsList {
           <sc-stacked-list>
             {downloads.map(download => {
               const media = download?.media as Media;
-              return <sc-stacked-list-row style={{ '--columns': '1' }}>
-                <sc-flex class="single-download" justifyContent='flex-start'>
-                  <div class="single-download__preview">
-                    {media?.filename?.split?.('.')?.pop?.()}
-                  </div>
-                  <div>
+              return (
+                <sc-stacked-list-row style={{ '--columns': '1' }}>
+                  <sc-flex class="single-download" justifyContent="flex-start">
+                    <div class="single-download__preview">{media?.filename?.split?.('.')?.pop?.()}</div>
                     <div>
-                      <strong>{media.filename}</strong>
+                      <div>
+                        <strong>{media.filename}</strong>
+                      </div>
+
+                      <sc-flex justifyContent="flex-start" alignItems="center" style={{ gap: '0.5em' }}>
+                        <sc-format-bytes value={media?.byte_size}></sc-format-bytes>
+
+                        {!!media?.release_json?.version && (
+                          <sc-tag
+                            type="primary"
+                            size="small"
+                            style={{
+                              '--sc-tag-primary-background-color': '#f3e8ff',
+                              '--sc-tag-primary-color': '#6b21a8',
+                            }}
+                          >
+                            v{media?.release_json?.version}
+                          </sc-tag>
+                        )}
+                      </sc-flex>
                     </div>
-
-                    <sc-flex justifyContent='flex-start' alignItems='center' style={{'gap': '0.5em'}}>
-                      <sc-format-bytes value={media?.byte_size}></sc-format-bytes>
-
-                      {!!media?.release_json?.version && (
-                        <sc-tag
-                          type="primary"
-                          size="small"
-                          style={{
-                            '--sc-tag-primary-background-color':
-                              '#f3e8ff',
-                            '--sc-tag-primary-color': '#6b21a8',
-                          }}
-                        >
-                          v{media?.release_json?.version}
-                        </sc-tag>
-                      )}
-                    </sc-flex>
-                  </div>
-                </sc-flex>
-                <sc-button size="small" slot="suffix" onClick={() => this.downloadItem(media.id)} busy={this.busy} disabled={this.busy}>{__('Download', 'surecart')}</sc-button>
-              </sc-stacked-list-row>
+                  </sc-flex>
+                  <sc-button size="small" slot="suffix" onClick={() => this.downloadItem(media.id)} busy={this.busy} disabled={this.busy}>
+                    {__('Download', 'surecart')}
+                  </sc-button>
+                </sc-stacked-list-row>
+              );
             })}
           </sc-stacked-list>
         </sc-card>

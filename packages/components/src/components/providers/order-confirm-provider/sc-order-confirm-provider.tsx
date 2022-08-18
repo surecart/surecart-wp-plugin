@@ -79,7 +79,7 @@ export class ScOrderConfirmProvider {
       console.error(e);
       this.scError.emit(e);
     } finally {
-       // we always want to redirect, regardless of the outcome here.
+      // we always want to redirect, regardless of the outcome here.
       const order = this.order?.id;
       // make sure form state changes before redirecting
       setTimeout(() => {

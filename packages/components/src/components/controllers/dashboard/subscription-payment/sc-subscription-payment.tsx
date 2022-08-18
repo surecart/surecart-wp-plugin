@@ -118,7 +118,7 @@ export class ScSubscriptionPayment {
       <Fragment>
         <sc-choices>
           <div>
-            {(this.paymentMethods || []).map((method) => {
+            {(this.paymentMethods || []).map(method => {
               if (method?.live_mode !== this?.subscription?.live_mode) return null;
               return (
                 <sc-choice checked={this.subscription?.payment_method === method?.id} name="method" value={method?.id}>

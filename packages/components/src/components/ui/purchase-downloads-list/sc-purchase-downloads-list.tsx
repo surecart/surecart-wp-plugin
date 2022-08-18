@@ -47,7 +47,7 @@ export class ScPurchaseDownloadsList {
 
   renderList() {
     return this.purchases.map(purchase => {
-      const downloads = (purchase?.product as Product)?.downloads?.data.filter((d: Download) =>!d.archived);
+      const downloads = (purchase?.product as Product)?.downloads?.data.filter((d: Download) => !d.archived);
       return (
         <sc-stacked-list-row
           href={
@@ -72,14 +72,8 @@ export class ScPurchaseDownloadsList {
               <strong>{(purchase?.product as Product)?.name}</strong>
             </div>
             <div class="download__details">
-              {sprintf(
-                _n('%s file', '%s files', downloads?.length, 'surecart'),
-                downloads?.length,
-              )}{' '}
-              &bull;{' '}
-              <sc-format-bytes
-                value={(downloads || []).map(item => (item?.media as Media)?.byte_size).reduce((prev, curr) => prev + curr, 0)}
-              ></sc-format-bytes>
+              {sprintf(_n('%s file', '%s files', downloads?.length, 'surecart'), downloads?.length)} &bull;{' '}
+              <sc-format-bytes value={(downloads || []).map(item => (item?.media as Media)?.byte_size).reduce((prev, curr) => prev + curr, 0)}></sc-format-bytes>
             </div>
           </sc-spacing>
 

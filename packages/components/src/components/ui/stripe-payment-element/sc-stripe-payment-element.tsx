@@ -73,9 +73,7 @@ export class ScStripePaymentElement {
 
     // check if stripe has been initialized
     if (!this.stripe) {
-      this.stripe = await loadStripe(this.paymentIntent?.processor_data?.stripe?.publishable_key,
-        { stripeAccount: this.paymentIntent?.processor_data?.stripe?.account_id }
-      );
+      this.stripe = await loadStripe(this.paymentIntent?.processor_data?.stripe?.publishable_key, { stripeAccount: this.paymentIntent?.processor_data?.stripe?.account_id });
     }
 
     // load the element.
@@ -91,8 +89,8 @@ export class ScStripePaymentElement {
       fields: {
         billingDetails: {
           email: 'never',
-        }
-      }
+        },
+      },
     });
   }
 
@@ -122,7 +120,7 @@ export class ScStripePaymentElement {
         payment_method_data: {
           billing_details: {
             email: this.order.email,
-          }
+          },
         },
       },
       redirect: 'if_required',
@@ -135,7 +133,7 @@ export class ScStripePaymentElement {
     try {
       this.scSetState.emit('PAYING');
       const response = type === 'setup' ? await this.stripe.confirmSetup(confirmArgs as any) : await this.stripe.confirmPayment(confirmArgs as any);
-      console.log({response});
+      console.log({ response });
       if (response?.error) {
         this.error = response.error.message;
         throw response.error;
@@ -191,9 +189,9 @@ export class ScStripePaymentElement {
       .create('payment', {
         fields: {
           billingDetails: {
-            email: 'never'
-          }
-        }
+            email: 'never',
+          },
+        },
       })
       .mount('.sc-payment-element-container');
 

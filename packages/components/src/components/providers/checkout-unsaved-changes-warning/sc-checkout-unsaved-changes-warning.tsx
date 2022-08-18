@@ -7,13 +7,13 @@ import { FormState } from '../../../types';
   shadow: true,
 })
 export class ScCheckoutUnsavedChangesWarning {
-  @Prop() state: FormState
+  @Prop() state: FormState;
 
   /**
    * Add event listener for beforeunload.
    */
   componentDidLoad() {
-    window.addEventListener('beforeunload', (e) => this.warnIfUnsavedChanges(e), {capture: true});
+    window.addEventListener('beforeunload', e => this.warnIfUnsavedChanges(e), { capture: true });
   }
 
   /**
@@ -21,9 +21,9 @@ export class ScCheckoutUnsavedChangesWarning {
    */
   warnIfUnsavedChanges(e) {
     if (['updating', 'finalizing', 'confirming'].includes(this.state)) {
-      console.log({e});
+      console.log({ e });
       e.preventDefault();
-      e.returnValue = __("Your payment is processing. Exiting this page could cause an error in your order. Please do not navigate away from this page.", 'surecart');
+      e.returnValue = __('Your payment is processing. Exiting this page could cause an error in your order. Please do not navigate away from this page.', 'surecart');
       return e.returnValue;
     }
   }
