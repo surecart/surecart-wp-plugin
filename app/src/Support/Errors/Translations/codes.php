@@ -8,6 +8,7 @@
 return [
 	'http_request_failed'                               => __( 'Could not complete the request. Please try again.', 'surecart' ),
 	'coupon.invalid'                                    => __( 'Failed to save coupon.', 'surecart' ),
+	'checkout.discount.coupon.currency_mismatch'        => __( 'This coupon is for a different currency and cannot be applied.', 'surecart' ),
 	'price.dependent_locked'                            => __( 'The price is already being used in subscriptions or checkout sessions. Please archive the price and create another one.', 'surecart' ),
 	'order.discount.promotion_code.invalid_code'        => __( 'Invalid promotion code.', 'surecart' ),
 	'order.invalid'                                     => __( 'Failed to update. Please check for errors and try again.', 'surecart' ),
