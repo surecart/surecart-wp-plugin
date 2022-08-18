@@ -177,13 +177,45 @@ export class ScPayment {
               <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
               <span>{__('Credit Card', 'surecart')}</span>
             </span>
-            <div class="sc-payment-instructions">{__('You will be prompted to complete your purchase securely.', 'surecart')}</div>
+            <sc-card>
+              <sc-payment-selected
+                  label={__(
+                    'Credit Card selected for check out.',
+                    'surecart'
+                  )}>
+                    <sc-icon
+                      slot="icon"
+                      name="paypal"
+                      style={{ width: '80px' }}
+                    />
+                    {__(
+                      'Another step will appear after submitting your order to complete your purchase details.',
+                      'surecart'
+                    )}
+                </sc-payment-selected>
+              </sc-card>
           </sc-toggle>
           <sc-toggle data-test-id="paypal-toggle" show-control shady borderless open={this.processor === 'paypal'} onScShow={() => this.scSetProcessor.emit('paypal')}>
             <span slot="summary" class="sc-payment-toggle-summary">
               <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
             </span>
-            <div class="sc-payment-instructions">{__('You will be prompted by PayPal to complete your purchase securely.', 'surecart')}</div>
+            <sc-card>
+              <sc-payment-selected
+                  label={__(
+                    'PayPal selected for check out.',
+                    'surecart'
+                  )}>
+                    <sc-icon
+                      slot="icon"
+                      name="paypal"
+                      style={{ width: '80px' }}
+                    />
+                    {__(
+                      'Another step will appear after submitting your order to complete your purchase details.',
+                      'surecart'
+                    )}
+                </sc-payment-selected>
+              </sc-card>
           </sc-toggle>
         </sc-toggles>
       </sc-form-control>
