@@ -1,19 +1,26 @@
-import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
 import Address from './modules/Address';
 import Customer from './modules/Customer';
 import MetaData from './modules/MetaData';
 import Purchases from './modules/Purchases';
+import TaxInfo from './modules/TaxInfo';
+import { Fragment } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
-export default ({ order, updateOrder, customer, loading }) => {
+export default ({ order, checkout, customer, loading }) => {
 	return (
 		<Fragment>
-			<Customer customer={customer} isLoading={loading} />
-			<Purchases />
-			{order?.shipping_address && (
+			<Customer customer={customer} loading={loading} />
+			<Purchases checkoutId={checkout?.id} />
+			{!!checkout?.shipping_address && (
 				<Address
-					address={order?.shipping_address}
-					label={__('Shipping Address', 'surecart')}
+					address={checkout?.shipping_address}
+					label={__('Shipping & Tax Address', 'surecart')}
+				/>
+			)}
+			{!!checkout?.tax_identifier && (
+				<TaxInfo
+					taxIdentifier={checkout?.tax_identifier}
+					loading={loading}
 				/>
 			)}
 			<MetaData order={order} loading={loading} />

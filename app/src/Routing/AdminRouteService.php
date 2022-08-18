@@ -25,6 +25,8 @@ class AdminRouteService {
 		'customer'         => 'sc-customers',
 		'subscriptions'    => 'sc-subscriptions',
 		'subscription'     => 'sc-subscriptions',
+		'licenses'         => 'sc-licenses',
+		'license'          => 'sc-licenses',
 		'abandoned_orders' => 'sc-abandoned-orders',
 		'upgrade-paths'    => 'sc-product-groups',
 		'coupon'           => 'sc-coupons',

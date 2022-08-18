@@ -55,11 +55,11 @@ class CustomerRestServiceProvider extends RestServiceProvider implements RestSer
 		return $this->schema;
 	}
 
-		/**
-		 * Register REST Routes
-		 *
-		 * @return void
-		 */
+	/**
+	 * Register REST Routes
+	 *
+	 * @return void
+	 */
 	public function registerRoutes() {
 		register_rest_route(
 			"$this->name/v$this->version",
@@ -69,6 +69,20 @@ class CustomerRestServiceProvider extends RestServiceProvider implements RestSer
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => $this->callback( $this->controller, 'connect' ),
 					'permission_callback' => [ $this, 'connect_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/expose/(?P<media_id>\S+)',
+			[
+				[
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => $this->callback( $this->controller, 'exposeMedia' ),
+					'permission_callback' => [ $this, 'get_item_permissions_check' ],
 				],
 				// Register our schema callback.
 				'schema' => [ $this, 'get_item_schema' ],

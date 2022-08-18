@@ -23,14 +23,10 @@ export class ScOrderStatusBadge {
 
   getType() {
     switch (this.status) {
-      case 'draft':
-        return 'info';
-      case 'requires_approval':
-      case 'finalized':
+      case 'processing':
         return 'warning';
       case 'paid':
         return 'success';
-      case 'payment_intent_canceled':
       case 'payment_failed':
         return 'danger';
     }
@@ -38,18 +34,12 @@ export class ScOrderStatusBadge {
 
   getText() {
     switch (this.status) {
-      case 'draft':
-        return __('Draft', 'surecart');
-      case 'finalized':
-        return __('Pending Payment', 'surecart');
+      case 'processing':
+        return __('Processing', 'surecart');
+      case 'payment_failed':
+        return __('Payment Failed', 'surecart');
       case 'paid':
         return __('Paid', 'surecart');
-      case 'payment_intent_canceled':
-        return __('Cancelled', 'surecart');
-      case 'payment_failed':
-        return __('Failed', 'surecart');
-      case 'requires_approval':
-        return __('Requires Approval', 'surecart');
       default:
         return this.status;
     }

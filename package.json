@@ -79,6 +79,7 @@
 		"@wordpress/components": "^10.1.0",
 		"@wordpress/core-data": "^2.21.0",
 		"@wordpress/data": "^4.23.0",
+		"@wordpress/date": "^4.14.0",
 		"@wordpress/dom-ready": "^2.10.0",
 		"@wordpress/editor": "^9.21.0",
 		"@wordpress/element": "^2.17.0",
@@ -88,6 +89,7 @@
 		"@wordpress/interface": "^0.8.0",
 		"@wordpress/media-utils": "^1.16.0",
 		"D": "^1.0.0",
+		"apexcharts": "^3.35.4",
 		"autoprefixer": "^10",
 		"babel-loader": "^8.2.3",
 		"chokidar": "^3.4.0",
@@ -103,6 +105,7 @@
 		"imagemin-mozjpeg": "^8.0.0",
 		"imagemin-webpack-plugin": "^2.1.1",
 		"import-glob": "^1.5.0",
+		"litepicker": "^2.0.11",
 		"loader-utils": "^1.1.0",
 		"lodash": "^4.17.15",
 		"mini-css-extract-plugin": "^0.9.0",
@@ -114,6 +117,7 @@
 		"postcss-discard-comments": "^4",
 		"postcss-loader": "^4.2.0",
 		"querystringify": "^2.2.0",
+		"react-apexcharts": "^1.4.0",
 		"sass-loader": "^10",
 		"svg-sprite-loader": "^4.2.5",
 		"swr": "^1.2.2",
@@ -133,6 +137,7 @@
 		"@wordpress/dependency-extraction-webpack-plugin": "^3.2.1",
 		"@wordpress/e2e-test-utils": "^5.4.1",
 		"@wordpress/env": "^4.8.0",
+		"@wordpress/prettier-config": "^1.4.0",
 		"@wordpress/scripts": "^22.5.0",
 		"adm-zip": "^0.5.9",
 		"archiver": "^4.0.1",
@@ -140,7 +145,7 @@
 		"change-case": "^4.1.1",
 		"co": "^4.6.0",
 		"copy-webpack-plugin": "6",
-		"cypress": "10.3.0",
+		"cypress": "10.4.0",
 		"cypress-file-upload": "^5.0.8",
 		"cypress-log-to-output": "^1.1.2",
 		"eslint": "^6.8.0",
@@ -153,9 +158,9 @@
 		"node-wp-i18n": "^1.2.1",
 		"npm-packlist": "^3.0.0",
 		"process": "^0.11.10",
-		"react": "17.0.1",
-		"react-dom": "17.0.1",
-		"react-test-renderer": "17.0.1",
+		"react": "17.0.2",
+		"react-dom": "17.0.2",
+		"react-test-renderer": "17.0.2",
 		"replace-in-file": "^6.0.0",
 		"shelljs": "^0.8.5",
 		"stream-browserify": "^3.0.0",
@@ -167,19 +172,15 @@
 		"webpack-dev-server": "^3.10.3"
 	},
 	"resolutions": {
-		"react": "17.0.1",
-		"react-dom": "17.0.1",
+		"react": "17.0.2",
+		"react-dom": "17.0.2",
 		"eslint-plugin-jsdoc": "^37.4.2",
-		"react-test-renderer": "17.0.1"
+		"react-test-renderer": "17.0.2"
 	},
 	"wp-env": {
 		"plugin-dir": "surecart",
-		"plugin-name": "SureCart",
-		"welcome-logo": [
-			"E2E Tests Example"
-		],
-		"welcome-build-command": "npm run dev"
+		"plugin-name": "SureCart"
 	},
-	"packageManager": "yarn@3.1.1",
+	"packageManager": "yarn@3.2.2",
 	"version": "0.0.1"
 }

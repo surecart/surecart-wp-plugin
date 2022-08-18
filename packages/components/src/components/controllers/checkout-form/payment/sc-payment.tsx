@@ -1,10 +1,9 @@
-import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Host, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 
-import { hasSubscription } from '../../../../functions/line-items';
 import { getProcessorData } from '../../../../functions/processor';
-import { Order, Processor, ProcessorName } from '../../../../types';
+import { Checkout, PaymentIntent, Processor, ProcessorName } from '../../../../types';
 
 @Component({
   tag: 'sc-payment',
@@ -19,7 +18,7 @@ export class ScPayment {
   @Prop() processors: Processor[] = [];
 
   /** Checkout Session from sc-checkout. */
-  @Prop() order: Order;
+  @Prop() order: Checkout;
 
   /** Is this loading. */
   @Prop() loading: boolean;
@@ -51,6 +50,9 @@ export class ScPayment {
   /** Use the Stripe payment element. */
   @Prop() stripePaymentElement: boolean;
 
+  /** The stripe payment intent. */
+  @Prop() stripePaymentIntent: PaymentIntent;
+
   /** Hold the stripe processor */
   @State() stripe: Processor;
 
@@ -60,21 +62,9 @@ export class ScPayment {
   /** Set the order procesor. */
   @Event() scSetProcessor: EventEmitter<ProcessorName>;
 
-  @Watch('order')
-  handleOrderChange(_, prev) {
-    if (!prev) {
-      this.handleDefaultChange();
-    }
-  }
-
-  @Watch('defaultProcessor')
-  handleDefaultChange() {
-    if (this.defaultProcessor) {
-      this.scSetProcessor.emit(this.defaultProcessor);
-    }
-  }
-
   componentWillLoad() {
+    this.scSetProcessor.emit(this.defaultProcessor);
+    this.processor = this.defaultProcessor;
     this.setProcessors();
   }
 
@@ -91,18 +81,13 @@ export class ScPayment {
    */
   renderStripePaymentElement() {
     if (this.stripePaymentElement) {
-      return <sc-order-stripe-payment-element order={this.order} mode={this.mode} processors={this.processors} currency-code={this.currencyCode}></sc-order-stripe-payment-element>;
+      return <sc-stripe-payment-element order={this.order} paymentIntent={this.stripePaymentIntent} />;
     }
+
     const data = getProcessorData(this.processors, 'stripe', this.mode);
     return (
       <div class="sc-payment__stripe-card-element">
-        <sc-stripe-element
-          order={this.order}
-          mode={this.mode}
-          publishableKey={data?.publishable_key}
-          accountId={data?.account_id}
-          secureText={this.secureNotice}
-        ></sc-stripe-element>
+        <sc-stripe-element order={this.order} mode={this.mode} publishableKey={data?.publishable_key} accountId={data?.account_id} secureText={this.secureNotice} />
         <sc-secure-notice>{this.secureNotice}</sc-secure-notice>
       </div>
     );
@@ -142,7 +127,12 @@ export class ScPayment {
             <span slot="summary" class="sc-payment-toggle-summary">
               <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
             </span>
-            <div class="sc-payment-instructions">{__('You will be prompted by PayPal to complete your purchase securely.', 'surecart')}</div>
+            <sc-card>
+              <sc-payment-selected label={__('PayPal selected for check out.', 'surecart')}>
+                <sc-icon slot="icon" name="paypal" style={{ width: '80px' }} />
+                {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
+              </sc-payment-selected>
+            </sc-card>
           </sc-toggle>
         </sc-toggles>
       </sc-form-control>
@@ -172,13 +162,23 @@ export class ScPayment {
               <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
               <span>{__('Credit Card', 'surecart')}</span>
             </span>
-            <div class="sc-payment-instructions">{__('You will be prompted to complete your purchase securely.', 'surecart')}</div>
+            <sc-card>
+              <sc-payment-selected label={__('Credit Card selected for check out.', 'surecart')}>
+                <sc-icon slot="icon" name="credit-card" />
+                {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
+              </sc-payment-selected>
+            </sc-card>
           </sc-toggle>
           <sc-toggle data-test-id="paypal-toggle" show-control shady borderless open={this.processor === 'paypal'} onScShow={() => this.scSetProcessor.emit('paypal')}>
             <span slot="summary" class="sc-payment-toggle-summary">
               <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
             </span>
-            <div class="sc-payment-instructions">{__('You will be prompted by PayPal to complete your purchase securely.', 'surecart')}</div>
+            <sc-card>
+              <sc-payment-selected label={__('PayPal selected for check out.', 'surecart')}>
+                <sc-icon slot="icon" name="paypal" style={{ width: '80px' }} />
+                {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
+              </sc-payment-selected>
+            </sc-card>
           </sc-toggle>
         </sc-toggles>
       </sc-form-control>
@@ -215,12 +215,10 @@ export class ScPayment {
     );
   }
 
-  render() {
-    // no payment is required if we dont have a subscription and the total amount is 0.
-    if (!hasSubscription(this.order)) {
-      if (this.order?.line_items?.pagination?.count >= 1 && this.order?.total_amount === 0) {
-        return null;
-      }
+  renderProcessors() {
+    // payment is not required for this order.
+    if (this.order?.payment_method_required === false) {
+      return null;
     }
 
     // we don't have any processors.
@@ -256,6 +254,16 @@ export class ScPayment {
     // render no processors message.
     return this.renderNoProcessors();
   }
+
+  render() {
+    return (
+      <Host>
+        {/* Handles the automatic filtering and selection of processors */}
+        <sc-processor-provider checkout={this.order} processors={this.processors} processor={this.processor} />
+        {this.renderProcessors()}
+      </Host>
+    );
+  }
 }
 
-openWormhole(ScPayment, ['processor', 'processors', 'order', 'mode', 'paymentMethod', 'loading', 'busy', 'currencyCode', 'stripePaymentElement'], false);
+openWormhole(ScPayment, ['processor', 'processors', 'order', 'mode', 'paymentMethod', 'loading', 'busy', 'currencyCode', 'stripePaymentElement', 'stripePaymentIntent'], false);

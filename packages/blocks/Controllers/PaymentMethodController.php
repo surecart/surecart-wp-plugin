@@ -31,6 +31,7 @@ class PaymentMethodController extends BaseController {
 						'customer_ids' => array_values( User::current()->customerIds() ),
 						'page'         => 1,
 						'per_page'     => 100,
+						'reusable'     => true,
 					],
 				]
 			)->render( $attributes['title'] ? "<span slot='heading'>" . $attributes['title'] . '</span>' : '' )
@@ -52,38 +53,6 @@ class PaymentMethodController extends BaseController {
 		}
 
 		return $this->createLive();
-
-		if ( ! empty( User::current()->customerId( 'live' ) ) ) {
-			$payment_intent_live = PaymentIntent::with( [ 'owner' ] )->create(
-				[
-					'processor_type' => 'stripe',
-					'live_mode'      => true,
-					'currency'       => \SureCart::account()->currency,
-					'customer_id'    => User::current()->customerId( 'live' ),
-				]
-			);
-			$output             .= $this->renderCreate( $payment_intent_live );
-		}
-
-		if ( User::current()->customerId( 'test' ) ) {
-			$output .= '<br /><sc-button type="default" >' . esc_html__( 'Add a test payment method', 'surecart' ) . '</sc-button>';
-		}
-
-		if ( ! empty( User::current()->customerId( 'test' ) ) && empty( User::current()->customerId( 'live' ) ) ) {
-			$payment_intent_test = PaymentIntent::with( [ 'owner' ] )->create(
-				[
-					'processor_type' => 'stripe',
-					'live_mode'      => false,
-					'currency'       => \SureCart::account()->currency,
-					'customer_id'    => User::current()->customerId( 'test' ),
-				]
-			);
-
-			$output .= $this->renderCreate( $payment_intent_test );
-		}
-
-		return $output;
-
 	}
 
 	public function createLive() {

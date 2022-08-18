@@ -1,18 +1,29 @@
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-import { useSelect, useDispatch } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
-/**
  * Internal dependencies
  */
 import { camelName } from '../util';
+import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch, useSelect } from '@wordpress/data';
 
-export default (type, id, query = {}, name = 'surecart') => {
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+export default (
+	type,
+	id,
+	query = {},
+	additionalItems = [],
+	name = 'surecart'
+) => {
 	// dispatchers.
-	const { editEntityRecord, deleteEntityRecord, saveEntityRecord } =
-		useDispatch(coreStore);
+	const {
+		editEntityRecord,
+		deleteEntityRecord,
+		saveEntityRecord,
+		saveEditedEntityRecord,
+	} = useDispatch(coreStore);
 
 	// the entity data.
 	const entityData = [name, type, id, query];
@@ -25,6 +36,8 @@ export default (type, id, query = {}, name = 'surecart') => {
 		hasLoadedItem,
 		savingItem,
 		deletingItem,
+		hasEdits,
+		edits,
 		saveError,
 	} = useSelect(
 		(select) => {
@@ -51,9 +64,13 @@ export default (type, id, query = {}, name = 'surecart') => {
 				deletingItem: select(coreStore)?.isDeletingEntityRecord?.(
 					...entityData
 				),
+				hasEdits: select(coreStore).hasEditsForEntityRecord(
+					...entityData
+				),
+				edits: select(coreStore).getEntityRecordEdits(...entityData),
 			};
 		},
-		[id]
+		[id, ...additionalItems]
 	);
 
 	/** Edit the entity. */
@@ -67,6 +84,9 @@ export default (type, id, query = {}, name = 'surecart') => {
 	/** Save the entity. */
 	const saveEntity = (data, options) =>
 		saveEntityRecord(name, type, { ...item, ...data }, options);
+
+	const saveEditedEntity = (options = {}) =>
+		saveEditedEntityRecord(name, type, id, options);
 
 	const ucName = camelName(type);
 
@@ -84,6 +104,8 @@ export default (type, id, query = {}, name = 'surecart') => {
 		// loaded.
 		hasLoadedItem,
 		[`hasLoaded${ucName}`]: hasLoadedItem,
+
+		edits,
 
 		// updating.
 		savingItem,
@@ -103,6 +125,9 @@ export default (type, id, query = {}, name = 'surecart') => {
 		// save.
 		saveItem: saveEntity,
 		[`save${ucName}`]: saveEntity,
+
+		saveEditedEntity,
+		[`saveEdited${ucName}`]: saveEditedEntity,
 
 		// edit
 		editItem: editEntity,

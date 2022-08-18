@@ -9,7 +9,7 @@
 
 | Property | Attribute | Description | Type                                    | Default        |
 | -------- | --------- | ----------- | --------------------------------------- | -------------- |
-| `order`  | --        |             | `Order`                                 | `undefined`    |
+| `order`  | --        |             | `Checkout`                              | `undefined`    |
 | `total`  | `total`   |             | `"amount_due" \| "subtotal" \| "total"` | `'amount_due'` |
 
 

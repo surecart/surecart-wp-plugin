@@ -15,7 +15,7 @@
 | `isAdHoc`     | --             | Is this an ad-hoc price choice  | `Boolean`                    | `undefined` |
 | `label`       | `label`        | Label for the choice.           | `string`                     | `undefined` |
 | `loading`     | `loading`      | Is this loading                 | `boolean`                    | `false`     |
-| `order`       | --             | Session                         | `Order`                      | `undefined` |
+| `order`       | --             | Session                         | `Checkout`                   | `undefined` |
 | `price`       | --             | Stores the price                | `Price`                      | `undefined` |
 | `priceId`     | `price-id`     | Id of the price.                | `string`                     | `undefined` |
 | `prices`      | --             | Price entities                  | `{ [id: string]: Price; }`   | `{}`        |

@@ -5,7 +5,7 @@ import { openWormhole } from 'stencil-wormhole';
 import { isPriceInOrder } from '../../../../functions/line-items';
 import { intervalString } from '../../../../functions/price';
 import { getPricesAndProducts } from '../../../../services/fetch';
-import { LineItemData, Order, Price, Prices, Product, Products, ResponseError } from '../../../../types';
+import { LineItemData, Checkout, Price, Prices, Product, Products, ResponseError } from '../../../../types';
 
 @Component({
   tag: 'sc-price-choice',
@@ -47,7 +47,7 @@ export class ScPriceChoice {
   @Prop() products: Products = {};
 
   /** Session */
-  @Prop() order: Order;
+  @Prop() order: Checkout;
 
   /** Default quantity */
   @Prop() quantity: number = 1;

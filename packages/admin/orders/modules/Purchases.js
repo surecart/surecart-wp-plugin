@@ -1,24 +1,35 @@
 import { __, _n } from '@wordpress/i18n';
 import PurchasesDataTable from '../../components/data-tables/purchases-data-table';
-import useEntities from '../../mixins/useEntities';
-import { useEffect } from '@wordpress/element';
-import useCurrentPage from '../../mixins/useCurrentPage';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
 
-export default () => {
-	const { id } = useCurrentPage();
-	const { purchases, isLoading, pagination, error, fetchPurchases } =
-		useEntities('purchase');
-
-	useEffect(() => {
-		id &&
-			fetchPurchases({
-				query: {
-					order_ids: [id],
-					context: 'edit',
-					expand: ['product', 'product.price'],
+export default ({ checkoutId }) => {
+	const { purchases, loading } = useSelect(
+		(select) => {
+			if (!checkoutId) {
+				return {
+					purchases: [],
+					loading: true,
+				};
+			}
+			const entityData = [
+				'surecart',
+				'purchase',
+				{
+					checkout_ids: checkoutId ? [checkoutId] : null,
+					expand: ['product'],
 				},
-			});
-	}, [id]);
+			];
+			return {
+				purchases: select(coreStore)?.getEntityRecords?.(...entityData),
+				loading: !select(coreStore)?.hasFinishedResolution?.(
+					'getEntityRecords',
+					[...entityData]
+				),
+			};
+		},
+		[checkoutId]
+	);
 
 	return (
 		<PurchasesDataTable
@@ -31,9 +42,7 @@ export default () => {
 				},
 			}}
 			data={purchases}
-			isLoading={isLoading}
-			error={error}
-			pagination={pagination}
+			isLoading={loading}
 		/>
 	);
 };

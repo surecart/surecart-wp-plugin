@@ -1,15 +1,14 @@
 /** @jsx jsx */
-import { css, jsx, Global } from '@emotion/core';
-
-import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
-import { SnackbarList } from '@wordpress/components';
-import { PostLockedModal } from '@wordpress/editor';
-import UnsavedChangesWarning from './UnsavedChangesWarning';
+import Notices from '../../components/Notices';
+import Notifications from '../../components/Notifications';
 import ErrorBoundary from '../../components/error-boundary';
-import { ScForm } from '@surecart/components-react';
-import useSnackbar from '../../hooks/useSnackbar';
 import admin from '../../styles/admin';
+import UnsavedChangesWarning from './UnsavedChangesWarning';
+import { css, jsx, Global } from '@emotion/core';
+import { ScForm } from '@surecart/components-react';
+import { PostLockedModal } from '@wordpress/editor';
+import { Fragment } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 export default ({
 	children,
@@ -20,8 +19,6 @@ export default ({
 	sidebar,
 	onError,
 }) => {
-	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
-
 	return (
 		<Fragment>
 			<Global
@@ -165,10 +162,11 @@ export default ({
 							css={css`
 								margin-bottom: 3em;
 								> * ~ * {
-									margin-top: var(--sc-spacing-xxx-large);
+									margin-top: var(--sc-spacing-x-large);
 								}
 							`}
 						>
+							<Notices margin="80px" />
 							{children}
 							{footer && (
 								<div>
@@ -186,7 +184,7 @@ export default ({
 								css={css`
 									margin-bottom: 3em;
 									> * ~ * {
-										margin-top: 1em;
+										margin-top: var(--sc-spacing-x-large);
 									}
 								`}
 							>
@@ -194,7 +192,7 @@ export default ({
 							</div>
 						</div>
 					</div>
-					<SnackbarList
+					<Notifications
 						css={css`
 							position: fixed !important;
 							left: auto !important;
@@ -206,8 +204,6 @@ export default ({
 								text-transform: uppercase;
 							}
 						`}
-						notices={snackbarNotices}
-						onRemove={removeSnackbarNotice}
 					/>
 				</ScForm>
 			</ErrorBoundary>

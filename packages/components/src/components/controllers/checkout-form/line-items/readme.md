@@ -9,11 +9,11 @@
 
 | Property          | Attribute           | Description | Type                       | Default     |
 | ----------------- | ------------------- | ----------- | -------------------------- | ----------- |
+| `busy`            | `busy`              |             | `boolean`                  | `undefined` |
 | `editLineItems`   | `edit-line-items`   |             | `boolean`                  | `true`      |
 | `editable`        | `editable`          |             | `boolean`                  | `undefined` |
-| `loading`         | `loading`           |             | `boolean`                  | `undefined` |
 | `lockedChoices`   | --                  |             | `PriceChoice[]`            | `[]`        |
-| `order`           | --                  |             | `Order`                    | `undefined` |
+| `order`           | --                  |             | `Checkout`                 | `undefined` |
 | `prices`          | --                  |             | `{ [id: string]: Price; }` | `undefined` |
 | `removable`       | `removable`         |             | `boolean`                  | `undefined` |
 | `removeLineItems` | `remove-line-items` |             | `boolean`                  | `true`      |

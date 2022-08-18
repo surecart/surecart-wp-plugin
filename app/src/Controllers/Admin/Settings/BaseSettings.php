@@ -90,7 +90,7 @@ abstract class BaseSettings {
 			$asset_file['version'] . '-' . \SureCart::plugin()->version()
 		);
 
-		wp_set_script_translations( $handle, 'surecart', WP_LANG_DIR . '/plugins/' );
+		wp_set_script_translations( $handle, 'surecart' );
 
 		wp_localize_script(
 			$handle,
@@ -100,6 +100,7 @@ abstract class BaseSettings {
 				'app_url'              => defined( 'SURECART_APP_URL' ) ? untrailingslashit( SURECART_APP_URL ) : 'https://app.surecart.com',
 				'api_url'              => defined( 'SURECART_API_URL' ) ? untrailingslashit( SURECART_API_URL ) : \SureCart::requests()->getBaseUrl(),
 				'time_zones'           => TimeDate::timezoneOptions(),
+				'entitlements'         => \SureCart::account()->entitlements,
 			]
 		);
 	}

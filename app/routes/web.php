@@ -7,7 +7,12 @@
  * @package SureCart
  */
 
+use SureCart\Middleware\CheckoutRedirectMiddleware;
 use SureCart\Middleware\CustomerDashboardMiddleware;
+use SureCart\Middleware\LoginLinkMiddleware;
+use SureCart\Middleware\OrderRedirectMiddleware;
+use SureCart\Middleware\PurchaseRedirectMiddleware;
+use SureCart\Middleware\SubscriptionRedirectMiddleware;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -24,6 +29,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 	->name( 'webhooks' )
 	->middleware( 'webhooks' )
 	->handle( 'WebhookController@receive' );
+
+	/*
+|--------------------------------------------------------------------------
+| Receive Webhooks
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+->get()
+->url( '/surecart/redirect' )
+->name( 'redirect' )
+->middleware( LoginLinkMiddleware::class )
+->middleware( OrderRedirectMiddleware::class )
+->middleware( PurchaseRedirectMiddleware::class )
+->middleware( CheckoutRedirectMiddleware::class )
+->middleware( SubscriptionRedirectMiddleware::class )
+->handle( 'DashboardController@show' );
 
 /*
 |--------------------------------------------------------------------------

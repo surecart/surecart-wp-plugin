@@ -1,27 +1,26 @@
 /** @jsx jsx */
-import { __, _n } from '@wordpress/i18n';
 import DataTable from '../../DataTable';
 import { css, jsx } from '@emotion/core';
-import Refund from './Refund';
+import { ScButton, ScPaymentMethod } from '@surecart/components-react';
 import { Fragment } from '@wordpress/element';
-import { useState } from '@wordpress/element';
-import PaginationFooter from '../PaginationFooter';
+import { __, _n } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
 
 export default ({
-	data,
+	data = [],
 	isLoading,
 	title,
+	footer,
 	error,
 	isFetching,
 	page,
+	onRefundClick,
 	setPage,
 	pagination,
 	columns,
 	empty,
 	...props
 }) => {
-	const [confirmRefund, setConfirmRefund] = useState(false);
-
 	const renderStatusTag = (charge) => {
 		if (charge?.fully_refunded) {
 			return <sc-tag type="danger">{__('Refunded', 'surecart')}</sc-tag>;
@@ -42,69 +41,16 @@ export default ({
 		if (charge?.fully_refunded) {
 			return null;
 		}
+		if (!onRefundClick) {
+			return null;
+		}
 
 		return (
-			<sc-button
-				onClick={() =>
-					setConfirmRefund({
-						charge,
-					})
-				}
-				size="small"
-			>
+			<sc-button onClick={() => onRefundClick(charge)} size="small">
 				{__('Refund', 'surecart')}
 			</sc-button>
 		);
 	};
-
-	const renderMethod = (charge) => {
-		if (charge?.payment_method?.card?.brand) {
-			return (
-				<div
-					css={css`
-						display: flex;
-						align-items: center;
-						gap: 1em;
-					`}
-				>
-					<sc-cc-logo
-						style={{ fontSize: '36px' }}
-						brand={charge?.payment_method?.card?.brand}
-					></sc-cc-logo>
-					**** {charge?.payment_method?.card?.last4}
-				</div>
-			);
-		}
-		console.log(charge?.payment_intent);
-
-		if (charge?.payment_intent?.processor_type === 'paypal') {
-			return (
-				<sc-tooltip
-					type="text"
-					style={{ display: 'inline-block' }}
-					text={
-						charge?.payment_intent?.processor_data?.paypal
-							?.payer_email || __('Unknown email', 'surecart')
-					}
-				>
-					<sc-icon
-						name="paypal"
-						style={{
-							fontSize: '56px',
-							lineHeight: '1',
-							height: '28px',
-						}}
-					></sc-icon>
-				</sc-tooltip>
-			);
-		}
-
-		return charge?.payment_intent?.processor_type;
-	};
-
-	if (Object.keys(data?.[0] || {}).length === 0) {
-		return null;
-	}
 
 	return (
 		<Fragment>
@@ -115,13 +61,7 @@ export default ({
 				items={(data || [])
 					.sort((a, b) => b.created_at - a.created_at)
 					.map((charge) => {
-						const {
-							currency,
-							amount,
-							id,
-							created_at,
-							payment_method,
-						} = charge;
+						const { currency, amount, created_at } = charge;
 						return {
 							amount: (
 								<sc-text
@@ -161,32 +101,32 @@ export default ({
 									year="numeric"
 								></sc-format-date>
 							),
-							method: renderMethod(charge),
+							method: (
+								<ScPaymentMethod
+									paymentMethod={charge?.payment_method}
+								/>
+							),
 							status: renderStatusTag(charge),
 							refund: renderRefundButton(charge),
+							order: charge?.checkout?.order?.id && (
+								<ScButton
+									href={addQueryArgs('admin.php', {
+										page: 'sc-orders',
+										action: 'edit',
+										id: charge?.checkout?.order?.id,
+									})}
+									size="small"
+								>
+									{__('View Order', 'surecart')}
+								</ScButton>
+							),
 						};
 					})}
 				loading={isLoading}
-				footer={
-					pagination ? (
-						<PaginationFooter
-							showing={data?.length}
-							total={pagination?.total}
-							total_pages={pagination?.total_pages}
-							page={page}
-							isFetching={isFetching}
-							setPage={setPage}
-						/>
-					) : null
-				}
+				updating={isFetching}
+				footer={!!footer && footer}
 				{...props}
-			></DataTable>
-			{confirmRefund && (
-				<Refund
-					charge={confirmRefund?.charge}
-					onRequestClose={() => setConfirmRefund(false)}
-				/>
-			)}
+			/>
 		</Fragment>
 	);
 };

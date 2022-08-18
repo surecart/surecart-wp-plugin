@@ -3,7 +3,6 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasCustomer;
-use SureCart\Models\Traits\HasOrder;
 use SureCart\Models\Traits\HasPrice;
 use SureCart\Models\Traits\HasPurchase;
 
@@ -11,7 +10,7 @@ use SureCart\Models\Traits\HasPurchase;
  * Subscription model
  */
 class Subscription extends Model {
-	use HasCustomer, HasOrder, HasPrice, HasPurchase;
+	use HasCustomer, HasPrice, HasPurchase;
 
 	/**
 	 * Rest API endpoint
@@ -45,22 +44,24 @@ class Subscription extends Model {
 		}
 
 		// do the purchase updated event.
-		do_action(
-			'surecart/purchase_updated',
-			$updated->purchase,
-			[
-				'data' => [
-					'object'              => $updated->purchase->toArray(),
-					'previous_attributes' => array_filter(
-						[
-							// conditionally have the previous product and quantity as the previous attributes.
-							'product'  => $updated->purchase->product_id !== $existing->purchase->product_id ? ( $existing->purchase->product_id ?? null ) : null,
-							'quantity' => $updated->purchase->quantity !== $existing->purchase->quantity ? ( $existing->purchase->quantity ?? 1 ) : null,
-						]
-					),
-				],
-			]
-		);
+		if ( ! empty( $updated->purchase ) ) {
+			do_action(
+				'surecart/purchase_updated',
+				$updated->purchase,
+				[
+					'data' => [
+						'object'              => $updated->purchase->toArray(),
+						'previous_attributes' => array_filter(
+							[
+								// conditionally have the previous product and quantity as the previous attributes.
+								'product'  => $updated->purchase->product_id !== $existing->purchase->product_id ? ( $existing->purchase->product_id ?? null ) : null,
+								'quantity' => $updated->purchase->quantity !== $existing->purchase->quantity ? ( $existing->purchase->quantity ?? 1 ) : null,
+							]
+						),
+					],
+				]
+			);
+		}
 
 		return $this;
 	}
@@ -206,14 +207,16 @@ class Subscription extends Model {
 	/**
 	 * Preview the upcoming invoice.
 	 *
+	 * @param string $args Arguments
 	 * @return $this|\WP_Error
 	 */
-	protected function upcomingInvoice( $id = null ) {
-		if ( $id ) {
-			$this->setAttribute( 'id', $id );
+	protected function upcomingPeriod( $args = [] ) {
+		if ( $args['id'] ) {
+			$this->setAttribute( 'id', $args['id'] );
+			unset( $args['id'] );
 		}
 
-		if ( $this->fireModelEvent( 'previewingUpcomingInvoice' ) === false ) {
+		if ( $this->fireModelEvent( 'previewingUpcomingPeriod' ) === false ) {
 			return false;
 		}
 
@@ -221,26 +224,28 @@ class Subscription extends Model {
 			return new \WP_Error( 'not_saved', 'Please create the subscription' );
 		}
 
-		$invoice = \SureCart::request(
-			$this->endpoint . '/' . $this->attributes['id'] . '/upcoming_invoice/',
+		$upcoming_period = \SureCart::request(
+			$this->endpoint . '/' . $this->attributes['id'] . '/upcoming_period/',
 			[
-				'method' => 'GET',
+				'method' => 'PATCH',
 				'query'  => array_merge(
 					$this->query,
-					$this->attributes
 				),
+				'body'   => [
+					$this->object_name => $args,
+				],
 			]
 		);
 
-		if ( is_wp_error( $invoice ) ) {
-			return $invoice;
+		if ( is_wp_error( $upcoming_period ) ) {
+			return $upcoming_period;
 		}
 
 		$this->resetAttributes();
 
-		$this->fill( $invoice );
+		$this->fill( $upcoming_period );
 
-		$this->fireModelEvent( 'previewedUpcomingInvoice' );
+		$this->fireModelEvent( 'previewedUpcomingPeriod' );
 
 		return $this;
 	}

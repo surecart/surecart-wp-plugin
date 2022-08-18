@@ -1,6 +1,7 @@
 <?php
 namespace SureCartBlocks\Controllers;
 
+use SureCart\Models\Activation;
 use SureCart\Models\Component;
 use SureCart\Models\PortalSession;
 use SureCart\Models\Purchase;
@@ -70,38 +71,84 @@ class DownloadController extends BaseController {
 		);
 	}
 
-	public function edit() {
-		if ( ! wp_verify_nonce( $_GET['nonce'], 'customer-download' ) ) {
-			die( esc_html__( 'Your session expired. Please go back and try again.', 'surecart' ) );
-		}
-
+	public function show() {
 		if ( ! User::current()->isCustomer() ) {
 			return;
 		}
 
-		$id = $this->getId();
+		$purchase = Purchase::with( [ 'customer', 'checkout', 'license', 'product', 'product.downloads', 'download.media', 'license.activations' ] )->find( $this->getId() );
 
-		if ( ! $id ) {
-			return $this->notFound();
+		if ( empty( $purchase->customer->id ) || ! User::current()->hasCustomerId( $purchase->customer->id ) ) {
+			return null;
 		}
 
-		$purchase = Purchase::find( $id );
+		ob_start(); ?>
 
-		$session = PortalSession::create(
-			[
-				'public'     => true,
-				'return_url' => add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ),
-				'customer'   => $purchase->customer,
-			]
-		);
+		<sc-spacing style="--spacing: var(--sc-spacing-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb href="
+					<?php
+					echo esc_url(
+						add_query_arg(
+							[
+								'tab'    => $this->getTab(),
+								'model'  => 'order',
+								'action' => 'index',
+							],
+							\SureCart::pages()->url( 'dashboard' )
+						)
+					);
+					?>
+				 ">
+					<?php esc_html_e( 'Orders', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
+					<?php esc_html_e( 'Download', 'surecart' ); ?>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
 
-		$url = (object) parse_url( $session->url );
+				<?php
+				echo wp_kses_post(
+					Component::tag( 'sc-downloads-list' )
+					->id( 'customer-purchase' )
+					->with(
+						[
+							'heading'    => __( 'Downloads', 'surecart' ),
+							'customerId' => $purchase->customer->id ?? '',
+							'downloads'  => array_values(
+								array_filter(
+									$purchase->product->downloads->data ?? [],
+									function( $download ) {
+										return ! $download->archived;
+									}
+								)
+							),
+						]
+					)->render()
+				);
+				?>
 
-		if ( $session->url ) {
-			wp_redirect( esc_url_raw( "{$url->scheme}://{$url->host}{$url->path}/purchases/$purchase->id?portal_session_id=$session->id" ) );
-			exit;
-		}
+			<?php
+			if ( $purchase->license ) :
+				echo wp_kses_post(
+					Component::tag( 'sc-licenses-list' )
+					->id( 'customer-licenses' )
+					->with(
+						[
+							'heading'  => __( 'License Keys', 'surecart' ),
+							'licenses' => [ $purchase->license ],
+						]
+					)->render()
+				);
+				 endif;
+			?>
 
-		return $this->notFound();
+		</sc-spacing>
+
+			<?php
+			return ob_get_clean();
 	}
 }

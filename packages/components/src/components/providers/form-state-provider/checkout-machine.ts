@@ -2,26 +2,14 @@ import { createMachine, assign } from '@xstate/fsm';
 
 export const checkoutMachine = createMachine({
   id: 'fetch',
-  initial: 'idle',
+  initial: 'draft',
   context: {
     retries: 3,
   },
   states: {
-    idle: {
-      on: {
-        FETCH: 'loading',
-      },
-    },
-    loading: {
-      on: {
-        RESOLVE: 'draft',
-        REJECT: 'failure',
-        EXPIRE: 'expired',
-        PAID: 'paid',
-      },
-    },
     draft: {
       on: {
+        PAID: 'confirming',
         FINALIZE: 'finalizing',
         FETCH: 'updating',
         REJECT: 'draft',
@@ -36,8 +24,20 @@ export const checkoutMachine = createMachine({
     },
     finalizing: {
       on: {
-        PAID: 'paid',
+        PAYING: 'paying',
         REJECT: 'draft',
+        PAID: 'confirming',
+      },
+    },
+    paying: {
+      on: {
+        PAID: 'confirming',
+        REJECT: 'draft',
+      },
+    },
+    confirming: {
+      on: {
+        CONFIRMED: 'confirmed',
       },
     },
     paid: {
@@ -51,7 +51,7 @@ export const checkoutMachine = createMachine({
     failure: {
       on: {
         RETRY: {
-          target: 'loading',
+          target: 'updating',
           actions: assign({
             retries: (context: { retries: number }) => context.retries + 1,
           }),

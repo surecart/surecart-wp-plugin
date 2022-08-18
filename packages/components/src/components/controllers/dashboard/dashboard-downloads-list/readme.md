@@ -7,38 +7,38 @@
 
 ## Properties
 
-| Property       | Attribute       | Description                        | Type                                  | Default                                |
-| -------------- | --------------- | ---------------------------------- | ------------------------------------- | -------------------------------------- |
-| `allLink`      | `all-link`      |                                    | `string`                              | `undefined`                            |
-| `heading`      | `heading`       |                                    | `string`                              | `undefined`                            |
-| `query`        | --              | Customer id to fetch subscriptions | `{ page: number; per_page: number; }` | `{     page: 1,     per_page: 10,   }` |
-| `requestNonce` | `request-nonce` |                                    | `string`                              | `undefined`                            |
+| Property       | Attribute       | Description                        | Type     | Default                                |
+| -------------- | --------------- | ---------------------------------- | -------- | -------------------------------------- |
+| `allLink`      | `all-link`      |                                    | `string` | `undefined`                            |
+| `heading`      | `heading`       |                                    | `string` | `undefined`                            |
+| `query`        | `query`         | Customer id to fetch subscriptions | `any`    | `{     page: 1,     per_page: 10,   }` |
+| `requestNonce` | `request-nonce` |                                    | `string` | `undefined`                            |
 
 
 ## Dependencies
 
 ### Depends on
 
-- [sc-downloads-list](../../../ui/downloads-list)
+- [sc-purchase-downloads-list](../../../ui/purchase-downloads-list)
 - [sc-pagination](../../../ui/pagination)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-dashboard-downloads-list --> sc-downloads-list
+  sc-dashboard-downloads-list --> sc-purchase-downloads-list
   sc-dashboard-downloads-list --> sc-pagination
-  sc-downloads-list --> sc-divider
-  sc-downloads-list --> sc-empty
-  sc-downloads-list --> sc-card
-  sc-downloads-list --> sc-stacked-list
-  sc-downloads-list --> sc-stacked-list-row
-  sc-downloads-list --> sc-skeleton
-  sc-downloads-list --> sc-spacing
-  sc-downloads-list --> sc-format-bytes
-  sc-downloads-list --> sc-icon
-  sc-downloads-list --> sc-dashboard-module
-  sc-downloads-list --> sc-button
-  sc-downloads-list --> sc-block-ui
+  sc-purchase-downloads-list --> sc-divider
+  sc-purchase-downloads-list --> sc-empty
+  sc-purchase-downloads-list --> sc-card
+  sc-purchase-downloads-list --> sc-stacked-list
+  sc-purchase-downloads-list --> sc-stacked-list-row
+  sc-purchase-downloads-list --> sc-skeleton
+  sc-purchase-downloads-list --> sc-spacing
+  sc-purchase-downloads-list --> sc-format-bytes
+  sc-purchase-downloads-list --> sc-icon
+  sc-purchase-downloads-list --> sc-dashboard-module
+  sc-purchase-downloads-list --> sc-button
+  sc-purchase-downloads-list --> sc-block-ui
   sc-empty --> sc-icon
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon

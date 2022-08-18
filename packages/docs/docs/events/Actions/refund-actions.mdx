@@ -1,0 +1,15 @@
+# Refund Actions Reference
+
+### surecart/refund_succeeded
+
+Occurs when a refund is successful. This can be a partial or full refund. Keep in mind, this is not related
+to purchase/access since a partial refund could be processed. If you want to revoke access, please use
+the `surecart/purchase_revoked` action instead.
+
+```php
+do_action(
+	'surecart/refund_succeeded',
+	(\SureCart\Models\Refund::class) $refund,
+	(array) $webhook_data
+)
+```

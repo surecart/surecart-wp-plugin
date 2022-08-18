@@ -1,7 +1,7 @@
 import { Config } from '@stencil/core';
 import { promises as fs, readFileSync } from 'fs';
 import { JsonDocs } from '@stencil/core/internal';
-import packageJson from './package.json';
+import externalGlobals from 'rollup-plugin-external-globals';
 import { reactOutputTarget } from '@stencil/react-output-target';
 import { sass } from '@stencil/sass';
 
@@ -13,20 +13,6 @@ export const config: Config = {
     https: {
       cert: readFileSync('cert.pem', { encoding: 'utf-8' }),
       key: readFileSync('key.pem', { encoding: 'utf-8' }),
-    },
-  },
-  rollupConfig: {
-    inputOptions: {
-      external: ['@wordpress/api-fetch', '@wordpress/hooks', '@wordpress/i18n', '@wordpress/url', 'wp'],
-    },
-    outputOptions: {
-      globals: {
-        '@wordpress/api-fetch': 'wp.api-fetch',
-        '@wordpress/hooks': 'wp.hooks',
-        '@wordpress/i18n': 'wp.i18n',
-        '@wordpress/url': 'wp.url',
-        'wp': 'wp',
-      },
     },
   },
   testing: {
@@ -81,5 +67,14 @@ export const config: Config = {
       },
     },
   ],
-  plugins: [sass()],
+  plugins: [
+    sass(),
+    externalGlobals({
+      // '@wordpress/api-fetch': 'wp.apiFetch',
+      // '@wordpress/hooks': 'wp.hooks',
+      '@wordpress/i18n': 'wp.i18n',
+      // '@wordpress/url': 'wp.url',
+      'wp': 'wp',
+    }),
+  ],
 };

@@ -12,6 +12,7 @@
 | `invalid`  | `invalid`  | This will be true when the control is in an invalid state. Validity is determined by the `required` prop. | `boolean` | `false`     |
 | `name`     | `name`     | The switch's name attribute.                                                                              | `string`  | `undefined` |
 | `required` | `required` | Makes the switch a required field.                                                                        | `boolean` | `false`     |
+| `reversed` | `reversed` |                                                                                                           | `boolean` | `undefined` |
 | `value`    | `value`    | The switch's value attribute.                                                                             | `string`  | `undefined` |
 
 

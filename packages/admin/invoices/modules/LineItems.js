@@ -102,7 +102,7 @@ export default ({ invoice, charge: chargeInput, loading }) => {
 								editable={false}
 								removable={false}
 								quantity={item.quantity}
-								amount={item.price.amount}
+								amount={item.subtotal_amount}
 								currency={item?.price?.currency}
 								trialDurationDays={
 									item?.price?.trial_duration_days

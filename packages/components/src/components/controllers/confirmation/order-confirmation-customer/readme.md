@@ -13,7 +13,7 @@
 | `error`    | `error`   | Error message.   | `string`   | `undefined` |
 | `heading`  | `heading` | The heading      | `string`   | `undefined` |
 | `loading`  | `loading` | Is this loading? | `boolean`  | `undefined` |
-| `order`    | --        | The Order        | `Order`    | `undefined` |
+| `order`    | --        | The Order        | `Checkout` | `undefined` |
 
 
 ## Dependencies

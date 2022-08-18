@@ -2,11 +2,8 @@ name: Test and Build
 
 on:
   push:
-    branches:
-    - master
-  pull_request:
-    branches:
-    - master
+    tags:
+    - "*"
 
 jobs:
   test:

@@ -1,5 +1,4 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { Address } from '../../../../../types';
 
 describe('sc-order-shipping-address', () => {
   it('renders', async () => {
@@ -18,15 +17,15 @@ describe('sc-order-shipping-address', () => {
     // default.
     let element = await page.find('sc-order-shipping-address >>> sc-compact-address');
     let address = await element.getProperty('address');
-    expect(address).toEqual({ country: 'US', city: null, line_1: null, line_2: null, postal_code: null, state: null });
+    expect(address).toEqual({ country: null, city: null, line_1: null, line_2: null, postal_code: null, state: null });
 
     // customer shipping address
     await page.$eval('sc-order-shipping-address', (elm: any) => {
-      elm.customerShippingAddress = { country: 'UK', city: 'Monona', line_1: '303 Park Ave', line_2: null, postal_code: '12345', state: 'WI' };
+      elm.shippingAddress = { id: 'test', country: 'UK', city: 'Monona', line_1: '303 Park Ave', line_2: null, postal_code: '12345', state: 'WI' };
     });
 
     await page.waitForChanges();
     address = await element.getProperty('address');
-    expect(address).toEqual({ country: 'UK', city: 'Monona', line_1: '303 Park Ave', line_2: null, postal_code: '12345', state: 'WI' });
+    expect(address).toEqual({ id: 'test', country: 'UK', city: 'Monona', line_1: '303 Park Ave', line_2: null, postal_code: '12345', state: 'WI' });
   });
 });

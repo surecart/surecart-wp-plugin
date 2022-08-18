@@ -1,0 +1,26 @@
+# Order Actions Reference
+
+### surecart/order_created
+
+Occurs whenever an order is created. This can happen when a customer purchases something during a checkout, when a subscription
+renews, or when a subscription is updated.
+
+```php
+do_action(
+	'surecart/order_created',
+	(\SureCart\Models\Order::class) $order,
+	(array) $webhook_data
+)
+```
+
+### surecart/order_paid
+
+Occurs whenever an order is paid.
+
+```php
+do_action(
+	'surecart/order_paid',
+	(\SureCart\Models\Order::class) $order,
+	(array) $webhook_data
+)
+```

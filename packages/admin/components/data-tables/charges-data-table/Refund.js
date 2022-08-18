@@ -1,25 +1,29 @@
+/** @jsx jsx   */
 import { css, jsx } from '@emotion/core';
 import {
 	ScAlert,
 	ScButton,
+	ScFlex,
 	ScForm,
 	ScFormControl,
 	ScPriceInput,
 	ScSelect,
 } from '@surecart/components-react';
-import { Button, Modal } from '@wordpress/components';
+import { useDispatch } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
+import { Modal } from '@wordpress/components';
 import { useState } from '@wordpress/element';
-/** @jsx jsx */
 import { __ } from '@wordpress/i18n';
 
-import useEntity from '../../../mixins/useEntity';
-
-export default ({ charge, onRequestClose }) => {
+export default ({ charge, onRequestClose, onRefunded }) => {
 	const [loading, setLoading] = useState(false);
+	const { createErrorNotice } = useDispatch(noticesStore);
 	const [amount, setAmount] = useState(charge.amount);
 	const [reason, setReason] = useState('requested_by_customer');
 	const [error, setError] = useState(null);
-	const { saveRefund } = useEntity('refund');
+
+	const { saveEntityRecord } = useDispatch(coreStore);
 
 	/**
 	 * Handle submit.
@@ -29,21 +33,17 @@ export default ({ charge, onRequestClose }) => {
 		setLoading(true);
 
 		try {
-			const refund = await saveRefund({
-				query: {
-					expand: [
-						'charge',
-						'charge.payment_method',
-						'charge.payment_method.card',
-						'charge.payment_intent',
-					],
-				},
-				data: {
+			const refund = await saveEntityRecord(
+				'surecart',
+				'refund',
+				{
 					amount,
 					reason,
 					charge: charge?.id,
 				},
-			});
+				{ throwOnError: true }
+			);
+
 			if (refund?.status === 'failed') {
 				throw {
 					message: __(
@@ -52,9 +52,9 @@ export default ({ charge, onRequestClose }) => {
 					),
 				};
 			}
-			onRequestClose();
+
+			onRefunded(refund);
 		} catch (e) {
-			console.error(e);
 			if (e?.additional_errors?.[0]?.message) {
 				setError(e?.additional_errors?.[0]?.message);
 			} else {
@@ -133,20 +133,14 @@ export default ({ charge, onRequestClose }) => {
 					{error}
 				</ScAlert>
 
-				<div
-					css={css`
-						display: flex;
-						align-items: center;
-						gap: 0.5em;
-					`}
-				>
+				<ScFlex alignItems="center">
 					<ScButton type="primary" busy={loading} submit>
 						{__('Refund', 'surecart')}
 					</ScButton>
 					<ScButton type="text" onClick={onRequestClose}>
 						{__('Cancel', 'surecart')}
 					</ScButton>
-				</div>
+				</ScFlex>
 
 				{loading && (
 					<sc-block-ui spinner style={{ zIndex: 9 }}></sc-block-ui>

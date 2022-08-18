@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
@@ -50,6 +51,14 @@ export default ({ id, prices, product }) => {
 				{ archived: !price?.archived },
 				{ throwOnError: true }
 			);
+			createSuccesNotice(
+				download?.archived
+					? __('Price unarchived.', 'surecart')
+					: __('Price archived.'),
+				{
+					type: 'snackbar',
+				}
+			);
 		} catch (e) {
 			console.error(e);
 			setError(e);
@@ -71,6 +80,9 @@ export default ({ id, prices, product }) => {
 		try {
 			setError(null);
 			await deletePrice({ throwOnError: true });
+			createSuccessNotice(__('Price deleted.', 'surecart'), {
+				type: 'snackbar',
+			});
 		} catch (e) {
 			console.error(e);
 			setError(e);
