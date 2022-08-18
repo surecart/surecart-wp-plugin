@@ -249,6 +249,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * Improvement: Add additional css variables for cart icon customizations.
 * Fix: Issue with PayPal Credit Card popup sometimes not appearing.
 * Fix: Compatibility issue with WPMU Dev Hosting and PHP8.0 with Memcaching enabled.
+* Fix: Issue with 100% discounted orders getting prompted for page navigation.
 
 = 1.1.2 - August 17, 2022 =
 * Hotfix: Order metadata not appearing on orders page.
