@@ -38,8 +38,10 @@ class Block extends DashboardPage {
 		$tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : false;
 
 		// make sure we are on the correct tab.
-		if ( empty( $attributes['name'] ) || $tab !== $attributes['name'] ) {
-			return '';
+		if ( ! empty( $attributes['name'] ) ) {
+			if ( $tab !== $attributes['name'] ) {
+				return '';
+			}
 		}
 
 		$model = isset( $_GET['model'] ) ? sanitize_text_field( wp_unslash( $_GET['model'] ) ) : false;
