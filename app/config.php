@@ -25,7 +25,7 @@ return [
 		\SureCart\WordPress\Admin\Profile\UserProfileServiceProvider::class,
 		\SureCart\WordPress\PostTypes\FormPostTypeServiceProvider::class,
 		\SureCart\WordPress\Assets\AssetsServiceProvider::class,
-		\SureCart\WordPress\ShortcodesServiceProvider::class,
+		\SureCart\WordPress\Shortcodes\ShortcodesServiceProvider::class,
 		\SureCart\WordPress\Admin\Menus\AdminMenuPageServiceProvider::class,
 		\SureCart\WordPress\Admin\Notices\AdminNoticesServiceProvider::class,
 		\SureCartAppCore\Assets\AssetsServiceProvider::class,
