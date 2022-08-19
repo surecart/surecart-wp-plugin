@@ -29,7 +29,7 @@ class SubscriptionController extends BaseController {
 							'model'  => 'subscription',
 							'action' => 'index',
 						],
-						\SureCart::pages()->url( 'dashboard' )
+						remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 					),
 					'query'   => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
@@ -90,7 +90,7 @@ class SubscriptionController extends BaseController {
 
 		<sc-spacing style="--spacing: var(--sc-spacing-large)">
 			<sc-breadcrumbs>
-				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
+				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>">
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</sc-breadcrumb>
 				<sc-breadcrumb>
@@ -171,7 +171,7 @@ class SubscriptionController extends BaseController {
 
 		<sc-spacing style="--spacing: var(--sc-spacing-xx-large)">
 			<sc-breadcrumbs>
-				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
+				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>">
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</sc-breadcrumb>
 				<sc-breadcrumb href="
@@ -184,7 +184,7 @@ class SubscriptionController extends BaseController {
 							'model'  => 'subscription',
 							'id'     => $this->getId(),
 						],
-						\SureCart::pages()->url( 'dashboard' )
+						remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 					)
 				);
 				?>
@@ -222,13 +222,13 @@ class SubscriptionController extends BaseController {
 	 * @return function
 	 */
 	public function confirm() {
-		$back = add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) );
+		$back = add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		ob_start();
 		?>
 
 		<sc-spacing style="--spacing: var(--sc-spacing-xx-large)">
 			<sc-breadcrumbs>
-				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
+				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>">
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</sc-breadcrumb>
 				<sc-breadcrumb href="
@@ -241,7 +241,7 @@ class SubscriptionController extends BaseController {
 							'model'  => 'subscription',
 							'id'     => $this->getId(),
 						],
-						\SureCart::pages()->url( 'dashboard' )
+						remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 					)
 				);
 				?>
@@ -291,7 +291,7 @@ class SubscriptionController extends BaseController {
 	 * @return function
 	 */
 	public function cancel() {
-		$back_url              = add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) );
+		$back_url              = add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$edit_subscription_url = add_query_arg(
 			[
 				'tab'    => $this->getTab(),
@@ -299,7 +299,7 @@ class SubscriptionController extends BaseController {
 				'model'  => 'subscription',
 				'id'     => $this->getId(),
 			],
-			\SureCart::pages()->url( 'dashboard' )
+			remove_query_arg( array_keys( $_GET ) )  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		);
 		ob_start();
 		?>
@@ -341,7 +341,7 @@ class SubscriptionController extends BaseController {
 	 * @return function
 	 */
 	public function renew() {
-		$back_url              = add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) );
+		$back_url              = add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$edit_subscription_url = add_query_arg(
 			[
 				'tab'    => $this->getTab(),
@@ -349,7 +349,7 @@ class SubscriptionController extends BaseController {
 				'model'  => 'subscription',
 				'id'     => $this->getId(),
 			],
-			\SureCart::pages()->url( 'dashboard' )
+			remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		);
 		ob_start();
 		?>
@@ -391,7 +391,7 @@ class SubscriptionController extends BaseController {
 	 * @return function
 	 */
 	public function payment() {
-		$back_url = add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) );
+		$back_url = add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		$edit_subscription_url = add_query_arg(
 			[
@@ -400,7 +400,7 @@ class SubscriptionController extends BaseController {
 				'model'  => 'subscription',
 				'id'     => $this->getId(),
 			],
-			\SureCart::pages()->url( 'dashboard' )
+			remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		);
 
 		$confirm_subscription_url = add_query_arg(
@@ -412,7 +412,7 @@ class SubscriptionController extends BaseController {
 				'id'            => $this->getId(),
 				'price_id'      => $this->getParam( 'price_id' ),
 			],
-			\SureCart::pages()->url( 'dashboard' )
+			remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		);
 
 		$subscription = Subscription::find( $this->getId() );

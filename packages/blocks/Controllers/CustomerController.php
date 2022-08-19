@@ -42,8 +42,9 @@ class CustomerController extends BaseController {
 	 * @return function
 	 */
 	public function edit() {
-		$back = add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) );
-		$id   = $this->getId();
+		$back = add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		$id = $this->getId();
 
 		if ( ! current_user_can( 'edit_sc_customer', $id, [] ) ) {
 			wp_die( 'You are not allowed to edit this customer', 'surecart' );

@@ -106,7 +106,7 @@ class PaymentMethodController extends BaseController {
 
 		<sc-spacing style="--spacing: var(--sc-spacing-large)">
 			<sc-breadcrumbs>
-				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
+				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) );  // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>">
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</sc-breadcrumb>
 				<sc-breadcrumb>
@@ -121,7 +121,7 @@ class PaymentMethodController extends BaseController {
 
 			<sc-payment-method-create
 				client-secret="<?php echo esc_attr( $payment_intent->processor_data->stripe->client_secret ); ?>"
-				success-url="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>"
+				success-url="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) );  // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>"
 				>
 					<?php
 						echo wp_kses_post(
