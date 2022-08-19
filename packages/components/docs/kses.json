@@ -793,6 +793,7 @@
     "slot": true
   },
   "sc-order": {
+    "customer-ids": true,
     "heading": true,
     "order-id": true,
     "style": true,

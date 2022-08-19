@@ -1432,6 +1432,7 @@ export namespace Components {
     interface ScMenuLabel {
     }
     interface ScOrder {
+        "customerIds": string[];
         "heading": string;
         "orderId": string;
     }
@@ -5613,6 +5614,7 @@ declare namespace LocalJSX {
     interface ScMenuLabel {
     }
     interface ScOrder {
+        "customerIds"?: string[];
         "heading"?: string;
         "orderId"?: string;
     }

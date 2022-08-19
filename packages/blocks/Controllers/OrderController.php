@@ -125,7 +125,8 @@ class OrderController extends BaseController {
 				->id( 'sc-customer-order' )
 				->with(
 					[
-						'orderId' => $this->getId(),
+						'orderId'     => $this->getId(),
+						'customerIds' => array_values( (array) User::current()->customerIds() ),
 					]
 				)->render()
 			);

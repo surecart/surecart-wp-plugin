@@ -15,6 +15,7 @@ import { Checkout, Order, Product, Purchase } from '../../../../types';
 export class ScOrder {
   @Element() el: HTMLScOrdersListElement;
   @Prop() orderId: string;
+  @Prop() customerIds: string[];
   @Prop() heading: string;
 
   @State() order: Order;
@@ -54,6 +55,7 @@ export class ScOrder {
         path: addQueryArgs(`surecart/v1/purchases`, {
           expand: ['product', 'product.downloads', 'download.media'],
           order_ids: [this.orderId],
+          customer_ids: this.customerIds,
           downloadable: true,
         }),
       })) as Purchase[];
