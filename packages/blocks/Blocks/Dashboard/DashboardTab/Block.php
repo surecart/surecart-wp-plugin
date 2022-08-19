@@ -23,7 +23,7 @@ class Block extends BaseBlock {
 		}
 
 		// get the current page tab and possible id.
-		$tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'orders';
+		$tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
 
 		return \SureCart::blocks()->render(
 			'blocks/dashboard-tab',
