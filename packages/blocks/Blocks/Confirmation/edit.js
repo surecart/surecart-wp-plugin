@@ -4,6 +4,21 @@ import { __ } from '@wordpress/i18n';
 import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 import { ScOrderConfirmation } from '@surecart/components-react';
 
+const DEFAULT_TEMPLATE = [
+	[
+		'core/paragraph',
+		{
+			content:
+				'Thank you for your purchase! Please check your inbox for additional information.',
+		},
+	],
+	['surecart/order-confirmation-line-items', {}],
+	[
+		'surecart/customer-dashboard-button',
+		{ label: 'Manage Orders', full: true },
+	],
+];
+
 export default () => {
 	const blockProps = useBlockProps();
 
@@ -288,7 +303,10 @@ export default () => {
 						}
 					`}
 				>
-					<InnerBlocks templateLock={false} />
+					<InnerBlocks
+						templateLock={false}
+						template={DEFAULT_TEMPLATE}
+					/>
 				</div>
 			</ScOrderConfirmation>
 		</div>
