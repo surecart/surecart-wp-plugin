@@ -23,6 +23,7 @@ class SubscriptionController extends BaseController {
 			->id( 'customer-subscriptions-preview' )
 			->with(
 				[
+					'heading' => $attributes['title'] ?? null,
 					'allLink' => add_query_arg(
 						[
 							'tab'    => $this->getTab(),
