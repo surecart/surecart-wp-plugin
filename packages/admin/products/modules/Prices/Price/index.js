@@ -148,7 +148,7 @@ export default ({ id, prices, product }) => {
 				css={css`
 					padding: var(--sc-spacing-large);
 				`}
-				collapsible={prices?.length > 1}
+				collapsible={true}
 			/>
 
 			<Error error={savePriceError || error} setError={setError} />

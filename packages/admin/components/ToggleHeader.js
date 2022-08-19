@@ -8,7 +8,6 @@ export default ({
 	setIsOpen,
 	children,
 	buttons,
-	type,
 	className,
 	collapsible = true,
 }) => {
