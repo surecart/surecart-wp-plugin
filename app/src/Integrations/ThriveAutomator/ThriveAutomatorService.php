@@ -8,6 +8,7 @@ namespace SureCart\Integrations\ThriveAutomator;
 use SureCart\Integrations\ThriveAutomator\Actions\InvokePurchaseAction;
 use SureCart\Integrations\ThriveAutomator\Actions\RevokePurchaseAction;
 use SureCart\Integrations\ThriveAutomator\DataObjects\ProductData;
+use SureCart\Integrations\ThriveAutomator\Fields\ProductDataField;
 use SureCart\Integrations\ThriveAutomator\Fields\ProductIDField;
 use SureCart\Integrations\ThriveAutomator\Fields\ProductNameField;
 use SureCart\Integrations\ThriveAutomator\TriggerFields\PriceField;
@@ -56,6 +57,7 @@ class ThriveAutomatorService {
 		// fields.
 		thrive_automator_register_data_field( ProductNameField::class );
 		thrive_automator_register_data_field( ProductIDField::class );
+		thrive_automator_register_data_field( ProductDataField::class );
 
 		// data objects.
 		thrive_automator_register_data_object( ProductData::class );
