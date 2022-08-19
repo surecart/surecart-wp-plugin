@@ -8,14 +8,16 @@ const DEFAULT_TEMPLATE = [
 	[
 		'core/paragraph',
 		{
-			content:
+			content: __(
 				'Thank you for your purchase! Please check your inbox for additional information.',
+				'surecart'
+			),
 		},
 	],
 	['surecart/order-confirmation-line-items', {}],
 	[
 		'surecart/customer-dashboard-button',
-		{ label: 'Manage Orders', full: true },
+		{ label: __('Manage Orders', 'surecart'), full: true },
 	],
 ];
 
