@@ -77,9 +77,8 @@ export default (
 	const editEntity = (data) => editEntityRecord(name, type, id, data);
 
 	/** Delete the entity. */
-	const deleteEntity = (options = {}) => {
-		return deleteEntityRecord(name, type, id, {}, options);
-	};
+	const deleteEntity = (options = {}) =>
+		deleteEntityRecord(name, type, id, {}, options);
 
 	/** Save the entity. */
 	const saveEntity = (data, options) =>

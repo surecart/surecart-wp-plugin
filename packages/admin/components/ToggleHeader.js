@@ -19,13 +19,7 @@ export default ({
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				border-radius: 8px;
-				border: 1px solid transparent;
-				${type === 'warning'
-					? `background-color: var(--sc-color-warning-50);
-        border-color: var(--sc-color-warning-200);
-        color: var(--sc-color-warning-700);`
-					: ``}
+				border-radius: var(--sc-border-radius-medium);
 			`}
 		>
 			<div
