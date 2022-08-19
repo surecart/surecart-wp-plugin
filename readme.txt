@@ -246,6 +246,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 = 1.1.4 - August 18, 2022 =
 * Improvement: Add default template to order confirmation block.
 * Improvement: Make price choice block appender button full-width.
+* Improvement: Center PayPal button for wider forms.
 * Fix: Issue with un-archiving prices.
 * Fix: Permissions issue with querying order downloads on customer portal.
 
