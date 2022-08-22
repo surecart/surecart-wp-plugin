@@ -33,6 +33,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		add_shortcode( 'sc_form', [ $this, 'formShortcode' ] );
 		add_shortcode( 'sc_add_to_cart_button', [ $this, 'addToCartShortcode' ], 10, 2 );
 		add_shortcode( 'sc_buy_button', [ $this, 'buyButtonShortcode' ], 10, 2 );
+		add_shortcode( 'sc_customer_dashboard', [ $this, 'dashboardShortcode' ] );
 
 		// dashboard.
 		$container['surecart.shortcodes']->registerBlockShortcode(
@@ -70,26 +71,19 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			'sc_customer_wordpress_account',
 			\SureCartBlocks\Blocks\Dashboard\WordPressAccount\Block::class,
 		);
-
-		// add_shortcode( 'sc_customer_dashboard', [ $this, 'dashboardShortcode' ], 10, 2 );
-		// add_shortcode( 'sc_customer_dashboard_tab', [ $this, 'dashboardTabShortcode' ], 10, 2 );
-		add_shortcode( 'sc_customer_dashboard_page', [ $this, 'dashboardPageShortcode' ], 10, 2 );
-		// add_shortcode( 'sc_customer_orders', [ $this, 'customerOrdersShortcode' ], 10, 2 );
-	}
-
-	/**
-	 * Dashboard tab shortcode.
-	 *
-	 * @param  array  $attributes Shortcode attributes.
-	 * @param  string $content Shortcode content.
-	 * @return string Shortcode output.
-	 */
-	public function customerOrdersShortcode( $attributes, $content ) {
-		$service = new ShortcodesBlockConversionService( $attributes, $content );
-		return $service->convert(
-			'sc_customer_orders',
-			\SureCartBlocks\Blocks\Dashboard\CustomerOrders\Block::class,
-			[ 'title' => '' ]
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_customer_dashboard_page',
+			\SureCartBlocks\Blocks\Dashboard\DashboardPage\Block::class,
+			[ 'name' => '' ]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_customer_dashboard_tab',
+			\SureCartBlocks\Blocks\Dashboard\DashboardTab\Block::class,
+			[
+				'icon'  => 'shopping-bag',
+				'panel' => '',
+				'title' => 'test',
+			]
 		);
 	}
 
@@ -108,43 +102,6 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		);
 
 		return '<sc-tab-group style="font-size:16px;font-family:var(--sc-font-sans)" class="wp-block-surecart-customer-dashboard alignwide">' . ( new \SureCartBlocks\Blocks\Dashboard\CustomerDashboard\Block() )->render( $attributes, $content ) . '</sc-tab-group>';
-	}
-
-	/**
-	 * Dashboard page shortcode.
-	 *
-	 * @param  array  $attributes Shortcode attributes.
-	 * @param  string $content Shortcode content.
-	 * @return string Shortcode output.
-	 */
-	public function dashboardPageShortcode( $attributes, $content ) {
-		$service = new ShortcodesBlockConversionService( $attributes, $content );
-		return $service->convert(
-			'sc_customer_dashboard_page',
-			\SureCartBlocks\Blocks\Dashboard\DashboardPage\Block::class,
-			[ 'name' => '' ]
-		);
-	}
-
-	/**
-	 * Dashboard tab shortcode.
-	 *
-	 * @param  array  $attributes Shortcode attributes.
-	 * @param  string $content Shortcode content.
-	 * @return string Shortcode output.
-	 */
-	public function dashboardTabShortcode( $attributes, $content ) {
-		$attributes = shortcode_atts(
-			[
-				'icon'  => 'shopping-bag',
-				'panel' => '',
-				'title' => $content,
-			],
-			$attributes,
-			'sc_customer_dashboard_tab'
-		);
-
-		return ( new \SureCartBlocks\Blocks\Dashboard\DashboardTab\Block() )->render( $attributes, $content );
 	}
 
 	/**

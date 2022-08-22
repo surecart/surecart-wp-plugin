@@ -19,8 +19,7 @@ class ShortcodesService {
 		add_shortcode(
 			$name,
 			function( $attributes, $content ) use ( $name, $class, $defaults ) {
-				$service = new ShortcodesBlockConversionService( $attributes, $content );
-				return $service->convert(
+				return ( new ShortcodesBlockConversionService( $attributes, $content ) )->convert(
 					$name,
 					$class,
 					$defaults

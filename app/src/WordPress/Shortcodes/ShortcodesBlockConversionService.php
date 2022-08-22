@@ -24,8 +24,8 @@ class ShortcodesBlockConversionService {
 	 * @param string $content Content.
 	 */
 	public function __construct( $attributes, $content ) {
-		$this->attribute = $attributes;
-		$this->content   = $content;
+		$this->attributes = $attributes;
+		$this->content    = $content;
 	}
 
 	/**
@@ -38,13 +38,17 @@ class ShortcodesBlockConversionService {
 	 * @return string
 	 */
 	public function convert( $name, $block, $defaults = [] ) {
-		return( new $block() )->render(
-			shortcode_atts(
-				$defaults,
-				$this->attributes,
-				$name
+		return apply_filters(
+			'surecart/shortcode/render',
+			( new $block() )->render(
+				shortcode_atts(
+					$defaults,
+					$this->attributes,
+					$name
+				),
+				$this->content
 			),
-			$this->content
+			$name
 		);
 	}
 }
