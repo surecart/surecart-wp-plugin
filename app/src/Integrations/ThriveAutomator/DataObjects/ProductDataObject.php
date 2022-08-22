@@ -2,9 +2,9 @@
 
 namespace SureCart\Integrations\ThriveAutomator\DataObjects;
 
-use SureCart\Integrations\ThriveAutomator\Fields\ProductDataField;
-use SureCart\Integrations\ThriveAutomator\Fields\ProductIDField;
-use SureCart\Integrations\ThriveAutomator\Fields\ProductNameField;
+use SureCart\Integrations\ThriveAutomator\DataFields\ProductDataField;
+use SureCart\Integrations\ThriveAutomator\DataFields\ProductIDDataField;
+use SureCart\Integrations\ThriveAutomator\DataFields\ProductNameDataField;
 use Thrive\Automator\Items\Data_Object;
 use SureCart\Models\Product;
 
@@ -13,9 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class ProductData
+ * Class ProductDataObject
  */
-class ProductData extends Data_Object {
+class ProductDataObject extends Data_Object {
 	/**
 	 * Get the data-object identifier
 	 *
@@ -41,8 +41,8 @@ class ProductData extends Data_Object {
 	 */
 	public static function get_fields() {
 		return [
-			ProductNameField::get_id(),
-			ProductIDField::get_id(),
+			ProductNameDataField::get_id(),
+			ProductIDDataField::get_id(),
 			ProductDataField::get_id(),
 			'archived',
 			'shipping_enabled',
@@ -105,12 +105,13 @@ class ProductData extends Data_Object {
 		foreach ( Product::get() as $product ) {
 			$name           = $product->name;
 			$id             = $product->id;
-			$options[ $id ] = array(
+			$options[ $id ] = [
 				'id'    => $id,
 				'label' => $name,
-			);
+			];
 		}
 
 		return $options;
 	}
+
 }

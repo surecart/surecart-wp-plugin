@@ -12,7 +12,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class ProductsField
  */
-class ProductsField extends Action_Field {
+class ProductsActionField extends Action_Field {
+	/**
+	 * Get ID
+	 */
+	public static function get_id() {
+		return 'surecart_products_action_field';
+	}
 	/**
 	 * Field name
 	 */
@@ -58,10 +64,6 @@ class ProductsField extends Action_Field {
 		}
 
 		return $products;
-	}
-
-	public static function get_id() {
-		return 'surecart_products';
 	}
 
 	public static function get_type() {

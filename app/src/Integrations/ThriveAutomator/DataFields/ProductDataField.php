@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCart\Integrations\ThriveAutomator\Fields;
+namespace SureCart\Integrations\ThriveAutomator\DataFields;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit; // Silence is golden!

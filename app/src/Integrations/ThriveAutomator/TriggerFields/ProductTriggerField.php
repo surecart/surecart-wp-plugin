@@ -5,14 +5,14 @@ namespace SureCart\Integrations\ThriveAutomator\TriggerFields;
 use Thrive\Automator\Items\Trigger_Field;
 use Thrive\Automator\Utils;
 
-class ProductField extends Trigger_Field {
+class ProductTriggerField extends Trigger_Field {
 	/**
 	 * Get the Trigger Field identifier
 	 *
 	 * @return string
 	 */
 	public static function get_id() {
-		return 'surecart_product_field';
+		return 'surecart_product_trigger_field';
 	}
 
 	/**

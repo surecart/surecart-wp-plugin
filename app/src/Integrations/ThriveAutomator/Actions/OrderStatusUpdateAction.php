@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Silence is golden!
 }
 
-class OrderStatusUpdate {
+class OrderStatusUpdateAction {
 
 	private $status;
 
@@ -66,7 +66,7 @@ class OrderStatusUpdate {
 	 * @return array
 	 */
 	public static function get_required_action_fields() {
-		return array( 'surecart_products' );
+		return array( 'surecart_products_action_field' );
 	}
 
 	/**

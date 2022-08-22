@@ -57,7 +57,7 @@ class InvokePurchaseAction extends Action {
 	 * @return array
 	 */
 	public static function get_required_action_fields() {
-		return array( 'surecart_products' );
+		return ['surecart_products_action_field'];
 	}
 
 	/**
@@ -66,7 +66,7 @@ class InvokePurchaseAction extends Action {
 	 * @return array
 	 */
 	public static function get_required_data_objects() {
-		return array( 'surecart_product_data' );
+		return ['surecart_product_data'];
 	}
 
 	public function do_action( $data ) {

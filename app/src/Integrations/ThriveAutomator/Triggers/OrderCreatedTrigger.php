@@ -2,7 +2,7 @@
 
 namespace SureCart\Integrations\ThriveAutomator\Triggers;
 
-use SureCart\Integrations\ThriveAutomator\DataObjects\ProductData;
+use SureCart\Integrations\ThriveAutomator\DataObjects\ProductDataObject;
 use SureCart\Integrations\ThriveAutomator\ThriveAutomatorApp;
 use Thrive\Automator\Items\Trigger;
 
@@ -43,7 +43,7 @@ class OrderCreatedTrigger extends Trigger {
 	 * @return array
 	 */
 	public static function get_provided_data_objects() {
-		return [ ProductData::get_id(), 'user_data' ];
+		return [ ProductDataObject::get_id(), 'user_data' ];
 	}
 
 	/**

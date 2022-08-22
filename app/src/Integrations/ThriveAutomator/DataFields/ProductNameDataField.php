@@ -1,30 +1,25 @@
 <?php
-
-namespace SureCart\Integrations\ThriveAutomator\Fields;
+namespace SureCart\Integrations\ThriveAutomator\DataFields;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Silence is golden!
 }
 
-use SureCart\Integrations\ThriveAutomator\DataObjects\ProductData;
+use SureCart\Integrations\ThriveAutomator\DataObjects\ProductDataObject;
 use Thrive\Automator\Items\Data_Field;
 
 /** Product name field. */
-class ProductIDField extends Data_Field {
+class ProductNameDataField extends Data_Field {
 	public static function get_id() {
-		return 'surecart_product_id';
+		return 'surecart_product_name_data_field';
 	}
 
 	public static function get_name() {
-		return __( 'Product ID', 'surecart' );
+		return __( 'Product Name', 'surecart' );
 	}
 
 	public static function get_description() {
-		return __( 'A specific product id.', 'surecart' );
-	}
-
-	public static function get_placeholder() {
-		return '';
+		return __( 'A specific product name.', 'surecart' );
 	}
 
 	public static function get_supported_filters() {
@@ -35,15 +30,19 @@ class ProductIDField extends Data_Field {
 		return [ 'required' ];
 	}
 
+	public static function get_placeholder() {
+		return '';
+	}
+
 	public static function get_field_value_type() {
 		return static::TYPE_STRING;
 	}
 
 	public static function get_dummy_value() {
-		return 'Product ID';
+		return 'Product Name';
 	}
 
 	public static function primary_key(): array {
-		return [ ProductData::get_id() ];
+		return [ ProductDataObject::get_id() ];
 	}
 }
