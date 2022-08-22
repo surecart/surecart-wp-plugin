@@ -35,6 +35,17 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		add_shortcode( 'sc_buy_button', [ $this, 'buyButtonShortcode' ], 10, 2 );
 		add_shortcode( 'sc_customer_dashboard', [ $this, 'dashboardShortcode' ] );
 
+		// buttons.
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_customer_dashboard_button',
+			\SureCartBlocks\Blocks\CustomerDashboardButton\Block::class,
+			[
+				'show_icon' => true,
+				'type'      => 'primary',
+				'size'      => 'medium',
+			]
+		);
+
 		// dashboard.
 		$container['surecart.shortcodes']->registerBlockShortcode(
 			'sc_customer_orders',
@@ -85,6 +96,17 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'title' => 'test',
 			]
 		);
+
+		// confirmation.
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_order_confirmation',
+			\SureCartBlocks\Blocks\Confirmation\Block::class,
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_order_confirmation_line_items',
+			\SureCartBlocks\Blocks\OrderConfirmationLineItems\Block::class,
+		);
+
 	}
 
 	/**
