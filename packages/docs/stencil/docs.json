@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-08-18T20:13:33",
+  "timestamp": "2022-08-22T22:54:42",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -11719,6 +11719,21 @@
       "usage": {},
       "props": [
         {
+          "name": "customerIds",
+          "type": "string[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "heading",
           "type": "string",
           "mutable": false,
@@ -21232,7 +21247,7 @@
           "mutable": false,
           "attr": "country",
           "reflectToAttr": false,
-          "docs": "Label for the field.",
+          "docs": "The country code.",
           "docsTags": [],
           "values": [
             {
