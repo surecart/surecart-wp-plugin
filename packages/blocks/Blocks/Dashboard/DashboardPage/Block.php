@@ -2,6 +2,7 @@
 
 namespace SureCartBlocks\Blocks\Dashboard\DashboardPage;
 
+use SureCart\Models\User;
 use SureCartBlocks\Blocks\Dashboard\DashboardPage;
 
 /**
@@ -34,6 +35,14 @@ class Block extends DashboardPage {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
+		if ( ! is_user_logged_in() ) {
+			return \SureCart::blocks()->render( 'web/login' );
+		}
+
+		if ( ! User::current()->isCustomer() ) {
+			return \SureCart::blocks()->render( 'web/no-customer' );
+		}
+
 		// get the current page tab and possible id.
 		$tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : false;
 
