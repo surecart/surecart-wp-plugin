@@ -154,11 +154,18 @@ export default ({ liveMode }) => {
 						</span>
 					</div>
 					<div>
-						{customer?.name}
+						{customer?.name || customer?.email}
 						<br />
-						<span style={{ color: '#6C727F', 'font-size': '14px' }}>
-							{customer?.email}
-						</span>
+						{!!customer?.name && (
+							<span
+								style={{
+									color: '#6C727F',
+									'font-size': '14px',
+								}}
+							>
+								{customer?.email}
+							</span>
+						)}
 					</div>
 					<div>{<ScOrderStatusBadge status={order?.status} />}</div>
 					<div>
