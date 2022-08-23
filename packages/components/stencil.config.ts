@@ -70,10 +70,7 @@ export const config: Config = {
   plugins: [
     sass(),
     externalGlobals({
-      // '@wordpress/api-fetch': 'wp.apiFetch',
-      // '@wordpress/hooks': 'wp.hooks',
       '@wordpress/i18n': 'wp.i18n',
-      // '@wordpress/url': 'wp.url',
       'wp': 'wp',
     }),
   ],
