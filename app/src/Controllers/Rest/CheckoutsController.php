@@ -130,29 +130,14 @@ class CheckoutsController extends RestController {
 			return $finalized;
 		}
 
-		// the order is paid (probably because of a coupon). Link the customer.
-		$linked = $this->maybeLinkCustomer( $finalized, $request );
+		// Maybe create a user account for the customer.
+		$linked = $this->linkCustomerId( $checkout, $request );
 		if ( is_wp_error( $linked ) ) {
 			return $linked;
 		}
 
 		// return the order.
 		return $finalized;
-	}
-
-	/**
-	 * Link the customer if the order status is paid only.
-	 *
-	 * @param \SureCart\Models\Checkout $checkout
-	 * @param \WP_REST_Request          $request
-	 *
-	 * @return \SureCart\Models\Checkout|\WP_Error
-	 */
-	public function maybeLinkCustomer( $checkout, $request ) {
-		if ( 'paid' !== $checkout->status ) {
-			return false;
-		}
-		return $this->linkCustomerId( $checkout, $request );
 	}
 
 	/**
@@ -184,12 +169,6 @@ class CheckoutsController extends RestController {
 
 		if ( is_wp_error( $checkout ) ) {
 			return $checkout;
-		}
-
-		// link the customer id to the user.
-		$linked = $this->maybeLinkCustomer( $checkout, $request );
-		if ( is_wp_error( $linked ) ) {
-			return $linked;
 		}
 
 		// purchase created.
