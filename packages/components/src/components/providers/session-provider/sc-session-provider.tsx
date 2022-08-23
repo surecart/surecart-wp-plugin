@@ -285,7 +285,15 @@ export class ScSessionProvider {
     const id = getSessionId(this.groupId, this.order, this.modified);
 
     // update or initialize a session.
-    return id && this.persist ? this.update(initial_data) : this.initialize(initial_data);
+    id && this.persist ? this.update(initial_data) : this.initialize(initial_data);
+
+    // redirect failure
+    if (status === 'failed') {
+      window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'redirect_status'));
+      this.scError.emit({
+        message: __('Payment unsuccessful. Please try again.', 'surecart'),
+      });
+    }
   }
 
   getInitialDataFromUrl() {
