@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { addQueryArgs, getQueryArg, removeQueryArgs } from '@wordpress/url';
+import { addQueryArgs } from '@wordpress/url';
 
 import apiFetch from '../../../functions/fetch';
 import { parseFormData } from '../../../functions/form-data';
@@ -44,22 +44,6 @@ export class ScOrderConfirmProvider {
   @Listen('scPaid')
   handlePaidEvent() {
     this.confirmOrder();
-  }
-
-  componentDidLoad() {
-    this.checkRedirectParams();
-  }
-
-  checkRedirectParams() {
-    const status = getQueryArg(window.location.href, 'redirect_status');
-    if (status === 'succeeded') {
-      // paid state.
-      this.scSetState.emit('PAID');
-      // so the back button does not re-confirm.
-      window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'redirect_status'));
-      // confirm order
-      this.confirmOrder();
-    }
   }
 
   /** Confirm the order. */

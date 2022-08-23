@@ -251,7 +251,9 @@ export class ScSessionProvider {
     /** Redirect status has succeeded. */
     const status = getQueryArg(window.location.href, 'redirect_status');
     if (status === 'succeeded') {
-      return this.fetch();
+      window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'redirect_status'));
+      this.scPaid.emit();
+      return this.scSetState.emit('PAID');
     }
 
     // we have a checkout id in the url, so clear any saved order.
