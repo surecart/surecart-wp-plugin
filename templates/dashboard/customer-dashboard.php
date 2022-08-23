@@ -45,7 +45,6 @@ return [
 
 		<!-- wp:surecart/customer-orders /-->
 
-		<!-- wp:surecart/customer-invoices /-->
 		<!-- /wp:surecart/dashboard-page -->
 		<!-- /wp:surecart/dashboard-pages --></sc-tab-group>
 		<!-- /wp:surecart/customer-dashboard -->

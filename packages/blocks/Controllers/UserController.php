@@ -52,7 +52,7 @@ class UserController extends BaseController {
 			return '';
 		}
 		$data = get_userdata( $user->ID );
-		$back = add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) );
+		$back = add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		ob_start(); ?>
 
 		<sc-spacing style="--spacing: var(--sc-spacing-large)">
