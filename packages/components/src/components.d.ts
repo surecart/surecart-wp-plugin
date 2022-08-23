@@ -834,7 +834,6 @@ export namespace Components {
     interface ScDashboardModule {
         "error": string;
         "heading": string;
-        "theme": string;
         "loading": boolean;
     }
     interface ScDialog {
@@ -4944,7 +4943,6 @@ declare namespace LocalJSX {
     interface ScDashboardModule {
         "error"?: string;
         "heading"?: string;
-        "theme"?: string;
         "loading"?: boolean;
     }
     interface ScDialog {

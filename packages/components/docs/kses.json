@@ -419,7 +419,6 @@
   "sc-dashboard-module": {
     "error": true,
     "heading": true,
-    "theme": true,
     "loading": true,
     "style": true,
     "id": true,

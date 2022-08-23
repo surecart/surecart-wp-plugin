@@ -12,6 +12,32 @@ export default {
 
 const Template = ({ theme }) => {
   localStorage.clear();
+  setTimeout(() => {
+    const select = document.querySelector('sc-select');
+    select.choices = [
+      {
+        label: 'Test',
+        value: 'test',
+        choices: [
+          {
+            label: 'Test 2',
+            value: 'test1',
+          },
+          {
+            label: 'Test 1',
+            value: 'test2',
+          },
+        ],
+      },
+    ];
+    // input.price = {
+    //   id: 'test',
+    //   amount,
+    //   currency,
+    //   ad_hoc_max_amount,
+    //   ad_hoc_min_amount,
+    // } as any;
+  });
   return `<div data-theme="${theme}" style="${theme === 'dark' && 'background: var(--sc-color-gray-900);'} height: 100%; padding: 40px;">
   <sc-form>
     <sc-input label="Test" help="Help text" placeholder="placeholder"><span slot="prefix">Prefix</span><span slot="suffix">Suffix</span></sc-input>
@@ -105,9 +131,9 @@ const Template = ({ theme }) => {
 
     <sc-secure-notice>SC secure-notice</sc-secure-notice>
 
-    <sc-select label="Select">SC select</sc-select>
-
-
+    <div style="margin-bottom: 200px">
+    <sc-select label="Select" search open>SC select</sc-select>
+    </div>
 
     <div>
       <header style="display: flex; align-items: center; margin-bottom: 1rem;">

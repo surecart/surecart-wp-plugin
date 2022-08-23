@@ -419,8 +419,8 @@
   "sc-dashboard-module": {
     "error": true,
     "heading": true,
-    "theme": true,
     "loading": true,
+    "theme": true,
     "style": true,
     "id": true,
     "class": true,
