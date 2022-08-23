@@ -204,7 +204,7 @@ class CheckoutsController extends RestController {
 	 * @return \WP_User|\WP_Error
 	 */
 	public function linkCustomerId( $checkout ) {
-		$password = ! empty( $checkout['metadata']['password'] ) ? Encryption::decrypt( $checkout['metadata']['password'] ) : '';
+		$password = ! empty( $checkout->metadata->password ) ? Encryption::decrypt( $checkout->metadata->password ) : '';
 		$service  = new CustomerLinkService( $checkout, $password );
 		return $service->link();
 	}
