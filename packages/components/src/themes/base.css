@@ -356,6 +356,37 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   border-right-color: var(--sc-color-gray-800);
   border-bottom-color: var(--sc-color-gray-800);
   color: var(--sc-color-gray-200);
+  border: solid 1px;
+}
+
+[data-theme='dark'] sc-alert[type='primary']::part(title),
+[data-theme='dark'] sc-alert[type='primary']::part(base) {
+  color: var(--sc-color-primary-500);
+}
+
+[data-theme='dark'] sc-alert[type='success']::part(title),
+[data-theme='dark'] sc-alert[type='success']::part(base) {
+  color: var(--sc-color-success-500);
+}
+
+[data-theme='dark'] sc-alert[type='info']::part(title),
+[data-theme='dark'] sc-alert[type='info']::part(base) {
+  color: var(--sc-color-info-500);
+}
+
+[data-theme='dark'] sc-alert[type='warning']::part(title),
+[data-theme='dark'] sc-alert[type='warning']::part(base) {
+  color: var(--sc-color-warning-500);
+}
+
+[data-theme='dark'] sc-alert[type='danger']::part(title),
+[data-theme='dark'] sc-alert[type='danger']::part(base) {
+  color: var(--sc-color-danger-500);
+}
+
+/* Avatar */
+[data-theme='dark'] sc-table {
+  color: var(--sc-color-gray-300);
 }
 
 /* Avatar */
@@ -658,4 +689,25 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
 
 [data-theme='dark'] sc-form-section::part(description) {
   color: var(--sc-color-gray-400);
+}
+
+[data-theme='dark'] sc-heading,
+[data-theme='dark'] sc-form-row,
+[data-theme='dark'] sc-form-control,
+[data-theme='dark'] sc-menu-label,
+[data-theme='dark'] sc-customer-details,
+[data-theme='dark'] .menu-item,
+[data-theme='dark'] sc-column,
+[data-theme='dark'] paypal-buttons,
+[data-theme='dark'] sc-stacked-list,
+[data-theme='dark'] sc-stripe-element,
+[data-theme='dark'] sc-stripe-payment-element,
+[data-theme='dark'] sc-stripe-payment-request,
+[data-theme='dark'] sc-text,
+[data-theme='dark'] sc-tooltip,
+[data-theme='dark'] sc-tag-panel,
+[data-theme='dark'] sc-toggles,
+[data-theme='dark'] sc-dashboard-module
+ {
+  color: var(--sc-color-gray-300);
 }
