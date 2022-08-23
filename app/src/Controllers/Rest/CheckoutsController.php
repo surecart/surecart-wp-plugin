@@ -5,6 +5,7 @@ namespace SureCart\Controllers\Rest;
 use SureCart\Models\Checkout;
 use SureCart\Models\Form;
 use SureCart\Models\User;
+use SureCart\Support\Encryption;
 use SureCart\WordPress\Users\CustomerLinkService;
 
 /**
@@ -120,20 +121,22 @@ class CheckoutsController extends RestController {
 			return $errors;
 		}
 
+		// get only body params.
+		$body = $request->get_body_params();
+
+		// encrypt password before setting in order.
+		if ( ! empty( $request->get_param( 'password' ) ) ) {
+			$body['metadata']['password'] = Encryption::encrypt( $request->get_param( 'password' ) );
+		}
+
 		$checkout  = new $this->class( [ 'id' => $request['id'] ] );
 		$finalized = $checkout->setProcessor( $request['processor_type'] )
 			->where( $request->get_query_params() )
-			->finalize( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
+			->finalize( $body );
 
 		// bail if error.
 		if ( is_wp_error( $finalized ) ) {
 			return $finalized;
-		}
-
-		// Maybe create a user account for the customer.
-		$linked = $this->linkCustomerId( $checkout, $request );
-		if ( is_wp_error( $linked ) ) {
-			return $linked;
 		}
 
 		// return the order.
@@ -171,6 +174,12 @@ class CheckoutsController extends RestController {
 			return $checkout;
 		}
 
+		// Create a user account for the customer.
+		$linked = $this->linkCustomerId( $checkout, $request );
+		if ( is_wp_error( $linked ) ) {
+			return $linked;
+		}
+
 		// purchase created.
 		if ( ! empty( $checkout->purchases->data ) ) {
 			foreach ( $checkout->purchases->data as $purchase ) {
@@ -192,11 +201,11 @@ class CheckoutsController extends RestController {
 	 * Link the customer id to the order.
 	 *
 	 * @param \SureCart\Models\Checkout $checkout Checkout model.
-	 * @param \WP_REST_Request          $request Request object.
 	 * @return \WP_User|\WP_Error
 	 */
-	public function linkCustomerId( $checkout, $request ) {
-		$service = new CustomerLinkService( $checkout, $request->get_param( 'password' ) );
+	public function linkCustomerId( $checkout ) {
+		$password = ! empty( $checkout['metadata']['password'] ) ? Encryption::decrypt( $checkout['metadata']['password'] ) : '';
+		$service  = new CustomerLinkService( $checkout, $password );
 		return $service->link();
 	}
 
