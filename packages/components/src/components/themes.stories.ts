@@ -34,80 +34,107 @@ const Template = ({ theme }) => {
       <sc-button type="text">Button</sc-button>
       <sc-button type="link">Button</sc-button>
     </sc-flex>
-  
-    <sc-address label="Test">SC Address</sc-address>
-    <sc-alert type="primary" open><span slot="title">Something went wrong.</span><ul><li>Test1</li><li>Test2</li></ul></sc-alert>
-    <sc-alert type="success" open><span slot="title">Something went wrong.</span><ul><li>Test1</li><li>Test2</li></ul></sc-alert>
-    <sc-alert type="info" open><span slot="title">Something went wrong.</span><ul><li>Test1</li><li>Test2</li></ul></sc-alert>
-    <sc-alert type="warning" open><span slot="title">Something went wrong.</span><ul><li>Test1</li><li>Test2</li></ul></sc-alert>
-    <sc-alert type="danger" open><span slot="title">Something went wrong.</span><ul><li>Test1</li><li>Test2</li></ul></sc-alert>
 
-    <sc-badge-notice>SC Badge Alert</sc-badge-notice>
-    <sc-checkbox>SC Checkbox</sc-checkbox>
-    <sc-choice>SC Choice</sc-choice>
-    <sc-choices label="SC Shoices">
-      <sc-choice>SC Choice-1</sc-choice>
-      <sc-choice>SC Choice-2</sc-choice>
+    <sc-flex justify-content="flex-start">
+      <sc-tag>Tag</sc-tag>
+      <sc-tag type="primary">Tag</sc-tag>
+      <sc-tag type="success">Tag</sc-tag>
+      <sc-tag type="info">Tag</sc-tag>
+      <sc-tag type="warning">Tag</sc-tag>
+      <sc-tag type="danger">Tag</sc-tag>
+    </sc-flex>
+
+    <sc-alert type="primary" open><span slot="title">Something went wrong.</span>This is a message</sc-alert>
+    <sc-alert type="success" open><span slot="title">Something went wrong.</span>This is a message</sc-alert>
+    <sc-alert type="info" open><span slot="title">Something went wrong.</span>This is a message</sc-alert>
+    <sc-alert type="warning" open><span slot="title">Something went wrong.</span>This is a message</sc-alert>
+    <sc-alert type="danger" open><span slot="title">Something went wrong.</span>This is a message</sc-alert>
+
+    <sc-address label="Address"></sc-address>
+    <sc-badge-notice label="test">SC Badge Alert</sc-badge-notice>
+
+    <sc-card>Card</sc-card>
+
+    <sc-radio-group label="Radio Group">
+      <sc-radio>SC Radio1</sc-radio>
+      <sc-radio checked>SC Radio2</sc-radio>
+    </sc-radio-group>
+
+    <sc-checkbox>Checkbox</sc-checkbox>
+
+    <sc-switch>
+      Switch
+      <span slot="description">Description text</span>
+    </sc-switch>
+
+    <sc-choices label="SC Choices">
+      <sc-choice>Choice</sc-choice>
+      <sc-choice checked>Choice Checked</sc-choice>
+      <sc-choice type="checkbox">Choice Checkbox</sc-choice>
+      <sc-choice type="checkbox" checked>Choice Checked</sc-choice>
     </sc-choices>
-    <sc-column>SC Column</sc-column>
-    <sc-columns>
-      <sc-column>SC Column1</sc-column>
-      <sc-column>SC Column2</sc-column>
-      <sc-column>SC Column3</sc-column>
-    </sc-columns>
 
-    <sc-customer-details>SC Customer Details</sc-customer-details>
-    <sc-dashboard-module>SC Dashboard Module</sc-dashboard-module>
+    <sc-dashboard-module heading="Dashboard Module"></sc-dashboard-module>
 
     <sc-divider>SC Divider</sc-divider>
-    <sc-downloads-list>SC Downloads List</sc-downloads-list>
-    <dropdown position="bottom-right">
-      <sc-button type="text" slot="trigger" circle>
-        <sc-icon name="more-horizontal" />
-      </sc-button>
-      <sc-menu>
-        <sc-menu-item>Start Plan</sc-menu-item>
-      </sc-menu>
-    </dropdown>
 
+    <sc-menu style="max-width: 200px; border: solid 1px var(--sc-panel-border-color); border-radius: var(--sc-border-radius-medium);">
+      <sc-menu-item>Option 1</sc-menu-item>
+      <sc-menu-item>Option 2</sc-menu-item>
+      <sc-menu-item>Option 3</sc-menu-item>
+      <sc-menu-divider></sc-menu-divider>
+      <sc-menu-item checked>Checked</sc-menu-item>
+      <sc-menu-item disabled>Disabled</sc-menu-item>
+      <sc-menu-divider></sc-menu-divider>
+      <sc-menu-item>
+      <span slot="prefix">A</span>Prefix
+      </sc-menu-item>
+      <sc-menu-item>
+      Suffix <span slot="suffix">B</span>
+      </sc-menu-item>
+    </sc-menu>
 
-    <sc-menu-label>SC Menu Lable</sc-menu-label>
-    <sc-order-status-badge>SC Order Status Badge</sc-order-status-badge>
-    <sc-pagination>SC Pagination</sc-pagination>
-    <paypal-buttons>Paypal Buttons</paypal-buttons>
-    <sc-price-input>SC Price Input</sc-price-input>
-    <sc-product-line-item>SC product-line-item</sc-product-line-item>
-    <sc-quantity-select>SC Price Input</sc-quantity-select>
-    <sc-radio>SC Radio</sc-radio>
-    <sc-radio-group label="SC Radio">
-      <sc-radio>SC Radio1</sc-radio>
-      <sc-radio>SC Radio2</sc-radio>
-    </sc-radio-group>
-    <sc-cart-icon>SC Cart Icon</sc-cart-icon>
-    <sc-compact-address>SC compact-address</sc-compact-address>
-    <sc-dialog>SC dialog</sc-dialog>
-    <sc-drawer>SC drawer</sc-drawer>
-    <sc-textarea>SC textarea</sc-textarea>
-    <sc-toggle>SC toggle</sc-toggle>
-    <sc-toggles>SC toggles</sc-toggles>
+    <sc-product-line-item amount="1000" currency="usd" interval="per month">
+      <span slot="title">Product Title</span>
+    </sc-product-line-item>
+
+    <sc-textarea label="Text Area" placeholder="placeholder"></sc-textarea>
+    <sc-textarea label="Text Area" value="This is some text"></sc-textarea>
+
+    <sc-toggle summary="Toggle">Toggle content</sc-toggle>
+
     <sc-secure-notice>SC secure-notice</sc-secure-notice>
-    <sc-select>SC select</sc-select>
-    <sc-skeleton>SC skeleton</sc-skeleton>
-    <sc-spacing>SC spacing</sc-spacing>
-    <sc-spinner>SC spinner</sc-spinner>
-    <sc-stacked-list>SC stacked-list</sc-stacked-list>
+
+    <sc-select label="Select">SC select</sc-select>
+
+
+
+    <div>
+      <header style="display: flex; align-items: center; margin-bottom: 1rem;">
+        <sc-skeleton style="width: 3rem; height: 3rem; margin-right: 1rem; vertical-align: middle;"></sc-skeleton>
+        <sc-skeleton style="width: 30%;"></sc-skeleton>
+      </header>
+      <sc-skeleton style="margin-bottom: 1rem;"></sc-skeleton>
+      <sc-skeleton style="margin-bottom: 1rem; width: 95%;"></sc-skeleton>
+      <sc-skeleton style="margin-bottom: 1rem; width: 80%;"></sc-skeleton>
+    </div>
+
+    <sc-spinner></sc-spinner>
+
+    <sc-stacked-list> <sc-stacked-list-row>SC stacked-list-row</sc-stacked-list-row>
     <sc-stacked-list-row>SC stacked-list-row</sc-stacked-list-row>
-    <sc-stripe-element>SC stripe-element</sc-stripe-element>
-    <sc-stripe-payment-element>SC stripe payment element</sc-stripe-payment-element>
-    <sc-stripe-payment-request>SC stripe-payment-request</sc-stripe-payment-request>
-    <sc-subscription-status-badge>SC subscription-status-badge</sc-subscription-status-badge>
-    <sc-switch>SC switch</sc-switch>
-    <sc-tag-group>
-      <sc-tag-panel>SC tag-panel</sc-tag-panel>
-      <sc-tab>SC tab1</sc-tab>
-      <sc-tab>SC tab2</sc-tab>
-      <sc-tab>SC tab3</sc-tab>
-    </sc-tag-group>
+    <sc-stacked-list-row>SC stacked-list-row</sc-stacked-list-row></sc-stacked-list>
+
+    <sc-stripe-element label="Payment" publishable-key="pk_live_51KgGVf2E2Wr9trjmbUbolV7DGH5RkCjH08zkJbfPTyoE2EQfCj7WJGP5PgzJI3jH9eC15TgGa6URDwxK52Cp3tav00jQ4rwfyg" account-id="acct_1KgGVf2E2Wr9trjm"></sc-stripe-element>
+
+    <sc-tab-group>
+      <sc-tab slot="nav" panel="panel-1">SC tab1</sc-tab>
+      <sc-tab slot="nav" panel="panel-2">SC tab2</sc-tab>
+      <sc-tab slot="nav" panel="panel-3">SC tab3</sc-tab>
+      <sc-tab-panel name="panel-1">SC tab-panel 1</sc-tab-panel>
+      <sc-tab-panel name="panel-2">SC tab-panel 2</sc-tab-panel>
+      <sc-tab-panel name="panel-3">SC tab-panel 3</sc-tab-panel>
+    </sc-tab-group>
 
     <sc-table>
       <sc-table-cell slot="head">Number</sc-table-cell>
@@ -171,21 +198,9 @@ const Template = ({ theme }) => {
       </sc-table-row>
     </sc-table>
 
-
-    <sc-tag>SC tag</sc-tag>
-    <sc-skeleton>SC skeleton</sc-skeleton>
-    <sc-tax-id-input>SC tax-id-input</sc-tax-id-input>
-    <sc-text>SC text</sc-text>
-    <sc-tooltip>SC tooltip</sc-tooltip>
-
-    <sc-empty icon="shopping-bag">SC Empty</sc-empty>
-    <sc-empty icon="inbox">SC Empty</sc-empty>
-    <sc-error>SC Error</sc-error>
-    <sc-form-control>SC Form</sc-form-control>
-    <sc-form-row>SC Form Row</sc-form-row>
     <sc-heading>SC Heading</sc-heading>
-    <sc-menu-label>SC Menu Lable</sc-menu-label>
-    <sc-order-status-badge>SC Order Status Badge</sc-order-status-badge>
+    <sc-text>SC text</sc-text>
+    <sc-empty icon="shopping-bag">SC Empty</sc-empty>
   </sc-form>
 </div>`;
 };
