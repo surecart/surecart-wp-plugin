@@ -8,15 +8,12 @@ import { __ } from '@wordpress/i18n';
 })
 export class ScDashboardModule {
   @Prop() heading: string;
-  @Prop() theme: string;
   @Prop() error: string;
   @Prop() loading: boolean;
 
   render() {
-    console.log('SC D Data:');
-    console.log(this);
     return (
-      <div class="dashboard-module" data-theme={this.theme}>
+      <div class="dashboard-module">
         {!!this.error && (
           <sc-alert open={!!this.error} type="danger">
             <span slot="title">{__('Error', 'surecart')}</span>
