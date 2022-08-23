@@ -10,7 +10,7 @@
 | Property  | Attribute | Description | Type                    | Default     |
 | --------- | --------- | ----------- | ----------------------- | ----------- |
 | `loading` | `loading` |             | `boolean`               | `undefined` |
-| `order`   | --        |             | `Order`                 | `undefined` |
+| `order`   | --        |             | `Checkout`              | `undefined` |
 | `size`    | `size`    |             | `"large" \| "medium"`   | `undefined` |
 | `total`   | `total`   |             | `"subtotal" \| "total"` | `'total'`   |
 

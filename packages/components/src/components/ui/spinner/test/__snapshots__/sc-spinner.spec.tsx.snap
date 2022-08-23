@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-spinner renders 1`] = `
+<sc-spinner>
+  <mock:shadow-root>
+    <span aria-busy="true" aria-live="polite" class="spinner" part="base"></span>
+  </mock:shadow-root>
+</sc-spinner>
+`;

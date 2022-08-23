@@ -39,6 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-dashboard' )
 ->middleware( 'user.can:manage_options' )
 ->middleware( 'assets.components' )
+->name( 'dashboard.show' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Dashboard\\' )
 ->handle( 'DashboardController@index' );
 
@@ -151,6 +152,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
+| Licenses
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+->where( 'admin', 'sc-licenses' )
+->middleware( 'user.can:edit_sc_products' )
+->middleware( 'assets.components' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Licenses\\' )
+->group(
+	function() {
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'LicensesController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'LicensesController@edit' );
+	}
+);
+
+/*
+|--------------------------------------------------------------------------
 | Abandoned Orders
 |--------------------------------------------------------------------------
 */
@@ -248,9 +266,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 			return;
 		}
 
-		// Iframed settings.
+		// Settings.
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'tab' )->name( 'settings.account' )->handle( 'AccountSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'brand', 'tab' )->name( 'settings.brand' )->handle( 'BrandSettings@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'order', 'tab' )->name( 'settings.order' )->handle( 'OrderSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'customer_notification_protocol', 'tab' )->name( 'settings.customer' )->handle( 'CustomerSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'subscription_protocol', 'tab' )->name( 'settings.subscription' )->handle( 'SubscriptionSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'portal_protocol', 'tab' )->name( 'settings.portal' )->handle( 'PortalSettings@show' );

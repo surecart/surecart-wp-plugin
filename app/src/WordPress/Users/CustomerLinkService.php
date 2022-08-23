@@ -18,23 +18,23 @@ class CustomerLinkService {
 	/**
 	 * Holds the model for the link.
 	 *
-	 * @var \SureCart\Models\Order
+	 * @var \SureCart\Models\Checkout
 	 */
-	protected $order;
+	protected $checkout;
 
 	/**
 	 * Get things going.
 	 *
-	 * @param \SureCart\Models\Order $order Model for the link.
-	 * @param string                 $password The password.
+	 * @param \SureCart\Models\Checkout $checkout Model for the link.
+	 * @param string                    $password The password.
 	 */
-	public function __construct( \SureCart\Models\Order $order, $password = '' ) {
-		$this->order    = $order;
+	public function __construct( \SureCart\Models\Checkout $checkout, $password = '' ) {
+		$this->checkout = $checkout;
 		$this->password = $password;
 	}
 
 	/**
-	 * Link the user to the order.
+	 * Link the user to the checkout.
 	 *
 	 * @return \SureCart\Models\User|\WP_Error
 	 */
@@ -61,7 +61,7 @@ class CustomerLinkService {
 	 * @return \SureCart\Models\User|false
 	 */
 	protected function getLinked() {
-		return User::findByCustomerId( $this->order->customer_id );
+		return User::findByCustomerId( $this->checkout->customer_id );
 	}
 
 	/**
@@ -71,14 +71,14 @@ class CustomerLinkService {
 	 */
 	protected function linkUserWithEmail() {
 		// next check if email has a user.
-		$existing = User::getUserBy( 'email', $this->order->email );
+		$existing = User::getUserBy( 'email', $this->checkout->email );
 
 		// We have a user, link it.
 		if ( $existing ) {
-			$mode = ! empty( $this->order->live_mode ) ? 'live' : 'test';
+			$mode = ! empty( $this->checkout->live_mode ) ? 'live' : 'test';
 			// maybe add the customer id for the user if it's not yet set.
-			if ( $this->order->customer_id !== $existing->customerId( $mode ) ) {
-				$existing->setCustomerId( $this->order->customer_id, $mode );
+			if ( $this->checkout->customer_id !== $existing->customerId( $mode ) ) {
+				$existing->setCustomerId( $this->checkout->customer_id, $mode );
 			}
 			return $existing;
 		}
@@ -95,8 +95,8 @@ class CustomerLinkService {
 		// if no user, create one with a password if provided.
 		$created = User::create(
 			[
-				'user_name'     => ! empty( $this->order->name ) ? $this->order->name : $this->order->email,
-				'user_email'    => $this->order->email,
+				'user_name'     => ! empty( $this->checkout->name ) ? $this->checkout->name : $this->checkout->email,
+				'user_email'    => $this->checkout->email,
 				'user_password' => $this->password,
 			]
 		);
@@ -107,9 +107,9 @@ class CustomerLinkService {
 		}
 
 		// get the mode string.
-		$mode = ! empty( $this->order->live_mode ) ? 'live' : 'test';
+		$mode = ! empty( $this->checkout->live_mode ) ? 'live' : 'test';
 
 		// set the customer id for the user.
-		return $created->setCustomerId( $this->order->customer_id, $mode );
+		return $created->setCustomerId( $this->checkout->customer_id, $mode );
 	}
 }

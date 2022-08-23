@@ -2,7 +2,7 @@ import { Component, Element, h, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
-import { BillingAgreement, Customer, PaymentMethod } from '../../../../types';
+import { Customer, PaymentMethod } from '../../../../types';
 import { onFirstVisible } from '../../../../functions/lazy';
 
 @Component({
@@ -70,7 +70,7 @@ export class ScPaymentMethodsList {
       })) as PaymentMethod;
       this.paymentMethods = (await await apiFetch({
         path: addQueryArgs(`surecart/v1/payment_methods/`, {
-          expand: ['card', 'customer', 'billing_agreement'],
+          expand: ['card', 'customer', 'billing_agreement', 'paypal_account', 'payment_instrument', 'bank_account'],
           ...this.query,
         }),
       })) as PaymentMethod[];
@@ -87,7 +87,7 @@ export class ScPaymentMethodsList {
       this.loading = true;
       this.paymentMethods = (await await apiFetch({
         path: addQueryArgs(`surecart/v1/payment_methods/`, {
-          expand: ['card', 'customer', 'billing_agreement'],
+          expand: ['card', 'customer', 'billing_agreement', 'paypal_account', 'payment_instrument'],
           ...this.query,
         }),
       })) as PaymentMethod[];
@@ -130,35 +130,21 @@ export class ScPaymentMethodsList {
 
   renderList() {
     return this.paymentMethods.map(paymentMethod => {
-      const { id, card, customer, live_mode, billing_agreement } = paymentMethod;
+      const { id, card, customer, live_mode, billing_agreement, paypal_account } = paymentMethod;
+      console.log(paymentMethod);
       return (
         <sc-stacked-list-row style={{ '--columns': billing_agreement ? '2' : '3' }}>
-          <sc-flex justify-content="flex-start" align-items="center" style={{ '--spacing': '0.5em' }}>
-            <div style={{ width: '50px', lineHeight: '0' }}>
-              {!!card?.brand && <sc-cc-logo style={{ fontSize: '36px' }} brand={card?.brand}></sc-cc-logo>}
-              {billing_agreement && <sc-icon style={{ width: '50px' }} name="paypal"></sc-icon>}
-            </div>
-            {!!card?.last4 && (
-              <sc-flex justify-content="flex-start" align-items="center" style={{ '--spacing': '0.5em' }}>
-                <span style={{ fontSize: '7px', whiteSpace: 'nowrap' }}>
-                  {'\u2B24'} {'\u2B24'} {'\u2B24'} {'\u2B24'}
-                </span>
-                <span>{card?.last4}</span>
-              </sc-flex>
-            )}
+          <sc-payment-method paymentMethod={paymentMethod} />
 
-            {!!(billing_agreement as BillingAgreement)?.email && (
-              <span style={{ '--spacing': '0.5em', 'overflow': 'hidden', 'textOverflow': 'ellipsis', 'whiteSpace': 'nowrap' }}>
-                {(billing_agreement as BillingAgreement)?.email}
+          <div>
+            {!!card?.exp_month && (
+              <span>
+                {__('Exp.', 'surecart')}
+                {card?.exp_month}/{card?.exp_year}
               </span>
             )}
-          </sc-flex>
-
-          {!!card?.exp_month && (
-            <div>
-              {__('Exp.', 'surecart')} {card?.exp_month}/{card?.exp_year}
-            </div>
-          )}
+            {!!paypal_account && paypal_account?.email}
+          </div>
 
           <sc-flex justify-content="flex-start" align-items="center" style={{ '--spacing': '0.5em', 'marginLeft': 'auto' }}>
             {typeof customer !== 'string' && customer?.default_payment_method === id && <sc-tag type="info">{__('Default', 'surecart')}</sc-tag>}

@@ -56,14 +56,17 @@
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-dialog](../sc-dialog)
  - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
- - [sc-downloads-list](../downloads-list)
+ - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-login-form](../../controllers/login)
+ - [sc-order](../../controllers/dashboard/order)
  - [sc-order-submit](../../controllers/checkout-form/order-submit)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-pagination](../pagination)
  - [sc-payment-method-create](../../controllers/dashboard/payment-method-create)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
@@ -95,12 +98,15 @@ graph TD;
   sc-donation-choices --> sc-button
   sc-downloads-list --> sc-button
   sc-invoices-list --> sc-button
+  sc-licenses-list --> sc-button
   sc-login-form --> sc-button
+  sc-order --> sc-button
   sc-order-submit --> sc-button
   sc-orders-list --> sc-button
   sc-pagination --> sc-button
   sc-payment-method-create --> sc-button
   sc-payment-methods-list --> sc-button
+  sc-purchase-downloads-list --> sc-button
   sc-subscription --> sc-button
   sc-subscription-ad-hoc-confirm --> sc-button
   sc-subscription-cancel --> sc-button

@@ -1,7 +1,7 @@
 import { Component, Prop, h, Watch, State, Event, EventEmitter, Method } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
-import { Address, Order, TaxStatus } from '../../../../types';
+import { Address, Checkout, TaxStatus } from '../../../../types';
 
 @Component({
   tag: 'sc-order-shipping-address',
@@ -19,9 +19,6 @@ export class ScOrderShippingAddress {
 
   /** Is this loading. */
   @Prop() loading: boolean;
-
-  /** Holds the customer's shipping address */
-  @Prop() customerShippingAddress: Address;
 
   /** Holds the customer's billing address */
   @Prop() shippingAddress: Address;
@@ -51,7 +48,7 @@ export class ScOrderShippingAddress {
 
   /** Make a request to update the order. */
   @Event() scUpdateOrder: EventEmitter<{
-    data: Partial<Order>;
+    data: Partial<Checkout>;
     options?: { silent?: boolean };
   }>;
 
@@ -65,29 +62,10 @@ export class ScOrderShippingAddress {
     state: null,
   };
 
-  /** When the customer shipping address changes, we want to use that instead of what's entered, if we have empty fields. */
-  @Watch('customerShippingAddress')
-  handleCustomerAddressChange(val, old) {
-    // if the shipping address is blank, use the customer address.
-    if (!Object.keys(this.shippingAddress || {}).length && !old) {
-      this.address = { ...this.address, ...val };
-    }
-  }
-
-  /** When the shipping address changes, we want to update the passed address to match. */
+  /** When the shipping address changes, we want to use that instead of what's entered, if we have empty fields. */
   @Watch('shippingAddress')
-  handleShippingChange(val, old) {
-    // let's only update it the first time.
-    if (!old) {
-      if (!val?.country) {
-        const country = navigator?.language?.slice(-2).toUpperCase();
-        if (country) {
-          this.address = {
-            ...this.address,
-            country,
-          };
-        }
-      }
+  handleCustomerAddressChange(val, old) {
+    if (val?.id && !old) {
       this.address = { ...this.address, ...val };
     }
   }
@@ -100,19 +78,6 @@ export class ScOrderShippingAddress {
         shipping_address: this.address as Address,
       },
     });
-  }
-
-  componentWillLoad() {
-    /** Set the country by browser language if not set. */
-    if (!this.address?.country) {
-      const country = navigator?.language?.slice(-2).toUpperCase();
-      if (country) {
-        this.address = {
-          ...this.address,
-          country,
-        };
-      }
-    }
   }
 
   @Method()
@@ -147,4 +112,4 @@ export class ScOrderShippingAddress {
   }
 }
 
-openWormhole(ScOrderShippingAddress, ['shippingAddress', 'loading', 'customerShippingAddress', 'taxStatus', 'shippingEnabled'], false);
+openWormhole(ScOrderShippingAddress, ['shippingAddress', 'loading', 'taxStatus', 'shippingEnabled'], false);

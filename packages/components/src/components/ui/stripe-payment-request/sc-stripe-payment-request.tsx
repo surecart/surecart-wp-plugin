@@ -5,7 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 
 import { createOrUpdateOrder, finalizeSession } from '../../../services/session';
-import { LineItem, Order, Prices, Product, ResponseError } from '../../../types';
+import { LineItem, Checkout, Prices, Product, ResponseError } from '../../../types';
 
 @Component({
   tag: 'sc-stripe-payment-request',
@@ -32,7 +32,7 @@ export class ScStripePaymentRequest {
   @Prop() currencyCode: string = 'usd';
 
   /** Checkout Session */
-  @Prop() order: Order;
+  @Prop() order: Checkout;
 
   @Prop() prices: Prices;
 
@@ -127,7 +127,7 @@ export class ScStripePaymentRequest {
             ...(shippingAddress?.region ? { state: shippingAddress?.region } : {}),
           },
         },
-      })) as Order;
+      })) as Checkout;
       updateWith({
         status: 'success',
         total: {
@@ -158,11 +158,11 @@ export class ScStripePaymentRequest {
     return name;
   }
 
-  getRequestObject(order: Order) {
+  getRequestObject(order: Checkout) {
     const displayItems = (order?.line_items?.data || []).map(item => {
       return {
         label: this.getName(item),
-        amount: item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount,
+        amount: item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.subtotal_amount,
       };
     });
 
@@ -225,9 +225,9 @@ export class ScStripePaymentRequest {
   async handlePaymentMethod(ev) {
     const { billing_details } = ev?.paymentMethod;
     const { shippingAddress } = ev;
-    this.scSetState.emit('FETCH');
 
     try {
+      this.scSetState.emit('FINALIZE');
       // update session with shipping/billing
       (await createOrUpdateOrder({
         id: this.order?.id,
@@ -244,7 +244,7 @@ export class ScStripePaymentRequest {
             ...(shippingAddress?.region ? { state: shippingAddress?.region } : {}),
           },
         },
-      })) as Order;
+      })) as Checkout;
 
       // finalize
       const session = (await finalizeSession({
@@ -253,16 +253,17 @@ export class ScStripePaymentRequest {
         query: {
           form_id: this.formId,
         },
-      })) as Order;
+      })) as Checkout;
 
       // confirm payment
+      this.scSetState.emit('PAYING');
       await this.confirmPayment(session, ev);
+      this.scSetState.emit('PAID');
       // paid.
       console.log('paid');
       this.scPaid.emit();
       // Report to the browser that the confirmation was successful, prompting
       // it to close the browser payment method collection interface.
-      console.log('complete');
       ev.complete('success');
     } catch (e) {
       console.error(e);
@@ -273,7 +274,7 @@ export class ScStripePaymentRequest {
     }
   }
 
-  async confirmPayment(val: Order, ev) {
+  async confirmPayment(val: Checkout, ev) {
     // must be finalized
     if (val?.status !== 'finalized') return;
     // must have a secret

@@ -137,6 +137,7 @@
 		"@wordpress/dependency-extraction-webpack-plugin": "^3.2.1",
 		"@wordpress/e2e-test-utils": "^5.4.1",
 		"@wordpress/env": "^4.8.0",
+		"@wordpress/prettier-config": "^1.4.0",
 		"@wordpress/scripts": "^22.5.0",
 		"adm-zip": "^0.5.9",
 		"archiver": "^4.0.1",
@@ -144,7 +145,7 @@
 		"change-case": "^4.1.1",
 		"co": "^4.6.0",
 		"copy-webpack-plugin": "6",
-		"cypress": "10.3.0",
+		"cypress": "10.4.0",
 		"cypress-file-upload": "^5.0.8",
 		"cypress-log-to-output": "^1.1.2",
 		"eslint": "^6.8.0",
@@ -157,9 +158,9 @@
 		"node-wp-i18n": "^1.2.1",
 		"npm-packlist": "^3.0.0",
 		"process": "^0.11.10",
-		"react": "17.0.1",
-		"react-dom": "17.0.1",
-		"react-test-renderer": "17.0.1",
+		"react": "17.0.2",
+		"react-dom": "17.0.2",
+		"react-test-renderer": "17.0.2",
 		"replace-in-file": "^6.0.0",
 		"shelljs": "^0.8.5",
 		"stream-browserify": "^3.0.0",
@@ -171,19 +172,15 @@
 		"webpack-dev-server": "^3.10.3"
 	},
 	"resolutions": {
-		"react": "17.0.1",
-		"react-dom": "17.0.1",
+		"react": "17.0.2",
+		"react-dom": "17.0.2",
 		"eslint-plugin-jsdoc": "^37.4.2",
-		"react-test-renderer": "17.0.1"
+		"react-test-renderer": "17.0.2"
 	},
 	"wp-env": {
 		"plugin-dir": "surecart",
-		"plugin-name": "SureCart",
-		"welcome-logo": [
-			"E2E Tests Example"
-		],
-		"welcome-build-command": "npm run dev"
+		"plugin-name": "SureCart"
 	},
-	"packageManager": "yarn@3.1.1",
+	"packageManager": "yarn@3.2.2",
 	"version": "0.0.1"
 }

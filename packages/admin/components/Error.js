@@ -1,7 +1,13 @@
 import { __ } from '@wordpress/i18n';
 import { ScAlert } from '@surecart/components-react';
 
-export default ({ error, setError, margin = '0', children }) => {
+export default ({
+	error,
+	setError,
+	margin = '0',
+	scrollOnOpen = true,
+	children,
+}) => {
 	if (!error || !Object.keys(error).length) {
 		return null;
 	}
@@ -11,7 +17,7 @@ export default ({ error, setError, margin = '0', children }) => {
 			open={true}
 			type="danger"
 			closable
-			scrollOnOpen
+			scrollOnOpen={scrollOnOpen}
 			scrollMargin={margin}
 			onScHide={() => setError(null)}
 		>

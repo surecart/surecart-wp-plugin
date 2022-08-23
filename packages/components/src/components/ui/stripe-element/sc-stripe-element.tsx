@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Fragment, h, Method, Prop, State, Watch } from '@stencil/core';
 import { loadStripe } from '@stripe/stripe-js/pure';
 
-import { Order } from '../../../types';
+import { Checkout, FormStateSetter } from '../../../types';
 
 @Component({
   tag: 'sc-stripe-element',
@@ -19,7 +19,7 @@ export class ScStripeElement {
   @Prop() disabled: boolean;
 
   /** The checkout session object for finalizing intents */
-  @Prop() order: Order;
+  @Prop() order: Checkout;
 
   /** Your stripe connected account id. */
   @Prop() accountId: string;
@@ -47,6 +47,8 @@ export class ScStripeElement {
 
   @Event() scPaid: EventEmitter<void>;
   @Event() scPayError: EventEmitter<any>;
+  /** Set the state */
+  @Event() scSetState: EventEmitter<FormStateSetter>;
 
   @State() error: string;
   @State() confirming: boolean;
@@ -60,11 +62,13 @@ export class ScStripeElement {
   }
 
   @Watch('order')
-  async confirmPayment(val: Order) {
+  async confirmPayment(val: Checkout, prev: Checkout) {
     // needs to be enabled
     if (this.disabled) return;
     // must be finalized
     if (val?.status !== 'finalized') return;
+    // the status didn't change.
+    if (prev?.status === 'finalized') return;
     // must be a stripe session
     if (val?.payment_intent?.processor_type !== 'stripe') return;
     // must have an external intent id
@@ -78,6 +82,7 @@ export class ScStripeElement {
 
     this.confirming = true;
     try {
+      this.scSetState.emit('PAYING');
       let response;
       if (val?.payment_intent?.processor_data?.stripe?.type == 'setup') {
         response = await this.confirmCardSetup(val?.payment_intent?.processor_data?.stripe.client_secret);
@@ -88,6 +93,7 @@ export class ScStripeElement {
         this.error = response.error.message;
         throw response.error;
       }
+      this.scSetState.emit('PAID');
       // paid
       this.scPaid.emit();
     } catch (e) {
@@ -95,7 +101,6 @@ export class ScStripeElement {
       if (e.message) {
         this.error = e.message;
       }
-    } finally {
       this.confirming = false;
     }
   }

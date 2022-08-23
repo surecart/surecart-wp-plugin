@@ -46,3 +46,4 @@ dist
 
 
 @surecart
+cypress.env.json

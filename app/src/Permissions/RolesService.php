@@ -154,9 +154,12 @@ class RolesService {
 		$capability_types = [
 			'sc_coupon',
 			'sc_promotion',
+			'sc_balance_transaction',
+			'sc_checkout',
 			'sc_purchase',
 			'sc_webhook',
 			'sc_product',
+			'sc_license',
 			'sc_customer',
 			'sc_order',
 			'sc_invoice',

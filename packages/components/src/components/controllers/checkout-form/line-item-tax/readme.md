@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property  | Attribute | Description | Type      | Default     |
-| --------- | --------- | ----------- | --------- | ----------- |
-| `loading` | `loading` |             | `boolean` | `undefined` |
-| `order`   | --        |             | `Order`   | `undefined` |
+| Property  | Attribute | Description | Type       | Default     |
+| --------- | --------- | ----------- | ---------- | ----------- |
+| `loading` | `loading` |             | `boolean`  | `undefined` |
+| `order`   | --        |             | `Checkout` | `undefined` |
 
 
 ## Dependencies

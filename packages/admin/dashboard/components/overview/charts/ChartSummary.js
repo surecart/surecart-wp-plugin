@@ -1,9 +1,9 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
-import { ScBlockUi } from '@surecart/components-react';
-import Chart from 'react-apexcharts';
 import { getFormattedPrice } from '../../../../util';
+import { css, jsx } from '@emotion/core';
+import { ScBlockUi } from '@surecart/components-react';
+import { __ } from '@wordpress/i18n';
+import Chart from 'react-apexcharts';
 
 export default ({
 	loading,
@@ -12,6 +12,7 @@ export default ({
 	currency,
 	previousTotal,
 	className,
+	reportBy,
 	type = 'number',
 }) => {
 	if (loading) {
@@ -25,7 +26,6 @@ export default ({
 			</div>
 		);
 	}
-
 	const formatYAxis = (value) => {
 		if (type === 'currency') {
 			return getFormattedPrice({
@@ -98,11 +98,23 @@ export default ({
 						type: 'date',
 						labels: {
 							formatter: function (value) {
-								if (isNaN(value)) return 0;
-								return new Intl.DateTimeFormat('default', {
-									day: 'numeric',
-									month: 'short',
-								}).format(value * 1000);
+								if (isNaN(value) || data?.length === 0)
+									return 0;
+
+								if ('month' === reportBy) {
+									return new Intl.DateTimeFormat('default', {
+										month: 'short',
+									}).format(parseInt(value) * 1000);
+								} else if ('year' === reportBy) {
+									return new Intl.DateTimeFormat('default', {
+										year: 'numeric',
+									}).format(parseInt(value) * 1000);
+								} else {
+									return new Intl.DateTimeFormat('default', {
+										day: 'numeric',
+										month: 'short',
+									}).format(parseInt(value) * 1000);
+								}
 							},
 						},
 					},
@@ -121,10 +133,13 @@ export default ({
 							stops: [0, 90, 100],
 						},
 					},
+					markers: {
+						size: [4, 7],
+					},
 				}}
 				series={[
 					{
-						name: 'Current',
+						name: __('Total', 'surecart'),
 						data,
 					},
 				]}

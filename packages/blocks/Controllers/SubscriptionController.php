@@ -81,8 +81,8 @@ class SubscriptionController extends BaseController {
 			[
 				'price',
 				'price.product',
-				'latest_invoice',
-				'product',
+				'current_period',
+				'period.checkout',
 			]
 		)->find( $id );
 

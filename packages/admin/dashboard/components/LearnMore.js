@@ -1,13 +1,12 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
 import LearnMoreDetails from '../LearnMoreDetails';
-
+import { css, jsx } from '@emotion/core';
 import {
 	ScCard,
 	ScDashboardModule,
 	ScStackedList,
 } from '@surecart/components-react';
+import { __ } from '@wordpress/i18n';
 
 export default () => {
 	return (
@@ -26,34 +25,34 @@ export default () => {
 			`}
 		>
 			<span className="sc-learn-more-title" slot="heading">
-				{__('Learn More', 'surecart')}
+				{__('Quick Actions', 'surecart')}
 			</span>
 			<ScCard noPadding>
 				<ScStackedList>
 					<LearnMoreDetails
-						icon="film"
-						href="#"
-						title={__('Tutorial Videos', 'surecart')}
+						icon="shopping-bag"
+						href="admin.php?page=sc-products&amp;action=edit"
+						title={__('Create A Product', 'surecart')}
 						descriptions={__(
-							'Learn more about SureCart',
+							'Create products to start selling.',
 							'surecart'
 						)}
 					/>
 					<LearnMoreDetails
-						icon="users"
-						href="#"
-						title={__('Join Our Community', 'surecart')}
+						icon="inbox"
+						href="post-new.php?post_type=sc_form"
+						title={__('Create A Form', 'surecart')}
 						descriptions={__(
-							'Connect with others in on Facebook',
+							'Create a new checkout form.',
 							'surecart'
 						)}
 					/>
 					<LearnMoreDetails
 						icon="life-buoy"
-						href="#"
+						href="mailto:hello@surecart.com"
 						title={__('Get Help', 'surecart')}
 						descriptions={__(
-							'Contact our support for additional help',
+							'Contact support for additional help',
 							'surecart'
 						)}
 					/>

@@ -1,0 +1,21 @@
+# Find with ID
+Returns a single activation by id.
+
+## Examples
+
+```php
+\SureCart\Models\Activation::with([
+	'license'
+])->find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
+```
+
+## Parameters
+import ModelParameters from '../../../components/ModelParameters.js';
+
+<ModelParameters path={'activations/{id}'} method={'get'} />
+
+## Response Attributes
+
+import ModelResponse from '../../../components/ModelResponse.js';
+
+<ModelResponse path={'activations/{id}'} method={'get'} model={'activation'} />

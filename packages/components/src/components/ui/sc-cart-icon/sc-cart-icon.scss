@@ -8,11 +8,11 @@
   right: var(--sc-cart-icon-right, 30px);
   left: var(--sc-cart-icon-left, auto);
   top: var(--sc-cart-icon-top, auto);
-  background: var(--sc-color-primary-500);
+  background: var(--sc-cart-icon-background, var(--sc-color-primary-500));
   border-radius: var(--sc-cart-icon-border-radius, var(--sc-input-border-radius-medium));
   width: var(--sc-cart-icon-width, 60px);
   height: var(--sc-cart-icon-height, 60px);
-  color: var(--sc-color-white);
+  color: var(--sc-cart-icon-color, var(--sc-color-white));
   font-family: var(--sc-cart-font-family, var(--sc-input-font-family));
   font-weight: var(--sc-font-weight-semibold);
   transition: opacity var(--sc-transition-medium) ease;
@@ -41,7 +41,7 @@
     right: -8px;
     font-size: 12px;
     border-radius: var(--sc-cart-counter-border-radius, 9999px);
-    background: var(--sc-color-gray-900);
+    background: var(--sc-card-counter-background, var(--sc-color-gray-900));
     padding: 4px 10px;
     line-height: 18px;
     z-index: 1;

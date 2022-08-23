@@ -4,7 +4,7 @@ import { openWormhole } from 'stencil-wormhole';
 
 import { hasSubscription } from '../../../../functions/line-items';
 import { intervalString } from '../../../../functions/price';
-import { LineItem, LineItemData, Order, PriceChoice, Prices, Product } from '../../../../types';
+import { LineItem, LineItemData, Checkout, PriceChoice, Prices, Product } from '../../../../types';
 
 @Component({
   tag: 'sc-line-items',
@@ -12,8 +12,8 @@ import { LineItem, LineItemData, Order, PriceChoice, Prices, Product } from '../
   shadow: true,
 })
 export class ScLineItems {
-  @Prop() order: Order;
-  @Prop() loading: boolean;
+  @Prop() order: Checkout;
+  @Prop() busy: boolean;
   @Prop() prices: Prices;
   @Prop() editable: boolean;
   @Prop() removable: boolean;
@@ -69,7 +69,7 @@ export class ScLineItems {
   }
 
   render() {
-    if (!!this.loading && !this.order?.line_items?.data?.length) {
+    if (!!this.busy && !this.order?.line_items?.data?.length) {
       return (
         <sc-line-item>
           <sc-skeleton style={{ 'width': '50px', 'height': '50px', '--border-radius': '0' }} slot="image"></sc-skeleton>
@@ -97,7 +97,7 @@ export class ScLineItems {
                 editable={this.isEditable() && !item?.price?.ad_hoc}
                 removable={this.isRemovable()}
                 quantity={item.quantity}
-                amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount * item.quantity}
+                amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.subtotal_amount}
                 currency={this.order?.currency}
                 trialDurationDays={item?.price?.trial_duration_days}
                 interval={!!item?.price && intervalString(item?.price, { showOnce: hasSubscription(this.order) })}
@@ -111,4 +111,4 @@ export class ScLineItems {
   }
 }
 
-openWormhole(ScLineItems, ['order', 'loading', 'prices', 'lockedChoices', 'editLineItems', 'removeLineItems'], false);
+openWormhole(ScLineItems, ['order', 'busy', 'prices', 'lockedChoices', 'editLineItems', 'removeLineItems'], false);

@@ -1,4 +1,4 @@
-import { Order } from '../../../../types';
+import { Checkout } from '../../../../types';
 import { Component, h, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { __ } from '@wordpress/i18n';
@@ -11,7 +11,7 @@ import { __ } from '@wordpress/i18n';
 export class ScLineItemTotal {
   @Prop() total: 'total' | 'subtotal' = 'total';
   @Prop() loading: boolean;
-  @Prop() order: Order;
+  @Prop() order: Checkout;
   @Prop() size: 'large' | 'medium';
 
   order_key = {

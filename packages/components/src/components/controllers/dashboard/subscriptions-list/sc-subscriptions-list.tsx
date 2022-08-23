@@ -75,7 +75,7 @@ export class ScSubscriptionsList {
   async getSubscriptions() {
     const response = (await await apiFetch({
       path: addQueryArgs(`surecart/v1/subscriptions/`, {
-        expand: ['price', 'price.product', 'latest_invoice'],
+        expand: ['price', 'price.product', 'current_period', 'period.checkout'],
         ...this.query,
       }),
       parse: false,

@@ -8,10 +8,10 @@ import 'litepicker/dist/plugins/ranges';
 export default ({ startDate, setStartDate, endDate, setEndDate }) => {
 	const dateRef = useRef();
 	const [inputSize, setInputSize] = useState(25);
+	const [datePicker, setDatePicker] = useState();
 
-	let datepicker;
 	useEffect(() => {
-		datepicker = new Litepicker({
+		const picker = new Litepicker({
 			element: dateRef?.current,
 			singleMode: false,
 			format: 'MMMM D YYYY',
@@ -38,7 +38,15 @@ export default ({ startDate, setStartDate, endDate, setEndDate }) => {
 				});
 			},
 		});
+		setDatePicker(picker);
 	}, [dateRef]);
+
+	useEffect(() => {
+		if (!datePicker) {
+			return;
+		}
+		datePicker.setDateRange(startDate, endDate);
+	}, [startDate, endDate]);
 
 	return (
 		<div>
@@ -150,6 +158,7 @@ export default ({ startDate, setStartDate, endDate, setEndDate }) => {
 						font-weight: 400;
 						font-size: 16px;
 						line-height: 28px;
+						width: 250px;
 					}
 				`}
 			/>

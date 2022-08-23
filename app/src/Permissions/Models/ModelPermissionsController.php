@@ -62,11 +62,11 @@ abstract class ModelPermissionsController {
 	 * @return boolean
 	 */
 	public function belongsToUser( $model, $id, $user ) {
-		$subscription = $model::find( $id );
-		if ( is_wp_error( $subscription ) ) {
-			return $subscription;
+		$model = $model::find( $id );
+		if ( is_wp_error( $model ) ) {
+			return $model;
 		}
-		return $subscription->belongsToUser( $user );
+		return $model->belongsToUser( $user );
 	}
 
 	/**

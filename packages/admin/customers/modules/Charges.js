@@ -1,60 +1,105 @@
-import { __, _n } from '@wordpress/i18n';
-import { useEffect } from '@wordpress/element';
 import ChargesDataTable from '../../components/data-tables/charges-data-table';
-import { useState } from 'react';
-import useEntities from '../../mixins/useEntities';
+import usePagination from '../../hooks/usePagination';
+import PrevNextButtons from '../../ui/PrevNextButtons';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
+import { useState } from '@wordpress/element';
+import { __, _n } from '@wordpress/i18n';
 
-export default ({ id }) => {
+export default ({ customerId }) => {
 	const [page, setPage] = useState(1);
-	const { charges, fetchCharges, pagination, isLoading, isFetching } =
-		useEntities('charge');
+	const [perPage, setPerPage] = useState(10);
 
-	useEffect(() => {
-		if (id) {
-			fetchCharges({
-				query: {
+	const { charges, updating, loading } = useSelect(
+		(select) => {
+			const queryArgs = [
+				'surecart',
+				'charge',
+				{
 					context: 'edit',
+					customer_ids: [customerId],
 					status: ['paid', 'failed'],
-					customer_ids: [id],
 					expand: [
 						'payment_method',
 						'payment_method.card',
+						'payment_method.payment_instrument',
+						'payment_method.paypal_account',
+						'payment_method.bank_account',
+						'payment_method.payment_instrument',
 						'payment_intent',
+						'checkout',
+						'checkout.order',
 					],
 					page,
-					per_page: 5,
+					per_page: perPage,
 				},
-			});
-		}
-	}, [id, page]);
+			];
+			const charges = select(coreStore).getEntityRecords(...queryArgs);
+			const loading = select(coreStore).isResolving(
+				'getEntityRecords',
+				queryArgs
+			);
+			return {
+				charges,
+				loading: loading && page === 1,
+				updating: loading && page !== 1,
+			};
+		},
+		[customerId, page, perPage]
+	);
+
+	const { hasPagination } = usePagination({
+		data: charges,
+		page,
+		perPage,
+	});
 
 	return (
-		<ChargesDataTable
-			hideHeader={true}
-			columns={{
-				amount: {
-					label: __('Amount', 'surecart'),
-				},
-				date: {
-					label: __('Date', 'surecart'),
-				},
-				method: {
-					label: __('Method', 'surecart'),
-				},
-				status: {
-					label: __('Status', 'surecart'),
-					width: '100px',
-				},
-				refund: {
-					width: '100px',
-				},
-			}}
-			data={charges}
-			isLoading={isLoading}
-			isFetching={isFetching}
-			page={page}
-			setPage={setPage}
-			pagination={pagination}
-		/>
+		<>
+			<ChargesDataTable
+				title={__('Charges', 'surecart')}
+				columns={{
+					amount: {
+						label: __('Amount', 'surecart'),
+					},
+					date: {
+						label: __('Date', 'surecart'),
+					},
+					method: {
+						label: __('Method', 'surecart'),
+					},
+					status: {
+						label: __('Status', 'surecart'),
+						width: '100px',
+					},
+					order: {
+						width: '100px',
+					},
+				}}
+				data={charges}
+				showTotal
+				isLoading={loading}
+				isFetching={updating}
+				perPage={perPage}
+				page={page}
+				setPage={setPage}
+				empty={
+					page > 1
+						? __('No more charges.', 'surecart')
+						: __('None found.', 'surecart')
+				}
+				footer={
+					hasPagination && (
+						<PrevNextButtons
+							data={charges}
+							page={page}
+							setPage={setPage}
+							perPage={perPage}
+							loading={updating}
+						/>
+					)
+				}
+			/>
+		</>
 	);
 };

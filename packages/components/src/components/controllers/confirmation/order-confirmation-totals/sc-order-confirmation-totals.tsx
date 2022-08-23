@@ -1,5 +1,5 @@
 import { getHumanDiscount } from '../../../../functions/price';
-import { Order } from '../../../../types';
+import { Checkout } from '../../../../types';
 import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
@@ -10,7 +10,7 @@ import { openWormhole } from 'stencil-wormhole';
   shadow: true,
 })
 export class ScOrderConfirmationTotals {
-  @Prop() order: Order;
+  @Prop() order: Checkout;
 
   renderDiscountLine() {
     if (!this.order?.discount?.promotion?.code) {

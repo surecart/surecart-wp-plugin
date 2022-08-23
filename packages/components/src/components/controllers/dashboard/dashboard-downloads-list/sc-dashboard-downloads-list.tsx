@@ -14,10 +14,7 @@ import { Purchase } from '../../../../types';
 export class ScDownloadsList {
   @Element() el: HTMLScDownloadsListElement;
   /** Customer id to fetch subscriptions */
-  @Prop({ mutable: true }) query: {
-    page: number;
-    per_page: number;
-  } = {
+  @Prop({ mutable: true }) query: any = {
     page: 1,
     per_page: 10,
   };
@@ -103,7 +100,7 @@ export class ScDownloadsList {
 
   render() {
     return (
-      <sc-downloads-list
+      <sc-purchase-downloads-list
         heading={this.heading}
         allLink={this.allLink && this.pagination.total_pages > 1 ? this.allLink : ''}
         loading={this.loading}
@@ -126,7 +123,7 @@ export class ScDownloadsList {
           onScNextPage={() => this.nextPage()}
           onScPrevPage={() => this.prevPage()}
         ></sc-pagination>
-      </sc-downloads-list>
+      </sc-purchase-downloads-list>
     );
   }
 }

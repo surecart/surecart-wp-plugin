@@ -8,7 +8,7 @@ describe('Checkout session helpers', () => {
 
     it('Should get the checkout session from the url, first', async () => {
       delete window.location;
-      window.location = new URL('https://www.example.com?order=urltest');
+      window.location = new URL('https://www.example.com?checkout_id=urltest');
       expect(getSessionId('asdf', {})).toBe('urltest');
     });
 

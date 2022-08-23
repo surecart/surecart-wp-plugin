@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 1.0.5
+Stable tag: 1.1.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,45 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.1.4 - August 18, 2022 =
+* Improvement: Add default template to order confirmation block.
+* Improvement: Make price choice block appender button full-width.
+* Improvement: Center PayPal button for wider forms.
+* Fix: Issue with un-archiving prices.
+* Fix: Permissions issue with querying order downloads on customer portal.
+
+= 1.1.3 - August 17, 2022 =
+* Improvement: Ability to select default credit card or paypal with PayPal only processor.
+* Improvement: Better preview of PayPal only processors on form edit screen.
+* Improvement: Add additional css variables for cart icon customizations.
+* Fix: Issue with PayPal Credit Card popup sometimes not appearing.
+* Fix: Compatibility issue with WPMU Dev Hosting and PHP8.0 with Memcaching enabled.
+* Fix: Issue with 100% discounted orders getting prompted for page navigation.
+
+= 1.1.2 - August 17, 2022 =
+* Hotfix: Order metadata not appearing on orders page.
+
+= 1.1.1 - August 17, 2022 =
+* Fix: Broken onboarding flow.
+* Fix: Merchant subscription update actions not working.
+
+= 1.1.0 - August 16, 2022 =
+* New: PayPal Payment Gateway for one-time purchases.
+* New: Admin dashboard page.
+* New: Checkout Form Loading Messsages.
+* Improvement: Admin subscription update screen now displays future charge.
+* Improvement: Customer dashboard improvements.
+* Improvement: Invoices and Orders are combined into Orders for easier fulfillment.
+* Improvement: SureCart emails now redirect to your site instead of hosted pages.
+* Fix: Caching javascript in admin screen issues after update.
+* Fix: Issue with Loco Translate not generating files for JavaScript translations.
+
+= 1.0.6 - August 11, 2022 =
+* Fix: Issue with tax not being calculated when shipping address country is prefilled and only country field is displayed.
+* Fix: Issue with password field not allowing form to submit when hidden.
+* Fix: Added missing tags to settings that are coming soon.
+* Improvement: Update "Password" default text to "Set A Password".
 
 = 1.0.5 - August 4, 2022 =
 * Improvement: Copy links button and popup.

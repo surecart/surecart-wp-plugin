@@ -4,7 +4,10 @@ exports[`sc-block-ui renders 1`] = `
 <sc-block-ui>
   <mock:shadow-root>
     <div class="overlay" style="z-index: 1;">
-      <slot></slot>
+      <div class="overlay__content">
+        <slot name="spinner"></slot>
+        <slot></slot>
+      </div>
     </div>
   </mock:shadow-root>
 </sc-block-ui>

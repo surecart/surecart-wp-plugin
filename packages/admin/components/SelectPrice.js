@@ -10,7 +10,6 @@ export default ({
 	open,
 	required,
 	products,
-	prices,
 	onSelect,
 	value,
 	className,
@@ -30,23 +29,20 @@ export default ({
 	);
 
 	const choices = (products || []).map((product) => {
-		const productPrices = (prices || []).filter(
-			(price) => price.product === product?.id
-		);
 		return {
 			label: product?.name,
 			id: product.id,
 			disabled: false,
-			choices: (productPrices || [])
+			choices: (product?.prices?.data || [])
 				.filter((price) => {
-					if (!ad_hoc && price.ad_hoc) {
+					if (!ad_hoc && price?.ad_hoc) {
 						return false;
 					}
 					return true;
 				})
 				.map((price) => {
 					return {
-						value: price.id,
+						value: price?.id,
 						label: `${formatNumber(price.amount, price.currency)}${
 							price?.archived ? ' (Archived)' : ''
 						}`,

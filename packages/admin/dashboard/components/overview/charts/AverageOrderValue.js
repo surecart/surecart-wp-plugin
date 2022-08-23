@@ -3,7 +3,7 @@ import { ScCard, ScDashboardModule } from '@surecart/components-react';
 import ChartSummary from './ChartSummary';
 
 export default (props) => {
-	const { data, previousData, loading, className, ...rest } = props;
+	const { data, previousData, loading, className, reportBy, ...rest } = props;
 
 	const formatData = (item) => {
 		return {
@@ -31,6 +31,7 @@ export default (props) => {
 					total={totals(data, 'average_amount')}
 					previousTotal={totals(previousData, 'average_amount')}
 					type="currency"
+					reportBy={reportBy}
 					{...rest}
 				/>
 			</ScCard>

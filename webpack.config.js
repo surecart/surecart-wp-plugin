@@ -1,5 +1,6 @@
 const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 const path = require('path');
+const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
@@ -43,6 +44,10 @@ module.exports = {
 		['admin/invoices']: path.resolve(
 			__dirname,
 			'packages/admin/invoices/index.js'
+		),
+		['admin/licenses']: path.resolve(
+			__dirname,
+			'packages/admin/licenses/index.js'
 		),
 		['admin/product-groups']: path.resolve(
 			__dirname,
@@ -92,6 +97,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/settings/brand/index.js'
 		),
+		['admin/settings/order']: path.resolve(
+			__dirname,
+			'packages/admin/settings/order/index.js'
+		),
 		['admin/settings/customer']: path.resolve(
 			__dirname,
 			'packages/admin/settings/customer/index.js'
@@ -128,6 +137,9 @@ module.exports = {
 	},
 	plugins: [
 		...defaultConfig.plugins,
+		new webpack.optimize.LimitChunkCountPlugin({
+			maxChunks: 1,
+		}),
 		new CopyPlugin({
 			patterns: [
 				{

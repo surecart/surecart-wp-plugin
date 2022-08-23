@@ -6,10 +6,8 @@ export default ({ page, totalPages, loading, button_text, onClick }) => {
 	};
 
 	return (
-		hasButton() && (
-			<sc-button onClick={onClick} loading={loading}>
-				{button_text || __('Load More', 'surecart')}
-			</sc-button>
-		)
+		<sc-button onClick={onClick} loading={loading}>
+			{button_text || __('Load More', 'surecart')}
+		</sc-button>
 	);
 };

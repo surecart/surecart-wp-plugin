@@ -1,9 +1,10 @@
 import { Component, Element, h, Prop, State } from '@stencil/core';
-import { sprintf, _n, __ } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+
 import apiFetch from '../../../../functions/fetch';
-import { Order } from '../../../../types';
 import { onFirstVisible } from '../../../../functions/lazy';
+import { Checkout, Order } from '../../../../types';
 
 @Component({
   tag: 'sc-orders-list',
@@ -75,7 +76,7 @@ export class ScOrdersList {
   async getOrders() {
     const response = (await await apiFetch({
       path: addQueryArgs(`surecart/v1/orders/`, {
-        expand: ['line_items', 'charge'],
+        expand: ['checkout', 'checkout.line_items', 'checkout.charge'],
         ...this.query,
       }),
       parse: false,
@@ -99,7 +100,8 @@ export class ScOrdersList {
   }
 
   renderStatusBadge(order: Order) {
-    const { status, charge } = order;
+    const { status, checkout } = order;
+    const { charge } = checkout as Checkout;
     if (charge && typeof charge === 'object') {
       if (charge?.fully_refunded) {
         return <sc-tag type="danger">{__('Refunded', 'surecart')}</sc-tag>;
@@ -139,9 +141,18 @@ export class ScOrdersList {
 
   renderList() {
     return this.orders.map(order => {
-      const { line_items, total_amount, currency, charge, created_at, url } = order;
+      const { checkout, created_at, id } = order;
+      const { line_items, total_amount, currency, charge } = checkout as Checkout;
       return (
-        <sc-stacked-list-row href={url} style={{ '--columns': '4' }} mobile-size={500}>
+        <sc-stacked-list-row
+          href={addQueryArgs(window.location.href, {
+            action: 'show',
+            model: 'order',
+            id,
+          })}
+          style={{ '--columns': '4' }}
+          mobile-size={500}
+        >
           <div>
             {typeof charge !== 'string' && (
               <sc-format-date class="order__date" date={(charge?.created_at || created_at) * 1000} month="short" day="numeric" year="numeric"></sc-format-date>

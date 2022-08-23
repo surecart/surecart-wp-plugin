@@ -2,7 +2,7 @@ import { Component, Element, h, Prop, State } from '@stencil/core';
 import { sprintf, __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
-import { Charge, Invoice, Order } from '../../../../types';
+import { Charge, Checkout, Order } from '../../../../types';
 import { onFirstVisible } from '../../../../functions/lazy';
 
 @Component({
@@ -54,7 +54,7 @@ export class ScChargesList {
       this.loading = true;
       const response = (await apiFetch({
         path: addQueryArgs(`surecart/v1/charges/`, {
-          expand: ['order', 'invoice'],
+          expand: ['checkout', 'checkout.order'],
           ...this.query,
         }),
         parse: false,
@@ -75,15 +75,6 @@ export class ScChargesList {
     } finally {
       this.loading = false;
       this.loaded = true;
-    }
-  }
-
-  renderOrderInvoiceNumber(charge: Charge) {
-    if (typeof charge?.order === 'object' && charge.order?.number) {
-      return sprintf(__('Order #%s', 'surecart'), charge.order.number);
-    }
-    if (typeof charge?.invoice === 'object' && charge.invoice?.number) {
-      return sprintf(__('Invoice #%s', 'surecart'), charge.invoice.number);
     }
   }
 
@@ -130,13 +121,22 @@ export class ScChargesList {
 
     return this.charges.map(charge => {
       const { currency, amount, created_at } = charge;
+
       return (
-        <sc-stacked-list-row style={{ '--columns': '4' }} mobile-size={600} href={(charge?.order as Order)?.url || (charge?.invoice as Invoice)?.url}>
+        <sc-stacked-list-row
+          style={{ '--columns': '4' }}
+          mobile-size={600}
+          href={addQueryArgs(window.location.href, {
+            action: 'show',
+            model: 'order',
+            id: ((charge.checkout as Checkout).order as Order)?.id,
+          })}
+        >
           <strong>
             <sc-format-date date={created_at} type="timestamp" month="short" day="numeric" year="numeric"></sc-format-date>
           </strong>
 
-          <sc-text style={{ '--color': 'var(--sc-color-gray-500)' }}>{this.renderOrderInvoiceNumber(charge)}</sc-text>
+          <sc-text style={{ '--color': 'var(--sc-color-gray-500)' }}>{sprintf(__('#%s', 'surecart'), ((charge.checkout as Checkout).order as Order).number)}</sc-text>
 
           <div>{this.renderRefundStatus(charge)}</div>
 

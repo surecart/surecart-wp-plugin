@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-licenses-list renders 1`] = `
+<sc-licenses-list>
+  <mock:shadow-root>
+    <sc-dashboard-module class="purchase" part="base">
+      <span slot="heading">
+        <slot name="heading">
+          License Keys
+        </slot>
+      </span>
+      <sc-card no-padding="">
+        <sc-table>
+          <sc-table-cell slot="head">
+            Key
+          </sc-table-cell>
+          <sc-table-cell slot="head" style="width: 100px;">
+            Status
+          </sc-table-cell>
+          <sc-table-cell slot="head" style="width: 100px;">
+            Activations
+          </sc-table-cell>
+        </sc-table>
+      </sc-card>
+    </sc-dashboard-module>
+  </mock:shadow-root>
+</sc-licenses-list>
+`;

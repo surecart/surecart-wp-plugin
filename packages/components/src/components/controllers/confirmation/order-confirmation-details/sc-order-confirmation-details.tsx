@@ -13,7 +13,7 @@ export class ScOrderConfirmationDetails {
   @Prop() loading: boolean;
 
   renderOrderStatus() {
-    if (this?.order?.status === 'requires_approval') {
+    if (this?.order?.status === 'processing') {
       return <sc-tag type="warning">{__('On Hold', 'surecart')}</sc-tag>;
     }
     return <sc-order-status-badge status={this.order?.status}></sc-order-status-badge>;

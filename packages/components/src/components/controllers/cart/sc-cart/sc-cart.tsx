@@ -1,12 +1,12 @@
 import { Component, Fragment, h, Listen, Prop, State, Watch } from '@stencil/core';
-import apiFetch from '@wordpress/api-fetch';
+import apiFetch from '../../../../functions/fetch';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { Creator, Universe } from 'stencil-wormhole';
 import { baseUrl } from '../../../../services/session';
 import { getOrder, setOrder } from '../../../../store/checkouts';
 import uiStore from '../../../../store/ui';
-import { Order, ResponseError } from '../../../../types';
+import { Checkout, ResponseError } from '../../../../types';
 
 @Component({
   tag: 'sc-cart',
@@ -115,7 +115,7 @@ export class ScCart {
             'tax_identifier',
           ],
         }),
-      })) as Order;
+      })) as Checkout;
       this.setOrder(order);
     } catch (e) {
       console.error(e);

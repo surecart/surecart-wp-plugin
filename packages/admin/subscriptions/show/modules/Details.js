@@ -1,12 +1,11 @@
 /** @jsx jsx */
-
-import { __, sprintf } from '@wordpress/i18n';
-import { css, jsx } from '@emotion/core';
 import { formatTime } from '../../../util/time';
+import { css, jsx } from '@emotion/core';
 import {
 	ScFormatDate,
 	ScSubscriptionStatusBadge,
 } from '@surecart/components-react';
+import { __, sprintf } from '@wordpress/i18n';
 
 export default ({ subscription, customer, product, loading }) => {
 	if (!subscription?.id) {
@@ -81,7 +80,7 @@ export default ({ subscription, customer, product, loading }) => {
 			);
 		}
 		if (
-			subscription.status === 'active' &&
+			['past_due', 'active'].includes(subscription?.status) &&
 			subscription.current_period_end_at
 		) {
 			return (
@@ -125,13 +124,6 @@ export default ({ subscription, customer, product, loading }) => {
 						`}
 					>
 						<h1>{customer?.email} </h1>
-						<p>
-							{!!product &&
-								sprintf(
-									__('for %s', 'surecart'),
-									product?.name
-								)}
-						</p>
 					</div>
 					{sprintf(
 						__('Created on %s', 'surecart'),
@@ -156,26 +148,7 @@ export default ({ subscription, customer, product, loading }) => {
 					margin-bottom: 2em;
 				`}
 			>
-				<div>
-					<div>
-						<strong>{__('Started', 'surecart')}</strong>
-					</div>
-					<ScFormatDate
-						date={subscription.current_period_start_at}
-						type="timestamp"
-						month="long"
-						day="numeric"
-						year="numeric"
-					></ScFormatDate>
-				</div>
-				<div
-					css={css`
-						padding-left: 1em;
-						border-left: 1px solid var(--sc-color-gray-500);
-					`}
-				>
-					{renderStartDate()}
-				</div>
+				{renderStartDate()}
 			</div>
 		</div>
 	);

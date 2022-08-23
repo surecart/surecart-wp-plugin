@@ -1,24 +1,37 @@
 import { __, _n } from '@wordpress/i18n';
 import SubscriptionsDataTable from '../../components/data-tables/subscriptions-data-table';
-import { useEffect } from '@wordpress/element';
-import useCurrentPage from '../../mixins/useCurrentPage';
-import useEntities from '../../mixins/useEntities';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
 
-export default () => {
-	const { id } = useCurrentPage();
-	const { subscriptions, isLoading, pagination, error, fetchSubscriptions } =
-		useEntities('subscription');
-
-	useEffect(() => {
-		id &&
-			fetchSubscriptions({
-				query: {
-					order_ids: [id],
-					context: 'edit',
-					expand: ['price', 'price.product', 'latest_invoice'],
+export default ({ checkoutId }) => {
+	const { subscriptions, loading } = useSelect(
+		(select) => {
+			if (!checkoutId) {
+				return {
+					subscriptions: [],
+					loading: true,
+				};
+			}
+			const entityData = [
+				'surecart',
+				'subscription',
+				{
+					checkout_ids: checkoutId ? [checkoutId] : null,
+					expand: ['price', 'price.product'],
 				},
-			});
-	}, [id]);
+			];
+			return {
+				subscriptions: select(coreStore)?.getEntityRecords?.(
+					...entityData
+				),
+				loading: !select(coreStore)?.hasFinishedResolution?.(
+					'getEntityRecords',
+					[...entityData]
+				),
+			};
+		},
+		[checkoutId]
+	);
 
 	return (
 		<SubscriptionsDataTable
@@ -41,9 +54,7 @@ export default () => {
 				},
 			}}
 			data={subscriptions}
-			isLoading={isLoading}
-			error={error}
-			pagination={pagination}
+			isLoading={loading}
 		/>
 	);
 };

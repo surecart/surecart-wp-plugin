@@ -1,7 +1,10 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { ScProductLineItem } from '@surecart/components-react';
+import {
+	ScProductLineItem,
+	ScStackedListRow,
+} from '@surecart/components-react';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, ToggleControl } from '@wordpress/components';
 import useCartBlockProps from '../../hooks/useCartBlockProps';
@@ -72,7 +75,7 @@ export default ({ attributes, setAttributes }) => {
 						removable={removable}
 						editable={editable}
 						amount={1234}
-						interval={__('every month')}
+						interval={__('every month', 'surecart')}
 						currency={scData?.currency || 'usd'}
 						imageUrl="https://source.unsplash.com/daily"
 						name={__('Example Product', 'surecart')}

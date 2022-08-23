@@ -1,18 +1,18 @@
 /** @jsx jsx */
-import { __, _n } from '@wordpress/i18n';
+import OverlayLabel from '../../../components/OverlayLabel';
 import { css, jsx } from '@emotion/core';
+import {
+	ScSubscriptionDetails,
+	ScDashboardModule,
+} from '@surecart/components-react';
 import {
 	InspectorControls,
 	RichText,
 	useBlockProps,
 } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl, SelectControl } from '@wordpress/components';
-import {
-	ScSubscriptionDetails,
-	ScDashboardModule,
-} from '@surecart/components-react';
 import { Fragment } from '@wordpress/element';
-import OverlayLabel from '../../../components/OverlayLabel';
+import { __, _n } from '@wordpress/i18n';
 
 export default ({ attributes, setAttributes }) => {
 	const { title, theme } = attributes;
@@ -73,7 +73,7 @@ export default ({ attributes, setAttributes }) => {
 									status: 'active',
 									current_period_end_at:
 										oneYearFromNow.getTime() / 1000,
-									latest_invoice: {
+									current_period: {
 										total_amount: 2000,
 										currency: scBlockData?.currency,
 									},
@@ -98,7 +98,7 @@ export default ({ attributes, setAttributes }) => {
 									status: 'trialing',
 									trial_end_at:
 										oneYearFromNow.getTime() / 1000,
-									latest_invoice: {
+									current_period: {
 										total_amount: 2000,
 										currency: scBlockData?.currency,
 									},

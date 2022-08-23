@@ -1,28 +1,33 @@
+import ModelParameter from './ModelParameter';
 import docsJSON from './open-api.json';
-import styles from './styles/styles.module.css';
-import Link from '@docusaurus/Link';
 import Translate from '@docusaurus/Translate';
 import React from 'react';
-import ModelParameter from './ModelParameter';
 
-export default ( { path, method } ) => {
-	const item = docsJSON.paths?.[ '/api/v1/' + path ]?.[ method ];
+export default ({ path, method }) => {
+	const item = docsJSON.paths?.['/v1/' + path]?.[method];
 
-  const renderParameters = () => {
-    if (!item?.parameters) return;
-    return (item.parameters || []).map((parameter) => {
-      return <ModelParameter path={parameter.$ref} key={parameter.$ref} />;
-    });
-  }
+	const renderParameters = () => {
+		if (!item?.parameters) return;
+		return (item.parameters || []).map((parameter) => {
+			return (
+				<ModelParameter path={parameter.$ref} key={parameter.$ref} />
+			);
+		});
+	};
 
-	return 	(<div>
-    <h1>
-      <Translate id="component.properties"	description="Properties Title">
-			  {item.summary}
-			</Translate>
-    </h1>
+	return (
+		<div>
+			<h1>
+				<Translate
+					id="component.properties"
+					description="Properties Title"
+				>
+					{item.summary}
+				</Translate>
+			</h1>
 
-    <h2>Where Parameters</h2>
-    {renderParameters()}
-  </div>);
+			<h2>Where Parameters</h2>
+			{renderParameters()}
+		</div>
+	);
 };

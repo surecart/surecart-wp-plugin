@@ -1,19 +1,3 @@
-.sc-toast-stack {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: var(--sc-z-index-toast);
-  width: 28em;
-  max-width: 100%;
-  max-height: 100%;
-  overflow: auto;
-}
-
-.sc-toast-stack sc-alert {
-  --box-shadow: var(--sc-shadow-large);
-  margin: var(--sc-spacing-medium);
-}
-
 sc-button-group:not([separate]) > sc-button:first-child::part(base),
 sc-button-group:not([separate]) > sc-dropdown:first-child > sc-button[slot='trigger']::part(base),
 sc-button-group:not([separate]) > sc-tooltip:first-child > sc-button::part(base) {
