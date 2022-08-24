@@ -274,7 +274,7 @@ export class ScUpcomingInvoice {
         {!!checkout.tax_amount && (
           <sc-line-item>
             <span slot="description">{checkout?.tax_label || __('Tax', 'surecart')}</span>
-            <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={-checkout?.tax_amount}></sc-format-number>
+            <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={checkout?.tax_amount}></sc-format-number>
           </sc-line-item>
         )}
 
