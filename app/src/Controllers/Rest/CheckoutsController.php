@@ -5,7 +5,6 @@ namespace SureCart\Controllers\Rest;
 use SureCart\Models\Checkout;
 use SureCart\Models\Form;
 use SureCart\Models\User;
-use SureCart\Support\Encryption;
 use SureCart\WordPress\Users\CustomerLinkService;
 
 /**
@@ -221,7 +220,7 @@ class CheckoutsController extends RestController {
 		$password_hash = get_transient( 'sc_checkout_password_hash_' . $checkout->id );
 		// delete transient.
 		delete_transient( 'sc_checkout_password_hash_' . $checkout->id );
-
+		// link customer.
 		$service = new CustomerLinkService( $checkout, $password_hash );
 		return $service->link();
 	}
