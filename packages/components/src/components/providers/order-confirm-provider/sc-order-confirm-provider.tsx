@@ -1,9 +1,8 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { addQueryArgs, getQueryArg, removeQueryArgs } from '@wordpress/url';
+import { addQueryArgs } from '@wordpress/url';
 
 import apiFetch from '../../../functions/fetch';
-import { parseFormData } from '../../../functions/form-data';
 import { expand } from '../../../services/session';
 import { clearOrder } from '../../../store/checkouts';
 import { Order } from '../../../types';
@@ -46,31 +45,12 @@ export class ScOrderConfirmProvider {
     this.confirmOrder();
   }
 
-  componentDidLoad() {
-    this.checkRedirectParams();
-  }
-
-  checkRedirectParams() {
-    const status = getQueryArg(window.location.href, 'redirect_status');
-    if (status === 'succeeded') {
-      // paid state.
-      this.scSetState.emit('PAID');
-      // so the back button does not re-confirm.
-      window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'redirect_status'));
-      // confirm order
-      this.confirmOrder();
-    }
-  }
-
   /** Confirm the order. */
   async confirmOrder() {
-    const json = await this.el.querySelector('sc-form').getFormJson();
-    let data = parseFormData(json);
     try {
       const confirmed = (await apiFetch({
         method: 'PATCH',
         path: addQueryArgs(`surecart/v1/checkouts/${this.order?.id}/confirm`, [expand]),
-        data,
       })) as Order;
       this.scSetState.emit('CONFIRMED');
       // emit the order paid event for tracking scripts.

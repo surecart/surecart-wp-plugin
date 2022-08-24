@@ -70,7 +70,7 @@
 .dialog__body {
   flex: 1 1 auto;
   padding: var(--body-spacing);
-  overflow: auto;
+  overflow: var(--dialog-body-overflow, auto);
   -webkit-overflow-scrolling: touch;
 }
 .dialog__footer {

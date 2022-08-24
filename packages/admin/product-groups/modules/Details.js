@@ -27,7 +27,7 @@ export default ({ id, productGroup, updateProductGroup, loading }) => {
 					className="sc-product-name hydrated"
 					help={__('A name for your product group.', 'surecart')}
 					value={productGroup?.name}
-					onScChange={(e) => {
+					onScInput={(e) => {
 						updateProductGroup({ name: e.target.value });
 					}}
 					name="name"
