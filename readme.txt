@@ -243,14 +243,14 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.1.4 - August 18, 2022 =
+= 1.1.4 - August 20, 2022 =
 * Improvement: Add default template to order confirmation block.
 * Improvement: Make price choice block appender button full-width.
 * Improvement: Center PayPal button for wider forms.
 * Fix: Issue with un-archiving prices.
 * Fix: Permissions issue with querying order downloads on customer portal.
 
-= 1.1.3 - August 17, 2022 =
+= 1.1.3 - August 18, 2022 =
 * Improvement: Ability to select default credit card or paypal with PayPal only processor.
 * Improvement: Better preview of PayPal only processors on form edit screen.
 * Improvement: Add additional css variables for cart icon customizations.
