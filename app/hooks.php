@@ -30,3 +30,18 @@ add_filter(
 		return $url;
 	}
 );
+
+// Theme option (dark/light) apply on HTML tag.
+add_filter(
+	'language_attributes',
+	function( $output, $doctype ) {
+		if ( 'html' !== $doctype ) {
+			return $output;
+		}
+		$output .= ' class="surecart-theme-' . get_option( 'surecart-theme-data', 'surecart-theme-light' ) . '"';
+	
+		return $output;
+	},
+	10,
+	2
+);

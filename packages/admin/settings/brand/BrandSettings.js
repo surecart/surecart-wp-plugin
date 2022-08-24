@@ -2,6 +2,8 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { store as preferencesStore } from '@wordpress/preferences';
 import {
 	ScAddress,
 	ScFormControl,
@@ -24,6 +26,10 @@ export default () => {
 		'store',
 		'brand'
 	);
+	const { set } = useDispatch(preferencesStore);
+	const scThemeData = useSelect((select) =>
+		select(preferencesStore).get('surecart/themedata', 'scThemeData')
+	);
 
 	/**
 	 * Form is submitted.
@@ -38,6 +44,15 @@ export default () => {
 			console.error(e);
 			setError(e);
 		}
+	};
+
+	const setSelectTheme = ( e ) => {
+		let scTheme = 'light';
+		if ( 'dark' === e.target.value ) {
+			scTheme = 'dark';
+		}
+		editItem({ site_theme: scTheme });
+		set( 'surecart/themedata', 'scThemeData', scTheme );
 	};
 
 	const choices = [
@@ -120,14 +135,11 @@ export default () => {
 							</ScInput>
 						</div>
 					</ScFormControl>
-
 						<ScSelect
 							label={__('Select Theme', 'surecart')}
 							placeholder={__('Select Theme', 'surecart')}
-							value={item?.site_theme}
-							onScChange={(e) =>
-								editItem({ site_theme: e.target.value })
-							}
+							value={scThemeData}
+							onScChange={setSelectTheme}
 							choices={choices}
 							required
 						></ScSelect>

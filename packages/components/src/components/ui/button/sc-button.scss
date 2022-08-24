@@ -400,7 +400,7 @@
   background-color: transparent;
   border-color: transparent;
   box-shadow: none;
-  color: var(--primary-background);
+  color: var(--sc-button-link-color, var(--primary-background));
   transition: opacity var(--sc-transition-fast) ease;
 
   &.button--has-label {

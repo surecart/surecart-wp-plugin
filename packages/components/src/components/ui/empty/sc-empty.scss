@@ -9,10 +9,10 @@
   padding: var(--sc-spacing-large);
   text-align: center;
   gap: var(--sc-spacing-x-small);
-  color: var(--sc-color-gray-500);
+  color: var(--sc-empty-color, var(--sc-color-gray-500));
 
   sc-icon {
     font-size: var(--sc-font-size-xx-large);
-    color: var(--sc-color-gray-700);
+    color: var(--sc-empty-icon-color, var(--sc-color-gray-700));
   }
 }

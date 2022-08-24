@@ -27,6 +27,9 @@ class BrandController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function edit( \WP_REST_Request $request ) {
+		if ( isset( $request->get_params()['site_theme'] ) ) {
+			update_option( 'surecart-theme-data', $request->get_params()['site_theme'] );
+		}
 		return Brand::with( [ 'address' ] )->update( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
 	}
 
