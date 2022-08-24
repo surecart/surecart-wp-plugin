@@ -3,7 +3,6 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
 import apiFetch from '../../../functions/fetch';
-import { parseFormData } from '../../../functions/form-data';
 import { expand } from '../../../services/session';
 import { clearOrder } from '../../../store/checkouts';
 import { Order } from '../../../types';
@@ -48,13 +47,10 @@ export class ScOrderConfirmProvider {
 
   /** Confirm the order. */
   async confirmOrder() {
-    const json = await this.el.querySelector('sc-form').getFormJson();
-    let data = parseFormData(json);
     try {
       const confirmed = (await apiFetch({
         method: 'PATCH',
         path: addQueryArgs(`surecart/v1/checkouts/${this.order?.id}/confirm`, [expand]),
-        data,
       })) as Order;
       this.scSetState.emit('CONFIRMED');
       // emit the order paid event for tracking scripts.
