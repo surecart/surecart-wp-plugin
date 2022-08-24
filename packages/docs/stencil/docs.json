@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-08-22T22:00:26",
+  "timestamp": "2022-08-22T22:54:42",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -21247,7 +21247,7 @@
           "mutable": false,
           "attr": "country",
           "reflectToAttr": false,
-          "docs": "Label for the field.",
+          "docs": "The country code.",
           "docsTags": [],
           "values": [
             {
