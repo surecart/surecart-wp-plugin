@@ -15,7 +15,7 @@ class ChargeController extends BaseController {
 
 		<sc-spacing style="--spacing: var(--sc-spacing-large)">
 			<sc-breadcrumbs>
-				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
+				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>">
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</sc-breadcrumb>
 				<sc-breadcrumb>

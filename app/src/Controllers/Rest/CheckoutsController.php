@@ -32,7 +32,26 @@ class CheckoutsController extends RestController {
 			return $class;
 		}
 		$class = $this->maybeSetUser( $class, $request );
+
 		return $class;
+	}
+
+	/**
+	 * Edit model.
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function edit( \WP_REST_Request $request ) {
+		// if we have a password, hash it and set it in a transient.
+		// we need to do this because some processors will redirect and we will lose this form data.
+		if ( ! empty( $request->get_param( 'password' ) ) ) {
+			set_transient( 'sc_checkout_password_hash_' . $request['id'], wp_hash_password( $request->get_param( 'password' ) ), DAY_IN_SECONDS );
+		}
+
+		// edit the checkout.
+		return parent::edit( $request );
 	}
 
 	/**
@@ -112,7 +131,7 @@ class CheckoutsController extends RestController {
 	public function finalize( \WP_REST_Request $request ) {
 		$args = $request->get_params();
 
-		// allow 3rd party validations on fields.
+		// validate form fields and password input.
 		$errors = $this->validate( $args, $request );
 
 		// return early if errors.
@@ -120,20 +139,15 @@ class CheckoutsController extends RestController {
 			return $errors;
 		}
 
+		// finalize the order.
 		$checkout  = new $this->class( [ 'id' => $request['id'] ] );
 		$finalized = $checkout->setProcessor( $request['processor_type'] )
 			->where( $request->get_query_params() )
-			->finalize( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
+			->finalize( $request->get_body_params() );
 
 		// bail if error.
 		if ( is_wp_error( $finalized ) ) {
 			return $finalized;
-		}
-
-		// the order is paid (probably because of a coupon). Link the customer.
-		$linked = $this->maybeLinkCustomer( $finalized, $request );
-		if ( is_wp_error( $linked ) ) {
-			return $linked;
 		}
 
 		// return the order.
@@ -141,25 +155,10 @@ class CheckoutsController extends RestController {
 	}
 
 	/**
-	 * Link the customer if the order status is paid only.
-	 *
-	 * @param \SureCart\Models\Checkout $checkout
-	 * @param \WP_REST_Request          $request
-	 *
-	 * @return \SureCart\Models\Checkout|\WP_Error
-	 */
-	public function maybeLinkCustomer( $checkout, $request ) {
-		if ( 'paid' !== $checkout->status ) {
-			return false;
-		}
-		return $this->linkCustomerId( $checkout, $request );
-	}
-
-	/**
 	 * Confirm an order.
 	 *
-	 * This force-fetches the order from the API and
-	 * creates/syncs a WordPress user account if paid.
+	 * This force-fetches the order from the API, runs any automations
+	 * and creates the user account tied to the customer.
 	 *
 	 * @param \WP_REST_Request $request  Rest Request.
 	 *
@@ -174,7 +173,7 @@ class CheckoutsController extends RestController {
 		$checkout = $checkout->where(
 			array_merge(
 				$request->get_query_params(),
-				[ 'refresh_status' => true ] // Important: This will force syncing with the processor.
+				[ 'refresh_status' => true ] // Important: Do not remove. This will force syncing with the processor.
 			)
 		)->with(
 			[
@@ -182,12 +181,13 @@ class CheckoutsController extends RestController {
 			]
 		)->find( $request['id'] );
 
+		// bail if error.
 		if ( is_wp_error( $checkout ) ) {
 			return $checkout;
 		}
 
-		// link the customer id to the user.
-		$linked = $this->maybeLinkCustomer( $checkout, $request );
+		// Create a user account for the customer.
+		$linked = $this->linkCustomerId( $checkout );
 		if ( is_wp_error( $linked ) ) {
 			return $linked;
 		}
@@ -213,11 +213,15 @@ class CheckoutsController extends RestController {
 	 * Link the customer id to the order.
 	 *
 	 * @param \SureCart\Models\Checkout $checkout Checkout model.
-	 * @param \WP_REST_Request          $request Request object.
 	 * @return \WP_User|\WP_Error
 	 */
-	public function linkCustomerId( $checkout, $request ) {
-		$service = new CustomerLinkService( $checkout, $request->get_param( 'password' ) );
+	public function linkCustomerId( $checkout ) {
+		// get transient.
+		$password_hash = get_transient( 'sc_checkout_password_hash_' . $checkout->id );
+		// delete transient.
+		delete_transient( 'sc_checkout_password_hash_' . $checkout->id );
+		// link customer.
+		$service = new CustomerLinkService( $checkout, $password_hash );
 		return $service->link();
 	}
 

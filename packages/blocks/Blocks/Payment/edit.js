@@ -78,8 +78,6 @@ export default ({ className, attributes, setAttributes, context }) => {
 		);
 	}, [mode]);
 
-	const options = processorOptions();
-
 	const stripeProcessor = (scBlockData?.processors || []).find(
 		(processor) =>
 			processor?.live_mode === false &&
@@ -172,6 +170,7 @@ export default ({ className, attributes, setAttributes, context }) => {
 							</ScTag>
 						)}
 					</div>
+
 					<ScToggles collapsible={false} theme="container">
 						{hasProcessor('stripe') && (
 							<ScToggle
@@ -281,49 +280,54 @@ export default ({ className, attributes, setAttributes, context }) => {
 							</ScToggle>
 						)}
 
-						<ScToggle
-							class="sc-paypal-toggle"
-							show-control
-							shady
-							borderless
-							open={processor === 'paypal'}
-							onScShow={() => setProcessor('paypal')}
-						>
-							<span
-								slot="summary"
-								css={css`
-									line-height: 1;
-									display: flex;
-									align-items: center;
-									gap: 0.5em;
-								`}
+						{hasProcessor('paypal') && (
+							<ScToggle
+								class="sc-paypal-toggle"
+								show-control
+								shady
+								borderless
+								open={processor === 'paypal'}
+								onScShow={() => setProcessor('paypal')}
 							>
-								<ScIcon
-									name="paypal"
-									style={{ width: '80px', fontSize: '24px' }}
-								></ScIcon>
-							</span>
-
-							<ScCard>
-								<ScPaymentSelected
-									label={__(
-										'PayPal selected for check out.',
-										'surecart'
-									)}
+								<span
+									slot="summary"
+									css={css`
+										line-height: 1;
+										display: flex;
+										align-items: center;
+										gap: 0.5em;
+									`}
 								>
 									<ScIcon
-										slot="icon"
 										name="paypal"
-										style={{ width: '80px' }}
-									/>
+										style={{
+											width: '80px',
+											fontSize: '24px',
+										}}
+									></ScIcon>
+								</span>
 
-									{__(
-										'Another step will appear after submitting your order to complete your purchase details.',
-										'surecart'
-									)}
-								</ScPaymentSelected>
-							</ScCard>
-						</ScToggle>
+								<ScCard>
+									<ScPaymentSelected
+										label={__(
+											'PayPal selected for check out.',
+											'surecart'
+										)}
+									>
+										<ScIcon
+											slot="icon"
+											name="paypal"
+											style={{ width: '80px' }}
+										/>
+
+										{__(
+											'Another step will appear after submitting your order to complete your purchase details.',
+											'surecart'
+										)}
+									</ScPaymentSelected>
+								</ScCard>
+							</ScToggle>
+						)}
 					</ScToggles>
 				</ScFormControl>
 			)}

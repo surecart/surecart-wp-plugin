@@ -8,7 +8,7 @@ import { zones, getType } from '../../../functions/tax';
   shadow: true,
 })
 export class ScTaxIdInput {
-  /** Label for the field. */
+  /** The country code. */
   @Prop() country: string;
 
   /** Force show the field. */
@@ -68,6 +68,13 @@ export class ScTaxIdInput {
           label={zones?.[this?.type || 'other']?.label}
           name="tax_identifier.number"
           value={this.number}
+          onScInput={(e: any) => {
+            e.stopImmediatePropagation();
+            this.scInput.emit({
+              number: e.target.value,
+              number_type: this.type || 'other',
+            });
+          }}
           onScChange={(e: any) => {
             e.stopImmediatePropagation();
             this.scChange.emit({
@@ -86,6 +93,10 @@ export class ScTaxIdInput {
               {Object.keys(zones || {}).map(name => (
                 <sc-menu-item
                   onClick={() => {
+                    this.scInput.emit({
+                      number: this.number,
+                      number_type: name,
+                    });
                     this.scChange.emit({
                       number: this.number,
                       number_type: name,

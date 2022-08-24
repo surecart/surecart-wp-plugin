@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCart\WordPress;
+namespace SureCart\WordPress\Shortcodes;
 
 use SureCartBlocks\Blocks\AddToCartButton\Block as AddtoCartBlock;
 use SureCartBlocks\Blocks\BuyButton\Block as BuyButtonBlock;
@@ -17,7 +17,9 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		// Nothing to register.
+		$container['surecart.shortcodes'] = function () {
+			return new ShortcodesService();
+		};
 	}
 
 	/**
@@ -31,6 +33,97 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		add_shortcode( 'sc_form', [ $this, 'formShortcode' ] );
 		add_shortcode( 'sc_add_to_cart_button', [ $this, 'addToCartShortcode' ], 10, 2 );
 		add_shortcode( 'sc_buy_button', [ $this, 'buyButtonShortcode' ], 10, 2 );
+		add_shortcode( 'sc_customer_dashboard', [ $this, 'dashboardShortcode' ] );
+
+		// buttons.
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_customer_dashboard_button',
+			\SureCartBlocks\Blocks\CustomerDashboardButton\Block::class,
+			[
+				'show_icon' => true,
+				'type'      => 'primary',
+				'size'      => 'medium',
+			]
+		);
+
+		// dashboard.
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_customer_orders',
+			\SureCartBlocks\Blocks\Dashboard\CustomerOrders\Block::class,
+			[ 'title' => '' ]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_customer_billing_details',
+			\SureCartBlocks\Blocks\Dashboard\CustomerBillingDetails\Block::class,
+			[ 'title' => '' ]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_customer_charges',
+			\SureCartBlocks\Blocks\Dashboard\CustomerCharges\Block::class,
+			[ 'title' => '' ]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_customer_payment_methods',
+			\SureCartBlocks\Blocks\Dashboard\CustomerPaymentMethods\Block::class,
+			[ 'title' => '' ]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_customer_subscriptions',
+			\SureCartBlocks\Blocks\Dashboard\CustomerSubscriptions\Block::class,
+			[ 'title' => '' ]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_customer_downloads',
+			\SureCartBlocks\Blocks\Dashboard\CustomerDownloads\Block::class,
+			[ 'title' => '' ]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_customer_wordpress_account',
+			\SureCartBlocks\Blocks\Dashboard\WordPressAccount\Block::class,
+			[ 'title' => '' ]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_customer_dashboard_page',
+			\SureCartBlocks\Blocks\Dashboard\DashboardPage\Block::class,
+			[ 'name' => '' ]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_customer_dashboard_tab',
+			\SureCartBlocks\Blocks\Dashboard\DashboardTab\Block::class,
+			[
+				'icon'  => 'shopping-bag',
+				'panel' => '',
+				'title' => 'test',
+			]
+		);
+
+		// confirmation.
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_order_confirmation',
+			\SureCartBlocks\Blocks\Confirmation\Block::class,
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_order_confirmation_line_items',
+			\SureCartBlocks\Blocks\OrderConfirmationLineItems\Block::class,
+		);
+
+	}
+
+	/**
+	 * Dashboard tab shortcode.
+	 *
+	 * @param  array  $attributes Shortcode attributes.
+	 * @param  string $content Shortcode content.
+	 * @return string Shortcode output.
+	 */
+	public function dashboardShortcode( $attributes, $content ) {
+		$attributes = shortcode_atts(
+			[],
+			$attributes,
+			'sc_customer_dashboard'
+		);
+
+		return '<sc-tab-group style="font-size:16px;font-family:var(--sc-font-sans)" class="wp-block-surecart-customer-dashboard alignwide">' . ( new \SureCartBlocks\Blocks\Dashboard\CustomerDashboard\Block() )->render( $attributes, $content ) . '</sc-tab-group>';
 	}
 
 	/**
@@ -89,9 +182,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			'sc_add_to_cart_button'
 		);
 
-		$block = new AddToCartBlock();
-
-		return $block->render( $atts );
+		return( new AddToCartBlock() )->render( $atts );
 	}
 
 	/**
@@ -159,5 +250,16 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		}
 
 		return $items;
+	}
+
+	protected function convertToBlock( $name, $block, $defaults = [], $atts = [], $content = '' ) {
+		return( new $block() )->render(
+			shortcode_atts(
+				$defaults,
+				$atts,
+				$name
+			),
+			$content
+		);
 	}
 }

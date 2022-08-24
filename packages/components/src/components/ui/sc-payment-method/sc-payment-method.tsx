@@ -33,9 +33,10 @@ export class ScPaymentMethod {
     }
 
     if ((this?.paymentMethod?.payment_instrument as PaymentInstrument)?.instrument_type) {
+      const type = (this?.paymentMethod?.payment_instrument as PaymentInstrument)?.instrument_type;
       return (
         <sc-tag type="info" pill>
-          <span style={{ textTransform: 'capitalize' }}>{(this?.paymentMethod?.payment_instrument as PaymentInstrument)?.instrument_type} </span>
+          <span style={{ textTransform: 'capitalize' }}>{type} </span>
         </sc-tag>
       );
     }

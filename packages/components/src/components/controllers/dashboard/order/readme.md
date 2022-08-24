@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property  | Attribute  | Description | Type     | Default     |
-| --------- | ---------- | ----------- | -------- | ----------- |
-| `heading` | `heading`  |             | `string` | `undefined` |
-| `orderId` | `order-id` |             | `string` | `undefined` |
+| Property      | Attribute  | Description | Type       | Default     |
+| ------------- | ---------- | ----------- | ---------- | ----------- |
+| `customerIds` | --         |             | `string[]` | `undefined` |
+| `heading`     | `heading`  |             | `string`   | `undefined` |
+| `orderId`     | `order-id` |             | `string`   | `undefined` |
 
 
 ## Dependencies

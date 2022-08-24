@@ -14,11 +14,11 @@ export default ({ region, item, editItem, loading }) => {
 				loading={loading}
 			>
 				<ScSwitch
-					checked={item?.eu_tax_enabled}
+					checked={item?.ca_tax_enabled}
 					onClick={(e) => {
 						e.preventDefault();
 						editItem({
-							eu_tax_enabled: !item?.eu_tax_enabled,
+							ca_tax_enabled: !item?.ca_tax_enabled,
 						});
 					}}
 				>
@@ -31,7 +31,7 @@ export default ({ region, item, editItem, loading }) => {
 					</span>
 				</ScSwitch>
 
-				{!!item?.eu_tax_enabled && (
+				{!!item?.ca_tax_enabled && (
 					<ScTaxIdInput
 						country={item?.ca_tax_identifier?.type || region}
 						number={item?.ca_tax_identifier?.number}
@@ -39,14 +39,9 @@ export default ({ region, item, editItem, loading }) => {
 							"In applicable tax jurisdictions, your tax ID will show on invoices. If you don't have your tax ID number yet, you can enter it later.",
 							'surecart'
 						)}
-						onScInputNumber={(e) => {
-							editItem({
-								ca_tax_identifier: {
-									...item?.ca_tax_identifier,
-									number: e.detail,
-								},
-							});
-						}}
+						onScInput={(e) =>
+							editItem({ ca_tax_identifier: e.detail })
+						}
 					/>
 				)}
 			</SettingsBox>
@@ -110,14 +105,9 @@ export default ({ region, item, editItem, loading }) => {
 							"In applicable tax jurisdictions, your tax ID will show on invoices. If you don't have your tax ID number yet, you can enter it later.",
 							'surecart'
 						)}
-						onScInputNumber={(e) => {
-							editItem({
-								eu_tax_identifier: {
-									...item?.eu_tax_identifier,
-									number: e.detail,
-								},
-							});
-						}}
+						onScInput={(e) =>
+							editItem({ eu_tax_identifier: e.detail })
+						}
 					/>
 				)}
 			</SettingsBox>

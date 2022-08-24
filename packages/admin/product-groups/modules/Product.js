@@ -1,35 +1,51 @@
 /** @jsx jsx */
 import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
-import { useDispatch, useSelect } from '@wordpress/data';
-import { store } from '../../store/data';
 import { intervalString } from '../../util/translations';
-import { ScButton } from '@surecart/components-react';
+import {
+	ScButton,
+	ScCard,
+	ScFlex,
+	ScSkeleton,
+	ScText,
+} from '@surecart/components-react';
+import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
+import { useDispatch, useSelect } from '@wordpress/data';
 
 export default ({ product }) => {
-	const prices = useSelect((select) =>
-		select(store)
-			.selectCollection('price')
-			.filter((price) => price.product === product.id)
+	const { createSuccessNotice } = useDispatch(noticesStore);
+	const { saveEntityRecord } = useDispatch(coreStore);
+	const savingProduct = useSelect((select) =>
+		select(coreStore).isSavingEntityRecord(
+			'surecart',
+			'product',
+			product?.id
+		)
 	);
-	const { updateModel } = useDispatch(store);
 
-	const onRemove = () => {
-		updateModel('product', product.id, { product_group: null });
+	const onRemove = async () => {
+		await saveEntityRecord('surecart', 'product', {
+			id: product?.id,
+			product_group: null,
+		});
+		createSuccessNotice(__('Product removed.', 'surecart'), {
+			type: 'snackbar',
+		});
 	};
 
 	return (
-		<sc-card>
-			<sc-flex>
+		<ScCard>
+			<ScFlex>
 				<div>
-					<sc-text
+					<ScText
 						style={{
 							'--font-size': 'var(--sc-font-size-large)',
 						}}
 					>
 						{product?.name}
-					</sc-text>
-					{(prices || []).map((price) => {
+					</ScText>
+					{(product?.prices?.data || []).map((price) => {
 						return (
 							<div
 								css={css`
@@ -50,11 +66,15 @@ export default ({ product }) => {
 					})}
 				</div>
 				<div>
-					<ScButton size="small" onClick={onRemove}>
+					<ScButton
+						size="small"
+						onClick={onRemove}
+						busy={savingProduct}
+					>
 						{__('Remove', 'surecart')}
 					</ScButton>
 				</div>
-			</sc-flex>
-		</sc-card>
+			</ScFlex>
+		</ScCard>
 	);
 };
