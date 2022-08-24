@@ -45,12 +45,13 @@ class CheckoutsController extends RestController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function edit( \WP_REST_Request $request ) {
-		// encrypt password before setting in order.
+		// if we have a password, hash it and set it in a transient.
+		// we need to do this because some processors will redirect and we will lose this form data.
 		if ( ! empty( $request->get_param( 'password' ) ) ) {
-			$metadata = (array) $request->get_param( 'metadata' );
-			$request->set_param( 'metadata', array_merge( $metadata, [ 'password_hash' => wp_hash_password( $request->get_param( 'password' ) ) ] ) );
+			set_transient( 'sc_checkout_password_hash_' . $request['id'], wp_hash_password( $request->get_param( 'password' ) ), DAY_IN_SECONDS );
 		}
 
+		// edit the checkout.
 		return parent::edit( $request );
 	}
 
@@ -216,8 +217,12 @@ class CheckoutsController extends RestController {
 	 * @return \WP_User|\WP_Error
 	 */
 	public function linkCustomerId( $checkout ) {
-		$password = ! empty( $checkout->metadata->password_hash ) ? $checkout->metadata->password_hash : '';
-		$service  = new CustomerLinkService( $checkout, $password );
+		// get transient.
+		$password_hash = get_transient( 'sc_checkout_password_hash_' . $checkout->id );
+		// delete transient.
+		delete_transient( 'sc_checkout_password_hash_' . $checkout->id );
+
+		$service = new CustomerLinkService( $checkout, $password_hash );
 		return $service->link();
 	}
 
