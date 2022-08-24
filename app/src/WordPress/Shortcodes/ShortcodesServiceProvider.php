@@ -75,8 +75,9 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			[ 'title' => '' ]
 		);
 		$container['surecart.shortcodes']->registerBlockShortcode(
-			'sc_order_downloads',
-			\SureCartBlocks\Blocks\Dashboard\OrderDownloads\Block::class,
+			'sc_customer_downloads',
+			\SureCartBlocks\Blocks\Dashboard\CustomerDownloads\Block::class,
+			[ 'title' => '' ]
 		);
 		$container['surecart.shortcodes']->registerBlockShortcode(
 			'sc_customer_wordpress_account',
