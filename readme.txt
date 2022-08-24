@@ -243,6 +243,13 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.1.5 - August 22, 2022 =
+* Improvement: Support additional Stripe payment methods (Bank Transfer, iDEAL, SEPA Klarna, etc.)
+* Improvment: Support for LearnDash groups.
+* Improvement: Dashboard and confirmation page shortcodes to be customizable with other page builders.
+* Fix: Tax ID not able to be entered on Merchant Tax Screen.
+* Fix: Issue with tax amount being displayed incorrectly as negative on subscription upgrade page.
+
 = 1.1.4 - August 20, 2022 =
 * Improvement: Add default template to order confirmation block.
 * Improvement: Make price choice block appender button full-width.
