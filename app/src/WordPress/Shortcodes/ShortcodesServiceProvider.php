@@ -66,10 +66,6 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			[ 'title' => '' ]
 		);
 		$container['surecart.shortcodes']->registerBlockShortcode(
-			'sc_customer_shipping_address',
-			\SureCartBlocks\Blocks\Dashboard\CustomerShippingAddress\Block::class,
-		);
-		$container['surecart.shortcodes']->registerBlockShortcode(
 			'sc_customer_subscriptions',
 			\SureCartBlocks\Blocks\Dashboard\CustomerSubscriptions\Block::class,
 			[ 'title' => '' ]
