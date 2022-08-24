@@ -13,7 +13,7 @@ class CustomerLinkService {
 	 *
 	 * @var string
 	 */
-	protected $password = '';
+	protected $password_hash = '';
 
 	/**
 	 * Holds the model for the link.
@@ -26,11 +26,11 @@ class CustomerLinkService {
 	 * Get things going.
 	 *
 	 * @param \SureCart\Models\Checkout $checkout Model for the link.
-	 * @param string                    $password The password.
+	 * @param string                    $password_hash The password.
 	 */
-	public function __construct( \SureCart\Models\Checkout $checkout, $password = '' ) {
-		$this->checkout = $checkout;
-		$this->password = $password;
+	public function __construct( \SureCart\Models\Checkout $checkout, $password_hash = '' ) {
+		$this->checkout      = $checkout;
+		$this->password_hash = $password_hash;
 	}
 
 	/**
@@ -92,18 +92,35 @@ class CustomerLinkService {
 	 * @return \SureCart\Models\User|\WP_Error
 	 */
 	protected function linkNewUser() {
+		global $wpdb;
+
 		// if no user, create one with a password if provided.
 		$created = User::create(
 			[
-				'user_name'     => ! empty( $this->checkout->name ) ? $this->checkout->name : $this->checkout->email,
-				'user_email'    => $this->checkout->email,
-				'user_password' => $this->password,
+				'user_name'  => ! empty( $this->checkout->name ) ? $this->checkout->name : $this->checkout->email,
+				'user_email' => $this->checkout->email,
 			]
 		);
 
 		// bail if error.
 		if ( is_wp_error( $created ) ) {
 			return $created;
+		}
+
+		// update the user's password hash if set.
+		if ( $this->password_hash ) {
+			$wpdb->update(
+				$wpdb->users,
+				array(
+					'user_pass'           => $this->password_hash,
+					'user_activation_key' => '',
+				),
+				array( 'ID' => $created->ID )
+			);
+			clean_user_cache( $created->ID );
+		} else {
+			// add to the user account that they have a generated password.
+			update_user_meta( $created->ID, 'sc_generated_password', true );
 		}
 
 		// get the mode string.
