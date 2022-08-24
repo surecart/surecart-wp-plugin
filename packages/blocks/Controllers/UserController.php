@@ -29,7 +29,7 @@ class UserController extends BaseController {
 			->id( 'wordpress-user-edit' )
 			->with(
 				[
-					'heading' => __( 'Account Details', 'surecart' ),
+					'heading' => $attributes['title'] ?? __( 'Account Details', 'surecart' ),
 					'user'    => [
 						'display_name' => $user->display_name,
 						'email'        => $user->user_email,

@@ -55,10 +55,12 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		$container['surecart.shortcodes']->registerBlockShortcode(
 			'sc_customer_billing_details',
 			\SureCartBlocks\Blocks\Dashboard\CustomerBillingDetails\Block::class,
+			[ 'title' => '' ]
 		);
 		$container['surecart.shortcodes']->registerBlockShortcode(
 			'sc_customer_charges',
 			\SureCartBlocks\Blocks\Dashboard\CustomerCharges\Block::class,
+			[ 'title' => '' ]
 		);
 		$container['surecart.shortcodes']->registerBlockShortcode(
 			'sc_customer_payment_methods',
@@ -78,6 +80,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		$container['surecart.shortcodes']->registerBlockShortcode(
 			'sc_customer_wordpress_account',
 			\SureCartBlocks\Blocks\Dashboard\WordPressAccount\Block::class,
+			[ 'title' => '' ]
 		);
 		$container['surecart.shortcodes']->registerBlockShortcode(
 			'sc_customer_dashboard_page',
