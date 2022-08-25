@@ -1,10 +1,11 @@
 import { __ } from '@wordpress/i18n';
 import useSnackbar from '../hooks/useSnackbar';
-import Error from '../components/Error';
+import { store as noticesStore } from '@wordpress/notices';
 import { select, useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 
 export default function useSave() {
+	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { addSnackbarNotice } = useSnackbar();
 	const { saveEditedEntityRecord } = useDispatch(coreStore);
 
@@ -30,6 +31,9 @@ export default function useSave() {
 			throw { message: 'Saving failed.' };
 		}
 
+		createSuccessNotice(successMessage, {
+			type: 'snackbar',
+		});
 		// save success.
 		addSnackbarNotice({
 			content: successMessage,

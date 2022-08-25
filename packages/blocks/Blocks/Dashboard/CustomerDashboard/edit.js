@@ -5,15 +5,95 @@ import {
 	useInnerBlocksProps as __stableUseInnerBlocksProps,
 	__experimentalUseInnerBlocksProps,
 } from '@wordpress/block-editor';
-import {
-	createBlock,
-	createBlocksFromInnerBlocksTemplate,
-} from '@wordpress/blocks';
+import { createBlock } from '@wordpress/blocks';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useRef } from '@wordpress/element';
 import { css, jsx } from '@emotion/core';
 import { __, sprintf } from '@wordpress/i18n';
 import { ScTabGroup } from '@surecart/components-react';
+
+const TEMPLATE = [
+	[
+		'surecart/dashboard-tabs',
+		{},
+		[
+			[
+				'surecart/dashboard-tab',
+				{
+					id: '6494481d-dd18-4323-8a68-2eec728a531c',
+					title: 'Dashboard',
+					panel: 'dashboard',
+					icon: 'shopping-bag',
+				},
+			],
+			[
+				'surecart/dashboard-tab',
+				{
+					id: '1543ae69-a38d-4e74-b1fd-bad2b8ae9e49',
+					title: 'Account',
+					panel: 'account',
+					icon: 'user',
+				},
+			],
+			[
+				'surecart/dashboard-tab',
+				{
+					id: '8d7824d1-bd96-4d25-99ae-e68bfc8d63c1',
+					title: 'Logout',
+					panel: 'logout',
+					icon: 'log-out',
+				},
+			],
+		],
+	],
+	[
+		'surecart/dashboard-pages',
+		{},
+		[
+			[
+				'surecart/dashboard-page',
+				{
+					id: '8d7824d1-bd96-4d25-99ae-e68bfc8d63c1',
+					name: 'logout',
+					title: 'New Tab 6',
+				},
+				[
+					[
+						'surecart/heading',
+						{ title: 'Are you sure you want to logout?' },
+					],
+					['surecart/logout-button', {}],
+				],
+			],
+			[
+				'surecart/dashboard-page',
+				{
+					id: '1543ae69-a38d-4e74-b1fd-bad2b8ae9e49',
+					name: 'account',
+					title: 'New Tab 5',
+				},
+				[
+					['surecart/wordpress-account', {}],
+					['surecart/customer-billing-details', {}],
+				],
+			],
+			[
+				'surecart/dashboard-page',
+				{
+					id: '6494481d-dd18-4323-8a68-2eec728a531c',
+					name: 'dashboard',
+					title: 'New Tab 2',
+				},
+				[
+					['surecart/customer-subscriptions', {}],
+					['surecart/customer-downloads', {}],
+					['surecart/customer-payment-methods', {}],
+					['surecart/customer-orders', {}],
+				],
+			],
+		],
+	],
+];
 
 export default ({ clientId }) => {
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
@@ -31,12 +111,8 @@ export default ({ clientId }) => {
 
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		orientation: 'horizontal',
-		templateLock: 'all',
 		renderAppender: false,
-		template: [
-			['surecart/dashboard-tabs', {}],
-			['surecart/dashboard-pages', {}],
-		],
+		template: TEMPLATE,
 	});
 
 	const { tabBlocks, panelBlocks, panelsWrapper, tabsWrapper } = useSelect(

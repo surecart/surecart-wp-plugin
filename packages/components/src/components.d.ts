@@ -2558,7 +2558,7 @@ export namespace Components {
     }
     interface ScTaxIdInput {
         /**
-          * Label for the field.
+          * The country code.
          */
         "country": string;
         /**
@@ -6880,7 +6880,7 @@ declare namespace LocalJSX {
     }
     interface ScTaxIdInput {
         /**
-          * Label for the field.
+          * The country code.
          */
         "country"?: string;
         /**
