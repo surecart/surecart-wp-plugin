@@ -1,4 +1,5 @@
 <?php
+
 namespace SureCart\Integrations\ThriveAutomator\DataFields;
 
 if ( ! defined( 'ABSPATH' ) ) {

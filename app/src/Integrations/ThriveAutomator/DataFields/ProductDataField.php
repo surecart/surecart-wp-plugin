@@ -19,7 +19,7 @@ class ProductDataField extends Data_Field {
      * @return string
      */
     public static function get_id() {
-        return 'surecart_product';
+        return 'surecart_product_data_field';
     }
 
     /**

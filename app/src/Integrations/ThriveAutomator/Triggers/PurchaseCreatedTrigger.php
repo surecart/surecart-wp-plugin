@@ -84,18 +84,19 @@ class PurchaseCreatedTrigger extends Trigger {
 	}
 
 
-	public function process_params( $params = array() ) {
-		$data = array();
+	public function process_params( $params = [] ) {
+		// log_it($params);
+		$data = [];
 
-		if ( ! empty( $params[1] ) ) {
-
+		if ( ! empty( $params ) ) {
 			$data_object_classes = Data_Object::get();
+			$product_id = $params[0]['product'];
+			// log_it($data_object_classes);
 
-			list ( $product, $user ) = $params;
-
-			$data['surecart_product_data'] = empty( $data_object_classes['surecart_product_data'] ) ? $product : new $data_object_classes['surecart_product_data']( $product );
-			$data['user_data']             = empty( $data_object_classes['user_data'] ) ? null : new $data_object_classes['user_data']( $user );
+			$data['surecart_product_data'] = empty( $data_object_classes['surecart_product_data'] ) ? null : new $data_object_classes['surecart_product_data']( $product_id );
+			$data['user_data']             = empty( $data_object_classes['user_data'] ) ? null : new $data_object_classes['user_data']();
 		}
+		// log_it($data);
 
 		return $data;
 	}

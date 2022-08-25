@@ -2,15 +2,15 @@
 
 namespace SureCart\Integrations\ThriveAutomator\DataObjects;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Silence is golden!
+}
+
 use SureCart\Integrations\ThriveAutomator\DataFields\ProductDataField;
 use SureCart\Integrations\ThriveAutomator\DataFields\ProductIDDataField;
 use SureCart\Integrations\ThriveAutomator\DataFields\ProductNameDataField;
 use Thrive\Automator\Items\Data_Object;
 use SureCart\Models\Product;
-
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Silence is golden!
-}
 
 /**
  * Class ProductDataObject
@@ -31,7 +31,7 @@ class ProductDataObject extends Data_Object {
 	 * @return string
 	 */
 	public static function get_nice_name() {
-		return __( 'SureCart product', 'surecart' );
+		return __( 'SureCart product object', 'surecart' );
 	}
 
 	/**
