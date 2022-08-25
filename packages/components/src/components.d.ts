@@ -820,7 +820,6 @@ export namespace Components {
     interface ScDashboardCustomerDetails {
         "customerId": string;
         "heading": string;
-        "theme": string;
     }
     interface ScDashboardDownloadsList {
         "allLink": string;
@@ -4929,7 +4928,6 @@ declare namespace LocalJSX {
     interface ScDashboardCustomerDetails {
         "customerId"?: string;
         "heading"?: string;
-        "theme"?: string;
     }
     interface ScDashboardDownloadsList {
         "allLink"?: string;
