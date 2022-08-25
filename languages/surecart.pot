@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-08-24T18:48:24+00:00\n"
+"POT-Creation-Date: 2022-08-25T18:20:01+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -9958,12 +9958,12 @@ msgstr ""
 msgid "You are probably offline."
 msgstr ""
 
-#: paypal-buttons.js:330
-#: paypal-buttons.js:336
+#: paypal-buttons.js:339
+#: paypal-buttons.js:345
 msgid "The payment did not process. Please try again."
 msgstr ""
 
-#: paypal-buttons.js:371
+#: paypal-buttons.js:380
 msgid "Something went wrong. Please contact us for payment."
 msgstr ""
 

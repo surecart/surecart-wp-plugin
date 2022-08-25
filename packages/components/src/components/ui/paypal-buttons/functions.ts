@@ -1,4 +1,4 @@
-export const getScriptLoadParams = ({ clientId, reusable, merchantId, currency, merchantInitiated }) => {
+export const getScriptLoadParams = ({ clientId, reusable, merchantId, currency = 'usd', merchantInitiated }) => {
   return {
     'client-id': clientId.replace(/ /g, ''),
     ...(!reusable || merchantInitiated ? { 'merchant-id': merchantId.replace(/ /g, '') } : {}),

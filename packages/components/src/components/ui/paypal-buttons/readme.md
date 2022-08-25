@@ -7,16 +7,17 @@
 
 ## Properties
 
-| Property     | Attribute     | Description                 | Type                                                           | Default              |
-| ------------ | ------------- | --------------------------- | -------------------------------------------------------------- | -------------------- |
-| `busy`       | `busy`        | Is this busy?               | `boolean`                                                      | `false`              |
-| `buttons`    | --            | Buttons to render           | `string[]`                                                     | `['paypal', 'card']` |
-| `clientId`   | `client-id`   | Client id for the script.   | `string`                                                       | `undefined`          |
-| `color`      | `color`       | Button color.               | `"black" \| "blue" \| "gold" \| "silver" \| "white"`           | `'gold'`             |
-| `label`      | `label`       | Label for the button.       | `"buynow" \| "checkout" \| "installment" \| "pay" \| "paypal"` | `'paypal'`           |
-| `merchantId` | `merchant-id` | The merchant id for paypal. | `string`                                                       | `undefined`          |
-| `mode`       | `mode`        | Test or live mode.          | `"live" \| "test"`                                             | `undefined`          |
-| `order`      | --            | The order.                  | `Checkout`                                                     | `undefined`          |
+| Property            | Attribute            | Description                         | Type                                                           | Default              |
+| ------------------- | -------------------- | ----------------------------------- | -------------------------------------------------------------- | -------------------- |
+| `busy`              | `busy`               | Is this busy?                       | `boolean`                                                      | `false`              |
+| `buttons`           | --                   | Buttons to render                   | `string[]`                                                     | `['paypal', 'card']` |
+| `clientId`          | `client-id`          | Client id for the script.           | `string`                                                       | `undefined`          |
+| `color`             | `color`              | Button color.                       | `"black" \| "blue" \| "gold" \| "silver" \| "white"`           | `'gold'`             |
+| `label`             | `label`              | Label for the button.               | `"buynow" \| "checkout" \| "installment" \| "pay" \| "paypal"` | `'paypal'`           |
+| `merchantId`        | `merchant-id`        | The merchant id for paypal.         | `string`                                                       | `undefined`          |
+| `merchantInitiated` | `merchant-initiated` | Merchant initiated billing enabled. | `boolean`                                                      | `undefined`          |
+| `mode`              | `mode`               | Test or live mode.                  | `"live" \| "test"`                                             | `undefined`          |
+| `order`             | --                   | The order.                          | `Checkout`                                                     | `undefined`          |
 
 
 ## Events

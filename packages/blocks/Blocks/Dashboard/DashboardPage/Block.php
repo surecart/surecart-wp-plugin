@@ -25,6 +25,28 @@ class Block extends DashboardPage {
 		'invoice'        => \SureCartBlocks\Controllers\InvoiceController::class,
 	];
 
+	public function getTestModeToggleHTML() {
+		return '';
+		ob_start(); ?>
+			<?php if ( $this->isLiveMode() ) { ?>
+				<div style="margin-top: 2em; text-align: right;">
+					<sc-switch onClick="window.location.assign('<?php echo esc_url( add_query_arg( [ 'live_mode' => 'false' ] ) ); ?>')" type="info" size="small">
+						<?php esc_html_e( 'Test Mode', 'surecart' ); ?>
+					</sc-switch>
+				</div>
+			<?php } ?>
+
+			<?php if ( ! $this->isLiveMode() ) { ?>
+				<div style="margin-top: 2em; text-align:right;">
+					<sc-switch checked onClick="window.location.assign('<?php echo esc_url( add_query_arg( [ 'live_mode' => false ] ) ); ?>')" type="info" size="small">
+						<?php esc_html_e( 'Test Mode', 'surecart' ); ?>
+					</sc-switch>
+				</div>
+			<?php } ?>
+		<?php
+		return ob_get_clean();
+	}
+
 
 	/**
 	 * Render the block
@@ -61,10 +83,14 @@ class Block extends DashboardPage {
 
 			if ( method_exists( $this->blocks[ $model ], $action ) ) {
 				$block = new $this->blocks[ $model ]();
-				return $block->$action();
+				return $block->$action() . $this->getTestModeToggleHTML();
 			}
 		}
 
-		return '<sc-spacing style="--spacing: var(--sc-spacing-xxx-large); font-size: 15px;">' . wp_kses_post( $content ) . '</sc-spacing>';
+		ob_start();
+		?>
+			<sc-spacing style="--spacing: var(--sc-spacing-xxx-large); font-size: 15px;"><?php echo wp_kses_post( $content ); ?></sc-spacing>
+		<?php
+		return ob_get_clean() . $this->getTestModeToggleHTML();
 	}
 }

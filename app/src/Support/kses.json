@@ -1010,15 +1010,6 @@
     "class": true,
     "slot": true
   },
-  "sc-payment-method-create": {
-    "client-secret": true,
-    "error": true,
-    "success-url": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "sc-payment-methods-list": {
     "heading": true,
     "query": true,
@@ -1030,6 +1021,16 @@
   "sc-payment-selected": {
     "icon-name": true,
     "label": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-paypal-add-method": {
+    "currency": true,
+    "customer-id": true,
+    "live-mode": true,
+    "success-url": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1266,6 +1267,15 @@
     "href": true,
     "mobile-size": true,
     "target": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-stripe-add-method": {
+    "customer-id": true,
+    "live-mode": true,
+    "success-url": true,
     "style": true,
     "id": true,
     "class": true,
