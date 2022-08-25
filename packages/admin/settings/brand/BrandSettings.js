@@ -2,8 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { store as coreStore, useEntityProp } from "@wordpress/core-data";
-import { useDispatch } from '@wordpress/data';
+import { useEntityProp } from '@wordpress/core-data';
 import {
 	ScAddress,
 	ScFormControl,
@@ -26,6 +25,11 @@ export default () => {
 		'store',
 		'brand'
 	);
+	const [scThemeData, setScThemeData] = useEntityProp(
+		'root',
+		'site',
+		'surecart_theme'
+	);
 
 	/**
 	 * Form is submitted.
@@ -41,30 +45,6 @@ export default () => {
 			setError(e);
 		}
 	};
-
-	const [scThemeData, setScThemeData] = useEntityProp(
-		"root",
-		"site",
-		"surecart_theme"
-	);
-	const { saveEditedEntityRecord } = useDispatch(coreStore);
-	const onSelectThemeChanged = (e) => {
-		setScThemeData(e.target.value);
-		saveEditedEntityRecord("root", "site", 'surecart_theme', {
-			surecart_theme: e.target.value,
-		});
-	};
-
-	const choices = [
-		{
-			label: __('Light', 'surecart'),
-			value: 'light',
-		},
-		{
-			label: __('Dark', 'surecart'),
-			value: 'dark',
-		},
-	];
 
 	return (
 		<SettingsTemplate
@@ -135,14 +115,23 @@ export default () => {
 							</ScInput>
 						</div>
 					</ScFormControl>
-						<ScSelect
-							label={__('Select Theme', 'surecart')}
-							placeholder={__('Select Theme', 'surecart')}
-							value={scThemeData}
-							onScChange={onSelectThemeChanged}
-							choices={choices}
-							required
-						></ScSelect>
+					<ScSelect
+						label={__('Select Theme', 'surecart')}
+						placeholder={__('Select Theme', 'surecart')}
+						value={scThemeData}
+						onScChange={(e) => setScThemeData(e.target.value)}
+						choices={[
+							{
+								label: __('Light', 'surecart'),
+								value: 'light',
+							},
+							{
+								label: __('Dark', 'surecart'),
+								value: 'dark',
+							},
+						]}
+						required
+					></ScSelect>
 				</div>
 			</SettingsBox>
 
