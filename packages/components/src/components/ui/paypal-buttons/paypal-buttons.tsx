@@ -5,6 +5,7 @@ import { __ } from '@wordpress/i18n';
 import apiFetch from '../../../functions/fetch';
 import { hasSubscription } from '../../../functions/line-items';
 import { Checkout, PaymentIntent } from '../../../types';
+import { getScriptLoadParams } from './functions';
 
 @Component({
   tag: 'sc-paypal-buttons',
@@ -29,6 +30,9 @@ export class ScPaypalButtons {
 
   /** The merchant id for paypal. */
   @Prop() merchantId: string;
+
+  /** Merchant initiated billing enabled. */
+  @Prop() merchantInitiated: boolean;
 
   /** Test or live mode. */
   @Prop() mode: 'test' | 'live';
@@ -69,13 +73,13 @@ export class ScPaypalButtons {
   /** Load the script */
   async loadScript() {
     if (!this.clientId || !this.merchantId) return;
-    const reusable = this.order?.reusable_payment_method_required;
     try {
       const paypal = await loadScript(
         getScriptLoadParams({
           clientId: this.clientId,
           merchantId: this.merchantId,
-          reusable,
+          merchantInitiated: this.merchantInitiated,
+          reusable: this.order?.reusable_payment_method_required,
           currency: this.order?.currency,
         }),
       );

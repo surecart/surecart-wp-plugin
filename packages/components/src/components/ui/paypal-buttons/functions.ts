@@ -1,7 +1,7 @@
-export const getScriptLoadParams = ({ clientId, reusable, merchantId, currency }) => {
+export const getScriptLoadParams = ({ clientId, reusable, merchantId, currency, merchantInitiated }) => {
   return {
     'client-id': clientId.replace(/ /g, ''),
-    ...(!reusable ? { 'merchant-id': merchantId.replace(/ /g, '') } : {}),
+    ...(!reusable || merchantInitiated ? { 'merchant-id': merchantId.replace(/ /g, '') } : {}),
     'commit': false,
     'intent': reusable ? 'tokenize' : 'capture',
     'vault': true,

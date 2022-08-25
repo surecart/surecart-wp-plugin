@@ -1815,6 +1815,10 @@ export namespace Components {
          */
         "merchantId": string;
         /**
+          * Merchant initiated billing enabled.
+         */
+        "merchantInitiated": boolean;
+        /**
           * Test or live mode.
          */
         "mode": 'test' | 'live';
@@ -6032,6 +6036,10 @@ declare namespace LocalJSX {
           * The merchant id for paypal.
          */
         "merchantId"?: string;
+        /**
+          * Merchant initiated billing enabled.
+         */
+        "merchantInitiated"?: boolean;
         /**
           * Test or live mode.
          */

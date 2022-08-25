@@ -1042,6 +1042,7 @@
     "color": true,
     "label": true,
     "merchant-id": true,
+    "merchant-initiated": true,
     "mode": true,
     "order": true,
     "style": true,
