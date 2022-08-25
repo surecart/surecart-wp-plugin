@@ -45,12 +45,3 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'help
 
 // Register hooks.
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'hooks.php';
-
-add_action('surecart/purchase_created', function(\SureCart\Models\Purchase $purchase) {
-    $product = \SureCart\Models\Product::find($purchase->product);
-
-    return [
-		'id' => $product->id,
-		'name' => $product->name
-    ];
-});
