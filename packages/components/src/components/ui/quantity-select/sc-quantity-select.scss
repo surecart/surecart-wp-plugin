@@ -9,6 +9,8 @@
   border: none;
   flex: 1;
   max-width: 35px;
+  background-color: var(--sc-input-control-background-color, var(--sc-color-white));
+  color: var(--sc-input-control-color, var(--sc-color-black));
   -moz-appearance:textfield;
 
 

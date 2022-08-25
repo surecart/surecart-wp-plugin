@@ -38,7 +38,7 @@ const Template = ({ theme }) => {
     //   ad_hoc_min_amount,
     // } as any;
   });
-  return `<div data-theme="${theme}" style="${theme === 'dark' && 'background: var(--sc-color-gray-900);'} height: 100%; padding: 40px;">
+  return `<div data-theme="${theme}" class="surecart-theme-${theme}" style="${theme === 'dark' && 'background: var(--sc-color-gray-950);'} height: 100%; padding: 40px;">
   <sc-form>
     <sc-input label="Test" help="Help text" placeholder="placeholder"><span slot="prefix">Prefix</span><span slot="suffix">Suffix</span></sc-input>
     <sc-input label="Test" help="Help text" value="test" placeholder="placeholder" clearable name="name" type="text"><span slot="prefix">Prefix</span><span slot="suffix">Suffix</span></sc-input>

@@ -7,7 +7,7 @@
   font-family: var(--sc-font-sans);
   font-size: var(--sc-font-size-small);
   font-weight: var(--sc-font-weight-semibold);
-  color: var(--sc-color-gray-600);
+  color: var(--sc-breadcrumb-color, var(--sc-color-gray-600));
   line-height: var(--sc-line-height-normal);
   white-space: nowrap;
 }
@@ -28,7 +28,7 @@
   transition: var(--sc-transition-fast) --color;
 }
 :host(:not(:last-of-type)) .breadcrumb-item__label {
-  color: var(--sc-color-gray-900);
+  color: var(--sc-breadcrumb-item-label-color, var(--sc-color-gray-900));
 }
 :host(:not(:last-of-type)) .breadcrumb-item__label:hover {
   color: var(--sc-color-primary-500);

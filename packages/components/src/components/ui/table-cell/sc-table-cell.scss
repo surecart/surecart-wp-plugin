@@ -6,7 +6,7 @@
 }
 
 :host([slot="head"]) {
-  background: var(--sc-color-gray-50);
+  background: var(--sc-table-cell-background-color, var(--sc-color-gray-50));
   font-size: var(--sc-font-size-x-small);
   padding: var(--sc-table-cell-spacing, var(--sc-spacing-small));
   text-transform: uppercase;

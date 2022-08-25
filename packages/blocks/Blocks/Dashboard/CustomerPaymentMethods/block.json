@@ -14,10 +14,6 @@
 		"title": {
 			"type": "string",
 			"default": "Payment Methods"
-		},
-		"theme": {
-			"type": "string",
-			"default": "light"
 		}
 	}
 }

@@ -22,10 +22,6 @@
 		"per_page": {
 			"type": "number",
 			"default": 10
-		},
-		"theme": {
-			"type": "string",
-			"default": "light"
 		}
 	}
 }

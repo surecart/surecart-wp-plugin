@@ -5,7 +5,7 @@
 }
 .details {
   border-radius: var(--sc-border-radius-medium);
-  background-color: var(--sc-color-white);
+  background-color: var(--sc-toggle-background-color, var(--sc-color-white));
   overflow-anchor: none;
 
   &__radio {
@@ -40,7 +40,7 @@
 }
 
 .details:not(.details--borderless) {
-  border: solid 1px var(--sc-color-gray-200);
+  border: solid 1px var(--sc-toggle-border-color, var(--sc-color-gray-200));
 }
 .details--disabled {
   opacity: 0.5;
@@ -52,6 +52,7 @@
   padding: var(--sc-toggle-padding);
   user-select: none;
   cursor: pointer;
+  color: solid 1px var(--sc-toggle-details-color, var(--sc-color-gray-200));
 }
 .details__header:focus {
   outline: none;

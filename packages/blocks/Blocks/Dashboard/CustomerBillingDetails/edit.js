@@ -4,13 +4,13 @@ import {
 	RichText,
 	useBlockProps,
 } from '@wordpress/block-editor';
-import { PanelBody, PanelRow, TextControl, SelectControl } from '@wordpress/components';
+import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { ScDashboardModule } from '@surecart/components-react';
 import { Fragment } from '@wordpress/element';
 import OverlayLabel from '../../../components/OverlayLabel';
 
 export default ({ attributes, setAttributes }) => {
-	const { title, theme } = attributes;
+	const { title } = attributes;
 	const blockProps = useBlockProps();
 
 	return (
@@ -24,21 +24,10 @@ export default ({ attributes, setAttributes }) => {
 							onChange={(title) => setAttributes({ title })}
 						/>
 					</PanelRow>
-					<PanelRow>
-						<SelectControl
-							label={__('Select Theme', 'surecart')}
-							value={ theme }
-							options={ [
-								{ label: 'Light', value: 'light' },
-								{ label: 'Dark', value: 'dark' },
-							] }
-							onChange={(theme) => setAttributes({ theme })}
-						/>
-					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 
-			<ScDashboardModule {...blockProps} theme={theme}>
+			<ScDashboardModule {...blockProps}>
 				<OverlayLabel>{__('Sample Data', 'surecart')}</OverlayLabel>
 				<RichText
 					aria-label={__('Title')}

@@ -28,8 +28,8 @@ sc-dropdown {
   border-width: var(--sc-input-border-width);
   font-family: var(--sc-input-font-family);
   font-weight: var(--sc-font-weight-normal);
-  background-color: var(--sc-color-white);
-  border-color: var(--sc-color-gray-300);
+  background-color: var(--sc-select-background-color, var(--sc-color-white));
+  border-color: var(--sc-select-border-color, var(--sc-color-gray-300));
   color: var(--sc-color-gray-600);
   text-decoration: none;
   user-select: none;

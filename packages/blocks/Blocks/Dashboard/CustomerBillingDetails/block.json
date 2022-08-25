@@ -14,10 +14,6 @@
 		"title": {
 			"type": "string",
 			"default": "Billing Details"
-		},
-		"theme": {
-			"type": "string",
-			"default": "light"
 		}
 	}
 }

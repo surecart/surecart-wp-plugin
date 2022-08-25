@@ -300,7 +300,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
 
 .surecart-theme-dark {
   /* Inputs */
-  --sc-input-label-color: var(--sc-color-gray-500);
+  --sc-input-label-color: var(--sc-color-gray-300);
   --sc-input-background-color: var(--sc-color-gray-900);
   --sc-input-background-color-hover: var(--sc-color-gray-900);
   --sc-input-background-color-focus: var(--sc-color-gray-900);
@@ -332,7 +332,6 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-input-placeholder-color: var(--sc-color-gray-500);
   --sc-input-placeholder-color-disabled: var(--sc-color-gray-400);
   --sc-input-help-text-color: var(--sc-color-gray-400);
-  --sc-input-label-color: var(--sc-color-gray-400);
   --sc-list-row-background-color: var(--sc-color-gray-950);
   --sc-list-row-color: var(--sc-color-gray-300);
   --sc-empty-color: var(--sc-color-gray-300);
@@ -340,6 +339,26 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-tab-active-background: var(--sc-color-gray-800);
   --ast-global-color-2: var(--sc-color-gray-300);
   --sc-menu-item-color: var(--sc-color-gray-300);
+  --sc-line-item-title-color: var(--sc-color-gray-300);
+  --sc-order-summary-color: var(--sc-color-gray-300);
+  --sc-order-collapse-link-icon-color: var(--sc-color-gray-300);
+  --sc-input-control-background-color: var(--sc-color-gray-900);
+  --sc-select-background-color: var(--sc-color-gray-900);
+  --sc-input-background-color: var(--sc-color-gray-900);
+  --sc-toggle-background-color: var(--sc-color-gray-950);
+  --sc-card-background-color: var(--sc-color-gray-950);
+  --sc-table-cell-background-color: var(--sc-color-gray-800);
+  --sc-input-control-color: var(--sc-color-gray-300);
+  --sc-breadcrumb-item-label-color: var(--sc-color-gray-300);
+  --sc-breadcrumb-color: var(--sc-color-gray-300);
+  --sc-card-boderless-border-color: var(--sc-color-gray-600);
+  --sc-select-border-color: var(--sc-color-gray-600);
+  --sc-stacked-list-border-color: var(--sc-color-gray-600);
+  --sc-divider-border-top-color: var(--sc-color-gray-600);
+  --sc-input-border-color: var(--sc-color-gray-600);
+  --sc-table-border-bottom-color: var(--sc-color-gray-600);
+  --sc-toggle-border-color: var(--sc-color-gray-600);
+  --sc-table-row-border-bottom-color: var(--sc-color-gray-600);
   --sc-stacked-list-row-hover-color: var(--sc-color-gray-800);
 
   /* Overlays */
@@ -712,12 +731,14 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
 .surecart-theme-dark sc-stripe-payment-element,
 .surecart-theme-dark sc-stripe-payment-request,
 .surecart-theme-dark sc-text,
+.surecart-theme-dark sc-card,
 .surecart-theme-dark sc-tooltip,
 .surecart-theme-dark sc-tag-panel,
 .surecart-theme-dark sc-toggles,
 .surecart-theme-dark sc-dashboard-module,
 .surecart-theme-dark entry-title,
+.surecart-theme-dark sc-toggle,
 .surecart-theme-dark sc-tab-group
- {
+{
   color: var(--sc-color-gray-300);
 }

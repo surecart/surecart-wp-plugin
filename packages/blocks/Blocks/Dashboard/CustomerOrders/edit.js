@@ -9,15 +9,14 @@ import {
 	PanelRow,
 	RangeControl,
 	TextControl,
-	ToggleControl,
-	SelectControl
+	ToggleControl
 } from '@wordpress/components';
 import { ScDashboardModule } from '@surecart/components-react';
 import { Fragment } from '@wordpress/element';
 import OverlayLabel from '../../../components/OverlayLabel';
 
 export default ({ attributes, setAttributes }) => {
-	const { per_page, paginate, title, theme } = attributes;
+	const { per_page, paginate, title } = attributes;
 	const blockProps = useBlockProps();
 
 	return (
@@ -29,17 +28,6 @@ export default ({ attributes, setAttributes }) => {
 							label={__('Title', 'surecart')}
 							value={title}
 							onChange={(title) => setAttributes({ title })}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<SelectControl
-							label={__('Select Theme', 'surecart')}
-							value={ theme }
-							options={ [
-								{ label: 'Light', value: 'light' },
-								{ label: 'Dark', value: 'dark' },
-							] }
-							onChange={(theme) => setAttributes({ theme })}
 						/>
 					</PanelRow>
 				</PanelBody>
