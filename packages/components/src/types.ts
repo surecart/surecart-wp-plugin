@@ -403,6 +403,7 @@ export interface ProcessorData {
   paypal: {
     account_id: string;
     client_id: string;
+    merchant_initiated: boolean;
   };
 }
 

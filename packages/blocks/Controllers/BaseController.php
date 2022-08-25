@@ -71,4 +71,11 @@ abstract class BaseController {
 	protected function noAccess() {
 		return '<sc-alert type="danger" open>' . esc_html__( 'You do not have permission to do this.', 'surecart' ) . '</sc-alert>';
 	}
+
+	protected function isLiveMode() {
+		if ( 'false' === sanitize_text_field( wp_unslash( $_GET['live_mode'] ?? '' ) ) ) {
+			return false;
+		}
+		return true;
+	}
 }

@@ -55,4 +55,12 @@ abstract class DashboardPage extends BaseBlock {
 
 		return true;
 	}
+
+
+	protected function isLiveMode() {
+		if ( 'false' === sanitize_text_field( wp_unslash( $_GET['live_mode'] ?? '' ) ) ) {
+			return false;
+		}
+		return true;
+	}
 }

@@ -25,9 +25,10 @@ export class ScToggles {
   }
 
   @Listen('scShow')
-  handleShowChange(event) {
+  handleShowChange(e) {
+    if (e.target.tagName !== 'SC-TOGGLE') return;
     if (this.accordion) {
-      this.getToggles().map(details => (details.open = event.target === details));
+      this.getToggles().map(details => (details.open = e.target === details));
     }
   }
 
