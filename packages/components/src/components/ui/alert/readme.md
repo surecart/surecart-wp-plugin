@@ -73,8 +73,9 @@ Type: `Promise<void>`
  - [sc-login-form](../../controllers/login)
  - [sc-order-confirmation](../../controllers/confirmation/order-confirmation)
  - [sc-payment](../../controllers/checkout-form/payment)
- - [sc-payment-method-create](../../controllers/dashboard/payment-method-create)
+ - [sc-paypal-add-method](../sc-paypal-add-method)
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
+ - [sc-stripe-add-method](../sc-stripe-add-method)
  - [sc-stripe-payment-request](../stripe-payment-request)
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
@@ -99,8 +100,9 @@ graph TD;
   sc-login-form --> sc-alert
   sc-order-confirmation --> sc-alert
   sc-payment --> sc-alert
-  sc-payment-method-create --> sc-alert
+  sc-paypal-add-method --> sc-alert
   sc-price-choice --> sc-alert
+  sc-stripe-add-method --> sc-alert
   sc-stripe-payment-request --> sc-alert
   sc-subscription-cancel --> sc-alert
   sc-subscription-renew --> sc-alert

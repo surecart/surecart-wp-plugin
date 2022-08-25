@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-08-25T18:19:30",
+  "timestamp": "2022-08-25T21:42:10",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -456,8 +456,9 @@
         "sc-login-form",
         "sc-order-confirmation",
         "sc-payment",
-        "sc-payment-method-create",
+        "sc-paypal-add-method",
         "sc-price-choice",
+        "sc-stripe-add-method",
         "sc-stripe-payment-request",
         "sc-subscription-cancel",
         "sc-subscription-renew",
@@ -501,10 +502,13 @@
         "sc-payment": [
           "sc-alert"
         ],
-        "sc-payment-method-create": [
+        "sc-paypal-add-method": [
           "sc-alert"
         ],
         "sc-price-choice": [
+          "sc-alert"
+        ],
+        "sc-stripe-add-method": [
           "sc-alert"
         ],
         "sc-stripe-payment-request": [
@@ -710,7 +714,6 @@
         "sc-invoices-list",
         "sc-login-form",
         "sc-orders-list",
-        "sc-payment-method-create",
         "sc-payment-methods-list",
         "sc-purchase-downloads-list",
         "sc-subscription",
@@ -771,9 +774,6 @@
           "sc-block-ui"
         ],
         "sc-orders-list": [
-          "sc-block-ui"
-        ],
-        "sc-payment-method-create": [
           "sc-block-ui"
         ],
         "sc-payment-methods-list": [
@@ -1362,9 +1362,9 @@
         "sc-order-submit",
         "sc-orders-list",
         "sc-pagination",
-        "sc-payment-method-create",
         "sc-payment-methods-list",
         "sc-purchase-downloads-list",
+        "sc-stripe-add-method",
         "sc-subscription",
         "sc-subscription-ad-hoc-confirm",
         "sc-subscription-cancel",
@@ -1433,13 +1433,13 @@
         "sc-pagination": [
           "sc-button"
         ],
-        "sc-payment-method-create": [
-          "sc-button"
-        ],
         "sc-payment-methods-list": [
           "sc-button"
         ],
         "sc-purchase-downloads-list": [
+          "sc-button"
+        ],
+        "sc-stripe-add-method": [
           "sc-button"
         ],
         "sc-subscription": [
@@ -1634,7 +1634,6 @@
         "sc-order-confirmation-details",
         "sc-orders-list",
         "sc-payment",
-        "sc-payment-method-create",
         "sc-payment-methods-list",
         "sc-purchase-downloads-list",
         "sc-subscription",
@@ -1681,9 +1680,6 @@
           "sc-card"
         ],
         "sc-payment": [
-          "sc-card"
-        ],
-        "sc-payment-method-create": [
           "sc-card"
         ],
         "sc-payment-methods-list": [
@@ -7912,7 +7908,7 @@
         "sc-cart-form",
         "sc-customer-edit",
         "sc-login-form",
-        "sc-payment-method-create",
+        "sc-stripe-add-method",
         "sc-subscription-ad-hoc-confirm",
         "sc-subscription-payment",
         "sc-subscription-switch",
@@ -7931,7 +7927,7 @@
         "sc-login-form": [
           "sc-form"
         ],
-        "sc-payment-method-create": [
+        "sc-stripe-add-method": [
           "sc-form"
         ],
         "sc-subscription-ad-hoc-confirm": [
@@ -14686,97 +14682,6 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/dashboard/payment-method-create/payment-method-create.tsx",
-      "encapsulation": "none",
-      "tag": "sc-payment-method-create",
-      "readme": "# ce-payment-method-create\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "clientSecret",
-          "type": "string",
-          "mutable": false,
-          "attr": "client-secret",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "error",
-          "type": "string",
-          "mutable": false,
-          "attr": "error",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "successUrl",
-          "type": "string",
-          "mutable": false,
-          "attr": "success-url",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
-      "methods": [],
-      "events": [],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
-      "dependents": [],
-      "dependencies": [
-        "sc-card",
-        "sc-form",
-        "sc-alert",
-        "sc-button",
-        "sc-block-ui"
-      ],
-      "dependencyGraph": {
-        "sc-payment-method-create": [
-          "sc-card",
-          "sc-form",
-          "sc-alert",
-          "sc-button",
-          "sc-block-ui"
-        ],
-        "sc-alert": [
-          "sc-icon"
-        ],
-        "sc-button": [
-          "sc-spinner"
-        ],
-        "sc-block-ui": [
-          "sc-spinner"
-        ]
-      }
-    },
-    {
       "filePath": "./src/components/controllers/dashboard/payment-methods-list/sc-payment-methods-list.tsx",
       "encapsulation": "shadow",
       "tag": "sc-payment-methods-list",
@@ -14952,6 +14857,99 @@
         ],
         "sc-payment": [
           "sc-payment-selected"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/sc-paypal-add-method/sc-paypal-add-method.tsx",
+      "encapsulation": "none",
+      "tag": "sc-paypal-add-method",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "currency",
+          "type": "string",
+          "mutable": false,
+          "attr": "currency",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "customerId",
+          "type": "string",
+          "mutable": false,
+          "attr": "customer-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "liveMode",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "live-mode",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "successUrl",
+          "type": "string",
+          "mutable": false,
+          "attr": "success-url",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-alert"
+      ],
+      "dependencyGraph": {
+        "sc-paypal-add-method": [
+          "sc-alert"
+        ],
+        "sc-alert": [
+          "sc-icon"
         ]
       }
     },
@@ -18091,6 +18089,7 @@
         "sc-paypal-buttons",
         "sc-price-choice",
         "sc-purchase-downloads-list",
+        "sc-stripe-add-method",
         "sc-stripe-payment-element",
         "sc-subscription",
         "sc-subscription-cancel",
@@ -18158,6 +18157,9 @@
           "sc-skeleton"
         ],
         "sc-purchase-downloads-list": [
+          "sc-skeleton"
+        ],
+        "sc-stripe-add-method": [
           "sc-skeleton"
         ],
         "sc-stripe-payment-element": [
@@ -18459,6 +18461,92 @@
         ],
         "sc-wordpress-user": [
           "sc-stacked-list-row"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/sc-stripe-add-method/sc-stripe-add-method.tsx",
+      "encapsulation": "none",
+      "tag": "sc-stripe-add-method",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "customerId",
+          "type": "string",
+          "mutable": false,
+          "attr": "customer-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "liveMode",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "live-mode",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "successUrl",
+          "type": "string",
+          "mutable": false,
+          "attr": "success-url",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-form",
+        "sc-alert",
+        "sc-skeleton",
+        "sc-button"
+      ],
+      "dependencyGraph": {
+        "sc-stripe-add-method": [
+          "sc-form",
+          "sc-alert",
+          "sc-skeleton",
+          "sc-button"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ]
       }
     },
