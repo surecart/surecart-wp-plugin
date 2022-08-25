@@ -39,7 +39,7 @@ add_filter(
 			return $output;
 		}
 		$output .= ' class="surecart-theme-' . get_option( 'surecart_theme', 'surecart-theme-light' ) . '"';
-	
+
 		return $output;
 	},
 	10,
@@ -47,15 +47,16 @@ add_filter(
 );
 
 function sc_register_settings() {
-    register_setting(
-        'general',
-        'surecart_theme',
-        array(
-            'type'              => 'string',
-            'show_in_rest'      => true,
-            'sanitize_callback' => 'sanitize_text_field',
-        )
-    );
+	register_setting(
+		'general',
+		'surecart_theme',
+		array(
+			'type'              => 'string',
+			'show_in_rest'      => true,
+			'sanitize_callback' => 'sanitize_text_field',
+			'default'           => 'light',
+		)
+	);
 }
 add_action( 'admin_init', 'sc_register_settings' );
 add_action( 'rest_api_init', 'sc_register_settings' );
