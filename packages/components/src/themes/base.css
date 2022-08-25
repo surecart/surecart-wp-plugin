@@ -343,6 +343,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-order-summary-color: var(--sc-color-gray-300);
   --sc-order-collapse-link-icon-color: var(--sc-color-gray-300);
   --sc-input-control-background-color: var(--sc-color-gray-900);
+  --sc-block-ui-background-color: var(--sc-color-gray-800);
   --sc-select-background-color: var(--sc-color-gray-900);
   --sc-input-background-color: var(--sc-color-gray-900);
   --sc-toggle-background-color: var(--sc-color-gray-950);
@@ -351,6 +352,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-input-control-color: var(--sc-color-gray-300);
   --sc-breadcrumb-item-label-color: var(--sc-color-gray-300);
   --sc-breadcrumb-color: var(--sc-color-gray-300);
+  --sc-stacked-list-row-text-color: var(--sc-color-gray-300);
   --sc-card-boderless-border-color: var(--sc-color-gray-600);
   --sc-select-border-color: var(--sc-color-gray-600);
   --sc-stacked-list-border-color: var(--sc-color-gray-600);
