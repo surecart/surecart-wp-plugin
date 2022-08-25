@@ -69,16 +69,16 @@ export class ScPaypalButtons {
   /** Load the script */
   async loadScript() {
     if (!this.clientId || !this.merchantId) return;
-    const subscriptionOrder = hasSubscription(this.order);
+    const reusable = this.order?.reusable_payment_method_required;
     try {
-      const paypal = await loadScript({
-        'client-id': this.clientId.replace(/ /g, ''),
-        ...(!subscriptionOrder ? { 'merchant-id': this.merchantId.replace(/ /g, '') } : {}),
-        'commit': false,
-        'intent': subscriptionOrder ? 'tokenize' : 'capture',
-        'vault': true,
-        'currency': this.order?.currency.toUpperCase() || 'USD',
-      });
+      const paypal = await loadScript(
+        getScriptLoadParams({
+          clientId: this.clientId,
+          merchantId: this.merchantId,
+          reusable,
+          currency: this.order?.currency,
+        }),
+      );
       this.renderButtons(paypal);
     } catch (err) {
       console.error('failed to load the PayPal JS SDK script', err);
