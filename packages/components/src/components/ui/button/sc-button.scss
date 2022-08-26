@@ -96,7 +96,7 @@
     color: var(--sc-button-default-color, var(--sc-color-gray-600));
 
     &:hover:not(.button--disabled) {
-      background-color: var(--sc-color-white);
+      background-color: var(--sc-button-default-hover-background-color, var(--sc-color-white));
       border-color: var(--primary-background);
       color: var(--primary-background);
     }
