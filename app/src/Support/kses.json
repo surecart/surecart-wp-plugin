@@ -400,7 +400,6 @@
   "sc-dashboard-customer-details": {
     "customer-id": true,
     "heading": true,
-    "theme": true,
     "style": true,
     "id": true,
     "class": true,
@@ -420,7 +419,6 @@
     "error": true,
     "heading": true,
     "loading": true,
-    "theme": true,
     "style": true,
     "id": true,
     "class": true,
