@@ -76,6 +76,19 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-color-gray-800: #1f2937;
   --sc-color-gray-900: #111827;
   --sc-color-gray-950: #0d131e;
+
+  --sc-color-neutral-50: #fafafa;
+  --sc-color-neutral-100: whitesmoke;
+  --sc-color-neutral-200: #e5e5e5;
+  --sc-color-neutral-300: #d4d4d4;
+  --sc-color-neutral-400: #a3a3a3;
+  --sc-color-neutral-500: #737373;
+  --sc-color-neutral-600: #525252;
+  --sc-color-neutral-700: #404040;
+  --sc-color-neutral-800: #262626;
+  --sc-color-neutral-900: #171717;
+  --sc-color-neutral-950: #0f0f0f;
+
   --sc-color-primary: 217;
   --sc-color-primary-luminance: 60%;
   --sc-color-primary-saturation: 91%;
@@ -294,11 +307,20 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   overflow: hidden !important;
 }
 
-.surecart-theme-dark body {
-  background: var(--sc-color-gray-950);
-}
-
 .surecart-theme-dark {
+  /** Let's make these less blue for basic dark mode **/
+  --sc-color-gray-50: var(--sc-color-neutral-50);
+  --sc-color-gray-100: var(--sc-color-neutral-100);
+  --sc-color-gray-200: var(--sc-color-neutral-200);
+  --sc-color-gray-300: var(--sc-color-neutral-300);
+  --sc-color-gray-400: var(--sc-color-neutral-400);
+  --sc-color-gray-500: var(--sc-color-neutral-500);
+  --sc-color-gray-600: var(--sc-color-neutral-600);
+  --sc-color-gray-700: var(--sc-color-neutral-700);
+  --sc-color-gray-800: var(--sc-color-neutral-800);
+  --sc-color-gray-900: var(--sc-color-neutral-900);
+  --sc-color-gray-950: var(--sc-color-neutral-950);
+
   /* Inputs */
   --sc-input-label-color: var(--sc-color-gray-300);
   --sc-input-background-color: var(--sc-color-gray-900);
@@ -381,6 +403,11 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
 
   /* Choice */
   --sc-choice-background-color: var(--sc-color-gray-900);
+
+  /** Stripe */
+  --sc-stripe-color-logo: 'dark';
+  --sc-stripe-color-tag: 'dark';
+  --sc-stripe-color-tab-selected: 'dark';
 }
 
 /* Alert */
