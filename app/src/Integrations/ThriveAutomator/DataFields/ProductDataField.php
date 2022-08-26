@@ -65,7 +65,6 @@ class ProductDataField extends Data_Field {
      */
     public static function get_options_callback() {
         $options = [];
-        // $products = Product::get();
         $products = Product::where( [
             'archived' => false,
         ] )->get();

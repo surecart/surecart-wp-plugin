@@ -44,7 +44,8 @@ class PurchaseCreatedTrigger extends Trigger {
 	 * @return array
 	 */
 	public static function get_provided_data_objects() {
-		return [ ProductDataObject::get_id(), 'user_data' ];
+		// return [ ProductDataObject::get_id(), 'user_data' ];
+		return [ ProductDataObject::get_id() ];
 	}
 
 	/**
@@ -85,17 +86,20 @@ class PurchaseCreatedTrigger extends Trigger {
 
 
 	public function process_params( $params = [] ) {
+		// log_it('Trigger 1');
 		// log_it($params);
 		$data = [];
 
 		if ( ! empty( $params ) ) {
 			$data_object_classes = Data_Object::get();
 			$product_id = $params[0]['product'];
+			// log_it('Trigger 2');
 			// log_it($data_object_classes);
 
 			$data['surecart_product_data'] = empty( $data_object_classes['surecart_product_data'] ) ? null : new $data_object_classes['surecart_product_data']( $product_id );
-			$data['user_data']             = empty( $data_object_classes['user_data'] ) ? null : new $data_object_classes['user_data']();
+			// $data['user_data']             = empty( $data_object_classes['user_data'] ) ? null : new $data_object_classes['user_data']();
 		}
+		// log_it('Trigger 3');
 		// log_it($data);
 
 		return $data;
