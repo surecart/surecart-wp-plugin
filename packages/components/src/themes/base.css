@@ -390,6 +390,8 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-toggle-shady-color: var(--sc-color-gray-800);
   --sc-table-row-border-bottom-color: var(--sc-color-gray-600);
   --sc-stacked-list-row-hover-color: var(--sc-color-gray-800);
+  --sc-skeleton-color: var(--sc-color-gray-800);
+  --sc-skeleton-sheen-color: var(--sc-color-gray-700);
 
   /* Overlays */
   --sc-overlay-background-color: #d1d5db22;
@@ -645,12 +647,6 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   background-color: var(--sc-color-info-800);
   border-color: var(--sc-color-info-700);
   color: var(--sc-color-info-300);
-}
-
-/* Skeleton */
-.surecart-theme-dark sc-skeleton {
-  --color: var(--sc-color-gray-800);
-  --sheen-color: var(--sc-color-gray-700);
 }
 
 /* Spinner */
