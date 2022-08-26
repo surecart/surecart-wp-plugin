@@ -243,6 +243,12 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.1.6 - August 24, 2022 =
+* Improvement: Allow PayPal for subscriptions if Reference Transactions are enabled.
+* Improvement: Ability to add PayPal payment method on customer dashboard page if Reference Transactions are enabled.
+* Fix: Issue with dashboard page being cached on some Cloudflare setups.
+* Fix: Issue with adding additional payment method on customer dashboard page.
+
 = 1.1.5 - August 22, 2022 =
 * Improvement: Support additional Stripe payment methods (Bank Transfer, iDEAL, SEPA Klarna, etc.)
 * Improvment: Support for LearnDash groups.
