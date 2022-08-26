@@ -145,7 +145,7 @@ export class ScStripeElement {
         style: {
           base: {
             'color': styles.getPropertyValue('--sc-input-label-color'),
-            'fontSize': styles.getPropertyValue('--sc-input-font-size-medium'),
+            'fontSize': '16px',
             'iconColor': styles.getPropertyValue('--sc-stripe-icon-color'),
             'fontSmoothing': 'antialiased',
             '::placeholder': {
