@@ -172,6 +172,9 @@ export class ScStripePaymentElement {
           borderRadius: styles.getPropertyValue('--sc-input-border-radius-medium'),
           colorBackground: styles.getPropertyValue('--sc-input-background-color'),
           fontSizeBase: styles.getPropertyValue('--sc-input-font-size-medium'),
+          colorLogo: styles.getPropertyValue('--sc-stripe-color-logo'),
+          colorLogoTab: styles.getPropertyValue('--sc-stripe-color-logo-tab'),
+          colorLogoTabSelected: styles.getPropertyValue('--sc-stripe-color-logo-tab-selected'),
         },
         rules: {
           '.Input': {
