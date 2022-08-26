@@ -12,6 +12,8 @@ class DashboardController {
 	 * Show the dashboard.
 	 */
 	public function show( $request, $view ) {
+		// do not cache.
+		$request->noCache();
 		return \SureCart::view( $view );
 	}
 
