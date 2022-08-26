@@ -127,7 +127,13 @@ const Template = ({ theme }) => {
     <sc-textarea label="Text Area" placeholder="placeholder"></sc-textarea>
     <sc-textarea label="Text Area" value="This is some text"></sc-textarea>
 
-    <sc-toggle summary="Toggle">Toggle content</sc-toggle>
+    <sc-toggle summary="Toggle" open>Toggle content</sc-toggle>
+    <sc-toggle summary="Toggle" open shady>Toggle content</sc-toggle>
+
+    <sc-toggles theme="container">
+      <sc-toggle summary="Toggle" open show-control shady borderless>Toggle content</sc-toggle>
+      <sc-toggle summary="Toggle"show-control shady borderless>Toggle content</sc-toggle>
+    </sc-toggles>
 
     <sc-secure-notice>SC secure-notice</sc-secure-notice>
 

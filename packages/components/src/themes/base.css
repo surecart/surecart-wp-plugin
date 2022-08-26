@@ -387,6 +387,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-input-border-color: var(--sc-color-gray-600);
   --sc-table-border-bottom-color: var(--sc-color-gray-600);
   --sc-toggle-border-color: var(--sc-color-gray-600);
+  --sc-toggle-shady-color: var(--sc-color-gray-800);
   --sc-table-row-border-bottom-color: var(--sc-color-gray-600);
   --sc-stacked-list-row-hover-color: var(--sc-color-gray-800);
 

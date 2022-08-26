@@ -89,7 +89,7 @@
 }
 .details--shady {
   .details__body {
-    background: var(--sc-color-gray-50);
+    background: var(--sc-toggle-shady-color, var(--sc-color-gray-50));
   }
 }
 .details__content {
