@@ -1773,11 +1773,6 @@ export namespace Components {
         "full": boolean;
         "paymentMethod": PaymentMethod;
     }
-    interface ScPaymentMethodCreate {
-        "clientSecret": string;
-        "error": string;
-        "successUrl": string;
-    }
     interface ScPaymentMethodsList {
         "heading": string;
         /**
@@ -1820,6 +1815,10 @@ export namespace Components {
           * The merchant id for paypal.
          */
         "merchantId": string;
+        /**
+          * Merchant initiated billing enabled.
+         */
+        "merchantInitiated": boolean;
         /**
           * Test or live mode.
          */
@@ -3568,12 +3567,6 @@ declare global {
         prototype: HTMLScPaymentMethodElement;
         new (): HTMLScPaymentMethodElement;
     };
-    interface HTMLScPaymentMethodCreateElement extends Components.ScPaymentMethodCreate, HTMLStencilElement {
-    }
-    var HTMLScPaymentMethodCreateElement: {
-        prototype: HTMLScPaymentMethodCreateElement;
-        new (): HTMLScPaymentMethodCreateElement;
-    };
     interface HTMLScPaymentMethodsListElement extends Components.ScPaymentMethodsList, HTMLStencilElement {
     }
     var HTMLScPaymentMethodsListElement: {
@@ -3996,7 +3989,6 @@ declare global {
         "sc-pagination": HTMLScPaginationElement;
         "sc-payment": HTMLScPaymentElement;
         "sc-payment-method": HTMLScPaymentMethodElement;
-        "sc-payment-method-create": HTMLScPaymentMethodCreateElement;
         "sc-payment-methods-list": HTMLScPaymentMethodsListElement;
         "sc-payment-selected": HTMLScPaymentSelectedElement;
         "sc-paypal-add-method": HTMLScPaypalAddMethodElement;
@@ -6016,11 +6008,6 @@ declare namespace LocalJSX {
         "full"?: boolean;
         "paymentMethod"?: PaymentMethod;
     }
-    interface ScPaymentMethodCreate {
-        "clientSecret"?: string;
-        "error"?: string;
-        "successUrl"?: string;
-    }
     interface ScPaymentMethodsList {
         "heading"?: string;
         /**
@@ -6063,6 +6050,10 @@ declare namespace LocalJSX {
           * The merchant id for paypal.
          */
         "merchantId"?: string;
+        /**
+          * Merchant initiated billing enabled.
+         */
+        "merchantInitiated"?: boolean;
         /**
           * Test or live mode.
          */
@@ -7266,7 +7257,6 @@ declare namespace LocalJSX {
         "sc-pagination": ScPagination;
         "sc-payment": ScPayment;
         "sc-payment-method": ScPaymentMethod;
-        "sc-payment-method-create": ScPaymentMethodCreate;
         "sc-payment-methods-list": ScPaymentMethodsList;
         "sc-payment-selected": ScPaymentSelected;
         "sc-paypal-add-method": ScPaypalAddMethod;
@@ -7419,7 +7409,6 @@ declare module "@stencil/core" {
             "sc-pagination": LocalJSX.ScPagination & JSXBase.HTMLAttributes<HTMLScPaginationElement>;
             "sc-payment": LocalJSX.ScPayment & JSXBase.HTMLAttributes<HTMLScPaymentElement>;
             "sc-payment-method": LocalJSX.ScPaymentMethod & JSXBase.HTMLAttributes<HTMLScPaymentMethodElement>;
-            "sc-payment-method-create": LocalJSX.ScPaymentMethodCreate & JSXBase.HTMLAttributes<HTMLScPaymentMethodCreateElement>;
             "sc-payment-methods-list": LocalJSX.ScPaymentMethodsList & JSXBase.HTMLAttributes<HTMLScPaymentMethodsListElement>;
             "sc-payment-selected": LocalJSX.ScPaymentSelected & JSXBase.HTMLAttributes<HTMLScPaymentSelectedElement>;
             "sc-paypal-add-method": LocalJSX.ScPaypalAddMethod & JSXBase.HTMLAttributes<HTMLScPaypalAddMethodElement>;

@@ -64,9 +64,9 @@
  - [sc-order-submit](../../controllers/checkout-form/order-submit)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-pagination](../pagination)
- - [sc-payment-method-create](../../controllers/dashboard/payment-method-create)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
+ - [sc-stripe-add-method](../sc-stripe-add-method)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
@@ -104,9 +104,9 @@ graph TD;
   sc-order-submit --> sc-button
   sc-orders-list --> sc-button
   sc-pagination --> sc-button
-  sc-payment-method-create --> sc-button
   sc-payment-methods-list --> sc-button
   sc-purchase-downloads-list --> sc-button
+  sc-stripe-add-method --> sc-button
   sc-subscription --> sc-button
   sc-subscription-ad-hoc-confirm --> sc-button
   sc-subscription-cancel --> sc-button

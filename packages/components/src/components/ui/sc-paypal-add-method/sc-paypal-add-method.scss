@@ -7,7 +7,7 @@
   line-height: 0;
   text-align: center;
 
-  &:not(.paypal-buttons--busy):after {
+  &:after {
     content: " ";
     border-bottom: 1px solid var(--sc-input-border-color);
     width: 100%;

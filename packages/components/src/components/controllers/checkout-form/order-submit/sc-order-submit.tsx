@@ -48,7 +48,7 @@ export class ScOrderSubmit {
   @Prop() processor: ProcessorName;
 
   renderPayPalButton(buttons) {
-    const { client_id, account_id } = getProcessorData(this.processors, 'paypal', this.mode);
+    const { client_id, account_id, merchant_initiated } = getProcessorData(this.processors, 'paypal', this.mode);
     if (!client_id && !account_id) return null;
 
     return (
@@ -57,6 +57,7 @@ export class ScOrderSubmit {
         busy={this.busy}
         mode={this.mode}
         order={this.order}
+        merchantInitiated={merchant_initiated}
         currency-code={this.currencyCode}
         client-id={client_id}
         merchant-id={account_id}

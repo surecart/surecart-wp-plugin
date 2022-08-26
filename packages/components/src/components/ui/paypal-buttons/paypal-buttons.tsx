@@ -5,6 +5,7 @@ import { __ } from '@wordpress/i18n';
 import apiFetch from '../../../functions/fetch';
 import { hasSubscription } from '../../../functions/line-items';
 import { Checkout, PaymentIntent } from '../../../types';
+import { getScriptLoadParams } from './functions';
 
 @Component({
   tag: 'sc-paypal-buttons',
@@ -29,6 +30,9 @@ export class ScPaypalButtons {
 
   /** The merchant id for paypal. */
   @Prop() merchantId: string;
+
+  /** Merchant initiated billing enabled. */
+  @Prop() merchantInitiated: boolean;
 
   /** Test or live mode. */
   @Prop() mode: 'test' | 'live';
@@ -69,16 +73,16 @@ export class ScPaypalButtons {
   /** Load the script */
   async loadScript() {
     if (!this.clientId || !this.merchantId) return;
-    const subscriptionOrder = hasSubscription(this.order);
     try {
-      const paypal = await loadScript({
-        'client-id': this.clientId.replace(/ /g, ''),
-        ...(!subscriptionOrder ? { 'merchant-id': this.merchantId.replace(/ /g, '') } : {}),
-        'commit': false,
-        'intent': subscriptionOrder ? 'tokenize' : 'capture',
-        'vault': true,
-        'currency': this.order?.currency.toUpperCase() || 'USD',
-      });
+      const paypal = await loadScript(
+        getScriptLoadParams({
+          clientId: this.clientId,
+          merchantId: this.merchantId,
+          merchantInitiated: this.merchantInitiated,
+          reusable: this.order?.reusable_payment_method_required,
+          currency: this.order?.currency,
+        }),
+      );
       this.renderButtons(paypal);
     } catch (err) {
       console.error('failed to load the PayPal JS SDK script', err);
@@ -208,7 +212,7 @@ export class ScPaypalButtons {
 
   render() {
     return (
-      <div class={{ 'paypal-buttons': true, 'paypal-buttons--busy': this.busy }}>
+      <div class={{ 'paypal-buttons': true, 'paypal-buttons--busy': this.busy || !this.loaded }}>
         {(!this.loaded || this.busy) && <sc-skeleton style={{ 'height': '55px', '--border-radius': '4px', 'cursor': 'wait' }}></sc-skeleton>}
         <div class="sc-paypal-button-container" hidden={!this.loaded || this.busy}>
           <div hidden={!this.buttons.includes('card')} class="sc-paypal-card-button" ref={el => (this.cardContainer = el as HTMLDivElement)}></div>
