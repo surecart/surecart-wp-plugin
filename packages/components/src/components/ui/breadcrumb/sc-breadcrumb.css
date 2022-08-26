@@ -31,10 +31,10 @@
   color: var(--sc-breadcrumb-item-label-color, var(--sc-color-gray-900));
 }
 :host(:not(:last-of-type)) .breadcrumb-item__label:hover {
-  color: var(--sc-color-primary-500);
+  color: var(--sc-breadcrumb-item-label-hover-color, var(--sc-color-primary-500));
 }
 :host(:not(:last-of-type)) .breadcrumb-item__label:active {
-  color: var(--sc-color-gray-900);
+  color: var(--sc-breadcrumb-item-label-active-color, var(--sc-color-gray-900));
 }
 .breadcrumb-item__label:focus {
   box-shadow: var(--sc-focus-ring);
