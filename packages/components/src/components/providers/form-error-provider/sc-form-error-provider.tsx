@@ -1,6 +1,6 @@
 import { Component, h, State, Event, EventEmitter, Listen, Watch, Prop, Host } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { FormStateSetter, Order, ResponseError } from '../../../types';
+import { FormState, FormStateSetter, ResponseError } from '../../../types';
 
 /**
  * This component listens for a confirmed event and redirects to the success url.
@@ -11,7 +11,7 @@ import { FormStateSetter, Order, ResponseError } from '../../../types';
 })
 export class ScFormErrorProvider {
   /** The current order. */
-  @Prop() order: Order;
+  @Prop() checkoutState: FormState;
 
   /** Set the state. */
   @Event() scUpdateError: EventEmitter<ResponseError>;
@@ -28,9 +28,11 @@ export class ScFormErrorProvider {
     this.scUpdateError.emit(val);
   }
 
-  @Watch('order')
-  handleOrderChange() {
-    this.error = null;
+  @Watch('checkoutState')
+  handleStateChange(val) {
+    if (['finalizing', 'updating'].includes(val)) {
+      this.error = null;
+    }
   }
 
   /** Listen for error events in component. */
@@ -56,7 +58,7 @@ export class ScFormErrorProvider {
     if (error.code === 'order.line_items.price.blank') {
       return __('This product is no longer purchasable.', 'surecart');
     }
-    return error?.message;
+    return <span innerHTML={error?.message}></span>;
   }
 
   /** First will display validation error, then main error if no validation errors. */
@@ -73,11 +75,10 @@ export class ScFormErrorProvider {
     return (
       <Host>
         {!!this.errorMessage() && (
-          <sc-alert type="danger" scrollOnOpen={true} open={!!this.errorMessage()}>
+          <sc-alert type="danger" scrollOnOpen={true} style={{ marginBottom: 'var(--sc-form-row-spacing)' }} open={!!this.errorMessage()}>
             <span slot="title">{this.errorMessage()}</span>
           </sc-alert>
         )}
-
         <slot />
       </Host>
     );

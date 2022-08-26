@@ -1,7 +1,7 @@
 import { Component, Prop, h, Watch, State, Event, EventEmitter, Method } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
-import { Address, Order, TaxStatus } from '../../../../types';
+import { Address, Checkout, TaxStatus } from '../../../../types';
 
 @Component({
   tag: 'sc-order-shipping-address',
@@ -48,7 +48,7 @@ export class ScOrderShippingAddress {
 
   /** Make a request to update the order. */
   @Event() scUpdateOrder: EventEmitter<{
-    data: Partial<Order>;
+    data: Partial<Checkout>;
     options?: { silent?: boolean };
   }>;
 

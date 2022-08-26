@@ -31,6 +31,7 @@ class PaymentMethodController extends BaseController {
 						'customer_ids' => array_values( User::current()->customerIds() ),
 						'page'         => 1,
 						'per_page'     => 100,
+						'reusable'     => true,
 					],
 				]
 			)->render( $attributes['title'] ? "<span slot='heading'>" . $attributes['title'] . '</span>' : '' )
@@ -52,38 +53,6 @@ class PaymentMethodController extends BaseController {
 		}
 
 		return $this->createLive();
-
-		if ( ! empty( User::current()->customerId( 'live' ) ) ) {
-			$payment_intent_live = PaymentIntent::with( [ 'owner' ] )->create(
-				[
-					'processor_type' => 'stripe',
-					'live_mode'      => true,
-					'currency'       => \SureCart::account()->currency,
-					'customer_id'    => User::current()->customerId( 'live' ),
-				]
-			);
-			$output             .= $this->renderCreate( $payment_intent_live );
-		}
-
-		if ( User::current()->customerId( 'test' ) ) {
-			$output .= '<br /><sc-button type="default" >' . esc_html__( 'Add a test payment method', 'surecart' ) . '</sc-button>';
-		}
-
-		if ( ! empty( User::current()->customerId( 'test' ) ) && empty( User::current()->customerId( 'live' ) ) ) {
-			$payment_intent_test = PaymentIntent::with( [ 'owner' ] )->create(
-				[
-					'processor_type' => 'stripe',
-					'live_mode'      => false,
-					'currency'       => \SureCart::account()->currency,
-					'customer_id'    => User::current()->customerId( 'test' ),
-				]
-			);
-
-			$output .= $this->renderCreate( $payment_intent_test );
-		}
-
-		return $output;
-
 	}
 
 	public function createLive() {
@@ -137,7 +106,7 @@ class PaymentMethodController extends BaseController {
 
 		<sc-spacing style="--spacing: var(--sc-spacing-large)">
 			<sc-breadcrumbs>
-				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
+				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) );  // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>">
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</sc-breadcrumb>
 				<sc-breadcrumb>
@@ -152,7 +121,7 @@ class PaymentMethodController extends BaseController {
 
 			<sc-payment-method-create
 				client-secret="<?php echo esc_attr( $payment_intent->processor_data->stripe->client_secret ); ?>"
-				success-url="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>"
+				success-url="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) );  // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>"
 				>
 					<?php
 						echo wp_kses_post(

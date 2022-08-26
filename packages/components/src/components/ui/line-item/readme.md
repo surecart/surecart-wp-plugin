@@ -43,6 +43,7 @@
  - [sc-line-item-tax](../../controllers/checkout-form/line-item-tax)
  - [sc-line-item-total](../../controllers/checkout-form/line-item-total)
  - [sc-line-items](../../controllers/checkout-form/line-items)
+ - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
  - [sc-order-confirmation-line-items](../../controllers/confirmation/order-confirmation-line-items)
  - [sc-order-confirmation-totals](../../controllers/confirmation/order-confirmation-totals)
@@ -56,6 +57,7 @@ graph TD;
   sc-line-item-tax --> sc-line-item
   sc-line-item-total --> sc-line-item
   sc-line-items --> sc-line-item
+  sc-order --> sc-line-item
   sc-order-confirmation-details --> sc-line-item
   sc-order-confirmation-line-items --> sc-line-item
   sc-order-confirmation-totals --> sc-line-item

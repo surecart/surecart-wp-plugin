@@ -1,4 +1,4 @@
-import { Customer, Order } from '../../../../types';
+import { Customer, Checkout } from '../../../../types';
 import { createOrUpdateOrder } from '../../../../services/session';
 import { Component, Prop, h, Event, EventEmitter, Watch, Method } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
@@ -14,7 +14,7 @@ export class ScCustomerName {
   @Prop() loggedIn: boolean;
 
   /** (passed from the sc-checkout component automatically) */
-  @Prop() order: Order;
+  @Prop() order: Checkout;
 
   /** Force a customer. */
   @Prop() customer: Customer;
@@ -64,7 +64,7 @@ export class ScCustomerName {
   /** Emitted when the control's value changes. */
   @Event({ composed: true }) scChange: EventEmitter<void>;
 
-  @Event() scUpdateOrderState: EventEmitter<Partial<Order>>;
+  @Event() scUpdateOrderState: EventEmitter<Partial<Checkout>>;
 
   /** Emitted when the clear button is activated. */
   @Event() scClear: EventEmitter<void>;
@@ -82,7 +82,7 @@ export class ScCustomerName {
 
   @Method()
   async reportValidity() {
-    return this.input.reportValidity();
+    return this.input?.reportValidity?.();
   }
 
   async handleChange() {

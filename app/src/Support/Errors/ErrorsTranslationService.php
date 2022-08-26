@@ -131,13 +131,14 @@ class ErrorsTranslationService {
 	 */
 	public function translate( $response = null, $code = null ) {
 		// fallback.
-		if ( ! $response ) {
+		if ( empty( $response['message'] ) ) {
+			error_log( print_r( $response, 1 ) );
 			return new \WP_Error( 'error', __( 'Error.', 'surecart' ) );
 		}
 
 		$formatted = new \WP_Error(
 			$response['code'] ?? '',
-			$this->translateErrorMessage( $response, $response['message'] ) ?? '',
+			$this->translateErrorMessage( $response, $response['message'] ?? '' ),
 			[
 				'status'      => $code,
 				'type'        => $response['type'] ?? '',

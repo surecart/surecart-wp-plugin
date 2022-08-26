@@ -43,7 +43,13 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 		dispatch('core/block-editor').insertBlock(block, innerCount, clientId);
 	};
 
-	const blockProps = useBlockProps();
+	const blockProps = useBlockProps({
+		css: css`
+			.block-list-appender {
+				position: relative;
+			}
+		`,
+	});
 
 	const { children, childIsSelected } = useSelect((select) => {
 		return {

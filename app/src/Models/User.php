@@ -64,7 +64,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 */
 	protected function customerIds() {
 		if ( empty( $this->user->ID ) ) {
-			return '';
+			return [];
 		}
 		return array_filter( (array) get_user_meta( $this->user->ID, $this->customer_id_key, true ) );
 	}
@@ -75,7 +75,23 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @return boolean
 	 */
 	protected function isCustomer() {
-		return ! empty( array_filter( $this->customerIds() ) );
+		return ! empty( array_filter( (array) $this->customerIds() ) );
+	}
+
+	/**
+	 * Does the user have this customer id?
+	 *
+	 * @param string $id The customer id.
+	 *
+	 * @return boolean
+	 */
+	protected function hasCustomerId( $id ) {
+		foreach ( (array) $this->customerIds() as $saved_id ) {
+			if ( $saved_id === $id ) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

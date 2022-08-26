@@ -12,4 +12,5 @@ svg {
   display: block;
   height: 100%;
   width: 100%;
+  stroke-width: var(--sc-icon-stroke-width, 2px);
 }

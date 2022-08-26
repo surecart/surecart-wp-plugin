@@ -90,7 +90,7 @@ abstract class BaseSettings {
 			$asset_file['version'] . '-' . \SureCart::plugin()->version()
 		);
 
-		wp_set_script_translations( $handle, 'surecart', WP_LANG_DIR . '/plugins/' );
+		wp_set_script_translations( $handle, 'surecart' );
 
 		wp_localize_script(
 			$handle,

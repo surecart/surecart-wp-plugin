@@ -15,9 +15,14 @@ class Block extends BaseBlock {
 	 *
 	 * @return string
 	 */
-	public function render( $attributes, $content ) {
+	public function render( $attributes, $content = '' ) {
 		$href = \SureCart::pages()->url( 'dashboard' );
 
+		$label = $attributes['label'] ?? '';
+
+		if ( empty( $label ) ) {
+			$label = $content;
+		}
 		ob_start(); ?>
 
 		<div>
@@ -25,7 +30,7 @@ class Block extends BaseBlock {
 				<?php if ( ! empty( $attributes['show_icon'] ) ) : ?>
 					<sc-icon name="user" style="font-size: 18px" slot="prefix"></sc-icon>
 				<?php endif; ?>
-				<?php echo esc_html( $attributes['label'] ?? __( 'Dashboard', 'surecart' ) ); ?>
+				<?php echo esc_html( ! empty( $label ) ? $label : __( 'Dashboard', 'surecart' ) ); ?>
 			</sc-button>
 		</div>
 

@@ -3,7 +3,17 @@ import MethodText from '../../../components/MethodText.js';
 
 <p><MethodText path={'account'} method={'get'}  /></p>
 
-## Examples
+## Getting a cached version
+Sometimes it may be important to get a cached version of the Account, which you can
+use our account service:
+
+```php
+$account = \SureCart::account()
+$account->currency;
+$account->brand;
+```
+
+## Non-Cached Version (Not recommended)
 
 ```php
 \SureCart\Models\Account::find();

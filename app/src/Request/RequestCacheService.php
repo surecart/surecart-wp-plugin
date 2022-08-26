@@ -131,7 +131,7 @@ class RequestCacheService {
 
 		// flush the cache on the first request to clear any redis caching.
 		if ( ! self::$cached ) {
-			wp_cache_flush( $object_cache_key );
+			wp_cache_flush();
 			self::$cached = true;
 		}
 

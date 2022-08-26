@@ -1,7 +1,7 @@
 import { newE2EPage } from '@stencil/core/testing';
 import { setResponses } from '../../../../../testing';
 
-describe('sc-customer-details', () => {
+describe('sc-dashboard-customer-details', () => {
   it('renders', async () => {
     const page = await newE2EPage();
     setResponses(
@@ -13,9 +13,9 @@ describe('sc-customer-details', () => {
       ],
       page,
     );
-    await page.setContent('<sc-customer-details></sc-customer-details>');
+    await page.setContent('<sc-dashboard-customer-details></sc-dashboard-customer-details>');
 
-    const element = await page.find('sc-customer-details');
+    const element = await page.find('sc-dashboard-customer-details');
     expect(element).toHaveClass('hydrated');
   });
 });

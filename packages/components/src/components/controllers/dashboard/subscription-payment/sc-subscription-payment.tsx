@@ -40,7 +40,7 @@ export class ScSubscriptionPayment {
     if (!this.subscriptionId) return;
     this.subscription = (await apiFetch({
       path: addQueryArgs(`/surecart/v1/subscriptions/${this.subscriptionId}`, {
-        expand: ['price', 'price.product', 'latest_invoice', 'product'],
+        expand: ['price', 'price.product', 'current_period', 'product'],
       }),
     })) as Subscription;
   }
@@ -48,8 +48,9 @@ export class ScSubscriptionPayment {
   async fetchPaymentMethods() {
     this.paymentMethods = (await apiFetch({
       path: addQueryArgs(`/surecart/v1/payment_methods`, {
-        expand: ['card'],
+        expand: ['card', 'customer', 'billing_agreement', 'paypal_account', 'payment_instrument', 'bank_account'],
         customer_ids: this.customerIds,
+        reusable: true,
         ...(this.subscription?.live_mode !== null ? { live_mode: this.subscription.live_mode } : {}),
       }),
     })) as PaymentMethod[];
@@ -117,20 +118,11 @@ export class ScSubscriptionPayment {
       <Fragment>
         <sc-choices>
           <div>
-            {(this.paymentMethods || []).map(({ id, card, live_mode }) => {
-              if (live_mode !== this?.subscription?.live_mode) return null;
+            {(this.paymentMethods || []).map(method => {
+              if (method?.live_mode !== this?.subscription?.live_mode) return null;
               return (
-                <sc-choice checked={this.subscription?.payment_method === id} name="method" value={id}>
-                  <sc-flex justify-content="flex-start" align-items="center" style={{ '--spacing': '0.5em' }}>
-                    <sc-cc-logo style={{ fontSize: '36px' }} brand={card?.brand}></sc-cc-logo>
-                    <span style={{ fontSize: '7px', whiteSpace: 'nowrap' }}>
-                      {'\u2B24'} {'\u2B24'} {'\u2B24'} {'\u2B24'}
-                    </span>
-                    <span>{card?.last4}</span>
-                  </sc-flex>
-                  <span slot="per">
-                    {__('Expires', 'surecart')} {card?.exp_month}/{card?.exp_year}
-                  </span>
+                <sc-choice checked={this.subscription?.payment_method === method?.id} name="method" value={method?.id}>
+                  <sc-payment-method paymentMethod={method} full={true} />
                 </sc-choice>
               );
             })}

@@ -1,5 +1,5 @@
 import apiFetch from '../../../../functions/fetch';
-import { Order } from '../../../../types';
+import { Checkout } from '../../../../types';
 import { Component, State, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs, getQueryArg } from '@wordpress/url';
@@ -11,7 +11,7 @@ import { Universe } from 'stencil-wormhole';
   shadow: true,
 })
 export class ScOrderConfirmation {
-  @Prop({ mutable: true }) order: Order;
+  @Prop({ mutable: true }) order: Checkout;
 
   /** Loading */
   @State() loading: boolean = false;
@@ -39,7 +39,7 @@ export class ScOrderConfirmation {
     try {
       this.loading = true;
       this.order = (await await apiFetch({
-        path: addQueryArgs(`surecart/v1/orders/${this.getSessionId()}`, {
+        path: addQueryArgs(`surecart/v1/checkouts/${this.getSessionId()}`, {
           expand: [
             'line_items',
             'line_item.price',
@@ -54,7 +54,7 @@ export class ScOrderConfirmation {
           ],
           refresh_status: true,
         }),
-      })) as Order;
+      })) as Checkout;
     } catch (e) {
       if (e?.message) {
         this.error = e.message;

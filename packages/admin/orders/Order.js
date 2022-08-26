@@ -1,126 +1,157 @@
-import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
-import { dispatch } from '@wordpress/data';
-import Sidebar from './Sidebar';
-import FlashError from '../components/FlashError';
-
+/** @jsx jsx */
+import useEntity from '../hooks/useEntity';
+import Logo from '../templates/Logo';
 // template
-import Template from '../templates/SingleModel';
-
-import Details from './modules/Details';
-
-import LineItems from './modules/LineItems';
+import UpdateModel from '../templates/UpdateModel';
+import Sidebar from './Sidebar';
 import Charges from './modules/Charges';
+import Details from './modules/Details';
+import LineItems from './modules/LineItems';
 import Subscriptions from './modules/Subscriptions';
-import useCurrentPage from '../mixins/useCurrentPage';
+import { css, jsx } from '@emotion/core';
+import {
+	ScBreadcrumbs,
+	ScBreadcrumb,
+	ScButton,
+	ScFlex,
+	ScIcon,
+} from '@surecart/components-react';
+import { store as dataStore } from '@surecart/data';
+import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
+import { store as noticesStore } from '@wordpress/notices';
 import { useEffect } from 'react';
-import { ScSkeleton } from '@surecart/components-react';
-import SaveButton from './components/SaveButton';
 
 export default () => {
-	const {
-		id,
-		order,
-		updateOrder,
-		saveOrder,
-		isLoading,
-		error,
-		isSaving,
-		setSaving,
-		fetchOrder,
-		getRelation,
-	} = useCurrentPage('order');
-	const customer = getRelation('customer');
-	const charge = getRelation('charge');
-
-	const onSubmit = async (e) => {
-		e.preventDefault();
-		try {
-			setSaving(true);
-			await saveOrder();
-			addSnackbarNotice({
-				content: __('Saved.'),
-			});
-		} catch (e) {
-			console.error(e);
-			addModelErrors('order', e);
-		} finally {
-			setSaving(false);
-		}
-	};
-
-	const onInvalid = () => {
-		dispatch(uiStore).setInvalid(true);
-	};
+	const { createErrorNotice } = useDispatch(noticesStore);
+	const { receiveEntityRecords } = useDispatch(coreStore);
+	const id = useSelect((select) => select(dataStore).selectPageId());
+	const { order, hasLoadedOrder, orderError } = useEntity('order', id, {
+		expand: [
+			'checkout',
+			'checkout.line_items',
+			'checkout.charge',
+			'checkout.customer',
+			'customer.balances',
+			'checkout.shipping_address',
+			'charge.payment_method',
+			'checkout.tax_identifier',
+			'payment_method.card',
+			'payment_method.payment_instrument',
+			'payment_method.paypal_account',
+			'payment_method.bank_account',
+			'line_item.price',
+			'price.product',
+		],
+	});
 
 	useEffect(() => {
-		if (id) {
-			fetchOrder({
-				query: {
-					context: 'edit',
+		if (order?.checkout) {
+			receiveEntityRecords(
+				'surecart',
+				'checkout',
+				order?.checkout,
+				{
 					expand: [
 						'line_items',
 						'line_item.price',
 						'price.product',
-						'subscription',
-						'subscription.price',
 						'charge',
 						'charge.payment_method',
-						'charge.payment_intent',
 						'payment_method.card',
-						'customer',
-						'billing_address',
-						'shipping_address',
+						'payment_method.payment_instrument',
+						'payment_method.paypal_account',
+						'payment_method.bank_account',
 					],
 				},
-			});
+				true
+			);
 		}
-	}, [id]);
+		if (order?.checkout?.charge) {
+			receiveEntityRecords(
+				'surecart',
+				'charge',
+				order?.checkout?.charge,
+				{
+					checkout_ids: [order?.checkout?.id],
+					expand: [
+						'payment_method',
+						'payment_method.card',
+						'payment_method.payment_instrument',
+						'payment_method.paypal_account',
+						'payment_method.bank_account',
+					],
+				},
+				true
+			);
+		}
+	}, [order]);
+
+	useEffect(() => {
+		if (orderError) {
+			createErrorNotice(
+				orderError?.message || __('Something went wrong', 'surecart')
+			);
+		}
+	}, [orderError]);
 
 	return (
-		<Template
-			status={status}
-			pageModelName={'orders'}
-			onSubmit={onSubmit}
-			onInvalid={onInvalid}
-			// button={
-			// 	isLoading ? (
-			// 		<ScSkeleton
-			// 			style={{
-			// 				width: '120px',
-			// 				height: '35px',
-			// 				display: 'inline-block',
-			// 			}}
-			// 		></ScSkeleton>
-			// 	) : (
-			// 		<SaveButton isSaving={isSaving}>
-			// 			{__('Update Order', 'surecart')}
-			// 		</SaveButton>
-			// 	)
-			// }
-			backUrl={'admin.php?page=sc-orders'}
-			backText={__('Back to All Orders', 'surecart')}
+		<UpdateModel
 			title={
-				id
-					? __('Edit Order', 'surecart')
-					: __('Create Order', 'surecart')
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: 1em;
+					`}
+				>
+					<ScButton
+						circle
+						size="small"
+						href="admin.php?page=sc-orders"
+					>
+						<ScIcon name="arrow-left"></ScIcon>
+					</ScButton>
+					<ScBreadcrumbs>
+						<ScBreadcrumb>
+							<Logo display="block" />
+						</ScBreadcrumb>
+						<ScBreadcrumb href="admin.php?page=sc-orders">
+							{__('Orders', 'surecart')}
+						</ScBreadcrumb>
+						<ScBreadcrumb>
+							<ScFlex style={{ gap: '1em' }}>
+								{__('View Order', 'surecart')}
+							</ScFlex>
+						</ScBreadcrumb>
+					</ScBreadcrumbs>
+				</div>
 			}
 			sidebar={
 				<Sidebar
 					order={order}
-					updateOrder={updateOrder}
-					customer={customer}
-					loading={isLoading}
+					checkout={order?.checkout}
+					customer={order?.checkout?.customer}
+					loading={!hasLoadedOrder}
 				/>
 			}
 		>
-			<Fragment>
-				<FlashError path="orders" scrollIntoView />
-				<Details order={order} loading={isLoading} />
-				<LineItems order={order} charge={charge} loading={isLoading} />
-				<Charges charge={charge} loading={isLoading} />
-				<Subscriptions />
-			</Fragment>
-		</Template>
+			<>
+				<Details
+					order={order}
+					checkout={order?.checkout}
+					loading={!hasLoadedOrder}
+				/>
+				<LineItems
+					order={order}
+					checkout={order?.checkout}
+					charge={order?.checkout?.charge}
+					loading={!hasLoadedOrder}
+				/>
+				<Charges checkoutId={order?.checkout?.id} />
+				<Subscriptions checkoutId={order?.checkout?.id} />
+			</>
+		</UpdateModel>
 	);
 };

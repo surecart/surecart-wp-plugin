@@ -1,4 +1,4 @@
-import { Customer, Order } from '../../../../types';
+import { Customer, Checkout } from '../../../../types';
 import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
@@ -10,7 +10,7 @@ import { openWormhole } from 'stencil-wormhole';
 })
 export class ScOrderConfirmationCustomer {
   /** The Order */
-  @Prop() order: Order;
+  @Prop() order: Checkout;
 
   /** The heading */
   @Prop() heading: string;

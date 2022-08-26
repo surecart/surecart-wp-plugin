@@ -46,7 +46,7 @@ export class ScProductLineItem {
     if (this.trialDurationDays) {
       return (
         <div class="item__price">
-          <div class="price">{sprintf(_n('%d day free', '%d days free', this.trialDurationDays), this.trialDurationDays)}</div>
+          <div class="price">{sprintf(_n('%d day free', '%d days free', this.trialDurationDays, 'surecart'), this.trialDurationDays)}</div>
           <div class="price__description">
             {__('Then', 'surecart')} <sc-format-number type="currency" currency={this.currency} value={this.amount}></sc-format-number> {!!this.interval && this.interval}
           </div>

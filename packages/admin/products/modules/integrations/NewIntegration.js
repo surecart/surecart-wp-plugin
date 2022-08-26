@@ -1,22 +1,22 @@
 /** @jsx jsx */
 import { css, Global, jsx } from '@emotion/core';
-
-import { __ } from '@wordpress/i18n';
-import { useState, Fragment } from '@wordpress/element';
-import { Modal, Button } from '@wordpress/components';
 import { ScButton, ScForm } from '@surecart/components-react';
-import SelectIntegration from './SelectIntegration';
-import Error from '../../../components/Error';
-import { useDispatch } from '@wordpress/data';
+import { Button, Modal } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
-import useSnackbar from '../../../hooks/useSnackbar';
+import { useDispatch } from '@wordpress/data';
+import { Fragment, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { store as noticesStore } from '@wordpress/notices';
+
+import Error from '../../../components/Error';
+import SelectIntegration from './SelectIntegration';
 
 export default ({ onRequestClose, id }) => {
 	const [provider, setProvider] = useState(null);
 	const [item, setItem] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
-	const { addSnackbarNotice } = useSnackbar();
+	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	const { saveEntityRecord } = useDispatch(coreStore);
 
@@ -35,8 +35,8 @@ export default ({ onRequestClose, id }) => {
 				},
 				{ throwOnError: true }
 			);
-			addSnackbarNotice({
-				content: __('Integration saved.', 'surecart'),
+			createSuccessNotice(__('Integration saved.', 'surecart'), {
+				type: 'snackbar',
 			});
 			onRequestClose();
 		} catch (e) {

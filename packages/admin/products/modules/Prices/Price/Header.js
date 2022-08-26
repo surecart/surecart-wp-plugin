@@ -128,7 +128,7 @@ export default ({
 	};
 
 	const renderDropdown = () => {
-		if (!onArchive && !onDelete && !price?.archived) {
+		if (!onArchive && !onDelete) {
 			return null;
 		}
 
@@ -218,7 +218,6 @@ export default ({
 				isOpen={isOpen}
 				setIsOpen={setIsOpen}
 				buttons={buttons}
-				type={price?.archived ? 'warning' : ''}
 			>
 				{headerName()}
 			</ToggleHeader>

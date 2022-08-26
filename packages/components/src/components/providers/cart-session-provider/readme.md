@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property | Attribute | Description  | Type    | Default     |
-| -------- | --------- | ------------ | ------- | ----------- |
-| `order`  | --        | Order Object | `Order` | `undefined` |
+| Property | Attribute | Description  | Type       | Default     |
+| -------- | --------- | ------------ | ---------- | ----------- |
+| `order`  | --        | Order Object | `Checkout` | `undefined` |
 
 
 ## Events
@@ -18,7 +18,7 @@
 | -------------------- | ----------------------- | --------------------------------------------------------------------------------------------- |
 | `scError`            | Error event             | `CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any; } \| {}>` |
 | `scSetState`         | Set the state           | `CustomEvent<"busy" \| "idle" \| "loading" \| "navigating">`                                  |
-| `scUpdateOrderState` | Update line items event | `CustomEvent<Order>`                                                                          |
+| `scUpdateOrderState` | Update line items event | `CustomEvent<Checkout>`                                                                       |
 
 
 ## Dependencies

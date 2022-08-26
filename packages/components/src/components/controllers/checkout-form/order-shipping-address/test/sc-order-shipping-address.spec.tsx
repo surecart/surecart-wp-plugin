@@ -1,7 +1,6 @@
+import { ScOrderShippingAddress } from '../sc-order-shipping-address';
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { Address } from '../../../../../types';
-import { ScOrderShippingAddress } from '../sc-order-shipping-address';
 
 describe('sc-order-shipping-address', () => {
   it('renders', async () => {

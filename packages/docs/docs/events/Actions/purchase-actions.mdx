@@ -7,7 +7,7 @@ Occurs whenever a purchase is created. This is typically when a customer success
 ```php
 do_action(
 	'surecart/purchase_created',
-	(string) $purchase_id,
+	(\SureCart\Models\Purchase::class) $purchase,
 	(array) $webhook_data
 )
 ```
@@ -20,7 +20,7 @@ or a subscription is canceled or expired.
 ```php
 do_action(
 	'surecart/purchase_revoked',
-	(string) $purchase_id,
+	(\SureCart\Models\Purchase::class) $purchase,
 	(array) $webhook_data
 )
 ```
@@ -32,7 +32,7 @@ Occurs whenever a purchase is invoked. (This is the opposite of revoked). This c
 ```php
 do_action(
 	'surecart/purchase_invoked',
-	(string) $purchase_id,
+	(\SureCart\Models\Purchase::class) $purchase,
 	(array) $webhook_data
 )
 ```
@@ -44,7 +44,7 @@ Occurs whenever a purchase is updated. This only occurs when a subscription's pr
 ```php
 do_action(
 	'surecart/purchase_updated',
-	(string) $purchase_id,
+	(\SureCart\Models\Purchase::class) $purchase,
 	(array) $webhook_data
 )
 ```

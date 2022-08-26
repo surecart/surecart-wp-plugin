@@ -35,6 +35,8 @@ export class ScSwitch {
   /** This will be true when the control is in an invalid state. Validity is determined by the `required` prop. */
   @Prop({ reflect: true, mutable: true }) invalid: boolean = false;
 
+  @Prop() reversed: boolean;
+
   /** Emitted when the control loses focus. */
   @Event() scBlur: EventEmitter<void>;
 
@@ -115,6 +117,7 @@ export class ScSwitch {
           'switch--checked': this.checked,
           'switch--disabled': this.disabled,
           'switch--focused': this.hasFocus,
+          'switch--reversed': this.reversed,
         }}
         onMouseDown={e => this.handleMouseDown(e)}
       >

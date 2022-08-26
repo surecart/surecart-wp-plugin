@@ -1,4 +1,4 @@
-import { Order } from '../../../../types';
+import { Checkout } from '../../../../types';
 import { Component, h, Prop } from '@stencil/core';
 import dotProp from 'dot-prop-immutable';
 import { openWormhole } from 'stencil-wormhole';
@@ -9,7 +9,7 @@ import { openWormhole } from 'stencil-wormhole';
   shadow: true,
 })
 export class ScSessionDetail {
-  @Prop() order: Order;
+  @Prop() order: Checkout;
   @Prop() value: string;
   @Prop() fallback: string;
   @Prop() metaKey: string;

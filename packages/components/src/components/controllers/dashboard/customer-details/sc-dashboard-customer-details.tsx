@@ -50,6 +50,7 @@ export class ScDashboardCustomerDetails {
         customer={this.customer}
         loading={this.loading}
         error={this.error}
+        heading={this.heading}
         edit-link={addQueryArgs(window.location.href, {
           action: 'edit',
           model: 'customer',

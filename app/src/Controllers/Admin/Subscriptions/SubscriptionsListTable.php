@@ -137,7 +137,8 @@ class SubscriptionsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_integrations( $subscription ) {
-		$output = $this->productIntegrationsList( $subscription->purchase->product );
+		$product = $subscription->purchase->product ?? null;
+		$output  = $product ? $this->productIntegrationsList( $product ) : false;
 		return $output ? $output : '-';
 	}
 	/**
@@ -168,7 +169,7 @@ class SubscriptionsListTable extends ListTable {
 			[
 				'status' => $this->getStatus(),
 			]
-		)->with( [ 'customer', 'price', 'price.product', 'latest_invoice', 'purchase' ] )
+		)->with( [ 'customer', 'price', 'price.product', 'current_period', 'purchase' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'subscriptions' ),
@@ -229,16 +230,17 @@ class SubscriptionsListTable extends ListTable {
 	/**
 	 * Handle the total column
 	 *
-	 * @param \SureCart\Models\Order $subscription Checkout Session Model.
+	 * @param \SureCart\Models\Subscription $subscription Checkout Session Model.
 	 *
 	 * @return string
 	 */
 	public function column_plan( $subscription ) {
+		$amount       = $subscription->price->amount ?? 0;
 		$interval     = $subscription->price->recurring_interval ?? '';
 		$count        = $subscription->price->recurring_interval_count ?? 1;
 		$period_count = $subscription->price->recurring_period_count ?? null;
 		ob_start();
-		echo '<sc-format-number type="currency" currency="' . esc_html( strtoupper( $subscription->latest_invoice->currency ?? 'usd' ) ) . '" value="' . (float) ( $subscription->latest_invoice->total_amount ?? 0 ) . '"></sc-format-number>';
+		echo '<sc-format-number type="currency" currency="' . esc_html( strtoupper( $subscription->currency ?? 'usd' ) ) . '" value="' . (float) $amount . '"></sc-format-number>';
 		echo esc_html( $this->getInterval( $interval, $count ) );
 		if ( null !== $period_count ) {
 			echo esc_html( $this->getInterval( $interval, $period_count, __( 'for', 'surecart' ) ) );

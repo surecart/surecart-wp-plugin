@@ -9,7 +9,7 @@
 
 | Property  | Attribute | Description           | Type                                | Default     |
 | --------- | --------- | --------------------- | ----------------------------------- | ----------- |
-| `country` | `country` | Label for the field.  | `string`                            | `undefined` |
+| `country` | `country` | The country code.     | `string`                            | `undefined` |
 | `help`    | `help`    | Help text.            | `string`                            | `undefined` |
 | `loading` | `loading` | Is this loading?      | `boolean`                           | `undefined` |
 | `number`  | `number`  | Tax ID Number         | `string`                            | `null`      |

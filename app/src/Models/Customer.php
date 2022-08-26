@@ -43,6 +43,39 @@ class Customer extends Model {
 	}
 
 	/**
+	 * Expose media for a customer
+	 *
+	 * @param string $media_id The media id.
+	 *
+	 * @return \SureCart\Models\Media|false;
+	 */
+	protected function exposeMedia( $media_id ) {
+		if ( empty( $this->attributes['id'] ) || empty( $media_id ) ) {
+			return false;
+		}
+
+		if ( $this->fireModelEvent( 'exposing_media' ) === false ) {
+			return false;
+		}
+
+		$media = \SureCart::request(
+			$this->endpoint . '/' . $this->attributes['id'] . '/expose/' . $media_id,
+			[
+				'method' => 'GET',
+				'query'  => $this->query,
+			]
+		);
+
+		if ( $this->isError( $media ) ) {
+			return $media;
+		}
+
+		$this->fireModelEvent( 'exposed_media' );
+
+		return new Media( $media );
+	}
+
+	/**
 	 * Get a customer by their email address
 	 *
 	 * @param string $email Email address.

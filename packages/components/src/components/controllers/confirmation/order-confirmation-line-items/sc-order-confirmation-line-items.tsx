@@ -4,7 +4,7 @@ import { openWormhole } from 'stencil-wormhole';
 
 import { hasSubscription } from '../../../../functions/line-items';
 import { intervalString } from '../../../../functions/price';
-import { Order, Product } from '../../../../types';
+import { Checkout, Product } from '../../../../types';
 
 @Component({
   tag: 'sc-order-confirmation-line-items',
@@ -12,7 +12,7 @@ import { Order, Product } from '../../../../types';
   shadow: true,
 })
 export class ScOrderConfirmationLineItems {
-  @Prop() order: Order;
+  @Prop() order: Checkout;
   @Prop() loading: boolean;
 
   render() {
@@ -40,7 +40,7 @@ export class ScOrderConfirmationLineItems {
                 editable={false}
                 removable={false}
                 quantity={item.quantity}
-                amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount}
+                amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.subtotal_amount}
                 currency={this.order?.currency}
                 trialDurationDays={item?.price?.trial_duration_days}
                 interval={intervalString(item?.price, { showOnce: hasSubscription(this.order) })}

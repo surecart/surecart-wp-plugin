@@ -1,6 +1,6 @@
-import { __ } from '@wordpress/i18n';
 import SettingsTemplate from '../SettingsTemplate';
 import ExportRow from './ExportRow';
+import { __ } from '@wordpress/i18n';
 
 export default () => {
 	return (
@@ -22,10 +22,6 @@ export default () => {
 					<ExportRow
 						title={__('Customers', 'surecart')}
 						model="customers"
-					/>
-					<ExportRow
-						title={__('Invoices', 'surecart')}
-						model="invoices"
 					/>
 					<ExportRow
 						title={__('Orders', 'surecart')}

@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type    | Default     |
-| -------- | --------- | ----------- | ------- | ----------- |
-| `order`  | --        |             | `Order` | `undefined` |
+| Property | Attribute | Description | Type       | Default     |
+| -------- | --------- | ----------- | ---------- | ----------- |
+| `order`  | --        |             | `Checkout` | `undefined` |
 
 
 ## Dependencies

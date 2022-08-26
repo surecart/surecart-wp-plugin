@@ -23,8 +23,7 @@
 
 ### Used by
 
- - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
- - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [sc-payment-method](../sc-payment-method)
 
 ### Depends on
 
@@ -34,8 +33,7 @@
 ```mermaid
 graph TD;
   sc-cc-logo --> sc-icon
-  sc-payment-methods-list --> sc-cc-logo
-  sc-subscription-payment --> sc-cc-logo
+  sc-payment-method --> sc-cc-logo
   style sc-cc-logo fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
