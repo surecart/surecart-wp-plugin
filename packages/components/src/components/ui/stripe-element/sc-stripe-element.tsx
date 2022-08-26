@@ -137,21 +137,25 @@ export class ScStripeElement {
     if (!this.elements) {
       return;
     }
+    // get the computed styles.
+    const styles = getComputedStyle(document.body);
+
     this.elements
       .create('card', {
         style: {
           base: {
-            'color': '#303238',
-            'fontSize': '16px',
+            'color': styles.getPropertyValue('--sc-input-label-color'),
+            'fontSize': styles.getPropertyValue('--sc-input-font-size-medium'),
+            'iconColor': styles.getPropertyValue('--sc-stripe-icon-color'),
             'fontSmoothing': 'antialiased',
             '::placeholder': {
-              color: '#CFD7DF',
+              color: styles.getPropertyValue('--sc-input-placeholder-color'),
             },
           },
           invalid: {
-            'color': '#e5424d',
+            'color': styles.getPropertyValue('--sc-color-error-500'),
             ':focus': {
-              color: '#303238',
+              color: styles.getPropertyValue('--sc-input-label-color'),
             },
           },
         },
