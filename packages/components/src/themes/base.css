@@ -406,6 +406,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
 
   /** Stripe */
   --sc-stripe-color-logo: 'dark';
+  --sc-stripe-icon-color: var(--sc-color-white);
   --sc-stripe-color-tag: 'dark';
   --sc-stripe-color-tab-selected: 'dark';
 }
