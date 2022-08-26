@@ -225,4 +225,21 @@ class Request extends ServerRequest implements RequestInterface {
 	public function headers( $key = '', $default = null ) {
 		return call_user_func( [ $this, 'get' ], $this->getHeaders(), $key, $default );
 	}
+
+	/**
+	 * Send no-cache headers.
+	 * This will prevent cloudflare, etc. from caching a specific page.
+	 *
+	 * @return void
+	 */
+	public function noCache() {
+		add_filter(
+			'nocache_headers',
+			function( $headers ) {
+				$headers['Cache-Control'] = 'no-cache, must-revalidate, max-age=0, no-store';
+				return $headers;
+			},
+			10
+		);
+	}
 }
