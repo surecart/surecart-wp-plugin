@@ -4,6 +4,8 @@ namespace SureCart\Integrations\ThriveAutomator\Triggers;
 
 use SureCart\Integrations\ThriveAutomator\DataObjects\ProductDataObject;
 use SureCart\Integrations\ThriveAutomator\ThriveAutomatorApp;
+use SureCart\Models\Customer;
+use SureCart\Models\User;
 use Thrive\Automator\Items\Data_Object;
 use Thrive\Automator\Items\Trigger;
 
@@ -85,22 +87,38 @@ class PurchaseCreatedTrigger extends Trigger {
 	}
 
 
+	/**
+	 * Process the params.
+	 * We receive the raw data and return an array of Data_Objects.
+	 * By default, we read the array of Data_Object keys the trigger provides
+	 * and we create an instance for each one we find.
+	 *
+	 * @param array $params
+	 *
+	 * @return void
+	 */
 	public function process_params( $params = [] ) {
-		// log_it('Trigger 1');
-		// log_it($params);
 		$data = [];
 
 		if ( ! empty( $params ) ) {
-			$data_object_classes = Data_Object::get();
-			$product_id = $params[0]['product'];
-			// log_it('Trigger 2');
-			// log_it($data_object_classes);
-
+			$purchase_data                 = $params[0];
+			$data_object_classes           = Data_Object::get();
+			$product_id                    = $purchase_data['product'];
 			$data['surecart_product_data'] = empty( $data_object_classes['surecart_product_data'] ) ? null : new $data_object_classes['surecart_product_data']( $product_id );
-			// $data['user_data']             = empty( $data_object_classes['user_data'] ) ? null : new $data_object_classes['user_data']();
+
+			$user_data = null;
+			/**
+			 * Try to match email with existing user.
+			 */
+			if ( ! empty( $purchase_data ) && ! empty( $purchase_data['customer'] ) ) {
+				User::findByCustomerId( $purchase_data['customer'] );
+			}
+			if ( empty( $data_object_classes['user_data'] ) ) {
+				$data_objects['user_data'] = $user_data;
+			} else {
+				$data_objects['user_data'] = new $data_object_classes['user_data']( $user_data, $this->get_automation_id() );
+			}
 		}
-		// log_it('Trigger 3');
-		// log_it($data);
 
 		return $data;
 	}
