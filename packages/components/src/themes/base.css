@@ -297,6 +297,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-z-index-tooltip: 1000;
   --sc-checkout-columns: 1;
   --sc-dashboard-module-spacing: var(--sc-spacing-x-small);
+  --sc-border-width-zero: 0px;
 }
 
 [hidden] {
@@ -355,6 +356,9 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-input-placeholder-color-disabled: var(--sc-color-gray-400);
   --sc-input-help-text-color: var(--sc-color-gray-400);
   --sc-list-row-background-color: var(--sc-color-gray-950);
+  --sc-badge-notice-background-color: var(--sc-color-gray-950);
+  --sc-divider-text-background-color: var(--sc-color-gray-900);
+  --sc-badge-notice-text-color: var(--sc-color-gray-300);
   --sc-list-row-color: var(--sc-color-gray-300);
   --sc-empty-color: var(--sc-color-gray-300);
   --sc-empty-icon-color: var(--sc-color-gray-300);
@@ -373,7 +377,22 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-toggle-background-color: var(--sc-color-gray-950);
   --sc-card-background-color: var(--sc-color-gray-950);
   --sc-table-cell-background-color: var(--sc-color-gray-800);
+  --sc-alert-primary-background: var(--sc-color-gray-800);
+  --sc-alert-info-background: var(--sc-color-gray-800);
+  --sc-alert-danger-background: var(--sc-color-gray-800);
+  --sc-alert-warning-background: var(--sc-color-gray-800);
+  --sc-alert-success-background: var(--sc-color-gray-800);
   --sc-input-control-color: var(--sc-color-gray-300);
+  --sc-alert-primary-color: var(--sc-color-gray-300);
+  --sc-alert-info-color: var(--sc-color-gray-300);
+  --sc-alert-danger-color: var(--sc-color-gray-300);
+  --sc-alert-warning-color: var(--sc-color-gray-300);
+  --sc-alert-success-color: var(--sc-color-gray-300);
+  --sc-alert-primary-title-color: var(--sc-color-gray-300);
+  --sc-alert-info-title-color: var(--sc-color-gray-300);
+  --sc-alert-danger-title-color: var(--sc-color-gray-300);
+  --sc-alert-warning-title-color: var(--sc-color-gray-300);
+  --sc-alert-success-title-color: var(--sc-color-gray-300);
   --sc-breadcrumb-item-label-color: var(--sc-color-gray-300);
   --sc-breadcrumb-item-label-active-color: var(--sc-color-gray-200);
   --sc-button-default-color: var(--sc-color-gray-300);
@@ -390,9 +409,25 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-toggle-border-color: var(--sc-color-gray-600);
   --sc-toggle-shady-color: var(--sc-color-gray-800);
   --sc-table-row-border-bottom-color: var(--sc-color-gray-600);
+  --sc-badge-notice-border-color: var(--sc-color-gray-600);
   --sc-stacked-list-row-hover-color: var(--sc-color-gray-800);
   --sc-skeleton-color: var(--sc-color-gray-800);
   --sc-skeleton-sheen-color: var(--sc-color-gray-700);
+  --sc-alert-border-width: 3px;
+  --sc-alert-primary-border-color: var(--sc-color-primary-500);
+  --sc-alert-success-border-color: var(--sc-color-success-500);
+  --sc-alert-warning-border-color: var(--sc-color-warning-600);
+  --sc-alert-danger-border-color: var(--sc-color-danger-600);
+  --sc-switch-background-thumb-color: var(--sc-color-gray-900);
+  --sc-switch-background-thumb-hover-color: var(--sc-color-gray-900);
+  --sc-swith-label-color: var(--sc-color-gray-300);
+  --sc-switch-description-color: var(--sc-color-gray-400);
+  --sc-switch-control-background-color: var(--sc-color-gray-700);
+  --sc-switch-border-color: var(--sc-color-gray-700);
+  --sc-switch-control-hover-background-color: var(--sc-color-gray-600);
+  --sc-switch-control-hover-border-color: var(--sc-color-gray-600);
+  --sc-switch-checked-control-background-color: var(--sc-color-primary-600);
+  --sc-switch-checked-control-border-color: var(--sc-color-primary-600);
 
   /* Overlays */
   --sc-overlay-background-color: #d1d5db22;
@@ -415,41 +450,6 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-stripe-color-tab-selected: 'dark';
 }
 
-/* Alert */
-.surecart-theme-dark sc-alert::part(base) {
-  background-color: var(--sc-color-gray-900);
-  border-left-color: var(--sc-color-gray-800);
-  border-right-color: var(--sc-color-gray-800);
-  border-bottom-color: var(--sc-color-gray-800);
-  color: var(--sc-color-gray-200);
-  border: solid 1px;
-}
-
-.surecart-theme-dark sc-alert[type='primary']::part(title),
-.surecart-theme-dark sc-alert[type='primary']::part(base) {
-  color: var(--sc-color-primary-500);
-}
-
-.surecart-theme-dark sc-alert[type='success']::part(title),
-.surecart-theme-dark sc-alert[type='success']::part(base) {
-  color: var(--sc-color-success-500);
-}
-
-.surecart-theme-dark sc-alert[type='info']::part(title),
-.surecart-theme-dark sc-alert[type='info']::part(base) {
-  color: var(--sc-color-info-500);
-}
-
-.surecart-theme-dark sc-alert[type='warning']::part(title),
-.surecart-theme-dark sc-alert[type='warning']::part(base) {
-  color: var(--sc-color-warning-500);
-}
-
-.surecart-theme-dark sc-alert[type='danger']::part(title),
-.surecart-theme-dark sc-alert[type='danger']::part(base) {
-  color: var(--sc-color-danger-500);
-}
-
 /* Avatar */
 .surecart-theme-dark sc-table {
   color: var(--sc-color-gray-300);
@@ -459,15 +459,6 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
 .surecart-theme-dark sc-avatar::part(base) {
   background-color: var(--sc-color-gray-700);
   color: var(--sc-color-gray-300);
-}
-
-/* Divider */
-.surecart-theme-dark sc-divider::part(text) {
-  background-color: var(--sc-color-gray-950);
-}
-
-.surecart-theme-dark sc-divider::part(line) {
-  border-color: var(--sc-color-gray-600);
 }
 
 /* Button */
@@ -510,13 +501,6 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
 .surecart-theme-dark sc-card::part(base) {
   background-color: var(--sc-color-gray-900);
   --border-color: var(--sc-color-gray-800);
-}
-
-/* Checkbox & radio */
-.surecart-theme-dark sc-checkbox::part(control),
-.surecart-theme-dark sc-radio::part(control),
-.surecart-theme-dark sc-choice::part(checked-icon) {
-  color: var(--sc-color-gray-900);
 }
 
 /* Color picker */
@@ -653,39 +637,6 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
 /* Spinner */
 .surecart-theme-dark sc-spinner {
   --track-color: #f9fafb20;
-}
-
-/* Switch */
-.surecart-theme-dark sc-switch::part(thumb) {
-  background-color: var(--sc-color-gray-900);
-}
-
-.surecart-theme-dark sc-switch::part(title) {
-  color: var(--sc-color-gray-300);
-}
-
-.surecart-theme-dark sc-switch::part(description) {
-  color: var(--sc-color-gray-400);
-}
-
-.surecart-theme-dark sc-switch::part(control) {
-  background-color: var(--sc-color-gray-700);
-  border-color: var(--sc-color-gray-700);
-}
-
-.surecart-theme-dark sc-switch:not([disabled])::part(control):hover {
-  background-color: var(--sc-color-gray-600);
-  border-color: var(--sc-color-gray-600);
-}
-
-.surecart-theme-dark sc-switch[checked]::part(control) {
-  background-color: var(--sc-color-primary-600);
-  border-color: var(--sc-color-primary-600);
-}
-
-.surecart-theme-dark sc-switch[checked]::part(control):hover {
-  background-color: var(--sc-color-primary-500);
-  border-color: var(--sc-color-primary-500);
 }
 
 /* Secure notice */

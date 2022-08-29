@@ -32,6 +32,6 @@
 
 .text {
   padding: 0 var(--sc-spacing-small);
-  background: var(--sc-color-white);
+  background: var(--sc-divider-text-background-color, var(--sc-color-white));
   color: var(--sc-color-gray-500);
 }

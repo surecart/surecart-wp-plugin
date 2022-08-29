@@ -3,7 +3,9 @@
 }
 
 .notice {
-  background: var(--sc-color-gray-100);
+  background: var(--sc-badge-notice-background-color, var(--sc-color-white));
+  color: var(--sc-badge-notice-text-color, var(--sc-color-gray-950));
+  border: solid 1px var(--sc-badge-notice-border-color, var(--sc-color-white));
   border-radius: var(--sc-border-radius-small);
   padding: var(--sc-spacing-small);
   font-size: var(--sc-font-size-x-small);
