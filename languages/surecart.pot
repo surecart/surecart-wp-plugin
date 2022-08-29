@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-08-24T18:48:24+00:00\n"
+"POT-Creation-Date: 2022-08-25T21:42:45+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -3083,7 +3083,7 @@ msgstr ""
 #: Controllers/DownloadController.php:90
 #: Controllers/OrderController.php:55
 #: Controllers/OrderController.php:99
-#: Controllers/PaymentMethodController.php:110
+#: Controllers/PaymentMethodController.php:100
 #: Controllers/SubscriptionController.php:95
 #: Controllers/SubscriptionController.php:176
 #: Controllers/SubscriptionController.php:233
@@ -4045,11 +4045,12 @@ msgstr ""
 #: sc-order.js:75
 #: sc-orders-list.js:56
 #: sc-orders-list.js:69
-#: sc-payment-method-create.js:24
-#: sc-payment-method-create.js:40
 #: sc-payment-methods-list.js:59
 #: sc-payment-methods-list.js:84
 #: sc-payment-methods-list.js:106
+#: sc-paypal-add-method.js:94
+#: sc-stripe-add-method.js:87
+#: sc-stripe-add-method.js:114
 #: sc-subscription-cancel.js:37
 #: sc-subscription-cancel.js:73
 #: sc-subscription-payment.js:43
@@ -4445,7 +4446,9 @@ msgstr ""
 #: invoices/modules/Details.js:77
 #: orders/modules/Details.js:55
 #: subscriptions/show/modules/Details.js:137
-#: Controllers/PaymentMethodController.php:119
+#: Blocks/Dashboard/DashboardPage/Block.php:34
+#: Blocks/Dashboard/DashboardPage/Block.php:42
+#: Controllers/PaymentMethodController.php:109
 #: Blocks/Payment/edit.js:169
 #: sc-order.js:138
 #: sc-payment.js:63
@@ -6871,21 +6874,41 @@ msgstr ""
 msgid "License Keys"
 msgstr ""
 
-#: Controllers/PaymentMethodController.php:70
-msgid "Add a test payment method"
+#: Controllers/PaymentMethodController.php:51
+msgid "You are not a live mode customer."
 msgstr ""
 
-#: Controllers/PaymentMethodController.php:88
-msgid "Add a live payment method"
+#: Controllers/PaymentMethodController.php:54
+msgid "Switch to test mode."
 msgstr ""
 
-#: Controllers/PaymentMethodController.php:102
+#: Controllers/PaymentMethodController.php:58
+msgid "You are not a test mode customer."
+msgstr ""
+
+#: Controllers/PaymentMethodController.php:61
+msgid "Switch to live mode."
+msgstr ""
+
+#: Controllers/PaymentMethodController.php:65
+msgid "You are not currently a customer."
+msgstr ""
+
+#: Controllers/PaymentMethodController.php:91
 msgid "You cannot currently add a payment method. Please contact us for support."
 msgstr ""
 
-#: Controllers/PaymentMethodController.php:113
-#: Controllers/PaymentMethodController.php:118
+#: Controllers/PaymentMethodController.php:103
+#: Controllers/PaymentMethodController.php:108
 msgid "Add Payment Method"
+msgstr ""
+
+#: Controllers/PaymentMethodController.php:118
+#: Blocks/Payment/edit.js:197
+#: Blocks/Payment/edit.js:260
+#: sc-payment.js:69
+#: sc-payment.js:75
+msgid "Credit Card"
 msgstr ""
 
 #: Controllers/SubscriptionController.php:108
@@ -7844,13 +7867,6 @@ msgstr ""
 
 #: Blocks/Payment/edit.js:154
 msgid "There is no payment method for %1s payments. You will need to connect and verify your account with at least one processor in order to process %2s payments."
-msgstr ""
-
-#: Blocks/Payment/edit.js:197
-#: Blocks/Payment/edit.js:260
-#: sc-payment.js:69
-#: sc-payment.js:75
-msgid "Credit Card"
 msgstr ""
 
 #: Blocks/Payment/edit.js:203
@@ -9958,12 +9974,15 @@ msgstr ""
 msgid "You are probably offline."
 msgstr ""
 
-#: paypal-buttons.js:330
-#: paypal-buttons.js:336
+#: paypal-buttons.js:92
+#: paypal-buttons.js:98
+#: sc-paypal-add-method.js:54
+#: sc-paypal-add-method.js:59
+#: sc-paypal-add-method.js:65
 msgid "The payment did not process. Please try again."
 msgstr ""
 
-#: paypal-buttons.js:371
+#: paypal-buttons.js:133
 msgid "Something went wrong. Please contact us for payment."
 msgstr ""
 
@@ -9996,7 +10015,8 @@ msgstr ""
 #: sc-cart-form.js:115
 #: sc-dashboard-module2.js:14
 #: sc-login-form.js:104
-#: sc-payment-method-create.js:45
+#: sc-paypal-add-method.js:101
+#: sc-stripe-add-method.js:119
 #: sc-upcoming-invoice.js:206
 msgid "Error"
 msgstr ""
@@ -10141,10 +10161,6 @@ msgstr ""
 msgid "Displaying %1d to %2d of %3d items"
 msgstr ""
 
-#: sc-payment-method-create.js:45
-msgid "Save Payment Method"
-msgstr ""
-
 #: sc-payment-method2.js:17
 msgid "Checking"
 msgstr ""
@@ -10171,6 +10187,10 @@ msgstr ""
 
 #: sc-payment.js:90
 msgid "Please contact us for payment"
+msgstr ""
+
+#: sc-paypal-add-method.js:72
+msgid "Failed to load the PayPal JS SDK script"
 msgstr ""
 
 #: sc-price-choice.js:780
@@ -10215,6 +10235,10 @@ msgstr ""
 
 #: sc-session-provider2.js:298
 msgid "Payment unsuccessful. Please try again."
+msgstr ""
+
+#: sc-stripe-add-method.js:119
+msgid "Save Payment Method"
 msgstr ""
 
 #: sc-stripe-payment-request2.js:159
