@@ -75,7 +75,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @return boolean
 	 */
 	protected function isCustomer() {
-		return ! empty( array_filter( (array) $this->customerIds() ) );
+		return true;// ! empty( array_filter( (array) $this->customerIds() ) );
 	}
 
 	/**
