@@ -1,5 +1,6 @@
-import { __ } from '@wordpress/i18n';
 import { ScCard, ScDashboardModule } from '@surecart/components-react';
+import { __ } from '@wordpress/i18n';
+
 import ChartSummary from './ChartSummary';
 
 export default (props) => {
@@ -13,7 +14,10 @@ export default (props) => {
 	};
 
 	const totals = (data, key) => {
-		return data.reduce((sum, item) => sum + parseFloat(item[key]), 0);
+		return (
+			data.reduce((sum, item) => sum + parseFloat(item[key]), 0) /
+				data?.length || 1
+		);
 	};
 
 	return (
