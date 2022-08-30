@@ -57,6 +57,7 @@ export default ({ required, value, className, onSelect }) => {
 			placeholder={__('Select a user', 'surecart')}
 			searchPlaceholder={__('Search for a user...', 'surecart')}
 			search
+			value={value}
 			onScSearch={(e) => findUser(e.detail)}
 			onScChange={(e) => {
 				onSelect(e.target.value);
