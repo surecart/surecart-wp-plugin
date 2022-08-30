@@ -140,7 +140,7 @@ export class ScCustomerDetails {
       <sc-dashboard-module class="customer-details" error={this.error}>
         <span slot="heading">
           {this.heading || __('Billing Details', 'surecart')}{' '}
-          {!this?.customer?.live_mode && (
+          {!this?.customer?.live_mode && '' !== this.customerid && (
             <sc-tag type="warning" size="small">
               {__('Test', 'surecart')}
             </sc-tag>
