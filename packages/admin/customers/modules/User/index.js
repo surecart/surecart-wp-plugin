@@ -42,14 +42,8 @@ export default ({ customerId, customer }) => {
 				},
 			];
 			return {
-				user: (
-					select(coreStore).getEntityRecords(...queryArgs) || []
-				).find(
-					(user) =>
-						user?.meta?.sc_customer_ids?.[
-							customer?.live_mode ? 'live' : 'test'
-						]
-				),
+				user: (select(coreStore).getEntityRecords(...queryArgs) ||
+					[])?.[0],
 				loading: select(coreStore).isResolving(
 					'getEntityRecords',
 					queryArgs
