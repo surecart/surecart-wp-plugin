@@ -673,6 +673,7 @@ export namespace Components {
     }
     interface ScCustomerDetails {
         "customer": Customer;
+        "customerid": string;
         "editLink": string;
         "error": string;
         "heading": string;
@@ -824,6 +825,7 @@ export namespace Components {
     interface ScDashboardDownloadsList {
         "allLink": string;
         "heading": string;
+        "isCustomer": boolean;
         /**
           * Customer id to fetch subscriptions
          */
@@ -1696,6 +1698,7 @@ export namespace Components {
     interface ScOrdersList {
         "allLink": string;
         "heading": string;
+        "isCustomer": boolean;
         /**
           * Query to fetch orders
          */
@@ -1775,6 +1778,7 @@ export namespace Components {
     }
     interface ScPaymentMethodsList {
         "heading": string;
+        "isCustomer": boolean;
         /**
           * Query to fetch paymentMethods
          */
@@ -2463,6 +2467,7 @@ export namespace Components {
         "allLink": string;
         "cancelBehavior": 'period_end' | 'immediate';
         "heading": string;
+        "isCustomer": boolean;
         /**
           * Customer id to fetch subscriptions
          */
@@ -4757,6 +4762,7 @@ declare namespace LocalJSX {
     }
     interface ScCustomerDetails {
         "customer"?: Customer;
+        "customerid"?: string;
         "editLink"?: string;
         "error"?: string;
         "heading"?: string;
@@ -4949,6 +4955,7 @@ declare namespace LocalJSX {
     interface ScDashboardDownloadsList {
         "allLink"?: string;
         "heading"?: string;
+        "isCustomer"?: boolean;
         /**
           * Customer id to fetch subscriptions
          */
@@ -5925,6 +5932,7 @@ declare namespace LocalJSX {
     interface ScOrdersList {
         "allLink"?: string;
         "heading"?: string;
+        "isCustomer"?: boolean;
         /**
           * Query to fetch orders
          */
@@ -6010,6 +6018,7 @@ declare namespace LocalJSX {
     }
     interface ScPaymentMethodsList {
         "heading"?: string;
+        "isCustomer"?: boolean;
         /**
           * Query to fetch paymentMethods
          */
@@ -6794,6 +6803,7 @@ declare namespace LocalJSX {
         "allLink"?: string;
         "cancelBehavior"?: 'period_end' | 'immediate';
         "heading"?: string;
+        "isCustomer"?: boolean;
         /**
           * Customer id to fetch subscriptions
          */

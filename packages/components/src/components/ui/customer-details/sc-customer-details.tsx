@@ -17,10 +17,22 @@ export class ScCustomerDetails {
   @Prop() customer: Customer;
   @Prop() loading: boolean;
   @Prop() error: string;
+  @Prop() customerid: string;
 
   renderContent() {
     if (this.loading) {
       return this.renderLoading();
+    }
+
+    if ( '' === this.customerid ) {
+      return (
+        <div>
+          <sc-divider style={{ '--spacing': '0' }}></sc-divider>
+          <slot name="empty">
+            <sc-empty icon="shopping-bag">{__("You don\'t have any billing details.", 'surecart')}</sc-empty>
+          </slot>
+        </div>
+      );
     }
 
     if (!this.customer) {
@@ -135,7 +147,7 @@ export class ScCustomerDetails {
           )}
         </span>
 
-        {this.editLink && (
+        {this.editLink && '' !== this.customerid && (
           <sc-button type="link" href={this.editLink} slot="end">
             <sc-icon name="edit-3" slot="prefix"></sc-icon>
             {__('Update', 'surecart')}

@@ -23,6 +23,7 @@ export class ScOrdersList {
   };
   @Prop() allLink: string;
   @Prop() heading: string;
+  @Prop() isCustomer: boolean;
 
   @State() orders: Array<Order> = [];
 
@@ -74,6 +75,9 @@ export class ScOrdersList {
 
   /** Get all orders */
   async getOrders() {
+    if ( ! this.isCustomer ) {
+      return;
+    }
     const response = (await await apiFetch({
       path: addQueryArgs(`surecart/v1/orders/`, {
         expand: ['checkout', 'checkout.line_items', 'checkout.charge'],

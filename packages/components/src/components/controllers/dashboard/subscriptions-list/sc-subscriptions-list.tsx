@@ -22,6 +22,7 @@ export class ScSubscriptionsList {
   };
   @Prop() allLink: string;
   @Prop() heading: string;
+  @Prop() isCustomer: boolean;
   @Prop() cancelBehavior: 'period_end' | 'immediate' = 'period_end';
 
   @State() subscriptions: Array<Subscription> = [];
@@ -73,6 +74,10 @@ export class ScSubscriptionsList {
 
   /** Get all subscriptions */
   async getSubscriptions() {
+    if ( ! this.isCustomer ) {
+      return;
+    }
+
     const response = (await await apiFetch({
       path: addQueryArgs(`surecart/v1/subscriptions/`, {
         expand: ['price', 'price.product', 'current_period', 'period.checkout'],

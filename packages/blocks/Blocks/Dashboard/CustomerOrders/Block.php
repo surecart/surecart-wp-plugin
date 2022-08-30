@@ -19,7 +19,7 @@ class Block extends DashboardPage {
 	 * @return function
 	 */
 	public function render( $attributes, $content ) {
-		if ( ! User::current()->isCustomer() ) {
+		if ( ! is_user_logged_in() ) {
 			return;
 		}
 		return ( new OrderController() )->preview( $attributes );
