@@ -170,11 +170,15 @@ class LifterLMSService extends IntegrationService implements IntegrationInterfac
 	 * @return boolean|void Returns true if the user course access updation was successful otherwise false.
 	 */
 	public function updateAccess( $course_id, $wp_user, $add = true ) {
-		// we don't have learndash installed.
-		if ( ! function_exists( 'ld_update_course_access' ) ) {
+		// we don't have LifterLMS installed.
+		if ( ! defined( 'LLMS_VERSION' ) ) {
 			return;
 		}
 		// update course access.
-		return \ld_update_course_access( $wp_user->ID, $course_id, ! $add );
+		if ( $add ) {
+			return \llms_enroll_student( $wp_user->ID, $course_id );
+		} else {
+			return \llms_delete_student_enrollment( $wp_user->ID, $course_id );
+		}
 	}
 }
