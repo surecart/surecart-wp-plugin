@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-08-25T21:42:10",
+  "timestamp": "2022-08-30T13:45:39",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -14864,6 +14864,7 @@
       "filePath": "./src/components/ui/sc-paypal-add-method/sc-paypal-add-method.tsx",
       "encapsulation": "none",
       "tag": "sc-paypal-add-method",
+      "readme": "# sc-paypal-add-method\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -18468,6 +18469,7 @@
       "filePath": "./src/components/ui/sc-stripe-add-method/sc-stripe-add-method.tsx",
       "encapsulation": "none",
       "tag": "sc-stripe-add-method",
+      "readme": "# sc-stripe-add-method\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
