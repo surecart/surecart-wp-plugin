@@ -77,10 +77,13 @@ class CustomerLinkService {
 		if ( $existing ) {
 			$mode = ! empty( $this->checkout->live_mode ) ? 'live' : 'test';
 			// maybe add the customer id for the user if it's not yet set.
-			if ( $this->checkout->customer_id !== $existing->customerId( $mode ) ) {
+			if ( ! $existing->customerId( $mode ) ) {
 				$existing->setCustomerId( $this->checkout->customer_id, $mode );
+				return $existing;
 			}
-			return $existing;
+			error_log( 'Andre Error: Attempted to set customer id, but the user already has one.' );
+			error_log( print_r( $existing, 1 ) );
+			error_log( print_r( $this->checkout, 1 ) );
 		}
 
 		return false;
