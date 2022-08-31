@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-08-25T21:42:45+00:00\n"
+"POT-Creation-Date: 2022-08-31T15:04:18+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -336,7 +336,7 @@ msgstr ""
 #: src/Controllers/Admin/Customers/CustomersController.php:24
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:131
 #: admin/customers/index.php:7
-#: customers/EditCustomer.js:80
+#: customers/EditCustomer.js:75
 #: settings/export/ExportSettings.js:23
 msgid "Customers"
 msgstr ""
@@ -359,7 +359,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:61
 #: customers/modules/Details.js:46
-#: settings/brand/BrandSettings.js:131
+#: settings/brand/BrandSettings.js:126
 msgid "Email"
 msgstr ""
 
@@ -855,8 +855,8 @@ msgstr ""
 msgid "The integration has been removed or is unavailable."
 msgstr ""
 
-#: src/Controllers/Web/DashboardController.php:40
-#: src/Models/User.php:142
+#: src/Controllers/Web/DashboardController.php:42
+#: src/Models/User.php:156
 msgid "This user could not be found."
 msgstr ""
 
@@ -1002,12 +1002,16 @@ msgstr ""
 msgid "You do not have permission do this."
 msgstr ""
 
-#: src/Middleware/CustomerDashboardMiddleware.php:88
+#: src/Middleware/CustomerDashboardMiddleware.php:91
 msgid "This link has expired."
 msgstr ""
 
 #: src/Middleware/NonceMiddleware.php:26
 msgid "Something is wrong with the provided link."
+msgstr ""
+
+#: src/Models/User.php:112
+msgid "This user is already linked to a customer."
 msgstr ""
 
 #: src/Permissions/RolesService.php:36
@@ -3637,7 +3641,7 @@ msgid "Store Settings"
 msgstr ""
 
 #: layouts/partials/admin-settings-sidebar.php:9
-#: settings/brand/BrandSettings.js:45
+#: settings/brand/BrandSettings.js:40
 msgid "Design & Branding"
 msgstr ""
 
@@ -4022,9 +4026,9 @@ msgid "Could not download the file."
 msgstr ""
 
 #: components/MediaLibrary/DownloadMedia.js:30
-#: customers/EditCustomer.js:51
+#: customers/EditCustomer.js:46
 #: customers/modules/Balance/ViewTransactions.js:46
-#: customers/modules/User/index.js:23
+#: customers/modules/User/index.js:24
 #: licenses/modules/Activations/index.js:59
 #: orders/Order.js:94
 #: products/modules/SingleDownload.js:35
@@ -4467,11 +4471,11 @@ msgstr ""
 msgid "Create"
 msgstr ""
 
-#: customers/EditCustomer.js:46
+#: customers/EditCustomer.js:41
 msgid "Customer updated."
 msgstr ""
 
-#: customers/EditCustomer.js:84
+#: customers/EditCustomer.js:79
 #: invoices/modules/Customer.js:27
 #: licenses/modules/Customer.js:53
 #: orders/modules/Customer.js:28
@@ -4480,7 +4484,7 @@ msgstr ""
 msgid "Edit Customer"
 msgstr ""
 
-#: customers/EditCustomer.js:95
+#: customers/EditCustomer.js:90
 msgid "Save Customer"
 msgstr ""
 
@@ -4572,28 +4576,28 @@ msgstr ""
 msgid "No more subscriptions."
 msgstr ""
 
-#: customers/modules/User/index.js:65
+#: customers/modules/User/index.js:74
 msgid "Are you sure you want to disconnect this from this customer? This will cause them to lose access to their purchases."
 msgstr ""
 
-#: customers/modules/User/index.js:96
+#: customers/modules/User/index.js:105
 msgid "User disconnected."
 msgstr ""
 
-#: customers/modules/User/index.js:126
+#: customers/modules/User/index.js:139
 msgid "User connected."
 msgstr ""
 
-#: customers/modules/User/index.js:138
+#: customers/modules/User/index.js:151
 msgid "WordPress User"
 msgstr ""
 
-#: customers/modules/User/index.js:186
+#: customers/modules/User/index.js:199
 #: customers/modules/User/WPUser.js:67
 msgid "Disconnect"
 msgstr ""
 
-#: customers/modules/User/index.js:190
+#: customers/modules/User/index.js:203
 msgid "Connect a user"
 msgstr ""
 
@@ -4655,7 +4659,7 @@ msgstr ""
 msgid "Contact support for additional help"
 msgstr ""
 
-#: dashboard/components/overview/charts/AverageOrderValue.js:21
+#: dashboard/components/overview/charts/AverageOrderValue.js:25
 msgid "Average Order Value"
 msgstr ""
 
@@ -4741,7 +4745,7 @@ msgstr ""
 
 #: invoices/modules/Address.js:7
 #: orders/modules/Address.js:10
-#: settings/brand/BrandSettings.js:154
+#: settings/brand/BrandSettings.js:149
 #: settings/tax/TaxSettings.js:72
 #: sc-address2.js:47
 #: sc-form-components-validator2.js:56
@@ -5314,12 +5318,12 @@ msgstr ""
 msgid "Enter the number of unique activations per license key. Leave blank for infinite."
 msgstr ""
 
-#: products/modules/Licensing.js:76
+#: products/modules/Licensing.js:77
 #: products/modules/SingleDownload.js:182
 msgid "Current Release"
 msgstr ""
 
-#: products/modules/Licensing.js:77
+#: products/modules/Licensing.js:78
 msgid "This is the current release zip of your software."
 msgstr ""
 
@@ -5528,7 +5532,7 @@ msgstr ""
 
 #: settings/account/AccountSettings.js:27
 #: settings/advanced/AdvancedSettings.js:25
-#: settings/brand/BrandSettings.js:35
+#: settings/brand/BrandSettings.js:30
 #: settings/connection/ConnectionSettings.js:25
 #: settings/customer/CustomerSettings.js:33
 #: settings/order/OrderProtocol.js:27
@@ -5593,78 +5597,50 @@ msgstr ""
 msgid "If you do not wish to use the slide-out cart, you can disable this to prevent scripts from loading on your pages."
 msgstr ""
 
-#: settings/brand/BrandSettings.js:56
+#: settings/brand/BrandSettings.js:51
 msgid "Brand Settings"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:57
+#: settings/brand/BrandSettings.js:52
 msgid "Customize how your brand appears globally across SureCart. Your logo and colors will be used on hosted pages and emails that are sent to your customers."
 msgstr ""
 
-#: settings/brand/BrandSettings.js:74
+#: settings/brand/BrandSettings.js:69
 msgid "Brand Color"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:75
+#: settings/brand/BrandSettings.js:70
 msgid "This color will be used for the main button color, links, and various UI elements."
 msgstr ""
 
-#: settings/brand/BrandSettings.js:116
+#: settings/brand/BrandSettings.js:111
 msgid "Contact Information"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:117
+#: settings/brand/BrandSettings.js:112
 msgid "This information helps customers recognize your business and contact you when necessary. It will be visible on invoices/receipts and any emails that need to be CAN-SPAM compliant (i.e. abandoned order emails)."
 msgstr ""
 
-#: settings/brand/BrandSettings.js:133
+#: settings/brand/BrandSettings.js:128
 msgid "Enter an email"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:138
+#: settings/brand/BrandSettings.js:133
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:82
 #: sc-customer-edit.js:88
 msgid "Phone"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:140
+#: settings/brand/BrandSettings.js:135
 msgid "Enter an phone number"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:145
+#: settings/brand/BrandSettings.js:140
 msgid "Website"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:147
+#: settings/brand/BrandSettings.js:142
 msgid "Enter a website URL"
-msgstr ""
-
-#: settings/brand/BrandSettings.js:165
-#: settings/order/OrderProtocol.js:87
-msgid "Invoices & Receipts"
-msgstr ""
-
-#: settings/brand/BrandSettings.js:166
-msgid "Configure how invoices and receipts are displayed to your customers."
-msgstr ""
-
-#: settings/brand/BrandSettings.js:173
-#: settings/order/OrderProtocol.js:95
-msgid "Memo"
-msgstr ""
-
-#: settings/brand/BrandSettings.js:178
-#: settings/order/OrderProtocol.js:98
-msgid "This appears in the memo area of your invoices and receipts."
-msgstr ""
-
-#: settings/brand/BrandSettings.js:184
-#: settings/order/OrderProtocol.js:104
-msgid "Footer"
-msgstr ""
-
-#: settings/brand/BrandSettings.js:189
-msgid "Help or legal text that appears at the bottom of the invoice."
 msgstr ""
 
 #: settings/brand/Logo.js:20
@@ -5853,8 +5829,24 @@ msgstr ""
 msgid "Random Numbers And Letters"
 msgstr ""
 
+#: settings/order/OrderProtocol.js:87
+msgid "Invoices & Receipts"
+msgstr ""
+
 #: settings/order/OrderProtocol.js:88
 msgid "Add additional information to receipts and invoices."
+msgstr ""
+
+#: settings/order/OrderProtocol.js:95
+msgid "Memo"
+msgstr ""
+
+#: settings/order/OrderProtocol.js:98
+msgid "This appears in the memo area of your invoices and receipts."
+msgstr ""
+
+#: settings/order/OrderProtocol.js:104
+msgid "Footer"
 msgstr ""
 
 #: settings/portal/PortalSettings.js:43
@@ -6560,7 +6552,7 @@ msgstr ""
 msgid "Buy Now"
 msgstr ""
 
-#: Blocks/AddToCartButton/Block.php:78
+#: Blocks/AddToCartButton/Block.php:80
 msgid "Add To Cart"
 msgstr ""
 
