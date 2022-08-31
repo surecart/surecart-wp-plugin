@@ -2,6 +2,7 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Order;
 use SureCart\Models\Traits\HasCustomer;
 use SureCart\Models\Traits\HasProduct;
 use SureCart\Models\Traits\HasRefund;
@@ -26,6 +27,16 @@ class Purchase extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'purchase';
+
+	/**
+	 * Set the product attribute
+	 *
+	 * @param  string $value Product properties.
+	 * @return void
+	 */
+	public function setInitialOrderAttribute( $value ) {
+		$this->setRelation( 'initial_order', $value, Order::class );
+	}
 
 	/**
 	 * Revoke the purchase.
