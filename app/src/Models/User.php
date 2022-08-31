@@ -180,18 +180,26 @@ class User implements ArrayAccess, JsonSerializable {
 			]
 		);
 
-		$user_id       = username_exists( $args['user_name'] );
+		// get username from first part of email.
+		if ( empty( $args['user_name'] ) ) {
+			$parts             = explode( '@', $args['user_email'] );
+			$username          = $parts[0];
+			$args['user_name'] = $username;
+		}
+
+		$username      = $this->createUniqueUsername( $args['user_name'] );
 		$user_password = trim( $args['user_password'] );
 		$user_created  = false;
 
-		if ( ! $user_id && empty( $user_password ) ) {
+		// password is not provided.
+		if ( empty( $user_password ) ) {
 			$user_password = wp_generate_password( 12, false );
-			$user_id       = wp_create_user( $args['user_name'], $user_password, $args['user_email'] );
+			$user_id       = wp_create_user( $username, $user_password, $args['user_email'] );
 			update_user_meta( $user_id, 'default_password_nag', true );
 			$user_created = true;
-		} elseif ( ! $user_id ) {
+		} else {
 			// Password has been provided.
-			$user_id      = wp_create_user( $args['user_name'], $user_password, $args['user_email'] );
+			$user_id      = wp_create_user( $username, $user_password, $args['user_email'] );
 			$user_created = true;
 		}
 
@@ -207,6 +215,22 @@ class User implements ArrayAccess, JsonSerializable {
 		}
 
 		return $this->find( $user_id );
+	}
+
+	/**
+	 * Create a unique username for the user.
+	 *
+	 * @param string $name The username.
+	 *
+	 * @return string
+	 */
+	protected function createUniqueUsername( $name ) {
+		$base_name = $name;
+		$i         = 0;
+		while ( username_exists( $name ) ) {
+			$name = $base_name . ( ++$i );
+		}
+		return $name;
 	}
 
 	/**

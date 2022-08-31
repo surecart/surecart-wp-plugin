@@ -53,7 +53,6 @@ class CustomerDashboardMiddleware {
 		if ( $link->customer ) {
 			$user = User::create(
 				[
-					'user_name'  => $link->email,
 					'user_email' => $link->email,
 				]
 			);

@@ -35,7 +35,7 @@ class Customer extends Model {
 		if ( $create_user ) {
 			$user = User::create(
 				[
-					'user_name'  => $this->attributes['name'] ?? '',
+					'user_name'  => $this->attributes['name'] ?? null,
 					'user_email' => $this->attributes['email'],
 				]
 			);
