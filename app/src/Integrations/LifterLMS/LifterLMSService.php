@@ -115,7 +115,7 @@ class LifterLMSService extends IntegrationService implements IntegrationInterfac
 	public function getItem( $id ) {
 		$course = get_post( $id );
 		if ( ! $course ) {
-			return [];
+			return (object) [];
 		}
 		return (object) [
 			'id'             => $id,
@@ -176,9 +176,9 @@ class LifterLMSService extends IntegrationService implements IntegrationInterfac
 		}
 		// update course access.
 		if ( $add ) {
-			return \llms_enroll_student( $wp_user->ID, $course_id );
+			return \llms_enroll_student( $wp_user->ID, $course_id, 'SureCart' );
 		} else {
-			return \llms_delete_student_enrollment( $wp_user->ID, $course_id );
+			return \llms_delete_student_enrollment( $wp_user->ID, $course_id, 'SureCart' );
 		}
 	}
 }
