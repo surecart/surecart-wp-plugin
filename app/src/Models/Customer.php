@@ -45,7 +45,11 @@ class Customer extends Model {
 				return $user;
 			}
 
-			$user->setCustomerId( $this->attributes['id'] );
+			$linked = $user->setCustomerId( $this->attributes['id'], $this->live_mode ? 'live' : 'test' );
+
+			if ( is_wp_error( $linked ) ) {
+				return $linked;
+			}
 		}
 
 		return $this;
