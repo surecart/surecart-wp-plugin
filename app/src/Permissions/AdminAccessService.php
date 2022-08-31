@@ -12,7 +12,7 @@ class AdminAccessService {
 	 *
 	 * @return void
 	 */
-    public function __construct() {
+    public function bootstrap() {
 		add_action( 'admin_init', [ $this, 'prevent_admin_access' ] );
 	}
 

@@ -20,14 +20,16 @@ class RolesServiceProvider implements ServiceProviderInterface {
 	 *  @param  \Pimple\Container $container Service Container.
 	 */
 	public function register( $container ) {
-		new AdminAccessService();
-
 		$container['surecart.permissions.roles'] = function () {
 			return new RolesService();
 		};
 
 		$container['surecart.permissions.permissions'] = function () {
 			return new PermissionsService();
+		};
+
+		$container['surecart.permissions.prevent'] = function () {
+			return new AdminAccessService();
 		};
 
 		$app = $container[ SURECART_APPLICATION_KEY ];
@@ -45,5 +47,6 @@ class RolesServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$container['surecart.permissions.permissions']->bootstrap();
+		$container['surecart.permissions.prevent']->bootstrap();
 	}
 }
