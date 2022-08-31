@@ -56,7 +56,10 @@ class LoginLinkMiddleware {
 			);
 
 			if ( $user ) {
-				$user->setCustomerId( $link->customer );
+				$linked = $user->setCustomerId( $link->customer );
+				if ( is_wp_error( $linked ) ) {
+					return $next( $request );
+				}
 				$user->login();
 				return $next( $request );
 			}
