@@ -121,16 +121,15 @@ class AffiliateWPIntegration extends \Affiliate_WP_Base {
 			return false; // Referral not created because affiliate was not referred.
 		}
 
-		$hydrated_purchase = Purchase::with( [ 'order', 'invoice', 'product', 'customer' ] )->find( $purchase->id );
-		$order             = $hydrated_purchase->order;
-		$invoice           = $hydrated_purchase->invoice;
+		$hydrated_purchase = Purchase::with( [ 'initial_order', 'order.checkout', 'product', 'customer' ] )->find( $purchase->id );
 
-		$reference = null;
-		if ( ! empty( $order->id ) ) {
-			$reference = $order;
-		}
-		if ( ! empty( $invoice->id ) ) {
-			$reference = $invoice;
+		// get the order reference.
+		$reference = $hydrated_purchase->initial_order ?? null;
+
+		// we must have an order id.
+		if ( ! $reference->id ) {
+			$this->log( 'Draft referral creation failed. No order attached.' );
+			return;
 		}
 
 		// Create draft referral.
@@ -141,19 +140,12 @@ class AffiliateWPIntegration extends \Affiliate_WP_Base {
 			]
 		);
 
-		if ( ! $referral_id || ! $reference->id ) {
+		if ( ! $referral_id ) {
 			$this->log( 'Draft referral creation failed.' );
 			return;
 		}
 
-		if ( 'invoice' === $reference->object ) {
-			$this->log( 'Processing referral for a subscription.' );
-		}
-		if ( 'order' === $reference->object ) {
-			$this->log( 'Processing referral for an order.' );
-		}
-
-		$stripe_amount = $reference->amount_due;
+		$stripe_amount = $reference->checkout->amount_due;
 		$currency      = $reference->currency;
 		$description   = $purchase->product->name;
 		$mode          = $reference->live_mode;
