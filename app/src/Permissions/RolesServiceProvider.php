@@ -6,6 +6,7 @@ use SureCart\Models\Charge;
 use SureCart\Models\Subscription;
 use SureCart\Models\User;
 use SureCart\Permissions\RolesService;
+use SureCart\Permissions\AdminAccessService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -19,6 +20,8 @@ class RolesServiceProvider implements ServiceProviderInterface {
 	 *  @param  \Pimple\Container $container Service Container.
 	 */
 	public function register( $container ) {
+		new AdminAccessService();
+
 		$container['surecart.permissions.roles'] = function () {
 			return new RolesService();
 		};
