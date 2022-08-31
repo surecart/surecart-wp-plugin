@@ -35,4 +35,18 @@ class UserTest extends SureCartUnitTestCase {
 		$this->assertSame($user_id, User::findByCustomerId('liveid')->ID);
 		$this->assertSame($user_id_2, User::findByCustomerId('testid')->ID);
 	}
+
+	public function test_setCustomerId() {
+		$user_id = $this->factory->user->create();
+
+		$model = User::find($user_id);
+		$model->setCustomerId('liveid', 'live');
+		$model->setCustomerId('test', 'test');
+
+		$this->assertWPError($model->setCustomerId('somethingelse', 'live'));
+		$this->assertWPError($model->setCustomerId('somethingelse', 'test'));
+
+		$this->assertNotWPError($model->setCustomerId('somethingelse', 'live', true));
+		$this->assertNotWPError($model->setCustomerId('somethingelse', 'test', true));
+	}
 }
