@@ -98,11 +98,25 @@ class User implements ArrayAccess, JsonSerializable {
 	 * Set the customer id in the user meta.
 	 *
 	 * @param string $id Customer id.
-	 * @return int|bool
+	 * @return $this|bool
 	 */
-	protected function setCustomerId( $id, $mode = 'live' ) {
-		$meta          = (array) get_user_meta( $this->user->ID, $this->customer_id_key, true );
+	protected function setCustomerId( $id, $mode = 'live', $force = false ) {
+		$meta = (array) get_user_meta( $this->user->ID, $this->customer_id_key, true );
+
+		// if we are setting something here.
+		if ( ! empty( $id ) ) {
+			// if they already have one set for this mode.
+			if ( ! empty( $meta[ $mode ] ) ) {
+				// if we have not passed force = true.
+				if ( ! $force ) {
+					return new \WP_Error( 'already_linked', __( 'This user is already linked to a customer.', 'surecart' ) );
+				}
+			}
+		}
+
+		// update id.
 		$meta[ $mode ] = $id;
+		// update meta.
 		update_user_meta( $this->user->ID, $this->customer_id_key, $meta );
 		return $this;
 	}
@@ -218,19 +232,6 @@ class User implements ArrayAccess, JsonSerializable {
 			return false;
 		}
 		return Customer::find( $this->customerId( $mode ) );
-	}
-
-	/**
-	 * Create the customer by email.
-	 *
-	 * @return void
-	 */
-	public function createCustomerByEmail() {
-		$customer = Customer::byEmail( $this->user->user_email );
-		if ( $customer ) {
-			$this->customer = $this->setCustomerId( $customer->id );
-		}
-		return $this;
 	}
 
 	/**
