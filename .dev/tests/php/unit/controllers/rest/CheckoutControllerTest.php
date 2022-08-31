@@ -93,23 +93,6 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 		$this->assertTrue($errors->has_errors());
 	}
 
-	public function test_maybeLinkCustomer() {
-		$request = new WP_REST_Request('POST', '/surecart/v1/checkouts/finalize');
-		$request->set_param('email', 'testuser@test.com');
-		$request->set_param('password', 'pass123');
-
-		// non-paid checkout should just return the checkout.
-		$this->assertFalse((new CheckoutsController())->maybeLinkCustomer(new Checkout(['status' => 'finalized']), $request));
-
-		// paid checkout should run linkCustomerID method.
-		$paid_checkout = new Checkout(['status' => 'paid']);
-		$controller = \Mockery::mock(CheckoutsController::class)->makePartial();
-		$controller->shouldReceive('linkCustomerId')
-			->with($paid_checkout, $request)
-			->once();
-	    $controller->maybeLinkCustomer($paid_checkout, $request);
-	}
-
 	public function test_finalize() {
 		// finalized checkout
 		$finalized_checkout = (object) [
@@ -142,10 +125,6 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 			->once()
 			->withSomeOfArgs('checkouts/test_checkout/finalize/')
 			->andReturn($finalized_checkout);
-		// then maybe link the customer.
-		$controller->shouldReceive('maybeLinkCustomer')
-			->once();
-
 		// finalize the checkout.
 		$controller_checkout = $controller->finalize($request);
 
@@ -180,6 +159,11 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 			->once()
 			->withSomeOfArgs('checkouts/test_checkout')
 			->andReturn($paid_checkout);
+
+		// then maybe link the customer.
+		$controller->shouldReceive('linkCustomerId')
+			->once();
+
 
 		// finalize the checkout.
 		$controller_checkout = $controller->confirm($request);

@@ -39,7 +39,7 @@ class CustomerTest extends SureCartUnitTestCase
 					'body' => [
 						"customer" => [
 							"email" => "test@test.com",
-							"name" => "NewTest"
+							"name" => "NewTest",
 						]
 					],
 					'query' => []
@@ -50,12 +50,14 @@ class CustomerTest extends SureCartUnitTestCase
 				"object" => "customer",
 				"email" => "test@test.com",
 				"name"=> "NewTest",
+				"live_mode" => true
 			]);
 
-		Customer::create([
+		$created = Customer::create([
 			"email" => "test@test.com",
 			"name" => "NewTest"
 		]);
+		$this->assertNotWPError($created);
 
 		// make sure a user is created with this email.
 		$user = get_user_by('email', "test@test.com");
