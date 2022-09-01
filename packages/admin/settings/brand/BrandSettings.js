@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import { useEntityProp } from '@wordpress/core-data';
 import {
@@ -13,10 +12,11 @@ import {
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
 import useEntity from '../../hooks/useEntity';
+import { __ } from '@wordpress/i18n';
+import ColorPopup from '../../../blocks/components/ColorPopup';
 import Error from '../../components/Error';
 import useSave from '../UseSave';
 import Logo from './Logo';
-import ColorPopup from '../../../blocks/components/ColorPopup';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -186,38 +186,6 @@ export default () => {
 					names={{}}
 					onScInputAddress={(e) => editItem({ address: e.detail })}
 				/>
-			</SettingsBox>
-
-			<SettingsBox
-				title={__('Invoices & Receipts', 'surecart')}
-				description={__(
-					'Configure how invoices and receipts are displayed to your customers.',
-					'surecart'
-				)}
-				loading={!hasLoadedItem}
-			>
-				<ScTextarea
-					label={__('Memo', 'surecart')}
-					value={item?.statement_memo}
-					onScInput={(e) =>
-						editItem({ statement_memo: e.target.value })
-					}
-					help={__(
-						'This appears in the memo area of your invoices and receipts.',
-						'surecart'
-					)}
-				></ScTextarea>
-				<ScTextarea
-					label={__('Footer', 'surecart')}
-					value={item?.statement_footer}
-					onScInput={(e) =>
-						editItem({ statement_footer: e.target.value })
-					}
-					help={__(
-						'Help or legal text that appears at the bottom of the invoice.',
-						'surecart'
-					)}
-				></ScTextarea>
 			</SettingsBox>
 		</SettingsTemplate>
 	);

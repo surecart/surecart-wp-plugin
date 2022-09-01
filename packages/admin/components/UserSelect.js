@@ -1,9 +1,9 @@
 import { ScSelect } from '@surecart/components-react';
-import { useRef, useState } from '@wordpress/element';
-import { throttle } from 'lodash';
 import { store as coreStore } from '@wordpress/core-data';
-import { __ } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
+import { useRef, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { throttle } from 'lodash';
 
 export default ({ required, value, className, onSelect }) => {
 	const selectRef = useRef();
@@ -57,8 +57,11 @@ export default ({ required, value, className, onSelect }) => {
 			placeholder={__('Select a user', 'surecart')}
 			searchPlaceholder={__('Search for a user...', 'surecart')}
 			search
+			value={value}
 			onScSearch={(e) => findUser(e.detail)}
-			onScChange={(e) => onSelect(e.target.value)}
+			onScChange={(e) => {
+				onSelect(e.target.value);
+			}}
 			choices={choices}
 		/>
 	);

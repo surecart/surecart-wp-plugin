@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-08-24T18:48:24+00:00\n"
+"POT-Creation-Date: 2022-08-31T15:04:18+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -336,7 +336,7 @@ msgstr ""
 #: src/Controllers/Admin/Customers/CustomersController.php:24
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:131
 #: admin/customers/index.php:7
-#: customers/EditCustomer.js:80
+#: customers/EditCustomer.js:75
 #: settings/export/ExportSettings.js:23
 msgid "Customers"
 msgstr ""
@@ -359,7 +359,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:61
 #: customers/modules/Details.js:46
-#: settings/brand/BrandSettings.js:131
+#: settings/brand/BrandSettings.js:126
 msgid "Email"
 msgstr ""
 
@@ -855,8 +855,8 @@ msgstr ""
 msgid "The integration has been removed or is unavailable."
 msgstr ""
 
-#: src/Controllers/Web/DashboardController.php:40
-#: src/Models/User.php:142
+#: src/Controllers/Web/DashboardController.php:42
+#: src/Models/User.php:156
 msgid "This user could not be found."
 msgstr ""
 
@@ -1002,12 +1002,16 @@ msgstr ""
 msgid "You do not have permission do this."
 msgstr ""
 
-#: src/Middleware/CustomerDashboardMiddleware.php:88
+#: src/Middleware/CustomerDashboardMiddleware.php:91
 msgid "This link has expired."
 msgstr ""
 
 #: src/Middleware/NonceMiddleware.php:26
 msgid "Something is wrong with the provided link."
+msgstr ""
+
+#: src/Models/User.php:112
+msgid "This user is already linked to a customer."
 msgstr ""
 
 #: src/Permissions/RolesService.php:36
@@ -3083,7 +3087,7 @@ msgstr ""
 #: Controllers/DownloadController.php:90
 #: Controllers/OrderController.php:55
 #: Controllers/OrderController.php:99
-#: Controllers/PaymentMethodController.php:110
+#: Controllers/PaymentMethodController.php:100
 #: Controllers/SubscriptionController.php:95
 #: Controllers/SubscriptionController.php:176
 #: Controllers/SubscriptionController.php:233
@@ -3637,7 +3641,7 @@ msgid "Store Settings"
 msgstr ""
 
 #: layouts/partials/admin-settings-sidebar.php:9
-#: settings/brand/BrandSettings.js:45
+#: settings/brand/BrandSettings.js:40
 msgid "Design & Branding"
 msgstr ""
 
@@ -4022,9 +4026,9 @@ msgid "Could not download the file."
 msgstr ""
 
 #: components/MediaLibrary/DownloadMedia.js:30
-#: customers/EditCustomer.js:51
+#: customers/EditCustomer.js:46
 #: customers/modules/Balance/ViewTransactions.js:46
-#: customers/modules/User/index.js:23
+#: customers/modules/User/index.js:24
 #: licenses/modules/Activations/index.js:59
 #: orders/Order.js:94
 #: products/modules/SingleDownload.js:35
@@ -4045,11 +4049,12 @@ msgstr ""
 #: sc-order.js:75
 #: sc-orders-list.js:56
 #: sc-orders-list.js:69
-#: sc-payment-method-create.js:24
-#: sc-payment-method-create.js:40
 #: sc-payment-methods-list.js:59
 #: sc-payment-methods-list.js:84
 #: sc-payment-methods-list.js:106
+#: sc-paypal-add-method.js:94
+#: sc-stripe-add-method.js:87
+#: sc-stripe-add-method.js:114
 #: sc-subscription-cancel.js:37
 #: sc-subscription-cancel.js:73
 #: sc-subscription-payment.js:43
@@ -4445,7 +4450,9 @@ msgstr ""
 #: invoices/modules/Details.js:77
 #: orders/modules/Details.js:55
 #: subscriptions/show/modules/Details.js:137
-#: Controllers/PaymentMethodController.php:119
+#: Blocks/Dashboard/DashboardPage/Block.php:34
+#: Blocks/Dashboard/DashboardPage/Block.php:42
+#: Controllers/PaymentMethodController.php:109
 #: Blocks/Payment/edit.js:169
 #: sc-order.js:138
 #: sc-payment.js:63
@@ -4464,11 +4471,11 @@ msgstr ""
 msgid "Create"
 msgstr ""
 
-#: customers/EditCustomer.js:46
+#: customers/EditCustomer.js:41
 msgid "Customer updated."
 msgstr ""
 
-#: customers/EditCustomer.js:84
+#: customers/EditCustomer.js:79
 #: invoices/modules/Customer.js:27
 #: licenses/modules/Customer.js:53
 #: orders/modules/Customer.js:28
@@ -4477,7 +4484,7 @@ msgstr ""
 msgid "Edit Customer"
 msgstr ""
 
-#: customers/EditCustomer.js:95
+#: customers/EditCustomer.js:90
 msgid "Save Customer"
 msgstr ""
 
@@ -4569,28 +4576,28 @@ msgstr ""
 msgid "No more subscriptions."
 msgstr ""
 
-#: customers/modules/User/index.js:65
+#: customers/modules/User/index.js:74
 msgid "Are you sure you want to disconnect this from this customer? This will cause them to lose access to their purchases."
 msgstr ""
 
-#: customers/modules/User/index.js:96
+#: customers/modules/User/index.js:105
 msgid "User disconnected."
 msgstr ""
 
-#: customers/modules/User/index.js:126
+#: customers/modules/User/index.js:139
 msgid "User connected."
 msgstr ""
 
-#: customers/modules/User/index.js:138
+#: customers/modules/User/index.js:151
 msgid "WordPress User"
 msgstr ""
 
-#: customers/modules/User/index.js:186
+#: customers/modules/User/index.js:199
 #: customers/modules/User/WPUser.js:67
 msgid "Disconnect"
 msgstr ""
 
-#: customers/modules/User/index.js:190
+#: customers/modules/User/index.js:203
 msgid "Connect a user"
 msgstr ""
 
@@ -4652,7 +4659,7 @@ msgstr ""
 msgid "Contact support for additional help"
 msgstr ""
 
-#: dashboard/components/overview/charts/AverageOrderValue.js:21
+#: dashboard/components/overview/charts/AverageOrderValue.js:25
 msgid "Average Order Value"
 msgstr ""
 
@@ -4738,7 +4745,7 @@ msgstr ""
 
 #: invoices/modules/Address.js:7
 #: orders/modules/Address.js:10
-#: settings/brand/BrandSettings.js:154
+#: settings/brand/BrandSettings.js:149
 #: settings/tax/TaxSettings.js:72
 #: sc-address2.js:47
 #: sc-form-components-validator2.js:56
@@ -5311,12 +5318,12 @@ msgstr ""
 msgid "Enter the number of unique activations per license key. Leave blank for infinite."
 msgstr ""
 
-#: products/modules/Licensing.js:76
+#: products/modules/Licensing.js:77
 #: products/modules/SingleDownload.js:182
 msgid "Current Release"
 msgstr ""
 
-#: products/modules/Licensing.js:77
+#: products/modules/Licensing.js:78
 msgid "This is the current release zip of your software."
 msgstr ""
 
@@ -5525,7 +5532,7 @@ msgstr ""
 
 #: settings/account/AccountSettings.js:27
 #: settings/advanced/AdvancedSettings.js:25
-#: settings/brand/BrandSettings.js:35
+#: settings/brand/BrandSettings.js:30
 #: settings/connection/ConnectionSettings.js:25
 #: settings/customer/CustomerSettings.js:33
 #: settings/order/OrderProtocol.js:27
@@ -5590,78 +5597,50 @@ msgstr ""
 msgid "If you do not wish to use the slide-out cart, you can disable this to prevent scripts from loading on your pages."
 msgstr ""
 
-#: settings/brand/BrandSettings.js:56
+#: settings/brand/BrandSettings.js:51
 msgid "Brand Settings"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:57
+#: settings/brand/BrandSettings.js:52
 msgid "Customize how your brand appears globally across SureCart. Your logo and colors will be used on hosted pages and emails that are sent to your customers."
 msgstr ""
 
-#: settings/brand/BrandSettings.js:74
+#: settings/brand/BrandSettings.js:69
 msgid "Brand Color"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:75
+#: settings/brand/BrandSettings.js:70
 msgid "This color will be used for the main button color, links, and various UI elements."
 msgstr ""
 
-#: settings/brand/BrandSettings.js:116
+#: settings/brand/BrandSettings.js:111
 msgid "Contact Information"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:117
+#: settings/brand/BrandSettings.js:112
 msgid "This information helps customers recognize your business and contact you when necessary. It will be visible on invoices/receipts and any emails that need to be CAN-SPAM compliant (i.e. abandoned order emails)."
 msgstr ""
 
-#: settings/brand/BrandSettings.js:133
+#: settings/brand/BrandSettings.js:128
 msgid "Enter an email"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:138
+#: settings/brand/BrandSettings.js:133
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:82
 #: sc-customer-edit.js:88
 msgid "Phone"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:140
+#: settings/brand/BrandSettings.js:135
 msgid "Enter an phone number"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:145
+#: settings/brand/BrandSettings.js:140
 msgid "Website"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:147
+#: settings/brand/BrandSettings.js:142
 msgid "Enter a website URL"
-msgstr ""
-
-#: settings/brand/BrandSettings.js:165
-#: settings/order/OrderProtocol.js:87
-msgid "Invoices & Receipts"
-msgstr ""
-
-#: settings/brand/BrandSettings.js:166
-msgid "Configure how invoices and receipts are displayed to your customers."
-msgstr ""
-
-#: settings/brand/BrandSettings.js:173
-#: settings/order/OrderProtocol.js:95
-msgid "Memo"
-msgstr ""
-
-#: settings/brand/BrandSettings.js:178
-#: settings/order/OrderProtocol.js:98
-msgid "This appears in the memo area of your invoices and receipts."
-msgstr ""
-
-#: settings/brand/BrandSettings.js:184
-#: settings/order/OrderProtocol.js:104
-msgid "Footer"
-msgstr ""
-
-#: settings/brand/BrandSettings.js:189
-msgid "Help or legal text that appears at the bottom of the invoice."
 msgstr ""
 
 #: settings/brand/Logo.js:20
@@ -5850,8 +5829,24 @@ msgstr ""
 msgid "Random Numbers And Letters"
 msgstr ""
 
+#: settings/order/OrderProtocol.js:87
+msgid "Invoices & Receipts"
+msgstr ""
+
 #: settings/order/OrderProtocol.js:88
 msgid "Add additional information to receipts and invoices."
+msgstr ""
+
+#: settings/order/OrderProtocol.js:95
+msgid "Memo"
+msgstr ""
+
+#: settings/order/OrderProtocol.js:98
+msgid "This appears in the memo area of your invoices and receipts."
+msgstr ""
+
+#: settings/order/OrderProtocol.js:104
+msgid "Footer"
 msgstr ""
 
 #: settings/portal/PortalSettings.js:43
@@ -6557,7 +6552,7 @@ msgstr ""
 msgid "Buy Now"
 msgstr ""
 
-#: Blocks/AddToCartButton/Block.php:78
+#: Blocks/AddToCartButton/Block.php:80
 msgid "Add To Cart"
 msgstr ""
 
@@ -6871,21 +6866,41 @@ msgstr ""
 msgid "License Keys"
 msgstr ""
 
-#: Controllers/PaymentMethodController.php:70
-msgid "Add a test payment method"
+#: Controllers/PaymentMethodController.php:51
+msgid "You are not a live mode customer."
 msgstr ""
 
-#: Controllers/PaymentMethodController.php:88
-msgid "Add a live payment method"
+#: Controllers/PaymentMethodController.php:54
+msgid "Switch to test mode."
 msgstr ""
 
-#: Controllers/PaymentMethodController.php:102
+#: Controllers/PaymentMethodController.php:58
+msgid "You are not a test mode customer."
+msgstr ""
+
+#: Controllers/PaymentMethodController.php:61
+msgid "Switch to live mode."
+msgstr ""
+
+#: Controllers/PaymentMethodController.php:65
+msgid "You are not currently a customer."
+msgstr ""
+
+#: Controllers/PaymentMethodController.php:91
 msgid "You cannot currently add a payment method. Please contact us for support."
 msgstr ""
 
-#: Controllers/PaymentMethodController.php:113
-#: Controllers/PaymentMethodController.php:118
+#: Controllers/PaymentMethodController.php:103
+#: Controllers/PaymentMethodController.php:108
 msgid "Add Payment Method"
+msgstr ""
+
+#: Controllers/PaymentMethodController.php:118
+#: Blocks/Payment/edit.js:197
+#: Blocks/Payment/edit.js:260
+#: sc-payment.js:69
+#: sc-payment.js:75
+msgid "Credit Card"
 msgstr ""
 
 #: Controllers/SubscriptionController.php:108
@@ -7844,13 +7859,6 @@ msgstr ""
 
 #: Blocks/Payment/edit.js:154
 msgid "There is no payment method for %1s payments. You will need to connect and verify your account with at least one processor in order to process %2s payments."
-msgstr ""
-
-#: Blocks/Payment/edit.js:197
-#: Blocks/Payment/edit.js:260
-#: sc-payment.js:69
-#: sc-payment.js:75
-msgid "Credit Card"
 msgstr ""
 
 #: Blocks/Payment/edit.js:203
@@ -9958,12 +9966,15 @@ msgstr ""
 msgid "You are probably offline."
 msgstr ""
 
-#: paypal-buttons.js:330
-#: paypal-buttons.js:336
+#: paypal-buttons.js:92
+#: paypal-buttons.js:98
+#: sc-paypal-add-method.js:54
+#: sc-paypal-add-method.js:59
+#: sc-paypal-add-method.js:65
 msgid "The payment did not process. Please try again."
 msgstr ""
 
-#: paypal-buttons.js:371
+#: paypal-buttons.js:133
 msgid "Something went wrong. Please contact us for payment."
 msgstr ""
 
@@ -9996,7 +10007,8 @@ msgstr ""
 #: sc-cart-form.js:115
 #: sc-dashboard-module2.js:14
 #: sc-login-form.js:104
-#: sc-payment-method-create.js:45
+#: sc-paypal-add-method.js:101
+#: sc-stripe-add-method.js:119
 #: sc-upcoming-invoice.js:206
 msgid "Error"
 msgstr ""
@@ -10141,10 +10153,6 @@ msgstr ""
 msgid "Displaying %1d to %2d of %3d items"
 msgstr ""
 
-#: sc-payment-method-create.js:45
-msgid "Save Payment Method"
-msgstr ""
-
 #: sc-payment-method2.js:17
 msgid "Checking"
 msgstr ""
@@ -10171,6 +10179,10 @@ msgstr ""
 
 #: sc-payment.js:90
 msgid "Please contact us for payment"
+msgstr ""
+
+#: sc-paypal-add-method.js:72
+msgid "Failed to load the PayPal JS SDK script"
 msgstr ""
 
 #: sc-price-choice.js:780
@@ -10215,6 +10227,10 @@ msgstr ""
 
 #: sc-session-provider2.js:298
 msgid "Payment unsuccessful. Please try again."
+msgstr ""
+
+#: sc-stripe-add-method.js:119
+msgid "Save Payment Method"
 msgstr ""
 
 #: sc-stripe-payment-request2.js:159

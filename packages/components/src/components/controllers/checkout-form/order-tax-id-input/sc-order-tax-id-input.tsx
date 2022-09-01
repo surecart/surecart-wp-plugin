@@ -41,9 +41,6 @@ export class ScOrderTaxIdInput {
   }
 
   maybeUpdateOrder(tax_identifier) {
-    if (this.taxProtocol?.eu_vat_unverified_behavior === 'apply_reverse_charge') {
-      return;
-    }
     this.scUpdateOrder.emit({
       data: { tax_identifier },
     });

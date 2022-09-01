@@ -403,6 +403,7 @@ export interface ProcessorData {
   paypal: {
     account_id: string;
     client_id: string;
+    merchant_initiated: boolean;
   };
 }
 
@@ -412,6 +413,7 @@ export interface Processor {
     account_id: string;
     recurring_enabled: boolean;
     client_id: string;
+    merchant_initiated?: boolean;
   };
   recurring_enabled: boolean;
   processor_type: 'paypal' | 'stripe';

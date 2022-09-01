@@ -74,7 +74,9 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 				></sc-price-input>
 			<?php endif; ?>
 
-			<sc-cart-form-submit type="<?php echo esc_attr( ! empty( $attributes['type'] ) ? $attributes['type'] : 'primary' ); ?>" full="false">
+			<sc-cart-form-submit
+				type="<?php echo esc_attr( ! empty( $attributes['type'] ) ? $attributes['type'] : 'primary' ); ?>"
+				size="<?php echo esc_attr( ! empty( $attributes['size'] ) ? $attributes['size'] : 'medium' ); ?>">
 				<?php echo wp_kses_post( $attributes['button_text'] ) ?? esc_html__( 'Add To Cart', 'surecart' ); ?>
 			</sc-cart-form-submit>
 		</sc-cart-form>
