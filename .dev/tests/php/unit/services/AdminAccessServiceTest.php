@@ -92,6 +92,9 @@ class AdminAccessServiceTest extends SureCartUnitTestCase {
 		$this->assertTrue($this->service->canAccessAdmin());
 	}
 
+	/**
+	 * Redirect happens if cannot access admin.
+	 */
 	public function test_redirect_happens_if_cannot_access_admin() {
 		$service = \Mockery::mock( AdminAccessService::class )->makePartial();
 		// if cannot access admin.
@@ -102,6 +105,9 @@ class AdminAccessServiceTest extends SureCartUnitTestCase {
 		$service->handleAdminAccess();
 	}
 
+	/**
+	 * Redirect happens if can access admin.
+	 */
 	public function test_redirect_does_not_happen_if_can_access_admin() {
 		$service = \Mockery::mock( AdminAccessService::class )->makePartial();
 		// if cannot access admin.
