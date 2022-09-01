@@ -13,9 +13,9 @@ class AdminAccessServiceTest extends SureCartUnitTestCase {
 	public function test_admin_access_service_redirect() {
 		$service = new AdminAccessService();
 		$user_id = $this->factory->user->create( [ 'role' => 'sc_customer' ] );
-        
+
         wp_set_current_user( $user_id );
 
-        $this->assertTrue( $service->prevent_admin_access() );
+        $this->assertTrue( $service->canAccessAdmin() );
 	}
 }

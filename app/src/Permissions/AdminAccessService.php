@@ -13,7 +13,7 @@ class AdminAccessService {
 	 * @return void
 	 */
     public function bootstrap() {
-		add_action( 'admin_init', [ $this, 'prevent_admin_access' ] );
+		add_action( 'admin_init', [ $this, 'canAccessAdmin' ] );
 	}
 
 	/**
@@ -21,20 +21,17 @@ class AdminAccessService {
 	 *
 	 * @return void
 	 */
-	public function prevent_admin_access() {
-		$prevent_access = false;
-
+	public function canAccessAdmin() {
 		if (
-            ! wp_doing_ajax() &&
-            isset( $_SERVER['SCRIPT_FILENAME'] ) &&
-            basename( sanitize_text_field( wp_unslash( $_SERVER['SCRIPT_FILENAME'] ) ) ) !== 'admin-post.php'
+            wp_doing_ajax() ||
+            ! isset( $_SERVER['SCRIPT_FILENAME'] ) ||
+            basename( sanitize_text_field( wp_unslash( $_SERVER['SCRIPT_FILENAME'] ) ) ) === 'admin-post.php' ||
+			current_user_can( 'edit_posts' )
         ) {
-            if ( current_user_can( 'sc_customer' ) && ! current_user_can( 'edit_posts' ) ) {
-                $prevent_access = true;
-            }
+            return false;
 		}
 
-		if ( $prevent_access ) {
+		if ( current_user_can( 'sc_customer' ) ) {
 			wp_safe_redirect( \SureCart::pages()->url( 'dashboard' ) );
 			exit;
 		}
