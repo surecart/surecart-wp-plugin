@@ -10,6 +10,7 @@
 	);
 	?>
 
+	<?php $table->search_form( __( 'Search Customers', 'surecart' ), 'sc-search-customers' ); ?>
 	<?php $table->display(); ?>
 </div>
 
