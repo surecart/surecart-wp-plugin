@@ -28,7 +28,6 @@ class AdminAccessServiceTest extends SureCartUnitTestCase {
 
 	/**
 	 * They are redirected from admin.
-	 * @group failing
 	 */
 	public function test_sc_customers_redirect_from_admin() {
 		$user_id = $this->factory->user->create( [ 'role' => 'sc_customer' ] );
@@ -38,7 +37,6 @@ class AdminAccessServiceTest extends SureCartUnitTestCase {
 
 	/**
 	 * They can access if doing ajax request (admin-ajax.php)
-	 * @group failing
 	 */
 	public function test_sc_customers_do_not_redirect_if_doing_ajax() {
 		$user_id = $this->factory->user->create( [ 'role' => 'sc_customer' ] );
@@ -49,7 +47,6 @@ class AdminAccessServiceTest extends SureCartUnitTestCase {
 
 	/**
 	 * They can access if admin-post.php
-	 * @group failing
 	 */
 	public function test_sc_customers_do_not_redirect_if_admin_post() {
 		$user_id = $this->factory->user->create( [ 'role' => 'sc_customer' ] );
@@ -65,7 +62,6 @@ class AdminAccessServiceTest extends SureCartUnitTestCase {
 
 	/**
 	 * They can access if they can edit posts
-	 * @group failing
 	 */
 	public function test_sc_customers_do_not_redirect_if_can_edit_posts() {
 		$user_id = $this->factory->user->create( [ 'role' => 'sc_customer' ] );
@@ -78,7 +74,6 @@ class AdminAccessServiceTest extends SureCartUnitTestCase {
 
 	/**
 	 * Subscribers do not redirect
-	 * @group failing
 	 */
 	public function test_subscribers_do_not_redirect() {
 		// customers can access.
@@ -89,7 +84,6 @@ class AdminAccessServiceTest extends SureCartUnitTestCase {
 
 	/**
 	 * Subscribers do not redirect
-	 * @group failing
 	 */
 	public function test_administrators_do_not_redirect() {
 		// customers can access.
