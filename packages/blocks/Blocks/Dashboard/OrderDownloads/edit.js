@@ -4,7 +4,7 @@ import {
 	RichText,
 	useBlockProps,
 } from '@wordpress/block-editor';
-import { PanelBody, PanelRow, TextContro } from '@wordpress/components';
+import { PanelBody, PanelRow } from '@wordpress/components';
 import { ScDashboardModule } from '@surecart/components-react';
 import { Fragment } from '@wordpress/element';
 
