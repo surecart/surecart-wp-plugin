@@ -6,7 +6,7 @@ use SureCart\Tests\SureCartUnitTestCase;
 use SureCart\Permissions\AdminAccessService;
 
 class AdminAccessServiceTest extends SureCartUnitTestCase {
-
+	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 	public $service = null;
 
 	/**
@@ -29,7 +29,7 @@ class AdminAccessServiceTest extends SureCartUnitTestCase {
 	/**
 	 * They are redirected from admin.
 	 */
-	public function test_sc_customers_redirect_from_admin() {
+	public function test_sc_customers_cannot_access_admin() {
 		$user_id = $this->factory->user->create( [ 'role' => 'sc_customer' ] );
 		wp_set_current_user( $user_id );
 		$this->assertFalse($this->service->canAccessAdmin());
@@ -38,7 +38,7 @@ class AdminAccessServiceTest extends SureCartUnitTestCase {
 	/**
 	 * They can access if doing ajax request (admin-ajax.php)
 	 */
-	public function test_sc_customers_do_not_redirect_if_doing_ajax() {
+	public function test_sc_customers_can_access_admin_if_doing_ajax() {
 		$user_id = $this->factory->user->create( [ 'role' => 'sc_customer' ] );
 		wp_set_current_user( $user_id );
 		define('DOING_AJAX', true);
@@ -48,7 +48,7 @@ class AdminAccessServiceTest extends SureCartUnitTestCase {
 	/**
 	 * They can access if admin-post.php
 	 */
-	public function test_sc_customers_do_not_redirect_if_admin_post() {
+	public function test_sc_customers_can_access_admin_if_admin_post() {
 		$user_id = $this->factory->user->create( [ 'role' => 'sc_customer' ] );
 		wp_set_current_user( $user_id );
 		// they can access if the script SCRIPT_FILENAME constant is not set.
@@ -63,7 +63,7 @@ class AdminAccessServiceTest extends SureCartUnitTestCase {
 	/**
 	 * They can access if they can edit posts
 	 */
-	public function test_sc_customers_do_not_redirect_if_can_edit_posts() {
+	public function test_sc_customers_can_access_admin_if_can_edit_posts() {
 		$user_id = $this->factory->user->create( [ 'role' => 'sc_customer' ] );
 		wp_set_current_user( $user_id );
 		// but they could if they have edit_posts permissions.
@@ -75,7 +75,7 @@ class AdminAccessServiceTest extends SureCartUnitTestCase {
 	/**
 	 * Subscribers do not redirect
 	 */
-	public function test_subscribers_do_not_redirect() {
+	public function test_subscribers_can_access_admin() {
 		// customers can access.
 		$user_id = $this->factory->user->create( [ 'role' => 'subscriber' ] );
 		wp_set_current_user( $user_id );
@@ -83,12 +83,32 @@ class AdminAccessServiceTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * Subscribers do not redirect
+	 * Administrators do not redirect
 	 */
-	public function test_administrators_do_not_redirect() {
+	public function test_administrators_can_access_admin() {
 		// customers can access.
 		$user_id = $this->factory->user->create( [ 'role' => 'administrator' ] );
 		wp_set_current_user( $user_id );
 		$this->assertTrue($this->service->canAccessAdmin());
+	}
+
+	public function test_redirect_happens_if_cannot_access_admin() {
+		$service = \Mockery::mock( AdminAccessService::class )->makePartial();
+		// if cannot access admin.
+		$service->shouldReceive('canAccessAdmin')->once()->andReturn(false);
+		// should redirect.
+		$service->shouldReceive('redirectToAdmin')->once()->andReturn(null);
+		// call function
+		$service->handleAdminAccess();
+	}
+
+	public function test_redirect_does_not_happen_if_can_access_admin() {
+		$service = \Mockery::mock( AdminAccessService::class )->makePartial();
+		// if cannot access admin.
+		$service->shouldReceive('canAccessAdmin')->once()->andReturn(true);
+		// should redirect.
+		$service->shouldReceive('redirectToAdmin')->never();
+		// call function
+		$service->handleAdminAccess();
 	}
 }

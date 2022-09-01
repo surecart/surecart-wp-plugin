@@ -22,7 +22,7 @@ class AdminAccessService {
 	 * @return method
 	 */
 	public function handleAdminAccess() {
-		if ( $this->canAccessAdmin() ) {
+		if ( ! $this->canAccessAdmin() ) {
 			return $this->redirectToAdmin();
 		}
 	}
