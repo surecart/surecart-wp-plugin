@@ -168,6 +168,7 @@ class SubscriptionsListTable extends ListTable {
 		return Subscription::where(
 			[
 				'status' => $this->getStatus(),
+				'query'  => $this->get_search_query(),
 			]
 		)->with( [ 'customer', 'price', 'price.product', 'current_period', 'purchase' ] )
 		->paginate(

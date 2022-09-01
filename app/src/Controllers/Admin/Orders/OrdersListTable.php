@@ -38,18 +38,6 @@ class OrdersListTable extends ListTable {
 		$this->items = $query->data;
 	}
 
-	public function search() {
-		?>
-	<form class="search-form"
-		method="get">
-		<?php $this->search_box( __( 'Search Orders', 'surecart' ), 'order' ); ?>
-		<input type="hidden"
-			name="id"
-			value="1" />
-	</form>
-		<?php
-	}
-
 	/**
 	 * Show any integrations.
 	 *
@@ -160,6 +148,7 @@ class OrdersListTable extends ListTable {
 		return Order::where(
 			[
 				'status' => $this->getStatus(),
+				'query'  => $this->get_search_query(),
 			]
 		)->with( [ 'checkout', 'checkout.charge', 'checkout.customer', 'checkout.payment_method', 'checkout.purchases', 'payment_method.card', 'payment_method.payment_instrument', 'payment_method.paypal_account', 'payment_method.bank_account' ] )
 		->paginate(
