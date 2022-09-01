@@ -120,6 +120,10 @@ export default () => {
 						placeholder={__('Select Theme', 'surecart')}
 						value={scThemeData}
 						onScChange={(e) => setScThemeData(e.target.value)}
+						help={__(
+							'Choose "Dark" if your theme already has a dark background.',
+							'surecart'
+						)}
 						choices={[
 							{
 								label: __('Light', 'surecart'),
