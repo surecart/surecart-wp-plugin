@@ -32,5 +32,6 @@
 	);
 	?>
 
+	<?php $table->search_form( __( 'Search Products', 'surecart' ), 'sc-search-products' ); ?>
 	<?php $table->display(); ?>
 </div>
