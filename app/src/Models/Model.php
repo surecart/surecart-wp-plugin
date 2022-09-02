@@ -458,7 +458,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		if ( $setter ) {
 			return $this->{$setter}( $value );
 		} else {
-			$this->attributes[ $key ] = $value;
+			$this->attributes[ $key ] = apply_filters( "surecart/$this->object_name/attributes/$key", $value, $this );
 		}
 	}
 
