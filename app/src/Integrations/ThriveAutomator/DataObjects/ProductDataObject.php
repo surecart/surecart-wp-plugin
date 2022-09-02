@@ -44,6 +44,7 @@ class ProductDataObject extends Data_Object {
 			ProductNameDataField::get_id(),
 			ProductIDDataField::get_id(),
 			ProductDataField::get_id(),
+			'name',
 			'archived',
 			'shipping_enabled',
 			'tax_category',
@@ -77,22 +78,11 @@ class ProductDataObject extends Data_Object {
 		}
 
 		if ( $product ) {
-			// return [
-			// 	'surecart_product_id' => $product->id,
-			// 	'name'                => $product->name,
-			// 	'archived'            => $product->archived,
-			// 	'shipping_enabled'    => $product->shipping_enabled,
-			// 	'tax_category'        => $product->tax_category,
-			// 	'tax_enabled'         => $product->tax_enabled,
-			// 	'metadata'            => $product->metadata,
-			// 	'file_upload_ids'     => $product->file_upload_ids,
-			// 	'prices'              => $product->prices,
-			// 	'product_group'       => $product->product_group,
-			// ];
 			return [
 				ProductNameDataField::get_id()	=> $product->id,
 				ProductIDDataField::get_id()   	=> $product->id,
 				ProductDataField::get_id()   	=> $product->id,
+				'name'                			=> $product->name,
 				'archived'            			=> $product->archived,
 				'shipping_enabled'    			=> $product->shipping_enabled,
 				'tax_category'        			=> $product->tax_category,
