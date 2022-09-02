@@ -39,6 +39,7 @@ class SettingsController {
 	public function edit( \WP_REST_Request $request ) {
 		// save api token.
 		if ( isset( $request['api_token'] ) ) {
+			\SureCart::account()->clearCache();
 			$old = ApiToken::get();
 			ApiToken::save( $request['api_token'] );
 			if ( ! empty( $request['api_token'] ) ) {

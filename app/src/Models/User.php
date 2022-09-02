@@ -98,11 +98,25 @@ class User implements ArrayAccess, JsonSerializable {
 	 * Set the customer id in the user meta.
 	 *
 	 * @param string $id Customer id.
-	 * @return int|bool
+	 * @return $this|bool
 	 */
-	protected function setCustomerId( $id, $mode = 'live' ) {
-		$meta          = (array) get_user_meta( $this->user->ID, $this->customer_id_key, true );
+	protected function setCustomerId( $id, $mode = 'live', $force = false ) {
+		$meta = (array) get_user_meta( $this->user->ID, $this->customer_id_key, true );
+
+		// if we are setting something here.
+		if ( ! empty( $id ) ) {
+			// if they already have one set for this mode.
+			if ( ! empty( $meta[ $mode ] ) ) {
+				// if we have not passed force = true.
+				if ( ! $force ) {
+					return new \WP_Error( 'already_linked', __( 'This user is already linked to a customer.', 'surecart' ) );
+				}
+			}
+		}
+
+		// update id.
 		$meta[ $mode ] = $id;
+		// update meta.
 		update_user_meta( $this->user->ID, $this->customer_id_key, $meta );
 		return $this;
 	}
@@ -166,18 +180,26 @@ class User implements ArrayAccess, JsonSerializable {
 			]
 		);
 
-		$user_id       = username_exists( $args['user_name'] );
+		// get username from first part of email.
+		if ( empty( $args['user_name'] ) ) {
+			$parts             = explode( '@', $args['user_email'] );
+			$username          = $parts[0];
+			$args['user_name'] = $username;
+		}
+
+		$username      = $this->createUniqueUsername( $args['user_name'] );
 		$user_password = trim( $args['user_password'] );
 		$user_created  = false;
 
-		if ( ! $user_id && empty( $user_password ) ) {
+		// password is not provided.
+		if ( empty( $user_password ) ) {
 			$user_password = wp_generate_password( 12, false );
-			$user_id       = wp_create_user( $args['user_name'], $user_password, $args['user_email'] );
+			$user_id       = wp_create_user( $username, $user_password, $args['user_email'] );
 			update_user_meta( $user_id, 'default_password_nag', true );
 			$user_created = true;
-		} elseif ( ! $user_id ) {
+		} else {
 			// Password has been provided.
-			$user_id      = wp_create_user( $args['user_name'], $user_password, $args['user_email'] );
+			$user_id      = wp_create_user( $username, $user_password, $args['user_email'] );
 			$user_created = true;
 		}
 
@@ -193,6 +215,22 @@ class User implements ArrayAccess, JsonSerializable {
 		}
 
 		return $this->find( $user_id );
+	}
+
+	/**
+	 * Create a unique username for the user.
+	 *
+	 * @param string $name The username.
+	 *
+	 * @return string
+	 */
+	protected function createUniqueUsername( $name ) {
+		$base_name = $name;
+		$i         = 0;
+		while ( username_exists( $name ) ) {
+			$name = $base_name . ( ++$i );
+		}
+		return $name;
 	}
 
 	/**
@@ -218,19 +256,6 @@ class User implements ArrayAccess, JsonSerializable {
 			return false;
 		}
 		return Customer::find( $this->customerId( $mode ) );
-	}
-
-	/**
-	 * Create the customer by email.
-	 *
-	 * @return void
-	 */
-	public function createCustomerByEmail() {
-		$customer = Customer::byEmail( $this->user->user_email );
-		if ( $customer ) {
-			$this->customer = $this->setCustomerId( $customer->id );
-		}
-		return $this;
 	}
 
 	/**

@@ -1,15 +1,16 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { select, useDispatch, useSelect } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
-import { store as noticesStore } from '@wordpress/notices';
-import { __ } from '@wordpress/i18n';
 import { ScButton, ScFormControl } from '@surecart/components-react';
+import { store as coreStore } from '@wordpress/core-data';
+import { select, useDispatch, useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
+import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
+import { useState } from 'react';
+
 import UserSelect from '../../../components/UserSelect';
 import Box from '../../../ui/Box';
 import Definition from '../../../ui/Definition';
-import { useState } from 'react';
 
 export default ({ customerId, customer }) => {
 	const { createErrorNotice, createSuccessNotice } =
@@ -33,14 +34,22 @@ export default ({ customerId, customer }) => {
 	// get user when customer id changes
 	const { user, loading } = useSelect(
 		(select) => {
+			if (!customer?.id) {
+				return {
+					user: null,
+					loading: true,
+				};
+			}
+
 			const queryArgs = [
 				'root',
 				'user',
 				{
-					sc_customer_ids: [customerId],
-					meta: { sc_customer_ids: [customerId] },
+					sc_customer_ids: [customer?.id],
+					meta: { sc_customer_ids: [customer?.id] },
 				},
 			];
+
 			return {
 				user: (
 					select(coreStore).getEntityRecords(...queryArgs) || []
@@ -56,7 +65,7 @@ export default ({ customerId, customer }) => {
 				),
 			};
 		},
-		[customerId]
+		[customer?.id]
 	);
 
 	/** Disconnect a WordPress user */
@@ -105,6 +114,10 @@ export default ({ customerId, customer }) => {
 
 	/** Connect a WordPress user */
 	const connect = async (userId) => {
+		if (!userId) {
+			return;
+		}
+
 		const id = parseInt(userId);
 		setSaving(true);
 		try {
@@ -188,7 +201,7 @@ export default ({ customerId, customer }) => {
 				</Definition>
 			) : (
 				<ScFormControl label={__('Connect a user', 'surecart')}>
-					<UserSelect onSelect={connect} required />
+					<UserSelect onSelect={connect} value={user?.id} required />
 				</ScFormControl>
 			)}
 		</Box>

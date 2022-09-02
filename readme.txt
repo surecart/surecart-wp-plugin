@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 1.1.6
+Stable tag: 1.1.8
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,20 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.1.8 - August 31, 2022 =
+* Fix: Issue with AffiliateWP affiliates sometimes not getting referrals marked complete.
+
+= 1.1.7 - August 31, 2022 =
+* Improvement: Make cart close arrow face opposite direction.
+* Improvement: Customer syncing with WordPress users.
+* Fix: Clear account cache on API Token save.
+* Fix: Remove duplicate Invoices/Receipts from brand settings page.
+* Fix: tax id dropdown on customer portal not saving.
+* Fix: Button size customization not applying in add to cart button.
+* Fix: Incorrect Average Order Total on dashboard chart.
+* Fix: Issue with live customers wp users not displaying prooperly on Merchant customer edit page.
+* Fix: Better error handling with Customer create.
 
 = 1.1.6 - August 24, 2022 =
 * Improvement: Allow PayPal for subscriptions if Reference Transactions are enabled on your account.
