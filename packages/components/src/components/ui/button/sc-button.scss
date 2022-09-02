@@ -97,20 +97,20 @@
 
     &:hover:not(.button--disabled) {
       background-color: var(--sc-button-default-hover-background-color, var(--sc-color-white));
-      border-color: var(--primary-background);
+      border-color: var(--sc-button-default-focus-border-color, var(--primary-background));
       color: var(--primary-background);
     }
 
     &:focus:not(.button--disabled) {
-      background-color: var(--sc-color-white);
-      border-color: var(--sc-color-white);
+      background-color: var(--sc-button-default-focus-background-color, var(--sc-color-white));
+      border-color: var(--sc-button-default-focus-border-color, var(--sc-color-white));
       color: var(--primary-background);
       box-shadow: 0 0 0 var(--sc-focus-ring-width) var(--sc-focus-ring-color-primary);
     }
 
     &:active:not(.button--disabled) {
-      background-color: var(--sc-color-white);
-      border-color: var(--sc-color-white);
+      background-color: var(--sc-button-default-active-background-color, var(--sc-color-white));
+      border-color: var(--sc-button-default-active-border-color, var(--sc-color-white));
       color: var(--primary-background);
     }
   }

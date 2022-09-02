@@ -328,7 +328,6 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-input-background-color-hover: var(--sc-color-gray-900);
   --sc-input-background-color-focus: var(--sc-color-gray-900);
   --sc-input-background-color-disabled: var(--sc-color-gray-800);
-  --sc-input-border-color: var(--sc-color-gray-700);
   --sc-input-border-color-hover: var(--sc-color-gray-600);
   --sc-input-border-color-focus: var(--sc-color-gray-500);
   --sc-input-border-color-disabled: var(--sc-color-gray-200);
@@ -374,6 +373,10 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-input-background-color: var(--sc-color-gray-900);
   --sc-button-default-background-color: var(--sc-color-gray-900);
   --sc-button-default-hover-background-color: var(--sc-color-gray-900);
+  --sc-button-default-active-background-color: var(--sc-button-default-hover-background-color);
+  --sc-button-default-focus-background-color: var(--sc-button-default-hover-background-color);
+  --sc-button-default-active-border-color: var(--sc-color-gray-600);
+  --sc-button-default-focus-border-color: var(--sc-color-gray-600);
   --sc-toggle-background-color: var(--sc-color-gray-950);
   --sc-card-background-color: var(--sc-color-gray-950);
   --sc-table-cell-background-color: var(--sc-color-gray-800);

@@ -25,7 +25,7 @@
   padding: 0;
   margin: 0;
   cursor: pointer;
-  transition: var(--sc-transition-fast) --color;
+  transition: color var(--sc-transition-fast) ease;
 }
 :host(:not(:last-of-type)) .breadcrumb-item__label {
   color: var(--sc-breadcrumb-item-label-color, var(--sc-color-gray-900));
