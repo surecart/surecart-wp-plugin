@@ -22,16 +22,6 @@ export default () => {
 		'site',
 		'sc_recaptcha_site_key'
 	);
-	const [scReCaptchaSecretData, setScReCaptchaSecretData] = useEntityProp(
-		'root',
-		'site',
-		'sc_recaptcha_secret_key'
-	);
-	const [scThemeData, setScThemeData] = useEntityProp(
-		'root',
-		'site',
-		'surecart_theme'
-	);
 
 	/**
 	 * Form is submitted.
@@ -185,39 +175,6 @@ export default () => {
 							'surecart'
 						)}
 					></ScInput>
-
-					<ScInput
-						value={scReCaptchaSecretData}
-						label={__('reCaptcha Secret Key', 'surecart')}
-						placeholder={__('reCaptcha Secret Key', 'surecart')}
-						onScChange={(e) => setScReCaptchaSecretData( e.target.value )}
-						type="password"
-						help={__(
-							'This is use reCaptcha.',
-							'surecart'
-						)}
-					></ScInput>
-					<ScSelect
-						label={__('Select Theme', 'surecart')}
-						placeholder={__('Select Theme', 'surecart')}
-						value={scThemeData}
-						onScChange={(e) => setScThemeData(e.target.value)}
-						help={__(
-							'Choose "Dark" if your theme already has a dark background.',
-							'surecart'
-						)}
-						choices={[
-							{
-								label: __('Light', 'surecart'),
-								value: 'light',
-							},
-							{
-								label: __('Dark', 'surecart'),
-								value: 'dark',
-							},
-						]}
-						required
-					></ScSelect>
 				</div>
 			</SettingsBox>
 

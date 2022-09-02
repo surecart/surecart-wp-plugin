@@ -30,3 +30,28 @@ add_filter(
 		return $url;
 	}
 );
+
+function sc_register_settings() {
+	register_setting(
+		'general',
+		'sc_recaptcha_site_key',
+		array(
+			'type'              => 'string',
+			'show_in_rest'      => true,
+			'sanitize_callback' => 'sanitize_text_field',
+		)
+	);
+}
+add_action( 'admin_init', 'sc_register_settings' );
+add_action( 'rest_api_init', 'sc_register_settings' );
+
+if ( ! empty( get_option( 'sc_recaptcha_site_key', true ) ) ) {
+	/**
+	 * SC Google ReCaptcha
+	 */
+	function sc_google_recaptcha_script() {
+		wp_enqueue_script( 'sc_google_recaptcha_script', 'https://www.google.com/recaptcha/api.js?render='. get_option( 'sc_recaptcha_site_key', true ) .'', array(), date('Y-m-d') );
+	
+	}
+	add_action( 'wp_enqueue_scripts', 'sc_google_recaptcha_script' );
+}
