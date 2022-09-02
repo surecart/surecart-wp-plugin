@@ -12,6 +12,9 @@ export default [
 				type: 'boolean',
 			},
 		},
+		supports: {
+			className: false,
+		},
 		save({ attributes, className }) {
 			const { label, full, show_name } = attributes;
 			return (
