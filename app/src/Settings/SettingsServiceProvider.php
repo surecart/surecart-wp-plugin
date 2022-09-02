@@ -2,7 +2,7 @@
 
 namespace SureCart\Settings;
 
-use SureCart\Settings\SettingsService;
+use SureCart\Settings\SettingService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -10,44 +10,31 @@ use SureCartCore\ServiceProviders\ServiceProviderInterface;
  */
 class SettingsServiceProvider implements ServiceProviderInterface {
 	/**
-	 * {@inheritDoc}
+	 * Register settings service.
+	 *
+	 * @param \Pimple\Container $container Service container.
+	 * @return void
 	 */
 	public function register( $container ) {
 		$app = $container[ SURECART_APPLICATION_KEY ];
 
 		// Service for registering a setting.
 		$container['surecart.settings'] = function () {
-			return SettingsService::getInstance();
+			return new SettingService();
 		};
 
-		// register_setting alias.
-		$app->alias(
-			'register_setting',
-			function () use ( $container ) {
-				return call_user_func_array( [ $container['surecart.settings'], 'register' ], func_get_args() );
-			}
-		);
-
-		// get registered settings alias.
-		$app->alias(
-			'get_registered_settings',
-			function () use ( $container ) {
-				return call_user_func_array( [ $container['surecart.settings'], 'getRegisteredSettings' ], func_get_args() );
-			}
-		);
-
-		// register our settings from config.
-		$config = $container[ SURECART_CONFIG_KEY ];
-		if ( ! empty( $config['settings'] ) ) {
-			foreach ( $config['settings'] as $setting ) {
-				$app->register_setting( $setting );
-			}
-		}
+		$app = $container[ SURECART_APPLICATION_KEY ];
+		$app->alias( 'setting', 'surecart.settings' );
 	}
 
 
 	/**
-	 * {@inheritDoc}
+	 * Bootstrap settings.
+	 *
+	 * @param \Pimple\Container $container Service container.
+	 * @return void
 	 */
-	public function bootstrap( $container ) {}
+	public function bootstrap( $container ) {
+		$container['surecart.settings']->bootstrap();
+	}
 }

@@ -17,5 +17,5 @@
 }
 
 ::slotted([slot=head]) {
-  border-bottom: 1px solid var(--sc-color-gray-200);
+  border-bottom: 1px solid var(--sc-table-border-bottom-color, var(--sc-color-gray-200));
 }

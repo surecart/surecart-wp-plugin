@@ -27,6 +27,20 @@ class ThemeServiceProvider implements ServiceProviderInterface {
 	public function bootstrap( $container ) {
 		// add the "Brand" color to the theme's color palette.
 		add_action( 'after_setup_theme', [ $this, 'addColorToPalette' ], 99999 );
+		// add the theme class to the body tag.
+		add_filter( 'body_class', [ $this, 'themeBodyClass' ] );
+	}
+
+	/**
+	 * Add our theme class to the body tag.
+	 *
+	 * @param array $classes Array of body classes.
+	 *
+	 * @return array
+	 */
+	public function themeBodyClass( $classes ) {
+		$classes[] = 'surecart-theme-' . get_option( 'surecart_theme', 'light' );
+		return $classes;
 	}
 
 	/**

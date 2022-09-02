@@ -1,14 +1,20 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScAddress, ScFormControl, ScInput } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
+import { useEntityProp } from '@wordpress/core-data';
+import {
+	ScAddress,
+	ScFormControl,
+	ScInput,
+	ScSelect,
+	ScTextarea,
+} from '@surecart/components-react';
+import SettingsTemplate from '../SettingsTemplate';
+import SettingsBox from '../SettingsBox';
+import useEntity from '../../hooks/useEntity';
 import { __ } from '@wordpress/i18n';
-
 import ColorPopup from '../../../blocks/components/ColorPopup';
 import Error from '../../components/Error';
-import useEntity from '../../hooks/useEntity';
-import SettingsBox from '../SettingsBox';
-import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
 import Logo from './Logo';
 
@@ -18,6 +24,11 @@ export default () => {
 	const { item, itemError, editItem, hasLoadedItem } = useEntity(
 		'store',
 		'brand'
+	);
+	const [scThemeData, setScThemeData] = useEntityProp(
+		'root',
+		'site',
+		'surecart_theme'
 	);
 
 	/**
@@ -104,6 +115,27 @@ export default () => {
 							</ScInput>
 						</div>
 					</ScFormControl>
+					<ScSelect
+						label={__('Select Theme', 'surecart')}
+						placeholder={__('Select Theme', 'surecart')}
+						value={scThemeData}
+						onScChange={(e) => setScThemeData(e.target.value)}
+						help={__(
+							'Choose "Dark" if your theme already has a dark background.',
+							'surecart'
+						)}
+						choices={[
+							{
+								label: __('Light', 'surecart'),
+								value: 'light',
+							},
+							{
+								label: __('Dark', 'surecart'),
+								value: 'dark',
+							},
+						]}
+						required
+					></ScSelect>
 				</div>
 			</SettingsBox>
 

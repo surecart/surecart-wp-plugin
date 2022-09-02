@@ -76,6 +76,19 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-color-gray-800: #1f2937;
   --sc-color-gray-900: #111827;
   --sc-color-gray-950: #0d131e;
+
+  --sc-color-neutral-50: #fafafa;
+  --sc-color-neutral-100: whitesmoke;
+  --sc-color-neutral-200: #e5e5e5;
+  --sc-color-neutral-300: #d4d4d4;
+  --sc-color-neutral-400: #a3a3a3;
+  --sc-color-neutral-500: #737373;
+  --sc-color-neutral-600: #525252;
+  --sc-color-neutral-700: #404040;
+  --sc-color-neutral-800: #262626;
+  --sc-color-neutral-900: #171717;
+  --sc-color-neutral-950: #0f0f0f;
+
   --sc-color-primary: 217;
   --sc-color-primary-luminance: 60%;
   --sc-color-primary-saturation: 91%;
@@ -284,6 +297,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-z-index-tooltip: 1000;
   --sc-checkout-columns: 1;
   --sc-dashboard-module-spacing: var(--sc-spacing-x-small);
+  --sc-border-width-zero: 0px;
 }
 
 [hidden] {
@@ -294,18 +308,26 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   overflow: hidden !important;
 }
 
-[data-theme='dark'] body {
-  background: var(--sc-color-gray-950);
-}
+.surecart-theme-dark {
+  /** Let's make these less blue for basic dark mode **/
+  --sc-color-gray-50: var(--sc-color-neutral-50);
+  --sc-color-gray-100: var(--sc-color-neutral-100);
+  --sc-color-gray-200: var(--sc-color-neutral-200);
+  --sc-color-gray-300: var(--sc-color-neutral-300);
+  --sc-color-gray-400: var(--sc-color-neutral-400);
+  --sc-color-gray-500: var(--sc-color-neutral-500);
+  --sc-color-gray-600: var(--sc-color-neutral-600);
+  --sc-color-gray-700: var(--sc-color-neutral-700);
+  --sc-color-gray-800: var(--sc-color-neutral-800);
+  --sc-color-gray-900: var(--sc-color-neutral-900);
+  --sc-color-gray-950: var(--sc-color-neutral-950);
 
-[data-theme='dark'] {
   /* Inputs */
-  --sc-input-label-color: var(--sc-color-gray-500);
+  --sc-input-label-color: var(--sc-color-gray-300);
   --sc-input-background-color: var(--sc-color-gray-900);
   --sc-input-background-color-hover: var(--sc-color-gray-900);
   --sc-input-background-color-focus: var(--sc-color-gray-900);
   --sc-input-background-color-disabled: var(--sc-color-gray-800);
-  --sc-input-border-color: var(--sc-color-gray-700);
   --sc-input-border-color-hover: var(--sc-color-gray-600);
   --sc-input-border-color-focus: var(--sc-color-gray-500);
   --sc-input-border-color-disabled: var(--sc-color-gray-200);
@@ -329,10 +351,86 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-input-icon-color: var(--sc-color-gray-500);
   --sc-input-icon-color-hover: var(--sc-color-gray-300);
   --sc-input-icon-color-focus: var(--sc-color-gray-300);
-  --sc-input-placeholder-color: var(--sc-color-gray-600);
-  --sc-input-placeholder-color-disabled: var(--sc-color-gray-500);
+  --sc-input-placeholder-color: var(--sc-color-gray-500);
+  --sc-input-placeholder-color-disabled: var(--sc-color-gray-400);
   --sc-input-help-text-color: var(--sc-color-gray-400);
-  --sc-input-label-color: var(--sc-color-gray-400);
+  --sc-list-row-background-color: var(--sc-color-gray-950);
+  --sc-badge-notice-background-color: var(--sc-color-gray-950);
+  --sc-divider-text-background-color: var(--sc-color-gray-900);
+  --sc-badge-notice-text-color: var(--sc-color-gray-300);
+  --sc-list-row-color: var(--sc-color-gray-300);
+  --sc-empty-color: var(--sc-color-gray-300);
+  --sc-empty-icon-color: var(--sc-color-gray-300);
+  --sc-tab-active-background: var(--sc-color-gray-800);
+  --ast-global-color-2: var(--sc-color-gray-300);
+  --sc-menu-item-color: var(--sc-color-gray-300);
+  --sc-line-item-title-color: var(--sc-color-gray-300);
+  --sc-order-summary-color: var(--sc-color-gray-300);
+  --sc-order-collapse-link-icon-color: var(--sc-color-gray-300);
+  --sc-input-control-background-color: var(--sc-color-gray-900);
+  --sc-block-ui-background-color: var(--sc-color-gray-800);
+  --sc-select-background-color: var(--sc-color-gray-900);
+  --sc-input-background-color: var(--sc-color-gray-900);
+  --sc-button-default-background-color: var(--sc-color-gray-900);
+  --sc-button-default-hover-background-color: var(--sc-color-gray-900);
+  --sc-button-default-active-background-color: var(--sc-button-default-hover-background-color);
+  --sc-button-default-focus-background-color: var(--sc-button-default-hover-background-color);
+  --sc-button-default-active-border-color: var(--sc-color-gray-600);
+  --sc-button-default-focus-border-color: var(--sc-color-gray-600);
+  --sc-toggle-background-color: var(--sc-color-gray-950);
+  --sc-card-background-color: var(--sc-color-gray-950);
+  --sc-table-cell-background-color: var(--sc-color-gray-800);
+  --sc-alert-primary-background: var(--sc-color-gray-800);
+  --sc-alert-info-background: var(--sc-color-gray-800);
+  --sc-alert-danger-background: var(--sc-color-gray-800);
+  --sc-alert-warning-background: var(--sc-color-gray-800);
+  --sc-alert-success-background: var(--sc-color-gray-800);
+  --sc-input-control-color: var(--sc-color-gray-300);
+  --sc-alert-primary-color: var(--sc-color-gray-300);
+  --sc-alert-info-color: var(--sc-color-gray-300);
+  --sc-alert-danger-color: var(--sc-color-gray-300);
+  --sc-alert-warning-color: var(--sc-color-gray-300);
+  --sc-alert-success-color: var(--sc-color-gray-300);
+  --sc-alert-primary-title-color: var(--sc-color-gray-300);
+  --sc-alert-info-title-color: var(--sc-color-gray-300);
+  --sc-alert-danger-title-color: var(--sc-color-gray-300);
+  --sc-alert-warning-title-color: var(--sc-color-gray-300);
+  --sc-alert-success-title-color: var(--sc-color-gray-300);
+  --sc-breadcrumb-item-label-color: var(--sc-color-gray-300);
+  --sc-breadcrumb-item-label-active-color: var(--sc-color-gray-200);
+  --sc-button-default-color: var(--sc-color-gray-300);
+  --sc-breadcrumb-color: var(--sc-color-gray-300);
+  --sc-stacked-list-row-text-color: var(--sc-color-gray-300);
+  --sc-order-confirmation-color: var(--sc-color-gray-300);
+  --sc-card-boderless-border-color: var(--sc-color-gray-600);
+  --sc-select-border-color: var(--sc-color-gray-600);
+  --sc-button-default-border-color: var(--sc-color-gray-600);
+  --sc-stacked-list-border-color: var(--sc-color-gray-600);
+  --sc-divider-border-top-color: var(--sc-color-gray-600);
+  --sc-input-border-color: var(--sc-color-gray-600);
+  --sc-table-border-bottom-color: var(--sc-color-gray-600);
+  --sc-toggle-border-color: var(--sc-color-gray-600);
+  --sc-toggle-shady-color: var(--sc-color-gray-800);
+  --sc-table-row-border-bottom-color: var(--sc-color-gray-600);
+  --sc-badge-notice-border-color: var(--sc-color-gray-600);
+  --sc-stacked-list-row-hover-color: var(--sc-color-gray-800);
+  --sc-skeleton-color: var(--sc-color-gray-800);
+  --sc-skeleton-sheen-color: var(--sc-color-gray-700);
+  --sc-alert-border-width: 3px;
+  --sc-alert-primary-border-color: var(--sc-color-primary-500);
+  --sc-alert-success-border-color: var(--sc-color-success-500);
+  --sc-alert-warning-border-color: var(--sc-color-warning-600);
+  --sc-alert-danger-border-color: var(--sc-color-danger-600);
+  --sc-switch-background-thumb-color: var(--sc-color-gray-900);
+  --sc-switch-background-thumb-hover-color: var(--sc-color-gray-900);
+  --sc-swith-label-color: var(--sc-color-gray-300);
+  --sc-switch-description-color: var(--sc-color-gray-400);
+  --sc-switch-control-background-color: var(--sc-color-gray-700);
+  --sc-switch-border-color: var(--sc-color-gray-700);
+  --sc-switch-control-hover-background-color: var(--sc-color-gray-600);
+  --sc-switch-control-hover-border-color: var(--sc-color-gray-600);
+  --sc-switch-checked-control-background-color: var(--sc-color-primary-600);
+  --sc-switch-checked-control-border-color: var(--sc-color-primary-600);
 
   /* Overlays */
   --sc-overlay-background-color: #d1d5db22;
@@ -347,305 +445,288 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
 
   /* Choice */
   --sc-choice-background-color: var(--sc-color-gray-900);
-}
 
-/* Alert */
-[data-theme='dark'] sc-alert::part(base) {
-  background-color: var(--sc-color-gray-900);
-  border-left-color: var(--sc-color-gray-800);
-  border-right-color: var(--sc-color-gray-800);
-  border-bottom-color: var(--sc-color-gray-800);
-  color: var(--sc-color-gray-200);
+  /** Stripe */
+  --sc-stripe-color-logo: 'dark';
+  --sc-stripe-icon-color: var(--sc-color-white);
+  --sc-stripe-color-tag: 'dark';
+  --sc-stripe-color-tab-selected: 'dark';
 }
 
 /* Avatar */
-[data-theme='dark'] sc-avatar::part(base) {
+.surecart-theme-dark sc-table {
+  color: var(--sc-color-gray-300);
+}
+
+/* Avatar */
+.surecart-theme-dark sc-avatar::part(base) {
   background-color: var(--sc-color-gray-700);
   color: var(--sc-color-gray-300);
 }
 
-/* Divider */
-[data-theme='dark'] sc-divider::part(text) {
-  background-color: var(--sc-color-gray-950);
-}
-
-[data-theme='dark'] sc-divider::part(line) {
-  border-color: var(--sc-color-gray-600);
-}
-
 /* Button */
-[data-theme='dark'] sc-button[type='default']::part(base) {
+.surecart-theme-dark sc-button[type='default']::part(base) {
   background-color: var(--sc-color-gray-900);
   border-color: var(--sc-color-gray-700);
   color: var(--sc-color-gray-400);
 }
 
-[data-theme='dark'] sc-button[type='default']:not([disabled])::part(base):hover {
+.surecart-theme-dark sc-button[type='default']:not([disabled])::part(base):hover {
   background-color: var(--sc-color-primary-950);
   border-color: var(--sc-color-primary-800);
   color: var(--sc-color-primary-400);
 }
 
-[data-theme='dark'] sc-button[type='default']:not([disabled])::part(base):focus {
+.surecart-theme-dark sc-button[type='default']:not([disabled])::part(base):focus {
   background-color: var(--sc-color-primary-950);
   border-color: var(--sc-color-primary-800);
   color: var(--sc-color-primary-400);
   box-shadow: 0 0 0 var(--sc-focus-ring-width) hsla(var(--sc-color-primary-hue), var(--sc-color-primary-saturation), 50%, var(--sc-focus-ring-alpha));
 }
 
-[data-theme='dark'] sc-button[type='default']:not([disabled])::part(base):active {
+.surecart-theme-dark sc-button[type='default']:not([disabled])::part(base):active {
   background-color: var(--sc-color-primary-900);
   border-color: var(--sc-color-primary-700);
   color: var(--sc-color-primary-300);
 }
 
+.surecart-theme-dark sc-button[type='text']::part(base) {
+  color: var(--sc-color-gray-400);
+}
+
+.surecart-theme-dark sc-button[type='text']:not([disabled])::part(base):active,
+.surecart-theme-dark sc-button[type='text']:not([disabled])::part(base):hover,
+.surecart-theme-dark sc-button[type='text']:not([disabled])::part(base):focus {
+  color: var(--sc-color-gray-300);
+}
+
 /* Card */
-[data-theme='dark'] sc-card::part(base) {
+.surecart-theme-dark sc-card::part(base) {
   background-color: var(--sc-color-gray-900);
   --border-color: var(--sc-color-gray-800);
 }
 
-/* Checkbox & radio */
-[data-theme='dark'] sc-checkbox::part(control),
-[data-theme='dark'] sc-radio::part(control),
-[data-theme='dark'] sc-choice::part(checked-icon) {
-  color: var(--sc-color-gray-900);
-}
-
 /* Color picker */
-[data-theme='dark'] sc-color-picker::part(format-button) {
+.surecart-theme-dark sc-color-picker::part(format-button) {
   background-color: var(--sc-color-gray-900);
   border-color: var(--sc-color-gray-700);
   color: var(--sc-color-gray-400);
 }
 
-[data-theme='dark'] sc-color-picker::part(format-button):hover {
+.surecart-theme-dark sc-color-picker::part(format-button):hover {
   background-color: var(--sc-color-primary-950);
   border-color: var(--sc-color-primary-800);
   color: var(--sc-color-primary-400);
 }
 
-[data-theme='dark'] sc-color-picker::part(format-button):focus {
+.surecart-theme-dark sc-color-picker::part(format-button):focus {
   background-color: var(--sc-color-primary-950);
   border-color: var(--sc-color-primary-800);
   color: var(--sc-color-primary-400);
   box-shadow: 0 0 0 var(--sc-focus-ring-width) hsla(var(--sc-color-primary-hue), var(--sc-color-primary-saturation), 50%, var(--sc-focus-ring-alpha));
 }
 
-[data-theme='dark'] sc-color-picker::part(format-button):active {
+.surecart-theme-dark sc-color-picker::part(format-button):active {
   background-color: var(--sc-color-primary-900);
   border-color: var(--sc-color-primary-700);
   color: var(--sc-color-primary-300);
 }
 
-[data-theme='dark'] sc-color-picker::part(panel) {
+.surecart-theme-dark sc-color-picker::part(panel) {
   background-color: var(--sc-color-gray-900);
   border-color: var(--sc-color-gray-800);
 }
 
-[data-theme='dark'] sc-color-picker::part(slider-handle) {
+.surecart-theme-dark sc-color-picker::part(slider-handle) {
   background-color: var(--sc-color-gray-800);
   box-shadow: 0 0 0 1px var(--sc-color-gray-600);
 }
 
-[data-theme='dark'] sc-color-picker::part(slider-handle):focus {
+.surecart-theme-dark sc-color-picker::part(slider-handle):focus {
   box-shadow: 0 0 0 1px var(--sc-color-primary-500), 0 0 0 var(--sc-focus-ring-width) var(--sc-focus-ring-color-primary);
 }
 
-[data-theme='dark'] sc-color-picker::part(grid-handle) {
+.surecart-theme-dark sc-color-picker::part(grid-handle) {
   border-color: var(--sc-color-gray-900);
 }
 
-[data-theme='dark'] sc-color-picker::part(preview),
-[data-theme='dark'] sc-color-picker::part(opacity-slider),
-[data-theme='dark'] sc-color-picker::part(trigger) {
+.surecart-theme-dark sc-color-picker::part(preview),
+.surecart-theme-dark sc-color-picker::part(opacity-slider),
+.surecart-theme-dark sc-color-picker::part(trigger) {
   background-image: linear-gradient(45deg, #333 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #333 75%), linear-gradient(45deg, transparent 75%, #333 75%),
     linear-gradient(45deg, #333 25%, transparent 25%);
 }
 
-[data-theme='dark'] sc-color-picker::part(swatches) {
+.surecart-theme-dark sc-color-picker::part(swatches) {
   border-top-color: var(--sc-color-gray-800);
 }
 
 /* Details */
-[data-theme='dark'] sc-details::part(base) {
+.surecart-theme-dark sc-details::part(base) {
   border-color: var(--sc-color-gray-800);
 }
 
 /* Icon button */
-[data-theme='dark'] sc-icon-button::part(base) {
+.surecart-theme-dark sc-icon-button::part(base) {
   color: var(--sc-color-gray-400);
 }
 
-[data-theme='dark'] sc-icon-button:not([disabled])::part(base):hover,
-[data-theme='dark'] sc-icon-button:not([disabled])::part(base):focus {
+.surecart-theme-dark sc-icon-button:not([disabled])::part(base):hover,
+.surecart-theme-dark sc-icon-button:not([disabled])::part(base):focus {
   color: var(--sc-color-primary-500);
 }
 
-[data-theme='dark'] sc-icon-button:not([disabled])::part(base):active {
+.surecart-theme-dark sc-icon-button:not([disabled])::part(base):active {
   color: var(--sc-color-primary-400);
 }
 
 /* Image comparer */
-[data-theme='dark'] sc-image-comparer::part(divider),
-[data-theme='dark'] sc-image-comparer::part(handle) {
+.surecart-theme-dark sc-image-comparer::part(divider),
+.surecart-theme-dark sc-image-comparer::part(handle) {
   background-color: var(--sc-color-gray-900);
   color: var(--sc-color-gray-400);
 }
 
 /* Menu item */
-[data-theme='dark'] sc-menu-item::part(base) {
+.surecart-theme-dark sc-menu-item::part(base) {
   color: var(--sc-color-gray-200);
 }
 
-[data-theme='dark'] sc-menu-item::part(base):focus {
+.surecart-theme-dark sc-menu-item::part(base):focus {
   background-color: var(--sc-color-primary-600);
   color: var(--sc-color-white);
 }
 
-[data-theme='dark'] sc-menu-item[disabled]::part(base) {
+.surecart-theme-dark sc-menu-item[disabled]::part(base) {
   color: var(--sc-color-gray-600);
 }
 
 /* Menu label */
-[data-theme='dark'] sc-menu-label::part(base) {
+.surecart-theme-dark sc-menu-label::part(base) {
   color: var(--sc-color-gray-600);
 }
 
 /* Progress bar */
-[data-theme='dark'] sc-progress-bar::part(base) {
+.surecart-theme-dark sc-progress-bar::part(base) {
   background-color: var(--sc-color-gray-800);
 }
 
-[data-theme='dark'] sc-progress-bar::part(indicator) {
+.surecart-theme-dark sc-progress-bar::part(indicator) {
   color: var(--sc-color-gray-900);
 }
 
 /* Progress ring */
-[data-theme='dark'] sc-progress-ring::part(base) {
+.surecart-theme-dark sc-progress-ring::part(base) {
   --track-color: var(--sc-color-gray-800);
 }
 
 /* Range */
-[data-theme='dark'] sc-range {
+.surecart-theme-dark sc-range {
   --track-color: var(--sc-color-gray-800);
 }
 
 /* Rating */
-[data-theme='dark'] sc-rating {
+.surecart-theme-dark sc-rating {
   --symbol-color: var(--sc-color-gray-700);
 }
 
 /* Select */
-[data-theme='dark'] sc-select::part(tag) {
+.surecart-theme-dark sc-select::part(tag) {
   background-color: var(--sc-color-info-800);
   border-color: var(--sc-color-info-700);
   color: var(--sc-color-info-300);
 }
 
-/* Skeleton */
-[data-theme='dark'] sc-skeleton {
-  --color: var(--sc-color-gray-800);
-  --sheen-color: var(--sc-color-gray-700);
-}
-
 /* Spinner */
-[data-theme='dark'] sc-spinner {
+.surecart-theme-dark sc-spinner {
   --track-color: #f9fafb20;
 }
 
-/* Switch */
-[data-theme='dark'] sc-switch::part(thumb) {
-  background-color: var(--sc-color-gray-900);
-}
-
-[data-theme='dark'] sc-switch::part(title) {
-  color: var(--sc-color-gray-300);
-}
-
-[data-theme='dark'] sc-switch::part(description) {
-  color: var(--sc-color-gray-400);
-}
-
-[data-theme='dark'] sc-switch::part(control) {
-  background-color: var(--sc-color-gray-700);
-  border-color: var(--sc-color-gray-700);
-}
-
-[data-theme='dark'] sc-switch:not([disabled])::part(control):hover {
-  background-color: var(--sc-color-gray-600);
-  border-color: var(--sc-color-gray-600);
-}
-
-[data-theme='dark'] sc-switch[checked]::part(control) {
-  background-color: var(--sc-color-primary-600);
-  border-color: var(--sc-color-primary-600);
-}
-
-[data-theme='dark'] sc-switch[checked]::part(control):hover {
-  background-color: var(--sc-color-primary-500);
-  border-color: var(--sc-color-primary-500);
-}
-
 /* Secure notice */
-[data-theme='dark'] sc-secure-notice::part(icon) {
+.surecart-theme-dark sc-secure-notice::part(icon) {
   color: var(--sc-color-gray-700);
 }
 
-[data-theme='dark'] sc-secure-notice::part(text) {
+.surecart-theme-dark sc-secure-notice::part(text) {
   color: var(--sc-color-gray-400);
 }
 
 /* Tab group */
-[data-theme='dark'] sc-tab-group::part(tabs) {
+.surecart-theme-dark sc-tab-group::part(tabs) {
   --tabs-border-color: var(--sc-color-gray-800);
 }
 
 /* Tab */
-[data-theme='dark'] sc-tab::part(base) {
+.surecart-theme-dark sc-tab::part(base) {
   color: var(--sc-color-gray-400);
 }
 
-[data-theme='dark'] sc-tab:not([disabled])::part(base):hover,
-[data-theme='dark'] sc-tab[active]::part(base) {
+.surecart-theme-dark sc-tab:not([disabled])::part(base):hover,
+.surecart-theme-dark sc-tab[active]::part(base) {
   color: var(--sc-color-primary-500);
 }
 
 /* Tag */
-[data-theme='dark'] sc-tag[type='primary']::part(base) {
+.surecart-theme-dark sc-tag[type='primary']::part(base) {
   background-color: var(--sc-color-primary-950);
   border-color: var(--sc-color-primary-900);
   color: var(--sc-color-primary-300);
 }
 
-[data-theme='dark'] sc-tag[type='success']::part(base) {
+.surecart-theme-dark sc-tag[type='success']::part(base) {
   background-color: var(--sc-color-success-950);
   border-color: var(--sc-color-success-900);
   color: var(--sc-color-success-300);
 }
 
-[data-theme='dark'] sc-tag[type='info']::part(base) {
+.surecart-theme-dark sc-tag[type='info']::part(base) {
   background-color: var(--sc-color-info-800);
   border-color: var(--sc-color-info-700);
   color: var(--sc-color-info-300);
 }
 
-[data-theme='dark'] sc-tag[type='warning']::part(base) {
+.surecart-theme-dark sc-tag[type='warning']::part(base) {
   background-color: var(--sc-color-warning-950);
   border-color: var(--sc-color-warning-900);
   color: var(--sc-color-warning-300);
 }
 
-[data-theme='dark'] sc-tag[type='danger']::part(base) {
+.surecart-theme-dark sc-tag[type='danger']::part(base) {
   background-color: var(--sc-color-danger-950);
   border-color: var(--sc-color-danger-900);
   color: var(--sc-color-danger-300);
 }
 
-[data-theme='dark'] sc-form-section::part(title) {
+.surecart-theme-dark sc-form-section::part(title) {
   color: var(--sc-color-white);
 }
 
-[data-theme='dark'] sc-form-section::part(description) {
+.surecart-theme-dark sc-form-section::part(description) {
   color: var(--sc-color-gray-400);
+}
+
+.surecart-theme-dark sc-heading,
+.surecart-theme-dark sc-form-row,
+.surecart-theme-dark sc-form-control,
+.surecart-theme-dark sc-menu-label,
+.surecart-theme-dark sc-customer-details,
+.surecart-theme-dark .menu-item,
+.surecart-theme-dark sc-column,
+.surecart-theme-dark paypal-buttons,
+.surecart-theme-dark sc-stacked-list,
+.surecart-theme-dark sc-stripe-element,
+.surecart-theme-dark sc-stripe-payment-element,
+.surecart-theme-dark sc-stripe-payment-request,
+.surecart-theme-dark sc-text,
+.surecart-theme-dark sc-card,
+.surecart-theme-dark sc-tooltip,
+.surecart-theme-dark sc-tag-panel,
+.surecart-theme-dark sc-toggles,
+.surecart-theme-dark sc-dashboard-module,
+.surecart-theme-dark entry-title,
+.surecart-theme-dark sc-toggle,
+.surecart-theme-dark sc-tab-group,
+.surecart-theme-dark sc-login-form
+{
+  color: var(--sc-color-gray-300);
 }

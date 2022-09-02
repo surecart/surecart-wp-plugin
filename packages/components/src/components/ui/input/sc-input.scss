@@ -29,7 +29,7 @@
   font-weight: var(--sc-input-font-weight);
   letter-spacing: var(--sc-input-letter-spacing);
   background-color: var(--sc-input-background-color);
-  border: var(--sc-input-border);
+  border: solid 1px var(--sc-input-border-color, var(--sc-input-border));
   vertical-align: middle;
   box-shadow: var(--sc-input-box-shadow);
   transition: var(--sc-transition-fast) color, var(--sc-transition-fast) border, var(--sc-transition-fast) box-shadow;
@@ -118,6 +118,7 @@
   display: inline-flex;
   flex: 0 0 auto;
   align-items: center;
+  color: var(--sc-input-color);
   cursor: default;
 
   ::slotted(sc-icon) {

@@ -22,7 +22,7 @@
     right: 0;
     bottom: 0;
     cursor: wait;
-    background: var(--sc-color-white);
+    background: var(--sc-block-ui-background-color, var(--sc-color-white));
     opacity: var(--sc-block-ui-opacity, 0.15);
   }
 

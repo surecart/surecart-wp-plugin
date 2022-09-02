@@ -137,13 +137,6 @@ return [
 	],
 
 	/**
-	 * And array of plugin settings to register
-	 */
-	'settings'               => [
-		\SureCart\Settings\Setting\AccountSetting::class,
-	],
-
-	/**
 	 * Array of route group definitions and default attributes.
 	 * All of these are optional so if we are not using
 	 * a certain group of routes we can skip it.
