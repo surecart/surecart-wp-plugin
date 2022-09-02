@@ -72,7 +72,7 @@ class PurchaseCreatedTrigger extends Trigger {
 	 * @return string
 	 */
 	public static function get_description() {
-		return 'This trigger will be fired when someone first purchases a product.';
+		return __( 'This trigger will be fired when someone first purchases a product.', 'surecart' );
 	}
 
 	/**
