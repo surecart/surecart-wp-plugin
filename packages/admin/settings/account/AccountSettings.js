@@ -8,6 +8,7 @@ import SettingsBox from '../SettingsBox';
 import useEntity from '../../hooks/useEntity';
 import Error from '../../components/Error';
 import useSave from '../UseSave';
+import { useEntityProp } from '@wordpress/core-data';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -15,6 +16,21 @@ export default () => {
 	const { item, itemError, editItem, hasLoadedItem } = useEntity(
 		'store',
 		'account'
+	);
+	const [scReCaptchaSiteData, setScReCaptchaSiteData] = useEntityProp(
+		'root',
+		'site',
+		'sc_recaptcha_site_key'
+	);
+	const [scReCaptchaSecretData, setScReCaptchaSecretData] = useEntityProp(
+		'root',
+		'site',
+		'sc_recaptcha_secret_key'
+	);
+	const [scThemeData, setScThemeData] = useEntityProp(
+		'root',
+		'site',
+		'surecart_theme'
 	);
 
 	/**
@@ -142,6 +158,69 @@ export default () => {
 					></ScSelect>
 				</div>
 			</SettingsBox>
+
+			<SettingsBox
+				title={__('reCaptcha Settings', 'surecart')}
+				description={__(
+					'Change your plugin reCaptcha settings.',
+					'surecart'
+				)}
+				loading={!hasLoadedItem}
+			>
+				<div
+					css={css`
+						gap: var(--sc-form-row-spacing);
+						display: grid;
+						grid-template-columns: repeat(2, minmax(0, 1fr));
+					`}
+				>
+					<ScInput
+						value={scReCaptchaSiteData}
+						label={__('reCaptcha Site Key', 'surecart')}
+						placeholder={__('reCaptcha Site Key', 'surecart')}
+						onScChange={(e) => setScReCaptchaSiteData( e.target.value )} 
+						type="password"
+						help={__(
+							'This is use reCaptcha.',
+							'surecart'
+						)}
+					></ScInput>
+
+					<ScInput
+						value={scReCaptchaSecretData}
+						label={__('reCaptcha Secret Key', 'surecart')}
+						placeholder={__('reCaptcha Secret Key', 'surecart')}
+						onScChange={(e) => setScReCaptchaSecretData( e.target.value )}
+						type="password"
+						help={__(
+							'This is use reCaptcha.',
+							'surecart'
+						)}
+					></ScInput>
+					<ScSelect
+						label={__('Select Theme', 'surecart')}
+						placeholder={__('Select Theme', 'surecart')}
+						value={scThemeData}
+						onScChange={(e) => setScThemeData(e.target.value)}
+						help={__(
+							'Choose "Dark" if your theme already has a dark background.',
+							'surecart'
+						)}
+						choices={[
+							{
+								label: __('Light', 'surecart'),
+								value: 'light',
+							},
+							{
+								label: __('Dark', 'surecart'),
+								value: 'dark',
+							},
+						]}
+						required
+					></ScSelect>
+				</div>
+			</SettingsBox>
+
 		</SettingsTemplate>
 	);
 };
