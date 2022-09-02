@@ -8,7 +8,8 @@
 	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,
-		"html": false
+		"html": false,
+		"className": false
 	},
 	"attributes": {
 		"label": {
@@ -16,7 +17,8 @@
 			"default": "Address"
 		},
 		"full": {
-			"type": "boolean"
+			"type": "boolean",
+			"default": true
 		},
 		"show_name": {
 			"type": "boolean"
