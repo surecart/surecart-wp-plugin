@@ -16,7 +16,8 @@
 			"default": "Address"
 		},
 		"full": {
-			"type": "boolean"
+			"type": "boolean",
+			"default": true
 		},
 		"show_name": {
 			"type": "boolean"
