@@ -22,6 +22,21 @@ export default () => {
 		'site',
 		'sc_recaptcha_site_key'
 	);
+	const [scReCaptchaSecretData, setScReCaptchaSecretData] = useEntityProp(
+		'root',
+		'site',
+		'sc_recaptcha_secret_key'
+	);
+	const [scReCaptchaMinScoreData, setScReCaptchaMinScoreData] = useEntityProp(
+		'root',
+		'site',
+		'sc_recaptcha_min_score'
+	);
+	const [scReCaptchaMaxScoreData, setScReCaptchaMaxScoreData] = useEntityProp(
+		'root',
+		'site',
+		'sc_recaptcha_max_score'
+	);
 
 	/**
 	 * Form is submitted.
@@ -172,6 +187,45 @@ export default () => {
 						type="password"
 						help={__(
 							'This is use reCaptcha.',
+							'surecart'
+						)}
+					></ScInput>
+					<ScInput
+						value={scReCaptchaSecretData}
+						label={__('reCaptcha Secret Key', 'surecart')}
+						placeholder={__('reCaptcha Secret Key', 'surecart')}
+						onScChange={(e) => setScReCaptchaSecretData( e.target.value )} 
+						type="password"
+						help={__(
+							'This is use reCaptcha.',
+							'surecart'
+						)}
+					></ScInput>
+					<ScInput
+						value={scReCaptchaMinScoreData}
+						label={__('Threshold Min Score', 'surecart')}
+						placeholder={__('0.1', 'surecart')}
+						onScChange={(e) => setScReCaptchaMinScoreData( e.target.value )} 
+						type="number"
+						min="0"
+						step="0.1"
+						max="1"
+						help={__(
+							'This is use reCaptcha threshold min score.',
+							'surecart'
+						)}
+					></ScInput>
+					<ScInput
+						value={scReCaptchaMaxScoreData}
+						label={__('Threshold Max Score', 'surecart')}
+						placeholder={__('1', 'surecart')}
+						onScChange={(e) => setScReCaptchaMaxScoreData( e.target.value )} 
+						type="number"
+						min="0"
+						max="1"
+						step="0.1"
+						help={__(
+							'This is use reCaptcha threshold max score.',
 							'surecart'
 						)}
 					></ScInput>

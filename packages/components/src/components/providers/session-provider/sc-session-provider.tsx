@@ -8,6 +8,12 @@ import { createOrUpdateOrder, finalizeSession, getCheckout } from '../../../serv
 import { FormStateSetter, PaymentIntents, ProcessorName, LineItemData, PriceChoice, LineItem, Checkout } from '../../../types';
 import { getSessionId, getURLCoupon, getURLLineItems } from './helpers/session';
 
+declare global {
+  interface Window {
+    grecaptcha: any
+  }
+}
+
 @Component({
   tag: 'sc-session-provider',
   shadow: true,
@@ -124,6 +130,12 @@ export class ScSessionProvider {
     // Get current form state.
     const json = await this.el.querySelector('sc-form').getFormJson();
     let data = parseFormData(json);
+
+    if ( window.scData.recaptcha_site_key && window?.grecaptcha ) {
+      await window.grecaptcha.execute(window.scData.recaptcha_site_key, {action: 'surecart_checkout_submit'}).then(function(token) {
+        data['grecaptcha'] = token;
+      });
+    }
 
     // first lets make sure the session is updated before we process it.
     try {

@@ -178,6 +178,7 @@ class ScriptsService {
 				'page_id'             => get_the_ID(),
 				'nonce'               => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 				'nonce_endpoint'      => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
+				'recaptcha_site_key'  => get_option( 'sc_recaptcha_site_key', true ),
 			]
 		);
 

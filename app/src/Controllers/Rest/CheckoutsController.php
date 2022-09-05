@@ -241,6 +241,29 @@ class CheckoutsController extends RestController {
 			$errors->add( $valid_login->get_error_code(), $valid_login->get_error_message() );
 		}
 
+		if ( $request->get_param( 'grecaptcha' ) ) {
+			$recaptcha_verify = wp_remote_post(
+				'https://www.google.com/recaptcha/api/siteverify',
+				[
+					'method' => 'POST',
+					'body'   => [
+						'secret'   => get_option( 'sc_recaptcha_secret_key', true ),
+						'response' => $request->get_param( 'grecaptcha' ),
+					],
+				]
+			);
+
+			$verifyBody = json_decode( wp_remote_retrieve_body( $recaptcha_verify ) );
+
+			if ( ! $verifyBody->success ) {
+				$errors->add( 'invalid_recaptcha', __( 'Invalid reCaptcha', 'surecart' ) );
+			}
+
+			if ( $verifyBody->score && $verifyBody->score < get_option( 'sc_recaptcha_min_score', true ) ) {
+				$errors->add( 'invalid_score_recaptcha', __( 'reCaptcha Score is Invalid', 'surecart' ) );
+			}
+		}
+
 		return apply_filters( 'surecart/checkout/validate', $errors, $args, $request );
 	}
 

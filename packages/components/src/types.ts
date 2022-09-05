@@ -17,6 +17,7 @@ declare global {
       nonce: string;
       base_url: string;
       nonce_endpoint: string;
+      recaptcha_site_key: string;
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;
