@@ -75,7 +75,7 @@ export class ScOrdersList {
 
   /** Get all orders */
   async getOrders() {
-    if ( ! this.isCustomer ) {
+    if (!this.isCustomer) {
       return;
     }
     const response = (await await apiFetch({
