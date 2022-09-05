@@ -16,6 +16,7 @@
 
 ### Used by
 
+ - [sc-customer-details](../customer-details)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
@@ -32,6 +33,7 @@
 ```mermaid
 graph TD;
   sc-empty --> sc-icon
+  sc-customer-details --> sc-empty
   sc-invoices-list --> sc-empty
   sc-order --> sc-empty
   sc-orders-list --> sc-empty

@@ -335,6 +335,7 @@
   },
   "sc-customer-details": {
     "customer": true,
+    "customerid": true,
     "edit-link": true,
     "error": true,
     "heading": true,
@@ -408,6 +409,7 @@
   "sc-dashboard-downloads-list": {
     "all-link": true,
     "heading": true,
+    "is-customer": true,
     "query": true,
     "request-nonce": true,
     "style": true,
@@ -965,6 +967,7 @@
   "sc-orders-list": {
     "all-link": true,
     "heading": true,
+    "is-customer": true,
     "query": true,
     "style": true,
     "id": true,
@@ -1012,6 +1015,7 @@
   },
   "sc-payment-methods-list": {
     "heading": true,
+    "is-customer": true,
     "query": true,
     "style": true,
     "id": true,
@@ -1415,6 +1419,7 @@
     "all-link": true,
     "cancel-behavior": true,
     "heading": true,
+    "is-customer": true,
     "query": true,
     "style": true,
     "id": true,
