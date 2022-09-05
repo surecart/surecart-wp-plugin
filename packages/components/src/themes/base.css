@@ -340,9 +340,10 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-input-letter-spacing: var(--sc-letter-spacing-normal);
   --sc-input-border-color: var(--sc-color-gray-700);
   --sc-input-border-color-hover: var(--sc-color-gray-600);
-  --sc-input-border-color-focus: var(--sc-color-primary-400);
+  --sc-input-border-color-focus: var(--sc-color-primary-500);
   --sc-input-border-color-disabled: var(--sc-color-gray-700);
   --sc-input-border-color-invalid: var(--sc-color-danger-500);
+  --sc-input-border: solid var(--sc-input-border-width) var(--sc-input-border-color);
   --sc-input-color: var(--sc-color-gray-200);
   --sc-input-color-hover: var(--sc-color-gray-200);
   --sc-input-color-focus: var(--sc-color-gray-200);
@@ -445,6 +446,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
 
   /* Choice */
   --sc-choice-background-color: var(--sc-color-gray-900);
+  --sc-choice-border: solid var(--sc-input-border-width) var(--sc-input-border-color);
 
   /** Stripe */
   --sc-stripe-color-logo: 'dark';
@@ -474,13 +476,13 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
 .surecart-theme-dark sc-button[type='default']:not([disabled])::part(base):hover {
   background-color: var(--sc-color-primary-950);
   border-color: var(--sc-color-primary-800);
-  color: var(--sc-color-primary-400);
+  color: var(--sc-color-primary-500);
 }
 
 .surecart-theme-dark sc-button[type='default']:not([disabled])::part(base):focus {
   background-color: var(--sc-color-primary-950);
   border-color: var(--sc-color-primary-800);
-  color: var(--sc-color-primary-400);
+  color: var(--sc-color-primary-500);
   box-shadow: 0 0 0 var(--sc-focus-ring-width) hsla(var(--sc-color-primary-hue), var(--sc-color-primary-saturation), 50%, var(--sc-focus-ring-alpha));
 }
 
@@ -516,13 +518,13 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
 .surecart-theme-dark sc-color-picker::part(format-button):hover {
   background-color: var(--sc-color-primary-950);
   border-color: var(--sc-color-primary-800);
-  color: var(--sc-color-primary-400);
+  color: var(--sc-color-primary-500);
 }
 
 .surecart-theme-dark sc-color-picker::part(format-button):focus {
   background-color: var(--sc-color-primary-950);
   border-color: var(--sc-color-primary-800);
-  color: var(--sc-color-primary-400);
+  color: var(--sc-color-primary-500);
   box-shadow: 0 0 0 var(--sc-focus-ring-width) hsla(var(--sc-color-primary-hue), var(--sc-color-primary-saturation), 50%, var(--sc-focus-ring-alpha));
 }
 
@@ -577,7 +579,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
 }
 
 .surecart-theme-dark sc-icon-button:not([disabled])::part(base):active {
-  color: var(--sc-color-primary-400);
+  color: var(--sc-color-primary-500);
 }
 
 /* Image comparer */
