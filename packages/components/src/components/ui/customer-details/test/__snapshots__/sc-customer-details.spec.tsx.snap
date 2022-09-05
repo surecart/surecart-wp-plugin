@@ -41,15 +41,14 @@ exports[`sc-customer-details has an error state 1`] = `
           Test
         </sc-tag>
       </span>
-      <sc-card no-padding="">
-        <sc-stacked-list>
-          <sc-stacked-list-row mobile-size="0">
-            <slot name="empty">
-              You are not a customer.
-            </slot>
-          </sc-stacked-list-row>
-        </sc-stacked-list>
-      </sc-card>
+      <div>
+        <sc-divider style="--spacing: 0;"></sc-divider>
+        <slot name="empty">
+          <sc-empty icon="user">
+            You don't have any billing information.
+          </sc-empty>
+        </slot>
+      </div>
     </sc-dashboard-module>
   </mock:shadow-root>
   <span slot="heading">
