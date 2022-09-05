@@ -160,7 +160,7 @@ export class ScStripePaymentElement {
     }
 
     // get the computed styles.
-    const styles = getComputedStyle(document.body);
+    const styles = getComputedStyle(this.el);
 
     // we have what we need, load elements.
     this.elements = this.stripe.elements({
