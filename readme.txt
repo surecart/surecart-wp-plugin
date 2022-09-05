@@ -250,6 +250,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * Improvement: Allow customer dashboard access to non-customers.
 * Improvement: Allow filtering php model attributes.
 * Improvement: Prevent Admin access to SureCart customers.
+* Improvement: Change address block to default to full address capture by default.
 
 = 1.1.8 - August 31, 2022 =
 * Fix: Issue with AffiliateWP affiliates sometimes not getting referrals marked complete.
