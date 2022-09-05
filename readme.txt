@@ -243,6 +243,14 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.1.9 - September 5, 2022 =
+* New: Dark mode theme
+* New: LifterLMS Integration
+* New: Merchant search on admin index pages.
+* Improvement: Allow customer dashboard access to non-customers.
+* Improvement: Allow filtering php model attributes.
+* Improvement: Prevent Admin access to SureCart customers.
+
 = 1.1.8 - August 31, 2022 =
 * Fix: Issue with AffiliateWP affiliates sometimes not getting referrals marked complete.
 
