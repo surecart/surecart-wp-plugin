@@ -9,5 +9,6 @@
 	);
 	?>
 
+	<?php $table->search_form( __( 'Search Coupons', 'surecart' ), 'sc-search-coupons' ); ?>
 	<?php $table->display(); ?>
 </div>

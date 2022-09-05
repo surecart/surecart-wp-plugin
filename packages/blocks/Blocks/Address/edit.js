@@ -31,11 +31,20 @@ export default ({ attributes, setAttributes }) => {
 					<PanelRow>
 						<ToggleControl
 							label={__(
-								'Always use collect a full address',
+								'Use a compact address if possible',
 								'surecart'
 							)}
-							checked={full}
-							onChange={(full) => setAttributes({ full })}
+							checked={!full}
+							onChange={(full) => {
+								setAttributes({ full: !full });
+								if (full) {
+									setAttributes({ show_name: false });
+								}
+							}}
+							help={__(
+								'If products in the cart require tax but not shipping, we will show a condensed version specifically for tax collection.',
+								'surecart'
+							)}
 						/>
 					</PanelRow>
 					{full && (

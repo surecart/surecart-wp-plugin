@@ -26,17 +26,30 @@ class Customer extends Model {
 	 * @param array   $attributes Attributes to create.
 	 * @param boolean $create_user Whether to create a corresponding WordPress user.
 	 *
-	 * @return $this|false
+	 * @return $this|\WP_Error|false
 	 */
 	protected function create( $attributes = [], $create_user = true ) {
 		parent::create( $attributes );
+
+		// maybe create a WordPress user.
 		if ( $create_user ) {
-			User::create(
+			$user = User::create(
 				[
-					'user_name'  => $this->attributes['name'] ?? '',
+					'user_name'  => $this->attributes['name'] ?? null,
 					'user_email' => $this->attributes['email'],
 				]
-			)->setCustomerId( $this->attributes['id'] );
+			);
+
+			// handle error creating user.
+			if ( is_wp_error( $user ) ) {
+				return $user;
+			}
+
+			$linked = $user->setCustomerId( $this->attributes['id'], $this->live_mode ? 'live' : 'test' );
+
+			if ( is_wp_error( $linked ) ) {
+				return $linked;
+			}
 		}
 
 		return $this;

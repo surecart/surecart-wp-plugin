@@ -44,17 +44,6 @@ class ProductsListTable extends ListTable {
 		$this->items = $query->data;
 	}
 
-	public function search() { ?>
-	<form class="search-form"
-		method="get">
-		<?php $this->search_box( __( 'Search Products', 'surecart' ), 'user' ); ?>
-		<input type="hidden"
-			name="id"
-			value="1" />
-	</form>
-		<?php
-	}
-
 	/**
 	 * @global int $post_id
 	 * @global string $comment_status
@@ -161,6 +150,7 @@ class ProductsListTable extends ListTable {
 		return Product::where(
 			[
 				'archived' => $this->getArchiveStatus(),
+				'query'    => $this->get_search_query(),
 			]
 		)->paginate(
 			[

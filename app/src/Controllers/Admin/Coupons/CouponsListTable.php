@@ -119,6 +119,7 @@ class CouponsListTable extends ListTable {
 		return Coupon::where(
 			[
 				'archived' => $this->getArchiveStatus(),
+				'query'    => $this->get_search_query(),
 			]
 		)->with( [ 'promotions' ] )
 		->paginate(

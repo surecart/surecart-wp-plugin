@@ -6,6 +6,7 @@ use SureCart\Models\Charge;
 use SureCart\Models\Subscription;
 use SureCart\Models\User;
 use SureCart\Permissions\RolesService;
+use SureCart\Permissions\AdminAccessService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -27,6 +28,10 @@ class RolesServiceProvider implements ServiceProviderInterface {
 			return new PermissionsService();
 		};
 
+		$container['surecart.permissions.prevent'] = function () {
+			return new AdminAccessService();
+		};
+
 		$app = $container[ SURECART_APPLICATION_KEY ];
 		$app->alias( 'roles', 'surecart.permissions.roles' );
 	}
@@ -42,5 +47,6 @@ class RolesServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$container['surecart.permissions.permissions']->bootstrap();
+		$container['surecart.permissions.prevent']->bootstrap();
 	}
 }

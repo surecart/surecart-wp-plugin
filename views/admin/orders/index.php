@@ -9,6 +9,7 @@
 	);
 	?>
 
+	<?php $table->search_form( __( 'Search Orders', 'surecart' ), 'sc-search-orders' ); ?>
 	<?php $table->display(); ?>
 </div>
 

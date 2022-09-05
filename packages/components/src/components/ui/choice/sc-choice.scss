@@ -110,27 +110,27 @@
 
 // Focus
 .choice.choice--focused:not(.choice--checked):not(.choice--disabled) .choice__control {
-  border-color: var(--sc-color-white);
+  border-color: var(--var-sc-checked-focus-border-color, var(--sc-input-background-color));
   background-color: var(--sc-input-background-color-focus);
   box-shadow: 0 0 0 var(--sc-focus-ring-width) var(--sc-color-primary-500);
 }
 
 // Checked
 .choice--checked .choice__control {
-  color: var(--sc-color-white);
+  color: var(--var-sc-checked-color, var(--sc-input-background-color));
   border-color: var(--sc-color-primary-500);
   background-color: var(--sc-color-primary-500);
 }
 
 // Checked + hover
 .choice.choice--checked:not(.choice--disabled) .choice__control:hover {
-  border-color: var(--sc-color-white);
+  border-color: var(--var-sc-checked-hover-radio-border-color, var(--sc-input-background-color));
   background-color: var(--sc-color-primary-500);
 }
 
 // Checked + focus
 .choice.choice--checked:not(.choice--disabled).choice--focused .choice__control {
-  border-color: var(--sc-color-white);
+  border-color: var(--var-sc-checked-focus-radio-border-color, var(--sc-input-background-color));
   background-color: var(--sc-color-primary-500);
   box-shadow: 0 0 0 var(--sc-focus-ring-width) var(--sc-focus-ring-color-primary);
 }

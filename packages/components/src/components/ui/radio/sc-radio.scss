@@ -62,7 +62,7 @@
 
 // Checked
 .radio--checked .radio__control {
-  color: var(--sc-color-white);
+  color: var(--var-sc-checked-radio-background-color, var(--sc-input-background-color));
   border-color: var(--sc-color-primary-500);
   background-color: var(--sc-color-primary-500);
 }
@@ -74,7 +74,7 @@
 
 // Checked + focus
 .radio.radio--checked:not(.radio--disabled).radio--focused .radio__control {
-  border-color: var(--sc-color-white);
+  border-color: var(--var-sc-checked-radio-border-color, var(--sc-input-background-color));
   background-color: var(--sc-color-primary-500);
   box-shadow: 0 0 0 var(--sc-focus-ring-width) var(--sc-focus-ring-color-primary);
 }

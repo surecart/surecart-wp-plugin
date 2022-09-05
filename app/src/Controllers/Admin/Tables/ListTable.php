@@ -43,8 +43,7 @@ abstract class ListTable extends \WP_List_Table {
 	 * @return boolean|null
 	 */
 	public function getArchiveStatus( $default = 'active' ) {
-		$status = sanitize_text_field( wp_unslash( $_GET['status'] ?? $default ) );
-
+		$status   = sanitize_text_field( wp_unslash( $_GET['status'] ?? $default ) );
 		$archived = false;
 		if ( 'archived' === $status ) {
 			$archived = true;
@@ -53,7 +52,7 @@ abstract class ListTable extends \WP_List_Table {
 			$archived = null;
 		}
 
-		return (bool) $archived;
+		return $archived;
 	}
 
 	/**
@@ -145,5 +144,37 @@ abstract class ListTable extends \WP_List_Table {
 			}
 		}
 		return $output;
+	}
+
+	/**
+	 * Get the search query from the url args.
+	 *
+	 * @return string
+	 */
+	public function get_search_query() {
+		$search = urldecode( $_GET['s'] ?? null );
+		return str_replace( [ "\r", "\n" ], '', $search );
+	}
+
+	/**
+	 * Display a search form
+	 *
+	 * @param string $text The 'submit' button label.
+	 * @param string $input_id  ID attribute value for the search input field.
+	 *
+	 * @return void
+	 */
+	public function search_form( $text, $input_id ) {
+		?>
+		<form id="posts-filter" method="get">
+			<?php if ( isset( $_GET['page'] ) ) : ?>
+				<input type="hidden" name="page" value="<?php echo esc_attr( $_GET['page'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>">
+			<?php endif; ?>
+			<?php if ( isset( $_GET['status'] ) ) : ?>
+				<input type="hidden" name="status" value="<?php echo esc_attr( $_GET['status'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>">
+			<?php endif; ?>
+			<?php $this->search_box( $text, $input_id ); ?>
+		</form>
+		<?php
 	}
 }

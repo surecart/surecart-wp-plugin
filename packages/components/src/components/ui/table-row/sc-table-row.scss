@@ -8,6 +8,6 @@
   background: var(--sc-color-gray-50);
 }
 :host(:not(:last-child)) {
-  border-bottom: 1px solid var(--sc-color-gray-200);
+  border-bottom: 1px solid var(--sc-table-row-border-bottom-color, var(--sc-color-gray-200));
 }
 

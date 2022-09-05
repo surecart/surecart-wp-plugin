@@ -144,7 +144,6 @@ export class ScAddress {
               name={this.names.name}
               squared-bottom
               disabled={this.disabled}
-              required={this.required}
             />
           )}
 
