@@ -230,7 +230,6 @@ class ScriptsService {
 				'processors' => (array) \SureCart::account()->processors ?? [],
 				'plugin_url' => \SureCart::core()->assets()->getUrl(),
 				'currency'   => \SureCart::account()->currency,
-				'theme'      => get_option( 'surecart_theme', 'light' ),
 				'beta'       => [
 					'stripe_payment_element' => (bool) get_option( 'sc_stripe_payment_element', false ),
 				],
