@@ -137,14 +137,14 @@ export class ScCustomerDetails {
       <sc-dashboard-module class="customer-details" error={this.error}>
         <span slot="heading">
           {this.heading || __('Billing Details', 'surecart')}{' '}
-          {!this?.customer?.live_mode && (
+          {!!this?.customer?.id && !this?.customer?.live_mode && (
             <sc-tag type="warning" size="small">
               {__('Test', 'surecart')}
             </sc-tag>
           )}
         </span>
 
-        {this.editLink && '' !== this.customer?.id && (
+        {!!this.editLink && !!this.customer?.id && (
           <sc-button type="link" href={this.editLink} slot="end">
             <sc-icon name="edit-3" slot="prefix"></sc-icon>
             {__('Update', 'surecart')}
