@@ -502,7 +502,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							margin-top: 2em;
 							font-size: ${font_size}px;
 						`}
-						className={`surecart-theme-${scBlockData?.theme}`}
+						className={className}
 						style={{
 							...(color
 								? {
