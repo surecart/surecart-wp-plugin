@@ -26,7 +26,7 @@ export class ScPaypalAddMethod {
   @State() error: string;
   @State() paymentIntent: PaymentIntent;
 
-  componentDidLoad() {
+  componentWillLoad() {
     this.createPaymentIntent();
   }
 
