@@ -28,10 +28,6 @@ class Block extends BaseBlock {
 			return \SureCart::blocks()->render( 'web/login' );
 		}
 
-		if ( ! $user->isCustomer() ) {
-			return \SureCart::blocks()->render( 'web/no-customer' );
-		}
-
 		// maybe redirect to the first tab if one is not specified.
 		$this->maybeRedirectToInitialTab();
 

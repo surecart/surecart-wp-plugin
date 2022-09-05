@@ -18,8 +18,8 @@ class PaymentMethodController extends BaseController {
 	 * @return function
 	 */
 	public function index( $attributes, $content ) {
-		if ( ! User::current()->isCustomer() ) {
-			return;
+		if ( ! is_user_logged_in() ) {
+			return false;
 		}
 
 		return wp_kses_post(
@@ -27,6 +27,7 @@ class PaymentMethodController extends BaseController {
 			->id( 'sc-customer-payment-methods-list' )
 			->with(
 				[
+					'isCustomer' => User::current()->isCustomer(),
 					'query' => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
 						'page'         => 1,

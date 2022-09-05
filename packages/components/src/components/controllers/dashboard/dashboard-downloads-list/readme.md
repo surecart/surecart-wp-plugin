@@ -7,12 +7,13 @@
 
 ## Properties
 
-| Property       | Attribute       | Description                        | Type     | Default                                |
-| -------------- | --------------- | ---------------------------------- | -------- | -------------------------------------- |
-| `allLink`      | `all-link`      |                                    | `string` | `undefined`                            |
-| `heading`      | `heading`       |                                    | `string` | `undefined`                            |
-| `query`        | `query`         | Customer id to fetch subscriptions | `any`    | `{     page: 1,     per_page: 10,   }` |
-| `requestNonce` | `request-nonce` |                                    | `string` | `undefined`                            |
+| Property       | Attribute       | Description                        | Type      | Default                                |
+| -------------- | --------------- | ---------------------------------- | --------- | -------------------------------------- |
+| `allLink`      | `all-link`      |                                    | `string`  | `undefined`                            |
+| `heading`      | `heading`       |                                    | `string`  | `undefined`                            |
+| `isCustomer`   | `is-customer`   |                                    | `boolean` | `undefined`                            |
+| `query`        | `query`         | Customer id to fetch subscriptions | `any`     | `{     page: 1,     per_page: 10,   }` |
+| `requestNonce` | `request-nonce` |                                    | `string`  | `undefined`                            |
 
 
 ## Dependencies

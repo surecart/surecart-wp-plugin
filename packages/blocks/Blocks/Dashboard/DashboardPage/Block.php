@@ -61,10 +61,6 @@ class Block extends DashboardPage {
 			return \SureCart::blocks()->render( 'web/login' );
 		}
 
-		if ( ! User::current()->isCustomer() ) {
-			return \SureCart::blocks()->render( 'web/no-customer' );
-		}
-
 		// get the current page tab and possible id.
 		$tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : false;
 

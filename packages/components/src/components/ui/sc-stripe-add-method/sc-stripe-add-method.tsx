@@ -29,7 +29,7 @@ export class ScStripeAddMethod {
   @State() error: string;
   @State() paymentIntent: PaymentIntent;
 
-  componentDidLoad() {
+  componentWillLoad() {
     this.createPaymentIntent();
   }
 

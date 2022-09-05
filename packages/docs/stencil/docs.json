@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-08-31T15:03:46",
+  "timestamp": "2022-09-05T14:44:37",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -4903,6 +4903,22 @@
           "required": false
         },
         {
+          "name": "customerid",
+          "type": "string",
+          "mutable": false,
+          "attr": "customerid",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "editLink",
           "type": "string",
           "mutable": false,
@@ -4978,25 +4994,32 @@
         "sc-order-confirmation-customer"
       ],
       "dependencies": [
+        "sc-card",
+        "sc-stacked-list",
         "sc-stacked-list-row",
         "sc-tag",
+        "sc-divider",
+        "sc-empty",
         "sc-skeleton",
         "sc-dashboard-module",
         "sc-button",
-        "sc-icon",
-        "sc-card",
-        "sc-stacked-list"
+        "sc-icon"
       ],
       "dependencyGraph": {
         "sc-customer-details": [
+          "sc-card",
+          "sc-stacked-list",
           "sc-stacked-list-row",
           "sc-tag",
+          "sc-divider",
+          "sc-empty",
           "sc-skeleton",
           "sc-dashboard-module",
           "sc-button",
-          "sc-icon",
-          "sc-card",
-          "sc-stacked-list"
+          "sc-icon"
+        ],
+        "sc-empty": [
+          "sc-icon"
         ],
         "sc-dashboard-module": [
           "sc-alert"
@@ -5961,14 +5984,19 @@
           "sc-customer-details"
         ],
         "sc-customer-details": [
+          "sc-card",
+          "sc-stacked-list",
           "sc-stacked-list-row",
           "sc-tag",
+          "sc-divider",
+          "sc-empty",
           "sc-skeleton",
           "sc-dashboard-module",
           "sc-button",
-          "sc-icon",
-          "sc-card",
-          "sc-stacked-list"
+          "sc-icon"
+        ],
+        "sc-empty": [
+          "sc-icon"
         ],
         "sc-dashboard-module": [
           "sc-alert"
@@ -6017,6 +6045,22 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "isCustomer",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "is-customer",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -6481,6 +6525,7 @@
         }
       ],
       "dependents": [
+        "sc-customer-details",
         "sc-express-payment",
         "sc-invoices-list",
         "sc-login-form",
@@ -6496,6 +6541,9 @@
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "sc-customer-details": [
+          "sc-divider"
+        ],
         "sc-express-payment": [
           "sc-divider"
         ],
@@ -7386,6 +7434,7 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "sc-customer-details",
         "sc-invoices-list",
         "sc-order",
         "sc-orders-list",
@@ -7400,6 +7449,9 @@
       "dependencyGraph": {
         "sc-empty": [
           "sc-icon"
+        ],
+        "sc-customer-details": [
+          "sc-empty"
         ],
         "sc-invoices-list": [
           "sc-empty"
@@ -12141,14 +12193,19 @@
           "sc-customer-details"
         ],
         "sc-customer-details": [
+          "sc-card",
+          "sc-stacked-list",
           "sc-stacked-list-row",
           "sc-tag",
+          "sc-divider",
+          "sc-empty",
           "sc-skeleton",
           "sc-dashboard-module",
           "sc-button",
-          "sc-icon",
-          "sc-card",
-          "sc-stacked-list"
+          "sc-icon"
+        ],
+        "sc-empty": [
+          "sc-icon"
         ],
         "sc-dashboard-module": [
           "sc-alert"
@@ -14029,6 +14086,22 @@
           "required": false
         },
         {
+          "name": "isCustomer",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "is-customer",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "query",
           "type": "{ page: number; per_page: number; }",
           "mutable": true,
@@ -14701,6 +14774,22 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "isCustomer",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "is-customer",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -20431,6 +20520,22 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "isCustomer",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "is-customer",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
