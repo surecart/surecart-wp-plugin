@@ -29,6 +29,19 @@ class ThemeServiceProvider implements ServiceProviderInterface {
 		add_action( 'after_setup_theme', [ $this, 'addColorToPalette' ], 99999 );
 		// add the theme class to the body tag.
 		add_filter( 'body_class', [ $this, 'themeBodyClass' ] );
+		add_filter( 'admin_body_class', [ $this, 'themeBodyClassAdmin' ] );
+	}
+
+	/**
+	 * Add Theme to body class admin.
+	 *
+	 * @param string $classes String of classes.
+	 *
+	 * @return string
+	 */
+	public function themeBodyClassAdmin( $classes ) {
+		$classes .= ' ' . 'surecart-theme-' . get_option( 'surecart_theme', 'light' );
+		return $classes;
 	}
 
 	/**
