@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-paypal-add-method renders 1`] = `
+<sc-paypal-add-method>
+  <sc-alert open="" type="danger">
+    <span slot="title">
+      Error
+    </span>
+    window.fetch is not a function
+  </sc-alert>
+  <div class="sc-paypal-button-container" hidden=""></div>
+</sc-paypal-add-method>
+`;
