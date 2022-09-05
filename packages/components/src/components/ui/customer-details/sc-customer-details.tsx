@@ -17,14 +17,13 @@ export class ScCustomerDetails {
   @Prop() customer: Customer;
   @Prop() loading: boolean;
   @Prop() error: string;
-  @Prop() customerid: string;
 
   renderContent() {
     if (this.loading) {
       return this.renderLoading();
     }
 
-    if ('' === this.customerid || !this.customer) {
+    if (!this.customer) {
       return this.renderEmpty();
     }
 
