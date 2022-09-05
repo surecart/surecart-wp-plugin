@@ -335,7 +335,6 @@
   },
   "sc-customer-details": {
     "customer": true,
-    "customerid": true,
     "edit-link": true,
     "error": true,
     "heading": true,
