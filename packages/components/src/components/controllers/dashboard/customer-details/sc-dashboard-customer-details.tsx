@@ -25,7 +25,7 @@ export class ScDashboardCustomerDetails {
   }
 
   async fetch() {
-    if ( '' === this.customerId ) {
+    if ('' === this.customerId) {
       return;
     }
     try {
@@ -51,7 +51,6 @@ export class ScDashboardCustomerDetails {
     return (
       <sc-customer-details
         customer={this.customer}
-        customerid={this.customerId}
         loading={this.loading}
         error={this.error}
         heading={this.heading}

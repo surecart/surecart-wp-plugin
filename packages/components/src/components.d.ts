@@ -673,7 +673,6 @@ export namespace Components {
     }
     interface ScCustomerDetails {
         "customer": Customer;
-        "customerid": string;
         "editLink": string;
         "error": string;
         "heading": string;
@@ -4762,7 +4761,6 @@ declare namespace LocalJSX {
     }
     interface ScCustomerDetails {
         "customer"?: Customer;
-        "customerid"?: string;
         "editLink"?: string;
         "error"?: string;
         "heading"?: string;
