@@ -502,6 +502,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							margin-top: 2em;
 							font-size: ${font_size}px;
 						`}
+						className={`surecart-theme-${scBlockData?.theme}`}
 						style={{
 							...(color
 								? {
@@ -515,7 +516,6 @@ export default function edit({ clientId, attributes, setAttributes }) {
 						persistSession={false}
 						alignment={align}
 						currencyCode={scBlockData.currency || scData?.currency}
-						className={className}
 						choiceType={choice_type}
 						prices={prices}
 					>
