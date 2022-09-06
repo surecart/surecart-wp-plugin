@@ -5,7 +5,11 @@ import externalGlobals from 'rollup-plugin-external-globals';
 import { reactOutputTarget } from '@stencil/react-output-target';
 import { sass } from '@stencil/sass';
 
-const isTest = process.argv.some(p => p === '--e2e');
+let external = false;
+if (process.env.SURECART_EXTERNAL) {
+  external = true;
+  console.log('Externalizing i18n');
+}
 
 export const config: Config = {
   namespace: 'surecart',
@@ -71,13 +75,13 @@ export const config: Config = {
   ],
   plugins: [
     sass(),
-    ...(isTest
-      ? []
-      : [
+    ...(external
+      ? [
           externalGlobals({
             '@wordpress/i18n': 'wp.i18n',
             'wp': 'wp',
           }),
-        ]),
+        ]
+      : []),
   ],
 };
