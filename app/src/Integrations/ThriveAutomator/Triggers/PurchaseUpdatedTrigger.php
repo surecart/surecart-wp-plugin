@@ -4,6 +4,8 @@ namespace SureCart\Integrations\ThriveAutomator\Triggers;
 
 use SureCart\Integrations\ThriveAutomator\DataObjects\ProductDataObject;
 use SureCart\Integrations\ThriveAutomator\ThriveAutomatorApp;
+use SureCart\Models\User;
+use Thrive\Automator\Items\Data_Object;
 use Thrive\Automator\Items\Trigger;
 
 /**
@@ -43,7 +45,7 @@ class PurchaseUpdatedTrigger extends Trigger {
 	 * @return array
 	 */
 	public static function get_provided_data_objects() {
-		return [ ProductDataObject::get_id() ];
+		return [ ProductDataObject::get_id(), 'user_data' ];
 	}
 
 	/**
@@ -70,7 +72,7 @@ class PurchaseUpdatedTrigger extends Trigger {
 	 * @return string
 	 */
 	public static function get_description() {
-		return 'This trigger will be fired when a purchase updated.';
+		return __( 'This trigger will be fired when a purchase updated.', 'surecart' );
 	}
 
 	/**
@@ -80,6 +82,26 @@ class PurchaseUpdatedTrigger extends Trigger {
 	 */
 	public static function get_image() {
 		return esc_url( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'app/src/Integrations/ThriveAutomator/images/icon.svg' );
+	}
+
+	/**
+	 * Process params for action
+	 *
+	 * @return array
+	 */
+	public function process_params( $params = [] ) {
+		$data_objects = [];
+
+		if ( ! empty( $params ) ) {
+			$data_object_classes = Data_Object::get();
+			$product_id = $params[0]['product'];
+			$user = User::findByCustomerId( $params[0]['customer'] );
+
+			$data_objects['surecart_product_data'] = empty( $data_object_classes['surecart_product_data'] ) ? null : new $data_object_classes['surecart_product_data']( $product_id );
+			$data_objects['user_data']             = empty( $data_object_classes['user_data'] ) ? null : new $data_object_classes['user_data']( $user->ID );
+		}
+
+		return $data_objects;
 	}
 
 }
