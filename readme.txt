@@ -243,7 +243,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.1.9 - September 5, 2022 =
+= 1.1.9 - September 6, 2022 =
 * New: Dark mode theme
 * New: LifterLMS Integration
 * New: Merchant search on admin index pages.
@@ -263,7 +263,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * Fix: tax id dropdown on customer portal not saving.
 * Fix: Button size customization not applying in add to cart button.
 * Fix: Incorrect Average Order Total on dashboard chart.
-* Fix: Issue with live customers wp users not displaying prooperly on Merchant customer edit page.
+* Fix: Issue with live customers wp users not displaying properly on Merchant customer edit page.
 * Fix: Better error handling with Customer create.
 
 = 1.1.6 - August 24, 2022 =
