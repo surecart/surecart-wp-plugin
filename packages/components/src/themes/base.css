@@ -274,6 +274,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-input-error-text-font-size-large: var(--sc-input-help-text-font-size-small);
   --sc-input-error-text-color: var(--sc-color-danger-500);
   --sc-toggle-size: 1em;
+  --sc-toggle-shady-color: var(--sc-color-gray-50);
   --sc-radio-size: 1em;
   --sc-checkbox-size: 1em;
   --sc-overlay-background-color: #37415180;
@@ -363,7 +364,6 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-empty-color: var(--sc-color-gray-300);
   --sc-empty-icon-color: var(--sc-color-gray-300);
   --sc-tab-active-background: var(--sc-color-gray-800);
-  --ast-global-color-2: var(--sc-color-gray-300);
   --sc-menu-item-color: var(--sc-color-gray-300);
   --sc-line-item-title-color: var(--sc-color-gray-300);
   --sc-order-summary-color: var(--sc-color-gray-300);
@@ -450,9 +450,16 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
 
   /** Stripe */
   --sc-stripe-color-logo: 'dark';
-  --sc-stripe-icon-color: var(--sc-color-white);
   --sc-stripe-color-tag: 'dark';
+  --sc-stripe-color-logo-tab-selected: 'dark';
   --sc-stripe-color-tab-selected: 'dark';
+
+  /** Drawer **/
+  --sc-drawer-border: solid var(--sc-input-border-width) var(--sc-input-border-color);
+
+  /** Cart **/
+  --sc-cart-counter-background: var(--sc-color-gray-50);
+  --sc-cart-counter-color: var(--sc-color-gray-950);
 }
 
 /* Avatar */
