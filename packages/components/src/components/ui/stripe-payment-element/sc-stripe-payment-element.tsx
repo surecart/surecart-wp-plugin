@@ -175,13 +175,11 @@ export class ScStripePaymentElement {
           colorLogo: styles.getPropertyValue('--sc-stripe-color-logo'),
           colorLogoTab: styles.getPropertyValue('--sc-stripe-color-logo-tab'),
           colorLogoTabSelected: styles.getPropertyValue('--sc-stripe-color-logo-tab-selected'),
+          colorTextPlaceholder: styles.getPropertyValue('--sc-input-placeholder-color'),
         },
         rules: {
           '.Input': {
             border: styles.getPropertyValue('--sc-input-border'),
-          },
-          '.Input::placeholder': {
-            color: styles.getPropertyValue('--sc-input-placeholder-color'),
           },
         },
       },
