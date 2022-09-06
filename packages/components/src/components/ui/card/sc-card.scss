@@ -10,8 +10,8 @@
 
 .card:not(.card--borderless) {
   padding: var(--sc-card-padding, var(--sc-spacing-large));
-  background: var(--sc-color-white);
-  border: 1px solid var(--sc-color-gray-300);
+  background: var(--sc-card-background-color, var(--sc-color-white));
+  border: 1px solid var(--sc-card-boderless-border-color, var(--sc-color-gray-300));
   border-radius: var(--sc-input-border-radius-medium);
   box-shadow: var(--sc-shadow-small);
   &.card--no-padding {

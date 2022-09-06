@@ -24,6 +24,7 @@ class SubscriptionController extends BaseController {
 			->with(
 				[
 					'heading' => $attributes['title'] ?? null,
+					'isCustomer' => User::current()->isCustomer(),
 					'allLink' => add_query_arg(
 						[
 							'tab'    => $this->getTab(),
@@ -54,6 +55,7 @@ class SubscriptionController extends BaseController {
 			'#customer-subscriptions-index',
 			[
 				'heading' => $attributes['title'] ?? __( 'Subscriptions', 'surecart' ),
+				'isCustomer' => User::current()->isCustomer(),
 				'query'   => [
 					'customer_ids' => array_values( User::current()->customerIds() ),
 					'status'       => [ 'active', 'trialing', 'canceled' ],

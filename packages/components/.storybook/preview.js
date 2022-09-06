@@ -1,10 +1,14 @@
+import * as i18n from '@wordpress/i18n';
+window.wp = {
+  i18n,
+};
+
 import { defineCustomElements } from '../loader';
 defineCustomElements();
 
-import '../src/themes/base.css';
+window.registerSureCartIconPath('https://cdn.jsdelivr.net/npm/@surecart/components/dist/surecart/icon-assets');
 
-import registerIcons from '../src/components/ui/icon/register';
-registerIcons();
+import '../src/themes/base.css';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },

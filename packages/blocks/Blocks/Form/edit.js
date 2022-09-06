@@ -5,7 +5,7 @@ import Cart from './components/Cart';
 import Mode from './components/Mode';
 import Setup from './components/Setup';
 import { css, jsx } from '@emotion/core';
-import { ScCheckout } from '@surecart/components-react';
+import { ScCheckout, ScIcon } from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
 import {
 	InnerBlocks,
@@ -391,7 +391,9 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							display: grid;
 							gap: 0.5em;
 							border: 1px solid transparent;
-							background: var(--sc-color-gray-100, #f9fafb);
+							background: var(
+								--sc-input-background-color-disabled
+							);
 						`}
 					>
 						<div
@@ -475,9 +477,12 @@ export default function edit({ clientId, attributes, setAttributes }) {
 											</span>
 										</span>
 
-										<sc-icon
+										<ScIcon
 											name="shopping-bag"
-											style={{ fontSize: '18px' }}
+											style={{
+												fontSize: '18px',
+												color: 'var(--sc-input-label-color)',
+											}}
 										/>
 									</Button>
 								</div>
@@ -502,6 +507,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							margin-top: 2em;
 							font-size: ${font_size}px;
 						`}
+						className={className}
 						style={{
 							...(color
 								? {
@@ -515,7 +521,6 @@ export default function edit({ clientId, attributes, setAttributes }) {
 						persistSession={false}
 						alignment={align}
 						currencyCode={scBlockData.currency || scData?.currency}
-						className={className}
 						choiceType={choice_type}
 						prices={prices}
 					>

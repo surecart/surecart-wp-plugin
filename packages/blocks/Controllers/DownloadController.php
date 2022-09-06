@@ -17,7 +17,7 @@ class DownloadController extends BaseController {
 	 * @param array $attributes Block attributes.
 	 */
 	public function preview( $attributes = [] ) {
-		if ( ! User::current()->isCustomer() ) {
+		if ( ! is_user_logged_in() ) {
 			return;
 		}
 
@@ -35,6 +35,7 @@ class DownloadController extends BaseController {
 						remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 					),
 					'requestNonce' => wp_create_nonce( 'customer-download' ),
+					'isCustomer'   => User::current()->isCustomer(),
 					'query'        => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
 						'page'         => 1,
@@ -49,7 +50,7 @@ class DownloadController extends BaseController {
 	 * Index.
 	 */
 	public function index() {
-		if ( ! User::current()->isCustomer() ) {
+		if ( ! is_user_logged_in() ) {
 			return;
 		}
 
@@ -59,7 +60,7 @@ class DownloadController extends BaseController {
 			->with(
 				[
 					'heading' => __( 'Order History', 'surecart' ),
-
+					'isCustomer' => User::current()->isCustomer(),
 					'query'   => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
 						'status'       => [ 'paid' ],
@@ -72,7 +73,7 @@ class DownloadController extends BaseController {
 	}
 
 	public function show() {
-		if ( ! User::current()->isCustomer() ) {
+		if ( ! is_user_logged_in() ) {
 			return;
 		}
 

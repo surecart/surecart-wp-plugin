@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property  | Attribute | Description                   | Type     | Default     |
-| --------- | --------- | ----------------------------- | -------- | ----------- |
-| `heading` | `heading` |                               | `string` | `undefined` |
-| `query`   | --        | Query to fetch paymentMethods | `object` | `undefined` |
+| Property     | Attribute     | Description                   | Type      | Default     |
+| ------------ | ------------- | ----------------------------- | --------- | ----------- |
+| `heading`    | `heading`     |                               | `string`  | `undefined` |
+| `isCustomer` | `is-customer` |                               | `boolean` | `undefined` |
+| `query`      | --            | Query to fetch paymentMethods | `object`  | `undefined` |
 
 
 ## Dependencies

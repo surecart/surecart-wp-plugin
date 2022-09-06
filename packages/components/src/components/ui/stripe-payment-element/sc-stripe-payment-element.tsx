@@ -160,7 +160,7 @@ export class ScStripePaymentElement {
     }
 
     // get the computed styles.
-    const styles = getComputedStyle(document.body);
+    const styles = getComputedStyle(this.el);
 
     // we have what we need, load elements.
     this.elements = this.stripe.elements({
@@ -172,13 +172,14 @@ export class ScStripePaymentElement {
           borderRadius: styles.getPropertyValue('--sc-input-border-radius-medium'),
           colorBackground: styles.getPropertyValue('--sc-input-background-color'),
           fontSizeBase: styles.getPropertyValue('--sc-input-font-size-medium'),
+          colorLogo: styles.getPropertyValue('--sc-stripe-color-logo'),
+          colorLogoTab: styles.getPropertyValue('--sc-stripe-color-logo-tab'),
+          colorLogoTabSelected: styles.getPropertyValue('--sc-stripe-color-logo-tab-selected'),
+          colorTextPlaceholder: styles.getPropertyValue('--sc-input-placeholder-color'),
         },
         rules: {
           '.Input': {
             border: styles.getPropertyValue('--sc-input-border'),
-          },
-          '.Input::placeholder': {
-            color: styles.getPropertyValue('--sc-input-placeholder-color'),
           },
         },
       },

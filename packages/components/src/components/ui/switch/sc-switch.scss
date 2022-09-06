@@ -35,15 +35,15 @@
   justify-content: center;
   width: var(--width);
   height: var(--height);
-  background-color: var(--sc-color-gray-300);
-  border: solid var(--sc-input-border-width) var(--sc-color-gray-300);
+  background-color: var(--sc-switch-control-background-color, var(--sc-color-gray-300));
+  border: solid var(--sc-input-border-width) var(--sc-switch-border-color, var(--sc-color-gray-300));
   border-radius: var(--height);
   transition: var(--sc-transition-fast) border-color, var(--sc-transition-fast) background-color;
 
   .switch__thumb {
     width: var(--thumb-size);
     height: var(--thumb-size);
-    background-color: var(--sc-color-white);
+    background-color: var(--sc-switch-thumb-background-color, var(--sc-color-white));
     border-radius: 50%;
     border: solid var(--sc-input-border-width) var(--sc-input-border-color);
     transform: translateX(calc(var(--width) / -2 + var(--thumb-size) / 2 - (var(--thumb-size) - var(--height)) / 2));
@@ -61,19 +61,19 @@
 
 // Hover
 .switch:not(.switch--checked):not(.switch--disabled) .switch__control:hover {
-  background-color: var(--sc-color-gray-200);
-  border-color: var(--sc-color-gray-200);
+  background-color: var(--sc-switch-control-hover-background-color, var(--sc-color-gray-200));
+  border-color: var(--sc-switch-control-hover-border-color, var(--sc-color-gray-200));
 
   .switch__thumb {
-    background-color: var(--sc-color-white);
-    border-color: var(--sc-input-border-color);
+    background-color: var(--sc-switch-background-thumb-hover-color, var(--sc-color-white));
+    border-color: var(--sc-switch-thumb-border-color, var(--sc-input-border-color));
   }
 }
 
 // Focus
 .switch.switch--focused:not(.switch--checked):not(.switch--disabled) .switch__control {
-  background-color: var(--sc-color-gray-200);
-  border-color: var(--sc-color-gray-200);
+  background-color: var(--sc-switch-control-hover-background-color, var(--sc-color-gray-200));
+  border-color: var(--sc-switch-control-hover-border-color, var(--sc-color-gray-200));
 
   .switch__thumb {
     background-color: var(--sc-color-white);
@@ -84,8 +84,8 @@
 
 // Checked
 .switch--checked .switch__control {
-  background-color: var(--sc-color-primary-500);
-  border-color: var(--sc-color-primary-500);
+  background-color: var(--sc-switch-checked-control-background-color, var(--sc-color-primary-500));
+  border-color: var(--sc-switch-checked-control-border-color, var(--sc-color-primary-500));
 
   .switch__thumb {
     background-color: var(--sc-color-white);
@@ -130,14 +130,14 @@
 }
 
 .switch__title {
-  color: var(--sc-input-label-color);
+  color: var(--sc-swith-label-color, var(--sc-input-label-color));
   font-weight: var(--sc-input-label-font-weight);
   font-size: var(--sc-input-label-font-size-medium);
 }
 
 .switch__description {
   display: block;
-  color: var(--sc-color-gray-500);
+  color: var(--sc-switch-description-color, var(--sc-color-gray-500));
   line-height: 1em;
   margin: 0.5em 0 0;
   font-size: var(--sc-font-size-small);

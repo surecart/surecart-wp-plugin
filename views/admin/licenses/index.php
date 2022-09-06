@@ -9,6 +9,7 @@
 	);
 	?>
 
+	<?php $table->search_form( __( 'Search Licenses', 'surecart' ), 'sc-search-licenses' ); ?>
 	<?php $table->display(); ?>
 </div>
 

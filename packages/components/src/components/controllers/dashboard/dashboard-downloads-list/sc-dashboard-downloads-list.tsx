@@ -20,6 +20,7 @@ export class ScDownloadsList {
   };
   @Prop() allLink: string;
   @Prop() heading: string;
+  @Prop() isCustomer: boolean;
   @Prop() requestNonce: string;
 
   @State() purchases: Array<Purchase> = [];
@@ -46,6 +47,9 @@ export class ScDownloadsList {
   }
 
   async initialFetch() {
+    if ( ! this.isCustomer ){
+      return;
+    }
     try {
       this.loading = true;
       await this.getItems();
@@ -58,6 +62,9 @@ export class ScDownloadsList {
   }
 
   async fetchItems() {
+    if ( ! this.isCustomer ){
+      return;
+    }
     try {
       this.busy = true;
       await this.getItems();

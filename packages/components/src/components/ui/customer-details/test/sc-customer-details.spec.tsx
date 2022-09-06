@@ -59,4 +59,18 @@ describe('sc-customer-details', () => {
     });
     expect(page.root).toMatchSnapshot();
   });
+
+  it('has an empty state', async () => {
+    const page = await newSpecPage({
+      components: [ScCustomerDetails],
+      template: () => (
+        <sc-customer-details>
+          <span slot="heading">
+            <slot name="heading">Test heading</slot>
+          </span>
+        </sc-customer-details>
+      ),
+    });
+    expect(page.root).toMatchSnapshot();
+  });
 });

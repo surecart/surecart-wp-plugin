@@ -12,6 +12,7 @@
 | `allLink`        | `all-link`        |                                    | `string`                              | `undefined`                            |
 | `cancelBehavior` | `cancel-behavior` |                                    | `"immediate" \| "period_end"`         | `'period_end'`                         |
 | `heading`        | `heading`         |                                    | `string`                              | `undefined`                            |
+| `isCustomer`     | `is-customer`     |                                    | `boolean`                             | `undefined`                            |
 | `query`          | --                | Customer id to fetch subscriptions | `{ page: number; per_page: number; }` | `{     page: 1,     per_page: 10,   }` |
 
 

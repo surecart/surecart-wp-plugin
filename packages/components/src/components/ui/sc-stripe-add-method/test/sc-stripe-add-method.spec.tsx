@@ -7,12 +7,6 @@ describe('sc-stripe-add-method', () => {
       components: [ScStripeAddMethod],
       html: `<sc-stripe-add-method></sc-stripe-add-method>`,
     });
-    expect(page.root).toEqualHtml(`
-      <sc-stripe-add-method>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </sc-stripe-add-method>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

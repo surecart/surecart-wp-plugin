@@ -15,6 +15,7 @@ export class ScPaymentMethodsList {
   /** Query to fetch paymentMethods */
   @Prop() query: object;
   @Prop() heading: string;
+  @Prop() isCustomer: boolean;
 
   @State() paymentMethods: Array<PaymentMethod> = [];
 
@@ -83,6 +84,10 @@ export class ScPaymentMethodsList {
 
   /** Get all paymentMethods */
   async getPaymentMethods() {
+    if ( ! this.isCustomer ){
+      return;
+    }
+
     try {
       this.loading = true;
       this.paymentMethods = (await await apiFetch({
@@ -166,6 +171,10 @@ export class ScPaymentMethodsList {
   }
 
   renderContent() {
+    if ( ! this.isCustomer ){
+      return this.renderEmpty();
+    }
+      
     if (this.loading) {
       return this.renderLoading();
     }
@@ -188,28 +197,30 @@ export class ScPaymentMethodsList {
           <slot name="heading">{this.heading || __('Payment Methods', 'surecart')}</slot>
         </span>
 
-        <sc-flex slot="end">
-          <sc-button
-            type="link"
-            href={addQueryArgs(window.location.href, {
-              action: 'index',
-              model: 'charge',
-            })}
-          >
-            <sc-icon name="clock" slot="prefix"></sc-icon>
-            {__('Payment History', 'surecart')}
-          </sc-button>
-          <sc-button
-            type="link"
-            href={addQueryArgs(window.location.href, {
-              action: 'create',
-              model: 'payment_method',
-            })}
-          >
-            <sc-icon name="plus" slot="prefix"></sc-icon>
-            {__('Add', 'surecart')}
-          </sc-button>
-        </sc-flex>
+        {this.isCustomer && (
+          <sc-flex slot="end">
+            <sc-button
+              type="link"
+              href={addQueryArgs(window.location.href, {
+                action: 'index',
+                model: 'charge',
+              })}
+            >
+              <sc-icon name="clock" slot="prefix"></sc-icon>
+              {__('Payment History', 'surecart')}
+            </sc-button>
+            <sc-button
+              type="link"
+              href={addQueryArgs(window.location.href, {
+                action: 'create',
+                model: 'payment_method',
+              })}
+            >
+              <sc-icon name="plus" slot="prefix"></sc-icon>
+              {__('Add', 'surecart')}
+            </sc-button>
+          </sc-flex>
+        )}
 
         {this.renderContent()}
 

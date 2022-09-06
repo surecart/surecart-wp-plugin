@@ -18,7 +18,7 @@ class CustomerController extends BaseController {
 	 * @return function
 	 */
 	public function show( $attributes, $content ) {
-		if ( ! User::current()->isCustomer() ) {
+		if ( ! is_user_logged_in() ) {
 			return;
 		}
 
@@ -31,6 +31,10 @@ class CustomerController extends BaseController {
 		// show live.
 		if ( ! empty( User::current()->customerId( 'live' ) ) ) {
 			$output .= '<sc-dashboard-customer-details heading="' . esc_attr( $attributes['title'] ?? '' ) . '" customer-id="' . User::current()->customerId( 'live' ) . '"></sc-dashboard-customer-details>';
+		}
+		// show for non-customers.
+		if ( empty( $output ) ) {
+			$output .= '<sc-dashboard-customer-details heading="' . esc_attr( $attributes['title'] ?? '' ) . '" customer-id=""></sc-dashboard-customer-details>';
 		}
 
 		return $output;

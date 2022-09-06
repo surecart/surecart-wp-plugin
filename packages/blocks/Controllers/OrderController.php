@@ -12,7 +12,7 @@ class OrderController extends BaseController {
 	 * Preview.
 	 */
 	public function preview( $attributes = [] ) {
-		if ( ! User::current()->isCustomer() ) {
+		if ( ! is_user_logged_in() ) {
 			return;
 		}
 
@@ -28,6 +28,7 @@ class OrderController extends BaseController {
 							'action' => 'index',
 						]
 					),
+					'isCustomer' => User::current()->isCustomer(),
 					'query'   => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
 						'status'       => [ 'paid', 'processing', 'payment_failed' ],
@@ -43,7 +44,7 @@ class OrderController extends BaseController {
 	 * Index.
 	 */
 	public function index() {
-		if ( ! User::current()->isCustomer() ) {
+		if ( ! is_user_logged_in() ) {
 			return;
 		}
 		ob_start();
@@ -66,6 +67,7 @@ class OrderController extends BaseController {
 			->with(
 				[
 					'heading' => __( 'Order History', 'surecart' ),
+					'isCustomer' => User::current()->isCustomer(),
 					'query'   => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
 						'status'       => [ 'paid', 'processing', 'payment_failed' ],
@@ -86,7 +88,7 @@ class OrderController extends BaseController {
 	 * Index.
 	 */
 	public function show() {
-		if ( ! User::current()->isCustomer() ) {
+		if ( ! is_user_logged_in() ) {
 			return;
 		}
 		ob_start();

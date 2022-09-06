@@ -25,26 +25,31 @@
 
 ### Depends on
 
+- [sc-card](../card)
+- [sc-stacked-list](../stacked-list)
 - [sc-stacked-list-row](../stacked-list-row)
 - [sc-tag](../tag)
+- [sc-divider](../divider)
+- [sc-empty](../empty)
 - [sc-skeleton](../skeleton)
 - [sc-dashboard-module](../dashboard-module)
 - [sc-button](../button)
 - [sc-icon](../icon)
-- [sc-card](../card)
-- [sc-stacked-list](../stacked-list)
 
 ### Graph
 ```mermaid
 graph TD;
+  sc-customer-details --> sc-card
+  sc-customer-details --> sc-stacked-list
   sc-customer-details --> sc-stacked-list-row
   sc-customer-details --> sc-tag
+  sc-customer-details --> sc-divider
+  sc-customer-details --> sc-empty
   sc-customer-details --> sc-skeleton
   sc-customer-details --> sc-dashboard-module
   sc-customer-details --> sc-button
   sc-customer-details --> sc-icon
-  sc-customer-details --> sc-card
-  sc-customer-details --> sc-stacked-list
+  sc-empty --> sc-icon
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon
   sc-button --> sc-spinner

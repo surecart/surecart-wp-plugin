@@ -17,6 +17,7 @@ declare global {
       nonce: string;
       base_url: string;
       nonce_endpoint: string;
+      theme: string;
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;
