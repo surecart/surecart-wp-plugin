@@ -1,4 +1,10 @@
-import { ScBlockUi, ScCard, ScEmpty, ScStackedList, ScTag } from '@surecart/components-react';
+import {
+	ScBlockUi,
+	ScCard,
+	ScEmpty,
+	ScStackedList,
+	ScTag,
+} from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __, sprintf } from '@wordpress/i18n';
@@ -8,7 +14,7 @@ import Box from '../../../ui/Box';
 import Activation from './Activation';
 
 export default ({ id, license }) => {
-	const { deleteEntityRecord, saveEntityRecord } = useDispatch(coreStore);
+	const { deleteEntityRecord } = useDispatch(coreStore);
 
 	const { activations, loading, updating, loadingError } = useSelect(
 		(select) => {
@@ -92,7 +98,7 @@ export default ({ id, license }) => {
 					<ScTag type="info">
 						{sprintf(
 							__('%1s of %2s Activations Used'),
-							parseInt(activations?.length || 0),
+							parseInt(license?.activation_count || 0),
 							parseInt(license?.activation_limit) || '∞'
 						)}
 					</ScTag>
