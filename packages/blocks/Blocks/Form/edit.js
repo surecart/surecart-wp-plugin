@@ -391,7 +391,9 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							display: grid;
 							gap: 0.5em;
 							border: 1px solid transparent;
-							background: var(--sc-toggle-shady-color);
+							background: var(
+								--sc-input-background-color-disabled
+							);
 						`}
 					>
 						<div
