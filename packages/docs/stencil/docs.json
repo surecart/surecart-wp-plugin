@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-09-05T14:44:37",
+  "timestamp": "2022-09-06T12:57:47",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -4897,22 +4897,6 @@
           "values": [
             {
               "type": "Customer"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "customerid",
-          "type": "string",
-          "mutable": false,
-          "attr": "customerid",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
             }
           ],
           "optional": false,

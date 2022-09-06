@@ -7,14 +7,13 @@
 
 ## Properties
 
-| Property     | Attribute    | Description | Type       | Default     |
-| ------------ | ------------ | ----------- | ---------- | ----------- |
-| `customer`   | --           |             | `Customer` | `undefined` |
-| `customerid` | `customerid` |             | `string`   | `undefined` |
-| `editLink`   | `edit-link`  |             | `string`   | `undefined` |
-| `error`      | `error`      |             | `string`   | `undefined` |
-| `heading`    | `heading`    |             | `string`   | `undefined` |
-| `loading`    | `loading`    |             | `boolean`  | `undefined` |
+| Property   | Attribute   | Description | Type       | Default     |
+| ---------- | ----------- | ----------- | ---------- | ----------- |
+| `customer` | --          |             | `Customer` | `undefined` |
+| `editLink` | `edit-link` |             | `string`   | `undefined` |
+| `error`    | `error`     |             | `string`   | `undefined` |
+| `heading`  | `heading`   |             | `string`   | `undefined` |
+| `loading`  | `loading`   |             | `boolean`  | `undefined` |
 
 
 ## Dependencies
