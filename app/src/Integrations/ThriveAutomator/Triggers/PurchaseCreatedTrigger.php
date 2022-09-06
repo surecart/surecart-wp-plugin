@@ -84,7 +84,11 @@ class PurchaseCreatedTrigger extends Trigger {
 		return esc_url( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'app/src/Integrations/ThriveAutomator/images/icon.svg' );
 	}
 
-
+	/**
+	 * Process params for action
+	 *
+	 * @return array
+	 */
 	public function process_params( $params = [] ) {
 		// log_it('Trigger 1');
 		// log_it($params);
@@ -106,4 +110,5 @@ class PurchaseCreatedTrigger extends Trigger {
 
 		return $data_objects;
 	}
+
 }
