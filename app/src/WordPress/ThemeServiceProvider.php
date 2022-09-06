@@ -40,7 +40,10 @@ class ThemeServiceProvider implements ServiceProviderInterface {
 	 * @return string
 	 */
 	public function themeBodyClassAdmin( $classes ) {
-		$classes .= ' ' . 'surecart-theme-' . get_option( 'surecart_theme', 'light' );
+		global $pagenow;
+		if ( 'post.php' === $pagenow ) {
+			$classes .= ' surecart-theme-' . get_option( 'surecart_theme', 'light' );
+		}
 		return $classes;
 	}
 
