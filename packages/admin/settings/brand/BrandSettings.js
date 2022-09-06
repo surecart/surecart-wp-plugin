@@ -7,7 +7,6 @@ import {
 	ScFormControl,
 	ScInput,
 	ScSelect,
-	ScTextarea,
 } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
@@ -116,7 +115,7 @@ export default () => {
 						</div>
 					</ScFormControl>
 					<ScSelect
-						label={__('Select Theme', 'surecart')}
+						label={__('Select Theme (Beta)', 'surecart')}
 						placeholder={__('Select Theme', 'surecart')}
 						value={scThemeData}
 						onScChange={(e) => setScThemeData(e.target.value)}
@@ -124,6 +123,7 @@ export default () => {
 							'Choose "Dark" if your theme already has a dark background.',
 							'surecart'
 						)}
+						unselect={false}
 						choices={[
 							{
 								label: __('Light', 'surecart'),
@@ -134,7 +134,6 @@ export default () => {
 								value: 'dark',
 							},
 						]}
-						required
 					></ScSelect>
 				</div>
 			</SettingsBox>
