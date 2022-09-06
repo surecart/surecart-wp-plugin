@@ -1,6 +1,18 @@
 /** @jsx jsx */
 import { css, Global, jsx } from '@emotion/core';
-import { ScAlert, ScBlockUi, ScButton, ScDropdown, ScForm, ScIcon, ScInput, ScMenu, ScMenuItem, ScStackedListRow } from '@surecart/components-react';
+import {
+	ScAlert,
+	ScBlockUi,
+	ScButton,
+	ScDropdown,
+	ScForm,
+	ScIcon,
+	ScInput,
+	ScMenu,
+	ScMenuItem,
+	ScStackedListRow,
+	ScTag,
+} from '@surecart/components-react';
 import { Modal } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
@@ -175,7 +187,12 @@ export default ({ activation }) => {
 			<ScStackedListRow style={{ '--columns': '2' }}>
 				<div>
 					<div>
-						<strong>{activation?.name}</strong>
+						<strong>{activation?.name}</strong>{' '}
+						{!activation?.counted && (
+							<ScTag size="small" type="warning">
+								{__('Local / Staging', 'surecart')}
+							</ScTag>
+						)}
 					</div>
 					<div>{activation?.fingerprint}</div>
 				</div>
