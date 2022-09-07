@@ -29,9 +29,14 @@
 
 ## Shadow Parts
 
-| Part     | Description |
-| -------- | ----------- |
-| `"base"` |             |
+| Part           | Description                |
+| -------------- | -------------------------- |
+| `"base"`       | The elements base wrapper. |
+| `"input"`      | The input control.         |
+| `"minus"`      | The minus control.         |
+| `"minus-icon"` | The minus icon.            |
+| `"plus"`       | The plus control.          |
+| `"plus-icon"`  | The plus icon.             |
 
 
 ## Dependencies

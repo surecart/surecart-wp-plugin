@@ -1,6 +1,14 @@
 import { Component, h, Prop, Element, Event, EventEmitter } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
+/**
+ * @part base - The elements base wrapper.
+ * @part input - The input control.
+ * @part minus - The minus control.
+ * @part minus-icon - The minus icon.
+ * @part plus - The plus control.
+ * @part plus-icon - The plus icon.
+ */
 @Component({
   tag: 'sc-quantity-select',
   styleUrl: 'sc-quantity-select.scss',
@@ -80,15 +88,17 @@ export class ScQuantitySelect {
         }}
       >
         <span
+          part="minus"
           role="button"
           aria-label={__('decrease number', 'surecart')}
           class={{ 'button__decrease': true, 'button--disabled': this.quantity <= this.min }}
           onClick={() => this.quantity > this.min && this.decrease()}
         >
-          <sc-icon name="minus"></sc-icon>
+          <sc-icon name="minus" exportparts="base:minus__icon"></sc-icon>
         </span>
 
         <input
+          part="input"
           class="input__control"
           ref={el => (this.input = el as HTMLInputElement)}
           step="1"
@@ -110,12 +120,13 @@ export class ScQuantitySelect {
         />
 
         <span
+          part="plus"
           role="button"
           aria-label={__('increase number', 'surecart')}
           class={{ 'button__increase': true, 'button--disabled': this.quantity >= this.max }}
           onClick={() => this.quantity < this.max && this.increase()}
         >
-          <sc-icon name="plus"></sc-icon>
+          <sc-icon name="plus" exportparts="base:plus__icon"></sc-icon>
         </span>
       </div>
     );
