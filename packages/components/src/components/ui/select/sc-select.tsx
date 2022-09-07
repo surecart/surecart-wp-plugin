@@ -275,6 +275,14 @@ export class ScSelectDropdown {
       }
     }
 
+    // Close select dropdown on Esc/Escape key
+    if (event.key === 'Escape') {
+      if (this.open) {
+        this.handleHide();
+      }
+      return;
+    }
+
     // don't open the menu when a CTRL/Command key is pressed
     if (event.ctrlKey || event.metaKey) {
       return;
