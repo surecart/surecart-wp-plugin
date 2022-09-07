@@ -51,12 +51,12 @@ Type: `Promise<boolean>`
 
 ## Shadow Parts
 
-| Part             | Description |
-| ---------------- | ----------- |
-| `"base"`         |             |
-| `"checked-icon"` |             |
-| `"control"`      |             |
-| `"label"`        |             |
+| Part             | Description                |
+| ---------------- | -------------------------- |
+| `"base"`         | The elements base wrapper. |
+| `"checked-icon"` | Checked icon.              |
+| `"control"`      | The control wrapper.       |
+| `"label"`        | The label.                 |
 
 
 ----------------------------------------------
