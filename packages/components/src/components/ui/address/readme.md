@@ -43,14 +43,25 @@ Type: `Promise<boolean>`
 
 ## Shadow Parts
 
-| Part             | Description                                    |
-| ---------------- | ---------------------------------------------- |
-| `"base"`         | The elements base wrapper.                     |
-| `"form-control"` | The form control wrapper.                      |
-| `"help-text"`    | Help text that describes how to use the input. |
-| `"input"`        | The html input element.                        |
-| `"label"`        | The input label.                               |
-| `"name__input"`  |                                                |
+| Part                     | Description                                    |
+| ------------------------ | ---------------------------------------------- |
+| `"base"`                 | The elements base wrapper.                     |
+| `"caret"`                | The select box caret.                          |
+| `"empty"`                | The select empty message.                      |
+| `"form-control"`         | The form control wrapper.                      |
+| `"help-text"`            | Help text that describes how to use the input. |
+| `"input"`                | The html input element.                        |
+| `"input__base"`          | The inputs base element.                       |
+| `"label"`                | The input label.                               |
+| `"menu__base"`           | The select menu base.                          |
+| `"name__input"`          |                                                |
+| `"panel"`                | The select box panel.                          |
+| `"search__base"`         | The select search base.                        |
+| `"search__form-control"` | The select search form control.                |
+| `"search__input"`        | The select search input.                       |
+| `"select__base"`         | The select boxes base element.                 |
+| `"spinner__base"`        | The select spinner base.                       |
+| `"trigger"`              | The select box trigger.                        |
 
 
 ## Dependencies

@@ -6,10 +6,21 @@ import { Address } from '../../../types';
 
 /**
  * @part base - The elements base wrapper.
+ * @part input__base - The inputs base element.
+ * @part select__base - The select boxes base element.
  * @part input - The html input element.
  * @part form-control - The form control wrapper.
  * @part label - The input label.
  * @part help-text - Help text that describes how to use the input.
+ * @part trigger - The select box trigger.
+ * @part panel - The select box panel.
+ * @part caret - The select box caret.
+ * @part search__base - The select search base.
+ * @part search__input - The select search input.
+ * @part search__form-control - The select search form control.
+ * @part menu__base - The select menu base.
+ * @part spinner__base  - The select spinner base.
+ * @part empty - The select empty message.
  */
 @Component({
   tag: 'sc-address',
@@ -143,7 +154,7 @@ export class ScAddress {
         <sc-form-control label={this.label} exportparts="label, help-text, form-control" class="sc-address__control" required={this.required}>
           {this.showName && (
             <sc-input
-              exportparts="label:name__label, help-text:name__help-text, form-control:name__form-control"
+              exportparts="base:input__base, input, form-control, label, help-text"
               value={this?.address?.name}
               onScChange={(e: any) => this.updateAddress({ name: e.target.value || null })}
               onScInput={(e: any) => this.handleAddressInput({ name: e.target.value || null })}
@@ -156,6 +167,7 @@ export class ScAddress {
           )}
 
           <sc-select
+            exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty"
             part="name__input"
             value={this.address?.country}
             onScChange={(e: any) => {
@@ -175,6 +187,7 @@ export class ScAddress {
           />
 
           <sc-input
+            exportparts="base:input__base, input, form-control, label, help-text"
             value={this?.address?.line_1}
             onScChange={(e: any) => this.updateAddress({ line_1: e.target.value || null })}
             onScInput={(e: any) => this.handleAddressInput({ line_1: e.target.value || null })}
@@ -188,6 +201,7 @@ export class ScAddress {
 
           {this.showLine2 && (
             <sc-input
+              exportparts="base:input__base, input, form-control, label, help-text"
               value={this?.address?.line_2}
               onScChange={(e: any) => this.updateAddress({ line_2: e.target.value || null })}
               onScInput={(e: any) => this.handleAddressInput({ line_2: e.target.value || null })}
@@ -203,6 +217,7 @@ export class ScAddress {
           <div class="sc-address__columns">
             {this.showCity && (
               <sc-input
+                exportparts="base:input__base, input, form-control, label, help-text"
                 placeholder={this.placeholders.city}
                 name={this.names.city}
                 value={this?.address?.city}
@@ -219,6 +234,7 @@ export class ScAddress {
 
             {this.showPostal && (
               <sc-input
+                exportparts="base:input__base, input, form-control, label, help-text"
                 placeholder={this.placeholders.postal_code}
                 name={this.names.postal_code}
                 onScChange={(e: any) => this.updateAddress({ postal_code: e.target.value || null })}
@@ -237,6 +253,7 @@ export class ScAddress {
 
           {!!this?.regions?.length && !!this?.address?.country && (
             <sc-select
+              exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty"
               placeholder={this.placeholders.state}
               name={this.names.state}
               autocomplete={'address-level1'}
