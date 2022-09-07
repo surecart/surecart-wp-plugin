@@ -283,6 +283,15 @@ export class ScSelectDropdown {
       return;
     }
 
+    // Open select dropdown with Enter
+    if (event.key === 'Enter') {
+      if (this.open) {
+        this.handleHide();
+      } else {
+        this.handleShow();
+      }
+    }
+
     // don't open the menu when a CTRL/Command key is pressed
     if (event.ctrlKey || event.metaKey) {
       return;
