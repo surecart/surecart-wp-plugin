@@ -21,6 +21,11 @@ import { Checkout, PaymentIntent, Processor, ProcessorName } from '../../../../t
  * @part toggle__summary - Toggle summary
  * @part toggle__summary-icon - Toggle icon
  * @part toggle__content - Toggle content
+ * @part instructions - Payment instructions.
+ * @part instructions__divider - Payment instructions divider.
+ * @part instructions__divider-line - Payment instructions divider line.
+ * @part instructions__text  - Payment instructions text.
+
  */
 @Component({
   tag: 'sc-payment',
@@ -163,7 +168,10 @@ export class ScPayment {
               <sc-icon name={window?.scData?.theme === 'dark' ? 'paypal-white' : 'paypal'} style={{ width: '80px', fontSize: '24px' }}></sc-icon>
             </span>
             <sc-card>
-              <sc-payment-selected label={__('PayPal selected for check out.', 'surecart')}>
+              <sc-payment-selected
+                exportparts="base:instructions, divider:instructions__divider, divider-line:instructions__divider-line, text:instructions__text, "
+                label={__('PayPal selected for check out.', 'surecart')}
+              >
                 <sc-icon slot="icon" name={window?.scData?.theme === 'dark' ? 'paypal-white' : 'paypal'} style={{ width: '80px' }} />
                 {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
               </sc-payment-selected>
@@ -200,7 +208,10 @@ export class ScPayment {
               <span>{__('Credit Card', 'surecart')}</span>
             </span>
             <sc-card>
-              <sc-payment-selected label={__('Credit Card selected for check out.', 'surecart')}>
+              <sc-payment-selected
+                exportparts="base:instructions, divider:instructions__divider, divider-line:instructions__divider-line, text:instructions__text, "
+                label={__('Credit Card selected for check out.', 'surecart')}
+              >
                 <sc-icon slot="icon" name="credit-card" />
                 {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
               </sc-payment-selected>
@@ -220,7 +231,10 @@ export class ScPayment {
               <sc-icon name={window?.scData?.theme === 'dark' ? 'paypal-white' : 'paypal'} style={{ width: '80px', fontSize: '24px' }}></sc-icon>
             </span>
             <sc-card>
-              <sc-payment-selected label={__('PayPal selected for check out.', 'surecart')}>
+              <sc-payment-selected
+                exportparts="base:instructions, divider:instructions__divider, divider-line:instructions__divider-line, text:instructions__text, "
+                label={__('PayPal selected for check out.', 'surecart')}
+              >
                 <sc-icon slot="icon" name={window?.scData?.theme === 'dark' ? 'paypal-white' : 'paypal'} style={{ width: '80px' }} />
                 {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
               </sc-payment-selected>
