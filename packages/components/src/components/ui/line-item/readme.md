@@ -27,12 +27,17 @@
 
 ## Shadow Parts
 
-| Part      | Description |
-| --------- | ----------- |
-| `"base"`  |             |
-| `"image"` |             |
-| `"price"` |             |
-| `"text"`  |             |
+| Part                  | Description                              |
+| --------------------- | ---------------------------------------- |
+| `"base"`              | The elements base wrapper.               |
+| `"currency"`          | Used for the 3 character currency code.  |
+| `"description"`       | Line item description (below the title)  |
+| `"image"`             | The image wrapper.                       |
+| `"price"`             | Price amount, including currency sign.   |
+| `"price-description"` | Description for the price (i.e. monthly) |
+| `"price-text"`        | The price text.                          |
+| `"text"`              | The text.                                |
+| `"title"`             | The title.                               |
 
 
 ## Dependencies
