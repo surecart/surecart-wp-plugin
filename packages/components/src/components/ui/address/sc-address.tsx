@@ -4,6 +4,13 @@ import { hasState, hasCity, hasPostal, countryChoices } from '../../../functions
 import { reportChildrenValidity } from '../../../functions/form-data';
 import { Address } from '../../../types';
 
+/**
+ * @part base - The elements base wrapper.
+ * @part input - The html input element.
+ * @part form-control - The form control wrapper.
+ * @part label - The input label.
+ * @part help-text - Help text that describes how to use the input.
+ */
 @Component({
   tag: 'sc-address',
   styleUrl: 'sc-address.scss',
@@ -132,10 +139,11 @@ export class ScAddress {
 
   render() {
     return (
-      <div class="sc-address">
-        <sc-form-control label={this.label} class="sc-address__control" part="control" required={this.required}>
+      <div class="sc-address" part="base">
+        <sc-form-control label={this.label} exportparts="label, help-text, form-control" class="sc-address__control" required={this.required}>
           {this.showName && (
             <sc-input
+              exportparts="label:name__label, help-text:name__help-text, form-control:name__form-control"
               value={this?.address?.name}
               onScChange={(e: any) => this.updateAddress({ name: e.target.value || null })}
               onScInput={(e: any) => this.handleAddressInput({ name: e.target.value || null })}
@@ -148,6 +156,7 @@ export class ScAddress {
           )}
 
           <sc-select
+            part="name__input"
             value={this.address?.country}
             onScChange={(e: any) => {
               this.clearAddress();

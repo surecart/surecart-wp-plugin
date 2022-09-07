@@ -43,9 +43,14 @@ Type: `Promise<boolean>`
 
 ## Shadow Parts
 
-| Part        | Description |
-| ----------- | ----------- |
-| `"control"` |             |
+| Part             | Description                                    |
+| ---------------- | ---------------------------------------------- |
+| `"base"`         | The elements base wrapper.                     |
+| `"form-control"` | The form control wrapper.                      |
+| `"help-text"`    | Help text that describes how to use the input. |
+| `"input"`        | The html input element.                        |
+| `"label"`        | The input label.                               |
+| `"name__input"`  |                                                |
 
 
 ## Dependencies
