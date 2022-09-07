@@ -2,6 +2,13 @@ import { Component, h, State, Prop, Element, Watch, Event, EventEmitter } from '
 
 let id = 0;
 
+/**
+ * @part base - The elements base wrapper.
+ * @part input - The html input element.
+ * @part form-control - The form control wrapper.
+ * @part label - The input label.
+ * @part help-text - Help text that describes how to use the input.
+ */
 @Component({
   tag: 'sc-textarea',
   styleUrl: 'sc-textarea.css',

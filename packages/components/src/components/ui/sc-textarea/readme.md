@@ -46,12 +46,15 @@
 
 ## Shadow Parts
 
-| Part                   | Description |
-| ---------------------- | ----------- |
-| `"base"`               |             |
-| `"form-control"`       |             |
-| `"form-control-input"` |             |
-| `"textarea"`           |             |
+| Part                   | Description                                    |
+| ---------------------- | ---------------------------------------------- |
+| `"base"`               | The elements base wrapper.                     |
+| `"form-control"`       | The form control wrapper.                      |
+| `"form-control-input"` |                                                |
+| `"help-text"`          | Help text that describes how to use the input. |
+| `"input"`              | The html input element.                        |
+| `"label"`              | The input label.                               |
+| `"textarea"`           |                                                |
 
 
 ## Dependencies
