@@ -7,9 +7,11 @@ let id = 0;
  * @part base - The elements base wrapper.
  * @part input - The html input element.
  * @part base - The elements base wrapper.
+ * @part form-control - The form control wrapper.
+ * @part label - The input label.
+ * @part help-text - Help text that describes how to use the input.
  * @part prefix - Used to prepend an icon or element to the input.
  * @part suffix - Used to prepend an icon or element to the input.
- * @part help-text - Help text that describes how to use the input.
  */
 @Component({
   tag: 'sc-input',
@@ -229,6 +231,7 @@ export class ScInput {
     return (
       <Host hidden={this.hidden}>
         <sc-form-control
+          exportparts="label, help-text, form-contol"
           size={this.size}
           required={this.required}
           label={this.label}
