@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-09-06T19:04:59",
+  "timestamp": "2022-09-07T13:25:15",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -9760,15 +9760,23 @@
         },
         {
           "name": "part",
+          "text": "form-control - The form control wrapper."
+        },
+        {
+          "name": "part",
+          "text": "label - The input label."
+        },
+        {
+          "name": "part",
+          "text": "help-text - Help text that describes how to use the input."
+        },
+        {
+          "name": "part",
           "text": "prefix - Used to prepend an icon or element to the input."
         },
         {
           "name": "part",
           "text": "suffix - Used to prepend an icon or element to the input."
-        },
-        {
-          "name": "part",
-          "text": "help-text - Help text that describes how to use the input."
         }
       ],
       "usage": {},
@@ -10500,12 +10508,20 @@
           "docs": ""
         },
         {
+          "name": "form-control",
+          "docs": "The form control wrapper."
+        },
+        {
           "name": "help-text",
           "docs": "Help text that describes how to use the input."
         },
         {
           "name": "input",
           "docs": "The html input element."
+        },
+        {
+          "name": "label",
+          "docs": "The input label."
         },
         {
           "name": "prefix",
