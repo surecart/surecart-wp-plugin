@@ -8,12 +8,6 @@ import { createOrUpdateOrder, finalizeSession, getCheckout } from '../../../serv
 import { FormStateSetter, PaymentIntents, ProcessorName, LineItemData, PriceChoice, LineItem, Checkout } from '../../../types';
 import { getSessionId, getURLCoupon, getURLLineItems } from './helpers/session';
 
-declare global {
-  interface Window {
-    grecaptcha: any
-  }
-}
-
 @Component({
   tag: 'sc-session-provider',
   shadow: true,

@@ -56,17 +56,7 @@ function sc_register_settings() {
 		array(
 			'type'              => 'number',
 			'show_in_rest'      => true,
-			'default'           => 0.1,
-			'sanitize_callback' => 'sanitize_text_field',
-		)
-	);
-	register_setting(
-		'general',
-		'sc_recaptcha_max_score',
-		array(
-			'type'              => 'number',
-			'show_in_rest'      => true,
-			'default'           => 1,
+			'default'           => 0.5,
 			'sanitize_callback' => 'sanitize_text_field',
 		)
 	);

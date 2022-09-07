@@ -32,11 +32,6 @@ export default () => {
 		'site',
 		'sc_recaptcha_min_score'
 	);
-	const [scReCaptchaMaxScoreData, setScReCaptchaMaxScoreData] = useEntityProp(
-		'root',
-		'site',
-		'sc_recaptcha_max_score'
-	);
 
 	/**
 	 * Form is submitted.
@@ -204,7 +199,7 @@ export default () => {
 					<ScInput
 						value={scReCaptchaMinScoreData}
 						label={__('Threshold Min Score', 'surecart')}
-						placeholder={__('0.1', 'surecart')}
+						placeholder={__('0.5', 'surecart')}
 						onScChange={(e) => setScReCaptchaMinScoreData( e.target.value )} 
 						type="number"
 						min="0"
@@ -212,20 +207,6 @@ export default () => {
 						max="1"
 						help={__(
 							'This is use reCaptcha threshold min score.',
-							'surecart'
-						)}
-					></ScInput>
-					<ScInput
-						value={scReCaptchaMaxScoreData}
-						label={__('Threshold Max Score', 'surecart')}
-						placeholder={__('1', 'surecart')}
-						onScChange={(e) => setScReCaptchaMaxScoreData( e.target.value )} 
-						type="number"
-						min="0"
-						max="1"
-						step="0.1"
-						help={__(
-							'This is use reCaptcha threshold max score.',
 							'surecart'
 						)}
 					></ScInput>
