@@ -35,13 +35,14 @@
 
 ## Shadow Parts
 
-| Part       | Description |
-| ---------- | ----------- |
-| `"base"`   |             |
-| `"caret"`  |             |
-| `"label"`  |             |
-| `"prefix"` |             |
-| `"suffix"` |             |
+| Part        | Description                |
+| ----------- | -------------------------- |
+| `"base"`    | The elements base wrapper. |
+| `"caret"`   | The button caret.          |
+| `"label"`   | The button label.          |
+| `"prefix"`  | The button prefix.         |
+| `"spinner"` | The button spinner.        |
+| `"suffix"`  | The button suffix.         |
 
 
 ## Dependencies

@@ -1,5 +1,13 @@
 import { Component, Prop, Event, EventEmitter, State, Element, Fragment, h } from '@stencil/core';
 
+/**
+ * @part base - The elements base wrapper.
+ * @part label - The button label.
+ * @part prefix - The button prefix.
+ * @part suffix - The button suffix.
+ * @part caret - The button caret.
+ * @part spinner - The button spinner.
+ */
 @Component({
   tag: 'sc-button',
   styleUrl: 'sc-button.scss',
@@ -156,7 +164,7 @@ export class ScButton {
         ) : (
           ''
         )}
-        {this.loading || this.busy ? <sc-spinner></sc-spinner> : ''}
+        {this.loading || this.busy ? <sc-spinner exportparts="base:spinner"></sc-spinner> : ''}
       </Fragment>
     );
 
