@@ -102,6 +102,7 @@ export class ScForm {
     return (
       <div part="base" class="form" role="form">
         <form
+          part="form"
           ref={el => (this.formElement = el as HTMLFormElement)}
           onSubmit={async e => {
             e.preventDefault();

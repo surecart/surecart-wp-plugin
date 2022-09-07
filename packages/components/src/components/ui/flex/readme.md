@@ -16,6 +16,13 @@
 | `justifyContent` | `justify-content` |             | `string` | `undefined` |
 
 
+## Shadow Parts
+
+| Part     | Description |
+| -------- | ----------- |
+| `"base"` |             |
+
+
 ## Dependencies
 
 ### Used by

@@ -16,10 +16,18 @@
 
 ## Shadow Parts
 
-| Part                    | Description |
-| ----------------------- | ----------- |
-| `"heading-description"` |             |
-| `"heading-title"`       |             |
+| Part                    | Description                |
+| ----------------------- | -------------------------- |
+| `"base"`                | The elements base wrapper. |
+| `"error__ message"`     | The alert message.         |
+| `"error__base"`         | The alert base wrapper.    |
+| `"error__icon"`         | The alert icon.            |
+| `"error__text"`         | The alert text.            |
+| `"error__title"`        | The alert title.           |
+| `"heading"`             | The heading.               |
+| `"heading-description"` | The heading description.   |
+| `"heading-text"`        | The heading text wrapper.  |
+| `"heading-title"`       | The heading title.         |
 
 
 ## Dependencies

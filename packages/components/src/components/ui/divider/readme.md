@@ -7,11 +7,13 @@
 
 ## Shadow Parts
 
-| Part     | Description |
-| -------- | ----------- |
-| `"base"` |             |
-| `"line"` |             |
-| `"text"` |             |
+| Part               | Description                |
+| ------------------ | -------------------------- |
+| `"base"`           | The elements base wrapper. |
+| `"line"`           | The line.                  |
+| `"line-container"` | The line container.        |
+| `"text"`           | The text.                  |
+| `"text-container"` | The text container.        |
 
 
 ## Dependencies
