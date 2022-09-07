@@ -1,5 +1,12 @@
 import { Component, Element, h, Prop, State } from '@stencil/core';
 
+/**
+ * @part base - The elements base wrapper.
+ * @part label - The label.
+ * @part suffix - The suffix item.
+ * @part prefix - The prefix item.
+ * @part separator - The separator.
+ */
 @Component({
   tag: 'sc-breadcrumb',
   styleUrl: 'sc-breadcrumb.css',
