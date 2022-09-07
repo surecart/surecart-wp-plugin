@@ -1,0 +1,315 @@
+# Styling
+
+SureCart components use a [shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM) to encapsulate their styles. This provides a few advantages:
+
+- Styles are protected from any potential style conflicts (theme styles, for example).
+- If the internal HTML structure of any components change, you won't need to update any custom css.
+
+There are two ways to make customizations to SureCart components. One way is with CSS custom properties ("CSS variables"), the other is with CSS parts ("parts").
+
+## CSS Variables
+CSS variables are great for global style changes that are shared across components. A good example of this is a border radius. Form elements, inputs, cards and buttons all share the same border radius.
+To make it as easy as possible to change this, you can set the `--sc-border-radius` variables to change this globally.
+
+Example:
+```css
+:root:root {
+  /** Remove all border radiuses */
+  --sc-border-radius-small: 0;
+  --sc-border-radius-medium: 0;
+  --sc-border-radius-large: 0;
+  --sc-border-radius-x-large: 0;
+}
+```
+
+Here's a list of commonly used available css variables.
+
+<details>
+  <summary>Colors</summary>
+
+  ```css
+   /** Primary Color */
+   --sc-color-primary-500: #000;
+   --sc-color-primary-text: var(--sc-color-white);
+
+  /** Colors */
+  --sc-color-black: #000;
+  --sc-color-white: #fff;
+  --sc-color-gray-50: #f9fafb;
+  --sc-color-gray-100: #f3f4f6;
+  --sc-color-gray-200: #e5e7eb;
+  --sc-color-gray-300: #dce0e6;
+  --sc-color-gray-400: #9ca3af;
+  --sc-color-gray-500: #6b7280;
+  --sc-color-gray-600: #4b5563;
+  --sc-color-gray-700: #374151;
+  --sc-color-gray-800: #1f2937;
+  --sc-color-gray-900: #111827;
+  --sc-color-gray-950: #0d131e;
+
+  /** Neutral Colors */
+  --sc-color-neutral-50: #fafafa;
+  --sc-color-neutral-100: whitesmoke;
+  --sc-color-neutral-200: #e5e5e5;
+  --sc-color-neutral-300: #d4d4d4;
+  --sc-color-neutral-400: #a3a3a3;
+  --sc-color-neutral-500: #737373;
+  --sc-color-neutral-600: #525252;
+  --sc-color-neutral-700: #404040;
+  --sc-color-neutral-800: #262626;
+  --sc-color-neutral-900: #171717;
+  --sc-color-neutral-950: #0f0f0f;
+
+  /** Success */
+  --sc-color-success-50: #f0fdf4;
+  --sc-color-success-100: #dcfce7;
+  --sc-color-success-200: #bbf7d0;
+  --sc-color-success-300: #86efac;
+  --sc-color-success-400: #4ade80;
+  --sc-color-success-500: #22c55e;
+  --sc-color-success-600: #16a34a;
+  --sc-color-success-700: #15803d;
+  --sc-color-success-800: #166534;
+  --sc-color-success-900: #14532d;
+  --sc-color-success-950: #0d381e;
+  --sc-color-success-text: var(--sc-color-white);
+
+  /** Info */
+  --sc-color-info-50: #eff6ff;
+  --sc-color-info-100: #dbeafe;
+  --sc-color-info-200: #bfdbfe;
+  --sc-color-info-300: #93c5fd;
+  --sc-color-info-400: #60a5fa;
+  --sc-color-info-500: #3b82f6;
+  --sc-color-info-600: #2563eb;
+  --sc-color-info-700: #1d4ed8;
+  --sc-color-info-800: #1e40af;
+  --sc-color-info-900: #1e3a8a;
+  --sc-color-info-text: var(--sc-color-white);
+
+  /** Warning */
+  --sc-color-warning-50: #fffbeb;
+  --sc-color-warning-100: #fef3c7;
+  --sc-color-warning-200: #fde68a;
+  --sc-color-warning-300: #fcd34d;
+  --sc-color-warning-400: #fbbf24;
+  --sc-color-warning-500: #f59e0b;
+  --sc-color-warning-600: #d97706;
+  --sc-color-warning-700: #b45309;
+  --sc-color-warning-800: #92400e;
+  --sc-color-warning-900: #78350f;
+  --sc-color-warning-950: #4d220a;
+  --sc-color-warning-text: var(--sc-color-white);
+
+  /** Danger */
+  --sc-color-danger-50: #fef2f2;
+  --sc-color-danger-100: #fee2e2;
+  --sc-color-danger-200: #fecaca;
+  --sc-color-danger-300: #fca5a5;
+  --sc-color-danger-400: #f87171;
+  --sc-color-danger-500: #ef4444;
+  --sc-color-danger-600: #dc2626;
+  --sc-color-danger-700: #b91c1c;
+  --sc-color-danger-800: #991b1b;
+  --sc-color-danger-900: #7f1d1d;
+  --sc-color-danger-950: #481111;
+  --sc-color-danger-text: var(--sc-color-white);
+  ```
+</details>
+
+<details>
+  <summary>Border Radius</summary>
+
+  ```css
+  --sc-border-radius-small: 0.15em;
+  --sc-border-radius-medium: 0.25em;
+  --sc-border-radius-large: 0.5em;
+  --sc-border-radius-x-large: 0.75em;
+  --sc-border-radius-circle: 50%;
+  --sc-border-radius-pill: 9999px;
+  ```
+</details>
+
+<details>
+  <summary>Shadow</summary>
+
+  ```css
+  --sc-shadow-x-small: 0 1px 0 #0d131e0d;
+  --sc-shadow-small: 0 1px 2px #0d131e1a;
+  --sc-shadow-medium: 0 0 #000,0 0 #000,0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --sc-shadow-large: 0 2px 8px #0d131e1a;
+  --sc-shadow-x-large: 0 4px 16px #0d131e1a;
+  ```
+</details>
+
+<details>
+  <summary>Spacing</summary>
+
+  ```css
+  --sc-spacing-xxx-small: 0.125em;
+  --sc-spacing-xx-small: 0.25em;
+  --sc-spacing-x-small: 0.5em;
+  --sc-spacing-small: 0.75em;
+  --sc-spacing-medium: 1em;
+  --sc-spacing-large: 1.25em;
+  --sc-spacing-x-large: 1.75em;
+  --sc-spacing-xx-large: 2.25em;
+  --sc-spacing-xxx-large: 3em;
+  --sc-spacing-xxxx-large: 4.5em;
+  ```
+</details>
+
+<details>
+  <summary>Transition</summary>
+
+  ```css
+  --sc-transition-x-slow: 1000ms;
+  --sc-transition-slow: 500ms;
+  --sc-transition-medium: 250ms;
+  --sc-transition-fast: 150ms;
+  --sc-transition-x-fast: 50ms;
+  ```
+</details>
+
+<details>
+  <summary>Fonts / Typography</summary>
+
+  ```css
+  --sc-font-mono: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+  --sc-font-sans: "Inter", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --sc-font-serif: Georgia, 'Times New Roman', serif;
+  --sc-font-size-xx-small: 0.625em;
+  --sc-font-size-x-small: 0.75em;
+  --sc-font-size-small: 0.875em;
+  --sc-font-size-medium: 1em;
+  --sc-font-size-large: 1.15em;
+  --sc-font-size-x-large: 1.25em;
+  --sc-font-size-xx-large: 1.45em;
+  --sc-font-size-xxx-large: 3em;
+  --sc-font-size-xxxx-large: 4.5em;
+  --sc-font-weight-light: 300;
+  --sc-font-weight-normal: 400;
+  --sc-font-weight-semibold: 500;
+  --sc-font-weight-bold: 600;
+  --sc-letter-spacing-dense: -0.015em;
+  --sc-letter-spacing-normal: normal;
+  --sc-letter-spacing-loose: 0.075em;
+  --sc-line-height-dense: 1.4;
+  --sc-line-height-normal: 1.8;
+  --sc-line-height-loose: 2.2;
+  --sc-button-font-size-small: var(--sc-font-size-x-small);
+  --sc-button-font-size-medium: var(--sc-font-size-medium);
+  --sc-button-font-size-large: var(--sc-font-size-large);
+  ```
+</details>
+
+<details>
+  <summary>Focus Ring</summary>
+
+  ```css
+  --sc-focus-ring-color-primary: var(--sc-color-primary-500);
+  --sc-focus-ring-color-success: #22c55e54;
+  --sc-focus-ring-color-info: #6b728054;
+  --sc-focus-ring-color-warning: #f59e0b54;
+  --sc-focus-ring-color-danger: #ef444454;
+  --sc-focus-ring-width: 1px;
+  ```
+</details>
+
+<details>
+  <summary>Inputs</summary>
+
+  ```css
+--sc-input-box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+  --sc-input-height-small: 2.25em;
+  --sc-input-height-medium: 2.8em;
+  --sc-input-height-large: 3.0em;
+  --sc-input-background-color: var(--sc-color-white);
+  --sc-input-background-color-hover: var(--sc-color-white);
+  --sc-input-background-color-focus: var(--sc-color-white);
+  --sc-input-background-color-disabled: var(--sc-color-gray-100);
+  --sc-input-border: solid var(--sc-input-border-width) var(--sc-input-border-color);
+  --sc-input-border-color: var(--sc-color-gray-300);
+  --sc-input-border-color-hover: var(--sc-color-gray-400);
+  --sc-input-border-color-focus: var(--sc-color-primary-500);
+  --sc-input-border-color-disabled: var(--sc-color-gray-300);
+  --sc-input-border-color-invalid: var(--sc-color-danger-500);
+  --sc-input-border-width: 1px;
+  --sc-input-border-radius-small: var(--sc-border-radius-small);
+  --sc-input-border-radius-medium: var(--sc-border-radius-medium);
+  --sc-input-border-radius-large: var(--sc-border-radius-medium);
+  --sc-input-font-family: var(--sc-font-sans);
+  --sc-input-font-weight: var(--sc-font-weight-normal);
+  --sc-input-font-size-small: var(--sc-font-size-small);
+  --sc-input-font-size-medium: var(--sc-font-size-medium);
+  --sc-input-font-size-large: var(--sc-font-size-large);
+  --sc-input-label-font-weight: var(--sc-font-weight-semibold);
+  --sc-input-label-margin: var(--sc-spacing-xx-small);
+  --sc-input-letter-spacing: var(--sc-letter-spacing-normal);
+  --sc-input-color: var(--sc-color-gray-700);
+  --sc-input-color-hover: var(--sc-color-gray-700);
+  --sc-input-color-focus: var(--sc-color-gray-700);
+  --sc-input-color-disabled: var(--sc-color-gray-900);
+  --sc-input-icon-color: var(--sc-color-gray-400);
+  --sc-input-icon-color-hover: var(--sc-color-gray-600);
+  --sc-input-icon-color-focus: var(--sc-color-gray-600);
+  --sc-input-placeholder-color: var(--sc-color-gray-400);
+  --sc-input-placeholder-color-disabled: var(--sc-color-gray-600);
+  --sc-input-spacing-small: var(--sc-spacing-small);
+  --sc-input-spacing-medium: var(--sc-spacing-medium);
+  --sc-input-spacing-large: var(--sc-spacing-large);
+  --sc-input-label-font-size-small: var(--sc-font-size-small);
+  --sc-input-label-font-size-medium: var(--sc-font-size-medium);
+  --sc-input-label-font-size-large: var(--sc-font-size-large);
+  --sc-input-label-color: var(--sc-color-gray-600);
+  --sc-input-help-text-font-size-small: var(--sc-font-size-x-small);
+  --sc-input-help-text-font-size-medium: var(--sc-font-size-small);
+  --sc-input-help-text-font-size-large: var(--sc-font-size-medium);
+  --sc-input-help-text-color: var(--sc-color-gray-500);
+  --sc-input-error-text-font-size-small: var(--sc-input-help-text-font-size-small);
+  --sc-input-error-text-font-size-medium: var(--sc-input-help-text-font-size-small);
+  --sc-input-error-text-font-size-large: var(--sc-input-help-text-font-size-small);
+  --sc-input-error-text-color: var(--sc-color-danger-500);
+  ```
+</details>
+
+## CSS Parts
+While CSS Variables offer a high-level way to customize the SureCart, css parts offer a low-level way to customize individual components. This is done with pure CSS — nothing else is required.
+
+SureCart components use a shadow DOM to encapsulate their styles. This means you can't simply target their internals with the usual CSS selectors as you are used to. Instead, components expose "parts" that can be targeted with the CSS part selector, or `::part()`.
+
+Here's an example that modifies an input component to a more techy/brutalist style:
+
+import DemoTabs from '../components/Demo-Tabs.js';
+import ComponentDoc from '../components/Component-Doc.js';
+
+<DemoTabs>
+	<DemoTabs.Code>
+		{ `
+<sc-input label="Your Name" class="sc-input-style-example" placeholder="Enter your name"></sc-input>
+<style>
+.sc-input-style-example::part(base) {
+  border: 1px solid black;
+  box-shadow: 2px 2px #2dd4bf;
+  border-radius: 0;
+  font-family: monospace;
+}
+.sc-input-style-example::part(base):hover {
+  border-color: #2dd4bf;
+  box-shadow: 5px 5px #2dd4bf;
+}
+.sc-input-style-example::part(label) {
+  color: black;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+.sc-input-style-example::part(input)::placeholder {
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+</style>` }
+	</DemoTabs.Code>
+	<sc-input label="Your Name" class="sc-input-style-example" placeholder="Enter your name"></sc-input>
+</DemoTabs>
