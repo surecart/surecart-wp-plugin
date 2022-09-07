@@ -6,7 +6,22 @@ import { __ } from '@wordpress/i18n';
 import { isValidURL } from '../../../functions/util';
 
 let id = 0;
-
+/**
+ * @part base - The elements base wrapper.
+ * @part input - The html input element.
+ * @part form-control - The form control wrapper.
+ * @part label - The input label.
+ * @part help-text - Help text that describes how to use the input.
+ * @part trigger - The trigger for the dropdown.
+ * @part panel - Them panel for the dropdown.
+ * @part caret - The caret.
+ * @part search___base - The search base wrapper.
+ * @part search__input - The search input element.
+ * @part search__form-control - The search form control wrapper.
+ * @part menu__base - The menu base.
+ * @part spinner__base - The spinner base.
+ * @part empty - The empty message.
+ */
 @Component({
   tag: 'sc-select',
   styleUrl: 'sc-select.scss',
@@ -314,6 +329,7 @@ export class ScSelectDropdown {
   render() {
     return (
       <div
+        part="base"
         class={{
           'select': true,
           'select--placeholder': !this.value,
@@ -329,6 +345,7 @@ export class ScSelectDropdown {
         }}
       >
         <sc-form-control
+          exportparts="label, help-text, form-control"
           size={this.size}
           required={this.required}
           label={this.label}
@@ -350,6 +367,7 @@ export class ScSelectDropdown {
           ></input>
 
           <sc-dropdown
+            exportparts="trigger, panel"
             disabled={this.disabled}
             open={this.open}
             position={this.position}
@@ -360,11 +378,12 @@ export class ScSelectDropdown {
           >
             <div class="trigger" slot="trigger">
               <div class="select__value">{this.displayValue() || this.placeholder || 'Select...'}</div>
-              <sc-icon part="caret" class="select__caret" name="chevron-down" />
+              <sc-icon exportparts="base:caret" class="select__caret" name="chevron-down" />
             </div>
 
             {this.search && (
               <sc-input
+                exportparts="base:search__base, input:search__input, form-control:search__form-control"
                 placeholder={this.searchPlaceholder || 'Search...'}
                 onScInput={e => this.handleQuery(e)}
                 class="search"
@@ -372,21 +391,25 @@ export class ScSelectDropdown {
                 part="search"
                 ref={el => (this.searchInput = el as HTMLScInputElement)}
               >
-                {this.loading && <sc-spinner style={{ '--spinner-size': '0.5em' }} slot="suffix"></sc-spinner>}
+                {this.loading && <sc-spinner exportparts="base:spinner__base" style={{ '--spinner-size': '0.5em' }} slot="suffix"></sc-spinner>}
               </sc-input>
             )}
 
-            <sc-menu style={{ maxHeight: '210px', overflow: 'auto' }} ref={el => (this.menu = el as HTMLScMenuElement)}>
+            <sc-menu exportparts="base:menu__base" style={{ maxHeight: '210px', overflow: 'auto' }} ref={el => (this.menu = el as HTMLScMenuElement)}>
               <slot name="prefix"></slot>
               {this.loading && !this.filteredChoices.length && (
                 <div class="loading">
-                  <sc-spinner></sc-spinner>
+                  <sc-spinner exportparts="base:spinner__base"></sc-spinner>
                 </div>
               )}
               {(this.filteredChoices || []).map((choice, index) => {
                 return [this.renderItem(choice, index), (choice.choices || []).map(choice => this.renderItem(choice, index))];
               })}
-              {!this.loading && !this.filteredChoices.length && <div class="select__empty">{__('Nothing Found', 'surecart')}</div>}
+              {!this.loading && !this.filteredChoices.length && (
+                <div class="select__empty" part="empty">
+                  {__('Nothing Found', 'surecart')}
+                </div>
+              )}
               <slot name="suffix"></slot>
             </sc-menu>
           </sc-dropdown>
