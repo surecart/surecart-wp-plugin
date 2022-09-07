@@ -240,6 +240,7 @@ export class ScTextarea {
         }}
       >
         <sc-form-control
+          exportparts="label, help-text, form-control"
           size={this.size}
           required={this.required}
           label={this.label}
