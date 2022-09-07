@@ -50,13 +50,14 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part        | Description |
-| ----------- | ----------- |
-| `"base"`    |             |
-| `"icon"`    |             |
-| `"message"` |             |
-| `"text"`    |             |
-| `"title"`   |             |
+| Part        | Description                |
+| ----------- | -------------------------- |
+| `"base"`    | The elements base wrapper. |
+| `"close"`   | The close icon.            |
+| `"icon"`    | The alert icon.            |
+| `"message"` | The alert message.         |
+| `"text"`    | The alert text.            |
+| `"title"`   | The alert title.           |
 
 
 ## Dependencies
