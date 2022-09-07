@@ -21,6 +21,8 @@ import { Address } from '../../../types';
  * @part menu__base - The select menu base.
  * @part spinner__base  - The select spinner base.
  * @part empty - The select empty message.
+ * @part block-ui - The block ui base component.
+ * @part block-ui__content - The block ui content (spinner).
  */
 @Component({
   tag: 'sc-address',
@@ -268,7 +270,7 @@ export class ScAddress {
           )}
         </sc-form-control>
 
-        {this.loading && <sc-block-ui></sc-block-ui>}
+        {this.loading && <sc-block-ui exportparts="base:block-ui, content:block-ui__content"></sc-block-ui>}
       </div>
     );
   }

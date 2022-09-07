@@ -46,6 +46,8 @@ Type: `Promise<boolean>`
 | Part                     | Description                                    |
 | ------------------------ | ---------------------------------------------- |
 | `"base"`                 | The elements base wrapper.                     |
+| `"block-ui"`             | The block ui base component.                   |
+| `"block-ui__content"`    | The block ui content (spinner).                |
 | `"caret"`                | The select box caret.                          |
 | `"empty"`                | The select empty message.                      |
 | `"form-control"`         | The form control wrapper.                      |
