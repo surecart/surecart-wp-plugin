@@ -16,7 +16,7 @@
   }
 
   &__label {
-    color: var(--sc-color-gray-600);
+    color: var(--sc-input-label-color);
     line-height: var(--sc-line-height-loose);
     font-size: var(--sc-font-size-medium);
   }
@@ -35,7 +35,7 @@
   }
 
   &__instructions-text {
-    color: var(--sc-color-gray-600);
+    color: var(--sc-input-label-color);
     font-size: var(--sc-font-size-small);
     line-height: var(--sc-line-height-dense);
   }

@@ -72,7 +72,8 @@ class LicensesListTable extends ListTable {
 	 * @return Array
 	 */
 	private function table_data() {
-		return License::with( [ 'purchase', 'purchase.customer', 'purchase.product' ] )
+		return License::where( [ 'query' => $this->get_search_query() ] )
+		->with( [ 'purchase', 'purchase.customer', 'purchase.product' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'surecart_licenses' ),

@@ -49,10 +49,6 @@ abstract class DashboardPage extends BaseBlock {
 			return false;
 		}
 
-		if ( ! $user->isCustomer() ) {
-			return '<sc-alert type="error" open>' . esc_html__( 'You must be a customer to access this page.', 'surecart' ) . '</sc-alert>';
-		}
-
 		return true;
 	}
 

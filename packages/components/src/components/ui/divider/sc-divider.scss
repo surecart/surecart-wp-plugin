@@ -20,7 +20,7 @@
 
 .line {
   width: 100%;
-  border-top: 1px solid var(--sc-color-gray-200);
+  border-top: 1px solid var(--sc-divider-border-top-color, var(--sc-color-gray-200));
 }
 
 .text__container {
@@ -32,6 +32,6 @@
 
 .text {
   padding: 0 var(--sc-spacing-small);
-  background: var(--sc-color-white);
+  background: var(--sc-divider-text-background-color, var(--sc-color-white));
   color: var(--sc-color-gray-500);
 }

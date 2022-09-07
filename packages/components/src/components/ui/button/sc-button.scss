@@ -96,21 +96,21 @@
     color: var(--sc-button-default-color, var(--sc-color-gray-600));
 
     &:hover:not(.button--disabled) {
-      background-color: var(--sc-color-white);
-      border-color: var(--primary-background);
+      background-color: var(--sc-button-default-hover-background-color, var(--sc-color-white));
+      border-color: var(--sc-button-default-focus-border-color, var(--primary-background));
       color: var(--primary-background);
     }
 
     &:focus:not(.button--disabled) {
-      background-color: var(--sc-color-white);
-      border-color: var(--sc-color-white);
+      background-color: var(--sc-button-default-focus-background-color, var(--sc-color-white));
+      border-color: var(--sc-button-default-focus-border-color, var(--sc-color-white));
       color: var(--primary-background);
       box-shadow: 0 0 0 var(--sc-focus-ring-width) var(--sc-focus-ring-color-primary);
     }
 
     &:active:not(.button--disabled) {
-      background-color: var(--sc-color-white);
-      border-color: var(--sc-color-white);
+      background-color: var(--sc-button-default-active-background-color, var(--sc-color-white));
+      border-color: var(--sc-button-default-active-border-color, var(--sc-color-white));
       color: var(--primary-background);
     }
   }
@@ -303,20 +303,20 @@
   background-color: var(--sc-color-success-700);
   color: var(--sc-color-white);
 }
-/* gray */
-.button--outline.button--gray {
+/* Info */
+.button--outline.button--info {
   border-color: var(--sc-color-gray-500);
   color: var(--sc-color-gray-500);
 }
-.button--outline.button--gray:hover:not(.button--disabled) {
+.button--outline.button--info:hover:not(.button--disabled) {
   background-color: var(--sc-color-gray-500);
   color: var(--sc-color-white);
 }
-.button--outline.button--gray:focus:not(.button--disabled) {
+.button--outline.button--info:focus:not(.button--disabled) {
   border-color: var(--sc-color-gray-500);
   box-shadow: 0 0 0 var(--sc-focus-ring-width) var(--sc-color-gray-500) / var(--sc-focus-ring-alpha);
 }
-.button--outline.button--gray:active:not(.button--disabled) {
+.button--outline.button--info:active:not(.button--disabled) {
   border-color: var(--sc-color-gray-700);
   background-color: var(--sc-color-gray-700);
   color: var(--sc-color-white);
@@ -400,7 +400,7 @@
   background-color: transparent;
   border-color: transparent;
   box-shadow: none;
-  color: var(--primary-background);
+  color: var(--sc-button-link-color, var(--primary-background));
   transition: opacity var(--sc-transition-fast) ease;
 
   &.button--has-label {

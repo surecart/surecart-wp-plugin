@@ -5,6 +5,8 @@ import externalGlobals from 'rollup-plugin-external-globals';
 import { reactOutputTarget } from '@stencil/react-output-target';
 import { sass } from '@stencil/sass';
 
+const isTest = process.argv.some(p => p === '--e2e');
+
 export const config: Config = {
   namespace: 'surecart',
   globalStyle: './src/themes/base.css',
@@ -69,12 +71,13 @@ export const config: Config = {
   ],
   plugins: [
     sass(),
-    externalGlobals({
-      // '@wordpress/api-fetch': 'wp.apiFetch',
-      // '@wordpress/hooks': 'wp.hooks',
-      '@wordpress/i18n': 'wp.i18n',
-      // '@wordpress/url': 'wp.url',
-      'wp': 'wp',
-    }),
+    ...(isTest
+      ? []
+      : [
+          externalGlobals({
+            '@wordpress/i18n': 'wp.i18n',
+            'wp': 'wp',
+          }),
+        ]),
   ],
 };

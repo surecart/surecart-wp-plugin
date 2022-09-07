@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-08-31T15:04:18+00:00\n"
+"POT-Creation-Date: 2022-09-05T19:07:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -19,7 +19,7 @@ msgstr ""
 #: src/Integrations/AffiliateWP/AffiliateWPService.php:29
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:108
 #: src/WordPress/Admin/Notices/AdminNoticesService.php:104
-#: src/WordPress/ThemeServiceProvider.php:57
+#: src/WordPress/ThemeServiceProvider.php:87
 #: admin/user-profile.php:1
 #: error.php:2
 msgid "SureCart"
@@ -31,9 +31,9 @@ msgid "Cart"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:48
-#: src/Controllers/Admin/Orders/OrdersListTable.php:81
+#: src/Controllers/Admin/Orders/OrdersListTable.php:69
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:63
-#: src/Controllers/Admin/Products/ProductsListTable.php:67
+#: src/Controllers/Admin/Products/ProductsListTable.php:56
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:60
 msgid "All"
 msgstr ""
@@ -52,18 +52,18 @@ msgid "Search Abanonded Orders"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:102
-#: src/Controllers/Admin/Orders/OrdersListTable.php:114
+#: src/Controllers/Admin/Orders/OrdersListTable.php:102
 #: store/add-entities.js:102
 #: subscriptions/show/modules/Orders.js:15
-#: Controllers/OrderController.php:118
+#: Controllers/OrderController.php:120
 msgid "Order"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:103
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:79
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:64
-#: src/Controllers/Admin/Orders/OrdersListTable.php:119
-#: src/Controllers/Admin/Products/ProductsListTable.php:113
+#: src/Controllers/Admin/Orders/OrdersListTable.php:107
+#: src/Controllers/Admin/Products/ProductsListTable.php:102
 #: customers/modules/Balance/ViewTransactions.js:110
 #: customers/modules/Charges.js:66
 #: customers/modules/Orders.js:65
@@ -81,7 +81,7 @@ msgstr ""
 #: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:105
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:65
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:63
-#: src/Controllers/Admin/Orders/OrdersListTable.php:115
+#: src/Controllers/Admin/Orders/OrdersListTable.php:103
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:104
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:103
 #: customers/modules/Charges.js:72
@@ -102,7 +102,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:106
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:67
-#: src/Controllers/Admin/Orders/OrdersListTable.php:118
+#: src/Controllers/Admin/Orders/OrdersListTable.php:106
 #: customers/modules/Orders.js:58
 #: dashboard/components/overview/charts/ChartSummary.js:142
 #: orders/modules/LineItems/index.js:201
@@ -142,13 +142,14 @@ msgid "Coupons"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:59
+#: admin/coupons/index.php:12
 msgid "Search Coupons"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:75
-#: src/Controllers/Admin/Customers/CustomersListTable.php:60
+#: src/Controllers/Admin/Customers/CustomersListTable.php:49
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:103
-#: src/Controllers/Admin/Products/ProductsListTable.php:108
+#: src/Controllers/Admin/Products/ProductsListTable.php:97
 #: src/Support/Errors/Translations/attributes.php:11
 #: customers/modules/Details.js:34
 #: licenses/modules/Activations/Activation.js:137
@@ -170,7 +171,7 @@ msgid "Code"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:77
-#: src/Controllers/Admin/Products/ProductsListTable.php:110
+#: src/Controllers/Admin/Products/ProductsListTable.php:99
 #: products/components/price/parts/SingleAmount.js:11
 #: store/add-entities.js:144
 #: subscriptions/edit/modules/Price.js:37
@@ -184,33 +185,33 @@ msgid "Usage"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:90
-#: src/Controllers/Admin/Customers/CustomersListTable.php:74
+#: src/Controllers/Admin/Customers/CustomersListTable.php:63
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:79
-#: src/Controllers/Admin/Orders/OrdersListTable.php:131
-#: src/Controllers/Admin/Products/ProductsListTable.php:124
+#: src/Controllers/Admin/Orders/OrdersListTable.php:119
+#: src/Controllers/Admin/Products/ProductsListTable.php:113
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:121
 msgid "Select comment"
 msgstr ""
 
 #. translators: coupon expiration date.
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:178
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:179
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:191
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:309
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:310
 msgid "Valid until %s"
 msgstr ""
 
 #. translators: Coupon % off.
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:193
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:194
 msgid "%d off"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:201
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:326
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:202
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:327
 msgid "No discount."
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:216
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:341
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:217
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:342
 #: coupons/modules/Types.js:37
 #: coupons/modules/Types.js:119
 #: coupons/Sidebar.js:37
@@ -218,27 +219,27 @@ msgid "Forever"
 msgstr ""
 
 #. translators: number of months.
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:220
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:345
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:221
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:346
 msgid "For %d months"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:223
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:348
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:224
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:349
 #: coupons/modules/Types.js:33
 #: coupons/modules/Types.js:126
 #: coupons/Sidebar.js:29
 msgid "Once"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:235
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:236
 msgid "Expired"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:235
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:123
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:236
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:124
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:61
-#: src/Controllers/Admin/Products/ProductsListTable.php:65
+#: src/Controllers/Admin/Products/ProductsListTable.php:54
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:61
 #: licenses/modules/Details/index.js:14
 #: util.js:48
@@ -247,28 +248,28 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:261
-#: src/Controllers/Admin/Customers/CustomersListTable.php:160
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:110
-#: src/Controllers/Admin/Products/ProductsListTable.php:322
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:406
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:262
+#: src/Controllers/Admin/Customers/CustomersListTable.php:150
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:111
+#: src/Controllers/Admin/Products/ProductsListTable.php:312
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:407
 #: licenses/modules/Activations/Activation.js:204
 #: settings/customer/EmailRow.js:14
 msgid "Edit"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:277
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:278
 msgid "No code specified"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:281
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:282
 msgid "+ %d more"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:293
-#: src/Controllers/Admin/Customers/CustomersListTable.php:176
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:165
-#: src/Controllers/Admin/Products/ProductsListTable.php:341
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:294
+#: src/Controllers/Admin/Customers/CustomersListTable.php:166
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:166
+#: src/Controllers/Admin/Products/ProductsListTable.php:331
 #: coupons/components/coupon/ActionsDropdown.js:29
 #: coupons/components/CouponActionsDropdown.js:96
 #: coupons/modules/Code.js:113
@@ -278,10 +279,10 @@ msgstr ""
 msgid "Un-Archive"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:293
-#: src/Controllers/Admin/Customers/CustomersListTable.php:176
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:165
-#: src/Controllers/Admin/Products/ProductsListTable.php:341
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:294
+#: src/Controllers/Admin/Customers/CustomersListTable.php:166
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:166
+#: src/Controllers/Admin/Products/ProductsListTable.php:331
 #: coupons/components/coupon/ActionsDropdown.js:30
 #: coupons/components/CouponActionsDropdown.js:97
 #: coupons/modules/Code.js:114
@@ -291,45 +292,45 @@ msgstr ""
 msgid "Archive"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:294
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:295
 msgid "Are you sure you want to restore this coupon? This will be be available to purchase."
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:294
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:295
 msgid "Are you sure you want to archive this coupon? This will be unavailable for purchase."
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:301
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:302
 msgid "Toggle Coupon Archive"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:346
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:347
 msgid "Unapprove"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:349
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:350
 msgid "Approve"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:352
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:353
 msgctxt "comment"
 msgid "Mark as spam"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:356
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:357
 msgid "Restore"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:358
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:359
 msgctxt "comment"
 msgid "Not spam"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:362
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:363
 msgid "Delete permanently"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:364
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:365
 msgid "Move to Trash"
 msgstr ""
 
@@ -353,17 +354,13 @@ msgstr ""
 msgid "Product restored."
 msgstr ""
 
-#: src/Controllers/Admin/Customers/CustomersListTable.php:45
-msgid "Search Customers"
-msgstr ""
-
-#: src/Controllers/Admin/Customers/CustomersListTable.php:61
+#: src/Controllers/Admin/Customers/CustomersListTable.php:50
 #: customers/modules/Details.js:46
-#: settings/brand/BrandSettings.js:126
+#: settings/brand/BrandSettings.js:158
 msgid "Email"
 msgstr ""
 
-#: src/Controllers/Admin/Customers/CustomersListTable.php:62
+#: src/Controllers/Admin/Customers/CustomersListTable.php:51
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:64
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:105
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:109
@@ -376,32 +373,32 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: src/Controllers/Admin/Customers/CustomersListTable.php:118
+#: src/Controllers/Admin/Customers/CustomersListTable.php:108
 msgid "No customers found."
 msgstr ""
 
-#: src/Controllers/Admin/Customers/CustomersListTable.php:129
-#: src/Controllers/Admin/Products/ProductsListTable.php:232
-#: src/Controllers/Admin/Products/ProductsListTable.php:252
+#: src/Controllers/Admin/Customers/CustomersListTable.php:119
+#: src/Controllers/Admin/Products/ProductsListTable.php:222
+#: src/Controllers/Admin/Products/ProductsListTable.php:242
 #: src/Integrations/TutorLMS/TutorLMSService.php:121
 msgid "No price"
 msgstr ""
 
-#: src/Controllers/Admin/Customers/CustomersListTable.php:177
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:166
-#: src/Controllers/Admin/Products/ProductsListTable.php:342
+#: src/Controllers/Admin/Customers/CustomersListTable.php:167
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:167
+#: src/Controllers/Admin/Products/ProductsListTable.php:332
 msgid "Are you sure you want to restore this product? This will be be available to purchase."
 msgstr ""
 
-#: src/Controllers/Admin/Customers/CustomersListTable.php:177
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:166
-#: src/Controllers/Admin/Products/ProductsListTable.php:342
+#: src/Controllers/Admin/Customers/CustomersListTable.php:167
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:167
+#: src/Controllers/Admin/Products/ProductsListTable.php:332
 msgid "Are you sure you want to archive this product? This will be unavailable for purchase."
 msgstr ""
 
-#: src/Controllers/Admin/Customers/CustomersListTable.php:184
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:173
-#: src/Controllers/Admin/Products/ProductsListTable.php:349
+#: src/Controllers/Admin/Customers/CustomersListTable.php:174
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:174
+#: src/Controllers/Admin/Products/ProductsListTable.php:339
 msgid "Toggle Product Archive"
 msgstr ""
 
@@ -416,7 +413,7 @@ msgid "Invoice"
 msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:66
-#: src/Controllers/Admin/Orders/OrdersListTable.php:116
+#: src/Controllers/Admin/Orders/OrdersListTable.php:104
 #: customers/modules/Charges.js:69
 #: invoices/modules/Charges.js:22
 #: invoices/modules/Refunds.js:20
@@ -425,23 +422,23 @@ msgid "Method"
 msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:203
-#: src/Controllers/Admin/Orders/OrdersListTable.php:233
+#: src/Controllers/Admin/Orders/OrdersListTable.php:222
 #: components/data-tables/charges-data-table/index.js:26
 #: components/data-tables/charges-data-table/index.js:90
 #: invoices/modules/LineItems.js:195
 #: orders/modules/LineItems/index.js:219
 #: Blocks/Dashboard/CustomerInvoices/edit.js:132
-#: Blocks/Dashboard/CustomerOrders/edit.js:138
+#: Blocks/Dashboard/CustomerOrders/edit.js:132
 #: sc-charges-list.js:80
 #: sc-invoices-list.js:103
-#: sc-orders-list.js:104
+#: sc-orders-list.js:107
 msgid "Refunded"
 msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:218
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:222
-#: src/Controllers/Admin/Orders/OrdersListTable.php:255
-#: src/Controllers/Admin/Orders/OrdersListTable.php:259
+#: src/Controllers/Admin/Orders/OrdersListTable.php:244
+#: src/Controllers/Admin/Orders/OrdersListTable.php:248
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:189
 msgid "Edit Order"
 msgstr ""
@@ -461,6 +458,7 @@ msgid "Licenses"
 msgstr ""
 
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:45
+#: admin/licenses/index.php:12
 msgid "Search Licenses"
 msgstr ""
 
@@ -490,11 +488,11 @@ msgstr ""
 msgid "Purchase"
 msgstr ""
 
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:90
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:91
 msgid "No licenses found."
 msgstr ""
 
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:125
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:126
 #: components/data-tables/purchases-data-table/purchase-item.js:19
 #: licenses/modules/Details/index.js:17
 #: licenses/modules/Purchase.js:66
@@ -502,7 +500,7 @@ msgstr ""
 msgid "Revoked"
 msgstr ""
 
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:127
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:128
 #: licenses/modules/Details/index.js:20
 #: sc-licenses-list.js:34
 msgid "Inactive"
@@ -516,44 +514,39 @@ msgstr ""
 msgid "Invalid API Token"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:45
-#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:46
-msgid "Search Orders"
-msgstr ""
-
-#: src/Controllers/Admin/Orders/OrdersListTable.php:78
+#: src/Controllers/Admin/Orders/OrdersListTable.php:66
 #: components/data-tables/charges-data-table/index.js:37
 #: orders/modules/LineItems/index.js:108
 #: Blocks/Dashboard/CustomerInvoices/edit.js:83
-#: Blocks/Dashboard/CustomerOrders/edit.js:89
+#: Blocks/Dashboard/CustomerOrders/edit.js:83
 #: sc-charges-list.js:85
 #: sc-order-status-badge2.js:35
 msgid "Paid"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:79
+#: src/Controllers/Admin/Orders/OrdersListTable.php:67
 #: sc-order-status-badge2.js:31
 msgid "Processing"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:80
+#: src/Controllers/Admin/Orders/OrdersListTable.php:68
 msgid "Failed"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:117
-#: src/Controllers/Admin/Products/ProductsListTable.php:112
+#: src/Controllers/Admin/Orders/OrdersListTable.php:105
+#: src/Controllers/Admin/Products/ProductsListTable.php:101
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:106
 #: products/modules/integrations/Integrations.js:40
 msgid "Integrations"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:238
+#: src/Controllers/Admin/Orders/OrdersListTable.php:227
 #: sc-order-confirmation.js:87
 msgid "Paypal is taking a closer look at this payment. It’s required for some payments and normally takes up to 3 business days."
 msgstr ""
 
 #. translators: Customer name.
-#: src/Controllers/Admin/Orders/OrdersListTable.php:262
+#: src/Controllers/Admin/Orders/OrdersListTable.php:251
 msgid "By %s"
 msgstr ""
 
@@ -565,15 +558,20 @@ msgstr ""
 #: dashboard/components/overview/charts/Orders.js:21
 #: orders/Order.js:121
 #: settings/export/ExportSettings.js:27
-#: Controllers/DownloadController.php:106
-#: Controllers/OrderController.php:58
-#: Controllers/OrderController.php:115
+#: Controllers/DownloadController.php:107
+#: Controllers/OrderController.php:59
+#: Controllers/OrderController.php:117
 msgid "Orders"
+msgstr ""
+
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:46
+#: admin/orders/index.php:12
+msgid "Search Orders"
 msgstr ""
 
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:62
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
-#: src/Controllers/Admin/Products/ProductsListTable.php:66
+#: src/Controllers/Admin/Products/ProductsListTable.php:55
 #: coupons/modules/Code.js:92
 #: product-groups/EditProductGroup.js:98
 #: products/EditProduct.js:184
@@ -608,16 +606,12 @@ msgstr ""
 msgid "Products"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:50
-msgid "Search Products"
-msgstr ""
-
-#: src/Controllers/Admin/Products/ProductsListTable.php:183
+#: src/Controllers/Admin/Products/ProductsListTable.php:173
 msgid "No products found."
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:203
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:225
+#: src/Controllers/Admin/Products/ProductsListTable.php:193
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:226
 #: invoices/store/entities.js:70
 #: products/modules/Prices/NewPrice/index.js:152
 #: products/modules/Prices/Price/Header.js:70
@@ -625,44 +619,44 @@ msgstr ""
 #: store/add-entities.js:186
 #: subscriptions/edit/EditSubscription.js:182
 #: Blocks/Dashboard/CustomerSubscriptions/Block.php:79
-#: Controllers/SubscriptionController.php:98
-#: Controllers/SubscriptionController.php:193
-#: Controllers/SubscriptionController.php:250
-#: Controllers/SubscriptionController.php:313
-#: Controllers/SubscriptionController.php:363
-#: Controllers/SubscriptionController.php:429
+#: Controllers/SubscriptionController.php:100
+#: Controllers/SubscriptionController.php:195
+#: Controllers/SubscriptionController.php:252
+#: Controllers/SubscriptionController.php:315
+#: Controllers/SubscriptionController.php:365
+#: Controllers/SubscriptionController.php:431
 #: sc-subscription-details2.js:25
 #: sc-subscription.js:95
 msgid "Subscription"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:216
+#: src/Controllers/Admin/Products/ProductsListTable.php:206
 msgid "One-Time"
 msgstr ""
 
 #. translators: Price starting at.
-#: src/Controllers/Admin/Products/ProductsListTable.php:239
+#: src/Controllers/Admin/Products/ProductsListTable.php:229
 msgid "Starting at %s"
 msgstr ""
 
 #. translators: Other prices.
-#: src/Controllers/Admin/Products/ProductsListTable.php:241
+#: src/Controllers/Admin/Products/ProductsListTable.php:231
 msgid "and %d other price."
 msgid_plural "and %d other prices."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:249
+#: src/Controllers/Admin/Products/ProductsListTable.php:239
 msgid "Name your own price"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:271
-#: src/Controllers/Admin/Tables/ListTable.php:75
+#: src/Controllers/Admin/Products/ProductsListTable.php:261
+#: src/Controllers/Admin/Tables/ListTable.php:74
 #: settings/tax-region/TaxRegionSettings.js:203
 msgid "Updated"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:309
+#: src/Controllers/Admin/Products/ProductsListTable.php:299
 #: licenses/modules/Details/Copy.js:10
 #: sc-licenses-list.js:54
 msgid "Copied!"
@@ -679,12 +673,13 @@ msgstr ""
 #: settings/subscription/SubscriptionSettings.js:48
 #: subscriptions/show/ShowSubscription.js:124
 #: Blocks/Dashboard/CustomerSubscriptions/Block.php:106
-#: Controllers/SubscriptionController.php:56
-#: sc-subscriptions-list.js:129
+#: Controllers/SubscriptionController.php:57
+#: sc-subscriptions-list.js:132
 msgid "Subscriptions"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:45
+#: admin/subscriptions/index.php:28
 msgid "Search Subscriptions"
 msgstr ""
 
@@ -731,11 +726,11 @@ msgstr ""
 msgid "No product"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:210
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:211
 msgid "None"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:227
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:228
 #: products/modules/Prices/NewPrice/index.js:148
 #: products/modules/Prices/Price/Header.js:64
 #: sc-subscription-status-badge2.js:53
@@ -743,7 +738,7 @@ msgstr ""
 msgid "Payment Plan"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:246
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:247
 #: util/translations.js:51
 #: price.js:48
 #: sc-price-choice.js:785
@@ -751,7 +746,7 @@ msgid "for"
 msgstr ""
 
 #. translators: number of days.
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:256
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:257
 #: util/translations.js:14
 #: price.js:32
 msgid "%d day"
@@ -760,7 +755,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of days.
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:256
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:257
 #: util/translations.js:15
 #: price.js:32
 msgid "day"
@@ -769,7 +764,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of weeks.
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:262
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:263
 #: util/translations.js:21
 #: price.js:34
 msgid "%d week"
@@ -778,7 +773,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of weeks.
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:262
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:263
 #: util/translations.js:22
 #: price.js:34
 msgid "week"
@@ -787,7 +782,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of months
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:268
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:269
 #: util/translations.js:28
 #: price.js:36
 msgid "%d month"
@@ -796,7 +791,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of months
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:268
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:269
 #: util/translations.js:29
 #: price.js:36
 msgid "month"
@@ -805,7 +800,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of yearls
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:274
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:275
 #: util/translations.js:35
 #: price.js:38
 msgid "%d year"
@@ -814,7 +809,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of yearls
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:274
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:275
 #: util/translations.js:36
 #: price.js:38
 msgid "year"
@@ -823,27 +818,27 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: Coupon % off.
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:318
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:319
 msgid "%1d%% off"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:396
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:397
 msgid "No name provided"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:399
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:400
 #: subscriptions/edit/EditSubscription.js:195
 msgid "Edit Subscription"
 msgstr ""
 
-#: src/Controllers/Admin/Tables/ListTable.php:111
+#: src/Controllers/Admin/Tables/ListTable.php:110
 #: src/WordPress/PostTypes/FormPostTypeService.php:317
 #: admin/user-profile.php:13
 #: dashboard/components/RecentOrders.js:184
 #: Blocks/Form/components/Mode.js:11
 #: Blocks/Form/components/Mode.js:31
 #: sc-customer-edit.js:88
-#: sc-payment-methods-list.js:126
+#: sc-payment-methods-list.js:129
 msgid "Test"
 msgstr ""
 
@@ -922,6 +917,7 @@ msgid "LearnDash Course"
 msgstr ""
 
 #: src/Integrations/LearnDash/LearnDashService.php:55
+#: src/Integrations/LifterLMS/LifterLMSService.php:55
 #: src/Integrations/TutorLMS/TutorLMSService.php:217
 msgid "Course Access"
 msgstr ""
@@ -944,6 +940,15 @@ msgstr ""
 
 #: src/Integrations/LearnDashGroup/LearnDashGroupService.php:122
 msgid "LearnDash Group"
+msgstr ""
+
+#: src/Integrations/LifterLMS/LifterLMSService.php:46
+#: src/Integrations/LifterLMS/LifterLMSService.php:122
+msgid "LifterLMS Course"
+msgstr ""
+
+#: src/Integrations/LifterLMS/LifterLMSService.php:64
+msgid "Enable access to a LifterLMS course."
 msgstr ""
 
 #: src/Integrations/MemberPress/MemberPressService.php:48
@@ -3083,17 +3088,17 @@ msgstr ""
 #: Blocks/CustomerDashboardButton/Block.php:33
 #: Blocks/Dashboard/CustomerSubscriptions/Block.php:76
 #: Controllers/ChargeController.php:19
-#: Controllers/CustomerController.php:58
-#: Controllers/DownloadController.php:90
-#: Controllers/OrderController.php:55
-#: Controllers/OrderController.php:99
-#: Controllers/PaymentMethodController.php:100
-#: Controllers/SubscriptionController.php:95
-#: Controllers/SubscriptionController.php:176
-#: Controllers/SubscriptionController.php:233
-#: Controllers/SubscriptionController.php:310
-#: Controllers/SubscriptionController.php:360
-#: Controllers/SubscriptionController.php:426
+#: Controllers/CustomerController.php:62
+#: Controllers/DownloadController.php:91
+#: Controllers/OrderController.php:56
+#: Controllers/OrderController.php:101
+#: Controllers/PaymentMethodController.php:101
+#: Controllers/SubscriptionController.php:97
+#: Controllers/SubscriptionController.php:178
+#: Controllers/SubscriptionController.php:235
+#: Controllers/SubscriptionController.php:312
+#: Controllers/SubscriptionController.php:362
+#: Controllers/SubscriptionController.php:428
 #: Controllers/UserController.php:61
 msgid "Dashboard"
 msgstr ""
@@ -3238,7 +3243,7 @@ msgstr ""
 #: src/WordPress/PostTypes/FormPostTypeService.php:129
 #: Blocks/CheckoutForm/components/Setup.js:184
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:82
-#: sc-payment-methods-list.js:126
+#: sc-payment-methods-list.js:129
 msgid "Default"
 msgstr ""
 
@@ -3476,6 +3481,10 @@ msgstr ""
 msgid "Update your api token to change or update the connection to SureCart."
 msgstr ""
 
+#: admin/customers/index.php:13
+msgid "Search Customers"
+msgstr ""
+
 #: admin/invoices/index.php:8
 msgid "What are Invoices?"
 msgstr ""
@@ -3598,6 +3607,10 @@ msgstr ""
 msgid "An upgrade groups is how you define upgrade and downgrade paths for your customers. It is based on products they have previously purchased."
 msgstr ""
 
+#: admin/products/index.php:35
+msgid "Search Products"
+msgstr ""
+
 #: admin/subscriptions/index.php:8
 msgid "What are Subscriptions?"
 msgstr ""
@@ -3641,7 +3654,7 @@ msgid "Store Settings"
 msgstr ""
 
 #: layouts/partials/admin-settings-sidebar.php:9
-#: settings/brand/BrandSettings.js:40
+#: settings/brand/BrandSettings.js:51
 msgid "Design & Branding"
 msgstr ""
 
@@ -3747,7 +3760,7 @@ msgstr ""
 #: components/data-tables/charges-data-table/index.js:32
 #: sc-charges-list.js:83
 #: sc-invoices-list.js:106
-#: sc-orders-list.js:107
+#: sc-orders-list.js:110
 msgid "Partially Refunded"
 msgstr ""
 
@@ -3831,7 +3844,7 @@ msgstr ""
 #: products/modules/Upgrades.js:130
 #: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:92
 #: subscriptions/show/modules/modals/CancelUpdateModal.js:95
-#: Controllers/SubscriptionController.php:316
+#: Controllers/SubscriptionController.php:318
 #: Blocks/CheckoutForm/components/Empty.js:117
 #: Blocks/CheckoutForm/components/Empty.js:157
 #: Blocks/CheckoutForm/components/SelectProductModal.js:142
@@ -3855,10 +3868,10 @@ msgstr ""
 #: Blocks/Dashboard/CustomerCharges/edit.js:66
 #: Blocks/Dashboard/CustomerInvoices/edit.js:71
 #: Blocks/Dashboard/CustomerInvoices/edit.js:120
-#: Blocks/Dashboard/CustomerOrders/edit.js:77
-#: Blocks/Dashboard/CustomerOrders/edit.js:126
+#: Blocks/Dashboard/CustomerOrders/edit.js:71
+#: Blocks/Dashboard/CustomerOrders/edit.js:120
 #: sc-invoices-list.js:123
-#: sc-orders-list.js:129
+#: sc-orders-list.js:132
 msgid "%s item"
 msgid_plural "%s items"
 msgstr[0] ""
@@ -4036,9 +4049,9 @@ msgstr ""
 #: sc-cart-form.js:68
 #: sc-charges-list.js:69
 #: sc-customer-edit.js:82
-#: sc-dashboard-customer-details.js:44
-#: sc-dashboard-downloads-list.js:53
-#: sc-dashboard-downloads-list.js:66
+#: sc-dashboard-customer-details.js:49
+#: sc-dashboard-downloads-list.js:56
+#: sc-dashboard-downloads-list.js:72
 #: sc-downloads-list.js:41
 #: sc-invoices-list.js:56
 #: sc-invoices-list.js:69
@@ -4051,7 +4064,7 @@ msgstr ""
 #: sc-orders-list.js:69
 #: sc-payment-methods-list.js:59
 #: sc-payment-methods-list.js:84
-#: sc-payment-methods-list.js:106
+#: sc-payment-methods-list.js:109
 #: sc-paypal-add-method.js:94
 #: sc-stripe-add-method.js:87
 #: sc-stripe-add-method.js:114
@@ -4137,7 +4150,7 @@ msgstr ""
 #: components/MediaLibrary/Preview.js:156
 #: products/modules/SingleDownload.js:249
 #: store/add-entities.js:52
-#: Controllers/DownloadController.php:109
+#: Controllers/DownloadController.php:110
 #: sc-downloads-list.js:72
 msgid "Download"
 msgstr ""
@@ -4151,7 +4164,7 @@ msgstr ""
 #: products/modules/integrations/Integration.js:204
 #: products/modules/Prices/Price/Header.js:167
 #: settings/tax-region/RegistrationForm.js:201
-#: sc-payment-methods-list.js:126
+#: sc-payment-methods-list.js:129
 msgid "Delete"
 msgstr ""
 
@@ -4452,7 +4465,7 @@ msgstr ""
 #: subscriptions/show/modules/Details.js:137
 #: Blocks/Dashboard/DashboardPage/Block.php:34
 #: Blocks/Dashboard/DashboardPage/Block.php:42
-#: Controllers/PaymentMethodController.php:109
+#: Controllers/PaymentMethodController.php:110
 #: Blocks/Payment/edit.js:169
 #: sc-order.js:138
 #: sc-payment.js:63
@@ -4699,7 +4712,7 @@ msgid "Yearly"
 msgstr ""
 
 #: dashboard/components/RecentOrders.js:68
-#: sc-orders-list.js:116
+#: sc-orders-list.js:119
 msgid "You don't have any orders."
 msgstr ""
 
@@ -4725,8 +4738,8 @@ msgstr ""
 #: subscriptions/show/modules/modals/CancelUpdateModal.js:71
 #: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:68
 #: subscriptions/show/modules/modals/DontCancelModal.js:71
-#: Controllers/SubscriptionController.php:253
-#: Controllers/SubscriptionController.php:432
+#: Controllers/SubscriptionController.php:255
+#: Controllers/SubscriptionController.php:434
 #: sc-upcoming-invoice.js:206
 msgid "Confirm"
 msgstr ""
@@ -4745,7 +4758,7 @@ msgstr ""
 
 #: invoices/modules/Address.js:7
 #: orders/modules/Address.js:10
-#: settings/brand/BrandSettings.js:149
+#: settings/brand/BrandSettings.js:181
 #: settings/tax/TaxSettings.js:72
 #: sc-address2.js:47
 #: sc-form-components-validator2.js:56
@@ -5189,8 +5202,8 @@ msgid "Download added."
 msgstr ""
 
 #: products/modules/Downloads.js:65
-#: Controllers/DownloadController.php:119
-#: sc-dashboard-downloads-list.js:100
+#: Controllers/DownloadController.php:120
+#: sc-dashboard-downloads-list.js:106
 #: sc-downloads-list.js:65
 #: sc-order.js:138
 msgid "Downloads"
@@ -5532,7 +5545,7 @@ msgstr ""
 
 #: settings/account/AccountSettings.js:27
 #: settings/advanced/AdvancedSettings.js:25
-#: settings/brand/BrandSettings.js:30
+#: settings/brand/BrandSettings.js:41
 #: settings/connection/ConnectionSettings.js:25
 #: settings/customer/CustomerSettings.js:33
 #: settings/order/OrderProtocol.js:27
@@ -5597,49 +5610,66 @@ msgstr ""
 msgid "If you do not wish to use the slide-out cart, you can disable this to prevent scripts from loading on your pages."
 msgstr ""
 
-#: settings/brand/BrandSettings.js:51
+#: settings/brand/BrandSettings.js:62
 msgid "Brand Settings"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:52
+#: settings/brand/BrandSettings.js:63
 msgid "Customize how your brand appears globally across SureCart. Your logo and colors will be used on hosted pages and emails that are sent to your customers."
 msgstr ""
 
-#: settings/brand/BrandSettings.js:69
+#: settings/brand/BrandSettings.js:80
 msgid "Brand Color"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:70
+#: settings/brand/BrandSettings.js:81
 msgid "This color will be used for the main button color, links, and various UI elements."
 msgstr ""
 
-#: settings/brand/BrandSettings.js:111
-msgid "Contact Information"
+#: settings/brand/BrandSettings.js:119
+#: settings/brand/BrandSettings.js:120
+msgid "Select Theme"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:112
-msgid "This information helps customers recognize your business and contact you when necessary. It will be visible on invoices/receipts and any emails that need to be CAN-SPAM compliant (i.e. abandoned order emails)."
+#: settings/brand/BrandSettings.js:123
+msgid "Choose \"Dark\" if your theme already has a dark background."
 msgstr ""
 
-#: settings/brand/BrandSettings.js:128
-msgid "Enter an email"
+#: settings/brand/BrandSettings.js:129
+msgid "Light"
 msgstr ""
 
 #: settings/brand/BrandSettings.js:133
+msgid "Dark"
+msgstr ""
+
+#: settings/brand/BrandSettings.js:143
+msgid "Contact Information"
+msgstr ""
+
+#: settings/brand/BrandSettings.js:144
+msgid "This information helps customers recognize your business and contact you when necessary. It will be visible on invoices/receipts and any emails that need to be CAN-SPAM compliant (i.e. abandoned order emails)."
+msgstr ""
+
+#: settings/brand/BrandSettings.js:160
+msgid "Enter an email"
+msgstr ""
+
+#: settings/brand/BrandSettings.js:165
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:82
 #: sc-customer-edit.js:88
 msgid "Phone"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:135
+#: settings/brand/BrandSettings.js:167
 msgid "Enter an phone number"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:140
+#: settings/brand/BrandSettings.js:172
 msgid "Website"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:142
+#: settings/brand/BrandSettings.js:174
 msgid "Enter a website URL"
 msgstr ""
 
@@ -5900,8 +5930,8 @@ msgid "A link to your privacy terms page."
 msgstr ""
 
 #: settings/portal/PortalSettings.js:156
-#: Controllers/SubscriptionController.php:149
-#: Controllers/SubscriptionController.php:153
+#: Controllers/SubscriptionController.php:151
+#: Controllers/SubscriptionController.php:155
 msgid "Privacy Policy"
 msgstr ""
 
@@ -6252,7 +6282,7 @@ msgstr ""
 #: store/add-entities.js:116
 #: subscriptions/edit/modules/PaymentMethod/index.js:34
 #: subscriptions/edit/modules/PaymentMethod/index.js:37
-#: Controllers/SubscriptionController.php:435
+#: Controllers/SubscriptionController.php:437
 #: sc-order.js:138
 msgid "Payment Method"
 msgstr ""
@@ -6561,10 +6591,6 @@ msgstr ""
 msgid "[block rendering halted]"
 msgstr ""
 
-#: Blocks/Dashboard/DashboardPage.php:53
-msgid "You must be a customer to access this page."
-msgstr ""
-
 #: Blocks/Form/Block.php:86
 msgid "The email address provided for the creation of a deferred account already has an account associated with it. Use the OAuth flow to connect the existing account to your platform."
 msgstr ""
@@ -6841,108 +6867,108 @@ msgstr ""
 #: Controllers/ChargeController.php:32
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:43
 #: sc-charges-list.js:121
-#: sc-payment-methods-list.js:143
+#: sc-payment-methods-list.js:149
 msgid "Payment History"
 msgstr ""
 
-#: Controllers/CustomerController.php:61
-#: sc-order-confirmation-customer.js:27
+#: Controllers/CustomerController.php:65
+#: sc-order-confirmation-customer.js:29
 msgid "Billing Details"
 msgstr ""
 
-#: Controllers/CustomerController.php:75
+#: Controllers/CustomerController.php:79
 #: sc-customer-edit.js:88
 msgid "Update Billing Details"
 msgstr ""
 
-#: Controllers/DownloadController.php:61
-#: Controllers/OrderController.php:68
-#: sc-orders-list.js:144
+#: Controllers/DownloadController.php:62
+#: Controllers/OrderController.php:69
+#: sc-orders-list.js:147
 msgid "Order History"
 msgstr ""
 
-#: Controllers/DownloadController.php:141
+#: Controllers/DownloadController.php:142
 #: sc-licenses-list.js:52
 msgid "License Keys"
 msgstr ""
 
-#: Controllers/PaymentMethodController.php:51
+#: Controllers/PaymentMethodController.php:52
 msgid "You are not a live mode customer."
 msgstr ""
 
-#: Controllers/PaymentMethodController.php:54
+#: Controllers/PaymentMethodController.php:55
 msgid "Switch to test mode."
 msgstr ""
 
-#: Controllers/PaymentMethodController.php:58
+#: Controllers/PaymentMethodController.php:59
 msgid "You are not a test mode customer."
 msgstr ""
 
-#: Controllers/PaymentMethodController.php:61
+#: Controllers/PaymentMethodController.php:62
 msgid "Switch to live mode."
 msgstr ""
 
-#: Controllers/PaymentMethodController.php:65
+#: Controllers/PaymentMethodController.php:66
 msgid "You are not currently a customer."
 msgstr ""
 
-#: Controllers/PaymentMethodController.php:91
+#: Controllers/PaymentMethodController.php:92
 msgid "You cannot currently add a payment method. Please contact us for support."
 msgstr ""
 
-#: Controllers/PaymentMethodController.php:103
-#: Controllers/PaymentMethodController.php:108
+#: Controllers/PaymentMethodController.php:104
+#: Controllers/PaymentMethodController.php:109
 msgid "Add Payment Method"
 msgstr ""
 
-#: Controllers/PaymentMethodController.php:118
+#: Controllers/PaymentMethodController.php:119
 #: Blocks/Payment/edit.js:197
 #: Blocks/Payment/edit.js:260
-#: sc-payment.js:69
-#: sc-payment.js:75
+#: sc-payment.js:70
+#: sc-payment.js:77
 msgid "Credit Card"
 msgstr ""
 
-#: Controllers/SubscriptionController.php:108
+#: Controllers/SubscriptionController.php:110
 #: sc-subscription-switch.js:166
 #: sc-subscription.js:127
 msgid "Current Plan"
 msgstr ""
 
-#: Controllers/SubscriptionController.php:124
+#: Controllers/SubscriptionController.php:126
 #: sc-subscription-switch.js:193
 msgid "Update Plan"
 msgstr ""
 
-#: Controllers/SubscriptionController.php:149
+#: Controllers/SubscriptionController.php:151
 msgid "By updating or canceling your plan, you agree to the <a href=\"%1$1s\" target=\"_blank\">%2$2s</a> and <a href=\"%3$3s\" target=\"_blank\">%4$4s</a>"
 msgstr ""
 
-#: Controllers/SubscriptionController.php:149
-#: Controllers/SubscriptionController.php:157
+#: Controllers/SubscriptionController.php:151
+#: Controllers/SubscriptionController.php:159
 msgid "Terms"
 msgstr ""
 
-#: Controllers/SubscriptionController.php:153
-#: Controllers/SubscriptionController.php:157
+#: Controllers/SubscriptionController.php:155
+#: Controllers/SubscriptionController.php:159
 msgid "By updating or canceling your plan, you agree to the <a href=\"%1$1s\" target=\"_blank\">%2$2s</a>"
 msgstr ""
 
-#: Controllers/SubscriptionController.php:196
+#: Controllers/SubscriptionController.php:198
 msgid "Enter Amount"
 msgstr ""
 
-#: Controllers/SubscriptionController.php:207
+#: Controllers/SubscriptionController.php:209
 #: sc-subscription-ad-hoc-confirm.js:34
 msgid "Enter An Amount"
 msgstr ""
 
-#: Controllers/SubscriptionController.php:269
+#: Controllers/SubscriptionController.php:271
 #: sc-upcoming-invoice.js:206
 msgid "New Plan"
 msgstr ""
 
-#: Controllers/SubscriptionController.php:366
+#: Controllers/SubscriptionController.php:368
 msgid "Renew"
 msgstr ""
 
@@ -6978,7 +7004,7 @@ msgstr ""
 #: Blocks/Dashboard/CustomerCharges/edit.js:10
 #: Blocks/Dashboard/CustomerDownloads/edit.js:19
 #: Blocks/Dashboard/CustomerInvoices/edit.js:19
-#: Blocks/Dashboard/CustomerOrders/edit.js:25
+#: Blocks/Dashboard/CustomerOrders/edit.js:19
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:18
 #: Blocks/Dashboard/DashboardPage/edit.js:42
 #: Blocks/Dashboard/DashboardTab/edit.js:50
@@ -7037,10 +7063,14 @@ msgid "Label"
 msgstr ""
 
 #: Blocks/Address/edit.js:33
-msgid "Always use collect a full address"
+msgid "Use a compact address if possible"
 msgstr ""
 
 #: Blocks/Address/edit.js:44
+msgid "If products in the cart require tax but not shipping, we will show a condensed version specifically for tax collection."
+msgstr ""
+
+#: Blocks/Address/edit.js:53
 msgid "Show the \"name or company name\" field in the form."
 msgstr ""
 
@@ -7165,8 +7195,8 @@ msgstr ""
 #: Blocks/Dashboard/CustomerDownloads/edit.js:33
 #: Blocks/Dashboard/CustomerInvoices/edit.js:22
 #: Blocks/Dashboard/CustomerInvoices/edit.js:33
-#: Blocks/Dashboard/CustomerOrders/edit.js:28
-#: Blocks/Dashboard/CustomerOrders/edit.js:38
+#: Blocks/Dashboard/CustomerOrders/edit.js:22
+#: Blocks/Dashboard/CustomerOrders/edit.js:32
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:21
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:31
 #: Blocks/Dashboard/CustomerSubscriptions/edit.js:31
@@ -7529,7 +7559,7 @@ msgstr ""
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:31
 #: Blocks/Dashboard/CustomerDownloads/edit.js:31
 #: Blocks/Dashboard/CustomerInvoices/edit.js:31
-#: Blocks/Dashboard/CustomerOrders/edit.js:53
+#: Blocks/Dashboard/CustomerOrders/edit.js:47
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:52
 #: Blocks/Dashboard/CustomerSubscriptions/edit.js:40
 #: Blocks/Dashboard/WordPressAccount/edit.js:31
@@ -7539,7 +7569,7 @@ msgstr ""
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:34
 #: Blocks/Dashboard/CustomerDownloads/edit.js:34
 #: Blocks/Dashboard/CustomerInvoices/edit.js:34
-#: Blocks/Dashboard/CustomerOrders/edit.js:39
+#: Blocks/Dashboard/CustomerOrders/edit.js:33
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:32
 #: Blocks/Dashboard/CustomerSubscriptions/edit.js:43
 #: Blocks/Dashboard/OrderDownloads/edit.js:32
@@ -7580,14 +7610,14 @@ msgstr ""
 
 #: Blocks/Dashboard/CustomerDownloads/edit.js:43
 #: Blocks/Dashboard/CustomerInvoices/edit.js:43
-#: Blocks/Dashboard/CustomerOrders/edit.js:48
+#: Blocks/Dashboard/CustomerOrders/edit.js:42
 #: Blocks/Dashboard/CustomerSubscriptions/edit.js:52
 #: Blocks/Dashboard/OrderDownloads/edit.js:41
 #: sc-charges-list.js:121
 #: sc-invoices-list.js:138
-#: sc-orders-list.js:144
+#: sc-orders-list.js:147
 #: sc-purchase-downloads-list2.js:60
-#: sc-subscriptions-list.js:129
+#: sc-subscriptions-list.js:132
 msgid "View all"
 msgstr ""
 
@@ -7602,13 +7632,13 @@ msgid "Application UI Icon Pack"
 msgstr ""
 
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:47
-#: sc-payment-methods-list.js:146
+#: sc-payment-methods-list.js:152
 msgid "Add"
 msgstr ""
 
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:78
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:117
-#: sc-payment-methods-list.js:124
+#: sc-payment-methods-list.js:127
 msgid "Exp."
 msgstr ""
 
@@ -7783,7 +7813,7 @@ msgstr ""
 msgid "Payment successful! Redirecting..."
 msgstr ""
 
-#: Blocks/Form/edit.js:425
+#: Blocks/Form/edit.js:427
 msgid "Form"
 msgstr ""
 
@@ -7866,20 +7896,20 @@ msgid "Please preview the form on the front-end to load the Stripe payment eleme
 msgstr ""
 
 #: Blocks/Payment/edit.js:265
-#: sc-payment.js:75
+#: sc-payment.js:77
 msgid "Credit Card selected for check out."
 msgstr ""
 
 #: Blocks/Payment/edit.js:274
 #: Blocks/Payment/edit.js:323
-#: sc-payment.js:69
-#: sc-payment.js:75
+#: sc-payment.js:70
+#: sc-payment.js:77
 msgid "Another step will appear after submitting your order to complete your purchase details."
 msgstr ""
 
 #: Blocks/Payment/edit.js:312
-#: sc-payment.js:69
-#: sc-payment.js:75
+#: sc-payment.js:70
+#: sc-payment.js:77
 msgid "PayPal selected for check out."
 msgstr ""
 
@@ -10165,19 +10195,19 @@ msgstr ""
 msgid "Are you sure you want to remove this payment method?"
 msgstr ""
 
-#: sc-payment-methods-list.js:118
+#: sc-payment-methods-list.js:121
 msgid "You don't have any saved payment methods."
 msgstr ""
 
-#: sc-payment-methods-list.js:126
+#: sc-payment-methods-list.js:129
 msgid "Make Default"
 msgstr ""
 
-#: sc-payment-methods-list.js:140
+#: sc-payment-methods-list.js:146
 msgid "Payment Methods"
 msgstr ""
 
-#: sc-payment.js:90
+#: sc-payment.js:92
 msgid "Please contact us for payment"
 msgstr ""
 
@@ -10367,7 +10397,7 @@ msgstr ""
 msgid "Cancel Scheduled Update"
 msgstr ""
 
-#: sc-subscriptions-list.js:101
+#: sc-subscriptions-list.js:104
 msgid "You don't have any subscriptions."
 msgstr ""
 

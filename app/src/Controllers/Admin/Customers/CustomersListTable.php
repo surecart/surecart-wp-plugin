@@ -39,17 +39,6 @@ class CustomersListTable extends ListTable {
 		$this->items = $query->data;
 	}
 
-	public function search() { ?>
-	<form class="search-form"
-		method="get">
-		<?php $this->search_box( __( 'Search Customers', 'surecart' ), 'user' ); ?>
-		<input type="hidden"
-			name="id"
-			value="1" />
-	</form>
-		<?php
-	}
-
 	/**
 	 * Override the parent columns method. Defines the columns to use in your listing table
 	 *
@@ -101,6 +90,7 @@ class CustomersListTable extends ListTable {
 	 */
 	private function table_data() {
 		return Customer::with( [ 'orders' ] )
+		->where( [ 'query' => $this->get_search_query() ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'customers' ),

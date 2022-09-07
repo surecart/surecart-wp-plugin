@@ -25,6 +25,9 @@ export class ScDashboardCustomerDetails {
   }
 
   async fetch() {
+    if ('' === this.customerId) {
+      return;
+    }
     try {
       this.loading = true;
       this.customer = (await await apiFetch({

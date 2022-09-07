@@ -17,10 +17,9 @@
 .new-plan {
   display: grid;
   gap: 0.25em;
-  color: var(--sc-color-gray-600);
+  color: var(--sc-input-label-color);
 
   &__heading {
     font-weight: var(--sc-font-weight-bold);
-    color: var(--sc-color-gray-800);
   }
 }

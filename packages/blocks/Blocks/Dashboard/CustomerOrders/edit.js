@@ -4,13 +4,7 @@ import {
 	RichText,
 	useBlockProps,
 } from '@wordpress/block-editor';
-import {
-	PanelBody,
-	PanelRow,
-	RangeControl,
-	TextControl,
-	ToggleControl,
-} from '@wordpress/components';
+import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { ScDashboardModule } from '@surecart/components-react';
 import { Fragment } from '@wordpress/element';
 import OverlayLabel from '../../../components/OverlayLabel';

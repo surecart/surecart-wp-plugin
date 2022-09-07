@@ -25,5 +25,6 @@
 	);
 	?>
 
+	<?php $table->search_form( __( 'Search Subscriptions', 'surecart' ), 'sc-search-subscriptions' ); ?>
 	<?php $table->display(); ?>
 </div>

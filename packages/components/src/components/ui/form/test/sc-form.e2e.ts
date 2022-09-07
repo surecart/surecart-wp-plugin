@@ -65,7 +65,10 @@ describe('sc-form', () => {
     // set shipping value.
     const shipping = await page.find('sc-order-shipping-address');
     shipping.setProperty('shippingEnabled', true);
+    await page.waitForChanges();
     shipping.setProperty('shippingAddress', { id: 'test', country: 'US', city: 'Monona', line_1: '303 Park Ave', line_2: null, postal_code: '12345', state: 'WI' });
+
+    await page.waitForChanges();
 
     // set tax id value.
     const taxID = await page.find('sc-order-tax-id-input');

@@ -20,8 +20,8 @@ class Block extends DashboardPage {
 	 * @return function
 	 */
 	public function render( $attributes, $content ) {
-		if ( ! User::current()->isCustomer() ) {
-			return;
+		if ( ! is_user_logged_in() ) {
+			return false;
 		}
 		return ( new SubscriptionController() )->preview( $attributes );
 	}
@@ -96,14 +96,15 @@ class Block extends DashboardPage {
 	 * @return function
 	 */
 	public function index( $attributes ) {
-		if ( ! User::current()->isCustomer() ) {
-			return;
+		if ( ! is_user_logged_in() ) {
+			return false;
 		}
 		\SureCart::assets()->addComponentData(
 			'sc-subscriptions-list',
 			'#customer-subscriptions-index',
 			[
 				'heading' => $attributes['title'] ?? __( 'Subscriptions', 'surecart' ),
+				'isCustomer' => User::current()->isCustomer(),
 				'query'   => [
 					'customer_ids' => array_values( User::current()->customerIds() ),
 					'status'       => [ 'active', 'trialing' ],

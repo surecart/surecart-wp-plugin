@@ -1,6 +1,7 @@
 <?php
 /**
- * Declare any actions and filters here.
+ * Declare any actions and filters here. USE THIS SPARINGLY.
+ *
  * In most cases you should use a service provider, but in cases where you
  * just need to add an action/filter and forget about it you can add it here.
  *
