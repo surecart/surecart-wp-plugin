@@ -5,6 +5,23 @@ import { openWormhole } from 'stencil-wormhole';
 import { getProcessorData } from '../../../../functions/processor';
 import { Checkout, PaymentIntent, Processor, ProcessorName } from '../../../../types';
 
+/**
+ * @part base - The elements base wrapper.
+ * @part form-control - The form control wrapper.
+ * @part label - The input label.
+ * @part help-text - Help text that describes how to use the input.
+ * @part secure-notice__base - Secure notice base.
+ * @part secure-notice__icon - Secure notice icon.
+ * @part secure-notice__text - Secure notice text.
+ * @part test-badge__base - Test badge base.
+ * @part test-badge__content - Test badge content.
+ * @part toggle__base - Toggle base.
+ * @part toggle__header - Toggle header
+ * @part toggle__radio - Toggle radio
+ * @part toggle__summary - Toggle summary
+ * @part toggle__summary-icon - Toggle icon
+ * @part toggle__content - Toggle content
+ */
 @Component({
   tag: 'sc-payment',
   styleUrl: 'sc-payment.scss',
@@ -88,7 +105,7 @@ export class ScPayment {
     return (
       <div class="sc-payment__stripe-card-element">
         <sc-stripe-element order={this.order} mode={this.mode} publishableKey={data?.publishable_key} accountId={data?.account_id} secureText={this.secureNotice} />
-        <sc-secure-notice>{this.secureNotice}</sc-secure-notice>
+        <sc-secure-notice exportparts="base:secure-notice__base, icon:secure-notice__icon, text:secure-notice__text">{this.secureNotice}</sc-secure-notice>
       </div>
     );
   }
@@ -97,7 +114,7 @@ export class ScPayment {
     if (this.hideTestModeBadge) return null;
     return (
       this.mode === 'test' && (
-        <sc-tag type="warning" size="small">
+        <sc-tag exportparts="base:test-badge__base, content:test-badge__content" type="warning" size="small">
           {__('Test Mode', 'surecart')}
         </sc-tag>
       )
@@ -109,13 +126,22 @@ export class ScPayment {
    */
   renderStripeAndPayPal() {
     return (
-      <sc-form-control label={this.label}>
+      <sc-form-control label={this.label} exportparts="label, help-text, form-control">
         <div class="sc-payment-label" slot="label">
           <div>{this.label}</div>
           {this.renderTestModeBadge()}
         </div>
-        <sc-toggles collapsible={false} theme="container">
-          <sc-toggle class="sc-stripe-toggle" show-control shady borderless open={this.processor === 'stripe'} onScShow={() => this.scSetProcessor.emit('stripe')}>
+        <sc-toggles collapsible={false} theme="container" part="toggles">
+          <sc-toggle
+            part="toggle"
+            exportparts="base:toggle__base, header:toggle__header, radio:toggle__radio, summary:toggle__summary, summary-icon:toggle__summary-icon, content:toggle__content"
+            class="sc-stripe-toggle"
+            show-control
+            shady
+            borderless
+            open={this.processor === 'stripe'}
+            onScShow={() => this.scSetProcessor.emit('stripe')}
+          >
             <span slot="summary" class="sc-payment-toggle-summary">
               <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
               <span>{__('Credit Card', 'surecart')}</span>
@@ -123,7 +149,16 @@ export class ScPayment {
             {this.renderStripePaymentElement()}
           </sc-toggle>
 
-          <sc-toggle class="sc-paypal-toggle" show-control shady borderless open={this.processor === 'paypal'} onScShow={() => this.scSetProcessor.emit('paypal')}>
+          <sc-toggle
+            part="toggle"
+            exportparts="base:toggle__base, header:toggle__header, radio:toggle__radio, summary:toggle__summary, summary-icon:toggle__summary-icon, content:toggle__content"
+            class="sc-paypal-toggle"
+            show-control
+            shady
+            borderless
+            open={this.processor === 'paypal'}
+            onScShow={() => this.scSetProcessor.emit('paypal')}
+          >
             <span slot="summary" class="sc-payment-toggle-summary">
               <sc-icon name={window?.scData?.theme === 'dark' ? 'paypal-white' : 'paypal'} style={{ width: '80px', fontSize: '24px' }}></sc-icon>
             </span>
@@ -144,7 +179,7 @@ export class ScPayment {
    */
   renderPayPal() {
     return (
-      <sc-form-control label={this.label}>
+      <sc-form-control label={this.label} exportparts="label, help-text, form-control">
         <div class="sc-payment-label" slot="label">
           <div>{this.label}</div>
           {this.renderTestModeBadge()}
@@ -152,6 +187,8 @@ export class ScPayment {
         <sc-toggles collapsible={false} theme="container">
           <sc-toggle
             data-test-id="paypal-credit-card-toggle"
+            part="toggle"
+            exportparts="base:toggle__base, header:toggle__header, radio:toggle__radio, summary:toggle__summary, summary-icon:toggle__summary-icon, content:toggle__content"
             show-control
             shady
             borderless
@@ -169,7 +206,16 @@ export class ScPayment {
               </sc-payment-selected>
             </sc-card>
           </sc-toggle>
-          <sc-toggle data-test-id="paypal-toggle" show-control shady borderless open={this.processor === 'paypal'} onScShow={() => this.scSetProcessor.emit('paypal')}>
+          <sc-toggle
+            part="toggle"
+            exportparts="base:toggle__base, header:toggle__header, radio:toggle__radio, summary:toggle__summary, summary-icon:toggle__summary-icon, content:toggle__content"
+            data-test-id="paypal-toggle"
+            show-control
+            shady
+            borderless
+            open={this.processor === 'paypal'}
+            onScShow={() => this.scSetProcessor.emit('paypal')}
+          >
             <span slot="summary" class="sc-payment-toggle-summary">
               <sc-icon name={window?.scData?.theme === 'dark' ? 'paypal-white' : 'paypal'} style={{ width: '80px', fontSize: '24px' }}></sc-icon>
             </span>
@@ -187,7 +233,7 @@ export class ScPayment {
 
   renderLoading() {
     return (
-      <div>
+      <div part="loading">
         <sc-skeleton style={{ width: '10%', marginBottom: '1em' }}></sc-skeleton>
         <sc-skeleton style={{ width: '100%', marginBottom: '1em' }}></sc-skeleton>
         <sc-skeleton style={{ width: '35%' }}></sc-skeleton>
@@ -207,7 +253,7 @@ export class ScPayment {
 
   renderNoProcessors() {
     return (
-      <sc-form-control label={this.label}>
+      <sc-form-control label={this.label} exportparts="label, help-text, form-control">
         <sc-alert type="info" open>
           {__('Please contact us for payment', 'surecart')}
         </sc-alert>
@@ -235,7 +281,7 @@ export class ScPayment {
     // we have stripe.
     if (this.stripe) {
       return (
-        <sc-form-control label={this.label}>
+        <sc-form-control label={this.label} exportparts="label, help-text, form-control">
           <div class="sc-payment-label" slot="label">
             <div>{this.label}</div>
             {this.renderTestModeBadge()}
