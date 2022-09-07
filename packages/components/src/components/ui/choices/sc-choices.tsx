@@ -2,6 +2,13 @@ import { Component, Prop, h, State, Element, Watch } from '@stencil/core';
 
 let id = 0;
 
+/**
+ * @part base - The elements base wrapper.
+ * @part choices - The choices wrapper.
+ * @part form-control - The form control wrapper.
+ * @part label - The input label.
+ * @part help-text - Help text that describes how to use the input.
+ */
 @Component({
   tag: 'sc-choices',
   styleUrl: 'sc-choices.scss',
