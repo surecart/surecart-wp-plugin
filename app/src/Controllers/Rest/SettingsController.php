@@ -40,12 +40,10 @@ class SettingsController {
 		// save api token.
 		if ( isset( $request['api_token'] ) ) {
 			\SureCart::account()->clearCache();
-			$old = ApiToken::get();
 			ApiToken::save( $request['api_token'] );
 			if ( ! empty( $request['api_token'] ) ) {
 				$test = Account::find();
 				if ( is_wp_error( $test ) ) {
-					ApiToken::save( $old );
 					return rest_ensure_response( $test );
 				}
 			}
