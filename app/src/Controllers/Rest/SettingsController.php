@@ -2,7 +2,6 @@
 
 namespace SureCart\Controllers\Rest;
 
-use SureCart\Models\Account;
 use SureCart\Models\ApiToken;
 
 /**
@@ -39,14 +38,13 @@ class SettingsController {
 	public function edit( \WP_REST_Request $request ) {
 		// save api token.
 		if ( isset( $request['api_token'] ) ) {
-			\SureCart::account()->clearCache();
-			ApiToken::save( $request['api_token'] );
 			if ( ! empty( $request['api_token'] ) ) {
-				$test = Account::find();
-				if ( is_wp_error( $test ) ) {
-					return rest_ensure_response( $test );
+				$validate = $this->validate( $request->get_param( 'api_token' ) );
+				if ( is_wp_error( $validate ) ) {
+					return $validate;
 				}
 			}
+			ApiToken::save( $request['api_token'] );
 		}
 
 		// update uninstall option.
@@ -70,5 +68,20 @@ class SettingsController {
 		}
 
 		return rest_ensure_response( $this->find( $request ) );
+	}
+
+	/**
+	 * Validate the token.
+	 *
+	 * @param string $token The API token.
+	 *
+	 * @return true|\WP_Error
+	 */
+	protected function validate( $token = '' ) {
+		$response = \SureCart::requests()->setToken( $token )->get( 'account' );
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+		return true;
 	}
 }
