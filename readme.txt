@@ -42,7 +42,7 @@ This way you get everything you want with none of the stuff you don’t want. Su
 Currently SureCart is ideally suited for selling non-physical goods. This would be selling online courses, memberships, subscriptions, selling services, selling event tickets, accepting donations, selling digital downloads, etc. These are no non-physical goods.
 
 However you can still sell physical products with SureCart and we have merchants selling physical goods currently, but we have yet to launch some essential features for selling physical goods. These are inventory control, shipping calculations, and country buying restrictions. These are planned by the end of the year.
-
+`
 ## Now let me tell you what SureCart can do, then why you could consider using it. ##
 
 ## SureCart Features ##
@@ -242,6 +242,9 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.1.10 - September 8, 2022 =
+* Fix: Issue with API Token sometimes not saving on settings page.
 
 = 1.1.9 - September 6, 2022 =
 * New: Dark mode theme
