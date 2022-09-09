@@ -6,6 +6,8 @@ import { __ } from '@wordpress/i18n';
 import { isValidURL } from '../../../functions/util';
 
 let id = 0;
+let itemIndex = 0;
+let arrowFlag = '';
 
 @Component({
   tag: 'sc-select',
@@ -236,8 +238,8 @@ export class ScSelectDropdown {
   handleKeyDown(event: KeyboardEvent) {
     const target = event.target as HTMLElement;
     const items = this.getItems();
-    const firstItem = items[0];
-    const lastItem = items[items.length - 1];
+    // const firstItem = items[0];
+    // const lastItem = items[items.length - 1];
 
     // Ignore key presses on tags
     if (target.tagName.toLowerCase() === 'sc-tag') {
@@ -263,14 +265,34 @@ export class ScSelectDropdown {
 
       // Focus on a menu item
       if (event.key === 'ArrowDown') {
-        this.menu.setCurrentItem(firstItem);
-        firstItem.setFocus();
+        // this.menu.setCurrentItem(firstItem);
+        // firstItem.setFocus();
+        if (itemIndex == items.length) {
+          itemIndex = 0;
+        }
+        if (arrowFlag == 'up') {
+          itemIndex = itemIndex + 2;
+        }
+        console.log('Down' + itemIndex);
+        items[itemIndex].setFocus();
+        arrowFlag = 'down';
+        itemIndex++;
         return;
       }
 
       if (event.key === 'ArrowUp') {
-        this.menu.setCurrentItem(lastItem);
-        lastItem.setFocus();
+        // this.menu.setCurrentItem(lastItem);
+        // lastItem.setFocus();
+        if (itemIndex == -1) {
+          itemIndex = items.length - 1;
+        }
+        if (arrowFlag == 'down') {
+          itemIndex = itemIndex - 2;
+        }
+        console.log('Up' + itemIndex);
+        items[itemIndex].setFocus();
+        arrowFlag = 'up';
+        itemIndex--;
         return;
       }
     }
