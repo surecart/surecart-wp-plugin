@@ -149,4 +149,26 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase {
 		$this->assertSame($response->get_status(), 200);
 	}
 
+	public function test_has_user_in_response() {
+		// mock the requests in the container
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+		$requests->shouldReceive('makeRequest')->andReturn([]);
+
+		$request = new WP_REST_Request('PATCH', '/surecart/v1/checkouts/test');
+		$request->set_param('email', 'test@test.com');
+		$response = rest_do_request( $request );
+		$data = $response->get_data();
+		$this->assertSame($data['email_exists'], false);
+
+		self::factory()->user->create([
+			'user_email' => 'test@test.com'
+		]);
+		$response = rest_do_request( $request );
+		$data = $response->get_data();
+		$this->assertSame($data['email_exists'], true);
+	}
+
 }
