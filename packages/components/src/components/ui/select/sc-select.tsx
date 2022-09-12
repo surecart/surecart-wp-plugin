@@ -252,6 +252,7 @@ export class ScSelectDropdown {
       if (this.open) {
         this.handleHide();
       }
+
       return;
     }
 
@@ -269,7 +270,7 @@ export class ScSelectDropdown {
         if (arrowFlag == 'up') {
           itemIndex = itemIndex + 2;
         }
-        if (itemIndex >= items.length) {
+        if (itemIndex > items.length - 1) {
           itemIndex = 0;
         }
 
@@ -277,7 +278,7 @@ export class ScSelectDropdown {
 
         arrowFlag = 'down';
         itemIndex++;
-        console.log(itemIndex);
+
         return;
       }
 
@@ -285,7 +286,7 @@ export class ScSelectDropdown {
         if (arrowFlag == 'down') {
           itemIndex = itemIndex - 2;
         }
-        if (itemIndex <= 0) {
+        if (itemIndex < 0) {
           itemIndex = items.length - 1;
         }
 
@@ -293,7 +294,7 @@ export class ScSelectDropdown {
 
         arrowFlag = 'up';
         itemIndex--;
-        console.log(itemIndex);
+
         return;
       }
     }
@@ -303,14 +304,13 @@ export class ScSelectDropdown {
       if (this.open) {
         this.handleHide();
       }
+
       return;
     }
 
     // Open select dropdown with Enter
     if (event.key === 'Enter') {
-      // console.log(target);
       if (this.open) {
-        // console.log(items[itemIndex]);
         this.menu.setCurrentItem(items[itemIndex]);
         items[itemIndex].setFocus();
         this.handleHide();
