@@ -123,11 +123,7 @@ export class ScSubscriptionDetails {
           {this.renderName()} {this.hasPendingUpdate && <sc-tag size="small">{__('Update Scheduled', 'surecart')}</sc-tag>}
         </sc-text>
         <div>
-          <sc-format-number
-            type="currency"
-            currency={((this.subscription?.current_period as Period)?.checkout as Checkout)?.currency}
-            value={((this.subscription?.current_period as Period)?.checkout as Checkout)?.total_amount}
-          ></sc-format-number>{' '}
+          <sc-format-number type="currency" currency={(this.subscription?.price as Price)?.currency} value={(this.subscription?.price as Price)?.amount}></sc-format-number>{' '}
           {intervalString(this.subscription?.price)}
         </div>
         {!this.hideRenewalText && <div>{this.renderRenewalText()}</div>}
