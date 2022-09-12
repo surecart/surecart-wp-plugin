@@ -6,6 +6,7 @@ use SureCart\Models\Checkout;
 use SureCart\Models\Form;
 use SureCart\Models\User;
 use SureCart\WordPress\Users\CustomerLinkService;
+use SureCart\WordPress\RecaptchaValidationService;
 
 /**
  * Handle price requests through the REST API
@@ -242,25 +243,10 @@ class CheckoutsController extends RestController {
 		}
 
 		if ( $request->get_param( 'grecaptcha' ) ) {
-			$recaptcha_verify = wp_remote_post(
-				'https://www.google.com/recaptcha/api/siteverify',
-				[
-					'method' => 'POST',
-					'body'   => [
-						'secret'   => get_option( 'sc_recaptcha_secret_key', true ),
-						'response' => $request->get_param( 'grecaptcha' ),
-					],
-				]
-			);
-
-			$verifyBody = json_decode( wp_remote_retrieve_body( $recaptcha_verify ) );
-
-			if ( ! $verifyBody->success ) {
-				$errors->add( 'invalid_recaptcha', __( 'Invalid reCaptcha', 'surecart' ) );
-			}
-
-			if ( $verifyBody->score && $verifyBody->score < get_option( 'sc_recaptcha_min_score', true ) ) {
-				$errors->add( 'invalid_score_recaptcha', __( 'reCaptcha Score is Invalid', 'surecart' ) );
+			$recaptcha = new RecaptchaValidationService();
+			
+			if ( ! $recaptcha->validate( $request->get_param( 'grecaptcha' ) ) ) {
+				$errors->add( 'invalid_recaptcha', __( 'reCaptcha not validated properly.', 'surecart' ) );
 			}
 		}
 
