@@ -4,7 +4,7 @@ import { addQueryArgs } from '@wordpress/url';
 
 import apiFetch from '../../../../functions/fetch';
 import { intervalString } from '../../../../functions/price';
-import { Checkout, Period, Price, Product, Subscription } from '../../../../types';
+import { Price, Product, Subscription } from '../../../../types';
 
 @Component({
   tag: 'sc-subscription-details',
@@ -117,13 +117,14 @@ export class ScSubscriptionDetails {
   }
 
   render() {
+    const price = this.subscription?.price as Price;
     return (
       <div class="subscription-details">
         <sc-text style={{ '--font-weight': 'var(--sc-font-weight-bold)' }}>
           {this.renderName()} {this.hasPendingUpdate && <sc-tag size="small">{__('Update Scheduled', 'surecart')}</sc-tag>}
         </sc-text>
         <div>
-          <sc-format-number type="currency" currency={(this.subscription?.price as Price)?.currency} value={(this.subscription?.price as Price)?.amount}></sc-format-number>{' '}
+          <sc-format-number type="currency" currency={price?.currency} value={this.subscription?.ad_hoc_amount || price?.amount}></sc-format-number>{' '}
           {intervalString(this.subscription?.price)}
         </div>
         {!this.hideRenewalText && <div>{this.renderRenewalText()}</div>}
