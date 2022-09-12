@@ -125,6 +125,7 @@ export class ScSelectDropdown {
 
   handleHide() {
     this.open = false;
+    itemIndex = 0;
     this.scClose.emit();
   }
 
@@ -265,34 +266,34 @@ export class ScSelectDropdown {
 
       // Focus on a menu item
       if (event.key === 'ArrowDown') {
-        // this.menu.setCurrentItem(firstItem);
-        // firstItem.setFocus();
-        if (itemIndex == items.length) {
-          itemIndex = 0;
-        }
         if (arrowFlag == 'up') {
           itemIndex = itemIndex + 2;
         }
-        console.log('Down' + itemIndex);
+        if (itemIndex >= items.length) {
+          itemIndex = 0;
+        }
+
         items[itemIndex].setFocus();
+
         arrowFlag = 'down';
         itemIndex++;
+        console.log(itemIndex);
         return;
       }
 
       if (event.key === 'ArrowUp') {
-        // this.menu.setCurrentItem(lastItem);
-        // lastItem.setFocus();
-        if (itemIndex == -1) {
-          itemIndex = items.length - 1;
-        }
         if (arrowFlag == 'down') {
           itemIndex = itemIndex - 2;
         }
-        console.log('Up' + itemIndex);
+        if (itemIndex <= 0) {
+          itemIndex = items.length - 1;
+        }
+
         items[itemIndex].setFocus();
+
         arrowFlag = 'up';
         itemIndex--;
+        console.log(itemIndex);
         return;
       }
     }
@@ -307,7 +308,11 @@ export class ScSelectDropdown {
 
     // Open select dropdown with Enter
     if (event.key === 'Enter') {
+      // console.log(target);
       if (this.open) {
+        // console.log(items[itemIndex]);
+        this.menu.setCurrentItem(items[itemIndex]);
+        items[itemIndex].setFocus();
         this.handleHide();
       } else {
         this.handleShow();
