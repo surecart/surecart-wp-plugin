@@ -1,15 +1,18 @@
 import { Customer, Checkout } from '../../../../types';
-import { Component, Prop, h, Event, EventEmitter, Watch, Method } from '@stencil/core';
+import { Component, Prop, h, Event, EventEmitter, Watch, Method, Host, State } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { createOrUpdateOrder } from '../../../../services/session';
+import { __ } from '@wordpress/i18n';
+import apiFetch from '../../../../functions/fetch';
 
 @Component({
   tag: 'sc-customer-email',
-  styleUrl: 'sc-customer-email.css',
+  styleUrl: 'sc-customer-email.scss',
   shadow: true,
 })
 export class ScCustomerEmail {
   private input: HTMLScInputElement;
+  private loginForm: HTMLScFormElement;
 
   /** Is the user logged in. */
   @Prop() loggedIn: boolean;
@@ -79,6 +82,10 @@ export class ScCustomerEmail {
 
   @Event() scUpdateOrderState: EventEmitter<Checkout>;
 
+  @State() loginDialog: boolean;
+  @State() loginLoading: boolean;
+  @State() loginError: string;
+
   async handleChange() {
     this.value = this.input.value;
     this.scChange.emit();
@@ -102,33 +109,108 @@ export class ScCustomerEmail {
     }
   }
 
+  @Watch('loginDialog')
+  handleLoginDialogChange(val) {
+    if (val) {
+      setTimeout(() => {
+        this.loginForm.querySelector('sc-input').triggerFocus();
+      }, 100);
+    }
+  }
+
   @Method()
   async reportValidity() {
     return this.input?.reportValidity?.();
   }
 
+  async handleFormSubmit(e) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    this.loginError = null;
+
+    const { login, password } = await e.target.getFormJson();
+
+    try {
+      this.loginLoading = true;
+      await apiFetch({
+        method: 'POST',
+        path: 'surecart/v1/login',
+        data: {
+          login,
+          password,
+        },
+      });
+      this.loginDialog = false;
+    } catch (e) {
+      console.error(e);
+      this.loginError = e?.message || __('Something went wrong', 'surecart');
+    } finally {
+      this.loginLoading = false;
+    }
+  }
+
   render() {
     return (
-      <sc-input
-        type="email"
-        name="email"
-        ref={el => (this.input = el as HTMLScInputElement)}
-        value={this.customer?.email || this.value}
-        label={this.label}
-        help={this.help}
-        autocomplete={'email'}
-        placeholder={this.placeholder}
-        disabled={!!this.loggedIn}
-        readonly={this.readonly}
-        required={true}
-        invalid={this.invalid}
-        autofocus={this.autofocus}
-        hasFocus={this.hasFocus}
-        onScChange={() => this.handleChange()}
-        onScInput={() => this.scInput.emit()}
-        onScFocus={() => this.scFocus.emit()}
-        onScBlur={() => this.scBlur.emit()}
-      ></sc-input>
+      <Host>
+        <sc-input
+          type="email"
+          name="email"
+          ref={el => (this.input = el as HTMLScInputElement)}
+          value={this.customer?.email || this.value}
+          help={this.help}
+          label={this.label}
+          autocomplete={'email'}
+          placeholder={this.placeholder}
+          disabled={!!this.loggedIn}
+          readonly={this.readonly}
+          required={true}
+          invalid={this.invalid}
+          autofocus={this.autofocus}
+          hasFocus={this.hasFocus}
+          onScChange={() => this.handleChange()}
+          onScInput={() => this.scInput.emit()}
+          onScFocus={() => this.scFocus.emit()}
+          onScBlur={() => this.scBlur.emit()}
+        >
+          {!this.loggedIn && (
+            <a
+              href="#"
+              class="customer-email__login-link"
+              slot="label-end"
+              onClick={e => {
+                e.preventDefault();
+                this.loginDialog = !this.loginDialog;
+              }}
+            >
+              {__('Login', 'surecart')}
+            </a>
+          )}
+        </sc-input>
+
+        {!this.loggedIn && (
+          <sc-dialog label={__('Login to your account', 'surecart')} open={this.loginDialog} onScRequestClose={() => (this.loginDialog = false)}>
+            <sc-form
+              ref={el => (this.loginForm = el as HTMLScFormElement)}
+              onScFormSubmit={e => {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+              }}
+              onScSubmit={e => this.handleFormSubmit(e)}
+            >
+              {!!this.loginError && (
+                <sc-alert type="danger" open={!!this.loginError}>
+                  {this.loginError}
+                </sc-alert>
+              )}
+              <sc-input label={__('Email or Username', 'surecart')} type="text" name="login" required autofocus={this.loginDialog}></sc-input>
+              <sc-input label={__('Password', 'surecart')} type="password" name="password" required></sc-input>
+              <sc-button type="primary" full loading={this.loginLoading} submit>
+                {__('Login', 'surecart')}
+              </sc-button>
+            </sc-form>
+          </sc-dialog>
+        )}
+      </Host>
     );
   }
 }

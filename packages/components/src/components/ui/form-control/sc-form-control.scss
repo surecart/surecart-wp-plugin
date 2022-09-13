@@ -42,8 +42,11 @@
   margin-top: var(--sc-spacing-small);
   color: var(--sc-color-danger-500);
 }
+::slotted([slot=label-end]) {
+  float: right;
+}
 
-.form-control--is-required .form-control__label:after {
+.form-control--is-required slot[name=label]:after {
   content: " *";
   color: var(--sc-color-danger-500);
 }
