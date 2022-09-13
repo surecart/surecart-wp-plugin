@@ -35,6 +35,13 @@ class AssetsService {
 	protected $container;
 
 	/**
+	 * The preload Service
+	 *
+	 * @var \SureCart\WordPress\Assets\PreloadService
+	 */
+	protected $preload;
+
+	/**
 	 * Get the loader.
 	 *
 	 * @param Object $loader The loader.
@@ -44,6 +51,7 @@ class AssetsService {
 		$this->scripts   = $scripts;
 		$this->styles    = $styles;
 		$this->container = $container;
+		$this->preload   = ( new PreloadService( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/stats.json' ) );
 	}
 
 	/**
@@ -58,9 +66,9 @@ class AssetsService {
 
 		// front-end styles. These only load when the block is being rendered on the page.
 		$this->loader->whenRendered( 'surecart/form', [ $this, 'enqueueComponents' ] );
-		$this->loader->whenRendered( 'surecart/checkout-form', [ $this, 'enqueueForm' ] );
 		$this->loader->whenRendered( 'surecart/buy-button', [ $this, 'enqueueComponents' ] );
-		$this->loader->whenRendered( 'surecart/customer-dashboard', [ $this, 'enqueueComponents' ] );
+		$this->loader->whenRendered( 'surecart/customer-dashboard', [ $this, 'enqueueDashboard' ] );
+		$this->loader->whenRendered( 'surecart/checkout-form', [ $this, 'enqueueForm' ] );
 		$this->loader->whenRendered( 'surecart/order-confirmation', [ $this, 'enqueueComponents' ] );
 
 		// block editor.
@@ -75,8 +83,7 @@ class AssetsService {
 	 */
 	public function enqueueForm() {
 		$this->enqueueComponents();
-		$preload = ( new PreloadService( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/stats.json' ) );
-		$preload->add(
+		$this->preload->add(
 			[
 				'sc-checkout',
 				'sc-form',
@@ -103,7 +110,39 @@ class AssetsService {
 				'sc-card',
 				'sc-line-items-provider',
 				'sc-spinner',
+				'sc-skeleton',
 				'sc-cart-loader',
+			]
+		);
+	}
+
+	/**
+	 * Enqueue and preload dashboard components.
+	 * This will also preload key components to prevent additional rendering delay.
+	 *
+	 * @return void
+	 */
+	public function enqueueDashboard() {
+		$this->enqueueComponents();
+		$this->preload->add(
+			[
+				'sc-tab',
+				'sc-tab-group',
+				'sc-spacing',
+				'sc-orders-list',
+				'sc-dashboard-downloads-list',
+				'sc-subscriptions-list',
+				'sc-payment-methods-list',
+				'sc-dashboard-customer-details',
+				'sc-wordpress-user',
+				'sc-format-number',
+				'sc-button',
+				'sc-flex',
+				'sc-divider',
+				'sc-stacked-list',
+				'sc-stacked-list-row',
+				'sc-pagination',
+				'sc-skeleton',
 			]
 		);
 	}
