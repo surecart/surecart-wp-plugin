@@ -90,23 +90,16 @@ class PurchaseCreatedTrigger extends Trigger {
 	 * @return array
 	 */
 	public function process_params( $params = [] ) {
-		// log_it('Trigger 1');
-		// log_it($params);
 		$data_objects = [];
 
 		if ( ! empty( $params ) ) {
 			$data_object_classes = Data_Object::get();
 			$product_id = $params[0]['product'];
 			$user = User::findByCustomerId( $params[0]['customer'] );
-			// log_it('Trigger 2');
-			// log_it($data_object_classes);
-			// log_it($user->ID);
 
 			$data_objects['surecart_product_data'] = empty( $data_object_classes['surecart_product_data'] ) ? null : new $data_object_classes['surecart_product_data']( $product_id );
 			$data_objects['user_data']             = empty( $data_object_classes['user_data'] ) ? null : new $data_object_classes['user_data']( $user->ID );
 		}
-		// log_it('Trigger 3');
-		// log_it($data_objects);
 
 		return $data_objects;
 	}

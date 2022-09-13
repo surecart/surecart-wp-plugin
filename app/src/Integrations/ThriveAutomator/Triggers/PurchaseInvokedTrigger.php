@@ -63,7 +63,7 @@ class PurchaseInvokedTrigger extends Trigger {
 	 * @return string
 	 */
 	public static function get_name() {
-		return __( 'Purchase is un-revoked', 'surecart' );
+		return __( 'Product purchase is unrevoked', 'surecart' );
 	}
 
 	/**
@@ -72,7 +72,7 @@ class PurchaseInvokedTrigger extends Trigger {
 	 * @return string
 	 */
 	public static function get_description() {
-		return __( 'This trigger will be fired when a purchase is un-revoked.', 'surecart' );
+		return __( 'This trigger will be fired when a purchase is unrevoked.', 'surecart' );
 	}
 
 	/**

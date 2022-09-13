@@ -63,7 +63,7 @@ class RefundSucceededTrigger extends Trigger {
 	 * @return string
 	 */
 	public static function get_name() {
-		return __( 'Refund Succeeded', 'surecart' );
+		return __( 'Product refund succeeded', 'surecart' );
 	}
 
 	/**
