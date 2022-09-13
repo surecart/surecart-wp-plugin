@@ -244,7 +244,8 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 == Changelog ==
 
 = 1.1.11 - September 14, 2022 =
-* Improvement: Preload key components to prevent momentary blank area on checkout and dashboard pages with slow connections.
+* Improvement: Preload key components to prevent momentary blank loading screen on checkout page for slow connections.
+* Fix: Subscription plan price incorrect on some instances on customer dashboard.
 
 = 1.1.10 - September 8, 2022 =
 * Fix: Issue with API Token sometimes not saving on settings page.
