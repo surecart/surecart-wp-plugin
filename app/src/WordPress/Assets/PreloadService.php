@@ -1,0 +1,107 @@
+<?php
+namespace SureCart\WordPress\Assets;
+
+use SureCart\Support\Arrays;
+
+/**
+ * Handles the preloading functionality for components.
+ */
+class PreloadService {
+	/**
+	 * The stats file path.
+	 *
+	 * @var string
+	 */
+	protected $stats_file;
+
+	/**
+	 * Get the stats file path
+	 *
+	 * @param string $stats_file The stats file path.
+	 */
+	public function __construct( $stats_file ) {
+		$this->stats_file = $stats_file;
+	}
+
+	/**
+	 * Get the bundle stats file.
+	 *
+	 * @return object|false;
+	 */
+	protected function getStatsFile() {
+		if ( ! file_exists( $this->stats_file ) ) {
+			return false;
+		}
+		return wp_json_file_decode( $this->stats_file, [ 'associative' => true ] );
+	}
+
+	/**
+	 * Get the filenames from the stats.
+	 *
+	 * @param array  $components An array of component names.
+	 * @param string $format The format we are using.
+	 *
+	 * @return array
+	 */
+	public function getFileNames( $components, $format = 'esmBrowser' ) {
+		$json    = $this->getStatsFile();
+		$entries = $json['formats'][ $format ];
+
+		$set = array_map(
+			function( $element ) use ( $entries ) {
+				$files              = [];
+				$collection_bundles = array_filter(
+					$entries,
+					function( $entry ) use ( $element ) {
+						return in_array( $element, $entry['components'], true );
+					}
+				);
+
+				foreach ( $collection_bundles as $bundle ) {
+					$files = array_merge( [ $bundle['fileName'] ], $bundle['imports'] );
+				}
+
+				return $files;
+			},
+			$components
+		);
+
+		return array_unique( Arrays::flatten( $set ) );
+	}
+
+	/**
+	 * Render the preload tags.
+	 *
+	 * @param array  $components An array of components
+	 * @param string $format The format.
+	 *
+	 * @return void
+	 */
+	public function render( $components, $format = 'esmBrowser', $path = 'dist/components/surecart/' ) {
+		$names = $this->getFileNames( $components, $format );
+
+		if ( empty( $names ) ) {
+			return;
+		}
+
+		foreach ( $names as $name ) {
+			echo "<link rel='preload' href='" . esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . trailingslashit( $path ) . $name ) . "' as='script' crossorigin />\n";
+		}
+	}
+
+	/**
+	 * Add Preload
+	 *
+	 * @param array $components Component names.
+	 *
+	 * @return void
+	 */
+	public function add( $components ) {
+		add_action(
+			'wp_head',
+			function() use ( $components ) {
+				$this->render( $components );
+			}
+		);
+	}
+}
