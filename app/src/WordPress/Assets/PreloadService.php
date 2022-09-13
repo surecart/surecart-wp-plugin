@@ -15,12 +15,28 @@ class PreloadService {
 	protected $stats_file;
 
 	/**
+	 * Components to preload.
+	 *
+	 * @var array
+	 */
+	protected $components = [];
+
+	/**
 	 * Get the stats file path
 	 *
 	 * @param string $stats_file The stats file path.
 	 */
 	public function __construct( $stats_file ) {
 		$this->stats_file = $stats_file;
+	}
+
+	/**
+	 * Bootstrap the preload.
+	 *
+	 * @return void
+	 */
+	public function bootstrap() {
+		add_action( 'wp_head', [ $this, 'renderComponents' ] );
 	}
 
 	/**
@@ -70,14 +86,26 @@ class PreloadService {
 	}
 
 	/**
-	 * Render the preload tags.
-	 *
-	 * @param array  $components An array of components
-	 * @param string $format The format.
+	 * Render the components
 	 *
 	 * @return void
 	 */
-	public function render( $components, $format = 'esmBrowser', $path = 'dist/components/surecart/' ) {
+	public function renderComponents() {
+		if ( ! empty( $this->components ) ) {
+			$this->renderTag( $this->components );
+		}
+	}
+
+	/**
+	 * Render the preload tags.
+	 *
+	 * @param array  $components An array of components.
+	 * @param string $format The format.
+	 * @param string $path The path to the component javascript file.
+	 *
+	 * @return void
+	 */
+	public function renderTag( $components, $format = 'esmBrowser', $path = 'dist/components/surecart/' ) {
 		$names = $this->getFileNames( $components, $format );
 
 		if ( empty( $names ) ) {
@@ -90,18 +118,13 @@ class PreloadService {
 	}
 
 	/**
-	 * Add Preload
+	 * Add preload components.
 	 *
 	 * @param array $components Component names.
 	 *
 	 * @return void
 	 */
 	public function add( $components ) {
-		add_action(
-			'wp_head',
-			function() use ( $components ) {
-				$this->render( $components );
-			}
-		);
+		$this->components = array_filter( array_unique( array_merge( $this->components, $components ) ) );
 	}
 }

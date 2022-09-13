@@ -25,9 +25,14 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			return new AssetsService( new BlockAssetsLoadService(), new ScriptsService( $container ), new StylesService( $container ), $container );
 		};
 
+		$container['surecart.assets.preload'] = function() use ( $container ) {
+			return new PreloadService( trailingslashit( $container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/stats.json' );
+		};
+
 		$app = $container[ SURECART_APPLICATION_KEY ];
 
 		$app->alias( 'assets', 'surecart.assets' );
+		$app->alias( 'preload', 'surecart.assets.preload' );
 	}
 
 	/**
@@ -38,5 +43,6 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	public function bootstrap( $container ) {
 		$this->container = $container;
 		$container['surecart.assets']->bootstrap();
+		$container['surecart.assets.preload']->bootstrap();
 	}
 }

@@ -37,9 +37,9 @@ class AssetsService {
 	/**
 	 * The preload Service
 	 *
-	 * @var \SureCart\WordPress\Assets\PreloadService
+	 * @var array
 	 */
-	protected $preload;
+	protected $config;
 
 	/**
 	 * Get the loader.
@@ -51,7 +51,7 @@ class AssetsService {
 		$this->scripts   = $scripts;
 		$this->styles    = $styles;
 		$this->container = $container;
-		$this->preload   = ( new PreloadService( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/stats.json' ) );
+		$this->config    = \SureCart::resolve( SURECART_CONFIG_KEY );
 	}
 
 	/**
@@ -63,100 +63,31 @@ class AssetsService {
 		// register assets we will reuse.
 		add_action( 'init', [ $this->scripts, 'register' ] );
 		add_action( 'init', [ $this->styles, 'register' ] );
+		add_filter( 'render_block_data', [ $this, 'preloadComponents' ] );
+
+		// block editor.
+		add_action( 'enqueue_block_editor_assets', [ $this, 'editorAssets' ] );
 
 		// front-end styles. These only load when the block is being rendered on the page.
 		$this->loader->whenRendered( 'surecart/form', [ $this, 'enqueueComponents' ] );
 		$this->loader->whenRendered( 'surecart/buy-button', [ $this, 'enqueueComponents' ] );
-		$this->loader->whenRendered( 'surecart/customer-dashboard', [ $this, 'enqueueDashboard' ] );
-		$this->loader->whenRendered( 'surecart/checkout-form', [ $this, 'enqueueForm' ] );
+		$this->loader->whenRendered( 'surecart/customer-dashboard', [ $this, 'enqueueComponents' ] );
+		$this->loader->whenRendered( 'surecart/checkout-form', [ $this, 'enqueueComponents' ] );
 		$this->loader->whenRendered( 'surecart/order-confirmation', [ $this, 'enqueueComponents' ] );
-
-		// block editor.
-		add_action( 'enqueue_block_editor_assets', [ $this, 'editorAssets' ] );
 	}
 
 	/**
-	 * Enqueue the checkout form.
-	 * This will also preload key components to prevent additional rendering delay.
+	 * Preload any components needed for block display.
 	 *
-	 * @return void
-	 */
-	public function enqueueForm() {
-		$this->enqueueComponents();
-		$this->preload->add(
-			[
-				'sc-checkout',
-				'sc-form',
-				'sc-columns',
-				'sc-column',
-				'sc-form-control',
-				'sc-total',
-				'sc-input',
-				'sc-customer-name',
-				'sc-customer-email',
-				'sc-order-shipping-address',
-				'sc-address',
-				'sc-select',
-				'sc-toggle',
-				'sc-toggles',
-				'sc-payment',
-				'sc-tag',
-				'sc-dropdown',
-				'sc-menu',
-				'sc-menu-item',
-				'sc-menu-label',
-				'sc-tax-id-input',
-				'sc-order-summary',
-				'sc-order-submit',
-				'sc-line-items',
-				'sc-line-item',
-				'sc-line-item-tax',
-				'sc-format-number',
-				'sc-order-coupon-form',
-				'sc-coupon-form',
-				'sc-checkout-unsaved-changes-warning',
-				'sc-product-line-item',
-				'sc-line-item-total',
-				'sc-divider',
-				'sc-button',
-				'sc-card',
-				'sc-line-items-provider',
-				'sc-spinner',
-				'sc-skeleton',
-				'sc-cart-loader',
-			]
-		);
-	}
-
-	/**
-	 * Enqueue and preload dashboard components.
-	 * This will also preload key components to prevent additional rendering delay.
+	 * @param array $parsed_block Parsed block data.
 	 *
-	 * @return void
+	 * @return array
 	 */
-	public function enqueueDashboard() {
-		$this->enqueueComponents();
-		$this->preload->add(
-			[
-				'sc-tab',
-				'sc-tab-group',
-				'sc-spacing',
-				'sc-orders-list',
-				'sc-dashboard-downloads-list',
-				'sc-subscriptions-list',
-				'sc-payment-methods-list',
-				'sc-dashboard-customer-details',
-				'sc-wordpress-user',
-				'sc-format-number',
-				'sc-button',
-				'sc-flex',
-				'sc-divider',
-				'sc-stacked-list',
-				'sc-stacked-list-row',
-				'sc-pagination',
-				'sc-skeleton',
-			]
-		);
+	public function preloadComponents( $parsed_block ) {
+		if ( ! empty( $this->config['preload'][ $parsed_block['blockName'] ] ) ) {
+			\SureCart::preload()->add( $this->config['preload'][ $parsed_block['blockName'] ] );
+		}
+		return $parsed_block;
 	}
 
 	/**
