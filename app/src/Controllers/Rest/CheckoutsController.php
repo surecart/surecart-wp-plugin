@@ -243,10 +243,15 @@ class CheckoutsController extends RestController {
 		}
 
 		if ( $request->get_param( 'grecaptcha' ) ) {
-			$recaptcha = new RecaptchaValidationService();
+			$recaptcha    = new RecaptchaValidationService();
+			$get_response = $recaptcha->get_response( $request->get_param( 'grecaptcha' ) );
 			
-			if ( ! $recaptcha->validate( $request->get_param( 'grecaptcha' ) ) ) {
-				$errors->add( 'invalid_recaptcha', __( 'reCaptcha not validated properly.', 'surecart' ) );
+			if ( ! $recaptcha->is_validate_token( $request->get_param( 'grecaptcha' ), $get_response ) ) {
+				$errors->add( 'invalid_recaptcha', __( 'reCaptcha not validated.', 'surecart' ) );
+			}
+
+			if ( ! $recaptcha->is_validate_score( $request->get_param( 'grecaptcha' ), $get_response ) ) {
+				$errors->add( 'invalid_recaptcha_score', __( 'reCaptcha score not validated.', 'surecart' ) );
 			}
 		}
 
