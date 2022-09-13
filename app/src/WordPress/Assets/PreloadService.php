@@ -61,7 +61,7 @@ class PreloadService {
 	 */
 	public function getFileNames( $components, $format = 'esmBrowser' ) {
 		$json    = $this->getStatsFile();
-		$entries = $json['formats'][ $format ];
+		$entries = $json['formats'][ $format ] ?? [];
 
 		$set = array_map(
 			function( $element ) use ( $entries ) {
