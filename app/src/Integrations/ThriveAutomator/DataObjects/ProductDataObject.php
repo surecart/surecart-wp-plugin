@@ -26,7 +26,7 @@ class ProductDataObject extends Data_Object {
 	}
 
 	/**
-	 * Nice name for the data object.
+	 * Nice name for the data-object.
 	 *
 	 * @return string
 	 */

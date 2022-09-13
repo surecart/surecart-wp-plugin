@@ -3,8 +3,6 @@
 namespace SureCart\Integrations\ThriveAutomator;
 
 use SureCart\Integrations\ThriveAutomator\ActionFields\ProductsActionField;
-use SureCart\Integrations\ThriveAutomator\Actions\InvokePurchaseAction;
-use SureCart\Integrations\ThriveAutomator\Actions\RevokePurchaseAction;
 use SureCart\Integrations\ThriveAutomator\DataObjects\ProductDataObject;
 use SureCart\Integrations\ThriveAutomator\DataFields\ProductDataField;
 use SureCart\Integrations\ThriveAutomator\DataFields\ProductIDDataField;
@@ -14,8 +12,6 @@ use SureCart\Integrations\ThriveAutomator\TriggerFields\ProductTriggerField;
 use SureCart\Integrations\ThriveAutomator\Triggers\PurchaseCreatedTrigger;
 use SureCart\Integrations\ThriveAutomator\Triggers\PurchaseRevokedTrigger;
 use SureCart\Integrations\ThriveAutomator\Triggers\PurchaseInvokedTrigger;
-use SureCart\Integrations\ThriveAutomator\Triggers\OrderCreatedTrigger;
-use SureCart\Integrations\ThriveAutomator\Triggers\PeriodPaidTrigger;
 use SureCart\Integrations\ThriveAutomator\Triggers\PurchaseUpdatedTrigger;
 use SureCart\Integrations\ThriveAutomator\Triggers\RefundSucceededTrigger;
 
@@ -38,10 +34,6 @@ class ThriveAutomatorService {
 		// action fields
 		thrive_automator_register_action_field( ProductsActionField::class );
 
-		// actions
-		thrive_automator_register_action( InvokePurchaseAction::class );
-		thrive_automator_register_action( RevokePurchaseAction::class );
-
 		// data objects
 		thrive_automator_register_data_object( ProductDataObject::class );
 
@@ -54,8 +46,6 @@ class ThriveAutomatorService {
 		thrive_automator_register_trigger( PurchaseCreatedTrigger::class );
 		thrive_automator_register_trigger( PurchaseRevokedTrigger::class );
 		thrive_automator_register_trigger( PurchaseInvokedTrigger::class );
-		thrive_automator_register_trigger( OrderCreatedTrigger::class );
-		thrive_automator_register_trigger( PeriodPaidTrigger::class );
 		thrive_automator_register_trigger( PurchaseUpdatedTrigger::class );
 		thrive_automator_register_trigger( RefundSucceededTrigger::class );
 
