@@ -22,7 +22,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 */
 	public function register( $container ) {
 		$container['surecart.assets'] = function () use ( $container ) {
-			return new AssetsService( new BlockAssetsLoadService(), new ScriptsService( $container ), new StylesService( $container ) );
+			return new AssetsService( new BlockAssetsLoadService(), new ScriptsService( $container ), new StylesService( $container ), $container );
 		};
 
 		$app = $container[ SURECART_APPLICATION_KEY ];

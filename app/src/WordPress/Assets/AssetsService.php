@@ -28,14 +28,22 @@ class AssetsService {
 	protected $scripts;
 
 	/**
+	 * The service container.
+	 *
+	 * @var \Pimple\Container $container Service Container.
+	 */
+	protected $container;
+
+	/**
 	 * Get the loader.
 	 *
 	 * @param Object $loader The loader.
 	 */
-	public function __construct( $loader, $scripts, $styles ) {
-		$this->loader  = $loader;
-		$this->scripts = $scripts;
-		$this->styles  = $styles;
+	public function __construct( $loader, $scripts, $styles, $container ) {
+		$this->loader    = $loader;
+		$this->scripts   = $scripts;
+		$this->styles    = $styles;
+		$this->container = $container;
 	}
 
 	/**
@@ -50,13 +58,54 @@ class AssetsService {
 
 		// front-end styles. These only load when the block is being rendered on the page.
 		$this->loader->whenRendered( 'surecart/form', [ $this, 'enqueueComponents' ] );
-		$this->loader->whenRendered( 'surecart/checkout-form', [ $this, 'enqueueComponents' ] );
+		$this->loader->whenRendered( 'surecart/checkout-form', [ $this, 'enqueueForm' ] );
 		$this->loader->whenRendered( 'surecart/buy-button', [ $this, 'enqueueComponents' ] );
 		$this->loader->whenRendered( 'surecart/customer-dashboard', [ $this, 'enqueueComponents' ] );
 		$this->loader->whenRendered( 'surecart/order-confirmation', [ $this, 'enqueueComponents' ] );
 
 		// block editor.
 		add_action( 'enqueue_block_editor_assets', [ $this, 'editorAssets' ] );
+	}
+
+	/**
+	 * Enqueue the checkout form.
+	 * This will also preload key components to prevent additional rendering delay.
+	 *
+	 * @return void
+	 */
+	public function enqueueForm() {
+		$this->enqueueComponents();
+		$preload = ( new PreloadService( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/stats.json' ) );
+		$preload->add(
+			[
+				'sc-checkout',
+				'sc-form',
+				'sc-columns',
+				'sc-column',
+				'sc-form-control',
+				'sc-total',
+				'sc-input',
+				'sc-customer-name',
+				'sc-customer-email',
+				'sc-order-shipping-address',
+				'sc-order-summary',
+				'sc-order-submit',
+				'sc-line-items',
+				'sc-line-item-tax',
+				'sc-format-number',
+				'sc-order-coupon-form',
+				'sc-coupon-form',
+				'sc-checkout-unsaved-changes-warning',
+				'sc-product-line-item',
+				'sc-line-item-total',
+				'sc-divider',
+				'sc-button',
+				'sc-card',
+				'sc-line-items-provider',
+				'sc-spinner',
+				'sc-cart-loader',
+			]
+		);
 	}
 
 	/**
