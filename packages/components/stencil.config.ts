@@ -47,6 +47,11 @@ export const config: Config = {
       type: 'www',
       serviceWorker: null, // disable service workers
     },
+    // this is used for preloading features.
+    {
+      type: 'stats',
+      file: 'dist/stats.json', // optional
+    },
     {
       // this generates a json file to be used for kses functions.
       type: 'docs-custom',

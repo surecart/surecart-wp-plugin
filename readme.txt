@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 1.1.10
+Stable tag: 1.1.11
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,10 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.1.11 - September 14, 2022 =
+* Improvement: Preload key components to prevent momentary blank loading screen on checkout page for slow connections.
+* Fix: Subscription plan price incorrect on some instances on customer dashboard.
 
 = 1.1.10 - September 8, 2022 =
 * Fix: Issue with API Token sometimes not saving on settings page.
