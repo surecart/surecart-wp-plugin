@@ -61,7 +61,7 @@ export class ScCheckout {
   @Prop() taxProtocol: TaxProtocol;
 
   /** Is this user logged in? */
-  @Prop() loggedIn: boolean;
+  @Prop({ mutable: true }) loggedIn: boolean;
 
   /** Should we disable components validation */
   @Prop() disableComponentsValidation: boolean;
@@ -222,6 +222,7 @@ export class ScCheckout {
       prices: this.pricesEntities,
       country: 'US',
       loggedIn: this.loggedIn,
+      emailExists: this.order()?.email_exists,
       formId: this.formId,
       mode: this.mode,
       currencyCode: this.currencyCode,
@@ -246,35 +247,38 @@ export class ScCheckout {
         <sc-checkout-unsaved-changes-warning state={this.checkoutState} />
         {/* Univers provider */}
         <Universe.Provider state={this.state()}>
-          {/* Handles the current checkout form state. */}
-          <sc-form-state-provider onScSetCheckoutFormState={e => (this.checkoutState = e.detail)}>
-            {/* Handles errors in the form. */}
-            <sc-form-error-provider checkoutState={this.checkoutState} onScUpdateError={e => (this.error = e.detail)}>
-              {/* Validate components in the form based on order state. */}
-              <sc-form-components-validator order={this.order()} disabled={this.disableComponentsValidation} taxProtocol={this.taxProtocol}>
-                {/* Handle confirming of order after it is "Paid" by processors. */}
-                <sc-order-confirm-provider order={this.order()} success-url={this.successUrl} form-id={this.formId} mode={this.mode}>
-                  {/* Handles the current session. */}
-                  <sc-session-provider
-                    ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)}
-                    prices={this.prices}
-                    stripePaymentElement={this.stripePaymentElement}
-                    paymentIntents={this.paymentIntents}
-                    persist={this.persistSession}
-                    modified={this.modified}
-                    mode={this.mode}
-                    form-id={this.formId}
-                    group-id={this.el.id}
-                    processor={this.processor}
-                    currency-code={this.currencyCode}
-                    onScError={e => (this.error = e.detail as ResponseError)}
-                  >
-                    <slot />
-                  </sc-session-provider>
-                </sc-order-confirm-provider>
-              </sc-form-components-validator>
-            </sc-form-error-provider>
-          </sc-form-state-provider>
+          {/** Handles login form prompts. */}
+          <sc-login-provider loggedIn={this.loggedIn} onScSetCustomer={e => (this.customer = e.detail as Customer)} onScSetLoggedIn={e => (this.loggedIn = e.detail)}>
+            {/* Handles the current checkout form state. */}
+            <sc-form-state-provider onScSetCheckoutFormState={e => (this.checkoutState = e.detail)}>
+              {/* Handles errors in the form. */}
+              <sc-form-error-provider checkoutState={this.checkoutState} onScUpdateError={e => (this.error = e.detail)}>
+                {/* Validate components in the form based on order state. */}
+                <sc-form-components-validator order={this.order()} disabled={this.disableComponentsValidation} taxProtocol={this.taxProtocol}>
+                  {/* Handle confirming of order after it is "Paid" by processors. */}
+                  <sc-order-confirm-provider order={this.order()} success-url={this.successUrl} form-id={this.formId} mode={this.mode}>
+                    {/* Handles the current session. */}
+                    <sc-session-provider
+                      ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)}
+                      prices={this.prices}
+                      stripePaymentElement={this.stripePaymentElement}
+                      paymentIntents={this.paymentIntents}
+                      persist={this.persistSession}
+                      modified={this.modified}
+                      mode={this.mode}
+                      form-id={this.formId}
+                      group-id={this.el.id}
+                      processor={this.processor}
+                      currency-code={this.currencyCode}
+                      onScError={e => (this.error = e.detail as ResponseError)}
+                    >
+                      <slot />
+                    </sc-session-provider>
+                  </sc-order-confirm-provider>
+                </sc-form-components-validator>
+              </sc-form-error-provider>
+            </sc-form-state-provider>
+          </sc-login-provider>
 
           {this.state().busy && <sc-block-ui z-index={9}></sc-block-ui>}
           {this.checkoutState === 'finalizing' && (

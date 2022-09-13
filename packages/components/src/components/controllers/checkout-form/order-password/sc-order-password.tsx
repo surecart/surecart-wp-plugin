@@ -44,6 +44,9 @@ export class ScOrderPassword {
   /** The input's autofocus attribute. */
   @Prop() autofocus: boolean;
 
+  /** Does the email exist? */
+  @Prop() emailExists: boolean;
+
   @Method()
   async reportValidity() {
     if (this.loggedIn) return true;
@@ -52,6 +55,10 @@ export class ScOrderPassword {
 
   render() {
     if (this.loggedIn) {
+      return null;
+    }
+
+    if (this.emailExists) {
       return null;
     }
 
@@ -74,4 +81,4 @@ export class ScOrderPassword {
   }
 }
 
-openWormhole(ScOrderPassword, ['loggedIn'], false);
+openWormhole(ScOrderPassword, ['loggedIn', 'emailExists'], false);

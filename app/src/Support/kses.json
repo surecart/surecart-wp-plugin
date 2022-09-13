@@ -765,6 +765,13 @@
     "class": true,
     "slot": true
   },
+  "sc-login-provider": {
+    "logged-in": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-menu": {
     "style": true,
     "id": true,
@@ -880,6 +887,7 @@
   "sc-order-password": {
     "autofocus": true,
     "disabled": true,
+    "email-exists": true,
     "help": true,
     "label": true,
     "logged-in": true,
