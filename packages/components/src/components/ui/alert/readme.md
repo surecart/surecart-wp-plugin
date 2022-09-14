@@ -50,13 +50,14 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part        | Description |
-| ----------- | ----------- |
-| `"base"`    |             |
-| `"icon"`    |             |
-| `"message"` |             |
-| `"text"`    |             |
-| `"title"`   |             |
+| Part           | Description |
+| -------------- | ----------- |
+| `"base"`       |             |
+| `"close-icon"` |             |
+| `"icon"`       |             |
+| `"message"`    |             |
+| `"text"`       |             |
+| `"title"`      |             |
 
 
 ## Dependencies
@@ -72,6 +73,7 @@ Type: `Promise<void>`
  - [sc-form-error-provider](../../providers/form-error-provider)
  - [sc-login-form](../../controllers/login)
  - [sc-order-confirmation](../../controllers/confirmation/order-confirmation)
+ - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-paypal-add-method](../sc-paypal-add-method)
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
@@ -99,6 +101,7 @@ graph TD;
   sc-form-error-provider --> sc-alert
   sc-login-form --> sc-alert
   sc-order-confirmation --> sc-alert
+  sc-password-nag --> sc-alert
   sc-payment --> sc-alert
   sc-paypal-add-method --> sc-alert
   sc-price-choice --> sc-alert
