@@ -85,8 +85,9 @@ class PurchaseRevokedTrigger extends Trigger {
 	}
 
 	/**
-	 * Process params for action
+	 * Process params for action.
 	 *
+	 * @param array $params Params from the action.
 	 * @return array
 	 */
 	public function process_params( $params = [] ) {
@@ -94,8 +95,8 @@ class PurchaseRevokedTrigger extends Trigger {
 
 		if ( ! empty( $params ) ) {
 			$data_object_classes = Data_Object::get();
-			$product_id = $params[0]['product'];
-			$user = User::findByCustomerId( $params[0]['customer'] );
+			$product_id          = $params[0]['product'];
+			$user                = User::findByCustomerId( $params[0]['customer'] );
 
 			$data_objects['surecart_product_data'] = empty( $data_object_classes['surecart_product_data'] ) ? null : new $data_object_classes['surecart_product_data']( $product_id );
 			$data_objects['user_data']             = empty( $data_object_classes['user_data'] ) ? null : new $data_object_classes['user_data']( $user->ID );

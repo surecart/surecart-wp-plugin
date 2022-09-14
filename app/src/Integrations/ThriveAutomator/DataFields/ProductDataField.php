@@ -64,12 +64,14 @@ class ProductDataField extends Data_Field {
 	 * @return array
 	 */
 	public static function get_options_callback() {
-		$options  = [];
+		$options = [];
+
 		$products = Product::where(
 			[
 				'archived' => false,
 			]
 		)->get();
+
 		foreach ( $products as $product ) {
 			$options[ $product->id ] = [
 				'label' => $product->name,
@@ -104,7 +106,7 @@ class ProductDataField extends Data_Field {
 	 * @return string
 	 */
 	public static function get_dummy_value() {
-		return 'subscriber';
+		return __( 'Product', 'surecart' );
 	}
 
 	/**
