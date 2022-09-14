@@ -824,6 +824,7 @@ export namespace Components {
     interface ScDashboardDownloadsList {
         "allLink": string;
         "heading": string;
+        "isCustomer": boolean;
         /**
           * Customer id to fetch subscriptions
          */
@@ -1696,6 +1697,7 @@ export namespace Components {
     interface ScOrdersList {
         "allLink": string;
         "heading": string;
+        "isCustomer": boolean;
         /**
           * Query to fetch orders
          */
@@ -1773,13 +1775,9 @@ export namespace Components {
         "full": boolean;
         "paymentMethod": PaymentMethod;
     }
-    interface ScPaymentMethodCreate {
-        "clientSecret": string;
-        "error": string;
-        "successUrl": string;
-    }
     interface ScPaymentMethodsList {
         "heading": string;
+        "isCustomer": boolean;
         /**
           * Query to fetch paymentMethods
          */
@@ -1788,6 +1786,12 @@ export namespace Components {
     interface ScPaymentSelected {
         "iconName": string;
         "label": string;
+    }
+    interface ScPaypalAddMethod {
+        "currency": string;
+        "customerId": string;
+        "liveMode": boolean;
+        "successUrl": string;
     }
     interface ScPaypalButtons {
         /**
@@ -1814,6 +1818,10 @@ export namespace Components {
           * The merchant id for paypal.
          */
         "merchantId": string;
+        /**
+          * Merchant initiated billing enabled.
+         */
+        "merchantInitiated": boolean;
         /**
           * Test or live mode.
          */
@@ -2261,6 +2269,11 @@ export namespace Components {
         "mobileSize": number;
         "target": string;
     }
+    interface ScStripeAddMethod {
+        "customerId": string;
+        "liveMode": boolean;
+        "successUrl": string;
+    }
     interface ScStripeElement {
         /**
           * Your stripe connected account id.
@@ -2453,6 +2466,7 @@ export namespace Components {
         "allLink": string;
         "cancelBehavior": 'period_end' | 'immediate';
         "heading": string;
+        "isCustomer": boolean;
         /**
           * Customer id to fetch subscriptions
          */
@@ -3557,12 +3571,6 @@ declare global {
         prototype: HTMLScPaymentMethodElement;
         new (): HTMLScPaymentMethodElement;
     };
-    interface HTMLScPaymentMethodCreateElement extends Components.ScPaymentMethodCreate, HTMLStencilElement {
-    }
-    var HTMLScPaymentMethodCreateElement: {
-        prototype: HTMLScPaymentMethodCreateElement;
-        new (): HTMLScPaymentMethodCreateElement;
-    };
     interface HTMLScPaymentMethodsListElement extends Components.ScPaymentMethodsList, HTMLStencilElement {
     }
     var HTMLScPaymentMethodsListElement: {
@@ -3574,6 +3582,12 @@ declare global {
     var HTMLScPaymentSelectedElement: {
         prototype: HTMLScPaymentSelectedElement;
         new (): HTMLScPaymentSelectedElement;
+    };
+    interface HTMLScPaypalAddMethodElement extends Components.ScPaypalAddMethod, HTMLStencilElement {
+    }
+    var HTMLScPaypalAddMethodElement: {
+        prototype: HTMLScPaypalAddMethodElement;
+        new (): HTMLScPaypalAddMethodElement;
     };
     interface HTMLScPaypalButtonsElement extends Components.ScPaypalButtons, HTMLStencilElement {
     }
@@ -3688,6 +3702,12 @@ declare global {
     var HTMLScStackedListRowElement: {
         prototype: HTMLScStackedListRowElement;
         new (): HTMLScStackedListRowElement;
+    };
+    interface HTMLScStripeAddMethodElement extends Components.ScStripeAddMethod, HTMLStencilElement {
+    }
+    var HTMLScStripeAddMethodElement: {
+        prototype: HTMLScStripeAddMethodElement;
+        new (): HTMLScStripeAddMethodElement;
     };
     interface HTMLScStripeElementElement extends Components.ScStripeElement, HTMLStencilElement {
     }
@@ -3973,9 +3993,9 @@ declare global {
         "sc-pagination": HTMLScPaginationElement;
         "sc-payment": HTMLScPaymentElement;
         "sc-payment-method": HTMLScPaymentMethodElement;
-        "sc-payment-method-create": HTMLScPaymentMethodCreateElement;
         "sc-payment-methods-list": HTMLScPaymentMethodsListElement;
         "sc-payment-selected": HTMLScPaymentSelectedElement;
+        "sc-paypal-add-method": HTMLScPaypalAddMethodElement;
         "sc-paypal-buttons": HTMLScPaypalButtonsElement;
         "sc-price-choice": HTMLScPriceChoiceElement;
         "sc-price-choices": HTMLScPriceChoicesElement;
@@ -3995,6 +4015,7 @@ declare global {
         "sc-spinner": HTMLScSpinnerElement;
         "sc-stacked-list": HTMLScStackedListElement;
         "sc-stacked-list-row": HTMLScStackedListRowElement;
+        "sc-stripe-add-method": HTMLScStripeAddMethodElement;
         "sc-stripe-element": HTMLScStripeElementElement;
         "sc-stripe-payment-element": HTMLScStripePaymentElementElement;
         "sc-stripe-payment-request": HTMLScStripePaymentRequestElement;
@@ -4932,6 +4953,7 @@ declare namespace LocalJSX {
     interface ScDashboardDownloadsList {
         "allLink"?: string;
         "heading"?: string;
+        "isCustomer"?: boolean;
         /**
           * Customer id to fetch subscriptions
          */
@@ -5908,6 +5930,7 @@ declare namespace LocalJSX {
     interface ScOrdersList {
         "allLink"?: string;
         "heading"?: string;
+        "isCustomer"?: boolean;
         /**
           * Query to fetch orders
          */
@@ -5991,13 +6014,9 @@ declare namespace LocalJSX {
         "full"?: boolean;
         "paymentMethod"?: PaymentMethod;
     }
-    interface ScPaymentMethodCreate {
-        "clientSecret"?: string;
-        "error"?: string;
-        "successUrl"?: string;
-    }
     interface ScPaymentMethodsList {
         "heading"?: string;
+        "isCustomer"?: boolean;
         /**
           * Query to fetch paymentMethods
          */
@@ -6006,6 +6025,12 @@ declare namespace LocalJSX {
     interface ScPaymentSelected {
         "iconName"?: string;
         "label"?: string;
+    }
+    interface ScPaypalAddMethod {
+        "currency"?: string;
+        "customerId"?: string;
+        "liveMode"?: boolean;
+        "successUrl"?: string;
     }
     interface ScPaypalButtons {
         /**
@@ -6032,6 +6057,10 @@ declare namespace LocalJSX {
           * The merchant id for paypal.
          */
         "merchantId"?: string;
+        /**
+          * Merchant initiated billing enabled.
+         */
+        "merchantInitiated"?: boolean;
         /**
           * Test or live mode.
          */
@@ -6560,6 +6589,11 @@ declare namespace LocalJSX {
         "mobileSize"?: number;
         "target"?: string;
     }
+    interface ScStripeAddMethod {
+        "customerId"?: string;
+        "liveMode"?: boolean;
+        "successUrl"?: string;
+    }
     interface ScStripeElement {
         /**
           * Your stripe connected account id.
@@ -6767,6 +6801,7 @@ declare namespace LocalJSX {
         "allLink"?: string;
         "cancelBehavior"?: 'period_end' | 'immediate';
         "heading"?: string;
+        "isCustomer"?: boolean;
         /**
           * Customer id to fetch subscriptions
          */
@@ -7230,9 +7265,9 @@ declare namespace LocalJSX {
         "sc-pagination": ScPagination;
         "sc-payment": ScPayment;
         "sc-payment-method": ScPaymentMethod;
-        "sc-payment-method-create": ScPaymentMethodCreate;
         "sc-payment-methods-list": ScPaymentMethodsList;
         "sc-payment-selected": ScPaymentSelected;
+        "sc-paypal-add-method": ScPaypalAddMethod;
         "sc-paypal-buttons": ScPaypalButtons;
         "sc-price-choice": ScPriceChoice;
         "sc-price-choices": ScPriceChoices;
@@ -7252,6 +7287,7 @@ declare namespace LocalJSX {
         "sc-spinner": ScSpinner;
         "sc-stacked-list": ScStackedList;
         "sc-stacked-list-row": ScStackedListRow;
+        "sc-stripe-add-method": ScStripeAddMethod;
         "sc-stripe-element": ScStripeElement;
         "sc-stripe-payment-element": ScStripePaymentElement;
         "sc-stripe-payment-request": ScStripePaymentRequest;
@@ -7381,9 +7417,9 @@ declare module "@stencil/core" {
             "sc-pagination": LocalJSX.ScPagination & JSXBase.HTMLAttributes<HTMLScPaginationElement>;
             "sc-payment": LocalJSX.ScPayment & JSXBase.HTMLAttributes<HTMLScPaymentElement>;
             "sc-payment-method": LocalJSX.ScPaymentMethod & JSXBase.HTMLAttributes<HTMLScPaymentMethodElement>;
-            "sc-payment-method-create": LocalJSX.ScPaymentMethodCreate & JSXBase.HTMLAttributes<HTMLScPaymentMethodCreateElement>;
             "sc-payment-methods-list": LocalJSX.ScPaymentMethodsList & JSXBase.HTMLAttributes<HTMLScPaymentMethodsListElement>;
             "sc-payment-selected": LocalJSX.ScPaymentSelected & JSXBase.HTMLAttributes<HTMLScPaymentSelectedElement>;
+            "sc-paypal-add-method": LocalJSX.ScPaypalAddMethod & JSXBase.HTMLAttributes<HTMLScPaypalAddMethodElement>;
             "sc-paypal-buttons": LocalJSX.ScPaypalButtons & JSXBase.HTMLAttributes<HTMLScPaypalButtonsElement>;
             "sc-price-choice": LocalJSX.ScPriceChoice & JSXBase.HTMLAttributes<HTMLScPriceChoiceElement>;
             "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;
@@ -7403,6 +7439,7 @@ declare module "@stencil/core" {
             "sc-spinner": LocalJSX.ScSpinner & JSXBase.HTMLAttributes<HTMLScSpinnerElement>;
             "sc-stacked-list": LocalJSX.ScStackedList & JSXBase.HTMLAttributes<HTMLScStackedListElement>;
             "sc-stacked-list-row": LocalJSX.ScStackedListRow & JSXBase.HTMLAttributes<HTMLScStackedListRowElement>;
+            "sc-stripe-add-method": LocalJSX.ScStripeAddMethod & JSXBase.HTMLAttributes<HTMLScStripeAddMethodElement>;
             "sc-stripe-element": LocalJSX.ScStripeElement & JSXBase.HTMLAttributes<HTMLScStripeElementElement>;
             "sc-stripe-payment-element": LocalJSX.ScStripePaymentElement & JSXBase.HTMLAttributes<HTMLScStripePaymentElementElement>;
             "sc-stripe-payment-request": LocalJSX.ScStripePaymentRequest & JSXBase.HTMLAttributes<HTMLScStripePaymentRequestElement>;

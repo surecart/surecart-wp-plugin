@@ -66,6 +66,18 @@ class RequestService {
 	}
 
 	/**
+	 * Set the API token on the fly.
+	 *
+	 * @param string $token API token.
+	 *
+	 * @return $this
+	 */
+	public function setToken( $token ) {
+		$this->token = $token;
+		return $this;
+	}
+
+	/**
 	 * Get the base url.
 	 */
 	public function getBaseUrl() {

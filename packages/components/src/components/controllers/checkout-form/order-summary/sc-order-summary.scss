@@ -17,7 +17,7 @@
 .collapse-link__icon {
   width: 18px;
   height: 18px;
-  color: var(--sc-color-gray-500);
+  color: var(--sc-order-collapse-link-icon-color, var(--sc-color-gray-500));
 }
 
 .item__product + .item__product {
@@ -25,7 +25,7 @@
 }
 
 .empty {
-  color: var(--sc-color-gray-500);
+  color: var(--sc-order-summary-color, var(--sc-color-gray-500));
 }
 
 .summary {

@@ -32,7 +32,6 @@
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-login-form](../../controllers/login)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
- - [sc-payment-method-create](../../controllers/dashboard/payment-method-create)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-subscription](../../controllers/dashboard/subscription)
@@ -68,7 +67,6 @@ graph TD;
   sc-invoices-list --> sc-block-ui
   sc-login-form --> sc-block-ui
   sc-orders-list --> sc-block-ui
-  sc-payment-method-create --> sc-block-ui
   sc-payment-methods-list --> sc-block-ui
   sc-purchase-downloads-list --> sc-block-ui
   sc-subscription --> sc-block-ui

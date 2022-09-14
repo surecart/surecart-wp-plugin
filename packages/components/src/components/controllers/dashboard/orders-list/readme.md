@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property  | Attribute  | Description           | Type                                  | Default                                |
-| --------- | ---------- | --------------------- | ------------------------------------- | -------------------------------------- |
-| `allLink` | `all-link` |                       | `string`                              | `undefined`                            |
-| `heading` | `heading`  |                       | `string`                              | `undefined`                            |
-| `query`   | --         | Query to fetch orders | `{ page: number; per_page: number; }` | `{     page: 1,     per_page: 10,   }` |
+| Property     | Attribute     | Description           | Type                                  | Default                                |
+| ------------ | ------------- | --------------------- | ------------------------------------- | -------------------------------------- |
+| `allLink`    | `all-link`    |                       | `string`                              | `undefined`                            |
+| `heading`    | `heading`     |                       | `string`                              | `undefined`                            |
+| `isCustomer` | `is-customer` |                       | `boolean`                             | `undefined`                            |
+| `query`      | --            | Query to fetch orders | `{ page: number; per_page: number; }` | `{     page: 1,     per_page: 10,   }` |
 
 
 ## Dependencies

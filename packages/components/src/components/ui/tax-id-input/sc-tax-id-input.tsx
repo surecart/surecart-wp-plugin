@@ -43,11 +43,15 @@ export class ScTaxIdInput {
 
   @Watch('country')
   handleCountryChange() {
-    this.type = getType(this.country);
+    if (this.country) {
+      this.type = getType(this.country);
+    }
   }
 
   componentWillLoad() {
-    this.type = getType(this.country);
+    if (this.country) {
+      this.type = getType(this.country);
+    }
   }
 
   renderStatus() {
@@ -101,6 +105,7 @@ export class ScTaxIdInput {
                       number: this.number,
                       number_type: name,
                     });
+                    this.type = name;
                   }}
                   checked={this.type === name}
                 >

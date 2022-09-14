@@ -26,14 +26,17 @@
 ```mermaid
 graph TD;
   sc-order-confirmation-customer --> sc-customer-details
+  sc-customer-details --> sc-card
+  sc-customer-details --> sc-stacked-list
   sc-customer-details --> sc-stacked-list-row
   sc-customer-details --> sc-tag
+  sc-customer-details --> sc-divider
+  sc-customer-details --> sc-empty
   sc-customer-details --> sc-skeleton
   sc-customer-details --> sc-dashboard-module
   sc-customer-details --> sc-button
   sc-customer-details --> sc-icon
-  sc-customer-details --> sc-card
-  sc-customer-details --> sc-stacked-list
+  sc-empty --> sc-icon
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon
   sc-button --> sc-spinner

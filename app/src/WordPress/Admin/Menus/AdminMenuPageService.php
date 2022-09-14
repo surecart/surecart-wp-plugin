@@ -105,7 +105,7 @@ class AdminMenuPageService {
 		}
 
 		$logo = file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'images/icon.svg' );
-		\add_menu_page( __( 'Dashboard', 'surecart' ), __( 'SureCart', 'surecart' ), 'install_plugins', $this->slug, '__return_false', 'data:image/svg+xml;base64,' . base64_encode( $logo ), 30 );
+		\add_menu_page( __( 'Dashboard', 'surecart' ), __( 'SureCart', 'surecart' ), 'install_plugins', $this->slug, '__return_false', 'data:image/svg+xml;base64,' . base64_encode( $logo ), 30.6001 );
 
 		// not yet installed.
 		if ( ! ApiToken::get() ) {

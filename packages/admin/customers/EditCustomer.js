@@ -1,3 +1,9 @@
+import { ScBreadcrumb, ScBreadcrumbs, ScButton, ScFlex, ScIcon } from '@surecart/components-react';
+import { store as dataStore } from '@surecart/data';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
+import { store as noticesStore } from '@wordpress/notices';
+
 import useDirty from '../hooks/useDirty';
 import useEntity from '../hooks/useEntity';
 import Logo from '../templates/Logo';
@@ -11,17 +17,6 @@ import Orders from './modules/Orders';
 import Purchases from './modules/Purchases';
 import Subscriptions from './modules/Subscriptions';
 import User from './modules/User';
-import {
-	ScButton,
-	ScIcon,
-	ScBreadcrumbs,
-	ScBreadcrumb,
-	ScFlex,
-} from '@surecart/components-react';
-import { store as dataStore } from '@surecart/data';
-import { useDispatch, useSelect } from '@wordpress/data';
-import { __ } from '@wordpress/i18n';
-import { store as noticesStore } from '@wordpress/notices';
 
 export default () => {
 	const { createSuccessNotice, createErrorNotice } =
@@ -99,7 +94,7 @@ export default () => {
 				<>
 					<Balance customer={customer} loading={!hasLoadedCustomer} />
 					<Purchases customerId={id} />
-					<User customerId={id} />
+					<User customer={customer} customerId={id} />
 					<Notifications
 						customer={customer}
 						updateCustomer={editCustomer}

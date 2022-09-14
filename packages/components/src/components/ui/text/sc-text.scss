@@ -13,7 +13,7 @@
   font-weight: var(--font-weight);
   line-height: var(--line-height);
   text-align: var(--text-align);
-  color: var(--color);
+  color: var(--sc-stacked-list-row-text-color, var(--color));
 
   &.is-truncated {
     overflow:hidden;

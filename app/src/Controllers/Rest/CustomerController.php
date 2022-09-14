@@ -34,11 +34,13 @@ class CustomerController extends RestController {
 			return $user;
 		}
 
-		$user->setCustomerId( $customer->id, $customer->live_mode ? 'live' : 'test' );
+		$response = $user->setCustomerId( $customer->id, $customer->live_mode ? 'live' : 'test', $request['force'] ?? false );
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+
 		$controller = new \WP_REST_Users_Controller();
-
 		return rest_ensure_response( $controller->prepare_item_for_response( $user->getUser(), $request ) );
-
 	}
 
 	/**

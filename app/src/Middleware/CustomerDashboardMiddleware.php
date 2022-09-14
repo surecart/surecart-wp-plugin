@@ -53,13 +53,16 @@ class CustomerDashboardMiddleware {
 		if ( $link->customer ) {
 			$user = User::create(
 				[
-					'user_name'  => $link->email,
 					'user_email' => $link->email,
 				]
 			);
 
 			if ( $user ) {
-				$user->setCustomerId( $link->customer );
+				$linked = $user->setCustomerId( $link->customer );
+				if ( is_wp_error( $linked ) ) {
+					return $this->success( $request );
+				}
+
 				$user->login();
 				return $this->success( $request );
 			}

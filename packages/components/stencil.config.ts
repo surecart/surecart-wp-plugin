@@ -5,6 +5,12 @@ import externalGlobals from 'rollup-plugin-external-globals';
 import { reactOutputTarget } from '@stencil/react-output-target';
 import { sass } from '@stencil/sass';
 
+let external = false;
+if (process.env.SURECART_EXTERNAL) {
+  external = true;
+  console.log('Externalizing i18n');
+}
+
 export const config: Config = {
   namespace: 'surecart',
   globalStyle: './src/themes/base.css',
@@ -41,6 +47,11 @@ export const config: Config = {
       type: 'www',
       serviceWorker: null, // disable service workers
     },
+    // this is used for preloading features.
+    {
+      type: 'stats',
+      file: 'dist/stats.json', // optional
+    },
     {
       // this generates a json file to be used for kses functions.
       type: 'docs-custom',
@@ -69,12 +80,13 @@ export const config: Config = {
   ],
   plugins: [
     sass(),
-    externalGlobals({
-      // '@wordpress/api-fetch': 'wp.apiFetch',
-      // '@wordpress/hooks': 'wp.hooks',
-      '@wordpress/i18n': 'wp.i18n',
-      // '@wordpress/url': 'wp.url',
-      'wp': 'wp',
-    }),
+    ...(external
+      ? [
+          externalGlobals({
+            '@wordpress/i18n': 'wp.i18n',
+            'wp': 'wp',
+          }),
+        ]
+      : []),
   ],
 };

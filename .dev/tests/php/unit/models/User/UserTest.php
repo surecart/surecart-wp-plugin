@@ -35,4 +35,50 @@ class UserTest extends SureCartUnitTestCase {
 		$this->assertSame($user_id, User::findByCustomerId('liveid')->ID);
 		$this->assertSame($user_id_2, User::findByCustomerId('testid')->ID);
 	}
+
+	public function test_setCustomerId() {
+		$user_id = $this->factory->user->create();
+
+		$model = User::find($user_id);
+		$model->setCustomerId('liveid', 'live');
+		$model->setCustomerId('test', 'test');
+
+		$this->assertWPError($model->setCustomerId('somethingelse', 'live'));
+		$this->assertWPError($model->setCustomerId('somethingelse', 'test'));
+
+		$this->assertNotWPError($model->setCustomerId('somethingelse', 'live', true));
+		$this->assertNotWPError($model->setCustomerId('somethingelse', 'test', true));
+	}
+
+	public function test_creating_a_user_without_an_username_uses_email() {
+		$user = User::create([
+			'user_email' => 'testemail@email.com'
+		]);
+		$this->assertSame($user->user_login, 'testemail');
+
+		$user = User::create([
+			'user_name' => null,
+			'user_email' => 'testemail2@email.com'
+		]);
+		$this->assertSame($user->user_login, 'testemail2');
+	}
+
+	public function test_creating_a_user_with_an_existing_username_appends_numbers() {
+		$user = User::create([
+			'user_name' => 'person',
+			'user_email' => 'testemail@email.com'
+		]);
+		$user1 = User::create([
+			'user_name' => 'person',
+			'user_email' => 'testemail1@email.com'
+		]);
+		$user2 = User::create([
+			'user_name' => 'person',
+			'user_email' => 'testemail2@email.com'
+		]);
+
+		$this->assertSame($user->user_login, 'person');
+		$this->assertSame($user1->user_login, 'person1');
+		$this->assertSame($user2->user_login, 'person2');
+	}
 }

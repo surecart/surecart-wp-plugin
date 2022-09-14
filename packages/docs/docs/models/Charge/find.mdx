@@ -6,10 +6,16 @@ import MethodText from '../../../components/MethodText.js';
 ## Examples
 
 ```php
-\SureCart\Models\Charge::paginate();
+\SureCart\Models\Charge::find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
 ```
 
+## Parameters
+import ModelParameters from '../../../components/ModelParameters.js';
+
+<ModelParameters path={'charges/{id}'} method={'get'} />
+
 ## Response Attributes
+
 import ModelResponse from '../../../components/ModelResponse.js';
 
-<ModelResponse path={'charges'} method={'get'} model={'charge'} />
+<ModelResponse path={'charges/{id}'} method={'get'} model={'charge'} />

@@ -18,8 +18,8 @@ class PaymentMethodController extends BaseController {
 	 * @return function
 	 */
 	public function index( $attributes, $content ) {
-		if ( ! User::current()->isCustomer() ) {
-			return;
+		if ( ! is_user_logged_in() ) {
+			return false;
 		}
 
 		return wp_kses_post(
@@ -27,6 +27,7 @@ class PaymentMethodController extends BaseController {
 			->id( 'sc-customer-payment-methods-list' )
 			->with(
 				[
+					'isCustomer' => User::current()->isCustomer(),
 					'query' => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
 						'page'         => 1,
@@ -44,100 +45,102 @@ class PaymentMethodController extends BaseController {
 	 * @return string
 	 */
 	public function create() {
-		$output = '';
+		if ( empty( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) ) ) {
+			ob_start(); ?>
+				<sc-alert type="info" open>
+					<?php if ( $this->isLiveMode() && ! empty( User::current()->customerId( 'test' ) ) ) { ?>
+						<?php esc_html_e( 'You are not a live mode customer.', 'surecart' ); ?>
+						<div style="margin-top:0.5em;">
+							<sc-button href="<?php echo esc_url( add_query_arg( [ 'live_mode' => 'false' ] ) ); ?>" type="info" size="small">
+								<?php esc_html_e( 'Switch to test mode.', 'surecart' ); ?>
+							</sc-button>
+						</div>
+					<?php } elseif ( ! $this->isLiveMode() && ! empty( User::current()->customerId( 'live' ) ) ) { ?>
+						<?php esc_html_e( 'You are not a test mode customer.', 'surecart' ); ?>
+						<div style="margin-top:0.5em;">
+							<sc-button href="<?php echo esc_url( add_query_arg( [ 'live_mode' => false ] ) ); ?>" type="info" size="small">
+								<?php esc_html_e( 'Switch to live mode.', 'surecart' ); ?>
+							</sc-button>
+						</div>
+					<?php } else { ?>
+						<?php esc_html_e( 'You are not currently a customer.', 'surecart' ); ?>
+					<?php } ?>
+				</sc-alert>
+			<?php
+			return ob_get_clean();
+		}
 
-		if ( isset( $_GET['live_mode'] ) && 'false' === sanitize_text_field( wp_unslash( $_GET['live_mode'] ) ) ) {
-			if ( ! empty( User::current()->customerId( 'test' ) ) ) {
-				return $this->createTest();
+		$applicable_processors = array_filter(
+			\SureCart::account()->processors ?? [],
+			function( $processor ) {
+				return $processor->live_mode === $this->isLiveMode() && $processor->recurring_enabled;
 			}
-		}
-
-		return $this->createLive();
-	}
-
-	public function createLive() {
-		$payment_intent_live = PaymentIntent::with( [ 'owner' ] )->create(
-			[
-				'processor_type' => 'stripe',
-				'live_mode'      => true,
-				'currency'       => \SureCart::account()->currency,
-				'customer_id'    => User::current()->customerId( 'live' ),
-			]
 		);
 
-		$output = $this->renderCreate( $payment_intent_live );
-		if ( User::current()->customerId( 'live' ) ) {
-			$output .= '<br /><sc-button type="default" href="' . esc_url_raw( add_query_arg( [ 'live_mode' => 'false' ] ) ) . '">' . esc_html__( 'Add a test payment method', 'surecart' ) . '</sc-button>';
-		}
-
-		return $output;
-	}
-
-	public function createTest() {
-		$payment_intent_test = PaymentIntent::with( [ 'owner' ] )->create(
-			[
-				'processor_type' => 'stripe',
-				'live_mode'      => false,
-				'currency'       => \SureCart::account()->currency,
-				'customer_id'    => User::current()->customerId( 'test' ),
-			]
+		$processor_names = array_filter(
+			array_values(
+				array_map(
+					function( $processor ) {
+						return $processor->processor_type;
+					},
+					$applicable_processors ?? []
+				)
+			)
 		);
 
-		$output = $this->renderCreate( $payment_intent_test );
-		if ( User::current()->customerId( 'live' ) ) {
-			$output .= '<br /><sc-button type="default" href="' . esc_url_raw( remove_query_arg( 'live_mode' ) ) . '">' . esc_html__( 'Add a live payment method', 'surecart' ) . '</sc-button>';
-		}
-
-		return $output;
-	}
-
-	/**
-	 * Render the create view.
-	 *
-	 * @param \SureCart\Models\PaymentIntent $payment_intent the payment intent.
-	 * @return string
-	 */
-	public function renderCreate( $payment_intent ) {
-		if ( empty( $payment_intent->processor_data->stripe->account_id ) ) {
+		if ( empty( $processor_names ) ) {
 			return '<sc-alert type="info" open>' . __( 'You cannot currently add a payment method. Please contact us for support.', 'surecart' ) . '</sc-alert>';
 		}
 
-		ob_start(); ?>
+		ob_start();
+		?>
 
 		<sc-spacing style="--spacing: var(--sc-spacing-large)">
 			<sc-breadcrumbs>
 				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) );  // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>">
-					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+				<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</sc-breadcrumb>
 				<sc-breadcrumb>
-					<?php esc_html_e( 'Add Payment Method', 'surecart' ); ?>
+				<?php esc_html_e( 'Add Payment Method', 'surecart' ); ?>
 				</sc-breadcrumb>
 			</sc-breadcrumbs>
 
 			<sc-heading>
-				<?php esc_html_e( 'Add Payment Method', 'surecart' ); ?>
-				<?php echo ! $payment_intent->live_mode ? '<sc-tag type="warning" slot="end">' . esc_html__( 'Test Mode', 'surecart' ) . '</sc-tag>' : ''; ?>
+			<?php esc_html_e( 'Add Payment Method', 'surecart' ); ?>
+			<?php echo ! $this->isLiveMode() ? '<sc-tag type="warning" slot="end">' . esc_html__( 'Test Mode', 'surecart' ) . '</sc-tag>' : ''; ?>
 			</sc-heading>
 
-			<sc-payment-method-create
-				client-secret="<?php echo esc_attr( $payment_intent->processor_data->stripe->client_secret ); ?>"
-				success-url="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) );  // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>"
-				>
-					<?php
-						echo wp_kses_post(
-							Component::tag( 'sc-stripe-payment-element' )
-							->id( 'customer-payment-method-add' )
-							->with(
-								[
-									'accountId'      => $payment_intent->processor_data->stripe->account_id,
-									'publishableKey' => $payment_intent->processor_data->stripe->publishable_key,
-									'clientSecret'   => $payment_intent->processor_data->stripe->client_secret,
-								]
-							)->render()
-						);
-					?>
-			</sc-payment-method-create>
+			<sc-toggles collapsible="false" theme="container" accordion>
+			<?php if ( in_array( 'stripe', $processor_names ) ) : ?>
+					<sc-toggle class="sc-stripe-toggle" show-control shady borderless>
+						<span slot="summary" class="sc-payment-toggle-summary">
+							<sc-flex>
+								<sc-icon name="credit-card" style="font-size:24px"></sc-icon>
+								<span><?php esc_html_e( 'Credit Card', 'surecart' ); ?></span>
+							</sc-flex>
+						</span>
+						<sc-stripe-add-method
+							success-url="<?php echo esc_url( home_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ) );  // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>"
+							live-mode="<?php echo esc_attr( $this->isLiveMode() ? 'true' : 'false' ); ?>"
+							customer-id="<?php echo esc_attr( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) ); ?>">
+						</sc-stripe-add-method>
+					</sc-toggle>
+				<?php endif; ?>
 
+			<?php if ( in_array( 'paypal', $processor_names ) ) : ?>
+					<sc-toggle class="sc-paypal-toggle" show-control shady borderless>
+						<span slot="summary" class="sc-payment-toggle-summary">
+							<sc-icon name="paypal" style="width: 80px; font-size: 24px"></sc-icon>
+						</span>
+						<sc-paypal-add-method
+							success-url="<?php echo esc_url( home_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ) );  // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>"
+							live-mode="<?php echo esc_attr( $this->isLiveMode() ? 'true' : 'false' ); ?>"
+							currency="<?php echo esc_attr( \SureCart::account()->currency ); ?>"
+							customer-id="<?php echo esc_attr( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) ); ?>">
+						</sc-paypal-add-method>
+					</sc-toggle>
+				<?php endif; ?>
+			</sc-toggles>
 		</sc-spacing>
 		<?php
 		return ob_get_clean();

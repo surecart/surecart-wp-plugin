@@ -125,11 +125,11 @@ export class ScPayment {
 
           <sc-toggle class="sc-paypal-toggle" show-control shady borderless open={this.processor === 'paypal'} onScShow={() => this.scSetProcessor.emit('paypal')}>
             <span slot="summary" class="sc-payment-toggle-summary">
-              <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
+              <sc-icon name={window?.scData?.theme === 'dark' ? 'paypal-white' : 'paypal'} style={{ width: '80px', fontSize: '24px' }}></sc-icon>
             </span>
             <sc-card>
               <sc-payment-selected label={__('PayPal selected for check out.', 'surecart')}>
-                <sc-icon slot="icon" name="paypal" style={{ width: '80px' }} />
+                <sc-icon slot="icon" name={window?.scData?.theme === 'dark' ? 'paypal-white' : 'paypal'} style={{ width: '80px' }} />
                 {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
               </sc-payment-selected>
             </sc-card>
@@ -171,11 +171,11 @@ export class ScPayment {
           </sc-toggle>
           <sc-toggle data-test-id="paypal-toggle" show-control shady borderless open={this.processor === 'paypal'} onScShow={() => this.scSetProcessor.emit('paypal')}>
             <span slot="summary" class="sc-payment-toggle-summary">
-              <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
+              <sc-icon name={window?.scData?.theme === 'dark' ? 'paypal-white' : 'paypal'} style={{ width: '80px', fontSize: '24px' }}></sc-icon>
             </span>
             <sc-card>
               <sc-payment-selected label={__('PayPal selected for check out.', 'surecart')}>
-                <sc-icon slot="icon" name="paypal" style={{ width: '80px' }} />
+                <sc-icon slot="icon" name={window?.scData?.theme === 'dark' ? 'paypal-white' : 'paypal'} style={{ width: '80px' }} />
                 {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
               </sc-payment-selected>
             </sc-card>

@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 1.1.5
+Stable tag: 1.1.11
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -42,7 +42,7 @@ This way you get everything you want with none of the stuff you don’t want. Su
 Currently SureCart is ideally suited for selling non-physical goods. This would be selling online courses, memberships, subscriptions, selling services, selling event tickets, accepting donations, selling digital downloads, etc. These are no non-physical goods.
 
 However you can still sell physical products with SureCart and we have merchants selling physical goods currently, but we have yet to launch some essential features for selling physical goods. These are inventory control, shipping calculations, and country buying restrictions. These are planned by the end of the year.
-
+`
 ## Now let me tell you what SureCart can do, then why you could consider using it. ##
 
 ## SureCart Features ##
@@ -242,6 +242,42 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.1.11 - September 14, 2022 =
+* Improvement: Preload key components to prevent momentary blank loading screen on checkout page for slow connections.
+* Fix: Subscription plan price incorrect on some instances on customer dashboard.
+
+= 1.1.10 - September 8, 2022 =
+* Fix: Issue with API Token sometimes not saving on settings page.
+
+= 1.1.9 - September 6, 2022 =
+* New: Dark mode theme
+* New: LifterLMS Integration
+* New: Merchant search on admin index pages.
+* Improvement: Allow customer dashboard access to non-customers.
+* Improvement: Allow filtering php model attributes.
+* Improvement: Prevent Admin access to SureCart customers.
+* Improvement: Change address block to default to full address capture by default.
+
+= 1.1.8 - August 31, 2022 =
+* Fix: Issue with AffiliateWP affiliates sometimes not getting referrals marked complete.
+
+= 1.1.7 - August 31, 2022 =
+* Improvement: Make cart close arrow face opposite direction.
+* Improvement: Customer syncing with WordPress users.
+* Fix: Clear account cache on API Token save.
+* Fix: Remove duplicate Invoices/Receipts from brand settings page.
+* Fix: tax id dropdown on customer portal not saving.
+* Fix: Button size customization not applying in add to cart button.
+* Fix: Incorrect Average Order Total on dashboard chart.
+* Fix: Issue with live customers wp users not displaying properly on Merchant customer edit page.
+* Fix: Better error handling with Customer create.
+
+= 1.1.6 - August 24, 2022 =
+* Improvement: Allow PayPal for subscriptions if Reference Transactions are enabled on your account.
+* Improvement: Ability to add PayPal payment method on customer dashboard page if Reference Transactions are enabled.
+* Fix: Issue with dashboard page being cached on some Cloudflare setups, causing login loop.
+* Fix: Issue with adding additional payment method on customer dashboard page.
 
 = 1.1.5 - August 22, 2022 =
 * Improvement: Support additional Stripe payment methods (Bank Transfer, iDEAL, SEPA Klarna, etc.)
