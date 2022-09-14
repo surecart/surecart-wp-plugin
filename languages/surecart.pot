@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-09-05T19:07:31+00:00\n"
+"POT-Creation-Date: 2022-09-14T14:54:02+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -17,6 +17,7 @@ msgstr ""
 
 #: src/BlockLibrary/BlockServiceProvider.php:95
 #: src/Integrations/AffiliateWP/AffiliateWPService.php:29
+#: src/Integrations/ThriveAutomator/ThriveAutomatorApp.php:25
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:108
 #: src/WordPress/Admin/Notices/AdminNoticesService.php:104
 #: src/WordPress/ThemeServiceProvider.php:87
@@ -152,7 +153,7 @@ msgstr ""
 #: src/Controllers/Admin/Products/ProductsListTable.php:97
 #: src/Support/Errors/Translations/attributes.php:11
 #: customers/modules/Details.js:34
-#: licenses/modules/Activations/Activation.js:137
+#: licenses/modules/Activations/Activation.js:149
 #: products/modules/Details.js:17
 #: Blocks/Checkbox/components/Inspector.js:16
 #: Blocks/Checkbox/edit.js:38
@@ -253,7 +254,7 @@ msgstr ""
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:111
 #: src/Controllers/Admin/Products/ProductsListTable.php:312
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:407
-#: licenses/modules/Activations/Activation.js:204
+#: licenses/modules/Activations/Activation.js:221
 #: settings/customer/EmailRow.js:14
 msgid "Edit"
 msgstr ""
@@ -356,7 +357,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:50
 #: customers/modules/Details.js:46
-#: settings/brand/BrandSettings.js:158
+#: settings/brand/BrandSettings.js:157
 msgid "Email"
 msgstr ""
 
@@ -696,6 +697,7 @@ msgid "Plan"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:105
+#: src/Integrations/ThriveAutomator/DataFields/ProductDataField.php:109
 #: src/Support/Errors/Translations/attributes.php:17
 #: src/Support/Errors/Translations/attributes.php:18
 #: customers/modules/Subscriptions.js:58
@@ -964,8 +966,63 @@ msgstr ""
 msgid "Enable access to a MemberPress membership."
 msgstr ""
 
-#: src/Integrations/ThriveAutomator/DataObjects/ProductData.php:32
-msgid "SureCart product"
+#: src/Integrations/ThriveAutomator/DataFields/ProductIDDataField.php:29
+#: src/Integrations/ThriveAutomator/DataFields/ProductIDDataField.php:47
+#: src/Integrations/ThriveAutomator/DataFields/ProductIDDataField.php:83
+msgid "Product ID"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/DataFields/ProductIDDataField.php:38
+msgid "A specific product id."
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/DataFields/ProductNameDataField.php:29
+#: products/CreateProduct.js:54
+msgid "Product Name"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/DataFields/ProductNameDataField.php:38
+msgid "A specific product name."
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/DataObjects/ProductDataObject.php:34
+msgid "SureCart product object"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/ThriveAutomatorApp.php:34
+msgid "SureCart eCommerce Platform"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/Triggers/PurchaseCreatedTrigger.php:66
+msgid "Product purchase completed"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/Triggers/PurchaseCreatedTrigger.php:75
+msgid "This trigger will be fired when someone first purchases a product."
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/Triggers/PurchaseInvokedTrigger.php:66
+msgid "Product purchase is unrevoked"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/Triggers/PurchaseInvokedTrigger.php:75
+msgid "This trigger will be fired when a purchase is unrevoked."
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/Triggers/PurchaseRevokedTrigger.php:66
+msgid "Product purchase is revoked"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/Triggers/PurchaseRevokedTrigger.php:75
+msgid "This trigger will be fired when a purchase is revoked."
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/Triggers/PurchaseUpdatedTrigger.php:66
+msgid "Product purchase updated"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/Triggers/PurchaseUpdatedTrigger.php:75
+msgid "This trigger will be fired when a purchase updated."
 msgstr ""
 
 #: src/Integrations/TutorLMS/TutorLMSService.php:127
@@ -3654,7 +3711,7 @@ msgid "Store Settings"
 msgstr ""
 
 #: layouts/partials/admin-settings-sidebar.php:9
-#: settings/brand/BrandSettings.js:51
+#: settings/brand/BrandSettings.js:50
 msgid "Design & Branding"
 msgstr ""
 
@@ -4019,7 +4076,7 @@ msgstr ""
 #: components/Error.js:25
 #: customers/CreateCustomer.js:44
 #: hooks/useDataApi/index.js:53
-#: licenses/modules/Activations/Activation.js:95
+#: licenses/modules/Activations/Activation.js:107
 #: product-groups/CreateProductGroup.js:35
 #: product-groups/modules/NewProduct.js:45
 #: products/CreateProduct.js:34
@@ -4042,7 +4099,7 @@ msgstr ""
 #: customers/EditCustomer.js:46
 #: customers/modules/Balance/ViewTransactions.js:46
 #: customers/modules/User/index.js:24
-#: licenses/modules/Activations/index.js:59
+#: licenses/modules/Activations/index.js:65
 #: orders/Order.js:94
 #: products/modules/SingleDownload.js:35
 #: subscriptions/edit/EditSubscription.js:149
@@ -4159,7 +4216,7 @@ msgstr ""
 #: coupons/components/coupon/ActionsDropdown.js:40
 #: coupons/components/CouponActionsDropdown.js:125
 #: coupons/modules/Code.js:126
-#: licenses/modules/Activations/Activation.js:208
+#: licenses/modules/Activations/Activation.js:225
 #: products/components/product/ActionsDropdown.js:40
 #: products/modules/integrations/Integration.js:204
 #: products/modules/Prices/Price/Header.js:167
@@ -4758,7 +4815,7 @@ msgstr ""
 
 #: invoices/modules/Address.js:7
 #: orders/modules/Address.js:10
-#: settings/brand/BrandSettings.js:181
+#: settings/brand/BrandSettings.js:180
 #: settings/tax/TaxSettings.js:72
 #: sc-address2.js:47
 #: sc-form-components-validator2.js:56
@@ -4851,36 +4908,36 @@ msgstr ""
 msgid "View License"
 msgstr ""
 
-#: licenses/modules/Activations/Activation.js:50
-#: licenses/modules/Activations/index.js:42
+#: licenses/modules/Activations/Activation.js:62
+#: licenses/modules/Activations/index.js:48
 msgid "Are you sure you want to remove this activation? This site will no longer get updates."
 msgstr ""
 
-#: licenses/modules/Activations/Activation.js:66
+#: licenses/modules/Activations/Activation.js:78
 msgid "Activation deleted."
 msgstr ""
 
-#: licenses/modules/Activations/Activation.js:73
+#: licenses/modules/Activations/Activation.js:85
 msgid "Please refresh the page and try again."
 msgstr ""
 
-#: licenses/modules/Activations/Activation.js:90
+#: licenses/modules/Activations/Activation.js:102
 msgid "Activation updated."
 msgstr ""
 
-#: licenses/modules/Activations/Activation.js:125
+#: licenses/modules/Activations/Activation.js:137
 msgid "Edit Activation"
 msgstr ""
 
-#: licenses/modules/Activations/Activation.js:148
+#: licenses/modules/Activations/Activation.js:160
 msgid "Fingerprint"
 msgstr ""
 
-#: licenses/modules/Activations/Activation.js:150
+#: licenses/modules/Activations/Activation.js:162
 msgid "This is a unique identifier for the license. For example, a website url."
 msgstr ""
 
-#: licenses/modules/Activations/Activation.js:169
+#: licenses/modules/Activations/Activation.js:181
 #: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:89
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:44
 #: Blocks/Dashboard/WordPressAccount/edit.js:44
@@ -4890,16 +4947,20 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
-#: licenses/modules/Activations/index.js:67
+#: licenses/modules/Activations/Activation.js:193
+msgid "Local / Staging"
+msgstr ""
+
+#: licenses/modules/Activations/index.js:73
 msgid "This license has not been activated."
 msgstr ""
 
-#: licenses/modules/Activations/index.js:88
+#: licenses/modules/Activations/index.js:94
 #: sc-licenses-list.js:52
 msgid "Activations"
 msgstr ""
 
-#: licenses/modules/Activations/index.js:94
+#: licenses/modules/Activations/index.js:100
 msgid "%1s of %2s Activations Used"
 msgstr ""
 
@@ -5165,10 +5226,6 @@ msgstr ""
 
 #: products/CreateProduct.js:45
 msgid "Create New Product"
-msgstr ""
-
-#: products/CreateProduct.js:54
-msgid "Product Name"
 msgstr ""
 
 #: products/CreateProduct.js:56
@@ -5545,7 +5602,7 @@ msgstr ""
 
 #: settings/account/AccountSettings.js:27
 #: settings/advanced/AdvancedSettings.js:25
-#: settings/brand/BrandSettings.js:41
+#: settings/brand/BrandSettings.js:40
 #: settings/connection/ConnectionSettings.js:25
 #: settings/customer/CustomerSettings.js:33
 #: settings/order/OrderProtocol.js:27
@@ -5610,28 +5667,31 @@ msgstr ""
 msgid "If you do not wish to use the slide-out cart, you can disable this to prevent scripts from loading on your pages."
 msgstr ""
 
-#: settings/brand/BrandSettings.js:62
+#: settings/brand/BrandSettings.js:61
 msgid "Brand Settings"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:63
+#: settings/brand/BrandSettings.js:62
 msgid "Customize how your brand appears globally across SureCart. Your logo and colors will be used on hosted pages and emails that are sent to your customers."
 msgstr ""
 
-#: settings/brand/BrandSettings.js:80
+#: settings/brand/BrandSettings.js:79
 msgid "Brand Color"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:81
+#: settings/brand/BrandSettings.js:80
 msgid "This color will be used for the main button color, links, and various UI elements."
 msgstr ""
 
+#: settings/brand/BrandSettings.js:118
+msgid "Select Theme (Beta)"
+msgstr ""
+
 #: settings/brand/BrandSettings.js:119
-#: settings/brand/BrandSettings.js:120
 msgid "Select Theme"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:123
+#: settings/brand/BrandSettings.js:122
 msgid "Choose \"Dark\" if your theme already has a dark background."
 msgstr ""
 
@@ -5643,33 +5703,33 @@ msgstr ""
 msgid "Dark"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:143
+#: settings/brand/BrandSettings.js:142
 msgid "Contact Information"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:144
+#: settings/brand/BrandSettings.js:143
 msgid "This information helps customers recognize your business and contact you when necessary. It will be visible on invoices/receipts and any emails that need to be CAN-SPAM compliant (i.e. abandoned order emails)."
 msgstr ""
 
-#: settings/brand/BrandSettings.js:160
+#: settings/brand/BrandSettings.js:159
 msgid "Enter an email"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:165
+#: settings/brand/BrandSettings.js:164
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:82
 #: sc-customer-edit.js:88
 msgid "Phone"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:167
+#: settings/brand/BrandSettings.js:166
 msgid "Enter an phone number"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:172
+#: settings/brand/BrandSettings.js:171
 msgid "Website"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:174
+#: settings/brand/BrandSettings.js:173
 msgid "Enter a website URL"
 msgstr ""
 
@@ -10332,7 +10392,7 @@ msgstr ""
 msgid "Your next payment is on"
 msgstr ""
 
-#: sc-subscription-details2.js:79
+#: sc-subscription-details2.js:80
 msgid "Update Scheduled"
 msgstr ""
 
