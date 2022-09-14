@@ -31,14 +31,3 @@ add_filter(
 		return $url;
 	}
 );
-
-
-register_meta(
-	'user',
-	'default_password_nag',
-	[
-		'type'         => 'boolean',
-		'show_in_rest' => true,
-		'single'       => true,
-	]
-);
