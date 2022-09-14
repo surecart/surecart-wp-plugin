@@ -248,7 +248,12 @@ export class ScCheckout {
         {/* Univers provider */}
         <Universe.Provider state={this.state()}>
           {/** Handles login form prompts. */}
-          <sc-login-provider loggedIn={this.loggedIn} onScSetCustomer={e => (this.customer = e.detail as Customer)} onScSetLoggedIn={e => (this.loggedIn = e.detail)}>
+          <sc-login-provider
+            loggedIn={this.loggedIn}
+            onScSetCustomer={e => (this.customer = e.detail as Customer)}
+            onScSetLoggedIn={e => (this.loggedIn = e.detail)}
+            order={this.order()}
+          >
             {/* Handles the current checkout form state. */}
             <sc-form-state-provider onScSetCheckoutFormState={e => (this.checkoutState = e.detail)}>
               {/* Handles errors in the form. */}

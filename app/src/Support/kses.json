@@ -767,6 +767,7 @@
   },
   "sc-login-provider": {
     "logged-in": true,
+    "order": true,
     "style": true,
     "id": true,
     "class": true,

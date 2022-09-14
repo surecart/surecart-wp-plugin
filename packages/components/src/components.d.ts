@@ -1404,6 +1404,7 @@ export namespace Components {
           * Is the user logged in.
          */
         "loggedIn": boolean;
+        "order": Order;
     }
     interface ScMenu {
         "setCurrentItem": (item: HTMLScMenuItemElement) => Promise<void>;
@@ -5645,6 +5646,7 @@ declare namespace LocalJSX {
         "loggedIn"?: boolean;
         "onScSetCustomer"?: (event: ScLoginProviderCustomEvent<{ email: string; name?: string }>) => void;
         "onScSetLoggedIn"?: (event: ScLoginProviderCustomEvent<boolean>) => void;
+        "order"?: Order;
     }
     interface ScMenu {
         "onScSelect"?: (event: ScMenuCustomEvent<{ item: HTMLScMenuItemElement }>) => void;
