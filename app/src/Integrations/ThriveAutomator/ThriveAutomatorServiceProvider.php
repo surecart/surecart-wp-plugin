@@ -3,6 +3,9 @@ namespace SureCart\Integrations\ThriveAutomator;
 
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
+/**
+ * Provides the Thrive Automator service.
+ */
 class ThriveAutomatorServiceProvider implements ServiceProviderInterface {
 	/**
 	 * Register all dependencies in the IoC container.
