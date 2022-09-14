@@ -242,16 +242,11 @@ class CheckoutsController extends RestController {
 			$errors->add( $valid_login->get_error_code(), $valid_login->get_error_message() );
 		}
 
-		if ( $request->get_param( 'grecaptcha' ) ) {
-			$recaptcha    = new RecaptchaValidationService();
-			$get_response = $recaptcha->get_response( $request->get_param( 'grecaptcha' ) );
-			
-			if ( ! $recaptcha->is_validate_token( $request->get_param( 'grecaptcha' ), $get_response ) ) {
-				$errors->add( 'invalid_recaptcha', __( 'reCaptcha not validated.', 'surecart' ) );
-			}
-
-			if ( ! $recaptcha->is_validate_score( $request->get_param( 'grecaptcha' ), $get_response ) ) {
-				$errors->add( 'invalid_recaptcha_score', __( 'reCaptcha score not validated.', 'surecart' ) );
+		// check recaptcha.
+		if ( ! empty( $request->get_param( 'grecaptcha' ) ) ) {
+			$recaptcha = ( new RecaptchaValidationService() )->validate( $request->get_param( 'grecaptcha' ) );
+			if ( is_wp_error( $recaptcha ) ) {
+				$errors->add( $recaptcha->get_error_code(), $recaptcha->get_error_message() );
 			}
 		}
 

@@ -151,6 +151,9 @@ class ScriptsService {
 		);
 
 		wp_localize_script( 'surecart-cart-blocks', 'scIcons', [ 'path' => esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) ] );
+
+		// regsiter recaptcha.
+		wp_register_script( 'surecart-google-recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . get_option( 'sc_recaptcha_site_key', '' ), [], \SureCart::plugin()->version(), true );
 	}
 
 	/**

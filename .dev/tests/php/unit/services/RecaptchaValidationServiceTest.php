@@ -5,49 +5,85 @@ namespace SureCart\Tests\Services;
 use SureCart\Tests\SureCartUnitTestCase;
 use SureCart\WordPress\RecaptchaValidationService;
 
-class RecaptchaValidationServiceTest extends SureCartUnitTestCase {
-	public $service = null;
+class RecaptchaValidationServiceTest extends SureCartUnitTestCase
+{
+	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
 	/**
 	 * Set up a new app instance to use for tests.
 	 */
-	public function setUp() {
+	public function setUp()
+	{
 		// Set up an app instance with whatever stubs and mocks we need before every test.
-		\SureCart::make()->bootstrap([
-			'providers' => [
-				\SureCart\WordPress\Pages\PageServiceProvider::class,
-			]
-		], false);
-
-		$this->service = new RecaptchaValidationService();
-
+		\SureCart::make()->bootstrap([], false);
 		parent::setUp();
+	}
+
+	public function validationData()
+	{
+		return [
+			[(object) [
+				'success'      => 0,
+				'score'        => 0.9,
+			], false],
+			[(object) [
+				'success'      => 1,
+				'score'        => 0.4,
+			], false],
+			[(object) [
+				'success'      => 1,
+				'score'        => 0.5,
+			], true],
+		];
 	}
 
 	/**
 	 * Test reCaptcha validate token.
+	 * @group failing
+	 * @dataProvider validationData
 	 */
-	public function test_sc_is_validate_token() {
-		$this->assertFalse( $this->service->is_validate_token( '', $this->get_test_data() ) );
+	public function test_validate($data, $valid)
+	{
+		$service = \Mockery::mock(RecaptchaValidationService::class)->makePartial();
+		$service->shouldReceive('makeRequest')->once()->andReturn($data);
+		if ($valid) {
+			$this->assertTrue($service->validate('test'));
+		} else {
+			$this->assertWPError($service->validate('test'));
+		}
 	}
 
 	/**
-	 * Test reCaptcha validate score.
+	 * Test Min score
+	 * @group failing
 	 */
-	public function test_sc_is_validate_score() {
-		$this->assertTrue( $this->service->is_validate_score( '', $this->get_test_data() ) );
+	public function test_min_score() {
+		$service = \Mockery::mock(RecaptchaValidationService::class)->makePartial();
+		$service->shouldReceive('getMinScore')->once()->andReturn(0.2);
+		$this->assertTrue($service->isValidScore((object)[
+			'success' => 1,
+			'score' => 0.3
+		]));
+
+		$service->shouldReceive('getMinScore')->once()->andReturn(0.4);
+		$this->assertFalse($service->isValidScore((object)[
+			'success' => 1,
+			'score' => 0.3
+		]));
 	}
 
-    /**
-	 * Get test data.
+	/**
+	 * @group failing
 	 */
-    public function get_test_data() {
-        return (object) [
-            'success'      => 1,
-            'challenge_ts' => '2022-09-13T17:43:52Z',
-            'hostname'     => 'surecart.local',
-            'score'        => 0.9,
-            'action'       => 'surecart_checkout_submit'
-        ];
-    }
+	public function test_is_token_valid() {
+		$service = \Mockery::mock(RecaptchaValidationService::class)->makePartial();
+		$this->assertTrue($service->isTokenValid((object)[
+			'success' => 1,
+		]));
+		$this->assertFalse($service->isTokenValid((object)[
+			'success' => 0,
+		]));
+		// unexpected response.
+		$this->assertFalse($service->isTokenValid('string'));
+	}
 }

@@ -22,6 +22,34 @@ class SettingService {
 				'default'           => 'light',
 			]
 		);
+		$this->register(
+			'general',
+			'sc_recaptcha_site_key',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+			]
+		);
+		$this->register(
+			'general',
+			'sc_recaptcha_secret_key',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+			]
+		);
+		$this->register(
+			'general',
+			'sc_recaptcha_min_score',
+			[
+				'type'              => 'number',
+				'show_in_rest'      => true,
+				'default'           => 0.5,
+				'sanitize_callback' => 'sanitize_text_field',
+			]
+		);
 	}
 
 	/**
