@@ -28,14 +28,14 @@ class RecaptchaValidationServiceTest extends SureCartUnitTestCase {
 	 * Test reCaptcha validate token.
 	 */
 	public function test_sc_is_validate_token() {
-		$this->assertFalse( $this->service->is_validate_token( $this->get_test_data() ) );
+		$this->assertFalse( $this->service->is_validate_token( '', $this->get_test_data() ) );
 	}
 
 	/**
 	 * Test reCaptcha validate score.
 	 */
 	public function test_sc_is_validate_score() {
-		$this->assertTrue( $this->service->is_validate_score( $this->get_test_data() ) );
+		$this->assertTrue( $this->service->is_validate_score( '', $this->get_test_data() ) );
 	}
 
     /**
