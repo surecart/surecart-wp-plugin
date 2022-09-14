@@ -45,6 +45,7 @@ return [
 		\SureCart\Rest\BlockPatternsRestServiceProvider::class,
 		\SureCart\Rest\AccountRestServiceProvider::class,
 		\SureCart\Rest\BrandRestServiceProvider::class,
+		\SureCart\Rest\BumpRestServiceProvider::class,
 		\SureCart\Rest\LoginRestServiceProvider::class,
 		\SureCart\Rest\PurchasesRestServiceProvider::class,
 		\SureCart\Rest\StatisticRestServiceProvider::class,
