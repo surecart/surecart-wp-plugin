@@ -18,6 +18,7 @@ export class ScPasswordNag {
   @State() set: boolean;
   @State() loading: boolean;
   @State() error: string;
+  @State() success: boolean;
 
   @Watch('set')
   handleSetChange() {
@@ -67,6 +68,7 @@ export class ScPasswordNag {
         },
       });
       this.dismiss();
+      this.success = true;
     } catch (e) {
       this.error = e?.message || __('Something went wrong', 'surecart');
       this.loading = false;
@@ -74,12 +76,21 @@ export class ScPasswordNag {
   }
 
   render() {
+    if (this.success) {
+      return (
+        <sc-alert style={{ marginBottom: 'var(--sc-spacing-xx-large)' }} type="success" open>
+          <span slot="title">{__('Succcess!', 'surecart')}</span>
+          {__('You have successfully set your password.', 'surecart')}
+        </sc-alert>
+      );
+    }
+
     return (
       <sc-alert
         type={this.type}
         open={this.open}
         exportparts="base, icon, text, title, message, close-icon"
-        style={{ marginBottom: this.open ? 'var(--sc-spacing-xx-large)' : '0' }}
+        style={{ marginBottom: this.open ? 'var(--sc-spacing-xx-large)' : '0', position: 'relative' }}
       >
         {!!this.error && this.error}
         {this.set ? (
@@ -94,7 +105,7 @@ export class ScPasswordNag {
                 <sc-input label={__('New Password', 'surecart')} name="password" type="password" required ref={el => (this.input = el as HTMLScInputElement)} />
                 <sc-input label={__('Confirm New Password', 'surecart')} name="password_confirm" type="password" required />
                 <div>
-                  <sc-button type="primary" full submit>
+                  <sc-button type="primary" full submit busy={this.loading}>
                     {__('Update Password', 'surecart')}
                   </sc-button>
                 </div>
