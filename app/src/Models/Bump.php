@@ -11,7 +11,7 @@ class Bump extends Model {
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'bump';
+	protected $endpoint = 'bumps';
 
 	/**
 	 * Object name

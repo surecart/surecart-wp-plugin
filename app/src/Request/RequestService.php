@@ -257,6 +257,8 @@ class RequestService {
 			}
 		}
 
+		error_log( print_r( $url, 1 ) );
+		error_log( print_r( $args, 1 ) );
 		// make request.
 		$response = $this->remoteRequest( $url, $args );
 
