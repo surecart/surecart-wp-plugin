@@ -36,7 +36,9 @@ class PreloadService {
 	 * @return void
 	 */
 	public function bootstrap() {
+		// add preload tags to head, footer as fallback.
 		add_action( 'wp_head', [ $this, 'renderComponents' ] );
+		add_action( 'wp_footer', [ $this, 'renderComponents' ] );
 	}
 
 	/**
@@ -93,6 +95,7 @@ class PreloadService {
 	public function renderComponents() {
 		if ( ! empty( $this->components ) ) {
 			$this->renderTag( $this->components );
+			$this->components = [];
 		}
 	}
 
