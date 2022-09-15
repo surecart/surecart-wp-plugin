@@ -2,7 +2,12 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { ScInput, ScSelect, ScSwitch } from '@surecart/components-react';
+import {
+	ScAlert,
+	ScInput,
+	ScSelect,
+	ScSwitch,
+} from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
 import useEntity from '../../hooks/useEntity';
@@ -13,6 +18,7 @@ import { useEntityProp } from '@wordpress/core-data';
 export default () => {
 	const [error, setError] = useState(null);
 	const { save } = useSave();
+	const [showNotice, setShowNotice] = useState(false);
 	const { item, itemError, editItem, hasLoadedItem } = useEntity(
 		'store',
 		'account'
@@ -167,16 +173,19 @@ export default () => {
 			</SettingsBox>
 
 			<SettingsBox
-				title={__('Spam Settings', 'surecart')}
+				title={__('Spam Protection & Security', 'surecart')}
 				description={__(
-					'Change your checkout spam protection settings.',
+					'Change your checkout spam protection and security settings.',
 					'surecart'
 				)}
 				loading={!hasLoadedItem}
 			>
 				<ScSwitch
 					checked={recaptchaEnabled}
-					onScChange={(e) => setRecaptchaEnabled(e.target.checked)}
+					onScChange={(e) => {
+						setRecaptchaEnabled(e.target.checked);
+						setShowNotice(true);
+					}}
 				>
 					{__('Recaptcha', 'surecart')}
 					<span slot="description">
@@ -186,15 +195,29 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
+
+				{showNotice && (
+					<ScAlert open>
+						<span slot="title">{__('Important', 'surecart')}</span>
+						{__(
+							'Please clear all site caching after changing this setting.',
+							'surecart'
+						)}
+					</ScAlert>
+				)}
+
 				{recaptchaEnabled && (
-					<div
-						css={css`
-							gap: var(--sc-form-row-spacing);
-							display: grid;
-							grid-template-columns: repeat(2, minmax(0, 1fr));
-						`}
-					>
-						<>
+					<>
+						<div
+							css={css`
+								gap: var(--sc-form-row-spacing);
+								display: grid;
+								grid-template-columns: repeat(
+									2,
+									minmax(0, 1fr)
+								);
+							`}
+						>
 							<ScInput
 								value={recaptchaSiteKey}
 								label={__('reCaptcha Site Key', 'surecart')}
@@ -206,7 +229,10 @@ export default () => {
 									setRecaptchaSiteKey(e.target.value)
 								}
 								type="password"
-								help={__('This is use reCaptcha.', 'surecart')}
+								help={__(
+									'You can find this on your google Recaptcha dashboard.',
+									'surecart'
+								)}
 							></ScInput>
 							<ScInput
 								value={recaptchaSecretKey}
@@ -219,7 +245,10 @@ export default () => {
 									setRecapchaSecretKey(e.target.value)
 								}
 								type="password"
-								help={__('This is use reCaptcha.', 'surecart')}
+								help={__(
+									'You can find this on your google Recaptcha dashboard.',
+									'surecart'
+								)}
 							></ScInput>
 							<ScInput
 								value={recaptchaMinScore}
@@ -237,8 +266,19 @@ export default () => {
 									'surecart'
 								)}
 							></ScInput>
-						</>
-					</div>
+						</div>
+						{!recaptchaSiteKey && (
+							<ScAlert open>
+								{__('To get your Recaptcha keys', 'surecart')}{' '}
+								<a
+									href="https://www.google.com/recaptcha/admin/create"
+									target="_blank"
+								>
+									{__('register a new site.', 'surecart')}
+								</a>
+							</ScAlert>
+						)}
+					</>
 				)}
 			</SettingsBox>
 		</SettingsTemplate>
