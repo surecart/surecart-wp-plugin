@@ -97,7 +97,7 @@ class AssetsService {
 	 */
 	public function enqueueForm() {
 		// add recaptcha if enabled.
-		if ( ! empty( get_option( 'sc_recaptcha_site_key', false ) ) ) {
+		if ( \SureCart::settings()->recaptcha()->isEnabled() ) {
 			wp_enqueue_script( 'surecart-google-recaptcha' );
 		}
 		$this->enqueueComponents();

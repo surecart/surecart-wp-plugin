@@ -7,12 +7,21 @@ namespace SureCart\WordPress;
  */
 class RecaptchaValidationService {
 	/**
+	 * Is recaptcha Enabled?
+	 *
+	 * @return boolean
+	 */
+	public function isEnabled() {
+		return (bool) get_option( 'surecart_recaptcha_enabled', false );
+	}
+
+	/**
 	 * Get reCaptcha min score.
 	 *
 	 * @return string
 	 */
 	public function getMinScore() {
-		return get_option( 'sc_recaptcha_min_score', 0.5 );
+		return get_option( 'surecart_recaptcha_min_score', 0.5 );
 	}
 
 	/**
@@ -21,7 +30,16 @@ class RecaptchaValidationService {
 	 * @return string
 	 */
 	public function getSecretKey() {
-		return get_option( 'sc_recaptcha_secret_key', '' );
+		return get_option( 'surecart_recaptcha_secret_key', '' );
+	}
+
+	/**
+	 * Get reCaptcha secret key.
+	 *
+	 * @return string
+	 */
+	public function getSiteKey() {
+		return get_option( 'surecart_recaptcha_site_key', '' );
 	}
 
 	/**

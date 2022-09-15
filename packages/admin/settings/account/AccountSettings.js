@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { ScInput, ScSelect } from '@surecart/components-react';
+import { ScInput, ScSelect, ScSwitch } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
 import useEntity from '../../hooks/useEntity';
@@ -17,20 +17,27 @@ export default () => {
 		'store',
 		'account'
 	);
-	const [scReCaptchaSiteData, setScReCaptchaSiteData] = useEntityProp(
+
+	// recapcha.
+	const [recaptchaEnabled, setRecaptchaEnabled] = useEntityProp(
 		'root',
 		'site',
-		'sc_recaptcha_site_key'
+		'surecart_recaptcha_enabled'
 	);
-	const [scReCaptchaSecretData, setScReCaptchaSecretData] = useEntityProp(
+	const [recaptchaSiteKey, setRecaptchaSiteKey] = useEntityProp(
 		'root',
 		'site',
-		'sc_recaptcha_secret_key'
+		'surecart_recaptcha_site_key'
 	);
-	const [scReCaptchaMinScoreData, setScReCaptchaMinScoreData] = useEntityProp(
+	const [recaptchaSecretKey, setRecapchaSecretKey] = useEntityProp(
 		'root',
 		'site',
-		'sc_recaptcha_min_score'
+		'surecart_recaptcha_secret_key'
+	);
+	const [recaptchaMinScore, setRecaptchaMinScore] = useEntityProp(
+		'root',
+		'site',
+		'surecart_recaptcha_min_score'
 	);
 
 	/**
@@ -160,59 +167,80 @@ export default () => {
 			</SettingsBox>
 
 			<SettingsBox
-				title={__('reCaptcha Settings', 'surecart')}
+				title={__('Spam Settings', 'surecart')}
 				description={__(
-					'Change your plugin reCaptcha settings.',
+					'Change your checkout spam protection settings.',
 					'surecart'
 				)}
 				loading={!hasLoadedItem}
 			>
-				<div
-					css={css`
-						gap: var(--sc-form-row-spacing);
-						display: grid;
-						grid-template-columns: repeat(2, minmax(0, 1fr));
-					`}
+				<ScSwitch
+					checked={recaptchaEnabled}
+					onScChange={(e) => setRecaptchaEnabled(e.target.checked)}
 				>
-					<ScInput
-						value={scReCaptchaSiteData}
-						label={__('reCaptcha Site Key', 'surecart')}
-						placeholder={__('reCaptcha Site Key', 'surecart')}
-						onScChange={(e) => setScReCaptchaSiteData( e.target.value )} 
-						type="password"
-						help={__(
-							'This is use reCaptcha.',
+					{__('Recaptcha', 'surecart')}
+					<span slot="description">
+						{__(
+							'Enable Recaptcha spam protection on checkout forms.',
 							'surecart'
 						)}
-					></ScInput>
-					<ScInput
-						value={scReCaptchaSecretData}
-						label={__('reCaptcha Secret Key', 'surecart')}
-						placeholder={__('reCaptcha Secret Key', 'surecart')}
-						onScChange={(e) => setScReCaptchaSecretData( e.target.value )} 
-						type="password"
-						help={__(
-							'This is use reCaptcha.',
-							'surecart'
-						)}
-					></ScInput>
-					<ScInput
-						value={scReCaptchaMinScoreData}
-						label={__('Threshold Min Score', 'surecart')}
-						placeholder={__('0.5', 'surecart')}
-						onScChange={(e) => setScReCaptchaMinScoreData( e.target.value )} 
-						type="number"
-						min="0"
-						step="0.1"
-						max="1"
-						help={__(
-							'This is use reCaptcha threshold min score.',
-							'surecart'
-						)}
-					></ScInput>
-				</div>
+					</span>
+				</ScSwitch>
+				{recaptchaEnabled && (
+					<div
+						css={css`
+							gap: var(--sc-form-row-spacing);
+							display: grid;
+							grid-template-columns: repeat(2, minmax(0, 1fr));
+						`}
+					>
+						<>
+							<ScInput
+								value={recaptchaSiteKey}
+								label={__('reCaptcha Site Key', 'surecart')}
+								placeholder={__(
+									'reCaptcha Site Key',
+									'surecart'
+								)}
+								onScInput={(e) =>
+									setRecaptchaSiteKey(e.target.value)
+								}
+								type="password"
+								help={__('This is use reCaptcha.', 'surecart')}
+							></ScInput>
+							<ScInput
+								value={recaptchaSecretKey}
+								label={__('reCaptcha Secret Key', 'surecart')}
+								placeholder={__(
+									'reCaptcha Secret Key',
+									'surecart'
+								)}
+								onScInput={(e) =>
+									setRecapchaSecretKey(e.target.value)
+								}
+								type="password"
+								help={__('This is use reCaptcha.', 'surecart')}
+							></ScInput>
+							<ScInput
+								value={recaptchaMinScore}
+								label={__('Threshold Min Score', 'surecart')}
+								placeholder={__('0.5', 'surecart')}
+								onScInput={(e) =>
+									setRecaptchaMinScore(e.target.value)
+								}
+								type="number"
+								min="0"
+								step="0.1"
+								max="1"
+								help={__(
+									'Use a lower score to allow more purchases. Set a higher score to be more strict against potential bots. A typical setting is 0.5.',
+									'surecart'
+								)}
+							></ScInput>
+						</>
+					</div>
+				)}
 			</SettingsBox>
-
 		</SettingsTemplate>
 	);
 };

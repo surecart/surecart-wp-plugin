@@ -2,6 +2,8 @@
 
 namespace SureCart\Settings;
 
+use SureCart\WordPress\RecaptchaValidationService;
+
 /**
  * A service for registering settings.
  */
@@ -24,7 +26,16 @@ class SettingService {
 		);
 		$this->register(
 			'general',
-			'sc_recaptcha_site_key',
+			'recaptcha_enabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+			]
+		);
+		$this->register(
+			'general',
+			'recaptcha_site_key',
 			[
 				'type'              => 'string',
 				'show_in_rest'      => true,
@@ -33,7 +44,7 @@ class SettingService {
 		);
 		$this->register(
 			'general',
-			'sc_recaptcha_secret_key',
+			'recaptcha_secret_key',
 			[
 				'type'              => 'string',
 				'show_in_rest'      => true,
@@ -42,7 +53,7 @@ class SettingService {
 		);
 		$this->register(
 			'general',
-			'sc_recaptcha_min_score',
+			'recaptcha_min_score',
 			[
 				'type'              => 'number',
 				'show_in_rest'      => true,
@@ -74,5 +85,14 @@ class SettingService {
 	public function register( $option_group, $option_name, $args = [] ) {
 		$service = new RegisterSettingService( $option_group, $option_name, $args );
 		return $service->register();
+	}
+
+	/**
+	 * Recaptcha service.
+	 *
+	 * @return RecaptchaValidationService
+	 */
+	public function recaptcha() {
+		return new RecaptchaValidationService();
 	}
 }

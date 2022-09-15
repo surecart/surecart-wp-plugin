@@ -243,8 +243,9 @@ class CheckoutsController extends RestController {
 		}
 
 		// check recaptcha.
-		if ( ! empty( $request->get_param( 'grecaptcha' ) ) ) {
-			$recaptcha = ( new RecaptchaValidationService() )->validate( $request->get_param( 'grecaptcha' ) );
+		$service = new RecaptchaValidationService();
+		if ( $service->isEnabled() ) {
+			$recaptcha = $service->validate( $request->get_param( 'grecaptcha' ) );
 			if ( is_wp_error( $recaptcha ) ) {
 				$errors->add( $recaptcha->get_error_code(), $recaptcha->get_error_message() );
 			}
