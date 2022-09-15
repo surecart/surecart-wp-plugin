@@ -109,6 +109,10 @@ class PreloadService {
 	 * @return void
 	 */
 	public function renderTag( $components, $format = 'esmBrowser', $path = 'dist/components/surecart/' ) {
+		if ( empty( $components ) ) {
+			return;
+		}
+
 		$names = $this->getFileNames( $components, $format );
 
 		if ( empty( $names ) ) {
