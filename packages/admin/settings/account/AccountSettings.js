@@ -187,7 +187,7 @@ export default () => {
 						setShowNotice(true);
 					}}
 				>
-					{__('Recaptcha', 'surecart')}
+					{__('Recaptcha v3', 'surecart')}
 					<span slot="description">
 						{__(
 							'Enable Recaptcha spam protection on checkout forms.',
@@ -196,11 +196,11 @@ export default () => {
 					</span>
 				</ScSwitch>
 
-				{showNotice && (
+				{showNotice && recaptchaSiteKey && (
 					<ScAlert open>
 						<span slot="title">{__('Important', 'surecart')}</span>
 						{__(
-							'Please clear all site caching after changing this setting.',
+							'Please clear checkout page cache after changing this setting.',
 							'surecart'
 						)}
 					</ScAlert>
@@ -262,7 +262,7 @@ export default () => {
 								step="0.1"
 								max="1"
 								help={__(
-									'Use a lower score to allow more purchases. Set a higher score to be more strict against potential bots. A typical setting is 0.5.',
+									'A number between 0 and 1. Use a lower score to allow more purchases. Set a higher score to be more strict against potential bots. A typical setting is 0.5.',
 									'surecart'
 								)}
 							></ScInput>
@@ -274,7 +274,10 @@ export default () => {
 									href="https://www.google.com/recaptcha/admin/create"
 									target="_blank"
 								>
-									{__('register a new site.', 'surecart')}
+									{__(
+										'register a new site and choose v3.',
+										'surecart'
+									)}
 								</a>
 							</ScAlert>
 						)}
