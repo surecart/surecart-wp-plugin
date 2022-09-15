@@ -4,11 +4,17 @@
 <sc-switch></sc-switch>
 ```
 
+This component let users create switch.
+
 import DemoTabs from '../../components/Demo-Tabs.js';
 import ComponentDoc from '../../components/Component-Doc.js';
 
 <DemoTabs>
-	<DemoTabs.Code>{ '<sc-switch>Toggle Me</sc-switch>' }</DemoTabs.Code>
+	<DemoTabs.Code>
+{`
+<sc-switch>Toggle Me</sc-switch>
+`}
+	</DemoTabs.Code>
 	<sc-switch>Toggle Me</sc-switch>
 </DemoTabs>
 
@@ -18,7 +24,9 @@ Use the `disabled` property to disable the switch
 
 <DemoTabs>
 	<DemoTabs.Code>
-		{ '<sc-switch disabled>Disabled</sc-switch>' }
+{`
+<sc-switch disabled>Disabled</sc-switch>
+`}
 	</DemoTabs.Code>
 	<sc-switch disabled>Disabled</sc-switch>
 </DemoTabs>
@@ -29,9 +37,9 @@ Use the css variable design tokens to change the sizes of the switch for an inst
 
 <DemoTabs>
 	<DemoTabs.Code>
-		{
-			'<sc-switch style="--width: 80px; --height: 32px; --thumb-size: 26px;"></sc-switch>'
-		}
+{`
+<sc-switch style="--width: 80px; --height: 32px; --thumb-size: 26px;"></sc-switch>
+`}
 	</DemoTabs.Code>
 	<sc-switch
 		style={ {
