@@ -63,6 +63,11 @@ class UserTest extends SureCartUnitTestCase {
 		$this->assertSame($user->user_login, 'testemail2');
 	}
 
+	/**
+	 * @group failing
+	 *
+	 * @return void
+	 */
 	public function test_creating_a_user_with_an_existing_username_appends_numbers() {
 		$user = User::create([
 			'user_name' => 'person',
@@ -76,9 +81,14 @@ class UserTest extends SureCartUnitTestCase {
 			'user_name' => 'person',
 			'user_email' => 'testemail2@email.com'
 		]);
+		$user_special = User::create([
+			'user_name' => 'הדר',
+			'user_email' => 'specialemail@email.com'
+		]);
 
 		$this->assertSame($user->user_login, 'person');
 		$this->assertSame($user1->user_login, 'person1');
 		$this->assertSame($user2->user_login, 'person2');
+		$this->assertSame($user_special->user_login, 'specialemail');
 	}
 }
