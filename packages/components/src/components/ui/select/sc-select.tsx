@@ -299,6 +299,7 @@ export class ScSelectDropdown {
     // Close select dropdown on Esc/Escape key
     if (event.key === 'Escape') {
       if (this.open) {
+        this.input.focus();
         this.handleHide();
       }
 
