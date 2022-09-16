@@ -22,7 +22,6 @@ export class ScSelectDropdown {
 
   private searchInput: HTMLScInputElement;
   private input: HTMLInputElement;
-  private menu: HTMLScMenuElement;
 
   private inputId: string = `select-${++id}`;
   private helpId = `select-help-text-${id}`;
@@ -418,7 +417,7 @@ export class ScSelectDropdown {
               </sc-input>
             )}
 
-            <sc-menu style={{ maxHeight: '210px', overflow: 'auto' }} ref={el => (this.menu = el as HTMLScMenuElement)}>
+            <sc-menu style={{ maxHeight: '210px', overflow: 'auto' }}>
               <slot name="prefix"></slot>
               {this.loading && !this.filteredChoices.length && (
                 <div class="loading">
