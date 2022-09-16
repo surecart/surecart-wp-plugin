@@ -239,8 +239,6 @@ export class ScSelectDropdown {
   handleKeyDown(event: KeyboardEvent) {
     const target = event.target as HTMLElement;
     const items = this.getItems();
-    // const firstItem = items[0];
-    // const lastItem = items[items.length - 1];
 
     // Ignore key presses on tags
     if (target.tagName.toLowerCase() === 'sc-tag') {
@@ -311,9 +309,9 @@ export class ScSelectDropdown {
     // Open select dropdown with Enter
     if (event.key === 'Enter') {
       if (this.open) {
-        this.menu.setCurrentItem(items[itemIndex]);
-        items[itemIndex].setFocus();
+        items[itemIndex - 1].click();
         this.handleHide();
+        this.el.focus();
       } else {
         this.handleShow();
       }
