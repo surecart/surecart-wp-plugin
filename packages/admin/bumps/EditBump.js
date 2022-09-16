@@ -10,15 +10,17 @@ import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
-import { useEffect } from 'react';
 
 import Error from '../components/Error';
 // hocs
 import useEntity from '../hooks/useEntity';
 import Logo from '../templates/Logo';
 import SaveButton from '../templates/SaveButton';
+
 // template
 import UpdateModel from '../templates/UpdateModel';
+
+import Discount from './modules/Discount';
 import Conditions from './modules/Conditions';
 import Name from './modules/Name';
 import Price from './modules/Price';
@@ -111,6 +113,11 @@ export default () => {
 					loading={!hasLoadedBump}
 				/>
 				<Conditions
+					bump={bump}
+					updateBump={editBump}
+					loading={!hasLoadedBump}
+				/>
+				<Discount
 					bump={bump}
 					updateBump={editBump}
 					loading={!hasLoadedBump}

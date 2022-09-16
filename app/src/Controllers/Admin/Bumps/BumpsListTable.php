@@ -94,12 +94,12 @@ class BumpsListTable extends ListTable {
 	public function get_columns() {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
-			'name'         => __( 'Name', 'surecart' ),
+			'name' => __( 'Name', 'surecart' ),
 			// 'description' => __( 'Description', 'surecart' ),
-			'price'        => __( 'Price', 'surecart' ),
+			// 'price'        => __( 'Price', 'surecart' ),
 			// 'type'         => __( 'Type', 'surecart' ),
-			'integrations' => __( 'Integrations', 'surecart' ),
-			'date'         => __( 'Date', 'surecart' ),
+			// 'integrations' => __( 'Integrations', 'surecart' ),
+			'date' => __( 'Date', 'surecart' ),
 		];
 	}
 
@@ -269,48 +269,24 @@ class BumpsListTable extends ListTable {
 	/**
 	 * Name column
 	 *
-	 * @param \SureCart\Models\Bump $product Bump model.
+	 * @param \SureCart\Models\Bump $bump Bump model.
 	 *
 	 * @return string
 	 */
-	public function column_name( $product ) {
+	public function column_name( $bump ) {
 		ob_start();
 		?>
 
-		<div class="sc-product-name">
-		<?php if ( $product->image_url ) { ?>
-			<img src="<?php echo esc_url( $product->image_url ); ?>" class="sc-product-image-preview" />
-		<?php } else { ?>
-		<div class="sc-product-image-preview">
-			<svg xmlns="http://www.w3.org/2000/svg" style="width: 18px; height: 18px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-			  </svg>
-		</div>
-	  <?php } ?>
-
 	  <div>
-		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Bump', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ); ?>">
-			<?php echo esc_html_e( $product->name, 'surecart' ); ?>
-		</a>
-
-		<script> function copyClick(e, content){
-			navigator.clipboard.writeText(content).then(() =>{
-				const oldText = e.target.innerText;
-				e.target.innerText = '<?php echo esc_html_e( 'Copied!', 'surecart' ); ?>';
-				setTimeout(() =>{
-					e.target.innerText = oldText;
-				}, 2000);
-			}).catch(err => {
-
-			});
-		} </script>
-
+		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Bump', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product', $bump->id ) ); ?>">
+			<?php echo esc_html( $bump->name ); ?>
+	</a>
 
 		<?php
 		echo $this->row_actions(
 			[
-				'edit'  => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Bump', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
-				'trash' => $this->action_toggle_archive( $product ),
+				'edit'  => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'bump', $bump->id ) ) . '" aria-label="' . esc_attr( 'Edit Bump', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
+				'trash' => $this->action_toggle_archive( $bump ),
 			],
 		);
 		?>
