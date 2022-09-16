@@ -6,6 +6,8 @@ import { __ } from '@wordpress/i18n';
 import { isValidURL } from '../../../functions/util';
 
 let id = 0;
+let itemIndex = 0;
+let arrowFlag = '';
 
 @Component({
   tag: 'sc-select',
@@ -20,7 +22,6 @@ export class ScSelectDropdown {
 
   private searchInput: HTMLScInputElement;
   private input: HTMLInputElement;
-  private menu: HTMLScMenuElement;
 
   private inputId: string = `select-${++id}`;
   private helpId = `select-help-text-${id}`;
@@ -123,6 +124,7 @@ export class ScSelectDropdown {
 
   handleHide() {
     this.open = false;
+    itemIndex = 0;
     this.scClose.emit();
   }
 
@@ -236,8 +238,6 @@ export class ScSelectDropdown {
   handleKeyDown(event: KeyboardEvent) {
     const target = event.target as HTMLElement;
     const items = this.getItems();
-    const firstItem = items[0];
-    const lastItem = items[items.length - 1];
 
     // Ignore key presses on tags
     if (target.tagName.toLowerCase() === 'sc-tag') {
@@ -249,6 +249,7 @@ export class ScSelectDropdown {
       if (this.open) {
         this.handleHide();
       }
+
       return;
     }
 
@@ -263,15 +264,56 @@ export class ScSelectDropdown {
 
       // Focus on a menu item
       if (event.key === 'ArrowDown') {
-        this.menu.setCurrentItem(firstItem);
-        firstItem.setFocus();
+        if (arrowFlag == 'up') {
+          itemIndex = itemIndex + 2;
+        }
+        if (itemIndex > items.length - 1) {
+          itemIndex = 0;
+        }
+
+        items[itemIndex].setFocus();
+
+        arrowFlag = 'down';
+        itemIndex++;
+
         return;
       }
 
       if (event.key === 'ArrowUp') {
-        this.menu.setCurrentItem(lastItem);
-        lastItem.setFocus();
+        if (arrowFlag == 'down') {
+          itemIndex = itemIndex - 2;
+        }
+        if (itemIndex < 0) {
+          itemIndex = items.length - 1;
+        }
+
+        items[itemIndex].setFocus();
+
+        arrowFlag = 'up';
+        itemIndex--;
+
         return;
+      }
+    }
+
+    // Close select dropdown on Esc/Escape key
+    if (event.key === 'Escape') {
+      if (this.open) {
+        this.input.focus();
+        this.handleHide();
+      }
+
+      return;
+    }
+
+    // Open select dropdown with Enter
+    if (event.key === 'Enter') {
+      if (this.open) {
+        items[itemIndex - 1].click();
+        this.handleHide();
+        this.input.focus();
+      } else {
+        this.handleShow();
       }
     }
 
@@ -376,7 +418,7 @@ export class ScSelectDropdown {
               </sc-input>
             )}
 
-            <sc-menu style={{ maxHeight: '210px', overflow: 'auto' }} ref={el => (this.menu = el as HTMLScMenuElement)}>
+            <sc-menu style={{ maxHeight: '210px', overflow: 'auto' }}>
               <slot name="prefix"></slot>
               {this.loading && !this.filteredChoices.length && (
                 <div class="loading">
