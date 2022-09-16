@@ -310,7 +310,7 @@ export class ScSelectDropdown {
       if (this.open) {
         items[itemIndex - 1].click();
         this.handleHide();
-        this.el.focus();
+        this.input.focus();
       } else {
         this.handleShow();
       }
