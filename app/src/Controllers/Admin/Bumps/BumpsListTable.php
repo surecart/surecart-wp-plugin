@@ -94,12 +94,12 @@ class BumpsListTable extends ListTable {
 	public function get_columns() {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
-			'name' => __( 'Name', 'surecart' ),
+			'name'  => __( 'Name', 'surecart' ),
 			// 'description' => __( 'Description', 'surecart' ),
-			// 'price'        => __( 'Price', 'surecart' ),
+			'price' => __( 'Price', 'surecart' ),
 			// 'type'         => __( 'Type', 'surecart' ),
 			// 'integrations' => __( 'Integrations', 'surecart' ),
-			'date' => __( 'Date', 'surecart' ),
+			'date'  => __( 'Date', 'surecart' ),
 		];
 	}
 
@@ -112,7 +112,7 @@ class BumpsListTable extends ListTable {
 		?>
 		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
 		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
-			<?php
+		<?php
 	}
 
 	/**
@@ -152,7 +152,9 @@ class BumpsListTable extends ListTable {
 				'archived' => $this->getArchiveStatus(),
 				'query'    => $this->get_search_query(),
 			]
-		)->paginate(
+		)
+		->with( [ 'price', 'price.product' ] )
+		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'bumps' ),
 				'page'     => $this->get_pagenum(),
@@ -209,40 +211,6 @@ class BumpsListTable extends ListTable {
 	}
 
 	/**
-	 * Handle the price column.
-	 *
-	 * @param \SureCart\Models\Bump $product Bump model.
-	 *
-	 * @return string
-	 */
-	public function column_price( $product ) {
-		$currency = $product->metrics->currency ?? 'usd';
-
-		if ( empty( $product->metrics->prices_count ) ) {
-			return '<sc-tag type="warning">' . esc_html__( 'No price', 'surecart' ) . '</sc-tag>';
-		}
-
-		if ( ! empty( $product->metrics->min_price_amount ) ) {
-			$amount = '<sc-format-number type="currency" currency="' . $currency . '" value="' . $product->metrics->min_price_amount . '"></sc-format-number>';
-			if ( $product->metrics->prices_count > 1 ) {
-				// translators: Price starting at.
-				$starting_at = sprintf( esc_html__( 'Starting at %s', 'surecart' ), $amount );
-				// translators: Other prices.
-				$others = sprintf( _n( 'and %d other price.', 'and %d other prices.', $product->metrics->prices_count - 1, 'surecart' ), $product->metrics->prices_count - 1 );
-				return $starting_at . '<br /><small style="opacity: 0.75">' . $others . '</small>';
-			} else {
-				return $amount;
-			}
-		}
-
-		if ( 1 === $product->metrics->prices_count ) {
-			return esc_html__( 'Name your own price', 'surecart' );
-		}
-
-		return esc_html__( 'No price', 'surecart' );
-	}
-
-	/**
 	 * Handle the status
 	 *
 	 * @param \SureCart\Models\Price $product Bump model.
@@ -267,6 +235,32 @@ class BumpsListTable extends ListTable {
 	}
 
 	/**
+	 * Price
+	 *
+	 * @param \SureCart\Models\Bump $bump Bump model.
+	 *
+	 * @return string
+	 */
+	public function column_price( $bump ) {
+		if ( empty( $bump->price->id ) ) {
+			return;
+		}
+
+		$price   = $bump->price ?? null;
+		$product = $price->product ?? null;
+
+		ob_start();
+		?>
+			<strong><?php echo esc_html( $product->name ); ?></strong><br/>
+			<sc-format-number type="currency" currency="<?php echo esc_attr( $price->currency ); ?>" value="<?php echo (float) $price->amount; ?>"></sc-format-number>
+			<sc-format-interval value="<?php echo (int) $price->recurring_interval_count; ?>" interval="<?php echo esc_attr( $price->recurring_interval ); ?>"></sc-format-interval>
+		<?php
+		return ob_get_clean();
+
+		return '<sc-format-number type="currency" currency="' . esc_attr( $price->currency ) . '" value="' . (float) $price->amount . '"></sc-format-number>';
+	}
+
+	/**
 	 * Name column
 	 *
 	 * @param \SureCart\Models\Bump $bump Bump model.
@@ -280,13 +274,12 @@ class BumpsListTable extends ListTable {
 	  <div>
 		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Bump', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product', $bump->id ) ); ?>">
 			<?php echo esc_html( $bump->name ); ?>
-	</a>
+		</a>
 
 		<?php
 		echo $this->row_actions(
 			[
-				'edit'  => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'bump', $bump->id ) ) . '" aria-label="' . esc_attr( 'Edit Bump', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
-				'trash' => $this->action_toggle_archive( $bump ),
+				'edit' => ' <a href="' . esc_url( \SureCart::getUrl()->edit( 'bump', $bump->id ) ) . '" aria-label="' . esc_attr( 'Edit Bump', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
 			],
 		);
 		?>
@@ -295,26 +288,6 @@ class BumpsListTable extends ListTable {
 		</div>
 		<?php
 		return ob_get_clean();
-	}
-
-	/**
-	 * Toggle archive action link and text.
-	 *
-	 * @param \SureCart\Models\Bump $product Bump model.
-	 * @return string
-	 */
-	public function action_toggle_archive( $product ) {
-		$text            = $product->archived ? __( 'Un-Archive', 'surecart' ) : __( 'Archive', 'surecart' );
-		$confirm_message = $product->archived ? __( 'Are you sure you want to restore this product? This will be be available to purchase.', 'surecart' ) : __( 'Are you sure you want to archive this product? This will be unavailable for purchase.', 'surecart' );
-		$link            = \SureCart::getUrl()->toggleArchive( 'product', $product->id );
-
-		return sprintf(
-			'<a class="submitdelete" onclick="return confirm(\'%1s\')" href="%2s" aria-label="%3s">%4s</a>',
-			esc_attr( $confirm_message ),
-			esc_url( $link ),
-			esc_attr__( 'Toggle Bump Archive', 'surecart' ),
-			esc_html( $text )
-		);
 	}
 
 	/**
@@ -328,7 +301,7 @@ class BumpsListTable extends ListTable {
 	public function column_default( $product, $column_name ) {
 		switch ( $column_name ) {
 			case 'name':
-				return '<a href="' . \SureCart::getUrl()->edit( 'product', $product->id ) . '">' . $product->name . '</a>';
+				return ' < a href     = "' . \SureCart::getUrl()->edit( 'product', $product->id ) . '" > ' . $product->name . ' < / a > ';
 			case 'name':
 			case 'description':
 				return $product->$column_name ?? '';

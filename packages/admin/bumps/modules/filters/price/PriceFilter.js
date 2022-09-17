@@ -1,54 +1,32 @@
-import {
-	ScButton,
-	ScDropdown,
-	ScFormatNumber,
-	ScIcon,
-	ScMenu,
-	ScMenuItem,
-	ScSkeleton,
-	ScStackedListRow,
-} from '@surecart/components-react';
+import { ScFormatNumber } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import useEntity from '../../../../hooks/useEntity';
 import { intervalString } from '../../../../util/translations';
+import FilterItem from '../FilterItem';
 
-export default ({ id }) => {
+export default ({ id, onRemove }) => {
 	const { price, hasLoadedPrice } = useEntity('price', id, {
 		expand: ['product'],
 	});
 
 	return (
-		<ScStackedListRow
-			style={{
-				'--columns': '1',
-			}}
+		<FilterItem
+			loading={!hasLoadedPrice}
+			imageUrl={price?.product?.image_url}
+			icon={'image'}
+			onRemove={onRemove}
 		>
-			{!hasLoadedPrice ? (
-				<ScSkeleton />
-			) : (
-				<>
-					<div>
-						<strong>{price?.product?.name}</strong> -{' '}
-						<ScFormatNumber
-							type="currency"
-							currency={price?.currency || 'usd'}
-							value={price?.amount}
-						/>
-						{intervalString(price)}
-					</div>
-					<ScDropdown slot="suffix" placement="bottom-end">
-						<ScButton type="text" slot="trigger" circle>
-							<ScIcon name="more-horizontal" />
-						</ScButton>
-						<ScMenu>
-							<ScMenuItem>
-								<ScIcon slot="prefix" name="trash" />
-								{__('Remove', 'surecart')}
-							</ScMenuItem>
-						</ScMenu>
-					</ScDropdown>
-				</>
-			)}
-		</ScStackedListRow>
+			<div>
+				<div>
+					<strong>{price?.product?.name}</strong>
+				</div>
+				<ScFormatNumber
+					type="currency"
+					currency={price?.currency || 'usd'}
+					value={price?.amount}
+				/>
+				{intervalString(price)}
+			</div>
+		</FilterItem>
 	);
 };

@@ -25,6 +25,7 @@ import Conditions from './modules/Conditions';
 import Name from './modules/Name';
 import Price from './modules/Price';
 import Priority from './modules/Priority';
+import Behavior from './modules/Behavior';
 // import ActionsDropdown from './components/product/ActionsDropdown';
 // import SaveButton from './components/product/SaveButton';
 // import Details from './modules/Details';
@@ -36,7 +37,6 @@ import Priority from './modules/Priority';
 
 export default () => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { receiveEntityRecords } = useDispatch(coreStore);
 	const id = useSelect((select) => select(store).selectPageId());
 	const {
 		bump,
@@ -98,6 +98,11 @@ export default () => {
 			sidebar={
 				<>
 					<Priority
+						bump={bump}
+						updateBump={editBump}
+						loading={!hasLoadedBump}
+					/>
+					<Behavior
 						bump={bump}
 						updateBump={editBump}
 						loading={!hasLoadedBump}

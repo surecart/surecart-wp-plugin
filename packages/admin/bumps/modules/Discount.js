@@ -8,9 +8,19 @@ import {
 	ScFlex,
 	ScSelect,
 } from '@surecart/components-react';
+import useEntity from '../../hooks/useEntity';
 
 export default ({ bump, updateBump, loading }) => {
 	const [type, setType] = useState('percentage');
+
+	const { price, hasLoadedPrice } = useEntity(
+		'price',
+		bump?.price,
+		{
+			expand: ['product'],
+		},
+		[bump?.price]
+	);
 
 	useEffect(() => {
 		if (bump?.amount_off) {
@@ -19,7 +29,10 @@ export default ({ bump, updateBump, loading }) => {
 	}, [bump?.amount_off]);
 
 	return (
-		<Box title={__('Discount', 'surecart')} loading={loading}>
+		<Box
+			title={__('Discount', 'surecart')}
+			loading={loading || !hasLoadedPrice}
+		>
 			<ScFormControl label={__('Discount Amount', 'surecart')}>
 				<ScFlex>
 					<ScSelect
@@ -62,7 +75,7 @@ export default ({ bump, updateBump, loading }) => {
 						<ScPriceInput
 							style={{ flex: 1 }}
 							className="sc-amount-off"
-							currencyCode={scData?.currency}
+							currencyCode={price?.currency || scData?.currency}
 							disabled={type === 'percentage'}
 							attribute="amount_off"
 							value={bump?.amount_off || null}

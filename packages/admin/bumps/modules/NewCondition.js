@@ -11,6 +11,9 @@ import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 import PriceSelector from '../../components/PriceSelector';
+import ProductSelector from '../../components/ProductSelector';
+import ProductGroupSelector from '../../components/ProductGroupSelector';
+import ModelSelector from '../../components/ModelSelector';
 
 export default ({ onRequestClose, bump, updateBump }) => {
 	const [type, setType] = useState('price_ids');
@@ -97,20 +100,58 @@ export default ({ onRequestClose, bump, updateBump }) => {
 						<ScFormControl label={__('Select A Price', 'surecart')}>
 							<PriceSelector
 								value={id}
-								style={{ width: '50%' }}
-								ad_hoc={false}
 								requestQuery={{
 									archived: false,
+									ad_hoc: false,
 								}}
-								onSelect={(price) => setId(price)}
+								onSelect={(price) => {
+									setType('price_ids');
+									setId(price);
+								}}
 							/>
 						</ScFormControl>
 					</div>
 				)}
 
-				{type === 'product_ids' && 'product selector'}
+				{type === 'product_ids' && (
+					<div>
+						<ScFormControl
+							label={__('Select A Product', 'surecart')}
+						>
+							<ModelSelector
+								name="product"
+								value={id}
+								requestQuery={{
+									archived: false,
+								}}
+								onSelect={(product) => {
+									setType('product_ids');
+									setId(product);
+								}}
+							/>
+						</ScFormControl>
+					</div>
+				)}
 
-				{type === 'product_group_ids' && 'product group'}
+				{type === 'product_group_ids' && (
+					<div>
+						<ScFormControl
+							label={__('Select An Upgrade Group', 'surecart')}
+						>
+							<ModelSelector
+								name="product-group"
+								value={id}
+								requestQuery={{
+									archived: false,
+								}}
+								onSelect={(product) => {
+									setType('product_group_ids');
+									setId(product);
+								}}
+							/>
+						</ScFormControl>
+					</div>
+				)}
 
 				<div
 					css={css`
