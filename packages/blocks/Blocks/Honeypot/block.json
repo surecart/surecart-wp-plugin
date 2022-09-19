@@ -1,0 +1,31 @@
+{
+	"apiVersion": 2,
+	"name": "surecart/honeypot",
+	"title": "Honeypot",
+	"description": "Display a checkbox as honeypot",
+	"category": "surecart",
+  "icon": "shield",
+	"keywords": ["honeypot", "checkbox", "toggle", "checkout", "engine"],
+	"ancestor": ["surecart/form"],
+	"supports": {
+		"reusable": false,
+		"html": false
+	},
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": "Checkbox honeypot"
+		},
+		"value": {
+			"type": "string",
+			"default": "off"
+		},
+		"name": {
+			"type": "string",
+			"default": "checkbox"
+		},
+		"required": {
+			"type": "boolean"
+		}
+	}
+}

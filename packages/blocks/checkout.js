@@ -9,6 +9,7 @@ import * as address from '@blocks/Address';
 import * as columns from '@blocks/Columns';
 import * as column from '@blocks/Column';
 import * as checkbox from '@blocks/Checkbox';
+import * as honeypot from '@blocks/Honeypot';
 import * as coupon from '@blocks/Coupon';
 import * as taxIdInput from '@blocks/TaxIdInput';
 import * as divider from '@blocks/Divider';
@@ -39,6 +40,7 @@ registerBlocks([
 	columns,
 	column,
 	checkbox,
+  honeypot,
 	coupon,
 	taxIdInput,
 	divider,
