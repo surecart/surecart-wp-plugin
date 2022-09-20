@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-09-06T19:04:59",
+  "timestamp": "2022-09-14T18:50:24",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -429,6 +429,10 @@
           "docs": ""
         },
         {
+          "name": "close-icon",
+          "docs": ""
+        },
+        {
           "name": "icon",
           "docs": ""
         },
@@ -455,6 +459,7 @@
         "sc-form-error-provider",
         "sc-login-form",
         "sc-order-confirmation",
+        "sc-password-nag",
         "sc-payment",
         "sc-paypal-add-method",
         "sc-price-choice",
@@ -497,6 +502,9 @@
           "sc-alert"
         ],
         "sc-order-confirmation": [
+          "sc-alert"
+        ],
+        "sc-password-nag": [
           "sc-alert"
         ],
         "sc-payment": [
@@ -1362,6 +1370,7 @@
         "sc-order-submit",
         "sc-orders-list",
         "sc-pagination",
+        "sc-password-nag",
         "sc-payment-methods-list",
         "sc-purchase-downloads-list",
         "sc-stripe-add-method",
@@ -1431,6 +1440,9 @@
           "sc-button"
         ],
         "sc-pagination": [
+          "sc-button"
+        ],
+        "sc-password-nag": [
           "sc-button"
         ],
         "sc-payment-methods-list": [
@@ -7793,6 +7805,7 @@
         "sc-downloads-list",
         "sc-order",
         "sc-pagination",
+        "sc-password-nag",
         "sc-payment-methods-list",
         "sc-subscription",
         "sc-subscription-switch",
@@ -7807,6 +7820,9 @@
           "sc-flex"
         ],
         "sc-pagination": [
+          "sc-flex"
+        ],
+        "sc-password-nag": [
           "sc-flex"
         ],
         "sc-payment-methods-list": [
@@ -14323,6 +14339,115 @@
         ],
         "sc-subscriptions-list": [
           "sc-pagination"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/dashboard/sc-password-nag/sc-password-nag.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-password-nag",
+      "readme": "# sc-password-nag\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "open",
+          "type": "boolean",
+          "mutable": true,
+          "attr": "open",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "type",
+          "type": "\"danger\" | \"info\" | \"primary\" | \"success\" | \"warning\"",
+          "mutable": false,
+          "attr": "type",
+          "reflectToAttr": true,
+          "docs": "The type of alert.",
+          "docsTags": [],
+          "default": "'warning'",
+          "values": [
+            {
+              "value": "danger",
+              "type": "string"
+            },
+            {
+              "value": "info",
+              "type": "string"
+            },
+            {
+              "value": "primary",
+              "type": "string"
+            },
+            {
+              "value": "success",
+              "type": "string"
+            },
+            {
+              "value": "warning",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-alert",
+        "sc-flex",
+        "sc-button",
+        "sc-wordpress-password-edit"
+      ],
+      "dependencyGraph": {
+        "sc-password-nag": [
+          "sc-alert",
+          "sc-flex",
+          "sc-button",
+          "sc-wordpress-password-edit"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-wordpress-password-edit": [
+          "sc-dashboard-module",
+          "sc-card",
+          "sc-form",
+          "sc-input",
+          "sc-button",
+          "sc-block-ui"
+        ],
+        "sc-dashboard-module": [
+          "sc-alert"
+        ],
+        "sc-input": [
+          "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
+        ],
+        "sc-block-ui": [
+          "sc-spinner"
         ]
       }
     },
@@ -23173,7 +23298,9 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "sc-password-nag"
+      ],
       "dependencies": [
         "sc-dashboard-module",
         "sc-card",
@@ -23208,6 +23335,9 @@
         ],
         "sc-block-ui": [
           "sc-spinner"
+        ],
+        "sc-password-nag": [
+          "sc-wordpress-password-edit"
         ]
       }
     },

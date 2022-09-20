@@ -23,6 +23,7 @@
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-pagination](../pagination)
+ - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
@@ -34,6 +35,7 @@ graph TD;
   sc-downloads-list --> sc-flex
   sc-order --> sc-flex
   sc-pagination --> sc-flex
+  sc-password-nag --> sc-flex
   sc-payment-methods-list --> sc-flex
   sc-subscription --> sc-flex
   sc-subscription-switch --> sc-flex
