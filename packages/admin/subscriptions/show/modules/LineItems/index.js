@@ -95,6 +95,14 @@ export default ({ period, loading }) => {
 					/>
 				)}
 
+				{!!checkout?.bump_amount && (
+					<LineItem
+						label={__('Bump Discounts', 'surecart')}
+						currency={checkout?.currency}
+						value={checkout?.bump_amount}
+					/>
+				)}
+
 				{!!checkout?.tax_amount && (
 					<LineItem
 						label={
