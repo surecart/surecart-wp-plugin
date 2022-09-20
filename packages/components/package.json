@@ -22,7 +22,7 @@
   "scripts": {
     "stencil": "stencil",
     "watch": "stencil build --watch",
-    "release": "yarn run build",
+    "release": "SURECART_EXTERNAL=true yarn run build",
     "docs:release": "yarn run build",
     "build": "stencil build --docs --docs-json ../docs/stencil/docs.json",
     "docs": "stencil build --watch",

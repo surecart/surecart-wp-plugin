@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 1.1.9
+Stable tag: 1.1.11
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -42,7 +42,7 @@ This way you get everything you want with none of the stuff you don’t want. Su
 Currently SureCart is ideally suited for selling non-physical goods. This would be selling online courses, memberships, subscriptions, selling services, selling event tickets, accepting donations, selling digital downloads, etc. These are no non-physical goods.
 
 However you can still sell physical products with SureCart and we have merchants selling physical goods currently, but we have yet to launch some essential features for selling physical goods. These are inventory control, shipping calculations, and country buying restrictions. These are planned by the end of the year.
-
+`
 ## Now let me tell you what SureCart can do, then why you could consider using it. ##
 
 ## SureCart Features ##
@@ -243,7 +243,14 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.1.9 - September 5, 2022 =
+= 1.1.11 - September 14, 2022 =
+* Improvement: Preload key components to prevent momentary blank loading screen on checkout page for slow connections.
+* Fix: Subscription plan price incorrect on some instances on customer dashboard.
+
+= 1.1.10 - September 8, 2022 =
+* Fix: Issue with API Token sometimes not saving on settings page.
+
+= 1.1.9 - September 6, 2022 =
 * New: Dark mode theme
 * New: LifterLMS Integration
 * New: Merchant search on admin index pages.
@@ -263,7 +270,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * Fix: tax id dropdown on customer portal not saving.
 * Fix: Button size customization not applying in add to cart button.
 * Fix: Incorrect Average Order Total on dashboard chart.
-* Fix: Issue with live customers wp users not displaying prooperly on Merchant customer edit page.
+* Fix: Issue with live customers wp users not displaying properly on Merchant customer edit page.
 * Fix: Better error handling with Customer create.
 
 = 1.1.6 - August 24, 2022 =

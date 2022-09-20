@@ -62,8 +62,16 @@ sc-order-submit, sc-button {
 }
 
 sc-order-summary {
-  &:not(.hydrated) {
+  &:not(.hydrated),
+  &:not(:defined) {
     @include button_cloak();
+  }
+}
+
+sc-tab-group, sc-tab {
+  &:not(.hydrated),
+  &:not(:defined) {
+    visibility: hidden;
   }
 }
 
