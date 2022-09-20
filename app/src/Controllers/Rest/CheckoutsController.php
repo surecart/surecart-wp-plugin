@@ -241,6 +241,12 @@ class CheckoutsController extends RestController {
 			$errors->add( $valid_login->get_error_code(), $valid_login->get_error_message() );
 		}
 
+		// Check if honeypot checkbox checked or not
+		$metadata = $request->get_param( 'metadata' );
+		if ( $metadata && $metadata['get_feedback'] ) {
+			$errors->add( 'invalid', __('Invalid request. Please try again.', 'surecart') );
+		}
+
 		return apply_filters( 'surecart/checkout/validate', $errors, $args, $request );
 	}
 
