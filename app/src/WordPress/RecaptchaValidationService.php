@@ -21,7 +21,7 @@ class RecaptchaValidationService {
 	 * @return string
 	 */
 	public function getMinScore() {
-		return get_option( 'surecart_recaptcha_min_score', 0.5 );
+		return apply_filters( 'surecart_recaptcha_min_score', 0.5 );
 	}
 
 	/**
@@ -101,7 +101,7 @@ class RecaptchaValidationService {
 		}
 
 		// score is not valid.
-		if ( ! $this->isValidScore( $response ) ) {
+		if ( apply_filters( 'surecart_recaptcha_needed_validation_score', false ) && ! $this->isValidScore( $response ) ) {
 			return new \WP_Error( 'invalid_recaptcha_score', __( 'Your request could not be validated. Please try again.', 'surecart' ) );
 		}
 

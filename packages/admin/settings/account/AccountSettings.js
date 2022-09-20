@@ -40,11 +40,6 @@ export default () => {
 		'site',
 		'surecart_recaptcha_secret_key'
 	);
-	const [recaptchaMinScore, setRecaptchaMinScore] = useEntityProp(
-		'root',
-		'site',
-		'surecart_recaptcha_min_score'
-	);
 
 	/**
 	 * Form is submitted.
@@ -247,22 +242,6 @@ export default () => {
 								type="password"
 								help={__(
 									'You can find this on your google Recaptcha dashboard.',
-									'surecart'
-								)}
-							></ScInput>
-							<ScInput
-								value={recaptchaMinScore}
-								label={__('Threshold Min Score', 'surecart')}
-								placeholder={__('0.5', 'surecart')}
-								onScInput={(e) =>
-									setRecaptchaMinScore(e.target.value)
-								}
-								type="number"
-								min="0"
-								step="0.1"
-								max="1"
-								help={__(
-									'A number between 0 and 1. Use a lower score to allow more purchases. Set a higher score to be more strict against potential bots. A typical setting is 0.5.',
 									'surecart'
 								)}
 							></ScInput>
