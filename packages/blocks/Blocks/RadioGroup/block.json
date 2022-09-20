@@ -1,0 +1,30 @@
+{
+	"apiVersion": 2,
+	"name": "surecart/radio-group-1",
+	"title": "Radio Group",
+	"description": "Display a radio input",
+	"category": "surecart",
+	"keywords": ["radio", "radio-group", "toggle", "engine"],
+	"ancestor": ["surecart/form"],
+	"supports": {
+		"reusable": false,
+		"html": false
+	},
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": "Radio"
+		},
+		"value": {
+			"type": "string",
+			"default": "key"
+		},
+		"name": {
+			"type": "string",
+			"default": "radio"
+		},
+		"required": {
+			"type": "boolean"
+		}
+	}
+}
