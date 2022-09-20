@@ -1,5 +1,3 @@
-import { RichText } from '@wordpress/block-editor';
-
 export default ({ className }) => {
 
 	return (

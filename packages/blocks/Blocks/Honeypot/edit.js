@@ -17,7 +17,7 @@ export default ( ) => {
 	return (
 		<Fragment>
       <ScSecureNotice>
-        Its a honeypot trap for spammers. Will not visible in the frontend and work out of the box.
+        {__('Honeypot field. This will not visible in the frontend', 'surecart')}
       </ScSecureNotice>
 		</Fragment>
 	);
