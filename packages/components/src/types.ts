@@ -67,6 +67,24 @@ export interface Price {
   metadata: { [key: string]: string };
 }
 
+export interface Bump {
+  id: string;
+  object: 'bump';
+  amount_off: number;
+  archived: boolean;
+  archived_at: number;
+  auto_apply: boolean;
+  filter_match_type: 'all' | 'any' | 'none';
+  filters: any;
+  metadata: any;
+  name: string;
+  percent_off: number;
+  price: string | Price;
+  priority: 1 | 2 | 3 | 4 | 5;
+  created_at: number;
+  updated_at: number;
+}
+
 export type Prices = {
   [id: string]: Price;
 };
@@ -192,7 +210,8 @@ export interface Coupon extends Model {
 }
 
 export interface LineItemData extends Object {
-  price_id: string;
+  price_id?: string;
+  bump?: string;
   quantity: number;
   ad_hoc_amount?: number;
 }
@@ -207,6 +226,9 @@ export interface LineItem extends Object {
   name: string;
   object: string;
   quantity: number;
+  bump: string | Bump;
+  bump_amount: number;
+  discount_amount: number;
   subtotal_amount: number;
   total_amount: number;
   created_at: number;
@@ -343,6 +365,7 @@ export interface Checkout extends Object {
     pagination: Pagination;
     data: Array<PaymentIntent>;
   };
+  bump_amount: number;
   payment_method_required?: boolean;
   reusable_payment_method_required?: boolean;
   number?: string;
@@ -365,6 +388,11 @@ export interface Checkout extends Object {
   tax_label: string;
   tax_percent: number;
   line_items: lineItems;
+  recommended_bumps?: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Bump>;
+  };
   metadata?: Object;
   payment_intent?: PaymentIntent;
   payment_method?: PaymentMethod;

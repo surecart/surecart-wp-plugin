@@ -25,10 +25,11 @@ export default ({ bump, updateBump, type, label, name }) => {
 	};
 
 	const onRemove = (id) => {
+		const items = bump.filters?.[type]?.filter((item) => item !== id);
 		updateBump({
 			filters: {
 				...(bump?.filters || {}),
-				[type]: bump.filters?.[type]?.filter((item) => item !== id),
+				[type]: items?.length ? items : null,
 			},
 		});
 	};

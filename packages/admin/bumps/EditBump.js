@@ -4,9 +4,12 @@ import {
 	ScBreadcrumb,
 	ScBreadcrumbs,
 	ScButton,
+	ScDropdown,
+	ScIcon,
+	ScMenu,
+	ScMenuItem,
 } from '@surecart/components-react';
 import { store } from '@surecart/data';
-import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
@@ -26,6 +29,9 @@ import Name from './modules/Name';
 import Price from './modules/Price';
 import Priority from './modules/Priority';
 import Behavior from './modules/Behavior';
+import Description from './modules/Description';
+import CTA from './modules/CTA';
+import Preview from './modules/Preview';
 // import ActionsDropdown from './components/product/ActionsDropdown';
 // import SaveButton from './components/product/SaveButton';
 // import Details from './modules/Details';
@@ -36,7 +42,8 @@ import Behavior from './modules/Behavior';
 // import Sidebar from './Sidebar';
 
 export default () => {
-	const { createSuccessNotice } = useDispatch(noticesStore);
+	const { createSuccessNotice, createErrorNotice } =
+		useDispatch(noticesStore);
 	const id = useSelect((select) => select(store).selectPageId());
 	const {
 		bump,
@@ -44,6 +51,8 @@ export default () => {
 		hasLoadedBump,
 		saveEditedBump,
 		savingBump,
+		saveBump,
+		deleteBump,
 		saveBumpError,
 		bumpError,
 	} = useEntity('bump', id);
@@ -59,13 +68,84 @@ export default () => {
 		});
 	};
 
+	/**
+	 * Toggle product delete.
+	 */
+	const onDelete = async () => {
+		const r = confirm(
+			__(
+				'Permanently delete this order bump? You cannot undo this action.',
+				'surecart'
+			)
+		);
+		if (!r) return;
+
+		try {
+			await deleteBump({ throwOnError: true });
+			createSuccessNotice(__('Bump deleted.', 'surecart'));
+			window.location.assign('admin.php?page=sc-bumps');
+		} catch (e) {
+			console.error(e);
+			createErrorNotice(e?.message, { type: 'snackbar' });
+		}
+	};
+
+	/**
+	 * Toggle Archive
+	 */
+	const toggleArchive = async () => {
+		const r = confirm(
+			bump?.archived
+				? __(
+						'Un-Archive this bump? This will make the product purchaseable again.',
+						'surecart'
+				  )
+				: __(
+						'Archive this bump? This bump will not be purchaseable and all unsaved changes will be lost.',
+						'surecart'
+				  )
+		);
+
+		if (!r) return;
+
+		try {
+			await saveBump({ archived: !bump?.archived });
+			createSuccessNotice(
+				!bump?.archived
+					? __('Bump archived.', 'surecart')
+					: __('Bump un-archived.', 'surecart'),
+				{ type: 'snackbar' }
+			);
+		} catch (e) {
+			console.error(e);
+			createErrorNotice(e?.message, { type: 'snackbar' });
+		}
+	};
+
 	return (
 		<UpdateModel
 			onSubmit={onSubmit}
 			button={
-				<SaveButton busy={!hasLoadedBump || savingBump}>
-					{__('Save Order Bump', 'surecart')}
-				</SaveButton>
+				<div>
+					<ScDropdown placement="bottom-end">
+						<ScButton type="text" slot="trigger">
+							<ScIcon name="more-horizontal" />
+						</ScButton>
+						<ScMenu>
+							<ScMenuItem onClick={toggleArchive}>
+								{bump?.archived
+									? __('Un-Archive', 'surecart')
+									: __('Archive', 'surecart')}
+							</ScMenuItem>
+							<ScMenuItem onClick={onDelete}>
+								{__('Delete', 'surecart')}
+							</ScMenuItem>
+						</ScMenu>
+					</ScDropdown>
+					<SaveButton busy={!hasLoadedBump || savingBump}>
+						{__('Save Order Bump', 'surecart')}
+					</SaveButton>
+				</div>
 			}
 			title={
 				<div
@@ -97,6 +177,7 @@ export default () => {
 			}
 			sidebar={
 				<>
+					{/* <Preview bump={bump} loading={!hasLoadedBump} /> */}
 					<Priority
 						bump={bump}
 						updateBump={editBump}
@@ -128,6 +209,16 @@ export default () => {
 					loading={!hasLoadedBump}
 				/>
 				<Name
+					bump={bump}
+					updateBump={editBump}
+					loading={!hasLoadedBump}
+				/>
+				<Description
+					bump={bump}
+					updateBump={editBump}
+					loading={!hasLoadedBump}
+				/>
+				<CTA
 					bump={bump}
 					updateBump={editBump}
 					loading={!hasLoadedBump}

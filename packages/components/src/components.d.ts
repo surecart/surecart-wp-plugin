@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export namespace Components {
     interface ScAddress {
         /**
@@ -1371,6 +1371,11 @@ export namespace Components {
          */
         "price": string;
     }
+    interface ScLineItemBump {
+        "label": string;
+        "loading": boolean;
+        "order": Checkout;
+    }
     interface ScLineItemTax {
         "loading": boolean;
         "order": Checkout;
@@ -1436,6 +1441,30 @@ export namespace Components {
         "customerIds": string[];
         "heading": string;
         "orderId": string;
+    }
+    interface ScOrderBump {
+        /**
+          * The bump
+         */
+        "bump": Bump;
+        /**
+          * The checkout
+         */
+        "checkout": Checkout;
+        /**
+          * Should we show the controls
+         */
+        "showControl": boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel": boolean;
+    }
+    interface ScOrderBumps {
+        "bumps": Bump[];
+        "checkout": Checkout;
+        "help": string;
+        "label": string;
     }
     interface ScOrderConfirmProvider {
         /**
@@ -2912,6 +2941,10 @@ export interface ScMenuCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScMenuElement;
 }
+export interface ScOrderBumpCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScOrderBumpElement;
+}
 export interface ScOrderConfirmProviderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScOrderConfirmProviderElement;
@@ -3403,6 +3436,12 @@ declare global {
         prototype: HTMLScLineItemElement;
         new (): HTMLScLineItemElement;
     };
+    interface HTMLScLineItemBumpElement extends Components.ScLineItemBump, HTMLStencilElement {
+    }
+    var HTMLScLineItemBumpElement: {
+        prototype: HTMLScLineItemBumpElement;
+        new (): HTMLScLineItemBumpElement;
+    };
     interface HTMLScLineItemTaxElement extends Components.ScLineItemTax, HTMLStencilElement {
     }
     var HTMLScLineItemTaxElement: {
@@ -3462,6 +3501,18 @@ declare global {
     var HTMLScOrderElement: {
         prototype: HTMLScOrderElement;
         new (): HTMLScOrderElement;
+    };
+    interface HTMLScOrderBumpElement extends Components.ScOrderBump, HTMLStencilElement {
+    }
+    var HTMLScOrderBumpElement: {
+        prototype: HTMLScOrderBumpElement;
+        new (): HTMLScOrderBumpElement;
+    };
+    interface HTMLScOrderBumpsElement extends Components.ScOrderBumps, HTMLStencilElement {
+    }
+    var HTMLScOrderBumpsElement: {
+        prototype: HTMLScOrderBumpsElement;
+        new (): HTMLScOrderBumpsElement;
     };
     interface HTMLScOrderConfirmProviderElement extends Components.ScOrderConfirmProvider, HTMLStencilElement {
     }
@@ -3965,6 +4016,7 @@ declare global {
         "sc-invoices-list": HTMLScInvoicesListElement;
         "sc-licenses-list": HTMLScLicensesListElement;
         "sc-line-item": HTMLScLineItemElement;
+        "sc-line-item-bump": HTMLScLineItemBumpElement;
         "sc-line-item-tax": HTMLScLineItemTaxElement;
         "sc-line-item-total": HTMLScLineItemTotalElement;
         "sc-line-items": HTMLScLineItemsElement;
@@ -3975,6 +4027,8 @@ declare global {
         "sc-menu-item": HTMLScMenuItemElement;
         "sc-menu-label": HTMLScMenuLabelElement;
         "sc-order": HTMLScOrderElement;
+        "sc-order-bump": HTMLScOrderBumpElement;
+        "sc-order-bumps": HTMLScOrderBumpsElement;
         "sc-order-confirm-provider": HTMLScOrderConfirmProviderElement;
         "sc-order-confirmation": HTMLScOrderConfirmationElement;
         "sc-order-confirmation-customer": HTMLScOrderConfirmationCustomerElement;
@@ -5570,6 +5624,11 @@ declare namespace LocalJSX {
          */
         "price"?: string;
     }
+    interface ScLineItemBump {
+        "label"?: string;
+        "loading"?: boolean;
+        "order"?: Checkout;
+    }
     interface ScLineItemTax {
         "loading"?: boolean;
         "order"?: Checkout;
@@ -5639,6 +5698,38 @@ declare namespace LocalJSX {
         "customerIds"?: string[];
         "heading"?: string;
         "orderId"?: string;
+    }
+    interface ScOrderBump {
+        /**
+          * The bump
+         */
+        "bump"?: Bump;
+        /**
+          * The checkout
+         */
+        "checkout"?: Checkout;
+        /**
+          * Add line item event
+         */
+        "onScAddLineItem"?: (event: ScOrderBumpCustomEvent<LineItemData>) => void;
+        /**
+          * Remove line item event
+         */
+        "onScRemoveLineItem"?: (event: ScOrderBumpCustomEvent<LineItemData>) => void;
+        /**
+          * Should we show the controls
+         */
+        "showControl"?: boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel"?: boolean;
+    }
+    interface ScOrderBumps {
+        "bumps"?: Bump[];
+        "checkout"?: Checkout;
+        "help"?: string;
+        "label"?: string;
     }
     interface ScOrderConfirmProvider {
         /**
@@ -7237,6 +7328,7 @@ declare namespace LocalJSX {
         "sc-invoices-list": ScInvoicesList;
         "sc-licenses-list": ScLicensesList;
         "sc-line-item": ScLineItem;
+        "sc-line-item-bump": ScLineItemBump;
         "sc-line-item-tax": ScLineItemTax;
         "sc-line-item-total": ScLineItemTotal;
         "sc-line-items": ScLineItems;
@@ -7247,6 +7339,8 @@ declare namespace LocalJSX {
         "sc-menu-item": ScMenuItem;
         "sc-menu-label": ScMenuLabel;
         "sc-order": ScOrder;
+        "sc-order-bump": ScOrderBump;
+        "sc-order-bumps": ScOrderBumps;
         "sc-order-confirm-provider": ScOrderConfirmProvider;
         "sc-order-confirmation": ScOrderConfirmation;
         "sc-order-confirmation-customer": ScOrderConfirmationCustomer;
@@ -7389,6 +7483,7 @@ declare module "@stencil/core" {
             "sc-invoices-list": LocalJSX.ScInvoicesList & JSXBase.HTMLAttributes<HTMLScInvoicesListElement>;
             "sc-licenses-list": LocalJSX.ScLicensesList & JSXBase.HTMLAttributes<HTMLScLicensesListElement>;
             "sc-line-item": LocalJSX.ScLineItem & JSXBase.HTMLAttributes<HTMLScLineItemElement>;
+            "sc-line-item-bump": LocalJSX.ScLineItemBump & JSXBase.HTMLAttributes<HTMLScLineItemBumpElement>;
             "sc-line-item-tax": LocalJSX.ScLineItemTax & JSXBase.HTMLAttributes<HTMLScLineItemTaxElement>;
             "sc-line-item-total": LocalJSX.ScLineItemTotal & JSXBase.HTMLAttributes<HTMLScLineItemTotalElement>;
             "sc-line-items": LocalJSX.ScLineItems & JSXBase.HTMLAttributes<HTMLScLineItemsElement>;
@@ -7399,6 +7494,8 @@ declare module "@stencil/core" {
             "sc-menu-item": LocalJSX.ScMenuItem & JSXBase.HTMLAttributes<HTMLScMenuItemElement>;
             "sc-menu-label": LocalJSX.ScMenuLabel & JSXBase.HTMLAttributes<HTMLScMenuLabelElement>;
             "sc-order": LocalJSX.ScOrder & JSXBase.HTMLAttributes<HTMLScOrderElement>;
+            "sc-order-bump": LocalJSX.ScOrderBump & JSXBase.HTMLAttributes<HTMLScOrderBumpElement>;
+            "sc-order-bumps": LocalJSX.ScOrderBumps & JSXBase.HTMLAttributes<HTMLScOrderBumpsElement>;
             "sc-order-confirm-provider": LocalJSX.ScOrderConfirmProvider & JSXBase.HTMLAttributes<HTMLScOrderConfirmProviderElement>;
             "sc-order-confirmation": LocalJSX.ScOrderConfirmation & JSXBase.HTMLAttributes<HTMLScOrderConfirmationElement>;
             "sc-order-confirmation-customer": LocalJSX.ScOrderConfirmationCustomer & JSXBase.HTMLAttributes<HTMLScOrderConfirmationCustomerElement>;
