@@ -89,12 +89,13 @@ export class ScLineItems {
             return a.price?.id > b.price?.id ? 1 : 0;
           })
           .map(item => {
+            console.log({ item });
             return (
               <sc-product-line-item
                 key={item.id}
                 imageUrl={(item?.price?.product as Product)?.image_url}
                 name={(item?.price?.product as Product)?.name}
-                editable={this.isEditable() && !item?.price?.ad_hoc}
+                editable={this.isEditable() && !item?.price?.ad_hoc && !item?.bump_amount}
                 removable={this.isRemovable()}
                 quantity={item.quantity}
                 amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.subtotal_amount}

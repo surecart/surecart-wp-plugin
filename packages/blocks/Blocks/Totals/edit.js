@@ -22,6 +22,7 @@ const ALLOWED_BLOCKS = [
 	'surecart/line-items',
 	'surecart/tax-line-item',
 	'surecart/total',
+	'surecart/bump-line-item',
 	'surecart/subtotal',
 ];
 
