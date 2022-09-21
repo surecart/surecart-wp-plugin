@@ -28,3 +28,10 @@ sc-alert {
 ::slotted(*) {
   font-family: var(--sc-font-sans);
 }
+
+sc-price-choices[type="radio"],
+sc-price-choice[type="radio"] {
+  width: auto;
+  height: auto;
+  display: block;
+}
