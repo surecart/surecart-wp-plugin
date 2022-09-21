@@ -13,9 +13,10 @@ import NewCondition from './NewCondition';
 export default ({ loading, bump, updateBump }) => {
 	const [newDialog, setNewDialog] = useState(false);
 
-	const hasConditions = Object.keys(bump.filters || {}).some((key) => {
-		return bump.filters[key]?.length;
-	});
+	const hasConditions =
+		bump?.filter_price_ids?.length ||
+		bump?.filter_product_ids?.length ||
+		bump?.filter_product_group_ids?.length;
 
 	return (
 		<Box

@@ -8,7 +8,9 @@ import Filter from './Filter';
 import PriceFilter from './price/PriceFilter';
 
 export default ({ bump, updateBump, type, label, name }) => {
-	if (!bump?.filters?.[type]?.length) {
+	const filtername = `filter_${type}`;
+
+	if (!bump?.[filtername]?.length) {
 		return null;
 	}
 
@@ -25,12 +27,8 @@ export default ({ bump, updateBump, type, label, name }) => {
 	};
 
 	const onRemove = (id) => {
-		const items = bump.filters?.[type]?.filter((item) => item !== id);
 		updateBump({
-			filters: {
-				...(bump?.filters || {}),
-				[type]: items?.length ? items : null,
-			},
+			[filtername]: bump[filtername].filter((item) => item !== id),
 		});
 	};
 
@@ -38,8 +36,8 @@ export default ({ bump, updateBump, type, label, name }) => {
 		<ScFormControl label={label}>
 			<ScCard noPadding>
 				<ScStackedList>
-					{(bump?.filters?.[type] || []).map((id) => {
-						if ('price_ids' === type) {
+					{(bump?.[filtername] || []).map((id) => {
+						if ('filter_price_ids' === filtername) {
 							return (
 								<PriceFilter
 									id={id}
