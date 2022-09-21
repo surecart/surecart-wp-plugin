@@ -1014,6 +1014,15 @@
     "class": true,
     "slot": true
   },
+  "sc-password-nag": {
+    "open": true,
+    "success-url": true,
+    "type": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-payment": {
     "busy": true,
     "currency-code": true,

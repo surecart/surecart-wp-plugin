@@ -90,6 +90,16 @@ class UsersService {
 				},
 			]
 		);
+
+		register_meta(
+			'user',
+			'default_password_nag',
+			[
+				'type'         => 'boolean',
+				'show_in_rest' => true,
+				'single'       => true,
+			]
+		);
 	}
 
 	/**

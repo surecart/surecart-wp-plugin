@@ -73,20 +73,50 @@ class Block extends DashboardPage {
 
 		$model = isset( $_GET['model'] ) ? sanitize_text_field( wp_unslash( $_GET['model'] ) ) : false;
 
+		/**
+		 * Filters content to display before the block.
+		 *
+		 * @since 1.1.12
+		 *
+		 * @param string $content Content to display. Default empty.
+		 * @param array  $args    Array of login form arguments.
+		 */
+		$before = apply_filters( 'surecart/dashboard/block/before', '', $attributes, $content );
+
+		/**
+		 * Filters content to display after the block.
+		 *
+		 * @since 1.1.12
+		 *
+		 * @param string $content Content to display. Default empty.
+		 * @param array  $args    Array of login form arguments.
+		 */
+		$after = apply_filters( 'surecart/dashboard/block/after', '', $attributes, $content );
+
 		// call the correct block controller.
 		if ( ! empty( $this->blocks[ $model ] ) ) {
 			$action = isset( $_GET['action'] ) ? sanitize_text_field( wp_unslash( $_GET['action'] ) ) : false;
 
 			if ( method_exists( $this->blocks[ $model ], $action ) ) {
 				$block = new $this->blocks[ $model ]();
-				return $block->$action() . $this->getTestModeToggleHTML();
+
+				return $this->passwordNag() . '<sc-spacing style="--spacing: var(--sc-spacing-xx-large); font-size: 15px;">' . $before . $block->$action() . $after . '</sc-spacing>';
 			}
 		}
+		return $this->passwordNag() . '<sc-spacing style="--spacing: var(--sc-spacing-xx-large); font-size: 15px;">' . $before . wp_kses_post( $content ) . $after . '</sc-spacing>';
+	}
 
+	public function passwordNag() {
+		if ( empty( get_user_meta( get_current_user_id(), 'default_password_nag', true ) ) ) {
+			return;
+		}
+		$back = add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		ob_start();
 		?>
-			<sc-spacing style="--spacing: var(--sc-spacing-xxx-large); font-size: 15px;"><?php echo wp_kses_post( $content ); ?></sc-spacing>
+
+		<sc-password-nag success-url="<?php echo esc_url( $back ); ?>"></sc-password-nag>
+
 		<?php
-		return ob_get_clean() . $this->getTestModeToggleHTML();
+		return ob_get_clean();
 	}
 }
