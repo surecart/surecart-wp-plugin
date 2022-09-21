@@ -10,15 +10,15 @@ import { Fragment } from '@wordpress/element';
 import { ScSecureNotice } from '@surecart/components-react';
 import { useBlockProps } from '@wordpress/block-editor';
 
-export default ( ) => {
-
+export default () => {
 	const blockProps = useBlockProps();
 
 	return (
-		<Fragment>
-      <ScSecureNotice>
-        {__('Honeypot field. This will not visible in the frontend', 'surecart')}
-      </ScSecureNotice>
-		</Fragment>
+		<ScSecureNotice {...blockProps}>
+			{__(
+				'Honeypot field. This will not visible in the frontend',
+				'surecart'
+			)}
+		</ScSecureNotice>
 	);
 };
