@@ -132,7 +132,7 @@ export class ScAlert {
             </div>
           </div>
           {this.closable && (
-            <span class="alert__close" onClick={() => this.handleCloseClick()}>
+            <span class="alert__close" part="close-icon" onClick={() => this.handleCloseClick()}>
               <span class="sr-only">Dismiss</span>
               <svg class="h-5 w-5" x-description="Heroicon name: solid/x" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path
