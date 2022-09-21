@@ -26,6 +26,16 @@ class SettingService {
 		);
 		$this->register(
 			'general',
+			'honeypot_enabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => true,
+			]
+		);
+		$this->register(
+			'general',
 			'recaptcha_enabled',
 			[
 				'type'              => 'boolean',

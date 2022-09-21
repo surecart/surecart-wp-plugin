@@ -24,6 +24,12 @@ export default () => {
 		'account'
 	);
 
+	// honeypot.
+	const [honeypotEnabled, setHoneyPotEnabled] = useEntityProp(
+		'root',
+		'site',
+		'surecart_honeypot_enabled'
+	);
 	// recapcha.
 	const [recaptchaEnabled, setRecaptchaEnabled] = useEntityProp(
 		'root',
@@ -175,6 +181,19 @@ export default () => {
 				)}
 				loading={!hasLoadedItem}
 			>
+				<ScSwitch
+					checked={honeypotEnabled}
+					onScChange={(e) => setHoneypotEnabled(e.target.checked)}
+				>
+					{__('Honeypot', 'surecart')}
+					<span slot="description">
+						{__(
+							'This adds a field that is invisible to users, but visible to bots in an attempt to trick them into filling it out.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
 				<ScSwitch
 					checked={recaptchaEnabled}
 					onScChange={(e) => {
