@@ -6,6 +6,7 @@ use SureCart\Models\Checkout;
 use SureCart\Models\Form;
 use SureCart\Models\User;
 use SureCart\WordPress\Users\CustomerLinkService;
+use SureCart\WordPress\RecaptchaValidationService;
 
 /**
  * Handle price requests through the REST API
@@ -241,10 +242,19 @@ class CheckoutsController extends RestController {
 			$errors->add( $valid_login->get_error_code(), $valid_login->get_error_message() );
 		}
 
-		// Check if honeypot checkbox checked or not
+		// Check if honeypot checkbox checked or not.
 		$metadata = $request->get_param( 'metadata' );
-		if ( $metadata && $metadata['get_feedback'] ) {
-			$errors->add( 'invalid', __('Invalid request. Please try again.', 'surecart') );
+		if ( $metadata && ! empty($metadata['get_feedback'] ) ) {
+			$errors->add( 'invalid', __('Invalid request. Please try again.', 'surecart') );  
+    }
+    
+		// check recaptcha.
+		$service = new RecaptchaValidationService();
+		if ( $service->isEnabled() ) {
+			$recaptcha = $service->validate( $request->get_param( 'grecaptcha' ) );
+			if ( is_wp_error( $recaptcha ) ) {
+				$errors->add( $recaptcha->get_error_code(), $recaptcha->get_error_message() );
+			}
 		}
 
 		return apply_filters( 'surecart/checkout/validate', $errors, $args, $request );

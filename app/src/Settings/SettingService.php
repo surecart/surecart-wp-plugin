@@ -2,6 +2,8 @@
 
 namespace SureCart\Settings;
 
+use SureCart\WordPress\RecaptchaValidationService;
+
 /**
  * A service for registering settings.
  */
@@ -93,5 +95,14 @@ class SettingService {
 	public function register( $option_group, $option_name, $args = [] ) {
 		$service = new RegisterSettingService( $option_group, $option_name, $args );
 		return $service->register();
+	}
+
+	/**
+	 * Recaptcha service.
+	 *
+	 * @return RecaptchaValidationService
+	 */
+	public function recaptcha() {
+		return new RecaptchaValidationService();
 	}
 }

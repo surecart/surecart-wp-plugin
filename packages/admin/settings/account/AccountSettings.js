@@ -30,7 +30,6 @@ export default () => {
 		'site',
 		'surecart_honeypot_enabled'
 	);
-
 	// recapcha.
 	const [recaptchaEnabled, setRecaptchaEnabled] = useEntityProp(
 		'root',
