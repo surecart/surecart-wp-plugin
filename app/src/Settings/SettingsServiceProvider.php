@@ -3,6 +3,7 @@
 namespace SureCart\Settings;
 
 use SureCart\Settings\SettingService;
+use SureCart\WordPress\RecaptchaValidationService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -24,7 +25,7 @@ class SettingsServiceProvider implements ServiceProviderInterface {
 		};
 
 		$app = $container[ SURECART_APPLICATION_KEY ];
-		$app->alias( 'setting', 'surecart.settings' );
+		$app->alias( 'settings', 'surecart.settings' );
 	}
 
 

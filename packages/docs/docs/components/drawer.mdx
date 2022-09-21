@@ -1,0 +1,36 @@
+# Drawer
+
+```html
+<sc-drawer></sc-drawer>
+```
+
+This component let users create drawer.
+
+import DemoTabs from '../../components/Demo-Tabs.js';
+import ComponentDoc from '../../components/Component-Doc.js';
+import { useState } from 'react';
+
+export const RenderDrawer = () => {
+  const [ open, setOpen] = useState(false);
+  return (
+    <>
+		<sc-button onClick={() => setOpen(!open)}>Open</sc-button>
+		<sc-drawer label="Drawer header" open={open} onScRequestClose={() => setOpen(false)}>
+			Content
+		</sc-drawer>
+	</>
+  )
+}
+
+<DemoTabs>
+	<DemoTabs.Code>
+{`
+<sc-drawer label="Drawer header"></sc-drawer>
+`}
+	</DemoTabs.Code>
+	{RenderDrawer()}
+</DemoTabs>
+
+## Component Codex
+
+<ComponentDoc tag="sc-drawer" />

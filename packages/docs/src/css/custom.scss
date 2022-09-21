@@ -17,6 +17,13 @@ body {
 	color: var(--sc-color-gray-950);
 }
 
+.cart-icon-demo::part(base) {
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
 /* You can override the default Infima variables here. */
 :root {
 	--ifm-color-primary: var(--sc-color-primary-500);

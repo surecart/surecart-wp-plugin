@@ -70,6 +70,7 @@ Type: `Promise<void>`
 | ---------------- | ----------- |
 | `"base"`         |             |
 | `"checked-icon"` |             |
+| `"content"`      |             |
 | `"control"`      |             |
 | `"description"`  |             |
 | `"label"`        |             |
@@ -80,6 +81,7 @@ Type: `Promise<void>`
 
 ### Used by
 
+ - [sc-order-bump](../../controllers/checkout-form/sc-order-bump)
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
@@ -87,6 +89,7 @@ Type: `Promise<void>`
 ### Graph
 ```mermaid
 graph TD;
+  sc-order-bump --> sc-choice
   sc-price-choice --> sc-choice
   sc-subscription-payment --> sc-choice
   sc-subscription-switch --> sc-choice

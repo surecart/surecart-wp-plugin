@@ -125,6 +125,17 @@ export class ScSessionProvider {
     const json = await this.el.querySelector('sc-form').getFormJson();
     let data = parseFormData(json);
 
+    if (window?.scData?.recaptcha_site_key && window?.grecaptcha) {
+      try {
+        data['grecaptcha'] = await window.grecaptcha.execute(window.scData.recaptcha_site_key, { action: 'surecart_checkout_submit' });
+      } catch (e) {
+        console.error(e);
+        this.scSetState.emit('REJECT');
+        this.handleErrorResponse(e);
+        return;
+      }
+    }
+
     // first lets make sure the session is updated before we process it.
     try {
       await this.update(data);
