@@ -1,0 +1,29 @@
+# Dashboard Module
+
+```html
+<sc-dashboard-module></sc-dashboard-module>
+```
+
+This component let users create dashboard module.
+
+import DemoTabs from '../../components/Demo-Tabs.js';
+import ComponentDoc from '../../components/Component-Doc.js';
+
+<DemoTabs>
+	<DemoTabs.Code>
+{`
+<sc-dashboard-module heading="Dashboard Title">
+	<sc-button slot="end" size="small">Button</sc-button>
+	<sc-card>Content</sc-card>
+</sc-dashboard-module>
+`}
+	</DemoTabs.Code>
+	<sc-dashboard-module heading="Dashboard Title">
+		<sc-button slot="end" size="small">Button</sc-button>
+		<sc-card>Content</sc-card>
+	</sc-dashboard-module>
+</DemoTabs>
+
+## Component Codex
+
+<ComponentDoc tag="sc-dashboard-module" />
