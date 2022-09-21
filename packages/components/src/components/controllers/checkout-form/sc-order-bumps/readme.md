@@ -7,12 +7,13 @@
 
 ## Properties
 
-| Property   | Attribute | Description | Type       | Default     |
-| ---------- | --------- | ----------- | ---------- | ----------- |
-| `bumps`    | --        |             | `Bump[]`   | `undefined` |
-| `checkout` | --        |             | `Checkout` | `undefined` |
-| `help`     | `help`    |             | `string`   | `undefined` |
-| `label`    | `label`   |             | `string`   | `undefined` |
+| Property      | Attribute      | Description | Type       | Default     |
+| ------------- | -------------- | ----------- | ---------- | ----------- |
+| `bumps`       | --             |             | `Bump[]`   | `undefined` |
+| `checkout`    | --             |             | `Checkout` | `undefined` |
+| `help`        | `help`         |             | `string`   | `undefined` |
+| `label`       | `label`        |             | `string`   | `undefined` |
+| `showControl` | `show-control` |             | `boolean`  | `undefined` |
 
 
 ## Dependencies
