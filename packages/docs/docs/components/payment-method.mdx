@@ -8,14 +8,21 @@ This component let users create payment method.
 
 import DemoTabs from '../../components/Demo-Tabs.js';
 import ComponentDoc from '../../components/Component-Doc.js';
+import {ScPaymentMethod} from '@surecart/components-react';
 
 <DemoTabs>
 	<DemoTabs.Code>
 {`
-<sc-payment-method></sc-payment-method>
+<sc-payment-method class="card"></sc-payment-method>
+<sc-payment-method class="bank"></sc-payment-method>
+<script>
+	document.querySelector('.card').paymentMethod = {card: { brand: 'visa', last4: '4242'}};
+	document.querySelector('.bank').paymentMethod = {bank_account: { id: 'test', account_type: "checking", last4: '9999'}};
+</script>
 `}
 	</DemoTabs.Code>
-	<sc-payment-method></sc-payment-method>
+	<ScPaymentMethod paymentMethod={{card: { brand: 'visa', last4: '4242'}}}></ScPaymentMethod>
+	<ScPaymentMethod paymentMethod={{bank_account: { id: 'test', account_type: "checking", last4: '9999'}}}></ScPaymentMethod>
 </DemoTabs>
 
 ## Component Codex

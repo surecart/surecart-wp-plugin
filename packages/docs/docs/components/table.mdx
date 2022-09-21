@@ -12,28 +12,11 @@ import ComponentDoc from '../../components/Component-Doc.js';
 <DemoTabs>
 	<DemoTabs.Code>
 {`
-<sc-table>
-	<sc-table-head>Table Header</sc-table-head>
-	<sc-table-row>
-		<sc-table-cell>Data 1</sc-table-cell>
-		<sc-table-cell>Data 2</sc-table-cell>
-		<sc-table-cell>Data 3</sc-table-cell>
-	</sc-table-row>
-	<sc-table-row>
-		<sc-table-cell>Data 4</sc-table-cell>
-		<sc-table-cell>Data 5</sc-table-cell>
-		<sc-table-cell>Data 6</sc-table-cell>
-	</sc-table-row>
-	<sc-table-row>
-		<sc-table-cell>Data 7</sc-table-cell>
-		<sc-table-cell>Data 8</sc-table-cell>
-		<sc-table-cell>Data 9</sc-table-cell>
-	</sc-table-row>
-</sc-table>
-`}
-	</DemoTabs.Code>
+<sc-card no-padding>
 	<sc-table>
-		<sc-table-head>Table Header</sc-table-head>
+		<sc-table-cell slot="head">Column 1</sc-table-cell>
+		<sc-table-cell slot="head">Column 2</sc-table-cell>
+		<sc-table-cell slot="head">Column 3</sc-table-cell>
 		<sc-table-row>
 			<sc-table-cell>Data 1</sc-table-cell>
 			<sc-table-cell>Data 2</sc-table-cell>
@@ -50,6 +33,31 @@ import ComponentDoc from '../../components/Component-Doc.js';
 			<sc-table-cell>Data 9</sc-table-cell>
 		</sc-table-row>
 	</sc-table>
+</sc-card>
+`}
+	</DemoTabs.Code>
+	<sc-card no-padding>
+		<sc-table>
+			<sc-table-cell slot="head">Column 1</sc-table-cell>
+			<sc-table-cell slot="head">Column 2</sc-table-cell>
+			<sc-table-cell slot="head">Column 3</sc-table-cell>
+			<sc-table-row>
+				<sc-table-cell>Data 1</sc-table-cell>
+				<sc-table-cell>Data 2</sc-table-cell>
+				<sc-table-cell>Data 3</sc-table-cell>
+			</sc-table-row>
+			<sc-table-row>
+				<sc-table-cell>Data 4</sc-table-cell>
+				<sc-table-cell>Data 5</sc-table-cell>
+				<sc-table-cell>Data 6</sc-table-cell>
+			</sc-table-row>
+			<sc-table-row>
+				<sc-table-cell>Data 7</sc-table-cell>
+				<sc-table-cell>Data 8</sc-table-cell>
+				<sc-table-cell>Data 9</sc-table-cell>
+			</sc-table-row>
+		</sc-table>
+	</sc-card>
 </DemoTabs>
 
 ## Component Codex

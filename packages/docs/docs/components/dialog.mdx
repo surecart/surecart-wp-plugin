@@ -8,6 +8,19 @@ This component let users create dialog.
 
 import DemoTabs from '../../components/Demo-Tabs.js';
 import ComponentDoc from '../../components/Component-Doc.js';
+import { useState } from 'react';
+
+export const RenderDialog = () => {
+  const [ open, setOpen] = useState(false);
+  return (
+    <>
+		<sc-button onClick={() => setOpen(!open)}>Open</sc-button>
+		<sc-dialog label="Dialog header" open={open} onScRequestClose={() => setOpen(false)}>
+			Content
+		</sc-dialog>
+	</>
+  )
+}
 
 <DemoTabs>
 	<DemoTabs.Code>
@@ -15,7 +28,7 @@ import ComponentDoc from '../../components/Component-Doc.js';
 <sc-dialog label="Dialog header"></sc-dialog>
 `}
 	</DemoTabs.Code>
-	<sc-dialog label="Dialog header"></sc-dialog>
+	{RenderDialog()}
 </DemoTabs>
 
 ## Component Codex

@@ -12,10 +12,52 @@ import ComponentDoc from '../../components/Component-Doc.js';
 <DemoTabs>
 	<DemoTabs.Code>
 {`
-<sc-tab-panel></sc-tab-panel>
+<sc-tab-group>
+	<sc-tab slot="nav" panel="general">
+		<sc-icon name="home" slot="prefix"></sc-icon>
+		General
+	</sc-tab>
+	<sc-tab slot="nav" panel="custom">
+		<sc-icon name="image" slot="prefix"></sc-icon>
+		Custom
+	</sc-tab>
+	<sc-tab slot="nav" panel="advanced">
+		<sc-icon name="sliders" slot="prefix"></sc-icon>
+		General
+	</sc-tab>
+	<sc-tab slot="nav" panel="disabled" disabled>
+		<sc-icon name="slash" slot="prefix"></sc-icon>
+		Disabled
+	</sc-tab>
+	<sc-tab-panel name="general">This is the general tab panel.</sc-tab-panel>
+	<sc-tab-panel name="custom">This is the custom tab panel.</sc-tab-panel>
+	<sc-tab-panel name="advanced">This is the advanced tab panel.</sc-tab-panel>
+	<sc-tab-panel name="disabled">This is a disabled tab panel.</sc-tab-panel>
+</sc-tab-group>
 `}
 	</DemoTabs.Code>
-	<sc-tab-panel name="Tab Panel"></sc-tab-panel>
+	<sc-tab-group>
+		<sc-tab slot="nav" panel="general">
+			<sc-icon name="home" slot="prefix"></sc-icon>
+			General
+		</sc-tab>
+		<sc-tab slot="nav" panel="custom">
+			<sc-icon name="image" slot="prefix"></sc-icon>
+			Custom
+		</sc-tab>
+		<sc-tab slot="nav" panel="advanced">
+			<sc-icon name="sliders" slot="prefix"></sc-icon>
+			General
+		</sc-tab>
+		<sc-tab slot="nav" panel="disabled" disabled>
+			<sc-icon name="slash" slot="prefix"></sc-icon>
+			Disabled
+		</sc-tab>
+		<sc-tab-panel name="general">This is the general tab panel.</sc-tab-panel>
+		<sc-tab-panel name="custom">This is the custom tab panel.</sc-tab-panel>
+		<sc-tab-panel name="advanced">This is the advanced tab panel.</sc-tab-panel>
+		<sc-tab-panel name="disabled">This is a disabled tab panel.</sc-tab-panel>
+	</sc-tab-group>
 </DemoTabs>
 
 ## Component Codex

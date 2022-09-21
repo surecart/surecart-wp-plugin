@@ -8,22 +8,21 @@ This component let users create select container.
 
 import DemoTabs from '../../components/Demo-Tabs.js';
 import ComponentDoc from '../../components/Component-Doc.js';
+import {ScSelect} from '@surecart/components-react';
 
 <DemoTabs>
 	<DemoTabs.Code>
 {`
-<sc-select placeholder="My Select Box">
-	<sc-menu-item>Option 1</sc-menu-item>
-	<sc-menu-item>Option 2</sc-menu-item>
-	<sc-menu-item>Option 3</sc-menu-item>
-</sc-select>
+<sc-select label="Select" placeholder="Select something" search></sc-select>
+<script>
+	document.querySelector('sc-select').choices = [
+		{label: 'Item', value: 'item-1'},
+		{label: 'Item 2', value: 'item-2'}
+	];
+</script>
 `}
 	</DemoTabs.Code>
-	<sc-select placeholder="My Select Box">
-		<sc-menu-item>Option 1</sc-menu-item>
-		<sc-menu-item>Option 2</sc-menu-item>
-		<sc-menu-item>Option 3</sc-menu-item>
-	</sc-select>
+	<ScSelect label="Select" placeholder="Select something" search choices={[{label: 'Item', value: 'item-1'}, {label: 'Item 2', value: 'item-2'}]} />
 </DemoTabs>
 
 ## Component Codex

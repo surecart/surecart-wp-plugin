@@ -1,10 +1,10 @@
 # Icon
 
 ```html
-<sc-icon></sc-icon>
+<sc-icon name="icon-name-here"></sc-icon>
 ```
 
-This component let users create an icon.
+This component let users display an icon. SureCart comes bundled with over 287 icons courtesy of the [Feather Icons](https://feathericons.com/). Please use the names from this library for the name property of the icon.
 
 import DemoTabs from '../../components/Demo-Tabs.js';
 import ComponentDoc from '../../components/Component-Doc.js';
@@ -12,10 +12,18 @@ import ComponentDoc from '../../components/Component-Doc.js';
 <DemoTabs>
 	<DemoTabs.Code>
 {`
-<sc-icon src="https://cdn.shortpixel.ai/spai/ret_img/https://surecart.com/wp-content/uploads/2022/08/Fevicon.svg"></sc-icon>
+<sc-icon name="shopping-bag"></sc-icon>
+<sc-icon name="activity"></sc-icon>
+<sc-icon name="airplay"></sc-icon>
+<sc-icon name="alert-circle"></sc-icon>
 `}
 	</DemoTabs.Code>
-	<sc-icon src="https://cdn.shortpixel.ai/spai/ret_img/https://surecart.com/wp-content/uploads/2022/08/Fevicon.svg"></sc-icon>
+	<sc-flex justify-content="flex-start" style={{fontSize: '20px'}}>
+		<sc-icon name="shopping-bag"></sc-icon>
+		<sc-icon name="activity"></sc-icon>
+		<sc-icon name="airplay"></sc-icon>
+		<sc-icon name="alert-circle"></sc-icon>
+	</sc-flex>
 </DemoTabs>
 
 ## Component Codex
