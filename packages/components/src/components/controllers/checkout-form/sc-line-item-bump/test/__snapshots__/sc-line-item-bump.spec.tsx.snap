@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-line-item-bump renders 1`] = `
+<sc-line-item-bump>
+  <mock:shadow-root></mock:shadow-root>
+</sc-line-item-bump>
+`;

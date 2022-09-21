@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-order-bump renders 1`] = `
+<sc-order-bump>
+  <mock:shadow-root>
+    <sc-choice exportparts="base, control, checked-icon, title" type="checkbox">
+      <div class="bump" part="base-content">
+        <div class="bump__text">
+          <div class="bump__title"></div>
+          <div class="bump__price" part="price" slot="description">
+            <sc-format-number class="bump__original-price" type="currency"></sc-format-number>
+            Free
+          </div>
+        </div>
+      </div>
+    </sc-choice>
+  </mock:shadow-root>
+</sc-order-bump>
+`;

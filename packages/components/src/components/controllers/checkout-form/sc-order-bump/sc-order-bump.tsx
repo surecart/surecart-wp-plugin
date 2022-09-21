@@ -47,7 +47,7 @@ export class ScOrderBump {
   }
 
   newPrice() {
-    let amount = (this.bump?.price as Price).amount || 0;
+    let amount = (this.bump?.price as Price)?.amount || 0;
 
     if (this.bump?.amount_off) {
       amount = Math.max(0, amount - this.bump?.amount_off);
@@ -65,8 +65,8 @@ export class ScOrderBump {
         <sc-format-number
           type="currency"
           class="bump__original-price"
-          value={(this.bump?.price as Price).amount}
-          currency={(this.bump?.price as Price).currency}
+          value={(this.bump?.price as Price)?.amount}
+          currency={(this.bump?.price as Price)?.currency}
         ></sc-format-number>{' '}
         {this.newPrice() === 0 ? (
           __('Free', 'surecart')
@@ -108,7 +108,7 @@ export class ScOrderBump {
       >
         <div part="base-content" class="bump">
           <div class="bump__text">
-            <div class="bump__title">{this.bump?.metadata?.cta || this.bump.name || product?.name}</div>
+            <div class="bump__title">{this.bump?.metadata?.cta || this.bump?.name || product?.name}</div>
             {this.renderPrice()}
           </div>
           {this.renderDiscount()}

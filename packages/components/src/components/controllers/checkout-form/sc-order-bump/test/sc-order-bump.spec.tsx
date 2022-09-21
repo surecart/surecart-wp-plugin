@@ -7,12 +7,6 @@ describe('sc-order-bump', () => {
       components: [ScOrderBump],
       html: `<sc-order-bump></sc-order-bump>`,
     });
-    expect(page.root).toEqualHtml(`
-      <sc-order-bump>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </sc-order-bump>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

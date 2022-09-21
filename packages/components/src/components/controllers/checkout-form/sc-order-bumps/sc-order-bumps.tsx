@@ -16,7 +16,7 @@ export class ScOrderBumps {
   @Prop() checkout: Checkout;
 
   render() {
-    if (!this.bumps.length) {
+    if (!this?.bumps?.length) {
       return null;
     }
 
