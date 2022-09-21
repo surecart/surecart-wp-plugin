@@ -1465,6 +1465,7 @@ export namespace Components {
         "checkout": Checkout;
         "help": string;
         "label": string;
+        "showControl": boolean;
     }
     interface ScOrderConfirmProvider {
         /**
@@ -5748,6 +5749,7 @@ declare namespace LocalJSX {
         "checkout"?: Checkout;
         "help"?: string;
         "label"?: string;
+        "showControl"?: boolean;
     }
     interface ScOrderConfirmProvider {
         /**

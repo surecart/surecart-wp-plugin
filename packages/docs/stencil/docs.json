@@ -1,5 +1,5 @@
 {
-	"timestamp": "2022-09-14T18:50:24",
+	"timestamp": "2022-09-21T15:46:28",
 	"compiler": {
 		"name": "@stencil/core",
 		"version": "2.17.1",
@@ -416,10 +416,6 @@
 					"docs": ""
 				},
 				{
-					"name": "close-icon",
-					"docs": ""
-				},
-				{
 					"name": "icon",
 					"docs": ""
 				},
@@ -446,7 +442,6 @@
 				"sc-form-error-provider",
 				"sc-login-form",
 				"sc-order-confirmation",
-				"sc-password-nag",
 				"sc-payment",
 				"sc-paypal-add-method",
 				"sc-price-choice",
@@ -469,7 +464,6 @@
 				"sc-form-error-provider": ["sc-alert"],
 				"sc-login-form": ["sc-alert"],
 				"sc-order-confirmation": ["sc-alert"],
-				"sc-password-nag": ["sc-alert"],
 				"sc-payment": ["sc-alert"],
 				"sc-paypal-add-method": ["sc-alert"],
 				"sc-price-choice": ["sc-alert"],
@@ -1247,7 +1241,6 @@
 				"sc-order-submit",
 				"sc-orders-list",
 				"sc-pagination",
-				"sc-password-nag",
 				"sc-payment-methods-list",
 				"sc-purchase-downloads-list",
 				"sc-stripe-add-method",
@@ -1283,7 +1276,6 @@
 				"sc-order-submit": ["sc-button"],
 				"sc-orders-list": ["sc-button"],
 				"sc-pagination": ["sc-button"],
-				"sc-password-nag": ["sc-button"],
 				"sc-payment-methods-list": ["sc-button"],
 				"sc-purchase-downloads-list": ["sc-button"],
 				"sc-stripe-add-method": ["sc-button"],
@@ -7193,7 +7185,6 @@
 				"sc-downloads-list",
 				"sc-order",
 				"sc-pagination",
-				"sc-password-nag",
 				"sc-payment-methods-list",
 				"sc-subscription",
 				"sc-subscription-switch",
@@ -7204,7 +7195,6 @@
 				"sc-downloads-list": ["sc-flex"],
 				"sc-order": ["sc-flex"],
 				"sc-pagination": ["sc-flex"],
-				"sc-password-nag": ["sc-flex"],
 				"sc-payment-methods-list": ["sc-flex"],
 				"sc-subscription": ["sc-flex"],
 				"sc-subscription-switch": ["sc-flex"],
@@ -10129,6 +10119,7 @@
 			"filePath": "./src/components/controllers/checkout-form/sc-line-item-bump/sc-line-item-bump.tsx",
 			"encapsulation": "shadow",
 			"tag": "sc-line-item-bump",
+			"readme": "# sc-line-item-bump\n\n\n",
 			"docs": "",
 			"docsTags": [],
 			"usage": {},
@@ -11032,6 +11023,7 @@
 			"filePath": "./src/components/controllers/checkout-form/sc-order-bump/sc-order-bump.tsx",
 			"encapsulation": "shadow",
 			"tag": "sc-order-bump",
+			"readme": "# sc-order-bump\n\n\n",
 			"docs": "",
 			"docsTags": [],
 			"usage": {},
@@ -11072,7 +11064,7 @@
 					"mutable": false,
 					"attr": "show-control",
 					"reflectToAttr": false,
-					"docs": "",
+					"docs": "Should we show the controls",
 					"docsTags": [],
 					"values": [
 						{
@@ -11088,7 +11080,7 @@
 					"mutable": false,
 					"attr": "show-label",
 					"reflectToAttr": false,
-					"docs": "",
+					"docs": "Should we show the label",
 					"docsTags": [],
 					"values": [
 						{
@@ -11148,6 +11140,7 @@
 			"filePath": "./src/components/controllers/checkout-form/sc-order-bumps/sc-order-bumps.tsx",
 			"encapsulation": "shadow",
 			"tag": "sc-order-bumps",
+			"readme": "# sc-order-bumps\n\n\n",
 			"docs": "",
 			"docsTags": [],
 			"usage": {},
@@ -13501,103 +13494,6 @@
 				"sc-invoices-list": ["sc-pagination"],
 				"sc-orders-list": ["sc-pagination"],
 				"sc-subscriptions-list": ["sc-pagination"]
-			}
-		},
-		{
-			"filePath": "./src/components/controllers/dashboard/sc-password-nag/sc-password-nag.tsx",
-			"encapsulation": "shadow",
-			"tag": "sc-password-nag",
-			"readme": "# sc-password-nag\n\n\n",
-			"docs": "",
-			"docsTags": [],
-			"usage": {},
-			"props": [
-				{
-					"name": "open",
-					"type": "boolean",
-					"mutable": true,
-					"attr": "open",
-					"reflectToAttr": false,
-					"docs": "",
-					"docsTags": [],
-					"default": "true",
-					"values": [
-						{
-							"type": "boolean"
-						}
-					],
-					"optional": false,
-					"required": false
-				},
-				{
-					"name": "type",
-					"type": "\"danger\" | \"info\" | \"primary\" | \"success\" | \"warning\"",
-					"mutable": false,
-					"attr": "type",
-					"reflectToAttr": true,
-					"docs": "The type of alert.",
-					"docsTags": [],
-					"default": "'warning'",
-					"values": [
-						{
-							"value": "danger",
-							"type": "string"
-						},
-						{
-							"value": "info",
-							"type": "string"
-						},
-						{
-							"value": "primary",
-							"type": "string"
-						},
-						{
-							"value": "success",
-							"type": "string"
-						},
-						{
-							"value": "warning",
-							"type": "string"
-						}
-					],
-					"optional": false,
-					"required": false
-				}
-			],
-			"methods": [],
-			"events": [],
-			"listeners": [],
-			"styles": [],
-			"slots": [],
-			"parts": [],
-			"dependents": [],
-			"dependencies": [
-				"sc-alert",
-				"sc-flex",
-				"sc-button",
-				"sc-wordpress-password-edit"
-			],
-			"dependencyGraph": {
-				"sc-password-nag": [
-					"sc-alert",
-					"sc-flex",
-					"sc-button",
-					"sc-wordpress-password-edit"
-				],
-				"sc-alert": ["sc-icon"],
-				"sc-button": ["sc-spinner"],
-				"sc-wordpress-password-edit": [
-					"sc-dashboard-module",
-					"sc-card",
-					"sc-form",
-					"sc-input",
-					"sc-button",
-					"sc-block-ui"
-				],
-				"sc-dashboard-module": ["sc-alert"],
-				"sc-input": ["sc-form-control"],
-				"sc-form-control": ["sc-tooltip"],
-				"sc-block-ui": ["sc-spinner"]
 			}
 		},
 		{
@@ -21880,7 +21776,7 @@
 			"styles": [],
 			"slots": [],
 			"parts": [],
-			"dependents": ["sc-password-nag"],
+			"dependents": [],
 			"dependencies": [
 				"sc-dashboard-module",
 				"sc-card",
@@ -21903,8 +21799,7 @@
 				"sc-input": ["sc-form-control"],
 				"sc-form-control": ["sc-tooltip"],
 				"sc-button": ["sc-spinner"],
-				"sc-block-ui": ["sc-spinner"],
-				"sc-password-nag": ["sc-wordpress-password-edit"]
+				"sc-block-ui": ["sc-spinner"]
 			}
 		},
 		{

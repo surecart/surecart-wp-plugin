@@ -34,10 +34,7 @@ export default ({ onRequestClose, bump, updateBump }) => {
 
 	const onSubmit = (e) => {
 		updateBump({
-			filters: {
-				...(bump?.filters || {}),
-				[type]: [...(bump?.filters?.[type] || []), id],
-			},
+			[`filter_${type}`]: [...(bump?.[`filter_${type}`] || []), id],
 		});
 		onRequestClose();
 	};
@@ -78,6 +75,7 @@ export default ({ onRequestClose, bump, updateBump }) => {
 				<ScSelect
 					label={__('Choose An Item', 'surecart')}
 					value={type}
+					unselect={false}
 					choices={[
 						{
 							label: __('Price', 'surecart'),
