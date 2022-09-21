@@ -6,6 +6,8 @@ import * as donation from '@blocks/Donation';
 import * as donationAmount from '@blocks/DonationAmount';
 import * as nameYourPrice from '@blocks/NameYourPrice';
 import * as address from '@blocks/Address';
+import * as orderBumps from '@blocks/OrderBumps';
+import * as bumpLineItem from '@blocks/BumpLineItem';
 import * as columns from '@blocks/Columns';
 import * as column from '@blocks/Column';
 import * as checkbox from '@blocks/Checkbox';
@@ -36,6 +38,8 @@ registerBlocks([
 	donation,
 	donationAmount,
 	nameYourPrice,
+	bumpLineItem,
+	...(!!scBlockData?.entitlements?.bumps ? [orderBumps] : []),
 	address,
 	columns,
 	column,

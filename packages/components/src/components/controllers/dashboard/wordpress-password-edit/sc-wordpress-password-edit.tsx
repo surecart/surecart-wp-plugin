@@ -33,6 +33,9 @@ export class ScWordPressPasswordEdit {
         method: 'PATCH',
         data: {
           password,
+          meta: {
+            default_password_nag: false,
+          },
         },
       });
       if (this.successUrl) {
@@ -50,7 +53,7 @@ export class ScWordPressPasswordEdit {
     return (
       <sc-dashboard-module class="customer-details" error={this.error}>
         <span slot="heading">{this.heading || __('Update Password', 'surecart')} </span>
-
+        <slot name="end" slot="end" />
         <sc-card>
           <sc-form onScFormSubmit={e => this.handleSubmit(e)}>
             <sc-input label={__('New Password', 'surecart')} name="password" type="password" required />

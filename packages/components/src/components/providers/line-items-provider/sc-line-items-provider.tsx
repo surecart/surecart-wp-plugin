@@ -1,6 +1,7 @@
+import { Component, Event, EventEmitter, h, Listen, Prop, State, Watch } from '@stencil/core';
+
 import { convertLineItemsToLineItemData } from '../../../functions/line-items';
 import { Checkout, LineItemData } from '../../../types';
-import { Component, h, State, Prop, Watch, Event, EventEmitter, Listen } from '@stencil/core';
 
 @Component({
   tag: 'sc-line-items-provider',
@@ -75,7 +76,7 @@ export class ScLineItemsProvider {
 
     // run existing data through chain of sync updates.
     (this.syncItems || []).forEach(item => {
-      existingData = map[item.type](item.payload, existingData);
+      existingData = map[item.type](item.payload, existingData) as any;
     });
 
     return existingData;
