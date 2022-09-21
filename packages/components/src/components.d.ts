@@ -1743,6 +1743,17 @@ export namespace Components {
         "totalPages": number;
         "totalShowing": number;
     }
+    interface ScPasswordNag {
+        "open": boolean;
+        /**
+          * The success url.
+         */
+        "successUrl": string;
+        /**
+          * The type of alert.
+         */
+        "type": 'primary' | 'success' | 'info' | 'warning' | 'danger';
+    }
     interface ScPayment {
         /**
           * Is this busy.
@@ -3611,6 +3622,12 @@ declare global {
         prototype: HTMLScPaginationElement;
         new (): HTMLScPaginationElement;
     };
+    interface HTMLScPasswordNagElement extends Components.ScPasswordNag, HTMLStencilElement {
+    }
+    var HTMLScPasswordNagElement: {
+        prototype: HTMLScPasswordNagElement;
+        new (): HTMLScPasswordNagElement;
+    };
     interface HTMLScPaymentElement extends Components.ScPayment, HTMLStencilElement {
     }
     var HTMLScPaymentElement: {
@@ -4046,6 +4063,7 @@ declare global {
         "sc-order-tax-id-input": HTMLScOrderTaxIdInputElement;
         "sc-orders-list": HTMLScOrdersListElement;
         "sc-pagination": HTMLScPaginationElement;
+        "sc-password-nag": HTMLScPasswordNagElement;
         "sc-payment": HTMLScPaymentElement;
         "sc-payment-method": HTMLScPaymentMethodElement;
         "sc-payment-methods-list": HTMLScPaymentMethodsListElement;
@@ -6041,6 +6059,17 @@ declare namespace LocalJSX {
         "totalPages"?: number;
         "totalShowing"?: number;
     }
+    interface ScPasswordNag {
+        "open"?: boolean;
+        /**
+          * The success url.
+         */
+        "successUrl"?: string;
+        /**
+          * The type of alert.
+         */
+        "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger';
+    }
     interface ScPayment {
         /**
           * Is this busy.
@@ -7359,6 +7388,7 @@ declare namespace LocalJSX {
         "sc-order-tax-id-input": ScOrderTaxIdInput;
         "sc-orders-list": ScOrdersList;
         "sc-pagination": ScPagination;
+        "sc-password-nag": ScPasswordNag;
         "sc-payment": ScPayment;
         "sc-payment-method": ScPaymentMethod;
         "sc-payment-methods-list": ScPaymentMethodsList;
@@ -7514,6 +7544,7 @@ declare module "@stencil/core" {
             "sc-order-tax-id-input": LocalJSX.ScOrderTaxIdInput & JSXBase.HTMLAttributes<HTMLScOrderTaxIdInputElement>;
             "sc-orders-list": LocalJSX.ScOrdersList & JSXBase.HTMLAttributes<HTMLScOrdersListElement>;
             "sc-pagination": LocalJSX.ScPagination & JSXBase.HTMLAttributes<HTMLScPaginationElement>;
+            "sc-password-nag": LocalJSX.ScPasswordNag & JSXBase.HTMLAttributes<HTMLScPasswordNagElement>;
             "sc-payment": LocalJSX.ScPayment & JSXBase.HTMLAttributes<HTMLScPaymentElement>;
             "sc-payment-method": LocalJSX.ScPaymentMethod & JSXBase.HTMLAttributes<HTMLScPaymentMethodElement>;
             "sc-payment-methods-list": LocalJSX.ScPaymentMethodsList & JSXBase.HTMLAttributes<HTMLScPaymentMethodsListElement>;
