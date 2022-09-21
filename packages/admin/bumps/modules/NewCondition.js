@@ -75,6 +75,7 @@ export default ({ onRequestClose, bump, updateBump }) => {
 				<ScSelect
 					label={__('Choose An Item', 'surecart')}
 					value={type}
+					unselect={false}
 					choices={[
 						{
 							label: __('Price', 'surecart'),
