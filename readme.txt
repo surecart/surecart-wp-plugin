@@ -243,6 +243,17 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.1.12 - September 22, 2022 =
+* New: Recaptcha v3 integration.
+* New: Honeypot spam protection.
+* New: Turn on subscription renewal reminders and edit template.
+* Improvement: Show notice for user to set password on customer dashboard if they have not yet set one.
+* Improvement: Show the coupon used along with the discount on the Merchant admin order's screen.
+* Improvement: Fix issue with possible theme conflicts re-sizing price selectors.
+* Improvement: Improve select box keyboard accessibility.
+* Improvement: Improve components preload performance for some theme that render content in a later priority.
+* Fix: Issue with users not getting created with special characters in name.
+
 = 1.1.11 - September 14, 2022 =
 * Improvement: Preload key components to prevent momentary blank loading screen on checkout page for slow connections.
 * Fix: Subscription plan price incorrect on some instances on customer dashboard.
