@@ -720,6 +720,15 @@
     "class": true,
     "slot": true
   },
+  "sc-line-item-bump": {
+    "label": true,
+    "loading": true,
+    "order": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-line-item-tax": {
     "loading": true,
     "order": true,
@@ -797,6 +806,27 @@
     "customer-ids": true,
     "heading": true,
     "order-id": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-order-bump": {
+    "bump": true,
+    "checkout": true,
+    "show-control": true,
+    "show-label": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-order-bumps": {
+    "bumps": true,
+    "checkout": true,
+    "help": true,
+    "label": true,
+    "show-control": true,
     "style": true,
     "id": true,
     "class": true,
@@ -979,6 +1009,15 @@
     "total": true,
     "total-pages": true,
     "total-showing": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-password-nag": {
+    "open": true,
+    "success-url": true,
+    "type": true,
     "style": true,
     "id": true,
     "class": true,

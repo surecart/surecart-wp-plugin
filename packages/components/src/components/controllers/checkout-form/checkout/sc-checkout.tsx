@@ -16,6 +16,7 @@ import {
   ResponseError,
   TaxProtocol,
   ProcessorName,
+  Bump,
 } from '../../../../types';
 
 @Component({
@@ -191,8 +192,10 @@ export class ScCheckout {
       state: this.checkoutState,
       paymentIntents: this.paymentIntents,
       successUrl: this.successUrl,
+      bumps: this.order()?.recommended_bumps?.data as Bump[],
 
       order: this.order(),
+      checkout: this.order(),
       shippingEnabled: this.order()?.shipping_enabled,
       lineItems: this.order()?.line_items?.data || [],
       editLineItems: this.editLineItems,

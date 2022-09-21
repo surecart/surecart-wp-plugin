@@ -12,6 +12,8 @@ export const expand = [
   'payment_intent',
   'discount',
   'discount.promotion',
+  'recommended_bumps',
+  'bump.price',
   'discount.coupon',
   'shipping_address',
   'staged_payment_intents',

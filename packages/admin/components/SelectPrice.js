@@ -61,8 +61,8 @@ export default ({
 			className={className}
 			open={open}
 			loading={loading}
-			placeholder={__('Select a product', 'surecart')}
-			searchPlaceholder={__('Search for a product...', 'surecart')}
+			placeholder={__('Select a price', 'surecart')}
+			searchPlaceholder={__('Search for a price...', 'surecart')}
 			search
 			onScOpen={onFetch}
 			onScSearch={(e) => findProduct(e.detail)}

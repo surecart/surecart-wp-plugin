@@ -94,7 +94,7 @@ export class ScLineItems {
                 key={item.id}
                 imageUrl={(item?.price?.product as Product)?.image_url}
                 name={(item?.price?.product as Product)?.name}
-                editable={this.isEditable() && !item?.price?.ad_hoc}
+                editable={this.isEditable() && !item?.price?.ad_hoc && !item?.bump_amount}
                 removable={this.isRemovable()}
                 quantity={item.quantity}
                 amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.subtotal_amount}
