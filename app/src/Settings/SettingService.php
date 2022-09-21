@@ -22,6 +22,53 @@ class SettingService {
 				'default'           => 'light',
 			]
 		);
+		$this->register(
+			'general',
+			'honeypot_enabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => true,
+			]
+		);
+		$this->register(
+			'general',
+			'recaptcha_enabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+			]
+		);
+		$this->register(
+			'general',
+			'recaptcha_site_key',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+			]
+		);
+		$this->register(
+			'general',
+			'recaptcha_secret_key',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+			]
+		);
+		$this->register(
+			'general',
+			'recaptcha_min_score',
+			[
+				'type'              => 'number',
+				'show_in_rest'      => true,
+				'default'           => 0.5,
+				'sanitize_callback' => 'sanitize_text_field',
+			]
+		);
 	}
 
 	/**

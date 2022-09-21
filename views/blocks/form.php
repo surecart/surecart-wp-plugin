@@ -5,6 +5,9 @@
 	style="<?php echo esc_attr( $style ); ?>"
 >
 	<sc-form>
+		<?php if ( (bool) $honeypot_enabled ?? false ) : ?>
+			<sc-checkbox name="get_feedback" value="Feedback" style="position: absolute; left: -9999px; top: -9999px;"></sc-checkbox>
+		<?php endif; ?>
 		<?php echo filter_block_content( $content, 'post' ); ?>
 	</sc-form>
 </sc-checkout>
