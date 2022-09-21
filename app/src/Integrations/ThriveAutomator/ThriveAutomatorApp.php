@@ -40,7 +40,7 @@ class ThriveAutomatorApp extends App {
 	 * @return string
 	 */
 	public static function get_logo() {
-		return esc_url( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'app/src/Integrations/ThriveAutomator/images/icon.svg' );
+		return esc_url( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'app/src/Integrations/ThriveAutomator/images/icon-color.svg' );
 	}
 
 	/**

@@ -81,7 +81,7 @@ class PurchaseCreatedTrigger extends Trigger {
 	 * @return string
 	 */
 	public static function get_image() {
-		return esc_url( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'app/src/Integrations/ThriveAutomator/images/icon.svg' );
+		return esc_url( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'app/src/Integrations/ThriveAutomator/images/icon-color.svg' );
 	}
 
 	/**
