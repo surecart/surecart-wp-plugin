@@ -27,12 +27,8 @@ export default ({ bump, updateBump, type, label, name }) => {
 	};
 
 	const onRemove = (id) => {
-		const items = bump?.[filtername]?.filter((item) => item !== id);
 		updateBump({
-			[filtername]: {
-				...(bump?.[filtername] || []),
-				items,
-			},
+			[filtername]: bump[filtername].filter((item) => item !== id),
 		});
 	};
 
@@ -40,8 +36,8 @@ export default ({ bump, updateBump, type, label, name }) => {
 		<ScFormControl label={label}>
 			<ScCard noPadding>
 				<ScStackedList>
-					{(bump?.filters?.[type] || []).map((id) => {
-						if ('price_ids' === type) {
+					{(bump?.[filtername] || []).map((id) => {
+						if ('filter_price_ids' === filtername) {
 							return (
 								<PriceFilter
 									id={id}
