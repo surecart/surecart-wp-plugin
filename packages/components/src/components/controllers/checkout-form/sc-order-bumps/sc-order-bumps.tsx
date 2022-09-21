@@ -24,7 +24,7 @@ export class ScOrderBumps {
       <sc-form-control label={this.label || __('Recommended', 'surecart')} help={this.help}>
         <div class="bumps__list">
           {(this.bumps || []).map(bump => (
-            <sc-order-bump show-control={this.showControl} bump={bump} checkout={this.checkout}></sc-order-bump>
+            <sc-order-bump showControl={this.showControl} bump={bump} checkout={this.checkout}></sc-order-bump>
           ))}
         </div>
       </sc-form-control>

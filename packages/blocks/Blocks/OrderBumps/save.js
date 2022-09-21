@@ -4,7 +4,7 @@ export default ({ attributes, className }) => {
 		<sc-order-bumps
 			className={className}
 			label={label}
-			show-control={show_control}
+			show-control={show_control ? '1' : 'false'}
 		></sc-order-bumps>
 	);
 };
