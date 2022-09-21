@@ -1,7 +1,3 @@
-/** @jsx jsx */
-import Box from '../../../ui/Box';
-import { intervalString } from '../../../util/translations';
-import LineItem from './LineItem';
 import { css, jsx } from '@emotion/core';
 import {
 	ScButton,
@@ -17,6 +13,11 @@ import { useSelect } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+
+/** @jsx jsx */
+import Box from '../../../ui/Box';
+import { intervalString } from '../../../util/translations';
+import LineItem from './LineItem';
 
 export default ({ order, checkout, loading }) => {
 	const line_items = checkout?.line_items?.data;
@@ -169,11 +170,35 @@ export default ({ order, checkout, loading }) => {
 					/>
 				)}
 
-				{!!checkout?.discounts && (
+				{!!checkout?.discount_amount && (
 					<LineItem
-						label={__('Discounts', 'surecart')}
+						label={
+							<>
+								{__('Discounts', 'surecart')}{' '}
+								{checkout?.discount?.promotion?.code && (
+									<>
+										<br />
+										<sc-tag type="success">
+											{__('Coupon:', 'surecart')}{' '}
+											{
+												checkout?.discount?.promotion
+													?.code
+											}
+										</sc-tag>
+									</>
+								)}
+							</>
+						}
 						currency={checkout?.currency}
 						value={checkout?.discount_amount}
+					/>
+				)}
+
+				{!!checkout?.bump_amount && (
+					<LineItem
+						label={__('Bump Discounts', 'surecart')}
+						currency={checkout?.currency}
+						value={checkout?.bump_amount}
 					/>
 				)}
 

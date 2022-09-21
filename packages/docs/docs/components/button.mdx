@@ -11,7 +11,9 @@ import ComponentDoc from '../../components/Component-Doc.js';
 
 <DemoTabs>
 	<DemoTabs.Code>
-		{ '<sc-button type="primary">Click Me</sc-button>' }
+{`
+<sc-button type="primary">Click Me</sc-button>
+`}
 	</DemoTabs.Code>
 	<sc-button type="primary">Click Me</sc-button>
 </DemoTabs>
@@ -22,20 +24,21 @@ Use the `type` property to set the button's type.
 
 <DemoTabs>
 	<DemoTabs.Code>
-		{ `
+{`
 <sc-button>Default</sc-button>
 <sc-button type="primary">Primary</sc-button>
 <sc-button type="success">Success</sc-button>
 <sc-button type="info">Info</sc-button>
 <sc-button type="warning">Warning</sc-button>
 <sc-button type="danger">Danger</sc-button>
-    ` }
+`}
 	</DemoTabs.Code>
-	<sc-button>Default</sc-button> <sc-button type="primary">
-		Primary
-	</sc-button> <sc-button type="success">Success</sc-button> <sc-button type="info">
-		Info
-	</sc-button> <sc-button type="warning">Warning</sc-button> <sc-button type="danger">Danger</sc-button>
+	<sc-button>Default</sc-button>
+	<sc-button type="primary">Primary</sc-button>
+	<sc-button type="success">Success</sc-button>
+	<sc-button type="info">Info</sc-button>
+	<sc-button type="warning">Warning</sc-button>
+	<sc-button type="danger">Danger</sc-button>
 </DemoTabs>
 
 ## Size
@@ -43,18 +46,16 @@ Use the `type` property to set the button's type.
 Use the `size` property to set the button's size.
 
 <DemoTabs>
-  <DemoTabs.Code>
+	<DemoTabs.Code>
 {`
 <sc-button size="small">Small</sc-button>
 <sc-button>Default</sc-button>
 <sc-button size="large">Large</sc-button>
 `}
-  </DemoTabs.Code>
-
-<sc-button size="small">Small</sc-button>
-<sc-button>Default</sc-button>
-<sc-button size="large">Large</sc-button>
-
+	</DemoTabs.Code>
+	<sc-button size="small">Small</sc-button>
+	<sc-button>Default</sc-button>
+	<sc-button size="large">Large</sc-button>
 </DemoTabs>
 
 ## Pill
@@ -62,18 +63,16 @@ Use the `size` property to set the button's size.
 Use the `pill` property to make the button rounded
 
 <DemoTabs>
-  <DemoTabs.Code>
+	<DemoTabs.Code>
 {`
 <sc-button size="small" pill>Small</sc-button>
 <sc-button pill>Default</sc-button>
 <sc-button size="large" pill>Large</sc-button>
 `}
-  </DemoTabs.Code>
-
-<sc-button size="small" pill>Small</sc-button>
-<sc-button pill>Default</sc-button>
-<sc-button size="large" pill>Large</sc-button>
-
+	</DemoTabs.Code>
+	<sc-button size="small" pill>Small</sc-button>
+	<sc-button pill>Default</sc-button>
+	<sc-button size="large" pill>Large</sc-button>
 </DemoTabs>
 
 ## Circle
@@ -81,70 +80,58 @@ Use the `pill` property to make the button rounded
 Use the `circle` property to create a circular button
 
 <DemoTabs>
-  <DemoTabs.Code>
-    {`
+	<DemoTabs.Code>
+{`
 <sc-button size="small" circle>👍🏻</sc-button>
 <sc-button circle>👍🏻</sc-button>
 <sc-button size="large" circle>👍🏻</sc-button>
-    `}
-  </DemoTabs.Code>
-
-<sc-button size="small" circle>👍🏻</sc-button>
-<sc-button circle>👍🏻</sc-button>
-<sc-button size="large" circle>👍🏻</sc-button>
-
+`}
+	</DemoTabs.Code>
+	<sc-button size="small" circle>👍🏻</sc-button>
+	<sc-button circle>👍🏻</sc-button>
+	<sc-button size="large" circle>👍🏻</sc-button>
 </DemoTabs>
 
 ## Loading
 
 <DemoTabs>
 	<DemoTabs.Code>
-		{ `
+{`
 <sc-button loading>Click Me</sc-button>
 <sc-button loading type="primary">Click Me</sc-button>
 <sc-button loading type="success">Click Me</sc-button>
 <sc-button loading type="info">Click Me</sc-button>
 <sc-button loading type="warning">Click Me</sc-button>
 <sc-button loading type="danger">Click Me</sc-button>
-    ` }
+`}
 	</DemoTabs.Code>
-	<sc-button loading>Default</sc-button> <sc-button loading type="primary">
-		Click Me
-	</sc-button> <sc-button loading type="success">
-		Click Me
-	</sc-button> <sc-button loading type="info">
-		Click Me
-	</sc-button> <sc-button loading type="warning">
-		Click Me
-	</sc-button> <sc-button loading type="danger">
-		Click Me
-	</sc-button>
+	<sc-button loading>Click Me</sc-button>
+	<sc-button loading type="primary">Click Me</sc-button>
+	<sc-button loading type="success">Click Me</sc-button>
+	<sc-button loading type="info">Click Me</sc-button>
+	<sc-button loading type="warning">Click Me</sc-button>
+	<sc-button loading type="danger">Click Me</sc-button>
 </DemoTabs>
 
 ## Disabled
 
 <DemoTabs>
 	<DemoTabs.Code>
-		{ `
+{`
 <sc-button disabled>Disabled</sc-button>
 <sc-button disabled type="primary">Disabled</sc-button>
 <sc-button disabled type="success">Disabled</sc-button>
 <sc-button disabled type="info">Disabled</sc-button>
 <sc-button disabled type="warning">Disabled</sc-button>
 <sc-button disabled type="danger">Disabled</sc-button>
-    ` }
+`}
 	</DemoTabs.Code>
-	<sc-button disabled>Disabled</sc-button> <sc-button disabled type="primary">
-		Disabled
-	</sc-button> <sc-button disabled type="success">
-		Disabled
-	</sc-button> <sc-button disabled type="info">
-		Disabled
-	</sc-button> <sc-button disabled type="warning">
-		Disabled
-	</sc-button> <sc-button disabled type="danger">
-		Disabled
-	</sc-button>
+	<sc-button disabled>Disabled</sc-button>
+<sc-button disabled type="primary">Disabled</sc-button>
+<sc-button disabled type="success">Disabled</sc-button>
+<sc-button disabled type="info">Disabled</sc-button>
+<sc-button disabled type="warning">Disabled</sc-button>
+<sc-button disabled type="danger">Disabled</sc-button>
 </DemoTabs>
 
 ## Component Codex

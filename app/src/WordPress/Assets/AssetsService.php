@@ -69,7 +69,7 @@ class AssetsService {
 		add_action( 'enqueue_block_editor_assets', [ $this, 'editorAssets' ] );
 
 		// front-end styles. These only load when the block is being rendered on the page.
-		$this->loader->whenRendered( 'surecart/form', [ $this, 'enqueueComponents' ] );
+		$this->loader->whenRendered( 'surecart/form', [ $this, 'enqueueForm' ] );
 		$this->loader->whenRendered( 'surecart/buy-button', [ $this, 'enqueueComponents' ] );
 		$this->loader->whenRendered( 'surecart/customer-dashboard', [ $this, 'enqueueComponents' ] );
 		$this->loader->whenRendered( 'surecart/checkout-form', [ $this, 'enqueueComponents' ] );
@@ -88,6 +88,19 @@ class AssetsService {
 			\SureCart::preload()->add( $this->config['preload'][ $parsed_block['blockName'] ] );
 		}
 		return $parsed_block;
+	}
+
+	/**
+	 * Enqueue form scripts.
+	 *
+	 * @return void
+	 */
+	public function enqueueForm() {
+		// add recaptcha if enabled.
+		if ( \SureCart::settings()->recaptcha()->isEnabled() ) {
+			wp_enqueue_script( 'surecart-google-recaptcha' );
+		}
+		$this->enqueueComponents();
 	}
 
 	/**

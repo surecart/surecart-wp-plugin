@@ -1,5 +1,6 @@
-import { Component, h, Prop, Watch, Element, State } from '@stencil/core';
+import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+
 import { Checkout, TaxProtocol } from '../../../types';
 
 @Component({
@@ -24,6 +25,9 @@ export class ScFormComponentsValidator {
   /** Is there a tax id field? */
   @State() hasTaxIDField: boolean;
 
+  /** Is there a bumps field? */
+  @State() hasBumpsField: boolean;
+
   @Watch('order')
   handleOrderChange() {
     // bail if we don't have address invalid error or disabled.
@@ -32,11 +36,16 @@ export class ScFormComponentsValidator {
     if (this?.order?.tax_status === 'address_invalid' || this?.order?.shipping_enabled) {
       this.addAddressField();
     }
+    // add order bumps.
+    if (this?.order?.recommended_bumps?.data?.length) {
+      this.addBumps();
+    }
   }
 
   componentWillLoad() {
     this.hasAddress = !!this.el.querySelector('sc-order-shipping-address');
     this.hasTaxIDField = !!this.el.querySelector('sc-order-tax-id-input');
+    this.hasBumpsField = !!this.el.querySelector('sc-order-bumps');
 
     // automatically add address field if tax is enabled.
     if (this.taxProtocol?.tax_enabled) {
@@ -68,6 +77,15 @@ export class ScFormComponentsValidator {
     taxInput.taxIdentifier?.number_type === 'eu_vat';
     payment.parentNode.insertBefore(taxInput, payment);
     this.hasTaxIDField = true;
+  }
+
+  addBumps() {
+    if (this.hasBumpsField) return;
+    const payment = this.el.querySelector('sc-payment');
+    const bumps = document.createElement('sc-order-bumps');
+    bumps.bumps === this.order?.recommended_bumps?.data;
+    payment.parentNode.insertBefore(bumps, payment.nextSibling);
+    this.hasBumpsField = true;
   }
 
   render() {

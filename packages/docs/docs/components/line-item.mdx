@@ -1,7 +1,7 @@
 # Line Item
 
 ```html
-<line-item></line-item>
+<sc-line-item></sc-line-item>
 ```
 
 Line items are used to display a piece of information in the checkout form that contains currency (such as a price, total or subtotal).
@@ -13,34 +13,30 @@ import ComponentDoc from '../../components/Component-Doc.js';
 
 <DemoTabs>
 	<DemoTabs.Code>
-		{ `
- 	<sc-line-item>
-          <img src="http://placekitten.com/200/300" slot="image" />
-          <span slot="title">Subscription </span>
-          <sc-quantity-select quantity="1" max="10" slot="description"></sc-quantity-select>
-          <span slot="price">$10.00</span>
-          <span slot="price-description">Monthly</span>
-    </sc-line-item>
-	<sc-divider style="--spacing: 20px;"></sc-divider>
-	<sc-line-item>
-          <img src="http://placekitten.com/200/300" slot="image" />
-          <span slot="title">Subscription </span>
-          <sc-quantity-select quantity="1" max="10" slot="description"></sc-quantity-select>
-          <span slot="price">$10.00</span>
-          <span slot="price-description">Monthly</span>
-    </sc-line-item>
-` }
+{`
+<sc-line-item>
+	<img src="http://placekitten.com/200/300" slot="image" />
+	<span slot="title">Subscription </span>
+	<sc-quantity-select quantity="1" max="10" slot="description"></sc-quantity-select>
+	<span slot="price">$10.00</span>
+	<span slot="price-description">Monthly</span>
+</sc-line-item>
+<sc-divider style="--spacing: 20px;"></sc-divider>
+<sc-line-item>
+	<img src="http://placekitten.com/200/300" slot="image" />
+	<span slot="title">Subscription </span>
+	<sc-quantity-select quantity="1" max="10" slot="description"></sc-quantity-select>
+	<span slot="price">$10.00</span>
+	<span slot="price-description">Monthly</span>
+</sc-line-item>
+`}
 	</DemoTabs.Code>
-
-<div>
 	<sc-line-item>
 		<span slot="title">Total</span>
 		<span slot="description">Total Price Description</span>
 		<span slot="price">$10.00</span>
 		<span slot="price-description">Monthly</span>
 	</sc-line-item>
-</div>
-
 </DemoTabs>
 
 ### Product Line Item
@@ -50,7 +46,7 @@ so you can be creative with your markup to create and enhance UI.
 
 <DemoTabs>
 	<DemoTabs.Code>
-		{ `
+{`
 <sc-line-item>
 	<img src="http://placekitten.com/200/300" slot="image" />
 	<span slot="title">Monthly Box of Kittens</span>
@@ -62,20 +58,19 @@ so you can be creative with your markup to create and enhance UI.
 	<span slot="price">$10.00</span>
 	<span slot="price-description">Monthly</span>
 </sc-line-item>
-` }
+`}
 	</DemoTabs.Code>
-
-<sc-line-item>
-	<img src="http://placekitten.com/200/300" slot="image" />
-	<span slot="title">Monthly Box of Kittens</span>
-	<sc-quantity-select
-		quantity="1"
-		max="10"
-		slot="description"
-	></sc-quantity-select>
-	<span slot="price">$10.00</span>
-	<span slot="price-description">Monthly</span>
-</sc-line-item>
+	<sc-line-item>
+		<img src="http://placekitten.com/200/300" slot="image" style={{height: '50px'}} />
+		<span slot="title">Monthly Box of Kittens</span>
+		<sc-quantity-select
+			quantity="1"
+			max="10"
+			slot="description"
+		></sc-quantity-select>
+		<span slot="price">$10.00</span>
+		<span slot="price-description">Monthly</span>
+	</sc-line-item>
 
 </DemoTabs>
 

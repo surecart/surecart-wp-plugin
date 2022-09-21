@@ -1,0 +1,47 @@
+# Choices
+
+```html
+<sc-choices></sc-choices>
+```
+
+This component let users create choices container.
+
+import DemoTabs from '../../components/Demo-Tabs.js';
+import ComponentDoc from '../../components/Component-Doc.js';
+
+<DemoTabs>
+	<DemoTabs.Code>
+{`
+<sc-choices label="Choose one">
+    <sc-choice>
+        Gold Plan
+        <span slot="description">$9.99, then $49.99 per month</span>
+    </sc-choice>
+    <sc-choice checked>
+        Silver Plan
+        <span slot="description">$39.99 per month</span>
+    </sc-choice>
+    <sc-choice>
+        Bronze Plan
+        <span slot="description">$9.99 per month</span>
+    </sc-choice>
+</sc-choices>
+`}
+	</DemoTabs.Code>
+    <sc-choices label="Choose one">
+        <sc-choice>
+            Gold Plan
+            <span slot="description">$9.99, then $49.99 per month</span>
+        </sc-choice>
+        <sc-choice checked>Silver Plan
+            <span slot="description">$39.99 per month</span>
+        </sc-choice>
+        <sc-choice>Bronze Plan
+            <span slot="description">$9.99 per month</span>
+        </sc-choice>
+    </sc-choices>
+</DemoTabs>
+
+## Component Codex
+
+<ComponentDoc tag="sc-choices" />

@@ -180,14 +180,15 @@ class User implements ArrayAccess, JsonSerializable {
 			]
 		);
 
-		// get username from first part of email.
-		if ( empty( $args['user_name'] ) ) {
+		// get username from first part of email if not provided or invalid.
+		if ( empty( $args['user_name'] ) || ! validate_username( $args['user_name'] ) ) {
 			$parts             = explode( '@', $args['user_email'] );
 			$username          = $parts[0];
 			$args['user_name'] = $username;
+		} else {
+			$username = $this->createUniqueUsername( $args['user_name'] );
 		}
 
-		$username      = $this->createUniqueUsername( $args['user_name'] );
 		$user_password = trim( $args['user_password'] );
 		$user_created  = false;
 

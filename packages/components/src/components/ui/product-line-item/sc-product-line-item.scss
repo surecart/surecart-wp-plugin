@@ -13,7 +13,12 @@
   align-items: stretch;
   width: 100%;
   border-bottom: none;
+
+  &--has-image {
+    align-items: center;
+  }
 }
+
 
 .item__text {
   box-sizing: border-box;
