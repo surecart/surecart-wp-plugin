@@ -2,6 +2,7 @@ import { IconLibraryMutator, IconLibraryResolver } from './components/ui/icon/li
 
 declare global {
   interface Window {
+    grecaptcha: any;
     wp: {
       apiFetch: any;
       blocks: any;
@@ -17,6 +18,7 @@ declare global {
       nonce: string;
       base_url: string;
       nonce_endpoint: string;
+      recaptcha_site_key: string;
       theme: string;
     };
     ceRegisterIconLibrary: any;
