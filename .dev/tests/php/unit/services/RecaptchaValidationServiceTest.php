@@ -46,6 +46,7 @@ class RecaptchaValidationServiceTest extends SureCartUnitTestCase
 	{
 		$service = \Mockery::mock(RecaptchaValidationService::class)->makePartial();
 		$service->shouldReceive('makeRequest')->once()->andReturn($data);
+		add_filter('surecart_recaptcha_needed_validation_score', '__return_true');
 		if ($valid) {
 			$this->assertTrue($service->validate('test'));
 		} else {
