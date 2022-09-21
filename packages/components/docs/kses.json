@@ -826,6 +826,7 @@
     "checkout": true,
     "help": true,
     "label": true,
+    "show-control": true,
     "style": true,
     "id": true,
     "class": true,

@@ -8,7 +8,9 @@ import Filter from './Filter';
 import PriceFilter from './price/PriceFilter';
 
 export default ({ bump, updateBump, type, label, name }) => {
-	if (!bump?.filters?.[type]?.length) {
+	const filtername = `filter_${type}`;
+
+	if (!bump?.[filtername]?.length) {
 		return null;
 	}
 
@@ -25,11 +27,11 @@ export default ({ bump, updateBump, type, label, name }) => {
 	};
 
 	const onRemove = (id) => {
-		const items = bump.filters?.[type]?.filter((item) => item !== id);
+		const items = bump?.[filtername]?.filter((item) => item !== id);
 		updateBump({
-			filters: {
-				...(bump?.filters || {}),
-				[type]: items?.length ? items : null,
+			[filtername]: {
+				...(bump?.[filtername] || []),
+				items,
 			},
 		});
 	};

@@ -89,7 +89,6 @@ export class ScLineItems {
             return a.price?.id > b.price?.id ? 1 : 0;
           })
           .map(item => {
-            console.log({ item });
             return (
               <sc-product-line-item
                 key={item.id}

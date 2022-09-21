@@ -40,6 +40,7 @@
   &__image {
     width: var(--sc-product-line-item-image-size, 4em);
     height: var(--sc-product-line-item-image-size, 4em);
+    flex: 1 0 var(--sc-product-line-item-image-size, 4em);
     object-fit: cover;
     border-radius: 4px;
     border: 1px solid var(--sc-color-gray-200);

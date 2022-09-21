@@ -34,10 +34,7 @@ export default ({ onRequestClose, bump, updateBump }) => {
 
 	const onSubmit = (e) => {
 		updateBump({
-			filters: {
-				...(bump?.filters || {}),
-				[type]: [...(bump?.filters?.[type] || []), id],
-			},
+			[`filter_${type}`]: [...(bump?.[`filter_${type}`] || []), id],
 		});
 		onRequestClose();
 	};

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-09-20T13:28:34",
+  "timestamp": "2022-09-21T15:46:28",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -11054,6 +11054,7 @@
       "filePath": "./src/components/controllers/checkout-form/sc-line-item-bump/sc-line-item-bump.tsx",
       "encapsulation": "shadow",
       "tag": "sc-line-item-bump",
+      "readme": "# sc-line-item-bump\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -12026,6 +12027,7 @@
       "filePath": "./src/components/controllers/checkout-form/sc-order-bump/sc-order-bump.tsx",
       "encapsulation": "shadow",
       "tag": "sc-order-bump",
+      "readme": "# sc-order-bump\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -12066,7 +12068,7 @@
           "mutable": false,
           "attr": "show-control",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Should we show the controls",
           "docsTags": [],
           "values": [
             {
@@ -12082,7 +12084,7 @@
           "mutable": false,
           "attr": "show-label",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Should we show the label",
           "docsTags": [],
           "values": [
             {
@@ -12150,6 +12152,7 @@
       "filePath": "./src/components/controllers/checkout-form/sc-order-bumps/sc-order-bumps.tsx",
       "encapsulation": "shadow",
       "tag": "sc-order-bumps",
+      "readme": "# sc-order-bumps\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},

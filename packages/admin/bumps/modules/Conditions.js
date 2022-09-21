@@ -14,7 +14,7 @@ export default ({ loading, bump, updateBump }) => {
 	const [newDialog, setNewDialog] = useState(false);
 
 	const hasConditions = Object.keys(bump.filters || {}).some((key) => {
-		return bump.filters[key]?.length;
+		return bump?.[`filter_${key}`]?.length;
 	});
 
 	return (
