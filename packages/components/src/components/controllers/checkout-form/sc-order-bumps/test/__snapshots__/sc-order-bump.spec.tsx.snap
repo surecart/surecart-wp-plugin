@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`sc-order-bump renders 1`] = `
-<sc-order-bumps>
-  <mock:shadow-root></mock:shadow-root>
-</sc-order-bumps>
-`;

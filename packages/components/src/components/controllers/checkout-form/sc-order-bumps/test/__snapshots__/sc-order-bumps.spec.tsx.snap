@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-order-bump renders custom label 1`] = `
+<sc-order-bumps>
+  <mock:shadow-root>
+    <sc-form-control label="custom">
+      <div class="bumps__list">
+        <sc-order-bump></sc-order-bump>
+      </div>
+    </sc-form-control>
+  </mock:shadow-root>
+</sc-order-bumps>
+`;
+
+exports[`sc-order-bump renders default label 1`] = `
+<sc-order-bumps>
+  <mock:shadow-root>
+    <sc-form-control label="Recommended">
+      <div class="bumps__list">
+        <sc-order-bump></sc-order-bump>
+      </div>
+    </sc-form-control>
+  </mock:shadow-root>
+</sc-order-bumps>
+`;
+
+exports[`sc-order-bump renders empty if no bumps 1`] = `
+<sc-order-bumps>
+  <mock:shadow-root></mock:shadow-root>
+</sc-order-bumps>
+`;

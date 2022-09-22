@@ -1,6 +1,120 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sc-order-bump renders 1`] = `
+exports[`sc-order-bump renders bump does not render an image without a description 1`] = `
+<sc-order-bump>
+  <mock:shadow-root>
+    <sc-choice exportparts="base, control, checked-icon, title" type="checkbox">
+      <div class="bump" part="base-content">
+        <div class="bump__text">
+          <div class="bump__title">
+            CTA test
+          </div>
+          <div class="bump__price" part="price" slot="description">
+            <sc-format-number class="bump__original-price" type="currency"></sc-format-number>
+          </div>
+        </div>
+      </div>
+    </sc-choice>
+  </mock:shadow-root>
+</sc-order-bump>
+`;
+
+exports[`sc-order-bump renders bump with amount off 1`] = `
+<sc-order-bump>
+  <mock:shadow-root>
+    <sc-choice exportparts="base, control, checked-icon, title" type="checkbox">
+      <div class="bump" part="base-content">
+        <div class="bump__text">
+          <div class="bump__title"></div>
+          <div class="bump__price bump__price--has-discount" part="price" slot="description">
+            <sc-format-number class="bump__original-price" currency="usd" type="currency" value="1000"></sc-format-number>
+            <sc-format-number class="bump__new-price" currency="usd" type="currency" value="1500"></sc-format-number>
+            <span class="bump__interval"></span>
+          </div>
+        </div>
+        <div class="bump__tag">
+          Save
+          <sc-format-number currency="usd" type="currency" value="500"></sc-format-number>
+        </div>
+      </div>
+    </sc-choice>
+  </mock:shadow-root>
+</sc-order-bump>
+`;
+
+exports[`sc-order-bump renders bump with description, cta and image 1`] = `
+<sc-order-bump>
+  <mock:shadow-root>
+    <sc-choice exportparts="base, control, checked-icon, title" type="checkbox">
+      <div class="bump" part="base-content">
+        <div class="bump__text">
+          <div class="bump__title">
+            CTA test
+          </div>
+          <div class="bump__price" part="price" slot="description">
+            <sc-format-number class="bump__original-price" type="currency"></sc-format-number>
+          </div>
+        </div>
+      </div>
+      <div slot="footer">
+        <sc-divider style="--spacing: var(--sc-spacing-medium);"></sc-divider>
+        <div class="bump__product">
+          <img class="bump__image" src="https://test.com/image.jpg">
+          <div class="bump__product-text">
+            <div class="bump__product-title"></div>
+            <div class="bump__product-description">
+              Description
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-choice>
+  </mock:shadow-root>
+</sc-order-bump>
+`;
+
+exports[`sc-order-bump renders bump with name 1`] = `
+<sc-order-bump>
+  <mock:shadow-root>
+    <sc-choice exportparts="base, control, checked-icon, title" type="checkbox">
+      <div class="bump" part="base-content">
+        <div class="bump__text">
+          <div class="bump__title">
+            Test
+          </div>
+          <div class="bump__price" part="price" slot="description">
+            <sc-format-number class="bump__original-price" type="currency"></sc-format-number>
+          </div>
+        </div>
+      </div>
+    </sc-choice>
+  </mock:shadow-root>
+</sc-order-bump>
+`;
+
+exports[`sc-order-bump renders bump with percent off 1`] = `
+<sc-order-bump>
+  <mock:shadow-root>
+    <sc-choice exportparts="base, control, checked-icon, title" type="checkbox">
+      <div class="bump" part="base-content">
+        <div class="bump__text">
+          <div class="bump__title"></div>
+          <div class="bump__price bump__price--has-discount" part="price" slot="description">
+            <sc-format-number class="bump__original-price" currency="usd" type="currency" value="1000"></sc-format-number>
+            <sc-format-number class="bump__new-price" currency="usd" type="currency" value="500"></sc-format-number>
+            <span class="bump__interval"></span>
+          </div>
+        </div>
+        <div class="bump__tag">
+          Save 50%
+        </div>
+      </div>
+    </sc-choice>
+  </mock:shadow-root>
+</sc-order-bump>
+`;
+
+exports[`sc-order-bump renders empty 1`] = `
 <sc-order-bump>
   <mock:shadow-root>
     <sc-choice exportparts="base, control, checked-icon, title" type="checkbox">
@@ -9,7 +123,6 @@ exports[`sc-order-bump renders 1`] = `
           <div class="bump__title"></div>
           <div class="bump__price" part="price" slot="description">
             <sc-format-number class="bump__original-price" type="currency"></sc-format-number>
-            Free
           </div>
         </div>
       </div>
