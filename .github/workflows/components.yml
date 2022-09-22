@@ -1,9 +1,12 @@
 name: Components
 
-on: [push]
+on:
+  push:
+    paths:
+      - "packages/components/src/**/*.tsx"
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
