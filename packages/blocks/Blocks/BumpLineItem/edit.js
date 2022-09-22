@@ -22,14 +22,14 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<ScLineItem>
-				<span slot="title">
+				<span slot="description">
 					{label || __('Bundle Discount', 'surecart')}
 				</span>
 				<span slot="price">
 					<ScFormatNumber
 						type="currency"
 						currency={scBlockData?.currency || 'usd'}
-						value={-20}
+						value={-123}
 					></ScFormatNumber>
 				</span>
 			</ScLineItem>
