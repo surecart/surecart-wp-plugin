@@ -1,4 +1,4 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Host, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 import { Checkout } from '../../../../types';
@@ -15,7 +15,7 @@ export class ScLineItemBump {
 
   render() {
     if (!this?.order?.bump_amount) {
-      return;
+      return <Host style={{ display: 'none' }}></Host>;
     }
 
     return (

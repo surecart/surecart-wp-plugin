@@ -103,6 +103,7 @@ return [
 		\SureCartBlocks\Blocks\CustomerDashboardButton\Block::class,
 		\SureCartBlocks\Blocks\CheckoutForm\Block::class,
 		\SureCartBlocks\Blocks\CartSubtotal\Block::class,
+		\SureCartBlocks\Blocks\CartBumpLineItem\Block::class,
 		\SureCartBlocks\Blocks\OrderConfirmationLineItems\Block::class,
 		\SureCartBlocks\Blocks\Form\Block::class,
 		\SureCartBlocks\Blocks\Confirmation\Block::class,
