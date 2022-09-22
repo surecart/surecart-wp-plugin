@@ -36,6 +36,7 @@
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
+ - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
@@ -63,6 +64,7 @@ graph TD;
   sc-order --> sc-card
   sc-order-confirmation-details --> sc-card
   sc-orders-list --> sc-card
+  sc-password-nag --> sc-card
   sc-payment --> sc-card
   sc-payment-methods-list --> sc-card
   sc-purchase-downloads-list --> sc-card

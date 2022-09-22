@@ -815,7 +815,6 @@
     "bump": true,
     "checkout": true,
     "show-control": true,
-    "show-label": true,
     "style": true,
     "id": true,
     "class": true,
