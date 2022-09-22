@@ -12,7 +12,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 16.x
-      - run: cd packages/components & yarn
-      - run: cd packages/components & yarn test --spec --e2e
+      - run: cd packages/components && yarn
+      - run: cd packages/components && yarn test --spec --e2e
         env:
           CI: true
