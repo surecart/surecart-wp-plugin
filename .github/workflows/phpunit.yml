@@ -69,5 +69,5 @@ jobs:
           yarn wp-env start
 
       - name: Running single site unit tests
-        run: yarn run test:php
+        run: yarn wp-env run phpunit 'phpunit -c /var/www/html/wp-content/plugins/surecart-wp/phpunit.xml --testdox'
         if: ${{ success() || failure() }}
