@@ -1,0 +1,77 @@
+name: PHPUnit
+
+on:
+  push:
+    branches:
+      - 'master'
+      - 'next'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: wordpress_test
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    strategy:
+      matrix:
+        php-versions: [ '7.4' ]
+        wp-versions: [ 'trunk' ]
+    name: PHP ${{ matrix.php-versions }} / WP ${{ matrix.wp-versions }} Test
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get Composer Cache Directory
+        shell: bash
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Composer Install
+        shell: bash
+        run: composer install
+
+      - name: Get yarn cache directory path
+        shell: bash
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+
+      - uses: actions/cache@v3
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Yarn Install
+        shell: bash
+        run: yarn
+
+      - name: Bootstrap
+        shell: bash
+        run: yarn bootstrap
+
+      - name: Build Scripts
+        run: yarn wp-scripts build
+
+      - name: Install WordPress
+        run: |
+          chmod -R 767 ./ # TODO: Possibly integrate in wp-env
+          yarn wp-env start
+
+      - name: Running single site unit tests
+        run: yarn wp-env run phpunit phpunit -c /var/www/html/wp-content/plugins/surecart-wp/phpunit.xml
+        if: ${{ success() || failure() }}
