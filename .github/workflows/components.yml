@@ -13,6 +13,6 @@ jobs:
         with:
           node-version: 16.x
       - run: cd packages/components & yarn
-      - run: yarn test
+      - run: cd packages/components & yarn test --spec --e2e
         env:
           CI: true
