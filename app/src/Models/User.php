@@ -177,6 +177,8 @@ class User implements ArrayAccess, JsonSerializable {
 				'user_name'     => '',
 				'user_email'    => '',
 				'user_password' => '',
+				'first_name'    => '',
+				'last_name'     => '',
 			]
 		);
 
@@ -210,6 +212,13 @@ class User implements ArrayAccess, JsonSerializable {
 
 		$user = new \WP_User( $user_id );
 		$user->add_role( 'sc_customer' );
+
+		if ( $args['first_name'] ) {
+			$user->first_name = $args['first_name'];
+		}
+		if ( $args['last_name'] ) {
+			$user->last_name = $args['last_name'];
+		}
 
 		if ( $user_created ) {
 			wp_update_user( $user );
