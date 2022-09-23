@@ -1,6 +1,6 @@
 export default ({ attributes }) => {
 	const { label, amount, currency } = attributes;
-  console.log(attributes);
+
 	return (
 		<sc-choice show-control="false" size="small" value={amount}>
 			{!!label ? label : <sc-format-number

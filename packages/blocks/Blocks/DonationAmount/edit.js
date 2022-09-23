@@ -1,17 +1,15 @@
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
-import { PanelBody, PanelRow } from '@wordpress/components';
+import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import {
 	ScChoice,
 	ScFormatNumber,
-	ScInput,
 	ScPriceInput,
 } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes }) => {
 	const { label, amount, currency } = attributes;
-  console.log(attributes);
 
 	const blockProps = useBlockProps();
 
@@ -20,18 +18,16 @@ export default ({ attributes, setAttributes }) => {
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
           <PanelRow>
-            <ScInput
-              label={__('Name the Price', 'surecart')}
-              name="label"
+            <TextControl
+              label={__('Label for donation', 'surecart')}
               placeholder="Buy me coffee!"
               value={label}
-              onScInput={(e) => {
-                console.log(e.target.value);
+              onChange={(value) => {
 								setAttributes({
-									label: e.target.value,
+									label: value,
 								})
 							}}
-            ></ScInput>
+            ></TextControl>
           </PanelRow>
 					<PanelRow>
 						<ScPriceInput
