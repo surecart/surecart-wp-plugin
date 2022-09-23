@@ -1,7 +1,7 @@
 import { RichText } from '@wordpress/block-editor';
 
 export default ({ className, attributes }) => {
-	const { name, checked, value, required, label } = attributes;
+	const { name, checked, value, label } = attributes;
 
 	return (
 		<sc-radio
@@ -9,7 +9,6 @@ export default ({ className, attributes }) => {
 			name={name || false}
 			checked={checked || false}
 			value={value || false}
-			required={required || false}
 		>
 			<RichText.Content value={label} />
 		</sc-radio>

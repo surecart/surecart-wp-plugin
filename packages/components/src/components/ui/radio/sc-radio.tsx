@@ -24,6 +24,9 @@ export class ScRadio {
   /** The radios value */
   @Prop() value: string;
 
+  /** Makes this static and not editable. */
+  @Prop({ reflect: true }) static: boolean = false;
+
   /** Is the radio disabled */
   @Prop({ reflect: true, mutable: true }) disabled: boolean = false;
 
@@ -133,8 +136,9 @@ export class ScRadio {
   }
 
   render() {
+    const Tag = this.static ? 'div' : 'label';
     return (
-      <label
+      <Tag
         part="base"
         class={{
           'radio': true,
@@ -176,7 +180,7 @@ export class ScRadio {
         <span part="label" id={this.labelId} class="radio__label">
           <slot></slot>
         </span>
-      </label>
+      </Tag>
     );
   }
 }

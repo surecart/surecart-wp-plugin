@@ -1,6 +1,6 @@
 {
 	"apiVersion": 2,
-	"name": "surecart/radio-group-1",
+	"name": "surecart/radio-group",
 	"title": "Radio Group",
 	"description": "Display a radio input",
 	"category": "surecart",
@@ -13,18 +13,7 @@
 	"attributes": {
 		"label": {
 			"type": "string",
-			"default": "Radio"
-		},
-		"value": {
-			"type": "string",
-			"default": "key"
-		},
-		"name": {
-			"type": "string",
-			"default": "radio"
-		},
-		"required": {
-			"type": "boolean"
+			"default": "Radio Label"
 		}
 	}
 }
