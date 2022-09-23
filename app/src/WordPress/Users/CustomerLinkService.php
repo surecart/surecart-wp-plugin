@@ -100,8 +100,10 @@ class CustomerLinkService {
 		// if no user, create one with a password if provided.
 		$created = User::create(
 			[
-				'user_name'  => ! empty( $this->checkout->name ) ? $this->checkout->name : null,
-				'user_email' => $this->checkout->email,
+				'user_name'  => $this->checkout->customer->name ?? $this->checkout->name ?? null,
+				'user_email' => $this->checkout->customer->email ?? $this->checkout->email ?? null,
+				'first_name' => $this->checkout->customer->first_name ?? null,
+				'last_name'  => $this->checkout->customer->last_name ?? null,
 			]
 		);
 
