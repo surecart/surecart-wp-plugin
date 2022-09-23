@@ -38,8 +38,8 @@ class ThriveAutomatorService {
 		// triggers.
 		thrive_automator_register_trigger( PurchaseCreatedTrigger::class );
 		thrive_automator_register_trigger( PurchaseRevokedTrigger::class );
-		thrive_automator_register_trigger( PurchaseInvokedTrigger::class );
-		thrive_automator_register_trigger( PurchaseUpdatedTrigger::class );
+		// thrive_automator_register_trigger( PurchaseInvokedTrigger::class );
+		// thrive_automator_register_trigger( PurchaseUpdatedTrigger::class );
 	}
 
 }
