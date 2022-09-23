@@ -63,7 +63,7 @@ class PurchaseCreatedTrigger extends Trigger {
 	 * @return string
 	 */
 	public static function get_name() {
-		return __( 'Product purchase completed', 'surecart' );
+		return __( 'Product or subscription is purchased', 'surecart' );
 	}
 
 	/**

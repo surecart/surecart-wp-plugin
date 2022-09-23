@@ -12,11 +12,11 @@ export default ({ purchase }) => {
 		const r = confirm(
 			revoke
 				? __(
-						'Are you sure you want to revoke this purchase?',
+						'Are you sure? This action will remove the associated access and trigger any cancelation automations you have set up.',
 						'surecart'
 				  )
 				: __(
-						'Are you sure you want to reinstate this purchase?',
+						'Are you sure? This action will re-enable associated access.',
 						'surecart'
 				  )
 		);

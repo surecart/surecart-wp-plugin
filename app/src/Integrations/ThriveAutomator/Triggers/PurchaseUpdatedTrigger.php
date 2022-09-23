@@ -63,7 +63,7 @@ class PurchaseUpdatedTrigger extends Trigger {
 	 * @return string
 	 */
 	public static function get_name() {
-		return __( 'Product purchase updated', 'surecart' );
+		return __( 'Subscription plan changed', 'surecart' );
 	}
 
 	/**
@@ -72,7 +72,7 @@ class PurchaseUpdatedTrigger extends Trigger {
 	 * @return string
 	 */
 	public static function get_description() {
-		return __( 'This trigger will be fired when a purchase updated.', 'surecart' );
+		return __( 'This trigger will be fired when a subscription plan is changed to something else.', 'surecart' );
 	}
 
 	/**
