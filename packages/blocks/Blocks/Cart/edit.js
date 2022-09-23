@@ -12,6 +12,7 @@ const allowedBlocks = [
 	'surecart/cart-coupon',
 	'surecart/cart-submit',
 	'surecart/cart-subtotal',
+	'surecart/cart-bump-line-item',
 	'surecart/cart-items',
 	'surecart/cart-header',
 	'surecart/cart-message',

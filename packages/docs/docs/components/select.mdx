@@ -8,7 +8,7 @@ This component let users create select container.
 
 import DemoTabs from '../../components/Demo-Tabs.js';
 import ComponentDoc from '../../components/Component-Doc.js';
-import {ScSelect} from '@surecart/components-react';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 
 <DemoTabs>
 	<DemoTabs.Code>
@@ -22,7 +22,12 @@ import {ScSelect} from '@surecart/components-react';
 </script>
 `}
 	</DemoTabs.Code>
-	<ScSelect label="Select" placeholder="Select something" search choices={[{label: 'Item', value: 'item-1'}, {label: 'Item 2', value: 'item-2'}]} />
+	<BrowserOnly>
+		{()=> {
+			const {ScSelect} = require('@surecart/components-react');
+			return <ScSelect label="Select" placeholder="Select something" search choices={[{label: 'Item', value: 'item-1'}, {label: 'Item 2', value: 'item-2'}]} />
+		}}
+	</BrowserOnly>
 </DemoTabs>
 
 ## Component Codex

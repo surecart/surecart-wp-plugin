@@ -131,7 +131,7 @@ exports[`sc-tax-id-input Renders UK VAT Tax Type 1`] = `
 exports[`sc-tax-id-input renders 1`] = `
 <sc-tax-id-input>
   <mock:shadow-root>
-    <sc-input name="tax_identifier.number_type" style="display: none;"></sc-input>
+    <sc-input name="tax_identifier.number_type" value="other" style="display: none;"></sc-input>
     <sc-input label="Tax ID" name="tax_identifier.number">
       <sc-dropdown position="bottom-right" slot="suffix">
         <sc-button caret="" slot="trigger" type="text" style="color: var(--sc-input-label-color);">
@@ -150,7 +150,7 @@ exports[`sc-tax-id-input renders 1`] = `
           <sc-menu-item>
             EU VAT
           </sc-menu-item>
-          <sc-menu-item>
+          <sc-menu-item checked="">
             Other
           </sc-menu-item>
         </sc-menu>

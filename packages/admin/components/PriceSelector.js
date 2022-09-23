@@ -6,7 +6,6 @@ import { useState } from '@wordpress/element';
 import SelectPrice from './SelectPrice';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
-import { useEffect } from 'react';
 
 export default ({ onSelect, ad_hoc, value, open = false }) => {
 	const [query, setQuery] = useState(null);

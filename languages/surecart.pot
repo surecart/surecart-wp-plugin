@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-09-21T20:59:42+00:00\n"
+"POT-Creation-Date: 2022-09-22T20:35:28+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -27,7 +27,7 @@ msgid "SureCart"
 msgstr ""
 
 #: src/Cart/CartService.php:51
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:134
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:133
 msgid "Cart"
 msgstr ""
 
@@ -274,7 +274,7 @@ msgid "Edit"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsController.php:23
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:130
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:129
 #: admin/coupons/index.php:6
 #: coupons/Coupons.js:189
 #: settings/export/ExportSettings.js:19
@@ -416,7 +416,7 @@ msgid "Move to Trash"
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersController.php:24
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:133
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:132
 #: admin/customers/index.php:7
 #: customers/EditCustomer.js:75
 #: settings/export/ExportSettings.js:23
@@ -520,7 +520,7 @@ msgid "Invoices"
 msgstr ""
 
 #: src/Controllers/Admin/Licenses/LicensesController.php:24
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:131
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:130
 #: admin/licenses/index.php:7
 #: licenses/License.js:74
 msgid "Licenses"
@@ -691,7 +691,7 @@ msgid "Copied!"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsController.php:23
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:132
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:131
 #: admin/subscriptions/index.php:23
 #: layouts/partials/admin-settings-sidebar.php:21
 #: web/dashboard/orders/show.php:58
@@ -771,7 +771,7 @@ msgstr ""
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:247
 #: util/translations.js:51
 #: price.js:48
-#: sc-order-bump2.js:50
+#: sc-order-bump2.js:51
 #: sc-price-choice.js:785
 msgid "for"
 msgstr ""
@@ -3243,7 +3243,7 @@ msgid "Complete Signup"
 msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:115
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:138
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:137
 #: layouts/partials/admin-settings-header.php:24
 msgid "Settings"
 msgstr ""
@@ -3254,12 +3254,12 @@ msgstr ""
 msgid "Upgrade Groups"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:129
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:128
 #: bumps/EditBump.js:170
 msgid "Order Bumps"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:137
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:136
 #: src/WordPress/PostTypes/CartPostTypeService.php:124
 #: src/WordPress/PostTypes/FormPostTypeService.php:81
 msgid "Forms"
@@ -3498,7 +3498,7 @@ msgstr ""
 #: settings/SettingsBox.js:51
 #: settings/SettingsTemplate.js:75
 #: sc-customer-edit.js:113
-#: sc-order-bump2.js:55
+#: sc-order-bump2.js:56
 #: sc-wordpress-user-edit.js:56
 msgid "Save"
 msgstr ""
@@ -3881,6 +3881,297 @@ msgstr ""
 #: web/no-customer.php:11
 #: Blocks/LogoutButton/Block.php:43
 msgid "Logout"
+msgstr ""
+
+#: bumps/CreateBump.js:40
+#: components/Error.js:25
+#: customers/CreateCustomer.js:44
+#: hooks/useDataApi/index.js:53
+#: licenses/modules/Activations/Activation.js:107
+#: product-groups/CreateProductGroup.js:35
+#: product-groups/modules/NewProduct.js:45
+#: products/CreateProduct.js:34
+#: products/modules/Prices/NewPrice/index.js:58
+#: settings/tax-region/RegistrationForm.js:103
+#: settings/tax-region/RegistrationForm.js:126
+#: store/notices/reducer.js:25
+#: store/ui/reducer.js:122
+#: sc-upcoming-invoice.js:172
+msgid "Something went wrong."
+msgstr ""
+
+#: bumps/CreateBump.js:51
+msgid "Create New Order Bump"
+msgstr ""
+
+#: bumps/CreateBump.js:60
+#: bumps/modules/Price.js:29
+msgid "Order Bump Price"
+msgstr ""
+
+#: bumps/CreateBump.js:61
+#: bumps/modules/Price.js:30
+msgid "This is the price for the bump."
+msgstr ""
+
+#: bumps/CreateBump.js:81
+#: customers/CreateCustomer.js:112
+#: product-groups/CreateProductGroup.js:74
+#: products/CreateProduct.js:70
+#: products/modules/Upgrades.js:124
+#: Blocks/Form/components/Setup.js:54
+msgid "Create"
+msgstr ""
+
+#: bumps/CreateBump.js:87
+#: bumps/modules/NewCondition.js:173
+#: components/data-tables/charges-data-table/Refund.js:141
+#: components/data-tables/subscriptions-data-table/Cancel.js:70
+#: components/data-tables/subscriptions-data-table/Cancel.js:92
+#: components/data-tables/subscriptions-data-table/subscription-item.js:124
+#: components/DatePicker.js:92
+#: components/subscriptions/Cancel.js:32
+#: components/subscriptions/Cancel.js:54
+#: components/subscriptions/CancelPendingUpdate.js:150
+#: coupons/components/DisableModal.js:30
+#: customers/CreateCustomer.js:118
+#: dashboard/DatePicker.js:24
+#: hocs/withConfirm.js:54
+#: product-groups/CreateProductGroup.js:80
+#: product-groups/modules/NewProduct.js:78
+#: products/CreateProduct.js:76
+#: products/modules/integrations/NewIntegration.js:106
+#: products/modules/Prices/NewPrice/index.js:193
+#: products/modules/Upgrades.js:130
+#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:92
+#: subscriptions/show/modules/modals/CancelUpdateModal.js:95
+#: Controllers/SubscriptionController.php:318
+#: Blocks/CheckoutForm/components/Empty.js:117
+#: Blocks/CheckoutForm/components/Empty.js:157
+#: Blocks/CheckoutForm/components/SelectProductModal.js:142
+#: Blocks/CheckoutForm/components/Setup.js:228
+#: components/ColorPopup.js:80
+#: controls/AddPriceUI.js:89
+#: formats/AddPriceUI.js:113
+#: sc-password-nag.js:84
+msgid "Cancel"
+msgstr ""
+
+#: bumps/EditBump.js:66
+msgid "Order Bump updated."
+msgstr ""
+
+#: bumps/EditBump.js:76
+msgid "Permanently delete this order bump? You cannot undo this action."
+msgstr ""
+
+#: bumps/EditBump.js:85
+msgid "Bump deleted."
+msgstr ""
+
+#: bumps/EditBump.js:99
+msgid "Un-Archive this bump? This will make the product purchaseable again."
+msgstr ""
+
+#: bumps/EditBump.js:103
+msgid "Archive this bump? This bump will not be purchaseable and all unsaved changes will be lost."
+msgstr ""
+
+#: bumps/EditBump.js:115
+msgid "Bump archived."
+msgstr ""
+
+#: bumps/EditBump.js:116
+msgid "Bump un-archived."
+msgstr ""
+
+#: bumps/EditBump.js:141
+#: components/MediaLibrary/Preview.js:167
+#: coupons/components/coupon/ActionsDropdown.js:40
+#: coupons/components/CouponActionsDropdown.js:125
+#: coupons/modules/Code.js:126
+#: licenses/modules/Activations/Activation.js:225
+#: products/components/product/ActionsDropdown.js:40
+#: products/modules/integrations/Integration.js:204
+#: products/modules/Prices/Price/Header.js:167
+#: settings/tax-region/RegistrationForm.js:201
+#: sc-payment-methods-list.js:129
+msgid "Delete"
+msgstr ""
+
+#: bumps/EditBump.js:146
+msgid "Save Order Bump"
+msgstr ""
+
+#: bumps/EditBump.js:173
+msgid "Edit Bump"
+msgstr ""
+
+#: bumps/modules/Behavior.js:7
+msgid "Behavior"
+msgstr ""
+
+#: bumps/modules/Behavior.js:15
+msgid "Auto Apply"
+msgstr ""
+
+#: bumps/modules/Behavior.js:17
+msgid "Automatically apply the order bump if the customer has the required items in the cart."
+msgstr ""
+
+#: bumps/modules/Conditions.js:23
+msgid "Display Conditions"
+msgstr ""
+
+#: bumps/modules/Conditions.js:28
+#: bumps/modules/NewCondition.js:44
+msgid "Add A Condition"
+msgstr ""
+
+#: bumps/modules/Conditions.js:35
+msgid "Show Bump Offer If"
+msgstr ""
+
+#: bumps/modules/Conditions.js:39
+msgid "All of these items are in the cart."
+msgstr ""
+
+#: bumps/modules/Conditions.js:46
+msgid "Any of these items are in the cart."
+msgstr ""
+
+#: bumps/modules/Conditions.js:53
+msgid "None of these items are in the cart."
+msgstr ""
+
+#: bumps/modules/Conditions.js:65
+msgid "Prices"
+msgstr ""
+
+#: bumps/modules/Conditions.js:85
+msgid "Add some conditions to display this bump."
+msgstr ""
+
+#: bumps/modules/CTA.js:10
+msgid "Custom Call to action"
+msgstr ""
+
+#: bumps/modules/CTA.js:11
+#: bumps/modules/Description.js:11
+#: bumps/modules/Name.js:11
+msgid "Optional"
+msgstr ""
+
+#: bumps/modules/CTA.js:17
+msgid "Call to action"
+msgstr ""
+
+#: bumps/modules/CTA.js:18
+msgid "Set a custom call to action for the bump."
+msgstr ""
+
+#: bumps/modules/Description.js:10
+msgid "Add a description"
+msgstr ""
+
+#: bumps/modules/Description.js:17
+msgid "Bump Description"
+msgstr ""
+
+#: bumps/modules/Description.js:18
+msgid "Add a descirption that will get your customers excited about the offer."
+msgstr ""
+
+#: bumps/modules/Discount.js:33
+#: coupons/Sidebar.js:61
+#: sc-coupon-form2.js:52
+#: sc-order-confirmation-totals2.js:29
+#: sc-order.js:124
+msgid "Discount"
+msgstr ""
+
+#: layouts/partials/admin-settings-sidebar.php:5
+#: settings/account/AccountSettings.js:78
+msgid "Store Settings"
+msgstr ""
+
+#: layouts/partials/admin-settings-sidebar.php:9
+#: settings/brand/BrandSettings.js:50
+msgid "Design & Branding"
+msgstr ""
+
+#: bumps/modules/Discount.js:48
+msgid "Fixed"
+msgstr ""
+
+#: bumps/modules/filters/FilterItem.js:89
+#: product-groups/modules/Product.js:74
+#: products/modules/Image.js:69
+#: products/modules/SingleDownload.js:263
+#: settings/brand/Logo.js:81
+#: Blocks/CheckoutForm/components/PriceChoice.js:82
+#: components/PriceChoice.js:116
+msgid "Remove"
+msgstr ""
+
+#: bumps/modules/Name.js:10
+msgid "Add a name"
+msgstr ""
+
+#: bumps/modules/Name.js:17
+msgid "Bump Name"
+msgstr ""
+
+#: bumps/modules/NewCondition.js:25
+msgid "Are you sure you want to discard this condition?"
+msgstr ""
+
+#: bumps/modules/NewCondition.js:76
+msgid "Choose An Item"
+msgstr ""
+
+#: bumps/modules/NewCondition.js:89
+#: products/modules/Upgrades.js:73
+msgid "Upgrade Group"
+msgstr ""
+
+#: bumps/modules/NewCondition.js:98
+msgid "Select A Price"
+msgstr ""
+
+#: web/dashboard/orders/show.php:15
+#: orders/modules/LineItems/index.js:62
+msgid "Order Details"
+msgstr ""
+
+#: bumps/modules/NewCondition.js:137
+msgid "Select An Upgrade Group"
+msgstr ""
+
+#: bumps/modules/NewCondition.js:170
+msgid "Add Condition"
+msgstr ""
+
+#: bumps/modules/Preview.js:17
+msgid "Preview"
+msgstr ""
+
+#: bumps/modules/Price.js:46
+#: subscriptions/edit/modules/Price.js:101
+#: subscriptions/show/modules/CurrentPlan.js:81
+msgid "Change"
+msgstr ""
+
+#: bumps/modules/Priority.js:7
+msgid "Priority"
+msgstr ""
+
+#: bumps/modules/Priority.js:9
+msgid "Bump Priority (1-5)"
+msgstr ""
+
+#: bumps/modules/Priority.js:10
+msgid "The priority of this bump in relation to other bumps. The higher the number, the higher the priority."
 msgstr ""
 
 #: bumps/CreateBump.js:40
@@ -7426,6 +7717,7 @@ msgstr ""
 #: Blocks/BumpLineItem/edit.js:13
 #: Blocks/BuyButton/edit.js:73
 #: Blocks/Card/edit.js:25
+#: Blocks/CartBumpLineItem/edit.js:30
 #: Blocks/CartCoupon/edit.js:38
 #: Blocks/CartItems/edit.js:28
 #: Blocks/CartSubmit/edit.js:28
@@ -7475,6 +7767,7 @@ msgstr ""
 
 #: Blocks/Address/edit.js:26
 #: Blocks/BumpLineItem/edit.js:16
+#: Blocks/CartBumpLineItem/edit.js:33
 #: Blocks/CartSubtotal/edit.js:33
 #: Blocks/Checkbox/components/Inspector.js:23
 #: Blocks/Donation/edit.js:162
@@ -8305,7 +8598,7 @@ msgid "Show Currency Code"
 msgstr ""
 
 #: Blocks/OrderBumps/edit.js:16
-#: sc-order-bumps2.js:22
+#: sc-order-bumps2.js:23
 msgid "Recommended"
 msgstr ""
 
@@ -8724,6 +9017,16 @@ msgstr ""
 #: Blocks/CartItems/block.json
 msgctxt "block description"
 msgid "The cart"
+msgstr ""
+
+#: Blocks/CartBumpLineItem/block.json
+msgctxt "block title"
+msgid "Cart Bump Line Item"
+msgstr ""
+
+#: Blocks/CartBumpLineItem/block.json
+msgctxt "block description"
+msgid "Display the cart bump line item"
 msgstr ""
 
 #: Blocks/CartCoupon/block.json
@@ -10630,11 +10933,11 @@ msgstr ""
 msgid "Enter your password"
 msgstr ""
 
-#: sc-order-bump2.js:50
+#: sc-order-bump2.js:51
 msgid "Free"
 msgstr ""
 
-#: sc-order-bump2.js:58
+#: sc-order-bump2.js:59
 msgid "Save %s%%"
 msgstr ""
 

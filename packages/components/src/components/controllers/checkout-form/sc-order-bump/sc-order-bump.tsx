@@ -17,11 +17,8 @@ export class ScOrderBump {
   /** The checkout */
   @Prop() checkout: Checkout;
 
-  /** Should we show the label */
-  @Prop() showLabel: boolean;
-
   /** Should we show the controls */
-  @Prop() showControl: boolean;
+  @Prop({ reflect: true }) showControl: boolean;
 
   /** Add line item event */
   @Event() scAddLineItem: EventEmitter<LineItemData>;
@@ -47,15 +44,17 @@ export class ScOrderBump {
   }
 
   newPrice() {
-    let amount = (this.bump?.price as Price).amount || 0;
+    let amount = null;
+    let initialAmount = (this.bump?.price as Price)?.amount || 0;
 
     if (this.bump?.amount_off) {
-      amount = Math.max(0, amount - this.bump?.amount_off);
+      amount = Math.max(0, initialAmount - this.bump?.amount_off);
     }
     if (this.bump?.percent_off) {
-      const off = amount * (this.bump?.percent_off / 100);
-      amount = Math.max(0, amount - off);
+      const off = initialAmount * (this.bump?.percent_off / 100);
+      amount = Math.max(0, initialAmount - off);
     }
+
     return amount;
   }
 
@@ -65,12 +64,11 @@ export class ScOrderBump {
         <sc-format-number
           type="currency"
           class="bump__original-price"
-          value={(this.bump?.price as Price).amount}
-          currency={(this.bump?.price as Price).currency}
+          value={(this.bump?.price as Price)?.amount}
+          currency={(this.bump?.price as Price)?.currency}
         ></sc-format-number>{' '}
-        {this.newPrice() === 0 ? (
-          __('Free', 'surecart')
-        ) : (
+        {this.newPrice() === 0 && __('Free', 'surecart')}
+        {this.newPrice() !== null && this.newPrice() > 0 && (
           <Fragment>
             <sc-format-number type="currency" class="bump__new-price" value={this.newPrice()} currency={(this.bump?.price as Price).currency} />
             <span class="bump__interval">{intervalString(this.bump?.price as Price, { labels: { interval: '/', period: __('for', 'surecart') } })}</span>
@@ -100,7 +98,6 @@ export class ScOrderBump {
       <sc-choice
         value={this.bump?.id}
         type="checkbox"
-        showLabel={this.showLabel}
         showControl={this.showControl}
         checked={isBumpInOrder(this.bump, this.checkout)}
         onScChange={e => this.updateLineItem(e.target.checked)}
@@ -108,7 +105,7 @@ export class ScOrderBump {
       >
         <div part="base-content" class="bump">
           <div class="bump__text">
-            <div class="bump__title">{this.bump?.metadata?.cta || this.bump.name || product?.name}</div>
+            <div class="bump__title">{this.bump?.metadata?.cta || this.bump?.name || product?.name}</div>
             {this.renderPrice()}
           </div>
           {this.renderDiscount()}

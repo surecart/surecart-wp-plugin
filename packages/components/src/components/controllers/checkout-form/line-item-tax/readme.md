@@ -15,6 +15,10 @@
 
 ## Dependencies
 
+### Used by
+
+ - [sc-form-components-validator](../../../providers/form-components-validator)
+
 ### Depends on
 
 - [sc-line-item](../../../ui/line-item)
@@ -25,6 +29,7 @@
 graph TD;
   sc-line-item-tax --> sc-line-item
   sc-line-item-tax --> sc-format-number
+  sc-form-components-validator --> sc-line-item-tax
   style sc-line-item-tax fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

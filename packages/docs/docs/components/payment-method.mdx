@@ -8,7 +8,7 @@ This component let users create payment method.
 
 import DemoTabs from '../../components/Demo-Tabs.js';
 import ComponentDoc from '../../components/Component-Doc.js';
-import {ScPaymentMethod} from '@surecart/components-react';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 
 <DemoTabs>
 	<DemoTabs.Code>
@@ -21,8 +21,15 @@ import {ScPaymentMethod} from '@surecart/components-react';
 </script>
 `}
 	</DemoTabs.Code>
-	<ScPaymentMethod paymentMethod={{card: { brand: 'visa', last4: '4242'}}}></ScPaymentMethod>
-	<ScPaymentMethod paymentMethod={{bank_account: { id: 'test', account_type: "checking", last4: '9999'}}}></ScPaymentMethod>
+	<BrowserOnly>
+		{()=> {
+		    const {ScPaymentMethod} = require('@surecart/components-react');
+			return <>
+			<ScPaymentMethod paymentMethod={{card: { brand: 'visa', last4: '4242'}}}></ScPaymentMethod>
+			<ScPaymentMethod paymentMethod={{bank_account: { id: 'test', account_type: "checking", last4: '9999'}}}></ScPaymentMethod>
+			</>;
+		}}
+	</BrowserOnly>
 </DemoTabs>
 
 ## Component Codex
