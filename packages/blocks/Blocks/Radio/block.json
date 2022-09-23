@@ -4,8 +4,8 @@
 	"title": "Radio",
 	"description": "Display a radio input",
 	"category": "surecart",
-	"keywords": ["radio", "toggle", "engine"],
-	"ancestor": ["surecart/form"],
+	"keywords": ["radio", "surecart"],
+	"ancestor": ["surecart/radio-group"],
 	"supports": {
 		"reusable": false,
 		"html": false

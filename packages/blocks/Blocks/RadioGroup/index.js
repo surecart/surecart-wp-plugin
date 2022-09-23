@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { edit as check } from '@wordpress/icons';
+import { list as icon } from '@wordpress/icons';
 
 /**
  * Internal dependencies
@@ -16,7 +16,7 @@ const { name } = metadata;
 export { metadata, name };
 
 export const settings = {
-	check,
+	icon,
 	edit,
 	save,
 };

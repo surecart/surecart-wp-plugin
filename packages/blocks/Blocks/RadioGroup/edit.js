@@ -31,7 +31,7 @@ export default ({ className, attributes, setAttributes }) => {
 		blockProps,
 		{
 			className: 'sc-radio',
-			allowedBlocks: ['surecart/radio', {}],
+			allowedBlocks: [ 'surecart/radio' ],
 		}
 	);
 
@@ -49,10 +49,7 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<div {...blockProps}>
-				<ScRadioGroup label={label} {...innerBlocksProps}>
-				</ScRadioGroup>
-			</div>
+			<ScRadioGroup label={label} {...innerBlocksProps}></ScRadioGroup>
 		</Fragment>
 	);
 };

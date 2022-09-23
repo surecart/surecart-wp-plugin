@@ -104,6 +104,10 @@ export class ScRadio {
   }
 
   handleKeyDown(event: KeyboardEvent) {
+    if ( this.static ) {
+      return;
+    }
+
     if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
       const radios = this.getAllRadios().filter(radio => !radio.disabled);
       const incr = ['ArrowUp', 'ArrowLeft'].includes(event.key) ? -1 : 1;
@@ -121,6 +125,10 @@ export class ScRadio {
 
   // Prevent clicks on the label from briefly blurring the input
   handleMouseDown(event: MouseEvent) {
+    if ( this.static ) {
+      return;
+    }
+
     event.preventDefault();
     this.input.focus();
   }
