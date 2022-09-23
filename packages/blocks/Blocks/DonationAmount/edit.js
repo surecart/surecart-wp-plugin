@@ -5,11 +5,13 @@ import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import {
 	ScChoice,
 	ScFormatNumber,
+	ScInput,
 	ScPriceInput,
 } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes }) => {
-	const { amount, currency } = attributes;
+	const { label, amount, currency } = attributes;
+  console.log(attributes);
 
 	const blockProps = useBlockProps();
 
@@ -17,6 +19,20 @@ export default ({ attributes, setAttributes }) => {
 		<Fragment>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
+          <PanelRow>
+            <ScInput
+              label={__('Name the Price', 'surecart')}
+              name="label"
+              placeholder="Buy me coffee!"
+              value={label}
+              onScInput={(e) => {
+                console.log(e.target.value);
+								setAttributes({
+									label: e.target.value,
+								})
+							}}
+            ></ScInput>
+          </PanelRow>
 					<PanelRow>
 						<ScPriceInput
 							label={__('Amount', 'surecart')}
@@ -37,12 +53,12 @@ export default ({ attributes, setAttributes }) => {
 				value={amount}
 				{...blockProps}
 			>
-				<ScFormatNumber
+				{!!label ? label : <ScFormatNumber
 					type="currency"
 					currency={currency || 'USD'}
 					value={amount}
 					minimum-fraction-digits="0"
-				></ScFormatNumber>
+				></ScFormatNumber>}
 			</ScChoice>
 		</Fragment>
 	);
