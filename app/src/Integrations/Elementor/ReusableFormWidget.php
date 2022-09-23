@@ -106,7 +106,6 @@ class ReusableFormWidget extends Widget_Base {
 			]
 		);
 
-
 		$options = $this->get_forms_options();
 
 		$this->add_control(
@@ -116,6 +115,28 @@ class ReusableFormWidget extends Widget_Base {
 				'type'    => \Elementor\Controls_Manager::SELECT2,
 				'options' => $options,
 				'default' => array_keys($options)[0]
+			]
+		);
+
+		$this->add_control(
+			'edit_form',
+			[
+				'label' => __('Edit Form', 'surecart'),
+				'type' => \Elementor\Controls_Manager::BUTTON,
+				'text' => __('Edit', 'surecart'),
+				'event' => 'surecart:form:edit',
+			]
+		);
+
+		$this->add_control(
+			'create_form',
+			[
+				'label' => __('Create Form', 'surecart'),
+				'separator' => 'before',
+				'classes' => 'testclass',
+				'type' => \Elementor\Controls_Manager::BUTTON,
+				'text' => __('Create', 'surecart'),
+				'event' => 'surecart:form:create',
 			]
 		);
 
