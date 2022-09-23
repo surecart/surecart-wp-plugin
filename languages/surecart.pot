@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-09-22T20:35:28+00:00\n"
+"POT-Creation-Date: 2022-09-23T20:59:48+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -620,7 +620,7 @@ msgid "By %s"
 msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersViewController.php:21
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:126
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:125
 #: admin/orders/index.php:7
 #: components/data-tables/OrdersDataTable.js:28
 #: customers/modules/Orders.js:48
@@ -654,7 +654,7 @@ msgid "View"
 msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsController.php:24
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:127
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:126
 #: admin/products/index.php:29
 #: bumps/modules/Conditions.js:71
 #: product-groups/modules/Products.js:40
@@ -1027,7 +1027,7 @@ msgid "SureCart eCommerce Platform"
 msgstr ""
 
 #: src/Integrations/ThriveAutomator/Triggers/PurchaseCreatedTrigger.php:66
-msgid "Product purchase completed"
+msgid "Product or subscription is purchased"
 msgstr ""
 
 #: src/Integrations/ThriveAutomator/Triggers/PurchaseCreatedTrigger.php:75
@@ -1043,7 +1043,7 @@ msgid "This trigger will be fired when a purchase is unrevoked."
 msgstr ""
 
 #: src/Integrations/ThriveAutomator/Triggers/PurchaseRevokedTrigger.php:66
-msgid "Product purchase is revoked"
+msgid "Product or subscription is canceled"
 msgstr ""
 
 #: src/Integrations/ThriveAutomator/Triggers/PurchaseRevokedTrigger.php:75
@@ -3213,7 +3213,7 @@ msgid "SureCart webhooks could not be created."
 msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:108
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:124
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:123
 #: dashboard/Dashboard.js:38
 #: Blocks/CustomerDashboardButton/Block.php:33
 #: Blocks/Dashboard/CustomerSubscriptions/Block.php:76
@@ -3238,7 +3238,7 @@ msgid "Get Started"
 msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:114
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:125
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:124
 msgid "Complete Signup"
 msgstr ""
 
@@ -3248,7 +3248,7 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:128
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:127
 #: admin/product-groups/index.php:20
 #: bumps/modules/Conditions.js:77
 msgid "Upgrade Groups"
@@ -4090,297 +4090,6 @@ msgstr ""
 msgid "Discount"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:5
-#: settings/account/AccountSettings.js:78
-msgid "Store Settings"
-msgstr ""
-
-#: layouts/partials/admin-settings-sidebar.php:9
-#: settings/brand/BrandSettings.js:50
-msgid "Design & Branding"
-msgstr ""
-
-#: bumps/modules/Discount.js:48
-msgid "Fixed"
-msgstr ""
-
-#: bumps/modules/filters/FilterItem.js:89
-#: product-groups/modules/Product.js:74
-#: products/modules/Image.js:69
-#: products/modules/SingleDownload.js:263
-#: settings/brand/Logo.js:81
-#: Blocks/CheckoutForm/components/PriceChoice.js:82
-#: components/PriceChoice.js:116
-msgid "Remove"
-msgstr ""
-
-#: bumps/modules/Name.js:10
-msgid "Add a name"
-msgstr ""
-
-#: bumps/modules/Name.js:17
-msgid "Bump Name"
-msgstr ""
-
-#: bumps/modules/NewCondition.js:25
-msgid "Are you sure you want to discard this condition?"
-msgstr ""
-
-#: bumps/modules/NewCondition.js:76
-msgid "Choose An Item"
-msgstr ""
-
-#: bumps/modules/NewCondition.js:89
-#: products/modules/Upgrades.js:73
-msgid "Upgrade Group"
-msgstr ""
-
-#: bumps/modules/NewCondition.js:98
-msgid "Select A Price"
-msgstr ""
-
-#: web/dashboard/orders/show.php:15
-#: orders/modules/LineItems/index.js:62
-msgid "Order Details"
-msgstr ""
-
-#: bumps/modules/NewCondition.js:137
-msgid "Select An Upgrade Group"
-msgstr ""
-
-#: bumps/modules/NewCondition.js:170
-msgid "Add Condition"
-msgstr ""
-
-#: bumps/modules/Preview.js:17
-msgid "Preview"
-msgstr ""
-
-#: bumps/modules/Price.js:46
-#: subscriptions/edit/modules/Price.js:101
-#: subscriptions/show/modules/CurrentPlan.js:81
-msgid "Change"
-msgstr ""
-
-#: bumps/modules/Priority.js:7
-msgid "Priority"
-msgstr ""
-
-#: bumps/modules/Priority.js:9
-msgid "Bump Priority (1-5)"
-msgstr ""
-
-#: bumps/modules/Priority.js:10
-msgid "The priority of this bump in relation to other bumps. The higher the number, the higher the priority."
-msgstr ""
-
-#: bumps/CreateBump.js:40
-#: components/Error.js:25
-#: customers/CreateCustomer.js:44
-#: hooks/useDataApi/index.js:53
-#: licenses/modules/Activations/Activation.js:107
-#: product-groups/CreateProductGroup.js:35
-#: product-groups/modules/NewProduct.js:45
-#: products/CreateProduct.js:34
-#: products/modules/Prices/NewPrice/index.js:58
-#: settings/tax-region/RegistrationForm.js:103
-#: settings/tax-region/RegistrationForm.js:126
-#: store/notices/reducer.js:25
-#: store/ui/reducer.js:122
-#: sc-upcoming-invoice.js:172
-msgid "Something went wrong."
-msgstr ""
-
-#: bumps/CreateBump.js:51
-msgid "Create New Order Bump"
-msgstr ""
-
-#: bumps/CreateBump.js:60
-#: bumps/modules/Price.js:29
-msgid "Order Bump Price"
-msgstr ""
-
-#: bumps/CreateBump.js:61
-#: bumps/modules/Price.js:30
-msgid "This is the price for the bump."
-msgstr ""
-
-#: bumps/CreateBump.js:81
-#: customers/CreateCustomer.js:112
-#: product-groups/CreateProductGroup.js:74
-#: products/CreateProduct.js:70
-#: products/modules/Upgrades.js:124
-#: Blocks/Form/components/Setup.js:54
-msgid "Create"
-msgstr ""
-
-#: bumps/CreateBump.js:87
-#: bumps/modules/NewCondition.js:173
-#: components/data-tables/charges-data-table/Refund.js:141
-#: components/data-tables/subscriptions-data-table/Cancel.js:70
-#: components/data-tables/subscriptions-data-table/Cancel.js:92
-#: components/data-tables/subscriptions-data-table/subscription-item.js:124
-#: components/DatePicker.js:92
-#: components/subscriptions/Cancel.js:32
-#: components/subscriptions/Cancel.js:54
-#: components/subscriptions/CancelPendingUpdate.js:150
-#: coupons/components/DisableModal.js:30
-#: customers/CreateCustomer.js:118
-#: dashboard/DatePicker.js:24
-#: hocs/withConfirm.js:54
-#: product-groups/CreateProductGroup.js:80
-#: product-groups/modules/NewProduct.js:78
-#: products/CreateProduct.js:76
-#: products/modules/integrations/NewIntegration.js:106
-#: products/modules/Prices/NewPrice/index.js:193
-#: products/modules/Upgrades.js:130
-#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:92
-#: subscriptions/show/modules/modals/CancelUpdateModal.js:95
-#: Controllers/SubscriptionController.php:318
-#: Blocks/CheckoutForm/components/Empty.js:117
-#: Blocks/CheckoutForm/components/Empty.js:157
-#: Blocks/CheckoutForm/components/SelectProductModal.js:142
-#: Blocks/CheckoutForm/components/Setup.js:228
-#: components/ColorPopup.js:80
-#: controls/AddPriceUI.js:89
-#: formats/AddPriceUI.js:113
-#: sc-password-nag.js:84
-msgid "Cancel"
-msgstr ""
-
-#: bumps/EditBump.js:66
-msgid "Order Bump updated."
-msgstr ""
-
-#: bumps/EditBump.js:76
-msgid "Permanently delete this order bump? You cannot undo this action."
-msgstr ""
-
-#: bumps/EditBump.js:85
-msgid "Bump deleted."
-msgstr ""
-
-#: bumps/EditBump.js:99
-msgid "Un-Archive this bump? This will make the product purchaseable again."
-msgstr ""
-
-#: bumps/EditBump.js:103
-msgid "Archive this bump? This bump will not be purchaseable and all unsaved changes will be lost."
-msgstr ""
-
-#: bumps/EditBump.js:115
-msgid "Bump archived."
-msgstr ""
-
-#: bumps/EditBump.js:116
-msgid "Bump un-archived."
-msgstr ""
-
-#: bumps/EditBump.js:141
-#: components/MediaLibrary/Preview.js:167
-#: coupons/components/coupon/ActionsDropdown.js:40
-#: coupons/components/CouponActionsDropdown.js:125
-#: coupons/modules/Code.js:126
-#: licenses/modules/Activations/Activation.js:225
-#: products/components/product/ActionsDropdown.js:40
-#: products/modules/integrations/Integration.js:204
-#: products/modules/Prices/Price/Header.js:167
-#: settings/tax-region/RegistrationForm.js:201
-#: sc-payment-methods-list.js:129
-msgid "Delete"
-msgstr ""
-
-#: bumps/EditBump.js:146
-msgid "Save Order Bump"
-msgstr ""
-
-#: bumps/EditBump.js:173
-msgid "Edit Bump"
-msgstr ""
-
-#: bumps/modules/Behavior.js:7
-msgid "Behavior"
-msgstr ""
-
-#: bumps/modules/Behavior.js:15
-msgid "Auto Apply"
-msgstr ""
-
-#: bumps/modules/Behavior.js:17
-msgid "Automatically apply the order bump if the customer has the required items in the cart."
-msgstr ""
-
-#: bumps/modules/Conditions.js:23
-msgid "Display Conditions"
-msgstr ""
-
-#: bumps/modules/Conditions.js:28
-#: bumps/modules/NewCondition.js:44
-msgid "Add A Condition"
-msgstr ""
-
-#: bumps/modules/Conditions.js:35
-msgid "Show Bump Offer If"
-msgstr ""
-
-#: bumps/modules/Conditions.js:39
-msgid "All of these items are in the cart."
-msgstr ""
-
-#: bumps/modules/Conditions.js:46
-msgid "Any of these items are in the cart."
-msgstr ""
-
-#: bumps/modules/Conditions.js:53
-msgid "None of these items are in the cart."
-msgstr ""
-
-#: bumps/modules/Conditions.js:65
-msgid "Prices"
-msgstr ""
-
-#: bumps/modules/Conditions.js:85
-msgid "Add some conditions to display this bump."
-msgstr ""
-
-#: bumps/modules/CTA.js:10
-msgid "Custom Call to action"
-msgstr ""
-
-#: bumps/modules/CTA.js:11
-#: bumps/modules/Description.js:11
-#: bumps/modules/Name.js:11
-msgid "Optional"
-msgstr ""
-
-#: bumps/modules/CTA.js:17
-msgid "Call to action"
-msgstr ""
-
-#: bumps/modules/CTA.js:18
-msgid "Set a custom call to action for the bump."
-msgstr ""
-
-#: bumps/modules/Description.js:10
-msgid "Add a description"
-msgstr ""
-
-#: bumps/modules/Description.js:17
-msgid "Bump Description"
-msgstr ""
-
-#: bumps/modules/Description.js:18
-msgid "Add a descirption that will get your customers excited about the offer."
-msgstr ""
-
-#: bumps/modules/Discount.js:33
-#: coupons/Sidebar.js:61
-#: sc-coupon-form2.js:52
-#: sc-order-confirmation-totals2.js:29
-#: sc-order.js:124
-msgid "Discount"
-msgstr ""
-
 #: bumps/modules/Discount.js:36
 msgid "Discount Amount"
 msgstr ""
@@ -4578,11 +4287,11 @@ msgid "Purchases"
 msgstr ""
 
 #: components/data-tables/purchases-data-table/RevokeToggleButton.js:14
-msgid "Are you sure you want to revoke this purchase?"
+msgid "Are you sure? This action will remove the associated access and trigger any cancelation automations you have set up."
 msgstr ""
 
 #: components/data-tables/purchases-data-table/RevokeToggleButton.js:18
-msgid "Are you sure you want to reinstate this purchase?"
+msgid "Are you sure? This action will re-enable associated access."
 msgstr ""
 
 #: components/data-tables/purchases-data-table/RevokeToggleButton.js:55
@@ -5415,7 +5124,7 @@ msgstr ""
 #: settings/brand/BrandSettings.js:180
 #: settings/tax/TaxSettings.js:72
 #: sc-address2.js:47
-#: sc-form-components-validator2.js:66
+#: sc-form-components-validator2.js:77
 #: sc-order-shipping-address2.js:32
 msgid "Address"
 msgstr ""
@@ -7894,7 +7603,7 @@ msgid "Add text…"
 msgstr ""
 
 #: Blocks/BumpLineItem/edit.js:26
-#: sc-line-item-bump.js:19
+#: sc-line-item-bump2.js:19
 #: sc-order-confirmation-totals2.js:33
 msgid "Bundle Discount"
 msgstr ""
@@ -8527,7 +8236,7 @@ msgid "Processing Payment"
 msgstr ""
 
 #: Blocks/Form/edit.js:322
-#: sc-checkout.js:178
+#: sc-checkout.js:181
 msgid "Processing payment..."
 msgstr ""
 
@@ -8536,7 +8245,7 @@ msgid "Confirming Payment"
 msgstr ""
 
 #: Blocks/Form/edit.js:340
-#: sc-checkout.js:178
+#: sc-checkout.js:181
 msgid "Finalizing order..."
 msgstr ""
 
@@ -8545,7 +8254,7 @@ msgid "Success Text"
 msgstr ""
 
 #: Blocks/Form/edit.js:355
-#: sc-checkout.js:178
+#: sc-checkout.js:181
 msgid "Payment successful! Redirecting..."
 msgstr ""
 
@@ -10847,11 +10556,11 @@ msgstr ""
 msgid "Your payment is processing. Exiting this page could cause an error in your order. Please do not navigate away from this page."
 msgstr ""
 
-#: sc-checkout.js:171
+#: sc-checkout.js:174
 msgid "Due to processor restrictions, only one checkout form is allowed on the page."
 msgstr ""
 
-#: sc-checkout.js:178
+#: sc-checkout.js:181
 msgid "Submitting order..."
 msgstr ""
 
@@ -10905,11 +10614,11 @@ msgstr ""
 msgid "Invoice History"
 msgstr ""
 
-#: sc-line-item-tax.js:16
+#: sc-line-item-tax2.js:16
 msgid "Estimated %s"
 msgstr ""
 
-#: sc-line-item-tax.js:31
+#: sc-line-item-tax2.js:31
 msgid "included"
 msgstr ""
 
