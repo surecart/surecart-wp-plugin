@@ -64,7 +64,6 @@ class UserTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * @group failing
 	 *
 	 * @return void
 	 */
@@ -90,5 +89,20 @@ class UserTest extends SureCartUnitTestCase {
 		$this->assertSame($user1->user_login, 'person1');
 		$this->assertSame($user2->user_login, 'person2');
 		$this->assertSame($user_special->user_login, 'specialemail');
+	}
+
+	/**
+	 * @group failing
+	 */
+	public function test_creating_a_user_also_sets_firstname_lastname() {
+		$user = User::create([
+			'user_name' => 'person',
+			'user_email' => 'testemail@email.com',
+			'first_name' => 'Andre',
+			'last_name' => 'Gagnon'
+		]);
+
+		$this->assertSame($user->first_name, 'Andre');
+		$this->assertSame($user->last_name, 'Gagnon');
 	}
 }
