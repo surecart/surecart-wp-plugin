@@ -984,7 +984,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		$models = [];
 		if ( ! empty( $collection->data ) && is_array( $collection->data ) ) {
 			foreach ( $collection->data as $attributes ) {
-				$models[] = new $model( $attributes );
+				$models[] = is_a( $attributes, $model ) ? $attributes : new $model( $attributes );
 			}
 			$collection->data = $models;
 		}

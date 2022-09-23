@@ -19,3 +19,29 @@ exports[`sc-order-confirmation-totals renders 1`] = `
   </mock:shadow-root>
 </sc-order-confirmation-totals>
 `;
+
+exports[`sc-order-confirmation-totals renders bump amount 1`] = `
+<sc-order-confirmation-totals>
+  <mock:shadow-root>
+    <div class="line-item-totals">
+      <sc-line-item-total total="subtotal">
+        <span slot="description">
+          Subtotal
+        </span>
+      </sc-line-item-total>
+      <sc-line-item style="margin-top: var(--sc-spacing-small);">
+        <span slot="description">
+          Bundle Discount
+        </span>
+        <sc-format-number slot="price" type="currency" value="-100"></sc-format-number>
+      </sc-line-item>
+      <sc-divider style="--spacing: var(--sc-spacing-small);"></sc-divider>
+      <sc-line-item-total show-currency="" size="large">
+        <span slot="description">
+          Total
+        </span>
+      </sc-line-item-total>
+    </div>
+  </mock:shadow-root>
+</sc-order-confirmation-totals>
+`;

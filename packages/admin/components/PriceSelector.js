@@ -15,7 +15,10 @@ export default ({ onSelect, ad_hoc, value, open = false }) => {
 			const queryArgs = [
 				'surecart',
 				'product',
-				{ search: query, expand: ['prices'] },
+				{
+					search: query,
+					expand: ['prices'],
+				},
 			];
 			return {
 				products: select(coreStore).getEntityRecords(...queryArgs),

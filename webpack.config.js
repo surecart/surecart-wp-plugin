@@ -53,6 +53,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/product-groups/index.js'
 		),
+		['admin/bumps']: path.resolve(
+			__dirname,
+			'packages/admin/bumps/index.js'
+		),
 		['admin/subscriptions/show']: path.resolve(
 			__dirname,
 			'packages/admin/subscriptions/show/index.js'

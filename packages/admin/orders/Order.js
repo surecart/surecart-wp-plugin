@@ -1,17 +1,8 @@
 /** @jsx jsx */
-import useEntity from '../hooks/useEntity';
-import Logo from '../templates/Logo';
-// template
-import UpdateModel from '../templates/UpdateModel';
-import Sidebar from './Sidebar';
-import Charges from './modules/Charges';
-import Details from './modules/Details';
-import LineItems from './modules/LineItems';
-import Subscriptions from './modules/Subscriptions';
 import { css, jsx } from '@emotion/core';
 import {
-	ScBreadcrumbs,
 	ScBreadcrumb,
+	ScBreadcrumbs,
 	ScButton,
 	ScFlex,
 	ScIcon,
@@ -23,6 +14,16 @@ import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { useEffect } from 'react';
 
+import useEntity from '../hooks/useEntity';
+import Logo from '../templates/Logo';
+// template
+import UpdateModel from '../templates/UpdateModel';
+import Charges from './modules/Charges';
+import Details from './modules/Details';
+import LineItems from './modules/LineItems';
+import Subscriptions from './modules/Subscriptions';
+import Sidebar from './Sidebar';
+
 export default () => {
 	const { createErrorNotice } = useDispatch(noticesStore);
 	const { receiveEntityRecords } = useDispatch(coreStore);
@@ -30,18 +31,15 @@ export default () => {
 	const { order, hasLoadedOrder, orderError } = useEntity('order', id, {
 		expand: [
 			'checkout',
-			'checkout.line_items',
 			'checkout.charge',
 			'checkout.customer',
-			'customer.balances',
-			'checkout.shipping_address',
-			'charge.payment_method',
 			'checkout.tax_identifier',
-			'payment_method.card',
-			'payment_method.payment_instrument',
-			'payment_method.paypal_account',
-			'payment_method.bank_account',
+			'checkout.shipping_address',
+			'checkout.discount',
+			'checkout.line_items',
+			'discount.promotion',
 			'line_item.price',
+			'customer.balances',
 			'price.product',
 		],
 	});

@@ -60,6 +60,7 @@ class Block extends BaseBlock {
 					'email' => $user->user_email,
 					'name'  => $user->display_name,
 				],
+				'honeypot_enabled'       => (bool) get_option( 'surecart_honeypot_enabled', true ),
 				'currency_code'          => $attributes['currency'] ?? \SureCart::account()->currency,
 				'tax_protocol'           => \SureCart::account()->tax_protocol,
 				'classes'                => $this->getClasses( $attributes ),

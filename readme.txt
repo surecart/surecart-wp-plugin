@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 1.1.11
+Stable tag: 1.1.12
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,18 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.1.12 - September 22, 2022 =
+* New: Recaptcha v3 integration.
+* New: Honeypot spam protection.
+* New: Turn on subscription renewal reminders.
+* New: Edit subscription renewal reminders email template.
+* Improvement: Show notice for user to set password on customer dashboard if they have not yet set one.
+* Improvement: Show the coupon used along with the discount on the Merchant admin order's screen.
+* Improvement: Fix issue with possible theme conflicts re-sizing price selectors.
+* Improvement: Improve select box keyboard accessibility.
+* Improvement: Improve components preload performance for some themes that render content in a later priority.
+* Fix: Issue with users not getting created with special characters in name.
 
 = 1.1.11 - September 14, 2022 =
 * Improvement: Preload key components to prevent momentary blank loading screen on checkout page for slow connections.

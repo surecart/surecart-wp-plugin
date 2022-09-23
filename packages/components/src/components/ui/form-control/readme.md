@@ -34,9 +34,11 @@
 ### Used by
 
  - [sc-address](../address)
+ - [sc-button-group](../sc-button-group)
  - [sc-choices](../choices)
  - [sc-compact-address](../sc-compact-address)
  - [sc-input](../input)
+ - [sc-order-bumps](../../controllers/checkout-form/sc-order-bumps)
  - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-select](../select)
  - [sc-textarea](../sc-textarea)
@@ -50,9 +52,11 @@
 graph TD;
   sc-form-control --> sc-tooltip
   sc-address --> sc-form-control
+  sc-button-group --> sc-form-control
   sc-choices --> sc-form-control
   sc-compact-address --> sc-form-control
   sc-input --> sc-form-control
+  sc-order-bumps --> sc-form-control
   sc-payment --> sc-form-control
   sc-select --> sc-form-control
   sc-textarea --> sc-form-control
