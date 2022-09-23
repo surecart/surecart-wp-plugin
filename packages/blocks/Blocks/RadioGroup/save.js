@@ -6,11 +6,9 @@
  export default ({ attributes }) => {
 	const { label } = attributes;
 	 return (
-		 <sc-radio-group label={label}>
-			 <div>
-				 <InnerBlocks.Content />
-			 </div>
-		 </sc-radio-group>
+		<sc-radio-group label={label}>
+			<InnerBlocks.Content />
+		</sc-radio-group>
 	 );
  };
  

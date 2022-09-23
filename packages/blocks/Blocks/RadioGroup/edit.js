@@ -28,11 +28,10 @@ export default ({ className, attributes, setAttributes }) => {
 	const blockProps = useBlockProps();
 
 	const innerBlocksProps = useInnerBlocksProps(
-		{},
+		blockProps,
 		{
 			className: 'sc-radio',
-			allowedBlocks: ['surecart/radio'],
-			//renderAppender: tru ? InnerBlocks.ButtonBlockAppender : false,
+			allowedBlocks: ['surecart/radio', {}],
 		}
 	);
 
@@ -51,8 +50,7 @@ export default ({ className, attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				<ScRadioGroup label={label}>
-					<div {...innerBlocksProps} />
+				<ScRadioGroup label={label} {...innerBlocksProps}>
 				</ScRadioGroup>
 			</div>
 		</Fragment>
