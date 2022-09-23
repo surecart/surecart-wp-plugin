@@ -6,17 +6,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Silence is golden!
 }
 
-use SureCart\Integrations\ThriveAutomator\DataFields\PreviousProductDataField;
-use SureCart\Integrations\ThriveAutomator\DataFields\ProductDataField;
-use SureCart\Integrations\ThriveAutomator\DataFields\ProductIDDataField;
-use SureCart\Integrations\ThriveAutomator\DataFields\ProductNameDataField;
-use Thrive\Automator\Items\Data_Object;
-use SureCart\Models\Product;
-
 /**
  * Class ProductDataObject
  */
-class ProductDataObject extends ProductDataObject {
+class PreviousProductDataObject extends ProductDataObject {
 	/**
 	 * Get the data-object identifier
 	 *
