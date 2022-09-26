@@ -121,9 +121,7 @@ class CustomerLinkService {
 				array( 'ID' => $created->ID )
 			);
 			clean_user_cache( $created->ID );
-		} else {
-			// add to the user account that they have a generated password.
-			update_user_meta( $created->ID, 'sc_generated_password', true );
+			update_user_meta( $created->ID, 'default_password_nag', false );
 		}
 
 		// get the mode string.
