@@ -153,14 +153,12 @@ class ReusableFormWidget extends Widget_Base {
 	 * @return array
 	 */
 	public function get_forms_options() {
-		$form_service = new FormPostTypeService( new PageService() );
-
 		$args = [
 			'numberposts' => -1,
 			'fields'      => 'ids',
         ];
 		
-		$get_forms = $form_service->get_forms( $args );
+		$get_forms = \SureCart::forms()->get_forms( $args );
 
 		foreach( $get_forms as $form ) {
 			$options[ $form ] = get_the_title( $form ); 
