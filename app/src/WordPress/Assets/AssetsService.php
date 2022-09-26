@@ -173,7 +173,6 @@ class AssetsService {
 			(async () => {
 				await customElements.whenDefined('<?php echo esc_js( $tag ); ?>');
 				var component = document.querySelector('<?php echo esc_js( $tag . $selector ); ?>');
-				console.log({component});
 				if (!component) return;
 				<?php
 				foreach ( $data as $key => $value ) {
