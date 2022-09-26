@@ -56,7 +56,7 @@ class PurchaseUpdatedTrigger extends Trigger {
 	 * @return int
 	 */
 	public static function get_hook_params_number() {
-		return 1;
+		return 2;
 	}
 
 	/**
@@ -98,7 +98,7 @@ class PurchaseUpdatedTrigger extends Trigger {
 		if ( ! empty( $params ) ) {
 			$data_object_classes = Data_Object::get();
 			$product_id          = $params[0]['product'];
-			$previous            = $params[0]['previous_attributes'] ?? [];
+			$previous            = $params[1]['data']['previous_attributes'] ?? [];
 			$previous_id         = $previous['product'] ?? false;
 			$user                = User::findByCustomerId( $params[0]['customer'] );
 
