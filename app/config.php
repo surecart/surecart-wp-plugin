@@ -92,6 +92,7 @@ return [
 		\SureCart\Integrations\TutorLMS\TutorLMSServiceProvider::class,
 		\SureCart\Integrations\User\UserServiceProvider::class,
 		\SureCart\Integrations\MemberPress\MemberPressServiceProvider::class,
+		\SureCart\Integrations\Elementor\ElementorServiceProvider::class,
 	],
 
 	/**

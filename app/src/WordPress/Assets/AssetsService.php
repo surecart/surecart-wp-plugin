@@ -139,6 +139,9 @@ class AssetsService {
 	 * @return void
 	 */
 	public function addComponentData( $tag, $selector, $data = [] ) {
+		if ( $this->loader->isUsingPageBuilder() ) {
+			return $this->outputComponentScript( $tag, $selector, $data );
+		}
 		add_action(
 			'wp_footer',
 			function () use ( $tag, $selector, $data ) {
