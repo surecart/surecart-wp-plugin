@@ -3,10 +3,6 @@
 namespace SureCart\Integrations\Elementor;
 
 use Elementor\Widget_Base;
-use Elementor\Controls_Manager;
-use Elementor\Modules\DynamicTags\Module as TagsModule;
-use SureCart\WordPress\Pages\PageService;
-use SureCart\WordPress\PostTypes\FormPostTypeService;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -15,9 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * SureCart form form widget.
  *
- * surecart widget that displays a form.
- *
- * @since x.x.x
+ * Surecart widget that displays a form.
  */
 class ReusableFormWidget extends Widget_Base {
 	/**
@@ -45,7 +39,7 @@ class ReusableFormWidget extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __('SureCart Checkout Form', 'surecart');
+		return __( 'SureCart Checkout Form', 'surecart' );
 	}
 
 	/**
@@ -75,7 +69,7 @@ class ReusableFormWidget extends Widget_Base {
 	 * @return array Widget categories.
 	 */
 	public function get_categories() {
-		return ['basic'];
+		return [ 'basic' ];
 	}
 
 	/**
@@ -89,7 +83,7 @@ class ReusableFormWidget extends Widget_Base {
 	 * @return array Widget keywords.
 	 */
 	public function get_keywords() {
-		return ['form', 'surecart', 'checkout'];
+		return [ 'form', 'surecart', 'checkout' ];
 	}
 
 	/**
@@ -104,7 +98,7 @@ class ReusableFormWidget extends Widget_Base {
 		$this->start_controls_section(
 			'section_form',
 			[
-				'label' => __('SureCart Checkout Form', 'surecart'),
+				'label' => __( 'SureCart Checkout Form', 'surecart' ),
 			]
 		);
 
@@ -113,19 +107,19 @@ class ReusableFormWidget extends Widget_Base {
 		$this->add_control(
 			'sc_form_block',
 			[
-				'label'   => __('Select Form', 'surecart'),
+				'label'   => __( 'Select Form', 'surecart' ),
 				'type'    => \Elementor\Controls_Manager::SELECT2,
 				'options' => $options,
-				'default' => array_keys($options)[0]
+				'default' => array_keys( $options )[0],
 			]
 		);
 
 		$this->add_control(
 			'sc_edit_form',
 			[
-				'label' => __('Edit Form', 'surecart'),
+				'label' => __( 'Edit Form', 'surecart' ),
 				'type'  => \Elementor\Controls_Manager::BUTTON,
-				'text'  => __('Edit', 'surecart'),
+				'text'  => __( 'Edit', 'surecart' ),
 				'event' => 'surecart:form:edit',
 			]
 		);
@@ -133,11 +127,11 @@ class ReusableFormWidget extends Widget_Base {
 		$this->add_control(
 			'sc_create_form',
 			[
-				'label'     => __('Create New Form', 'surecart'),
+				'label'     => __( 'Create New Form', 'surecart' ),
 				'separator' => 'before',
 				'classes'   => 'testclass',
 				'type'      => \Elementor\Controls_Manager::BUTTON,
-				'text'      => __('Create', 'surecart'),
+				'text'      => __( 'Create', 'surecart' ),
 				'event'     => 'surecart:form:create',
 			]
 		);
@@ -149,19 +143,19 @@ class ReusableFormWidget extends Widget_Base {
 	 * Get froms options.
 	 *
 	 * @since x.x.x
-	 * 
+	 *
 	 * @return array
 	 */
 	public function get_forms_options() {
 		$args = [
 			'numberposts' => -1,
 			'fields'      => 'ids',
-        ];
-		
+		];
+
 		$get_forms = \SureCart::forms()->get_forms( $args );
 
-		foreach( $get_forms as $form ) {
-			$options[ $form ] = get_the_title( $form ); 
+		foreach ( $get_forms as $form ) {
+			$options[ $form ] = get_the_title( $form );
 		}
 
 		return $options;
@@ -178,6 +172,6 @@ class ReusableFormWidget extends Widget_Base {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 
-		echo do_shortcode( '[sc_form id='.$settings['sc_form_block'].']' );
+		echo do_shortcode( '[sc_form id=' . $settings['sc_form_block'] . ']' );
 	}
 }
