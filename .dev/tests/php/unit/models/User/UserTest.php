@@ -64,8 +64,7 @@ class UserTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 *
-	 * @return void
+	 * Append number to existing username.
 	 */
 	public function test_creating_a_user_with_an_existing_username_appends_numbers() {
 		$user = User::create([
@@ -92,7 +91,7 @@ class UserTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * @group failing
+	 * Sets first and last name
 	 */
 	public function test_creating_a_user_also_sets_firstname_lastname() {
 		$user = User::create([
