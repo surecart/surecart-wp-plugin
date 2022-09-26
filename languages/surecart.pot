@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-09-22T20:35:28+00:00\n"
+"POT-Creation-Date: 2022-09-23T20:59:48+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -17,6 +17,7 @@ msgstr ""
 
 #: src/BlockLibrary/BlockServiceProvider.php:95
 #: src/Integrations/AffiliateWP/AffiliateWPService.php:29
+#: src/Integrations/ThriveAutomator/ThriveAutomatorApp.php:25
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:108
 #: src/WordPress/Admin/Notices/AdminNoticesService.php:104
 #: src/WordPress/ThemeServiceProvider.php:87
@@ -723,6 +724,7 @@ msgid "Plan"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:105
+#: src/Integrations/ThriveAutomator/DataFields/ProductDataField.php:109
 #: src/Support/Errors/Translations/attributes.php:17
 #: src/Support/Errors/Translations/attributes.php:18
 #: bumps/modules/NewCondition.js:85
@@ -997,8 +999,63 @@ msgstr ""
 msgid "Enable access to a MemberPress membership."
 msgstr ""
 
-#: src/Integrations/ThriveAutomator/DataObjects/ProductData.php:32
-msgid "SureCart product"
+#: src/Integrations/ThriveAutomator/DataFields/ProductIDDataField.php:29
+#: src/Integrations/ThriveAutomator/DataFields/ProductIDDataField.php:47
+#: src/Integrations/ThriveAutomator/DataFields/ProductIDDataField.php:83
+msgid "Product ID"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/DataFields/ProductIDDataField.php:38
+msgid "A specific product id."
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/DataFields/ProductNameDataField.php:29
+#: products/CreateProduct.js:54
+msgid "Product Name"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/DataFields/ProductNameDataField.php:38
+msgid "A specific product name."
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/DataObjects/ProductDataObject.php:34
+msgid "SureCart product object"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/ThriveAutomatorApp.php:34
+msgid "SureCart eCommerce Platform"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/Triggers/PurchaseCreatedTrigger.php:66
+msgid "Product or subscription is purchased"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/Triggers/PurchaseCreatedTrigger.php:75
+msgid "This trigger will be fired when someone first purchases a product."
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/Triggers/PurchaseInvokedTrigger.php:66
+msgid "Product purchase is unrevoked"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/Triggers/PurchaseInvokedTrigger.php:75
+msgid "This trigger will be fired when a purchase is unrevoked."
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/Triggers/PurchaseRevokedTrigger.php:66
+msgid "Product or subscription is canceled"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/Triggers/PurchaseRevokedTrigger.php:75
+msgid "This trigger will be fired when a purchase is revoked."
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/Triggers/PurchaseUpdatedTrigger.php:66
+msgid "Product purchase updated"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/Triggers/PurchaseUpdatedTrigger.php:75
+msgid "This trigger will be fired when a purchase updated."
 msgstr ""
 
 #: src/Integrations/TutorLMS/TutorLMSService.php:127
@@ -4230,11 +4287,11 @@ msgid "Purchases"
 msgstr ""
 
 #: components/data-tables/purchases-data-table/RevokeToggleButton.js:14
-msgid "Are you sure you want to revoke this purchase?"
+msgid "Are you sure? This action will remove the associated access and trigger any cancelation automations you have set up."
 msgstr ""
 
 #: components/data-tables/purchases-data-table/RevokeToggleButton.js:18
-msgid "Are you sure you want to reinstate this purchase?"
+msgid "Are you sure? This action will re-enable associated access."
 msgstr ""
 
 #: components/data-tables/purchases-data-table/RevokeToggleButton.js:55
@@ -5067,7 +5124,7 @@ msgstr ""
 #: settings/brand/BrandSettings.js:180
 #: settings/tax/TaxSettings.js:72
 #: sc-address2.js:47
-#: sc-form-components-validator2.js:66
+#: sc-form-components-validator2.js:77
 #: sc-order-shipping-address2.js:32
 msgid "Address"
 msgstr ""
@@ -5475,10 +5532,6 @@ msgstr ""
 
 #: products/CreateProduct.js:45
 msgid "Create New Product"
-msgstr ""
-
-#: products/CreateProduct.js:54
-msgid "Product Name"
 msgstr ""
 
 #: products/CreateProduct.js:56
@@ -7550,7 +7603,7 @@ msgid "Add text…"
 msgstr ""
 
 #: Blocks/BumpLineItem/edit.js:26
-#: sc-line-item-bump.js:19
+#: sc-line-item-bump2.js:19
 #: sc-order-confirmation-totals2.js:33
 msgid "Bundle Discount"
 msgstr ""
@@ -8183,7 +8236,7 @@ msgid "Processing Payment"
 msgstr ""
 
 #: Blocks/Form/edit.js:322
-#: sc-checkout.js:178
+#: sc-checkout.js:181
 msgid "Processing payment..."
 msgstr ""
 
@@ -8192,7 +8245,7 @@ msgid "Confirming Payment"
 msgstr ""
 
 #: Blocks/Form/edit.js:340
-#: sc-checkout.js:178
+#: sc-checkout.js:181
 msgid "Finalizing order..."
 msgstr ""
 
@@ -8201,7 +8254,7 @@ msgid "Success Text"
 msgstr ""
 
 #: Blocks/Form/edit.js:355
-#: sc-checkout.js:178
+#: sc-checkout.js:181
 msgid "Payment successful! Redirecting..."
 msgstr ""
 
@@ -10503,11 +10556,11 @@ msgstr ""
 msgid "Your payment is processing. Exiting this page could cause an error in your order. Please do not navigate away from this page."
 msgstr ""
 
-#: sc-checkout.js:171
+#: sc-checkout.js:174
 msgid "Due to processor restrictions, only one checkout form is allowed on the page."
 msgstr ""
 
-#: sc-checkout.js:178
+#: sc-checkout.js:181
 msgid "Submitting order..."
 msgstr ""
 
@@ -10561,11 +10614,11 @@ msgstr ""
 msgid "Invoice History"
 msgstr ""
 
-#: sc-line-item-tax.js:16
+#: sc-line-item-tax2.js:16
 msgid "Estimated %s"
 msgstr ""
 
-#: sc-line-item-tax.js:31
+#: sc-line-item-tax2.js:31
 msgid "included"
 msgstr ""
 

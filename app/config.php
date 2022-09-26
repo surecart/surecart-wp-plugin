@@ -85,6 +85,7 @@ return [
 
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,
+		\SureCart\Integrations\ThriveAutomator\ThriveAutomatorServiceProvider::class,
 		\SureCart\Integrations\LearnDash\LearnDashServiceProvider::class,
 		\SureCart\Integrations\LearnDashGroup\LearnDashGroupServiceProvider::class,
 		\SureCart\Integrations\LifterLMS\LifterLMSServiceProvider::class,
