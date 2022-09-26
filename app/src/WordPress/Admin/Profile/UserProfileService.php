@@ -34,8 +34,8 @@ class UserProfileService {
 			[
 				'test_customer'  => $test_customer,
 				'live_customer'  => $live_customer,
-				'edit_test_link' => ! empty( $test_customer ) ? \SureCart::getUrl()->edit( 'customer', $test_customer->id ) : '',
-				'edit_live_link' => ! empty( $live_customer ) ? \SureCart::getUrl()->edit( 'customer', $live_customer->id ) : '',
+				'edit_test_link' => is_a( $test_customer, \SureCart\Models\Customer::class ) ? \SureCart::getUrl()->edit( 'customer', $test_customer->id ) : '',
+				'edit_live_link' => is_a( $live_customer, \SureCart\Models\Customer::class ) ? \SureCart::getUrl()->edit( 'customer', $live_customer->id ) : '',
 			]
 		);
 	}
