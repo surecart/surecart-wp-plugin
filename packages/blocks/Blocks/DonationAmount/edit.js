@@ -1,15 +1,11 @@
-import { __ } from '@wordpress/i18n';
+import { ScChoice, ScFormatNumber, ScPriceInput } from '@surecart/components-react';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
+import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
-import { PanelBody, PanelRow } from '@wordpress/components';
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import {
-	ScChoice,
-	ScFormatNumber,
-	ScPriceInput,
-} from '@surecart/components-react';
+import { __ } from '@wordpress/i18n';
 
 export default ({ attributes, setAttributes }) => {
-	const { amount, currency } = attributes;
+	const { label, amount, currency } = attributes;
 
 	const blockProps = useBlockProps();
 
@@ -18,11 +14,23 @@ export default ({ attributes, setAttributes }) => {
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
+						<TextControl
+							label={__('Label for donation', 'surecart')}
+							placeholder={__('Buy me coffee!', 'surecart')}
+							value={label}
+							onChange={(value) => {
+								setAttributes({
+									label: value,
+								});
+							}}
+						></TextControl>
+					</PanelRow>
+					<PanelRow>
 						<ScPriceInput
 							label={__('Amount', 'surecart')}
 							currencyCode={currency}
 							value={amount}
-							onScChange={(e) =>
+							onScInput={(e) =>
 								setAttributes({
 									amount: parseInt(e.target.value),
 								})
@@ -37,12 +45,16 @@ export default ({ attributes, setAttributes }) => {
 				value={amount}
 				{...blockProps}
 			>
-				<ScFormatNumber
-					type="currency"
-					currency={currency || 'USD'}
-					value={amount}
-					minimum-fraction-digits="0"
-				></ScFormatNumber>
+				{!!label ? (
+					label
+				) : (
+					<ScFormatNumber
+						type="currency"
+						currency={currency || 'USD'}
+						value={amount}
+						minimum-fraction-digits="0"
+					></ScFormatNumber>
+				)}
 			</ScChoice>
 		</Fragment>
 	);
