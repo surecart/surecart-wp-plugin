@@ -129,7 +129,27 @@ class CustomerLinkService {
 		// get the mode string.
 		$mode = ! empty( $this->checkout->live_mode ) ? 'live' : 'test';
 
+		// login the user.
+		if ( apply_filters( 'surecart/checkout/auto-login-new-user', true ) ) {
+			$this->loginUser( $created );
+		}
+
 		// set the customer id for the user.
 		return $created->setCustomerId( $this->checkout->customer_id, $mode );
+	}
+
+	/**
+	 * Login ths user
+	 *
+	 * @param \SureCart\Models\User $user The user model.
+	 *
+	 * @return void
+	 */
+	public function loginUser( \SureCart\Models\User $user ) {
+		clean_user_cache( $user->ID );
+		wp_clear_auth_cookie();
+		wp_set_current_user( $user->ID );
+		wp_set_auth_cookie( $user->ID, true, false );
+		update_user_caches( $user->getUser() );
 	}
 }
