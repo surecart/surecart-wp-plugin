@@ -63,7 +63,7 @@ class PurchaseInvokedTrigger extends Trigger {
 	 * @return string
 	 */
 	public static function get_name() {
-		return __( 'Product purchase is unrevoked', 'surecart' );
+		return __( 'Admin unrevokes a purchase', 'surecart' );
 	}
 
 	/**

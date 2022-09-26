@@ -63,7 +63,7 @@ class PurchaseRevokedTrigger extends Trigger {
 	 * @return string
 	 */
 	public static function get_name() {
-		return __( 'Subscription is canceled or purchase is revoked', 'surecart' );
+		return __( 'Product purchase is revoked or subscription cancels', 'surecart' );
 	}
 
 	/**
@@ -72,7 +72,7 @@ class PurchaseRevokedTrigger extends Trigger {
 	 * @return string
 	 */
 	public static function get_description() {
-		return __( 'This trigger will be fired when a purchase is revoked.', 'surecart' );
+		return __( 'This trigger will be fired when a subscription cancels after failed payment or by customer request, or when the purchase is manually revoked by the merchant.', 'surecart' );
 	}
 
 	/**

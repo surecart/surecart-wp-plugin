@@ -9,14 +9,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class ProductDataField
  */
-class PreviousProductDataField extends ProductDataField {
+class PreviousProductNameField extends ProductNameDataField {
 	/**
 	 * Get the data field identifier
 	 *
 	 * @return string
 	 */
 	public static function get_id() {
-		return 'surecart_previous_product_data_field';
+		return 'surecart_previous_product_name_data_field';
 	}
 
 	/**
@@ -25,6 +25,6 @@ class PreviousProductDataField extends ProductDataField {
 	 * @return string
 	 */
 	public static function get_name() {
-		return 'Previous Product';
+		return 'Previous Product Name';
 	}
 }

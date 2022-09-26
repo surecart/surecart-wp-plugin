@@ -2,6 +2,8 @@
 
 namespace SureCart\Integrations\ThriveAutomator\Triggers;
 
+use SureCart\Integrations\ThriveAutomator\DataFields\PreviousProductDataField;
+use SureCart\Integrations\ThriveAutomator\DataObjects\PreviousProductDataObject;
 use SureCart\Integrations\ThriveAutomator\DataObjects\ProductDataObject;
 use SureCart\Integrations\ThriveAutomator\ThriveAutomatorApp;
 use SureCart\Models\User;
@@ -45,7 +47,7 @@ class PurchaseUpdatedTrigger extends Trigger {
 	 * @return array
 	 */
 	public static function get_provided_data_objects() {
-		return [ ProductDataObject::get_id(), 'user_data' ];
+		return [ ProductDataObject::get_id(), PreviousProductDataObject::get_id(), 'user_data' ];
 	}
 
 	/**
@@ -96,10 +98,15 @@ class PurchaseUpdatedTrigger extends Trigger {
 		if ( ! empty( $params ) ) {
 			$data_object_classes = Data_Object::get();
 			$product_id          = $params[0]['product'];
+			$previous            = $params[0]['previous_attributes'] ?? [];
+			$previous_id         = $previous['product'] ?? false;
 			$user                = User::findByCustomerId( $params[0]['customer'] );
 
 			$data_objects['surecart_product_data'] = empty( $data_object_classes['surecart_product_data'] ) ? null : new $data_object_classes['surecart_product_data']( $product_id );
-			$data_objects['user_data']             = empty( $data_object_classes['user_data'] ) ? null : new $data_object_classes['user_data']( $user->ID );
+			if ( $previous_id ) {
+				$data_objects['surecart_previous_product_data'] = empty( $data_object_classes['surecart_previous_product_data'] ) ? null : new $data_object_classes['surecart_previous_product_data']( $previous_id );
+			}
+			$data_objects['user_data'] = empty( $data_object_classes['user_data'] ) ? null : new $data_object_classes['user_data']( $user->ID );
 		}
 
 		return $data_objects;
