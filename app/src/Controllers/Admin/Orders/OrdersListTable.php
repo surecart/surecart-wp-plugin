@@ -219,7 +219,7 @@ class OrdersListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_type( $order ) {
-		if ( 'subscription' === $order->order_type ) {
+		if ( ! empty( $order->order_type ) && 'subscription' === $order->order_type ) {
 			return '<sc-tag type="success">' . esc_html__( 'Subscription Renewal', 'surecart' ) . '</sc-tag>';
 		}
 
