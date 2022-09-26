@@ -25,7 +25,7 @@ export default ({ customer, loading }) => {
 							id: customer?.id,
 						})}
 					>
-						{__('Edit Customer', 'surecart')}
+						{__('View Customer', 'surecart')}
 					</ScButton>
 				</div>
 			}
