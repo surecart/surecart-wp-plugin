@@ -243,7 +243,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.1.12 - September 27, 2022 =
+= 1.1.13 - September 27, 2022 =
 * New: Thrive Automator purchase events integration.
 * New: Elementor module! Select, edit and create forms from the new Elementor widget.
 * New: Per customer purchase limits for products.
