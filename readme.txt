@@ -243,6 +243,17 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.1.12 - September 27, 2022 =
+* New: Thrive Automator integration.
+* New: Elementor modules to choose, create and edit form.
+* New: Add order "type" to the merchant order admin (renewal vs checkout).
+* New: Per customer purchase limits for products.
+* New: Ability to not require an upfront payment method for subscriptions (to offer free trials without credit cards).
+* New: Add custom labels to donation block amounts instead of showing the amount.
+* Improvement: Update "Edit Customer" button to "View Customer".
+* Fix: Issue with object caching causing dashboard slowness on some hosts.
+* Fix: Tax amount missing from confirmation page.
+
 = 1.1.12 - September 22, 2022 =
 * New: Recaptcha v3 integration.
 * New: Honeypot spam protection.
