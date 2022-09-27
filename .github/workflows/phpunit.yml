@@ -35,12 +35,13 @@ jobs:
           ini-values: post_max_size=256M, short_open_tag=On #optional, setup php.ini configuration
           coverage: xdebug #optional, setup coverage driver
 
+      - name: Check PHP Version
+        run: php -v
+
       - name: Composer Install
-        shell: bash
-        run: composer install
+        run: composer install --optimize-autoloader --prefer-dist
 
       - name: Get yarn cache directory path
-        shell: bash
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
 
@@ -53,21 +54,8 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Yarn Install
-        shell: bash
         run: yarn
 
-      - name: Bootstrap
-        shell: bash
-        run: yarn bootstrap
-
-      - name: Build Scripts
-        run: yarn wp-scripts build
-
-      - name: Install WordPress
-        run: |
-          chmod -R 767 ./ # TODO: Possibly integrate in wp-env
-          yarn wp-env start
-
       - name: Running single site unit tests
-        run: yarn wp-env run phpunit 'phpunit -c /var/www/html/wp-content/plugins/surecart-wp/phpunit.xml --testdox'
+        run: yarn run test:php:ci
         if: ${{ success() || failure() }}

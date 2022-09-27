@@ -57,6 +57,7 @@
 		"plugin-zip": "node .dev/release.js",
 		"test:all": "yarn test:php && yarn test:cypress:ci && yarn workspace @surecart/components run test --spec --e2e",
 		"test:php": "wp-env run phpunit 'phpunit -c /var/www/html/wp-content/plugins/surecart/phpunit.xml --testdox'",
+		"test:php:ci": "wp-env run phpunit 'phpunit -c /var/www/html/wp-content/plugins/surecart-wp/phpunit.xml --testdox'",
 		"test:php:watch": "wp-env run phpunit '/var/www/html/wp-content/plugins/surecart/vendor/bin/phpunit-watcher watch --directories=/var/www/html/wp-content/plugins/surecart/app'",
 		"test:php:failing": "wp-env run phpunit 'phpunit -c /var/www/html/wp-content/plugins/surecart/phpunit.xml --group=failing' --verbose",
 		"test:cypress:ci": "wp-env start && wp-env clean && cypress run --config video=false --browser chrome",
