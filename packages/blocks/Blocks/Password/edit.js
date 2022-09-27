@@ -17,7 +17,7 @@ import {
 import { ScInput } from '@surecart/components-react';
 
 export default ({ className, attributes, setAttributes, isSelected }) => {
-	const { label, placeholder, help, required } = attributes;
+	const { label, placeholder, help, required, confirmation } = attributes;
 
 	return (
 		<Fragment>
@@ -44,6 +44,13 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 							onChange={(placeholder) =>
 								setAttributes({ placeholder })
 							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={__('Password Confirmation', 'surecart')}
+							checked={confirmation}
+							onChange={(confirmation) => setAttributes({ confirmation })}
 						/>
 					</PanelRow>
 					<PanelRow>

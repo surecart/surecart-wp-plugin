@@ -10,6 +10,7 @@ export default ({ className, attributes }) => {
 		size,
 		value,
 		required,
+		confirmation,
 	} = attributes;
 
 	return (
@@ -27,6 +28,7 @@ export default ({ className, attributes }) => {
 			name="password"
 			value={value}
 			required={required}
+			confirmation={confirmation ? '1' : null}
 		></sc-order-password>
 	);
 };

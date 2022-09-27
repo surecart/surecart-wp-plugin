@@ -1,5 +1,6 @@
 import { Component, Prop, h, Method } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
+import { __ } from '@wordpress/i18n';
 
 @Component({
   tag: 'sc-order-password',
@@ -8,6 +9,7 @@ import { openWormhole } from 'stencil-wormhole';
 })
 export class ScOrderPassword {
   private input: HTMLScInputElement;
+  private confirmInput: HTMLScInputElement;
 
   @Prop() loggedIn: boolean;
 
@@ -44,9 +46,19 @@ export class ScOrderPassword {
   /** The input's autofocus attribute. */
   @Prop() autofocus: boolean;
 
+  /** The input's password confirmation attribute. */
+  @Prop({ reflect: true }) confirmation = false;
+
   @Method()
   async reportValidity() {
     if (this.loggedIn) return true;
+
+    if ( this.input?.value !== this.confirmInput?.value ) {
+      this.input.setCustomValidity( __( 'Confirmation Password Not Match.', 'surecart' ) );
+    } else {
+      this.input.setCustomValidity('');
+    }
+
     return this.input.reportValidity();
   }
 
@@ -56,20 +68,35 @@ export class ScOrderPassword {
     }
 
     return (
-      <sc-input
-        ref={el => (this.input = el as HTMLScInputElement)}
-        label={this.label}
-        help={this.help}
-        autofocus={this.autofocus}
-        placeholder={this.placeholder}
-        showLabel={this.showLabel}
-        size={this.size ? this.size : 'medium'}
-        type="password"
-        name="password"
-        value={this.value}
-        required={this.required}
-        disabled={this.disabled}
-      ></sc-input>
+      <div>
+        <sc-input
+          ref={el => (this.input = el as HTMLScInputElement)}
+          label={this.label}
+          help={this.help}
+          autofocus={this.autofocus}
+          placeholder={this.placeholder}
+          showLabel={this.showLabel}
+          size={this.size ? this.size : 'medium'}
+          type="password"
+          name="password"
+          value={this.value}
+          required={this.required}
+          disabled={this.disabled}
+        ></sc-input>
+        {this.confirmation && (
+          <sc-input
+            ref={el => (this.confirmInput = el as HTMLScInputElement)}
+            label={__('Password Confirmation', 'surecart')}
+            help={this.help}
+            placeholder={this.placeholder}
+            size={this.size ? this.size : 'medium'}
+            type="password"
+            value={this.value}
+            required={this.required}
+            disabled={this.disabled}
+          ></sc-input>
+        )}
+      </div>  
     );
   }
 }
