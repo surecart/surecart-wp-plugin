@@ -32,7 +32,7 @@ class LearnDashServiceTest extends SureCartUnitTestCase
 		$learndash = new LearnDashService();
 		$this->assertSame($learndash->getName(), 'surecart/learndash-course');
 		$this->assertSame($learndash->getModel(), 'product');
-		$this->assertStringContainsString('surecart/images/integrations/learndash.svg', $learndash->getLogo());
+		$this->assertStringContainsString('learndash.svg', $learndash->getLogo());
 		$this->assertSame($learndash->getLabel(), 'LearnDash Course');
 		$this->assertSame($learndash->getItemLabel(), 'Course Access');
 		$this->assertSame($learndash->getItemHelp(), 'Enable access to a LearnDash course.');
