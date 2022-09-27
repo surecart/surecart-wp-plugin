@@ -92,7 +92,19 @@ abstract class AdminModelEditController {
 		// enqueue dependencies.
 		$this->enqueueScriptDependencies();
 
-		// automatically load dependencies and version
+		// fix shitty jetpack issues key hijacking issues.
+		add_filter(
+			'admin_head',
+			function() {
+				wp_dequeue_script( 'wpcom-notes-common' );
+				wp_dequeue_script( 'wpcom-notes-admin-bar' );
+				wp_dequeue_style( 'wpcom-notes-admin-bar' );
+				wp_dequeue_style( 'noticons' );
+			},
+			200
+		);
+
+		// automatically load dependencies and version.
 		$asset_file = include plugin_dir_path( SURECART_PLUGIN_FILE ) . "dist/$this->path.asset.php";
 
 		// Enqueue scripts.
