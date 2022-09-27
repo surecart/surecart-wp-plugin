@@ -139,7 +139,7 @@ class AssetsService {
 	 * @return void
 	 */
 	public function addComponentData( $tag, $selector, $data = [] ) {
-		if ( $this->loader->isUsingPageBuilder() ) {
+		if ( $this->loader->isUsingPageBuilder() || wp_doing_ajax() ) {
 			return $this->outputComponentScript( $tag, $selector, $data );
 		}
 		add_action(
