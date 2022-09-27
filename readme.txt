@@ -257,6 +257,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * Fix: Tax amount missing from confirmation page.
 * Fix: Issue with revoke purchase button not updating after revoking purchase.
 * Fix: Issue with set a password nag showing even if customer supplies a password.
+* Fix: Issue with Jetpack "Notes" not allowing "n" keypresses on our inputs.
 
 = 1.1.12 - September 22, 2022 =
 * New: Recaptcha v3 integration.
