@@ -10,6 +10,9 @@
   font-weight: var(--sc-input-font-weight);
   color: var(--sc-input-color);
   vertical-align: middle;
+}
+
+.radio:not(.radio--editing) {
   cursor: pointer;
 }
 

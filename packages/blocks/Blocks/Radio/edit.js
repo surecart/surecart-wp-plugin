@@ -20,8 +20,6 @@ import { useBlockProps } from '@wordpress/block-editor';
 export default ({ className, attributes, setAttributes }) => {
 	const { label, value, checked, name } = attributes;
 
-	const blockProps = useBlockProps();
-
 	return (
 		<Fragment>
 			<InspectorControls>
@@ -50,12 +48,7 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScRadio
-				className={className}
-				name={name}
-				static
-				{...blockProps}
-			>
+			<ScRadio name={name} checked={checked} edit {...useBlockProps()}>
 				<RichText
 					aria-label={__('Radio Text', 'surecart')}
 					placeholder={__('Add some radio text...', 'surecart')}

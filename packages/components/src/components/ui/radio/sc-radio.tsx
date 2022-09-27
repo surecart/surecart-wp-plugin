@@ -24,9 +24,6 @@ export class ScRadio {
   /** The radios value */
   @Prop() value: string;
 
-  /** Makes this static and not editable. */
-  @Prop({ reflect: true }) static: boolean = false;
-
   /** Is the radio disabled */
   @Prop({ reflect: true, mutable: true }) disabled: boolean = false;
 
@@ -38,6 +35,9 @@ export class ScRadio {
 
   /** This will be true when the control is in an invalid state. Validity is determined by the `required` prop. */
   @Prop({ reflect: true, mutable: true }) invalid: boolean = false;
+
+  /** This will be true as a workaround in the block editor to focus on the content. */
+  @Prop() edit: boolean;
 
   /** Emitted when the control loses focus. */
   @Event() scBlur: EventEmitter<void>;
@@ -104,9 +104,7 @@ export class ScRadio {
   }
 
   handleKeyDown(event: KeyboardEvent) {
-    if ( this.static ) {
-      return;
-    }
+    if (this.edit) return true;
 
     if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
       const radios = this.getAllRadios().filter(radio => !radio.disabled);
@@ -125,10 +123,7 @@ export class ScRadio {
 
   // Prevent clicks on the label from briefly blurring the input
   handleMouseDown(event: MouseEvent) {
-    if ( this.static ) {
-      return;
-    }
-
+    if (this.edit) return true;
     event.preventDefault();
     this.input.focus();
   }
@@ -144,7 +139,7 @@ export class ScRadio {
   }
 
   render() {
-    const Tag = this.static ? 'div' : 'label';
+    const Tag = this.edit ? 'div' : 'label';
     return (
       <Tag
         part="base"
@@ -153,6 +148,7 @@ export class ScRadio {
           'radio--checked': this.checked,
           'radio--disabled': this.disabled,
           'radio--focused': this.hasFocus,
+          'radio--editing': this.edit,
         }}
         htmlFor={this.inputId}
         onKeyDown={e => this.handleKeyDown(e)}
