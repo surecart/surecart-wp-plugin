@@ -33,6 +33,15 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 			return '';
 		}
 
+		// Use backgroundColor and textColor if exist
+		$styles = '';
+		if ( ! empty( $attributes['backgroundColor'] ) ) {
+			$styles .= 'background-color: ' . $attributes['backgroundColor'] . '; ';
+		}
+		if ( ! empty( $attributes['textColor'] ) ) {
+			$styles .= 'color: ' . $attributes['textColor'] . '; ';
+		}
+
 		// Slide-out is disabled, go directly to checkout.
 		if ( (bool) get_option( 'sc_slide_out_cart_disabled', false ) ) {
 			return \SureCart::blocks()->render(
@@ -40,7 +49,7 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 				[
 					'type'  => $attributes['type'] ?? 'primary',
 					'size'  => $attributes['size'] ?? 'medium',
-					'style' => '',
+					'style' => $styles,
 					'href'  => $this->href(
 						[
 							[

@@ -156,12 +156,12 @@ export default ({ className, attributes, setAttributes }) => {
               ]}
             ></PanelColorSettings>
           </PanelRow>
-          <PanelBody title={__('Product Info', 'surecart')}>
-            <PanelRow>
-              <PriceInfo price_id={price_id} />
-            </PanelRow>
-          </PanelBody>
 				</PanelBody>
+        <PanelBody title={__('Product Info', 'surecart')}>
+          <PanelRow>
+            <PriceInfo price_id={price_id} />
+          </PanelRow>
+        </PanelBody>
 			</InspectorControls>
 
 			{renderButton()}
