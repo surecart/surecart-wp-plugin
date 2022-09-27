@@ -146,6 +146,7 @@ export class ScChoice {
   }
 
   handleKeyDown(event: KeyboardEvent) {
+    console.log('Hello');
     if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
       const choices = this.getAllChoices().filter(choice => !choice.disabled);
       const incr = ['ArrowUp', 'ArrowLeft'].includes(event.key) ? -1 : 1;
