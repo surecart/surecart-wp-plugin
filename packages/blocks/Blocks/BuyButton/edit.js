@@ -133,24 +133,22 @@ export default ({ className, attributes, setAttributes }) => {
 							]}
 						/>
 					</PanelRow>
-          <PanelRow>
-            <PanelColorSettings
-              title={__('Color Settings')}
-              colorSettings={[
-                {
-                  value: backgroundColor,
-                  onChange: (backgroundColor) => setAttributes({ backgroundColor }),
-                  label: __('Background Color', 'surecart'),
-                },
-                {
-                  value: textColor,
-                  onChange: (textColor) => setAttributes({ textColor }),
-                  label: __('Text Color', 'surecart'),
-                },
-              ]}
-            ></PanelColorSettings>
-          </PanelRow>
 				</PanelBody>
+        <PanelColorSettings
+          title={__('Color Settings')}
+          colorSettings={[
+            {
+              value: backgroundColor,
+              onChange: (backgroundColor) => setAttributes({ backgroundColor }),
+              label: __('Background Color', 'surecart'),
+            },
+            {
+              value: textColor,
+              onChange: (textColor) => setAttributes({ textColor }),
+              label: __('Text Color', 'surecart'),
+            },
+          ]}
+        ></PanelColorSettings>
         <PanelBody title={__('Product Info', 'surecart')}>
           <PanelRow>
             <PriceInfo price_id={price_id} />

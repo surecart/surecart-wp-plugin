@@ -152,24 +152,22 @@ export default ({ className, attributes, setAttributes }) => {
 							]}
 						/>
 					</PanelRow>
-          <PanelRow>
-            <PanelColorSettings
-              title={__('Color Settings')}
-              colorSettings={[
-                {
-                  value: backgroundColor,
-                  onChange: (backgroundColor) => setAttributes({ backgroundColor }),
-                  label: __('Background Color', 'surecart'),
-                },
-                {
-                  value: textColor,
-                  onChange: (textColor) => setAttributes({ textColor }),
-                  label: __('Text Color', 'surecart'),
-                },
-              ]}
-            ></PanelColorSettings>
-          </PanelRow>
 				</PanelBody>
+        <PanelColorSettings
+          title={__('Color Settings')}
+          colorSettings={[
+            {
+              value: backgroundColor,
+              onChange: (backgroundColor) => setAttributes({ backgroundColor }),
+              label: __('Background Color', 'surecart'),
+            },
+            {
+              value: textColor,
+              onChange: (textColor) => setAttributes({ textColor }),
+              label: __('Text Color', 'surecart'),
+            },
+          ]}
+        ></PanelColorSettings>
         <PanelBody title={__('Product Info', 'surecart')}>
           <PanelRow>
             <PriceInfo price_id={price_id} />
@@ -193,25 +191,13 @@ export default ({ className, attributes, setAttributes }) => {
 					type={type}
 					size={size}
 					style={{
-						...(colorStyle?.backgroundColor
-							? {
-									'--primary-background':
-										colorStyle.backgroundColor,
-							  }
-							: {}),
-						...(colorStyle?.background
-							? { '--primary-background': colorStyle.background }
-							: {}),
-						...(colorStyle?.color
-							? { '--primary-color': colorStyle.color }
-							: {}),
-						...(borderStyle?.borderRadius
-							? {
-									'--button-border-radius':
-										borderStyle.borderRadius,
-							  }
-							: {}),
-					}}
+            ...(backgroundColor
+              ? { '--primary-background': backgroundColor }
+              : {}),
+            ...(textColor
+              ? { '--primary-color': textColor }
+              : {}),
+          }}
 				>
 					<RichText
 						aria-label={__('Button text')}

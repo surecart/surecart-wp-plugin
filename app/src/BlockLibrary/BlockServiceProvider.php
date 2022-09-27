@@ -68,6 +68,8 @@ class BlockServiceProvider implements ServiceProviderInterface {
 						'--text-align',
 						'--color',
 						'--sc-input-label-color',
+						'--primary-background',
+						'--primary-color',
 					],
 					$styles
 				);
