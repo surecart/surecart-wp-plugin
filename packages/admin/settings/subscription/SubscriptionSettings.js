@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { ScSelect, ScSwitch } from '@surecart/components-react';
+import { ScSelect, ScSwitch, ScTag } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
 import useEntity from '../../hooks/useEntity';
@@ -189,8 +189,15 @@ export default () => {
 				loading={!hasLoadedItem}
 			>
 				<ScSwitch
-					checked={item?.require_upfront_payment_method}
-					onClick={(e) => {
+					checked={
+						scData?.entitlements?.optional_upfront_payment_method
+							? item?.require_upfront_payment_method
+							: true
+					}
+					disabled={
+						!scData?.entitlements?.optional_upfront_payment_method
+					}
+					onScChange={(e) => {
 						e.preventDefault();
 						editItem({
 							require_upfront_payment_method:
@@ -199,6 +206,11 @@ export default () => {
 					}}
 				>
 					{__('Require Upfront Payment Method', 'surecart')}
+					{!scData?.entitlements?.optional_upfront_payment_method && (
+						<ScTag type="success" size="small" pill>
+							{__('Pro', 'surecart')}
+						</ScTag>
+					)}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
 							'Whether or not a payment method should be required for subscriptions that have an initial period amount of $0 (free trial or coupon). This is useful if you want to offer a "no credit card required" free trials.',
