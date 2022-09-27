@@ -46,6 +46,7 @@ function _manually_load_plugin()
     // Update array with plugins to include
     $plugins_to_active = array(
         'surecart/surecart.php',
+		'surecart-wp/surecart.php', // for the CI.
     );
 
     update_option('active_plugins', $plugins_to_active);

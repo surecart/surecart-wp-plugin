@@ -368,4 +368,24 @@ class FormPostTypeService {
 
 		echo implode( ', ', $product_names );
 	}
+
+	/**
+	 * Get the SC forms list.
+	 * 
+	 * @param array $args Form query data.
+	 *
+	 * @return array
+	 */
+	public function get_forms( $args = [] ) {
+		$defaults = [
+			'post_type'   => 'sc_form',
+			'post_status' => 'publish',
+			'order'       => 'DESC',
+			'orderby'     => 'ID',
+		];
+
+		$args = wp_parse_args( $args, $defaults );
+
+		return get_posts( $args );
+	}
 }
