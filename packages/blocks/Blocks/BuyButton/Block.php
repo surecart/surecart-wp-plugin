@@ -19,10 +19,10 @@ class Block extends BaseBlock {
 
 		$styles = '';
 		if ( ! empty( $attributes['backgroundColor'] ) ) {
-			$styles .= 'background-color: ' . $attributes['backgroundColor'] . '; ';
+			$styles .= '--primary-background: ' . $attributes['backgroundColor'] . '; ';
 		}
 		if ( ! empty( $attributes['textColor'] ) ) {
-			$styles .= 'color: ' . $attributes['textColor'] . '; ';
+			$styles .= '--primary-color: ' . $attributes['textColor'] . '; ';
 		}
 
 		return \SureCart::blocks()->render(

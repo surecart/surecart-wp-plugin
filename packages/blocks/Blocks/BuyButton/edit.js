@@ -55,17 +55,11 @@ export default ({ className, attributes, setAttributes }) => {
 				type={type}
 				size={size}
 				style={{
-					...(colorStyle?.backgroundColor
-						? { '--primary-background': colorStyle.backgroundColor }
+					...(backgroundColor
+						? { '--primary-background': backgroundColor }
 						: {}),
-					...(colorStyle?.background
-						? { '--primary-background': colorStyle.background }
-						: {}),
-					...(colorStyle?.color
-						? { '--primary-color': colorStyle.color }
-						: {}),
-					...(borderStyle?.borderRadius
-						? { '--button-border-radius': borderStyle.borderRadius }
+					...(textColor
+						? { '--primary-color': textColor }
 						: {}),
 				}}
 			>
