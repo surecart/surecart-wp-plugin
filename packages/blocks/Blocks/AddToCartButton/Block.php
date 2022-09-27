@@ -36,10 +36,10 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 		// Use backgroundColor and textColor if exist
 		$styles = '';
 		if ( ! empty( $attributes['backgroundColor'] ) ) {
-			$styles .= '--primary-background: ' . $attributes['backgroundColor'] . '; ';
+			$styles .= '--sc-color-primary-500: ' . $attributes['backgroundColor'] . '; ';
 		}
 		if ( ! empty( $attributes['textColor'] ) ) {
-			$styles .= '--primary-color: ' . $attributes['textColor'] . '; ';
+			$styles .= '--sc-color-primary-text: ' . $attributes['textColor'] . '; ';
 		}
 
 		// Slide-out is disabled, go directly to checkout.
@@ -86,7 +86,10 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 			<sc-cart-form-submit
 				type="<?php echo esc_attr( ! empty( $attributes['type'] ) ? $attributes['type'] : 'primary' ); ?>"
 				size="<?php echo esc_attr( ! empty( $attributes['size'] ) ? $attributes['size'] : 'medium' ); ?>"
-				<?php if ( ! empty($styles) ) { ?> style="<?php echo esc_attr( $styles ); ?>" <?php } ?>
+				<?php
+				if ( ! empty( $styles ) ) {
+					?>
+					 style="<?php echo esc_attr( $styles ); ?>" <?php } ?>
 			>
 				<?php echo wp_kses_post( $attributes['button_text'] ) ?? esc_html__( 'Add To Cart', 'surecart' ); ?>
 			</sc-cart-form-submit>
