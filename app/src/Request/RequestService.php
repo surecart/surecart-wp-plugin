@@ -166,11 +166,11 @@ class RequestService {
 		$cache = new RequestCacheService( $endpoint, $args, $cache_key );
 
 		// we have an object cache request.
-		$response_body = $cache->getObjectCache();
-		if ( false !== $response_body ) {
-			$this->cache_status = 'object';
-			return $this->respond( $response_body, $args, $endpoint );
-		}
+		// $response_body = $cache->getObjectCache();
+		// if ( false !== $response_body ) {
+		// $this->cache_status = 'object';
+		// return $this->respond( $response_body, $args, $endpoint );
+		// }
 
 		// check if we should get a cached version of this.
 		if ( $this->shouldFindCache( $cachable, $cache_key, $args ) ) {
@@ -257,8 +257,6 @@ class RequestService {
 			}
 		}
 
-		error_log( print_r( $url, 1 ) );
-		error_log( print_r( $args, 1 ) );
 		// make request.
 		$response = $this->remoteRequest( $url, $args );
 

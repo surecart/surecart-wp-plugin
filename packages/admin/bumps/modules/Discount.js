@@ -67,7 +67,6 @@ export default ({ bump, updateBump, loading }) => {
 									percent_off: e.target.value,
 								})
 							}
-							required={type === 'percentage'}
 						>
 							<span slot="suffix">%</span>
 						</ScInput>
@@ -79,7 +78,6 @@ export default ({ bump, updateBump, loading }) => {
 							disabled={type === 'percentage'}
 							attribute="amount_off"
 							value={bump?.amount_off || null}
-							required={type === 'fixed'}
 							onScInput={(e) => {
 								updateBump({
 									percent_off: null,

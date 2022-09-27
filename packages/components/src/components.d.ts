@@ -1455,16 +1455,13 @@ export namespace Components {
           * Should we show the controls
          */
         "showControl": boolean;
-        /**
-          * Should we show the label
-         */
-        "showLabel": boolean;
     }
     interface ScOrderBumps {
         "bumps": Bump[];
         "checkout": Checkout;
         "help": string;
         "label": string;
+        "showControl": boolean;
     }
     interface ScOrderConfirmProvider {
         /**
@@ -5738,16 +5735,13 @@ declare namespace LocalJSX {
           * Should we show the controls
          */
         "showControl"?: boolean;
-        /**
-          * Should we show the label
-         */
-        "showLabel"?: boolean;
     }
     interface ScOrderBumps {
         "bumps"?: Bump[];
         "checkout"?: Checkout;
         "help"?: string;
         "label"?: string;
+        "showControl"?: boolean;
     }
     interface ScOrderConfirmProvider {
         /**

@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property | Attribute | Description        | Type                                                        | Default     |
-| -------- | --------- | ------------------ | ----------------------------------------------------------- | ----------- |
-| `open`   | `open`    |                    | `boolean`                                                   | `true`      |
-| `type`   | `type`    | The type of alert. | `"danger" \| "info" \| "primary" \| "success" \| "warning"` | `'warning'` |
+| Property     | Attribute     | Description        | Type                                                        | Default     |
+| ------------ | ------------- | ------------------ | ----------------------------------------------------------- | ----------- |
+| `open`       | `open`        |                    | `boolean`                                                   | `true`      |
+| `successUrl` | `success-url` | The success url.   | `string`                                                    | `undefined` |
+| `type`       | `type`        | The type of alert. | `"danger" \| "info" \| "primary" \| "success" \| "warning"` | `'primary'` |
 
 
 ## Dependencies
@@ -18,26 +19,30 @@
 ### Depends on
 
 - [sc-alert](../../../ui/alert)
-- [sc-flex](../../../ui/flex)
+- [sc-dashboard-module](../../../ui/dashboard-module)
 - [sc-button](../../../ui/button)
-- [sc-wordpress-password-edit](../wordpress-password-edit)
+- [sc-icon](../../../ui/icon)
+- [sc-card](../../../ui/card)
+- [sc-form](../../../ui/form)
+- [sc-input](../../../ui/input)
+- [sc-flex](../../../ui/flex)
+- [sc-block-ui](../../../ui/block-ui)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-password-nag --> sc-alert
-  sc-password-nag --> sc-flex
+  sc-password-nag --> sc-dashboard-module
   sc-password-nag --> sc-button
-  sc-password-nag --> sc-wordpress-password-edit
+  sc-password-nag --> sc-icon
+  sc-password-nag --> sc-card
+  sc-password-nag --> sc-form
+  sc-password-nag --> sc-input
+  sc-password-nag --> sc-flex
+  sc-password-nag --> sc-block-ui
   sc-alert --> sc-icon
-  sc-button --> sc-spinner
-  sc-wordpress-password-edit --> sc-dashboard-module
-  sc-wordpress-password-edit --> sc-card
-  sc-wordpress-password-edit --> sc-form
-  sc-wordpress-password-edit --> sc-input
-  sc-wordpress-password-edit --> sc-button
-  sc-wordpress-password-edit --> sc-block-ui
   sc-dashboard-module --> sc-alert
+  sc-button --> sc-spinner
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
   sc-block-ui --> sc-spinner

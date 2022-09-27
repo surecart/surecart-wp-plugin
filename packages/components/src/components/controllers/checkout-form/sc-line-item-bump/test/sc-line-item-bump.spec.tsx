@@ -7,12 +7,6 @@ describe('sc-line-item-bump', () => {
       components: [ScLineItemBump],
       html: `<sc-line-item-bump></sc-line-item-bump>`,
     });
-    expect(page.root).toEqualHtml(`
-      <sc-line-item-bump>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </sc-line-item-bump>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

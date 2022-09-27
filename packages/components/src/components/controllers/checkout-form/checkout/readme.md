@@ -91,6 +91,8 @@ graph TD;
   sc-form-components-validator --> sc-order-shipping-address
   sc-form-components-validator --> sc-order-tax-id-input
   sc-form-components-validator --> sc-order-bumps
+  sc-form-components-validator --> sc-line-item-tax
+  sc-form-components-validator --> sc-line-item-bump
   sc-order-shipping-address --> sc-address
   sc-order-shipping-address --> sc-compact-address
   sc-address --> sc-form-control
@@ -125,6 +127,10 @@ graph TD;
   sc-order-bump --> sc-format-number
   sc-order-bump --> sc-choice
   sc-order-bump --> sc-divider
+  sc-line-item-tax --> sc-line-item
+  sc-line-item-tax --> sc-format-number
+  sc-line-item-bump --> sc-line-item
+  sc-line-item-bump --> sc-format-number
   sc-session-provider --> sc-line-items-provider
   style sc-checkout fill:#f9f,stroke:#333,stroke-width:4px
 ```

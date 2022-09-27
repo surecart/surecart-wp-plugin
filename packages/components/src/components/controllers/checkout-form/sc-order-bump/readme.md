@@ -7,12 +7,11 @@
 
 ## Properties
 
-| Property      | Attribute      | Description  | Type       | Default     |
-| ------------- | -------------- | ------------ | ---------- | ----------- |
-| `bump`        | --             | The bump     | `Bump`     | `undefined` |
-| `checkout`    | --             | The checkout | `Checkout` | `undefined` |
-| `showControl` | `show-control` |              | `boolean`  | `undefined` |
-| `showLabel`   | `show-label`   |              | `boolean`  | `undefined` |
+| Property      | Attribute      | Description                 | Type       | Default     |
+| ------------- | -------------- | --------------------------- | ---------- | ----------- |
+| `bump`        | --             | The bump                    | `Bump`     | `undefined` |
+| `checkout`    | --             | The checkout                | `Checkout` | `undefined` |
+| `showControl` | `show-control` | Should we show the controls | `boolean`  | `undefined` |
 
 
 ## Events

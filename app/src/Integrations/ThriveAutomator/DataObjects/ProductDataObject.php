@@ -2,18 +2,21 @@
 
 namespace SureCart\Integrations\ThriveAutomator\DataObjects;
 
-use SureCart\Integrations\ThriveAutomator\Fields\ProductNameField;
-use Thrive\Automator\Items\Data_Object;
-use SureCart\Models\Product;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Silence is golden!
 }
 
+use SureCart\Integrations\ThriveAutomator\DataFields\PreviousProductDataField;
+use SureCart\Integrations\ThriveAutomator\DataFields\ProductDataField;
+use SureCart\Integrations\ThriveAutomator\DataFields\ProductIDDataField;
+use SureCart\Integrations\ThriveAutomator\DataFields\ProductNameDataField;
+use Thrive\Automator\Items\Data_Object;
+use SureCart\Models\Product;
+
 /**
- * Class ProductData
+ * Class ProductDataObject
  */
-class ProductData extends Data_Object {
+class ProductDataObject extends Data_Object {
 	/**
 	 * Get the data-object identifier
 	 *
@@ -24,12 +27,12 @@ class ProductData extends Data_Object {
 	}
 
 	/**
-	 * Nice name for the data object.
+	 * Nice name for the data-object.
 	 *
 	 * @return string
 	 */
 	public static function get_nice_name() {
-		return __( 'SureCart product', 'surecart' );
+		return __( 'SureCart product object', 'surecart' );
 	}
 
 	/**
@@ -39,16 +42,9 @@ class ProductData extends Data_Object {
 	 */
 	public static function get_fields() {
 		return [
-			ProductNameField::get_id(),
-			ProductIdField::get_id(),
-			'archived',
-			'shipping_enabled',
-			'tax_category',
-			'tax_enabled',
-			'metadata',
-			'file_upload_ids',
-			'prices',
-			'product_group',
+			ProductNameDataField::get_id(),
+			ProductIDDataField::get_id(),
+			ProductDataField::get_id(),
 		];
 	}
 
@@ -75,16 +71,10 @@ class ProductData extends Data_Object {
 
 		if ( $product ) {
 			return [
-				'surecart_product_id' => $product->id,
-				'name'                => $product->name,
-				'archived'            => $product->archived,
-				'shipping_enabled'    => $product->shipping_enabled,
-				'tax_category'        => $product->tax_category,
-				'tax_enabled'         => $product->tax_enabled,
-				'metadata'            => $product->metadata,
-				'file_upload_ids'     => $product->file_upload_ids,
-				'prices'              => $product->prices,
-				'product_group'       => $product->product_group,
+				ProductNameDataField::get_id()     => $product->id,
+				ProductIDDataField::get_id()       => $product->id,
+				ProductDataField::get_id()         => $product->id,
+				PreviousProductDataField::get_id() => $product->id,
 			];
 		}
 
@@ -102,12 +92,13 @@ class ProductData extends Data_Object {
 		foreach ( Product::get() as $product ) {
 			$name           = $product->name;
 			$id             = $product->id;
-			$options[ $id ] = array(
+			$options[ $id ] = [
 				'id'    => $id,
 				'label' => $name,
-			);
+			];
 		}
 
 		return $options;
 	}
+
 }

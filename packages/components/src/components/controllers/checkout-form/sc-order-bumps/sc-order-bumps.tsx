@@ -10,12 +10,13 @@ import { Bump, Checkout } from '../../../../types';
 })
 export class ScOrderBumps {
   @Prop() label: string;
+  @Prop() showControl: boolean;
   @Prop() help: string;
   @Prop() bumps: Bump[];
   @Prop() checkout: Checkout;
 
   render() {
-    if (!this.bumps.length) {
+    if (!this?.bumps?.length) {
       return null;
     }
 
@@ -23,7 +24,7 @@ export class ScOrderBumps {
       <sc-form-control label={this.label || __('Recommended', 'surecart')} help={this.help}>
         <div class="bumps__list">
           {(this.bumps || []).map(bump => (
-            <sc-order-bump bump={bump} checkout={this.checkout}></sc-order-bump>
+            <sc-order-bump showControl={this.showControl} bump={bump} checkout={this.checkout}></sc-order-bump>
           ))}
         </div>
       </sc-form-control>

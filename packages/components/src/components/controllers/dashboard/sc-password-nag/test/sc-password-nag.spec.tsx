@@ -7,12 +7,6 @@ describe('sc-password-nag', () => {
       components: [ScPasswordNag],
       html: `<sc-password-nag></sc-password-nag>`,
     });
-    expect(page.root).toEqualHtml(`
-      <sc-password-nag>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </sc-password-nag>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

@@ -85,6 +85,7 @@ return [
 
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,
+		\SureCart\Integrations\ThriveAutomator\ThriveAutomatorServiceProvider::class,
 		\SureCart\Integrations\LearnDash\LearnDashServiceProvider::class,
 		\SureCart\Integrations\LearnDashGroup\LearnDashGroupServiceProvider::class,
 		\SureCart\Integrations\LifterLMS\LifterLMSServiceProvider::class,
@@ -92,6 +93,7 @@ return [
 		\SureCart\Integrations\TutorLMS\TutorLMSServiceProvider::class,
 		\SureCart\Integrations\User\UserServiceProvider::class,
 		\SureCart\Integrations\MemberPress\MemberPressServiceProvider::class,
+		\SureCart\Integrations\Elementor\ElementorServiceProvider::class,
 	],
 
 	/**
@@ -103,6 +105,7 @@ return [
 		\SureCartBlocks\Blocks\CustomerDashboardButton\Block::class,
 		\SureCartBlocks\Blocks\CheckoutForm\Block::class,
 		\SureCartBlocks\Blocks\CartSubtotal\Block::class,
+		\SureCartBlocks\Blocks\CartBumpLineItem\Block::class,
 		\SureCartBlocks\Blocks\OrderConfirmationLineItems\Block::class,
 		\SureCartBlocks\Blocks\Form\Block::class,
 		\SureCartBlocks\Blocks\Confirmation\Block::class,

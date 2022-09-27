@@ -16,10 +16,6 @@
 
 ## Dependencies
 
-### Used by
-
- - [sc-password-nag](../sc-password-nag)
-
 ### Depends on
 
 - [sc-dashboard-module](../../../ui/dashboard-module)
@@ -44,7 +40,6 @@ graph TD;
   sc-form-control --> sc-tooltip
   sc-button --> sc-spinner
   sc-block-ui --> sc-spinner
-  sc-password-nag --> sc-wordpress-password-edit
   style sc-wordpress-password-edit fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -5,20 +5,20 @@ import { useSelect, useDispatch } from '@wordpress/data';
 
 export default () => {
 	return {
-		...useSelect( ( select ) => {
-			const customer = select( store ).selectCustomer();
+		...useSelect((select) => {
+			const customer = select(store).selectCustomer();
 			return {
 				customer,
-				loading: select( store ).isResolving( 'selectOrder' ),
-				error: select( coreStore ).selectError(),
-				editLink: select( coreStore ).getEntityEditLink(
+				loading: select(store).isResolving('selectOrder'),
+				error: select(coreStore).selectError(),
+				editLink: select(coreStore).getEntityEditLink(
 					'customers',
 					customer?.id
 				),
-				isSaving: select( coreStore ).isSaving(),
-				isInvalid: select( uiStore ).isInvalid(),
+				isSaving: select(coreStore).isSaving(),
+				isInvalid: select(uiStore).isInvalid(),
 			};
-		} ),
-		...useDispatch( store ),
+		}),
+		...useDispatch(store),
 	};
 };

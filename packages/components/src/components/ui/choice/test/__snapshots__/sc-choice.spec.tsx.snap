@@ -3,38 +3,42 @@
 exports[`sc-choice renders 1`] = `
 <sc-choice>
   <mock:shadow-root>
-    <label class="choice choice--layout-columns choice--size-medium" htmlfor="choice-1" part="base">
-      <span class="choice__control choice__radio" part="control">
-        <span class="choice__icon" part="checked-icon">
-          <svg viewBox="0 0 16 16">
-            <g fill="none" fill-rule="evenodd" stroke="none" stroke-width="1">
-              <g fill="currentColor">
-                <circle cx="8" cy="8" r="3.42857143"></circle>
+    <div class="choice choice--layout-columns choice--size-medium" part="base">
+      <slot name="header"></slot>
+      <label class="choice__content" htmlfor="choice-1" part="content">
+        <span class="choice__control choice__radio" part="control">
+          <span class="choice__icon" part="checked-icon">
+            <svg viewBox="0 0 16 16">
+              <g fill="none" fill-rule="evenodd" stroke="none" stroke-width="1">
+                <g fill="currentColor">
+                  <circle cx="8" cy="8" r="3.42857143"></circle>
+                </g>
               </g>
-            </g>
-          </svg>
+            </svg>
+          </span>
+          <input aria-checked="false" aria-disabled="false" aria-labelledby="choice-label-1" id="choice-1" type="radio">
         </span>
-        <input aria-checked="false" aria-disabled="false" aria-labelledby="choice-label-1" id="choice-1" type="radio">
-      </span>
-      <span class="choice__label" id="choice-label-1" part="label">
-        <span class="choice__label-text">
-          <span class="choice__title" part="title">
-            <slot></slot>
+        <span class="choice__label" id="choice-label-1" part="label">
+          <span class="choice__label-text">
+            <span class="choice__title" part="title">
+              <slot></slot>
+            </span>
+            <span class="choice__description description" hidden="" part="description">
+              <slot name="description"></slot>
+            </span>
           </span>
-          <span class="choice__description description" hidden="" part="description">
-            <slot name="description"></slot>
+          <span class="choice__price" hidden="">
+            <span class="choice__title">
+              <slot name="price"></slot>
+            </span>
+            <span class="choice__description">
+              <slot name="per"></slot>
+            </span>
           </span>
         </span>
-        <span class="choice__price" hidden="">
-          <span class="choice__title">
-            <slot name="price"></slot>
-          </span>
-          <span class="choice__description">
-            <slot name="per"></slot>
-          </span>
-        </span>
-      </span>
-    </label>
+      </label>
+      <slot name="footer"></slot>
+    </div>
   </mock:shadow-root>
 </sc-choice>
 `;

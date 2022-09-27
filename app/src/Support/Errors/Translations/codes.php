@@ -34,6 +34,8 @@ return [
 	'order_protocol.number_prefix.invalid'              => __( 'Please double-check your prefix does not contain any spaces, underscores, dashes or special characters.', 'surecart' ),
 	'order_protocol.number_prefix.too_long'             => __( 'This prefix is too long. Please enter a shorter prefix.', 'surecart' ),
 	'order_protocol.number_prefix.too_short'            => __( 'This prefix is too short. Please enter a longer prefix.', 'surecart' ),
+	'checkout.line_items.bump.invalid_quantity'         => __( 'You can only apply this offer once.', 'surecart' ),
+	'checkout.line_items.price.product_not_purchasable' => __( 'This product is no longer purchaseable.', 'surecart' ),
 	'price_version.restrict_dependent_destroy.has_many' => __( 'This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one.', 'surecart' ),
 	'price.ad_hoc_max_amount.less_than'                 => __( 'The maximum price must be smaller.', 'surecart' ),
 	'price.ad_hoc_min_amount.less_than'                 => __( 'The minimum price must be smaller.', 'surecart' ),

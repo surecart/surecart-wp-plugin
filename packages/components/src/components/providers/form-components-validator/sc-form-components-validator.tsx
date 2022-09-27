@@ -28,6 +28,12 @@ export class ScFormComponentsValidator {
   /** Is there a bumps field? */
   @State() hasBumpsField: boolean;
 
+  /** Is there a tax line? */
+  @State() hasTaxLine: boolean;
+
+  /** Is there a bump line? */
+  @State() hasBumpLine: boolean;
+
   @Watch('order')
   handleOrderChange() {
     // bail if we don't have address invalid error or disabled.
@@ -40,12 +46,20 @@ export class ScFormComponentsValidator {
     if (this?.order?.recommended_bumps?.data?.length) {
       this.addBumps();
     }
+    if (!!this.order?.bump_amount) {
+      this.addBumpLine();
+    }
+    if (!!this.order?.tax_amount) {
+      this.addTaxLine();
+    }
   }
 
   componentWillLoad() {
     this.hasAddress = !!this.el.querySelector('sc-order-shipping-address');
     this.hasTaxIDField = !!this.el.querySelector('sc-order-tax-id-input');
     this.hasBumpsField = !!this.el.querySelector('sc-order-bumps');
+    this.hasTaxLine = !!this.el.querySelector('sc-line-item-tax');
+    this.hasBumpLine = !!this.el.querySelector('sc-line-item-bump');
 
     // automatically add address field if tax is enabled.
     if (this.taxProtocol?.tax_enabled) {
@@ -86,6 +100,30 @@ export class ScFormComponentsValidator {
     bumps.bumps === this.order?.recommended_bumps?.data;
     payment.parentNode.insertBefore(bumps, payment.nextSibling);
     this.hasBumpsField = true;
+  }
+
+  addTaxLine() {
+    if (this.hasTaxLine) return;
+    const total = this.el.querySelector('sc-line-item-total[total=total]');
+    const tax = document.createElement('sc-line-item-tax');
+    if (total?.previousElementSibling?.tagName === 'SC-DIVIDER') {
+      total.parentNode.insertBefore(tax, total.previousElementSibling);
+    } else {
+      total.parentNode.insertBefore(tax, total);
+    }
+    this.hasTaxLine = true;
+  }
+
+  addBumpLine() {
+    if (this.hasBumpLine) return;
+    const total = this.el.querySelector('sc-line-item-total[total=total]');
+    const tax = document.createElement('sc-line-item-bump');
+    if (total?.previousElementSibling?.tagName === 'SC-DIVIDER') {
+      total.parentNode.insertBefore(tax, total.previousElementSibling);
+    } else {
+      total.parentNode.insertBefore(tax, total);
+    }
+    this.hasBumpLine = true;
   }
 
   render() {

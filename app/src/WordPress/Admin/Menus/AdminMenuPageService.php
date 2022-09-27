@@ -118,7 +118,6 @@ class AdminMenuPageService {
 		}
 
 		$cart_page_id        = \SureCart::pages()->getId( 'cart', 'sc_cart' );
-		$entitlements->bumps = true;
 
 		$this->pages = [
 			'get-started'     => \add_submenu_page( $this->slug, __( 'Dashboard', 'surecart' ), __( 'Dashboard', 'surecart' ), 'install_plugins', $this->slug, '__return_false' ),

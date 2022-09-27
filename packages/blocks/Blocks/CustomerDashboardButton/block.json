@@ -13,7 +13,7 @@
 	"attributes": {
 		"label": {
 			"type": "string",
-			"default": "Manage Your Orders"
+			"default": "Customer Dashboard"
 		},
 		"type": {
 			"type": "string",
