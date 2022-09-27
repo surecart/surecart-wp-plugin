@@ -56,6 +56,11 @@ jobs:
       - name: Yarn Install
         run: yarn
 
+      - name: Install WordPress
+        run: |
+          chmod -R 767 ./ # TODO: Possibly integrate in wp-env
+          yarn wp-env start
+
       - name: Running single site unit tests
         run: yarn run test:php:ci
         if: ${{ success() || failure() }}
