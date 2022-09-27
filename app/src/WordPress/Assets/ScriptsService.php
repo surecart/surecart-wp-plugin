@@ -186,6 +186,18 @@ class ScriptsService {
 			]
 		);
 
+		// fix shitty jetpack issues key hijacking issues.
+		add_filter(
+			'wp_head',
+			function() {
+				wp_dequeue_script( 'wpcom-notes-common' );
+				wp_dequeue_script( 'wpcom-notes-admin-bar' );
+				wp_dequeue_style( 'wpcom-notes-admin-bar' );
+				wp_dequeue_style( 'noticons' );
+			},
+			200
+		);
+
 		wp_localize_script( 'surecart-components', 'scIcons', [ 'path' => esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) ] );
 	}
 

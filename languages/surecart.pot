@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-09-22T20:35:28+00:00\n"
+"POT-Creation-Date: 2022-09-27T17:47:13+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -17,6 +17,7 @@ msgstr ""
 
 #: src/BlockLibrary/BlockServiceProvider.php:95
 #: src/Integrations/AffiliateWP/AffiliateWPService.php:29
+#: src/Integrations/ThriveAutomator/ThriveAutomatorApp.php:25
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:108
 #: src/WordPress/Admin/Notices/AdminNoticesService.php:104
 #: src/WordPress/ThemeServiceProvider.php:87
@@ -64,7 +65,7 @@ msgstr ""
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:102
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:79
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:64
-#: src/Controllers/Admin/Orders/OrdersListTable.php:107
+#: src/Controllers/Admin/Orders/OrdersListTable.php:108
 #: src/Controllers/Admin/Products/ProductsListTable.php:102
 #: customers/modules/Balance/ViewTransactions.js:110
 #: customers/modules/Charges.js:66
@@ -218,7 +219,7 @@ msgstr ""
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:90
 #: src/Controllers/Admin/Customers/CustomersListTable.php:63
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:79
-#: src/Controllers/Admin/Orders/OrdersListTable.php:119
+#: src/Controllers/Admin/Orders/OrdersListTable.php:120
 #: src/Controllers/Admin/Products/ProductsListTable.php:113
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:121
 msgid "Select comment"
@@ -267,6 +268,7 @@ msgstr ""
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:111
 #: src/Controllers/Admin/Products/ProductsListTable.php:312
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:407
+#: src/Integrations/Elementor/ReusableFormWidget.php:122
 #: licenses/modules/Activations/Activation.js:221
 #: settings/customer/EmailRow.js:14
 msgid "Edit"
@@ -490,7 +492,7 @@ msgid "Method"
 msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:203
-#: src/Controllers/Admin/Orders/OrdersListTable.php:222
+#: src/Controllers/Admin/Orders/OrdersListTable.php:238
 #: components/data-tables/charges-data-table/index.js:26
 #: components/data-tables/charges-data-table/index.js:90
 #: invoices/modules/LineItems.js:195
@@ -505,8 +507,8 @@ msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:218
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:222
-#: src/Controllers/Admin/Orders/OrdersListTable.php:244
-#: src/Controllers/Admin/Orders/OrdersListTable.php:248
+#: src/Controllers/Admin/Orders/OrdersListTable.php:260
+#: src/Controllers/Admin/Orders/OrdersListTable.php:264
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:189
 msgid "Edit Order"
 msgstr ""
@@ -608,13 +610,32 @@ msgstr ""
 msgid "Integrations"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:227
+#: src/Controllers/Admin/Orders/OrdersListTable.php:107
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:108
+#: customers/modules/Balance/ViewTransactions.js:101
+#: Blocks/BuyButton/edit.js:111
+#: Blocks/CustomerDashboardButton/edit.js:85
+#: Blocks/PriceSelector/edit.js:104
+msgid "Type"
+msgstr ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:223
+#: settings/customer/CustomerSettings.js:310
+msgid "Subscription Renewal"
+msgstr ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:226
+#: store/add-entities.js:38
+msgid "Checkout"
+msgstr ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:243
 #: sc-order-confirmation.js:87
 msgid "Paypal is taking a closer look at this payment. It’s required for some payments and normally takes up to 3 business days."
 msgstr ""
 
 #. translators: Customer name.
-#: src/Controllers/Admin/Orders/OrdersListTable.php:251
+#: src/Controllers/Admin/Orders/OrdersListTable.php:267
 msgid "By %s"
 msgstr ""
 
@@ -723,6 +744,7 @@ msgid "Plan"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:105
+#: src/Integrations/ThriveAutomator/DataFields/ProductDataField.php:109
 #: src/Support/Errors/Translations/attributes.php:17
 #: src/Support/Errors/Translations/attributes.php:18
 #: bumps/modules/NewCondition.js:85
@@ -740,14 +762,6 @@ msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:107
 msgid "Remaining Payments"
-msgstr ""
-
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:108
-#: customers/modules/Balance/ViewTransactions.js:101
-#: Blocks/BuyButton/edit.js:111
-#: Blocks/CustomerDashboardButton/edit.js:85
-#: Blocks/PriceSelector/edit.js:104
-msgid "Type"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:128
@@ -944,6 +958,34 @@ msgstr ""
 msgid "Method '%s' not implemented. Must be overridden in subclass."
 msgstr ""
 
+#: src/Integrations/Elementor/ReusableFormWidget.php:42
+#: src/Integrations/Elementor/ReusableFormWidget.php:101
+msgid "SureCart Checkout Form"
+msgstr ""
+
+#: src/Integrations/Elementor/ReusableFormWidget.php:110
+#: Blocks/CheckoutForm/components/Empty.js:192
+msgid "Select Form"
+msgstr ""
+
+#: src/Integrations/Elementor/ReusableFormWidget.php:120
+msgid "Edit Form"
+msgstr ""
+
+#: src/Integrations/Elementor/ReusableFormWidget.php:130
+msgid "Create New Form"
+msgstr ""
+
+#: src/Integrations/Elementor/ReusableFormWidget.php:134
+#: bumps/CreateBump.js:81
+#: customers/CreateCustomer.js:112
+#: product-groups/CreateProductGroup.js:74
+#: products/CreateProduct.js:70
+#: products/modules/Upgrades.js:124
+#: Blocks/Form/components/Setup.js:54
+msgid "Create"
+msgstr ""
+
 #: src/Integrations/LearnDash/LearnDashService.php:46
 #: src/Integrations/LearnDash/LearnDashService.php:122
 msgid "LearnDash Course"
@@ -997,8 +1039,67 @@ msgstr ""
 msgid "Enable access to a MemberPress membership."
 msgstr ""
 
-#: src/Integrations/ThriveAutomator/DataObjects/ProductData.php:32
-msgid "SureCart product"
+#: src/Integrations/ThriveAutomator/DataFields/PreviousProductIDDataField.php:26
+msgid "Previous Product ID"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/DataFields/ProductIDDataField.php:29
+#: src/Integrations/ThriveAutomator/DataFields/ProductIDDataField.php:47
+#: src/Integrations/ThriveAutomator/DataFields/ProductIDDataField.php:83
+msgid "Product ID"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/DataFields/ProductIDDataField.php:38
+msgid "A specific product id."
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/DataFields/ProductNameDataField.php:29
+#: products/CreateProduct.js:54
+msgid "Product Name"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/DataFields/ProductNameDataField.php:38
+msgid "A specific product name."
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/DataObjects/ProductDataObject.php:35
+msgid "SureCart product object"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/ThriveAutomatorApp.php:34
+msgid "SureCart eCommerce Platform"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/Triggers/PurchaseCreatedTrigger.php:66
+msgid "Product or subscription is purchased"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/Triggers/PurchaseCreatedTrigger.php:75
+msgid "This trigger will be fired when someone first purchases a product."
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/Triggers/PurchaseInvokedTrigger.php:66
+msgid "Admin unrevokes a purchase"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/Triggers/PurchaseInvokedTrigger.php:75
+msgid "This trigger will be fired when a purchase is unrevoked."
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/Triggers/PurchaseRevokedTrigger.php:66
+msgid "Product purchase is revoked or subscription cancels"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/Triggers/PurchaseRevokedTrigger.php:75
+msgid "This trigger will be fired when a subscription cancels after failed payment or by customer request, or when the purchase is manually revoked by the merchant."
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/Triggers/PurchaseUpdatedTrigger.php:68
+msgid "Subscription plan changed"
+msgstr ""
+
+#: src/Integrations/ThriveAutomator/Triggers/PurchaseUpdatedTrigger.php:77
+msgid "This trigger will be fired when a subscription plan is changed to something else."
 msgstr ""
 
 #: src/Integrations/TutorLMS/TutorLMSService.php:127
@@ -2118,7 +2219,7 @@ msgstr ""
 #: subscriptions/show/modules/Periods.js:74
 #: Blocks/AddToCartButton/Block.php:67
 #: Blocks/Donation/edit.js:258
-#: Blocks/DonationAmount/edit.js:22
+#: Blocks/DonationAmount/edit.js:30
 msgid "Amount"
 msgstr ""
 
@@ -2244,34 +2345,38 @@ msgid "You can only apply this offer once."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:38
-msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
+msgid "This product is no longer purchaseable."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:39
-msgid "The maximum price must be smaller."
+msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:40
-msgid "The minimum price must be smaller."
+msgid "The maximum price must be smaller."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:41
-msgid "The maximum price must be greater than the minimum price."
+msgid "The minimum price must be smaller."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:42
-msgid "You are already collecting tax for this zone."
+msgid "The maximum price must be greater than the minimum price."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:43
-msgid "You cannot enable EU Micro Exemption if your address is outside of the EU."
+msgid "You are already collecting tax for this zone."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:44
-msgid "You cannot enable taxes unless a valid tax address is provided"
+msgid "You cannot enable EU Micro Exemption if your address is outside of the EU."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:45
+msgid "You cannot enable taxes unless a valid tax address is provided"
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:46
 msgid "You cannot delete this media item because it is currently being used."
 msgstr ""
 
@@ -3229,6 +3334,7 @@ msgid "Checkout Page"
 msgstr ""
 
 #: src/WordPress/Pages/PageService.php:65
+#: Blocks/Confirmation/edit.js:20
 msgid "Customer Dashboard"
 msgstr ""
 
@@ -3773,6 +3879,7 @@ msgid "Connection"
 msgstr ""
 
 #: layouts/partials/admin-settings-sidebar.php:48
+#: products/modules/Advanced.js:7
 msgid "Advanced"
 msgstr ""
 
@@ -3855,15 +3962,6 @@ msgstr ""
 #: bumps/CreateBump.js:61
 #: bumps/modules/Price.js:30
 msgid "This is the price for the bump."
-msgstr ""
-
-#: bumps/CreateBump.js:81
-#: customers/CreateCustomer.js:112
-#: product-groups/CreateProductGroup.js:74
-#: products/CreateProduct.js:70
-#: products/modules/Upgrades.js:124
-#: Blocks/Form/components/Setup.js:54
-msgid "Create"
 msgstr ""
 
 #: bumps/CreateBump.js:87
@@ -3951,6 +4049,7 @@ msgid "Edit Bump"
 msgstr ""
 
 #: bumps/modules/Behavior.js:7
+#: settings/subscription/SubscriptionSettings.js:184
 msgid "Behavior"
 msgstr ""
 
@@ -4229,35 +4328,35 @@ msgstr ""
 msgid "Purchases"
 msgstr ""
 
-#: components/data-tables/purchases-data-table/RevokeToggleButton.js:14
-msgid "Are you sure you want to revoke this purchase?"
+#: components/data-tables/purchases-data-table/RevokeToggleButton.js:16
+msgid "Are you sure? This action will remove the associated access and trigger any cancelation automations you have set up."
 msgstr ""
 
-#: components/data-tables/purchases-data-table/RevokeToggleButton.js:18
-msgid "Are you sure you want to reinstate this purchase?"
+#: components/data-tables/purchases-data-table/RevokeToggleButton.js:20
+msgid "Are you sure? This action will re-enable associated access."
 msgstr ""
 
-#: components/data-tables/purchases-data-table/RevokeToggleButton.js:55
+#: components/data-tables/purchases-data-table/RevokeToggleButton.js:64
 msgid "To unrevoke this purchase, the customer must purchase a new subscription."
 msgstr ""
 
-#: components/data-tables/purchases-data-table/RevokeToggleButton.js:59
+#: components/data-tables/purchases-data-table/RevokeToggleButton.js:68
 msgid "Unrevoke access to this purchase"
 msgstr ""
 
-#: components/data-tables/purchases-data-table/RevokeToggleButton.js:69
+#: components/data-tables/purchases-data-table/RevokeToggleButton.js:78
 msgid "Unrevoke"
 msgstr ""
 
-#: components/data-tables/purchases-data-table/RevokeToggleButton.js:77
+#: components/data-tables/purchases-data-table/RevokeToggleButton.js:86
 msgid "To revoke this purchase you must cancel the subscription."
 msgstr ""
 
-#: components/data-tables/purchases-data-table/RevokeToggleButton.js:81
+#: components/data-tables/purchases-data-table/RevokeToggleButton.js:90
 msgid "Revoke access to this purchase"
 msgstr ""
 
-#: components/data-tables/purchases-data-table/RevokeToggleButton.js:91
+#: components/data-tables/purchases-data-table/RevokeToggleButton.js:100
 msgid "Revoke"
 msgstr ""
 
@@ -4721,7 +4820,7 @@ msgid "%d months"
 msgstr ""
 
 #: coupons/Sidebar.js:52
-#: products/Sidebar.js:36
+#: products/Sidebar.js:34
 #: subscriptions/edit/modules/Summary.js:8
 #: subscriptions/edit/modules/UpcomingPeriod.js:109
 #: sc-order-summary.js:19
@@ -4742,12 +4841,12 @@ msgid "Redeem By"
 msgstr ""
 
 #: coupons/Sidebar.js:88
-#: products/Sidebar.js:69
+#: products/Sidebar.js:67
 msgid "Last Updated"
 msgstr ""
 
 #: coupons/Sidebar.js:109
-#: products/Sidebar.js:59
+#: products/Sidebar.js:57
 msgid "Archived On"
 msgstr ""
 
@@ -4795,11 +4894,6 @@ msgid "Customer updated."
 msgstr ""
 
 #: customers/EditCustomer.js:79
-#: invoices/modules/Customer.js:27
-#: licenses/modules/Customer.js:53
-#: orders/modules/Customer.js:28
-#: subscriptions/edit/modules/Customer.js:24
-#: subscriptions/show/modules/Customer.js:28
 msgid "Edit Customer"
 msgstr ""
 
@@ -5067,7 +5161,7 @@ msgstr ""
 #: settings/brand/BrandSettings.js:180
 #: settings/tax/TaxSettings.js:72
 #: sc-address2.js:47
-#: sc-form-components-validator2.js:66
+#: sc-form-components-validator2.js:77
 #: sc-order-shipping-address2.js:32
 msgid "Address"
 msgstr ""
@@ -5077,6 +5171,14 @@ msgstr ""
 #: orders/modules/Charges.js:54
 #: store/add-entities.js:31
 msgid "Charge"
+msgstr ""
+
+#: invoices/modules/Customer.js:27
+#: licenses/modules/Customer.js:53
+#: orders/modules/Customer.js:28
+#: subscriptions/edit/modules/Customer.js:24
+#: subscriptions/show/modules/Customer.js:28
+msgid "View Customer"
 msgstr ""
 
 #: invoices/modules/Details.js:70
@@ -5128,6 +5230,7 @@ msgstr ""
 #: invoices/modules/LineItems.js:155
 #: orders/modules/LineItems/index.js:209
 #: subscriptions/show/modules/LineItems/index.js:110
+#: sc-order-confirmation-totals2.js:33
 #: sc-order.js:127
 #: sc-upcoming-invoice.js:201
 msgid "Tax"
@@ -5477,10 +5580,6 @@ msgstr ""
 msgid "Create New Product"
 msgstr ""
 
-#: products/CreateProduct.js:54
-msgid "Product Name"
-msgstr ""
-
 #: products/CreateProduct.js:56
 #: products/modules/Details.js:19
 msgid "A name for your product."
@@ -5505,6 +5604,18 @@ msgstr ""
 #: products/EditProduct.js:179
 #: Blocks/PriceChoice/components/PriceInfo.js:75
 msgid "Edit Product"
+msgstr ""
+
+#: products/modules/Advanced.js:16
+msgid "Limit Per-Customer Purchases"
+msgstr ""
+
+#: products/modules/Advanced.js:18
+msgid "Limit the number of times a single customer can purchase this product."
+msgstr ""
+
+#: products/modules/Advanced.js:27
+msgid "Customer Purchase Limit"
 msgstr ""
 
 #: products/modules/Downloads.js:49
@@ -5821,11 +5932,11 @@ msgstr ""
 msgid "To charge tax, please set up your tax information on the settings page."
 msgstr ""
 
-#: products/modules/Tax.js:78
+#: products/modules/Tax.js:68
 msgid "Tax and Shipping"
 msgstr ""
 
-#: products/modules/Tax.js:84
+#: products/modules/Tax.js:71
 msgid "This product requires shipping"
 msgstr ""
 
@@ -5841,11 +5952,11 @@ msgstr ""
 msgid "This is not shown to the customer, but is used help you identify the group."
 msgstr ""
 
-#: products/Sidebar.js:42
+#: products/Sidebar.js:40
 msgid "Available for purchase"
 msgstr ""
 
-#: products/Sidebar.js:78
+#: products/Sidebar.js:76
 msgid "Created On"
 msgstr ""
 
@@ -6112,6 +6223,7 @@ msgstr ""
 #: settings/customer/CustomerSettings.js:177
 #: settings/customer/CustomerSettings.js:216
 #: settings/customer/CustomerSettings.js:252
+#: settings/subscription/SubscriptionSettings.js:211
 msgid "Pro"
 msgstr ""
 
@@ -6169,10 +6281,6 @@ msgstr ""
 
 #: settings/customer/CustomerSettings.js:302
 msgid "Sent to customers 3 days before a subscription renews."
-msgstr ""
-
-#: settings/customer/CustomerSettings.js:310
-msgid "Subscription Renewal"
 msgstr ""
 
 #: settings/customer/CustomerSettings.js:311
@@ -6386,6 +6494,18 @@ msgstr ""
 
 #: settings/subscription/SubscriptionSettings.js:176
 msgid "If a subscription payment fails, the subscription is marked past due. When this happens we automatically retry the payment based on our smart retry logic. If the payment is still unsuccessful after the duration set above, the subscription will be canceled."
+msgstr ""
+
+#: settings/subscription/SubscriptionSettings.js:185
+msgid "Manage your subscription purchase behavior."
+msgstr ""
+
+#: settings/subscription/SubscriptionSettings.js:208
+msgid "Require Upfront Payment Method"
+msgstr ""
+
+#: settings/subscription/SubscriptionSettings.js:215
+msgid "Whether or not a payment method should be required for subscriptions that have an initial period amount of $0 (free trial or coupon). This is useful if you want to offer a \"no credit card required\" free trials."
 msgstr ""
 
 #: settings/tax-region/RegionSettings.js:9
@@ -6640,10 +6760,6 @@ msgstr ""
 
 #: store/add-entities.js:24
 msgid "Bump"
-msgstr ""
-
-#: store/add-entities.js:38
-msgid "Checkout"
 msgstr ""
 
 #: store/add-entities.js:45
@@ -7394,7 +7510,7 @@ msgstr ""
 #: Blocks/Dashboard/WordPressAccount/edit.js:19
 #: Blocks/Divider/edit.js:26
 #: Blocks/Donation/edit.js:159
-#: Blocks/DonationAmount/edit.js:19
+#: Blocks/DonationAmount/edit.js:15
 #: Blocks/Email/components/Inspector.js:13
 #: Blocks/Heading/edit.js:23
 #: Blocks/Input/components/Inspector.js:13
@@ -7550,7 +7666,7 @@ msgid "Add text…"
 msgstr ""
 
 #: Blocks/BumpLineItem/edit.js:26
-#: sc-line-item-bump.js:19
+#: sc-line-item-bump2.js:19
 #: sc-order-confirmation-totals2.js:33
 msgid "Bundle Discount"
 msgstr ""
@@ -7756,10 +7872,6 @@ msgstr ""
 msgid "New Form"
 msgstr ""
 
-#: Blocks/CheckoutForm/components/Empty.js:192
-msgid "Select Form"
-msgstr ""
-
 #: Blocks/CheckoutForm/components/Options.js:42
 msgid "Create Product"
 msgstr ""
@@ -7925,10 +8037,6 @@ msgstr ""
 
 #: Blocks/Confirmation/edit.js:11
 msgid "Thank you for your purchase! Please check your inbox for additional information."
-msgstr ""
-
-#: Blocks/Confirmation/edit.js:20
-msgid "Manage Orders"
 msgstr ""
 
 #: Blocks/Coupon/edit.js:38
@@ -8102,6 +8210,14 @@ msgstr ""
 msgid "Add  Amount"
 msgstr ""
 
+#: Blocks/DonationAmount/edit.js:18
+msgid "Label for donation"
+msgstr ""
+
+#: Blocks/DonationAmount/edit.js:19
+msgid "Buy me coffee!"
+msgstr ""
+
 #: Blocks/Form/components/ChooseDesign.js:20
 msgid "Choose A Starting Design"
 msgstr ""
@@ -8183,7 +8299,7 @@ msgid "Processing Payment"
 msgstr ""
 
 #: Blocks/Form/edit.js:322
-#: sc-checkout.js:178
+#: sc-checkout.js:181
 msgid "Processing payment..."
 msgstr ""
 
@@ -8192,7 +8308,7 @@ msgid "Confirming Payment"
 msgstr ""
 
 #: Blocks/Form/edit.js:340
-#: sc-checkout.js:178
+#: sc-checkout.js:181
 msgid "Finalizing order..."
 msgstr ""
 
@@ -8201,7 +8317,7 @@ msgid "Success Text"
 msgstr ""
 
 #: Blocks/Form/edit.js:355
-#: sc-checkout.js:178
+#: sc-checkout.js:181
 msgid "Payment successful! Redirecting..."
 msgstr ""
 
@@ -10503,11 +10619,11 @@ msgstr ""
 msgid "Your payment is processing. Exiting this page could cause an error in your order. Please do not navigate away from this page."
 msgstr ""
 
-#: sc-checkout.js:171
+#: sc-checkout.js:174
 msgid "Due to processor restrictions, only one checkout form is allowed on the page."
 msgstr ""
 
-#: sc-checkout.js:178
+#: sc-checkout.js:181
 msgid "Submitting order..."
 msgstr ""
 
@@ -10561,11 +10677,11 @@ msgstr ""
 msgid "Invoice History"
 msgstr ""
 
-#: sc-line-item-tax.js:16
+#: sc-line-item-tax2.js:16
 msgid "Estimated %s"
 msgstr ""
 
-#: sc-line-item-tax.js:31
+#: sc-line-item-tax2.js:31
 msgid "included"
 msgstr ""
 
