@@ -197,11 +197,11 @@
   "sc-checkbox": {
     "checked": true,
     "disabled": true,
+    "edit": true,
     "indeterminate": true,
     "invalid": true,
     "name": true,
     "required": true,
-    "static": true,
     "value": true,
     "style": true,
     "id": true,
