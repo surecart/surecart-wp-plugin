@@ -1,9 +1,9 @@
 class ResizeObserver {
   observe() {
-      // do nothing
+    // do nothing
   }
   unobserve() {
-      // do nothing
+    // do nothing
   }
 }
 

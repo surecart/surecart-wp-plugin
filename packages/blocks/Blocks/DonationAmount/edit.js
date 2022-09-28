@@ -1,4 +1,8 @@
-import { ScChoice, ScFormatNumber, ScPriceInput } from '@surecart/components-react';
+import {
+	ScChoice,
+	ScFormatNumber,
+	ScPriceInput,
+} from '@surecart/components-react';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { Fragment } from '@wordpress/element';

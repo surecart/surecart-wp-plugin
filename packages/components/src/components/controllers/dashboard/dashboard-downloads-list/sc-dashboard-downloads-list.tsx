@@ -47,7 +47,7 @@ export class ScDownloadsList {
   }
 
   async initialFetch() {
-    if ( ! this.isCustomer ){
+    if (!this.isCustomer) {
       return;
     }
     try {
@@ -62,7 +62,7 @@ export class ScDownloadsList {
   }
 
   async fetchItems() {
-    if ( ! this.isCustomer ){
+    if (!this.isCustomer) {
       return;
     }
     try {

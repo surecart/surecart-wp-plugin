@@ -6,8 +6,8 @@ import { __ } from '@wordpress/i18n';
 export default {
 	*selectSubscription() {
 		// maybe get from url.
-		const id = yield controls.resolveSelect( store, 'selectPageId' );
-		if ( ! id ) return {};
+		const id = yield controls.resolveSelect(store, 'selectPageId');
+		if (!id) return {};
 
 		const request = yield controls.resolveSelect(
 			store,
@@ -30,29 +30,25 @@ export default {
 		// fetch and normalize
 		try {
 			// we need prices.
-			const response = yield apiFetch( request );
-			const {
-				customer,
-				order,
-				subscription_items,
-				...subscription
-			} = response;
+			const response = yield apiFetch(request);
+			const { customer, order, subscription_items, ...subscription } =
+				response;
 
-			if ( ! subscription?.id ) return;
+			if (!subscription?.id) return;
 
-			return yield controls.dispatch( store, 'addModels', {
-				subscriptions: [ subscription ],
-				customers: [ customer ],
+			return yield controls.dispatch(store, 'addModels', {
+				subscriptions: [subscription],
+				customers: [customer],
 				orders: order?.data || [],
 				subscription_items: [
-					...( subscription_items?.data
+					...(subscription_items?.data
 						? subscription_items.data
-						: [] ),
+						: []),
 				],
-			} );
-		} catch ( error ) {
+			});
+		} catch (error) {
 			// set critical error. We don't want to display the UI if we can't load the product.
-			yield controls.dispatch( store, 'setError', error );
+			yield controls.dispatch(store, 'setError', error);
 		}
 	},
 };

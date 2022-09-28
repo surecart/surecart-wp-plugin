@@ -1,12 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`sc-radio-group renders 1`] = `
-<sc-radio-group>
+<sc-radio-group value="">
   <mock:shadow-root>
     <fieldset class="radio-group" part="base" role="radiogroup">
       <legend class="radio-group__label" part="label">
         <slot name="label"></slot>
       </legend>
+      <input class="radio-group__hidden-input" tabindex="-1" type="text" value="">
       <slot></slot>
     </fieldset>
   </mock:shadow-root>

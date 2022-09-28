@@ -1,4 +1,10 @@
-import { ScBreadcrumb, ScBreadcrumbs, ScButton, ScFlex, ScIcon } from '@surecart/components-react';
+import {
+	ScBreadcrumb,
+	ScBreadcrumbs,
+	ScButton,
+	ScFlex,
+	ScIcon,
+} from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';

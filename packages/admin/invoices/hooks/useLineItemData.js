@@ -5,15 +5,15 @@ import { useSelect, useDispatch } from '@wordpress/data';
 
 export default () => {
 	return {
-		...useSelect( ( select ) => {
+		...useSelect((select) => {
 			return {
-				line_items: select( store ).selectLineItems(),
-				loading: select( store ).isResolving( 'selectOrder' ),
-				error: select( coreStore ).selectError(),
-				isSaving: select( coreStore ).isSaving(),
-				isInvalid: select( uiStore ).isInvalid(),
+				line_items: select(store).selectLineItems(),
+				loading: select(store).isResolving('selectOrder'),
+				error: select(coreStore).selectError(),
+				isSaving: select(coreStore).isSaving(),
+				isInvalid: select(uiStore).isInvalid(),
 			};
-		} ),
-		...useDispatch( store ),
+		}),
+		...useDispatch(store),
 	};
 };

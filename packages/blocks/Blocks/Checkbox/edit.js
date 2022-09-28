@@ -61,7 +61,7 @@ export default ({ className, attributes, setAttributes }) => {
 				className={className}
 				name={name}
 				required={required}
-				static
+				edit
 				{...blockProps}
 			>
 				<RichText

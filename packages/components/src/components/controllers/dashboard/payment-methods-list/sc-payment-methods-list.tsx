@@ -84,7 +84,7 @@ export class ScPaymentMethodsList {
 
   /** Get all paymentMethods */
   async getPaymentMethods() {
-    if ( ! this.isCustomer ){
+    if (!this.isCustomer) {
       return;
     }
 
@@ -171,10 +171,10 @@ export class ScPaymentMethodsList {
   }
 
   renderContent() {
-    if ( ! this.isCustomer ){
+    if (!this.isCustomer) {
       return this.renderEmpty();
     }
-      
+
     if (this.loading) {
       return this.renderLoading();
     }

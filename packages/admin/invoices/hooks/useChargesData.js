@@ -5,16 +5,16 @@ import { store } from '../store';
 
 export default () => {
 	return {
-		...useSelect( ( select ) => {
-			const charges = select( store ).selectCharges();
+		...useSelect((select) => {
+			const charges = select(store).selectCharges();
 			return {
 				charges,
-				loading: select( store ).isResolving( 'selectCharges' ),
-				error: select( coreStore ).selectError(),
-				isSaving: select( coreStore ).isSaving(),
-				isInvalid: select( uiStore ).isInvalid(),
+				loading: select(store).isResolving('selectCharges'),
+				error: select(coreStore).selectError(),
+				isSaving: select(coreStore).isSaving(),
+				isInvalid: select(uiStore).isInvalid(),
 			};
-		} ),
-		...useDispatch( store ),
+		}),
+		...useDispatch(store),
 	};
 };
