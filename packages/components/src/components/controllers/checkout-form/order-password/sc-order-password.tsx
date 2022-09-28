@@ -62,12 +62,12 @@ export class ScOrderPassword {
   async reportValidity() {
     if (this.loggedIn) return true;
 
-    this.confirmInput.setCustomValidity('');
+    this.confirmInput?.setCustomValidity?.('');
 
     // confirmation is enabled.
     if (this.confirmation) {
       if (this.confirmInput?.value && this.input?.value !== this.confirmInput?.value) {
-        this.confirmInput.setCustomValidity(__('Confirmation Password Not Match.', 'surecart'));
+        this.confirmInput.setCustomValidity(__('Password does not match.', 'surecart'));
       }
     }
 
@@ -76,7 +76,11 @@ export class ScOrderPassword {
       return false;
     }
 
-    return this.confirmInput.reportValidity();
+    if (this.confirmInput) {
+      return this.confirmInput.reportValidity();
+    }
+
+    return valid;
   }
 
   render() {
