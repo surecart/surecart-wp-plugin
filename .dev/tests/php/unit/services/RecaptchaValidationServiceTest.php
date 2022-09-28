@@ -39,7 +39,6 @@ class RecaptchaValidationServiceTest extends SureCartUnitTestCase
 
 	/**
 	 * Test reCaptcha validate token.
-	 * @group failing
 	 * @dataProvider validationData
 	 */
 	public function test_validate($data, $valid)
@@ -56,7 +55,6 @@ class RecaptchaValidationServiceTest extends SureCartUnitTestCase
 
 	/**
 	 * Test Min score
-	 * @group failing
 	 */
 	public function test_min_score() {
 		$service = \Mockery::mock(RecaptchaValidationService::class)->makePartial();
@@ -74,7 +72,7 @@ class RecaptchaValidationServiceTest extends SureCartUnitTestCase
 	}
 
 	/**
-	 * @group failing
+	 * Test token valid.
 	 */
 	public function test_is_token_valid() {
 		$service = \Mockery::mock(RecaptchaValidationService::class)->makePartial();

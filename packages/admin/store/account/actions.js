@@ -1,11 +1,11 @@
-export function setCurrency( value ) {
+export function setCurrency(value) {
 	return {
 		type: 'SET_CURRENCY',
 		value,
 	};
 }
 
-export function setAccount( value ) {
+export function setAccount(value) {
 	return {
 		type: 'SET_ACCOUNT',
 		value,

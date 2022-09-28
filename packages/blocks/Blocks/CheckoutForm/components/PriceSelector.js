@@ -8,86 +8,83 @@ import SelectPrice from '../../../components/SelectPrice';
 import { useSelect, dispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 
-export default ( { onSelect, createNew, ad_hoc, value, open = true } ) => {
-	const [ query, setQuery ] = useState( null );
-	const [ newModal, setNewModal ] = useState( false );
+export default ({ onSelect, createNew, ad_hoc, value, open = true }) => {
+	const [query, setQuery] = useState(null);
+	const [newModal, setNewModal] = useState(false);
 
 	const { products, loading } = useSelect(
-		( select ) => {
+		(select) => {
 			const queryArgs = [
 				'root',
 				'product',
-				{ query, expand: [ 'prices' ], archived: false },
+				{ query, expand: ['prices'], archived: false },
 			];
 			return {
-				products: select( coreStore ).getEntityRecords( ...queryArgs ),
-				loading: select( coreStore ).isResolving(
+				products: select(coreStore).getEntityRecords(...queryArgs),
+				loading: select(coreStore).isResolving(
 					'getEntityRecord',
 					queryArgs
 				),
 			};
 		},
-		[ query ]
+		[query]
 	);
 
 	// set prices when products are loaded.
-	useEffect( () => {
-		const prices = ( products || [] )
-			.map( ( product ) => product?.prices?.data )
+	useEffect(() => {
+		const prices = (products || [])
+			.map((product) => product?.prices?.data)
 			.flat()
-			.filter( ( price ) => price?.id );
+			.filter((price) => price?.id);
 
-		if ( prices ) {
-			dispatch( coreStore ).receiveEntityRecords(
-				'root',
-				'price',
-				prices,
-				{ expand: [ 'product' ] }
-			);
+		if (prices) {
+			dispatch(coreStore).receiveEntityRecords('root', 'price', prices, {
+				expand: ['product'],
+			});
 		}
-	}, [ products ] );
+	}, [products]);
 
 	const onNew = () => {
-		setNewModal( true );
+		setNewModal(true);
 	};
 
 	return (
 		<Fragment>
 			<SelectPrice
 				required
-				css={ css`
+				css={css`
 					flex: 0 1 50%;
-				` }
-				value={ value }
-				onNew={ createNew && onNew }
-				open={ open }
-				ad_hoc={ ad_hoc }
-				products={ products }
-				onQuery={ setQuery }
-				onFetch={ () => setQuery( '' ) }
-				loading={ loading }
-				onSelect={ onSelect }
+				`}
+				value={value}
+				onNew={createNew && onNew}
+				open={open}
+				ad_hoc={ad_hoc}
+				products={products}
+				onQuery={setQuery}
+				onFetch={() => setQuery('')}
+				loading={loading}
+				onSelect={onSelect}
 			/>
-			{ newModal && (
+			{newModal && (
 				<Modal
 					title="Create a product"
-					isFullScreen={ true }
-					css={ css`
+					isFullScreen={true}
+					css={css`
 						width: 90vw;
 						min-height: 90vh;
-					` }
-					shouldCloseOnClickOutside={ false }
-					onRequestClose={ () => setNewModal( false ) }
+					`}
+					shouldCloseOnClickOutside={false}
+					onRequestClose={() => setNewModal(false)}
 				>
 					<p>Dialog for creating a new product</p>
-					<Button isPrimary onClick={ () => setNewModal( false ) }>
+					<Button isPrimary onClick={() => setNewModal(false)}>
 						Create
 					</Button>
-					<Button isTertiary onClick={ () => setNewModal( false ) }>
+					<Button isTertiary onClick={() => setNewModal(false)}>
 						Cancel
 					</Button>
 				</Modal>
-			) }
+			)}
 		</Fragment>
 	);
 };

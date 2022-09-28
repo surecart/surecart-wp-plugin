@@ -47,7 +47,7 @@
 		"start:workspace": "yarn workspaces foreach -pvi run watch",
 		"check-engines": "wp-scripts check-engines",
 		"check-licenses": "wp-scripts check-licenses",
-		"format": "wp-scripts format",
+		"format:js": "wp-scripts format",
 		"lint:css": "wp-scripts lint-style",
 		"lint:js": "wp-scripts lint-js",
 		"lint:md:docs": "wp-scripts lint-md-docs",

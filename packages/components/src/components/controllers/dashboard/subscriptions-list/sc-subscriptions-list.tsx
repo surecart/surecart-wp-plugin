@@ -74,7 +74,7 @@ export class ScSubscriptionsList {
 
   /** Get all subscriptions */
   async getSubscriptions() {
-    if ( ! this.isCustomer ) {
+    if (!this.isCustomer) {
       return;
     }
 
