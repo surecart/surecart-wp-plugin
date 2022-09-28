@@ -340,6 +340,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Makes this edit and not editable.
+         */
+        "edit": boolean;
+        /**
           * Draws the checkbox in an indeterminate state.
          */
         "indeterminate": boolean;
@@ -359,10 +363,6 @@ export namespace Components {
           * Makes the checkbox a required field.
          */
         "required": boolean;
-        /**
-          * Makes this static and not editable.
-         */
-        "static": boolean;
         /**
           * Removes focus from the checkbox.
          */
@@ -4501,6 +4501,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * Makes this edit and not editable.
+         */
+        "edit"?: boolean;
+        /**
           * Draws the checkbox in an indeterminate state.
          */
         "indeterminate"?: boolean;
@@ -4528,10 +4532,6 @@ declare namespace LocalJSX {
           * Makes the checkbox a required field.
          */
         "required"?: boolean;
-        /**
-          * Makes this static and not editable.
-         */
-        "static"?: boolean;
         /**
           * The checkbox's value attribute.
          */
