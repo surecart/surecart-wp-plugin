@@ -73,7 +73,7 @@ class SettingService {
 		);
 		$this->register(
 			'general',
-			'stripe_script_enabled',
+			'load_stripe_js',
 			[
 				'type'              => 'boolean',
 				'show_in_rest'      => true,

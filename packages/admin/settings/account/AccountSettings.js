@@ -50,7 +50,7 @@ export default () => {
 	const [stripeScriptEnabled, setStripeScriptEnabled] = useEntityProp(
 		'root',
 		'site',
-		'surecart_stripe_script_enabled'
+		'surecart_load_stripe_js'
 	);
 
 	/**

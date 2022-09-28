@@ -156,7 +156,7 @@ class ScriptsService {
 		wp_register_script( 'surecart-google-recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . \SureCart::settings()->recaptcha()->getSiteKey(), [], \SureCart::plugin()->version(), true );
 
 		// register stripe if enabled.
-		if ( get_option( 'surecart_stripe_script_enabled', false ) ) {
+		if ( get_option( 'surecart_load_stripe_js', false ) ) {
 			wp_enqueue_script( 'surecart-stripe-script', 'https://js.stripe.com/v3', [], \SureCart::plugin()->version(), false );
 		}
 	}
