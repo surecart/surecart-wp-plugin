@@ -1,12 +1,15 @@
-/**
- * WordPress dependencies
- */
+/** @jsx jsx */
+
 import { __ } from '@wordpress/i18n';
 import {
 	InspectorControls,
-	useInnerBlocksProps,
+	InnerBlocks,
+	useInnerBlocksProps as __stableUseInnerBlocksProps,
 	__experimentalUseInnerBlocksProps,
+	useBlockProps,
+	store as blockEditorStore,
 } from '@wordpress/block-editor';
+import { css, jsx } from '@emotion/core';
 import { Fragment } from '@wordpress/element';
 import {
 	PanelBody,
@@ -19,16 +22,37 @@ import {
  * Component Dependencies
  */
 import { ScRadioGroup } from '@surecart/components-react';
-import { useBlockProps } from '@wordpress/block-editor';
 
-export default ({ attributes, setAttributes }) => {
+import { useSelect } from '@wordpress/data';
+
+export default ({ attributes, setAttributes, isSelected, clientId }) => {
 	const { label, required } = attributes;
+	const useInnerBlocksProps = __stableUseInnerBlocksProps
+		? __stableUseInnerBlocksProps
+		: __experimentalUseInnerBlocksProps;
 
-	const blockProps = useBlockProps();
+	const blockProps = useBlockProps({
+		css: css`
+			.block-list-appender {
+				position: relative;
+			}
+			.wp-block[data-block] {
+				margin-top: 0;
+			}
+		`,
+	});
+
+	const childIsSelected = useSelect((select) =>
+		select(blockEditorStore).hasSelectedInnerBlock(clientId, true)
+	);
 
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		className: 'sc-radio',
 		allowedBlocks: ['surecart/radio'],
+		renderAppender:
+			isSelected || childIsSelected
+				? InnerBlocks.ButtonBlockAppender
+				: false,
 	});
 
 	return (
