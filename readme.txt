@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 1.1.11
+Stable tag: 1.1.13
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -243,15 +243,32 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.1.13 - September 27, 2022 =
+* New: Thrive Automator purchase events integration.
+* New: Elementor module! Select, edit and create forms from the new Elementor widget.
+* New: Per customer purchase limits for products.
+* New: Ability to not require an upfront payment method for subscriptions (i.e. offer free trials without credit cards).
+* New: Add custom labels to donation block amounts instead of showing the amount.
+* Improvement: Add order "type" to the merchant order admin (renewal vs checkout).
+* Improvement: Update "Edit Customer" button to "View Customer".
+* Improvement: Newly registered users are automatically logged in after checking out.
+* Improvement: Change default customer dashboard button text to "Customer Dashboard" instead of "Manage Orders".
+* Fix: Issue with object caching causing dashboard slowness on some hosts.
+* Fix: Tax amount missing from confirmation page.
+* Fix: Issue with revoke purchase button not updating after revoking purchase.
+* Fix: Issue with set a password nag showing even if customer supplies a password.
+* Fix: Issue with Jetpack "Notes" not allowing "n" keypresses on our inputs.
+
 = 1.1.12 - September 22, 2022 =
 * New: Recaptcha v3 integration.
 * New: Honeypot spam protection.
-* New: Turn on subscription renewal reminders and edit template.
+* New: Turn on subscription renewal reminders.
+* New: Edit subscription renewal reminders email template.
 * Improvement: Show notice for user to set password on customer dashboard if they have not yet set one.
 * Improvement: Show the coupon used along with the discount on the Merchant admin order's screen.
 * Improvement: Fix issue with possible theme conflicts re-sizing price selectors.
 * Improvement: Improve select box keyboard accessibility.
-* Improvement: Improve components preload performance for some theme that render content in a later priority.
+* Improvement: Improve components preload performance for some themes that render content in a later priority.
 * Fix: Issue with users not getting created with special characters in name.
 
 = 1.1.11 - September 14, 2022 =

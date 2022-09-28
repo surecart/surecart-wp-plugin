@@ -1,6 +1,12 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScButton, ScDropdown, ScIcon, ScMenu, ScMenuItem } from '@surecart/components-react';
+import {
+	ScButton,
+	ScDropdown,
+	ScIcon,
+	ScMenu,
+	ScMenuItem,
+} from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __, sprintf } from '@wordpress/i18n';

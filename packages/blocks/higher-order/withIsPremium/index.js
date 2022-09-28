@@ -9,8 +9,8 @@ import { createHigherOrderComponent } from '@wordpress/compose';
  *
  * @return {WPComponent} Wrapped component.
  */
-export default createHigherOrderComponent( ( OriginalComponent ) => {
-	function Component( props, ref ) {
+export default createHigherOrderComponent((OriginalComponent) => {
+	function Component(props, ref) {
 		// todo: maybe make a fetch call here
 		const propsOut = {
 			...props,
@@ -18,18 +18,18 @@ export default createHigherOrderComponent( ( OriginalComponent ) => {
 		};
 
 		return isForwardRef ? (
-			<OriginalComponent { ...propsOut } ref={ ref } />
+			<OriginalComponent {...propsOut} ref={ref} />
 		) : (
-			<OriginalComponent { ...propsOut } />
+			<OriginalComponent {...propsOut} />
 		);
 	}
 
 	let isForwardRef;
 	const { render } = OriginalComponent;
 	// Returns a forwardRef if OriginalComponent appears to be a forwardRef
-	if ( typeof render === 'function' ) {
+	if (typeof render === 'function') {
 		isForwardRef = true;
-		return forwardRef( Component );
+		return forwardRef(Component);
 	}
 	return Component;
-} );
+});

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-09-22T20:34:51",
+  "timestamp": "2022-09-23T20:59:00",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -3484,7 +3484,9 @@
         "sc-form-components-validator": [
           "sc-order-shipping-address",
           "sc-order-tax-id-input",
-          "sc-order-bumps"
+          "sc-order-bumps",
+          "sc-line-item-tax",
+          "sc-line-item-bump"
         ],
         "sc-order-shipping-address": [
           "sc-address",
@@ -3541,6 +3543,14 @@
           "sc-format-number",
           "sc-choice",
           "sc-divider"
+        ],
+        "sc-line-item-tax": [
+          "sc-line-item",
+          "sc-format-number"
+        ],
+        "sc-line-item-bump": [
+          "sc-line-item",
+          "sc-format-number"
         ],
         "sc-session-provider": [
           "sc-line-items-provider"
@@ -8117,13 +8127,17 @@
       "dependencies": [
         "sc-order-shipping-address",
         "sc-order-tax-id-input",
-        "sc-order-bumps"
+        "sc-order-bumps",
+        "sc-line-item-tax",
+        "sc-line-item-bump"
       ],
       "dependencyGraph": {
         "sc-form-components-validator": [
           "sc-order-shipping-address",
           "sc-order-tax-id-input",
-          "sc-order-bumps"
+          "sc-order-bumps",
+          "sc-line-item-tax",
+          "sc-line-item-bump"
         ],
         "sc-order-shipping-address": [
           "sc-address",
@@ -8183,6 +8197,14 @@
           "sc-format-number",
           "sc-choice",
           "sc-divider"
+        ],
+        "sc-line-item-tax": [
+          "sc-line-item",
+          "sc-format-number"
+        ],
+        "sc-line-item-bump": [
+          "sc-line-item",
+          "sc-format-number"
         ],
         "sc-checkout": [
           "sc-form-components-validator"
@@ -11166,7 +11188,9 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "sc-form-components-validator"
+      ],
       "dependencies": [
         "sc-line-item",
         "sc-format-number"
@@ -11175,6 +11199,9 @@
         "sc-line-item-bump": [
           "sc-line-item",
           "sc-format-number"
+        ],
+        "sc-form-components-validator": [
+          "sc-line-item-bump"
         ]
       }
     },
@@ -11225,7 +11252,9 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "sc-form-components-validator"
+      ],
       "dependencies": [
         "sc-line-item",
         "sc-format-number"
@@ -11234,6 +11263,9 @@
         "sc-line-item-tax": [
           "sc-line-item",
           "sc-format-number"
+        ],
+        "sc-form-components-validator": [
+          "sc-line-item-tax"
         ]
       }
     },

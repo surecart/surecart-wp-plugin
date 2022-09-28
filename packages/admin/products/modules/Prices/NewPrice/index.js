@@ -1,6 +1,11 @@
 /** @jsx jsx */
 import { css, Global, jsx } from '@emotion/core';
-import { ScButton, ScForm, ScSelect, ScSwitch } from '@surecart/components-react';
+import {
+	ScButton,
+	ScForm,
+	ScSelect,
+	ScSwitch,
+} from '@surecart/components-react';
 import { Modal } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';

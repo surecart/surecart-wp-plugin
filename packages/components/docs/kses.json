@@ -197,11 +197,11 @@
   "sc-checkbox": {
     "checked": true,
     "disabled": true,
+    "edit": true,
     "indeterminate": true,
     "invalid": true,
     "name": true,
     "required": true,
-    "static": true,
     "value": true,
     "style": true,
     "id": true,
@@ -1209,6 +1209,7 @@
   "sc-radio": {
     "checked": true,
     "disabled": true,
+    "edit": true,
     "invalid": true,
     "name": true,
     "required": true,
@@ -1219,7 +1220,10 @@
     "slot": true
   },
   "sc-radio-group": {
+    "invalid": true,
     "label": true,
+    "required": true,
+    "value": true,
     "style": true,
     "id": true,
     "class": true,

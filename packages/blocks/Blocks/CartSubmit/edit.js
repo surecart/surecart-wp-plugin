@@ -4,8 +4,19 @@ import { css, jsx } from '@emotion/core';
  * Component Dependencies
  */
 import { ScCartSubmit } from '@surecart/components-react';
-import { InspectorControls, RichText, useBlockProps } from '@wordpress/block-editor';
-import { Disabled, PanelBody, PanelRow, SelectControl, TextControl, ToggleControl } from '@wordpress/components';
+import {
+	InspectorControls,
+	RichText,
+	useBlockProps,
+} from '@wordpress/block-editor';
+import {
+	Disabled,
+	PanelBody,
+	PanelRow,
+	SelectControl,
+	TextControl,
+	ToggleControl,
+} from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 import CartInspectorControls from '../../components/CartInspectorControls';

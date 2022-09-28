@@ -179,6 +179,7 @@ class CheckoutsController extends RestController {
 		)->with(
 			[
 				'purchases', // Important: we need to make sure we expand the purchase to provide access.
+				'customer', // Important: we need to use this to create the WP User with the same info.
 			]
 		)->find( $request['id'] );
 
@@ -244,10 +245,10 @@ class CheckoutsController extends RestController {
 
 		// Check if honeypot checkbox checked or not.
 		$metadata = $request->get_param( 'metadata' );
-		if ( $metadata && ! empty($metadata['get_feedback'] ) ) {
-			$errors->add( 'invalid', __('Invalid request. Please try again.', 'surecart') );  
-    }
-    
+		if ( $metadata && ! empty( $metadata['get_feedback'] ) ) {
+			$errors->add( 'invalid', __( 'Invalid request. Please try again.', 'surecart' ) );
+		}
+
 		// check recaptcha.
 		$service = new RecaptchaValidationService();
 		if ( $service->isEnabled() ) {

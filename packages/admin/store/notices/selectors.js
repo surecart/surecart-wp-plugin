@@ -1,3 +1,3 @@
-export function snackbarNotices( state ) {
+export function snackbarNotices(state) {
 	return state || [];
 }
