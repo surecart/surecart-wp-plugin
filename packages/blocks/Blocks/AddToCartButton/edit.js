@@ -3,9 +3,9 @@
  */
 import { __ } from '@wordpress/i18n';
 import {
-  InspectorControls,
-  PanelColorSettings,
-  useBlockProps,
+	InspectorControls,
+	PanelColorSettings,
+	useBlockProps,
 	RichText,
 	__experimentalUseColorProps as useColorProps,
 	__experimentalUseBorderProps as useBorderProps,
@@ -35,8 +35,8 @@ export default ({ className, attributes, setAttributes }) => {
 		ad_hoc_label,
 		placeholder,
 		help,
-    backgroundColor,
-    textColor,
+		backgroundColor,
+		textColor,
 	} = attributes;
 	const borderProps = useBorderProps(attributes);
 	const { style: borderStyle } = borderProps;
@@ -153,29 +153,46 @@ export default ({ className, attributes, setAttributes }) => {
 						/>
 					</PanelRow>
 				</PanelBody>
-        <PanelColorSettings
-          title={__('Color Settings')}
-          colorSettings={[
-            {
-              value: backgroundColor,
-              onChange: (backgroundColor) => setAttributes({ backgroundColor }),
-              label: __('Background Color', 'surecart'),
-            },
-            {
-              value: textColor,
-              onChange: (textColor) => setAttributes({ textColor }),
-              label: __('Text Color', 'surecart'),
-            },
-          ]}
-        ></PanelColorSettings>
-        <PanelBody title={__('Product Info', 'surecart')}>
-          <PanelRow>
-            <PriceInfo price_id={price_id} />
-          </PanelRow>
-        </PanelBody>
+				<PanelColorSettings
+					title={__('Color Settings')}
+					colorSettings={[
+						{
+							value: backgroundColor,
+							onChange: (backgroundColor) =>
+								setAttributes({ backgroundColor }),
+							label: __('Background Color', 'surecart'),
+						},
+						{
+							value: textColor,
+							onChange: (textColor) =>
+								setAttributes({ textColor }),
+							label: __('Text Color', 'surecart'),
+						},
+					]}
+				></PanelColorSettings>
+				<PanelBody title={__('Product Info', 'surecart')}>
+					<PanelRow>
+						<PriceInfo price_id={price_id} />
+					</PanelRow>
+				</PanelBody>
 			</InspectorControls>
 
-			<ScForm>
+			<ScForm
+				style={{
+					...(backgroundColor
+						? {
+								'--sc-color-primary-500': backgroundColor,
+								'--sc-focus-ring-color-primary':
+									backgroundColor,
+								'--sc-input-border-color-focus':
+									backgroundColor,
+						  }
+						: {}),
+					...(textColor
+						? { '--sc-color-primary-text': textColor }
+						: {}),
+				}}
+			>
 				{price?.ad_hoc && (
 					<ScPriceInput
 						currencyCode={price.currency}
@@ -187,18 +204,7 @@ export default ({ className, attributes, setAttributes }) => {
 					/>
 				)}
 
-				<ScButton
-					type={type}
-					size={size}
-					style={{
-            ...(backgroundColor
-              ? { '--primary-background': backgroundColor }
-              : {}),
-            ...(textColor
-              ? { '--primary-color': textColor }
-              : {}),
-          }}
-				>
+				<ScButton type={type} size={size}>
 					<RichText
 						aria-label={__('Button text')}
 						placeholder={__('Add text…')}
