@@ -287,15 +287,19 @@ export default () => {
 						)}
 					</>
 				)}
-				{scData.processors.some(processor => processor.processor_type === 'stripe') && (
+				{scData.processors.some(
+					(processor) => processor.processor_type === 'stripe'
+				) && (
 					<ScSwitch
 						checked={stripeScriptEnabled}
-						onScChange={(e) => setStripeScriptEnabled(e.target.checked)}
+						onScChange={(e) =>
+							setStripeScriptEnabled(e.target.checked)
+						}
 					>
-						{__('Enable to Load Stripe Script on Every Page', 'surecart')}
+						{__('Stripe Fraud Monitoring', 'surecart')}
 						<span slot="description" style={{ lineHeight: '1.4' }}>
 							{__(
-								'If you want enable to load stripe.js on every page to help with Fraud monitoring.',
+								'This will load stripe.js on every page to help with Fraud monitoring.',
 								'surecart'
 							)}
 						</span>
