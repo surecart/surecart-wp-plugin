@@ -1539,6 +1539,22 @@ export namespace Components {
          */
         "autofocus": boolean;
         /**
+          * The input's password confirmation attribute.
+         */
+        "confirmation": boolean;
+        /**
+          * The input's confirmation help text.
+         */
+        "confirmationHelp": string;
+        /**
+          * The input's confirmation label text.
+         */
+        "confirmationLabel": string;
+        /**
+          * The input's confirmation placeholder text.
+         */
+        "confirmationPlaceholder": string;
+        /**
           * Disables the input.
          */
         "disabled": boolean;
@@ -5848,6 +5864,22 @@ declare namespace LocalJSX {
           * The input's autofocus attribute.
          */
         "autofocus"?: boolean;
+        /**
+          * The input's password confirmation attribute.
+         */
+        "confirmation"?: boolean;
+        /**
+          * The input's confirmation help text.
+         */
+        "confirmationHelp"?: string;
+        /**
+          * The input's confirmation label text.
+         */
+        "confirmationLabel"?: string;
+        /**
+          * The input's confirmation placeholder text.
+         */
+        "confirmationPlaceholder"?: string;
         /**
           * Disables the input.
          */

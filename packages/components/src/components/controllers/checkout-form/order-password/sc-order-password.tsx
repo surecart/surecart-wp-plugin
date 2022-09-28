@@ -50,25 +50,33 @@ export class ScOrderPassword {
   @Prop({ reflect: true }) confirmation = false;
 
   /** The input's confirmation label text. */
-  @Prop() confirmation_label: string;
+  @Prop() confirmationLabel: string;
 
   /** The input's confirmation placeholder text. */
-  @Prop() confirmation_placeholder: string;
+  @Prop() confirmationPlaceholder: string;
 
   /** The input's confirmation help text. */
-  @Prop() confirmation_help: string;
+  @Prop() confirmationHelp: string;
 
   @Method()
   async reportValidity() {
     if (this.loggedIn) return true;
 
-    if ( this.input?.value !== this.confirmInput?.value ) {
-      this.input.setCustomValidity( __( 'Confirmation Password Not Match.', 'surecart' ) );
-    } else {
-      this.input.setCustomValidity('');
+    this.confirmInput.setCustomValidity('');
+
+    // confirmation is enabled.
+    if (this.confirmation) {
+      if (this.confirmInput?.value && this.input?.value !== this.confirmInput?.value) {
+        this.confirmInput.setCustomValidity(__('Confirmation Password Not Match.', 'surecart'));
+      }
     }
 
-    return this.input.reportValidity();
+    const valid = await this.input.reportValidity();
+    if (!valid) {
+      return false;
+    }
+
+    return this.confirmInput.reportValidity();
   }
 
   render() {
@@ -77,7 +85,7 @@ export class ScOrderPassword {
     }
 
     return (
-      <div>
+      <div class="password">
         <sc-input
           ref={el => (this.input = el as HTMLScInputElement)}
           label={this.label}
@@ -95,9 +103,9 @@ export class ScOrderPassword {
         {this.confirmation && (
           <sc-input
             ref={el => (this.confirmInput = el as HTMLScInputElement)}
-            label={this.confirmation_label}
-            help={this.confirmation_help}
-            placeholder={this.confirmation_placeholder}
+            label={this.confirmationLabel ?? __('Confirm Password', 'surecart')}
+            help={this.confirmationHelp}
+            placeholder={this.confirmationPlaceholder}
             size={this.size ? this.size : 'medium'}
             type="password"
             value={this.value}
@@ -105,7 +113,7 @@ export class ScOrderPassword {
             disabled={this.disabled}
           ></sc-input>
         )}
-      </div>  
+      </div>
     );
   }
 }
