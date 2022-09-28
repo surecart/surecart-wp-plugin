@@ -295,7 +295,8 @@ export default () => {
 						{__('Enable to Load Stripe Script on Every Page', 'surecart')}
 						<span slot="description" style={{ lineHeight: '1.4' }}>
 							{__(
-								'If you want enable to load stripe.js on every page to help with Fraud monitoring.'
+								'If you want enable to load stripe.js on every page to help with Fraud monitoring.',
+								'surecart'
 							)}
 						</span>
 					</ScSwitch>
