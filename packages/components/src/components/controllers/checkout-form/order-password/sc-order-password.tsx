@@ -49,6 +49,15 @@ export class ScOrderPassword {
   /** The input's password confirmation attribute. */
   @Prop({ reflect: true }) confirmation = false;
 
+  /** The input's confirmation label text. */
+  @Prop() confirmation_label: string;
+
+  /** The input's confirmation placeholder text. */
+  @Prop() confirmation_placeholder: string;
+
+  /** The input's confirmation help text. */
+  @Prop() confirmation_help: string;
+
   @Method()
   async reportValidity() {
     if (this.loggedIn) return true;
@@ -86,9 +95,9 @@ export class ScOrderPassword {
         {this.confirmation && (
           <sc-input
             ref={el => (this.confirmInput = el as HTMLScInputElement)}
-            label={__('Password Confirmation', 'surecart')}
-            help={this.help}
-            placeholder={this.placeholder}
+            label={this.confirmation_label}
+            help={this.confirmation_help}
+            placeholder={this.confirmation_placeholder}
             size={this.size ? this.size : 'medium'}
             type="password"
             value={this.value}

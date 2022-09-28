@@ -11,6 +11,9 @@ export default ({ className, attributes }) => {
 		value,
 		required,
 		confirmation,
+		confirmation_label,
+		confirmation_placeholder,
+		confirmation_help,
 	} = attributes;
 
 	return (
@@ -29,6 +32,9 @@ export default ({ className, attributes }) => {
 			value={value}
 			required={required}
 			confirmation={confirmation ? '1' : null}
+			confirmation_label={confirmation_label}
+			confirmation_placeholder={confirmation_placeholder}
+			confirmation_help={confirmation_help}
 		></sc-order-password>
 	);
 };

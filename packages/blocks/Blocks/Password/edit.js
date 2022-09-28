@@ -17,7 +17,16 @@ import {
 import { ScInput } from '@surecart/components-react';
 
 export default ({ className, attributes, setAttributes, isSelected }) => {
-	const { label, placeholder, help, required, confirmation } = attributes;
+	const {
+		label,
+		placeholder,
+		help,
+		required,
+		confirmation,
+		confirmation_label,
+		confirmation_placeholder,
+		confirmation_help,
+	} = attributes;
 
 	return (
 		<Fragment>
@@ -47,19 +56,46 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 						/>
 					</PanelRow>
 					<PanelRow>
-						<ToggleControl
-							label={__('Password Confirmation', 'surecart')}
-							checked={confirmation}
-							onChange={(confirmation) => setAttributes({ confirmation })}
-						/>
-					</PanelRow>
-					<PanelRow>
 						<TextControl
 							label={__('Help', 'surecart')}
 							value={help}
 							onChange={(help) => setAttributes({ help })}
 						/>
 					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={__('Password Confirmation', 'surecart')}
+							checked={confirmation}
+							onChange={(confirmation) => setAttributes({ confirmation })}
+						/>
+					</PanelRow>
+					{confirmation && (
+						<>
+							<PanelRow>
+								<TextControl
+									label={__('Password Confirmation Label', 'surecart')}
+									value={confirmation_label}
+									onChange={(confirmation_label) => setAttributes({ confirmation_label })}
+								/>
+							</PanelRow>
+							<PanelRow>
+								<TextControl
+									label={__('Password Confirmation Placeholder', 'surecart')}
+									value={confirmation_placeholder}
+									onChange={(confirmation_placeholder) =>
+										setAttributes({ confirmation_placeholder })
+									}
+								/>
+							</PanelRow>
+							<PanelRow>
+								<TextControl
+									label={__('Password Confirmation Help', 'surecart')}
+									value={confirmation_help}
+									onChange={(confirmation_help) => setAttributes({ confirmation_help })}
+								/>
+							</PanelRow>
+						</>			
+					)}
 				</PanelBody>
 			</InspectorControls>
 
