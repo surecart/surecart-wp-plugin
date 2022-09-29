@@ -512,6 +512,7 @@ export namespace Components {
           * Simulates a click on the choice.
          */
         "triggerClick": () => Promise<void>;
+        "triggerFocus": () => Promise<void>;
         /**
           * The choice name attribute
          */
@@ -555,6 +556,7 @@ export namespace Components {
           * Input size
          */
         "size": 'small' | 'medium' | 'large';
+        "triggerFocus": () => Promise<void>;
     }
     interface ScColumn {
     }

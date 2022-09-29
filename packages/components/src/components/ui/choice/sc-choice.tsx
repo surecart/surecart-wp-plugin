@@ -77,6 +77,11 @@ export class ScChoice {
     this.input.click();
   }
 
+  @Method()
+  async triggerFocus() {
+    this.input.focus();
+  }
+
   /** Checks for validity and shows the browser's validation message if the control is invalid. */
   @Method()
   async reportValidity() {
@@ -138,7 +143,7 @@ export class ScChoice {
     if (!choiceGroup) {
       return [];
     }
-    return [...choiceGroup.querySelectorAll('sc-choice')].filter((choice: HTMLScChoiceElement) => choice.name === this.name) as HTMLScChoiceElement[];
+    return [...choiceGroup.querySelectorAll('sc-choice')] as HTMLScChoiceElement[];
   }
 
   getSiblingChoices() {
@@ -151,36 +156,13 @@ export class ScChoice {
       const choices = this.getAllChoices().filter(choice => !choice.disabled);
       const incr = ['ArrowUp', 'ArrowLeft'].includes(event.key) ? -1 : 1;
       let index = choices.indexOf(this.el) + incr;
-      console.log(this.el);
       if (index < 0) index = choices.length - 1;
       if (index > choices.length - 1) index = 0;
-      this.getAllChoices().map(choice => (choice.checked = false));
-      choices[index].focus();
-      // choices[index].click();
+
+      choices[index].triggerFocus();
       choices[index].checked = true;
 
       event.preventDefault();
-    }
-
-    // On Tab key press
-    if (event.key == "Tab") {
-      event.preventDefault();
-      console.log('Tab');
-    }
-
-    // On Esc key press
-    if (event.key == "Escape") {
-      const choiceGroup = this.el.closest('sc-choices') || this.el.parentElement;
-      choiceGroup.focus();
-    }
-
-    // On Enter key press
-    if (event.key == "Enter") {
-      event.preventDefault();
-      const choices = this.getAllChoices().filter(choice => !choice.disabled);
-      let index = choices.indexOf(this.el);
-      choices[index].focus();
-      choices[index].checked = true;
     }
   }
 
