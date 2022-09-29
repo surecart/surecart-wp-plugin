@@ -146,19 +146,41 @@ export class ScChoice {
   }
 
   handleKeyDown(event: KeyboardEvent) {
-    console.log('Hello');
+    // On arrow key press
     if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
       const choices = this.getAllChoices().filter(choice => !choice.disabled);
       const incr = ['ArrowUp', 'ArrowLeft'].includes(event.key) ? -1 : 1;
       let index = choices.indexOf(this.el) + incr;
+      console.log(this.el);
       if (index < 0) index = choices.length - 1;
       if (index > choices.length - 1) index = 0;
-
       this.getAllChoices().map(choice => (choice.checked = false));
       choices[index].focus();
+      // choices[index].click();
       choices[index].checked = true;
 
       event.preventDefault();
+    }
+
+    // On Tab key press
+    if (event.key == "Tab") {
+      event.preventDefault();
+      console.log('Tab');
+    }
+
+    // On Esc key press
+    if (event.key == "Escape") {
+      const choiceGroup = this.el.closest('sc-choices') || this.el.parentElement;
+      choiceGroup.focus();
+    }
+
+    // On Enter key press
+    if (event.key == "Enter") {
+      event.preventDefault();
+      const choices = this.getAllChoices().filter(choice => !choice.disabled);
+      let index = choices.indexOf(this.el);
+      choices[index].focus();
+      choices[index].checked = true;
     }
   }
 
