@@ -1,22 +1,24 @@
-import useEntity from '../../../mixins/useEntity';
+import { store as coreStore } from '@wordpress/core-data';
 import { ScButton, ScTooltip } from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
 import { useState } from '@wordpress/element';
 import { __, _n } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+import { useDispatch } from '@wordpress/data';
 
 export default ({ purchase }) => {
 	const [loading, setLoading] = useState(false);
+	const { receiveEntityRecords } = useDispatch(coreStore);
 
 	const toggleRevoke = async (id, revoke) => {
 		const r = confirm(
 			revoke
 				? __(
-						'Are you sure you want to revoke this purchase?',
+						'Are you sure? This action will remove the associated access and trigger any cancelation automations you have set up.',
 						'surecart'
 				  )
 				: __(
-						'Are you sure you want to reinstate this purchase?',
+						'Are you sure? This action will re-enable associated access.',
 						'surecart'
 				  )
 		);
@@ -39,7 +41,14 @@ export default ({ purchase }) => {
 				),
 				method: 'PATCH',
 			});
-			receivePurchase(result);
+			receiveEntityRecords(
+				'surecart',
+				'purchase',
+				result,
+				undefined,
+				false,
+				purchase
+			);
 		} catch (e) {
 			throw e;
 		} finally {

@@ -26,8 +26,8 @@ export class ScCheckbox {
   /** Disables the checkbox. */
   @Prop({ reflect: true }) disabled: boolean = false;
 
-  /** Makes this static and not editable. */
-  @Prop({ reflect: true }) static: boolean = false;
+  /** Makes this edit and not editable. */
+  @Prop({ reflect: true }) edit: boolean = false;
 
   /** Makes the checkbox a required field. */
   @Prop({ reflect: true }) required: boolean = false;
@@ -125,7 +125,7 @@ export class ScCheckbox {
   }
 
   render() {
-    const Tag = this.static ? 'div' : 'label';
+    const Tag = this.edit ? 'div' : 'label';
     return (
       <Tag
         part="base"

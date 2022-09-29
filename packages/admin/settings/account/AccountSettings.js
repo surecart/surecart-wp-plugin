@@ -46,6 +46,12 @@ export default () => {
 		'site',
 		'surecart_recaptcha_secret_key'
 	);
+	// enable stripe script.
+	const [stripeScriptEnabled, setStripeScriptEnabled] = useEntityProp(
+		'root',
+		'site',
+		'surecart_load_stripe_js'
+	);
 
 	/**
 	 * Form is submitted.
@@ -280,6 +286,24 @@ export default () => {
 							</ScAlert>
 						)}
 					</>
+				)}
+				{scData.processors.some(
+					(processor) => processor.processor_type === 'stripe'
+				) && (
+					<ScSwitch
+						checked={stripeScriptEnabled}
+						onScChange={(e) =>
+							setStripeScriptEnabled(e.target.checked)
+						}
+					>
+						{__('Stripe Fraud Monitoring', 'surecart')}
+						<span slot="description" style={{ lineHeight: '1.4' }}>
+							{__(
+								'This will load stripe.js on every page to help with Fraud monitoring.',
+								'surecart'
+							)}
+						</span>
+					</ScSwitch>
 				)}
 			</SettingsBox>
 		</SettingsTemplate>

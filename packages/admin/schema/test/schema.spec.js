@@ -1,17 +1,17 @@
 import { normalizePrices, normalizeProducts } from '../index';
-describe( 'Schema', () => {
-	describe( 'normalizePrices', () => {
-		it( 'Normalizes prices with product', () => {
+describe('Schema', () => {
+	describe('normalizePrices', () => {
+		it('Normalizes prices with product', () => {
 			expect(
-				normalizePrices( [
+				normalizePrices([
 					{
 						id: 'price',
 						product: {
 							id: 'product',
 						},
 					},
-				] ).entities
-			).toEqual( {
+				]).entities
+			).toEqual({
 				prices: {
 					price: {
 						id: 'price',
@@ -23,13 +23,13 @@ describe( 'Schema', () => {
 						id: 'product',
 					},
 				},
-			} );
-		} );
-	} );
-	describe( 'normalizeProducts', () => {
-		it( 'Normalizes products with prices', () => {
+			});
+		});
+	});
+	describe('normalizeProducts', () => {
+		it('Normalizes products with prices', () => {
 			expect(
-				normalizeProducts( [
+				normalizeProducts([
 					{
 						id: 'product',
 						prices: {
@@ -43,8 +43,8 @@ describe( 'Schema', () => {
 							],
 						},
 					},
-				] ).entities
-			).toEqual( {
+				]).entities
+			).toEqual({
 				prices: {
 					price_1: {
 						id: 'price_1',
@@ -57,11 +57,11 @@ describe( 'Schema', () => {
 					product: {
 						id: 'product',
 						prices: {
-							data: [ 'price_1', 'price_2' ],
+							data: ['price_1', 'price_2'],
 						},
 					},
 				},
-			} );
-		} );
-	} );
-} );
+			});
+		});
+	});
+});

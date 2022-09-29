@@ -1,6 +1,10 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScBreadcrumb, ScBreadcrumbs, ScButton } from '@surecart/components-react';
+import {
+	ScBreadcrumb,
+	ScBreadcrumbs,
+	ScButton,
+} from '@surecart/components-react';
 import { store } from '@surecart/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';

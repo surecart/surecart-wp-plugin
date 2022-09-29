@@ -3,8 +3,8 @@
  */
 import { entities, dirty } from '../reducer';
 
-describe( 'entities', () => {
-	it( 'can set entities', () => {
+describe('entities', () => {
+	it('can set entities', () => {
 		const payload = {
 			product: { id: 'product_id', name: 'test' },
 			prices: [
@@ -20,10 +20,10 @@ describe( 'entities', () => {
 			}
 		);
 
-		expect( state ).toEqual( payload );
-	} );
+		expect(state).toEqual(payload);
+	});
 
-	it( 'can set a model', () => {
+	it('can set a model', () => {
 		const payload = {
 			id: 'price_id_1',
 			name: 'test',
@@ -37,10 +37,10 @@ describe( 'entities', () => {
 			}
 		);
 
-		expect( state ).toEqual( { prices: { 0: payload } } );
-	} );
+		expect(state).toEqual({ prices: { 0: payload } });
+	});
 
-	it( 'can add a model', () => {
+	it('can add a model', () => {
 		const payload = {
 			id: 'price_id_3',
 			name: 'test',
@@ -60,17 +60,17 @@ describe( 'entities', () => {
 			}
 		);
 
-		expect( state ).toEqual( {
+		expect(state).toEqual({
 			product: { id: 'product_id', name: 'test' },
 			prices: [
 				{ id: 'price_id_1', name: 'test' },
 				{ id: 'price_id_2', name: 'test' },
 				{ id: 'price_id_3', name: 'test' },
 			],
-		} );
-	} );
+		});
+	});
 
-	it( 'can add update model', () => {
+	it('can add update model', () => {
 		const state = entities(
 			{
 				product: { id: 'product_id', name: 'test' },
@@ -85,16 +85,16 @@ describe( 'entities', () => {
 				payload: { name: 'updated' },
 			}
 		);
-		expect( state ).toEqual( {
+		expect(state).toEqual({
 			product: { id: 'product_id', name: 'test' },
 			prices: [
 				{ id: 'price_id_1', name: 'updated' },
 				{ id: 'price_id_2', name: 'test' },
 			],
-		} );
-	} );
+		});
+	});
 
-	it( 'can delete a model', () => {
+	it('can delete a model', () => {
 		const state = entities(
 			{
 				product: { id: 'product_id', name: 'test' },
@@ -109,13 +109,13 @@ describe( 'entities', () => {
 			}
 		);
 
-		expect( state ).toEqual( {
+		expect(state).toEqual({
 			product: { id: 'product_id', name: 'test' },
-			prices: [ { id: 'price_id_2', name: 'test' } ],
-		} );
-	} );
+			prices: [{ id: 'price_id_2', name: 'test' }],
+		});
+	});
 
-	it( 'can remove a dirty model', () => {
+	it('can remove a dirty model', () => {
 		const state = dirty(
 			{
 				product_id_2: { name: 'test' },
@@ -128,9 +128,9 @@ describe( 'entities', () => {
 			}
 		);
 
-		expect( state ).toEqual( {
+		expect(state).toEqual({
 			product_id_2: { name: 'test' },
 			price_id_1: { name: 'test' },
-		} );
-	} );
-} );
+		});
+	});
+});

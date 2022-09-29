@@ -7,10 +7,8 @@ import { __ } from '@wordpress/i18n';
 
 import Box from '../ui/Box';
 import Definition from '../ui/Definition';
-import Downloads from './modules/Downloads';
+import Advanced from './modules/Advanced';
 import Image from './modules/Image';
-import Integrations from './modules/integrations/Integrations';
-import Licensing from './modules/Licensing';
 import Taxes from './modules/Tax';
 
 export default ({
@@ -97,11 +95,11 @@ export default ({
 				loading={loading}
 			/>
 
-			{/* <Upgrades
+			<Advanced
 				product={product}
 				updateProduct={updateProduct}
 				loading={loading}
-			/> */}
+			/>
 		</Fragment>
 	);
 };

@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { PanelColorSettings } from '@wordpress/editor';
+import { PanelColorSettings } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	PanelRow,

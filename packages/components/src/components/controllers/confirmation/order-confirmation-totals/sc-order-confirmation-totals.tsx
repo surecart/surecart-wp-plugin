@@ -52,10 +52,17 @@ export class ScOrderConfirmationTotals {
         </sc-line-item-total>
         {this.renderDiscountLine()}
 
-        {this.order?.bump_amount && (
+        {!!this.order?.bump_amount && (
           <sc-line-item style={{ marginTop: 'var(--sc-spacing-small)' }}>
             <span slot="description">{__('Bundle Discount', 'surecart')}</span>
             <sc-format-number slot="price" type="currency" currency={this.order?.currency} value={this.order?.bump_amount}></sc-format-number>
+          </sc-line-item>
+        )}
+
+        {!!this.order?.tax_amount && (
+          <sc-line-item style={{ marginTop: 'var(--sc-spacing-small)' }}>
+            <span slot="description">{this.order?.tax_label || __('Tax', 'surecart')}</span>
+            <sc-format-number slot="price" type="currency" currency={this.order?.currency} value={this.order?.tax_amount}></sc-format-number>
           </sc-line-item>
         )}
 

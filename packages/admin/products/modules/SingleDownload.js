@@ -1,6 +1,17 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScBlockUi, ScButton, ScDropdown, ScFormatBytes, ScIcon, ScMenu, ScMenuDivider, ScMenuItem, ScStackedListRow, ScTag } from '@surecart/components-react';
+import {
+	ScBlockUi,
+	ScButton,
+	ScDropdown,
+	ScFormatBytes,
+	ScIcon,
+	ScMenu,
+	ScMenuDivider,
+	ScMenuItem,
+	ScStackedListRow,
+	ScTag,
+} from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';

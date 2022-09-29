@@ -17,6 +17,19 @@
     letter-spacing: var(--sc-input-label-letter-spacing, 0);
     margin-bottom: var(--sc-input-label-margin);
   }
+
+  &__hidden-input {
+    position: absolute;
+    opacity: 0;
+    padding: 0px;
+    margin: 0px;
+    pointer-events: none;
+  }
+
+  &--is-required .radio-group__label:after {
+    content: " *";
+    color: var(--sc-color-danger-500);
+  }
 }
 
 ::slotted(sc-radio:not(:last-of-type)) {

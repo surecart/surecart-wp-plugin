@@ -8,24 +8,24 @@ export const entities = (
 	},
 	{ type, payload }
 ) => {
-	switch ( type ) {
+	switch (type) {
 		case 'SET_ENTITIES':
 			return payload;
 		case 'MERGE_ENTITIES':
 			return {
 				products: {
 					...state.products,
-					...( payload.products || {} ),
+					...(payload.products || {}),
 				},
 				prices: {
 					...state.prices,
-					...( payload.prices || {} ),
+					...(payload.prices || {}),
 				},
 			};
 	}
 	return state;
 };
 
-export default combineReducers( {
+export default combineReducers({
 	entities,
-} );
+});

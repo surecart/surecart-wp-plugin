@@ -3,45 +3,45 @@ import { mergeEntities } from './actions';
 import { normalizeProducts, normalizePrices } from '@admin/utils/schema';
 
 export default {
-	*searchProducts( query ) {
+	*searchProducts(query) {
 		try {
-			const products = yield apiFetch( {
+			const products = yield apiFetch({
 				path: 'products',
 				query: {
 					query,
 					archived: false,
 				},
-			} );
-			const { entities } = normalizeProducts( products );
-			return yield mergeEntities( entities );
-		} catch ( error ) {
-			console.error( error );
+			});
+			const { entities } = normalizeProducts(products);
+			return yield mergeEntities(entities);
+		} catch (error) {
+			console.error(error);
 		}
 	},
 
-	*selectPricesByProductId( id ) {
+	*selectPricesByProductId(id) {
 		try {
-			const prices = yield apiFetch( {
+			const prices = yield apiFetch({
 				path: 'prices',
-				product_ids: [ id ],
-			} );
-			const { entities } = normalizePrices( prices );
-			return yield mergeEntities( entities );
-		} catch ( error ) {
-			console.error( error );
+				product_ids: [id],
+			});
+			const { entities } = normalizePrices(prices);
+			return yield mergeEntities(entities);
+		} catch (error) {
+			console.error(error);
 		}
 	},
 
-	*selectPricesByIds( ids ) {
+	*selectPricesByIds(ids) {
 		try {
-			const product = yield apiFetch( {
+			const product = yield apiFetch({
 				path: `prices`,
 				query: { ids },
-			} );
-			const { entities } = normalizePrices( product );
-			return yield mergeEntities( entities );
-		} catch ( error ) {
-			console.error( error );
+			});
+			const { entities } = normalizePrices(product);
+			return yield mergeEntities(entities);
+		} catch (error) {
+			console.error(error);
 		}
 	},
 };

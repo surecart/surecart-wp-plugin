@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "packages/components/src/**/*.tsx"
+      - "packages/components/src/**/*.snap"
 
 jobs:
   test:

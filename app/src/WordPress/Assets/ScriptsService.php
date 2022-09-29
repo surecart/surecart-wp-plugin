@@ -154,6 +154,11 @@ class ScriptsService {
 
 		// regsiter recaptcha.
 		wp_register_script( 'surecart-google-recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . \SureCart::settings()->recaptcha()->getSiteKey(), [], \SureCart::plugin()->version(), true );
+
+		// register stripe if enabled.
+		if ( get_option( 'surecart_load_stripe_js', false ) ) {
+			wp_enqueue_script( 'surecart-stripe-script', 'https://js.stripe.com/v3', [], \SureCart::plugin()->version(), false );
+		}
 	}
 
 	/**
@@ -184,6 +189,18 @@ class ScriptsService {
 				'nonce_endpoint'      => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
 				'recaptcha_site_key'  => \SureCart::settings()->recaptcha()->getSiteKey(),
 			]
+		);
+
+		// fix shitty jetpack issues key hijacking issues.
+		add_filter(
+			'wp_head',
+			function() {
+				wp_dequeue_script( 'wpcom-notes-common' );
+				wp_dequeue_script( 'wpcom-notes-admin-bar' );
+				wp_dequeue_style( 'wpcom-notes-admin-bar' );
+				wp_dequeue_style( 'noticons' );
+			},
+			200
 		);
 
 		wp_localize_script( 'surecart-components', 'scIcons', [ 'path' => esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) ] );

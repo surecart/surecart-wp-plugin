@@ -71,6 +71,15 @@ class SettingService {
 				'sanitize_callback' => 'sanitize_text_field',
 			]
 		);
+		$this->register(
+			'general',
+			'load_stripe_js',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+			]
+		);
 	}
 
 	/**

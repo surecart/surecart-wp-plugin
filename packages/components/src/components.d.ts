@@ -340,6 +340,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Makes this edit and not editable.
+         */
+        "edit": boolean;
+        /**
           * Draws the checkbox in an indeterminate state.
          */
         "indeterminate": boolean;
@@ -359,10 +363,6 @@ export namespace Components {
           * Makes the checkbox a required field.
          */
         "required": boolean;
-        /**
-          * Makes this static and not editable.
-         */
-        "static": boolean;
         /**
           * Removes focus from the checkbox.
          */
@@ -1539,6 +1539,22 @@ export namespace Components {
          */
         "autofocus": boolean;
         /**
+          * The input's password confirmation attribute.
+         */
+        "confirmation": boolean;
+        /**
+          * The input's confirmation help text.
+         */
+        "confirmationHelp": string;
+        /**
+          * The input's confirmation label text.
+         */
+        "confirmationLabel": string;
+        /**
+          * The input's confirmation placeholder text.
+         */
+        "confirmationPlaceholder": string;
+        /**
           * Disables the input.
          */
         "disabled": boolean;
@@ -2136,6 +2152,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * This will be true as a workaround in the block editor to focus on the content.
+         */
+        "edit": boolean;
+        /**
           * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
          */
         "invalid": boolean;
@@ -2158,9 +2178,25 @@ export namespace Components {
     }
     interface ScRadioGroup {
         /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid": boolean;
+        /**
           * The radio group label. Required for proper accessibility.
          */
         "label": string;
+        /**
+          * Checks for validity and shows the browser's validation message if the control is invalid.
+         */
+        "reportValidity": () => Promise<boolean>;
+        /**
+          * Is one of these items required.
+         */
+        "required": boolean;
+        /**
+          * The selected value of the control.
+         */
+        "value": string;
     }
     interface ScSecureNotice {
     }
@@ -4481,6 +4517,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * Makes this edit and not editable.
+         */
+        "edit"?: boolean;
+        /**
           * Draws the checkbox in an indeterminate state.
          */
         "indeterminate"?: boolean;
@@ -4508,10 +4548,6 @@ declare namespace LocalJSX {
           * Makes the checkbox a required field.
          */
         "required"?: boolean;
-        /**
-          * Makes this static and not editable.
-         */
-        "static"?: boolean;
         /**
           * The checkbox's value attribute.
          */
@@ -5829,6 +5865,22 @@ declare namespace LocalJSX {
          */
         "autofocus"?: boolean;
         /**
+          * The input's password confirmation attribute.
+         */
+        "confirmation"?: boolean;
+        /**
+          * The input's confirmation help text.
+         */
+        "confirmationHelp"?: string;
+        /**
+          * The input's confirmation label text.
+         */
+        "confirmationLabel"?: string;
+        /**
+          * The input's confirmation placeholder text.
+         */
+        "confirmationPlaceholder"?: string;
+        /**
           * Disables the input.
          */
         "disabled"?: boolean;
@@ -6494,6 +6546,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * This will be true as a workaround in the block editor to focus on the content.
+         */
+        "edit"?: boolean;
+        /**
           * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
          */
         "invalid"?: boolean;
@@ -6524,9 +6580,21 @@ declare namespace LocalJSX {
     }
     interface ScRadioGroup {
         /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid"?: boolean;
+        /**
           * The radio group label. Required for proper accessibility.
          */
         "label"?: string;
+        /**
+          * Is one of these items required.
+         */
+        "required"?: boolean;
+        /**
+          * The selected value of the control.
+         */
+        "value"?: string;
     }
     interface ScSecureNotice {
     }
