@@ -908,6 +908,10 @@
   },
   "sc-order-password": {
     "autofocus": true,
+    "confirmation": true,
+    "confirmation-help": true,
+    "confirmation-label": true,
+    "confirmation-placeholder": true,
     "disabled": true,
     "help": true,
     "label": true,

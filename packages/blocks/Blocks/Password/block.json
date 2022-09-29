@@ -47,6 +47,21 @@
 		},
 		"name": {
 			"type": "string"
+		},
+		"confirmation": {
+			"type": "boolean",
+			"default": false
+		},
+		"confirmation_label": {
+			"type": "string",
+			"default": "Password Confirmation"
+		},
+		"confirmation_placeholder": {
+			"type": "string",
+			"default": ""
+		},
+		"confirmation_help": {
+			"type": "string"
 		}
 	}
 }
