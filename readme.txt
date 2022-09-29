@@ -243,6 +243,13 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.1.14 - September 29, 2022 =
+* New: Radio group checkout form block.
+* New: Password confirmation option in password form block.
+* New: Customer name now syncs with WordPress name on checkout.
+* Fix: Issue with clicking add to cart button for an existing item in cart sometimes creating 2 line items instead of 1.
+* Fix: Issue with theme line-height sometimes cutting off decenders in dashboard tabs.
+
 = 1.1.13 - September 27, 2022 =
 * New: Thrive Automator purchase events integration.
 * New: Elementor module! Select, edit and create forms from the new Elementor widget.
