@@ -54,6 +54,9 @@ export class ScAddress {
   /** Should we show name field? */
   @Prop() showName: boolean;
 
+  /** Placeholder for Name */
+  @Prop() namePlaceholder: string;
+
   /** Should we show name field? */
   @Prop() showLine2: boolean;
 
@@ -140,7 +143,7 @@ export class ScAddress {
               onScChange={(e: any) => this.updateAddress({ name: e.target.value || null })}
               onScInput={(e: any) => this.handleAddressInput({ name: e.target.value || null })}
               autocomplete="street-address"
-              placeholder={this.placeholders.name}
+              placeholder={this?.namePlaceholder}
               name={this.names.name}
               squared-bottom
               disabled={this.disabled}

@@ -24,6 +24,10 @@ export namespace Components {
           * Is this loading?
          */
         "loading": boolean;
+        /**
+          * Placeholder for Name
+         */
+        "namePlaceholder": string;
         "names": Partial<Address>;
         "placeholders": Partial<Address>;
         "reportValidity": () => Promise<boolean>;
@@ -4137,6 +4141,10 @@ declare namespace LocalJSX {
           * Is this loading?
          */
         "loading"?: boolean;
+        /**
+          * Placeholder for Name
+         */
+        "namePlaceholder"?: string;
         "names"?: Partial<Address>;
         /**
           * Address change event.

@@ -10,11 +10,12 @@ import {
 import { ScAddress } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes }) => {
-	const { label, full, show_name } = attributes;
+	const { label, full, show_name, name_placeholder } = attributes;
 
 	const blockProps = useBlockProps({
 		label,
 		showName: show_name,
+    namePlaceholder: name_placeholder,
 	});
 
 	return (
@@ -59,6 +60,15 @@ export default ({ attributes, setAttributes }) => {
 									setAttributes({ show_name })
 								}
 							/>
+						</PanelRow>
+					)}
+          {show_name && (
+						<PanelRow>
+							<TextControl
+                label={__('Placeholder Text', 'surecart')}
+                value={name_placeholder}
+                onChange={(name_placeholder) => setAttributes({ name_placeholder })}
+              />
 						</PanelRow>
 					)}
 				</PanelBody>

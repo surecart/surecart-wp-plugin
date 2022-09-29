@@ -4,6 +4,7 @@
     "disabled": true,
     "label": true,
     "loading": true,
+    "name-placeholder": true,
     "names": true,
     "placeholders": true,
     "required": true,
