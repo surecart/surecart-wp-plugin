@@ -24,7 +24,8 @@
 			"type": "boolean"
 		},
 		"name_placeholder": {
-			"type": "string"
+			"type": "string",
+      "default": "Name or Company Name"
 		}
 	}
 }

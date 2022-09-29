@@ -35,6 +35,9 @@ export class ScOrderShippingAddress {
   /** Show the name field. */
   @Prop() showName: boolean;
 
+  /** Show the name field placeholder. */
+  @Prop() namePlaceholder: string;
+
   /** Placeholder values. */
   @Prop() placeholders: Partial<Address> = {
     name: __('Name or Company Name', 'surecart'),
@@ -92,6 +95,7 @@ export class ScOrderShippingAddress {
           ref={el => (this.input = el as any)}
           label={this.label || __('Shipping Address', 'surecart')}
           placeholders={this.placeholders}
+          namePlaceholder={this.namePlaceholder}
           required={this.required}
           loading={this.loading}
           address={this.address}

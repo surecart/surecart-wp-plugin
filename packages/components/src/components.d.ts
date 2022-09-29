@@ -1599,6 +1599,10 @@ export namespace Components {
          */
         "loading": boolean;
         /**
+          * Show the name field placeholder.
+         */
+        "namePlaceholder": string;
+        /**
           * Placeholder values.
          */
         "placeholders": Partial<Address>;
@@ -5891,6 +5895,10 @@ declare namespace LocalJSX {
           * Is this loading.
          */
         "loading"?: boolean;
+        /**
+          * Show the name field placeholder.
+         */
+        "namePlaceholder"?: string;
         /**
           * Make a request to update the order.
          */
