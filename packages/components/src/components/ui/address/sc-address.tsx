@@ -143,7 +143,7 @@ export class ScAddress {
               onScChange={(e: any) => this.updateAddress({ name: e.target.value || null })}
               onScInput={(e: any) => this.handleAddressInput({ name: e.target.value || null })}
               autocomplete="street-address"
-              placeholder={this?.namePlaceholder}
+              placeholder={this.namePlaceholder ?? this.placeholders.name}
               name={this.names.name}
               squared-bottom
               disabled={this.disabled}
