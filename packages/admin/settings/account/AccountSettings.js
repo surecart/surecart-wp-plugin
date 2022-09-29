@@ -7,6 +7,8 @@ import {
 	ScInput,
 	ScSelect,
 	ScSwitch,
+	ScButton,
+	ScIcon,
 } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
@@ -281,6 +283,19 @@ export default () => {
 						)}
 					</>
 				)}
+			</SettingsBox>
+			<SettingsBox
+				title={__('Data Clear', 'surecart')}
+				description={__(
+					'Delete the application test data by clicking the button.',
+					'surecart'
+				)}
+				loading={!hasLoadedItem}
+				noButton={true}
+			>
+				<ScButton type="danger" href={'https://app.surecart.com/account/purge_test_data'} target="_blank">
+					{__('Clear Test Data', 'surecart')}
+				</ScButton>
 			</SettingsBox>
 		</SettingsTemplate>
 	);
