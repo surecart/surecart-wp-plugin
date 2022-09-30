@@ -28,15 +28,15 @@ function getRemoteFile(url) {
 }
 
 const languages = [
-  // {
-  //   code: "de"
-  // },
+  {
+    code: "de"
+  },
   {
     code: "es"
   },
-  // {
-  //   code: "fr"
-  // },
+  {
+    code: "fr"
+  },
 ];
 
 languages.forEach(function(item) {
