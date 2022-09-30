@@ -22,11 +22,7 @@ export class ScExpressPayment {
   }
 
   renderStripePaymentRequest() {
-    if (
-      !this?.order?.processor_data?.stripe?.publishable_key ||
-      !this?.order?.processor_data?.stripe?.account_id ||
-      !window?.scData?.is_ssl
-    ) {
+    if (!this?.order?.processor_data?.stripe?.publishable_key || !this?.order?.processor_data?.stripe?.account_id) {
       return '';
     }
 

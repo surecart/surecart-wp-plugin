@@ -74,6 +74,11 @@ export class ScStripePaymentRequest {
     if (!this?.publishableKey || !this?.stripeAccountId) {
       return true;
     }
+
+    if ( ! window?.scData?.is_ssl ) {
+      return;
+    }
+
     this.stripe = await loadStripe(this.publishableKey, { stripeAccount: this.stripeAccountId });
     this.elements = this.stripe.elements();
     this.paymentRequest = this.stripe.paymentRequest({

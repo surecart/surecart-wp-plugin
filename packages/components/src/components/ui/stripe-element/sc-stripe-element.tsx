@@ -1,5 +1,6 @@
 import { Component, Element, Event, EventEmitter, Fragment, h, Method, Prop, State, Watch } from '@stencil/core';
 import { loadStripe } from '@stripe/stripe-js/pure';
+import { __ } from '@wordpress/i18n';
 
 import { Checkout, FormStateSetter } from '../../../types';
 
@@ -57,8 +58,12 @@ export class ScStripeElement {
     if (!this.publishableKey || !this.accountId) {
       return;
     }
-    this.stripe = await loadStripe(this.publishableKey, { stripeAccount: this.accountId });
-    this.elements = this.stripe.elements();
+    try {
+      this.stripe   = await loadStripe(this.publishableKey, { stripeAccount: this.accountId });
+      this.elements = this.stripe.elements();
+    } catch (e) {
+      this.error = e?.message || __('Cannot run live payments without a valid SSL certificate.', 'surecart');
+    }
   }
 
   @Watch('order')
