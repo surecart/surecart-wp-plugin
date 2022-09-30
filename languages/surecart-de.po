@@ -1,0 +1,54 @@
+msgid ""
+msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2022-09-30T11:15:38+00:00\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"X-Generator: WP-CLI 2.6.0\n"
+
+#: src/BlockLibrary/BlockPatternsService.php:28
+msgid "Checkout Form"
+msgstr "Checkout-Formular"
+
+#: src/BlockLibrary/BlockServiceProvider.php:95
+#: src/Integrations/AffiliateWP/AffiliateWPService.php:29
+#: src/Integrations/ThriveAutomator/ThriveAutomatorApp.php:25
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:108
+#: src/WordPress/Admin/Notices/AdminNoticesService.php:104
+#: src/WordPress/ThemeServiceProvider.php:87
+#: admin/user-profile.php:1
+#: error.php:2
+msgid "SureCart"
+msgstr "SureCart"
+
+#: src/Cart/CartService.php:51
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:133
+msgid "Cart"
+msgstr "Wagen"
+
+#: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:48
+#: src/Controllers/Admin/Bumps/BumpsListTable.php:56
+#: src/Controllers/Admin/Orders/OrdersListTable.php:69
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:63
+#: src/Controllers/Admin/Products/ProductsListTable.php:56
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:60
+msgid "All"
+msgstr "Alle"
+
+#: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:49
+#: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:185
+msgid "Recovered"
+msgstr "Erholt"
+
+#: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:50
+msgid "Notified"
+msgstr "Benachrichtigt"
+
+#: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:87
+msgid "Search Abanonded Orders"
+msgstr "Suche nach aufgegebenen Bestellungen"

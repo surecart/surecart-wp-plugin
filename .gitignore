@@ -12,6 +12,9 @@ node_modules
 
 # Composer packages
 /vendor/
+vendor/
+cache/
+temp/
 
 # NPM lockfile as it causes more problems than it solves
 package-lock.json

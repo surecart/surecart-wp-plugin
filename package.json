@@ -31,7 +31,9 @@
 	"prettier": "@wordpress/prettier-config",
 	"scripts": {
 		"pot:download": "node scripts/po-files.js",
-		"pot:translate": "vendor/bin/potrans google languages/surecart.pot ./ --credentials=credentials.json --from=en --to=mr",
+		"pot:merge": "node scripts/merge-po.js",
+		"pot:translate": "node scripts/google-translate.js",
+		"pot:test": "vendor/bin/potrans google languages/surecart.pot ./ --credentials=credentials.json --from=en --to=mr",
 		"wp-env": "wp-env",
 		"dev": "composer install && yarn start:workspace",
 		"docs:release": "yarn workspaces foreach run docs:release",
