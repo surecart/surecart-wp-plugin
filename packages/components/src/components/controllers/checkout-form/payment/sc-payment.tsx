@@ -80,6 +80,10 @@ export class ScPayment {
    * Render the payment element.
    */
   renderStripePaymentElement() {
+    if ( ! window?.scData?.is_ssl ) {
+      return '';
+    }
+
     if (this.stripePaymentElement) {
       return <sc-stripe-payment-element order={this.order} paymentIntent={this.stripePaymentIntent} />;
     }
@@ -233,7 +237,7 @@ export class ScPayment {
     }
 
     // we have stripe.
-    if (this.stripe) {
+    if ( this.stripe && window?.scData?.is_ssl ) {
       return (
         <sc-form-control label={this.label}>
           <div class="sc-payment-label" slot="label">

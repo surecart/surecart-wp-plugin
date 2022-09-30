@@ -20,6 +20,7 @@ declare global {
       nonce_endpoint: string;
       recaptcha_site_key: string;
       theme: string;
+      is_ssl: boolean;
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;

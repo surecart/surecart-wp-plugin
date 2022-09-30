@@ -102,6 +102,7 @@ abstract class BaseSettings {
 				'time_zones'           => TimeDate::timezoneOptions(),
 				'entitlements'         => \SureCart::account()->entitlements,
 				'processors'           => \SureCart::account()->processors ?? [],
+				'is_ssl'               => is_ssl(),
 			]
 		);
 	}
