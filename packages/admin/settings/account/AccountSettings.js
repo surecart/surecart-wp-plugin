@@ -293,7 +293,7 @@ export default () => {
 				loading={!hasLoadedItem}
 				noButton={true}
 			>
-				<ScButton type="danger" href={'https://app.surecart.com/account/purge_test_data'} target="_blank">
+				<ScButton type="danger" href={'https://app.surecart.com/account/edit'} target="_blank">
 					{__('Clear Test Data', 'surecart')}
 				</ScButton>
 			</SettingsBox>
