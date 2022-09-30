@@ -73,6 +73,16 @@ export default () => {
 		return currency?.value;
 	};
 
+  /**
+   * Get language for customer_locale
+   */
+  const customer_locales = {
+    "de": "Deutsch",
+    "en": "English (United States)",
+    "es": "Español",
+    "fr": "Français"
+  }
+
 	return (
 		<SettingsTemplate
 			title={__('Store Settings', 'surecart')}
@@ -166,6 +176,29 @@ export default () => {
 						label={__('Time Zone', 'surecart')}
 						help={__(
 							'Change this if you want the store to be in a different time zone than your server.',
+							'surecart'
+						)}
+						required
+					></ScSelect>
+
+          <ScSelect
+						search
+						value={item?.customer_locale}
+						onScChange={(e) =>
+							editItem({ customer_locale: e.target.value })
+						}
+						choices={Object.keys(customer_locales || {}).map(
+							(value) => {
+								const label = customer_locales[value];
+								return {
+									label,
+									value,
+								};
+							}
+						)}
+						label={__('Notifications and Invoice Language', 'surecart')}
+						help={__(
+							'The default language for notification and invoice.',
 							'surecart'
 						)}
 						required
