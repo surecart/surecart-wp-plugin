@@ -140,9 +140,25 @@ export class ScSubscriptionPaymentMethod {
     return (
       <sc-form onScSubmit={e => this.updateMethod(e)}>
         <sc-choices>{this.renderList()}</sc-choices>
-        <sc-button type="primary" submit full size="large" busy={this.busy} disabled={this.busy}>
-          {__('Update Payment Method', 'surecart')}
-        </sc-button>
+        {this.paymentMethods?.length > 1 ? (
+          <sc-button type="primary" submit full size="large" busy={this.busy} disabled={this.busy}>
+            {__('Update Payment Method', 'surecart')}
+          </sc-button>
+        ) : (
+          <sc-button
+            type="link"
+            full
+            href={addQueryArgs(window.location.href, {
+              action: 'create',
+              model: 'payment_method',
+              ...(this.subscription?.live_mode === false ? { live_mode: false } : {}),
+              success_url: window.location.href,
+            })}
+          >
+            <sc-icon name="plus" slot="prefix"></sc-icon>
+            {__('Add New', 'surecart')}
+          </sc-button>
+        )}
       </sc-form>
     );
   }
@@ -184,8 +200,9 @@ export class ScSubscriptionPaymentMethod {
   render() {
     return (
       <sc-dashboard-module heading={this.heading || __('Update Payment Method', 'surecart')} class="subscription" error={this.error}>
-        <sc-flex slot="end">
+        {this.paymentMethods?.length > 1 && (
           <sc-button
+            slot="end"
             type="link"
             href={addQueryArgs(window.location.href, {
               action: 'create',
@@ -197,7 +214,7 @@ export class ScSubscriptionPaymentMethod {
             <sc-icon name="plus" slot="prefix"></sc-icon>
             {__('Add New', 'surecart')}
           </sc-button>
-        </sc-flex>
+        )}
 
         {this.renderContent()}
 
