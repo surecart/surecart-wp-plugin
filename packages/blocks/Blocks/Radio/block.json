@@ -12,16 +12,14 @@
 	},
 	"attributes": {
 		"label": {
-			"type": "string",
-			"default": "Radio"
+			"type": "string"
 		},
 		"value": {
 			"type": "string",
-			"default": "key"
+			"default": "checked"
 		},
 		"name": {
-			"type": "string",
-			"default": "radio"
+			"type": "string"
 		}
 	}
 }

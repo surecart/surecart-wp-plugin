@@ -1,4 +1,5 @@
 import { RichText } from '@wordpress/block-editor';
+import { stripHTML } from '../../util';
 
 export default ({ className, attributes }) => {
 	const { name, checked, value, label } = attributes;
@@ -6,7 +7,7 @@ export default ({ className, attributes }) => {
 	return (
 		<sc-radio
 			class={className || false}
-			name={name || false}
+			name={name || stripHTML(label) || false}
 			checked={checked || false}
 			value={value || false}
 		>

@@ -49,6 +49,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		className: 'sc-radio',
 		allowedBlocks: ['surecart/radio'],
+		template: [['surecart/radio', {}]],
 		renderAppender:
 			isSelected || childIsSelected
 				? InnerBlocks.ButtonBlockAppender

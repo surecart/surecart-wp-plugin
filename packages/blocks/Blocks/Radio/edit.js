@@ -1,21 +1,15 @@
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-import { InspectorControls, RichText } from '@wordpress/block-editor';
-import { Fragment } from '@wordpress/element';
-import {
-	PanelBody,
-	PanelRow,
-	TextControl,
-	ToggleControl,
-} from '@wordpress/components';
-
-/**
  * Component Dependencies
  */
 import { ScRadio } from '@surecart/components-react';
+import { InspectorControls, RichText } from '@wordpress/block-editor';
 import { useBlockProps } from '@wordpress/block-editor';
+import { PanelBody, PanelRow, TextControl, ToggleControl } from '@wordpress/components';
+import { Fragment } from '@wordpress/element';
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 export default ({ className, attributes, setAttributes }) => {
 	const { label, value, checked, name } = attributes;
@@ -48,10 +42,23 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScRadio name={name} checked={checked} edit {...useBlockProps()}>
+			<ScRadio
+				name={name}
+				checked={checked}
+				edit
+				{...useBlockProps({
+					className,
+					style: {
+						display: 'block',
+					},
+				})}
+			>
 				<RichText
 					aria-label={__('Radio Text', 'surecart')}
-					placeholder={__('Add some radio text...', 'surecart')}
+					placeholder={__(
+						'Click here to add some radio text...',
+						'surecart'
+					)}
 					value={label}
 					onChange={(label) => setAttributes({ label })}
 				/>
