@@ -11,6 +11,7 @@ use SureCart\Middleware\CheckoutRedirectMiddleware;
 use SureCart\Middleware\CustomerDashboardMiddleware;
 use SureCart\Middleware\LoginLinkMiddleware;
 use SureCart\Middleware\OrderRedirectMiddleware;
+use SureCart\Middleware\PaymentFailureRedirectMiddleware;
 use SureCart\Middleware\PurchaseRedirectMiddleware;
 use SureCart\Middleware\SubscriptionRedirectMiddleware;
 
@@ -43,6 +44,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( OrderRedirectMiddleware::class )
 ->middleware( PurchaseRedirectMiddleware::class )
 ->middleware( CheckoutRedirectMiddleware::class )
+->middleware( PaymentFailureRedirectMiddleware::class )
 ->middleware( SubscriptionRedirectMiddleware::class )
 ->handle( 'DashboardController@show' );
 

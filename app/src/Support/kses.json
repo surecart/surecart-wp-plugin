@@ -1426,6 +1426,14 @@
     "class": true,
     "slot": true
   },
+  "sc-subscription-payment-method": {
+    "heading": true,
+    "subscription": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-subscription-renew": {
     "back-url": true,
     "heading": true,
