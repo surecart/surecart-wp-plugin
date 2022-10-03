@@ -285,16 +285,22 @@ export default () => {
 				)}
 			</SettingsBox>
 			<SettingsBox
-				title={__('Data Clear', 'surecart')}
+				title={__('Clear Test Data', 'surecart')}
 				description={__(
-					'Delete the application test data by clicking the button.',
+					'Clear out all of your test data with one-click.',
 					'surecart'
 				)}
 				loading={!hasLoadedItem}
 				noButton={true}
 			>
-				<ScButton type="danger" href={'https://app.surecart.com/account/edit'} target="_blank">
+				<ScButton
+					type="danger"
+					href={'https://app.surecart.com/account/edit'}
+					target="_blank"
+					outline
+				>
 					{__('Clear Test Data', 'surecart')}
+					<ScIcon name="external-link" slot="suffix" />
 				</ScButton>
 			</SettingsBox>
 		</SettingsTemplate>
