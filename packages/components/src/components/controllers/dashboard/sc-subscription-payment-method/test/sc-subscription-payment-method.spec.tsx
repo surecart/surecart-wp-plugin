@@ -7,12 +7,6 @@ describe('sc-subscription-payment-method', () => {
       components: [ScSubscriptionPaymentMethod],
       html: `<sc-subscription-payment-method></sc-subscription-payment-method>`,
     });
-    expect(page.root).toEqualHtml(`
-      <sc-subscription-payment-method>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </sc-subscription-payment-method>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });
