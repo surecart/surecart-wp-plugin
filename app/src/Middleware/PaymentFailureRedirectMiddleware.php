@@ -9,7 +9,7 @@ use SureCartCore\Responses\RedirectResponse;
 /**
  * Middleware for handling model archiving.
  */
-class PaymentMethodRedirectMiddleware {
+class PaymentFailureRedirectMiddleware {
 	/**
 	 * Enqueue component assets.
 	 *
@@ -18,15 +18,17 @@ class PaymentMethodRedirectMiddleware {
 	 * @return function
 	 */
 	public function handle( RequestInterface $request, Closure $next ) {
-		$id = $request->query( 'payment_method_id' );
+		$payment_id      = $request->query( 'payment_failure_id' );
+		$subscription_id = $request->query( 'subscription_id' );
 
-		if ( $id ) {
+		if ( $payment_id && $subscription_id ) {
 			return ( new RedirectResponse( $request ) )->to(
 				add_query_arg(
 					[
 						'action' => 'edit',
-						'model'  => 'payment_method',
-						'id'     => $id,
+						'model'  => 'subscription',
+						'id'     => $subscription_id,
+						'action' => 'update_payment_method',
 					],
 					\SureCart::pages()->url( 'dashboard' )
 				)
