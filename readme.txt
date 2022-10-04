@@ -247,6 +247,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * New: Radio group checkout form block.
 * New: Password confirmation option in password form block.
 * New: Customer name now syncs with WordPress name on checkout.
+* Fix: Issue with payment failure email links going to 404.
 * Fix: Issue with clicking add to cart button for an existing item in cart sometimes creating 2 line items instead of 1.
 * Fix: Issue with theme line-height sometimes cutting off decenders in dashboard tabs.
 
