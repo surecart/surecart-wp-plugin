@@ -118,6 +118,13 @@
   box-shadow: 0 0 0 var(--sc-focus-ring-width) var(--sc-color-primary-500);
 }
 
+.choice.choice--focused:not(.choice--checked):not(.choice--disabled) {
+  outline-style: solid;
+  outline-color: var(--sc-color-primary-500);
+  outline-width: var(--sc-focus-ring-width);
+  outline-offset: 2px;
+}
+
 // Checked
 .choice--checked .choice__control {
   color: var(--var-sc-checked-color, var(--sc-input-background-color));
