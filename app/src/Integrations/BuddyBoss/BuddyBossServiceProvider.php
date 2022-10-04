@@ -15,7 +15,7 @@ class BuddyBossServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.lifterlms'] = function () {
+		$container['surecart.buddyboss.platform'] = function () {
 			return new BuddyBossService();
 		};
 	}
@@ -26,6 +26,6 @@ class BuddyBossServiceProvider implements ServiceProviderInterface {
 	 * @param  \Pimple\Container $container Service Container.
 	 */
 	public function bootstrap( $container ) {
-		$container['surecart.lifterlms']->bootstrap();
+		$container['surecart.buddyboss.platform']->bootstrap();
 	}
 }
