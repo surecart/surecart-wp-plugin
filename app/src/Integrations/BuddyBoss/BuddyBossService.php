@@ -82,23 +82,17 @@ class BuddyBossService extends IntegrationService implements IntegrationInterfac
 	 * @return array The items for the integration.
 	 */
 	public function getItems( $items = [], $search = '' ) {
-		$course_query = new \WP_Query(
-			[
-				'post_type' => 'course',
-				's'         => $search,
-				'per_page'  => 10,
-			]
-		);
+		$groups = \groups_get_groups();
 
-		if ( ( isset( $course_query->posts ) ) && ( ! empty( $course_query->posts ) ) ) {
+		if ( ( isset( $groups ) ) && ( ! empty( $groups ) ) ) {
 			$items = array_map(
-				function( $post ) {
+				function( $group ) {
 					return (object) [
-						'id'    => $post->ID,
-						'label' => $post->post_title,
+						'id'    => $group->id,
+						'label' => $group->name,
 					];
 				},
-				$course_query->posts
+				$groups['groups']
 			);
 		}
 
@@ -113,24 +107,25 @@ class BuddyBossService extends IntegrationService implements IntegrationInterfac
 	 * @return object The item for the integration.
 	 */
 	public function getItem( $id ) {
-		$course = get_post( $id );
-		if ( ! $course ) {
+		$group = \groups_get_group( $id );
+		if ( ! $group ) {
 			return (object) [];
 		}
+
 		return (object) [
 			'id'             => $id,
 			'provider_label' => __( 'BuddyBoss Group', 'surecart' ),
-			'label'          => $course->post_title,
+			'label'          => $group->name,
 		];
 	}
 
 	/**
-	 * Enable Access to the course.
+	 * Enable Access to the group.
 	 *
 	 * @param \SureCart\Models\Integration $integration The integrations.
 	 * @param \WP_User                     $wp_user The user.
 	 *
-	 * @return boolean|void Returns true if the user course access updation was successful otherwise false.
+	 * @return boolean|void Returns true if the user group access updation was successful otherwise false.
 	 */
 	public function onPurchaseCreated( $integration, $wp_user ) {
 		$this->updateAccess( $integration->integration_id, $wp_user, true );
@@ -142,7 +137,7 @@ class BuddyBossService extends IntegrationService implements IntegrationInterfac
 	 * @param \SureCart\Models\Integration $integration The integrations.
 	 * @param \WP_User                     $wp_user The user.
 	 *
-	 * @return boolean|void Returns true if the user course access updation was successful otherwise false.
+	 * @return boolean|void Returns true if the user group access updation was successful otherwise false.
 	 */
 	public function onPurchaseInvoked( $integration, $wp_user ) {
 		$this->onPurchaseCreated( $integration, $wp_user );
@@ -154,31 +149,31 @@ class BuddyBossService extends IntegrationService implements IntegrationInterfac
 	 * @param \SureCart\Models\Integration $integration The integrations.
 	 * @param \WP_User                     $wp_user The user.
 	 *
-	 * @return boolean|void Returns true if the user course access updation was successful otherwise false.
+	 * @return boolean|void Returns true if the user group access updation was successful otherwise false.
 	 */
 	public function onPurchaseRevoked( $integration, $wp_user ) {
 		$this->updateAccess( $integration->integration_id, $wp_user, false );
 	}
 
 	/**
-	 * Update access to a course.
+	 * Update access to a group.
 	 *
-	 * @param integer  $course_id The course id.
+	 * @param integer  $group_id The group id.
 	 * @param \WP_User $wp_user The user.
-	 * @param boolean  $add True to add the user to the course, false to remove.
+	 * @param boolean  $add True to add the user to the group, false to remove.
 	 *
-	 * @return boolean|void Returns true if the user course access updation was successful otherwise false.
+	 * @return boolean|void Returns true if the user group access updation was successful otherwise false.
 	 */
-	public function updateAccess( $course_id, $wp_user, $add = true ) {
+	public function updateAccess( $group_id, $wp_user, $add = true ) {
 		// we don't have BuddyBoss installed.
-		if ( ! defined( 'LLMS_VERSION' ) ) {
+		if ( ! defined( 'BP_PLATFORM_VERSION' ) ) {
 			return;
 		}
-		// update course access.
+		// update group access.
 		if ( $add ) {
-			return \llms_enroll_student( $wp_user->ID, $course_id, 'SureCart' );
+			return \groups_join_group( $wp_user->ID, $group_id, 'SureCart' );
 		} else {
-			return \llms_delete_student_enrollment( $wp_user->ID, $course_id, 'SureCart' );
+			return \groups_leave_group( $wp_user->ID, $group_id, 'SureCart' );
 		}
 	}
 }
