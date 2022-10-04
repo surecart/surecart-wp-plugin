@@ -15,16 +15,17 @@ class WebhookController {
 	 * @var array
 	 */
 	protected $models = [
-		'charge'   => \SureCart\Models\Charge::class,
-		'coupon'   => \SureCart\Models\Coupon::class,
-		'customer' => \SureCart\Models\Customer::class,
-		'purchase' => \SureCart\Models\Purchase::class,
-		'price'    => \SureCart\Models\Price::class,
-		'product'  => \SureCart\Models\Product::class,
-		'period'   => \SureCart\Models\Period::class,
-		'order'    => \SureCart\Models\Order::class,
-		'refund'   => \SureCart\Models\Refund::class,
-		'invoice'  => \SureCart\Models\Invoice::class,
+		'charge'       => \SureCart\Models\Charge::class,
+		'coupon'       => \SureCart\Models\Coupon::class,
+		'customer'     => \SureCart\Models\Customer::class,
+		'purchase'     => \SureCart\Models\Purchase::class,
+		'price'        => \SureCart\Models\Price::class,
+		'product'      => \SureCart\Models\Product::class,
+		'period'       => \SureCart\Models\Period::class,
+		'order'        => \SureCart\Models\Order::class,
+		'refund'       => \SureCart\Models\Refund::class,
+		'subscription' => \SureCart\Models\Subscription::class,
+		'invoice'      => \SureCart\Models\Invoice::class,
 	];
 
 	/**
