@@ -40,7 +40,11 @@ export class ScStripeAddMethod {
 
     // check if stripe has been initialized
     if (!this.stripe) {
-      this.stripe = await loadStripe(this.paymentIntent?.processor_data?.stripe?.publishable_key, { stripeAccount: this.paymentIntent?.processor_data?.stripe?.account_id });
+      try {
+        this.stripe = await loadStripe(this.paymentIntent?.processor_data?.stripe?.publishable_key, { stripeAccount: this.paymentIntent?.processor_data?.stripe?.account_id });
+      } catch (e) {
+        this.error = e?.message || __('Stripe could not be loaded', 'surecart');
+      }
     }
 
     // load the element.
@@ -54,26 +58,28 @@ export class ScStripeAddMethod {
     const styles = getComputedStyle(document.body);
 
     // we have what we need, load elements.
-    this.elements = this.stripe.elements({
-      clientSecret: this.paymentIntent?.processor_data?.stripe?.client_secret,
-      appearance: {
-        variables: {
-          colorPrimary: styles.getPropertyValue('--sc-color-primary-500'),
-          colorText: styles.getPropertyValue('--sc-input-label-color'),
-          borderRadius: styles.getPropertyValue('--sc-input-border-radius-medium'),
-          colorBackground: styles.getPropertyValue('--sc-input-background-color'),
-          fontSizeBase: styles.getPropertyValue('--sc-input-font-size-medium'),
-        },
-        rules: {
-          '.Input': {
-            border: styles.getPropertyValue('--sc-input-border'),
+    if (this.stripe) {
+      this.elements = this.stripe.elements({
+        clientSecret: this.paymentIntent?.processor_data?.stripe?.client_secret,
+        appearance: {
+          variables: {
+            colorPrimary: styles.getPropertyValue('--sc-color-primary-500'),
+            colorText: styles.getPropertyValue('--sc-input-label-color'),
+            borderRadius: styles.getPropertyValue('--sc-input-border-radius-medium'),
+            colorBackground: styles.getPropertyValue('--sc-input-background-color'),
+            fontSizeBase: styles.getPropertyValue('--sc-input-font-size-medium'),
           },
-          '.Input::placeholder': {
-            color: styles.getPropertyValue('--sc-input-placeholder-color'),
+          rules: {
+            '.Input': {
+              border: styles.getPropertyValue('--sc-input-border'),
+            },
+            '.Input::placeholder': {
+              color: styles.getPropertyValue('--sc-input-placeholder-color'),
+            },
           },
         },
-      },
-    });
+      });
+    }
 
     // create the payment element.
     this.elements

@@ -75,26 +75,26 @@ export class ScStripePaymentRequest {
       return true;
     }
 
-    if ( ! window?.scData?.is_ssl ) {
-      return;
+    try {
+      this.stripe = await loadStripe(this.publishableKey, { stripeAccount: this.stripeAccountId });
+      this.elements = this.stripe.elements();
+      this.paymentRequest = this.stripe.paymentRequest({
+        country: this.country,
+        requestShipping: true,
+        requestPayerEmail: true,
+        shippingOptions: [
+          {
+            id: 'free',
+            label: 'Free Shipping',
+            detail: 'No shipping required',
+            amount: 0,
+          },
+        ],
+        ...(this.getRequestObject(this.order) as PaymentRequestOptions),
+      });
+    } catch (e) {
+      console.log( e?.message || __('Stripe could not be loaded', 'surecart') );
     }
-
-    this.stripe = await loadStripe(this.publishableKey, { stripeAccount: this.stripeAccountId });
-    this.elements = this.stripe.elements();
-    this.paymentRequest = this.stripe.paymentRequest({
-      country: this.country,
-      requestShipping: true,
-      requestPayerEmail: true,
-      shippingOptions: [
-        {
-          id: 'free',
-          label: 'Free Shipping',
-          detail: 'No shipping required',
-          amount: 0,
-        },
-      ],
-      ...(this.getRequestObject(this.order) as PaymentRequestOptions),
-    });
   }
 
   @Watch('order')
