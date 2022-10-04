@@ -76,8 +76,19 @@ class WebhookController {
 		} else {
 			$body = $request->getParsedBody();
 		}
+
+		// the model does not exist.
+		if ( empty( $this->models[ $body['data']['object']['object'] ] ) ) {
+			return \SureCart::json(
+				[
+					'event_triggered' => 'none',
+				]
+			)->withHeader( 'X-SURECART-WP-PLUGIN-VERSION', \SureCart::plugin()->version() );
+		}
+
 		// perform the action.
 		$action = $this->doAction( $body );
+
 		// handle the response.
 		return $this->handleResponse( $action );
 	}
@@ -107,7 +118,9 @@ class WebhookController {
 				'event_triggered' => $data['event'] ?? 'none',
 				'data'            => $data,
 			]
-		)->withHeader( 'X-SURECART-WP-PLUGIN-VERSION', \SureCart::plugin()->version() );
+		)
+		->withHeader( 'X-SURECART-WP-PLUGIN-VERSION', \SureCart::plugin()->version() )
+		->withStatus( 200 );
 	}
 
 	/**
