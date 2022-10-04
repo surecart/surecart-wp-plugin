@@ -202,7 +202,7 @@ export class ScChoice {
 
   render() {
     return (
-      <label
+      <div
         part="base"
         class={{
           'choice': true,
@@ -212,78 +212,81 @@ export class ScChoice {
           'choice--layout-columns': !this.isStacked,
           [`choice--size-${this.size}`]: true,
         }}
-        htmlFor={this.inputId}
         onKeyDown={e => this.handleKeyDown(e)}
         onMouseDown={e => this.handleMouseDown(e)}
       >
-        <span
-          part="control"
-          class={{
-            choice__control: true,
-            choice__checkbox: this.type === 'checkbox',
-            choice__radio: this.type === 'radio',
-          }}
-          hidden={!this.showControl}
-        >
-          <span part="checked-icon" class="choice__icon">
-            {this.type === 'checkbox' ? (
-              <svg viewBox="0 0 16 16">
-                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
-                  <g stroke="currentColor" stroke-width="2">
-                    <g transform="translate(3.428571, 3.428571)">
-                      <path d="M0,5.71428571 L3.42857143,9.14285714"></path>
-                      <path d="M9.14285714,0 L3.42857143,9.14285714"></path>
+        <slot name="header" />
+        <label class="choice__content" part="content" htmlFor={this.inputId}>
+          <span
+            part="control"
+            class={{
+              choice__control: true,
+              choice__checkbox: this.type === 'checkbox',
+              choice__radio: this.type === 'radio',
+            }}
+            hidden={!this.showControl}
+          >
+            <span part="checked-icon" class="choice__icon">
+              {this.type === 'checkbox' ? (
+                <svg viewBox="0 0 16 16">
+                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
+                    <g stroke="currentColor" stroke-width="2">
+                      <g transform="translate(3.428571, 3.428571)">
+                        <path d="M0,5.71428571 L3.42857143,9.14285714"></path>
+                        <path d="M9.14285714,0 L3.42857143,9.14285714"></path>
+                      </g>
                     </g>
                   </g>
-                </g>
-              </svg>
-            ) : (
-              <svg viewBox="0 0 16 16">
-                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                  <g fill="currentColor">
-                    <circle cx="8" cy="8" r="3.42857143"></circle>
+                </svg>
+              ) : (
+                <svg viewBox="0 0 16 16">
+                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g fill="currentColor">
+                      <circle cx="8" cy="8" r="3.42857143"></circle>
+                    </g>
                   </g>
-                </g>
-              </svg>
-            )}
-          </span>
-          <input
-            id={this.inputId}
-            ref={el => (this.input = el as HTMLInputElement)}
-            type={this.type}
-            name={this.name}
-            value={this.value}
-            checked={this.checked}
-            disabled={this.disabled}
-            aria-checked={this.checked ? 'true' : 'false'}
-            aria-disabled={this.disabled ? 'true' : 'false'}
-            aria-labelledby={this.labelId}
-            // required={this.required}
-            onClick={() => this.handleClick()}
-            onBlur={() => this.handleBlur()}
-            onFocus={() => this.handleFocus()}
-          />
-        </span>
-        <span part="label" id={this.labelId} class="choice__label">
-          <span class="choice__label-text" hidden={!this.showLabel}>
-            <span class="choice__title" part="title">
-              <slot onSlotchange={() => this.handleSlotChange()}></slot>
+                </svg>
+              )}
             </span>
-            <span class="choice__description description" part="description" hidden={!this.hasDescription}>
-              <slot name="description" onSlotchange={() => this.handleSlotChange()}></slot>
-            </span>
+            <input
+              id={this.inputId}
+              ref={el => (this.input = el as HTMLInputElement)}
+              type={this.type}
+              name={this.name}
+              value={this.value}
+              checked={this.checked}
+              disabled={this.disabled}
+              aria-checked={this.checked ? 'true' : 'false'}
+              aria-disabled={this.disabled ? 'true' : 'false'}
+              aria-labelledby={this.labelId}
+              // required={this.required}
+              onClick={() => this.handleClick()}
+              onBlur={() => this.handleBlur()}
+              onFocus={() => this.handleFocus()}
+            />
           </span>
+          <span part="label" id={this.labelId} class="choice__label">
+            <span class="choice__label-text" hidden={!this.showLabel}>
+              <span class="choice__title" part="title">
+                <slot onSlotchange={() => this.handleSlotChange()}></slot>
+              </span>
+              <span class="choice__description description" part="description" hidden={!this.hasDescription}>
+                <slot name="description" onSlotchange={() => this.handleSlotChange()}></slot>
+              </span>
+            </span>
 
-          <span class="choice__price" hidden={!this.showPrice || (!this.hasPrice && !this.hasPer)}>
-            <span class="choice__title">
-              <slot name="price" onSlotchange={() => this.handleSlotChange()}></slot>
-            </span>{' '}
-            <span class="choice__description">
-              <slot name="per" onSlotchange={() => this.handleSlotChange()}></slot>
+            <span class="choice__price" hidden={!this.showPrice || (!this.hasPrice && !this.hasPer)}>
+              <span class="choice__title">
+                <slot name="price" onSlotchange={() => this.handleSlotChange()}></slot>
+              </span>{' '}
+              <span class="choice__description">
+                <slot name="per" onSlotchange={() => this.handleSlotChange()}></slot>
+              </span>
             </span>
           </span>
-        </span>
-      </label>
+        </label>
+        <slot name="footer" />
+      </div>
     );
   }
 }

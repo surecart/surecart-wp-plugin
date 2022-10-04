@@ -1,0 +1,69 @@
+name: PHPUnit
+
+on:
+  push:
+  pull_request:
+    branches:
+      - master
+      - next
+    paths:
+      - "app/**/*.php"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: wordpress_test
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    strategy:
+      matrix:
+        php-versions: [ '8.0', '8.1' ]
+        wp-versions: [ 'trunk' ]
+    name: PHP ${{ matrix.php-versions }} / WP ${{ matrix.wp-versions }} Test
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: mbstring, intl #optional, setup extensions
+          ini-values: post_max_size=256M, short_open_tag=On #optional, setup php.ini configuration
+          coverage: xdebug #optional, setup coverage driver
+
+      - name: Check PHP Version
+        run: php -v
+
+      - name: Composer Install
+        run: composer install --optimize-autoloader --prefer-dist
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+
+      - uses: actions/cache@v3
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Yarn Install
+        run: yarn
+
+      - name: Install WordPress
+        run: |
+          chmod -R 767 ./ # TODO: Possibly integrate in wp-env
+          yarn wp-env start
+
+      - name: Running single site unit tests
+        run: yarn run test:php:ci
+        if: ${{ success() || failure() }}

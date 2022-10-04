@@ -17,13 +17,24 @@
     window.scIcons = {
       path: '/build/icon-assets'
     }
+    window.wp = {
+      i18n: {
+        __: () => {}
+      }
+    }
   </script>
 
 </head>
 
 <body>
 
-  <sc-product-line-item name="AO Jogger Black Slim Fit" currency="usd" amount="1000" interval="per month for 3 months" image-url="http://placekitten.com/200/300"></sc-product-line-item>
-
+  <sc-form>
+    <sc-radio-group label="required" required>
+      <sc-radio value="1">Test</sc-radio>
+      <sc-radio value="2">Test 2</sc-radio>
+    </sc-radio-group>
+    <sc-input label="" required></sc-input>
+    <sc-button submit type="primary">Test</sc-button>
+  </sc-form>
 </body>
 </html>

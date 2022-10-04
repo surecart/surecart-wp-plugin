@@ -12,7 +12,7 @@ import { Checkout, PaymentIntent, Processor, ProcessorName } from '../../../../t
 })
 export class ScPayment {
   /** The current payment method for the payment */
-  @Prop() processor: string = 'stripe';
+  @Prop({ mutable: true }) processor: string = 'stripe';
 
   /** List of available processors. */
   @Prop() processors: Processor[] = [];

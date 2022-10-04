@@ -80,43 +80,43 @@ const ERROR_STATE = {
 	],
 };
 
-describe( 'selectors', () => {
-	describe( 'selectErrors', () => {
-		it( 'Can select all errors', () => {
-			expect( selectErrors( ERROR_STATE ) ).toEqual( ERROR_STATE.errors );
-		} );
-		it( 'Can filter errors by key', () => {
-			expect( selectErrors( ERROR_STATE, 'prices' ) ).toEqual( [
-				...[ ERROR_STATE.errors[ 0 ] ],
-				...[ ERROR_STATE.errors[ 1 ] ],
-			] );
-		} );
-		it( 'Can filter errors by key and index', () => {
-			expect( selectErrors( ERROR_STATE, 'prices', 0 ) ).toEqual( [
-				ERROR_STATE.errors[ 0 ],
-			] );
-		} );
-	} );
-	describe( 'selectValidationErrors', () => {
-		it( 'Can select all validation errors', () => {
-			expect( selectValidationErrors( ERROR_STATE ) ).toEqual( [
-				...ERROR_STATE.errors[ 0 ].error.additional_errors,
-				...ERROR_STATE.errors[ 1 ].error.additional_errors,
-				...ERROR_STATE.errors[ 2 ].error.additional_errors,
-			] );
-		} );
-		it( 'should select validation errors by key', () => {
-			expect( selectValidationErrors( ERROR_STATE, 'prices' ) ).toEqual( [
-				...ERROR_STATE.errors[ 0 ].error.additional_errors,
-				...ERROR_STATE.errors[ 1 ].error.additional_errors,
-			] );
-		} );
-		it( 'should select validation errors by key and index', () => {
-			expect(
-				selectValidationErrors( ERROR_STATE, 'prices', 1 )
-			).toEqual( [ ...ERROR_STATE.errors[ 1 ].error.additional_errors ] );
-		} );
-		it( 'should select validation errors by key, index and attribute', () => {
+describe('selectors', () => {
+	describe('selectErrors', () => {
+		it('Can select all errors', () => {
+			expect(selectErrors(ERROR_STATE)).toEqual(ERROR_STATE.errors);
+		});
+		it('Can filter errors by key', () => {
+			expect(selectErrors(ERROR_STATE, 'prices')).toEqual([
+				...[ERROR_STATE.errors[0]],
+				...[ERROR_STATE.errors[1]],
+			]);
+		});
+		it('Can filter errors by key and index', () => {
+			expect(selectErrors(ERROR_STATE, 'prices', 0)).toEqual([
+				ERROR_STATE.errors[0],
+			]);
+		});
+	});
+	describe('selectValidationErrors', () => {
+		it('Can select all validation errors', () => {
+			expect(selectValidationErrors(ERROR_STATE)).toEqual([
+				...ERROR_STATE.errors[0].error.additional_errors,
+				...ERROR_STATE.errors[1].error.additional_errors,
+				...ERROR_STATE.errors[2].error.additional_errors,
+			]);
+		});
+		it('should select validation errors by key', () => {
+			expect(selectValidationErrors(ERROR_STATE, 'prices')).toEqual([
+				...ERROR_STATE.errors[0].error.additional_errors,
+				...ERROR_STATE.errors[1].error.additional_errors,
+			]);
+		});
+		it('should select validation errors by key and index', () => {
+			expect(selectValidationErrors(ERROR_STATE, 'prices', 1)).toEqual([
+				...ERROR_STATE.errors[1].error.additional_errors,
+			]);
+		});
+		it('should select validation errors by key, index and attribute', () => {
 			expect(
 				selectValidationErrors(
 					ERROR_STATE,
@@ -124,7 +124,7 @@ describe( 'selectors', () => {
 					1,
 					'recurring_interval_count'
 				)
-			).toEqual( [ ...ERROR_STATE.errors[ 1 ].error.additional_errors ] );
-		} );
-	} );
-} );
+			).toEqual([...ERROR_STATE.errors[1].error.additional_errors]);
+		});
+	});
+});

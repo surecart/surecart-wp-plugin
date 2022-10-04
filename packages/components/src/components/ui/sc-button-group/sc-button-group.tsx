@@ -55,7 +55,7 @@ export class ScButtonGroup {
 
   render() {
     return (
-      <div
+      <sc-form-control
         part="base"
         class={{
           'button-group': true,
@@ -67,9 +67,10 @@ export class ScButtonGroup {
         onFocusin={e => this.handleFocus(e)}
         onMouseOver={e => this.handleMouseOver(e)}
         onMouseOut={e => this.handleMouseOut(e)}
+        label={this.label}
       >
         <slot onSlotchange={() => this.handleSlotChange()}></slot>
-      </div>
+      </sc-form-control>
     );
   }
 }

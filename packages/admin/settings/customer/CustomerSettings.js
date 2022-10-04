@@ -133,6 +133,25 @@ export default () => {
 				</ScSwitch>
 
 				<ScSwitch
+					checked={item?.subscription_renewal_enabled}
+					onClick={(e) => {
+						e.preventDefault();
+						editItem({
+							subscription_renewal_enabled:
+								!item?.subscription_renewal_enabled,
+						});
+					}}
+				>
+					{__('Subscription Renewal Emails', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Send an email customers when their subscription renews.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				<ScSwitch
 					checked={
 						scData?.entitlements?.abandoned_checkouts
 							? item?.abandoned_checkout_enabled
@@ -286,6 +305,15 @@ export default () => {
 							)}
 							model="subscription"
 							action="reminder_notification"
+						/>
+						<EmailRow
+							title={__('Subscription Renewal', 'surecart')}
+							description={__(
+								'Sent to customers when their subscription renews.',
+								'surecart'
+							)}
+							model="subscription"
+							action="renewal_notification"
 						/>
 						<EmailRow
 							title={__('Product Access', 'surecart')}

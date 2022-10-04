@@ -104,6 +104,7 @@ class OrdersListTable extends ListTable {
 			'method'       => __( 'Method', 'surecart' ),
 			'integrations' => __( 'Integrations', 'surecart' ),
 			'total'        => __( 'Total', 'surecart' ),
+			'type'         => __( 'Type', 'surecart' ),
 			'created'      => __( 'Date', 'surecart' ),
 			'mode'         => '',
 		];
@@ -208,6 +209,21 @@ class OrdersListTable extends ListTable {
 			</script>
 		<?php
 		return ob_get_clean();
+	}
+
+	/**
+	 * The type of order.
+	 *
+	 * @param \SureCart\Models\Order $order The order model.
+	 *
+	 * @return string
+	 */
+	public function column_type( $order ) {
+		if ( ! empty( $order->order_type ) && 'subscription' === $order->order_type ) {
+			return '<sc-tag type="success">' . esc_html__( 'Subscription Renewal', 'surecart' ) . '</sc-tag>';
+		}
+
+		return '<sc-tag type="info">' . esc_html__( 'Checkout', 'surecart' ) . '</sc-tag>';
 	}
 
 	/**

@@ -197,11 +197,11 @@
   "sc-checkbox": {
     "checked": true,
     "disabled": true,
+    "edit": true,
     "indeterminate": true,
     "invalid": true,
     "name": true,
     "required": true,
-    "static": true,
     "value": true,
     "style": true,
     "id": true,
@@ -720,6 +720,15 @@
     "class": true,
     "slot": true
   },
+  "sc-line-item-bump": {
+    "label": true,
+    "loading": true,
+    "order": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-line-item-tax": {
     "loading": true,
     "order": true,
@@ -810,6 +819,26 @@
     "class": true,
     "slot": true
   },
+  "sc-order-bump": {
+    "bump": true,
+    "checkout": true,
+    "show-control": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-order-bumps": {
+    "bumps": true,
+    "checkout": true,
+    "help": true,
+    "label": true,
+    "show-control": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-order-confirm-provider": {
     "form-id": true,
     "mode": true,
@@ -887,6 +916,10 @@
   },
   "sc-order-password": {
     "autofocus": true,
+    "confirmation": true,
+    "confirmation-help": true,
+    "confirmation-label": true,
+    "confirmation-placeholder": true,
     "disabled": true,
     "email-exists": true,
     "help": true,
@@ -988,6 +1021,15 @@
     "total": true,
     "total-pages": true,
     "total-showing": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-password-nag": {
+    "open": true,
+    "success-url": true,
+    "type": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1180,6 +1222,7 @@
   "sc-radio": {
     "checked": true,
     "disabled": true,
+    "edit": true,
     "invalid": true,
     "name": true,
     "required": true,
@@ -1190,7 +1233,10 @@
     "slot": true
   },
   "sc-radio-group": {
+    "invalid": true,
     "label": true,
+    "required": true,
+    "value": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1384,6 +1430,14 @@
     "subscription": true,
     "subscription-id": true,
     "success-url": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-subscription-payment-method": {
+    "heading": true,
+    "subscription": true,
     "style": true,
     "id": true,
     "class": true,

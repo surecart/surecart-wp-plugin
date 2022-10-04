@@ -45,6 +45,7 @@ return [
 		\SureCart\Rest\BlockPatternsRestServiceProvider::class,
 		\SureCart\Rest\AccountRestServiceProvider::class,
 		\SureCart\Rest\BrandRestServiceProvider::class,
+		\SureCart\Rest\BumpRestServiceProvider::class,
 		\SureCart\Rest\LoginRestServiceProvider::class,
 		\SureCart\Rest\PurchasesRestServiceProvider::class,
 		\SureCart\Rest\StatisticRestServiceProvider::class,
@@ -84,6 +85,7 @@ return [
 
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,
+		\SureCart\Integrations\ThriveAutomator\ThriveAutomatorServiceProvider::class,
 		\SureCart\Integrations\LearnDash\LearnDashServiceProvider::class,
 		\SureCart\Integrations\LearnDashGroup\LearnDashGroupServiceProvider::class,
 		\SureCart\Integrations\LifterLMS\LifterLMSServiceProvider::class,
@@ -91,6 +93,7 @@ return [
 		\SureCart\Integrations\TutorLMS\TutorLMSServiceProvider::class,
 		\SureCart\Integrations\User\UserServiceProvider::class,
 		\SureCart\Integrations\MemberPress\MemberPressServiceProvider::class,
+		\SureCart\Integrations\Elementor\ElementorServiceProvider::class,
 	],
 
 	/**
@@ -102,6 +105,7 @@ return [
 		\SureCartBlocks\Blocks\CustomerDashboardButton\Block::class,
 		\SureCartBlocks\Blocks\CheckoutForm\Block::class,
 		\SureCartBlocks\Blocks\CartSubtotal\Block::class,
+		\SureCartBlocks\Blocks\CartBumpLineItem\Block::class,
 		\SureCartBlocks\Blocks\OrderConfirmationLineItems\Block::class,
 		\SureCartBlocks\Blocks\Form\Block::class,
 		\SureCartBlocks\Blocks\Confirmation\Block::class,
@@ -140,7 +144,7 @@ return [
 		'surecart/donation'                  => [ 'sc-donation-choices', 'sc-choices', 'sc-choice' ],
 		'surecart/donation-amount'           => [ 'sc-choice', 'sc-format-number' ],
 		'surecart/email'                     => [ 'sc-input', 'sc-customer-email' ],
-		'surecart/express-payment'           => [ 'sc-express-payment', 'sc-divider' ],
+		'surecart/express-payment'           => [ 'sc-express-payment', 'sc-divider', 'sc-stripe-payment-request' ],
 		'surecart/form'                      => [ 'sc-checkout', 'sc-form', 'sc-checkout-unsaved-changes-warning', 'sc-line-items-provider', 'sc-block-ui' ],
 		'surecart/heading'                   => [ 'sc-heading' ],
 		'surecart/input'                     => [ 'sc-input' ],

@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export namespace Components {
     interface ScAddress {
         /**
@@ -340,6 +340,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Makes this edit and not editable.
+         */
+        "edit": boolean;
+        /**
           * Draws the checkbox in an indeterminate state.
          */
         "indeterminate": boolean;
@@ -359,10 +363,6 @@ export namespace Components {
           * Makes the checkbox a required field.
          */
         "required": boolean;
-        /**
-          * Makes this static and not editable.
-         */
-        "static": boolean;
         /**
           * Removes focus from the checkbox.
          */
@@ -1371,6 +1371,11 @@ export namespace Components {
          */
         "price": string;
     }
+    interface ScLineItemBump {
+        "label": string;
+        "loading": boolean;
+        "order": Checkout;
+    }
     interface ScLineItemTax {
         "loading": boolean;
         "order": Checkout;
@@ -1443,6 +1448,27 @@ export namespace Components {
         "customerIds": string[];
         "heading": string;
         "orderId": string;
+    }
+    interface ScOrderBump {
+        /**
+          * The bump
+         */
+        "bump": Bump;
+        /**
+          * The checkout
+         */
+        "checkout": Checkout;
+        /**
+          * Should we show the controls
+         */
+        "showControl": boolean;
+    }
+    interface ScOrderBumps {
+        "bumps": Bump[];
+        "checkout": Checkout;
+        "help": string;
+        "label": string;
+        "showControl": boolean;
     }
     interface ScOrderConfirmProvider {
         /**
@@ -1519,6 +1545,22 @@ export namespace Components {
           * The input's autofocus attribute.
          */
         "autofocus": boolean;
+        /**
+          * The input's password confirmation attribute.
+         */
+        "confirmation": boolean;
+        /**
+          * The input's confirmation help text.
+         */
+        "confirmationHelp": string;
+        /**
+          * The input's confirmation label text.
+         */
+        "confirmationLabel": string;
+        /**
+          * The input's confirmation placeholder text.
+         */
+        "confirmationPlaceholder": string;
         /**
           * Disables the input.
          */
@@ -1723,6 +1765,17 @@ export namespace Components {
         "total": number;
         "totalPages": number;
         "totalShowing": number;
+    }
+    interface ScPasswordNag {
+        "open": boolean;
+        /**
+          * The success url.
+         */
+        "successUrl": string;
+        /**
+          * The type of alert.
+         */
+        "type": 'primary' | 'success' | 'info' | 'warning' | 'danger';
     }
     interface ScPayment {
         /**
@@ -2110,6 +2163,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * This will be true as a workaround in the block editor to focus on the content.
+         */
+        "edit": boolean;
+        /**
           * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
          */
         "invalid": boolean;
@@ -2132,9 +2189,25 @@ export namespace Components {
     }
     interface ScRadioGroup {
         /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid": boolean;
+        /**
           * The radio group label. Required for proper accessibility.
          */
         "label": string;
+        /**
+          * Checks for validity and shows the browser's validation message if the control is invalid.
+         */
+        "reportValidity": () => Promise<boolean>;
+        /**
+          * Is one of these items required.
+         */
+        "required": boolean;
+        /**
+          * The selected value of the control.
+         */
+        "value": string;
     }
     interface ScSecureNotice {
     }
@@ -2432,6 +2505,16 @@ export namespace Components {
         "subscription": Subscription;
         "subscriptionId": string;
         "successUrl": string;
+    }
+    interface ScSubscriptionPaymentMethod {
+        /**
+          * The heading
+         */
+        "heading": string;
+        /**
+          * The subscription
+         */
+        "subscription": Subscription;
     }
     interface ScSubscriptionRenew {
         "backUrl": string;
@@ -2927,6 +3010,10 @@ export interface ScMenuCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScMenuElement;
 }
+export interface ScOrderBumpCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScOrderBumpElement;
+}
 export interface ScOrderConfirmProviderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScOrderConfirmProviderElement;
@@ -3418,6 +3505,12 @@ declare global {
         prototype: HTMLScLineItemElement;
         new (): HTMLScLineItemElement;
     };
+    interface HTMLScLineItemBumpElement extends Components.ScLineItemBump, HTMLStencilElement {
+    }
+    var HTMLScLineItemBumpElement: {
+        prototype: HTMLScLineItemBumpElement;
+        new (): HTMLScLineItemBumpElement;
+    };
     interface HTMLScLineItemTaxElement extends Components.ScLineItemTax, HTMLStencilElement {
     }
     var HTMLScLineItemTaxElement: {
@@ -3483,6 +3576,18 @@ declare global {
     var HTMLScOrderElement: {
         prototype: HTMLScOrderElement;
         new (): HTMLScOrderElement;
+    };
+    interface HTMLScOrderBumpElement extends Components.ScOrderBump, HTMLStencilElement {
+    }
+    var HTMLScOrderBumpElement: {
+        prototype: HTMLScOrderBumpElement;
+        new (): HTMLScOrderBumpElement;
+    };
+    interface HTMLScOrderBumpsElement extends Components.ScOrderBumps, HTMLStencilElement {
+    }
+    var HTMLScOrderBumpsElement: {
+        prototype: HTMLScOrderBumpsElement;
+        new (): HTMLScOrderBumpsElement;
     };
     interface HTMLScOrderConfirmProviderElement extends Components.ScOrderConfirmProvider, HTMLStencilElement {
     }
@@ -3579,6 +3684,12 @@ declare global {
     var HTMLScPaginationElement: {
         prototype: HTMLScPaginationElement;
         new (): HTMLScPaginationElement;
+    };
+    interface HTMLScPasswordNagElement extends Components.ScPasswordNag, HTMLStencilElement {
+    }
+    var HTMLScPasswordNagElement: {
+        prototype: HTMLScPasswordNagElement;
+        new (): HTMLScPasswordNagElement;
     };
     interface HTMLScPaymentElement extends Components.ScPayment, HTMLStencilElement {
     }
@@ -3777,6 +3888,12 @@ declare global {
     var HTMLScSubscriptionPaymentElement: {
         prototype: HTMLScSubscriptionPaymentElement;
         new (): HTMLScSubscriptionPaymentElement;
+    };
+    interface HTMLScSubscriptionPaymentMethodElement extends Components.ScSubscriptionPaymentMethod, HTMLStencilElement {
+    }
+    var HTMLScSubscriptionPaymentMethodElement: {
+        prototype: HTMLScSubscriptionPaymentMethodElement;
+        new (): HTMLScSubscriptionPaymentMethodElement;
     };
     interface HTMLScSubscriptionRenewElement extends Components.ScSubscriptionRenew, HTMLStencilElement {
     }
@@ -3986,6 +4103,7 @@ declare global {
         "sc-invoices-list": HTMLScInvoicesListElement;
         "sc-licenses-list": HTMLScLicensesListElement;
         "sc-line-item": HTMLScLineItemElement;
+        "sc-line-item-bump": HTMLScLineItemBumpElement;
         "sc-line-item-tax": HTMLScLineItemTaxElement;
         "sc-line-item-total": HTMLScLineItemTotalElement;
         "sc-line-items": HTMLScLineItemsElement;
@@ -3997,6 +4115,8 @@ declare global {
         "sc-menu-item": HTMLScMenuItemElement;
         "sc-menu-label": HTMLScMenuLabelElement;
         "sc-order": HTMLScOrderElement;
+        "sc-order-bump": HTMLScOrderBumpElement;
+        "sc-order-bumps": HTMLScOrderBumpsElement;
         "sc-order-confirm-provider": HTMLScOrderConfirmProviderElement;
         "sc-order-confirmation": HTMLScOrderConfirmationElement;
         "sc-order-confirmation-customer": HTMLScOrderConfirmationCustomerElement;
@@ -4013,6 +4133,7 @@ declare global {
         "sc-order-tax-id-input": HTMLScOrderTaxIdInputElement;
         "sc-orders-list": HTMLScOrdersListElement;
         "sc-pagination": HTMLScPaginationElement;
+        "sc-password-nag": HTMLScPasswordNagElement;
         "sc-payment": HTMLScPaymentElement;
         "sc-payment-method": HTMLScPaymentMethodElement;
         "sc-payment-methods-list": HTMLScPaymentMethodsListElement;
@@ -4046,6 +4167,7 @@ declare global {
         "sc-subscription-cancel": HTMLScSubscriptionCancelElement;
         "sc-subscription-details": HTMLScSubscriptionDetailsElement;
         "sc-subscription-payment": HTMLScSubscriptionPaymentElement;
+        "sc-subscription-payment-method": HTMLScSubscriptionPaymentMethodElement;
         "sc-subscription-renew": HTMLScSubscriptionRenewElement;
         "sc-subscription-status-badge": HTMLScSubscriptionStatusBadgeElement;
         "sc-subscription-switch": HTMLScSubscriptionSwitchElement;
@@ -4434,6 +4556,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * Makes this edit and not editable.
+         */
+        "edit"?: boolean;
+        /**
           * Draws the checkbox in an indeterminate state.
          */
         "indeterminate"?: boolean;
@@ -4461,10 +4587,6 @@ declare namespace LocalJSX {
           * Makes the checkbox a required field.
          */
         "required"?: boolean;
-        /**
-          * Makes this static and not editable.
-         */
-        "static"?: boolean;
         /**
           * The checkbox's value attribute.
          */
@@ -5599,6 +5721,11 @@ declare namespace LocalJSX {
          */
         "price"?: string;
     }
+    interface ScLineItemBump {
+        "label"?: string;
+        "loading"?: boolean;
+        "order"?: Checkout;
+    }
     interface ScLineItemTax {
         "loading"?: boolean;
         "order"?: Checkout;
@@ -5677,6 +5804,35 @@ declare namespace LocalJSX {
         "customerIds"?: string[];
         "heading"?: string;
         "orderId"?: string;
+    }
+    interface ScOrderBump {
+        /**
+          * The bump
+         */
+        "bump"?: Bump;
+        /**
+          * The checkout
+         */
+        "checkout"?: Checkout;
+        /**
+          * Add line item event
+         */
+        "onScAddLineItem"?: (event: ScOrderBumpCustomEvent<LineItemData>) => void;
+        /**
+          * Remove line item event
+         */
+        "onScRemoveLineItem"?: (event: ScOrderBumpCustomEvent<LineItemData>) => void;
+        /**
+          * Should we show the controls
+         */
+        "showControl"?: boolean;
+    }
+    interface ScOrderBumps {
+        "bumps"?: Bump[];
+        "checkout"?: Checkout;
+        "help"?: string;
+        "label"?: string;
+        "showControl"?: boolean;
     }
     interface ScOrderConfirmProvider {
         /**
@@ -5763,6 +5919,22 @@ declare namespace LocalJSX {
           * The input's autofocus attribute.
          */
         "autofocus"?: boolean;
+        /**
+          * The input's password confirmation attribute.
+         */
+        "confirmation"?: boolean;
+        /**
+          * The input's confirmation help text.
+         */
+        "confirmationHelp"?: string;
+        /**
+          * The input's confirmation label text.
+         */
+        "confirmationLabel"?: string;
+        /**
+          * The input's confirmation placeholder text.
+         */
+        "confirmationPlaceholder"?: string;
         /**
           * Disables the input.
          */
@@ -5989,6 +6161,17 @@ declare namespace LocalJSX {
         "total"?: number;
         "totalPages"?: number;
         "totalShowing"?: number;
+    }
+    interface ScPasswordNag {
+        "open"?: boolean;
+        /**
+          * The success url.
+         */
+        "successUrl"?: string;
+        /**
+          * The type of alert.
+         */
+        "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger';
     }
     interface ScPayment {
         /**
@@ -6422,6 +6605,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * This will be true as a workaround in the block editor to focus on the content.
+         */
+        "edit"?: boolean;
+        /**
           * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
          */
         "invalid"?: boolean;
@@ -6452,9 +6639,21 @@ declare namespace LocalJSX {
     }
     interface ScRadioGroup {
         /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid"?: boolean;
+        /**
           * The radio group label. Required for proper accessibility.
          */
         "label"?: string;
+        /**
+          * Is one of these items required.
+         */
+        "required"?: boolean;
+        /**
+          * The selected value of the control.
+         */
+        "value"?: string;
     }
     interface ScSecureNotice {
     }
@@ -6798,6 +6997,16 @@ declare namespace LocalJSX {
         "subscription"?: Subscription;
         "subscriptionId"?: string;
         "successUrl"?: string;
+    }
+    interface ScSubscriptionPaymentMethod {
+        /**
+          * The heading
+         */
+        "heading"?: string;
+        /**
+          * The subscription
+         */
+        "subscription"?: Subscription;
     }
     interface ScSubscriptionRenew {
         "backUrl"?: string;
@@ -7279,6 +7488,7 @@ declare namespace LocalJSX {
         "sc-invoices-list": ScInvoicesList;
         "sc-licenses-list": ScLicensesList;
         "sc-line-item": ScLineItem;
+        "sc-line-item-bump": ScLineItemBump;
         "sc-line-item-tax": ScLineItemTax;
         "sc-line-item-total": ScLineItemTotal;
         "sc-line-items": ScLineItems;
@@ -7290,6 +7500,8 @@ declare namespace LocalJSX {
         "sc-menu-item": ScMenuItem;
         "sc-menu-label": ScMenuLabel;
         "sc-order": ScOrder;
+        "sc-order-bump": ScOrderBump;
+        "sc-order-bumps": ScOrderBumps;
         "sc-order-confirm-provider": ScOrderConfirmProvider;
         "sc-order-confirmation": ScOrderConfirmation;
         "sc-order-confirmation-customer": ScOrderConfirmationCustomer;
@@ -7306,6 +7518,7 @@ declare namespace LocalJSX {
         "sc-order-tax-id-input": ScOrderTaxIdInput;
         "sc-orders-list": ScOrdersList;
         "sc-pagination": ScPagination;
+        "sc-password-nag": ScPasswordNag;
         "sc-payment": ScPayment;
         "sc-payment-method": ScPaymentMethod;
         "sc-payment-methods-list": ScPaymentMethodsList;
@@ -7339,6 +7552,7 @@ declare namespace LocalJSX {
         "sc-subscription-cancel": ScSubscriptionCancel;
         "sc-subscription-details": ScSubscriptionDetails;
         "sc-subscription-payment": ScSubscriptionPayment;
+        "sc-subscription-payment-method": ScSubscriptionPaymentMethod;
         "sc-subscription-renew": ScSubscriptionRenew;
         "sc-subscription-status-badge": ScSubscriptionStatusBadge;
         "sc-subscription-switch": ScSubscriptionSwitch;
@@ -7432,6 +7646,7 @@ declare module "@stencil/core" {
             "sc-invoices-list": LocalJSX.ScInvoicesList & JSXBase.HTMLAttributes<HTMLScInvoicesListElement>;
             "sc-licenses-list": LocalJSX.ScLicensesList & JSXBase.HTMLAttributes<HTMLScLicensesListElement>;
             "sc-line-item": LocalJSX.ScLineItem & JSXBase.HTMLAttributes<HTMLScLineItemElement>;
+            "sc-line-item-bump": LocalJSX.ScLineItemBump & JSXBase.HTMLAttributes<HTMLScLineItemBumpElement>;
             "sc-line-item-tax": LocalJSX.ScLineItemTax & JSXBase.HTMLAttributes<HTMLScLineItemTaxElement>;
             "sc-line-item-total": LocalJSX.ScLineItemTotal & JSXBase.HTMLAttributes<HTMLScLineItemTotalElement>;
             "sc-line-items": LocalJSX.ScLineItems & JSXBase.HTMLAttributes<HTMLScLineItemsElement>;
@@ -7443,6 +7658,8 @@ declare module "@stencil/core" {
             "sc-menu-item": LocalJSX.ScMenuItem & JSXBase.HTMLAttributes<HTMLScMenuItemElement>;
             "sc-menu-label": LocalJSX.ScMenuLabel & JSXBase.HTMLAttributes<HTMLScMenuLabelElement>;
             "sc-order": LocalJSX.ScOrder & JSXBase.HTMLAttributes<HTMLScOrderElement>;
+            "sc-order-bump": LocalJSX.ScOrderBump & JSXBase.HTMLAttributes<HTMLScOrderBumpElement>;
+            "sc-order-bumps": LocalJSX.ScOrderBumps & JSXBase.HTMLAttributes<HTMLScOrderBumpsElement>;
             "sc-order-confirm-provider": LocalJSX.ScOrderConfirmProvider & JSXBase.HTMLAttributes<HTMLScOrderConfirmProviderElement>;
             "sc-order-confirmation": LocalJSX.ScOrderConfirmation & JSXBase.HTMLAttributes<HTMLScOrderConfirmationElement>;
             "sc-order-confirmation-customer": LocalJSX.ScOrderConfirmationCustomer & JSXBase.HTMLAttributes<HTMLScOrderConfirmationCustomerElement>;
@@ -7459,6 +7676,7 @@ declare module "@stencil/core" {
             "sc-order-tax-id-input": LocalJSX.ScOrderTaxIdInput & JSXBase.HTMLAttributes<HTMLScOrderTaxIdInputElement>;
             "sc-orders-list": LocalJSX.ScOrdersList & JSXBase.HTMLAttributes<HTMLScOrdersListElement>;
             "sc-pagination": LocalJSX.ScPagination & JSXBase.HTMLAttributes<HTMLScPaginationElement>;
+            "sc-password-nag": LocalJSX.ScPasswordNag & JSXBase.HTMLAttributes<HTMLScPasswordNagElement>;
             "sc-payment": LocalJSX.ScPayment & JSXBase.HTMLAttributes<HTMLScPaymentElement>;
             "sc-payment-method": LocalJSX.ScPaymentMethod & JSXBase.HTMLAttributes<HTMLScPaymentMethodElement>;
             "sc-payment-methods-list": LocalJSX.ScPaymentMethodsList & JSXBase.HTMLAttributes<HTMLScPaymentMethodsListElement>;
@@ -7492,6 +7710,7 @@ declare module "@stencil/core" {
             "sc-subscription-cancel": LocalJSX.ScSubscriptionCancel & JSXBase.HTMLAttributes<HTMLScSubscriptionCancelElement>;
             "sc-subscription-details": LocalJSX.ScSubscriptionDetails & JSXBase.HTMLAttributes<HTMLScSubscriptionDetailsElement>;
             "sc-subscription-payment": LocalJSX.ScSubscriptionPayment & JSXBase.HTMLAttributes<HTMLScSubscriptionPaymentElement>;
+            "sc-subscription-payment-method": LocalJSX.ScSubscriptionPaymentMethod & JSXBase.HTMLAttributes<HTMLScSubscriptionPaymentMethodElement>;
             "sc-subscription-renew": LocalJSX.ScSubscriptionRenew & JSXBase.HTMLAttributes<HTMLScSubscriptionRenewElement>;
             "sc-subscription-status-badge": LocalJSX.ScSubscriptionStatusBadge & JSXBase.HTMLAttributes<HTMLScSubscriptionStatusBadgeElement>;
             "sc-subscription-switch": LocalJSX.ScSubscriptionSwitch & JSXBase.HTMLAttributes<HTMLScSubscriptionSwitchElement>;
