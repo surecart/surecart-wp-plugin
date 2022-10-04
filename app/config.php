@@ -89,6 +89,7 @@ return [
 		\SureCart\Integrations\LearnDash\LearnDashServiceProvider::class,
 		\SureCart\Integrations\LearnDashGroup\LearnDashGroupServiceProvider::class,
 		\SureCart\Integrations\LifterLMS\LifterLMSServiceProvider::class,
+		\SureCart\Integrations\BuddyBoss\BuddyBossServiceProvider::class,
 		\SureCart\Integrations\AffiliateWP\AffiliateWPServiceProvider::class,
 		\SureCart\Integrations\TutorLMS\TutorLMSServiceProvider::class,
 		\SureCart\Integrations\User\UserServiceProvider::class,
