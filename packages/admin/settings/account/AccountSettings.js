@@ -76,12 +76,12 @@ export default () => {
   /**
    * Get language for customer_locale
    */
-  const customer_locales = {
-    "de": "Deutsch",
-    "en": "English (United States)",
-    "es": "Español",
-    "fr": "Français"
-  }
+  // const customer_locales = {
+  //   "de": "Deutsch",
+  //   "en": "English (United States)",
+  //   "es": "Español",
+  //   "fr": "Français"
+  // }
 
 	return (
 		<SettingsTemplate
@@ -182,23 +182,40 @@ export default () => {
 					></ScSelect>
 
           <ScSelect
-						search
 						value={item?.customer_locale}
 						onScChange={(e) =>
 							editItem({ customer_locale: e.target.value })
 						}
-						choices={Object.keys(customer_locales || {}).map(
-							(value) => {
-								const label = customer_locales[value];
-								return {
-									label,
-									value,
-								};
-							}
-						)}
+						// choices={Object.keys(customer_locales || {}).map(
+						// 	(value) => {
+						// 		const label = customer_locales[value];
+						// 		return {
+						// 			label,
+						// 			value,
+						// 		};
+						// 	}
+						// )}
+            choices = {[
+              {
+                value: 'de',
+                label: 'Deutsch'
+              },
+              {
+                value: 'en',
+                label: 'English (United States)'
+              },
+              {
+                value: 'es',
+                label: 'Español'
+              },
+              {
+                value: 'fr',
+                label: 'Français'
+              },
+            ]}
 						label={__('Notifications and Invoice Language', 'surecart')}
 						help={__(
-							'The default language for notification and invoice.',
+							'The default language for notification and invoices.',
 							'surecart'
 						)}
 						required
