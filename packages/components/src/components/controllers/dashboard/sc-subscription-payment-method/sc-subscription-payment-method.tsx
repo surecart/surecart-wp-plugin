@@ -76,10 +76,12 @@ export class ScSubscriptionPaymentMethod {
   }
 
   async fetchMethods() {
+    const customerId = this.subscription?.customer?.id || this.subscription?.customer;
+    if (!customerId) return;
     return (await apiFetch({
       path: addQueryArgs(`surecart/v1/payment_methods`, {
         expand: ['card', 'customer', 'billing_agreement', 'paypal_account', 'payment_instrument', 'bank_account'],
-        customer_ids: [this.subscription?.customer?.id || this.subscription?.customer],
+        customer_ids: [customerId],
         reusable: true,
         live_mode: this.subscription?.live_mode,
       }),
