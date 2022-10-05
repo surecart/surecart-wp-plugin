@@ -64,9 +64,11 @@ export class ScSubscriptionPaymentMethod {
   /** Get all subscriptions */
   async getPaymentMethods() {
     if (this.paymentMethods?.length) return;
+    const customerId = this.subscription?.customer?.id || this.subscription?.customer;
+    if (!customerId) return;
     try {
       this.loading = true;
-      this.paymentMethods = await this.fetchMethods();
+      this.paymentMethods = await this.fetchMethods(customerId);
     } catch (e) {
       this.error = e?.messsage || __('Something went wrong', 'surecart');
       console.error(this.error);
@@ -75,9 +77,7 @@ export class ScSubscriptionPaymentMethod {
     }
   }
 
-  async fetchMethods() {
-    const customerId = this.subscription?.customer?.id || this.subscription?.customer;
-    if (!customerId) return;
+  async fetchMethods(customerId) {
     return (await apiFetch({
       path: addQueryArgs(`surecart/v1/payment_methods`, {
         expand: ['card', 'customer', 'billing_agreement', 'paypal_account', 'payment_instrument', 'bank_account'],
