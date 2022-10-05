@@ -78,6 +78,8 @@ export class ScStripePaymentElement {
         this.stripe = await loadStripe(this.paymentIntent?.processor_data?.stripe?.publishable_key, { stripeAccount: this.paymentIntent?.processor_data?.stripe?.account_id });
       } catch (e) {
         this.error = e?.message || __('Stripe could not be loaded', 'surecart');
+        // don't continue.
+        return; 
       }
     }
 
