@@ -18,6 +18,7 @@ import Downloads from './modules/Downloads';
 import Integrations from './modules/integrations/Integrations';
 import Licensing from './modules/Licensing';
 import Prices from './modules/Prices';
+import Publishing from './modules/Publishing';
 import Sidebar from './Sidebar';
 
 export default ({ id }) => {
@@ -233,6 +234,12 @@ export default ({ id }) => {
 
 				<Licensing
 					id={id}
+					product={product}
+					updateProduct={editProduct}
+					loading={!hasLoadedProduct}
+				/>
+
+				<Publishing
 					product={product}
 					updateProduct={editProduct}
 					loading={!hasLoadedProduct}

@@ -1,6 +1,11 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScSwitch } from '@surecart/components-react';
+import {
+	ScDivider,
+	ScRadio,
+	ScRadioGroup,
+	ScSwitch,
+} from '@surecart/components-react';
 import { format } from '@wordpress/date';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -9,6 +14,7 @@ import Box from '../ui/Box';
 import Definition from '../ui/Definition';
 import Advanced from './modules/Advanced';
 import Image from './modules/Image';
+import Publishing from './modules/Publishing';
 import Taxes from './modules/Tax';
 
 export default ({
@@ -82,6 +88,13 @@ export default ({
 					)}
 				</Fragment>
 			</Box>
+
+			<Publishing
+				id={id}
+				product={product}
+				updateProduct={updateProduct}
+				loading={loading}
+			/>
 
 			<Taxes
 				product={product}
