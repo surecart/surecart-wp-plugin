@@ -35,6 +35,8 @@ export default ({ id }) => {
 	);
 
 	const updatePost = (status) => {
+		// if it's switched from draft, maybe let's create one.
+
 		// if it's future, set the date.
 
 		// if it's now, remove the date?
