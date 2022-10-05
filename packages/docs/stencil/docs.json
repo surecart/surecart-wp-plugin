@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-09-23T20:59:00",
+  "timestamp": "2022-10-05T01:47:17",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -75,6 +75,22 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "namePlaceholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "name-placeholder",
+          "reflectToAttr": false,
+          "docs": "Placeholder for Name",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -13489,6 +13505,22 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "namePlaceholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "name-placeholder",
+          "reflectToAttr": false,
+          "docs": "Show the name field placeholder.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,

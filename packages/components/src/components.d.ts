@@ -24,10 +24,6 @@ export namespace Components {
           * Is this loading?
          */
         "loading": boolean;
-        /**
-          * Placeholder for Name
-         */
-        "namePlaceholder": string;
         "names": Partial<Address>;
         "placeholders": Partial<Address>;
         "reportValidity": () => Promise<boolean>;
@@ -1586,6 +1582,8 @@ export namespace Components {
         "value": string;
     }
     interface ScOrderShippingAddress {
+        "cityPlaceholder": string;
+        "countryPlaceholder": string;
         /**
           * Show the full address
          */
@@ -1594,18 +1592,17 @@ export namespace Components {
           * Label for the field.
          */
         "label": string;
+        "line1Placeholder": string;
+        "line2Placeholder": string;
         /**
           * Is this loading.
          */
         "loading": boolean;
         /**
-          * Show the name field placeholder.
+          * Show the placeholder fields.
          */
         "namePlaceholder": string;
-        /**
-          * Placeholder values.
-         */
-        "placeholders": Partial<Address>;
+        "postalCodePlaceholder": string;
         "reportValidity": () => Promise<boolean>;
         /**
           * Is this required (defaults to true)
@@ -1623,6 +1620,7 @@ export namespace Components {
           * Show the name field.
          */
         "showName": boolean;
+        "statePlaceholder": string;
         /**
           * Tax status of the order
          */
@@ -4145,10 +4143,6 @@ declare namespace LocalJSX {
           * Is this loading?
          */
         "loading"?: boolean;
-        /**
-          * Placeholder for Name
-         */
-        "namePlaceholder"?: string;
         "names"?: Partial<Address>;
         /**
           * Address change event.
@@ -5883,6 +5877,8 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface ScOrderShippingAddress {
+        "cityPlaceholder"?: string;
+        "countryPlaceholder"?: string;
         /**
           * Show the full address
          */
@@ -5891,12 +5887,14 @@ declare namespace LocalJSX {
           * Label for the field.
          */
         "label"?: string;
+        "line1Placeholder"?: string;
+        "line2Placeholder"?: string;
         /**
           * Is this loading.
          */
         "loading"?: boolean;
         /**
-          * Show the name field placeholder.
+          * Show the placeholder fields.
          */
         "namePlaceholder"?: string;
         /**
@@ -5906,10 +5904,7 @@ declare namespace LocalJSX {
     data: Partial<Checkout>;
     options?: { silent?: boolean };
   }>) => void;
-        /**
-          * Placeholder values.
-         */
-        "placeholders"?: Partial<Address>;
+        "postalCodePlaceholder"?: string;
         /**
           * Is this required (defaults to true)
          */
@@ -5926,6 +5921,7 @@ declare namespace LocalJSX {
           * Show the name field.
          */
         "showName"?: boolean;
+        "statePlaceholder"?: string;
         /**
           * Tax status of the order
          */

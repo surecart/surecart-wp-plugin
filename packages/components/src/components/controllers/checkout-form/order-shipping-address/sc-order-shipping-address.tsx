@@ -35,19 +35,14 @@ export class ScOrderShippingAddress {
   /** Show the name field. */
   @Prop() showName: boolean;
 
-  /** Show the name field placeholder. */
-  @Prop() namePlaceholder: string;
-
-  /** Placeholder values. */
-  @Prop() placeholders: Partial<Address> = {
-    name: __('Name or Company Name', 'surecart'),
-    country: __('Country', 'surecart'),
-    city: __('City', 'surecart'),
-    line_1: __('Address', 'surecart'),
-    line_2: __('Address Line 2', 'surecart'),
-    postal_code: __('Postal Code/Zip', 'surecart'),
-    state: __('State/Province/Region', 'surecart'),
-  };
+  /** Show the placeholder fields. */
+  @Prop() namePlaceholder: string = __('Name or Company Name', 'surecart');
+  @Prop() countryPlaceholder: string = __('Country', 'surecart');
+  @Prop() cityPlaceholder: string = __('City', 'surecart');
+  @Prop() line1Placeholder: string = __('Address', 'surecart');
+  @Prop() line2Placeholder: string = __('Address Line 2', 'surecart');
+  @Prop() postalCodePlaceholder: string = __('Postal Code/Zip', 'surecart');
+  @Prop() statePlaceholder: string = __('State/Province/Region', 'surecart');
 
   /** Make a request to update the order. */
   @Event() scUpdateOrder: EventEmitter<{
@@ -94,8 +89,15 @@ export class ScOrderShippingAddress {
         <sc-address
           ref={el => (this.input = el as any)}
           label={this.label || __('Shipping Address', 'surecart')}
-          placeholders={this.placeholders}
-          namePlaceholder={this.namePlaceholder}
+          placeholders={{
+            'name': this.namePlaceholder,
+            'country': this.countryPlaceholder,
+            'city': this.cityPlaceholder,
+            'line_1': this.line1Placeholder,
+            'line_2': this.line2Placeholder,
+            'postal_code': this.postalCodePlaceholder,
+            'state': this.statePlaceholder
+          }}
           required={this.required}
           loading={this.loading}
           address={this.address}
