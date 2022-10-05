@@ -289,7 +289,7 @@ export default () => {
 						)}
 					</>
 				)}
-				{scData.processors.some(
+				{(scData.processors || []).some(
 					(processor) => processor.processor_type === 'stripe'
 				) && (
 					<ScSwitch
