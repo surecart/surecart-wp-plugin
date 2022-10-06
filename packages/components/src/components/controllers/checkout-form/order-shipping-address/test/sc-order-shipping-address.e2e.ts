@@ -36,6 +36,14 @@ describe('sc-order-shipping-address', () => {
 
     let element = await page.find('sc-order-shipping-address >>> sc-address');
     let placeholders = await element.getProperty('placeholders');
-    expect(placeholders).toEqual({ name: 'test name', 'country': 'country test' });
+    expect(placeholders).toEqual({
+      "city": "City",
+      "line_1": "Address",
+      "line_2": "Address Line 2",
+      name: 'test name',
+      'country': 'country test' ,
+      "postal_code": "Postal Code/Zip",
+      "state": "State/Province/Region"
+    });
   });
 });
