@@ -53,4 +53,40 @@ class Product extends Model {
 	public function setPurchaseAttribute( $value ) {
 		$this->setRelation( 'purchase', $value, Purchase::class );
 	}
+
+	/**
+	 * Create a new model
+	 *
+	 * @param array $attributes Attributes to create.
+	 *
+	 * @return $this|false
+	 */
+	// protected function create( $attributes = [] ) {
+	// $created = parent::create( $attributes );
+
+	// handle error.
+	// if ( is_wp_error( $created ) ) {
+	// return $created;
+	// }
+
+	// already creating product page.
+	// if ( $this->fireModelEvent( 'creating_product_page' ) === false ) {
+	// return false;
+	// }
+
+	// create the draft product page.
+	// \SureCart::productPage()->create(
+	// [
+	// 'post_title'  => $created->name,
+	// 'post_status' => 'draft',
+	// ],
+	// $created->id
+	// );
+
+	// fire event.
+	// $this->fireModelEvent( 'created_product_page' );
+
+	// created.
+	// return $created;
+	// }
 }

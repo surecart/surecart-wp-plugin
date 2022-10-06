@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import {
+	ScBlockUi,
 	ScButton,
 	ScIcon,
 	ScRadio,
@@ -8,36 +9,43 @@ import {
 } from '@surecart/components-react';
 import { addQueryArgs } from '@wordpress/url';
 import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
 import Box from '../../ui/Box';
+import { useState } from 'react';
 
-export default ({ id, product }) => {
+export default ({ id, product, post, loading }) => {
+	const [busy, setBusy] = useState();
+	const [error, setError] = useState();
 	const { editEntityRecord, saveEntityRecord } = useDispatch(coreStore);
 
-	const { post, loading } = useSelect(
-		(select) => {
-			const queryArgs = [
+	/** Create the product post. */
+	const createPost = async () => {
+		try {
+			setBusy(true);
+			setError(null);
+			await saveEntityRecord(
 				'postType',
 				'sc-product',
 				{
-					status: ['publish', 'future', 'draft'],
-					meta: { sc_product_id: id },
+					status: 'draft',
+					title: product?.name,
+					meta: {
+						sc_product_id: id,
+					},
 				},
-			];
-			return {
-				post:
-					select(coreStore).getEntityRecords(...queryArgs)?.[0] ||
-					null,
-				loading: select(coreStore).isResolving(
-					'getEntityRecords',
-					queryArgs
-				),
-			};
-		},
-		[id]
-	);
+				{
+					throwOnError: true,
+				}
+			);
+		} catch (e) {
+			console.error(e);
+			setError(e?.message || __('Something went wrong', 'surecart'));
+		} finally {
+			setBusy(false);
+		}
+	};
 
 	const updatePost = (status) => {
 		let date = null;
@@ -46,28 +54,11 @@ export default ({ id, product }) => {
 		if (status === 'future') {
 		}
 
-		// if it's future, set the date.
-
-		if (post?.id) {
-			// if it's now, remove the date?
-			editEntityRecord('postType', 'sc-product', post?.id, {
-				status,
-				date,
-			});
-		} else {
-			saveEntityRecord(
-				~'postType',
-				'sc-product',
-				{
-					status,
-					date,
-					title: product?.name,
-				},
-				{
-					meta: { sc_product_id: id },
-				}
-			);
-		}
+		// if it's now, remove the date?
+		editEntityRecord('postType', 'sc-product', post?.id, {
+			status,
+			date,
+		});
 	};
 
 	return (
@@ -98,23 +89,40 @@ export default ({ id, product }) => {
 				)
 			}
 		>
-			<ScRadioGroup
-				label={__('Publish product page', 'surecart')}
-				onScChange={(e) => updatePost(e.target.value)}
-			>
-				<ScRadio
-					checked={!['future', 'publish'].includes(post?.status)}
-					value="draft"
+			{!post?.id ? (
+				<ScButton type="default" onClick={createPost}>
+					<ScIcon name="shopping-bag" slot="prefix" />
+					{__('Create Product Page', 'surecart')}
+				</ScButton>
+			) : (
+				<ScRadioGroup
+					label={__('Public product page', 'surecart')}
+					onScChange={(e) => updatePost(e.target.value)}
 				>
-					{__("Don't publish", 'surecart')}
-				</ScRadio>
-				<ScRadio checked={post?.status === 'future'} value="future">
-					{__('Schedule', 'surecart')}
-				</ScRadio>
-				<ScRadio checked={post?.status === 'publish'} value="publish">
-					{__('Immediately', 'surecart')}
-				</ScRadio>
-			</ScRadioGroup>
+					<ScRadio
+						checked={!['future', 'publish'].includes(post?.status)}
+						value="draft"
+						name="publishing"
+					>
+						{__('Draft', 'surecart')}
+					</ScRadio>
+					<ScRadio
+						checked={post?.status === 'future'}
+						value="future"
+						name="publishing"
+					>
+						{__('Scheduled', 'surecart')}
+					</ScRadio>
+					<ScRadio
+						checked={post?.status === 'publish'}
+						value="publish"
+						name="publishing"
+					>
+						{__('Published', 'surecart')}
+					</ScRadio>
+				</ScRadioGroup>
+			)}
+			{!!busy && <ScBlockUi spinner />}
 		</Box>
 	);
 };

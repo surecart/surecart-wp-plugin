@@ -8,6 +8,7 @@
  * @package SureCart
  */
 
+use SureCart\Models\Price;
 use SureCart\Models\Product;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -43,29 +44,33 @@ add_filter(
 			return $value;
 		}
 
-		// we don't care about.
+		// we want to leave this one alone.
 		if ( 'sc_product_id' === $meta_key ) {
 			return $value;
 		}
 
-		if ( false === strpos( $meta_key, 'product' ) ) {
-			return $value;
-		}
-
+		// get the associated product id.
 		$product_id = get_post_meta( $object_id, 'sc_product_id', true );
 		if ( empty( $product_id ) ) {
 			return $value;
 		}
 
-		$product = Product::with( [ 'prices' ] )->find( $product_id );
-
+		// asking for the product.
 		if ( 'product' === $meta_key ) {
-			return $product;
+			return Product::with( [ 'prices' ] )->find( $product_id );
 		}
 
-		$key = str_replace( 'product_', '', $meta_key );
+		// asking for prices.
+		if ( 'prices' === $meta_key ) {
+			return Price::where(
+				[
+					'archived'    => false,
+					'product_ids' => [ $product_id ],
+				]
+			)->get();
+		}
 
-		return $product->$key;
+		return $value;
 	},
 	9,
 	5
@@ -82,5 +87,35 @@ add_filter(
 		return $title;
 	},
 	10,
+	2
+);
+
+register_meta(
+	'post',
+	'sc_product_id',
+	[
+		'type'              => 'string',
+		'show_in_rest'      => true,
+		'single'            => true,
+		'sanitize_callback' => 'sanitize_text_field',
+		'auth_callback'     => function () {
+			return current_user_can( 'edit_sc_products' );
+		},
+	]
+);
+
+
+add_filter(
+	'rest_sc-product_query',
+	function( $args, $request ) {
+		$args += [
+			'meta_key'   => $request['meta_key'],
+			'meta_value' => $request['meta_value'],
+			'meta_query' => $request['meta_query'],
+		];
+
+		return $args;
+	},
+	99,
 	2
 );

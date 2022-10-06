@@ -34,7 +34,6 @@ export class ScRadioGroup {
   @Listen('click')
   handleRadioClick(event) {
     const target = event.target as HTMLScRadioElement;
-    console.log(target);
     if (target.disabled) {
       return;
     }

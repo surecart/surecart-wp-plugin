@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { ScButton } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
-import { select, useDispatch } from '@wordpress/data';
+import { select, useDispatch, useSelect } from '@wordpress/data';
 import { Fragment, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
@@ -13,13 +13,17 @@ import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import ActionsDropdown from './components/product/ActionsDropdown';
 import SaveButton from './components/product/SaveButton';
+
+import Advanced from './modules/Advanced';
 import Details from './modules/Details';
 import Downloads from './modules/Downloads';
+import Image from './modules/Image';
 import Integrations from './modules/integrations/Integrations';
 import Licensing from './modules/Licensing';
 import Prices from './modules/Prices';
 import Publishing from './modules/Publishing';
-import Sidebar from './Sidebar';
+import Summary from './modules/Summary';
+import Tax from './modules/Tax';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
@@ -37,10 +41,33 @@ export default ({ id }) => {
 		productError,
 	} = useEntity('product', id);
 
+	// the the product page post.
+	const { post, hasLoadedPost } = useSelect(
+		(select) => {
+			const queryArgs = [
+				'postType',
+				'sc-product',
+				{
+					status: ['publish', 'future', 'draft'],
+					meta_key: 'sc_product_id',
+					meta_value: id,
+				},
+			];
+			return {
+				post: select(coreStore).getEntityRecords(...queryArgs)?.[0],
+				hasLoadedPost: select(coreStore).hasFinishedResolution(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
+		},
+		[id]
+	);
+
 	/**
 	 * Handle the form submission
 	 */
-	const onSubmit = async () => {
+	const onSubmit = async (e) => {
 		try {
 			setError(null);
 
@@ -193,14 +220,37 @@ export default ({ id }) => {
 			}
 			button={button}
 			sidebar={
-				<Sidebar
-					id={id}
-					onToggleArchiveProduct={onToggleArchiveProduct}
-					loading={!hasLoadedProduct}
-					product={product}
-					updateProduct={editProduct}
-					isSaving={savingProduct}
-				/>
+				<>
+					<Summary
+						id={id}
+						post={post}
+						product={product}
+						isSaving={savingProduct}
+						onToggleArchiveProduct={onToggleArchiveProduct}
+						loading={!hasLoadedProduct}
+					/>
+					<Publishing
+						id={id}
+						product={product}
+						post={post}
+						loading={!hasLoadedPost}
+					/>
+					<Tax
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+					<Image
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+					<Advanced
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+				</>
 			}
 		>
 			<Fragment>
@@ -234,12 +284,6 @@ export default ({ id }) => {
 
 				<Licensing
 					id={id}
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-
-				<Publishing
 					product={product}
 					updateProduct={editProduct}
 					loading={!hasLoadedProduct}

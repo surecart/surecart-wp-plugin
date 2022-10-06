@@ -27,6 +27,7 @@ class FormPostTypeServiceProvider implements ServiceProviderInterface {
 		$app = $container[ SURECART_APPLICATION_KEY ];
 		$app->alias( 'forms', 'surecart.forms' );
 		$app->alias( 'cartPost', 'surecart.cart.post' );
+		$app->alias( 'productPage', 'surecart.product.post' );
 	}
 
 	/**
