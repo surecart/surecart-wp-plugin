@@ -101,6 +101,7 @@ abstract class BaseSettings {
 				'api_url'              => defined( 'SURECART_API_URL' ) ? untrailingslashit( SURECART_API_URL ) : \SureCart::requests()->getBaseUrl(),
 				'time_zones'           => TimeDate::timezoneOptions(),
 				'entitlements'         => \SureCart::account()->entitlements,
+				'processors'           => \SureCart::account()->processors ?? [],
 			]
 		);
 	}

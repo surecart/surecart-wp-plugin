@@ -340,6 +340,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Makes this edit and not editable.
+         */
+        "edit": boolean;
+        /**
           * Draws the checkbox in an indeterminate state.
          */
         "indeterminate": boolean;
@@ -359,10 +363,6 @@ export namespace Components {
           * Makes the checkbox a required field.
          */
         "required": boolean;
-        /**
-          * Makes this static and not editable.
-         */
-        "static": boolean;
         /**
           * Removes focus from the checkbox.
          */
@@ -1539,6 +1539,22 @@ export namespace Components {
          */
         "autofocus": boolean;
         /**
+          * The input's password confirmation attribute.
+         */
+        "confirmation": boolean;
+        /**
+          * The input's confirmation help text.
+         */
+        "confirmationHelp": string;
+        /**
+          * The input's confirmation label text.
+         */
+        "confirmationLabel": string;
+        /**
+          * The input's confirmation placeholder text.
+         */
+        "confirmationPlaceholder": string;
+        /**
           * Disables the input.
          */
         "disabled": boolean;
@@ -2136,6 +2152,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * This will be true as a workaround in the block editor to focus on the content.
+         */
+        "edit": boolean;
+        /**
           * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
          */
         "invalid": boolean;
@@ -2158,9 +2178,25 @@ export namespace Components {
     }
     interface ScRadioGroup {
         /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid": boolean;
+        /**
           * The radio group label. Required for proper accessibility.
          */
         "label": string;
+        /**
+          * Checks for validity and shows the browser's validation message if the control is invalid.
+         */
+        "reportValidity": () => Promise<boolean>;
+        /**
+          * Is one of these items required.
+         */
+        "required": boolean;
+        /**
+          * The selected value of the control.
+         */
+        "value": string;
     }
     interface ScSecureNotice {
     }
@@ -2458,6 +2494,16 @@ export namespace Components {
         "subscription": Subscription;
         "subscriptionId": string;
         "successUrl": string;
+    }
+    interface ScSubscriptionPaymentMethod {
+        /**
+          * The heading
+         */
+        "heading": string;
+        /**
+          * The subscription
+         */
+        "subscription": Subscription;
     }
     interface ScSubscriptionRenew {
         "backUrl": string;
@@ -3822,6 +3868,12 @@ declare global {
         prototype: HTMLScSubscriptionPaymentElement;
         new (): HTMLScSubscriptionPaymentElement;
     };
+    interface HTMLScSubscriptionPaymentMethodElement extends Components.ScSubscriptionPaymentMethod, HTMLStencilElement {
+    }
+    var HTMLScSubscriptionPaymentMethodElement: {
+        prototype: HTMLScSubscriptionPaymentMethodElement;
+        new (): HTMLScSubscriptionPaymentMethodElement;
+    };
     interface HTMLScSubscriptionRenewElement extends Components.ScSubscriptionRenew, HTMLStencilElement {
     }
     var HTMLScSubscriptionRenewElement: {
@@ -4093,6 +4145,7 @@ declare global {
         "sc-subscription-cancel": HTMLScSubscriptionCancelElement;
         "sc-subscription-details": HTMLScSubscriptionDetailsElement;
         "sc-subscription-payment": HTMLScSubscriptionPaymentElement;
+        "sc-subscription-payment-method": HTMLScSubscriptionPaymentMethodElement;
         "sc-subscription-renew": HTMLScSubscriptionRenewElement;
         "sc-subscription-status-badge": HTMLScSubscriptionStatusBadgeElement;
         "sc-subscription-switch": HTMLScSubscriptionSwitchElement;
@@ -4481,6 +4534,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * Makes this edit and not editable.
+         */
+        "edit"?: boolean;
+        /**
           * Draws the checkbox in an indeterminate state.
          */
         "indeterminate"?: boolean;
@@ -4508,10 +4565,6 @@ declare namespace LocalJSX {
           * Makes the checkbox a required field.
          */
         "required"?: boolean;
-        /**
-          * Makes this static and not editable.
-         */
-        "static"?: boolean;
         /**
           * The checkbox's value attribute.
          */
@@ -5829,6 +5882,22 @@ declare namespace LocalJSX {
          */
         "autofocus"?: boolean;
         /**
+          * The input's password confirmation attribute.
+         */
+        "confirmation"?: boolean;
+        /**
+          * The input's confirmation help text.
+         */
+        "confirmationHelp"?: string;
+        /**
+          * The input's confirmation label text.
+         */
+        "confirmationLabel"?: string;
+        /**
+          * The input's confirmation placeholder text.
+         */
+        "confirmationPlaceholder"?: string;
+        /**
           * Disables the input.
          */
         "disabled"?: boolean;
@@ -6494,6 +6563,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * This will be true as a workaround in the block editor to focus on the content.
+         */
+        "edit"?: boolean;
+        /**
           * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
          */
         "invalid"?: boolean;
@@ -6524,9 +6597,21 @@ declare namespace LocalJSX {
     }
     interface ScRadioGroup {
         /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid"?: boolean;
+        /**
           * The radio group label. Required for proper accessibility.
          */
         "label"?: string;
+        /**
+          * Is one of these items required.
+         */
+        "required"?: boolean;
+        /**
+          * The selected value of the control.
+         */
+        "value"?: string;
     }
     interface ScSecureNotice {
     }
@@ -6870,6 +6955,16 @@ declare namespace LocalJSX {
         "subscription"?: Subscription;
         "subscriptionId"?: string;
         "successUrl"?: string;
+    }
+    interface ScSubscriptionPaymentMethod {
+        /**
+          * The heading
+         */
+        "heading"?: string;
+        /**
+          * The subscription
+         */
+        "subscription"?: Subscription;
     }
     interface ScSubscriptionRenew {
         "backUrl"?: string;
@@ -7414,6 +7509,7 @@ declare namespace LocalJSX {
         "sc-subscription-cancel": ScSubscriptionCancel;
         "sc-subscription-details": ScSubscriptionDetails;
         "sc-subscription-payment": ScSubscriptionPayment;
+        "sc-subscription-payment-method": ScSubscriptionPaymentMethod;
         "sc-subscription-renew": ScSubscriptionRenew;
         "sc-subscription-status-badge": ScSubscriptionStatusBadge;
         "sc-subscription-switch": ScSubscriptionSwitch;
@@ -7570,6 +7666,7 @@ declare module "@stencil/core" {
             "sc-subscription-cancel": LocalJSX.ScSubscriptionCancel & JSXBase.HTMLAttributes<HTMLScSubscriptionCancelElement>;
             "sc-subscription-details": LocalJSX.ScSubscriptionDetails & JSXBase.HTMLAttributes<HTMLScSubscriptionDetailsElement>;
             "sc-subscription-payment": LocalJSX.ScSubscriptionPayment & JSXBase.HTMLAttributes<HTMLScSubscriptionPaymentElement>;
+            "sc-subscription-payment-method": LocalJSX.ScSubscriptionPaymentMethod & JSXBase.HTMLAttributes<HTMLScSubscriptionPaymentMethodElement>;
             "sc-subscription-renew": LocalJSX.ScSubscriptionRenew & JSXBase.HTMLAttributes<HTMLScSubscriptionRenewElement>;
             "sc-subscription-status-badge": LocalJSX.ScSubscriptionStatusBadge & JSXBase.HTMLAttributes<HTMLScSubscriptionStatusBadgeElement>;
             "sc-subscription-switch": LocalJSX.ScSubscriptionSwitch & JSXBase.HTMLAttributes<HTMLScSubscriptionSwitchElement>;

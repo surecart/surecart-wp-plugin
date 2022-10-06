@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 1.1.13
+Stable tag: 1.1.14
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,15 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.1.14 - October 5, 2022 =
+* New: Radio button group form block.
+* New: Password confirmation option in password form block.
+* New: Customer name now syncs with WordPress name on checkout.
+* New: Link to delete test data.
+* Fix: Issue with payment failure email links going to 404.
+* Fix: Issue with clicking add to cart button for an existing item in cart sometimes creating 2 line items instead of 1.
+* Fix: Issue with theme line-height sometimes cutting off decenders in dashboard tabs.
 
 = 1.1.13 - September 27, 2022 =
 * New: Thrive Automator purchase events integration.

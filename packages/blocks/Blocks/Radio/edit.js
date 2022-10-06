@@ -1,38 +1,23 @@
 /**
+ * Component Dependencies
+ */
+import { ScRadio } from '@surecart/components-react';
+import { InspectorControls, RichText } from '@wordpress/block-editor';
+import { useBlockProps } from '@wordpress/block-editor';
+import { PanelBody, PanelRow, TextControl, ToggleControl } from '@wordpress/components';
+import { Fragment } from '@wordpress/element';
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls, RichText } from '@wordpress/block-editor';
-import { Fragment } from '@wordpress/element';
-import {
-	PanelBody,
-	PanelRow,
-	TextControl,
-	ToggleControl,
-} from '@wordpress/components';
-
-/**
- * Component Dependencies
- */
-import { ScCheckbox } from '@surecart/components-react';
-import { useBlockProps } from '@wordpress/block-editor';
 
 export default ({ className, attributes, setAttributes }) => {
-	const { label, value, checked, name, required } = attributes;
-
-	const blockProps = useBlockProps();
+	const { label, value, checked, name } = attributes;
 
 	return (
 		<Fragment>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
-					<PanelRow>
-						<ToggleControl
-							label={__('Required', 'surecart')}
-							checked={required}
-							onChange={(required) => setAttributes({ required })}
-						/>
-					</PanelRow>
 					<PanelRow>
 						<TextControl
 							label={__('Name', 'surecart')}
@@ -57,20 +42,27 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScCheckbox
-				className={className}
+			<ScRadio
 				name={name}
-				required={required}
+				checked={checked}
 				edit
-				{...blockProps}
+				{...useBlockProps({
+					className,
+					style: {
+						display: 'block',
+					},
+				})}
 			>
 				<RichText
-					aria-label={__('Checkbox Text', 'surecart')}
-					placeholder={__('Add some checkbox text...', 'surecart')}
+					aria-label={__('Radio Text', 'surecart')}
+					placeholder={__(
+						'Click here to add some radio text...',
+						'surecart'
+					)}
 					value={label}
 					onChange={(label) => setAttributes({ label })}
 				/>
-			</ScCheckbox>
+			</ScRadio>
 		</Fragment>
 	);
 };

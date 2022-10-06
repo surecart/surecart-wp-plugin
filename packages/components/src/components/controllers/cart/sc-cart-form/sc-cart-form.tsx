@@ -55,10 +55,7 @@ export class ScCartForm {
     const order = this.getOrder();
     const lineItem = (order?.line_items?.data || []).find(item => item.price?.id === this.priceId);
     if (!lineItem?.id) {
-      return {
-        price_id: this.priceId,
-        quantity: 0,
-      };
+      return false;
     }
 
     return {
@@ -78,7 +75,7 @@ export class ScCartForm {
     try {
       this.busy = true;
       // if it's ad_hoc, update the amount. Otherwise increment the quantity.
-      const order = await this.addOrUpdateLineItem({ ad_hoc_amount: parseInt(price as string) || null });
+      const order = await this.addOrUpdateLineItem({ ...(!!price ? { ad_hoc_amount: parseInt(price as string) || null } : {}) });
       // store the checkout in localstorage and open the cart
       setOrder(order, this.formId);
       uiStore.set('cart', { ...uiStore.state.cart, ...{ open: true } });
@@ -90,26 +87,41 @@ export class ScCartForm {
     }
   }
 
-  async addOrUpdateLineItem(data = { ad_hoc_amount: null }) {
+  async addOrUpdateLineItem(data: any = {}) {
     // get the current line item from the price id.
     let lineItem = this.getLineItem() as LineItemData;
+
     // convert line items response to line items post.
     let existingData = convertLineItemsToLineItemData(this.getOrder()?.line_items || []);
 
-    if (lineItem && !data?.ad_hoc_amount) {
-      lineItem.quantity = lineItem.quantity + 1;
-    }
-
+    // Line item does not exist. Add it.
     return (await createOrUpdateOrder({
       id: this.getOrder()?.id,
       data: {
         live_mode: this.mode === 'live',
         line_items: [
-          ...(existingData || []),
-          {
-            ...lineItem,
-            ...data,
-          },
+          ...(existingData || []).map((item: LineItemData) => {
+            // if the price ids match (we have already a line item)
+            if (this.priceId === item?.price_id) {
+              return {
+                ...item,
+                ...(!!data?.ad_hoc_amount ? { ad_hoc_amount: data?.ad_hoc_amount } : {}),
+                quantity: !!item?.ad_hoc_amount ? item?.quantity + 1 : 1, // only increase quantity if not ad_hoc.
+              };
+            }
+            // return item.
+            return item;
+          }),
+          // add a line item if one does not exist.
+          ...(!lineItem
+            ? [
+                {
+                  price_id: this.priceId,
+                  ...(!!data?.ad_hoc_amount ? { ad_hoc_amount: data?.ad_hoc_amount } : {}),
+                  quantity: 1,
+                },
+              ]
+            : []),
         ],
       },
       query: {
@@ -136,7 +148,6 @@ export class ScCartForm {
       <sc-form
         ref={el => (this.form = el as HTMLScFormElement)}
         onScSubmit={() => {
-          console.log('submit');
           this.addToCart();
         }}
       >
