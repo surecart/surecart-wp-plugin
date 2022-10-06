@@ -8,6 +8,8 @@
  * @package SureCart
  */
 
+use SureCart\Models\Product;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -30,4 +32,55 @@ add_filter(
 		}
 		return $url;
 	}
+);
+
+
+add_filter(
+	'get_post_metadata',
+	function( $value, $object_id, $meta_key, $single, $meta_type ) {
+		// we only care about our post type.
+		if ( 'sc-product' !== get_post_type( $object_id ) ) {
+			return $value;
+		}
+
+		// we don't care about.
+		if ( 'sc_product_id' === $meta_key ) {
+			return $value;
+		}
+
+		if ( false === strpos( $meta_key, 'product' ) ) {
+			return $value;
+		}
+
+		$product_id = get_post_meta( $object_id, 'sc_product_id', true );
+		if ( empty( $product_id ) ) {
+			return $value;
+		}
+
+		$product = Product::with( [ 'prices' ] )->find( $product_id );
+
+		if ( 'product' === $meta_key ) {
+			return $product;
+		}
+
+		$key = str_replace( 'product_', '', $meta_key );
+
+		return $product->$key;
+	},
+	9,
+	5
+);
+
+add_filter(
+	'the_title',
+	function( $title, $id ) {
+		$product_id = get_post_meta( $id, 'sc_product_id', true );
+		if ( $product_id ) {
+			$product = Product::find( $product_id );
+			return $product->name;
+		}
+		return $title;
+	},
+	10,
+	2
 );

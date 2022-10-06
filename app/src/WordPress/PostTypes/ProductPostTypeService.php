@@ -21,7 +21,7 @@ class ProductPostTypeService {
 	 *
 	 * @var string
 	 */
-	protected $post_type = 'sc_product';
+	protected $post_type = 'sc-product';
 
 	/**
 	 * Get the page service from the application container.
@@ -50,13 +50,13 @@ class ProductPostTypeService {
 		register_post_type(
 			$this->post_type,
 			array(
-				'labels'       => array(
+				'labels'            => array(
 					'name'                     => _x( 'Products', 'post type general name', 'surecart' ),
 					'singular_name'            => _x( 'Product', 'post type singular name', 'surecart' ),
 					'add_new'                  => _x( 'Add New', 'Product', 'surecart' ),
 					'add_new_item'             => __( 'Add new Product', 'surecart' ),
-					'new_item'                 => __( 'New Product', 'surecart' ),
-					'edit_item'                => __( 'Edit Product', 'surecart' ),
+					'new_item'                 => __( 'New Product Page', 'surecart' ),
+					'edit_item'                => __( 'Edit Product Page', 'surecart' ),
 					'view_item'                => __( 'View Product', 'surecart' ),
 					'all_items'                => __( 'All Products', 'surecart' ),
 					'search_items'             => __( 'Search Products', 'surecart' ),
@@ -71,15 +71,18 @@ class ProductPostTypeService {
 					'item_scheduled'           => __( 'Product scheduled.', 'surecart' ),
 					'item_updated'             => __( 'Product updated.', 'surecart' ),
 				),
-				'public'       => true,
-				'show_ui'      => true,
-				// 'show_in_menu' => false, // remove from menu.
-				'rewrite'      => false,
-				'show_in_rest' => true,
-				'rest_base'    => 'sc-products',
-				'map_meta_cap' => true,
-				'supports'     => array(
-					'title',
+				'public'            => true,
+				'show_ui'           => true,
+				'show_in_admin_bar' => true,
+				'show_in_menu'      => false, // remove from menu.
+				'rewrite'           => [
+					'slug'       => 'product',
+					'with_front' => false,
+				],
+				'show_in_rest'      => true,
+				'rest_base'         => 'sc-products',
+				'map_meta_cap'      => true,
+				'supports'          => array(
 					'editor',
 					'custom-fields', // todo: maybe remove.
 					'revisions',

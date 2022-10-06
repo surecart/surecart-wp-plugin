@@ -65,4 +65,8 @@ class Price extends Model {
 	public function setProductAttribute( $value ) {
 		$this->setRelation( 'product', $value, Product::class );
 	}
+
+	public function getDisplayAmount() {
+		return $this->attributes->amount;
+	}
 }

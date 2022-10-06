@@ -1,21 +1,26 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScRadio, ScRadioGroup } from '@surecart/components-react';
-import { store as sureCartStore } from '@surecart/data';
+import {
+	ScButton,
+	ScIcon,
+	ScRadio,
+	ScRadioGroup,
+} from '@surecart/components-react';
+import { addQueryArgs } from '@wordpress/url';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
 import Box from '../../ui/Box';
 
-export default ({ id }) => {
-	const { editEntityRecord } = useDispatch(coreStore);
+export default ({ id, product }) => {
+	const { editEntityRecord, saveEntityRecord } = useDispatch(coreStore);
 
 	const { post, loading } = useSelect(
 		(select) => {
 			const queryArgs = [
 				'postType',
-				'sc_product',
+				'sc-product',
 				{
 					status: ['publish', 'future', 'draft'],
 					meta: { sc_product_id: id },
@@ -35,14 +40,34 @@ export default ({ id }) => {
 	);
 
 	const updatePost = (status) => {
+		let date = null;
+
 		// if it's switched from draft, maybe let's create one.
+		if (status === 'future') {
+		}
 
 		// if it's future, set the date.
 
-		// if it's now, remove the date?
-		editEntityRecord('postType', 'sc_product', post?.id, {
-			status,
-		});
+		if (post?.id) {
+			// if it's now, remove the date?
+			editEntityRecord('postType', 'sc-product', post?.id, {
+				status,
+				date,
+			});
+		} else {
+			saveEntityRecord(
+				~'postType',
+				'sc-product',
+				{
+					status,
+					date,
+					title: product?.name,
+				},
+				{
+					meta: { sc_product_id: id },
+				}
+			);
+		}
 	};
 
 	return (
@@ -59,13 +84,26 @@ export default ({ id }) => {
 					{__('Publishing', 'surecart')}
 				</div>
 			}
+			footer={
+				post?.id && (
+					<ScButton
+						href={addQueryArgs('post.php', {
+							post: post?.id,
+							action: 'edit',
+						})}
+					>
+						<ScIcon slot="prefix" name="edit" />
+						{__('Edit Page Layout', 'surecart')}
+					</ScButton>
+				)
+			}
 		>
 			<ScRadioGroup
 				label={__('Publish product page', 'surecart')}
 				onScChange={(e) => updatePost(e.target.value)}
 			>
 				<ScRadio
-					checked={!['future', 'published'].includes(post?.status)}
+					checked={!['future', 'publish'].includes(post?.status)}
 					value="draft"
 				>
 					{__("Don't publish", 'surecart')}

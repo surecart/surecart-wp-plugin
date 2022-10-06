@@ -2,10 +2,14 @@
 import { css, jsx } from '@emotion/core';
 import {
 	ScDivider,
+	ScFormControl,
+	ScInput,
 	ScRadio,
 	ScRadioGroup,
 	ScSwitch,
 } from '@surecart/components-react';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 import { format } from '@wordpress/date';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -25,6 +29,27 @@ export default ({
 	isSaving,
 	onToggleArchiveProduct,
 }) => {
+	const { editEntityRecord } = useDispatch(coreStore);
+
+	const { post } = useSelect(
+		(select) => {
+			const queryArgs = [
+				'postType',
+				'sc-product',
+				{
+					status: ['publish', 'future', 'draft'],
+					meta: { sc_product_id: id },
+				},
+			];
+			return {
+				post:
+					select(coreStore).getEntityRecords(...queryArgs)?.[0] ||
+					null,
+			};
+		},
+		[id]
+	);
+
 	return (
 		<Fragment>
 			<Box
@@ -87,6 +112,34 @@ export default ({
 						</Definition>
 					)}
 				</Fragment>
+
+				{!!post?.link && !!post?.slug && (
+					<ScDivider style={{ '--spacing': '1em' }} />
+				)}
+
+				{!!post?.link && (
+					<ScFormControl label={__('Permalink', 'surecart')}>
+						<a href={post.link}>{post.link}</a>
+					</ScFormControl>
+				)}
+
+				{!!post?.slug && (
+					<ScInput
+						label={__('URL Slug')}
+						help={__('The last part of the URL', 'surecart')}
+						value={post.slug}
+						onScInput={(e) =>
+							editEntityRecord(
+								'postType',
+								'sc-product',
+								post?.id,
+								{
+									slug: e.target.value,
+								}
+							)
+						}
+					></ScInput>
+				)}
 			</Box>
 
 			<Publishing
