@@ -28,4 +28,14 @@ describe('sc-order-shipping-address', () => {
     address = await element.getProperty('address');
     expect(address).toEqual({ id: 'test', country: 'UK', city: 'Monona', line_1: '303 Park Ave', line_2: null, postal_code: '12345', state: 'WI' });
   });
+
+  it('renders custom placeholders', async () => {
+    const page = await newE2EPage();
+    await page.setContent('<sc-order-shipping-address name-placeholder="test name" country-placeholder="country test" full></sc-order-shipping-address>');
+    page.waitForChanges();
+
+    let element = await page.find('sc-order-shipping-address >>> sc-address');
+    let placeholders = await element.getProperty('placeholders');
+    expect(placeholders).toEqual({ name: 'test name', 'country': 'country test' });
+  });
 });
