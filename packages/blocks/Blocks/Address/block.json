@@ -22,6 +22,9 @@
 		},
 		"show_name": {
 			"type": "boolean"
-		}
+		},
+    "default_country": {
+      "type": "string"
+    }
 	}
 }

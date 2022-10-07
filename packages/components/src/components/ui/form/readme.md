@@ -82,6 +82,7 @@ Type: `Promise<boolean>`
  - [sc-stripe-add-method](../sc-stripe-add-method)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
  - [sc-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
@@ -97,6 +98,7 @@ graph TD;
   sc-stripe-add-method --> sc-form
   sc-subscription-ad-hoc-confirm --> sc-form
   sc-subscription-payment --> sc-form
+  sc-subscription-payment-method --> sc-form
   sc-subscription-switch --> sc-form
   sc-upcoming-invoice --> sc-form
   sc-wordpress-password-edit --> sc-form
