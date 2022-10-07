@@ -929,6 +929,7 @@
     "slot": true
   },
   "sc-order-shipping-address": {
+    "default-country": true,
     "full": true,
     "label": true,
     "loading": true,

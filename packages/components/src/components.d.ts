@@ -1599,6 +1599,10 @@ export namespace Components {
     }
     interface ScOrderShippingAddress {
         /**
+          * Default country for address
+         */
+        "defaultCountry": string;
+        /**
           * Show the full address
          */
         "full": boolean;
@@ -5940,6 +5944,10 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface ScOrderShippingAddress {
+        /**
+          * Default country for address
+         */
+        "defaultCountry"?: string;
         /**
           * Show the full address
          */

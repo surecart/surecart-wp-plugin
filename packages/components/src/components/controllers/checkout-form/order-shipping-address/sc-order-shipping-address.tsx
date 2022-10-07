@@ -35,6 +35,9 @@ export class ScOrderShippingAddress {
   /** Show the name field. */
   @Prop() showName: boolean;
 
+  /** Default country for address */
+  @Prop() defaultCountry: string;
+
   /** Placeholder values. */
   @Prop() placeholders: Partial<Address> = {
     name: __('Name or Company Name', 'surecart'),
@@ -83,6 +86,12 @@ export class ScOrderShippingAddress {
   @Method()
   async reportValidity() {
     return this.input.reportValidity();
+  }
+
+  componentWillLoad() {
+    if (this.defaultCountry) {
+      this.address.country = this.defaultCountry;
+    }
   }
 
   render() {

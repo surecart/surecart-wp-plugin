@@ -23,6 +23,7 @@ export default ({ attributes, setAttributes }) => {
 	const blockProps = useBlockProps({
 		label,
 		showName: show_name,
+    defaultCountry: default_country
 	});
 
 	return (
