@@ -8,22 +8,16 @@ import {
 	ToggleControl,
 } from '@wordpress/components';
 import { ScAddress, ScSelect } from '@surecart/components-react';
-// import { countryChoices } from '@surecart/components';
+import { address } from '@surecart/components';
 
 export default ({ attributes, setAttributes }) => {
 	const { label, full, show_name, default_country } = attributes;
-  const countryChoices = [
-    { value: 'AF', label: __('Afghanistan', 'surecart') },
-    { value: 'AL', label: __('Albania', 'surecart') },
-    { value: 'DZ', label: __('Algeria', 'surecart') },
-    { value: 'AS', label: __('American Samoa', 'surecart') },
-    { value: 'AD', label: __('Andorra', 'surecart') },
-  ];
+	const { countryChoices } = address;
 
 	const blockProps = useBlockProps({
 		label,
 		showName: show_name,
-    defaultCountry: default_country
+		defaultCountry: default_country,
 	});
 
 	return (
@@ -70,20 +64,20 @@ export default ({ attributes, setAttributes }) => {
 							/>
 						</PanelRow>
 					)}
-          <PanelRow>
-            <ScSelect
-              search
-              label={__('Choose default country.', 'surecart')}
-              placeholder={__('Country', 'surecart')}
-              choices={countryChoices}
-              value={default_country}
-              onScChange={(e) =>
-                setAttributes({
-                  default_country: e.target.value,
-                })
-              }
-            />
-          </PanelRow>
+					<PanelRow>
+						<ScSelect
+							search
+							label={__('Choose default country.', 'surecart')}
+							placeholder={__('Country', 'surecart')}
+							choices={countryChoices}
+							value={default_country}
+							onScChange={(e) =>
+								setAttributes({
+									default_country: e.target.value,
+								})
+							}
+						/>
+					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 
