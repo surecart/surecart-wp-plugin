@@ -89,6 +89,7 @@ while ( have_posts() ) :
 	$prices = get_post_meta( get_the_ID(), 'prices' );
 	?>
 
+<!--
 <h1><?php the_title(); ?></h1>
 
 <sc-cart-form>
@@ -101,6 +102,7 @@ while ( have_posts() ) :
 	</sc-choices>
 	<sc-button submit type="primary"><?php esc_attr_e( 'Add To Cart', 'surecart' ); ?>
 </sc-cart-form>
+		-->
 
 	<?php
 	do_action( 'surecart_page_elements' );

@@ -125,6 +125,25 @@ class ProductPostTypeService {
 	}
 
 	/**
+	 * Get the posts.
+	 *
+	 * @param array $args get_posts arguments.
+	 *
+	 * @return WP_Post[]|int[] Array of post objects or post IDs.
+	 */
+	public function get( $args = [] ) {
+		$args = wp_parse_args(
+			$args,
+			[
+				'per_page'    => -1,
+				'post_status' => [ 'publish', 'draft', 'future' ],
+				'post_type'   => $this->post_type,
+			]
+		);
+		return get_posts( $args );
+	}
+
+	/**
 	 * Register the post type
 	 *
 	 * @return void
@@ -167,6 +186,7 @@ class ProductPostTypeService {
 				'map_meta_cap'      => true,
 				'has_archive'       => true,
 				'supports'          => array(
+					'title',
 					'editor',
 					'custom-fields', // todo: maybe remove.
 					'revisions',

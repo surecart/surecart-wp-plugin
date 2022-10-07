@@ -76,19 +76,19 @@ add_filter(
 	5
 );
 
-add_filter(
-	'the_title',
-	function( $title, $id ) {
-		$product_id = get_post_meta( $id, 'sc_product_id', true );
-		if ( $product_id ) {
-			$product = Product::find( $product_id );
-			return $product->name;
-		}
-		return $title;
-	},
-	10,
-	2
-);
+// add_filter(
+// 'the_title',
+// function( $title, $id ) {
+// $product_id = get_post_meta( $id, 'sc_product_id', true );
+// if ( $product_id ) {
+// $product = Product::find( $product_id );
+// return $product->name;
+// }
+// return $title;
+// },
+// 10,
+// 2
+// );
 
 register_meta(
 	'post',
