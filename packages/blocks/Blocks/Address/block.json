@@ -21,7 +21,8 @@
 			"default": true
 		},
 		"show_name": {
-			"type": "boolean"
+			"type": "boolean",
+      "default": false
 		},
     "default_country": {
       "type": "string"
