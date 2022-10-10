@@ -14,6 +14,7 @@ import {
 	PanelRow,
 	TextControl,
 } from '@wordpress/components';
+import { cleanForSlug } from '@wordpress/url';
 import { useEffect, useRef, Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import feather from 'feather-icons';
@@ -28,26 +29,9 @@ export default ({ attributes, setAttributes }) => {
 
 	useEffect(() => {
 		setAttributes({
-			panel: panelSlug(title),
+			panel: cleanForSlug(title),
 		});
 	}, [title]);
-
-	const panelSlug = (title) => {
-		let slug = (title || '')
-				.toLowerCase()
-				.replace(/ /g, '-')
-				.replace(/[^\w-]+/g, '');
-		
-		if ( ! slug ) {
-			slug = (title || '')
-			.toLowerCase()
-			.trim()
-			.replace(/ +/g, '_')
-			.replace(/_+/g, '-');
-		}
-		
-		return slug;
-	}
 
 	useEffect(() => {
 		if (active) {
