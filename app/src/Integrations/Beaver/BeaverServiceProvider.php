@@ -38,7 +38,7 @@ class BeaverServiceProvider implements ServiceProviderInterface {
 	 */
 	public function fetch_forms() {
 		// verify nonce
-        if( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'wp_rest' ) ) {
+        if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'wp_rest' ) ) {
             wp_send_json_error();
         }
 
@@ -63,8 +63,8 @@ class BeaverServiceProvider implements ServiceProviderInterface {
 
 		foreach ( $get_forms as $form_id ) {
 			$forms[] = [
-				'id' 		 => $form_id,
-				'form_title' => get_the_title( $form_id )
+				'ID' 		 => $form_id,
+				'post_title' => get_the_title( $form_id )
 			];
 		}
 

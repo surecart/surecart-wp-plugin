@@ -1,3 +1,4 @@
+
 window.surecartBBDropdown = ({ nonce }) => {
   return {
     show: false,
@@ -36,8 +37,8 @@ window.surecartBBDropdown = ({ nonce }) => {
     },
 
     setForm(item) {
-      this.form.id = item.id;
-      this.form.name = item.form_title;
+      this.form.id = item.ID;
+      this.form.name = item.post_title;
       this.close();
       FLBuilder.preview.preview();
     },
@@ -55,7 +56,7 @@ window.surecartBBDropdown = ({ nonce }) => {
           search: this.search,
         },
         error: function (jqXHR, textStatus, errorThrown) {
-          console.log('Error....');
+          //console.log('init: error HTTP Status['+jqXHR.status+'] '+errorThrown);
         },
         success: ({ data }) => {
           this.items = data;
