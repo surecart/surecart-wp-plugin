@@ -346,25 +346,13 @@ class ProductsListTable extends ListTable {
 			<?php echo esc_html_e( $product->name, 'surecart' ); ?>
 		</a>
 
-		<script> function copyClick(e, content){
-			navigator.clipboard.writeText(content).then(() =>{
-				const oldText = e.target.innerText;
-				e.target.innerText = '<?php echo esc_html_e( 'Copied!', 'surecart' ); ?>';
-				setTimeout(() =>{
-					e.target.innerText = oldText;
-				}, 2000);
-			}).catch(err => {
-
-			});
-		} </script>
-
-
 		<?php
 		echo $this->row_actions(
 			array_filter(
 				[
 					'edit'         => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
 					'edit_product' => $edit_page ? '<a href="' . esc_url( get_edit_post_link( $edit_page->ID ) ) . '" aria-label="' . esc_attr( 'Edit Product Page', 'surecart' ) . '">' . esc_html__( 'Edit Page', 'surecart' ) . '</a>' : null,
+					'view_product' => $edit_page ? '<a href="' . esc_url( get_the_permalink( $edit_page->ID ) ) . '" aria-label="' . esc_attr( 'View Page', 'surecart' ) . '">' . esc_html__( 'View Page', 'surecart' ) . '</a>' : null,
 					'trash'        => $this->action_toggle_archive( $product ),
 				]
 			),
