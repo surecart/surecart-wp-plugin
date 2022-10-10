@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`sc-choice renders 1`] = `
-<sc-choice>
+<sc-choice tabindex="0">
   <mock:shadow-root>
     <div class="choice choice--layout-columns choice--size-medium" part="base">
       <slot name="header"></slot>
@@ -16,7 +16,7 @@ exports[`sc-choice renders 1`] = `
               </g>
             </svg>
           </span>
-          <input aria-checked="false" aria-disabled="false" aria-labelledby="choice-label-1" id="choice-1" type="radio">
+          <input aria-checked="false" aria-disabled="false" aria-labelledby="choice-label-1" id="choice-1" tabindex="0" type="radio">
         </span>
         <span class="choice__label" id="choice-label-1" part="label">
           <span class="choice__label-text">
