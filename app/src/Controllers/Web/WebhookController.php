@@ -15,16 +15,17 @@ class WebhookController {
 	 * @var array
 	 */
 	protected $models = [
-		'charge'   => \SureCart\Models\Charge::class,
-		'coupon'   => \SureCart\Models\Coupon::class,
-		'customer' => \SureCart\Models\Customer::class,
-		'purchase' => \SureCart\Models\Purchase::class,
-		'price'    => \SureCart\Models\Price::class,
-		'product'  => \SureCart\Models\Product::class,
-		'period'   => \SureCart\Models\Period::class,
-		'order'    => \SureCart\Models\Order::class,
-		'refund'   => \SureCart\Models\Refund::class,
-		'invoice'  => \SureCart\Models\Invoice::class,
+		'charge'       => \SureCart\Models\Charge::class,
+		'coupon'       => \SureCart\Models\Coupon::class,
+		'customer'     => \SureCart\Models\Customer::class,
+		'purchase'     => \SureCart\Models\Purchase::class,
+		'price'        => \SureCart\Models\Price::class,
+		'product'      => \SureCart\Models\Product::class,
+		'period'       => \SureCart\Models\Period::class,
+		'order'        => \SureCart\Models\Order::class,
+		'refund'       => \SureCart\Models\Refund::class,
+		'subscription' => \SureCart\Models\Subscription::class,
+		'invoice'      => \SureCart\Models\Invoice::class,
 	];
 
 	/**
@@ -76,8 +77,21 @@ class WebhookController {
 		} else {
 			$body = $request->getParsedBody();
 		}
+
+		// the model does not exist.
+		if ( empty( $this->models[ $body['data']['object']['object'] ] ) ) {
+			return \SureCart::json(
+				[
+					'event_triggered' => 'none',
+				]
+			)
+			->withHeader( 'X-SURECART-WP-PLUGIN-VERSION', \SureCart::plugin()->version() )
+			->withStatus( 200 );
+		}
+
 		// perform the action.
 		$action = $this->doAction( $body );
+
 		// handle the response.
 		return $this->handleResponse( $action );
 	}
@@ -107,7 +121,9 @@ class WebhookController {
 				'event_triggered' => $data['event'] ?? 'none',
 				'data'            => $data,
 			]
-		)->withHeader( 'X-SURECART-WP-PLUGIN-VERSION', \SureCart::plugin()->version() );
+		)
+		->withHeader( 'X-SURECART-WP-PLUGIN-VERSION', \SureCart::plugin()->version() )
+		->withStatus( 200 );
 	}
 
 	/**
