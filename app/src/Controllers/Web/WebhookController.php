@@ -84,7 +84,9 @@ class WebhookController {
 				[
 					'event_triggered' => 'none',
 				]
-			)->withHeader( 'X-SURECART-WP-PLUGIN-VERSION', \SureCart::plugin()->version() );
+			)
+			->withHeader( 'X-SURECART-WP-PLUGIN-VERSION', \SureCart::plugin()->version() )
+			->withStatus( 200 );
 		}
 
 		// perform the action.
