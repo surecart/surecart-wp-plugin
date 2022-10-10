@@ -56,7 +56,7 @@ class Block extends DashboardPage {
 			'sc-subscription',
 			'#customer-subscription',
 			[
-				'heading'      => $attributes['title'] ?? __( 'Update Subscription', 'surecart' ),
+				'heading'      => $attributes['title'] ?? __( 'Update Plan', 'surecart' ),
 				'subscription' => $subscription,
 			]
 		);
@@ -64,7 +64,7 @@ class Block extends DashboardPage {
 			'sc-subscription-switch',
 			'#customer-subscription-switch',
 			[
-				'heading'       => $attributes['title'] ?? __( 'Update Subscription', 'surecart' ),
+				'heading'       => $attributes['title'] ?? __( 'Update Plan', 'surecart' ),
 				'product-group' => $subscription->price->product->product_group ?? null,
 				'subscription'  => $subscription,
 			]
@@ -76,7 +76,7 @@ class Block extends DashboardPage {
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</sc-breadcrumb>
 				<sc-breadcrumb>
-					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
+					<?php esc_html_e( 'Plan', 'surecart' ); ?>
 				</sc-breadcrumb>
 			</sc-breadcrumbs>
 
@@ -103,7 +103,7 @@ class Block extends DashboardPage {
 			'sc-subscriptions-list',
 			'#customer-subscriptions-index',
 			[
-				'heading' => $attributes['title'] ?? __( 'Subscriptions', 'surecart' ),
+				'heading' => $attributes['title'] ?? __( 'Plans', 'surecart' ),
 				'isCustomer' => User::current()->isCustomer(),
 				'query'   => [
 					'customer_ids' => array_values( User::current()->customerIds() ),
