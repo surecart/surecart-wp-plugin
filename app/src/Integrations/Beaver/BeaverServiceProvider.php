@@ -37,26 +37,24 @@ class BeaverServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function fetch_forms() {
-		// verify nonce
+		// Verify nonce.
         if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'wp_rest' ) ) {
             wp_send_json_error();
         }
 
-        // need to edit posts
+        // Need to edit posts.
         if ( ! current_user_can('edit_posts') ) {
             wp_send_json_error();
         }
-
-        $args = [];
-
-        if ( ! empty( $_POST['search'] ) ) {
-          $args['s'] = sanitize_text_field($_POST['search']);
-        }
-
+        
 		$args = [
 			'numberposts' => -1,
 			'fields'      => 'ids',
 		];
+
+        if ( ! empty( $_POST['search'] ) ) {
+          $args['s'] = sanitize_text_field($_POST['search']);
+        }
 
 		$get_forms = \SureCart::forms()->get_forms( $args );
 		$forms     = [];
