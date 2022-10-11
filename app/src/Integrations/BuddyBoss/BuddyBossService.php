@@ -171,9 +171,9 @@ class BuddyBossService extends IntegrationService implements IntegrationInterfac
 		}
 		// update group access.
 		if ( $add ) {
-			return \groups_join_group( $wp_user->ID, $group_id, 'SureCart' );
+			return \groups_join_group( $group_id, $wp_user->ID, 'SureCart' );
 		} else {
-			return \groups_leave_group( $wp_user->ID, $group_id, 'SureCart' );
+			return \groups_leave_group( $group_id, $wp_user->ID, 'SureCart' );
 		}
 	}
 }
