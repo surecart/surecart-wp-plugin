@@ -2,6 +2,8 @@
 
 namespace SureCart\Controllers\Admin\Settings;
 
+use SureCart\Models\Processor;
+
 /**
  * Controls the settings page.
  */
@@ -14,7 +16,7 @@ class ProcessorsSettings {
 	 */
 	public function show( \SureCartCore\Requests\RequestInterface $request ) {
 		$processors = [];
-		foreach ( \SureCart::account()->processors ?? [] as $processor ) {
+		foreach ( Processor::get() ?? [] as $processor ) {
 			$processors[ $processor->processor_type . '_' . ( $processor->live_mode ? 'live' : 'test' ) ] = $processor;
 		}
 
