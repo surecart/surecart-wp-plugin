@@ -7,7 +7,8 @@ import {
 	ScMenuItem,
 	ScMenuDivider,
 	ScBlockUi,
-	ScTag,
+	ScSwitch,
+	ScFlex,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
@@ -55,18 +56,6 @@ export default ({ paymentMethod }) => {
 	};
 
 	const toggleArchive = async () => {
-		const r = confirm(
-			paymentMethod?.archived
-				? __(
-						'Are you sure you want to enable this payment method?',
-						'surecart'
-				  )
-				: __(
-						'Are you sure you want to disable this payment method?',
-						'surecart'
-				  )
-		);
-		if (!r) return;
 		try {
 			setBusy(true);
 			const result = await saveEntityRecord(
@@ -101,79 +90,75 @@ export default ({ paymentMethod }) => {
 		<>
 			<ScStackedListRow>
 				<div>
-					<strong>
-						{paymentMethod?.name}{' '}
-						{paymentMethod?.archived ? (
-							<ScTag type="warning" size="small">
-								{__('Disabled', 'surecart')}
-							</ScTag>
-						) : (
-							<ScTag type="success" size="small">
-								{__('Enabled', 'surecart')}
-							</ScTag>
-						)}
-					</strong>
+					<strong>{paymentMethod?.name} </strong>
 					<div>{paymentMethod?.description}</div>
 				</div>
-				<ScDropdown slot="suffix" placement="bottom-end">
-					<ScButton circle slot="trigger" type="text">
-						<ScIcon name="more-horizontal" />
-					</ScButton>
-					<ScMenu>
-						<ScMenuItem onClick={() => setOpen(true)}>
-							<ScIcon
-								name="edit"
-								slot="prefix"
-								style={{
-									opacity: 0.5,
-								}}
-							/>
-							{__('Edit', 'surecart')}
-						</ScMenuItem>
-						{paymentMethod?.archived ? (
-							<ScMenuItem onClick={toggleArchive}>
+				<ScFlex slot="suffix" alignItems="center">
+					<ScSwitch
+						checked={!paymentMethod?.archived}
+						onScChange={toggleArchive}
+					/>
+					<ScDropdown placement="bottom-end">
+						<ScButton circle slot="trigger" type="text">
+							<ScIcon name="more-horizontal" />
+						</ScButton>
+						<ScMenu>
+							<ScMenuItem onClick={() => setOpen(true)}>
 								<ScIcon
-									name="circle"
+									name="edit"
 									slot="prefix"
 									style={{
 										opacity: 0.5,
 									}}
 								/>
-								{__('Enable', 'surecart')}
+								{__('Edit', 'surecart')}
 							</ScMenuItem>
-						) : (
-							<ScMenuItem onClick={toggleArchive}>
+							{paymentMethod?.archived ? (
+								<ScMenuItem onClick={toggleArchive}>
+									<ScIcon
+										name="circle"
+										slot="prefix"
+										style={{
+											opacity: 0.5,
+										}}
+									/>
+									{__('Enable', 'surecart')}
+								</ScMenuItem>
+							) : (
+								<ScMenuItem onClick={toggleArchive}>
+									<ScIcon
+										name="slash"
+										slot="prefix"
+										style={{
+											opacity: 0.5,
+										}}
+									/>
+									{__('Disable', 'surecart')}
+								</ScMenuItem>
+							)}
+							<ScMenuDivider />
+							<ScMenuItem onClick={onDelete}>
 								<ScIcon
-									name="slash"
+									name="trash"
 									slot="prefix"
 									style={{
 										opacity: 0.5,
 									}}
 								/>
-								{__('Disable', 'surecart')}
+								{__('Delete', 'surecart')}
 							</ScMenuItem>
-						)}
-						<ScMenuDivider />
-						<ScMenuItem onClick={onDelete}>
-							<ScIcon
-								name="trash"
-								slot="prefix"
-								style={{
-									opacity: 0.5,
-								}}
-							/>
-							{__('Delete', 'surecart')}
-						</ScMenuItem>
-					</ScMenu>
-				</ScDropdown>
+						</ScMenu>
+					</ScDropdown>
+				</ScFlex>
 			</ScStackedListRow>
-			{busy && <ScBlockUi spinner />}
 
 			<CreateEditPaymentMethod
 				paymentMethod={paymentMethod}
 				open={open}
 				onRequestClose={() => setOpen(false)}
 			/>
+
+			{busy && <ScBlockUi spinner style={{ zIndex: 9 }} />}
 		</>
 	);
 };
