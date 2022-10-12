@@ -71,9 +71,12 @@ export default () => {
 			icon={<sc-icon name="credit-card"></sc-icon>}
 			noButton
 		>
-			{loading ? (
-				<SettingsBox loading={loading} />
-			) : (
+			<SettingsBox
+				title={__('Available Processors', 'surecart')}
+				loading={loading}
+				wrapperTag="div"
+				noButton
+			>
 				<ScCard no-padding style={{ overflow: 'hidden' }}>
 					<ScStackedList>
 						<ScStackedListRow href={link} target="_blank">
@@ -257,7 +260,7 @@ export default () => {
 						</ScStackedListRow>
 					</ScStackedList>
 				</ScCard>
-			)}
+			</SettingsBox>
 
 			<ManualPaymentMethods />
 		</SettingsTemplate>
