@@ -39,7 +39,7 @@ class ReusableFormWidget extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'SureCart Checkout Form', 'surecart' );
+		return __( 'Checkout Form', 'surecart' );
 	}
 
 	/**
@@ -53,7 +53,7 @@ class ReusableFormWidget extends Widget_Base {
 	 * @return string Widget icon.
 	 */
 	public function get_icon() {
-		return 'eicon-form-horizontal';
+		return 'eicon-form-horizontal surecart-checkout-icon';
 	}
 
 	/**
@@ -69,7 +69,7 @@ class ReusableFormWidget extends Widget_Base {
 	 * @return array Widget categories.
 	 */
 	public function get_categories() {
-		return [ 'basic' ];
+		return [ 'surecart-elementor' ];
 	}
 
 	/**
@@ -98,7 +98,7 @@ class ReusableFormWidget extends Widget_Base {
 		$this->start_controls_section(
 			'section_form',
 			[
-				'label' => __( 'SureCart Checkout Form', 'surecart' ),
+				'label' => __( 'Checkout Form', 'surecart' ),
 			]
 		);
 
