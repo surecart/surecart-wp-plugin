@@ -114,7 +114,7 @@ export default ({ subscriptionId }) => {
 							<ScFormatNumber
 								type="currency"
 								currency={period?.checkout?.currency}
-								value={period?.checkout?.charge?.amount || 0}
+								value={period?.checkout?.amount_due || 0}
 							/>
 						),
 						status: <ScOrderStatusBadge status={period?.status} />,
