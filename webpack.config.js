@@ -85,6 +85,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/settings/portal/index.js'
 		),
+		['admin/settings/processors']: path.resolve(
+			__dirname,
+			'packages/admin/settings/processors/index.js'
+		),
 		['admin/settings/tax']: path.resolve(
 			__dirname,
 			'packages/admin/settings/tax/index.js'

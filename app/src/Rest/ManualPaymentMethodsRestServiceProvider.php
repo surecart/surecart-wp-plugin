@@ -76,6 +76,16 @@ class ManualPaymentMethodsRestServiceProvider extends RestServiceProvider implem
 	}
 
 	/**
+	 * Create permissions.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function create_item_permissions_check( $request ) {
+		return current_user_can( 'edit_sc_payment_methods' );
+	}
+
+	/**
 	 * Update permissions.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
