@@ -49,7 +49,9 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	}
 
 	/**
-	 * Elementor load scripts
+	 * Elementor surecart categories register
+	 *
+	 * @param Obj $elements_manager Elementor category manager.
 	 *
 	 * @return void
 	 */
