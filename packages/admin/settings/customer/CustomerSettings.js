@@ -38,7 +38,6 @@ export default () => {
 		}
 	};
 
-	{console.log(item)}
 	return (
 		<SettingsTemplate
 			title={__('Customer Notifications', 'surecart')}
@@ -314,6 +313,7 @@ export default () => {
 								"Sent to customers when their subscription's payment method fails.",
 								'surecart'
 							)}
+							disabled={!scData?.entitlements?.payment_failure_notifications}
 							model="payment_failure"
 						/>
 						<EmailRow
@@ -322,6 +322,7 @@ export default () => {
 								'Sent to customers 3 days before a subscription renews.',
 								'surecart'
 							)}
+							disabled={!scData?.entitlements?.subscription_reminder_notifications}
 							model="subscription"
 							action="reminder_notification"
 						/>
