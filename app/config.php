@@ -54,6 +54,7 @@ return [
 		\SureCart\Rest\CustomerRestServiceProvider::class,
 		\SureCart\Rest\CustomerLinksRestServiceProvider::class,
 		\SureCart\Rest\PaymentMethodsRestServiceProvider::class,
+		\SureCart\Rest\ManualPaymentMethodsRestServiceProvider::class,
 		\SureCart\Rest\PaymentIntentsRestServiceProvider::class,
 		\SureCart\Rest\ProductsRestServiceProvider::class,
 		\SureCart\Rest\ProductGroupsRestServiceProvider::class,
