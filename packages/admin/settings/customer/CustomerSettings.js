@@ -38,6 +38,7 @@ export default () => {
 		}
 	};
 
+	{console.log(item)}
 	return (
 		<SettingsTemplate
 			title={__('Customer Notifications', 'surecart')}
@@ -146,6 +147,24 @@ export default () => {
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
 							'Send an email customers when their subscription renews.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				<ScSwitch
+					checked={item?.subscription_cancellation_enabled}
+					onClick={(e) => {
+						e.preventDefault();
+						editItem({
+							subscription_cancellation_enabled: !item?.subscription_cancellation_enabled,
+						});
+					}}
+				>
+					{__('Subscription Cancellation Notification', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Send a general subscription cancellation confirmation email to your customers when subscription canceled.',
 							'surecart'
 						)}
 					</span>
@@ -316,6 +335,15 @@ export default () => {
 							action="renewal_notification"
 						/>
 						<EmailRow
+							title={__('Subscription Cancellation', 'surecart')}
+							description={__(
+								'Sent to customers when their subscription cancellation.',
+								'surecart'
+							)}
+							model="subscription"
+							action="cancellation_notification"
+						/>
+						<EmailRow
 							title={__('Product Access', 'surecart')}
 							description={__(
 								'Sent to customers when a purchase is downloadable or has a license.',
@@ -330,6 +358,16 @@ export default () => {
 								'surecart'
 							)}
 							model="refund"
+						/>
+						<EmailRow
+							title={__('Abandoned Checkout', 'surecart')}
+							description={__(
+								'Abandoned order emails to remind your customers of incomplete orders.',
+								'surecart'
+							)}
+							disabled={!scData?.entitlements?.abandoned_checkouts}
+							model="abandoned_checkout"
+							action="notification"
 						/>
 					</ScStackedList>
 				</sc-card>
