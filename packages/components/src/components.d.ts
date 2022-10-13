@@ -1601,6 +1601,10 @@ export namespace Components {
         "cityPlaceholder": string;
         "countryPlaceholder": string;
         /**
+          * Default country for address
+         */
+        "defaultCountry": string;
+        /**
           * Show the full address
          */
         "full": boolean;
@@ -1618,6 +1622,10 @@ export namespace Components {
           * Show the placeholder fields.
          */
         "namePlaceholder": string;
+        /**
+          * Placeholder values.
+         */
+        "placeholders": Partial<Address>;
         "postalCodePlaceholder": string;
         "reportValidity": () => Promise<boolean>;
         /**
@@ -5949,6 +5957,10 @@ declare namespace LocalJSX {
         "cityPlaceholder"?: string;
         "countryPlaceholder"?: string;
         /**
+          * Default country for address
+         */
+        "defaultCountry"?: string;
+        /**
           * Show the full address
          */
         "full"?: boolean;
@@ -5973,6 +5985,10 @@ declare namespace LocalJSX {
     data: Partial<Checkout>;
     options?: { silent?: boolean };
   }>) => void;
+        /**
+          * Placeholder values.
+         */
+        "placeholders"?: Partial<Address>;
         "postalCodePlaceholder"?: string;
         /**
           * Is this required (defaults to true)

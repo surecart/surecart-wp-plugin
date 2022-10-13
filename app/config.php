@@ -100,6 +100,7 @@ return [
 	* SSR Blocks
 	*/
 	'blocks'                 => [
+		\SureCartBlocks\Blocks\Address\Block::class,
 		\SureCartBlocks\Blocks\BuyButton\Block::class,
 		\SureCartBlocks\Blocks\AddToCartButton\Block::class,
 		\SureCartBlocks\Blocks\CustomerDashboardButton\Block::class,

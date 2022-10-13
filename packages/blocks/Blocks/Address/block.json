@@ -24,6 +24,9 @@
 			"type": "boolean",
       "default": false
 		},
+    "default_country": {
+      "type": "string"
+    },
 		"name_placeholder": {
 			"type": "string",
 			"default": "Name or Company Name"

@@ -44,6 +44,20 @@ export class ScOrderShippingAddress {
   @Prop() postalCodePlaceholder: string = __('Postal Code/Zip', 'surecart');
   @Prop() statePlaceholder: string = __('State/Province/Region', 'surecart');
 
+  /** Default country for address */
+  @Prop() defaultCountry: string;
+
+  /** Placeholder values. */
+  @Prop() placeholders: Partial<Address> = {
+    name: __('Name or Company Name', 'surecart'),
+    country: __('Country', 'surecart'),
+    city: __('City', 'surecart'),
+    line_1: __('Address', 'surecart'),
+    line_2: __('Address Line 2', 'surecart'),
+    postal_code: __('Postal Code/Zip', 'surecart'),
+    state: __('State/Province/Region', 'surecart'),
+  };
+
   /** Make a request to update the order. */
   @Event() scUpdateOrder: EventEmitter<{
     data: Partial<Checkout>;
@@ -81,6 +95,12 @@ export class ScOrderShippingAddress {
   @Method()
   async reportValidity() {
     return this.input.reportValidity();
+  }
+
+  componentWillLoad() {
+    if (this.defaultCountry) {
+      this.address.country = this.defaultCountry;
+    }
   }
 
   render() {

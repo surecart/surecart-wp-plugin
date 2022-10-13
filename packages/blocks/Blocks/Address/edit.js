@@ -7,10 +7,12 @@ import {
 	PanelRow,
 	ToggleControl,
 } from '@wordpress/components';
-import { ScAddress } from '@surecart/components-react';
+import { ScAddress, ScSelect } from '@surecart/components-react';
+import { address } from '@surecart/components';
 
 export default ({ attributes, setAttributes }) => {
-	const { label, full, show_name, name_placeholder, country_placeholder, city_placeholder, line_1_placeholder, postal_code_placeholder, state_placeholder } = attributes;
+	const { label, full, show_name, default_country, name_placeholder, country_placeholder, city_placeholder, line_1_placeholder, postal_code_placeholder, state_placeholder } = attributes;
+	const { countryChoices } = address;
 
 	const blockProps = useBlockProps({
 		label,
@@ -22,6 +24,9 @@ export default ({ attributes, setAttributes }) => {
       'line_1': line_1_placeholder,
       'postal_code': postal_code_placeholder,
       'state': state_placeholder
+    },
+    address: {
+      country: default_country
     }
 	});
 
@@ -113,6 +118,20 @@ export default ({ attributes, setAttributes }) => {
               onChange={(state_placeholder) => setAttributes({ state_placeholder })}
             />
           </PanelRow>
+					<PanelRow>
+						<ScSelect
+							search
+							label={__('Choose default country.', 'surecart')}
+							placeholder={__('Country', 'surecart')}
+							choices={countryChoices}
+							value={default_country}
+							onScChange={(e) =>
+								setAttributes({
+									default_country: e.target.value,
+								})
+							}
+						/>
+					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 

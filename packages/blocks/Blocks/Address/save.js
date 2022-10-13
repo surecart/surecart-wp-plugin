@@ -1,5 +1,5 @@
 export default ({ attributes, className }) => {
-	const { label, full, show_name, name_placeholder, country_placeholder, city_placeholder, line_1_placeholder, postal_code_placeholder, state_placeholder } = attributes;
+	const { label, full, show_name, default_country, name_placeholder, country_placeholder, city_placeholder, line_1_placeholder, postal_code_placeholder, state_placeholder } = attributes;
 
 	return (
 		<sc-order-shipping-address
@@ -13,6 +13,7 @@ export default ({ attributes, className }) => {
       line-1-placeholder={line_1_placeholder}
       postal-code-placeholder={postal_code_placeholder}
       state-placeholder={state_placeholder}
+      default-country={default_country}
 		></sc-order-shipping-address>
 	);
 };
