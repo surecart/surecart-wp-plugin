@@ -1,15 +1,23 @@
 import { __ } from '@wordpress/i18n';
 
-export default ({ title, description, model, action = 'notification' }) => {
+export default ({ title, description, model, action = 'notification', disabled = false }) => {
 	return (
 		<sc-stacked-list-row style={{ '--columns': '3' }}>
-			<strong>{title}</strong>
+			<strong>
+				{title}
+				{ disabled && (
+					<sc-tag style={{ marginLeft: '5px' }} type="success" size="small" pill>
+						{__('Pro', 'surecart')}
+					</sc-tag>
+				)}
+			</strong>
 			<div style={{ opacity: '0.75' }}>{description}</div>
 			<sc-button
 				size="small"
 				slot="suffix"
-				href={`${scData?.app_url}/notification_templates/:customer_notifications/${model}/${action}/edit`}
+				href={disabled ? `#` : `${scData?.app_url}/notification_templates/:customer_notifications/${model}/${action}/edit`}
 				target="_blank"
+				disabled={disabled}
 			>
 				{__('Edit', 'surecart')}
 				<sc-icon
