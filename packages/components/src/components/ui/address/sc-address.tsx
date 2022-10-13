@@ -54,6 +54,9 @@ export class ScAddress {
   /** Should we show name field? */
   @Prop() showName: boolean;
 
+  /** Placeholder for Name */
+  // @Prop() namePlaceholder: string;
+
   /** Should we show name field? */
   @Prop() showLine2: boolean;
 
