@@ -1,84 +1,45 @@
+( function ( $ ) {
+	const surecartBBScript = {
+		init() {
+      $( 'body' ).on( 'click', '.surecart-edit-bb-form', function ( e ) {
+        let formID = $('#fl-field-sc_form_id select').val();
+        const editLink = "/wp-admin/post.php?post=" + formID + "&action=edit";
 
-window.surecartBBDropdown = ({ nonce }) => {
-  return {
-    show: false,
-    loading: false,
-    focus: false,
-    search: "",
-    form: {
-      name: jQuery("#fl-field-form_name").find("input").val() || "",
-      id: jQuery("#fl-field-form_id").find("input").val() || "",
-      editLink: "",
+        if ( formID ) {
+          let win = window.open(
+            editLink,
+            '_blank'
+          );
+          win.focus();
+        } else {
+          return false;
+        }
+			} );
+
+      surecartBBScript.setEditLink();
+
+      $( 'body' ).on( 'change', '#fl-field-sc_form_id select', function ( e ) {
+        surecartBBScript.setEditLink();
+			} );
     },
-    items: [],
 
-    async init() {
-      this.$watch("show", (val) => {
-        val && this.fetchForms();
-        this.$nextTick(() => {
-          this.$refs.searchbox.focus();
-        });
-      });
-      this.$watch("search", (val) => {
-        val && this.show && this.fetchForms();
-      });
-      this.$watch("form.id", (val) => {
-        jQuery("#fl-field-form_id").find("input").val(val).trigger("change");
-        this.form.editLink = "/wp-admin/post.php?post=" + val + "&action=edit";
-      });
-      this.$watch("form.name", (val) => {
-        jQuery("#fl-field-form_name").find("input").val(val).trigger("change");
-      });
+    /**
+		 * Set edit link
+		 *
+		 * @since x.x.x
+		 */
+		setEditLink: () => {
+      let formID = $('#fl-field-sc_form_id select').val();
 
-      const val = jQuery("#fl-field-form_id").find("input").val();
-      if (val) {
-        this.form.editLink = "/wp-admin/post.php?post=" + val + "&action=edit";
+      if ( formID ) {
+        const editLink = "/wp-admin/post.php?post=" + formID + "&action=edit";
+        $(".surecart-edit-bb-form").show();
+        $(".surecart-edit-bb-form").attr('href', editLink);
       }
-    },
-
-    setForm(item) {
-      this.form.id = item.ID;
-      this.form.name = item.post_title;
-      this.close();
-      FLBuilder.preview.preview();
-    },
-
-    fetchForms() {
-      this.loading = true;
-      jQuery.ajax({
-        type: "POST",
-        url: ajaxurl,
-        dataType: "json",
-        cache: false,
-        data: {
-          action: "surecart_fetch_forms",
-          _wpnonce: nonce,
-          search: this.search,
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-          //console.log('init: error HTTP Status['+jqXHR.status+'] '+errorThrown);
-        },
-        success: ({ data }) => {
-          this.items = data;
-        },
-        complete: () => {
-          this.loading = false;
-        },
-      });
-    },
-
-    open() {
-      this.show = true;
-    },
-    close() {
-      this.show = false;
-    },
-    isOpen() {
-      return this.show === true;
-    },
+		},
   };
-};
-
-jQuery("window").on("focus", function () {
-  jQuery("select[name='sc_form_select']").trigger("change");
-});
+  
+  $( function () {
+		  surecartBBScript.init();
+	} );
+} )( jQuery );
