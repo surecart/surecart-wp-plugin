@@ -91,9 +91,9 @@ export class ScOrderPassword {
       return <Host style={{ display: 'none' }}></Host>;
     }
 
-    if (this.emailExists) {
-      return <Host style={{ display: 'none' }}></Host>;
-    }
+    // if (this.emailExists) {
+    //   return <Host style={{ display: 'none' }}></Host>;
+    // }
 
     return (
       <div class="password">

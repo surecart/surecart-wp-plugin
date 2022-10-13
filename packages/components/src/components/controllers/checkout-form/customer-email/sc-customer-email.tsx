@@ -134,7 +134,7 @@ export class ScCustomerEmail {
           onScFocus={() => this.scFocus.emit()}
           onScBlur={() => this.scBlur.emit()}
         >
-          {!this.loggedIn && (
+          {/* {!this.loggedIn && (
             <a
               href="#"
               class="customer-email__login-link"
@@ -146,7 +146,7 @@ export class ScCustomerEmail {
             >
               {__('Login', 'surecart')}
             </a>
-          )}
+          )} */}
         </sc-input>
       </Host>
     );
