@@ -8,7 +8,6 @@ import { pin as icon } from '@wordpress/icons';
  * Internal dependencies
  */
 import edit from './edit';
-// import save from './save';
 import deprecated from './deprecated';
 import metadata from './block.json';
 
@@ -19,6 +18,5 @@ export { metadata, name };
 export const settings = {
 	icon,
 	edit,
-	// save,
 	deprecated,
 };
