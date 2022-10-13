@@ -243,6 +243,28 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.1.15 - October 14, 2022 =
+* New: Buddyboss groups integration with purchases.
+* New: Beaver Builder form select module.
+* New: Choose your store invoice and email notifications language.
+* New: Subscription cancellation notification and admin settings (Pro).
+* New: Login button next to email form field to allow users to login before checking out.
+* Improvement: Price selector, donation block accessibility improvements.
+* Improvement: Rename "Payment Plan" to "Installment".
+* Improvement: Hide the "Set A Password" field if the email matches a known user account.
+* Improvement: Show notice if Stripe requires SSL (Live Mode) and SSL is not enabled on the site.
+* Improvement: Change default title on customer dashboard from Subscriptions to Plans to account for installment plans and subscriptions.
+* Improvement: Add elementor block to category and add badge.
+* Improvement: Rearrange merchant subscription list and remove type column.
+* Fix: Don't error when new unused webhooks are added to the platform.
+* Fix: Calendar translations on dashboard.
+* Fix: Japanese letters not displaying in customer dashboard tab.
+* Fix: Merchant subscription periods amount sometimes inaccurate.
+* Fix: Percent coupons missing % in admin list.
+* Fix: Error/validation translations not showing on checkout.
+* Fix: Issue with refund amount displaying wrong in form when processing a refund.
+* Fix: Error sometimes occurring when validating customer link.
+
 = 1.1.14 - October 5, 2022 =
 * New: Radio button group form block.
 * New: Password confirmation option in password form block.
