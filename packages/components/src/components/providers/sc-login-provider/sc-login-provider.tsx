@@ -47,9 +47,10 @@ export class ScLoginProvider {
   }
 
   @Watch('order')
-  handleOrderChange() {
-    console.log(this.order);
-    this.notice = false;
+  handleOrderChange(val, prev) {
+    if (val?.updated_at !== prev?.updated_at) {
+      this.notice = false;
+    }
   }
 
   /** Handle form submit. */
