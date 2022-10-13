@@ -44,6 +44,7 @@ export default ({ open, onRequestClose, paymentMethod }) => {
 					throwOnError: true,
 				}
 			);
+			setData(paymentMethod);
 			onRequestClose();
 		} catch (e) {
 			console.error(e);
@@ -127,8 +128,8 @@ export default ({ open, onRequestClose, paymentMethod }) => {
 				<div>
 					<ScButton type="primary" submit>
 						{paymentMethod?.id
-							? __('Update Payment Method', 'surecart')
-							: __('Create Payment Method', 'surecart')}
+							? __('Update', 'surecart')
+							: __('Create', 'surecart')}
 					</ScButton>
 					<ScButton type="text" onClick={onRequestClose}>
 						{__('Cancel', 'surecart')}
