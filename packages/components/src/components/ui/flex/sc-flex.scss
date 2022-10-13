@@ -36,9 +36,3 @@ $direction: row, row-reverse, column, column-reverse;
     flex-direction: $value;
   }
 }
-
-@media only screen and (max-width: 600px) {
-  .flex {
-    display: initial;
-  }
-}
