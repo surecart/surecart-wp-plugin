@@ -19,6 +19,9 @@ class LoginController extends RestController {
 			]
 		);
 
+		// flush all caches.
+		wp_cache_flush();
+
 		if ( is_wp_error( $user ) ) {
 			return $user;
 		}
