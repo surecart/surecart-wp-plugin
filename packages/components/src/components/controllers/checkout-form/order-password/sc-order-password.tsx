@@ -1,4 +1,4 @@
-import { Component, Prop, h, Method } from '@stencil/core';
+import { Component, Prop, h, Method, Host } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { __ } from '@wordpress/i18n';
 
@@ -88,11 +88,11 @@ export class ScOrderPassword {
 
   render() {
     if (this.loggedIn) {
-      return null;
+      return <Host style={{ display: 'none' }}></Host>;
     }
 
     if (this.emailExists) {
-      return null;
+      return <Host style={{ display: 'none' }}></Host>;
     }
 
     return (
