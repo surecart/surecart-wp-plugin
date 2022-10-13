@@ -11,7 +11,11 @@ exports[`sc-customer-email is disabled when logged in 1`] = `
 exports[`sc-customer-email renders 1`] = `
 <sc-customer-email size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="email" help="" name="email" required="" type="email" value=""></sc-input>
+    <sc-input autocomplete="email" help="" name="email" required="" type="email" value="">
+      <a class="customer-email__login-link" href="#" slot="label-end">
+        Login
+      </a>
+    </sc-input>
   </mock:shadow-root>
 </sc-customer-email>
 `;

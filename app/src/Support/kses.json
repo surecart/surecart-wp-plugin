@@ -774,6 +774,14 @@
     "class": true,
     "slot": true
   },
+  "sc-login-provider": {
+    "logged-in": true,
+    "order": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-menu": {
     "style": true,
     "id": true,
@@ -913,6 +921,7 @@
     "confirmation-label": true,
     "confirmation-placeholder": true,
     "disabled": true,
+    "email-exists": true,
     "help": true,
     "label": true,
     "logged-in": true,

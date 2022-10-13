@@ -1406,6 +1406,13 @@ export namespace Components {
     }
     interface ScLoginForm {
     }
+    interface ScLoginProvider {
+        /**
+          * Is the user logged in.
+         */
+        "loggedIn": boolean;
+        "order": Order;
+    }
     interface ScMenu {
         "setCurrentItem": (item: HTMLScMenuItemElement) => Promise<void>;
     }
@@ -1560,6 +1567,10 @@ export namespace Components {
           * Disables the input.
          */
         "disabled": boolean;
+        /**
+          * Does the email exist?
+         */
+        "emailExists": boolean;
         /**
           * The input's help text.
          */
@@ -2993,6 +3004,10 @@ export interface ScLineItemsProviderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScLineItemsProviderElement;
 }
+export interface ScLoginProviderCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScLoginProviderElement;
+}
 export interface ScMenuCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScMenuElement;
@@ -3527,6 +3542,12 @@ declare global {
     var HTMLScLoginFormElement: {
         prototype: HTMLScLoginFormElement;
         new (): HTMLScLoginFormElement;
+    };
+    interface HTMLScLoginProviderElement extends Components.ScLoginProvider, HTMLStencilElement {
+    }
+    var HTMLScLoginProviderElement: {
+        prototype: HTMLScLoginProviderElement;
+        new (): HTMLScLoginProviderElement;
     };
     interface HTMLScMenuElement extends Components.ScMenu, HTMLStencilElement {
     }
@@ -4090,6 +4111,7 @@ declare global {
         "sc-line-items": HTMLScLineItemsElement;
         "sc-line-items-provider": HTMLScLineItemsProviderElement;
         "sc-login-form": HTMLScLoginFormElement;
+        "sc-login-provider": HTMLScLoginProviderElement;
         "sc-menu": HTMLScMenuElement;
         "sc-menu-divider": HTMLScMenuDividerElement;
         "sc-menu-item": HTMLScMenuItemElement;
@@ -4948,6 +4970,13 @@ declare namespace LocalJSX {
           * Emitted when the control receives input.
          */
         "onScInput"?: (event: ScCustomerEmailCustomEvent<void>) => void;
+        /**
+          * Prompt for login.
+         */
+        "onScLoginPrompt"?: (event: ScCustomerEmailCustomEvent<void>) => void;
+        /**
+          * Update the order state.
+         */
         "onScUpdateOrderState"?: (event: ScCustomerEmailCustomEvent<Checkout>) => void;
         /**
           * (passed from the sc-checkout component automatically)
@@ -5739,6 +5768,15 @@ declare namespace LocalJSX {
     }
     interface ScLoginForm {
     }
+    interface ScLoginProvider {
+        /**
+          * Is the user logged in.
+         */
+        "loggedIn"?: boolean;
+        "onScSetCustomer"?: (event: ScLoginProviderCustomEvent<{ email: string; name?: string }>) => void;
+        "onScSetLoggedIn"?: (event: ScLoginProviderCustomEvent<boolean>) => void;
+        "order"?: Order;
+    }
     interface ScMenu {
         "onScSelect"?: (event: ScMenuCustomEvent<{ item: HTMLScMenuItemElement }>) => void;
     }
@@ -5903,6 +5941,10 @@ declare namespace LocalJSX {
           * Disables the input.
          */
         "disabled"?: boolean;
+        /**
+          * Does the email exist?
+         */
+        "emailExists"?: boolean;
         /**
           * The input's help text.
          */
@@ -7454,6 +7496,7 @@ declare namespace LocalJSX {
         "sc-line-items": ScLineItems;
         "sc-line-items-provider": ScLineItemsProvider;
         "sc-login-form": ScLoginForm;
+        "sc-login-provider": ScLoginProvider;
         "sc-menu": ScMenu;
         "sc-menu-divider": ScMenuDivider;
         "sc-menu-item": ScMenuItem;
@@ -7611,6 +7654,7 @@ declare module "@stencil/core" {
             "sc-line-items": LocalJSX.ScLineItems & JSXBase.HTMLAttributes<HTMLScLineItemsElement>;
             "sc-line-items-provider": LocalJSX.ScLineItemsProvider & JSXBase.HTMLAttributes<HTMLScLineItemsProviderElement>;
             "sc-login-form": LocalJSX.ScLoginForm & JSXBase.HTMLAttributes<HTMLScLoginFormElement>;
+            "sc-login-provider": LocalJSX.ScLoginProvider & JSXBase.HTMLAttributes<HTMLScLoginProviderElement>;
             "sc-menu": LocalJSX.ScMenu & JSXBase.HTMLAttributes<HTMLScMenuElement>;
             "sc-menu-divider": LocalJSX.ScMenuDivider & JSXBase.HTMLAttributes<HTMLScMenuDividerElement>;
             "sc-menu-item": LocalJSX.ScMenuItem & JSXBase.HTMLAttributes<HTMLScMenuItemElement>;

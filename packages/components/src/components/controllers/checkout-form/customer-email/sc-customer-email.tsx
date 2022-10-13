@@ -1,11 +1,11 @@
 import { Customer, Checkout } from '../../../../types';
-import { Component, Prop, h, Event, EventEmitter, Watch, Method } from '@stencil/core';
+import { Component, Prop, h, Event, EventEmitter, Watch, Method, Host } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { createOrUpdateOrder } from '../../../../services/session';
-
+import { __ } from '@wordpress/i18n';
 @Component({
   tag: 'sc-customer-email',
-  styleUrl: 'sc-customer-email.css',
+  styleUrl: 'sc-customer-email.scss',
   shadow: true,
 })
 export class ScCustomerEmail {
@@ -77,7 +77,11 @@ export class ScCustomerEmail {
   /** Emitted when the control loses focus. */
   @Event() scBlur: EventEmitter<void>;
 
+  /** Update the order state. */
   @Event() scUpdateOrderState: EventEmitter<Checkout>;
+
+  /** Prompt for login. */
+  @Event() scLoginPrompt: EventEmitter<void>;
 
   async handleChange() {
     this.value = this.input.value;
@@ -109,26 +113,42 @@ export class ScCustomerEmail {
 
   render() {
     return (
-      <sc-input
-        type="email"
-        name="email"
-        ref={el => (this.input = el as HTMLScInputElement)}
-        value={this.customer?.email || this.value}
-        label={this.label}
-        help={this.help}
-        autocomplete={'email'}
-        placeholder={this.placeholder}
-        disabled={!!this.loggedIn}
-        readonly={this.readonly}
-        required={true}
-        invalid={this.invalid}
-        autofocus={this.autofocus}
-        hasFocus={this.hasFocus}
-        onScChange={() => this.handleChange()}
-        onScInput={() => this.scInput.emit()}
-        onScFocus={() => this.scFocus.emit()}
-        onScBlur={() => this.scBlur.emit()}
-      ></sc-input>
+      <Host>
+        <sc-input
+          type="email"
+          name="email"
+          ref={el => (this.input = el as HTMLScInputElement)}
+          value={this.customer?.email || this.value}
+          help={this.help}
+          label={this.label}
+          autocomplete={'email'}
+          placeholder={this.placeholder}
+          disabled={!!this.loggedIn}
+          readonly={this.readonly}
+          required={true}
+          invalid={this.invalid}
+          autofocus={this.autofocus}
+          hasFocus={this.hasFocus}
+          onScChange={() => this.handleChange()}
+          onScInput={() => this.scInput.emit()}
+          onScFocus={() => this.scFocus.emit()}
+          onScBlur={() => this.scBlur.emit()}
+        >
+          {!this.loggedIn && (
+            <a
+              href="#"
+              class="customer-email__login-link"
+              slot="label-end"
+              onClick={e => {
+                e.preventDefault();
+                this.scLoginPrompt.emit();
+              }}
+            >
+              {__('Login', 'surecart')}
+            </a>
+          )}
+        </sc-input>
+      </Host>
     );
   }
 }

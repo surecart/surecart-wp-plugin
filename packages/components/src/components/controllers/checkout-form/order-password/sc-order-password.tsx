@@ -1,4 +1,4 @@
-import { Component, Prop, h, Method } from '@stencil/core';
+import { Component, Prop, h, Method, Host } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { __ } from '@wordpress/i18n';
 
@@ -46,6 +46,9 @@ export class ScOrderPassword {
   /** The input's autofocus attribute. */
   @Prop() autofocus: boolean;
 
+  /** Does the email exist? */
+  @Prop() emailExists: boolean;
+
   /** The input's password confirmation attribute. */
   @Prop({ reflect: true }) confirmation = false;
 
@@ -85,7 +88,11 @@ export class ScOrderPassword {
 
   render() {
     if (this.loggedIn) {
-      return null;
+      return <Host style={{ display: 'none' }}></Host>;
+    }
+
+    if (this.emailExists) {
+      return <Host style={{ display: 'none' }}></Host>;
     }
 
     return (
@@ -122,4 +129,4 @@ export class ScOrderPassword {
   }
 }
 
-openWormhole(ScOrderPassword, ['loggedIn'], false);
+openWormhole(ScOrderPassword, ['loggedIn', 'emailExists'], false);
