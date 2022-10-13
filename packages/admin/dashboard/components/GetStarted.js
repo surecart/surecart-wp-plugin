@@ -9,10 +9,10 @@ import { store as preferencesStore } from '@wordpress/preferences';
 export default () => {
 	const { set } = useDispatch(preferencesStore);
 	const hideGetStarted = useSelect((select) =>
-		select(preferencesStore).get('surecart/dashboard', 'hideGetStarted')
+		select(preferencesStore).get('surecart/dashboard', 'hideGetStarted2')
 	);
 	const removeGetStarted = () => {
-		set('surecart/dashboard', 'hideGetStarted', true);
+		set('surecart/dashboard', 'hideGetStarted2', true);
 	};
 
 	if (hideGetStarted) {
@@ -40,6 +40,9 @@ export default () => {
 					right: 30px;
 					top: 30px;
 					cursor: pointer;
+				}
+				@media only screen and (max-width: 768px) {
+					display: none;
 				}
 			`}
 		>
