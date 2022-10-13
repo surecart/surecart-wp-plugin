@@ -153,7 +153,7 @@ export default () => {
 
 				<ScSwitch
 					checked={item?.subscription_cancellation_enabled}
-					onClick={(e) => {
+					onScChange={(e) => {
 						e.preventDefault();
 						editItem({
 							subscription_cancellation_enabled: !item?.subscription_cancellation_enabled,
