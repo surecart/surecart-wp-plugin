@@ -82,7 +82,12 @@ class BuddyBossService extends IntegrationService implements IntegrationInterfac
 	 * @return array The items for the integration.
 	 */
 	public function getItems( $items = [], $search = '' ) {
-		$groups = \groups_get_groups( ['search_terms' => $search] );
+		$groups = \groups_get_groups(
+			[
+				'search_terms' => $search,
+				'show_hidden'  => true,
+			]
+		);
 
 		if ( ( isset( $groups ) ) && ( ! empty( $groups ) ) ) {
 			$items = array_map(
