@@ -95,6 +95,7 @@ return [
 		\SureCart\Integrations\User\UserServiceProvider::class,
 		\SureCart\Integrations\MemberPress\MemberPressServiceProvider::class,
 		\SureCart\Integrations\Elementor\ElementorServiceProvider::class,
+		\SureCart\Integrations\Beaver\BeaverServiceProvider::class,
 	],
 
 	/**
