@@ -176,7 +176,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'price_id'    => null,
 				'type'        => 'primary',
 				'size'        => 'medium',
-				'button_text' => $content,
+				'label'       => $content,
 			],
 			$atts,
 			'sc_add_to_cart_button'
@@ -198,7 +198,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			[
 				'type'        => 'primary',
 				'size'        => 'medium',
-				'button_text' => $content,
+				'label'       => $content,
 			],
 			$atts,
 			'sc_add_to_cart_button'
