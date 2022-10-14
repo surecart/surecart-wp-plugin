@@ -37,7 +37,7 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function load_scripts() {
-		wp_enqueue_script( 'surecart-elementor-editor', plugins_url( 'assets/editor.js', __FILE__ ), array( 'elementor-editor', 'jquery' ), \SureCart::plugin()->version(), true );
+		wp_enqueue_script( 'surecart-elementor-editor', plugins_url( 'assets/editor.js', __FILE__ ), array( 'jquery' ), \SureCart::plugin()->version(), true );
 		wp_enqueue_style( 'surecart-elementor-style', plugins_url( 'assets/editor.css', __FILE__ ), '', \SureCart::plugin()->version(), 'all' );
 		wp_localize_script(
 			'surecart-elementor-editor',
