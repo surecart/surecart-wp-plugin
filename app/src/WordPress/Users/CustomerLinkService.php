@@ -97,6 +97,10 @@ class CustomerLinkService {
 	protected function linkNewUser() {
 		global $wpdb;
 
+		if ( email_exists( $this->checkout->customer->email ?? $this->checkout->email ?? null ) ) {
+			return false;
+		}
+
 		// if no user, create one with a password if provided.
 		$created = User::create(
 			[
