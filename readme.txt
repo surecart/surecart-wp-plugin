@@ -248,14 +248,13 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * New: Beaver Builder form select module.
 * New: Choose your store invoice and email notifications language.
 * New: Subscription cancellation notification and admin settings (Pro).
-* New: Login button next to email form field to allow users to login before checking out.
 * Improvement: Price selector, donation block accessibility improvements.
 * Improvement: Rename "Payment Plan" to "Installment".
-* Improvement: Hide the "Set A Password" field if the email matches a known user account.
 * Improvement: Show notice if Stripe requires SSL (Live Mode) and SSL is not enabled on the site.
 * Improvement: Change default title on customer dashboard from Subscriptions to Plans to account for installment plans and subscriptions.
 * Improvement: Add elementor block to category and add badge.
 * Improvement: Rearrange merchant subscription list and remove type column.
+* Fix: Elementor popup visibility settings missing.
 * Fix: Don't error when new unused webhooks are added to the platform.
 * Fix: Calendar translations on dashboard.
 * Fix: Japanese letters not displaying in customer dashboard tab.
