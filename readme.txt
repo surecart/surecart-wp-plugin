@@ -254,6 +254,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * Improvement: Change default title on customer dashboard from Subscriptions to Plans to account for installment plans and subscriptions.
 * Improvement: Add elementor block to category and add badge.
 * Improvement: Rearrange merchant subscription list and remove type column.
+* Improvement: Rename Input and Radio Group names to Text Field and Radio Select.
 * Fix: Elementor popup visibility settings missing.
 * Fix: Don't error when new unused webhooks are added to the platform.
 * Fix: Calendar translations on dashboard.
