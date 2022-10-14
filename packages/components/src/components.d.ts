@@ -2112,6 +2112,10 @@ export namespace Components {
          */
         "interval": string;
         /**
+          * The max allowed.
+         */
+        "max": number;
+        /**
           * Product name
          */
         "name": string;
@@ -6535,6 +6539,10 @@ declare namespace LocalJSX {
           * Recurring interval (i.e. monthly, once, etc.)
          */
         "interval"?: string;
+        /**
+          * The max allowed.
+         */
+        "max"?: number;
         /**
           * Product name
          */
