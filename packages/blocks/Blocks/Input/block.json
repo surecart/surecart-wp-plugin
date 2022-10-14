@@ -1,9 +1,9 @@
 {
 	"name": "surecart/input",
-	"title": "Input",
-	"description": "Displays a form text input.",
+	"title": "Text Field",
+	"description": "Displays a form text input field. This is saved with the order as additional metadata.",
 	"category": "surecart",
-	"keywords": ["email", "mail"],
+	"keywords": ["text", "input", "custom", "field"],
 	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,
