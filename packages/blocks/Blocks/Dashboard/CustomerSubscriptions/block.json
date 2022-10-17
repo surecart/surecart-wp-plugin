@@ -13,7 +13,7 @@
 	"attributes": {
 		"title": {
 			"type": "string",
-			"default": "Subscriptions"
+			"default": "Plans"
 		},
 		"per_page": {
 			"type": "number",

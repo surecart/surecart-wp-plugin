@@ -233,7 +233,7 @@ export class ScPayment {
     }
 
     // we have stripe.
-    if (this.stripe) {
+    if ( this.stripe ) {
       return (
         <sc-form-control label={this.label}>
           <div class="sc-payment-label" slot="label">

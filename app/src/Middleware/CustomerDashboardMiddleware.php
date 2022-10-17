@@ -57,6 +57,10 @@ class CustomerDashboardMiddleware {
 				]
 			);
 
+			if ( is_wp_error( $user ) ) {
+				return $this->error( $user );
+			}
+
 			if ( $user ) {
 				$linked = $user->setCustomerId( $link->customer );
 				if ( is_wp_error( $linked ) ) {

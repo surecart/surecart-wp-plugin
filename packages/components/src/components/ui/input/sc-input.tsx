@@ -239,6 +239,7 @@ export class ScInput {
           labelId={this.labelId}
           name={this.name}
         >
+          <slot name="label-end" slot="label-end"></slot>
           <div
             part="base"
             class={{

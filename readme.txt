@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 1.1.14
+Stable tag: 1.1.15
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,28 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.1.15 - October 14, 2022 =
+* New: Buddyboss groups integration with purchases.
+* New: Beaver Builder form select module.
+* New: Choose your store invoice and email notifications language.
+* New: Subscription cancellation notification and admin settings (Pro).
+* Improvement: Price selector, donation block accessibility improvements.
+* Improvement: Rename "Payment Plan" to "Installment".
+* Improvement: Show notice if Stripe requires SSL (Live Mode) and SSL is not enabled on the site.
+* Improvement: Change default title on customer dashboard from Subscriptions to Plans to account for installment plans and subscriptions.
+* Improvement: Add elementor block to category and add badge.
+* Improvement: Rearrange merchant subscription list and remove type column.
+* Improvement: Rename Input and Radio Group names to Text Field and Radio Select.
+* Fix: Elementor popup visibility settings missing.
+* Fix: Don't error when new unused webhooks are added to the platform.
+* Fix: Calendar translations on dashboard.
+* Fix: Japanese letters not displaying in customer dashboard tab.
+* Fix: Merchant subscription periods amount sometimes inaccurate.
+* Fix: Percent coupons missing % in admin list.
+* Fix: Error/validation translations not showing on checkout.
+* Fix: Issue with refund amount displaying wrong in form when processing a refund.
+* Fix: Error sometimes occurring when validating customer link.
 
 = 1.1.14 - October 5, 2022 =
 * New: Radio button group form block.

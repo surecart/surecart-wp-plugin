@@ -77,6 +77,7 @@ export const ScLineItemTotal = /*@__PURE__*/createReactComponent<JSX.ScLineItemT
 export const ScLineItems = /*@__PURE__*/createReactComponent<JSX.ScLineItems, HTMLScLineItemsElement>('sc-line-items');
 export const ScLineItemsProvider = /*@__PURE__*/createReactComponent<JSX.ScLineItemsProvider, HTMLScLineItemsProviderElement>('sc-line-items-provider');
 export const ScLoginForm = /*@__PURE__*/createReactComponent<JSX.ScLoginForm, HTMLScLoginFormElement>('sc-login-form');
+export const ScLoginProvider = /*@__PURE__*/createReactComponent<JSX.ScLoginProvider, HTMLScLoginProviderElement>('sc-login-provider');
 export const ScMenu = /*@__PURE__*/createReactComponent<JSX.ScMenu, HTMLScMenuElement>('sc-menu');
 export const ScMenuDivider = /*@__PURE__*/createReactComponent<JSX.ScMenuDivider, HTMLScMenuDividerElement>('sc-menu-divider');
 export const ScMenuItem = /*@__PURE__*/createReactComponent<JSX.ScMenuItem, HTMLScMenuItemElement>('sc-menu-item');
