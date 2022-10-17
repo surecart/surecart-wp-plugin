@@ -194,13 +194,13 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 	 * @return string
 	 */
 	public function buyButtonShortcode( $atts, $content ) {
-		// Remove inner shortcode from buy button lable
-		$lable = preg_replace( "/\[[^]]+\]/", "", $content );
+		// Remove inner shortcode from buy button label
+		$label = strip_shortcodes($content);
 		$atts = shortcode_atts(
 			[
 				'type'        => 'primary',
 				'size'        => 'medium',
-				'label'       => $lable,
+				'label'       => $label,
 			],
 			$atts,
 			'sc_buy_button'
