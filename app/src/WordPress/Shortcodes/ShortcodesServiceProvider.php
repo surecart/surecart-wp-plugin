@@ -176,7 +176,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'price_id'    => null,
 				'type'        => 'primary',
 				'size'        => 'medium',
-				'label'       => $content,
+				'button_text' => $content,
 			],
 			$atts,
 			'sc_add_to_cart_button'
@@ -194,14 +194,16 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 	 * @return string
 	 */
 	public function buyButtonShortcode( $atts, $content ) {
+		// Remove inner shortcode from buy button lable
+		$lable = preg_replace( "/\[[^]]+\]/", "", $content );
 		$atts = shortcode_atts(
 			[
 				'type'        => 'primary',
 				'size'        => 'medium',
-				'label'       => $content,
+				'label'       => $lable,
 			],
 			$atts,
-			'sc_add_to_cart_button'
+			'sc_buy_button'
 		);
 
 		$atts['line_items'] = (array) $this->getShortcodesAtts(
