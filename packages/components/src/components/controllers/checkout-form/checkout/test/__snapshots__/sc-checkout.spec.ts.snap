@@ -5,15 +5,17 @@ exports[`sc-checkout renders 1`] = `
   <!---->
   <div class="sc-checkout-container">
     <sc-checkout-unsaved-changes-warning state="idle"></sc-checkout-unsaved-changes-warning>
-    <sc-form-state-provider>
-      <sc-form-error-provider checkoutstate="idle">
-        <sc-form-components-validator>
-          <sc-order-confirm-provider mode="live" success-url="">
-            <sc-session-provider currency-code="usd" group-id="" mode="live" persist="" processor="stripe"></sc-session-provider>
-          </sc-order-confirm-provider>
-        </sc-form-components-validator>
-      </sc-form-error-provider>
-    </sc-form-state-provider>
+    <sc-login-provider>
+      <sc-form-state-provider>
+        <sc-form-error-provider checkoutstate="idle">
+          <sc-form-components-validator>
+            <sc-order-confirm-provider mode="live" success-url="">
+              <sc-session-provider currency-code="usd" group-id="" mode="live" persist="" processor="stripe"></sc-session-provider>
+            </sc-order-confirm-provider>
+          </sc-form-components-validator>
+        </sc-form-error-provider>
+      </sc-form-state-provider>
+    </sc-login-provider>
   </div>
 </sc-checkout>
 `;

@@ -52,7 +52,16 @@ class CheckoutsController extends RestController {
 		}
 
 		// edit the checkout.
-		return parent::edit( $request );
+		$response = parent::edit( $request );
+
+		// check if the email exists and set on record.
+		if ( apply_filters( 'surecart/checkout/finduser', true ) ) {
+			if ( ! empty( $response->email ) ) {
+				$response->email_exists = (bool) email_exists( $response->email );
+			}
+		}
+
+		return $response;
 	}
 
 	/**

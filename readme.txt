@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 1.1.13
+Stable tag: 1.1.15
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -243,10 +243,33 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.1.14 - September 29, 2022 =
-* New: Radio group checkout form block.
+= 1.1.15 - October 14, 2022 =
+* New: Buddyboss groups integration with purchases.
+* New: Beaver Builder form select module.
+* New: Choose your store invoice and email notifications language.
+* New: Subscription cancellation notification and admin settings (Pro).
+* Improvement: Price selector, donation block accessibility improvements.
+* Improvement: Rename "Payment Plan" to "Installment".
+* Improvement: Show notice if Stripe requires SSL (Live Mode) and SSL is not enabled on the site.
+* Improvement: Change default title on customer dashboard from Subscriptions to Plans to account for installment plans and subscriptions.
+* Improvement: Add elementor block to category and add badge.
+* Improvement: Rearrange merchant subscription list and remove type column.
+* Improvement: Rename Input and Radio Group names to Text Field and Radio Select.
+* Fix: Elementor popup visibility settings missing.
+* Fix: Don't error when new unused webhooks are added to the platform.
+* Fix: Calendar translations on dashboard.
+* Fix: Japanese letters not displaying in customer dashboard tab.
+* Fix: Merchant subscription periods amount sometimes inaccurate.
+* Fix: Percent coupons missing % in admin list.
+* Fix: Error/validation translations not showing on checkout.
+* Fix: Issue with refund amount displaying wrong in form when processing a refund.
+* Fix: Error sometimes occurring when validating customer link.
+
+= 1.1.14 - October 5, 2022 =
+* New: Radio button group form block.
 * New: Password confirmation option in password form block.
 * New: Customer name now syncs with WordPress name on checkout.
+* New: Link to delete test data.
 * Fix: Issue with payment failure email links going to 404.
 * Fix: Issue with clicking add to cart button for an existing item in cart sometimes creating 2 line items instead of 1.
 * Fix: Issue with theme line-height sometimes cutting off decenders in dashboard tabs.

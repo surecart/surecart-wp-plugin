@@ -19,7 +19,7 @@ import { __ } from '@wordpress/i18n';
 export default ({ charge, onRequestClose, onRefunded }) => {
 	const [loading, setLoading] = useState(false);
 	const { createErrorNotice } = useDispatch(noticesStore);
-	const [amount, setAmount] = useState(charge.amount);
+	const [amount, setAmount] = useState(charge?.amount - charge?.refunded_amount);
 	const [reason, setReason] = useState('requested_by_customer');
 	const [error, setError] = useState(null);
 
@@ -94,7 +94,7 @@ export default ({ charge, onRequestClose, onRefunded }) => {
 						name="amount"
 						label={__('Refund', 'surecart')}
 						currencyCode={charge?.currency}
-						value={charge?.amount - charge?.refunded_amount}
+						value={amount}
 						max={charge?.amount - charge?.refunded_amount}
 						onScChange={(e) => {
 							setAmount(e.target.value);

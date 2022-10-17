@@ -1,0 +1,11 @@
+:host {
+  display: block;
+}
+
+a.customer-email {
+  &__login-link {
+    color: var(--sc-customer-login-link-color, var(--sc-input-placeholder-color));
+    text-decoration:none;
+    font-size: var(--sc-font-size-small);
+  }
+}

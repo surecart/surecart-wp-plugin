@@ -1,10 +1,10 @@
 {
 	"apiVersion": 2,
 	"name": "surecart/radio-group",
-	"title": "Radio Group",
-	"description": "Display a radio input",
+	"title": "Radio Select",
+	"description": "Display a radio select input. This is saved with the order as additional metadata.",
 	"category": "surecart",
-	"keywords": ["radio", "radio-group", "surecart"],
+	"keywords": ["radio", "select", "radio-group", "surecart"],
 	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,

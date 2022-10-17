@@ -59,9 +59,6 @@ export class ScSubscriptionStatusBadge {
       case 'trialing':
         return __('Trialing', 'surecart');
       case 'active':
-        if (Number.isInteger(this.subscription?.remaining_period_count)) {
-          return __('Payment Plan', 'surecart');
-        }
         return __('Active', 'surecart');
       case 'past_due':
         return __('Past Due', 'surecart');

@@ -63,6 +63,7 @@ export class ScFormControl {
       >
         <label part="label" id={this.labelId} class="form-control__label" htmlFor={this.inputId} aria-hidden={!!this.label ? 'false' : 'true'}>
           <slot name="label">{this.label}</slot>
+          <slot name="label-end"></slot>
         </label>
         <div class="form-control__input">
           {!!this.errorMessage ? (
