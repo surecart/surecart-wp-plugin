@@ -36,6 +36,9 @@ export class ScProductLineItem {
   /** Can we select the quantity */
   @Prop() editable: boolean = true;
 
+  /** The max allowed. */
+  @Prop() max: number = 100;
+
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scUpdateQuantity: EventEmitter<number>;
 
@@ -72,7 +75,9 @@ export class ScProductLineItem {
           <div class="item__title">
             <slot name="title">{this.name}</slot>
           </div>
-          {this.editable && <sc-quantity-select clickEl={this.el} quantity={this.quantity} onScChange={e => e.detail && this.scUpdateQuantity.emit(e.detail)}></sc-quantity-select>}
+          {this.editable && (
+            <sc-quantity-select max={this.max} clickEl={this.el} quantity={this.quantity} onScChange={e => e.detail && this.scUpdateQuantity.emit(e.detail)}></sc-quantity-select>
+          )}
           {!this.editable && this.quantity > 1 && (
             <span class="item__description">
               {__('Qty:', 'surecart')} {this.quantity}

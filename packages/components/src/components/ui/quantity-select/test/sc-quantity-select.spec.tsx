@@ -9,4 +9,18 @@ describe('sc-quantity-select', () => {
     });
     expect(page.root).toMatchSnapshot();
   });
+  it('renders disabled increment if max matches quantity', async () => {
+    const page = await newSpecPage({
+      components: [ScQuantitySelect],
+      html: `<sc-quantity-select max="2" quantity="2"></sc-quantity-select>`,
+    });
+    expect(page.root).toMatchSnapshot();
+  });
+  it('renders disabled decrement if min is greater than 1', async () => {
+    const page = await newSpecPage({
+      components: [ScQuantitySelect],
+      html: `<sc-quantity-select min="2" max="3" quantity="2"></sc-quantity-select>`,
+    });
+    expect(page.root).toMatchSnapshot();
+  });
 });
