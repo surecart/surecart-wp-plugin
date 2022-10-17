@@ -71,8 +71,8 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 			[
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => $this->callback( $this->controller, 'manually_pay' ),
-					'permission_callback' => [ $this, 'finalize_permissions_check' ],
+					'callback'            => $this->callback( $this->controller, 'manuallyPay' ),
+					'permission_callback' => [ $this, 'manually_pay_permissions_check' ],
 				],
 				// Register our schema callback.
 				'schema' => [ $this, 'get_item_schema' ],
