@@ -3,6 +3,7 @@
 namespace SureCart\WordPress\PostTypes;
 
 use SureCart\Models\Form;
+use SureCart\Models\Product;
 use SureCart\WordPress\Pages\PageService;
 
 /**
@@ -48,6 +49,7 @@ class ProductPostTypeService {
 	 */
 	public function bootstrap() {
 		add_action( 'init', [ $this, 'registerPostType' ] );
+		add_action( 'rest_api_init', [ $this, 'addRestField' ] );
 		add_filter(
 			"rest_prepare_$this->post_type",
 			function( $results, $post ) {
@@ -60,6 +62,29 @@ class ProductPostTypeService {
 			2
 		);
 	}
+
+	/**
+	 * Add Product to Rest Field.
+	 *
+	 * @return void
+	 */
+	public function addRestField() {
+		register_rest_field(
+			$this->post_type,
+			'product',
+			array(
+				'get_callback' => function ( $object ) {
+					// get the associated product id.
+					$product_id = get_post_meta( $object['id'], 'sc_product_id', true );
+					if ( empty( $product_id ) ) {
+						return null;
+					}
+					return Product::with( [ 'prices' ] )->find( $product_id );
+				},
+			)
+		);
+	}
+
 
 	/**
 	 * Create the post.

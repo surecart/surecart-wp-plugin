@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-10-17T18:08:13",
+  "timestamp": "2022-10-18T20:30:15",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -1957,7 +1957,7 @@
     },
     {
       "filePath": "./src/components/controllers/cart/sc-cart-form/sc-cart-form.tsx",
-      "encapsulation": "none",
+      "encapsulation": "shadow",
       "tag": "sc-cart-form",
       "readme": "# sc-cart-form\n\n\n",
       "docs": "",
@@ -11813,6 +11813,7 @@
       "filePath": "./src/components/providers/sc-login-provider/sc-login-provider.tsx",
       "encapsulation": "shadow",
       "tag": "sc-login-provider",
+      "readme": "# sc-login-provider\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -20954,6 +20955,7 @@
       "filePath": "./src/components/controllers/dashboard/sc-subscription-payment-method/sc-subscription-payment-method.tsx",
       "encapsulation": "shadow",
       "tag": "sc-subscription-payment-method",
+      "readme": "# sc-subscription-payment-method\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
