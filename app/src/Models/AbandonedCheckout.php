@@ -16,14 +16,14 @@ class AbandonedCheckout extends Order {
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'abandoned_orders';
+	protected $endpoint = 'abandoned_checkouts';
 
 	/**
 	 * Object name
 	 *
 	 * @var string
 	 */
-	protected $object_name = 'abandoned_order';
+	protected $object_name = 'abandoned_checkout';
 
 	/**
 	 * Set the latest checkout session attribute

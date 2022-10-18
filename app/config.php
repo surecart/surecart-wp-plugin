@@ -42,6 +42,7 @@ return [
 		\SureCart\Activation\ActivationServiceProvider::class,
 
 		// REST providers.
+		\SureCart\Rest\AbandonedCheckoutsRestServiceProvider::class,
 		\SureCart\Rest\BlockPatternsRestServiceProvider::class,
 		\SureCart\Rest\AccountRestServiceProvider::class,
 		\SureCart\Rest\BrandRestServiceProvider::class,
