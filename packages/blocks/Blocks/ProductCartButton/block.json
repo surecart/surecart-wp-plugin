@@ -1,0 +1,51 @@
+{
+	"apiVersion": 2,
+	"name": "surecart/product-cart-button",
+	"title": "Product Add To Cart Button",
+	"description": "Displays product add to cart button",
+	"category": "surecart",
+	"keywords": ["cart", "form", "product"],
+	"attributes": {
+		"text": {
+			"type": "string",
+			"default": "Add To Cart"
+		},
+		"type": {
+			"type": "string",
+			"default": "primary"
+		},
+		"size": {
+			"type": "string",
+			"default": "large"
+		},
+		"full": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"supports": {
+		"reusable": false,
+		"html": false,
+		"multiple": false,
+		"align": true,
+		"alignWide": false,
+		"color": {
+			"__experimentalSkipSerialization": true,
+			"gradients": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"typography": {
+			"fontSize": true
+		},
+		"__experimentalBorder": {
+			"radius": true,
+			"__experimentalSkipSerialization": true,
+			"__experimentalDefaultControls": {
+				"radius": true
+			}
+		}
+	}
+}

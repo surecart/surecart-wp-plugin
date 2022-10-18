@@ -1,5 +1,6 @@
 :host {
   --focus-ring: 0 0 0 var(--sc-focus-ring-width) var(--sc-focus-ring-color-primary);
+  --border-radius: var(--sc-quantity-border-radius, var(--sc-input-border-radius-small));
   display: inline-block;
 }
 
@@ -61,7 +62,7 @@
   letter-spacing: var(--sc-input-letter-spacing);
   background-color: var(--sc-input-background-color);
   border: var(--sc-input-border);
-  border-radius: var(--sc-input-border-radius-small);
+  border-radius: var(--border-radius);
   vertical-align: middle;
   box-shadow: var(--sc-input-box-shadow);
   transition: var(--sc-transition-fast) color, var(--sc-transition-fast) border, var(--sc-transition-fast) box-shadow;
@@ -129,11 +130,11 @@
 
 .button__decrease {
   left: 1px;
-  border-radius: var(--sc-input-border-radius-small) 0 0 var(--sc-input-border-radius-small);
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
   border-right: var(--sc-input-border);
 }
 .button__increase {
   right: 1px;
-  border-radius: 0 var(--sc-input-border-radius-small) var(--sc-input-border-radius-small) 0;
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
   border-left: var(--sc-input-border);
 }

@@ -48,6 +48,17 @@ class ProductPostTypeService {
 	 */
 	public function bootstrap() {
 		add_action( 'init', [ $this, 'registerPostType' ] );
+		add_filter(
+			"rest_prepare_$this->post_type",
+			function( $results, $post ) {
+				if ( isset( $post->sc_product_id ) ) {
+					$results->add_link( 'author', rest_url( '/surecart/v1/products/' . $post->sc_product_id ) . '?expand[]=prices', array( 'embeddable' => true ) );
+				}
+				return $results;
+			},
+			10,
+			2
+		);
 	}
 
 	/**

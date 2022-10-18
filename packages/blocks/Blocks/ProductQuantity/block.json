@@ -1,0 +1,43 @@
+{
+	"apiVersion": 2,
+	"name": "surecart/product-quantity",
+	"title": "Product Quantity",
+	"description": "Displays quantity selector for a product.",
+	"category": "surecart",
+	"ancestor": ["surecart/product-form"],
+	"keywords": ["quantity", "form", "product"],
+	"attributes": {
+		"label": {
+			"type": "string"
+		}
+	},
+	"supports": {
+		"reusable": false,
+		"html": false,
+		"multiple": false,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true
+		},
+		"color": {
+			"gradients": false,
+			"background": false,
+			"link": false,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true,
+				"link": true
+			}
+		},
+		"__experimentalBorder": {
+			"radius": true,
+			"__experimentalSkipSerialization": true,
+			"__experimentalDefaultControls": {
+				"radius": true
+			}
+		}
+	}
+}

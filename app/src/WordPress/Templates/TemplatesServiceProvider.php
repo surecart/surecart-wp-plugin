@@ -19,7 +19,7 @@ class TemplatesServiceProvider implements ServiceProviderInterface {
 			return new TemplatesService(
 				$c,
 				[
-					'template-surecart-no-sidebar.php' => esc_html__( 'Full Width No Sidebar', 'surecart' ),
+					'template-surecart-no-sidebar.php' => esc_html__( 'SureCart: Full Width No Sidebar', 'surecart' ),
 				],
 				$c['surecart.product.post']->getPostType()
 			);

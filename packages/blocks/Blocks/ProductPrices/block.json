@@ -1,0 +1,59 @@
+{
+	"apiVersion": 2,
+	"name": "surecart/product-prices",
+	"title": "Product Prices",
+	"description": "Displays product price amounts",
+	"category": "surecart",
+	"keywords": ["price", "product"],
+	"attributes": {
+		"text": {
+			"type": "string",
+			"default": "Add To Cart"
+		},
+		"type": {
+			"type": "string",
+			"default": "primary"
+		},
+		"size": {
+			"type": "string",
+			"default": "large"
+		},
+		"full": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"supports": {
+		"reusable": false,
+		"html": false,
+		"multiple": false,
+		"color": {
+			"gradients": true,
+			"link": false,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true,
+				"link": true
+			}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true,
+				"fontAppearance": true,
+				"textTransform": true
+			}
+		}
+	}
+}
