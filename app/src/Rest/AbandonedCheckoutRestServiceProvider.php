@@ -96,7 +96,7 @@ class AbandonedCheckoutRestServiceProvider extends RestServiceProvider implement
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return current_user_can( 'view_sc_checkouts' );
+		return current_user_can( 'read_sc_checkouts' );
 	}
 
 	/**
@@ -106,6 +106,6 @@ class AbandonedCheckoutRestServiceProvider extends RestServiceProvider implement
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		return current_user_can( 'view_sc_checkouts' );
+		return current_user_can( 'read_sc_checkouts' );
 	}
 }
