@@ -32,12 +32,12 @@ class AbandonedCheckoutRestServiceProviderTest extends SureCartUnitTestCase {
 		$has_permissions->add_cap('read_sc_checkouts');
 
 		return [
-			[null, 'GET', '/surecart/v1/abandoned_checkouts', 401],
-			[self::factory()->user->create_and_get(), 'GET', '/surecart/v1/abandoned_checkouts', 403],
-			[$has_permissions, 'GET', '/surecart/v1/abandoned_checkouts', 200],
-			[null, 'GET', '/surecart/v1/abandoned_checkouts/test', 401],
-			[self::factory()->user->create_and_get(), 'GET', '/surecart/v1/abandoned_checkouts/test', 403],
-			[$has_permissions, 'GET', '/surecart/v1/abandoned_checkouts/test', 200]
+			'List: Unauthenticated' => [null, 'GET', '/surecart/v1/abandoned_checkouts', 401],
+			'List: Missing Capability' => [[], 'GET', '/surecart/v1/abandoned_checkouts', 403],
+			'List: Has Capability' =>  [['read_sc_checkouts'], 'GET', '/surecart/v1/abandoned_checkouts', 200],
+			'Find: Unauthenticated' => [null, 'GET', '/surecart/v1/abandoned_checkouts/test', 401],
+			'Find: Without Capability' => [[], 'GET', '/surecart/v1/abandoned_checkouts/test', 403],
+			'Find: Has Capability' => [['read_sc_checkouts'], 'GET', '/surecart/v1/abandoned_checkouts/test', 200]
 		];
 	}
 
@@ -46,7 +46,7 @@ class AbandonedCheckoutRestServiceProviderTest extends SureCartUnitTestCase {
 	 * @group failing
 	 * @dataProvider requestProvider
 	 */
-	public function test_permissions( $user, $method, $route, $status) {
+	public function test_permissions( $caps, $method, $route, $status) {
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
 		\SureCart::alias('request', function () use ($requests) {
@@ -54,29 +54,18 @@ class AbandonedCheckoutRestServiceProviderTest extends SureCartUnitTestCase {
 		});
 		$requests->shouldReceive('makeRequest')->andReturn((object) ['id' => 'test']);
 
-		wp_set_current_user($user->ID ?? null);
+		if (is_array($caps)) {
+			$user= self::factory()->user->create_and_get();
+			foreach($caps as $cap) {
+				$user->add_cap($cap);
+			}
+			wp_set_current_user($user->ID ?? null);
+		}
 
 		// unauthed.
 		$request = new \WP_REST_Request($method, $route);
 		$response = rest_do_request( $request );
 		$this->assertSame($status, $response->get_status());
-
-		// // no permission.
-		// $user = self::factory()->user->create_and_get();
-		// wp_set_current_user($user->ID);
-		// $request = new \WP_REST_Request('GET', '/surecart/v1/abandoned_checkouts');
-		// $response = rest_do_request( $request );
-		// $this->assertSame(403, $response->get_status());
-
-		// // has cap.
-		// $user = self::factory()->user->create_and_get();
-		// $user->add_cap('read_sc_checkouts');
-		// wp_set_current_user($user->ID);
-		// $request = new \WP_REST_Request('GET', '/surecart/v1/abandoned_checkouts');
-		// $response = rest_do_request( $request );
-		// $this->assertSame(200, $response->get_status());
-		// $data = $response->get_data();
-		// $this->assertSame($data['email_exists'], true);
 	}
 
 }
