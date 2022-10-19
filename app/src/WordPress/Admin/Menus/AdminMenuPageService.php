@@ -132,7 +132,7 @@ class AdminMenuPageService {
 			'customers'       => \add_submenu_page( $this->slug, __( 'Customers', 'surecart' ), __( 'Customers', 'surecart' ), 'edit_sc_customers', 'sc-customers', '__return_false' ),
 			'cart'            => get_edit_post_link( $cart_page_id ) ? \add_submenu_page( $this->slug, __( 'Cart', 'surecart' ), __( 'Cart', 'surecart' ), 'manage_options', 'post.php?post=' . (int) $cart_page_id . '&action=edit', '' ) : null,
 			// 'upgrade-paths'   => \add_submenu_page( $this->slug, __( 'Upgrade Groups', 'surecart' ), __( 'Upgrade Groups', 'surecart' ), 'edit_sc_products', 'sc-product-groups', '__return_false' ),
-			// 'abandoned'       => \add_submenu_page( $this->slug, __( 'Abandoned Orders', 'surecart' ), __( 'Abandoned Orders', 'surecart' ), 'edit_sc_orders', 'sc-abandoned-orders', '__return_false' ),
+			'abandoned'       => \add_submenu_page( $this->slug, __( 'Abandoned Orders', 'surecart' ), __( 'Abandoned Orders', 'surecart' ), 'edit_sc_orders', 'sc-abandoned-orders', '__return_false' ),
 			'forms'           => \add_submenu_page( $this->slug, __( 'Forms', 'surecart' ), __( 'Forms', 'surecart' ), 'edit_posts', 'edit.php?post_type=sc_form', '' ),
 			'settings'        => \add_submenu_page( $this->slug, __( 'Settings', 'surecart' ), __( 'Settings', 'surecart' ), 'manage_options', 'sc-settings', '__return_false' ),
 		];

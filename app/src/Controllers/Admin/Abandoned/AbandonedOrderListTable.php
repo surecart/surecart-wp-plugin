@@ -4,7 +4,7 @@ namespace SureCart\Controllers\Admin\Abandoned;
 
 use SureCart\Support\TimeDate;
 use SureCart\Controllers\Admin\Tables\ListTable;
-use SureCart\Models\AbandonedOrder;
+use SureCart\Models\AbandonedCheckout;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -82,13 +82,13 @@ class AbandonedOrderListTable extends ListTable {
 
 	public function search() {
 		?>
-	<form class="search-form"
-		method="get">
-		<?php $this->search_box( __( 'Search Abanonded Orders', 'surecart' ), 'abandoned_order' ); ?>
-		<input type="hidden"
-			name="id"
-			value="1" />
-	</form>
+		<form class="search-form"
+			method="get">
+			<?php $this->search_box( __( 'Search Abanonded Orders', 'surecart' ), 'abandoned_order' ); ?>
+			<input type="hidden"
+				name="id"
+				value="1" />
+		</form>
 		<?php
 	}
 
@@ -99,11 +99,11 @@ class AbandonedOrderListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return [
-			'order'    => __( 'Order', 'surecart' ),
-			'date'     => __( 'Date', 'surecart' ),
-			'delivery' => __( 'Delivery', 'surecart' ),
-			'status'   => __( 'Status', 'surecart' ),
-			'total'    => __( 'Total', 'surecart' ),
+			'placed_by'       => __( 'Placed By', 'surecart' ),
+			'date'     		  => __( 'Date', 'surecart' ),
+			'email_status'    => __( 'Email Status', 'surecart' ),
+			'recovery_status' => __( 'Recovery Status', 'surecart' ),
+			'total'           => __( 'Total', 'surecart' ),
 		];
 	}
 
@@ -113,7 +113,7 @@ class AbandonedOrderListTable extends ListTable {
 	 * @return Array
 	 */
 	protected function table_data() {
-		return AbandonedOrder::where(
+		return AbandonedCheckout::where(
 			[
 				'status' => $this->getStatus(),
 			]
@@ -169,7 +169,7 @@ class AbandonedOrderListTable extends ListTable {
 	 *
 	 * @return string
 	 */
-	public function column_delivery( $abandoned ) {
+	public function column_email_status( $abandoned ) {
 		return 'notified' === $abandoned->status ? '<sc-tag type="success">' . __( 'Sent', 'surecart' ) . '</sc-tag>' : '<sc-tag>' . __( 'Not Sent', 'surecart' ) . '</sc-tag>';
 	}
 
@@ -181,7 +181,7 @@ class AbandonedOrderListTable extends ListTable {
 	 *
 	 * @return string
 	 */
-	public function column_status( $abandoned ) {
+	public function column_recovery_status( $abandoned ) {
 		return 'recovered' === $abandoned->status ? '<sc-tag type="success">' . __( 'Recovered', 'surecart' ) . '</sc-tag>' : '<sc-tag>' . __( 'Not Recovered', 'surecart' ) . '</sc-tag>';
 	}
 
@@ -192,7 +192,7 @@ class AbandonedOrderListTable extends ListTable {
 	 *
 	 * @return string
 	 */
-	public function column_order( $abandoned ) {
+	public function column_placed_by( $abandoned ) {
 		return "#{$abandoned->latest_order->number}";
 	}
 }
