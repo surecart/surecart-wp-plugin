@@ -66,6 +66,7 @@ Type: `Promise<boolean>`
 
 - [sc-alert](../../../ui/alert)
 - [sc-checkout-unsaved-changes-warning](../../../providers/checkout-unsaved-changes-warning)
+- [sc-login-provider](../../../providers/sc-login-provider)
 - [sc-form-state-provider](../../../providers/form-state-provider)
 - [sc-form-error-provider](../../../providers/form-error-provider)
 - [sc-form-components-validator](../../../providers/form-components-validator)
@@ -78,6 +79,7 @@ Type: `Promise<boolean>`
 graph TD;
   sc-checkout --> sc-alert
   sc-checkout --> sc-checkout-unsaved-changes-warning
+  sc-checkout --> sc-login-provider
   sc-checkout --> sc-form-state-provider
   sc-checkout --> sc-form-error-provider
   sc-checkout --> sc-form-components-validator
@@ -85,6 +87,16 @@ graph TD;
   sc-checkout --> sc-session-provider
   sc-checkout --> sc-block-ui
   sc-alert --> sc-icon
+  sc-login-provider --> sc-alert
+  sc-login-provider --> sc-dialog
+  sc-login-provider --> sc-form
+  sc-login-provider --> sc-input
+  sc-login-provider --> sc-button
+  sc-dialog --> sc-button
+  sc-dialog --> sc-icon
+  sc-button --> sc-spinner
+  sc-input --> sc-form-control
+  sc-form-control --> sc-tooltip
   sc-form-state-provider --> sc-block-ui
   sc-block-ui --> sc-spinner
   sc-form-error-provider --> sc-alert
@@ -99,8 +111,6 @@ graph TD;
   sc-address --> sc-input
   sc-address --> sc-select
   sc-address --> sc-block-ui
-  sc-form-control --> sc-tooltip
-  sc-input --> sc-form-control
   sc-select --> sc-icon
   sc-select --> sc-menu-label
   sc-select --> sc-menu-item
@@ -121,7 +131,6 @@ graph TD;
   sc-tax-id-input --> sc-button
   sc-tax-id-input --> sc-menu
   sc-tax-id-input --> sc-menu-item
-  sc-button --> sc-spinner
   sc-order-bumps --> sc-form-control
   sc-order-bumps --> sc-order-bump
   sc-order-bump --> sc-format-number
