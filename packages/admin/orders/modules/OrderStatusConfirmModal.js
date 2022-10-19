@@ -4,10 +4,9 @@ import {
 	ScButton,
 	ScDialog,
 } from '@surecart/components-react';
-import { store as dataStore } from '@surecart/data';
 import apiFetch from '@wordpress/api-fetch';
 import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
@@ -17,9 +16,8 @@ const expand = [
 	'order',
 ];
 
-export default ({ open, onRequestClose }) => {
-	const id = useSelect((select) => select(dataStore).selectPageId());
-	const [loading, setLoading] = useState(false);
+export default ({ checkout, open, onRequestClose, hasLoading }) => {
+	const [loading, setLoading] = useState(hasLoading);
 	const [error, setError] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { receiveEntityRecords } = useDispatch(coreStore);
@@ -30,7 +28,7 @@ export default ({ open, onRequestClose }) => {
 			setError(null);
 			const manuallyPay = await apiFetch({
 				method: 'PATCH',
-				path: addQueryArgs(`surecart/v1/checkouts/${id}/manually_pay`, {
+				path: addQueryArgs(`surecart/v1/checkouts/${checkout?.id}/manually_pay`, {
 					expand,
 				}),
 				data: {

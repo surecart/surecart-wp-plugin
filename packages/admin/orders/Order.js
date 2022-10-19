@@ -135,21 +135,25 @@ export default () => {
 				<ScDropdown
 					position="bottom-right"
 					style={{ '--panel-width': '14em' }}
-				>
-					<ScButton
-						type="primary"
-						slot="trigger"
-						caret
-					>
-						{__('Actions', 'surecart')}
-					</ScButton>
-					<ScMenu>
-						<ScMenuItem
-							onClick={() => setModal('order_status_update')}
-						>
-							{__('Mark as Paid', 'surecart')}
-						</ScMenuItem>
-					</ScMenu>
+				>	
+					{order?.status === 'processing' && (
+						<>
+							<ScButton
+								type="primary"
+								slot="trigger"
+								caret
+							>
+								{__('Actions', 'surecart')}
+							</ScButton>
+							<ScMenu>
+								<ScMenuItem
+									onClick={() => setModal('order_status_update')}
+								>
+									{__('Mark as Paid', 'surecart')}
+								</ScMenuItem>
+							</ScMenu>
+						</>
+					)}
 				</ScDropdown>
 			}
 			sidebar={
@@ -176,8 +180,10 @@ export default () => {
 				<Charges checkoutId={order?.checkout?.id} />
 				<Subscriptions checkoutId={order?.checkout?.id} />
 				<OrderStatusConfirmModal
+					checkout={order?.checkout}
 					open={modal === 'order_status_update'}
 					onRequestClose={() => setModal(false)}
+					loading={!hasLoadedOrder}
 				/>
 			</>
 		</UpdateModel>
