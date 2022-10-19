@@ -243,6 +243,13 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.1.16  - October 19, 2022 =
+- Improvement: Wording for price select options.
+- Fix: Limit line item quantity selector based on product purchase limit.
+- Fix: Nested shortcodes not rendering with some themes.
+- Fix: Buy button shortcode text not customizable.
+- Fix: Checkout form intermittently hanging when submitted.
+
 = 1.1.15 - October 14, 2022 =
 * New: Buddyboss groups integration with purchases.
 * New: Beaver Builder form select module.
