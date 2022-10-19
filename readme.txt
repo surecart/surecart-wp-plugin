@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 1.1.15
+Stable tag: 1.1.16
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -248,6 +248,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * Fix: Limit line item quantity selector based on product purchase limit.
 * Fix: Nested shortcodes not rendering with some themes.
 * Fix: Buy button shortcode text not customizable.
+* Fix: Payment limit field disappearing when amount is removed.
 * Fix: Checkout form intermittently hanging when submitted.
 
 = 1.1.15 - October 14, 2022 =
