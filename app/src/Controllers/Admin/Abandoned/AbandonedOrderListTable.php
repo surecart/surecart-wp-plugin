@@ -159,7 +159,7 @@ class AbandonedOrderListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_date( $abandoned ) {
-		return '<sc-format-date date="' . (int) $abandoned->latest_order->updated_at . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></sc-format-date>';
+		return isset( $abandoned->created_at ) ? '<sc-format-date date="' . (int) $abandoned->created_at . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></sc-format-date>' : '--';
 	}
 
 	/**
@@ -193,6 +193,20 @@ class AbandonedOrderListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_placed_by( $abandoned ) {
-		return "#{$abandoned->latest_order->number}";
+		ob_start();
+		?>
+		<a  class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $abandoned->id ) ); ?>">
+			<?php
+			// translators: Customer name.
+			echo sprintf( esc_html__( 'By %s', 'surecart' ), esc_html( $abandoned->customer->name ?? $abandoned->customer->email ) );
+			?>
+		</a>
+		<br />
+		<a aria-label="<?php echo esc_attr__( 'View Checkout', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $abandoned->id ) ); ?>">
+			<?php echo esc_attr__( 'View Checkout', 'surecart' ); ?>
+		</a>
+		<?php
+
+		return ob_get_clean();
 	}
 }
