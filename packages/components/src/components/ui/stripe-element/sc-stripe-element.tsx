@@ -60,7 +60,7 @@ export class ScStripeElement {
     }
 
     try {
-      this.stripe   = await loadStripe(this.publishableKey, { stripeAccount: this.accountId });
+      this.stripe = await loadStripe(this.publishableKey, { stripeAccount: this.accountId });
       this.elements = this.stripe.elements();
     } catch (e) {
       this.error = e?.message || __('Stripe could not be loaded', 'surecart');
@@ -68,13 +68,11 @@ export class ScStripeElement {
   }
 
   @Watch('order')
-  async confirmPayment(val: Checkout, prev: Checkout) {
+  async confirmPayment(val: Checkout) {
     // needs to be enabled
     if (this.disabled) return;
     // must be finalized
     if (val?.status !== 'finalized') return;
-    // the status didn't change.
-    if (prev?.status === 'finalized') return;
     // must be a stripe session
     if (val?.payment_intent?.processor_type !== 'stripe') return;
     // must have an external intent id
