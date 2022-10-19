@@ -35,9 +35,12 @@ export default ({ checkout, open, onRequestClose, hasLoading }) => {
 					purge_pending_update: true,
 				},
 			});
-			receiveEntityRecords('surecart', 'manually_pay', manuallyPay, {
-				expand,
-			});
+			
+			receiveEntityRecords('surecart', 'order', [], {}, true);
+
+			// receiveEntityRecords('surecart', 'order', manuallyPay, {
+			// 	expand,
+			// });
 			createSuccessNotice(__('Order Marked as Paid.', 'surecart'), {
 				type: 'snackbar',
 			});
@@ -69,7 +72,7 @@ export default ({ checkout, open, onRequestClose, hasLoading }) => {
 					onClick={onRequestClose}
 					disabled={loading}
 				>
-					{__("Don't mark paid", 'surecart')}
+					{__("Cancel", 'surecart')}
 				</ScButton>{' '}
 				<ScButton
 					type="primary"
