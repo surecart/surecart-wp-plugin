@@ -136,7 +136,7 @@ export default () => {
 					position="bottom-right"
 					style={{ '--panel-width': '14em' }}
 				>	
-					{order?.status === 'processing' && (
+					{order?.status === 'processing' && order?.manual_payment && (
 						<>
 							<ScButton
 								type="primary"
