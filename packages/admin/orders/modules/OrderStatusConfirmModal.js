@@ -18,7 +18,8 @@ export default ({ order, open, onRequestClose, hasLoading }) => {
 	const [loading, setLoading] = useState(hasLoading);
 	const [error, setError] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { receiveEntityRecords } = useDispatch(coreStore);
+	const { receiveEntityRecords, invalidateResolutionForStore } =
+		useDispatch(coreStore);
 
 	const markAsPaid = async () => {
 		try {
@@ -36,6 +37,9 @@ export default ({ order, open, onRequestClose, hasLoading }) => {
 					purge_pending_update: true,
 				},
 			});
+
+			// refetch entities.
+			invalidateResolutionForStore();
 
 			receiveEntityRecords('surecart', 'order', {
 				...order,
