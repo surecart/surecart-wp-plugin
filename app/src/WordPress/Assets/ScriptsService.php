@@ -2,6 +2,8 @@
 
 namespace SureCart\WordPress\Assets;
 
+use SureCart\Models\Processor;
+
 /**
  * Handles the component theme.
  */
@@ -250,7 +252,7 @@ class ScriptsService {
 			'surecart-blocks',
 			'scBlockData',
 			[
-				'processors'   => (array) \SureCart::account()->processors ?? [],
+				'processors'   => (array) Processor::get() ?? [],
 				'plugin_url'   => \SureCart::core()->assets()->getUrl(),
 				'currency'     => \SureCart::account()->currency,
 				'theme'        => get_option( 'surecart_theme', 'light' ),

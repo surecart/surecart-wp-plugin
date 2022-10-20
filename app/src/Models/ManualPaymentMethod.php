@@ -1,24 +1,23 @@
 <?php
-
 namespace SureCart\Models;
 
 /**
- * Processor model.
+ * Payment intent model.
  */
-class Processor extends Model {
+class ManualPaymentMethod extends Model {
 	/**
 	 * Rest API endpoint
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'processors';
+	protected $endpoint = 'manual_payment_methods';
 
 	/**
 	 * Object name
 	 *
 	 * @var string
 	 */
-	protected $object_name = 'processor';
+	protected $object_name = 'manual_payment_method';
 
 	/**
 	 * Is this cachable?
@@ -32,5 +31,5 @@ class Processor extends Model {
 	 *
 	 * @var string
 	 */
-	protected $cache_key = 'processors_updated_at';
+	protected $cache_key = 'manual_payment_methods_updated_at';
 }

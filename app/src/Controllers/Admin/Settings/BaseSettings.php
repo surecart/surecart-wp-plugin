@@ -2,6 +2,7 @@
 
 namespace SureCart\Controllers\Admin\Settings;
 
+use SureCart\Models\Processor;
 use SureCart\Support\Currency;
 use SureCart\Support\TimeDate;
 
@@ -101,7 +102,7 @@ abstract class BaseSettings {
 				'api_url'              => defined( 'SURECART_API_URL' ) ? untrailingslashit( SURECART_API_URL ) : \SureCart::requests()->getBaseUrl(),
 				'time_zones'           => TimeDate::timezoneOptions(),
 				'entitlements'         => \SureCart::account()->entitlements,
-				'processors'           => \SureCart::account()->processors ?? [],
+				'processors'           => Processor::get(),
 			]
 		);
 	}

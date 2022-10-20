@@ -125,6 +125,13 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'manual_payment_method',
+		kind: 'surecart',
+		label: __('Manual Payment Method', 'surecart'),
+		baseURL: 'surecart/v1/manual_payment_methods',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'period',
 		kind: 'surecart',
 		label: __('Billing Period', 'surecart'),
@@ -136,6 +143,13 @@ dispatch(coreStore).addEntities([
 		kind: 'surecart',
 		label: __('Product', 'surecart'),
 		baseURL: 'surecart/v1/products',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'processor',
+		kind: 'surecart',
+		label: __('Processor', 'surecart'),
+		baseURL: 'surecart/v1/processors',
 		baseURLParams: { context: 'edit' },
 	},
 	{
