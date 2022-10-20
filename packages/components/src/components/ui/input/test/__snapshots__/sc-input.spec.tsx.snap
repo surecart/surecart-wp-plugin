@@ -4,6 +4,7 @@ exports[`sc-input renders 1`] = `
 <sc-input size="medium" type="text" value="">
   <mock:shadow-root>
     <sc-form-control help="" helpid="input-help-text-1" inputid="input-1" labelid="input-label-1" showlabel="" size="medium">
+      <slot name="label-end" slot="label-end"></slot>
       <div class="input input--medium" part="base">
         <span class="input__prefix" part="prefix">
           <slot name="prefix"></slot>

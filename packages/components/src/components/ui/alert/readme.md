@@ -72,6 +72,7 @@ Type: `Promise<void>`
  - [sc-error](../error)
  - [sc-form-error-provider](../../providers/form-error-provider)
  - [sc-login-form](../../controllers/login)
+ - [sc-login-provider](../../providers/sc-login-provider)
  - [sc-order-confirmation](../../controllers/confirmation/order-confirmation)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment](../../controllers/checkout-form/payment)
@@ -100,6 +101,7 @@ graph TD;
   sc-error --> sc-alert
   sc-form-error-provider --> sc-alert
   sc-login-form --> sc-alert
+  sc-login-provider --> sc-alert
   sc-order-confirmation --> sc-alert
   sc-password-nag --> sc-alert
   sc-payment --> sc-alert

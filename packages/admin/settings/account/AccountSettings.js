@@ -178,6 +178,48 @@ export default () => {
 						)}
 						required
 					></ScSelect>
+
+					<ScSelect
+						value={item?.customer_locale}
+						onScChange={(e) =>
+							editItem({ customer_locale: e.target.value })
+						}
+						choices={[
+							{
+								value: 'de',
+								label: 'Deutsch',
+							},
+							{
+								value: 'en',
+								label: 'English (United States)',
+							},
+							{
+								value: 'es',
+								label: 'Español',
+							},
+							{
+								value: 'fr',
+								label: 'Français',
+							},
+							{
+								value: 'it',
+								label: 'Italiano',
+							},
+							{
+								value: 'pt',
+								label: 'Português',
+							},
+						]}
+						label={__(
+							'Notifications and Invoice Language',
+							'surecart'
+						)}
+						help={__(
+							'The default language for notification and invoices.',
+							'surecart'
+						)}
+						required
+					></ScSelect>
 				</div>
 			</SettingsBox>
 

@@ -1,6 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch } from '@stencil/core';
 import { Stripe } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js/pure';
+import { __ } from '@wordpress/i18n';
 
 import { Checkout, FormStateSetter, PaymentIntent } from '../../../types';
 
@@ -73,7 +74,13 @@ export class ScStripePaymentElement {
 
     // check if stripe has been initialized
     if (!this.stripe) {
-      this.stripe = await loadStripe(this.paymentIntent?.processor_data?.stripe?.publishable_key, { stripeAccount: this.paymentIntent?.processor_data?.stripe?.account_id });
+      try {
+        this.stripe = await loadStripe(this.paymentIntent?.processor_data?.stripe?.publishable_key, { stripeAccount: this.paymentIntent?.processor_data?.stripe?.account_id });
+      } catch (e) {
+        this.error = e?.message || __('Stripe could not be loaded', 'surecart');
+        // don't continue.
+        return;
+      }
     }
 
     // load the element.
@@ -98,11 +105,9 @@ export class ScStripePaymentElement {
    * Watch order status and maybe confirm the order.
    */
   @Watch('order')
-  async maybeConfirmOrder(val: Checkout, prev: Checkout) {
+  async maybeConfirmOrder(val: Checkout) {
     // must be finalized
     if (val?.status !== 'finalized') return;
-    // the status didn't change.
-    if (prev?.status === 'finalized') return;
     // must be a stripe session
     if (val?.payment_intent?.processor_type !== 'stripe') return;
     // need an external_type

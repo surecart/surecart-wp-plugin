@@ -15,6 +15,7 @@
 | `confirmationLabel`       | `confirmation-label`       | The input's confirmation label text.         | `string`                         | `undefined` |
 | `confirmationPlaceholder` | `confirmation-placeholder` | The input's confirmation placeholder text.   | `string`                         | `undefined` |
 | `disabled`                | `disabled`                 | Disables the input.                          | `boolean`                        | `false`     |
+| `emailExists`             | `email-exists`             | Does the email exist?                        | `boolean`                        | `undefined` |
 | `help`                    | `help`                     | The input's help text.                       | `string`                         | `''`        |
 | `label`                   | `label`                    | The input's label.                           | `string`                         | `undefined` |
 | `loggedIn`                | `logged-in`                |                                              | `boolean`                        | `undefined` |

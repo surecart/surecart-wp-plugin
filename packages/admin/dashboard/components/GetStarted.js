@@ -41,6 +41,9 @@ export default () => {
 					top: 30px;
 					cursor: pointer;
 				}
+				@media only screen and (max-width: 768px) {
+					display: none;
+				}
 			`}
 		>
 			<div className="sc-getstarted-inner-wrap">

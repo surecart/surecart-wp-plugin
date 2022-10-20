@@ -63,6 +63,16 @@ Type: `Promise<void>`
 
 
 
+### `triggerFocus() => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 
 ## Shadow Parts
 

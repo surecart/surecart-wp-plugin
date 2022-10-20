@@ -60,6 +60,7 @@
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-login-form](../../controllers/login)
+ - [sc-login-provider](../../providers/sc-login-provider)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-submit](../../controllers/checkout-form/order-submit)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
@@ -102,6 +103,7 @@ graph TD;
   sc-invoices-list --> sc-button
   sc-licenses-list --> sc-button
   sc-login-form --> sc-button
+  sc-login-provider --> sc-button
   sc-order --> sc-button
   sc-order-submit --> sc-button
   sc-orders-list --> sc-button

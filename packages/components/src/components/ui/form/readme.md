@@ -78,6 +78,7 @@ Type: `Promise<boolean>`
  - [sc-cart-form](../../controllers/cart/sc-cart-form)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-login-form](../../controllers/login)
+ - [sc-login-provider](../../providers/sc-login-provider)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-stripe-add-method](../sc-stripe-add-method)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
@@ -94,6 +95,7 @@ graph TD;
   sc-cart-form --> sc-form
   sc-customer-edit --> sc-form
   sc-login-form --> sc-form
+  sc-login-provider --> sc-form
   sc-password-nag --> sc-form
   sc-stripe-add-method --> sc-form
   sc-subscription-ad-hoc-confirm --> sc-form

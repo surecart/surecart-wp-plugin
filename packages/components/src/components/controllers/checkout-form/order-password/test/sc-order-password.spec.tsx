@@ -24,4 +24,11 @@ describe('sc-order-password', () => {
     });
     expect(page.root).toMatchSnapshot();
   });
+  // it('does not render if email exists', async () => {
+  //   const page = await newSpecPage({
+  //     components: [ScOrderPassword],
+  //     html: `<sc-order-password email-exists></sc-order-password>`,
+  //   });
+  //   expect(page.root).toMatchSnapshot();
+  // });
 });

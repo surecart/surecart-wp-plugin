@@ -20,6 +20,19 @@
 | `size`         | `size`          | Input size                                                                                              | `"large" \| "medium" \| "small"` | `'medium'`  |
 
 
+## Methods
+
+### `triggerFocus() => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+
 ## Shadow Parts
 
 | Part        | Description |

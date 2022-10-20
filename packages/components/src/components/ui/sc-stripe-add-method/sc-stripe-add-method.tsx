@@ -40,7 +40,13 @@ export class ScStripeAddMethod {
 
     // check if stripe has been initialized
     if (!this.stripe) {
-      this.stripe = await loadStripe(this.paymentIntent?.processor_data?.stripe?.publishable_key, { stripeAccount: this.paymentIntent?.processor_data?.stripe?.account_id });
+      try {
+        this.stripe = await loadStripe(this.paymentIntent?.processor_data?.stripe?.publishable_key, { stripeAccount: this.paymentIntent?.processor_data?.stripe?.account_id });
+      } catch (e) {
+        this.error = e?.message || __('Stripe could not be loaded', 'surecart');
+        // don't continue.
+        return; 
+      }
     }
 
     // load the element.

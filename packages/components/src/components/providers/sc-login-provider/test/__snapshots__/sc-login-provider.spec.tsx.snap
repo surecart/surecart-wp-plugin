@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-login-provider renders 1`] = `
+<sc-login-provider>
+  <mock:shadow-root>
+    <slot></slot>
+    <sc-dialog label="Login to your account">
+      <sc-form>
+        <sc-input label="Email or Username" name="login" required="" type="text"></sc-input>
+        <sc-input label="Password" name="password" required="" type="password"></sc-input>
+        <sc-button full="" submit="" type="primary">
+          Login
+        </sc-button>
+      </sc-form>
+    </sc-dialog>
+  </mock:shadow-root>
+</sc-login-provider>
+`;

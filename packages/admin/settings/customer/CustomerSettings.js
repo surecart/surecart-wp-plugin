@@ -152,6 +152,24 @@ export default () => {
 				</ScSwitch>
 
 				<ScSwitch
+					checked={item?.subscription_cancellation_enabled}
+					onScChange={(e) => {
+						e.preventDefault();
+						editItem({
+							subscription_cancellation_enabled: !item?.subscription_cancellation_enabled,
+						});
+					}}
+				>
+					{__('Subscription Cancellation Notification', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Send a general subscription cancellation confirmation email to your customers when subscription canceled.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				<ScSwitch
 					checked={
 						scData?.entitlements?.abandoned_checkouts
 							? item?.abandoned_checkout_enabled
@@ -295,6 +313,7 @@ export default () => {
 								"Sent to customers when their subscription's payment method fails.",
 								'surecart'
 							)}
+							disabled={!scData?.entitlements?.payment_failure_notifications}
 							model="payment_failure"
 						/>
 						<EmailRow
@@ -303,6 +322,7 @@ export default () => {
 								'Sent to customers 3 days before a subscription renews.',
 								'surecart'
 							)}
+							disabled={!scData?.entitlements?.subscription_reminder_notifications}
 							model="subscription"
 							action="reminder_notification"
 						/>
@@ -314,6 +334,15 @@ export default () => {
 							)}
 							model="subscription"
 							action="renewal_notification"
+						/>
+						<EmailRow
+							title={__('Subscription Cancellation', 'surecart')}
+							description={__(
+								'Sent to customers when their subscription cancellation.',
+								'surecart'
+							)}
+							model="subscription"
+							action="cancellation_notification"
 						/>
 						<EmailRow
 							title={__('Product Access', 'surecart')}
@@ -330,6 +359,16 @@ export default () => {
 								'surecart'
 							)}
 							model="refund"
+						/>
+						<EmailRow
+							title={__('Abandoned Checkout', 'surecart')}
+							description={__(
+								'Abandoned order emails to remind your customers of incomplete orders.',
+								'surecart'
+							)}
+							disabled={!scData?.entitlements?.abandoned_checkouts}
+							model="abandoned_checkout"
+							action="notification"
 						/>
 					</ScStackedList>
 				</sc-card>
