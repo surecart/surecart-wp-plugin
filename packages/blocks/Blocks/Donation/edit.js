@@ -27,7 +27,7 @@ import {
 	ScPriceInput,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
-import PriceInfo from '../PriceChoice/components/PriceInfo';
+import PriceInfo from '@scripts/blocks/components/PriceInfo';
 
 export default ({ attributes, setAttributes, isSelected, clientId }) => {
 	const { price_id, label, currency, custom_amount, default_amount } =
