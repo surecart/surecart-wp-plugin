@@ -135,25 +135,24 @@ export default () => {
 				<ScDropdown
 					position="bottom-right"
 					style={{ '--panel-width': '14em' }}
-				>	
-					{order?.status === 'processing' && order?.manual_payment && (
-						<>
-							<ScButton
-								type="primary"
-								slot="trigger"
-								caret
-							>
-								{__('Actions', 'surecart')}
-							</ScButton>
-							<ScMenu>
-								<ScMenuItem
-									onClick={() => setModal('order_status_update')}
-								>
-									{__('Mark as Paid', 'surecart')}
-								</ScMenuItem>
-							</ScMenu>
-						</>
-					)}
+				>
+					{order?.status === 'processing' &&
+						order?.checkout?.manual_payment && (
+							<>
+								<ScButton type="primary" slot="trigger" caret>
+									{__('Actions', 'surecart')}
+								</ScButton>
+								<ScMenu>
+									<ScMenuItem
+										onClick={() =>
+											setModal('order_status_update')
+										}
+									>
+										{__('Mark as Paid', 'surecart')}
+									</ScMenuItem>
+								</ScMenu>
+							</>
+						)}
 				</ScDropdown>
 			}
 			sidebar={
