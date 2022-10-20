@@ -100,7 +100,7 @@ class AbandonedOrderListTable extends ListTable {
 	public function get_columns() {
 		return [
 			'placed_by'       => __( 'Placed By', 'surecart' ),
-			'date'     		  => __( 'Date', 'surecart' ),
+			'date'            => __( 'Date', 'surecart' ),
 			'email_status'    => __( 'Email Status', 'surecart' ),
 			'recovery_status' => __( 'Recovery Status', 'surecart' ),
 			'total'           => __( 'Total', 'surecart' ),
@@ -118,7 +118,7 @@ class AbandonedOrderListTable extends ListTable {
 				'status' => $this->getStatus(),
 			]
 		)
-		->with( [ 'latest_order', 'customer' ] )
+		->with( [ 'latest_recoverable_checkout', 'customer' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'coupons' ),
@@ -148,7 +148,7 @@ class AbandonedOrderListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_total( $abandoned ) {
-		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $abandoned->latest_order->currency ?? 'usd' ) ) . '" value="' . (float) $abandoned->latest_order->total_amount . '"></sc-format-number>';
+		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $abandoned->latest_recoverable_checkout->currency ?? 'usd' ) ) . '" value="' . (float) $abandoned->latest_recoverable_checkout->total_amount . '"></sc-format-number>';
 	}
 
 	/**
