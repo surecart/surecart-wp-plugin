@@ -2,14 +2,13 @@
 
 namespace SureCart\Controllers\Admin\Abandoned;
 
-use SureCart\Support\TimeDate;
 use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\AbandonedCheckout;
 
 /**
  * Create a new table class that will extend the WP_List_Table
  */
-class AbandonedOrderListTable extends ListTable {
+class AbandonedCheckoutListTable extends ListTable {
 	/**
 	 * Prepare the items for the table to process
 	 *
@@ -31,18 +30,13 @@ class AbandonedOrderListTable extends ListTable {
 		$this->set_pagination_args(
 			[
 				'total_items' => $query->pagination->count,
-				'per_page'    => $this->get_items_per_page( 'abandoned_orders' ),
+				'per_page'    => $this->get_items_per_page( 'abandoned_checkout' ),
 			]
 		);
 
 		$this->items = $query->data;
 	}
 
-		/**
-		 * @global int $post_id
-		 * @global string $comment_status
-		 * @global string $comment_type
-		 */
 	protected function get_views() {
 		$stati = [
 			'all'       => __( 'All', 'surecart' ),
@@ -50,7 +44,7 @@ class AbandonedOrderListTable extends ListTable {
 			'notified'  => __( 'Notified', 'surecart' ),
 		];
 
-		$link = \SureCart::getUrl()->index( 'abandoned_orders' );
+		$link = \SureCart::getUrl()->index( 'abandoned-checkout' );
 
 		foreach ( $stati as $status => $label ) {
 			$current_link_attributes = '';
@@ -121,7 +115,7 @@ class AbandonedOrderListTable extends ListTable {
 		->with( [ 'latest_recoverable_checkout', 'customer' ] )
 		->paginate(
 			[
-				'per_page' => $this->get_items_per_page( 'coupons' ),
+				'per_page' => $this->get_items_per_page( 'abandoned-checkouts' ),
 				'page'     => $this->get_pagenum(),
 			]
 		);
@@ -143,7 +137,7 @@ class AbandonedOrderListTable extends ListTable {
 	/**
 	 * Handle the total column
 	 *
-	 * @param \SureCart\Models\AbandonedOrder $checkout Checkout Session Model.
+	 * @param \SureCart\Models\AbandonedCheckout $checkout Checkout Session Model.
 	 *
 	 * @return string
 	 */
@@ -154,7 +148,7 @@ class AbandonedOrderListTable extends ListTable {
 	/**
 	 * Handle the total column
 	 *
-	 * @param \SureCart\Models\AbandonedOrder $abandoned Abandoned checkout model.
+	 * @param \SureCart\Models\AbandonedCheckout $abandoned Abandoned checkout model.
 	 *
 	 * @return string
 	 */
@@ -165,7 +159,7 @@ class AbandonedOrderListTable extends ListTable {
 	/**
 	 * Handle the status
 	 *
-	 * @param \SureCart\Models\AbandonedOrder $abandoned Abandoned checkout session.
+	 * @param \SureCart\Models\AbandonedCheckout $abandoned Abandoned checkout session.
 	 *
 	 * @return string
 	 */
@@ -177,7 +171,7 @@ class AbandonedOrderListTable extends ListTable {
 	/**
 	 * Handle the status
 	 *
-	 * @param \SureCart\Models\AbandonedOrder $abandoned Abandoned checkout session.
+	 * @param \SureCart\Models\AbandonedCheckout $abandoned Abandoned checkout session.
 	 *
 	 * @return string
 	 */
@@ -188,21 +182,21 @@ class AbandonedOrderListTable extends ListTable {
 	/**
 	 * Email of customer
 	 *
-	 * @param \SureCart\Models\AbandonedOrder $abandoned Abandoned checkout model.
+	 * @param \SureCart\Models\AbandonedCheckout $abandoned Abandoned checkout model.
 	 *
 	 * @return string
 	 */
 	public function column_placed_by( $abandoned ) {
 		ob_start();
 		?>
-		<a  class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $abandoned->id ) ); ?>">
+		<a  class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'abandoned-checkout', $abandoned->id ) ); ?>">
 			<?php
 			// translators: Customer name.
 			echo sprintf( esc_html__( 'By %s', 'surecart' ), esc_html( $abandoned->customer->name ?? $abandoned->customer->email ) );
 			?>
 		</a>
 		<br />
-		<a aria-label="<?php echo esc_attr__( 'View Checkout', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $abandoned->id ) ); ?>">
+		<a aria-label="<?php echo esc_attr__( 'View Checkout', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'abandoned-checkout', $abandoned->id ) ); ?>">
 			<?php echo esc_attr__( 'View Checkout', 'surecart' ); ?>
 		</a>
 		<?php

@@ -7,7 +7,7 @@ use SureCart\Support\Scripts\AdminModelEditController;
 /**
  * Coupon page
  */
-class AbandonedOrderScriptsController extends AdminModelEditController {
+class AbandonedCheckoutScriptsController extends AdminModelEditController {
 	/**
 	 * What types of data to add the the page.
 	 *
@@ -20,12 +20,12 @@ class AbandonedOrderScriptsController extends AdminModelEditController {
 	 *
 	 * @var string
 	 */
-	protected $handle = 'surecart/scripts/admin/abandoned_order';
+	protected $handle = 'surecart/scripts/admin/abandoned_checkout';
 
 	/**
 	 * Script path.
 	 *
 	 * @var string
 	 */
-	protected $path = 'dist/admin/order.js';
+	protected $path = 'admin/abandoned-checkouts';
 }

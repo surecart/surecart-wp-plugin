@@ -169,18 +169,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
-| Abandoned Orders
+| Abandoned Checkouts
 |--------------------------------------------------------------------------
 */
 \SureCart::route()
-->where( 'admin', 'sc-abandoned-orders' )
+->where( 'admin', 'sc-abandoned-checkouts' )
 ->middleware( 'user.can:edit_sc_orders' )
 ->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Abandoned\\' )
 ->group(
 	function() {
-		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AbandonedOrderViewController@index' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AbandonedOrderViewController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AbandonedCheckoutViewController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AbandonedCheckoutViewController@edit' );
 	}
 );
 
