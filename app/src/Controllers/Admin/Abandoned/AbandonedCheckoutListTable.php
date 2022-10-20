@@ -39,9 +39,10 @@ class AbandonedCheckoutListTable extends ListTable {
 
 	protected function get_views() {
 		$stati = [
-			'all'       => __( 'All', 'surecart' ),
-			'recovered' => __( 'Recovered', 'surecart' ),
-			'notified'  => __( 'Notified', 'surecart' ),
+			'all'          => __( 'All', 'surecart' ),
+			'recovered'    => __( 'Recovered', 'surecart' ),
+			'notified'     => __( 'Notified', 'surecart' ),
+			'not_notified' => __( 'Not Notified', 'surecart' ),
 		];
 
 		$link = \SureCart::getUrl()->index( 'abandoned-checkout' );
@@ -107,11 +108,13 @@ class AbandonedCheckoutListTable extends ListTable {
 	 * @return Array
 	 */
 	protected function table_data() {
-		return AbandonedCheckout::where(
-			[
-				'status' => $this->getStatus(),
-			]
-		)
+		$status = $this->getStatus();
+		$where  = [];
+		if ( $status ) {
+			$where['status'] = $status;
+		}
+
+		return AbandonedCheckout::where( $where )
 		->with( [ 'latest_recoverable_checkout', 'customer' ] )
 		->paginate(
 			[
@@ -129,7 +132,7 @@ class AbandonedCheckoutListTable extends ListTable {
 	public function getStatus() {
 		$status = sanitize_text_field( wp_unslash( $_GET['status'] ?? 'all' ) );
 		if ( 'all' === $status ) {
-			return [ 'not_notified', 'notified' ];
+			return null;
 		}
 		return $status ? [ esc_html( $status ) ] : [];
 	}
@@ -176,7 +179,15 @@ class AbandonedCheckoutListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_recovery_status( $abandoned ) {
-		return 'recovered' === $abandoned->status ? '<sc-tag type="success">' . __( 'Recovered', 'surecart' ) . '</sc-tag>' : '<sc-tag>' . __( 'Not Recovered', 'surecart' ) . '</sc-tag>';
+		switch ( $abandoned->status ) {
+			case 'recovered':
+				return '<sc-tag type="success">' . __( 'Recovered', 'surecart' ) . '</sc-tag>';
+			case 'not_notified':
+				return '<sc-tag type="danger">' . __( 'Not Notified', 'surecart' ) . '</sc-tag>';
+			case 'notified':
+				return '<sc-tag type="warning">' . __( 'Notified', 'surecart' ) . '</sc-tag>';
+		}
+		 return '<sc-tag>' . esc_html( $abandoned->status ?? 'Unknown' ) . '</sc-tag>';
 	}
 
 	/**
