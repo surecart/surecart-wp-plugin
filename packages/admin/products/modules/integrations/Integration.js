@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import {
+  ScBadgeNotice,
 	ScButton,
 	ScDropdown,
 	ScIcon,
@@ -82,34 +83,92 @@ export default ({ id }) => {
 
 	if (integration_id && integrationDataResolved && !integrationData?.label) {
 		return (
-			<sc-stacked-list-row
-				style={{ position: 'relative' }}
-				mobile-size={0}
-			>
+			<sc-stacked-list-row style={{ position: 'relative' }} mobile-size={0}>
 				<div
 					css={css`
 						overflow: hidden;
+            align-items: center;
 						text-overflow: ellipsis;
 						white-space: nowrap;
+            display: flex;
+            gap: 1em;
 					`}
 				>
-					<div
+          <div
+						css={css`
+							display: flex;
+							align-items: center;
+							justify-content: center;
+						`}
+					>
+						{providerData?.logo ? (
+							<img
+								src={providerData?.logo}
+								css={css`
+									width: 35px;
+									height: 35px;
+									object-fit: contain;
+								`}
+							/>
+						) : (
+							<div
+								css={css`
+									padding: 1em;
+									width: 35px;
+									box-sizing: border-box;
+									height: 35px;
+									display: flex;
+									align-items: center;
+									justify-content: center;
+									line-height: 0;
+									font-size: 18px;
+									background: var(--sc-color-gray-200);
+									border-radius: var(
+										--sc-border-radius-small
+									);
+								`}
+							>
+								{providerData?.name.charAt(0)}
+							</div>
+						)}
+					</div>
+          <div
 						css={css`
 							overflow: hidden;
 							text-overflow: ellipsis;
 							white-space: nowrap;
-							font-weight: bold;
 						`}
 					>
-						{__('Not found', 'surecart')}
-					</div>
-					{sprintf(
+						<div
+							css={css`
+								overflow: hidden;
+								text-overflow: ellipsis;
+								white-space: nowrap;
+								font-weight: bold;
+							`}
+						>
+							{__('Not found', 'surecart')}
+						</div>
+						{sprintf(
 						__(
 							'The provider is not installed or unavailable.',
 							'surecart'
 						)
 					)}
+					</div>
+          <ScBadgeNotice type='warning' label='Test' size='medium' />
 				</div>
+
+        <ScDropdown slot="suffix" placement="bottom-end">
+          <ScButton type="text" slot="trigger" circle>
+            <ScIcon name="more-horizontal" />
+          </ScButton>
+          <ScMenu>
+            <ScMenuItem onClick={onRemove}>
+              {__('Delete', 'surecart')}
+            </ScMenuItem>
+          </ScMenu>
+        </ScDropdown>
 			</sc-stacked-list-row>
 		);
 	}
