@@ -12,11 +12,9 @@ import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
 
-const expand = [
-	'order',
-];
+const expand = ['order'];
 
-export default ({ checkout, open, onRequestClose, hasLoading }) => {
+export default ({ order, open, onRequestClose, hasLoading }) => {
 	const [loading, setLoading] = useState(hasLoading);
 	const [error, setError] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
@@ -26,24 +24,28 @@ export default ({ checkout, open, onRequestClose, hasLoading }) => {
 		try {
 			setLoading(true);
 			setError(null);
-			const manuallyPay = await apiFetch({
+			const checkout = await apiFetch({
 				method: 'PATCH',
-				path: addQueryArgs(`surecart/v1/checkouts/${checkout?.id}/manually_pay`, {
-					expand,
-				}),
+				path: addQueryArgs(
+					`surecart/v1/checkouts/${order?.checkout?.id}/manually_pay`,
+					{
+						expand,
+					}
+				),
 				data: {
 					purge_pending_update: true,
 				},
 			});
-			
-			receiveEntityRecords('surecart', 'order', [], {}, true);
 
-			// receiveEntityRecords('surecart', 'order', manuallyPay, {
-			// 	expand,
-			// });
+			receiveEntityRecords('surecart', 'order', {
+				...order,
+				status: checkout?.status,
+			});
+
 			createSuccessNotice(__('Order Marked as Paid.', 'surecart'), {
 				type: 'snackbar',
 			});
+
 			onRequestClose();
 		} catch (e) {
 			console.error(e);
@@ -62,17 +64,14 @@ export default ({ checkout, open, onRequestClose, hasLoading }) => {
 			<ScAlert open={error} type="error">
 				{error}
 			</ScAlert>
-			{__(
-				'Are you sure you wish to mark the order as paid?',
-				'surecart'
-			)}
+			{__('Are you sure you wish to mark the order as paid?', 'surecart')}
 			<div slot="footer">
 				<ScButton
 					type="text"
 					onClick={onRequestClose}
 					disabled={loading}
 				>
-					{__("Cancel", 'surecart')}
+					{__('Cancel', 'surecart')}
 				</ScButton>{' '}
 				<ScButton
 					type="primary"

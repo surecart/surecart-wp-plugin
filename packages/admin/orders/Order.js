@@ -4,9 +4,9 @@ import {
 	ScBreadcrumb,
 	ScBreadcrumbs,
 	ScButton,
+	ScDropdown,
 	ScFlex,
 	ScIcon,
-	ScDropdown,
 	ScMenu,
 	ScMenuItem,
 } from '@surecart/components-react';
@@ -24,8 +24,8 @@ import UpdateModel from '../templates/UpdateModel';
 import Charges from './modules/Charges';
 import Details from './modules/Details';
 import LineItems from './modules/LineItems';
-import Subscriptions from './modules/Subscriptions';
 import OrderStatusConfirmModal from './modules/OrderStatusConfirmModal';
+import Subscriptions from './modules/Subscriptions';
 import Sidebar from './Sidebar';
 
 export default () => {
@@ -179,7 +179,7 @@ export default () => {
 				<Charges checkoutId={order?.checkout?.id} />
 				<Subscriptions checkoutId={order?.checkout?.id} />
 				<OrderStatusConfirmModal
-					checkout={order?.checkout}
+					order={order}
 					open={modal === 'order_status_update'}
 					onRequestClose={() => setModal(false)}
 					loading={!hasLoadedOrder}
