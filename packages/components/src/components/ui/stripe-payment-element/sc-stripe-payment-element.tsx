@@ -79,7 +79,7 @@ export class ScStripePaymentElement {
       } catch (e) {
         this.error = e?.message || __('Stripe could not be loaded', 'surecart');
         // don't continue.
-        return; 
+        return;
       }
     }
 
@@ -105,11 +105,9 @@ export class ScStripePaymentElement {
    * Watch order status and maybe confirm the order.
    */
   @Watch('order')
-  async maybeConfirmOrder(val: Checkout, prev: Checkout) {
+  async maybeConfirmOrder(val: Checkout) {
     // must be finalized
     if (val?.status !== 'finalized') return;
-    // the status didn't change.
-    if (prev?.status === 'finalized') return;
     // must be a stripe session
     if (val?.payment_intent?.processor_type !== 'stripe') return;
     // need an external_type

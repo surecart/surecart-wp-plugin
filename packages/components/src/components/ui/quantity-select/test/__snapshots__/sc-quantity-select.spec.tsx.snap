@@ -4,11 +4,43 @@ exports[`sc-quantity-select renders 1`] = `
 <sc-quantity-select quantity="1">
   <mock:shadow-root>
     <div class="quantity" part="base">
-      <span aria-label="decrease number" class="button--disabled button__decrease" role="button">
+      <span aria-label="decrease number" class="button__decrease" role="button">
         <sc-icon name="minus"></sc-icon>
       </span>
       <input aria-valuemax="100" aria-valuemin="1" aria-valuenow="1" autocomplete="off" class="input__control" max="100" min="1" role="spinbutton" step="1" tabindex="0" type="number" value="1">
       <span aria-label="increase number" class="button__increase" role="button">
+        <sc-icon name="plus"></sc-icon>
+      </span>
+    </div>
+  </mock:shadow-root>
+</sc-quantity-select>
+`;
+
+exports[`sc-quantity-select renders disabled decrement if min is greater than 1 1`] = `
+<sc-quantity-select max="3" min="2" quantity="2">
+  <mock:shadow-root>
+    <div class="quantity" part="base">
+      <span aria-label="decrease number" class="button--disabled button__decrease" role="button">
+        <sc-icon name="minus"></sc-icon>
+      </span>
+      <input aria-valuemax="3" aria-valuemin="2" aria-valuenow="2" autocomplete="off" class="input__control" max="3" min="2" role="spinbutton" step="1" tabindex="0" type="number" value="2">
+      <span aria-label="increase number" class="button__increase" role="button">
+        <sc-icon name="plus"></sc-icon>
+      </span>
+    </div>
+  </mock:shadow-root>
+</sc-quantity-select>
+`;
+
+exports[`sc-quantity-select renders disabled increment if max matches quantity 1`] = `
+<sc-quantity-select max="2" quantity="2">
+  <mock:shadow-root>
+    <div class="quantity" part="base">
+      <span aria-label="decrease number" class="button__decrease" role="button">
+        <sc-icon name="minus"></sc-icon>
+      </span>
+      <input aria-valuemax="2" aria-valuemin="1" aria-valuenow="2" autocomplete="off" class="input__control" max="2" min="1" role="spinbutton" step="1" tabindex="0" type="number" value="2">
+      <span aria-label="increase number" class="button--disabled button__increase" role="button">
         <sc-icon name="plus"></sc-icon>
       </span>
     </div>

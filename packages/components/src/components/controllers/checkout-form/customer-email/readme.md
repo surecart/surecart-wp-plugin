@@ -36,7 +36,8 @@
 | `scClear`            | Emitted when the clear button is activated. | `CustomEvent<void>`     |
 | `scFocus`            | Emitted when the control gains focus.       | `CustomEvent<void>`     |
 | `scInput`            | Emitted when the control receives input.    | `CustomEvent<void>`     |
-| `scUpdateOrderState` |                                             | `CustomEvent<Checkout>` |
+| `scLoginPrompt`      | Prompt for login.                           | `CustomEvent<void>`     |
+| `scUpdateOrderState` | Update the order state.                     | `CustomEvent<Checkout>` |
 
 
 ## Methods

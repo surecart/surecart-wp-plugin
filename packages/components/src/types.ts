@@ -176,6 +176,7 @@ export interface Product extends Object {
   recurring: boolean;
   tax_category: string;
   tax_enabled: boolean;
+  purchase_limit: number;
   prices: {
     object: 'list';
     pagination: Pagination;

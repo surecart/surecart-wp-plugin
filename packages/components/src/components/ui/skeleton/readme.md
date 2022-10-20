@@ -58,6 +58,7 @@
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
@@ -91,6 +92,7 @@ graph TD;
   sc-subscription-cancel --> sc-skeleton
   sc-subscription-details --> sc-skeleton
   sc-subscription-payment --> sc-skeleton
+  sc-subscription-payment-method --> sc-skeleton
   sc-subscription-renew --> sc-skeleton
   sc-subscription-switch --> sc-skeleton
   sc-subscriptions-list --> sc-skeleton

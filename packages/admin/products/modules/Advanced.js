@@ -22,12 +22,13 @@ export default ({ product, updateProduct, loading }) => {
 				</span>
 			</ScSwitch>
 
-			{product?.purchase_limit && (
+			{!!product?.purchase_limit && (
 				<ScInput
 					label={__('Customer Purchase Limit', 'surecart')}
 					type="number"
 					value={product?.purchase_limit || 1}
 					onScInput={(e) =>
+						e.target.value &&
 						updateProduct({
 							purchase_limit: parseInt(e.target.value),
 						})

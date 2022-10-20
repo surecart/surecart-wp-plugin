@@ -59,7 +59,7 @@ export class ScQuantitySelect {
   }
 
   handleChange() {
-    this.quantity = parseInt(this.input.value);
+    this.quantity = parseInt(this.input.value) > this.max ? this.max : parseInt(this.input.value);
     this.scChange.emit(this.quantity);
   }
 
@@ -82,7 +82,7 @@ export class ScQuantitySelect {
         <span
           role="button"
           aria-label={__('decrease number', 'surecart')}
-          class={{ 'button__decrease': true, 'button--disabled': this.quantity <= this.min }}
+          class={{ 'button__decrease': true, 'button--disabled': this.quantity <= this.min && this.min > 1 }}
           onClick={() => this.quantity > this.min && this.decrease()}
         >
           <sc-icon name="minus"></sc-icon>
