@@ -3,12 +3,11 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasCustomer;
-use SureCart\Models\Order;
 
 /**
  * Order model
  */
-class AbandonedCheckout extends Order {
+class AbandonedCheckout extends Model {
 	use HasCustomer;
 
 	/**
