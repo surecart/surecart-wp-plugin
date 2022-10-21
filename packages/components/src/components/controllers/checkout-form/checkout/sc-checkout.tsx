@@ -17,6 +17,7 @@ import {
   TaxProtocol,
   ProcessorName,
   Bump,
+  ManualPaymentMethod,
 } from '../../../../types';
 
 @Component({
@@ -69,6 +70,9 @@ export class ScCheckout {
 
   /** Processors enabled for this form. */
   @Prop({ mutable: true }) processors: Processor[];
+
+  /** Manual payment methods enabled for this form. */
+  @Prop() manualPaymentMethods: ManualPaymentMethod[];
 
   /** Can we edit line items? */
   @Prop() editLineItems: boolean = true;
@@ -188,6 +192,7 @@ export class ScCheckout {
       processors: (this.processors || []).filter(processor => {
         return !(this?.order().reusable_payment_method_required && !processor?.recurring_enabled);
       }),
+      manualPaymentMethods: this.manualPaymentMethods,
       processor_data: this.order()?.processor_data,
       state: this.checkoutState,
       paymentIntents: this.paymentIntents,

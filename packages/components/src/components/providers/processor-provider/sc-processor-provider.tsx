@@ -36,7 +36,7 @@ export class ScProcessorProvider {
   @Watch('filteredProcessors')
   handleProcessorChange() {
     if (!this.filteredProcessors.some(processor => processor?.processor_type === this.processorName?.[this.processor])) {
-      this.scSetProcessor.emit(this.filteredProcessors?.[0]?.processor_type);
+      // this.scSetProcessor.emit(this.filteredProcessors?.[0]?.processor_type);
     }
   }
 

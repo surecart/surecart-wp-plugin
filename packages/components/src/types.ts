@@ -438,6 +438,18 @@ export interface ProcessorData {
   };
 }
 
+export interface ManualPaymentMethod {
+  "id": string;
+  "object": "manual_payment_method";
+  "archived": boolean;
+  "archived_at": number;
+  "description": string;
+  "instructions": string;
+  "name": string,
+  "created_at": number,
+  "updated_at": number
+}
+
 export interface Processor {
   live_mode: boolean;
   processor_data: {

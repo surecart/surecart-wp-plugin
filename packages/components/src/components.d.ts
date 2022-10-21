@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export namespace Components {
     interface ScAddress {
         /**
@@ -415,6 +415,10 @@ export namespace Components {
           * Is this user logged in?
          */
         "loggedIn": boolean;
+        /**
+          * Manual payment methods enabled for this form.
+         */
+        "manualPaymentMethods": ManualPaymentMethod[];
         /**
           * Are we in test or live mode.
          */
@@ -1804,6 +1808,10 @@ export namespace Components {
           * Is this loading.
          */
         "loading": boolean;
+        /**
+          * Manual payment methods.
+         */
+        "manualPaymentMethods": ManualPaymentMethod[];
         /**
           * Is this created in "test" mode
          */
@@ -4630,6 +4638,10 @@ declare namespace LocalJSX {
          */
         "loggedIn"?: boolean;
         /**
+          * Manual payment methods enabled for this form.
+         */
+        "manualPaymentMethods"?: ManualPaymentMethod[];
+        /**
           * Are we in test or live mode.
          */
         "mode"?: 'test' | 'live';
@@ -6201,13 +6213,17 @@ declare namespace LocalJSX {
          */
         "loading"?: boolean;
         /**
+          * Manual payment methods.
+         */
+        "manualPaymentMethods"?: ManualPaymentMethod[];
+        /**
           * Is this created in "test" mode
          */
         "mode"?: 'test' | 'live';
         /**
           * Set the order procesor.
          */
-        "onScSetProcessor"?: (event: ScPaymentCustomEvent<ProcessorName>) => void;
+        "onScSetProcessor"?: (event: ScPaymentCustomEvent<string>) => void;
         /**
           * Checkout Session from sc-checkout.
          */

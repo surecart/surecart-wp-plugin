@@ -11,34 +11,6 @@ use SureCartBlocks\Blocks\BaseBlock;
  */
 class Block extends BaseBlock {
 	/**
-	 * Get the classes for the block
-	 *
-	 * @param  array $attributes Block attributes.
-	 * @return string
-	 */
-	public function getClasses( $attributes ) {
-		$block_alignment = isset( $attributes['align'] ) ? sanitize_text_field( $attributes['align'] ) : '';
-		return ! empty( $block_alignment ) ? 'align' . $block_alignment : '';
-	}
-
-	/**
-	 * Get the style for the block
-	 *
-	 * @param  array $attributes Block attributes.
-	 * @return string
-	 */
-	public function getStyle( $attributes ) {
-		$style  = 'text-align: left;';
-		$style .= '--sc-form-row-spacing: ' . ( $attributes['gap'] ?? '25' ) . ';';
-		if ( ! empty( $attributes['color'] ) ) {
-			$style .= '--sc-color-primary-500: ' . sanitize_hex_color( $attributes['color'] ) . ';';
-			$style .= '--sc-focus-ring-color-primary: ' . sanitize_hex_color( $attributes['color'] ) . ';';
-			$style .= '--sc-input-border-color-focus: ' . sanitize_hex_color( $attributes['color'] ) . ';';
-		}
-		return $style;
-	}
-
-	/**
 	 * Render the block
 	 *
 	 * @param array  $attributes Block attributes.
