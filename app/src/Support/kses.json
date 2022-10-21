@@ -1188,6 +1188,7 @@
     "editable": true,
     "image-url": true,
     "interval": true,
+    "max": true,
     "name": true,
     "quantity": true,
     "removable": true,
