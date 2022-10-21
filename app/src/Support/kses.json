@@ -1065,6 +1065,14 @@
     "class": true,
     "slot": true
   },
+  "sc-payment-method-choice": {
+    "has-others": true,
+    "open": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-payment-methods-list": {
     "heading": true,
     "is-customer": true,
@@ -1362,6 +1370,19 @@
     "order": true,
     "payment-intent": true,
     "success-url": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-stripe-payment-method-choice": {
+    "checkout": true,
+    "mode": true,
+    "processor": true,
+    "processors": true,
+    "secure-notice": true,
+    "stripe-payment-element": true,
+    "stripe-payment-intent": true,
     "style": true,
     "id": true,
     "class": true,

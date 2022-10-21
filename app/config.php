@@ -112,6 +112,7 @@ return [
 		\SureCartBlocks\Blocks\CartBumpLineItem\Block::class,
 		\SureCartBlocks\Blocks\OrderConfirmationLineItems\Block::class,
 		\SureCartBlocks\Blocks\Form\Block::class,
+		\SureCartBlocks\Blocks\Payment\Block::class,
 		\SureCartBlocks\Blocks\Confirmation\Block::class,
 		\SureCartBlocks\Blocks\LogoutButton\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\WordPressAccount\Block::class,

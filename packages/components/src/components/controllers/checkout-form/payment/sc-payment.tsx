@@ -113,13 +113,14 @@ export class ScPayment {
   renderStripeAndPayPal() {
     return (
       <Fragment>
-        <sc-toggle class="sc-stripe-toggle" show-control shady borderless open={this.processor === 'stripe'} onScShow={() => this.scSetProcessor.emit('stripe')}>
+        <sc-stripe-payment-method-choice />
+        {/* <sc-toggle class="sc-stripe-toggle" show-control shady borderless open={this.processor === 'stripe'} onScShow={() => this.scSetProcessor.emit('stripe')}>
           <span slot="summary" class="sc-payment-toggle-summary">
             <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
             <span>{__('Credit Card', 'surecart')}</span>
           </span>
           {this.renderStripePaymentElement()}
-        </sc-toggle>
+        </sc-toggle> */}
 
         <sc-toggle class="sc-paypal-toggle" show-control shady borderless open={this.processor === 'paypal'} onScShow={() => this.scSetProcessor.emit('paypal')}>
           <span slot="summary" class="sc-payment-toggle-summary">
@@ -281,8 +282,9 @@ export class ScPayment {
             {this.renderTestModeBadge()}
           </div>
           <sc-toggles collapsible={false} theme="container">
-            {this.renderProcessors()}
-            {this.renderManualPaymentMethods()}
+            {/* {this.renderProcessors()}
+            {this.renderManualPaymentMethods()} */}
+            <slot />
           </sc-toggles>
         </sc-form-control>
       </Host>

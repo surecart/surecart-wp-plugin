@@ -18,6 +18,7 @@
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-subscription](../../controllers/dashboard/subscription)
+ - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-wordpress-user](../../controllers/dashboard/wordpress-user)
 
@@ -33,6 +34,7 @@ graph TD;
   sc-payment-methods-list --> sc-stacked-list
   sc-purchase-downloads-list --> sc-stacked-list
   sc-subscription --> sc-stacked-list
+  sc-subscription-payment-method --> sc-stacked-list
   sc-subscriptions-list --> sc-stacked-list
   sc-wordpress-user --> sc-stacked-list
   style sc-stacked-list fill:#f9f,stroke:#333,stroke-width:4px

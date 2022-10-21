@@ -23,6 +23,7 @@
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
 
 ### Depends on
@@ -40,6 +41,7 @@ graph TD;
   sc-payment-methods-list --> sc-empty
   sc-purchase-downloads-list --> sc-empty
   sc-subscription-payment --> sc-empty
+  sc-subscription-payment-method --> sc-empty
   sc-subscriptions-list --> sc-empty
   style sc-empty fill:#f9f,stroke:#333,stroke-width:4px
 ```

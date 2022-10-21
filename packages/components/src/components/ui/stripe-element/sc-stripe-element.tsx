@@ -1,6 +1,7 @@
 import { Component, Element, Event, EventEmitter, Fragment, h, Method, Prop, State, Watch } from '@stencil/core';
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
+import { openWormhole } from 'stencil-wormhole';
 
 import { Checkout, FormStateSetter } from '../../../types';
 
@@ -60,7 +61,7 @@ export class ScStripeElement {
     }
 
     try {
-      this.stripe   = await loadStripe(this.publishableKey, { stripeAccount: this.accountId });
+      this.stripe = await loadStripe(this.publishableKey, { stripeAccount: this.accountId });
       this.elements = this.stripe.elements();
     } catch (e) {
       this.error = e?.message || __('Stripe could not be loaded', 'surecart');
@@ -69,6 +70,7 @@ export class ScStripeElement {
 
   @Watch('order')
   async confirmPayment(val: Checkout, prev: Checkout) {
+    console.log(val);
     // needs to be enabled
     if (this.disabled) return;
     // must be finalized
@@ -196,3 +198,5 @@ export class ScStripeElement {
     );
   }
 }
+
+openWormhole(ScStripeElement, ['order', 'mode']);

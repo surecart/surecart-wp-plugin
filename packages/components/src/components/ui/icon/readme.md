@@ -60,8 +60,10 @@
  - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-quantity-select](../quantity-select)
  - [sc-select](../select)
+ - [sc-stripe-payment-method-choice](../../processors/sc-stripe-payment-method-choice)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
+ - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-tax-id-input](../tax-id-input)
@@ -98,8 +100,10 @@ graph TD;
   sc-purchase-downloads-list --> sc-icon
   sc-quantity-select --> sc-icon
   sc-select --> sc-icon
+  sc-stripe-payment-method-choice --> sc-icon
   sc-subscription --> sc-icon
   sc-subscription-ad-hoc-confirm --> sc-icon
+  sc-subscription-payment-method --> sc-icon
   sc-subscription-switch --> sc-icon
   sc-subscriptions-list --> sc-icon
   sc-tax-id-input --> sc-icon

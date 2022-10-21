@@ -58,6 +58,7 @@ Type: `Promise<any>`
 ### Used by
 
  - [sc-payment](../../controllers/checkout-form/payment)
+ - [sc-stripe-payment-method-choice](../../processors/sc-stripe-payment-method-choice)
 
 ### Depends on
 
@@ -72,6 +73,7 @@ graph TD;
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
   sc-payment --> sc-stripe-element
+  sc-stripe-payment-method-choice --> sc-stripe-element
   style sc-stripe-element fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

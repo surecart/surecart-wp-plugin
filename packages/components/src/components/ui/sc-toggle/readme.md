@@ -44,6 +44,7 @@
 ### Used by
 
  - [sc-payment](../../controllers/checkout-form/payment)
+ - [sc-payment-method-choice](../../processors/sc-payment-method-choice)
 
 ### Depends on
 
@@ -54,6 +55,7 @@
 graph TD;
   sc-toggle --> sc-icon
   sc-payment --> sc-toggle
+  sc-payment-method-choice --> sc-toggle
   style sc-toggle fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

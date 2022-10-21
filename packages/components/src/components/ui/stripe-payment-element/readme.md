@@ -42,6 +42,7 @@ Type: `Promise<void>`
 ### Used by
 
  - [sc-payment](../../controllers/checkout-form/payment)
+ - [sc-stripe-payment-method-choice](../../processors/sc-stripe-payment-method-choice)
 
 ### Depends on
 
@@ -54,6 +55,7 @@ graph TD;
   sc-stripe-payment-element --> sc-text
   sc-stripe-payment-element --> sc-skeleton
   sc-payment --> sc-stripe-payment-element
+  sc-stripe-payment-method-choice --> sc-stripe-payment-element
   style sc-stripe-payment-element fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
