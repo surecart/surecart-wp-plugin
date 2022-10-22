@@ -2,6 +2,7 @@ import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch 
 import { Stripe } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
+import { openWormhole } from 'stencil-wormhole';
 
 import { Checkout, FormStateSetter, PaymentIntent } from '../../../types';
 
@@ -22,7 +23,7 @@ export class ScStripePaymentElement {
   private stripe: Stripe;
 
   /** The Payment Intent */
-  @Prop() paymentIntent: PaymentIntent;
+  @Prop() stripePaymentIntent: PaymentIntent;
 
   /** Order to watch */
   @Prop() order: Checkout;
@@ -55,7 +56,7 @@ export class ScStripePaymentElement {
     this.initialize();
   }
 
-  @Watch('paymentIntent')
+  @Watch('stripePaymentIntent')
   handleUpdatedChange(val, prev) {
     this.error = '';
 
@@ -70,12 +71,14 @@ export class ScStripePaymentElement {
 
   async initialize() {
     // we need this data.
-    if (!this.paymentIntent?.processor_data?.stripe?.publishable_key || !this.paymentIntent?.processor_data?.stripe?.account_id) return;
+    if (!this.stripePaymentIntent?.processor_data?.stripe?.publishable_key || !this.stripePaymentIntent?.processor_data?.stripe?.account_id) return;
 
     // check if stripe has been initialized
     if (!this.stripe) {
       try {
-        this.stripe = await loadStripe(this.paymentIntent?.processor_data?.stripe?.publishable_key, { stripeAccount: this.paymentIntent?.processor_data?.stripe?.account_id });
+        this.stripe = await loadStripe(this.stripePaymentIntent?.processor_data?.stripe?.publishable_key, {
+          stripeAccount: this.stripePaymentIntent?.processor_data?.stripe?.account_id,
+        });
       } catch (e) {
         this.error = e?.message || __('Stripe could not be loaded', 'surecart');
         // don't continue.
@@ -138,7 +141,6 @@ export class ScStripePaymentElement {
     try {
       this.scSetState.emit('PAYING');
       const response = type === 'setup' ? await this.stripe.confirmSetup(confirmArgs as any) : await this.stripe.confirmPayment(confirmArgs as any);
-      console.log({ response });
       if (response?.error) {
         this.error = response.error.message;
         throw response.error;
@@ -159,7 +161,7 @@ export class ScStripePaymentElement {
 
   loadElement() {
     // we need a stripe instance and client secret.
-    if (!this.stripe || !this.paymentIntent?.processor_data?.stripe?.client_secret || !this.container) {
+    if (!this.stripe || !this.stripePaymentIntent?.processor_data?.stripe?.client_secret || !this.container) {
       console.log('do not have stripe or');
       return;
     }
@@ -169,7 +171,7 @@ export class ScStripePaymentElement {
 
     // we have what we need, load elements.
     this.elements = this.stripe.elements({
-      clientSecret: this.paymentIntent?.processor_data?.stripe?.client_secret,
+      clientSecret: this.stripePaymentIntent?.processor_data?.stripe?.client_secret,
       appearance: {
         variables: {
           colorPrimary: styles.getPropertyValue('--sc-color-primary-500'),
@@ -245,3 +247,5 @@ export class ScStripePaymentElement {
     );
   }
 }
+
+openWormhole(ScStripePaymentElement, ['order', 'stripePaymentIntent'], true);

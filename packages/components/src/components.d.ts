@@ -1785,18 +1785,6 @@ export namespace Components {
     }
     interface ScPayment {
         /**
-          * Is this busy.
-         */
-        "busy": boolean;
-        /**
-          * The currency code.
-         */
-        "currencyCode": string;
-        /**
-          * Default
-         */
-        "defaultProcessor": ProcessorName;
-        /**
           * Hide the test mode badge
          */
         "hideTestModeBadge": boolean;
@@ -1804,14 +1792,6 @@ export namespace Components {
           * The input's label.
          */
         "label": string;
-        /**
-          * Is this loading.
-         */
-        "loading": boolean;
-        /**
-          * Manual payment methods.
-         */
-        "manualPaymentMethods": ManualPaymentMethod[];
         /**
           * Is this created in "test" mode
          */
@@ -1821,35 +1801,23 @@ export namespace Components {
          */
         "order": Checkout;
         /**
-          * Payment mode inside individual payment method (i.e. Payment Buttons)
-         */
-        "paymentMethod": 'stripe-payment-request' | null;
-        /**
-          * The current payment method for the payment
+          * The current selected processor.
          */
         "processor": string;
         /**
           * List of available processors.
          */
         "processors": Processor[];
-        /**
-          * Secure notice
-         */
-        "secureNotice": string;
-        /**
-          * Use the Stripe payment element.
-         */
-        "stripePaymentElement": boolean;
-        /**
-          * The stripe payment intent.
-         */
-        "stripePaymentIntent": PaymentIntent;
     }
     interface ScPaymentMethod {
         "full": boolean;
         "paymentMethod": PaymentMethod;
     }
     interface ScPaymentMethodChoice {
+        /**
+          * The checkout.
+         */
+        "checkout": Checkout;
         /**
           * Does this have others?
          */
@@ -1858,6 +1826,18 @@ export namespace Components {
           * Is this open?
          */
         "open": boolean;
+        /**
+          * The current processor
+         */
+        "processor": string;
+        /**
+          * The processor ID
+         */
+        "processorId": string;
+        /**
+          * Is this recurring-enabled?
+         */
+        "recurringEnabled": boolean;
     }
     interface ScPaymentMethodsList {
         "heading": string;
@@ -2445,41 +2425,11 @@ export namespace Components {
         /**
           * The Payment Intent
          */
-        "paymentIntent": PaymentIntent;
+        "stripePaymentIntent": PaymentIntent;
         /**
           * Success url to redirect.
          */
         "successUrl": string;
-    }
-    interface ScStripePaymentMethodChoice {
-        /**
-          * The checkout.
-         */
-        "checkout": Checkout;
-        /**
-          * Is this created in "test" mode
-         */
-        "mode": 'test' | 'live';
-        /**
-          * The currently selected processor
-         */
-        "processor": string;
-        /**
-          * List of available processors.
-         */
-        "processors": Processor[];
-        /**
-          * The secure notice.
-         */
-        "secureNotice": string;
-        /**
-          * Use the Stripe payment element.
-         */
-        "stripePaymentElement": boolean;
-        /**
-          * The stripe payment intent.
-         */
-        "stripePaymentIntent": PaymentIntent;
     }
     interface ScStripePaymentRequest {
         /**
@@ -3151,10 +3101,6 @@ export interface ScStripeElementCustomEvent<T> extends CustomEvent<T> {
 export interface ScStripePaymentElementCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScStripePaymentElementElement;
-}
-export interface ScStripePaymentMethodChoiceCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScStripePaymentMethodChoiceElement;
 }
 export interface ScStripePaymentRequestCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -3921,12 +3867,6 @@ declare global {
         prototype: HTMLScStripePaymentElementElement;
         new (): HTMLScStripePaymentElementElement;
     };
-    interface HTMLScStripePaymentMethodChoiceElement extends Components.ScStripePaymentMethodChoice, HTMLStencilElement {
-    }
-    var HTMLScStripePaymentMethodChoiceElement: {
-        prototype: HTMLScStripePaymentMethodChoiceElement;
-        new (): HTMLScStripePaymentMethodChoiceElement;
-    };
     interface HTMLScStripePaymentRequestElement extends Components.ScStripePaymentRequest, HTMLStencilElement {
     }
     var HTMLScStripePaymentRequestElement: {
@@ -4236,7 +4176,6 @@ declare global {
         "sc-stripe-add-method": HTMLScStripeAddMethodElement;
         "sc-stripe-element": HTMLScStripeElementElement;
         "sc-stripe-payment-element": HTMLScStripePaymentElementElement;
-        "sc-stripe-payment-method-choice": HTMLScStripePaymentMethodChoiceElement;
         "sc-stripe-payment-request": HTMLScStripePaymentRequestElement;
         "sc-subscription": HTMLScSubscriptionElement;
         "sc-subscription-ad-hoc-confirm": HTMLScSubscriptionAdHocConfirmElement;
@@ -6255,18 +6194,6 @@ declare namespace LocalJSX {
     }
     interface ScPayment {
         /**
-          * Is this busy.
-         */
-        "busy"?: boolean;
-        /**
-          * The currency code.
-         */
-        "currencyCode"?: string;
-        /**
-          * Default
-         */
-        "defaultProcessor"?: ProcessorName;
-        /**
           * Hide the test mode badge
          */
         "hideTestModeBadge"?: boolean;
@@ -6275,49 +6202,25 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
-          * Is this loading.
-         */
-        "loading"?: boolean;
-        /**
-          * Manual payment methods.
-         */
-        "manualPaymentMethods"?: ManualPaymentMethod[];
-        /**
           * Is this created in "test" mode
          */
         "mode"?: 'test' | 'live';
         /**
           * Set the order procesor.
          */
-        "onScSetProcessor"?: (event: ScPaymentCustomEvent<string>) => void;
+        "onScSetProcessor"?: (event: ScPaymentCustomEvent<string | null>) => void;
         /**
           * Checkout Session from sc-checkout.
          */
         "order"?: Checkout;
         /**
-          * Payment mode inside individual payment method (i.e. Payment Buttons)
-         */
-        "paymentMethod"?: 'stripe-payment-request' | null;
-        /**
-          * The current payment method for the payment
+          * The current selected processor.
          */
         "processor"?: string;
         /**
           * List of available processors.
          */
         "processors"?: Processor[];
-        /**
-          * Secure notice
-         */
-        "secureNotice"?: string;
-        /**
-          * Use the Stripe payment element.
-         */
-        "stripePaymentElement"?: boolean;
-        /**
-          * The stripe payment intent.
-         */
-        "stripePaymentIntent"?: PaymentIntent;
     }
     interface ScPaymentMethod {
         "full"?: boolean;
@@ -6325,9 +6228,18 @@ declare namespace LocalJSX {
     }
     interface ScPaymentMethodChoice {
         /**
+          * The checkout.
+         */
+        "checkout"?: Checkout;
+        /**
           * Does this have others?
          */
         "hasOthers"?: boolean;
+        "onScProcessorInvalid"?: (event: ScPaymentMethodChoiceCustomEvent<void>) => void;
+        /**
+          * Set the order procesor.
+         */
+        "onScSetProcessor"?: (event: ScPaymentMethodChoiceCustomEvent<string>) => void;
         /**
           * Show the toggle
          */
@@ -6336,6 +6248,18 @@ declare namespace LocalJSX {
           * Is this open?
          */
         "open"?: boolean;
+        /**
+          * The current processor
+         */
+        "processor"?: string;
+        /**
+          * The processor ID
+         */
+        "processorId"?: string;
+        /**
+          * Is this recurring-enabled?
+         */
+        "recurringEnabled"?: boolean;
     }
     interface ScPaymentMethodsList {
         "heading"?: string;
@@ -7009,45 +6933,11 @@ declare namespace LocalJSX {
         /**
           * The Payment Intent
          */
-        "paymentIntent"?: PaymentIntent;
+        "stripePaymentIntent"?: PaymentIntent;
         /**
           * Success url to redirect.
          */
         "successUrl"?: string;
-    }
-    interface ScStripePaymentMethodChoice {
-        /**
-          * The checkout.
-         */
-        "checkout"?: Checkout;
-        /**
-          * Is this created in "test" mode
-         */
-        "mode"?: 'test' | 'live';
-        /**
-          * Set the order procesor.
-         */
-        "onScSetProcessor"?: (event: ScStripePaymentMethodChoiceCustomEvent<string>) => void;
-        /**
-          * The currently selected processor
-         */
-        "processor"?: string;
-        /**
-          * List of available processors.
-         */
-        "processors"?: Processor[];
-        /**
-          * The secure notice.
-         */
-        "secureNotice"?: string;
-        /**
-          * Use the Stripe payment element.
-         */
-        "stripePaymentElement"?: boolean;
-        /**
-          * The stripe payment intent.
-         */
-        "stripePaymentIntent"?: PaymentIntent;
     }
     interface ScStripePaymentRequest {
         /**
@@ -7683,7 +7573,6 @@ declare namespace LocalJSX {
         "sc-stripe-add-method": ScStripeAddMethod;
         "sc-stripe-element": ScStripeElement;
         "sc-stripe-payment-element": ScStripePaymentElement;
-        "sc-stripe-payment-method-choice": ScStripePaymentMethodChoice;
         "sc-stripe-payment-request": ScStripePaymentRequest;
         "sc-subscription": ScSubscription;
         "sc-subscription-ad-hoc-confirm": ScSubscriptionAdHocConfirm;
@@ -7843,7 +7732,6 @@ declare module "@stencil/core" {
             "sc-stripe-add-method": LocalJSX.ScStripeAddMethod & JSXBase.HTMLAttributes<HTMLScStripeAddMethodElement>;
             "sc-stripe-element": LocalJSX.ScStripeElement & JSXBase.HTMLAttributes<HTMLScStripeElementElement>;
             "sc-stripe-payment-element": LocalJSX.ScStripePaymentElement & JSXBase.HTMLAttributes<HTMLScStripePaymentElementElement>;
-            "sc-stripe-payment-method-choice": LocalJSX.ScStripePaymentMethodChoice & JSXBase.HTMLAttributes<HTMLScStripePaymentMethodChoiceElement>;
             "sc-stripe-payment-request": LocalJSX.ScStripePaymentRequest & JSXBase.HTMLAttributes<HTMLScStripePaymentRequestElement>;
             "sc-subscription": LocalJSX.ScSubscription & JSXBase.HTMLAttributes<HTMLScSubscriptionElement>;
             "sc-subscription-ad-hoc-confirm": LocalJSX.ScSubscriptionAdHocConfirm & JSXBase.HTMLAttributes<HTMLScSubscriptionAdHocConfirmElement>;

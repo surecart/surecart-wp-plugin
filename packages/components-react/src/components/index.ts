@@ -130,7 +130,6 @@ export const ScStackedListRow = /*@__PURE__*/createReactComponent<JSX.ScStackedL
 export const ScStripeAddMethod = /*@__PURE__*/createReactComponent<JSX.ScStripeAddMethod, HTMLScStripeAddMethodElement>('sc-stripe-add-method');
 export const ScStripeElement = /*@__PURE__*/createReactComponent<JSX.ScStripeElement, HTMLScStripeElementElement>('sc-stripe-element');
 export const ScStripePaymentElement = /*@__PURE__*/createReactComponent<JSX.ScStripePaymentElement, HTMLScStripePaymentElementElement>('sc-stripe-payment-element');
-export const ScStripePaymentMethodChoice = /*@__PURE__*/createReactComponent<JSX.ScStripePaymentMethodChoice, HTMLScStripePaymentMethodChoiceElement>('sc-stripe-payment-method-choice');
 export const ScStripePaymentRequest = /*@__PURE__*/createReactComponent<JSX.ScStripePaymentRequest, HTMLScStripePaymentRequestElement>('sc-stripe-payment-request');
 export const ScSubscription = /*@__PURE__*/createReactComponent<JSX.ScSubscription, HTMLScSubscriptionElement>('sc-subscription');
 export const ScSubscriptionAdHocConfirm = /*@__PURE__*/createReactComponent<JSX.ScSubscriptionAdHocConfirm, HTMLScSubscriptionAdHocConfirmElement>('sc-subscription-ad-hoc-confirm');
