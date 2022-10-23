@@ -46,6 +46,8 @@ class Block extends BaseBlock {
 	 *
 	 * @param string $type The processor type.
 	 * @param array  $processors Array of processors.
+	 *
+	 * @return \SureCart/Models/Processor|null;
 	 */
 	protected function getProcessorByType( $type, $processors ) {
 		$key = array_search( $type, array_column( $processors, 'processor_type' ), true );
@@ -109,11 +111,30 @@ class Block extends BaseBlock {
 	 * @return void
 	 */
 	protected function renderPayPal( $processors ) {
+		$stripe    = $this->getProcessorByType( 'stripe', $processors );
 		$processor = $this->getProcessorByType( 'paypal', $processors );
 		if ( ! $processor ) {
 			return;
 		}
 		?>
+
+		<?php if ( ! $stripe ) : ?>
+			<sc-payment-method-choice
+				processor-id="paypal-card"
+				<?php echo $processor->recurring_enabled ? 'recurring-enabled' : null; ?>
+				has-others>
+				<span slot="summary" class="sc-payment-toggle-summary">
+					<sc-icon name="credit-card" style="font-size: 24px"></sc-icon>
+					<span><?php esc_html_e( 'Credit Card', 'surecart' ); ?></span>
+				</span>
+
+				<sc-card>
+					<sc-payment-selected label="<?php esc_attr_e( 'Credit Card selected for check out.', 'surecart' ); ?>">
+						<?php esc_html_e( 'Another step will appear after submitting your order to complete your purchase details.', 'surecart' ); ?>
+					</sc-payment-selected>
+				</sc-card>
+			</sc-payment-method-choice>
+		<?php endif; ?>
 
 		<sc-payment-method-choice
 			processor-id="paypal"
