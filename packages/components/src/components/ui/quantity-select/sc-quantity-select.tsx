@@ -13,7 +13,7 @@ export class ScQuantitySelect {
   @Prop() clickEl?: HTMLElement;
 
   @Prop() disabled: boolean;
-  @Prop() max: number = 100;
+  @Prop() max: number = Infinity;
   @Prop() min: number = 1;
   @Prop({ mutable: true, reflect: true }) quantity: number = 0;
   /** Inputs focus */
