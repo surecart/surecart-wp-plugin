@@ -8,6 +8,7 @@ describe('sc-payment-method-choice', () => {
     const element = await page.find('sc-payment-method-choice');
     expect(element).toHaveClass('hydrated');
   });
+
   it('Is toggled open if the processor id matches the current processor', async () => {
     const page = await newE2EPage();
     await page.setContent('<sc-payment-method-choice processor-id="test" has-others></sc-payment-method-choice>');
