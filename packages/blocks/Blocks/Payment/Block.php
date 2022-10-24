@@ -19,7 +19,6 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-
 		// get the mode context.
 		$mode       = $this->block->context['surecart/form/mode'] ?? 'live';
 		$processors = Processor::where( [ 'live_mode' => 'test' === $mode ? false : true ] )->get();
@@ -33,7 +32,7 @@ class Block extends BaseBlock {
 			default-processor="<?php echo esc_attr( $attributes['default_processor'] ); ?>"
 			secure-notice="<?php echo esc_attr( $attributes['secure_notice'] ); ?>"
 		>
-			<?php $this->renderStripe( $processors, $mode ); ?>
+			<?php $this->renderStripe( $processors, $mode, $attributes ); ?>
 			<?php $this->renderPayPal( $processors ); ?>
 			<?php $this->renderManualPaymentMethods(); ?>
 		</sc-payment>
@@ -65,7 +64,7 @@ class Block extends BaseBlock {
 	 *
 	 * @return void
 	 */
-	protected function renderStripe( $processors, $mode ) {
+	protected function renderStripe( $processors, $mode, $attributes ) {
 		$processor = $this->getProcessorByType( 'stripe', $processors );
 		if ( ! $processor ) {
 			return;
@@ -75,7 +74,7 @@ class Block extends BaseBlock {
 
 		<sc-payment-method-choice
 			processor-id="stripe"
-		<?php echo $processor->recurring_enabled ? 'recurring-enabled' : null; ?>
+			<?php echo $processor->recurring_enabled ? 'recurring-enabled' : null; ?>
 			has-others>
 			<span slot="summary" class="sc-payment-toggle-summary">
 				<sc-icon name="credit-card" style="font-size: 24px"></sc-icon>
@@ -84,13 +83,13 @@ class Block extends BaseBlock {
 
 			<div class="sc-payment__stripe-card-element">
 				<?php if ( $payment_element ) : ?>
-					<sc-stripe-payment-element order={this.order} paymentIntent={this.stripePaymentIntent} />
+					<sc-stripe-payment-element order={this.order} paymentIntent={this.stripePaymentIntent}></sc-stripe-payment-element>
 				<?php else : ?>
 					<sc-stripe-element
 					mode="<?php echo esc_attr( $mode ); ?>"
 					account-id="<?php echo esc_attr( $processor->processor_data->account_id ?? null ); ?>"
-					publishable-key="<?php echo esc_attr( $processor->processor_data->publishable_key ?? null ); ?>"/>
-
+					publishable-key="<?php echo esc_attr( $processor->processor_data->publishable_key ?? null ); ?>">
+					</sc-stripe-element>
 					<?php if ( ! empty( $attributes['secure_notice'] ) ) : ?>
 						<sc-secure-notice>
 							<?php echo wp_kses_post( $attributes['secure_notice'] ); ?>
@@ -147,7 +146,7 @@ class Block extends BaseBlock {
 			<sc-card>
 				<sc-payment-selected label="<?php esc_attr_e( 'PayPal selected for check out.', 'surecart' ); ?>">
 					<sc-icon slot="icon" name="paypal" style="width: 80px"></sc-icon>
-				<?php esc_html_e( 'Another step will appear after submitting your order to complete your purchase details.', 'surecart' ); ?>
+					<?php esc_html_e( 'Another step will appear after submitting your order to complete your purchase details.', 'surecart' ); ?>
 				</sc-payment-selected>
 			</sc-card>
 		</sc-payment-method-choice>
@@ -165,6 +164,7 @@ class Block extends BaseBlock {
 
 		<?php foreach ( $methods as $method ) : ?>
 			<sc-payment-method-choice
+			is-manual
 			processor-id="<?php echo esc_attr( $method->id ); ?>"
 			has-others>
 

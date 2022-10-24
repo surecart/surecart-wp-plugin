@@ -154,7 +154,6 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 		$form = get_post( $request['form_id'] );
 
 		if ( ! $form || 'sc_form' !== Form::getPostType() ) {
-			// TODO: check form manual registration on server here. (ce_register_form)
 			// form not found.
 			return new \WP_Error( 'form_id_invalid', esc_html__( 'Form ID is invalid.', 'surecart' ), [ 'status' => 400 ] );
 		}

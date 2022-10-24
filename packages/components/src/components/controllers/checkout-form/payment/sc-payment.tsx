@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 import { Checkout, Processor } from '../../../../types';
@@ -9,6 +9,8 @@ import { Checkout, Processor } from '../../../../types';
   shadow: true,
 })
 export class ScPayment {
+  private paymentChoices: HTMLScPaymentMethodChoiceElement[] = [];
+
   /** This element. */
   @Element() el: HTMLScPaymentElement;
 
@@ -19,7 +21,7 @@ export class ScPayment {
   @Prop() processors: Processor[] = [];
 
   /** Checkout Session from sc-checkout. */
-  @Prop() order: Checkout;
+  @Prop() checkout: Checkout;
 
   /** Is this created in "test" mode */
   @Prop() mode: 'test' | 'live' = 'live';
@@ -30,8 +32,15 @@ export class ScPayment {
   /** Hide the test mode badge */
   @Prop() hideTestModeBadge: boolean;
 
-  /** Set the order procesor. */
-  @Event() scSetProcessor: EventEmitter<string | null>;
+  /** Does this have multiple choices */
+  @State() hasMultiple: boolean;
+
+  /** Set the checkout procesor. */
+  @Event() scSetProcessor: EventEmitter<{ id: string; manual: boolean } | null>;
+
+  getAllProcessors() {
+    return Array.from(this.el.querySelectorAll('sc-payment-method-choice') as NodeListOf<HTMLScPaymentMethodChoiceElement>) || null;
+  }
 
   /** Handle processor invalid state. */
   @Listen('scProcessorInvalid')
@@ -39,16 +48,36 @@ export class ScPayment {
     // set the first processor that is showing and set that one.
     // use settimeout to wait for display:none rendering to finish.
     setTimeout(() => {
-      const processor = (this.el.querySelector('sc-payment-method-choice:not([style*="display: none"])') as HTMLScPaymentMethodChoiceElement)?.processorId || null;
-      this.scSetProcessor.emit(processor);
+      const processor = (this.el.querySelector('sc-payment-method-choice:not([style*="display: none"])') as HTMLScPaymentMethodChoiceElement) || null;
+      if (processor?.processorId) {
+        this.scSetProcessor.emit({ id: processor?.processorId, manual: processor.isManual });
+      }
     }, 50);
   }
 
+  componentDidLoad() {
+    this.paymentChoices = this.getAllProcessors();
+    this.handleHasMultipleChange();
+  }
+
+  @Watch('checkout')
+  handleOrderChange() {
+    const active = this.paymentChoices.filter(choice => !choice?.isDisabled);
+    this.hasMultiple = active?.length > 1;
+  }
+
+  @Watch('hasMultiple')
+  handleHasMultipleChange() {
+    this.paymentChoices.forEach(choice => {
+      choice.hasOthers = this?.hasMultiple;
+    });
+  }
+
   render() {
+    const Tag = this.hasMultiple ? 'sc-toggles' : 'div';
+
     return (
       <Host>
-        {/* Handles the automatic filtering and selection of processors */}
-        <sc-processor-provider checkout={this.order} processors={this.processors} processor={this.processor} />
         <sc-form-control label={this.label}>
           <div class="sc-payment-label" slot="label">
             <div>{this.label}</div>
@@ -58,17 +87,17 @@ export class ScPayment {
               </sc-tag>
             )}
           </div>
-          <sc-toggles collapsible={false} theme="container">
+          <Tag collapsible={false} theme="container">
             <slot>
               <sc-alert type="info" open>
                 {__('Please contact us for payment', 'surecart')}
               </sc-alert>
             </slot>
-          </sc-toggles>
+          </Tag>
         </sc-form-control>
       </Host>
     );
   }
 }
 
-openWormhole(ScPayment, ['processor', 'processors', 'order', 'mode'], false);
+openWormhole(ScPayment, ['processor', 'processors', 'checkout', 'mode'], false);

@@ -1785,6 +1785,10 @@ export namespace Components {
     }
     interface ScPayment {
         /**
+          * Checkout Session from sc-checkout.
+         */
+        "checkout": Checkout;
+        /**
           * Hide the test mode badge
          */
         "hideTestModeBadge": boolean;
@@ -1796,10 +1800,6 @@ export namespace Components {
           * Is this created in "test" mode
          */
         "mode": 'test' | 'live';
-        /**
-          * Checkout Session from sc-checkout.
-         */
-        "order": Checkout;
         /**
           * The current selected processor.
          */
@@ -1822,6 +1822,14 @@ export namespace Components {
           * Does this have others?
          */
         "hasOthers": boolean;
+        /**
+          * Is this disabled?
+         */
+        "isDisabled": boolean;
+        /**
+          * Is this a manual processor
+         */
+        "isManual": boolean;
         /**
           * Is this open?
          */
@@ -2074,20 +2082,6 @@ export namespace Components {
          */
         "value": string;
     }
-    interface ScProcessorProvider {
-        /**
-          * The current checkout
-         */
-        "checkout": Checkout;
-        /**
-          * The currently selected processor
-         */
-        "processor": string;
-        /**
-          * A list of available processors
-         */
-        "processors": Processor[];
-    }
     interface ScProductLineItem {
         /**
           * Product monetary amount
@@ -2303,6 +2297,10 @@ export namespace Components {
           * Group id
          */
         "groupId": string;
+        /**
+          * Is this a manual payment?
+         */
+        "isManualProcessor": boolean;
         /**
           * Are we in test or live mode.
          */
@@ -3066,10 +3064,6 @@ export interface ScPriceInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScPriceInputElement;
 }
-export interface ScProcessorProviderCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScProcessorProviderElement;
-}
 export interface ScProductLineItemCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScProductLineItemElement;
@@ -3759,12 +3753,6 @@ declare global {
         prototype: HTMLScPriceInputElement;
         new (): HTMLScPriceInputElement;
     };
-    interface HTMLScProcessorProviderElement extends Components.ScProcessorProvider, HTMLStencilElement {
-    }
-    var HTMLScProcessorProviderElement: {
-        prototype: HTMLScProcessorProviderElement;
-        new (): HTMLScProcessorProviderElement;
-    };
     interface HTMLScProductLineItemElement extends Components.ScProductLineItem, HTMLStencilElement {
     }
     var HTMLScProductLineItemElement: {
@@ -4158,7 +4146,6 @@ declare global {
         "sc-price-choice": HTMLScPriceChoiceElement;
         "sc-price-choices": HTMLScPriceChoicesElement;
         "sc-price-input": HTMLScPriceInputElement;
-        "sc-processor-provider": HTMLScProcessorProviderElement;
         "sc-product-line-item": HTMLScProductLineItemElement;
         "sc-provider": HTMLScProviderElement;
         "sc-purchase-downloads-list": HTMLScPurchaseDownloadsListElement;
@@ -6194,6 +6181,10 @@ declare namespace LocalJSX {
     }
     interface ScPayment {
         /**
+          * Checkout Session from sc-checkout.
+         */
+        "checkout"?: Checkout;
+        /**
           * Hide the test mode badge
          */
         "hideTestModeBadge"?: boolean;
@@ -6206,13 +6197,9 @@ declare namespace LocalJSX {
          */
         "mode"?: 'test' | 'live';
         /**
-          * Set the order procesor.
+          * Set the checkout procesor.
          */
-        "onScSetProcessor"?: (event: ScPaymentCustomEvent<string | null>) => void;
-        /**
-          * Checkout Session from sc-checkout.
-         */
-        "order"?: Checkout;
+        "onScSetProcessor"?: (event: ScPaymentCustomEvent<{ id: string; manual: boolean } | null>) => void;
         /**
           * The current selected processor.
          */
@@ -6235,11 +6222,22 @@ declare namespace LocalJSX {
           * Does this have others?
          */
         "hasOthers"?: boolean;
+        /**
+          * Is this disabled?
+         */
+        "isDisabled"?: boolean;
+        /**
+          * Is this a manual processor
+         */
+        "isManual"?: boolean;
+        /**
+          * The currenct processor is invalid.
+         */
         "onScProcessorInvalid"?: (event: ScPaymentMethodChoiceCustomEvent<void>) => void;
         /**
           * Set the order procesor.
          */
-        "onScSetProcessor"?: (event: ScPaymentMethodChoiceCustomEvent<string>) => void;
+        "onScSetProcessor"?: (event: ScPaymentMethodChoiceCustomEvent<{ id: string; manual: boolean }>) => void;
         /**
           * Show the toggle
          */
@@ -6516,24 +6514,6 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface ScProcessorProvider {
-        /**
-          * The current checkout
-         */
-        "checkout"?: Checkout;
-        /**
-          * Event to set a processor in the checkout.
-         */
-        "onScSetProcessor"?: (event: ScProcessorProviderCustomEvent<string>) => void;
-        /**
-          * The currently selected processor
-         */
-        "processor"?: string;
-        /**
-          * A list of available processors
-         */
-        "processors"?: Processor[];
-    }
     interface ScProductLineItem {
         /**
           * Product monetary amount
@@ -6785,6 +6765,10 @@ declare namespace LocalJSX {
           * Group id
          */
         "groupId"?: string;
+        /**
+          * Is this a manual payment?
+         */
+        "isManualProcessor"?: boolean;
         /**
           * Are we in test or live mode.
          */
@@ -7555,7 +7539,6 @@ declare namespace LocalJSX {
         "sc-price-choice": ScPriceChoice;
         "sc-price-choices": ScPriceChoices;
         "sc-price-input": ScPriceInput;
-        "sc-processor-provider": ScProcessorProvider;
         "sc-product-line-item": ScProductLineItem;
         "sc-provider": ScProvider;
         "sc-purchase-downloads-list": ScPurchaseDownloadsList;
@@ -7714,7 +7697,6 @@ declare module "@stencil/core" {
             "sc-price-choice": LocalJSX.ScPriceChoice & JSXBase.HTMLAttributes<HTMLScPriceChoiceElement>;
             "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
-            "sc-processor-provider": LocalJSX.ScProcessorProvider & JSXBase.HTMLAttributes<HTMLScProcessorProviderElement>;
             "sc-product-line-item": LocalJSX.ScProductLineItem & JSXBase.HTMLAttributes<HTMLScProductLineItemElement>;
             "sc-provider": LocalJSX.ScProvider & JSXBase.HTMLAttributes<HTMLScProviderElement>;
             "sc-purchase-downloads-list": LocalJSX.ScPurchaseDownloadsList & JSXBase.HTMLAttributes<HTMLScPurchaseDownloadsListElement>;

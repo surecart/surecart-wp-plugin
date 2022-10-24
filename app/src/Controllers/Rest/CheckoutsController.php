@@ -171,8 +171,7 @@ class CheckoutsController extends RestController {
 
 		// finalize the order.
 		$checkout  = new $this->class( [ 'id' => $request['id'] ] );
-		$finalized = $checkout->setProcessor( $request['processor_type'] )
-			->where( $request->get_query_params() )
+		$finalized = $checkout->where( $request->get_query_params() )
 			->finalize( $request->get_body_params() );
 
 		// bail if error.

@@ -43,6 +43,9 @@ export class ScSessionProvider {
   /** The processor. */
   @Prop() processor: ProcessorName = 'stripe';
 
+  /** Is this a manual payment? */
+  @Prop() isManualProcessor: boolean;
+
   /** Url to redirect upon success. */
   @Prop() successUrl: string;
 
@@ -106,9 +109,8 @@ export class ScSessionProvider {
       case 'paypal':
       case 'paypal-card':
         return 'paypal';
-      default:
-        return 'stripe';
     }
+    return this.processor;
   }
 
   /**
@@ -149,15 +151,17 @@ export class ScSessionProvider {
     try {
       const order = await finalizeSession({
         id: this.order()?.id,
-        data,
         query: {
           ...this.defaultFormQuery(),
         },
-        processor: this.getProcessor(),
+        processor: {
+          id: this.getProcessor(),
+          manual: this.isManualProcessor,
+        },
       });
 
       // the order is paid
-      if (order?.status === 'paid') {
+      if (['paid', 'processing'].includes(order?.status)) {
         this.scPaid.emit();
       }
 

@@ -105,6 +105,9 @@ export class ScCheckout {
   /** The currenly selected processor */
   @State() processor: ProcessorName = 'stripe';
 
+  /** Is the processor manual? */
+  @State() isManualProcessor: boolean;
+
   /** Holds the payment intents for the checkout. */
   @State() paymentIntents: PaymentIntents = {};
 
@@ -134,7 +137,10 @@ export class ScCheckout {
 
   @Listen('scSetProcessor')
   handleProcessorChange(e) {
-    this.processor = e.detail;
+    const { id, manual } = e.detail;
+    console.log(e.detail);
+    this.processor = id;
+    this.isManualProcessor = manual;
   }
 
   @Listen('scAddEntities')
@@ -279,6 +285,7 @@ export class ScCheckout {
                       persist={this.persistSession}
                       modified={this.modified}
                       mode={this.mode}
+                      isManualProcessor={this.isManualProcessor}
                       form-id={this.formId}
                       group-id={this.el.id}
                       processor={this.processor}
@@ -311,7 +318,7 @@ export class ScCheckout {
           )}
           {this.checkoutState === 'confirmed' && (
             <sc-block-ui z-index={9} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
-              {this.loadingText?.confirmed || __('Payment successful! Redirecting...', 'surecart')}
+              {this.loadingText?.confirmed || __('Success! Redirecting...', 'surecart')}
             </sc-block-ui>
           )}
         </Universe.Provider>

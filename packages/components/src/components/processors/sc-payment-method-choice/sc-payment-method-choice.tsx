@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, h, Host, Prop, State, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Host, Prop, Watch } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { Checkout } from '../../../types';
 
@@ -20,17 +20,22 @@ export class ScPaymentMethodChoice {
   /** The processor ID */
   @Prop() processorId: string;
 
+  /** Is this a manual processor */
+  @Prop() isManual: boolean;
+
   /** Is this recurring-enabled? */
   @Prop() recurringEnabled: boolean;
 
   /** The checkout. */
   @Prop() checkout: Checkout;
 
-  @State() isHidden: boolean;
+  /** Is this disabled? */
+  @Prop({ reflect: true }) isDisabled: boolean;
 
   /** Set the order procesor. */
-  @Event() scSetProcessor: EventEmitter<string>;
+  @Event() scSetProcessor: EventEmitter<{ id: string; manual: boolean }>;
 
+  /** The currenct processor is invalid. */
   @Event() scProcessorInvalid: EventEmitter<void>;
 
   /** Show the toggle */
@@ -38,31 +43,30 @@ export class ScPaymentMethodChoice {
 
   @Watch('checkout')
   handleCheckoutChange() {
-    this.isHidden = this.checkout?.reusable_payment_method_required && !this.recurringEnabled;
+    this.isDisabled = this.checkout?.reusable_payment_method_required && !this.recurringEnabled;
   }
 
-  @Watch('isHidden')
+  @Watch('isDisabled')
   handleHiddenChange() {
-    if (this.isHidden && this.isSelected()) {
+    if (this.isDisabled && this.isSelected()) {
       this.scProcessorInvalid.emit();
     }
   }
 
   isSelected() {
-    console.log(this.processor);
     return this.processor === this.processorId;
   }
 
   render() {
     // do not render if needs recurring and is not supported
-    if (this.isHidden) {
+    if (this.isDisabled) {
       return <Host style={{ display: 'none' }} />;
     }
 
     const Tag = this.hasOthers ? 'sc-toggle' : 'div';
 
     return (
-      <Tag show-control shady borderless open={this.isSelected()} onScShow={() => this.scSetProcessor.emit(this.processorId)}>
+      <Tag show-control shady borderless open={this.isSelected()} onScShow={() => this.scSetProcessor.emit({ id: this.processorId, manual: this.isManual })}>
         {this.hasOthers && <slot name="summary" slot="summary"></slot>}
         <slot />
       </Tag>

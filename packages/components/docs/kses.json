@@ -1037,10 +1037,10 @@
     "slot": true
   },
   "sc-payment": {
+    "checkout": true,
     "hide-test-mode-badge": true,
     "label": true,
     "mode": true,
-    "order": true,
     "processor": true,
     "processors": true,
     "style": true,
@@ -1059,6 +1059,8 @@
   "sc-payment-method-choice": {
     "checkout": true,
     "has-others": true,
+    "is-disabled": true,
+    "is-manual": true,
     "open": true,
     "processor": true,
     "processor-id": true,
@@ -1163,15 +1165,6 @@
     "show-label": true,
     "size": true,
     "value": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "sc-processor-provider": {
-    "checkout": true,
-    "processor": true,
-    "processors": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1288,6 +1281,7 @@
     "currency-code": true,
     "form-id": true,
     "group-id": true,
+    "is-manual-processor": true,
     "mode": true,
     "modified": true,
     "payment-intents": true,
