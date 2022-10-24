@@ -196,4 +196,4 @@ export class ScStripeElement {
   }
 }
 
-openWormhole(ScStripeElement, ['order', 'mode']);
+openWormhole(ScStripeElement, ['order', 'mode'], false);

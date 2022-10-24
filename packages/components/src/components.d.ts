@@ -1831,10 +1831,6 @@ export namespace Components {
          */
         "isManual": boolean;
         /**
-          * Is this open?
-         */
-        "open": boolean;
-        /**
           * The current processor
          */
         "processor": string;
@@ -6242,10 +6238,6 @@ declare namespace LocalJSX {
           * Show the toggle
          */
         "onScShow"?: (event: ScPaymentMethodChoiceCustomEvent<void>) => void;
-        /**
-          * Is this open?
-         */
-        "open"?: boolean;
         /**
           * The current processor
          */

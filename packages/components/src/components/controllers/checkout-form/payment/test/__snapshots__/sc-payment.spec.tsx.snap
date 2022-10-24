@@ -2,136 +2,19 @@
 
 exports[`sc-payment renders no processors 1`] = `
 <sc-payment>
-  <sc-processor-provider processor="stripe"></sc-processor-provider>
-  <sc-form-control>
-    <sc-alert open="" type="info">
-      Please contact us for payment
-    </sc-alert>
-  </sc-form-control>
-</sc-payment>
-`;
-
-exports[`sc-payment renders paypal only 1`] = `
-<sc-payment>
-  <sc-processor-provider processor="stripe"></sc-processor-provider>
-  <sc-form-control>
-    <div class="sc-payment-label" slot="label">
-      <div></div>
-    </div>
-    <sc-toggles theme="container">
-      <sc-toggle borderless="" data-test-id="paypal-credit-card-toggle" shady="" show-control="">
-        <span class="sc-payment-toggle-summary" slot="summary">
-          <sc-icon name="credit-card" style="font-size: 24px;"></sc-icon>
-          <span>
-            Credit Card
-          </span>
-        </span>
-        <sc-card>
-          <sc-payment-selected label="Credit Card selected for check out.">
-            <sc-icon name="credit-card" slot="icon"></sc-icon>
-            Another step will appear after submitting your order to complete your purchase details.
-          </sc-payment-selected>
-        </sc-card>
-      </sc-toggle>
-      <sc-toggle borderless="" data-test-id="paypal-toggle" shady="" show-control="">
-        <span class="sc-payment-toggle-summary" slot="summary">
-          <sc-icon name="paypal" style="width: 80px; font-size: 24px;"></sc-icon>
-        </span>
-        <sc-card>
-          <sc-payment-selected label="PayPal selected for check out.">
-            <sc-icon name="paypal" slot="icon" style="width: 80px;"></sc-icon>
-            Another step will appear after submitting your order to complete your purchase details.
-          </sc-payment-selected>
-        </sc-card>
-      </sc-toggle>
-    </sc-toggles>
-  </sc-form-control>
-</sc-payment>
-`;
-
-exports[`sc-payment renders stripe and hides paypal if recurring 1`] = `
-<sc-payment>
-  <sc-processor-provider processor="stripe"></sc-processor-provider>
-  <sc-form-control>
-    <div class="sc-payment-label" slot="label">
-      <div></div>
-    </div>
-    <sc-toggles theme="container">
-      <sc-toggle borderless="" class="sc-stripe-toggle" open="" shady="" show-control="">
-        <span class="sc-payment-toggle-summary" slot="summary">
-          <sc-icon name="credit-card" style="font-size: 24px;"></sc-icon>
-          <span>
-            Credit Card
-          </span>
-        </span>
-        <div class="sc-payment__stripe-card-element">
-          <sc-stripe-element mode="live"></sc-stripe-element>
-          <sc-secure-notice></sc-secure-notice>
-        </div>
-      </sc-toggle>
-      <sc-toggle borderless="" class="sc-paypal-toggle" shady="" show-control="">
-        <span class="sc-payment-toggle-summary" slot="summary">
-          <sc-icon name="paypal" style="width: 80px; font-size: 24px;"></sc-icon>
-        </span>
-        <sc-card>
-          <sc-payment-selected label="PayPal selected for check out.">
-            <sc-icon name="paypal" slot="icon" style="width: 80px;"></sc-icon>
-            Another step will appear after submitting your order to complete your purchase details.
-          </sc-payment-selected>
-        </sc-card>
-      </sc-toggle>
-    </sc-toggles>
-  </sc-form-control>
-</sc-payment>
-`;
-
-exports[`sc-payment renders stripe and paypal 1`] = `
-<sc-payment>
-  <sc-processor-provider processor="stripe"></sc-processor-provider>
-  <sc-form-control>
-    <div class="sc-payment-label" slot="label">
-      <div></div>
-    </div>
-    <sc-toggles theme="container">
-      <sc-toggle borderless="" class="sc-stripe-toggle" open="" shady="" show-control="">
-        <span class="sc-payment-toggle-summary" slot="summary">
-          <sc-icon name="credit-card" style="font-size: 24px;"></sc-icon>
-          <span>
-            Credit Card
-          </span>
-        </span>
-        <div class="sc-payment__stripe-card-element">
-          <sc-stripe-element mode="live"></sc-stripe-element>
-          <sc-secure-notice></sc-secure-notice>
-        </div>
-      </sc-toggle>
-      <sc-toggle borderless="" class="sc-paypal-toggle" shady="" show-control="">
-        <span class="sc-payment-toggle-summary" slot="summary">
-          <sc-icon name="paypal" style="width: 80px; font-size: 24px;"></sc-icon>
-        </span>
-        <sc-card>
-          <sc-payment-selected label="PayPal selected for check out.">
-            <sc-icon name="paypal" slot="icon" style="width: 80px;"></sc-icon>
-            Another step will appear after submitting your order to complete your purchase details.
-          </sc-payment-selected>
-        </sc-card>
-      </sc-toggle>
-    </sc-toggles>
-  </sc-form-control>
-</sc-payment>
-`;
-
-exports[`sc-payment renders stripe only 1`] = `
-<sc-payment>
-  <sc-processor-provider processor="stripe"></sc-processor-provider>
-  <sc-form-control>
-    <div class="sc-payment-label" slot="label">
-      <div></div>
-    </div>
-    <div class="sc-payment__stripe-card-element">
-      <sc-stripe-element mode="live"></sc-stripe-element>
-      <sc-secure-notice></sc-secure-notice>
-    </div>
-  </sc-form-control>
+  <mock:shadow-root>
+    <sc-form-control>
+      <div class="sc-payment-label" slot="label">
+        <div></div>
+      </div>
+      <div theme="container">
+        <slot>
+          <sc-alert open="" type="info">
+            Please contact us for payment
+          </sc-alert>
+        </slot>
+      </div>
+    </sc-form-control>
+  </mock:shadow-root>
 </sc-payment>
 `;

@@ -1,6 +1,6 @@
 import { Component, Event, EventEmitter, h, Host, Prop, Watch } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
 import { Checkout } from '../../../types';
+import { openWormhole } from 'stencil-wormhole';
 
 @Component({
   tag: 'sc-payment-method-choice',
@@ -8,9 +8,6 @@ import { Checkout } from '../../../types';
   shadow: true,
 })
 export class ScPaymentMethodChoice {
-  /** Is this open? */
-  @Prop() open: boolean;
-
   /** Does this have others? */
   @Prop() hasOthers: boolean;
 
@@ -66,7 +63,7 @@ export class ScPaymentMethodChoice {
     const Tag = this.hasOthers ? 'sc-toggle' : 'div';
 
     return (
-      <Tag show-control shady borderless open={this.isSelected()} onScShow={() => this.scSetProcessor.emit({ id: this.processorId, manual: this.isManual })}>
+      <Tag show-control shady borderless open={this.isSelected()} onScShow={() => this.scSetProcessor.emit({ id: this.processorId, manual: !!this.isManual })}>
         {this.hasOthers && <slot name="summary" slot="summary"></slot>}
         <slot />
       </Tag>
@@ -74,4 +71,4 @@ export class ScPaymentMethodChoice {
   }
 }
 
-openWormhole(ScPaymentMethodChoice, ['processor', 'checkout'], true);
+openWormhole(ScPaymentMethodChoice, ['processor', 'checkout'], false);
