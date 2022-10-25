@@ -11,6 +11,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
+import { addQueryArgs } from '@wordpress/url';
 
 export default ({ open, onRequestClose }) => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
@@ -19,19 +20,17 @@ export default ({ open, onRequestClose }) => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { invalidateResolutionForStore } = useDispatch(coreStore);
 
-	const resumeSubscription = async () => {
+	const restoreSubscription = async () => {
 		try {
 			setLoading(true);
 			setError(null);
 			await apiFetch({
 				method: 'PATCH',
-				path: `surecart/v1/subscriptions/${id}`,
-				data: {
-					cancel_at_period_end: false,
-				},
+				path: `surecart/v1/subscriptions/${id}/restore/`,
 			});
+			// invalidate page.
 			await invalidateResolutionForStore();
-			createSuccessNotice(__('Subscription resumed.', 'surecart'), {
+			createSuccessNotice(__('Subscription restored.', 'surecart'), {
 				type: 'snackbar',
 			});
 			onRequestClose();
@@ -49,11 +48,11 @@ export default ({ open, onRequestClose }) => {
 			open={open}
 			onScRequestClose={onRequestClose}
 		>
-			<ScAlert open={error} type="error">
+			<ScAlert open={error} type="danger">
 				{error}
 			</ScAlert>
 			{__(
-				'Are you sure you wish to resume this subscription?',
+				'Are you sure you want to restore this subscription? This will make it active again.',
 				'surecart'
 			)}
 			<div slot="footer">
@@ -62,14 +61,14 @@ export default ({ open, onRequestClose }) => {
 					onClick={onRequestClose}
 					disabled={loading}
 				>
-					{__('Nevermind', 'surecart')}
+					{__('Cancel', 'surecart')}
 				</ScButton>{' '}
 				<ScButton
 					type="primary"
-					onClick={() => resumeSubscription()}
+					onClick={() => restoreSubscription()}
 					disabled={loading}
 				>
-					{__('Resume Subscription', 'surecart')}
+					{__('Restore', 'surecart')}
 				</ScButton>
 			</div>
 			{loading && (

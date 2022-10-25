@@ -11,46 +11,23 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
-import { addQueryArgs } from '@wordpress/url';
-
-const expand = [
-	'current_period',
-	'period.checkout',
-	'checkout.line_items',
-	'line_item.price',
-	'price',
-	'price.product',
-	'customer',
-	'customer.balances',
-	'purchase',
-	'order',
-	'payment_method',
-	'payment_method.card',
-	'payment_method.payment_instrument',
-	'payment_method.paypal_account',
-	'payment_method.bank_account',
-];
 
 export default ({ open, onRequestClose }) => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { receiveEntityRecords } = useDispatch(coreStore);
+	const { invalidateResolutionForStore } = useDispatch(coreStore);
 
 	const completeSubscription = async () => {
 		try {
 			setLoading(true);
 			setError(null);
-			const subscription = await apiFetch({
+			await apiFetch({
 				method: 'PATCH',
-				path: addQueryArgs(`surecart/v1/subscriptions/${id}/complete`, {
-					expand,
-				}),
+				path: `surecart/v1/subscriptions/${id}/complete`,
 			});
-			receiveEntityRecords('surecart', 'subscription', subscription, {
-				expand,
-			});
+			await invalidateResolutionForStore();
 			createSuccessNotice(__('Subscription completed.', 'surecart'), {
 				type: 'snackbar',
 			});
