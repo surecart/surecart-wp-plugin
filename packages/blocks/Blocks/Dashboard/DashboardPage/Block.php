@@ -103,7 +103,7 @@ class Block extends DashboardPage {
 				return $this->passwordNag() . '<sc-spacing style="--spacing: var(--sc-spacing-xx-large); font-size: 15px;">' . $before . $block->$action() . $after . '</sc-spacing>';
 			}
 		}
-		return $this->passwordNag() . '<sc-spacing style="--spacing: var(--sc-spacing-xx-large); font-size: 15px;">' . $before . wp_kses_post( $content ) . $after . '</sc-spacing>';
+		return $this->passwordNag() . '<sc-spacing style="--spacing: var(--sc-spacing-xx-large); font-size: 15px;">' . $before . filter_block_content( $content ) . $after . '</sc-spacing>';
 	}
 
 	public function passwordNag() {
