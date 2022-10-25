@@ -154,6 +154,7 @@ class Block extends BaseBlock {
 
 				<sc-card>
 					<sc-payment-selected label="<?php esc_attr_e( 'Credit Card selected for check out.', 'surecart' ); ?>">
+						<sc-icon name="credit-card" slot="icon" style="font-size: 24px"></sc-icon>
 						<?php esc_html_e( 'Another step will appear after submitting your order to complete your purchase details.', 'surecart' ); ?>
 					</sc-payment-selected>
 				</sc-card>

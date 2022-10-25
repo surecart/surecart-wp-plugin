@@ -8,7 +8,7 @@ import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from 'react';
 import { hasProcessor } from '../util';
 
-export default ({ attributes: { disabled_methods }, mode }) => {
+export default ({ attributes: { disabled_methods = [] }, mode }) => {
 	const [processor, setProcessor] = useState();
 
 	useEffect(() => {
@@ -21,6 +21,13 @@ export default ({ attributes: { disabled_methods }, mode }) => {
 		);
 	}, [mode]);
 
+	const hasStripe = () => {
+		if (!hasProcessor('stripe')) {
+			return false;
+		}
+		return (disabled_methods || []).includes('stripe');
+	};
+
 	if (!processor) {
 		return null;
 	}
@@ -31,7 +38,7 @@ export default ({ attributes: { disabled_methods }, mode }) => {
 
 	return (
 		<>
-			{!hasProcessor('stripe') && (
+			{hasStripe() && (
 				<ScPaymentMethodChoice processor-id="paypal-card">
 					<span slot="summary" class="sc-payment-toggle-summary">
 						<ScIcon
@@ -49,8 +56,8 @@ export default ({ attributes: { disabled_methods }, mode }) => {
 						>
 							<ScIcon
 								slot="icon"
-								name="paypal"
-								style={{ width: '80px' }}
+								name="credit-card"
+								style={{ width: '24px' }}
 							/>
 
 							{__(

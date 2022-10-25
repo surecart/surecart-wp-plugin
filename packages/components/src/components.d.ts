@@ -1546,6 +1546,10 @@ export namespace Components {
         "order": Checkout;
         "value": string;
     }
+    interface ScOrderManualInstructions {
+        "manualPaymentInstructions": string;
+        "manualPaymentTitle": string;
+    }
     interface ScOrderPassword {
         /**
           * The input's autofocus attribute.
@@ -3635,6 +3639,12 @@ declare global {
         prototype: HTMLScOrderDetailElement;
         new (): HTMLScOrderDetailElement;
     };
+    interface HTMLScOrderManualInstructionsElement extends Components.ScOrderManualInstructions, HTMLStencilElement {
+    }
+    var HTMLScOrderManualInstructionsElement: {
+        prototype: HTMLScOrderManualInstructionsElement;
+        new (): HTMLScOrderManualInstructionsElement;
+    };
     interface HTMLScOrderPasswordElement extends Components.ScOrderPassword, HTMLStencilElement {
     }
     var HTMLScOrderPasswordElement: {
@@ -4123,6 +4133,7 @@ declare global {
         "sc-order-confirmation-totals": HTMLScOrderConfirmationTotalsElement;
         "sc-order-coupon-form": HTMLScOrderCouponFormElement;
         "sc-order-detail": HTMLScOrderDetailElement;
+        "sc-order-manual-instructions": HTMLScOrderManualInstructionsElement;
         "sc-order-password": HTMLScOrderPasswordElement;
         "sc-order-shipping-address": HTMLScOrderShippingAddressElement;
         "sc-order-status-badge": HTMLScOrderStatusBadgeElement;
@@ -5916,6 +5927,10 @@ declare namespace LocalJSX {
         "order"?: Checkout;
         "value"?: string;
     }
+    interface ScOrderManualInstructions {
+        "manualPaymentInstructions"?: string;
+        "manualPaymentTitle"?: string;
+    }
     interface ScOrderPassword {
         /**
           * The input's autofocus attribute.
@@ -7512,6 +7527,7 @@ declare namespace LocalJSX {
         "sc-order-confirmation-totals": ScOrderConfirmationTotals;
         "sc-order-coupon-form": ScOrderCouponForm;
         "sc-order-detail": ScOrderDetail;
+        "sc-order-manual-instructions": ScOrderManualInstructions;
         "sc-order-password": ScOrderPassword;
         "sc-order-shipping-address": ScOrderShippingAddress;
         "sc-order-status-badge": ScOrderStatusBadge;
@@ -7670,6 +7686,7 @@ declare module "@stencil/core" {
             "sc-order-confirmation-totals": LocalJSX.ScOrderConfirmationTotals & JSXBase.HTMLAttributes<HTMLScOrderConfirmationTotalsElement>;
             "sc-order-coupon-form": LocalJSX.ScOrderCouponForm & JSXBase.HTMLAttributes<HTMLScOrderCouponFormElement>;
             "sc-order-detail": LocalJSX.ScOrderDetail & JSXBase.HTMLAttributes<HTMLScOrderDetailElement>;
+            "sc-order-manual-instructions": LocalJSX.ScOrderManualInstructions & JSXBase.HTMLAttributes<HTMLScOrderManualInstructionsElement>;
             "sc-order-password": LocalJSX.ScOrderPassword & JSXBase.HTMLAttributes<HTMLScOrderPasswordElement>;
             "sc-order-shipping-address": LocalJSX.ScOrderShippingAddress & JSXBase.HTMLAttributes<HTMLScOrderShippingAddressElement>;
             "sc-order-status-badge": LocalJSX.ScOrderStatusBadge & JSXBase.HTMLAttributes<HTMLScOrderStatusBadgeElement>;

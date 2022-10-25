@@ -1,5 +1,5 @@
 import apiFetch from '../../../../functions/fetch';
-import { Checkout } from '../../../../types';
+import { Checkout, ManualPaymentMethod } from '../../../../types';
 import { Component, State, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs, getQueryArg } from '@wordpress/url';
@@ -48,6 +48,7 @@ export class ScOrderConfirmation {
             'customer.shipping_address',
             'payment_intent',
             'discount',
+            'manual_payment_method',
             'discount.promotion',
             'billing_address',
             'shipping_address',
@@ -67,12 +68,16 @@ export class ScOrderConfirmation {
   }
 
   state() {
+    const manualPaymentMethod = this.order?.manual_payment_method as ManualPaymentMethod;
+    console.log(manualPaymentMethod);
     return {
       processor: 'stripe',
       loading: this.loading,
       orderId: this.getSessionId(),
       order: this.order,
       customer: this.order?.customer,
+      manualPaymentTitle: manualPaymentMethod?.name,
+      manualPaymentInstructions: manualPaymentMethod?.instructions,
     };
   }
 
@@ -85,7 +90,17 @@ export class ScOrderConfirmation {
         </sc-alert>
       );
     }
-    return 'asdf';
+  }
+
+  renderManualInstructions() {
+    const paymentMethod = this.order?.manual_payment_method as ManualPaymentMethod;
+    if (!paymentMethod?.instructions) return;
+    return (
+      <sc-alert type="info" open>
+        <span slot="title">{paymentMethod?.name}</span>
+        {paymentMethod?.instructions}
+      </sc-alert>
+    );
   }
 
   render() {
@@ -98,7 +113,7 @@ export class ScOrderConfirmation {
               'hidden': !this.order?.id && !this.loading,
             }}
           >
-            {this.renderOnHold()}
+            <sc-order-manual-instructions></sc-order-manual-instructions>
             <slot />
           </div>
 

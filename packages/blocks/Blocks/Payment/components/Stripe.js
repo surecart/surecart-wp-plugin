@@ -16,7 +16,7 @@ export default ({ attributes: { secure_notice, disabled_methods }, mode }) => {
 		setProcessor(
 			(scBlockData?.processors || []).find(
 				(processor) =>
-					processor?.live_mode === false &&
+					processor?.live_mode === (mode === 'live') &&
 					processor?.processor_type === 'stripe'
 			)
 		);

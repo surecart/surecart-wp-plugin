@@ -370,6 +370,8 @@ export interface Checkout extends Object {
   };
   bump_amount: number;
   payment_method_required?: boolean;
+  manual_payment: boolean;
+  manual_payment_method?: string | ManualPaymentMethod;
   reusable_payment_method_required?: boolean;
   number?: string;
   amount_due?: number;
@@ -440,15 +442,15 @@ export interface ProcessorData {
 }
 
 export interface ManualPaymentMethod {
-  "id": string;
-  "object": "manual_payment_method";
-  "archived": boolean;
-  "archived_at": number;
-  "description": string;
-  "instructions": string;
-  "name": string,
-  "created_at": number,
-  "updated_at": number
+  id: string;
+  object: 'manual_payment_method';
+  archived: boolean;
+  archived_at: number;
+  description: string;
+  instructions: string;
+  name: string;
+  created_at: number;
+  updated_at: number;
 }
 
 export interface Processor {
