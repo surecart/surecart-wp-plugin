@@ -50,9 +50,10 @@ export default ({ customer, loading }) => {
 							</span>
 							<span slot="price">
 								{customer?.balances?.data.map(
-									({ amount, currency }) => {
+									({ amount, currency, id }) => {
 										return (
 											<ScFormatNumber
+												key={id}
 												type="currency"
 												currency={currency}
 												value={-amount}
