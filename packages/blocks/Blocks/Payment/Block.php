@@ -10,6 +10,23 @@ use SureCartBlocks\Blocks\BaseBlock;
  * Checkout block
  */
 class Block extends BaseBlock {
+
+	/**
+	 * Attributes.
+	 *
+	 * @var array
+	 */
+	private $attributes = [];
+
+	/**
+	 * Is the processor enabled?
+	 *
+	 * @return boolean
+	 */
+	public function processorEnabled( $id ) {
+		return ! in_array( $id, $this->attributes['disabled_methods'] ?? [] );
+	}
+
 	/**
 	 * Render the block
 	 *
@@ -19,9 +36,10 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		// get the mode context.
-		$mode       = $this->block->context['surecart/form/mode'] ?? 'live';
-		$processors = Processor::where( [ 'live_mode' => 'test' === $mode ? false : true ] )->get();
+		$this->attributes = $attributes;
+		$this->mode       = $this->block->context['surecart/form/mode'] ?? 'live';
+
+		$processors = Processor::where( [ 'live_mode' => 'test' === $this->mode ? false : true ] )->get();
 
 		ob_start();
 		?>
@@ -32,7 +50,7 @@ class Block extends BaseBlock {
 			default-processor="<?php echo esc_attr( $attributes['default_processor'] ); ?>"
 			secure-notice="<?php echo esc_attr( $attributes['secure_notice'] ); ?>"
 		>
-			<?php $this->renderStripe( $processors, $mode, $attributes ); ?>
+			<?php $this->renderStripe( $processors, $attributes ); ?>
 			<?php $this->renderPayPal( $processors ); ?>
 			<?php $this->renderManualPaymentMethods(); ?>
 		</sc-payment>
@@ -59,12 +77,15 @@ class Block extends BaseBlock {
 	/**
 	 * Render Stripe payment method choice.
 	 *
-	 * @param array  $processors Array of processors.
-	 * @param string $mode Live mode or test mode.
+	 * @param array $processors Array of processors.
 	 *
 	 * @return void
 	 */
-	protected function renderStripe( $processors, $mode, $attributes ) {
+	protected function renderStripe( $processors ) {
+		if ( ! $this->processorEnabled( 'stripe' ) ) {
+			return;
+		}
+
 		$processor = $this->getProcessorByType( 'stripe', $processors );
 		if ( ! $processor ) {
 			return;
@@ -86,13 +107,13 @@ class Block extends BaseBlock {
 					<sc-stripe-payment-element order={this.order} paymentIntent={this.stripePaymentIntent}></sc-stripe-payment-element>
 				<?php else : ?>
 					<sc-stripe-element
-					mode="<?php echo esc_attr( $mode ); ?>"
+					mode="<?php echo esc_attr( $this->mode ); ?>"
 					account-id="<?php echo esc_attr( $processor->processor_data->account_id ?? null ); ?>"
 					publishable-key="<?php echo esc_attr( $processor->processor_data->publishable_key ?? null ); ?>">
 					</sc-stripe-element>
-					<?php if ( ! empty( $attributes['secure_notice'] ) ) : ?>
+					<?php if ( ! empty( $this->attributes['secure_notice'] ) ) : ?>
 						<sc-secure-notice>
-							<?php echo wp_kses_post( $attributes['secure_notice'] ); ?>
+							<?php echo wp_kses_post( $this->attributes['secure_notice'] ); ?>
 						</sc-secure-notice>
 					<?php endif; ?>
 				<?php endif; ?>
@@ -110,6 +131,10 @@ class Block extends BaseBlock {
 	 * @return void
 	 */
 	protected function renderPayPal( $processors ) {
+		if ( ! $this->processorEnabled( 'paypal' ) ) {
+			return;
+		}
+
 		$stripe    = $this->getProcessorByType( 'stripe', $processors );
 		$processor = $this->getProcessorByType( 'paypal', $processors );
 		if ( ! $processor ) {
@@ -117,7 +142,7 @@ class Block extends BaseBlock {
 		}
 		?>
 
-		<?php if ( ! $stripe ) : ?>
+		<?php if ( ! $stripe || ! $this->processorEnabled( 'stripe' ) ) : ?>
 			<sc-payment-method-choice
 				processor-id="paypal-card"
 				<?php echo $processor->recurring_enabled ? 'recurring-enabled' : null; ?>
@@ -163,6 +188,12 @@ class Block extends BaseBlock {
 		<?php $methods = (array) ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? []; ?>
 
 		<?php foreach ( $methods as $method ) : ?>
+			<?php
+			if ( ! $this->processorEnabled( $method->id ) ) :
+				continue;
+			 endif;
+			?>
+
 			<sc-payment-method-choice
 			is-manual
 			processor-id="<?php echo esc_attr( $method->id ); ?>"

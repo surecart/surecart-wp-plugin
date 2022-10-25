@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 import { Checkout, Processor } from '../../../../types';
@@ -38,13 +38,15 @@ export class ScPayment {
   /** Set the checkout procesor. */
   @Event() scSetProcessor: EventEmitter<{ id: string; manual: boolean } | null>;
 
+  private mutationObserver: MutationObserver;
+
   getAllProcessors() {
     return Array.from(this.el.querySelectorAll('sc-payment-method-choice') as NodeListOf<HTMLScPaymentMethodChoiceElement>) || null;
   }
 
   /** Handle processor invalid state. */
   @Listen('scProcessorInvalid')
-  handleInvalidProcessor() {
+  selectFirstProcessor() {
     // set the first processor that is showing and set that one.
     // use settimeout to wait for display:none rendering to finish.
     setTimeout(() => {
@@ -56,18 +58,20 @@ export class ScPayment {
   }
 
   componentDidLoad() {
-    this.paymentChoices = this.getAllProcessors();
-    this.handleHasMultipleChange();
+    this.checkMethodsNumber();
+    this.selectFirstProcessor();
+    this.mutationObserver = new MutationObserver(() => this.checkMethodsNumber());
+    this.mutationObserver.observe(this.el, { attributes: true, childList: true, subtree: false });
   }
 
-  @Watch('checkout')
-  handleOrderChange() {
+  disconnectedCallback() {
+    this.mutationObserver.disconnect();
+  }
+
+  checkMethodsNumber() {
+    this.paymentChoices = this.getAllProcessors();
     const active = this.paymentChoices.filter(choice => !choice?.isDisabled);
     this.hasMultiple = active?.length > 1;
-  }
-
-  @Watch('hasMultiple')
-  handleHasMultipleChange() {
     this.paymentChoices.forEach(choice => {
       choice.hasOthers = this?.hasMultiple;
     });

@@ -1061,7 +1061,6 @@
     "has-others": true,
     "is-disabled": true,
     "is-manual": true,
-    "open": true,
     "processor": true,
     "processor-id": true,
     "recurring-enabled": true,
