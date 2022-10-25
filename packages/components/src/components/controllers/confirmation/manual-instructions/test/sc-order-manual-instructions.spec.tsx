@@ -7,12 +7,6 @@ describe('sc-order-manual-instructions', () => {
       components: [ScOrderManualInstructions],
       html: `<sc-order-manual-instructions></sc-order-manual-instructions>`,
     });
-    expect(page.root).toEqualHtml(`
-      <sc-order-manual-instructions>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </sc-order-manual-instructions>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });
