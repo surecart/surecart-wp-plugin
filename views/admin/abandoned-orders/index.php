@@ -4,5 +4,7 @@
 		[ 'title' => __( 'Abandoned Checkouts', 'surecart' ) ]
 	); ?>
 
+	<div id="stats"></div>
+
 	<?php $table->display(); ?>
 </div>
