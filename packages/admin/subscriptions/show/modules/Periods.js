@@ -4,12 +4,14 @@ import PrevNextButtons from '../../../ui/PrevNextButtons';
 import {
 	ScButton,
 	ScDropdown,
+	ScFlex,
 	ScFormatDate,
 	ScFormatNumber,
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
 	ScOrderStatusBadge,
+	ScText,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
@@ -85,10 +87,10 @@ export default ({ subscriptionId }) => {
 					},
 					status: {
 						label: __('Status', 'surecart'),
-						width: '100px',
+						width: '200px',
 					},
 					view: {
-						width: '100px',
+						width: '50px',
 					},
 				}}
 				empty={__('No billing periods', 'surecart')}
@@ -123,7 +125,34 @@ export default ({ subscriptionId }) => {
 								/>
 							),
 							status: (
-								<ScOrderStatusBadge status={period?.status} />
+								<ScFlex
+									flexDirection="column"
+									style={{ '--spacing': '0.25em' }}
+								>
+									<ScOrderStatusBadge
+										status={period?.status}
+									/>
+									{!!period?.next_payment_retry_at && (
+										<div
+											style={{
+												color: 'var(--sc-color-gray-600)',
+											}}
+										>
+											{__('Next retry:', 'surecart')}{' '}
+											<ScFormatDate
+												type="timestamp"
+												date={
+													period?.next_payment_retry_at
+												}
+												month="short"
+												hour="numeric"
+												minute="numeric"
+												day="numeric"
+												year="numeric"
+											/>
+										</div>
+									)}
+								</ScFlex>
 							),
 							view: (
 								<ScDropdown placement="bottom-end">
