@@ -43,7 +43,7 @@ export default ({ checkoutId }) => {
 		[checkoutId]
 	);
 
-	const onRefunded = (refunded) => {
+	const onRefunded = () => {
 		invalidateCharges();
 		setRefundCharge(false);
 	};
