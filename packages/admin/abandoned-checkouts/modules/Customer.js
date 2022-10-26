@@ -3,14 +3,13 @@ import Box from '../../ui/Box';
 import { css, jsx } from '@emotion/core';
 import {
 	ScButton,
-	ScDivider,
-	ScFormatNumber,
 	ScLineItem,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
 export default ({ customer, loading }) => {
+	const imgUrl = 'https://secure.gravatar.com/avatar/199a213db9f4aed6aa44c629f3854910?s=96&d=mm&r=g';
 	return (
 		<Box
 			title={__('Customer', 'surecart')}
@@ -37,33 +36,22 @@ export default ({ customer, loading }) => {
 				`}
 			>
 				<ScLineItem>
+					{console.log('customer:')}
+					{console.log(customer)}
+					<img
+						src={imgUrl}
+						slot="image"
+						css={css`
+							width: 40px;
+							height: 40px;
+							border-radius: var(
+								--sc-border-radius-medium
+							);
+						`}
+					/>
 					<span slot="title">{customer?.name}</span>
 					<span slot="description">{customer?.email}</span>
 				</ScLineItem>
-
-				{!!customer?.balances?.data?.length && (
-					<>
-						<ScDivider style={{ '--spacing': '0.5em' }} />
-						<ScLineItem>
-							<span slot="title">
-								{__('Credit Balance', 'surecart')}
-							</span>
-							<span slot="price">
-								{customer?.balances?.data.map(
-									({ amount, currency }) => {
-										return (
-											<ScFormatNumber
-												type="currency"
-												currency={currency}
-												value={-amount}
-											/>
-										);
-									}
-								)}
-							</span>
-						</ScLineItem>
-					</>
-				)}
 			</div>
 		</Box>
 	);

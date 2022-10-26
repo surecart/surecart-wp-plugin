@@ -105,7 +105,7 @@ export default () => {
 					<ScButton
 						circle
 						size="small"
-						href="admin.php?page=sc-orders"
+						href="admin.php?page=sc-abandoned-checkouts"
 					>
 						<ScIcon name="arrow-left"></ScIcon>
 					</ScButton>
@@ -113,7 +113,7 @@ export default () => {
 						<ScBreadcrumb>
 							<Logo display="block" />
 						</ScBreadcrumb>
-						<ScBreadcrumb href="admin.php?page=sc-orders">
+						<ScBreadcrumb href="admin.php?page=sc-abandoned-checkouts">
 							{__('Abandoned Checkout', 'surecart')}
 						</ScBreadcrumb>
 						<ScBreadcrumb>
