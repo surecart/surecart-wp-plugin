@@ -44,7 +44,7 @@ export default () => {
 
 	return (
     <>
-      <ScFlex style={{ '--sc-flex-column-gap': '1em' }} flexWrap="wrap">
+      <ScFlex>
         <Box title={__('Recoverable Orders', 'surecart')} loading={loading}>
           <h1>84</h1>
           Total Recoverable Orders.
@@ -61,7 +61,7 @@ export default () => {
 
       <ScDivider style={{ '--spacing': '1em' }} />
 
-      <ScFlex style={{ '--sc-flex-column-gap': '1em' }} flexWrap="wrap">
+      <ScFlex>
         <Box title={__('Recoverable Revenue', 'surecart')} loading={loading}>
           <h1>$1,234.56</h1>
           Total Recoverable Revenue
