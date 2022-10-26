@@ -81,6 +81,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/settings/account/index.js'
 		),
+		['admin/settings/abandoned']: path.resolve(
+			__dirname,
+			'packages/admin/settings/abandoned/index.js'
+		),
 		['admin/settings/subscription']: path.resolve(
 			__dirname,
 			'packages/admin/settings/subscription/index.js'

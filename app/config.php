@@ -43,6 +43,7 @@ return [
 
 		// REST providers.
 		\SureCart\Rest\AbandonedCheckoutRestServiceProvider::class,
+		\SureCart\Rest\AbandonedCheckoutProtocolRestServiceProvider::class,
 		\SureCart\Rest\BlockPatternsRestServiceProvider::class,
 		\SureCart\Rest\AccountRestServiceProvider::class,
 		\SureCart\Rest\BrandRestServiceProvider::class,

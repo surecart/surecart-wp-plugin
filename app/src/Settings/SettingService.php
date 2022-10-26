@@ -80,6 +80,25 @@ class SettingService {
 				'sanitize_callback' => 'boolval',
 			]
 		);
+		$this->register(
+			'general',
+			'tracking_confirmation',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+			]
+		);
+		$this->register(
+			'general',
+			'tracking_confirmation_message',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'default'           => esc_html__( 'Your email and cart are saved so we can send email reminders about this order.', 'surecart' ),
+				'sanitize_callback' => 'sanitize_text_field',
+			]
+		);
 	}
 
 	/**
