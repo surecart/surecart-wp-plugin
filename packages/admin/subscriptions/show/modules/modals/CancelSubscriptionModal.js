@@ -1,14 +1,12 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import {
-	ScAlert,
 	ScBlockUi,
 	ScButton,
 	ScChoice,
 	ScChoices,
 	ScDialog,
 	ScForm,
-	ScFormatDate,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import apiFetch from '@wordpress/api-fetch';
@@ -18,6 +16,7 @@ import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
+import Error from '../../../../components/Error';
 
 export default ({ subscription, open, onRequestClose }) => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
@@ -53,7 +52,7 @@ export default ({ subscription, open, onRequestClose }) => {
 			onRequestClose();
 		} catch (e) {
 			console.error(e);
-			setError(e?.message);
+			setError(e);
 		} finally {
 			setLoading(false);
 		}
@@ -71,9 +70,7 @@ export default ({ subscription, open, onRequestClose }) => {
 				open={open}
 				onScRequestClose={onRequestClose}
 			>
-				<ScAlert open={error} type="error">
-					{error}
-				</ScAlert>
+				<Error error={error} setError={setError} />
 				<ScChoices
 					label={__(
 						'When do you want to cancel the subscription?',

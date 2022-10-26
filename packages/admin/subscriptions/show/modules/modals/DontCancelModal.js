@@ -1,9 +1,4 @@
-import {
-	ScAlert,
-	ScBlockUi,
-	ScButton,
-	ScDialog,
-} from '@surecart/components-react';
+import { ScBlockUi, ScButton, ScDialog } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import apiFetch from '@wordpress/api-fetch';
 import { store as coreStore } from '@wordpress/core-data';
@@ -11,6 +6,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
+import Error from '../../../../components/Error';
 
 export default ({ open, onRequestClose }) => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
@@ -36,8 +32,7 @@ export default ({ open, onRequestClose }) => {
 			});
 			onRequestClose();
 		} catch (e) {
-			console.error(e);
-			setError(e?.message);
+			setError(e);
 		} finally {
 			setLoading(false);
 		}
@@ -49,9 +44,7 @@ export default ({ open, onRequestClose }) => {
 			open={open}
 			onScRequestClose={onRequestClose}
 		>
-			<ScAlert open={error} type="error">
-				{error}
-			</ScAlert>
+			<Error error={error} setError={setError} />
 			{__(
 				'Are you sure you wish to resume this subscription?',
 				'surecart'
