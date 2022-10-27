@@ -354,6 +354,7 @@
     "slot": true
   },
   "sc-customer-email": {
+    "abandoned-checkout-enabled": true,
     "autofocus": true,
     "customer": true,
     "disabled": true,
@@ -369,6 +370,7 @@
     "required": true,
     "show-label": true,
     "size": true,
+    "tracking-confirmation-message": true,
     "value": true,
     "style": true,
     "id": true,

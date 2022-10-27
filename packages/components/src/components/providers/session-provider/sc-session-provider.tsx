@@ -182,6 +182,14 @@ export class ScSessionProvider {
     this.scSetState.emit('REJECT');
   }
 
+  @Listen('scUpdateAbandonedCart')
+  async handleAbandonedCartUpdate(e) {
+    const abandoned_checkout_enabled = e.detail;
+    this.loadUpdate({
+      abandoned_checkout_enabled,
+    });
+  }
+
   /** Handles coupon updates. */
   @Listen('scApplyCoupon')
   async handleCouponApply(e) {
