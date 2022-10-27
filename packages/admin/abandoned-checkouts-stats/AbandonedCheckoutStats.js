@@ -1,26 +1,39 @@
 import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
-import { ScDivider, ScFlex } from '@surecart/components-react';
+import { ScButton, ScDivider, ScFlex } from '@surecart/components-react';
 import Box from '../ui/Box';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useState, useEffect } from '@wordpress/element';
 
 export default () => {
-  const [startDate, setStartDate] = useState(
-		new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
-	);
-  const [endDate, setEndDate] = useState(new Date());
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
-  const [interval, setInterval] = useState('day');
+  const [filter, setFilter] = useState('today');
 
   const getAbandonedData = async() => {
-    let startDateObj = new Date(startDate);
-		let endDateObj = new Date(endDate);
-    console.log(startDateObj);
-    console.log(endDateObj);
+    let startDate = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    let endDate = new Date();
+    let interval = "day";
+    switch (filter) {
+      case "yesterday":
+        endDate = startDate;
+        startDate = new Date(Date.now() - 2 * 24 * 60 * 60 * 1000);
+        break;
+      case "lastweek":
+        startDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+        break;
+      case "lastmonth":
+        startDate = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+        break;
+      default:
+        interval = "hour";
+        break;
+    }
+    let startDateObj = new Date(startDate).toISOString();
+    let endDateObj = new Date(endDate).toISOString();
+
     try {
       setError(false);
       setLoading(true);
@@ -43,12 +56,21 @@ export default () => {
 
   useEffect(()=>{
     getAbandonedData();
-  }, []);
+  }, [filter]);
 
   console.log(data);
 
 	return (
     <>
+      <ScFlex alignItems="center" justifyContent="flex-start">
+        <ScButton onClick={() => setFilter('today')} size="small" type={filter === 'today' ? 'default' : 'text'}>{__('Today', 'surecart')}</ScButton>
+        <ScButton onClick={() => setFilter('yesterday')} size="small" type={filter === 'yesterday' ? 'default' : 'text'}>{__('Yesterday', 'surecart')}</ScButton>
+        <ScButton onClick={() => setFilter('lastweek')} size="small" type={filter === 'lastweek' ? 'default' : 'text'}>{__('Last Week', 'surecart')}</ScButton>
+        <ScButton onClick={() => setFilter('lastmonth')} size="small" type={filter === 'lastmonth' ? 'default' : 'text'}>{__('Last Month', 'surecart')}</ScButton>
+      </ScFlex>
+
+      <ScDivider style={{ '--spacing': '1em' }} />
+
       <ScFlex>
         <div style={{'width': '33%'}}>
           <Box title={__('Recoverable Orders', 'surecart')} loading={loading}>
