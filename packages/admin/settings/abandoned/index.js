@@ -1,6 +1,6 @@
 import { render } from '@wordpress/element';
 import ErrorBoundary from '../../components/error-boundary';
-import '../store';
+import '../../store/add-entities';
 
 import Settings from './AbandonedSettings';
 

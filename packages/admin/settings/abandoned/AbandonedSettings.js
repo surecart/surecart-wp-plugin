@@ -1,18 +1,29 @@
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { ScSelect, ScSwitch, ScTextarea } from '@surecart/components-react';
+import {
+	ScInput,
+	ScSelect,
+	ScSwitch,
+	ScTextarea,
+} from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
 import useEntity from '../../hooks/useEntity';
+import { store as coreStore } from '@wordpress/core-data';
 import Error from '../../components/Error';
 import useSave from '../UseSave';
 import { useEntityProp } from '@wordpress/core-data';
 
 import { TIME_CHOICES } from './util';
+import Coupon from './Coupon';
+import { useDispatch } from '@wordpress/data';
+import { useEffect } from 'react';
 
 export default () => {
 	const [error, setError] = useState(null);
 	const { save } = useSave();
+	const { receiveEntityRecords } = useDispatch(coreStore);
+
 	const { item, itemError, editItem, hasLoadedItem } = useEntity(
 		'store',
 		'abandoned_checkout_protocol'
@@ -27,6 +38,13 @@ export default () => {
 
 	const [trackingConfirmationMessage, setTrackingConfirmationMessage] =
 		useEntityProp('root', 'site', 'surecart_tracking_confirmation_message');
+
+	// update coupon in store.
+	useEffect(() => {
+		if (item?.coupon) {
+			receiveEntityRecords('surecart', 'coupon', item.coupon);
+		}
+	}, [item?.coupon]);
 
 	const updateNotification = (value, index) =>
 		editItem({
@@ -119,6 +137,60 @@ export default () => {
 					</>
 				)}
 			</SettingsBox>
+
+			{item?.enabled && (
+				<SettingsBox
+					title={__('Discount Settings', 'surecart')}
+					description={__(
+						'Your discount settings for abandoned cart.',
+						'surecart'
+					)}
+					loading={!hasLoadedItem}
+				>
+					<ScSwitch
+						checked={item?.first_promotion_notification}
+						onScChange={(e) =>
+							editItem({
+								first_promotion_notification: e.target.checked
+									? 1
+									: 0,
+							})
+						}
+					>
+						{__('Abandoned Checkout Discount', 'surecart')}
+						<span slot="description">
+							{__(
+								'Add a discount incentive for abandoned cart.',
+								'surecart'
+							)}
+						</span>
+					</ScSwitch>
+
+					{!!item?.first_promotion_notification && (
+						<>
+							<ScInput
+								label={__(
+									'Provide a coupon for email',
+									'surecart'
+								)}
+								value={item?.first_promotion_notification}
+								type="number"
+								min="1"
+								max="3"
+								onScInput={(e) => {
+									if (e.target.value) {
+										editItem({
+											first_promotion_notification:
+												parseInt(e.target.value),
+										});
+									}
+								}}
+							/>
+							<Coupon coupon={item?.coupon} />
+						</>
+					)}
+				</SettingsBox>
+			)}
 
 			<SettingsBox
 				title={__('GDPR Settings', 'surecart')}
