@@ -104,6 +104,7 @@ return [
 	* SSR Blocks
 	*/
 	'blocks'                 => [
+		\SureCartBlocks\Blocks\Email\Block::class,
 		\SureCartBlocks\Blocks\BuyButton\Block::class,
 		\SureCartBlocks\Blocks\AddToCartButton\Block::class,
 		\SureCartBlocks\Blocks\CustomerDashboardButton\Block::class,

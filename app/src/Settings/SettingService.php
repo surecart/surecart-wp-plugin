@@ -133,4 +133,13 @@ class SettingService {
 	public function recaptcha() {
 		return new RecaptchaValidationService();
 	}
+
+	/**
+	 * Get the option.
+	 *
+	 * @return mixed
+	 */
+	public function get( $name, $default = false ) {
+		return get_option( "surecart_${name}", $default );
+	}
 }

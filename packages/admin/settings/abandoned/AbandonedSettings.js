@@ -168,16 +168,14 @@ export default () => {
 
 					{!!item?.first_promotion_notification && (
 						<>
-							<ScInput
+							<Coupon coupon={item?.coupon} />
+							<ScSelect
 								label={__(
-									'Provide a coupon for email',
+									'When should we offer the discount?',
 									'surecart'
 								)}
 								value={item?.first_promotion_notification}
-								type="number"
-								min="1"
-								max="3"
-								onScInput={(e) => {
+								onSeChange={(e) => {
 									if (e.target.value) {
 										editItem({
 											first_promotion_notification:
@@ -185,8 +183,30 @@ export default () => {
 										});
 									}
 								}}
+								choices={[
+									{
+										label: __(
+											'On the first email',
+											'surecart'
+										),
+										value: 1,
+									},
+									{
+										label: __(
+											'On the second email',
+											'surecart'
+										),
+										value: 2,
+									},
+									{
+										label: __(
+											'On the final email',
+											'surecart'
+										),
+										value: 3,
+									},
+								]}
 							/>
-							<Coupon coupon={item?.coupon} />
 						</>
 					)}
 				</SettingsBox>

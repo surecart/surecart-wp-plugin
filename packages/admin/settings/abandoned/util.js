@@ -57,12 +57,4 @@ export const TIME_CHOICES = [
 		label: __('1 week', 'surecart'),
 		value: WEEK,
 	},
-	{
-		label: __('1.5 weeks', 'surecart'),
-		value: WEEK * 1.5,
-	},
-	{
-		label: __('2 weeks', 'surecart'),
-		value: WEEK * 2,
-	},
 ];
