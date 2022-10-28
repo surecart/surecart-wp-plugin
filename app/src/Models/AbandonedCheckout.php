@@ -31,7 +31,7 @@ class AbandonedCheckout extends Model {
 	 * @return void
 	 */
 	protected function setLatestRecoverableCheckoutAttribute( $value ) {
-		$this->setRelation( 'latest_recoverable_checkout', $value, Checkout::class );
+		$this->setRelation( 'recovered_checkout', $value, Checkout::class );
 	}
 
 	/**
@@ -40,7 +40,7 @@ class AbandonedCheckout extends Model {
 	 * @return string
 	 */
 	public function getLatestRecoverableCheckoutIdAttribute() {
-		return $this->getRelationId( 'latest_recoverable_checkout' );
+		return $this->getRelationId( 'recovered_checkout' );
 	}
 
 	/**

@@ -16,13 +16,22 @@ class AbandonedCheckoutViewController {
 		// enqueue stats.
 		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( AbandonedCheckoutStatsScriptsController::class, 'enqueue' ) );
 
-		$table = new AbandonedCheckoutListTable();
-		$table->prepare_items();
-		return \SureCart::view( 'admin/abandoned-orders/index' )->with(
-			[
-				'table' => $table,
-			]
-		);
+		$entitlements = \SureCart::account()->entitlements;
+
+		if ( empty( $entitlements->abandoned_checkouts ) ) {
+			wp_enqueue_style( 'surecart-themes-default' );
+			wp_enqueue_script('surecart-components');
+
+			return \SureCart::view( 'admin/abandoned-orders/cta-banner' )->toString();
+		} else {
+			$table = new AbandonedCheckoutListTable();
+			$table->prepare_items();
+			return \SureCart::view( 'admin/abandoned-orders/index' )->with(
+				[
+					'table' => $table,
+				]
+			);
+		}
 	}
 
 	/**

@@ -60,13 +60,13 @@ class AbandonedCheckoutRestServiceProvider extends RestServiceProvider implement
 					'type'        => 'string',
 					'readonly'    => true,
 				],
-				'status'                      => [
+				'notifications_scheduled_at'  => [
 					'description' => esc_html__( 'The current status of this abandonded checkout, which can be one of not_notified, notified, or recovered.', 'surecart' ),
-					'type'        => 'string',
+					'type'        => 'object',
 					'readonly'    => true,
 				],
-				'customer_id'                 => [
-					'description' => esc_html__( 'The customer id for the checkout.', 'surecart' ),
+				'checkout'                    => [
+					'description' => esc_html__( 'The checkout id for the checkout.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'edit' ],
 					'readonly'    => true,
@@ -77,7 +77,7 @@ class AbandonedCheckoutRestServiceProvider extends RestServiceProvider implement
 					'context'     => [ 'edit' ],
 					'readonly'    => true,
 				],
-				'latest_recoverable_checkout' => [
+				'recovered_checkout' => [
 					'description' => esc_html__( "This customer's most recent checkout that has been abandoned.", 'surecart' ),
 					'type'        => 'object',
 					'context'     => [ 'edit' ],

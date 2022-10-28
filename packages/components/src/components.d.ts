@@ -687,6 +687,10 @@ export namespace Components {
     }
     interface ScCustomerEmail {
         /**
+          * Is abandoned checkout enabled?
+         */
+        "abandonedCheckoutEnabled": boolean;
+        /**
           * The input's autofocus attribute.
          */
         "autofocus": boolean;
@@ -747,6 +751,10 @@ export namespace Components {
           * The input's size.
          */
         "size": 'small' | 'medium' | 'large';
+        /**
+          * A message for tracking confirmation.
+         */
+        "trackingConfirmationMessage": string;
         /**
           * The input's value attribute.
          */
@@ -2111,6 +2119,10 @@ export namespace Components {
           * Recurring interval (i.e. monthly, once, etc.)
          */
         "interval": string;
+        /**
+          * The max allowed.
+         */
+        "max": number;
         /**
           * Product name
          */
@@ -4919,6 +4931,10 @@ declare namespace LocalJSX {
     }
     interface ScCustomerEmail {
         /**
+          * Is abandoned checkout enabled?
+         */
+        "abandonedCheckoutEnabled"?: boolean;
+        /**
           * The input's autofocus attribute.
          */
         "autofocus"?: boolean;
@@ -4975,6 +4991,10 @@ declare namespace LocalJSX {
          */
         "onScLoginPrompt"?: (event: ScCustomerEmailCustomEvent<void>) => void;
         /**
+          * Update the abandoned cart.
+         */
+        "onScUpdateAbandonedCart"?: (event: ScCustomerEmailCustomEvent<boolean>) => void;
+        /**
           * Update the order state.
          */
         "onScUpdateOrderState"?: (event: ScCustomerEmailCustomEvent<Checkout>) => void;
@@ -5006,6 +5026,10 @@ declare namespace LocalJSX {
           * The input's size.
          */
         "size"?: 'small' | 'medium' | 'large';
+        /**
+          * A message for tracking confirmation.
+         */
+        "trackingConfirmationMessage"?: string;
         /**
           * The input's value attribute.
          */
@@ -6535,6 +6559,10 @@ declare namespace LocalJSX {
           * Recurring interval (i.e. monthly, once, etc.)
          */
         "interval"?: string;
+        /**
+          * The max allowed.
+         */
+        "max"?: number;
         /**
           * Product name
          */
