@@ -1,8 +1,9 @@
-/** @jsx jsx */
-import { sprintf, __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
+/** @jsx jsx */
+import { __, sprintf } from '@wordpress/i18n';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
+
 dayjs.extend(duration);
 import {
 	ScFlex,
@@ -166,7 +167,11 @@ export default () => {
 		>
 			<Error error={error} setError={setError} />
 
-			<ScFlex alignItems="center" justifyContent="flex-start">
+			<ScFlex
+				alignItems="center"
+				justifyContent="flex-start"
+				flexWrap="wrap"
+			>
 				<Tab
 					selected={filter === 'today'}
 					onClick={() => setFilter('today')}
@@ -208,7 +213,17 @@ export default () => {
 			<div
 				css={css`
 					display: grid;
-					grid-template-columns: 1fr 1fr 1fr;
+					grid-template-columns: 1fr;
+
+					// 2 col, wide mobile.
+					@media screen and (min-width: 720px) {
+						grid-template-columns: 1fr 1fr;
+					}
+
+					// 3 col, desktop.
+					@media screen and (min-width: 1280px) {
+						grid-template-columns: 1fr 1fr 1fr;
+					}
 					gap: 1.5em;
 				`}
 			>

@@ -1,6 +1,7 @@
+import { css, jsx } from '@emotion/core';
+
 /** @jsx jsx */
 import Box from '../ui/Box';
-import { css, jsx } from '@emotion/core';
 
 export default ({ title, loading, description, children, compare }) => {
 	return (
