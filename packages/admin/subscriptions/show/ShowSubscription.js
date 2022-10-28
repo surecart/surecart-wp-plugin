@@ -99,8 +99,11 @@ export default () => {
 
 	/** Render the complete button */
 	const renderCompleteButton = () => {
-		if (!subscription?.remaining_period_count) return null;
-		if (subscription?.status !== 'active') return null;
+		// bail if not finite.
+		if (!subscription?.finite) return null;
+		// bail if completed.
+		if (subscription?.status === 'completed') return null;
+
 		return (
 			<ScMenuItem onClick={() => setModal('complete')}>
 				{__('Complete Subscription', 'surecart')}
