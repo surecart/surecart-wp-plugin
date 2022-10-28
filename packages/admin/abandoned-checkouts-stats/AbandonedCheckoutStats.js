@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
-import { ScButton, ScDivider, ScFlex } from '@surecart/components-react';
+import { ScButton, ScDivider, ScFlex, ScFormatNumber } from '@surecart/components-react';
 import Box from '../ui/Box';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
@@ -54,11 +54,50 @@ export default () => {
     }
   }
 
+  let recoverableOrderTitle;
+  let recoverableOrder;
+  let recoveredOrderTitle;
+  let recoveredOrder;
+  let orderRecoveryTitle;
+  let orderRecovery;
+  let recoverableRevenueTitle;
+  let recoverableRevenue;
+  let recoveredRevenueTitle;
+  let recoveredRevenue;
+  let recoveryRateTitle;
+  let recoveryRate;
+
+  if (scData?.entitlements?.licensing) {
+    recoverableOrderTitle = __('Recoverable Orders', 'surecart');
+    recoverableOrder = data?.[0]?.count ?? 0;
+    recoveredOrderTitle = __('Recovered Orders', 'surecart');
+    recoveredOrder = data?.[0]?.assisted_count ?? 0;
+    orderRecoveryTitle = __('Recovered Order Recovery Rate', 'surecart');
+    orderRecovery = data?.[0]?.assisted_rate ?? 0;
+    recoverableRevenueTitle = __('Recoverable Revenue', 'surecart');
+    recoverableRevenue = data?.[0]?.amount ?? 0;
+    recoveredRevenueTitle = __('Recovered Revenue', 'surecart');
+    recoveredRevenue = data?.[0]?.recovered_amount ?? 0;
+    recoveryRateTitle = __('Recovery Rate', 'surecart');
+    recoveryRate = data?.[0]?.recovered_rate ?? 0;
+  } else {
+    recoverableOrderTitle = __('Recoverable Orders', 'surecart');
+    recoverableOrder = data?.[0]?.count ?? 0;
+    recoveredOrderTitle = __('Potential Recovered Orders', 'surecart');
+    recoveredOrder = data?.[0]?.assisted_count ? data?.[0]?.assisted_count * .18 : 0;
+    orderRecoveryTitle = __('Potential Order Recovery Rate', 'surecart');
+    orderRecovery = data?.[0]?.assisted_rate ? data?.[0]?.assisted_rate * .18 : 0;
+    recoverableRevenueTitle = __('Recoverable Revenue', 'surecart');
+    recoverableRevenue = data?.[0]?.amount ?? 0;
+    recoveredRevenueTitle = __('Potential Recovered Revenue', 'surecart');
+    recoveredRevenue = data?.[0]?.recovered_amount ? data?.[0]?.recovered_amount * .18 : 0;
+    recoveryRateTitle = __('Potential Recovery Rate', 'surecart');
+    recoveryRate = data?.[0]?.recovered_rate ? data?.[0]?.recovered_rate * .18 : 0;
+  }
+
   useEffect(()=>{
     getAbandonedData();
   }, [filter]);
-
-  console.log(data);
 
 	return (
     <>
@@ -73,20 +112,20 @@ export default () => {
 
       <ScFlex>
         <div style={{'width': '33%'}}>
-          <Box title={__('Recoverable Orders', 'surecart')} loading={loading}>
-            <h1>84</h1>
+          <Box title={recoverableOrderTitle} loading={loading}>
+            <h1>{recoverableOrder}</h1>
             Total Recoverable Orders.
           </Box>
         </div>
         <div style={{'width': '33%'}}>
-          <Box title={__('Recovered Orders', 'surecart')} loading={loading}>
-            <h1>71</h1>
+          <Box title={recoveredOrderTitle} loading={loading}>
+            <h1>{recoveredOrder}</h1>
             Total Recovered Orders.
           </Box>
         </div>
         <div style={{'width': '33%'}}>
-          <Box title={__('Recovered Order Recovery Rate', 'surecart')} loading={loading}>
-            <h1>42%</h1>
+          <Box title={orderRecoveryTitle} loading={loading}>
+            <h1>{orderRecovery}%</h1>
             Total Recovered Order Recovery Rate
           </Box>
         </div>
@@ -96,21 +135,21 @@ export default () => {
 
       <ScFlex>
         <div style={{'width': '33%'}}>
-          <Box title={__('Recoverable Revenue', 'surecart')} loading={loading}>
-            <h1>$1,234.56</h1>
+          <Box title={recoverableRevenueTitle} loading={loading}>
+            <h1><ScFormatNumber type='currency' currency='usd' value={recoverableRevenue} /></h1>
             Total Recoverable Revenue
           </Box>
         </div>
         <div style={{'width': '33%'}}>
-          <Box title={__('Potential Recovered Revenue', 'surecart')} loading={loading}>
-            <h1>$2,345.67</h1>
+          <Box title={recoveredRevenueTitle} loading={loading}>
+            <h1><ScFormatNumber type='currency' currency='usd' value={recoveredRevenue} /></h1>
             Total Recovered Revenue
           </Box>
         </div>
         <div style={{'width': '33%'}}>
-          <Box title={__('Potential Recovery Rate', 'surecart')} loading={loading}>
-            <h1>30%</h1>
-            Total Potential Recovery Rate
+          <Box title={recoveryRateTitle} loading={loading}>
+            <h1>{recoveryRate}%</h1>
+            Total Recovery Rate
           </Box>
         </div>
       </ScFlex>
