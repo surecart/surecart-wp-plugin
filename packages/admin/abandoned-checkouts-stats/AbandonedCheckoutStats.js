@@ -32,7 +32,7 @@ export default () => {
 		let endDate = dayjs().endOf('day');
 		let prevEndDate = startDate;
 		let prevStartDate = dayjs(startDate).add(-1, 'day');
-		let interval = 'hour';
+		let interval = 'day';
 
 		// change current and previous dates.
 		switch (filter) {
@@ -41,36 +41,36 @@ export default () => {
 				startDate = dayjs().startOf('day').add(-1, 'day');
 				prevEndDate = startDate;
 				prevStartDate = dayjs(startDate).add(-1, 'day');
-				interval = 'hour';
 				break;
 			case 'thisweek':
 				startDate = dayjs().startOf('week');
 				endDate = dayjs().endOf('day');
 				prevEndDate = startDate;
 				prevStartDate = dayjs(startDate).add(-1, 'week');
-				interval = 'day';
 				break;
 			case 'lastweek':
 				startDate = dayjs().startOf('week').add(-1, 'week');
 				endDate = dayjs().startOf('week');
 				prevEndDate = startDate;
 				prevStartDate = dayjs(startDate).add(-1, 'week');
-				interval = 'day';
 				break;
 			case 'thismonth':
 				startDate = dayjs().startOf('month');
 				endDate = dayjs().endOf('day');
 				prevEndDate = startDate;
 				prevStartDate = dayjs(startDate).add(-1, 'month');
-				interval = 'day';
 				break;
 			case 'lastmonth':
 				startDate = dayjs().startOf('month').add(-1, 'month');
 				endDate = dayjs().startOf('month');
 				prevEndDate = startDate;
 				prevStartDate = dayjs(startDate).add(-1, 'month');
-				interval = 'week';
 				break;
+		}
+
+		// set interval to hour if day is not enough
+		if (endDate.diff(startDate, 'day') < 1) {
+			interval = 'hour';
 		}
 
 		try {
