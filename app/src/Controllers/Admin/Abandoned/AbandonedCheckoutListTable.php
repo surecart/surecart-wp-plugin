@@ -41,7 +41,7 @@ class AbandonedCheckoutListTable extends ListTable {
 		$stati = [
 			'all'           => __( 'All', 'surecart' ),
 			'scheduled'     => __( 'Scheduled', 'surecart' ),
-			'send'          => __( 'Send', 'surecart' ),
+			'sent'          => __( 'Sent', 'surecart' ),
 			'not_scheduled' => __( 'Not Scheduled', 'surecart' ),
 		];
 
@@ -94,11 +94,11 @@ class AbandonedCheckoutListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return [
-			'placed_by'       => __( 'Placed By', 'surecart' ),
-			'date'            => __( 'Date', 'surecart' ),
-			'email_status'    => __( 'Email Status', 'surecart' ),
-			'recovery_status' => __( 'Recovery Status', 'surecart' ),
-			'total'           => __( 'Total', 'surecart' ),
+			'placed_by'           => __( 'Placed By', 'surecart' ),
+			'date'            	  => __( 'Date', 'surecart' ),
+			'email_status'    	  => __( 'Email Status', 'surecart' ),
+			'notification_status' => __( 'Notification Status', 'surecart' ),
+			'total'           	  => __( 'Total', 'surecart' ),
 		];
 	}
 
@@ -111,10 +111,9 @@ class AbandonedCheckoutListTable extends ListTable {
 		$status = $this->getStatus();
 		$where  = [];
 		if ( $status ) {
-			$where['notification_status'] = $status;
+			$where['notification_status'] = [$status];
 		}
-
-		return AbandonedCheckout::where( $where )
+		return AbandonedCheckout::where($where)
 		->with( [ 'recovered_checkout', 'checkout', 'customer' ] )
 		->paginate(
 			[
@@ -145,7 +144,7 @@ class AbandonedCheckoutListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_total( $abandoned ) {
-		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $abandoned->recovered_checkout->currency ?? 'usd' ) ) . '" value="' . (float) $abandoned->recovered_checkout->total_amount . '"></sc-format-number>';
+		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $abandoned->checkout->currency ?? 'usd' ) ) . '" value="' . (float) $abandoned->checkout->total_amount . '"></sc-format-number>';
 	}
 
 	/**
@@ -167,7 +166,7 @@ class AbandonedCheckoutListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_email_status( $abandoned ) {
-		return 'sent' === $abandoned->status ? '<sc-tag type="success">' . __( 'Sent', 'surecart' ) . '</sc-tag>' : '<sc-tag>' . __( 'Not Sent', 'surecart' ) . '</sc-tag>';
+		return 'sent' === $abandoned->notification_status ? '<sc-tag type="success">' . __( 'Sent', 'surecart' ) . '</sc-tag>' : '<sc-tag>' . __( 'Not Sent', 'surecart' ) . '</sc-tag>';
 	}
 
 
@@ -178,8 +177,8 @@ class AbandonedCheckoutListTable extends ListTable {
 	 *
 	 * @return string
 	 */
-	public function column_recovery_status( $abandoned ) {
-		switch ( $abandoned->status ) {
+	public function column_notification_status( $abandoned ) {
+		switch ( $abandoned->notification_status ) {
 			case 'scheduled':
 				return '<sc-tag type="success">' . __( 'Scheduled', 'surecart' ) . '</sc-tag>';
 			case 'not_scheduled':
@@ -187,7 +186,7 @@ class AbandonedCheckoutListTable extends ListTable {
 			case 'sent':
 				return '<sc-tag type="warning">' . __( 'Sent', 'surecart' ) . '</sc-tag>';
 		}
-		 return '<sc-tag>' . esc_html( $abandoned->status ?? 'Unknown' ) . '</sc-tag>';
+		 return '<sc-tag>' . esc_html( $abandoned->notification_status ?? 'Unknown' ) . '</sc-tag>';
 	}
 
 	/**

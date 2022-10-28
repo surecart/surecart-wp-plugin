@@ -29,7 +29,6 @@ export default () => {
 	const { order, hasLoadedOrder, orderError } = useEntity('order', id, {
 		expand: [
 			'checkout',
-			'checkout.charge',
 			'checkout.customer',
 			'checkout.tax_identifier',
 			'checkout.shipping_address',
