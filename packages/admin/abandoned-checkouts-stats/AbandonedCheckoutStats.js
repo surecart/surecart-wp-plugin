@@ -77,9 +77,9 @@ export default () => {
     recoverableRevenueTitle = __('Recoverable Revenue', 'surecart');
     recoverableRevenue = data?.[0]?.amount ?? 0;
     recoveredRevenueTitle = __('Recovered Revenue', 'surecart');
-    recoveredRevenue = data?.[0]?.recovered_amount ?? 0;
+    recoveredRevenue = data?.[0]?.assisted_amount ?? 0;
     recoveryRateTitle = __('Recovery Rate', 'surecart');
-    recoveryRate = data?.[0]?.recovered_rate ?? 0;
+    recoveryRate = data?.[0]?.assisted_amount_rate ?? 0;
   } else {
     recoverableOrderTitle = __('Recoverable Orders', 'surecart');
     recoverableOrder = data?.[0]?.count ?? 0;
@@ -90,9 +90,9 @@ export default () => {
     recoverableRevenueTitle = __('Recoverable Revenue', 'surecart');
     recoverableRevenue = data?.[0]?.amount ?? 0;
     recoveredRevenueTitle = __('Potential Recovered Revenue', 'surecart');
-    recoveredRevenue = data?.[0]?.recovered_amount ? data?.[0]?.recovered_amount * .18 : 0;
+    recoveredRevenue = data?.[0]?.assisted_amount ? data?.[0]?.assisted_amount * .18 : 0;
     recoveryRateTitle = __('Potential Recovery Rate', 'surecart');
-    recoveryRate = data?.[0]?.recovered_rate ? data?.[0]?.recovered_rate * .18 : 0;
+    recoveryRate = data?.[0]?.assisted_amount_rate ? data?.[0]?.assisted_amount_rate * .18 : 0;
   }
 
   useEffect(()=>{
