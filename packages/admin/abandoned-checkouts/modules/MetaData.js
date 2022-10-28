@@ -4,13 +4,13 @@ import { css, jsx } from '@emotion/core';
 import { ScText } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
-export default ({ order, loading }) => {
-	if (!Object.keys(order?.checkout?.metadata || {}).length || loading) {
+export default ({ abandoned, loading }) => {
+	if (!Object.keys(abandoned?.checkout?.metadata || {}).length || loading) {
 		return null;
 	}
 
 	const { wp_created_by, page_id, page_url, ...metadata } =
-		order?.checkout?.metadata || {};
+		abandoned?.checkout?.metadata || {};
 
 	return (
 		<Box title={__('Metadata', 'surecart')}>

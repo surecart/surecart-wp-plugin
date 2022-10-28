@@ -10,7 +10,7 @@ import {
 	ScTag,
 } from '@surecart/components-react';
 
-export default ({ order, checkout, loading }) => {
+export default ({ abandoned, checkout, loading }) => {
 	if (loading) {
 		return (
 			<div
@@ -27,7 +27,7 @@ export default ({ order, checkout, loading }) => {
 		);
 	}
 
-	if (!order?.id) {
+	if (!abandoned?.id) {
 		return null;
 	}
 
@@ -49,7 +49,7 @@ export default ({ order, checkout, loading }) => {
 						gap: 0.5em;
 					`}
 				>
-					<h1>#{order?.number}</h1>
+					<h1>#{abandoned?.id}</h1>
 					{!checkout?.live_mode && (
 						<ScTag type="warning">
 							{__('Test Mode', 'surecart')}
@@ -58,13 +58,25 @@ export default ({ order, checkout, loading }) => {
 				</div>
 				{sprintf(
 					__('Created on %s', 'surecart'),
-					formatTime(order.updated_at)
+					formatTime(abandoned.updated_at)
 				)}
 			</div>
 			<div>
-				<ScOrderStatusBadge
-					status={order?.status || checkout?.status}
-				></ScOrderStatusBadge>
+				{ abandoned?.notification_status === 'sent' && (
+					<ScTag type="success">
+						{__('Sent', 'surecart')}
+					</ScTag>
+				)}
+				{ abandoned?.notification_status === 'scheduled' && (
+					<ScTag type="info">
+						{__('Scheduled', 'surecart')}
+					</ScTag>
+				)}
+				{ abandoned?.notification_status === 'not_scheduled' && (
+					<ScTag type="warning">
+						{__('Not Scheduled', 'surecart')}
+					</ScTag>
+				)}
 			</div>
 		</div>
 	);

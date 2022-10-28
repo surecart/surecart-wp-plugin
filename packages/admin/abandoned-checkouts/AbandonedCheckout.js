@@ -26,8 +26,10 @@ export default () => {
 	const { createErrorNotice } = useDispatch(noticesStore);
 	const { receiveEntityRecords } = useDispatch(coreStore);
 	const id = useSelect((select) => select(dataStore).selectPageId());
-	const { order, hasLoadedOrder, orderError } = useEntity('order', id, {
+	
+	const { abandoned, hasLoadedOrder, orderError } = useEntity('abandoned', id, {
 		expand: [
+			'recovered_checkout',
 			'checkout',
 			'checkout.customer',
 			'checkout.tax_identifier',
@@ -42,11 +44,11 @@ export default () => {
 	});
 
 	useEffect(() => {
-		if (order?.checkout) {
+		if (abandoned?.checkout) {
 			receiveEntityRecords(
 				'surecart',
 				'checkout',
-				order?.checkout,
+				abandoned?.checkout,
 				{
 					expand: [
 						'line_items',
@@ -63,25 +65,7 @@ export default () => {
 				true
 			);
 		}
-		if (order?.checkout?.charge) {
-			receiveEntityRecords(
-				'surecart',
-				'charge',
-				order?.checkout?.charge,
-				{
-					checkout_ids: [order?.checkout?.id],
-					expand: [
-						'payment_method',
-						'payment_method.card',
-						'payment_method.payment_instrument',
-						'payment_method.paypal_account',
-						'payment_method.bank_account',
-					],
-				},
-				true
-			);
-		}
-	}, [order]);
+	}, [abandoned]);
 
 	useEffect(() => {
 		if (orderError) {
@@ -125,24 +109,23 @@ export default () => {
 			}
 			sidebar={
 				<Sidebar
-					order={order}
-					checkout={order?.checkout}
-					customer={order?.checkout?.customer}
-					loading={!hasLoadedOrder}
+				abandoned={abandoned}
+					checkout={abandoned?.checkout}
+					customer={abandoned?.checkout?.customer}
+					loading={false}
 				/>
 			}
 		>
 			<>
 				<Details
-					order={order}
-					checkout={order?.checkout}
-					loading={!hasLoadedOrder}
+					abandoned={abandoned}
+					checkout={abandoned?.checkout}
+					loading={false}
 				/>
 				<LineItems
-					order={order}
-					checkout={order?.checkout}
-					charge={order?.checkout?.charge}
-					loading={!hasLoadedOrder}
+					abandoned={abandoned}
+					checkout={abandoned?.checkout}
+					loading={false}
 				/>
 			</>
 		</UpdateModel>

@@ -4,7 +4,7 @@ import MetaData from './modules/MetaData';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
-export default ({ order, checkout, customer, loading }) => {
+export default ({ abandoned, checkout, customer, loading }) => {
 	return (
 		<Fragment>
 			<Customer customer={customer} loading={loading} />
@@ -14,7 +14,7 @@ export default ({ order, checkout, customer, loading }) => {
 					label={__('Shipping & Tax Address', 'surecart')}
 				/>
 			)}
-			<MetaData order={order} loading={loading} />
+			<MetaData abandoned={abandoned} loading={loading} />
 		</Fragment>
 	);
 };
