@@ -1,55 +1,88 @@
-import { __ } from '@wordpress/i18n';
+/** @jsx jsx */
+import { sprintf, __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+dayjs.extend(duration);
 import {
-	ScButton,
-	ScDivider,
 	ScFlex,
 	ScFormatNumber,
+	ScIcon,
+	ScTag,
 } from '@surecart/components-react';
-import Box from '../ui/Box';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useState, useEffect } from '@wordpress/element';
+import Error from '../components/Error';
+import Stat from './Stat';
+import Tab from './Tab';
+import { averageProperties, totalProperties } from './util';
 
 export default () => {
-	const [data, setData] = useState();
+	const [data, setData] = useState([]);
+	const [previous, setPrevious] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState();
 	const [filter, setFilter] = useState('today');
 
 	const getAbandonedData = async () => {
-		let startDate = new Date(Date.now() - 24 * 60 * 60 * 1000);
-		let endDate = new Date();
-		let interval = 'day';
+		// defaults.
+		let startDate = dayjs().startOf('day');
+		let endDate = dayjs().endOf('day');
+		let prevEndDate = startDate;
+		let prevStartDate = dayjs(startDate).add(-1, 'day');
+		let interval = 'hour';
+
+		// change current and previous dates.
 		switch (filter) {
 			case 'yesterday':
-				endDate = startDate;
-				startDate = new Date(Date.now() - 2 * 24 * 60 * 60 * 1000);
-				break;
-			case 'lastweek':
-				startDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-				break;
-			case 'lastmonth':
-				startDate = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
-				break;
-			default:
+				endDate = dayjs().startOf('day');
+				startDate = dayjs().startOf('day').add(-1, 'day');
+				prevEndDate = startDate;
+				prevStartDate = dayjs(startDate).add(-1, 'day');
 				interval = 'hour';
 				break;
+			case 'thisweek':
+				startDate = dayjs().startOf('week');
+				endDate = dayjs().endOf('day');
+				prevEndDate = startDate;
+				prevStartDate = dayjs(startDate).add(-1, 'week');
+				interval = 'day';
+				break;
+			case 'lastweek':
+				startDate = dayjs().startOf('week').add(-1, 'week');
+				endDate = dayjs().startOf('week');
+				prevEndDate = startDate;
+				prevStartDate = dayjs(startDate).add(-1, 'week');
+				interval = 'day';
+				break;
+			case 'thismonth':
+				startDate = dayjs().startOf('month');
+				endDate = dayjs().endOf('day');
+				prevEndDate = startDate;
+				prevStartDate = dayjs(startDate).add(-1, 'month');
+				interval = 'day';
+				break;
+			case 'lastmonth':
+				startDate = dayjs().startOf('month').add(-1, 'month');
+				endDate = dayjs().startOf('month');
+				prevEndDate = startDate;
+				prevStartDate = dayjs(startDate).add(-1, 'month');
+				interval = 'week';
+				break;
 		}
-		let startDateObj = new Date(startDate).toISOString();
-		let endDateObj = new Date(endDate).toISOString();
 
 		try {
 			setError(false);
 			setLoading(true);
-			const { data } = await apiFetch({
-				path: addQueryArgs(`surecart/v1/stats/abandoned_checkouts`, {
-					start_at: startDateObj,
-					end_at: endDateObj,
-					interval: interval,
+			await Promise.all([
+				fetchCurrent({ startDate, endDate, interval }),
+				fetchPrevious({
+					startDate: prevStartDate,
+					endDate: prevEndDate,
+					interval,
 				}),
-			});
-			setData(data);
+			]);
 		} catch (err) {
 			console.error(err);
 			setError(err);
@@ -58,149 +91,298 @@ export default () => {
 		}
 	};
 
-	let recoverableOrderTitle;
-	let recoverableOrder;
-	let recoveredOrderTitle;
-	let recoveredOrder;
-	let orderRecoveryTitle;
-	let orderRecovery;
-	let recoverableRevenueTitle;
-	let recoverableRevenue;
-	let recoveredRevenueTitle;
-	let recoveredRevenue;
-	let recoveryRateTitle;
-	let recoveryRate;
-
-	if (scData?.entitlements?.licensing) {
-		recoverableOrderTitle = __('Recoverable Orders', 'surecart');
-		recoverableOrder = data?.[0]?.count ?? 0;
-		recoveredOrderTitle = __('Recovered Orders', 'surecart');
-		recoveredOrder = data?.[0]?.assisted_count ?? 0;
-		orderRecoveryTitle = __('Recovered Order Recovery Rate', 'surecart');
-		orderRecovery = data?.[0]?.assisted_rate ?? 0;
-		recoverableRevenueTitle = __('Recoverable Revenue', 'surecart');
-		recoverableRevenue = data?.[0]?.amount ?? 0;
-		recoveredRevenueTitle = __('Recovered Revenue', 'surecart');
-		recoveredRevenue = data?.[0]?.assisted_amount ?? 0;
-		recoveryRateTitle = __('Recovery Rate', 'surecart');
-		recoveryRate = data?.[0]?.assisted_amount_rate ?? 0;
-	} else {
-		recoverableOrderTitle = __('Recoverable Orders', 'surecart');
-		recoverableOrder = data?.[0]?.count ?? 0;
-		recoveredOrderTitle = __('Potential Recovered Orders', 'surecart');
-		recoveredOrder = data?.[0]?.assisted_count
-			? data?.[0]?.assisted_count * 0.18
-			: 0;
-		orderRecoveryTitle = __('Potential Order Recovery Rate', 'surecart');
-		orderRecovery = data?.[0]?.assisted_rate
-			? data?.[0]?.assisted_rate * 0.18
-			: 0;
-		recoverableRevenueTitle = __('Recoverable Revenue', 'surecart');
-		recoverableRevenue = data?.[0]?.amount ?? 0;
-		recoveredRevenueTitle = __('Potential Recovered Revenue', 'surecart');
-		recoveredRevenue = data?.[0]?.assisted_amount
-			? data?.[0]?.assisted_amount * 0.18
-			: 0;
-		recoveryRateTitle = __('Potential Recovery Rate', 'surecart');
-		recoveryRate = data?.[0]?.assisted_amount_rate
-			? data?.[0]?.assisted_amount_rate * 0.18
-			: 0;
-	}
-
 	useEffect(() => {
 		getAbandonedData();
 	}, [filter]);
 
+	const fetchCurrent = async ({ startDate, endDate, interval }) => {
+		const data = await fetchData({ startDate, endDate, interval });
+		data && setData(data);
+	};
+
+	const fetchPrevious = async ({ startDate, endDate, interval }) => {
+		const data = await fetchData({
+			startDate,
+			endDate,
+			interval,
+		});
+		data && setPrevious(data);
+	};
+
+	const fetchData = async ({ startDate, endDate, interval }) => {
+		const { data } = await apiFetch({
+			path: addQueryArgs('surecart/v1/stats/abandoned_checkouts', {
+				start_at: startDate.toISOString(),
+				end_at: endDate.toISOString(),
+				interval: interval,
+			}),
+		});
+		return data;
+	};
+
+	const hasAccess = scData?.entitlements?.abandoned_checkouts;
+
+	const badge = ({ previous, current, text }) => {
+		if (!hasAccess) {
+			return <ScTag type="success">{__('Pro', 'surecart')}</ScTag>;
+		}
+		if (loading) return null;
+
+		let type, icon;
+		if (previous === current) {
+			type = 'default';
+			icon = 'arrow-right';
+		} else {
+			type = previous < current ? 'success' : 'danger';
+			icon = previous < current ? 'arrow-up-right' : 'arrow-down-right';
+		}
+
+		return (
+			<ScTag type={type}>
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: 0.3em;
+					`}
+				>
+					<ScIcon name={icon} /> {text}
+				</div>
+			</ScTag>
+		);
+	};
+
 	return (
-		<>
+		<div
+			css={css`
+				display: grid;
+				gap: 1.5em;
+				margin: 1.5em auto;
+
+				--sc-color-primary-500: var(--sc-color-brand-primary);
+				--sc-focus-ring-color-primary: var(--sc-color-brand-primary);
+				--sc-input-border-color-focus: var(--sc-color-brand-primary);
+			`}
+		>
+			<Error error={error} setError={setError} />
+
 			<ScFlex alignItems="center" justifyContent="flex-start">
-				<ScButton
+				<Tab
+					selected={filter === 'today'}
 					onClick={() => setFilter('today')}
-					size="small"
-					type={filter === 'today' ? 'default' : 'text'}
 				>
 					{__('Today', 'surecart')}
-				</ScButton>
-				<ScButton
+				</Tab>
+				<Tab
+					selected={filter === 'yesterday'}
 					onClick={() => setFilter('yesterday')}
-					size="small"
-					type={filter === 'yesterday' ? 'default' : 'text'}
 				>
 					{__('Yesterday', 'surecart')}
-				</ScButton>
-				<ScButton
+				</Tab>
+				<Tab
+					selected={filter === 'thisweek'}
+					onClick={() => setFilter('thisweek')}
+				>
+					{__('This Week', 'surecart')}
+				</Tab>
+				<Tab
+					selected={filter === 'lastweek'}
 					onClick={() => setFilter('lastweek')}
-					size="small"
-					type={filter === 'lastweek' ? 'default' : 'text'}
 				>
 					{__('Last Week', 'surecart')}
-				</ScButton>
-				<ScButton
+				</Tab>
+				<Tab
+					selected={filter === 'thismonth'}
+					onClick={() => setFilter('thismonth')}
+				>
+					{__('This Month', 'surecart')}
+				</Tab>
+				<Tab
+					selected={filter === 'lastmonth'}
 					onClick={() => setFilter('lastmonth')}
-					size="small"
-					type={filter === 'lastmonth' ? 'default' : 'text'}
 				>
 					{__('Last Month', 'surecart')}
-				</ScButton>
+				</Tab>
 			</ScFlex>
 
-			<ScDivider style={{ '--spacing': '1em' }} />
+			<div
+				css={css`
+					display: grid;
+					grid-template-columns: 1fr 1fr 1fr;
+					gap: 1.5em;
+				`}
+			>
+				<Stat
+					title={__('Recoverable Checkouts', 'surecart')}
+					description={__('Total Recoverable Checkouts', 'surecart')}
+					loading={loading}
+					compare={badge({
+						current: totalProperties('count', data),
+						previous: totalProperties('count', previous),
+						text: sprintf(
+							__('%1d Previous', 'surecart'),
+							totalProperties('count', previous)
+						),
+					})}
+				>
+					{totalProperties('count', data)}
+				</Stat>
 
-			<ScFlex>
-				<div style={{ width: '33%' }}>
-					<Box title={recoverableOrderTitle} loading={loading}>
-						<h1>{recoverableOrder}</h1>
-						Total Recoverable Orders.
-					</Box>
-				</div>
-				<div style={{ width: '33%' }}>
-					<Box title={recoveredOrderTitle} loading={loading}>
-						<h1>{recoveredOrder}</h1>
-						Total Recovered Orders.
-					</Box>
-				</div>
-				<div style={{ width: '33%' }}>
-					<Box title={orderRecoveryTitle} loading={loading}>
-						<h1>{orderRecovery}%</h1>
-						Total Recovered Order Recovery Rate
-					</Box>
-				</div>
-			</ScFlex>
+				<Stat
+					title={
+						hasAccess
+							? __('Recovered Checkouts', 'surecart')
+							: __('Potential Recovered Checkouts', 'surecart')
+					}
+					description={__('Total recovered checkouts', 'surecart')}
+					loading={loading}
+					compare={badge({
+						current: totalProperties('assisted_count', data),
+						previous: totalProperties('assisted_count', previous),
+						text: sprintf(
+							__('%1d Previous', 'surecart'),
+							totalProperties('assisted_count', previous)
+						),
+					})}
+				>
+					{hasAccess
+						? totalProperties('assisted_count', data)
+						: Math.round(
+								(totalProperties('count', data) || 0) * 0.18
+						  )}
+				</Stat>
 
-			<ScDivider style={{ '--spacing': '1em' }} />
+				<Stat
+					title={
+						hasAccess
+							? __('Checkout Recovery Rate', 'surecart')
+							: __('Potential Checkout Recovery Rate', 'surecart')
+					}
+					description={__(
+						'Percentage of checkouts recovered',
+						'surecart'
+					)}
+					loading={loading}
+					compare={badge({
+						current: averageProperties('assisted_rate', data),
+						previous: averageProperties('assisted_rate', previous),
+						text: sprintf(
+							__('%1d%% Previous', 'surecart'),
+							averageProperties('assisted_rate', previous) * 100
+						),
+					})}
+				>
+					{hasAccess
+						? `${averageProperties('assisted_rate', data) * 100}%`
+						: '18%'}
+				</Stat>
 
-			<ScFlex>
-				<div style={{ width: '33%' }}>
-					<Box title={recoverableRevenueTitle} loading={loading}>
-						<h1>
-							<ScFormatNumber
-								type="currency"
-								currency="usd"
-								value={recoverableRevenue}
-							/>
-						</h1>
-						Total Recoverable Revenue
-					</Box>
-				</div>
-				<div style={{ width: '33%' }}>
-					<Box title={recoveredRevenueTitle} loading={loading}>
-						<h1>
-							<ScFormatNumber
-								type="currency"
-								currency="usd"
-								value={recoveredRevenue}
-							/>
-						</h1>
-						Total Recovered Revenue
-					</Box>
-				</div>
-				<div style={{ width: '33%' }}>
-					<Box title={recoveryRateTitle} loading={loading}>
-						<h1>{recoveryRate}%</h1>
-						Total Recovery Rate
-					</Box>
-				</div>
-			</ScFlex>
-		</>
+				<Stat
+					title={__('Recoverable Revenue', 'surecart')}
+					description={__('Total recoverable revenue', 'surecart')}
+					loading={loading}
+					compare={badge({
+						current: totalProperties('amount', data),
+						previous: totalProperties('amount', previous),
+						text: (
+							<>
+								<ScFormatNumber
+									type="currency"
+									currency={scData?.currency_code || 'usd'}
+									value={totalProperties('amount', previous)}
+								/>{' '}
+								{__(' Previous', 'surecart')}
+							</>
+						),
+					})}
+				>
+					<ScFormatNumber
+						type="currency"
+						currency={scData?.currency_code || 'usd'}
+						value={totalProperties('amount', data)}
+					/>
+				</Stat>
+
+				<Stat
+					title={
+						hasAccess
+							? __('Recovered Revenue', 'surecart')
+							: __('Potential Recovered Revenue', 'surecart')
+					}
+					description={__('Total recovered revenue', 'surecart')}
+					loading={loading}
+					compare={badge({
+						current: totalProperties('assisted_amount', data),
+						previous: totalProperties('assisted_amount', previous),
+						text: (
+							<>
+								<ScFormatNumber
+									type="currency"
+									currency={scData?.currency_code || 'usd'}
+									value={totalProperties(
+										'assisted_amount',
+										previous
+									)}
+								/>{' '}
+								{__(' Previous', 'surecart')}
+							</>
+						),
+					})}
+				>
+					{hasAccess ? (
+						<ScFormatNumber
+							type="currency"
+							currency="usd"
+							value={totalProperties('assisted_amount', data)}
+						/>
+					) : (
+						<ScFormatNumber
+							type="currency"
+							currency="usd"
+							value={totalProperties('amount', data) * 0.18}
+						/>
+					)}
+				</Stat>
+
+				<Stat
+					title={
+						hasAccess
+							? __('Revenue Recovery Rate', 'surecart')
+							: __('Potential Revenue Recovery Rate', 'surecart')
+					}
+					description={__(
+						'Percentage of revenue recovered',
+						'surecart'
+					)}
+					loading={loading}
+					compare={badge({
+						current: averageProperties(
+							'assisted_amount_rate',
+							data
+						),
+						previous: averageProperties(
+							'assisted_amount_rate',
+							previous
+						),
+						text: sprintf(
+							__('%1d%% Previous', 'surecart'),
+							averageProperties(
+								'assisted_amount_rate',
+								previous
+							) * 100
+						),
+					})}
+				>
+					{hasAccess
+						? `${
+								averageProperties(
+									'assisted_amount_rate',
+									data
+								) * 100
+						  }%`
+						: '18%'}
+				</Stat>
+			</div>
+		</div>
 	);
 };
