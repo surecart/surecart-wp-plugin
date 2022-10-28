@@ -2777,6 +2777,10 @@ export namespace Components {
          */
         "readonly": boolean;
         /**
+          * Checks for validity and shows the browser's validation message if the control is invalid.
+         */
+        "reportValidity": () => Promise<boolean>;
+        /**
           * Makes the textarea a required field.
          */
         "required": boolean;

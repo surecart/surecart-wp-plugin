@@ -207,6 +207,44 @@ export default () => {
 									},
 								]}
 							/>
+							<ScSwitch
+								checked={!!item?.promotion_expires_after_days}
+								onScChange={(e) =>
+									editItem({
+										promotion_expires_after_days: e.target
+											.checked
+											? 7
+											: null,
+									})
+								}
+							>
+								{__('Discount Expires', 'surecart')}
+							</ScSwitch>
+
+							{!!item?.promotion_expires_after_days && (
+								<ScInput
+									type="number"
+									min="1"
+									required
+									label={__(
+										'Number of days until expiration',
+										'surecart'
+									)}
+									value={item?.promotion_expires_after_days}
+									onScInput={(e) => {
+										if (e.target.value) {
+											editItem({
+												promotion_expires_after_days:
+													e.target.value,
+											});
+										}
+									}}
+								>
+									<span slot="suffix">
+										{__('Days', 'surecart')}
+									</span>
+								</ScInput>
+							)}
 						</>
 					)}
 				</SettingsBox>
@@ -239,6 +277,7 @@ export default () => {
 					<ScTextarea
 						label={__('GDPR Message', 'surecart')}
 						value={trackingConfirmationMessage}
+						required
 						onScInput={(e) =>
 							setTrackingConfirmationMessage(e.target.value)
 						}
