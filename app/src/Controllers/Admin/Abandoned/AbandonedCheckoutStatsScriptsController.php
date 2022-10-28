@@ -9,6 +9,12 @@ use SureCart\Support\Scripts\AdminModelEditController;
  */
 class AbandonedCheckoutStatsScriptsController extends AdminModelEditController {
 	/**
+	 * What types of data to add the the page.
+	 *
+	 * @var array
+	 */
+	protected $with_data = [ 'currency' ];
+	/**
 	 * Script handle.
 	 *
 	 * @var string
