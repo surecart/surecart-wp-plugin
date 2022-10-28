@@ -239,6 +239,7 @@ export default () => {
 					<ScTextarea
 						label={__('GDPR Message', 'surecart')}
 						value={trackingConfirmationMessage}
+						required
 						onScInput={(e) =>
 							setTrackingConfirmationMessage(e.target.value)
 						}
