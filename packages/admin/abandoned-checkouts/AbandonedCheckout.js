@@ -27,7 +27,7 @@ export default () => {
 	const { receiveEntityRecords } = useDispatch(coreStore);
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	
-	const { abandoned, hasLoadedOrder, orderError } = useEntity('abandoned', id, {
+	const { abandoned, hasLoadedAbandoned, orderError } = useEntity('abandoned', id, {
 		expand: [
 			'recovered_checkout',
 			'checkout',
@@ -112,7 +112,7 @@ export default () => {
 				abandoned={abandoned}
 					checkout={abandoned?.checkout}
 					customer={abandoned?.checkout?.customer}
-					loading={false}
+					loading={!hasLoadedAbandoned}
 				/>
 			}
 		>
@@ -120,12 +120,12 @@ export default () => {
 				<Details
 					abandoned={abandoned}
 					checkout={abandoned?.checkout}
-					loading={false}
+					loading={!hasLoadedAbandoned}
 				/>
 				<LineItems
 					abandoned={abandoned}
 					checkout={abandoned?.checkout}
-					loading={false}
+					loading={!hasLoadedAbandoned}
 				/>
 			</>
 		</UpdateModel>

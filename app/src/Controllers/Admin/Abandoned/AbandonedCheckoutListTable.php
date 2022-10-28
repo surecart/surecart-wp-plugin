@@ -166,7 +166,7 @@ class AbandonedCheckoutListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_email_status( $abandoned ) {
-		return 'sent' === $abandoned->notification_status ? '<sc-tag type="success">' . __( 'Sent', 'surecart' ) . '</sc-tag>' : '<sc-tag>' . __( 'Not Sent', 'surecart' ) . '</sc-tag>';
+		return 'sent' === $abandoned->notification_status ? '<sc-tag type="success">' . __( 'Sent', 'surecart' ) . '</sc-tag>' : '<sc-tag type="danger">' . __( 'Not Sent', 'surecart' ) . '</sc-tag>';
 	}
 
 
@@ -180,11 +180,11 @@ class AbandonedCheckoutListTable extends ListTable {
 	public function column_notification_status( $abandoned ) {
 		switch ( $abandoned->notification_status ) {
 			case 'scheduled':
-				return '<sc-tag type="success">' . __( 'Scheduled', 'surecart' ) . '</sc-tag>';
+				return '<sc-tag type="info">' . __( 'Scheduled', 'surecart' ) . '</sc-tag>';
 			case 'not_scheduled':
 				return '<sc-tag type="danger">' . __( 'Not Scheduled', 'surecart' ) . '</sc-tag>';
 			case 'sent':
-				return '<sc-tag type="warning">' . __( 'Sent', 'surecart' ) . '</sc-tag>';
+				return '<sc-tag type="success">' . __( 'Sent', 'surecart' ) . '</sc-tag>';
 		}
 		 return '<sc-tag>' . esc_html( $abandoned->notification_status ?? 'Unknown' ) . '</sc-tag>';
 	}
