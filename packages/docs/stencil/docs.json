@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-10-19T19:59:48",
+  "timestamp": "2022-10-28T13:51:58",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -5291,6 +5291,22 @@
       "usage": {},
       "props": [
         {
+          "name": "abandonedCheckoutEnabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "abandoned-checkout-enabled",
+          "reflectToAttr": false,
+          "docs": "Is abandoned checkout enabled?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "autofocus",
           "type": "boolean",
           "mutable": false,
@@ -5546,6 +5562,22 @@
           "required": false
         },
         {
+          "name": "trackingConfirmationMessage",
+          "type": "string",
+          "mutable": false,
+          "attr": "tracking-confirmation-message",
+          "reflectToAttr": false,
+          "docs": "A message for tracking confirmation.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "value",
           "type": "string",
           "mutable": true,
@@ -5629,6 +5661,15 @@
           "cancelable": true,
           "composed": true,
           "docs": "Prompt for login.",
+          "docsTags": []
+        },
+        {
+          "event": "scUpdateAbandonedCart",
+          "detail": "boolean",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Update the abandoned cart.",
           "docsTags": []
         },
         {
@@ -11813,6 +11854,7 @@
       "filePath": "./src/components/providers/sc-login-provider/sc-login-provider.tsx",
       "encapsulation": "shadow",
       "tag": "sc-login-provider",
+      "readme": "# sc-login-provider\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -17698,7 +17740,7 @@
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
-          "default": "100",
+          "default": "Infinity",
           "values": [
             {
               "type": "number"
@@ -19014,6 +19056,11 @@
         },
         {
           "event": "scPayError",
+          "capture": false,
+          "passive": false
+        },
+        {
+          "event": "scUpdateAbandonedCart",
           "capture": false,
           "passive": false
         },
@@ -20971,6 +21018,7 @@
       "filePath": "./src/components/controllers/dashboard/sc-subscription-payment-method/sc-subscription-payment-method.tsx",
       "encapsulation": "shadow",
       "tag": "sc-subscription-payment-method",
+      "readme": "# sc-subscription-payment-method\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -23336,7 +23384,19 @@
           "required": false
         }
       ],
-      "methods": [],
+      "methods": [
+        {
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<boolean>",
+          "parameters": [],
+          "docs": "Checks for validity and shows the browser's validation message if the control is invalid.",
+          "docsTags": []
+        }
+      ],
       "events": [
         {
           "event": "scBlur",
