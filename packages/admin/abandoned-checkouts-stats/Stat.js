@@ -12,6 +12,7 @@ export default ({ title, loading, description, children, compare }) => {
 			header_action={compare}
 			css={css`
 				border-radius: 6px !important;
+				border: 1px solid var(--sc-color-gray-200);
 			`}
 		>
 			<h1

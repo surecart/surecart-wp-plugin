@@ -1,10 +1,20 @@
 <div class="wrap">
-	<?php \SureCart::render(
-		'layouts/partials/admin-index-header',
-		[ 'title' => __( 'Abandoned Checkouts', 'surecart' ) ]
-	); ?>
+	<?php
+		\SureCart::render(
+			'layouts/partials/admin-index-header',
+			[ 'title' => __( 'Abandoned Checkouts', 'surecart' ) ]
+		);
+		?>
 
 	<div id="stats"></div>
 
-	<?php $table->display(); ?>
+	<?php if ( $enabled ) : ?>
+		<?php $table->display(); ?>
+	<?php else : ?>
+		<?php
+		\SureCart::render(
+			'admin/abandoned-orders/cta-banner',
+		);
+		?>
+	<?php endif; ?>
 </div>

@@ -1,45 +1,48 @@
 <style>
-    #wpwrap {
+	#wpwrap {
 		color: var(--sc-color-brand-body);
 		background: var(--sc-color-brand-main-background);
+		--sc-color-primary-500: var(--sc-color-brand-primary);
+		--sc-focus-ring-color-primary: var(--sc-color-brand-primary);
+		--sc-input-border-color-focus: var(--sc-color-brand-primary);
 	}
 
 	.wrap {
 		display: grid;
-		margin: 0px;
+		width: 100%;
 	}
 
 	.sc-container {
 		margin: auto;
-		max-width: 1200px;
-		padding: 2rem;
+		width: 100%;
 	}
 
-	#wpcontent {
-		padding-left: 0px;
+	.sc-banner-text {
+		margin: auto;
+		max-width: 1200px;
+	}
+	.sc-banner-text,
+	.sc-banner-top-img-area {
+		padding: 6%;
+		width: 100%;
 	}
 
 	.sc-banner-top-area {
-		box-shadow: 0 0 #00000070;
-		padding: 10px 0px 0px 50px;
-		row-gap: 20px;
-		column-gap: 20px;
+		display: flex;
+		align-items: center;
 		overflow: hidden;
-		background-color: #fcf2f7;
-		position: relative;
-		top: -10px;
-		border-radius: 20px;
+		background-color: #ffffff;
+		border: 1px solid var(--sc-color-gray-200);
+		max-width: 1600px;
+		margin: auto;
+		border-radius: var(--sc-border-radius-large);
 	}
 
 	.sc-banner-top-area img {
 		max-width: 600px;
 		margin: 0px;
 		padding: 0px;
-		top: 45px;
-		position: relative;
-		right: -15px;
-		box-shadow: -8px -2px 24px #ccc;
-		border-radius: 10px;
+		padding: 5%;
 	}
 
 	.sc-get-started-top-desc {
@@ -62,28 +65,37 @@
 		border-bottom: 1px solid var(--sc-color-gray-200);
 		height: 66px;
 	}
+
+	.cta-video {
+		aspect-ratio: 16/9;
+		width: 100%;
+	}
 </style>
 
 <div class="wrap">
-    <div class="sc-container">
-        <div class="sc-section-top-banner">
-            <sc-flex class="sc-banner-top-area"  style="--sc-flex-column-gap: 5%" align-items="center">
-                <div>
-                    <sc-text style="--font-size: var(--sc-font-size-xxx-large); --line-height: 50px; --font-weight: var(--sc-font-weight-bold)">
-                        <?php esc_html_e( 'Abanonded Checkouts List', 'surecart' ); ?>
-                    </sc-text>
-                    <sc-text class="sc-get-started-top-desc" style="--font-size: var(--sc-font-size-x-large); --line-height: var(--sc-line-height-normal)">
-                        <?php esc_html_e( 'Get Abandoned Checkouts list full access where can view the checkout cart item details with customers..', 'surecart' ); ?>
-                    </sc-text>
-                    <sc-button class="sc-get-started-button" type="primary" target="_blank" size="large" href="<?php echo esc_url_raw( 'https://surecart.com/pricing/' ); ?>">
-                        <?php esc_html_e( 'Upgrade to Pro', 'surecart' ); ?>
-                        <sc-icon name="arrow-right" slot="suffix"></sc-icon>
-                    </sc-button>
-                </div>
-                <div class="sc-banner-top-img-area">
-                    <img src="<?php echo esc_url( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/abandoned-hero.png' ); ?>" alt="Abandoned-Banner">
-                </div>
-            </sc-flex>   
-        </div>
-    </div>
+	<div class="sc-section-top-banner">
+		<div class="sc-banner-top-area">
+			<div class="sc-banner-text">
+				<div style="margin-bottom:1em;">
+			<svg  viewBox="0 0 290 290" fill="none" xmlns="http://www.w3.org/2000/svg" width="35">
+				<path fill-rule="evenodd" clip-rule="evenodd" d="M145 290C225.081 290 290 225.081 290 145C290 64.9187 225.081 0 145 0C64.9187 0 0 64.9187 0 145C0 225.081 64.9187 290 145 290ZM145.624 72.5C133.982 72.5 117.869 79.1583 109.637 87.3718L87.2765 109.679H198.728L235.994 72.5H145.624ZM180.176 202.628C171.943 210.842 155.831 217.5 144.188 217.5H53.8177L91.0844 180.321H202.536L180.176 202.628ZM216.398 128.269H68.6835L61.7061 135.24C45.1844 150.112 50.0845 161.731 73.2223 161.731H221.337L228.317 154.76C244.678 139.975 239.536 128.269 216.398 128.269Z" fill="#01824C"/>
+			</svg>
+</div>
+
+				<sc-text style="--font-size: var(--sc-font-size-xxx-large); --line-height: 50px; --font-weight: var(--sc-font-weight-bold)">
+					<?php esc_html_e( 'Recover lost sales with abandoned checkout.', 'surecart' ); ?>
+				</sc-text>
+				<sc-text class="sc-get-started-top-desc" style="--font-size: var(--sc-font-size-x-large); --line-height: var(--sc-line-height-normal)">
+					<?php esc_html_e( 'Get Abandoned Checkouts list full access where can view the checkout cart item details with customers.', 'surecart' ); ?>
+				</sc-text>
+				<sc-button class="sc-get-started-button" type="primary" target="_blank" size="large" href="<?php echo esc_url_raw( 'https://surecart.com/pricing/' ); ?>">
+					<?php esc_html_e( 'Upgrade to Pro', 'surecart' ); ?>
+					<sc-icon name="arrow-right" slot="suffix"></sc-icon>
+				</sc-button>
+			</div>
+			<div class="sc-banner-top-img-area">
+				<iframe class="cta-video" src="https://www.youtube.com/embed/rr8jy9lnPdI?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			</div>
+		</div>
+	</div>
 </div>
