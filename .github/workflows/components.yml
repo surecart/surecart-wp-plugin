@@ -1,7 +1,7 @@
 name: Components
 
 on:
-  push:
+  pull_request:
     paths:
       - "packages/components/src/**/*.tsx"
       - "packages/components/src/**/*.snap"

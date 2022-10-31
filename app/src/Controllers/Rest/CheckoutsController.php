@@ -132,6 +132,26 @@ class CheckoutsController extends RestController {
 	}
 
 	/**
+	 * Manually pay an order.
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \SureCart\Models\Checkout|\WP_Error
+	 */
+	public function manuallyPay( \WP_REST_Request $request ) {
+		$checkout = $this->middleware( new $this->class( $request['id'] ), $request );
+		if ( is_wp_error( $checkout ) ) {
+			return $checkout;
+		}
+
+		if ( ! empty( $this->with ) ) {
+			$checkout = $checkout->with( $this->with );
+		}
+
+		return $checkout->where( $request->get_query_params() )->manuallyPay();
+	}
+
+	/**
 	 * Finalize an order.
 	 *
 	 * @param \WP_REST_Request $request Rest Request.

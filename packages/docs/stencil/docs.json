@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-10-19T19:59:48",
+  "timestamp": "2022-10-31T19:34:06",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -103,7 +103,7 @@
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
-          "default": "{\n    name: __('Name or Company Name', 'surecart'),\n    country: __('Country', 'surecart'),\n    city: __('City', 'surecart'),\n    line_1: __('Address', 'surecart'),\n    line_2: __('Address Line 2', 'surecart'),\n    postal_code: __('Postal Code/Zip', 'surecart'),\n    state: __('State/Province/Region', 'surecart'),\n  }",
+          "default": "{}",
           "values": [
             {
               "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
@@ -11813,6 +11813,7 @@
       "filePath": "./src/components/providers/sc-login-provider/sc-login-provider.tsx",
       "encapsulation": "shadow",
       "tag": "sc-login-provider",
+      "readme": "# sc-login-provider\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -13744,6 +13745,56 @@
       "usage": {},
       "props": [
         {
+          "name": "cityPlaceholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "city-placeholder",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "__('City', 'surecart')",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "countryPlaceholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "country-placeholder",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "__('Country', 'surecart')",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "defaultCountry",
+          "type": "string",
+          "mutable": false,
+          "attr": "default-country",
+          "reflectToAttr": false,
+          "docs": "Default country for address",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "full",
           "type": "boolean",
           "mutable": false,
@@ -13776,6 +13827,40 @@
           "required": false
         },
         {
+          "name": "line1Placeholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "line-1-placeholder",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "__('Address', 'surecart')",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "line2Placeholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "line-2-placeholder",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "__('Address Line 2', 'surecart')",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "loading",
           "type": "boolean",
           "mutable": false,
@@ -13792,6 +13877,23 @@
           "required": false
         },
         {
+          "name": "namePlaceholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "name-placeholder",
+          "reflectToAttr": false,
+          "docs": "Show the placeholder fields.",
+          "docsTags": [],
+          "default": "__('Name or Company Name', 'surecart')",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "placeholders",
           "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "mutable": false,
@@ -13802,6 +13904,23 @@
           "values": [
             {
               "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "postalCodePlaceholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "postal-code-placeholder",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "__('Postal Code/Zip', 'surecart')",
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -13866,6 +13985,23 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "statePlaceholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "state-placeholder",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "__('State/Province/Region', 'surecart')",
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -14060,7 +14196,7 @@
         },
         {
           "name": "status",
-          "type": "\"paid\" | \"payment_failed\" | \"processing\"",
+          "type": "\"paid\" | \"payment_failed\" | \"processing\" | \"void\"",
           "mutable": false,
           "attr": "status",
           "reflectToAttr": false,
@@ -14077,6 +14213,10 @@
             },
             {
               "value": "processing",
+              "type": "string"
+            },
+            {
+              "value": "void",
               "type": "string"
             }
           ],
@@ -16074,7 +16214,7 @@
         {
           "name": "order",
           "type": "Checkout",
-          "mutable": false,
+          "mutable": true,
           "reflectToAttr": false,
           "docs": "The order.",
           "docsTags": [],
@@ -17698,7 +17838,7 @@
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
-          "default": "100",
+          "default": "Infinity",
           "values": [
             {
               "type": "number"
@@ -20971,6 +21111,7 @@
       "filePath": "./src/components/controllers/dashboard/sc-subscription-payment-method/sc-subscription-payment-method.tsx",
       "encapsulation": "shadow",
       "tag": "sc-subscription-payment-method",
+      "readme": "# sc-subscription-payment-method\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},

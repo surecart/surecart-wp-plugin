@@ -2,8 +2,10 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import {
+	InspectorControls,
+	PanelColorSettings,
+	useBlockProps,
 	RichText,
 	__experimentalUseColorProps as useColorProps,
 	__experimentalUseBorderProps as useBorderProps,
@@ -20,6 +22,7 @@ import {
  */
 import { ScButton, ScForm, ScPriceInput } from '@surecart/components-react';
 import PriceSelector from '@scripts/blocks/components/PriceSelector';
+import PriceInfo from '@scripts/blocks/components/PriceInfo';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 
@@ -32,6 +35,8 @@ export default ({ className, attributes, setAttributes }) => {
 		ad_hoc_label,
 		placeholder,
 		help,
+		backgroundColor,
+		textColor,
 	} = attributes;
 	const borderProps = useBorderProps(attributes);
 	const { style: borderStyle } = borderProps;
@@ -148,9 +153,46 @@ export default ({ className, attributes, setAttributes }) => {
 						/>
 					</PanelRow>
 				</PanelBody>
+				<PanelColorSettings
+					title={__('Color Settings')}
+					colorSettings={[
+						{
+							value: backgroundColor,
+							onChange: (backgroundColor) =>
+								setAttributes({ backgroundColor }),
+							label: __('Background Color', 'surecart'),
+						},
+						{
+							value: textColor,
+							onChange: (textColor) =>
+								setAttributes({ textColor }),
+							label: __('Text Color', 'surecart'),
+						},
+					]}
+				></PanelColorSettings>
+				<PanelBody title={__('Product Info', 'surecart')}>
+					<PanelRow>
+						<PriceInfo price_id={price_id} />
+					</PanelRow>
+				</PanelBody>
 			</InspectorControls>
 
-			<ScForm>
+			<ScForm
+				style={{
+					...(backgroundColor
+						? {
+								'--sc-color-primary-500': backgroundColor,
+								'--sc-focus-ring-color-primary':
+									backgroundColor,
+								'--sc-input-border-color-focus':
+									backgroundColor,
+						  }
+						: {}),
+					...(textColor
+						? { '--sc-color-primary-text': textColor }
+						: {}),
+				}}
+			>
 				{price?.ad_hoc && (
 					<ScPriceInput
 						currencyCode={price.currency}
@@ -162,30 +204,7 @@ export default ({ className, attributes, setAttributes }) => {
 					/>
 				)}
 
-				<ScButton
-					type={type}
-					size={size}
-					style={{
-						...(colorStyle?.backgroundColor
-							? {
-									'--primary-background':
-										colorStyle.backgroundColor,
-							  }
-							: {}),
-						...(colorStyle?.background
-							? { '--primary-background': colorStyle.background }
-							: {}),
-						...(colorStyle?.color
-							? { '--primary-color': colorStyle.color }
-							: {}),
-						...(borderStyle?.borderRadius
-							? {
-									'--button-border-radius':
-										borderStyle.borderRadius,
-							  }
-							: {}),
-					}}
-				>
+				<ScButton type={type} size={size}>
 					<RichText
 						aria-label={__('Button text')}
 						placeholder={__('Add text…')}

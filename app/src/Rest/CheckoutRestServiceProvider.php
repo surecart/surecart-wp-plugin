@@ -65,6 +65,19 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 				'schema' => [ $this, 'get_item_schema' ],
 			]
 		);
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/manually_pay/',
+			[
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'manuallyPay' ),
+					'permission_callback' => [ $this, 'manually_pay_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
 	}
 
 	/**
@@ -246,5 +259,16 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 	 */
 	public function delete_item_permissions_check( $request ) {
 		return false;
+	}
+
+	/**
+	 * Can the user manually mark the checkout as paid?
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 *
+	 * @return boolean
+	 */
+	public function manually_pay_permissions_check( $request ) {
+		return current_user_can( 'edit_sc_checkouts' );
 	}
 }
