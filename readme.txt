@@ -243,6 +243,14 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.1.18  - October 22, 2022 =
+* Improvement: Admin ability "restore" a subscription that has been canceled.
+* Improvement: Admin ability to mark an order as paid.
+* Improvement: Admin ability to turn off tax on individual subscriptions.
+* Fix: Radio button individual selection not working in forms.
+* Fix: Issue with PayPal not working on Safari mobile browsers.
+
+
 = 1.1.17  - October 22, 2022 =
 * Fix: Quantity selector not working in some cases.
 
