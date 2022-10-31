@@ -840,6 +840,13 @@
     "class": true,
     "slot": true
   },
+  "sc-order-confirm-components-validator": {
+    "checkout": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-order-confirm-provider": {
     "form-id": true,
     "mode": true,

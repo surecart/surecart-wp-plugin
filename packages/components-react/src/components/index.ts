@@ -85,6 +85,7 @@ export const ScMenuLabel = /*@__PURE__*/createReactComponent<JSX.ScMenuLabel, HT
 export const ScOrder = /*@__PURE__*/createReactComponent<JSX.ScOrder, HTMLScOrderElement>('sc-order');
 export const ScOrderBump = /*@__PURE__*/createReactComponent<JSX.ScOrderBump, HTMLScOrderBumpElement>('sc-order-bump');
 export const ScOrderBumps = /*@__PURE__*/createReactComponent<JSX.ScOrderBumps, HTMLScOrderBumpsElement>('sc-order-bumps');
+export const ScOrderConfirmComponentsValidator = /*@__PURE__*/createReactComponent<JSX.ScOrderConfirmComponentsValidator, HTMLScOrderConfirmComponentsValidatorElement>('sc-order-confirm-components-validator');
 export const ScOrderConfirmProvider = /*@__PURE__*/createReactComponent<JSX.ScOrderConfirmProvider, HTMLScOrderConfirmProviderElement>('sc-order-confirm-provider');
 export const ScOrderConfirmation = /*@__PURE__*/createReactComponent<JSX.ScOrderConfirmation, HTMLScOrderConfirmationElement>('sc-order-confirmation');
 export const ScOrderConfirmationCustomer = /*@__PURE__*/createReactComponent<JSX.ScOrderConfirmationCustomer, HTMLScOrderConfirmationCustomerElement>('sc-order-confirmation-customer');

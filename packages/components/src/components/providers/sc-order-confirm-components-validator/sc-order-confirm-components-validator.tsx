@@ -24,7 +24,6 @@ export class ScOrderConfirmComponentsValidator {
 
   addManualPaymentInstructions() {
     if (this.hasManualInstructions) return;
-    console.log(this.el.querySelectorAll('*'));
     const details = this.el.shadowRoot
       .querySelector('slot')
       .assignedElements({ flatten: true })
