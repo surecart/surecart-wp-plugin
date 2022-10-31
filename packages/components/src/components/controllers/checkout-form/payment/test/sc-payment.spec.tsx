@@ -1,5 +1,4 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { h } from '@stencil/core';
 import { ScPayment } from '../sc-payment';
 
 describe('sc-payment', () => {
