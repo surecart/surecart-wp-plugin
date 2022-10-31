@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-10-20T13:59:48",
+  "timestamp": "2022-10-31T18:51:25",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -14196,7 +14196,7 @@
         },
         {
           "name": "status",
-          "type": "\"paid\" | \"payment_failed\" | \"processing\"",
+          "type": "\"paid\" | \"payment_failed\" | \"processing\" | \"void\"",
           "mutable": false,
           "attr": "status",
           "reflectToAttr": false,
@@ -14213,6 +14213,10 @@
             },
             {
               "value": "processing",
+              "type": "string"
+            },
+            {
+              "value": "void",
               "type": "string"
             }
           ],
@@ -16210,7 +16214,7 @@
         {
           "name": "order",
           "type": "Checkout",
-          "mutable": false,
+          "mutable": true,
           "reflectToAttr": false,
           "docs": "The order.",
           "docsTags": [],
@@ -17834,7 +17838,7 @@
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
-          "default": "100",
+          "default": "Infinity",
           "values": [
             {
               "type": "number"

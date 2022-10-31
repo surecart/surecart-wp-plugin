@@ -133,7 +133,7 @@ export class ScAddress {
               onScInput={(e: any) => this.handleAddressInput({ name: e.target.value || null })}
               autocomplete="street-address"
               placeholder={this.placeholders.name || __('Name or Company Name', 'surecart')}
-              name={this.names.name}
+              name={this.names?.name}
               squared-bottom
               disabled={this.disabled}
             />
@@ -148,7 +148,7 @@ export class ScAddress {
             choices={this.countryChoices}
             autocomplete={'country-name'}
             placeholder={this.placeholders.country || __('Country', 'surecart')}
-            name={this.names.country}
+            name={this.names?.country}
             search
             unselect={false}
             squared-bottom
@@ -163,7 +163,7 @@ export class ScAddress {
             onScInput={(e: any) => this.handleAddressInput({ line_1: e.target.value || null })}
             autocomplete="street-address"
             placeholder={this.placeholders.line_1 || __('Address', 'surecart')}
-            name={this.names.line_1}
+            name={this.names?.line_1}
             squared
             disabled={this.disabled}
             required={this.required}
@@ -176,7 +176,7 @@ export class ScAddress {
               onScInput={(e: any) => this.handleAddressInput({ line_2: e.target.value || null })}
               autocomplete="street-address"
               placeholder={this.placeholders.line_2 || __('Address Line 2', 'surecart')}
-              name={this.names.line_2}
+              name={this.names?.line_2}
               squared
               disabled={this.disabled}
               required={this.required}
@@ -187,7 +187,7 @@ export class ScAddress {
             {this.showCity && (
               <sc-input
                 placeholder={this.placeholders.city || __('City', 'surecart')}
-                name={this.names.city}
+                name={this.names?.city}
                 value={this?.address?.city}
                 onScChange={(e: any) => this.updateAddress({ city: e.target.value || null })}
                 onScInput={(e: any) => this.handleAddressInput({ city: e.target.value || null })}
@@ -203,7 +203,7 @@ export class ScAddress {
             {this.showPostal && (
               <sc-input
                 placeholder={this.placeholders.postal_code || __('Postal Code/Zip')}
-                name={this.names.postal_code}
+                name={this.names?.postal_code}
                 onScChange={(e: any) => this.updateAddress({ postal_code: e.target.value || null })}
                 onScInput={(e: any) => this.handleAddressInput({ postal_code: e.target.value || null })}
                 autocomplete={'postal-code'}
@@ -221,7 +221,7 @@ export class ScAddress {
           {!!this?.regions?.length && !!this?.address?.country && (
             <sc-select
               placeholder={this.placeholders.state || __('State/Province/Region', 'surecart')}
-              name={this.names.state}
+              name={this.names?.state}
               autocomplete={'address-level1'}
               value={this?.address?.state}
               onScChange={(e: any) => this.updateAddress({ state: e.target.value || null })}
