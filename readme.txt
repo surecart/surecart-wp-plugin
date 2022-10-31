@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 1.1.17
+Stable tag: 1.1.18
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -244,10 +244,13 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 == Changelog ==
 
 = 1.1.18  - October 31, 2022 =
+* Improvement: Set custom background and text colors for cart, buy buttons and submit buttons.
 * Improvement: Set placeholder labels for address block.
+* Improvement: Set a default country for shipping address.
 * Improvement: Admin ability "restore" a subscription that has been canceled.
 * Improvement: Admin ability to mark an order as paid.
 * Improvement: Admin ability to turn off tax on individual subscriptions.
+* Improvement: Show payment failure list on orders if failed payments.
 * Fix: Radio button individual selection not working in forms.
 * Fix: Issue with PayPal not working on Safari mobile browsers.
 
