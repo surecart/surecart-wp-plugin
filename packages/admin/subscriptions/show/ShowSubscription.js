@@ -102,11 +102,13 @@ export default () => {
 	const renderCompleteButton = () => {
 		// bail if not finite.
 		if (!subscription?.finite) return null;
-		// bail if completed.
-		if (subscription?.status === 'completed') return null;
-
 		return (
-			<ScMenuItem onClick={() => setModal('complete')}>
+			<ScMenuItem
+				onClick={(e) => {
+					setModal(e.target.disabled ? null : 'complete');
+				}}
+				disabled={subscription?.status === 'completed'}
+			>
 				{__('Complete Subscription', 'surecart')}
 			</ScMenuItem>
 		);
