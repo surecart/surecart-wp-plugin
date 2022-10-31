@@ -13,11 +13,10 @@ export default ({ customerId }) => {
 		(select) => {
 			const queryArgs = [
 				'surecart',
-				'order',
+				'payment_method',
 				{
-					context: 'edit',
 					customer_ids: [customerId],
-					expand: ['checkout', 'checkout.line_items'],
+					expand: ['card', 'customer', 'billing_agreement', 'paypal_account', 'payment_instrument', 'bank_account'],
 					page,
 					per_page: perPage,
 				},
@@ -34,6 +33,8 @@ export default ({ customerId }) => {
 		},
 		[customerId, page, perPage]
 	);
+
+  console.log(paymentMethods);
 
   // Test data
   const data = [
