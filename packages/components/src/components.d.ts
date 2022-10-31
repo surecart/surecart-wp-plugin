@@ -1476,6 +1476,12 @@ export namespace Components {
         "label": string;
         "showControl": boolean;
     }
+    interface ScOrderConfirmComponentsValidator {
+        /**
+          * The checkout
+         */
+        "checkout": Checkout;
+    }
     interface ScOrderConfirmProvider {
         /**
           * The form id
@@ -3605,6 +3611,12 @@ declare global {
         prototype: HTMLScOrderBumpsElement;
         new (): HTMLScOrderBumpsElement;
     };
+    interface HTMLScOrderConfirmComponentsValidatorElement extends Components.ScOrderConfirmComponentsValidator, HTMLStencilElement {
+    }
+    var HTMLScOrderConfirmComponentsValidatorElement: {
+        prototype: HTMLScOrderConfirmComponentsValidatorElement;
+        new (): HTMLScOrderConfirmComponentsValidatorElement;
+    };
     interface HTMLScOrderConfirmProviderElement extends Components.ScOrderConfirmProvider, HTMLStencilElement {
     }
     var HTMLScOrderConfirmProviderElement: {
@@ -4139,6 +4151,7 @@ declare global {
         "sc-order": HTMLScOrderElement;
         "sc-order-bump": HTMLScOrderBumpElement;
         "sc-order-bumps": HTMLScOrderBumpsElement;
+        "sc-order-confirm-components-validator": HTMLScOrderConfirmComponentsValidatorElement;
         "sc-order-confirm-provider": HTMLScOrderConfirmProviderElement;
         "sc-order-confirmation": HTMLScOrderConfirmationElement;
         "sc-order-confirmation-customer": HTMLScOrderConfirmationCustomerElement;
@@ -5861,6 +5874,12 @@ declare namespace LocalJSX {
         "label"?: string;
         "showControl"?: boolean;
     }
+    interface ScOrderConfirmComponentsValidator {
+        /**
+          * The checkout
+         */
+        "checkout"?: Checkout;
+    }
     interface ScOrderConfirmProvider {
         /**
           * The form id
@@ -7547,6 +7566,7 @@ declare namespace LocalJSX {
         "sc-order": ScOrder;
         "sc-order-bump": ScOrderBump;
         "sc-order-bumps": ScOrderBumps;
+        "sc-order-confirm-components-validator": ScOrderConfirmComponentsValidator;
         "sc-order-confirm-provider": ScOrderConfirmProvider;
         "sc-order-confirmation": ScOrderConfirmation;
         "sc-order-confirmation-customer": ScOrderConfirmationCustomer;
@@ -7706,6 +7726,7 @@ declare module "@stencil/core" {
             "sc-order": LocalJSX.ScOrder & JSXBase.HTMLAttributes<HTMLScOrderElement>;
             "sc-order-bump": LocalJSX.ScOrderBump & JSXBase.HTMLAttributes<HTMLScOrderBumpElement>;
             "sc-order-bumps": LocalJSX.ScOrderBumps & JSXBase.HTMLAttributes<HTMLScOrderBumpsElement>;
+            "sc-order-confirm-components-validator": LocalJSX.ScOrderConfirmComponentsValidator & JSXBase.HTMLAttributes<HTMLScOrderConfirmComponentsValidatorElement>;
             "sc-order-confirm-provider": LocalJSX.ScOrderConfirmProvider & JSXBase.HTMLAttributes<HTMLScOrderConfirmProviderElement>;
             "sc-order-confirmation": LocalJSX.ScOrderConfirmation & JSXBase.HTMLAttributes<HTMLScOrderConfirmationElement>;
             "sc-order-confirmation-customer": LocalJSX.ScOrderConfirmationCustomer & JSXBase.HTMLAttributes<HTMLScOrderConfirmationCustomerElement>;

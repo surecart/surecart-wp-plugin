@@ -113,8 +113,9 @@ export class ScOrderConfirmation {
               'hidden': !this.order?.id && !this.loading,
             }}
           >
-            <sc-order-manual-instructions></sc-order-manual-instructions>
-            <slot />
+            <sc-order-confirm-components-validator checkout={this.order}>
+              <slot />
+            </sc-order-confirm-components-validator>
           </div>
 
           {!this.order?.id && !this.loading && (
