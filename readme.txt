@@ -253,6 +253,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * Improvement: Show payment failure list on orders if failed payments.
 * Fix: Radio button individual selection not working in forms.
 * Fix: Issue with PayPal not working on Safari mobile browsers.
+* Fix: Issue with certain embeds not appearing on dashboard pages.
 
 = 1.1.17  - October 22, 2022 =
 * Fix: Quantity selector not working in some cases.
