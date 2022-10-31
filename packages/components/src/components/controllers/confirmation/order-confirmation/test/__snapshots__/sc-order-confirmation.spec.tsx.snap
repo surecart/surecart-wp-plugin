@@ -5,8 +5,9 @@ exports[`sc-order-confirmation renders 1`] = `
   <mock:shadow-root>
     <div class="order-confirmation">
       <div class="hidden order-confirmation__content">
-        <sc-order-manual-instructions></sc-order-manual-instructions>
-        <slot></slot>
+        <sc-order-confirm-components-validator>
+          <slot></slot>
+        </sc-order-confirm-components-validator>
       </div>
       <sc-heading>
         Order not found.
