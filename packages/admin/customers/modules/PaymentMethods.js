@@ -36,22 +36,6 @@ export default ({ customerId }) => {
 
   console.log(paymentMethods);
 
-  // Test data
-  const data = [
-    {
-      "id": "1",
-      "icon": "visa",
-      "number": "VISA 1234",
-      "expDate": "12/2023",
-    },
-    {
-      "id": "2",
-      "icon": "master",
-      "number": "MASTER 1234",
-      "expDate": "12/2023",
-    }
-  ];
-
 	return (
 		<>
       <DataTable
@@ -73,19 +57,19 @@ export default ({ customerId }) => {
             width: '150px',
           },
         }}
-        items={data.map((item)=>{
+        items={paymentMethods?.map((item)=>{
           return {
             icon: (
               <sc-cc-logo
                 style={{ fontSize: '36px' }}
-                brand={item.icon}
+                brand={item?.card?.brand}
               ></sc-cc-logo>
             ),
             number: (
-              item.number
+              '**** ' + item?.card?.last4
             ),
             exp: (
-              item.expDate
+              item?.card?.exp_month + '/' + item?.card?.exp_year
             ),
             action: (
 							<ScButton size="small">
