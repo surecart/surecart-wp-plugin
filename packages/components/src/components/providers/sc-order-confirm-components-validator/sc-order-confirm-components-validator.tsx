@@ -29,7 +29,7 @@ export class ScOrderConfirmComponentsValidator {
       .assignedElements({ flatten: true })
       .find(element => element.tagName === 'SC-ORDER-CONFIRMATION-DETAILS');
     const address = document.createElement('sc-order-manual-instructions');
-    details.parentNode.insertBefore(address, details);
+    details?.parentNode?.insertBefore?.(address, details);
     this.hasManualInstructions = true;
   }
 
