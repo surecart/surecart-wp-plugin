@@ -109,7 +109,7 @@ export default () => {
 			}
 			sidebar={
 				<Sidebar
-				abandoned={abandoned}
+					abandoned={abandoned}
 					checkout={abandoned?.checkout}
 					customer={abandoned?.checkout?.customer}
 					loading={!hasLoadedAbandoned}

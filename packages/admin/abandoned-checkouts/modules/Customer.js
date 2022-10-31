@@ -9,7 +9,9 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
 export default ({ customer, loading }) => {
+	// 'https://secure.gravatar.com/avatar/' + MD5(customer?.email.toLowerCase().trim()) + '?size=120&default=mm'
 	const imgUrl = 'https://secure.gravatar.com/avatar/199a213db9f4aed6aa44c629f3854910?s=96&d=mm&r=g';
+
 	return (
 		<Box
 			title={__('Customer', 'surecart')}
@@ -36,8 +38,6 @@ export default ({ customer, loading }) => {
 				`}
 			>
 				<ScLineItem>
-					{console.log('customer:')}
-					{console.log(customer)}
 					<img
 						src={imgUrl}
 						slot="image"
