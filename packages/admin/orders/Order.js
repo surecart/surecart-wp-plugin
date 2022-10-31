@@ -4,15 +4,18 @@ import {
 	ScBreadcrumb,
 	ScBreadcrumbs,
 	ScButton,
+	ScDropdown,
 	ScFlex,
 	ScIcon,
+	ScMenu,
+	ScMenuItem,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import useEntity from '../hooks/useEntity';
 import Logo from '../templates/Logo';
@@ -21,6 +24,7 @@ import UpdateModel from '../templates/UpdateModel';
 import Charges from './modules/Charges';
 import Details from './modules/Details';
 import LineItems from './modules/LineItems';
+import OrderStatusConfirmModal from './modules/OrderStatusConfirmModal';
 import PaymentFailures from './modules/PaymentFailures';
 import Subscriptions from './modules/Subscriptions';
 import Sidebar from './Sidebar';
@@ -45,6 +49,7 @@ export default () => {
 			'price.product',
 		],
 	});
+	const [modal, setModal] = useState();
 
 	useEffect(() => {
 		if (order?.checkout) {
@@ -128,6 +133,30 @@ export default () => {
 					</ScBreadcrumbs>
 				</div>
 			}
+			button={
+				<ScDropdown
+					position="bottom-right"
+					style={{ '--panel-width': '14em' }}
+				>
+					{order?.status === 'processing' &&
+						order?.checkout?.manual_payment && (
+							<>
+								<ScButton type="primary" slot="trigger" caret>
+									{__('Actions', 'surecart')}
+								</ScButton>
+								<ScMenu>
+									<ScMenuItem
+										onClick={() =>
+											setModal('order_status_update')
+										}
+									>
+										{__('Mark as Paid', 'surecart')}
+									</ScMenuItem>
+								</ScMenu>
+							</>
+						)}
+				</ScDropdown>
+			}
 			sidebar={
 				<Sidebar
 					order={order}
@@ -155,6 +184,12 @@ export default () => {
 					loading={!hasLoadedOrder}
 				/>
 				<Subscriptions checkoutId={order?.checkout?.id} />
+				<OrderStatusConfirmModal
+					order={order}
+					open={modal === 'order_status_update'}
+					onRequestClose={() => setModal(false)}
+					loading={!hasLoadedOrder}
+				/>
 			</>
 		</UpdateModel>
 	);
