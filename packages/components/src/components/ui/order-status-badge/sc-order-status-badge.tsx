@@ -29,6 +29,8 @@ export class ScOrderStatusBadge {
         return 'success';
       case 'payment_failed':
         return 'danger';
+      case 'void':
+        return 'default';
     }
   }
 
@@ -40,6 +42,8 @@ export class ScOrderStatusBadge {
         return __('Payment Failed', 'surecart');
       case 'paid':
         return __('Paid', 'surecart');
+      case 'void':
+        return __('Void', 'surecart');
       default:
         return this.status;
     }
