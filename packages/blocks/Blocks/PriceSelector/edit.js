@@ -106,11 +106,11 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 							selected={type}
 							options={[
 								{
-									label: __('Choose one', 'checkout_egine'),
+									label: __('Select one', 'checkout_egine'),
 									value: 'radio',
 								},
 								{
-									label: __('Choose many', 'surecart'),
+									label: __('Select many', 'surecart'),
 									value: 'checkbox',
 								},
 							]}

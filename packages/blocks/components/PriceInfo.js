@@ -6,7 +6,7 @@ import { Spinner, Button } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
-import { intervalString } from '../../../../admin/util/translations';
+import { intervalString } from '../../admin/util/translations';
 
 export default ({ price_id }) => {
 	const { price, product, loading } = useSelect((select) => {
