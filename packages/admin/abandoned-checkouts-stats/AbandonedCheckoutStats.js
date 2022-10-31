@@ -18,6 +18,7 @@ import Error from '../components/Error';
 import Stat from './Stat';
 import Tab from './Tab';
 import { averageProperties, totalProperties } from './util';
+import { maybeConvertAmount } from '../util';
 
 export default () => {
 	const [data, setData] = useState([]);
@@ -123,16 +124,27 @@ export default () => {
 
 	const hasAccess = scData?.entitlements?.abandoned_checkouts;
 
-	const badge = ({ previous, current, text }) => {
+	const badge = ({ previous, current, currency = false }) => {
 		if (!hasAccess) {
 			return <ScTag type="success">{__('Pro', 'surecart')}</ScTag>;
 		}
+
 		if (loading) return null;
+
+		if (currency) {
+			previous = maybeConvertAmount(previous, scData.currency_code);
+			current = maybeConvertAmount(current, scData.currency_code);
+		}
+
+		const percentage =
+			Math.abs(
+				((current - previous) / (previous || 1)) * 100
+			).toLocaleString('fullwide', { maximumFractionDigits: 3 }) + '%';
 
 		let type, icon;
 		if (previous === current) {
 			type = 'default';
-			icon = 'arrow-right';
+			icon = 'bar-chart';
 		} else {
 			type = previous < current ? 'success' : 'danger';
 			icon = previous < current ? 'arrow-up-right' : 'arrow-down-right';
@@ -147,7 +159,8 @@ export default () => {
 						gap: 0.3em;
 					`}
 				>
-					<ScIcon name={icon} /> {text}
+					<ScIcon name={icon} />
+					{percentage}
 				</div>
 			</ScTag>
 		);
@@ -234,10 +247,6 @@ export default () => {
 					compare={badge({
 						current: totalProperties('count', data),
 						previous: totalProperties('count', previous),
-						text: sprintf(
-							__('%1d Previous', 'surecart'),
-							totalProperties('count', previous)
-						),
 					})}
 				>
 					{totalProperties('count', data)}
@@ -254,10 +263,6 @@ export default () => {
 					compare={badge({
 						current: totalProperties('assisted_count', data),
 						previous: totalProperties('assisted_count', previous),
-						text: sprintf(
-							__('%1d Previous', 'surecart'),
-							totalProperties('assisted_count', previous)
-						),
 					})}
 				>
 					{hasAccess
@@ -281,10 +286,6 @@ export default () => {
 					compare={badge({
 						current: averageProperties('assisted_rate', data),
 						previous: averageProperties('assisted_rate', previous),
-						text: sprintf(
-							__('%1d%% Previous', 'surecart'),
-							averageProperties('assisted_rate', previous) * 100
-						),
 					})}
 				>
 					{hasAccess
@@ -299,16 +300,7 @@ export default () => {
 					compare={badge({
 						current: totalProperties('amount', data),
 						previous: totalProperties('amount', previous),
-						text: (
-							<>
-								<ScFormatNumber
-									type="currency"
-									currency={scData?.currency_code || 'usd'}
-									value={totalProperties('amount', previous)}
-								/>{' '}
-								{__(' Previous', 'surecart')}
-							</>
-						),
+						currency: true,
 					})}
 				>
 					<ScFormatNumber
@@ -329,19 +321,7 @@ export default () => {
 					compare={badge({
 						current: totalProperties('assisted_amount', data),
 						previous: totalProperties('assisted_amount', previous),
-						text: (
-							<>
-								<ScFormatNumber
-									type="currency"
-									currency={scData?.currency_code || 'usd'}
-									value={totalProperties(
-										'assisted_amount',
-										previous
-									)}
-								/>{' '}
-								{__(' Previous', 'surecart')}
-							</>
-						),
+						currency: true,
 					})}
 				>
 					{hasAccess ? (
@@ -378,13 +358,6 @@ export default () => {
 						previous: averageProperties(
 							'assisted_amount_rate',
 							previous
-						),
-						text: sprintf(
-							__('%1d%% Previous', 'surecart'),
-							averageProperties(
-								'assisted_amount_rate',
-								previous
-							) * 100
 						),
 					})}
 				>
