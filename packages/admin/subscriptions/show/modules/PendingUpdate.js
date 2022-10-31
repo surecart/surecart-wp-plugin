@@ -1,22 +1,38 @@
 /** @jsx jsx */
 import DataTable from '../../../components/DataTable';
-import useEntity from '../../../hooks/useEntity';
 import { intervalString } from '../../../util/translations';
 import { css, jsx } from '@emotion/core';
 import { ScFormatDate } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
-import { useEffect } from 'react';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 
 export default ({ subscription }) => {
 	const { pending_update } = subscription || {};
-	const { price: price_id } = pending_update || {};
 
-	const { price, hasLoadedPrice } = useEntity(
-		'price',
-		price_id || subscription?.price,
-		{
-			expand: ['product'],
-		}
+	const { price, hasLoadedPrice } = useSelect(
+		(select) => {
+			if (!pending_update) return {};
+			const queryArgs = [
+				'surecart',
+				'price',
+				pending_update?.price?.id ||
+					pending_update?.price ||
+					subscription?.price?.id ||
+					subscription?.price,
+				{
+					expand: ['product'],
+				},
+			];
+			return {
+				price: select(coreStore).getEntityRecord(...queryArgs),
+				hasLoadedPrice: select(coreStore).hasFinishedResolution(
+					'getEntityRecord',
+					queryArgs
+				),
+			};
+		},
+		[pending_update]
 	);
 
 	return (

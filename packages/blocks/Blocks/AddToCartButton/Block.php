@@ -33,6 +33,17 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 			return '';
 		}
 
+		// Use backgroundColor and textColor if exist.
+		$styles = '';
+		if ( ! empty( $attributes['backgroundColor'] ) ) {
+			$styles .= '--sc-color-primary-500: ' . $attributes['backgroundColor'] . '; ';
+			$styles .= '--sc-focus-ring-color-primary: ' . $attributes['backgroundColor'] . '; ';
+			$styles .= '--sc-input-border-color-focus: ' . $attributes['backgroundColor'] . '; ';
+		}
+		if ( ! empty( $attributes['textColor'] ) ) {
+			$styles .= '--sc-color-primary-text: ' . $attributes['textColor'] . '; ';
+		}
+
 		// Slide-out is disabled, go directly to checkout.
 		if ( (bool) get_option( 'sc_slide_out_cart_disabled', false ) ) {
 			return \SureCart::blocks()->render(
@@ -40,7 +51,7 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 				[
 					'type'  => $attributes['type'] ?? 'primary',
 					'size'  => $attributes['size'] ?? 'medium',
-					'style' => '',
+					'style' => $styles,
 					'href'  => $this->href(
 						[
 							[
@@ -59,7 +70,10 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 		<sc-cart-form
 			price-id="<?php echo esc_attr( $attributes['price_id'] ); ?>"
 			form-id="<?php echo esc_attr( $form->ID ); ?>"
-			mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>">
+			mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>"
+			<?php if ( ! empty( $styles ) ) { ?>
+				 style="<?php echo esc_attr( $styles ); ?>"
+			<?php } ?>>
 
 			<?php if ( $price->ad_hoc ) : ?>
 				<sc-price-input
@@ -76,7 +90,8 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 
 			<sc-cart-form-submit
 				type="<?php echo esc_attr( ! empty( $attributes['type'] ) ? $attributes['type'] : 'primary' ); ?>"
-				size="<?php echo esc_attr( ! empty( $attributes['size'] ) ? $attributes['size'] : 'medium' ); ?>">
+				size="<?php echo esc_attr( ! empty( $attributes['size'] ) ? $attributes['size'] : 'medium' ); ?>"
+			>
 				<?php echo wp_kses_post( $attributes['button_text'] ) ?? esc_html__( 'Add To Cart', 'surecart' ); ?>
 			</sc-cart-form-submit>
 		</sc-cart-form>

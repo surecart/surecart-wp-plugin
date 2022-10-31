@@ -13,7 +13,7 @@ import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
  * Component Dependencies
  */
 import { ScPriceChoice } from '@surecart/components-react';
-import PriceInfo from './components/PriceInfo';
+import PriceInfo from '@scripts/blocks/components/PriceInfo';
 
 import PriceSelector from '@scripts/blocks/components/PriceSelector';
 

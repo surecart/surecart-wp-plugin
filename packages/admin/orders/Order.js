@@ -25,6 +25,7 @@ import Charges from './modules/Charges';
 import Details from './modules/Details';
 import LineItems from './modules/LineItems';
 import OrderStatusConfirmModal from './modules/OrderStatusConfirmModal';
+import PaymentFailures from './modules/PaymentFailures';
 import Subscriptions from './modules/Subscriptions';
 import Sidebar from './Sidebar';
 
@@ -38,6 +39,7 @@ export default () => {
 			'checkout.charge',
 			'checkout.customer',
 			'checkout.tax_identifier',
+			'checkout.payment_failures',
 			'checkout.shipping_address',
 			'checkout.discount',
 			'checkout.line_items',
@@ -177,6 +179,10 @@ export default () => {
 					loading={!hasLoadedOrder}
 				/>
 				<Charges checkoutId={order?.checkout?.id} />
+				<PaymentFailures
+					failures={order?.checkout?.payment_failures}
+					loading={!hasLoadedOrder}
+				/>
 				<Subscriptions checkoutId={order?.checkout?.id} />
 				<OrderStatusConfirmModal
 					order={order}

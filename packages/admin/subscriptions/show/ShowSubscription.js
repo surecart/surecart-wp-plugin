@@ -1,5 +1,4 @@
 /** @jsx jsx */
-import useEntity from '../../hooks/useEntity';
 import Logo from '../../templates/Logo';
 import Template from '../../templates/UpdateModel';
 import CurrentPlan from './modules/CurrentPlan';
@@ -12,7 +11,9 @@ import UpcomingPeriod from './modules/UpcomingPeriod';
 import CancelSubscriptionModal from './modules/modals/CancelSubscriptionModal';
 import CancelPendingUpdate from './modules/modals/CancelUpdateModal';
 import CompleteSubscriptionModal from './modules/modals/CompleteSubscriptionModal';
+import RestoreSubscriptionModal from './modules/modals/RestoreSubscriptionModal';
 import DontCancelModal from './modules/modals/DontCancelModal';
+
 import { css, jsx } from '@emotion/core';
 import {
 	ScBreadcrumb,
@@ -24,43 +25,56 @@ import {
 	ScMenu,
 	ScMenuItem,
 } from '@surecart/components-react';
-import { ScDialog } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
-import apiFetch from '@wordpress/api-fetch';
+import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
-import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
 import { useState } from 'react';
-
-const expand = [
-	'current_period',
-	'period.checkout',
-	'checkout.line_items',
-	'line_item.price',
-	'price',
-	'price.product',
-	'customer',
-	'customer.balances',
-	'purchase',
-	'order',
-	'payment_method',
-	'payment_method.card',
-	'payment_method.payment_instrument',
-	'payment_method.paypal_account',
-	'payment_method.bank_account',
-];
-
+import Tax from './modules/Tax';
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [modal, setModal] = useState();
-	const { subscription, hasLoadedSubscription } = useEntity(
-		'subscription',
-		id,
-		{
-			expand,
-		}
+
+	const { subscription, hasLoadedSubscription } = useSelect(
+		(select) => {
+			if (!id) return;
+			const queryArgs = [
+				'surecart',
+				'subscription',
+				{
+					ids: [id],
+					expand: [
+						'current_period',
+						'period.checkout',
+						'checkout.line_items',
+						'line_item.price',
+						'price',
+						'price.product',
+						'customer',
+						'customer.balances',
+						'purchase',
+						'order',
+						'payment_method',
+						'payment_method.card',
+						'payment_method.payment_instrument',
+						'payment_method.paypal_account',
+						'payment_method.bank_account',
+					],
+				},
+			];
+
+			return {
+				subscription: select(coreStore).getEntityRecords(
+					...queryArgs
+				)?.[0],
+				hasLoadedSubscription: select(coreStore).hasFinishedResolution(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
+		},
+		[id]
 	);
 
 	/** Render the cancel button */
@@ -86,11 +100,43 @@ export default () => {
 
 	/** Render the complete button */
 	const renderCompleteButton = () => {
-		if (!subscription?.remaining_period_count) return null;
-		if (subscription?.status !== 'active') return null;
+		// bail if not finite.
+		if (!subscription?.finite) return null;
 		return (
-			<ScMenuItem onClick={() => setModal('complete')}>
+			<ScMenuItem
+				onClick={(e) => {
+					setModal(e.target.disabled ? null : 'complete');
+				}}
+				disabled={subscription?.status === 'completed'}
+			>
 				{__('Complete Subscription', 'surecart')}
+			</ScMenuItem>
+		);
+	};
+
+	const renderRestoreButton = () => {
+		if (subscription?.status !== 'canceled') return null;
+		return (
+			<ScMenuItem onClick={() => setModal('restore')}>
+				{__('Restore Subscription', 'surecart')}
+			</ScMenuItem>
+		);
+	};
+
+	const renderUpdateButton = () => {
+		if (!!Object.keys(subscription?.pending_update || {})?.length)
+			return null;
+		if (['completed', 'canceled'].includes(subscription?.status))
+			return null;
+		return (
+			<ScMenuItem
+				href={addQueryArgs('admin.php', {
+					page: 'sc-subscriptions',
+					action: 'edit',
+					id: id,
+				})}
+			>
+				{__('Update Subscription', 'surecart')}
 			</ScMenuItem>
 		);
 	};
@@ -138,56 +184,40 @@ export default () => {
 						loading={!hasLoadedSubscription}
 					/>
 					<Purchases subscriptionId={id} />
+					<Tax
+						subscription={subscription}
+						loading={!hasLoadedSubscription}
+					/>
 				</>
 			}
 			button={
-				!['completed', 'canceled'].includes(subscription?.status) ? (
-					<ScDropdown
-						position="bottom-right"
-						style={{ '--panel-width': '14em' }}
+				<ScDropdown
+					position="bottom-right"
+					style={{ '--panel-width': '14em' }}
+				>
+					<ScButton
+						type="primary"
+						slot="trigger"
+						loading={!hasLoadedSubscription}
+						caret
 					>
-						<ScButton
-							type="primary"
-							slot="trigger"
-							loading={!hasLoadedSubscription}
-							caret
-						>
-							{__('Actions', 'surecart')}
-						</ScButton>
-						<ScMenu>
-							{!!Object.keys(subscription?.pending_update || {})
-								.length ? (
-								<ScMenuItem
-									onClick={() => setModal('cancel_update')}
-								>
-									{__('Cancel Pending Update', 'surecart')}
-								</ScMenuItem>
-							) : (
-								subscription?.current_period_end_at !==
-									null && (
-									<ScMenuItem
-										href={addQueryArgs('admin.php', {
-											page: 'sc-subscriptions',
-											action: 'edit',
-											id: id,
-										})}
-									>
-										{__('Update Subscription', 'surecart')}
-									</ScMenuItem>
-								)
-							)}
-							{renderCompleteButton()}
-							{renderCancelButton()}
-						</ScMenu>
-					</ScDropdown>
-				) : (
-					<ScButton type="primary" slot="trigger" disabled>
-						{subscription?.status === 'completed' &&
-							__('Subscription Completed', 'surecart')}
-						{subscription?.status === 'canceled' &&
-							__('Subscription Canceled', 'surecart')}
+						{__('Actions', 'surecart')}
 					</ScButton>
-				)
+					<ScMenu>
+						{!!Object.keys(subscription?.pending_update || {})
+							.length && (
+							<ScMenuItem
+								onClick={() => setModal('cancel_update')}
+							>
+								{__('Cancel Pending Update', 'surecart')}
+							</ScMenuItem>
+						)}
+						{renderUpdateButton()}
+						{renderCompleteButton()}
+						{renderCancelButton()}
+						{renderRestoreButton()}
+					</ScMenu>
+				</ScDropdown>
 			}
 		>
 			<>
@@ -238,6 +268,10 @@ export default () => {
 			/>
 			<CompleteSubscriptionModal
 				open={modal === 'complete'}
+				onRequestClose={() => setModal(false)}
+			/>
+			<RestoreSubscriptionModal
+				open={modal === 'restore'}
 				onRequestClose={() => setModal(false)}
 			/>
 		</Template>

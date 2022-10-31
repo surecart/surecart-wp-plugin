@@ -160,6 +160,46 @@ class Subscription extends Model {
 	}
 
 	/**
+	 * Restore a subscription
+	 *
+	 * @param string $id Model id.
+	 * @return $this|\WP_Error
+	 */
+	protected function restore( $id = null ) {
+		if ( $id ) {
+			$this->setAttribute( 'id', $id );
+		}
+
+		if ( $this->fireModelEvent( 'restoring' ) === false ) {
+			return false;
+		}
+
+		if ( empty( $this->attributes['id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please create the subscription.' );
+		}
+
+		$restored = \SureCart::request(
+			$this->endpoint . '/' . $this->attributes['id'] . '/restore/',
+			[
+				'method' => 'PATCH',
+				'query'  => $this->query,
+			]
+		);
+
+		if ( is_wp_error( $restored ) ) {
+			return $restored;
+		}
+
+		$this->resetAttributes();
+
+		$this->fill( $restored );
+
+		$this->fireModelEvent( 'restored' );
+
+		return $this;
+	}
+
+	/**
 	 * Renew a subscription.
 	 *
 	 * @param string $id Model id.
