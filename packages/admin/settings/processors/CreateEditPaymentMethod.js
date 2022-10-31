@@ -118,13 +118,6 @@ export default ({ open, onRequestClose, paymentMethod }) => {
 					required
 				/>
 
-				<ScSwitch
-					checked={!archived}
-					onScChange={(e) => updateData({ archived: !archived })}
-				>
-					{__('Enabled', 'surecart')}
-				</ScSwitch>
-
 				<div>
 					<ScButton type="primary" submit>
 						{paymentMethod?.id
