@@ -8,7 +8,7 @@ describe('sc-checkout', () => {
     setResponses(
       [
         {
-          path: '/surecart/v1/orders',
+          path: '/surecart/v1/checkouts',
           data: {},
         },
       ],
@@ -19,15 +19,15 @@ describe('sc-checkout', () => {
     expect(element).toHaveClass('hydrated');
   });
 
-  it('updates order summary', async () => {
+  it('updates checkout summary', async () => {
     const page = await newE2EPage();
     setResponses(
       [
         {
-          path: '/surecart/v1/orders',
+          path: '/surecart/v1/checkouts',
           data: {
             id: '0df38be0-5d52-4f80-af56-0a9a6eea7998',
-            object: 'order',
+            object: 'checkout',
             amount_due: 9900,
             currency: 'usd',
             discount_amount: 0,
@@ -163,7 +163,9 @@ describe('sc-checkout', () => {
       ],
       page,
     );
-    await page.setContent('<sc-checkout></sc-checkout>');
+    await page.setContent('<sc-checkout><sc-form><sc-line-items></sc-line-items></sc-form></sc-checkout>');
+    const items = await page.find('sc-line-items >>> sc-product-line-item');
+    console.log({items});
   });
 
   // it('Can be submitted', async () => {

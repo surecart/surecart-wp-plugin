@@ -138,7 +138,6 @@ export class ScCheckout {
   @Listen('scSetProcessor')
   handleProcessorChange(e) {
     const { id, manual } = e.detail;
-    console.log(e.detail);
     this.processor = id;
     this.isManualProcessor = manual;
   }
