@@ -244,6 +244,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 == Changelog ==
 
 = 1.1.18  - October 22, 2022 =
+* Improvement: Set placeholder labels for address block.
 * Improvement: Admin ability "restore" a subscription that has been canceled.
 * Improvement: Admin ability to mark an order as paid.
 * Improvement: Admin ability to turn off tax on individual subscriptions.
