@@ -69,7 +69,6 @@ export class ScOrderConfirmation {
 
   state() {
     const manualPaymentMethod = this.order?.manual_payment_method as ManualPaymentMethod;
-    console.log(manualPaymentMethod);
     return {
       processor: 'stripe',
       loading: this.loading,
