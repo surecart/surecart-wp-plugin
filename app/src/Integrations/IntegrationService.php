@@ -342,9 +342,7 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	 * @return array
 	 */
 	public function indexProviders( $list = [] ) {
-		if ( $this->findProvider() ) {
-			$list[] = $this->findProvider();
-		}
+		$list[] = $this->findProvider();
 
 		return $list;
 	}
@@ -355,18 +353,14 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	 * @return array
 	 */
 	public function findProvider() {
-		if ( $this->enabled() ) {
-			return [
-				'name'       => $this->getName(),
-				'label'      => $this->getLabel(),
-				'disabled'   => ! $this->enabled(),
-				'logo'       => esc_url_raw( $this->getLogo() ),
-				'item_label' => $this->getItemLabel(),
-				'item_help'  => $this->getItemHelp(),
-			];
-		} else {
-			return null;
-		}
+		return [
+			'name'       => $this->getName(),
+			'label'      => $this->getLabel(),
+			'disabled'   => ! $this->enabled(),
+			'logo'       => esc_url_raw( $this->getLogo() ),
+			'item_label' => $this->getItemLabel(),
+			'item_help'  => $this->getItemHelp(),
+		];
 
 	}
 

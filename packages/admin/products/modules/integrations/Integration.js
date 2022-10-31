@@ -147,7 +147,7 @@ export default ({ id }) => {
 								font-weight: bold;
 							`}
 						>
-							{__('Not found', 'surecart')}
+							{sprintf( __('%s not found', 'surecart'), providerData?.label)}
 						</div>
 						{sprintf(
 						__(
@@ -156,7 +156,7 @@ export default ({ id }) => {
 						)
 					)}
 					</div>
-          <ScBadgeNotice type='warning' label='Test' size='medium' />
+          <ScBadgeNotice type='warning' label='Disabled' size='medium' />
 				</div>
 
         <ScDropdown slot="suffix" placement="bottom-end">
