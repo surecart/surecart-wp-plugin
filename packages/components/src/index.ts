@@ -1,2 +1,2 @@
+export { countryChoices } from './functions/address';
 export { Components, JSX } from './components';
-export * as address from './functions/address';
