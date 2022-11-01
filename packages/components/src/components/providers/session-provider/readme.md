@@ -12,6 +12,7 @@
 | `currencyCode`         | `currency-code`          | Currency Code                               | `string`                                | `'usd'`     |
 | `formId`               | `form-id`                | The checkout form id                        | `number`                                | `undefined` |
 | `groupId`              | `group-id`               | Group id                                    | `string`                                | `undefined` |
+| `isManualProcessor`    | `is-manual-processor`    | Is this a manual payment?                   | `boolean`                               | `undefined` |
 | `mode`                 | `mode`                   | Are we in test or live mode.                | `"live" \| "test"`                      | `'live'`    |
 | `modified`             | `modified`               | Whent the post was modified.                | `string`                                | `undefined` |
 | `paymentIntents`       | --                       | Holds all available payment intents.        | `PaymentIntents`                        | `undefined` |

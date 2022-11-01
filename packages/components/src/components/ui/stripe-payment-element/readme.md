@@ -7,12 +7,12 @@
 
 ## Properties
 
-| Property        | Attribute     | Description                   | Type            | Default     |
-| --------------- | ------------- | ----------------------------- | --------------- | ----------- |
-| `address`       | `address`     | Should we collect an address? | `boolean`       | `undefined` |
-| `order`         | --            | Order to watch                | `Checkout`      | `undefined` |
-| `paymentIntent` | --            | The Payment Intent            | `PaymentIntent` | `undefined` |
-| `successUrl`    | `success-url` | Success url to redirect.      | `string`        | `undefined` |
+| Property              | Attribute     | Description                   | Type            | Default     |
+| --------------------- | ------------- | ----------------------------- | --------------- | ----------- |
+| `address`             | `address`     | Should we collect an address? | `boolean`       | `undefined` |
+| `order`               | --            | Order to watch                | `Checkout`      | `undefined` |
+| `stripePaymentIntent` | --            | The Payment Intent            | `PaymentIntent` | `undefined` |
+| `successUrl`          | `success-url` | Success url to redirect.      | `string`        | `undefined` |
 
 
 ## Events
@@ -39,11 +39,6 @@ Type: `Promise<void>`
 
 ## Dependencies
 
-### Used by
-
- - [sc-payment](../../controllers/checkout-form/payment)
- - [sc-stripe-payment-method-choice](../../processors/sc-stripe-payment-method-choice)
-
 ### Depends on
 
 - [sc-text](../text)
@@ -54,8 +49,6 @@ Type: `Promise<void>`
 graph TD;
   sc-stripe-payment-element --> sc-text
   sc-stripe-payment-element --> sc-skeleton
-  sc-payment --> sc-stripe-payment-element
-  sc-stripe-payment-method-choice --> sc-stripe-payment-element
   style sc-stripe-payment-element fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

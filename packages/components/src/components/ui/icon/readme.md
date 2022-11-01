@@ -53,14 +53,12 @@
  - [sc-order-submit](../../controllers/checkout-form/order-submit)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
- - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-payment-method](../sc-payment-method)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-product-line-item](../product-line-item)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-quantity-select](../quantity-select)
  - [sc-select](../select)
- - [sc-stripe-payment-method-choice](../../processors/sc-stripe-payment-method-choice)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
@@ -93,14 +91,12 @@ graph TD;
   sc-order-submit --> sc-icon
   sc-orders-list --> sc-icon
   sc-password-nag --> sc-icon
-  sc-payment --> sc-icon
   sc-payment-method --> sc-icon
   sc-payment-methods-list --> sc-icon
   sc-product-line-item --> sc-icon
   sc-purchase-downloads-list --> sc-icon
   sc-quantity-select --> sc-icon
   sc-select --> sc-icon
-  sc-stripe-payment-method-choice --> sc-icon
   sc-subscription --> sc-icon
   sc-subscription-ad-hoc-confirm --> sc-icon
   sc-subscription-payment-method --> sc-icon
