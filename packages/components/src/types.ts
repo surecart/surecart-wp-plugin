@@ -381,6 +381,7 @@ export interface Checkout extends Object {
   currency?: string;
   total_amount?: number;
   subtotal_amount?: number;
+  full_amount?: number;
   proration_amount?: number;
   applied_balance_amount?: number;
   discounts?: number;

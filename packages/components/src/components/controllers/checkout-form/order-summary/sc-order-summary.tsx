@@ -63,6 +63,9 @@ export class ScOrderSummary {
           <slot name="description" />
         </span>
         <span slot="price">
+          {this.order?.total_amount !== this.order?.full_amount && (
+            <sc-total class="full_amount__new-price" total={'full_amount'} order={this.order}></sc-total>
+          )}
           <sc-total total={'total'} order={this.order}></sc-total>
         </span>
       </sc-line-item>
