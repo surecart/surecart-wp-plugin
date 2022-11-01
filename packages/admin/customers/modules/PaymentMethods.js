@@ -1,8 +1,9 @@
-import { ScButton, ScFormatNumber } from '@surecart/components-react';
+import { ScButton, ScTag } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __, _n } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
 import DataTable from '../../components/DataTable';
 
 export default ({ customerId }) => {
@@ -34,6 +35,28 @@ export default ({ customerId }) => {
 		[customerId, page, perPage]
 	);
 
+  const setDefault = async (id) => {
+    try {
+      loading = true;
+      await apiFetch({
+        path: `surecart/v1/customers/${customerId}`,
+        method: 'PATCH',
+        data: {
+          default_payment_method: method.id,
+        },
+      });
+      paymentMethods = (await apiFetch({
+        path: addQueryArgs(`surecart/v1/payment_methods/`, {
+          expand: ['card', 'customer', 'billing_agreement', 'paypal_account', 'payment_instrument', 'bank_account']
+        }),
+      }));
+    } catch (e) {
+      alert(e?.messsage || __('Something went wrong', 'surecart'));
+    } finally {
+      loading = false;
+    }
+  }
+
   console.log(paymentMethods);
 
 	return (
@@ -54,7 +77,6 @@ export default ({ customerId }) => {
           },
           action: {
             label: __('Status', 'surecart'),
-            width: '150px',
           },
         }}
         items={paymentMethods?.map((item)=>{
@@ -72,14 +94,17 @@ export default ({ customerId }) => {
               item?.card?.exp_month + '/' + item?.card?.exp_year
             ),
             action: (
-							<ScButton size="small">
-								{__('View', 'surecart')}
-							</ScButton>
+                item?.id !== item?.customer?.default_payment_method ? (
+                  <ScButton size='small' type='default' onClick={() => setDefault(item?.id)}>
+                    {__('Make Default', 'surecart')}
+                  </ScButton>
+                ) : (
+                  <ScTag type='info'>Default</ScTag>
+                )
 						),
           }
         })}
       />
-      {/* {console.log(paymentMethods)} */}
     </>
 	);
 };
