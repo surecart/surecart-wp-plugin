@@ -30,8 +30,8 @@ export default () => {
 		);
 		return {
 			items: select(coreStore).getEntityRecords(...queryArgs),
-			loading: !items?.length && resolving,
-			busy: items?.length && resolving,
+			loading: !!(!items?.length && resolving),
+			busy: !!(items?.length && resolving),
 		};
 	});
 
