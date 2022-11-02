@@ -48,8 +48,15 @@
 		<?php esc_html_e( 'Advanced', 'surecart' ); ?>
 	</sc-tab>
 
-	<sc-tab href="mailto:hello@surecart.com" target="_blank">
-		<sc-icon style="font-size: 18px; width: 22px; stroke-width: 4; opacity: 0.7" name="life-buoy" slot="prefix"></sc-icon>
-		<?php esc_html_e( 'Help', 'surecart' ); ?>
+	<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'upgrade' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'upgrade' === $tab ? 'active' : ''; ?> >
+		<sc-icon style="font-size: 18px; width: 22px; stroke-width: 4; opacity: 0.7" name="zap" slot="prefix"></sc-icon>
+		<?php esc_html_e( 'Upgrade', 'surecart' ); ?>
+		<sc-tag slot="suffix" type="success"><?php esc_html_e( 'Pro', 'surecart' ); ?></sc-tag>
 	</sc-tab>
+
+	<a href="https://surecart.com/support/" target="_blank" class="surecart-help">
+		<sc-icon style="font-size: 18px; width: 22px; stroke-width: 4;" name="life-buoy"></sc-icon>
+		<?php esc_html_e( 'Help', 'surecart' ); ?>
+	</a>
+
 </div>

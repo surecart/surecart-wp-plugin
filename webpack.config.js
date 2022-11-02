@@ -117,6 +117,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/settings/advanced/index.js'
 		),
+		['admin/settings/upgrade']: path.resolve(
+			__dirname,
+			'packages/admin/settings/upgrade/index.js'
+		),
 
 		/**
 		 * Data.
