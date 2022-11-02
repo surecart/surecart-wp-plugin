@@ -160,12 +160,13 @@ export class ScSessionProvider {
         },
       });
 
+      setOrder(order, this.formId);
+
       // the order is paid
       if (['paid', 'processing'].includes(order?.status)) {
         this.scPaid.emit();
       }
 
-      setOrder(order, this.formId);
       return this.order();
     } catch (e) {
       console.error(e);

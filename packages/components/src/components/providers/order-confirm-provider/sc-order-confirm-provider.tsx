@@ -65,6 +65,7 @@ export class ScOrderConfirmProvider {
       setTimeout(() => {
         // make sure we clear the order state no matter what.
         clearOrder(this.formId, this.mode);
+        console.log(addQueryArgs(this.successUrl, { order }));
         window.location.assign(addQueryArgs(this.successUrl, { order }));
       }, 50);
     }

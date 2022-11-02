@@ -299,7 +299,7 @@ export class ScCheckout {
             </sc-form-state-provider>
           </sc-login-provider>
 
-          {this.state().busy && <sc-block-ui z-index={9}></sc-block-ui>}
+          {this.state().busy && <sc-block-ui class="busy-block-ui" z-index={9}></sc-block-ui>}
           {this.checkoutState === 'finalizing' && (
             <sc-block-ui z-index={9} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
               {this.loadingText?.finalizing || __('Submitting order...', 'surecart')}

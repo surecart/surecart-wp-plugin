@@ -3,12 +3,12 @@ import './paypal';
 import 'cypress-file-upload';
 
 before(function () {
-	disableGutenbergFeatures();
+	// disableGutenbergFeatures();
 
 	// make sure to seed pages.
-	cy.exec(
-		`yarn wp-env run tests-cli "wp eval '\SureCart::page_seeder()->seed();'"`
-	);
+	// cy.exec(
+	// 	`yarn wp-env run tests-cli "wp eval '\SureCart::page_seeder()->seed();'"`
+	// );
 });
 
 /**

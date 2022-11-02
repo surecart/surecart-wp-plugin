@@ -1,8 +1,7 @@
 import apiFetch from '@wordpress/api-fetch';
 
-console.log({ window });
+apiFetch.fetchAllMiddleware = null;
 if (window?.scData) {
-  console.log(window?.scData);
   apiFetch.use(apiFetch.createRootURLMiddleware(window?.scData?.root_url));
   // @ts-ignore
   apiFetch.nonceMiddleware = apiFetch.createNonceMiddleware(window?.scData?.nonce);

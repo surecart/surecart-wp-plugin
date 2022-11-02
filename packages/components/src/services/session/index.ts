@@ -64,7 +64,7 @@ export const getCheckout = async ({ id, query = {} }) => {
 export const finalizeSession = async ({ id, data = {}, query = {}, processor }: { id: string; data?: any; query?: any; processor: { id: string; manual: boolean } }) => {
   return (await apiFetch({
     method: 'POST',
-    path: addQueryArgs(parsePath(id, `/finalize/`), {
+    path: addQueryArgs(parsePath(id, '/finalize'), {
       ...(processor?.manual ? { manual_payment: true, manual_payment_method_id: processor?.id } : { processor_type: processor?.id }),
       ...query,
     }),

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-11-01T18:15:40",
+  "timestamp": "2022-11-02T13:00:45",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -12568,6 +12568,7 @@
       "filePath": "./src/components/providers/sc-order-confirm-components-validator/sc-order-confirm-components-validator.tsx",
       "encapsulation": "shadow",
       "tag": "sc-order-confirm-components-validator",
+      "readme": "# sc-order-confirm-components-validator\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -13475,6 +13476,7 @@
       "filePath": "./src/components/controllers/confirmation/manual-instructions/sc-order-manual-instructions.tsx",
       "encapsulation": "shadow",
       "tag": "sc-order-manual-instructions",
+      "readme": "# sc-order-manual-instructions\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},

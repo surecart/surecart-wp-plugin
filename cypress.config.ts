@@ -4,11 +4,9 @@ export default defineConfig({
 	chromeWebSecurity: false,
 	fixturesFolder: '.dev/tests/cypress/fixtures',
 	screenshotsFolder: '.dev/tests/cypress/screenshots',
-	viewportWidth: 2560,
 	projectId: 'ae7zwm',
-	viewportHeight: 1440,
 	env: {
-		testURL: 'http://localhost:8009',
+		testURL: 'http://localhost:3456',
 		wpUsername: 'admin',
 		wpPassword: 'password',
 		apiToken: 'HK5eRVENxcgzQzqU4AfFoJXf',
@@ -25,7 +23,7 @@ export default defineConfig({
 		setupNodeEvents(on, config) {
 			return require('./.dev/tests/cypress/plugins/index.js')(on, config);
 		},
-		baseUrl: 'http://localhost:8009',
+		baseUrl: 'https://localhost:3456',
 		supportFile: '.dev/tests/cypress/support/commands.js',
 		specPattern: './/.dev/tests/tests-e2e/**/*.cypress.js',
 		excludeSpecPattern: '**/ignoredTestFiles/*.js',
