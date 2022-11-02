@@ -1,6 +1,4 @@
 import { ScButton, ScTag } from '@surecart/components-react';
-import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
 import { __, _n } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
@@ -9,54 +7,27 @@ import DataTable from '../../components/DataTable';
 
 export default ({ customerId }) => {
   const [paymentMethods, setPaymentMethods] = useState([]);
-  const [loading, setLoading] = useState(false);
-	const [page, setPage] = useState(1);
-	const [perPage, setPerPage] = useState(10);
-
-	// const { paymentMethods, loading } = useSelect(
-	// 	(select) => {
-	// 		const queryArgs = [
-	// 			'surecart',
-	// 			'payment_method',
-	// 			{
-	// 				customer_ids: [customerId],
-	// 				expand: ['card', 'customer', 'billing_agreement', 'paypal_account', 'payment_instrument', 'bank_account'],
-	// 				page,
-	// 				per_page: perPage,
-	// 			},
-	// 		];
-	// 		const paymentMethods = select(coreStore).getEntityRecords(...queryArgs);
-	// 		const loading = select(coreStore).isResolving(
-	// 			'getEntityRecords',
-	// 			queryArgs
-	// 		);
-	// 		return {
-	// 			paymentMethods,
-	// 			loading: loading && page === 1,
-	// 		};
-	// 	},
-	// 	[customerId, page, perPage]
-	// );
+  const [loading, setLoading] = useState(true);
+	const [state, setState] = useState(true);
 
   useEffect(()=>{
     setLoading(true);
     const payment = async () => {
       const data = await apiFetch({
         path: addQueryArgs(`surecart/v1/payment_methods/`, {
-          expand: ['card', 'customer', 'billing_agreement', 'paypal_account', 'payment_instrument', 'bank_account']
+          expand: ['card', 'customer', 'billing_agreement', 'paypal_account', 'payment_instrument', 'bank_account'],
+          customer_ids: [customerId]
         }),
-        customer_ids: [customerId]
       });
       setPaymentMethods(data);
       setLoading(false);
     }
     payment();
-  }, []);
+  }, [state]);
 
   const setDefault = async (id) => {
     try {
-      // loading = true;
-      console.log(paymentMethods);
+      setLoading(true);
       await apiFetch({
         path: `surecart/v1/customers/${customerId}`,
         method: 'PATCH',
@@ -64,20 +35,14 @@ export default ({ customerId }) => {
           default_payment_method: id,
         },
       });
-      // paymentMethods = (await apiFetch({
-      //   path: addQueryArgs(`surecart/v1/payment_methods/`, {
-      //     expand: ['card', 'customer', 'billing_agreement', 'paypal_account', 'payment_instrument', 'bank_account']
-      //   }),
-      // }));
     } catch (e) {
-      // alert(e?.messsage || __('Something went wrong', 'surecart'));
+      alert(e?.messsage || __('Something went wrong', 'surecart'));
       console.log(e);
     } finally {
-      // loading = false;
+      setLoading(false);
+      setState(!state);
     }
   }
-
-  // console.log(paymentMethods);
 
 	return (
 		<>
