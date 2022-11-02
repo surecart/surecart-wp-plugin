@@ -8,6 +8,7 @@
   <link href="/build/surecart.css" rel="stylesheet">
   <script type="module" src="/build/surecart.esm.js"></script>
   <script nomodule src="/build/surecart.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
   <script>
     window.scIcons = {
       path: '/build/icon-assets'
@@ -17,6 +18,14 @@
         __: () => { }
       }
     }
+
+    const origStripe = window.Stripe;
+    window.Stripe = (...args) => {
+      return {
+        ...origStripe(...args),
+        ...window.mockStripeMethods,
+      };
+    };
   </script>
 </head>
 
