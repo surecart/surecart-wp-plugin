@@ -3,8 +3,8 @@ Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
-Tested up to: 6.0
-Stable tag: 1.1.18
+Tested up to: 6.1
+Stable tag: 1.1.19
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,9 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.1.19  - Novermber 2, 2022 =
+* Improvement: WordPress 6.1 Compatibility.
 
 = 1.1.18  - October 31, 2022 =
 * Improvement: Set custom background and text colors for cart, buy buttons and submit buttons.
