@@ -15,7 +15,17 @@ describe('Checkout', () => {
 		}, {
       id: "test",
       object: "checkout",
-      status: "finalized"
+      status: "finalized",
+      payment_intent: {
+        processor_type: 'stripe',
+        external_intent_id: 'test',
+        processor_data: {
+          stripe: {
+            client_secret: 'test',
+            type: 'payment'
+          }
+        }
+      }
     }).as('finalize');
 
     cy.intercept({
@@ -28,7 +38,14 @@ describe('Checkout', () => {
   });
 
 	it('Can checkout', () => {
-    cy.visit('/test/sc-checkout');
+    const confirmCardPaymentStub = cy.stub();
+    cy.visit('/test/sc-checkout', {
+      onBeforeLoad: (window) => {
+        window.mockStripeMethods = {
+          confirmCardPayment: confirmCardPaymentStub
+        }
+      }
+    });
 
     cy.wait('@createUpdate');
     cy.get('sc-block-ui.busy-block-ui').should('not.exist');
@@ -43,6 +60,7 @@ describe('Checkout', () => {
 			force: true,
 		});
 
+
     cy.get('sc-order-submit sc-button').shadow()
     .find('.button')
     .should('not.have.class', 'button--loading')
@@ -54,6 +72,8 @@ describe('Checkout', () => {
 
     cy.location('pathname').should('contain', 'success');
     cy.location('search').should('contain', 'order=test');
+
+    // expect(confirmCardPaymentStub).to.be.called;
 
 		// // we will intercept confirm order.
 		// cy.intercept({
