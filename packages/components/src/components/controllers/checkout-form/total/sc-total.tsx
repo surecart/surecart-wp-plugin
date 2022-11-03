@@ -8,14 +8,13 @@ import { openWormhole } from 'stencil-wormhole';
   shadow: false,
 })
 export class ScTotal {
-  @Prop() total: 'total' | 'subtotal' | 'full_amount' | 'amount_due' = 'amount_due';
+  @Prop() total: 'total' | 'subtotal' | 'amount_due' = 'amount_due';
   @Prop() order: Checkout;
 
   order_key = {
     total: 'total_amount',
     subtotal: 'subtotal_amount',
     amount_due: 'amount_due',
-    full_amount: 'full_amount',
   };
 
   render() {
