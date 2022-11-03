@@ -11,17 +11,15 @@ import { useState } from 'react';
 import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch } from '@wordpress/data';
 
-export default ({ url, checkoutId, promotionId }) => {
+export default ({ url, checkoutId, promotionCode }) => {
 	const [copied, setCopied] = useState(false);
 	const { createErrorNotice } = useDispatch(noticesStore);
-
-	console.log({ promotionId });
 
 	const link = addQueryArgs(
 		`${(url || '').replace(/\/+$/, '')}/surecart/redirect`,
 		{
 			checkout_id: checkoutId,
-			...(promotionId ? { promotion: promotionId } : {}),
+			...(promotionCode ? { promotion_code: promotionCode } : {}),
 		}
 	);
 

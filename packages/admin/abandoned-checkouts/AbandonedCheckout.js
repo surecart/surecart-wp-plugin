@@ -155,7 +155,7 @@ export default () => {
 				<Link
 					url={site?.url}
 					checkoutId={abandoned?.checkout?.id}
-					promotionId={abandoned?.promotion?.id}
+					promotionCode={abandoned?.promotion?.code}
 				/>
 				<LineItems
 					checkout={abandoned?.checkout}
