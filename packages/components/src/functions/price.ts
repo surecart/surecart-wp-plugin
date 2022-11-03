@@ -30,7 +30,7 @@ export const getCurrencySymbol = (code: string = 'usd') => {
   const [currency] = new Intl.NumberFormat(undefined, {
     style: 'currency',
     currency: code,
-  }).formatToParts();
+  }).formatToParts(0);
   return currency?.value;
 };
 
