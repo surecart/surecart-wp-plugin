@@ -179,10 +179,12 @@ export class ScCheckout {
   }
 
   order() {
+    console.log(this?.formId);
     return getOrder(this?.formId, this.mode);
   }
 
   state() {
+    console.log(this.order());
     return {
       processor: this.processor,
       processors: (this.processors || []).filter(processor => {

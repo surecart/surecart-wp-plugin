@@ -1,6 +1,6 @@
-import { css, jsx } from '@emotion/core';
 /** @jsx jsx */
-import { __, sprintf } from '@wordpress/i18n';
+import { css, jsx } from '@emotion/core';
+import { __ } from '@wordpress/i18n';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 

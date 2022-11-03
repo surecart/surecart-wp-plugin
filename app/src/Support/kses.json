@@ -17,6 +17,7 @@
   "sc-alert": {
     "closable": true,
     "duration": true,
+    "no-icon": true,
     "open": true,
     "scroll-margin": true,
     "scroll-on-open": true,

@@ -54,6 +54,10 @@ export namespace Components {
          */
         "hide": () => Promise<void>;
         /**
+          * No icon
+         */
+        "noIcon": boolean;
+        /**
           * Indicates whether or not the alert is open. You can use this in lieu of the show/hide methods.
          */
         "open": boolean;
@@ -4276,6 +4280,10 @@ declare namespace LocalJSX {
           * The length of time, in milliseconds, the alert will show before closing itself. If the user interacts with the alert before it closes (e.g. moves the mouse over it), the timer will restart. Defaults to `Infinity`.
          */
         "duration"?: number;
+        /**
+          * No icon
+         */
+        "noIcon"?: boolean;
         /**
           * When alert is hidden
          */

@@ -41,7 +41,7 @@ class AbandonedCheckoutListTable extends ListTable {
 		$stati = [
 			'all'           => __( 'All', 'surecart' ),
 			'scheduled'     => __( 'Scheduled', 'surecart' ),
-			'send'          => __( 'Send', 'surecart' ),
+			'sent'          => __( 'Sent', 'surecart' ),
 			'not_scheduled' => __( 'Not Scheduled', 'surecart' ),
 		];
 
@@ -110,9 +110,8 @@ class AbandonedCheckoutListTable extends ListTable {
 		$status = $this->getStatus();
 		$where  = [];
 		if ( $status ) {
-			$where['notification_status'] = $status;
+			$where['notification_status'] = [ $status ];
 		}
-
 		return AbandonedCheckout::where( $where )
 		->with( [ 'recovered_checkout', 'checkout', 'customer' ] )
 		->paginate(
@@ -144,7 +143,7 @@ class AbandonedCheckoutListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_total( $abandoned ) {
-		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $abandoned->recovered_checkout->currency ?? 'usd' ) ) . '" value="' . (float) ( $abandoned->recovered_checkout->total_amount ?? 0 ) . '"></sc-format-number>';
+		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $abandoned->checkout->currency ?? 'usd' ) ) . '" value="' . (float) $abandoned->checkout->total_amount . '"></sc-format-number>';
 	}
 
 	/**
