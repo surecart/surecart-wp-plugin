@@ -1,14 +1,8 @@
 /** @jsx jsx */
-
 import { __, sprintf } from '@wordpress/i18n';
-
 import { css, jsx } from '@emotion/core';
 import { formatTime } from '../../util/time';
-import {
-	ScOrderStatusBadge,
-	ScSkeleton,
-	ScTag,
-} from '@surecart/components-react';
+import { ScSkeleton, ScTag } from '@surecart/components-react';
 
 export default ({ abandoned, checkout, loading }) => {
 	if (loading) {
@@ -62,17 +56,13 @@ export default ({ abandoned, checkout, loading }) => {
 				)}
 			</div>
 			<div>
-				{ abandoned?.notification_status === 'sent' && (
-					<ScTag type="success">
-						{__('Sent', 'surecart')}
-					</ScTag>
+				{abandoned?.notification_status === 'sent' && (
+					<ScTag type="success">{__('Sent', 'surecart')}</ScTag>
 				)}
-				{ abandoned?.notification_status === 'scheduled' && (
-					<ScTag type="info">
-						{__('Scheduled', 'surecart')}
-					</ScTag>
+				{abandoned?.notification_status === 'scheduled' && (
+					<ScTag type="info">{__('Scheduled', 'surecart')}</ScTag>
 				)}
-				{ abandoned?.notification_status === 'not_scheduled' && (
+				{abandoned?.notification_status === 'not_scheduled' && (
 					<ScTag type="warning">
 						{__('Not Scheduled', 'surecart')}
 					</ScTag>

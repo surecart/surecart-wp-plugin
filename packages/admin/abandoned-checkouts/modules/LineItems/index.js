@@ -1,9 +1,6 @@
-import { css, jsx } from '@emotion/core';
 import {
-	ScButton,
 	ScDivider,
 	ScFormatNumber,
-	ScIcon,
 	ScLineItem,
 	ScProductLineItem,
 	ScSkeleton,
@@ -12,14 +9,13 @@ import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
 
 /** @jsx jsx */
 import Box from '../../../ui/Box';
 import { intervalString } from '../../../util/translations';
 import LineItem from './LineItem';
 
-export default ({ abandoned, checkout, loading }) => {
+export default ({ checkout, loading }) => {
 	const line_items = checkout?.line_items?.data;
 
 	const { charge, loadedCharge } = useSelect(
