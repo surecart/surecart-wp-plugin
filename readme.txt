@@ -243,9 +243,9 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.1.20  - Novermber 2, 2022 =
+= 1.1.20  - Novermber 3, 2022 =
+* Fix: Issue with default country selection in address block not initializing with new checkout.
 * Fix: Prevent false positive notice from Sucuri for our honeypot field.
-
 
 = 1.1.19  - Novermber 2, 2022 =
 * Improvement: WordPress 6.1 Compatibility.
