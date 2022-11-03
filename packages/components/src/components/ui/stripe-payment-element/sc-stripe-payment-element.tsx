@@ -135,6 +135,9 @@ export class ScStripePaymentElement {
     // prevent possible double-charges
     if (this.confirming) return;
 
+    // stripe must be loaded.
+    if (!this.stripe) return;
+
     try {
       this.scSetState.emit('PAYING');
       const response = type === 'setup' ? await this.stripe.confirmSetup(confirmArgs as any) : await this.stripe.confirmPayment(confirmArgs as any);
