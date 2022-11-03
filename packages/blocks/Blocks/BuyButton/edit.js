@@ -4,8 +4,9 @@ import { css, jsx } from '@emotion/core';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/block-editor';
 import {
+  InspectorControls,
+  PanelColorSettings,
 	RichText,
 	__experimentalUseColorProps as useColorProps,
 	__experimentalUseBorderProps as useBorderProps,
@@ -23,13 +24,26 @@ import {
  */
 import { ScButton } from '@surecart/components-react';
 import Placeholder from './Placeholder';
+import PriceSelector from '@scripts/blocks/components/PriceSelector';
+import PriceInfo from '@scripts/blocks/components/PriceInfo';
 
 export default ({ className, attributes, setAttributes }) => {
-	const { type, label, size, line_items } = attributes;
+	const { price_id, type, label, size, line_items, backgroundColor, textColor } = attributes;
 	const borderProps = useBorderProps(attributes);
 	const { style: borderStyle } = borderProps;
 	const colorProps = useColorProps(attributes);
 	const { style: colorStyle } = colorProps;
+
+  if (!price_id) {
+		return (
+			<div>
+				<PriceSelector
+					ad_hoc={false}
+					onSelect={(price_id) => setAttributes({ price_id })}
+				/>
+			</div>
+		);
+	}
 
 	const renderButton = () => {
 		if (!line_items || !line_items?.length) {
@@ -41,17 +55,11 @@ export default ({ className, attributes, setAttributes }) => {
 				type={type}
 				size={size}
 				style={{
-					...(colorStyle?.backgroundColor
-						? { '--primary-background': colorStyle.backgroundColor }
+					...(backgroundColor
+						? { '--primary-background': backgroundColor }
 						: {}),
-					...(colorStyle?.background
-						? { '--primary-background': colorStyle.background }
-						: {}),
-					...(colorStyle?.color
-						? { '--primary-color': colorStyle.color }
-						: {}),
-					...(borderStyle?.borderRadius
-						? { '--button-border-radius': borderStyle.borderRadius }
+					...(textColor
+						? { '--primary-color': textColor }
 						: {}),
 				}}
 			>
@@ -126,6 +134,26 @@ export default ({ className, attributes, setAttributes }) => {
 						/>
 					</PanelRow>
 				</PanelBody>
+        <PanelColorSettings
+          title={__('Color Settings')}
+          colorSettings={[
+            {
+              value: backgroundColor,
+              onChange: (backgroundColor) => setAttributes({ backgroundColor }),
+              label: __('Background Color', 'surecart'),
+            },
+            {
+              value: textColor,
+              onChange: (textColor) => setAttributes({ textColor }),
+              label: __('Text Color', 'surecart'),
+            },
+          ]}
+        ></PanelColorSettings>
+        <PanelBody title={__('Product Info', 'surecart')}>
+          <PanelRow>
+            <PriceInfo price_id={price_id} />
+          </PanelRow>
+        </PanelBody>
 			</InspectorControls>
 
 			{renderButton()}

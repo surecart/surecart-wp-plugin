@@ -15,16 +15,17 @@ export default ({ open, onRequestClose }) => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { invalidateResolutionForStore } = useDispatch(coreStore);
 
-	const completeSubscription = async () => {
+	const restoreSubscription = async () => {
 		try {
 			setLoading(true);
 			setError(null);
 			await apiFetch({
 				method: 'PATCH',
-				path: `surecart/v1/subscriptions/${id}/complete`,
+				path: `surecart/v1/subscriptions/${id}/restore/`,
 			});
+			// invalidate page.
 			await invalidateResolutionForStore();
-			createSuccessNotice(__('Subscription completed.', 'surecart'), {
+			createSuccessNotice(__('Subscription restored.', 'surecart'), {
 				type: 'snackbar',
 			});
 			onRequestClose();
@@ -44,7 +45,7 @@ export default ({ open, onRequestClose }) => {
 		>
 			<Error error={error} setError={setError} />
 			{__(
-				'Are you sure you want to complete this payment plan? This will eliminate any additional payments and mark the plan as complete. You cannot undo this.',
+				'Are you sure you want to restore this subscription? This will make it active again.',
 				'surecart'
 			)}
 			<div slot="footer">
@@ -53,14 +54,14 @@ export default ({ open, onRequestClose }) => {
 					onClick={onRequestClose}
 					disabled={loading}
 				>
-					{__('Nevermind', 'surecart')}
+					{__('Cancel', 'surecart')}
 				</ScButton>{' '}
 				<ScButton
 					type="primary"
-					onClick={() => completeSubscription()}
+					onClick={() => restoreSubscription()}
 					disabled={loading}
 				>
-					{__('Complete Subscription', 'surecart')}
+					{__('Restore', 'surecart')}
 				</ScButton>
 			</div>
 			{loading && (
