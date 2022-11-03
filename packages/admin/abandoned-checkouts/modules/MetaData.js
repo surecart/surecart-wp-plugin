@@ -12,6 +12,10 @@ export default ({ abandoned, loading }) => {
 	const { wp_created_by, page_id, page_url, ...metadata } =
 		abandoned?.checkout?.metadata || {};
 
+	if (!Object.keys(metadata || {}).length) {
+		return null;
+	}
+
 	return (
 		<Box title={__('Metadata', 'surecart')}>
 			<div

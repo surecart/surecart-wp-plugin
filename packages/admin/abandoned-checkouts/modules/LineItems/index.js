@@ -10,7 +10,6 @@ import { useSelect } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
-/** @jsx jsx */
 import Box from '../../../ui/Box';
 import { intervalString } from '../../../util/translations';
 import LineItem from './LineItem';
@@ -55,7 +54,7 @@ export default ({ checkout, loading }) => {
 
 	return (
 		<Box
-			title={__('Order Details', 'surecart')}
+			title={__('Checkout Details', 'surecart')}
 			loading={loading}
 			footer={
 				!loadedCharge ? (
