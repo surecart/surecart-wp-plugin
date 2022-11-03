@@ -111,6 +111,16 @@ export class ScSessionProvider {
     }
   }
 
+  async getFormData() {
+    let data = {};
+    const form = this.el.querySelector('sc-form');
+    if (form) {
+      const json = await form.getFormJson();
+      data = parseFormData(json);
+    }
+    return data;
+  }
+
   /**
    * Handles the form submission.
    * @param e
@@ -122,8 +132,7 @@ export class ScSessionProvider {
     this.scSetState.emit('FINALIZE');
 
     // Get current form state.
-    const json = await this.el.querySelector('sc-form').getFormJson();
-    let data = parseFormData(json);
+    let data = this.getFormData();
 
     if (window?.scData?.recaptcha_site_key && window?.grecaptcha) {
       try {
@@ -258,7 +267,7 @@ export class ScSessionProvider {
   }
 
   /** Find or create an order */
-  findOrCreateOrder() {
+  async findOrCreateOrder() {
     /** Redirect status has succeeded. */
     const status = getQueryArg(window.location.href, 'redirect_status');
     if (status === 'succeeded') {
@@ -294,8 +303,11 @@ export class ScSessionProvider {
     // check if we have an existing session.
     const id = getSessionId(this.groupId, this.order, this.modified);
 
+    // Get current form state.
+    let data = this.getFormData();
+
     // update or initialize a session.
-    id && this.persist ? this.update(initial_data) : this.initialize(initial_data);
+    id && this.persist ? this.update(initial_data) : this.initialize({ ...(data || {}), ...initial_data });
 
     // redirect failure
     if (status === 'failed') {
