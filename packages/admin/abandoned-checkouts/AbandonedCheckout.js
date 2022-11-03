@@ -45,7 +45,7 @@ export default () => {
 						'promotion.coupon',
 						'recovered_checkout',
 						'checkout',
-						'checkout.customer',
+						'customer',
 						'checkout.tax_identifier',
 						'checkout.shipping_address',
 						'checkout.discount',
@@ -122,7 +122,7 @@ export default () => {
 			sidebar={
 				<>
 					<Customer
-						customer={abandoned?.checkout?.customer}
+						customer={abandoned?.customer}
 						loading={!hasLoadedAbandoned}
 					/>
 					<Coupon

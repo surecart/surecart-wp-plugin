@@ -58,7 +58,7 @@ export default ({ abandoned, checkout, loading }) => {
 						gap: 0.5em;
 					`}
 				>
-					<h1>#{abandoned?.id}</h1>
+					<h1>{abandoned?.customer?.email}</h1>
 					{!checkout?.live_mode && (
 						<ScTag type="warning">
 							{__('Test Mode', 'surecart')}
