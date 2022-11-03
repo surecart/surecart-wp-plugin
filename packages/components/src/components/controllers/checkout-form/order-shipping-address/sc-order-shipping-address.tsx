@@ -14,8 +14,8 @@ export class ScOrderShippingAddress {
   /** Label for the field. */
   @Prop() label: string;
 
-  /** Is this required (defaults to true) */
-  @Prop() required: boolean = true;
+  /** Is this required (defaults to false) */
+  @Prop() required: boolean = false;
 
   /** Is this loading. */
   @Prop() loading: boolean;

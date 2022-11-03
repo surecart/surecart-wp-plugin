@@ -13,6 +13,7 @@ import { countryChoices } from '@surecart/components';
 export default ({ attributes, setAttributes }) => {
 	const {
 		label,
+		required,
 		full,
 		show_name,
 		default_country,
@@ -26,6 +27,7 @@ export default ({ attributes, setAttributes }) => {
 
 	const blockProps = useBlockProps({
 		label,
+		required: required,
 		showName: show_name,
 		placeholders: {
 			name: name_placeholder,
@@ -68,6 +70,18 @@ export default ({ attributes, setAttributes }) => {
 								'If products in the cart require tax but not shipping, we will show a condensed version specifically for tax collection.',
 								'surecart'
 							)}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={__(
+								'Make Required',
+								'surecart'
+							)}
+							checked={required}
+							onChange={(required) =>
+								setAttributes({ required })
+							}
 						/>
 					</PanelRow>
 					{full && (

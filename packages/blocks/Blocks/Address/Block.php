@@ -22,6 +22,7 @@ class Block extends BaseBlock {
 
 		<sc-order-shipping-address
 			label="<?php echo esc_attr( $attributes['label'] ); ?>"
+			<?php echo $attributes['required'] ? 'required' : null ?>
 			<?php echo $attributes['full'] ? 'full' : null ?>
 			<?php echo $attributes['show_name'] ? 'show-name' : null ?>
 			default-country="<?php echo esc_attr( $default_country ); ?>"
