@@ -274,15 +274,15 @@ export class ScSessionProvider {
       return this.scPaid.emit();
     }
 
+    // get initial data from the url
+    const initial_data = this.getInitialDataFromUrl() as { line_items?: LineItem[]; discount?: { promotion_code: string } };
+
     // we have a checkout id in the url, so clear any saved order.
     const checkoutId = getQueryArg(window.location.href, 'checkout_id');
     if (!!checkoutId) {
       clearOrder(this.formId, this.mode);
-      return this.initialize();
+      return this.initialize(initial_data);
     }
-
-    // get initial data from the url
-    const initial_data = this.getInitialDataFromUrl() as { line_items?: LineItem[]; discount?: { promotion_code: string } };
 
     // remove discount from window.
     if (initial_data?.discount?.promotion_code) {
