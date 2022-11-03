@@ -7,6 +7,9 @@ import {
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
+  ScSkeleton,
+  ScStackedListRow,
+  ScTag,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
@@ -83,7 +86,7 @@ export default ({ id }) => {
 
 	if (integration_id && integrationDataResolved && !integrationData?.label) {
 		return (
-			<sc-stacked-list-row style={{ position: 'relative' }} mobile-size={0}>
+			<ScStackedListRow style={{ position: 'relative' }} mobile-size={0}>
 				<div
 					css={css`
 						overflow: hidden;
@@ -156,7 +159,8 @@ export default ({ id }) => {
 						)
 					)}
 					</div>
-          <ScBadgeNotice type='warning' label='Disabled' size='medium' />
+
+          <ScTag type='warning'>{__('Disabled', 'surecart')}</ScTag>
 				</div>
 
         <ScDropdown slot="suffix" placement="bottom-end">
@@ -169,12 +173,12 @@ export default ({ id }) => {
             </ScMenuItem>
           </ScMenu>
         </ScDropdown>
-			</sc-stacked-list-row>
+			</ScStackedListRow>
 		);
 	}
 
 	return (
-		<sc-stacked-list-row style={{ position: 'relative' }} mobile-size={0}>
+		<ScStackedListRow style={{ position: 'relative' }} mobile-size={0}>
 			{loading || deletingIntegration ? (
 				<div
 					css={css`
@@ -182,13 +186,13 @@ export default ({ id }) => {
 						gap: 1em;
 					`}
 				>
-					<sc-skeleton
+					<ScSkeleton
 						style={{ width: '60px', display: 'inline-block' }}
-					></sc-skeleton>
-					<sc-skeleton
+					></ScSkeleton>
+					<ScSkeleton
 						style={{ width: '80px', display: 'inline-block' }}
 						slot="price"
-					></sc-skeleton>
+					></ScSkeleton>
 				</div>
 			) : (
 				<div
@@ -234,7 +238,7 @@ export default ({ id }) => {
 									);
 								`}
 							>
-								{providerData?.name.charAt(0)}
+								{(providerData?.name || 'I' ).charAt(0)}
 							</div>
 						)}
 					</div>
@@ -270,6 +274,6 @@ export default ({ id }) => {
 					</ScMenuItem>
 				</ScMenu>
 			</ScDropdown>
-		</sc-stacked-list-row>
+		</ScStackedListRow>
 	);
 };
