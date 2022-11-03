@@ -343,7 +343,6 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	 */
 	public function indexProviders( $list = [] ) {
 		$list[] = $this->findProvider();
-
 		return $list;
 	}
 
@@ -361,7 +360,6 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 			'item_label' => $this->getItemLabel(),
 			'item_help'  => $this->getItemHelp(),
 		];
-
 	}
 
 	/**
