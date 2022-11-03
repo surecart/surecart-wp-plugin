@@ -156,7 +156,8 @@ export default () => {
 					onScChange={(e) => {
 						e.preventDefault();
 						editItem({
-							subscription_cancellation_enabled: !item?.subscription_cancellation_enabled,
+							subscription_cancellation_enabled:
+								!item?.subscription_cancellation_enabled,
 						});
 					}}
 				>
@@ -292,6 +293,42 @@ export default () => {
 				<sc-card no-padding>
 					<ScStackedList>
 						<EmailRow
+							title={__('Abandoned Checkout #1', 'surecart')}
+							description={__(
+								'First email sent when a checkout is abandoned.',
+								'surecart'
+							)}
+							disabled={
+								!scData?.entitlements?.abandoned_checkouts
+							}
+							model="abandoned_checkout"
+							action="notification1"
+						/>
+						<EmailRow
+							title={__('Abandoned Checkout #2', 'surecart')}
+							description={__(
+								'Second email sent when a checkout is abandoned.',
+								'surecart'
+							)}
+							disabled={
+								!scData?.entitlements?.abandoned_checkouts
+							}
+							model="abandoned_checkout"
+							action="notification2"
+						/>
+						<EmailRow
+							title={__('Abandoned Checkout #3', 'surecart')}
+							description={__(
+								'Third (final) email sent when a checkout is abandoned.',
+								'surecart'
+							)}
+							disabled={
+								!scData?.entitlements?.abandoned_checkouts
+							}
+							model="abandoned_checkout"
+							action="notification3"
+						/>
+						<EmailRow
 							title={__('Magic Sign In', 'surecart')}
 							description={__(
 								'Sent to customers to login to the customer portal without a password.',
@@ -313,7 +350,10 @@ export default () => {
 								"Sent to customers when their subscription's payment method fails.",
 								'surecart'
 							)}
-							disabled={!scData?.entitlements?.payment_failure_notifications}
+							disabled={
+								!scData?.entitlements
+									?.payment_failure_notifications
+							}
 							model="payment_failure"
 						/>
 						<EmailRow
@@ -322,7 +362,10 @@ export default () => {
 								'Sent to customers 3 days before a subscription renews.',
 								'surecart'
 							)}
-							disabled={!scData?.entitlements?.subscription_reminder_notifications}
+							disabled={
+								!scData?.entitlements
+									?.subscription_reminder_notifications
+							}
 							model="subscription"
 							action="reminder_notification"
 						/>
@@ -359,16 +402,6 @@ export default () => {
 								'surecart'
 							)}
 							model="refund"
-						/>
-						<EmailRow
-							title={__('Abandoned Checkout', 'surecart')}
-							description={__(
-								'Abandoned order emails to remind your customers of incomplete orders.',
-								'surecart'
-							)}
-							disabled={!scData?.entitlements?.abandoned_checkouts}
-							model="abandoned_checkout"
-							action="notification"
 						/>
 					</ScStackedList>
 				</sc-card>

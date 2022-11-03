@@ -5,6 +5,7 @@ import { openWormhole } from 'stencil-wormhole';
 
 @Component({
   tag: 'sc-customer-name',
+  styleUrl: 'sc-customer-name.css',
   shadow: true,
 })
 export class ScCustomerName {

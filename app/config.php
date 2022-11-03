@@ -43,6 +43,7 @@ return [
 
 		// REST providers.
 		\SureCart\Rest\AbandonedCheckoutRestServiceProvider::class,
+		\SureCart\Rest\AbandonedCheckoutProtocolRestServiceProvider::class,
 		\SureCart\Rest\BlockPatternsRestServiceProvider::class,
 		\SureCart\Rest\AccountRestServiceProvider::class,
 		\SureCart\Rest\BrandRestServiceProvider::class,
@@ -103,6 +104,8 @@ return [
 	* SSR Blocks
 	*/
 	'blocks'                 => [
+		\SureCartBlocks\Blocks\Email\Block::class,
+		\SureCartBlocks\Blocks\Address\Block::class,
 		\SureCartBlocks\Blocks\BuyButton\Block::class,
 		\SureCartBlocks\Blocks\AddToCartButton\Block::class,
 		\SureCartBlocks\Blocks\CustomerDashboardButton\Block::class,

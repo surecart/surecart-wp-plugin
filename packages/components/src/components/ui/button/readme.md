@@ -60,6 +60,7 @@
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-login-form](../../controllers/login)
+ - [sc-login-provider](../../providers/sc-login-provider)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-submit](../../controllers/checkout-form/order-submit)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
@@ -72,6 +73,7 @@
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
@@ -101,6 +103,7 @@ graph TD;
   sc-invoices-list --> sc-button
   sc-licenses-list --> sc-button
   sc-login-form --> sc-button
+  sc-login-provider --> sc-button
   sc-order --> sc-button
   sc-order-submit --> sc-button
   sc-orders-list --> sc-button
@@ -113,6 +116,7 @@ graph TD;
   sc-subscription-ad-hoc-confirm --> sc-button
   sc-subscription-cancel --> sc-button
   sc-subscription-payment --> sc-button
+  sc-subscription-payment-method --> sc-button
   sc-subscription-renew --> sc-button
   sc-subscription-switch --> sc-button
   sc-subscriptions-list --> sc-button

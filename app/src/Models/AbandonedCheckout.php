@@ -42,4 +42,16 @@ class AbandonedCheckout extends Model {
 	public function getLatestRecoverableCheckoutIdAttribute() {
 		return $this->getRelationId( 'recovered_checkout' );
 	}
+
+	/**
+	 * Get stats for the order.
+	 *
+	 * @param array $args Array of arguments for the statistics.
+	 *
+	 * @return \SureCart\Models\Statistic;
+	 */
+	protected function stats( $args = [] ) {
+		$stat = new Statistic();
+		return $stat->where( $args )->find( 'abandoned_checkouts' );
+	}
 }

@@ -12,7 +12,7 @@
 | `clickEl`  | --          |              | `HTMLElement` | `undefined` |
 | `disabled` | `disabled`  |              | `boolean`     | `undefined` |
 | `hasFocus` | `has-focus` | Inputs focus | `boolean`     | `undefined` |
-| `max`      | `max`       |              | `number`      | `100`       |
+| `max`      | `max`       |              | `number`      | `Infinity`  |
 | `min`      | `min`       |              | `number`      | `1`         |
 | `quantity` | `quantity`  |              | `number`      | `0`         |
 

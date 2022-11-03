@@ -197,6 +197,7 @@ export class ScCheckout {
       bumps: this.order()?.recommended_bumps?.data as Bump[],
 
       order: this.order(),
+      abandonedCheckoutEnabled: this.order()?.abandoned_checkout_enabled,
       checkout: this.order(),
       shippingEnabled: this.order()?.shipping_enabled,
       lineItems: this.order()?.line_items?.data || [],

@@ -11,6 +11,7 @@ use SureCartCore\Responses\RedirectResponse;
  * Middleware for handling model archiving.
  */
 class CheckoutRedirectMiddleware {
+
 	/**
 	 * Enqueue component assets.
 	 *
@@ -21,50 +22,72 @@ class CheckoutRedirectMiddleware {
 	public function handle( RequestInterface $request, Closure $next ) {
 		$id = $request->query( 'checkout_id' );
 
+		// no checkout id, next request.
+		if ( empty( $id ) ) {
+			return $next( $request );
+		}
+
 		$checkout = Checkout::find( $id );
 
+		// get checkout from page id.
 		if ( ! empty( $checkout->metadata->page_id ) ) {
 			$url = get_permalink( (int) $checkout->metadata->page_id );
 			if ( $url ) {
 				return ( new RedirectResponse( $request ) )->to(
-					esc_url_raw(
-						add_query_arg(
-							[
-								'checkout_id' => $id,
-							],
-							$url
-						)
-					)
+					esc_url_raw( $this->buildUrl( $url, $request ) )
 				);
 			}
 		}
 
+		// get checkout from page_url.
 		if ( ! empty( $checkout->metadata->page_url ) ) {
 			return ( new RedirectResponse( $request ) )->to(
-				esc_url_raw(
-					add_query_arg(
-						[
-							'checkout_id' => $id,
-						],
-						$checkout->metadata->page_url
-					)
-				)
+				esc_url_raw( $this->buildUrl( $checkout->metadata->page_url, $request ) )
 			);
 		}
 
-		if ( $id ) {
+		// these don't exist, use the default checkout page.
+		if ( ! empty( \SureCart::pages()->url( 'checkout' ) ) ) {
 			return ( new RedirectResponse( $request ) )->to(
-				add_query_arg(
-					[
-						'action' => 'show',
-						'model'  => 'download',
-						'id'     => $id,
-					],
-					\SureCart::pages()->url( 'dashboard' )
-				)
+				esc_url_raw( $this->buildUrl( \SureCart::pages()->url( 'checkout' ), $request ) )
 			);
 		}
 
+		// cannot find checkout page.
 		return $next( $request );
+	}
+
+	/**
+	 * Build the url.
+	 *
+	 * @return string
+	 */
+	public function buildUrl( $url, RequestInterface $request ) {
+		if ( empty( $url ) ) {
+			return $url;
+		}
+
+		// add checkout id.
+		$id = $request->query( 'checkout_id' );
+		if ( $id ) {
+			$url = add_query_arg(
+				[
+					'checkout_id' => $id,
+				],
+				$url
+			);
+		}
+
+		$promotion_code = $request->query( 'promotion_code' );
+		if ( $promotion_code ) {
+			$url = add_query_arg(
+				[
+					'coupon' => $promotion_code,
+				],
+				$url
+			);
+		}
+
+		return $url;
 	}
 }

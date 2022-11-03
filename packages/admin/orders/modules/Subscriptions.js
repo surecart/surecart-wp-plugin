@@ -33,6 +33,11 @@ export default ({ checkoutId }) => {
 		[checkoutId]
 	);
 
+	// empty, don't render anything.
+	if (!loading && !subscriptions?.length) {
+		return null;
+	}
+
 	return (
 		<SubscriptionsDataTable
 			columns={{

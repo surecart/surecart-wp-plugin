@@ -31,6 +31,11 @@ export default ({ checkoutId }) => {
 		[checkoutId]
 	);
 
+	// empty, don't render anything.
+	if (!loading && !purchases?.length) {
+		return null;
+	}
+
 	return (
 		<PurchasesDataTable
 			columns={{

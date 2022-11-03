@@ -691,6 +691,10 @@ export namespace Components {
     }
     interface ScCustomerEmail {
         /**
+          * Is abandoned checkout enabled?
+         */
+        "abandonedCheckoutEnabled": boolean;
+        /**
           * The input's autofocus attribute.
          */
         "autofocus": boolean;
@@ -751,6 +755,10 @@ export namespace Components {
           * The input's size.
          */
         "size": 'small' | 'medium' | 'large';
+        /**
+          * A message for tracking confirmation.
+         */
+        "trackingConfirmationMessage": string;
         /**
           * The input's value attribute.
          */
@@ -1615,6 +1623,12 @@ export namespace Components {
         "value": string;
     }
     interface ScOrderShippingAddress {
+        "cityPlaceholder": string;
+        "countryPlaceholder": string;
+        /**
+          * Default country for address
+         */
+        "defaultCountry": string;
         /**
           * Show the full address
          */
@@ -1623,14 +1637,21 @@ export namespace Components {
           * Label for the field.
          */
         "label": string;
+        "line1Placeholder": string;
+        "line2Placeholder": string;
         /**
           * Is this loading.
          */
         "loading": boolean;
         /**
+          * Show the placeholder fields.
+         */
+        "namePlaceholder": string;
+        /**
           * Placeholder values.
          */
         "placeholders": Partial<Address>;
+        "postalCodePlaceholder": string;
         "reportValidity": () => Promise<boolean>;
         /**
           * Is this required (defaults to true)
@@ -1648,6 +1669,7 @@ export namespace Components {
           * Show the name field.
          */
         "showName": boolean;
+        "statePlaceholder": string;
         /**
           * Tax status of the order
          */
@@ -2115,6 +2137,10 @@ export namespace Components {
           * Recurring interval (i.e. monthly, once, etc.)
          */
         "interval": string;
+        /**
+          * The max allowed.
+         */
+        "max": number;
         /**
           * Product name
          */
@@ -2768,6 +2794,10 @@ export namespace Components {
           * Makes the textarea readonly.
          */
         "readonly": boolean;
+        /**
+          * Checks for validity and shows the browser's validation message if the control is invalid.
+         */
+        "reportValidity": () => Promise<boolean>;
         /**
           * Makes the textarea a required field.
          */
@@ -4927,6 +4957,10 @@ declare namespace LocalJSX {
     }
     interface ScCustomerEmail {
         /**
+          * Is abandoned checkout enabled?
+         */
+        "abandonedCheckoutEnabled"?: boolean;
+        /**
           * The input's autofocus attribute.
          */
         "autofocus"?: boolean;
@@ -4983,6 +5017,10 @@ declare namespace LocalJSX {
          */
         "onScLoginPrompt"?: (event: ScCustomerEmailCustomEvent<void>) => void;
         /**
+          * Update the abandoned cart.
+         */
+        "onScUpdateAbandonedCart"?: (event: ScCustomerEmailCustomEvent<boolean>) => void;
+        /**
           * Update the order state.
          */
         "onScUpdateOrderState"?: (event: ScCustomerEmailCustomEvent<Checkout>) => void;
@@ -5014,6 +5052,10 @@ declare namespace LocalJSX {
           * The input's size.
          */
         "size"?: 'small' | 'medium' | 'large';
+        /**
+          * A message for tracking confirmation.
+         */
+        "trackingConfirmationMessage"?: string;
         /**
           * The input's value attribute.
          */
@@ -5992,6 +6034,12 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface ScOrderShippingAddress {
+        "cityPlaceholder"?: string;
+        "countryPlaceholder"?: string;
+        /**
+          * Default country for address
+         */
+        "defaultCountry"?: string;
         /**
           * Show the full address
          */
@@ -6000,10 +6048,16 @@ declare namespace LocalJSX {
           * Label for the field.
          */
         "label"?: string;
+        "line1Placeholder"?: string;
+        "line2Placeholder"?: string;
         /**
           * Is this loading.
          */
         "loading"?: boolean;
+        /**
+          * Show the placeholder fields.
+         */
+        "namePlaceholder"?: string;
         /**
           * Make a request to update the order.
          */
@@ -6015,6 +6069,7 @@ declare namespace LocalJSX {
           * Placeholder values.
          */
         "placeholders"?: Partial<Address>;
+        "postalCodePlaceholder"?: string;
         /**
           * Is this required (defaults to true)
          */
@@ -6031,6 +6086,7 @@ declare namespace LocalJSX {
           * Show the name field.
          */
         "showName"?: boolean;
+        "statePlaceholder"?: string;
         /**
           * Tax status of the order
          */
@@ -6543,6 +6599,10 @@ declare namespace LocalJSX {
           * Recurring interval (i.e. monthly, once, etc.)
          */
         "interval"?: string;
+        /**
+          * The max allowed.
+         */
+        "max"?: number;
         /**
           * Product name
          */
