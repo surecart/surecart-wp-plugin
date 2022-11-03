@@ -1,16 +1,13 @@
 /** @jsx jsx */
 import Box from '../../ui/Box';
 import { css, jsx } from '@emotion/core';
-import {
-	ScButton,
-	ScLineItem,
-} from '@surecart/components-react';
+import { ScButton, ScLineItem } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+import useAvatar from '../../hooks/useAvatar';
 
 export default ({ customer, loading }) => {
-	// 'https://secure.gravatar.com/avatar/' + MD5(customer?.email.toLowerCase().trim()) + '?size=120&default=mm'
-	const imgUrl = 'https://secure.gravatar.com/avatar/199a213db9f4aed6aa44c629f3854910?s=96&d=mm&r=g';
+	const imgUrl = useAvatar({ email: customer?.email });
 
 	return (
 		<Box
@@ -44,9 +41,7 @@ export default ({ customer, loading }) => {
 						css={css`
 							width: 40px;
 							height: 40px;
-							border-radius: var(
-								--sc-border-radius-medium
-							);
+							border-radius: var(--sc-border-radius-medium);
 						`}
 					/>
 					<span slot="title">{customer?.name}</span>
