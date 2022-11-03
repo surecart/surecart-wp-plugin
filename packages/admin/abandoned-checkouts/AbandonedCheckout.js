@@ -26,22 +26,26 @@ export default () => {
 	const { createErrorNotice } = useDispatch(noticesStore);
 	const { receiveEntityRecords } = useDispatch(coreStore);
 	const id = useSelect((select) => select(dataStore).selectPageId());
-	
-	const { abandoned, hasLoadedAbandoned, orderError } = useEntity('abandoned', id, {
-		expand: [
-			'recovered_checkout',
-			'checkout',
-			'checkout.customer',
-			'checkout.tax_identifier',
-			'checkout.shipping_address',
-			'checkout.discount',
-			'checkout.line_items',
-			'discount.promotion',
-			'line_item.price',
-			'customer.balances',
-			'price.product',
-		],
-	});
+
+	const { abandoned, hasLoadedAbandoned, orderError } = useEntity(
+		'abandoned_checkout',
+		id,
+		{
+			expand: [
+				'recovered_checkout',
+				'checkout',
+				'checkout.customer',
+				'checkout.tax_identifier',
+				'checkout.shipping_address',
+				'checkout.discount',
+				'checkout.line_items',
+				'discount.promotion',
+				'line_item.price',
+				'customer.balances',
+				'price.product',
+			],
+		}
+	);
 
 	useEffect(() => {
 		if (abandoned?.checkout) {

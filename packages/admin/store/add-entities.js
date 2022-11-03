@@ -111,7 +111,7 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
-		name: 'abandoned',
+		name: 'abandoned_checkout',
 		kind: 'surecart',
 		label: __('Abandoned Checkouts', 'surecart'),
 		baseURL: 'surecart/v1/abandoned_checkouts',
