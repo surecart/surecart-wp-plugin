@@ -5,6 +5,21 @@ import { formatTime } from '../../util/time';
 import { ScSkeleton, ScTag } from '@surecart/components-react';
 
 export default ({ abandoned, checkout, loading }) => {
+	const renderNotificationStatus = () => {
+		if (abandoned?.notification_status === 'sent') {
+			return <ScTag type="success">{__('Sent', 'surecart')}</ScTag>;
+		}
+		if (abandoned?.notification_status === 'scheduled') {
+			return <ScTag type="info">{__('Scheduled', 'surecart')}</ScTag>;
+		}
+		if (abandoned?.notification_status === 'not_scheduled') {
+			return (
+				<ScTag type="warning">{__('Not Scheduled', 'surecart')}</ScTag>
+			);
+		}
+		return <ScTag>{abandoned?.notification_status}</ScTag>;
+	};
+
 	if (loading) {
 		return (
 			<div
@@ -55,19 +70,7 @@ export default ({ abandoned, checkout, loading }) => {
 					formatTime(abandoned.updated_at)
 				)}
 			</div>
-			<div>
-				{abandoned?.notification_status === 'sent' && (
-					<ScTag type="success">{__('Sent', 'surecart')}</ScTag>
-				)}
-				{abandoned?.notification_status === 'scheduled' && (
-					<ScTag type="info">{__('Scheduled', 'surecart')}</ScTag>
-				)}
-				{abandoned?.notification_status === 'not_scheduled' && (
-					<ScTag type="warning">
-						{__('Not Scheduled', 'surecart')}
-					</ScTag>
-				)}
-			</div>
+			<div>{renderNotificationStatus()}</div>
 		</div>
 	);
 };

@@ -1,13 +1,11 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import {
-	ScAlert,
 	ScBreadcrumb,
 	ScBreadcrumbs,
 	ScButton,
 	ScFlex,
 	ScIcon,
-	ScInput,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import { store as coreStore } from '@wordpress/core-data';
@@ -15,19 +13,18 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { useEffect } from 'react';
-import { addQueryArgs } from '@wordpress/url';
 
 import Logo from '../templates/Logo';
 // template
 import UpdateModel from '../templates/UpdateModel';
 import Details from './modules/Details';
 import LineItems from './modules/LineItems';
-import Sidebar from './Sidebar';
 import Link from './components/Link';
 import Schedule from './modules/Schedule';
 import Customer from './modules/Customer';
 import Address from './modules/Address';
 import MetaData from './modules/MetaData';
+import Coupon from './modules/Coupon';
 
 export default () => {
 	const { createErrorNotice } = useDispatch(noticesStore);
@@ -127,6 +124,10 @@ export default () => {
 					<Customer
 						customer={abandoned?.checkout?.customer}
 						loading={!hasLoadedAbandoned}
+					/>
+					<Coupon
+						promotion={abandoned?.promotion}
+						coupon={abandoned?.promotion?.coupon}
 					/>
 					<Schedule
 						abandoned={abandoned}

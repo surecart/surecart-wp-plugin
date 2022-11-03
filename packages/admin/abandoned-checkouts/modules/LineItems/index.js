@@ -17,92 +17,14 @@ import LineItem from './LineItem';
 export default ({ checkout, loading }) => {
 	const line_items = checkout?.line_items?.data;
 
-	const { charge, loadedCharge } = useSelect(
-		(select) => {
-			if (!checkout?.id) {
-				return {
-					charge: {},
-					loading: true,
-				};
-			}
-			const entityData = [
-				'surecart',
-				'charge',
-				{
-					checkout_ids: checkout?.id ? [checkout?.id] : null,
-					expand: [
-						'payment_method',
-						'payment_method.card',
-						'payment_method.payment_instrument',
-						'payment_method.paypal_account',
-						'payment_method.bank_account',
-					],
-				},
-			];
-			return {
-				charge: select(coreStore)?.getEntityRecords?.(
-					...entityData
-				)?.[0],
-				loadedCharge: select(coreStore)?.hasFinishedResolution?.(
-					'getEntityRecords',
-					[...entityData]
-				),
-			};
-		},
-		[checkout?.id]
-	);
-
 	return (
-		<Box
-			title={__('Checkout Details', 'surecart')}
-			loading={loading}
-			footer={
-				!loadedCharge ? (
-					<ScLineItem
-						style={{
-							width: '100%',
-						}}
-					>
-						<ScSkeleton slot="title"></ScSkeleton>
-						<ScSkeleton slot="price"></ScSkeleton>
-					</ScLineItem>
-				) : (
-					(!!charge?.amount || !!charge?.refunded_amount) && (
-						<ScLineItem
-							style={{
-								width: '100%',
-								'--price-size': 'var(--sc-font-size-x-large)',
-							}}
-						>
-							<span slot="title">
-								{charge?.refunded_amount
-									? __('Net Payment', 'surecart')
-									: __('Paid', 'surecart')}
-							</span>
-
-							<ScFormatNumber
-								slot="price"
-								type="currency"
-								currency={charge?.currency}
-								value={
-									charge?.amount
-										? charge?.amount -
-										  charge?.refunded_amount
-										: 0
-								}
-							></ScFormatNumber>
-							<span slot="currency">{charge?.currency}</span>
-						</ScLineItem>
-					)
-				)
-			}
-		>
+		<Box title={__('Checkout Details', 'surecart')} loading={loading}>
 			<Fragment>
 				{(line_items || []).map((item) => {
 					return (
 						<ScProductLineItem
 							key={item.id}
-							imageUrl={item?.price?.metadata?.wp_attachment_src}
+							imageUrl={item?.price?.product?.image_url}
 							name={item?.price?.product?.name}
 							editable={false}
 							removable={false}

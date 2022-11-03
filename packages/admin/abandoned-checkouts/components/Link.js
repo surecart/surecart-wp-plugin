@@ -62,7 +62,13 @@ export default ({ url, checkoutId, promotionId }) => {
 				}}
 			>
 				{__('To adjust your abandoned checkout notifications,')}{' '}
-				<a href="#" style={{ color: 'var(--sc-color-gray-700)' }}>
+				<a
+					href={addQueryArgs('admin.php', {
+						page: 'sc-settings',
+						tab: 'abandoned_checkout',
+					})}
+					style={{ color: 'var(--sc-color-gray-700)' }}
+				>
 					{__('adjust your settings', 'surecart')}
 				</a>
 				.
