@@ -29,7 +29,7 @@ class AbandonedCheckoutViewController extends AdminController {
 		return \SureCart::view( 'admin/abandoned-orders/index' )->with(
 			[
 				'table'   => $table,
-				'enabled' => false, // \SureCart::account()->entitlements->abandoned_checkouts ?? false,
+				'enabled' => \SureCart::account()->entitlements->abandoned_checkouts ?? false,
 			]
 		);
 	}
