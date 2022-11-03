@@ -27,7 +27,7 @@ export default () => {
 	);
 
 	// honeypot.
-	const [honeypotEnabled, setHoneyPotEnabled] = useEntityProp(
+	const [honeypotEnabled, setHoneypotEnabled] = useEntityProp(
 		'root',
 		'site',
 		'surecart_honeypot_enabled'
