@@ -1,18 +1,20 @@
-import { ScButton, ScTag } from '@surecart/components-react';
+import { ScButton, ScPaymentMethod, ScTag } from '@surecart/components-react';
 import { useEffect, useState } from '@wordpress/element';
 import { __, _n } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '@wordpress/api-fetch';
 import DataTable from '../../components/DataTable';
+import { store as noticesStore } from '@wordpress/notices';
+import { useDispatch } from '@wordpress/data';
 
 export default ({ customerId }) => {
   const [paymentMethods, setPaymentMethods] = useState([]);
   const [loading, setLoading] = useState(true);
-	const [state, setState] = useState(true);
+  const { createSuccessNotice, createErrorNotice } = useDispatch(noticesStore);
 
-  useEffect(()=>{
-    setLoading(true);
-    const payment = async () => {
+  const payment = async () => {
+    try {
+      setLoading(true);
       const data = await apiFetch({
         path: addQueryArgs(`surecart/v1/payment_methods/`, {
           expand: ['card', 'customer', 'billing_agreement', 'paypal_account', 'payment_instrument', 'bank_account'],
@@ -20,10 +22,12 @@ export default ({ customerId }) => {
         }),
       });
       setPaymentMethods(data);
+    } catch(e) {
+      createErrorNotice(e?.message || __('Something went wrong', 'surecart'), {type: 'snackbar'});
+    } finally {
       setLoading(false);
     }
-    payment();
-  }, [state]);
+  }
 
   const setDefault = async (id) => {
     try {
@@ -36,13 +40,17 @@ export default ({ customerId }) => {
         },
       });
     } catch (e) {
-      alert(e?.messsage || __('Something went wrong', 'surecart'));
-      console.log(e);
+      createErrorNotice(e?.message || __('Something went wrong', 'surecart'), {type: 'snackbar'});
     } finally {
+      payment();
+      createSuccessNotice(__('Default payment method changed', 'surecart'), {type: 'snackbar'});
       setLoading(false);
-      setState(!state);
     }
   }
+
+  useEffect(() => {
+    payment();
+  }, [])
 
 	return (
 		<>
@@ -51,11 +59,8 @@ export default ({ customerId }) => {
         empty={__('None found.', 'surecart')}
         loading={loading}
         columns={{
-          icon: {
-            label: __('Icon', 'surecart'),
-          },
-          number: {
-            label: __('Number', 'surecart'),
+          method: {
+            label: __('Method', 'surecart'),
           },
           exp: {
             label: __('Exp', 'surecart'),
@@ -66,14 +71,8 @@ export default ({ customerId }) => {
         }}
         items={paymentMethods?.map((item)=>{
           return {
-            icon: (
-              <sc-cc-logo
-                style={{ fontSize: '36px' }}
-                brand={item?.card?.brand}
-              ></sc-cc-logo>
-            ),
-            number: (
-              '**** ' + item?.card?.last4
+            method: (
+              <ScPaymentMethod paymentMethod={item} />
             ),
             exp: (
               item?.card?.exp_month + '/' + item?.card?.exp_year
