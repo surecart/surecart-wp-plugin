@@ -54,7 +54,7 @@ export default () => {
 			</ScAlert>
 
 			<SettingsBox
-				title={__('License Key', 'surecart')}
+				title={__('Upgrade This Store', 'surecart')}
 				description={__(
 					'Enter your license key to activate your plan on thie store.',
 					'surecart'
@@ -62,8 +62,8 @@ export default () => {
 				loading={!hasLoadedItem}
 			>
 				<ScInput
-					label={__('API Token', 'surecart')}
-					placeholder={__('Enter your api token', 'surecart')}
+					label={__('License Key', 'surecart')}
+					placeholder={__('Enter your license key', 'surecart')}
 					value={item?.api_token}
 					type="password"
 					onScInput={(e) => editItem({ api_token: e.target.value })}
