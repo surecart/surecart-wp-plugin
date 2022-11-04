@@ -77,6 +77,7 @@ export default ({ subscription, customer, product, loading }) => {
 				</div>
 			);
 		}
+
 		if (
 			['past_due', 'active'].includes(subscription?.status) &&
 			subscription.current_period_end_at
@@ -97,6 +98,19 @@ export default ({ subscription, customer, product, loading }) => {
 			);
 		}
 	};
+
+	const renderRemainingPayments = () => {
+		if (subscription?.remaining_period_count) {
+			return (
+				<div>
+					<div>
+						<strong>{sprintf(__('Remaining Payments', 'surecart'))}</strong>
+					</div>
+					{subscription?.remaining_period_count}
+				</div>
+			);
+		}
+	}
 
 	if (loading) {
 		return (
@@ -154,13 +168,15 @@ export default ({ subscription, customer, product, loading }) => {
 			<div
 				css={css`
 					display: flex;
+					flex-direction: column;
 					justify-content: flex-start;
-					align-items: center;
+					align-items: flex-start;
 					gap: 1em;
 					margin-bottom: 2em;
 				`}
 			>
 				{renderStartDate()}
+				{renderRemainingPayments()}
 			</div>
 		</div>
 	);
