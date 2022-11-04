@@ -4,7 +4,7 @@ import { getQueryArg, removeQueryArgs } from '@wordpress/url';
 import { parseFormData } from '../../../functions/form-data';
 import { clearOrder, getOrder, setOrder } from '../../../store/checkouts';
 
-import { createOrUpdateOrder, finalizeSession, getCheckout } from '../../../services/session';
+import { createOrUpdateOrder, finalizeSession, fetchCheckout } from '../../../services/session';
 import { FormStateSetter, PaymentIntents, ProcessorName, LineItemData, PriceChoice, LineItem, Checkout } from '../../../types';
 import { getSessionId, getURLCoupon, getURLLineItems } from './helpers/session';
 
@@ -98,7 +98,7 @@ export class ScSessionProvider {
 
   /** Get the order from the store. */
   order() {
-    return getOrder(this?.formId, this.mode);
+    return getOrder(this?.formId, this.mode) as Checkout;
   }
 
   getProcessor() {
@@ -165,12 +165,13 @@ export class ScSessionProvider {
         processor: this.getProcessor(),
       });
 
+      setOrder(order, this.formId);
+
       // the order is paid
       if (order?.status === 'paid') {
         this.scPaid.emit();
       }
 
-      setOrder(order, this.formId);
       return this.order();
     } catch (e) {
       console.error(e);
@@ -268,18 +269,33 @@ export class ScSessionProvider {
 
   /** Find or create an order */
   async findOrCreateOrder() {
-    /** Redirect status has succeeded. */
-    const status = getQueryArg(window.location.href, 'redirect_status');
-    if (status === 'succeeded') {
-      window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'redirect_status'));
-      return this.scPaid.emit();
-    }
-
-    // we have a checkout id in the url, so clear any saved order.
+    // we have a checkout id in the url, fetch this checkout instead.
     const checkoutId = getQueryArg(window.location.href, 'checkout_id');
     if (!!checkoutId) {
-      clearOrder(this.formId, this.mode);
-      return this.initialize();
+      const promotion_code = getURLCoupon();
+      const order = await this.fetchCheckout(checkoutId, {
+        query: { refresh_status: true },
+        data: {
+          ...(promotion_code ? { discount: { promotion_code } } : {}),
+        },
+      });
+      setOrder(order, this.formId);
+      // if the order is paid, emit payment event.
+      if (order?.status === 'paid') {
+        // this is needed to allow the order to be set before confirm starts running.
+        setTimeout(() => {
+          this.scPaid.emit();
+        }, 50);
+      }
+
+      // redirect failure
+      if (getQueryArg(window.location.href, 'redirect_status') === 'failed') {
+        window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'redirect_status'));
+        this.scError.emit({
+          message: __('Payment unsuccessful. Please try again.', 'surecart'),
+        });
+      }
+      return;
     }
 
     // get initial data from the url
@@ -308,14 +324,6 @@ export class ScSessionProvider {
 
     // update or initialize a session.
     id && this.persist ? this.update(initial_data) : this.initialize({ ...(data || {}), ...initial_data });
-
-    // redirect failure
-    if (status === 'failed') {
-      window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'redirect_status'));
-      this.scError.emit({
-        message: __('Payment unsuccessful. Please try again.', 'surecart'),
-      });
-    }
   }
 
   getInitialDataFromUrl() {
@@ -405,11 +413,29 @@ export class ScSessionProvider {
     }
   }
 
+  async fetchCheckout(id, { query = {}, data = {} } = {}) {
+    try {
+      this.scSetState.emit('FETCH');
+      const checkout = (await createOrUpdateOrder({
+        id,
+        query: {
+          ...this.defaultFormQuery(),
+          ...query,
+        },
+        data,
+      })) as Checkout;
+      this.scSetState.emit('RESOLVE');
+      return checkout;
+    } catch (e) {
+      this.handleErrorResponse(e);
+    }
+  }
+
   /** Fetch a session. */
   async fetch(query = {}) {
     try {
       this.scSetState.emit('FETCH');
-      const checkout = (await getCheckout({
+      const checkout = (await fetchCheckout({
         id: this.getSessionId(),
         query: {
           ...this.defaultFormQuery(),

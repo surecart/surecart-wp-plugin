@@ -1,6 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { h } from '@stencil/core';
 import { ScPayment } from '../sc-payment';
+import { Processor } from '../../../../../types';
 
 describe('sc-payment', () => {
   it('renders no processors', async () => {
@@ -17,8 +18,8 @@ describe('sc-payment', () => {
       template: () => (
         <sc-payment
           processors={[
-            { processor_type: 'stripe', live_mode: true },
-            { processor_type: 'paypal', live_mode: true },
+            { processor_type: 'stripe', live_mode: true } as Processor,
+            { processor_type: 'paypal', live_mode: true } as Processor,
           ]}
         ></sc-payment>
       ),
@@ -32,8 +33,8 @@ describe('sc-payment', () => {
       template: () => (
         <sc-payment
           processors={[
-            { processor_type: 'stripe', live_mode: true },
-            { processor_type: 'paypal', live_mode: true },
+            { processor_type: 'stripe', live_mode: true } as Processor,
+            { processor_type: 'paypal', live_mode: true } as Processor,
           ]}
           order={
             {
@@ -59,14 +60,14 @@ describe('sc-payment', () => {
   it('renders paypal only', async () => {
     const page = await newSpecPage({
       components: [ScPayment],
-      template: () => <sc-payment processors={[{ processor_type: 'paypal', live_mode: true }]}></sc-payment>,
+      template: () => <sc-payment processors={[{ processor_type: 'paypal', live_mode: true }] as Processor[]}></sc-payment>,
     });
     expect(page.root).toMatchSnapshot();
   });
   it('renders stripe only', async () => {
     const page = await newSpecPage({
       components: [ScPayment],
-      template: () => <sc-payment processors={[{ processor_type: 'stripe', live_mode: true }]}></sc-payment>,
+      template: () => <sc-payment processors={[{ processor_type: 'stripe', live_mode: true }] as Processor[]}></sc-payment>,
     });
     expect(page.root).toMatchSnapshot();
   });

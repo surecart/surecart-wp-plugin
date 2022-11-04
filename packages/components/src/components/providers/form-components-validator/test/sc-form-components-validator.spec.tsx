@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { Order, TaxProtocol } from '../../../../types';
+import { Checkout, Order, TaxProtocol } from '../../../../types';
 import { ScFormComponentsValidator } from '../sc-form-components-validator';
 
 describe('sc-form-components-validator', () => {
@@ -21,7 +21,7 @@ describe('sc-form-components-validator', () => {
         </sc-form-components-validator>
       ),
     });
-    page.root.order = { tax_status: 'address_invalid' } as Order;
+    page.root.order = { tax_status: 'address_invalid' } as Checkout;
     page.waitForChanges();
     expect(page.root).toMatchSnapshot();
   });

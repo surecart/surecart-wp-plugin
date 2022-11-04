@@ -2,6 +2,7 @@ import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch 
 import { Stripe } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
 
 import { Checkout, FormStateSetter, PaymentIntent } from '../../../types';
 
@@ -121,7 +122,9 @@ export class ScStripePaymentElement {
     const confirmArgs = {
       elements: this.elements,
       confirmParams: {
-        return_url: window.location.href,
+        return_url: addQueryArgs(window.location.href, {
+          ...(this.order.id ? { checkout_id: this.order.id } : {}),
+        }),
         payment_method_data: {
           billing_details: {
             email: this.order.email,
