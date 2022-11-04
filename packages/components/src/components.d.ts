@@ -446,7 +446,7 @@ export namespace Components {
         /**
           * Submit the form
          */
-        "submit": ({ skip_validation }?: { skip_validation: boolean; }) => Promise<any>;
+        "submit": ({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout>;
         /**
           * Where to go on success
          */
@@ -2310,7 +2310,7 @@ export namespace Components {
           * Finalize the order.
           * @returns
          */
-        "finalize": () => Promise<any>;
+        "finalize": () => Promise<Checkout>;
         /**
           * The checkout form id
          */
