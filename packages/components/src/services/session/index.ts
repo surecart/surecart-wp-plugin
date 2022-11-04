@@ -28,7 +28,7 @@ export const parsePath = (id, endpoint = '') => {
   });
 };
 
-export const createOrUpdateSession = async ({ id, data, query = {} }) => {
+export const createOrUpdateSession = async ({ id = null, data, query = {} }) => {
   return await apiFetch({
     method: id ? 'PATCH' : 'POST', // create or update
     path: addQueryArgs(parsePath(id), query),
@@ -36,7 +36,7 @@ export const createOrUpdateSession = async ({ id, data, query = {} }) => {
   });
 };
 
-export const createOrUpdateOrder = async ({ id, data = {}, query = {} }) => {
+export const createOrUpdateOrder = async ({ id = null, data = {}, query = {} }) => {
   return await apiFetch({
     method: id ? 'PATCH' : 'POST', // create or update
     path: addQueryArgs(parsePath(id), query),
@@ -75,6 +75,12 @@ export const finalizeSession = async ({ id, data = {}, query = {}, processor }: 
 export const getSession = async id => {
   return (await apiFetch({
     path: parsePath(id),
+  })) as Checkout;
+};
+
+export const fetchCheckout = async ({ id, query = {} }) => {
+  return (await apiFetch({
+    path: addQueryArgs(parsePath(id), query),
   })) as Checkout;
 };
 

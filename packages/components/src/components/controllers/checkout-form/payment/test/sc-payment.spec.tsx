@@ -1,5 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { ScPayment } from '../sc-payment';
+import { Processor } from '../../../../../types';
 
 describe('sc-payment', () => {
   it('renders no processors', async () => {
