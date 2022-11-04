@@ -171,6 +171,10 @@ export class ScSessionProvider {
         this.scPaid.emit();
       }
 
+      setTimeout(() => {
+        this.scSetState.emit('PAYING');
+      }, 50);
+
       return this.order();
     } catch (e) {
       console.error(e);
@@ -260,7 +264,7 @@ export class ScSessionProvider {
     // success, refetch the checkout
     try {
       this.scSetState.emit('FINALIZE');
-      this.scSetState.emit('PAYING');
+      this.scSetState.emit('PAID');
       const checkout = (await fetchCheckout({
         id,
         query: {
