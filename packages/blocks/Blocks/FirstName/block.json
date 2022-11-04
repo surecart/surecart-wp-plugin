@@ -1,0 +1,29 @@
+{
+	"name": "surecart/first-name",
+	"title": "First Name",
+	"description": "Display a first name collection field.",
+	"category": "surecart",
+	"keywords": ["first-name", "name", "customer"],
+	"ancestor": ["surecart/form"],
+	"supports": {
+		"reusable": false,
+		"html": false
+	},
+	"attributes": {
+		"required": {
+			"type": "boolean",
+			"default": true
+		},
+		"label": {
+			"type": "string",
+			"default": "First Name"
+		},
+		"help": {
+			"type": "string",
+			"default": ""
+		},
+		"placeholder": {
+			"type": "string"
+		}
+	}
+}

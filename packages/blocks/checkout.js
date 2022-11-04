@@ -24,6 +24,8 @@ import * as input from '@blocks/Input';
 import * as lineItems from '@blocks/LineItems';
 import * as taxLineItem from '@blocks/TaxLineItem';
 import * as name from '@blocks/Name';
+import * as firstName from '@blocks/FirstName';
+import * as lastName from '@blocks/LastName';
 import * as password from '@blocks/Password';
 import * as payment from '@blocks/Payment';
 import * as priceChoice from '@blocks/PriceChoice';
@@ -58,6 +60,8 @@ registerBlocks([
 	lineItems,
 	taxLineItem,
 	name,
+	firstName,
+	lastName,
 	password,
 	payment,
 	priceChoice,

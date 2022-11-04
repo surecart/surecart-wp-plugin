@@ -29,6 +29,9 @@ export class ScCustomerName {
   /** Draws a pill-style input with rounded edges. */
   @Prop({ reflect: true }) pill = false;
 
+  /** The input's name. */
+  @Prop() name: string = 'name';
+
   /** The input's label. */
   @Prop() label: string;
 
@@ -91,8 +94,16 @@ export class ScCustomerName {
 
     // update order.
     try {
-      const order = await createOrUpdateOrder({ id: this.order?.id, data: { name: this.input.value } });
-      this.scUpdateOrderState.emit(order);
+      if (this.name === 'first_name') {
+        const order = await createOrUpdateOrder({ id: this.order?.id, data: { first_name: this.input.value } });
+        this.scUpdateOrderState.emit(order);
+      } else if (this.name === 'last_name') {
+        const order = await createOrUpdateOrder({ id: this.order?.id, data: { last_name: this.input.value } });
+        this.scUpdateOrderState.emit(order);
+      } else {
+        const order = await createOrUpdateOrder({ id: this.order?.id, data: { name: this.input.value } });
+        this.scUpdateOrderState.emit(order);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -101,7 +112,15 @@ export class ScCustomerName {
   /** Sync customer email with session if it's updated by other means */
   @Watch('order')
   handleSessionChange(val) {
-    if (val?.name) {
+    if (this.name === 'first_name' && val?.first_name) {
+      if (val.first_name !== this.value) {
+        this.value = val?.first_name;
+      }
+    } else if (this.name === 'last_name' && val?.last_name) {
+      if (val.last_name !== this.value) {
+        this.value = val?.last_name;
+      }
+    } else {
       if (val.name !== this.value) {
         this.value = val?.name;
       }
@@ -112,13 +131,13 @@ export class ScCustomerName {
     return (
       <sc-input
         type="text"
-        name="name"
+        name={this.name}
         ref={el => (this.input = el as HTMLScInputElement)}
-        value={this.customer?.name || this.value}
+        value={this.value}
         disabled={!!this.loggedIn}
         label={this.label}
         help={this.help}
-        autocomplete="name"
+        autocomplete={this.name}
         placeholder={this.placeholder}
         readonly={this.readonly}
         required={this.required}
