@@ -78,6 +78,12 @@ export const getSession = async id => {
   })) as Checkout;
 };
 
+export const fetchCheckout = async ({ id, query = {} }) => {
+  return (await apiFetch({
+    path: addQueryArgs(parsePath(id), query),
+  })) as Checkout;
+};
+
 export const requestSession = async ({ id, query = {} }) => {
   return apiFetch({
     path: addQueryArgs(`${baseUrl}${id}`, query),
