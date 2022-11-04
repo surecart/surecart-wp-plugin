@@ -51,6 +51,16 @@ Cypress.Commands.add('getStripeCardElement', fieldName => {
   return cy.get('.StripeElement').find('iframe').its('0.contentDocument.body').should('not.be.empty').then(cy.wrap).find(selector);
 });
 
+Cypress.Commands.add('getStripePaymentElement', fieldName => {
+  if (Cypress.config('chromeWebSecurity')) {
+    throw new Error('To get stripe element `chromeWebSecurity` must be disabled');
+  }
+
+  const selector = `[data-field=${fieldName}] input:not([disabled])`;
+
+  return cy.get('.StripeElement').find('iframe').its('0.contentDocument.body').should('not.be.empty').then(cy.wrap).find(selector);
+});
+
 Cypress.Commands.add('getPayPalButton', fieldName => {
   if (Cypress.config('chromeWebSecurity')) {
     throw new Error('To get stripe element `chromeWebSecurity` must be disabled');

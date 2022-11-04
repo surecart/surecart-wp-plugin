@@ -138,6 +138,7 @@ describe('Payment Instrument Redirects', () => {
       },
     ).as('confirm');
     cy.visit('/test/sc-checkout/url-params?checkout_id=test&redirect_status=succeeded');
+    cy.wait('@createUpdate');
     cy.wait('@confirm');
     cy.location('pathname').should('contain', 'success');
     cy.location('search').should('contain', 'order=test');

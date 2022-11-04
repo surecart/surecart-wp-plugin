@@ -18,11 +18,19 @@
         __: () => { }
       }
     }
+
+    const origStripe = window.Stripe;
+    window.Stripe = (...args) => {
+      return {
+        ...origStripe(...args),
+        ...window.mockStripeMethods,
+      };
+    };
   </script>
 </head>
 
 <body>
-  <sc-checkout success-url="/success" form-id="1" mode="test">
+  <sc-checkout success-url="/success" form-id="1" mode="test" stripe-payment-element>
     <sc-form>
       <sc-payment label="Payment" default-processor='stripe' secure-notice="This is secure"></sc-payment>
       <sc-order-submit>Submit</sc-order-submit>
@@ -33,11 +41,10 @@
       {
         "live_mode": false,
         "processor_data": {
-          "account_id": "ZTHPZFPZFZXZG",
-          "client_id": "AcvWgKnWqxsUIo9VdwKFOMWxlNGElh2i5NX0MsMgqcFc_6UTds2tezGVS6ssem02RqW-tF6gasFEnw4K",
-          "merchant_initiated_enabled": true
+          "account_id": "acct_1KgGVf2E2Wr9trjm",
+          "publishable_key": "pk_test_51KeWoQFugiAKLuJycCZesY1aYEzfauqW2SHSZSUj5xCorx7h7oZd5i6Vz2whx7Y5fMZr6WQQTeOoQEtaEnpk4fkB00dinySlbK"
         },
-        "processor_type": "paypal",
+        "processor_type": "stripe",
         "recurring_enabled": true
       }]
   </script>
