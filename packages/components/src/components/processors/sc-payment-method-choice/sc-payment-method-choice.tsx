@@ -29,6 +29,9 @@ export class ScPaymentMethodChoice {
   /** Is this disabled? */
   @Prop({ reflect: true }) isDisabled: boolean;
 
+  /** Should we show this in a card? */
+  @Prop() card: boolean;
+
   /** Set the order procesor. */
   @Event() scSetProcessor: EventEmitter<{ id: string; manual: boolean }>;
 
@@ -65,7 +68,13 @@ export class ScPaymentMethodChoice {
     return (
       <Tag show-control shady borderless open={this.isSelected()} onScShow={() => this.scSetProcessor.emit({ id: this.processorId, manual: !!this.isManual })}>
         {this.hasOthers && <slot name="summary" slot="summary"></slot>}
-        <slot />
+        {this.card ? (
+          <sc-card>
+            <slot />
+          </sc-card>
+        ) : (
+          <slot />
+        )}
       </Tag>
     );
   }

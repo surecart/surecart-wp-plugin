@@ -32,22 +32,31 @@
 <body>
   <sc-checkout success-url="/success" form-id="1" mode="test">
     <sc-form>
-      <sc-payment label="Payment" default-processor='stripe' secure-notice="This is secure"></sc-payment>
+      <sc-payment>
+        <sc-payment-method-choice processor-id="stripe">
+          <span slot="summary">
+            Credit Card
+          </span>
+
+          <sc-stripe-element mode="test" account-id="acct_1KgGVf2E2Wr9trjm"
+            publishable-key="pk_test_51KeWoQFugiAKLuJycCZesY1aYEzfauqW2SHSZSUj5xCorx7h7oZd5i6Vz2whx7Y5fMZr6WQQTeOoQEtaEnpk4fkB00dinySlbK">
+          </sc-stripe-element>
+        </sc-payment-method-choice>
+
+        <sc-payment-method-choice processor-id="test2" is-manual>
+          <span slot="summary">
+            Manual 2
+          </span>
+
+          <sc-card>
+            <sc-payment-selected label="Test 2 selected">description</sc-payment-selected>
+          </sc-card>
+        </sc-payment-method-choice>
+      </sc-payment>
+
       <sc-order-submit>Submit</sc-order-submit>
     </sc-form>
   </sc-checkout>
-  <script>
-    document.querySelector('sc-checkout').processors = [
-      {
-        "live_mode": false,
-        "processor_data": {
-          "account_id": "acct_1KgGVf2E2Wr9trjm",
-          "publishable_key": "pk_test_51KeWoQFugiAKLuJycCZesY1aYEzfauqW2SHSZSUj5xCorx7h7oZd5i6Vz2whx7Y5fMZr6WQQTeOoQEtaEnpk4fkB00dinySlbK"
-        },
-        "processor_type": "stripe",
-        "recurring_enabled": true
-      }]
-  </script>
 </body>
 
 </html>

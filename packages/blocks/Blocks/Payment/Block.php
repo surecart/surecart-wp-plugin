@@ -95,6 +95,7 @@ class Block extends BaseBlock {
 
 		<sc-payment-method-choice
 			processor-id="stripe"
+			card="<?php echo esc_attr( $payment_element ? 'true' : 'false' ); ?>"
 			<?php echo $processor->recurring_enabled ? 'recurring-enabled' : null; ?>
 			has-others>
 			<span slot="summary" class="sc-payment-toggle-summary">
@@ -104,7 +105,7 @@ class Block extends BaseBlock {
 
 			<div class="sc-payment__stripe-card-element">
 				<?php if ( $payment_element ) : ?>
-					<sc-stripe-payment-element order={this.order} paymentIntent={this.stripePaymentIntent}></sc-stripe-payment-element>
+					<sc-stripe-payment-element></sc-stripe-payment-element>
 				<?php else : ?>
 					<sc-stripe-element
 					mode="<?php echo esc_attr( $this->mode ); ?>"

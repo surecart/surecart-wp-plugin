@@ -30,7 +30,7 @@ describe('Checkout Stripe', () => {
 
     cy.intercept(
       {
-        path: '**/surecart/v1/checkouts/test/finalize/*',
+        path: '**/surecart/v1/checkouts/test/finalize*',
       },
       {
         id: 'test',

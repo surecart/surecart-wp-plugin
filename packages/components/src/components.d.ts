@@ -1839,6 +1839,10 @@ export namespace Components {
     }
     interface ScPaymentMethodChoice {
         /**
+          * Should we show this in a card?
+         */
+        "card": boolean;
+        /**
           * The checkout.
          */
         "checkout": Checkout;
@@ -6272,6 +6276,10 @@ declare namespace LocalJSX {
         "paymentMethod"?: PaymentMethod;
     }
     interface ScPaymentMethodChoice {
+        /**
+          * Should we show this in a card?
+         */
+        "card"?: boolean;
         /**
           * The checkout.
          */
