@@ -66,8 +66,8 @@ beforeEach(() => {
   ).as('createUpdate');
 });
 
-describe('Line Items', () => {
-  it('Handles line items as URL params', () => {
+describe('Default Prices', () => {
+  it('Creates new checkout with default prices added to the checkout form', () => {
     cy.intercept(
       {
         path: '**/surecart/v1/checkouts/*',
@@ -80,42 +80,14 @@ describe('Line Items', () => {
     ).as('createUpdate');
     cy.visit('/test/sc-checkout/default-prices');
     cy.wait('@createUpdate').then(({ request }) => {
-      expect(request.body.line_items.length).to.eq(1);
-      expect(request.body.line_items[0]['price_id']).to.eq('price_id');
-      expect((request.body.line_items[0]['quantity']).toString()).to.eq('2');
+      expect(request.body.line_items.length).to.eq(2);
+      expect(request.body.line_items[0]['price_id']).to.eq('default_price_1');
+      expect((request.body.line_items[0]['quantity'])).to.eq(2);
+      expect(request.body.line_items[1]['price_id']).to.eq('default_price_2');
+      expect((request.body.line_items[1]['quantity'])).to.eq(3);
     })
   });
-});
-
-describe('Coupons', () => {
-  it('Applies a coupon', () => {
-    cy.visit('/test/sc-checkout/url-params?coupon=TESTCOUPON');
-    cy.wait('@createUpdate').its('request.body.discount').should('have.property', 'promotion_code', 'TESTCOUPON');
-  })
-});
-
-describe('Abandoned Cart', () => {
-  it('Loads a checkout', () => {
-    cy.visit('/test/sc-checkout/url-params?checkout_id=test');
-    cy.wait('@createUpdate').its('request.method').should('eq', 'POST');
-  });
-  it('Applies a coupon with an existing checkout', () => {
-    cy.visit('/test/sc-checkout/url-params?checkout_id=testcheckoutid&coupon=TESTCOUPON');
-    cy.wait('@createUpdate').then(({ request }) => {
-      expect(request.url).to.include('testcheckoutid');
-      expect(request.body.discount.promotion_code).to.eq('TESTCOUPON');
-    })
-  })
-  it('Ignores existing sessions', () => {
-    cy.visit('/test/sc-checkout/url-params?checkout_id=test&coupon=TESTCOUPON');
-    cy.wait('@createUpdate')
-    cy.visit('/test/sc-checkout/url-params?checkout_id=test2&coupon=TESTCOUPON');
-    cy.wait('@createUpdate').its('request.url').should('include', 'checkouts/test2');
-  });
-});
-
-describe('Payment Instrument Redirects', () => {
-  it('Handles redirect success', () => {
+  it('Ignores form default prices when a checkout_id is passed in the url', () => {
     cy.intercept(
       {
         path: '**/surecart/v1/checkouts/*',
@@ -123,38 +95,10 @@ describe('Payment Instrument Redirects', () => {
       {
         id: 'test',
         object: 'checkout',
-        status: 'paid',
+        status: 'draft',
       },
     ).as('createUpdate');
-    cy.intercept(
-      {
-        method: 'POST',
-        path: '**/surecart/v1/checkouts/test/confirm*',
-      },
-      {
-        id: 'test',
-        status: 'paid',
-      },
-    ).as('confirm');
-    cy.visit('/test/sc-checkout/url-params?checkout_id=test&redirect_status=succeeded');
-    cy.wait('@confirm');
-    cy.location('pathname').should('contain', 'success');
-    cy.location('search').should('contain', 'order=test');
-  });
-
-  it('Handles redirect errors', () => {
-    cy.intercept(
-      {
-        path: '**/surecart/v1/checkouts/*',
-      },
-      {
-        id: 'test',
-        object: 'checkout',
-        status: 'finalized',
-      },
-    ).as('createUpdate');
-    cy.visit('/test/sc-checkout/url-params?redirect_status=failed&checkout_id=test');
-    cy.get('sc-checkout sc-form-error-provider').shadow().find('sc-alert').should('be.visible').should('have.attr', 'type', 'danger')
+    cy.visit('/test/sc-checkout/default-prices?checkout_id=test');
+    cy.wait('@createUpdate').its('request.method').should('eq', 'GET');
   });
 });
-

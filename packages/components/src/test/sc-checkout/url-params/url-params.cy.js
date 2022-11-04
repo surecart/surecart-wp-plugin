@@ -97,12 +97,13 @@ describe('Coupons', () => {
 describe('Abandoned Cart', () => {
   it('Loads a checkout', () => {
     cy.visit('/test/sc-checkout/url-params?checkout_id=test');
-    cy.wait('@createUpdate').its('request.method').should('eq', 'POST');
+    cy.wait('@createUpdate').its('request.method').should('eq', 'GET');
   });
   it('Applies a coupon with an existing checkout', () => {
     cy.visit('/test/sc-checkout/url-params?checkout_id=testcheckoutid&coupon=TESTCOUPON');
     cy.wait('@createUpdate').then(({ request }) => {
       expect(request.url).to.include('testcheckoutid');
+      expect(request.method).to.eq('POST');
       expect(request.body.discount.promotion_code).to.eq('TESTCOUPON');
     })
   })
