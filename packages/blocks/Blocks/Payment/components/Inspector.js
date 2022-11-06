@@ -5,18 +5,16 @@ import { __ } from '@wordpress/i18n';
 import { InspectorControls } from '@wordpress/block-editor';
 import {
 	BaseControl,
-	CheckboxControl,
+	Flex,
 	PanelBody,
 	PanelRow,
-	RadioControl,
 	TextControl,
 } from '@wordpress/components';
-import { hasProcessor } from '../util';
 import PaymentMethodCheckbox from './PaymentMethodCheckbox';
+import { ScTag } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes }) => {
-	const { label, secure_notice, default_processor, disabled_methods } =
-		attributes;
+	const { label, secure_notice } = attributes;
 
 	return (
 		<InspectorControls>
@@ -37,11 +35,36 @@ export default ({ attributes, setAttributes }) => {
 						}
 					/>
 				</PanelRow>
-
+			</PanelBody>
+			<PanelBody
+				title={
+					<Flex align={'center'} gap={8}>
+						{__('Enabled Processors', 'surecart')}{' '}
+						{!scBlockData?.entitlements
+							?.form_specific_payment_methods && (
+							<ScTag
+								pill
+								style={{
+									'--sc-tag-default-background-color':
+										'var(--sc-color-gray-200)',
+								}}
+							>
+								{__('Pro', 'surecart')}
+							</ScTag>
+						)}
+					</Flex>
+				}
+				initialOpen={
+					scBlockData?.entitlements?.form_specific_payment_methods
+				}
+			>
 				<PanelRow>
-					<BaseControl.VisualLabel>
-						{__('Enabled Processors', 'surecart')}
-					</BaseControl.VisualLabel>
+					<p>
+						{__(
+							'Disable or enable specific processors for this form.',
+							'surecart'
+						)}
+					</p>
 				</PanelRow>
 
 				<PanelRow>

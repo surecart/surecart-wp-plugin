@@ -7,10 +7,16 @@ export default ({
 	help,
 	id,
 }) => {
+	const disabled = !scBlockData?.entitlements?.form_specific_payment_methods;
 	return (
 		<CheckboxControl
+			style={{
+				cursor: disabled ? 'not-allowed' : 'inherit',
+				opacity: disabled ? '0.5' : '1',
+			}}
 			label={name}
 			help={help}
+			disabled={disabled}
 			checked={!(disabled_methods || []).includes(id)}
 			onChange={(checked) => {
 				if (checked) {
