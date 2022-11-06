@@ -67,7 +67,7 @@ describe('Checkout Stripe', () => {
     cy.intercept(
       {
         method: 'POST',
-        path: '**/surecart/v1/checkouts/test/confirm/*',
+        path: '**/surecart/v1/checkouts/test/confirm*',
       },
       {
         id: 'test',
@@ -77,10 +77,11 @@ describe('Checkout Stripe', () => {
   });
 
   it('Can checkout', () => {
+    const confirmPayment = cy.stub().as('confirmPayment');
     cy.visit('/test/sc-checkout/stripe-payment-element/', {
       onBeforeLoad: window => {
         window.mockStripeMethods = {
-          confirmPayment: cy.stub()
+          confirmPayment
         };
       },
     });
@@ -107,6 +108,8 @@ describe('Checkout Stripe', () => {
 
     cy.wait('@finalize').its('request.url').should('include', 'form_id=1').should('include', 'processor_type=stripe');
 
+    cy.wait('@confirm');
+    cy.get('@confirmPayment').should('have.been.calledOnce');
     cy.location('pathname').should('contain', 'success');
     cy.location('search').should('contain', 'order=test');
   });

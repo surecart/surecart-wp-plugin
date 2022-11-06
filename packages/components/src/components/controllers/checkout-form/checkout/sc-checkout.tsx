@@ -194,12 +194,14 @@ export class ScCheckout {
   state() {
     return {
       processor: this.processor,
+      selectedProcessorId: this.processor,
       processors: (this.processors || []).filter(processor => {
         return !(this?.order().reusable_payment_method_required && !processor?.recurring_enabled);
       }),
       manualPaymentMethods: this.manualPaymentMethods,
       processor_data: this.order()?.processor_data,
       state: this.checkoutState,
+      formState: this.checkoutState,
       paymentIntents: this.paymentIntents,
       successUrl: this.successUrl,
       bumps: this.order()?.recommended_bumps?.data as Bump[],

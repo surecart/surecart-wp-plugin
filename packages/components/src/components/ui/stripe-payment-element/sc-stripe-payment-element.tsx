@@ -5,7 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { openWormhole } from 'stencil-wormhole';
 
-import { Checkout, FormStateSetter, PaymentIntent } from '../../../types';
+import { Checkout, FormState, FormStateSetter, PaymentIntent, ProcessorName } from '../../../types';
 
 @Component({
   tag: 'sc-stripe-payment-element',
@@ -34,6 +34,12 @@ export class ScStripePaymentElement {
 
   /** Success url to redirect. */
   @Prop() successUrl: string;
+
+  /** The current form state. */
+  @Prop() formState: FormState;
+
+  /** The selected processor name. */
+  @Prop() selectedProcessorId: ProcessorName;
 
   /** The error. */
   @State() error: string;
@@ -108,16 +114,18 @@ export class ScStripePaymentElement {
   /**
    * Watch order status and maybe confirm the order.
    */
-  @Watch('order')
-  async maybeConfirmOrder(val: Checkout) {
+  @Watch('formState')
+  async maybeConfirmOrder(val: FormState) {
     // must be finalized
-    if (val?.status !== 'finalized') return;
+    if (val !== 'paying') return;
+    // this processor is not selected.
+    if (this.selectedProcessorId !== 'stripe') return;
     // must be a stripe session
-    if (val?.payment_intent?.processor_type !== 'stripe') return;
+    if (this.order?.payment_intent?.processor_type !== 'stripe') return;
     // need an external_type
-    if (!val?.payment_intent?.processor_data?.stripe?.type) return;
+    if (!this.order?.payment_intent?.processor_data?.stripe?.type) return;
     // confirm the intent.
-    return await this.confirm(val?.payment_intent?.processor_data?.stripe?.type);
+    return await this.confirm(this.order?.payment_intent?.processor_data?.stripe?.type);
   }
 
   @Method()
@@ -254,4 +262,4 @@ export class ScStripePaymentElement {
   }
 }
 
-openWormhole(ScStripePaymentElement, ['order', 'stripePaymentIntent'], true);
+openWormhole(ScStripePaymentElement, ['order', 'selectedProcessorId', 'stripePaymentIntent', 'formState'], true);

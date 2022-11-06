@@ -25,7 +25,7 @@ describe('Checkout Stripe', () => {
           external_intent_id: 'test',
           processor_data: {
             stripe: {
-              client_secret: 'test',
+              client_secret: 'test_client_secret',
               type: 'payment',
             },
           },
@@ -36,7 +36,7 @@ describe('Checkout Stripe', () => {
     cy.intercept(
       {
         method: 'POST',
-        path: '**/surecart/v1/checkouts/test/confirm/*',
+        path: '**/surecart/v1/checkouts/test/confirm*',
       },
       {
         id: 'test',
@@ -46,11 +46,11 @@ describe('Checkout Stripe', () => {
   });
 
   it('Can checkout', () => {
-    const confirmCardPaymentStub = cy.stub();
+    const confirmCardPayment = cy.stub().as('confirmCardPayment');
     cy.visit('/test/sc-checkout/stripe/', {
       onBeforeLoad: window => {
         window.mockStripeMethods = {
-          confirmCardPayment: confirmCardPaymentStub,
+          confirmCardPayment
         };
       },
     });
@@ -72,7 +72,10 @@ describe('Checkout Stripe', () => {
     cy.get('sc-order-submit sc-button').shadow().find('.button').should('not.have.class', 'button--loading').click({ force: true, waitForAnimations: true, multiple: true });
 
     cy.wait('@finalize').its('request.url').should('include', 'form_id=1').should('include', 'processor_type=stripe');
-
+    cy.wait('@confirm');
+    cy.get('@confirmCardPayment').should('have.been.calledOnceWith', Cypress.sinon.match(
+      'test_client_secret'
+    ));
     cy.location('pathname').should('contain', 'success');
     cy.location('search').should('contain', 'order=test');
   });

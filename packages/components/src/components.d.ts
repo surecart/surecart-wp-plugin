@@ -2402,6 +2402,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * The form state
+         */
+        "formState": FormState;
+        /**
           * Inputs focus
          */
         "hasFocus": boolean;
@@ -2426,6 +2430,10 @@ export namespace Components {
          */
         "secureText": string;
         /**
+          * The selected processor id
+         */
+        "selectedProcessorId": ProcessorName;
+        /**
           * Should we show the label
          */
         "showLabel": boolean;
@@ -2441,9 +2449,17 @@ export namespace Components {
         "address": boolean;
         "confirm": (type: any, args?: {}) => Promise<void>;
         /**
+          * The current form state.
+         */
+        "formState": FormState;
+        /**
           * Order to watch
          */
         "order": Checkout;
+        /**
+          * The selected processor name.
+         */
+        "selectedProcessorId": ProcessorName;
         /**
           * The Payment Intent
          */
@@ -6917,6 +6933,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * The form state
+         */
+        "formState"?: FormState;
+        /**
           * Inputs focus
          */
         "hasFocus"?: boolean;
@@ -6947,6 +6967,10 @@ declare namespace LocalJSX {
          */
         "secureText"?: string;
         /**
+          * The selected processor id
+         */
+        "selectedProcessorId"?: ProcessorName;
+        /**
           * Should we show the label
          */
         "showLabel"?: boolean;
@@ -6960,6 +6984,10 @@ declare namespace LocalJSX {
           * Should we collect an address?
          */
         "address"?: boolean;
+        /**
+          * The current form state.
+         */
+        "formState"?: FormState;
         /**
           * The order/invoice was paid for.
          */
@@ -6976,6 +7004,10 @@ declare namespace LocalJSX {
           * Order to watch
          */
         "order"?: Checkout;
+        /**
+          * The selected processor name.
+         */
+        "selectedProcessorId"?: ProcessorName;
         /**
           * The Payment Intent
          */
