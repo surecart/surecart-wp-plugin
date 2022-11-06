@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-11-02T13:00:45",
+  "timestamp": "2022-11-05T17:25:01",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -1679,6 +1679,7 @@
         "sc-order-confirmation-details",
         "sc-orders-list",
         "sc-password-nag",
+        "sc-payment-method-choice",
         "sc-payment-methods-list",
         "sc-purchase-downloads-list",
         "sc-subscription",
@@ -1726,6 +1727,9 @@
           "sc-card"
         ],
         "sc-password-nag": [
+          "sc-card"
+        ],
+        "sc-payment-method-choice": [
           "sc-card"
         ],
         "sc-payment-methods-list": [
@@ -3408,10 +3412,10 @@
         {
           "name": "submit",
           "returns": {
-            "type": "Promise<any>",
+            "type": "Promise<Checkout>",
             "docs": ""
           },
-          "signature": "submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<any>",
+          "signature": "submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout>",
           "parameters": [],
           "docs": "Submit the form",
           "docsTags": []
@@ -15722,6 +15726,22 @@
       "usage": {},
       "props": [
         {
+          "name": "card",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "card",
+          "reflectToAttr": false,
+          "docs": "Should we show this in a card?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "checkout",
           "type": "Checkout",
           "mutable": false,
@@ -15868,8 +15888,14 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [],
-      "dependencyGraph": {}
+      "dependencies": [
+        "sc-card"
+      ],
+      "dependencyGraph": {
+        "sc-payment-method-choice": [
+          "sc-card"
+        ]
+      }
     },
     {
       "filePath": "./src/components/controllers/dashboard/payment-methods-list/sc-payment-methods-list.tsx",
@@ -19024,6 +19050,7 @@
           "reflectToAttr": false,
           "docs": "Should we persist the session.",
           "docsTags": [],
+          "default": "true",
           "values": [
             {
               "type": "boolean"
@@ -19126,10 +19153,10 @@
         {
           "name": "finalize",
           "returns": {
-            "type": "Promise<any>",
+            "type": "Promise<Checkout>",
             "docs": ""
           },
-          "signature": "finalize() => Promise<any>",
+          "signature": "finalize() => Promise<Checkout>",
           "parameters": [],
           "docs": "Finalize the order.",
           "docsTags": [

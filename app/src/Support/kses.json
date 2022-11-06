@@ -1080,6 +1080,7 @@
     "slot": true
   },
   "sc-payment-method-choice": {
+    "card": true,
     "checkout": true,
     "has-others": true,
     "is-disabled": true,

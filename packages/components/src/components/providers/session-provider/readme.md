@@ -16,7 +16,7 @@
 | `mode`                 | `mode`                   | Are we in test or live mode.                | `"live" \| "test"`                      | `'live'`    |
 | `modified`             | `modified`               | Whent the post was modified.                | `string`                                | `undefined` |
 | `paymentIntents`       | --                       | Holds all available payment intents.        | `PaymentIntents`                        | `undefined` |
-| `persist`              | `persist`                | Should we persist the session.              | `boolean`                               | `undefined` |
+| `persist`              | `persist`                | Should we persist the session.              | `boolean`                               | `true`      |
 | `prices`               | --                       | An array of prices to pre-fill in the form. | `PriceChoice[]`                         | `[]`        |
 | `processor`            | `processor`              | The processor.                              | `"paypal" \| "paypal-card" \| "stripe"` | `'stripe'`  |
 | `setState`             | --                       | Set the checkout state                      | `(state: string) => void`               | `undefined` |
@@ -37,13 +37,13 @@
 
 ## Methods
 
-### `finalize() => Promise<any>`
+### `finalize() => Promise<Checkout>`
 
 Finalize the order.
 
 #### Returns
 
-Type: `Promise<any>`
+Type: `Promise<Checkout>`
 
 
 

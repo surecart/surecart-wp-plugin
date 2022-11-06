@@ -40,13 +40,13 @@
 
 ## Methods
 
-### `submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<any>`
+### `submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout>`
 
 Submit the form
 
 #### Returns
 
-Type: `Promise<any>`
+Type: `Promise<Checkout>`
 
 
 
