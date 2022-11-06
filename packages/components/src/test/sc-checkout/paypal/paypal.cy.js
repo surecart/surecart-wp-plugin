@@ -14,7 +14,7 @@ describe('Checkout PayPal', () => {
 
     cy.intercept(
       {
-        path: '**/surecart/v1/checkouts/test/finalize/*',
+        path: '**/surecart/v1/checkouts/test/finalize*',
       },
       {
         id: 'test',
@@ -46,6 +46,7 @@ describe('Checkout PayPal', () => {
     cy.wait('@createUpdate');
     cy.get('sc-block-ui.busy-block-ui').should('not.exist');
 
+    cy.get('sc-payment-method-choice[processor-id="paypal"]').shadow().find('sc-toggle').click();
     cy.get('sc-paypal-buttons').shadow().find('.sc-paypal-button').should('be.visible');
     // submit.
     cy.getPayPalButton('paypal').click();
