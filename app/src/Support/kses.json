@@ -17,6 +17,7 @@
   "sc-alert": {
     "closable": true,
     "duration": true,
+    "no-icon": true,
     "open": true,
     "scroll-margin": true,
     "scroll-on-open": true,
@@ -355,6 +356,7 @@
     "slot": true
   },
   "sc-customer-email": {
+    "abandoned-checkout-enabled": true,
     "autofocus": true,
     "customer": true,
     "disabled": true,
@@ -370,6 +372,7 @@
     "required": true,
     "show-label": true,
     "size": true,
+    "tracking-confirmation-message": true,
     "value": true,
     "style": true,
     "id": true,

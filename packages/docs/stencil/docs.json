@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-11-05T17:25:01",
+  "timestamp": "2022-11-07T18:43:46",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -286,6 +286,22 @@
           "values": [
             {
               "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "noIcon",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "no-icon",
+          "reflectToAttr": false,
+          "docs": "No icon",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -5310,6 +5326,22 @@
       "usage": {},
       "props": [
         {
+          "name": "abandonedCheckoutEnabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "abandoned-checkout-enabled",
+          "reflectToAttr": false,
+          "docs": "Is abandoned checkout enabled?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "autofocus",
           "type": "boolean",
           "mutable": false,
@@ -5565,6 +5597,22 @@
           "required": false
         },
         {
+          "name": "trackingConfirmationMessage",
+          "type": "string",
+          "mutable": false,
+          "attr": "tracking-confirmation-message",
+          "reflectToAttr": false,
+          "docs": "A message for tracking confirmation.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "value",
           "type": "string",
           "mutable": true,
@@ -5648,6 +5696,15 @@
           "cancelable": true,
           "composed": true,
           "docs": "Prompt for login.",
+          "docsTags": []
+        },
+        {
+          "event": "scUpdateAbandonedCart",
+          "detail": "boolean",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Update the abandoned cart.",
           "docsTags": []
         },
         {
@@ -19235,6 +19292,11 @@
           "passive": false
         },
         {
+          "event": "scUpdateAbandonedCart",
+          "capture": false,
+          "passive": false
+        },
+        {
           "event": "scApplyCoupon",
           "capture": false,
           "passive": false
@@ -19857,6 +19919,63 @@
           "required": false
         },
         {
+          "name": "formState",
+          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"updating\"",
+          "mutable": false,
+          "attr": "form-state",
+          "reflectToAttr": false,
+          "docs": "The form state",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "confirmed",
+              "type": "string"
+            },
+            {
+              "value": "confirming",
+              "type": "string"
+            },
+            {
+              "value": "draft",
+              "type": "string"
+            },
+            {
+              "value": "expired",
+              "type": "string"
+            },
+            {
+              "value": "failure",
+              "type": "string"
+            },
+            {
+              "value": "finalizing",
+              "type": "string"
+            },
+            {
+              "value": "idle",
+              "type": "string"
+            },
+            {
+              "value": "loading",
+              "type": "string"
+            },
+            {
+              "value": "paid",
+              "type": "string"
+            },
+            {
+              "value": "paying",
+              "type": "string"
+            },
+            {
+              "value": "updating",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "hasFocus",
           "type": "boolean",
           "mutable": true,
@@ -19952,6 +20071,31 @@
           "default": "''",
           "values": [
             {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "selectedProcessorId",
+          "type": "\"paypal\" | \"paypal-card\" | \"stripe\"",
+          "mutable": false,
+          "attr": "selected-processor-id",
+          "reflectToAttr": false,
+          "docs": "The selected processor id",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "paypal",
+              "type": "string"
+            },
+            {
+              "value": "paypal-card",
+              "type": "string"
+            },
+            {
+              "value": "stripe",
               "type": "string"
             }
           ],
@@ -20103,6 +20247,63 @@
           "required": false
         },
         {
+          "name": "formState",
+          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"updating\"",
+          "mutable": false,
+          "attr": "form-state",
+          "reflectToAttr": false,
+          "docs": "The current form state.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "confirmed",
+              "type": "string"
+            },
+            {
+              "value": "confirming",
+              "type": "string"
+            },
+            {
+              "value": "draft",
+              "type": "string"
+            },
+            {
+              "value": "expired",
+              "type": "string"
+            },
+            {
+              "value": "failure",
+              "type": "string"
+            },
+            {
+              "value": "finalizing",
+              "type": "string"
+            },
+            {
+              "value": "idle",
+              "type": "string"
+            },
+            {
+              "value": "loading",
+              "type": "string"
+            },
+            {
+              "value": "paid",
+              "type": "string"
+            },
+            {
+              "value": "paying",
+              "type": "string"
+            },
+            {
+              "value": "updating",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "order",
           "type": "Checkout",
           "mutable": false,
@@ -20112,6 +20313,31 @@
           "values": [
             {
               "type": "Checkout"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "selectedProcessorId",
+          "type": "\"paypal\" | \"paypal-card\" | \"stripe\"",
+          "mutable": false,
+          "attr": "selected-processor-id",
+          "reflectToAttr": false,
+          "docs": "The selected processor name.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "paypal",
+              "type": "string"
+            },
+            {
+              "value": "paypal-card",
+              "type": "string"
+            },
+            {
+              "value": "stripe",
+              "type": "string"
             }
           ],
           "optional": false,
@@ -23540,7 +23766,19 @@
           "required": false
         }
       ],
-      "methods": [],
+      "methods": [
+        {
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<boolean>",
+          "parameters": [],
+          "docs": "Checks for validity and shows the browser's validation message if the control is invalid.",
+          "docsTags": []
+        }
+      ],
       "events": [
         {
           "event": "scBlur",

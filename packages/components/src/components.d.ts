@@ -54,6 +54,10 @@ export namespace Components {
          */
         "hide": () => Promise<void>;
         /**
+          * No icon
+         */
+        "noIcon": boolean;
+        /**
           * Indicates whether or not the alert is open. You can use this in lieu of the show/hide methods.
          */
         "open": boolean;
@@ -691,6 +695,10 @@ export namespace Components {
     }
     interface ScCustomerEmail {
         /**
+          * Is abandoned checkout enabled?
+         */
+        "abandonedCheckoutEnabled": boolean;
+        /**
           * The input's autofocus attribute.
          */
         "autofocus": boolean;
@@ -751,6 +759,10 @@ export namespace Components {
           * The input's size.
          */
         "size": 'small' | 'medium' | 'large';
+        /**
+          * A message for tracking confirmation.
+         */
+        "trackingConfirmationMessage": string;
         /**
           * The input's value attribute.
          */
@@ -2805,6 +2817,10 @@ export namespace Components {
          */
         "readonly": boolean;
         /**
+          * Checks for validity and shows the browser's validation message if the control is invalid.
+         */
+        "reportValidity": () => Promise<boolean>;
+        /**
           * Makes the textarea a required field.
          */
         "required": boolean;
@@ -4301,6 +4317,10 @@ declare namespace LocalJSX {
          */
         "duration"?: number;
         /**
+          * No icon
+         */
+        "noIcon"?: boolean;
+        /**
           * When alert is hidden
          */
         "onScHide"?: (event: ScAlertCustomEvent<void>) => void;
@@ -4977,6 +4997,10 @@ declare namespace LocalJSX {
     }
     interface ScCustomerEmail {
         /**
+          * Is abandoned checkout enabled?
+         */
+        "abandonedCheckoutEnabled"?: boolean;
+        /**
           * The input's autofocus attribute.
          */
         "autofocus"?: boolean;
@@ -5033,6 +5057,10 @@ declare namespace LocalJSX {
          */
         "onScLoginPrompt"?: (event: ScCustomerEmailCustomEvent<void>) => void;
         /**
+          * Update the abandoned cart.
+         */
+        "onScUpdateAbandonedCart"?: (event: ScCustomerEmailCustomEvent<boolean>) => void;
+        /**
           * Update the order state.
          */
         "onScUpdateOrderState"?: (event: ScCustomerEmailCustomEvent<Checkout>) => void;
@@ -5064,6 +5092,10 @@ declare namespace LocalJSX {
           * The input's size.
          */
         "size"?: 'small' | 'medium' | 'large';
+        /**
+          * A message for tracking confirmation.
+         */
+        "trackingConfirmationMessage"?: string;
         /**
           * The input's value attribute.
          */

@@ -6706,11 +6706,13 @@ __metadata:
     co: ^4.6.0
     copy-webpack-plugin: 6
     cross-env: ^7.0.2
+    crypto-js: ^4.1.1
     css-loader: ^3.5.3
     cssnano: ^4.1.10
     cypress: 10.11.0
     cypress-file-upload: ^5.0.8
     cypress-log-to-output: ^1.1.2
+    dayjs: ^1.11.6
     dot-prop-immutable: ^2.1.1
     eslint: ^6.8.0
     eslint-config-airbnb: ^18.1.0
@@ -14043,6 +14045,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"crypto-js@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "crypto-js@npm:4.1.1"
+  checksum: b3747c12ee3a7632fab3b3e171ea50f78b182545f0714f6d3e7e2858385f0f4101a15f2517e033802ce9d12ba50a391575ff4638c9de3dd9b2c4bc47768d5425
+  languageName: node
+  linkType: hard
+
 "crypto-random-string@npm:^1.0.0":
   version: 1.0.0
   resolution: "crypto-random-string@npm:1.0.0"
@@ -14763,6 +14772,13 @@ __metadata:
   version: 1.10.7
   resolution: "dayjs@npm:1.10.7"
   checksum: a0a4ca95abaa03d0702161dc2c35d16121188e342f5052b9c61cdf784dab68af766f477c04f87f71c6af666fd4d13db9b9853b87265850d6093b7b04e1bb1cd7
+  languageName: node
+  linkType: hard
+
+"dayjs@npm:^1.11.6":
+  version: 1.11.6
+  resolution: "dayjs@npm:1.11.6"
+  checksum: 18bdfd927009b68eab08dca578e421d4a581cefcbe9337f54c5d9e0d941ffb6b221c4b2c1cab15cdd9d419940e768ac4c984531461a90bbe1c158b75fe160580
   languageName: node
   linkType: hard
 

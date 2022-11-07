@@ -7,25 +7,24 @@ use SureCart\Support\Scripts\AdminModelEditController;
 /**
  * Coupon page
  */
-class AbandonedOrderScriptsController extends AdminModelEditController {
+class AbandonedCheckoutStatsScriptsController extends AdminModelEditController {
 	/**
 	 * What types of data to add the the page.
 	 *
 	 * @var array
 	 */
-	protected $with_data = [ 'currency', 'supported_currencies' ];
-
+	protected $with_data = [ 'currency' ];
 	/**
 	 * Script handle.
 	 *
 	 * @var string
 	 */
-	protected $handle = 'surecart/scripts/admin/abandoned_order';
+	protected $handle = 'surecart/scripts/admin/abandoned_checkout_stats';
 
 	/**
 	 * Script path.
 	 *
 	 * @var string
 	 */
-	protected $path = 'dist/admin/order.js';
+	protected $path = 'admin/abandoned-checkouts-stats';
 }
