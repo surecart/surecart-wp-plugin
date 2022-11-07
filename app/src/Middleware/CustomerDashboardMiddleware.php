@@ -19,7 +19,7 @@ class CustomerDashboardMiddleware {
 	 * @param Closure          $next Next.
 	 * @return method
 	 */
-	public function handle( $request, Closure $next ) {
+	public function handle( RequestInterface $request, Closure $next ) {
 		$link_id = $request->query( 'customer_link_id' );
 
 		// use original page view if no customer link id is found.
