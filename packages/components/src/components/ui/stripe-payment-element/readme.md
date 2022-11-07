@@ -7,12 +7,14 @@
 
 ## Properties
 
-| Property              | Attribute     | Description                   | Type            | Default     |
-| --------------------- | ------------- | ----------------------------- | --------------- | ----------- |
-| `address`             | `address`     | Should we collect an address? | `boolean`       | `undefined` |
-| `order`               | --            | Order to watch                | `Checkout`      | `undefined` |
-| `stripePaymentIntent` | --            | The Payment Intent            | `PaymentIntent` | `undefined` |
-| `successUrl`          | `success-url` | Success url to redirect.      | `string`        | `undefined` |
+| Property              | Attribute               | Description                   | Type                                                                                                                                          | Default     |
+| --------------------- | ----------------------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `address`             | `address`               | Should we collect an address? | `boolean`                                                                                                                                     | `undefined` |
+| `formState`           | `form-state`            | The current form state.       | `"confirmed" \| "confirming" \| "draft" \| "expired" \| "failure" \| "finalizing" \| "idle" \| "loading" \| "paid" \| "paying" \| "updating"` | `undefined` |
+| `order`               | --                      | Order to watch                | `Checkout`                                                                                                                                    | `undefined` |
+| `selectedProcessorId` | `selected-processor-id` | The selected processor name.  | `"paypal" \| "paypal-card" \| "stripe"`                                                                                                       | `undefined` |
+| `stripePaymentIntent` | --                      | The Payment Intent            | `PaymentIntent`                                                                                                                               | `undefined` |
+| `successUrl`          | `success-url`           | Success url to redirect.      | `string`                                                                                                                                      | `undefined` |
 
 
 ## Events
