@@ -14,7 +14,7 @@
 		</sc-tab>
 		<sc-tab href="
 		<?php
-		echo ! empty( $entitlements->abandoned_checkouts ) ?
+		echo empty( $entitlements->abandoned_checkouts ) ?
 			esc_url( $upgrade_url ?? '' ) :
 			esc_url( add_query_arg( [ 'tab' => 'abandoned_checkout' ], menu_page_url( 'sc-settings', false ) ) );
 		?>
