@@ -93,6 +93,7 @@
   },
   "sc-card": {
     "borderless": true,
+    "href": true,
     "loading": true,
     "no-divider": true,
     "no-padding": true,

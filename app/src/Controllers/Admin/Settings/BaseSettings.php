@@ -42,9 +42,11 @@ abstract class BaseSettings {
 
 		return \SureCart::view( $this->template )->with(
 			[
-				'tab'       => $request->query( 'tab' ) ?? '',
-				'plan_name' => \SureCart::account()->plan->name ?? '',
-				'status'    => $request->query( 'status' ),
+				'tab'          => $request->query( 'tab' ) ?? '',
+				'is_free'      => (bool) ( \SureCart::account()->plan->free ?? true ),
+				'entitlements' => \SureCart::account()->entitlements,
+				'upgrade_url'  => 'https://app.surecart.com/plans',
+				'status'       => $request->query( 'status' ),
 			]
 		);
 	}

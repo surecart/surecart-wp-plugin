@@ -184,6 +184,10 @@ export namespace Components {
          */
         "borderless": boolean;
         /**
+          * A link for the card.
+         */
+        "href": string;
+        /**
           * Is this card loading.
          */
         "loading": boolean;
@@ -1506,7 +1510,7 @@ export namespace Components {
         /**
           * The current order.
          */
-        "order": Order;
+        "order": Checkout;
         /**
           * Success url.
          */
@@ -4459,6 +4463,10 @@ declare namespace LocalJSX {
          */
         "borderless"?: boolean;
         /**
+          * A link for the card.
+         */
+        "href"?: string;
+        /**
           * Is this card loading.
          */
         "loading"?: boolean;
@@ -5948,12 +5956,12 @@ declare namespace LocalJSX {
         /**
           * The order is paid event.
          */
-        "onScOrderPaid"?: (event: ScOrderConfirmProviderCustomEvent<Order>) => void;
+        "onScOrderPaid"?: (event: ScOrderConfirmProviderCustomEvent<Checkout>) => void;
         "onScSetState"?: (event: ScOrderConfirmProviderCustomEvent<string>) => void;
         /**
           * The current order.
          */
-        "order"?: Order;
+        "order"?: Checkout;
         /**
           * Success url.
          */

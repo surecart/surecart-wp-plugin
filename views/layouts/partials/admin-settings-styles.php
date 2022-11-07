@@ -4,6 +4,11 @@
 		font-size: 14px;
 		color: var(--sc-color-brand-body);
 	}
+	.sc-item-stick-bottom {
+		margin-top: auto;
+		padding-top: var(--sc-spacing-large);
+	}
+
 	a.surecart-help {
 		position: fixed;
 		box-shadow: var(--sc-shadow-large);
@@ -61,8 +66,13 @@
 		display: flex;
 		flex-direction: column;
 		gap: 2px;
-		min-width: 225px;
+		width: 100%;
+		max-width: 250px;
 		overflow: auto;
+	}
+
+	.surecart-cta {
+		--sc-card-border-color: var(--sc-color-primary-500);
 	}
 	.sc-container {
 		width: 100%;

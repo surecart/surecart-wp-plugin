@@ -10,6 +10,7 @@
 | Property     | Attribute    | Description              | Type      | Default     |
 | ------------ | ------------ | ------------------------ | --------- | ----------- |
 | `borderless` | `borderless` | Is this card borderless. | `boolean` | `undefined` |
+| `href`       | `href`       | A link for the card.     | `string`  | `undefined` |
 | `loading`    | `loading`    | Is this card loading.    | `boolean` | `undefined` |
 | `noDivider`  | `no-divider` | Eliminate the divider    | `boolean` | `undefined` |
 | `noPadding`  | `no-padding` | Remove padding           | `boolean` | `undefined` |
