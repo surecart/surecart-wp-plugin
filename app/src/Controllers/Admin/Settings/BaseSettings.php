@@ -42,8 +42,9 @@ abstract class BaseSettings {
 
 		return \SureCart::view( $this->template )->with(
 			[
-				'tab'    => $request->query( 'tab' ) ?? '',
-				'status' => $request->query( 'status' ),
+				'tab'       => $request->query( 'tab' ) ?? '',
+				'plan_name' => \SureCart::account()->plan->name ?? '',
+				'status'    => $request->query( 'status' ),
 			]
 		);
 	}
@@ -102,6 +103,7 @@ abstract class BaseSettings {
 				'api_url'              => defined( 'SURECART_API_URL' ) ? untrailingslashit( SURECART_API_URL ) : \SureCart::requests()->getBaseUrl(),
 				'time_zones'           => TimeDate::timezoneOptions(),
 				'entitlements'         => \SureCart::account()->entitlements,
+				'plan_name'            => \SureCart::account()->plan->name ?? '',
 				'processors'           => Processor::get(),
 			]
 		);
