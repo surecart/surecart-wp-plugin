@@ -148,7 +148,18 @@ class CheckoutsController extends RestController {
 			$checkout = $checkout->with( $this->with );
 		}
 
-		return $checkout->where( $request->get_query_params() )->manuallyPay();
+		$paid = $checkout->where( $request->get_query_params() )->manuallyPay();
+
+		// purchase created.
+		if ( ! empty( $paid->purchases->data ) ) {
+			foreach ( $paid->purchases->data as $purchase ) {
+				if ( empty( $purchase->revoked ) ) {
+					// broadcast the webhook.
+					do_action( 'surecart/purchase_created', $purchase );
+				}
+			}
+		}
+		return $paid;
 	}
 
 	/**
