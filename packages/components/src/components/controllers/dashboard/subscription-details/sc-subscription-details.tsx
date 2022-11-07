@@ -4,7 +4,7 @@ import { addQueryArgs } from '@wordpress/url';
 
 import apiFetch from '../../../../functions/fetch';
 import { intervalString } from '../../../../functions/price';
-import { Price, Product, Subscription } from '../../../../types';
+import { License, Price, Product, Purchase, Subscription } from '../../../../types';
 
 @Component({
   tag: 'sc-subscription-details',
@@ -16,6 +16,7 @@ export class ScSubscriptionDetails {
   @Prop() pendingPrice: Price;
   @Prop() hideRenewalText: boolean;
 
+  @State() activationsModal: boolean;
   @State() loading: boolean;
   @State() hasPendingUpdate: boolean;
 
@@ -116,18 +117,76 @@ export class ScSubscriptionDetails {
     return tag;
   }
 
+  getActivations() {
+    return (((this.subscription?.purchase as Purchase)?.license as License)?.activations?.data || []).filter(activation => {
+      return !activation?.counted;
+    });
+  }
+
+  renderActivations() {
+    const activations = this.getActivations();
+    if (!activations?.length) return null;
+    return (
+      <sc-flex justifyContent="flex-start" alignItems="center">
+        <sc-tag size="small">{activations?.[0]?.name}</sc-tag>
+        {activations?.length > 1 && (
+          <sc-text
+            style={{ '--font-size': 'var(--sc-font-size-small)', 'cursor': 'pointer' }}
+            onClick={e => {
+              e.preventDefault();
+              e.stopImmediatePropagation();
+              this.activationsModal = true;
+            }}
+          >
+            + {activations?.length - 1} More
+          </sc-text>
+        )}
+      </sc-flex>
+    );
+  }
+
   render() {
     const price = this.subscription?.price as Price;
     return (
       <div class="subscription-details">
-        <sc-text style={{ '--font-weight': 'var(--sc-font-weight-bold)' }}>
-          {this.renderName()} {this.hasPendingUpdate && <sc-tag size="small">{__('Update Scheduled', 'surecart')}</sc-tag>}
-        </sc-text>
+        {this.hasPendingUpdate && (
+          <div>
+            <sc-tag size="small" type="warning">
+              {__('Update Scheduled', 'surecart')}
+            </sc-tag>
+          </div>
+        )}
+        <sc-flex alignItems="center" justifyContent="flex-start">
+          <sc-text style={{ '--font-weight': 'var(--sc-font-weight-bold)' }}>{this.renderName()}</sc-text>
+          {this.renderActivations()}
+        </sc-flex>
         <div>
           <sc-format-number type="currency" currency={price?.currency} value={this.subscription?.ad_hoc_amount || price?.amount}></sc-format-number>{' '}
           {intervalString(this.subscription?.price)}
         </div>
         {!this.hideRenewalText && <div>{this.renderRenewalText()}</div>}
+
+        <sc-dialog label={__('Activations', 'surecart')} onScRequestClose={() => (this.activationsModal = false)} open={!!this.activationsModal}>
+          <sc-card no-padding style={{ '--overflow': 'hidden' }}>
+            <sc-stacked-list>
+              {(this.getActivations() || []).map(activation => {
+                return (
+                  <sc-stacked-list-row style={{ '--columns': '2' }} mobileSize={0}>
+                    <sc-text style={{ '--line-height': 'var(--sc-line-height-dense)' }}>
+                      <strong>{activation?.name}</strong>
+                      <div>
+                        <sc-text style={{ '--color': 'var(--sc-color-gray-500)' }}>{activation?.fingerprint}</sc-text>
+                      </div>
+                    </sc-text>
+                    <sc-text style={{ '--color': 'var(--sc-color-gray-500)' }}>
+                      <sc-format-date type="timestamp" month="short" day="numeric" year="numeric" date={activation?.created_at}></sc-format-date>
+                    </sc-text>
+                  </sc-stacked-list-row>
+                );
+              })}
+            </sc-stacked-list>
+          </sc-card>
+        </sc-dialog>
       </div>
     );
   }

@@ -159,6 +159,7 @@ export interface Activation {
   id: string;
   object: 'activation';
   name: string;
+  counted: boolean;
   fingerprint: string;
   license: string | License;
   created_at: number;
@@ -480,6 +481,7 @@ export interface Purchase {
   product: string | Product;
   refund: string | Refund;
   subscription: string | Subscription;
+  license: string | License;
   created_at: number;
   updated_at: number;
 }
@@ -518,6 +520,7 @@ export interface Subscription extends Object {
     price?: string;
     quantity?: number;
   };
+  purchase: Purchase | string;
   cancel_at_period_end: number | false;
   current_period: string | Period;
   current_period_end_at: number | false;
