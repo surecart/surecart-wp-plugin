@@ -243,7 +243,9 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.1.20  - Novermber 3, 2022 =
+= 1.2.0  - Novermber 8, 2022 =
+* New: Manual payment methods.
+* New: Abandoned Checkouts (Pro)
 * Fix: Issue with default country selection in address block not initializing with new checkout.
 * Fix: Prevent false positive notice from Sucuri for our honeypot field.
 
