@@ -11,6 +11,7 @@ use SureCart\Middleware\CheckoutRedirectMiddleware;
 use SureCart\Middleware\CustomerDashboardMiddleware;
 use SureCart\Middleware\LoginLinkMiddleware;
 use SureCart\Middleware\OrderRedirectMiddleware;
+use SureCart\Middleware\PathRedirectMiddleware;
 use SureCart\Middleware\PaymentFailureRedirectMiddleware;
 use SureCart\Middleware\PurchaseRedirectMiddleware;
 use SureCart\Middleware\SubscriptionRedirectMiddleware;
@@ -40,6 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->get()
 ->url( '/surecart/redirect' )
 ->name( 'redirect' )
+->middleware( PathRedirectMiddleware::class )
 ->middleware( LoginLinkMiddleware::class )
 ->middleware( OrderRedirectMiddleware::class )
 ->middleware( PurchaseRedirectMiddleware::class )
