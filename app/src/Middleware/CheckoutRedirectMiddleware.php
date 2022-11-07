@@ -11,7 +11,6 @@ use SureCartCore\Responses\RedirectResponse;
  * Middleware for handling model archiving.
  */
 class CheckoutRedirectMiddleware {
-
 	/**
 	 * Enqueue component assets.
 	 *
