@@ -398,7 +398,7 @@ export interface Checkout extends Object {
     pagination: Pagination;
     data: Array<Bump>;
   };
-  metadata?: Object;
+  metadata?: any;
   payment_intent?: PaymentIntent;
   payment_method?: PaymentMethod;
   order?: string | Order;
