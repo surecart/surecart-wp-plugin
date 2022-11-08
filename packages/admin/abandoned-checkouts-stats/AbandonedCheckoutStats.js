@@ -138,8 +138,8 @@ export default () => {
 
 		const percentage =
 			Math.abs(
-				((current - previous) / (previous || 1)) * 100
-			).toLocaleString('fullwide', { maximumFractionDigits: 3 }) + '%';
+				((current - previous) / (previous || 1)) * 100.0
+			).toLocaleString('fullwide', { maximumFractionDigits: 0 }) + '%';
 
 		let type, icon;
 		if (previous === current) {
@@ -289,7 +289,9 @@ export default () => {
 					})}
 				>
 					{hasAccess
-						? `${averageProperties('assisted_rate', data) * 100}%`
+						? `${Math.round(
+								averageProperties('assisted_rate', data) * 100
+						  )}%`
 						: '18%'}
 				</Stat>
 
@@ -362,12 +364,12 @@ export default () => {
 					})}
 				>
 					{hasAccess
-						? `${
+						? `${Math.round(
 								averageProperties(
 									'assisted_amount_rate',
 									data
 								) * 100
-						  }%`
+						  )}%`
 						: '18%'}
 				</Stat>
 			</div>

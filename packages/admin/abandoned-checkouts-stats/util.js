@@ -9,4 +9,4 @@ export const totalProperties = (prop, data) => {
 
 // average the items.
 export const averageProperties = (prop, data) =>
-	parseFloat(totalProperties(prop) / (data || []).length) || 0;
+	parseFloat(totalProperties(prop, data) / ((data || []).length || 1)) || 0;
