@@ -121,7 +121,6 @@ export class ScCustomerEmail {
   }
 
   renderOptIn() {
-    if (this.loggedIn) return null;
     if (!this.trackingConfirmationMessage) return null;
 
     if (this.abandonedCheckoutEnabled !== false) {
