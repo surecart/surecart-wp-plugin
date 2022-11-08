@@ -7,6 +7,10 @@
 		--sc-input-border-color-focus: var(--sc-color-brand-primary);
 	}
 
+	#wpbody {
+		padding-right: 20px;
+	}
+
 	.wrap {
 		display: grid;
 		width: 100%;
@@ -36,6 +40,7 @@
 		max-width: 1600px;
 		margin: auto;
 		border-radius: var(--sc-border-radius-large);
+		margin-bottom: 2em;
 	}
 
 	.sc-banner-top-area img {
