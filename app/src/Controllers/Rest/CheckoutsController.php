@@ -148,7 +148,11 @@ class CheckoutsController extends RestController {
 			$checkout = $checkout->with( $this->with );
 		}
 
-		$paid = $checkout->where( $request->get_query_params() )->manuallyPay();
+		$paid = $checkout->where( $request->get_query_params() )->with(
+			[
+				'purchases', // Important: we need to make sure we expand the purchase to provide access.
+			]
+		)->manuallyPay();
 
 		// purchase created.
 		if ( ! empty( $paid->purchases->data ) ) {
