@@ -17,12 +17,14 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content = '' ) {
-		$default_country = $attributes['default_country'] ?? \SureCart::account()->tax_protocol->address->country ?? \SureCart::account()->brand->address->country ?? null;
+		$default_country  = $attributes['default_country'] ?? \SureCart::account()->tax_protocol->address->country ?? \SureCart::account()->brand->address->country ?? null;
+		$tax_enabled      = \SureCart::account()->tax_protocol->tax_enabled;
+		$shipping_enabled = \SureCart::account()->shipping->shipping_enabled;
 		ob_start(); ?>
 
 		<sc-order-shipping-address
 			label="<?php echo esc_attr( $attributes['label'] ); ?>"
-			<?php echo $attributes['required'] ? 'required' : null ?>
+			<?php echo ( $attributes['required'] || $tax_enabled || $shipping_enabled ) ? 'required' : null ?>
 			<?php echo $attributes['full'] ? 'full' : null ?>
 			<?php echo $attributes['show_name'] ? 'show-name' : null ?>
 			default-country="<?php echo esc_attr( $default_country ); ?>"

@@ -82,6 +82,10 @@ export default ({ attributes, setAttributes }) => {
 							onChange={(required) =>
 								setAttributes({ required })
 							}
+							help={__(
+								'If Tax or Shipping is enable then the address field must be required, so this setting can be overwrrite select on Tax or Shipping option enable.',
+								'surecart'
+							)}
 						/>
 					</PanelRow>
 					{full && (
