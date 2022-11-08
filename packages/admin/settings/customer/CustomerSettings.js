@@ -172,40 +172,6 @@ export default () => {
 
 				<ScSwitch
 					checked={
-						scData?.entitlements?.abandoned_checkouts
-							? item?.abandoned_checkout_enabled
-							: false
-					}
-					disabled={!scData?.entitlements?.abandoned_checkouts}
-					onScChange={(e) => {
-						e.preventDefault();
-						editItem({
-							abandoned_checkout_enabled:
-								!item?.abandoned_checkout_enabled,
-						});
-					}}
-					css={css`
-						::part(base) {
-							opacity: 1;
-						}
-					`}
-				>
-					{__('Abandoned Checkout Emails', 'surecart')}{' '}
-					{!scData?.entitlements?.abandoned_checkouts && (
-						<ScTag type="success" size="small" pill>
-							{__('Pro', 'surecart')}
-						</ScTag>
-					)}
-					<span slot="description" style={{ lineHeight: '1.4' }}>
-						{__(
-							'Turn on abandoned order emails to remind your customers of incomplete orders. Abandoned order emails are sent 4 hours after abandonment. If the order is still abandoned after 24 hours another email will be sent.',
-							'surecart'
-						)}
-					</span>
-				</ScSwitch>
-
-				<ScSwitch
-					checked={
 						scData?.entitlements
 							?.subscription_reminder_notifications
 							? item?.subscription_reminder_enabled
