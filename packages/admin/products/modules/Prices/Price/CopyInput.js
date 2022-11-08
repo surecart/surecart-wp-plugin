@@ -21,6 +21,7 @@ export default ({ label, text }) => {
 			});
 		}
 	};
+  console.log(location.protocol);
 	return (
 		<ScInput
 			style={{ '--sc-input-background-color': 'var(--sc-color-gray-100' }}
@@ -28,10 +29,12 @@ export default ({ label, text }) => {
 			readonly
 			value={text}
 		>
+      { (location.protocol === 'https:') && (
 			<ScButton slot="suffix" size="small" onClick={copy}>
 				<ScIcon name="clipboard" slot="prefix" />
 				{__('Copy', 'surecart')}
 			</ScButton>
+      )}
 		</ScInput>
 	);
 };
