@@ -968,7 +968,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @return string|null;
 	 */
 	public function getRelationId( $attribute ) {
-		$value = (array) $this->attributes[ $attribute ] ?? null;
+		$value = $this->attributes[ $attribute ] ?? null;
 		return ! empty( $value['id'] ) ? $value['id'] : $value;
 	}
 

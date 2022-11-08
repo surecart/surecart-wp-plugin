@@ -35,15 +35,6 @@ class AbandonedCheckout extends Model {
 	}
 
 	/**
-	 * Get the relation id attribute
-	 *
-	 * @return string
-	 */
-	public function getLatestRecoverableCheckoutIdAttribute() {
-		return $this->getRelationId( 'recovered_checkout' );
-	}
-
-	/**
 	 * Get stats for the order.
 	 *
 	 * @param array $args Array of arguments for the statistics.
