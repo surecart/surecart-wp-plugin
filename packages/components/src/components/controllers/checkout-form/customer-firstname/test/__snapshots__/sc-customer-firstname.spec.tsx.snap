@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-customer-firstname is disabled when logged in 1`] = `
+<sc-customer-firstname logged-in="" size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="first_name" disabled="" help="" name="first_name" type="text" value=""></sc-input>
+  </mock:shadow-root>
+</sc-customer-firstname>
+`;
+
+exports[`sc-customer-firstname renders 1`] = `
+<sc-customer-firstname size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="firstname" help="" name="first_name" type="text" value=""></sc-input>
+  </mock:shadow-root>
+</sc-customer-firstname>
+`;
