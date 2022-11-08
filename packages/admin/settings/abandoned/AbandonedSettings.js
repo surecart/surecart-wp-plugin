@@ -153,7 +153,7 @@ export default () => {
 							editItem({
 								first_promotion_notification: e.target.checked
 									? 1
-									: 0,
+									: null,
 							})
 						}
 					>
