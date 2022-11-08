@@ -77,10 +77,10 @@
 		<div class="sc-banner-top-area">
 			<div class="sc-banner-text">
 				<div style="margin-bottom:1em;">
-			<svg  viewBox="0 0 290 290" fill="none" xmlns="http://www.w3.org/2000/svg" width="35">
-				<path fill-rule="evenodd" clip-rule="evenodd" d="M145 290C225.081 290 290 225.081 290 145C290 64.9187 225.081 0 145 0C64.9187 0 0 64.9187 0 145C0 225.081 64.9187 290 145 290ZM145.624 72.5C133.982 72.5 117.869 79.1583 109.637 87.3718L87.2765 109.679H198.728L235.994 72.5H145.624ZM180.176 202.628C171.943 210.842 155.831 217.5 144.188 217.5H53.8177L91.0844 180.321H202.536L180.176 202.628ZM216.398 128.269H68.6835L61.7061 135.24C45.1844 150.112 50.0845 161.731 73.2223 161.731H221.337L228.317 154.76C244.678 139.975 239.536 128.269 216.398 128.269Z" fill="#01824C"/>
-			</svg>
-</div>
+					<svg  viewBox="0 0 290 290" fill="none" xmlns="http://www.w3.org/2000/svg" width="35">
+						<path fill-rule="evenodd" clip-rule="evenodd" d="M145 290C225.081 290 290 225.081 290 145C290 64.9187 225.081 0 145 0C64.9187 0 0 64.9187 0 145C0 225.081 64.9187 290 145 290ZM145.624 72.5C133.982 72.5 117.869 79.1583 109.637 87.3718L87.2765 109.679H198.728L235.994 72.5H145.624ZM180.176 202.628C171.943 210.842 155.831 217.5 144.188 217.5H53.8177L91.0844 180.321H202.536L180.176 202.628ZM216.398 128.269H68.6835L61.7061 135.24C45.1844 150.112 50.0845 161.731 73.2223 161.731H221.337L228.317 154.76C244.678 139.975 239.536 128.269 216.398 128.269Z" fill="#01824C"/>
+					</svg>
+				</div>
 
 				<sc-text style="--font-size: var(--sc-font-size-xxx-large); --line-height: 50px; --font-weight: var(--sc-font-weight-bold)">
 					<?php esc_html_e( 'Recover lost sales with abandoned checkout.', 'surecart' ); ?>
@@ -88,7 +88,7 @@
 				<sc-text class="sc-get-started-top-desc" style="--font-size: var(--sc-font-size-x-large); --line-height: var(--sc-line-height-normal)">
 					<?php esc_html_e( 'Get Abandoned Checkouts list full access where can view the checkout cart item details with customers.', 'surecart' ); ?>
 				</sc-text>
-				<sc-button class="sc-get-started-button" type="primary" target="_blank" size="large" href="<?php echo esc_url_raw( 'https://surecart.com/pricing/' ); ?>">
+				<sc-button class="sc-get-started-button" type="primary" target="_blank" size="large" href="<?php echo esc_url_raw( 'https://app.surecart.com/plans' ); ?>">
 					<?php esc_html_e( 'Upgrade to Pro', 'surecart' ); ?>
 					<sc-icon name="arrow-right" slot="suffix"></sc-icon>
 				</sc-button>
