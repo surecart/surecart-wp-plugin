@@ -25,6 +25,7 @@
 		line-height: 50px;
 		border-radius: 999px;
 		line-height: 50px;
+		z-index: 99;
 	}
 
 	#wpfooter {
