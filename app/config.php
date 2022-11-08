@@ -154,6 +154,8 @@ return [
 		'surecart/line-items'                => [ 'sc-line-items', 'sc-line-item', 'sc-line-item-tax', 'sc-product-line-item', 'sc-format-number', 'sc-skeleton' ],
 		'surecart/logout-button'             => [ 'sc-button' ],
 		'surecart/name'                      => [ 'sc-customer-name', 'sc-input' ],
+		'surecart/first-name'                      => [ 'sc-customer-firstname', 'sc-input' ],
+		'surecart/last-name'                      => [ 'sc-customer-lastname', 'sc-input' ],
 		'surecart/name-your-price'           => [ 'sc-custom-order-price-input', 'sc-price-input', 'sc-skeleton' ],
 		'surecart/password'                  => [ 'sc-order-password', 'sc-input' ],
 		'surecart/payment'                   => [ 'sc-payment', 'sc-toggles', 'sc-toggle', 'sc-tag' ],

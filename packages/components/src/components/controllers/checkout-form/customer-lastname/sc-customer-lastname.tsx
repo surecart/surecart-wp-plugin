@@ -4,11 +4,11 @@ import { Component, Prop, h, Event, EventEmitter, Watch, Method } from '@stencil
 import { openWormhole } from 'stencil-wormhole';
 
 @Component({
-  tag: 'sc-customer-name',
-  styleUrl: 'sc-customer-name.css',
+  tag: 'sc-customer-lastname',
+  styleUrl: 'sc-customer-lastname.css',
   shadow: true,
 })
-export class ScCustomerName {
+export class ScCustomerLastname {
   private input: HTMLScInputElement;
 
   /** Is the user logged in. */
@@ -91,7 +91,7 @@ export class ScCustomerName {
 
     // update order.
     try {
-      const order = await createOrUpdateOrder({ id: this.order?.id, data: { name: this.input.value } });
+      const order = await createOrUpdateOrder({ id: this.order?.id, data: { last_name: this.input.value } });
       this.scUpdateOrderState.emit(order);
     } catch (error) {
       console.error(error);
@@ -101,9 +101,9 @@ export class ScCustomerName {
   /** Sync customer email with session if it's updated by other means */
   @Watch('order')
   handleSessionChange(val) {
-    if (val?.name) {
-      if (val.name !== this.value) {
-        this.value = val?.name;
+    if (val?.last_name) {
+      if (val.last_name !== this.value) {
+        this.value = val?.last_name;
       }
     }
   }
@@ -112,13 +112,13 @@ export class ScCustomerName {
     return (
       <sc-input
         type="text"
-        name="name"
+        name="last_name"
         ref={el => (this.input = el as HTMLScInputElement)}
-        value={this.customer?.name || this.value}
+        value={this.customer?.last_name || this.value}
         disabled={!!this.loggedIn}
         label={this.label}
         help={this.help}
-        autocomplete="name"
+        autocomplete="last_name"
         placeholder={this.placeholder}
         readonly={this.readonly}
         required={this.required}
@@ -134,4 +134,4 @@ export class ScCustomerName {
   }
 }
 
-openWormhole(ScCustomerName, ['order', 'customer'], false);
+openWormhole(ScCustomerLastname, ['order', 'customer'], false);

@@ -3,7 +3,7 @@ export default ({ className, attributes }) => {
 		attributes;
 
 	return (
-		<sc-customer-name
+		<sc-customer-firstname
 			name={'first_name'}
 			class={className || false}
 			label={label || false}
@@ -13,6 +13,6 @@ export default ({ className, attributes }) => {
 			showLabel={showLabel || false}
 			size={size || false}
 			required={required ? '1' : '0'}
-		></sc-customer-name>
+		></sc-customer-firstname>
 	);
 };
