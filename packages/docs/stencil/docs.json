@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-11-08T22:50:53",
+  "timestamp": "2022-11-09T16:38:16",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -12342,6 +12342,7 @@
         "sc-spacing",
         "sc-dashboard-module",
         "sc-tag",
+        "sc-order-manual-instructions",
         "sc-card",
         "sc-stacked-list",
         "sc-stacked-list-row",
@@ -12364,6 +12365,7 @@
           "sc-spacing",
           "sc-dashboard-module",
           "sc-tag",
+          "sc-order-manual-instructions",
           "sc-card",
           "sc-stacked-list",
           "sc-stacked-list-row",
@@ -12390,6 +12392,9 @@
         ],
         "sc-alert": [
           "sc-icon"
+        ],
+        "sc-order-manual-instructions": [
+          "sc-alert"
         ],
         "sc-order-status-badge": [
           "sc-tag"
@@ -13610,6 +13615,7 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "sc-order",
         "sc-order-confirm-components-validator"
       ],
       "dependencies": [
@@ -13621,6 +13627,9 @@
         ],
         "sc-alert": [
           "sc-icon"
+        ],
+        "sc-order": [
+          "sc-order-manual-instructions"
         ],
         "sc-order-confirm-components-validator": [
           "sc-order-manual-instructions"

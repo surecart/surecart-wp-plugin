@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-11-08T22:52:18+00:00\n"
+"POT-Creation-Date: 2022-11-09T16:38:53+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -85,7 +85,7 @@ msgstr ""
 #: invoices/modules/Charges.js:19
 #: invoices/modules/Refunds.js:17
 #: orders/modules/Charges.js:66
-#: sc-order.js:138
+#: sc-order.js:143
 msgid "Date"
 msgstr ""
 
@@ -109,7 +109,7 @@ msgstr ""
 #: Blocks/Totals/edit.js:61
 #: components/PriceChoices.js:20
 #: sc-order-confirmation-totals2.js:33
-#: sc-order.js:133
+#: sc-order.js:137
 #: sc-stripe-payment-request2.js:98
 #: sc-stripe-payment-request2.js:136
 msgid "Total"
@@ -171,7 +171,7 @@ msgstr ""
 #: src/Controllers/Admin/Products/ProductsListTable.php:54
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:61
 #: licenses/modules/Details/index.js:14
-#: util.js:48
+#: util.js:44
 #: sc-licenses-list.js:28
 #: sc-subscription-status-badge2.js:52
 msgid "Active"
@@ -186,7 +186,7 @@ msgstr ""
 #: products/EditProduct.js:184
 #: products/modules/Prices/Price/Header.js:179
 #: products/modules/SingleDownload.js:230
-#: util.js:46
+#: util.js:42
 msgid "Archived"
 msgstr ""
 
@@ -3617,11 +3617,11 @@ msgid "Limit result set to users with specific customer ids."
 msgstr ""
 
 #: admin/abandoned-orders/cta-banner.php:91
-msgid "Recover lost sales with abandoned checkout."
+msgid "Recover lost sales with abandoned checkouts."
 msgstr ""
 
 #: admin/abandoned-orders/cta-banner.php:94
-msgid "Get Abandoned Checkouts list full access where can view the checkout cart item details with customers."
+msgid "69% of shoppers abandon their checkouts before completing a purchase. Recover lost revenue with automated, high-converting emails."
 msgstr ""
 
 #: admin/abandoned-orders/cta-banner.php:97
@@ -3957,7 +3957,7 @@ msgid "Abandoned Checkout"
 msgstr ""
 
 #: layouts/partials/admin-settings-sidebar.php:25
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:129
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:135
 #: settings/customer/CustomerSettings.js:201
 #: settings/customer/CustomerSettings.js:237
 #: settings/customer/EmailRow.js:10
@@ -4056,91 +4056,95 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:194
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:203
+msgid "Last 30 Days"
+msgstr ""
+
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:209
 msgid "Today"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:200
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:215
 msgid "Yesterday"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:206
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:221
 msgid "This Week"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:212
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:227
 msgid "Last Week"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:218
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:233
 msgid "This Month"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:224
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:239
 msgid "Last Month"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:246
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:261
 msgid "Recoverable Checkouts"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:247
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:262
 msgid "Total Recoverable Checkouts"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:260
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:275
 msgid "Recovered Checkouts"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:261
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:276
 msgid "Potential Recovered Checkouts"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:263
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:278
 msgid "Total recovered checkouts"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:280
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:295
 msgid "Checkout Recovery Rate"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:281
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:296
 msgid "Potential Checkout Recovery Rate"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:283
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:298
 msgid "Percentage of checkouts recovered"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:301
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:316
 msgid "Recoverable Revenue"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:302
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:317
 msgid "Total recoverable revenue"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:320
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:335
 msgid "Recovered Revenue"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:321
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:336
 msgid "Potential Recovered Revenue"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:323
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:338
 msgid "Total recovered revenue"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:349
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:364
 msgid "Revenue Recovery Rate"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:350
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:365
 msgid "Potential Revenue Recovery Rate"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:352
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:367
 msgid "Percentage of revenue recovered"
 msgstr ""
 
@@ -4169,8 +4173,8 @@ msgstr ""
 #: sc-login-form.js:89
 #: sc-login-provider2.js:67
 #: sc-order-confirmation.js:68
-#: sc-order.js:55
-#: sc-order.js:75
+#: sc-order.js:56
+#: sc-order.js:76
 #: sc-orders-list.js:56
 #: sc-orders-list.js:69
 #: sc-password-nag.js:49
@@ -4256,7 +4260,7 @@ msgstr ""
 #: coupons/Sidebar.js:61
 #: sc-coupon-form2.js:52
 #: sc-order-confirmation-totals2.js:29
-#: sc-order.js:124
+#: sc-order.js:128
 msgid "Discount"
 msgstr ""
 
@@ -4292,7 +4296,7 @@ msgstr ""
 #: Blocks/Dashboard/DashboardPage/Block.php:34
 #: Blocks/Dashboard/DashboardPage/Block.php:42
 #: Controllers/PaymentMethodController.php:112
-#: sc-order.js:138
+#: sc-order.js:143
 #: sc-payment.js:56
 msgid "Test Mode"
 msgstr ""
@@ -4316,7 +4320,7 @@ msgstr ""
 #: subscriptions/show/modules/SubscriptionItems.js:71
 #: Blocks/Totals/edit.js:46
 #: sc-order-confirmation-totals2.js:33
-#: sc-order.js:115
+#: sc-order.js:119
 #: sc-upcoming-invoice.js:201
 msgid "Subtotal"
 msgstr ""
@@ -4324,14 +4328,14 @@ msgstr ""
 #: abandoned-checkouts/modules/LineItems/index.js:52
 #: orders/modules/LineItems/index.js:159
 #: subscriptions/show/modules/LineItems/index.js:68
-#: sc-order.js:118
+#: sc-order.js:122
 msgid "Proration"
 msgstr ""
 
 #: abandoned-checkouts/modules/LineItems/index.js:60
 #: orders/modules/LineItems/index.js:167
 #: subscriptions/show/modules/LineItems/index.js:76
-#: sc-order.js:121
+#: sc-order.js:125
 #: sc-upcoming-invoice.js:201
 msgid "Applied Balance"
 msgstr ""
@@ -4361,7 +4365,7 @@ msgstr ""
 #: subscriptions/show/modules/LineItems/index.js:110
 #: subscriptions/show/modules/Tax.js:55
 #: sc-order-confirmation-totals2.js:33
-#: sc-order.js:127
+#: sc-order.js:131
 #: sc-upcoming-invoice.js:201
 msgid "Tax"
 msgstr ""
@@ -5869,7 +5873,7 @@ msgid "Repeat Payment Every"
 msgstr ""
 
 #: products/components/price/parts/RecurringAmount.js:84
-#: util.js:42
+#: util.js:38
 msgid "Day"
 msgstr ""
 
@@ -5878,12 +5882,12 @@ msgid "Week"
 msgstr ""
 
 #: products/components/price/parts/RecurringAmount.js:92
-#: util.js:43
+#: util.js:39
 msgid "Month"
 msgstr ""
 
 #: products/components/price/parts/RecurringAmount.js:96
-#: util.js:44
+#: util.js:40
 msgid "Year"
 msgstr ""
 
@@ -5956,7 +5960,7 @@ msgstr ""
 #: Controllers/DownloadController.php:120
 #: sc-dashboard-downloads-list.js:106
 #: sc-downloads-list.js:65
-#: sc-order.js:138
+#: sc-order.js:143
 msgid "Downloads"
 msgstr ""
 
@@ -7411,7 +7415,7 @@ msgstr ""
 #: subscriptions/edit/modules/PaymentMethod/index.js:34
 #: subscriptions/edit/modules/PaymentMethod/index.js:37
 #: Controllers/SubscriptionController.php:526
-#: sc-order.js:138
+#: sc-order.js:143
 msgid "Payment Method"
 msgstr ""
 
@@ -7552,7 +7556,7 @@ msgstr ""
 
 #: subscriptions/shared/EndDate.js:9
 #: subscriptions/show/modules/Details.js:18
-#: util.js:45
+#: util.js:41
 #: sc-subscription-switch.js:132
 msgid "Lifetime"
 msgstr ""
@@ -7721,7 +7725,7 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-#: util.js:47
+#: util.js:43
 msgid "Draft"
 msgstr ""
 
@@ -9042,7 +9046,7 @@ msgid "Processing Payment"
 msgstr ""
 
 #: Blocks/Form/edit.js:322
-#: sc-checkout.js:193
+#: sc-checkout.js:192
 msgid "Processing payment..."
 msgstr ""
 
@@ -9051,7 +9055,7 @@ msgid "Confirming Payment"
 msgstr ""
 
 #: Blocks/Form/edit.js:340
-#: sc-checkout.js:193
+#: sc-checkout.js:192
 msgid "Finalizing order..."
 msgstr ""
 
@@ -9060,7 +9064,7 @@ msgid "Success Text"
 msgstr ""
 
 #: Blocks/Form/edit.js:355
-#: sc-checkout.js:193
+#: sc-checkout.js:192
 msgid "Success! Redirecting..."
 msgstr ""
 
@@ -11409,11 +11413,11 @@ msgstr ""
 msgid "Your payment is processing. Exiting this page could cause an error in your order. Please do not navigate away from this page."
 msgstr ""
 
-#: sc-checkout.js:186
+#: sc-checkout.js:185
 msgid "Due to processor restrictions, only one checkout form is allowed on the page."
 msgstr ""
 
-#: sc-checkout.js:193
+#: sc-checkout.js:192
 msgid "Submitting order..."
 msgstr ""
 
@@ -11536,7 +11540,7 @@ msgid "Order #%s"
 msgstr ""
 
 #: sc-order-confirmation.js:109
-#: sc-order.js:101
+#: sc-order.js:105
 msgid "Order not found."
 msgstr ""
 
@@ -11568,11 +11572,11 @@ msgstr ""
 msgid "Your cart is empty."
 msgstr ""
 
-#: sc-order.js:138
+#: sc-order.js:143
 msgid "Order Status"
 msgstr ""
 
-#: sc-order.js:138
+#: sc-order.js:143
 msgid "Download Receipt/Invoice"
 msgstr ""
 
