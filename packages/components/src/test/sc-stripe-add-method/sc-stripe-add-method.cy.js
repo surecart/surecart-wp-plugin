@@ -28,6 +28,7 @@ describe('Update Payment Method Stripe', () => {
     cy.get('sc-block-ui.busy-block-ui').should('not.exist');
 
     // fill stripe card element.
+    cy.getStripePaymentElement('country', 'select').select('US');
     cy.getStripePaymentElement('number').type('4242424242424242', {
       force: true,
     });
