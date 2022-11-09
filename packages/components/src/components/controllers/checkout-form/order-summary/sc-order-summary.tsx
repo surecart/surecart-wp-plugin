@@ -63,8 +63,8 @@ export class ScOrderSummary {
           <slot name="description" />
         </span>
         <span slot="price">
-          {this.order?.total_amount !== this.order?.full_amount && (
-            <sc-format-number class="full-amount__new-price" type="currency" value={this.order?.full_amount} currency={this.order?.currency || 'usd'} />
+          {this.order?.total_amount !== (this.order?.total_amount + Math.abs(this.order?.bump_amount) + Math.abs(this.order?.discount_amount)) && (
+            <sc-format-number class="full-amount__new-price" type="currency" value={this.order?.total_amount + Math.abs(this.order?.bump_amount) + Math.abs(this.order?.discount_amount)} currency={this.order?.currency || 'usd'} />
           )}
           <sc-total total={'total'} order={this.order}></sc-total>
         </span>
