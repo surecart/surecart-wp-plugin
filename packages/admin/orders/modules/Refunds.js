@@ -68,11 +68,18 @@ export default ({ chargeId }) => {
         items={refunds?.map((refund) =>{
           return {
             amount: (
-              <ScFormatNumber
-                type="currency"
-								currency={refund?.currency || 'usd'}
-								value={refund?.amount}
-              />
+              <sc-text
+                style={{
+                  '--font-weight':
+                    'var(--sc-font-weight-bold)',
+                }}
+              >
+                <ScFormatNumber
+                  type="currency"
+                  currency={refund?.currency || 'usd'}
+                  value={refund?.amount}
+                />
+              </sc-text>
             ),
             date: (
               <ScFormatDate
