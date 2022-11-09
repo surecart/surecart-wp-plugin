@@ -39,7 +39,7 @@ describe('Cart', () => {
       }).as('createGetCart');
 
 			// click the add to cart button.
-			cy.get('sc-cart-form-submit sc-button')
+			cy.get('sc-cart-form-submit.hydrated sc-button.hydrated')
 				.shadow()
 				.find('button')
 				.click({ force: true });
