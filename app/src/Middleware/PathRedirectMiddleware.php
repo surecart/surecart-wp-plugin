@@ -9,7 +9,7 @@ use SureCartCore\Responses\RedirectResponse;
 /**
  * Middleware for handling model archiving.
  */
-class PathRedirectMiddleware extends CustomerDashboardMiddleware {
+class PathRedirectMiddleware {
 	/**
 	 * Enqueue component assets.
 	 *
@@ -26,16 +26,6 @@ class PathRedirectMiddleware extends CustomerDashboardMiddleware {
 			return $next( $request );
 		}
 
-		// run the customer dashboard redirect.
-		return parent::handle( $request, $next );
-	}
-
-	/**
-	 * Request success. Removes link id from the request and redirects.
-	 *
-	 * @return RedirectResponse
-	 */
-	public function success( $request ) {
 		$path = $request->query( 'path' );
 		return ( new RedirectResponse( $request ) )->to(
 			esc_url_raw( $this->buildUrl( untrailingslashit( get_site_url() ) . $path, $request ) )

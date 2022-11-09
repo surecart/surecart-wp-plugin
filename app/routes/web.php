@@ -41,13 +41,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->get()
 ->url( '/surecart/redirect' )
 ->name( 'redirect' )
-->middleware( PathRedirectMiddleware::class )
+// handle login.
 ->middleware( LoginLinkMiddleware::class )
+// redirect in this order.
+->middleware( PathRedirectMiddleware::class )
 ->middleware( OrderRedirectMiddleware::class )
 ->middleware( PurchaseRedirectMiddleware::class )
 ->middleware( CheckoutRedirectMiddleware::class )
 ->middleware( PaymentFailureRedirectMiddleware::class )
 ->middleware( SubscriptionRedirectMiddleware::class )
+// customer dashboard redirect is the fallback if there is a customer_id present.
+->middleware( CustomerDashboardRedirectMiddleware::class )
 ->handle( 'DashboardController@show' );
 
 /*

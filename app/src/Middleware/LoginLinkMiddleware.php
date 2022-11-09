@@ -28,12 +28,12 @@ class LoginLinkMiddleware {
 		}
 
 		// get the customer link by id.
-		$link = CustomerLink::find( $link_id );
+		$link = CustomerLink::with(['customer'])->find( $link_id );
 		if ( is_wp_error( $link ) || false !== $link->expired ) {
 			return $next( $request );
 		}
 
-		$user = User::getUserBy( 'email', $link->email );
+		$user = User::getUserBy( 'email', $link->customer->email );
 		if ( $user ) {
 			$user->login();
 			return $next( $request );
@@ -47,10 +47,11 @@ class LoginLinkMiddleware {
 		}
 
 		// there's no user with this email or customer id. Let's create one.
-		if ( $link->customer ) {
+		if ( $link->customer->email ?? false ) {
 			$user = User::create(
 				[
-					'user_email' => $link->email,
+					'user_name' => sanitize_user($link->customer->email, true),
+					'user_email' => $link->customer->email,
 				]
 			);
 
