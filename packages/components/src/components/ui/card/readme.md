@@ -44,6 +44,7 @@
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
+ - [sc-subscription-details](../../controllers/dashboard/subscription-details)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
@@ -73,6 +74,7 @@ graph TD;
   sc-subscription --> sc-card
   sc-subscription-ad-hoc-confirm --> sc-card
   sc-subscription-cancel --> sc-card
+  sc-subscription-details --> sc-card
   sc-subscription-payment --> sc-card
   sc-subscription-payment-method --> sc-card
   sc-subscription-renew --> sc-card
