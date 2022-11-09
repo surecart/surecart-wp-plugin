@@ -5,20 +5,37 @@ on: [push]
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./packages/components
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: "UI Tests - Chrome"
+      # first, install dependencies and Cypress
+      # from the root folder using the lock file
+      # note: because there is lerna.json file and lerna dependency
+      # the single "yarn" install in the root
+      # will install packages in all subfolders and link them
+      - name: Cypress install
         uses: cypress-io/github-action@v4
         with:
-          project: ./packages/components
-          build: yarn workspace @surecart/components build
+          runTests: false
+
+      # now run the tests from the subfolder
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          install: false
+          working-directory: packages/e2e
+          build: yarn build
           start: yarn start
           wait-on: "http://localhost:3456"
+
+      # - name: "UI Tests - Chrome"
+      #   uses: cypress-io/github-action@v4
+      #   with:
+      #     project: ./packages/components
+      #     build: yarn workspace @surecart/components build
+      #     start: yarn workspace @surecart/components start
+      #     wait-on: "http://localhost:3456"
           # wait-on-timeout: 120
           # browser: chrome
           # record: true
