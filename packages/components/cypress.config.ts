@@ -4,6 +4,7 @@ export default defineConfig({
   chromeWebSecurity: false,
   projectId: 'ae7zwm',
   experimentalWebKitSupport: true,
+  includeShadowDom: true,
   retries: {
     // Configure retry attempts for `cypress run`
     // Default is 0
