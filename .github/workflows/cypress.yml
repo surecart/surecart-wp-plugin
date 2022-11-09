@@ -1,0 +1,42 @@
+name: Cypress e2e Component Tests
+
+on: [push]
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./packages/components
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Install NPM dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress install
+        uses: cypress-io/github-action@v4
+        with:
+          runTests: false
+      - run: yarn cypress info
+
+      - name: "UI Tests - Chrome"
+        uses: cypress-io/github-action@v4
+        with:
+          build: yarn build
+          start: yarn start
+          wait-on: "http://localhost:3456"
+          # wait-on-timeout: 120
+          # browser: chrome
+          # record: true
+          # parallel: true
+          # group: "UI - Chrome"
+          # spec: cypress/tests/ui/*
+          # config-file: cypress.config.js
+        # env:
+        #   CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+        #   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+        #   # Recommended: pass the GitHub token lets this action correctly
+        #   # determine the unique run id necessary to re-run the checks
+        #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        #   DEBUG: "cypress:server:args"
