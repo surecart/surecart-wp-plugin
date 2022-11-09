@@ -12,18 +12,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Cypress install
-        uses: cypress-io/github-action@v4
-        with:
-          runTests: false
-      - run: yarn cypress info
-
       - name: "UI Tests - Chrome"
         uses: cypress-io/github-action@v4
         with:
-          build: yarn build
+          project: ./packages/components
+          build: yarn workspace @surecart/components build
           start: yarn start
           wait-on: "http://localhost:3456"
           # wait-on-timeout: 120
