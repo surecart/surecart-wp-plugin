@@ -12,12 +12,11 @@ class AdminSSLCheckService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		error_log('Hello');
 		add_action(
 			'admin_notices',
 			function() {
-				if ( is_ssl() ) {
-					\SureCart::notices()->render(
+				if ( ! is_ssl() ) {
+					echo \SureCart::notices()->render(
 						[
 							'name'  => 'ssl_notice',
 							'type'  => 'warning',
