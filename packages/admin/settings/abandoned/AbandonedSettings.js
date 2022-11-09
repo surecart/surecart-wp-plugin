@@ -175,7 +175,7 @@ export default () => {
 									'surecart'
 								)}
 								value={item?.first_promotion_notification}
-								onSeChange={(e) => {
+								onScChange={(e) => {
 									if (e.target.value) {
 										editItem({
 											first_promotion_notification:
