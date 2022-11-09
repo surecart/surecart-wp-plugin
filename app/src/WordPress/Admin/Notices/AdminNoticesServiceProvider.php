@@ -2,7 +2,9 @@
 
 namespace SureCart\WordPress\Admin\Notices;
 
+use FFMpeg\Format\Audio\Aac;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
+use SureCart\WordPress\Admin\SSLCheck\AdminSSLCheckService;
 
 /**
  * Register plugin options.
@@ -19,6 +21,9 @@ class AdminNoticesServiceProvider implements ServiceProviderInterface {
 			return new AdminNoticesService();
 		};
 
+		$container['surecart.admin.sslcheck'] = function () {
+			return new AdminSSLCheckService();
+		};
 
 		$app = $container[ SURECART_APPLICATION_KEY ];
 		$app->alias( 'notices', 'surecart.admin.notices' );
@@ -32,5 +37,6 @@ class AdminNoticesServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$container['surecart.admin.notices']->bootstrap();
+		$container['surecart.admin.sslcheck']->bootstrap();
 	}
 }
