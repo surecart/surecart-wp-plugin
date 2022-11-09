@@ -88,10 +88,10 @@
 				</div>
 
 				<sc-text style="--font-size: var(--sc-font-size-xxx-large); --line-height: 50px; --font-weight: var(--sc-font-weight-bold)">
-					<?php esc_html_e( 'Recover lost sales with abandoned checkout.', 'surecart' ); ?>
+					<?php esc_html_e( 'Recover lost sales with abandoned checkouts.', 'surecart' ); ?>
 				</sc-text>
 				<sc-text class="sc-get-started-top-desc" style="--font-size: var(--sc-font-size-x-large); --line-height: var(--sc-line-height-normal)">
-					<?php esc_html_e( 'Get Abandoned Checkouts list full access where can view the checkout cart item details with customers.', 'surecart' ); ?>
+					<?php esc_html_e( '69% of shoppers abandon their checkouts before completing a purchase. Recover lost revenue with automated, high-converting emails.', 'surecart' ); ?>
 				</sc-text>
 				<sc-button class="sc-get-started-button" type="primary" target="_blank" size="large" href="<?php echo esc_url_raw( 'https://app.surecart.com/plans' ); ?>">
 					<?php esc_html_e( 'Upgrade to Pro', 'surecart' ); ?>
