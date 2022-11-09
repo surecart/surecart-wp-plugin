@@ -188,7 +188,6 @@ export class ScCheckout {
   }
 
   order() {
-    console.log(this?.formId);
     return getOrder(this?.formId, this.mode);
   }
 
