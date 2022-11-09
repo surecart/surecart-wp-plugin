@@ -3,12 +3,9 @@ import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __, _n } from '@wordpress/i18n';
 import { useState } from 'react';
-
-import ChargesDataTable from '../../components/data-tables/charges-data-table';
 import DataTable from '../../components/DataTable';
 
 export default ({ chargeId }) => {
-	// const [refundCharge, setRefundCharge] = useState(false);
 	const { invalidateResolution } = useDispatch(coreStore);
 	const { refunds, loading, invalidateCharges } = useSelect(
 		(select) => {
@@ -39,8 +36,6 @@ export default ({ chargeId }) => {
 		},
 		[chargeId]
 	);
-
-  console.log(refunds);
 
 	// empty, don't render anything.
 	if (!loading && !refunds?.length) {

@@ -52,8 +52,6 @@ export default () => {
 	});
 	const [modal, setModal] = useState();
 
-  console.log(order);
-
 	useEffect(() => {
 		if (order?.checkout) {
 			receiveEntityRecords(
