@@ -18,14 +18,14 @@ import Error from '../components/Error';
 import Stat from './Stat';
 import Tab from './Tab';
 import { averageProperties, totalProperties } from './util';
-import { maybeConvertAmount } from '../util';
+import { getFormattedPrice, maybeConvertAmount } from '../util';
 
 export default () => {
 	const [data, setData] = useState([]);
 	const [previous, setPrevious] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState();
-	const [filter, setFilter] = useState('today');
+	const [filter, setFilter] = useState('30days');
 
 	const getAbandonedData = async () => {
 		// defaults.
@@ -37,6 +37,12 @@ export default () => {
 
 		// change current and previous dates.
 		switch (filter) {
+			case '30days':
+				endDate = dayjs();
+				startDate = dayjs().add(-1, 'month');
+				prevEndDate = startDate;
+				prevStartDate = dayjs().add(-2, 'month');
+				break;
 			case 'yesterday':
 				endDate = dayjs().startOf('day');
 				startDate = dayjs().startOf('day').add(-1, 'day');
@@ -131,15 +137,20 @@ export default () => {
 
 		if (loading) return null;
 
+		let percentage;
 		if (currency) {
-			previous = maybeConvertAmount(previous, scData.currency_code);
-			current = maybeConvertAmount(current, scData.currency_code);
+			console.log(Math.abs(current - previous));
+			percentage = getFormattedPrice({
+				amount: Math.abs(current - previous),
+				currency: scData.currency_code,
+			});
+		} else {
+			percentage =
+				Math.abs(
+					((current - previous) / (previous || 1)) * 100.0
+				).toLocaleString('fullwide', { maximumFractionDigits: 0 }) +
+				'%';
 		}
-
-		const percentage =
-			Math.abs(
-				((current - previous) / (previous || 1)) * 100.0
-			).toLocaleString('fullwide', { maximumFractionDigits: 0 }) + '%';
 
 		let type, icon;
 		if (previous === current) {
@@ -185,6 +196,12 @@ export default () => {
 				justifyContent="flex-start"
 				flexWrap="wrap"
 			>
+				<Tab
+					selected={filter === '30days'}
+					onClick={() => setFilter('30days')}
+				>
+					{__('Last 30 Days', 'surecart')}
+				</Tab>
 				<Tab
 					selected={filter === 'today'}
 					onClick={() => setFilter('today')}
