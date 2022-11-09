@@ -48,8 +48,9 @@ describe('Checkout PayPal', () => {
 
     cy.get('sc-payment-method-choice[processor-id="paypal"]').shadow().find('sc-toggle').click();
     cy.get('sc-paypal-buttons').shadow().find('.sc-paypal-button').should('be.visible');
+
     // submit.
-    cy.getPayPalButton('paypal').click();
+    cy.getPayPalButton('paypal').click({force: true, multiple: true});
 
     cy.wait('@finalize').its('request.url').should('include', 'form_id=1').should('include', 'processor_type=paypal');
   });
