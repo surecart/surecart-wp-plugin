@@ -114,7 +114,7 @@ describe('Abandoned Cart', () => {
     cy.visit('/test/sc-checkout/url-params?checkout_id=test2&coupon=TESTCOUPON');
     cy.wait('@createUpdate').its('request.url').should('include', 'checkouts/test2');
   });
-  it.only('Shows an empty cart if form mode does not match', () => {
+  it('Shows an empty cart if form mode does not match', () => {
     cy.intercept(
       {
         path: '**/surecart/v1/checkouts/*',
