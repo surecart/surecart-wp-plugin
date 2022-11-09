@@ -1,6 +1,10 @@
 name: Cypress e2e Component Tests
 
-on: [push]
+on:
+  pull_request:
+    paths:
+      - "packages/components/src/**/*.tsx"
+      - "packages/components/src/**/*.ts"
 
 jobs:
   cypress-run:
