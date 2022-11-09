@@ -27,6 +27,7 @@ jobs:
           install: false
           working-directory: packages/components
           start: yarn start
+          browser: chrome
           # wait-on: "http://localhost:3456"
 
       # - name: "UI Tests - Chrome"
