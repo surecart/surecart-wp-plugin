@@ -18,16 +18,18 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           working-directory: packages/components
-          runTests: false
-
-      # now run the tests from the subfolder
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
-        with:
-          install: false
-          working-directory: packages/components
           start: yarn start
           browser: chrome
+          wait-on: "http://localhost:3456"
+
+      # now run the tests from the subfolder
+      # - name: Cypress run
+      #   uses: cypress-io/github-action@v2
+      #   with:
+      #     install: false
+      #     working-directory: packages/components
+      #     start: yarn start
+      #     browser: chrome
           # wait-on: "http://localhost:3456"
 
       # - name: "UI Tests - Chrome"
