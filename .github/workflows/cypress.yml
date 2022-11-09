@@ -20,7 +20,7 @@ jobs:
           working-directory: packages/components
           start: yarn start
           browser: chrome
-          wait-on: "http://localhost:3456"
+          wait-on: "https://localhost:3456/"
 
       # now run the tests from the subfolder
       # - name: Cypress run
