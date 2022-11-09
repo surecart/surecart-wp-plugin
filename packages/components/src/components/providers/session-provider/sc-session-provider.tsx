@@ -379,6 +379,7 @@ export class ScSessionProvider {
   async handleErrorResponse(e) {
     // reinitalize if order not found.
     if (['checkout.not_found'].includes(e?.code)) {
+      window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'checkout_id'));
       clearOrder(this.formId, this.mode);
       return this.handleNewCheckout(false);
     }
