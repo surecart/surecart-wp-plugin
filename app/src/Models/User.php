@@ -193,7 +193,10 @@ class User implements ArrayAccess, JsonSerializable {
 		if ( empty( $user_password ) ) {
 			$user_password = wp_generate_password( 12, false );
 			$user_id       = wp_create_user( sanitize_user( $username, true ), $user_password, $args['user_email'] );
-			update_user_meta( $user_id, 'default_password_nag', true );
+			// turn off this feature with a filter.
+			if ( apply_filters( 'surecart/default_password_nag', true, $user_id ) ) {
+				update_user_meta( $user_id, 'default_password_nag', true );
+			}
 			$user_created = true;
 		} else {
 			// Password has been provided.
