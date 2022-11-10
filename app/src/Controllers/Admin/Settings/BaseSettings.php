@@ -45,7 +45,7 @@ abstract class BaseSettings {
 				'tab'          => $request->query( 'tab' ) ?? '',
 				'is_free'      => (bool) ( \SureCart::account()->plan->free ?? true ),
 				'entitlements' => \SureCart::account()->entitlements,
-				'upgrade_url'  => 'https://app.surecart.com/plans',
+				'upgrade_url'  => \SureCart::config()->links->purchase,
 				'status'       => $request->query( 'status' ),
 			]
 		);

@@ -145,6 +145,7 @@ return [
 		'surecart/coupon'                    => [ 'sc-order-coupon-form', 'sc-coupon-form', 'sc-button', 'sc-input' ],
 		'surecart/customer-dashboard-button' => [ 'sc-button' ],
 		'surecart/customer-dashboard'        => [ 'sc-tab-group' ],
+		'surecart/customer-subscriptions'    => [ 'sc-subscriptions-list', 'sc-dialog', 'sc-card', 'sc-stacked-list', 'sc-stacked-list-row', 'sc-flex' ],
 		'surecart/dashboard-page'            => [ 'sc-spacing' ],
 		'surecart/dashboard-tab'             => [ 'sc-tab' ],
 		'surecart/customer-billing-details'  => [ 'sc-dashboard-customer-details', 'sc-breadcrumbs', 'sc-breadcrumb', 'sc-customer-edit' ],
@@ -168,6 +169,13 @@ return [
 		'surecart/subtotal'                  => [ 'sc-line-item-total', 'sc-format-number' ],
 		'surecart/total'                     => [ 'sc-line-item-total', 'sc-format-number' ],
 		'surecart/totals'                    => [ 'sc-order-summary' ],
+	],
+
+	/**
+	 * Links used.
+	 */
+	'links'                  => [
+		'purchase' => 'https://surecart.com/pricing/',
 	],
 
 	/**

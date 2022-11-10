@@ -93,7 +93,7 @@
 				<sc-text class="sc-get-started-top-desc" style="--font-size: var(--sc-font-size-x-large); --line-height: var(--sc-line-height-normal)">
 					<?php esc_html_e( '69% of shoppers abandon their checkouts before completing a purchase. Recover lost revenue with automated, high-converting emails.', 'surecart' ); ?>
 				</sc-text>
-				<sc-button class="sc-get-started-button" type="primary" target="_blank" size="large" href="<?php echo esc_url_raw( 'https://app.surecart.com/plans' ); ?>">
+				<sc-button class="sc-get-started-button" type="primary" target="_blank" size="large" href="<?php echo esc_url_raw( \SureCart::config()->links->purchase ); ?>">
 					<?php esc_html_e( 'Upgrade to Pro', 'surecart' ); ?>
 					<sc-icon name="arrow-right" slot="suffix"></sc-icon>
 				</sc-button>
