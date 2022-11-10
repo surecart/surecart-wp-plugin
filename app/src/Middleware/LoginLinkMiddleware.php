@@ -33,14 +33,14 @@ class LoginLinkMiddleware {
 			return $next( $request );
 		}
 
-		$user = User::getUserBy( 'email', $link->customer->email );
+		// login the user using the customer id from the link.
+		$user = $link->getUser();
 		if ( $user ) {
 			$user->login();
 			return $next( $request );
 		}
 
-		// login the user using the customer id from the link.
-		$user = $link->getUser();
+		$user = User::getUserBy( 'email', $link->customer->email );
 		if ( $user ) {
 			$user->login();
 			return $next( $request );
