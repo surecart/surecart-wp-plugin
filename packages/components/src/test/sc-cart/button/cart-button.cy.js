@@ -39,10 +39,7 @@ describe('Cart', () => {
       }).as('createGetCart');
 
 			// click the add to cart button.
-			cy.get('sc-cart-form-submit sc-button')
-				.shadow()
-				.find('button')
-				.click({ force: true });
+			cy.get('sc-cart-form-submit.hydrated sc-button.hydrated').find('button').click({force: true});
 
 			// the panel should open with the correct stuff.
 			cy.get('sc-cart-loader')

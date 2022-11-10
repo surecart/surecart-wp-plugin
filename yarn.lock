@@ -6709,7 +6709,6 @@ __metadata:
     crypto-js: ^4.1.1
     css-loader: ^3.5.3
     cssnano: ^4.1.10
-    cypress: 10.11.0
     cypress-file-upload: ^5.0.8
     cypress-log-to-output: ^1.1.2
     dayjs: ^1.11.6
@@ -14630,7 +14629,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:10.11.0, cypress@npm:^10.11.0":
+"cypress@npm:^10.11.0":
   version: 10.11.0
   resolution: "cypress@npm:10.11.0"
   dependencies:

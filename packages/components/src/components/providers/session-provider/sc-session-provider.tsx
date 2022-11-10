@@ -290,7 +290,7 @@ export class ScSessionProvider {
       if (checkout?.status && ['paid', 'processing'].includes(checkout?.status)) {
         setTimeout(() => {
           this.scPaid.emit();
-        }, 50);
+        }, 100);
       }
     } catch (e) {
       this.handleErrorResponse(e);
