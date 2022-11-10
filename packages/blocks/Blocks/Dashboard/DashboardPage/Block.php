@@ -100,10 +100,10 @@ class Block extends DashboardPage {
 			if ( method_exists( $this->blocks[ $model ], $action ) ) {
 				$block = new $this->blocks[ $model ]();
 
-				return $this->passwordNag() . '<sc-spacing style="--spacing: var(--sc-spacing-xx-large); font-size: 15px;">' . $before . $block->$action() . $after . '</sc-spacing>';
+				return $this->passwordNag() . '<sc-spacing class="sc-customer-dashboard" style="--spacing: var(--sc-spacing-xx-large); font-size: 15px;">' . $before . $block->$action() . $after . '</sc-spacing>';
 			}
 		}
-		return $this->passwordNag() . '<sc-spacing style="--spacing: var(--sc-spacing-xx-large); font-size: 15px;">' . $before . filter_block_content( $content ) . $after . '</sc-spacing>';
+		return $this->passwordNag() . '<sc-spacing class="sc-customer-dashboard" style="--spacing: var(--sc-spacing-xx-large); font-size: 15px;">' . $before . filter_block_content( $content ) . $after . '</sc-spacing>';
 	}
 
 	public function passwordNag() {
