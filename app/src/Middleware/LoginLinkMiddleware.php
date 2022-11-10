@@ -28,7 +28,7 @@ class LoginLinkMiddleware {
 		}
 
 		// get the customer link by id.
-		$link = CustomerLink::with(['customer'])->find( $link_id );
+		$link = CustomerLink::with( [ 'customer' ] )->find( $link_id );
 		if ( is_wp_error( $link ) || false !== $link->expired ) {
 			return $next( $request );
 		}
@@ -50,13 +50,13 @@ class LoginLinkMiddleware {
 		if ( $link->customer->email ?? false ) {
 			$user = User::create(
 				[
-					'user_name' => sanitize_user($link->customer->email, true),
+					'user_name'  => sanitize_user( $link->customer->email, true ),
 					'user_email' => $link->customer->email,
 				]
 			);
 
 			if ( $user ) {
-				$linked = $user->setCustomerId( $link->customer );
+				$linked = $user->setCustomerId( $link->customer->id, $link->customer->live_mode ? 'live' : 'test' );
 				if ( is_wp_error( $linked ) ) {
 					return $next( $request );
 				}
