@@ -15,7 +15,7 @@ class AdminSSLCheckService {
 		add_action(
 			'admin_notices',
 			function() {
-				if ( is_ssl() ) {
+				if ( ! is_ssl() ) {
 					echo wp_kses_post(
 						\SureCart::notices()->render(
 							[
