@@ -183,7 +183,7 @@ class User implements ArrayAccess, JsonSerializable {
 		);
 
 		// use the username or the email as a fallback.
-		$name     = ! empty( $args['user_name'] ) ? $args['user_name'] : $args['user_email'];
+		$name     = ! empty( sanitize_user( $args['user_name'], true ) ) ? sanitize_user( $args['user_name'], true ) : $args['user_email'];
 		$username = $this->createUniqueUsername( sanitize_user( $name, true ) );
 
 		$user_password = trim( $args['user_password'] );

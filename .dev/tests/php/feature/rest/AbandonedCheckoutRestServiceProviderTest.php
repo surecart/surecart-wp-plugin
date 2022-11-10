@@ -43,7 +43,6 @@ class AbandonedCheckoutRestServiceProviderTest extends SureCartUnitTestCase {
 
 
 	/**
-	 * @group failing
 	 * @dataProvider requestProvider
 	 */
 	public function test_permissions( $caps, $method, $route, $status) {
