@@ -62,10 +62,10 @@ class Block extends DashboardPage {
 		}
 
 		// get the current page tab and possible id.
-		$tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : false;
+		$tab = $this->getTab();
 
 		// make sure we are on the correct tab.
-		if ( ! empty( $attributes['name'] ) ) {
+		if ( ! empty( $tab ) && ! empty( $attributes['name'] ) ) {
 			if ( $tab !== $attributes['name'] ) {
 				return '';
 			}
@@ -74,7 +74,7 @@ class Block extends DashboardPage {
 		$model = isset( $_GET['model'] ) ? sanitize_text_field( wp_unslash( $_GET['model'] ) ) : false;
 
 		/**
-		 * Filters content to display before the block.
+	 * Filters content to display before the block.
 		 *
 		 * @since 1.1.12
 		 *
