@@ -68,6 +68,9 @@ class AssetsService {
 		// block editor.
 		add_action( 'enqueue_block_editor_assets', [ $this, 'editorAssets' ] );
 
+		// Shortcode usages scripts load.
+		add_action( 'wp_head', [ $this, 'shortcode_scripts' ] );
+
 		// front-end styles. These only load when the block is being rendered on the page.
 		$this->loader->whenRendered( 'surecart/form', [ $this, 'enqueueForm' ] );
 		$this->loader->whenRendered( 'surecart/buy-button', [ $this, 'enqueueComponents' ] );
@@ -128,6 +131,23 @@ class AssetsService {
 	 */
 	public function printBrandColors() {
 		$this->styles->addInlineBrandColors( 'surecart-themes-default' );
+	}
+
+	/**
+	 * Shortcodes scripts add.
+	 *
+	 * @return void
+	 */
+	public function shortcode_scripts() {
+		if ( ! (bool) get_option( 'sc_slide_out_cart_disabled', false ) ) {
+			return;
+		}
+
+		global $post;
+
+        if ( $post instanceof \WP_Post && has_shortcode( $post->post_content, 'sc_customer_dashboard_page' ) ) {
+			$this->enqueueComponents();
+        }
 	}
 
 	/**
