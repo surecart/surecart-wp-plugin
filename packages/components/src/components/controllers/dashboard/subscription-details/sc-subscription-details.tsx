@@ -119,7 +119,7 @@ export class ScSubscriptionDetails {
 
   getActivations() {
     return (((this.subscription?.purchase as Purchase)?.license as License)?.activations?.data || []).filter(activation => {
-      return !activation?.counted;
+      return activation?.counted;
     });
   }
 
