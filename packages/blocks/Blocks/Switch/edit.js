@@ -73,15 +73,13 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 
 			{!isSelected && !name && <div>Please add a name</div>}
 
-			<ScSwitch className={className} name={name} required={required}>
+			<ScSwitch className={className} name={name} required={required} edit>
 				<RichText
 					tagName="span"
 					aria-label={__('Switch label')}
 					placeholder={__('Add some text...')}
 					value={label}
 					onChange={(label) => setAttributes({ label })}
-					withoutInteractiveFormatting
-					allowedFormats={['core/bold', 'core/italic']}
 				/>
 				{(description || isSelected) && (
 					<RichText
@@ -93,8 +91,6 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 						onChange={(description) =>
 							setAttributes({ description })
 						}
-						withoutInteractiveFormatting
-						allowedFormats={['core/bold', 'core/italic']}
 					/>
 				)}
 			</ScSwitch>
