@@ -40,7 +40,7 @@ export default () => {
 
 	return (
 		<SettingsTemplate
-			title={__('Customer Notifications', 'surecart')}
+			title={__('Notifications', 'surecart')}
 			icon={<sc-icon name="bell"></sc-icon>}
 			onSubmit={onSubmit}
 		>
@@ -280,7 +280,7 @@ export default () => {
 			</SettingsBox>
 
 			<SettingsBox
-				title={__('Customize Notification Emails', 'surecart')}
+				title={__('Customer Emails', 'surecart')}
 				description={__(
 					'Customize the content of each notification that is sent to your customers.',
 					'surecart'
@@ -369,6 +369,62 @@ export default () => {
 							disabled={!scData?.entitlements?.abandoned_checkouts}
 							model="abandoned_checkout"
 							action="notification"
+						/>
+					</ScStackedList>
+				</sc-card>
+			</SettingsBox>
+
+      <SettingsBox
+				title={__('Store Emails', 'surecart')}
+				description={__(
+					'These are the emails that are sent to you and other team members of this store.',
+					'surecart'
+				)}
+				noButton
+				loading={!hasLoadedItem}
+				wrapperTag={'div'}
+			>
+				<sc-card no-padding>
+					<ScStackedList>
+						<EmailRow
+							title={__('New Order', 'surecart')}
+							description={__(
+								'Sent when an order is created.',
+								'surecart'
+							)}
+              link="account_notifications"
+							model="order"
+              action="notification"
+						/>
+            <EmailRow
+							title={__('Subscription Cancellation', 'surecart')}
+							description={__(
+								'Sent when a subscription is canceled.',
+								'surecart'
+							)}
+              link="account_notifications"
+							model="subscription"
+              action="cancellation_notification"
+						/>
+            <EmailRow
+							title={__('Subscription Payment', 'surecart')}
+							description={__(
+								'Sent when a subscription renews.',
+								'surecart'
+							)}
+              link="account_notifications"
+							model="subscription"
+              action="renewal_notification"
+						/>
+            <EmailRow
+							title={__('Subscription Payment Failure', 'surecart')}
+							description={__(
+								'Sent when a subscription payment fails.',
+								'surecart'
+							)}
+              link="account_notifications"
+							model="subscription"
+              action="payment_failure_notification"
 						/>
 					</ScStackedList>
 				</sc-card>
