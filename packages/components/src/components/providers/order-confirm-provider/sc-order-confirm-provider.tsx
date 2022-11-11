@@ -64,8 +64,9 @@ export class ScOrderConfirmProvider {
       // make sure form state changes before redirecting
       setTimeout(() => {
         // make sure we clear the order state no matter what.
+        const success_url = this?.order?.metadata?.success_url || this.successUrl;
         clearOrder(this.formId, this.mode);
-        window.location.assign(addQueryArgs(this?.order?.metadata?.success_url || this.successUrl, { order }));
+        window.location.assign(addQueryArgs(success_url, { order }));
       }, 50);
     }
   }
