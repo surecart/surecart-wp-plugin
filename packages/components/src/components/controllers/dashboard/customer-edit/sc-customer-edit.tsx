@@ -22,7 +22,8 @@ export class ScCustomerEdit {
     try {
       const {
         email,
-        name,
+        first_name,
+        last_name,
         phone,
         billing_matches_shipping,
         shipping_name,
@@ -45,7 +46,9 @@ export class ScCustomerEdit {
         method: 'PATCH',
         data: {
           email,
-          name,
+          name: first_name + ' ' + last_name,
+          // first_name,
+          // last_name,
           phone,
           billing_matches_shipping: billing_matches_shipping === 'on',
           shipping_address: {
@@ -75,7 +78,7 @@ export class ScCustomerEdit {
         },
       });
       if (this.successUrl) {
-        window.location.assign(this.successUrl);
+        // window.location.assign(this.successUrl);
       } else {
         this.loading = false;
       }
@@ -99,14 +102,26 @@ export class ScCustomerEdit {
 
         <sc-card>
           <sc-form onScFormSubmit={e => this.handleSubmit(e)}>
-            <sc-columns style={{ '--sc-column-spacing': 'var(--sc-spacing-medium)' }}>
+            {/* <sc-columns style={{ '--sc-column-spacing': 'var(--sc-spacing-medium)' }}>
               <sc-column>
                 <sc-input label={__('Name', 'surecart')} name="name" value={this.customer?.name} />
               </sc-column>
               <sc-column>
                 <sc-input label={__('Phone', 'surecart')} name="phone" value={this.customer?.phone} />
               </sc-column>
+            </sc-columns> */}
+            {console.log(this.customer)}
+            <sc-columns style={{ '--sc-column-spacing': 'var(--sc-spacing-medium)' }}>
+              <sc-column>
+                <sc-input label={__('First Name', 'surecart')} name="first_name" value={this.customer?.first_name} />
+              </sc-column>
+              <sc-column>
+                <sc-input label={__('Last Name', 'surecart')} name="last_name" value={this.customer?.last_name} />
+              </sc-column>
             </sc-columns>
+            <sc-column>
+              <sc-input label={__('Phone', 'surecart')} name="phone" value={this.customer?.phone} />
+            </sc-column>
             <div>
               <sc-address
                 label={__('Shipping Address', 'surecart')}
