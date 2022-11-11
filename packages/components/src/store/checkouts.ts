@@ -22,6 +22,7 @@ if (window?.scData?.do_not_persist_cart) {
   );
 }
 
+window.scStore = store;
 export default store;
 
 /** Get the order. */
