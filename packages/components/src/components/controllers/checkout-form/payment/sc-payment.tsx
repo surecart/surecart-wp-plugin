@@ -78,6 +78,11 @@ export class ScPayment {
   }
 
   render() {
+    // payment is not required for this order.
+    if (this.checkout?.payment_method_required === false) {
+      return null;
+    }
+
     const Tag = this.hasMultiple ? 'sc-toggles' : 'div';
 
     return (
