@@ -11,7 +11,7 @@ export const getHumanDiscount = (coupon: Coupon) => {
   }
   if (coupon.percent_off) {
     // TODO: Translators.
-    return `${coupon.percent_off | 0}% off`;
+    return sprintf(__('%% off', 'surecart'), coupon.percent_off | 0);
   }
   return '';
 };
