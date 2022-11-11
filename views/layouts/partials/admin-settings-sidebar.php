@@ -12,10 +12,12 @@
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="shopping-bag"></sc-icon>
 			<?php esc_html_e( 'Orders & Receipts', 'surecart' ); ?>
 		</sc-tab>
-		<sc-tab href="
+		<sc-tab
+		disabled="<?php echo empty( $entitlements->abandoned_checkouts ) ? 'true' : 'false' ?>"
+		href="
 		<?php
 		echo empty( $entitlements->abandoned_checkouts ) ?
-			esc_url( $upgrade_url ?? '' ) :
+			'#' :
 			esc_url( add_query_arg( [ 'tab' => 'abandoned_checkout' ], menu_page_url( 'sc-settings', false ) ) );
 		?>
 		" <?php echo 'abandoned_checkout' === $tab ? 'active' : ''; ?>>
