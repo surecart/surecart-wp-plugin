@@ -192,7 +192,6 @@ export class ScCheckout {
   }
 
   state() {
-    console.log(this.order());
     return {
       processor: this.processor,
       selectedProcessorId: this.processor,
