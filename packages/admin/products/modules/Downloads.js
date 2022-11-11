@@ -10,7 +10,6 @@ import {
 	ScStackedList,
 	ScSwitch,
 } from '@surecart/components-react';
-import { Button } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
@@ -25,6 +24,7 @@ export default ({ id, product, updateProduct, loading }) => {
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const [showArchived, setShowArchived] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
+
 	const { downloads, fetching } = useSelect(
 		(select) => {
 			const queryArgs = [
@@ -149,8 +149,6 @@ export default ({ id, product, updateProduct, loading }) => {
 					</>
 				);
 			})()}
-
-
 
 			{fetching && <ScBlockUi spinner />}
 		</Box>
