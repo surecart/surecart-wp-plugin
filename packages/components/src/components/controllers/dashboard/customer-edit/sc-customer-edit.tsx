@@ -99,8 +99,6 @@ export class ScCustomerEdit {
 
         <sc-card>
           <sc-form onScFormSubmit={e => this.handleSubmit(e)}>
-            <sc-input label={__('Billing Email', 'surecart')} name="email" value={this.customer?.email} required />
-
             <sc-columns style={{ '--sc-column-spacing': 'var(--sc-spacing-medium)' }}>
               <sc-column>
                 <sc-input label={__('Name', 'surecart')} name="name" value={this.customer?.name} />
