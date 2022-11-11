@@ -112,7 +112,7 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 				'metadata'    => [
 					'description' => esc_html__( 'Metadata for the order.', 'surecart' ),
 					'type'        => 'object',
-					'context'     => [ 'edit' ],
+					// 'context'     => [ 'edit' ],
 				],
 				'customer_id' => [
 					'description' => esc_html__( 'The customer id for the order.', 'surecart' ),
