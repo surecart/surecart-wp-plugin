@@ -68,7 +68,7 @@ export class ScPaymentMethodChoice {
     return (
       <Tag show-control shady borderless open={this.isSelected()} onScShow={() => this.scSetProcessor.emit({ id: this.processorId, manual: !!this.isManual })}>
         {this.hasOthers && <slot name="summary" slot="summary"></slot>}
-        {this.card ? (
+        {this.card && !this.hasOthers ? (
           <sc-card>
             <slot />
           </sc-card>
