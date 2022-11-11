@@ -23,7 +23,8 @@
 
 	.sc-banner-text {
 		margin: auto;
-		max-width: 1200px;
+		max-width: 600px;
+		text-align: center;
 	}
 	.sc-banner-text,
 	.sc-banner-top-img-area {
@@ -87,20 +88,23 @@
 					</svg>
 				</div>
 
-				<sc-text style="--font-size: var(--sc-font-size-xxx-large); --line-height: 50px; --font-weight: var(--sc-font-weight-bold)">
+				<sc-text style="--font-size: var(--sc-font-size-xxx-large); --line-height: 50px; --font-weight: var(--sc-font-weight-bold); --text-align: center;">
 					<?php esc_html_e( 'Recover lost sales with abandoned checkouts.', 'surecart' ); ?>
 				</sc-text>
-				<sc-text class="sc-get-started-top-desc" style="--font-size: var(--sc-font-size-x-large); --line-height: var(--sc-line-height-normal)">
+				<sc-text class="sc-get-started-top-desc" style="--font-size: var(--sc-font-size-x-large); --line-height: var(--sc-line-height-normal); --text-align: center;">
 					<?php esc_html_e( '69% of shoppers abandon their checkouts before completing a purchase. Recover lost revenue with automated, high-converting emails.', 'surecart' ); ?>
 				</sc-text>
 				<sc-button class="sc-get-started-button" type="primary" target="_blank" size="large" href="<?php echo esc_url_raw( \SureCart::config()->links->purchase ); ?>">
-					<?php esc_html_e( 'Upgrade to Pro', 'surecart' ); ?>
+					<?php esc_html_e( 'Upgrade', 'surecart' ); ?>
 					<sc-icon name="arrow-right" slot="suffix"></sc-icon>
 				</sc-button>
 			</div>
+
+			<!--
 			<div class="sc-banner-top-img-area">
 				<iframe class="cta-video" src="https://www.youtube.com/embed/rr8jy9lnPdI?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 			</div>
+			-->
 		</div>
 	</div>
 </div>
