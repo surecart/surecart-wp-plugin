@@ -6556,8 +6556,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@surecart/blocks@workspace:packages/blocks"
   dependencies:
-    "@surecart/components": ^0.0.9
-    "@surecart/components-react": ^0.0.6
+    "@surecart/components": ^0.0.10
+    "@surecart/components-react": ^0.0.7
     "@wordpress/prettier-config": ^1.1.1
     "@wordpress/scripts": ^21.0.2
     prettier: ^2.5.1
@@ -6565,11 +6565,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@surecart/components-react@^0.0.6, @surecart/components-react@workspace:packages/components-react":
+"@surecart/components-react@^0.0.7, @surecart/components-react@workspace:packages/components-react":
   version: 0.0.0-use.local
   resolution: "@surecart/components-react@workspace:packages/components-react"
   dependencies:
-    "@surecart/components": ^0.0.9
+    "@surecart/components": ^0.0.10
     "@types/jest": 23.3.9
     "@types/node": ^15.12.2
     "@types/react": ^17.0.34
@@ -6584,7 +6584,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@surecart/components@^0.0.9, @surecart/components@workspace:packages/components":
+"@surecart/components@^0.0.10, @surecart/components@workspace:packages/components":
   version: 0.0.0-use.local
   resolution: "@surecart/components@workspace:packages/components"
   dependencies:
@@ -6643,8 +6643,8 @@ __metadata:
     "@docusaurus/core": 2.1.0
     "@docusaurus/preset-classic": 2.1.0
     "@mdx-js/react": ^1.6.22
-    "@surecart/components": ^0.0.9
-    "@surecart/components-react": ^0.0.6
+    "@surecart/components": ^0.0.10
+    "@surecart/components-react": ^0.0.7
     clsx: ^1.1.1
     docusaurus-plugin-sass: ^0.1.14
     dotenv: ^8.2.0
@@ -6706,11 +6706,12 @@ __metadata:
     co: ^4.6.0
     copy-webpack-plugin: 6
     cross-env: ^7.0.2
+    crypto-js: ^4.1.1
     css-loader: ^3.5.3
     cssnano: ^4.1.10
-    cypress: 10.4.0
     cypress-file-upload: ^5.0.8
     cypress-log-to-output: ^1.1.2
+    dayjs: ^1.11.6
     dot-prop-immutable: ^2.1.1
     eslint: ^6.8.0
     eslint-config-airbnb: ^18.1.0
@@ -14043,6 +14044,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"crypto-js@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "crypto-js@npm:4.1.1"
+  checksum: b3747c12ee3a7632fab3b3e171ea50f78b182545f0714f6d3e7e2858385f0f4101a15f2517e033802ce9d12ba50a391575ff4638c9de3dd9b2c4bc47768d5425
+  languageName: node
+  linkType: hard
+
 "crypto-random-string@npm:^1.0.0":
   version: 1.0.0
   resolution: "crypto-random-string@npm:1.0.0"
@@ -14621,58 +14629,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:10.4.0":
-  version: 10.4.0
-  resolution: "cypress@npm:10.4.0"
-  dependencies:
-    "@cypress/request": ^2.88.10
-    "@cypress/xvfb": ^1.2.4
-    "@types/node": ^14.14.31
-    "@types/sinonjs__fake-timers": 8.1.1
-    "@types/sizzle": ^2.3.2
-    arch: ^2.2.0
-    blob-util: ^2.0.2
-    bluebird: ^3.7.2
-    buffer: ^5.6.0
-    cachedir: ^2.3.0
-    chalk: ^4.1.0
-    check-more-types: ^2.24.0
-    cli-cursor: ^3.1.0
-    cli-table3: ~0.6.1
-    commander: ^5.1.0
-    common-tags: ^1.8.0
-    dayjs: ^1.10.4
-    debug: ^4.3.2
-    enquirer: ^2.3.6
-    eventemitter2: ^6.4.3
-    execa: 4.1.0
-    executable: ^4.1.1
-    extract-zip: 2.0.1
-    figures: ^3.2.0
-    fs-extra: ^9.1.0
-    getos: ^3.2.1
-    is-ci: ^3.0.0
-    is-installed-globally: ~0.4.0
-    lazy-ass: ^1.6.0
-    listr2: ^3.8.3
-    lodash: ^4.17.21
-    log-symbols: ^4.0.0
-    minimist: ^1.2.6
-    ospath: ^1.2.2
-    pretty-bytes: ^5.6.0
-    proxy-from-env: 1.0.0
-    request-progress: ^3.0.0
-    semver: ^7.3.2
-    supports-color: ^8.1.1
-    tmp: ~0.2.1
-    untildify: ^4.0.0
-    yauzl: ^2.10.0
-  bin:
-    cypress: bin/cypress
-  checksum: 3f7385e076ac936683d1d1d104a7183f2e61ad0f4c901aff07146ae2e10197e8314019dcdfb6c188312fbf1be05484291f1cf8d49c4c37cf6485103c4ac5303e
-  languageName: node
-  linkType: hard
-
 "cypress@npm:^10.11.0":
   version: 10.11.0
   resolution: "cypress@npm:10.11.0"
@@ -14763,6 +14719,13 @@ __metadata:
   version: 1.10.7
   resolution: "dayjs@npm:1.10.7"
   checksum: a0a4ca95abaa03d0702161dc2c35d16121188e342f5052b9c61cdf784dab68af766f477c04f87f71c6af666fd4d13db9b9853b87265850d6093b7b04e1bb1cd7
+  languageName: node
+  linkType: hard
+
+"dayjs@npm:^1.11.6":
+  version: 1.11.6
+  resolution: "dayjs@npm:1.11.6"
+  checksum: 18bdfd927009b68eab08dca578e421d4a581cefcbe9337f54c5d9e0d941ffb6b221c4b2c1cab15cdd9d419940e768ac4c984531461a90bbe1c158b75fe160580
   languageName: node
   linkType: hard
 
@@ -16778,13 +16741,6 @@ __metadata:
   version: 6.4.7
   resolution: "eventemitter2@npm:6.4.7"
   checksum: 1b36a77e139d6965ebf3a36c01fa00c089ae6b80faa1911e52888f40b3a7057b36a2cc45dcd1ad87cda3798fe7b97a0aabcbb8175a8b96092a23bb7d0f039e66
-  languageName: node
-  linkType: hard
-
-"eventemitter2@npm:^6.4.3":
-  version: 6.4.5
-  resolution: "eventemitter2@npm:6.4.5"
-  checksum: 84504f9cf0cc30205cdd46783fe9df3733435e5097f13070b678023110b5ef07847651808ae280cd94c42cd5976880211c7a40321a8ff8fa56f7c5f9c5c11960
   languageName: node
   linkType: hard
 

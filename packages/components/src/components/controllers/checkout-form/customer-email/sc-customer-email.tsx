@@ -17,6 +17,9 @@ export class ScCustomerEmail {
   /** (passed from the sc-checkout component automatically) */
   @Prop() order: Checkout;
 
+  /** A message for tracking confirmation. */
+  @Prop() trackingConfirmationMessage: string;
+
   /** Force a customer.  */
   @Prop() customer: Customer;
 
@@ -62,6 +65,9 @@ export class ScCustomerEmail {
   /** Inputs focus */
   @Prop({ mutable: true, reflect: true }) hasFocus: boolean;
 
+  /** Is abandoned checkout enabled? */
+  @Prop() abandonedCheckoutEnabled: boolean;
+
   /** Emitted when the control's value changes. */
   @Event({ composed: true }) scChange: EventEmitter<void>;
 
@@ -79,6 +85,9 @@ export class ScCustomerEmail {
 
   /** Update the order state. */
   @Event() scUpdateOrderState: EventEmitter<Checkout>;
+
+  /** Update the abandoned cart. */
+  @Event() scUpdateAbandonedCart: EventEmitter<boolean>;
 
   /** Prompt for login. */
   @Event() scLoginPrompt: EventEmitter<void>;
@@ -109,6 +118,33 @@ export class ScCustomerEmail {
   @Method()
   async reportValidity() {
     return this.input?.reportValidity?.();
+  }
+
+  renderOptIn() {
+    if (!this.trackingConfirmationMessage) return null;
+
+    if (this.abandonedCheckoutEnabled !== false) {
+      return (
+        <div class="tracking-confirmation-message">
+          <span>{this.trackingConfirmationMessage}</span>{' '}
+          <a
+            href="#"
+            onClick={e => {
+              e.preventDefault();
+              this.scUpdateAbandonedCart.emit(false);
+            }}
+          >
+            {__('No Thanks', 'surecart')}
+          </a>
+        </div>
+      );
+    }
+
+    return (
+      <div class="tracking-confirmation-message">
+        <span> {__("You won't receive further emails from us.", 'surecart')}</span>
+      </div>
+    );
   }
 
   render() {
@@ -148,9 +184,11 @@ export class ScCustomerEmail {
             </a>
           )} */}
         </sc-input>
+
+        {this.renderOptIn()}
       </Host>
     );
   }
 }
 
-openWormhole(ScCustomerEmail, ['order', 'customer', 'loggedIn'], false);
+openWormhole(ScCustomerEmail, ['order', 'customer', 'loggedIn', 'abandonedCheckoutEnabled'], false);

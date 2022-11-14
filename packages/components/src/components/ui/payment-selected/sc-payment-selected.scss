@@ -4,20 +4,17 @@
 
 ::slotted([slot=icon]) {
   display: block;
+  font-size: 24px;
 }
 
 .payment-selected {
   display: flex;
   flex-direction: column;
-  gap: 0.3em;
-
-  &__provider-icon {
-    font-size: 24px;
-  }
+  gap: var(--sc-spacing-x-small);
 
   &__label {
     color: var(--sc-input-label-color);
-    line-height: var(--sc-line-height-loose);
+    line-height: var(--sc-line-height-dense);
     font-size: var(--sc-font-size-medium);
   }
 

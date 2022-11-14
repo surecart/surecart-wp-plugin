@@ -1,4 +1,4 @@
-import { Component, h, State, Prop, Element, Watch, Event, EventEmitter } from '@stencil/core';
+import { Component, h, State, Prop, Element, Watch, Event, EventEmitter, Method } from '@stencil/core';
 
 let id = 0;
 
@@ -173,7 +173,8 @@ export class ScTextarea {
   }
 
   /** Checks for validity and shows the browser's validation message if the control is invalid. */
-  reportValidity() {
+  @Method()
+  async reportValidity() {
     return this.input.reportValidity();
   }
 
