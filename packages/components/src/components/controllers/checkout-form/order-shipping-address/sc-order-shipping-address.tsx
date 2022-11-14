@@ -98,7 +98,7 @@ export class ScOrderShippingAddress {
   }
 
   componentWillLoad() {
-    if (this.defaultCountry) {
+    if (this.defaultCountry && !this.address.country) {
       this.address.country = this.defaultCountry;
     }
   }
@@ -110,13 +110,13 @@ export class ScOrderShippingAddress {
           ref={el => (this.input = el as any)}
           label={this.label || __('Shipping Address', 'surecart')}
           placeholders={{
-            'name': this.namePlaceholder,
-            'country': this.countryPlaceholder,
-            'city': this.cityPlaceholder,
-            'line_1': this.line1Placeholder,
-            'line_2': this.line2Placeholder,
-            'postal_code': this.postalCodePlaceholder,
-            'state': this.statePlaceholder
+            name: this.namePlaceholder,
+            country: this.countryPlaceholder,
+            city: this.cityPlaceholder,
+            line_1: this.line1Placeholder,
+            line_2: this.line2Placeholder,
+            postal_code: this.postalCodePlaceholder,
+            state: this.statePlaceholder,
           }}
           required={this.required}
           loading={this.loading}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>Manual Payment Methods Fixture</title>
+  <link href="/build/surecart.css" rel="stylesheet">
+  <script type="module" src="/build/surecart.esm.js"></script>
+  <script nomodule src="/build/surecart.js"></script>
+  <script>
+    window.scIcons = {
+      path: '/build/icon-assets'
+    }
+    window.wp = {
+      i18n: {
+        __: () => { }
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <sc-cart-form price-id="test" form-id="1" mode="test">
+
+    <sc-price-input currency-code="usd" label="Amount" required name="price"></sc-price-input>
+
+    <sc-cart-form-submit type="primary" size="medium">
+      Add To Cart
+    </sc-cart-form-submit>
+  </sc-cart-form>
+
+  <br /> <br />
+
+  <sc-cart-form price-id="test" form-id="1" mode="test">
+    <sc-cart-form-submit type="primary" size="medium">
+      Add To Cart
+    </sc-cart-form-submit>
+  </sc-cart-form>
+
+
+  <sc-cart-loader form-id="1" mode="test"
+    template='&lt;sc-cart id=&quot;sc-cart&quot; header=&quot;Cart&quot; form-id=&quot;721&quot; mode=&quot;test&quot; checkout-link=&quot;https://surecart.test/checkout/&quot; style=&quot;font-size: 16px&quot;&gt; &lt;div style=&quot;border-bottom:var(--sc-drawer-border);padding-top:1.25em;padding-bottom:1.25em;padding-left:1.25em;padding-right:1.25em&quot;&gt;&lt;sc-cart-header&gt;&lt;span&gt;My Bag&lt;/span&gt;&lt;/sc-cart-header&gt;&lt;/div&gt; &lt;sc-line-items style=&quot;border-bottom:var(--sc-drawer-border);padding-top:1.25em;padding-bottom:1.25em;padding-left:1.25em;padding-right:1.25em&quot; removable=&quot;true&quot; editable=&quot;true&quot;&gt;&lt;/sc-line-items&gt; &lt;sc-order-coupon-form style=&quot;border-bottom:var(--sc-drawer-border);padding-top:1.25em;padding-bottom:1.25em;padding-left:1.25em;padding-right:1.25em&quot; label=&quot;Add Coupon Code&quot;&gt;Apply Coupon&lt;/sc-order-coupon-form&gt; &lt;sc-line-item-bump label=&quot;Bundle Discount&quot; class=&quot;&quot; style=&quot;padding-top:1.25em;padding-bottom:0em;padding-left:1.25em;padding-right:1.25em&quot;&gt;&lt;/sc-line-item-bump&gt; &lt;sc-line-item-total total=&quot;total&quot; size=&quot;large&quot; class=&quot;&quot; style=&quot;padding-top:1.25em;padding-bottom:0em;padding-left:1.25em;padding-right:1.25em&quot;&gt; &lt;span slot=&quot;title&quot;&gt;Subtotal&lt;/span&gt; &lt;/sc-line-item-total&gt; &lt;sc-cart-submit style=&quot;border-bottom:var(--sc-drawer-border);color:var(--sc-color-primary-500);--sc-input-label-color:var(--sc-color-primary-500);padding-top:1.25em;padding-bottom:1.25em;padding-left:1.25em;padding-right:1.25em&quot; type=&quot;primary&quot; size=&quot;medium&quot; icon=&quot;lock&quot;&gt;Checkout&lt;/sc-cart-submit&gt; &lt;/sc-cart&gt;'>
+  </sc-cart-loader>
+</body>
+
+</html>

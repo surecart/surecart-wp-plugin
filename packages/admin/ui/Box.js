@@ -10,6 +10,7 @@ export default ({
 	size = 'large',
 	isBorderLess = true,
 	hasDivider = true,
+	isRounded = true,
 	loading,
 	footer,
 	className,
@@ -37,10 +38,16 @@ export default ({
 				}
 			`}
 			size={size}
+			isRounded={isRounded}
 			isBorderless={isBorderLess}
 			className={className}
 		>
-			<CardHeader isBorderless={!hasDivider}>
+			<CardHeader
+				isBorderless={!hasDivider}
+				css={css`
+					${!hasDivider ? 'padding-bottom: 0 !important' : ''};
+				`}
+			>
 				<sc-text
 					tag="h2"
 					style={{
