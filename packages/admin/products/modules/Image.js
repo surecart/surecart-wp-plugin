@@ -50,49 +50,59 @@ export default ({ product, updateProduct, loading }) => {
 
 	const renderMediaLibrary = () => {
 		if (product?.image_url) {
-      return (
-        <div
-          css={css`
-            display: flex;
-            align-items: center;
-            gap: 0.5em;
-          `}
-        >
-          <MediaLibrary
-            onSelect={onSelectMedia}
-            isPrivate={false}
-            render={({ setOpen }) => {
-              return (
-                <>
-                  <ScButton onClick={() => setOpen(true)}>
-                    {__('Replace', 'surecart')}
-                  </ScButton>
-                  <ScButton type='danger' onClick={onRemoveMedia}>
-                    {__('Remove', 'surecart')}
-                  </ScButton>
-                </>
-              );
-            }}
-          ></MediaLibrary>
-        </div>
-      );
+			return (
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: 0.5em;
+					`}
+				>
+					<MediaLibrary
+						onSelect={onSelectMedia}
+						isPrivate={false}
+						render={({ setOpen }) => {
+							return (
+								<>
+									<ScButton onClick={() => setOpen(true)}>
+										<ScIcon
+											name="repeat"
+											slot="prefix"
+										></ScIcon>
+										{__('Replace', 'surecart')}
+									</ScButton>
+									<ScButton
+										css={css`
+											color: var(--sc-color-gray-600);
+										`}
+										type="text"
+										onClick={onRemoveMedia}
+									>
+										{__('Remove', 'surecart')}
+									</ScButton>
+								</>
+							);
+						}}
+					></MediaLibrary>
+				</div>
+			);
 		} else {
-      return (
-        <MediaLibrary
-          onSelect={onSelectMedia}
-          isPrivate={false}
-          render={({ setOpen }) => {
-            return (
-              <ScButton onClick={() => setOpen(true)}>
-                <ScIcon name="plus" slot="prefix"></ScIcon>
-                {__('Add Image', 'surecart')}
-              </ScButton>
-            );
-          }}
-        ></MediaLibrary>
-      );
+			return (
+				<MediaLibrary
+					onSelect={onSelectMedia}
+					isPrivate={false}
+					render={({ setOpen }) => {
+						return (
+							<ScButton onClick={() => setOpen(true)}>
+								<ScIcon name="plus" slot="prefix"></ScIcon>
+								{__('Add Image', 'surecart')}
+							</ScButton>
+						);
+					}}
+				></MediaLibrary>
+			);
 		}
-	}
+	};
 
 	return (
 		<Box
