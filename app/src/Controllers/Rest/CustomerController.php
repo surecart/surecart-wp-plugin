@@ -58,4 +58,22 @@ class CustomerController extends RestController {
 
 		return $customer->where( $request->get_query_params() )->exposeMedia( $request['media_id'] );
 	}
+
+	/**
+	 * Edit model.
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function edit( \WP_REST_Request $request ) {
+
+		$args = $request->get_json_params();
+		$args['ID'] = get_current_user_id();
+		$args['sc_server_update'] = 'no';
+
+		wp_update_user( $args );
+
+		return parent::edit( $request );
+	}
 }

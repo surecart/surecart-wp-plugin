@@ -29,51 +29,47 @@ export default ({ customer, updateCustomer, loading }) => {
 				`}
 			>
 				<ScColumns>
-					<ScColumn>
-          <ScColumns>
-            <ScColumn>
-              <ScInput
-                label={__('First Name', 'surecart')}
-                className="sc-customer-fname"
-                help={__('Your customer\'s first name.', 'surecart')}
-                attribute="first_name"
-                value={customer?.first_name}
-                onScInput={(e) =>
-                  updateCustomer({ first_name: e.target.value })
-                }
-              />
-            </ScColumn>
-            <ScColumn>
-              <ScInput
-                label={__('Last Name', 'surecart')}
-                className="sc-customer-lname"
-                help={__('Your customer\'s last name.', 'surecart')}
-                attribute="last_name"
-                value={customer?.last_name}
-                onScInput={(e) =>
-                  updateCustomer({ last_name: e.target.value })
-                }
-              />
-            </ScColumn>
-          </ScColumns>
-					</ScColumn>
-					<ScColumn>
-						<ScInput
-							label={__('Email', 'surecart')}
-							className="sc-customer-email"
-							help={__(
-								"Your customer's email address.",
-								'surecart'
-							)}
-							value={customer?.email}
-							name="email"
-							required
-							onScInput={(e) =>
-								updateCustomer({ email: e.target.value })
-							}
-						/>
-					</ScColumn>
+          <ScColumn>
+            <ScInput
+              label={__('First Name', 'surecart')}
+              className="sc-customer-fname"
+              help={__('Your customer\'s first name.', 'surecart')}
+              attribute="first_name"
+              value={customer?.first_name}
+              onScInput={(e) =>
+                updateCustomer({ first_name: e.target.value })
+              }
+            />
+          </ScColumn>
+          <ScColumn>
+            <ScInput
+              label={__('Last Name', 'surecart')}
+              className="sc-customer-lname"
+              help={__('Your customer\'s last name.', 'surecart')}
+              attribute="last_name"
+              value={customer?.last_name}
+              onScInput={(e) =>
+                updateCustomer({ last_name: e.target.value })
+              }
+            />
+          </ScColumn>
 				</ScColumns>
+        <ScColumn>
+          <ScInput
+            label={__('Email', 'surecart')}
+            className="sc-customer-email"
+            help={__(
+              "Your customer's email address.",
+              'surecart'
+            )}
+            value={customer?.email}
+            name="email"
+            required
+            onScInput={(e) =>
+              updateCustomer({ email: e.target.value })
+            }
+          />
+        </ScColumn>
 			</div>
 		</Box>
 	);

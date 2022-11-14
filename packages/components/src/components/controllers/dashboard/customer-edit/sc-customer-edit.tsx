@@ -46,9 +46,8 @@ export class ScCustomerEdit {
         method: 'PATCH',
         data: {
           email,
-          name: first_name + ' ' + last_name,
-          // first_name,
-          // last_name,
+          first_name,
+          last_name,
           phone,
           billing_matches_shipping: billing_matches_shipping === 'on',
           shipping_address: {
@@ -78,7 +77,7 @@ export class ScCustomerEdit {
         },
       });
       if (this.successUrl) {
-        // window.location.assign(this.successUrl);
+        window.location.assign(this.successUrl);
       } else {
         this.loading = false;
       }

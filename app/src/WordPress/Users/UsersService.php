@@ -18,9 +18,42 @@ class UsersService {
 		add_filter( 'rest_user_query', [ $this, 'isCustomerQuery' ], 10, 2 );
 		add_filter( 'rest_user_collection_params', [ $this, 'collectionParams' ] );
 		add_filter( 'show_admin_bar', [ $this, 'disableAdminBar' ], 10, 1 );
-		add_filter( 'insert_user_meta', [ $this, 'syncUser' ], 10, 4 );
+		// add_filter( 'insert_user_meta', [ $this, 'syncUser' ], 10, 4 );
+		add_action( 'profile_update', [ $this, 'syncUserProfile' ], 10, 3 );
 
 		$this->registerMeta();
+	}
+
+	/**
+	 * Fires immediately after an existing user is updated.
+	 *
+	 *
+	 * @param int     $user_id       User ID.
+	 * @param WP_User $old_user_data Object containing user's data prior to update.
+	 * @param array   $userdata      The raw array of data passed to wp_insert_user().
+	 */
+	public function syncUserProfile( $user_id, $old_user_data, $userdata ) {
+
+		$customer_ids = \SureCart\Models\User::find( $user_id )->customerIds();
+
+		if ( ! empty( $customer_ids ) && empty( $userdata['sc_server_update'] ) ) {
+
+			foreach ( $customer_ids as $mode => $id ) {
+				$result = \SureCart\Models\Customer::update([
+					'id' => $id,
+					'first_name' => $userdata['first_name'],
+					'last_name' => $userdata['last_name'],
+					'email' => $userdata['user_email'],
+				]);
+
+				if( is_wp_error( $result ) ) {
+
+					if ( ! isset( $result->errors['customer.not_found'] ) ) {
+						//TO DO. We can handle other errors here. As we don't do anything, if customer not found.
+					}
+				}
+			}
+		}
 	}
 
 	/**
@@ -36,7 +69,7 @@ class UsersService {
 
 		$customer_ids = \SureCart\Models\User::find( $user->ID )->customerIds();
 
-		if ( ! empty( $customer_ids ) ) {
+		if ( ! empty( $customer_ids ) && empty( $userdata['sc_server_update'] ) ) {
 
 			foreach ( $customer_ids as $mode => $id ) {
 				$result = \SureCart\Models\Customer::update([
