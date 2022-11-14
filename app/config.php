@@ -42,6 +42,8 @@ return [
 		\SureCart\Activation\ActivationServiceProvider::class,
 
 		// REST providers.
+		\SureCart\Rest\AbandonedCheckoutRestServiceProvider::class,
+		\SureCart\Rest\AbandonedCheckoutProtocolRestServiceProvider::class,
 		\SureCart\Rest\BlockPatternsRestServiceProvider::class,
 		\SureCart\Rest\AccountRestServiceProvider::class,
 		\SureCart\Rest\BrandRestServiceProvider::class,
@@ -54,6 +56,8 @@ return [
 		\SureCart\Rest\CustomerRestServiceProvider::class,
 		\SureCart\Rest\CustomerLinksRestServiceProvider::class,
 		\SureCart\Rest\PaymentMethodsRestServiceProvider::class,
+		\SureCart\Rest\ProcessorRestServiceProvider::class,
+		\SureCart\Rest\ManualPaymentMethodsRestServiceProvider::class,
 		\SureCart\Rest\PaymentIntentsRestServiceProvider::class,
 		\SureCart\Rest\ProductsRestServiceProvider::class,
 		\SureCart\Rest\ProductGroupsRestServiceProvider::class,
@@ -102,6 +106,7 @@ return [
 	* SSR Blocks
 	*/
 	'blocks'                 => [
+		\SureCartBlocks\Blocks\Email\Block::class,
 		\SureCartBlocks\Blocks\Address\Block::class,
 		\SureCartBlocks\Blocks\BuyButton\Block::class,
 		\SureCartBlocks\Blocks\AddToCartButton\Block::class,
@@ -111,7 +116,7 @@ return [
 		\SureCartBlocks\Blocks\CartBumpLineItem\Block::class,
 		\SureCartBlocks\Blocks\OrderConfirmationLineItems\Block::class,
 		\SureCartBlocks\Blocks\Form\Block::class,
-		\SureCartBlocks\Blocks\Confirmation\Block::class,
+		\SureCartBlocks\Blocks\Payment\Block::class,
 		\SureCartBlocks\Blocks\LogoutButton\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\WordPressAccount\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerCharges\Block::class,
@@ -140,6 +145,7 @@ return [
 		'surecart/coupon'                    => [ 'sc-order-coupon-form', 'sc-coupon-form', 'sc-button', 'sc-input' ],
 		'surecart/customer-dashboard-button' => [ 'sc-button' ],
 		'surecart/customer-dashboard'        => [ 'sc-tab-group' ],
+		'surecart/customer-subscriptions'    => [ 'sc-subscriptions-list', 'sc-dialog', 'sc-card', 'sc-stacked-list', 'sc-stacked-list-row', 'sc-flex' ],
 		'surecart/dashboard-page'            => [ 'sc-spacing' ],
 		'surecart/dashboard-tab'             => [ 'sc-tab' ],
 		'surecart/customer-billing-details'  => [ 'sc-dashboard-customer-details', 'sc-breadcrumbs', 'sc-breadcrumb', 'sc-customer-edit' ],
@@ -163,6 +169,13 @@ return [
 		'surecart/subtotal'                  => [ 'sc-line-item-total', 'sc-format-number' ],
 		'surecart/total'                     => [ 'sc-line-item-total', 'sc-format-number' ],
 		'surecart/totals'                    => [ 'sc-order-summary' ],
+	],
+
+	/**
+	 * Links used.
+	 */
+	'links'                  => [
+		'purchase' => 'https://app.surecart.com/plans',
 	],
 
 	/**
@@ -243,23 +256,23 @@ return [
 	 * This lets you reference a model based on a simple string.
 	 */
 	'models'                 => [
-		'abandoned_order' => \SureCart\Models\AbandonedOrder::class,
-		'account'         => \SureCart\Models\Account::class,
-		'charge'          => \SureCart\Models\Charge::class,
-		'coupon'          => \SureCart\Models\Coupon::class,
-		'customer'        => \SureCart\Models\Customer::class,
-		'customer_link'   => \SureCart\Models\CustomerLink::class,
-		'form'            => \SureCart\Models\Form::class,
-		'line_item'       => \SureCart\Models\LineItem::class,
-		'order'           => \SureCart\Models\Order::class,
-		'price'           => \SureCart\Models\Price::class,
-		'processor'       => \SureCart\Models\Processor::class,
-		'product'         => \SureCart\Models\Product::class,
-		'promotion'       => \SureCart\Models\Promotion::class,
-		'subscription'    => \SureCart\Models\Subscription::class,
-		'upload'          => \SureCart\Models\Upload::class,
-		'user'            => \SureCart\Models\User::class,
-		'webhook'         => \SureCart\Models\Webhook::class,
+		'abandoned_checkout' => \SureCart\Models\AbandonedCheckout::class,
+		'account'            => \SureCart\Models\Account::class,
+		'charge'             => \SureCart\Models\Charge::class,
+		'coupon'             => \SureCart\Models\Coupon::class,
+		'customer'           => \SureCart\Models\Customer::class,
+		'customer_link'      => \SureCart\Models\CustomerLink::class,
+		'form'               => \SureCart\Models\Form::class,
+		'line_item'          => \SureCart\Models\LineItem::class,
+		'order'              => \SureCart\Models\Order::class,
+		'price'              => \SureCart\Models\Price::class,
+		'processor'          => \SureCart\Models\Processor::class,
+		'product'            => \SureCart\Models\Product::class,
+		'promotion'          => \SureCart\Models\Promotion::class,
+		'subscription'       => \SureCart\Models\Subscription::class,
+		'upload'             => \SureCart\Models\Upload::class,
+		'user'               => \SureCart\Models\User::class,
+		'webhook'            => \SureCart\Models\Webhook::class,
 	],
 
 	/**

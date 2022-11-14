@@ -12,6 +12,21 @@
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="shopping-bag"></sc-icon>
 			<?php esc_html_e( 'Orders & Receipts', 'surecart' ); ?>
 		</sc-tab>
+		<sc-tab
+		disabled="<?php echo empty( $entitlements->abandoned_checkouts ) ? 'true' : 'false' ?>"
+		href="
+		<?php
+		echo empty( $entitlements->abandoned_checkouts ) ?
+			'#' :
+			esc_url( add_query_arg( [ 'tab' => 'abandoned_checkout' ], menu_page_url( 'sc-settings', false ) ) );
+		?>
+		" <?php echo 'abandoned_checkout' === $tab ? 'active' : ''; ?>>
+			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="shopping-cart"></sc-icon>
+			<?php esc_html_e( 'Abandoned Checkout', 'surecart' ); ?>
+			<?php if ( empty( $entitlements->abandoned_checkouts ) ) : ?>
+				<sc-tag slot="suffix" type="success"><?php esc_html_e( 'Pro', 'surecart' ); ?></sc-tag>
+			<?php endif; ?>
+		</sc-tab>
 		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'customer_notification_protocol' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'customer_notification_protocol' === $tab ? 'active' : ''; ?>>
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="bell"></sc-icon>
 			<?php esc_html_e( 'Notifications', 'surecart' ); ?>
@@ -48,8 +63,26 @@
 		<?php esc_html_e( 'Advanced', 'surecart' ); ?>
 	</sc-tab>
 
-	<sc-tab href="mailto:hello@surecart.com" target="_blank">
-		<sc-icon style="font-size: 18px; width: 22px; stroke-width: 4; opacity: 0.7" name="life-buoy" slot="prefix"></sc-icon>
+	<?php if ( $is_free ) : ?>
+		<div class="sc-item-stick-bottom">
+			<sc-card href="<?php echo esc_url( $upgrade_url ); ?>" class="surecart-cta">
+				<sc-flex flex-direction="column" flex-direction="column" style="--spacing: var(--sc-spacing-medium)">
+					<sc-flex justify-content="flex-start">
+						<sc-icon style="font-size: 18px; width: 22px; stroke-width: 4; color: var(--sc-color-primary-500)" name="zap"></sc-icon>
+						<sc-text style="--font-size: var(--sc-font-size-large); --font-weight: var(--sc-font-weight-bold)"><?php esc_html_e( 'Boost Your Revenue', 'surecart' ); ?></sc-text>
+					</sc-flex>
+					<sc-text><?php esc_html_e( 'Unlock revenue boosting features when you upgrade to Pro!', 'surecart' ); ?></sc-text>
+					<sc-button type="primary" href="<?php echo esc_url( $upgrade_url ); ?>" target="_blank">
+						<?php esc_html_e( 'Upgrade To Pro', 'surecart' ); ?>
+					</sc-button>
+				</sc-flex>
+			</sc-card>
+		</div>
+	<?php endif; ?>
+
+	<a href="https://surecart.com/support/" target="_blank" class="surecart-help">
+		<sc-icon style="font-size: 18px; width: 22px; stroke-width: 4;" name="life-buoy"></sc-icon>
 		<?php esc_html_e( 'Help', 'surecart' ); ?>
-	</sc-tab>
+	</a>
+
 </div>

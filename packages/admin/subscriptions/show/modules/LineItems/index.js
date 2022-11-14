@@ -40,7 +40,7 @@ export default ({ period, loading }) => {
 					return (
 						<ScProductLineItem
 							key={item.id}
-							imageUrl={item?.price?.metadata?.wp_attachment_src}
+							imageUrl={item?.price?.product?.image_url}
 							name={item?.price?.product?.name}
 							editable={false}
 							removable={false}

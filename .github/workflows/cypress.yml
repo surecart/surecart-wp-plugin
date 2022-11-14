@@ -1,0 +1,66 @@
+name: Cypress e2e Component Tests
+
+on:
+  pull_request:
+    paths:
+      - "packages/components/src/**/*.tsx"
+      - "packages/components/src/**/*.ts"
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # first, install dependencies and Cypress
+      # from the root folder using the lock file
+      # note: because there is lerna.json file and lerna dependency
+      # the single "yarn" install in the root
+      # will install packages in all subfolders and link them
+      - name: Cypress install
+        uses: cypress-io/github-action@v4
+        with:
+          working-directory: packages/components
+          start: yarn start
+          browser: chrome
+          wait-on: "http://localhost:3456"
+          record: true
+          parallel: true
+        env:
+          # pass the Dashboard record key as an environment variable
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          # pass GitHub token to allow accurately detecting a build vs a re-run build
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # now run the tests from the subfolder
+      # - name: Cypress run
+      #   uses: cypress-io/github-action@v2
+      #   with:
+      #     install: false
+      #     working-directory: packages/components
+      #     start: yarn start
+      #     browser: chrome
+          # wait-on: "http://localhost:3456"
+
+      # - name: "UI Tests - Chrome"
+      #   uses: cypress-io/github-action@v4
+      #   with:
+      #     project: ./packages/components
+      #     build: yarn workspace @surecart/components build
+      #     start: yarn workspace @surecart/components start
+      #     wait-on: "http://localhost:3456"
+          # wait-on-timeout: 120
+          # browser: chrome
+          # record: true
+          # parallel: true
+          # group: "UI - Chrome"
+          # spec: cypress/tests/ui/*
+          # config-file: cypress.config.js
+        # env:
+        #   CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+        #   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+        #   # Recommended: pass the GitHub token lets this action correctly
+        #   # determine the unique run id necessary to re-run the checks
+        #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        #   DEBUG: "cypress:server:args"
