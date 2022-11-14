@@ -243,7 +243,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.2.0  - Novermber 8, 2022 =
+= 1.2.0  - Novermber 14, 2022 =
 * New: Manual payment methods.
 * New: Abandoned Checkouts (Pro).
 * Improvement: Add Dutch notifications and invoice language.
