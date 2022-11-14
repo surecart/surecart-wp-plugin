@@ -71,7 +71,7 @@ export class ScCart {
   getItemsCount() {
     const items = this.order()?.line_items?.data;
     let count = 0;
-    items.forEach(item => {
+    (items || []).forEach(item => {
       count = count + item?.quantity;
     });
     return count;

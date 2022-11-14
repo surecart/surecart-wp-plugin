@@ -43,23 +43,21 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<ScChoice
-				showControl={false}
-				size="small"
-				value={amount}
-				{...blockProps}
-			>
-				{!!label ? (
-					label
-				) : (
-					<ScFormatNumber
-						type="currency"
-						currency={currency || 'USD'}
-						value={amount}
-						minimum-fraction-digits="0"
-					></ScFormatNumber>
-				)}
-			</ScChoice>
+
+			<div {...blockProps}>
+				<ScChoice showControl={false} size="small" value={amount}>
+					{!!label ? (
+						label
+					) : (
+						<ScFormatNumber
+							type="currency"
+							currency={currency || 'USD'}
+							value={amount}
+							minimum-fraction-digits="0"
+						></ScFormatNumber>
+					)}
+				</ScChoice>
+			</div>
 		</Fragment>
 	);
 };

@@ -41,10 +41,6 @@
 
 ## Dependencies
 
-### Used by
-
- - [sc-payment](../../controllers/checkout-form/payment)
-
 ### Depends on
 
 - [sc-icon](../icon)
@@ -53,7 +49,6 @@
 ```mermaid
 graph TD;
   sc-toggle --> sc-icon
-  sc-payment --> sc-toggle
   style sc-toggle fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

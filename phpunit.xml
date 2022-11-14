@@ -18,6 +18,9 @@
 			<directory suffix=".php">./.dev/tests/php/feature/</directory>
 		</testsuite>
 	</testsuites>
+	<php>
+        <env name="SURECART_RUNNING_TESTS" value="true" force="true" />
+    </php>
 	<filter>
 		<whitelist processUncoveredFilesFromWhitelist="true">
 			<directory suffix=".php">./app/src</directory>

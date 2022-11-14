@@ -82,8 +82,8 @@ abstract class RestController {
 		}
 
 		$response = rest_ensure_response( $items->data );
-		$response->header( 'X-WP-Total', (int) $items->pagination->count );
-		$max_pages = ceil( $items->pagination->count / $items->pagination->limit );
+		$response->header( 'X-WP-Total', (int) ( $items->pagination->count ?? 0 ) );
+		$max_pages = ceil( ( $items->pagination->count ?? 0 ) / ( $items->pagination->limit ?? 1 ) );
 		$response->header( 'X-WP-TotalPages', (int) $max_pages );
 
 		return $response;

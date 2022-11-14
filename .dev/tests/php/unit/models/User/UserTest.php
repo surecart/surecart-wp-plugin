@@ -54,13 +54,13 @@ class UserTest extends SureCartUnitTestCase {
 		$user = User::create([
 			'user_email' => 'testemail@email.com'
 		]);
-		$this->assertSame($user->user_login, 'testemail');
+		$this->assertSame('testemail@email.com', $user->user_login);
 
 		$user = User::create([
 			'user_name' => null,
 			'user_email' => 'testemail2@email.com'
 		]);
-		$this->assertSame($user->user_login, 'testemail2');
+		$this->assertSame('testemail2@email.com', $user->user_login);
 	}
 
 	/**
@@ -87,7 +87,7 @@ class UserTest extends SureCartUnitTestCase {
 		$this->assertSame($user->user_login, 'person');
 		$this->assertSame($user1->user_login, 'person1');
 		$this->assertSame($user2->user_login, 'person2');
-		$this->assertSame($user_special->user_login, 'specialemail');
+		$this->assertSame($user_special->user_login, 'specialemail@email.com');
 	}
 
 	/**

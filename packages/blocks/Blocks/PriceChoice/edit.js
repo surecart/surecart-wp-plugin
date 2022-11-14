@@ -107,19 +107,20 @@ export default ({ attributes, setAttributes, isSelected }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScPriceChoice
-				{...blockProps}
-				onClick={(e) => e.preventDefault()}
-				priceId={price_id}
-				type={type}
-				label={label}
-				showLabel={show_label}
-				showPrice={show_price}
-				showControl={show_control}
-				description={description}
-				checked={checked}
-				quantity={quantity}
-			/>
+			<div {...blockProps}>
+				<ScPriceChoice
+					onClick={(e) => e.preventDefault()}
+					priceId={price_id}
+					type={type}
+					label={label}
+					showLabel={show_label}
+					showPrice={show_price}
+					showControl={show_control}
+					description={description}
+					checked={checked}
+					quantity={quantity}
+				/>
+			</div>
 		</Fragment>
 	);
 };
