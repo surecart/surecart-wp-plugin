@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScCard, ScDashboardModule } from '@surecart/components-react';
 
 import { Card, CardBody, CardFooter, CardHeader } from '@wordpress/components';
 
@@ -16,6 +15,20 @@ export default ({
 	footer,
 	className,
 }) => {
+	const hasChildren = () => {
+		if (!children) {
+			return false;
+		}
+		if (!Array.isArray(children)) {
+			return true;
+		}
+		if (children[0] != null) {
+			return true;
+		}
+
+		return false;
+	};
+
 	return (
 		<Card
 			css={css`
@@ -46,39 +59,41 @@ export default ({
 				</sc-text>
 				{header_action}
 			</CardHeader>
-			<CardBody
-				css={css`
-					display: grid;
-					gap: 10px;
-					> * {
-						width: 100%;
-					}
-					.components-base-control__label {
-						font-weight: 500;
-						margin-bottom: 12px;
-					}
-				`}
-			>
-				{loading ? (
-					<div>
-						<sc-skeleton
-							style={{
-								width: '100%',
-								marginBottom: '15px',
-								display: 'inline-block',
-							}}
-						></sc-skeleton>
-						<sc-skeleton
-							style={{
-								width: '40%',
-								display: 'inline-block',
-							}}
-						></sc-skeleton>
-					</div>
-				) : (
-					children
-				)}
-			</CardBody>
+			{(loading || hasChildren()) && (
+				<CardBody
+					css={css`
+						display: grid;
+						gap: 10px;
+						> * {
+							width: 100%;
+						}
+						.components-base-control__label {
+							font-weight: 500;
+							margin-bottom: 12px;
+						}
+					`}
+				>
+					{loading ? (
+						<div>
+							<sc-skeleton
+								style={{
+									width: '100%',
+									marginBottom: '15px',
+									display: 'inline-block',
+								}}
+							></sc-skeleton>
+							<sc-skeleton
+								style={{
+									width: '40%',
+									display: 'inline-block',
+								}}
+							></sc-skeleton>
+						</div>
+					) : (
+						children
+					)}
+				</CardBody>
+			)}
 			{!!footer && <CardFooter>{footer}</CardFooter>}
 		</Card>
 	);
