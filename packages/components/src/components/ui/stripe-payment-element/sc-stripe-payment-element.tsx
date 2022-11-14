@@ -3,8 +3,9 @@ import { Stripe } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+import { openWormhole } from 'stencil-wormhole';
 
-import { Checkout, FormStateSetter, PaymentIntent } from '../../../types';
+import { Checkout, FormState, FormStateSetter, PaymentIntent, ProcessorName } from '../../../types';
 
 @Component({
   tag: 'sc-stripe-payment-element',
@@ -23,7 +24,7 @@ export class ScStripePaymentElement {
   private stripe: Stripe;
 
   /** The Payment Intent */
-  @Prop() paymentIntent: PaymentIntent;
+  @Prop() stripePaymentIntent: PaymentIntent;
 
   /** Order to watch */
   @Prop() order: Checkout;
@@ -33,6 +34,12 @@ export class ScStripePaymentElement {
 
   /** Success url to redirect. */
   @Prop() successUrl: string;
+
+  /** The current form state. */
+  @Prop() formState: FormState;
+
+  /** The selected processor name. */
+  @Prop() selectedProcessorId: ProcessorName;
 
   /** The error. */
   @State() error: string;
@@ -56,7 +63,7 @@ export class ScStripePaymentElement {
     this.initialize();
   }
 
-  @Watch('paymentIntent')
+  @Watch('stripePaymentIntent')
   handleUpdatedChange(val, prev) {
     this.error = '';
 
@@ -71,12 +78,14 @@ export class ScStripePaymentElement {
 
   async initialize() {
     // we need this data.
-    if (!this.paymentIntent?.processor_data?.stripe?.publishable_key || !this.paymentIntent?.processor_data?.stripe?.account_id) return;
+    if (!this.stripePaymentIntent?.processor_data?.stripe?.publishable_key || !this.stripePaymentIntent?.processor_data?.stripe?.account_id) return;
 
     // check if stripe has been initialized
     if (!this.stripe) {
       try {
-        this.stripe = await loadStripe(this.paymentIntent?.processor_data?.stripe?.publishable_key, { stripeAccount: this.paymentIntent?.processor_data?.stripe?.account_id });
+        this.stripe = await loadStripe(this.stripePaymentIntent?.processor_data?.stripe?.publishable_key, {
+          stripeAccount: this.stripePaymentIntent?.processor_data?.stripe?.account_id,
+        });
       } catch (e) {
         this.error = e?.message || __('Stripe could not be loaded', 'surecart');
         // don't continue.
@@ -105,16 +114,18 @@ export class ScStripePaymentElement {
   /**
    * Watch order status and maybe confirm the order.
    */
-  @Watch('order')
-  async maybeConfirmOrder(val: Checkout) {
+  @Watch('formState')
+  async maybeConfirmOrder(val: FormState) {
     // must be finalized
-    if (val?.status !== 'finalized') return;
+    if (val !== 'paying') return;
+    // this processor is not selected.
+    if (this.selectedProcessorId !== 'stripe') return;
     // must be a stripe session
-    if (val?.payment_intent?.processor_type !== 'stripe') return;
+    if (this.order?.payment_intent?.processor_type !== 'stripe') return;
     // need an external_type
-    if (!val?.payment_intent?.processor_data?.stripe?.type) return;
+    if (!this.order?.payment_intent?.processor_data?.stripe?.type) return;
     // confirm the intent.
-    return await this.confirm(val?.payment_intent?.processor_data?.stripe?.type);
+    return await this.confirm(this.order?.payment_intent?.processor_data?.stripe?.type);
   }
 
   @Method()
@@ -144,7 +155,6 @@ export class ScStripePaymentElement {
     try {
       this.scSetState.emit('PAYING');
       const response = type === 'setup' ? await this.stripe.confirmSetup(confirmArgs as any) : await this.stripe.confirmPayment(confirmArgs as any);
-      console.log({ response });
       if (response?.error) {
         this.error = response.error.message;
         throw response.error;
@@ -165,7 +175,7 @@ export class ScStripePaymentElement {
 
   loadElement() {
     // we need a stripe instance and client secret.
-    if (!this.stripe || !this.paymentIntent?.processor_data?.stripe?.client_secret || !this.container) {
+    if (!this.stripe || !this.stripePaymentIntent?.processor_data?.stripe?.client_secret || !this.container) {
       console.log('do not have stripe or');
       return;
     }
@@ -175,7 +185,7 @@ export class ScStripePaymentElement {
 
     // we have what we need, load elements.
     this.elements = this.stripe.elements({
-      clientSecret: this.paymentIntent?.processor_data?.stripe?.client_secret,
+      clientSecret: this.stripePaymentIntent?.processor_data?.stripe?.client_secret,
       appearance: {
         variables: {
           colorPrimary: styles.getPropertyValue('--sc-color-primary-500'),
@@ -251,3 +261,5 @@ export class ScStripePaymentElement {
     );
   }
 }
+
+openWormhole(ScStripePaymentElement, ['order', 'selectedProcessorId', 'stripePaymentIntent', 'formState'], true);

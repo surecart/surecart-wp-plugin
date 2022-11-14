@@ -1,14 +1,43 @@
 import { Checkout } from '../../../../../types';
 import { getQueryArg, removeQueryArgs } from '@wordpress/url';
 
+// get line items data from url.
 export const getURLLineItems = () => {
   // check the url query first
   return getQueryArg(window.location.href, 'line_items');
 };
 
+/** Get coupon data from url. */
 export const getURLCoupon = () => {
   // check the url query first
-  return ((getQueryArg(window.location.href, 'coupon') as string) || '').toUpperCase();
+  return getQueryArg(window.location.href, 'coupon');
+};
+
+/** Get checkout data from url. */
+export const getUrlData = () => {
+  let initial_data = {};
+
+  // Coupon code.
+  const promotion_code = getURLCoupon();
+  if (promotion_code) {
+    window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'coupon'));
+    initial_data = {
+      ...initial_data,
+      discount: { promotion_code },
+    };
+  }
+
+  // Line items.
+  const line_items = getURLLineItems();
+  if (line_items && line_items?.length) {
+    window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'line_items'));
+    initial_data = {
+      ...initial_data,
+      line_items,
+    };
+  }
+
+  return initial_data;
 };
 
 /**

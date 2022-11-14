@@ -17,6 +17,7 @@
 | `formId`                      | `form-id`                       | The checkout form id                                          | `number`                                                                         | `undefined` |
 | `loadingText`                 | --                              |                                                               | `{ finalizing: string; paying: string; confirming: string; confirmed: string; }` | `undefined` |
 | `loggedIn`                    | `logged-in`                     | Is this user logged in?                                       | `boolean`                                                                        | `undefined` |
+| `manualPaymentMethods`        | --                              | Manual payment methods enabled for this form.                 | `ManualPaymentMethod[]`                                                          | `undefined` |
 | `mode`                        | `mode`                          | Are we in test or live mode.                                  | `"live" \| "test"`                                                               | `'live'`    |
 | `modified`                    | `modified`                      | When the form was modified.                                   | `string`                                                                         | `undefined` |
 | `persistSession`              | `persist-session`               | Whether to persist the session in the browser between visits. | `boolean`                                                                        | `true`      |
@@ -39,13 +40,13 @@
 
 ## Methods
 
-### `submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<any>`
+### `submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout>`
 
 Submit the form
 
 #### Returns
 
-Type: `Promise<any>`
+Type: `Promise<Checkout>`
 
 
 
