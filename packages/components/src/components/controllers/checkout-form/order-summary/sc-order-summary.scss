@@ -37,6 +37,13 @@
     transition: transform 0.25s ease-in-out;
   }
 
+  .full-amount__new-price {
+    text-decoration: line-through;
+    color: var(--sc-color-gray-500);
+    font-size: var(--sc-font-size-small);
+    margin-right: var(--sc-spacing-xx-small);
+  }
+
   &--open {
     .collapse-link__icon {
       transform: rotate(180deg);
