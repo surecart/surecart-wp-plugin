@@ -132,7 +132,7 @@ export class ScSessionProvider {
     this.scSetState.emit('FINALIZE');
 
     // Get current form state.
-    let data = this.getFormData();
+    let data = await this.getFormData();
 
     if (window?.scData?.recaptcha_site_key && window?.grecaptcha) {
       try {
