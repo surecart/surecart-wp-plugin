@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>Manual Payment Methods Fixture</title>
+  <link href="/build/surecart.css" rel="stylesheet">
+  <script type="module" src="/build/surecart.esm.js"></script>
+  <script nomodule src="/build/surecart.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script>
+    window.scIcons = {
+      path: '/build/icon-assets'
+    }
+    window.wp = {
+      i18n: {
+        __: () => { }
+      }
+    }
+
+    const origStripe = window.Stripe;
+    window.Stripe = (...args) => {
+      return {
+        ...origStripe(...args),
+        ...window.mockStripeMethods,
+      };
+    };
+  </script>
+</head>
+
+<body>
+  <sc-checkout success-url="/success" form-id="1" mode="test">
+    <sc-form>
+      <sc-payment label="Payment" default-processor='stripe' secure-notice="This is secure"></sc-payment>
+      <sc-order-summary>
+        <sc-line-items></sc-line-items>
+      </sc-order-summary>
+      <sc-order-submit>Submit</sc-order-submit>
+    </sc-form>
+  </sc-checkout>
+  <script>
+    document.querySelector('sc-checkout').processors = [
+      {
+        "live_mode": false,
+        "processor_data": {
+          "account_id": "acct_1KgGVf2E2Wr9trjm",
+          "publishable_key": "pk_test_51KeWoQFugiAKLuJycCZesY1aYEzfauqW2SHSZSUj5xCorx7h7oZd5i6Vz2whx7Y5fMZr6WQQTeOoQEtaEnpk4fkB00dinySlbK"
+        },
+        "processor_type": "stripe",
+        "recurring_enabled": true
+      }]
+  </script>
+</body>
+
+</html>

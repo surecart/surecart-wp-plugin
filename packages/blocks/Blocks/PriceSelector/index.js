@@ -7,6 +7,7 @@ import { buttons as icon } from '@wordpress/icons';
 /**
  * Internal dependencies
  */
+import deprecated from './deprecated';
 import edit from './edit';
 import save from './save';
 import metadata from './block.json';
@@ -19,4 +20,5 @@ export const settings = {
 	icon,
 	edit,
 	save,
+	deprecated,
 };
