@@ -21,7 +21,6 @@ export default ({ label, text }) => {
 			});
 		}
 	};
-  console.log(location.protocol);
 	return (
 		<ScInput
 			style={{ '--sc-input-background-color': 'var(--sc-color-gray-100' }}
