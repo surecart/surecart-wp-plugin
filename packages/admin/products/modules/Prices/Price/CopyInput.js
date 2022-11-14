@@ -28,12 +28,12 @@ export default ({ label, text }) => {
 			readonly
 			value={text}
 		>
-      { (location.protocol === 'https:') && (
-			<ScButton slot="suffix" size="small" onClick={copy}>
-				<ScIcon name="clipboard" slot="prefix" />
-				{__('Copy', 'surecart')}
-			</ScButton>
-      )}
+      {location.protocol === 'https:' && (
+				<ScButton slot="suffix" size="small" onClick={copy}>
+					<ScIcon name="clipboard" slot="prefix" />
+					{__('Copy', 'surecart')}
+				</ScButton>
+			)}
 		</ScInput>
 	);
 };
