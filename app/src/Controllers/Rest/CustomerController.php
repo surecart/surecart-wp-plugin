@@ -80,6 +80,10 @@ class CustomerController extends RestController {
 				$args['sc_server_update'] = 'no';
 				$args['ID'] = $wp_user->ID;
 
+				if ( isset( $args['email'] ) ) {
+					$args['user_email'] = $args['email'];
+				}
+
 				wp_update_user( $args );
 			}
 		}
