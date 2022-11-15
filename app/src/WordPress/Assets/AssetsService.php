@@ -69,7 +69,7 @@ class AssetsService {
 		add_action( 'enqueue_block_editor_assets', [ $this, 'editorAssets' ] );
 
 		// Shortcode usages scripts load.
-		add_action( 'wp_head', [ $this, 'shortcode_scripts' ] );
+		add_action( 'wp_head', [ $this, 'maybeEnqueueShortcodeScripts' ] );
 
 		// front-end styles. These only load when the block is being rendered on the page.
 		$this->loader->whenRendered( 'surecart/form', [ $this, 'enqueueForm' ] );
@@ -138,16 +138,14 @@ class AssetsService {
 	 *
 	 * @return void
 	 */
-	public function shortcode_scripts() {
-		if ( ! (bool) get_option( 'sc_slide_out_cart_disabled', false ) ) {
+	public function maybeEnqueueShortcodeScripts() {
+		global $post;
+		
+		if ( ! has_shortcode( $post->post_content ?? '', 'sc_customer_dashboard_page' ) ) {
 			return;
 		}
 
-		global $post;
-
-        if ( $post instanceof \WP_Post && has_shortcode( $post->post_content, 'sc_customer_dashboard_page' ) ) {
-			$this->enqueueComponents();
-        }
+		$this->enqueueComponents();
 	}
 
 	/**
