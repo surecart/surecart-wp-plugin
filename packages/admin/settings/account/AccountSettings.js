@@ -27,7 +27,7 @@ export default () => {
 	);
 
 	// honeypot.
-	const [honeypotEnabled, setHoneyPotEnabled] = useEntityProp(
+	const [honeypotEnabled, setHoneypotEnabled] = useEntityProp(
 		'root',
 		'site',
 		'surecart_honeypot_enabled'
@@ -186,6 +186,10 @@ export default () => {
 						}
 						choices={[
 							{
+								value: 'nl',
+								label: 'Nederlands',
+							},
+              {
 								value: 'de',
 								label: 'Deutsch',
 							},

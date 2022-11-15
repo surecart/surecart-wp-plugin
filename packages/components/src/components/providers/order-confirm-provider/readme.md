@@ -11,7 +11,7 @@
 | ------------ | ------------- | ---------------------------- | ------------------ | ----------- |
 | `formId`     | `form-id`     | The form id                  | `number`           | `undefined` |
 | `mode`       | `mode`        | Are we in test or live mode. | `"live" \| "test"` | `'live'`    |
-| `order`      | --            | The current order.           | `Order`            | `undefined` |
+| `order`      | --            | The current order.           | `Checkout`         | `undefined` |
 | `successUrl` | `success-url` | Success url.                 | `string`           | `undefined` |
 
 
@@ -20,7 +20,7 @@
 | Event         | Description              | Type                                                                                          |
 | ------------- | ------------------------ | --------------------------------------------------------------------------------------------- |
 | `scError`     | Error event.             | `CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any; } \| {}>` |
-| `scOrderPaid` | The order is paid event. | `CustomEvent<Order>`                                                                          |
+| `scOrderPaid` | The order is paid event. | `CustomEvent<Checkout>`                                                                       |
 | `scSetState`  |                          | `CustomEvent<string>`                                                                         |
 
 

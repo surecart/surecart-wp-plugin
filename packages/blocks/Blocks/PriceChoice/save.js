@@ -1,3 +1,5 @@
+import { useBlockProps } from '@wordpress/block-editor';
+
 export default ({ attributes }) => {
 	const {
 		price_id,
@@ -10,8 +12,10 @@ export default ({ attributes }) => {
 		description,
 		checked,
 	} = attributes;
+	const blockProps = useBlockProps.save();
 	return (
 		<sc-price-choice
+			{...blockProps}
 			price-id={price_id}
 			type={type}
 			label={label}

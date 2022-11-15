@@ -23,7 +23,7 @@ describe('sc-order-bump', () => {
   it('renders custom label', async () => {
     const page = await newSpecPage({
       components: [ScOrderBumps],
-      template: () => <sc-order-bumps label="custom" bumps={[{ name: 'Test', amount_off: 123 }]}></sc-order-bumps>,
+      template: () => <sc-order-bumps label="custom" bumps={[{ name: 'Test', amount_off: 123 }] as Bump[]}></sc-order-bumps>,
     });
     expect(page.root).toMatchSnapshot();
   });
@@ -31,7 +31,7 @@ describe('sc-order-bump', () => {
   it('renders custom label', async () => {
     const page = await newSpecPage({
       components: [ScOrderBumps],
-      template: () => <sc-order-bumps label="custom" bumps={[{ name: 'Test', amount_off: 123 }]}></sc-order-bumps>,
+      template: () => <sc-order-bumps label="custom" bumps={[{ name: 'Test', amount_off: 123 }] as Bump[]}></sc-order-bumps>,
     });
     expect(page.root).toMatchSnapshot();
   });
