@@ -245,7 +245,12 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 = 1.2.1  - Novermber 15, 2022 =
 * New: Textarea field.
-* Fix: Some custom form fields not saving metadata.
+* Improvement: Show scratch price on order summary if discount is present.
+* Improvement: Edit store (admin) email templates.
+* Improvement: Button style consistency on product page.
+* Fix: Some custom form fields not saving metadata for some processors.
+* Fix: sc_order_confirmation shortcode not displaying.
+* Fix: Overflow issue on some themes with address component.
 
 = 1.2.0  - Novermber 14, 2022 =
 * New: Manual payment methods.
