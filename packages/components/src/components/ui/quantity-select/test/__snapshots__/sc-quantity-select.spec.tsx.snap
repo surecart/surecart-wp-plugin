@@ -7,7 +7,7 @@ exports[`sc-quantity-select renders 1`] = `
       <span aria-label="decrease number" class="button__decrease" role="button">
         <sc-icon name="minus"></sc-icon>
       </span>
-      <input aria-valuemax="100" aria-valuemin="1" aria-valuenow="1" autocomplete="off" class="input__control" max="100" min="1" role="spinbutton" step="1" tabindex="0" type="number" value="1">
+      <input aria-valuemax="Infinity" aria-valuemin="1" aria-valuenow="1" autocomplete="off" class="input__control" max="Infinity" min="1" role="spinbutton" step="1" tabindex="0" type="number" value="1">
       <span aria-label="increase number" class="button__increase" role="button">
         <sc-icon name="plus"></sc-icon>
       </span>

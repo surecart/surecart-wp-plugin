@@ -6,7 +6,7 @@ exports[`sc-price-input renders 1`] = `
     <div>
       <sc-input help="" inputmode="decimal" min="0" showlabel="" size="medium" step="0.001" type="number" value="NaN">
         <span slot="prefix" style="opacity: 0.5;">
-          $
+          US$
         </span>
         <span slot="suffix">
           <slot name="suffix"></slot>
