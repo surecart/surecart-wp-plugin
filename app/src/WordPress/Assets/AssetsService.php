@@ -140,8 +140,9 @@ class AssetsService {
 	 */
 	public function maybeEnqueueShortcodeScripts() {
 		global $post;
-		
-		if ( ! has_shortcode( $post->post_content ?? '', 'sc_customer_dashboard_page' ) ) {
+
+		// match all of our shortcodes.
+		if ( false === strpos( $post->post_content ?? '', '[sc_' ) ) {
 			return;
 		}
 
