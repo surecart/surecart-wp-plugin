@@ -101,15 +101,6 @@ export class ScCustomerEdit {
 
         <sc-card>
           <sc-form onScFormSubmit={e => this.handleSubmit(e)}>
-            {/* <sc-columns style={{ '--sc-column-spacing': 'var(--sc-spacing-medium)' }}>
-              <sc-column>
-                <sc-input label={__('Name', 'surecart')} name="name" value={this.customer?.name} />
-              </sc-column>
-              <sc-column>
-                <sc-input label={__('Phone', 'surecart')} name="phone" value={this.customer?.phone} />
-              </sc-column>
-            </sc-columns> */}
-            {console.log(this.customer)}
             <sc-columns style={{ '--sc-column-spacing': 'var(--sc-spacing-medium)' }}>
               <sc-column>
                 <sc-input label={__('First Name', 'surecart')} name="first_name" value={this.customer?.first_name} />
