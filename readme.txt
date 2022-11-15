@@ -251,6 +251,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * Fix: Some custom form fields not saving metadata for some processors.
 * Fix: sc_order_confirmation shortcode not displaying.
 * Fix: Overflow issue on some themes with address component.
+* Fix: Issue with some shortcodes not displaying if slide-out cart is disabled by admin.
 
 = 1.2.0  - Novermber 14, 2022 =
 * New: Manual payment methods.
