@@ -248,6 +248,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * Improvement: Show scratch price on order summary if discount is present.
 * Improvement: Edit store (admin) email templates.
 * Improvement: Button style consistency on product page.
+* Improvement: Enable or disable customer subscription reminder emails is now a free feature.
 * Fix: Some custom form fields not saving metadata for some processors.
 * Fix: sc_order_confirmation shortcode not displaying.
 * Fix: Overflow issue on some themes with address component.
