@@ -5,6 +5,9 @@
 	style="<?php echo esc_attr( $style ); ?>"
 >
 	<sc-form>
+		<?php if ( (bool) $honeypot_enabled ?? false ) : ?>
+			<sc-checkbox name="get_feedback" value="Feedback" style="display: none !important;"></sc-checkbox>
+		<?php endif; ?>
 		<?php echo filter_block_content( $content, 'post' ); ?>
 	</sc-form>
 </sc-checkout>
@@ -30,6 +33,7 @@
 		'stripePaymentElement' => $stripe_payment_element ?? false,
 		'successUrl'           => esc_url_raw( $success_url ?? \SureCart::pages()->url( 'order-confirmation' ) ),
 		'processors'           => $processors,
+		'manualPaymentMethods' => $manual_payment_methods,
 	]
 );
 ?>

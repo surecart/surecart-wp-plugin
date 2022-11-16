@@ -19,6 +19,7 @@ export default ({ startDate, setStartDate, endDate, setEndDate }) => {
 			plugins: ['ranges'],
 			maxDate: new Date(),
 			numberOfMonths: 2,
+			lang: scData.get_locale,
 			buttonText: {
 				apply: __('Apply', 'surecart'),
 				cancel: __('Cancel', 'surecart'),

@@ -1,0 +1,23 @@
+:host {
+  display: block;
+}
+
+a {
+  color: var(--sc-color-primary-500);
+}
+
+a.customer-email {
+  &__login-link {
+    color: var(--sc-customer-login-link-color, var(--sc-input-placeholder-color));
+    text-decoration:none;
+    font-size: var(--sc-font-size-small);
+  }
+}
+
+.tracking-confirmation-message {
+  font-size: var(--sc-font-size-xx-small);
+
+  span {
+    opacity: 0.75;
+  }
+}

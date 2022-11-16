@@ -49,7 +49,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
 
 :root {
   /** Brand */
-  --sc-color-brand-primary: #08BA4F;
+  --sc-color-brand-primary: #01824C;
   --sc-color-brand-secondary: #2CC965;
   --sc-color-brand-heading: #002E33;
   --sc-color-brand-body: #45505F;
@@ -381,11 +381,8 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-toggle-background-color: var(--sc-color-gray-950);
   --sc-card-background-color: var(--sc-color-gray-950);
   --sc-table-cell-background-color: var(--sc-color-gray-800);
-  --sc-alert-primary-background: var(--sc-color-gray-800);
-  --sc-alert-info-background: var(--sc-color-gray-800);
-  --sc-alert-danger-background: var(--sc-color-gray-800);
-  --sc-alert-warning-background: var(--sc-color-gray-800);
-  --sc-alert-success-background: var(--sc-color-gray-800);
+  --sc-alert-background-color: var(--sc-color-gray-800);
+  --sc-alert-title-color: var(--sc-color-white);
   --sc-input-control-color: var(--sc-color-gray-300);
   --sc-alert-primary-color: var(--sc-color-gray-300);
   --sc-alert-info-color: var(--sc-color-gray-300);
@@ -403,7 +400,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-breadcrumb-color: var(--sc-color-gray-300);
   --sc-stacked-list-row-text-color: var(--sc-color-gray-300);
   --sc-order-confirmation-color: var(--sc-color-gray-300);
-  --sc-card-boderless-border-color: var(--sc-color-gray-600);
+  --sc-card-border-color: var(--sc-color-gray-600);
   --sc-select-border-color: var(--sc-color-gray-600);
   --sc-button-default-border-color: var(--sc-color-gray-600);
   --sc-stacked-list-border-color: var(--sc-color-gray-600);
@@ -417,11 +414,6 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-stacked-list-row-hover-color: var(--sc-color-gray-800);
   --sc-skeleton-color: var(--sc-color-gray-800);
   --sc-skeleton-sheen-color: var(--sc-color-gray-700);
-  --sc-alert-border-width: 3px;
-  --sc-alert-primary-border-color: var(--sc-color-primary-500);
-  --sc-alert-success-border-color: var(--sc-color-success-500);
-  --sc-alert-warning-border-color: var(--sc-color-warning-600);
-  --sc-alert-danger-border-color: var(--sc-color-danger-600);
   --sc-switch-background-thumb-color: var(--sc-color-gray-900);
   --sc-switch-background-thumb-hover-color: var(--sc-color-gray-900);
   --sc-swith-label-color: var(--sc-color-gray-300);

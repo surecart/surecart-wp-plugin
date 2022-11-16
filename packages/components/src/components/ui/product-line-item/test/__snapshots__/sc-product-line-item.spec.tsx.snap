@@ -8,7 +8,7 @@ exports[`sc-product-line-item renders 1`] = `
         <div class="item__title">
           <slot name="title"></slot>
         </div>
-        <sc-quantity-select></sc-quantity-select>
+        <sc-quantity-select max="100"></sc-quantity-select>
       </div>
       <div class="item__suffix">
         <div></div>

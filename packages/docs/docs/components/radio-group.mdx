@@ -1,0 +1,31 @@
+# Radio Group
+
+```html
+<sc-radio-group></sc-radio-group>
+```
+
+This component let users create radio group for holding multiple radio option.
+
+import DemoTabs from '../../components/Demo-Tabs.js';
+import ComponentDoc from '../../components/Component-Doc.js';
+
+<DemoTabs>
+	<DemoTabs.Code>
+{`
+<sc-radio-group label="Choose an Option" no-fieldset>
+	<sc-radio value="1" name="test" checked>Option 1</sc-radio>
+	<sc-radio value="2" name="test">Option 2</sc-radio>
+	<sc-radio value="3" name="test" disabled>Option 3</sc-radio>
+</sc-radio-group>
+`}
+	</DemoTabs.Code>
+	<sc-radio-group label="Choose an Option" no-fieldset>
+		<sc-radio value="1" name="test" checked>Option 1</sc-radio>
+		<sc-radio value="2" name="test">Option 2</sc-radio>
+		<sc-radio value="3" name="test" disabled>Option 3</sc-radio>
+	</sc-radio-group>
+</DemoTabs>
+
+## Component Codex
+
+<ComponentDoc tag="sc-radio-group" />

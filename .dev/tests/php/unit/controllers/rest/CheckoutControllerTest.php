@@ -164,7 +164,6 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 		$controller->shouldReceive('linkCustomerId')
 			->once();
 
-
 		// finalize the checkout.
 		$controller_checkout = $controller->confirm($request);
 
@@ -176,10 +175,11 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 		$this->assertSame(1, did_action('surecart/checkout_confirmed'), 'Checkout confirmed action was not called');
 	}
 
+
 	public function test_linkCustomerId() {
 		$user = User::find(self::factory()->user->create())
 			->setCustomerId('testcustomerid');
-		$wrong = (new CheckoutsController())->linkCustomerId(new Checkout(['customer'=> 'wrong', 'email' => 'wrong@email.com', 'live_mode' => true]), new WP_REST_Request());
+		$wrong = (new CheckoutsController())->linkCustomerId(new Checkout(['customer'=> [ 'id' => 'wrong'], 'email' => 'wrong@email.com', 'live_mode' => true]), new WP_REST_Request());
 		$this->assertNotSame($wrong->ID, $user->ID);
 		$correct = (new CheckoutsController())->linkCustomerId(new Checkout(['customer'=> 'testcustomerid', 'email' => 'any@email.com', 'live_mode' => true]), new WP_REST_Request());
 		$this->assertSame($correct->ID, $user->ID , 'User should be linked to checkout based on customer id.');
@@ -194,9 +194,21 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 		$this->assertSame($user_not_yet_customer->customerId(), 'anewcustomerid', 'An existing user is not given a customer id.');
 
 		// new user
-		$user = (new CheckoutsController())->linkCustomerId(new Checkout(['customer'=> 'usernotexists', 'email' => 'user_not_exist', 'live_mode' => true]), new WP_REST_Request());
+		$user = (new CheckoutsController())->linkCustomerId(new Checkout(
+			[
+				'customer' => [
+					'id' => 'usernotexists',
+					'first_name' => 'First',
+					'last_name' => 'Last'
+				],
+				'email' => 'user_not_exist',
+				'live_mode' => true
+			]
+		), new WP_REST_Request());
 		$this->assertNotEmpty($user, 'A new user should be created.');
-		$this->assertNotEmpty($user->customerId(), 'A new user should be given a customer id.');
+		$this->assertSame('usernotexists', $user->customerId());
+		$this->assertSame('First', $user->first_name);
+		$this->assertSame('Last', $user->last_name);
 	}
 
 }

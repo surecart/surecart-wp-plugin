@@ -53,6 +53,9 @@ export class ScProductLineItem {
   /** Can we select the quantity */
   @Prop() editable: boolean = true;
 
+  /** The max allowed. */
+  @Prop() max: number = 100;
+
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scUpdateQuantity: EventEmitter<number>;
 
@@ -97,6 +100,7 @@ export class ScProductLineItem {
           </div>
           {this.editable && (
             <sc-quantity-select
+              max={this.max || Infinity}
               exportparts="base:quantity__base, minus, minus-icon, plus, plus-icon, input"
               clickEl={this.el}
               quantity={this.quantity}

@@ -353,7 +353,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							label={__('Success Text', 'surecart')}
 							value={loading_text?.confirmed}
 							placeholder={__(
-								'Payment successful! Redirecting...',
+								'Success! Redirecting...',
 								'surecart'
 							)}
 							onChange={(confirmed) =>
@@ -528,7 +528,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							css={css`
 								*
 									> *
-									> .wp-block:not(sc-choice):not(sc-column):not(:last-child) {
+									> .wp-block:not(sc-choice):not(sc-column):not(sc-radio):not(:last-child) {
 									margin-bottom: ${gap} !important;
 								}
 							`}

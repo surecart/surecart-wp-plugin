@@ -74,22 +74,27 @@ export class ScStripePaymentRequest {
     if (!this?.publishableKey || !this?.stripeAccountId) {
       return true;
     }
-    this.stripe = await loadStripe(this.publishableKey, { stripeAccount: this.stripeAccountId });
-    this.elements = this.stripe.elements();
-    this.paymentRequest = this.stripe.paymentRequest({
-      country: this.country,
-      requestShipping: true,
-      requestPayerEmail: true,
-      shippingOptions: [
-        {
-          id: 'free',
-          label: 'Free Shipping',
-          detail: 'No shipping required',
-          amount: 0,
-        },
-      ],
-      ...(this.getRequestObject(this.order) as PaymentRequestOptions),
-    });
+
+    try {
+      this.stripe = await loadStripe(this.publishableKey, { stripeAccount: this.stripeAccountId });
+      this.elements = this.stripe.elements();
+      this.paymentRequest = this.stripe.paymentRequest({
+        country: this.country,
+        requestShipping: true,
+        requestPayerEmail: true,
+        shippingOptions: [
+          {
+            id: 'free',
+            label: 'Free Shipping',
+            detail: 'No shipping required',
+            amount: 0,
+          },
+        ],
+        ...(this.getRequestObject(this.order) as PaymentRequestOptions),
+      });
+    } catch (e) {
+      console.log(e?.message || __('Stripe could not be loaded', 'surecart'));
+    }
   }
 
   @Watch('order')
@@ -249,10 +254,10 @@ export class ScStripePaymentRequest {
       // finalize
       const session = (await finalizeSession({
         id: this.order.id,
-        processor: 'stripe',
         query: {
           form_id: this.formId,
         },
+        processor: { id: 'stripe', manual: false },
       })) as Checkout;
 
       // confirm payment
@@ -260,7 +265,6 @@ export class ScStripePaymentRequest {
       await this.confirmPayment(session, ev);
       this.scSetState.emit('PAID');
       // paid.
-      console.log('paid');
       this.scPaid.emit();
       // Report to the browser that the confirmation was successful, prompting
       // it to close the browser payment method collection interface.

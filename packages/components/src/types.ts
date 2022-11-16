@@ -2,11 +2,13 @@ import { IconLibraryMutator, IconLibraryResolver } from './components/ui/icon/li
 
 declare global {
   interface Window {
+    grecaptcha: any;
     wp: {
       apiFetch: any;
       blocks: any;
       i18n: any;
     };
+    scStore: any;
     registerSureCartIconPath: (path: string) => void;
     registerSureCartIconLibrary: (name: string, options: { resolver: IconLibraryResolver; mutator?: IconLibraryMutator }) => void;
     scIcons: { path: string };
@@ -17,6 +19,7 @@ declare global {
       nonce: string;
       base_url: string;
       nonce_endpoint: string;
+      recaptcha_site_key: string;
       theme: string;
     };
     ceRegisterIconLibrary: any;
@@ -65,6 +68,24 @@ export interface Price {
   updated_at: number;
   product?: Product | string;
   metadata: { [key: string]: string };
+}
+
+export interface Bump {
+  id: string;
+  object: 'bump';
+  amount_off: number;
+  archived: boolean;
+  archived_at: number;
+  auto_apply: boolean;
+  filter_match_type: 'all' | 'any' | 'none';
+  filters: any;
+  metadata: any;
+  name: string;
+  percent_off: number;
+  price: string | Price;
+  priority: 1 | 2 | 3 | 4 | 5;
+  created_at: number;
+  updated_at: number;
 }
 
 export type Prices = {
@@ -139,6 +160,7 @@ export interface Activation {
   id: string;
   object: 'activation';
   name: string;
+  counted: boolean;
   fingerprint: string;
   license: string | License;
   created_at: number;
@@ -156,6 +178,7 @@ export interface Product extends Object {
   recurring: boolean;
   tax_category: string;
   tax_enabled: boolean;
+  purchase_limit: number;
   prices: {
     object: 'list';
     pagination: Pagination;
@@ -192,7 +215,8 @@ export interface Coupon extends Model {
 }
 
 export interface LineItemData extends Object {
-  price_id: string;
+  price_id?: string;
+  bump?: string;
   quantity: number;
   ad_hoc_amount?: number;
 }
@@ -207,6 +231,9 @@ export interface LineItem extends Object {
   name: string;
   object: string;
   quantity: number;
+  bump: string | Bump;
+  bump_amount: number;
+  discount_amount: number;
   subtotal_amount: number;
   total_amount: number;
   created_at: number;
@@ -343,7 +370,10 @@ export interface Checkout extends Object {
     pagination: Pagination;
     data: Array<PaymentIntent>;
   };
+  bump_amount: number;
   payment_method_required?: boolean;
+  manual_payment: boolean;
+  manual_payment_method?: string | ManualPaymentMethod;
   reusable_payment_method_required?: boolean;
   number?: string;
   amount_due?: number;
@@ -355,6 +385,7 @@ export interface Checkout extends Object {
   currency?: string;
   total_amount?: number;
   subtotal_amount?: number;
+  full_amount?: number;
   proration_amount?: number;
   applied_balance_amount?: number;
   discounts?: number;
@@ -365,7 +396,12 @@ export interface Checkout extends Object {
   tax_label: string;
   tax_percent: number;
   line_items: lineItems;
-  metadata?: Object;
+  recommended_bumps?: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Bump>;
+  };
+  metadata?: any;
   payment_intent?: PaymentIntent;
   payment_method?: PaymentMethod;
   order?: string | Order;
@@ -408,6 +444,18 @@ export interface ProcessorData {
   };
 }
 
+export interface ManualPaymentMethod {
+  id: string;
+  object: 'manual_payment_method';
+  archived: boolean;
+  archived_at: number;
+  description: string;
+  instructions: string;
+  name: string;
+  created_at: number;
+  updated_at: number;
+}
+
 export interface Processor {
   live_mode: boolean;
   processor_data: {
@@ -435,6 +483,7 @@ export interface Purchase {
   product: string | Product;
   refund: string | Refund;
   subscription: string | Subscription;
+  license: string | License;
   created_at: number;
   updated_at: number;
 }
@@ -473,6 +522,7 @@ export interface Subscription extends Object {
     price?: string;
     quantity?: number;
   };
+  purchase: Purchase | string;
   cancel_at_period_end: number | false;
   current_period: string | Period;
   current_period_end_at: number | false;
@@ -501,7 +551,7 @@ export interface SubscriptionProtocol {
 export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid' | 'completed';
 
 export type CheckoutStatus = 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'requires_approval';
-export type OrderStatus = 'paid' | 'payment_failed' | 'processing';
+export type OrderStatus = 'paid' | 'payment_failed' | 'processing' | 'void';
 
 export interface PaymentMethod extends Object {
   id: string;

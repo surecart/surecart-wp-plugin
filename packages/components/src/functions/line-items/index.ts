@@ -1,5 +1,6 @@
-import { RecursivePartial, ChoiceType, lineItems, Product, Checkout, Price, PriceChoice, LineItemData } from '../../types';
 import { getQueryArg } from '@wordpress/url';
+
+import { Bump, Checkout, ChoiceType, LineItemData, lineItems, Price, PriceChoice, Product, RecursivePartial } from '../../types';
 
 // Get only enabled price choices.
 export const getEnabledPriceChoices = (choices: Array<PriceChoice>): Array<PriceChoice> => {
@@ -68,6 +69,10 @@ export const getLineItemPriceIds = (line_items: RecursivePartial<lineItems>) => 
   return (line_items?.data || []).map(item => item.price.id);
 };
 
+export const getLineItemBumpIds = (line_items: RecursivePartial<lineItems>) => {
+  return (line_items?.data || []).map(item => (item?.bump as Bump)?.id || (item?.bump as string));
+};
+
 export const getLineItemPrices = (line_items: RecursivePartial<lineItems>) => {
   return (line_items?.data || []).map(item => item.price);
 };
@@ -91,6 +96,14 @@ export const isProductInOrder = (product: RecursivePartial<Product>, order: Chec
 export const isPriceInOrder = (price: RecursivePartial<Price>, order: Checkout) => {
   const priceIds = getLineItemPriceIds(order?.line_items);
   return !!priceIds.find(id => price?.id === id);
+};
+
+/**
+ * Is the price in a checkout session
+ */
+export const isBumpInOrder = (bump: RecursivePartial<Bump>, order: Checkout) => {
+  const bumpIds = getLineItemBumpIds(order?.line_items);
+  return !!bumpIds.find(id => bump?.id === id);
 };
 
 /**

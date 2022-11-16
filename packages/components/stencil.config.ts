@@ -15,12 +15,12 @@ export const config: Config = {
   namespace: 'surecart',
   globalStyle: './src/themes/base.css',
   globalScript: './src/global/global.ts',
-  devServer: {
-    https: {
-      cert: readFileSync('cert.pem', { encoding: 'utf-8' }),
-      key: readFileSync('key.pem', { encoding: 'utf-8' }),
-    },
-  },
+  // devServer: {
+  //   https: {
+  //     cert: readFileSync('cert.pem', { encoding: 'utf-8' }),
+  //     key: readFileSync('key.pem', { encoding: 'utf-8' }),
+  //   },
+  // },
   testing: {
     // browserHeadless: false,
     transform: {
@@ -46,6 +46,12 @@ export const config: Config = {
     {
       type: 'www',
       serviceWorker: null, // disable service workers
+      copy: [{ src: 'test/**/*.html' }],
+    },
+    // this is used for preloading features.
+    {
+      type: 'stats',
+      file: 'dist/stats.json', // optional
     },
     {
       // this generates a json file to be used for kses functions.

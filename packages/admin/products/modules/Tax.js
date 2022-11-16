@@ -65,20 +65,7 @@ export default ({ loading, product, updateProduct }) => {
 	};
 
 	return (
-		<Box
-			loading={loading}
-			title={
-				<div
-					css={css`
-						display: flex;
-						align-items: center;
-						justify-content: space-between;
-					`}
-				>
-					{__('Tax and Shipping', 'surecart')}
-				</div>
-			}
-		>
+		<Box loading={loading} title={__('Tax and Shipping', 'surecart')}>
 			{renderTaxInput()}
 			<Definition
 				title={__('This product requires shipping', 'surecart')}

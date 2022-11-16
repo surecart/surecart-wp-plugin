@@ -5,7 +5,7 @@ describe('sc-stripe-element', () => {
   it('renders', async () => {
     const page = await newSpecPage({
       components: [ScStripeElement],
-      html: `<sc-stripe-element></sc-stripe-element>`,
+      html: `<sc-stripe-element publishable-key="pk_test_51IGqEQFOGhs5FBqkukQRgXOUWl4zEUF8t9NAEz9QdTozrZ9QlWNXbKROsKICnpY808sEfhZYLfSAeSX3arrT8A6K00gf5F5845"></sc-stripe-element>`,
     });
     expect(page.root).toMatchSnapshot();
   });

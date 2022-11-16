@@ -28,14 +28,30 @@ class AssetsService {
 	protected $scripts;
 
 	/**
+	 * The service container.
+	 *
+	 * @var \Pimple\Container $container Service Container.
+	 */
+	protected $container;
+
+	/**
+	 * The preload Service
+	 *
+	 * @var array
+	 */
+	protected $config;
+
+	/**
 	 * Get the loader.
 	 *
 	 * @param Object $loader The loader.
 	 */
-	public function __construct( $loader, $scripts, $styles ) {
-		$this->loader  = $loader;
-		$this->scripts = $scripts;
-		$this->styles  = $styles;
+	public function __construct( $loader, $scripts, $styles, $container ) {
+		$this->loader    = $loader;
+		$this->scripts   = $scripts;
+		$this->styles    = $styles;
+		$this->container = $container;
+		$this->config    = \SureCart::resolve( SURECART_CONFIG_KEY );
 	}
 
 	/**
@@ -47,16 +63,47 @@ class AssetsService {
 		// register assets we will reuse.
 		add_action( 'init', [ $this->scripts, 'register' ] );
 		add_action( 'init', [ $this->styles, 'register' ] );
-
-		// front-end styles. These only load when the block is being rendered on the page.
-		$this->loader->whenRendered( 'surecart/form', [ $this, 'enqueueComponents' ] );
-		$this->loader->whenRendered( 'surecart/checkout-form', [ $this, 'enqueueComponents' ] );
-		$this->loader->whenRendered( 'surecart/buy-button', [ $this, 'enqueueComponents' ] );
-		$this->loader->whenRendered( 'surecart/customer-dashboard', [ $this, 'enqueueComponents' ] );
-		$this->loader->whenRendered( 'surecart/order-confirmation', [ $this, 'enqueueComponents' ] );
+		add_filter( 'render_block_data', [ $this, 'preloadComponents' ] );
 
 		// block editor.
 		add_action( 'enqueue_block_editor_assets', [ $this, 'editorAssets' ] );
+
+		// Shortcode usages scripts load.
+		add_action( 'wp_head', [ $this, 'maybeEnqueueShortcodeScripts' ] );
+
+		// front-end styles. These only load when the block is being rendered on the page.
+		$this->loader->whenRendered( 'surecart/form', [ $this, 'enqueueForm' ] );
+		$this->loader->whenRendered( 'surecart/buy-button', [ $this, 'enqueueComponents' ] );
+		$this->loader->whenRendered( 'surecart/customer-dashboard', [ $this, 'enqueueComponents' ] );
+		$this->loader->whenRendered( 'surecart/checkout-form', [ $this, 'enqueueComponents' ] );
+		$this->loader->whenRendered( 'surecart/order-confirmation', [ $this, 'enqueueComponents' ] );
+	}
+
+	/**
+	 * Preload any components needed for block display.
+	 *
+	 * @param array $parsed_block Parsed block data.
+	 *
+	 * @return array
+	 */
+	public function preloadComponents( $parsed_block ) {
+		if ( ! empty( $this->config['preload'][ $parsed_block['blockName'] ] ) ) {
+			\SureCart::preload()->add( $this->config['preload'][ $parsed_block['blockName'] ] );
+		}
+		return $parsed_block;
+	}
+
+	/**
+	 * Enqueue form scripts.
+	 *
+	 * @return void
+	 */
+	public function enqueueForm() {
+		// add recaptcha if enabled.
+		if ( \SureCart::settings()->recaptcha()->isEnabled() ) {
+			wp_enqueue_script( 'surecart-google-recaptcha' );
+		}
+		$this->enqueueComponents();
 	}
 
 	/**
@@ -87,6 +134,22 @@ class AssetsService {
 	}
 
 	/**
+	 * Shortcodes scripts add.
+	 *
+	 * @return void
+	 */
+	public function maybeEnqueueShortcodeScripts() {
+		global $post;
+
+		// match all of our shortcodes.
+		if ( false === strpos( $post->post_content ?? '', '[sc_' ) ) {
+			return;
+		}
+
+		$this->enqueueComponents();
+	}
+
+	/**
 	 * This adds component data to the component when it's defined at runtime.
 	 *
 	 * @param string $tag Tag of the web component.
@@ -95,6 +158,9 @@ class AssetsService {
 	 * @return void
 	 */
 	public function addComponentData( $tag, $selector, $data = [] ) {
+		if ( $this->loader->isUsingPageBuilder() || wp_doing_ajax() ) {
+			return $this->outputComponentScript( $tag, $selector, $data );
+		}
 		add_action(
 			'wp_footer',
 			function () use ( $tag, $selector, $data ) {

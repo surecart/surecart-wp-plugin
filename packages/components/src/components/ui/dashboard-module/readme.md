@@ -43,12 +43,14 @@
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
+ - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
@@ -75,12 +77,14 @@ graph TD;
   sc-order --> sc-dashboard-module
   sc-order-confirmation-details --> sc-dashboard-module
   sc-orders-list --> sc-dashboard-module
+  sc-password-nag --> sc-dashboard-module
   sc-payment-methods-list --> sc-dashboard-module
   sc-purchase-downloads-list --> sc-dashboard-module
   sc-subscription --> sc-dashboard-module
   sc-subscription-ad-hoc-confirm --> sc-dashboard-module
   sc-subscription-cancel --> sc-dashboard-module
   sc-subscription-payment --> sc-dashboard-module
+  sc-subscription-payment-method --> sc-dashboard-module
   sc-subscription-renew --> sc-dashboard-module
   sc-subscription-switch --> sc-dashboard-module
   sc-subscriptions-list --> sc-dashboard-module

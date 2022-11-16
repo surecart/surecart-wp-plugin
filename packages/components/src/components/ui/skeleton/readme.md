@@ -47,7 +47,6 @@
  - [sc-order-detail](../../controllers/confirmation/order-detail)
  - [sc-order-summary](../../controllers/checkout-form/order-summary)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
- - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-paypal-buttons](../paypal-buttons)
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
@@ -58,6 +57,7 @@
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
@@ -80,7 +80,6 @@ graph TD;
   sc-order-detail --> sc-skeleton
   sc-order-summary --> sc-skeleton
   sc-orders-list --> sc-skeleton
-  sc-payment --> sc-skeleton
   sc-payment-methods-list --> sc-skeleton
   sc-paypal-buttons --> sc-skeleton
   sc-price-choice --> sc-skeleton
@@ -91,6 +90,7 @@ graph TD;
   sc-subscription-cancel --> sc-skeleton
   sc-subscription-details --> sc-skeleton
   sc-subscription-payment --> sc-skeleton
+  sc-subscription-payment-method --> sc-skeleton
   sc-subscription-renew --> sc-skeleton
   sc-subscription-switch --> sc-skeleton
   sc-subscriptions-list --> sc-skeleton

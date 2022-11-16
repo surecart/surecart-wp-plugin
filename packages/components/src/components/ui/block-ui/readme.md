@@ -40,12 +40,14 @@
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-login-form](../../controllers/login)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
+ - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
@@ -75,12 +77,14 @@ graph TD;
   sc-invoices-list --> sc-block-ui
   sc-login-form --> sc-block-ui
   sc-orders-list --> sc-block-ui
+  sc-password-nag --> sc-block-ui
   sc-payment-methods-list --> sc-block-ui
   sc-purchase-downloads-list --> sc-block-ui
   sc-subscription --> sc-block-ui
   sc-subscription-ad-hoc-confirm --> sc-block-ui
   sc-subscription-cancel --> sc-block-ui
   sc-subscription-payment --> sc-block-ui
+  sc-subscription-payment-method --> sc-block-ui
   sc-subscription-renew --> sc-block-ui
   sc-subscription-switch --> sc-block-ui
   sc-subscriptions-list --> sc-block-ui

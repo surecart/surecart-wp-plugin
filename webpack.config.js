@@ -41,6 +41,14 @@ module.exports = {
 			__dirname,
 			'packages/admin/orders/index.js'
 		),
+		['admin/abandoned-checkouts-stats']: path.resolve(
+			__dirname,
+			'packages/admin/abandoned-checkouts-stats/index.js'
+		),
+		['admin/abandoned-checkouts']: path.resolve(
+			__dirname,
+			'packages/admin/abandoned-checkouts/index.js'
+		),
 		['admin/invoices']: path.resolve(
 			__dirname,
 			'packages/admin/invoices/index.js'
@@ -52,6 +60,10 @@ module.exports = {
 		['admin/product-groups']: path.resolve(
 			__dirname,
 			'packages/admin/product-groups/index.js'
+		),
+		['admin/bumps']: path.resolve(
+			__dirname,
+			'packages/admin/bumps/index.js'
 		),
 		['admin/subscriptions/show']: path.resolve(
 			__dirname,
@@ -73,6 +85,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/settings/account/index.js'
 		),
+		['admin/settings/abandoned']: path.resolve(
+			__dirname,
+			'packages/admin/settings/abandoned/index.js'
+		),
 		['admin/settings/subscription']: path.resolve(
 			__dirname,
 			'packages/admin/settings/subscription/index.js'
@@ -80,6 +96,10 @@ module.exports = {
 		['admin/settings/portal']: path.resolve(
 			__dirname,
 			'packages/admin/settings/portal/index.js'
+		),
+		['admin/settings/processors']: path.resolve(
+			__dirname,
+			'packages/admin/settings/processors/index.js'
 		),
 		['admin/settings/tax']: path.resolve(
 			__dirname,
@@ -112,6 +132,10 @@ module.exports = {
 		['admin/settings/advanced']: path.resolve(
 			__dirname,
 			'packages/admin/settings/advanced/index.js'
+		),
+		['admin/settings/upgrade']: path.resolve(
+			__dirname,
+			'packages/admin/settings/upgrade/index.js'
 		),
 
 		/**

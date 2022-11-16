@@ -14,10 +14,19 @@ import {
 /**
  * Component Dependencies
  */
-import { ScInput } from '@surecart/components-react';
+import { ScInput, ScOrderPassword } from '@surecart/components-react';
 
 export default ({ className, attributes, setAttributes, isSelected }) => {
-	const { label, placeholder, help, required } = attributes;
+	const {
+		label,
+		placeholder,
+		help,
+		required,
+		confirmation,
+		confirmation_label,
+		confirmation_placeholder,
+		confirmation_help,
+	} = attributes;
 
 	return (
 		<Fragment>
@@ -53,18 +62,72 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 							onChange={(help) => setAttributes({ help })}
 						/>
 					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={__('Password Confirmation', 'surecart')}
+							checked={confirmation}
+							onChange={(confirmation) =>
+								setAttributes({ confirmation })
+							}
+						/>
+					</PanelRow>
+					{confirmation && (
+						<>
+							<PanelRow>
+								<TextControl
+									label={__(
+										'Password Confirmation Label',
+										'surecart'
+									)}
+									value={confirmation_label}
+									onChange={(confirmation_label) =>
+										setAttributes({ confirmation_label })
+									}
+								/>
+							</PanelRow>
+							<PanelRow>
+								<TextControl
+									label={__(
+										'Password Confirmation Placeholder',
+										'surecart'
+									)}
+									value={confirmation_placeholder}
+									onChange={(confirmation_placeholder) =>
+										setAttributes({
+											confirmation_placeholder,
+										})
+									}
+								/>
+							</PanelRow>
+							<PanelRow>
+								<TextControl
+									label={__(
+										'Password Confirmation Help',
+										'surecart'
+									)}
+									value={confirmation_help}
+									onChange={(confirmation_help) =>
+										setAttributes({ confirmation_help })
+									}
+								/>
+							</PanelRow>
+						</>
+					)}
 				</PanelBody>
 			</InspectorControls>
 
-			<ScInput
+			<ScOrderPassword
 				className={className}
 				name={'password'}
 				label={label}
 				placeholder={placeholder}
-				required={required}
-				type={'password'}
 				help={help}
-			></ScInput>
+				confirmationPlaceholder={confirmation_placeholder}
+				confirmationLabel={confirmation_label}
+				confirmationHelp={confirmation_help}
+				confirmation={confirmation}
+				required={required}
+			></ScOrderPassword>
 		</Fragment>
 	);
 };

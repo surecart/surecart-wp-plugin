@@ -32,7 +32,11 @@ class AccountService {
 	 * @param \SureCart\Support\Server $server The server utility to use.
 	 */
 	public function __construct( \SureCart\Support\Server $server ) {
-		$cache = defined( 'SURECART_CACHE_ACCOUNT' ) && SURECART_CACHE_ACCOUNT;
+		$cache = null;
+
+		if ( defined( 'SURECART_CACHE_ACCOUNT' ) ) {
+			$cache = SURECART_CACHE_ACCOUNT;
+		}
 
 		// do not cache requests if specifically set to false.
 		if ( false === $cache ) {
@@ -73,7 +77,7 @@ class AccountService {
 	 * @return \SureCart\Models\Account
 	 */
 	protected function fetchAccount() {
-		$this->account = Account::with( [ 'brand', 'portal_protocol', 'tax_protocol' ] )->find();
+		$this->account = Account::with( [ 'brand', 'brand.address', 'portal_protocol', 'tax_protocol', 'tax_protocol.address' ] )->find();
 		return $this->account;
 	}
 

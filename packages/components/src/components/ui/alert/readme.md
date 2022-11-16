@@ -11,6 +11,7 @@
 | -------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | ----------- |
 | `closable`     | `closable`       | Makes the alert closable.                                                                                                                                                                                             | `boolean`                                                   | `false`     |
 | `duration`     | `duration`       | The length of time, in milliseconds, the alert will show before closing itself. If the user interacts with the alert before it closes (e.g. moves the mouse over it), the timer will restart. Defaults to `Infinity`. | `number`                                                    | `Infinity`  |
+| `noIcon`       | `no-icon`        | No icon                                                                                                                                                                                                               | `boolean`                                                   | `undefined` |
 | `open`         | `open`           | Indicates whether or not the alert is open. You can use this in lieu of the show/hide methods.                                                                                                                        | `boolean`                                                   | `false`     |
 | `scrollMargin` | `scroll-margin`  | Scroll margin                                                                                                                                                                                                         | `string`                                                    | `'0px'`     |
 | `scrollOnOpen` | `scroll-on-open` | Scroll into view.                                                                                                                                                                                                     | `boolean`                                                   | `undefined` |
@@ -50,14 +51,14 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part        | Description                |
-| ----------- | -------------------------- |
-| `"base"`    | The elements base wrapper. |
-| `"close"`   | The close icon.            |
-| `"icon"`    | The alert icon.            |
-| `"message"` | The alert message.         |
-| `"text"`    | The alert text.            |
-| `"title"`   | The alert title.           |
+| Part           | Description |
+| -------------- | ----------- |
+| `"base"`       |             |
+| `"close-icon"` |             |
+| `"icon"`       |             |
+| `"message"`    |             |
+| `"text"`       |             |
+| `"title"`      |             |
 
 
 ## Dependencies
@@ -72,7 +73,10 @@ Type: `Promise<void>`
  - [sc-error](../error)
  - [sc-form-error-provider](../../providers/form-error-provider)
  - [sc-login-form](../../controllers/login)
+ - [sc-login-provider](../../providers/sc-login-provider)
  - [sc-order-confirmation](../../controllers/confirmation/order-confirmation)
+ - [sc-order-manual-instructions](../../controllers/confirmation/manual-instructions)
+ - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-paypal-add-method](../sc-paypal-add-method)
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
@@ -99,7 +103,10 @@ graph TD;
   sc-error --> sc-alert
   sc-form-error-provider --> sc-alert
   sc-login-form --> sc-alert
+  sc-login-provider --> sc-alert
   sc-order-confirmation --> sc-alert
+  sc-order-manual-instructions --> sc-alert
+  sc-password-nag --> sc-alert
   sc-payment --> sc-alert
   sc-paypal-add-method --> sc-alert
   sc-price-choice --> sc-alert

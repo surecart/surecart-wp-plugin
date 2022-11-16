@@ -71,7 +71,7 @@ export class ScCart {
   getItemsCount() {
     const items = this.order()?.line_items?.data;
     let count = 0;
-    items.forEach(item => {
+    (items || []).forEach(item => {
       count = count + item?.quantity;
     });
     return count;
@@ -111,6 +111,8 @@ export class ScCart {
             'discount',
             'discount.promotion',
             'discount.coupon',
+            'recommended_bumps',
+            'bump.price',
             'shipping_address',
             'tax_identifier',
           ],
@@ -174,20 +176,7 @@ export class ScCart {
                       <slot name="cart-header" />
                       <sc-error style={{ '--sc-alert-border-radius': '0' }} slot="header" error={this.error} onScUpdateError={e => (this.error = e.detail)}></sc-error>
                     </div>
-
                     <slot />
-
-                    <div class="cart_footer" slot="footer">
-                      <sc-cart-session-provider
-                        order={this.order()}
-                        form-id={this.formId}
-                        group-id={this.formId}
-                        onScUpdateOrderState={e => this.setOrder(e.detail)}
-                        onScError={e => (this.error = e.detail as ResponseError)}
-                      >
-                        <slot name="cart-footer" />
-                      </sc-cart-session-provider>
-                    </div>
                   </Fragment>
                 )}
                 {this.uiState === 'busy' && <sc-block-ui z-index={9}></sc-block-ui>}

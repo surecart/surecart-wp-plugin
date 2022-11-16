@@ -58,7 +58,17 @@ export class ScLineItems {
     return this.lockedChoices.some(choice => choice.id === item.price.id);
   }
 
-  isEditable() {
+  isEditable(item: LineItem) {
+    // ad hoc prices cannot have quantity.
+    if (item?.price?.ad_hoc) {
+      return false;
+    }
+
+    // if the item has a bump amount, it cannot have quantity.
+    if (item?.bump_amount) {
+      return false;
+    }
+
     if (this.editable !== null) return this.editable;
     return this.editLineItems;
   }
@@ -94,7 +104,8 @@ export class ScLineItems {
                 key={item.id}
                 imageUrl={(item?.price?.product as Product)?.image_url}
                 name={(item?.price?.product as Product)?.name}
-                editable={this.isEditable() && !item?.price?.ad_hoc}
+                max={(item?.price?.product as Product)?.purchase_limit}
+                editable={this.isEditable(item)}
                 removable={this.isRemovable()}
                 quantity={item.quantity}
                 amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.subtotal_amount}

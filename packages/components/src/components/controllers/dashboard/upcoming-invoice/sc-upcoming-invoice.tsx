@@ -88,13 +88,13 @@ export class ScUpcomingInvoice {
           'payment_method.paypal_account',
           'payment_method.bank_account',
         ],
-        subscription: {
-          price: this.priceId,
-          quantity: this.quantity,
-          ...(this.adHocAmount ? { ad_hoc_amount: this.adHocAmount } : {}),
-          ...(this.discount ? { discount: this.discount } : {}),
-        },
       }),
+      data: {
+        price: this.priceId,
+        quantity: this.quantity,
+        ...(this.adHocAmount ? { ad_hoc_amount: this.adHocAmount } : {}),
+        ...(this.discount ? { discount: this.discount } : {}),
+      },
     })) as Period;
     return this.invoice;
   }

@@ -3,8 +3,8 @@ Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
-Tested up to: 6.0
-Stable tag: 1.1.9
+Tested up to: 6.1
+Stable tag: 1.2.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -42,7 +42,7 @@ This way you get everything you want with none of the stuff you don’t want. Su
 Currently SureCart is ideally suited for selling non-physical goods. This would be selling online courses, memberships, subscriptions, selling services, selling event tickets, accepting donations, selling digital downloads, etc. These are no non-physical goods.
 
 However you can still sell physical products with SureCart and we have merchants selling physical goods currently, but we have yet to launch some essential features for selling physical goods. These are inventory control, shipping calculations, and country buying restrictions. These are planned by the end of the year.
-
+`
 ## Now let me tell you what SureCart can do, then why you could consider using it. ##
 
 ## SureCart Features ##
@@ -242,6 +242,117 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.2.1  - Novermber 15, 2022 =
+* New: Textarea field.
+* Improvement: Show scratch price on order summary if discount is present.
+* Improvement: Edit store (admin) email templates.
+* Improvement: Button style consistency on product page.
+* Improvement: Enable or disable customer subscription reminder emails is now a free feature.
+* Fix: Some custom form fields not saving metadata for some processors.
+* Fix: sc_order_confirmation shortcode not displaying.
+* Fix: Overflow issue on some themes with address component.
+* Fix: Issue with some shortcodes not displaying if slide-out cart is disabled by admin.
+
+= 1.2.0  - Novermber 14, 2022 =
+* New: Manual payment methods.
+* New: Abandoned Checkouts (Pro).
+* Improvement: Add Dutch notifications and invoice language.
+* Fix: Issue with default country selection in address block not initializing with new checkout.
+* Fix: Prevent false positive notice from Sucuri for our honeypot field.
+* Fix: Issue with Stripe Payment Element redirect processors not working on iOS devices.
+
+= 1.1.19  - Novermber 2, 2022 =
+* Improvement: WordPress 6.1 Compatibility.
+
+= 1.1.18  - October 31, 2022 =
+* Improvement: Set custom background and text colors for cart, buy buttons and submit buttons.
+* Improvement: Set placeholder labels for address block.
+* Improvement: Set a default country for shipping address.
+* Improvement: Admin ability "restore" a subscription that has been canceled.
+* Improvement: Admin ability to mark an order as paid.
+* Improvement: Admin ability to turn off tax on individual subscriptions.
+* Improvement: Show payment failure list on orders if failed payments.
+* Fix: Radio button individual selection not working in forms.
+* Fix: Issue with PayPal not working on Safari mobile browsers.
+* Fix: Issue with certain embeds not appearing on dashboard pages.
+
+= 1.1.17  - October 22, 2022 =
+* Fix: Quantity selector not working in some cases.
+
+= 1.1.16  - October 19, 2022 =
+* Improvement: Wording for price select options.
+* Fix: Limit line item quantity selector based on product purchase limit.
+* Fix: Nested shortcodes not rendering with some themes.
+* Fix: Buy button shortcode text not customizable.
+* Fix: Payment limit field disappearing when amount is removed.
+* Fix: Checkout form intermittently hanging when submitted.
+
+= 1.1.15 - October 14, 2022 =
+* New: Buddyboss groups integration with purchases.
+* New: Beaver Builder form select module.
+* New: Choose your store invoice and email notifications language.
+* New: Subscription cancellation notification and admin settings (Pro).
+* Improvement: Price selector, donation block accessibility improvements.
+* Improvement: Rename "Payment Plan" to "Installment".
+* Improvement: Show notice if Stripe requires SSL (Live Mode) and SSL is not enabled on the site.
+* Improvement: Change default title on customer dashboard from Subscriptions to Plans to account for installment plans and subscriptions.
+* Improvement: Add elementor block to category and add badge.
+* Improvement: Rearrange merchant subscription list and remove type column.
+* Improvement: Rename Input and Radio Group names to Text Field and Radio Select.
+* Fix: Elementor popup visibility settings missing.
+* Fix: Don't error when new unused webhooks are added to the platform.
+* Fix: Calendar translations on dashboard.
+* Fix: Japanese letters not displaying in customer dashboard tab.
+* Fix: Merchant subscription periods amount sometimes inaccurate.
+* Fix: Percent coupons missing % in admin list.
+* Fix: Error/validation translations not showing on checkout.
+* Fix: Issue with refund amount displaying wrong in form when processing a refund.
+* Fix: Error sometimes occurring when validating customer link.
+
+= 1.1.14 - October 5, 2022 =
+* New: Radio button group form block.
+* New: Password confirmation option in password form block.
+* New: Customer name now syncs with WordPress name on checkout.
+* New: Link to delete test data.
+* Fix: Issue with payment failure email links going to 404.
+* Fix: Issue with clicking add to cart button for an existing item in cart sometimes creating 2 line items instead of 1.
+* Fix: Issue with theme line-height sometimes cutting off decenders in dashboard tabs.
+
+= 1.1.13 - September 27, 2022 =
+* New: Thrive Automator purchase events integration.
+* New: Elementor module! Select, edit and create forms from the new Elementor widget.
+* New: Per customer purchase limits for products.
+* New: Ability to not require an upfront payment method for subscriptions (i.e. offer free trials without credit cards).
+* New: Add custom labels to donation block amounts instead of showing the amount.
+* Improvement: Add order "type" to the merchant order admin (renewal vs checkout).
+* Improvement: Update "Edit Customer" button to "View Customer".
+* Improvement: Newly registered users are automatically logged in after checking out.
+* Improvement: Change default customer dashboard button text to "Customer Dashboard" instead of "Manage Orders".
+* Fix: Issue with object caching causing dashboard slowness on some hosts.
+* Fix: Tax amount missing from confirmation page.
+* Fix: Issue with revoke purchase button not updating after revoking purchase.
+* Fix: Issue with set a password nag showing even if customer supplies a password.
+* Fix: Issue with Jetpack "Notes" not allowing "n" keypresses on our inputs.
+
+= 1.1.12 - September 22, 2022 =
+* New: Recaptcha v3 integration.
+* New: Honeypot spam protection.
+* New: Turn on subscription renewal reminders.
+* New: Edit subscription renewal reminders email template.
+* Improvement: Show notice for user to set password on customer dashboard if they have not yet set one.
+* Improvement: Show the coupon used along with the discount on the Merchant admin order's screen.
+* Improvement: Fix issue with possible theme conflicts re-sizing price selectors.
+* Improvement: Improve select box keyboard accessibility.
+* Improvement: Improve components preload performance for some themes that render content in a later priority.
+* Fix: Issue with users not getting created with special characters in name.
+
+= 1.1.11 - September 14, 2022 =
+* Improvement: Preload key components to prevent momentary blank loading screen on checkout page for slow connections.
+* Fix: Subscription plan price incorrect on some instances on customer dashboard.
+
+= 1.1.10 - September 8, 2022 =
+* Fix: Issue with API Token sometimes not saving on settings page.
 
 = 1.1.9 - September 6, 2022 =
 * New: Dark mode theme

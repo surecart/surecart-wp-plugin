@@ -17,7 +17,7 @@ const DEFAULT_TEMPLATE = [
 	['surecart/order-confirmation-line-items', {}],
 	[
 		'surecart/customer-dashboard-button',
-		{ label: __('Manage Orders', 'surecart'), full: true },
+		{ label: __('Customer Dashboard', 'surecart'), full: true },
 	],
 ];
 

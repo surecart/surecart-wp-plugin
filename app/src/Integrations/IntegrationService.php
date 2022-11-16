@@ -272,6 +272,9 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	 * @return object
 	 */
 	public function _getItem( $id ) {
+		if ( ! $this->enabled() ) {
+			return;
+		}
 		$item       = (object) $this->getItem( $id );
 		$item->logo = esc_url_raw( $this->getLogo() );
 		return $item;

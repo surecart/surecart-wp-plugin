@@ -2,7 +2,7 @@
 namespace SureCartBlocks\Controllers;
 
 use SureCart\Models\Component;
-use SureCart\Models\PaymentIntent;
+use SureCart\Models\Processor;
 use SureCart\Models\User;
 
 /**
@@ -28,7 +28,7 @@ class PaymentMethodController extends BaseController {
 			->with(
 				[
 					'isCustomer' => User::current()->isCustomer(),
-					'query' => [
+					'query'      => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
 						'page'         => 1,
 						'per_page'     => 100,
@@ -71,7 +71,7 @@ class PaymentMethodController extends BaseController {
 		}
 
 		$applicable_processors = array_filter(
-			\SureCart::account()->processors ?? [],
+			Processor::get() ?? [],
 			function( $processor ) {
 				return $processor->live_mode === $this->isLiveMode() && $processor->recurring_enabled;
 			}
@@ -91,6 +91,8 @@ class PaymentMethodController extends BaseController {
 		if ( empty( $processor_names ) ) {
 			return '<sc-alert type="info" open>' . __( 'You cannot currently add a payment method. Please contact us for support.', 'surecart' ) . '</sc-alert>';
 		}
+
+		$success_url = esc_url( $_GET['success_url'] ?? home_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		ob_start();
 		?>
@@ -120,7 +122,7 @@ class PaymentMethodController extends BaseController {
 							</sc-flex>
 						</span>
 						<sc-stripe-add-method
-							success-url="<?php echo esc_url( home_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ) );  // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>"
+							success-url="<?php echo esc_url( $success_url ); ?>"
 							live-mode="<?php echo esc_attr( $this->isLiveMode() ? 'true' : 'false' ); ?>"
 							customer-id="<?php echo esc_attr( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) ); ?>">
 						</sc-stripe-add-method>

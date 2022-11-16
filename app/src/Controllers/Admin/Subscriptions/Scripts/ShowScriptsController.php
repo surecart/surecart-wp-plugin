@@ -13,7 +13,7 @@ class ShowScriptsController extends AdminModelEditController {
 	 *
 	 * @var array
 	 */
-	protected $with_data = [ 'currency', 'supported_currencies' ];
+	protected $with_data = [ 'currency', 'tax_protocol', 'supported_currencies' ];
 
 	/**
 	 * Script handle.

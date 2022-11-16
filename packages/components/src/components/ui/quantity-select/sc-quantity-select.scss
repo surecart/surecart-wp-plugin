@@ -123,7 +123,10 @@
   }
 
   &.button--disabled {
-    color: var(--sc-input-color-disabled);
+    background-color: var(--sc-input-background-color-disabled);
+    border-color: var(--sc-input-border-color-disabled);
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }
 

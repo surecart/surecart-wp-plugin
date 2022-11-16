@@ -177,29 +177,30 @@ class User implements ArrayAccess, JsonSerializable {
 				'user_name'     => '',
 				'user_email'    => '',
 				'user_password' => '',
+				'first_name'    => '',
+				'last_name'     => '',
 			]
 		);
 
-		// get username from first part of email.
-		if ( empty( $args['user_name'] ) ) {
-			$parts             = explode( '@', $args['user_email'] );
-			$username          = $parts[0];
-			$args['user_name'] = $username;
-		}
+		// use the username or the email as a fallback.
+		$name     = ! empty( sanitize_user( $args['user_name'], true ) ) ? sanitize_user( $args['user_name'], true ) : $args['user_email'];
+		$username = $this->createUniqueUsername( sanitize_user( $name, true ) );
 
-		$username      = $this->createUniqueUsername( $args['user_name'] );
 		$user_password = trim( $args['user_password'] );
 		$user_created  = false;
 
 		// password is not provided.
 		if ( empty( $user_password ) ) {
 			$user_password = wp_generate_password( 12, false );
-			$user_id       = wp_create_user( $username, $user_password, $args['user_email'] );
-			update_user_meta( $user_id, 'default_password_nag', true );
+			$user_id       = wp_create_user( sanitize_user( $username, true ), $user_password, $args['user_email'] );
+			// turn off this feature with a filter.
+			if ( apply_filters( 'surecart/default_password_nag', true, $user_id ) ) {
+				update_user_meta( $user_id, 'default_password_nag', true );
+			}
 			$user_created = true;
 		} else {
 			// Password has been provided.
-			$user_id      = wp_create_user( $username, $user_password, $args['user_email'] );
+			$user_id      = wp_create_user( sanitize_user( $username, true ), $user_password, $args['user_email'] );
 			$user_created = true;
 		}
 
@@ -209,6 +210,13 @@ class User implements ArrayAccess, JsonSerializable {
 
 		$user = new \WP_User( $user_id );
 		$user->add_role( 'sc_customer' );
+
+		if ( $args['first_name'] ) {
+			$user->first_name = $args['first_name'];
+		}
+		if ( $args['last_name'] ) {
+			$user->last_name = $args['last_name'];
+		}
 
 		if ( $user_created ) {
 			wp_update_user( $user );

@@ -40,7 +40,7 @@ export default ({ period, loading }) => {
 					return (
 						<ScProductLineItem
 							key={item.id}
-							imageUrl={item?.price?.metadata?.wp_attachment_src}
+							imageUrl={item?.price?.product?.image_url}
 							name={item?.price?.product?.name}
 							editable={false}
 							removable={false}
@@ -92,6 +92,14 @@ export default ({ period, loading }) => {
 						label={__('Discounts', 'surecart')}
 						currency={checkout?.currency}
 						value={checkout?.discount_amount}
+					/>
+				)}
+
+				{!!checkout?.bump_amount && (
+					<LineItem
+						label={__('Bump Discounts', 'surecart')}
+						currency={checkout?.currency}
+						value={checkout?.bump_amount}
 					/>
 				)}
 

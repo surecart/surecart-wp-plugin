@@ -25,6 +25,7 @@
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-login-form](../../controllers/login)
  - [sc-order](../../controllers/dashboard/order)
+ - [sc-order-bump](../../controllers/checkout-form/sc-order-bump)
  - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
  - [sc-order-confirmation-totals](../../controllers/confirmation/order-confirmation-totals)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
@@ -42,6 +43,7 @@ graph TD;
   sc-invoices-list --> sc-divider
   sc-login-form --> sc-divider
   sc-order --> sc-divider
+  sc-order-bump --> sc-divider
   sc-order-confirmation-details --> sc-divider
   sc-order-confirmation-totals --> sc-divider
   sc-orders-list --> sc-divider

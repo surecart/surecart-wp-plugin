@@ -21,7 +21,7 @@ export class ScQuantitySelect {
   @Prop() clickEl?: HTMLElement;
 
   @Prop() disabled: boolean;
-  @Prop() max: number = 100;
+  @Prop() max: number = Infinity;
   @Prop() min: number = 1;
   @Prop({ mutable: true, reflect: true }) quantity: number = 0;
   /** Inputs focus */
@@ -67,7 +67,7 @@ export class ScQuantitySelect {
   }
 
   handleChange() {
-    this.quantity = parseInt(this.input.value);
+    this.quantity = parseInt(this.input.value) > this.max ? this.max : parseInt(this.input.value);
     this.scChange.emit(this.quantity);
   }
 
@@ -91,7 +91,7 @@ export class ScQuantitySelect {
           part="minus"
           role="button"
           aria-label={__('decrease number', 'surecart')}
-          class={{ 'button__decrease': true, 'button--disabled': this.quantity <= this.min }}
+          class={{ 'button__decrease': true, 'button--disabled': this.quantity <= this.min && this.min > 1 }}
           onClick={() => this.quantity > this.min && this.decrease()}
         >
           <sc-icon name="minus" exportparts="base:minus__icon"></sc-icon>

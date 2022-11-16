@@ -5,16 +5,16 @@ import { store } from '../store';
 
 export default () => {
 	return {
-		...useSelect( ( select ) => {
-			const subscriptions = select( store ).selectSubscriptions();
+		...useSelect((select) => {
+			const subscriptions = select(store).selectSubscriptions();
 			return {
 				subscriptions,
-				loading: select( store ).isResolving( 'selectSubscriptions' ),
-				error: select( coreStore ).selectError(),
-				isSaving: select( coreStore ).isSaving(),
-				isInvalid: select( uiStore ).isInvalid(),
+				loading: select(store).isResolving('selectSubscriptions'),
+				error: select(coreStore).selectError(),
+				isSaving: select(coreStore).isSaving(),
+				isInvalid: select(uiStore).isInvalid(),
 			};
-		} ),
-		...useDispatch( store ),
+		}),
+		...useDispatch(store),
 	};
 };

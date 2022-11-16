@@ -2,6 +2,9 @@
 
 namespace SureCart\WordPress\Assets;
 
+use SureCart\Models\ManualPaymentMethod;
+use SureCart\Models\Processor;
+
 /**
  * Handles the component theme.
  */
@@ -151,6 +154,14 @@ class ScriptsService {
 		);
 
 		wp_localize_script( 'surecart-cart-blocks', 'scIcons', [ 'path' => esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) ] );
+
+		// regsiter recaptcha.
+		wp_register_script( 'surecart-google-recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . \SureCart::settings()->recaptcha()->getSiteKey(), [], \SureCart::plugin()->version(), true );
+
+		// register stripe if enabled.
+		if ( get_option( 'surecart_load_stripe_js', false ) ) {
+			wp_enqueue_script( 'surecart-stripe-script', 'https://js.stripe.com/v3', [], \SureCart::plugin()->version(), false );
+		}
 	}
 
 	/**
@@ -179,7 +190,20 @@ class ScriptsService {
 				'page_id'             => get_the_ID(),
 				'nonce'               => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 				'nonce_endpoint'      => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
+				'recaptcha_site_key'  => \SureCart::settings()->recaptcha()->getSiteKey(),
 			]
+		);
+
+		// fix shitty jetpack issues key hijacking issues.
+		add_filter(
+			'wp_head',
+			function() {
+				wp_dequeue_script( 'wpcom-notes-common' );
+				wp_dequeue_script( 'wpcom-notes-admin-bar' );
+				wp_dequeue_style( 'wpcom-notes-admin-bar' );
+				wp_dequeue_style( 'noticons' );
+			},
+			200
 		);
 
 		wp_localize_script( 'surecart-components', 'scIcons', [ 'path' => esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) ] );
@@ -229,14 +253,16 @@ class ScriptsService {
 			'surecart-blocks',
 			'scBlockData',
 			[
-				'processors' => (array) \SureCart::account()->processors ?? [],
-				'plugin_url' => \SureCart::core()->assets()->getUrl(),
-				'currency'   => \SureCart::account()->currency,
-				'theme'      => get_option( 'surecart_theme', 'light' ),
-				'beta'       => [
+				'processors'           => (array) Processor::get() ?? [],
+				'manualPaymentMethods' => (array) ManualPaymentMethod::get() ?? [],
+				'plugin_url'           => \SureCart::core()->assets()->getUrl(),
+				'currency'             => \SureCart::account()->currency,
+				'theme'                => get_option( 'surecart_theme', 'light' ),
+				'entitlements'         => \SureCart::account()->entitlements,
+				'beta'                 => [
 					'stripe_payment_element' => (bool) get_option( 'sc_stripe_payment_element', false ),
 				],
-				'pages'      => [
+				'pages'                => [
 					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 					'checkout'  => \SureCart::pages()->url( 'checkout' ),
 				],

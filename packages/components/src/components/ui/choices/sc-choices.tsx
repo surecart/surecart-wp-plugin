@@ -1,4 +1,4 @@
-import { Component, Prop, h, State, Element, Watch } from '@stencil/core';
+import { Component, Prop, h, State, Element, Watch, Method } from '@stencil/core';
 
 let id = 0;
 
@@ -48,6 +48,11 @@ export class ScChoices {
   @Prop() errorMessage: string = '';
 
   @State() width: number;
+
+  @Method()
+  async triggerFocus() {
+    this.el.focus();
+  }
 
   componentDidLoad() {
     this.handleRequiredChange();

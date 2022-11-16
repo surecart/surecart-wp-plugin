@@ -25,7 +25,7 @@ export default ({ customer, loading }) => {
 							id: customer?.id,
 						})}
 					>
-						{__('Edit Customer', 'surecart')}
+						{__('View Customer', 'surecart')}
 					</ScButton>
 				</div>
 			}
@@ -50,9 +50,10 @@ export default ({ customer, loading }) => {
 							</span>
 							<span slot="price">
 								{customer?.balances?.data.map(
-									({ amount, currency }) => {
+									({ amount, currency, id }) => {
 										return (
 											<ScFormatNumber
+												key={id}
 												type="currency"
 												currency={currency}
 												value={-amount}
