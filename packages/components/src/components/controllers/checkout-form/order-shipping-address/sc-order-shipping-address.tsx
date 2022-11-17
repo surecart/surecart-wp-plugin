@@ -101,6 +101,10 @@ export class ScOrderShippingAddress {
     if (this.defaultCountry) {
       this.address.country = this.defaultCountry;
     }
+
+    if (this.shippingEnabled || this.taxStatus ) {
+      this.required = true;
+    }
   }
 
   render() {
