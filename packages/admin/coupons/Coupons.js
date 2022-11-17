@@ -16,6 +16,7 @@ import Logo from '../templates/Logo';
 import Template from '../templates/SingleModel';
 import Codes from './modules/Codes';
 import Limits from './modules/Limits';
+import Conditions from './modules/Conditions';
 // modules
 import Name from './modules/Name';
 import Types from './modules/Types';
@@ -243,6 +244,12 @@ export default () => {
 				/>
 
 				<Codes id={coupon?.id || id} loading={isLoading} />
+
+				<Conditions
+					loading={isLoading}
+					bump={''}
+					updateBump={''}
+				/>
 
 				<Types
 					loading={isLoading}
