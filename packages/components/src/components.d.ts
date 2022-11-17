@@ -1672,7 +1672,7 @@ export namespace Components {
         "postalCodePlaceholder": string;
         "reportValidity": () => Promise<boolean>;
         /**
-          * Is this required (defaults to true)
+          * Is this required (defaults to false)
          */
         "required": boolean;
         /**
@@ -6133,7 +6133,7 @@ declare namespace LocalJSX {
         "placeholders"?: Partial<Address>;
         "postalCodePlaceholder"?: string;
         /**
-          * Is this required (defaults to true)
+          * Is this required (defaults to false)
          */
         "required"?: boolean;
         /**
