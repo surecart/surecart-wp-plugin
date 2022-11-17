@@ -1659,6 +1659,10 @@ export namespace Components {
         "showName": boolean;
         "statePlaceholder": string;
         /**
+          * Tax enabled status of the order
+         */
+        "taxEnabled": boolean;
+        /**
           * Tax status of the order
          */
         "taxStatus": TaxStatus;
@@ -6055,6 +6059,10 @@ declare namespace LocalJSX {
          */
         "showName"?: boolean;
         "statePlaceholder"?: string;
+        /**
+          * Tax enabled status of the order
+         */
+        "taxEnabled"?: boolean;
         /**
           * Tax status of the order
          */
