@@ -105,6 +105,12 @@ export class ScOrderShippingAddress {
       this.address.country = this.defaultCountry;
     }
 
+    this.handleRequirementChange();
+  }
+
+  @Watch('shippingEnabled')
+  @Watch('taxEnabled')
+  handleRequirementChange() {
     if (this.shippingEnabled || this.taxEnabled) {
       this.required = true;
     }
