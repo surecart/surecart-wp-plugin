@@ -26,6 +26,9 @@ export class ScOrderShippingAddress {
   /** Tax status of the order */
   @Prop() taxStatus: TaxStatus;
 
+  /** Tax enabled status of the order */
+  @Prop() taxEnabled: boolean;
+
   /** Is shipping enabled for this order? */
   @Prop() shippingEnabled: boolean;
 
@@ -102,7 +105,7 @@ export class ScOrderShippingAddress {
       this.address.country = this.defaultCountry;
     }
 
-    if (this.shippingEnabled || this.taxStatus ) {
+    if ( this.shippingEnabled || this.taxEnabled ) {
       this.required = true;
     }
   }
@@ -142,4 +145,4 @@ export class ScOrderShippingAddress {
   }
 }
 
-openWormhole(ScOrderShippingAddress, ['shippingAddress', 'loading', 'taxStatus', 'shippingEnabled'], false);
+openWormhole(ScOrderShippingAddress, ['shippingAddress', 'loading', 'taxStatus', 'taxEnabled', 'shippingEnabled'], false);
