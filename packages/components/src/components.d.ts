@@ -54,6 +54,10 @@ export namespace Components {
          */
         "hide": () => Promise<void>;
         /**
+          * No icon
+         */
+        "noIcon": boolean;
+        /**
           * Indicates whether or not the alert is open. You can use this in lieu of the show/hide methods.
          */
         "open": boolean;
@@ -179,6 +183,10 @@ export namespace Components {
           * Is this card borderless.
          */
         "borderless": boolean;
+        /**
+          * A link for the card.
+         */
+        "href": string;
         /**
           * Is this card loading.
          */
@@ -340,6 +348,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Makes this edit and not editable.
+         */
+        "edit": boolean;
+        /**
           * Draws the checkbox in an indeterminate state.
          */
         "indeterminate": boolean;
@@ -359,10 +371,6 @@ export namespace Components {
           * Makes the checkbox a required field.
          */
         "required": boolean;
-        /**
-          * Makes this static and not editable.
-         */
-        "static": boolean;
         /**
           * Removes focus from the checkbox.
          */
@@ -560,6 +568,7 @@ export namespace Components {
           * Input size
          */
         "size": 'small' | 'medium' | 'large';
+        "triggerFocus": () => Promise<void>;
     }
     interface ScColumn {
     }
@@ -1816,17 +1825,9 @@ export namespace Components {
     }
     interface ScPayment {
         /**
-          * Is this busy.
+          * Checkout Session from sc-checkout.
          */
-        "busy": boolean;
-        /**
-          * The currency code.
-         */
-        "currencyCode": string;
-        /**
-          * Default
-         */
-        "defaultProcessor": ProcessorName;
+        "checkout": Checkout;
         /**
           * Hide the test mode badge
          */
@@ -1836,41 +1837,17 @@ export namespace Components {
          */
         "label": string;
         /**
-          * Is this loading.
-         */
-        "loading": boolean;
-        /**
           * Is this created in "test" mode
          */
         "mode": 'test' | 'live';
         /**
-          * Checkout Session from sc-checkout.
-         */
-        "order": Checkout;
-        /**
-          * Payment mode inside individual payment method (i.e. Payment Buttons)
-         */
-        "paymentMethod": 'stripe-payment-request' | null;
-        /**
-          * The current payment method for the payment
+          * The current selected processor.
          */
         "processor": string;
         /**
           * List of available processors.
          */
         "processors": Processor[];
-        /**
-          * Secure notice
-         */
-        "secureNotice": string;
-        /**
-          * Use the Stripe payment element.
-         */
-        "stripePaymentElement": boolean;
-        /**
-          * The stripe payment intent.
-         */
-        "stripePaymentIntent": PaymentIntent;
     }
     interface ScPaymentMethod {
         "full": boolean;
@@ -2145,20 +2122,6 @@ export namespace Components {
          */
         "value": string;
     }
-    interface ScProcessorProvider {
-        /**
-          * The current checkout
-         */
-        "checkout": Checkout;
-        /**
-          * The currently selected processor
-         */
-        "processor": string;
-        /**
-          * A list of available processors
-         */
-        "processors": Processor[];
-    }
     interface ScProductLineItem {
         /**
           * Product monetary amount
@@ -2180,6 +2143,10 @@ export namespace Components {
           * Recurring interval (i.e. monthly, once, etc.)
          */
         "interval": string;
+        /**
+          * The max allowed.
+         */
+        "max": number;
         /**
           * Product name
          */
@@ -2233,6 +2200,10 @@ export namespace Components {
           * Is the radio disabled
          */
         "disabled": boolean;
+        /**
+          * This will be true as a workaround in the block editor to focus on the content.
+         */
+        "edit": boolean;
         /**
           * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
          */
@@ -2850,6 +2821,10 @@ export namespace Components {
          */
         "readonly": boolean;
         /**
+          * Checks for validity and shows the browser's validation message if the control is invalid.
+         */
+        "reportValidity": () => Promise<boolean>;
+        /**
           * Makes the textarea a required field.
          */
         "required": boolean;
@@ -3148,10 +3123,6 @@ export interface ScPriceChoicesCustomEvent<T> extends CustomEvent<T> {
 export interface ScPriceInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScPriceInputElement;
-}
-export interface ScProcessorProviderCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScProcessorProviderElement;
 }
 export interface ScProductLineItemCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -3854,12 +3825,6 @@ declare global {
         prototype: HTMLScPriceInputElement;
         new (): HTMLScPriceInputElement;
     };
-    interface HTMLScProcessorProviderElement extends Components.ScProcessorProvider, HTMLStencilElement {
-    }
-    var HTMLScProcessorProviderElement: {
-        prototype: HTMLScProcessorProviderElement;
-        new (): HTMLScProcessorProviderElement;
-    };
     interface HTMLScProductLineItemElement extends Components.ScProductLineItem, HTMLStencilElement {
     }
     var HTMLScProductLineItemElement: {
@@ -4255,7 +4220,6 @@ declare global {
         "sc-price-choice": HTMLScPriceChoiceElement;
         "sc-price-choices": HTMLScPriceChoicesElement;
         "sc-price-input": HTMLScPriceInputElement;
-        "sc-processor-provider": HTMLScProcessorProviderElement;
         "sc-product-line-item": HTMLScProductLineItemElement;
         "sc-provider": HTMLScProviderElement;
         "sc-purchase-downloads-list": HTMLScPurchaseDownloadsListElement;
@@ -4356,6 +4320,10 @@ declare namespace LocalJSX {
           * The length of time, in milliseconds, the alert will show before closing itself. If the user interacts with the alert before it closes (e.g. moves the mouse over it), the timer will restart. Defaults to `Infinity`.
          */
         "duration"?: number;
+        /**
+          * No icon
+         */
+        "noIcon"?: boolean;
         /**
           * When alert is hidden
          */
@@ -4494,6 +4462,10 @@ declare namespace LocalJSX {
           * Is this card borderless.
          */
         "borderless"?: boolean;
+        /**
+          * A link for the card.
+         */
+        "href"?: string;
         /**
           * Is this card loading.
          */
@@ -4668,6 +4640,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * Makes this edit and not editable.
+         */
+        "edit"?: boolean;
+        /**
           * Draws the checkbox in an indeterminate state.
          */
         "indeterminate"?: boolean;
@@ -4695,10 +4671,6 @@ declare namespace LocalJSX {
           * Makes the checkbox a required field.
          */
         "required"?: boolean;
-        /**
-          * Makes this static and not editable.
-         */
-        "static"?: boolean;
         /**
           * The checkbox's value attribute.
          */
@@ -6327,17 +6299,9 @@ declare namespace LocalJSX {
     }
     interface ScPayment {
         /**
-          * Is this busy.
+          * Checkout Session from sc-checkout.
          */
-        "busy"?: boolean;
-        /**
-          * The currency code.
-         */
-        "currencyCode"?: string;
-        /**
-          * Default
-         */
-        "defaultProcessor"?: ProcessorName;
+        "checkout"?: Checkout;
         /**
           * Hide the test mode badge
          */
@@ -6347,45 +6311,21 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
-          * Is this loading.
-         */
-        "loading"?: boolean;
-        /**
           * Is this created in "test" mode
          */
         "mode"?: 'test' | 'live';
         /**
-          * Set the order procesor.
+          * Set the checkout procesor.
          */
-        "onScSetProcessor"?: (event: ScPaymentCustomEvent<ProcessorName>) => void;
+        "onScSetProcessor"?: (event: ScPaymentCustomEvent<{ id: string; manual: boolean } | null>) => void;
         /**
-          * Checkout Session from sc-checkout.
-         */
-        "order"?: Checkout;
-        /**
-          * Payment mode inside individual payment method (i.e. Payment Buttons)
-         */
-        "paymentMethod"?: 'stripe-payment-request' | null;
-        /**
-          * The current payment method for the payment
+          * The current selected processor.
          */
         "processor"?: string;
         /**
           * List of available processors.
          */
         "processors"?: Processor[];
-        /**
-          * Secure notice
-         */
-        "secureNotice"?: string;
-        /**
-          * Use the Stripe payment element.
-         */
-        "stripePaymentElement"?: boolean;
-        /**
-          * The stripe payment intent.
-         */
-        "stripePaymentIntent"?: PaymentIntent;
     }
     interface ScPaymentMethod {
         "full"?: boolean;
@@ -6692,24 +6632,6 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface ScProcessorProvider {
-        /**
-          * The current checkout
-         */
-        "checkout"?: Checkout;
-        /**
-          * Event to set a processor in the checkout.
-         */
-        "onScSetProcessor"?: (event: ScProcessorProviderCustomEvent<string>) => void;
-        /**
-          * The currently selected processor
-         */
-        "processor"?: string;
-        /**
-          * A list of available processors
-         */
-        "processors"?: Processor[];
-    }
     interface ScProductLineItem {
         /**
           * Product monetary amount
@@ -6731,6 +6653,10 @@ declare namespace LocalJSX {
           * Recurring interval (i.e. monthly, once, etc.)
          */
         "interval"?: string;
+        /**
+          * The max allowed.
+         */
+        "max"?: number;
         /**
           * Product name
          */
@@ -6802,6 +6728,10 @@ declare namespace LocalJSX {
           * Is the radio disabled
          */
         "disabled"?: boolean;
+        /**
+          * This will be true as a workaround in the block editor to focus on the content.
+         */
+        "edit"?: boolean;
         /**
           * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
          */
@@ -7745,7 +7675,6 @@ declare namespace LocalJSX {
         "sc-price-choice": ScPriceChoice;
         "sc-price-choices": ScPriceChoices;
         "sc-price-input": ScPriceInput;
-        "sc-processor-provider": ScProcessorProvider;
         "sc-product-line-item": ScProductLineItem;
         "sc-provider": ScProvider;
         "sc-purchase-downloads-list": ScPurchaseDownloadsList;
@@ -7906,7 +7835,6 @@ declare module "@stencil/core" {
             "sc-price-choice": LocalJSX.ScPriceChoice & JSXBase.HTMLAttributes<HTMLScPriceChoiceElement>;
             "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
-            "sc-processor-provider": LocalJSX.ScProcessorProvider & JSXBase.HTMLAttributes<HTMLScProcessorProviderElement>;
             "sc-product-line-item": LocalJSX.ScProductLineItem & JSXBase.HTMLAttributes<HTMLScProductLineItemElement>;
             "sc-provider": LocalJSX.ScProvider & JSXBase.HTMLAttributes<HTMLScProviderElement>;
             "sc-purchase-downloads-list": LocalJSX.ScPurchaseDownloadsList & JSXBase.HTMLAttributes<HTMLScPurchaseDownloadsListElement>;

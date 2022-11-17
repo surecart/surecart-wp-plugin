@@ -208,10 +208,10 @@ export class ScAddress {
             />
           )}
 
-          <div class="sc-address__columns">
+          <div class="sc-address__columns" part="columns">
             {this.showCity && (
               <sc-input
-				exportparts="base:input__base, input, form-control, label, help-text"
+                exportparts="base:input__base, input, form-control, label, help-text"
                 placeholder={this.placeholders.city || __('City', 'surecart')}
                 name={this.names?.city}
                 value={this?.address?.city}
@@ -219,7 +219,7 @@ export class ScAddress {
                 onScInput={(e: any) => this.handleAddressInput({ city: e.target.value || null })}
                 required={this.required}
                 squared={!!this?.regions?.length}
-                style={{ marginRight: this.showPostal ? '-1px' : '0' }}
+                // style={{ marginRight: this.showPostal ? '-1px' : '0' }}
                 squared-top
                 disabled={this.disabled}
                 squared-right={this.showPostal}
@@ -228,7 +228,7 @@ export class ScAddress {
 
             {this.showPostal && (
               <sc-input
-				exportparts="base:input__base, input, form-control, label, help-text"
+                exportparts="base:input__base, input, form-control, label, help-text"
                 placeholder={this.placeholders.postal_code || __('Postal Code/Zip', 'surecart')}
                 name={this.names?.postal_code}
                 onScChange={(e: any) => this.updateAddress({ postal_code: e.target.value || null })}
@@ -247,7 +247,7 @@ export class ScAddress {
 
           {!!this?.regions?.length && !!this?.address?.country && (
             <sc-select
-		      exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty"
+              exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty"
               placeholder={this.placeholders.state || __('State/Province/Region', 'surecart')}
               name={this.names?.state}
               autocomplete={'address-level1'}

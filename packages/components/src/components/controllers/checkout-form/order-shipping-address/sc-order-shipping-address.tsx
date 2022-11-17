@@ -1,6 +1,7 @@
-import { Component, Prop, h, Watch, State, Event, EventEmitter, Method } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Method, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
+
 import { Address, Checkout, TaxStatus } from '../../../../types';
 
 @Component({
@@ -107,6 +108,7 @@ export class ScOrderShippingAddress {
     if (this.shippingEnabled || this.full) {
       return (
         <sc-address
+          exportparts="label, help-text, form-control, input__base, select__base, columns, search__base, menu__base"
           ref={el => (this.input = el as any)}
           label={this.label || __('Shipping Address', 'surecart')}
           placeholders={{

@@ -1,6 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
+
 import { Checkout, Processor } from '../../../../types';
 
 /**
@@ -60,6 +61,8 @@ export class ScPayment {
       default:
         return 'stripe';
     }
+  }
+
   /** Handle processor invalid state. */
   @Listen('scProcessorInvalid')
   selectFirstProcessor() {

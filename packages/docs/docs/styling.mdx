@@ -2,7 +2,7 @@
 
 SureCart components use a [shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM) to encapsulate their styles. This provides a few advantages:
 
-- Styles are protected from any potential style conflicts (theme styles, for example).
+- Styles are protected from any potential style conflicts. This means you don't have to worry about theme or plugin styles conflicting with the SureCart UI.
 - If the internal HTML structure of any components change, you won't need to update any custom css.
 
 There are two ways to make customizations to SureCart components. One way is with CSS custom properties ("CSS variables"), the other is with CSS parts ("parts").
@@ -273,43 +273,139 @@ Here's a list of commonly used available css variables.
   ```
 </details>
 
+import styles from './styles.module.css';
+
 ## CSS Parts
 While CSS Variables offer a high-level way to customize the SureCart, css parts offer a low-level way to customize individual components. This is done with pure CSS — nothing else is required.
 
 SureCart components use a shadow DOM to encapsulate their styles. This means you can't simply target their internals with the usual CSS selectors as you are used to. Instead, components expose "parts" that can be targeted with the CSS part selector, or `::part()`.
 
-Here's an example that modifies an input component to a more techy/brutalist style:
+### Some Examples
+Here's an example that modifies various components to a more techy/brutalist style:
 
 import DemoTabs from '../components/Demo-Tabs.js';
 import ComponentDoc from '../components/Component-Doc.js';
 
+#### Input/Text Field
 <DemoTabs>
 	<DemoTabs.Code>
 		{ `
-<sc-input label="Your Name" class="sc-input-style-example" placeholder="Enter your name"></sc-input>
 <style>
-.sc-input-style-example::part(base) {
+sc-input::part(base) {
   border: 1px solid black;
   box-shadow: 2px 2px #2dd4bf;
   border-radius: 0;
   font-family: monospace;
 }
-.sc-input-style-example::part(base):hover {
+sc-input::part(base):hover {
   border-color: #2dd4bf;
   box-shadow: 5px 5px #2dd4bf;
 }
-.sc-input-style-example::part(label) {
+sc-input::part(label) {
   color: black;
   font-size: 14px;
   letter-spacing: 2px;
   text-transform: uppercase;
   font-family: monospace;
 }
-.sc-input-style-example::part(input)::placeholder {
+sc-input::part(input)::placeholder {
   letter-spacing: 2px;
   text-transform: uppercase;
 }
-</style>` }
+</style>
+<sc-input label="Your Name" placeholder="Enter your name"></sc-input>` }
 	</DemoTabs.Code>
 	<sc-input label="Your Name" class="sc-input-style-example" placeholder="Enter your name"></sc-input>
+</DemoTabs>
+
+#### Customer Email
+<DemoTabs>
+	<DemoTabs.Code>
+		{ `
+<style>
+sc-customer-email {
+  --sc-font-sans: monospace;
+  --sc-color-primary-500: #2dd4bf;
+}
+sc-customer-email::part(label) {
+  color: black;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+sc-customer-email::part(base) {
+  border: 1px solid black;
+  box-shadow: 2px 2px #2dd4bf;
+  border-radius: 0;
+  font-family: monospace;
+}
+sc-customer-email::part(base):hover {
+  box-shadow: 5px 5px #2dd4bf;
+}
+</style>
+<sc-customer-email label="Email" placeholder="Enter your name"></sc-customer-email>` }
+	</DemoTabs.Code>
+	<sc-customer-email label="Email" class="sc-customer-email-style-example" placeholder="Enter your name"></sc-customer-email>
+</DemoTabs>
+
+#### Order Shipping Address
+<DemoTabs>
+	<DemoTabs.Code>
+		{ `
+<style>
+sc-order-shipping-address {
+  --sc-font-sans: monospace;
+  --sc-address-column-spacing: 1em;
+  --sc-color-primary-500: #2dd4bf;
+  font-size: 14px;
+}
+sc-order-shipping-address::part(label) {
+  color: black;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+sc-order-shipping-address::part(input__base),
+sc-order-shipping-address::part(select__base),
+sc-order-shipping-address::part(search__base) {
+  border: 1px solid black;
+  border-radius: 0;
+  font-family: monospace;
+  box-shadow: 2px 2px #2dd4bf;
+  transition: box-shadow 0.25s ease;
+}
+sc-order-shipping-address::part(input__base):hover,
+sc-order-shipping-address::part(select__base):hover,
+sc-order-shipping-address::part(search__base):hover {
+  box-shadow: 5px 5px #2dd4bf;
+}
+</style>
+<sc-order-shipping-address full></sc-order-shipping-address>` }
+	</DemoTabs.Code>
+	<sc-order-shipping-address class="sc-shipping-address-style-example" full></sc-order-shipping-address>
+</DemoTabs>
+
+#### Button
+<DemoTabs>
+	<DemoTabs.Code>
+		{ `
+<style>
+sc-button {
+  --sc-font-sans: monospace;
+  --sc-color-primary-500: #2dd4bf;
+}
+sc-button::part(base) {
+  border-radius:0;
+  background: white;
+  font-family: monospace;
+  border: 1px solid black;
+  box-shadow: 2px 2px #2dd4bf;
+  color: black;
+}
+sc-button::part(base):hover {
+  background: #2dd4bf;
+}
+</style>
+<sc-button type="primary" submit full>Purchase</sc-button>` }
+	</DemoTabs.Code>
+	<sc-button class="sc-button-example" type="primary" submit full>Purchase</sc-button>
 </DemoTabs>
