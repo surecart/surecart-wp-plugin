@@ -280,37 +280,41 @@ While CSS Variables offer a high-level way to customize the SureCart, css parts 
 
 SureCart components use a shadow DOM to encapsulate their styles. This means you can't simply target their internals with the usual CSS selectors as you are used to. Instead, components expose "parts" that can be targeted with the CSS part selector, or `::part()`.
 
+### Finding CSS Parts
+To find the specific css parts available for styling, you can check out our [Components Documentation](./components). Each has a section on "Shadow Parts" to see the available shadow parts for styling.
+
 ### Some Examples
-Here's an example that modifies various components to a more techy/brutalist style:
+Here's some examples that modify various components to a more techy/brutalist style.
 
 import DemoTabs from '../components/Demo-Tabs.js';
 import ComponentDoc from '../components/Component-Doc.js';
 
 #### Input/Text Field
+
+To restyle the input field, we are going to refer to the [input component codex](http://localhost:3000/docs/components/input#component-codex:~:text=on%20the%20input.-,Shadow%20Parts,-Part). This will give us information about the various css parts that can be used for styling.
+
 <DemoTabs>
 	<DemoTabs.Code>
 		{ `
 <style>
+sc-input {
+  --sc-font-sans: monospace;
+  --sc-color-primary-500: #2dd4bf;
+}
 sc-input::part(base) {
   border: 1px solid black;
   box-shadow: 2px 2px #2dd4bf;
   border-radius: 0;
   font-family: monospace;
 }
-sc-input::part(base):hover {
-  border-color: #2dd4bf;
-  box-shadow: 5px 5px #2dd4bf;
-}
 sc-input::part(label) {
   color: black;
   font-size: 14px;
   letter-spacing: 2px;
   text-transform: uppercase;
-  font-family: monospace;
 }
-sc-input::part(input)::placeholder {
-  letter-spacing: 2px;
-  text-transform: uppercase;
+sc-input::part(base):hover {
+  box-shadow: 5px 5px #2dd4bf;
 }
 </style>
 <sc-input label="Your Name" placeholder="Enter your name"></sc-input>` }
@@ -319,6 +323,9 @@ sc-input::part(input)::placeholder {
 </DemoTabs>
 
 #### Customer Email
+
+To restyle the customer email field, we are going to refer to the [input component codex](http://localhost:3000/docs/components/input#component-codex:~:text=on%20the%20input.-,Shadow%20Parts,-Part). This will give us information about the various css parts that can be used for styling.
+
 <DemoTabs>
 	<DemoTabs.Code>
 		{ `
@@ -349,6 +356,10 @@ sc-customer-email::part(base):hover {
 </DemoTabs>
 
 #### Order Shipping Address
+
+To restyle the customer email field, we are going to refer to the [address component codex](http://localhost:3000/docs/components/address#:~:text=reportValidity()%20%3D%3E%20Promise%3Cboolean%3E-,Shadow%20Parts,-Part). This will give us information about the various css parts that can be used for styling.
+We are also applying some css variables scoped to this component, though you can scope it to any parent component and the styles will cascade into the children.
+
 <DemoTabs>
 	<DemoTabs.Code>
 		{ `
