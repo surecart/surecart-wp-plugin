@@ -38,6 +38,20 @@ export default ({ attributes, setAttributes }) => {
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
+						<ToggleControl
+							label={__('Required', 'surecart')}
+							checked={required}
+							onChange={(required) => setAttributes({ required })}
+							help={
+								!required &&
+								__(
+									'If tax or shipping is required for checkout the address field will automatically be required.',
+									'surecart'
+								)
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
 						<TextControl
 							label={__('Label', 'surecart')}
 							value={label}
@@ -59,17 +73,6 @@ export default ({ attributes, setAttributes }) => {
 							}}
 							help={__(
 								'If products in the cart require tax but not shipping, we will show a condensed version specifically for tax collection.',
-								'surecart'
-							)}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<ToggleControl
-							label={__('Make Required', 'surecart')}
-							checked={required}
-							onChange={(required) => setAttributes({ required })}
-							help={__(
-								'If Tax or Shipping is enable then the address field must be required, so this setting can be overwrrite select on Tax or Shipping option enable.',
 								'surecart'
 							)}
 						/>
