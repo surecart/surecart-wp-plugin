@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.1
-Stable tag: 1.1.19
+Stable tag: 1.2.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,25 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.2.1  - Novermber 15, 2022 =
+* New: Textarea field.
+* Improvement: Show scratch price on order summary if discount is present.
+* Improvement: Edit store (admin) email templates.
+* Improvement: Button style consistency on product page.
+* Improvement: Enable or disable customer subscription reminder emails is now a free feature.
+* Fix: Some custom form fields not saving metadata for some processors.
+* Fix: sc_order_confirmation shortcode not displaying.
+* Fix: Overflow issue on some themes with address component.
+* Fix: Issue with some shortcodes not displaying if slide-out cart is disabled by admin.
+
+= 1.2.0  - Novermber 14, 2022 =
+* New: Manual payment methods.
+* New: Abandoned Checkouts (Pro).
+* Improvement: Add Dutch notifications and invoice language.
+* Fix: Issue with default country selection in address block not initializing with new checkout.
+* Fix: Prevent false positive notice from Sucuri for our honeypot field.
+* Fix: Issue with Stripe Payment Element redirect processors not working on iOS devices.
 
 = 1.1.19  - Novermber 2, 2022 =
 * Improvement: WordPress 6.1 Compatibility.

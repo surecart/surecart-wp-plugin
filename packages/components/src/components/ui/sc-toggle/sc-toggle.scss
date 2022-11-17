@@ -3,6 +3,14 @@
   font-family: var(--sc-font-sans);
   --sc-toggle-padding: var(--sc-spacing-medium);
 }
+
+::slotted([slot="summary"]) {
+  display: flex;
+  align-items: center;
+  flex-direction: flex-start;
+  gap: var(--sc-spacing-x-small);
+}
+
 .details {
   border-radius: var(--sc-border-radius-medium);
   background-color: var(--sc-toggle-background-color, var(--sc-color-white));

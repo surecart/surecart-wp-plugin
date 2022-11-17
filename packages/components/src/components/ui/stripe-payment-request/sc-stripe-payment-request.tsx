@@ -93,7 +93,7 @@ export class ScStripePaymentRequest {
         ...(this.getRequestObject(this.order) as PaymentRequestOptions),
       });
     } catch (e) {
-      console.log( e?.message || __('Stripe could not be loaded', 'surecart') );
+      console.log(e?.message || __('Stripe could not be loaded', 'surecart'));
     }
   }
 
@@ -254,10 +254,10 @@ export class ScStripePaymentRequest {
       // finalize
       const session = (await finalizeSession({
         id: this.order.id,
-        processor: 'stripe',
         query: {
           form_id: this.formId,
         },
+        processor: { id: 'stripe', manual: false },
       })) as Checkout;
 
       // confirm payment
@@ -265,7 +265,6 @@ export class ScStripePaymentRequest {
       await this.confirmPayment(session, ev);
       this.scSetState.emit('PAID');
       // paid.
-      console.log('paid');
       this.scPaid.emit();
       // Report to the browser that the confirmation was successful, prompting
       // it to close the browser payment method collection interface.

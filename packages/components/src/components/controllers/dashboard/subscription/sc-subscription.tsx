@@ -41,7 +41,9 @@ export class ScSubscription {
     try {
       this.busy = true;
       this.subscription = (await apiFetch({
-        path: addQueryArgs(`surecart/v1/subscriptions/${this.subscription?.id}/`, { expand: ['price', 'price.product', 'current_period', 'period.checkout'] }),
+        path: addQueryArgs(`surecart/v1/subscriptions/${this.subscription?.id}/`, {
+          expand: ['price', 'price.product', 'current_period', 'period.checkout', 'purchase', 'purchase.license', 'license.activations'],
+        }),
         method: 'PATCH',
         data: {
           purge_pending_update: true,

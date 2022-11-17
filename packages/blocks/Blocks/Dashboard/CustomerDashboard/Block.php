@@ -28,34 +28,6 @@ class Block extends BaseBlock {
 			return \SureCart::blocks()->render( 'web/login' );
 		}
 
-		// maybe redirect to the first tab if one is not specified.
-		$this->maybeRedirectToInitialTab();
-
 		return $content;
-	}
-
-	/**
-	 * If we don't yet have a tab, maybe redirect to the first tab.
-	 *
-	 * @return void
-	 */
-	public function maybeRedirectToInitialTab() {
-		if ( is_admin() || wp_doing_ajax() || defined( 'REST_REQUEST' ) ) {
-			return;
-		}
-
-		$tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : false;
-
-		if ( empty( $tab ) ) {
-			global $post;
-			$postcontent = $post->post_content;
-			$blocks      = parse_blocks( $postcontent );
-			$named       = \SureCart::blocks()->filterBy( 'blockName', 'surecart/dashboard-tab', $blocks );
-
-			if ( ! empty( $named[0]['attrs']['panel'] ) ) {
-				wp_redirect( esc_url_raw( add_query_arg( [ 'tab' => $named[0]['attrs']['panel'] ] ) ) );
-				exit;
-			}
-		}
 	}
 }

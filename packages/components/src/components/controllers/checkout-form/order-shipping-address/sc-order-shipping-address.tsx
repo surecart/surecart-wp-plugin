@@ -101,7 +101,7 @@ export class ScOrderShippingAddress {
   }
 
   componentWillLoad() {
-    if (this.defaultCountry) {
+    if (this.defaultCountry && !this.address.country) {
       this.address.country = this.defaultCountry;
     }
 

@@ -21,6 +21,7 @@ import * as expressPayment from '@blocks/ExpressPayment';
 import * as form from '@blocks/Form';
 import * as heading from '@blocks/Heading';
 import * as input from '@blocks/Input';
+import * as textarea from '@blocks/Textarea';
 import * as lineItems from '@blocks/LineItems';
 import * as taxLineItem from '@blocks/TaxLineItem';
 import * as name from '@blocks/Name';
@@ -55,6 +56,7 @@ registerBlocks([
 	form,
 	heading,
 	input,
+	textarea,
 	lineItems,
 	taxLineItem,
 	name,

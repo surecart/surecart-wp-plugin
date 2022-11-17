@@ -17,6 +17,7 @@ import {
   TaxProtocol,
   ProcessorName,
   Bump,
+  ManualPaymentMethod,
 } from '../../../../types';
 
 @Component({
@@ -70,6 +71,9 @@ export class ScCheckout {
   /** Processors enabled for this form. */
   @Prop({ mutable: true }) processors: Processor[];
 
+  /** Manual payment methods enabled for this form. */
+  @Prop() manualPaymentMethods: ManualPaymentMethod[];
+
   /** Can we edit line items? */
   @Prop() editLineItems: boolean = true;
 
@@ -101,6 +105,9 @@ export class ScCheckout {
   /** The currenly selected processor */
   @State() processor: ProcessorName = 'stripe';
 
+  /** Is the processor manual? */
+  @State() isManualProcessor: boolean;
+
   /** Holds the payment intents for the checkout. */
   @State() paymentIntents: PaymentIntents = {};
 
@@ -130,7 +137,9 @@ export class ScCheckout {
 
   @Listen('scSetProcessor')
   handleProcessorChange(e) {
-    this.processor = e.detail;
+    const { id, manual } = e.detail;
+    this.processor = id;
+    this.isManualProcessor = manual;
   }
 
   @Listen('scAddEntities')
@@ -185,16 +194,20 @@ export class ScCheckout {
   state() {
     return {
       processor: this.processor,
+      selectedProcessorId: this.processor,
       processors: (this.processors || []).filter(processor => {
         return !(this?.order().reusable_payment_method_required && !processor?.recurring_enabled);
       }),
+      manualPaymentMethods: this.manualPaymentMethods,
       processor_data: this.order()?.processor_data,
       state: this.checkoutState,
+      formState: this.checkoutState,
       paymentIntents: this.paymentIntents,
       successUrl: this.successUrl,
       bumps: this.order()?.recommended_bumps?.data as Bump[],
 
       order: this.order(),
+      abandonedCheckoutEnabled: this.order()?.abandoned_checkout_enabled,
       checkout: this.order(),
       shippingEnabled: this.order()?.shipping_enabled,
       lineItems: this.order()?.line_items?.data || [],
@@ -275,6 +288,7 @@ export class ScCheckout {
                       persist={this.persistSession}
                       modified={this.modified}
                       mode={this.mode}
+                      isManualProcessor={this.isManualProcessor}
                       form-id={this.formId}
                       group-id={this.el.id}
                       processor={this.processor}
@@ -289,7 +303,7 @@ export class ScCheckout {
             </sc-form-state-provider>
           </sc-login-provider>
 
-          {this.state().busy && <sc-block-ui z-index={9}></sc-block-ui>}
+          {this.state().busy && <sc-block-ui class="busy-block-ui" z-index={9}></sc-block-ui>}
           {this.checkoutState === 'finalizing' && (
             <sc-block-ui z-index={9} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
               {this.loadingText?.finalizing || __('Submitting order...', 'surecart')}
@@ -307,7 +321,7 @@ export class ScCheckout {
           )}
           {this.checkoutState === 'confirmed' && (
             <sc-block-ui z-index={9} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
-              {this.loadingText?.confirmed || __('Payment successful! Redirecting...', 'surecart')}
+              {this.loadingText?.confirmed || __('Success! Redirecting...', 'surecart')}
             </sc-block-ui>
           )}
         </Universe.Provider>

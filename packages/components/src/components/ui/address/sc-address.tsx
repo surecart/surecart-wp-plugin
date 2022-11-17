@@ -202,7 +202,7 @@ export class ScAddress {
 
             {this.showPostal && (
               <sc-input
-                placeholder={this.placeholders.postal_code || __('Postal Code/Zip')}
+                placeholder={this.placeholders.postal_code || __('Postal Code/Zip', 'surecart')}
                 name={this.names?.postal_code}
                 onScChange={(e: any) => this.updateAddress({ postal_code: e.target.value || null })}
                 onScInput={(e: any) => this.handleAddressInput({ postal_code: e.target.value || null })}

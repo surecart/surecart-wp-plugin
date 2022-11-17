@@ -171,7 +171,17 @@ export class ScDialog {
         }}
         onKeyDown={e => this.handleKeyDown(e)}
       >
-        <div part="overlay" class="dialog__overlay" onClick={() => this.requestClose('overlay')} ref={el => (this.overlay = el as HTMLElement)} tabindex="-1"></div>
+        <div
+          part="overlay"
+          class="dialog__overlay"
+          onClick={e => {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            this.requestClose('overlay');
+          }}
+          ref={el => (this.overlay = el as HTMLElement)}
+          tabindex="-1"
+        ></div>
         <div
           part="panel"
           class="dialog__panel"
@@ -188,7 +198,18 @@ export class ScDialog {
               <h2 part="title" class="dialog__title" id="title">
                 <slot name="label"> {this.label.length > 0 ? this.label : String.fromCharCode(65279)} </slot>
               </h2>
-              <sc-button class="dialog__close" type="text" circle part="close-button" exportparts="base:close-button__base" onClick={() => this.requestClose('close-button')}>
+              <sc-button
+                class="dialog__close"
+                type="text"
+                circle
+                part="close-button"
+                exportparts="base:close-button__base"
+                onClick={e => {
+                  e.preventDefault();
+                  e.stopImmediatePropagation();
+                  this.requestClose('close-button');
+                }}
+              >
                 <sc-icon name="x" label={__('Close', 'surecart')}></sc-icon>
               </sc-button>
             </header>
