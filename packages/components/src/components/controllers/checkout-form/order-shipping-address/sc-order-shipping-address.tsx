@@ -15,7 +15,7 @@ export class ScOrderShippingAddress {
   @Prop() label: string;
 
   /** Is this required (defaults to false) */
-  @Prop() required: boolean = false;
+  @Prop({ mutable: true }) required: boolean = false;
 
   /** Is this loading. */
   @Prop() loading: boolean;
@@ -105,7 +105,7 @@ export class ScOrderShippingAddress {
       this.address.country = this.defaultCountry;
     }
 
-    if ( this.shippingEnabled || this.taxEnabled ) {
+    if (this.shippingEnabled || this.taxEnabled) {
       this.required = true;
     }
   }
@@ -117,13 +117,13 @@ export class ScOrderShippingAddress {
           ref={el => (this.input = el as any)}
           label={this.label || __('Shipping Address', 'surecart')}
           placeholders={{
-            'name': this.namePlaceholder,
-            'country': this.countryPlaceholder,
-            'city': this.cityPlaceholder,
-            'line_1': this.line1Placeholder,
-            'line_2': this.line2Placeholder,
-            'postal_code': this.postalCodePlaceholder,
-            'state': this.statePlaceholder
+            name: this.namePlaceholder,
+            country: this.countryPlaceholder,
+            city: this.cityPlaceholder,
+            line_1: this.line1Placeholder,
+            line_2: this.line2Placeholder,
+            postal_code: this.postalCodePlaceholder,
+            state: this.statePlaceholder,
           }}
           required={this.required}
           loading={this.loading}
