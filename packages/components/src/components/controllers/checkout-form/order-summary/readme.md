@@ -32,7 +32,6 @@
 
 - [sc-line-item](../../../ui/line-item)
 - [sc-skeleton](../../../ui/skeleton)
-- [sc-format-number](../../../util/format-number)
 - [sc-total](../total)
 
 ### Graph
@@ -40,7 +39,6 @@
 graph TD;
   sc-order-summary --> sc-line-item
   sc-order-summary --> sc-skeleton
-  sc-order-summary --> sc-format-number
   sc-order-summary --> sc-total
   sc-total --> sc-format-number
   style sc-order-summary fill:#f9f,stroke:#333,stroke-width:4px
