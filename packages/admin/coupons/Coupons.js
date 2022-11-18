@@ -247,8 +247,8 @@ export default () => {
 
 				<Conditions
 					loading={isLoading}
-					bump={''}
-					updateBump={''}
+					coupon={coupon}
+					updateCoupon={updateCoupon}
 				/>
 
 				<Types

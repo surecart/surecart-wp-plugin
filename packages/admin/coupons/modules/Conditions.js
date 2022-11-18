@@ -10,13 +10,14 @@ import Box from '../../ui/Box';
 import Filters from './filters/Filters';
 import NewCondition from './NewCondition';
 
-export default ({ loading, bump, updateBump }) => {
+export default ({ loading, coupon, updateCoupon }) => {
 	const [newDialog, setNewDialog] = useState(false);
 
 	const hasConditions =
-		bump?.filter_price_ids?.length ||
-		bump?.filter_product_ids?.length ||
-		bump?.filter_product_group_ids?.length;
+		coupon?.filter_price_ids?.length ||
+		coupon?.filter_product_ids?.length ||
+		coupon?.filter_customer_ids?.length ||
+		coupon?.filter_product_group_ids?.length;
 
 	return (
 		<Box
@@ -33,7 +34,7 @@ export default ({ loading, bump, updateBump }) => {
 				<>
 					<ScSelect
 						label={__('Show Filter Offer If', 'surecart')}
-						value={bump?.filter_match_type}
+						value={coupon?.filter_match_type}
 						choices={[
 							{
 								label: __(
@@ -58,26 +59,32 @@ export default ({ loading, bump, updateBump }) => {
 							},
 						]}
 						onScChange={(e) =>
-							updateBump({ filter_match_type: e.target.value })
+							updateCoupon({ filter_match_type: e.target.value })
 						}
 					/>
 					<Filters
 						label={__('Prices', 'surecart')}
 						type="price_ids"
-						bump={bump}
-						updateBump={updateBump}
+						coupon={coupon}
+						updateCoupon={updateCoupon}
 					/>
 					<Filters
 						label={__('Products', 'surecart')}
 						type="product_ids"
-						bump={bump}
-						updateBump={updateBump}
+						coupon={coupon}
+						updateCoupon={updateCoupon}
+					/>
+					<Filters
+						label={__('Customers', 'surecart')}
+						type="customer_ids"
+						coupon={coupon}
+						updateCoupon={updateCoupon}
 					/>
 					<Filters
 						label={__('Upgrade Groups', 'surecart')}
 						type="product_group_ids"
-						bump={bump}
-						updateBump={updateBump}
+						coupon={coupon}
+						updateCoupon={updateCoupon}
 					/>
 				</>
 			) : (
@@ -91,8 +98,8 @@ export default ({ loading, bump, updateBump }) => {
 
 			{newDialog && (
 				<NewCondition
-					bump={bump}
-					updateBump={updateBump}
+					coupon={coupon}
+					updateCoupon={updateCoupon}
 					onRequestClose={() => setNewDialog(false)}
 				/>
 			)}

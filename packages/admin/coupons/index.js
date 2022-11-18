@@ -5,6 +5,7 @@ import { render } from '@wordpress/element';
  * register store entities.
  */
 import '@admin/schema/register';
+import '../store/add-entities';
 
 /**
  * App

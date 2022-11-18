@@ -13,7 +13,7 @@ import { __ } from '@wordpress/i18n';
 import PriceSelector from '../../components/PriceSelector';
 import ModelSelector from '../../components/ModelSelector';
 
-export default ({ onRequestClose, bump, updateBump }) => {
+export default ({ onRequestClose, coupon, updateCoupon }) => {
 	const [type, setType] = useState('price_ids');
 	const [id, setId] = useState();
 
@@ -31,8 +31,8 @@ export default ({ onRequestClose, bump, updateBump }) => {
 	};
 
 	const onSubmit = (e) => {
-		updateBump({
-			[`filter_${type}`]: [...(bump?.[`filter_${type}`] || []), id],
+		updateCoupon({
+			[`filter_${type}`]: [...(coupon?.[`filter_${type}`] || []), id],
 		});
 		onRequestClose();
 	};
@@ -41,7 +41,7 @@ export default ({ onRequestClose, bump, updateBump }) => {
 
 	return (
 		<Modal
-			title={__('Add A Condition', 'surecart')}
+			title={__('Add A Filter', 'surecart')}
 			css={css`
 				width: 100%;
 				box-sizing: border-box;
@@ -86,8 +86,12 @@ export default ({ onRequestClose, bump, updateBump }) => {
 							value: 'product_ids',
 						},
 						{
-							label: __('Customers', 'surecart'),
-							value: 'customer_id',
+							label: __('Customer', 'surecart'),
+							value: 'customer_ids',
+						},
+						{
+							label: __('Product Group', 'surecart'),
+							value: 'product_group_ids',
 						},
 					]}
 					onScChange={(e) => setType(e.target.value)}
@@ -131,6 +135,26 @@ export default ({ onRequestClose, bump, updateBump }) => {
 					</div>
 				)}
 
+				{type === 'customer_ids' && (
+					<div>
+						<ScFormControl
+							label={__('Select A Customer', 'surecart')}
+						>
+							<ModelSelector
+								name="customer"
+								value={id}
+								requestQuery={{
+									archived: false,
+								}}
+								onSelect={(product) => {
+									setType('product_group_ids');
+									setId(product);
+								}}
+							/>
+						</ScFormControl>
+					</div>
+				)}
+
 				{type === 'product_group_ids' && (
 					<div>
 						<ScFormControl
@@ -167,7 +191,7 @@ export default ({ onRequestClose, bump, updateBump }) => {
 						`}
 					>
 						<ScButton type="primary" submit>
-							{__('Add Condition', 'surecart')}
+							{__('Add Filter', 'surecart')}
 						</ScButton>
 						<ScButton type="text" onClick={onClose}>
 							{__('Cancel', 'surecart')}

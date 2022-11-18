@@ -7,10 +7,10 @@ import { __ } from '@wordpress/i18n';
 import Filter from './Filter';
 import PriceFilter from './price/PriceFilter';
 
-export default ({ bump, updateBump, type, label, name }) => {
+export default ({ coupon, updateCoupon, type, label, name }) => {
 	const filtername = `filter_${type}`;
 
-	if (!bump?.[filtername]?.length) {
+	if (!coupon?.[filtername]?.length) {
 		return null;
 	}
 
@@ -27,8 +27,8 @@ export default ({ bump, updateBump, type, label, name }) => {
 	};
 
 	const onRemove = (id) => {
-		updateBump({
-			[filtername]: bump[filtername].filter((item) => item !== id),
+		updateCoupon({
+			[filtername]: coupon[filtername].filter((item) => item !== id),
 		});
 	};
 
@@ -36,7 +36,7 @@ export default ({ bump, updateBump, type, label, name }) => {
 		<ScFormControl label={label}>
 			<ScCard noPadding>
 				<ScStackedList>
-					{(bump?.[filtername] || []).map((id) => {
+					{(coupon?.[filtername] || []).map((id) => {
 						if ('filter_price_ids' === filtername) {
 							return (
 								<PriceFilter
