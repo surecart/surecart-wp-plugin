@@ -228,6 +228,7 @@ export class ScCheckout {
       error: this.error,
       customer: this.customer,
       tax_status: this.order()?.tax_status,
+      taxEnabled: this.order()?.tax_enabled,
       customerShippingAddress: typeof this.order()?.customer !== 'string' ? this.order()?.customer?.shipping_address : {},
       shippingAddress: this.order()?.shipping_address,
       taxStatus: this.order()?.tax_status,
