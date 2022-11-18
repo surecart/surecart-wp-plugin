@@ -147,7 +147,7 @@ export default ({ onRequestClose, coupon, updateCoupon }) => {
 									archived: false,
 								}}
 								onSelect={(product) => {
-									setType('product_group_ids');
+									setType('customer_ids');
 									setId(product);
 								}}
 							/>
