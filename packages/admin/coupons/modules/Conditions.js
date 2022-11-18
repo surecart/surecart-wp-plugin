@@ -21,38 +21,38 @@ export default ({ loading, coupon, updateCoupon }) => {
 
 	return (
 		<Box
-			title={__('Coupon Filters', 'surecart')}
+			title={__('Conditions', 'surecart')}
 			loading={loading}
 			footer={
 				<ScButton onClick={() => setNewDialog(true)}>
 					<ScIcon name="plus" slot="prefix" />
-					{__('Add A Filter', 'surecart')}
+					{__('Add A Condition', 'surecart')}
 				</ScButton>
 			}
 		>
-			{hasConditions ? (
+			{!!hasConditions && (
 				<>
 					<ScSelect
-						label={__('Show Filter Offer If', 'surecart')}
+						label={__('Allow Coupon If', 'surecart')}
 						value={coupon?.filter_match_type}
 						choices={[
 							{
 								label: __(
-									'All of these items are in the cart.',
+									'All of these items are true.',
 									'surecart'
 								),
 								value: 'all',
 							},
 							{
 								label: __(
-									'Any of these items are in the cart.',
+									'Any of these items are true.',
 									'surecart'
 								),
 								value: 'any',
 							},
 							{
 								label: __(
-									'None of these items are in the cart.',
+									'None of these items are true.',
 									'surecart'
 								),
 								value: 'none',
@@ -87,13 +87,6 @@ export default ({ loading, coupon, updateCoupon }) => {
 						updateCoupon={updateCoupon}
 					/>
 				</>
-			) : (
-				<ScEmpty icon="zap">
-					{__(
-						'Add some filters to display this coupon.',
-						'surecart'
-					)}
-				</ScEmpty>
 			)}
 
 			{newDialog && (

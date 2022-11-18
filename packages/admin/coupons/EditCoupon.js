@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { ScButton } from '@surecart/components-react';
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { useEffect } from 'react';
@@ -23,9 +23,25 @@ import Types from './modules/Types';
 // parts
 import Sidebar from './Sidebar';
 
-export default () => {
+export default ({ id }) => {
 	const { saveModel, saveDraft, clearDrafts } = useDispatch(dataStore);
 	const { addSnackbarNotice, addModelErrors } = useDispatch(uiStore);
+	const { coupon, isLoading } = useSelect((select) => {
+		const entityData = ['surecart', 'coupon', id];
+
+		return {
+			coupon: select(coreStore).getEditedEntityRecord(...entityData),
+			isLoading: select(coreStore)?.isResolving?.(
+				'getEditedEntityRecord',
+				[...entityData]
+			),
+			loadError: select(coreStore)?.getResolutionError?.(
+				'getEditedEntityRecord',
+				...entityData
+			),
+		};
+	});
+
 	const {
 		id,
 		coupon,
