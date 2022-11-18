@@ -1,31 +1,38 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScButton } from '@surecart/components-react';
+import {
+	ScBreadcrumb,
+	ScBreadcrumbs,
+	ScButton,
+} from '@surecart/components-react';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { useEffect } from 'react';
+import { store as coreStore } from '@wordpress/core-data';
 
-import ErrorFlash from '../components/ErrorFlash';
+import Error from '../components/Error';
+
 // hocs
-import useCurrentPage from '../mixins/useCurrentPage';
-import useEntities from '../mixins/useEntities';
-import { store as dataStore } from '../store/data';
-import { store as uiStore } from '../store/ui';
 import Logo from '../templates/Logo';
 import Template from '../templates/SingleModel';
 import Codes from './modules/Codes';
 import Limits from './modules/Limits';
 import Conditions from './modules/Conditions';
+
 // modules
 import Name from './modules/Name';
 import Types from './modules/Types';
 // parts
 import Sidebar from './Sidebar';
+import useSave from '../settings/UseSave';
+import { useState } from 'react';
+import SaveButton from '../templates/SaveButton';
 
 export default ({ id }) => {
-	const { saveModel, saveDraft, clearDrafts } = useDispatch(dataStore);
-	const { addSnackbarNotice, addModelErrors } = useDispatch(uiStore);
+	const { save } = useSave();
+	const [error, setError] = useState(null);
+	const { editEntityRecord } = useDispatch(coreStore);
+
 	const { coupon, isLoading } = useSelect((select) => {
 		const entityData = ['surecart', 'coupon', id];
 
@@ -42,152 +49,18 @@ export default ({ id }) => {
 		};
 	});
 
-	const {
-		id,
-		coupon,
-		updateCoupon,
-		saveCoupon,
-		deleteCoupon,
-		saving,
-		setSaving,
-		isSaving,
-		fetchCoupon,
-		couponErrors,
-		clearCouponErrors,
-		isLoading,
-	} = useCurrentPage('coupon');
-	const { promotions, draftPromotions } = useEntities('promotion');
-
-	// fetch product on load.
-	useEffect(() => {
-		if (id) {
-			fetchCoupon({
-				query: {
-					context: 'edit',
-					expand: ['promotions'],
-				},
-			});
-		}
-	}, []);
-
-	const title = () => {
-		if (isLoading) {
-			return (
-				<sc-skeleton
-					style={{
-						width: '120px',
-						display: 'inline-block',
-					}}
-				></sc-skeleton>
-			);
-		}
-		return coupon?.id
-			? __('Edit Coupon', 'surecart')
-			: __('New Coupon', 'surecart');
-	};
-
-	const onSubmit = async (e) => {
-		e.preventDefault();
-		try {
-			setSaving(true);
-			id ? await updatePage() : await createPage();
-			addSnackbarNotice({
-				content: __('Saved.'),
-			});
-		} catch (e) {
-			console.error(e);
-		} finally {
-			setSaving(false);
-		}
-	};
+	const updateCoupon = (data) =>
+		editEntityRecord('surecart', 'coupon', id, data);
 
 	/**
-	 * Create the page and clear all drafts.
+	 * Handle the form submission
 	 */
-	const createPage = async () => {
+	const onSubmit = async () => {
 		try {
-			const saved = await saveCoupon({
-				query: {
-					context: 'edit',
-					expand: ['promotions'],
-				},
-				data: {
-					promotions: draftPromotions,
-				},
-			});
-			if (saved?.id) {
-				await clearDrafts('coupon');
-				return await clearDrafts('promotion');
-			}
+			setError(null);
+			save({ successMessage: __('Coupon updated.', 'surecart') });
 		} catch (e) {
-			throw e;
-		}
-	};
-
-	/**
-	 * Update product, prices and drafts all at once.
-	 */
-	const updatePage = async () => {
-		return Promise.all([
-			saveCoupon(),
-			savePromotions(),
-			saveDraftPromotions(),
-		]);
-	};
-
-	const saveDraftPromotions = async () => {
-		try {
-			await Promise.all(
-				(draftPromotions || []).map((promotion, index) =>
-					saveDraftPromotion(promotion, index)
-				)
-			);
-			return await clearDrafts('promotion');
-		} catch (e) {
-			throw e;
-		}
-	};
-
-	const savePromotions = async () => {
-		return await Promise.all(
-			(promotions || []).map((promotion) => savePromotion(promotion))
-		);
-	};
-
-	// save price
-	const savePromotion = async (promotion, coupon) => {
-		try {
-			return await saveModel('promotion', promotion?.id);
-		} catch (e) {
-			addModelErrors('promotion', e);
-			throw e;
-		}
-	};
-
-	/** Save any draft prices. */
-	const saveDraftPromotion = async (_, index) => {
-		try {
-			return await saveDraft('promotion', index);
-		} catch (e) {
-			addModelErrors('promotion', e);
-			throw e;
-		}
-	};
-
-	// delete promotion
-	const onDelete = async () => {
-		try {
-			const r = confirm(
-				__(
-					'Are you sure you want to delete this Coupon code?',
-					'surecart'
-				)
-			);
-			if (!r) return;
-			setSaving(true);
-			await deleteCoupon();
-		} finally {
-			setSaving(false);
+			setError(e);
 		}
 	};
 
@@ -198,17 +71,15 @@ export default ({ id }) => {
 			backUrl={'admin.php?page=sc-coupons'}
 			backText={__('Back to All Coupons', 'surecart')}
 			title={
-				<sc-breadcrumbs>
-					<sc-breadcrumb>
+				<ScBreadcrumbs>
+					<ScBreadcrumb>
 						<Logo display="block" />
-					</sc-breadcrumb>
-					<sc-breadcrumb href="admin.php?page=sc-coupons">
+					</ScBreadcrumb>
+					<ScBreadcrumb href="admin.php?page=sc-coupons">
 						{__('Coupons', 'surecart')}
-					</sc-breadcrumb>
-					<sc-breadcrumb>
-						<sc-flex style={{ gap: '1em' }}>{title()}</sc-flex>
-					</sc-breadcrumb>
-				</sc-breadcrumbs>
+					</ScBreadcrumb>
+					<ScBreadcrumb>{__('Edit Coupon', 'surecart')}</ScBreadcrumb>
+				</ScBreadcrumbs>
 			}
 			button={
 				isLoading ? (
@@ -220,25 +91,7 @@ export default ({ id }) => {
 						}}
 					></sc-skeleton>
 				) : (
-					<div
-						css={css`
-							display: flex;
-							align-items: center;
-							gap: 0.5em;
-						`}
-					>
-						{/* <ActionsDropdown coupon={coupon} onDelete={onDelete} /> */}
-						<ScButton
-							class="sc-save-model"
-							type="primary"
-							loading={saving || isSaving}
-							submit
-						>
-							{coupon?.id
-								? __('Update Coupon', 'surecart')
-								: __('Create Coupon', 'surecart')}
-						</ScButton>
-					</div>
+					<SaveButton>{__('Update Coupon', 'surecart')}</SaveButton>
 				)
 			}
 			sidebar={
@@ -246,12 +99,11 @@ export default ({ id }) => {
 					coupon={coupon}
 					updateCoupon={updateCoupon}
 					loading={isLoading}
-					saveCoupon={saveCoupon}
 				/>
 			}
 		>
 			<Fragment>
-				<ErrorFlash errors={couponErrors} onHide={clearCouponErrors} />
+				<Error error={error} setError={setError} margin="80px" />
 
 				<Name
 					loading={isLoading}

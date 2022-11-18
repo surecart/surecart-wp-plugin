@@ -11,58 +11,39 @@ import Code from './Code';
 import { useEffect } from 'react';
 import useEntity from '../../mixins/useEntity';
 import ErrorFlash from '../../components/ErrorFlash';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 
 export default ({ id, loading }) => {
-	const { promotions, addPromotion, draftPromotions } =
-		useEntities('promotion');
-	const { promotionErrors, clearPromotionErrors } = useEntity('promotion');
-	const activePromotions = (promotions || []).filter((p) => !p.archived);
-	const archivedPromotions = (promotions || []).filter((p) => p.archived);
+	// const { promotions, addPromotion, draftPromotions } =
+	// 	useEntities('promotion');
+	// const { promotionErrors, clearPromotionErrors } = useEntity('promotion');
+	// const activePromotions = (promotions || []).filter((p) => !p.archived);
+	// const archivedPromotions = (promotions || []).filter((p) => p.archived);
 
-	const [showArchived, setShowArchived] = useState(false);
+	// const [showArchived, setShowArchived] = useState(false);
 
-	useEffect(() => {
-		if (!id) {
-			addPromotion({
-				currency: scData?.currency_code || 'usd',
-			});
-		}
-	}, []);
-
-	const renderLoading = () => {
-		return (
-			<div
-				css={css`
-					display: grid;
-					gap: 0.5em;
-				`}
-			>
-				<sc-skeleton
-					style={{
-						'--border-radius':
-							'var(--sc-input-border-radius-medium)',
-						height: 'var( --sc-input-height-medium )',
-						width: '100%',
-					}}
-				></sc-skeleton>
-				<sc-skeleton
-					style={{
-						width: '80%',
-					}}
-				></sc-skeleton>
-			</div>
-		);
-	};
-
-	const renderPromotionsList = (promotions) => {
-		return (promotions || []).map((promotion, index) => {
-			return <Code promotion={promotion} key={index} index={index} />;
-		});
-	};
+	const { promotions, isLoading } = useSelect((select) => {
+		const queryArgs = [
+			'surecart',
+			'promotion',
+			{
+				coupon_ids: [id],
+			},
+		];
+		return {
+			promotions: select(coreStore).getEntityRecords(...queryArgs),
+			loading: select(coreStore).isResolving(
+				'getEntityRecords',
+				queryArgs
+			),
+		};
+	});
 
 	return (
 		<Box
 			title={__('Promotion Codes', 'surecart')}
+			loading={isLoading}
 			footer={
 				!loading && (
 					<Fragment>
@@ -93,7 +74,7 @@ export default ({ id, loading }) => {
 							</svg>
 							{__('Add Another Promotion Code', 'surecart')}
 						</ScButton>
-
+						{/*
 						{!!archivedPromotions?.length && (
 							<div
 								css={css`
@@ -122,19 +103,14 @@ export default ({ id, loading }) => {
 									)}
 								</ScSwitch>
 							</div>
-						)}
+						)} */}
 					</Fragment>
 				)
 			}
 		>
-			<ErrorFlash
-				errors={promotionErrors}
-				onHide={clearPromotionErrors}
-			/>
-			{loading ? renderLoading() : renderPromotionsList()}
-			{renderPromotionsList(activePromotions)}
-			{renderPromotionsList(draftPromotions)}
-			{showArchived && renderPromotionsList(archivedPromotions)}
+			{(promotions || []).map((promotion, index) => {
+				return <Code promotion={promotion} key={index} index={index} />;
+			})}
 		</Box>
 	);
 };
