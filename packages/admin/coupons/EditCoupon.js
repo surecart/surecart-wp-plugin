@@ -4,6 +4,8 @@ import {
 	ScBreadcrumb,
 	ScBreadcrumbs,
 	ScButton,
+	ScIcon,
+	ScTag,
 } from '@surecart/components-react';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
@@ -14,7 +16,7 @@ import Error from '../components/Error';
 
 // hocs
 import Logo from '../templates/Logo';
-import Template from '../templates/SingleModel';
+import Template from '../templates/UpdateModel';
 import Codes from './modules/Codes';
 import Limits from './modules/Limits';
 import Conditions from './modules/Conditions';
@@ -67,19 +69,43 @@ export default ({ id }) => {
 	return (
 		<Template
 			onSubmit={onSubmit}
-			pageModelName={'coupon'}
-			backUrl={'admin.php?page=sc-coupons'}
-			backText={__('Back to All Coupons', 'surecart')}
 			title={
-				<ScBreadcrumbs>
-					<ScBreadcrumb>
-						<Logo display="block" />
-					</ScBreadcrumb>
-					<ScBreadcrumb href="admin.php?page=sc-coupons">
-						{__('Coupons', 'surecart')}
-					</ScBreadcrumb>
-					<ScBreadcrumb>{__('Edit Coupon', 'surecart')}</ScBreadcrumb>
-				</ScBreadcrumbs>
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: 1em;
+					`}
+				>
+					<ScButton
+						circle
+						size="small"
+						href="admin.php?page=sc-coupons"
+					>
+						<ScIcon name="arrow-left" />
+					</ScButton>
+					<ScBreadcrumbs>
+						<ScBreadcrumb>
+							<Logo display="block" />
+						</ScBreadcrumb>
+						<ScBreadcrumb href="admin.php?page=sc-coupons">
+							{__('Coupons', 'surecart')}
+						</ScBreadcrumb>
+						<ScBreadcrumb>
+							<sc-flex style={{ gap: '1em' }}>
+								{__('Edit Coupon', 'surecart')}
+								{coupon?.archived && (
+									<>
+										{' '}
+										<ScTag type="warning">
+											{__('Archived', 'surecart')}
+										</ScTag>
+									</>
+								)}
+							</sc-flex>
+						</ScBreadcrumb>
+					</ScBreadcrumbs>
+				</div>
 			}
 			button={
 				isLoading ? (
