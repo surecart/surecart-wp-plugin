@@ -37,11 +37,9 @@ export default ({ onRequestClose, coupon, updateCoupon }) => {
 		onRequestClose();
 	};
 
-	console.log(type);
-
 	return (
 		<Modal
-			title={__('Add A Filter', 'surecart')}
+			title={__('Add A Restriction', 'surecart')}
 			css={css`
 				width: 100%;
 				box-sizing: border-box;
@@ -73,7 +71,7 @@ export default ({ onRequestClose, coupon, updateCoupon }) => {
 				`}
 			>
 				<ScSelect
-					label={__('Choose An Item', 'surecart')}
+					label={__('Coupon is valid for', 'surecart')}
 					value={type}
 					unselect={false}
 					choices={[
@@ -88,10 +86,6 @@ export default ({ onRequestClose, coupon, updateCoupon }) => {
 						{
 							label: __('Customer', 'surecart'),
 							value: 'customer_ids',
-						},
-						{
-							label: __('Product Group', 'surecart'),
-							value: 'product_group_ids',
 						},
 					]}
 					onScChange={(e) => setType(e.target.value)}

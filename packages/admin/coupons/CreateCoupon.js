@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { ScAlert, ScButton, ScForm, ScInput } from '@surecart/components-react';
 import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
-import Conditions from './modules/Conditions';
+import Restrictions from './modules/Restrictions';
 import Types from './modules/Types';
 import Limits from './modules/Limits';
 
@@ -122,7 +122,7 @@ export default ({ id, setId }) => {
 
 				<Limits coupon={coupon} updateCoupon={updateCoupon} />
 
-				<Conditions coupon={coupon} updateCoupon={updateCoupon} />
+				<Restrictions coupon={coupon} updateCoupon={updateCoupon} />
 
 				<div css={css`display: flex gap: var(--sc-spacing-small);`}>
 					<ScButton type="primary" submit loading={isSaving}>

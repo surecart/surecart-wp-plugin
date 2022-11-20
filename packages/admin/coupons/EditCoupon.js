@@ -24,7 +24,7 @@ import Logo from '../templates/Logo';
 import Template from '../templates/UpdateModel';
 import Codes from './modules/Codes';
 import Limits from './modules/Limits';
-import Conditions from './modules/Conditions';
+import Restrictions from './modules/Restrictions';
 
 // modules
 import Name from './modules/Name';
@@ -197,7 +197,7 @@ export default ({ id }) => {
 
 				<Codes id={coupon?.id || id} loading={isLoading} />
 
-				<Conditions
+				<Restrictions
 					loading={isLoading}
 					coupon={coupon}
 					updateCoupon={updateCoupon}
