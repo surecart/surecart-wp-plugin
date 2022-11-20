@@ -4,13 +4,18 @@ import {
 	ScBreadcrumb,
 	ScBreadcrumbs,
 	ScButton,
+	ScDropdown,
+	ScMenu,
+	ScMenuItem,
 	ScIcon,
 	ScTag,
+	ScFlex,
 } from '@surecart/components-react';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
 
 import Error from '../components/Error';
 
@@ -29,30 +34,68 @@ import Sidebar from './Sidebar';
 import useSave from '../settings/UseSave';
 import { useState } from 'react';
 import SaveButton from '../templates/SaveButton';
+import { Modal } from '@wordpress/components';
 
 export default ({ id }) => {
 	const { save } = useSave();
 	const [error, setError] = useState(null);
-	const { editEntityRecord } = useDispatch(coreStore);
+	const [modal, setModal] = useState(null);
+	const { createSuccessNotice } = useDispatch(noticesStore);
+	const { saveEntityRecord, editEntityRecord, deleteEntityRecord } =
+		useDispatch(coreStore);
 
-	const { coupon, isLoading } = useSelect((select) => {
-		const entityData = ['surecart', 'coupon', id];
+	const { coupon, isLoading, isDeleting, deleteError, saveError, loadError } =
+		useSelect((select) => {
+			const entityData = ['surecart', 'coupon', id];
 
-		return {
-			coupon: select(coreStore).getEditedEntityRecord(...entityData),
-			isLoading: select(coreStore)?.isResolving?.(
-				'getEditedEntityRecord',
-				[...entityData]
-			),
-			loadError: select(coreStore)?.getResolutionError?.(
-				'getEditedEntityRecord',
-				...entityData
-			),
-		};
-	});
+			return {
+				coupon: select(coreStore).getEditedEntityRecord(...entityData),
+				isLoading: select(coreStore)?.isResolving?.(
+					'getEditedEntityRecord',
+					[...entityData]
+				),
+				isSaving: select(coreStore)?.isSavingEntityRecord?.(
+					...entityData
+				),
+				isDeleting: select(coreStore)?.isDeletingEntityRecord?.(
+					...entityData
+				),
+				saveError: select(coreStore)?.getLastEntitySaveError(
+					...entityData
+				),
+				loadError: select(coreStore)?.getResolutionError?.(
+					'getEditedEntityRecord',
+					...entityData
+				),
+				deleteError: select(coreStore)?.getLastEntityDeleteError(
+					...entityData
+				),
+			};
+		});
 
+	/**
+	 * Update
+	 */
 	const updateCoupon = (data) =>
 		editEntityRecord('surecart', 'coupon', id, data);
+
+	/**
+	 * Delete
+	 */
+	const deleteCoupon = async () => {
+		try {
+			await deleteEntityRecord('surecart', 'coupon', id, undefined, {
+				throwOnError: true,
+			});
+			createSuccessNotice(__('Deleted.', 'surecart'), {
+				type: 'snackbar',
+			});
+			window.location.assign('admin.php?page=sc-coupons');
+		} catch (e) {
+			console.error(e);
+			setModal(false);
+		}
+	};
 
 	/**
 	 * Handle the form submission
@@ -94,14 +137,6 @@ export default ({ id }) => {
 						<ScBreadcrumb>
 							<sc-flex style={{ gap: '1em' }}>
 								{__('Edit Coupon', 'surecart')}
-								{coupon?.archived && (
-									<>
-										{' '}
-										<ScTag type="warning">
-											{__('Archived', 'surecart')}
-										</ScTag>
-									</>
-								)}
 							</sc-flex>
 						</ScBreadcrumb>
 					</ScBreadcrumbs>
@@ -117,7 +152,27 @@ export default ({ id }) => {
 						}}
 					></sc-skeleton>
 				) : (
-					<SaveButton>{__('Update Coupon', 'surecart')}</SaveButton>
+					<ScFlex justifyContent="flex-start">
+						<ScDropdown placement="bottom-end">
+							<ScButton type="text" slot="trigger">
+								<ScIcon name="more-horizontal" />
+							</ScButton>
+							<ScMenu>
+								<ScMenuItem onClick={() => setModal('delete')}>
+									<ScIcon
+										slot="prefix"
+										style={{ opacity: 0.5 }}
+										name="trash"
+									/>
+									{__('Delete', 'surecart')}
+								</ScMenuItem>
+							</ScMenu>
+						</ScDropdown>
+
+						<SaveButton>
+							{__('Update Coupon', 'surecart')}
+						</SaveButton>
+					</ScFlex>
 				)
 			}
 			sidebar={
@@ -129,7 +184,10 @@ export default ({ id }) => {
 			}
 		>
 			<Fragment>
-				<Error error={error} setError={setError} margin="80px" />
+				<Error
+					error={error || loadError || saveError || deleteError}
+					margin="80px"
+				/>
 
 				<Name
 					loading={isLoading}
@@ -157,6 +215,36 @@ export default ({ id }) => {
 					updateCoupon={updateCoupon}
 				/>
 			</Fragment>
+
+			{modal === 'delete' && (
+				<Modal
+					title={__('Delete this coupon?', 'surecart')}
+					css={css`
+						max-width: 500px !important;
+					`}
+					onRequestClose={() => setModal(false)}
+					shouldCloseOnClickOutside={false}
+				>
+					<p>
+						{__(
+							'Are you sure you want to delete this coupon?',
+							'surecart'
+						)}
+					</p>
+					<ScFlex alignItems="center" justifyContent="flex-start">
+						<ScButton
+							type="primary"
+							busy={isDeleting}
+							onClick={deleteCoupon}
+						>
+							{__('Delete', 'surecart')}
+						</ScButton>
+						<ScButton type="text" onClick={() => setModal(false)}>
+							{__('Cancel', 'surecart')}
+						</ScButton>
+					</ScFlex>
+				</Modal>
+			)}
 		</Template>
 	);
 };

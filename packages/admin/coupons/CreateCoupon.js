@@ -3,6 +3,7 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
 import { useState } from 'react';
 
 import { ScAlert, ScButton, ScForm, ScInput } from '@surecart/components-react';
@@ -18,6 +19,7 @@ export default ({ id, setId }) => {
 	const [promotion, setPromotion] = useState(null);
 	const [coupon, setCoupon] = useState(null);
 	const [error, setError] = useState('');
+	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { saveEntityRecord } = useDispatch(coreStore);
 
 	const updatePromotion = (data) => {
@@ -55,6 +57,9 @@ export default ({ id, setId }) => {
 				{ throwOnError: true }
 			);
 			setId(response.id);
+			createSuccessNotice(__('Coupon created.', 'surecart'), {
+				type: 'snackbar',
+			});
 		} catch (e) {
 			console.error(e);
 			setError(e?.message || __('Something went wrong.', 'surecart'));
