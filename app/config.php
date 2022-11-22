@@ -175,7 +175,7 @@ return [
 	 * Links used.
 	 */
 	'links'                  => [
-		'purchase' => 'https://app.surecart.com/plans',
+		'purchase' => 'https://app.surecart.com/billing',
 	],
 
 	/**
