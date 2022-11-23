@@ -71,7 +71,7 @@ export class ScLogin {
       this.loading = true;
       this.error = '';
       if (redirect_url) {
-        window.location.replace(redirect_url);
+        window.location.reload();
       } else {
         this.error = __('Verification code invalid!', 'surecart');
       }
@@ -163,7 +163,7 @@ export class ScLogin {
             ></sc-input>
             <sc-button type="primary" outline submit full>
               <sc-icon name="lock" slot="prefix" />
-              {__('Verify Code', 'surecart')}
+              {__('Login with Verify Code', 'surecart')}
             </sc-button>
           </sc-form>
         </div>

@@ -51,7 +51,7 @@ class LoginWithCodeController extends RestController {
 		return [
 			'name'         => $user->display_name,
 			'email'        => $user->user_email,
-			'redirect_url' => site_url( '/customer-dashboard' ),
+			'redirect_url' => true,
 		];
 	}
 }
