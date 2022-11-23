@@ -3,7 +3,6 @@
 namespace SureCart\Rest;
 
 use SureCart\Rest\RestServiceInterface;
-use SureCart\Controllers\Rest\AccountController;
 use SureCart\Controllers\Rest\LoginWithCodeController;
 
 /**
@@ -36,7 +35,7 @@ class LoginWithCodeRestServiceProvider extends RestServiceProvider implements Re
 			[
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => $this->callback( LoginWithCodeController::class, 'authenticate' ),
+					'callback'            => $this->callback( LoginWithCodeController::class, 'verify' ),
 					'permission_callback' => [ $this, 'authenticate_permissions_check' ],
 				],
 				'schema' => [ $this, 'get_item_schema' ],

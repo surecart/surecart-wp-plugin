@@ -87,7 +87,6 @@ return [
 		\SureCart\Rest\InvoicesRestServiceProvider::class,
 		\SureCart\Rest\WebhooksRestServiceProvider::class,
 		\SureCart\Rest\VerificationCodeRestServiceProvider::class,
-		\SureCart\Rest\VerifyCodeRestServiceProvider::class,
 		\SureCart\Rest\CheckEmailRestServiceProvider::class,
 		\SureCart\Rest\LoginWithCodeRestServiceProvider::class,
 

@@ -60,36 +60,20 @@ export class ScLogin {
   async submitVerifyCode() {
     try {
       this.loading = true;
-      const { verified } = await apiFetch({
+      const { redirect_url } = await apiFetch({
         method: 'POST',
-        path: 'surecart/v1/verification_codes/verify',
+        path: 'surecart/v1/login_with_code',
         data: {
-          email: this.email,
+          login: this.email,
           code: this.verifyCode,
         },
       });
-      this.loading = false;
-      
-      if ( verified ) {
-        this.step = 'complete';
-        this.error = '';
-
-        const { redirect_url } = await apiFetch({
-          method: 'POST',
-          path: 'surecart/v1/login_with_code',
-          data: {
-            login: this.email,
-          },
-        });
-  
-        if (redirect_url) {
-          window.location.replace(redirect_url);
-        } else {
-          window.location.reload();
-        }
-
+      this.loading = true;
+      this.error = '';
+      if (redirect_url) {
+        window.location.replace(redirect_url);
       } else {
-        this.error = __('Something went wrong', 'surecart');
+        this.error = __('Verification code invalid!', 'surecart');
       }
     } catch (e) {
       if (e?.message) {
