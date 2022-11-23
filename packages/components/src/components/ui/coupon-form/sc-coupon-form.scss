@@ -17,7 +17,19 @@
   opacity: 0;
   visibility: hidden;
   height: 0;
+  position: relative;
   transition: opacity var(--sc-transition-fast) ease-in-out;
+
+  sc-input {
+    width: 100%;
+  }
+
+  sc-button {
+    position: absolute;
+    right: 0;
+    z-index: 999;
+    display: none;
+  }
 }
 
 .coupon-form--is-open {

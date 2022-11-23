@@ -10,6 +10,7 @@ import { DiscountResponse } from '../../../types';
 })
 export class ScCouponForm {
   private input: HTMLScInputElement;
+  private button: HTMLScButtonElement;
 
   /** The label for the coupon form */
   @Prop() label: string;
@@ -57,6 +58,15 @@ export class ScCouponForm {
     if (!this.input.value) {
       this.open = false;
       this.error = '';
+    }
+  }
+
+  /** On key up show coupon button (on condition) */
+  handleKeyUp() {
+    if (!this.input.value) {
+      this.button.style.display = "none";
+    } else {
+      this.button.style.display = "block";
     }
   }
 
@@ -127,15 +137,15 @@ export class ScCouponForm {
         </div>
 
         <div class="form">
-          <sc-input onScBlur={() => this.handleBlur()} ref={el => (this.input = el as HTMLScInputElement)} clearable></sc-input>
+          <sc-input onScBlur={() => this.handleBlur()} onKeyUp={() => this.handleKeyUp()} ref={el => (this.input = el as HTMLScInputElement)}></sc-input>
+          <sc-button type="primary" loading={this.busy} size="medium" onClick={() => this.applyCoupon()} ref={el => (this.button = el as HTMLScButtonElement)}>
+            <slot />
+          </sc-button>
           {!!this.error && (
             <sc-alert type="danger" open>
               <span slot="title">{this.error}</span>
             </sc-alert>
           )}
-          <sc-button type="primary" loading={this.busy} full onClick={() => this.applyCoupon()}>
-            <slot />
-          </sc-button>
         </div>
 
         {this.loading && <sc-block-ui></sc-block-ui>}
