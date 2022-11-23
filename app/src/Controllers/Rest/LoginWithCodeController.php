@@ -14,13 +14,6 @@ class LoginWithCodeController extends RestController {
 	protected $endpoint = 'verification_codes/verify';
 
 	/**
-	 * Object name
-	 *
-	 * @var string
-	 */
-	protected $object_name = 'verification_code';
-
-	/**
 	 * Login user
 	 *
 	 * @return Model
@@ -30,10 +23,7 @@ class LoginWithCodeController extends RestController {
 			$this->endpoint,
 			[
 				'method' => 'POST',
-				'query'  => $this->query,
-				'body'   => [
-					$this->object_name => json_decode( wp_json_encode( $request->get_params ), true ),
-				],
+				'body'   => json_decode( wp_json_encode( [ 'email' => $request->get_param( 'login' ), 'code' => $request->get_param( 'code' ) ] ), true ),
 			]
 		);
 
