@@ -14,6 +14,7 @@ export class ScLogin {
   @State() step: string = '';
   @State() email: string = '';
   @State() password: string = '';
+  @State() verifyCode: string = '';
   @State() loading: boolean;
   @State() error: string;
 
@@ -31,19 +32,65 @@ export class ScLogin {
     this.email = this.emailInput.value;
   }
 
-  /** Get all subscriptions */
-  async submitMagicLink() {
+  /** Submit for verification codes */
+  async submitVerificationCode() {
     try {
       this.loading = true;
       await apiFetch({
         method: 'POST',
-        path: 'surecart/v1/customer_links',
+        path: 'surecart/v1/verification_codes',
         data: {
           email: this.email,
-          return_url: window.location.href,
         },
       });
       this.step = 'complete';
+    } catch (e) {
+      if (e?.message) {
+        this.error = e.message;
+      } else {
+        this.error = __('Something went wrong', 'surecart');
+      }
+      console.error(this.error);
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  /** Get all subscriptions */
+  async submitVerifyCode() {
+    try {
+      this.loading = true;
+      const { verified } = await apiFetch({
+        method: 'POST',
+        path: 'surecart/v1/verification_codes/verify',
+        data: {
+          email: this.email,
+          code: this.verifyCode,
+        },
+      });
+      this.loading = false;
+      
+      if ( verified ) {
+        this.step = 'complete';
+        this.error = '';
+
+        const { redirect_url } = await apiFetch({
+          method: 'POST',
+          path: 'surecart/v1/login_with_code',
+          data: {
+            login: this.email,
+          },
+        });
+  
+        if (redirect_url) {
+          window.location.replace(redirect_url);
+        } else {
+          window.location.reload();
+        }
+
+      } else {
+        this.error = __('Something went wrong', 'surecart');
+      }
     } catch (e) {
       if (e?.message) {
         this.error = e.message;
@@ -84,24 +131,68 @@ export class ScLogin {
     }
   }
 
+  async checkEmail() {
+    try {
+      this.loading = true;
+      const { check_email } = await apiFetch({
+        method: 'POST',
+        path: 'surecart/v1/check_email',
+        data: {
+          login: this.email,
+        },
+      });
+      this.loading = false;
+      if (check_email) {
+        this.step = 'password';
+        this.error = '';
+      } else {
+        this.error = __('Email does not exist, try with the correct email address.', 'surecart');
+      }
+    } catch (e) {
+      console.error(this.error);
+      this.loading = false;
+      if (e?.message) {
+        this.error = e.message;
+      } else {
+        this.error = __('Something went wrong', 'surecart');
+      }
+    }
+  }
+
   renderInner() {
     if (this.step === 'complete') {
       return (
-        <sc-alert type="success" open>
-          <sc-icon slot="icon" name="check"></sc-icon>
-          <span slot="title">{__('Sent!', 'surecart')}</span>
-          <p>{__('You should receive an email shortly with a link to login.', 'surecart')}</p>
-        </sc-alert>
+        <div>
+          <sc-alert type="success" open>
+            <sc-icon slot="icon" name="check"></sc-icon>
+            <span slot="title">{__('Sent!', 'surecart')}</span>
+            <p>{__('You should receive an email shortly with a verification code.', 'surecart')}</p>
+          </sc-alert>
+          <sc-form onScFormSubmit={() => this.submitVerifyCode()}>
+            <sc-input
+              label={__('Enter your code', 'surecart')}
+              type="text"
+              ref={el => (this.passwordInput = el as HTMLScInputElement)}
+              autofocus
+              required
+              onScChange={e => (this.verifyCode = (e.target as HTMLScInputElement).value)}
+            ></sc-input>
+            <sc-button type="primary" outline submit full>
+              <sc-icon name="lock" slot="prefix" />
+              {__('Verify Code', 'surecart')}
+            </sc-button>
+          </sc-form>
+        </div>
       );
     }
 
     if (this.step === 'password' && this.email) {
       return (
         <div>
-          <sc-form onScFormSubmit={() => this.submitMagicLink()}>
+          <sc-form onScFormSubmit={() => this.submitVerificationCode()}>
             <sc-button type="primary" submit full>
               <sc-icon name="mail" slot="prefix" />
-              {__('Send a magic link', 'surecart')}
+              {__('Send a login code', 'surecart')}
             </sc-button>
           </sc-form>
           <sc-divider>{__('or', 'surecart')}</sc-divider>
@@ -124,7 +215,7 @@ export class ScLogin {
     }
 
     return (
-      <sc-form onScFormSubmit={() => (this.step = 'password')}>
+      <sc-form onScFormSubmit={() => this.checkEmail()}>
         <sc-input
           ref={el => (this.emailInput = el as HTMLScInputElement)}
           label="Email Address"
