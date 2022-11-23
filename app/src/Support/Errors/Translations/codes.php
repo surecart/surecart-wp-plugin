@@ -31,6 +31,7 @@ return [
 	'checkout.shipping_address.postal_code.invalid'     => __( 'Your postal code is not valid.', 'surecart' ),
 	'checkout.discount.coupon.expired'                  => __( 'This coupon has expired.', 'surecart' ),
 	'checkout.discount.coupon.currency_mismatch'        => __( 'This discount code does not apply to this currency.', 'surecart' ),
+	'checkout.discount.coupon.invalid'                  => __( 'This is not a valid coupon code', 'surecart' ),
 	'order_protocol.number_prefix.invalid'              => __( 'Please double-check your prefix does not contain any spaces, underscores, dashes or special characters.', 'surecart' ),
 	'order_protocol.number_prefix.too_long'             => __( 'This prefix is too long. Please enter a shorter prefix.', 'surecart' ),
 	'order_protocol.number_prefix.too_short'            => __( 'This prefix is too short. Please enter a longer prefix.', 'surecart' ),
