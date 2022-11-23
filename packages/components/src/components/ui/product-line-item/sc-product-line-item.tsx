@@ -55,7 +55,7 @@ export class ScProductLineItem {
           <div class="price">{sprintf(_n('%d day free', '%d days free', this.trialDurationDays, 'surecart'), this.trialDurationDays)}</div>
           <div class="price__description">
             {__('Then', 'surecart')}{' '}
-            {this.scratchAmount && this.scratchAmount !== this.amount && (
+            {!!this.scratchAmount && this.scratchAmount !== this.amount && (
               <Fragment>
                 <sc-format-number class="item__scratch-price" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>{' '}
               </Fragment>
@@ -69,7 +69,7 @@ export class ScProductLineItem {
     return (
       <div class="item__price">
         <div class="price">
-          {this.scratchAmount && this.scratchAmount !== this.amount && (
+          {!!this.scratchAmount && this.scratchAmount !== this.amount && (
             <Fragment>
               <sc-format-number class="item__scratch-price" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>{' '}
             </Fragment>
