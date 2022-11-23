@@ -68,13 +68,12 @@ export class ScLogin {
           code: this.verifyCode,
         },
       });
-      this.loading = true;
-      this.error = '';
       if (redirect_url) {
         window.location.reload();
       } else {
         this.error = __('Verification code invalid!', 'surecart');
       }
+      this.loading = false;
     } catch (e) {
       if (e?.message) {
         this.error = e.message;
