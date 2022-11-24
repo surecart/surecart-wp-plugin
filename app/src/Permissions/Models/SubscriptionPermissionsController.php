@@ -187,7 +187,7 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 		}
 
 		// check if user can modify quantity.
-		if ( ! empty( $params['quantity'] ) && ! $this->update_sc_subscription_quantity( $user, $args, $allcaps ) ) {
+		if ( ! empty( $params['quantity'] ) && $params['quantity'] > 1 && ! $this->update_sc_subscription_quantity( $user, $args, $allcaps ) ) {
 			return false;
 		}
 
