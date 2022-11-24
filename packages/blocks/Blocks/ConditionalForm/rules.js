@@ -1,0 +1,226 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+import { __ } from '@wordpress/i18n';
+import { InspectorControls } from '@wordpress/block-editor'
+import {
+	PanelBody,
+	PanelRow,
+	TextControl,
+	SelectControl,
+	ToggleControl,
+  Button,
+  Modal
+} from '@wordpress/components';
+import { useState } from '@wordpress/element';
+// import './rules.css';
+import Conditions from './conditions';
+
+
+const Rules = ( props ) => {
+
+  const { attributes, setAttributes } = props;
+
+  const { rule_groups } = attributes;
+
+  // const [ isOpen, setOpen ] = useState( false );
+  // const openModal = () => setOpen( true );
+  // const closeModal = () => setOpen( false );
+  const addNewRule = function ( event ) {}
+  const addNewGroup = function ( event ) {}
+  const showRules = function ( event ) {
+    // rule_groups += 'Hello Sandesh';
+    setAttributes({ rule_groups: JSON.stringify( conditions ) });
+		const group_id = event.target.getAttribute( 'data-group_id' );
+
+		const target = document.getElementById(
+			`sc-rules--group-${ group_id }`
+		);
+		toggle_class( event, target );
+	};
+
+  const toggle_class = function ( event, target ) {
+		if ( target.classList.contains( 'hidden' ) ) {
+			target.classList.remove( 'hidden' );
+			event.target.classList.remove( 'dashicons-arrow-down' );
+			event.target.classList.add( 'dashicons-arrow-up' );
+		} else {
+			target.classList.add( 'hidden' );
+			event.target.classList.add( 'dashicons-arrow-down' );
+			event.target.classList.remove( 'dashicons-arrow-up' );
+		}
+	};
+
+  let conditions = [
+    {
+      "group_id": "me7",
+      "rules": [
+        {
+          rule_id: "m2v",
+          condition: "cart_item",
+          operator: "any",
+          value: [""]
+        },
+        {
+          rule_id: "v2v",
+          condition: "cart_item",
+          operator: "any",
+          value: [""]
+        }
+      ]
+    },
+    {
+      "group_id": "7dd",
+      "rules": [{
+        rule_id: "ac3",
+        condition: "cart_item",
+        operator: "any",
+        value: [""]
+      }]
+    }
+
+  ];
+
+	return (
+		<>
+    <form>
+		{ conditions.map( ( group, g_index ) => {
+      debugger;
+      const group_id = group.group_id;
+      const rules = group.rules;
+      return (
+        <div
+          className="sc-rules-page--group_wrapper tw-flex"
+          key={ group_id }
+        >
+          <div
+            className="sc-rules--group"
+            data-group-id={ group_id }
+            css={css`
+              padding: 15px;
+              background-color: #fafafa;
+              border: 1px dashed #fafafa;
+            `}
+          >
+            <input
+              type="hidden"
+              name={ `sc-rules[${ g_index }][group_id]` }
+              value={ group_id }
+            />
+
+            <div className="sc-rules--redirection-step" css={ css`
+              display: flex;
+              justify-content: space-between;
+            `}>
+              <div className="sc-rules--group_header__left">
+                <span className="sc-rules__handle dashicons dashicons-menu"></span>
+                Rule Group - { g_index + 1 }
+              </div>
+              <div className="sc-rules--group_header">
+                <span className="sc-rules--group_id">
+                  { __(
+                    'ID - ',
+                    'surecart'
+                  ) }
+                  { group_id }
+                </span>
+                <span
+                  className={
+                    'dashicons dashicons-arrow-down'
+                  }
+                  onClick={
+                    showRules
+                  }
+                  data-group_id={
+                    group_id
+                  }
+                ></span>
+              </div>
+            </div>
+            <div
+              id={ `sc-rules--group-${ group_id }` }
+              className={ 'hidden' }
+            >
+              <div className="sc-rules--group_rules--wrapper" css={css`margin: 15px 0;`}>
+                { rules.length !==
+                  0 && (
+                  <Conditions
+                    rules={ rules }
+                    group_id={
+                      group_id
+                    }
+                    g_index={
+                      g_index
+                    }
+                    groups_length={
+                      conditions.length
+                    }
+                  />
+                  ) }
+              </div>
+
+              <div className="sc-rules--add-rule__repeater">
+                <div
+                  className="sc-button sc-button--secondary button"
+                  group_id={
+                    group_id
+                  }
+                  onClick={
+                    addNewRule
+                  }
+                >
+                  { __(
+                    'Add Condition',
+                    'surecart'
+                  ) }
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="sc-rules-page--group_wrapper__footer"
+            css={css`margin: 20px 0 0;`}
+          >
+            { parseInt( g_index ) + 1 < conditions.length &&
+            ( <div className="sc-rules--or-group"
+              css={css`
+                padding: 4px 6px;
+                border: 1px solid #d4d4d4;
+                margin: 15px auto;
+                width: 48px;
+                text-align: center;
+              `}
+            >
+              <span className="sc-rules--or_group__text">
+                { __(
+                  'OR',
+                  'surecart'
+                ) }
+              </span>
+            </div> )
+            }
+
+            { parseInt( g_index ) + 1 === conditions.length && (
+              <div className="sc-rules--or_group__button">
+                <span
+                  className="sc-rules--or_group_button or-button sc-button sc-button--secondary button"
+                  onClick={
+                    addNewGroup
+                  }
+                >
+                  { __(
+                    'Add Rule Group',
+                    'surecart'
+                  ) }
+                </span>
+              </div>
+            ) }
+          </div>
+        </div>
+      );
+			} )
+    }
+    </form>
+		</>
+	);
+};
+
+export default Rules;
