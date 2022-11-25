@@ -74,14 +74,14 @@ const Rules = ( props ) => {
 				},
 			],
 		};
-  }
+  };
   // const [ isOpen, setOpen ] = useState( false );
   // const openModal = () => setOpen( true );
   // const closeModal = () => setOpen( false );
   const updateRuleGroupData = function( data ) {
     setAttributes({ rule_groups: JSON.stringify( data ) });
     setRuleGroupsData( [...data] );
-  }
+  };
   const addConditionToRuleGroup = function( groupId, newCondition ) {
 
     if ( ruleGroupsData && groupId ) {
@@ -95,7 +95,7 @@ const Rules = ( props ) => {
       setAttributes({ rule_groups: JSON.stringify( ruleGroupsData ) });
       setRuleGroupsData( [...ruleGroupsData] );
     }
-  }
+  };
 
   const removeConditionFromRuleGroup = function( groupId, conditionId ) {
     debugger;
@@ -118,7 +118,25 @@ const Rules = ( props ) => {
 
     setAttributes({ rule_groups: JSON.stringify( newGroupData ) });
     setRuleGroupsData( [...newGroupData] );
-  }
+  };
+
+  const updateConditionInRuleGroup = function( groupId, conditionId, currentValue ) {
+    debugger;
+			for ( const group of ruleGroupsData ) {
+				if ( groupId === group.group_id ) {
+					for ( const rule of group.rules ) {
+						if ( conditionId === rule.rule_id ) {
+							rule.condition = currentValue;
+							rule.value = '';
+							break;
+						}
+					}
+					break;
+				}
+			}
+      setAttributes({ rule_groups: JSON.stringify( ruleGroupsData ) });
+      setRuleGroupsData( [...ruleGroupsData] );
+  };
 
   const addNewCondition = ( event ) => {
 		const groupId = event.target.getAttribute( 'group_id' );
@@ -184,7 +202,7 @@ const Rules = ( props ) => {
       const rules = group.rules;
       return (
         <div
-          className="sc-rules-page--group_wrapper tw-flex"
+          className="sc-rules-page--group_wrapper"
           key={ group_id }
         >
           <div
@@ -244,6 +262,7 @@ const Rules = ( props ) => {
                     g_index={ g_index }
                     groups_length={ ruleGroupsData.length }
                     removeConditionFromRuleGroup={ removeConditionFromRuleGroup }
+                    updateConditionInRuleGroup={ updateConditionInRuleGroup }
                   />
                   ) }
               </div>

@@ -20,7 +20,7 @@ import {
 
 // import ReactHtmlParser from 'react-html-parser';
 
-function Conditions( { rules, group_id, g_index, groups_length, removeConditionFromRuleGroup } ) {
+function Conditions( { rules, group_id, g_index, groups_length, removeConditionFromRuleGroup, updateConditionInRuleGroup } ) {
 	// const [ { page_settings }, dispatch ] = useStateValue();
 
 	// const rule_settings = page_settings.settings.rules;
@@ -196,14 +196,10 @@ function Conditions( { rules, group_id, g_index, groups_length, removeConditionF
 								<SelectControl
 									name={ `wcf-checkout-rules[${ g_index }][rules][${ r_index }][condition]` }
 									options={ conditions_select }
-									// onSelect={ () => {
-									// 	dispatch( {
-									// 		type: 'RESET_RULE_VALUE',
-									// 		name: 'wcf-checkout-rules',
-									// 		group_id,
-									// 		rule_id,
-									// 	} );
-									// } }
+									onSelect={ () => {
+                    updateConditionInRuleGroup( group_id, rule_id );
+									} }
+                  onChange={ ( selection ) => { updateConditionInRuleGroup( group_id, rule_id, selection ); } }
 									value={ rule_data.condition }
 								/>
 								<SelectControl
