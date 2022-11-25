@@ -244,7 +244,8 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 == Changelog ==
 
 = 1.2.23  - Novermber 25, 2022 =
-* Hotfix: Issue with admin prices search closing on keypresses, not allowing search functionality.
+* Fix: Issue with admin prices search closing on keypresses, not allowing search functionality.
+* Fix: Issue with customers not able to update subscription if subscription quantity changes were disabled.
 
 = 1.2.2  - Novermber 23, 2022 =
 * New: “Compare at” option for creating sale prices.
