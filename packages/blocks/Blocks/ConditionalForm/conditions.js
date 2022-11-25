@@ -20,7 +20,7 @@ import {
 
 // import ReactHtmlParser from 'react-html-parser';
 
-function Conditions( { rules, group_id, g_index, groups_length } ) {
+function Conditions( { rules, group_id, g_index, groups_length, removeConditionFromRuleGroup } ) {
 	// const [ { page_settings }, dispatch ] = useStateValue();
 
 	// const rule_settings = page_settings.settings.rules;
@@ -87,18 +87,15 @@ function Conditions( { rules, group_id, g_index, groups_length } ) {
             }
         ]
     },
-}
+  }
 
-	const removeRule = ( event ) => {
+
+	const removeCondition = ( event ) => {
+    debugger
 		const rule_id = event.target.getAttribute( 'rule_id' );
 
 		if ( group_id && rule_id ) {
-			dispatch( {
-				type: 'REMOVE_RULE',
-				name: 'wcf-checkout-rules',
-				rule_id,
-				group_id,
-			} );
+      removeConditionFromRuleGroup( group_id, rule_id );
 		}
 	};
 
@@ -139,19 +136,18 @@ function Conditions( { rules, group_id, g_index, groups_length } ) {
 		} );
 	};
 
-	const removeRuleIcon = function ( rules_length, rule_id ) {
+	const removeConditionIcon = function ( rules_length, rule_id ) {
 		if ( 1 === rules_length && 1 === groups_length ) {
 			return '';
 		}
 		return (
-      <div css={css`margin-top:15px;`}>
-			  <span
-          className="dashicons dashicons-trash and-close"
-          onClick={ removeRule }
-          group_id={ group_id }
-          rule_id={ rule_id }
-        ></span> { __( 'Remove', 'surecart' ) }
-      </div>
+      <div className='button' css={css`margin-top:15px;`}
+        onClick={ removeCondition }
+        group_id={ group_id }
+        rule_id={ rule_id }
+      >{
+        __( 'Remove Condition', 'surecart' )
+      }</div>
 		);
 	};
 
@@ -223,7 +219,7 @@ function Conditions( { rules, group_id, g_index, groups_length } ) {
 								) }
 							</div>
 							<div className="sc-rules--rule_actions">
-								{ removeRuleIcon( rules.length, rule_id ) }
+								{ removeConditionIcon( rules.length, rule_id ) }
 							</div>
 						</div>
 					</>

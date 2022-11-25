@@ -22,14 +22,138 @@ const Rules = ( props ) => {
 
   const { rule_groups } = attributes;
 
+  // debugger
+  const getInitialGroups = function() {
+
+    let defaultData = [
+      {
+        "group_id": "me7",
+        "rules": [
+          {
+            rule_id: "m2v",
+            condition: "cart_item",
+            operator: "any",
+            value: [""]
+          },
+          {
+            rule_id: "v2v",
+            condition: "cart_item",
+            operator: "any",
+            value: [""]
+          }
+        ]
+      },
+      {
+        "group_id": "7dd",
+        "rules": [{
+          rule_id: "ac3",
+          condition: "cart_item",
+          operator: "any",
+          value: [""]
+        }]
+      }
+    ];
+
+    let rgData = rule_groups ? JSON.parse( rule_groups ) : defaultData;
+
+    return rgData;
+  };
+
+  const [ ruleGroupsData, setRuleGroupsData ] = useState( getInitialGroups() );
+
+
+  const getEmptyRuleGroup = function() {
+    return {
+			group_id: Math.random().toString( 36 ).substring( 2, 5 ),
+			rules: [
+				{
+					rule_id: Math.random().toString( 36 ).substring( 2, 5 ),
+					condition: 'cart_item',
+					operator: '',
+					value: '',
+				},
+			],
+		};
+  }
   // const [ isOpen, setOpen ] = useState( false );
   // const openModal = () => setOpen( true );
   // const closeModal = () => setOpen( false );
-  const addNewRule = function ( event ) {}
-  const addNewGroup = function ( event ) {}
+  const updateRuleGroupData = function( data ) {
+    setAttributes({ rule_groups: JSON.stringify( data ) });
+    setRuleGroupsData( [...data] );
+  }
+  const addConditionToRuleGroup = function( groupId, newCondition ) {
+
+    if ( ruleGroupsData && groupId ) {
+      for ( const ruleGroup of ruleGroupsData ) {
+        if ( groupId === ruleGroup.group_id ) {
+          ruleGroup.rules.push( newCondition );
+          break;
+        }
+      }
+
+      setAttributes({ rule_groups: JSON.stringify( ruleGroupsData ) });
+      setRuleGroupsData( [...ruleGroupsData] );
+    }
+  }
+
+  const removeConditionFromRuleGroup = function( groupId, conditionId ) {
+    debugger;
+    const newGroupData = ruleGroupsData.filter( ( group, i ) => {
+      if ( groupId === group.group_id ) {
+
+        group.rules = group.rules.filter( ( rule, j ) => {
+          if ( rule.rule_id === conditionId ) {
+            return false;
+          }
+          return true;
+        } );
+
+        if ( group.rules.length === 0 ) {
+          return false;
+        }
+      }
+      return true;
+    });
+
+    setAttributes({ rule_groups: JSON.stringify( newGroupData ) });
+    setRuleGroupsData( [...newGroupData] );
+  }
+
+  const addNewCondition = ( event ) => {
+		const groupId = event.target.getAttribute( 'group_id' );
+		const newCondition = {
+			rule_id: Math.random().toString( 36 ).substring( 2, 5 ),
+			condition: 'cart_item',
+			operator: '',
+			value: '',
+		};
+
+    addConditionToRuleGroup( groupId, newCondition );
+  }
+
+  const addNewGroup = function ( event ) {
+    // debugger;
+    const newGroup = {
+			group_id: Math.random().toString( 36 ).substring( 2, 5 ),
+			rules: [
+				{
+					rule_id: Math.random().toString( 36 ).substring( 2, 5 ),
+					condition: 'cart_item',
+					operator: '',
+					value: '',
+				},
+			],
+		};
+
+    ruleGroupsData.push( newGroup );
+    // setRuleGroupsData( ruleGroupsData );
+    updateRuleGroupData( ruleGroupsData );
+  }
+
   const showRules = function ( event ) {
     // rule_groups += 'Hello Sandesh';
-    setAttributes({ rule_groups: JSON.stringify( conditions ) });
+    // setAttributes({ rule_groups: JSON.stringify( ruleGroupsData ) });
 		const group_id = event.target.getAttribute( 'data-group_id' );
 
 		const target = document.getElementById(
@@ -50,41 +174,12 @@ const Rules = ( props ) => {
 		}
 	};
 
-  let conditions = [
-    {
-      "group_id": "me7",
-      "rules": [
-        {
-          rule_id: "m2v",
-          condition: "cart_item",
-          operator: "any",
-          value: [""]
-        },
-        {
-          rule_id: "v2v",
-          condition: "cart_item",
-          operator: "any",
-          value: [""]
-        }
-      ]
-    },
-    {
-      "group_id": "7dd",
-      "rules": [{
-        rule_id: "ac3",
-        condition: "cart_item",
-        operator: "any",
-        value: [""]
-      }]
-    }
-
-  ];
 
 	return (
 		<>
     <form>
-		{ conditions.map( ( group, g_index ) => {
-      debugger;
+		{ ruleGroupsData.map( ( group, g_index ) => {
+      // debugger;
       const group_id = group.group_id;
       const rules = group.rules;
       return (
@@ -145,15 +240,10 @@ const Rules = ( props ) => {
                   0 && (
                   <Conditions
                     rules={ rules }
-                    group_id={
-                      group_id
-                    }
-                    g_index={
-                      g_index
-                    }
-                    groups_length={
-                      conditions.length
-                    }
+                    group_id={ group_id }
+                    g_index={ g_index }
+                    groups_length={ ruleGroupsData.length }
+                    removeConditionFromRuleGroup={ removeConditionFromRuleGroup }
                   />
                   ) }
               </div>
@@ -165,7 +255,7 @@ const Rules = ( props ) => {
                     group_id
                   }
                   onClick={
-                    addNewRule
+                    addNewCondition
                   }
                 >
                   { __(
@@ -179,7 +269,7 @@ const Rules = ( props ) => {
           <div className="sc-rules-page--group_wrapper__footer"
             css={css`margin: 20px 0 0;`}
           >
-            { parseInt( g_index ) + 1 < conditions.length &&
+            { parseInt( g_index ) + 1 < ruleGroupsData.length &&
             ( <div className="sc-rules--or-group"
               css={css`
                 padding: 4px 6px;
@@ -198,7 +288,7 @@ const Rules = ( props ) => {
             </div> )
             }
 
-            { parseInt( g_index ) + 1 === conditions.length && (
+            { parseInt( g_index ) + 1 === ruleGroupsData.length && (
               <div className="sc-rules--or_group__button">
                 <span
                   className="sc-rules--or_group_button or-button sc-button sc-button--secondary button"
