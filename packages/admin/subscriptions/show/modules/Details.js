@@ -104,7 +104,7 @@ export default ({ subscription, customer, product, loading }) => {
 			return (
 				<div>
 					<div>
-						<strong>{sprintf(__('Payments', 'surecart'))}</strong>
+						<strong>{__('Payments', 'surecart')}</strong>
 					</div>
 					{sprintf(
 						__('%d Remaining', 'surecart'),
