@@ -20,7 +20,7 @@ export default ({ subscription, updateSubscription, loading }) => {
 				>
 					<DatePicker
 						placeholder={__('Add Free Trial', 'surecart')}
-						popoverTitle={__('Choose a trial end date', 'surecart')}
+						title={__('Choose a trial end date', 'surecart')}
 						currentDate={
 							subscription?.trial_end_at
 								? new Date(subscription?.trial_end_at * 1000)

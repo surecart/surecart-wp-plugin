@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { __ } from '@wordpress/i18n';
 import { ScFormatDate, ScButton } from '@surecart/components-react';
-import { Popover, DateTimePicker } from '@wordpress/components';
+import { DateTimePicker } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { css, jsx } from '@emotion/core';
 import { useEffect } from 'react';
@@ -12,7 +12,7 @@ export default (props) => {
 		onChange,
 		onChoose,
 		placeholder,
-		popoverTitle,
+		title,
 		...rest
 	} = props;
 	const [isVisible, setIsVisible] = useState(false);
@@ -55,14 +55,14 @@ export default (props) => {
 			</ScButton>
 
 			{isVisible && (
-				<Popover position="bottom">
-					{!!popoverTitle && (
+				<div>
+					{!!title && (
 						<div
 							css={css`
 								padding: 1em 1em 0 1em;
 							`}
 						>
-							{popoverTitle}
+							{title}
 						</div>
 					)}
 					<DateTimePicker
@@ -92,7 +92,7 @@ export default (props) => {
 							{__('Cancel', 'surecart')}
 						</ScButton>
 					</div>
-				</Popover>
+				</div>
 			)}
 		</div>
 	);
