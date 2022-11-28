@@ -104,13 +104,16 @@ export default ({ subscription, customer, product, loading }) => {
 			return (
 				<div>
 					<div>
-						<strong>{sprintf(__('Remaining Payments', 'surecart'))}</strong>
+						<strong>{sprintf(__('Payments', 'surecart'))}</strong>
 					</div>
-					{subscription?.remaining_period_count}
+					{sprintf(
+						__('%d Remaining', 'surecart'),
+						subscription?.remaining_period_count
+					)}
 				</div>
 			);
 		}
-	}
+	};
 
 	if (loading) {
 		return (
@@ -168,10 +171,9 @@ export default ({ subscription, customer, product, loading }) => {
 			<div
 				css={css`
 					display: flex;
-					flex-direction: column;
 					justify-content: flex-start;
-					align-items: flex-start;
-					gap: 1em;
+					align-items: center;
+					gap: 2em;
 					margin-bottom: 2em;
 				`}
 			>
