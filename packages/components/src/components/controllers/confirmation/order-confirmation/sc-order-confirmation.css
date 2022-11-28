@@ -4,9 +4,12 @@
   margin: auto;
 }
 
+::slotted(*:not(:last-child)),
+sc-form form > *:not(:last-child) {
+  margin-bottom: var(--sc-form-row-spacing-large)
+}
+
 .order-confirmation__content {
-  display: grid;
-  gap: var(--sc-form-row-spacing-large);
   color: var(--sc-order-confirmation-color, var(--sc-color-gray-500));
 }
 

@@ -18,12 +18,14 @@ import { __ } from '@wordpress/i18n';
 
 export default ({ charge, onRequestClose, onRefunded }) => {
 	const [loading, setLoading] = useState(false);
-	const { createErrorNotice } = useDispatch(noticesStore);
-	const [amount, setAmount] = useState(charge?.amount - charge?.refunded_amount);
+	const [amount, setAmount] = useState(
+		charge?.amount - charge?.refunded_amount
+	);
 	const [reason, setReason] = useState('requested_by_customer');
 	const [error, setError] = useState(null);
 
-	const { saveEntityRecord } = useDispatch(coreStore);
+	const { saveEntityRecord, invalidateResolutionForStore } =
+		useDispatch(coreStore);
 
 	/**
 	 * Handle submit.
@@ -47,11 +49,14 @@ export default ({ charge, onRequestClose, onRefunded }) => {
 			if (refund?.status === 'failed') {
 				throw {
 					message: __(
-						'Could not refund the charge. Please check with the processor for more details.',
+						'We were unable to issue a refund with this payment processor. Please check with your payment processor and try issuing the refund directly through the processor.',
 						'surecart'
 					),
 				};
 			}
+
+			// invalidate page.
+			await invalidateResolutionForStore();
 
 			onRefunded(refund);
 		} catch (e) {

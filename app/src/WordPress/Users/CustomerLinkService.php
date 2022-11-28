@@ -130,16 +130,13 @@ class CustomerLinkService {
 			update_user_meta( $created->ID, 'default_password_nag', false );
 		}
 
-		// get the mode string.
-		$mode = ! empty( $this->checkout->live_mode ) ? 'live' : 'test';
-
 		// login the user.
 		if ( apply_filters( 'surecart/checkout/auto-login-new-user', true ) ) {
 			$this->loginUser( $created );
 		}
 
 		// set the customer id for the user.
-		return $created->setCustomerId( $this->checkout->customer_id, $mode );
+		return $created->setCustomerId( $this->checkout->customer->id ?? $this->checkout->customer, ! empty( $this->checkout->live_mode ) ? 'live' : 'test' );
 	}
 
 	/**

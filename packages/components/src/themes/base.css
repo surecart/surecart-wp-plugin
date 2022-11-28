@@ -49,7 +49,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
 
 :root {
   /** Brand */
-  --sc-color-brand-primary: #08BA4F;
+  --sc-color-brand-primary: #01824C;
   --sc-color-brand-secondary: #2CC965;
   --sc-color-brand-heading: #002E33;
   --sc-color-brand-body: #45505F;
@@ -400,7 +400,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-breadcrumb-color: var(--sc-color-gray-300);
   --sc-stacked-list-row-text-color: var(--sc-color-gray-300);
   --sc-order-confirmation-color: var(--sc-color-gray-300);
-  --sc-card-boderless-border-color: var(--sc-color-gray-600);
+  --sc-card-border-color: var(--sc-color-gray-600);
   --sc-select-border-color: var(--sc-color-gray-600);
   --sc-button-default-border-color: var(--sc-color-gray-600);
   --sc-stacked-list-border-color: var(--sc-color-gray-600);

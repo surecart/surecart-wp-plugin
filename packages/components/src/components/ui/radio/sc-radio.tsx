@@ -96,7 +96,7 @@ export class ScRadio {
     if (!radioGroup) {
       return [];
     }
-    return [...radioGroup.querySelectorAll('sc-radio')].filter((radio: HTMLScRadioElement) => radio.name === this.name) as HTMLScRadioElement[];
+    return [...radioGroup.querySelectorAll('sc-radio')] as HTMLScRadioElement[];
   }
 
   getSiblingRadios() {

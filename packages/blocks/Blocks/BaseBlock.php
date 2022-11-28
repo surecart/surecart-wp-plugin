@@ -14,6 +14,13 @@ abstract class BaseBlock {
 	protected $directory = '';
 
 	/**
+	 * Holds the block.
+	 *
+	 * @var object
+	 */
+	protected $block;
+
+	/**
 	 * Register the block for dynamic output
 	 *
 	 * @param \Pimple\Container $container Service container.
@@ -55,6 +62,8 @@ abstract class BaseBlock {
 	 * @return function
 	 */
 	public function preRender( $attributes, $content, $block ) {
+		$this->block = $block;
+
 		// run middlware.
 		$render = $this->middleware( $attributes, $content );
 

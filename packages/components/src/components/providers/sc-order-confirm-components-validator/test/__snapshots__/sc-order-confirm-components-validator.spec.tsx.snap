@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-order-confirm-components-validator renders 1`] = `
+<sc-order-confirm-components-validator>
+  <mock:shadow-root>
+    <slot></slot>
+  </mock:shadow-root>
+</sc-order-confirm-components-validator>
+`;

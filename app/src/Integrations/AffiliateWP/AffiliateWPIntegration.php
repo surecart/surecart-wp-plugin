@@ -2,8 +2,7 @@
 
 namespace Surecart\Integrations\AffiliateWP;
 
-use SureCart\Models\Invoice;
-use SureCart\Models\Order;
+use SureCart\Models\Checkout;
 use SureCart\Models\Purchase;
 use SureCart\Support\Currency;
 
@@ -62,11 +61,7 @@ class AffiliateWPIntegration extends \Affiliate_WP_Base {
 		$url         = '';
 		$object_name = $referral->custom['object'] ?? 'order';
 
-		if ( 'invoice' === $object_name ) {
-			$object = Invoice::find( $reference );
-		} else {
-			$object = Order::find( $reference );
-		}
+		$object = Checkout::find( $reference );
 
 		if ( $object->id ) {
 			$url = esc_url( \SureCart::getUrl()->edit( $object_name, $object->id ) );
@@ -147,7 +142,7 @@ class AffiliateWPIntegration extends \Affiliate_WP_Base {
 
 		$stripe_amount = $reference->checkout->amount_due;
 		$currency      = $reference->currency;
-		$description   = $purchase->product->name;
+		$description   = $hydrated_purchase->product->name;
 		$mode          = $reference->live_mode;
 
 		if ( Currency::isZeroDecimal( $currency ) ) {
@@ -156,7 +151,7 @@ class AffiliateWPIntegration extends \Affiliate_WP_Base {
 			$amount = round( $stripe_amount / 100, 2 );
 		}
 
-		if ( $this->is_affiliate_email( $purchase->customer->email, $this->affiliate_id ) ) {
+		if ( $this->is_affiliate_email( $hydrated_purchase->customer->email, $this->affiliate_id ) ) {
 			$this->log( 'Referral not created because affiliate\'s own account was used.' );
 			$this->mark_referral_failed( $referral_id );
 			return;
