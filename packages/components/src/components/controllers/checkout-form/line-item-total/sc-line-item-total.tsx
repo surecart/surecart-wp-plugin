@@ -67,6 +67,9 @@ export class ScLineItemTotal {
           <slot name="description" />
         </span>
         <span slot="price">
+          {this.order?.total_amount !== this.order?.scratch_amount && this.total === 'total' && (
+            <sc-format-number class="scratch-price" type="currency" value={this.order?.scratch_amount} currency={this.order?.currency || 'usd'} />
+          )}
           <sc-total order={this.order} total={this.total}></sc-total>
         </span>
       </sc-line-item>

@@ -2,36 +2,40 @@
 
 namespace SureCartBlocks\Blocks\Email;
 
+use SureCartBlocks\Blocks\BaseBlock;
 /**
  * Logout Button Block.
  */
-class Block {
+class Block extends BaseBlock {
 	/**
-	 * Optional directory to .json block data files.
+	 * Render the block
 	 *
-	 * @var string
-	 */
-	protected $directory = '';
-
-	/**
-	 * Register the block for dynamic output
-	 *
-	 * @return void
-	 */
-	public function register() {
-		register_block_type_from_metadata(
-			$this->getDir(),
-		);
-	}
-
-	/**
-	 * Get the called class directory path
+	 * @param array  $attributes Block attributes.
+	 * @param string $content Post content.
 	 *
 	 * @return string
 	 */
-	public function getDir() {
-		$reflector = new \ReflectionClass( $this );
-		$fn        = $reflector->getFileName();
-		return dirname( $fn );
+	public function render( $attributes, $content = '' ) {
+		$tracking_confirmation = \SureCart::settings()->get( 'tracking_confirmation', false );
+		if ( $tracking_confirmation ) {
+			$tracking_confirmation_message = \SureCart::settings()->get( 'tracking_confirmation_message', esc_html__( 'Your email and cart are saved so we can send email reminders about this order.', 'surecart' ) );
+		}
+		ob_start(); ?>
+
+		<sc-customer-email
+			class="<?php echo esc_attr( $attributes['className'] ?? '' ); ?>"
+			label="<?php echo esc_attr( $attributes['label'] ?? '' ); ?>"
+			<?php echo ! empty( $attributes['placeholder'] ) ? 'placeholder="' . esc_attr( $attributes['placeholder'] ) . '"' : false; ?>
+			<?php echo ! empty( $attributes['help'] ) ? 'help="' . esc_attr( $attributes['help'] ) . '"' : false; ?>
+			<?php echo ! empty( $attributes['autofocus'] ) ? 'autofocus' : false; ?>
+			<?php echo ! empty( $tracking_confirmation_message ) ? 'tracking-confirmation-message="' . esc_attr( $tracking_confirmation_message ) . '"' : false; ?>
+			required
+			autocomplete='email'
+			inputmode='email'
+		>
+		</sc-customer-email>
+
+		<?php
+		return ob_get_clean();
 	}
 }

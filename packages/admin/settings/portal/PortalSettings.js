@@ -34,17 +34,6 @@ export default () => {
 		}
 	};
 
-	const choices = [
-		{
-			label: __('Immediately', 'surecart'),
-			value: 'immediate',
-		},
-		{
-			label: __('Next Billing Period', 'surecart'),
-			value: 'pending',
-		},
-	];
-
 	return (
 		<SettingsTemplate
 			title={__('Customer Portal', 'surecart')}

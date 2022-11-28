@@ -21,19 +21,6 @@
 | `"base"` |             |
 
 
-## Dependencies
-
-### Used by
-
- - [sc-payment](../../controllers/checkout-form/payment)
-
-### Graph
-```mermaid
-graph TD;
-  sc-payment --> sc-toggles
-  style sc-toggles fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

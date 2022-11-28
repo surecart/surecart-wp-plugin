@@ -4,6 +4,7 @@ import { __ } from '@wordpress/i18n';
 
 import apiFetch from '../../../functions/fetch';
 import { hasSubscription } from '../../../functions/line-items';
+import { getCheckout } from '../../../services/session';
 import { Checkout, PaymentIntent } from '../../../types';
 import { getScriptLoadParams } from './functions';
 
@@ -38,7 +39,7 @@ export class ScPaypalButtons {
   @Prop() mode: 'test' | 'live';
 
   /** The order. */
-  @Prop() order: Checkout;
+  @Prop({ mutable: true }) order: Checkout;
 
   /** Buttons to render */
   @Prop() buttons: string[] = ['paypal', 'card'];
@@ -121,6 +122,14 @@ export class ScPaypalButtons {
        * We can capture it.
        */
       onApprove: async () => {
+        try {
+          this.order = (await getCheckout({ id: this.order?.id })) as Checkout;
+        } catch (e) {
+          console.error(e);
+          this.scError.emit({ code: 'could_not_capture', message: __('The payment did not process. Please try again.', 'surecart') });
+          this.scSetState.emit('REJECT');
+        }
+
         try {
           this.scSetState.emit('PAYING');
           const intent = (await apiFetch({

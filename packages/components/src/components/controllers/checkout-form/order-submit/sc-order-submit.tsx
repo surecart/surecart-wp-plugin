@@ -73,7 +73,7 @@ export class ScOrderSubmit {
         {this.processor === 'paypal' && this.renderPayPalButton(['paypal'])}
         {this.processor === 'paypal-card' && this.renderPayPalButton(['card'])}
         <sc-button
-          hidden={this.processor !== 'stripe'}
+          hidden={['paypal', 'paypal-card'].includes(this.processor)}
           submit
           type={this.type}
           size={this.size}

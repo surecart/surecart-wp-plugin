@@ -8,7 +8,10 @@
 			\SureCart::render(
 				'layouts/partials/admin-settings-sidebar',
 				[
-					'tab' => $tab,
+					'tab'          => $tab,
+					'is_free'      => $is_free,
+					'entitlements' => $entitlements,
+					'upgrade_url'  => $upgrade_url,
 				]
 			);
 			?>

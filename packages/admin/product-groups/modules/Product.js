@@ -15,7 +15,8 @@ import { useDispatch, useSelect } from '@wordpress/data';
 
 export default ({ product }) => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { saveEntityRecord } = useDispatch(coreStore);
+	const { saveEntityRecord, invalidateResolutionForStore } =
+		useDispatch(coreStore);
 	const savingProduct = useSelect((select) =>
 		select(coreStore).isSavingEntityRecord(
 			'surecart',
@@ -29,6 +30,7 @@ export default ({ product }) => {
 			id: product?.id,
 			product_group: null,
 		});
+		await invalidateResolutionForStore();
 		createSuccessNotice(__('Product removed.', 'surecart'), {
 			type: 'snackbar',
 		});

@@ -2,7 +2,7 @@
 namespace SureCartBlocks\Controllers;
 
 use SureCart\Models\Component;
-use SureCart\Models\PaymentIntent;
+use SureCart\Models\Processor;
 use SureCart\Models\User;
 
 /**
@@ -71,7 +71,7 @@ class PaymentMethodController extends BaseController {
 		}
 
 		$applicable_processors = array_filter(
-			\SureCart::account()->processors ?? [],
+			Processor::get() ?? [],
 			function( $processor ) {
 				return $processor->live_mode === $this->isLiveMode() && $processor->recurring_enabled;
 			}

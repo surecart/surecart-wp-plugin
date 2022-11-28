@@ -9,4 +9,20 @@ describe('sc-product-line-item', () => {
     });
     expect(page.root).toMatchSnapshot();
   });
+
+  it('renders scratch amount if different from amount', async () => {
+    const page = await newSpecPage({
+      components: [ScProductLineItem],
+      html: `<sc-product-line-item currency="CAD" amount="1000" scratch-amount="2000"></sc-product-line-item>`,
+    });
+    expect(page.root).toMatchSnapshot();
+  });
+
+  it('does not render scratch amount if the same as amount', async () => {
+    const page = await newSpecPage({
+      components: [ScProductLineItem],
+      html: `<sc-product-line-item currency="CAD" amount="1000" scratch-amount="1000"></sc-product-line-item>`,
+    });
+    expect(page.root).toMatchSnapshot();
+  });
 });

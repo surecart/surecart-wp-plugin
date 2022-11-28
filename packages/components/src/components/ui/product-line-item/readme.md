@@ -14,9 +14,11 @@
 | `editable`          | `editable`            | Can we select the quantity                    | `boolean` | `true`      |
 | `imageUrl`          | `image-url`           | Url for the product image                     | `string`  | `undefined` |
 | `interval`          | `interval`            | Recurring interval (i.e. monthly, once, etc.) | `string`  | `undefined` |
+| `max`               | `max`                 | The max allowed.                              | `number`  | `100`       |
 | `name`              | `name`                | Product name                                  | `string`  | `undefined` |
 | `quantity`          | `quantity`            | Quantity                                      | `number`  | `undefined` |
 | `removable`         | `removable`           | Is the line item removable                    | `boolean` | `undefined` |
+| `scratchAmount`     | `scratch-amount`      | The line item scratch amount                  | `number`  | `undefined` |
 | `trialDurationDays` | `trial-duration-days` | Trial duration days                           | `number`  | `undefined` |
 
 

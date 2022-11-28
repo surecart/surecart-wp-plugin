@@ -26,6 +26,8 @@
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-subscription](../../controllers/dashboard/subscription)
+ - [sc-subscription-details](../../controllers/dashboard/subscription-details)
+ - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
@@ -38,6 +40,8 @@ graph TD;
   sc-password-nag --> sc-flex
   sc-payment-methods-list --> sc-flex
   sc-subscription --> sc-flex
+  sc-subscription-details --> sc-flex
+  sc-subscription-payment-method --> sc-flex
   sc-subscription-switch --> sc-flex
   sc-upcoming-invoice --> sc-flex
   style sc-flex fill:#f9f,stroke:#333,stroke-width:4px

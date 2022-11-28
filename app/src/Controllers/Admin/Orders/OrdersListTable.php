@@ -2,7 +2,6 @@
 
 namespace SureCart\Controllers\Admin\Orders;
 
-use SureCart\Support\TimeDate;
 use SureCart\Models\Order;
 use SureCart\Controllers\Admin\Tables\ListTable;
 
@@ -151,7 +150,7 @@ class OrdersListTable extends ListTable {
 				'status' => $this->getStatus(),
 				'query'  => $this->get_search_query(),
 			]
-		)->with( [ 'checkout', 'checkout.charge', 'checkout.customer', 'checkout.payment_method', 'checkout.purchases', 'payment_method.card', 'payment_method.payment_instrument', 'payment_method.paypal_account', 'payment_method.bank_account' ] )
+		)->with( [ 'checkout', 'checkout.charge', 'checkout.customer', 'checkout.payment_method', 'checkout.manual_payment_method', 'checkout.purchases', 'payment_method.card', 'payment_method.payment_instrument', 'payment_method.paypal_account', 'payment_method.bank_account' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'orders' ),
@@ -201,6 +200,9 @@ class OrdersListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_method( $order ) {
+		if ( isset( $order->checkout->manual_payment_method->name ) ) {
+			return '<sc-tag>' . $order->checkout->manual_payment_method->name . '</sc-tag>';
+		}
 		ob_start();
 		?>
 			<sc-payment-method id="sc-method-<?php echo esc_attr( $order->id ); ?>"></sc-payment-method>
