@@ -2,6 +2,9 @@
 
 namespace SureCart\WordPress\Assets;
 
+use SureCart\Models\ManualPaymentMethod;
+use SureCart\Models\Processor;
+
 /**
  * Handles the component theme.
  */
@@ -250,15 +253,16 @@ class ScriptsService {
 			'surecart-blocks',
 			'scBlockData',
 			[
-				'processors'   => (array) \SureCart::account()->processors ?? [],
-				'plugin_url'   => \SureCart::core()->assets()->getUrl(),
-				'currency'     => \SureCart::account()->currency,
-				'theme'        => get_option( 'surecart_theme', 'light' ),
-				'entitlements' => \SureCart::account()->entitlements,
-				'beta'         => [
+				'processors'           => (array) Processor::get() ?? [],
+				'manualPaymentMethods' => (array) ManualPaymentMethod::get() ?? [],
+				'plugin_url'           => \SureCart::core()->assets()->getUrl(),
+				'currency'             => \SureCart::account()->currency,
+				'theme'                => get_option( 'surecart_theme', 'light' ),
+				'entitlements'         => \SureCart::account()->entitlements,
+				'beta'                 => [
 					'stripe_payment_element' => (bool) get_option( 'sc_stripe_payment_element', false ),
 				],
-				'pages'        => [
+				'pages'                => [
 					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 					'checkout'  => \SureCart::pages()->url( 'checkout' ),
 				],

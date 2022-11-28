@@ -39,8 +39,8 @@
 		"test:unit": "wp-scripts test-unit-js"
 	},
 	"dependencies": {
-		"@surecart/components": "^0.0.9",
-		"@surecart/components-react": "^0.0.6"
+		"@surecart/components": "^0.0.10",
+		"@surecart/components-react": "^0.0.7"
 	},
 	"devDependencies": {
 		"@wordpress/prettier-config": "^1.1.1",

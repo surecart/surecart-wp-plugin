@@ -1,5 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
+import { Customer } from '../../../../types';
 import { ScCustomerDetails } from '../sc-customer-details';
 
 describe('sc-customer-details', () => {
@@ -22,7 +23,7 @@ describe('sc-customer-details', () => {
               postal_code: '53716',
               country: 'us',
             },
-          }}
+          } as Customer}
         >
           <span slot="heading">
             <slot name="heading">Showing Customer Info</slot>

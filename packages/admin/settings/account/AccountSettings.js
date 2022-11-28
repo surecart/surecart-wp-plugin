@@ -186,6 +186,10 @@ export default () => {
 						}
 						choices={[
 							{
+								value: 'nl',
+								label: 'Nederlands',
+							},
+              {
 								value: 'de',
 								label: 'Deutsch',
 							},

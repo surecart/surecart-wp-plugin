@@ -8,17 +8,17 @@ import { __ } from '@wordpress/i18n';
 })
 export class ScPaymentSelected {
   @Prop() iconName: string;
+
   @Prop() label: string;
+
   render() {
     return (
       <div class="payment-selected" part="base">
-        <div class="payment-selected__provider-icon">
-          <slot name="icon" />
-        </div>
+        <slot name="icon" />
 
         <div class="payment-selected__label">{this.label}</div>
 
-        <sc-divider></sc-divider>
+        <sc-divider style={{ '--spacing': 'var(--sc-spacing-xx-small)' }}></sc-divider>
 
         <div class="payment-selected__instructions">
           <svg viewBox="0 0 48 40" fill="var(--sc-color-gray-500)" xmlns="http://www.w3.org/2000/svg" role="presentation">
