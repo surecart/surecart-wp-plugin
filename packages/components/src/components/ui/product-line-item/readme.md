@@ -18,6 +18,7 @@
 | `name`              | `name`                | Product name                                  | `string`  | `undefined` |
 | `quantity`          | `quantity`            | Quantity                                      | `number`  | `undefined` |
 | `removable`         | `removable`           | Is the line item removable                    | `boolean` | `undefined` |
+| `scratchAmount`     | `scratch-amount`      | The line item scratch amount                  | `number`  | `undefined` |
 | `trialDurationDays` | `trial-duration-days` | Trial duration days                           | `number`  | `undefined` |
 
 

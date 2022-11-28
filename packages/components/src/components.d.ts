@@ -2164,6 +2164,10 @@ export namespace Components {
          */
         "removable": boolean;
         /**
+          * The line item scratch amount
+         */
+        "scratchAmount": number;
+        /**
           * Trial duration days
          */
         "trialDurationDays": number;
@@ -6685,6 +6689,10 @@ declare namespace LocalJSX {
           * Is the line item removable
          */
         "removable"?: boolean;
+        /**
+          * The line item scratch amount
+         */
+        "scratchAmount"?: number;
         /**
           * Trial duration days
          */

@@ -1208,6 +1208,7 @@
     "name": true,
     "quantity": true,
     "removable": true,
+    "scratch-amount": true,
     "trial-duration-days": true,
     "style": true,
     "id": true,
