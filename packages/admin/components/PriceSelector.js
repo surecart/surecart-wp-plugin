@@ -39,7 +39,7 @@ export default ({ onSelect, ad_hoc, value, open = false }) => {
 			`}
 			value={value}
 			ad_hoc={ad_hoc}
-			open={open}
+			// open={open}
 			products={products}
 			onQuery={setQuery}
 			onFetch={() => setQuery('')}
