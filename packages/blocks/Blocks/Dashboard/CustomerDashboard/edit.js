@@ -166,7 +166,9 @@ export default ({ clientId }) => {
 			);
 
 			const title = sprintf(
-				__('Dashboard', 'surecart'),
+				tabBlocks?.length
+					? __('Dashboard', 'surecart')
+					: __('New Tab %d', 'surecart'),
 				tabBlocks.length
 			);
 
