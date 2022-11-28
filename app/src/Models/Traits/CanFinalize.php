@@ -20,10 +20,6 @@ trait CanFinalize {
 			return new \WP_Error( 'not_saved', 'Please create the checkout session.' );
 		}
 
-		if ( empty( $this->processor_type ) ) {
-			return new \WP_Error( 'no_processor', 'Please provide a processor' );
-		}
-
 		$finalized = \SureCart::request(
 			$this->endpoint . '/' . $this->attributes['id'] . '/finalize/',
 			[

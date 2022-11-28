@@ -102,6 +102,9 @@ class WebhooksService {
 	 * @return \WP_Error|\SureCart\Models\Webhook;
 	 */
 	public function register() {
+		if ( defined( 'SURECART_RUNNING_TESTS' ) ) {
+			return;
+		}
 		return Webhook::register();
 	}
 

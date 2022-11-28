@@ -29,6 +29,9 @@ export class ScAlert {
   /** Scroll margin */
   @Prop() scrollMargin: string = '0px';
 
+  /** No icon */
+  @Prop() noIcon: boolean;
+
   @State() autoHideTimeout: any;
 
   /** When alert is hidden */

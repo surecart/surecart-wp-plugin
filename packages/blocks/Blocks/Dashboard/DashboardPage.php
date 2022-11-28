@@ -27,7 +27,16 @@ abstract class DashboardPage extends BaseBlock {
 	 * Get the current tab.
 	 */
 	protected function getTab() {
-		return isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : false;
+		$tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : false;
+		if ( $tab ) {
+			return $tab;
+		}
+
+		global $post;
+		$postcontent = $post->post_content;
+		$blocks      = parse_blocks( $postcontent );
+		$named       = \SureCart::blocks()->filterBy( 'blockName', 'surecart/dashboard-tab', $blocks );
+		return ! empty( $named[0]['attrs']['panel'] ) ? $named[0]['attrs']['panel'] : $tab;
 	}
 
 	/**

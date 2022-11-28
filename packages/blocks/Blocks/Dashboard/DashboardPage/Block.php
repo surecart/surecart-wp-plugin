@@ -62,10 +62,10 @@ class Block extends DashboardPage {
 		}
 
 		// get the current page tab and possible id.
-		$tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : false;
+		$tab = $this->getTab();
 
 		// make sure we are on the correct tab.
-		if ( ! empty( $attributes['name'] ) ) {
+		if ( ! empty( $tab ) && ! empty( $attributes['name'] ) ) {
 			if ( $tab !== $attributes['name'] ) {
 				return '';
 			}
@@ -74,7 +74,7 @@ class Block extends DashboardPage {
 		$model = isset( $_GET['model'] ) ? sanitize_text_field( wp_unslash( $_GET['model'] ) ) : false;
 
 		/**
-		 * Filters content to display before the block.
+	 * Filters content to display before the block.
 		 *
 		 * @since 1.1.12
 		 *
@@ -100,10 +100,10 @@ class Block extends DashboardPage {
 			if ( method_exists( $this->blocks[ $model ], $action ) ) {
 				$block = new $this->blocks[ $model ]();
 
-				return $this->passwordNag() . '<sc-spacing style="--spacing: var(--sc-spacing-xx-large); font-size: 15px;">' . $before . $block->$action() . $after . '</sc-spacing>';
+				return $this->passwordNag() . '<sc-spacing class="sc-customer-dashboard" style="--spacing: var(--sc-spacing-xx-large); font-size: 15px;">' . $before . $block->$action() . $after . '</sc-spacing>';
 			}
 		}
-		return $this->passwordNag() . '<sc-spacing style="--spacing: var(--sc-spacing-xx-large); font-size: 15px;">' . $before . filter_block_content( $content ) . $after . '</sc-spacing>';
+		return $this->passwordNag() . '<sc-spacing class="sc-customer-dashboard" style="--spacing: var(--sc-spacing-xx-large); font-size: 15px;">' . $before . filter_block_content( $content ) . $after . '</sc-spacing>';
 	}
 
 	public function passwordNag() {

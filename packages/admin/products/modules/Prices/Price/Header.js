@@ -102,15 +102,36 @@ export default ({
 					{price?.ad_hoc ? (
 						__('Custom Amount', 'surecart')
 					) : (
-						<ScFormatNumber
-							css={css`
-								font-weight: bold;
-								font-size: 14px;
-							`}
-							type="currency"
-							currency={price?.currency || scData.currency_code}
-							value={price?.amount}
-						/>
+						<>
+							{!!price?.scratch_amount &&
+								price?.scratch_amount > price?.amount && (
+									<ScFormatNumber
+										css={css`
+											font-weight: bold;
+											font-size: 14px;
+											opacity: 0.75;
+											text-decoration: line-through;
+										`}
+										type="currency"
+										currency={
+											price?.currency ||
+											scData.currency_code
+										}
+										value={price?.scratch_amount}
+									/>
+								)}
+							<ScFormatNumber
+								css={css`
+									font-weight: bold;
+									font-size: 14px;
+								`}
+								type="currency"
+								currency={
+									price?.currency || scData.currency_code
+								}
+								value={price?.amount}
+							/>
+						</>
 					)}{' '}
 					<div
 						css={css`

@@ -182,14 +182,9 @@ class User implements ArrayAccess, JsonSerializable {
 			]
 		);
 
-		// get username from first part of email if not provided or invalid.
-		if ( empty( $args['user_name'] ) || ! validate_username( $args['user_name'] ) ) {
-			$parts             = explode( '@', $args['user_email'] );
-			$username          = $parts[0];
-			$args['user_name'] = $username;
-		} else {
-			$username = $this->createUniqueUsername( $args['user_name'] );
-		}
+		// use the username or the email as a fallback.
+		$name     = ! empty( sanitize_user( $args['user_name'], true ) ) ? sanitize_user( $args['user_name'], true ) : $args['user_email'];
+		$username = $this->createUniqueUsername( sanitize_user( $name, true ) );
 
 		$user_password = trim( $args['user_password'] );
 		$user_created  = false;
@@ -197,12 +192,15 @@ class User implements ArrayAccess, JsonSerializable {
 		// password is not provided.
 		if ( empty( $user_password ) ) {
 			$user_password = wp_generate_password( 12, false );
-			$user_id       = wp_create_user( $username, $user_password, $args['user_email'] );
-			update_user_meta( $user_id, 'default_password_nag', true );
+			$user_id       = wp_create_user( sanitize_user( $username, true ), $user_password, $args['user_email'] );
+			// turn off this feature with a filter.
+			if ( apply_filters( 'surecart/default_password_nag', true, $user_id ) ) {
+				update_user_meta( $user_id, 'default_password_nag', true );
+			}
 			$user_created = true;
 		} else {
 			// Password has been provided.
-			$user_id      = wp_create_user( $username, $user_password, $args['user_email'] );
+			$user_id      = wp_create_user( sanitize_user( $username, true ), $user_password, $args['user_email'] );
 			$user_created = true;
 		}
 
