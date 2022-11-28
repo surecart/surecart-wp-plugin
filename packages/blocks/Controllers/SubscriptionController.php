@@ -86,6 +86,9 @@ class SubscriptionController extends BaseController {
 				'price.product',
 				'current_period',
 				'period.checkout',
+				'purchase',
+				'purchase.license',
+				'license.activations',
 			]
 		)->find( $id );
 

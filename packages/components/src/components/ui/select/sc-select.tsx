@@ -323,9 +323,10 @@ export class ScSelectDropdown {
     }
 
     // All other "printable" keys open the menu and initiate type to select
-    if (!this.open && event.key.length === 1) {
-      this.handleShow();
-    }
+    // TODO: this is closing out the dropdown during typing events.
+    // if (!this.open && event.key.length === 1) {
+    //   this.handleShow();
+    // }
   }
 
   disconnectedCallback() {

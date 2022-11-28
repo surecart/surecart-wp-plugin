@@ -221,10 +221,10 @@ class SubscriptionsListTable extends ListTable {
 	 * @return string
 	 */
 	// public function column_type( $subscription ) {
-	// 	if ( null === $subscription->remaining_period_count ) {
-	// 		return '<sc-tag type="success">' . __( 'Subscription', 'surecart' ) . '</sc-tag>';
-	// 	}
-	// 	return '<sc-tag type="info">' . __( 'Payment Plan', 'surecart' ) . '</sc-tag>';
+	// if ( null === $subscription->remaining_period_count ) {
+	// return '<sc-tag type="success">' . __( 'Subscription', 'surecart' ) . '</sc-tag>';
+	// }
+	// return '<sc-tag type="info">' . __( 'Payment Plan', 'surecart' ) . '</sc-tag>';
 	// }
 
 	/**
@@ -235,7 +235,7 @@ class SubscriptionsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_plan( $subscription ) {
-		$amount       = $subscription->price->amount ?? 0;
+		$amount       = $subscription->price->ad_hoc_amount ?? $subscription->price->amount ?? 0;
 		$interval     = $subscription->price->recurring_interval ?? '';
 		$count        = $subscription->price->recurring_interval_count ?? 1;
 		$period_count = $subscription->price->recurring_period_count ?? null;

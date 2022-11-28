@@ -1,8 +1,9 @@
 import { Component, Element, Event, EventEmitter, Fragment, h, Method, Prop, State, Watch } from '@stencil/core';
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
+import { openWormhole } from 'stencil-wormhole';
 
-import { Checkout, FormStateSetter } from '../../../types';
+import { Checkout, FormState, FormStateSetter, ProcessorName } from '../../../types';
 
 @Component({
   tag: 'sc-stripe-element',
@@ -46,6 +47,12 @@ export class ScStripeElement {
   /** Inputs focus */
   @Prop({ mutable: true, reflect: true }) hasFocus: boolean;
 
+  /** The selected processor id */
+  @Prop() selectedProcessorId: ProcessorName;
+
+  /** The form state */
+  @Prop() formState: FormState;
+
   @Event() scPaid: EventEmitter<void>;
   @Event() scPayError: EventEmitter<any>;
   /** Set the state */
@@ -67,31 +74,34 @@ export class ScStripeElement {
     }
   }
 
-  @Watch('order')
-  async confirmPayment(val: Checkout) {
-    // needs to be enabled
-    if (this.disabled) return;
-    // must be finalized
-    if (val?.status !== 'finalized') return;
+  /**
+   * Watch order status and maybe confirm the order.
+   */
+  @Watch('formState')
+  async maybeConfirmOrder(val: FormState) {
+    // must be paying
+    if (val !== 'paying') return;
+    console.log('id', this.selectedProcessorId);
+    // this processor is not selected.
+    if (this.selectedProcessorId !== 'stripe') return;
     // must be a stripe session
-    if (val?.payment_intent?.processor_type !== 'stripe') return;
+    if (this.order?.payment_intent?.processor_type !== 'stripe') return;
     // must have an external intent id
-    if (!val?.payment_intent?.external_intent_id) return;
+    if (!this.order?.payment_intent?.external_intent_id) return;
     // must have a secret
-    if (!val?.payment_intent?.processor_data?.stripe?.client_secret) return;
+    if (!this.order?.payment_intent?.processor_data?.stripe?.client_secret) return;
     // need an external_type
-    if (!val?.payment_intent?.processor_data?.stripe?.type) return;
+    if (!this.order?.payment_intent?.processor_data?.stripe?.type) return;
     // prevent possible double-charges
     if (this.confirming) return;
 
     this.confirming = true;
     try {
-      this.scSetState.emit('PAYING');
       let response;
-      if (val?.payment_intent?.processor_data?.stripe?.type == 'setup') {
-        response = await this.confirmCardSetup(val?.payment_intent?.processor_data?.stripe.client_secret);
+      if (this.order?.payment_intent?.processor_data?.stripe?.type == 'setup') {
+        response = await this.confirmCardSetup(this.order?.payment_intent?.processor_data?.stripe.client_secret);
       } else {
-        response = await this.confirmCardPayment(val?.payment_intent?.processor_data?.stripe?.client_secret);
+        response = await this.confirmCardPayment(this.order?.payment_intent?.processor_data?.stripe?.client_secret);
       }
       if (response?.error) {
         this.error = response.error.message;
@@ -106,6 +116,7 @@ export class ScStripeElement {
         this.error = e.message;
       }
       this.confirming = false;
+      this.scSetState.emit('REJECT');
     }
   }
 
@@ -194,3 +205,5 @@ export class ScStripeElement {
     );
   }
 }
+
+openWormhole(ScStripeElement, ['order', 'mode', 'selectedProcessorId', 'formState'], false);

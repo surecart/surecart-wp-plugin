@@ -8,7 +8,7 @@ import { Checkout, TaxProtocol } from '../../../types';
   shadow: true,
 })
 export class ScFormComponentsValidator {
-  @Element() el: HTMLElement;
+  @Element() el: HTMLScFormComponentsValidatorElement;
 
   /** Disable validation? */
   @Prop() disabled: boolean;
