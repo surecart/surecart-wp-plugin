@@ -162,6 +162,7 @@ export class ScSessionProvider {
         query: {
           ...this.defaultFormQuery(),
         },
+        data,
         processor: {
           id: this.getProcessor(),
           manual: this.isManualProcessor,

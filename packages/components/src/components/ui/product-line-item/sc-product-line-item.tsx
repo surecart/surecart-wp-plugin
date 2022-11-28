@@ -1,4 +1,4 @@
-import { Component, h, Prop, Event, EventEmitter, Element } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter, Element, Fragment } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 
 /**
@@ -38,6 +38,9 @@ export class ScProductLineItem {
   /** Product monetary amount */
   @Prop() amount: number;
 
+  /** The line item scratch amount */
+  @Prop() scratchAmount: number;
+
   /** Currency for the product */
   @Prop() currency: string;
 
@@ -70,7 +73,13 @@ export class ScProductLineItem {
             {sprintf(_n('%d day free', '%d days free', this.trialDurationDays, 'surecart'), this.trialDurationDays)}
           </div>
           <div class="price__description" part="price__description">
-            {__('Then', 'surecart')} <sc-format-number type="currency" currency={this.currency} value={this.amount}></sc-format-number> {!!this.interval && this.interval}
+            {__('Then', 'surecart')}{' '}
+            {!!this.scratchAmount && this.scratchAmount !== this.amount && (
+              <Fragment>
+                <sc-format-number class="item__scratch-price" part="price__scratch" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>{' '}
+              </Fragment>
+            )}
+            <sc-format-number part="price__amount" type="currency" currency={this.currency} value={this.amount}></sc-format-number> {!!this.interval && this.interval}
           </div>
         </div>
       );
@@ -79,6 +88,11 @@ export class ScProductLineItem {
     return (
       <div class="item__price" part="price">
         <div class="price" part="price__amount">
+          {!!this.scratchAmount && this.scratchAmount !== this.amount && (
+            <Fragment>
+              <sc-format-number class="item__scratch-price" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>{' '}
+            </Fragment>
+          )}
           <sc-format-number type="currency" currency={this.currency} value={this.amount}></sc-format-number>
         </div>
         {!!this.interval && (

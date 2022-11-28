@@ -236,6 +236,7 @@ export interface LineItem extends Object {
   discount_amount: number;
   subtotal_amount: number;
   total_amount: number;
+  scratch_amount: number;
   created_at: number;
   updated_at: number;
   price?: Price;
@@ -387,6 +388,7 @@ export interface Checkout extends Object {
   subtotal_amount?: number;
   full_amount?: number;
   proration_amount?: number;
+  scratch_amount?: number;
   applied_balance_amount?: number;
   discounts?: number;
   tax_amount: number;

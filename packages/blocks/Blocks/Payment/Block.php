@@ -202,7 +202,7 @@ class Block extends BaseBlock {
 			has-others>
 
 			<span slot="summary">
-				<?php echo esc_html( $method->name ); ?>
+				<?php echo esc_html( apply_filters( 'surecart/manual_payment_method_choice/summary', $method->name, $method ) ); ?>
 			</span>
 
 			<sc-card>
