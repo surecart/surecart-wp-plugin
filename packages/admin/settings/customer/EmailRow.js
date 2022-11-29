@@ -6,9 +6,7 @@ export default ({ title, description, link = 'customer_notifications', model, ac
 			<strong>
 				{title}
 				{ disabled && (
-					<sc-tag style={{ marginLeft: '5px' }} type="success" size="small" pill>
-						{__('Pro', 'surecart')}
-					</sc-tag>
+					<sc-upgrade-required style={{ marginLeft: '5px' }} type="success" size="small" pill />
 				)}
 			</strong>
 			<div style={{ opacity: '0.75' }}>{description}</div>
