@@ -11,9 +11,9 @@ import edit from './edit';
 import save from './save';
 import metadata from './block.json';
 
-const { firstName } = metadata;
+const { name } = metadata;
 
-export { metadata, firstName };
+export { metadata, name };
 
 export const settings = {
 	icon,

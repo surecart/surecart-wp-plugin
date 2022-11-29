@@ -4,7 +4,6 @@ export default ({ className, attributes }) => {
 
 	return (
 		<sc-customer-lastname
-			name={'last_name'}
 			class={className || false}
 			label={label || false}
 			help={help || false}
