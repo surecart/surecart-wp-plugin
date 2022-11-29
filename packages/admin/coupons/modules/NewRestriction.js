@@ -4,6 +4,9 @@ import {
 	ScButton,
 	ScForm,
 	ScFormControl,
+	ScIcon,
+	ScMenuDivider,
+	ScMenuItem,
 	ScSelect,
 } from '@surecart/components-react';
 import { Modal } from '@wordpress/components';
@@ -12,6 +15,7 @@ import { __ } from '@wordpress/i18n';
 
 import PriceSelector from '../../components/PriceSelector';
 import ModelSelector from '../../components/ModelSelector';
+import CustomerSelector from './CustomerSelector';
 
 export default ({ onRequestClose, coupon, updateCoupon }) => {
 	const [type, setType] = useState('price_ids');
@@ -134,17 +138,7 @@ export default ({ onRequestClose, coupon, updateCoupon }) => {
 						<ScFormControl
 							label={__('Select A Customer', 'surecart')}
 						>
-							<ModelSelector
-								name="customer"
-								value={id}
-								requestQuery={{
-									archived: false,
-								}}
-								onSelect={(product) => {
-									setType('customer_ids');
-									setId(product);
-								}}
-							/>
+							<CustomerSelector id={id} onSelect={setId} />
 						</ScFormControl>
 					</div>
 				)}

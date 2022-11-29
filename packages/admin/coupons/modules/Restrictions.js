@@ -6,8 +6,8 @@ import {
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { useState } from 'react';
+import Filters from '../../components/filters/Filters';
 import Box from '../../ui/Box';
-import Filters from './filters/Filters';
 import NewRestriction from './NewRestriction';
 
 export default ({ loading, coupon, updateCoupon }) => {
@@ -48,27 +48,48 @@ export default ({ loading, coupon, updateCoupon }) => {
 					<>
 						{!!hasRestrictions && (
 							<>
+								<Filters
+									label={__('Prices', 'surecart')}
+									type="filter_price_ids"
+									item={coupon}
+									updateItem={updateCoupon}
+								/>
+
+								<Filters
+									label={__('Products', 'surecart')}
+									type="filter_product_ids"
+									item={coupon}
+									updateItem={updateCoupon}
+								/>
+
+								<Filters
+									label={__('Customers', 'surecart')}
+									type="filter_customer_ids"
+									item={coupon}
+									updateItem={updateCoupon}
+								/>
+
 								<ScSelect
-									label={__('Allow Coupon If', 'surecart')}
+									label={__('Allow Coupon', 'surecart')}
 									value={coupon?.filter_match_type}
 									choices={[
 										{
 											label: __(
-												'All of these items are true.',
+												'If all of these conditions are true',
 												'surecart'
 											),
 											value: 'all',
 										},
 										{
 											label: __(
-												'Any of these items are true.',
+												'If any of these conditions are true',
 												'surecart'
 											),
 											value: 'any',
 										},
 										{
 											label: __(
-												'None of these items are true.',
+												'If none of these conditions are true',
 												'surecart'
 											),
 											value: 'none',
@@ -79,30 +100,6 @@ export default ({ loading, coupon, updateCoupon }) => {
 											filter_match_type: e.target.value,
 										})
 									}
-								/>
-								<Filters
-									label={__('Prices', 'surecart')}
-									type="price_ids"
-									coupon={coupon}
-									updateCoupon={updateCoupon}
-								/>
-								<Filters
-									label={__('Products', 'surecart')}
-									type="product_ids"
-									coupon={coupon}
-									updateCoupon={updateCoupon}
-								/>
-								<Filters
-									label={__('Customers', 'surecart')}
-									type="customer_ids"
-									coupon={coupon}
-									updateCoupon={updateCoupon}
-								/>
-								<Filters
-									label={__('Upgrade Groups', 'surecart')}
-									type="product_group_ids"
-									coupon={coupon}
-									updateCoupon={updateCoupon}
 								/>
 							</>
 						)}

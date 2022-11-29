@@ -6,8 +6,8 @@ import {
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { useState } from 'react';
+import Filters from '../../components/filters/Filters';
 import Box from '../../ui/Box';
-import Filters from './filters/Filters';
 import NewCondition from './NewCondition';
 
 export default ({ loading, bump, updateBump }) => {
@@ -63,21 +63,23 @@ export default ({ loading, bump, updateBump }) => {
 					/>
 					<Filters
 						label={__('Prices', 'surecart')}
-						type="price_ids"
-						bump={bump}
-						updateBump={updateBump}
+						type="filter_price_ids"
+						item={bump}
+						updateItem={updateBump}
 					/>
+
 					<Filters
 						label={__('Products', 'surecart')}
-						type="product_ids"
-						bump={bump}
-						updateBump={updateBump}
+						type="filter_product_ids"
+						item={bump}
+						updateItem={updateBump}
 					/>
+
 					<Filters
-						label={__('Upgrade Groups', 'surecart')}
-						type="product_group_ids"
-						bump={bump}
-						updateBump={updateBump}
+						label={__('Customers', 'surecart')}
+						type="filter_customer_ids"
+						item={bump}
+						updateItem={updateBump}
 					/>
 				</>
 			) : (
