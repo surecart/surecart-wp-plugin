@@ -5,7 +5,7 @@ import { ScFlex, ScFormatDate, ScTag } from '@surecart/components-react';
 import { sprintf, _n, __ } from '@wordpress/i18n';
 import dayjs from 'dayjs';
 
-export default ({ abandoned: { notifications_scheduled_at }, loading }) => {
+export default ({ abandoned, loading }) => {
 	return (
 		<Box title={__('Schedule', 'surecart')} loading={loading}>
 			<div
@@ -14,8 +14,13 @@ export default ({ abandoned: { notifications_scheduled_at }, loading }) => {
 					gap: 0.5em;
 				`}
 			>
-				{(notifications_scheduled_at || []).map((time, index) => {
+				{(abandoned?.notifications_scheduled_at || []).map((time, index) => {
 					const isBefore = dayjs(time * 1000).isBefore(dayjs());
+
+					if ( abandoned?.recovered_checkout?.id && ! isBefore ) {
+						return;
+					}
+
 					return (
 						<ScFlex
 							alignItems="center"

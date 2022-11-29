@@ -94,10 +94,11 @@ class AbandonedCheckoutListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return [
-			'placed_by'       => __( 'Placed By', 'surecart' ),
-			'date'            => __( 'Date', 'surecart' ),
-			'recovery_status' => __( 'Recovery Status', 'surecart' ),
-			'total'           => __( 'Total', 'surecart' ),
+			'placed_by'           => __( 'Placed By', 'surecart' ),
+			'date'                => __( 'Date', 'surecart' ),
+			'notification_status' => __( 'Email Status', 'surecart' ),
+			'recovery_status'     => __( 'Status', 'surecart' ),
+			'total'               => __( 'Total', 'surecart' ),
 		];
 	}
 
@@ -157,15 +158,18 @@ class AbandonedCheckoutListTable extends ListTable {
 		return isset( $abandoned->created_at ) ? '<sc-format-date date="' . (int) $abandoned->created_at . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></sc-format-date>' : '--';
 	}
 
-
 	/**
-	 * Handle the status
+	 * Handle the notification status
 	 *
 	 * @param \SureCart\Models\AbandonedCheckout $abandoned Abandoned checkout session.
 	 *
 	 * @return string
 	 */
-	public function column_recovery_status( $abandoned ) {
+	public function column_notification_status( $abandoned ) {
+		if ( $abandoned->recovered_checkout ) {
+			return '--';
+		}
+
 		switch ( $abandoned->notification_status ?? '' ) {
 			case 'scheduled':
 				return '<sc-tag type="warning">' . __( 'Scheduled', 'surecart' ) . '</sc-tag>';
@@ -175,6 +179,21 @@ class AbandonedCheckoutListTable extends ListTable {
 				return '<sc-tag type="success">' . __( 'Email Sent', 'surecart' ) . '</sc-tag>';
 		}
 		 return '<sc-tag>' . esc_html( $abandoned->notification_status ?? 'Unknown' ) . '</sc-tag>';
+	}
+
+	/**
+	 * Handle the recovery status
+	 *
+	 * @param \SureCart\Models\AbandonedCheckout $abandoned Abandoned checkout session.
+	 *
+	 * @return string
+	 */
+	public function column_recovery_status( $abandoned ) {
+		if ( $abandoned->recovered_checkout ) {
+			return '<sc-tag type="success">' . __( 'Recovered', 'surecart' ) . '</sc-tag>';
+		} else {
+			return '<sc-tag type="danger">' . __( 'Abandoned', 'surecart' ) . '</sc-tag>';
+		}
 	}
 
 	/**
