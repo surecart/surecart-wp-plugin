@@ -71,14 +71,8 @@ class Block extends BaseBlock {
 				'abandoned_checkout_return_url' => esc_url( trailingslashit( get_site_url() ) . 'surecart/redirect' ),
 				'processors'                    => (array) Processor::get() ?? [],
 				'manual_payment_methods'        => (array) ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? [],
-				'stripe_payment_element'        => (bool) get_option(
-					'sc_stripe_payment_element',
-					false
-				),
-				'mode'                          => apply_filters(
-					'surecart/payments/mode',
-					$attributes['mode'] ?? 'live'
-				),
+				'stripe_payment_element'        => (bool) get_option( 'sc_stripe_payment_element', false ),
+				'mode'                          => apply_filters( 'surecart/payments/mode', $attributes['mode'] ?? 'live' ),
 				'form_id'                       => $sc_form_id,
 				'id'                            => 'sc-checkout-' . $sc_form_id,
 				'prices'                        => $attributes['prices'] ?? [],
