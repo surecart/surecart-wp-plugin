@@ -72,6 +72,7 @@ export default ({ loading, coupon, updateCoupon }) => {
 								<ScSelect
 									label={__('Allow Coupon', 'surecart')}
 									value={coupon?.filter_match_type}
+									unselect={false}
 									choices={[
 										{
 											label: __(
