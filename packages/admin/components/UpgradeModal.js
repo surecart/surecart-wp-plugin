@@ -1,18 +1,27 @@
-import { ScButton, ScIcon } from '@surecart/components-react';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+import { ScButton, ScFlex, ScIcon } from '@surecart/components-react';
 import { Modal } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 export default ({ onRequestClose }) => {
 	return (
 		<Modal
+			css={css`
+				max-width: 375px !important;
+			`}
 			title={
-				<>
-					<ScIcon name="zap" /> {__('Boost your revenue', 'surecart')}
-				</>
+				<ScFlex alignItems="center">
+					<ScIcon
+						name="zap"
+						style={{ color: 'var(--sc-color-brand-primary)' }}
+					/>
+					<span>{__('Boost Your Revenue', 'surecart')}</span>
+				</ScFlex>
 			}
 			onRequestClose={onRequestClose}
 		>
-			<p>
+			<p style={{ fontSize: 'var(--sc-font-size-large)' }}>
 				{__(
 					'Unlock revenue boosting features when you upgrade your plan!',
 					'surecart'
@@ -25,6 +34,7 @@ export default ({ onRequestClose }) => {
 				href={scData?.upgrade_url || 'https://app.surecart.com'}
 				type="primary"
 				target="_blank"
+				full
 			>
 				{__('Upgrade Your Plan', 'surecart')}
 			</ScButton>

@@ -1,10 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import {
-	ScFormControl,
-	ScInput,
-	ScSwitch,
-	ScTag,
-} from '@surecart/components-react';
+import { ScFormControl, ScInput, ScTag } from '@surecart/components-react';
 import { useDispatch } from '@wordpress/data';
 import { store as uiStore } from '@surecart/ui-data';
 
@@ -18,7 +13,7 @@ export default ({ className, price, updatePrice }) => {
 				<span slot="label">
 					{__('Free Trial Days', 'surecart')}{' '}
 					<ScTag type="success" size="small" pill slot="prefix">
-						{__('Upgrade', 'surecart')}
+						{__('Premium', 'surecart')}
 					</ScTag>
 				</span>
 				<ScInput
