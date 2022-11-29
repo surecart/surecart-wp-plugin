@@ -390,6 +390,10 @@ export namespace Components {
     }
     interface ScCheckout {
         /**
+          * The abandoned checkout return url.
+         */
+        "abandonedCheckoutReturnUrl": string;
+        /**
           * Alignment
          */
         "alignment": 'center' | 'wide' | 'full';
@@ -2324,6 +2328,10 @@ export namespace Components {
         "value": string;
     }
     interface ScSessionProvider {
+        /**
+          * The abandoned checkout return url.
+         */
+        "abandonedCheckoutReturnUrl": string;
         /**
           * Currency Code
          */
@@ -4682,6 +4690,10 @@ declare namespace LocalJSX {
     }
     interface ScCheckout {
         /**
+          * The abandoned checkout return url.
+         */
+        "abandonedCheckoutReturnUrl"?: string;
+        /**
           * Alignment
          */
         "alignment"?: 'center' | 'wide' | 'full';
@@ -6879,6 +6891,10 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface ScSessionProvider {
+        /**
+          * The abandoned checkout return url.
+         */
+        "abandonedCheckoutReturnUrl"?: string;
         /**
           * Currency Code
          */
