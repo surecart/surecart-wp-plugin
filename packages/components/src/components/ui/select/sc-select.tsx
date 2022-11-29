@@ -323,9 +323,10 @@ export class ScSelectDropdown {
     }
 
     // All other "printable" keys open the menu and initiate type to select
-    if (!this.open && event.key.length === 1) {
-      this.handleShow();
-    }
+    // TODO: this is closing out the dropdown during typing events.
+    // if (!this.open && event.key.length === 1) {
+    //   this.handleShow();
+    // }
   }
 
   disconnectedCallback() {
@@ -345,7 +346,13 @@ export class ScSelectDropdown {
     }
 
     return (
-      <sc-menu-item key={index} checked={this.isChecked(choice)} value={choice?.value} onClick={() => this.handleSelect(choice.value)} disabled={choice.disabled}>
+      <sc-menu-item
+        key={index}
+        checked={this.isChecked(choice)}
+        value={choice?.value}
+        onClick={() => !choice.disabled && this.handleSelect(choice.value)}
+        disabled={choice.disabled}
+      >
         {choice.label}
         {!!choice?.suffix && <span slot="suffix">{choice.suffix}</span>}
         {!!choice?.icon && this.renderIcon(choice.icon)}

@@ -68,7 +68,7 @@ export default ({ coupon, loading, updateCoupon }) => {
 						attribute="percent_off"
 						label={__('Percent Off', 'surecart')}
 						value={coupon?.percent_off || null}
-						onScChange={(e) =>
+						onScInput={(e) =>
 							updateCoupon({
 								amount_off: null,
 								percent_off: e.target.value,
@@ -87,7 +87,7 @@ export default ({ coupon, loading, updateCoupon }) => {
 						label={__('Amount Off', 'surecart')}
 						value={coupon?.amount_off || null}
 						required={type === 'fixed'}
-						onScChange={(e) => {
+						onScInput={(e) => {
 							updateCoupon({
 								percent_off: null,
 								amount_off: e.target.value,
@@ -145,7 +145,7 @@ export default ({ coupon, loading, updateCoupon }) => {
 						label={__('Number of months', 'surecart')}
 						className="sc-duration-in-months"
 						value={coupon?.duration_in_months || null}
-						onScChange={(e) => {
+						onScInput={(e) => {
 							updateCoupon({
 								duration_in_months: e.target.value,
 							});

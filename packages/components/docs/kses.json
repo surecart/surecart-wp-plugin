@@ -211,6 +211,7 @@
     "slot": true
   },
   "sc-checkout": {
+    "abandoned-checkout-return-url": true,
     "alignment": true,
     "currency-code": true,
     "customer": true,
@@ -1208,6 +1209,7 @@
     "name": true,
     "quantity": true,
     "removable": true,
+    "scratch-amount": true,
     "trial-duration-days": true,
     "style": true,
     "id": true,
@@ -1306,6 +1308,7 @@
     "slot": true
   },
   "sc-session-provider": {
+    "abandoned-checkout-return-url": true,
     "currency-code": true,
     "form-id": true,
     "group-id": true,

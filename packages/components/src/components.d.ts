@@ -390,6 +390,10 @@ export namespace Components {
     }
     interface ScCheckout {
         /**
+          * The abandoned checkout return url.
+         */
+        "abandonedCheckoutReturnUrl": string;
+        /**
           * Alignment
          */
         "alignment": 'center' | 'wide' | 'full';
@@ -2164,6 +2168,10 @@ export namespace Components {
          */
         "removable": boolean;
         /**
+          * The line item scratch amount
+         */
+        "scratchAmount": number;
+        /**
           * Trial duration days
          */
         "trialDurationDays": number;
@@ -2324,6 +2332,10 @@ export namespace Components {
         "value": string;
     }
     interface ScSessionProvider {
+        /**
+          * The abandoned checkout return url.
+         */
+        "abandonedCheckoutReturnUrl": string;
         /**
           * Currency Code
          */
@@ -4682,6 +4694,10 @@ declare namespace LocalJSX {
     }
     interface ScCheckout {
         /**
+          * The abandoned checkout return url.
+         */
+        "abandonedCheckoutReturnUrl"?: string;
+        /**
           * Alignment
          */
         "alignment"?: 'center' | 'wide' | 'full';
@@ -6686,6 +6702,10 @@ declare namespace LocalJSX {
          */
         "removable"?: boolean;
         /**
+          * The line item scratch amount
+         */
+        "scratchAmount"?: number;
+        /**
           * Trial duration days
          */
         "trialDurationDays"?: number;
@@ -6879,6 +6899,10 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface ScSessionProvider {
+        /**
+          * The abandoned checkout return url.
+         */
+        "abandonedCheckoutReturnUrl"?: string;
         /**
           * Currency Code
          */

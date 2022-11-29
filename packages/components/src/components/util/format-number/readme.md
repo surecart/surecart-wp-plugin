@@ -37,6 +37,7 @@
  - [sc-order-bump](../../controllers/checkout-form/sc-order-bump)
  - [sc-order-confirmation-totals](../../controllers/confirmation/order-confirmation-totals)
  - [sc-order-detail](../../controllers/confirmation/order-detail)
+ - [sc-order-summary](../../controllers/checkout-form/order-summary)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
  - [sc-product-line-item](../../ui/product-line-item)
@@ -58,6 +59,7 @@ graph TD;
   sc-order-bump --> sc-format-number
   sc-order-confirmation-totals --> sc-format-number
   sc-order-detail --> sc-format-number
+  sc-order-summary --> sc-format-number
   sc-orders-list --> sc-format-number
   sc-price-choice --> sc-format-number
   sc-product-line-item --> sc-format-number

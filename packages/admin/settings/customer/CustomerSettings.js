@@ -1,3 +1,8 @@
+import { css, jsx } from '@emotion/core';
+import { ScInput, ScStackedList, ScSwitch, ScTag } from '@surecart/components-react';
+import { useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+
 /** @jsx jsx */
 import Error from '../../components/Error';
 import useEntity from '../../hooks/useEntity';
@@ -5,15 +10,6 @@ import SettingsBox from '../SettingsBox';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
 import EmailRow from './EmailRow';
-import { css, jsx } from '@emotion/core';
-import {
-	ScInput,
-	ScStackedList,
-	ScSwitch,
-	ScTag,
-} from '@surecart/components-react';
-import { useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -313,10 +309,6 @@ export default () => {
 								'Sent to customers 3 days before a subscription renews.',
 								'surecart'
 							)}
-							disabled={
-								!scData?.entitlements
-									?.subscription_reminder_notifications
-							}
 							model="subscription"
 							action="reminder_notification"
 						/>

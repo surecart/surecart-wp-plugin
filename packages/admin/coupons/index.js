@@ -7,11 +7,16 @@ import { render } from '@wordpress/element';
 import '@admin/schema/register';
 
 /**
+ * register store and entities.
+ */
+import '../store/add-entities';
+
+/**
  * App
  */
-import Coupons from './Coupons';
+import Coupon from './Coupon';
 
 /**
  * Render
  */
-render(<Coupons />, document.getElementById('app'));
+render(<Coupon />, document.getElementById('app'));
