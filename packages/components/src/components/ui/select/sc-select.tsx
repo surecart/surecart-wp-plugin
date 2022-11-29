@@ -346,7 +346,13 @@ export class ScSelectDropdown {
     }
 
     return (
-      <sc-menu-item key={index} checked={this.isChecked(choice)} value={choice?.value} onClick={() => this.handleSelect(choice.value)} disabled={choice.disabled}>
+      <sc-menu-item
+        key={index}
+        checked={this.isChecked(choice)}
+        value={choice?.value}
+        onClick={() => !choice.disabled && this.handleSelect(choice.value)}
+        disabled={choice.disabled}
+      >
         {choice.label}
         {!!choice?.suffix && <span slot="suffix">{choice.suffix}</span>}
         {!!choice?.icon && this.renderIcon(choice.icon)}
