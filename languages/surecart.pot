@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-11-09T18:31:20+00:00\n"
+"POT-Creation-Date: 2022-11-23T20:11:24+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -184,7 +184,7 @@ msgstr ""
 #: coupons/modules/Code.js:92
 #: product-groups/EditProductGroup.js:98
 #: products/EditProduct.js:184
-#: products/modules/Prices/Price/Header.js:179
+#: products/modules/Prices/Price/Header.js:200
 #: products/modules/SingleDownload.js:230
 #: util.js:42
 msgid "Archived"
@@ -207,6 +207,7 @@ msgstr ""
 #: Blocks/Radio/edit.js:23
 #: Blocks/Switch/components/Inspector.js:16
 #: Blocks/Switch/edit.js:36
+#: Blocks/Textarea/edit.js:35
 #: sc-customer-edit.js:88
 msgid "Name"
 msgstr ""
@@ -214,7 +215,7 @@ msgstr ""
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:99
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:77
 #: src/Controllers/Admin/Products/ProductsListTable.php:99
-#: bumps/modules/NewCondition.js:81
+#: bumps/modules/NewCondition.js:79
 #: bumps/modules/Price.js:27
 #: products/components/price/parts/SingleAmount.js:11
 #: store/add-entities.js:172
@@ -371,7 +372,7 @@ msgstr ""
 #: coupons/components/CouponActionsDropdown.js:96
 #: coupons/modules/Code.js:113
 #: products/components/product/ActionsDropdown.js:29
-#: products/modules/Prices/Price/Header.js:154
+#: products/modules/Prices/Price/Header.js:175
 #: products/modules/SingleDownload.js:268
 msgid "Un-Archive"
 msgstr ""
@@ -385,7 +386,7 @@ msgstr ""
 #: coupons/components/CouponActionsDropdown.js:97
 #: coupons/modules/Code.js:114
 #: products/components/product/ActionsDropdown.js:30
-#: products/modules/Prices/Price/Header.js:155
+#: products/modules/Prices/Price/Header.js:176
 #: products/modules/SingleDownload.js:269
 msgid "Archive"
 msgstr ""
@@ -658,7 +659,7 @@ msgid "Type"
 msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersListTable.php:225
-#: settings/customer/CustomerSettings.js:339
+#: settings/customer/CustomerSettings.js:316
 msgid "Subscription Renewal"
 msgstr ""
 
@@ -747,7 +748,7 @@ msgstr ""
 #: src/Controllers/Admin/Subscriptions/SubscriptionsController.php:23
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:132
 #: admin/subscriptions/index.php:23
-#: layouts/partials/admin-settings-sidebar.php:34
+#: layouts/partials/admin-settings-sidebar.php:36
 #: web/dashboard/orders/show.php:58
 #: components/data-tables/subscriptions-data-table/index.js:21
 #: customers/modules/Subscriptions.js:51
@@ -785,7 +786,7 @@ msgstr ""
 #: src/Integrations/ThriveAutomator/DataFields/ProductDataField.php:109
 #: src/Support/Errors/Translations/attributes.php:17
 #: src/Support/Errors/Translations/attributes.php:18
-#: bumps/modules/NewCondition.js:85
+#: bumps/modules/NewCondition.js:83
 #: customers/modules/Subscriptions.js:58
 #: invoices/modules/Subscriptions.js:13
 #: invoices/store/entities.js:78
@@ -887,7 +888,9 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: Coupon % off.
+#. Translators: Percent off.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:318
+#: price.js:10
 msgid "%1d%% off"
 msgstr ""
 
@@ -2410,54 +2413,58 @@ msgid "This discount code does not apply to this currency."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:34
-msgid "Please double-check your prefix does not contain any spaces, underscores, dashes or special characters."
+msgid "This is not a valid coupon code"
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:35
-msgid "This prefix is too long. Please enter a shorter prefix."
+msgid "Please double-check your prefix does not contain any spaces, underscores, dashes or special characters."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:36
-msgid "This prefix is too short. Please enter a longer prefix."
+msgid "This prefix is too long. Please enter a shorter prefix."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:37
-msgid "You can only apply this offer once."
+msgid "This prefix is too short. Please enter a longer prefix."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:38
-msgid "This product is no longer purchaseable."
+msgid "You can only apply this offer once."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:39
-msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
+msgid "This product is no longer purchaseable."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:40
-msgid "The maximum price must be smaller."
+msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:41
-msgid "The minimum price must be smaller."
+msgid "The maximum price must be smaller."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:42
-msgid "The maximum price must be greater than the minimum price."
+msgid "The minimum price must be smaller."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:43
-msgid "You are already collecting tax for this zone."
+msgid "The maximum price must be greater than the minimum price."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:44
-msgid "You cannot enable EU Micro Exemption if your address is outside of the EU."
+msgid "You are already collecting tax for this zone."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:45
-msgid "You cannot enable taxes unless a valid tax address is provided"
+msgid "You cannot enable EU Micro Exemption if your address is outside of the EU."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:46
+msgid "You cannot enable taxes unless a valid tax address is provided"
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:47
 msgid "You cannot delete this media item because it is currently being used."
 msgstr ""
 
@@ -3337,7 +3344,7 @@ msgstr ""
 msgid "Remove webhook."
 msgstr ""
 
-#: src/Webhooks/WebhooksService.php:118
+#: src/Webhooks/WebhooksService.php:121
 msgid "SureCart webhooks could not be created."
 msgstr ""
 
@@ -3419,7 +3426,7 @@ msgid "Customer Dashboard"
 msgstr ""
 
 #: src/WordPress/Pages/PageService.php:69
-#: settings/customer/CustomerSettings.js:306
+#: settings/customer/CustomerSettings.js:287
 msgid "Order Confirmation"
 msgstr ""
 
@@ -3612,17 +3619,16 @@ msgstr ""
 msgid "Limit result set to users with specific customer ids."
 msgstr ""
 
-#: admin/abandoned-orders/cta-banner.php:91
+#: admin/abandoned-orders/cta-banner.php:92
 msgid "Recover lost sales with abandoned checkouts."
 msgstr ""
 
-#: admin/abandoned-orders/cta-banner.php:94
+#: admin/abandoned-orders/cta-banner.php:95
 msgid "69% of shoppers abandon their checkouts before completing a purchase. Recover lost revenue with automated, high-converting emails."
 msgstr ""
 
-#: admin/abandoned-orders/cta-banner.php:97
-#: settings/upgrade/UpgradeSettings.js:37
-msgid "Upgrade to Pro"
+#: admin/abandoned-orders/cta-banner.php:98
+msgid "Upgrade"
 msgstr ""
 
 #: admin/advanced.php:30
@@ -3842,7 +3848,7 @@ msgid "Save Settings"
 msgstr ""
 
 #: admin/processors.php:30
-#: layouts/partials/admin-settings-sidebar.php:46
+#: layouts/partials/admin-settings-sidebar.php:48
 msgid "Processors"
 msgstr ""
 
@@ -3946,64 +3952,65 @@ msgstr ""
 msgid "Orders & Receipts"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:23
+#: layouts/partials/admin-settings-sidebar.php:25
 #: abandoned-checkouts/AbandonedCheckout.js:112
 #: settings/abandoned/AbandonedSettings.js:79
 msgid "Abandoned Checkout"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:25
+#: layouts/partials/admin-settings-sidebar.php:27
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:135
-#: settings/customer/CustomerSettings.js:201
-#: settings/customer/CustomerSettings.js:237
+#: settings/customer/CustomerSettings.js:218
 #: settings/customer/EmailRow.js:10
 #: settings/subscription/SubscriptionSettings.js:211
 #: Blocks/Payment/components/Inspector.js:52
 msgid "Pro"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:30
-#: settings/customer/CustomerSettings.js:43
-msgid "Customer Notifications"
+#: layouts/partials/admin-settings-sidebar.php:32
+#: customers/modules/Notifications.js:9
+#: settings/customer/CustomerSettings.js:39
+#: settings/customer/CustomerSettings.js:88
+msgid "Notifications"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:38
+#: layouts/partials/admin-settings-sidebar.php:40
 #: settings/portal/PortalSettings.js:39
 msgid "Customer Portal"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:42
+#: layouts/partials/admin-settings-sidebar.php:44
 #: settings/tax/TaxSettings.js:36
 msgid "Taxes"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:50
+#: layouts/partials/admin-settings-sidebar.php:52
 #: settings/export/ExportSettings.js:8
 msgid "Data Export"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:56
+#: layouts/partials/admin-settings-sidebar.php:58
 msgid "Connection"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:61
+#: layouts/partials/admin-settings-sidebar.php:63
 #: products/modules/Advanced.js:7
 msgid "Advanced"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:70
+#: layouts/partials/admin-settings-sidebar.php:72
 msgid "Boost Your Revenue"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:72
+#: layouts/partials/admin-settings-sidebar.php:74
 msgid "Unlock revenue boosting features when you upgrade to Pro!"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:74
+#: layouts/partials/admin-settings-sidebar.php:76
 msgid "Upgrade To Pro"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:83
+#: layouts/partials/admin-settings-sidebar.php:85
 #: Blocks/Checkbox/components/Inspector.js:39
 #: Blocks/Email/components/Inspector.js:32
 #: Blocks/Input/components/Inspector.js:39
@@ -4013,6 +4020,7 @@ msgstr ""
 #: Blocks/Password/components/Inspector.js:39
 #: Blocks/Password/edit.js:60
 #: Blocks/Switch/components/Inspector.js:39
+#: Blocks/Textarea/edit.js:58
 msgid "Help"
 msgstr ""
 
@@ -4225,7 +4233,7 @@ msgstr ""
 
 #: abandoned-checkouts/components/Link.js:53
 #: licenses/modules/Details/Copy.js:21
-#: products/modules/Prices/Price/CopyInput.js:33
+#: products/modules/Prices/Price/CopyInput.js:34
 #: sc-licenses-list.js:54
 msgid "Copy"
 msgstr ""
@@ -4293,7 +4301,7 @@ msgstr ""
 #: Blocks/Dashboard/DashboardPage/Block.php:42
 #: Controllers/PaymentMethodController.php:112
 #: sc-order.js:143
-#: sc-payment.js:56
+#: sc-payment.js:61
 msgid "Test Mode"
 msgstr ""
 
@@ -4415,7 +4423,7 @@ msgid "This is the price for the bump."
 msgstr ""
 
 #: bumps/CreateBump.js:87
-#: bumps/modules/NewCondition.js:173
+#: bumps/modules/NewCondition.js:167
 #: components/data-tables/charges-data-table/Refund.js:146
 #: components/data-tables/subscriptions-data-table/Cancel.js:70
 #: components/data-tables/subscriptions-data-table/Cancel.js:92
@@ -4488,7 +4496,7 @@ msgstr ""
 #: licenses/modules/Activations/Activation.js:225
 #: products/components/product/ActionsDropdown.js:40
 #: products/modules/integrations/Integration.js:210
-#: products/modules/Prices/Price/Header.js:167
+#: products/modules/Prices/Price/Header.js:188
 #: settings/processors/ManualPaymentMethod.js:148
 #: settings/tax-region/RegistrationForm.js:201
 #: sc-payment-methods-list.js:129
@@ -4521,7 +4529,7 @@ msgid "Display Conditions"
 msgstr ""
 
 #: bumps/modules/Conditions.js:28
-#: bumps/modules/NewCondition.js:44
+#: bumps/modules/NewCondition.js:42
 msgid "Add A Condition"
 msgstr ""
 
@@ -4593,7 +4601,7 @@ msgstr ""
 
 #: bumps/modules/filters/FilterItem.js:89
 #: product-groups/modules/Product.js:76
-#: products/modules/Image.js:69
+#: products/modules/Image.js:81
 #: products/modules/SingleDownload.js:274
 #: settings/brand/Logo.js:81
 #: Blocks/CheckoutForm/components/PriceChoice.js:82
@@ -4609,32 +4617,27 @@ msgstr ""
 msgid "Bump Name"
 msgstr ""
 
-#: bumps/modules/NewCondition.js:25
+#: bumps/modules/NewCondition.js:23
 msgid "Are you sure you want to discard this condition?"
 msgstr ""
 
-#: bumps/modules/NewCondition.js:76
+#: bumps/modules/NewCondition.js:74
 msgid "Choose An Item"
 msgstr ""
 
-#: bumps/modules/NewCondition.js:89
-#: products/modules/Upgrades.js:73
-msgid "Upgrade Group"
-msgstr ""
-
-#: bumps/modules/NewCondition.js:98
+#: bumps/modules/NewCondition.js:92
 msgid "Select A Price"
 msgstr ""
 
-#: bumps/modules/NewCondition.js:117
+#: bumps/modules/NewCondition.js:111
 msgid "Select A Product"
 msgstr ""
 
-#: bumps/modules/NewCondition.js:137
+#: bumps/modules/NewCondition.js:131
 msgid "Select An Upgrade Group"
 msgstr ""
 
-#: bumps/modules/NewCondition.js:170
+#: bumps/modules/NewCondition.js:164
 msgid "Add Condition"
 msgstr ""
 
@@ -4686,7 +4689,7 @@ msgstr ""
 #: components/data-tables/charges-data-table/index.js:50
 #: components/data-tables/charges-data-table/Refund.js:100
 #: components/data-tables/charges-data-table/Refund.js:143
-#: settings/customer/CustomerSettings.js:365
+#: settings/customer/CustomerSettings.js:342
 #: store/add-entities.js:193
 msgid "Refund"
 msgstr ""
@@ -5337,11 +5340,6 @@ msgstr ""
 msgid "Your customer's email address."
 msgstr ""
 
-#: customers/modules/Notifications.js:9
-#: settings/customer/CustomerSettings.js:92
-msgid "Notifications"
-msgstr ""
-
 #: customers/modules/Notifications.js:16
 msgid "Subscribed to emails"
 msgstr ""
@@ -5844,11 +5842,11 @@ msgstr ""
 msgid "Add some products to this upgrade group. A customer who has purchased one of these products can switch between others in this group."
 msgstr ""
 
-#: products/components/price/Multiple.js:18
+#: products/components/price/Multiple.js:20
 msgid "Number of Payments"
 msgstr ""
 
-#: products/components/price/Multiple.js:35
+#: products/components/price/Multiple.js:37
 msgid "Payments"
 msgstr ""
 
@@ -5885,6 +5883,14 @@ msgstr ""
 #: products/components/price/parts/RecurringAmount.js:96
 #: util.js:40
 msgid "Year"
+msgstr ""
+
+#: products/components/price/parts/ScratchAmount.js:8
+msgid "Compare at price"
+msgstr ""
+
+#: products/components/price/parts/ScratchAmount.js:12
+msgid "If this item is on sale, enter a pre-sale price that is greater than the price."
 msgstr ""
 
 #: products/components/price/parts/SingleAmount.js:10
@@ -5948,11 +5954,11 @@ msgstr ""
 msgid "Customer Purchase Limit"
 msgstr ""
 
-#: products/modules/Downloads.js:56
+#: products/modules/Downloads.js:58
 msgid "Download added."
 msgstr ""
 
-#: products/modules/Downloads.js:72
+#: products/modules/Downloads.js:75
 #: Controllers/DownloadController.php:120
 #: sc-dashboard-downloads-list.js:106
 #: sc-downloads-list.js:65
@@ -5960,34 +5966,33 @@ msgstr ""
 msgid "Downloads"
 msgstr ""
 
-#: products/modules/Downloads.js:120
+#: products/modules/Downloads.js:85
 msgid "File"
 msgstr ""
 
-#: products/modules/Downloads.js:127
+#: products/modules/Downloads.js:93
 msgid "Add Downloads"
 msgstr ""
 
-#: products/modules/Downloads.js:140
+#: products/modules/Downloads.js:106
 msgid "Show Archived"
 msgstr ""
 
-#: products/modules/Image.js:63
+#: products/modules/Image.js:72
 #: products/modules/SingleDownload.js:250
 #: settings/brand/Logo.js:75
 msgid "Replace"
 msgstr ""
 
-#: products/modules/Image.js:78
-#: products/modules/Image.js:97
-#: products/modules/Image.js:99
-#: settings/brand/Logo.js:91
-msgid "Product Image"
-msgstr ""
-
-#: products/modules/Image.js:87
+#: products/modules/Image.js:98
 #: settings/brand/Logo.js:100
 msgid "Add Image"
+msgstr ""
+
+#: products/modules/Image.js:109
+#: products/modules/Image.js:113
+#: settings/brand/Logo.js:91
+msgid "Product Image"
 msgstr ""
 
 #: products/modules/integrations/Integration.js:66
@@ -6159,7 +6164,7 @@ msgstr ""
 msgid "Custom Amount"
 msgstr ""
 
-#: products/modules/Prices/Price/Header.js:122
+#: products/modules/Prices/Price/Header.js:143
 #: util/translations.js:6
 #: util/translations.js:50
 #: price.js:29
@@ -6167,42 +6172,42 @@ msgstr ""
 msgid "every"
 msgstr ""
 
-#: products/modules/Prices/Price/Header.js:189
+#: products/modules/Prices/Price/Header.js:210
 msgid "Copy Links"
 msgstr ""
 
-#: products/modules/Prices/Price/Header.js:225
+#: products/modules/Prices/Price/Header.js:246
 msgid "Links and Shortcodes"
 msgstr ""
 
-#: products/modules/Prices/Price/Header.js:231
+#: products/modules/Prices/Price/Header.js:252
 #: controls/index.js:82
 #: formats/index.js:24
 #: formats/ShowPrice.js:87
 msgid "Buy Link"
 msgstr ""
 
-#: products/modules/Prices/Price/Header.js:237
+#: products/modules/Prices/Price/Header.js:258
 msgid "Shortcodes"
 msgstr ""
 
-#: products/modules/Prices/Price/Header.js:240
+#: products/modules/Prices/Price/Header.js:261
 msgid "Add To Cart Button Shortcode"
 msgstr ""
 
-#: products/modules/Prices/Price/Header.js:244
+#: products/modules/Prices/Price/Header.js:265
 msgid "Buy Button Shortcode"
 msgstr ""
 
-#: products/modules/Prices/Price/Header.js:248
+#: products/modules/Prices/Price/Header.js:269
 msgid "Miscellaneous"
 msgstr ""
 
-#: products/modules/Prices/Price/Header.js:251
+#: products/modules/Prices/Price/Header.js:272
 msgid "Price ID"
 msgstr ""
 
-#: products/modules/Prices/Price/Header.js:261
+#: products/modules/Prices/Price/Header.js:282
 msgid "Done"
 msgstr ""
 
@@ -6279,6 +6284,10 @@ msgstr ""
 msgid "This product requires shipping"
 msgstr ""
 
+#: products/modules/Upgrades.js:73
+msgid "Upgrade Group"
+msgstr ""
+
 #: products/modules/Upgrades.js:78
 msgid "Add this product to a group with others you want the purchaser to switch between."
 msgstr ""
@@ -6304,7 +6313,7 @@ msgstr ""
 #: settings/advanced/AdvancedSettings.js:25
 #: settings/brand/BrandSettings.js:40
 #: settings/connection/ConnectionSettings.js:25
-#: settings/customer/CustomerSettings.js:33
+#: settings/customer/CustomerSettings.js:29
 #: settings/order/OrderProtocol.js:27
 #: settings/portal/PortalSettings.js:29
 #: settings/subscription/SubscriptionSettings.js:27
@@ -6315,7 +6324,7 @@ msgid "Settings Updated."
 msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:91
-#: settings/customer/CustomerSettings.js:54
+#: settings/customer/CustomerSettings.js:50
 msgid "Notification Settings"
 msgstr ""
 
@@ -6683,160 +6692,197 @@ msgstr ""
 msgid "Enter your api token"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:55
+#: settings/customer/CustomerSettings.js:51
 msgid "Use these settings to configure how notifications are sent to your customers. Currently, all emails are sent from notifications@surecart.com, but in the future you'll be able to set your own email server if you'd like."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:69
+#: settings/customer/CustomerSettings.js:65
 msgid "Sender Name"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:70
+#: settings/customer/CustomerSettings.js:66
 msgid "Enter the sender name"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:77
+#: settings/customer/CustomerSettings.js:73
 msgid "Reply To Email"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:78
+#: settings/customer/CustomerSettings.js:74
 msgid "notifications@surecart.com"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:93
+#: settings/customer/CustomerSettings.js:89
 msgid "Manage which notifications are sent to your customers."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:108
+#: settings/customer/CustomerSettings.js:104
 msgid "Order Confirmation Emails"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:110
+#: settings/customer/CustomerSettings.js:106
 msgid "Send a general order confirmation email to your customers when an order is paid. These emails include a breakdown of the order, and a link to a page where they can download their invoice and receipt."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:126
+#: settings/customer/CustomerSettings.js:122
 msgid "Refund Emails"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:128
+#: settings/customer/CustomerSettings.js:124
 msgid "Send a quick reminder when a refund is created for a customer. These emails contain the amount and payment method being refunded."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:145
+#: settings/customer/CustomerSettings.js:141
 msgid "Subscription Renewal Emails"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:147
+#: settings/customer/CustomerSettings.js:143
 msgid "Send an email customers when their subscription renews."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:164
+#: settings/customer/CustomerSettings.js:160
 msgid "Subscription Cancellation Notification"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:166
+#: settings/customer/CustomerSettings.js:162
 msgid "Send a general subscription cancellation confirmation email to your customers when subscription canceled."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:197
+#: settings/customer/CustomerSettings.js:184
 msgid "Subscription Reminder Notifications"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:205
+#: settings/customer/CustomerSettings.js:186
 msgid "Send a reminder to your subscribers 3 days before their subscription renews."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:234
+#: settings/customer/CustomerSettings.js:215
 msgid "Subscription Recovery Emails"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:241
+#: settings/customer/CustomerSettings.js:222
 msgid "Subscription payments fail all the time. Don't leave your recurring revenue to chance - turn on recovery emails to increase your chances of recovering subscriptions with failed payments."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:250
-msgid "Customize Notification Emails"
+#: settings/customer/CustomerSettings.js:231
+msgid "Customer Emails"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:251
+#: settings/customer/CustomerSettings.js:232
 msgid "Customize the content of each notification that is sent to your customers."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:262
+#: settings/customer/CustomerSettings.js:243
 msgid "Abandoned Checkout #1"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:263
+#: settings/customer/CustomerSettings.js:244
 msgid "First email sent when a checkout is abandoned."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:274
+#: settings/customer/CustomerSettings.js:255
 msgid "Abandoned Checkout #2"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:275
+#: settings/customer/CustomerSettings.js:256
 msgid "Second email sent when a checkout is abandoned."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:286
+#: settings/customer/CustomerSettings.js:267
 msgid "Abandoned Checkout #3"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:287
+#: settings/customer/CustomerSettings.js:268
 msgid "Third (final) email sent when a checkout is abandoned."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:298
+#: settings/customer/CustomerSettings.js:279
 msgid "Magic Sign In"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:299
+#: settings/customer/CustomerSettings.js:280
 msgid "Sent to customers to login to the customer portal without a password."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:307
+#: settings/customer/CustomerSettings.js:288
 msgid "Sent to customers after they place an order."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:314
+#: settings/customer/CustomerSettings.js:295
 msgid "Subscription Recovery"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:315
+#: settings/customer/CustomerSettings.js:296
 msgid "Sent to customers when their subscription's payment method fails."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:326
+#: settings/customer/CustomerSettings.js:307
 msgid "Subscription Reminder"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:327
+#: settings/customer/CustomerSettings.js:308
 msgid "Sent to customers 3 days before a subscription renews."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:340
+#: settings/customer/CustomerSettings.js:317
 msgid "Sent to customers when their subscription renews."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:348
+#: settings/customer/CustomerSettings.js:325
+#: settings/customer/CustomerSettings.js:376
 msgid "Subscription Cancellation"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:349
+#: settings/customer/CustomerSettings.js:326
 msgid "Sent to customers when their subscription cancellation."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:357
+#: settings/customer/CustomerSettings.js:334
 msgid "Product Access"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:358
+#: settings/customer/CustomerSettings.js:335
 msgid "Sent to customers when a purchase is downloadable or has a license."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:366
+#: settings/customer/CustomerSettings.js:343
 msgid "Sent to customers when a charge is refunded."
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:354
+msgid "Store Emails"
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:355
+msgid "These are the emails that are sent to you and other team members of this store."
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:366
+msgid "New Order"
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:367
+msgid "Sent when an order is created."
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:377
+msgid "Sent when a subscription is canceled."
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:386
+msgid "Subscription Payment"
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:387
+msgid "Sent when a subscription renews."
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:396
+msgid "Subscription Payment Failure"
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:400
+msgid "Sent when a subscription payment fails."
 msgstr ""
 
 #: settings/export/ExportRow.js:14
@@ -7360,6 +7406,10 @@ msgstr ""
 
 #: settings/tax/TaxSettings.js:173
 msgid "Manage how your store charges sales tax within each tax region. Check with a tax expert to understand your tax obligations."
+msgstr ""
+
+#: settings/upgrade/UpgradeSettings.js:37
+msgid "Upgrade to Pro"
 msgstr ""
 
 #: settings/upgrade/UpgradeSettings.js:57
@@ -8229,6 +8279,7 @@ msgstr ""
 #: Blocks/Subtotal/edit.js:12
 #: Blocks/Switch/components/Inspector.js:13
 #: Blocks/Switch/edit.js:26
+#: Blocks/Textarea/edit.js:25
 #: Blocks/Total/edit.js:12
 #: Blocks/Totals/edit.js:74
 msgid "Attributes"
@@ -8256,6 +8307,7 @@ msgstr ""
 #: Blocks/Subtotal/edit.js:15
 #: Blocks/Switch/components/Inspector.js:23
 #: Blocks/Switch/edit.js:43
+#: Blocks/Textarea/edit.js:42
 #: Blocks/Total/edit.js:15
 msgid "Label"
 msgstr ""
@@ -8547,6 +8599,7 @@ msgstr ""
 #: Blocks/Password/components/Inspector.js:30
 #: Blocks/Password/edit.js:51
 #: Blocks/Switch/components/Inspector.js:30
+#: Blocks/Textarea/edit.js:49
 msgid "Placeholder"
 msgstr ""
 
@@ -8557,6 +8610,7 @@ msgstr ""
 #: Blocks/Password/edit.js:37
 #: Blocks/RadioGroup/edit.js:72
 #: Blocks/Switch/edit.js:29
+#: Blocks/Textarea/edit.js:28
 msgid "Required"
 msgstr ""
 
@@ -9042,7 +9096,7 @@ msgid "Processing Payment"
 msgstr ""
 
 #: Blocks/Form/edit.js:322
-#: sc-checkout.js:192
+#: sc-checkout.js:191
 msgid "Processing payment..."
 msgstr ""
 
@@ -9051,7 +9105,7 @@ msgid "Confirming Payment"
 msgstr ""
 
 #: Blocks/Form/edit.js:340
-#: sc-checkout.js:192
+#: sc-checkout.js:191
 msgid "Finalizing order..."
 msgstr ""
 
@@ -9060,7 +9114,7 @@ msgid "Success Text"
 msgstr ""
 
 #: Blocks/Form/edit.js:355
-#: sc-checkout.js:192
+#: sc-checkout.js:191
 msgid "Success! Redirecting..."
 msgstr ""
 
@@ -9919,6 +9973,7 @@ msgstr ""
 #: Blocks/Donation/block.json
 #: Blocks/DonationAmount/block.json
 #: Blocks/Input/block.json
+#: Blocks/Textarea/block.json
 msgctxt "block keyword"
 msgid "custom"
 msgstr ""
@@ -10033,11 +10088,13 @@ msgstr ""
 
 #: Blocks/Input/block.json
 #: Blocks/Password/block.json
+#: Blocks/Textarea/block.json
 msgctxt "block keyword"
 msgid "input"
 msgstr ""
 
 #: Blocks/Input/block.json
+#: Blocks/Textarea/block.json
 msgctxt "block keyword"
 msgid "field"
 msgstr ""
@@ -10325,6 +10382,21 @@ msgstr ""
 #: Blocks/Total/block.json
 msgctxt "block keyword"
 msgid "subtotal"
+msgstr ""
+
+#: Blocks/Textarea/block.json
+msgctxt "block title"
+msgid "Textarea"
+msgstr ""
+
+#: Blocks/Textarea/block.json
+msgctxt "block description"
+msgid "Displays a form text textarea field. This is saved with the order as additional metadata."
+msgstr ""
+
+#: Blocks/Textarea/block.json
+msgctxt "block keyword"
+msgid "textarea"
 msgstr ""
 
 #: Blocks/Total/block.json
@@ -11409,11 +11481,11 @@ msgstr ""
 msgid "Your payment is processing. Exiting this page could cause an error in your order. Please do not navigate away from this page."
 msgstr ""
 
-#: sc-checkout.js:185
+#: sc-checkout.js:184
 msgid "Due to processor restrictions, only one checkout form is allowed on the page."
 msgstr ""
 
-#: sc-checkout.js:192
+#: sc-checkout.js:191
 msgid "Submitting order..."
 msgstr ""
 
@@ -11644,7 +11716,7 @@ msgstr ""
 msgid "Payment Methods"
 msgstr ""
 
-#: sc-payment.js:56
+#: sc-payment.js:61
 msgid "Please contact us for payment"
 msgstr ""
 
@@ -11692,11 +11764,11 @@ msgstr ""
 msgid "Nothing Found"
 msgstr ""
 
-#: sc-session-provider2.js:230
+#: sc-session-provider2.js:231
 msgid "Payment unsuccessful. Please try again."
 msgstr ""
 
-#: sc-session-provider2.js:237
+#: sc-session-provider2.js:238
 msgid "Could not find checkout. Please contact us before attempting to purchase again."
 msgstr ""
 

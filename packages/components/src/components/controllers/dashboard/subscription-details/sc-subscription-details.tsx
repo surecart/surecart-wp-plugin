@@ -108,7 +108,7 @@ export class ScSubscriptionDetails {
     if (this.subscription?.status === 'active' && this.subscription?.current_period_end_at) {
       return (
         <span>
-          {tag} {this.subscription?.remaining_period_count === null ? __('Your plan renews on', 'surecart') : __('Your next payment is on')}{' '}
+          {tag} {this.subscription?.remaining_period_count === null ? __('Your plan renews on', 'surecart') : __('Your next payment is on', 'surecart')}{' '}
           <sc-format-date date={this?.subscription?.current_period_end_at} type="timestamp" month="long" day="numeric" year="numeric"></sc-format-date>
         </span>
       );

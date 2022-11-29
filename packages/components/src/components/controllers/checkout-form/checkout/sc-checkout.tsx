@@ -3,22 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
 
 import { getOrder, setOrder } from '../../../../store/checkouts';
-import {
-  Customer,
-  FormState,
-  Checkout,
-  PaymentIntent,
-  PaymentIntents,
-  PriceChoice,
-  Prices,
-  Processor,
-  Products,
-  ResponseError,
-  TaxProtocol,
-  ProcessorName,
-  Bump,
-  ManualPaymentMethod,
-} from '../../../../types';
+import { Bump, Checkout, Customer, FormState, ManualPaymentMethod, PaymentIntent, PaymentIntents, PriceChoice, Prices, Processor, ProcessorName, Products, ResponseError, TaxProtocol } from '../../../../types';
 
 @Component({
   tag: 'sc-checkout',
@@ -79,6 +64,9 @@ export class ScCheckout {
 
   /** Can we remove line items? */
   @Prop() removeLineItems: boolean = true;
+
+  /** The abandoned checkout return url. */
+  @Prop() abandonedCheckoutReturnUrl: string;
 
   /** Use the Stripe payment element. */
   @Prop() stripePaymentElement: boolean = false;
@@ -228,6 +216,7 @@ export class ScCheckout {
       error: this.error,
       customer: this.customer,
       tax_status: this.order()?.tax_status,
+      taxEnabled: this.order()?.tax_enabled,
       customerShippingAddress: typeof this.order()?.customer !== 'string' ? this.order()?.customer?.shipping_address : {},
       shippingAddress: this.order()?.shipping_address,
       taxStatus: this.order()?.tax_status,
@@ -282,6 +271,7 @@ export class ScCheckout {
                     <sc-session-provider
                       ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)}
                       prices={this.prices}
+                      abandonedCheckoutReturnUrl={this.abandonedCheckoutReturnUrl}
                       stripePaymentElement={this.stripePaymentElement}
                       paymentIntents={this.paymentIntents}
                       persist={this.persistSession}

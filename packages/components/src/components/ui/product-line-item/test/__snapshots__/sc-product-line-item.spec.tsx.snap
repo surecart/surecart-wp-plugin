@@ -1,5 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`sc-product-line-item does not render scratch amount if the same as amount 1`] = `
+<sc-product-line-item amount="1000" currency="CAD" scratch-amount="1000">
+  <mock:shadow-root>
+    <div class="item">
+      <div class="item__text">
+        <div class="item__title">
+          <slot name="title"></slot>
+        </div>
+        <sc-quantity-select max="100"></sc-quantity-select>
+      </div>
+      <div class="item__suffix">
+        <div></div>
+        <div class="item__price">
+          <div class="price">
+            <sc-format-number currency="CAD" type="currency" value="1000"></sc-format-number>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-product-line-item>
+`;
+
 exports[`sc-product-line-item renders 1`] = `
 <sc-product-line-item amount="1000" currency="CAD">
   <mock:shadow-root>
@@ -14,6 +37,30 @@ exports[`sc-product-line-item renders 1`] = `
         <div></div>
         <div class="item__price">
           <div class="price">
+            <sc-format-number currency="CAD" type="currency" value="1000"></sc-format-number>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-product-line-item>
+`;
+
+exports[`sc-product-line-item renders scratch amount if different from amount 1`] = `
+<sc-product-line-item amount="1000" currency="CAD" scratch-amount="2000">
+  <mock:shadow-root>
+    <div class="item">
+      <div class="item__text">
+        <div class="item__title">
+          <slot name="title"></slot>
+        </div>
+        <sc-quantity-select max="100"></sc-quantity-select>
+      </div>
+      <div class="item__suffix">
+        <div></div>
+        <div class="item__price">
+          <div class="price">
+            <sc-format-number class="item__scratch-price" currency="CAD" type="currency" value="2000"></sc-format-number>
             <sc-format-number currency="CAD" type="currency" value="1000"></sc-format-number>
           </div>
         </div>
