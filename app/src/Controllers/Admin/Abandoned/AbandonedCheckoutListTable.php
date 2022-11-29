@@ -97,7 +97,7 @@ class AbandonedCheckoutListTable extends ListTable {
 			'placed_by'           => __( 'Placed By', 'surecart' ),
 			'date'                => __( 'Date', 'surecart' ),
 			'notification_status' => __( 'Email Status', 'surecart' ),
-			'recovery_status'     => __( 'Status', 'surecart' ),
+			'recovery_status'     => __( 'Recovery Status', 'surecart' ),
 			'total'               => __( 'Total', 'surecart' ),
 		];
 	}
@@ -172,9 +172,9 @@ class AbandonedCheckoutListTable extends ListTable {
 
 		switch ( $abandoned->notification_status ?? '' ) {
 			case 'scheduled':
-				return '<sc-tag type="warning">' . __( 'Scheduled', 'surecart' ) . '</sc-tag>';
+				return '<sc-tag type="info">' . __( 'Scheduled', 'surecart' ) . '</sc-tag>';
 			case 'not_scheduled':
-				return '<sc-tag type="danger">' . __( 'Not Scheduled', 'surecart' ) . '</sc-tag>';
+				return '<sc-tag type="warning">' . __( 'Not Scheduled', 'surecart' ) . '</sc-tag>';
 			case 'sent':
 				return '<sc-tag type="success">' . __( 'Email Sent', 'surecart' ) . '</sc-tag>';
 		}
@@ -192,7 +192,7 @@ class AbandonedCheckoutListTable extends ListTable {
 		if ( $abandoned->recovered_checkout ) {
 			return '<sc-tag type="success">' . __( 'Recovered', 'surecart' ) . '</sc-tag>';
 		} else {
-			return '<sc-tag type="danger">' . __( 'Abandoned', 'surecart' ) . '</sc-tag>';
+			return '<sc-tag type="warning">' . __( 'Abandoned', 'surecart' ) . '</sc-tag>';
 		}
 	}
 
