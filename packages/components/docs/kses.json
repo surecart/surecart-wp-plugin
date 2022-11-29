@@ -211,6 +211,7 @@
     "slot": true
   },
   "sc-checkout": {
+    "abandoned-checkout-return-url": true,
     "alignment": true,
     "currency-code": true,
     "customer": true,
@@ -1307,6 +1308,7 @@
     "slot": true
   },
   "sc-session-provider": {
+    "abandoned-checkout-return-url": true,
     "currency-code": true,
     "form-id": true,
     "group-id": true,
