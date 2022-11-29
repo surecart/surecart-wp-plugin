@@ -1,4 +1,4 @@
-describe('Recaptcha', () => {
+describe('Abandoned Checkouts', () => {
   beforeEach(() => {
     cy.intercept({
 			method: 'POST',
