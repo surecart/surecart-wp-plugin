@@ -14,6 +14,7 @@ return [
 	'checkout.invalid'                                  => __( 'Failed to update. Please check for errors and try again.', 'surecart' ),
 	'checkout.line_items.required'                      => __( 'Please add at least one product.', 'surecart' ),
 	'checkout.shipping_address.missing_tax_info'        => __( 'Please fill out your address.', 'surecart' ),
+	'checkout.discount.coupon.invalid'                  => __( 'This coupon is not valid. Please double-check it and try again.', 'surecart' ),
 	'download.current_release'                          => __( 'This download cannot be removed or archived when it is set as the current release.', 'surecart' ),
 	'refund.amount.greater_than_refundable_amount'      => __( 'The refund amount is greater than the refundable amount.', 'surecart' ),
 	'subscription.product.one_time'                     => __( 'You cannot add a one-time product to a subscription.', 'surecart' ),
