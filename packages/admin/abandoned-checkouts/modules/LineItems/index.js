@@ -5,8 +5,6 @@ import {
 	ScProductLineItem,
 	ScButton,
 } from '@surecart/components-react';
-import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
@@ -19,24 +17,22 @@ export default ({ checkout, loading, abandoned }) => {
 	const line_items = checkout?.line_items?.data;
 
 	return (
-		<Box 
-			title={__('Checkout Details', 'surecart')} 
+		<Box
+			title={__('Checkout Details', 'surecart')}
 			loading={loading}
 			footer={
-				<div>
-					{abandoned?.recovered_checkout?.order && (
-						<ScButton
-							size="medium"
-							href={addQueryArgs('admin.php', {
-								page: 'sc-orders',
-								action: 'edit',
-								id: abandoned?.recovered_checkout?.order,
-							})}
-						>
-							{__('View Order', 'surecart')}
-						</ScButton>
-					)}
-				</div>
+				abandoned?.recovered_checkout?.order && (
+					<ScButton
+						size="medium"
+						href={addQueryArgs('admin.php', {
+							page: 'sc-orders',
+							action: 'edit',
+							id: abandoned?.recovered_checkout?.order,
+						})}
+					>
+						{__('View Order', 'surecart')}
+					</ScButton>
+				)
 			}
 		>
 			<Fragment>
