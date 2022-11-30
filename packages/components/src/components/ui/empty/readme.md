@@ -12,6 +12,14 @@
 | `icon`   | `icon`    |             | `string` | `undefined` |
 
 
+## Shadow Parts
+
+| Part     | Description                |
+| -------- | -------------------------- |
+| `"base"` | The elements base wrapper. |
+| `"icon"` | The icon.                  |
+
+
 ## Dependencies
 
 ### Used by

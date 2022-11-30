@@ -8,22 +8,22 @@ exports[`sc-line-item renders 1`] = `
         <slot name="image"></slot>
       </div>
       <div class="item__text" part="text">
-        <div class="item__title">
+        <div class="item__title" part="title">
           <slot name="title"></slot>
         </div>
-        <div class="item__description">
+        <div class="item__description" part="description">
           <slot name="description"></slot>
         </div>
       </div>
       <div class="item__end" part="price">
-        <div class="item__price-currency">
+        <div class="item__price-currency" part="currency">
           <slot name="currency"></slot>
         </div>
-        <div class="item__price-text">
-          <div class="item__price">
+        <div class="item__price-text" part="price-text">
+          <div class="item__price" part="price">
             <slot name="price"></slot>
           </div>
-          <div class="item__price-description">
+          <div class="item__price-description" part="price-description">
             <slot name="price-description"></slot>
           </div>
         </div>

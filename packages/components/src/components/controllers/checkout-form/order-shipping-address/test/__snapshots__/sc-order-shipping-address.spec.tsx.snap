@@ -3,7 +3,7 @@
 exports[`sc-order-shipping-address is required if required is false but shipping enabled is true 1`] = `
 <sc-order-shipping-address>
   <mock:shadow-root>
-    <sc-address label="Shipping Address" required=""></sc-address>
+    <sc-address exportparts="label, help-text, form-control, input__base, select__base, columns, search__base, menu__base" label="Shipping Address" required=""></sc-address>
   </mock:shadow-root>
 </sc-order-shipping-address>
 `;
@@ -11,7 +11,7 @@ exports[`sc-order-shipping-address is required if required is false but shipping
 exports[`sc-order-shipping-address is required if required is false but shipping is later enabled 1`] = `
 <sc-order-shipping-address>
   <mock:shadow-root>
-    <sc-address label="Shipping Address" required=""></sc-address>
+    <sc-address exportparts="label, help-text, form-control, input__base, select__base, columns, search__base, menu__base" label="Shipping Address" required=""></sc-address>
   </mock:shadow-root>
 </sc-order-shipping-address>
 `;
@@ -59,7 +59,7 @@ exports[`sc-order-shipping-address renders compact fields loading if shipping is
 exports[`sc-order-shipping-address renders full fields if shipping is enabled 1`] = `
 <sc-order-shipping-address>
   <mock:shadow-root>
-    <sc-address label="Shipping Address" required=""></sc-address>
+    <sc-address exportparts="label, help-text, form-control, input__base, select__base, columns, search__base, menu__base" label="Shipping Address" required=""></sc-address>
   </mock:shadow-root>
 </sc-order-shipping-address>
 `;
@@ -67,7 +67,7 @@ exports[`sc-order-shipping-address renders full fields if shipping is enabled 1`
 exports[`sc-order-shipping-address renders full fields loading if shipping is enabled 1`] = `
 <sc-order-shipping-address>
   <mock:shadow-root>
-    <sc-address label="Shipping Address" loading="" required=""></sc-address>
+    <sc-address exportparts="label, help-text, form-control, input__base, select__base, columns, search__base, menu__base" label="Shipping Address" loading="" required=""></sc-address>
   </mock:shadow-root>
 </sc-order-shipping-address>
 `;

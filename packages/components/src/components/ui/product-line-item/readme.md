@@ -30,6 +30,29 @@
 | `scUpdateQuantity` | Emitted when the quantity changes. | `CustomEvent<number>` |
 
 
+## Shadow Parts
+
+| Part                   | Description                        |
+| ---------------------- | ---------------------------------- |
+| `"base"`               | The elements base wrapper.         |
+| `"image"`              |                                    |
+| `"input"`              | The input control.                 |
+| `"minus"`              | The minus control.                 |
+| `"minus-icon"`         | The minus icon.                    |
+| `"plus"`               | The plus control.                  |
+| `"plus-icon"`          | The plus icon.                     |
+| `"price"`              | The price wrapper.                 |
+| `"price__amount"`      | The price amount.                  |
+| `"price__description"` | The price description.             |
+| `"price__scratch"`     |                                    |
+| `"quantity__base"`     | The quantity base wrapper.         |
+| `"remove-icon__base"`  | The remove icon base wrapper.      |
+| `"static-quantity"`    | The statically displayed quantity. |
+| `"suffix"`             | The suffix items.                  |
+| `"text"`               | The text wrapper.                  |
+| `"title"`              | The product title.                 |
+
+
 ## Dependencies
 
 ### Used by

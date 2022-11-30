@@ -23,10 +23,9 @@ export default ({ className, price, updatePrice }) => {
 					min={1}
 					max={365}
 					value={price?.trial_duration_days}
-					disabled={true}
-					onScInput={(e) =>
+					onScInput={() =>
 						updatePrice({
-							trial_duration_days: parseInt(e.target.value),
+							trial_duration_days: null,
 						})
 					}
 				>

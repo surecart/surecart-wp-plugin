@@ -3,7 +3,7 @@
 exports[`sc-form-row renders 1`] = `
 <sc-form-row>
   <mock:shadow-root>
-    <div class="form-row">
+    <div class="form-row" part="base">
       <slot></slot>
     </div>
   </mock:shadow-root>

@@ -4,7 +4,7 @@ exports[`sc-choices renders 1`] = `
 <sc-choices size="medium">
   <mock:shadow-root>
     <fieldset class="choices" part="base" role="radiogroup">
-      <sc-form-control help="" helpid="choices-help-text-1" inputid="choices-1" label="" labelid="choices-label-1" showlabel="" size="medium">
+      <sc-form-control exportparts="label, help-text, form-control" help="" helpid="choices-help-text-1" inputid="choices-1" label="" labelid="choices-label-1" showlabel="" size="medium">
         <div class="choices__items" part="choices">
           <slot></slot>
         </div>
