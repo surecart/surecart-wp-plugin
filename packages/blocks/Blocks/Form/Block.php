@@ -68,7 +68,7 @@ class Block extends BaseBlock {
 				'classes'                       => $this->getClasses( $attributes ),
 				'style'                         => $this->getStyle( $attributes ),
 				'content'                       => $content,
-				'abandoned_checkout_return_url' => \SureCart::routeUrl( 'redirect' ),
+				'abandoned_checkout_return_url' => esc_url( trailingslashit( get_site_url() ) . 'surecart/redirect' ),
 				'processors'                    => (array) Processor::get() ?? [],
 				'manual_payment_methods'        => (array) ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? [],
 				'stripe_payment_element'        => (bool) get_option( 'sc_stripe_payment_element', false ),
