@@ -251,6 +251,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * Improvement: Option for the address component to not be required.
 * Improvement: Show remaining payment for payment plan on individual admin plan page.
 * Improvement: Show customer's payment methods in the admin.
+* Fix: Unable to update PayPal payment method on existing subscription in admin.
 * Fix: Disabled integrations are no longer selectable.
 * Fix: Customer dashboard full setting not taking effect.
 * Fix: Abandoned checkouts missing recovered state.
