@@ -115,6 +115,7 @@ export default ({ id, onSelect }) => {
 							onScInput={(e) =>
 								updateCustomer({ first_name: e.target.value })
 							}
+							tabIndex="0"
 							autofocus
 						/>
 
@@ -123,6 +124,7 @@ export default ({ id, onSelect }) => {
 							onScInput={(e) =>
 								updateCustomer({ last_name: e.target.value })
 							}
+							tabIndex="0"
 							type="text"
 						/>
 
@@ -132,6 +134,7 @@ export default ({ id, onSelect }) => {
 							onScInput={(e) =>
 								updateCustomer({ email: e.target.value })
 							}
+							tabIndex="0"
 							required
 						/>
 
