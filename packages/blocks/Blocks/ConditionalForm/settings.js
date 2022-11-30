@@ -50,8 +50,7 @@ const Settings = ( props ) => {
                 <Modal title={ __( 'Configure Rules', 'surecart' ) } onRequestClose={ closeModal } css={css`
                   width: 75%;
                   max-width: 650px;
-                  max-height: 80%;
-                  height: 80%;` }
+                  max-height: 80%;` }
                 >
                     {/* <Button variant="secondary" onClick={ closeModal }>
                         My custom close button
@@ -60,7 +59,7 @@ const Settings = ( props ) => {
                 </Modal>
             ) }
           </PanelRow>
-					<PanelRow>
+					{/*<PanelRow>
             <SelectControl
               label={ __( 'Condition', 'surecart') }
               value={ condition }
@@ -95,7 +94,7 @@ const Settings = ( props ) => {
               onChange={ ( value ) => setAttributes({ value })}
               __nextHasNoMarginBottom
             />
-					</PanelRow>
+            </PanelRow>*/}
 				</PanelBody>
 			</InspectorControls>
 		</>

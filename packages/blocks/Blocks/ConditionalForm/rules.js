@@ -137,6 +137,22 @@ const Rules = ( props ) => {
       setAttributes({ rule_groups: JSON.stringify( ruleGroupsData ) });
       setRuleGroupsData( [...ruleGroupsData] );
   };
+  const updateConditionOptionInRuleGroup = function( groupId, conditionId, currentValue, optionName ) {
+    debugger;
+			for ( const group of ruleGroupsData ) {
+				if ( groupId === group.group_id ) {
+					for ( const rule of group.rules ) {
+						if ( conditionId === rule.rule_id ) {
+							rule[optionName] = currentValue;
+							break;
+						}
+					}
+					break;
+				}
+			}
+      setAttributes({ rule_groups: JSON.stringify( ruleGroupsData ) });
+      setRuleGroupsData( [...ruleGroupsData] );
+  };
 
   const addNewCondition = ( event ) => {
 		const groupId = event.target.getAttribute( 'group_id' );
@@ -263,6 +279,7 @@ const Rules = ( props ) => {
                     groups_length={ ruleGroupsData.length }
                     removeConditionFromRuleGroup={ removeConditionFromRuleGroup }
                     updateConditionInRuleGroup={ updateConditionInRuleGroup }
+                    updateConditionOptionInRuleGroup = { updateConditionOptionInRuleGroup }
                   />
                   ) }
               </div>

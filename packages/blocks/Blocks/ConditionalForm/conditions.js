@@ -20,11 +20,14 @@ import {
 
 // import ReactHtmlParser from 'react-html-parser';
 
-function Conditions( { rules, group_id, g_index, groups_length, removeConditionFromRuleGroup, updateConditionInRuleGroup } ) {
+function Conditions( props ) {
 	// const [ { page_settings }, dispatch ] = useStateValue();
 
+  const { rules, group_id, g_index, groups_length, removeConditionFromRuleGroup, updateConditionInRuleGroup, updateConditionOptionInRuleGroup } = props;
 	// const rule_settings = page_settings.settings.rules;
 	// const conditions_select = rule_settings.conditions;
+
+
 	const rule_settings = [];
   const conditions_select = [
     { label: "Product(s)", value: "cart_item" },
@@ -100,7 +103,9 @@ function Conditions( { rules, group_id, g_index, groups_length, removeConditionF
 	};
 
 	const valueFields = function ( fields, r_index, rule_data ) {
+    debugger;
 		const value = rule_data.value;
+    const rule_id = rule_data.rule_id;
 
 		let rendorfields = '';
 		const name = `wcf-checkout-rules[${ g_index }][rules][${ r_index }][value]`;
@@ -116,6 +121,7 @@ function Conditions( { rules, group_id, g_index, groups_length, removeConditionF
 							tooltip={ field.tooltip }
 							options={ field.options }
 							isMulti={ field.isMulti }
+              onChange={ ( selection ) => { updateConditionOptionInRuleGroup( group_id, rule_id, selection, 'value' ); } }
 						/>
 					);
 					break;
@@ -128,6 +134,7 @@ function Conditions( { rules, group_id, g_index, groups_length, removeConditionF
 							value={ value }
 							placeholder={ field.placeholder }
 							tooltip={ field.tooltip }
+              onChange={ ( selection ) => { updateConditionOptionInRuleGroup( group_id, rule_id, selection, 'value' ); } }
 						/>
 					);
 					break;
@@ -196,9 +203,6 @@ function Conditions( { rules, group_id, g_index, groups_length, removeConditionF
 								<SelectControl
 									name={ `wcf-checkout-rules[${ g_index }][rules][${ r_index }][condition]` }
 									options={ conditions_select }
-									onSelect={ () => {
-                    updateConditionInRuleGroup( group_id, rule_id );
-									} }
                   onChange={ ( selection ) => { updateConditionInRuleGroup( group_id, rule_id, selection ); } }
 									value={ rule_data.condition }
 								/>
@@ -206,6 +210,7 @@ function Conditions( { rules, group_id, g_index, groups_length, removeConditionF
 									name={ `wcf-checkout-rules[${ g_index }][rules][${ r_index }][operator]` }
 									options={ rule_field_data.operator }
 									value={ rule_data.operator }
+                  onChange={ ( selection ) => { updateConditionOptionInRuleGroup( group_id, rule_id, selection, 'operator' ); } }
 								/>
 
 								{ valueFields(
