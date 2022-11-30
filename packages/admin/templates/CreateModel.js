@@ -18,8 +18,10 @@ export default ({ children, onError }) => {
 			/>
 			<div
 				css={css`
-					height: calc(100vh - 100px);
+					min-height: calc(100vh - 100px);
 					display: grid;
+					overflow: auto;
+					padding: 50px 0;
 				`}
 			>
 				<div

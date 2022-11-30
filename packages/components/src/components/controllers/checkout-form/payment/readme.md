@@ -24,6 +24,18 @@
 | `scSetProcessor` | Set the checkout procesor. | `CustomEvent<{ id: string; manual: boolean; }>` |
 
 
+## Shadow Parts
+
+| Part                    | Description                                    |
+| ----------------------- | ---------------------------------------------- |
+| `"base"`                | The elements base wrapper.                     |
+| `"form-control"`        | The form control wrapper.                      |
+| `"help-text"`           | Help text that describes how to use the input. |
+| `"label"`               | The input label.                               |
+| `"test-badge__base"`    | Test badge base.                               |
+| `"test-badge__content"` | Test badge content.                            |
+
+
 ## Dependencies
 
 ### Depends on

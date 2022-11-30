@@ -16,17 +16,21 @@
 			"type": "string",
 			"default": "Address"
 		},
+		"required": {
+			"type": "boolean",
+			"default": true
+		},
 		"full": {
 			"type": "boolean",
 			"default": true
 		},
 		"show_name": {
 			"type": "boolean",
-      "default": false
+      		"default": false
 		},
-    "default_country": {
-      "type": "string"
-    },
+		"default_country": {
+		"type": "string"
+		},
 		"name_placeholder": {
 			"type": "string",
 			"default": "Name or Company Name"

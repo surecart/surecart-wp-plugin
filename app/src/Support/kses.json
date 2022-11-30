@@ -975,6 +975,7 @@
     "shipping-enabled": true,
     "show-name": true,
     "state-placeholder": true,
+    "tax-enabled": true,
     "tax-status": true,
     "style": true,
     "id": true,

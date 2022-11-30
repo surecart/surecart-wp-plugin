@@ -3,11 +3,11 @@
 exports[`paypal-buttons renders 1`] = `
 <sc-paypal-buttons>
   <mock:shadow-root>
-    <div class="paypal-buttons paypal-buttons--busy">
+    <div class="paypal-buttons paypal-buttons--busy" part="base base--busy">
       <sc-skeleton style="height: 55px; --border-radius: 4px; cursor: wait;"></sc-skeleton>
       <div class="sc-paypal-button-container" hidden="">
-        <div class="sc-paypal-card-button"></div>
-        <div class="sc-paypal-button"></div>
+        <div class="sc-paypal-card-button" part="paypal-card-button"></div>
+        <div class="sc-paypal-button" part="paypal-button"></div>
       </div>
     </div>
   </mock:shadow-root>

@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-11-23T20:11:24+00:00\n"
+"POT-Creation-Date: 2022-11-30T20:19:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -39,7 +39,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:42
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:56
-#: src/Controllers/Admin/Orders/OrdersListTable.php:68
+#: src/Controllers/Admin/Orders/OrdersListTable.php:65
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:63
 #: src/Controllers/Admin/Products/ProductsListTable.php:56
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:60
@@ -47,21 +47,21 @@ msgid "All"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:43
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:171
-#: abandoned-checkouts/modules/Details.js:13
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:175
+#: abandoned-checkouts/modules/Details.js:16
 #: subscriptions/show/modules/PendingUpdate.js:58
 #: subscriptions/show/modules/PendingUpdate.js:91
 msgid "Scheduled"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:44
-#: abandoned-checkouts/modules/Details.js:10
+#: abandoned-checkouts/modules/Details.js:13
 msgid "Sent"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:45
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:173
-#: abandoned-checkouts/modules/Details.js:17
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:177
+#: abandoned-checkouts/modules/Details.js:20
 msgid "Not Scheduled"
 msgstr ""
 
@@ -90,13 +90,17 @@ msgid "Date"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:99
-msgid "Recovery Status"
+msgid "Email Status"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:100
+msgid "Recovery Status"
+msgstr ""
+
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:101
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:67
 #: src/Controllers/Admin/Orders/OrdersListTable.php:105
-#: abandoned-checkouts/modules/LineItems/index.js:119
+#: abandoned-checkouts/modules/LineItems/index.js:135
 #: customers/modules/Orders.js:58
 #: dashboard/components/overview/charts/ChartSummary.js:142
 #: orders/modules/LineItems/index.js:226
@@ -115,11 +119,21 @@ msgstr ""
 msgid "Total"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:175
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:179
 msgid "Email Sent"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:190
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:193
+#: abandoned-checkouts/modules/Details.js:10
+msgid "Recovered"
+msgstr ""
+
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:195
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:126
+msgid "Abandoned"
+msgstr ""
+
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:209
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:218
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:222
 #: src/Controllers/Admin/Orders/OrdersListTable.php:262
@@ -129,19 +143,19 @@ msgid "Edit Order"
 msgstr ""
 
 #. translators: Customer name.
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:193
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:212
 #: src/Controllers/Admin/Orders/OrdersListTable.php:269
 msgid "By %s"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:197
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:198
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:216
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:217
 msgid "View Checkout"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutViewController.php:22
 #: admin/abandoned-orders/index.php:13
-#: store/add-entities.js:116
+#: store/add-entities.js:117
 msgid "Abandoned Checkouts"
 msgstr ""
 
@@ -181,8 +195,8 @@ msgstr ""
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:62
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
 #: src/Controllers/Admin/Products/ProductsListTable.php:55
-#: coupons/modules/Code.js:92
-#: product-groups/EditProductGroup.js:98
+#: coupons/modules/Codes/Code.js:127
+#: product-groups/EditProductGroup.js:95
 #: products/EditProduct.js:184
 #: products/modules/Prices/Price/Header.js:200
 #: products/modules/SingleDownload.js:230
@@ -217,8 +231,9 @@ msgstr ""
 #: src/Controllers/Admin/Products/ProductsListTable.php:99
 #: bumps/modules/NewCondition.js:79
 #: bumps/modules/Price.js:27
+#: coupons/modules/NewRestriction.js:83
 #: products/components/price/parts/SingleAmount.js:11
-#: store/add-entities.js:172
+#: store/add-entities.js:173
 #: subscriptions/edit/modules/Price.js:37
 #: subscriptions/show/modules/CurrentPlan.js:24
 #: Blocks/CheckoutForm/entities.js:19
@@ -244,9 +259,9 @@ msgstr ""
 #: invoices/store/entities.js:70
 #: products/modules/Prices/NewPrice/index.js:157
 #: products/modules/Prices/Price/Header.js:70
-#: store/add-entities.js:207
-#: store/add-entities.js:214
-#: subscriptions/edit/EditSubscription.js:182
+#: store/add-entities.js:208
+#: store/add-entities.js:215
+#: subscriptions/edit/EditSubscription.js:214
 #: Controllers/SubscriptionController.php:103
 #: Controllers/SubscriptionController.php:190
 #: Controllers/SubscriptionController.php:284
@@ -288,7 +303,7 @@ msgstr ""
 #: src/Controllers/Admin/Coupons/CouponsController.php:23
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:130
 #: admin/coupons/index.php:6
-#: coupons/Coupons.js:189
+#: coupons/EditCoupon.js:135
 #: settings/export/ExportSettings.js:19
 msgid "Coupons"
 msgstr ""
@@ -370,7 +385,7 @@ msgstr ""
 #: bumps/EditBump.js:137
 #: coupons/components/coupon/ActionsDropdown.js:29
 #: coupons/components/CouponActionsDropdown.js:96
-#: coupons/modules/Code.js:113
+#: coupons/modules/Codes/Code.js:148
 #: products/components/product/ActionsDropdown.js:29
 #: products/modules/Prices/Price/Header.js:175
 #: products/modules/SingleDownload.js:268
@@ -384,7 +399,7 @@ msgstr ""
 #: bumps/EditBump.js:138
 #: coupons/components/coupon/ActionsDropdown.js:30
 #: coupons/components/CouponActionsDropdown.js:97
-#: coupons/modules/Code.js:114
+#: coupons/modules/Codes/Code.js:149
 #: products/components/product/ActionsDropdown.js:30
 #: products/modules/Prices/Price/Header.js:176
 #: products/modules/SingleDownload.js:269
@@ -437,12 +452,15 @@ msgstr ""
 #: src/Controllers/Admin/Customers/CustomersController.php:24
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:133
 #: admin/customers/index.php:7
-#: customers/EditCustomer.js:81
+#: bumps/modules/Conditions.js:79
+#: coupons/modules/Restrictions.js:66
+#: customers/EditCustomer.js:82
 #: settings/export/ExportSettings.js:23
 msgid "Customers"
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:50
+#: coupons/modules/CustomerSelector.js:132
 #: customers/modules/Details.js:46
 #: settings/brand/BrandSettings.js:157
 msgid "Email"
@@ -496,7 +514,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:63
 #: invoices/store/entities.js:62
-#: store/add-entities.js:88
+#: store/add-entities.js:89
 msgid "Invoice"
 msgstr ""
 
@@ -525,6 +543,7 @@ msgstr ""
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:66
 #: src/Controllers/Admin/Orders/OrdersListTable.php:103
 #: customers/modules/Charges.js:69
+#: customers/modules/PaymentMethods/index.js:51
 #: invoices/modules/Charges.js:22
 #: invoices/modules/Refunds.js:20
 #: orders/modules/Charges.js:69
@@ -573,11 +592,12 @@ msgstr ""
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:102
 #: admin/user-profile.php:5
 #: abandoned-checkouts/modules/Customer.js:14
+#: coupons/modules/NewRestriction.js:91
 #: invoices/modules/Customer.js:17
 #: invoices/store/entities.js:94
 #: licenses/modules/Customer.js:41
 #: orders/modules/Customer.js:16
-#: store/add-entities.js:52
+#: store/add-entities.js:53
 #: subscriptions/edit/modules/Customer.js:12
 #: subscriptions/show/modules/Customer.js:16
 msgid "Customer"
@@ -587,7 +607,7 @@ msgstr ""
 #: src/Integrations/TutorLMS/add-to-cart-surecart.php:21
 #: invoices/store/entities.js:86
 #: licenses/modules/Purchase.js:39
-#: store/add-entities.js:186
+#: store/add-entities.js:187
 msgid "Purchase"
 msgstr ""
 
@@ -617,7 +637,7 @@ msgstr ""
 msgid "Invalid API Token"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:65
+#: src/Controllers/Admin/Orders/OrdersListTable.php:66
 #: components/data-tables/charges-data-table/index.js:37
 #: orders/modules/LineItems/index.js:109
 #: Blocks/Dashboard/CustomerInvoices/edit.js:83
@@ -627,17 +647,17 @@ msgstr ""
 msgid "Paid"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:66
+#: src/Controllers/Admin/Orders/OrdersListTable.php:67
 #: sc-order-status-badge2.js:33
 msgid "Processing"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:67
+#: src/Controllers/Admin/Orders/OrdersListTable.php:68
 msgid "Failed"
 msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersListTable.php:101
-#: store/add-entities.js:109
+#: store/add-entities.js:110
 #: subscriptions/show/modules/Orders.js:15
 #: Controllers/OrderController.php:120
 msgid "Order"
@@ -664,7 +684,7 @@ msgid "Subscription Renewal"
 msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersListTable.php:228
-#: store/add-entities.js:38
+#: store/add-entities.js:39
 msgid "Checkout"
 msgstr ""
 
@@ -710,7 +730,8 @@ msgstr ""
 #: src/Controllers/Admin/Products/ProductsController.php:24
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:127
 #: admin/products/index.php:29
-#: bumps/modules/Conditions.js:71
+#: bumps/modules/Conditions.js:72
+#: coupons/modules/Restrictions.js:59
 #: product-groups/modules/Products.js:43
 #: products/EditProduct.js:175
 #: Blocks/CheckoutForm/components/Setup.js:115
@@ -787,11 +808,12 @@ msgstr ""
 #: src/Support/Errors/Translations/attributes.php:17
 #: src/Support/Errors/Translations/attributes.php:18
 #: bumps/modules/NewCondition.js:83
+#: coupons/modules/NewRestriction.js:87
 #: customers/modules/Subscriptions.js:58
 #: invoices/modules/Subscriptions.js:13
 #: invoices/store/entities.js:78
 #: orders/modules/Subscriptions.js:49
-#: store/add-entities.js:151
+#: store/add-entities.js:152
 #: subscriptions/show/modules/PendingUpdate.js:44
 #: Blocks/CheckoutForm/components/PriceChoices.js:48
 #: Blocks/CheckoutForm/entities.js:12
@@ -899,7 +921,7 @@ msgid "No name provided"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:399
-#: subscriptions/edit/EditSubscription.js:195
+#: subscriptions/edit/EditSubscription.js:227
 msgid "Edit Subscription"
 msgstr ""
 
@@ -1008,6 +1030,8 @@ msgstr ""
 #: src/Integrations/Beaver/BeaverFormModule.php:92
 #: src/Integrations/Elementor/ReusableFormWidget.php:134
 #: bumps/CreateBump.js:81
+#: coupons/modules/Codes/NewPromotionCode.js:86
+#: coupons/modules/CustomerSelector.js:149
 #: customers/CreateCustomer.js:112
 #: product-groups/CreateProductGroup.js:74
 #: products/CreateProduct.js:70
@@ -2344,127 +2368,131 @@ msgid "Please add at least one product."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:16
-#: src/Support/Errors/Translations/codes.php:26
+#: src/Support/Errors/Translations/codes.php:27
 msgid "Please fill out your address."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:17
-msgid "This download cannot be removed or archived when it is set as the current release."
+msgid "This coupon is not valid. Please double-check it and try again."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:18
-msgid "The refund amount is greater than the refundable amount."
+msgid "This download cannot be removed or archived when it is set as the current release."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:19
-msgid "You cannot add a one-time product to a subscription."
+msgid "The refund amount is greater than the refundable amount."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:20
-msgid "The price cannot be blank."
+msgid "You cannot add a one-time product to a subscription."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:21
-msgid "A price with this currency and recurring interval already exists. Please create a new product to create this price."
+msgid "The price cannot be blank."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:22
-msgid "This promotion code already exists. Please archive the old code or use a different code."
+msgid "A price with this currency and recurring interval already exists. Please create a new product to create this price."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:23
-msgid "There are no processors to make the payment. Please contact us for assistance."
+msgid "This promotion code already exists. Please archive the old code or use a different code."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:24
-msgid "This product has prices that are currently being used. Please archive the product instead if it is not already archived."
+msgid "There are no processors to make the payment. Please contact us for assistance."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:25
+msgid "This product has prices that are currently being used. Please archive the product instead if it is not already archived."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:26
 msgid "The product image must be an image."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:27
+#: src/Support/Errors/Translations/codes.php:28
 msgid "Please enter a valid tax number."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:28
+#: src/Support/Errors/Translations/codes.php:29
 msgid "The prices in this checkout session have changed. Please recheck it before submitting again."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:29
+#: src/Support/Errors/Translations/codes.php:30
 msgid "This coupon code is invalid."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:30
+#: src/Support/Errors/Translations/codes.php:31
 msgid "You cannot enable abandoned checkouts until you have updated your business contact address. Please add an address to your store branding."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:31
+#: src/Support/Errors/Translations/codes.php:32
 msgid "Your postal code is not valid."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:32
+#: src/Support/Errors/Translations/codes.php:33
 msgid "This coupon has expired."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:33
+#: src/Support/Errors/Translations/codes.php:34
 msgid "This discount code does not apply to this currency."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:34
+#: src/Support/Errors/Translations/codes.php:35
 msgid "This is not a valid coupon code"
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:35
+#: src/Support/Errors/Translations/codes.php:36
 msgid "Please double-check your prefix does not contain any spaces, underscores, dashes or special characters."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:36
+#: src/Support/Errors/Translations/codes.php:37
 msgid "This prefix is too long. Please enter a shorter prefix."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:37
+#: src/Support/Errors/Translations/codes.php:38
 msgid "This prefix is too short. Please enter a longer prefix."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:38
+#: src/Support/Errors/Translations/codes.php:39
 msgid "You can only apply this offer once."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:39
+#: src/Support/Errors/Translations/codes.php:40
 msgid "This product is no longer purchaseable."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:40
+#: src/Support/Errors/Translations/codes.php:41
 msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:41
+#: src/Support/Errors/Translations/codes.php:42
 msgid "The maximum price must be smaller."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:42
+#: src/Support/Errors/Translations/codes.php:43
 msgid "The minimum price must be smaller."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:43
+#: src/Support/Errors/Translations/codes.php:44
 msgid "The maximum price must be greater than the minimum price."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:44
+#: src/Support/Errors/Translations/codes.php:45
 msgid "You are already collecting tax for this zone."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:45
+#: src/Support/Errors/Translations/codes.php:46
 msgid "You cannot enable EU Micro Exemption if your address is outside of the EU."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:46
+#: src/Support/Errors/Translations/codes.php:47
 msgid "You cannot enable taxes unless a valid tax address is provided"
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:47
+#: src/Support/Errors/Translations/codes.php:48
 msgid "You cannot delete this media item because it is currently being used."
 msgstr ""
 
@@ -3367,6 +3395,7 @@ msgstr ""
 #: Controllers/SubscriptionController.php:451
 #: Controllers/SubscriptionController.php:517
 #: Controllers/UserController.php:61
+#: Blocks/Dashboard/CustomerDashboard/edit.js:170
 msgid "Dashboard"
 msgstr ""
 
@@ -3379,13 +3408,8 @@ msgstr ""
 msgid "Complete Signup"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:126
-msgid "Abandoned"
-msgstr ""
-
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:128
 #: admin/product-groups/index.php:20
-#: bumps/modules/Conditions.js:77
 msgid "Upgrade Groups"
 msgstr ""
 
@@ -3835,7 +3859,6 @@ msgstr ""
 
 #: admin/plugin.php:54
 #: layouts/partials/admin-settings-notices.php:16
-#: coupons/Coupons.js:78
 msgid "Saved."
 msgstr ""
 
@@ -3910,6 +3933,7 @@ msgid "This user is not a customer."
 msgstr ""
 
 #: layouts/partials/admin-index-header.php:14
+#: coupons/modules/CustomerSelector.js:77
 #: settings/processors/ManualPaymentMethods.js:80
 #: sc-subscription-payment-method.js:136
 #: sc-subscription-payment-method.js:155
@@ -3999,6 +4023,7 @@ msgid "Advanced"
 msgstr ""
 
 #: layouts/partials/admin-settings-sidebar.php:72
+#: components/UpgradeModal.js:19
 msgid "Boost Your Revenue"
 msgstr ""
 
@@ -4154,15 +4179,17 @@ msgstr ""
 
 #: abandoned-checkouts/AbandonedCheckout.js:85
 #: components/MediaLibrary/DownloadMedia.js:30
-#: customers/EditCustomer.js:52
+#: coupons/modules/Codes/Code.js:43
+#: customers/EditCustomer.js:53
 #: customers/modules/Balance/ViewTransactions.js:46
+#: customers/modules/PaymentMethods/Actions.js:69
 #: customers/modules/User/index.js:24
 #: licenses/modules/Activations/index.js:65
 #: orders/Order.js:99
 #: products/modules/SingleDownload.js:46
 #: settings/processors/ManualPaymentMethod.js:50
 #: settings/processors/ManualPaymentMethod.js:81
-#: subscriptions/edit/EditSubscription.js:149
+#: subscriptions/edit/EditSubscription.js:181
 #: subscriptions/show/modules/Tax.js:42
 #: sc-cart-form.js:65
 #: sc-charges-list.js:69
@@ -4290,26 +4317,26 @@ msgstr ""
 msgid "View Customer"
 msgstr ""
 
-#: abandoned-checkouts/modules/Details.js:64
+#: abandoned-checkouts/modules/Details.js:67
 #: customers/CreateCustomer.js:99
 #: customers/modules/Details.js:21
 #: dashboard/Dashboard.js:51
 #: invoices/modules/Details.js:77
 #: orders/modules/Details.js:55
-#: subscriptions/show/modules/Details.js:149
+#: subscriptions/show/modules/Details.js:166
 #: Blocks/Dashboard/DashboardPage/Block.php:34
 #: Blocks/Dashboard/DashboardPage/Block.php:42
 #: Controllers/PaymentMethodController.php:112
 #: sc-order.js:143
-#: sc-payment.js:61
+#: sc-payment.js:70
 msgid "Test Mode"
 msgstr ""
 
-#: abandoned-checkouts/modules/Details.js:69
+#: abandoned-checkouts/modules/Details.js:72
 #: invoices/modules/Details.js:70
 #: licenses/modules/Details/index.js:39
 #: orders/modules/Details.js:60
-#: subscriptions/show/modules/Details.js:141
+#: subscriptions/show/modules/Details.js:158
 msgid "Created on %s"
 msgstr ""
 
@@ -4317,7 +4344,15 @@ msgstr ""
 msgid "Checkout Details"
 msgstr ""
 
-#: abandoned-checkouts/modules/LineItems/index.js:45
+#: abandoned-checkouts/modules/LineItems/index.js:33
+#: components/data-tables/charges-data-table/index.js:120
+#: orders/Order.js:130
+#: subscriptions/show/modules/modals/RetryPaymentModal.js:51
+#: subscriptions/show/modules/Periods.js:194
+msgid "View Order"
+msgstr ""
+
+#: abandoned-checkouts/modules/LineItems/index.js:61
 #: invoices/modules/LineItems.js:115
 #: orders/modules/LineItems/index.js:152
 #: subscriptions/show/modules/LineItems/index.js:61
@@ -4329,14 +4364,14 @@ msgstr ""
 msgid "Subtotal"
 msgstr ""
 
-#: abandoned-checkouts/modules/LineItems/index.js:52
+#: abandoned-checkouts/modules/LineItems/index.js:68
 #: orders/modules/LineItems/index.js:159
 #: subscriptions/show/modules/LineItems/index.js:68
 #: sc-order.js:122
 msgid "Proration"
 msgstr ""
 
-#: abandoned-checkouts/modules/LineItems/index.js:60
+#: abandoned-checkouts/modules/LineItems/index.js:76
 #: orders/modules/LineItems/index.js:167
 #: subscriptions/show/modules/LineItems/index.js:76
 #: sc-order.js:125
@@ -4344,7 +4379,7 @@ msgstr ""
 msgid "Applied Balance"
 msgstr ""
 
-#: abandoned-checkouts/modules/LineItems/index.js:70
+#: abandoned-checkouts/modules/LineItems/index.js:86
 #: invoices/modules/LineItems.js:126
 #: orders/modules/LineItems/index.js:177
 #: subscriptions/show/modules/LineItems/index.js:92
@@ -4352,18 +4387,18 @@ msgstr ""
 msgid "Discounts"
 msgstr ""
 
-#: abandoned-checkouts/modules/LineItems/index.js:75
+#: abandoned-checkouts/modules/LineItems/index.js:91
 #: orders/modules/LineItems/index.js:182
 msgid "Coupon:"
 msgstr ""
 
-#: abandoned-checkouts/modules/LineItems/index.js:92
+#: abandoned-checkouts/modules/LineItems/index.js:108
 #: orders/modules/LineItems/index.js:199
 #: subscriptions/show/modules/LineItems/index.js:100
 msgid "Bump Discounts"
 msgstr ""
 
-#: abandoned-checkouts/modules/LineItems/index.js:102
+#: abandoned-checkouts/modules/LineItems/index.js:118
 #: invoices/modules/LineItems.js:153
 #: orders/modules/LineItems/index.js:209
 #: subscriptions/show/modules/LineItems/index.js:110
@@ -4379,20 +4414,21 @@ msgstr ""
 msgid "Metadata"
 msgstr ""
 
-#: abandoned-checkouts/modules/Schedule.js:10
+#: abandoned-checkouts/modules/Schedule.js:14
 msgid "Schedule"
 msgstr ""
 
-#: abandoned-checkouts/modules/Schedule.js:27
+#: abandoned-checkouts/modules/Schedule.js:31
 msgid "Email #%d"
 msgstr ""
 
-#: abandoned-checkouts/modules/Schedule.js:33
+#: abandoned-checkouts/modules/Schedule.js:37
 msgid "Upcoming"
 msgstr ""
 
 #: bumps/CreateBump.js:40
 #: components/Error.js:25
+#: coupons/CreateCoupon.js:65
 #: customers/CreateCustomer.js:44
 #: hooks/useDataApi/index.js:53
 #: licenses/modules/Activations/Activation.js:107
@@ -4403,7 +4439,7 @@ msgstr ""
 #: settings/tax-region/RegistrationForm.js:103
 #: settings/tax-region/RegistrationForm.js:126
 #: store/notices/reducer.js:25
-#: store/ui/reducer.js:122
+#: store/ui/reducer.js:130
 #: sc-upcoming-invoice.js:172
 msgid "Something went wrong."
 msgstr ""
@@ -4433,7 +4469,14 @@ msgstr ""
 #: components/subscriptions/Cancel.js:54
 #: components/subscriptions/CancelPendingUpdate.js:150
 #: coupons/components/DisableModal.js:30
+#: coupons/CreateCoupon.js:132
+#: coupons/EditCoupon.js:243
+#: coupons/modules/Codes/Code.js:195
+#: coupons/modules/Codes/NewPromotionCode.js:89
+#: coupons/modules/CustomerSelector.js:155
+#: coupons/modules/NewRestriction.js:185
 #: customers/CreateCustomer.js:118
+#: customers/modules/PaymentMethods/ConfirmDelete.js:71
 #: dashboard/DatePicker.js:25
 #: hocs/withConfirm.js:54
 #: orders/modules/OrderStatusConfirmModal.js:78
@@ -4444,7 +4487,7 @@ msgstr ""
 #: products/modules/Prices/NewPrice/index.js:198
 #: products/modules/Upgrades.js:130
 #: settings/processors/CreateEditPaymentMethod.js:128
-#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:92
+#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:98
 #: subscriptions/show/modules/modals/CancelUpdateModal.js:65
 #: subscriptions/show/modules/modals/RestoreSubscriptionModal.js:57
 #: subscriptions/show/modules/modals/RetryPaymentModal.js:88
@@ -4492,10 +4535,16 @@ msgstr ""
 #: components/MediaLibrary/Preview.js:167
 #: coupons/components/coupon/ActionsDropdown.js:40
 #: coupons/components/CouponActionsDropdown.js:125
-#: coupons/modules/Code.js:126
+#: coupons/EditCoupon.js:167
+#: coupons/EditCoupon.js:240
+#: coupons/modules/Codes/Code.js:161
+#: coupons/modules/Codes/Code.js:192
+#: customers/modules/PaymentMethods/Actions.js:91
+#: customers/modules/PaymentMethods/ConfirmDelete.js:68
 #: licenses/modules/Activations/Activation.js:225
 #: products/components/product/ActionsDropdown.js:40
-#: products/modules/integrations/Integration.js:210
+#: products/modules/integrations/Integration.js:172
+#: products/modules/integrations/Integration.js:273
 #: products/modules/Prices/Price/Header.js:188
 #: settings/processors/ManualPaymentMethod.js:148
 #: settings/tax-region/RegistrationForm.js:201
@@ -4550,10 +4599,11 @@ msgid "None of these items are in the cart."
 msgstr ""
 
 #: bumps/modules/Conditions.js:65
+#: coupons/modules/Restrictions.js:52
 msgid "Prices"
 msgstr ""
 
-#: bumps/modules/Conditions.js:85
+#: bumps/modules/Conditions.js:87
 msgid "Add some conditions to display this bump."
 msgstr ""
 
@@ -4599,16 +4649,6 @@ msgstr ""
 msgid "Fixed"
 msgstr ""
 
-#: bumps/modules/filters/FilterItem.js:89
-#: product-groups/modules/Product.js:76
-#: products/modules/Image.js:81
-#: products/modules/SingleDownload.js:274
-#: settings/brand/Logo.js:81
-#: Blocks/CheckoutForm/components/PriceChoice.js:82
-#: components/PriceChoice.js:116
-msgid "Remove"
-msgstr ""
-
 #: bumps/modules/Name.js:10
 msgid "Add a name"
 msgstr ""
@@ -4618,6 +4658,7 @@ msgid "Bump Name"
 msgstr ""
 
 #: bumps/modules/NewCondition.js:23
+#: coupons/modules/NewRestriction.js:27
 msgid "Are you sure you want to discard this condition?"
 msgstr ""
 
@@ -4626,14 +4667,17 @@ msgid "Choose An Item"
 msgstr ""
 
 #: bumps/modules/NewCondition.js:92
+#: coupons/modules/NewRestriction.js:100
 msgid "Select A Price"
 msgstr ""
 
 #: bumps/modules/NewCondition.js:111
+#: coupons/modules/NewRestriction.js:119
 msgid "Select A Product"
 msgstr ""
 
 #: bumps/modules/NewCondition.js:131
+#: coupons/modules/NewRestriction.js:149
 msgid "Select An Upgrade Group"
 msgstr ""
 
@@ -4690,7 +4734,7 @@ msgstr ""
 #: components/data-tables/charges-data-table/Refund.js:100
 #: components/data-tables/charges-data-table/Refund.js:143
 #: settings/customer/CustomerSettings.js:342
-#: store/add-entities.js:193
+#: store/add-entities.js:194
 msgid "Refund"
 msgstr ""
 
@@ -4702,13 +4746,6 @@ msgstr ""
 
 #: components/data-tables/charges-data-table/index.js:60
 msgid "No charges"
-msgstr ""
-
-#: components/data-tables/charges-data-table/index.js:120
-#: orders/Order.js:130
-#: subscriptions/show/modules/modals/RetryPaymentModal.js:51
-#: subscriptions/show/modules/Periods.js:194
-msgid "View Order"
 msgstr ""
 
 #: components/data-tables/charges-data-table/Refund.js:51
@@ -4753,6 +4790,7 @@ msgstr ""
 #: components/data-tables/subscriptions-data-table/index.js:23
 #: customers/modules/Charges.js:89
 #: customers/modules/Orders.js:81
+#: customers/modules/PaymentMethods/index.js:47
 #: customers/modules/Subscriptions.js:80
 msgid "None found."
 msgstr ""
@@ -4908,6 +4946,20 @@ msgstr ""
 msgid "Choose"
 msgstr ""
 
+#: components/filters/FilterItem.js:89
+#: product-groups/modules/Product.js:76
+#: products/modules/Image.js:81
+#: products/modules/SingleDownload.js:274
+#: settings/brand/Logo.js:81
+#: Blocks/CheckoutForm/components/PriceChoice.js:82
+#: components/PriceChoice.js:116
+msgid "Remove"
+msgstr ""
+
+#: components/filters/product/ProductFilter.js:33
+msgid "Any price"
+msgstr ""
+
 #: components/MediaLibrary/DownloadMedia.js:24
 #: products/modules/SingleDownload.js:124
 #: sc-downloads-list.js:34
@@ -4976,7 +5028,7 @@ msgstr ""
 
 #: components/MediaLibrary/Preview.js:156
 #: products/modules/SingleDownload.js:260
-#: store/add-entities.js:59
+#: store/add-entities.js:60
 #: Controllers/DownloadController.php:110
 #: sc-downloads-list.js:72
 msgid "Download"
@@ -5061,6 +5113,14 @@ msgstr ""
 msgid "You have unsaved changes. If you proceed, they will be lost."
 msgstr ""
 
+#: components/UpgradeModal.js:25
+msgid "Unlock revenue boosting features when you upgrade your plan!"
+msgstr ""
+
+#: components/UpgradeModal.js:39
+msgid "Upgrade Your Plan"
+msgstr ""
+
 #: components/UserSelect.js:57
 msgid "Select a user"
 msgstr ""
@@ -5095,56 +5155,128 @@ msgstr ""
 msgid "Disable"
 msgstr ""
 
-#: coupons/Coupons.js:68
-msgid "Edit Coupon"
+#: coupons/CreateCoupon.js:60
+msgid "Coupon created."
 msgstr ""
 
-#: coupons/Coupons.js:69
-msgid "New Coupon"
+#: coupons/CreateCoupon.js:80
+msgid "Create New Coupon"
 msgstr ""
 
-#: coupons/Coupons.js:164
-msgid "Are you sure you want to delete this Coupon code?"
+#: coupons/CreateCoupon.js:88
+#: coupons/modules/Name.js:10
+msgid "Coupon Name"
 msgstr ""
 
-#: coupons/Coupons.js:182
-msgid "Back to All Coupons"
+#: coupons/CreateCoupon.js:89
+#: coupons/modules/Name.js:13
+msgid "This is an internal name for your coupon. This is not visible to customers."
 msgstr ""
 
-#: coupons/Coupons.js:221
-msgid "Update Coupon"
+#: coupons/CreateCoupon.js:103
+msgid "Promotion Code"
 msgstr ""
 
-#: coupons/Coupons.js:222
-msgid "Create Coupon"
-msgstr ""
-
-#: coupons/modules/Code.js:41
-msgid "Are you sure you want to delete this promotion code?"
-msgstr ""
-
-#: coupons/modules/Code.js:75
-msgid "Customers will enter this discount code at checkout."
-msgstr ""
-
-#: coupons/modules/Code.js:79
+#: coupons/CreateCoupon.js:108
+#: coupons/modules/Codes/Code.js:116
+#: coupons/modules/Codes/NewPromotionCode.js:74
 msgid "Customers will enter this discount code at checkout. Leave this blank and we will generate one for you."
 msgstr ""
 
-#: coupons/modules/Codes.js:65
+#: coupons/CreateCoupon.js:129
+msgid "Create Coupon"
+msgstr ""
+
+#: coupons/EditCoupon.js:90
+#: coupons/modules/Codes/Code.js:36
+#: store/data/actions.js:160
+msgid "Deleted."
+msgstr ""
+
+#: coupons/EditCoupon.js:106
+msgid "Coupon updated."
+msgstr ""
+
+#: coupons/EditCoupon.js:139
+msgid "Edit Coupon"
+msgstr ""
+
+#: coupons/EditCoupon.js:173
+msgid "Update Coupon"
+msgstr ""
+
+#: coupons/EditCoupon.js:221
+msgid "Delete this coupon?"
+msgstr ""
+
+#: coupons/EditCoupon.js:229
+msgid "Are you sure you want to delete this coupon?"
+msgstr ""
+
+#: coupons/modules/Codes/Code.js:56
+msgid "Archived."
+msgstr ""
+
+#: coupons/modules/Codes/Code.js:57
+msgid "Restored."
+msgstr ""
+
+#: coupons/modules/Codes/Code.js:112
+msgid "Customers will enter this discount code at checkout."
+msgstr ""
+
+#: coupons/modules/Codes/Code.js:173
+msgid "Delete this promotion code?"
+msgstr ""
+
+#: coupons/modules/Codes/Code.js:181
+msgid "Are you sure you want to delete this promotion code?"
+msgstr ""
+
+#: coupons/modules/Codes/index.js:51
 msgid "Promotion Codes"
 msgstr ""
 
-#: coupons/modules/Codes.js:94
-msgid "Add Another Promotion Code"
+#: coupons/modules/Codes/index.js:58
+msgid "Add Promotion Code"
 msgstr ""
 
-#: coupons/modules/Codes.js:113
+#: coupons/modules/Codes/index.js:71
 msgid "Show %d Archived Promotion Codes"
 msgstr ""
 
-#: coupons/modules/Codes.js:117
+#: coupons/modules/Codes/index.js:75
 msgid "Hide %d Archived Promotion Codes"
+msgstr ""
+
+#: coupons/modules/Codes/NewPromotionCode.js:36
+msgid "Promotion created."
+msgstr ""
+
+#: coupons/modules/Codes/NewPromotionCode.js:56
+msgid "New Promotion Code"
+msgstr ""
+
+#: coupons/modules/CustomerSelector.js:51
+msgid "Customer created."
+msgstr ""
+
+#: coupons/modules/CustomerSelector.js:96
+msgid "Add Customer"
+msgstr ""
+
+#: coupons/modules/CustomerSelector.js:113
+#: Blocks/Dashboard/WordPressAccount/edit.js:60
+#: sc-wordpress-user-edit.js:56
+#: sc-wordpress-user.js:25
+msgid "First Name"
+msgstr ""
+
+#: coupons/modules/CustomerSelector.js:123
+#: Blocks/Dashboard/WordPressAccount/edit.js:65
+#: sc-wordpress-user-edit.js:56
+#: sc-wordpress-user.js:25
+msgid "Last Name"
 msgstr ""
 
 #: coupons/modules/Limits.js:12
@@ -5179,12 +5311,45 @@ msgstr ""
 msgid "This limit applies across customers so it won't prevent a single customer from redeeming multiple times."
 msgstr ""
 
-#: coupons/modules/Name.js:35
-msgid "Coupon Name"
+#: coupons/modules/NewRestriction.js:46
+#: coupons/modules/Restrictions.js:31
+msgid "Add A Restriction"
 msgstr ""
 
-#: coupons/modules/Name.js:41
-msgid "This is an internal name for your coupon. This is not visible to customers."
+#: coupons/modules/NewRestriction.js:78
+msgid "Coupon is valid for"
+msgstr ""
+
+#: coupons/modules/NewRestriction.js:139
+msgid "Select A Customer"
+msgstr ""
+
+#: coupons/modules/NewRestriction.js:182
+msgid "Add Filter"
+msgstr ""
+
+#: coupons/modules/Restrictions.js:25
+msgid "Restrictions"
+msgstr ""
+
+#: coupons/modules/Restrictions.js:44
+msgid "Restrict this coupon"
+msgstr ""
+
+#: coupons/modules/Restrictions.js:73
+msgid "Allow Coupon"
+msgstr ""
+
+#: coupons/modules/Restrictions.js:78
+msgid "If all of these conditions are true"
+msgstr ""
+
+#: coupons/modules/Restrictions.js:85
+msgid "If any of these conditions are true"
+msgstr ""
+
+#: coupons/modules/Restrictions.js:92
+msgid "If none of these conditions are true"
 msgstr ""
 
 #: coupons/modules/Types.js:35
@@ -5278,15 +5443,15 @@ msgstr ""
 msgid "Create this customer in test mode if you are going to use this account for test mode purchasing."
 msgstr ""
 
-#: customers/EditCustomer.js:47
+#: customers/EditCustomer.js:48
 msgid "Customer updated."
 msgstr ""
 
-#: customers/EditCustomer.js:85
+#: customers/EditCustomer.js:86
 msgid "Edit Customer"
 msgstr ""
 
-#: customers/EditCustomer.js:96
+#: customers/EditCustomer.js:97
 msgid "Save Customer"
 msgstr ""
 
@@ -5361,10 +5526,52 @@ msgstr ""
 msgid "No more orders."
 msgstr ""
 
+#: customers/modules/PaymentMethods/Actions.js:44
+msgid "This will save any changes on the page. Do you want to save your changes?"
+msgstr ""
+
+#: customers/modules/PaymentMethods/Actions.js:62
+msgid "Default payment method changed."
+msgstr ""
+
+#: customers/modules/PaymentMethods/Actions.js:87
+#: sc-payment-methods-list.js:129
+msgid "Make Default"
+msgstr ""
+
+#: customers/modules/PaymentMethods/ConfirmDelete.js:27
+#: settings/processors/ManualPaymentMethod.js:44
+msgid "Payment method deleted."
+msgstr ""
+
+#: customers/modules/PaymentMethods/ConfirmDelete.js:41
+msgid "Delete this payment method?"
+msgstr ""
+
+#: customers/modules/PaymentMethods/ConfirmDelete.js:50
+#: settings/processors/ManualPaymentMethod.js:29
+msgid "Are you sure you want to delete this payment method?"
+msgstr ""
+
+#: customers/modules/PaymentMethods/index.js:46
+#: sc-payment-methods-list.js:146
+msgid "Payment Methods"
+msgstr ""
+
+#: customers/modules/PaymentMethods/index.js:66
+#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:72
+#: subscriptions/edit/modules/PaymentMethod/index.js:65
+#: Blocks/Dashboard/CustomerPaymentMethods/edit.js:78
+#: Blocks/Dashboard/CustomerPaymentMethods/edit.js:117
+#: sc-payment-methods-list.js:127
+#: sc-subscription-payment-method.js:143
+msgid "Exp."
+msgstr ""
+
 #: customers/modules/Purchases.js:38
 #: invoices/modules/Purchases.js:31
 #: orders/modules/Purchases.js:43
-#: products/modules/integrations/SelectIntegration.js:97
+#: products/modules/integrations/SelectIntegration.js:95
 #: subscriptions/show/modules/Purchases.js:38
 msgid "Item"
 msgstr ""
@@ -5546,7 +5753,7 @@ msgstr ""
 #: invoices/modules/Charges.js:13
 #: invoices/store/entities.js:54
 #: orders/modules/Charges.js:60
-#: store/add-entities.js:31
+#: store/add-entities.js:32
 msgid "Charge"
 msgstr ""
 
@@ -5579,7 +5786,7 @@ msgstr ""
 #: invoices/Sidebar.js:15
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:60
 #: sc-customer-edit.js:88
-#: sc-order-shipping-address2.js:81
+#: sc-order-shipping-address2.js:87
 msgid "Shipping Address"
 msgstr ""
 
@@ -5626,7 +5833,7 @@ msgstr ""
 
 #: licenses/modules/Activations/Activation.js:181
 #: settings/processors/CreateEditPaymentMethod.js:124
-#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:89
+#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:95
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:44
 #: Blocks/Dashboard/WordPressAccount/edit.js:44
 #: sc-donation-choices.js:124
@@ -5654,7 +5861,7 @@ msgid "%1s of %2s Activations Used"
 msgstr ""
 
 #: licenses/modules/Details/index.js:28
-#: store/add-entities.js:95
+#: store/add-entities.js:96
 msgid "License"
 msgstr ""
 
@@ -5787,19 +5994,19 @@ msgstr ""
 msgid "A name for your product group. It is not shown to customers."
 msgstr ""
 
-#: product-groups/EditProductGroup.js:38
+#: product-groups/EditProductGroup.js:35
 msgid "Product group updated."
 msgstr ""
 
-#: product-groups/EditProductGroup.js:61
+#: product-groups/EditProductGroup.js:58
 msgid "Save Group"
 msgstr ""
 
-#: product-groups/EditProductGroup.js:89
+#: product-groups/EditProductGroup.js:86
 msgid "Product Groups"
 msgstr ""
 
-#: product-groups/EditProductGroup.js:93
+#: product-groups/EditProductGroup.js:90
 msgid "Edit Product Group"
 msgstr ""
 
@@ -5847,6 +6054,7 @@ msgid "Number of Payments"
 msgstr ""
 
 #: products/components/price/Multiple.js:37
+#: subscriptions/show/modules/Details.js:107
 msgid "Payments"
 msgstr ""
 
@@ -5902,11 +6110,17 @@ msgstr ""
 msgid "Tax is included"
 msgstr ""
 
-#: products/components/price/parts/Trial.js:7
+#: products/components/price/parts/Trial.js:14
+#: products/components/price/parts/Trial.js:40
 msgid "Free Trial Days"
 msgstr ""
 
-#: products/components/price/parts/Trial.js:19
+#: products/components/price/parts/Trial.js:16
+msgid "Premium"
+msgstr ""
+
+#: products/components/price/parts/Trial.js:32
+#: products/components/price/parts/Trial.js:52
 #: settings/abandoned/AbandonedSettings.js:244
 #: settings/abandoned/Delay.js:19
 msgid "Days"
@@ -5995,24 +6209,29 @@ msgstr ""
 msgid "Product Image"
 msgstr ""
 
-#: products/modules/integrations/Integration.js:66
+#: products/modules/integrations/Integration.js:70
 msgid "Are you sure you want to remove this integration? This will affect existing customers who have purchased this product."
 msgstr ""
 
-#: products/modules/integrations/Integration.js:74
+#: products/modules/integrations/Integration.js:78
 msgid "Integration deleted."
 msgstr ""
 
-#: products/modules/integrations/Integration.js:79
+#: products/modules/integrations/Integration.js:83
 msgid "An error occurred"
 msgstr ""
 
-#: products/modules/integrations/Integration.js:104
-msgid "Not found"
+#: products/modules/integrations/Integration.js:153
+msgid "%s not found"
 msgstr ""
 
-#: products/modules/integrations/Integration.js:107
+#: products/modules/integrations/Integration.js:156
 msgid "The provider is not installed or unavailable."
+msgstr ""
+
+#: products/modules/integrations/Integration.js:163
+#: Blocks/Coupon/edit.js:38
+msgid "Disabled"
 msgstr ""
 
 #: products/modules/integrations/IntegrationHelp.js:50
@@ -6056,22 +6275,22 @@ msgstr ""
 msgid "Add Integration"
 msgstr ""
 
-#: products/modules/integrations/SelectIntegration.js:69
+#: products/modules/integrations/SelectIntegration.js:67
 msgid "A product purchase will be automatically synced with this item."
 msgstr ""
 
-#: products/modules/integrations/SelectIntegration.js:76
-#: store/add-entities.js:66
+#: products/modules/integrations/SelectIntegration.js:74
+#: store/add-entities.js:67
 #: store/integration/register/index.js:9
 #: store/integration/register/index.js:16
 msgid "Integration"
 msgstr ""
 
-#: products/modules/integrations/SelectIntegration.js:78
+#: products/modules/integrations/SelectIntegration.js:76
 msgid "Select An Integration"
 msgstr ""
 
-#: products/modules/integrations/SelectIntegration.js:102
+#: products/modules/integrations/SelectIntegration.js:100
 msgid "Select an Item"
 msgstr ""
 
@@ -7051,14 +7270,6 @@ msgstr ""
 msgid "Instructions on how to pay."
 msgstr ""
 
-#: settings/processors/ManualPaymentMethod.js:29
-msgid "Are you sure you want to delete this payment method?"
-msgstr ""
-
-#: settings/processors/ManualPaymentMethod.js:44
-msgid "Payment method deleted."
-msgstr ""
-
 #: settings/processors/ManualPaymentMethod.js:72
 msgid "Payment method disabled."
 msgstr ""
@@ -7214,7 +7425,7 @@ msgstr ""
 #: settings/tax-region/RegistrationForm.js:21
 #: settings/tax-region/RegistrationForm.js:22
 #: settings/tax-region/TaxRegionSettings.js:197
-#: Blocks/Address/edit.js:140
+#: Blocks/Address/edit.js:155
 #: sc-address2.js:106
 #: sc-order-shipping-address2.js:29
 #: sc-order-shipping-address2.js:38
@@ -7424,73 +7635,68 @@ msgstr ""
 msgid "Enter your license key"
 msgstr ""
 
-#: store/add-entities.js:9
+#: store/add-entities.js:10
 msgid "Store"
 msgstr ""
 
-#: store/add-entities.js:17
+#: store/add-entities.js:18
 msgid "Activation"
 msgstr ""
 
-#: store/add-entities.js:24
+#: store/add-entities.js:25
 msgid "Bump"
 msgstr ""
 
-#: store/add-entities.js:45
+#: store/add-entities.js:46
 msgid "Coupon"
 msgstr ""
 
-#: store/add-entities.js:74
+#: store/add-entities.js:75
 msgid "Integration Provider"
 msgstr ""
 
-#: store/add-entities.js:81
+#: store/add-entities.js:82
 #: store/integration/register/index.js:31
 msgid "Integration Provider Items"
 msgstr ""
 
-#: store/add-entities.js:102
+#: store/add-entities.js:103
 msgid "Media"
 msgstr ""
 
-#: store/add-entities.js:123
+#: store/add-entities.js:124
 msgid "Payment Intent"
 msgstr ""
 
-#: store/add-entities.js:130
-#: subscriptions/edit/modules/PaymentMethod/index.js:34
-#: subscriptions/edit/modules/PaymentMethod/index.js:37
+#: store/add-entities.js:131
+#: subscriptions/edit/modules/PaymentMethod/index.js:52
 #: Controllers/SubscriptionController.php:526
 #: sc-order.js:143
 msgid "Payment Method"
 msgstr ""
 
-#: store/add-entities.js:137
+#: store/add-entities.js:138
 msgid "Manual Payment Method"
 msgstr ""
 
-#: store/add-entities.js:144
+#: store/add-entities.js:145
 msgid "Billing Period"
 msgstr ""
 
-#: store/add-entities.js:158
+#: store/add-entities.js:159
 msgid "Processor"
 msgstr ""
 
-#: store/add-entities.js:165
+#: store/add-entities.js:166
 msgid "Product Group"
 msgstr ""
 
-#: store/add-entities.js:179
+#: store/add-entities.js:180
 msgid "Promotion"
 msgstr ""
 
-#: store/add-entities.js:200
+#: store/add-entities.js:201
 msgid "Statistic"
-msgstr ""
-
-#: store/data/actions.js:160
-msgid "Deleted."
 msgstr ""
 
 #: store/data/actions.js:227
@@ -7503,30 +7709,30 @@ msgstr ""
 msgid "Integration Providers"
 msgstr ""
 
-#: subscriptions/edit/EditSubscription.js:82
+#: subscriptions/edit/EditSubscription.js:112
 msgid "Subscription updated."
 msgstr ""
 
-#: subscriptions/edit/EditSubscription.js:191
+#: subscriptions/edit/EditSubscription.js:223
 #: subscriptions/show/modules/SubscriptionItems.js:39
 #: subscriptions/show/ShowSubscription.js:174
 msgid "Subscription Details"
 msgstr ""
 
-#: subscriptions/edit/EditSubscription.js:211
+#: subscriptions/edit/EditSubscription.js:243
 msgid "Update Immediately"
 msgstr ""
 
-#: subscriptions/edit/EditSubscription.js:219
+#: subscriptions/edit/EditSubscription.js:251
 #: subscriptions/show/ShowSubscription.js:139
 msgid "Update Subscription"
 msgstr ""
 
-#: subscriptions/edit/EditSubscription.js:220
+#: subscriptions/edit/EditSubscription.js:252
 msgid "Schedule Update"
 msgstr ""
 
-#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:53
+#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:57
 #: Controllers/SubscriptionController.php:193
 #: sc-subscription-payment-method.js:131
 #: sc-subscription-payment-method.js:150
@@ -7534,7 +7740,7 @@ msgstr ""
 msgid "Update Payment Method"
 msgstr ""
 
-#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:68
+#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:82
 msgid "Current"
 msgstr ""
 
@@ -7623,8 +7829,12 @@ msgid "Trial ends on"
 msgstr ""
 
 #: subscriptions/shared/EndDate.js:76
-#: subscriptions/show/modules/Details.js:87
+#: subscriptions/show/modules/Details.js:88
 msgid "Renews on"
+msgstr ""
+
+#: subscriptions/show/modules/Details.js:110
+msgid "%d Remaining"
 msgstr ""
 
 #: subscriptions/show/modules/LineItems/index.js:21
@@ -7809,271 +8019,271 @@ msgstr ""
 msgid "Plans"
 msgstr ""
 
-#: Blocks/Form/Block.php:90
+#: Blocks/Form/Block.php:91
 msgid "The email address provided for the creation of a deferred account already has an account associated with it. Use the OAuth flow to connect the existing account to your platform."
 msgstr ""
 
-#: Blocks/Form/Block.php:91
+#: Blocks/Form/Block.php:92
 msgid "The country of the business address provided does not match the country of the account. Businesses must be located in the same country as the account."
 msgstr ""
 
-#: Blocks/Form/Block.php:92
+#: Blocks/Form/Block.php:93
 msgid "The account ID provided as a value for the Stripe-Account header is invalid. Check that your requests are specifying a valid account ID."
 msgstr ""
 
-#: Blocks/Form/Block.php:93
+#: Blocks/Form/Block.php:94
 msgid "The bank account number provided is invalid (e.g., missing digits). Bank account information varies from country to country. We recommend creating validations in your entry forms based on the bank account formats we provide."
 msgstr ""
 
-#: Blocks/Form/Block.php:94
+#: Blocks/Form/Block.php:95
 msgid "This method for creating Alipay payments is not supported anymore. Please upgrade your integration to use Sources instead."
 msgstr ""
 
-#: Blocks/Form/Block.php:95
+#: Blocks/Form/Block.php:96
 msgid "The specified amount is greater than the maximum amount allowed. Use a lower amount and try again."
 msgstr ""
 
-#: Blocks/Form/Block.php:96
+#: Blocks/Form/Block.php:97
 msgid "The specified amount is less than the minimum amount allowed. Use a higher amount and try again."
 msgstr ""
 
-#: Blocks/Form/Block.php:97
+#: Blocks/Form/Block.php:98
 msgid "The API key provided has expired. Obtain your current API keys from the Dashboard and update your integration to use them."
 msgstr ""
 
-#: Blocks/Form/Block.php:98
+#: Blocks/Form/Block.php:99
 msgid "The transfer or payout could not be completed because the associated account does not have a sufficient balance available. Create a new transfer or payout using an amount less than or equal to the account’s available balance."
 msgstr ""
 
-#: Blocks/Form/Block.php:99
+#: Blocks/Form/Block.php:100
 msgid "The bank account provided already exists on the specified Customer object. If the bank account should also be attached to a different customer, include the correct customer ID when making the request again."
 msgstr ""
 
-#: Blocks/Form/Block.php:100
+#: Blocks/Form/Block.php:101
 msgid "The bank account provided cannot be used for payouts. A different bank account must be used."
 msgstr ""
 
-#: Blocks/Form/Block.php:101
+#: Blocks/Form/Block.php:102
 msgid "Your Connect platform is attempting to share an unverified bank account with a connected account."
 msgstr ""
 
-#: Blocks/Form/Block.php:102
+#: Blocks/Form/Block.php:103
 msgid "This method for creating Bitcoin payments is not supported anymore. Please upgrade your integration to use Sources instead."
 msgstr ""
 
-#: Blocks/Form/Block.php:103
+#: Blocks/Form/Block.php:104
 msgid "The card has been declined. When a card is declined, the error returned also includes the decline_code attribute with the reason why the card was declined. Refer to our decline codes documentation to learn more."
 msgstr ""
 
-#: Blocks/Form/Block.php:104
+#: Blocks/Form/Block.php:105
 msgid "The charge you’re attempting to capture has already been captured. Update the request with an uncaptured charge ID."
 msgstr ""
 
-#: Blocks/Form/Block.php:105
+#: Blocks/Form/Block.php:106
 msgid "The charge you’re attempting to refund has already been refunded. Update the request to use the ID of a charge that has not been refunded."
 msgstr ""
 
-#: Blocks/Form/Block.php:106
+#: Blocks/Form/Block.php:107
 msgid "The charge you’re attempting to refund has been charged back. Check the disputes documentation to learn how to respond to the dispute."
 msgstr ""
 
-#: Blocks/Form/Block.php:107
+#: Blocks/Form/Block.php:108
 msgid "This charge would cause you to exceed your rolling-window processing limit for this source type. Please retry the charge later, or contact us to request a higher processing limit."
 msgstr ""
 
-#: Blocks/Form/Block.php:108
+#: Blocks/Form/Block.php:109
 msgid "The charge cannot be captured as the authorization has expired. Auth and capture charges must be captured within seven days."
 msgstr ""
 
-#: Blocks/Form/Block.php:109
+#: Blocks/Form/Block.php:110
 msgid "Your platform attempted to create a custom account in a country that is not yet supported. Make sure that users can only sign up in countries supported by custom accounts."
 msgstr ""
 
-#: Blocks/Form/Block.php:110
+#: Blocks/Form/Block.php:111
 msgid "The coupon provided for a subscription or order has expired. Either create a new coupon, or use an existing one that is valid."
 msgstr ""
 
-#: Blocks/Form/Block.php:111
+#: Blocks/Form/Block.php:112
 msgid "The maximum number of subscriptions for a customer has been reached. Contact us if you are receiving this error."
 msgstr ""
 
-#: Blocks/Form/Block.php:112
+#: Blocks/Form/Block.php:113
 msgid "The email address is invalid (e.g., not properly formatted). Check that the email address is properly formatted and only includes allowed characters."
 msgstr ""
 
-#: Blocks/Form/Block.php:113
+#: Blocks/Form/Block.php:114
 msgid "The card has expired. Check the expiration date or use a different card."
 msgstr ""
 
-#: Blocks/Form/Block.php:114
+#: Blocks/Form/Block.php:115
 msgid "The idempotency key provided is currently being used in another request. This occurs if your integration is making duplicate requests simultaneously."
 msgstr ""
 
-#: Blocks/Form/Block.php:115
+#: Blocks/Form/Block.php:116
 msgid "The card’s address is incorrect. Check the card’s address or use a different card."
 msgstr ""
 
-#: Blocks/Form/Block.php:116
+#: Blocks/Form/Block.php:117
 msgid "The card’s security code is incorrect. Check the card’s security code or use a different card."
 msgstr ""
 
-#: Blocks/Form/Block.php:117
+#: Blocks/Form/Block.php:118
 msgid "The card number is incorrect. Check the card’s number or use a different card."
 msgstr ""
 
-#: Blocks/Form/Block.php:118
+#: Blocks/Form/Block.php:119
 msgid "The card’s postal code is incorrect. Check the card’s postal code or use a different card."
 msgstr ""
 
-#: Blocks/Form/Block.php:119
+#: Blocks/Form/Block.php:120
 msgid "The debit card provided as an external account does not support instant payouts. Provide another debit card or use a bank account instead."
 msgstr ""
 
-#: Blocks/Form/Block.php:120
+#: Blocks/Form/Block.php:121
 msgid "The card provided as an external account is not a debit card. Provide a debit card or use a bank account instead."
 msgstr ""
 
-#: Blocks/Form/Block.php:121
+#: Blocks/Form/Block.php:122
 msgid "The specified amount is invalid. The charge amount must be a positive integer in the smallest currency unit, and not exceed the minimum or maximum amount."
 msgstr ""
 
-#: Blocks/Form/Block.php:122
+#: Blocks/Form/Block.php:123
 msgid "The card’s security code is invalid. Check the card’s security code or use a different card."
 msgstr ""
 
-#: Blocks/Form/Block.php:123
+#: Blocks/Form/Block.php:124
 msgid "The card’s expiration month is incorrect. Check the expiration date or use a different card."
 msgstr ""
 
-#: Blocks/Form/Block.php:124
+#: Blocks/Form/Block.php:125
 msgid "The card’s expiration year is incorrect. Check the expiration date or use a different card."
 msgstr ""
 
-#: Blocks/Form/Block.php:125
+#: Blocks/Form/Block.php:126
 msgid "The card number is invalid. Check the card details or use a different card."
 msgstr ""
 
-#: Blocks/Form/Block.php:126
+#: Blocks/Form/Block.php:127
 msgid "The source cannot be used because it is not in the correct state (e.g., a charge request is trying to use a source with a pending, failed, or consumed source). Check the status of the source you are attempting to use."
 msgstr ""
 
-#: Blocks/Form/Block.php:127
+#: Blocks/Form/Block.php:128
 msgid "An invoice cannot be generated for the specified customer as there are no pending invoice items. Check that the correct customer is being specified or create any necessary invoice items first."
 msgstr ""
 
-#: Blocks/Form/Block.php:128
+#: Blocks/Form/Block.php:129
 msgid "An invoice cannot be generated for the specified subscription as there are no pending invoice items. Check that the correct subscription is being specified or create any necessary invoice items first."
 msgstr ""
 
-#: Blocks/Form/Block.php:129
+#: Blocks/Form/Block.php:130
 msgid "The specified invoice can no longer be edited. Instead, consider creating additional invoice items that will be applied to the next invoice. You can either manually generate the next invoice or wait for it to be automatically generated at the end of the billing cycle."
 msgstr ""
 
-#: Blocks/Form/Block.php:130
+#: Blocks/Form/Block.php:131
 msgid "There is no upcoming invoice on the specified customer to preview. Only customers with active subscriptions or pending invoice items have invoices that can be previewed."
 msgstr ""
 
-#: Blocks/Form/Block.php:131
+#: Blocks/Form/Block.php:132
 msgid "Test and live mode API keys, requests, and objects are only available within the mode they are in."
 msgstr ""
 
-#: Blocks/Form/Block.php:132
+#: Blocks/Form/Block.php:133
 msgid "Both a customer and source ID have been provided, but the source has not been saved to the customer. To create a charge for a customer with a specified source, you must first save the card details."
 msgstr ""
 
-#: Blocks/Form/Block.php:133
+#: Blocks/Form/Block.php:134
 msgid "Transfers and payouts on behalf of a Standard connected account are not allowed."
 msgstr ""
 
-#: Blocks/Form/Block.php:134
+#: Blocks/Form/Block.php:135
 msgid "The order could not be created. Check the order details and then try again."
 msgstr ""
 
-#: Blocks/Form/Block.php:135
+#: Blocks/Form/Block.php:136
 msgid "The order could not be processed as it is missing required information. Check the information provided and try again."
 msgstr ""
 
-#: Blocks/Form/Block.php:136
+#: Blocks/Form/Block.php:137
 msgid "The order cannot be updated because the status provided is either invalid or does not follow the order lifecycle (e.g., an order cannot transition from created to fulfilled without first transitioning to paid)."
 msgstr ""
 
-#: Blocks/Form/Block.php:137
+#: Blocks/Form/Block.php:138
 msgid "The request timed out. Try again later."
 msgstr ""
 
-#: Blocks/Form/Block.php:138
+#: Blocks/Form/Block.php:139
 msgid "The SKU is out of stock. If more stock is available, update the SKU’s inventory quantity and try again."
 msgstr ""
 
-#: Blocks/Form/Block.php:139
+#: Blocks/Form/Block.php:140
 msgid "One or more required values were not provided. Make sure requests include all required parameters."
 msgstr ""
 
-#: Blocks/Form/Block.php:140
+#: Blocks/Form/Block.php:141
 msgid "One or more of the parameters requires an integer, but the values provided were a different type. Make sure that only supported values are provided for each attribute. Refer to our API documentation to look up the type of data each attribute supports."
 msgstr ""
 
-#: Blocks/Form/Block.php:141
+#: Blocks/Form/Block.php:142
 msgid "One or more values provided only included whitespace. Check the values in your request and update any that contain only whitespace."
 msgstr ""
 
-#: Blocks/Form/Block.php:142
+#: Blocks/Form/Block.php:143
 msgid "One or more required string values is empty. Make sure that string values contain at least one character."
 msgstr ""
 
-#: Blocks/Form/Block.php:143
+#: Blocks/Form/Block.php:144
 msgid "One or more required values are missing. Check our API documentation to see which values are required to create or modify the specified resource."
 msgstr ""
 
-#: Blocks/Form/Block.php:144
+#: Blocks/Form/Block.php:145
 msgid "The request contains one or more unexpected parameters. Remove these and try again."
 msgstr ""
 
-#: Blocks/Form/Block.php:145
+#: Blocks/Form/Block.php:146
 msgid "Two or more mutually exclusive parameters were provided. Check our API documentation or the returned error message to see which values are permitted when creating or modifying the specified resource."
 msgstr ""
 
-#: Blocks/Form/Block.php:146
+#: Blocks/Form/Block.php:147
 msgid "The provided source has failed authentication. Provide source_data or a new source to attempt to fulfill this PaymentIntent again."
 msgstr ""
 
-#: Blocks/Form/Block.php:147
+#: Blocks/Form/Block.php:148
 msgid "The PaymentIntent expected a payment method with different properties than what was provided."
 msgstr ""
 
-#: Blocks/Form/Block.php:148
+#: Blocks/Form/Block.php:149
 msgid "One or more provided parameters was not allowed for the given operation on the PaymentIntent. Check our API reference or the returned error message to see which values were not correct for that PaymentIntent."
 msgstr ""
 
-#: Blocks/Form/Block.php:149
+#: Blocks/Form/Block.php:150
 msgid "The latest payment attempt for the PaymentIntent has failed. Check the last_payment_error property on the PaymentIntent for more details, and provide source_data or a new source to attempt to fulfill this PaymentIntent again."
 msgstr ""
 
-#: Blocks/Form/Block.php:150
+#: Blocks/Form/Block.php:151
 msgid "The PaymentIntent’s state was incompatible with the operation you were trying to perform."
 msgstr ""
 
-#: Blocks/Form/Block.php:151
+#: Blocks/Form/Block.php:152
 msgid "The charge cannot be created as the payment method used has not been activated. Activate the payment method in the Dashboard, then try again."
 msgstr ""
 
-#: Blocks/Form/Block.php:152
+#: Blocks/Form/Block.php:153
 msgid "The provided payment method’s state was incompatible with the operation you were trying to perform. Confirm that the payment method is in an allowed state for the given operation before attempting to perform it."
 msgstr ""
 
-#: Blocks/Form/Block.php:153
+#: Blocks/Form/Block.php:154
 msgid "Payouts have been disabled on the connected account. Check the connected account’s status to see if any additional information needs to be provided, or if payouts have been disabled for another reason."
 msgstr ""
 
-#: Blocks/Form/Block.php:154
+#: Blocks/Form/Block.php:155
 msgid "The API key provided by your Connect platform has expired. This occurs if your platform has either generated a new key or the connected account has been disconnected from the platform. Obtain your current API keys from the Dashboard and update your integration, or reach out to the user and reconnect the account."
 msgstr ""
 
-#: Blocks/Form/Block.php:155
+#: Blocks/Form/Block.php:156
 msgid "The postal code provided was incorrect."
 msgstr ""
 
-#: Blocks/Form/Block.php:156
+#: Blocks/Form/Block.php:157
 msgid "An error occurred while processing the card. Check the card details are correct or use a different card."
 msgstr ""
 
@@ -8230,7 +8440,7 @@ msgstr ""
 msgid "Update Password"
 msgstr ""
 
-#: Blocks/Address/edit.js:38
+#: Blocks/Address/edit.js:39
 #: Blocks/AddToCartButton/edit.js:65
 #: Blocks/BumpLineItem/edit.js:13
 #: Blocks/BuyButton/edit.js:81
@@ -8285,7 +8495,23 @@ msgstr ""
 msgid "Attributes"
 msgstr ""
 
-#: Blocks/Address/edit.js:41
+#: Blocks/Address/edit.js:42
+#: Blocks/Checkbox/edit.js:31
+#: Blocks/Input/edit.js:28
+#: Blocks/Name/edit.js:29
+#: Blocks/NameYourPrice/edit.js:42
+#: Blocks/Password/edit.js:37
+#: Blocks/RadioGroup/edit.js:72
+#: Blocks/Switch/edit.js:29
+#: Blocks/Textarea/edit.js:28
+msgid "Required"
+msgstr ""
+
+#: Blocks/Address/edit.js:47
+msgid "If tax or shipping is required for checkout the address field will automatically be required."
+msgstr ""
+
+#: Blocks/Address/edit.js:56
 #: Blocks/BumpLineItem/edit.js:16
 #: Blocks/CartBumpLineItem/edit.js:33
 #: Blocks/CartSubtotal/edit.js:33
@@ -8312,43 +8538,43 @@ msgstr ""
 msgid "Label"
 msgstr ""
 
-#: Blocks/Address/edit.js:48
+#: Blocks/Address/edit.js:63
 msgid "Use a compact address if possible"
 msgstr ""
 
-#: Blocks/Address/edit.js:59
+#: Blocks/Address/edit.js:74
 msgid "If products in the cart require tax but not shipping, we will show a condensed version specifically for tax collection."
 msgstr ""
 
-#: Blocks/Address/edit.js:68
+#: Blocks/Address/edit.js:83
 msgid "Show the \"name or company name\" field in the form."
 msgstr ""
 
-#: Blocks/Address/edit.js:82
+#: Blocks/Address/edit.js:97
 msgid "Name Placeholder"
 msgstr ""
 
-#: Blocks/Address/edit.js:92
+#: Blocks/Address/edit.js:107
 msgid "Country Placeholder"
 msgstr ""
 
-#: Blocks/Address/edit.js:101
+#: Blocks/Address/edit.js:116
 msgid "City Placeholder"
 msgstr ""
 
-#: Blocks/Address/edit.js:110
+#: Blocks/Address/edit.js:125
 msgid "Address Placeholder"
 msgstr ""
 
-#: Blocks/Address/edit.js:119
+#: Blocks/Address/edit.js:134
 msgid "Postal Code Placeholder"
 msgstr ""
 
-#: Blocks/Address/edit.js:128
+#: Blocks/Address/edit.js:143
 msgid "State Placeholder"
 msgstr ""
 
-#: Blocks/Address/edit.js:139
+#: Blocks/Address/edit.js:154
 msgid "Default country"
 msgstr ""
 
@@ -8603,17 +8829,6 @@ msgstr ""
 msgid "Placeholder"
 msgstr ""
 
-#: Blocks/Checkbox/edit.js:31
-#: Blocks/Input/edit.js:28
-#: Blocks/Name/edit.js:29
-#: Blocks/NameYourPrice/edit.js:42
-#: Blocks/Password/edit.js:37
-#: Blocks/RadioGroup/edit.js:72
-#: Blocks/Switch/edit.js:29
-#: Blocks/Textarea/edit.js:28
-msgid "Required"
-msgstr ""
-
 #: Blocks/Checkbox/edit.js:45
 #: Blocks/Radio/edit.js:30
 #: Blocks/Switch/edit.js:59
@@ -8841,10 +9056,6 @@ msgstr ""
 msgid "Thank you for your purchase! Please check your inbox for additional information."
 msgstr ""
 
-#: Blocks/Coupon/edit.js:38
-msgid "Disabled"
-msgstr ""
-
 #: Blocks/CustomerDashboardButton/edit.js:42
 msgid "Show Icon"
 msgstr ""
@@ -8906,7 +9117,7 @@ msgstr ""
 msgid "Prev Page"
 msgstr ""
 
-#: Blocks/Dashboard/CustomerDashboard/edit.js:169
+#: Blocks/Dashboard/CustomerDashboard/edit.js:171
 msgid "New Tab %d"
 msgstr ""
 
@@ -8938,13 +9149,6 @@ msgstr ""
 msgid "Add"
 msgstr ""
 
-#: Blocks/Dashboard/CustomerPaymentMethods/edit.js:78
-#: Blocks/Dashboard/CustomerPaymentMethods/edit.js:117
-#: sc-payment-methods-list.js:127
-#: sc-subscription-payment-method.js:143
-msgid "Exp."
-msgstr ""
-
 #: Blocks/Dashboard/DashboardPage/edit.js:45
 msgid "Url Slug"
 msgstr ""
@@ -8973,18 +9177,6 @@ msgstr ""
 
 #: Blocks/Dashboard/WordPressAccount/edit.js:55
 msgid "Email Address"
-msgstr ""
-
-#: Blocks/Dashboard/WordPressAccount/edit.js:60
-#: sc-wordpress-user-edit.js:56
-#: sc-wordpress-user.js:25
-msgid "First Name"
-msgstr ""
-
-#: Blocks/Dashboard/WordPressAccount/edit.js:65
-#: sc-wordpress-user-edit.js:56
-#: sc-wordpress-user.js:25
-msgid "Last Name"
 msgstr ""
 
 #: Blocks/Donation/edit.js:169
@@ -9096,7 +9288,7 @@ msgid "Processing Payment"
 msgstr ""
 
 #: Blocks/Form/edit.js:322
-#: sc-checkout.js:191
+#: sc-checkout.js:192
 msgid "Processing payment..."
 msgstr ""
 
@@ -9105,7 +9297,7 @@ msgid "Confirming Payment"
 msgstr ""
 
 #: Blocks/Form/edit.js:340
-#: sc-checkout.js:191
+#: sc-checkout.js:192
 msgid "Finalizing order..."
 msgstr ""
 
@@ -9114,7 +9306,7 @@ msgid "Success Text"
 msgstr ""
 
 #: Blocks/Form/edit.js:355
-#: sc-checkout.js:191
+#: sc-checkout.js:192
 msgid "Success! Redirecting..."
 msgstr ""
 
@@ -11481,11 +11673,11 @@ msgstr ""
 msgid "Your payment is processing. Exiting this page could cause an error in your order. Please do not navigate away from this page."
 msgstr ""
 
-#: sc-checkout.js:184
+#: sc-checkout.js:185
 msgid "Due to processor restrictions, only one checkout form is allowed on the page."
 msgstr ""
 
-#: sc-checkout.js:191
+#: sc-checkout.js:192
 msgid "Submitting order..."
 msgstr ""
 
@@ -11708,15 +11900,7 @@ msgstr ""
 msgid "You don't have any saved payment methods."
 msgstr ""
 
-#: sc-payment-methods-list.js:129
-msgid "Make Default"
-msgstr ""
-
-#: sc-payment-methods-list.js:146
-msgid "Payment Methods"
-msgstr ""
-
-#: sc-payment.js:61
+#: sc-payment.js:70
 msgid "Please contact us for payment"
 msgstr ""
 
@@ -11760,7 +11944,7 @@ msgstr ""
 msgid "increase number"
 msgstr ""
 
-#: sc-select2.js:2057
+#: sc-select2.js:2058
 msgid "Nothing Found"
 msgstr ""
 

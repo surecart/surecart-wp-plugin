@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.1
-Stable tag: 1.2.5
+Stable tag: 1.3.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,21 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.3.0  - December 1, 2022 =
+* New: Restrict coupons to products, prices or customers.
+* Improvement: Ability to filter error messages.
+* Improvement: New documentation on styling with shadow parts and css variables.
+* Improvement: Show all orders by default on admin orders page.
+* Improvement: Option for the address component to not be required.
+* Improvement: Show remaining payment for payment plan on individual admin plan page.
+* Improvement: Show customer's payment methods in the admin.
+* Fix: Unable to update PayPal payment method on existing subscription in admin.
+* Fix: Disabled integrations are no longer selectable.
+* Fix: Customer dashboard full setting not taking effect.
+* Fix: Abandoned checkouts missing recovered state.
+* Fix: Added correct premium label to free trials.
+* Fix: Validate compare at price in browser.
 
 = 1.2.5  - Novermber 29, 2022 =
 * Hotfix: Fix fatal error happening on some servers that are not supporting our get route url function.

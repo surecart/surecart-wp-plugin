@@ -15,9 +15,11 @@
 
 ## Shadow Parts
 
-| Part     | Description |
-| -------- | ----------- |
-| `"base"` |             |
+| Part           | Description                |
+| -------------- | -------------------------- |
+| `"base"`       | The elements base wrapper. |
+| `"container"`  | The container.             |
+| `"icon__base"` | The icon base wrapper.     |
 
 
 ## Dependencies
