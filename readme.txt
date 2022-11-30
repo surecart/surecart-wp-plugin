@@ -243,6 +243,17 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.3.0  - December 1, 2022 =
+* New: Restrict coupons to products, prices or customers.
+* Improvement: Ability to filter error messages.
+* Improvement: New documentation on styling with shadow parts and css variables.
+* Improvement: Show all orders by default on admin orders page.
+* Fix: Disabled integrations are no longer selectable.
+* Fix: Customer dashboard full setting not taking effect.
+* Fix: Abandoned checkouts missing recovered state.
+* Fix: Added correct premium label to free trials.
+* Fix: Validate compare at price in browser.
+
 = 1.2.5  - Novermber 29, 2022 =
 * Hotfix: Fix fatal error happening on some servers that are not supporting our get route url function.
 
