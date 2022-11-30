@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-11-30T00:46:24",
+  "timestamp": "2022-11-30T20:19:18",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -193,7 +193,7 @@
           "reflectToAttr": true,
           "docs": "Is this required?",
           "docsTags": [],
-          "default": "true",
+          "default": "false",
           "values": [
             {
               "type": "boolean"
@@ -3446,6 +3446,22 @@
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "abandonedCheckoutReturnUrl",
+          "type": "string",
+          "mutable": false,
+          "attr": "abandoned-checkout-return-url",
+          "reflectToAttr": false,
+          "docs": "The abandoned checkout return url.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
         {
           "name": "alignment",
           "type": "\"center\" | \"full\" | \"wide\"",
@@ -15247,12 +15263,12 @@
         {
           "name": "required",
           "type": "boolean",
-          "mutable": false,
+          "mutable": true,
           "attr": "required",
           "reflectToAttr": false,
-          "docs": "Is this required (defaults to true)",
+          "docs": "Is this required (defaults to false)",
           "docsTags": [],
-          "default": "true",
+          "default": "false",
           "values": [
             {
               "type": "boolean"
@@ -15320,6 +15336,22 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "taxEnabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "tax-enabled",
+          "reflectToAttr": false,
+          "docs": "Tax enabled status of the order",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -20516,6 +20548,22 @@
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "abandonedCheckoutReturnUrl",
+          "type": "string",
+          "mutable": false,
+          "attr": "abandoned-checkout-return-url",
+          "reflectToAttr": false,
+          "docs": "The abandoned checkout return url.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
         {
           "name": "currencyCode",
           "type": "string",
