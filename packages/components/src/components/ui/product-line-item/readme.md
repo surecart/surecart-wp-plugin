@@ -44,6 +44,7 @@
 | `"price"`              | The price wrapper.                 |
 | `"price__amount"`      | The price amount.                  |
 | `"price__description"` | The price description.             |
+| `"price__scratch"`     |                                    |
 | `"quantity__base"`     | The quantity base wrapper.         |
 | `"remove-icon__base"`  | The remove icon base wrapper.      |
 | `"static-quantity"`    | The statically displayed quantity. |

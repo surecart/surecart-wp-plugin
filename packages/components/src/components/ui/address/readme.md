@@ -49,6 +49,7 @@ Type: `Promise<boolean>`
 | `"block-ui"`             | The block ui base component.                   |
 | `"block-ui__content"`    | The block ui content (spinner).                |
 | `"caret"`                | The select box caret.                          |
+| `"columns"`              |                                                |
 | `"empty"`                | The select empty message.                      |
 | `"form-control"`         | The form control wrapper.                      |
 | `"help-text"`            | Help text that describes how to use the input. |
