@@ -243,7 +243,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.3.0  - December 1, 2022 =
+= 1.3.0  - November 30, 2022 =
 * New: Restrict coupons to products, prices or customers.
 * Improvement: Ability to filter error messages.
 * Improvement: New documentation on styling with shadow parts and css variables.
