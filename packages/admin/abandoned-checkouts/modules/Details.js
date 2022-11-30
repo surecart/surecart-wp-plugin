@@ -6,6 +6,9 @@ import { ScSkeleton, ScTag } from '@surecart/components-react';
 
 export default ({ abandoned, checkout, loading }) => {
 	const renderNotificationStatus = () => {
+		if ( abandoned?.recovered_checkout?.id ) {
+			return <ScTag type="success">{__('Recovered', 'surecart')}</ScTag>;
+		}
 		if (abandoned?.notification_status === 'sent') {
 			return <ScTag type="success">{__('Sent', 'surecart')}</ScTag>;
 		}

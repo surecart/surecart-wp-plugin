@@ -70,7 +70,7 @@ export class ScAddress {
   @Prop() showLine2: boolean;
 
   /** Is this required? */
-  @Prop({ reflect: true }) required: boolean = true;
+  @Prop({ reflect: true }) required: boolean = false;
 
   /** Should we show the city field? */
   @State() showCity: boolean = true;

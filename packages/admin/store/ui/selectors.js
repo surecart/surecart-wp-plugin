@@ -1,6 +1,9 @@
 export function snackbarNotices(state) {
 	return state.snackbar || [];
 }
+export function showUpgradeModal(state) {
+	return state.modal === 'upgrade';
+}
 export function isSaving(state) {
 	return state.saving.isSaving;
 }

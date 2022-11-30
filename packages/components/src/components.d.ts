@@ -390,6 +390,10 @@ export namespace Components {
     }
     interface ScCheckout {
         /**
+          * The abandoned checkout return url.
+         */
+        "abandonedCheckoutReturnUrl": string;
+        /**
           * Alignment
          */
         "alignment": 'center' | 'wide' | 'full';
@@ -1672,7 +1676,7 @@ export namespace Components {
         "postalCodePlaceholder": string;
         "reportValidity": () => Promise<boolean>;
         /**
-          * Is this required (defaults to true)
+          * Is this required (defaults to false)
          */
         "required": boolean;
         /**
@@ -1688,6 +1692,10 @@ export namespace Components {
          */
         "showName": boolean;
         "statePlaceholder": string;
+        /**
+          * Tax enabled status of the order
+         */
+        "taxEnabled": boolean;
         /**
           * Tax status of the order
          */
@@ -2324,6 +2332,10 @@ export namespace Components {
         "value": string;
     }
     interface ScSessionProvider {
+        /**
+          * The abandoned checkout return url.
+         */
+        "abandonedCheckoutReturnUrl": string;
         /**
           * Currency Code
          */
@@ -4682,6 +4694,10 @@ declare namespace LocalJSX {
     }
     interface ScCheckout {
         /**
+          * The abandoned checkout return url.
+         */
+        "abandonedCheckoutReturnUrl"?: string;
+        /**
           * Alignment
          */
         "alignment"?: 'center' | 'wide' | 'full';
@@ -6133,7 +6149,7 @@ declare namespace LocalJSX {
         "placeholders"?: Partial<Address>;
         "postalCodePlaceholder"?: string;
         /**
-          * Is this required (defaults to true)
+          * Is this required (defaults to false)
          */
         "required"?: boolean;
         /**
@@ -6149,6 +6165,10 @@ declare namespace LocalJSX {
          */
         "showName"?: boolean;
         "statePlaceholder"?: string;
+        /**
+          * Tax enabled status of the order
+         */
+        "taxEnabled"?: boolean;
         /**
           * Tax status of the order
          */
@@ -6879,6 +6899,10 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface ScSessionProvider {
+        /**
+          * The abandoned checkout return url.
+         */
+        "abandonedCheckoutReturnUrl"?: string;
         /**
           * Currency Code
          */

@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.1
-Stable tag: 1.2.3
+Stable tag: 1.2.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -243,7 +243,12 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.2.23  - Novermber 25, 2022 =
+= 1.2.4  - Novermber 29, 2022 =
+* Improvement: Abandoned checkout email links with multi-website stores.
+* Improvement: Add filter to manual payment method summary to allow customization.
+* Fix: AffiliateWP not showing product in list.
+
+= 1.2.3  - Novermber 25, 2022 =
 * Fix: Issue with admin prices search closing on keypresses, not allowing search functionality.
 * Fix: Issue with customers not able to update subscription if subscription quantity changes were disabled.
 

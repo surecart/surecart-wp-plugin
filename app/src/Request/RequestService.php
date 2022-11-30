@@ -276,6 +276,9 @@ class RequestService {
 			error_log( print_r( $response_body, 1 ) );
 			error_log( print_r( $url, 1 ) );
 			error_log( print_r( $args, 1 ) );
+			if ( is_string( $response_body ) ) {
+				return new \WP_Error( 'error', $response_body );
+			}
 			$body = json_decode( $response_body, true );
 			return $this->errors_service->translate( $body, $response_code );
 		}

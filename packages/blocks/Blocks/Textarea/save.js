@@ -1,7 +1,6 @@
 export default ({ className, attributes }) => {
 	const {
 		label,
-		clearable,
 		disabled,
 		help,
 		autofocus,
@@ -17,9 +16,6 @@ export default ({ className, attributes }) => {
 		showLabel,
 		size,
 		spellcheck,
-		step,
-		togglePassword,
-		type,
 		value,
 		required,
 	} = attributes;
@@ -28,15 +24,12 @@ export default ({ className, attributes }) => {
 		<sc-textarea
 			class={className}
 			label={label}
-			clearable={clearable ? '1' : null}
 			disabled={disabled ? '1' : null}
 			help={help}
 			autofocus={autofocus ? '1' : null}
 			autocomplete={autocomplete ? '1' : null}
 			inputmode={inputmode}
-			max={max}
 			maxlength={maxlength}
-			min={min}
 			minlength={minlength}
 			name={name}
 			placeholder={placeholder}
@@ -44,9 +37,6 @@ export default ({ className, attributes }) => {
 			showLabel={showLabel ? '1' : null}
 			size={size ? size : 'medium'}
 			spellcheck={spellcheck ? '1' : null}
-			step={step}
-			togglePassword={togglePassword ? '1' : null}
-			type={type}
 			value={value}
 			required={required ? '1' : null}
 		></sc-textarea>
