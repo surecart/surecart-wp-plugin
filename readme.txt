@@ -248,6 +248,9 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * Improvement: Ability to filter error messages.
 * Improvement: New documentation on styling with shadow parts and css variables.
 * Improvement: Show all orders by default on admin orders page.
+* Improvement: Option for the address component to not be required.
+* Improvement: Show remaining payment for payment plan on individual admin plan page.
+* Improvement: Show customer's payment methods in the admin.
 * Fix: Disabled integrations are no longer selectable.
 * Fix: Customer dashboard full setting not taking effect.
 * Fix: Abandoned checkouts missing recovered state.
