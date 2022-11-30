@@ -22,7 +22,7 @@ import Error from '../components/Error';
 // hocs
 import Logo from '../templates/Logo';
 import Template from '../templates/UpdateModel';
-import Codes from './modules/Codes/index.js';
+import Codes from './modules/Codes';
 import Limits from './modules/Limits';
 import Restrictions from './modules/Restrictions';
 

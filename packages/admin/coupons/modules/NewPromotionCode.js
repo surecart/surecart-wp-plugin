@@ -13,7 +13,7 @@ import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
 import { useRef, useEffect, useState } from 'react';
-import Error from '../../../components/Error';
+import Error from '../../components/Error';
 
 export default ({ onRequestClose, couponId }) => {
 	const { createErrorNotice, createSuccessNotice } =

@@ -1,6 +1,6 @@
 import { sprintf, __ } from '@wordpress/i18n';
 
-import Box from '../../../ui/Box';
+import Box from '../../ui/Box';
 import {
 	ScBlockUi,
 	ScButton,
