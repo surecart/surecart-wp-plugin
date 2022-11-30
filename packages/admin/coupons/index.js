@@ -1,4 +1,3 @@
-// const { render } = wp.element;
 import { render } from '@wordpress/element';
 
 /**
