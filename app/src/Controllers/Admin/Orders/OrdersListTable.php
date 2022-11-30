@@ -62,10 +62,10 @@ class OrdersListTable extends ListTable {
 	 */
 	protected function get_views() {
 		$stati = [
+			'all'            => __( 'All', 'surecart' ),
 			'paid'           => __( 'Paid', 'surecart' ),
 			'processing'     => __( 'Processing', 'surecart' ),
 			'payment_failed' => __( 'Failed', 'surecart' ),
-			'all'            => __( 'All', 'surecart' ),
 		];
 
 		$link = \SureCart::getUrl()->index( 'orders' );
@@ -77,7 +77,7 @@ class OrdersListTable extends ListTable {
 				if ( $status === $_GET['status'] ) {
 					$current_link_attributes = ' class="current" aria-current="page"';
 				}
-			} elseif ( 'paid' === $status ) {
+			} elseif ( 'all' === $status ) {
 				$current_link_attributes = ' class="current" aria-current="page"';
 			}
 
