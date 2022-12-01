@@ -2653,6 +2653,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * This will be true as a workaround in the block editor to focus on the content.
+         */
+        "edit": boolean;
+        /**
           * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
          */
         "invalid": boolean;
@@ -7246,6 +7250,10 @@ declare namespace LocalJSX {
           * Disables the switch.
          */
         "disabled"?: boolean;
+        /**
+          * This will be true as a workaround in the block editor to focus on the content.
+         */
+        "edit"?: boolean;
         /**
           * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
          */
