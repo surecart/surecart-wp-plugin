@@ -3,21 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
 
 import { getOrder, setOrder } from '../../../../store/checkouts';
-import {
-  Customer,
-  FormState,
-  Checkout,
-  PaymentIntent,
-  PaymentIntents,
-  PriceChoice,
-  Prices,
-  Processor,
-  Products,
-  ResponseError,
-  TaxProtocol,
-  ProcessorName,
-  Bump,
-} from '../../../../types';
+import { Bump, Checkout, Customer, FormState, ManualPaymentMethod, PaymentIntent, PaymentIntents, PriceChoice, Prices, Processor, ProcessorName, Products, ResponseError, TaxProtocol } from '../../../../types';
 
 @Component({
   tag: 'sc-checkout',
@@ -70,11 +56,17 @@ export class ScCheckout {
   /** Processors enabled for this form. */
   @Prop({ mutable: true }) processors: Processor[];
 
+  /** Manual payment methods enabled for this form. */
+  @Prop() manualPaymentMethods: ManualPaymentMethod[];
+
   /** Can we edit line items? */
   @Prop() editLineItems: boolean = true;
 
   /** Can we remove line items? */
   @Prop() removeLineItems: boolean = true;
+
+  /** The abandoned checkout return url. */
+  @Prop() abandonedCheckoutReturnUrl: string;
 
   /** Use the Stripe payment element. */
   @Prop() stripePaymentElement: boolean = false;
@@ -100,6 +92,9 @@ export class ScCheckout {
 
   /** The currenly selected processor */
   @State() processor: ProcessorName = 'stripe';
+
+  /** Is the processor manual? */
+  @State() isManualProcessor: boolean;
 
   /** Holds the payment intents for the checkout. */
   @State() paymentIntents: PaymentIntents = {};
@@ -130,7 +125,9 @@ export class ScCheckout {
 
   @Listen('scSetProcessor')
   handleProcessorChange(e) {
-    this.processor = e.detail;
+    const { id, manual } = e.detail;
+    this.processor = id;
+    this.isManualProcessor = manual;
   }
 
   @Listen('scAddEntities')
@@ -185,16 +182,20 @@ export class ScCheckout {
   state() {
     return {
       processor: this.processor,
+      selectedProcessorId: this.processor,
       processors: (this.processors || []).filter(processor => {
         return !(this?.order().reusable_payment_method_required && !processor?.recurring_enabled);
       }),
+      manualPaymentMethods: this.manualPaymentMethods,
       processor_data: this.order()?.processor_data,
       state: this.checkoutState,
+      formState: this.checkoutState,
       paymentIntents: this.paymentIntents,
       successUrl: this.successUrl,
       bumps: this.order()?.recommended_bumps?.data as Bump[],
 
       order: this.order(),
+      abandonedCheckoutEnabled: this.order()?.abandoned_checkout_enabled,
       checkout: this.order(),
       shippingEnabled: this.order()?.shipping_enabled,
       lineItems: this.order()?.line_items?.data || [],
@@ -215,6 +216,7 @@ export class ScCheckout {
       error: this.error,
       customer: this.customer,
       tax_status: this.order()?.tax_status,
+      taxEnabled: this.order()?.tax_enabled,
       customerShippingAddress: typeof this.order()?.customer !== 'string' ? this.order()?.customer?.shipping_address : {},
       shippingAddress: this.order()?.shipping_address,
       taxStatus: this.order()?.tax_status,
@@ -269,11 +271,13 @@ export class ScCheckout {
                     <sc-session-provider
                       ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)}
                       prices={this.prices}
+                      abandonedCheckoutReturnUrl={this.abandonedCheckoutReturnUrl}
                       stripePaymentElement={this.stripePaymentElement}
                       paymentIntents={this.paymentIntents}
                       persist={this.persistSession}
                       modified={this.modified}
                       mode={this.mode}
+                      isManualProcessor={this.isManualProcessor}
                       form-id={this.formId}
                       group-id={this.el.id}
                       processor={this.processor}
@@ -288,7 +292,7 @@ export class ScCheckout {
             </sc-form-state-provider>
           </sc-login-provider>
 
-          {this.state().busy && <sc-block-ui z-index={9}></sc-block-ui>}
+          {this.state().busy && <sc-block-ui class="busy-block-ui" z-index={9}></sc-block-ui>}
           {this.checkoutState === 'finalizing' && (
             <sc-block-ui z-index={9} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
               {this.loadingText?.finalizing || __('Submitting order...', 'surecart')}
@@ -306,7 +310,7 @@ export class ScCheckout {
           )}
           {this.checkoutState === 'confirmed' && (
             <sc-block-ui z-index={9} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
-              {this.loadingText?.confirmed || __('Payment successful! Redirecting...', 'surecart')}
+              {this.loadingText?.confirmed || __('Success! Redirecting...', 'surecart')}
             </sc-block-ui>
           )}
         </Universe.Provider>

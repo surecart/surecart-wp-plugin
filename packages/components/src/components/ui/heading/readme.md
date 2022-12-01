@@ -14,9 +14,11 @@
 
 ## Shadow Parts
 
-| Part     | Description |
-| -------- | ----------- |
-| `"base"` |             |
+| Part            | Description |
+| --------------- | ----------- |
+| `"base"`        |             |
+| `"description"` |             |
+| `"title"`       |             |
 
 
 ## Dependencies

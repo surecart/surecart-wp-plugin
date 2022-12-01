@@ -14,6 +14,14 @@
 | `zIndex`      | `z-index`     |             | `number`  | `1`         |
 
 
+## Shadow Parts
+
+| Part        | Description                |
+| ----------- | -------------------------- |
+| `"base"`    | The elements base wrapper. |
+| `"content"` | The content (spinner)      |
+
+
 ## Dependencies
 
 ### Used by

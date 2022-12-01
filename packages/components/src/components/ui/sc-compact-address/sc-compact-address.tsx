@@ -4,6 +4,26 @@ import { countryChoices, hasState } from '../../../functions/address';
 import { __ } from '@wordpress/i18n';
 import { reportChildrenValidity } from '../../../functions/form-data';
 
+/**
+ * @part base - The elements base wrapper.
+ * @part input__base - The inputs base element.
+ * @part select__base - The select boxes base element.
+ * @part input - The html input element.
+ * @part form-control - The form control wrapper.
+ * @part label - The input label.
+ * @part help-text - Help text that describes how to use the input.
+ * @part trigger - The select box trigger.
+ * @part panel - The select box panel.
+ * @part caret - The select box caret.
+ * @part search__base - The select search base.
+ * @part search__input - The select search input.
+ * @part search__form-control - The select search form control.
+ * @part menu__base - The select menu base.
+ * @part spinner__base  - The select spinner base.
+ * @part empty - The select empty message.
+ * @part block-ui - The block ui base component.
+ * @part block-ui__content - The block ui content (spinner).
+ */
 @Component({
   tag: 'sc-compact-address',
   styleUrl: 'sc-compact-address.scss',
@@ -111,9 +131,10 @@ export class ScCompactAddress {
 
   render() {
     return (
-      <div class="sc-address">
-        <sc-form-control label={this.label} class="sc-address__control" part="control" required={this.required}>
+      <div class="sc-address" part="base">
+        <sc-form-control exportparts="label, help-text, form-control" label={this.label} class="sc-address__control" part="control" required={this.required}>
           <sc-select
+            exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty"
             value={this.address?.country}
             onScChange={(e: any) => {
               this.clearAddress();
@@ -132,6 +153,7 @@ export class ScCompactAddress {
           <div class="sc-address__columns">
             {this.showState && (
               <sc-select
+                exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty"
                 placeholder={this.address.country === 'US' ? __('State', 'surecart') : __('Province/Region', 'surecart')}
                 name={this.names.state}
                 autocomplete={'address-level1'}
@@ -147,6 +169,7 @@ export class ScCompactAddress {
             )}
             {this.showPostal && (
               <sc-input
+                exportparts="base:input__base, input, form-control, label, help-text"
                 placeholder={__('Postal Code/Zip', 'surecart')}
                 name={this.names.postal_code}
                 onScChange={(e: any) => this.updateAddress({ postal_code: e.target.value || null })}
@@ -161,7 +184,7 @@ export class ScCompactAddress {
             )}
           </div>
         </sc-form-control>
-        {this.loading && <sc-block-ui></sc-block-ui>}
+        {this.loading && <sc-block-ui exportparts="base:block-ui, content:block-ui__content"></sc-block-ui>}
       </div>
     );
   }

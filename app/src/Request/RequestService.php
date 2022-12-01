@@ -165,13 +165,6 @@ class RequestService {
 		// use the cache service for this request.
 		$cache = new RequestCacheService( $endpoint, $args, $cache_key );
 
-		// we have an object cache request.
-		// $response_body = $cache->getObjectCache();
-		// if ( false !== $response_body ) {
-		// $this->cache_status = 'object';
-		// return $this->respond( $response_body, $args, $endpoint );
-		// }
-
 		// check if we should get a cached version of this.
 		if ( $this->shouldFindCache( $cachable, $cache_key, $args ) ) {
 			// get from cache.
@@ -281,7 +274,12 @@ class RequestService {
 		// check for errors.
 		if ( ! in_array( $response_code, [ 200, 201 ], true ) ) {
 			error_log( print_r( $response_body, 1 ) );
+			error_log( print_r( $url, 1 ) );
+			error_log( print_r( $args, 1 ) );
 			$body = json_decode( $response_body, true );
+			if ( is_string( $body ) ) {
+				return new \WP_Error( 'error', $response_body );
+			}
 			return $this->errors_service->translate( $body, $response_code );
 		}
 

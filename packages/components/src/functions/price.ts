@@ -10,8 +10,8 @@ export const getHumanDiscount = (coupon: Coupon) => {
     return getFormattedPrice({ amount: coupon.amount_off, currency: coupon.currency });
   }
   if (coupon.percent_off) {
-    // TODO: Translators.
-    return `${coupon.percent_off | 0}% off`;
+    // Translators: Percent off.
+    return sprintf(__('%1d%% off', 'surecart'), coupon.percent_off | 0);
   }
   return '';
 };

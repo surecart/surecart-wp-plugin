@@ -10,6 +10,7 @@
 | Property     | Attribute    | Description              | Type      | Default     |
 | ------------ | ------------ | ------------------------ | --------- | ----------- |
 | `borderless` | `borderless` | Is this card borderless. | `boolean` | `undefined` |
+| `href`       | `href`       | A link for the card.     | `string`  | `undefined` |
 | `loading`    | `loading`    | Is this card loading.    | `boolean` | `undefined` |
 | `noDivider`  | `no-divider` | Eliminate the divider    | `boolean` | `undefined` |
 | `noPadding`  | `no-padding` | Remove padding           | `boolean` | `undefined` |
@@ -17,9 +18,9 @@
 
 ## Shadow Parts
 
-| Part     | Description |
-| -------- | ----------- |
-| `"base"` |             |
+| Part     | Description                |
+| -------- | -------------------------- |
+| `"base"` | The elements base wrapper. |
 
 
 ## Dependencies
@@ -37,12 +38,13 @@
  - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
- - [sc-payment](../../controllers/checkout-form/payment)
+ - [sc-payment-method-choice](../../processors/sc-payment-method-choice)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
+ - [sc-subscription-details](../../controllers/dashboard/subscription-details)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
@@ -66,12 +68,13 @@ graph TD;
   sc-order-confirmation-details --> sc-card
   sc-orders-list --> sc-card
   sc-password-nag --> sc-card
-  sc-payment --> sc-card
+  sc-payment-method-choice --> sc-card
   sc-payment-methods-list --> sc-card
   sc-purchase-downloads-list --> sc-card
   sc-subscription --> sc-card
   sc-subscription-ad-hoc-confirm --> sc-card
   sc-subscription-cancel --> sc-card
+  sc-subscription-details --> sc-card
   sc-subscription-payment --> sc-card
   sc-subscription-payment-method --> sc-card
   sc-subscription-renew --> sc-card

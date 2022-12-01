@@ -1,5 +1,9 @@
 import { Component, h, Prop, State, Element, Listen, Watch } from '@stencil/core';
 
+/**
+ * @part base - The elements base wrapper.
+ * @part text - The tooltip text.
+ */
 @Component({
   tag: 'sc-tooltip',
   styleUrl: 'sc-tooltip.scss',

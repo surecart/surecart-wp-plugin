@@ -28,10 +28,11 @@
 
 ## Shadow Parts
 
-| Part        | Description |
-| ----------- | ----------- |
-| `"panel"`   |             |
-| `"trigger"` |             |
+| Part        | Description                |
+| ----------- | -------------------------- |
+| `"base"`    | The elements base wrapper. |
+| `"panel"`   | The panel.                 |
+| `"trigger"` | The trigger.               |
 
 
 ## Dependencies

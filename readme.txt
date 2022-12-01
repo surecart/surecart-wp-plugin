@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.1
-Stable tag: 1.1.19
+Stable tag: 1.3.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -243,9 +243,62 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.1.20  - Novermber 3, 2022 =
+= 1.3.1  - November 30, 2022 =
+* Hotfix: Scratch prices not able to be created with decimal points.
+
+= 1.3.0  - November 30, 2022 =
+* New: Restrict coupons to products, prices or customers.
+* Improvement: Ability to filter error messages.
+* Improvement: New documentation on styling with shadow parts and css variables.
+* Improvement: Show all orders by default on admin orders page.
+* Improvement: Option for the address component to not be required.
+* Improvement: Show remaining payment for payment plan on individual admin plan page.
+* Improvement: Show customer's payment methods in the admin.
+* Fix: Unable to update PayPal payment method on existing subscription in admin.
+* Fix: Disabled integrations are no longer selectable.
+* Fix: Customer dashboard full setting not taking effect.
+* Fix: Abandoned checkouts missing recovered state.
+* Fix: Added correct premium label to free trials.
+* Fix: Validate compare at price in browser.
+
+= 1.2.5  - Novermber 29, 2022 =
+* Hotfix: Fix fatal error happening on some servers that are not supporting our get route url function.
+
+= 1.2.4  - Novermber 29, 2022 =
+* Improvement: Abandoned checkout email links with multi-website stores.
+* Improvement: Add filter to manual payment method summary to allow customization.
+* Fix: AffiliateWP not showing product in list.
+
+= 1.2.3  - Novermber 25, 2022 =
+* Fix: Issue with admin prices search closing on keypresses, not allowing search functionality.
+* Fix: Issue with customers not able to update subscription if subscription quantity changes were disabled.
+
+= 1.2.2  - Novermber 23, 2022 =
+* New: “Compare at” option for creating sale prices.
+* Improvement: Slide out cart width compatibility with some themes that make it too narrow.
+* Fix: Recapcha not working with manual processors change.
+* Fix: Scripts sometimes not loading with specific page builders if shortcodes are used and cart is turned off.
+* Fix: Subscription email edit had incorrect pro badge.
+* Fix: Some users having permission issues when updating payment methods in dashboard.
+
+= 1.2.1  - Novermber 15, 2022 =
+* New: Textarea field.
+* Improvement: Show scratch price on order summary if discount is present.
+* Improvement: Edit store (admin) email templates.
+* Improvement: Button style consistency on product page.
+* Improvement: Enable or disable customer subscription reminder emails is now a free feature.
+* Fix: Some custom form fields not saving metadata for some processors.
+* Fix: sc_order_confirmation shortcode not displaying.
+* Fix: Overflow issue on some themes with address component.
+* Fix: Issue with some shortcodes not displaying if slide-out cart is disabled by admin.
+
+= 1.2.0  - Novermber 14, 2022 =
+* New: Manual payment methods.
+* New: Abandoned Checkouts (Pro).
+* Improvement: Add Dutch notifications and invoice language.
 * Fix: Issue with default country selection in address block not initializing with new checkout.
 * Fix: Prevent false positive notice from Sucuri for our honeypot field.
+* Fix: Issue with Stripe Payment Element redirect processors not working on iOS devices.
 
 = 1.1.19  - Novermber 2, 2022 =
 * Improvement: WordPress 6.1 Compatibility.

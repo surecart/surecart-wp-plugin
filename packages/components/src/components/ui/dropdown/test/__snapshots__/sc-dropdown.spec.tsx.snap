@@ -3,7 +3,7 @@
 exports[`sc-dropdown can be positioned 1`] = `
 <sc-dropdown close-on-select="" placement="bottom-start">
   <mock:shadow-root>
-    <div class="dropdown">
+    <div class="dropdown" part="base">
       <span aria-expanded="true" aria-haspopup="true" class="dropdown__trigger" part="trigger">
         <slot name="trigger"></slot>
       </span>
@@ -20,7 +20,7 @@ exports[`sc-dropdown can be positioned 1`] = `
 exports[`sc-dropdown can be positioned 2`] = `
 <sc-dropdown close-on-select="" placement="bottom-start">
   <mock:shadow-root>
-    <div class="dropdown">
+    <div class="dropdown" part="base">
       <span aria-expanded="true" aria-haspopup="true" class="dropdown__trigger" part="trigger">
         <slot name="trigger"></slot>
       </span>
@@ -37,7 +37,7 @@ exports[`sc-dropdown can be positioned 2`] = `
 exports[`sc-dropdown can be positioned 3`] = `
 <sc-dropdown close-on-select="" placement="bottom-start">
   <mock:shadow-root>
-    <div class="dropdown">
+    <div class="dropdown" part="base">
       <span aria-expanded="true" aria-haspopup="true" class="dropdown__trigger" part="trigger">
         <slot name="trigger"></slot>
       </span>
@@ -54,7 +54,7 @@ exports[`sc-dropdown can be positioned 3`] = `
 exports[`sc-dropdown can be positioned 4`] = `
 <sc-dropdown close-on-select="" placement="bottom-start">
   <mock:shadow-root>
-    <div class="dropdown">
+    <div class="dropdown" part="base">
       <span aria-expanded="true" aria-haspopup="true" class="dropdown__trigger" part="trigger">
         <slot name="trigger"></slot>
       </span>
@@ -71,7 +71,7 @@ exports[`sc-dropdown can be positioned 4`] = `
 exports[`sc-dropdown renders 1`] = `
 <sc-dropdown close-on-select="" placement="bottom-start">
   <mock:shadow-root>
-    <div class="dropdown">
+    <div class="dropdown" part="base">
       <span aria-expanded="true" aria-haspopup="true" class="dropdown__trigger" part="trigger">
         <slot name="trigger"></slot>
       </span>

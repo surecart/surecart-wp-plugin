@@ -26,25 +26,4 @@ class Account extends Model {
 	 * @var boolean
 	 */
 	protected $clears_account_cache = true;
-
-	/**
-	 * Get processors.
-	 *
-	 * This is cached for performance reasons.
-	 *
-	 * @return array
-	 */
-	public static function processors() {
-		$key        = 'surecart_account_processors';
-		$processors = get_transient( $key );
-
-		if ( false === $processors ) {
-			$account    = ( new static() )->find();
-			$processors = $account->processors;
-			// store for 60 days.
-			set_transient( $key, $processors, 60 * DAY_IN_SECONDS );
-		}
-
-		return $processors;
-	}
 }

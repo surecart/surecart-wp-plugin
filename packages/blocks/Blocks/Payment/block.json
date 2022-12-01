@@ -11,6 +11,9 @@
 		"multiple": false
 	},
 	"attributes": {
+		"disabled_methods": {
+			"type": "array"
+		},
 		"secure_notice": {
 			"type": "string",
 			"default": "This is a secure, encrypted payment."
