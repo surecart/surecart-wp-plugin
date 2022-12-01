@@ -1,13 +1,11 @@
 import { ScFormatDate, ScFormatNumber, ScTag } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch, useSelect } from '@wordpress/data';
+import {  useSelect } from '@wordpress/data';
 import { __, _n } from '@wordpress/i18n';
-import { useState } from 'react';
 import DataTable from '../../components/DataTable';
 
 export default ({ chargeId }) => {
-	const { invalidateResolution } = useDispatch(coreStore);
-	const { refunds, loading, invalidateCharges } = useSelect(
+	const { refunds, loading } = useSelect(
 		(select) => {
 			if (!chargeId) {
 				return {
@@ -26,8 +24,6 @@ export default ({ chargeId }) => {
 
 			return {
 				refunds: select(coreStore)?.getEntityRecords?.(...entityData),
-				invalidateCharges: () =>
-					invalidateResolution('getEntityRecords', [...entityData]),
 				loading: !select(coreStore)?.hasFinishedResolution?.(
 					'getEntityRecords',
 					[...entityData]
