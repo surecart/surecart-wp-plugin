@@ -23,6 +23,7 @@ export default ({ chargeId }) => {
 				'refund',
 				{
 					charge_ids: chargeId ? [chargeId] : null,
+					per_page: 100,
 				},
 			];
 
