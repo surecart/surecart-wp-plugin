@@ -48,7 +48,7 @@ export default ({ product }) => {
 						{product?.name}
 					</ScText>
 					{(product?.prices?.data || []).map((price) => {
-						if (price.archived) return;
+						if (price.archived) return null;
             return (
               <div
                 css={css`
