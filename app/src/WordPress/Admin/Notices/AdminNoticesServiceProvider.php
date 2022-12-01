@@ -2,7 +2,6 @@
 
 namespace SureCart\WordPress\Admin\Notices;
 
-use FFMpeg\Format\Audio\Aac;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 use SureCart\WordPress\Admin\SSLCheck\AdminSSLCheckService;
 
