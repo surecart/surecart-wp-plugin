@@ -45,8 +45,7 @@ export default ({ chargeId }) => {
 	return (
 		<>
 			<DataTable
-				title={__('Refund', 'surecart')}
-				empty={__('None found.', 'surecart')}
+				title={__('Refunds', 'surecart')}
 				loading={loading}
 				columns={{
 					amount: {
