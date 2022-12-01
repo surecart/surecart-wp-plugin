@@ -2,6 +2,7 @@ import {
 	ScFormatDate,
 	ScFormatNumber,
 	ScTag,
+	ScTooltip,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
@@ -38,6 +39,26 @@ export default ({ chargeId }) => {
 		[chargeId]
 	);
 
+	const renderRefundStatusBadge = (status) => {
+		switch (status) {
+			case 'pending':
+				return (
+					<ScTag type="warning">{__('Pending', 'surecart')}</ScTag>
+				);
+			case 'succeeded':
+				return (
+					<ScTag type="success">{__('Succeeded', 'surecart')}</ScTag>
+				);
+			case 'failed':
+				return <ScTag type="danger">{__('Failed', 'surecart')}</ScTag>;
+			case 'canceled':
+				return (
+					<ScTag type="danger">{__('Canceled', 'surecart')}</ScTag>
+				);
+		}
+		return <ScTag>{status || __('Unknown', 'surecart')}</ScTag>;
+	};
+
 	// don't render anything if loading.
 	if (loading || !refunds?.length) {
 		return null;
@@ -49,11 +70,11 @@ export default ({ chargeId }) => {
 				title={__('Refunds', 'surecart')}
 				loading={loading}
 				columns={{
-					amount: {
-						label: __('Amount', 'surecart'),
-					},
 					date: {
 						label: __('Date', 'surecart'),
+					},
+					amount: {
+						label: __('Amount Refunded', 'surecart'),
 					},
 					status: {
 						label: __('Status', 'surecart'),
@@ -69,6 +90,7 @@ export default ({ chargeId }) => {
 										'var(--sc-font-weight-bold)',
 								}}
 							>
+								-
 								<ScFormatNumber
 									type="currency"
 									currency={refund?.currency || 'usd'}
@@ -82,10 +104,29 @@ export default ({ chargeId }) => {
 								month="long"
 								day="numeric"
 								year="numeric"
+								hour="numeric"
+								minute="numeric"
 								type="timestamp"
 							/>
 						),
-						status: <ScTag type="warning">{refund?.status}</ScTag>,
+						status: (
+							<>
+								<ScTooltip
+									type="danger"
+									text={
+										refund?.failure_reason ===
+										'insufficient_funds'
+											? __(
+													'Insufficient Funds',
+													'surecart'
+											  )
+											: null
+									}
+								>
+									{renderRefundStatusBadge(refund?.status)}
+								</ScTooltip>
+							</>
+						),
 					};
 				})}
 			/>
