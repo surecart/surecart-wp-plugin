@@ -1,10 +1,63 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`sc-order-summary does not render scratch price if the same as amount and collapsed 1`] = `
+<sc-order-summary>
+  <mock:shadow-root>
+    <div class="summary">
+      <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
+        <span class="collapse-link" slot="title">
+          Show Summary
+          <svg class="collapse-link__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+          </svg>
+        </span>
+        <span slot="description">
+          <slot name="description"></slot>
+        </span>
+        <span slot="price">
+          <sc-total total="total"></sc-total>
+        </span>
+      </sc-line-item>
+      <div class="summary__content" hidden="" style="height: 0;">
+        <slot></slot>
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-order-summary>
+`;
+
 exports[`sc-order-summary renders 1`] = `
 <sc-order-summary>
   <mock:shadow-root>
     <div class="summary summary--open">
       <div class="summary__content" style="height: auto;">
+        <slot></slot>
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-order-summary>
+`;
+
+exports[`sc-order-summary renders scratch price if different from amount and collapsed 1`] = `
+<sc-order-summary>
+  <mock:shadow-root>
+    <div class="summary">
+      <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
+        <span class="collapse-link" slot="title">
+          Show Summary
+          <svg class="collapse-link__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+          </svg>
+        </span>
+        <span slot="description">
+          <slot name="description"></slot>
+        </span>
+        <span slot="price">
+          <sc-format-number class="scratch-price" currency="usd" type="currency" value="2000"></sc-format-number>
+          <sc-total total="total"></sc-total>
+        </span>
+      </sc-line-item>
+      <div class="summary__content" hidden="" style="height: 0;">
         <slot></slot>
       </div>
     </div>

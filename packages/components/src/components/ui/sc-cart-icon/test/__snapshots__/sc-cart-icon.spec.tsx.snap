@@ -4,15 +4,14 @@ exports[`sc-cart-icon renders 1`] = `
 <sc-cart-icon>
   <mock:shadow-root>
     <div class="cart" part="base">
-      <div class="cart__container">
+      <div class="cart__container" part="container">
         <div class="cart__counter">
           0
         </div>
         <slot>
-          <sc-icon name="shopping-bag"></sc-icon>
+          <sc-icon exportparts="base:icon__base" name="shopping-bag"></sc-icon>
         </slot>
       </div>
-      <sc-register-icon-library></sc-register-icon-library>
     </div>
   </mock:shadow-root>
 </sc-cart-icon>

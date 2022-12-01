@@ -7,6 +7,16 @@ import { Component, Prop, h, Element, State } from '@stencil/core';
  * @slot currency - Used for the 3 character currency code.
  * @slot price - Price amount, including currency sign.
  * @slot price-description - Description for the price (i.e. monthly)
+ *
+ * @part base - The elements base wrapper.
+ * @part image - The image wrapper.
+ * @part text - The text.
+ * @part title - The title.
+ * @part description - Line item description (below the title)
+ * @part currency - Used for the 3 character currency code.
+ * @part price - Price amount, including currency sign.
+ * @part price-text - The price text.
+ * @part price-description - Description for the price (i.e. monthly)
  */
 @Component({
   tag: 'sc-line-item',
@@ -57,24 +67,24 @@ export class ScLineItem {
         </div>
 
         <div class="item__text" part="text">
-          <div class="item__title">
+          <div class="item__title" part="title">
             <slot name="title"></slot>
           </div>
-          <div class="item__description">
+          <div class="item__description" part="description">
             <slot name="description"></slot>
           </div>
         </div>
 
         <div class="item__end" part="price">
-          <div class="item__price-currency">
+          <div class="item__price-currency" part="currency">
             <slot name="currency"></slot>
           </div>
 
-          <div class="item__price-text">
-            <div class="item__price">
+          <div class="item__price-text" part="price-text">
+            <div class="item__price" part="price">
               <slot name="price"></slot>
             </div>
-            <div class="item__price-description">
+            <div class="item__price-description" part="price-description">
               <slot name="price-description"></slot>
             </div>
           </div>

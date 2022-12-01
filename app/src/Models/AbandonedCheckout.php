@@ -3,12 +3,11 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasCustomer;
-use SureCart\Models\Order;
 
 /**
  * Order model
  */
-class AbandonedCheckout extends Order {
+class AbandonedCheckout extends Model {
 	use HasCustomer;
 
 	/**
@@ -16,14 +15,14 @@ class AbandonedCheckout extends Order {
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'abandoned_orders';
+	protected $endpoint = 'abandoned_checkouts';
 
 	/**
 	 * Object name
 	 *
 	 * @var string
 	 */
-	protected $object_name = 'abandoned_order';
+	protected $object_name = 'abandoned_checkout';
 
 	/**
 	 * Set the latest checkout session attribute
@@ -32,15 +31,18 @@ class AbandonedCheckout extends Order {
 	 * @return void
 	 */
 	protected function setLatestRecoverableCheckoutAttribute( $value ) {
-		$this->setRelation( 'latest_recoverable_checkout', $value, Checkout::class );
+		$this->setRelation( 'recovered_checkout', $value, Checkout::class );
 	}
 
 	/**
-	 * Get the relation id attribute
+	 * Get stats for the order.
 	 *
-	 * @return string
+	 * @param array $args Array of arguments for the statistics.
+	 *
+	 * @return \SureCart\Models\Statistic;
 	 */
-	public function getLatestRecoverableCheckoutIdAttribute() {
-		return $this->getRelationId( 'latest_recoverable_checkout' );
+	protected function stats( $args = [] ) {
+		$stat = new Statistic();
+		return $stat->where( $args )->find( 'abandoned_checkouts' );
 	}
 }

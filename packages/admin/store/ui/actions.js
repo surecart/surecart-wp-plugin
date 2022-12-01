@@ -5,6 +5,13 @@ export function setSaving(value) {
 	};
 }
 
+export function setUpgradeModal(open) {
+	return {
+		type: 'SET_MODAL',
+		value: open ? 'upgrade' : false,
+	};
+}
+
 export function setInvalid(value) {
 	return {
 		type: 'SET_INVALID',

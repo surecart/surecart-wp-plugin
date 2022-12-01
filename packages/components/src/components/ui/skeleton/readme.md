@@ -47,7 +47,6 @@
  - [sc-order-detail](../../controllers/confirmation/order-detail)
  - [sc-order-summary](../../controllers/checkout-form/order-summary)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
- - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-paypal-buttons](../paypal-buttons)
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
@@ -81,7 +80,6 @@ graph TD;
   sc-order-detail --> sc-skeleton
   sc-order-summary --> sc-skeleton
   sc-orders-list --> sc-skeleton
-  sc-payment --> sc-skeleton
   sc-payment-methods-list --> sc-skeleton
   sc-paypal-buttons --> sc-skeleton
   sc-price-choice --> sc-skeleton

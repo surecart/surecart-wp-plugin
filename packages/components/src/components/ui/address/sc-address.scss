@@ -23,7 +23,7 @@
     display: block;
 
     > * {
-      margin-bottom: -1px;
+      margin-bottom: var(--sc-address-column-spacing, -1);
     }
   }
 
@@ -37,7 +37,7 @@
     > * {
       flex: 1;
       width: 50%;
-      margin-right: -1px;
+      margin-right: var(--sc-address-column-spacing, -1);
 
       &:last-child {
         margin-right: 0;

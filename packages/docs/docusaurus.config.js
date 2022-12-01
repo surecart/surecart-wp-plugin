@@ -14,6 +14,11 @@ module.exports = {
 	clientModules: [require.resolve('./src/js/components.js')],
 	scripts: ['https://unpkg.com/swagger-client'],
 	themeConfig: {
+		colorMode: {
+			defaultMode: 'light',
+			disableSwitch: false,
+			respectPrefersColorScheme: false,
+		},
 		prism: {
 			additionalLanguages: ['php'],
 			lineHeight: 1.5,
