@@ -240,7 +240,7 @@ class OrdersListTable extends ListTable {
 			return '<sc-tag type="danger">' . __( 'Refunded', 'surecart' ) . '</sc-tag>';
 		}
 
-		if ( ! empty( $order->checkout->payment_intent->processor_type ) && 'paypal' === $order->checkout->payment_intent->processor_type ) {
+		if ( ! empty( $order->checkout->payment_method->processor_type ) && 'paypal' === $order->checkout->payment_method->processor_type ) {
 			if ( 'requires_approval' === $order->status ) {
 				return '<sc-tooltip text="' . __( 'Paypal is taking a closer look at this payment. It’s required for some payments and normally takes up to 3 business days.', 'surecart' ) . '" type="warning"><sc-order-status-badge status="' . esc_attr( $order->status ) . '"></sc-order-status-badge></sc-tooltip>';
 			}

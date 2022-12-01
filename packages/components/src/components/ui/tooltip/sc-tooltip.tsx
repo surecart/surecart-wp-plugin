@@ -79,6 +79,10 @@ export class ScTooltip {
   }
 
   render() {
+    if (!this.text) {
+      return <slot />;
+    }
+
     return (
       <span
         part="base"
