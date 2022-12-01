@@ -31,8 +31,16 @@
 		width: 100%;
 	}
 
+	@media screen and (min-width: 1180px) {
+		.sc-banner-text,
+		.sc-banner-top-img-area {
+			flex:1
+		}
+	}
+
 	.sc-banner-top-area {
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
 		overflow: hidden;
 		background-color: #ffffff;
