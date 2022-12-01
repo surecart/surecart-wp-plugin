@@ -1,6 +1,10 @@
-import { ScFormatDate, ScFormatNumber, ScTag } from '@surecart/components-react';
+import {
+	ScFormatDate,
+	ScFormatNumber,
+	ScTag,
+} from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
-import {  useSelect } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 import { __, _n } from '@wordpress/i18n';
 import DataTable from '../../components/DataTable';
 
@@ -33,18 +37,18 @@ export default ({ chargeId }) => {
 		[chargeId]
 	);
 
-	// empty, don't render anything.
-	if (!loading && !refunds?.length) {
+	// don't render anything if loading.
+	if (loading || !refunds?.length) {
 		return null;
 	}
 
 	return (
 		<>
-      <DataTable
-        title={__('Refund', 'surecart')}
-        empty={__('None found.', 'surecart')}
-        loading={loading}
-        columns={{
+			<DataTable
+				title={__('Refund', 'surecart')}
+				empty={__('None found.', 'surecart')}
+				loading={loading}
+				columns={{
 					amount: {
 						label: __('Amount', 'surecart'),
 					},
@@ -56,39 +60,35 @@ export default ({ chargeId }) => {
 						width: '100px',
 					},
 				}}
-        items={refunds?.map((refund) =>{
-          return {
-            amount: (
-              <sc-text
-                style={{
-                  '--font-weight':
-                    'var(--sc-font-weight-bold)',
-                }}
-              >
-                <ScFormatNumber
-                  type="currency"
-                  currency={refund?.currency || 'usd'}
-                  value={refund?.amount}
-                />
-              </sc-text>
-            ),
-            date: (
-              <ScFormatDate
-                date={refund?.updated_at}
-                month="long"
-                day="numeric"
-                year="numeric"
-                type="timestamp"
-              />
-            ),
-            status: (
-              <ScTag
-                type="warning"
-              >{refund?.status}</ScTag>
-            )
-          }
-        })}
-      />
+				items={refunds?.map((refund) => {
+					return {
+						amount: (
+							<sc-text
+								style={{
+									'--font-weight':
+										'var(--sc-font-weight-bold)',
+								}}
+							>
+								<ScFormatNumber
+									type="currency"
+									currency={refund?.currency || 'usd'}
+									value={refund?.amount}
+								/>
+							</sc-text>
+						),
+						date: (
+							<ScFormatDate
+								date={refund?.updated_at}
+								month="long"
+								day="numeric"
+								year="numeric"
+								type="timestamp"
+							/>
+						),
+						status: <ScTag type="warning">{refund?.status}</ScTag>,
+					};
+				})}
+			/>
 		</>
 	);
 };
