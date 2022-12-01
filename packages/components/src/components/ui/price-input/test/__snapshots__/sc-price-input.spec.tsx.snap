@@ -3,16 +3,14 @@
 exports[`sc-price-input renders 1`] = `
 <sc-price-input size="medium">
   <mock:shadow-root>
-    <div>
-      <sc-input help="" inputmode="decimal" min="0" showlabel="" size="medium" step="0.001" type="number" value="NaN">
-        <span slot="prefix" style="opacity: 0.5;">
-          $
-        </span>
-        <span slot="suffix">
-          <slot name="suffix"></slot>
-        </span>
-      </sc-input>
-    </div>
+    <sc-input exportparts="base, input, form-control, label, help-text, prefix, suffix" help="" inputmode="decimal" min="0" showlabel="" size="medium" step="0.001" type="number" value="NaN">
+      <span slot="prefix" style="opacity: 0.5;">
+        $
+      </span>
+      <span slot="suffix">
+        <slot name="suffix"></slot>
+      </span>
+    </sc-input>
   </mock:shadow-root>
 </sc-price-input>
 `;

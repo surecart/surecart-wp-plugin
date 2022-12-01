@@ -15,6 +15,7 @@ export class ScFlex {
   render() {
     return (
       <div
+        part="base"
         class={{
           flex: true,
           ...(this.justifyContent ? { [`justify-${this.justifyContent}`]: true } : {}),

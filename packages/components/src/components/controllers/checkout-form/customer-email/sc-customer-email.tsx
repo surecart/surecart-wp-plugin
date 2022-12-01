@@ -151,6 +151,7 @@ export class ScCustomerEmail {
     return (
       <Host>
         <sc-input
+          exportparts="base, input, form-control, label, help-text, prefix, suffix"
           type="email"
           name="email"
           ref={el => (this.input = el as HTMLScInputElement)}

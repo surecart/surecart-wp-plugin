@@ -73,13 +73,13 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part                   | Description |
-| ---------------------- | ----------- |
-| `"base"`               |             |
-| `"checked-icon"`       |             |
-| `"control"`            |             |
-| `"indeterminate-icon"` |             |
-| `"label"`              |             |
+| Part                   | Description                |
+| ---------------------- | -------------------------- |
+| `"base"`               | The elements base wrapper. |
+| `"checked-icon"`       | Checked icon.              |
+| `"control"`            | The control wrapper.       |
+| `"indeterminate-icon"` | Indeterminate icon.        |
+| `"label"`              | The label.                 |
 
 
 ----------------------------------------------

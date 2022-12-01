@@ -1,0 +1,21 @@
+.sc-input-style-example::part(base) {
+  border: 1px solid black;
+  box-shadow: 2px 2px #2dd4bf;
+  border-radius: 0;
+  font-family: monospace;
+}
+.sc-input-style-example::part(base):hover {
+  border-color: #2dd4bf;
+  box-shadow: 5px 5px #2dd4bf;
+}
+.sc-input-style-example::part(label) {
+  color: black;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+.sc-input-style-example::part(input)::placeholder {
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}

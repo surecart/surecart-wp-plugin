@@ -15,7 +15,7 @@
 | `loading`      | `loading`     | Is this loading?           | `boolean`                                                                                                                                                                                                                                                                                                                                                                       | `false`                                                                                                                                                                                                                            |
 | `names`        | --            |                            | `{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }` | `{     name: 'shipping_name',     country: 'shipping_country',     city: 'shipping_city',     line_1: 'shipping_line_1',     line_2: 'shipping_line_2',     postal_code: 'shipping_postal_code',     state: 'shipping_state',   }` |
 | `placeholders` | --            |                            | `{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }` | `{}`                                                                                                                                                                                                                               |
-| `required`     | `required`    | Is this required?          | `boolean`                                                                                                                                                                                                                                                                                                                                                                       | `true`                                                                                                                                                                                                                             |
+| `required`     | `required`    | Is this required?          | `boolean`                                                                                                                                                                                                                                                                                                                                                                       | `false`                                                                                                                                                                                                                            |
 | `showLine2`    | `show-line-2` | Should we show name field? | `boolean`                                                                                                                                                                                                                                                                                                                                                                       | `undefined`                                                                                                                                                                                                                        |
 | `showName`     | `show-name`   | Should we show name field? | `boolean`                                                                                                                                                                                                                                                                                                                                                                       | `undefined`                                                                                                                                                                                                                        |
 
@@ -43,9 +43,28 @@ Type: `Promise<boolean>`
 
 ## Shadow Parts
 
-| Part        | Description |
-| ----------- | ----------- |
-| `"control"` |             |
+| Part                     | Description                                    |
+| ------------------------ | ---------------------------------------------- |
+| `"base"`                 | The elements base wrapper.                     |
+| `"block-ui"`             | The block ui base component.                   |
+| `"block-ui__content"`    | The block ui content (spinner).                |
+| `"caret"`                | The select box caret.                          |
+| `"columns"`              |                                                |
+| `"empty"`                | The select empty message.                      |
+| `"form-control"`         | The form control wrapper.                      |
+| `"help-text"`            | Help text that describes how to use the input. |
+| `"input"`                | The html input element.                        |
+| `"input__base"`          | The inputs base element.                       |
+| `"label"`                | The input label.                               |
+| `"menu__base"`           | The select menu base.                          |
+| `"name__input"`          |                                                |
+| `"panel"`                | The select box panel.                          |
+| `"search__base"`         | The select search base.                        |
+| `"search__form-control"` | The select search form control.                |
+| `"search__input"`        | The select search input.                       |
+| `"select__base"`         | The select boxes base element.                 |
+| `"spinner__base"`        | The select spinner base.                       |
+| `"trigger"`              | The select box trigger.                        |
 
 
 ## Dependencies

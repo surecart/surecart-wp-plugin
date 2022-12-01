@@ -1,11 +1,11 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { getQueryArg, getQueryArgs, removeQueryArgs } from '@wordpress/url';
-import { parseFormData } from '../../../functions/form-data';
-import { clearOrder, getOrder, setOrder } from '../../../store/checkouts';
 
-import { createOrUpdateOrder, finalizeSession, fetchCheckout } from '../../../services/session';
-import { FormStateSetter, PaymentIntents, ProcessorName, LineItemData, PriceChoice, Checkout } from '../../../types';
+import { parseFormData } from '../../../functions/form-data';
+import { createOrUpdateOrder, fetchCheckout, finalizeSession } from '../../../services/session';
+import { clearOrder, getOrder, setOrder } from '../../../store/checkouts';
+import { Checkout, FormStateSetter, LineItemData, PaymentIntents, PriceChoice, ProcessorName } from '../../../types';
 
 @Component({
   tag: 'sc-session-provider',
@@ -53,6 +53,9 @@ export class ScSessionProvider {
 
   /** Are we using the Stripe payment element? */
   @Prop() stripePaymentElement: boolean;
+
+  /** The abandoned checkout return url. */
+  @Prop() abandonedCheckoutReturnUrl: string;
 
   /** Update line items event */
   @Event() scUpdateOrderState: EventEmitter<Checkout>;
@@ -431,6 +434,7 @@ export class ScSessionProvider {
       currency: this.order()?.currency || this.currencyCode,
       live_mode: this.mode !== 'test',
       group_key: this.groupId,
+      ...(this.abandonedCheckoutReturnUrl ? {abandoned_checkout_return_url: this.abandonedCheckoutReturnUrl} : {}),
     };
   }
 

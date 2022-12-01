@@ -1,5 +1,9 @@
 import { Component, h, Prop } from '@stencil/core';
 
+/**
+ * @part base - The elements base wrapper.
+ * @part icon - The icon.
+ */
 @Component({
   tag: 'sc-empty',
   styleUrl: 'sc-empty.scss',
@@ -10,8 +14,8 @@ export class ScEmpty {
 
   render() {
     return (
-      <div class="empty">
-        {!!this.icon && <sc-icon name={this.icon}></sc-icon>}
+      <div part="base" class="empty">
+        {!!this.icon && <sc-icon exportparts="base:icon" name={this.icon}></sc-icon>}
         <slot></slot>
       </div>
     );

@@ -17,6 +17,7 @@ import { countryChoices } from '@surecart/components';
 export default ({ attributes, setAttributes }) => {
 	const {
 		label,
+		required,
 		full,
 		show_name,
 		default_country,
@@ -36,6 +37,20 @@ export default ({ attributes, setAttributes }) => {
 		<Fragment>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
+					<PanelRow>
+						<ToggleControl
+							label={__('Required', 'surecart')}
+							checked={required}
+							onChange={(required) => setAttributes({ required })}
+							help={
+								!required &&
+								__(
+									'If tax or shipping is required for checkout the address field will automatically be required.',
+									'surecart'
+								)
+							}
+						/>
+					</PanelRow>
 					<PanelRow>
 						<TextControl
 							label={__('Label', 'surecart')}
@@ -154,6 +169,7 @@ export default ({ attributes, setAttributes }) => {
 				<Tag
 					label={label}
 					showName={show_name}
+					required={required}
 					placeholders={{
 						name: name_placeholder,
 						country: country_placeholder,

@@ -5,7 +5,7 @@ import { useSelect } from '@wordpress/data';
 import SelectModel from './SelectModel';
 
 export default (props) => {
-	const { name, requestQuery = {} } = props;
+	const { name, requestQuery = {}, display } = props;
 	const [query, setQuery] = useState(null);
 
 	const { items, loading } = useSelect(
@@ -14,7 +14,7 @@ export default (props) => {
 				'surecart',
 				name,
 				{
-					search: query,
+					query,
 					...requestQuery,
 				},
 			];
@@ -32,7 +32,7 @@ export default (props) => {
 	return (
 		<SelectModel
 			choices={(items || []).map((item) => ({
-				label: item.name,
+				label: !!display ? display(item) : item.name,
 				value: item.id,
 			}))}
 			onQuery={setQuery}

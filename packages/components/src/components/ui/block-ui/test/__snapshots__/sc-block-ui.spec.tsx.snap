@@ -3,8 +3,8 @@
 exports[`sc-block-ui renders 1`] = `
 <sc-block-ui>
   <mock:shadow-root>
-    <div class="overlay" style="z-index: 1;">
-      <div class="overlay__content">
+    <div class="overlay" part="base" style="z-index: 1;">
+      <div class="overlay__content" part="content">
         <slot name="spinner"></slot>
         <slot></slot>
       </div>
