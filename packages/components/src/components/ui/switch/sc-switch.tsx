@@ -126,6 +126,7 @@ export class ScSwitch {
           'switch--disabled': this.disabled,
           'switch--focused': this.hasFocus,
           'switch--reversed': this.reversed,
+          'switch--editing': this.edit,
         }}
         onMouseDown={e => this.handleMouseDown(e)}
       >
