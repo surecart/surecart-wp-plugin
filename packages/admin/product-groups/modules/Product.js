@@ -48,23 +48,24 @@ export default ({ product }) => {
 						{product?.name}
 					</ScText>
 					{(product?.prices?.data || []).map((price) => {
-						return (
-							<div
-								css={css`
-									opacity: 0.5;
-								`}
-								key={price?.id}
-							>
-								<sc-format-number
-									type="currency"
-									value={price?.amount}
-									currency={price?.currency}
-								/>
-								{intervalString(price, {
-									labels: { interval: '/' },
-								})}
-							</div>
-						);
+						if (price.archived) return null;
+            return (
+              <div
+                css={css`
+                  opacity: 0.5;
+                `}
+                key={price?.id}
+              >
+                <sc-format-number
+                  type="currency"
+                  value={price?.amount}
+                  currency={price?.currency}
+                />
+                {intervalString(price, {
+                  labels: { interval: '/' },
+                })}
+              </div>
+            );
 					})}
 				</div>
 				<div>

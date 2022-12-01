@@ -1526,6 +1526,7 @@
   "sc-switch": {
     "checked": true,
     "disabled": true,
+    "edit": true,
     "invalid": true,
     "name": true,
     "required": true,
