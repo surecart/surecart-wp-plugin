@@ -40,22 +40,6 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Label', 'surecart')}
-							value={label}
-							onChange={(label) => setAttributes({ label })}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={__('Description', 'surecart')}
-							value={description}
-							onChange={(description) =>
-								setAttributes({ description })
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextControl
 							label={__('Value', 'surecart')}
 							value={value}
 							onChange={(value) => setAttributes({ value })}
@@ -73,7 +57,12 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 
 			{!isSelected && !name && <div>Please add a name</div>}
 
-			<ScSwitch className={className} name={name} required={required} edit>
+			<ScSwitch
+				className={className}
+				name={name}
+				required={required}
+				edit
+			>
 				<RichText
 					tagName="span"
 					aria-label={__('Switch label')}
