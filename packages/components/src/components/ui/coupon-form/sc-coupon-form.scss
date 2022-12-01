@@ -21,10 +21,15 @@
   transition: opacity var(--sc-transition-fast) ease-in-out;
 
   .btn-hide {
+    opacity: 0;
     visibility: hidden;
+    transform: scale(0.75);
+    transition: opacity 0.25s ease, transform 0.25s ease;
   }
   .btn-show {
+    opacity: 1;
     visibility: visible;
+    transform: scale(1);
   }
 }
 
