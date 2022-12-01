@@ -7,6 +7,7 @@ export default ({ subscription, updateSubscription, loading }) => {
 	return (
 		<Box title={__('Trial', 'surecart')} loading={loading}>
 			<ScFormControl
+				showLabel={subscription?.trial_end_at}
 				label={
 					subscription?.trial_end_at
 						? __('Free Trial Ends', 'surecart')
@@ -20,7 +21,7 @@ export default ({ subscription, updateSubscription, loading }) => {
 				>
 					<DatePicker
 						placeholder={__('Add Free Trial', 'surecart')}
-						popoverTitle={__('Choose a trial end date', 'surecart')}
+						title={__('Choose a trial end date', 'surecart')}
 						currentDate={
 							subscription?.trial_end_at
 								? new Date(subscription?.trial_end_at * 1000)
@@ -34,12 +35,12 @@ export default ({ subscription, updateSubscription, loading }) => {
 					/>
 					{!!subscription?.trial_end_at && (
 						<ScButton
-							type="default"
+							type="text"
 							onClick={() =>
 								updateSubscription({ trial_end_at: null })
 							}
 						>
-							{__('Remove Trial', 'surecart')}
+							{__('Remove', 'surecart')}
 						</ScButton>
 					)}
 				</ScFlex>
