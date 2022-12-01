@@ -137,7 +137,7 @@ export class ScCouponForm {
         </div>
 
         <div class="form">
-          <sc-input onScBlur={() => this.handleBlur()} onKeyUp={() => this.handleKeyUp()} ref={el => (this.input = el as HTMLScInputElement)}></sc-input>
+          <sc-input placeholder='Enter coupon code' onScBlur={() => this.handleBlur()} onKeyUp={() => this.handleKeyUp()} ref={el => (this.input = el as HTMLScInputElement)}></sc-input>
           <sc-button type="primary" loading={this.busy} size="medium" onClick={() => this.applyCoupon()} ref={el => (this.button = el as HTMLScButtonElement)}>
             <slot />
           </sc-button>
