@@ -11,8 +11,6 @@ import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 import PriceSelector from '../../components/PriceSelector';
-import ProductSelector from '../../components/ProductSelector';
-import ProductGroupSelector from '../../components/ProductGroupSelector';
 import ModelSelector from '../../components/ModelSelector';
 
 export default ({ onRequestClose, bump, updateBump }) => {
@@ -84,10 +82,6 @@ export default ({ onRequestClose, bump, updateBump }) => {
 						{
 							label: __('Product', 'surecart'),
 							value: 'product_ids',
-						},
-						{
-							label: __('Upgrade Group', 'surecart'),
-							value: 'product_group_ids',
 						},
 					]}
 					onScChange={(e) => setType(e.target.value)}

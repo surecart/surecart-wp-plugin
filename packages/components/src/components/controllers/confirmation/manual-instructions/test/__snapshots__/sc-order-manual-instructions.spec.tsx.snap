@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-order-manual-instructions renders 1`] = `
+<sc-order-manual-instructions style="display: none;">
+  <mock:shadow-root></mock:shadow-root>
+</sc-order-manual-instructions>
+`;

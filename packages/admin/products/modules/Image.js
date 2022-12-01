@@ -1,8 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { Button } from '@wordpress/components';
-import { ScFormControl } from '@surecart/components-react';
+import { ScButton, ScFormControl, ScIcon } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import MediaLibrary from '../../components/MediaLibrary';
 
@@ -21,7 +20,7 @@ export default ({ product, updateProduct, loading }) => {
 		});
 	};
 
-	const renderContent = () => {
+	const renderImage = () => {
 		if (product?.image_url) {
 			return (
 				<div
@@ -44,63 +43,81 @@ export default ({ product, updateProduct, loading }) => {
 							background: #f3f3f3;
 						`}
 					/>
-					<div
-						css={css`
-							display: flex;
-							align-items: center;
-							gap: 0.5em;
-						`}
-					>
-						<MediaLibrary
-							onSelect={onSelectMedia}
-							isPrivate={false}
-							render={({ setOpen }) => {
-								return (
-									<Button
-										isPrimary
-										onClick={() => setOpen(true)}
-									>
-										{__('Replace', 'surecart')}
-									</Button>
-								);
-							}}
-						></MediaLibrary>
-						<Button isTertiary onClick={onRemoveMedia}>
-							{__('Remove', 'surecart')}
-						</Button>
-					</div>
 				</div>
 			);
 		}
+	};
 
-		return (
-			<ScFormControl
-				label={__('Product Image', 'surecart')}
-				showLabel={false}
-			>
+	const renderMediaLibrary = () => {
+		if (product?.image_url) {
+			return (
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: 0.5em;
+					`}
+				>
+					<MediaLibrary
+						onSelect={onSelectMedia}
+						isPrivate={false}
+						render={({ setOpen }) => {
+							return (
+								<>
+									<ScButton onClick={() => setOpen(true)}>
+										<ScIcon
+											name="repeat"
+											slot="prefix"
+										></ScIcon>
+										{__('Replace', 'surecart')}
+									</ScButton>
+									<ScButton
+										css={css`
+											color: var(--sc-color-gray-600);
+										`}
+										type="text"
+										onClick={onRemoveMedia}
+									>
+										{__('Remove', 'surecart')}
+									</ScButton>
+								</>
+							);
+						}}
+					></MediaLibrary>
+				</div>
+			);
+		} else {
+			return (
 				<MediaLibrary
 					onSelect={onSelectMedia}
 					isPrivate={false}
 					render={({ setOpen }) => {
 						return (
-							<Button isPrimary onClick={() => setOpen(true)}>
+							<ScButton onClick={() => setOpen(true)}>
+								<ScIcon name="plus" slot="prefix"></ScIcon>
 								{__('Add Image', 'surecart')}
-							</Button>
+							</ScButton>
 						);
 					}}
 				></MediaLibrary>
-			</ScFormControl>
-		);
+			);
+		}
 	};
 
 	return (
-		<Box title={__('Product Image', 'surecart')} loading={loading}>
-			<ScFormControl
-				label={__('Product Image', 'surecart')}
-				showLabel={false}
-			>
-				{renderContent()}
-			</ScFormControl>
+		<Box
+			title={__('Product Image', 'surecart')}
+			loading={loading}
+			footer={
+				<ScFormControl
+					label={__('Product Image', 'surecart')}
+					showLabel={false}
+				>
+					{renderMediaLibrary()}
+				</ScFormControl>
+			}
+		>
+			{renderImage()}
 		</Box>
 	);
 };

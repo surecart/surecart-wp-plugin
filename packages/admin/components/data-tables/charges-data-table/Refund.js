@@ -49,7 +49,7 @@ export default ({ charge, onRequestClose, onRefunded }) => {
 			if (refund?.status === 'failed') {
 				throw {
 					message: __(
-						'Could not refund the charge. Please check with the processor for more details.',
+						'We were unable to issue a refund with this payment processor. Please check with your payment processor and try issuing the refund directly through the processor.',
 						'surecart'
 					),
 				};

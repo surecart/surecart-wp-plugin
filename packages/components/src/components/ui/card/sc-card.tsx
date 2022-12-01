@@ -1,6 +1,9 @@
 import { Component, h, Prop, Element, State } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 
+/**
+ * @part base - The elements base wrapper.
+ */
 @Component({
   tag: 'sc-card',
   styleUrl: 'sc-card.scss',
@@ -14,6 +17,8 @@ export class ScCard {
   @Prop() borderless: boolean;
   /** Remove padding */
   @Prop() noPadding: boolean;
+  /** A link for the card. */
+  @Prop() href: string;
   /** Is this card loading. */
   @Prop() loading: boolean;
   /** Does this have a title slot? */
@@ -27,22 +32,18 @@ export class ScCard {
   }
 
   render() {
+    const Tag = this.href ? 'a' : 'div';
     return (
-      <div
+      <Tag
         part="base"
         class={{
           'card': true,
           'card--borderless': this.borderless,
           'card--no-padding': this.noPadding,
-          // 'card--has-title-slot': this.hasTitleSlot,
         }}
       >
-        {/* <div class="card--title">
-          {this.loading ? <sc-skeleton style={{ width: '120px' }}></sc-skeleton> : <slot name="title" onSlotchange={() => this.handleSlotChange()}></slot>}
-          {!this.noDivider && <sc-divider class="title--divider" part="border" style={{ '--spacing': 'var(--sc-spacing-small)' }}></sc-divider>}
-        </div> */}
         <slot />
-      </div>
+      </Tag>
     );
   }
 }

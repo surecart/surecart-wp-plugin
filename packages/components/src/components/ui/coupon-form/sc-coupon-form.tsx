@@ -3,6 +3,27 @@ import { __ } from '@wordpress/i18n';
 import { getHumanDiscount } from '../../../functions/price';
 import { DiscountResponse } from '../../../types';
 
+/**
+ * @part base - The elements base wrapper.
+ * @part form - The form.
+ * @part input__base - The input base.
+ * @part input - The input.
+ * @part input__form-control - The input form control.
+ * @part button__base - The button base element.
+ * @part button__label - The button label.
+ * @part info - The discount info.
+ * @part discount - The discount displayed (% off)
+ * @part amount - The discount amount.
+ * @part discount-label - The discount label.
+ * @part coupon-tag - The coupon tag.
+ * @part error__base - The error base.
+ * @part error__icon - The error icon
+ * @part error__text - The error text.
+ * @part error_title - The error title.
+ * @part error__message - The error message.
+ * @part block-ui - The block ui base component.
+ * @part block-ui__content - The block ui content (spinner).
+ */
 @Component({
   tag: 'sc-coupon-form',
   styleUrl: 'sc-coupon-form.scss',
@@ -78,10 +99,11 @@ export class ScCouponForm {
       }
 
       return (
-        <sc-line-item>
+        <sc-line-item exportparts="description:info, price-description:discount, price:amount">
           <span slot="description">
-            <div>{__('Discount')}</div>
+            <div part="discount-label">{__('Discount')}</div>
             <sc-tag
+              exportparts="base:coupon-tag"
               type="success"
               class="coupon-tag"
               clearable
@@ -109,12 +131,14 @@ export class ScCouponForm {
 
     return (
       <div
+        part="base"
         class={{
           'coupon-form': true,
           'coupon-form--is-open': this.open || this.forceOpen,
         }}
       >
         <div
+          part="label"
           class="trigger"
           onMouseDown={() => {
             if (this.open) {
@@ -126,19 +150,24 @@ export class ScCouponForm {
           <slot name="label">{this.label}</slot>
         </div>
 
-        <div class="form">
-          <sc-input onScBlur={() => this.handleBlur()} ref={el => (this.input = el as HTMLScInputElement)} clearable></sc-input>
+        <div class="form" part="form">
+          <sc-input
+            exportparts="base:input__base, input, form-control:input__form-control"
+            onScBlur={() => this.handleBlur()}
+            ref={el => (this.input = el as HTMLScInputElement)}
+            clearable
+          ></sc-input>
           {!!this.error && (
-            <sc-alert type="danger" open>
+            <sc-alert exportparts="base:error__base, icon:error__icon, text:error__text, title:error_title, message:error__message" type="danger" open>
               <span slot="title">{this.error}</span>
             </sc-alert>
           )}
-          <sc-button type="primary" loading={this.busy} full onClick={() => this.applyCoupon()}>
+          <sc-button exportparts="base:button__base, label:button_label" type="primary" loading={this.busy} full onClick={() => this.applyCoupon()}>
             <slot />
           </sc-button>
         </div>
 
-        {this.loading && <sc-block-ui></sc-block-ui>}
+        {this.loading && <sc-block-ui exportparts="base:block-ui, content:block-ui__content"></sc-block-ui>}
       </div>
     );
   }

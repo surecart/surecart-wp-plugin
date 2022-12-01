@@ -17,6 +17,7 @@
   "sc-alert": {
     "closable": true,
     "duration": true,
+    "no-icon": true,
     "open": true,
     "scroll-margin": true,
     "scroll-on-open": true,
@@ -92,6 +93,7 @@
   },
   "sc-card": {
     "borderless": true,
+    "href": true,
     "loading": true,
     "no-divider": true,
     "no-padding": true,
@@ -209,6 +211,7 @@
     "slot": true
   },
   "sc-checkout": {
+    "abandoned-checkout-return-url": true,
     "alignment": true,
     "currency-code": true,
     "customer": true,
@@ -217,6 +220,7 @@
     "form-id": true,
     "loading-text": true,
     "logged-in": true,
+    "manual-payment-methods": true,
     "mode": true,
     "modified": true,
     "persist-session": true,
@@ -354,6 +358,7 @@
     "slot": true
   },
   "sc-customer-email": {
+    "abandoned-checkout-enabled": true,
     "autofocus": true,
     "customer": true,
     "disabled": true,
@@ -369,6 +374,7 @@
     "required": true,
     "show-label": true,
     "size": true,
+    "tracking-confirmation-message": true,
     "value": true,
     "style": true,
     "id": true,
@@ -839,6 +845,13 @@
     "class": true,
     "slot": true
   },
+  "sc-order-confirm-components-validator": {
+    "checkout": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-order-confirm-provider": {
     "form-id": true,
     "mode": true,
@@ -914,6 +927,14 @@
     "class": true,
     "slot": true
   },
+  "sc-order-manual-instructions": {
+    "manual-payment-instructions": true,
+    "manual-payment-title": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-order-password": {
     "autofocus": true,
     "confirmation": true,
@@ -954,6 +975,7 @@
     "shipping-enabled": true,
     "show-name": true,
     "state-placeholder": true,
+    "tax-enabled": true,
     "tax-status": true,
     "style": true,
     "id": true,
@@ -1044,20 +1066,12 @@
     "slot": true
   },
   "sc-payment": {
-    "busy": true,
-    "currency-code": true,
-    "default-processor": true,
+    "checkout": true,
     "hide-test-mode-badge": true,
     "label": true,
-    "loading": true,
     "mode": true,
-    "order": true,
-    "payment-method": true,
     "processor": true,
     "processors": true,
-    "secure-notice": true,
-    "stripe-payment-element": true,
-    "stripe-payment-intent": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1066,6 +1080,20 @@
   "sc-payment-method": {
     "full": true,
     "payment-method": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-payment-method-choice": {
+    "card": true,
+    "checkout": true,
+    "has-others": true,
+    "is-disabled": true,
+    "is-manual": true,
+    "processor": true,
+    "processor-id": true,
+    "recurring-enabled": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1171,15 +1199,6 @@
     "class": true,
     "slot": true
   },
-  "sc-processor-provider": {
-    "checkout": true,
-    "processor": true,
-    "processors": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "sc-product-line-item": {
     "amount": true,
     "currency": true,
@@ -1190,6 +1209,7 @@
     "name": true,
     "quantity": true,
     "removable": true,
+    "scratch-amount": true,
     "trial-duration-days": true,
     "style": true,
     "id": true,
@@ -1288,9 +1308,11 @@
     "slot": true
   },
   "sc-session-provider": {
+    "abandoned-checkout-return-url": true,
     "currency-code": true,
     "form-id": true,
     "group-id": true,
+    "is-manual-processor": true,
     "mode": true,
     "modified": true,
     "payment-intents": true,
@@ -1351,12 +1373,14 @@
   "sc-stripe-element": {
     "account-id": true,
     "disabled": true,
+    "form-state": true,
     "has-focus": true,
     "label": true,
     "mode": true,
     "order": true,
     "publishable-key": true,
     "secure-text": true,
+    "selected-processor-id": true,
     "show-label": true,
     "size": true,
     "style": true,
@@ -1366,8 +1390,10 @@
   },
   "sc-stripe-payment-element": {
     "address": true,
+    "form-state": true,
     "order": true,
-    "payment-intent": true,
+    "selected-processor-id": true,
+    "stripe-payment-intent": true,
     "success-url": true,
     "style": true,
     "id": true,

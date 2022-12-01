@@ -19,10 +19,10 @@
 
 ## Shadow Parts
 
-| Part     | Description |
-| -------- | ----------- |
-| `"base"` |             |
-| `"text"` |             |
+| Part     | Description                |
+| -------- | -------------------------- |
+| `"base"` | The elements base wrapper. |
+| `"text"` | The tooltip text.          |
 
 
 ## Dependencies

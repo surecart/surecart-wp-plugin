@@ -3,9 +3,9 @@
 exports[`sc-dashboard-module renders 1`] = `
 <sc-dashboard-module>
   <mock:shadow-root>
-    <div class="dashboard-module">
-      <div class="heading">
-        <div class="heading__text">
+    <div class="dashboard-module" part="base">
+      <div class="heading" part="heading">
+        <div class="heading__text" part="heading-text">
           <div class="heading__title" part="heading-title">
             <slot name="heading"></slot>
           </div>

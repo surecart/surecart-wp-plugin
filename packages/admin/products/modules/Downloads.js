@@ -2,13 +2,14 @@
 import { css, jsx } from '@emotion/core';
 import {
 	ScBlockUi,
+	ScButton,
 	ScCard,
 	ScFormControl,
+	ScIcon,
 	ScSelect,
 	ScStackedList,
 	ScSwitch,
 } from '@surecart/components-react';
-import { Button } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
@@ -23,6 +24,7 @@ export default ({ id, product, updateProduct, loading }) => {
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const [showArchived, setShowArchived] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
+
 	const { downloads, fetching } = useSelect(
 		(select) => {
 			const queryArgs = [
@@ -69,7 +71,45 @@ export default ({ id, product, updateProduct, loading }) => {
 	const archived = (sorted || []).filter((download) => !!download.archived);
 
 	return (
-		<Box title={__('Downloads', 'surecart')} loading={loading}>
+		<Box
+      title={__('Downloads', 'surecart')}
+      loading={loading}
+      footer={
+        <div
+          css={css`
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          `}
+        >
+          <ScFormControl label={__('File', 'surecart')} showLabel={false}>
+            <MediaLibrary
+              onSelect={addDownload}
+              multiple={true}
+              render={({ setOpen }) => {
+                return (
+                  <ScButton onClick={() => setOpen(true)}>
+                    <ScIcon name="plus" slot="prefix"></ScIcon>
+                    {__('Add Downloads', 'surecart')}
+                  </ScButton>
+                );
+              }}
+            ></MediaLibrary>
+          </ScFormControl>
+
+          {!!archived?.length && (
+            <ScSwitch
+              class="sc-show-archived"
+              checked={showArchived}
+              onScChange={(e) => setShowArchived(e.target.checked)}
+            >
+              {__('Show Archived', 'surecart')}{' '}
+              <sc-tag size="small">{archived?.length}</sc-tag>
+            </ScSwitch>
+          )}
+        </div>
+      }
+    >
 			{(() => {
 				if (!downloads?.length) return null;
 				return (
@@ -109,39 +149,6 @@ export default ({ id, product, updateProduct, loading }) => {
 					</>
 				);
 			})()}
-
-			<div
-				css={css`
-					display: flex;
-					justify-content: space-between;
-					align-items: center;
-				`}
-			>
-				<ScFormControl label={__('File', 'surecart')} showLabel={false}>
-					<MediaLibrary
-						onSelect={addDownload}
-						multiple={true}
-						render={({ setOpen }) => {
-							return (
-								<Button isPrimary onClick={() => setOpen(true)}>
-									{__('Add Downloads', 'surecart')}
-								</Button>
-							);
-						}}
-					></MediaLibrary>
-				</ScFormControl>
-
-				{!!archived?.length && (
-					<ScSwitch
-						class="sc-show-archived"
-						checked={showArchived}
-						onScChange={(e) => setShowArchived(e.target.checked)}
-					>
-						{__('Show Archived', 'surecart')}{' '}
-						<sc-tag size="small">{archived?.length}</sc-tag>
-					</ScSwitch>
-				)}
-			</div>
 
 			{fetching && <ScBlockUi spinner />}
 		</Box>

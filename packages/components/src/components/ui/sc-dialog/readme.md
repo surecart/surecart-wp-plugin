@@ -45,6 +45,7 @@
 ### Used by
 
  - [sc-login-provider](../../providers/sc-login-provider)
+ - [sc-subscription-details](../../controllers/dashboard/subscription-details)
 
 ### Depends on
 
@@ -58,6 +59,7 @@ graph TD;
   sc-dialog --> sc-icon
   sc-button --> sc-spinner
   sc-login-provider --> sc-dialog
+  sc-subscription-details --> sc-dialog
   style sc-dialog fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

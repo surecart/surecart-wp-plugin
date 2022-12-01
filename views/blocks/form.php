@@ -6,7 +6,7 @@
 >
 	<sc-form>
 		<?php if ( (bool) $honeypot_enabled ?? false ) : ?>
-			<sc-checkbox name="get_feedback" value="Feedback" style="position: absolute; left: -9999px; top: -9999px;"></sc-checkbox>
+			<sc-checkbox name="get_feedback" value="Feedback" style="display: none !important;"></sc-checkbox>
 		<?php endif; ?>
 		<?php echo filter_block_content( $content, 'post' ); ?>
 	</sc-form>
@@ -20,19 +20,21 @@
 	'sc-checkout',
 	'#' . $id,
 	[
-		'prices'               => $prices,
-		'customer'             => $customer ?? '',
-		'formId'               => $form_id ?? '',
-		'currencyCode'         => $currency_code ?? null,
-		'modified'             => $modified ?? null,
-		'loggedIn'             => is_user_logged_in(),
-		'mode'                 => $mode ?? 'live',
-		'alignment'            => $align ?? '',
-		'taxProtocol'          => $tax_protocol ?? [],
-		'loadingText'          => $loading_text ?? [],
-		'stripePaymentElement' => $stripe_payment_element ?? false,
-		'successUrl'           => esc_url_raw( $success_url ?? \SureCart::pages()->url( 'order-confirmation' ) ),
-		'processors'           => $processors,
+		'prices'                     => $prices,
+		'customer'                   => $customer ?? '',
+		'formId'                     => $form_id ?? '',
+		'currencyCode'               => $currency_code ?? null,
+		'modified'                   => $modified ?? null,
+		'loggedIn'                   => is_user_logged_in(),
+		'mode'                       => $mode ?? 'live',
+		'alignment'                  => $align ?? '',
+		'taxProtocol'                => $tax_protocol ?? [],
+		'loadingText'                => $loading_text ?? [],
+		'stripePaymentElement'       => $stripe_payment_element ?? false,
+		'successUrl'                 => esc_url_raw( $success_url ?? \SureCart::pages()->url( 'order-confirmation' ) ),
+		'processors'                 => $processors,
+		'manualPaymentMethods'       => $manual_payment_methods,
+		'abandonedCheckoutReturnUrl' => $abandoned_checkout_return_url,
 	]
 );
 ?>
