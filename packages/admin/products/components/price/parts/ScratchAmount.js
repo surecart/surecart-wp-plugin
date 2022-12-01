@@ -1,5 +1,5 @@
-import { __ } from '@wordpress/i18n';
 import { ScPriceInput } from '@surecart/components-react';
+import { __ } from '@wordpress/i18n';
 
 export default ({ className, price, updatePrice, suffix }) => {
 	return (
@@ -13,7 +13,7 @@ export default ({ className, price, updatePrice, suffix }) => {
 				'If this item is on sale, enter a pre-sale price that is greater than the price.',
 				'surecart'
 			)}
-			min={price?.amount + 1}
+			min={price?.amount}
 			onScInput={(e) => {
 				updatePrice({ scratch_amount: e.target.value });
 			}}

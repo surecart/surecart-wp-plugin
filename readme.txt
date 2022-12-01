@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.1
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -243,7 +243,10 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.3.0  - December 1, 2022 =
+= 1.3.1  - November 30, 2022 =
+* Hotfix: Scratch prices not able to be created with decimal points.
+
+= 1.3.0  - November 30, 2022 =
 * New: Restrict coupons to products, prices or customers.
 * Improvement: Ability to filter error messages.
 * Improvement: New documentation on styling with shadow parts and css variables.
