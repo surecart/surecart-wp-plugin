@@ -12,22 +12,26 @@ class AdminSSLCheckService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_action(
-			'admin_notices',
-			function() {
-				if ( ! is_ssl() ) {
-					echo wp_kses_post(
-						\SureCart::notices()->render(
-							[
-								'name'  => 'ssl_notice',
-								'type'  => 'warning',
-								'title' => esc_html__( 'SureCart', 'surecart' ),
-								'text'  => esc_html__('Your store does not appear to be using a secure connection. A secure connection (https) is required to use SureCart to process live transactions.', 'surecart'),
-							]
-						)
-					);
-				}
-			}
+		if ( ! is_ssl() ) {
+			add_action( 'admin_notices', [ $this, 'showNotice' ] );
+		}
+	}
+
+	/**
+	 * Show the SSL notice.
+	 *
+	 * @return void
+	 */
+	public function showNotice() {
+		echo wp_kses_post(
+			\SureCart::notices()->render(
+				[
+					'name'  => 'ssl_notice',
+					'type'  => 'warning',
+					'title' => esc_html__( 'SureCart', 'surecart' ),
+					'text'  => esc_html__( 'Your store does not appear to be using a secure connection. A secure connection (https) is required to use SureCart to process live transactions.', 'surecart' ),
+				]
+			)
 		);
 	}
 
