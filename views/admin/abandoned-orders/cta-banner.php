@@ -99,7 +99,7 @@
 				</sc-button>
 			</div>
 			<div class="sc-banner-top-img-area">
-				<iframe class="cta-video" src="https://www.youtube.com/embed/JL1UxdwWXIM?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				<iframe class="cta-video" src="https://www.youtube.com/embed/JL1UxdwWXIM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 			</div>
 		</div>
 	</div>
