@@ -64,9 +64,9 @@ export class ScCouponForm {
   /** On key up show coupon button (on condition) */
   handleKeyUp() {
     if (!this.input.value) {
-      this.button.style.display = "none";
+      this.button.className = 'btn-hide'
     } else {
-      this.button.style.display = "block";
+      this.button.className = 'btn-show';
     }
   }
 
@@ -137,10 +137,11 @@ export class ScCouponForm {
         </div>
 
         <div class="form">
-          <sc-input placeholder='Enter coupon code' onScBlur={() => this.handleBlur()} onKeyUp={() => this.handleKeyUp()} ref={el => (this.input = el as HTMLScInputElement)}></sc-input>
-          <sc-button type="primary" loading={this.busy} size="medium" onClick={() => this.applyCoupon()} ref={el => (this.button = el as HTMLScButtonElement)}>
-            <slot />
-          </sc-button>
+          <sc-input placeholder="Enter coupon code" onScBlur={() => this.handleBlur()} onKeyUp={() => this.handleKeyUp()} ref={el => (this.input = el as HTMLScInputElement)}>
+            <sc-button slot="suffix" type="text" loading={this.busy} size="medium" class="btn-hide" onClick={() => this.applyCoupon()} ref={el => (this.button = el as HTMLScButtonElement)}>
+              <slot />
+            </sc-button>
+          </sc-input>
           {!!this.error && (
             <sc-alert type="danger" open>
               <span slot="title">{this.error}</span>
