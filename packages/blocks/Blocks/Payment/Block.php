@@ -67,7 +67,7 @@ class Block extends BaseBlock {
 	 * @return \SureCart/Models/Processor|null;
 	 */
 	protected function getProcessorByType( $type, $processors ) {
-		$key = array_search( $type, array_column( $processors, 'processor_type' ), true );
+		$key = array_search( $type, array_column( (array) $processors, 'processor_type' ), true );
 		if ( ! is_int( $key ) ) {
 			return null;
 		}
@@ -186,8 +186,10 @@ class Block extends BaseBlock {
 	 * @return void
 	 */
 	protected function renderManualPaymentMethods() {
+		$methods = (array) ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? [];
+		
+		if ( isset( $methods['errors'] ) ) return;
 		?>
-		<?php $methods = (array) ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? []; ?>
 
 		<?php foreach ( $methods as $method ) : ?>
 			<?php
