@@ -1,16 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-// import { useStateValue } from '@Utils/StateProvider';
-// import './conditions.scss';
 import { Fragment } from '@wordpress/element';
-// import {
-// 	SelectField,
-// 	ProductField,
-// 	NumberField,
-// 	CouponField,
-// 	Select2Field,
-// } from '@Fields';
 import {
 	TextControl,
 	SelectControl,
@@ -30,65 +21,146 @@ function Conditions( props ) {
 
 	const rule_settings = [];
   const conditions_select = [
-    { label: "Product(s)", value: "cart_item" },
-    { label: "Total", value: "cart_total" }
+    { label: __( 'Product(s)', 'surecart' ), value: 'cart_item' },
+    { label: __( 'Total', 'surecart' ), value: 'cart_total' },
+    { label: __( 'Coupon(s)', 'surecart' ), value: 'cart_coupons' },
+    { label: __( 'Payment Processor', 'surecart' ), value: 'cart_payment_method' },
+    { label: __( 'Shipping country', 'surecart' ), value: 'cart_shipping_country' },
+    { label: __( 'Billing country', 'surecart' ), value: 'cart_billing_country' }
+  ];
+  const stringOperators = [
+    {
+        'label': 'matches any of',
+        'value': 'any'
+    },
+    {
+        'label': 'matches all of',
+        'value': 'all'
+    },
+    {
+        'label': 'matches none of',
+        'value': 'none'
+    }
+  ];
+  const mathOperators = [
+    {
+        'label': 'is equal to',
+        'value': '=='
+    },
+    {
+        'label': 'is not equal to',
+        'value': '!='
+    },
+    {
+        'label': 'is greater than',
+        'value': '>'
+    },
+    {
+        'label': 'is less than',
+        'value': '<'
+    },
+    {
+        'label': 'is greater or equal to',
+        'value': '>='
+    },
+    {
+        'label': 'is less or equal to',
+        'value': '<='
+    }
+  ];
+  const couponOperators = [
+    {
+      'label': __( 'matches any of', 'surecart' ),
+      'value': 'any',
+    },
+    {
+      'label': __( 'matches all of', 'surecart' ),
+      'value': 'all',
+    },
+    {
+      'label': __( 'matches none of', 'surecart' ),
+      'value': 'none',
+    },
+    {
+      'label': __( 'exist', 'surecart' ),
+      'value': 'exist',
+    },
+    {
+      'label': __( 'not exist', 'surecart' ),
+      'value': 'not_exist',
+    },
+  ];
+  const shippingOperators = [
+    {
+      'label': __( 'matches any of', 'surecart' ),
+      'value': 'any',
+    },
+    {
+      'label': __( 'matches none of', 'surecart' ),
+      'value': 'none',
+    },
   ];
   const rule_settings_field_data = {
-    "cart_item": {
-        "operator": [
+    'cart_item': {
+        'operator': stringOperators,
+        'fields': [
             {
-                "label": "matches any of",
-                "value": "any"
-            },
-            {
-                "label": "matches all of",
-                "value": "all"
-            },
-            {
-                "label": "matches none of",
-                "value": "none"
-            }
-        ],
-        "fields": [
-            {
-                "type": "text",
-                "placeholder": "Search for products..",
-                "isMulti": true
+                'type': 'text',
+                'placeholder': 'Search for products..',
+                'isMulti': true
             }
         ]
     },
-    "cart_total": {
-        "operator": [
+    'cart_total': {
+        'operator': mathOperators,
+        'fields': [
             {
-                "label": "is equal to",
-                "value": "=="
-            },
-            {
-                "label": "is not equal to",
-                "value": "!="
-            },
-            {
-                "label": "is greater than",
-                "value": ">"
-            },
-            {
-                "label": "is less than",
-                "value": "<"
-            },
-            {
-                "label": "is greater or equal to",
-                "value": ">="
-            },
-            {
-                "label": "is less or equal to",
-                "value": "<="
-            }
-        ],
-        "fields": [
-            {
-                "type": "number"
+                'type': 'number'
             }
         ]
+    },
+    'cart_coupons': {
+      'operator': couponOperators,
+      'fields': [
+        {
+          'type': 'coupon',
+          'placeholder': __( 'Search for coupons..', 'cartflows-pro' ),
+          'isMulti': true,
+        },
+      ],
+    },
+    'cart_shipping_country': {
+      'operator': shippingOperators,
+      'fields': [
+        {
+          'type': 'select',
+          'placeholder': __( 'Search for country..', 'surecart' ),
+          'isMulti': true,
+          'options': [{ 'label': 'India', 'value': 'IN' }],
+        },
+      ],
+    },
+    'cart_billing_country': {
+      'operator': shippingOperators,
+      'fields': [
+        {
+          'type': 'select',
+          'placeholder': __( 'Search for country..', 'surecart' ),
+          'isMulti': true,
+          'options': [{ 'label': 'India', 'value': 'IN' }],
+        },
+      ],
+    },
+    'cart_payment_method': {
+      'operator': shippingOperators,
+      'fields': [
+        {
+          'type': 'select',
+          'placeholder': __( 'Search for payment method..', 'cartflows-pro' ),
+          'isMulti': true,
+          'options': [{ 'label': 'Stripe', 'value': 'stripe' }],
+        },
+      ],
     },
   }
 
@@ -111,6 +183,7 @@ function Conditions( props ) {
 		const name = `wcf-checkout-rules[${ g_index }][rules][${ r_index }][value]`;
 
 		return fields.map( ( field ) => {
+      debugger;
 			switch ( field.type ) {
 				case 'select':
 					rendorfields = (
@@ -128,6 +201,7 @@ function Conditions( props ) {
 
 				case 'number':
         case 'text':
+        default:
 					rendorfields = (
 						<TextControl
 							name={ name }

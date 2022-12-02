@@ -18,7 +18,7 @@ import Rules from './rules';
 
 const Settings = ( props ) => {
   const { attributes, setAttributes } = props;
-  const { condition, operator, value, rule_groups } = attributes;
+  const { rule_groups } = attributes;
 
   const [ isOpen, setOpen ] = useState( false );
   const openModal = () => setOpen( true );
@@ -52,49 +52,10 @@ const Settings = ( props ) => {
                   max-width: 650px;
                   max-height: 80%;` }
                 >
-                    {/* <Button variant="secondary" onClick={ closeModal }>
-                        My custom close button
-                    </Button> */}
                   <Rules {...props}/>
                 </Modal>
             ) }
           </PanelRow>
-					{/*<PanelRow>
-            <SelectControl
-              label={ __( 'Condition', 'surecart') }
-              value={ condition }
-              options={ [
-                { label: 'Checkout', value: 'checkout' },
-                { label: 'Product', value: 'product' },
-              ] }
-              onChange={ ( condition ) => setAttributes({ condition })}
-              __nextHasNoMarginBottom
-            />
-          </PanelRow>
-          <PanelRow>
-            <SelectControl
-              label={ __( 'Operator', 'surecart') }
-              value={ operator }
-              options={ [
-                { label: '===', value: '===' },
-                { label: '!==', value: '!==' },
-              ] }
-              onChange={ ( operator ) => setAttributes({ operator })}
-              __nextHasNoMarginBottom
-            />
-          </PanelRow>
-          <PanelRow>
-            <SelectControl
-              label={ __( 'Value', 'surecart') }
-              value={ value }
-              options={ [
-                { label: '50', value: '50' },
-                { label: '100', value: '100' },
-              ] }
-              onChange={ ( value ) => setAttributes({ value })}
-              __nextHasNoMarginBottom
-            />
-            </PanelRow>*/}
 				</PanelBody>
 			</InspectorControls>
 		</>

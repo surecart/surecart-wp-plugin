@@ -12,15 +12,6 @@
     "align": ["wide", "full"]
 	},
 	"attributes": {
-		"condition": {
-			"type": "string"
-		},
-		"operator": {
-			"type": "string"
-		},
-		"value": {
-			"type": "string"
-		},
     "rule_groups": {
 			"type": "string"
 		}
