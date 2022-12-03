@@ -8,8 +8,10 @@ import { DropZone, Button, FormFileUpload } from '@wordpress/components';
 import Template from './template';
 import {
 	ScBlockUi,
+	ScButton,
 	ScCard,
 	ScEmpty,
+	ScFormatBytes,
 	ScTable,
 	ScTableCell,
 	ScTag,
@@ -180,6 +182,78 @@ export default ({
 	const hasPrevious = page > 1;
 	const hasNext = medias?.length === perPage;
 
+	const mediaUsage = window?.scData?.entitlements?.medias_total_byte_size;
+	const mediaUsagePercentage = mediaUsage
+		? (mediaUsage?.count / mediaUsage?.limit) * 100
+		: null;
+	// if media usage is more than 75% :: show low media component
+	const isLowMediaStorage = mediaUsagePercentage
+		? Math.round(mediaUsagePercentage) >= 75
+		: false;
+
+	const storageWarning = () => {
+		return (
+			<div
+				css={css`
+					display: flex;
+					align-items: center;
+					gap: 0.66rem;
+					padding-left: 0.55rem;
+				`}
+			>
+				<div
+					css={css`
+						background-color: #dddddd;
+						border-radius: 6px;
+						height: 6px;
+						width: 5rem;
+					`}
+				>
+					<div
+						css={css`
+							background-color: #f59e0b;
+							border-radius: 6px;
+							height: 6px;
+							width: ${mediaUsagePercentage}%;
+						`}
+					></div>
+				</div>
+				<div
+					css={css`
+						font-size: 0.75rem;
+						padding-right: 0.33rem;
+					`}
+				>
+					<ScFormatBytes
+						style={{ color: '#f59e0b', fontWeight: 600 }}
+						value={mediaUsage?.count}
+					/>{' '}
+					of{' '}
+					<ScFormatBytes
+						style={{ color: '#3e4448' }}
+						value={mediaUsage?.limit}
+					/>
+				</div>
+				<ScTag
+					type="warning"
+					css={css`
+						--sc-font-weight-bold: 400;
+					`}
+				>
+					{__('Your storage space is low', 'surecart')}
+				</ScTag>
+				<ScButton
+					target="_blank"
+					href={scData?.upgrade_url ?? 'https://app.surecart.com'}
+					size="small"
+					type="warning"
+				>
+					{__('Upgrade', 'surecart')}
+				</ScButton>
+			</div>
+		);
+	};
+
 	/**
 	 * Main Content
 	 *
@@ -282,16 +356,28 @@ export default ({
 					mainContent={mainContent()}
 					onClose={onRequestClose}
 					footer={
-						<Button
-							isPrimary
-							disabled={!selected?.id}
-							onClick={() => {
-								onSelect && onSelect(selected);
-								setOpen(false);
-							}}
+						<div
+							css={css`
+								display: flex;
+								align-items: flex-end;
+								justify-content: ${isLowMediaStorage
+									? 'space-between'
+									: 'flex-end'};
+								flex: 1 0 0px;
+							`}
 						>
-							{__('Choose', 'surecart')}
-						</Button>
+							{isLowMediaStorage && storageWarning()}
+							<Button
+								isPrimary
+								disabled={!selected?.id}
+								onClick={() => {
+									onSelect && onSelect(selected);
+									setOpen(false);
+								}}
+							>
+								{__('Choose', 'surecart')}
+							</Button>
+						</div>
 					}
 					sidebar={
 						selected && (
