@@ -38,7 +38,7 @@ $direction: row, row-reverse, column, column-reverse;
 }
 
 @media (max-width: 768px) {
-  .flex {
+  .flex-responsive {
     flex-direction: column;
   }
 }
