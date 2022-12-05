@@ -8,6 +8,9 @@ import {
 	ToggleControl,
   Button,
 } from '@wordpress/components';
+// import React from 'react'
+// import Select from 'react-select'
+import SelectProducts from './selectProducts';
 
 // import ReactHtmlParser from 'react-html-parser';
 
@@ -17,6 +20,7 @@ function Conditions( props ) {
   const { rules, group_id, g_index, groups_length, removeConditionFromRuleGroup, updateConditionInRuleGroup, updateConditionOptionInRuleGroup } = props;
 	// const rule_settings = page_settings.settings.rules;
 	// const conditions_select = rule_settings.conditions;
+
 
 
 	const rule_settings = [];
@@ -105,7 +109,7 @@ function Conditions( props ) {
         'operator': stringOperators,
         'fields': [
             {
-                'type': 'text',
+                'type': 'products',
                 'placeholder': 'Search for products..',
                 'isMulti': true
             }
@@ -183,9 +187,24 @@ function Conditions( props ) {
 		const name = `wcf-checkout-rules[${ g_index }][rules][${ r_index }][value]`;
 
 		return fields.map( ( field ) => {
-      debugger;
+      // debugger;
 			switch ( field.type ) {
-				case 'select':
+				case 'products':
+          debugger
+					rendorfields = (
+            <SelectProducts
+							name={ `${ name }[]` }
+							value={ value }
+							placeholder={ field.placeholder }
+							tooltip={ field.tooltip }
+							options={ field.options }
+							isMulti={ field.isMulti }
+              onChangeCB={ ( selection ) => { debugger; updateConditionOptionInRuleGroup( group_id, rule_id, selection, 'value' ); } }
+						/>
+					);
+					break;
+
+        case 'select':
 					rendorfields = (
 						<SelectControl
 							name={ `${ name }[]` }
