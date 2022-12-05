@@ -12,6 +12,19 @@
 // sc-input {
 //   margin-bottom: var(--sc-spacing-small);
 // }
+.coupon-button {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.90);
+  transition: all 0.15s ease;
+}
+.coupon--has-value {
+  .coupon-button {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+  }
+}
 
 .form {
   opacity: 0;
@@ -19,19 +32,6 @@
   height: 0;
   position: relative;
   transition: opacity var(--sc-transition-fast) ease-in-out;
-
-  .btn-hide {
-    opacity: 0;
-    visibility: hidden;
-    transform: scale(0.90);
-    transition: all 0.15s ease;
-  }
-  .btn-show {
-    opacity: 1;
-    visibility: visible;
-    transform: scale(1);
-    transition: all 0.15s ease;
-  }
 }
 
 .coupon-form--is-open {

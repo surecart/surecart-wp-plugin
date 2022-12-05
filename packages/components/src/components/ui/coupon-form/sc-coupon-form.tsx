@@ -1,5 +1,6 @@
-import { Component, State, h, Watch, Prop, Event, EventEmitter } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+
 import { getHumanDiscount } from '../../../functions/price';
 import { DiscountResponse } from '../../../types';
 
@@ -10,7 +11,7 @@ import { DiscountResponse } from '../../../types';
 })
 export class ScCouponForm {
   private input: HTMLScInputElement;
-  private button: HTMLScButtonElement;
+  // private button: HTMLScButtonElement;
 
   /** The label for the coupon form */
   @Prop() label: string;
@@ -53,22 +54,27 @@ export class ScCouponForm {
     }
   }
 
+  @Watch('value')
+  handleValue(val) {
+    console.log(val);
+  }
+
   /** Close it when blurred and no value. */
   handleBlur() {
-    if (!this.input.value) {
+    if (!this.value) {
       this.open = false;
       this.error = '';
     }
   }
 
   /** On key up show coupon button (on condition) */
-  handleKeyUp() {
-    if (!this.input.value) {
-      this.button.className = 'btn-hide'
-    } else {
-      this.button.className = 'btn-show';
-    }
-  }
+  // handleKeyUp() {
+  //   if (!this.input.value) {
+  //     this.button.className = 'btn-hide';
+  //   } else {
+  //     this.button.className = 'btn-show';
+  //   }
+  // }
 
   /** Apply the coupon. */
   applyCoupon() {
@@ -122,6 +128,7 @@ export class ScCouponForm {
         class={{
           'coupon-form': true,
           'coupon-form--is-open': this.open || this.forceOpen,
+          'coupon--has-value': !!this.value,
         }}
       >
         <div
@@ -137,8 +144,27 @@ export class ScCouponForm {
         </div>
 
         <div class="form">
-          <sc-input placeholder="Enter coupon code" onScBlur={() => this.handleBlur()} onKeyUp={() => this.handleKeyUp()} ref={el => (this.input = el as HTMLScInputElement)}>
-            <sc-button slot="suffix" type="text" loading={this.busy} size="medium" class="btn-hide" onClick={() => this.applyCoupon()} ref={el => (this.button = el as HTMLScButtonElement)}>
+          <sc-input
+            value={this.value}
+            onScInput={(e: any) => (this.value = e.target.value)}
+            placeholder="Enter coupon code"
+            onScBlur={() => this.handleBlur()}
+            // onKeyUp={() => this.handleKeyUp()}
+            ref={el => (this.input = el as HTMLScInputElement)}
+          >
+            <sc-button
+              slot="suffix"
+              type="text"
+              loading={this.busy}
+              size="medium"
+              class="coupon-button"
+              // class={{
+              //   'btn-hide': !this.value,
+              //   'btn-show': !!this.value,
+              // }}
+              onClick={() => this.applyCoupon()}
+              // ref={el => (this.button = el as HTMLScButtonElement)}
+            >
               <slot />
             </sc-button>
           </sc-input>
