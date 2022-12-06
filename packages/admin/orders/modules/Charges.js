@@ -6,7 +6,7 @@ import { useState } from 'react';
 import ChargesDataTable from '../../components/data-tables/charges-data-table';
 import Refund from '../../components/data-tables/charges-data-table/Refund';
 
-export default ({ checkoutId }) => {
+export default ({ checkoutId, checkout }) => {
 	const [refundCharge, setRefundCharge] = useState(false);
 	const { invalidateResolution } = useDispatch(coreStore);
 	const { charges, loading, invalidateCharges } = useSelect(
@@ -86,6 +86,7 @@ export default ({ checkoutId }) => {
 					charge={refundCharge}
 					onRefunded={onRefunded}
 					onRequestClose={() => setRefundCharge(false)}
+					checkout={checkout}
 				/>
 			)}
 		</>

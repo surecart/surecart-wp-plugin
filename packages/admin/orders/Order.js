@@ -179,12 +179,15 @@ export default () => {
 					charge={order?.checkout?.charge}
 					loading={!hasLoadedOrder}
 				/>
-				<Charges checkoutId={order?.checkout?.id} />
+				<Charges
+					checkoutId={order?.checkout?.id}
+					checkout={order?.checkout}
+				/>
 				<PaymentFailures
 					failures={order?.checkout?.payment_failures}
 					loading={!hasLoadedOrder}
 				/>
-        <Refunds chargeId={order?.checkout?.charge?.id} />
+				<Refunds chargeId={order?.checkout?.charge?.id} />
 				<Subscriptions checkoutId={order?.checkout?.id} />
 				<OrderStatusConfirmModal
 					order={order}

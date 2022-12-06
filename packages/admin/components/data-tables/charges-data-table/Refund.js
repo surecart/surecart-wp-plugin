@@ -3,10 +3,12 @@ import { css, jsx } from '@emotion/core';
 import {
 	ScAlert,
 	ScButton,
+	ScCheckbox,
 	ScFlex,
 	ScForm,
 	ScFormControl,
 	ScPriceInput,
+	ScProductLineItem,
 	ScSelect,
 } from '@surecart/components-react';
 import { useDispatch } from '@wordpress/data';
@@ -15,17 +17,21 @@ import { store as noticesStore } from '@wordpress/notices';
 import { Modal } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { intervalString } from '../../../util/translations';
 
-export default ({ charge, onRequestClose, onRefunded }) => {
+export default ({ charge, onRequestClose, onRefunded, checkout }) => {
 	const [loading, setLoading] = useState(false);
 	const [amount, setAmount] = useState(
 		charge?.amount - charge?.refunded_amount
 	);
 	const [reason, setReason] = useState('requested_by_customer');
 	const [error, setError] = useState(null);
+	const [revokedPurchaseIds, setRevokedPurchaseIds] = useState([]);
 
 	const { saveEntityRecord, invalidateResolutionForStore } =
 		useDispatch(coreStore);
+
+	const line_items = checkout?.line_items?.data;
 
 	/**
 	 * Handle submit.
@@ -42,6 +48,7 @@ export default ({ charge, onRequestClose, onRefunded }) => {
 					amount,
 					reason,
 					charge: charge?.id,
+					revoked_purchases: revokedPurchaseIds,
 				},
 				{ throwOnError: true }
 			);
@@ -70,6 +77,13 @@ export default ({ charge, onRequestClose, onRefunded }) => {
 		} finally {
 			setLoading(false);
 		}
+	};
+
+	// handle purchased item click for revoke
+	const onClickProductItem = (id, checked) => {
+		setRevokedPurchaseIds((state) =>
+			checked ? state.filter((item) => id !== item) : [...state, id]
+		);
 	};
 
 	return (
@@ -131,6 +145,52 @@ export default ({ charge, onRequestClose, onRefunded }) => {
 								},
 							]}
 						/>
+					</ScFormControl>
+				</div>
+
+				<div>
+					<ScFormControl label={__('Revoke Purchase(s)', 'surecart')}>
+						<div
+							css={css`
+								padding: 0.44rem 0;
+							`}
+						>
+							{(line_items || []).map((item) => {
+								const checked = revokedPurchaseIds.includes(
+									item.id
+								);
+								return (
+									<ScCheckbox
+										key={item.id}
+										checked={checked}
+										onScChange={() =>
+											onClickProductItem(item.id, checked)
+										}
+									>
+										<ScProductLineItem
+											css={css`
+												width: 100%;
+											`}
+											imageUrl={
+												item?.price?.product?.image_url
+											}
+											name={item?.price?.product?.name}
+											editable={false}
+											removable={false}
+											quantity={item.quantity}
+											amount={item.subtotal_amount}
+											currency={item?.price?.currency}
+											trialDurationDays={
+												item?.price?.trial_duration_days
+											}
+											interval={intervalString(
+												item?.price
+											)}
+										/>
+									</ScCheckbox>
+								);
+							})}
+						</div>
 					</ScFormControl>
 				</div>
 
