@@ -1,6 +1,14 @@
 import { Component, h, Prop, Element, Watch } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 
+/**
+ * @part form-control - The elements base wrapper.
+ * @part label - The label.
+ * @part input - The input wrapper.
+ * @part help-text - Help text.
+ * @part tooltip - Tooltip
+ * @part tooltip-text - Tooltip text.
+ */
 @Component({
   tag: 'sc-form-control',
   styleUrl: 'sc-form-control.scss',
@@ -65,9 +73,9 @@ export class ScFormControl {
           <slot name="label">{this.label}</slot>
           <slot name="label-end"></slot>
         </label>
-        <div class="form-control__input">
+        <div part="input" class="form-control__input">
           {!!this.errorMessage ? (
-            <sc-tooltip text={this.errorMessage} type="danger" padding={10} freeze open onClick={() => (this.errorMessage = '')}>
+            <sc-tooltip exportparts="base:tooltip, text:tooltip-text" text={this.errorMessage} type="danger" padding={10} freeze open onClick={() => (this.errorMessage = '')}>
               <slot></slot>
             </sc-tooltip>
           ) : (

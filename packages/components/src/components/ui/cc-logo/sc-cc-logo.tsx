@@ -1,5 +1,9 @@
 import { Component, h, Prop } from '@stencil/core';
 
+/**
+ * @part base - The elements base wrapper.
+ */
+
 @Component({
   tag: 'sc-cc-logo',
   styleUrl: 'sc-cc-logo.css',

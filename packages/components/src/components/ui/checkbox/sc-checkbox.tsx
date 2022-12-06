@@ -3,6 +3,13 @@ import { FormSubmitController } from '../../../functions/form-data';
 
 let id = 0;
 
+/**
+ * @part base - The elements base wrapper.
+ * @part control - The control wrapper.
+ * @part checked-icon - Checked icon.
+ * @part indeterminate-icon - Indeterminate icon.
+ * @part label - The label.
+ */
 @Component({
   tag: 'sc-checkbox',
   styleUrl: 'sc-checkbox.scss',

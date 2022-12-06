@@ -37,6 +37,9 @@ export class ScSwitch {
 
   @Prop() reversed: boolean;
 
+  /** This will be true as a workaround in the block editor to focus on the content. */
+  @Prop() edit: boolean = false;
+
   /** Emitted when the control loses focus. */
   @Event() scBlur: EventEmitter<void>;
 
@@ -69,6 +72,8 @@ export class ScSwitch {
   }
 
   handleKeyDown(event: KeyboardEvent) {
+    if (this.edit) return true;
+
     if (event.key === 'ArrowLeft') {
       event.preventDefault();
       this.checked = false;
@@ -83,6 +88,8 @@ export class ScSwitch {
   }
 
   handleMouseDown(event: MouseEvent) {
+    if (this.edit) return true;
+
     // Prevent clicks on the label from briefly blurring the input
     event.preventDefault();
     this.input.focus();
@@ -107,8 +114,9 @@ export class ScSwitch {
   }
 
   render() {
+    const Tag = this.edit ? 'div' : 'label';
     return (
-      <label
+      <Tag
         part="base"
         htmlFor={this.switchId}
         class={{
@@ -118,6 +126,7 @@ export class ScSwitch {
           'switch--disabled': this.disabled,
           'switch--focused': this.hasFocus,
           'switch--reversed': this.reversed,
+          'switch--editing': this.edit,
         }}
         onMouseDown={e => this.handleMouseDown(e)}
       >
@@ -149,7 +158,7 @@ export class ScSwitch {
             <slot name="description"></slot>
           </span>
         </span>
-      </label>
+      </Tag>
     );
   }
 }

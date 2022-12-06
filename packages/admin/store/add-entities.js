@@ -1,6 +1,7 @@
 import { store as coreStore } from '@wordpress/core-data';
 import { dispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
+import './ui/register';
 
 dispatch(coreStore).addEntities([
 	{

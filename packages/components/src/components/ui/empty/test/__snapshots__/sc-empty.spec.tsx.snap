@@ -3,7 +3,7 @@
 exports[`sc-empty renders 1`] = `
 <sc-empty>
   <mock:shadow-root>
-    <div class="empty">
+    <div class="empty" part="base">
       <slot></slot>
     </div>
   </mock:shadow-root>

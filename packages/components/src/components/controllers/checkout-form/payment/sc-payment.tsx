@@ -1,8 +1,17 @@
 import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
+
 import { Checkout, Processor } from '../../../../types';
 
+/**
+ * @part base - The elements base wrapper.
+ * @part form-control - The form control wrapper.
+ * @part label - The input label.
+ * @part help-text - Help text that describes how to use the input.
+ * @part test-badge__base - Test badge base.
+ * @part test-badge__content - Test badge content.
+ */
 @Component({
   tag: 'sc-payment',
   styleUrl: 'sc-payment.scss',
@@ -42,6 +51,16 @@ export class ScPayment {
 
   getAllProcessors() {
     return Array.from(this.el.querySelectorAll('sc-payment-method-choice') as NodeListOf<HTMLScPaymentMethodChoiceElement>) || null;
+  }
+
+  getProcessor() {
+    switch (this.processor) {
+      case 'paypal':
+      case 'paypal-card':
+        return 'paypal';
+      default:
+        return 'stripe';
+    }
   }
 
   /** Handle processor invalid state. */
@@ -87,11 +106,11 @@ export class ScPayment {
 
     return (
       <Host>
-        <sc-form-control label={this.label}>
+        <sc-form-control label={this.label} exportparts="label, help-text, form-control">
           <div class="sc-payment-label" slot="label">
             <div>{this.label}</div>
             {this.mode === 'test' && !this.hideTestModeBadge && (
-              <sc-tag type="warning" size="small">
+              <sc-tag type="warning" size="small" exportparts="base:test-badge__base, content:test-badge__content">
                 {__('Test Mode', 'surecart')}
               </sc-tag>
             )}

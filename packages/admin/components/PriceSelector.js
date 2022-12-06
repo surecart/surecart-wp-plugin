@@ -16,7 +16,7 @@ export default ({ onSelect, ad_hoc, value, open = false }) => {
 				'surecart',
 				'product',
 				{
-					search: query,
+					query,
 					expand: ['prices'],
 				},
 			];

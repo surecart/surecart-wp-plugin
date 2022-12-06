@@ -102,19 +102,19 @@ class ErrorsTranslationService {
 		// translate specific error code.
 		$translated = $this->codeTranslation( $response['code'] ?? '' );
 		if ( $translated ) {
-			return $translated;
+			return apply_filters( 'surecart/translated_error', $translated, $response );
 		}
 
 		// translate attribute.
 		$translated = $this->attributeTranslation( $response['attribute'] ?? '', $response['type'] ?? '', $response['options'] ?? [] );
 		if ( $translated ) {
-			return $translated;
+			return apply_filters( 'surecart/translated_error', $translated, $response );
 		}
 
 		// translate type.
 		$translated = $this->typeTranslation( $response['type'] ?? '' );
 		if ( $translated ) {
-			return $translated;
+			return apply_filters( 'surecart/translated_error', $translated, $response );
 		}
 
 		// fallback.
@@ -160,6 +160,6 @@ class ErrorsTranslationService {
 			}
 		}
 
-		return $formatted;
+		return apply_filters( 'surecart/translated_errors', $formatted );
 	}
 }
