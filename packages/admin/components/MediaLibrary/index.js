@@ -20,6 +20,7 @@ import useFileUpload from '../../mixins/useFileUpload';
 import Error from '../Error';
 import MediaItem from './MediaItem';
 import Preview from './Preview';
+import StorageLimitWarning from '../StorageLimitWarning';
 
 export default ({
 	render,
@@ -191,69 +192,6 @@ export default ({
 		? Math.round(mediaUsagePercentage) >= 75
 		: false;
 
-	const storageWarning = () => {
-		return (
-			<div
-				css={css`
-					display: flex;
-					align-items: center;
-					gap: 0.66rem;
-					padding-left: 0.55rem;
-				`}
-			>
-				<div
-					css={css`
-						background-color: #dddddd;
-						border-radius: 6px;
-						height: 6px;
-						width: 5rem;
-					`}
-				>
-					<div
-						css={css`
-							background-color: #f59e0b;
-							border-radius: 6px;
-							height: 6px;
-							width: ${mediaUsagePercentage}%;
-						`}
-					></div>
-				</div>
-				<div
-					css={css`
-						font-size: 0.75rem;
-						padding-right: 0.33rem;
-					`}
-				>
-					<ScFormatBytes
-						style={{ color: '#f59e0b', fontWeight: 600 }}
-						value={mediaUsage?.count}
-					/>{' '}
-					of{' '}
-					<ScFormatBytes
-						style={{ color: '#3e4448' }}
-						value={mediaUsage?.limit}
-					/>
-				</div>
-				<ScTag
-					type="warning"
-					css={css`
-						--sc-font-weight-bold: 400;
-					`}
-				>
-					{__('Your storage space is low', 'surecart')}
-				</ScTag>
-				<ScButton
-					target="_blank"
-					href={scData?.upgrade_url ?? 'https://app.surecart.com'}
-					size="small"
-					type="warning"
-				>
-					{__('Upgrade', 'surecart')}
-				</ScButton>
-			</div>
-		);
-	};
-
 	/**
 	 * Main Content
 	 *
@@ -366,7 +304,12 @@ export default ({
 								flex: 1 0 0px;
 							`}
 						>
-							{isLowMediaStorage && storageWarning()}
+							{isLowMediaStorage && (
+								<StorageLimitWarning
+									mediaUsageDetails={mediaUsage}
+									mediaUsagePercentage={mediaUsagePercentage}
+								/>
+							)}
 							<Button
 								isPrimary
 								disabled={!selected?.id}
