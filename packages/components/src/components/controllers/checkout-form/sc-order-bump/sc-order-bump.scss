@@ -11,14 +11,10 @@
     gap: 0.25em;
   }
   &__tag {
-    position: absolute;
-    top: 0;
-    right: 0;
     background: var(--sc-color-primary-500);
     color: var(--sc-color-white);
-    line-height: var(--sc-input-height-small);
-    border-radius: 0 var(--sc-input-border-radius-medium) 0 var(--sc-input-border-radius-medium);
-    padding: 0 var(--sc-spacing-small);
+    border-radius: var(--sc-input-border-radius-medium);
+    padding: var(--sc-spacing-x-small);
     font-size: var(--sc-font-size-x-small);
   }
 
@@ -61,5 +57,13 @@
     .bump__interval {
       color: var(--sc-color-gray-500);
     }
+  }
+
+  &__amount {
+    display: flex;
+    align-items: center;
+    gap: 0.33rem;
+    flex-wrap: wrap;
+    padding-top: var(--sc-spacing-xx-small);
   }
 }
