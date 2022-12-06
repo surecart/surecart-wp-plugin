@@ -11,7 +11,7 @@ export class ScFlex {
   @Prop() flexDirection: string;
   @Prop() columnGap: string;
   @Prop() flexWrap: string;
-  @Prop() mobileSize: string;
+  @Prop() stack: string;
 
   render() {
     return (
@@ -24,7 +24,7 @@ export class ScFlex {
           ...(this.flexDirection ? { [`direction-${this.flexDirection}`]: true } : {}),
           ...(this.columnGap ? { [`column-gap-${this.columnGap}`]: true } : {}),
           ...(this.flexWrap ? { [`wrap-${this.flexWrap}`]: true } : {}),
-          ...(this.mobileSize ? { [`flex-${this.mobileSize}`]: true } : {}),
+          ...(this.stack ? { [`stack-${this.stack}`]: true } : {}),
         }}
       >
         <slot></slot>
