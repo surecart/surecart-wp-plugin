@@ -298,9 +298,7 @@ export default ({
 							css={css`
 								display: flex;
 								align-items: flex-end;
-								justify-content: ${isLowMediaStorage
-									? 'space-between'
-									: 'flex-end'};
+								justify-content: space-between;
 								flex: 1 0 0px;
 							`}
 						>
@@ -311,6 +309,9 @@ export default ({
 								/>
 							)}
 							<Button
+								css={css`
+									margin-left: auto;
+								`}
 								isPrimary
 								disabled={!selected?.id}
 								onClick={() => {
