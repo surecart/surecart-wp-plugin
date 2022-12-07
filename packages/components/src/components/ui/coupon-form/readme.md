@@ -41,8 +41,8 @@
 - [sc-tag](../tag)
 - [sc-format-number](../../util/format-number)
 - [sc-input](../input)
-- [sc-alert](../alert)
 - [sc-button](../button)
+- [sc-alert](../alert)
 - [sc-block-ui](../block-ui)
 
 ### Graph
@@ -53,13 +53,13 @@ graph TD;
   sc-coupon-form --> sc-tag
   sc-coupon-form --> sc-format-number
   sc-coupon-form --> sc-input
-  sc-coupon-form --> sc-alert
   sc-coupon-form --> sc-button
+  sc-coupon-form --> sc-alert
   sc-coupon-form --> sc-block-ui
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
-  sc-alert --> sc-icon
   sc-button --> sc-spinner
+  sc-alert --> sc-icon
   sc-block-ui --> sc-spinner
   sc-order-coupon-form --> sc-coupon-form
   sc-upcoming-invoice --> sc-coupon-form
