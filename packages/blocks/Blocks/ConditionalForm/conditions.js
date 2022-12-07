@@ -11,6 +11,7 @@ import {
 // import React from 'react'
 // import Select from 'react-select'
 import SelectProducts from './selectProducts';
+import SelectCoupons from './selectCoupons';
 
 // import ReactHtmlParser from 'react-html-parser';
 
@@ -127,7 +128,7 @@ function Conditions( props ) {
       'operator': couponOperators,
       'fields': [
         {
-          'type': 'coupon',
+          'type': 'coupons',
           'placeholder': __( 'Search for coupons..', 'cartflows-pro' ),
           'isMulti': true,
         },
@@ -204,6 +205,20 @@ function Conditions( props ) {
 					);
 					break;
 
+        case 'coupons':
+          debugger
+					rendorfields = (
+            <SelectCoupons
+							name={ `${ name }[]` }
+							value={ value }
+							placeholder={ field.placeholder }
+							tooltip={ field.tooltip }
+							options={ field.options }
+							isMulti={ field.isMulti }
+              onChangeCB={ ( selection ) => { debugger; updateConditionOptionInRuleGroup( group_id, rule_id, selection, 'value' ); } }
+						/>
+					);
+					break;
         case 'select':
 					rendorfields = (
 						<SelectControl
