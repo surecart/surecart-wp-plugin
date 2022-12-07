@@ -5,8 +5,7 @@ import { Fragment } from '@wordpress/element';
 import {
 	TextControl,
 	SelectControl,
-	ToggleControl,
-  Button,
+	__experimentalNumberControl as NumberControl,
 } from '@wordpress/components';
 // import React from 'react'
 // import Select from 'react-select'
@@ -234,8 +233,20 @@ function Conditions( props ) {
 					break;
 
 				case 'number':
+          rendorfields = (
+						<NumberControl
+              name={ name }
+              value={ value }
+              placeholder={ field.placeholder }
+				      tooltip={ field.tooltip }
+              onChange={ ( selection ) => { updateConditionOptionInRuleGroup( group_id, rule_id, selection, 'value' ); } }
+              isShiftStepEnabled={ true }
+              shiftStep={ 1 }
+            />
+					);
+					break;
+
         case 'text':
-        default:
 					rendorfields = (
 						<TextControl
 							name={ name }
@@ -246,6 +257,7 @@ function Conditions( props ) {
 						/>
 					);
 					break;
+        default:
 			}
 			return rendorfields;
 		} );
