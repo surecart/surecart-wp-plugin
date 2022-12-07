@@ -5,13 +5,7 @@
 .coupon-form {
   position: relative;
 }
-// .coupon-tag {
-//   margin-bottom: 4px;
-// }
 
-// sc-input {
-//   margin-bottom: var(--sc-spacing-small);
-// }
 .coupon-button {
   opacity: 0;
   visibility: hidden;
@@ -46,6 +40,8 @@
 
   .trigger {
     color: var(--sc-input-label-color);
+    display: none;
+    transition: all 0.15s ease;
 
     &:hover {
       text-decoration: none;
