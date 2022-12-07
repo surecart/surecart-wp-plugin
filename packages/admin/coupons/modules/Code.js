@@ -1,7 +1,5 @@
 /** @jsx jsx */
-
 import { __ } from '@wordpress/i18n';
-
 import {
 	ScInput,
 	ScButton,
@@ -9,46 +7,85 @@ import {
 	ScMenu,
 	ScMenuItem,
 	ScTag,
+	ScBlockUi,
+	ScFlex,
 } from '@surecart/components-react';
 import { Icon, box, trash, moreHorizontalMobile } from '@wordpress/icons';
 import { css, jsx } from '@emotion/core';
-import useEntity from '../../mixins/useEntity';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
+import { Modal } from '@wordpress/components';
 import { useState } from 'react';
 
-export default ({ promotion: promotionEntity, index }) => {
-	const { promotion, savePromotion, updatePromotion, deletePromotion } =
-		useEntity('promotion', promotionEntity?.id, index);
-	const [loading, setLoading] = useState(false);
+export default ({ promotion: { id }, index }) => {
+	const [modal, setModal] = useState(false);
+	const { editEntityRecord, saveEntityRecord, deleteEntityRecord } =
+		useDispatch(coreStore);
+	const { createErrorNotice, createSuccessNotice } =
+		useDispatch(noticesStore);
 
-	// archive.
-	const onArchive = async () => {
-		updatePromotion({
-			archived: !promotion.archived,
-		});
-		try {
-			setLoading(true);
-			await savePromotion();
-		} finally {
-			setLoading(false);
-		}
-	};
+	const updatePromotion = (data) =>
+		editEntityRecord('surecart', 'promotion', id, data);
 
-	// delete promotion
-	const onDelete = async () => {
+	const deletePromotion = async () => {
 		try {
-			setLoading(true);
-			const r = confirm(
-				__(
-					'Are you sure you want to delete this promotion code?',
-					'surecart'
-				)
+			await deleteEntityRecord('surecart', 'promotion', id, {
+				throwOnError: true,
+			});
+			createSuccessNotice(__('Deleted.', 'surecart'), {
+				type: 'snackbar',
+			});
+			setModal(false);
+		} catch (e) {
+			console.error(e);
+			createErrorNotice(
+				e?.message || __('Something went wrong', 'surecart')
 			);
-			if (!r) return;
-			await deletePromotion();
-		} finally {
-			setLoading(false);
 		}
 	};
+
+	const onArchive = async () => {
+		try {
+			const saved = await saveEntityRecord('surecart', 'promotion', {
+				id,
+				archived: !promotion?.archived,
+			});
+			createSuccessNotice(
+				saved?.archived
+					? __('Archived.', 'surecart')
+					: __('Restored.', 'surecart'),
+				{
+					type: 'snackbar',
+				}
+			);
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
+	const { promotion, isSaving, isDeleting } = useSelect(
+		(select) => {
+			if (!id) return;
+			const entityData = ['surecart', 'promotion', id];
+			return {
+				promotion: select(coreStore).getEditedEntityRecord(
+					...entityData
+				),
+				isLoading: select(coreStore)?.isResolving?.(
+					'getEditedEntityRecord',
+					[...entityData]
+				),
+				isSaving: select(coreStore)?.isSavingEntityRecord?.(
+					...entityData
+				),
+				isDeleting: select(coreStore)?.isDeletingEntityRecord?.(
+					...entityData
+				),
+			};
+		},
+		[id]
+	);
 
 	return (
 		<div
@@ -83,9 +120,7 @@ export default ({ promotion: promotionEntity, index }) => {
 					}
 					attribute="name"
 					value={promotion?.code}
-					onScChange={(e) =>
-						updatePromotion({ code: e.target.value })
-					}
+					onScInput={(e) => updatePromotion({ code: e.target.value })}
 				>
 					{promotion?.archived && (
 						<ScTag type="warning" slot="suffix">
@@ -95,7 +130,7 @@ export default ({ promotion: promotionEntity, index }) => {
 				</ScInput>
 			</div>
 			<ScDropdown slot="suffix" position="bottom-right">
-				<ScButton type="text" slot="trigger" loading={loading} circle>
+				<ScButton type="text" slot="trigger" circle>
 					<Icon icon={moreHorizontalMobile} />
 				</ScButton>
 				<ScMenu>
@@ -114,7 +149,7 @@ export default ({ promotion: promotionEntity, index }) => {
 								: __('Archive', 'surecart')}
 						</ScMenuItem>
 					)}
-					<ScMenuItem onClick={() => onDelete(index)}>
+					<ScMenuItem onClick={() => setModal('delete')}>
 						<Icon
 							slot="prefix"
 							style={{
@@ -127,6 +162,41 @@ export default ({ promotion: promotionEntity, index }) => {
 					</ScMenuItem>
 				</ScMenu>
 			</ScDropdown>
+			{isSaving && (
+				<ScBlockUi
+					style={{ '--sc-block-ui-opacity': '0.25' }}
+					spinner
+				/>
+			)}
+			{modal === 'delete' && (
+				<Modal
+					title={__('Delete this promotion code?', 'surecart')}
+					css={css`
+						max-width: 500px !important;
+					`}
+					onRequestClose={() => setModal(false)}
+					shouldCloseOnClickOutside={false}
+				>
+					<p>
+						{__(
+							'Are you sure you want to delete this promotion code?',
+							'surecart'
+						)}
+					</p>
+					<ScFlex alignItems="center">
+						<ScButton
+							type="primary"
+							busy={isDeleting}
+							onClick={deletePromotion}
+						>
+							{__('Delete', 'surecart')}
+						</ScButton>
+						<ScButton type="text" onClick={() => setModal(false)}>
+							{__('Cancel', 'surecart')}
+						</ScButton>
+					</ScFlex>
+				</Modal>
+			)}
 		</div>
 	);
 };

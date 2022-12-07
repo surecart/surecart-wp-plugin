@@ -1,11 +1,15 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import {
+  ScBadgeNotice,
 	ScButton,
 	ScDropdown,
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
+  ScSkeleton,
+  ScStackedListRow,
+  ScTag,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
@@ -82,40 +86,99 @@ export default ({ id }) => {
 
 	if (integration_id && integrationDataResolved && !integrationData?.label) {
 		return (
-			<sc-stacked-list-row
-				style={{ position: 'relative' }}
-				mobile-size={0}
-			>
+			<ScStackedListRow style={{ position: 'relative' }} mobile-size={0}>
 				<div
 					css={css`
 						overflow: hidden;
+            align-items: center;
 						text-overflow: ellipsis;
 						white-space: nowrap;
+            display: flex;
+            gap: 1em;
 					`}
 				>
-					<div
+          <div
+						css={css`
+							display: flex;
+							align-items: center;
+							justify-content: center;
+						`}
+					>
+						{providerData?.logo ? (
+							<img
+								src={providerData?.logo}
+								css={css`
+									width: 35px;
+									height: 35px;
+									object-fit: contain;
+								`}
+							/>
+						) : (
+							<div
+								css={css`
+									padding: 1em;
+									width: 35px;
+									box-sizing: border-box;
+									height: 35px;
+									display: flex;
+									align-items: center;
+									justify-content: center;
+									line-height: 0;
+									font-size: 18px;
+									background: var(--sc-color-gray-200);
+									border-radius: var(
+										--sc-border-radius-small
+									);
+								`}
+							>
+								{providerData?.name.charAt(0)}
+							</div>
+						)}
+					</div>
+          <div
 						css={css`
 							overflow: hidden;
 							text-overflow: ellipsis;
 							white-space: nowrap;
-							font-weight: bold;
 						`}
 					>
-						{__('Not found', 'surecart')}
-					</div>
-					{sprintf(
+						<div
+							css={css`
+								overflow: hidden;
+								text-overflow: ellipsis;
+								white-space: nowrap;
+								font-weight: bold;
+							`}
+						>
+							{sprintf( __('%s not found', 'surecart'), providerData?.label)}
+						</div>
+						{sprintf(
 						__(
 							'The provider is not installed or unavailable.',
 							'surecart'
 						)
 					)}
+					</div>
+
+          <ScTag type='warning'>{__('Disabled', 'surecart')}</ScTag>
 				</div>
-			</sc-stacked-list-row>
+
+        <ScDropdown slot="suffix" placement="bottom-end">
+          <ScButton type="text" slot="trigger" circle>
+            <ScIcon name="more-horizontal" />
+          </ScButton>
+          <ScMenu>
+            <ScMenuItem onClick={onRemove}>
+              {__('Delete', 'surecart')}
+            </ScMenuItem>
+          </ScMenu>
+        </ScDropdown>
+			</ScStackedListRow>
 		);
 	}
 
 	return (
-		<sc-stacked-list-row style={{ position: 'relative' }} mobile-size={0}>
+		<ScStackedListRow style={{ position: 'relative' }} mobile-size={0}>
 			{loading || deletingIntegration ? (
 				<div
 					css={css`
@@ -123,13 +186,13 @@ export default ({ id }) => {
 						gap: 1em;
 					`}
 				>
-					<sc-skeleton
+					<ScSkeleton
 						style={{ width: '60px', display: 'inline-block' }}
-					></sc-skeleton>
-					<sc-skeleton
+					></ScSkeleton>
+					<ScSkeleton
 						style={{ width: '80px', display: 'inline-block' }}
 						slot="price"
-					></sc-skeleton>
+					></ScSkeleton>
 				</div>
 			) : (
 				<div
@@ -175,7 +238,7 @@ export default ({ id }) => {
 									);
 								`}
 							>
-								{providerData?.name.charAt(0)}
+								{(providerData?.name || 'I' ).charAt(0)}
 							</div>
 						)}
 					</div>
@@ -211,6 +274,6 @@ export default ({ id }) => {
 					</ScMenuItem>
 				</ScMenu>
 			</ScDropdown>
-		</sc-stacked-list-row>
+		</ScStackedListRow>
 	);
 };

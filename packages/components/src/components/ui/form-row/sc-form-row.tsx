@@ -24,6 +24,7 @@ export class ScFormRow {
   render() {
     return (
       <div
+        part="base"
         class={{
           'form-row': true,
           'breakpoint-sm': this.width < 384,

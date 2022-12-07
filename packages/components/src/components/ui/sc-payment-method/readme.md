@@ -17,7 +17,9 @@
 
 | Part     | Description |
 | -------- | ----------- |
+| `"bank"` |             |
 | `"base"` |             |
+| `"card"` |             |
 
 
 ## Dependencies
