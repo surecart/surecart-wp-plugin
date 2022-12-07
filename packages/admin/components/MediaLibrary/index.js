@@ -18,6 +18,7 @@ import useFileUpload from '../../mixins/useFileUpload';
 import Error from '../Error';
 import MediaItem from './MediaItem';
 import Preview from './Preview';
+import StorageLimitWarning from '../StorageLimitWarning';
 
 export default ({
 	render,
@@ -180,6 +181,15 @@ export default ({
 	const hasPrevious = page > 1;
 	const hasNext = medias?.length === perPage;
 
+	const mediaUsage = window?.scData?.entitlements?.medias_total_byte_size;
+	const mediaUsagePercentage = mediaUsage
+		? (mediaUsage?.count / mediaUsage?.limit) * 100
+		: null;
+	// if media usage is more than 75% :: show low media component
+	const isLowMediaStorage = mediaUsagePercentage
+		? Math.round(mediaUsagePercentage) >= 75
+		: false;
+
 	/**
 	 * Main Content
 	 *
@@ -282,16 +292,34 @@ export default ({
 					mainContent={mainContent()}
 					onClose={onRequestClose}
 					footer={
-						<Button
-							isPrimary
-							disabled={!selected?.id}
-							onClick={() => {
-								onSelect && onSelect(selected);
-								setOpen(false);
-							}}
+						<div
+							css={css`
+								display: flex;
+								align-items: flex-end;
+								justify-content: space-between;
+								flex: 1 0 0px;
+							`}
 						>
-							{__('Choose', 'surecart')}
-						</Button>
+							{isLowMediaStorage && (
+								<StorageLimitWarning
+									mediaUsageDetails={mediaUsage}
+									mediaUsagePercentage={mediaUsagePercentage}
+								/>
+							)}
+							<Button
+								css={css`
+									margin-left: auto;
+								`}
+								isPrimary
+								disabled={!selected?.id}
+								onClick={() => {
+									onSelect && onSelect(selected);
+									setOpen(false);
+								}}
+							>
+								{__('Choose', 'surecart')}
+							</Button>
+						</div>
 					}
 					sidebar={
 						selected && (
