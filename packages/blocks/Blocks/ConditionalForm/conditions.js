@@ -11,6 +11,7 @@ import {
 // import Select from 'react-select'
 import SelectProducts from './selectProducts';
 import SelectCoupons from './selectCoupons';
+import { countryChoices } from '@surecart/components';
 
 // import ReactHtmlParser from 'react-html-parser';
 
@@ -29,8 +30,8 @@ function Conditions( props ) {
     { label: __( 'Total', 'surecart' ), value: 'cart_total' },
     { label: __( 'Coupon(s)', 'surecart' ), value: 'cart_coupons' },
     { label: __( 'Payment Processor', 'surecart' ), value: 'cart_payment_method' },
-    { label: __( 'Shipping country', 'surecart' ), value: 'cart_shipping_country' },
     { label: __( 'Billing country', 'surecart' ), value: 'cart_billing_country' }
+    { label: __( 'Shipping country', 'surecart' ), value: 'cart_shipping_country' },
   ];
   const stringOperators = [
     {
@@ -133,17 +134,6 @@ function Conditions( props ) {
         },
       ],
     },
-    'cart_shipping_country': {
-      'operator': shippingOperators,
-      'fields': [
-        {
-          'type': 'select',
-          'placeholder': __( 'Search for country..', 'surecart' ),
-          'isMulti': true,
-          'options': [{ 'label': 'India', 'value': 'IN' }],
-        },
-      ],
-    },
     'cart_billing_country': {
       'operator': shippingOperators,
       'fields': [
@@ -151,7 +141,18 @@ function Conditions( props ) {
           'type': 'select',
           'placeholder': __( 'Search for country..', 'surecart' ),
           'isMulti': true,
-          'options': [{ 'label': 'India', 'value': 'IN' }],
+          'options': countryChoices
+        },
+      ],
+    },
+    'cart_shipping_country': {
+      'operator': shippingOperators,
+      'fields': [
+        {
+          'type': 'select',
+          'placeholder': __( 'Search for country..', 'surecart' ),
+          'isMulti': true,
+          'options': countryChoices
         },
       ],
     },
