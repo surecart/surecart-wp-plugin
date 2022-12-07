@@ -3,9 +3,7 @@
 exports[`sc-tooltip renders 1`] = `
 <sc-tooltip type="info">
   <mock:shadow-root>
-    <span class="tooltip tooltip--info" part="base">
-      <slot></slot>
-    </span>
+    <slot></slot>
   </mock:shadow-root>
 </sc-tooltip>
 `;
