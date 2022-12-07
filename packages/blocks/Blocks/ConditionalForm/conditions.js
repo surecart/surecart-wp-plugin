@@ -184,7 +184,7 @@ function Conditions( props ) {
     const rule_id = rule_data.rule_id;
 
 		let rendorfields = '';
-		const name = `wcf-checkout-rules[${ g_index }][rules][${ r_index }][value]`;
+		const name = `sc-checkout-rules[${ g_index }][rules][${ r_index }][value]`;
 
 		return fields.map( ( field ) => {
       // debugger;
@@ -315,19 +315,19 @@ function Conditions( props ) {
 						>
 							<input
 								type="hidden"
-								name={ `wcf-checkout-rules[${ g_index }][rules][${ r_index }][rule_id]` }
+								name={ `sc-checkout-rules[${ g_index }][rules][${ r_index }][rule_id]` }
 								value={ rule_id }
 							/>
 
-							<div className="wcf-checkout-rules--rule_fields">
+							<div className="sc-checkout-rules--rule_fields">
 								<SelectControl
-									name={ `wcf-checkout-rules[${ g_index }][rules][${ r_index }][condition]` }
+									name={ `sc-checkout-rules[${ g_index }][rules][${ r_index }][condition]` }
 									options={ conditions_select }
                   onChange={ ( selection ) => { updateConditionInRuleGroup( group_id, rule_id, selection ); } }
 									value={ rule_data.condition }
 								/>
 								<SelectControl
-									name={ `wcf-checkout-rules[${ g_index }][rules][${ r_index }][operator]` }
+									name={ `sc-checkout-rules[${ g_index }][rules][${ r_index }][operator]` }
 									options={ rule_field_data.operator }
 									value={ rule_data.operator }
                   onChange={ ( selection ) => { updateConditionOptionInRuleGroup( group_id, rule_id, selection, 'operator' ); } }
