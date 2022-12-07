@@ -9,9 +9,6 @@ function SelectProducts( props ) {
 		name,
 		desc,
 		value,
-		allowed_products = [],
-		include_products = [],
-		excluded_products = [],
 		placeholder,
 		onChangeCB,
 		attr,
@@ -33,31 +30,14 @@ function SelectProducts( props ) {
 
 	const loadOptions = ( inputValue ) => {
 		if ( inputValue.length >= 3 ) {
-			const formData = new window.FormData();
-			formData.append( 'allowed_products', allowed_products );
-			formData.append( 'include_products', include_products );
-			formData.append( 'exclude_products', excluded_products );
-
-			formData.append( 'action', 'sc_json_search_products' );
-			// formData.append(
-			// 	'security',
-			// 	cartflows_admin.json_search_products_nonce
-			// );
-
-			formData.append( 'term', inputValue );
-			formData.append( 'query', inputValue );
-
 
 			return new Promise( ( resolve ) => {
 				apiFetch( {
-					// url: surecart/v1/products,
 					path: addQueryArgs(`surecart/v1/products`, {
             query: inputValue,
             archived: false,
             expand: ['prices'],
           }),
-					// method: 'POST',
-					// body: formData,
 				} ).then( ( res ) => {
 
           let results = [];
@@ -71,7 +51,6 @@ function SelectProducts( props ) {
             });
 
           }
-          debugger;
 					resolve( results );
 				} );
 			} );
@@ -79,8 +58,8 @@ function SelectProducts( props ) {
 	};
 
 	return (
-		<div className="wcf-select2-field wcf-product-field">
-			<div className="wcf-selection-field">
+		<div className="sc-select2-field sc-product-field">
+			<div className="sc-selection-field">
 				{ label && (
 					<label>
 						{ label }
@@ -88,8 +67,8 @@ function SelectProducts( props ) {
 				) }
 
 				<AsyncSelect
-					className="wcf-select2-input"
-					classNamePrefix="wcf"
+					className="sc-select2-input"
+					classNamePrefix="sc"
 					name={ `${ name }` }
 					isMulti={ isMulti }
 					isClearable={ true }
@@ -104,7 +83,7 @@ function SelectProducts( props ) {
 				/>
 			</div>
 			{ desc && (
-				<div className="wcf-field__desc">
+				<div className="sc-field__desc">
 					{ desc }
 				</div>
 			) }
