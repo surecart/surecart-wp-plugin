@@ -4,12 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
-  <title>Stencil Component Starter</title>
-  <style>
-    body {
-      color: #101010;
-    }
-  </style>
+  <title>Manual Payment Methods Fixture</title>
   <link href="/build/surecart.css" rel="stylesheet">
   <script type="module" src="/build/surecart.esm.js"></script>
   <script nomodule src="/build/surecart.js"></script>
@@ -23,11 +18,17 @@
       }
     }
   </script>
-
 </head>
 
 <body>
-  <sc-coupon-form label="Add Coupon">Button Text</sc-coupon-form>
+  <sc-checkout success-url="/success" form-id="1" mode="test">
+    <sc-form>
+      <sc-order-summary>
+        <sc-order-coupon-form label="Add A Coupon">Apply</sc-order-coupon-form>
+      </sc-order-summary>
+      <sc-order-submit>Submit</sc-order-submit>
+    </sc-form>
+  </sc-checkout>
 </body>
 
 </html>

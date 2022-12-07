@@ -126,6 +126,8 @@ Type: `Promise<void>`
  - [sc-coupon-form](../coupon-form)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-customer-email](../../controllers/checkout-form/customer-email)
+ - [sc-customer-firstname](../../controllers/checkout-form/customer-firstname)
+ - [sc-customer-lastname](../../controllers/checkout-form/customer-lastname)
  - [sc-customer-name](../../controllers/checkout-form/customer-name)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-login-form](../../controllers/login)
@@ -153,6 +155,8 @@ graph TD;
   sc-coupon-form --> sc-input
   sc-customer-edit --> sc-input
   sc-customer-email --> sc-input
+  sc-customer-firstname --> sc-input
+  sc-customer-lastname --> sc-input
   sc-customer-name --> sc-input
   sc-licenses-list --> sc-input
   sc-login-form --> sc-input
