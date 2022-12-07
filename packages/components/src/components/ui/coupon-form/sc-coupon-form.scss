@@ -42,7 +42,7 @@ sc-button {
     visibility: visible;
     transform: translateY(0);
     height: auto;
-    margin-top: var(--sc-spacing-small);
+    margin: var(--sc-spacing-small) 0;
   }
 
   .trigger {
