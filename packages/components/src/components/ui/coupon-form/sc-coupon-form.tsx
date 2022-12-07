@@ -101,7 +101,7 @@ export class ScCouponForm {
     if (this?.discount?.promotion?.code) {
       let humanDiscount = '';
 
-      if (this?.discount?.coupon) {
+      if (this?.discount?.coupon && this?.discount?.coupon.percent_off) {
         humanDiscount = getHumanDiscount(this?.discount?.coupon);
       }
 
