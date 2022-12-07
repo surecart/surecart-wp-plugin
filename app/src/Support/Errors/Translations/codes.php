@@ -19,6 +19,7 @@ return [
 	'refund.amount.greater_than_refundable_amount'      => __( 'The refund amount is greater than the refundable amount.', 'surecart' ),
 	'subscription.product.one_time'                     => __( 'You cannot add a one-time product to a subscription.', 'surecart' ),
 	'price.blank'                                       => __( 'The price cannot be blank.', 'surecart' ),
+	'price.scratch_amount.greater_than'                 => __( 'The compare at price must be greater than the price.', 'surecart' ),
 	'price.currency.taken'                              => __( 'A price with this currency and recurring interval already exists. Please create a new product to create this price.', 'surecart' ),
 	'promotion.code.taken'                              => __( 'This promotion code already exists. Please archive the old code or use a different code.', 'surecart' ),
 	'payment_intent.processor.blank'                    => __( 'There are no processors to make the payment. Please contact us for assistance.', 'surecart' ),

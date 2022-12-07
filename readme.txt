@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.1
-Stable tag: 1.3.0
+Stable tag: 1.3.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -243,7 +243,18 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.3.0  - December 1, 2022 =
+= 1.3.2 - December 1, 2022 =
+* Improvement: Switch form block now allows rich text (links, formatting, etc.)
+* Improvement: Show notice in admin if SSL is not enabled on your site.
+* Fix: Unable to search all products product, price selectors.
+* Fix: Setting free trial on admin subscription edit getting cut off.
+* Fix: Upgrade groups no longer show archived prices.
+* Fix: Show refunds list on admin order page.
+
+= 1.3.1  - November 30, 2022 =
+* Hotfix: Scratch prices not able to be created with decimal points.
+
+= 1.3.0  - November 30, 2022 =
 * New: Restrict coupons to products, prices or customers.
 * Improvement: Ability to filter error messages.
 * Improvement: New documentation on styling with shadow parts and css variables.

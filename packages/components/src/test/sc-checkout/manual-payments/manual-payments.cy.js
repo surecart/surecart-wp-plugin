@@ -1,4 +1,4 @@
-describe('Checkout', () => {
+describe('Manual Payments', () => {
   beforeEach(() => {
     cy.intercept({
 			method: 'POST',
