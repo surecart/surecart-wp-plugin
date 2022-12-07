@@ -8,10 +8,8 @@ import { DropZone, Button, FormFileUpload } from '@wordpress/components';
 import Template from './template';
 import {
 	ScBlockUi,
-	ScButton,
 	ScCard,
 	ScEmpty,
-	ScFormatBytes,
 	ScTable,
 	ScTableCell,
 	ScTag,
