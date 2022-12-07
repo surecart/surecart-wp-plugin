@@ -10,6 +10,7 @@ import {
 	ScBlockUi,
 	ScCard,
 	ScEmpty,
+	ScFormatBytes,
 	ScTable,
 	ScTableCell,
 	ScTag,
@@ -151,6 +152,7 @@ export default ({
 		);
 	};
 
+	const fileLimit = window.scData.entitlements.media_byte_size?.limit;
 	const header = () => {
 		return (
 			<div
@@ -174,6 +176,12 @@ export default ({
 					{__('Upload Media', 'surecart')}
 				</FormFileUpload>{' '}
 				{__('or drag and drop a file to upload.')}
+				{!!fileLimit && (
+					<span style={{ color: 'var(--sc-color-gray-400)' }}>
+						(<ScFormatBytes value={fileLimit} />{' '}
+						{__('Max', 'surecart')})
+					</span>
+				)}
 			</div>
 		);
 	};
