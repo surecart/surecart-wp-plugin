@@ -62,8 +62,8 @@
   &__amount {
     display: flex;
     align-items: center;
-    gap: 0.33rem;
+    gap: var(--sc-spacing-x-small);
     flex-wrap: wrap;
-    padding-top: var(--sc-spacing-xx-small);
+    margin-top: var(--sc-spacing-xx-small);
   }
 }
