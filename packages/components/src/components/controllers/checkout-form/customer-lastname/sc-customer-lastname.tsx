@@ -1,5 +1,4 @@
 import { Customer, Checkout } from '../../../../types';
-import { createOrUpdateOrder } from '../../../../services/session';
 import { Component, Prop, h, Event, EventEmitter, Watch, Method } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 
@@ -86,18 +85,6 @@ export class ScCustomerLastname {
     return this.input?.reportValidity?.();
   }
 
-  async handleChange() {
-    this.value = this.input.value;
-
-    // update order.
-    try {
-      const order = await createOrUpdateOrder({ id: this.order?.id, data: { last_name: this.input.value } });
-      this.scUpdateOrderState.emit(order);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   /** Sync customer email with session if it's updated by other means */
   @Watch('order')
   handleSessionChange(val) {
@@ -125,7 +112,6 @@ export class ScCustomerLastname {
         invalid={this.invalid}
         autofocus={this.autofocus}
         hasFocus={this.hasFocus}
-        onScChange={() => this.handleChange()}
         onScInput={() => this.scInput.emit()}
         onScFocus={() => this.scFocus.emit()}
         onScBlur={() => this.scBlur.emit()}
