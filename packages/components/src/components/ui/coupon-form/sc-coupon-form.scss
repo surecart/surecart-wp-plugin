@@ -4,19 +4,20 @@
 
 .coupon-form {
   position: relative;
-}
 
-.coupon-button {
-  opacity: 0;
-  visibility: hidden;
-  transform: scale(0.90);
-  transition: all 0.15s ease;
-}
-.coupon--has-value {
   .coupon-button {
-    opacity: 1;
-    visibility: visible;
-    transform: scale(1);
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.90);
+    transition: all var(--sc-transition-fast) ease;
+  }
+
+  &--has-value {
+    .coupon-button {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+    }
   }
 }
 
@@ -24,28 +25,25 @@
   opacity: 0;
   visibility: hidden;
   height: 0;
+  transform: translateY(5px);
+  transition: opacity var(--sc-transition-fast) ease, transform var(--sc-transition-fast) ease;
   position: relative;
-  transition: opacity var(--sc-transition-fast) ease-in-out;
+  display: grid;
+  margin-top: var(--sc-spacing-small);
+  gap: var(--sc-spacing-small);
 }
 
 .coupon-form--is-open {
   .form {
     opacity: 1;
     visibility: visible;
+    transform: translateY(0);
     height: auto;
-    margin-top: var(--sc-spacing-small);
-    display: grid;
-    gap: var(--sc-spacing-small);
   }
 
   .trigger {
     color: var(--sc-input-label-color);
     display: none;
-    transition: all 0.15s ease;
-
-    &:hover {
-      text-decoration: none;
-    }
   }
 }
 

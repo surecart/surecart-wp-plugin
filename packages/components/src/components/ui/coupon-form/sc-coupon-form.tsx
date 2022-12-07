@@ -54,11 +54,6 @@ export class ScCouponForm {
     }
   }
 
-  @Watch('value')
-  handleValue(val) {
-    console.log(val);
-  }
-
   /** Close it when blurred and no value. */
   handleBlur() {
     if (!this.value) {
@@ -66,15 +61,6 @@ export class ScCouponForm {
       this.error = '';
     }
   }
-
-  /** On key up show coupon button (on condition) */
-  // handleKeyUp() {
-  //   if (!this.input.value) {
-  //     this.button.className = 'btn-hide';
-  //   } else {
-  //     this.button.className = 'btn-show';
-  //   }
-  // }
 
   /** Apply the coupon. */
   applyCoupon() {
@@ -128,7 +114,7 @@ export class ScCouponForm {
         class={{
           'coupon-form': true,
           'coupon-form--is-open': this.open || this.forceOpen,
-          'coupon--has-value': !!this.value,
+          'coupon-form--has-value': !!this.value,
         }}
       >
         <div
@@ -149,22 +135,9 @@ export class ScCouponForm {
             onScInput={(e: any) => (this.value = e.target.value)}
             placeholder="Enter coupon code"
             onScBlur={() => this.handleBlur()}
-            // onKeyUp={() => this.handleKeyUp()}
             ref={el => (this.input = el as HTMLScInputElement)}
           >
-            <sc-button
-              slot="suffix"
-              type="text"
-              loading={this.busy}
-              size="medium"
-              class="coupon-button"
-              // class={{
-              //   'btn-hide': !this.value,
-              //   'btn-show': !!this.value,
-              // }}
-              onClick={() => this.applyCoupon()}
-              // ref={el => (this.button = el as HTMLScButtonElement)}
-            >
+            <sc-button slot="suffix" type="text" loading={this.busy} size="medium" class="coupon-button" onClick={() => this.applyCoupon()}>
               <slot />
             </sc-button>
           </sc-input>
