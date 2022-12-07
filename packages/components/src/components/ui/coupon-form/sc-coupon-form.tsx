@@ -32,7 +32,6 @@ import { DiscountResponse } from '../../../types';
 })
 export class ScCouponForm {
   private input: HTMLScInputElement;
-  // private button: HTMLScButtonElement;
 
   /** The label for the coupon form */
   @Prop() label: string;
