@@ -102,8 +102,10 @@ Type: `Promise<void>`
 | ---------------- | ------------------------------------------------ |
 | `"base"`         | The elements base wrapper.                       |
 | `"clear-button"` |                                                  |
+| `"form-control"` | The form control wrapper.                        |
 | `"help-text"`    | Help text that describes how to use the input.   |
 | `"input"`        | The html input element.                          |
+| `"label"`        | The input label.                                 |
 | `"prefix"`       | Used to prepend an icon or element to the input. |
 | `"suffix"`       | Used to prepend an icon or element to the input. |
 

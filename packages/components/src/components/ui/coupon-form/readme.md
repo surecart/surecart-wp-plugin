@@ -27,6 +27,32 @@
 | `scApplyCoupon` | When the coupon is applied | `CustomEvent<string>` |
 
 
+## Shadow Parts
+
+| Part                    | Description                     |
+| ----------------------- | ------------------------------- |
+| `"amount"`              | The discount amount.            |
+| `"base"`                | The elements base wrapper.      |
+| `"block-ui"`            | The block ui base component.    |
+| `"block-ui__content"`   | The block ui content (spinner). |
+| `"button__base"`        | The button base element.        |
+| `"button__label"`       | The button label.               |
+| `"coupon-tag"`          | The coupon tag.                 |
+| `"discount"`            | The discount displayed (% off)  |
+| `"discount-label"`      | The discount label.             |
+| `"error__base"`         | The error base.                 |
+| `"error__icon"`         | The error icon                  |
+| `"error__message"`      | The error message.              |
+| `"error__text"`         | The error text.                 |
+| `"error_title"`         | The error title.                |
+| `"form"`                | The form.                       |
+| `"info"`                | The discount info.              |
+| `"input"`               | The input.                      |
+| `"input__base"`         | The input base.                 |
+| `"input__form-control"` | The input form control.         |
+| `"label"`               |                                 |
+
+
 ## Dependencies
 
 ### Used by

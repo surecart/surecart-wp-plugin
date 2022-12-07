@@ -77,6 +77,8 @@ export const parseFormData = (data: any) => {
   const {
     email,
     name,
+    first_name,
+    last_name,
     password,
     shipping_city,
     shipping_country,
@@ -116,6 +118,8 @@ export const parseFormData = (data: any) => {
   return {
     ...(name ? { name } : {}),
     ...(email ? { email } : {}),
+    ...(first_name ? { first_name } : {}),
+    ...(last_name ? { last_name } : {}),
     ...(password ? { password } : {}),
     ...(Object.keys(shipping_address || {}).length ? { shipping_address } : {}),
     ...(Object.keys(billing_address || {}).length ? { billing_address } : {}),

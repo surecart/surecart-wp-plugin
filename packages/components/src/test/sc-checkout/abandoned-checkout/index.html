@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>Manual Payment Methods Fixture</title>
+  <link href="/build/surecart.css" rel="stylesheet">
+  <script type="module" src="/build/surecart.esm.js"></script>
+  <script nomodule src="/build/surecart.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script>
+    window.scIcons = {
+      path: '/build/icon-assets'
+    }
+    window.wp = {
+      i18n: {
+        __: () => { }
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <sc-checkout success-url="/success" form-id="1" mode="test"
+    abandoned-checkout-return-url="https://test.com/surecart/redirect">
+    <sc-form>
+      <sc-payment>
+        <sc-payment-method-choice processor-id="test1" is-manual>
+          <span slot="summary">
+            Manual
+          </span>
+
+          <sc-card>
+            <sc-payment-selected label="Test selected">description</sc-payment-selected>
+          </sc-card>
+        </sc-payment-method-choice>
+
+        <sc-payment-method-choice processor-id="test2" is-manual>
+          <span slot="summary">
+            Manual 2
+          </span>
+
+          <sc-card>
+            <sc-payment-selected label="Test 2 selected">description</sc-payment-selected>
+          </sc-card>
+        </sc-payment-method-choice>
+      </sc-payment>
+
+      <sc-order-submit>Submit</sc-order-submit>
+    </sc-form>
+  </sc-checkout>
+</body>
+
+</html>

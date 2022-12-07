@@ -3,6 +3,13 @@ import { FormSubmitController } from '../../../functions/form-data';
 
 let id = 0;
 
+/**
+ * @part base - The elements base wrapper.
+ * @part input - The html input element.
+ * @part form-control - The form control wrapper.
+ * @part label - The input label.
+ * @part help-text - Help text that describes how to use the input.
+ */
 @Component({
   tag: 'sc-textarea',
   styleUrl: 'sc-textarea.css',
@@ -246,6 +253,7 @@ export class ScTextarea {
         }}
       >
         <sc-form-control
+          exportparts="label, help-text, form-control"
           size={this.size}
           required={this.required}
           label={this.label}

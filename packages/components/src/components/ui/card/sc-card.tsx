@@ -1,6 +1,9 @@
 import { Component, h, Prop, Element, State } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 
+/**
+ * @part base - The elements base wrapper.
+ */
 @Component({
   tag: 'sc-card',
   styleUrl: 'sc-card.scss',

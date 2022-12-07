@@ -9,6 +9,9 @@ import { ScForm } from '@surecart/components-react';
 import { PostLockedModal } from '@wordpress/editor';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { store as uiStore } from '../../store/ui';
+import { useDispatch, useSelect } from '@wordpress/data';
+import UpgradeModal from '../../components/UpgradeModal';
 
 export default ({
 	children,
@@ -19,6 +22,10 @@ export default ({
 	sidebar,
 	onError,
 }) => {
+	const modal = useSelect((select) => select(uiStore).showUpgradeModal());
+	const { setUpgradeModal } = useDispatch(uiStore);
+	const onRequestClose = () => setUpgradeModal(false);
+
 	return (
 		<Fragment>
 			<Global
@@ -62,7 +69,7 @@ export default ({
 							float: right;
 						}
 
-						.components-text-control__input,
+						/* .components-text-control__input,
 						.components-input-control__container
 							.components-input-control__input {
 							&[type='text'],
@@ -84,7 +91,7 @@ export default ({
 								padding: 10px 12px;
 								box-shadow: rgb(0 0 0 / 5%) 0px 1px 2px 0px;
 							}
-						}
+						} */
 
 						.is-error {
 							.components-text-control__input {
@@ -206,6 +213,7 @@ export default ({
 						`}
 					/>
 				</ScForm>
+				{modal && <UpgradeModal onRequestClose={onRequestClose} />}
 			</ErrorBoundary>
 			<PostLockedModal />
 		</Fragment>
