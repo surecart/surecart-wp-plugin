@@ -67,6 +67,12 @@ export class ScCouponForm {
     this.scApplyCoupon.emit(this.input.value.toUpperCase());
   }
 
+  handleKeyDown(e) {
+    if (e?.code === 'Enter') {
+      this.applyCoupon();
+    }
+  }
+
   render() {
     if (this.loading) {
       return <sc-skeleton style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>;
@@ -135,6 +141,7 @@ export class ScCouponForm {
             onScInput={(e: any) => (this.value = e.target.value)}
             placeholder="Enter coupon code"
             onScBlur={() => this.handleBlur()}
+            onKeyDown={e => this.handleKeyDown(e)}
             ref={el => (this.input = el as HTMLScInputElement)}
           >
             <sc-button slot="suffix" type="text" loading={this.busy} size="medium" class="coupon-button" onClick={() => this.applyCoupon()}>
