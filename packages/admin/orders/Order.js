@@ -179,10 +179,7 @@ export default () => {
 					charge={order?.checkout?.charge}
 					loading={!hasLoadedOrder}
 				/>
-				<Charges
-					checkoutId={order?.checkout?.id}
-					checkout={order?.checkout}
-				/>
+				<Charges checkoutId={order?.checkout?.id} />
 				<PaymentFailures
 					failures={order?.checkout?.payment_failures}
 					loading={!hasLoadedOrder}
