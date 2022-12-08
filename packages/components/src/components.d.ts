@@ -1858,6 +1858,8 @@ export namespace Components {
         "processors": Processor[];
     }
     interface ScPaymentMethod {
+        "externalLink": string;
+        "externalLinkTooltipText": string;
         "full": boolean;
         "paymentMethod": PaymentMethod;
     }
@@ -6356,6 +6358,8 @@ declare namespace LocalJSX {
         "processors"?: Processor[];
     }
     interface ScPaymentMethod {
+        "externalLink"?: string;
+        "externalLinkTooltipText"?: string;
         "full"?: boolean;
         "paymentMethod"?: PaymentMethod;
     }

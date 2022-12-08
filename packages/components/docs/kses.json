@@ -1078,6 +1078,8 @@
     "slot": true
   },
   "sc-payment-method": {
+    "external-link": true,
+    "external-link-tooltip-text": true,
     "full": true,
     "payment-method": true,
     "style": true,

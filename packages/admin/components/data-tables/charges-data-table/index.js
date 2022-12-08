@@ -44,7 +44,7 @@ export default ({
 		return <sc-tag type="success">{__('Paid', 'surecart')}</sc-tag>;
 	};
 
-	const renderRefundOption = (charge) => {
+	const renderRefundButton = (charge) => {
 		if (charge?.fully_refunded) {
 			return null;
 		}
@@ -53,43 +53,35 @@ export default ({
 		}
 
 		return (
-			<ScMenuItem onClick={() => onRefundClick(charge)}>
+			<ScButton size="small" onClick={() => onRefundClick(charge)}>
 				{__('Refund', 'surecart')}
-			</ScMenuItem>
+			</ScButton>
 		);
 	};
 
-	const renderViewChargeButton = (charge) => {
+	const getExternalChargeLink = (charge) => {
 		const paymentType = charge?.payment_method?.processor_type;
 		let chargeLink = '';
 
-		if (!['stripe'].includes(paymentType)) return null;
+		if (!['stripe', 'paypal'].includes(paymentType)) return null;
 
-		const externalIntentId = charge?.payment_intent?.external_intent_id;
-		if (!externalIntentId) return null;
+		const externalChargeId = charge?.external_charge_id;
+		if (!externalChargeId) return null;
 
 		if (paymentType === 'stripe') {
-			chargeLink += 'https://dashboard.stripe.com/';
-			chargeLink += charge?.live_mode
-				? ''
-				: 'test/' + 'payments/' + externalIntentId;
+			chargeLink =
+				'https://dashboard.stripe.com/charges/' + externalChargeId;
 		}
 
-		return <ScMenuItem href={chargeLink}>{__('View Charge')}</ScMenuItem>;
-	};
+		if (paymentType === 'paypal') {
+			const isLiveMode = charge?.live_mode;
+			chargeLink = isLiveMode
+				? 'https://www.paypal.com/activity/payment/'
+				: 'https://www.sandbox.paypal.com/activity/payment/' +
+				  externalChargeId;
+		}
 
-	const renderChargeActions = (charge) => {
-		return (
-			<ScDropdown placement="bottom-end">
-				<ScButton slot="trigger" size="small">
-					<ScIcon name="more-horizontal" />
-				</ScButton>
-				<ScMenu>
-					{renderRefundOption(charge)}
-					{renderViewChargeButton(charge)}
-				</ScMenu>
-			</ScDropdown>
-		);
+		return chargeLink;
 	};
 
 	return (
@@ -144,10 +136,17 @@ export default ({
 							method: (
 								<ScPaymentMethod
 									paymentMethod={charge?.payment_method}
+									externalLink={getExternalChargeLink(charge)}
+									externalLinkTooltipText={`View Charge on ${
+										charge?.payment_method
+											?.processor_type === 'stripe'
+											? 'Stripe'
+											: 'PayPal'
+									}`}
 								/>
 							),
 							status: renderStatusTag(charge),
-							refund: renderChargeActions(charge),
+							refund: renderRefundButton(charge),
 							order: charge?.checkout?.order?.id && (
 								<ScButton
 									href={addQueryArgs('admin.php', {

@@ -28,7 +28,6 @@ export default ({ checkoutId }) => {
 						'payment_method.payment_instrument',
 						'payment_method.paypal_account',
 						'payment_method.bank_account',
-						'payment_intent',
 					],
 				},
 			];

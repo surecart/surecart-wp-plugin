@@ -11,6 +11,8 @@ import { BankAccount, PaymentInstrument, PaymentMethod } from '../../../types';
 export class ScPaymentMethod {
   @Prop() paymentMethod: PaymentMethod;
   @Prop() full: boolean;
+  @Prop() externalLink: string;
+  @Prop() externalLinkTooltipText: string;
 
   renderBankAccountType(type) {
     if (type === 'checking') {
@@ -45,7 +47,14 @@ export class ScPaymentMethod {
       return (
         <div class="payment-method" part="card">
           <sc-cc-logo style={{ fontSize: '36px' }} brand={this.paymentMethod?.card?.brand}></sc-cc-logo>
-          **** {this.paymentMethod?.card?.last4}
+          <sc-text style={{ whiteSpace: 'nowrap', paddingRight: '6px' }}>**** {this.paymentMethod?.card?.last4}</sc-text>
+          {!!this.externalLink && (
+            <sc-tooltip text={this.externalLinkTooltipText} type="text">
+              <sc-button type="link" size="small" href={this.externalLink} target="_blank">
+                <sc-icon name="external-link" style={{ fontSize: '16px' }}></sc-icon>
+              </sc-button>
+            </sc-tooltip>
+          )}
         </div>
       );
     }
