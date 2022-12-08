@@ -1,7 +1,14 @@
 /** @jsx jsx */
 import DataTable from '../../DataTable';
 import { css, jsx } from '@emotion/core';
-import { ScButton, ScPaymentMethod } from '@surecart/components-react';
+import {
+	ScButton,
+	ScDropdown,
+	ScIcon,
+	ScMenu,
+	ScMenuItem,
+	ScPaymentMethod,
+} from '@surecart/components-react';
 import { Fragment } from '@wordpress/element';
 import { __, _n } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
@@ -37,7 +44,7 @@ export default ({
 		return <sc-tag type="success">{__('Paid', 'surecart')}</sc-tag>;
 	};
 
-	const renderRefundButton = (charge) => {
+	const renderRefundOption = (charge) => {
 		if (charge?.fully_refunded) {
 			return null;
 		}
@@ -46,9 +53,42 @@ export default ({
 		}
 
 		return (
-			<sc-button onClick={() => onRefundClick(charge)} size="small">
+			<ScMenuItem onClick={() => onRefundClick(charge)}>
 				{__('Refund', 'surecart')}
-			</sc-button>
+			</ScMenuItem>
+		);
+	};
+
+	const renderViewChargeButton = (charge) => {
+		const paymentType = charge?.payment_method?.processor_type;
+		let chargeLink = '';
+
+		if (!['stripe'].includes(paymentType)) return null;
+
+		const externalIntentId = charge?.payment_intent?.external_intent_id;
+		if (!externalIntentId) return null;
+
+		if (paymentType === 'stripe') {
+			chargeLink += 'https://dashboard.stripe.com/';
+			chargeLink += charge?.live_mode
+				? ''
+				: 'test/' + 'payments/' + externalIntentId;
+		}
+
+		return <ScMenuItem href={chargeLink}>{__('View Charge')}</ScMenuItem>;
+	};
+
+	const renderChargeActions = (charge) => {
+		return (
+			<ScDropdown placement="bottom-end">
+				<ScButton slot="trigger" size="small">
+					<ScIcon name="more-horizontal" />
+				</ScButton>
+				<ScMenu>
+					{renderRefundOption(charge)}
+					{renderViewChargeButton(charge)}
+				</ScMenu>
+			</ScDropdown>
 		);
 	};
 
@@ -107,7 +147,7 @@ export default ({
 								/>
 							),
 							status: renderStatusTag(charge),
-							refund: renderRefundButton(charge),
+							refund: renderChargeActions(charge),
 							order: charge?.checkout?.order?.id && (
 								<ScButton
 									href={addQueryArgs('admin.php', {
