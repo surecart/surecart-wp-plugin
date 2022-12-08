@@ -3,23 +3,22 @@ import { css, jsx } from '@emotion/core';
 import {
 	ScAlert,
 	ScButton,
-	ScCheckbox,
+	ScChoices,
+	ScChoice,
 	ScFlex,
 	ScForm,
 	ScFormControl,
+	ScLineItem,
 	ScPriceInput,
-	ScProductLineItem,
 	ScSelect,
 } from '@surecart/components-react';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { store as noticesStore } from '@wordpress/notices';
 import { Modal } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { intervalString } from '../../../util/translations';
 
-export default ({ charge, onRequestClose, onRefunded, checkout }) => {
+export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 	const [loading, setLoading] = useState(false);
 	const [amount, setAmount] = useState(
 		charge?.amount - charge?.refunded_amount
@@ -31,7 +30,7 @@ export default ({ charge, onRequestClose, onRefunded, checkout }) => {
 	const { saveEntityRecord, invalidateResolutionForStore } =
 		useDispatch(coreStore);
 
-	const line_items = checkout?.line_items?.data;
+	console.log({ purchases });
 
 	/**
 	 * Handle submit.
@@ -80,7 +79,7 @@ export default ({ charge, onRequestClose, onRefunded, checkout }) => {
 	};
 
 	// handle purchased item click for revoke
-	const onClickProductItem = (id, checked) => {
+	const onTogglePurchase = (id, checked) => {
 		setRevokedPurchaseIds((state) =>
 			checked ? state.filter((item) => id !== item) : [...state, id]
 		);
@@ -148,51 +147,33 @@ export default ({ charge, onRequestClose, onRefunded, checkout }) => {
 					</ScFormControl>
 				</div>
 
-				<div>
-					<ScFormControl label={__('Revoke Purchase(s)', 'surecart')}>
-						<div
-							css={css`
-								padding: 0.44rem 0;
-							`}
-						>
-							{(line_items || []).map((item) => {
-								const checked = revokedPurchaseIds.includes(
-									item.id
-								);
-								return (
-									<ScCheckbox
-										key={item.id}
-										checked={checked}
-										onScChange={() =>
-											onClickProductItem(item.id, checked)
-										}
-									>
-										<ScProductLineItem
-											css={css`
-												width: 100%;
-											`}
-											imageUrl={
-												item?.price?.product?.image_url
-											}
-											name={item?.price?.product?.name}
-											editable={false}
-											removable={false}
-											quantity={item.quantity}
-											amount={item.subtotal_amount}
-											currency={item?.price?.currency}
-											trialDurationDays={
-												item?.price?.trial_duration_days
-											}
-											interval={intervalString(
-												item?.price
-											)}
+				<ScChoices label={__('Revoke Purchase(s)', 'surecart')}>
+					{(purchases || []).map((purchase) => {
+						const { id, product, quantity } = purchase;
+						const checked = revokedPurchaseIds.includes(id);
+						return (
+							<ScChoice
+								key={id}
+								type="checkbox"
+								checked={checked}
+								onScChange={() => onTogglePurchase(id, checked)}
+							>
+								<ScLineItem>
+									{!!product?.image_url && (
+										<img
+											src={product?.image_url}
+											slot="image"
 										/>
-									</ScCheckbox>
-								);
-							})}
-						</div>
-					</ScFormControl>
-				</div>
+									)}
+									<span slot="title">{product?.name}</span>
+									<span slot="description">
+										<span>Qty: {quantity}</span>{' '}
+									</span>
+								</ScLineItem>
+							</ScChoice>
+						);
+					})}
+				</ScChoices>
 
 				<ScAlert type="danger" open={error}>
 					{error}

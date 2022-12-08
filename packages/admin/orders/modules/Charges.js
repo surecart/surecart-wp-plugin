@@ -6,7 +6,7 @@ import { useState } from 'react';
 import ChargesDataTable from '../../components/data-tables/charges-data-table';
 import Refund from '../../components/data-tables/charges-data-table/Refund';
 
-export default ({ checkoutId, checkout }) => {
+export default ({ checkoutId }) => {
 	const [refundCharge, setRefundCharge] = useState(false);
 	const { invalidateResolution } = useDispatch(coreStore);
 	const { charges, loading, invalidateCharges } = useSelect(
@@ -35,6 +35,33 @@ export default ({ checkoutId, checkout }) => {
 				charges: select(coreStore)?.getEntityRecords?.(...entityData),
 				invalidateCharges: () =>
 					invalidateResolution('getEntityRecords', [...entityData]),
+				loading: !select(coreStore)?.hasFinishedResolution?.(
+					'getEntityRecords',
+					[...entityData]
+				),
+			};
+		},
+		[checkoutId]
+	);
+
+	const { purchases, loadingPurchases } = useSelect(
+		(select) => {
+			if (!checkoutId) {
+				return {
+					purchases: [],
+					loading: true,
+				};
+			}
+			const entityData = [
+				'surecart',
+				'purchase',
+				{
+					checkout_ids: checkoutId ? [checkoutId] : null,
+					expand: ['product'],
+				},
+			];
+			return {
+				purchases: select(coreStore)?.getEntityRecords?.(...entityData),
 				loading: !select(coreStore)?.hasFinishedResolution?.(
 					'getEntityRecords',
 					[...entityData]
@@ -84,9 +111,9 @@ export default ({ checkoutId, checkout }) => {
 			{!!refundCharge && (
 				<Refund
 					charge={refundCharge}
+					purchases={purchases}
 					onRefunded={onRefunded}
 					onRequestClose={() => setRefundCharge(false)}
-					checkout={checkout}
 				/>
 			)}
 		</>
