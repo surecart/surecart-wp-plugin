@@ -1,4 +1,4 @@
-import { Component, h } from '@stencil/core';
+import { Component, h, Host, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 @Component({
@@ -7,11 +7,20 @@ import { __ } from '@wordpress/i18n';
   shadow: true,
 })
 export class ScUpgradeRequired {
+  @State() open: boolean = false;
+
   render() {
     return (
-      <sc-tag type="success" size="medium" pill={false}>
-        {__('Premium', 'surecart')}
-      </sc-tag>
+      <Host>
+        <sc-tag type="success" size="medium" pill={false} onClick={() => (this.open = true)}>
+          {__('Premium', 'surecart')}
+        </sc-tag>
+        <sc-dialog label="For upgrade click upgrade now." open={this.open}>
+          <sc-button href="https://api.surecart.com/billing" type="primary">
+            Upgrade Now!
+          </sc-button>
+        </sc-dialog>
+      </Host>
     );
   }
 }
