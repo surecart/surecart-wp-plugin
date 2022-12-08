@@ -30,8 +30,6 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 	const { saveEntityRecord, invalidateResolutionForStore } =
 		useDispatch(coreStore);
 
-	console.log({ purchases });
-
 	/**
 	 * Handle submit.
 	 */
