@@ -30,8 +30,8 @@ function Conditions( props ) {
     { label: __( 'Total', 'surecart' ), value: 'cart_total' },
     { label: __( 'Coupon(s)', 'surecart' ), value: 'cart_coupons' },
     { label: __( 'Payment Processor', 'surecart' ), value: 'cart_payment_method' },
-    { label: __( 'Billing country', 'surecart' ), value: 'cart_billing_country' }
-    { label: __( 'Shipping country', 'surecart' ), value: 'cart_shipping_country' },
+    { label: __( 'Billing country', 'surecart' ), value: 'cart_billing_country' },
+    { label: __( 'Shipping country', 'surecart' ), value: 'cart_shipping_country' }
   ];
   const stringOperators = [
     {
