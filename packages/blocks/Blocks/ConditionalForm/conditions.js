@@ -129,7 +129,7 @@ function Conditions( props ) {
       'fields': [
         {
           'type': 'coupons',
-          'placeholder': __( 'Search for coupons..', 'cartflows-pro' ),
+          'placeholder': __( 'Search for coupons..', 'surecart' ),
           'isMulti': true,
         },
       ],
@@ -161,9 +161,12 @@ function Conditions( props ) {
       'fields': [
         {
           'type': 'select',
-          'placeholder': __( 'Search for payment method..', 'cartflows-pro' ),
+          'placeholder': __( 'Search for payment method..', 'surecart' ),
           'isMulti': true,
-          'options': [{ 'label': 'Stripe', 'value': 'stripe' }],
+          'options': [
+            { 'label': 'Stripe', 'value': 'stripe' },
+            { 'label': 'PayPal', 'value': 'paypal' }
+          ],
         },
       ],
     },
