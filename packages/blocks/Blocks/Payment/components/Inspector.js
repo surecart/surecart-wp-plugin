@@ -43,7 +43,6 @@ export default ({ attributes, setAttributes }) => {
 						{!scBlockData?.entitlements
 							?.form_specific_payment_methods && (
 							<ScUpgradeRequired
-								pill
 								style={{
 									'--sc-tag-default-background-color':
 										'var(--sc-color-gray-200)',

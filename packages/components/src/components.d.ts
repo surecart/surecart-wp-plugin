@@ -2950,18 +2950,6 @@ export namespace Components {
         "successUrl": string;
     }
     interface ScUpgradeRequired {
-        /**
-          * Draws a pill-style tag with rounded edges.
-         */
-        "pill": boolean;
-        /**
-          * The tag's size.
-         */
-        "size": 'small' | 'medium' | 'large';
-        /**
-          * The tag's type.
-         */
-        "type": 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'default';
     }
     interface ScWordpressPasswordEdit {
         "heading": string;
@@ -7584,18 +7572,6 @@ declare namespace LocalJSX {
         "successUrl"?: string;
     }
     interface ScUpgradeRequired {
-        /**
-          * Draws a pill-style tag with rounded edges.
-         */
-        "pill"?: boolean;
-        /**
-          * The tag's size.
-         */
-        "size"?: 'small' | 'medium' | 'large';
-        /**
-          * The tag's type.
-         */
-        "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'default';
     }
     interface ScWordpressPasswordEdit {
         "heading"?: string;

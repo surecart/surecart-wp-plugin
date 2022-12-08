@@ -214,7 +214,7 @@ export default () => {
 				>
 					{__('Subscription Recovery Emails', 'surecart')}{' '}
 					{!scData?.entitlements?.payment_failure_notifications && (
-						<ScUpgradeRequired type="success" size="small" pill />
+						<ScUpgradeRequired />
 					)}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(

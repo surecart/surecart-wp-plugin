@@ -169,7 +169,6 @@ return [
 		'surecart/subtotal'                  => [ 'sc-line-item-total', 'sc-format-number' ],
 		'surecart/total'                     => [ 'sc-line-item-total', 'sc-format-number' ],
 		'surecart/totals'                    => [ 'sc-order-summary' ],
-		'surecart/upgrade-required'          => [ 'sc-upgrade-required' ],
 	],
 
 	/**

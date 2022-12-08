@@ -207,7 +207,7 @@ export default () => {
 				>
 					{__('Require Upfront Payment Method', 'surecart')}
 					{!scData?.entitlements?.optional_upfront_payment_method && (
-						<ScUpgradeRequired type="success" size="small" pill />
+						<ScUpgradeRequired />
 					)}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(

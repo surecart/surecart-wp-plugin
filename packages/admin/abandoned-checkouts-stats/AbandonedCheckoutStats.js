@@ -129,11 +129,12 @@ export default () => {
 		return data;
 	};
 
-	const hasAccess = scData?.entitlements?.abandoned_checkouts;
+	// const hasAccess = scData?.entitlements?.abandoned_checkouts;
+	const hasAccess = false;
 
 	const badge = ({ previous, current, currency = false }) => {
 		if (!hasAccess) {
-			return <ScUpgradeRequired type="success" />;
+			return <ScUpgradeRequired />;
 		}
 
 		if (loading) return null;

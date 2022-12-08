@@ -1702,9 +1702,6 @@
     "slot": true
   },
   "sc-upgrade-required": {
-    "pill": true,
-    "size": true,
-    "type": true,
     "style": true,
     "id": true,
     "class": true,

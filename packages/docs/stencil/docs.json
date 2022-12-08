@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-11-23T20:10:47",
+  "timestamp": "2022-12-08T15:19:51",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -23003,7 +23003,8 @@
         "sc-subscription-details",
         "sc-subscription-payment-method",
         "sc-subscription-status-badge",
-        "sc-subscription-switch"
+        "sc-subscription-switch",
+        "sc-upgrade-required"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -23068,6 +23069,9 @@
           "sc-tag"
         ],
         "sc-subscription-switch": [
+          "sc-tag"
+        ],
+        "sc-upgrade-required": [
           "sc-tag"
         ]
       }
@@ -24753,6 +24757,31 @@
         ],
         "sc-dashboard-module": [
           "sc-alert"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/sc-upgrade-required/sc-upgrade-required.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-upgrade-required",
+      "readme": "# sc-upgrade-required\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-tag"
+      ],
+      "dependencyGraph": {
+        "sc-upgrade-required": [
+          "sc-tag"
         ]
       }
     },

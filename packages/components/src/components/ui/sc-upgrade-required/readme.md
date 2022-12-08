@@ -5,13 +5,6 @@
 <!-- Auto Generated Below -->
 
 
-## Properties
-
-| Property | Attribute | Description | Type     | Default     |
-| -------- | --------- | ----------- | -------- | ----------- |
-| `brand`  | `brand`   |             | `string` | `undefined` |
-
-
 ## Dependencies
 
 ### Depends on
