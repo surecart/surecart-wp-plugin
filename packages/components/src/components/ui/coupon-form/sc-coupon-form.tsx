@@ -108,7 +108,7 @@ export class ScCouponForm {
       return (
         <sc-line-item exportparts="description:info, price-description:discount, price:amount">
           <span slot="description">
-            <div part="discount-label">{__('Discount')}</div>
+            <div part="discount-label">{__('Discount', 'surecart')}</div>
             <sc-tag
               exportparts="base:coupon-tag"
               type="success"
