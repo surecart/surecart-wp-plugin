@@ -12,12 +12,13 @@ export class ScUpgradeRequired {
   render() {
     return (
       <Host>
-        <sc-tag type="success" size="medium" pill={false} onClick={() => (this.open = true)}>
+        <sc-tag type="success" size="medium" onClick={() => (this.open = true)}>
           {__('Premium', 'surecart')}
         </sc-tag>
-        <sc-dialog label="For upgrade click upgrade now." open={this.open}>
-          <sc-button href="https://api.surecart.com/billing" type="primary">
-            Upgrade Now!
+        <sc-dialog label={__('Boost your revenue', 'surecart')} open={this.open} onScRequestClose={() => (this.open = false)}>
+          <p>{__('Unlock revenue boosting features when you upgrade your plan!', 'surecart')}</p>
+          <sc-button href="https://api.surecart.com/billing" type="primary" target="_blank">
+            {__('Upgrade Now!', 'surecart')}
           </sc-button>
         </sc-dialog>
       </Host>
