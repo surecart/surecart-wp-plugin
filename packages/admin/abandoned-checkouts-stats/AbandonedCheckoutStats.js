@@ -129,8 +129,7 @@ export default () => {
 		return data;
 	};
 
-	// const hasAccess = scData?.entitlements?.abandoned_checkouts;
-	const hasAccess = false;
+	const hasAccess = scData?.entitlements?.abandoned_checkouts;
 
 	const badge = ({ previous, current, currency = false }) => {
 		if (!hasAccess) {
