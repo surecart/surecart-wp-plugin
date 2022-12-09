@@ -53,6 +53,8 @@ return [
 		\SureCart\Rest\StatisticRestServiceProvider::class,
 		\SureCart\Rest\IntegrationsRestServiceProvider::class,
 		\SureCart\Rest\IntegrationProvidersRestServiceProvider::class,
+		\SureCart\Rest\CancellationActRestServiceProvider::class,
+		\SureCart\Rest\CancellationReasonRestServiceProvider::class,
 		\SureCart\Rest\CustomerRestServiceProvider::class,
 		\SureCart\Rest\CustomerLinksRestServiceProvider::class,
 		\SureCart\Rest\PaymentMethodsRestServiceProvider::class,
