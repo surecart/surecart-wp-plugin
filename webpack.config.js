@@ -93,6 +93,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/settings/subscription/index.js'
 		),
+		['admin/settings/subscription-preservation']: path.resolve(
+			__dirname,
+			'packages/admin/settings/subscription-preservation/index.js'
+		),
 		['admin/settings/portal']: path.resolve(
 			__dirname,
 			'packages/admin/settings/portal/index.js'

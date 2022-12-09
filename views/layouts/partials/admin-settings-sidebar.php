@@ -13,7 +13,7 @@
 			<?php esc_html_e( 'Orders & Receipts', 'surecart' ); ?>
 		</sc-tab>
 		<sc-tab
-		disabled="<?php echo empty( $entitlements->abandoned_checkouts ) ? 'true' : 'false' ?>"
+		disabled="<?php echo empty( $entitlements->abandoned_checkouts ) ? 'true' : 'false'; ?>"
 		href="
 		<?php
 		echo empty( $entitlements->abandoned_checkouts ) ?
@@ -34,6 +34,21 @@
 		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'subscription_protocol' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'subscription_protocol' === $tab ? 'active' : ''; ?>>
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="refresh-ccw"></sc-icon>
 			<?php esc_html_e( 'Subscriptions', 'surecart' ); ?>
+		</sc-tab>
+		<sc-tab
+		disabled="<?php echo empty( $entitlements->subscription_preservation ) ? 'true' : 'false'; ?>"
+		href="
+		<?php
+		echo empty( $entitlements->subscription_preservation ) ?
+			'#' :
+			esc_url( add_query_arg( [ 'tab' => 'subscription_preservation' ], menu_page_url( 'sc-settings', false ) ) );
+		?>
+		" <?php echo 'subscription_preservation' === $tab ? 'active' : ''; ?>>
+			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="bar-chart-2"></sc-icon>
+			<?php esc_html_e( 'Subscription Saver', 'surecart' ); ?>
+			<?php if ( empty( $entitlements->subscription_preservation ) ) : ?>
+				<sc-tag slot="suffix" type="success"><?php esc_html_e( 'Pro', 'surecart' ); ?></sc-tag>
+			<?php endif; ?>
 		</sc-tab>
 		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'portal_protocol' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'portal_protocol' === $tab ? 'active' : ''; ?>>
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="briefcase"></sc-icon>
