@@ -1,6 +1,14 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScSelect, ScSwitch, ScTag } from '@surecart/components-react';
+import {
+	ScButton,
+	ScIcon,
+	ScInput,
+	ScSelect,
+	ScSwitch,
+	ScTag,
+	ScTextarea,
+} from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
@@ -10,15 +18,36 @@ import SettingsBox from '../SettingsBox';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
 import Coupon from './Coupon';
-import Locales from './Locales';
+import NewReason from './NewReason';
+import Reasons from './Reasons';
 
 export default () => {
 	const [error, setError] = useState(null);
+	const [modal, setModal] = useState(false);
 	const { save } = useSave();
 	const { item, itemError, editItem, hasLoadedItem } = useEntity(
 		'store',
 		'subscription_protocol'
 	);
+
+	const {
+		reasons_title,
+		reasons_description,
+		skip_link,
+		preserve_title,
+		preserve_description,
+		preserve_button,
+		cancel_link,
+	} = item?.preservation_locales || {};
+
+	const updateLocale = (data) => {
+		updateItem({
+			preservation_locales: {
+				...item?.preservation_locales,
+				...data,
+			},
+		});
+	};
 
 	/**
 	 * Form is submitted.
@@ -34,17 +63,6 @@ export default () => {
 			setError(e);
 		}
 	};
-
-	const choices = [
-		{
-			label: __('Immediately', 'surecart'),
-			value: 'immediate',
-		},
-		{
-			label: __('Next Billing Period', 'surecart'),
-			value: 'pending',
-		},
-	];
 
 	return (
 		<SettingsTemplate
@@ -104,28 +122,84 @@ export default () => {
 			{!!item?.preservation_enabled && (
 				<>
 					<SettingsBox
-						title={__('Discount', 'surecart')}
+						title={__('Renewal Discount', 'surecart')}
 						description={__(
-							'Manage your subscription saver settings discount.',
+							'Provide a discount to keep a subscription.',
 							'surecart'
 						)}
 						loading={!hasLoadedItem}
 					>
 						<Coupon coupon={item?.preservation_coupon} />
+						<ScInput
+							label={__('Title', 'surecart')}
+							value={preserve_title}
+							onScInput={(e) =>
+								updateLocale({ preserve_title: e.target.value })
+							}
+						/>
+						<ScTextarea
+							label={__('Description', 'surecart')}
+							value={preserve_description}
+							onScInput={(e) =>
+								updateLocale({
+									preserve_description: e.target.value,
+								})
+							}
+						/>
+						<ScInput
+							label={__('Button', 'surecart')}
+							value={preserve_button}
+							onScInput={(e) =>
+								updateLocale({
+									preserve_button: e.target.value,
+								})
+							}
+						/>
+						<ScInput
+							label={__('Cancel Link', 'surecart')}
+							value={cancel_link}
+							onScInput={(e) =>
+								updateLocale({ cancel_link: e.target.value })
+							}
+						/>
 					</SettingsBox>
 
 					<SettingsBox
-						title={__('Interface', 'surecart')}
+						title={__('Cancellation Survey', 'surecart')}
 						description={__(
-							'Manage your subscription saver settings discount.',
+							'Cancellation survey options.',
 							'surecart'
 						)}
 						loading={!hasLoadedItem}
 					>
-						<Locales item={item} updateItem={editItem} />
+						<Reasons />
+						<ScInput
+							label={__('Title', 'surecart')}
+							value={reasons_title}
+							onScInput={(e) =>
+								updateLocale({ reasons_title: e.target.value })
+							}
+						/>
+						<ScTextarea
+							label={__('Description', 'surecart')}
+							value={reasons_description}
+							onScInput={(e) =>
+								updateLocale({
+									reasons_description: e.target.value,
+								})
+							}
+						/>
+						<ScInput
+							label={__('Skip Link', 'surecart')}
+							value={skip_link}
+							onScInput={(e) =>
+								updateLocale({ skip_link: e.target.value })
+							}
+						/>
 					</SettingsBox>
 				</>
 			)}
+			{!!modal && <NewReason onRequestClose={() => setModal(false)} />}
 		</SettingsTemplate>
 	);
 };
