@@ -8,8 +8,6 @@ import Box from '../../ui/Box';
 import { ScInput, ScSwitch } from '@surecart/components-react';
 
 export default ({ coupon, loading, updateCoupon }) => {
-	console.log('coupon:');
-	console.log(coupon);
 	return (
 		<Box title={__('Redemption Limits', 'surecart')} loading={loading}>
 			<div
