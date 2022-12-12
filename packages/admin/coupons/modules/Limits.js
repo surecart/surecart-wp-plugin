@@ -8,6 +8,8 @@ import Box from '../../ui/Box';
 import { ScInput, ScSwitch } from '@surecart/components-react';
 
 export default ({ coupon, loading, updateCoupon }) => {
+	console.log('coupon:');
+	console.log(coupon);
 	return (
 		<Box title={__('Redemption Limits', 'surecart')} loading={loading}>
 			<div
@@ -87,23 +89,42 @@ export default ({ coupon, loading, updateCoupon }) => {
 					</ScSwitch>
 
 					{!!coupon?.max_redemptions && (
-						<BaseControl>
-							<ScInput
-								label={__('Number of Times', 'surecart')}
-								help={__(
-									"This limit applies across customers so it won't prevent a single customer from redeeming multiple times.",
-									'surecart'
-								)}
-								class="max-redemptions-input"
-								value={coupon?.max_redemptions || 1}
-								onScChange={(e) => {
-									updateCoupon({
-										max_redemptions: e.target.value,
-									});
-								}}
-								type="number"
-							/>
-						</BaseControl>
+						<>
+							<BaseControl>
+								<ScInput
+									label={__('Number of Times', 'surecart')}
+									help={__(
+										"This limit applies across customers so it won't prevent a single customer from redeeming multiple times.",
+										'surecart'
+									)}
+									class="max-redemptions-input"
+									value={coupon?.max_redemptions || 1}
+									onScChange={(e) => {
+										updateCoupon({
+											max_redemptions: e.target.value,
+										});
+									}}
+									type="number"
+								/>
+							</BaseControl>
+							<BaseControl>
+								<ScInput
+									label={__('Limits Per Customer', 'surecart')}
+									help={__(
+										"This limit applies across per customer.",
+										'surecart'
+									)}
+									class="max-redemptions-input"
+									value={coupon?.max_redemptions_per_customer || ''}
+									onScChange={(e) => {
+										updateCoupon({
+											max_redemptions_per_customer: e.target.value,
+										});
+									}}
+									type="number"
+								/>
+							</BaseControl>
+						</>
 					)}
 				</div>
 			</div>
