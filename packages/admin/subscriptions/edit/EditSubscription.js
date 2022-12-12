@@ -232,16 +232,18 @@ export default () => {
 			}
 			button={
 				<ScFlex alignItems="center">
-					<ScSwitch
-						checked={updateBehavior === 'immediate'}
-						onScChange={(e) =>
-							setUpdateBehavior(
-								e.target.checked ? 'immediate' : 'pending'
-							)
-						}
-					>
-						{__('Update Immediately', 'surecart')}
-					</ScSwitch>
+					{!Object.keys(subscription?.pending_update || {}).length && (
+						<ScSwitch
+							checked={updateBehavior === 'immediate'}
+							onScChange={(e) =>
+								setUpdateBehavior(
+									e.target.checked ? 'immediate' : 'pending'
+								)
+							}
+						>
+							{__('Update Immediately', 'surecart')}
+						</ScSwitch>
+					)}
 					<SaveButton
 						loading={!hasLoadedSubscription}
 						busy={savingSubscription}
