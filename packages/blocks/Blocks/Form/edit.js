@@ -29,6 +29,12 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { Fragment, useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
+const ALLOWED_BLOCKS = [
+	'surecart/heading',
+	'surecart/donation',
+	'surecart/address',
+];
+
 export default function edit({ clientId, attributes, setAttributes }) {
 	const [patterns, setPatterns] = useState([]);
 	const UnitControl = __stableUnitControl
@@ -534,6 +540,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							`}
 						>
 							<InnerBlocks
+								allowedBlocks={ALLOWED_BLOCKS}
 								templateLock={false}
 								renderAppender={
 									blockCount
