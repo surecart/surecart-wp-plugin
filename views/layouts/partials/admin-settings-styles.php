@@ -38,7 +38,6 @@
 	#sc-settings-container {
 		position: absolute;
 		top: 0;
-		height: 100% !important;
 		width: 100% !important;
 		left: 0;
 		background: var(--sc-color-brand-main-background);
@@ -55,7 +54,6 @@
 	#sc-settings-content {
 		display: flex;
 		flex: 1;
-		overflow: hidden;
 	}
 	#sc-settings {
 		flex: 1;
