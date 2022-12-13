@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 
-export default ({ title, description, model, action = 'notification', disabled = false }) => {
+export default ({ title, description, link = 'customer_notifications', model, action = 'notification', disabled = false }) => {
 	return (
 		<sc-stacked-list-row style={{ '--columns': '3' }}>
 			<strong>
@@ -15,7 +15,7 @@ export default ({ title, description, model, action = 'notification', disabled =
 			<sc-button
 				size="small"
 				slot="suffix"
-				href={disabled ? `#` : `${scData?.app_url}/notification_templates/:customer_notifications/${model}/${action}/edit`}
+				href={disabled ? `#` : `${scData?.app_url}/notification_templates/:${link}/${model}/${action}/edit`}
 				target="_blank"
 				disabled={disabled}
 			>

@@ -1,5 +1,4 @@
 :host {
-  --sc-drawer-size: 25rem;
   display: contents;
 }
 .drawer {
@@ -42,14 +41,15 @@
   bottom: auto;
   left: 0;
   width: 100%;
-  height: var(--sc-drawer-size);
+  height: var(--sc-drawer-size, 400px);
 }
 .drawer--end .drawer__panel {
   top: 0;
   right: 0;
   bottom: auto;
   left: auto;
-  width: var(--sc-drawer-size);
+  width: 100%;
+  max-width: var(--sc-drawer-size, 400px);
   height: 100%;
 }
 .drawer--bottom .drawer__panel {
@@ -58,14 +58,14 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: var(--sc-drawer-size);
+  height: var(--sc-drawer-size, 400px);
 }
 .drawer--start .drawer__panel {
   top: 0;
   right: auto;
   bottom: auto;
   left: 0;
-  width: var(--sc-drawer-size);
+  width: var(--sc-drawer-size, 400px);
   height: 100%;
 }
 /* .drawer__header {

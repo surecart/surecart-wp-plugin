@@ -3,7 +3,7 @@
 exports[`sc-customer-details has a loading state 1`] = `
 <sc-customer-details>
   <mock:shadow-root>
-    <sc-dashboard-module class="customer-details">
+    <sc-dashboard-module class="customer-details" exportparts="base, heading, heading-text, heading-title, heading-description">
       <span slot="heading">
         Billing Details
       </span>
@@ -31,7 +31,7 @@ exports[`sc-customer-details has a loading state 1`] = `
 exports[`sc-customer-details has an empty state 1`] = `
 <sc-customer-details>
   <mock:shadow-root>
-    <sc-dashboard-module class="customer-details">
+    <sc-dashboard-module class="customer-details" exportparts="base, heading, heading-text, heading-title, heading-description">
       <span slot="heading">
         Billing Details
       </span>
@@ -56,7 +56,7 @@ exports[`sc-customer-details has an empty state 1`] = `
 exports[`sc-customer-details has an error state 1`] = `
 <sc-customer-details>
   <mock:shadow-root>
-    <sc-dashboard-module class="customer-details" error="testmessage">
+    <sc-dashboard-module class="customer-details" error="testmessage" exportparts="base, heading, heading-text, heading-title, heading-description">
       <span slot="heading">
         Billing Details
       </span>
@@ -81,10 +81,10 @@ exports[`sc-customer-details has an error state 1`] = `
 exports[`sc-customer-details renders 1`] = `
 <sc-customer-details>
   <mock:shadow-root>
-    <sc-dashboard-module class="customer-details">
+    <sc-dashboard-module class="customer-details" exportparts="base, heading, heading-text, heading-title, heading-description">
       <span slot="heading">
         Billing Details
-        <sc-tag size="small" type="warning">
+        <sc-tag exportparts="base:test-tag__base, content:test-tag__content" size="small" type="warning">
           Test
         </sc-tag>
       </span>

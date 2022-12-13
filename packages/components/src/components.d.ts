@@ -390,6 +390,10 @@ export namespace Components {
     }
     interface ScCheckout {
         /**
+          * The abandoned checkout return url.
+         */
+        "abandonedCheckoutReturnUrl": string;
+        /**
           * Alignment
          */
         "alignment": 'center' | 'wide' | 'full';
@@ -1672,7 +1676,7 @@ export namespace Components {
         "postalCodePlaceholder": string;
         "reportValidity": () => Promise<boolean>;
         /**
-          * Is this required (defaults to true)
+          * Is this required (defaults to false)
          */
         "required": boolean;
         /**
@@ -1688,6 +1692,10 @@ export namespace Components {
          */
         "showName": boolean;
         "statePlaceholder": string;
+        /**
+          * Tax enabled status of the order
+         */
+        "taxEnabled": boolean;
         /**
           * Tax status of the order
          */
@@ -2160,6 +2168,10 @@ export namespace Components {
          */
         "removable": boolean;
         /**
+          * The line item scratch amount
+         */
+        "scratchAmount": number;
+        /**
           * Trial duration days
          */
         "trialDurationDays": number;
@@ -2320,6 +2332,10 @@ export namespace Components {
         "value": string;
     }
     interface ScSessionProvider {
+        /**
+          * The abandoned checkout return url.
+         */
+        "abandonedCheckoutReturnUrl": string;
         /**
           * Currency Code
          */
@@ -2636,6 +2652,10 @@ export namespace Components {
           * Disables the switch.
          */
         "disabled": boolean;
+        /**
+          * This will be true as a workaround in the block editor to focus on the content.
+         */
+        "edit": boolean;
         /**
           * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
          */
@@ -4678,6 +4698,10 @@ declare namespace LocalJSX {
     }
     interface ScCheckout {
         /**
+          * The abandoned checkout return url.
+         */
+        "abandonedCheckoutReturnUrl"?: string;
+        /**
           * Alignment
          */
         "alignment"?: 'center' | 'wide' | 'full';
@@ -6129,7 +6153,7 @@ declare namespace LocalJSX {
         "placeholders"?: Partial<Address>;
         "postalCodePlaceholder"?: string;
         /**
-          * Is this required (defaults to true)
+          * Is this required (defaults to false)
          */
         "required"?: boolean;
         /**
@@ -6145,6 +6169,10 @@ declare namespace LocalJSX {
          */
         "showName"?: boolean;
         "statePlaceholder"?: string;
+        /**
+          * Tax enabled status of the order
+         */
+        "taxEnabled"?: boolean;
         /**
           * Tax status of the order
          */
@@ -6678,6 +6706,10 @@ declare namespace LocalJSX {
          */
         "removable"?: boolean;
         /**
+          * The line item scratch amount
+         */
+        "scratchAmount"?: number;
+        /**
           * Trial duration days
          */
         "trialDurationDays"?: number;
@@ -6871,6 +6903,10 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface ScSessionProvider {
+        /**
+          * The abandoned checkout return url.
+         */
+        "abandonedCheckoutReturnUrl"?: string;
         /**
           * Currency Code
          */
@@ -7214,6 +7250,10 @@ declare namespace LocalJSX {
           * Disables the switch.
          */
         "disabled"?: boolean;
+        /**
+          * This will be true as a workaround in the block editor to focus on the content.
+         */
+        "edit"?: boolean;
         /**
           * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
          */

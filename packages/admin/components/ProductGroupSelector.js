@@ -13,7 +13,7 @@ export default (props) => {
 				'surecart',
 				'product_group',
 				{
-					search: query,
+					query,
 				},
 			];
 			return {

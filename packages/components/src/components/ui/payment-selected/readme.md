@@ -15,9 +15,14 @@
 
 ## Shadow Parts
 
-| Part     | Description |
-| -------- | ----------- |
-| `"base"` |             |
+| Part              | Description       |
+| ----------------- | ----------------- |
+| `"base"`          |                   |
+| `"divider"`       | The divider.      |
+| `"divider__line"` | The divider line. |
+| `"icon"`          |                   |
+| `"instructions"`  |                   |
+| `"text"`          |                   |
 
 
 ## Dependencies

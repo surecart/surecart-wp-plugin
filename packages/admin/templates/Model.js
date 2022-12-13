@@ -103,7 +103,7 @@ export default ({
 							float: right;
 						}
 
-						.components-text-control__input,
+						/* .components-text-control__input,
 						.components-input-control__container
 							.components-input-control__input {
 							&[type='text'],
@@ -125,7 +125,7 @@ export default ({
 								padding: 10px 12px;
 								box-shadow: rgb(0 0 0 / 5%) 0px 1px 2px 0px;
 							}
-						}
+						} */
 
 						.is-error {
 							.components-text-control__input {

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-11-10T21:38:06",
+  "timestamp": "2022-11-30T20:19:18",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -12,7 +12,80 @@
       "tag": "sc-address",
       "readme": "# ce-address\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "input__base - The inputs base element."
+        },
+        {
+          "name": "part",
+          "text": "select__base - The select boxes base element."
+        },
+        {
+          "name": "part",
+          "text": "input - The html input element."
+        },
+        {
+          "name": "part",
+          "text": "form-control - The form control wrapper."
+        },
+        {
+          "name": "part",
+          "text": "label - The input label."
+        },
+        {
+          "name": "part",
+          "text": "help-text - Help text that describes how to use the input."
+        },
+        {
+          "name": "part",
+          "text": "trigger - The select box trigger."
+        },
+        {
+          "name": "part",
+          "text": "panel - The select box panel."
+        },
+        {
+          "name": "part",
+          "text": "caret - The select box caret."
+        },
+        {
+          "name": "part",
+          "text": "search__base - The select search base."
+        },
+        {
+          "name": "part",
+          "text": "search__input - The select search input."
+        },
+        {
+          "name": "part",
+          "text": "search__form-control - The select search form control."
+        },
+        {
+          "name": "part",
+          "text": "menu__base - The select menu base."
+        },
+        {
+          "name": "part",
+          "text": "spinner__base  - The select spinner base."
+        },
+        {
+          "name": "part",
+          "text": "empty - The select empty message."
+        },
+        {
+          "name": "part",
+          "text": "block-ui - The block ui base component."
+        },
+        {
+          "name": "part",
+          "text": "block-ui__content - The block ui content (spinner)."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -120,7 +193,7 @@
           "reflectToAttr": true,
           "docs": "Is this required?",
           "docsTags": [],
-          "default": "true",
+          "default": "false",
           "values": [
             {
               "type": "boolean"
@@ -200,8 +273,84 @@
       "slots": [],
       "parts": [
         {
-          "name": "control",
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "block-ui",
+          "docs": "The block ui base component."
+        },
+        {
+          "name": "block-ui__content",
+          "docs": "The block ui content (spinner)."
+        },
+        {
+          "name": "caret",
+          "docs": "The select box caret."
+        },
+        {
+          "name": "columns",
           "docs": ""
+        },
+        {
+          "name": "empty",
+          "docs": "The select empty message."
+        },
+        {
+          "name": "form-control",
+          "docs": "The form control wrapper."
+        },
+        {
+          "name": "help-text",
+          "docs": "Help text that describes how to use the input."
+        },
+        {
+          "name": "input",
+          "docs": "The html input element."
+        },
+        {
+          "name": "input__base",
+          "docs": "The inputs base element."
+        },
+        {
+          "name": "label",
+          "docs": "The input label."
+        },
+        {
+          "name": "menu__base",
+          "docs": "The select menu base."
+        },
+        {
+          "name": "name__input",
+          "docs": ""
+        },
+        {
+          "name": "panel",
+          "docs": "The select box panel."
+        },
+        {
+          "name": "search__base",
+          "docs": "The select search base."
+        },
+        {
+          "name": "search__form-control",
+          "docs": "The select search form control."
+        },
+        {
+          "name": "search__input",
+          "docs": "The select search input."
+        },
+        {
+          "name": "select__base",
+          "docs": "The select boxes base element."
+        },
+        {
+          "name": "spinner__base",
+          "docs": "The select spinner base."
+        },
+        {
+          "name": "trigger",
+          "docs": "The select box trigger."
         }
       ],
       "dependents": [
@@ -254,7 +403,32 @@
       "tag": "sc-alert",
       "readme": "# ce-alert\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "icon - The alert icon."
+        },
+        {
+          "name": "part",
+          "text": "text - The alert text."
+        },
+        {
+          "name": "part",
+          "text": "title - The alert title."
+        },
+        {
+          "name": "part",
+          "text": "message - The alert message."
+        },
+        {
+          "name": "part",
+          "text": "close - The close icon."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -442,27 +616,27 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
         },
         {
-          "name": "close-icon",
-          "docs": ""
+          "name": "close",
+          "docs": "The close icon."
         },
         {
           "name": "icon",
-          "docs": ""
+          "docs": "The alert icon."
         },
         {
           "name": "message",
-          "docs": ""
+          "docs": "The alert message."
         },
         {
           "name": "text",
-          "docs": ""
+          "docs": "The alert text."
         },
         {
           "name": "title",
-          "docs": ""
+          "docs": "The alert title."
         }
       ],
       "dependents": [
@@ -672,7 +846,16 @@
       "tag": "sc-block-ui",
       "readme": "# ce-block-ui\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "content - The content (spinner)"
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -730,7 +913,16 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "content",
+          "docs": "The content (spinner)"
+        }
+      ],
       "dependents": [
         "sc-address",
         "sc-cart",
@@ -860,7 +1052,28 @@
       "tag": "sc-breadcrumb",
       "readme": "# ce-breadcrumb\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "label - The label."
+        },
+        {
+          "name": "part",
+          "text": "suffix - The suffix item."
+        },
+        {
+          "name": "part",
+          "text": "prefix - The prefix item."
+        },
+        {
+          "name": "part",
+          "text": "separator - The separator."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -934,23 +1147,23 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
         },
         {
           "name": "label",
-          "docs": ""
+          "docs": "The label."
         },
         {
           "name": "prefix",
-          "docs": ""
+          "docs": "The prefix item."
         },
         {
           "name": "separator",
-          "docs": ""
+          "docs": "The separator."
         },
         {
           "name": "suffix",
-          "docs": ""
+          "docs": "The suffix item."
         }
       ],
       "dependents": [],
@@ -969,7 +1182,16 @@
       "tag": "sc-breadcrumbs",
       "readme": "# ce-breadcrumbs\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "separator - The separator."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -998,7 +1220,11 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "separator",
+          "docs": "The separator."
         }
       ],
       "dependents": [],
@@ -1017,7 +1243,32 @@
       "tag": "sc-button",
       "readme": "# ce-button\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "label - The button label."
+        },
+        {
+          "name": "part",
+          "text": "prefix - The button prefix."
+        },
+        {
+          "name": "part",
+          "text": "suffix - The button suffix."
+        },
+        {
+          "name": "part",
+          "text": "caret - The button caret."
+        },
+        {
+          "name": "part",
+          "text": "spinner - The button spinner."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -1366,23 +1617,27 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
         },
         {
           "name": "caret",
-          "docs": ""
+          "docs": "The button caret."
         },
         {
           "name": "label",
-          "docs": ""
+          "docs": "The button label."
         },
         {
           "name": "prefix",
-          "docs": ""
+          "docs": "The button prefix."
+        },
+        {
+          "name": "spinner",
+          "docs": "The button spinner."
         },
         {
           "name": "suffix",
-          "docs": ""
+          "docs": "The button suffix."
         }
       ],
       "dependents": [
@@ -1604,7 +1859,12 @@
       "tag": "sc-card",
       "readme": "# ce-card\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -1696,7 +1956,7 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
         }
       ],
       "dependents": [
@@ -2308,7 +2568,20 @@
       "tag": "sc-cart-icon",
       "readme": "# sc-cart-icon\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "container - The container."
+        },
+        {
+          "name": "part",
+          "text": "icon__base - The icon base wrapper."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -2354,7 +2627,15 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "container",
+          "docs": "The container."
+        },
+        {
+          "name": "icon__base",
+          "docs": "The icon base wrapper."
         }
       ],
       "dependents": [
@@ -2705,7 +2986,12 @@
       "tag": "sc-cc-logo",
       "readme": "# ce-cc-logo\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -2733,7 +3019,7 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
         }
       ],
       "dependents": [
@@ -2888,7 +3174,28 @@
       "tag": "sc-checkbox",
       "readme": "# ce-checkbox\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "control - The control wrapper."
+        },
+        {
+          "name": "part",
+          "text": "checked-icon - Checked icon."
+        },
+        {
+          "name": "part",
+          "text": "indeterminate-icon - Indeterminate icon."
+        },
+        {
+          "name": "part",
+          "text": "label - The label."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -3107,23 +3414,23 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
         },
         {
           "name": "checked-icon",
-          "docs": ""
+          "docs": "Checked icon."
         },
         {
           "name": "control",
-          "docs": ""
+          "docs": "The control wrapper."
         },
         {
           "name": "indeterminate-icon",
-          "docs": ""
+          "docs": "Indeterminate icon."
         },
         {
           "name": "label",
-          "docs": ""
+          "docs": "The label."
         }
       ],
       "dependents": [],
@@ -3139,6 +3446,22 @@
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "abandonedCheckoutReturnUrl",
+          "type": "string",
+          "mutable": false,
+          "attr": "abandoned-checkout-return-url",
+          "reflectToAttr": false,
+          "docs": "The abandoned checkout return url.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
         {
           "name": "alignment",
           "type": "\"center\" | \"full\" | \"wide\"",
@@ -4077,7 +4400,28 @@
       "tag": "sc-choices",
       "readme": "# ce-choices\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "choices - The choices wrapper."
+        },
+        {
+          "name": "part",
+          "text": "form-control - The form control wrapper."
+        },
+        {
+          "name": "part",
+          "text": "label - The input label."
+        },
+        {
+          "name": "part",
+          "text": "help-text - Help text that describes how to use the input."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -4262,11 +4606,23 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
         },
         {
           "name": "choices",
-          "docs": ""
+          "docs": "The choices wrapper."
+        },
+        {
+          "name": "form-control",
+          "docs": "The form control wrapper."
+        },
+        {
+          "name": "help-text",
+          "docs": "Help text that describes how to use the input."
+        },
+        {
+          "name": "label",
+          "docs": "The input label."
         }
       ],
       "dependents": [
@@ -4400,7 +4756,80 @@
       "tag": "sc-compact-address",
       "readme": "# sc-compact-address\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "input__base - The inputs base element."
+        },
+        {
+          "name": "part",
+          "text": "select__base - The select boxes base element."
+        },
+        {
+          "name": "part",
+          "text": "input - The html input element."
+        },
+        {
+          "name": "part",
+          "text": "form-control - The form control wrapper."
+        },
+        {
+          "name": "part",
+          "text": "label - The input label."
+        },
+        {
+          "name": "part",
+          "text": "help-text - Help text that describes how to use the input."
+        },
+        {
+          "name": "part",
+          "text": "trigger - The select box trigger."
+        },
+        {
+          "name": "part",
+          "text": "panel - The select box panel."
+        },
+        {
+          "name": "part",
+          "text": "caret - The select box caret."
+        },
+        {
+          "name": "part",
+          "text": "search__base - The select search base."
+        },
+        {
+          "name": "part",
+          "text": "search__input - The select search input."
+        },
+        {
+          "name": "part",
+          "text": "search__form-control - The select search form control."
+        },
+        {
+          "name": "part",
+          "text": "menu__base - The select menu base."
+        },
+        {
+          "name": "part",
+          "text": "spinner__base  - The select spinner base."
+        },
+        {
+          "name": "part",
+          "text": "empty - The select empty message."
+        },
+        {
+          "name": "part",
+          "text": "block-ui - The block ui base component."
+        },
+        {
+          "name": "part",
+          "text": "block-ui__content - The block ui content (spinner)."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -4523,8 +4952,80 @@
       "slots": [],
       "parts": [
         {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "block-ui",
+          "docs": "The block ui base component."
+        },
+        {
+          "name": "block-ui__content",
+          "docs": "The block ui content (spinner)."
+        },
+        {
+          "name": "caret",
+          "docs": "The select box caret."
+        },
+        {
           "name": "control",
           "docs": ""
+        },
+        {
+          "name": "empty",
+          "docs": "The select empty message."
+        },
+        {
+          "name": "form-control",
+          "docs": "The form control wrapper."
+        },
+        {
+          "name": "help-text",
+          "docs": "Help text that describes how to use the input."
+        },
+        {
+          "name": "input",
+          "docs": "The html input element."
+        },
+        {
+          "name": "input__base",
+          "docs": "The inputs base element."
+        },
+        {
+          "name": "label",
+          "docs": "The input label."
+        },
+        {
+          "name": "menu__base",
+          "docs": "The select menu base."
+        },
+        {
+          "name": "panel",
+          "docs": "The select box panel."
+        },
+        {
+          "name": "search__base",
+          "docs": "The select search base."
+        },
+        {
+          "name": "search__form-control",
+          "docs": "The select search form control."
+        },
+        {
+          "name": "search__input",
+          "docs": "The select search input."
+        },
+        {
+          "name": "select__base",
+          "docs": "The select boxes base element."
+        },
+        {
+          "name": "spinner__base",
+          "docs": "The select spinner base."
+        },
+        {
+          "name": "trigger",
+          "docs": "The select box trigger."
         }
       ],
       "dependents": [
@@ -4619,7 +5120,84 @@
       "tag": "sc-coupon-form",
       "readme": "# ce-coupon-form\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "form - The form."
+        },
+        {
+          "name": "part",
+          "text": "input__base - The input base."
+        },
+        {
+          "name": "part",
+          "text": "input - The input."
+        },
+        {
+          "name": "part",
+          "text": "input__form-control - The input form control."
+        },
+        {
+          "name": "part",
+          "text": "button__base - The button base element."
+        },
+        {
+          "name": "part",
+          "text": "button__label - The button label."
+        },
+        {
+          "name": "part",
+          "text": "info - The discount info."
+        },
+        {
+          "name": "part",
+          "text": "discount - The discount displayed (% off)"
+        },
+        {
+          "name": "part",
+          "text": "amount - The discount amount."
+        },
+        {
+          "name": "part",
+          "text": "discount-label - The discount label."
+        },
+        {
+          "name": "part",
+          "text": "coupon-tag - The coupon tag."
+        },
+        {
+          "name": "part",
+          "text": "error__base - The error base."
+        },
+        {
+          "name": "part",
+          "text": "error__icon - The error icon"
+        },
+        {
+          "name": "part",
+          "text": "error__text - The error text."
+        },
+        {
+          "name": "part",
+          "text": "error_title - The error title."
+        },
+        {
+          "name": "part",
+          "text": "error__message - The error message."
+        },
+        {
+          "name": "part",
+          "text": "block-ui - The block ui base component."
+        },
+        {
+          "name": "part",
+          "text": "block-ui__content - The block ui content (spinner)."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -4781,7 +5359,88 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "amount",
+          "docs": "The discount amount."
+        },
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "block-ui",
+          "docs": "The block ui base component."
+        },
+        {
+          "name": "block-ui__content",
+          "docs": "The block ui content (spinner)."
+        },
+        {
+          "name": "button__base",
+          "docs": "The button base element."
+        },
+        {
+          "name": "button__label",
+          "docs": "The button label."
+        },
+        {
+          "name": "coupon-tag",
+          "docs": "The coupon tag."
+        },
+        {
+          "name": "discount",
+          "docs": "The discount displayed (% off)"
+        },
+        {
+          "name": "discount-label",
+          "docs": "The discount label."
+        },
+        {
+          "name": "error__base",
+          "docs": "The error base."
+        },
+        {
+          "name": "error__icon",
+          "docs": "The error icon"
+        },
+        {
+          "name": "error__message",
+          "docs": "The error message."
+        },
+        {
+          "name": "error__text",
+          "docs": "The error text."
+        },
+        {
+          "name": "error_title",
+          "docs": "The error title."
+        },
+        {
+          "name": "form",
+          "docs": "The form."
+        },
+        {
+          "name": "info",
+          "docs": "The discount info."
+        },
+        {
+          "name": "input",
+          "docs": "The input."
+        },
+        {
+          "name": "input__base",
+          "docs": "The input base."
+        },
+        {
+          "name": "input__form-control",
+          "docs": "The input form control."
+        },
+        {
+          "name": "label",
+          "docs": ""
+        }
+      ],
       "dependents": [
         "sc-order-coupon-form",
         "sc-upcoming-invoice"
@@ -5060,7 +5719,68 @@
       "tag": "sc-customer-details",
       "readme": "# ce-customer-details\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "heading - The heading."
+        },
+        {
+          "name": "part",
+          "text": "heading-text - The heading text wrapper."
+        },
+        {
+          "name": "part",
+          "text": "heading-title - The heading title."
+        },
+        {
+          "name": "part",
+          "text": "heading-description - The heading description."
+        },
+        {
+          "name": "part",
+          "text": "error__base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "error__icon - The alert icon."
+        },
+        {
+          "name": "part",
+          "text": "error__text - The alert text."
+        },
+        {
+          "name": "part",
+          "text": "error__title - The alert title."
+        },
+        {
+          "name": "part",
+          "text": "error__ message - The alert message."
+        },
+        {
+          "name": "part",
+          "text": "test-tag__base - The base test tag."
+        },
+        {
+          "name": "part",
+          "text": "text-tag__content - The base test tag content."
+        },
+        {
+          "name": "part",
+          "text": "button__base - The button base."
+        },
+        {
+          "name": "part",
+          "text": "button__label - The button label."
+        },
+        {
+          "name": "part",
+          "text": "button__prefix - The button prefix."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -5148,7 +5868,68 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "button__base",
+          "docs": "The button base."
+        },
+        {
+          "name": "button__label",
+          "docs": "The button label."
+        },
+        {
+          "name": "button__prefix",
+          "docs": "The button prefix."
+        },
+        {
+          "name": "error__ message",
+          "docs": "The alert message."
+        },
+        {
+          "name": "error__base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "error__icon",
+          "docs": "The alert icon."
+        },
+        {
+          "name": "error__text",
+          "docs": "The alert text."
+        },
+        {
+          "name": "error__title",
+          "docs": "The alert title."
+        },
+        {
+          "name": "heading",
+          "docs": "The heading."
+        },
+        {
+          "name": "heading-description",
+          "docs": "The heading description."
+        },
+        {
+          "name": "heading-text",
+          "docs": "The heading text wrapper."
+        },
+        {
+          "name": "heading-title",
+          "docs": "The heading title."
+        },
+        {
+          "name": "test-tag__base",
+          "docs": "The base test tag."
+        },
+        {
+          "name": "text-tag__content",
+          "docs": "The base test tag content."
+        }
+      ],
       "dependents": [
         "sc-dashboard-customer-details",
         "sc-order-confirmation-customer"
@@ -6109,7 +6890,7 @@
         },
         {
           "event": "scUpdateOrderState",
-          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\" | \"requires_approval\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; proration_amount?: number; applied_balance_amount?: number; discounts?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\" | \"requires_approval\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; scratch_amount?: number; applied_balance_amount?: number; discounts?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -6367,7 +7148,48 @@
       "tag": "sc-dashboard-module",
       "readme": "# ce-dashboard-module\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "heading - The heading."
+        },
+        {
+          "name": "part",
+          "text": "heading-text - The heading text wrapper."
+        },
+        {
+          "name": "part",
+          "text": "heading-title - The heading title."
+        },
+        {
+          "name": "part",
+          "text": "heading-description - The heading description."
+        },
+        {
+          "name": "part",
+          "text": "error__base - The alert base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "error__icon - The alert icon."
+        },
+        {
+          "name": "part",
+          "text": "error__text - The alert text."
+        },
+        {
+          "name": "part",
+          "text": "error__title - The alert title."
+        },
+        {
+          "name": "part",
+          "text": "error__ message - The alert message."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -6426,12 +7248,44 @@
       "slots": [],
       "parts": [
         {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "error__ message",
+          "docs": "The alert message."
+        },
+        {
+          "name": "error__base",
+          "docs": "The alert base wrapper."
+        },
+        {
+          "name": "error__icon",
+          "docs": "The alert icon."
+        },
+        {
+          "name": "error__text",
+          "docs": "The alert text."
+        },
+        {
+          "name": "error__title",
+          "docs": "The alert title."
+        },
+        {
+          "name": "heading",
+          "docs": "The heading."
+        },
+        {
           "name": "heading-description",
-          "docs": ""
+          "docs": "The heading description."
+        },
+        {
+          "name": "heading-text",
+          "docs": "The heading text wrapper."
         },
         {
           "name": "heading-title",
-          "docs": ""
+          "docs": "The heading title."
         }
       ],
       "dependents": [
@@ -6729,7 +7583,28 @@
       "tag": "sc-divider",
       "readme": "# ce-divider\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "line-container - The line container."
+        },
+        {
+          "name": "part",
+          "text": "line - The line."
+        },
+        {
+          "name": "part",
+          "text": "text-container - The text container."
+        },
+        {
+          "name": "part",
+          "text": "text - The text."
+        }
+      ],
       "usage": {},
       "props": [],
       "methods": [],
@@ -6740,15 +7615,23 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
         },
         {
           "name": "line",
-          "docs": ""
+          "docs": "The line."
+        },
+        {
+          "name": "line-container",
+          "docs": "The line container."
         },
         {
           "name": "text",
-          "docs": ""
+          "docs": "The text."
+        },
+        {
+          "name": "text-container",
+          "docs": "The text container."
         }
       ],
       "dependents": [
@@ -7369,7 +8252,20 @@
       "tag": "sc-dropdown",
       "readme": "# ce-dropdown\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "trigger - The trigger."
+        },
+        {
+          "name": "part",
+          "text": "panel - The panel."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -7606,12 +8502,16 @@
       "slots": [],
       "parts": [
         {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
           "name": "panel",
-          "docs": ""
+          "docs": "The panel."
         },
         {
           "name": "trigger",
-          "docs": ""
+          "docs": "The trigger."
         }
       ],
       "dependents": [
@@ -7638,7 +8538,16 @@
       "tag": "sc-empty",
       "readme": "# ce-empty\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "icon - The icon."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -7663,7 +8572,16 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "icon",
+          "docs": "The icon."
+        }
+      ],
       "dependents": [
         "sc-customer-details",
         "sc-invoices-list",
@@ -7716,8 +8634,33 @@
       "encapsulation": "shadow",
       "tag": "sc-error",
       "readme": "# sc-error\n\n\n",
-      "docs": "This component listens for a confirmed event and redirects to the success url.",
-      "docsTags": [],
+      "docs": "",
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "icon - The alert icon."
+        },
+        {
+          "name": "part",
+          "text": "text - The alert text."
+        },
+        {
+          "name": "part",
+          "text": "title - The alert title."
+        },
+        {
+          "name": "part",
+          "text": "message - The alert message."
+        },
+        {
+          "name": "part",
+          "text": "close - The close icon."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -7757,7 +8700,32 @@
       ],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "close",
+          "docs": "The close icon."
+        },
+        {
+          "name": "icon",
+          "docs": "The alert icon."
+        },
+        {
+          "name": "message",
+          "docs": "The alert message."
+        },
+        {
+          "name": "text",
+          "docs": "The alert text."
+        },
+        {
+          "name": "title",
+          "docs": "The alert title."
+        }
+      ],
       "dependents": [
         "sc-cart"
       ],
@@ -8039,7 +9007,12 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        }
+      ],
       "dependents": [
         "sc-downloads-list",
         "sc-order",
@@ -8200,6 +9173,10 @@
       "parts": [
         {
           "name": "base",
+          "docs": ""
+        },
+        {
+          "name": "form",
           "docs": ""
         }
       ],
@@ -8419,7 +9396,32 @@
       "tag": "sc-form-control",
       "readme": "# ce-form-control\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "form-control - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "label - The label."
+        },
+        {
+          "name": "part",
+          "text": "input - The input wrapper."
+        },
+        {
+          "name": "part",
+          "text": "help-text - Help text."
+        },
+        {
+          "name": "part",
+          "text": "tooltip - Tooltip"
+        },
+        {
+          "name": "part",
+          "text": "tooltip-text - Tooltip text."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -8619,15 +9621,27 @@
       "parts": [
         {
           "name": "form-control",
-          "docs": ""
+          "docs": "The elements base wrapper."
         },
         {
           "name": "help-text",
-          "docs": ""
+          "docs": "Help text."
+        },
+        {
+          "name": "input",
+          "docs": "The input wrapper."
         },
         {
           "name": "label",
-          "docs": ""
+          "docs": "The label."
+        },
+        {
+          "name": "tooltip",
+          "docs": "Tooltip"
+        },
+        {
+          "name": "tooltip-text",
+          "docs": "Tooltip text."
         }
       ],
       "dependents": [
@@ -8812,7 +9826,12 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        }
+      ],
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
@@ -9690,6 +10709,7 @@
         "sc-order-bump",
         "sc-order-confirmation-totals",
         "sc-order-detail",
+        "sc-order-summary",
         "sc-orders-list",
         "sc-price-choice",
         "sc-product-line-item",
@@ -9728,6 +10748,9 @@
           "sc-format-number"
         ],
         "sc-order-detail": [
+          "sc-format-number"
+        ],
+        "sc-order-summary": [
           "sc-format-number"
         ],
         "sc-orders-list": [
@@ -9797,6 +10820,14 @@
       "parts": [
         {
           "name": "base",
+          "docs": ""
+        },
+        {
+          "name": "description",
+          "docs": ""
+        },
+        {
+          "name": "title",
           "docs": ""
         }
       ],
@@ -10074,7 +11105,15 @@
         },
         {
           "name": "part",
-          "text": "base - The elements base wrapper."
+          "text": "form-control - The form control wrapper."
+        },
+        {
+          "name": "part",
+          "text": "label - The input label."
+        },
+        {
+          "name": "part",
+          "text": "help-text - Help text that describes how to use the input."
         },
         {
           "name": "part",
@@ -10083,10 +11122,6 @@
         {
           "name": "part",
           "text": "suffix - Used to prepend an icon or element to the input."
-        },
-        {
-          "name": "part",
-          "text": "help-text - Help text that describes how to use the input."
         }
       ],
       "usage": {},
@@ -10818,12 +11853,20 @@
           "docs": ""
         },
         {
+          "name": "form-control",
+          "docs": "The form control wrapper."
+        },
+        {
           "name": "help-text",
           "docs": "Help text that describes how to use the input."
         },
         {
           "name": "input",
           "docs": "The html input element."
+        },
+        {
+          "name": "label",
+          "docs": "The input label."
         },
         {
           "name": "prefix",
@@ -11196,6 +12239,42 @@
         {
           "name": "slot",
           "text": "price-description - Description for the price (i.e. monthly)"
+        },
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "image - The image wrapper."
+        },
+        {
+          "name": "part",
+          "text": "text - The text."
+        },
+        {
+          "name": "part",
+          "text": "title - The title."
+        },
+        {
+          "name": "part",
+          "text": "description - Line item description (below the title)"
+        },
+        {
+          "name": "part",
+          "text": "currency - Used for the 3 character currency code."
+        },
+        {
+          "name": "part",
+          "text": "price - Price amount, including currency sign."
+        },
+        {
+          "name": "part",
+          "text": "price-text - The price text."
+        },
+        {
+          "name": "part",
+          "text": "price-description - Description for the price (i.e. monthly)"
         }
       ],
       "usage": {},
@@ -11266,19 +12345,39 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "currency",
+          "docs": "Used for the 3 character currency code."
+        },
+        {
+          "name": "description",
+          "docs": "Line item description (below the title)"
         },
         {
           "name": "image",
-          "docs": ""
+          "docs": "The image wrapper."
         },
         {
           "name": "price",
-          "docs": ""
+          "docs": "Price amount, including currency sign."
+        },
+        {
+          "name": "price-description",
+          "docs": "Description for the price (i.e. monthly)"
+        },
+        {
+          "name": "price-text",
+          "docs": "The price text."
         },
         {
           "name": "text",
-          "docs": ""
+          "docs": "The text."
+        },
+        {
+          "name": "title",
+          "docs": "The title."
         }
       ],
       "dependents": [
@@ -14164,12 +15263,12 @@
         {
           "name": "required",
           "type": "boolean",
-          "mutable": false,
+          "mutable": true,
           "attr": "required",
           "reflectToAttr": false,
-          "docs": "Is this required (defaults to true)",
+          "docs": "Is this required (defaults to false)",
           "docsTags": [],
-          "default": "true",
+          "default": "false",
           "values": [
             {
               "type": "boolean"
@@ -14237,6 +15336,22 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "taxEnabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "tax-enabled",
+          "reflectToAttr": false,
+          "docs": "Tax enabled status of the order",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -14949,12 +16064,14 @@
       "dependencies": [
         "sc-line-item",
         "sc-skeleton",
+        "sc-format-number",
         "sc-total"
       ],
       "dependencyGraph": {
         "sc-order-summary": [
           "sc-line-item",
           "sc-skeleton",
+          "sc-format-number",
           "sc-total"
         ],
         "sc-total": [
@@ -14990,7 +16107,7 @@
         },
         {
           "name": "order",
-          "type": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\" | \"requires_approval\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; proration_amount?: number; applied_balance_amount?: number; discounts?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "type": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\" | \"requires_approval\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; scratch_amount?: number; applied_balance_amount?: number; discounts?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "The order",
@@ -15014,7 +16131,7 @@
               "type": "ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string"
             },
             {
-              "type": "Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; proration_amount?: number; applied_balance_amount?: number; discounts?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\""
+              "type": "Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; scratch_amount?: number; applied_balance_amount?: number; discounts?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\""
             },
             {
               "value": "address_invalid",
@@ -15571,7 +16688,32 @@
       "tag": "sc-payment",
       "readme": "# ce-payment\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "form-control - The form control wrapper."
+        },
+        {
+          "name": "part",
+          "text": "label - The input label."
+        },
+        {
+          "name": "part",
+          "text": "help-text - Help text that describes how to use the input."
+        },
+        {
+          "name": "part",
+          "text": "test-badge__base - Test badge base."
+        },
+        {
+          "name": "part",
+          "text": "test-badge__content - Test badge content."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -15697,7 +16839,32 @@
       ],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "form-control",
+          "docs": "The form control wrapper."
+        },
+        {
+          "name": "help-text",
+          "docs": "Help text that describes how to use the input."
+        },
+        {
+          "name": "label",
+          "docs": "The input label."
+        },
+        {
+          "name": "test-badge__base",
+          "docs": "Test badge base."
+        },
+        {
+          "name": "test-badge__content",
+          "docs": "Test badge content."
+        }
+      ],
       "dependents": [],
       "dependencies": [
         "sc-form-control",
@@ -15766,7 +16933,15 @@
       "slots": [],
       "parts": [
         {
+          "name": "bank",
+          "docs": ""
+        },
+        {
           "name": "base",
+          "docs": ""
+        },
+        {
+          "name": "card",
           "docs": ""
         }
       ],
@@ -16124,7 +17299,16 @@
       "tag": "sc-payment-selected",
       "readme": "# sc-payment-selected\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "divider - The divider."
+        },
+        {
+          "name": "part",
+          "text": "divider__line - The divider line."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -16168,6 +17352,26 @@
       "parts": [
         {
           "name": "base",
+          "docs": ""
+        },
+        {
+          "name": "divider",
+          "docs": "The divider."
+        },
+        {
+          "name": "divider__line",
+          "docs": "The divider line."
+        },
+        {
+          "name": "icon",
+          "docs": ""
+        },
+        {
+          "name": "instructions",
+          "docs": ""
+        },
+        {
+          "name": "text",
           "docs": ""
         }
       ],
@@ -16503,7 +17707,16 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "paypal-button",
+          "docs": ""
+        },
+        {
+          "name": "paypal-card-button",
+          "docs": ""
+        }
+      ],
       "dependents": [
         "sc-order-submit"
       ],
@@ -17474,7 +18687,68 @@
       "tag": "sc-product-line-item",
       "readme": "# ce-product-line-item\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "text - The text wrapper."
+        },
+        {
+          "name": "part",
+          "text": "title - The product title."
+        },
+        {
+          "name": "part",
+          "text": "static-quantity - The statically displayed quantity."
+        },
+        {
+          "name": "part",
+          "text": "quantity__base - The quantity base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "input - The input control."
+        },
+        {
+          "name": "part",
+          "text": "minus - The minus control."
+        },
+        {
+          "name": "part",
+          "text": "minus-icon - The minus icon."
+        },
+        {
+          "name": "part",
+          "text": "plus - The plus control."
+        },
+        {
+          "name": "part",
+          "text": "plus-icon - The plus icon."
+        },
+        {
+          "name": "part",
+          "text": "remove-icon__base - The remove icon base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "price - The price wrapper."
+        },
+        {
+          "name": "part",
+          "text": "price__amount - The price amount."
+        },
+        {
+          "name": "part",
+          "text": "price__description - The price description."
+        },
+        {
+          "name": "part",
+          "text": "suffix - The suffix items."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -17624,6 +18898,22 @@
           "required": false
         },
         {
+          "name": "scratchAmount",
+          "type": "number",
+          "mutable": false,
+          "attr": "scratch-amount",
+          "reflectToAttr": false,
+          "docs": "The line item scratch amount",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "trialDurationDays",
           "type": "number",
           "mutable": false,
@@ -17664,7 +18954,76 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "image",
+          "docs": ""
+        },
+        {
+          "name": "input",
+          "docs": "The input control."
+        },
+        {
+          "name": "minus",
+          "docs": "The minus control."
+        },
+        {
+          "name": "minus-icon",
+          "docs": "The minus icon."
+        },
+        {
+          "name": "plus",
+          "docs": "The plus control."
+        },
+        {
+          "name": "plus-icon",
+          "docs": "The plus icon."
+        },
+        {
+          "name": "price",
+          "docs": "The price wrapper."
+        },
+        {
+          "name": "price__amount",
+          "docs": "The price amount."
+        },
+        {
+          "name": "price__description",
+          "docs": "The price description."
+        },
+        {
+          "name": "price__scratch",
+          "docs": ""
+        },
+        {
+          "name": "quantity__base",
+          "docs": "The quantity base wrapper."
+        },
+        {
+          "name": "remove-icon__base",
+          "docs": "The remove icon base wrapper."
+        },
+        {
+          "name": "static-quantity",
+          "docs": "The statically displayed quantity."
+        },
+        {
+          "name": "suffix",
+          "docs": "The suffix items."
+        },
+        {
+          "name": "text",
+          "docs": "The text wrapper."
+        },
+        {
+          "name": "title",
+          "docs": "The product title."
+        }
+      ],
       "dependents": [
         "sc-line-items",
         "sc-order",
@@ -17940,7 +19299,32 @@
       "tag": "sc-quantity-select",
       "readme": "# ce-quantity-select\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "input - The input control."
+        },
+        {
+          "name": "part",
+          "text": "minus - The minus control."
+        },
+        {
+          "name": "part",
+          "text": "minus-icon - The minus icon."
+        },
+        {
+          "name": "part",
+          "text": "plus - The plus control."
+        },
+        {
+          "name": "part",
+          "text": "plus-icon - The plus icon."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -18087,7 +19471,27 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "input",
+          "docs": "The input control."
+        },
+        {
+          "name": "minus",
+          "docs": "The minus control."
+        },
+        {
+          "name": "minus-icon",
+          "docs": "The minus icon."
+        },
+        {
+          "name": "plus",
+          "docs": "The plus control."
+        },
+        {
+          "name": "plus-icon",
+          "docs": "The plus icon."
         }
       ],
       "dependents": [
@@ -18111,7 +19515,24 @@
       "tag": "sc-radio",
       "readme": "# ce-radio\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "control - The control wrapper."
+        },
+        {
+          "name": "part",
+          "text": "checked-icon - Checked icon."
+        },
+        {
+          "name": "part",
+          "text": "label - The label."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -18290,19 +19711,19 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
         },
         {
           "name": "checked-icon",
-          "docs": ""
+          "docs": "Checked icon."
         },
         {
           "name": "control",
-          "docs": ""
+          "docs": "The control wrapper."
         },
         {
           "name": "label",
-          "docs": ""
+          "docs": "The label."
         }
       ],
       "dependents": [],
@@ -18460,7 +19881,64 @@
       "tag": "sc-select",
       "readme": "# ce-select-dropdown\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "input - The html input element."
+        },
+        {
+          "name": "part",
+          "text": "form-control - The form control wrapper."
+        },
+        {
+          "name": "part",
+          "text": "label - The input label."
+        },
+        {
+          "name": "part",
+          "text": "help-text - Help text that describes how to use the input."
+        },
+        {
+          "name": "part",
+          "text": "trigger - The trigger for the dropdown."
+        },
+        {
+          "name": "part",
+          "text": "panel - Them panel for the dropdown."
+        },
+        {
+          "name": "part",
+          "text": "caret - The caret."
+        },
+        {
+          "name": "part",
+          "text": "search___base - The search base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "search__input - The search input element."
+        },
+        {
+          "name": "part",
+          "text": "search__form-control - The search form control wrapper."
+        },
+        {
+          "name": "part",
+          "text": "menu__base - The menu base."
+        },
+        {
+          "name": "part",
+          "text": "spinner__base - The spinner base."
+        },
+        {
+          "name": "part",
+          "text": "empty - The empty message."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -18962,12 +20440,64 @@
       "slots": [],
       "parts": [
         {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
           "name": "caret",
-          "docs": ""
+          "docs": "The caret."
+        },
+        {
+          "name": "empty",
+          "docs": "The empty message."
+        },
+        {
+          "name": "form-control",
+          "docs": "The form control wrapper."
+        },
+        {
+          "name": "help-text",
+          "docs": "Help text that describes how to use the input."
+        },
+        {
+          "name": "input",
+          "docs": "The html input element."
+        },
+        {
+          "name": "label",
+          "docs": "The input label."
+        },
+        {
+          "name": "menu__base",
+          "docs": "The menu base."
+        },
+        {
+          "name": "panel",
+          "docs": "Them panel for the dropdown."
         },
         {
           "name": "search",
           "docs": ""
+        },
+        {
+          "name": "search___base",
+          "docs": "The search base wrapper."
+        },
+        {
+          "name": "search__form-control",
+          "docs": "The search form control wrapper."
+        },
+        {
+          "name": "search__input",
+          "docs": "The search input element."
+        },
+        {
+          "name": "spinner__base",
+          "docs": "The spinner base."
+        },
+        {
+          "name": "trigger",
+          "docs": "The trigger for the dropdown."
         }
       ],
       "dependents": [
@@ -19018,6 +20548,22 @@
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "abandonedCheckoutReturnUrl",
+          "type": "string",
+          "mutable": false,
+          "attr": "abandoned-checkout-return-url",
+          "reflectToAttr": false,
+          "docs": "The abandoned checkout return url.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
         {
           "name": "currencyCode",
           "type": "string",
@@ -23387,7 +24933,28 @@
       "tag": "sc-textarea",
       "readme": "# sc-textarea\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "input - The html input element."
+        },
+        {
+          "name": "part",
+          "text": "form-control - The form control wrapper."
+        },
+        {
+          "name": "part",
+          "text": "label - The input label."
+        },
+        {
+          "name": "part",
+          "text": "help-text - Help text that describes how to use the input."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -23554,7 +25121,7 @@
           "name": "help",
           "type": "string",
           "mutable": false,
-          "attr": "help-text",
+          "attr": "help",
           "reflectToAttr": false,
           "docs": "The textarea's help text. Alternatively, you can use the help-text slot.",
           "docsTags": [],
@@ -23921,15 +25488,27 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
         },
         {
           "name": "form-control",
-          "docs": ""
+          "docs": "The form control wrapper."
         },
         {
           "name": "form-control-input",
           "docs": ""
+        },
+        {
+          "name": "help-text",
+          "docs": "Help text that describes how to use the input."
+        },
+        {
+          "name": "input",
+          "docs": "The html input element."
+        },
+        {
+          "name": "label",
+          "docs": "The input label."
         },
         {
           "name": "textarea",
@@ -24247,7 +25826,16 @@
       "tag": "sc-tooltip",
       "readme": "# ce-tooltip\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "text - The tooltip text."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -24391,11 +25979,11 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
         },
         {
           "name": "text",
-          "docs": ""
+          "docs": "The tooltip text."
         }
       ],
       "dependents": [

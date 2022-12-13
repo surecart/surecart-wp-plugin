@@ -72,10 +72,23 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part       | Description |
-| ---------- | ----------- |
-| `"caret"`  |             |
-| `"search"` |             |
+| Part                     | Description                                    |
+| ------------------------ | ---------------------------------------------- |
+| `"base"`                 | The elements base wrapper.                     |
+| `"caret"`                | The caret.                                     |
+| `"empty"`                | The empty message.                             |
+| `"form-control"`         | The form control wrapper.                      |
+| `"help-text"`            | Help text that describes how to use the input. |
+| `"input"`                | The html input element.                        |
+| `"label"`                | The input label.                               |
+| `"menu__base"`           | The menu base.                                 |
+| `"panel"`                | Them panel for the dropdown.                   |
+| `"search"`               |                                                |
+| `"search___base"`        | The search base wrapper.                       |
+| `"search__form-control"` | The search form control wrapper.               |
+| `"search__input"`        | The search input element.                      |
+| `"spinner__base"`        | The spinner base.                              |
+| `"trigger"`              | The trigger for the dropdown.                  |
 
 
 ## Dependencies
