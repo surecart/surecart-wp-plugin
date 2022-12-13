@@ -61,6 +61,7 @@ const Rules = ( props ) => {
 
   const [ ruleGroupsData, setRuleGroupsData ] = useState( getInitialGroups() );
 
+  console.log( ruleGroupsData );
 
   const getEmptyRuleGroup = function() {
     return {

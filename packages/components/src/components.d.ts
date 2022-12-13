@@ -606,6 +606,8 @@ export namespace Components {
          */
         "required": boolean;
     }
+    interface ScConditionalForm {
+    }
     interface ScConsumer {
         "renderer": any;
     }
@@ -3371,6 +3373,12 @@ declare global {
         prototype: HTMLScCompactAddressElement;
         new (): HTMLScCompactAddressElement;
     };
+    interface HTMLScConditionalFormElement extends Components.ScConditionalForm, HTMLStencilElement {
+    }
+    var HTMLScConditionalFormElement: {
+        prototype: HTMLScConditionalFormElement;
+        new (): HTMLScConditionalFormElement;
+    };
     interface HTMLScConsumerElement extends Components.ScConsumer, HTMLStencilElement {
     }
     var HTMLScConsumerElement: {
@@ -4161,6 +4169,7 @@ declare global {
         "sc-column": HTMLScColumnElement;
         "sc-columns": HTMLScColumnsElement;
         "sc-compact-address": HTMLScCompactAddressElement;
+        "sc-conditional-form": HTMLScConditionalFormElement;
         "sc-consumer": HTMLScConsumerElement;
         "sc-coupon-form": HTMLScCouponFormElement;
         "sc-custom-order-price-input": HTMLScCustomOrderPriceInputElement;
@@ -4922,6 +4931,8 @@ declare namespace LocalJSX {
           * Is this required?
          */
         "required"?: boolean;
+    }
+    interface ScConditionalForm {
     }
     interface ScConsumer {
         "onMountConsumer"?: (event: ScConsumerCustomEvent<any>) => void;
@@ -7636,6 +7647,7 @@ declare namespace LocalJSX {
         "sc-column": ScColumn;
         "sc-columns": ScColumns;
         "sc-compact-address": ScCompactAddress;
+        "sc-conditional-form": ScConditionalForm;
         "sc-consumer": ScConsumer;
         "sc-coupon-form": ScCouponForm;
         "sc-custom-order-price-input": ScCustomOrderPriceInput;
@@ -7796,6 +7808,7 @@ declare module "@stencil/core" {
             "sc-column": LocalJSX.ScColumn & JSXBase.HTMLAttributes<HTMLScColumnElement>;
             "sc-columns": LocalJSX.ScColumns & JSXBase.HTMLAttributes<HTMLScColumnsElement>;
             "sc-compact-address": LocalJSX.ScCompactAddress & JSXBase.HTMLAttributes<HTMLScCompactAddressElement>;
+            "sc-conditional-form": LocalJSX.ScConditionalForm & JSXBase.HTMLAttributes<HTMLScConditionalFormElement>;
             "sc-consumer": LocalJSX.ScConsumer & JSXBase.HTMLAttributes<HTMLScConsumerElement>;
             "sc-coupon-form": LocalJSX.ScCouponForm & JSXBase.HTMLAttributes<HTMLScCouponFormElement>;
             "sc-custom-order-price-input": LocalJSX.ScCustomOrderPriceInput & JSXBase.HTMLAttributes<HTMLScCustomOrderPriceInputElement>;

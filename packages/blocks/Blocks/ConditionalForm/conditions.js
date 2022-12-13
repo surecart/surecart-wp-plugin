@@ -210,17 +210,24 @@ function Conditions( props ) {
 
         case 'coupons':
           debugger
-					rendorfields = (
-            <SelectCoupons
-							name={ `${ name }[]` }
-							value={ value }
-							placeholder={ field.placeholder }
-							tooltip={ field.tooltip }
-							options={ field.options }
-							isMulti={ field.isMulti }
-              onChangeCB={ ( selection ) => { debugger; updateConditionOptionInRuleGroup( group_id, rule_id, selection, 'value' ); } }
-						/>
-					);
+          if (
+						'exist' === rule_data.operator ||
+						'not_exist' === rule_data.operator
+					) {
+						// If required we will add field here for these two option
+					} else {
+            rendorfields = (
+              <SelectCoupons
+                name={ `${ name }[]` }
+                value={ value }
+                placeholder={ field.placeholder }
+                tooltip={ field.tooltip }
+                options={ field.options }
+                isMulti={ field.isMulti }
+                onChangeCB={ ( selection ) => { debugger; updateConditionOptionInRuleGroup( group_id, rule_id, selection, 'value' ); } }
+              />
+            );
+          }
 					break;
         case 'select':
 					rendorfields = (
