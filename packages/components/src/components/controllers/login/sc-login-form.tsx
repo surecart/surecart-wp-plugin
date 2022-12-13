@@ -59,14 +59,14 @@ export class ScLogin {
   async login() {
     try {
       this.loading = true;
-      const { redirect_url } = await apiFetch({
+      const { redirect_url } = (await apiFetch({
         method: 'POST',
         path: 'surecart/v1/login',
         data: {
           login: this.email,
           password: this.password,
         },
-      });
+      })) as any;
 
       if (redirect_url) {
         window.location.replace(redirect_url);
