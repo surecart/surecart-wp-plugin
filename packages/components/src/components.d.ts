@@ -1138,6 +1138,7 @@ export namespace Components {
         "flexDirection": string;
         "flexWrap": string;
         "justifyContent": string;
+        "stack": string;
     }
     interface ScForm {
         /**
@@ -5752,6 +5753,7 @@ declare namespace LocalJSX {
         "flexDirection"?: string;
         "flexWrap"?: string;
         "justifyContent"?: string;
+        "stack"?: string;
     }
     interface ScForm {
         /**

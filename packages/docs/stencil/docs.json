@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-12-07T21:27:28",
+  "timestamp": "2022-12-13T21:24:56",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -9750,6 +9750,22 @@
           "type": "string",
           "mutable": false,
           "attr": "justify-content",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "stack",
+          "type": "string",
+          "mutable": false,
+          "attr": "stack",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],

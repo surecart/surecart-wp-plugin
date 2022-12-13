@@ -572,6 +572,7 @@
     "flex-direction": true,
     "flex-wrap": true,
     "justify-content": true,
+    "stack": true,
     "style": true,
     "id": true,
     "class": true,
