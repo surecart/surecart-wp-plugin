@@ -61,27 +61,22 @@ export default ({
 
 	const getExternalChargeLink = (charge) => {
 		const paymentType = charge?.payment_method?.processor_type;
-		let chargeLink = '';
 
 		if (!['stripe', 'paypal'].includes(paymentType)) return null;
 
 		const externalChargeId = charge?.external_charge_id;
+		const isLiveMode = charge?.live_mode;
+
 		if (!externalChargeId) return null;
 
-		if (paymentType === 'stripe') {
-			chargeLink =
-				'https://dashboard.stripe.com/charges/' + externalChargeId;
-		}
+		if (paymentType === 'stripe')
+			return 'https://dashboard.stripe.com/charges/' + externalChargeId;
 
 		if (paymentType === 'paypal') {
-			const isLiveMode = charge?.live_mode;
-			chargeLink = isLiveMode
-				? 'https://www.paypal.com/activity/payment/'
-				: 'https://www.sandbox.paypal.com/activity/payment/' +
-				  externalChargeId;
+			return `https://www.${
+				!isLiveMode && 'sandbox.'
+			}paypal.com/activity/payment/${externalChargeId}`;
 		}
-
-		return chargeLink;
 	};
 
 	return (
