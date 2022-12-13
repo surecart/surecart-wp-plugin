@@ -74,7 +74,7 @@ export class ScProductLineItem {
           </div>
           <div class="price__description" part="price__description">
             {__('Then', 'surecart')}{' '}
-            {!!this.scratchAmount && this.scratchAmount !== this.amount && (
+            {!!this.scratchAmount && this.scratchAmount > this.amount && (
               <Fragment>
                 <sc-format-number class="item__scratch-price" part="price__scratch" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>{' '}
               </Fragment>
