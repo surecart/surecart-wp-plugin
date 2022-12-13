@@ -127,7 +127,7 @@ export class ScLogin {
       <sc-form onScFormSubmit={() => (this.step = 'password')}>
         <sc-input
           ref={el => (this.emailInput = el as HTMLScInputElement)}
-          label="Email Address"
+          label={__('Email Address', 'surecart')}
           onScChange={() => this.handleEmailChange()}
           required
           autofocus
