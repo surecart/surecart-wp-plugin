@@ -26,32 +26,25 @@ class UsersService {
 	/**
 	 * Fires immediately after an existing user is updated.
 	 *
-	 *
 	 * @param int     $user_id       User ID.
 	 * @param WP_User $old_user_data Object containing user's data prior to update.
 	 * @param array   $userdata      The raw array of data passed to wp_insert_user().
 	 */
 	public function syncUserProfile( $user_id, $old_user_data, $userdata ) {
-
 		$customer_ids = \SureCart\Models\User::find( $user_id )->customerIds();
+		if ( empty( $customer_ids ) ) {
+			return;
+		}
 
-		if ( ! empty( $customer_ids ) && empty( $userdata['sc_server_update'] ) ) {
-
-			foreach ( $customer_ids as $mode => $id ) {
-				$result = \SureCart\Models\Customer::update([
-					'id' => $id,
+		foreach ( $customer_ids as $id ) {
+			\SureCart\Models\Customer::update(
+				[
+					'id'         => $id,
 					'first_name' => $userdata['first_name'],
-					'last_name' => $userdata['last_name'],
-					'email' => $userdata['user_email'],
-				]);
-
-				if( is_wp_error( $result ) ) {
-
-					if ( ! isset( $result->errors['customer.not_found'] ) ) {
-						//TO DO. We can handle other errors here. As we don't do anything, if customer not found.
-					}
-				}
-			}
+					'last_name'  => $userdata['last_name'],
+					'email'      => $userdata['user_email'],
+				]
+			);
 		}
 	}
 
