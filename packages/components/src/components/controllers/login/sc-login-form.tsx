@@ -129,7 +129,7 @@ export class ScLogin {
         this.step = 'password';
         this.error = '';
       } else {
-        this.error = __('Email does not exist, try with the correct email address.', 'surecart');
+        this.error = __('Email is not exist.', 'surecart');
       }
     } catch (e) {
       console.error(this.error);
