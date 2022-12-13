@@ -243,6 +243,17 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.3.3 - December 13, 2022 =
+* New: Separate first name and last name fields.
+* Improvement: Coupon entry UX.
+* Improvement: Order bump UI to work better on mobile devices.
+* Improvement: Display per-file upload limits.
+* Improvement: Show storage limits if reaching upper limits of storage.
+* Fix: Flexbox wrapping issue on admin dashboard.
+* Fix: SureCart columns block category incorrect.
+* Fix: Issue with taxes being taken into account with scratch prices.
+* Fix: Add missing "Email Address" translation in login form.
+
 = 1.3.2 - December 1, 2022 =
 * Improvement: Switch form block now allows rich text (links, formatting, etc.)
 * Improvement: Show notice in admin if SSL is not enabled on your site.
