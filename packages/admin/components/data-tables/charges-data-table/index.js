@@ -132,7 +132,10 @@ export default ({
 								<ScPaymentMethod
 									paymentMethod={charge?.payment_method}
 									externalLink={getExternalChargeLink(charge)}
-									externalLinkTooltipText={`View Charge on ${
+									externalLinkTooltipText={`${__(
+										'View charge on ',
+										'surecart'
+									)} ${
 										charge?.payment_method
 											?.processor_type === 'stripe'
 											? 'Stripe'
