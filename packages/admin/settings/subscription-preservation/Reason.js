@@ -1,26 +1,45 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScIcon, ScStackedListRow, ScTag } from '@surecart/components-react';
+import {
+	ScButton,
+	ScDropdown,
+	ScIcon,
+	ScMenu,
+	ScMenuItem,
+	ScSkeleton,
+	ScStackedListRow,
+	ScTag,
+} from '@surecart/components-react';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
-export default ({ reason }) => {
+export default ({ reason: passedReason, loading }) => {
+	const reason = useSelect((select) =>
+		select(coreStore).getEditedEntityRecord(
+			'surecart',
+			'cancellation_reason',
+			passedReason?.id
+		)
+	);
 	return (
 		<ScStackedListRow
 			style={{
 				'--columns': '2',
 			}}
 		>
-			<div>
+			{loading ? (
+				<ScSkeleton style={{ width: '150px' }} />
+			) : (
 				<div>
-					<strong>{reason?.label}</strong>{' '}
+					<strong>{reason?.label}</strong> {reason.position}
 					{reason?.coupon_enabled && (
 						<ScTag type="info" size="small">
-							{__('Offer Discount', 'surecart')}
+							{__('Discount Offer', 'surecart')}
 						</ScTag>
 					)}
 				</div>
-				<div>{reason?.description}</div>
-			</div>
+			)}
 
 			<ScIcon
 				name="menu"
@@ -30,7 +49,16 @@ export default ({ reason }) => {
 					cursor: move;
 				`}
 			/>
-			<ScIcon name="more-horizontal" slot="suffix" />
+
+			<ScDropdown slot="suffix" placement="bottom-end">
+				<ScButton type="text" slot="trigger" circle>
+					<ScIcon name="more-horizontal" />
+				</ScButton>
+				<ScMenu>
+					<ScMenuItem>{__('Edit', 'surecart')}</ScMenuItem>
+					<ScMenuItem>{__('Delete', 'surecart')}</ScMenuItem>
+				</ScMenu>
+			</ScDropdown>
 		</ScStackedListRow>
 	);
 };

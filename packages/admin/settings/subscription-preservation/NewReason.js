@@ -21,7 +21,9 @@ export default ({ onRequestClose }) => {
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState(null);
-	const [data, setData] = useState(null);
+	const [data, setData] = useState({
+		description: __('Can you tell us a little more?', 'surecart'),
+	});
 	const input = useRef(null);
 
 	const updateData = (newData) =>
@@ -67,6 +69,7 @@ export default ({ onRequestClose }) => {
 				onScSubmit={createReason}
 				css={css`
 					margin-top: 5px;
+					--sc-form-row-spacing: var(--sc-spacing-x-large);
 				`}
 			>
 				<Error error={error} setError={setError} />
@@ -81,57 +84,50 @@ export default ({ onRequestClose }) => {
 					autofocus
 					ref={input}
 				/>
-				<ScInput
-					label={__('Description', 'surecart')}
-					help={__(
-						'A brief customer-facing description for this cancellation reason.',
-						'surecart'
-					)}
-					value={data?.description}
-					onScInput={(e) =>
-						updateData({ description: e.target.value })
+
+				<ScSwitch
+					checked={data?.coupon_enabled}
+					onScChange={(e) =>
+						updateData({ coupon_enabled: e.target.checked })
 					}
-				/>
-				<div
-					css={css`
-						margin: var(--sc-spacing-large) 0;
-					`}
 				>
-					<ScSwitch
-						checked={data?.comment_enabled}
-						onScChange={(e) =>
-							updateData({ comment_enabled: e.target.checked })
-						}
-					>
-						{__('Request Comments', 'surecart')}
-						<span slot="description">
-							{__(
-								'Should the customer be prompted for additional information?',
-								'surecart'
-							)}
-						</span>
-					</ScSwitch>
-				</div>
-				<div
-					css={css`
-						margin: var(--sc-spacing-large) 0;
-					`}
+					{__('Offer Discount', 'surecart')}
+					<span slot="description">
+						{__(
+							'Offer the rewewal discount when this option is selected',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				<ScSwitch
+					checked={data?.comment_enabled}
+					onScChange={(e) =>
+						updateData({ comment_enabled: e.target.checked })
+					}
 				>
-					<ScSwitch
-						checked={data?.coupon_enabled}
-						onScChange={(e) =>
-							updateData({ coupon_enabled: e.target.checked })
+					{__('Request Comments', 'surecart')}
+					<span slot="description">
+						{__(
+							'Should the customer be prompted for additional information?',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				{!!data?.comment_enabled && (
+					<ScInput
+						label={__('Comment Prompt', 'surecart')}
+						help={__(
+							'The prompt that will appear when you request more information.',
+							'surecart'
+						)}
+						value={data?.description}
+						onScInput={(e) =>
+							updateData({ description: e.target.value })
 						}
-					>
-						{__('Offer Discount', 'surecart')}
-						<span slot="description">
-							{__(
-								'Offer the rewewal discount when this option is selected',
-								'surecart'
-							)}
-						</span>
-					</ScSwitch>
-				</div>
+					/>
+				)}
 				<ScFlex alignItems="center" justifyContent="flex-start">
 					<ScButton type="primary" submit busy={busy}>
 						{__('Create', 'surecart')}

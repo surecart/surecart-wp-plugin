@@ -66,7 +66,7 @@ export default () => {
 
 	return (
 		<SettingsTemplate
-			title={__('Subscription Saver & Cancelation Insights', 'surecart')}
+			title={__('Subscription Saver & Cancellation Insights', 'surecart')}
 			icon={<sc-icon name="bar-chart-2"></sc-icon>}
 			onSubmit={onSubmit}
 		>
@@ -81,10 +81,10 @@ export default () => {
 					'Subscription Saver & Cancelation Insights',
 					'surecart'
 				)}
-				description={__(
-					'Manage your subscription saver settings.',
-					'surecart'
-				)}
+				// description={__(
+				// 	'Manage your subscription saver settings.',
+				// 	'surecart'
+				// )}
 				loading={!hasLoadedItem}
 			>
 				<ScSwitch
@@ -101,10 +101,7 @@ export default () => {
 						});
 					}}
 				>
-					{__(
-						'Enable Subscription Saver and Cancelation Insights',
-						'surecart'
-					)}
+					{__('Enabled', 'surecart')}
 					{!scData?.entitlements?.subscription_preservation && (
 						<ScTag type="success" size="small" pill>
 							{__('Pro', 'surecart')}
@@ -121,6 +118,40 @@ export default () => {
 
 			{!!item?.preservation_enabled && (
 				<>
+					<SettingsBox
+						title={__('Cancellation Survey', 'surecart')}
+						description={__(
+							'Cancellation survey options.',
+							'surecart'
+						)}
+						loading={!hasLoadedItem}
+					>
+						<Reasons />
+
+						<ScInput
+							label={__('Title', 'surecart')}
+							value={reasons_title}
+							onScInput={(e) =>
+								updateLocale({ reasons_title: e.target.value })
+							}
+						/>
+						<ScTextarea
+							label={__('Description', 'surecart')}
+							value={reasons_description}
+							onScInput={(e) =>
+								updateLocale({
+									reasons_description: e.target.value,
+								})
+							}
+						/>
+						<ScInput
+							label={__('Skip Link', 'surecart')}
+							value={skip_link}
+							onScInput={(e) =>
+								updateLocale({ skip_link: e.target.value })
+							}
+						/>
+					</SettingsBox>
 					<SettingsBox
 						title={__('Renewal Discount', 'surecart')}
 						description={__(
@@ -160,40 +191,6 @@ export default () => {
 							value={cancel_link}
 							onScInput={(e) =>
 								updateLocale({ cancel_link: e.target.value })
-							}
-						/>
-					</SettingsBox>
-
-					<SettingsBox
-						title={__('Cancellation Survey', 'surecart')}
-						description={__(
-							'Cancellation survey options.',
-							'surecart'
-						)}
-						loading={!hasLoadedItem}
-					>
-						<Reasons />
-						<ScInput
-							label={__('Title', 'surecart')}
-							value={reasons_title}
-							onScInput={(e) =>
-								updateLocale({ reasons_title: e.target.value })
-							}
-						/>
-						<ScTextarea
-							label={__('Description', 'surecart')}
-							value={reasons_description}
-							onScInput={(e) =>
-								updateLocale({
-									reasons_description: e.target.value,
-								})
-							}
-						/>
-						<ScInput
-							label={__('Skip Link', 'surecart')}
-							value={skip_link}
-							onScInput={(e) =>
-								updateLocale({ skip_link: e.target.value })
 							}
 						/>
 					</SettingsBox>
