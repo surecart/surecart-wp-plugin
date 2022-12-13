@@ -128,6 +128,8 @@ export default () => {
 			return null;
 		if (['completed', 'canceled'].includes(subscription?.status))
 			return null;
+		if (subscription?.finite)
+			return null;
 		return (
 			<ScMenuItem
 				href={addQueryArgs('admin.php', {
@@ -235,6 +237,7 @@ export default () => {
 					}
 					subscriptionId={id}
 					loading={!hasLoadedSubscription}
+					subscription={subscription}
 				/>
 
 				{!!Object.keys(subscription?.pending_update || {}).length && (

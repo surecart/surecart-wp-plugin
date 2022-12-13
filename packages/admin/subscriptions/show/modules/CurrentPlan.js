@@ -9,7 +9,7 @@ import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
-export default ({ subscriptionId, lineItem, loading }) => {
+export default ({ subscriptionId, lineItem, loading, subscription }) => {
 	return (
 		<div
 			css={css`
@@ -69,17 +69,18 @@ export default ({ subscriptionId, lineItem, loading }) => {
 											})}
 										</div>
 									</div>
-
-									<ScButton
-										size="small"
-										href={addQueryArgs('admin.php', {
-											page: 'sc-subscriptions',
-											action: 'edit',
-											id: subscriptionId,
-										})}
-									>
-										{__('Change', 'surecart')}
-									</ScButton>
+									{!subscription?.finite && (
+										<ScButton
+											size="small"
+											href={addQueryArgs('admin.php', {
+												page: 'sc-subscriptions',
+												action: 'edit',
+												id: subscriptionId,
+											})}
+										>
+											{__('Change', 'surecart')}
+										</ScButton>
+									)}
 								</div>
 							</div>
 						),
