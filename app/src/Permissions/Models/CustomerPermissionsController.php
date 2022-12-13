@@ -32,7 +32,7 @@ class CustomerPermissionsController extends ModelPermissionsController {
 		$params = $args[3];
 
 		// request has blacklisted keys.
-		if ( ! $this->requestOnlyHasKeys( $params, [ 'billing_matches_shipping', 'email', 'first_name', 'last_name', 'phone', 'unsubscribed', 'billing_address', 'default_payment_method', 'shipping_address', 'tax_identifier' ] ) ) {
+		if ( ! $this->requestOnlyHasKeys( $params, [ 'billing_matches_shipping', 'email', 'name', 'first_name', 'last_name', 'phone', 'unsubscribed', 'billing_address', 'default_payment_method', 'shipping_address', 'tax_identifier' ] ) ) {
 			return false;
 		}
 
