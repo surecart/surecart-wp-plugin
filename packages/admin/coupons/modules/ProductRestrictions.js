@@ -27,8 +27,17 @@ export default ({ coupon, updateCoupon, loading }) => {
 		});
 
 	return (
-		<Box title={__('Products Restriction', 'surecart')} loading={loading}>
-			{!!productIds?.length && (
+		<Box
+			title={__('Product Restrictions', 'surecart')}
+			loading={loading}
+			footer={
+				<ScButton onClick={() => setDrafts(drafts + 1)}>
+					<ScIcon name="plus" slot="prefix" />
+					{__('Add product', 'surecart')}
+				</ScButton>
+			}
+		>
+			{(!!productIds?.length || !![...Array(drafts)]?.length) && (
 				<ScStackedList>
 					<ScCard noPadding>
 						<div>
@@ -121,13 +130,6 @@ export default ({ coupon, updateCoupon, loading }) => {
 					</ScCard>
 				</ScStackedList>
 			)}
-
-			<div>
-				<ScButton onClick={() => setDrafts(drafts + 1)}>
-					<ScIcon name="plus" slot="prefix" />
-					{__('Add product', 'surecart')}
-				</ScButton>
-			</div>
 		</Box>
 	);
 };
