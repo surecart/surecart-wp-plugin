@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-11-30T20:19:59+00:00\n"
+"POT-Creation-Date: 2022-12-13T21:25:27+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -26,6 +26,7 @@ msgstr ""
 #: src/Integrations/ThriveAutomator/ThriveAutomatorApp.php:25
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:108
 #: src/WordPress/Admin/Notices/AdminNoticesService.php:104
+#: src/WordPress/Admin/SSLCheck/AdminSSLCheckService.php:31
 #: src/WordPress/ThemeServiceProvider.php:87
 #: admin/user-profile.php:1
 #: error.php:2
@@ -85,6 +86,7 @@ msgstr ""
 #: invoices/modules/Charges.js:19
 #: invoices/modules/Refunds.js:17
 #: orders/modules/Charges.js:66
+#: orders/modules/Refunds.js:74
 #: sc-order.js:143
 msgid "Date"
 msgstr ""
@@ -195,7 +197,7 @@ msgstr ""
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:62
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
 #: src/Controllers/Admin/Products/ProductsListTable.php:55
-#: coupons/modules/Codes/Code.js:127
+#: coupons/modules/Code.js:127
 #: product-groups/EditProductGroup.js:95
 #: products/EditProduct.js:184
 #: products/modules/Prices/Price/Header.js:200
@@ -385,7 +387,7 @@ msgstr ""
 #: bumps/EditBump.js:137
 #: coupons/components/coupon/ActionsDropdown.js:29
 #: coupons/components/CouponActionsDropdown.js:96
-#: coupons/modules/Codes/Code.js:148
+#: coupons/modules/Code.js:148
 #: products/components/product/ActionsDropdown.js:29
 #: products/modules/Prices/Price/Header.js:175
 #: products/modules/SingleDownload.js:268
@@ -399,7 +401,7 @@ msgstr ""
 #: bumps/EditBump.js:138
 #: coupons/components/coupon/ActionsDropdown.js:30
 #: coupons/components/CouponActionsDropdown.js:97
-#: coupons/modules/Codes/Code.js:149
+#: coupons/modules/Code.js:149
 #: products/components/product/ActionsDropdown.js:30
 #: products/modules/Prices/Price/Header.js:176
 #: products/modules/SingleDownload.js:269
@@ -531,6 +533,7 @@ msgstr ""
 #: invoices/modules/Refunds.js:23
 #: invoices/modules/Subscriptions.js:9
 #: orders/modules/Charges.js:72
+#: orders/modules/Refunds.js:80
 #: orders/modules/Subscriptions.js:45
 #: subscriptions/show/modules/Invoices.js:60
 #: subscriptions/show/modules/Orders.js:21
@@ -653,6 +656,7 @@ msgid "Processing"
 msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersListTable.php:68
+#: orders/modules/Refunds.js:53
 msgid "Failed"
 msgstr ""
 
@@ -699,7 +703,7 @@ msgstr ""
 #: components/data-tables/OrdersDataTable.js:28
 #: customers/modules/Orders.js:48
 #: dashboard/components/overview/charts/Orders.js:21
-#: orders/Order.js:126
+#: orders/Order.js:127
 #: settings/export/ExportSettings.js:27
 #: Controllers/DownloadController.php:107
 #: Controllers/OrderController.php:59
@@ -787,6 +791,7 @@ msgid "Search Subscriptions"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:62
+#: orders/modules/Refunds.js:56
 #: sc-subscription-status-badge2.js:56
 msgid "Canceled"
 msgstr ""
@@ -1030,8 +1035,8 @@ msgstr ""
 #: src/Integrations/Beaver/BeaverFormModule.php:92
 #: src/Integrations/Elementor/ReusableFormWidget.php:134
 #: bumps/CreateBump.js:81
-#: coupons/modules/Codes/NewPromotionCode.js:86
 #: coupons/modules/CustomerSelector.js:149
+#: coupons/modules/NewPromotionCode.js:86
 #: customers/CreateCustomer.js:112
 #: product-groups/CreateProductGroup.js:74
 #: products/CreateProduct.js:70
@@ -2368,7 +2373,7 @@ msgid "Please add at least one product."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:16
-#: src/Support/Errors/Translations/codes.php:27
+#: src/Support/Errors/Translations/codes.php:28
 msgid "Please fill out your address."
 msgstr ""
 
@@ -2393,106 +2398,110 @@ msgid "The price cannot be blank."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:22
-msgid "A price with this currency and recurring interval already exists. Please create a new product to create this price."
+msgid "The compare at price must be greater than the price."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:23
-msgid "This promotion code already exists. Please archive the old code or use a different code."
+msgid "A price with this currency and recurring interval already exists. Please create a new product to create this price."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:24
-msgid "There are no processors to make the payment. Please contact us for assistance."
+msgid "This promotion code already exists. Please archive the old code or use a different code."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:25
-msgid "This product has prices that are currently being used. Please archive the product instead if it is not already archived."
+msgid "There are no processors to make the payment. Please contact us for assistance."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:26
+msgid "This product has prices that are currently being used. Please archive the product instead if it is not already archived."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:27
 msgid "The product image must be an image."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:28
+#: src/Support/Errors/Translations/codes.php:29
 msgid "Please enter a valid tax number."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:29
+#: src/Support/Errors/Translations/codes.php:30
 msgid "The prices in this checkout session have changed. Please recheck it before submitting again."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:30
+#: src/Support/Errors/Translations/codes.php:31
 msgid "This coupon code is invalid."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:31
+#: src/Support/Errors/Translations/codes.php:32
 msgid "You cannot enable abandoned checkouts until you have updated your business contact address. Please add an address to your store branding."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:32
+#: src/Support/Errors/Translations/codes.php:33
 msgid "Your postal code is not valid."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:33
+#: src/Support/Errors/Translations/codes.php:34
 msgid "This coupon has expired."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:34
+#: src/Support/Errors/Translations/codes.php:35
 msgid "This discount code does not apply to this currency."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:35
+#: src/Support/Errors/Translations/codes.php:36
 msgid "This is not a valid coupon code"
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:36
+#: src/Support/Errors/Translations/codes.php:37
 msgid "Please double-check your prefix does not contain any spaces, underscores, dashes or special characters."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:37
+#: src/Support/Errors/Translations/codes.php:38
 msgid "This prefix is too long. Please enter a shorter prefix."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:38
+#: src/Support/Errors/Translations/codes.php:39
 msgid "This prefix is too short. Please enter a longer prefix."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:39
+#: src/Support/Errors/Translations/codes.php:40
 msgid "You can only apply this offer once."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:40
+#: src/Support/Errors/Translations/codes.php:41
 msgid "This product is no longer purchaseable."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:41
+#: src/Support/Errors/Translations/codes.php:42
 msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:42
+#: src/Support/Errors/Translations/codes.php:43
 msgid "The maximum price must be smaller."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:43
+#: src/Support/Errors/Translations/codes.php:44
 msgid "The minimum price must be smaller."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:44
+#: src/Support/Errors/Translations/codes.php:45
 msgid "The maximum price must be greater than the minimum price."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:45
+#: src/Support/Errors/Translations/codes.php:46
 msgid "You are already collecting tax for this zone."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:46
+#: src/Support/Errors/Translations/codes.php:47
 msgid "You cannot enable EU Micro Exemption if your address is outside of the EU."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:47
+#: src/Support/Errors/Translations/codes.php:48
 msgid "You cannot enable taxes unless a valid tax address is provided"
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:48
+#: src/Support/Errors/Translations/codes.php:49
 msgid "You cannot delete this media item because it is currently being used."
 msgstr ""
 
@@ -3428,6 +3437,10 @@ msgstr ""
 msgid "Dismiss Notice"
 msgstr ""
 
+#: src/WordPress/Admin/SSLCheck/AdminSSLCheckService.php:32
+msgid "Your store does not appear to be using a secure connection. A secure connection (https) is required to use SureCart to process live transactions."
+msgstr ""
+
 #: src/WordPress/Pages/PageSeeder.php:66
 #: src/WordPress/PostTypes/CartPostTypeService.php:189
 msgctxt "Cart slug"
@@ -3643,15 +3656,16 @@ msgstr ""
 msgid "Limit result set to users with specific customer ids."
 msgstr ""
 
-#: admin/abandoned-orders/cta-banner.php:92
+#: admin/abandoned-orders/cta-banner.php:99
 msgid "Recover lost sales with abandoned checkouts."
 msgstr ""
 
-#: admin/abandoned-orders/cta-banner.php:95
+#: admin/abandoned-orders/cta-banner.php:102
 msgid "69% of shoppers abandon their checkouts before completing a purchase. Recover lost revenue with automated, high-converting emails."
 msgstr ""
 
-#: admin/abandoned-orders/cta-banner.php:98
+#: admin/abandoned-orders/cta-banner.php:105
+#: components/StorageLimitWarning.js:99
 msgid "Upgrade"
 msgstr ""
 
@@ -4038,8 +4052,10 @@ msgstr ""
 #: layouts/partials/admin-settings-sidebar.php:85
 #: Blocks/Checkbox/components/Inspector.js:39
 #: Blocks/Email/components/Inspector.js:32
+#: Blocks/FirstName/edit.js:52
 #: Blocks/Input/components/Inspector.js:39
 #: Blocks/Input/edit.js:58
+#: Blocks/LastName/edit.js:52
 #: Blocks/Name/edit.js:52
 #: Blocks/NameYourPrice/edit.js:65
 #: Blocks/Password/components/Inspector.js:39
@@ -4179,13 +4195,13 @@ msgstr ""
 
 #: abandoned-checkouts/AbandonedCheckout.js:85
 #: components/MediaLibrary/DownloadMedia.js:30
-#: coupons/modules/Codes/Code.js:43
+#: coupons/modules/Code.js:43
 #: customers/EditCustomer.js:53
 #: customers/modules/Balance/ViewTransactions.js:46
 #: customers/modules/PaymentMethods/Actions.js:69
 #: customers/modules/User/index.js:24
 #: licenses/modules/Activations/index.js:65
-#: orders/Order.js:99
+#: orders/Order.js:100
 #: products/modules/SingleDownload.js:46
 #: settings/processors/ManualPaymentMethod.js:50
 #: settings/processors/ManualPaymentMethod.js:81
@@ -4289,7 +4305,7 @@ msgstr ""
 #: abandoned-checkouts/modules/Coupon.js:31
 #: bumps/modules/Discount.js:33
 #: coupons/Sidebar.js:61
-#: sc-coupon-form2.js:52
+#: sc-coupon-form2.js:57
 #: sc-order-confirmation-totals2.js:29
 #: sc-order.js:128
 msgid "Discount"
@@ -4346,7 +4362,7 @@ msgstr ""
 
 #: abandoned-checkouts/modules/LineItems/index.js:33
 #: components/data-tables/charges-data-table/index.js:120
-#: orders/Order.js:130
+#: orders/Order.js:131
 #: subscriptions/show/modules/modals/RetryPaymentModal.js:51
 #: subscriptions/show/modules/Periods.js:194
 msgid "View Order"
@@ -4464,16 +4480,16 @@ msgstr ""
 #: components/data-tables/subscriptions-data-table/Cancel.js:70
 #: components/data-tables/subscriptions-data-table/Cancel.js:92
 #: components/data-tables/subscriptions-data-table/subscription-item.js:124
-#: components/DatePicker.js:92
+#: components/DatePicker.js:77
 #: components/subscriptions/Cancel.js:32
 #: components/subscriptions/Cancel.js:54
 #: components/subscriptions/CancelPendingUpdate.js:150
 #: coupons/components/DisableModal.js:30
 #: coupons/CreateCoupon.js:132
 #: coupons/EditCoupon.js:243
-#: coupons/modules/Codes/Code.js:195
-#: coupons/modules/Codes/NewPromotionCode.js:89
+#: coupons/modules/Code.js:195
 #: coupons/modules/CustomerSelector.js:155
+#: coupons/modules/NewPromotionCode.js:89
 #: coupons/modules/NewRestriction.js:185
 #: customers/CreateCustomer.js:118
 #: customers/modules/PaymentMethods/ConfirmDelete.js:71
@@ -4537,8 +4553,8 @@ msgstr ""
 #: coupons/components/CouponActionsDropdown.js:125
 #: coupons/EditCoupon.js:167
 #: coupons/EditCoupon.js:240
-#: coupons/modules/Codes/Code.js:161
-#: coupons/modules/Codes/Code.js:192
+#: coupons/modules/Code.js:161
+#: coupons/modules/Code.js:192
 #: customers/modules/PaymentMethods/Actions.js:91
 #: customers/modules/PaymentMethods/ConfirmDelete.js:68
 #: licenses/modules/Activations/Activation.js:225
@@ -4936,21 +4952,22 @@ msgstr ""
 msgid "Failed to un-cancel subscription."
 msgstr ""
 
-#: components/DatePicker.js:53
+#: components/DatePicker.js:43
 msgid "Select date"
 msgstr ""
 
-#: components/DatePicker.js:89
-#: components/MediaLibrary/index.js:293
+#: components/DatePicker.js:74
+#: components/MediaLibrary/index.js:328
 #: Blocks/CheckoutForm/components/Empty.js:147
 msgid "Choose"
 msgstr ""
 
 #: components/filters/FilterItem.js:89
-#: product-groups/modules/Product.js:76
+#: product-groups/modules/Product.js:77
 #: products/modules/Image.js:81
 #: products/modules/SingleDownload.js:274
 #: settings/brand/Logo.js:81
+#: subscriptions/edit/modules/Trial.js:43
 #: Blocks/CheckoutForm/components/PriceChoice.js:82
 #: components/PriceChoice.js:116
 msgid "Remove"
@@ -4966,42 +4983,46 @@ msgstr ""
 msgid "Could not download the file."
 msgstr ""
 
-#: components/MediaLibrary/index.js:77
+#: components/MediaLibrary/index.js:79
 msgid "No items found"
 msgstr ""
 
-#: components/MediaLibrary/index.js:134
+#: components/MediaLibrary/index.js:136
 #: settings/processors/CreateEditPaymentMethod.js:53
 msgid "Something went wrong. Please try again."
 msgstr ""
 
-#: components/MediaLibrary/index.js:173
+#: components/MediaLibrary/index.js:176
 msgid "Upload Media"
 msgstr ""
 
-#: components/MediaLibrary/index.js:175
+#: components/MediaLibrary/index.js:178
 msgid "or drag and drop a file to upload."
 msgstr ""
 
-#: components/MediaLibrary/index.js:224
+#: components/MediaLibrary/index.js:182
+msgid "Max"
+msgstr ""
+
+#: components/MediaLibrary/index.js:242
 msgid "Previous Page"
 msgstr ""
 
-#: components/MediaLibrary/index.js:232
+#: components/MediaLibrary/index.js:250
 #: Blocks/Dashboard/CustomerCharges/edit.js:111
 msgid "Next Page"
 msgstr ""
 
-#: components/MediaLibrary/index.js:263
+#: components/MediaLibrary/index.js:281
 msgid "SureCart Media"
 msgstr ""
 
-#: components/MediaLibrary/index.js:269
+#: components/MediaLibrary/index.js:287
 #: components/MediaLibrary/MediaItem.js:93
 msgid "Private"
 msgstr ""
 
-#: components/MediaLibrary/index.js:276
+#: components/MediaLibrary/index.js:294
 #: components/MediaLibrary/MediaItem.js:91
 msgid "Public"
 msgstr ""
@@ -5074,6 +5095,14 @@ msgstr ""
 #: components/SelectPrice.js:103
 #: components/SelectProduct.js:80
 msgid "Search for a product..."
+msgstr ""
+
+#: components/StorageLimitWarning.js:70
+msgid "of"
+msgstr ""
+
+#: components/StorageLimitWarning.js:91
+msgid "Your storage space is low"
 msgstr ""
 
 #: components/subscriptions/CancelPendingUpdate.js:62
@@ -5178,8 +5207,8 @@ msgid "Promotion Code"
 msgstr ""
 
 #: coupons/CreateCoupon.js:108
-#: coupons/modules/Codes/Code.js:116
-#: coupons/modules/Codes/NewPromotionCode.js:74
+#: coupons/modules/Code.js:116
+#: coupons/modules/NewPromotionCode.js:74
 msgid "Customers will enter this discount code at checkout. Leave this blank and we will generate one for you."
 msgstr ""
 
@@ -5188,7 +5217,7 @@ msgid "Create Coupon"
 msgstr ""
 
 #: coupons/EditCoupon.js:90
-#: coupons/modules/Codes/Code.js:36
+#: coupons/modules/Code.js:36
 #: store/data/actions.js:160
 msgid "Deleted."
 msgstr ""
@@ -5213,48 +5242,40 @@ msgstr ""
 msgid "Are you sure you want to delete this coupon?"
 msgstr ""
 
-#: coupons/modules/Codes/Code.js:56
+#: coupons/modules/Code.js:56
 msgid "Archived."
 msgstr ""
 
-#: coupons/modules/Codes/Code.js:57
+#: coupons/modules/Code.js:57
 msgid "Restored."
 msgstr ""
 
-#: coupons/modules/Codes/Code.js:112
+#: coupons/modules/Code.js:112
 msgid "Customers will enter this discount code at checkout."
 msgstr ""
 
-#: coupons/modules/Codes/Code.js:173
+#: coupons/modules/Code.js:173
 msgid "Delete this promotion code?"
 msgstr ""
 
-#: coupons/modules/Codes/Code.js:181
+#: coupons/modules/Code.js:181
 msgid "Are you sure you want to delete this promotion code?"
 msgstr ""
 
-#: coupons/modules/Codes/index.js:51
+#: coupons/modules/Codes.js:51
 msgid "Promotion Codes"
 msgstr ""
 
-#: coupons/modules/Codes/index.js:58
+#: coupons/modules/Codes.js:58
 msgid "Add Promotion Code"
 msgstr ""
 
-#: coupons/modules/Codes/index.js:71
+#: coupons/modules/Codes.js:71
 msgid "Show %d Archived Promotion Codes"
 msgstr ""
 
-#: coupons/modules/Codes/index.js:75
+#: coupons/modules/Codes.js:75
 msgid "Hide %d Archived Promotion Codes"
-msgstr ""
-
-#: coupons/modules/Codes/NewPromotionCode.js:36
-msgid "Promotion created."
-msgstr ""
-
-#: coupons/modules/Codes/NewPromotionCode.js:56
-msgid "New Promotion Code"
 msgstr ""
 
 #: coupons/modules/CustomerSelector.js:51
@@ -5309,6 +5330,14 @@ msgstr ""
 
 #: coupons/modules/Limits.js:93
 msgid "This limit applies across customers so it won't prevent a single customer from redeeming multiple times."
+msgstr ""
+
+#: coupons/modules/NewPromotionCode.js:36
+msgid "Promotion created."
+msgstr ""
+
+#: coupons/modules/NewPromotionCode.js:56
+msgid "New Promotion Code"
 msgstr ""
 
 #: coupons/modules/NewRestriction.js:46
@@ -5717,6 +5746,7 @@ msgstr ""
 
 #: dashboard/DatePicker.js:24
 #: components/ColorPopup.js:83
+#: sc-order-coupon-form.js:33
 msgid "Apply"
 msgstr ""
 
@@ -5911,6 +5941,31 @@ msgstr ""
 msgid "Attempt"
 msgstr ""
 
+#: orders/modules/Refunds.js:46
+msgid "Pending"
+msgstr ""
+
+#: orders/modules/Refunds.js:50
+msgid "Succeeded"
+msgstr ""
+
+#: orders/modules/Refunds.js:59
+msgid "Unknown"
+msgstr ""
+
+#: orders/modules/Refunds.js:70
+#: settings/export/ExportSettings.js:39
+msgid "Refunds"
+msgstr ""
+
+#: orders/modules/Refunds.js:77
+msgid "Amount Refunded"
+msgstr ""
+
+#: orders/modules/Refunds.js:119
+msgid "Insufficient Funds"
+msgstr ""
+
 #: orders/modules/TaxInfo.js:7
 #: tax.js:4
 msgid "CA GST"
@@ -5967,12 +6022,12 @@ msgstr ""
 msgid "Unverified"
 msgstr ""
 
-#: orders/Order.js:145
+#: orders/Order.js:146
 #: subscriptions/show/ShowSubscription.js:204
 msgid "Actions"
 msgstr ""
 
-#: orders/Order.js:153
+#: orders/Order.js:154
 msgid "Mark as Paid"
 msgstr ""
 
@@ -6368,7 +6423,7 @@ msgid "Error copying to clipboard."
 msgstr ""
 
 #: products/modules/Prices/Price/Header.js:43
-#: subscriptions/edit/modules/Trial.js:13
+#: subscriptions/edit/modules/Trial.js:14
 #: subscriptions/edit/modules/UpcomingPeriod.js:77
 #: sc-upcoming-invoice.js:201
 msgid "Free Trial"
@@ -7116,10 +7171,6 @@ msgstr ""
 msgid "Promotions"
 msgstr ""
 
-#: settings/export/ExportSettings.js:39
-msgid "Refunds"
-msgstr ""
-
 #: settings/order/OrderProtocol.js:48
 msgid "Order Numbering"
 msgstr ""
@@ -7246,7 +7297,6 @@ msgstr ""
 #: Blocks/Heading/edit.js:33
 #: Blocks/Heading/edit.js:56
 #: Blocks/PriceChoice/edit.js:61
-#: Blocks/Switch/edit.js:50
 msgid "Description"
 msgstr ""
 
@@ -7759,20 +7809,16 @@ msgstr ""
 msgid "Trial"
 msgstr ""
 
-#: subscriptions/edit/modules/Trial.js:12
+#: subscriptions/edit/modules/Trial.js:13
 msgid "Free Trial Ends"
 msgstr ""
 
-#: subscriptions/edit/modules/Trial.js:22
+#: subscriptions/edit/modules/Trial.js:23
 msgid "Add Free Trial"
 msgstr ""
 
-#: subscriptions/edit/modules/Trial.js:23
+#: subscriptions/edit/modules/Trial.js:24
 msgid "Choose a trial end date"
-msgstr ""
-
-#: subscriptions/edit/modules/Trial.js:42
-msgid "Remove Trial"
 msgstr ""
 
 #: subscriptions/edit/modules/UpcomingPeriod.js:44
@@ -8468,9 +8514,11 @@ msgstr ""
 #: Blocks/Donation/edit.js:159
 #: Blocks/DonationAmount/edit.js:19
 #: Blocks/Email/components/Inspector.js:13
+#: Blocks/FirstName/edit.js:26
 #: Blocks/Heading/edit.js:23
 #: Blocks/Input/components/Inspector.js:13
 #: Blocks/Input/edit.js:25
+#: Blocks/LastName/edit.js:26
 #: Blocks/LineItems/edit.js:20
 #: Blocks/Name/components/Inspector.js:14
 #: Blocks/Name/edit.js:26
@@ -8497,7 +8545,9 @@ msgstr ""
 
 #: Blocks/Address/edit.js:42
 #: Blocks/Checkbox/edit.js:31
+#: Blocks/FirstName/edit.js:29
 #: Blocks/Input/edit.js:28
+#: Blocks/LastName/edit.js:29
 #: Blocks/Name/edit.js:29
 #: Blocks/NameYourPrice/edit.js:42
 #: Blocks/Password/edit.js:37
@@ -8518,8 +8568,10 @@ msgstr ""
 #: Blocks/Checkbox/components/Inspector.js:23
 #: Blocks/Donation/edit.js:162
 #: Blocks/Email/components/Inspector.js:16
+#: Blocks/FirstName/edit.js:36
 #: Blocks/Input/components/Inspector.js:23
 #: Blocks/Input/edit.js:42
+#: Blocks/LastName/edit.js:36
 #: Blocks/LogoutButton/edit.js:29
 #: Blocks/Name/edit.js:36
 #: Blocks/NameYourPrice/edit.js:49
@@ -8532,7 +8584,6 @@ msgstr ""
 #: Blocks/SessionDetail/edit.js:72
 #: Blocks/Subtotal/edit.js:15
 #: Blocks/Switch/components/Inspector.js:23
-#: Blocks/Switch/edit.js:43
 #: Blocks/Textarea/edit.js:42
 #: Blocks/Total/edit.js:15
 msgid "Label"
@@ -8818,8 +8869,10 @@ msgstr ""
 
 #: Blocks/Checkbox/components/Inspector.js:30
 #: Blocks/Email/components/Inspector.js:23
+#: Blocks/FirstName/edit.js:43
 #: Blocks/Input/components/Inspector.js:30
 #: Blocks/Input/edit.js:49
+#: Blocks/LastName/edit.js:43
 #: Blocks/Name/edit.js:43
 #: Blocks/NameYourPrice/edit.js:56
 #: Blocks/Password/components/Inspector.js:30
@@ -8831,13 +8884,13 @@ msgstr ""
 
 #: Blocks/Checkbox/edit.js:45
 #: Blocks/Radio/edit.js:30
-#: Blocks/Switch/edit.js:59
+#: Blocks/Switch/edit.js:43
 msgid "Value"
 msgstr ""
 
 #: Blocks/Checkbox/edit.js:52
 #: Blocks/Radio/edit.js:37
-#: Blocks/Switch/edit.js:66
+#: Blocks/Switch/edit.js:50
 msgid "Checked by default"
 msgstr ""
 
@@ -9176,6 +9229,7 @@ msgid "Display Name"
 msgstr ""
 
 #: Blocks/Dashboard/WordPressAccount/edit.js:55
+#: sc-login-form.js:100
 msgid "Email Address"
 msgstr ""
 
@@ -9449,16 +9503,16 @@ msgstr ""
 msgid "Show total due in button text."
 msgstr ""
 
-#: Blocks/Switch/edit.js:79
-#: Blocks/Switch/edit.js:90
+#: Blocks/Switch/edit.js:68
+#: Blocks/Switch/edit.js:77
 msgid "Switch label"
 msgstr ""
 
-#: Blocks/Switch/edit.js:80
+#: Blocks/Switch/edit.js:69
 msgid "Add some text..."
 msgstr ""
 
-#: Blocks/Switch/edit.js:91
+#: Blocks/Switch/edit.js:78
 msgid "Enter a description..."
 msgstr ""
 
@@ -9472,7 +9526,6 @@ msgid "Add Coupon Code"
 msgstr ""
 
 #: Blocks/Totals/edit.js:53
-#: sc-order-coupon-form.js:33
 msgid "Apply Coupon"
 msgstr ""
 
@@ -9614,6 +9667,8 @@ msgstr ""
 #: Blocks/Dashboard/DashboardPages/block.json
 #: Blocks/Dashboard/DashboardTab/block.json
 #: Blocks/Dashboard/DashboardTabs/block.json
+#: Blocks/FirstName/block.json
+#: Blocks/LastName/block.json
 #: Blocks/LogoutButton/block.json
 #: Blocks/Name/block.json
 #: Blocks/NameYourPrice/block.json
@@ -9638,6 +9693,8 @@ msgstr ""
 #: Blocks/Dashboard/DashboardTab/block.json
 #: Blocks/Dashboard/DashboardTabs/block.json
 #: Blocks/Dashboard/OrderDownloads/block.json
+#: Blocks/FirstName/block.json
+#: Blocks/LastName/block.json
 #: Blocks/LogoutButton/block.json
 #: Blocks/Name/block.json
 #: Blocks/NameYourPrice/block.json
@@ -10233,6 +10290,21 @@ msgctxt "block keyword"
 msgid "android"
 msgstr ""
 
+#: Blocks/FirstName/block.json
+msgctxt "block title"
+msgid "First Name"
+msgstr ""
+
+#: Blocks/FirstName/block.json
+msgctxt "block description"
+msgid "Display a first name collection field."
+msgstr ""
+
+#: Blocks/FirstName/block.json
+msgctxt "block keyword"
+msgid "first-name"
+msgstr ""
+
 #: Blocks/Form/block.json
 msgctxt "block title"
 msgid "Form"
@@ -10289,6 +10361,21 @@ msgstr ""
 #: Blocks/Textarea/block.json
 msgctxt "block keyword"
 msgid "field"
+msgstr ""
+
+#: Blocks/LastName/block.json
+msgctxt "block title"
+msgid "Last Name"
+msgstr ""
+
+#: Blocks/LastName/block.json
+msgctxt "block description"
+msgid "Display a last name collection field."
+msgstr ""
+
+#: Blocks/LastName/block.json
+msgctxt "block keyword"
+msgid "last-name"
 msgstr ""
 
 #: Blocks/LineItems/block.json
@@ -11699,6 +11786,10 @@ msgstr ""
 
 #: sc-compact-address2.js:100
 msgid "Province/Region"
+msgstr ""
+
+#: sc-coupon-form2.js:71
+msgid "Enter coupon code"
 msgstr ""
 
 #: sc-custom-order-price-input.js:70
