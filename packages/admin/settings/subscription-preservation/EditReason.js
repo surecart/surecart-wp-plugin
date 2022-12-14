@@ -16,14 +16,16 @@ import { store as coreStore } from '@wordpress/core-data';
 import { useRef, useEffect, useState } from 'react';
 import Error from '../../components/Error';
 
-export default ({ onRequestClose }) => {
+export default ({ onRequestClose, reason }) => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState(null);
-	const [data, setData] = useState({
-		description: __('Can you tell us a little more?', 'surecart'),
-	});
+	const [data, setData] = useState(
+		reason || {
+			comment_prompt: __('Can you tell us a little more?', 'surecart'),
+		}
+	);
 	const input = useRef(null);
 
 	const updateData = (newData) =>
@@ -58,7 +60,11 @@ export default ({ onRequestClose }) => {
 
 	return (
 		<Modal
-			title={__('New Cancellation Reason', 'surecart')}
+			title={
+				reason
+					? __('Edit Cancellation Reason', 'surecart')
+					: __('New Cancellation Reason', 'surecart')
+			}
 			css={css`
 				max-width: 500px !important;
 			`}
@@ -122,9 +128,9 @@ export default ({ onRequestClose }) => {
 							'The prompt that will appear when you request more information.',
 							'surecart'
 						)}
-						value={data?.description}
+						value={data?.comment_prompt}
 						onScInput={(e) =>
-							updateData({ description: e.target.value })
+							updateData({ comment_prompt: e.target.value })
 						}
 					/>
 				)}

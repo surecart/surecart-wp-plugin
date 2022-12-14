@@ -2,13 +2,19 @@
 import { css, jsx } from '@emotion/core';
 import {
 	ScButton,
+	ScChoice,
+	ScChoices,
+	ScDialog,
+	ScHeading,
 	ScIcon,
 	ScInput,
-	ScSelect,
+	ScForm,
 	ScSwitch,
 	ScTag,
 	ScTextarea,
 } from '@surecart/components-react';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
@@ -18,12 +24,13 @@ import SettingsBox from '../SettingsBox';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
 import Coupon from './Coupon';
-import NewReason from './NewReason';
+import NewReason from './EditReason';
 import Reasons from './Reasons';
 
 export default () => {
 	const [error, setError] = useState(null);
 	const [modal, setModal] = useState(false);
+	const [preview, setPreview] = useState(false);
 	const { save } = useSave();
 	const { item, itemError, editItem, hasLoadedItem } = useEntity(
 		'store',
@@ -48,6 +55,20 @@ export default () => {
 			},
 		});
 	};
+
+	const { reasons, loading, fetching } = useSelect((select) => {
+		const queryArgs = ['surecart', 'cancellation_reason'];
+		const reasons = select(coreStore).getEntityRecords(...queryArgs);
+		const loading = select(coreStore).isResolving(
+			'getEntityRecords',
+			queryArgs
+		);
+		return {
+			reasons,
+			loading: loading && !reasons?.length,
+			fetching: loading && reasons?.length,
+		};
+	});
 
 	/**
 	 * Form is submitted.
@@ -81,10 +102,6 @@ export default () => {
 					'Subscription Saver & Cancelation Insights',
 					'surecart'
 				)}
-				// description={__(
-				// 	'Manage your subscription saver settings.',
-				// 	'surecart'
-				// )}
 				loading={!hasLoadedItem}
 			>
 				<ScSwitch
@@ -125,6 +142,12 @@ export default () => {
 							'surecart'
 						)}
 						loading={!hasLoadedItem}
+						end={
+							<ScButton onClick={() => setPreview(true)}>
+								<ScIcon name="eye" slot="suffix" />
+								{__('Preview', 'surecart')}
+							</ScButton>
+						}
 					>
 						<Reasons />
 
@@ -197,6 +220,81 @@ export default () => {
 				</>
 			)}
 			{!!modal && <NewReason onRequestClose={() => setModal(false)} />}
+			<ScDialog
+				style={{ '--width': '750px' }}
+				noHeader
+				open={preview}
+				onScRequestClose={() => setPreview(false)}
+			>
+				<ScForm
+					css={css`
+						padding: 1.5em;
+					`}
+					onScSubmit={(e) => {
+						e.preventDefault();
+						e.stopImmediatePropagation();
+					}}
+					onScFormSubmit={(e) => {
+						e.preventDefault();
+						e.stopImmediatePropagation();
+					}}
+				>
+					<ScButton
+						css={css`
+							position: absolute;
+							top: 20px;
+							right: 20px;
+						`}
+						type="text"
+						circle
+						onClick={() => setPreview(false)}
+					>
+						<ScIcon name="x" />
+					</ScButton>
+					<div
+						css={css`
+							text-align: center;
+						`}
+					>
+						<ScHeading>
+							{reasons_title}
+							<span slot="description">
+								{reasons_description}
+							</span>
+						</ScHeading>
+					</div>
+					<ScChoices style={{ '--columns': 2 }} required>
+						<div>
+							{(reasons || []).map((reason) => (
+								<ScChoice>{reason?.label}</ScChoice>
+							))}
+						</div>
+					</ScChoices>
+
+					<div
+						css={css`
+							text-align: center;
+						`}
+					>
+						<ScButton
+							type="primary"
+							size="large"
+							onClick={() => setPreview(false)}
+						>
+							{__('Continue', 'surecart')}
+						</ScButton>
+					</div>
+					<div
+						css={css`
+							text-align: center;
+						`}
+					>
+						<ScButton type="link" onClick={() => setPreview(false)}>
+							{skip_link}
+						</ScButton>
+					</div>
+				</ScForm>
+			</ScDialog>
 		</SettingsTemplate>
 	);
 };

@@ -1,8 +1,12 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { __ } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
 import { Container, Draggable } from 'react-smooth-dnd';
 import {
+	ScBlockUi,
 	ScButton,
 	ScCard,
 	ScEmpty,
@@ -11,24 +15,35 @@ import {
 	ScStackedList,
 } from '@surecart/components-react';
 import Reason from './Reason';
-import NewReason from './NewReason';
-import { useState } from 'react';
+import EditReason from './EditReason';
+import { store as noticesStore } from '@wordpress/notices';
+import { useState, useEffect } from 'react';
 
 export default () => {
-	const { editEntityRecord } = useDispatch(coreStore);
+	const { createErrorNotice, createSuccessNotice } =
+		useDispatch(noticesStore);
 	const [modal, setModal] = useState(false);
-	const { reasons, loading } = useSelect((select) => {
+	const [busy, setBusy] = useState(false);
+	const { reasons, loading, fetching } = useSelect((select) => {
 		const queryArgs = ['surecart', 'cancellation_reason'];
+		const reasons = select(coreStore).getEntityRecords(...queryArgs);
+		const loading = select(coreStore).isResolving(
+			'getEntityRecords',
+			queryArgs
+		);
 		return {
-			reasons: select(coreStore).getEntityRecords(...queryArgs),
-			loading: select(coreStore).isResolving(
-				'getEntityRecords',
-				queryArgs
-			),
+			reasons,
+			loading: loading && !reasons?.length,
+			fetching: loading && reasons?.length,
 		};
 	});
 
-	const applyDrag = (arr, dragResult) => {
+	const [sortedReasons, setSortedReasons] = useState(null);
+	useEffect(() => {
+		setSortedReasons(reasons);
+	}, [reasons]);
+
+	const applyDrag = async (arr, dragResult) => {
 		const { removedIndex, addedIndex, payload } = dragResult;
 		if (removedIndex === null && addedIndex === null) return;
 		const result = [...arr];
@@ -42,12 +57,27 @@ export default () => {
 			result.splice(addedIndex, 0, itemToAdd);
 		}
 
-		result.forEach((result, index) => {
-			editEntityRecord('surecart', 'cancellation_reason', result?.id, {
-				...result,
-				position: index + 1,
+		setSortedReasons(result);
+
+		try {
+			setBusy(true);
+			// save reason.
+			await apiFetch({
+				method: 'PATCH',
+				path: `surecart/v1/cancellation_reasons/${payload?.id}`,
+				data: {
+					position: addedIndex + 1,
+				},
 			});
-		});
+			createSuccessNotice(__('Answers updated.', 'surecart'), {
+				type: 'snackbar',
+			});
+		} catch (e) {
+			console.error(e);
+			createErrorNotice(e?.message, { type: 'snackbar' });
+		} finally {
+			setBusy(false);
+		}
 
 		return result;
 	};
@@ -67,7 +97,11 @@ export default () => {
 
 	return (
 		<>
-			<div>
+			<div
+				css={css`
+					position: relative;
+				`}
+			>
 				<ScFormControl label={__('Survey Answers', 'surecart')}>
 					{!loading && !reasons?.length && (
 						<ScCard>
@@ -80,13 +114,28 @@ export default () => {
 						</ScCard>
 					)}
 
-					<ScStackedList>
+					<ScStackedList
+						css={css`
+							.smooth-dnd-container.vertical
+								> .smooth-dnd-draggable-wrapper {
+								overflow: visible;
+								border: 1px solid var(--sc-color-gray-200);
+								margin-top: -1px;
+								margin-left: -1px;
+								margin-right: -1px;
+								margin-bottom: -1px;
+							}
+						`}
+					>
 						<ScCard noPadding>
 							<Container
-								onDrop={(e) => applyDrag(reasons, e)}
-								getChildPayload={(index) => reasons?.[index]}
+								onDrop={(e) => applyDrag(sortedReasons, e)}
+								getChildPayload={(index) =>
+									sortedReasons?.[index]
+								}
+								dragHandleSelector=".dragger"
 							>
-								{(reasons || []).map((reason) => (
+								{(sortedReasons || []).map((reason) => (
 									<Draggable key={reason.id}>
 										<Reason
 											reason={reason}
@@ -98,12 +147,13 @@ export default () => {
 						</ScCard>
 					</ScStackedList>
 				</ScFormControl>
+				{(!!busy || !!fetching) && <ScBlockUi spinner />}
 			</div>
 			<ScButton onClick={() => setModal(true)}>
 				<ScIcon name="plus" slot="prefix" />
 				{__('Add New', 'surecart')}
 			</ScButton>
-			{!!modal && <NewReason onRequestClose={() => setModal(false)} />}
+			{!!modal && <EditReason onRequestClose={() => setModal(false)} />}
 		</>
 	);
 };

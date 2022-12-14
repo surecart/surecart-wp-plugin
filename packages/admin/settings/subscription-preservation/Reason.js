@@ -10,18 +10,12 @@ import {
 	ScStackedListRow,
 	ScTag,
 } from '@surecart/components-react';
-import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
+import { useState } from 'react';
+import EditReason from './EditReason';
 
-export default ({ reason: passedReason, loading }) => {
-	const reason = useSelect((select) =>
-		select(coreStore).getEditedEntityRecord(
-			'surecart',
-			'cancellation_reason',
-			passedReason?.id
-		)
-	);
+export default ({ reason, loading }) => {
+	const [edit, setEdit] = useState(null);
 	return (
 		<ScStackedListRow
 			style={{
@@ -32,16 +26,17 @@ export default ({ reason: passedReason, loading }) => {
 				<ScSkeleton style={{ width: '150px' }} />
 			) : (
 				<div>
-					<strong>{reason?.label}</strong> {reason.position}
+					<strong>{reason?.label}</strong>{' '}
 					{reason?.coupon_enabled && (
 						<ScTag type="info" size="small">
-							{__('Discount Offer', 'surecart')}
+							{__('Discount', 'surecart')}
 						</ScTag>
 					)}
 				</div>
 			)}
 
 			<ScIcon
+				class="dragger"
 				name="menu"
 				slot="prefix"
 				css={css`
@@ -50,15 +45,35 @@ export default ({ reason: passedReason, loading }) => {
 				`}
 			/>
 
-			<ScDropdown slot="suffix" placement="bottom-end">
+			<ScDropdown class="dropdown" slot="suffix" placement="bottom-end">
 				<ScButton type="text" slot="trigger" circle>
 					<ScIcon name="more-horizontal" />
 				</ScButton>
 				<ScMenu>
-					<ScMenuItem>{__('Edit', 'surecart')}</ScMenuItem>
-					<ScMenuItem>{__('Delete', 'surecart')}</ScMenuItem>
+					<ScMenuItem onClick={() => setEdit(reason)}>
+						<ScIcon
+							name="edit-2"
+							slot="prefix"
+							style={{ opacity: 0.5 }}
+						/>
+						{__('Edit', 'surecart')}
+					</ScMenuItem>
+					<ScMenuItem>
+						<ScIcon
+							name="trash"
+							slot="prefix"
+							style={{ opacity: 0.5 }}
+						/>
+						{__('Delete', 'surecart')}
+					</ScMenuItem>
 				</ScMenu>
 			</ScDropdown>
+			{!!edit && (
+				<EditReason
+					reason={edit}
+					onRequestClose={() => setEdit(null)}
+				/>
+			)}
 		</ScStackedListRow>
 	);
 };
