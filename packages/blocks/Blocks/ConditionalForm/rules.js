@@ -14,11 +14,12 @@ import {
 import { useState } from '@wordpress/element';
 // import './rules.css';
 import Conditions from './conditions';
+import apiFetch from '@wordpress/api-fetch';
 
 
 const Rules = ( props ) => {
 
-  const { attributes, setAttributes } = props;
+  const { attributes, setAttributes, formId, setOpen } = props;
 
   const { rule_groups } = attributes;
 
@@ -76,9 +77,6 @@ const Rules = ( props ) => {
 			],
 		};
   };
-  // const [ isOpen, setOpen ] = useState( false );
-  // const openModal = () => setOpen( true );
-  // const closeModal = () => setOpen( false );
   const updateRuleGroupData = function( data ) {
     setAttributes({ rule_groups: JSON.stringify( data ) });
     setRuleGroupsData( [...data] );
@@ -99,7 +97,7 @@ const Rules = ( props ) => {
   };
 
   const removeConditionFromRuleGroup = function( groupId, conditionId ) {
-    debugger;
+    // debugger;
     const newGroupData = ruleGroupsData.filter( ( group, i ) => {
       if ( groupId === group.group_id ) {
 
@@ -122,7 +120,7 @@ const Rules = ( props ) => {
   };
 
   const updateConditionInRuleGroup = function( groupId, conditionId, currentValue ) {
-    debugger;
+    // debugger;
 			for ( const group of ruleGroupsData ) {
 				if ( groupId === group.group_id ) {
 					for ( const rule of group.rules ) {
@@ -139,7 +137,7 @@ const Rules = ( props ) => {
       setRuleGroupsData( [...ruleGroupsData] );
   };
   const updateConditionOptionInRuleGroup = function( groupId, conditionId, currentValue, optionName ) {
-    debugger;
+    // debugger;
 			for ( const group of ruleGroupsData ) {
 				if ( groupId === group.group_id ) {
 					for ( const rule of group.rules ) {
@@ -209,10 +207,79 @@ const Rules = ( props ) => {
 		}
 	};
 
+  const handleFormSubmit = function ( e ) {
+    e.preventDefault();
+    // debugger;
+    const formData = new window.FormData( e.target );
+    let option = [];
+
+    for ( const pair of formData.entries() ) {
+      console.log(`${pair[0]}, ${pair[1]}`);
+      // debugger;
+      option = prepareFormDataObject( option, pair[0], pair[1] )
+    }
+
+    setAttributes({ rule_groups: JSON.stringify( option ) });
+    setOpen( false );
+  };
+
+  const prepareFormDataObject = function ( option, dkey, dvalue ) {
+    // debugger;
+		const name = dkey;
+    const value = dvalue;
+
+		if ( name.includes( '[' ) ) {
+			const newTxt = name.split( '[' );
+			const arr = [];
+			for ( let i = 1; i < newTxt.length; i++ ) {
+				arr.push( newTxt[ i ].split( ']' )[ 0 ] );
+			}
+
+			const newName = name.substr( 0, name.indexOf( '[' ) );
+
+			// const newValue = options[ newName ];
+			// const option = option;
+
+			switch ( arr.length ) {
+				case 2:
+          if ( ! option[ arr[ 0 ] ] ) {
+            option[ arr[ 0 ] ] = {};
+          }
+          option[ arr[ 0 ] ][ arr[ 1 ] ] = value;
+					break;
+				case 4:
+
+          if ( ! option[ arr[ 0 ] ] ) {
+            option[ arr[ 0 ] ] = {};
+          }
+
+          if ( ! option[ arr[ 0 ] ][ arr[ 1 ] ] ) {
+            option[ arr[ 0 ] ][ arr[ 1 ] ] = [];
+          }
+
+          if ( ! option[ arr[ 0 ] ][ arr[ 1 ] ][ arr[ 2 ] ] ) {
+            option[ arr[ 0 ] ][ arr[ 1 ] ][ arr[ 2 ] ] = {};
+          }
+
+					option[ arr[ 0 ] ][ arr[ 1 ] ][ arr[ 2 ] ][
+						arr[ 3 ]
+					] = value;
+					break;
+			}
+
+			// dispatch( {
+			// 	type: 'SET_OPTION',
+			// 	name: newName,
+			// 	value: newValue,
+			// } );
+		}
+
+    return option;
+	};
 
 	return (
 		<>
-    <form>
+    <form id={formId} className='sc-rules-group-form' onSubmit={ handleFormSubmit }>
 		{ ruleGroupsData.map( ( group, g_index ) => {
       // debugger;
       const group_id = group.group_id;
@@ -233,7 +300,7 @@ const Rules = ( props ) => {
           >
             <input
               type="hidden"
-              name={ `sc-rules[${ g_index }][group_id]` }
+              name={ `sc-form-rules[${ g_index }][group_id]` }
               value={ group_id }
             />
 
@@ -345,6 +412,8 @@ const Rules = ( props ) => {
       );
 			} )
     }
+    <Button variant='secondary'>Cancel</Button>
+    <Button variant="primary" type='submit'>Save</Button>
     </form>
 		</>
 	);

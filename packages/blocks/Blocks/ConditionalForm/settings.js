@@ -17,12 +17,23 @@ import Rules from './rules';
 
 
 const Settings = ( props ) => {
-  const { attributes, setAttributes } = props;
+  const { attributes, setAttributesm } = props;
   const { rule_groups } = attributes;
+
+  const formId = 'sc-rules-group-' + Math.random().toString( 36 ).substring( 2, 5 );
+
+  props.formId = formId;
 
   const [ isOpen, setOpen ] = useState( false );
   const openModal = () => setOpen( true );
-  const closeModal = () => setOpen( false );
+  const closeModal = (e) => {
+    // debugger;
+    // console.log(e);
+    // document.getElementById( formId );
+    setOpen( false )
+  };
+  props.setOpen = setOpen;
+
   // debugger;
   let rule_data = rule_groups ? JSON.parse( rule_groups ) : [];
 
