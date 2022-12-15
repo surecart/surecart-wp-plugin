@@ -9,17 +9,20 @@ import {
 } from '@surecart/components-react';
 import { Modal } from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
-import { __ } from '@wordpress/i18n';
+import { _n, __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
 import { useRef, useEffect, useState } from 'react';
 import Error from '../../components/Error';
+import SelectCustomer from './SelectCustomer';
 
-export default ({ onRequestClose, couponId }) => {
+export default ({ onRequestClose, couponId, promotion: existingPromotion }) => {
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
 	const { saveEntityRecord } = useDispatch(coreStore);
-	const [code, setCode] = useState(null);
+	const [promotion, setPromotion] = useState(existingPromotion);
+	const updatePromotion = (data) =>
+		setPromotion({ ...(promotion || {}), ...data });
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState(null);
 	const input = useRef(null);
@@ -30,12 +33,20 @@ export default ({ onRequestClose, couponId }) => {
 			await saveEntityRecord(
 				'surecart',
 				'promotion',
-				{ code, coupon: couponId },
+				{
+					...promotion,
+					coupon: couponId,
+				},
 				{ throwOnError: true }
 			);
-			createSuccessNotice(__('Promotion created.', 'surecart'), {
-				type: 'snackbar',
-			});
+			createSuccessNotice(
+				promotion?.id
+					? __('Promotion updated.', 'surecart')
+					: __('Promotion created.', 'surecart'),
+				{
+					type: 'snackbar',
+				}
+			);
 			onRequestClose();
 		} catch (e) {
 			console.error(e);
@@ -53,9 +64,17 @@ export default ({ onRequestClose, couponId }) => {
 
 	return (
 		<Modal
-			title={__('New Promotion Code', 'surecart')}
+			title={
+				existingPromotion
+					? __('Edit Promotion Code', 'surecart')
+					: __('New Promotion Code', 'surecart')
+			}
 			css={css`
 				max-width: 500px !important;
+				width: 100%;
+				.components-modal__content {
+					overflow: visible !important;
+				}
 			`}
 			onRequestClose={onRequestClose}
 			shouldCloseOnClickOutside={false}
@@ -67,23 +86,63 @@ export default ({ onRequestClose, couponId }) => {
 				`}
 			>
 				<Error error={error} setError={setError} />
+
 				<ScInput
+					label={__('Code', 'surecart')}
 					css={css`
 						flex: 1;
 					`}
 					help={__(
-						'Customers will enter this discount code at checkout. Leave this blank and we will generate one for you.',
+						'Leave this blank and we will generate one for you.',
 						'surecart'
 					)}
 					attribute="code"
-					value={code}
-					onScInput={(e) => setCode(e.target.value)}
+					value={promotion?.code}
+					onScInput={(e) => updatePromotion({ code: e.target.value })}
 					autofocus
 					ref={input}
 				/>
+
+				<SelectCustomer
+					promotion={promotion}
+					updatePromotion={updatePromotion}
+				/>
+
+				<ScInput
+					css={css`
+						flex: 1;
+					`}
+					label={__('Usage Limit', 'surecart')}
+					help={__(
+						'Limit the number of times this code can be redeemed.',
+						'surecart'
+					)}
+					placeholder={__('Unlimited Usage', 'surecart')}
+					value={promotion?.max_redemptions}
+					onScInput={(e) => {
+						updatePromotion({
+							max_redemptions: e.target.value,
+						});
+					}}
+					type="number"
+				>
+					{!!promotion?.max_redemptions && (
+						<span slot="suffix">
+							{_n(
+								'time',
+								'times',
+								parseInt(promotion?.max_redemptions),
+								'surecart'
+							)}
+						</span>
+					)}
+				</ScInput>
+
 				<ScFlex alignItems="center" justifyContent="flex-start">
 					<ScButton type="primary" submit busy={busy}>
-						{__('Create', 'surecart')}
+						{existingPromotion
+							? __('Update', 'surecart')
+							: __('Create', 'surecart')}
 					</ScButton>
 					<ScButton type="text" onClick={onRequestClose}>
 						{__('Cancel', 'surecart')}

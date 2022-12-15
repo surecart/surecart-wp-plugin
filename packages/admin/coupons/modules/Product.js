@@ -2,6 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import {
 	ScFlex,
+	ScFormatNumber,
 	ScFormControl,
 	ScIcon,
 	ScSkeleton,
@@ -9,6 +10,8 @@ import {
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import ModelSelector from '../../components/ModelSelector';
+import { intervalString } from '../../util/translations';
+import { _n, sprintf, __ } from '@wordpress/i18n';
 
 export default ({ id, onSelect }) => {
 	const { product, loading } = useSelect(
@@ -48,6 +51,12 @@ export default ({ id, onSelect }) => {
 	if (loading) {
 		return <ScSkeleton />;
 	}
+
+	const activePrices = product?.prices?.data?.filter(
+		(price) => !price?.archived
+	);
+	const firstPrice = activePrices?.[0];
+	const totalPrices = activePrices?.length;
 
 	return (
 		<ScFlex alignItems="center" justifyContent="flex-start">
@@ -91,7 +100,18 @@ export default ({ id, onSelect }) => {
 				<div>
 					<strong>{product?.name}</strong>
 				</div>
-				asdfa
+				{totalPrices > 1 ? (
+					sprintf(__('%d prices', 'surecart'), totalPrices)
+				) : (
+					<>
+						<ScFormatNumber
+							value={firstPrice?.amount}
+							type="currency"
+							currency={firstPrice?.currency}
+						/>
+						{intervalString(firstPrice)}
+					</>
+				)}
 			</div>
 		</ScFlex>
 	);

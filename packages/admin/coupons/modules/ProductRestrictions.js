@@ -20,10 +20,10 @@ import Product from './Product';
 
 export default ({ coupon, updateCoupon, loading }) => {
 	const [drafts, setDrafts] = useState(0);
-	const productIds = coupon?.filter_product_ids || [];
+	const productIds = coupon?.product_ids || [];
 	const onRemove = (id) =>
 		updateCoupon({
-			filter_product_ids: productIds.filter((item) => item !== id),
+			product_ids: productIds.filter((item) => item !== id),
 		});
 
 	return (
@@ -33,7 +33,7 @@ export default ({ coupon, updateCoupon, loading }) => {
 			footer={
 				<ScButton onClick={() => setDrafts(drafts + 1)}>
 					<ScIcon name="plus" slot="prefix" />
-					{__('Add product', 'surecart')}
+					{__('Add product restriction', 'surecart')}
 				</ScButton>
 			}
 		>
@@ -88,9 +88,9 @@ export default ({ coupon, updateCoupon, loading }) => {
 										requestQuery={{ archived: false }}
 										onSelect={(id) => {
 											updateCoupon({
-												filter_product_ids: [
+												product_ids: [
 													...new Set([
-														...(coupon?.filter_product_ids ||
+														...(coupon?.product_ids ||
 															[]),
 														...[id],
 													]),
