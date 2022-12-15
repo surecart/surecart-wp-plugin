@@ -6,6 +6,7 @@ import {
 	ScFlex,
 	ScForm,
 	ScInput,
+	ScSwitch,
 } from '@surecart/components-react';
 import { Modal } from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
@@ -17,10 +18,11 @@ import Error from '../../components/Error';
 import SelectCustomer from './SelectCustomer';
 
 export default ({ onRequestClose, couponId, promotion: existingPromotion }) => {
-	const { createErrorNotice, createSuccessNotice } =
-		useDispatch(noticesStore);
+	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { saveEntityRecord } = useDispatch(coreStore);
-	const [promotion, setPromotion] = useState(existingPromotion);
+	const [promotion, setPromotion] = useState(
+		existingPromotion || { max_redemptions: null }
+	);
 	const updatePromotion = (data) =>
 		setPromotion({ ...(promotion || {}), ...data });
 	const [busy, setBusy] = useState(false);
@@ -83,6 +85,7 @@ export default ({ onRequestClose, couponId, promotion: existingPromotion }) => {
 				onScSubmit={createPromotion}
 				css={css`
 					margin-top: 5px;
+					--sc-form-row-spacing: var(--sc-spacing-large);
 				`}
 			>
 				<Error error={error} setError={setError} />
@@ -108,35 +111,49 @@ export default ({ onRequestClose, couponId, promotion: existingPromotion }) => {
 					updatePromotion={updatePromotion}
 				/>
 
-				<ScInput
-					css={css`
-						flex: 1;
-					`}
-					label={__('Usage Limit', 'surecart')}
-					help={__(
-						'Limit the number of times this code can be redeemed.',
-						'surecart'
-					)}
-					placeholder={__('Unlimited Usage', 'surecart')}
-					value={promotion?.max_redemptions}
-					onScInput={(e) => {
+				<ScSwitch
+					checked={promotion?.max_redemptions !== null}
+					onScChange={(e) =>
 						updatePromotion({
-							max_redemptions: e.target.value,
-						});
-					}}
-					type="number"
+							max_redemptions: e.target.checked ? 1 : null,
+						})
+					}
 				>
-					{!!promotion?.max_redemptions && (
-						<span slot="suffix">
-							{_n(
-								'time',
-								'times',
-								parseInt(promotion?.max_redemptions),
-								'surecart'
-							)}
-						</span>
-					)}
-				</ScInput>
+					{__('Limit the usage of this coupon code', 'surecart')}
+				</ScSwitch>
+
+				{promotion?.max_redemptions !== null && (
+					<ScInput
+						css={css`
+							flex: 1;
+						`}
+						label={__('Usage Limit', 'surecart')}
+						help={__(
+							'Limit the number of times this code can be redeemed.',
+							'surecart'
+						)}
+						value={promotion?.max_redemptions}
+						onScInput={(e) => {
+							updatePromotion({
+								max_redemptions: e.target.value || 0,
+							});
+						}}
+						type="number"
+						min="1"
+						required
+					>
+						{promotion?.max_redemptions !== null && (
+							<span slot="suffix">
+								{_n(
+									'time',
+									'times',
+									parseInt(promotion?.max_redemptions),
+									'surecart'
+								)}
+							</span>
+						)}
+					</ScInput>
+				)}
 
 				<ScFlex alignItems="center" justifyContent="flex-start">
 					<ScButton type="primary" submit busy={busy}>

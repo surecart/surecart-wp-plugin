@@ -128,9 +128,11 @@ export default ({ promotion: { id }, index }) => {
 					`}
 				>
 					<ScTag>
-						{promotion?.times_redeemed} /{' '}
-						{promotion?.max_redemptions || '∞'}{' '}
-						{__('uses', 'surecart')}
+						{promotion?.times_redeemed}
+						{promotion?.max_redemptions
+							? ` / ${promotion?.max_redemptions}`
+							: ''}{' '}
+						{__('Uses', 'surecart')}
 					</ScTag>
 				</div>
 			</div>
