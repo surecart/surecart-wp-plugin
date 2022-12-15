@@ -33,7 +33,7 @@ export default ({ coupon, updateCoupon, loading }) => {
 			footer={
 				<ScButton onClick={() => setDrafts(drafts + 1)}>
 					<ScIcon name="plus" slot="prefix" />
-					{__('Add product restriction', 'surecart')}
+					{__('Add Product Restriction', 'surecart')}
 				</ScButton>
 			}
 		>
