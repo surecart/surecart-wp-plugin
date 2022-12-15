@@ -119,7 +119,7 @@ export default ({ onRequestClose, couponId, promotion: existingPromotion }) => {
 						})
 					}
 				>
-					{__('Limit the usage of this coupon code', 'surecart')}
+					{__('Limit the usage of this promotion code', 'surecart')}
 				</ScSwitch>
 
 				{promotion?.max_redemptions !== null && (
