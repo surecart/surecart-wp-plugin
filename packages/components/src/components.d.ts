@@ -6862,6 +6862,10 @@ declare namespace LocalJSX {
          */
         "onScOpen"?: (event: ScSelectCustomEvent<string>) => void;
         /**
+          * Emitted when the list scrolls to the end.
+         */
+        "onScScrollEnd"?: (event: ScSelectCustomEvent<void>) => void;
+        /**
           * Emitted whent the components search query changes
          */
         "onScSearch"?: (event: ScSelectCustomEvent<string>) => void;
