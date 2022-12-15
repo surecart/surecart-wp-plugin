@@ -239,11 +239,11 @@ export class ScSelectDropdown {
   }
 
   handleMenuScroll(e) {
-    if (this.loading) return; // if it is loading don't emit the event
     const scrollTop = e.target.scrollTop;
     const scrollHeight = e.target.scrollHeight;
     const offsetHeight = e.target.offsetHeight;
     const contentHeight = scrollHeight - offsetHeight;
+    if (this.loading) return; // if it is loading don't emit the event
     if (contentHeight <= scrollTop) this.scScrollEnd.emit();
   }
 
@@ -459,14 +459,14 @@ export class ScSelectDropdown {
 
             <sc-menu style={{ maxHeight: '210px', overflow: 'auto' }} exportparts="base:menu__base" onScroll={e => this.handleMenuScroll(e)}>
               <slot name="prefix"></slot>
-              {this.loading && !this.filteredChoices.length && (
+              {(this.filteredChoices || []).map((choice, index) => {
+                return [this.renderItem(choice, index), (choice.choices || []).map(choice => this.renderItem(choice, index))];
+              })}
+              {this.loading && (
                 <div class="loading">
                   <sc-spinner exportparts="base:spinner__base"></sc-spinner>
                 </div>
               )}
-              {(this.filteredChoices || []).map((choice, index) => {
-                return [this.renderItem(choice, index), (choice.choices || []).map(choice => this.renderItem(choice, index))];
-              })}
               {!this.loading && !this.filteredChoices.length && (
                 <div class="select__empty" part="empty">
                   {__('Nothing Found', 'surecart')}
