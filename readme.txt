@@ -243,6 +243,10 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.3.4 - December 15, 2022 =
+* Improvement: Coupon UX - set usage and customer limits per promotion code.
+* Fix: Product restrictions on coupons not applying to specific products only.
+
 = 1.3.3 - December 14, 2022 =
 * New: Separate first name and last name fields.
 * Improvement: Coupon entry UX.
