@@ -19,7 +19,7 @@ import apiFetch from '@wordpress/api-fetch';
 
 const Rules = ( props ) => {
 
-  const { attributes, setAttributes, formId, setOpen } = props;
+  const { attributes, setAttributes, formId, closeModal } = props;
 
   const { rule_groups } = attributes;
 
@@ -220,7 +220,7 @@ const Rules = ( props ) => {
     }
 
     setAttributes({ rule_groups: JSON.stringify( option ) });
-    setOpen( false );
+    closeModal();
   };
 
   const prepareFormDataObject = function ( option, dkey, dvalue ) {
@@ -412,7 +412,7 @@ const Rules = ( props ) => {
       );
 			} )
     }
-    <Button variant='secondary'>Cancel</Button>
+    <Button variant='secondary' onClick={closeModal}>Cancel</Button>
     <Button variant="primary" type='submit'>Save</Button>
     </form>
 		</>

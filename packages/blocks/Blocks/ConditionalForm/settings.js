@@ -26,13 +26,9 @@ const Settings = ( props ) => {
 
   const [ isOpen, setOpen ] = useState( false );
   const openModal = () => setOpen( true );
-  const closeModal = (e) => {
-    // debugger;
-    // console.log(e);
-    // document.getElementById( formId );
-    setOpen( false )
-  };
-  props.setOpen = setOpen;
+  const closeModal = () => setOpen( false );
+
+  props.closeModal = closeModal;
 
   // debugger;
   let rule_data = rule_groups ? JSON.parse( rule_groups ) : [];
