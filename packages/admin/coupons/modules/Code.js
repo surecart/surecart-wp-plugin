@@ -118,23 +118,14 @@ export default ({ promotion: { id }, index }) => {
 							{__('Archived', 'surecart')}
 						</ScTag>
 					)}
-				</ScInput>
-				<div
-					css={css`
-						display: flex;
-						flex-direction: column;
-						justify-content: center;
-						align-items: center;
-					`}
-				>
-					<ScTag>
+					<ScTag slot="suffix">
 						{promotion?.times_redeemed}
 						{promotion?.max_redemptions
 							? ` / ${promotion?.max_redemptions}`
 							: ''}{' '}
 						{__('Uses', 'surecart')}
 					</ScTag>
-				</div>
+				</ScInput>
 			</div>
 			<ScDropdown slot="suffix" placement="bottom-end">
 				<ScButton type="text" slot="trigger" circle>
