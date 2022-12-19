@@ -14,7 +14,7 @@ export default (props) => {
 		per_page: 10,
 	});
 
-	const { items, loading } = useSelect(
+	const { data, loading } = useSelect(
 		(select) => {
 			const queryArgs = [
 				'surecart',
@@ -26,19 +26,22 @@ export default (props) => {
 					...requestQuery,
 				},
 			];
-			console.log('fetching....');
 			return {
-				items: select(coreStore).getEntityRecords(...queryArgs),
-				loading: select(coreStore).isResolving(
-					'getEntityRecords',
-					queryArgs
-				),
+				data:
+					query !== null
+						? select(coreStore).getEntityRecords(...queryArgs)
+						: [],
+				loading:
+					query !== null
+						? select(coreStore).isResolving(
+								'getEntityRecords',
+								queryArgs
+						  )
+						: false,
 			};
 		},
 		[query, pagination]
 	);
-
-	console.log('choices', choices);
 
 	const handleOnScrollEnd = () => {
 		if (!pagination.enabled) return;
@@ -46,17 +49,17 @@ export default (props) => {
 	};
 
 	useEffect(() => {
-		if (loading && items?.length < pagination.per_page)
+		if (loading && data?.length < pagination.per_page)
 			setPagination((state) => ({ ...state, enabled: false }));
 
 		setChoices((state) => [
 			...state,
-			...(items || []).map((item) => ({
+			...(data || []).map((item) => ({
 				label: !!display ? display(item) : item.name,
 				value: item.id,
 			})),
 		]);
-	}, [items]);
+	}, [data]);
 
 	return (
 		<SelectModel
