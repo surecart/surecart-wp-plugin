@@ -9,6 +9,7 @@ import {
 	ScTag,
 	ScBlockUi,
 	ScFlex,
+	ScIcon,
 } from '@surecart/components-react';
 import { Icon, box, trash, moreHorizontalMobile } from '@wordpress/icons';
 import { css, jsx } from '@emotion/core';
@@ -17,6 +18,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { Modal } from '@wordpress/components';
 import { useState } from 'react';
+import EditPromotionCode from './EditPromotionCode';
 
 export default ({ promotion: { id }, index }) => {
 	const [modal, setModal] = useState(false);
@@ -107,17 +109,6 @@ export default ({ promotion: { id }, index }) => {
 					css={css`
 						flex: 1;
 					`}
-					help={
-						promotion?.id
-							? __(
-									'Customers will enter this discount code at checkout.',
-									'surecart'
-							  )
-							: __(
-									'Customers will enter this discount code at checkout. Leave this blank and we will generate one for you.',
-									'surecart'
-							  )
-					}
 					attribute="name"
 					value={promotion?.code}
 					onScInput={(e) => updatePromotion({ code: e.target.value })}
@@ -127,22 +118,38 @@ export default ({ promotion: { id }, index }) => {
 							{__('Archived', 'surecart')}
 						</ScTag>
 					)}
+					<ScTag slot="suffix">
+						{promotion?.times_redeemed}
+						{promotion?.max_redemptions
+							? ` / ${promotion?.max_redemptions}`
+							: ''}{' '}
+						{__('Uses', 'surecart')}
+					</ScTag>
 				</ScInput>
 			</div>
-			<ScDropdown slot="suffix" position="bottom-right">
+			<ScDropdown slot="suffix" placement="bottom-end">
 				<ScButton type="text" slot="trigger" circle>
 					<Icon icon={moreHorizontalMobile} />
 				</ScButton>
 				<ScMenu>
+					<ScMenuItem onClick={() => setModal('edit')}>
+						<ScIcon
+							slot="prefix"
+							name="edit-2"
+							style={{
+								opacity: 0.5,
+							}}
+						/>
+						{__('Edit', 'surecart')}
+					</ScMenuItem>
 					{promotion?.id && (
 						<ScMenuItem onClick={() => onArchive(index)}>
-							<Icon
+							<ScIcon
 								slot="prefix"
+								name="archive"
 								style={{
 									opacity: 0.5,
 								}}
-								icon={box}
-								size={20}
 							/>
 							{promotion?.archived
 								? __('Un-Archive', 'surecart')
@@ -150,13 +157,12 @@ export default ({ promotion: { id }, index }) => {
 						</ScMenuItem>
 					)}
 					<ScMenuItem onClick={() => setModal('delete')}>
-						<Icon
+						<ScIcon
 							slot="prefix"
+							name="trash"
 							style={{
 								opacity: 0.5,
 							}}
-							icon={trash}
-							size={20}
 						/>
 						{__('Delete', 'surecart')}
 					</ScMenuItem>
@@ -166,6 +172,12 @@ export default ({ promotion: { id }, index }) => {
 				<ScBlockUi
 					style={{ '--sc-block-ui-opacity': '0.25' }}
 					spinner
+				/>
+			)}
+			{modal === 'edit' && (
+				<EditPromotionCode
+					promotion={promotion}
+					onRequestClose={() => setModal(null)}
 				/>
 			)}
 			{modal === 'delete' && (

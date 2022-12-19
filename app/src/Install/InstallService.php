@@ -79,8 +79,8 @@ class InstallService {
 					<sc-line-item-total class="sc-subtotal" total="subtotal" class="wp-block-surecart-subtotal"><span slot="description">Subtotal</span></sc-line-item-total>
 					<!-- /wp:surecart/subtotal -->
 
-					<!-- wp:surecart/coupon {"text":"Add Coupon Code","button_text":"Apply Coupon"} -->
-					<sc-coupon-form label="Add Coupon Code">Apply Coupon</sc-coupon-form>
+					<!-- wp:surecart/coupon {"text":"Add Coupon Code","button_text":"Apply"} -->
+					<sc-coupon-form label="Add Coupon Code">Apply</sc-coupon-form>
 					<!-- /wp:surecart/coupon -->
 
 					<!-- wp:surecart/divider -->

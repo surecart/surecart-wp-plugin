@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>Manual Payment Methods Fixture</title>
+  <link href="/build/surecart.css" rel="stylesheet">
+  <script type="module" src="/build/surecart.esm.js"></script>
+  <script nomodule src="/build/surecart.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script>
+    window.scIcons = {
+      path: '/build/icon-assets'
+    }
+    window.wp = {
+      i18n: {
+        __: () => { }
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <sc-checkout success-url="/success" form-id="1" mode="test">
+    <sc-form>
+      <sc-customer-firstname value="John"></sc-customer-firstname>
+      <sc-customer-lastname value="Smith"></sc-customer-lastname>
+      <sc-order-submit>Submit</sc-order-submit>
+    </sc-form>
+  </sc-checkout>
+</body>
+
+</html>
