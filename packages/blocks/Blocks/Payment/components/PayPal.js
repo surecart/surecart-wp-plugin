@@ -39,7 +39,10 @@ export default ({ attributes: { disabled_methods = [] }, mode }) => {
 	return (
 		<>
 			{hasStripe() && (
-				<ScPaymentMethodChoice processor-id="paypal-card">
+				<ScPaymentMethodChoice
+					processor-id="paypal-card"
+					recurringEnabled
+				>
 					<span slot="summary" class="sc-payment-toggle-summary">
 						<ScIcon
 							name="credit-card"
@@ -69,7 +72,7 @@ export default ({ attributes: { disabled_methods = [] }, mode }) => {
 				</ScPaymentMethodChoice>
 			)}
 
-			<ScPaymentMethodChoice processor-id="paypal">
+			<ScPaymentMethodChoice processor-id="paypal" recurringEnabled>
 				<span slot="summary" class="sc-payment-toggle-summary">
 					<ScIcon
 						name="paypal"

@@ -9,9 +9,10 @@ import { useState } from 'react';
 import { ScAlert, ScButton, ScForm, ScInput } from '@surecart/components-react';
 import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
-import Restrictions from './modules/Restrictions';
 import Types from './modules/Types';
 import Limits from './modules/Limits';
+import SelectCustomer from './modules/SelectCustomer';
+import ProductRestrictions from './modules/ProductRestrictions';
 
 export default ({ id, setId }) => {
 	const [isSaving, setIsSaving] = useState(false);
@@ -39,7 +40,6 @@ export default ({ id, setId }) => {
 	// create the product.
 	const onSubmit = async (e) => {
 		e.preventDefault();
-		console.log({ coupon });
 		try {
 			setIsSaving(true);
 			const response = await saveEntityRecord(
@@ -47,12 +47,7 @@ export default ({ id, setId }) => {
 				'coupon',
 				{
 					...coupon,
-					promotions: [
-						{
-							archived: false,
-							code: promotion?.code,
-						},
-					],
+					promotions: [promotion],
 				},
 				{ throwOnError: true }
 			);
@@ -115,14 +110,24 @@ export default ({ id, setId }) => {
 								updatePromotion({ code: e.target.value })
 							}
 						/>
+
+						<SelectCustomer
+							promotion={promotion}
+							updatePromotion={updatePromotion}
+						/>
 					</div>
 				</Box>
+
+				<ProductRestrictions
+					coupon={coupon}
+					updateCoupon={updateCoupon}
+				/>
 
 				<Types coupon={coupon} updateCoupon={updateCoupon} />
 
 				<Limits coupon={coupon} updateCoupon={updateCoupon} />
 
-				<Restrictions coupon={coupon} updateCoupon={updateCoupon} />
+				{/* <Restrictions coupon={coupon} updateCoupon={updateCoupon} /> */}
 
 				<div css={css`display: flex gap: var(--sc-spacing-small);`}>
 					<ScButton type="primary" submit loading={isSaving}>
