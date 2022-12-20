@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { ScSelect, ScSwitch, ScTag } from '@surecart/components-react';
+import { ScSelect, ScSwitch, ScUpgradeRequired } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
 import useEntity from '../../hooks/useEntity';
@@ -207,9 +207,7 @@ export default () => {
 				>
 					{__('Require Upfront Payment Method', 'surecart')}
 					{!scData?.entitlements?.optional_upfront_payment_method && (
-						<ScTag type="success" size="small" pill>
-							{__('Pro', 'surecart')}
-						</ScTag>
+						<ScUpgradeRequired />
 					)}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-12-15T20:59:01",
+  "timestamp": "2022-12-20T21:42:02",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -1672,6 +1672,7 @@
         "sc-subscriptions-list",
         "sc-tax-id-input",
         "sc-upcoming-invoice",
+        "sc-upgrade-required",
         "sc-wordpress-password-edit",
         "sc-wordpress-user",
         "sc-wordpress-user-edit"
@@ -1774,6 +1775,9 @@
           "sc-button"
         ],
         "sc-upcoming-invoice": [
+          "sc-button"
+        ],
+        "sc-upgrade-required": [
           "sc-button"
         ],
         "sc-wordpress-password-edit": [
@@ -6048,9 +6052,9 @@
         "sc-tag",
         "sc-card",
         "sc-form",
-        "sc-input",
         "sc-columns",
         "sc-column",
+        "sc-input",
         "sc-address",
         "sc-switch",
         "sc-tax-id-input",
@@ -6063,9 +6067,9 @@
           "sc-tag",
           "sc-card",
           "sc-form",
-          "sc-input",
           "sc-columns",
           "sc-column",
+          "sc-input",
           "sc-address",
           "sc-switch",
           "sc-tax-id-input",
@@ -8315,7 +8319,8 @@
       ],
       "dependents": [
         "sc-login-provider",
-        "sc-subscription-details"
+        "sc-subscription-details",
+        "sc-upgrade-required"
       ],
       "dependencies": [
         "sc-button",
@@ -8333,6 +8338,9 @@
           "sc-dialog"
         ],
         "sc-subscription-details": [
+          "sc-dialog"
+        ],
+        "sc-upgrade-required": [
           "sc-dialog"
         ]
       }
@@ -11756,6 +11764,7 @@
         "sc-tax-id-input",
         "sc-toggle",
         "sc-upcoming-invoice",
+        "sc-upgrade-required",
         "sc-wordpress-user"
       ],
       "dependencies": [],
@@ -11857,6 +11866,9 @@
           "sc-icon"
         ],
         "sc-upcoming-invoice": [
+          "sc-icon"
+        ],
+        "sc-upgrade-required": [
           "sc-icon"
         ],
         "sc-wordpress-user": [
@@ -25328,7 +25340,8 @@
         "sc-subscription-details",
         "sc-subscription-payment-method",
         "sc-subscription-status-badge",
-        "sc-subscription-switch"
+        "sc-subscription-switch",
+        "sc-upgrade-required"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -25393,6 +25406,9 @@
           "sc-tag"
         ],
         "sc-subscription-switch": [
+          "sc-tag"
+        ],
+        "sc-upgrade-required": [
           "sc-tag"
         ]
       }
@@ -27120,6 +27136,71 @@
         ],
         "sc-dashboard-module": [
           "sc-alert"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/sc-upgrade-required/sc-upgrade-required.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-upgrade-required",
+      "readme": "# sc-upgrade-required\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The tag's size.",
+          "docsTags": [],
+          "default": "'small'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-tag",
+        "sc-dialog",
+        "sc-icon",
+        "sc-button"
+      ],
+      "dependencyGraph": {
+        "sc-upgrade-required": [
+          "sc-tag",
+          "sc-dialog",
+          "sc-icon",
+          "sc-button"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ]
       }
     },

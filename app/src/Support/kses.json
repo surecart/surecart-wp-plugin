@@ -1750,6 +1750,13 @@
     "class": true,
     "slot": true
   },
+  "sc-upgrade-required": {
+    "size": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-wordpress-password-edit": {
     "heading": true,
     "success-url": true,
