@@ -2950,6 +2950,10 @@ export namespace Components {
         "successUrl": string;
     }
     interface ScUpgradeRequired {
+        /**
+          * The tag's size.
+         */
+        "size": 'small' | 'medium' | 'large';
     }
     interface ScWordpressPasswordEdit {
         "heading": string;
@@ -7572,6 +7576,10 @@ declare namespace LocalJSX {
         "successUrl"?: string;
     }
     interface ScUpgradeRequired {
+        /**
+          * The tag's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
     }
     interface ScWordpressPasswordEdit {
         "heading"?: string;

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-12-20T21:10:44",
+  "timestamp": "2022-12-20T21:38:23",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -9961,6 +9961,7 @@
         "sc-tax-id-input",
         "sc-toggle",
         "sc-upcoming-invoice",
+        "sc-upgrade-required",
         "sc-wordpress-user"
       ],
       "dependencies": [],
@@ -10062,6 +10063,9 @@
           "sc-icon"
         ],
         "sc-upcoming-invoice": [
+          "sc-icon"
+        ],
+        "sc-upgrade-required": [
           "sc-icon"
         ],
         "sc-wordpress-user": [
@@ -24776,7 +24780,34 @@
       "docs": "",
       "docsTags": [],
       "usage": {},
-      "props": [],
+      "props": [
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The tag's size.",
+          "docsTags": [],
+          "default": "'small'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
       "methods": [],
       "events": [],
       "listeners": [],
@@ -24787,12 +24818,14 @@
       "dependencies": [
         "sc-tag",
         "sc-dialog",
+        "sc-icon",
         "sc-button"
       ],
       "dependencyGraph": {
         "sc-upgrade-required": [
           "sc-tag",
           "sc-dialog",
+          "sc-icon",
           "sc-button"
         ],
         "sc-dialog": [
