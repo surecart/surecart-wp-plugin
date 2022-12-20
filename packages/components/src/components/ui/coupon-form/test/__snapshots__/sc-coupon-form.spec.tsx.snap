@@ -31,10 +31,11 @@ exports[`sc-coupon-form renders 1`] = `
         <slot name="label"></slot>
       </div>
       <div class="form" part="form">
-        <sc-input clearable="" exportparts="base:input__base, input, form-control:input__form-control"></sc-input>
-        <sc-button exportparts="base:button__base, label:button_label" full="" type="primary">
-          <slot></slot>
-        </sc-button>
+        <sc-input exportparts="base:input__base, input, form-control:input__form-control" placeholder="Enter coupon code">
+          <sc-button class="coupon-button" exportparts="base:button__base, label:button_label" size="medium" slot="suffix" type="text">
+            <slot></slot>
+          </sc-button>
+        </sc-input>
       </div>
     </div>
   </mock:shadow-root>
