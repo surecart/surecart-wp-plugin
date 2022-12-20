@@ -61,8 +61,6 @@ export default ({
 		setItem('');
 	}, [providerName]);
 
-	console.log({ items });
-
 	return (
 		<Fragment>
 			<p>

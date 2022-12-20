@@ -147,40 +147,39 @@ export class ScPriceInput {
 
   render() {
     return (
-      <div>
-        <sc-input
-          size={this.size}
-          label={this.label}
-          showLabel={this.showLabel}
-          help={this.help}
-          ref={el => (this.scInput = el as HTMLScInputElement)}
-          type="number"
-          name={this.name}
-          disabled={this.disabled}
-          readonly={this.readonly}
-          required={this.required}
-          placeholder={this.placeholder}
-          minlength={this.minlength}
-          maxlength={this.maxlength}
-          min={!!this.min ? this.min / 100 : 0.0}
-          step={0.001}
-          max={!!this.max ? this.max / 100 : null}
-          // TODO: Test These below
-          autofocus={this.autofocus}
-          inputmode={'decimal'}
-          onScChange={() => this.handleChange()}
-          onScInput={() => this.handleInput()}
-          value={maybeConvertAmount(parseFloat(this.value), this.currencyCode).toString()}
-        >
-          <span style={{ opacity: '0.5' }} slot="prefix">
-            {getCurrencySymbol(this.currencyCode)}
-          </span>
+      <sc-input
+        exportparts="base, input, form-control, label, help-text, prefix, suffix"
+        size={this.size}
+        label={this.label}
+        showLabel={this.showLabel}
+        help={this.help}
+        ref={el => (this.scInput = el as HTMLScInputElement)}
+        type="number"
+        name={this.name}
+        disabled={this.disabled}
+        readonly={this.readonly}
+        required={this.required}
+        placeholder={this.placeholder}
+        minlength={this.minlength}
+        maxlength={this.maxlength}
+        min={!!this.min ? this.min / 100 : 0.0}
+        step={0.001}
+        max={!!this.max ? this.max / 100 : null}
+        // TODO: Test These below
+        autofocus={this.autofocus}
+        inputmode={'decimal'}
+        onScChange={() => this.handleChange()}
+        onScInput={() => this.handleInput()}
+        value={maybeConvertAmount(parseFloat(this.value), this.currencyCode).toString()}
+      >
+        <span style={{ opacity: '0.5' }} slot="prefix">
+          {getCurrencySymbol(this.currencyCode)}
+        </span>
 
-          <span slot="suffix">
-            <slot name="suffix">{this.showCode && this?.currencyCode && <span style={{ opacity: '0.5' }}>{this.currencyCode.toUpperCase()}</span>}</slot>
-          </span>
-        </sc-input>
-      </div>
+        <span slot="suffix">
+          <slot name="suffix">{this.showCode && this?.currencyCode && <span style={{ opacity: '0.5' }}>{this.currencyCode.toUpperCase()}</span>}</slot>
+        </span>
+      </sc-input>
     );
   }
 }

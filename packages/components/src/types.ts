@@ -237,6 +237,7 @@ export interface LineItem extends Object {
   subtotal_amount: number;
   total_amount: number;
   scratch_amount: number;
+  total_savings_amount: number;
   created_at: number;
   updated_at: number;
   price?: Price;
@@ -388,7 +389,7 @@ export interface Checkout extends Object {
   subtotal_amount?: number;
   full_amount?: number;
   proration_amount?: number;
-  scratch_amount?: number;
+  total_savings_amount?: number;
   applied_balance_amount?: number;
   discounts?: number;
   tax_amount: number;
@@ -700,6 +701,8 @@ export interface Customer extends Object {
   id: string;
   email: string;
   name?: string;
+  first_name?: string;
+  last_name?: string;
   phone?: string;
   billing_address?: string | Address;
   shipping_address?: string | Address;

@@ -3,12 +3,12 @@
 exports[`sc-coupon-form handles applied coupons 1`] = `
 <sc-coupon-form>
   <mock:shadow-root>
-    <sc-line-item>
+    <sc-line-item exportparts="description:info, price-description:discount, price:amount">
       <span slot="description">
-        <div>
+        <div part="discount-label">
           Discount
         </div>
-        <sc-tag class="coupon-tag" clearable="" type="success">
+        <sc-tag class="coupon-tag" clearable="" exportparts="base:coupon-tag" type="success">
           TESTCODE
         </sc-tag>
       </span>
@@ -26,15 +26,16 @@ exports[`sc-coupon-form handles applied coupons 1`] = `
 exports[`sc-coupon-form renders 1`] = `
 <sc-coupon-form>
   <mock:shadow-root>
-    <div class="coupon-form">
-      <div class="trigger">
+    <div class="coupon-form" part="base">
+      <div class="trigger" part="label">
         <slot name="label"></slot>
       </div>
-      <div class="form">
-        <sc-input clearable=""></sc-input>
-        <sc-button full="" type="primary">
-          <slot></slot>
-        </sc-button>
+      <div class="form" part="form">
+        <sc-input exportparts="base:input__base, input, form-control:input__form-control" placeholder="Enter coupon code">
+          <sc-button class="coupon-button" exportparts="base:button__base, label:button_label" size="medium" slot="suffix" type="text">
+            <slot></slot>
+          </sc-button>
+        </sc-input>
       </div>
     </div>
   </mock:shadow-root>

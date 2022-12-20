@@ -2,7 +2,7 @@ import { Coupon, Price } from '../types';
 import { __, _n, sprintf } from '@wordpress/i18n';
 
 export const convertAmount = (amount: number, currency: string) => {
-  return ['bif', 'clp', 'djf', 'gnf', 'jpy', 'kmf', 'krw'].includes(currency) ? amount : amount / 100;
+  return ['bif', 'clp', 'djf', 'gnf', 'jpy', 'kmf', 'krw', 'xaf'].includes(currency) ? amount : amount / 100;
 };
 
 export const getHumanDiscount = (coupon: Coupon) => {

@@ -1,6 +1,7 @@
-import { Component, Prop, h, Watch, State, Event, EventEmitter, Method } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Method, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
+
 import { Address, Checkout, TaxStatus } from '../../../../types';
 
 @Component({
@@ -14,8 +15,8 @@ export class ScOrderShippingAddress {
   /** Label for the field. */
   @Prop() label: string;
 
-  /** Is this required (defaults to true) */
-  @Prop() required: boolean = true;
+  /** Is this required (defaults to false) */
+  @Prop({ mutable: true }) required: boolean = false;
 
   /** Is this loading. */
   @Prop() loading: boolean;
@@ -25,6 +26,9 @@ export class ScOrderShippingAddress {
 
   /** Tax status of the order */
   @Prop() taxStatus: TaxStatus;
+
+  /** Tax enabled status of the order */
+  @Prop() taxEnabled: boolean;
 
   /** Is shipping enabled for this order? */
   @Prop() shippingEnabled: boolean;
@@ -101,12 +105,23 @@ export class ScOrderShippingAddress {
     if (this.defaultCountry && !this.address.country) {
       this.address.country = this.defaultCountry;
     }
+
+    this.handleRequirementChange();
+  }
+
+  @Watch('shippingEnabled')
+  @Watch('taxEnabled')
+  handleRequirementChange() {
+    if (this.shippingEnabled || this.taxEnabled) {
+      this.required = true;
+    }
   }
 
   render() {
     if (this.shippingEnabled || this.full) {
       return (
         <sc-address
+          exportparts="label, help-text, form-control, input__base, select__base, columns, search__base, menu__base"
           ref={el => (this.input = el as any)}
           label={this.label || __('Shipping Address', 'surecart')}
           placeholders={{
@@ -138,4 +153,4 @@ export class ScOrderShippingAddress {
   }
 }
 
-openWormhole(ScOrderShippingAddress, ['shippingAddress', 'loading', 'taxStatus', 'shippingEnabled'], false);
+openWormhole(ScOrderShippingAddress, ['shippingAddress', 'loading', 'taxStatus', 'taxEnabled', 'shippingEnabled'], false);

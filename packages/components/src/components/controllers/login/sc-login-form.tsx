@@ -59,14 +59,14 @@ export class ScLogin {
   async login() {
     try {
       this.loading = true;
-      const { redirect_url } = await apiFetch({
+      const { redirect_url } = (await apiFetch({
         method: 'POST',
         path: 'surecart/v1/login',
         data: {
           login: this.email,
           password: this.password,
         },
-      });
+      })) as any;
 
       if (redirect_url) {
         window.location.replace(redirect_url);
@@ -127,7 +127,7 @@ export class ScLogin {
       <sc-form onScFormSubmit={() => (this.step = 'password')}>
         <sc-input
           ref={el => (this.emailInput = el as HTMLScInputElement)}
-          label="Email Address"
+          label={__('Email Address', 'surecart')}
           onScChange={() => this.handleEmailChange()}
           required
           autofocus

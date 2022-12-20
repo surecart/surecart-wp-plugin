@@ -12,15 +12,17 @@ exports[`sc-customer-edit renders 1`] = `
       </span>
       <sc-card>
         <sc-form>
-          <sc-input label="Billing Email" name="email" required=""></sc-input>
           <sc-columns style="--sc-column-spacing: var(--sc-spacing-medium);">
             <sc-column>
-              <sc-input label="Name" name="name"></sc-input>
+              <sc-input label="First Name" name="first_name"></sc-input>
             </sc-column>
             <sc-column>
-              <sc-input label="Phone" name="phone"></sc-input>
+              <sc-input label="Last Name" name="last_name"></sc-input>
             </sc-column>
           </sc-columns>
+          <sc-column>
+            <sc-input label="Phone" name="phone"></sc-input>
+          </sc-column>
           <div>
             <sc-address label="Shipping Address" showname=""></sc-address>
           </div>

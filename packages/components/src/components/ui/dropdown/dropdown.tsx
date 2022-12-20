@@ -2,6 +2,11 @@ import { Component, Element, Prop, Event, EventEmitter, Watch, State, h } from '
 import { autoUpdate, computePosition, flip, offset, shift, size } from '@floating-ui/dom';
 import { ScMenu } from '../menu/sc-menu';
 
+/**
+ * @part base - The elements base wrapper.
+ * @part trigger - The trigger.
+ * @part panel - The panel.
+ */
 @Component({
   tag: 'sc-dropdown',
   styleUrl: 'dropdown.scss',
@@ -182,6 +187,7 @@ export class ScDropdown {
   render() {
     return (
       <div
+        part="base"
         class={{
           'dropdown': true,
           'dropdown--open': this.open,

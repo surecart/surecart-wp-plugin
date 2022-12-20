@@ -1,20 +1,14 @@
 /** @jsx jsx */
 import { __ } from '@wordpress/i18n';
-import { ScFormatDate, ScButton } from '@surecart/components-react';
-import { Popover, DateTimePicker } from '@wordpress/components';
+import { ScFormatDate, ScButton, ScIcon } from '@surecart/components-react';
+import { DateTimePicker, Modal } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { css, jsx } from '@emotion/core';
 import { useEffect } from 'react';
 
 export default (props) => {
-	const {
-		currentDate,
-		onChange,
-		onChoose,
-		placeholder,
-		popoverTitle,
-		...rest
-	} = props;
+	const { currentDate, onChange, onChoose, placeholder, title, ...rest } =
+		props;
 	const [isVisible, setIsVisible] = useState(false);
 	const [date, setDate] = useState(currentDate);
 
@@ -36,12 +30,8 @@ export default (props) => {
 	}, [currentDate]);
 
 	return (
-		<div
-			css={css`
-				display: inline-block;
-			`}
-		>
-			<ScButton onClick={toggleVisible} caret>
+		<div {...props}>
+			<ScButton onClick={toggleVisible}>
 				{currentDate ? (
 					<ScFormatDate
 						date={currentDate}
@@ -52,28 +42,23 @@ export default (props) => {
 				) : (
 					placeholder || __('Select date', 'surecart')
 				)}
+				{currentDate ? (
+					<ScIcon name="edit" slot="suffix" />
+				) : (
+					<ScIcon name="plus" slot="suffix" />
+				)}
 			</ScButton>
 
 			{isVisible && (
-				<Popover position="bottom">
-					{!!popoverTitle && (
-						<div
-							css={css`
-								padding: 1em 1em 0 1em;
-							`}
-						>
-							{popoverTitle}
-						</div>
-					)}
+				<Modal title={title} onRequestClose={toggleVisible}>
 					<DateTimePicker
-						headerTitle={'test'}
 						currentDate={date}
 						onChange={onChangeDate}
 						{...rest}
 					/>
 					<div
 						css={css`
-							padding: 0 1em 1em 1em;
+							margin-top: 1em;
 							display: flex;
 							align-items: center;
 							gap: 1em;
@@ -92,7 +77,7 @@ export default (props) => {
 							{__('Cancel', 'surecart')}
 						</ScButton>
 					</div>
-				</Popover>
+				</Modal>
 			)}
 		</div>
 	);

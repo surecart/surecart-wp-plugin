@@ -3,17 +3,17 @@
 exports[`sc-product-line-item does not render scratch amount if the same as amount 1`] = `
 <sc-product-line-item amount="1000" currency="CAD" scratch-amount="1000">
   <mock:shadow-root>
-    <div class="item">
-      <div class="item__text">
-        <div class="item__title">
+    <div class="item" part="base">
+      <div class="item__text" part="text">
+        <div class="item__title" part="title">
           <slot name="title"></slot>
         </div>
-        <sc-quantity-select max="100"></sc-quantity-select>
+        <sc-quantity-select exportparts="base:quantity__base, minus, minus-icon, plus, plus-icon, input" max="100"></sc-quantity-select>
       </div>
-      <div class="item__suffix">
+      <div class="item__suffix" part="suffix">
         <div></div>
-        <div class="item__price">
-          <div class="price">
+        <div class="item__price" part="price">
+          <div class="price" part="price__amount">
             <sc-format-number currency="CAD" type="currency" value="1000"></sc-format-number>
           </div>
         </div>
@@ -26,17 +26,17 @@ exports[`sc-product-line-item does not render scratch amount if the same as amou
 exports[`sc-product-line-item renders 1`] = `
 <sc-product-line-item amount="1000" currency="CAD">
   <mock:shadow-root>
-    <div class="item">
-      <div class="item__text">
-        <div class="item__title">
+    <div class="item" part="base">
+      <div class="item__text" part="text">
+        <div class="item__title" part="title">
           <slot name="title"></slot>
         </div>
-        <sc-quantity-select max="100"></sc-quantity-select>
+        <sc-quantity-select exportparts="base:quantity__base, minus, minus-icon, plus, plus-icon, input" max="100"></sc-quantity-select>
       </div>
-      <div class="item__suffix">
+      <div class="item__suffix" part="suffix">
         <div></div>
-        <div class="item__price">
-          <div class="price">
+        <div class="item__price" part="price">
+          <div class="price" part="price__amount">
             <sc-format-number currency="CAD" type="currency" value="1000"></sc-format-number>
           </div>
         </div>
@@ -49,17 +49,17 @@ exports[`sc-product-line-item renders 1`] = `
 exports[`sc-product-line-item renders scratch amount if different from amount 1`] = `
 <sc-product-line-item amount="1000" currency="CAD" scratch-amount="2000">
   <mock:shadow-root>
-    <div class="item">
-      <div class="item__text">
-        <div class="item__title">
+    <div class="item" part="base">
+      <div class="item__text" part="text">
+        <div class="item__title" part="title">
           <slot name="title"></slot>
         </div>
-        <sc-quantity-select max="100"></sc-quantity-select>
+        <sc-quantity-select exportparts="base:quantity__base, minus, minus-icon, plus, plus-icon, input" max="100"></sc-quantity-select>
       </div>
-      <div class="item__suffix">
+      <div class="item__suffix" part="suffix">
         <div></div>
-        <div class="item__price">
-          <div class="price">
+        <div class="item__price" part="price">
+          <div class="price" part="price__amount">
             <sc-format-number class="item__scratch-price" currency="CAD" type="currency" value="2000"></sc-format-number>
             <sc-format-number currency="CAD" type="currency" value="1000"></sc-format-number>
           </div>

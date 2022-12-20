@@ -39,7 +39,7 @@ export class ScOrderCouponForm {
         currency={this?.order?.currency}
         discount-amount={this?.order?.discount_amount}
       >
-        <slot>{__('Apply Coupon', 'surecart')}</slot>
+        <slot>{__('Apply', 'surecart')}</slot>
       </sc-coupon-form>
     );
   }

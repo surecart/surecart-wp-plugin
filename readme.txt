@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.1
-Stable tag: 1.2.3
+Stable tag: 1.3.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -243,7 +243,56 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.2.23  - Novermber 25, 2022 =
+= 1.3.4 - December 15, 2022 =
+* Improvement: Coupon UX - set usage and customer limits per promotion code.
+* Fix: Product restrictions on coupons not applying to specific products only.
+
+= 1.3.3 - December 14, 2022 =
+* New: Separate first name and last name fields.
+* Improvement: Coupon entry UX.
+* Improvement: Order bump UI to work better on mobile devices.
+* Improvement: Display per-file upload limits.
+* Improvement: Show storage limits if reaching upper limits of storage.
+* Fix: Flexbox wrapping issue on admin dashboard.
+* Fix: SureCart columns block category incorrect.
+* Fix: Issue with taxes being taken into account with scratch prices.
+* Fix: Add missing "Email Address" translation in login form.
+
+= 1.3.2 - December 1, 2022 =
+* Improvement: Switch form block now allows rich text (links, formatting, etc.)
+* Improvement: Show notice in admin if SSL is not enabled on your site.
+* Fix: Unable to search all products product, price selectors.
+* Fix: Setting free trial on admin subscription edit getting cut off.
+* Fix: Upgrade groups no longer show archived prices.
+* Fix: Show refunds list on admin order page.
+
+= 1.3.1  - November 30, 2022 =
+* Hotfix: Scratch prices not able to be created with decimal points.
+
+= 1.3.0  - November 30, 2022 =
+* New: Restrict coupons to products, prices or customers.
+* Improvement: Ability to filter error messages.
+* Improvement: New documentation on styling with shadow parts and css variables.
+* Improvement: Show all orders by default on admin orders page.
+* Improvement: Option for the address component to not be required.
+* Improvement: Show remaining payment for payment plan on individual admin plan page.
+* Improvement: Show customer's payment methods in the admin.
+* Fix: Unable to update PayPal payment method on existing subscription in admin.
+* Fix: Disabled integrations are no longer selectable.
+* Fix: Customer dashboard full setting not taking effect.
+* Fix: Abandoned checkouts missing recovered state.
+* Fix: Added correct premium label to free trials.
+* Fix: Validate compare at price in browser.
+
+= 1.2.5  - Novermber 29, 2022 =
+* Hotfix: Fix fatal error happening on some servers that are not supporting our get route url function.
+
+= 1.2.4  - Novermber 29, 2022 =
+* Improvement: Abandoned checkout email links with multi-website stores.
+* Improvement: Add filter to manual payment method summary to allow customization.
+* Fix: AffiliateWP not showing product in list.
+
+= 1.2.3  - Novermber 25, 2022 =
 * Fix: Issue with admin prices search closing on keypresses, not allowing search functionality.
 * Fix: Issue with customers not able to update subscription if subscription quantity changes were disabled.
 

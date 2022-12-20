@@ -25,7 +25,7 @@ export class ScPaymentMethod {
     if ((this.paymentMethod?.bank_account as BankAccount)?.id) {
       const account = this.paymentMethod?.bank_account as BankAccount;
       return (
-        <div class="payment-method" part="base">
+        <div class="payment-method" part="bank">
           <span>{this.renderBankAccountType(account?.account_type)}</span>
           **** {account?.last4}
         </div>
@@ -35,7 +35,7 @@ export class ScPaymentMethod {
     if ((this?.paymentMethod?.payment_instrument as PaymentInstrument)?.instrument_type) {
       const type = (this?.paymentMethod?.payment_instrument as PaymentInstrument)?.instrument_type;
       return (
-        <sc-tag type="info" pill>
+        <sc-tag exportparts="base:payment_instrument" type="info" pill>
           <span style={{ textTransform: 'capitalize' }}>{type} </span>
         </sc-tag>
       );
@@ -43,7 +43,7 @@ export class ScPaymentMethod {
 
     if (this.paymentMethod?.card?.brand) {
       return (
-        <div class="payment-method" part="base">
+        <div class="payment-method" part="card">
           <sc-cc-logo style={{ fontSize: '36px' }} brand={this.paymentMethod?.card?.brand}></sc-cc-logo>
           **** {this.paymentMethod?.card?.last4}
         </div>

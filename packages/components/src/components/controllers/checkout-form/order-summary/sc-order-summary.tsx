@@ -64,8 +64,13 @@ export class ScOrderSummary {
         </span>
         {this.collapsed && (
           <span slot="price">
-            {!!this.order?.scratch_amount && this.order?.total_amount !== this.order?.scratch_amount && (
-              <sc-format-number class="scratch-price" type="currency" value={this.order?.scratch_amount} currency={this.order?.currency || 'usd'} />
+            {!!this.order?.total_savings_amount && (
+              <sc-format-number
+                class="scratch-price"
+                type="currency"
+                value={-this.order?.total_savings_amount + this.order?.total_amount}
+                currency={this.order?.currency || 'usd'}
+              />
             )}
             <sc-total total={'total'} order={this.order}></sc-total>
           </span>
