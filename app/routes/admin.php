@@ -202,6 +202,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 );
 
+/*
+|--------------------------------------------------------------------------
+| Subscription Cancellations
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+->where( 'admin', 'sc-subscription-cancellations' )
+->middleware( 'user.can:edit_sc_subscriptions' )
+->middleware( 'assets.components' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\SubscriptionCancellations\\' )
+->group(
+	function() {
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'SubscriptionCancellationsController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'show', 'action' )->handle( 'SubscriptionCancellationsController@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'SubscriptionCancellationsController@edit' );
+	}
+);
+
+
 \SureCart::route()
 ->where( 'admin', 'cart' )
 ->middleware( 'user.can:manage_options' )

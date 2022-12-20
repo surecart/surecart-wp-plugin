@@ -36,6 +36,7 @@ class AdminRouteService {
 		'coupons'             => 'sc-coupons',
 		'product_group'       => 'sc-product-groups',
 		'product_groups'      => 'sc-product-groups',
+		'cancellations'       => 'sc-subscription-cancellations',
 	];
 
 	/**
