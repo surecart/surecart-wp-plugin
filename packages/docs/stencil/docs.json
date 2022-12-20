@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-12-08T15:19:51",
+  "timestamp": "2022-12-20T21:10:44",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -1417,6 +1417,7 @@
         "sc-subscriptions-list",
         "sc-tax-id-input",
         "sc-upcoming-invoice",
+        "sc-upgrade-required",
         "sc-wordpress-password-edit",
         "sc-wordpress-user",
         "sc-wordpress-user-edit"
@@ -1519,6 +1520,9 @@
           "sc-button"
         ],
         "sc-upcoming-invoice": [
+          "sc-button"
+        ],
+        "sc-upgrade-required": [
           "sc-button"
         ],
         "sc-wordpress-password-edit": [
@@ -6701,7 +6705,8 @@
       ],
       "dependents": [
         "sc-login-provider",
-        "sc-subscription-details"
+        "sc-subscription-details",
+        "sc-upgrade-required"
       ],
       "dependencies": [
         "sc-button",
@@ -6719,6 +6724,9 @@
           "sc-dialog"
         ],
         "sc-subscription-details": [
+          "sc-dialog"
+        ],
+        "sc-upgrade-required": [
           "sc-dialog"
         ]
       }
@@ -24777,11 +24785,22 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
-        "sc-tag"
+        "sc-tag",
+        "sc-dialog",
+        "sc-button"
       ],
       "dependencyGraph": {
         "sc-upgrade-required": [
-          "sc-tag"
+          "sc-tag",
+          "sc-dialog",
+          "sc-button"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ]
       }
     },

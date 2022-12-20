@@ -42,12 +42,7 @@ export default ({ attributes, setAttributes }) => {
 						{__('Enabled Processors', 'surecart')}{' '}
 						{!scBlockData?.entitlements
 							?.form_specific_payment_methods && (
-							<ScUpgradeRequired
-								style={{
-									'--sc-tag-default-background-color':
-										'var(--sc-color-gray-200)',
-								}}
-							/>
+							<ScUpgradeRequired />
 						)}
 					</Flex>
 				}
