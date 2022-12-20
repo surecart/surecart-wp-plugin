@@ -1,10 +1,57 @@
-import { result } from "lodash";
 
-export const applyLogic = ( args ) => {
+export const is_any_rule_group_passed = ( conditions, checkout ) => {
 
-  return true;
+  let result = false;
+
+  conditions.forEach( element => {
+    // debugger;
+    // console.log( 'element' );
+    // console.log( element['rules'] );
+    // console.log( checkout );
+
+    if ( result ) {
+      return;
+    }
+    result = is_rules_passed( element['rules'], checkout );
+  });
+
+  return result;
 }
 
+export const is_rules_passed = ( rules, checkout ) => {
+  debugger;
+  // console.log( 'rules' );
+  // console.log( rules );
+  console.log( checkout );
+  let result = true;
+
+  rules.forEach( rule => {
+    // debugger;
+    console.log( 'rule' );
+    console.log( rule );
+
+    if ( false === result ) {
+      return;
+    }
+    let ruleOperator = rule['operator'];
+		let ruleValue    = rule['value'];
+
+    switch (rule['condition']) {
+      case 'cart_total':
+        console.log( parseFloat( checkout.total_amount ) );
+        console.log( parseFloat( ruleValue ) );
+
+        result = compare_number_values( parseFloat( checkout.total_amount ), parseFloat( ruleValue ), ruleOperator );
+        break;
+
+      default:
+        break;
+    }
+    // result = is_rules_passed( element['rules'], checkout );
+  });
+
+  return result;
+}
 
 /**
  * Compare string values.
@@ -34,12 +81,12 @@ export const compare_string_values = ( cart_values, rule_values, operator ) => {
     case 'not_exist':
         result = cart_values.length === 0;
       break;
-    case '===':
-        result = count( array_intersect( rule_values, cart_values ) ) === 1;
-      break;
-    case '!==':
-        result = count( array_intersect( rule_values, cart_values ) ) === 0;
-      break;
+    // case '===':
+    //     result = count( array_intersect( rule_values, cart_values ) ) === 1;
+    //   break;
+    // case '!==':
+    //     result = count( array_intersect( rule_values, cart_values ) ) === 0;
+    //   break;
     default:
         result = false;
       break;

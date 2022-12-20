@@ -2,6 +2,24 @@ import * as logic from '../conditional-functions';
 
 describe('Conditional form logic', () => {
 
+  describe('Actual Rule data', () => {
+
+    let rulesData = '[{"group_id":"me7","rules":[{"rule_id":"m2v","condition":"cart_total","operator":"==","value":"10000"}]}]';
+
+    let parsedRules = rulesData ? JSON.parse( rulesData ) : [];
+
+    let checkout = { total_amount: 10000 }
+
+
+    it('Test Rule groups', () => {
+
+      let result = logic.is_any_rule_group_passed( parsedRules, checkout );
+
+      expect(result).toBe(true);
+    });
+
+  });
+
   describe('Order Total', () => {
 
     let rule_order_value = 100;

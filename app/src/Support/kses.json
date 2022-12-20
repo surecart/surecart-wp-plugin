@@ -299,6 +299,14 @@
     "class": true,
     "slot": true
   },
+  "sc-conditional-form": {
+    "checkout": true,
+    "rule_groups": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-consumer": {
     "renderer": true,
     "style": true,

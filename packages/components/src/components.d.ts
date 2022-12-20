@@ -607,6 +607,14 @@ export namespace Components {
         "required": boolean;
     }
     interface ScConditionalForm {
+        /**
+          * Checkout Session from sc-checkout.
+         */
+        "checkout": Checkout;
+        /**
+          * Selector label
+         */
+        "rule_groups": string;
     }
     interface ScConsumer {
         "renderer": any;
@@ -4933,6 +4941,14 @@ declare namespace LocalJSX {
         "required"?: boolean;
     }
     interface ScConditionalForm {
+        /**
+          * Checkout Session from sc-checkout.
+         */
+        "checkout"?: Checkout;
+        /**
+          * Selector label
+         */
+        "rule_groups"?: string;
     }
     interface ScConsumer {
         "onMountConsumer"?: (event: ScConsumerCustomEvent<any>) => void;

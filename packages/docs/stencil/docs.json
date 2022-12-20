@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-11-30T20:19:18",
+  "timestamp": "2022-12-20T14:43:11",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -5067,6 +5067,58 @@
           "sc-compact-address"
         ]
       }
+    },
+    {
+      "filePath": "./src/components/controllers/checkout-form/sc-conditional-form/sc-conditional-form.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-conditional-form",
+      "readme": "# sc-conditional-form\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "checkout",
+          "type": "Checkout",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Checkout Session from sc-checkout.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Checkout"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "rule_groups",
+          "type": "string",
+          "mutable": false,
+          "attr": "rule_groups",
+          "reflectToAttr": false,
+          "docs": "Selector label",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
     },
     {
       "filePath": "./src/components/context/consumer/sc-consumer.tsx",
@@ -23809,6 +23861,23 @@
           "attr": "disabled",
           "reflectToAttr": true,
           "docs": "Disables the switch.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "edit",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "edit",
+          "reflectToAttr": false,
+          "docs": "This will be true as a workaround in the block editor to focus on the content.",
           "docsTags": [],
           "default": "false",
           "values": [
