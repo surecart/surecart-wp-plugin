@@ -34,10 +34,6 @@ export default function useSave() {
 		createSuccessNotice(successMessage, {
 			type: 'snackbar',
 		});
-		// save success.
-		addSnackbarNotice({
-			content: successMessage,
-		});
 	};
 
 	return {

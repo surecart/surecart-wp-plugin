@@ -3,9 +3,9 @@
 namespace SureCart\Models;
 
 /**
- * Price model
+ * Cancellation Reason Model
  */
-class Coupon extends Model {
+class CancellationReason extends Model {
 	/**
 	 * Rest API endpoint
 	 *
@@ -21,16 +21,14 @@ class Coupon extends Model {
 	protected $object_name = 'cancellation_reason';
 
 	/**
-	 * Is this cachable?
+	 * Get stats for the order.
 	 *
-	 * @var boolean
-	 */
-	protected $cachable = true;
-
-	/**
-	 * Clear cache when cancellation_reason are updated.
+	 * @param array $args Array of arguments for the statistics.
 	 *
-	 * @var string
+	 * @return \SureCart\Models\Statistic;
 	 */
-	protected $cache_key = 'cancellation_reason_updated_at';
+	protected function stats( $args = [] ) {
+		$stat = new Statistic();
+		return $stat->where( $args )->find( 'cancellation_reasons' );
+	}
 }

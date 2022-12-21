@@ -1,12 +1,13 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
 import { ScSelect, ScSwitch, ScTag } from '@surecart/components-react';
-import SettingsTemplate from '../SettingsTemplate';
-import SettingsBox from '../SettingsBox';
-import useEntity from '../../hooks/useEntity';
+import { useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+
 import Error from '../../components/Error';
+import useEntity from '../../hooks/useEntity';
+import SettingsBox from '../SettingsBox';
+import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
 
 export default () => {
