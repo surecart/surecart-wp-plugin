@@ -92,7 +92,6 @@ export class ScLogin {
       window.location.reload();
     } catch (e) {
       this.handleError(e);
-    } finally {
       this.loading = false;
     }
   }
