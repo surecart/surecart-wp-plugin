@@ -24,22 +24,31 @@ class VerificationCodeController extends RestController {
 	 * @return \SureCart\Models\VerificationCode|\WP_Error
 	 */
 	public function verify( \WP_REST_Request $request ) {
+		// run middleware.
 		$model = $this->middleware( new $this->class(), $request );
+
+		// bail if error.
 		if ( is_wp_error( $model ) ) {
 			return $model;
 		}
+
+		// verify the code.
 		$verify = $model->where( $request->get_query_params() )->verify( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
 
+		// check for errors.
 		if ( is_wp_error( $verify ) ) {
 			return $verify;
 		}
 
+		// code is invalid or not verified.
 		if ( empty( $verify->verified ) ) {
 			return new \WP_Error( 'invalid_code', __( 'Invalid verification code', 'surecart' ) );
 		}
 
+		// get the user based on the email.
 		$user = User::get_user_by( 'email', $request->get_param( 'login' ) );
 
+		// bail if no user.
 		if ( ! $user ) {
 			return new \WP_Error( 'user_not_found', __( 'The user could not be found.', 'surecart' ) );
 		}
