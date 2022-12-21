@@ -87,7 +87,11 @@ class VerificationCodeController extends RestController {
 		}
 
 		// login the user.
-		$user->login();
+		$logged_in = $user->login();
+
+		if ( is_wp_error( $logged_in ) ) {
+			return $logged_in;
+		}
 
 		// return the model.
 		return $verify;
