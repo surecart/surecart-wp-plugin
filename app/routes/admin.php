@@ -204,19 +204,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
-| Subscription Cancellations
+| Cancellation Insights
 |--------------------------------------------------------------------------
 */
 \SureCart::route()
-->where( 'admin', 'sc-subscription-cancellations' )
+->where( 'admin', 'sc-cancellation-insights' )
 ->middleware( 'user.can:edit_sc_subscriptions' )
 ->middleware( 'assets.components' )
-->setNamespace( '\\SureCart\\Controllers\\Admin\\SubscriptionCancellations\\' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\CancellationInsights\\' )
 ->group(
 	function() {
-		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'SubscriptionCancellationsController@index' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'show', 'action' )->handle( 'SubscriptionCancellationsController@show' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'SubscriptionCancellationsController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'CancellationInsightsController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'show', 'action' )->handle( 'CancellationInsightsController@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'CancellationInsightsController@edit' );
 	}
 );
 

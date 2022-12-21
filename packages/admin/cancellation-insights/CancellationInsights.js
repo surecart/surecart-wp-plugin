@@ -11,9 +11,11 @@ import {
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useState, useEffect } from '@wordpress/element';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
 import Error from '../components/Error';
-import Stat from './Stat';
-import Tab from './Tab';
+import Stat from '../ui/Stat';
+import Tab from '../ui/Tab';
 import { averageProperties, totalProperties } from './util';
 import { getFormattedPrice, maybeConvertAmount } from '../util';
 import { getFilterData } from '../util/filter';
@@ -24,6 +26,21 @@ export default () => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState();
 	const [filter, setFilter] = useState('30days');
+
+	const { cancellation_reasons } = useSelect((select) => {
+		const queryArgs = ['surecart', 'cancellation_reasons'];
+		return {
+			cancellation_reasons: select(coreStore).getEntityRecords(
+				...queryArgs
+			),
+			loading: select(coreStore).isResolving(
+				'getEntityRecords',
+				queryArgs
+			),
+		};
+	});
+
+	console.log('cancellation_reasons', cancellation_reasons);
 
 	const getAbandonedData = async () => {
 		const { startDate, endDate, prevEndDate, prevStartDate, interval } =
@@ -207,8 +224,8 @@ export default () => {
 				`}
 			>
 				<Stat
-					title={__('Recoverable Checkouts', 'surecart')}
-					description={__('Total Recoverable Checkouts', 'surecart')}
+					title={__('Cancellation Attempts', 'surecart')}
+					description={__('Total Cancellation Attempts', 'surecart')}
 					loading={loading}
 					compare={badge({
 						current: totalProperties('count', data),
@@ -221,8 +238,8 @@ export default () => {
 				<Stat
 					title={
 						hasAccess
-							? __('Recovered Checkouts', 'surecart')
-							: __('Potential Recovered Checkouts', 'surecart')
+							? __('Retained Cancellations', 'surecart')
+							: __('Total Retained Cancellations', 'surecart')
 					}
 					description={__('Total recovered checkouts', 'surecart')}
 					loading={loading}
@@ -241,8 +258,8 @@ export default () => {
 				<Stat
 					title={
 						hasAccess
-							? __('Checkout Recovery Rate', 'surecart')
-							: __('Potential Checkout Recovery Rate', 'surecart')
+							? __('Cancellation Rate', 'surecart')
+							: __('Average Cancellation Rate', 'surecart')
 					}
 					description={__(
 						'Percentage of checkouts recovered',
@@ -262,8 +279,8 @@ export default () => {
 				</Stat>
 
 				<Stat
-					title={__('Recoverable Revenue', 'surecart')}
-					description={__('Total recoverable revenue', 'surecart')}
+					title={__('Total Lost', 'surecart')}
+					description={__('Total Lost', 'surecart')}
 					loading={loading}
 					compare={badge({
 						current: totalProperties('amount', data),
@@ -276,67 +293,6 @@ export default () => {
 						currency={scData?.currency_code || 'usd'}
 						value={totalProperties('amount', data)}
 					/>
-				</Stat>
-
-				<Stat
-					title={
-						hasAccess
-							? __('Recovered Revenue', 'surecart')
-							: __('Potential Recovered Revenue', 'surecart')
-					}
-					description={__('Total recovered revenue', 'surecart')}
-					loading={loading}
-					compare={badge({
-						current: totalProperties('assisted_amount', data),
-						previous: totalProperties('assisted_amount', previous),
-						currency: true,
-					})}
-				>
-					{hasAccess ? (
-						<ScFormatNumber
-							type="currency"
-							currency="usd"
-							value={totalProperties('assisted_amount', data)}
-						/>
-					) : (
-						<ScFormatNumber
-							type="currency"
-							currency="usd"
-							value={totalProperties('amount', data) * 0.18}
-						/>
-					)}
-				</Stat>
-
-				<Stat
-					title={
-						hasAccess
-							? __('Revenue Recovery Rate', 'surecart')
-							: __('Potential Revenue Recovery Rate', 'surecart')
-					}
-					description={__(
-						'Percentage of revenue recovered',
-						'surecart'
-					)}
-					loading={loading}
-					compare={badge({
-						current: averageProperties(
-							'assisted_amount_rate',
-							data
-						),
-						previous: averageProperties(
-							'assisted_amount_rate',
-							previous
-						),
-					})}
-				>
-					{hasAccess
-						? `${Math.round(
-								averageProperties(
-									'assisted_amount_rate',
-									data
-								) * 100
-						  )}%`
-						: '18%'}
 				</Stat>
 			</div>
 		</div>

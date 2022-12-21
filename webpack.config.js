@@ -77,6 +77,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/cart/edit/index.js'
 		),
+		['admin/cancellation-insights']: path.resolve(
+			__dirname,
+			'packages/admin/cancellation-insights/index.js'
+		),
 
 		/**
 		 * Settings.

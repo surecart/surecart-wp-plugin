@@ -2,11 +2,11 @@
 	<?php
 		\SureCart::render(
 			'layouts/partials/admin-index-header',
-			[ 'title' => __( 'Subscription Cancellations', 'surecart' ) ]
+			[ 'title' => __( 'Cancellation Insights', 'surecart' ) ]
 		);
 		?>
 
-	<div id="stats"></div>
+	<div id="app"></div>
 
 	<?php if ( $enabled ) : ?>
 		<?php $table->display(); ?>

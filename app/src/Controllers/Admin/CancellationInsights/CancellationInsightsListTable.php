@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCart\Controllers\Admin\SubscriptionCancellations;
+namespace SureCart\Controllers\Admin\CancellationInsights;
 
 use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\AbandonedCheckout;
@@ -8,7 +8,7 @@ use SureCart\Models\AbandonedCheckout;
 /**
  * Create a new table class that will extend the WP_List_Table
  */
-class SubscriptionCancellationsListTable extends ListTable {
+class CancellationInsightsListTable extends ListTable {
 	/**
 	 * Prepare the items for the table to process
 	 *

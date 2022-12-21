@@ -260,6 +260,7 @@ return [
 	'models'                 => [
 		'abandoned_checkout' => \SureCart\Models\AbandonedCheckout::class,
 		'account'            => \SureCart\Models\Account::class,
+		'cancellation_reason'=> \SureCart\Models\CancellationReason::class,
 		'charge'             => \SureCart\Models\Charge::class,
 		'coupon'             => \SureCart\Models\Coupon::class,
 		'customer'           => \SureCart\Models\Customer::class,

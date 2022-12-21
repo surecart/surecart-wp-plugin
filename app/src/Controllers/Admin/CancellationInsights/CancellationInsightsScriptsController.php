@@ -1,13 +1,13 @@
 <?php
 
-namespace SureCart\Controllers\Admin\SubscriptionCancellations;
+namespace SureCart\Controllers\Admin\CancellationInsights;
 
 use SureCart\Support\Scripts\AdminModelEditController;
 
 /**
  * Coupon page
  */
-class SubscriptionCancellationsScriptsController extends AdminModelEditController {
+class CancellationInsightsScriptsController extends AdminModelEditController {
 	/**
 	 * What types of data to add the the page.
 	 *
@@ -20,12 +20,12 @@ class SubscriptionCancellationsScriptsController extends AdminModelEditControlle
 	 *
 	 * @var string
 	 */
-	protected $handle = 'surecart/scripts/admin/subscription_cancellations';
+	protected $handle = 'surecart/scripts/admin/cancellation_insights';
 
 	/**
 	 * Script path.
 	 *
 	 * @var string
 	 */
-	protected $path = 'admin/subscription-cancellations';
+	protected $path = 'admin/cancellation-insights';
 }
