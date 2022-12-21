@@ -3,7 +3,7 @@
 	"apiVersion": 2,
 	"name": "surecart/column",
 	"title": "Column",
-	"category": "text",
+	"category": "surecart",
 	"parent": ["surecart/columns"],
 	"description": "A single column within a columns block.",
 	"textdomain": "default",
