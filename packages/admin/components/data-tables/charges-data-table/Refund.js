@@ -11,6 +11,7 @@ import {
 	ScLineItem,
 	ScPriceInput,
 	ScSelect,
+	ScIcon,
 } from '@surecart/components-react';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
@@ -26,11 +27,14 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 	const [reason, setReason] = useState('requested_by_customer');
 	const [error, setError] = useState(null);
 	const [revokedPurchaseIds, setRevokedPurchaseIds] = useState([]);
-	const [revokablePurchases, setRevokablePurchases] = useState();
 	const [selectedAllPurchases, setSelectedAllPurchases] = useState(false);
 
 	const { saveEntityRecord, invalidateResolutionForStore } =
 		useDispatch(coreStore);
+
+	const revokablePurchases = (purchases || []).filter(
+		(purchase) => !purchase?.revoked
+	);
 
 	/**
 	 * Handle submit.
@@ -93,13 +97,6 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 		);
 		setSelectedAllPurchases(!checked);
 	};
-
-	useEffect(() => {
-		const revokablePurchases = purchases.filter(
-			(purchase) => !(purchase?.revoked || purchase?.subscription)
-		);
-		setRevokablePurchases(revokablePurchases);
-	}, [purchases]);
 
 	return (
 		<Modal
@@ -173,12 +170,13 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 							}
 						>
 							{selectedAllPurchases
-								? 'Unselect All'
-								: 'Select All'}
+								? __('Unselect All', 'surecart')
+								: __('Select All', 'surecart')}
 						</ScButton>
 						<ScChoices>
 							{revokablePurchases.map((purchase) => {
-								const { id, product, quantity } = purchase;
+								const { id, product, quantity, subscription } =
+									purchase;
 								const checked = revokedPurchaseIds.includes(id);
 								return (
 									<ScChoice
@@ -190,18 +188,66 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 										}
 									>
 										<ScLineItem>
-											{!!product?.image_url && (
+											{!!product?.image_url ? (
 												<img
 													src={product?.image_url}
 													slot="image"
 												/>
+											) : (
+												<div
+													css={css`
+														width: 48px;
+														height: 48px;
+														object-fit: cover;
+														background: var(
+															--sc-color-gray-100
+														);
+														display: flex;
+														align-items: center;
+														justify-content: center;
+														border-radius: var(
+															--sc-border-radius-small
+														);
+													`}
+													slot="image"
+												>
+													<ScIcon
+														style={{
+															width: '18px',
+															height: '18px',
+														}}
+														name={'image'}
+													/>
+												</div>
 											)}
 											<span slot="title">
 												{product?.name}
 											</span>
-											<span slot="description">
-												<span>Qty: {quantity}</span>{' '}
-											</span>
+											<div slot="description">
+												<span>
+													{__('Qty', 'surecart')}:{' '}
+													{quantity}
+												</span>
+												{!!subscription && (
+													<p
+														css={css`
+															color: var(
+																--sc-color-danger-500
+															);
+															font-size: var(
+																--sc-font-size-small
+															);
+															margin: 0;
+															white-space: nowrap;
+														`}
+													>
+														{__(
+															'This subscription will be cancelled if revoked',
+															'surecart'
+														)}
+													</p>
+												)}
+											</div>
 										</ScLineItem>
 									</ScChoice>
 								);
