@@ -30,6 +30,26 @@ class VerificationCodeRestServiceProvider extends RestServiceProvider implements
 	 */
 	protected $methods = [ 'create' ];
 
+	/**
+	 * Register additional routes (the /verify route).
+	 *
+	 * @return void
+	 */
+	public function register_routes() {
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/verify/',
+			[
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'verify' ),
+					'permission_callback' => [ $this, 'verify_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+	}
 
 	/**
 	 * Get our sample schema for a post.
@@ -44,42 +64,32 @@ class VerificationCodeRestServiceProvider extends RestServiceProvider implements
 
 		$this->schema = [
 			// This tells the spec of JSON Schema we are using which is draft 4.
-			'$schema'    => 'http://json-schema.org/draft-04/schema#',
+			'$schema' => 'http://json-schema.org/draft-04/schema#',
 			// The title property marks the identity of the resource.
-			'title'      => $this->endpoint,
-			'type'       => 'object',
+			'title'   => $this->endpoint,
+			'type'    => 'object',
 		];
 
 		return $this->schema;
 	}
 
 	/**
-	 * Anyone can get a specific price.
+	 * Anyone can get verify a code.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 * @return true
 	 */
-	public function get_item_permissions_check( $request ) {
+	public function verify_permissions_check( $request ) {
 		return true;
 	}
 
 	/**
-	 * Who can list prices
+	 * Must be a WordPress user to generate a verification code.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
-	 */
-	public function get_items_permissions_check( $request ) {
-		return true;
-	}
-
-	/**
-	 * Create model.
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 * @return boolean
 	 */
 	public function create_item_permissions_check( $request ) {
-		return true;
+		return (bool) email_exists( $request->get_param( 'login' ) );
 	}
 }
