@@ -2,6 +2,7 @@
 
 namespace SureCart\Rest;
 
+use SureCart\Controllers\Rest\CheckEmailController;
 use SureCart\Rest\RestServiceInterface;
 use SureCart\Controllers\Rest\VerificationCodeController;
 
@@ -35,7 +36,7 @@ class VerificationCodeRestServiceProvider extends RestServiceProvider implements
 	 *
 	 * @return void
 	 */
-	public function register_routes() {
+	public function registerRoutes() {
 		register_rest_route(
 			"$this->name/v$this->version",
 			$this->endpoint . '/verify/',
@@ -90,6 +91,6 @@ class VerificationCodeRestServiceProvider extends RestServiceProvider implements
 	 * @return boolean
 	 */
 	public function create_item_permissions_check( $request ) {
-		return (bool) email_exists( $request->get_param( 'login' ) );
+		return ( new CheckEmailController() )->checkEmail( $request );
 	}
 }

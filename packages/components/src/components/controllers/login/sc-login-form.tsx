@@ -1,7 +1,7 @@
 import { Component, h, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '../../../functions/fetch';
-import { VerificationCode } from '../../../types';
+import { ResponseError, VerificationCode } from '../../../types';
 
 @Component({
   tag: 'sc-login-form',
@@ -10,26 +10,49 @@ import { VerificationCode } from '../../../types';
 })
 export class ScLogin {
   private passwordInput: HTMLScInputElement;
+  private codeInput: HTMLScInputElement;
 
-  @State() step: string = '';
+  @State() step: number = 0;
   @State() email: string = '';
   @State() password: string = '';
   @State() verifyCode: string = '';
   @State() loading: boolean;
-  @State() error: string;
+  @State() error: ResponseError;
 
   /** Focus the password field automatically on password step. */
   @Watch('step')
   handleStepChange() {
-    if (this.step === 'password') {
+    if (this.step === 1) {
       setTimeout(() => {
         this.passwordInput.triggerFocus();
       }, 50);
     }
+    if (this.step === 2) {
+      setTimeout(() => {
+        this.codeInput.triggerFocus();
+      }, 50);
+    }
   }
 
-  handleEmailChange(e) {
-    this.email = (e.target as HTMLScInputElement).value;
+  /** Clear out error when loading happens. */
+  @Watch('loading')
+  handleLoadingChange(val) {
+    if (val) {
+      this.error = null;
+    }
+  }
+
+  @Watch('verifyCode')
+  handleVerifyCodeChange(val) {
+    if (val?.length >= 6) {
+      this.submitCode();
+    }
+  }
+
+  /** Handle request errors. */
+  handleError(e) {
+    console.error(this.error);
+    this.error = e || { message: __('Something went wrong', 'surecart') };
   }
 
   /** Submit for verification codes */
@@ -40,13 +63,12 @@ export class ScLogin {
         method: 'POST',
         path: 'surecart/v1/verification_codes',
         data: {
-          email: this.email,
+          login: this.email,
         },
       });
-      this.step = 'complete';
+      this.step = this.step + 1;
     } catch (e) {
-      console.error(this.error);
-      this.error = e?.message || __('Something went wrong', 'surecart');
+      this.handleError(e);
     } finally {
       this.loading = false;
     }
@@ -69,8 +91,7 @@ export class ScLogin {
       }
       window.location.reload();
     } catch (e) {
-      console.error(this.error);
-      this.error = e?.message || __('Something went wrong', 'surecart');
+      this.handleError(e);
     } finally {
       this.loading = false;
     }
@@ -89,8 +110,7 @@ export class ScLogin {
       });
       window.location.reload();
     } catch (e) {
-      console.error(this.error);
-      this.error = e?.message || __('Something went wrong', 'surecart');
+      this.handleError(e);
     } finally {
       this.loading = false;
     }
@@ -106,43 +126,37 @@ export class ScLogin {
           login: this.email,
         },
       });
-      this.step = 'password';
+      this.step = this.step + 1;
     } catch (e) {
-      console.error(this.error);
-      this.error = e?.message || __('Something went wrong', 'surecart');
+      this.handleError(e);
     } finally {
       this.loading = false;
     }
   }
 
   renderInner() {
-    if (this.step === 'complete') {
+    if (this.step === 2) {
       return (
         <div>
-          <sc-alert type="success" open>
-            <sc-icon slot="icon" name="check"></sc-icon>
-            <span slot="title">{__('Sent!', 'surecart')}</span>
-            <p>{__('You should receive an email shortly with a verification code.', 'surecart')}</p>
-          </sc-alert>
           <sc-form onScFormSubmit={() => this.submitCode()}>
             <sc-input
-              label={__('Enter your code', 'surecart')}
+              label={__('Confirmation code', 'surecart')}
               type="text"
-              ref={el => (this.passwordInput = el as HTMLScInputElement)}
+              ref={el => (this.codeInput = el as HTMLScInputElement)}
               autofocus
               required
               onScInput={e => (this.verifyCode = (e.target as HTMLScInputElement).value)}
             ></sc-input>
-            <sc-button type="primary" outline submit full>
+            <sc-button type="primary" submit full>
               <sc-icon name="lock" slot="prefix" />
-              {__('Login with Verify Code', 'surecart')}
+              {__('Login with Code', 'surecart')}
             </sc-button>
           </sc-form>
         </div>
       );
     }
 
-    if (this.step === 'password' && this.email) {
+    if (this.step === 1 && this.email) {
       return (
         <div>
           <sc-form onScFormSubmit={() => this.createLoginCode()}>
@@ -151,12 +165,13 @@ export class ScLogin {
               {__('Send a login code', 'surecart')}
             </sc-button>
           </sc-form>
-          <sc-divider>{__('or', 'surecart')}</sc-divider>
+          <sc-divider style={{ '--spacing': '0.5em' }}>{__('or', 'surecart')}</sc-divider>
           <sc-form onScFormSubmit={() => this.login()}>
             <sc-input
               label={__('Enter your password', 'surecart')}
               type="password"
               ref={el => (this.passwordInput = el as HTMLScInputElement)}
+              onKeyDown={e => e.key === 'Enter' && this.login()}
               autofocus
               required
               onScChange={e => (this.password = (e.target as HTMLScInputElement).value)}
@@ -172,7 +187,15 @@ export class ScLogin {
 
     return (
       <sc-form onScFormSubmit={() => this.checkEmail()}>
-        <sc-input type="text" label={__('Username or Email Address', 'surecart')} onScInput={e => (this.email = (e.target as HTMLScInputElement).value)} required autofocus />
+        <sc-input
+          type="text"
+          value={this.email}
+          label={__('Username or Email Address', 'surecart')}
+          onScInput={e => (this.email = (e.target as HTMLScInputElement).value)}
+          onKeyDown={e => e.key === 'Enter' && this.checkEmail()}
+          required
+          autofocus
+        />
         <sc-button type="primary" submit full>
           <sc-icon name="arrow-right" slot="suffix" />
           {__('Next', 'surecart')}
@@ -184,18 +207,29 @@ export class ScLogin {
   render() {
     return (
       <div class="login-form">
-        <div class="login-form__title" part="title">
-          <slot name="title"></slot>
-        </div>
         <sc-card>
+          <div class="login-form__title" part="title">
+            {this.step === 2 ? __('Check your email for a confirmation code', 'surecart') : <slot name="title"></slot>}
+          </div>
           {!!this.error && (
-            <sc-alert open type="danger">
-              <span innerHTML={this.error}></span>
+            <sc-alert open type="danger" closable onScHide={() => (this.error = null)}>
+              <span slot="title" innerHTML={this.error?.message}></span>
+              {(this.error?.additional_errors || []).map(({ message }) => (
+                <div innerHTML={message}></div>
+              ))}
             </sc-alert>
           )}
           {this.renderInner()}
         </sc-card>
-        {this.loading && <sc-block-ui spinner></sc-block-ui>}
+        {this.step > 0 && (
+          <div class="login-form__back">
+            <sc-button type="text" onClick={() => (this.step = this.step - 1)}>
+              <sc-icon name="arrow-left" slot="prefix" />
+              {__('Back', 'surecart')}
+            </sc-button>
+          </div>
+        )}
+        {this.loading && <sc-block-ui spinner style={{ 'zIndex': '9', '--sc-block-ui-opacity': '0.5' }}></sc-block-ui>}
       </div>
     );
   }

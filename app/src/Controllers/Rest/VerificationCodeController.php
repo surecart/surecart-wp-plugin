@@ -2,7 +2,6 @@
 
 namespace SureCart\Controllers\Rest;
 
-use SureCart\Models\User;
 use SureCart\Models\VerificationCode;
 
 /**
@@ -15,6 +14,28 @@ class VerificationCodeController extends RestController {
 	 * @var string
 	 */
 	protected $class = VerificationCode::class;
+
+	/**
+	 * Create model.
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function create( \WP_REST_Request $request ) {
+		$model = $this->middleware( new $this->class(), $request );
+		if ( is_wp_error( $model ) ) {
+			return $model;
+		}
+
+		$user = $this->getUser( $request->get_param( 'login' ) );
+
+		return $model->where( $request->get_query_params() )->create(
+			[
+				'email' => $user->user_email,
+			]
+		);
+	}
 
 	/**
 	 * Verify a verification code
@@ -32,8 +53,20 @@ class VerificationCodeController extends RestController {
 			return $model;
 		}
 
+		$user = $this->getUser( $request->get_param( 'login' ) );
+		if ( ! $user ) {
+			return new \WP_Error(
+				'invalid_email',
+				__( 'There is no account with that username or email address.', 'surecart' )
+			);
+		}
+
 		// verify the code.
-		$verify = $model->where( $request->get_query_params() )->verify( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
+		$verify = $model->where( $request->get_query_params() )->verify(
+			[
+				'email' => $user->user_email,
+			]
+		);
 
 		// check for errors.
 		if ( is_wp_error( $verify ) ) {
@@ -46,7 +79,7 @@ class VerificationCodeController extends RestController {
 		}
 
 		// get the user based on the login value.
-		$user = User::get_user_by( 'login', $request->get_param( 'login' ) );
+		$user = $this->getUser( $request->get_param( 'login' ) );
 
 		// bail if no user.
 		if ( ! $user ) {
@@ -58,5 +91,16 @@ class VerificationCodeController extends RestController {
 
 		// return the model.
 		return $verify;
+	}
+
+	/**
+	 * Get the user from the login.
+	 *
+	 * @param string $login An email or login.
+	 *
+	 * @return \SureCart\Models\User|false
+	 */
+	public function getUser( $login ) {
+		return get_user_by( strpos( $login, '@' ) ? 'email' : 'login', $login );
 	}
 }
