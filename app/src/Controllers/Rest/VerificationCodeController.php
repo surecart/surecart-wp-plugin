@@ -2,6 +2,7 @@
 
 namespace SureCart\Controllers\Rest;
 
+use SureCart\Models\User;
 use SureCart\Models\VerificationCode;
 
 /**
@@ -29,6 +30,11 @@ class VerificationCodeController extends RestController {
 		}
 
 		$user = $this->getUser( $request->get_param( 'login' ) );
+
+		// bail if no user.
+		if ( ! $user ) {
+			return new \WP_Error( 'user_not_found', __( 'The user could not be found.', 'surecart' ) );
+		}
 
 		return $model->where( $request->get_query_params() )->create(
 			[
@@ -65,6 +71,7 @@ class VerificationCodeController extends RestController {
 		$verify = $model->where( $request->get_query_params() )->verify(
 			[
 				'email' => $user->user_email,
+				'code'  => $request->get_param( 'code' ),
 			]
 		);
 
@@ -105,6 +112,6 @@ class VerificationCodeController extends RestController {
 	 * @return \SureCart\Models\User|false
 	 */
 	public function getUser( $login ) {
-		return get_user_by( strpos( $login, '@' ) ? 'email' : 'login', $login );
+		return User::getUserby( strpos( $login, '@' ) ? 'email' : 'login', $login );
 	}
 }
