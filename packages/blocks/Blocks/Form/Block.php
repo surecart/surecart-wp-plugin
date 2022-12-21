@@ -51,6 +51,14 @@ class Block extends BaseBlock {
 		$post = get_post( $sc_form_id );
 		$user = wp_get_current_user();
 
+		$processors = [];
+		$processor = Processor::get();
+		foreach ($processor as $item) {
+			if ($item->approved && $item->enabled) {
+				$processors[] = $item;
+			}
+		}
+
 		return \SureCart::blocks()->render(
 			'blocks/form',
 			[
@@ -69,7 +77,7 @@ class Block extends BaseBlock {
 				'style'                         => $this->getStyle( $attributes ),
 				'content'                       => $content,
 				'abandoned_checkout_return_url' => esc_url( trailingslashit( get_site_url() ) . 'surecart/redirect' ),
-				'processors'                    => (array) Processor::get() ?? [],
+				'processors'                    => $processors,
 				'manual_payment_methods'        => (array) ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? [],
 				'stripe_payment_element'        => (bool) get_option( 'sc_stripe_payment_element', false ),
 				'mode'                          => apply_filters( 'surecart/payments/mode', $attributes['mode'] ?? 'live' ),
