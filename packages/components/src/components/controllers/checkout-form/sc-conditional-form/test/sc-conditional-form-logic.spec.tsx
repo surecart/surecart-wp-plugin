@@ -100,7 +100,7 @@ describe('Conditional form logic', () => {
         }
       ];
 
-      let result = logic.compare_string_values( cart_products, rule_group.value, 'any' );
+      let result = logic.compare_object_values( cart_products, rule_group.value, 'any' );
 
       expect(result).toBe(true);
     });
@@ -118,7 +118,7 @@ describe('Conditional form logic', () => {
         }
       ];
 
-      let result = logic.compare_string_values( cart_products, rule_group.value, 'all' );
+      let result = logic.compare_object_values( cart_products, rule_group.value, 'all' );
 
       expect(result).toBe(true);
     });
@@ -132,7 +132,7 @@ describe('Conditional form logic', () => {
         }
       ];
 
-      let result = logic.compare_string_values( cart_products, rule_group.value, 'none' );
+      let result = logic.compare_object_values( cart_products, rule_group.value, 'none' );
 
       expect(result).toBe(true);
     });
@@ -166,7 +166,7 @@ describe('Conditional form logic', () => {
         }
       ];
 
-      let result = logic.compare_string_values( cart_coupons, rule_group.value, 'any' );
+      let result = logic.compare_object_values( cart_coupons, rule_group.value, 'any' );
 
       expect(result).toBe(true);
     });
@@ -184,7 +184,7 @@ describe('Conditional form logic', () => {
         }
       ];
 
-      let result = logic.compare_string_values( cart_coupons, rule_group.value, 'all' );
+      let result = logic.compare_object_values( cart_coupons, rule_group.value, 'all' );
 
       expect(result).toBe(true);
     });
@@ -198,7 +198,7 @@ describe('Conditional form logic', () => {
         }
       ];
 
-      let result = logic.compare_string_values( cart_coupons, rule_group.value, 'none' );
+      let result = logic.compare_object_values( cart_coupons, rule_group.value, 'none' );
 
       expect(result).toBe(true);
     });
@@ -212,7 +212,7 @@ describe('Conditional form logic', () => {
         }
       ];
 
-      let result = logic.compare_string_values( cart_coupons, rule_group.value, 'exist' );
+      let result = logic.compare_object_values( cart_coupons, rule_group.value, 'exist' );
 
       expect(result).toBe(true);
     });
@@ -221,7 +221,7 @@ describe('Conditional form logic', () => {
 
       let cart_coupons = [];
 
-      let result = logic.compare_string_values( cart_coupons, rule_group.value, 'not_exist' );
+      let result = logic.compare_object_values( cart_coupons, rule_group.value, 'not_exist' );
 
       expect(result).toBe(true);
     });
@@ -251,7 +251,7 @@ describe('Conditional form logic', () => {
         }
       ];
 
-      let result = logic.compare_string_values( cart_data, rule_group.value, 'any' );
+      let result = logic.compare_object_values( cart_data, rule_group.value, 'any' );
 
       expect(result).toBe(true);
     });
@@ -265,7 +265,7 @@ describe('Conditional form logic', () => {
         }
       ];
 
-      let result = logic.compare_string_values( cart_data, rule_group.value, 'none' );
+      let result = logic.compare_object_values( cart_data, rule_group.value, 'none' );
 
       expect(result).toBe(true);
     });
@@ -294,7 +294,7 @@ describe('Conditional form logic', () => {
         }
       ];
 
-      let result = logic.compare_string_values( cart_data, rule_group.value, 'any' );
+      let result = logic.compare_object_values( cart_data, rule_group.value, 'any' );
 
       expect(result).toBe(true);
     });
@@ -308,7 +308,7 @@ describe('Conditional form logic', () => {
         }
       ];
 
-      let result = logic.compare_string_values( cart_data, rule_group.value, 'none' );
+      let result = logic.compare_object_values( cart_data, rule_group.value, 'none' );
 
       expect(result).toBe(true);
     });
