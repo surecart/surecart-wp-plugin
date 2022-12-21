@@ -52,7 +52,7 @@ export class ScWordPressUserEdit {
 
         <sc-card>
           <sc-form onScFormSubmit={e => this.handleSubmit(e)}>
-            <sc-input label={__('Billing Email', 'surecart')} name="email" value={this.user?.email} required />
+            <sc-input label={__('Account Email', 'surecart')} name="email" value={this.user?.email} required />
             <sc-columns style={{ '--sc-column-spacing': 'var(--sc-spacing-medium)' }}>
               <sc-column>
                 <sc-input label={__('First Name', 'surecart')} name="first_name" value={this.user?.first_name} />

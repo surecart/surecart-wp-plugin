@@ -9,6 +9,7 @@
 | ---------- | ---------- | --------------------------------------------------------------------------------------------------------- | --------- | ----------- |
 | `checked`  | `checked`  | Draws the switch in a checked state.                                                                      | `boolean` | `false`     |
 | `disabled` | `disabled` | Disables the switch.                                                                                      | `boolean` | `false`     |
+| `edit`     | `edit`     | This will be true as a workaround in the block editor to focus on the content.                            | `boolean` | `false`     |
 | `invalid`  | `invalid`  | This will be true when the control is in an invalid state. Validity is determined by the `required` prop. | `boolean` | `false`     |
 | `name`     | `name`     | The switch's name attribute.                                                                              | `string`  | `undefined` |
 | `required` | `required` | Makes the switch a required field.                                                                        | `boolean` | `false`     |

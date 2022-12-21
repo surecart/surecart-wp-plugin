@@ -776,6 +776,140 @@ export namespace Components {
          */
         "value": string;
     }
+    interface ScCustomerFirstname {
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus": boolean;
+        /**
+          * Force a customer.
+         */
+        "customer": Customer;
+        /**
+          * Disables the input.
+         */
+        "disabled": boolean;
+        /**
+          * Inputs focus
+         */
+        "hasFocus": boolean;
+        /**
+          * The input's help text.
+         */
+        "help": string;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid": boolean;
+        /**
+          * The input's label.
+         */
+        "label": string;
+        /**
+          * Is the user logged in.
+         */
+        "loggedIn": boolean;
+        /**
+          * (passed from the sc-checkout component automatically)
+         */
+        "order": Checkout;
+        /**
+          * Draws a pill-style input with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder": string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly": boolean;
+        "reportValidity": () => Promise<boolean>;
+        /**
+          * Makes the input a required field.
+         */
+        "required": boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel": boolean;
+        /**
+          * The input's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The input's value attribute.
+         */
+        "value": string;
+    }
+    interface ScCustomerLastname {
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus": boolean;
+        /**
+          * Force a customer.
+         */
+        "customer": Customer;
+        /**
+          * Disables the input.
+         */
+        "disabled": boolean;
+        /**
+          * Inputs focus
+         */
+        "hasFocus": boolean;
+        /**
+          * The input's help text.
+         */
+        "help": string;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid": boolean;
+        /**
+          * The input's label.
+         */
+        "label": string;
+        /**
+          * Is the user logged in.
+         */
+        "loggedIn": boolean;
+        /**
+          * (passed from the sc-checkout component automatically)
+         */
+        "order": Checkout;
+        /**
+          * Draws a pill-style input with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder": string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly": boolean;
+        "reportValidity": () => Promise<boolean>;
+        /**
+          * Makes the input a required field.
+         */
+        "required": boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel": boolean;
+        /**
+          * The input's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The input's value attribute.
+         */
+        "value": string;
+    }
     interface ScCustomerName {
         /**
           * The input's autofocus attribute.
@@ -1004,6 +1138,7 @@ export namespace Components {
         "flexDirection": string;
         "flexWrap": string;
         "justifyContent": string;
+        "stack": string;
     }
     interface ScForm {
         /**
@@ -2965,6 +3100,12 @@ export namespace Components {
         "subscriptionId": string;
         "successUrl": string;
     }
+    interface ScUpgradeRequired {
+        /**
+          * The tag's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+    }
     interface ScWordpressPasswordEdit {
         "heading": string;
         "successUrl": string;
@@ -3031,6 +3172,14 @@ export interface ScCustomOrderPriceInputCustomEvent<T> extends CustomEvent<T> {
 export interface ScCustomerEmailCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScCustomerEmailElement;
+}
+export interface ScCustomerFirstnameCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCustomerFirstnameElement;
+}
+export interface ScCustomerLastnameCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCustomerLastnameElement;
 }
 export interface ScCustomerNameCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -3406,6 +3555,18 @@ declare global {
     var HTMLScCustomerEmailElement: {
         prototype: HTMLScCustomerEmailElement;
         new (): HTMLScCustomerEmailElement;
+    };
+    interface HTMLScCustomerFirstnameElement extends Components.ScCustomerFirstname, HTMLStencilElement {
+    }
+    var HTMLScCustomerFirstnameElement: {
+        prototype: HTMLScCustomerFirstnameElement;
+        new (): HTMLScCustomerFirstnameElement;
+    };
+    interface HTMLScCustomerLastnameElement extends Components.ScCustomerLastname, HTMLStencilElement {
+    }
+    var HTMLScCustomerLastnameElement: {
+        prototype: HTMLScCustomerLastnameElement;
+        new (): HTMLScCustomerLastnameElement;
     };
     interface HTMLScCustomerNameElement extends Components.ScCustomerName, HTMLStencilElement {
     }
@@ -4115,6 +4276,12 @@ declare global {
         prototype: HTMLScUpcomingInvoiceElement;
         new (): HTMLScUpcomingInvoiceElement;
     };
+    interface HTMLScUpgradeRequiredElement extends Components.ScUpgradeRequired, HTMLStencilElement {
+    }
+    var HTMLScUpgradeRequiredElement: {
+        prototype: HTMLScUpgradeRequiredElement;
+        new (): HTMLScUpgradeRequiredElement;
+    };
     interface HTMLScWordpressPasswordEditElement extends Components.ScWordpressPasswordEdit, HTMLStencilElement {
     }
     var HTMLScWordpressPasswordEditElement: {
@@ -4167,6 +4334,8 @@ declare global {
         "sc-customer-details": HTMLScCustomerDetailsElement;
         "sc-customer-edit": HTMLScCustomerEditElement;
         "sc-customer-email": HTMLScCustomerEmailElement;
+        "sc-customer-firstname": HTMLScCustomerFirstnameElement;
+        "sc-customer-lastname": HTMLScCustomerLastnameElement;
         "sc-customer-name": HTMLScCustomerNameElement;
         "sc-dashboard-customer-details": HTMLScDashboardCustomerDetailsElement;
         "sc-dashboard-downloads-list": HTMLScDashboardDownloadsListElement;
@@ -4285,6 +4454,7 @@ declare global {
         "sc-tooltip": HTMLScTooltipElement;
         "sc-total": HTMLScTotalElement;
         "sc-upcoming-invoice": HTMLScUpcomingInvoiceElement;
+        "sc-upgrade-required": HTMLScUpgradeRequiredElement;
         "sc-wordpress-password-edit": HTMLScWordpressPasswordEditElement;
         "sc-wordpress-user": HTMLScWordpressUserElement;
         "sc-wordpress-user-edit": HTMLScWordpressUserEditElement;
@@ -5133,6 +5303,182 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface ScCustomerFirstname {
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus"?: boolean;
+        /**
+          * Force a customer.
+         */
+        "customer"?: Customer;
+        /**
+          * Disables the input.
+         */
+        "disabled"?: boolean;
+        /**
+          * Inputs focus
+         */
+        "hasFocus"?: boolean;
+        /**
+          * The input's help text.
+         */
+        "help"?: string;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid"?: boolean;
+        /**
+          * The input's label.
+         */
+        "label"?: string;
+        /**
+          * Is the user logged in.
+         */
+        "loggedIn"?: boolean;
+        /**
+          * Emitted when the control loses focus.
+         */
+        "onScBlur"?: (event: ScCustomerFirstnameCustomEvent<void>) => void;
+        /**
+          * Emitted when the control's value changes.
+         */
+        "onScChange"?: (event: ScCustomerFirstnameCustomEvent<void>) => void;
+        /**
+          * Emitted when the clear button is activated.
+         */
+        "onScClear"?: (event: ScCustomerFirstnameCustomEvent<void>) => void;
+        /**
+          * Emitted when the control gains focus.
+         */
+        "onScFocus"?: (event: ScCustomerFirstnameCustomEvent<void>) => void;
+        /**
+          * Emitted when the control receives input.
+         */
+        "onScInput"?: (event: ScCustomerFirstnameCustomEvent<void>) => void;
+        "onScUpdateCustomer"?: (event: ScCustomerFirstnameCustomEvent<{ email: string }>) => void;
+        "onScUpdateOrderState"?: (event: ScCustomerFirstnameCustomEvent<Partial<Checkout>>) => void;
+        /**
+          * (passed from the sc-checkout component automatically)
+         */
+        "order"?: Checkout;
+        /**
+          * Draws a pill-style input with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder"?: string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly"?: boolean;
+        /**
+          * Makes the input a required field.
+         */
+        "required"?: boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel"?: boolean;
+        /**
+          * The input's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The input's value attribute.
+         */
+        "value"?: string;
+    }
+    interface ScCustomerLastname {
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus"?: boolean;
+        /**
+          * Force a customer.
+         */
+        "customer"?: Customer;
+        /**
+          * Disables the input.
+         */
+        "disabled"?: boolean;
+        /**
+          * Inputs focus
+         */
+        "hasFocus"?: boolean;
+        /**
+          * The input's help text.
+         */
+        "help"?: string;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid"?: boolean;
+        /**
+          * The input's label.
+         */
+        "label"?: string;
+        /**
+          * Is the user logged in.
+         */
+        "loggedIn"?: boolean;
+        /**
+          * Emitted when the control loses focus.
+         */
+        "onScBlur"?: (event: ScCustomerLastnameCustomEvent<void>) => void;
+        /**
+          * Emitted when the control's value changes.
+         */
+        "onScChange"?: (event: ScCustomerLastnameCustomEvent<void>) => void;
+        /**
+          * Emitted when the clear button is activated.
+         */
+        "onScClear"?: (event: ScCustomerLastnameCustomEvent<void>) => void;
+        /**
+          * Emitted when the control gains focus.
+         */
+        "onScFocus"?: (event: ScCustomerLastnameCustomEvent<void>) => void;
+        /**
+          * Emitted when the control receives input.
+         */
+        "onScInput"?: (event: ScCustomerLastnameCustomEvent<void>) => void;
+        "onScUpdateCustomer"?: (event: ScCustomerLastnameCustomEvent<{ email: string }>) => void;
+        "onScUpdateOrderState"?: (event: ScCustomerLastnameCustomEvent<Partial<Checkout>>) => void;
+        /**
+          * (passed from the sc-checkout component automatically)
+         */
+        "order"?: Checkout;
+        /**
+          * Draws a pill-style input with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder"?: string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly"?: boolean;
+        /**
+          * Makes the input a required field.
+         */
+        "required"?: boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel"?: boolean;
+        /**
+          * The input's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The input's value attribute.
+         */
+        "value"?: string;
+    }
     interface ScCustomerName {
         /**
           * The input's autofocus attribute.
@@ -5420,6 +5766,7 @@ declare namespace LocalJSX {
         "flexDirection"?: string;
         "flexWrap"?: string;
         "justifyContent"?: string;
+        "stack"?: string;
     }
     interface ScForm {
         /**
@@ -7594,6 +7941,12 @@ declare namespace LocalJSX {
         "subscriptionId"?: string;
         "successUrl"?: string;
     }
+    interface ScUpgradeRequired {
+        /**
+          * The tag's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+    }
     interface ScWordpressPasswordEdit {
         "heading"?: string;
         "successUrl"?: string;
@@ -7642,6 +7995,8 @@ declare namespace LocalJSX {
         "sc-customer-details": ScCustomerDetails;
         "sc-customer-edit": ScCustomerEdit;
         "sc-customer-email": ScCustomerEmail;
+        "sc-customer-firstname": ScCustomerFirstname;
+        "sc-customer-lastname": ScCustomerLastname;
         "sc-customer-name": ScCustomerName;
         "sc-dashboard-customer-details": ScDashboardCustomerDetails;
         "sc-dashboard-downloads-list": ScDashboardDownloadsList;
@@ -7760,6 +8115,7 @@ declare namespace LocalJSX {
         "sc-tooltip": ScTooltip;
         "sc-total": ScTotal;
         "sc-upcoming-invoice": ScUpcomingInvoice;
+        "sc-upgrade-required": ScUpgradeRequired;
         "sc-wordpress-password-edit": ScWordpressPasswordEdit;
         "sc-wordpress-user": ScWordpressUser;
         "sc-wordpress-user-edit": ScWordpressUserEdit;
@@ -7802,6 +8158,8 @@ declare module "@stencil/core" {
             "sc-customer-details": LocalJSX.ScCustomerDetails & JSXBase.HTMLAttributes<HTMLScCustomerDetailsElement>;
             "sc-customer-edit": LocalJSX.ScCustomerEdit & JSXBase.HTMLAttributes<HTMLScCustomerEditElement>;
             "sc-customer-email": LocalJSX.ScCustomerEmail & JSXBase.HTMLAttributes<HTMLScCustomerEmailElement>;
+            "sc-customer-firstname": LocalJSX.ScCustomerFirstname & JSXBase.HTMLAttributes<HTMLScCustomerFirstnameElement>;
+            "sc-customer-lastname": LocalJSX.ScCustomerLastname & JSXBase.HTMLAttributes<HTMLScCustomerLastnameElement>;
             "sc-customer-name": LocalJSX.ScCustomerName & JSXBase.HTMLAttributes<HTMLScCustomerNameElement>;
             "sc-dashboard-customer-details": LocalJSX.ScDashboardCustomerDetails & JSXBase.HTMLAttributes<HTMLScDashboardCustomerDetailsElement>;
             "sc-dashboard-downloads-list": LocalJSX.ScDashboardDownloadsList & JSXBase.HTMLAttributes<HTMLScDashboardDownloadsListElement>;
@@ -7920,6 +8278,7 @@ declare module "@stencil/core" {
             "sc-tooltip": LocalJSX.ScTooltip & JSXBase.HTMLAttributes<HTMLScTooltipElement>;
             "sc-total": LocalJSX.ScTotal & JSXBase.HTMLAttributes<HTMLScTotalElement>;
             "sc-upcoming-invoice": LocalJSX.ScUpcomingInvoice & JSXBase.HTMLAttributes<HTMLScUpcomingInvoiceElement>;
+            "sc-upgrade-required": LocalJSX.ScUpgradeRequired & JSXBase.HTMLAttributes<HTMLScUpgradeRequiredElement>;
             "sc-wordpress-password-edit": LocalJSX.ScWordpressPasswordEdit & JSXBase.HTMLAttributes<HTMLScWordpressPasswordEditElement>;
             "sc-wordpress-user": LocalJSX.ScWordpressUser & JSXBase.HTMLAttributes<HTMLScWordpressUserElement>;
             "sc-wordpress-user-edit": LocalJSX.ScWordpressUserEdit & JSXBase.HTMLAttributes<HTMLScWordpressUserEditElement>;
