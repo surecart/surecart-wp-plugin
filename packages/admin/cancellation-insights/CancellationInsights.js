@@ -19,6 +19,7 @@ import Tab from '../ui/Tab';
 import { averageProperties, totalProperties } from './util';
 import { getFormattedPrice, maybeConvertAmount } from '../util';
 import { getFilterData } from '../util/filter';
+import { CancellationReasonStats } from './CancellationReasonStats';
 
 export default () => {
 	const [data, setData] = useState([]);
@@ -27,20 +28,30 @@ export default () => {
 	const [error, setError] = useState();
 	const [filter, setFilter] = useState('30days');
 
-	const { cancellation_reasons } = useSelect((select) => {
-		const queryArgs = ['surecart', 'cancellation_reasons'];
+	const { cancellation_reasons, cancellation_acts } = useSelect((select) => {
+		const reasonsQueryArgs = ['surecart', 'cancellation_reason'];
+		const actsQueryArgs = ['surecart', 'cancellation_act'];
+
 		return {
 			cancellation_reasons: select(coreStore).getEntityRecords(
-				...queryArgs
+				...reasonsQueryArgs
 			),
-			loading: select(coreStore).isResolving(
+			cancellation_acts: select(coreStore).getEntityRecords(
+				...actsQueryArgs
+			),
+			is_reasons_loading: select(coreStore).isResolving(
 				'getEntityRecords',
-				queryArgs
+				reasonsQueryArgs
+			),
+			is_acts_loading: select(coreStore).isResolving(
+				'getEntityRecords',
+				actsQueryArgs
 			),
 		};
 	});
 
 	console.log('cancellation_reasons', cancellation_reasons);
+	console.log('cancellation_acts', cancellation_acts);
 
 	const getAbandonedData = async () => {
 		const { startDate, endDate, prevEndDate, prevStartDate, interval } =
@@ -85,7 +96,7 @@ export default () => {
 
 	const fetchData = async ({ startDate, endDate, interval }) => {
 		const { data } = await apiFetch({
-			path: addQueryArgs('surecart/v1/stats/abandoned_checkouts', {
+			path: addQueryArgs('surecart/v1/stats/cancellation_reasons', {
 				start_at: startDate.toISOString(),
 				end_at: endDate.toISOString(),
 				interval: interval,
@@ -212,88 +223,117 @@ export default () => {
 					grid-template-columns: 1fr;
 
 					// 2 col, wide mobile.
-					@media screen and (min-width: 720px) {
-						grid-template-columns: 1fr 1fr;
+					@media screen and (min-width: 1280px) {
+						grid-template-columns: 5fr 2fr;
 					}
 
-					// 3 col, desktop.
-					@media screen and (min-width: 1280px) {
-						grid-template-columns: 1fr 1fr 1fr;
-					}
 					gap: 1.5em;
 				`}
 			>
-				<Stat
-					title={__('Cancellation Attempts', 'surecart')}
-					description={__('Total Cancellation Attempts', 'surecart')}
-					loading={loading}
-					compare={badge({
-						current: totalProperties('count', data),
-						previous: totalProperties('count', previous),
-					})}
-				>
-					{totalProperties('count', data)}
-				</Stat>
+				<div
+					css={css`
+						display: grid;
+						grid-template-columns: 1fr;
 
-				<Stat
-					title={
-						hasAccess
-							? __('Retained Cancellations', 'surecart')
-							: __('Total Retained Cancellations', 'surecart')
-					}
-					description={__('Total recovered checkouts', 'surecart')}
-					loading={loading}
-					compare={badge({
-						current: totalProperties('assisted_count', data),
-						previous: totalProperties('assisted_count', previous),
-					})}
-				>
-					{hasAccess
-						? totalProperties('assisted_count', data)
-						: Math.round(
-								(totalProperties('count', data) || 0) * 0.18
-						  )}
-				</Stat>
+						// 2 col, wide mobile.
+						@media screen and (min-width: 720px) {
+							grid-template-columns: 1fr 1fr;
+						}
 
-				<Stat
-					title={
-						hasAccess
-							? __('Cancellation Rate', 'surecart')
-							: __('Average Cancellation Rate', 'surecart')
-					}
-					description={__(
-						'Percentage of checkouts recovered',
-						'surecart'
-					)}
-					loading={loading}
-					compare={badge({
-						current: averageProperties('assisted_rate', data),
-						previous: averageProperties('assisted_rate', previous),
-					})}
+						// 3 col, desktop.
+						@media screen and (min-width: 1280px) {
+							grid-template-columns: repeat(2, 1fr);
+						}
+						gap: 1.5em;
+					`}
 				>
-					{hasAccess
-						? `${Math.round(
-								averageProperties('assisted_rate', data) * 100
-						  )}%`
-						: '18%'}
-				</Stat>
+					<Stat
+						title={__('Cancellation Attempts', 'surecart')}
+						description={__(
+							'Total Cancellation Attempts',
+							'surecart'
+						)}
+						loading={loading}
+						compare={badge({
+							current: totalProperties('count', data),
+							previous: totalProperties('count', previous),
+						})}
+					>
+						{totalProperties('count', data)}
+					</Stat>
 
-				<Stat
-					title={__('Total Lost', 'surecart')}
-					description={__('Total Lost', 'surecart')}
-					loading={loading}
-					compare={badge({
-						current: totalProperties('amount', data),
-						previous: totalProperties('amount', previous),
-						currency: true,
-					})}
-				>
-					<ScFormatNumber
-						type="currency"
-						currency={scData?.currency_code || 'usd'}
-						value={totalProperties('amount', data)}
-					/>
-				</Stat>
+					<Stat
+						title={
+							hasAccess
+								? __('Retained Cancellations', 'surecart')
+								: __('Total Retained Cancellations', 'surecart')
+						}
+						description={__(
+							'Total recovered checkouts',
+							'surecart'
+						)}
+						loading={loading}
+						compare={badge({
+							current: totalProperties('assisted_count', data),
+							previous: totalProperties(
+								'assisted_count',
+								previous
+							),
+						})}
+					>
+						{hasAccess
+							? totalProperties('assisted_count', data)
+							: Math.round(
+									(totalProperties('count', data) || 0) * 0.18
+							  )}
+					</Stat>
+
+					<Stat
+						title={
+							hasAccess
+								? __('Cancellation Rate', 'surecart')
+								: __('Average Cancellation Rate', 'surecart')
+						}
+						description={__(
+							'Percentage of checkouts recovered',
+							'surecart'
+						)}
+						loading={loading}
+						compare={badge({
+							current: averageProperties('assisted_rate', data),
+							previous: averageProperties(
+								'assisted_rate',
+								previous
+							),
+						})}
+					>
+						{hasAccess
+							? `${Math.round(
+									averageProperties('assisted_rate', data) *
+										100
+							  )}%`
+							: '18%'}
+					</Stat>
+
+					<Stat
+						title={__('Total Lost', 'surecart')}
+						description={__('Total Lost', 'surecart')}
+						loading={loading}
+						compare={badge({
+							current: totalProperties('amount', data),
+							previous: totalProperties('amount', previous),
+							currency: true,
+						})}
+					>
+						<ScFormatNumber
+							type="currency"
+							currency={scData?.currency_code || 'usd'}
+							value={totalProperties('amount', data)}
+						/>
+					</Stat>
+				</div>
+
+				<CancellationReasonStats />
 			</div>
 		</div>
 	);
