@@ -186,9 +186,21 @@ class Block extends BaseBlock {
 	 * @return void
 	 */
 	protected function renderManualPaymentMethods() {
-		$methods = (array) ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? [];
-		
-		if ( isset( $methods['errors'] ) ) return;
+		$methods = ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? [];
+
+		if ( is_wp_error( $methods ) ) {
+			?>
+				<sc-alert open type="danger">
+					<?php foreach ( $methods->get_error_messages() as $message ) : ?>
+						<div>
+							<?php echo esc_html( $message ); ?>
+						</div>
+					<?php endforeach; ?>
+				</sc-alert>
+			<?php
+			return;
+		}
+
 		?>
 
 		<?php foreach ( $methods as $method ) : ?>
