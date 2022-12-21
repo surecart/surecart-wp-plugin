@@ -7,18 +7,37 @@ namespace SureCart\Controllers\Rest;
  */
 class CheckEmailController extends RestController {
 	/**
-	 * Check email user
+	 * Check login.
 	 *
-	 * @return Model
+	 * @param \WP_REST_Request $request The REST request.
+	 *
+	 * @return true|\WP_Error
 	 */
 	public function checkEmail( \WP_REST_Request $request ) {
-		$user = email_exists( $request->get_param( 'login' ) ) ? true : false;
+		// handle email.
+		if ( strpos( $request->get_param( 'login' ), '@' ) ) {
+			$user = get_user_by( 'email', $request->get_param( 'login' ) );
+			if ( ! $user ) {
+				return new \WP_Error(
+					'invalid_email',
+					__( 'There is no account with that username or email address.', 'surecart' )
+				);
+			}
+		}
 
-		// flush all caches.
-		wp_cache_flush();
+		// check for login.
+		$user = get_user_by( 'login', $request->get_param( 'login' ) );
+		if ( ! $user ) {
+			return new \WP_Error(
+				'invalid_username',
+				sprintf(
+					/* translators: %s: User name. */
+					__( 'The username <strong>%s</strong> is not registered on this site. If you are unsure of your username, try your email address instead.', 'surecart' ),
+					$request->get_param( 'login' )
+				)
+			);
+		}
 
-        return [
-			'check_email' => $user,
-		];
+		return true;
 	}
 }

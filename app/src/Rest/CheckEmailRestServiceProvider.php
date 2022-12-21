@@ -36,7 +36,7 @@ class CheckEmailRestServiceProvider extends RestServiceProvider implements RestS
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => $this->callback( CheckEmailController::class, 'checkEmail' ),
-					'permission_callback' => [ $this, 'authenticate_permissions_check' ],
+					'permission_callback' => [ $this, 'check_email_permissions_check' ],
 				],
 				'schema' => [ $this, 'get_item_schema' ],
 			]
@@ -62,7 +62,7 @@ class CheckEmailRestServiceProvider extends RestServiceProvider implements RestS
 			'type'       => 'object',
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
-				'login'    => [
+				'login' => [
 					'description' => esc_html__( 'Login', 'surecart' ),
 					'type'        => 'string',
 				],
@@ -73,11 +73,11 @@ class CheckEmailRestServiceProvider extends RestServiceProvider implements RestS
 	}
 
 	/**
-	 * Anyone can login.
+	 * Anyone can check email.
 	 *
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 * @return true
 	 */
-	public function authenticate_permissions_check( $request ) {
+	public function check_email_permissions_check( $request ) {
 		return true;
 	}
 }

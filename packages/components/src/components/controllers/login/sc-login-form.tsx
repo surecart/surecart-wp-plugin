@@ -1,6 +1,7 @@
 import { Component, h, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '../../../functions/fetch';
+import { VerificationCode } from '../../../types';
 
 @Component({
   tag: 'sc-login-form',
@@ -8,7 +9,6 @@ import apiFetch from '../../../functions/fetch';
   shadow: true,
 })
 export class ScLogin {
-  private emailInput: HTMLScInputElement;
   private passwordInput: HTMLScInputElement;
 
   @State() step: string = '';
@@ -28,12 +28,12 @@ export class ScLogin {
     }
   }
 
-  handleEmailChange() {
-    this.email = this.emailInput.value;
+  handleEmailChange(e) {
+    this.email = (e.target as HTMLScInputElement).value;
   }
 
   /** Submit for verification codes */
-  async submitVerificationCode() {
+  async createLoginCode() {
     try {
       this.loading = true;
       await apiFetch({
@@ -45,42 +45,32 @@ export class ScLogin {
       });
       this.step = 'complete';
     } catch (e) {
-      if (e?.message) {
-        this.error = e.message;
-      } else {
-        this.error = __('Something went wrong', 'surecart');
-      }
       console.error(this.error);
+      this.error = e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.loading = false;
     }
   }
 
   /** Get all subscriptions */
-  async submitVerifyCode() {
+  async submitCode() {
     try {
       this.loading = true;
-      const { redirect_url } = await apiFetch({
+      const { verified } = (await apiFetch({
         method: 'POST',
-        path: 'surecart/v1/login_with_code',
+        path: 'surecart/v1/verification_codes/verify',
         data: {
           login: this.email,
           code: this.verifyCode,
         },
-      });
-      if (redirect_url) {
-        window.location.reload();
-      } else {
-        this.error = __('Verification code invalid!', 'surecart');
+      })) as VerificationCode;
+      if (!verified) {
+        throw { message: __('Verification code is not valid. Please try again.', 'surecart') };
       }
-      this.loading = false;
+      window.location.reload();
     } catch (e) {
-      if (e?.message) {
-        this.error = e.message;
-      } else {
-        this.error = __('Something went wrong', 'surecart');
-      }
       console.error(this.error);
+      this.error = e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.loading = false;
     }
@@ -89,7 +79,7 @@ export class ScLogin {
   async login() {
     try {
       this.loading = true;
-      const { redirect_url } = await apiFetch({
+      await apiFetch({
         method: 'POST',
         path: 'surecart/v1/login',
         data: {
@@ -97,48 +87,31 @@ export class ScLogin {
           password: this.password,
         },
       });
-
-      if (redirect_url) {
-        window.location.replace(redirect_url);
-      } else {
-        window.location.reload();
-      }
+      window.location.reload();
     } catch (e) {
       console.error(this.error);
+      this.error = e?.message || __('Something went wrong', 'surecart');
+    } finally {
       this.loading = false;
-      if (e?.message) {
-        this.error = e.message;
-      } else {
-        this.error = __('Something went wrong', 'surecart');
-      }
     }
   }
 
   async checkEmail() {
     try {
       this.loading = true;
-      const { check_email } = await apiFetch({
+      await apiFetch({
         method: 'POST',
         path: 'surecart/v1/check_email',
         data: {
           login: this.email,
         },
       });
-      this.loading = false;
-      if (check_email) {
-        this.step = 'password';
-        this.error = '';
-      } else {
-        this.error = __('Email is not exist.', 'surecart');
-      }
+      this.step = 'password';
     } catch (e) {
       console.error(this.error);
+      this.error = e?.message || __('Something went wrong', 'surecart');
+    } finally {
       this.loading = false;
-      if (e?.message) {
-        this.error = e.message;
-      } else {
-        this.error = __('Something went wrong', 'surecart');
-      }
     }
   }
 
@@ -151,14 +124,14 @@ export class ScLogin {
             <span slot="title">{__('Sent!', 'surecart')}</span>
             <p>{__('You should receive an email shortly with a verification code.', 'surecart')}</p>
           </sc-alert>
-          <sc-form onScFormSubmit={() => this.submitVerifyCode()}>
+          <sc-form onScFormSubmit={() => this.submitCode()}>
             <sc-input
               label={__('Enter your code', 'surecart')}
               type="text"
               ref={el => (this.passwordInput = el as HTMLScInputElement)}
               autofocus
               required
-              onScChange={e => (this.verifyCode = (e.target as HTMLScInputElement).value)}
+              onScInput={e => (this.verifyCode = (e.target as HTMLScInputElement).value)}
             ></sc-input>
             <sc-button type="primary" outline submit full>
               <sc-icon name="lock" slot="prefix" />
@@ -172,7 +145,7 @@ export class ScLogin {
     if (this.step === 'password' && this.email) {
       return (
         <div>
-          <sc-form onScFormSubmit={() => this.submitVerificationCode()}>
+          <sc-form onScFormSubmit={() => this.createLoginCode()}>
             <sc-button type="primary" submit full>
               <sc-icon name="mail" slot="prefix" />
               {__('Send a login code', 'surecart')}
@@ -199,14 +172,7 @@ export class ScLogin {
 
     return (
       <sc-form onScFormSubmit={() => this.checkEmail()}>
-        <sc-input
-          ref={el => (this.emailInput = el as HTMLScInputElement)}
-          label="Email Address"
-          onScChange={() => this.handleEmailChange()}
-          required
-          autofocus
-          type="email"
-        ></sc-input>
+        <sc-input type="text" label={__('Username or Email Address', 'surecart')} onScInput={e => (this.email = (e.target as HTMLScInputElement).value)} required autofocus />
         <sc-button type="primary" submit full>
           <sc-icon name="arrow-right" slot="suffix" />
           {__('Next', 'surecart')}
@@ -215,26 +181,21 @@ export class ScLogin {
     );
   }
 
-  renderError() {
-    if (this.error) {
-      return (
-        <sc-alert open type="danger">
-          <span slot="title">{__('Error', 'surecart')}</span>
-          <span innerHTML={this.error}></span>
-        </sc-alert>
-      );
-    }
-  }
-
   render() {
     return (
       <div class="login-form">
         <div class="login-form__title" part="title">
           <slot name="title"></slot>
         </div>
-        <sc-card>{this.renderInner()}</sc-card>
+        <sc-card>
+          {!!this.error && (
+            <sc-alert open type="danger">
+              <span innerHTML={this.error}></span>
+            </sc-alert>
+          )}
+          {this.renderInner()}
+        </sc-card>
         {this.loading && <sc-block-ui spinner></sc-block-ui>}
-        {this.renderError()}
       </div>
     );
   }

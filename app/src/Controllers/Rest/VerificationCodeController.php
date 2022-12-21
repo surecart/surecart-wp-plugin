@@ -6,7 +6,7 @@ use SureCart\Models\User;
 use SureCart\Models\VerificationCode;
 
 /**
- * Handle coupon requests through the REST API
+ * Handle verification code requests through the REST API
  */
 class VerificationCodeController extends RestController {
 	/**
@@ -45,8 +45,8 @@ class VerificationCodeController extends RestController {
 			return new \WP_Error( 'invalid_code', __( 'Invalid verification code', 'surecart' ) );
 		}
 
-		// get the user based on the email.
-		$user = User::get_user_by( 'email', $request->get_param( 'login' ) );
+		// get the user based on the login value.
+		$user = User::get_user_by( 'login', $request->get_param( 'login' ) );
 
 		// bail if no user.
 		if ( ! $user ) {
