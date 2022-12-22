@@ -24,12 +24,12 @@ export class ScLogin {
   handleStepChange() {
     if (this.step === 1) {
       setTimeout(() => {
-        this.passwordInput.triggerFocus();
+        this.passwordInput?.triggerFocus?.();
       }, 50);
     }
     if (this.step === 2) {
       setTimeout(() => {
-        this.codeInput.triggerFocus();
+        this.codeInput?.triggerFocus?.();
       }, 50);
     }
   }
