@@ -46,7 +46,7 @@ export default ({ onSelect, ad_hoc, value, open = false }) => {
 	);
 
 	const handleOnScrollEnd = () => {
-		if (!pagination.enabled) return;
+		if (!pagination.enabled || loading) return;
 		setPagination((state) => ({ ...state, page: (state.page += 1) }));
 	};
 
