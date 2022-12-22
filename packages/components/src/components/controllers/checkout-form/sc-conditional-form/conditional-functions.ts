@@ -1,27 +1,23 @@
-
-export const is_any_rule_group_passed = ( conditions, checkout ) => {
+export const is_any_rule_group_passed = ( conditions, props ) => {
 
   let result = false;
 
   conditions.forEach( element => {
-    // debugger;
-    // console.log( 'element' );
-    // console.log( element['rules'] );
-    // console.log( checkout );
 
     if ( result ) {
       return;
     }
-    result = is_rules_passed( element['rules'], checkout );
+    result = is_rules_passed( element['rules'], props );
   });
 
   return result;
 }
 
-export const is_rules_passed = ( rules, checkout ) => {
+export const is_rules_passed = ( rules, props ) => {
   debugger;
   // console.log( 'rules' );
   // console.log( rules );
+  const { checkout, processor } = props;
   console.log( checkout );
   let result = true;
 
@@ -67,6 +63,11 @@ export const is_rules_passed = ( rules, checkout ) => {
         const temp_cart_bcountry = [{ label: 'Temp', value: checkout?.billing_address?.country }];
         const temp_rule_bcountry = [{ label: 'Temp', value: ruleValue }];
         result = compare_object_values( temp_cart_bcountry, temp_rule_bcountry, ruleOperator );
+        break;
+      case 'cart_payment_method':
+        const temp_cart_processor = [{ value: processor }];
+        const temp_rule_processor = [{ value: ruleValue }];
+        result = compare_object_values( temp_cart_processor, temp_rule_processor, ruleOperator );
         break;
 
       default:

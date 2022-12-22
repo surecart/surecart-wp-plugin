@@ -13,7 +13,7 @@ describe('Conditional form logic', () => {
 
     it('Test Rule groups', () => {
 
-      let result = logic.is_any_rule_group_passed( parsedRules, checkout );
+      let result = logic.is_any_rule_group_passed( parsedRules, { checkout: checkout, processor: 'stripe' } );
 
       expect(result).toBe(true);
     });

@@ -615,6 +615,10 @@ export namespace Components {
           * Selector label
          */
         "rule_groups": string;
+        /**
+          * The currently selected processor
+         */
+        "selectedProcessorId": ProcessorName;
     }
     interface ScConsumer {
         "renderer": any;
@@ -4949,6 +4953,10 @@ declare namespace LocalJSX {
           * Selector label
          */
         "rule_groups"?: string;
+        /**
+          * The currently selected processor
+         */
+        "selectedProcessorId"?: ProcessorName;
     }
     interface ScConsumer {
         "onMountConsumer"?: (event: ScConsumerCustomEvent<any>) => void;

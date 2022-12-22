@@ -302,6 +302,7 @@
   "sc-conditional-form": {
     "checkout": true,
     "rule_groups": true,
+    "selected-processor-id": true,
     "style": true,
     "id": true,
     "class": true,
