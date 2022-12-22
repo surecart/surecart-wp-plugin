@@ -3,9 +3,9 @@ import { css, jsx } from '@emotion/core';
 import Box from '../ui/Box';
 
 const colorsArr = [
-	'#3b82f6',
+	'#0ea5e9',
 	'#22d3ee',
-	'#a3e635',
+	'#22c55e',
 	'#fbbf24',
 	'#ef4444',
 	'#d1d5db',
