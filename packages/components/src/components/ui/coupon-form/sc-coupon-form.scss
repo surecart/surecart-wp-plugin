@@ -32,7 +32,6 @@ sc-button {
   transform: translateY(5px);
   transition: opacity var(--sc-transition-fast) ease, transform var(--sc-transition-fast) ease;
   position: relative;
-  display: grid;
   gap: var(--sc-spacing-small);
 }
 
