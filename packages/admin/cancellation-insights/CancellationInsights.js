@@ -333,7 +333,16 @@ export default () => {
 					</Stat>
 				</div>
 
-				<CancellationReasonStats />
+				<CancellationReasonStats
+					reasons={[
+						{ label: 'Too expensive', count: 30 },
+						{ label: 'Switching to another product', count: 18 },
+						{ label: 'Shutting down the company', count: 8 },
+						{ label: 'Technical issues', count: 56 },
+						{ label: 'Others', count: 22 },
+						{ label: 'No reason selected', count: 3 },
+					]}
+				/>
 			</div>
 		</div>
 	);

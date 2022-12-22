@@ -2,8 +2,9 @@
 
 namespace SureCart\Controllers\Admin\CancellationInsights;
 
+use SureCart\Support\Currency;
 use SureCart\Controllers\Admin\Tables\ListTable;
-use SureCart\Models\AbandonedCheckout;
+use SureCart\Models\Subscription;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -30,28 +31,44 @@ class CancellationInsightsListTable extends ListTable {
 		$this->set_pagination_args(
 			[
 				'total_items' => $query->pagination->count,
-				'per_page'    => $this->get_items_per_page( 'abandoned_checkout' ),
+				'per_page'    => $this->get_items_per_page( 'orders' ),
 			]
 		);
 
 		$this->items = $query->data;
 	}
 
+	public function search() {
+		?>
+	<form class="search-form"
+		method="get">
+		<?php $this->search_box( __( 'Search Subscriptions', 'surecart' ), 'order' ); ?>
+		<input type="hidden"
+			name="id"
+			value="1" />
+	</form>
+		<?php
+	}
+
+	/**
+	 * @global int $post_id
+	 * @global string $comment_status
+	 * @global string $comment_type
+	 */
 	protected function get_views() {
 		$stati = [
-			'all'           => __( 'All', 'surecart' ),
-			'scheduled'     => __( 'Scheduled', 'surecart' ),
-			'sent'          => __( 'Sent', 'surecart' ),
-			'not_scheduled' => __( 'Not Scheduled', 'surecart' ),
+			'all'      => __( 'All', 'surecart' ),
+			'active'   => __( 'Active', 'surecart' ),
+			'canceled' => __( 'Canceled', 'surecart' ),
 		];
 
-		$link = \SureCart::getUrl()->index( 'abandoned-checkout' );
+		$link = \SureCart::getUrl()->index( 'subscriptions' );
 
 		foreach ( $stati as $status => $label ) {
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
-				if ( sanitize_text_field( wp_unslash( $_GET['status'] ) ) === $status ) {
+				if ( $status === $_GET['status'] ) {
 					$current_link_attributes = ' class="current" aria-current="page"';
 				}
 			} elseif ( 'all' === $status ) {
@@ -72,19 +89,7 @@ class CancellationInsightsListTable extends ListTable {
 		 * @param string[] $status_links An associative array of fully-formed comment status links. Includes 'All', 'Mine',
 		 *                              'Pending', 'Approved', 'Spam', and 'Trash'.
 		 */
-		return apply_filters( 'abandoned_order_status_links', $status_links );
-	}
-
-	public function search() {
-		?>
-		<form class="search-form"
-			method="get">
-			<?php $this->search_box( __( 'Search Abanonded Orders', 'surecart' ), 'abandoned_order' ); ?>
-			<input type="hidden"
-				name="id"
-				value="1" />
-		</form>
-		<?php
+		return apply_filters( 'surecart/subscription/index/links', $status_links );
 	}
 
 	/**
@@ -94,12 +99,63 @@ class CancellationInsightsListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return [
-			'placed_by'           => __( 'Placed By', 'surecart' ),
-			'date'                => __( 'Date', 'surecart' ),
-			'notification_status' => __( 'Email Status', 'surecart' ),
-			'recovery_status'     => __( 'Recovery Status', 'surecart' ),
-			'total'               => __( 'Total', 'surecart' ),
+			'customer'           => __( 'Customer', 'surecart' ),
+			'status'             => __( 'Status', 'surecart' ),
+			'plan'               => __( 'Plan', 'surecart' ),
+			'remaining_payments' => __( 'Remaining Payments', 'surecart' ),
+			'product'            => __( 'Product', 'surecart' ),
+			'integrations'       => __( 'Integrations', 'surecart' ),
+			'created'            => __( 'Created', 'surecart' ),
+			'mode'               => '',
 		];
+	}
+
+	/**
+	 * Displays the checkbox column.
+	 *
+	 * @param Product $product The product model.
+	 */
+	public function column_cb( $product ) {
+		?>
+		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
+		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
+			<?php
+	}
+
+	public function column_product( $subscription ) {
+		if ( empty( $subscription->price->product ) ) {
+			return __( 'No product', 'surecart' );
+		}
+		return '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $subscription->price->product->id ) ) . '">' . $subscription->price->product->name . '</a>';
+	}
+
+	/**
+	 * Show any integrations.
+	 *
+	 * @param \SureCart\Models\Subscription $subscription The subscription model.
+	 * @return string
+	 */
+	public function column_integrations( $subscription ) {
+		$product = $subscription->purchase->product ?? null;
+		$output  = $product ? $this->productIntegrationsList( $product ) : false;
+		return $output ? $output : '-';
+	}
+	/**
+	 * Define which columns are hidden
+	 *
+	 * @return Array
+	 */
+	public function get_hidden_columns() {
+		return array();
+	}
+
+	/**
+	 * Define the sortable columns
+	 *
+	 * @return Array
+	 */
+	public function get_sortable_columns() {
+		return array( 'title' => array( 'title', false ) );
 	}
 
 	/**
@@ -108,16 +164,15 @@ class CancellationInsightsListTable extends ListTable {
 	 * @return Array
 	 */
 	protected function table_data() {
-		$status = $this->getStatus();
-		$where  = [];
-		if ( $status ) {
-			$where['notification_status'] = [ $status ];
-		}
-		return AbandonedCheckout::where( $where )
-		->with( [ 'recovered_checkout', 'checkout', 'customer' ] )
+		return Subscription::where(
+			[
+				'status' => $this->getStatus(),
+				'query'  => $this->get_search_query(),
+			]
+		)->with( [ 'customer', 'price', 'price.product', 'current_period', 'purchase' ] )
 		->paginate(
 			[
-				'per_page' => $this->get_items_per_page( 'abandoned-checkouts' ),
+				'per_page' => $this->get_items_per_page( 'subscriptions' ),
 				'page'     => $this->get_pagenum(),
 			]
 		);
@@ -129,95 +184,230 @@ class CancellationInsightsListTable extends ListTable {
 	 * @return boolean|null
 	 */
 	public function getStatus() {
-		$status = sanitize_text_field( wp_unslash( $_GET['status'] ?? 'all' ) );
+		$status = sanitize_text_field( wp_unslash( $_GET['status'] ?? null ) );
 		if ( 'all' === $status ) {
-			return null;
+			$status = null;
 		}
 		return $status ? [ esc_html( $status ) ] : [];
 	}
 
 	/**
+	 * The remaining payments for the subscription
+	 *
+	 * @param \SureCart\Models\Subscription $subscription The subscription model.
+	 *
+	 * @return string
+	 */
+	public function column_remaining_payments( $subscription ) {
+		if ( null === $subscription->remaining_period_count ) {
+			if ( 'completed' === $subscription->status ) {
+				return '-';
+			} else {
+				return '&infin;';
+			}
+		}
+		if ( 0 === $subscription->remaining_period_count ) {
+			return __( 'None', 'surecart' );
+		}
+
+		return (int) $subscription->remaining_period_count;
+	}
+
+	/**
+	 * The subscription type
+	 *
+	 * @param \SureCart\Models\Subscription $subscription The subscription model.
+	 *
+	 * @return string
+	 */
+	// public function column_type( $subscription ) {
+	// if ( null === $subscription->remaining_period_count ) {
+	// return '<sc-tag type="success">' . __( 'Subscription', 'surecart' ) . '</sc-tag>';
+	// }
+	// return '<sc-tag type="info">' . __( 'Payment Plan', 'surecart' ) . '</sc-tag>';
+	// }
+
+	/**
 	 * Handle the total column
 	 *
-	 * @param \SureCart\Models\AbandonedCheckout $checkout Checkout Session Model.
+	 * @param \SureCart\Models\Subscription $subscription Checkout Session Model.
 	 *
 	 * @return string
 	 */
-	public function column_total( $abandoned ) {
-		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $abandoned->checkout->currency ?? 'usd' ) ) . '" value="' . (float) $abandoned->checkout->total_amount . '"></sc-format-number>';
-	}
-
-	/**
-	 * Handle the total column
-	 *
-	 * @param \SureCart\Models\AbandonedCheckout $abandoned Abandoned checkout model.
-	 *
-	 * @return string
-	 */
-	public function column_date( $abandoned ) {
-		return isset( $abandoned->created_at ) ? '<sc-format-date date="' . (int) $abandoned->created_at . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></sc-format-date>' : '--';
-	}
-
-	/**
-	 * Handle the notification status
-	 *
-	 * @param \SureCart\Models\AbandonedCheckout $abandoned Abandoned checkout session.
-	 *
-	 * @return string
-	 */
-	public function column_notification_status( $abandoned ) {
-		if ( $abandoned->recovered_checkout ) {
-			return '--';
+	public function column_plan( $subscription ) {
+		$amount       = $subscription->price->ad_hoc_amount ?? $subscription->price->amount ?? 0;
+		$interval     = $subscription->price->recurring_interval ?? '';
+		$count        = $subscription->price->recurring_interval_count ?? 1;
+		$period_count = $subscription->price->recurring_period_count ?? null;
+		ob_start();
+		echo '<sc-format-number type="currency" currency="' . esc_html( strtoupper( $subscription->currency ?? 'usd' ) ) . '" value="' . (float) $amount . '"></sc-format-number>';
+		echo esc_html( $this->getInterval( $interval, $count ) );
+		if ( null !== $period_count ) {
+			echo esc_html( $this->getInterval( $interval, $period_count, __( 'for', 'surecart' ) ) );
 		}
-
-		switch ( $abandoned->notification_status ?? '' ) {
-			case 'scheduled':
-				return '<sc-tag type="info">' . __( 'Scheduled', 'surecart' ) . '</sc-tag>';
-			case 'not_scheduled':
-				return '<sc-tag type="warning">' . __( 'Not Scheduled', 'surecart' ) . '</sc-tag>';
-			case 'sent':
-				return '<sc-tag type="success">' . __( 'Email Sent', 'surecart' ) . '</sc-tag>';
-		}
-		 return '<sc-tag>' . esc_html( $abandoned->notification_status ?? 'Unknown' ) . '</sc-tag>';
+		return ob_get_clean();
 	}
 
-	/**
-	 * Handle the recovery status
-	 *
-	 * @param \SureCart\Models\AbandonedCheckout $abandoned Abandoned checkout session.
-	 *
-	 * @return string
-	 */
-	public function column_recovery_status( $abandoned ) {
-		if ( $abandoned->recovered_checkout ) {
-			return '<sc-tag type="success">' . __( 'Recovered', 'surecart' ) . '</sc-tag>';
-		} else {
-			return '<sc-tag type="warning">' . __( 'Abandoned', 'surecart' ) . '</sc-tag>';
+	public function getInterval( $interval, $count, $separator = '/', $show_single = false ) {
+		switch ( $interval ) {
+			case 'day':
+				return " $separator " . sprintf(
+					// translators: number of days.
+					$show_single ? _n( '%d day', '%d days', $count, 'surecart' ) : _n( 'day', '%d days', $count, 'surecart' ),
+					$count
+				);
+			case 'week':
+				return " $separator " . sprintf(
+					// translators: number of weeks.
+					$show_single ? _n( '%d week', '%d weeks', $count, 'surecart' ) : _n( 'week', '%d weeks', $count, 'surecart' ),
+					$count
+				);
+			case 'month':
+				return " $separator " . sprintf(
+					// translators: number of months
+					$show_single ? _n( '%d month', '%d months', $count, 'surecart' ) : _n( 'month', '%d months', $count, 'surecart' ),
+					$count
+				);
+			case 'year':
+				return " $separator " . sprintf(
+					// translators: number of yearls
+					$show_single ? _n( '%d year', '%d years', $count, 'surecart' ) : _n( 'year', '%d years', $count, 'surecart' ),
+					$count
+				);
 		}
 	}
 
 	/**
-	 * Email of customer
+	 * Output the Promo Code
 	 *
-	 * @param \SureCart\Models\AbandonedCheckout $abandoned Abandoned checkout model.
+	 * @param Promotion $promotion Promotion model.
 	 *
 	 * @return string
 	 */
-	public function column_placed_by( $abandoned ) {
+	public function column_usage( $promotion ) {
+		$max = $promotion->max_redemptions ?? '&infin;';
 		ob_start();
 		?>
-		<a  class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'abandoned-checkout', $abandoned->id ) ); ?>">
-			<?php
-			// translators: Customer name.
-			echo sprintf( esc_html__( 'By %s', 'surecart' ), esc_html( $abandoned->customer->name ?? $abandoned->customer->email ) );
-			?>
-		</a>
+		<?php echo \esc_html( "$promotion->times_redeemed / $max" ); ?>
 		<br />
-		<a aria-label="<?php echo esc_attr__( 'View Checkout', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'abandoned-checkout', $abandoned->id ) ); ?>">
-			<?php echo esc_attr__( 'View Checkout', 'surecart' ); ?>
-		</a>
+		<div style="opacity: 0.75"><?php echo \esc_html( $this->get_expiration_string( $promotion->redeem_by ) ); ?></div>
 		<?php
+		return ob_get_clean();
+	}
 
+	/**
+	 * Render the "Redeem By".
+	 *
+	 * @param string $timestamp Redeem timestamp.
+	 * @return string
+	 */
+	public function get_expiration_string( $timestamp = '' ) {
+		if ( ! $timestamp ) {
+			return '';
+		}
+		// translators: coupon expiration date.
+		return sprintf( __( 'Valid until %s', 'surecart' ), date_i18n( get_option( 'date_format' ), $timestamp / 1000 ) );
+	}
+
+	public function get_price_string( $coupon = '' ) {
+		if ( ! $coupon || empty( $coupon->duration ) ) {
+			return;
+		}
+		if ( ! empty( $coupon->percent_off ) ) {
+			// translators: Coupon % off.
+			return sprintf( esc_html( __( '%1d%% off', 'surecart' ) ), $coupon->percent_off );
+		}
+
+		if ( ! empty( $coupon->amount_off ) ) {
+			// translators: Coupon amount off.
+			return Currency::formatCurrencyNumber( $coupon->amount_off ) . ' <small style="opacity: 0.75;">' . strtoupper( esc_html( $coupon->currency ) ) . '</small>';
+		}
+
+		return esc_html__( 'No discount.', 'surecart' );
+	}
+
+	/**
+	 * Get the duration string
+	 *
+	 * @param Coupon|boolean $coupon Coupon object.
+	 * @return string|void;
+	 */
+	public function get_duration_string( $coupon = '' ) {
+		if ( ! $coupon || empty( $coupon->duration ) ) {
+			return;
+		}
+
+		if ( 'forever' === $coupon->duration ) {
+			return __( 'Forever', 'surecart' );
+		}
+		if ( 'repeating' === $coupon->duration ) {
+			// translators: number of months.
+			return sprintf( __( 'For %d months', 'surecart' ), $coupon->duration_in_months ?? 1 );
+		}
+
+		return __( 'Once', 'surecart' );
+	}
+
+	/**
+	 * Handle the status
+	 *
+	 * @param \SureCart\Models\Price $product Product model.
+	 *
+	 * @return string
+	 */
+	public function column_status( $subscription ) {
+		return wp_kses_post( "<sc-subscription-status-badge status='$subscription->status'></sc-subscription-status-badge>" );
+		// switch ( $subscription->status ) {
+		// case 'active':
+		// $status = '<sc-tag type="success">' . __( 'Active', 'surecart' ) . '</sc-tag>';
+		// break;
+		// case 'canceled':
+		// $status = '<sc-tag type="danger">' . __( 'Canceled', 'surecart' ) . '</sc-tag>';
+		// break;
+		// case 'trialing':
+		// $status = '<sc-tag type="primary">' . __( 'Trialing', 'surecart' ) . '</sc-tag>';
+		// break;
+		// case 'draft':
+		// $status = '<sc-tag>' . __( 'Draft', 'surecart' ) . '</sc-tag>';
+		// break;
+		// default:
+		// $status = '<sc-tag>' . $subscription->status . '</sc-tag>';
+		// break;
+		// }
+
+		// if ( ! empty( (array) $subscription->pending_update ) ) {
+		// $status .= ' <sc-tag type="info">' . __( 'Update Pending', 'surecart' ) . '</sc-tag>';
+		// }
+
+		// return $status;
+	}
+
+	/**
+	 * Name of the coupon
+	 *
+	 * @param \SureCart\Models\Promotion $promotion Promotion model.
+	 *
+	 * @return string
+	 */
+	public function column_customer( $subscription ) {
+		ob_start();
+		$name = $subscription->customer->name ?? '';
+		if ( ! $name ) {
+			$name = $subscription->customer->email ?? __( 'No name provided', 'surecart' );
+		}
+		?>
+		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Subscription', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->show( 'subscription', $subscription->id ) ); ?>">
+			<?php echo esc_html( $name ); ?>
+		</a>
+
+		<?php
+		echo $this->row_actions(
+			[
+				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->show( 'subscription', $subscription->id ) ) . '" aria-label="' . esc_attr( 'Edit Subscription', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
+			],
+		);
+		?>
+		<?php
 		return ob_get_clean();
 	}
 }
