@@ -54,22 +54,37 @@ export default ({ customer, updateCustomer, loading }) => {
             />
           </ScColumn>
 				</ScColumns>
-        <ScColumn>
-          <ScInput
-            label={__('Email', 'surecart')}
-            className="sc-customer-email"
-            help={__(
-              "Your customer's email address.",
-              'surecart'
-            )}
-            value={customer?.email}
-            name="email"
-            required
-            onScInput={(e) =>
-              updateCustomer({ email: e.target.value })
-            }
-          />
-        </ScColumn>
+        <ScColumns>
+          <ScColumn>
+            <ScInput
+              label={__('Email', 'surecart')}
+              className="sc-customer-email"
+              help={__(
+                "Your customer's email address.",
+                'surecart'
+              )}
+              value={customer?.email}
+              name="email"
+              required
+              onScInput={(e) =>
+                updateCustomer({ email: e.target.value })
+              }
+            />
+          </ScColumn>
+          <ScColumn>
+            <ScInput
+              label={__('Phone', 'surecart')}
+              className="sc-customer-phone"
+              help={__('Your customer\'s phone number.', 'surecart')}
+              type="number"
+              attribute="phone"
+              value={customer?.phone}
+              onScInput={(e) =>
+                updateCustomer({ phone: e.target.value })
+              }
+            />
+          </ScColumn>
+				</ScColumns>
 			</div>
 		</Box>
 	);

@@ -153,6 +153,7 @@ return [
 		'surecart/donation'                  => [ 'sc-donation-choices', 'sc-choices', 'sc-choice' ],
 		'surecart/donation-amount'           => [ 'sc-choice', 'sc-format-number' ],
 		'surecart/email'                     => [ 'sc-input', 'sc-customer-email' ],
+		'surecart/phone'                     => [ 'sc-input', 'sc-customer-phone' ],
 		'surecart/express-payment'           => [ 'sc-express-payment', 'sc-divider', 'sc-stripe-payment-request' ],
 		'surecart/form'                      => [ 'sc-checkout', 'sc-form', 'sc-checkout-unsaved-changes-warning', 'sc-line-items-provider', 'sc-block-ui' ],
 		'surecart/heading'                   => [ 'sc-heading' ],

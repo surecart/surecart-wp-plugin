@@ -17,6 +17,7 @@ import * as coupon from '@blocks/Coupon';
 import * as taxIdInput from '@blocks/TaxIdInput';
 import * as divider from '@blocks/Divider';
 import * as email from '@blocks/Email';
+import * as phone from '@blocks/Phone';
 import * as expressPayment from '@blocks/ExpressPayment';
 import * as form from '@blocks/Form';
 import * as heading from '@blocks/Heading';
@@ -54,6 +55,7 @@ registerBlocks([
 	taxIdInput,
 	divider,
 	email,
+	phone,
 	expressPayment,
 	form,
 	heading,
