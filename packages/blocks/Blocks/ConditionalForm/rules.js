@@ -211,7 +211,7 @@ const Rules = ( props ) => {
     e.preventDefault();
     // debugger;
     const formData = new window.FormData( e.target );
-    let option = [];
+    let option = [...ruleGroupsData];
 
     for ( const pair of formData.entries() ) {
       console.log(`${pair[0]}, ${pair[1]}`);
@@ -224,7 +224,7 @@ const Rules = ( props ) => {
   };
 
   const prepareFormDataObject = function ( option, dkey, dvalue ) {
-    // debugger;
+    debugger;
 		const name = dkey;
     const value = dvalue;
 
