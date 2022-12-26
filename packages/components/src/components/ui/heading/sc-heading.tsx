@@ -12,19 +12,19 @@ export class ScHeading {
   render() {
     return (
       <div
+        part="base"
         class={{
           'heading': true,
           'heading--small': this.size === 'small',
           'heading--medium': this.size === 'medium',
           'heading--large': this.size === 'large',
         }}
-        part="base"
       >
         <div class={{ heading__text: true }}>
-          <div class="heading__title">
+          <div class="heading__title" part="title">
             <slot></slot>
           </div>
-          <div class="heading__description">
+          <div class="heading__description" part="description">
             <slot name="description"></slot>
           </div>
         </div>

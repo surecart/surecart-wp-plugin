@@ -27,6 +27,32 @@
 | `scApplyCoupon` | When the coupon is applied | `CustomEvent<string>` |
 
 
+## Shadow Parts
+
+| Part                    | Description                     |
+| ----------------------- | ------------------------------- |
+| `"amount"`              | The discount amount.            |
+| `"base"`                | The elements base wrapper.      |
+| `"block-ui"`            | The block ui base component.    |
+| `"block-ui__content"`   | The block ui content (spinner). |
+| `"button__base"`        | The button base element.        |
+| `"button__label"`       | The button label.               |
+| `"coupon-tag"`          | The coupon tag.                 |
+| `"discount"`            | The discount displayed (% off)  |
+| `"discount-label"`      | The discount label.             |
+| `"error__base"`         | The error base.                 |
+| `"error__icon"`         | The error icon                  |
+| `"error__message"`      | The error message.              |
+| `"error__text"`         | The error text.                 |
+| `"error_title"`         | The error title.                |
+| `"form"`                | The form.                       |
+| `"info"`                | The discount info.              |
+| `"input"`               | The input.                      |
+| `"input__base"`         | The input base.                 |
+| `"input__form-control"` | The input form control.         |
+| `"label"`               |                                 |
+
+
 ## Dependencies
 
 ### Used by
@@ -41,8 +67,8 @@
 - [sc-tag](../tag)
 - [sc-format-number](../../util/format-number)
 - [sc-input](../input)
-- [sc-alert](../alert)
 - [sc-button](../button)
+- [sc-alert](../alert)
 - [sc-block-ui](../block-ui)
 
 ### Graph
@@ -53,13 +79,13 @@ graph TD;
   sc-coupon-form --> sc-tag
   sc-coupon-form --> sc-format-number
   sc-coupon-form --> sc-input
-  sc-coupon-form --> sc-alert
   sc-coupon-form --> sc-button
+  sc-coupon-form --> sc-alert
   sc-coupon-form --> sc-block-ui
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
-  sc-alert --> sc-icon
   sc-button --> sc-spinner
+  sc-alert --> sc-icon
   sc-block-ui --> sc-spinner
   sc-order-coupon-form --> sc-coupon-form
   sc-upcoming-invoice --> sc-coupon-form

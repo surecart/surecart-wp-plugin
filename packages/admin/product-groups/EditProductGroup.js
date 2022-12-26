@@ -1,11 +1,8 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { ScButton } from '@surecart/components-react';
-import { store as coreStore } from '@wordpress/core-data';
-import { select, useDispatch } from '@wordpress/data';
 import { Fragment, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { store as noticesStore } from '@wordpress/notices';
 
 import Error from '../components/Error';
 import useEntity from '../hooks/useEntity';

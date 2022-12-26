@@ -8,7 +8,7 @@ exports[`sc-form-control renders 1`] = `
         <slot name="label"></slot>
         <slot name="label-end"></slot>
       </label>
-      <div class="form-control__input">
+      <div class="form-control__input" part="input">
         <slot></slot>
       </div>
     </div>

@@ -56,7 +56,7 @@ export default () => {
 				<GetStarted />
 				<Overview liveMode={liveMode} setLiveMode={setLiveMode} />
 				<ScDivider style={{ '--spacing': '1em' }} />
-				<ScFlex style={{ '--sc-flex-column-gap': '2em' }}>
+				<ScFlex style={{ '--sc-flex-column-gap': '2em' }} stack="tablet">
 					<RecentOrders liveMode={liveMode} />
 					<LearnMore />
 				</ScFlex>

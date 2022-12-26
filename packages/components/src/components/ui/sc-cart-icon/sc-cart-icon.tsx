@@ -1,5 +1,10 @@
 import { Component, h, Prop } from '@stencil/core';
 
+/**
+ * @part base - The elements base wrapper.
+ * @part container - The container.
+ * @part icon__base - The icon base wrapper.
+ */
 @Component({
   tag: 'sc-cart-icon',
   styleUrl: 'sc-cart-icon.scss',
@@ -15,13 +20,12 @@ export class ScCartIcon {
   render() {
     return (
       <div class={{ cart: true }} part="base">
-        <div class="cart__container">
+        <div class="cart__container" part="container">
           <div class={{ cart__counter: true }}>{this.count}</div>
           <slot>
-            <sc-icon name={this.icon}></sc-icon>
+            <sc-icon exportparts="base:icon__base" name={this.icon}></sc-icon>
           </slot>
         </div>
-        <sc-register-icon-library></sc-register-icon-library>
       </div>
     );
   }

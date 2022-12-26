@@ -62,10 +62,10 @@ class OrdersListTable extends ListTable {
 	 */
 	protected function get_views() {
 		$stati = [
+			'all'            => __( 'All', 'surecart' ),
 			'paid'           => __( 'Paid', 'surecart' ),
 			'processing'     => __( 'Processing', 'surecart' ),
 			'payment_failed' => __( 'Failed', 'surecart' ),
-			'all'            => __( 'All', 'surecart' ),
 		];
 
 		$link = \SureCart::getUrl()->index( 'orders' );
@@ -77,7 +77,7 @@ class OrdersListTable extends ListTable {
 				if ( $status === $_GET['status'] ) {
 					$current_link_attributes = ' class="current" aria-current="page"';
 				}
-			} elseif ( 'paid' === $status ) {
+			} elseif ( 'all' === $status ) {
 				$current_link_attributes = ' class="current" aria-current="page"';
 			}
 
@@ -240,7 +240,7 @@ class OrdersListTable extends ListTable {
 			return '<sc-tag type="danger">' . __( 'Refunded', 'surecart' ) . '</sc-tag>';
 		}
 
-		if ( ! empty( $order->checkout->payment_intent->processor_type ) && 'paypal' === $order->checkout->payment_intent->processor_type ) {
+		if ( ! empty( $order->checkout->payment_method->processor_type ) && 'paypal' === $order->checkout->payment_method->processor_type ) {
 			if ( 'requires_approval' === $order->status ) {
 				return '<sc-tooltip text="' . __( 'Paypal is taking a closer look at this payment. It’s required for some payments and normally takes up to 3 business days.', 'surecart' ) . '" type="warning"><sc-order-status-badge status="' . esc_attr( $order->status ) . '"></sc-order-status-badge></sc-tooltip>';
 			}

@@ -4,7 +4,7 @@ exports[`sc-form renders 1`] = `
 <sc-form>
   <mock:shadow-root>
     <div class="form" part="base" role="form">
-      <form>
+      <form part="form">
         <slot></slot>
       </form>
     </div>

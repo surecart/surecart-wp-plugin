@@ -259,6 +259,7 @@ class ScriptsService {
 				'currency'             => \SureCart::account()->currency,
 				'theme'                => get_option( 'surecart_theme', 'light' ),
 				'entitlements'         => \SureCart::account()->entitlements,
+				'upgrade_url'          => \SureCart::config()->links->purchase,
 				'beta'                 => [
 					'stripe_payment_element' => (bool) get_option( 'sc_stripe_payment_element', false ),
 				],

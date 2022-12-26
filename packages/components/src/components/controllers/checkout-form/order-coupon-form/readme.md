@@ -39,13 +39,13 @@ graph TD;
   sc-coupon-form --> sc-tag
   sc-coupon-form --> sc-format-number
   sc-coupon-form --> sc-input
-  sc-coupon-form --> sc-alert
   sc-coupon-form --> sc-button
+  sc-coupon-form --> sc-alert
   sc-coupon-form --> sc-block-ui
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
-  sc-alert --> sc-icon
   sc-button --> sc-spinner
+  sc-alert --> sc-icon
   sc-block-ui --> sc-spinner
   style sc-order-coupon-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
