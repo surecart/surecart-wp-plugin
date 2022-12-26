@@ -245,6 +245,46 @@ class Subscription extends Model {
 	}
 
 	/**
+	 * Preserve a subscription.
+	 *
+	 * @param string $id Model id.
+	 * @return $this|\WP_Error
+	 */
+	protected function preserve( $id = null ) {
+		if ( $id ) {
+			$this->setAttribute( 'id', $id );
+		}
+
+		if ( $this->fireModelEvent( 'preserving' ) === false ) {
+			return false;
+		}
+
+		if ( empty( $this->attributes['id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please create the subscription.' );
+		}
+
+		$preserved = $this->makeRequest(
+			[
+				'method' => 'PATCH',
+				'query'  => $this->query,
+			],
+			$this->endpoint . '/' . $this->attributes['id'] . '/preserve/'
+		);
+
+		if ( is_wp_error( $preserved ) ) {
+			return $preserved;
+		}
+
+		$this->resetAttributes();
+
+		$this->fill( $preserved );
+
+		$this->fireModelEvent( 'preserved' );
+
+		return $this;
+	}
+
+	/**
 	 * Preview the upcoming invoice.
 	 *
 	 * @param string $args Arguments
