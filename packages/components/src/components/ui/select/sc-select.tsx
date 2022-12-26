@@ -121,7 +121,6 @@ export class ScSelectDropdown {
       this.searchInput && this.searchInput.triggerFocus();
     }, 50);
     console.log(this.open);
-
   }
 
   handleHide() {
@@ -327,6 +326,8 @@ export class ScSelectDropdown {
     // All other "printable" keys open the menu and initiate type to select
     // TODO: this is closing out the dropdown during typing events.
     if (!this.open && event.key.length === 1) {
+      console.log(event.key);
+
       this.handleShow();
     }
   }
