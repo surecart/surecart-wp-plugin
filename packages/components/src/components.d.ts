@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export namespace Components {
     interface ScAddress {
         /**
@@ -177,6 +177,11 @@ export namespace Components {
     interface ScButtonGroup {
         "label": string;
         "separate": boolean;
+    }
+    interface ScCancelDialog {
+        "open": boolean;
+        "protocol": SubscriptionProtocol;
+        "subscription": Subscription;
     }
     interface ScCard {
         /**
@@ -2548,6 +2553,7 @@ export namespace Components {
     }
     interface ScSubscription {
         "heading": string;
+        "protocol": SubscriptionProtocol;
         "query": object;
         "showCancel": boolean;
         "subscription": Subscription;
@@ -2563,8 +2569,8 @@ export namespace Components {
     interface ScSubscriptionCancel {
         "backUrl": string;
         "heading": string;
+        "protocol": SubscriptionProtocol;
         "subscription": Subscription;
-        "subscriptionId": string;
         "successUrl": string;
     }
     interface ScSubscriptionDetails {
@@ -2992,6 +2998,10 @@ export interface ScButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScButtonElement;
 }
+export interface ScCancelDialogCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCancelDialogElement;
+}
 export interface ScCartHeaderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScCartHeaderElement;
@@ -3180,6 +3190,10 @@ export interface ScStripePaymentRequestCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScStripePaymentRequestElement;
 }
+export interface ScSubscriptionCancelCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScSubscriptionCancelElement;
+}
 export interface ScSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScSwitchElement;
@@ -3256,6 +3270,12 @@ declare global {
     var HTMLScButtonGroupElement: {
         prototype: HTMLScButtonGroupElement;
         new (): HTMLScButtonGroupElement;
+    };
+    interface HTMLScCancelDialogElement extends Components.ScCancelDialog, HTMLStencilElement {
+    }
+    var HTMLScCancelDialogElement: {
+        prototype: HTMLScCancelDialogElement;
+        new (): HTMLScCancelDialogElement;
     };
     interface HTMLScCardElement extends Components.ScCard, HTMLStencilElement {
     }
@@ -4142,6 +4162,7 @@ declare global {
         "sc-breadcrumbs": HTMLScBreadcrumbsElement;
         "sc-button": HTMLScButtonElement;
         "sc-button-group": HTMLScButtonGroupElement;
+        "sc-cancel-dialog": HTMLScCancelDialogElement;
         "sc-card": HTMLScCardElement;
         "sc-cart": HTMLScCartElement;
         "sc-cart-form": HTMLScCartFormElement;
@@ -4476,6 +4497,12 @@ declare namespace LocalJSX {
     interface ScButtonGroup {
         "label"?: string;
         "separate"?: boolean;
+    }
+    interface ScCancelDialog {
+        "onScRequestClose"?: (event: ScCancelDialogCustomEvent<'close-button' | 'keyboard' | 'overlay'>) => void;
+        "open"?: boolean;
+        "protocol"?: SubscriptionProtocol;
+        "subscription"?: Subscription;
     }
     interface ScCard {
         /**
@@ -7146,6 +7173,7 @@ declare namespace LocalJSX {
     }
     interface ScSubscription {
         "heading"?: string;
+        "protocol"?: SubscriptionProtocol;
         "query"?: object;
         "showCancel"?: boolean;
         "subscription"?: Subscription;
@@ -7161,8 +7189,9 @@ declare namespace LocalJSX {
     interface ScSubscriptionCancel {
         "backUrl"?: string;
         "heading"?: string;
+        "onScRequestClose"?: (event: ScSubscriptionCancelCustomEvent<'close-button' | 'keyboard' | 'overlay'>) => void;
+        "protocol"?: SubscriptionProtocol;
         "subscription"?: Subscription;
-        "subscriptionId"?: string;
         "successUrl"?: string;
     }
     interface ScSubscriptionDetails {
@@ -7617,6 +7646,7 @@ declare namespace LocalJSX {
         "sc-breadcrumbs": ScBreadcrumbs;
         "sc-button": ScButton;
         "sc-button-group": ScButtonGroup;
+        "sc-cancel-dialog": ScCancelDialog;
         "sc-card": ScCard;
         "sc-cart": ScCart;
         "sc-cart-form": ScCartForm;
@@ -7777,6 +7807,7 @@ declare module "@stencil/core" {
             "sc-breadcrumbs": LocalJSX.ScBreadcrumbs & JSXBase.HTMLAttributes<HTMLScBreadcrumbsElement>;
             "sc-button": LocalJSX.ScButton & JSXBase.HTMLAttributes<HTMLScButtonElement>;
             "sc-button-group": LocalJSX.ScButtonGroup & JSXBase.HTMLAttributes<HTMLScButtonGroupElement>;
+            "sc-cancel-dialog": LocalJSX.ScCancelDialog & JSXBase.HTMLAttributes<HTMLScCancelDialogElement>;
             "sc-card": LocalJSX.ScCard & JSXBase.HTMLAttributes<HTMLScCardElement>;
             "sc-cart": LocalJSX.ScCart & JSXBase.HTMLAttributes<HTMLScCartElement>;
             "sc-cart-form": LocalJSX.ScCartForm & JSXBase.HTMLAttributes<HTMLScCartFormElement>;

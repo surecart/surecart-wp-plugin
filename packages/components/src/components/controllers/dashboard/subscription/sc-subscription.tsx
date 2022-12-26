@@ -2,7 +2,7 @@ import { Component, Element, h, Prop, State } from '@stencil/core';
 import { sprintf, __ } from '@wordpress/i18n';
 import { addQueryArgs, getQueryArg } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
-import { Subscription } from '../../../../types';
+import { Subscription, SubscriptionProtocol } from '../../../../types';
 import { onFirstVisible } from '../../../../functions/lazy';
 
 @Component({
@@ -17,11 +17,15 @@ export class ScSubscription {
   @Prop() showCancel: boolean;
   @Prop() heading: string;
   @Prop() query: object;
+  @Prop() protocol: SubscriptionProtocol;
 
   @Prop({ mutable: true }) subscription: Subscription;
 
   /** Loading state */
   @State() loading: boolean;
+
+  /** Cancel modal */
+  @State() cancelModal: boolean;
 
   /**  Busy state */
   @State() busy: boolean;
@@ -189,12 +193,7 @@ export class ScSubscription {
               this.subscription?.status !== 'canceled' &&
               this.subscription?.current_period_end_at &&
               this.showCancel && (
-                <sc-button
-                  type="link"
-                  href={addQueryArgs(window.location.href, {
-                    action: 'cancel',
-                  })}
-                >
+                <sc-button type="link" onClick={() => (this.cancelModal = true)}>
                   <sc-icon name="x" slot="prefix"></sc-icon>
                   {__('Cancel Plan', 'surecart')}
                 </sc-button>
@@ -208,6 +207,8 @@ export class ScSubscription {
         </sc-card>
 
         {this.busy && <sc-block-ui spinner></sc-block-ui>}
+
+        <sc-cancel-dialog subscription={this.subscription} protocol={this.protocol} open={this.cancelModal} onScRequestClose={() => (this.cancelModal = false)} />
       </sc-dashboard-module>
     );
   }

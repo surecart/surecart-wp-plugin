@@ -112,6 +112,7 @@ class SubscriptionController extends BaseController {
 					[
 						'heading'      => __( 'Current Plan', 'surecart' ),
 						'showCancel'   => \SureCart::account()->portal_protocol->subscription_cancellations_enabled && ! $subscription->remaining_period_count,
+						'protocol'     => \SureCart::account()->subscription_protocol,
 						'subscription' => $subscription,
 					]
 				)->render()

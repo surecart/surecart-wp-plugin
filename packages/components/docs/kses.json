@@ -91,6 +91,15 @@
     "class": true,
     "slot": true
   },
+  "sc-cancel-dialog": {
+    "open": true,
+    "protocol": true,
+    "subscription": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-card": {
     "borderless": true,
     "href": true,
@@ -1421,6 +1430,7 @@
   },
   "sc-subscription": {
     "heading": true,
+    "protocol": true,
     "query": true,
     "show-cancel": true,
     "subscription": true,
@@ -1441,8 +1451,8 @@
   "sc-subscription-cancel": {
     "back-url": true,
     "heading": true,
+    "protocol": true,
     "subscription": true,
-    "subscription-id": true,
     "success-url": true,
     "style": true,
     "id": true,

@@ -1,6 +1,5 @@
-import { Component, Fragment, h, Prop, State } from '@stencil/core';
+import { Component, Event, EventEmitter, Fragment, h, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
 import { SubscriptionProtocol } from '../../../../types';
 import { Subscription } from '../../../../types';
@@ -12,52 +11,21 @@ import { Subscription } from '../../../../types';
 })
 export class ScSubscriptionCancel {
   @Prop() heading: string;
-  @Prop() subscriptionId: string;
   @Prop() backUrl: string;
   @Prop() successUrl: string;
-  @Prop({ mutable: true }) subscription: Subscription;
-  @State() protocol: SubscriptionProtocol;
+  @Prop() subscription: Subscription;
+  @Prop() protocol: SubscriptionProtocol;
   @State() loading: boolean;
   @State() busy: boolean;
   @State() error: string;
-
-  componentWillLoad() {
-    this.fetchItems();
-  }
-
-  async fetchItems() {
-    try {
-      this.loading = true;
-      await Promise.all([this.fetchProtocol(), this.fetchSubscription()]);
-    } catch (e) {
-      console.error(e);
-      this.error = e?.message || __('Something went wrong', 'surecart');
-    } finally {
-      this.loading = false;
-    }
-  }
-
-  async fetchProtocol() {
-    this.protocol = (await apiFetch({
-      path: '/surecart/v1/subscription_protocol',
-    })) as SubscriptionProtocol;
-  }
-
-  async fetchSubscription() {
-    if (!this.subscriptionId) return;
-    this.subscription = (await apiFetch({
-      path: addQueryArgs(`/surecart/v1/subscriptions/${this.subscriptionId}`, {
-        expand: ['price', 'price.product', 'current_period', 'period.checkout'],
-      }),
-    })) as Subscription;
-  }
+  @Event() scRequestClose: EventEmitter<'close-button' | 'keyboard' | 'overlay'>;
 
   async cancelSubscription() {
     try {
       this.error = '';
       this.busy = true;
       await apiFetch({
-        path: `/surecart/v1/subscriptions/${this.subscriptionId}/cancel`,
+        path: `/surecart/v1/subscriptions/${this.subscription?.id}/cancel`,
         method: 'PATCH',
       });
       if (this.successUrl) {
@@ -78,8 +46,6 @@ export class ScSubscriptionCancel {
 
     return (
       <Fragment>
-        <sc-subscription-details subscription={this?.subscription} hideRenewalText={true}></sc-subscription-details>
-
         {this?.protocol?.cancel_behavior === 'pending' ? (
           <sc-alert type="info" open>
             {__('Your plan will be canceled, but is still available until the end of your billing period on', 'surecart')}{' '}
@@ -93,6 +59,10 @@ export class ScSubscriptionCancel {
             {__('Your plan will be canceled immediately. You cannot change your mind.', 'surecart')}
           </sc-alert>
         )}
+
+        <sc-card>
+          <sc-subscription-details subscription={this?.subscription}></sc-subscription-details>
+        </sc-card>
       </Fragment>
     );
   }
@@ -110,19 +80,22 @@ export class ScSubscriptionCancel {
   render() {
     return (
       <sc-dashboard-module heading={this.heading || __('Cancel your plan', 'surecart')} class="subscription-cancel" error={this.error}>
-        <sc-card>
-          {this.renderContent()}
+        {this.renderContent()}
 
-          <sc-button type="primary" full loading={this.loading || this.busy} disabled={this.loading || this.busy} onClick={() => this.cancelSubscription()}>
-            {__('Cancel Plan', 'surecart')}
-          </sc-button>
+        <sc-button type="primary" full loading={this.loading || this.busy} disabled={this.loading || this.busy} onClick={() => this.cancelSubscription()}>
+          {__('Cancel Plan', 'surecart')}
+        </sc-button>
 
-          {!!this.backUrl && (
-            <sc-button href={this.backUrl} full loading={this.loading || this.busy} disabled={this.loading || this.busy}>
-              {__('Go Back', 'surecart')}
-            </sc-button>
-          )}
-        </sc-card>
+        <sc-button
+          style={{ color: 'var(--sc-color-gray-500' }}
+          type="text"
+          onClick={() => this.scRequestClose.emit('close-button')}
+          full
+          loading={this.loading || this.busy}
+          disabled={this.loading || this.busy}
+        >
+          {__('No Thanks', 'surecart')}
+        </sc-button>
 
         {this.busy && <sc-block-ui></sc-block-ui>}
       </sc-dashboard-module>

@@ -546,6 +546,16 @@ export interface SubscriptionProtocol {
   downgrade_behavior: 'pending' | 'immediate';
   payment_retry_window_weeks: number;
   upgrade_behavior: 'pending' | 'immediate';
+  preservation_enabled: boolean;
+  preservation_locales: {
+    reasons_title: string;
+    reasons_description: string;
+    skip_link: string;
+    preserve_title: string;
+    preserve_description: string;
+    preserve_button: string;
+    cancel_link: string;
+  };
   created_at: number;
   updated_at: number;
 }

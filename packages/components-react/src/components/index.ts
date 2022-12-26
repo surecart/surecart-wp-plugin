@@ -16,6 +16,7 @@ export const ScBreadcrumb = /*@__PURE__*/createReactComponent<JSX.ScBreadcrumb, 
 export const ScBreadcrumbs = /*@__PURE__*/createReactComponent<JSX.ScBreadcrumbs, HTMLScBreadcrumbsElement>('sc-breadcrumbs');
 export const ScButton = /*@__PURE__*/createReactComponent<JSX.ScButton, HTMLScButtonElement>('sc-button');
 export const ScButtonGroup = /*@__PURE__*/createReactComponent<JSX.ScButtonGroup, HTMLScButtonGroupElement>('sc-button-group');
+export const ScCancelDialog = /*@__PURE__*/createReactComponent<JSX.ScCancelDialog, HTMLScCancelDialogElement>('sc-cancel-dialog');
 export const ScCard = /*@__PURE__*/createReactComponent<JSX.ScCard, HTMLScCardElement>('sc-card');
 export const ScCart = /*@__PURE__*/createReactComponent<JSX.ScCart, HTMLScCartElement>('sc-cart');
 export const ScCartForm = /*@__PURE__*/createReactComponent<JSX.ScCartForm, HTMLScCartFormElement>('sc-cart-form');
