@@ -12,11 +12,6 @@ import {
 	ToggleControl,
 } from '@wordpress/components';
 
-/**
- * Component Dependencies
- */
-import { ScInput } from '@surecart/components-react';
-
 export default ({ attributes, setAttributes }) => {
 	const { label, placeholder, help, required } = attributes;
 
@@ -58,14 +53,13 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<Disabled>
-				<ScInput
+				<sc-customer-phone
 					required={required}
 					label={label}
 					placeholder={placeholder}
 					name="phone"
-					type="number"
 					help={help}
-				></ScInput>
+				></sc-customer-phone>
 			</Disabled>
 		</Fragment>
 	);

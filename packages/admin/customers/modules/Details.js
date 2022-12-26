@@ -72,11 +72,10 @@ export default ({ customer, updateCustomer, loading }) => {
             />
           </ScColumn>
           <ScColumn>
-            <ScInput
+            <sc-customer-phone
               label={__('Phone', 'surecart')}
               className="sc-customer-phone"
               help={__('Your customer\'s phone number.', 'surecart')}
-              type="number"
               attribute="phone"
               value={customer?.phone}
               onScInput={(e) =>

@@ -78,14 +78,27 @@ export class ScCustomerPhone {
   /** Emitted when the control loses focus. */
   @Event() scBlur: EventEmitter<void>;
 
-  @Event() scUpdateCustomer: EventEmitter<{ email: string }>;
+  @Event() scUpdateCustomer: EventEmitter<{ phone: string }>;
+
+  async handleChange() {
+    let regExp = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+    let phone  = this.input.value.match(regExp);
+    
+    if ( phone ) {
+      console.log('Valid Phone');
+      return true;
+    } else {
+      console.log('Invalid Phone');
+      return false;
+    }
+  }
 
   @Method()
   async reportValidity() {
     return this.input?.reportValidity?.();
   }
 
-  /** Sync customer email with session if it's updated by other means */
+  /** Sync customer phone with session if it's updated by other means */
   @Watch('order')
   handleSessionChange(val) {
     if (val?.phone) {
@@ -98,7 +111,7 @@ export class ScCustomerPhone {
   render() {
     return (
       <sc-input
-        type="number"
+        type="tel"
         name="phone"
         ref={el => (this.input = el as HTMLScInputElement)}
         value={this.customer?.phone || this.value}
@@ -112,6 +125,7 @@ export class ScCustomerPhone {
         invalid={this.invalid}
         autofocus={this.autofocus}
         hasFocus={this.hasFocus}
+        onScChange={() => this.handleChange()}
         onScInput={() => this.scInput.emit()}
         onScFocus={() => this.scFocus.emit()}
         onScBlur={() => this.scBlur.emit()}
