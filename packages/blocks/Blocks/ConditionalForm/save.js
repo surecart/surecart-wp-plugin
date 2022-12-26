@@ -14,7 +14,7 @@ export default function save( props ) {
 
   // let rules = JSON.stringify( props.attributes );
   return (
-    <ScConditionalForm rule_groups={rule_groups} >
+    <ScConditionalForm rule_groups={ JSON.stringify( rule_groups ) } >
       <div className='sc-conditional-from'>
         <InnerBlocks.Content />
       </div>

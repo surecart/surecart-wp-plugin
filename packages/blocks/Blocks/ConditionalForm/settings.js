@@ -30,7 +30,7 @@ const Settings = ( props ) => {
 
   props.closeModal = closeModal;
 
-  let rule_data = rule_groups ? JSON.parse( rule_groups ) : [];
+  let rule_data = rule_groups ? rule_groups : [];
 
 	return (
 		<>

@@ -41,6 +41,8 @@ export const is_rules_passed = ( rules, props ) => {
     switch (rule['condition']) {
       case 'cart_total':
         result = compare_number_values( parseFloat( checkout.total_amount ), parseFloat( ruleValue ), ruleOperator );
+        console.log( 'result' );
+        console.log( result );
         break;
       case 'cart_item':
         const cart_products = get_cart_products( checkout );

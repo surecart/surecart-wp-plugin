@@ -9,12 +9,9 @@ import {
 	SelectControl,
 	ToggleControl,
   Button,
-  Modal
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
-// import './rules.css';
 import Conditions from './conditions';
-import apiFetch from '@wordpress/api-fetch';
 
 
 const Rules = ( props ) => {
@@ -28,34 +25,19 @@ const Rules = ( props ) => {
 
     let defaultData = [
       {
-        "group_id": "me7",
+        "group_id": Math.random().toString( 36 ).substring( 2, 5 ),
         "rules": [
           {
-            rule_id: "m2v",
-            condition: "cart_item",
-            operator: "any",
-            value: [""]
-          },
-          {
-            rule_id: "v2v",
+            rule_id: Math.random().toString( 36 ).substring( 2, 5 ),
             condition: "cart_item",
             operator: "any",
             value: [""]
           }
         ]
       },
-      {
-        "group_id": "7dd",
-        "rules": [{
-          rule_id: "ac3",
-          condition: "cart_item",
-          operator: "any",
-          value: [""]
-        }]
-      }
     ];
 
-    let rgData = rule_groups ? JSON.parse( rule_groups ) : defaultData;
+    let rgData = rule_groups?.length > 0 ? rule_groups : defaultData;
 
     return rgData;
   };
@@ -78,7 +60,7 @@ const Rules = ( props ) => {
 		};
   };
   const updateRuleGroupData = function( data ) {
-    setAttributes({ rule_groups: JSON.stringify( data ) });
+    setAttributes({ rule_groups: data });
     setRuleGroupsData( [...data] );
   };
   const addConditionToRuleGroup = function( groupId, newCondition ) {
@@ -91,7 +73,7 @@ const Rules = ( props ) => {
         }
       }
 
-      setAttributes({ rule_groups: JSON.stringify( ruleGroupsData ) });
+      setAttributes({ rule_groups: ruleGroupsData });
       setRuleGroupsData( [...ruleGroupsData] );
     }
   };
@@ -115,7 +97,7 @@ const Rules = ( props ) => {
       return true;
     });
 
-    setAttributes({ rule_groups: JSON.stringify( newGroupData ) });
+    setAttributes({ rule_groups: newGroupData });
     setRuleGroupsData( [...newGroupData] );
   };
 
@@ -133,7 +115,7 @@ const Rules = ( props ) => {
 					break;
 				}
 			}
-      setAttributes({ rule_groups: JSON.stringify( ruleGroupsData ) });
+      setAttributes({ rule_groups: ruleGroupsData });
       setRuleGroupsData( [...ruleGroupsData] );
   };
   const updateConditionOptionInRuleGroup = function( groupId, conditionId, currentValue, optionName ) {
@@ -149,7 +131,7 @@ const Rules = ( props ) => {
 					break;
 				}
 			}
-      setAttributes({ rule_groups: JSON.stringify( ruleGroupsData ) });
+      setAttributes({ rule_groups: ruleGroupsData });
       setRuleGroupsData( [...ruleGroupsData] );
   };
 
@@ -186,7 +168,7 @@ const Rules = ( props ) => {
 
   const showRules = function ( event ) {
     // rule_groups += 'Hello Sandesh';
-    // setAttributes({ rule_groups: JSON.stringify( ruleGroupsData ) });
+    // setAttributes({ rule_groups: ruleGroupsData });
 		const group_id = event.target.getAttribute( 'data-group_id' );
 
 		const target = document.getElementById(
@@ -219,7 +201,7 @@ const Rules = ( props ) => {
       option = prepareFormDataObject( option, pair[0], pair[1] )
     }
 
-    setAttributes({ rule_groups: JSON.stringify( option ) });
+    setAttributes({ rule_groups: option });
     closeModal();
   };
 
