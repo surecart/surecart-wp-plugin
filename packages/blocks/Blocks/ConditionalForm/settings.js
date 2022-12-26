@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { InspectorControls } from '@wordpress/block-editor'
 import {
 	PanelBody,
@@ -30,7 +30,6 @@ const Settings = ( props ) => {
 
   props.closeModal = closeModal;
 
-  // debugger;
   let rule_data = rule_groups ? JSON.parse( rule_groups ) : [];
 
 	return (
@@ -38,20 +37,21 @@ const Settings = ( props ) => {
 			<InspectorControls>
 				<PanelBody title={__('Conditions', 'surecart')}>
           <PanelRow>
-            <div>Active Groups</div>
+            <div>{ __( 'Active Groups', 'surecart' ) }</div>
           </PanelRow>
           {
-            rule_data.map( ( rule, r_index ) => {
+            rule_data.map( ( rule ) => {
               return(
                 <PanelRow>
-                  Group - { rule.group_id }
+                  { sprintf( __( 'Group - %s', 'surecart' ), rule.group_id ) }
+
                 </PanelRow>
               )
             } )
           }
           <PanelRow>
             <Button variant="secondary" onClick={ openModal }>
-              Configure Rules
+              { __( 'Configure Rules', 'surecart' ) }
             </Button>
             { isOpen && (
                 <Modal title={ __( 'Configure Rules', 'surecart' ) } onRequestClose={ closeModal } css={css`

@@ -35,41 +35,41 @@ function Conditions( props ) {
   ];
   const stringOperators = [
     {
-        'label': 'matches any of',
+        'label': __( 'matches any of', 'surecart' ),
         'value': 'any'
     },
     {
-        'label': 'matches all of',
+        'label': __( 'matches all of', 'surecart' ),
         'value': 'all'
     },
     {
-        'label': 'matches none of',
+        'label': __( 'matches none of', 'surecart' ),
         'value': 'none'
     }
   ];
   const mathOperators = [
     {
-        'label': 'is equal to',
+        'label': __( 'is equal to', 'surecart' ),
         'value': '=='
     },
     {
-        'label': 'is not equal to',
+        'label': __( 'is not equal to', 'surecart' ),
         'value': '!='
     },
     {
-        'label': 'is greater than',
+        'label': __( 'is greater than', 'surecart' ),
         'value': '>'
     },
     {
-        'label': 'is less than',
+        'label': __( 'is less than', 'surecart' ),
         'value': '<'
     },
     {
-        'label': 'is greater or equal to',
+        'label': __( 'is greater or equal to', 'surecart' ),
         'value': '>='
     },
     {
-        'label': 'is less or equal to',
+        'label': __( 'is less or equal to', 'surecart' ),
         'value': '<='
     }
   ];
@@ -111,7 +111,7 @@ function Conditions( props ) {
         'fields': [
             {
                 'type': 'products',
-                'placeholder': 'Search for products..',
+                'placeholder': __( 'Search for products..', 'surecart' ),
                 'isMulti': true
             }
         ]

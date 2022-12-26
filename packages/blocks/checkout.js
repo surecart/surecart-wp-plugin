@@ -34,6 +34,7 @@ import * as subtotal from '@blocks/Subtotal';
 import * as switchBlock from '@blocks/Switch';
 import * as total from '@blocks/Total';
 import * as totals from '@blocks/Totals';
+import * as conditionalForm from '@blocks/ConditionalForm';
 
 registerBlocks([
 	button,
@@ -69,4 +70,5 @@ registerBlocks([
 	switchBlock,
 	total,
 	totals,
+  conditionalForm,
 ]);

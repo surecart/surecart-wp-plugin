@@ -412,8 +412,8 @@ const Rules = ( props ) => {
       );
 			} )
     }
-    <Button variant='secondary' onClick={closeModal}>Cancel</Button>
-    <Button variant="primary" type='submit'>Save</Button>
+    <Button variant='secondary' onClick={closeModal}>{ __( 'Cancel', 'surecart' ) }</Button>
+    <Button variant="primary" type='submit'>{ __( 'Save', 'surecart' ) }</Button>
     </form>
 		</>
 	);

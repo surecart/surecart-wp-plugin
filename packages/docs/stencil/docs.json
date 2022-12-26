@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-12-20T14:43:11",
+  "timestamp": "2022-12-23T10:19:42",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -5103,6 +5103,31 @@
           "default": "''",
           "values": [
             {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "selectedProcessorId",
+          "type": "\"paypal\" | \"paypal-card\" | \"stripe\"",
+          "mutable": false,
+          "attr": "selected-processor-id",
+          "reflectToAttr": false,
+          "docs": "The currently selected processor",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "paypal",
+              "type": "string"
+            },
+            {
+              "value": "paypal-card",
+              "type": "string"
+            },
+            {
+              "value": "stripe",
               "type": "string"
             }
           ],

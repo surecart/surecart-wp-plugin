@@ -27,7 +27,6 @@ import * as dashboardPage from '@blocks/Dashboard/DashboardPage';
 import * as dashboardPages from '@blocks/Dashboard/DashboardPages';
 import * as dashboardTab from '@blocks/Dashboard/DashboardTab';
 import * as dashboardTabs from '@blocks/Dashboard/DashboardTabs';
-import * as conditionalForm from '@blocks/ConditionalForm';
 
 registerBlocks([
 	checkout,
@@ -51,5 +50,4 @@ registerBlocks([
 	dashboardPages,
 	dashboardTab,
 	dashboardTabs,
-  conditionalForm,
 ]);
