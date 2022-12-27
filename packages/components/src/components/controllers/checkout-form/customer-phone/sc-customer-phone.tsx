@@ -1,6 +1,7 @@
 import { Customer, Checkout } from '../../../../types';
 import { Component, Prop, h, Event, EventEmitter, Watch, Method } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
+import { __ } from '@wordpress/i18n';
 
 @Component({
   tag: 'sc-customer-phone',
@@ -61,6 +62,9 @@ export class ScCustomerPhone {
   /** Inputs focus */
   @Prop({ mutable: true, reflect: true }) hasFocus: boolean;
 
+  /** Error focus */
+  @Prop({ mutable: true }) error: boolean;
+
   /** Emitted when the control's value changes. */
   @Event({ composed: true }) scChange: EventEmitter<void>;
 
@@ -81,15 +85,15 @@ export class ScCustomerPhone {
   @Event() scUpdateCustomer: EventEmitter<{ phone: string }>;
 
   async handleChange() {
-    let regExp = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-    let phone  = this.input.value.match(regExp);
-    
-    if ( phone ) {
-      console.log('Valid Phone');
-      return true;
+    let phoneNo = this.input.value;
+    this.scChange.emit();
+
+    let pattern = new RegExp(/[0-9\\-\\+]+$/);
+
+    if ( pattern.test(phoneNo) ) {
+      this.error = false;
     } else {
-      console.log('Invalid Phone');
-      return false;
+      this.error = true;
     }
   }
 
@@ -110,26 +114,33 @@ export class ScCustomerPhone {
 
   render() {
     return (
-      <sc-input
-        type="tel"
-        name="phone"
-        ref={el => (this.input = el as HTMLScInputElement)}
-        value={this.customer?.phone || this.value}
-        disabled={!!this.loggedIn}
-        label={this.label}
-        help={this.help}
-        autocomplete="phone"
-        placeholder={this.placeholder}
-        readonly={this.readonly}
-        required={this.required}
-        invalid={this.invalid}
-        autofocus={this.autofocus}
-        hasFocus={this.hasFocus}
-        onScChange={() => this.handleChange()}
-        onScInput={() => this.scInput.emit()}
-        onScFocus={() => this.scFocus.emit()}
-        onScBlur={() => this.scBlur.emit()}
-      ></sc-input>
+      <div
+        class={{
+          'phone--invalid': this.error,
+        }}
+      >
+        <sc-input
+          type="tel"
+          name="phone"
+          ref={el => (this.input = el as HTMLScInputElement)}
+          value={this.customer?.phone || this.value}
+          disabled={!!this.loggedIn}
+          label={this.label}
+          help={this.help}
+          autocomplete="phone"
+          placeholder={this.placeholder}
+          readonly={this.readonly}
+          required={this.required}
+          invalid={this.invalid}
+          autofocus={this.autofocus}
+          hasFocus={this.hasFocus}
+          onScChange={() => this.handleChange()}
+          onScInput={() => this.scInput.emit()}
+          onScFocus={() => this.scFocus.emit()}
+          onScBlur={() => this.scBlur.emit()}
+          style={{'--sc-input-border-color': this.error ? '#dc2626' : '', '--sc-input-border-color-focus': !!this.error ? '#dc2626' : ''}}
+        ></sc-input>
+      </div>
     );
   }
 }
