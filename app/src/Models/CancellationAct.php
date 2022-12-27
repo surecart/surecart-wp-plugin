@@ -2,10 +2,14 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasSubscription;
+
 /**
  * Cancellation Reason Model
  */
 class CancellationAct extends Model {
+	use HasSubscription;
+
 	/**
 	 * Rest API endpoint
 	 *
@@ -19,4 +23,35 @@ class CancellationAct extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'cancellation_act';
+
+	/**
+	 * Set the product attribute
+	 *
+	 * @param  string $value Product properties.
+	 * @return void
+	 */
+	public function setCancellationReasonAttribute( $value ) {
+		$this->setRelation( 'cancellation_reason', $value, CancellationReason::class );
+	}
+
+	/**
+	 * Get the relation id attribute
+	 *
+	 * @return string
+	 */
+	public function getCancellationReasonIdAttribute() {
+		return $this->getRelationId( 'cancellation_reason' );
+	}
+
+	/**
+	 * Get stats for the order.
+	 *
+	 * @param array $args Array of arguments for the statistics.
+	 *
+	 * @return \SureCart\Models\Statistic;
+	 */
+	protected function stats( $args = [] ) {
+		$stat = new Statistic();
+		return $stat->where( $args )->find( 'cancellation_acts' );
+	}
 }
