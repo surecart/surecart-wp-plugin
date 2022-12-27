@@ -139,6 +139,7 @@ export const ScSubscription = /*@__PURE__*/createReactComponent<JSX.ScSubscripti
 export const ScSubscriptionAdHocConfirm = /*@__PURE__*/createReactComponent<JSX.ScSubscriptionAdHocConfirm, HTMLScSubscriptionAdHocConfirmElement>('sc-subscription-ad-hoc-confirm');
 export const ScSubscriptionCancel = /*@__PURE__*/createReactComponent<JSX.ScSubscriptionCancel, HTMLScSubscriptionCancelElement>('sc-subscription-cancel');
 export const ScSubscriptionDetails = /*@__PURE__*/createReactComponent<JSX.ScSubscriptionDetails, HTMLScSubscriptionDetailsElement>('sc-subscription-details');
+export const ScSubscriptionNextPayment = /*@__PURE__*/createReactComponent<JSX.ScSubscriptionNextPayment, HTMLScSubscriptionNextPaymentElement>('sc-subscription-next-payment');
 export const ScSubscriptionPayment = /*@__PURE__*/createReactComponent<JSX.ScSubscriptionPayment, HTMLScSubscriptionPaymentElement>('sc-subscription-payment');
 export const ScSubscriptionPaymentMethod = /*@__PURE__*/createReactComponent<JSX.ScSubscriptionPaymentMethod, HTMLScSubscriptionPaymentMethodElement>('sc-subscription-payment-method');
 export const ScSubscriptionRenew = /*@__PURE__*/createReactComponent<JSX.ScSubscriptionRenew, HTMLScSubscriptionRenewElement>('sc-subscription-renew');

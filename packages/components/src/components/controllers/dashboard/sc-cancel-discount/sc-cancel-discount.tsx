@@ -8,6 +8,7 @@ import { replaceAmount } from './functions';
 
 @Component({
   tag: 'sc-cancel-discount',
+  styleUrl: 'sc-cancel-discount.scss',
   shadow: true,
 })
 export class ScCancelDiscount {
@@ -21,6 +22,9 @@ export class ScCancelDiscount {
   @State() error: ResponseError;
 
   replaceAmount(string) {
+    if (!this.protocol?.preservation_coupon) {
+      return string;
+    }
     return replaceAmount(string, 'amount', getHumanDiscount(this.protocol?.preservation_coupon as Coupon));
   }
 
@@ -46,19 +50,23 @@ export class ScCancelDiscount {
   }
 
   render() {
-    const { preserve_title, preserve_description, preserve_button, cancel_link } = this.protocol?.preservation_locales;
+    const { preserve_title, preserve_description, preserve_button, cancel_link } = this.protocol?.preservation_locales || {};
 
     return (
-      <sc-dashboard-module heading={this.replaceAmount(preserve_title)}>
-        <span slot="description">{this.replaceAmount(preserve_description)}</span>
-        <sc-button type="primary" onClick={() => this.addDiscount()}>
-          {preserve_button}
-        </sc-button>
-        <sc-button type="text" onClick={() => this.scCancel.emit()}>
-          {cancel_link}
-        </sc-button>
-        {!!this.loading && <sc-block-ui spinner />}
-      </sc-dashboard-module>
+      <div class="cancel-discount">
+        <sc-dashboard-module heading={this.replaceAmount(preserve_title)} style={{ '--sc-dashboard-module-spacing': '2em' }}>
+          <span slot="description">{this.replaceAmount(preserve_description)}</span>
+          <sc-flex justifyContent="flex-start">
+            <sc-button type="primary" onClick={() => this.addDiscount()}>
+              {preserve_button}
+            </sc-button>
+            <sc-button class="cancel-discount__abort-link" type="text" onClick={() => this.scCancel.emit()}>
+              {cancel_link}
+            </sc-button>
+          </sc-flex>
+          {!!this.loading && <sc-block-ui spinner />}
+        </sc-dashboard-module>
+      </div>
     );
   }
 }

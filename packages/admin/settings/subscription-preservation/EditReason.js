@@ -136,7 +136,9 @@ export default ({ onRequestClose, reason }) => {
 				)}
 				<ScFlex alignItems="center" justifyContent="flex-start">
 					<ScButton type="primary" submit busy={busy}>
-						{__('Create', 'surecart')}
+						{reason
+							? __('Update', 'surecart')
+							: __('Create', 'surecart')}
 					</ScButton>
 					<ScButton type="text" onClick={onRequestClose}>
 						{__('Cancel', 'surecart')}

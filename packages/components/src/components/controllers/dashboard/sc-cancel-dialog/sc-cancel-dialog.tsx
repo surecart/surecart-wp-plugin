@@ -16,6 +16,7 @@ export class ScCancelDialog {
   @State() step: 'cancel' | 'survey' | 'discount' | 'discount-complete' = 'cancel';
   @State() comment: string;
   @Event({ cancelable: true }) scRequestClose: EventEmitter<'close-button' | 'keyboard' | 'overlay'>;
+  @Event() scRefresh: EventEmitter<void>;
 
   close() {
     this.reset();
@@ -33,7 +34,15 @@ export class ScCancelDialog {
 
   render() {
     return (
-      <sc-dialog style={{ '--width': '645px', '--body-spacing': 'var(--sc-spacing-xx-large)' }} noHeader open={this.open} onScRequestClose={() => this.close()}>
+      <sc-dialog
+        style={{
+          '--width': this.step === 'survey' ? '675px' : '500px',
+          '--body-spacing': 'var(--sc-spacing-xxx-large)',
+        }}
+        noHeader
+        open={this.open}
+        onScRequestClose={() => this.close()}
+      >
         <div
           class={{
             cancel: true,
@@ -42,7 +51,17 @@ export class ScCancelDialog {
           <sc-button class="close__button" type="text" circle onClick={() => this.close()}>
             <sc-icon name="x" />
           </sc-button>
-          {this.step === 'cancel' && <sc-subscription-cancel subscription={this.subscription} protocol={this.protocol} onScAbandon={() => this.close()} />}
+          {this.step === 'cancel' && (
+            <sc-subscription-cancel
+              subscription={this.subscription}
+              protocol={this.protocol}
+              onScAbandon={() => this.close()}
+              onScCancelled={() => {
+                this.scRefresh.emit();
+                this.close();
+              }}
+            />
+          )}
           {this.step === 'survey' && (
             <sc-cancel-survey
               protocol={this.protocol}
@@ -62,7 +81,10 @@ export class ScCancelDialog {
               reason={this.reason}
               comment={this.comment}
               onScCancel={() => (this.step = 'cancel')}
-              onScPreserved={() => this.close()}
+              onScPreserved={() => {
+                this.scRefresh.emit();
+                this.close();
+              }}
             />
           )}
         </div>

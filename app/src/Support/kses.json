@@ -112,6 +112,7 @@
   },
   "sc-cancel-survey": {
     "protocol": true,
+    "reasons": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1479,6 +1480,13 @@
   "sc-subscription-details": {
     "hide-renewal-text": true,
     "pending-price": true,
+    "subscription": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-subscription-next-payment": {
     "subscription": true,
     "style": true,
     "id": true,

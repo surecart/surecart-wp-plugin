@@ -44,6 +44,7 @@
 
 ### Used by
 
+ - [sc-cancel-dialog](../../controllers/dashboard/sc-cancel-dialog)
  - [sc-login-provider](../../providers/sc-login-provider)
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
 
@@ -58,6 +59,7 @@ graph TD;
   sc-dialog --> sc-button
   sc-dialog --> sc-icon
   sc-button --> sc-spinner
+  sc-cancel-dialog --> sc-dialog
   sc-login-provider --> sc-dialog
   sc-subscription-details --> sc-dialog
   style sc-dialog fill:#f9f,stroke:#333,stroke-width:4px

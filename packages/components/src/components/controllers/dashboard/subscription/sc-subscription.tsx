@@ -1,4 +1,4 @@
-import { Component, Element, h, Prop, State } from '@stencil/core';
+import { Component, Element, Fragment, h, Prop, State } from '@stencil/core';
 import { sprintf, __ } from '@wordpress/i18n';
 import { addQueryArgs, getQueryArg } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
@@ -35,7 +35,9 @@ export class ScSubscription {
 
   componentWillLoad() {
     onFirstVisible(this.el, () => {
-      this.getSubscription();
+      if (!this.subscription) {
+        this.getSubscription();
+      }
     });
   }
 
@@ -67,11 +69,10 @@ export class ScSubscription {
 
   /** Get all subscriptions */
   async getSubscription() {
-    if (this.subscription) return;
     try {
       this.loading = true;
       this.subscription = (await await apiFetch({
-        path: addQueryArgs(`surecart/v1/subscriptions/${this.subscriptionId}`, {
+        path: addQueryArgs(`surecart/v1/subscriptions/${this.subscriptionId || this.subscription?.id}`, {
           expand: ['price', 'price.product', 'current_period'],
           ...(this.query || {}),
         }),
@@ -151,9 +152,11 @@ export class ScSubscription {
     }
 
     return (
-      <sc-stacked-list-row mobile-size={0}>
-        <sc-subscription-details subscription={this.subscription}></sc-subscription-details>
-      </sc-stacked-list-row>
+      <Fragment>
+        <sc-subscription-next-payment subscription={this.subscription}>
+          <sc-subscription-details subscription={this.subscription}></sc-subscription-details>
+        </sc-subscription-next-payment>
+      </Fragment>
     );
   }
 
@@ -202,13 +205,19 @@ export class ScSubscription {
           </sc-flex>
         )}
 
-        <sc-card no-padding style={{ '--overflow': 'hidden' }}>
-          <sc-stacked-list>{this.renderContent()}</sc-stacked-list>
+        <sc-card style={{ '--overflow': 'hidden' }} noPadding>
+          {this.renderContent()}
         </sc-card>
 
         {this.busy && <sc-block-ui spinner></sc-block-ui>}
 
-        <sc-cancel-dialog subscription={this.subscription} protocol={this.protocol} open={this.cancelModal} onScRequestClose={() => (this.cancelModal = false)} />
+        <sc-cancel-dialog
+          subscription={this.subscription}
+          protocol={this.protocol}
+          open={this.cancelModal}
+          onScRequestClose={() => (this.cancelModal = false)}
+          onScRefresh={() => this.getSubscription()}
+        />
       </sc-dashboard-module>
     );
   }

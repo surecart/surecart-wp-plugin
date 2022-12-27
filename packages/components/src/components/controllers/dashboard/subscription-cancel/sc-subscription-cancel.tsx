@@ -19,6 +19,7 @@ export class ScSubscriptionCancel {
   @State() busy: boolean;
   @State() error: string;
   @Event() scAbandon: EventEmitter<void>;
+  @Event() scCancelled: EventEmitter<void>;
 
   async cancelSubscription() {
     try {
@@ -28,11 +29,7 @@ export class ScSubscriptionCancel {
         path: `/surecart/v1/subscriptions/${this.subscription?.id}/cancel`,
         method: 'PATCH',
       });
-      if (this.successUrl) {
-        window.location.assign(this.successUrl);
-      } else {
-        this.busy = false;
-      }
+      this.scCancelled.emit();
     } catch (e) {
       this.error = e?.message || __('Something went wrong', 'surecart');
       this.busy = false;
@@ -47,22 +44,16 @@ export class ScSubscriptionCancel {
     return (
       <Fragment>
         {this?.protocol?.cancel_behavior === 'pending' ? (
-          <sc-alert type="info" open>
+          <div slot="description">
             {__('Your plan will be canceled, but is still available until the end of your billing period on', 'surecart')}{' '}
             <strong>
               <sc-format-date type="timestamp" date={this?.subscription?.current_period_end_at as number} month="long" day="numeric" year="numeric"></sc-format-date>
             </strong>
             . {__('If you change your mind, you can renew your subscription.', 'surecart')}
-          </sc-alert>
+          </div>
         ) : (
-          <sc-alert type="info" open>
-            {__('Your plan will be canceled immediately. You cannot change your mind.', 'surecart')}
-          </sc-alert>
+          <div slot="description">{__('Your plan will be canceled immediately. You cannot change your mind.', 'surecart')}</div>
         )}
-
-        <sc-card>
-          <sc-subscription-details subscription={this?.subscription}></sc-subscription-details>
-        </sc-card>
       </Fragment>
     );
   }
@@ -79,7 +70,12 @@ export class ScSubscriptionCancel {
 
   render() {
     return (
-      <sc-dashboard-module heading={this.heading || __('Cancel your plan', 'surecart')} class="subscription-cancel" error={this.error}>
+      <sc-dashboard-module
+        heading={this.heading || __('Cancel your plan', 'surecart')}
+        class="subscription-cancel"
+        error={this.error}
+        style={{ '--sc-dashboard-module-spacing': '1em' }}
+      >
         {this.renderContent()}
 
         <sc-flex justifyContent="flex-start">
@@ -94,7 +90,7 @@ export class ScSubscriptionCancel {
             loading={this.loading || this.busy}
             disabled={this.loading || this.busy}
           >
-            {__('No Thanks', 'surecart')}
+            {__('Keep My Plan', 'surecart')}
           </sc-button>
         </sc-flex>
 

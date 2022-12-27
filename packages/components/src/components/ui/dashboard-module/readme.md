@@ -34,6 +34,8 @@
 
 ### Used by
 
+ - [sc-cancel-discount](../../controllers/dashboard/sc-cancel-discount)
+ - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-customer-details](../customer-details)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
@@ -68,6 +70,8 @@
 graph TD;
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon
+  sc-cancel-discount --> sc-dashboard-module
+  sc-cancel-survey --> sc-dashboard-module
   sc-charges-list --> sc-dashboard-module
   sc-customer-details --> sc-dashboard-module
   sc-customer-edit --> sc-dashboard-module
