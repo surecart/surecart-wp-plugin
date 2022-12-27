@@ -108,6 +108,7 @@ class CustomerLinkService {
 				'user_email' => $this->checkout->customer->email ?? $this->checkout->email ?? null,
 				'first_name' => $this->checkout->customer->first_name ?? null,
 				'last_name'  => $this->checkout->customer->last_name ?? null,
+				'phone'      => $this->checkout->customer->phone ?? null,
 			]
 		);
 

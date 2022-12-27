@@ -114,33 +114,27 @@ export class ScCustomerPhone {
 
   render() {
     return (
-      <div
-        class={{
-          'phone--invalid': this.error,
-        }}
-      >
-        <sc-input
-          type="tel"
-          name="phone"
-          ref={el => (this.input = el as HTMLScInputElement)}
-          value={this.customer?.phone || this.value}
-          disabled={!!this.loggedIn}
-          label={this.label}
-          help={this.help}
-          autocomplete="phone"
-          placeholder={this.placeholder}
-          readonly={this.readonly}
-          required={this.required}
-          invalid={this.invalid}
-          autofocus={this.autofocus}
-          hasFocus={this.hasFocus}
-          onScChange={() => this.handleChange()}
-          onScInput={() => this.scInput.emit()}
-          onScFocus={() => this.scFocus.emit()}
-          onScBlur={() => this.scBlur.emit()}
-          style={{'--sc-input-border-color': this.error ? '#dc2626' : '', '--sc-input-border-color-focus': !!this.error ? '#dc2626' : ''}}
-        ></sc-input>
-      </div>
+      <sc-input
+        type="tel"
+        name="phone"
+        ref={el => (this.input = el as HTMLScInputElement)}
+        value={this.customer?.phone || this.value}
+        disabled={!!this.loggedIn}
+        label={this.label}
+        help={this.help}
+        autocomplete="phone"
+        placeholder={this.placeholder}
+        readonly={this.readonly}
+        required={this.required}
+        invalid={this.invalid}
+        autofocus={this.autofocus}
+        hasFocus={this.hasFocus}
+        onScChange={() => this.handleChange()}
+        onScInput={() => this.scInput.emit()}
+        onScFocus={() => this.scFocus.emit()}
+        onScBlur={() => this.scBlur.emit()}
+        style={{'--sc-input-border-color': this.error ? '#dc2626' : '', '--sc-input-border-color-focus': !!this.error ? '#dc2626' : ''}}
+      ></sc-input>
     );
   }
 }

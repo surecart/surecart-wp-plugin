@@ -72,7 +72,7 @@ export default ({ customer, updateCustomer, loading }) => {
             />
           </ScColumn>
           <ScColumn>
-            <sc-customer-phone
+            <ScInput
               label={__('Phone', 'surecart')}
               className="sc-customer-phone"
               help={__('Your customer\'s phone number.', 'surecart')}
