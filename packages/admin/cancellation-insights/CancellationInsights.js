@@ -6,13 +6,10 @@ import { ScFlex, ScIcon, ScSwitch, ScTag } from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useState, useEffect } from '@wordpress/element';
-import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
 import Error from '../components/Error';
 import Stat from '../ui/Stat';
 import Tab from '../ui/Tab';
 import { averageProperties, totalProperties } from './util';
-import { getFormattedPrice } from '../util';
 import { getFilterData } from '../util/filter';
 import { CancellationReasonStats } from './CancellationReasonStats';
 
@@ -24,27 +21,7 @@ export default () => {
 	const [filter, setFilter] = useState('30days');
 	const [liveMode, setLiveMode] = useState(false);
 
-	const { cancellation_reasons, is_reasons_loading } = useSelect((select) => {
-		const reasonsQueryArgs = ['surecart', 'cancellation_reason'];
-
-		return {
-			cancellation_reasons: select(coreStore).getEntityRecords(
-				...reasonsQueryArgs
-			),
-			is_reasons_loading: select(coreStore).isResolving(
-				'getEntityRecords',
-				reasonsQueryArgs
-			),
-		};
-	});
-
-	console.log(
-		'cancellation_reasons',
-		cancellation_reasons,
-		is_reasons_loading
-	);
-
-	const getCancellationData = async () => {
+	const getCancellationActsData = async () => {
 		const { startDate, endDate, prevEndDate, prevStartDate, interval } =
 			getFilterData(filter);
 
@@ -68,7 +45,7 @@ export default () => {
 	};
 
 	useEffect(() => {
-		getCancellationData();
+		getCancellationActsData();
 	}, [filter]);
 
 	const fetchCurrent = async ({ startDate, endDate, interval }) => {
@@ -97,34 +74,26 @@ export default () => {
 		return data;
 	};
 
-	const badge = ({ previous, current, currency = false }) => {
-		// if (!hasAccess) {
-		// 	return <ScTag type="success">{__('Pro', 'surecart')}</ScTag>;
-		// }
-
+	const badge = ({ previous, current, reverse = false }) => {
 		if (loading) return null;
 
 		let percentage;
-		if (currency) {
-			console.log(Math.abs(current - previous));
-			percentage = getFormattedPrice({
-				amount: Math.abs(current - previous),
-				currency: scData.currency_code,
-			});
-		} else {
-			percentage =
-				Math.abs(
-					((current - previous) / (previous || 1)) * 100.0
-				).toLocaleString('fullwide', { maximumFractionDigits: 0 }) +
-				'%';
-		}
+
+		percentage =
+			Math.abs(
+				((current - previous) / (previous || 1)) * 100.0
+			).toLocaleString('fullwide', { maximumFractionDigits: 0 }) + '%';
 
 		let type, icon;
 		if (previous === current) {
 			type = 'default';
 			icon = 'bar-chart';
 		} else {
-			type = previous < current ? 'success' : 'danger';
+			if (reverse) {
+				type = previous < current ? 'danger' : 'success';
+			} else {
+				type = previous < current ? 'success' : 'danger';
+			}
 			icon = previous < current ? 'arrow-up-right' : 'arrow-down-right';
 		}
 
@@ -225,7 +194,7 @@ export default () => {
 
 					// 2 col, wide mobile.
 					@media screen and (min-width: 1280px) {
-						grid-template-columns: 5fr 2fr;
+						grid-template-columns: 6fr 2fr;
 					}
 
 					gap: 1.5em;
@@ -243,11 +212,19 @@ export default () => {
 
 						// 3 col, desktop.
 						@media screen and (min-width: 1280px) {
-							grid-template-columns: repeat(2, 1fr);
+							grid-template-columns: repeat(3, 1fr);
 						}
 						gap: 1.5em;
 					`}
 				>
+					{/* Order
+						// Cancellations Attempts
+						// Preserved Count
+						// Preserved By Coupon
+						// Total Lost
+						// Preserved Rate %
+						// Preserved Rate By Coupon %
+					*/}
 					<Stat
 						title={__('Cancellation Attempts', 'surecart')}
 						description={__(
@@ -265,10 +242,7 @@ export default () => {
 
 					<Stat
 						title={__('Preserved Count', 'surecart')}
-						description={__(
-							'Total Preserved Cancellations Count',
-							'surecart'
-						)}
+						description={__('Total Preserved Count', 'surecart')}
 						loading={loading}
 						compare={badge({
 							current: totalProperties('preserved_count', data),
@@ -284,24 +258,40 @@ export default () => {
 					<Stat
 						title={__('Preserved By Coupon', 'surecart')}
 						description={__(
-							'Percentage of Preserved By Coupon',
+							'Total Preserved By Coupon',
 							'surecart'
 						)}
 						loading={loading}
 						compare={badge({
-							current: averageProperties(
-								'coupon_applied_rate',
+							current: totalProperties(
+								'coupon_applied_count',
 								data
 							),
-							previous: averageProperties(
-								'coupon_applied_rate',
+							previous: totalProperties(
+								'coupon_applied_count',
 								previous
 							),
 						})}
 					>
-						{`${Math.round(
-							averageProperties('coupon_applied_rate', data) * 100
-						)}%`}
+						{totalProperties('coupon_applied_count', data)}
+					</Stat>
+
+					<Stat
+						title={__('Total Lost', 'surecart')}
+						description={__('Total Lost Cancellations', 'surecart')}
+						loading={loading}
+						compare={badge({
+							current:
+								totalProperties('count', data) -
+								totalProperties('preserved_count', data),
+							previous:
+								totalProperties('count', previous) -
+								totalProperties('preserved_count', previous),
+							reverse: true,
+						})}
+					>
+						{totalProperties('count', data) -
+							totalProperties('preserved_count', data)}
 					</Stat>
 
 					<Stat
@@ -320,18 +310,32 @@ export default () => {
 							averageProperties('preserved_rate', data) * 100
 						)}%`}
 					</Stat>
+
+					<Stat
+						title={__('Preserved Rate By Coupon', 'surecart')}
+						description={__(
+							'Percentage of Preserved Rate By Coupon',
+							'surecart'
+						)}
+						loading={loading}
+						compare={badge({
+							current: averageProperties(
+								'coupon_applied_rate',
+								data
+							),
+							previous: averageProperties(
+								'coupon_applied_rate',
+								data
+							),
+						})}
+					>
+						{`${Math.round(
+							averageProperties('coupon_applied_rate', data) * 100
+						)}%`}
+					</Stat>
 				</div>
 
-				<CancellationReasonStats
-					reasons={[
-						{ label: 'Too expensive', count: 30 },
-						{ label: 'Switching to another product', count: 18 },
-						{ label: 'Shutting down the company', count: 8 },
-						{ label: 'Technical issues', count: 56 },
-						{ label: 'Others', count: 22 },
-						{ label: 'No reason selected', count: 3 },
-					]}
-				/>
+				<CancellationReasonStats reasons={[]} />
 			</div>
 		</div>
 	);
