@@ -87,6 +87,8 @@ class SubscriptionController extends BaseController {
 				'current_period',
 				'period.checkout',
 				'purchase',
+				'discount',
+				'discount.coupon',
 				'purchase.license',
 				'license.activations',
 			]
@@ -112,7 +114,7 @@ class SubscriptionController extends BaseController {
 					[
 						'heading'      => __( 'Current Plan', 'surecart' ),
 						'showCancel'   => \SureCart::account()->portal_protocol->subscription_cancellations_enabled && ! $subscription->remaining_period_count,
-						'protocol'     => \SureCart::account()->subscription_protocol,
+						'protocol'     => SubscriptionProtocol::with( [ 'preservation_coupon' ] )->find(), // \SureCart::account()->subscription_protocol,
 						'subscription' => $subscription,
 					]
 				)->render()
@@ -162,6 +164,8 @@ class SubscriptionController extends BaseController {
 				'price.product',
 				'current_period',
 				'period.checkout',
+				'discount',
+				'discount.coupon',
 			]
 		)->find( $id );
 

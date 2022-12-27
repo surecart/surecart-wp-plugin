@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export namespace Components {
     interface ScAddress {
         /**
@@ -182,6 +182,15 @@ export namespace Components {
         "open": boolean;
         "protocol": SubscriptionProtocol;
         "subscription": Subscription;
+    }
+    interface ScCancelDiscount {
+        "comment": string;
+        "protocol": SubscriptionProtocol;
+        "reason": CancellationReason;
+        "subscription": Subscription;
+    }
+    interface ScCancelSurvey {
+        "protocol": SubscriptionProtocol;
     }
     interface ScCard {
         /**
@@ -2875,6 +2884,10 @@ export namespace Components {
          */
         "spellcheck": boolean;
         /**
+          * Sets focus on the input.
+         */
+        "triggerFocus": (options?: FocusOptions) => Promise<void>;
+        /**
           * The textarea's value attribute.
          */
         "value": string;
@@ -3001,6 +3014,14 @@ export interface ScButtonCustomEvent<T> extends CustomEvent<T> {
 export interface ScCancelDialogCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScCancelDialogElement;
+}
+export interface ScCancelDiscountCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCancelDiscountElement;
+}
+export interface ScCancelSurveyCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCancelSurveyElement;
 }
 export interface ScCartHeaderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -3276,6 +3297,18 @@ declare global {
     var HTMLScCancelDialogElement: {
         prototype: HTMLScCancelDialogElement;
         new (): HTMLScCancelDialogElement;
+    };
+    interface HTMLScCancelDiscountElement extends Components.ScCancelDiscount, HTMLStencilElement {
+    }
+    var HTMLScCancelDiscountElement: {
+        prototype: HTMLScCancelDiscountElement;
+        new (): HTMLScCancelDiscountElement;
+    };
+    interface HTMLScCancelSurveyElement extends Components.ScCancelSurvey, HTMLStencilElement {
+    }
+    var HTMLScCancelSurveyElement: {
+        prototype: HTMLScCancelSurveyElement;
+        new (): HTMLScCancelSurveyElement;
     };
     interface HTMLScCardElement extends Components.ScCard, HTMLStencilElement {
     }
@@ -4163,6 +4196,8 @@ declare global {
         "sc-button": HTMLScButtonElement;
         "sc-button-group": HTMLScButtonGroupElement;
         "sc-cancel-dialog": HTMLScCancelDialogElement;
+        "sc-cancel-discount": HTMLScCancelDiscountElement;
+        "sc-cancel-survey": HTMLScCancelSurveyElement;
         "sc-card": HTMLScCardElement;
         "sc-cart": HTMLScCartElement;
         "sc-cart-form": HTMLScCartFormElement;
@@ -4503,6 +4538,19 @@ declare namespace LocalJSX {
         "open"?: boolean;
         "protocol"?: SubscriptionProtocol;
         "subscription"?: Subscription;
+    }
+    interface ScCancelDiscount {
+        "comment"?: string;
+        "onScCancel"?: (event: ScCancelDiscountCustomEvent<void>) => void;
+        "onScPreserved"?: (event: ScCancelDiscountCustomEvent<void>) => void;
+        "protocol"?: SubscriptionProtocol;
+        "reason"?: CancellationReason;
+        "subscription"?: Subscription;
+    }
+    interface ScCancelSurvey {
+        "onScAbandon"?: (event: ScCancelSurveyCustomEvent<void>) => void;
+        "onScSubmitReason"?: (event: ScCancelSurveyCustomEvent<{ reason: CancellationReason; comment: string }>) => void;
+        "protocol"?: SubscriptionProtocol;
     }
     interface ScCard {
         /**
@@ -7189,7 +7237,7 @@ declare namespace LocalJSX {
     interface ScSubscriptionCancel {
         "backUrl"?: string;
         "heading"?: string;
-        "onScRequestClose"?: (event: ScSubscriptionCancelCustomEvent<'close-button' | 'keyboard' | 'overlay'>) => void;
+        "onScAbandon"?: (event: ScSubscriptionCancelCustomEvent<void>) => void;
         "protocol"?: SubscriptionProtocol;
         "subscription"?: Subscription;
         "successUrl"?: string;
@@ -7647,6 +7695,8 @@ declare namespace LocalJSX {
         "sc-button": ScButton;
         "sc-button-group": ScButtonGroup;
         "sc-cancel-dialog": ScCancelDialog;
+        "sc-cancel-discount": ScCancelDiscount;
+        "sc-cancel-survey": ScCancelSurvey;
         "sc-card": ScCard;
         "sc-cart": ScCart;
         "sc-cart-form": ScCartForm;
@@ -7808,6 +7858,8 @@ declare module "@stencil/core" {
             "sc-button": LocalJSX.ScButton & JSXBase.HTMLAttributes<HTMLScButtonElement>;
             "sc-button-group": LocalJSX.ScButtonGroup & JSXBase.HTMLAttributes<HTMLScButtonGroupElement>;
             "sc-cancel-dialog": LocalJSX.ScCancelDialog & JSXBase.HTMLAttributes<HTMLScCancelDialogElement>;
+            "sc-cancel-discount": LocalJSX.ScCancelDiscount & JSXBase.HTMLAttributes<HTMLScCancelDiscountElement>;
+            "sc-cancel-survey": LocalJSX.ScCancelSurvey & JSXBase.HTMLAttributes<HTMLScCancelSurveyElement>;
             "sc-card": LocalJSX.ScCard & JSXBase.HTMLAttributes<HTMLScCardElement>;
             "sc-cart": LocalJSX.ScCart & JSXBase.HTMLAttributes<HTMLScCartElement>;
             "sc-cart-form": LocalJSX.ScCartForm & JSXBase.HTMLAttributes<HTMLScCartFormElement>;

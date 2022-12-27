@@ -291,7 +291,7 @@ class Subscription extends Model {
 	 * @return $this|\WP_Error
 	 */
 	protected function upcomingPeriod( $args = [] ) {
-		if ( $args['id'] ) {
+		if ( ! empty( $args['id'] ) ) {
 			$this->setAttribute( 'id', $args['id'] );
 			unset( $args['id'] );
 		}
@@ -304,17 +304,28 @@ class Subscription extends Model {
 			return new \WP_Error( 'not_saved', 'Please create the subscription' );
 		}
 
-		$upcoming_period = \SureCart::request(
-			$this->endpoint . '/' . $this->attributes['id'] . '/upcoming_period/',
+		// $upcoming_period = \SureCart::request(
+		// $this->endpoint . '/' . $this->attributes['id'] . '/upcoming_period/',
+		// [
+		// 'method' => 'PATCH',
+		// 'query'  => array_merge(
+		// $this->query,
+		// ),
+		// 'body'   => [
+		// $this->object_name => $args,
+		// ],
+		// ]
+		// );
+
+		$upcoming_period = $this->makeRequest(
 			[
 				'method' => 'PATCH',
-				'query'  => array_merge(
-					$this->query,
-				),
+				'query'  => $this->query,
 				'body'   => [
 					$this->object_name => $args,
 				],
-			]
+			],
+			$this->endpoint . '/' . $this->attributes['id'] . '/upcoming_period/'
 		);
 
 		if ( is_wp_error( $upcoming_period ) ) {

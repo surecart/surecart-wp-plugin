@@ -1,6 +1,6 @@
-import { Component, Event, EventEmitter, Fragment, h, Prop } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { Subscription, SubscriptionProtocol } from '../../../../types';
+import { CancellationReason, Subscription, SubscriptionProtocol } from '../../../../types';
 
 @Component({
   tag: 'sc-cancel-dialog',
@@ -11,41 +11,60 @@ export class ScCancelDialog {
   @Prop() open: boolean;
   @Prop() protocol: SubscriptionProtocol;
   @Prop() subscription: Subscription;
+  @State() reasons: CancellationReason[];
+  @State() reason: CancellationReason;
+  @State() step: 'cancel' | 'survey' | 'discount' | 'discount-complete' = 'cancel';
+  @State() comment: string;
   @Event({ cancelable: true }) scRequestClose: EventEmitter<'close-button' | 'keyboard' | 'overlay'>;
 
-  renderContent() {
-    return <sc-subscription-cancel subscription={this.subscription} protocol={this.protocol} onScRequestClose={e => this.scRequestClose.emit(e.detail)} />;
-    // if (!this.protocol.preservation_enabled) {
-    //   return this.renderCancel();
-    // }
-
-    // return this.renderSurvey();
+  close() {
+    this.reset();
+    this.scRequestClose.emit('close-button');
   }
 
-  renderSurvey() {
-    return (
-      <Fragment>
-        <sc-button type="primary">{__('Continue', 'surecart')}</sc-button>
-      </Fragment>
-    );
+  reset() {
+    this.reason = null;
+    this.step = this.protocol.preservation_enabled ? 'survey' : 'cancel';
   }
 
-  renderCancel() {
-    return 'cancel';
+  componentWillLoad() {
+    this.reset();
   }
 
   render() {
     return (
-      <sc-dialog noHeader open={this.open} onScRequestClose={e => this.scRequestClose.emit(e.detail)} style={{ '--body-spacing': 'var(--sc-spacing-xx-large)' }}>
+      <sc-dialog style={{ '--width': '645px', '--body-spacing': 'var(--sc-spacing-xx-large)' }} noHeader open={this.open} onScRequestClose={() => this.close()}>
         <div
           class={{
             cancel: true,
           }}
         >
-          <sc-button class="close__button" type="text" circle onClick={() => this.scRequestClose.emit('close-button')}>
+          <sc-button class="close__button" type="text" circle onClick={() => this.close()}>
             <sc-icon name="x" />
           </sc-button>
-          {this.renderContent()}
+          {this.step === 'cancel' && <sc-subscription-cancel subscription={this.subscription} protocol={this.protocol} onScAbandon={() => this.close()} />}
+          {this.step === 'survey' && (
+            <sc-cancel-survey
+              protocol={this.protocol}
+              onScAbandon={() => this.close()}
+              onScSubmitReason={e => {
+                const { comment, reason } = e.detail;
+                this.reason = reason;
+                this.comment = comment;
+                this.step = 'discount';
+              }}
+            />
+          )}
+          {this.step === 'discount' && (
+            <sc-cancel-discount
+              protocol={this.protocol}
+              subscription={this.subscription}
+              reason={this.reason}
+              comment={this.comment}
+              onScCancel={() => (this.step = 'cancel')}
+              onScPreserved={() => this.close()}
+            />
+          )}
         </div>
       </sc-dialog>
     );

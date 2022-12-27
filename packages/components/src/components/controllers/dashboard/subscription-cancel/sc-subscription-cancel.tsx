@@ -18,7 +18,7 @@ export class ScSubscriptionCancel {
   @State() loading: boolean;
   @State() busy: boolean;
   @State() error: string;
-  @Event() scRequestClose: EventEmitter<'close-button' | 'keyboard' | 'overlay'>;
+  @Event() scAbandon: EventEmitter<void>;
 
   async cancelSubscription() {
     try {
@@ -82,20 +82,21 @@ export class ScSubscriptionCancel {
       <sc-dashboard-module heading={this.heading || __('Cancel your plan', 'surecart')} class="subscription-cancel" error={this.error}>
         {this.renderContent()}
 
-        <sc-button type="primary" full loading={this.loading || this.busy} disabled={this.loading || this.busy} onClick={() => this.cancelSubscription()}>
-          {__('Cancel Plan', 'surecart')}
-        </sc-button>
+        <sc-flex justifyContent="flex-start">
+          <sc-button type="primary" loading={this.loading || this.busy} disabled={this.loading || this.busy} onClick={() => this.cancelSubscription()}>
+            {__('Cancel Plan', 'surecart')}
+          </sc-button>
 
-        <sc-button
-          style={{ color: 'var(--sc-color-gray-500' }}
-          type="text"
-          onClick={() => this.scRequestClose.emit('close-button')}
-          full
-          loading={this.loading || this.busy}
-          disabled={this.loading || this.busy}
-        >
-          {__('No Thanks', 'surecart')}
-        </sc-button>
+          <sc-button
+            style={{ color: 'var(--sc-color-gray-500' }}
+            type="text"
+            onClick={() => this.scAbandon.emit()}
+            loading={this.loading || this.busy}
+            disabled={this.loading || this.busy}
+          >
+            {__('No Thanks', 'surecart')}
+          </sc-button>
+        </sc-flex>
 
         {this.busy && <sc-block-ui></sc-block-ui>}
       </sc-dashboard-module>

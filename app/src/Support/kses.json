@@ -100,6 +100,23 @@
     "class": true,
     "slot": true
   },
+  "sc-cancel-discount": {
+    "comment": true,
+    "protocol": true,
+    "reason": true,
+    "subscription": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-cancel-survey": {
+    "protocol": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-card": {
     "borderless": true,
     "href": true,
