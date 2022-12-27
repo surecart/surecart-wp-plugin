@@ -2,7 +2,7 @@
 
 namespace SureCart\Rest;
 
-use SureCart\Controllers\Rest\CancellationReasonsController;
+use SureCart\Controllers\Rest\CancellationActsController;
 use SureCart\Rest\RestServiceInterface;
 
 /**
@@ -21,7 +21,7 @@ class CancellationActRestServiceProvider extends RestServiceProvider implements 
 	 *
 	 * @var string
 	 */
-	protected $controller = CancellationReasonsController::class;
+	protected $controller = CancellationActsController::class;
 
 	/**
 	 * Methods allowed for the model.
