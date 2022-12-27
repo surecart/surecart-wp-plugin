@@ -4,7 +4,7 @@ namespace SureCart\Controllers\Admin\CancellationInsights;
 
 use SureCart\Support\Currency;
 use SureCart\Controllers\Admin\Tables\ListTable;
-use SureCart\Models\Subscription;
+use SureCart\Models\CancellationAct;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -51,75 +51,23 @@ class CancellationInsightsListTable extends ListTable {
 	}
 
 	/**
-	 * @global int $post_id
-	 * @global string $comment_status
-	 * @global string $comment_type
-	 */
-	// protected function get_views() {
-	// $stati = [
-	// 'all'      => __( 'All', 'surecart' ),
-	// 'active'   => __( 'Active', 'surecart' ),
-	// 'canceled' => __( 'Canceled', 'surecart' ),
-	// ];
-
-	// $link = \SureCart::getUrl()->index( 'cancellations' );
-
-	// foreach ( $stati as $status => $label ) {
-	// $current_link_attributes = '';
-
-	// if ( ! empty( $_GET['status'] ) ) {
-	// if ( $status === $_GET['status'] ) {
-	// $current_link_attributes = ' class="current" aria-current="page"';
-	// }
-	// } elseif ( 'all' === $status ) {
-	// $current_link_attributes = ' class="current" aria-current="page"';
-	// }
-
-	// $link = add_query_arg( 'status', $status, $link );
-
-	// $status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
-	// }
-
-	// **
-	// * Filters the comment status links.
-	// *
-	// * @since 2.5.0
-	// * @since 5.1.0 The 'Mine' link was added.
-	// *
-	// * @param string[] $status_links An associative array of fully-formed comment status links. Includes 'All', 'Mine',
-	// *                              'Pending', 'Approved', 'Spam', and 'Trash'.
-	// */
-	// return apply_filters( 'surecart/subscription/index/links', $status_links );
-	// }
-
-	/**
 	 * Override the parent columns method. Defines the columns to use in your listing table
 	 *
 	 * @return Array
 	 */
 	public function get_columns() {
 		return [
-			'customer'           => __( 'Customer', 'surecart' ),
-			'status'             => __( 'Status', 'surecart' ),
-			'plan'               => __( 'Plan', 'surecart' ),
-			'remaining_payments' => __( 'Remaining Payments', 'surecart' ),
-			'product'            => __( 'Product', 'surecart' ),
-			'integrations'       => __( 'Integrations', 'surecart' ),
-			'created'            => __( 'Created', 'surecart' ),
-			'mode'               => '',
+			'customer'            => __( 'Customer', 'surecart' ),
+			'product'             => __( 'Product', 'surecart' ),
+			'date'                => __( 'Date', 'surecart' ),
+			'cancellation_reason' => __( 'Cancellation Reason', 'surecart' ),
+			'preserved'           => __( 'Preserved', 'surecart' ),
+			'comment'             => __( 'Comment', 'surecart' ),
 		];
 	}
-
-	/**
-	 * Displays the checkbox column.
-	 *
-	 * @param Product $product The product model.
-	 */
-	public function column_cb( $product ) {
-		?>
-		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
-		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
-			<?php
+	
+	protected function get_views() {
+		return [ 'all'      => __( 'All Cancellations', 'surecart' )];
 	}
 
 	public function column_product( $subscription ) {
@@ -129,17 +77,6 @@ class CancellationInsightsListTable extends ListTable {
 		return '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $subscription->price->product->id ) ) . '">' . $subscription->price->product->name . '</a>';
 	}
 
-	/**
-	 * Show any integrations.
-	 *
-	 * @param \SureCart\Models\Subscription $subscription The subscription model.
-	 * @return string
-	 */
-	public function column_integrations( $subscription ) {
-		$product = $subscription->purchase->product ?? null;
-		$output  = $product ? $this->productIntegrationsList( $product ) : false;
-		return $output ? $output : '-';
-	}
 	/**
 	 * Define which columns are hidden
 	 *

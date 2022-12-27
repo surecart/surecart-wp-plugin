@@ -25,9 +25,9 @@ class CancellationAct extends Model {
 	protected $object_name = 'cancellation_act';
 
 	/**
-	 * Set the product attribute
+	 * Set the cancellation_reason attribute
 	 *
-	 * @param  string $value Product properties.
+	 * @param  string $value Cancellation Reason properties.
 	 * @return void
 	 */
 	public function setCancellationReasonAttribute( $value ) {
@@ -44,7 +44,7 @@ class CancellationAct extends Model {
 	}
 
 	/**
-	 * Get stats for the order.
+	 * Get stats for the cancellation act.
 	 *
 	 * @param array $args Array of arguments for the statistics.
 	 *
