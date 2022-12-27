@@ -52,42 +52,42 @@ class CancellationInsightsListTable extends ListTable {
 	 * @global string $comment_status
 	 * @global string $comment_type
 	 */
-	protected function get_views() {
-		$stati = [
-			'all'      => __( 'All', 'surecart' ),
-			'active'   => __( 'Active', 'surecart' ),
-			'canceled' => __( 'Canceled', 'surecart' ),
-		];
+	// protected function get_views() {
+	// $stati = [
+	// 'all'      => __( 'All', 'surecart' ),
+	// 'active'   => __( 'Active', 'surecart' ),
+	// 'canceled' => __( 'Canceled', 'surecart' ),
+	// ];
 
-		$link = \SureCart::getUrl()->index( 'cancellation_act' );
+	// $link = \SureCart::getUrl()->index( 'cancellations' );
 
-		foreach ( $stati as $status => $label ) {
-			$current_link_attributes = '';
+	// foreach ( $stati as $status => $label ) {
+	// $current_link_attributes = '';
 
-			if ( ! empty( $_GET['status'] ) ) {
-				if ( $status === $_GET['status'] ) {
-					$current_link_attributes = ' class="current" aria-current="page"';
-				}
-			} elseif ( 'all' === $status ) {
-				$current_link_attributes = ' class="current" aria-current="page"';
-			}
+	// if ( ! empty( $_GET['status'] ) ) {
+	// if ( $status === $_GET['status'] ) {
+	// $current_link_attributes = ' class="current" aria-current="page"';
+	// }
+	// } elseif ( 'all' === $status ) {
+	// $current_link_attributes = ' class="current" aria-current="page"';
+	// }
 
-			$link = add_query_arg( 'status', $status, $link );
+	// $link = add_query_arg( 'status', $status, $link );
 
-			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
-		}
+	// $status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
+	// }
 
-		/**
-		 * Filters the comment status links.
-		 *
-		 * @since 2.5.0
-		 * @since 5.1.0 The 'Mine' link was added.
-		 *
-		 * @param string[] $status_links An associative array of fully-formed comment status links. Includes 'All', 'Mine',
-		 *                              'Pending', 'Approved', 'Spam', and 'Trash'.
-		 */
-		return apply_filters( 'surecart/subscription/index/links', $status_links );
-	}
+	// **
+	// * Filters the comment status links.
+	// *
+	// * @since 2.5.0
+	// * @since 5.1.0 The 'Mine' link was added.
+	// *
+	// * @param string[] $status_links An associative array of fully-formed comment status links. Includes 'All', 'Mine',
+	// *                              'Pending', 'Approved', 'Spam', and 'Trash'.
+	// */
+	// return apply_filters( 'surecart/subscription/index/links', $status_links );
+	// }
 
 	/**
 	 * Override the parent columns method. Defines the columns to use in your listing table
@@ -129,7 +129,7 @@ class CancellationInsightsListTable extends ListTable {
 	 * @return Array
 	 */
 	protected function table_data() {
-		return CancellationAct::where()->with( [ 'subscription', 'subscription.customer' ] )
+		return CancellationAct::with( [ 'subscription', 'subscription.customer', 'cancellation_reason' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'cancellation_act' ),
@@ -138,30 +138,29 @@ class CancellationInsightsListTable extends ListTable {
 		);
 	}
 
+	public function column_cancellation_reason( $act ) {
+		return $act->cancellation_reason->label ?? '-';
+	}
+
 	/**
 	 * Name of the customer
 	 *
-	 * @param \SureCart\Models\Subscription $subscription Subscription model.
+	 * @param \SureCart\Models\CancellationAct $act Cancellation act model.
 	 *
 	 * @return string
 	 */
-	public function column_customer( $subscription ) {
+	public function column_customer( $act ) {
 		ob_start();
-		$name = $subscription->customer->name ?? '';
-		if ( ! $name ) {
-			$name = $subscription->customer->email ?? __( 'No name provided', 'surecart' );
-		}
+		$name = $act->subscription->customer->name ?? $act->subscription->customer->email ?? __( 'No name provided', 'surecart' );
 		?>
-		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Subscription', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->show( 'subscription', $subscription->id ) ); ?>">
-			<?php echo esc_html( $name ); ?>
-		</a>
+		<?php echo esc_html( $name ); ?>
 
 		<?php
-		echo $this->row_actions(
-			[
-				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->show( 'subscription', $subscription->id ) ) . '" aria-label="' . esc_attr( 'Edit Subscription', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
-			],
-		);
+		// echo $this->row_actions(
+		// [
+		// 'edit' => '<a href="' . esc_url( \SureCart::getUrl()->show( 'subscription', $subscription->id ) ) . '" aria-label="' . esc_attr( 'Edit Subscription', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
+		// ],
+		// );
 		?>
 		<?php
 		return ob_get_clean();
