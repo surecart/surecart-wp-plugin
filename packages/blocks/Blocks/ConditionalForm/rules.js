@@ -16,7 +16,7 @@ import Conditions from './conditions';
 
 const Rules = ( props ) => {
 
-  const { attributes, setAttributes, formId, closeModal } = props;
+  const { attributes, setAttributes, closeModal } = props;
 
   const { rule_groups } = attributes;
 
@@ -46,19 +46,19 @@ const Rules = ( props ) => {
 
   console.log( ruleGroupsData );
 
-  const getEmptyRuleGroup = function() {
-    return {
-			group_id: Math.random().toString( 36 ).substring( 2, 5 ),
-			rules: [
-				{
-					rule_id: Math.random().toString( 36 ).substring( 2, 5 ),
-					condition: 'cart_item',
-					operator: '',
-					value: '',
-				},
-			],
-		};
-  };
+  // const getEmptyRuleGroup = function() {
+  //   return {
+	// 		group_id: Math.random().toString( 36 ).substring( 2, 5 ),
+	// 		rules: [
+	// 			{
+	// 				rule_id: Math.random().toString( 36 ).substring( 2, 5 ),
+	// 				condition: 'cart_item',
+	// 				operator: '',
+	// 				value: '',
+	// 			},
+	// 		],
+	// 	};
+  // };
   const updateRuleGroupData = function( data ) {
     setAttributes({ rule_groups: data });
     setRuleGroupsData( [...data] );
@@ -261,7 +261,7 @@ const Rules = ( props ) => {
 
 	return (
 		<>
-    <form id={formId} className='sc-rules-group-form' onSubmit={ handleFormSubmit }>
+    <form className='sc-rules-group-form' onSubmit={ handleFormSubmit }>
 		{ ruleGroupsData.map( ( group, g_index ) => {
       // debugger;
       const group_id = group.group_id;

@@ -5,24 +5,15 @@ import { InspectorControls } from '@wordpress/block-editor'
 import {
 	PanelBody,
 	PanelRow,
-	TextControl,
-	SelectControl,
-	ToggleControl,
   Button,
   Modal
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import Rules from './rules';
 
-
-
 const Settings = ( props ) => {
-  const { attributes, setAttributesm } = props;
+  const { attributes } = props;
   const { rule_groups } = attributes;
-
-  const formId = 'sc-rules-group-' + Math.random().toString( 36 ).substring( 2, 5 );
-
-  props.formId = formId;
 
   const [ isOpen, setOpen ] = useState( false );
   const openModal = () => setOpen( true );
