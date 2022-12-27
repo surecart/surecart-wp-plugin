@@ -2,12 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 
-import {
-	ScFlex,
-	ScFormatNumber,
-	ScIcon,
-	ScTag,
-} from '@surecart/components-react';
+import { ScFlex, ScIcon, ScSwitch, ScTag } from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useState, useEffect } from '@wordpress/element';
@@ -17,7 +12,7 @@ import Error from '../components/Error';
 import Stat from '../ui/Stat';
 import Tab from '../ui/Tab';
 import { averageProperties, totalProperties } from './util';
-import { getFormattedPrice, maybeConvertAmount } from '../util';
+import { getFormattedPrice } from '../util';
 import { getFilterData } from '../util/filter';
 import { CancellationReasonStats } from './CancellationReasonStats';
 
@@ -27,33 +22,29 @@ export default () => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState();
 	const [filter, setFilter] = useState('30days');
+	const [liveMode, setLiveMode] = useState(false);
 
-	const { cancellation_reasons, cancellation_acts } = useSelect((select) => {
+	const { cancellation_reasons, is_reasons_loading } = useSelect((select) => {
 		const reasonsQueryArgs = ['surecart', 'cancellation_reason'];
-		const actsQueryArgs = ['surecart', 'cancellation_act'];
 
 		return {
 			cancellation_reasons: select(coreStore).getEntityRecords(
 				...reasonsQueryArgs
 			),
-			cancellation_acts: select(coreStore).getEntityRecords(
-				...actsQueryArgs
-			),
 			is_reasons_loading: select(coreStore).isResolving(
 				'getEntityRecords',
 				reasonsQueryArgs
 			),
-			is_acts_loading: select(coreStore).isResolving(
-				'getEntityRecords',
-				actsQueryArgs
-			),
 		};
 	});
 
-	console.log('cancellation_reasons', cancellation_reasons);
-	console.log('cancellation_acts', cancellation_acts);
+	console.log(
+		'cancellation_reasons',
+		cancellation_reasons,
+		is_reasons_loading
+	);
 
-	const getAbandonedData = async () => {
+	const getCancellationData = async () => {
 		const { startDate, endDate, prevEndDate, prevStartDate, interval } =
 			getFilterData(filter);
 
@@ -77,7 +68,7 @@ export default () => {
 	};
 
 	useEffect(() => {
-		getAbandonedData();
+		getCancellationData();
 	}, [filter]);
 
 	const fetchCurrent = async ({ startDate, endDate, interval }) => {
@@ -100,17 +91,16 @@ export default () => {
 				start_at: startDate.toISOString(),
 				end_at: endDate.toISOString(),
 				interval: interval,
+				live_mode: liveMode,
 			}),
 		});
 		return data;
 	};
 
-	const hasAccess = scData?.entitlements?.abandoned_checkouts;
-
 	const badge = ({ previous, current, currency = false }) => {
-		if (!hasAccess) {
-			return <ScTag type="success">{__('Pro', 'surecart')}</ScTag>;
-		}
+		// if (!hasAccess) {
+		// 	return <ScTag type="success">{__('Pro', 'surecart')}</ScTag>;
+		// }
 
 		if (loading) return null;
 
@@ -167,54 +157,65 @@ export default () => {
 			`}
 		>
 			<Error error={error} setError={setError} />
+			<ScFlex alignItems="center">
+				<ScFlex
+					alignItems="center"
+					justifyContent="flex-start"
+					flexWrap="wrap"
+				>
+					<Tab
+						selected={filter === '30days'}
+						onClick={() => setFilter('30days')}
+					>
+						{__('Last 30 Days', 'surecart')}
+					</Tab>
+					<Tab
+						selected={filter === 'today'}
+						onClick={() => setFilter('today')}
+					>
+						{__('Today', 'surecart')}
+					</Tab>
+					<Tab
+						selected={filter === 'yesterday'}
+						onClick={() => setFilter('yesterday')}
+					>
+						{__('Yesterday', 'surecart')}
+					</Tab>
+					<Tab
+						selected={filter === 'thisweek'}
+						onClick={() => setFilter('thisweek')}
+					>
+						{__('This Week', 'surecart')}
+					</Tab>
+					<Tab
+						selected={filter === 'lastweek'}
+						onClick={() => setFilter('lastweek')}
+					>
+						{__('Last Week', 'surecart')}
+					</Tab>
+					<Tab
+						selected={filter === 'thismonth'}
+						onClick={() => setFilter('thismonth')}
+					>
+						{__('This Month', 'surecart')}
+					</Tab>
+					<Tab
+						selected={filter === 'lastmonth'}
+						onClick={() => setFilter('lastmonth')}
+					>
+						{__('Last Month', 'surecart')}
+					</Tab>
+				</ScFlex>
 
-			<ScFlex
-				alignItems="center"
-				justifyContent="flex-start"
-				flexWrap="wrap"
-			>
-				<Tab
-					selected={filter === '30days'}
-					onClick={() => setFilter('30days')}
+				<ScSwitch
+					checked={!liveMode}
+					onScChange={(e) => {
+						setLiveMode(!e.target.checked);
+					}}
+					reversed
 				>
-					{__('Last 30 Days', 'surecart')}
-				</Tab>
-				<Tab
-					selected={filter === 'today'}
-					onClick={() => setFilter('today')}
-				>
-					{__('Today', 'surecart')}
-				</Tab>
-				<Tab
-					selected={filter === 'yesterday'}
-					onClick={() => setFilter('yesterday')}
-				>
-					{__('Yesterday', 'surecart')}
-				</Tab>
-				<Tab
-					selected={filter === 'thisweek'}
-					onClick={() => setFilter('thisweek')}
-				>
-					{__('This Week', 'surecart')}
-				</Tab>
-				<Tab
-					selected={filter === 'lastweek'}
-					onClick={() => setFilter('lastweek')}
-				>
-					{__('Last Week', 'surecart')}
-				</Tab>
-				<Tab
-					selected={filter === 'thismonth'}
-					onClick={() => setFilter('thismonth')}
-				>
-					{__('This Month', 'surecart')}
-				</Tab>
-				<Tab
-					selected={filter === 'lastmonth'}
-					onClick={() => setFilter('lastmonth')}
-				>
-					{__('Last Month', 'surecart')}
-				</Tab>
+					{__('Test Mode', 'surecart')}
+				</ScSwitch>
 			</ScFlex>
 
 			<div
@@ -263,73 +264,61 @@ export default () => {
 					</Stat>
 
 					<Stat
-						title={
-							hasAccess
-								? __('Retained Cancellations', 'surecart')
-								: __('Total Retained Cancellations', 'surecart')
-						}
+						title={__('Preserved Count', 'surecart')}
 						description={__(
-							'Total recovered checkouts',
+							'Total Preserved Cancellations Count',
 							'surecart'
 						)}
 						loading={loading}
 						compare={badge({
-							current: totalProperties('assisted_count', data),
+							current: totalProperties('preserved_count', data),
 							previous: totalProperties(
-								'assisted_count',
+								'preserved_count',
 								previous
 							),
 						})}
 					>
-						{hasAccess
-							? totalProperties('assisted_count', data)
-							: Math.round(
-									(totalProperties('count', data) || 0) * 0.18
-							  )}
+						{totalProperties('preserved_count', data)}
 					</Stat>
 
 					<Stat
-						title={
-							hasAccess
-								? __('Cancellation Rate', 'surecart')
-								: __('Average Cancellation Rate', 'surecart')
-						}
+						title={__('Preserved By Coupon', 'surecart')}
 						description={__(
-							'Percentage of checkouts recovered',
+							'Percentage of Preserved By Coupon',
 							'surecart'
 						)}
 						loading={loading}
 						compare={badge({
-							current: averageProperties('assisted_rate', data),
+							current: averageProperties(
+								'coupon_applied_rate',
+								data
+							),
 							previous: averageProperties(
-								'assisted_rate',
+								'coupon_applied_rate',
 								previous
 							),
 						})}
 					>
-						{hasAccess
-							? `${Math.round(
-									averageProperties('assisted_rate', data) *
-										100
-							  )}%`
-							: '18%'}
+						{`${Math.round(
+							averageProperties('coupon_applied_rate', data) * 100
+						)}%`}
 					</Stat>
 
 					<Stat
-						title={__('Total Lost', 'surecart')}
-						description={__('Total Lost', 'surecart')}
+						title={__('Preserved Rate', 'surecart')}
+						description={__(
+							'Percentage of Preserved Rate',
+							'surecart'
+						)}
 						loading={loading}
 						compare={badge({
-							current: totalProperties('amount', data),
-							previous: totalProperties('amount', previous),
-							currency: true,
+							current: averageProperties('preserved_rate', data),
+							previous: averageProperties('preserved_rate', data),
 						})}
 					>
-						<ScFormatNumber
-							type="currency"
-							currency={scData?.currency_code || 'usd'}
-							value={totalProperties('amount', data)}
-						/>
+						{`${Math.round(
+							averageProperties('preserved_rate', data) * 100
+						)}%`}
 					</Stat>
 				</div>
 

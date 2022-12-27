@@ -4,7 +4,7 @@ namespace SureCart\Controllers\Admin\CancellationInsights;
 
 use SureCart\Support\Currency;
 use SureCart\Controllers\Admin\Tables\ListTable;
-use SureCart\Models\CancellationAct;
+use SureCart\Models\Subscription;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -31,7 +31,7 @@ class CancellationInsightsListTable extends ListTable {
 		$this->set_pagination_args(
 			[
 				'total_items' => $query->pagination->count,
-				'per_page'    => $this->get_items_per_page( 'cancellation_act' ),
+				'per_page'    => $this->get_items_per_page( 'orders' ),
 			]
 		);
 
@@ -40,10 +40,13 @@ class CancellationInsightsListTable extends ListTable {
 
 	public function search() {
 		?>
-		<form class="search-form" method="get">
-			<?php $this->search_box( __( 'Search Cancellation', 'surecart' ), 'order' ); ?>
-			<input type="hidden" name="id" value="1" />
-		</form>
+	<form class="search-form"
+		method="get">
+		<?php $this->search_box( __( 'Search Subscriptions', 'surecart' ), 'order' ); ?>
+		<input type="hidden"
+			name="id"
+			value="1" />
+	</form>
 		<?php
 	}
 
@@ -96,15 +99,47 @@ class CancellationInsightsListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return [
-			'customer'            => __( 'Customer', 'surecart' ),
-			'product'             => __( 'Product', 'surecart' ),
-			'date'                => __( 'Date', 'surecart' ),
-			'cancellation_reason' => __( 'Cancellation Reason', 'surecart' ),
-			'preserved'           => __( 'Preserved', 'surecart' ),
-			'comment'             => __( 'Comment', 'surecart' ),
+			'customer'           => __( 'Customer', 'surecart' ),
+			'status'             => __( 'Status', 'surecart' ),
+			'plan'               => __( 'Plan', 'surecart' ),
+			'remaining_payments' => __( 'Remaining Payments', 'surecart' ),
+			'product'            => __( 'Product', 'surecart' ),
+			'integrations'       => __( 'Integrations', 'surecart' ),
+			'created'            => __( 'Created', 'surecart' ),
+			'mode'               => '',
 		];
 	}
 
+	/**
+	 * Displays the checkbox column.
+	 *
+	 * @param Product $product The product model.
+	 */
+	public function column_cb( $product ) {
+		?>
+		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
+		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
+			<?php
+	}
+
+	public function column_product( $subscription ) {
+		if ( empty( $subscription->price->product ) ) {
+			return __( 'No product', 'surecart' );
+		}
+		return '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $subscription->price->product->id ) ) . '">' . $subscription->price->product->name . '</a>';
+	}
+
+	/**
+	 * Show any integrations.
+	 *
+	 * @param \SureCart\Models\Subscription $subscription The subscription model.
+	 * @return string
+	 */
+	public function column_integrations( $subscription ) {
+		$product = $subscription->purchase->product ?? null;
+		$output  = $product ? $this->productIntegrationsList( $product ) : false;
+		return $output ? $output : '-';
+	}
 	/**
 	 * Define which columns are hidden
 	 *
@@ -132,7 +167,7 @@ class CancellationInsightsListTable extends ListTable {
 		return CancellationAct::with( [ 'subscription', 'subscription.customer', 'cancellation_reason' ] )
 		->paginate(
 			[
-				'per_page' => $this->get_items_per_page( 'cancellation_act' ),
+				'per_page' => $this->get_items_per_page( 'subscriptions' ),
 				'page'     => $this->get_pagenum(),
 			]
 		);
@@ -143,7 +178,7 @@ class CancellationInsightsListTable extends ListTable {
 	}
 
 	/**
-	 * Name of the customer
+	 * Get the archive query status.
 	 *
 	 * @param \SureCart\Models\CancellationAct $act Cancellation act model.
 	 *
