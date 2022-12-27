@@ -1,14 +1,8 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/block-editor'
 import {
-	PanelBody,
-	PanelRow,
-	TextControl,
-	SelectControl,
-	ToggleControl,
-  Button,
+	Button,
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import Conditions from './conditions';
@@ -16,110 +10,102 @@ import Conditions from './conditions';
 
 const Rules = ( props ) => {
 
-  const { attributes, setAttributes, closeModal } = props;
+	const { attributes, setAttributes, closeModal } = props;
 
-  const { rule_groups } = attributes;
+	const { rule_groups } = attributes;
 
-  // debugger
-  const getInitialGroups = function() {
+	const getInitialGroups = function() {
 
-    let defaultData = [
-      {
-        "group_id": Math.random().toString( 36 ).substring( 2, 5 ),
-        "rules": [
-          {
-            rule_id: Math.random().toString( 36 ).substring( 2, 5 ),
-            condition: "cart_item",
-            operator: "any",
-            value: [""]
-          }
-        ]
-      },
-    ];
+		let defaultData = [
+			{
+				"group_id": Math.random().toString( 36 ).substring( 2, 5 ),
+				"rules": [
+					{
+						rule_id: Math.random().toString( 36 ).substring( 2, 5 ),
+						condition: "cart_item",
+						operator: "any",
+						value: ""
+					}
+				]
+			},
+		];
 
-    let rgData = rule_groups?.length > 0 ? rule_groups : defaultData;
+		let rgData = rule_groups?.length > 0 ? rule_groups : defaultData;
 
-    return rgData;
-  };
+		return rgData;
+	};
 
-  const [ ruleGroupsData, setRuleGroupsData ] = useState( getInitialGroups() );
+	const [ ruleGroupsData, setRuleGroupsData ] = useState( getInitialGroups() );
 
-  console.log( ruleGroupsData );
+	console.log( ruleGroupsData );
 
-  // const getEmptyRuleGroup = function() {
-  //   return {
-	// 		group_id: Math.random().toString( 36 ).substring( 2, 5 ),
-	// 		rules: [
-	// 			{
-	// 				rule_id: Math.random().toString( 36 ).substring( 2, 5 ),
-	// 				condition: 'cart_item',
-	// 				operator: '',
-	// 				value: '',
-	// 			},
-	// 		],
-	// 	};
-  // };
-  const updateRuleGroupData = function( data ) {
-    setAttributes({ rule_groups: data });
-    setRuleGroupsData( [...data] );
-  };
-  const addConditionToRuleGroup = function( groupId, newCondition ) {
+	const updateRuleGroupData = function( data ) {
+		// setAttributes({ rule_groups: data });
+		setRuleGroupsData( [...data] );
+	};
+	const addConditionToRuleGroup = function( groupId, newCondition ) {
 
-    if ( ruleGroupsData && groupId ) {
-      for ( const ruleGroup of ruleGroupsData ) {
-        if ( groupId === ruleGroup.group_id ) {
-          ruleGroup.rules.push( newCondition );
-          break;
-        }
-      }
+		if ( ruleGroupsData && groupId ) {
+			for ( const ruleGroup of ruleGroupsData ) {
+				if ( groupId === ruleGroup.group_id ) {
+					ruleGroup.rules.push( newCondition );
+					break;
+				}
+			}
 
-      setAttributes({ rule_groups: ruleGroupsData });
-      setRuleGroupsData( [...ruleGroupsData] );
-    }
-  };
+			// setAttributes({ rule_groups: ruleGroupsData });
+			setRuleGroupsData( [...ruleGroupsData] );
+		}
+	};
 
-  const removeConditionFromRuleGroup = function( groupId, conditionId ) {
-    // debugger;
-    const newGroupData = ruleGroupsData.filter( ( group, i ) => {
-      if ( groupId === group.group_id ) {
+	const removeConditionFromRuleGroup = function( groupId, conditionId ) {
+		// debugger;
+		const newGroupData = ruleGroupsData.filter( ( group, i ) => {
+			if ( groupId === group.group_id ) {
 
-        group.rules = group.rules.filter( ( rule, j ) => {
-          if ( rule.rule_id === conditionId ) {
-            return false;
-          }
-          return true;
-        } );
+				group.rules = group.rules.filter( ( rule, j ) => {
+					if ( rule.rule_id === conditionId ) {
+						return false;
+					}
+					return true;
+				} );
 
-        if ( group.rules.length === 0 ) {
-          return false;
-        }
-      }
-      return true;
-    });
+				if ( group.rules.length === 0 ) {
+					return false;
+				}
+			}
+			return true;
+		});
 
-    setAttributes({ rule_groups: newGroupData });
-    setRuleGroupsData( [...newGroupData] );
-  };
+		// setAttributes({ rule_groups: newGroupData });
+		setRuleGroupsData( [...newGroupData] );
+	};
 
-  const updateConditionInRuleGroup = function( groupId, conditionId, currentValue ) {
-    // debugger;
+	const updateConditionInRuleGroup = function( groupId, conditionId, currentValue ) {
+		// debugger;
 			for ( const group of ruleGroupsData ) {
 				if ( groupId === group.group_id ) {
 					for ( const rule of group.rules ) {
 						if ( conditionId === rule.rule_id ) {
 							rule.condition = currentValue;
 							rule.value = '';
+							rule.operator = 'any';
+
+							if ( 'cart_total' === currentValue ) {
+								rule.operator = '==';
+							}
+
 							break;
 						}
 					}
 					break;
 				}
 			}
-      setAttributes({ rule_groups: ruleGroupsData });
-      setRuleGroupsData( [...ruleGroupsData] );
-  };
-  const updateConditionOptionInRuleGroup = function( groupId, conditionId, currentValue, optionName ) {
-    // debugger;
+			// setAttributes({ rule_groups: ruleGroupsData });
+			setRuleGroupsData( [...ruleGroupsData] );
+	};
+	const updateConditionOptionInRuleGroup = function( groupId, conditionId, currentValue, optionName ) {
+		// debugger;
 			for ( const group of ruleGroupsData ) {
 				if ( groupId === group.group_id ) {
 					for ( const rule of group.rules ) {
@@ -131,44 +117,44 @@ const Rules = ( props ) => {
 					break;
 				}
 			}
-      setAttributes({ rule_groups: ruleGroupsData });
-      setRuleGroupsData( [...ruleGroupsData] );
-  };
+			// setAttributes({ rule_groups: ruleGroupsData });
+			setRuleGroupsData( [...ruleGroupsData] );
+	};
 
-  const addNewCondition = ( event ) => {
+	const addNewCondition = ( event ) => {
 		const groupId = event.target.getAttribute( 'group_id' );
 		const newCondition = {
 			rule_id: Math.random().toString( 36 ).substring( 2, 5 ),
 			condition: 'cart_item',
-			operator: '',
+			operator: 'any',
 			value: '',
 		};
 
-    addConditionToRuleGroup( groupId, newCondition );
-  }
+		addConditionToRuleGroup( groupId, newCondition );
+	}
 
-  const addNewGroup = function ( event ) {
-    // debugger;
-    const newGroup = {
+	const addNewGroup = function ( event ) {
+		// debugger;
+		const newGroup = {
 			group_id: Math.random().toString( 36 ).substring( 2, 5 ),
 			rules: [
 				{
 					rule_id: Math.random().toString( 36 ).substring( 2, 5 ),
 					condition: 'cart_item',
-					operator: '',
+					operator: 'any',
 					value: '',
 				},
 			],
 		};
 
-    ruleGroupsData.push( newGroup );
-    // setRuleGroupsData( ruleGroupsData );
-    updateRuleGroupData( ruleGroupsData );
-  }
+		ruleGroupsData.push( newGroup );
+		// setRuleGroupsData( ruleGroupsData );
+		updateRuleGroupData( ruleGroupsData );
+	}
 
-  const showRules = function ( event ) {
-    // rule_groups += 'Hello Sandesh';
-    // setAttributes({ rule_groups: ruleGroupsData });
+	const showRules = function ( event ) {
+		// rule_groups += 'Hello Sandesh';
+		// setAttributes({ rule_groups: ruleGroupsData });
 		const group_id = event.target.getAttribute( 'data-group_id' );
 
 		const target = document.getElementById(
@@ -177,7 +163,7 @@ const Rules = ( props ) => {
 		toggle_class( event, target );
 	};
 
-  const toggle_class = function ( event, target ) {
+	const toggle_class = function ( event, target ) {
 		if ( target.classList.contains( 'hidden' ) ) {
 			target.classList.remove( 'hidden' );
 			event.target.classList.remove( 'dashicons-arrow-down' );
@@ -189,214 +175,152 @@ const Rules = ( props ) => {
 		}
 	};
 
-  const handleFormSubmit = function ( e ) {
-    e.preventDefault();
-    // debugger;
-    const formData = new window.FormData( e.target );
-    let option = [...ruleGroupsData];
+	const handleFormSubmit = function ( e ) {
+		e.preventDefault();
 
-    for ( const pair of formData.entries() ) {
-      console.log(`${pair[0]}, ${pair[1]}`);
-      // debugger;
-      option = prepareFormDataObject( option, pair[0], pair[1] )
-    }
+		setAttributes({ rule_groups: ruleGroupsData });
 
-    setAttributes({ rule_groups: option });
-    closeModal();
-  };
-
-  const prepareFormDataObject = function ( option, dkey, dvalue ) {
-    debugger;
-		const name = dkey;
-    const value = dvalue;
-
-		if ( name.includes( '[' ) ) {
-			const newTxt = name.split( '[' );
-			const arr = [];
-			for ( let i = 1; i < newTxt.length; i++ ) {
-				arr.push( newTxt[ i ].split( ']' )[ 0 ] );
-			}
-
-			const newName = name.substr( 0, name.indexOf( '[' ) );
-
-			// const newValue = options[ newName ];
-			// const option = option;
-
-			switch ( arr.length ) {
-				case 2:
-          if ( ! option[ arr[ 0 ] ] ) {
-            option[ arr[ 0 ] ] = {};
-          }
-          option[ arr[ 0 ] ][ arr[ 1 ] ] = value;
-					break;
-				case 4:
-
-          if ( ! option[ arr[ 0 ] ] ) {
-            option[ arr[ 0 ] ] = {};
-          }
-
-          if ( ! option[ arr[ 0 ] ][ arr[ 1 ] ] ) {
-            option[ arr[ 0 ] ][ arr[ 1 ] ] = [];
-          }
-
-          if ( ! option[ arr[ 0 ] ][ arr[ 1 ] ][ arr[ 2 ] ] ) {
-            option[ arr[ 0 ] ][ arr[ 1 ] ][ arr[ 2 ] ] = {};
-          }
-
-					option[ arr[ 0 ] ][ arr[ 1 ] ][ arr[ 2 ] ][
-						arr[ 3 ]
-					] = value;
-					break;
-			}
-
-			// dispatch( {
-			// 	type: 'SET_OPTION',
-			// 	name: newName,
-			// 	value: newValue,
-			// } );
-		}
-
-    return option;
+		closeModal();
 	};
 
 	return (
 		<>
-    <form className='sc-rules-group-form' onSubmit={ handleFormSubmit }>
+		<form className='sc-rules-group-form' onSubmit={ handleFormSubmit }>
 		{ ruleGroupsData.map( ( group, g_index ) => {
-      // debugger;
-      const group_id = group.group_id;
-      const rules = group.rules;
-      return (
-        <div
-          className="sc-rules-page--group_wrapper"
-          key={ group_id }
-        >
-          <div
-            className="sc-rules--group"
-            data-group-id={ group_id }
-            css={css`
-              padding: 15px;
-              background-color: #fafafa;
-              border: 1px dashed #fafafa;
-            `}
-          >
-            <input
-              type="hidden"
-              name={ `sc-form-rules[${ g_index }][group_id]` }
-              value={ group_id }
-            />
+			// debugger;
+			const group_id = group.group_id;
+			const rules = group.rules;
+			return (
+				<div
+					className="sc-rules-page--group_wrapper"
+					key={ group_id }
+				>
+					<div
+						className="sc-rules--group"
+						data-group-id={ group_id }
+						css={css`
+							padding: 15px;
+							background-color: #fafafa;
+							border: 1px dashed #fafafa;
+						`}
+					>
+						<input
+							type="hidden"
+							name={ `sc-form-rules[${ g_index }][group_id]` }
+							value={ group_id }
+						/>
 
-            <div className="sc-rules--redirection-step" css={ css`
-              display: flex;
-              justify-content: space-between;
-            `}>
-              <div className="sc-rules--group_header__left">
-                <span className="sc-rules__handle dashicons dashicons-menu"></span>
-                Rule Group - { g_index + 1 }
-              </div>
-              <div className="sc-rules--group_header">
-                <span className="sc-rules--group_id">
-                  { __(
-                    'ID - ',
-                    'surecart'
-                  ) }
-                  { group_id }
-                </span>
-                <span
-                  className={
-                    'dashicons dashicons-arrow-down'
-                  }
-                  onClick={
-                    showRules
-                  }
-                  data-group_id={
-                    group_id
-                  }
-                ></span>
-              </div>
-            </div>
-            <div
-              id={ `sc-rules--group-${ group_id }` }
-              className={ 'hidden' }
-            >
-              <div className="sc-rules--group_rules--wrapper" css={css`margin: 15px 0;`}>
-                { rules.length !==
-                  0 && (
-                  <Conditions
-                    rules={ rules }
-                    group_id={ group_id }
-                    g_index={ g_index }
-                    groups_length={ ruleGroupsData.length }
-                    removeConditionFromRuleGroup={ removeConditionFromRuleGroup }
-                    updateConditionInRuleGroup={ updateConditionInRuleGroup }
-                    updateConditionOptionInRuleGroup = { updateConditionOptionInRuleGroup }
-                  />
-                  ) }
-              </div>
+						<div className="sc-rules--redirection-step" css={ css`
+							display: flex;
+							justify-content: space-between;
+						`}>
+							<div className="sc-rules--group_header__left">
+								<span className="sc-rules__handle dashicons dashicons-menu"></span>
+								Rule Group - { g_index + 1 }
+							</div>
+							<div className="sc-rules--group_header">
+								<span className="sc-rules--group_id">
+									{ __(
+										'ID - ',
+										'surecart'
+									) }
+									{ group_id }
+								</span>
+								<span
+									className={
+										'dashicons dashicons-arrow-down'
+									}
+									onClick={
+										showRules
+									}
+									data-group_id={
+										group_id
+									}
+								></span>
+							</div>
+						</div>
+						<div
+							id={ `sc-rules--group-${ group_id }` }
+							className={ 'hidden' }
+						>
+							<div className="sc-rules--group_rules--wrapper" css={css`margin: 15px 0;`}>
+								{ rules.length !==
+									0 && (
+									<Conditions
+										rules={ rules }
+										group_id={ group_id }
+										g_index={ g_index }
+										groups_length={ ruleGroupsData.length }
+										removeConditionFromRuleGroup={ removeConditionFromRuleGroup }
+										updateConditionInRuleGroup={ updateConditionInRuleGroup }
+										updateConditionOptionInRuleGroup = { updateConditionOptionInRuleGroup }
+									/>
+									) }
+							</div>
 
-              <div className="sc-rules--add-rule__repeater">
-                <div
-                  className="sc-button sc-button--secondary button"
-                  group_id={
-                    group_id
-                  }
-                  onClick={
-                    addNewCondition
-                  }
-                >
-                  { __(
-                    'Add Condition',
-                    'surecart'
-                  ) }
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="sc-rules-page--group_wrapper__footer"
-            css={css`margin: 20px 0 0;`}
-          >
-            { parseInt( g_index ) + 1 < ruleGroupsData.length &&
-            ( <div className="sc-rules--or-group"
-              css={css`
-                padding: 4px 6px;
-                border: 1px solid #d4d4d4;
-                margin: 15px auto;
-                width: 48px;
-                text-align: center;
-              `}
-            >
-              <span className="sc-rules--or_group__text">
-                { __(
-                  'OR',
-                  'surecart'
-                ) }
-              </span>
-            </div> )
-            }
+							<div className="sc-rules--add-rule__repeater">
+								<div
+									className="sc-button sc-button--secondary button"
+									group_id={
+										group_id
+									}
+									onClick={
+										addNewCondition
+									}
+								>
+									{ __(
+										'Add Condition',
+										'surecart'
+									) }
+								</div>
+							</div>
+						</div>
+					</div>
+					<div className="sc-rules-page--group_wrapper__footer"
+						css={css`margin: 20px 0 0;`}
+					>
+						{ parseInt( g_index ) + 1 < ruleGroupsData.length &&
+						( <div className="sc-rules--or-group"
+							css={css`
+								padding: 4px 6px;
+								border: 1px solid #d4d4d4;
+								margin: 15px auto;
+								width: 48px;
+								text-align: center;
+							`}
+						>
+							<span className="sc-rules--or_group__text">
+								{ __(
+									'OR',
+									'surecart'
+								) }
+							</span>
+						</div> )
+						}
 
-            { parseInt( g_index ) + 1 === ruleGroupsData.length && (
-              <div className="sc-rules--or_group__button">
-                <span
-                  className="sc-rules--or_group_button or-button sc-button sc-button--secondary button"
-                  onClick={
-                    addNewGroup
-                  }
-                >
-                  { __(
-                    'Add Rule Group',
-                    'surecart'
-                  ) }
-                </span>
-              </div>
-            ) }
-          </div>
-        </div>
-      );
+						{ parseInt( g_index ) + 1 === ruleGroupsData.length && (
+							<div className="sc-rules--or_group__button">
+								<span
+									className="sc-rules--or_group_button or-button sc-button sc-button--secondary button"
+									onClick={
+										addNewGroup
+									}
+								>
+									{ __(
+										'Add Rule Group',
+										'surecart'
+									) }
+								</span>
+							</div>
+						) }
+					</div>
+				</div>
+			);
 			} )
-    }
-    <Button variant='secondary' onClick={closeModal}>{ __( 'Cancel', 'surecart' ) }</Button>
-    <Button variant="primary" type='submit'>{ __( 'Save', 'surecart' ) }</Button>
-    </form>
+		}
+		<Button variant='secondary' onClick={closeModal}>{ __( 'Cancel', 'surecart' ) }</Button>
+		<Button variant="primary" type='submit'>{ __( 'Save', 'surecart' ) }</Button>
+		</form>
 		</>
 	);
 };

@@ -7,24 +7,16 @@ import {
 	SelectControl,
 	__experimentalNumberControl as NumberControl,
 } from '@wordpress/components';
-// import React from 'react'
-// import Select from 'react-select'
+
 import SelectProducts from './selectProducts';
 import SelectCoupons from './selectCoupons';
 import { countryChoices } from '@surecart/components';
 
-// import ReactHtmlParser from 'react-html-parser';
 
 function Conditions( props ) {
-	// const [ { page_settings }, dispatch ] = useStateValue();
 
   const { rules, group_id, g_index, groups_length, removeConditionFromRuleGroup, updateConditionInRuleGroup, updateConditionOptionInRuleGroup } = props;
-	// const rule_settings = page_settings.settings.rules;
-	// const conditions_select = rule_settings.conditions;
 
-
-
-	const rule_settings = [];
   const conditions_select = [
     { label: __( 'Product(s)', 'surecart' ), value: 'cart_item' },
     { label: __( 'Total', 'surecart' ), value: 'cart_total' },
