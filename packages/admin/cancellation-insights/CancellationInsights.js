@@ -65,8 +65,8 @@ export default () => {
 	const fetchData = async ({ startDate, endDate, interval }) => {
 		const { data } = await apiFetch({
 			path: addQueryArgs('surecart/v1/stats/cancellation_acts', {
-				start_at: startDate.toISOString(),
-				end_at: endDate.toISOString(),
+				start_at: startDate.format(),
+				end_at: endDate.format(),
 				interval: interval,
 				live_mode: liveMode,
 			}),
