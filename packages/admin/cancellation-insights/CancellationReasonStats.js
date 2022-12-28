@@ -9,6 +9,7 @@ import Box from '../ui/Box';
 import { getFilterData } from '../util/filter';
 
 const colorsArr = [
+	'#a855f7',
 	'#0ea5e9',
 	'#22d3ee',
 	'#22c55e',
@@ -25,7 +26,11 @@ export function CancellationReasonStats({ liveMode = true, filter }) {
 	const [error, setError] = useState(false);
 
 	const { cancellation_reasons } = useSelect((select) => {
-		const queryArgs = ['surecart', 'cancellation_reason'];
+		const queryArgs = [
+			'surecart',
+			'cancellation_reason',
+			{ per_page: 100 },
+		];
 		return {
 			cancellation_reasons: select(coreStore).getEntityRecords(
 				...queryArgs
@@ -39,8 +44,8 @@ export function CancellationReasonStats({ liveMode = true, filter }) {
 
 		const { data } = await apiFetch({
 			path: addQueryArgs('surecart/v1/stats/cancellation_reasons', {
-				start_at: startDate.toISOString(),
-				end_at: endDate.toISOString(),
+				start_at: startDate.format(),
+				end_at: endDate.format(),
 				interval: interval,
 				live_mode: liveMode,
 			}),
@@ -133,6 +138,32 @@ export function CancellationReasonStats({ liveMode = true, filter }) {
 		return currReason[0]?.label;
 	};
 
+	const setTrimmedChartData = (reasonsStats) => {
+		const mappedReasons =
+			reasonsStats?.map((reason) => ({
+				count: reason?.count,
+				label: getReasonLabel(reason?.cancellation_reason_id),
+			})) ?? [];
+		const sortedReasons = mappedReasons.sort((a, b) => b.count - a.count);
+		const topReasons = sortedReasons.slice(0, 6);
+		const restReasonsCount = sortedReasons
+			.slice(6)
+			.reduce((acc, curr) => acc + curr.count, 0);
+
+		if (!!restReasonsCount) {
+			topReasons.push({
+				count: restReasonsCount,
+				label: 'Others',
+			});
+		}
+
+		setTotalCount(
+			mappedReasons?.reduce((acc, curr) => acc + curr.count, 0)
+		);
+		setReasonChartData(topReasons);
+		setLoading(false);
+	};
+
 	useEffect(() => {
 		fetchReasonsStatsData(filter);
 	}, [filter, liveMode]);
@@ -141,16 +172,7 @@ export function CancellationReasonStats({ liveMode = true, filter }) {
 		if (!cancellation_reasons && !cancellation_reasons?.length) return;
 		if (!reasonsStats && !reasonsStats?.length) return;
 
-		const mappedReasons = reasonsStats.map((reason) => ({
-			cancellation_reason_id: reason?.cancellation_reason_id,
-			count: reason?.count,
-			label: getReasonLabel(reason?.cancellation_reason_id),
-		}));
-		setTotalCount(
-			mappedReasons?.reduce((acc, curr) => acc + curr.count, 0)
-		);
-		setReasonChartData(mappedReasons?.sort((a, b) => b.count - a.count));
-		setLoading(false);
+		setTrimmedChartData(reasonsStats);
 	}, [cancellation_reasons, reasonsStats]);
 
 	return (
