@@ -1,4 +1,4 @@
-import { Component, h, State, Watch } from '@stencil/core';
+import { Component, Fragment, h, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '../../../functions/fetch';
 import { ResponseError, VerificationCode } from '../../../types';
@@ -110,7 +110,6 @@ export class ScLogin {
       window.location.reload();
     } catch (e) {
       this.handleError(e);
-    } finally {
       this.loading = false;
     }
   }
@@ -136,70 +135,92 @@ export class ScLogin {
   renderInner() {
     if (this.step === 2) {
       return (
-        <div>
-          <sc-form onScFormSubmit={() => this.submitCode()}>
-            <sc-input
-              label={__('Confirmation code', 'surecart')}
-              type="text"
-              ref={el => (this.codeInput = el as HTMLScInputElement)}
-              autofocus
-              required
-              onScInput={e => (this.verifyCode = (e.target as HTMLScInputElement).value)}
-            ></sc-input>
-            <sc-button type="primary" submit full>
-              <sc-icon name="lock" slot="prefix" />
-              {__('Login with Code', 'surecart')}
-            </sc-button>
-          </sc-form>
-        </div>
+        <Fragment>
+          <div class="login-form__title" part="title">
+            {__('Check your email for a confirmation code', 'surecart')}
+          </div>
+          <div>
+            <sc-form onScFormSubmit={() => this.submitCode()}>
+              <sc-input
+                label={__('Confirmation code', 'surecart')}
+                type="text"
+                ref={el => (this.codeInput = el as HTMLScInputElement)}
+                autofocus
+                required
+                onScInput={e => (this.verifyCode = (e.target as HTMLScInputElement).value)}
+              ></sc-input>
+              <sc-button type="primary" submit full>
+                <sc-icon name="lock" slot="prefix" />
+                {__('Login with Code', 'surecart')}
+              </sc-button>
+            </sc-form>
+          </div>
+        </Fragment>
       );
     }
 
     if (this.step === 1 && this.email) {
       return (
-        <div>
-          <sc-form onScFormSubmit={() => this.createLoginCode()}>
-            <sc-button type="primary" submit full>
-              <sc-icon name="mail" slot="prefix" />
-              {__('Send a login code', 'surecart')}
+        <Fragment>
+          <div class="login-form__title" part="title">
+            <div>{__('Welcome', 'surecart')}</div>
+            <sc-button style={{ fontSize: '18px' }} size="small" pill caret onClick={() => (this.step = this.step - 1)}>
+              <sc-icon name="user" slot="prefix"></sc-icon>
+              {this.email}
             </sc-button>
-          </sc-form>
-          <sc-divider style={{ '--spacing': '0.5em' }}>{__('or', 'surecart')}</sc-divider>
-          <sc-form onScFormSubmit={() => this.login()}>
-            <sc-input
-              label={__('Enter your password', 'surecart')}
-              type="password"
-              ref={el => (this.passwordInput = el as HTMLScInputElement)}
-              onKeyDown={e => e.key === 'Enter' && this.login()}
-              autofocus
-              required
-              onScChange={e => (this.password = (e.target as HTMLScInputElement).value)}
-            ></sc-input>
-            <sc-button type="primary" outline submit full>
-              <sc-icon name="lock" slot="prefix" />
-              {__('Login', 'surecart')}
-            </sc-button>
-          </sc-form>
-        </div>
+          </div>
+          <sc-flex flexDirection="column" style={{ '--sc-flex-column-gap': 'var(--sc-spacing-large)' }}>
+            <div>
+              <sc-form onScFormSubmit={() => this.createLoginCode()}>
+                <sc-button type="primary" submit full>
+                  <sc-icon name="mail" slot="prefix" />
+                  {__('Send a login code', 'surecart')}
+                </sc-button>
+              </sc-form>
+              <sc-divider style={{ '--spacing': '0.5em' }}>{__('or', 'surecart')}</sc-divider>
+              <sc-form onScFormSubmit={() => this.login()}>
+                <sc-input
+                  label={__('Enter your password', 'surecart')}
+                  type="password"
+                  ref={el => (this.passwordInput = el as HTMLScInputElement)}
+                  onKeyDown={e => e.key === 'Enter' && this.login()}
+                  autofocus
+                  required
+                  onScChange={e => (this.password = (e.target as HTMLScInputElement).value)}
+                ></sc-input>
+                <sc-button type="primary" outline submit full>
+                  <sc-icon name="lock" slot="prefix" />
+                  {__('Login', 'surecart')}
+                </sc-button>
+              </sc-form>
+            </div>
+          </sc-flex>
+        </Fragment>
       );
     }
 
     return (
-      <sc-form onScFormSubmit={() => this.checkEmail()}>
-        <sc-input
-          type="text"
-          value={this.email}
-          label={__('Username or Email Address', 'surecart')}
-          onScInput={e => (this.email = (e.target as HTMLScInputElement).value)}
-          onKeyDown={e => e.key === 'Enter' && this.checkEmail()}
-          required
-          autofocus
-        />
-        <sc-button type="primary" submit full>
-          <sc-icon name="arrow-right" slot="suffix" />
-          {__('Next', 'surecart')}
-        </sc-button>
-      </sc-form>
+      <Fragment>
+        <div class="login-form__title" part="title">
+          <slot name="title"></slot>
+        </div>
+
+        <sc-form onScFormSubmit={() => this.checkEmail()}>
+          <sc-input
+            type="text"
+            value={this.email}
+            label={__('Username or Email Address', 'surecart')}
+            onScInput={e => (this.email = (e.target as HTMLScInputElement).value)}
+            onKeyDown={e => e.key === 'Enter' && this.checkEmail()}
+            required
+            autofocus
+          />
+          <sc-button type="primary" submit full>
+            <sc-icon name="arrow-right" slot="suffix" />
+            {__('Next', 'surecart')}
+          </sc-button>
+        </sc-form>
+      </Fragment>
     );
   }
 
@@ -207,9 +228,6 @@ export class ScLogin {
     return (
       <div class="login-form">
         <sc-card>
-          <div class="login-form__title" part="title">
-            {this.step === 2 ? __('Check your email for a confirmation code', 'surecart') : <slot name="title"></slot>}
-          </div>
           {!!this.error && (
             <sc-alert open type="danger" closable onScHide={() => (this.error = null)}>
               <span slot="title" innerHTML={this.error?.message}></span>
@@ -220,14 +238,6 @@ export class ScLogin {
           )}
           {this.renderInner()}
         </sc-card>
-        {this.step > 0 && (
-          <div class="login-form__back">
-            <sc-button type="text" onClick={() => (this.step = this.step - 1)}>
-              <sc-icon name="arrow-left" slot="prefix" />
-              {__('Back', 'surecart')}
-            </sc-button>
-          </div>
-        )}
         {this.loading && <sc-block-ui spinner style={{ 'zIndex': '9', '--sc-block-ui-opacity': '0.5' }}></sc-block-ui>}
       </div>
     );
