@@ -46,7 +46,7 @@ export default () => {
 
 	useEffect(() => {
 		getCancellationActsData();
-	}, [filter]);
+	}, [filter, liveMode]);
 
 	const fetchCurrent = async ({ startDate, endDate, interval }) => {
 		const data = await fetchData({ startDate, endDate, interval });
@@ -335,7 +335,7 @@ export default () => {
 					</Stat>
 				</div>
 
-				<CancellationReasonStats reasons={[]} />
+				<CancellationReasonStats liveMode={liveMode} filter={filter} />
 			</div>
 		</div>
 	);
