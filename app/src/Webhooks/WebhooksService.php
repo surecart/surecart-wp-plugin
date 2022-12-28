@@ -105,7 +105,7 @@ class WebhooksService {
 		if ( defined( 'SURECART_RUNNING_TESTS' ) ) {
 			return;
 		}
-		return Webhook::register();
+		return Webhook::register()->test();
 	}
 
 	/**
