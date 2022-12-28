@@ -47,7 +47,7 @@ export default () => {
 	} = item?.preservation_locales || {};
 
 	const updateLocale = (data) => {
-		updateItem({
+		editItem({
 			preservation_locales: {
 				...item?.preservation_locales,
 				...data,
@@ -257,9 +257,10 @@ export default () => {
 					onScAbandon={() => setSurveyPreview(false)}
 				/>
 			</ScDialog>
+
 			<ScDialog
 				style={{
-					'--width': '675px',
+					'--width': '500px',
 					'--body-spacing': 'var(--sc-spacing-xxx-large)',
 				}}
 				noHeader

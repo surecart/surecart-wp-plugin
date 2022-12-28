@@ -10,6 +10,7 @@
 | Property   | Attribute | Description | Type                   | Default     |
 | ---------- | --------- | ----------- | ---------------------- | ----------- |
 | `protocol` | --        |             | `SubscriptionProtocol` | `undefined` |
+| `reasons`  | --        |             | `CancellationReason[]` | `undefined` |
 
 
 ## Events

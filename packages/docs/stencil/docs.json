@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-12-27T23:13:23",
+  "timestamp": "2022-12-28T02:28:27",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -1869,6 +1869,7 @@
       "filePath": "./src/components/controllers/dashboard/sc-cancel-dialog/sc-cancel-dialog.tsx",
       "encapsulation": "shadow",
       "tag": "sc-cancel-dialog",
+      "readme": "# sc-cancel-dialog\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -2024,6 +2025,7 @@
       "filePath": "./src/components/controllers/dashboard/sc-cancel-discount/sc-cancel-discount.tsx",
       "encapsulation": "shadow",
       "tag": "sc-cancel-discount",
+      "readme": "# sc-cancel-discount\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -2152,6 +2154,7 @@
       "filePath": "./src/components/controllers/dashboard/sc-cancel-survey/sc-cancel-survey.tsx",
       "encapsulation": "shadow",
       "tag": "sc-cancel-survey",
+      "readme": "# sc-cancel-survey\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -2166,6 +2169,21 @@
           "values": [
             {
               "type": "SubscriptionProtocol"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "reasons",
+          "type": "CancellationReason[]",
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "CancellationReason[]"
             }
           ],
           "optional": false,
