@@ -301,7 +301,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-border-width-zero: 0px;
 }
 
-[hidden] {
+sc-checkout [hidden] {
   display: none !important;
 }
 
