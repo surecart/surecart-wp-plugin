@@ -291,6 +291,11 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @return $this
 	 */
 	protected function findByCustomerId( $id ) {
+
+		if ( ! is_string( $id ) || empty( $id ) ) {
+			return false;
+		}
+
 		$users = new \WP_User_Query(
 			[
 				'meta_query' => [

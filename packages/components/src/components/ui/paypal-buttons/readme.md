@@ -29,6 +29,14 @@
 | `scSetState` | Set the state machine | `CustomEvent<string>` |
 
 
+## Shadow Parts
+
+| Part                   | Description |
+| ---------------------- | ----------- |
+| `"paypal-button"`      |             |
+| `"paypal-card-button"` |             |
+
+
 ## Dependencies
 
 ### Used by

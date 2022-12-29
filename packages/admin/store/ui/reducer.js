@@ -12,6 +12,14 @@ export const saving = (state = { isSaving: false }, action) => {
 	return state;
 };
 
+export const modal = (state, action) => {
+	switch (action.type) {
+		case 'SET_MODAL':
+			return action.value;
+	}
+	return state;
+};
+
 export const errors = (
 	state = {
 		flash: {},
@@ -131,5 +139,6 @@ export default combineReducers({
 	saving,
 	errors,
 	modelErrors,
+	modal,
 	snackbar,
 });

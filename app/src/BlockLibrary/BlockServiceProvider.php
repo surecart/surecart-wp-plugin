@@ -84,7 +84,7 @@ class BlockServiceProvider implements ServiceProviderInterface {
 		// register our blocks.
 		add_action( 'init', [ $this, 'registerBlocks' ] );
 		// register our category.
-		add_action( 'block_categories_all', [ $this, 'registerBlockCategories' ] );
+		add_action( 'block_categories_all', [ $this, 'registerBlockCategories' ], 9999999999, 2 );
 	}
 
 	/**

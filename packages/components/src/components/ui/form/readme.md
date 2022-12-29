@@ -69,6 +69,7 @@ Type: `Promise<boolean>`
 | Part     | Description |
 | -------- | ----------- |
 | `"base"` |             |
+| `"form"` |             |
 
 
 ## Dependencies

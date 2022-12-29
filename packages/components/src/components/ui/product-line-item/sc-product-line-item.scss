@@ -17,6 +17,12 @@
   &--has-image {
     align-items: center;
   }
+
+  &__scratch-price {
+    opacity: 0.75;
+    font-size: 90%;
+    text-decoration: line-through;
+  }
 }
 
 

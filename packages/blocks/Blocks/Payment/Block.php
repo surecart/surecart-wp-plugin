@@ -67,7 +67,7 @@ class Block extends BaseBlock {
 	 * @return \SureCart/Models/Processor|null;
 	 */
 	protected function getProcessorByType( $type, $processors ) {
-		$key = array_search( $type, array_column( $processors, 'processor_type' ), true );
+		$key = array_search( $type, array_column( (array) $processors, 'processor_type' ), true );
 		if ( ! is_int( $key ) ) {
 			return null;
 		}
@@ -186,8 +186,22 @@ class Block extends BaseBlock {
 	 * @return void
 	 */
 	protected function renderManualPaymentMethods() {
+		$methods = ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? [];
+
+		if ( is_wp_error( $methods ) ) {
+			?>
+				<sc-alert open type="danger">
+					<?php foreach ( $methods->get_error_messages() as $message ) : ?>
+						<div>
+							<?php echo esc_html( $message ); ?>
+						</div>
+					<?php endforeach; ?>
+				</sc-alert>
+			<?php
+			return;
+		}
+
 		?>
-		<?php $methods = (array) ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? []; ?>
 
 		<?php foreach ( $methods as $method ) : ?>
 			<?php
@@ -202,7 +216,7 @@ class Block extends BaseBlock {
 			has-others>
 
 			<span slot="summary">
-				<?php echo esc_html( $method->name ); ?>
+				<?php echo esc_html( apply_filters( 'surecart/manual_payment_method_choice/summary', $method->name, $method ) ); ?>
 			</span>
 
 			<sc-card>

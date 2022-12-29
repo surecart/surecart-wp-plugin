@@ -99,32 +99,20 @@ export class ScLogin {
   async login() {
     try {
       this.loading = true;
-      await apiFetch({
+      const { redirect_url } = (await apiFetch({
         method: 'POST',
         path: 'surecart/v1/login',
         data: {
           login: this.email,
           password: this.password,
         },
-      });
-      window.location.reload();
-    } catch (e) {
-      this.handleError(e);
-      this.loading = false;
-    }
-  }
+      })) as any;
 
-  async checkEmail() {
-    try {
-      this.loading = true;
-      await apiFetch({
-        method: 'POST',
-        path: 'surecart/v1/check_email',
-        data: {
-          login: this.email,
-        },
-      });
-      this.step = this.step + 1;
+      if (redirect_url) {
+        window.location.replace(redirect_url);
+      } else {
+        window.location.reload();
+      }
     } catch (e) {
       this.handleError(e);
     } finally {

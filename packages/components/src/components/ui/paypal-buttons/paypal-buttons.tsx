@@ -221,11 +221,11 @@ export class ScPaypalButtons {
 
   render() {
     return (
-      <div class={{ 'paypal-buttons': true, 'paypal-buttons--busy': this.busy || !this.loaded }}>
+      <div part={`base ${this.busy || (!this.loaded && 'base--busy')}`} class={{ 'paypal-buttons': true, 'paypal-buttons--busy': this.busy || !this.loaded }}>
         {(!this.loaded || this.busy) && <sc-skeleton style={{ 'height': '55px', '--border-radius': '4px', 'cursor': 'wait' }}></sc-skeleton>}
         <div class="sc-paypal-button-container" hidden={!this.loaded || this.busy}>
-          <div hidden={!this.buttons.includes('card')} class="sc-paypal-card-button" ref={el => (this.cardContainer = el as HTMLDivElement)}></div>
-          <div hidden={!this.buttons.includes('paypal')} class="sc-paypal-button" ref={el => (this.paypalContainer = el as HTMLDivElement)}></div>
+          <div part="paypal-card-button" hidden={!this.buttons.includes('card')} class="sc-paypal-card-button" ref={el => (this.cardContainer = el as HTMLDivElement)}></div>
+          <div part="paypal-button" hidden={!this.buttons.includes('paypal')} class="sc-paypal-button" ref={el => (this.paypalContainer = el as HTMLDivElement)}></div>
         </div>
       </div>
     );

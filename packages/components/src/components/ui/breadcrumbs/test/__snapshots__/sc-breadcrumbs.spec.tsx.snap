@@ -6,7 +6,7 @@ exports[`sc-breadcrumbs renders 1`] = `
     <nav aria-label="Breadcrumb" class="breadcrumb" part="base">
       <slot></slot>
     </nav>
-    <div aria-hidden="true" hidden="">
+    <div aria-hidden="true" hidden="" part="separator">
       <slot name="separator">
         <sc-icon name="chevron-right"></sc-icon>
       </slot>

@@ -1,5 +1,9 @@
 import { Component, h, Fragment, Prop, Element } from '@stencil/core';
 
+/**
+ * @part base - The elements base wrapper.
+ * @part separator - The separator.
+ */
 @Component({
   tag: 'sc-breadcrumbs',
   styleUrl: 'sc-breadcrumbs.css',
@@ -55,7 +59,7 @@ export class ScBreadcrumbs {
         <nav part="base" class="breadcrumb" aria-label={this.label}>
           <slot onSlotchange={() => this.handleSlotChange()}></slot>
         </nav>
-        <div hidden aria-hidden="true">
+        <div part="separator" hidden aria-hidden="true">
           <slot name="separator">
             <sc-icon name="chevron-right"></sc-icon>
           </slot>

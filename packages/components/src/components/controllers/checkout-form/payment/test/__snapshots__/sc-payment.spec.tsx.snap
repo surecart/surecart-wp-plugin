@@ -3,7 +3,7 @@
 exports[`sc-payment renders no processors 1`] = `
 <sc-payment>
   <mock:shadow-root>
-    <sc-form-control>
+    <sc-form-control exportparts="label, help-text, form-control">
       <div class="sc-payment-label" slot="label">
         <div></div>
       </div>

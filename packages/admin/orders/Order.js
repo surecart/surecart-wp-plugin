@@ -26,6 +26,7 @@ import Details from './modules/Details';
 import LineItems from './modules/LineItems';
 import OrderStatusConfirmModal from './modules/OrderStatusConfirmModal';
 import PaymentFailures from './modules/PaymentFailures';
+import Refunds from './modules/Refunds';
 import Subscriptions from './modules/Subscriptions';
 import Sidebar from './Sidebar';
 
@@ -183,6 +184,7 @@ export default () => {
 					failures={order?.checkout?.payment_failures}
 					loading={!hasLoadedOrder}
 				/>
+        <Refunds chargeId={order?.checkout?.charge?.id} />
 				<Subscriptions checkoutId={order?.checkout?.id} />
 				<OrderStatusConfirmModal
 					order={order}

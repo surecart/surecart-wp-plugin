@@ -3,7 +3,12 @@ import { __ } from '@wordpress/i18n';
 import { ResponseError } from '../../../types';
 
 /**
- * This component listens for a confirmed event and redirects to the success url.
+ * @part base - The elements base wrapper.
+ * @part icon - The alert icon.
+ * @part text - The alert text.
+ * @part title - The alert title.
+ * @part message - The alert message.
+ * @part close - The close icon.
  */
 @Component({
   tag: 'sc-error',
@@ -48,7 +53,7 @@ export class ScFormErrorProvider {
 
   render() {
     return !!this.errorMessage() ? (
-      <sc-alert type="danger" scrollOnOpen={true} open={!!this.errorMessage()}>
+      <sc-alert exportparts="base, icon, text, title, message, close" type="danger" scrollOnOpen={true} open={!!this.errorMessage()}>
         <span slot="title">{this.errorMessage()}</span>
       </sc-alert>
     ) : null;

@@ -22,11 +22,14 @@
 
 ## Shadow Parts
 
-| Part             | Description |
-| ---------------- | ----------- |
-| `"form-control"` |             |
-| `"help-text"`    |             |
-| `"label"`        |             |
+| Part             | Description                |
+| ---------------- | -------------------------- |
+| `"form-control"` | The elements base wrapper. |
+| `"help-text"`    | Help text.                 |
+| `"input"`        | The input wrapper.         |
+| `"label"`        | The label.                 |
+| `"tooltip"`      | Tooltip                    |
+| `"tooltip-text"` | Tooltip text.              |
 
 
 ## Dependencies
