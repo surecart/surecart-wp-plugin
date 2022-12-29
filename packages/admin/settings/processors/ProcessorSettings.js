@@ -10,8 +10,8 @@ import {
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
-import SettingsBox from '../SettingsBox';
 
+import SettingsBox from '../SettingsBox';
 import SettingsTemplate from '../SettingsTemplate';
 import ManualPaymentMethods from './ManualPaymentMethods';
 
@@ -35,30 +35,38 @@ export default () => {
 
 	const renderStatus = (type) => {
 		const test = (processors || []).some(
-			(p) => p?.processor_type === type && p?.live_mode === false
+			(p) =>
+				p?.processor_type === type &&
+				!p?.live_mode &&
+				p?.enabled &&
+				p?.approved
 		);
 		const live = (processors || []).some(
-			(p) => p?.processor_type === type && p?.live_mode === true
+			(p) =>
+				p?.processor_type === type &&
+				p?.live_mode &&
+				p?.enabled &&
+				p?.approved
 		);
 
 		return (
 			<>
-				{live ? (
-					<ScTag type="success">
-						{__('Live Payments Enabled', 'surecart')}
-					</ScTag>
-				) : (
-					<ScTag type="warning">
-						{__('Live Payments Not Enabled', 'surecart')}
-					</ScTag>
-				)}{' '}
 				{test ? (
 					<ScTag type="success">
 						{__('Test Payments Enabled', 'surecart')}
 					</ScTag>
 				) : (
 					<ScTag type="warning">
-						{__('Test Payments Not Enabled', 'surecart')}
+						{__('Test Payments Disabled', 'surecart')}
+					</ScTag>
+				)}{' '}
+				{live ? (
+					<ScTag type="success">
+						{__('Live Payments Enabled', 'surecart')}
+					</ScTag>
+				) : (
+					<ScTag type="warning">
+						{__('Live Payments Disabled', 'surecart')}
 					</ScTag>
 				)}
 			</>
