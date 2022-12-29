@@ -176,7 +176,7 @@ export class ScLogin {
           <sc-flex flexDirection="column" style={{ '--sc-flex-column-gap': 'var(--sc-spacing-large)' }}>
             <div>
               <sc-form onScFormSubmit={() => this.createLoginCode()}>
-                <sc-button type="primary" submit full>
+                <sc-button class="login-code" type="primary" submit full>
                   <sc-icon name="mail" slot="prefix" />
                   {__('Send a login code', 'surecart')}
                 </sc-button>

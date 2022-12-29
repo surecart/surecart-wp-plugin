@@ -55,7 +55,7 @@ describe('Signin', () => {
 			},
 		).as('sendVerificationCode');
 
-		cy.get('sc-button').shadow().find('.button').should('not.have.class', 'button--loading').first().click({ force: true, waitForAnimations: true, multiple: true });
+		cy.get('sc-button.login-code').shadow().find('.button').should('not.have.class', 'button--loading').first().click({ force: true, waitForAnimations: true, multiple: true });
 		cy.wait('@sendVerificationCode');
 		cy.get('sc-login-form').contains('Check your email');
 
