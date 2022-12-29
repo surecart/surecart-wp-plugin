@@ -1,6 +1,4 @@
-/** @jsx jsx */
 import DataTable from '../../DataTable';
-import { css, jsx } from '@emotion/core';
 import { ScButton, ScPaymentMethod } from '@surecart/components-react';
 import { Fragment } from '@wordpress/element';
 import { __, _n } from '@wordpress/i18n';
@@ -46,10 +44,41 @@ export default ({
 		}
 
 		return (
-			<sc-button onClick={() => onRefundClick(charge)} size="small">
+			<ScButton size="small" onClick={() => onRefundClick(charge)}>
 				{__('Refund', 'surecart')}
-			</sc-button>
+			</ScButton>
 		);
+	};
+
+	const getExternalChargeLink = (charge) => {
+		const paymentType = charge?.payment_method?.processor_type;
+
+		if (!['stripe', 'paypal'].includes(paymentType)) return null;
+
+		const externalChargeId = charge?.external_charge_id;
+		const isLiveMode = charge?.live_mode;
+
+		if (!externalChargeId) return null;
+
+		if (paymentType === 'stripe')
+			return `https://dashboard.stripe.com/${
+				!isLiveMode && 'test/'
+			}charges/${externalChargeId}`;
+
+		if (paymentType === 'paypal') {
+			return `https://www.${
+				!isLiveMode && 'sandbox.'
+			}paypal.com/activity/payment/${externalChargeId}`;
+		}
+	};
+
+	const getProcessorName = (type) => {
+		switch (type) {
+			case 'stripe':
+				return 'Stripe';
+			case 'paypal':
+				return 'PayPal';
+		}
 	};
 
 	return (
@@ -104,6 +133,14 @@ export default ({
 							method: (
 								<ScPaymentMethod
 									paymentMethod={charge?.payment_method}
+									externalLink={getExternalChargeLink(charge)}
+									externalLinkTooltipText={`${__(
+										'View charge on ',
+										'surecart'
+									)} ${getProcessorName(
+										charge?.payment_method
+											?.processor_type || ''
+									)}`}
 								/>
 							),
 							status: renderStatusTag(charge),
