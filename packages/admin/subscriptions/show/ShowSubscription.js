@@ -1,19 +1,4 @@
 /** @jsx jsx */
-import Logo from '../../templates/Logo';
-import Template from '../../templates/UpdateModel';
-import CurrentPlan from './modules/CurrentPlan';
-import Customer from './modules/Customer';
-import Details from './modules/Details';
-import PendingUpdate from './modules/PendingUpdate';
-import Periods from './modules/Periods';
-import Purchases from './modules/Purchases';
-import UpcomingPeriod from './modules/UpcomingPeriod';
-import CancelSubscriptionModal from './modules/modals/CancelSubscriptionModal';
-import CancelPendingUpdate from './modules/modals/CancelUpdateModal';
-import CompleteSubscriptionModal from './modules/modals/CompleteSubscriptionModal';
-import RestoreSubscriptionModal from './modules/modals/RestoreSubscriptionModal';
-import DontCancelModal from './modules/modals/DontCancelModal';
-
 import { css, jsx } from '@emotion/core';
 import {
 	ScBreadcrumb,
@@ -26,12 +11,28 @@ import {
 	ScMenuItem,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
-import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { useState } from 'react';
+
+import Logo from '../../templates/Logo';
+import Template from '../../templates/UpdateModel';
+import CurrentPlan from './modules/CurrentPlan';
+import Customer from './modules/Customer';
+import Details from './modules/Details';
+import CancelSubscriptionModal from './modules/modals/CancelSubscriptionModal';
+import CancelPendingUpdate from './modules/modals/CancelUpdateModal';
+import CompleteSubscriptionModal from './modules/modals/CompleteSubscriptionModal';
+import DontCancelModal from './modules/modals/DontCancelModal';
+import RestoreSubscriptionModal from './modules/modals/RestoreSubscriptionModal';
+import PendingUpdate from './modules/PendingUpdate';
+import Periods from './modules/Periods';
+import Purchases from './modules/Purchases';
 import Tax from './modules/Tax';
+import UpcomingPeriod from './modules/UpcomingPeriod';
+
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [modal, setModal] = useState();
@@ -128,8 +129,7 @@ export default () => {
 			return null;
 		if (['completed', 'canceled'].includes(subscription?.status))
 			return null;
-		if (subscription?.finite)
-			return null;
+		if (subscription?.finite) return null;
 		return (
 			<ScMenuItem
 				href={addQueryArgs('admin.php', {
@@ -235,7 +235,6 @@ export default () => {
 						subscription?.current_period?.checkout?.line_items
 							?.data?.[0]
 					}
-					subscriptionId={id}
 					loading={!hasLoadedSubscription}
 					subscription={subscription}
 				/>
