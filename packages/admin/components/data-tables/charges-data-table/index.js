@@ -1,14 +1,7 @@
 /** @jsx jsx */
 import DataTable from '../../DataTable';
-import { css, jsx } from '@emotion/core';
-import {
-	ScButton,
-	ScDropdown,
-	ScIcon,
-	ScMenu,
-	ScMenuItem,
-	ScPaymentMethod,
-} from '@surecart/components-react';
+import { jsx } from '@emotion/core';
+import { ScButton, ScPaymentMethod } from '@surecart/components-react';
 import { Fragment } from '@wordpress/element';
 import { __, _n } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
@@ -70,7 +63,9 @@ export default ({
 		if (!externalChargeId) return null;
 
 		if (paymentType === 'stripe')
-			return 'https://dashboard.stripe.com/charges/' + externalChargeId;
+			return `https://dashboard.stripe.com/${
+				!isLiveMode && 'test/'
+			}charges/${externalChargeId}`;
 
 		if (paymentType === 'paypal') {
 			return `https://www.${
