@@ -1,6 +1,4 @@
-/** @jsx jsx */
 import DataTable from '../../DataTable';
-import { jsx } from '@emotion/core';
 import { ScButton, ScPaymentMethod } from '@surecart/components-react';
 import { Fragment } from '@wordpress/element';
 import { __, _n } from '@wordpress/i18n';
