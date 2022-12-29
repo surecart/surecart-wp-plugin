@@ -72,6 +72,15 @@ export default ({
 		}
 	};
 
+	const getProcessorName = (type) => {
+		switch (type) {
+			case 'stripe':
+				return 'Stripe';
+			case 'paypal':
+				return 'PayPal';
+		}
+	};
+
 	return (
 		<Fragment>
 			<DataTable
@@ -128,12 +137,10 @@ export default ({
 									externalLinkTooltipText={`${__(
 										'View charge on ',
 										'surecart'
-									)} ${
+									)} ${getProcessorName(
 										charge?.payment_method
-											?.processor_type === 'stripe'
-											? 'Stripe'
-											: 'PayPal'
-									}`}
+											?.processor_type || ''
+									)}`}
 								/>
 							),
 							status: renderStatusTag(charge),
