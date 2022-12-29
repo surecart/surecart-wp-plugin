@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-12-28T20:33:44",
+  "timestamp": "2022-12-29T20:01:01",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -1659,6 +1659,7 @@
         "sc-orders-list",
         "sc-pagination",
         "sc-password-nag",
+        "sc-payment-method",
         "sc-payment-methods-list",
         "sc-purchase-downloads-list",
         "sc-stripe-add-method",
@@ -1736,6 +1737,9 @@
           "sc-button"
         ],
         "sc-password-nag": [
+          "sc-button"
+        ],
+        "sc-payment-method": [
           "sc-button"
         ],
         "sc-payment-methods-list": [
@@ -14301,16 +14305,18 @@
           "sc-tag"
         ],
         "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
           "sc-tag",
           "sc-cc-logo",
-          "sc-icon",
           "sc-text"
-        ],
-        "sc-cc-logo": [
-          "sc-icon"
         ],
         "sc-button": [
           "sc-spinner"
+        ],
+        "sc-cc-logo": [
+          "sc-icon"
         ],
         "sc-purchase-downloads-list": [
           "sc-divider",
@@ -17697,6 +17703,38 @@
       "usage": {},
       "props": [
         {
+          "name": "externalLink",
+          "type": "string",
+          "mutable": false,
+          "attr": "external-link",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "externalLinkTooltipText",
+          "type": "string",
+          "mutable": false,
+          "attr": "external-link-tooltip-text",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "full",
           "type": "boolean",
           "mutable": false,
@@ -17745,6 +17783,10 @@
         {
           "name": "card",
           "docs": ""
+        },
+        {
+          "name": "instrument",
+          "docs": ""
         }
       ],
       "dependents": [
@@ -17755,17 +17797,24 @@
         "sc-upcoming-invoice"
       ],
       "dependencies": [
+        "sc-tooltip",
+        "sc-button",
+        "sc-icon",
         "sc-tag",
         "sc-cc-logo",
-        "sc-icon",
         "sc-text"
       ],
       "dependencyGraph": {
         "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
           "sc-tag",
           "sc-cc-logo",
-          "sc-icon",
           "sc-text"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-cc-logo": [
           "sc-icon"
@@ -18073,10 +18122,15 @@
           "sc-icon"
         ],
         "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
           "sc-tag",
           "sc-cc-logo",
-          "sc-icon",
           "sc-text"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-cc-logo": [
           "sc-icon"
@@ -18086,9 +18140,6 @@
         ],
         "sc-alert": [
           "sc-icon"
-        ],
-        "sc-button": [
-          "sc-spinner"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -23805,9 +23856,11 @@
           "sc-tooltip"
         ],
         "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
           "sc-tag",
           "sc-cc-logo",
-          "sc-icon",
           "sc-text"
         ],
         "sc-cc-logo": [
@@ -23920,9 +23973,11 @@
           "sc-spinner"
         ],
         "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
           "sc-tag",
           "sc-cc-logo",
-          "sc-icon",
           "sc-text"
         ],
         "sc-cc-logo": [
@@ -26810,11 +26865,15 @@
         }
       ],
       "dependents": [
-        "sc-form-control"
+        "sc-form-control",
+        "sc-payment-method"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-form-control": [
+          "sc-tooltip"
+        ],
+        "sc-payment-method": [
           "sc-tooltip"
         ]
       }
@@ -27132,9 +27191,11 @@
           "sc-spinner"
         ],
         "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
           "sc-tag",
           "sc-cc-logo",
-          "sc-icon",
           "sc-text"
         ],
         "sc-cc-logo": [
