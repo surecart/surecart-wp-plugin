@@ -235,6 +235,7 @@ export default () => {
 						compare={badge({
 							current: totalProperties('count', data),
 							previous: totalProperties('count', previous),
+							reverse: true,
 						})}
 					>
 						{totalProperties('count', data)}
