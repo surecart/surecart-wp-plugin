@@ -107,12 +107,28 @@ export class ScLogin {
           password: this.password,
         },
       })) as any;
-
       if (redirect_url) {
         window.location.replace(redirect_url);
       } else {
         window.location.reload();
       }
+    } catch (e) {
+      this.handleError(e);
+      this.loading = false;
+    }
+  }
+
+  async checkEmail() {
+    try {
+      this.loading = true;
+      await apiFetch({
+        method: 'POST',
+        path: 'surecart/v1/check_email',
+        data: {
+          login: this.email,
+        },
+      });
+      this.step = this.step + 1;
     } catch (e) {
       this.handleError(e);
     } finally {

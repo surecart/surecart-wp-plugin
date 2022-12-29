@@ -29,6 +29,7 @@
 ### Used by
 
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
+ - [sc-login-form](../../controllers/login)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-pagination](../pagination)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
@@ -43,6 +44,7 @@
 ```mermaid
 graph TD;
   sc-downloads-list --> sc-flex
+  sc-login-form --> sc-flex
   sc-order --> sc-flex
   sc-pagination --> sc-flex
   sc-password-nag --> sc-flex

@@ -20,6 +20,7 @@
 - [sc-input](../../ui/input)
 - [sc-button](../../ui/button)
 - [sc-icon](../../ui/icon)
+- [sc-flex](../../ui/flex)
 - [sc-divider](../../ui/divider)
 - [sc-card](../../ui/card)
 - [sc-alert](../../ui/alert)
@@ -32,6 +33,7 @@ graph TD;
   sc-login-form --> sc-input
   sc-login-form --> sc-button
   sc-login-form --> sc-icon
+  sc-login-form --> sc-flex
   sc-login-form --> sc-divider
   sc-login-form --> sc-card
   sc-login-form --> sc-alert
