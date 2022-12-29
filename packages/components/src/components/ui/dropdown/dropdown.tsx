@@ -122,6 +122,7 @@ export class ScDropdown {
         position: this.hoist ? 'fixed' : 'absolute',
         left: `${x}px`,
         top: `${y}px`,
+        right: 'auto',
       });
     });
   }
