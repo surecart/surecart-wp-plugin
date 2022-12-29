@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 
 export const maybeConvertAmount = (amount, currency) => {
-	return ['BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW'].includes(
+	return ['BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW', 'XAF'].includes(
 		currency.toUpperCase()
 	)
 		? amount

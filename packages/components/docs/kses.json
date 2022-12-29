@@ -572,6 +572,7 @@
     "flex-direction": true,
     "flex-wrap": true,
     "justify-content": true,
+    "stack": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1122,6 +1123,8 @@
     "slot": true
   },
   "sc-payment-method": {
+    "external-link": true,
+    "external-link-tooltip-text": true,
     "full": true,
     "payment-method": true,
     "style": true,
@@ -1744,6 +1747,13 @@
     "quantity-updates-enabled": true,
     "subscription-id": true,
     "success-url": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-upgrade-required": {
+    "size": true,
     "style": true,
     "id": true,
     "class": true,

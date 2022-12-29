@@ -4,6 +4,7 @@ import Box from '../../ui/Box';
 import {
 	ScBlockUi,
 	ScButton,
+	ScEmpty,
 	ScFlex,
 	ScIcon,
 	ScSwitch,
@@ -12,7 +13,7 @@ import { useState, Fragment } from '@wordpress/element';
 import Code from './Code';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import NewPromotionCode from './NewPromotionCode';
+import EditPromotionCode from './EditPromotionCode';
 
 export default ({ id }) => {
 	const [showArchived, setShowArchived] = useState(false);
@@ -89,19 +90,19 @@ export default ({ id }) => {
 				<Code promotion={promotion} key={promotion?.id} />
 			))}
 
-			{showArchived &&
+			{!!showArchived &&
 				(archivedPromotions || []).map((promotion) => (
 					<Code promotion={promotion} key={promotion?.id} />
 				))}
 
 			{!!modal && (
-				<NewPromotionCode
+				<EditPromotionCode
 					couponId={id}
 					onRequestClose={() => setModal(false)}
 				/>
 			)}
 
-			{isBusy && <ScBlockUi spinner />}
+			{!!isBusy && <ScBlockUi spinner />}
 		</Box>
 	);
 };
