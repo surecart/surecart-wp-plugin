@@ -10,8 +10,8 @@ import {
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
-import SettingsBox from '../SettingsBox';
 
+import SettingsBox from '../SettingsBox';
 import SettingsTemplate from '../SettingsTemplate';
 import ManualPaymentMethods from './ManualPaymentMethods';
 
@@ -37,16 +37,16 @@ export default () => {
 		const test = (processors || []).some(
 			(p) =>
 				p?.processor_type === type &&
-				p?.live_mode === false &&
-				p?.enabled === true &&
-				p?.approved === true
+				!p?.live_mode &&
+				p?.enabled &&
+				p?.approved
 		);
 		const live = (processors || []).some(
 			(p) =>
 				p?.processor_type === type &&
-				p?.live_mode === true &&
-				p?.enabled === true &&
-				p?.approved === true
+				p?.live_mode &&
+				p?.enabled &&
+				p?.approved
 		);
 
 		return (
