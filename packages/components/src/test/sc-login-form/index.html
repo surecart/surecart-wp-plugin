@@ -4,12 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
-  <title>Stencil Component Starter</title>
-  <style>
-    body {
-      color: #101010;
-    }
-  </style>
+  <title>Signin Flow with Verification Code</title>
   <link href="/build/surecart.css" rel="stylesheet">
   <script type="module" src="/build/surecart.esm.js"></script>
   <script nomodule src="/build/surecart.js"></script>
@@ -23,10 +18,12 @@
       }
     }
   </script>
-
 </head>
 
 <body>
+  <sc-login-form>
+    <span slot="title">Test</span>
+  </sc-login-form>
 </body>
 
 </html>

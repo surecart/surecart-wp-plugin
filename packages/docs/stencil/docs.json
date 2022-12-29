@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-12-20T21:42:02",
+  "timestamp": "2022-12-28T20:33:44",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -9799,6 +9799,7 @@
       ],
       "dependents": [
         "sc-downloads-list",
+        "sc-login-form",
         "sc-order",
         "sc-pagination",
         "sc-password-nag",
@@ -9812,6 +9813,9 @@
       "dependencies": [],
       "dependencyGraph": {
         "sc-downloads-list": [
+          "sc-flex"
+        ],
+        "sc-login-form": [
           "sc-flex"
         ],
         "sc-order": [
@@ -13767,37 +13771,39 @@
       ],
       "dependents": [],
       "dependencies": [
-        "sc-alert",
-        "sc-icon",
         "sc-form",
-        "sc-button",
-        "sc-divider",
         "sc-input",
+        "sc-button",
+        "sc-icon",
+        "sc-flex",
+        "sc-divider",
         "sc-card",
+        "sc-alert",
         "sc-block-ui"
       ],
       "dependencyGraph": {
         "sc-login-form": [
-          "sc-alert",
-          "sc-icon",
           "sc-form",
-          "sc-button",
-          "sc-divider",
           "sc-input",
+          "sc-button",
+          "sc-icon",
+          "sc-flex",
+          "sc-divider",
           "sc-card",
+          "sc-alert",
           "sc-block-ui"
-        ],
-        "sc-alert": [
-          "sc-icon"
-        ],
-        "sc-button": [
-          "sc-spinner"
         ],
         "sc-input": [
           "sc-form-control"
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-alert": [
+          "sc-icon"
         ],
         "sc-block-ui": [
           "sc-spinner"
