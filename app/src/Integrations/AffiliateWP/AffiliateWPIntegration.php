@@ -185,39 +185,4 @@ class AffiliateWPIntegration extends \Affiliate_WP_Base {
 		$this->log( 'Referral failed to be set to completed with complete_referral()' );
 	}
 
-	/**
-	 * Records a recurring referral when a subscription renews
-	 *
-	 * @param \SureCart\Models\Purchase $purchase Purchase model.
-	 */
-	public function renewedSubscription( $purchase ) {
-		// check if recurring referral is active
-		if ( ! class_exists( 'AffiliateWP_Recurring_Referrals' ) ) {
-			return;
-		}
-
-		// the integration is not active.
-		if ( ! $this->is_active() ) {
-			return;
-		}
-
-		// Check if it was referred.
-		if ( ! $this->was_referred() ) {
-			return false; // Referral not created because affiliate was not referred.
-		}
-
-		$hydrated_purchase = Purchase::with( [ 'initial_order', 'order.checkout', 'product', 'customer' ] )->find( $purchase->id );
-
-		// get the order reference.
-		$reference = $hydrated_purchase->initial_order ?? null;
-
-		// we must have an order id.
-		if ( ! $reference->id ) {
-			$this->log( 'Draft referral creation failed. No order attached.' );
-			return;
-		}
-
-		// Create pending referral for subscription.
-
-	}
 }
