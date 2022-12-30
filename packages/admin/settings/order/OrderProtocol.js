@@ -81,6 +81,21 @@ export default () => {
 						},
 					]}
 				/>
+				{item?.number_type == 'sequential' && (
+					<ScInput
+						label={__('Next Order Sequential Number', 'surecart')}
+						value={item?.next_sequential_number}
+						onScInput={(e) =>
+							editItem({
+								next_sequential_number: e.target.value || null,
+							})
+						}
+						help={__(
+							'You can set your next Order Sequential Number. It must be greater than the largest existing sequential number.',
+							'surecart'
+						)}
+					/>
+				)}
 			</SettingsBox>
 
 			<SettingsBox
