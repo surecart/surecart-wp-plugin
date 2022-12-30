@@ -358,7 +358,7 @@ export interface Order extends Object {
   object: 'order';
   number?: string;
   order_type?: 'checkout' | 'subscription';
-  pdf_url?: string;
+  statement_url?: string;
   status?: OrderStatus;
   checkout?: Checkout | string;
   created_at: number;

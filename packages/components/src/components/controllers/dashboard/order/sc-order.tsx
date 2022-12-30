@@ -271,8 +271,8 @@ export class ScOrder {
           </sc-card>
         </sc-dashboard-module>
 
-        {this.order?.pdf_url && (
-          <sc-button type="primary" href={this.order?.pdf_url} target="_blank">
+        {this.order?.statement_url && (
+          <sc-button type="primary" href={this.order?.statement_url} target="_blank">
             <sc-icon name="inbox" slot="prefix"></sc-icon>
             {__('Download Receipt/Invoice', 'surecart')}
           </sc-button>
