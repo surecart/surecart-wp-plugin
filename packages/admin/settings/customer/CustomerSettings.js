@@ -1,5 +1,10 @@
 import { css, jsx } from '@emotion/core';
-import { ScInput, ScStackedList, ScSwitch, ScTag } from '@surecart/components-react';
+import {
+	ScInput,
+	ScStackedList,
+	ScSwitch,
+	ScTag,
+} from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
@@ -123,6 +128,24 @@ export default () => {
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
 							'Send a quick reminder when a refund is created for a customer. These emails contain the amount and payment method being refunded.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				<ScSwitch
+					checked={item?.free_order_enabled}
+					onClick={(e) => {
+						e.preventDefault();
+						editItem({
+							free_order_enabled: !item?.free_order_enabled,
+						});
+					}}
+				>
+					{__('Free Order Emails', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'This allows the merchant to turn off customer order emails when the order is free.',
 							'surecart'
 						)}
 					</span>
