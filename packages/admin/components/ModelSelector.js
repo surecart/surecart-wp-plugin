@@ -14,7 +14,7 @@ export default (props) => {
 		per_page: 10,
 	});
 
-	const { data, loading } = useSelect(
+	const { data, loading, error } = useSelect(
 		(select) => {
 			const queryArgs = [
 				'surecart',
@@ -38,6 +38,11 @@ export default (props) => {
 								queryArgs
 						  )
 						: false,
+				error:
+					select(coreStore)?.getResolutionError(
+						'getEntityRecords',
+						queryArgs
+					) ?? null,
 			};
 		},
 		[query, pagination]
@@ -57,7 +62,7 @@ export default (props) => {
 	};
 
 	useEffect(() => {
-		if (loading && data?.length < pagination.per_page)
+		if (error || (loading && data?.length < pagination.per_page))
 			setPagination((state) => ({ ...state, enabled: false }));
 
 		setChoices((state) => [
@@ -67,7 +72,7 @@ export default (props) => {
 				value: item.id,
 			})),
 		]);
-	}, [data]);
+	}, [data, error]);
 
 	return (
 		<SelectModel
