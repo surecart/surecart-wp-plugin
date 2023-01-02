@@ -13,7 +13,8 @@
 	},
 	"attributes": {
     "rule_groups": {
-			"type": "string"
+			"type": "array",
+			"default": []
 		}
 	}
 }

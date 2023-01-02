@@ -30,13 +30,17 @@ const Rules = ( props ) => {
 			},
 		];
 
-		let rgData = rule_groups?.length > 0 ? rule_groups : defaultData;
+		// Deep clone hack.
+		let rgData = rule_groups?.length > 0 ? JSON.parse( JSON.stringify( rule_groups ) ) : defaultData;
 
 		return rgData;
 	};
 
 	const [ ruleGroupsData, setRuleGroupsData ] = useState( getInitialGroups() );
 
+	console.log( 'rule_groups' )
+	console.log( rule_groups )
+	console.log( 'ruleGroupsData' );
 	console.log( ruleGroupsData );
 
 	const updateRuleGroupData = function( data ) {
