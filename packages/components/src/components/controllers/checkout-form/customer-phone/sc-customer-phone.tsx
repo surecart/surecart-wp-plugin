@@ -85,16 +85,8 @@ export class ScCustomerPhone {
   @Event() scUpdateCustomer: EventEmitter<{ phone: string }>;
 
   async handleChange() {
-    let phoneNo = this.input.value;
+    this.value = this.input.value;
     this.scChange.emit();
-
-    let pattern = new RegExp(/[0-9\\-\\+]+$/);
-
-    if ( pattern.test(phoneNo) ) {
-      this.error = false;
-    } else {
-      this.error = true;
-    }
   }
 
   @Method()
@@ -114,7 +106,7 @@ export class ScCustomerPhone {
 
   render() {
     return (
-      <sc-input
+      <sc-phone-input
         type="tel"
         name="phone"
         ref={el => (this.input = el as HTMLScInputElement)}
@@ -133,8 +125,7 @@ export class ScCustomerPhone {
         onScInput={() => this.scInput.emit()}
         onScFocus={() => this.scFocus.emit()}
         onScBlur={() => this.scBlur.emit()}
-        style={{'--sc-input-border-color': this.error ? '#dc2626' : '', '--sc-input-border-color-focus': !!this.error ? '#dc2626' : ''}}
-      ></sc-input>
+      ></sc-phone-input>
     );
   }
 }

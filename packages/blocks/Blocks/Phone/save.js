@@ -11,7 +11,7 @@ export default ({ className, attributes }) => {
 			placeholder={placeholder || false}
 			showLabel={showLabel || false}
 			size={size || false}
-			required={required ? '1' : '0'}
+			required={required}
 		></sc-customer-phone>
 	);
 };

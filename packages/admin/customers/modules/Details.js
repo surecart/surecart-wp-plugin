@@ -6,6 +6,7 @@ import {
 	ScColumn,
 	ScColumns,
 	ScInput,
+  ScPhoneInput,
 	ScTag,
 } from '@surecart/components-react';
 import { css, jsx } from '@emotion/core';
@@ -72,7 +73,7 @@ export default ({ customer, updateCustomer, loading }) => {
             />
           </ScColumn>
           <ScColumn>
-            <ScInput
+            <ScPhoneInput
               label={__('Phone', 'surecart')}
               className="sc-customer-phone"
               help={__('Your customer\'s phone number.', 'surecart')}
