@@ -1,6 +1,6 @@
 <?php
 
-namespace Surecart\Integrations\AffiliateWP;
+namespace SureCart\Integrations\AffiliateWP;
 
 use SureCart\Models\Checkout;
 use SureCart\Models\Purchase;
@@ -41,8 +41,6 @@ class AffiliateWPIntegration extends \Affiliate_WP_Base {
 		add_action( 'surecart/purchase_revoked', [ $this, 'revokeReferral' ], 10, 3 );
 		// re-complete referral when the purchase is completed.
 		add_action( 'surecart/purchase_invoked', [ $this, 'invokeReferral' ], 10, 3 );
-		// add pending referral when subscription renewed.
-		add_action( 'surecart/subscription_renewed', [ $this, 'renewedSubscription' ], 10, 2 );
 		// add a reference link to the referral table.
 		add_filter( 'affwp_referral_reference_column', [ $this, 'referenceLink' ], 10, 2 );
 	}

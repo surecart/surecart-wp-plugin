@@ -1,6 +1,6 @@
 <?php
 
-namespace Surecart\Integrations\AffiliateWP;
+namespace SureCart\Integrations\AffiliateWP;
 
 use SureCart\Models\Checkout;
 use SureCart\Models\Purchase;
@@ -10,14 +10,12 @@ use SureCart\Support\Currency;
  * Custom Integration Class
  */
 
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 /**
- * Class Custom_Integration
- * Use this class to ext
+ * Class AffiliateWPRecurringIntegration
  */
 class AffiliateWPRecurringIntegration extends \Affiliate_WP_Recurring_Base {
 	/**
@@ -35,8 +33,28 @@ class AffiliateWPRecurringIntegration extends \Affiliate_WP_Recurring_Base {
 	 * @since   2.0
 	 */
 	public function init() {
-		// add pending referral when subscription renewed.
-		add_action( 'surecart/subscription_renewed', [ $this, 'renewedSubscription' ], 10, 2 );
+		// Add referral when subscription renewed.
+		add_action( 'surecart/subscription_renewed', [ $this, 'renewedSubscription' ], 10, 1 );
+
+		// Automated test for subscription renewed
+		$json = '{
+			"id": "8370dee2-e883-4b38-8440-804c93e826da",
+			"object": "purchase",
+			"live_mode": false,
+			"quantity": 1,
+			"revoked": false,
+			"revoked_at": null,
+			"customer": "567b3130-c1bc-4982-acf1-df28b626afd1",
+			"initial_order": "a5c946aa-b654-4e73-be9f-366d313db95b",
+			"license": null,
+			"product": "f6e90ad9-e5d4-44a0-927b-198348489acd",
+			"refund": null,
+			"subscription": null,
+			"created_at": 1672340597,
+			"updated_at": 1672340597
+		}';
+		$purchase = json_decode($json);
+		// do_action( 'surecart/subscription_renewed', $purchase);
 	}
 
 	/**
@@ -45,56 +63,74 @@ class AffiliateWPRecurringIntegration extends \Affiliate_WP_Recurring_Base {
 	 * @param \SureCart\Models\Purchase $purchase Purchase model.
 	 */
 	public function renewedSubscription( $purchase ) {
-		// check if recurring referral is active
+		// Check if recurring referral is active
 		if ( ! class_exists( 'AffiliateWP_Recurring_Referrals' ) ) {
+			affiliate_wp()->utils->log( 'Recurring referral not applied.' );
 			return;
 		}
-
-		// the integration is not active.
-		// if ( ! $this->is_active() ) {
-		// 	return;
-		// }
 
 		// Check if it was referred.
 		if ( ! affiliate_wp()->tracking->was_referred() ) {
 			return false; // Referral not created because affiliate was not referred.
 		}
 
+		// Get details purchase information
 		$hydrated_purchase = Purchase::with( [ 'initial_order', 'order.checkout', 'product', 'customer' ] )->find( $purchase->id );
 
-		// get the order reference.
+		// Get the order reference.
 		$reference = $hydrated_purchase->initial_order ?? null;
 
-		// we must have an order id.
+		// We must have an order id.
 		if ( ! $reference->id ) {
-			// $this->log( 'Draft referral creation failed. No order attached.' );
+			affiliate_wp()->utils->log( 'Draft referral creation failed. No order attached.' );
 			return;
 		}
 
-		$stripe_amount = $reference->checkout->amount_due;
+		// Get the parent referral
+		$parent_referral = affiliate_wp()->referrals->get_by( 'reference', $reference->id, $this->context );
+
+		// This signup wasn't referred or is the very first payment of a referred subscription
+		if ( ! $parent_referral || ! is_object( $parent_referral ) || 'rejected' == $parent_referral->status ) {
+			affiliate_wp()->utils->log( 'Recurring Referrals: No referral found or referral is rejected.' );
+			return false;
+		}
+
+		$amount_due    = $reference->checkout->amount_due;
 		$currency      = $reference->currency;
 		$description   = $hydrated_purchase->product->name;
 		$mode          = $reference->live_mode;
 
 		if ( Currency::isZeroDecimal( $currency ) ) {
-			$amount = $stripe_amount;
+			$amount = $amount_due;
 		} else {
-			$amount = round( $stripe_amount / 100, 2 );
+			$amount = round( $amount_due / 100, 2 );
 		}
 
-		// Create pending referral for subscription.
+		// Calculate referral amount
+		$referral_amount = $this->calc_referral_amount( $amount, $reference, $parent_referral->referral_id );
+
+		// Create referral for subscription.
 		$referral_id = $this->insert_referral(
 			[
+				'amount'       => $referral_amount,
+				'reference'    => $reference->id ?? null,
+				'description'  => $description,
 				'affiliate_id' => $this->affiliate_id,
-				'reference' => $reference->id ?? null,
-				'amount' => $amount,
-				'description' => $description,
-				'context' => $this->context,
+				'context'      => $this->context,
+				'custom'       => array(
+					'livemode' => $mode,
+					'object'   => $reference->object,
+				),
 			]
 		);
 
 		if ( ! $referral_id ) {
-			// $this->log( 'Draft referral creation failed.' );
+			affiliate_wp()->utils->log( 'Draft referral creation failed.' );
+			return;
+		}
+
+		if ( $this->complete_referral( $referral_id ) ) {
+			affiliate_wp()->utils->log( 'Referral completed successfully during insert_referral()' );
 			return;
 		}
 
