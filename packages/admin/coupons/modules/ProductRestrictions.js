@@ -96,7 +96,6 @@ export default ({ coupon, updateCoupon, loading }) => {
 													]),
 												],
 											});
-											setDrafts(drafts - 1);
 										}}
 									/>
 									<ScDropdown
