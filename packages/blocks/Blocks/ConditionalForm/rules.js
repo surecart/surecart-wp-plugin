@@ -103,19 +103,10 @@ const Rules = ( props ) => {
 
 		setRuleGroupsData( [...ruleGroupsData] );
 	};
-	const updateConditionOptionInRuleGroup = function( groupId, conditionId, currentValue, optionName ) {
-		// debugger;
-			for ( const group of ruleGroupsData ) {
-				if ( groupId === group.group_id ) {
-					for ( const rule of group.rules ) {
-						if ( conditionId === rule.rule_id ) {
-							rule[optionName] = currentValue;
-							break;
-						}
-					}
-					break;
-				}
-			}
+	const updateConditionOptionInRuleGroup = function( groupIndex, conditionIndex, currentValue, optionName ) {
+	  	debugger;
+      ruleGroupsData[groupIndex]['rules'][conditionIndex][optionName] = currentValue;
+
 			// setAttributes({ rule_groups: ruleGroupsData });
 			setRuleGroupsData( [...ruleGroupsData] );
 	};
@@ -252,7 +243,7 @@ const Rules = ( props ) => {
 										groups_length={ ruleGroupsData.length }
 										removeConditionFromRuleGroup={ ( conditionIndex ) => removeConditionFromRuleGroup( g_index, conditionIndex ) }
 										updateConditionInRuleGroup={ ( conditionIndex, currentValue ) => { updateConditionInRuleGroup( g_index, conditionIndex, currentValue ) } }
-										updateConditionOptionInRuleGroup = { updateConditionOptionInRuleGroup }
+										updateConditionOptionInRuleGroup = { ( conditionIndex, currentValue, optionName ) => { updateConditionOptionInRuleGroup( g_index, conditionIndex, currentValue, optionName ) } }
 									/>
 									) }
 							</div>

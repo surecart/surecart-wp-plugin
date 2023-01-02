@@ -186,7 +186,7 @@ function Conditions( props ) {
 							tooltip={ field.tooltip }
 							options={ field.options }
 							isMulti={ field.isMulti }
-              onChangeCB={ ( selection ) => { updateConditionOptionInRuleGroup( group_id, rule_id, selection, 'value' ); } }
+              onChangeCB={ ( selection ) => { updateConditionOptionInRuleGroup( r_index, selection, 'value' ); } }
 						/>
 					);
 					break;
@@ -207,7 +207,7 @@ function Conditions( props ) {
                 tooltip={ field.tooltip }
                 options={ field.options }
                 isMulti={ field.isMulti }
-                onChangeCB={ ( selection ) => { updateConditionOptionInRuleGroup( group_id, rule_id, selection, 'value' ); } }
+                onChangeCB={ ( selection ) => { updateConditionOptionInRuleGroup( r_index, selection, 'value' ); } }
               />
             );
           }
@@ -221,7 +221,7 @@ function Conditions( props ) {
 							tooltip={ field.tooltip }
 							options={ field.options }
 							isMulti={ field.isMulti }
-              onChange={ ( selection ) => { updateConditionOptionInRuleGroup( group_id, rule_id, selection, 'value' ); } }
+              onChange={ ( selection ) => { updateConditionOptionInRuleGroup( r_index, selection, 'value' ); } }
 						/>
 					);
 					break;
@@ -233,7 +233,7 @@ function Conditions( props ) {
               value={ value }
               placeholder={ field.placeholder }
 				      tooltip={ field.tooltip }
-              onChange={ ( selection ) => { updateConditionOptionInRuleGroup( group_id, rule_id, selection, 'value' ); } }
+              onChange={ ( selection ) => { updateConditionOptionInRuleGroup( r_index, selection, 'value' ); } }
               isShiftStepEnabled={ true }
               shiftStep={ 1 }
             />
@@ -247,7 +247,7 @@ function Conditions( props ) {
 							value={ value }
 							placeholder={ field.placeholder }
 							tooltip={ field.tooltip }
-              onChange={ ( selection ) => { updateConditionOptionInRuleGroup( group_id, rule_id, selection, 'value' ); } }
+              onChange={ ( selection ) => { updateConditionOptionInRuleGroup( r_index, selection, 'value' ); } }
 						/>
 					);
 					break;
@@ -324,7 +324,7 @@ function Conditions( props ) {
 									name={ `sc-form-rules[${ g_index }][rules][${ r_index }][operator]` }
 									options={ rule_field_data.operator }
 									value={ rule_data.operator }
-                  onChange={ ( selection ) => { updateConditionOptionInRuleGroup( group_id, rule_id, selection, 'operator' ); } }
+                  onChange={ ( selection ) => { updateConditionOptionInRuleGroup( r_index, selection, 'operator' ); } }
 								/>
 
 								{ valueFields(
