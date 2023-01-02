@@ -176,7 +176,7 @@
     margin-left: var(--sc-input-spacing-medium) !important;
   }
 
-  .input__suffix ::slotted(:not(sc-button)) {
+  .input__suffix ::slotted(:not(sc-button[size="medium"])) {
     margin-right: var(--sc-input-spacing-medium) !important;
   }
 

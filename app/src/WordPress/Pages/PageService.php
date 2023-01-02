@@ -58,7 +58,7 @@ class PageService {
 		}
 
 		if ( $post->ID === $this->getId( 'checkout' ) ) {
-			$states[] = __( 'Checkout Page', 'surecart' );
+			$states[] = __( 'Store Checkout', 'surecart' );
 		}
 
 		if ( $post->ID === $this->getId( 'dashboard' ) ) {

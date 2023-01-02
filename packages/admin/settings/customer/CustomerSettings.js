@@ -1,5 +1,5 @@
 import { css, jsx } from '@emotion/core';
-import { ScInput, ScStackedList, ScSwitch, ScTag } from '@surecart/components-react';
+import { ScInput, ScStackedList, ScSwitch, ScUpgradeRequired } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
@@ -214,9 +214,7 @@ export default () => {
 				>
 					{__('Subscription Recovery Emails', 'surecart')}{' '}
 					{!scData?.entitlements?.payment_failure_notifications && (
-						<ScTag type="success" size="small" pill>
-							{__('Pro', 'surecart')}
-						</ScTag>
+						<ScUpgradeRequired />
 					)}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(

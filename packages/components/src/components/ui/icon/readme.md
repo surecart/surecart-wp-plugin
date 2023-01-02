@@ -67,6 +67,7 @@
  - [sc-tax-id-input](../tax-id-input)
  - [sc-toggle](../sc-toggle)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-upgrade-required](../sc-upgrade-required)
  - [sc-wordpress-user](../../controllers/dashboard/wordpress-user)
 
 ### Graph
@@ -105,6 +106,7 @@ graph TD;
   sc-tax-id-input --> sc-icon
   sc-toggle --> sc-icon
   sc-upcoming-invoice --> sc-icon
+  sc-upgrade-required --> sc-icon
   sc-wordpress-user --> sc-icon
   style sc-icon fill:#f9f,stroke:#333,stroke-width:4px
 ```

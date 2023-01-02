@@ -88,6 +88,8 @@ return [
 		\SureCart\Rest\CheckoutRestServiceProvider::class,
 		\SureCart\Rest\InvoicesRestServiceProvider::class,
 		\SureCart\Rest\WebhooksRestServiceProvider::class,
+		\SureCart\Rest\VerificationCodeRestServiceProvider::class,
+		\SureCart\Rest\CheckEmailRestServiceProvider::class,
 
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,

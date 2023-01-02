@@ -46,6 +46,7 @@
 
  - [sc-login-provider](../../providers/sc-login-provider)
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
+ - [sc-upgrade-required](../sc-upgrade-required)
 
 ### Depends on
 
@@ -60,6 +61,7 @@ graph TD;
   sc-button --> sc-spinner
   sc-login-provider --> sc-dialog
   sc-subscription-details --> sc-dialog
+  sc-upgrade-required --> sc-dialog
   style sc-dialog fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

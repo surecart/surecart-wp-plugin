@@ -58,4 +58,28 @@ class CustomerController extends RestController {
 
 		return $customer->where( $request->get_query_params() )->exposeMedia( $request['media_id'] );
 	}
+
+	/**
+	 * Edit model.
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function edit( \WP_REST_Request $request ) {
+		$wp_user = \SureCart\Models\User::findByCustomerId( $request['id'] );
+
+		if ( ! empty( $wp_user->ID ) ) {
+			wp_update_user(
+				[
+					'ID'         => $wp_user->ID,
+					'user_email' => ! empty( $request['email'] ) ? $request['email'] : $wp_user->user_email,
+					'first_name' => ! empty( $request['first_name'] ) ? $request['first_name'] : $wp_user->first_name,
+					'last_name'  => ! empty( $request['last_name'] ) ? $request['last_name'] : $wp_user->last_name,
+				]
+			);
+		}
+
+		return parent::edit( $request );
+	}
 }
