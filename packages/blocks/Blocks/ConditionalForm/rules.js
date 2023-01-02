@@ -85,28 +85,23 @@ const Rules = ( props ) => {
 		setRuleGroupsData( [...newGroupData] );
 	};
 
-	const updateConditionInRuleGroup = function( groupId, conditionId, currentValue ) {
-		// debugger;
-			for ( const group of ruleGroupsData ) {
-				if ( groupId === group.group_id ) {
-					for ( const rule of group.rules ) {
-						if ( conditionId === rule.rule_id ) {
-							rule.condition = currentValue;
-							rule.value = '';
-							rule.operator = 'any';
+	const updateConditionInRuleGroup = function( groupIndex, conditionIndex, currentValue ) {
 
-							if ( 'cart_total' === currentValue ) {
-								rule.operator = '==';
-							}
+    // debugger;
 
-							break;
-						}
-					}
-					break;
-				}
-			}
-			// setAttributes({ rule_groups: ruleGroupsData });
-			setRuleGroupsData( [...ruleGroupsData] );
+    let savedRule = ruleGroupsData[groupIndex]['rules'][conditionIndex];
+
+    savedRule.condition = currentValue;
+    savedRule.value = '';
+    savedRule.operator = 'any';
+
+    if ( 'cart_total' === currentValue ) {
+      savedRule.operator = '==';
+    }
+
+    ruleGroupsData[groupIndex]['rules'][conditionIndex] = savedRule;
+
+		setRuleGroupsData( [...ruleGroupsData] );
 	};
 	const updateConditionOptionInRuleGroup = function( groupId, conditionId, currentValue, optionName ) {
 		// debugger;
@@ -256,7 +251,7 @@ const Rules = ( props ) => {
 										g_index={ g_index }
 										groups_length={ ruleGroupsData.length }
 										removeConditionFromRuleGroup={ ( conditionIndex ) => removeConditionFromRuleGroup( g_index, conditionIndex ) }
-										updateConditionInRuleGroup={ updateConditionInRuleGroup }
+										updateConditionInRuleGroup={ ( conditionIndex, currentValue ) => { updateConditionInRuleGroup( g_index, conditionIndex, currentValue ) } }
 										updateConditionOptionInRuleGroup = { updateConditionOptionInRuleGroup }
 									/>
 									) }
