@@ -165,13 +165,13 @@ function Conditions( props ) {
   };
 
 
-	const removeCondition = ( event, rule_id, rule_index ) => {
+	const removeCondition = ( event, rule_index ) => {
     // debugger
 		// const rule_id = event.target.getAttribute( 'rule_id' );
 
-		if ( group_id && rule_id ) {
-      removeConditionFromRuleGroup( group_id, rule_id, rule_index );
-		}
+		// if ( group_id && rule_id ) {
+    // }
+    removeConditionFromRuleGroup( rule_index );
 	};
 
 	const valueFields = function ( fields, r_index, rule_data ) {
@@ -272,7 +272,7 @@ function Conditions( props ) {
 		}
 		return (
       <div className='button' css={css`margin-top:15px;`}
-        onClick={ (e) => { removeCondition(e, rule_id, rule_index ); } }
+        onClick={ (e) => { removeConditionFromRuleGroup( rule_index ); } }
         group_id={ group_id }
         rule_id={ rule_id }
       >{

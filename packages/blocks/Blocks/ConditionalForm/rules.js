@@ -62,13 +62,13 @@ const Rules = ( props ) => {
 		}
 	};
 
-	const removeConditionFromRuleGroup = function( groupId, conditionId, conditionIndex ) {
-		// debugger;
+	const removeConditionFromRuleGroup = function( groupIndex, conditionIndex ) {
+		debugger;
 		const newGroupData = ruleGroupsData.filter( ( group, i ) => {
-			if ( groupId === group.group_id ) {
+			if ( i === groupIndex ) {
 
 				group.rules = group.rules.filter( ( rule, j ) => {
-					if ( rule.rule_id === conditionId ) {
+					if ( j === conditionIndex ) {
 						return false;
 					}
 					return true;
@@ -255,7 +255,7 @@ const Rules = ( props ) => {
 										group_id={ group_id }
 										g_index={ g_index }
 										groups_length={ ruleGroupsData.length }
-										removeConditionFromRuleGroup={ removeConditionFromRuleGroup }
+										removeConditionFromRuleGroup={ ( conditionIndex ) => removeConditionFromRuleGroup( g_index, conditionIndex ) }
 										updateConditionInRuleGroup={ updateConditionInRuleGroup }
 										updateConditionOptionInRuleGroup = { updateConditionOptionInRuleGroup }
 									/>
