@@ -42,6 +42,7 @@ export default ({ coupon, updateCoupon, loading }) => {
 					<ScCard noPadding>
 						<div>
 							{productIds.map((id) => {
+								if (!id) return '';
 								return (
 									<ScStackedListRow>
 										<Product id={id} onSetId={() => {}} />
@@ -78,7 +79,6 @@ export default ({ coupon, updateCoupon, loading }) => {
 										css={css`
 											min-width: 380px;
 										`}
-										required
 										key={index}
 										name="product"
 										placeholder={__(
