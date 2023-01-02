@@ -44,7 +44,7 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => $this->callback( $this->controller, 'cancel' ),
-					'permission_callback' => [ $this, 'cancel_permissions_check' ],
+					'permission_callback' => [ $this, 'cancel_item_permissions_check' ],
 				],
 				// Register our schema callback.
 				'schema' => [ $this, 'get_item_schema' ],
