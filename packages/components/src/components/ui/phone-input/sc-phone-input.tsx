@@ -37,9 +37,6 @@ export class ScPhoneInput {
   /** Hidden */
   @Prop() hidden: boolean = false;
 
-  /** The input's type. */
-  @Prop({ reflect: true }) type: 'tel';
-
   /** The input's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
 
@@ -115,9 +112,6 @@ export class ScPhoneInput {
   /** Enables spell checking on the input. */
   @Prop() spellcheck: boolean;
 
-  /** The input's inputmode attribute. */
-  @Prop() inputmode: 'tel';
-
   /** Inputs focus */
   @Prop({ mutable: true, reflect: true }) hasFocus: boolean;
 
@@ -185,16 +179,6 @@ export class ScPhoneInput {
   }
 
   handleInput() {
-    // let prevPhone = this.value;
-    // let pattern = new RegExp(/[0-9\\-\\+]+$/);
-  
-    // if ( pattern.test( this.input.value ) ) {
-    //   this.value = this.input.value;
-    //   //console.log('Correct phone digit');
-    // } else {
-    //   this.value = prevPhone;
-    //   //console.log('Wrong phone digit');
-    // }
     this.value = this.input.value;
     this.scInput.emit();
   }
@@ -284,7 +268,7 @@ export class ScPhoneInput {
                 id={this.inputId}
                 class="input__control"
                 ref={el => (this.input = el as HTMLInputElement)}
-                type={this.type}
+                type={'number'}
                 name={this.name}
                 disabled={this.disabled}
                 readonly={this.readonly}
@@ -301,7 +285,7 @@ export class ScPhoneInput {
                 autofocus={this.autofocus}
                 spellcheck={this.spellcheck}
                 pattern={this.pattern}
-                inputmode={this.inputmode}
+                inputmode={'numeric'}
                 aria-labelledby={this.label}
                 aria-invalid={this.invalid ? true : false}
                 value={this.value}
