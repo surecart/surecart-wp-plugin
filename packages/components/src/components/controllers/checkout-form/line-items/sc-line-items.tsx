@@ -109,6 +109,7 @@ export class ScLineItems {
                 removable={this.isRemovable()}
                 quantity={item.quantity}
                 amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.subtotal_amount}
+                scratchAmount={item.ad_hoc_amount == null && item?.scratch_amount}
                 currency={this.order?.currency}
                 trialDurationDays={item?.price?.trial_duration_days}
                 interval={!!item?.price && intervalString(item?.price, { showOnce: hasSubscription(this.order) })}

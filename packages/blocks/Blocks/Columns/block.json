@@ -3,7 +3,7 @@
 	"apiVersion": 2,
 	"name": "surecart/columns",
 	"title": "Columns",
-	"category": "design",
+	"category": "surecart",
 	"description": "Display content in multiple columns, with blocks added to each column.",
 	"textdomain": "surecart",
 	"ancestor": ["surecart/form"],

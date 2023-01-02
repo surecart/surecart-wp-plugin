@@ -18,9 +18,9 @@
 
 ## Shadow Parts
 
-| Part     | Description |
-| -------- | ----------- |
-| `"base"` |             |
+| Part     | Description                |
+| -------- | -------------------------- |
+| `"base"` | The elements base wrapper. |
 
 
 ## Dependencies

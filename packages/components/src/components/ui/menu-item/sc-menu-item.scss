@@ -22,7 +22,7 @@
 
   &.menu-item--focused:not(.menu-item--disabled) {
     outline: none;
-    background-color: var(--sc-color-primary-500);
+    background-color: var(--sc-menu-item-background-focused, var(--sc-color-primary-500));
     color: var(--sc-color-white);
   }
 

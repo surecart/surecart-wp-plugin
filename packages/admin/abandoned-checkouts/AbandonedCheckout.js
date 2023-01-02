@@ -152,14 +152,17 @@ export default () => {
 					checkout={abandoned?.checkout}
 					loading={!hasLoadedAbandoned}
 				/>
-				<Link
-					url={site?.url}
-					checkoutId={abandoned?.checkout?.id}
-					promotionCode={abandoned?.promotion?.code}
-				/>
+				{!abandoned?.recovered_checkout?.id && (
+					<Link
+						url={site?.url}
+						checkoutId={abandoned?.checkout?.id}
+						promotionCode={abandoned?.promotion?.code}
+					/>
+				)}
 				<LineItems
 					checkout={abandoned?.checkout}
 					loading={!hasLoadedAbandoned}
+					abandoned={abandoned}
 				/>
 			</>
 		</UpdateModel>

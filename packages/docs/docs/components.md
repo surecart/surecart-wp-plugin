@@ -4,7 +4,7 @@ id: components
 
 # Introduction
 
-Presto ships with a library of web components so you can add, extend or modify functionality without needing to code everything from scratch. You can use these components to match UI, ensure accessibility add additional checkout fields, and much more.
+SureCart ships with a library of web components so you can add, extend or modify functionality without needing to code everything from scratch. You can use these components to match UI, ensure accessibility add additional checkout fields, and much more.
 
 ## Benefits
 
@@ -17,7 +17,7 @@ Additional benefits include:
 -   👌 Touch input friendly.
 -   🎨 Style anything you want with CSS variables. Default light and dark themes are included.
 -   🏎️ Performant with lazy loading of components.
--   🧩 Easily build your own components and extend Presto.
+-   🧩 Easily build your own components and extend SureCart.
 -   🗑️ Lightweight
 -   💪 Built with TypeScript so you can enjoy completely typed components.
 -   🏠 Feel right at home with HTML/CSS/JS thanks to web components.

@@ -1,6 +1,6 @@
 {
 	"name": "surecart/name",
-	"title": "Name",
+	"title": "Full Name",
 	"description": "Display a name collection field.",
 	"category": "surecart",
 	"keywords": ["name", "customer"],

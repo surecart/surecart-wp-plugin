@@ -176,8 +176,12 @@
     margin-left: var(--sc-input-spacing-medium) !important;
   }
 
-  .input__suffix ::slotted(*) {
+  .input__suffix ::slotted(:not(sc-button)) {
     margin-right: var(--sc-input-spacing-medium) !important;
+  }
+
+  .input__suffix ::slotted(sc-tag) {
+    margin-right: var(--sc-input-spacing-small) !important;
   }
 
   .input__suffix ::slotted(sc-dropdown) {

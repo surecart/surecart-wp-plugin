@@ -35,26 +35,55 @@ export default () => {
 	const [skipProration, setSkipProration] = useState(false);
 	const [savingSubscription, setSavingSubscription] = useState(false);
 	const [updateBehavior, setUpdateBehavior] = useState('pending');
+	const { editEntityRecord } = useDispatch(coreStore);
 
-	const {
-		subscription,
-		hasLoadedSubscription,
-		editSubscription,
-		hasEdits,
-		edits,
-	} = useEntity('subscription', id, {
-		expand: ['current_period', 'current_period.checkout'],
-	});
+	const editSubscription = (data) =>
+		editEntityRecord('surecart', 'subscription', id, data);
+	const { subscription, hasLoadedSubscription, hasEdits, edits } = useSelect(
+		(select) => {
+			const entityData = [
+				'surecart',
+				'subscription',
+				id,
+				{
+					expand: ['current_period', 'current_period.checkout'],
+				},
+			];
+
+			return {
+				subscription: select(coreStore).getEditedEntityRecord(
+					...entityData
+				),
+				hasLoadedSubscription: select(
+					coreStore
+				)?.hasFinishedResolution?.('getEditedEntityRecord', [
+					...entityData,
+				]),
+				hasEdits: select(coreStore).hasEditsForEntityRecord(
+					...entityData
+				),
+				edits: select(coreStore).getEntityRecordEdits(...entityData),
+			};
+		},
+		[id]
+	);
 
 	useEffect(() => {
 		if (subscription?.id) {
+			console.log('fetching');
 			fetchUpcomingPeriod();
 		}
-	}, [subscription, skipProration, updateBehavior]);
+	}, [
+		subscription?.id,
+		subscription?.quantity,
+		subscription?.price,
+		subscription?.trial_end_at,
+		skipProration,
+		updateBehavior,
+	]);
 
 	const fetchUpcomingPeriod = async () => {
 		setLoadingUpcoming(true);
-
 		try {
 			const response = await makeRequest({ preview: true });
 			setUpcoming(response);
@@ -70,6 +99,7 @@ export default () => {
 		try {
 			setSavingSubscription(true);
 			const subscription = await makeRequest({ preview: false });
+
 			receiveEntityRecords(
 				'surecart',
 				'subscription',
@@ -111,6 +141,7 @@ export default () => {
 			quantity,
 			discount,
 			price,
+			payment_method,
 		} = subscription;
 
 		return apiFetch({
@@ -136,6 +167,7 @@ export default () => {
 				...(ad_hoc_amount ? { ad_hoc_amount } : {}),
 				...(cancel_at_period_end ? { cancel_at_period_end } : {}),
 				...(discount ? { discount } : {}),
+				...(payment_method ? { payment_method } : {}),
 				trial_end_at,
 				quantity,
 				purge_pending_update: true,

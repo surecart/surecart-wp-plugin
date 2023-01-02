@@ -14,6 +14,14 @@
 | `flexDirection`  | `flex-direction`  |             | `string` | `undefined` |
 | `flexWrap`       | `flex-wrap`       |             | `string` | `undefined` |
 | `justifyContent` | `justify-content` |             | `string` | `undefined` |
+| `stack`          | `stack`           |             | `string` | `undefined` |
+
+
+## Shadow Parts
+
+| Part     | Description |
+| -------- | ----------- |
+| `"base"` |             |
 
 
 ## Dependencies

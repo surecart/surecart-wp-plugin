@@ -35,10 +35,13 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part        | Description |
-| ----------- | ----------- |
-| `"base"`    |             |
-| `"choices"` |             |
+| Part             | Description                                    |
+| ---------------- | ---------------------------------------------- |
+| `"base"`         | The elements base wrapper.                     |
+| `"choices"`      | The choices wrapper.                           |
+| `"form-control"` | The form control wrapper.                      |
+| `"help-text"`    | Help text that describes how to use the input. |
+| `"label"`        | The input label.                               |
 
 
 ## Dependencies

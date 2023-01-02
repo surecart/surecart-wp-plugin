@@ -9,6 +9,7 @@
 
 | Property                      | Attribute                       | Description                                                   | Type                                                                             | Default     |
 | ----------------------------- | ------------------------------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------- | ----------- |
+| `abandonedCheckoutReturnUrl`  | `abandoned-checkout-return-url` | The abandoned checkout return url.                            | `string`                                                                         | `undefined` |
 | `alignment`                   | `alignment`                     | Alignment                                                     | `"center" \| "full" \| "wide"`                                                   | `undefined` |
 | `currencyCode`                | `currency-code`                 | Currency to use for this checkout.                            | `string`                                                                         | `'usd'`     |
 | `customer`                    | --                              | Stores the current customer                                   | `Customer`                                                                       | `undefined` |
