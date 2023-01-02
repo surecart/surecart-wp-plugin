@@ -48,6 +48,14 @@ export default (props) => {
 		setPagination((state) => ({ ...state, page: (state.page += 1) }));
 	};
 
+	const handleOnQuery = (val) => {
+		if (query === val) return;
+		setQuery(val);
+		setChoices([]);
+		if (pagination.page !== 1)
+			setPagination((state) => ({ ...state, page: 1 }));
+	};
+
 	useEffect(() => {
 		if (loading && data?.length < pagination.per_page)
 			setPagination((state) => ({ ...state, enabled: false }));
@@ -64,7 +72,7 @@ export default (props) => {
 	return (
 		<SelectModel
 			choices={choices}
-			onQuery={setQuery}
+			onQuery={handleOnQuery}
 			onFetch={() => setQuery('')}
 			loading={loading}
 			onScrollEnd={handleOnScrollEnd}
