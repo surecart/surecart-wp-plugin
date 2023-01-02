@@ -165,12 +165,12 @@ function Conditions( props ) {
   };
 
 
-	const removeCondition = ( event ) => {
+	const removeCondition = ( event, rule_id, rule_index ) => {
     // debugger
-		const rule_id = event.target.getAttribute( 'rule_id' );
+		// const rule_id = event.target.getAttribute( 'rule_id' );
 
 		if ( group_id && rule_id ) {
-      removeConditionFromRuleGroup( group_id, rule_id );
+      removeConditionFromRuleGroup( group_id, rule_id, rule_index );
 		}
 	};
 
@@ -266,13 +266,13 @@ function Conditions( props ) {
 		} );
 	};
 
-	const removeConditionIcon = function ( rules_length, rule_id ) {
+	const removeConditionIcon = function ( rules_length, rule_index, rule_id ) {
 		if ( 1 === rules_length && 1 === groups_length ) {
 			return '';
 		}
 		return (
       <div className='button' css={css`margin-top:15px;`}
-        onClick={ removeCondition }
+        onClick={ (e) => { removeCondition(e, rule_id, rule_index ); } }
         group_id={ group_id }
         rule_id={ rule_id }
       >{
@@ -301,7 +301,7 @@ function Conditions( props ) {
                   text-align: center;
                 `}>
 									<span className="sc--condition-label__and_group__text">
-										AND
+										{ __( 'AND', 'surecart' ) }
 									</span>
 								</div>
 							</div>
@@ -343,7 +343,7 @@ function Conditions( props ) {
 								) }
 							</div>
 							<div className="sc-rules--rule_actions">
-								{ removeConditionIcon( rules.length, rule_id ) }
+								{ removeConditionIcon( rules.length, r_index, rule_id ) }
 							</div>
 						</div>
 					</>

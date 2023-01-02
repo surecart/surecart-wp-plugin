@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import {
 	Button,
 } from '@wordpress/components';
@@ -62,7 +62,7 @@ const Rules = ( props ) => {
 		}
 	};
 
-	const removeConditionFromRuleGroup = function( groupId, conditionId ) {
+	const removeConditionFromRuleGroup = function( groupId, conditionId, conditionIndex ) {
 		// debugger;
 		const newGroupData = ruleGroupsData.filter( ( group, i ) => {
 			if ( groupId === group.group_id ) {
@@ -220,7 +220,7 @@ const Rules = ( props ) => {
 						`}>
 							<div className="sc-rules--group_header__left">
 								<span className="sc-rules__handle dashicons dashicons-menu"></span>
-								Rule Group - { g_index + 1 }
+                { sprintf( __( 'Rule Group - %s', 'surecart' ), g_index + 1 ) }
 							</div>
 							<div className="sc-rules--group_header">
 								<span className="sc-rules--group_id">
