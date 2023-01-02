@@ -10,6 +10,7 @@ import {
 
 import SelectProducts from './selectProducts';
 import SelectCoupons from './selectCoupons';
+import Select2 from './select2';
 import { countryChoices } from '@surecart/components';
 
 
@@ -130,7 +131,7 @@ function Conditions( props ) {
       'operator': shippingOperators,
       'fields': [
         {
-          'type': 'select',
+          'type': 'select2',
           'placeholder': __( 'Search for country..', 'surecart' ),
           'isMulti': true,
           'options': countryChoices
@@ -141,7 +142,7 @@ function Conditions( props ) {
       'operator': shippingOperators,
       'fields': [
         {
-          'type': 'select',
+          'type': 'select2',
           'placeholder': __( 'Search for country..', 'surecart' ),
           'isMulti': true,
           'options': countryChoices
@@ -152,7 +153,7 @@ function Conditions( props ) {
       'operator': shippingOperators,
       'fields': [
         {
-          'type': 'select',
+          'type': 'select2',
           'placeholder': __( 'Search for payment method..', 'surecart' ),
           'isMulti': true,
           'options': [
@@ -225,6 +226,20 @@ function Conditions( props ) {
 						/>
 					);
 					break;
+        case 'select2':
+          // debugger
+          rendorfields = (
+            <Select2
+              name={ `${ name }[]` }
+              value={ value }
+              placeholder={ field.placeholder }
+              tooltip={ field.tooltip }
+              options={ field.options }
+              isMulti={ field.isMulti }
+              onChangeCB={ ( selection ) => { updateConditionOptionInRuleGroup( r_index, selection, 'value' ); } }
+            />
+          );
+          break;
 
 				case 'number':
           rendorfields = (
