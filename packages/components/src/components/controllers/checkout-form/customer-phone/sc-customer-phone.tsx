@@ -107,7 +107,6 @@ export class ScCustomerPhone {
   render() {
     return (
       <sc-phone-input
-        type="tel"
         name="phone"
         ref={el => (this.input = el as HTMLScInputElement)}
         value={this.customer?.phone || this.value}
