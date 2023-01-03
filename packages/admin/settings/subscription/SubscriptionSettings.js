@@ -216,6 +216,26 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
+				<ScSwitch
+					checked={
+						item?.revoke_purchases_on_past_due
+					}
+					onScChange={(e) => {
+						e.preventDefault();
+						editItem({
+							revoke_purchases_on_past_due:
+								!item?.revoke_purchases_on_past_due,
+						});
+					}}
+				>
+					{__('Revoke Purchases on Past Due', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Whether or not a purchase should be revoked when a subscription becomes past due. If the subscription transitions to the active or trialing state the associated purchase will be automatically invoked again.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
 			</SettingsBox>
 		</SettingsTemplate>
 	);
