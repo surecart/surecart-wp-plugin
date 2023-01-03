@@ -134,15 +134,11 @@ export class ScSubscriptionsList {
     return this.subscriptions.map(subscription => {
       return (
         <sc-stacked-list-row
-          href={
-            subscription?.status !== 'canceled'
-              ? addQueryArgs(window.location.href, {
-                  action: 'edit',
-                  model: 'subscription',
-                  id: subscription.id,
-                })
-              : null
-          }
+          href={addQueryArgs(window.location.href, {
+            action: 'edit',
+            model: 'subscription',
+            id: subscription.id,
+          })}
           key={subscription.id}
           mobile-size={0}
         >

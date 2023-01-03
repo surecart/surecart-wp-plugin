@@ -96,7 +96,7 @@ export class ScSubscriptionCancel {
           {this.renderContent()}
 
           <sc-button type="primary" full loading={this.loading || this.busy} disabled={this.loading || this.busy} onClick={() => this.renewSubscription()}>
-            {__('Renew Plan', 'surecart')}
+            {__('Restore Plan', 'surecart')}
           </sc-button>
 
           {!!this.backUrl && (

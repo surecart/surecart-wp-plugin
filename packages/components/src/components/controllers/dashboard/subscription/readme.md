@@ -83,9 +83,11 @@ graph TD;
   sc-product-line-item --> sc-quantity-select
   sc-product-line-item --> sc-icon
   sc-quantity-select --> sc-icon
+  sc-payment-method --> sc-tooltip
+  sc-payment-method --> sc-button
+  sc-payment-method --> sc-icon
   sc-payment-method --> sc-tag
   sc-payment-method --> sc-cc-logo
-  sc-payment-method --> sc-icon
   sc-payment-method --> sc-text
   sc-cc-logo --> sc-icon
   sc-dashboard-module --> sc-alert

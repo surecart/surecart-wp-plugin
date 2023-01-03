@@ -30,6 +30,10 @@ export class ScSubscriptionNextPayment {
       this.loading = false;
       return;
     }
+    if (this.subscription?.status === 'canceled') {
+      this.loading = false;
+      return;
+    }
     try {
       this.loading = true;
       this.period = (await apiFetch({

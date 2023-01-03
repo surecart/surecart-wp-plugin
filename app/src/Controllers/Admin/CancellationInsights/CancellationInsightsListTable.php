@@ -184,6 +184,15 @@ class CancellationInsightsListTable extends ListTable {
 		if ( $act->preserved ) {
 			return '<sc-tag type="success">' . esc_html__( 'Preserved', 'surecart' ) . '</sc-tag>';
 		}
-		return '<sc-tag type="danger">' . esc_html__( 'Cancelled', 'surecart' ) . '</sc-tag>';
+		if ( 'canceled' === $act->subscription->status ) {
+			return '<sc-tag type="danger">' . esc_html__( 'Cancelled', 'surecart' ) . '</sc-tag>';
+		}
+		if ( $act->subscription->cancel_at_period_end ) {
+			return '<sc-tag type="warning">' . esc_html__( 'Will Cancel', 'surecart' ) . '</sc-tag>';
+		}
+		if ( 'active' === $act->subscription->status ) {
+			return '<sc-tag type="success">' . esc_html__( 'Active', 'surecart' ) . '</sc-tag>';
+		}
+		return '-';
 	}
 }

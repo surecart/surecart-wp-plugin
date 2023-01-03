@@ -190,7 +190,7 @@ export class ScSubscription {
                 })}
               >
                 <sc-icon name="repeat" slot="prefix"></sc-icon>
-                {__('Renew Plan', 'surecart')}
+                {__('Restore Plan', 'surecart')}
               </sc-button>
             ) : (
               this.subscription?.status !== 'canceled' &&
