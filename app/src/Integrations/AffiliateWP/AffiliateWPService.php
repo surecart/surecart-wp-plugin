@@ -17,9 +17,17 @@ class AffiliateWPService {
 	public function bootstrap() {
 		add_filter( 'affwp_extended_integrations', [ $this, 'register' ] );
 
-		if ( class_exists( 'AffiliateWP_Recurring_Referrals' ) ) {
-			new AffiliateWPRecurringIntegration();
-		}
+		// if ( class_exists( 'AffiliateWP_Recurring_Referrals' ) ) {
+		// 	new AffiliateWPRecurringIntegration();
+		// }
+		add_action(
+			'plugins_loaded',
+			function() {
+				if ( class_exists( 'Affiliate_WP_Recurring_Base' ) ) {
+					new AffiliateWPRecurringIntegration();
+				}
+			}
+		);
 	}
 
 	/**
