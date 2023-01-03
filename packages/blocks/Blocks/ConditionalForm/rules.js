@@ -57,7 +57,7 @@ const Rules = ( props ) => {
 	};
 
 	const removeConditionFromRuleGroup = function( groupIndex, conditionIndex ) {
-		debugger;
+
 		const newGroupData = draftRuleGroups.filter( ( group, i ) => {
 			if ( i === groupIndex ) {
 
@@ -75,13 +75,10 @@ const Rules = ( props ) => {
 			return true;
 		});
 
-		// setAttributes({ rule_groups: newGroupData });
 		setDraftRuleGroups( [...newGroupData] );
 	};
 
 	const updateConditionInRuleGroup = function( groupIndex, conditionIndex, currentValue ) {
-
-    // debugger;
 
     let savedRule = draftRuleGroups[groupIndex]['rules'][conditionIndex];
 
@@ -97,11 +94,11 @@ const Rules = ( props ) => {
 
 		setDraftRuleGroups( [...draftRuleGroups] );
 	};
+
 	const updateConditionOptionInRuleGroup = function( groupIndex, conditionIndex, currentValue, optionName ) {
-	  	debugger;
+
       draftRuleGroups[groupIndex]['rules'][conditionIndex][optionName] = currentValue;
 
-			// setAttributes({ rule_groups: draftRuleGroups });
 			setDraftRuleGroups( [...draftRuleGroups] );
 	};
 
@@ -116,8 +113,8 @@ const Rules = ( props ) => {
 		addConditionToRuleGroup( groupIndex, newCondition );
 	}
 
-	const addNewGroup = function ( event ) {
-		// debugger;
+	const addNewGroup = function () {
+
 		const newGroup = {
 			group_id: Math.random().toString( 36 ).substring( 2, 5 ),
 			rules: [
@@ -130,7 +127,7 @@ const Rules = ( props ) => {
 		};
 
 		draftRuleGroups.push( newGroup );
-		// setDraftRuleGroups( draftRuleGroups );
+
 		updateRuleGroupData( draftRuleGroups );
 	}
 
@@ -279,9 +276,7 @@ const Rules = ( props ) => {
 							<div className="sc-rules--or_group__button">
 								<span
 									className="sc-rules--or_group_button or-button sc-button sc-button--secondary button"
-									onClick={
-										addNewGroup
-									}
+									onClick={ addNewGroup }
 								>
 									{ __(
 										'Add Rule Group',
