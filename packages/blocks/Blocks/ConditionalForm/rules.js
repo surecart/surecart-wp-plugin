@@ -163,7 +163,6 @@ const Rules = ( props ) => {
 				>
 					<div
 						className="sc-rules--group"
-						data-group-id={ group_id }
 						css={css`
 							padding: 15px;
 							background-color: #fafafa;
@@ -195,9 +194,6 @@ const Rules = ( props ) => {
 								<span
 									className={ isActiveGroup ? 'dashicons dashicons-arrow-up' : 'dashicons dashicons-arrow-down' }
 									onClick={ () => { showRules( groupIndex ) } }
-									data-group_id={
-										group_id
-									}
 								></span>
 							</div>
 						</div>
@@ -210,7 +206,6 @@ const Rules = ( props ) => {
 									0 && (
 									<Conditions
 										rules={ rules }
-										groupId={ group_id }
 										groupIndex={ groupIndex }
 										groupsLength={ draftRuleGroups.length }
 										removeConditionFromRuleGroup={ ( conditionIndex ) => removeConditionFromRuleGroup( groupIndex, conditionIndex ) }
