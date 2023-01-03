@@ -287,7 +287,6 @@ function Conditions( props ) {
 		<Fragment>
 			{ rules.map( ( rule, ruleIndex ) => {
         // debugger;
-				const rule_id = rule?.rule_id;
 				const rule_data = rules[ ruleIndex ];
 				const rule_field_data = rule_settings_field_data[ rule_data.condition ];
 
@@ -310,20 +309,12 @@ function Conditions( props ) {
 						) }
 						<div
 							className="sc-rules--group_rules"
-							data-rule-id={ rule_id }
-							key={ rule_id }
               css={css`
                 background: #ffffff;
                 padding: 15px 14px;
                 border: 1px #d4d4d4 solid;
               `}
 						>
-							<input
-								type="hidden"
-								name={ `sc-form-rules[${ groupIndex }][rules][${ ruleIndex }][rule_id]` }
-								value={ rule_id }
-							/>
-
 							<div className="sc-checkout-rules--rule_fields">
 								<SelectControl
 									name={ `sc-form-rules[${ groupIndex }][rules][${ ruleIndex }][condition]` }

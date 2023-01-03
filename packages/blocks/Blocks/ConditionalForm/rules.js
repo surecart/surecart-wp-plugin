@@ -21,7 +21,6 @@ const Rules = ( props ) => {
 				"group_id": Math.random().toString( 36 ).substring( 2, 5 ),
 				"rules": [
 					{
-						rule_id: Math.random().toString( 36 ).substring( 2, 5 ),
 						condition: "cart_item",
 						operator: "any",
 						value: ""
@@ -114,7 +113,6 @@ const Rules = ( props ) => {
 	const addNewCondition = ( event ) => {
 		const groupId = event.target.getAttribute( 'group_id' );
 		const newCondition = {
-			rule_id: Math.random().toString( 36 ).substring( 2, 5 ),
 			condition: 'cart_item',
 			operator: 'any',
 			value: '',
@@ -129,7 +127,6 @@ const Rules = ( props ) => {
 			group_id: Math.random().toString( 36 ).substring( 2, 5 ),
 			rules: [
 				{
-					rule_id: Math.random().toString( 36 ).substring( 2, 5 ),
 					condition: 'cart_item',
 					operator: 'any',
 					value: '',
