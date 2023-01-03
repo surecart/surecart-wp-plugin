@@ -16,7 +16,7 @@ import { countryChoices } from '@surecart/components';
 
 function Conditions( props ) {
 
-  const { rules, group_id, g_index, groups_length, removeConditionFromRuleGroup, updateConditionInRuleGroup, updateConditionOptionInRuleGroup } = props;
+  const { rules, g_index, groups_length, removeConditionFromRuleGroup, updateConditionInRuleGroup, updateConditionOptionInRuleGroup } = props;
 
   const conditions_select = [
     { label: __( 'Product(s)', 'surecart' ), value: 'cart_item' },
@@ -166,20 +166,18 @@ function Conditions( props ) {
   };
 
 
-	const valueFields = function ( fields, r_index, rule_data ) {
-    // debugger;
-		const value = rule_data.value;
-    const rule_id = rule_data.rule_id;
+	const valueFields = function ( fields, ruleIndex, rule_data ) {
 
-		let rendorfields = '';
-		const name = `sc-form-rules[${ g_index }][rules][${ r_index }][value]`;
+		let renderFields = '';
+		const value = rule_data.value;
+		const name = `sc-form-rules[${ g_index }][rules][${ ruleIndex }][value]`;
 
 		return fields.map( ( field ) => {
-      // debugger;
+
 			switch ( field.type ) {
 				case 'products':
-          // debugger
-					rendorfields = (
+
+					renderFields = (
             <SelectProducts
 							name={ `${ name }[]` }
 							value={ value }
@@ -187,20 +185,20 @@ function Conditions( props ) {
 							tooltip={ field.tooltip }
 							options={ field.options }
 							isMulti={ field.isMulti }
-              onChangeCB={ ( selection ) => { updateConditionOptionInRuleGroup( r_index, selection, 'value' ); } }
+              onChangeCB={ ( selection ) => { updateConditionOptionInRuleGroup( ruleIndex, selection, 'value' ); } }
 						/>
 					);
 					break;
 
         case 'coupons':
-          // debugger
+
           if (
 						'exist' === rule_data.operator ||
 						'not_exist' === rule_data.operator
 					) {
 						// If required we will add field here for these two option
 					} else {
-            rendorfields = (
+            renderFields = (
               <SelectCoupons
                 name={ `${ name }[]` }
                 value={ value }
@@ -208,13 +206,13 @@ function Conditions( props ) {
                 tooltip={ field.tooltip }
                 options={ field.options }
                 isMulti={ field.isMulti }
-                onChangeCB={ ( selection ) => { updateConditionOptionInRuleGroup( r_index, selection, 'value' ); } }
+                onChangeCB={ ( selection ) => { updateConditionOptionInRuleGroup( ruleIndex, selection, 'value' ); } }
               />
             );
           }
 					break;
         case 'select':
-					rendorfields = (
+					renderFields = (
 						<SelectControl
 							name={ `${ name }[]` }
 							value={ value }
@@ -222,13 +220,13 @@ function Conditions( props ) {
 							tooltip={ field.tooltip }
 							options={ field.options }
 							isMulti={ field.isMulti }
-              onChange={ ( selection ) => { updateConditionOptionInRuleGroup( r_index, selection, 'value' ); } }
+              onChange={ ( selection ) => { updateConditionOptionInRuleGroup( ruleIndex, selection, 'value' ); } }
 						/>
 					);
 					break;
         case 'select2':
           // debugger
-          rendorfields = (
+          renderFields = (
             <Select2
               name={ `${ name }[]` }
               value={ value }
@@ -236,19 +234,19 @@ function Conditions( props ) {
               tooltip={ field.tooltip }
               options={ field.options }
               isMulti={ field.isMulti }
-              onChangeCB={ ( selection ) => { updateConditionOptionInRuleGroup( r_index, selection, 'value' ); } }
+              onChangeCB={ ( selection ) => { updateConditionOptionInRuleGroup( ruleIndex, selection, 'value' ); } }
             />
           );
           break;
 
 				case 'number':
-          rendorfields = (
+          renderFields = (
 						<NumberControl
               name={ name }
               value={ value }
               placeholder={ field.placeholder }
 				      tooltip={ field.tooltip }
-              onChange={ ( selection ) => { updateConditionOptionInRuleGroup( r_index, selection, 'value' ); } }
+              onChange={ ( selection ) => { updateConditionOptionInRuleGroup( ruleIndex, selection, 'value' ); } }
               isShiftStepEnabled={ true }
               shiftStep={ 1 }
             />
@@ -256,31 +254,29 @@ function Conditions( props ) {
 					break;
 
         case 'text':
-					rendorfields = (
+					renderFields = (
 						<TextControl
 							name={ name }
 							value={ value }
 							placeholder={ field.placeholder }
 							tooltip={ field.tooltip }
-              onChange={ ( selection ) => { updateConditionOptionInRuleGroup( r_index, selection, 'value' ); } }
+              onChange={ ( selection ) => { updateConditionOptionInRuleGroup( ruleIndex, selection, 'value' ); } }
 						/>
 					);
 					break;
         default:
 			}
-			return rendorfields;
+			return renderFields;
 		} );
 	};
 
-	const removeConditionIcon = function ( rules_length, rule_index, rule_id ) {
+	const removeConditionIcon = function ( rules_length, rule_index ) {
 		if ( 1 === rules_length && 1 === groups_length ) {
 			return '';
 		}
 		return (
       <div className='button' css={css`margin-top:15px;`}
         onClick={ () => { removeConditionFromRuleGroup( rule_index ); } }
-        group_id={ group_id }
-        rule_id={ rule_id }
       >{
         __( 'Remove Condition', 'surecart' )
       }</div>
@@ -289,15 +285,15 @@ function Conditions( props ) {
 
   return (
 		<Fragment>
-			{ rules.map( ( rule, r_index ) => {
+			{ rules.map( ( rule, ruleIndex ) => {
         // debugger;
 				const rule_id = rule?.rule_id;
-				const rule_data = rules[ r_index ];
+				const rule_data = rules[ ruleIndex ];
 				const rule_field_data = rule_settings_field_data[ rule_data.condition ];
 
 				return (
 					<>
-						{ 0 !== r_index && (
+						{ 0 !== ruleIndex && (
 							<div className="sc-rules--group_rules__condition-label">
 								<div className="sc--condition-label__and_group" css={css`
                   padding: 4px 6px;
@@ -324,32 +320,32 @@ function Conditions( props ) {
 						>
 							<input
 								type="hidden"
-								name={ `sc-form-rules[${ g_index }][rules][${ r_index }][rule_id]` }
+								name={ `sc-form-rules[${ g_index }][rules][${ ruleIndex }][rule_id]` }
 								value={ rule_id }
 							/>
 
 							<div className="sc-checkout-rules--rule_fields">
 								<SelectControl
-									name={ `sc-form-rules[${ g_index }][rules][${ r_index }][condition]` }
+									name={ `sc-form-rules[${ g_index }][rules][${ ruleIndex }][condition]` }
 									options={ conditions_select }
-                  onChange={ ( selection ) => { updateConditionInRuleGroup( r_index, selection ); } }
+                  onChange={ ( selection ) => { updateConditionInRuleGroup( ruleIndex, selection ); } }
 									value={ rule_data.condition }
 								/>
 								<SelectControl
-									name={ `sc-form-rules[${ g_index }][rules][${ r_index }][operator]` }
+									name={ `sc-form-rules[${ g_index }][rules][${ ruleIndex }][operator]` }
 									options={ rule_field_data.operator }
 									value={ rule_data.operator }
-                  onChange={ ( selection ) => { updateConditionOptionInRuleGroup( r_index, selection, 'operator' ); } }
+                  onChange={ ( selection ) => { updateConditionOptionInRuleGroup( ruleIndex, selection, 'operator' ); } }
 								/>
 
 								{ valueFields(
 									rule_field_data.fields,
-									r_index,
+									ruleIndex,
 									rule_data
 								) }
 							</div>
 							<div className="sc-rules--rule_actions">
-								{ removeConditionIcon( rules.length, r_index, rule_id ) }
+								{ removeConditionIcon( rules.length, ruleIndex ) }
 							</div>
 						</div>
 					</>
