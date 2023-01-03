@@ -46,7 +46,7 @@ class CancellationInsightsListTable extends ListTable {
 	public function get_columns() {
 		return [
 			'customer'            => __( 'Customer', 'surecart' ),
-			'product'             => __( 'Product', 'surecart' ),
+			'plan'                => __( 'Plan', 'surecart' ),
 			'cancellation_reason' => __( 'Cancellation Reason', 'surecart' ),
 			'comment'             => __( 'Comment', 'surecart' ),
 			'coupon'              => __( 'Coupon', 'surecart' ),
@@ -62,11 +62,11 @@ class CancellationInsightsListTable extends ListTable {
 	 *
 	 * @return string
 	 */
-	public function column_product( $act ) {
+	public function column_plan( $act ) {
 		if ( empty( $act->subscription->price->product ) ) {
 			return __( 'No product', 'surecart' );
 		}
-		return '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $act->subscription->price->product->id ) ) . '">' . $act->subscription->price->product->name . '</a>';
+		return '<a href="' . esc_url( \SureCart::getUrl()->show( 'subscription', $act->subscription->id ) ) . '">' . $act->subscription->price->product->name . '</a>';
 	}
 
 	/**
