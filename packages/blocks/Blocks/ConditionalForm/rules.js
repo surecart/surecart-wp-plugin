@@ -36,6 +36,7 @@ const Rules = ( props ) => {
 	};
 
 	const [ draftRuleGroups, setDraftRuleGroups ] = useState( getInitialGroups() );
+  const [ activeRuleGroup, setActiveRuleGroup ] = useState( 0 );
 
 	console.log( 'rule_groups' )
 	console.log( rule_groups )
@@ -43,7 +44,6 @@ const Rules = ( props ) => {
 	console.log( draftRuleGroups );
 
 	const updateRuleGroupData = function( data ) {
-		// setAttributes({ rule_groups: data });
 		setDraftRuleGroups( [...data] );
 	};
 	const addConditionToRuleGroup = function( groupIndex, newCondition ) {
@@ -131,27 +131,13 @@ const Rules = ( props ) => {
 		updateRuleGroupData( draftRuleGroups );
 	}
 
-	const showRules = function ( event ) {
-		// rule_groups += 'Hello Sandesh';
-		// setAttributes({ rule_groups: draftRuleGroups });
-		const group_id = event.target.getAttribute( 'data-group_id' );
+	const showRules = function ( groupIndex ) {
 
-		const target = document.getElementById(
-			`sc-rules--group-${ group_id }`
-		);
-		toggle_class( event, target );
-	};
-
-	const toggle_class = function ( event, target ) {
-		if ( target.classList.contains( 'hidden' ) ) {
-			target.classList.remove( 'hidden' );
-			event.target.classList.remove( 'dashicons-arrow-down' );
-			event.target.classList.add( 'dashicons-arrow-up' );
-		} else {
-			target.classList.add( 'hidden' );
-			event.target.classList.add( 'dashicons-arrow-down' );
-			event.target.classList.remove( 'dashicons-arrow-up' );
-		}
+    if( activeRuleGroup !== groupIndex ) {
+      setActiveRuleGroup( groupIndex );
+    } else {
+      setActiveRuleGroup( -1 );
+    }
 	};
 
 	const handleFormSubmit = function ( e ) {
@@ -166,7 +152,8 @@ const Rules = ( props ) => {
 		<>
 		<form className='sc-rules-group-form' onSubmit={ handleFormSubmit }>
 		{ draftRuleGroups.map( ( group, groupIndex ) => {
-			// debugger;
+
+      const isActiveGroup = activeRuleGroup === groupIndex;
 			const group_id = group.group_id;
 			const rules = group.rules;
 			return (
@@ -206,12 +193,8 @@ const Rules = ( props ) => {
 									{ group_id }
 								</span>
 								<span
-									className={
-										'dashicons dashicons-arrow-down'
-									}
-									onClick={
-										showRules
-									}
+									className={ isActiveGroup ? 'dashicons dashicons-arrow-up' : 'dashicons dashicons-arrow-down' }
+									onClick={ () => { showRules( groupIndex ) } }
 									data-group_id={
 										group_id
 									}
@@ -220,7 +203,7 @@ const Rules = ( props ) => {
 						</div>
 						<div
 							id={ `sc-rules--group-${ group_id }` }
-							className={ 'hidden' }
+							className={ ! isActiveGroup && 'hidden' }
 						>
 							<div className="sc-rules--group_rules--wrapper" css={css`margin: 15px 0;`}>
 								{ rules.length !==
