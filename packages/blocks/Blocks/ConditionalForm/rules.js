@@ -192,7 +192,7 @@ const Rules = ( props ) => {
 									{ group_id }
 								</span>
 								<span
-									className={ isActiveGroup ? 'dashicons dashicons-arrow-up' : 'dashicons dashicons-arrow-down' }
+									className={ `dashicons ${ isActiveGroup ? 'dashicons-arrow-up' : 'dashicons-arrow-down'}` }
 									onClick={ () => { showRules( groupIndex ) } }
 								></span>
 							</div>
@@ -268,8 +268,16 @@ const Rules = ( props ) => {
 			);
 			} )
 		}
-		<Button variant='secondary' onClick={closeModal}>{ __( 'Cancel', 'surecart' ) }</Button>
-		<Button variant="primary" type='submit'>{ __( 'Save', 'surecart' ) }</Button>
+    <div className='sc-rules-page--footer' css={css`
+      display: flex;
+      justify-content: flex-end;
+      margin-top: -33px;
+    `}>
+  		<Button variant='secondary' onClick={closeModal}>{ __( 'Cancel', 'surecart' ) }</Button>
+	  	<Button variant="primary" type='submit' css={css`
+        margin-left: 15px;
+      `}>{ __( 'Save', 'surecart' ) }</Button>
+    </div>
 		</form>
 		</>
 	);
