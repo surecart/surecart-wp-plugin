@@ -2715,8 +2715,10 @@ export namespace Components {
     }
     interface ScSubscriptionCancel {
         "backUrl": string;
+        "comment": string;
         "heading": string;
         "protocol": SubscriptionProtocol;
+        "reason": CancellationReason;
         "subscription": Subscription;
         "successUrl": string;
     }
@@ -7600,10 +7602,12 @@ declare namespace LocalJSX {
     }
     interface ScSubscriptionCancel {
         "backUrl"?: string;
+        "comment"?: string;
         "heading"?: string;
         "onScAbandon"?: (event: ScSubscriptionCancelCustomEvent<void>) => void;
         "onScCancelled"?: (event: ScSubscriptionCancelCustomEvent<void>) => void;
         "protocol"?: SubscriptionProtocol;
+        "reason"?: CancellationReason;
         "subscription"?: Subscription;
         "successUrl"?: string;
     }
