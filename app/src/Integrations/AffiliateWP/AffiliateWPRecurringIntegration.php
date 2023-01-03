@@ -38,47 +38,56 @@ class AffiliateWPRecurringIntegration extends \Affiliate_WP_Recurring_Base {
 
 		// Automated test for subscription renewed
 		$json = '{
-			"id": "8370dee2-e883-4b38-8440-804c93e826da",
-			"object": "purchase",
-			"live_mode": false,
+			"id": "697dbfee-e758-439a-a7a7-ca95804b7791",
+			"object": "subscription",
+			"ad_hoc_amount": null,
+			"cancel_at_period_end": false,
+			"currency": "usd",
+			"current_period_end_at": null,
+			"current_period_start_at": null,
+			"end_behavior": "cancel",
+			"ended_at": null,
+			"finite": false,
+			"live_mode": true,
+			"metadata": {},
+			"pending_update": {},
 			"quantity": 1,
-			"revoked": false,
-			"revoked_at": null,
+			"remaining_period_count": null,
+			"status": "active",
+			"tax_enabled": false,
+			"trial_end_at": null,
+			"trial_start_at": null,
+			"current_cancellation_act": null,
+			"current_period": null,
 			"customer": "567b3130-c1bc-4982-acf1-df28b626afd1",
-			"initial_order": "a5c946aa-b654-4e73-be9f-366d313db95b",
-			"license": null,
-			"product": "f6e90ad9-e5d4-44a0-927b-198348489acd",
-			"refund": null,
-			"subscription": null,
-			"created_at": 1672340597,
-			"updated_at": 1672340597
+			"discount": null,
+			"payment_method": "ae67e307-2e8d-46a0-9aee-3f88999a274d",
+			"price": "30eacbd7-5746-4dc3-97fb-b951048116ab",
+			"purchase": "1034b845-d743-4873-ba27-8940311a214a",
+			"created_at": 1672340602,
+			"updated_at": 1672340602
 		}';
-		$purchase = json_decode($json);
-		// do_action( 'surecart/subscription_renewed', $purchase);
+		$subscription = json_decode($json);
+		// do_action( 'surecart/subscription_renewed', $subscription);
 	}
 
 	/**
 	 * Records a recurring referral when a subscription renews
 	 *
-	 * @param \SureCart\Models\Purchase $purchase Purchase model.
+	 * @param $subscription Subscription object.
 	 */
-	public function renewedSubscription( $purchase ) {
+	public function renewedSubscription( $subscription ) {
 		// Check if recurring referral is active
 		if ( ! class_exists( 'AffiliateWP_Recurring_Referrals' ) ) {
 			affiliate_wp()->utils->log( 'Recurring referral not applied.' );
 			return;
 		}
 
-		// Check if it was referred.
-		if ( ! affiliate_wp()->tracking->was_referred() ) {
-			return false; // Referral not created because affiliate was not referred.
-		}
-
 		// Get details purchase information
-		$hydrated_purchase = Purchase::with( [ 'initial_order', 'order.checkout', 'product', 'customer' ] )->find( $purchase->id );
+		$purchase = Purchase::with( [ 'initial_order', 'order.checkout', 'product', 'customer' ] )->find( $subscription->purchase );
 
 		// Get the order reference.
-		$reference = $hydrated_purchase->initial_order ?? null;
+		$reference = $purchase->initial_order ?? null;
 
 		// We must have an order id.
 		if ( ! $reference->id ) {
@@ -97,8 +106,7 @@ class AffiliateWPRecurringIntegration extends \Affiliate_WP_Recurring_Base {
 
 		$amount_due    = $reference->checkout->amount_due;
 		$currency      = $reference->currency;
-		$description   = $hydrated_purchase->product->name;
-		$mode          = $reference->live_mode;
+		$description   = $purchase->product->name;
 
 		if ( Currency::isZeroDecimal( $currency ) ) {
 			$amount = $amount_due;
@@ -113,14 +121,10 @@ class AffiliateWPRecurringIntegration extends \Affiliate_WP_Recurring_Base {
 		$referral_id = $this->insert_referral(
 			[
 				'amount'       => $referral_amount,
-				'reference'    => $reference->id ?? null,
+				'reference'    => $reference,
 				'description'  => $description,
-				'affiliate_id' => $this->affiliate_id,
+				'affiliate_id' => $parent_referral->affiliate_id,
 				'context'      => $this->context,
-				'custom'       => array(
-					'livemode' => $mode,
-					'object'   => $reference->object,
-				),
 			]
 		);
 
@@ -129,6 +133,7 @@ class AffiliateWPRecurringIntegration extends \Affiliate_WP_Recurring_Base {
 			return;
 		}
 
+		// Complete referral
 		if ( $this->complete_referral( $referral_id ) ) {
 			affiliate_wp()->utils->log( 'Referral completed successfully during insert_referral()' );
 			return;
