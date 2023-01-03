@@ -1,4 +1,4 @@
-import { Component, Prop, State, Watch, h, Event, EventEmitter, Method, Element, Host } from '@stencil/core';
+import { Component, Prop, Watch, h, Event, EventEmitter, Method, Element, Host } from '@stencil/core';
 import { FormSubmitController } from '../../../functions/form-data';
 
 let id = 0;
@@ -115,9 +115,6 @@ export class ScPhoneInput {
   /** Inputs focus */
   @Prop({ mutable: true, reflect: true }) hasFocus: boolean;
 
-  /** Is the password visible */
-  @State() isPasswordVisible = false;
-
   /** Emitted when the control's value changes. */
   @Event({ composed: true })
   scChange: EventEmitter<void>;
@@ -191,10 +188,6 @@ export class ScPhoneInput {
     this.input.focus();
 
     event.stopPropagation();
-  }
-
-  handlePasswordToggle() {
-    this.isPasswordVisible = !this.isPasswordVisible;
   }
 
   @Watch('hasFocus')

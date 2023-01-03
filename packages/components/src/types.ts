@@ -599,6 +599,7 @@ export interface BillingAgreement {
   first_name: string;
   id: string;
   last_name: string;
+  phone: string;
   object: 'billing_agreement';
   created_at: number;
   updated_at: number;

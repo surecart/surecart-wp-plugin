@@ -82,7 +82,7 @@ export class ScCustomerPhone {
   /** Emitted when the control loses focus. */
   @Event() scBlur: EventEmitter<void>;
 
-  @Event() scUpdateCustomer: EventEmitter<{ phone: string }>;
+  @Event() scUpdateCustomer: EventEmitter<{ email: string }>;
 
   async handleChange() {
     this.value = this.input.value;
