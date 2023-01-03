@@ -46,17 +46,12 @@ const Rules = ( props ) => {
 		// setAttributes({ rule_groups: data });
 		setDraftRuleGroups( [...data] );
 	};
-	const addConditionToRuleGroup = function( groupId, newCondition ) {
+	const addConditionToRuleGroup = function( groupIndex, newCondition ) {
 
-		if ( draftRuleGroups && groupId ) {
-			for ( const ruleGroup of draftRuleGroups ) {
-				if ( groupId === ruleGroup.group_id ) {
-					ruleGroup.rules.push( newCondition );
-					break;
-				}
-			}
+		if ( draftRuleGroups[groupIndex]?.rules ) {
 
-			// setAttributes({ rule_groups: draftRuleGroups });
+      draftRuleGroups[groupIndex].rules.push( newCondition );
+
 			setDraftRuleGroups( [...draftRuleGroups] );
 		}
 	};
@@ -110,15 +105,15 @@ const Rules = ( props ) => {
 			setDraftRuleGroups( [...draftRuleGroups] );
 	};
 
-	const addNewCondition = ( event ) => {
-		const groupId = event.target.getAttribute( 'group_id' );
+	const addNewCondition = ( groupIndex ) => {
+
 		const newCondition = {
 			condition: 'cart_item',
 			operator: 'any',
 			value: '',
 		};
 
-		addConditionToRuleGroup( groupId, newCondition );
+		addConditionToRuleGroup( groupIndex, newCondition );
 	}
 
 	const addNewGroup = function ( event ) {
@@ -248,12 +243,7 @@ const Rules = ( props ) => {
 							<div className="sc-rules--add-rule__repeater">
 								<div
 									className="sc-button sc-button--secondary button"
-									group_id={
-										group_id
-									}
-									onClick={
-										addNewCondition
-									}
+									onClick={ (e) => { addNewCondition( groupIndex ) } }
 								>
 									{ __(
 										'Add Condition',
