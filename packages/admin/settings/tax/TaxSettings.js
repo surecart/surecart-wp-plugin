@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { ScAddress, ScSelect, ScSwitch } from '@surecart/components-react';
+import { ScAddress, ScSelect, ScSwitch, ScInput } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
 import useEntity from '../../hooks/useEntity';
@@ -68,6 +68,42 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
+				<ScSwitch
+					checked={item?.default_tax_enabled}
+					onClick={(e) => {
+						e.preventDefault();
+						editItem({
+							default_tax_enabled: !item?.default_tax_enabled,
+						});
+					}}
+				>
+					{__('Enable Default Tax', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Whether or not to use the default rate when a specific tax registration is not found.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				{item?.default_tax_enabled && (
+					<ScInput
+						className="sc-default-rate"
+						type="number"
+						attribute="sc-default-rate"
+						label={__('Default Rate', 'surecart')}
+						help={__('The default tax rate to use for checkouts when a specific tax registration is not found. This will only apply if default tax enabled.', 'surecart')}
+						value={item?.default_rate || null}
+						onScInput={(e) => {
+							e.preventDefault();
+							editItem({
+								default_rate: e.target.value,
+							})
+						}}
+						required={item?.default_tax_enabled}
+					>
+						<span slot="suffix">%</span>
+					</ScInput>
+				)}
 				<ScAddress
 					label={__('Address', 'surecart')}
 					required={false}
