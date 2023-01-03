@@ -243,7 +243,7 @@ export class ScSelectDropdown {
     const scrollHeight = e.target.scrollHeight;
     const offsetHeight = e.target.offsetHeight;
     const contentHeight = scrollHeight - offsetHeight;
-    if (contentHeight <= scrollTop) this.scScrollEnd.emit();
+    if (contentHeight - scrollTop < 5) this.scScrollEnd.emit();
   }
 
   componentWillLoad() {

@@ -8,13 +8,14 @@ export default (props) => {
 	const { name, requestQuery = {}, display } = props;
 	const [query, setQuery] = useState(null);
 	const [choices, setChoices] = useState([]);
+	const [searchedChoices, setSearchedChoices] = useState(null);
 	const [pagination, setPagination] = useState({
 		enabled: true,
 		page: 1,
 		per_page: 10,
 	});
 
-	const { data, loading, error } = useSelect(
+	const { data, loading, error, is_searched } = useSelect(
 		(select) => {
 			const queryArgs = [
 				'surecart',
@@ -43,6 +44,7 @@ export default (props) => {
 						'getEntityRecords',
 						queryArgs
 					) ?? null,
+				is_searched: !!query?.length,
 			};
 		},
 		[query, pagination]
@@ -55,28 +57,35 @@ export default (props) => {
 
 	const handleOnQuery = (val) => {
 		if (query === val) return;
+		if (val === '') setChoices([]);
+		if (pagination.page !== 1 || val === '')
+			setPagination((state) => ({ ...state, page: 1, enabled: true }));
+
+		setSearchedChoices([]);
 		setQuery(val);
-		setChoices([]);
-		if (pagination.page !== 1)
-			setPagination((state) => ({ ...state, page: 1 }));
+	};
+
+	const mapData = (data) => {
+		return (data || []).map((item) => ({
+			label: !!display ? display(item) : item.name,
+			value: item.id,
+		}));
 	};
 
 	useEffect(() => {
-		if (error || (loading && data?.length < pagination.per_page))
-			setPagination((state) => ({ ...state, enabled: false }));
+		if (error) setPagination((state) => ({ ...state, enabled: false }));
+		if (!loading) return;
 
-		setChoices((state) => [
-			...state,
-			...(data || []).map((item) => ({
-				label: !!display ? display(item) : item.name,
-				value: item.id,
-			})),
-		]);
-	}, [data, error]);
+		if (is_searched) {
+			setSearchedChoices((state) => [...state, ...mapData(data)]);
+		} else {
+			setChoices((state) => [...state, ...mapData(data)]);
+		}
+	}, [data, error, loading, is_searched]);
 
 	return (
 		<SelectModel
-			choices={choices}
+			choices={is_searched ? searchedChoices : choices}
 			onQuery={handleOnQuery}
 			onFetch={() => setQuery('')}
 			loading={loading}

@@ -10,13 +10,14 @@ import { useSelect } from '@wordpress/data';
 export default ({ onSelect, ad_hoc, value, open = false }) => {
 	const [query, setQuery] = useState(null);
 	const [products, setProducts] = useState([]);
+	const [searchedProducts, setSearchedProducts] = useState(null);
 	const [pagination, setPagination] = useState({
 		enabled: true,
 		page: 1,
 		per_page: 10,
 	});
 
-	const { data, loading } = useSelect(
+	const { data, loading, error, is_searched } = useSelect(
 		(select) => {
 			const queryArgs = [
 				'surecart',
@@ -40,6 +41,12 @@ export default ({ onSelect, ad_hoc, value, open = false }) => {
 								queryArgs
 						  )
 						: false,
+				error:
+					select(coreStore)?.getResolutionError(
+						'getEntityRecords',
+						queryArgs
+					) ?? null,
+				is_searched: !!query?.length,
 			};
 		},
 		[query, pagination]
@@ -50,12 +57,26 @@ export default ({ onSelect, ad_hoc, value, open = false }) => {
 		setPagination((state) => ({ ...state, page: (state.page += 1) }));
 	};
 
-	useEffect(() => {
-		if (loading && data?.length < pagination.per_page)
-			setPagination((state) => ({ ...state, enabled: false }));
+	const handleOnQuery = (val) => {
+		if (query === val) return;
+		if (val === '') setProducts([]);
+		if (pagination.page !== 1 || val === '')
+			setPagination((state) => ({ ...state, page: 1, enabled: true }));
 
-		setProducts((state) => [...state, ...(data || [])]);
-	}, [data]);
+		setSearchedProducts([]);
+		setQuery(val);
+	};
+
+	useEffect(() => {
+		if (error) setPagination((state) => ({ ...state, enabled: false }));
+		if (!loading) return;
+
+		if (is_searched) {
+			setSearchedProducts((state) => [...state, ...(data || [])]);
+		} else {
+			setProducts((state) => [...state, ...(data || [])]);
+		}
+	}, [data, error, loading, is_searched]);
 
 	return (
 		<SelectPrice
@@ -66,7 +87,7 @@ export default ({ onSelect, ad_hoc, value, open = false }) => {
 			value={value}
 			ad_hoc={ad_hoc}
 			open={open}
-			products={products}
+			choices={is_searched ? searchedProducts : products}
 			onQuery={setQuery}
 			onFetch={() => setQuery('')}
 			loading={loading}
