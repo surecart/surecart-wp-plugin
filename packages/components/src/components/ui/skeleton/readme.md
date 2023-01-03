@@ -33,6 +33,7 @@
 
 ### Used by
 
+ - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-coupon-form](../coupon-form)
  - [sc-custom-order-price-input](../../controllers/checkout-form/custom-order-price-input)
@@ -56,6 +57,7 @@
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
+ - [sc-subscription-next-payment](../../controllers/dashboard/subscription-details)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
@@ -66,6 +68,7 @@
 ### Graph
 ```mermaid
 graph TD;
+  sc-cancel-survey --> sc-skeleton
   sc-charges-list --> sc-skeleton
   sc-coupon-form --> sc-skeleton
   sc-custom-order-price-input --> sc-skeleton
@@ -89,6 +92,7 @@ graph TD;
   sc-subscription --> sc-skeleton
   sc-subscription-cancel --> sc-skeleton
   sc-subscription-details --> sc-skeleton
+  sc-subscription-next-payment --> sc-skeleton
   sc-subscription-payment --> sc-skeleton
   sc-subscription-payment-method --> sc-skeleton
   sc-subscription-renew --> sc-skeleton

@@ -40,7 +40,7 @@ export default ({ onRequestClose, reason }) => {
 			await saveEntityRecord('surecart', 'cancellation_reason', data, {
 				throwOnError: true,
 			});
-			createSuccessNotice(__('Reason created.', 'surecart'), {
+			createSuccessNotice(__('Answer created.', 'surecart'), {
 				type: 'snackbar',
 			});
 			onRequestClose();
@@ -136,7 +136,9 @@ export default ({ onRequestClose, reason }) => {
 				)}
 				<ScFlex alignItems="center" justifyContent="flex-start">
 					<ScButton type="primary" submit busy={busy}>
-						{__('Create', 'surecart')}
+						{reason
+							? __('Update', 'surecart')
+							: __('Create', 'surecart')}
 					</ScButton>
 					<ScButton type="text" onClick={onRequestClose}>
 						{__('Cancel', 'surecart')}

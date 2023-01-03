@@ -2,13 +2,11 @@
 import { css, jsx } from '@emotion/core';
 import {
 	ScButton,
-	ScChoice,
-	ScChoices,
+	ScCancelSurvey,
+	ScCancelDiscount,
 	ScDialog,
-	ScHeading,
 	ScIcon,
 	ScInput,
-	ScForm,
 	ScSwitch,
 	ScTag,
 	ScTextarea,
@@ -30,7 +28,8 @@ import Reasons from './Reasons';
 export default () => {
 	const [error, setError] = useState(null);
 	const [modal, setModal] = useState(false);
-	const [preview, setPreview] = useState(false);
+	const [surveyPreview, setSurveyPreview] = useState(false);
+	const [discountPreview, setDiscountPreview] = useState(false);
 	const { save } = useSave();
 	const { item, itemError, editItem, hasLoadedItem } = useEntity(
 		'store',
@@ -48,7 +47,7 @@ export default () => {
 	} = item?.preservation_locales || {};
 
 	const updateLocale = (data) => {
-		updateItem({
+		editItem({
 			preservation_locales: {
 				...item?.preservation_locales,
 				...data,
@@ -143,7 +142,7 @@ export default () => {
 						)}
 						loading={!hasLoadedItem}
 						end={
-							<ScButton onClick={() => setPreview(true)}>
+							<ScButton onClick={() => setSurveyPreview(true)}>
 								<ScIcon name="eye" slot="suffix" />
 								{__('Preview', 'surecart')}
 							</ScButton>
@@ -182,6 +181,12 @@ export default () => {
 							'surecart'
 						)}
 						loading={!hasLoadedItem}
+						end={
+							<ScButton onClick={() => setDiscountPreview(true)}>
+								<ScIcon name="eye" slot="suffix" />
+								{__('Preview', 'surecart')}
+							</ScButton>
+						}
 					>
 						<Coupon coupon={item?.preservation_coupon} />
 						<ScInput
@@ -219,81 +224,69 @@ export default () => {
 					</SettingsBox>
 				</>
 			)}
-			{!!modal && <NewReason onRequestClose={() => setModal(false)} />}
-			<ScDialog
-				style={{ '--width': '750px' }}
-				noHeader
-				open={preview}
-				onScRequestClose={() => setPreview(false)}
-			>
-				<ScForm
-					css={css`
-						padding: 1.5em;
-					`}
-					onScSubmit={(e) => {
-						e.preventDefault();
-						e.stopImmediatePropagation();
-					}}
-					onScFormSubmit={(e) => {
-						e.preventDefault();
-						e.stopImmediatePropagation();
-					}}
-				>
-					<ScButton
-						css={css`
-							position: absolute;
-							top: 20px;
-							right: 20px;
-						`}
-						type="text"
-						circle
-						onClick={() => setPreview(false)}
-					>
-						<ScIcon name="x" />
-					</ScButton>
-					<div
-						css={css`
-							text-align: center;
-						`}
-					>
-						<ScHeading>
-							{reasons_title}
-							<span slot="description">
-								{reasons_description}
-							</span>
-						</ScHeading>
-					</div>
-					<ScChoices style={{ '--columns': 2 }} required>
-						<div>
-							{(reasons || []).map((reason) => (
-								<ScChoice>{reason?.label}</ScChoice>
-							))}
-						</div>
-					</ScChoices>
 
-					<div
-						css={css`
-							text-align: center;
-						`}
-					>
-						<ScButton
-							type="primary"
-							size="large"
-							onClick={() => setPreview(false)}
-						>
-							{__('Continue', 'surecart')}
-						</ScButton>
-					</div>
-					<div
-						css={css`
-							text-align: center;
-						`}
-					>
-						<ScButton type="link" onClick={() => setPreview(false)}>
-							{skip_link}
-						</ScButton>
-					</div>
-				</ScForm>
+			{!!modal && <NewReason onRequestClose={() => setModal(false)} />}
+
+			<ScDialog
+				style={{
+					'--width': '675px',
+					'--body-spacing': 'var(--sc-spacing-xxx-large)',
+				}}
+				noHeader
+				open={surveyPreview}
+				onScRequestClose={() => setSurveyPreview(false)}
+			>
+				<ScButton
+					class="close__button"
+					type="text"
+					circle
+					onClick={() => setSurveyPreview(false)}
+					css={css`
+						position: absolute;
+						top: 0;
+						right: 0;
+						font-size: 22px;
+					`}
+				>
+					<ScIcon name="x" />
+				</ScButton>
+
+				<ScCancelSurvey
+					protocol={item}
+					reasons={reasons}
+					onScAbandon={() => setSurveyPreview(false)}
+				/>
+			</ScDialog>
+
+			<ScDialog
+				style={{
+					'--width': '500px',
+					'--body-spacing': 'var(--sc-spacing-xxx-large)',
+				}}
+				noHeader
+				open={discountPreview}
+				onScRequestClose={() => setDiscountPreview(false)}
+			>
+				<ScButton
+					class="close__button"
+					type="text"
+					circle
+					onClick={() => setDiscountPreview(false)}
+					css={css`
+						position: absolute;
+						top: 0;
+						right: 0;
+						font-size: 22px;
+					`}
+				>
+					<ScIcon name="x" />
+				</ScButton>
+
+				<ScCancelDiscount
+					protocol={item}
+					reason={'test'}
+					onScPreserved={() => setDiscountPreview(false)}
+				/>
 			</ScDialog>
 		</SettingsTemplate>
 	);

@@ -27,6 +27,7 @@
 ### Used by
 
  - [sc-address](../address)
+ - [sc-cancel-discount](../../controllers/dashboard/sc-cancel-discount)
  - [sc-cart](../../controllers/cart/sc-cart)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-checkout](../../controllers/checkout-form/checkout)
@@ -64,6 +65,7 @@
 graph TD;
   sc-block-ui --> sc-spinner
   sc-address --> sc-block-ui
+  sc-cancel-discount --> sc-block-ui
   sc-cart --> sc-block-ui
   sc-charges-list --> sc-block-ui
   sc-checkout --> sc-block-ui

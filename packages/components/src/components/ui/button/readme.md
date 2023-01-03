@@ -49,6 +49,9 @@
 
 ### Used by
 
+ - [sc-cancel-dialog](../../controllers/dashboard/sc-cancel-dialog)
+ - [sc-cancel-discount](../../controllers/dashboard/sc-cancel-discount)
+ - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
  - [sc-cart-form-submit](../../controllers/cart/cart-form-submit)
  - [sc-cart-submit](../../controllers/cart/cart-submit)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
@@ -94,6 +97,9 @@
 ```mermaid
 graph TD;
   sc-button --> sc-spinner
+  sc-cancel-dialog --> sc-button
+  sc-cancel-discount --> sc-button
+  sc-cancel-survey --> sc-button
   sc-cart-form-submit --> sc-button
   sc-cart-submit --> sc-button
   sc-charges-list --> sc-button

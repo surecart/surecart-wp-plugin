@@ -69,6 +69,7 @@ export default () => {
 					position: addedIndex + 1,
 				},
 			});
+
 			createSuccessNotice(__('Answers updated.', 'surecart'), {
 				type: 'snackbar',
 			});
