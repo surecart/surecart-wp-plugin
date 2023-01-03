@@ -1,6 +1,11 @@
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { ScAddress, ScSelect, ScSwitch, ScInput } from '@surecart/components-react';
+import {
+	ScAddress,
+	ScSelect,
+	ScSwitch,
+	ScInput,
+} from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
 import useEntity from '../../hooks/useEntity';
