@@ -26,14 +26,9 @@ export class ScConditionalForm {
   render() {
     { console.log( 'this.selectedProcessorId' ) }
     { console.log( this.selectedProcessorId ) }
-    // { console.log( this.checkout ) }
-    // // { console.log( this ) }
-    // { console.log( 'this.props' ) }
-    // { console.log( this.rule_groups ) }
 
     let parsedRules = this.rule_groups ? JSON.parse( this.rule_groups ) : [];
 
-    // return null;
     let show = logic.is_any_rule_group_passed( parsedRules, { checkout: this.checkout, processor: this.selectedProcessorId } );
     if ( ! show ) return null;
     return (
