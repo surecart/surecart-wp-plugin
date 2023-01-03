@@ -36,35 +36,35 @@ const Rules = ( props ) => {
 		return rgData;
 	};
 
-	const [ ruleGroupsData, setRuleGroupsData ] = useState( getInitialGroups() );
+	const [ draftRuleGroups, setDraftRuleGroups ] = useState( getInitialGroups() );
 
 	console.log( 'rule_groups' )
 	console.log( rule_groups )
-	console.log( 'ruleGroupsData' );
-	console.log( ruleGroupsData );
+	console.log( 'draftRuleGroups' );
+	console.log( draftRuleGroups );
 
 	const updateRuleGroupData = function( data ) {
 		// setAttributes({ rule_groups: data });
-		setRuleGroupsData( [...data] );
+		setDraftRuleGroups( [...data] );
 	};
 	const addConditionToRuleGroup = function( groupId, newCondition ) {
 
-		if ( ruleGroupsData && groupId ) {
-			for ( const ruleGroup of ruleGroupsData ) {
+		if ( draftRuleGroups && groupId ) {
+			for ( const ruleGroup of draftRuleGroups ) {
 				if ( groupId === ruleGroup.group_id ) {
 					ruleGroup.rules.push( newCondition );
 					break;
 				}
 			}
 
-			// setAttributes({ rule_groups: ruleGroupsData });
-			setRuleGroupsData( [...ruleGroupsData] );
+			// setAttributes({ rule_groups: draftRuleGroups });
+			setDraftRuleGroups( [...draftRuleGroups] );
 		}
 	};
 
 	const removeConditionFromRuleGroup = function( groupIndex, conditionIndex ) {
 		debugger;
-		const newGroupData = ruleGroupsData.filter( ( group, i ) => {
+		const newGroupData = draftRuleGroups.filter( ( group, i ) => {
 			if ( i === groupIndex ) {
 
 				group.rules = group.rules.filter( ( rule, j ) => {
@@ -82,14 +82,14 @@ const Rules = ( props ) => {
 		});
 
 		// setAttributes({ rule_groups: newGroupData });
-		setRuleGroupsData( [...newGroupData] );
+		setDraftRuleGroups( [...newGroupData] );
 	};
 
 	const updateConditionInRuleGroup = function( groupIndex, conditionIndex, currentValue ) {
 
     // debugger;
 
-    let savedRule = ruleGroupsData[groupIndex]['rules'][conditionIndex];
+    let savedRule = draftRuleGroups[groupIndex]['rules'][conditionIndex];
 
     savedRule.condition = currentValue;
     savedRule.value = '';
@@ -99,16 +99,16 @@ const Rules = ( props ) => {
       savedRule.operator = '==';
     }
 
-    ruleGroupsData[groupIndex]['rules'][conditionIndex] = savedRule;
+    draftRuleGroups[groupIndex]['rules'][conditionIndex] = savedRule;
 
-		setRuleGroupsData( [...ruleGroupsData] );
+		setDraftRuleGroups( [...draftRuleGroups] );
 	};
 	const updateConditionOptionInRuleGroup = function( groupIndex, conditionIndex, currentValue, optionName ) {
 	  	debugger;
-      ruleGroupsData[groupIndex]['rules'][conditionIndex][optionName] = currentValue;
+      draftRuleGroups[groupIndex]['rules'][conditionIndex][optionName] = currentValue;
 
-			// setAttributes({ rule_groups: ruleGroupsData });
-			setRuleGroupsData( [...ruleGroupsData] );
+			// setAttributes({ rule_groups: draftRuleGroups });
+			setDraftRuleGroups( [...draftRuleGroups] );
 	};
 
 	const addNewCondition = ( event ) => {
@@ -137,14 +137,14 @@ const Rules = ( props ) => {
 			],
 		};
 
-		ruleGroupsData.push( newGroup );
-		// setRuleGroupsData( ruleGroupsData );
-		updateRuleGroupData( ruleGroupsData );
+		draftRuleGroups.push( newGroup );
+		// setDraftRuleGroups( draftRuleGroups );
+		updateRuleGroupData( draftRuleGroups );
 	}
 
 	const showRules = function ( event ) {
 		// rule_groups += 'Hello Sandesh';
-		// setAttributes({ rule_groups: ruleGroupsData });
+		// setAttributes({ rule_groups: draftRuleGroups });
 		const group_id = event.target.getAttribute( 'data-group_id' );
 
 		const target = document.getElementById(
@@ -168,7 +168,7 @@ const Rules = ( props ) => {
 	const handleFormSubmit = function ( e ) {
 		e.preventDefault();
 
-		setAttributes({ rule_groups: ruleGroupsData });
+		setAttributes({ rule_groups: draftRuleGroups });
 
 		closeModal();
 	};
@@ -176,7 +176,7 @@ const Rules = ( props ) => {
 	return (
 		<>
 		<form className='sc-rules-group-form' onSubmit={ handleFormSubmit }>
-		{ ruleGroupsData.map( ( group, groupIndex ) => {
+		{ draftRuleGroups.map( ( group, groupIndex ) => {
 			// debugger;
 			const group_id = group.group_id;
 			const rules = group.rules;
@@ -240,7 +240,7 @@ const Rules = ( props ) => {
 										rules={ rules }
 										groupId={ group_id }
 										groupIndex={ groupIndex }
-										groupsLength={ ruleGroupsData.length }
+										groupsLength={ draftRuleGroups.length }
 										removeConditionFromRuleGroup={ ( conditionIndex ) => removeConditionFromRuleGroup( groupIndex, conditionIndex ) }
 										updateConditionInRuleGroup={ ( conditionIndex, currentValue ) => { updateConditionInRuleGroup( groupIndex, conditionIndex, currentValue ) } }
 										updateConditionOptionInRuleGroup = { ( conditionIndex, currentValue, optionName ) => { updateConditionOptionInRuleGroup( groupIndex, conditionIndex, currentValue, optionName ) } }
@@ -269,7 +269,7 @@ const Rules = ( props ) => {
 					<div className="sc-rules-page--group_wrapper__footer"
 						css={css`margin: 20px 0 0;`}
 					>
-						{ parseInt( groupIndex ) + 1 < ruleGroupsData.length &&
+						{ parseInt( groupIndex ) + 1 < draftRuleGroups.length &&
 						( <div className="sc-rules--or-group"
 							css={css`
 								padding: 4px 6px;
@@ -288,7 +288,7 @@ const Rules = ( props ) => {
 						</div> )
 						}
 
-						{ parseInt( groupIndex ) + 1 === ruleGroupsData.length && (
+						{ parseInt( groupIndex ) + 1 === draftRuleGroups.length && (
 							<div className="sc-rules--or_group__button">
 								<span
 									className="sc-rules--or_group_button or-button sc-button sc-button--secondary button"
