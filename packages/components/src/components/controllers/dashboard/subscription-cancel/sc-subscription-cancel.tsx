@@ -1,7 +1,8 @@
 import { Component, Event, EventEmitter, Fragment, h, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
-import { SubscriptionProtocol } from '../../../../types';
+import { CancellationReason, SubscriptionProtocol } from '../../../../types';
 import { Subscription } from '../../../../types';
 
 @Component({
@@ -15,6 +16,8 @@ export class ScSubscriptionCancel {
   @Prop() successUrl: string;
   @Prop() subscription: Subscription;
   @Prop() protocol: SubscriptionProtocol;
+  @Prop() reason: CancellationReason;
+  @Prop() comment: string;
   @State() loading: boolean;
   @State() busy: boolean;
   @State() error: string;
@@ -26,7 +29,12 @@ export class ScSubscriptionCancel {
       this.error = '';
       this.busy = true;
       await apiFetch({
-        path: `/surecart/v1/subscriptions/${this.subscription?.id}/cancel`,
+        path: addQueryArgs(`/surecart/v1/subscriptions/${this.subscription?.id}/cancel`, {
+          cancellation_act: {
+            ...(!!this.comment ? { comment: this.comment } : {}),
+            cancellation_reason_id: this.reason?.id,
+          },
+        }),
         method: 'PATCH',
       });
       this.scCancelled.emit();

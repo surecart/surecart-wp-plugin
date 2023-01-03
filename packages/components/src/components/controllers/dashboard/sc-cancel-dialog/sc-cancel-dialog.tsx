@@ -51,10 +51,13 @@ export class ScCancelDialog {
           <sc-button class="close__button" type="text" circle onClick={() => this.close()}>
             <sc-icon name="x" />
           </sc-button>
+
           {this.step === 'cancel' && (
             <sc-subscription-cancel
               subscription={this.subscription}
               protocol={this.protocol}
+              reason={this.reason}
+              comment={this.comment}
               onScAbandon={() => this.close()}
               onScCancelled={() => {
                 this.scRefresh.emit();
@@ -62,6 +65,7 @@ export class ScCancelDialog {
               }}
             />
           )}
+
           {this.step === 'survey' && (
             <sc-cancel-survey
               protocol={this.protocol}
@@ -70,10 +74,11 @@ export class ScCancelDialog {
                 const { comment, reason } = e.detail;
                 this.reason = reason;
                 this.comment = comment;
-                this.step = 'discount';
+                this.step = reason?.coupon_enabled ? 'discount' : 'cancel';
               }}
             />
           )}
+
           {this.step === 'discount' && (
             <sc-cancel-discount
               protocol={this.protocol}
