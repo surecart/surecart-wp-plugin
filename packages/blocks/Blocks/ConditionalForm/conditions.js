@@ -16,7 +16,7 @@ import { countryChoices } from '@surecart/components';
 
 function Conditions( props ) {
 
-  const { rules, g_index, groups_length, removeConditionFromRuleGroup, updateConditionInRuleGroup, updateConditionOptionInRuleGroup } = props;
+  const { rules, groupIndex, groupsLength, removeConditionFromRuleGroup, updateConditionInRuleGroup, updateConditionOptionInRuleGroup } = props;
 
   const conditions_select = [
     { label: __( 'Product(s)', 'surecart' ), value: 'cart_item' },
@@ -170,7 +170,7 @@ function Conditions( props ) {
 
 		let renderFields = '';
 		const value = rule_data.value;
-		const name = `sc-form-rules[${ g_index }][rules][${ ruleIndex }][value]`;
+		const name = `sc-form-rules[${ groupIndex }][rules][${ ruleIndex }][value]`;
 
 		return fields.map( ( field ) => {
 
@@ -270,13 +270,13 @@ function Conditions( props ) {
 		} );
 	};
 
-	const removeConditionIcon = function ( rules_length, rule_index ) {
-		if ( 1 === rules_length && 1 === groups_length ) {
+	const removeConditionIcon = function ( rulesLength, ruleIndex ) {
+		if ( 1 === rulesLength && 1 === groupsLength ) {
 			return '';
 		}
 		return (
       <div className='button' css={css`margin-top:15px;`}
-        onClick={ () => { removeConditionFromRuleGroup( rule_index ); } }
+        onClick={ () => { removeConditionFromRuleGroup( ruleIndex ); } }
       >{
         __( 'Remove Condition', 'surecart' )
       }</div>
@@ -320,19 +320,19 @@ function Conditions( props ) {
 						>
 							<input
 								type="hidden"
-								name={ `sc-form-rules[${ g_index }][rules][${ ruleIndex }][rule_id]` }
+								name={ `sc-form-rules[${ groupIndex }][rules][${ ruleIndex }][rule_id]` }
 								value={ rule_id }
 							/>
 
 							<div className="sc-checkout-rules--rule_fields">
 								<SelectControl
-									name={ `sc-form-rules[${ g_index }][rules][${ ruleIndex }][condition]` }
+									name={ `sc-form-rules[${ groupIndex }][rules][${ ruleIndex }][condition]` }
 									options={ conditions_select }
                   onChange={ ( selection ) => { updateConditionInRuleGroup( ruleIndex, selection ); } }
 									value={ rule_data.condition }
 								/>
 								<SelectControl
-									name={ `sc-form-rules[${ g_index }][rules][${ ruleIndex }][operator]` }
+									name={ `sc-form-rules[${ groupIndex }][rules][${ ruleIndex }][operator]` }
 									options={ rule_field_data.operator }
 									value={ rule_data.operator }
                   onChange={ ( selection ) => { updateConditionOptionInRuleGroup( ruleIndex, selection, 'operator' ); } }

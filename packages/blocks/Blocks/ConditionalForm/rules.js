@@ -176,7 +176,7 @@ const Rules = ( props ) => {
 	return (
 		<>
 		<form className='sc-rules-group-form' onSubmit={ handleFormSubmit }>
-		{ ruleGroupsData.map( ( group, g_index ) => {
+		{ ruleGroupsData.map( ( group, groupIndex ) => {
 			// debugger;
 			const group_id = group.group_id;
 			const rules = group.rules;
@@ -196,7 +196,7 @@ const Rules = ( props ) => {
 					>
 						<input
 							type="hidden"
-							name={ `sc-form-rules[${ g_index }][group_id]` }
+							name={ `sc-form-rules[${ groupIndex }][group_id]` }
 							value={ group_id }
 						/>
 
@@ -206,7 +206,7 @@ const Rules = ( props ) => {
 						`}>
 							<div className="sc-rules--group_header__left">
 								<span className="sc-rules__handle dashicons dashicons-menu"></span>
-                { sprintf( __( 'Rule Group - %s', 'surecart' ), g_index + 1 ) }
+                { sprintf( __( 'Rule Group - %s', 'surecart' ), groupIndex + 1 ) }
 							</div>
 							<div className="sc-rules--group_header">
 								<span className="sc-rules--group_id">
@@ -238,12 +238,12 @@ const Rules = ( props ) => {
 									0 && (
 									<Conditions
 										rules={ rules }
-										group_id={ group_id }
-										g_index={ g_index }
-										groups_length={ ruleGroupsData.length }
-										removeConditionFromRuleGroup={ ( conditionIndex ) => removeConditionFromRuleGroup( g_index, conditionIndex ) }
-										updateConditionInRuleGroup={ ( conditionIndex, currentValue ) => { updateConditionInRuleGroup( g_index, conditionIndex, currentValue ) } }
-										updateConditionOptionInRuleGroup = { ( conditionIndex, currentValue, optionName ) => { updateConditionOptionInRuleGroup( g_index, conditionIndex, currentValue, optionName ) } }
+										groupId={ group_id }
+										groupIndex={ groupIndex }
+										groupsLength={ ruleGroupsData.length }
+										removeConditionFromRuleGroup={ ( conditionIndex ) => removeConditionFromRuleGroup( groupIndex, conditionIndex ) }
+										updateConditionInRuleGroup={ ( conditionIndex, currentValue ) => { updateConditionInRuleGroup( groupIndex, conditionIndex, currentValue ) } }
+										updateConditionOptionInRuleGroup = { ( conditionIndex, currentValue, optionName ) => { updateConditionOptionInRuleGroup( groupIndex, conditionIndex, currentValue, optionName ) } }
 									/>
 									) }
 							</div>
@@ -269,7 +269,7 @@ const Rules = ( props ) => {
 					<div className="sc-rules-page--group_wrapper__footer"
 						css={css`margin: 20px 0 0;`}
 					>
-						{ parseInt( g_index ) + 1 < ruleGroupsData.length &&
+						{ parseInt( groupIndex ) + 1 < ruleGroupsData.length &&
 						( <div className="sc-rules--or-group"
 							css={css`
 								padding: 4px 6px;
@@ -288,7 +288,7 @@ const Rules = ( props ) => {
 						</div> )
 						}
 
-						{ parseInt( g_index ) + 1 === ruleGroupsData.length && (
+						{ parseInt( groupIndex ) + 1 === ruleGroupsData.length && (
 							<div className="sc-rules--or_group__button">
 								<span
 									className="sc-rules--or_group_button or-button sc-button sc-button--secondary button"
