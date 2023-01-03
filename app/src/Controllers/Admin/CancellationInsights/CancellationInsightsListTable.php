@@ -2,7 +2,6 @@
 
 namespace SureCart\Controllers\Admin\CancellationInsights;
 
-use SureCart\Support\Currency;
 use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\CancellationAct;
 
@@ -38,17 +37,6 @@ class CancellationInsightsListTable extends ListTable {
 		$this->items = $query->data;
 	}
 
-	public function search() {
-		?>
-	<form class="search-form"
-		method="get">
-		<?php $this->search_box( __( 'Search Subscriptions', 'surecart' ), 'order' ); ?>
-		<input type="hidden"
-			name="id"
-			value="1" />
-	</form>
-		<?php
-	}
 
 	/**
 	 * Override the parent columns method. Defines the columns to use in your listing table
@@ -59,49 +47,53 @@ class CancellationInsightsListTable extends ListTable {
 		return [
 			'customer'            => __( 'Customer', 'surecart' ),
 			'product'             => __( 'Product', 'surecart' ),
-			'date'                => __( 'Date', 'surecart' ),
 			'cancellation_reason' => __( 'Cancellation Reason', 'surecart' ),
-			'preserved'           => __( 'Preserved', 'surecart' ),
 			'comment'             => __( 'Comment', 'surecart' ),
+			'coupon'              => __( 'Coupon', 'surecart' ),
+			'status'              => __( 'Status', 'surecart' ),
+			'date'                => __( 'Date', 'surecart' ),
 		];
 	}
-	
-	protected function get_views() {
-		return [ 'all'      => __( 'All Cancellations', 'surecart' )];
-	}
 
-	public function column_product( $subscription ) {
-		if ( empty( $subscription->price->product ) ) {
+	/**
+	 * The subscription product.
+	 *
+	 * @param \SureCart\Models\CancellationAct $act Cancellation reason model.
+	 *
+	 * @return string
+	 */
+	public function column_product( $act ) {
+		if ( empty( $act->subscription->price->product ) ) {
 			return __( 'No product', 'surecart' );
 		}
-		return '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $subscription->price->product->id ) ) . '">' . $subscription->price->product->name . '</a>';
+		return '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $act->subscription->price->product->id ) ) . '">' . $act->subscription->price->product->name . '</a>';
 	}
 
 	/**
-	 * Define which columns are hidden
+	 * The subscription product.
 	 *
-	 * @return Array
+	 * @param \SureCart\Models\CancellationAct $act Cancellation reason model.
+	 *
+	 * @return string
 	 */
-	public function get_hidden_columns() {
-		return array();
+	public function column_date( $act ) {
+		return '<sc-format-date date="' . (int) $act->performed_at . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></sc-format-date>';
 	}
 
 	/**
-	 * Define the sortable columns
-	 *
-	 * @return Array
+	 * We only have one default view.
 	 */
-	public function get_sortable_columns() {
-		return array( 'title' => array( 'title', false ) );
+	protected function get_views() {
+		return [ 'all' => __( 'Cancellation Acts', 'surecart' ) ];
 	}
 
 	/**
 	 * Get the table data
 	 *
-	 * @return Array
+	 * @return Object
 	 */
 	protected function table_data() {
-		return CancellationAct::with( [ 'subscription', 'subscription.customer', 'cancellation_reason' ] )
+		return CancellationAct::with( [ 'subscription', 'subscription.customer', 'cancellation_reason', 'subscription.price', 'price.product' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'subscriptions' ),
@@ -110,12 +102,28 @@ class CancellationInsightsListTable extends ListTable {
 		);
 	}
 
+	/**
+	 * Nothing found.
+	 *
+	 * @return void
+	 */
+	public function no_items() {
+		echo esc_html_e( 'No cancellation acts.', 'surecart' );
+	}
+
+	/**
+	 * The cancellation reason.
+	 *
+	 * @param \SureCart\Models\CancellationAct $act Cancellation act.
+	 *
+	 * @return string
+	 */
 	public function column_cancellation_reason( $act ) {
 		return $act->cancellation_reason->label ?? '-';
 	}
 
 	/**
-	 * Get the archive query status.
+	 * The customer.
 	 *
 	 * @param \SureCart\Models\CancellationAct $act Cancellation act model.
 	 *
@@ -123,18 +131,59 @@ class CancellationInsightsListTable extends ListTable {
 	 */
 	public function column_customer( $act ) {
 		ob_start();
-		$name = $act->subscription->customer->name ?? $act->subscription->customer->email ?? __( 'No name provided', 'surecart' );
 		?>
-		<?php echo esc_html( $name ); ?>
+		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Customer', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'customers', $act->subscription->customer->id ) ); ?>">
+			<?php echo wp_kses_post( $act->subscription->customer->name ?? $act->subscription->customer->email ?? esc_html__( 'No name provided', 'surecart' ) ); ?>
+		</a>
 
 		<?php
-		// echo $this->row_actions(
-		// [
-		// 'edit' => '<a href="' . esc_url( \SureCart::getUrl()->show( 'subscription', $subscription->id ) ) . '" aria-label="' . esc_attr( 'Edit Subscription', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
-		// ],
-		// );
+		echo $this->row_actions(
+			[
+				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'customers', $act->subscription->customer->id ) ) . '" aria-label="' . esc_attr( 'View Customer', 'surecart' ) . '">' . esc_html__( 'View Customer', 'surecart' ) . '</a>',
+			],
+		);
 		?>
+
 		<?php
 		return ob_get_clean();
+	}
+
+	/**
+	 * Was the coupon applied?
+	 *
+	 * @param \SureCart\Models\CancellationAct $act Cancellation act model.
+	 *
+	 * @return string
+	 */
+	public function column_coupon( $act ) {
+		if ( $act->coupon_applied ) {
+			return '<sc-tag type="info">' . esc_html__( 'Coupon Applied', 'surecart' ) . '</sc-tag>';
+		}
+		return '-';
+	}
+
+	/**
+	 * Cancellation comment.
+	 *
+	 * @param \SureCart\Models\CancellationAct $act Cancellation act model.
+	 *
+	 * @return string
+	 */
+	public function column_comment( $act ) {
+		return $act->comment ?? '-';
+	}
+
+	/**
+	 * The status
+	 *
+	 * @param \SureCart\Models\CancellationAct $act Cancellation act model.
+	 *
+	 * @return string
+	 */
+	public function column_status( $act ) {
+		if ( $act->preserved ) {
+			return '<sc-tag type="success">' . esc_html__( 'Preserved', 'surecart' ) . '</sc-tag>';
+		}
+		return '<sc-tag type="danger">' . esc_html__( 'Cancelled', 'surecart' ) . '</sc-tag>';
 	}
 }
