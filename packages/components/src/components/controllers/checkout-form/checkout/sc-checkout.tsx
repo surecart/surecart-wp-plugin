@@ -3,7 +3,22 @@ import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
 
 import { getOrder, setOrder } from '../../../../store/checkouts';
-import { Bump, Checkout, Customer, FormState, ManualPaymentMethod, PaymentIntent, PaymentIntents, PriceChoice, Prices, Processor, ProcessorName, Products, ResponseError, TaxProtocol } from '../../../../types';
+import {
+  Bump,
+  Checkout,
+  Customer,
+  FormState,
+  ManualPaymentMethod,
+  PaymentIntent,
+  PaymentIntents,
+  PriceChoice,
+  Prices,
+  Processor,
+  ProcessorName,
+  Products,
+  ResponseError,
+  TaxProtocol,
+} from '../../../../types';
 
 @Component({
   tag: 'sc-checkout',
@@ -121,6 +136,13 @@ export class ScCheckout {
   @Listen('scUpdateOrderState')
   handleOrderStateUpdate(e: { detail: Checkout }) {
     setOrder(e?.detail, this?.formId);
+  }
+
+  @Listen('scUpdateCustomer')
+  handleCustomerUpdate(e: { detail: Customer }) {
+    if (e?.detail) {
+      this.customer = e?.detail;
+    }
   }
 
   @Listen('scSetProcessor')

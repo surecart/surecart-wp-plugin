@@ -1,7 +1,8 @@
-import { Customer, Checkout } from '../../../../types';
-import { Component, Prop, h, Event, EventEmitter, Watch, Method } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
+import { Component, Event, EventEmitter, h, Method, Prop, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+import { openWormhole } from 'stencil-wormhole';
+
+import { Checkout, Customer } from '../../../../types';
 
 @Component({
   tag: 'sc-customer-phone',
@@ -97,6 +98,17 @@ export class ScCustomerPhone {
   /** Sync customer phone with session if it's updated by other means */
   @Watch('order')
   handleSessionChange(val) {
+    if (val?.phone) {
+      if (val.phone !== this.value) {
+        this.value = val?.phone;
+      }
+    }
+  }
+
+  @Watch('customer')
+  handleCustomerChange(val, prev) {
+    // we only want to do this the first time.
+    if (prev) return;
     if (val?.phone) {
       if (val.phone !== this.value) {
         this.value = val?.phone;
