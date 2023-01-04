@@ -12,10 +12,10 @@ export default ({ bump, updateBump, loading }) => {
 				}}
 				reversed
 			>
-				{__('Auto Apply')}
+				{__('Auto Apply Discount')}
 				<span slot="description">
 					{__(
-						'Automatically apply the order bump if the customer has the required items in the cart.',
+						'Automatically apply the discount if the customer has added the price to their checkout outside of the checkout form. If disabled, the discount will only be applied if the customer applies the bump from within the checkout form.',
 						'surecart'
 					)}
 				</span>
