@@ -18,6 +18,44 @@ function Conditions( props ) {
 
   const { rules, groupIndex, groupsLength, removeConditionFromRuleGroup, updateConditionInRuleGroup, updateConditionOptionInRuleGroup } = props;
 
+  const getProcessorLists = function() {
+
+    let processors = [];
+
+    if ( scBlockData?.processors ) {
+      scBlockData.processors.map( ( processor ) => {
+
+        switch ( processor.processor_type ) {
+          case 'stripe':
+            processors.push( {
+              'label': __( 'Stripe', 'surecart' ),
+              'value': processor.processor_type
+            } )
+            break;
+
+          case 'paypal':
+            processors.push( {
+              'label': __( 'PayPal', 'surecart' ),
+              'value': processor.processor_type
+            } )
+            break;
+        }
+      });
+    }
+
+    if ( scBlockData?.manualPaymentMethods ) {
+      scBlockData.manualPaymentMethods.map( ( payment_method ) => {
+
+        processors.push( {
+          'label': payment_method.name,
+          'value': payment_method.id
+        } );
+      });
+    }
+
+    return processors;
+  };
+
   const conditions_select = [
     { label: __( 'Product(s)', 'surecart' ), value: 'cart_item' },
     { label: __( 'Total', 'surecart' ), value: 'cart_total' },
@@ -156,15 +194,11 @@ function Conditions( props ) {
           'type': 'select2',
           'placeholder': __( 'Search for payment method..', 'surecart' ),
           'isMulti': true,
-          'options': [
-            { 'label': 'Stripe', 'value': 'stripe' },
-            { 'label': 'PayPal', 'value': 'paypal' }
-          ],
+          'options': getProcessorLists(),
         },
       ],
     },
   };
-
 
 	const valueFields = function ( fields, ruleIndex, rule_data ) {
 
