@@ -13,6 +13,26 @@ class PageService {
 	 */
 	public function bootstrap() {
 		add_action( 'display_post_states', [ $this, 'displayDefaultPageStatuses' ] );
+		add_filter( 'pre_delete_post', [ $this, 'restrictDefaultPageDeletion' ], 11, 2 );
+		add_filter( 'pre_trash_post', [ $this, 'restrictDefaultPageDeletion' ], 11, 2 );
+	}
+
+	/**
+	 * Restrict default page deletion
+	 *
+	 * @param boolean $delete Delete status.
+	 * @param boject  $post Post object.
+	 *
+	 * @return boolean|void
+	 */
+	public function restrictDefaultPageDeletion( $delete, $post ) {
+		$default_checkout = \SureCart::pages()->getID('checkout');
+		$default_form     = \SureCart::forms()->getDefault()->ID;
+		$post_id          = $post->ID;
+
+		if ( in_array( $post_id, [ $default_checkout, $default_form ], true ) ) {
+			return false;
+		}
 	}
 
 	/**
