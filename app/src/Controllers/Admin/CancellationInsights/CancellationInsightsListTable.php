@@ -49,7 +49,6 @@ class CancellationInsightsListTable extends ListTable {
 			'plan'                => __( 'Plan', 'surecart' ),
 			'cancellation_reason' => __( 'Cancellation Reason', 'surecart' ),
 			'comment'             => __( 'Comment', 'surecart' ),
-			'coupon'              => __( 'Coupon', 'surecart' ),
 			'status'              => __( 'Status', 'surecart' ),
 			'date'                => __( 'Date', 'surecart' ),
 		];
@@ -93,11 +92,23 @@ class CancellationInsightsListTable extends ListTable {
 	 * @return Object
 	 */
 	protected function table_data() {
-		$live_mode = 'false' === sanitize_text_field( wp_unslash( $_GET['live_mode'] ?? '' ) ) ? false : true;
-		return CancellationAct::where( [ 'live_mode' => (bool) $live_mode ] )->with( [ 'subscription', 'subscription.customer', 'cancellation_reason', 'subscription.price', 'price.product' ] )
+		return CancellationAct::where(
+			[
+				'live_mode' => 'false' !== sanitize_text_field( wp_unslash( $_GET['live_mode'] ?? '' ) ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			]
+		)
+		->with(
+			[
+				'subscription',
+				'subscription.customer',
+				'cancellation_reason',
+				'subscription.price',
+				'price.product',
+			]
+		)
 		->paginate(
 			[
-				'per_page' => $this->get_items_per_page( 'subscriptions' ),
+				'per_page' => $this->get_items_per_page( 'cancellation_acts' ),
 				'page'     => $this->get_pagenum(),
 			]
 		);
@@ -134,7 +145,7 @@ class CancellationInsightsListTable extends ListTable {
 		ob_start();
 		?>
 		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Customer', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'customers', $act->subscription->customer->id ) ); ?>">
-			<?php echo wp_kses_post( $act->subscription->customer->name ?? $act->subscription->customer->email ?? esc_html__( 'No name provided', 'surecart' ) ); ?>
+		<?php echo wp_kses_post( $act->subscription->customer->name ?? $act->subscription->customer->email ?? esc_html__( 'No name provided', 'surecart' ) ); ?>
 		</a>
 
 		<?php
@@ -147,20 +158,6 @@ class CancellationInsightsListTable extends ListTable {
 
 		<?php
 		return ob_get_clean();
-	}
-
-	/**
-	 * Was the coupon applied?
-	 *
-	 * @param \SureCart\Models\CancellationAct $act Cancellation act model.
-	 *
-	 * @return string
-	 */
-	public function column_coupon( $act ) {
-		if ( $act->coupon_applied ) {
-			return '<sc-tag type="info">' . esc_html__( 'Coupon Applied', 'surecart' ) . '</sc-tag>';
-		}
-		return '-';
 	}
 
 	/**
@@ -182,18 +179,28 @@ class CancellationInsightsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_status( $act ) {
+
 		if ( $act->preserved ) {
-			return '<sc-tag type="success">' . esc_html__( 'Preserved', 'surecart' ) . '</sc-tag>';
+			ob_start();
+			?>
+			<sc-tag type="success"><?php echo esc_html__( 'Preserved', 'surecart' ); ?> </sc-tag>
+			<?php if ( $act->coupon_applied ) { ?>
+				<sc-tag type="info"><?php echo esc_html__( 'Coupon Applied', 'surecart' ); ?></sc-tag>
+			<?php } ?>
+			<?php
+			return ob_get_clean();
 		}
-		if ( 'canceled' === $act->subscription->status ) {
-			return '<sc-tag type="danger">' . esc_html__( 'Cancelled', 'surecart' ) . '</sc-tag>';
-		}
-		if ( $act->subscription->cancel_at_period_end ) {
-			return '<sc-tag type="warning">' . esc_html__( 'Will Cancel', 'surecart' ) . '</sc-tag>';
-		}
-		if ( 'active' === $act->subscription->status ) {
-			return '<sc-tag type="success">' . esc_html__( 'Active', 'surecart' ) . '</sc-tag>';
-		}
-		return '-';
+
+		$badge = '<sc-subscription-status-badge id="act-' . esc_attr( $act->id ) . '"></sc-subscription-status-badge>';
+
+		\SureCart::assets()->addComponentData(
+			'sc-subscription-status-badge',
+			'#act-' . esc_attr( $act->id ),
+			[
+				'subscription' => $act->subscription,
+			]
+		);
+
+		return $badge;
 	}
 }
