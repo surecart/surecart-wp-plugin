@@ -177,7 +177,7 @@ export function CancellationReasonStats({ liveMode = true, filter }) {
 
 	return (
 		<Box
-			title={'Cancellations Reasons'}
+			title={'Cancellation Reasons'}
 			loading={loading}
 			hasDivider={false}
 			css={css`
