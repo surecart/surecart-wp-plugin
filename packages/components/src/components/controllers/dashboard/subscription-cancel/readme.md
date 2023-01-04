@@ -10,8 +10,10 @@
 | Property       | Attribute     | Description | Type                   | Default     |
 | -------------- | ------------- | ----------- | ---------------------- | ----------- |
 | `backUrl`      | `back-url`    |             | `string`               | `undefined` |
+| `comment`      | `comment`     |             | `string`               | `undefined` |
 | `heading`      | `heading`     |             | `string`               | `undefined` |
 | `protocol`     | --            |             | `SubscriptionProtocol` | `undefined` |
+| `reason`       | --            |             | `CancellationReason`   | `undefined` |
 | `subscription` | --            |             | `Subscription`         | `undefined` |
 | `successUrl`   | `success-url` |             | `string`               | `undefined` |
 

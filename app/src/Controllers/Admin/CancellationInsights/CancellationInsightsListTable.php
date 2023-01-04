@@ -93,7 +93,8 @@ class CancellationInsightsListTable extends ListTable {
 	 * @return Object
 	 */
 	protected function table_data() {
-		return CancellationAct::with( [ 'subscription', 'subscription.customer', 'cancellation_reason', 'subscription.price', 'price.product' ] )
+		$live_mode = 'false' === sanitize_text_field( wp_unslash( $_GET['live_mode'] ?? '' ) ) ? false : true;
+		return CancellationAct::where( [ 'live_mode' => (bool) $live_mode ] )->with( [ 'subscription', 'subscription.customer', 'cancellation_reason', 'subscription.price', 'price.product' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'subscriptions' ),

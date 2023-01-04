@@ -2,9 +2,9 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 
-import { ScFlex, ScIcon, ScSwitch, ScTag } from '@surecart/components-react';
+import { ScFlex, ScIcon, ScTag } from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
+import { addQueryArgs, getQueryArg } from '@wordpress/url';
 import { useState, useEffect } from '@wordpress/element';
 import Error from '../components/Error';
 import Stat from '../ui/Stat';
@@ -12,6 +12,7 @@ import Tab from '../ui/Tab';
 import { averageProperties, totalProperties } from './util';
 import { getFilterData } from '../util/filter';
 import { CancellationReasonStats } from './CancellationReasonStats';
+import LiveModeToggle from './LiveModeToggle';
 
 export default () => {
 	const [data, setData] = useState([]);
@@ -19,7 +20,7 @@ export default () => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState();
 	const [filter, setFilter] = useState('30days');
-	const [liveMode, setLiveMode] = useState(false);
+	const liveMode = getQueryArg(window.location.href, 'live_mode') !== 'false';
 
 	const getCancellationActsData = async () => {
 		const { startDate, endDate, prevEndDate, prevStartDate, interval } =
@@ -176,15 +177,7 @@ export default () => {
 					</Tab>
 				</ScFlex>
 
-				<ScSwitch
-					checked={!liveMode}
-					onScChange={(e) => {
-						setLiveMode(!e.target.checked);
-					}}
-					reversed
-				>
-					{__('Test Mode', 'surecart')}
-				</ScSwitch>
+				<LiveModeToggle />
 			</ScFlex>
 
 			<div

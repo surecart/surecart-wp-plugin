@@ -1,9 +1,10 @@
 import { Component, Event, EventEmitter, h, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+
 import apiFetch from '../../../../functions/fetch';
 import { getHumanDiscount } from '../../../../functions/price';
-import { CancellationReason, ResponseError, SubscriptionProtocol, Subscription, Coupon } from '../../../../types';
+import { CancellationReason, Coupon, ResponseError, Subscription, SubscriptionProtocol } from '../../../../types';
 import { replaceAmount } from './functions';
 
 @Component({
@@ -25,7 +26,7 @@ export class ScCancelDiscount {
     if (!this.protocol?.preservation_coupon) {
       return string;
     }
-    return replaceAmount(string, 'amount', getHumanDiscount(this.protocol?.preservation_coupon as Coupon));
+    return replaceAmount(string, getHumanDiscount(this.protocol?.preservation_coupon as Coupon));
   }
 
   async addDiscount() {

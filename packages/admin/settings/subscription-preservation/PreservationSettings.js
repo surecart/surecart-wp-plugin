@@ -1,10 +1,5 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import {
 	ScButton,
-	ScCancelSurvey,
-	ScCancelDiscount,
-	ScDialog,
 	ScIcon,
 	ScInput,
 	ScSwitch,
@@ -12,42 +7,84 @@ import {
 	ScTextarea,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
-import { useState } from '@wordpress/element';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 import Error from '../../components/Error';
-import useEntity from '../../hooks/useEntity';
 import SettingsBox from '../SettingsBox';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
 import Coupon from './Coupon';
+import DiscountPreview from './DiscountPreview';
 import NewReason from './EditReason';
 import Reasons from './Reasons';
+import SurveyPreview from './SurveyPreview';
 
 export default () => {
 	const [error, setError] = useState(null);
 	const [modal, setModal] = useState(false);
-	const [surveyPreview, setSurveyPreview] = useState(false);
-	const [discountPreview, setDiscountPreview] = useState(false);
+	const [reasons, setReasons] = useState(null);
+	const { editEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
 	const { save } = useSave();
-	const { item, itemError, editItem, hasLoadedItem } = useEntity(
-		'store',
-		'subscription_protocol'
+
+	/** Get the subscription protocol item. */
+	const { item, itemError, hasLoadedItem } = useSelect((select) => {
+		const entityData = ['surecart', 'store', 'subscription_protocol'];
+		return {
+			item: select(coreStore)?.getEditedEntityRecord?.(...entityData),
+			hasLoadedItem: select(coreStore)?.hasFinishedResolution?.(
+				'getEditedEntityRecord',
+				[...entityData]
+			),
+			itemError: select(coreStore)?.getResolutionError?.(
+				'getEditedEntityRecord',
+				...entityData
+			),
+		};
+	});
+
+	/** Add nested coupon to redux so we can pull it directly */
+	useEffect(() => {
+		if (item?.preservation_coupon?.id) {
+			receiveEntityRecords('surecart', 'coupon', {
+				...item?.preservation_coupon,
+			});
+		}
+	}, [item?.preservation_coupon?.id]);
+
+	/** Get edited coupon */
+	const { coupon, couponError } = useSelect(
+		(select) => {
+			const entityData = [
+				'surecart',
+				'coupon',
+				[item?.preservation_coupon?.id || item?.preservation_coupon],
+			];
+			return {
+				coupon: select(coreStore)?.getEditedEntityRecord?.(
+					...entityData
+				),
+				couponError: select(coreStore)?.getResolutionError?.(
+					'getEditedEntityRecord',
+					...entityData
+				),
+			};
+		},
+		[item?.preservation_coupon?.id]
 	);
 
-	const {
-		reasons_title,
-		reasons_description,
-		skip_link,
-		preserve_title,
-		preserve_description,
-		preserve_button,
-		cancel_link,
-	} = item?.preservation_locales || {};
+	/** Update the coupon. */
+	const editCoupon = (data) =>
+		editEntityRecord('surecart', 'coupon', coupon?.id, data);
 
+	/** Edit the protocol. */
+	const editProtocol = (data) =>
+		editEntityRecord('surecart', 'store', 'subscription_protocol', data);
+
+	/** Update the protocol locale. */
 	const updateLocale = (data) => {
-		editItem({
+		editProtocol({
 			preservation_locales: {
 				...item?.preservation_locales,
 				...data,
@@ -55,23 +92,7 @@ export default () => {
 		});
 	};
 
-	const { reasons, loading, fetching } = useSelect((select) => {
-		const queryArgs = ['surecart', 'cancellation_reason'];
-		const reasons = select(coreStore).getEntityRecords(...queryArgs);
-		const loading = select(coreStore).isResolving(
-			'getEntityRecords',
-			queryArgs
-		);
-		return {
-			reasons,
-			loading: loading && !reasons?.length,
-			fetching: loading && reasons?.length,
-		};
-	});
-
-	/**
-	 * Form is submitted.
-	 */
+	/** Form is submitted. */
 	const onSubmit = async () => {
 		setError(null);
 		try {
@@ -84,6 +105,17 @@ export default () => {
 		}
 	};
 
+	// locales.
+	const {
+		reasons_title,
+		reasons_description,
+		skip_link,
+		preserve_title,
+		preserve_description,
+		preserve_button,
+		cancel_link,
+	} = item?.preservation_locales || {};
+
 	return (
 		<SettingsTemplate
 			title={__('Subscription Saver & Cancellation Insights', 'surecart')}
@@ -91,7 +123,7 @@ export default () => {
 			onSubmit={onSubmit}
 		>
 			<Error
-				error={itemError || error}
+				error={itemError || couponError | error}
 				setError={setError}
 				margin="80px"
 			/>
@@ -112,7 +144,7 @@ export default () => {
 					disabled={!scData?.entitlements?.subscription_preservation}
 					onScChange={(e) => {
 						e.preventDefault();
-						editItem({
+						editProtocol({
 							preservation_enabled: !item?.preservation_enabled,
 						});
 					}}
@@ -142,13 +174,24 @@ export default () => {
 						)}
 						loading={!hasLoadedItem}
 						end={
-							<ScButton onClick={() => setSurveyPreview(true)}>
-								<ScIcon name="eye" slot="suffix" />
-								{__('Preview', 'surecart')}
-							</ScButton>
+							<SurveyPreview
+								protocol={item}
+								reasons={reasons}
+								renderTrigger={({ setOpen }) => {
+									return (
+										<ScButton
+											onClick={() => setOpen(true)}
+											disabled={!reasons?.length}
+										>
+											<ScIcon name="eye" slot="suffix" />
+											{__('Preview', 'surecart')}
+										</ScButton>
+									);
+								}}
+							/>
 						}
 					>
-						<Reasons />
+						<Reasons reasons={reasons} setReasons={setReasons} />
 
 						<ScInput
 							label={__('Title', 'surecart')}
@@ -182,13 +225,21 @@ export default () => {
 						)}
 						loading={!hasLoadedItem}
 						end={
-							<ScButton onClick={() => setDiscountPreview(true)}>
-								<ScIcon name="eye" slot="suffix" />
-								{__('Preview', 'surecart')}
-							</ScButton>
+							<DiscountPreview
+								protocol={item}
+								coupon={coupon}
+								renderTrigger={({ setOpen }) => {
+									return (
+										<ScButton onClick={() => setOpen(true)}>
+											<ScIcon name="eye" slot="suffix" />
+											{__('Preview', 'surecart')}
+										</ScButton>
+									);
+								}}
+							/>
 						}
 					>
-						<Coupon coupon={item?.preservation_coupon} />
+						<Coupon coupon={coupon} updateCoupon={editCoupon} />
 						<ScInput
 							label={__('Title', 'surecart')}
 							value={preserve_title}
@@ -226,68 +277,6 @@ export default () => {
 			)}
 
 			{!!modal && <NewReason onRequestClose={() => setModal(false)} />}
-
-			<ScDialog
-				style={{
-					'--width': '675px',
-					'--body-spacing': 'var(--sc-spacing-xxx-large)',
-				}}
-				noHeader
-				open={surveyPreview}
-				onScRequestClose={() => setSurveyPreview(false)}
-			>
-				<ScButton
-					class="close__button"
-					type="text"
-					circle
-					onClick={() => setSurveyPreview(false)}
-					css={css`
-						position: absolute;
-						top: 0;
-						right: 0;
-						font-size: 22px;
-					`}
-				>
-					<ScIcon name="x" />
-				</ScButton>
-
-				<ScCancelSurvey
-					protocol={item}
-					reasons={reasons}
-					onScAbandon={() => setSurveyPreview(false)}
-				/>
-			</ScDialog>
-
-			<ScDialog
-				style={{
-					'--width': '500px',
-					'--body-spacing': 'var(--sc-spacing-xxx-large)',
-				}}
-				noHeader
-				open={discountPreview}
-				onScRequestClose={() => setDiscountPreview(false)}
-			>
-				<ScButton
-					class="close__button"
-					type="text"
-					circle
-					onClick={() => setDiscountPreview(false)}
-					css={css`
-						position: absolute;
-						top: 0;
-						right: 0;
-						font-size: 22px;
-					`}
-				>
-					<ScIcon name="x" />
-				</ScButton>
-
-				<ScCancelDiscount
-					protocol={item}
-					reason={'test'}
-					onScPreserved={() => setDiscountPreview(false)}
-				/>
-			</ScDialog>
 		</SettingsTemplate>
 	);
 };

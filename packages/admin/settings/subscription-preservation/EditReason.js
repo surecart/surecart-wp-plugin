@@ -40,9 +40,14 @@ export default ({ onRequestClose, reason }) => {
 			await saveEntityRecord('surecart', 'cancellation_reason', data, {
 				throwOnError: true,
 			});
-			createSuccessNotice(__('Answer created.', 'surecart'), {
-				type: 'snackbar',
-			});
+			createSuccessNotice(
+				data?.id
+					? __('Answer updated.', 'surecart')
+					: __('Answer created.', 'surecart'),
+				{
+					type: 'snackbar',
+				}
+			);
 			onRequestClose();
 		} catch (e) {
 			console.error(e);

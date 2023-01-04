@@ -1515,8 +1515,10 @@
   },
   "sc-subscription-cancel": {
     "back-url": true,
+    "comment": true,
     "heading": true,
     "protocol": true,
+    "reason": true,
     "subscription": true,
     "success-url": true,
     "style": true,

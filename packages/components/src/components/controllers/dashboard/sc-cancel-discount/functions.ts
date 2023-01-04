@@ -1,3 +1,3 @@
-export const replaceAmount = (string, variable, replace) => {
-  return string.replace(new RegExp('{{(?:\\s+)?(' + variable + ')(?:\\s+)?}}'), replace);
+export const replaceAmount = (string, replace, name = 'amount') => {
+  return string.replaceAll('{{' + name + '}}', replace).replaceAll('{{ ' + name + ' }}', replace);
 };

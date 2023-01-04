@@ -19,7 +19,7 @@ import EditReason from './EditReason';
 import { store as noticesStore } from '@wordpress/notices';
 import { useState, useEffect } from 'react';
 
-export default () => {
+export default ({ reasons: sortedReasons, setReasons: setSortedReasons }) => {
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
 	const [modal, setModal] = useState(false);
@@ -38,7 +38,6 @@ export default () => {
 		};
 	});
 
-	const [sortedReasons, setSortedReasons] = useState(null);
 	useEffect(() => {
 		setSortedReasons(reasons);
 	}, [reasons]);
@@ -104,49 +103,49 @@ export default () => {
 				`}
 			>
 				<ScFormControl label={__('Survey Answers', 'surecart')}>
-					{!loading && !reasons?.length && (
+					{!loading && !reasons?.length ? (
 						<ScCard>
 							<ScEmpty icon="inbox">
 								{__(
-									"You don't have any feedback reasons. Please add a reason to collect cancellation feedback.",
+									"You don't have any survey answers. Please add at least one to collect cancellation feedback.",
 									'surecart'
 								)}
 							</ScEmpty>
 						</ScCard>
-					)}
-
-					<ScStackedList
-						css={css`
-							.smooth-dnd-container.vertical
-								> .smooth-dnd-draggable-wrapper {
-								overflow: visible;
-								border: 1px solid var(--sc-color-gray-200);
-								margin-top: -1px;
-								margin-left: -1px;
-								margin-right: -1px;
-								margin-bottom: -1px;
-							}
-						`}
-					>
-						<ScCard noPadding>
-							<Container
-								onDrop={(e) => applyDrag(sortedReasons, e)}
-								getChildPayload={(index) =>
-									sortedReasons?.[index]
+					) : (
+						<ScStackedList
+							css={css`
+								.smooth-dnd-container.vertical
+									> .smooth-dnd-draggable-wrapper {
+									overflow: visible;
+									border: 1px solid var(--sc-color-gray-200);
+									margin-top: -1px;
+									margin-left: -1px;
+									margin-right: -1px;
+									margin-bottom: -1px;
 								}
-								dragHandleSelector=".dragger"
-							>
-								{(sortedReasons || []).map((reason) => (
-									<Draggable key={reason.id}>
-										<Reason
-											reason={reason}
-											key={reason?.id}
-										/>
-									</Draggable>
-								))}
-							</Container>
-						</ScCard>
-					</ScStackedList>
+							`}
+						>
+							<ScCard noPadding>
+								<Container
+									onDrop={(e) => applyDrag(sortedReasons, e)}
+									getChildPayload={(index) =>
+										sortedReasons?.[index]
+									}
+									dragHandleSelector=".dragger"
+								>
+									{(sortedReasons || []).map((reason) => (
+										<Draggable key={reason.id}>
+											<Reason
+												reason={reason}
+												key={reason?.id}
+											/>
+										</Draggable>
+									))}
+								</Container>
+							</ScCard>
+						</ScStackedList>
+					)}
 				</ScFormControl>
 				{(!!busy || !!fetching) && <ScBlockUi spinner />}
 			</div>

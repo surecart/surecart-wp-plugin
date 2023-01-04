@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-01-03T03:07:46",
+  "timestamp": "2023-01-03T23:06:18",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -24041,6 +24041,22 @@
           "required": false
         },
         {
+          "name": "comment",
+          "type": "string",
+          "mutable": false,
+          "attr": "comment",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "heading",
           "type": "string",
           "mutable": false,
@@ -24066,6 +24082,21 @@
           "values": [
             {
               "type": "SubscriptionProtocol"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "reason",
+          "type": "CancellationReason",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "CancellationReason"
             }
           ],
           "optional": false,

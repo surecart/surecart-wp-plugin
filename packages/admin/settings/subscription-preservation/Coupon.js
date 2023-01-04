@@ -11,33 +11,10 @@ import {
 	ScRadio,
 	ScRadioGroup,
 } from '@surecart/components-react';
-import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
-export default ({ coupon: { id } }) => {
-	const { editEntityRecord } = useDispatch(coreStore);
-	const { coupon, loading } = useSelect(
-		(select) => {
-			if (!id) return {};
-			const entityData = ['surecart', 'coupon', id];
-			return {
-				coupon: select(coreStore)?.getEditedEntityRecord?.(
-					...entityData
-				),
-				loading: select(coreStore)?.isResolving?.(
-					'getEditedEntityRecord',
-					[...entityData]
-				),
-			};
-		},
-		[id]
-	);
-
-	const updateCoupon = (data) =>
-		editEntityRecord('surecart', 'coupon', id, data);
-
+export default ({ coupon, updateCoupon }) => {
 	const [type, setType] = useState('percentage');
 
 	useEffect(() => {
@@ -101,7 +78,7 @@ export default ({ coupon: { id } }) => {
 					onScInput={(e) => {
 						updateCoupon({
 							percent_off: null,
-							amount_off: e.target.value,
+							amount_off: parseInt(e.target.value),
 						});
 					}}
 				/>
