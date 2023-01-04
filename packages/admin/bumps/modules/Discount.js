@@ -9,9 +9,11 @@ import {
 	ScSelect,
 } from '@surecart/components-react';
 import useEntity from '../../hooks/useEntity';
+import Behavior from './Behavior';
 
 export default ({ bump, updateBump, loading }) => {
 	const [type, setType] = useState('percentage');
+	const [inputValue, setInputValue] = useState();
 
 	const { price, hasLoadedPrice } = useEntity(
 		'price',
@@ -61,12 +63,13 @@ export default ({ bump, updateBump, loading }) => {
 							max="100"
 							attribute="percent_off"
 							value={bump?.percent_off || null}
-							onScInput={(e) =>
+							onScInput={(e) => {
 								updateBump({
 									amount_off: null,
 									percent_off: e.target.value,
-								})
-							}
+								});
+								setInputValue(e.target.value);
+							}}
 						>
 							<span slot="suffix">%</span>
 						</ScInput>
@@ -83,10 +86,16 @@ export default ({ bump, updateBump, loading }) => {
 									percent_off: null,
 									amount_off: e.target.value,
 								});
+								setInputValue(e.target.value);
 							}}
 						/>
 					)}
 				</ScFlex>
+				{(bump?.amount_off || bump?.percent_off || inputValue ) && (
+					<ScFlex>
+						<Behavior />
+					</ScFlex>
+				)}
 			</ScFormControl>
 		</Box>
 	);

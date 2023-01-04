@@ -1,16 +1,16 @@
 import { __ } from '@wordpress/i18n';
 import { ScSwitch } from '@surecart/components-react';
-import Box from '../../ui/Box';
+import BoxMinimal from '../../ui/Box-Minimal';
 
 export default ({ bump, updateBump, loading }) => {
 	return (
-		<Box title={__('Behavior', 'surecart')} loading={loading}>
+		<BoxMinimal loading={loading}>
 			<ScSwitch
 				checked={bump?.auto_apply}
 				onScChange={(e) => {
 					updateBump({ auto_apply: e.target.checked });
 				}}
-				reversed
+
 			>
 				{__('Auto Apply Discount')}
 				<span slot="description">
@@ -20,6 +20,6 @@ export default ({ bump, updateBump, loading }) => {
 					)}
 				</span>
 			</ScSwitch>
-		</Box>
+		</BoxMinimal>
 	);
 };

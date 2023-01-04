@@ -183,11 +183,6 @@ export default () => {
 						updateBump={editBump}
 						loading={!hasLoadedBump}
 					/>
-					<Behavior
-						bump={bump}
-						updateBump={editBump}
-						loading={!hasLoadedBump}
-					/>
 				</>
 			}
 		>
