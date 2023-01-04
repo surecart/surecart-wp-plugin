@@ -25,7 +25,7 @@ export class ScCustomerName {
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
 
   /** The input's value attribute. */
-  @Prop({ mutable: true }) value = getValueFromUrl('email');
+  @Prop({ mutable: true }) value = getValueFromUrl('full_name');
 
   /** Draws a pill-style input with rounded edges. */
   @Prop({ reflect: true }) pill = false;
