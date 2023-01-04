@@ -2,6 +2,7 @@ import { Customer, Checkout } from '../../../../types';
 import { createOrUpdateOrder } from '../../../../services/session';
 import { Component, Prop, h, Event, EventEmitter, Watch, Method } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
+import { getValueFromUrl } from '../../../../functions/util';
 
 @Component({
   tag: 'sc-customer-name',
@@ -24,7 +25,7 @@ export class ScCustomerName {
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
 
   /** The input's value attribute. */
-  @Prop({ mutable: true }) value = '';
+  @Prop({ mutable: true }) value = getValueFromUrl('email');
 
   /** Draws a pill-style input with rounded edges. */
   @Prop({ reflect: true }) pill = false;

@@ -39,3 +39,9 @@ export const isValidURL = str => {
 
   return url.protocol === 'http:' || url.protocol === 'https:';
 };
+
+export const getValueFromUrl = (key: string) => {
+	const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  return urlParams.get(key);
+};

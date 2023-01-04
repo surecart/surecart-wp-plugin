@@ -3,6 +3,8 @@ import { Component, Prop, h, Event, EventEmitter, Watch, Method, Host } from '@s
 import { openWormhole } from 'stencil-wormhole';
 import { createOrUpdateOrder } from '../../../../services/session';
 import { __ } from '@wordpress/i18n';
+import { getValueFromUrl } from '../../../../functions/util';
+
 @Component({
   tag: 'sc-customer-email',
   styleUrl: 'sc-customer-email.scss',
@@ -27,7 +29,7 @@ export class ScCustomerEmail {
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
 
   /** The input's value attribute. */
-  @Prop({ mutable: true }) value = '';
+  @Prop({ mutable: true }) value = getValueFromUrl('email');
 
   /** Draws a pill-style input with rounded edges. */
   @Prop({ reflect: true }) pill = false;
