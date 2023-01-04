@@ -1,12 +1,15 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useSelect } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useState, useEffect } from '@wordpress/element';
-import { store as coreStore } from '@wordpress/core-data';
 import Box from '../ui/Box';
 import { getFilterData } from '../util/filter';
+import { __ } from '@wordpress/i18n';
+import { store as noticesStore } from '@wordpress/notices';
+import { useDispatch } from '@wordpress/data';
+import { createErrorString } from '../util';
+import { ScEmpty } from '@surecart/components-react';
 
 const colorsArr = [
 	'#a855f7',
@@ -23,37 +26,33 @@ export function CancellationReasonStats({ liveMode = true, filter }) {
 	const [reasonsStats, setReasonsStats] = useState(null);
 	const [reasonChartData, setReasonChartData] = useState(null);
 	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(false);
+	const { createErrorNotice } = useDispatch(noticesStore);
 
-	const { cancellation_reasons } = useSelect((select) => {
-		const queryArgs = [
-			'surecart',
-			'cancellation_reason',
-			{ per_page: 100 },
-		];
-		return {
-			cancellation_reasons: select(coreStore).getEntityRecords(
-				...queryArgs
-			),
-		};
-	}, []);
-
+	/** Fetch stats data. */
 	const fetchReasonsStatsData = async (filter) => {
-		const { startDate, endDate, interval } = getFilterData(filter);
-		setLoading(true);
-
-		const { data } = await apiFetch({
-			path: addQueryArgs('surecart/v1/stats/cancellation_reasons', {
-				start_at: startDate.format(),
-				end_at: endDate.format(),
-				interval: interval,
-				live_mode: liveMode,
-			}),
-		}).catch(() => setError(true));
-		setReasonsStats(data);
+		try {
+			setLoading(true);
+			const { startDate, endDate, interval } = getFilterData(filter);
+			const { data } = await apiFetch({
+				path: addQueryArgs('surecart/v1/stats/cancellation_reasons', {
+					start_at: startDate.format(),
+					end_at: endDate.format(),
+					interval: interval,
+					live_mode: liveMode,
+					expand: ['cancellation_reason'],
+				}),
+			});
+			setReasonsStats(data);
+		} catch (e) {
+			console.error(e);
+			createErrorNotice(createErrorString(e), { type: 'snackbar' });
+		} finally {
+			setLoading(false);
+		}
 	};
 
-	const renderChart = (arr) => {
+	/** Render the chart. */
+	const renderChart = (arr = []) => {
 		return (
 			<div
 				css={css`
@@ -62,10 +61,11 @@ export function CancellationReasonStats({ liveMode = true, filter }) {
 					margin-bottom: 1.33rem;
 				`}
 			>
-				{arr.map(({ count, label }, idx) => {
+				{(arr || []).map(({ count, label }, idx) => {
 					const percentage = Math.round((count / totalCount) * 100);
 					return (
 						<div
+							key={idx}
 							title={`${label} - ${percentage}% (${count})`}
 							css={css`
 								width: ${percentage}%;
@@ -80,14 +80,15 @@ export function CancellationReasonStats({ liveMode = true, filter }) {
 		);
 	};
 
-	const renderReasonList = (arr) => {
+	const renderReasonList = (arr = []) => {
 		return (
 			<div>
-				{arr.map(({ count, label }, idx) => {
+				{(arr || []).map(({ count, label }, idx) => {
 					const percentage = Math.round((count / totalCount) * 100);
 					const color = colorsArr[idx] ?? 'var(--sc-color-gray-400)';
 					return (
 						<div
+							key={idx}
 							css={css`
 								display: flex;
 								align-items: center;
@@ -130,20 +131,13 @@ export function CancellationReasonStats({ liveMode = true, filter }) {
 		);
 	};
 
-	const getReasonLabel = (reasonId) => {
-		if (!reasonId) return 'No Reason Provided';
-		const currReason = cancellation_reasons.filter(
-			(reason) => reason.id === reasonId
-		);
-		return currReason[0]?.label;
-	};
-
 	const setTrimmedChartData = (reasonsStats) => {
-		const mappedReasons =
-			reasonsStats?.map((reason) => ({
-				count: reason?.count,
-				label: getReasonLabel(reason?.cancellation_reason_id),
-			})) ?? [];
+		const mappedReasons = (reasonsStats || [])?.map((stat) => ({
+			count: stat?.count,
+			label:
+				stat?.cancellation_reason?.label ||
+				__('No Reason Provided', 'surecart'),
+		}));
 		const sortedReasons = mappedReasons.sort((a, b) => b.count - a.count);
 		const topReasons = sortedReasons.slice(0, 6);
 		const restReasonsCount = sortedReasons
@@ -161,7 +155,6 @@ export function CancellationReasonStats({ liveMode = true, filter }) {
 			mappedReasons?.reduce((acc, curr) => acc + curr.count, 0)
 		);
 		setReasonChartData(topReasons);
-		setLoading(false);
 	};
 
 	useEffect(() => {
@@ -169,11 +162,8 @@ export function CancellationReasonStats({ liveMode = true, filter }) {
 	}, [filter, liveMode]);
 
 	useEffect(() => {
-		if (!cancellation_reasons && !cancellation_reasons?.length) return;
-		if (!reasonsStats && !reasonsStats?.length) return;
-
-		setTrimmedChartData(reasonsStats);
-	}, [cancellation_reasons, reasonsStats]);
+		setTrimmedChartData(reasonsStats || []);
+	}, [reasonsStats]);
 
 	return (
 		<Box
@@ -185,21 +175,29 @@ export function CancellationReasonStats({ liveMode = true, filter }) {
 				border: 1px solid var(--sc-color-gray-200);
 			`}
 		>
-			{!loading && (
-				<>
-					<strong
-						css={css`
-							font-size: 2.25em;
-							font-weight: var(--sc-font-weight-normal);
-							padding-bottom: 0.66em;
-						`}
-					>
-						{totalCount}
-					</strong>
-					{renderChart(reasonChartData)}
-					{renderReasonList(reasonChartData)}
-				</>
-			)}
+			{!loading &&
+				(totalCount === 0 ? (
+					<ScEmpty icon="inbox">
+						{__(
+							'There are no cancellation reasons for this period.',
+							'surecart'
+						)}
+					</ScEmpty>
+				) : (
+					<>
+						<strong
+							css={css`
+								font-size: 2.25em;
+								font-weight: var(--sc-font-weight-normal);
+								padding-bottom: 0.66em;
+							`}
+						>
+							{totalCount}
+						</strong>
+						{renderChart(reasonChartData)}
+						{renderReasonList(reasonChartData)}
+					</>
+				))}
 		</Box>
 	);
 }

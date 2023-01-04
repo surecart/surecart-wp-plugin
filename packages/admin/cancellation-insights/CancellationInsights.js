@@ -13,6 +13,7 @@ import { averageProperties, totalProperties } from './util';
 import { getFilterData } from '../util/filter';
 import { CancellationReasonStats } from './CancellationReasonStats';
 import LiveModeToggle from './LiveModeToggle';
+import Notifications from '../components/Notifications';
 
 export default () => {
 	const [data, setData] = useState([]);
@@ -331,6 +332,20 @@ export default () => {
 
 				<CancellationReasonStats liveMode={liveMode} filter={filter} />
 			</div>
+
+			<Notifications
+				css={css`
+					position: fixed !important;
+					left: auto !important;
+					right: 40px;
+					bottom: 40px;
+					width: auto !important;
+
+					:first-letter {
+						text-transform: uppercase;
+					}
+				`}
+			/>
 		</div>
 	);
 };
