@@ -91,9 +91,13 @@ export default ({ bump, updateBump, loading }) => {
 						/>
 					)}
 				</ScFlex>
-				{(bump?.amount_off || bump?.percent_off || inputValue ) && (
+				{(bump?.amount_off || bump?.percent_off || inputValue) && (
 					<ScFlex>
-						<Behavior />
+						<Behavior
+							bump={bump}
+							updateBump={updateBump}
+							loading={loading}
+						/>
 					</ScFlex>
 				)}
 			</ScFormControl>
