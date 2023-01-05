@@ -15,6 +15,7 @@ class PageService {
 		add_action( 'display_post_states', [ $this, 'displayDefaultPageStatuses' ] );
 		add_filter( 'pre_delete_post', [ $this, 'restrictDefaultPageDeletion' ], 11, 2 );
 		add_filter( 'pre_trash_post', [ $this, 'restrictDefaultPageDeletion' ], 11, 2 );
+		add_filter( 'wp_insert_post_empty_content', [ $this, 'restrictDefaultBlockRemove' ], 11, 2 );
 	}
 
 	/**
@@ -33,6 +34,29 @@ class PageService {
 		if ( in_array( $post_id, [ $default_checkout, $default_form ], true ) ) {
 			return false;
 		}
+	}
+
+	/**
+	 * Restrict default form remove
+	 *
+	 * @param boolean $maybe_empty Maybe empty.
+	 * @param array   $post Post data.
+	 *
+	 * @return boolean|void
+	 */
+	public function restrictDefaultBlockRemove( $maybe_empty, $post ) {
+		$default_checkout = \SureCart::pages()->getID('checkout');
+		$post_id          = $post['ID'];
+
+		if ( $post_id !== $default_checkout ) {
+			return $maybe_empty;
+		}
+
+		if ( ! has_block( 'surecart/checkout-form', $post['post_content'] ) ) {
+			return true;
+		}
+
+		return $maybe_empty;
 	}
 
 	/**
