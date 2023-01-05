@@ -3,6 +3,7 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import {
+	ScFormControl,
 	ScSelect,
 	ScSwitch,
 	ScUpgradeRequired,
@@ -227,34 +228,46 @@ export default () => {
 						grid-template-columns: repeat(2, minmax(0, 1fr));
 					`}
 				>
-					<ScSelect
-						value={
-							item?.revoke_purchases_on_past_due
-								? 'true'
-								: 'false'
-						}
-						label={__('Purchase Revoke Behavior', 'surecart')}
-						unselect={false}
-						onScChange={(e) =>
-							editItem({
-								revoke_purchases_on_past_due:
-									e.target.value === 'true',
-							})
-						}
-						choices={[
-							{
-								value: 'true',
-								label: __('Revoke Immediately', 'surecart'),
-							},
-							{
-								value: 'false',
-								label: __(
-									'Revoke Purchase After All Payment Retries Fail',
-									'surecart'
-								),
-							},
-						]}
-					/>
+					<ScFormControl label={true}>
+						<span slot="label">
+							{__('Purchase Revoke Behavior', 'surecart')}
+							{!scData?.entitlements
+								?.revoke_purchases_on_past_due && (
+								<ScUpgradeRequired />
+							)}
+						</span>
+
+						<ScSelect
+							value={
+								item?.revoke_purchases_on_past_due
+									? 'true'
+									: 'false'
+							}
+							unselect={false}
+							onScChange={(e) =>
+								editItem({
+									revoke_purchases_on_past_due: !scData
+										?.entitlements
+										?.revoke_purchases_on_past_due
+										? false
+										: e.target.value === 'true',
+								})
+							}
+							choices={[
+								{
+									value: 'true',
+									label: __('Revoke Immediately', 'surecart'),
+								},
+								{
+									value: 'false',
+									label: __(
+										'Revoke Purchase After All Payment Retries Fail',
+										'surecart'
+									),
+								},
+							]}
+						/>
+					</ScFormControl>
 				</div>
 			</SettingsBox>
 		</SettingsTemplate>
