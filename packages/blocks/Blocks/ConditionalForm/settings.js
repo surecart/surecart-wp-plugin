@@ -11,8 +11,7 @@ import {
 import { useState } from '@wordpress/element';
 import Rules from './rules';
 
-const Settings = ( props ) => {
-  const { attributes } = props;
+const Settings = ( { attributes, setAttributes } ) => {
   const { rule_groups } = attributes;
 
   const [ isOpen, setOpen ] = useState( false );
@@ -49,7 +48,8 @@ const Settings = ( props ) => {
                   max-height: 80%;` }
                 >
                   <Rules
-                    { ...props }
+                    attributes={attributes}
+                    setAttributes={setAttributes}
                     closeModal={closeModal}
                   />
                 </Modal>
