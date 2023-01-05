@@ -8,9 +8,7 @@ import { useState } from '@wordpress/element';
 import Conditions from './conditions';
 
 
-const Rules = ( props ) => {
-
-	const { attributes, setAttributes, closeModal } = props;
+const Rules = ( { attributes, setAttributes, closeModal } ) => {
 
 	const { rule_groups } = attributes;
 

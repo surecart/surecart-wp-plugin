@@ -19,8 +19,6 @@ const Settings = ( props ) => {
   const openModal = () => setOpen( true );
   const closeModal = () => setOpen( false );
 
-  props.closeModal = closeModal;
-
   let rule_data = rule_groups ? rule_groups : [];
 
 	return (
@@ -50,7 +48,10 @@ const Settings = ( props ) => {
                   max-width: 650px;
                   max-height: 80%;` }
                 >
-                  <Rules {...props}/>
+                  <Rules
+                    { ...props }
+                    closeModal={closeModal}
+                  />
                 </Modal>
             ) }
           </PanelRow>
