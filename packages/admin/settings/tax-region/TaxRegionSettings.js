@@ -3,7 +3,13 @@ import { useState, Fragment } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { getQueryArg, removeQueryArgs } from '@wordpress/url';
-import { ScButton } from '@surecart/components-react';
+import {
+	ScButton,
+	ScCard,
+	ScTable,
+	ScTableCell,
+	ScTableRow,
+} from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
 import useEntity from '../../hooks/useEntity';
@@ -25,6 +31,7 @@ const zoneName = {
 	uk: __('United Kingdom', 'surecart'),
 	ca: __('Canada', 'surecart'),
 	us: __('United States', 'surecart'),
+	other: __('Rest Of The World', 'surecart'),
 };
 
 const zoneTitles = {
@@ -54,6 +61,10 @@ const zoneDescriptions = {
 	),
 	us: __(
 		'You’ll need to collect sales tax if you meet certain state requirements, also known as nexus. To start collecting tax, you need to register with the appropriate state tax authority.',
+		'surecart'
+	),
+	other: __(
+		'Add custom manual tax rates for specific countries.',
 		'surecart'
 	),
 };
@@ -191,30 +202,45 @@ export default () => {
 					loading={!hasLoadedItem}
 					wrapperTag="div"
 				>
-					<sc-card no-padding style={{ position: 'relative' }}>
-						<sc-table>
-							<sc-table-cell slot="head">
+					<ScCard no-padding style={{ position: 'relative' }}>
+						<ScTable>
+							<ScTableCell slot="head">
 								{__('Country', 'surecart')}
-							</sc-table-cell>
-							<sc-table-cell
+							</ScTableCell>
+							{registrations.some(
+								(registration) => registration.manual_rate
+							) && (
+								<ScTableCell
+									slot="head"
+									style={{ width: '100px' }}
+								>
+									{__('Tax Rate', 'surecart')}
+								</ScTableCell>
+							)}
+							<ScTableCell
 								slot="head"
 								style={{ textAlign: 'right' }}
 							>
 								{__('Updated', 'surecart')}
-							</sc-table-cell>
+							</ScTableCell>
 							{registrations.map((registration) => {
 								const { tax_zone } = registration;
 								return (
-									<sc-table-row
+									<ScTableRow
 										href="#"
 										onClick={() => setDialog(registration)}
 										key={registration.id}
 									>
-										<sc-table-cell>
+										<ScTableCell>
 											{tax_zone?.state_name ||
 												tax_zone?.country_name}
-										</sc-table-cell>
-										<sc-table-cell>
+										</ScTableCell>
+										{registration?.manual_rate && (
+											<ScTableCell>
+												{registration?.manual_rate}%
+											</ScTableCell>
+										)}
+										<ScTableCell>
 											<sc-format-date
 												type="timestamp"
 												month="short"
@@ -222,11 +248,11 @@ export default () => {
 												year="numeric"
 												date={registration?.updated_at}
 											></sc-format-date>
-										</sc-table-cell>
-									</sc-table-row>
+										</ScTableCell>
+									</ScTableRow>
 								);
 							})}
-						</sc-table>
+						</ScTable>
 
 						{!fetching && !registrations?.length && (
 							<sc-empty icon="inbox">
@@ -240,7 +266,7 @@ export default () => {
 						)}
 
 						{fetching && <sc-block-ui spinner></sc-block-ui>}
-					</sc-card>
+					</ScCard>
 				</SettingsBox>
 			</SettingsTemplate>
 			<RegistrationDialog
