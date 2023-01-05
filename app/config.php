@@ -20,6 +20,7 @@ return [
 		\SureCart\WordPress\PluginServiceProvider::class,
 		\SureCart\WordPress\TranslationsServiceProvider::class,
 		\SureCart\WordPress\ThemeServiceProvider::class,
+		\SureCart\WordPress\Templates\TemplatesServiceProvider::class,
 		\SureCart\WordPress\Pages\PageServiceProvider::class,
 		\SureCart\WordPress\Users\UsersServiceProvider::class,
 		\SureCart\WordPress\Admin\Profile\UserProfileServiceProvider::class,
