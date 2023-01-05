@@ -8,7 +8,6 @@ import {
 	ScMenu,
 	ScMenuItem,
 	ScIcon,
-	ScTag,
 	ScFlex,
 } from '@surecart/components-react';
 import { useDispatch, useSelect } from '@wordpress/data';
@@ -35,6 +34,7 @@ import useSave from '../settings/UseSave';
 import { useState } from 'react';
 import SaveButton from '../templates/SaveButton';
 import { Modal } from '@wordpress/components';
+import ProductRestrictions from './modules/ProductRestrictions';
 
 export default ({ id }) => {
 	const { save } = useSave();
@@ -197,11 +197,16 @@ export default ({ id }) => {
 
 				<Codes id={coupon?.id || id} loading={isLoading} />
 
-				<Restrictions
+				<ProductRestrictions
+					coupon={coupon}
+					updateCoupon={updateCoupon}
+					loading={isLoading}
+				/>
+				{/* <Restrictions
 					loading={isLoading}
 					coupon={coupon}
 					updateCoupon={updateCoupon}
-				/>
+				/> */}
 
 				<Types
 					loading={isLoading}

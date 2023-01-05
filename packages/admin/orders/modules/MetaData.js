@@ -29,7 +29,7 @@ export default ({ order, loading }) => {
 								'--font-size': 'var(--sc-font-size-medium)',
 							}}
 						>
-							{key}
+							{key.replaceAll('_', ' ')}
 						</ScText>
 						<div>{metadata[key]}</div>
 					</div>

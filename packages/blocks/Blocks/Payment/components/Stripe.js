@@ -31,7 +31,7 @@ export default ({ attributes: { secure_notice, disabled_methods }, mode }) => {
 	}
 
 	return (
-		<ScPaymentMethodChoice processor-id="stripe">
+		<ScPaymentMethodChoice processor-id="stripe" recurringEnabled>
 			<span slot="summary" class="sc-payment-toggle-summary">
 				<ScIcon name="credit-card" style={{ fontSize: '24px' }} />
 				<span>{__('Credit Card', 'surecart')}</span>
