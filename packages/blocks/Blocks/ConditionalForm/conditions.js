@@ -362,7 +362,7 @@ function Conditions( props ) {
                 border: 1px #d4d4d4 solid;
               `}
 						>
-							<div className="sc-checkout-rules--rule_fields">
+							<div className="sc-rules--rule_fields">
 								<SelectControl
 									name={ `sc-form-rules[${ groupIndex }][rules][${ ruleIndex }][condition]` }
 									options={ conditions_select }

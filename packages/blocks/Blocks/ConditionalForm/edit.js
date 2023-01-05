@@ -9,8 +9,6 @@ import {
 } from '@wordpress/block-editor';
 import Settings from './settings';
 
-const allowedBlocks = [];
-
 export default ( props ) => {
 	const blockProps = useBlockProps({
     className: 'sc-coditional-form',
