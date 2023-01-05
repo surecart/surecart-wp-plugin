@@ -2,7 +2,11 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { ScSelect, ScSwitch, ScUpgradeRequired } from '@surecart/components-react';
+import {
+	ScSelect,
+	ScSwitch,
+	ScUpgradeRequired,
+} from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
 import useEntity from '../../hooks/useEntity';
@@ -216,6 +220,42 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
+				<div
+					css={css`
+						gap: var(--sc-form-row-spacing);
+						display: grid;
+						grid-template-columns: repeat(2, minmax(0, 1fr));
+					`}
+				>
+					<ScSelect
+						value={
+							item?.revoke_purchases_on_past_due
+								? 'true'
+								: 'false'
+						}
+						label={__('Purchase Revoke Behavior', 'surecart')}
+						unselect={false}
+						onScChange={(e) =>
+							editItem({
+								revoke_purchases_on_past_due:
+									e.target.value === 'true',
+							})
+						}
+						choices={[
+							{
+								value: 'true',
+								label: __('Revoke Immediately', 'surecart'),
+							},
+							{
+								value: 'false',
+								label: __(
+									'Revoke Purchase After All Payment Retries Fail',
+									'surecart'
+								),
+							},
+						]}
+					/>
+				</div>
 			</SettingsBox>
 		</SettingsTemplate>
 	);
