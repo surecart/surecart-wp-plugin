@@ -243,6 +243,24 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.4.0 - January 5, 2022 =
+* New: Sign in codes and login flow.
+* New: Add max redemptions per customer UI to coupon.
+* Improvement: Rename “Checkout Page” to “Store Checkout” in pages list.
+* Improvement: Show if a processor is disabled on the settings page. Disallow showing disabled processor in forms.
+* Improvement: Keep customer data and Wordpress user in sync.
+* Improvement: Change the word Pro to Premium in plugin.
+* Improvement: Rename "default" to "store checkout" for store checkout page and store checkout form.
+* Improvement: Link the charge to the payment processor from the admin UI.
+* Improvement: Select box accessibility improvement.
+* Fix: Coupon field overflow on mobile screens.
+* Fix: Disallow payment plan update screen if not enabled in admin.
+* Fix: Scrolling issue on settings pages.
+* Fix: PHP8 compatibility issues on checkout page with debug mode turned on.
+* Fix: FCFA currency support.
+* Fix: global [hidden] conflicts.
+
+
 = 1.3.4 - December 15, 2022 =
 * Improvement: Coupon UX - set usage and customer limits per promotion code.
 * Fix: Product restrictions on coupons not applying to specific products only.
