@@ -15,7 +15,7 @@ class PageService {
 		add_action( 'display_post_states', [ $this, 'displayDefaultPageStatuses' ] );
 		add_filter( 'pre_delete_post', [ $this, 'restrictDefaultPageDeletion' ], 11, 2 );
 		add_filter( 'pre_trash_post', [ $this, 'restrictDefaultPageDeletion' ], 11, 2 );
-		add_filter( 'wp_insert_post_empty_content', [ $this, 'restrictDefaultBlockRemove' ], 11, 2 );
+		add_filter( 'wp_insert_post_empty_content', [ $this, 'restrictDefaultFormRemove' ], 11, 2 );
 	}
 
 	/**
@@ -44,7 +44,7 @@ class PageService {
 	 *
 	 * @return boolean|void
 	 */
-	public function restrictDefaultBlockRemove( $maybe_empty, $post ) {
+	public function restrictDefaultFormRemove( $maybe_empty, $post ) {
 		$default_checkout = \SureCart::pages()->getID('checkout');
 		$post_id          = $post['ID'];
 
