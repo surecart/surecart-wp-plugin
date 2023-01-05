@@ -2,7 +2,11 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { ScSelect, ScSwitch, ScUpgradeRequired } from '@surecart/components-react';
+import {
+	ScSelect,
+	ScSwitch,
+	ScUpgradeRequired,
+} from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
 import useEntity from '../../hooks/useEntity';
@@ -217,11 +221,11 @@ export default () => {
 					</span>
 				</ScSwitch>
 				<ScSwitch
-					checked={
-						item?.revoke_purchases_on_past_due
-					}
-          onScChange={(e) =>
-							editItem({ revoke_purchases_on_past_due: e.target.checked })
+					checked={item?.revoke_purchases_on_past_due}
+					onScChange={(e) =>
+						editItem({
+							revoke_purchases_on_past_due: e.target.checked,
+						})
 					}
 				>
 					{__('Revoke Purchases on Past Due', 'surecart')}
