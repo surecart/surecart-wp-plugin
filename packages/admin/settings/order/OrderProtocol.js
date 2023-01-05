@@ -5,7 +5,12 @@ import SettingsBox from '../SettingsBox';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
 import { css, jsx } from '@emotion/core';
-import { ScInput, ScSelect, ScTextarea } from '@surecart/components-react';
+import {
+	ScFlex,
+	ScInput,
+	ScSelect,
+	ScTextarea,
+} from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
@@ -63,24 +68,50 @@ export default () => {
 						'surecart'
 					)}
 				/>
-				<ScSelect
-					label={__('Order Numbers Counter', 'surecart')}
-					value={item?.number_type}
-					help={__('Choose the style of order numbers.', 'surecart')}
-					onScChange={(e) =>
-						editItem({ number_type: e.target.value })
-					}
-					choices={[
-						{
-							value: 'sequential',
-							label: __('Sequential', 'surecart'),
-						},
-						{
-							value: 'token',
-							label: __('Random Numbers And Letters', 'surecart'),
-						},
-					]}
-				/>
+				<ScFlex>
+					<ScSelect
+						style={{ flex: 1 }}
+						label={__('Order Numbers Counter', 'surecart')}
+						value={item?.number_type}
+						help={__(
+							'Choose the style of order numbers.',
+							'surecart'
+						)}
+						onScChange={(e) =>
+							editItem({ number_type: e.target.value })
+						}
+						choices={[
+							{
+								value: 'sequential',
+								label: __('Sequential', 'surecart'),
+							},
+							{
+								value: 'token',
+								label: __(
+									'Random Numbers And Letters',
+									'surecart'
+								),
+							},
+						]}
+					/>
+					{item?.number_type == 'sequential' && (
+						<ScInput
+							style={{ flex: 1 }}
+							label={__('Start Order Number At', 'surecart')}
+							value={item?.next_sequential_number}
+							onScInput={(e) =>
+								editItem({
+									next_sequential_number:
+										e.target.value || null,
+								})
+							}
+							help={__(
+								'It must be greater than the largest existing order number.',
+								'surecart'
+							)}
+						/>
+					)}
+				</ScFlex>
 			</SettingsBox>
 
 			<SettingsBox
