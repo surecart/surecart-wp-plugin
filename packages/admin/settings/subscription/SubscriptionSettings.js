@@ -220,13 +220,9 @@ export default () => {
 					checked={
 						item?.revoke_purchases_on_past_due
 					}
-					onScChange={(e) => {
-						e.preventDefault();
-						editItem({
-							revoke_purchases_on_past_due:
-								!item?.revoke_purchases_on_past_due,
-						});
-					}}
+          onScChange={(e) =>
+							editItem({ revoke_purchases_on_past_due: e.target.checked })
+					}
 				>
 					{__('Revoke Purchases on Past Due', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
