@@ -71,12 +71,14 @@ graph TD;
   sc-alert --> sc-icon
   sc-order-manual-instructions --> sc-alert
   sc-order-status-badge --> sc-tag
+  sc-payment-method --> sc-tooltip
+  sc-payment-method --> sc-button
+  sc-payment-method --> sc-icon
   sc-payment-method --> sc-tag
   sc-payment-method --> sc-cc-logo
-  sc-payment-method --> sc-icon
   sc-payment-method --> sc-text
-  sc-cc-logo --> sc-icon
   sc-button --> sc-spinner
+  sc-cc-logo --> sc-icon
   sc-purchase-downloads-list --> sc-divider
   sc-purchase-downloads-list --> sc-empty
   sc-purchase-downloads-list --> sc-card

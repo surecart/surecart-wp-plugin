@@ -118,6 +118,7 @@ export class ScCustomerDetails {
             '\n' +
             countryName || country}
         </div>
+        <div></div>
       </sc-stacked-list-row>
     );
   }

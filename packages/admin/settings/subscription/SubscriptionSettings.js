@@ -2,7 +2,12 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { ScSelect, ScSwitch, ScTag } from '@surecart/components-react';
+import {
+	ScFormControl,
+	ScSelect,
+	ScSwitch,
+	ScUpgradeRequired,
+} from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
 import useEntity from '../../hooks/useEntity';
@@ -207,9 +212,7 @@ export default () => {
 				>
 					{__('Require Upfront Payment Method', 'surecart')}
 					{!scData?.entitlements?.optional_upfront_payment_method && (
-						<ScTag type="success" size="small" pill>
-							{__('Pro', 'surecart')}
-						</ScTag>
+						<ScUpgradeRequired />
 					)}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
@@ -218,6 +221,54 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
+				<div
+					css={css`
+						gap: var(--sc-form-row-spacing);
+						display: grid;
+						grid-template-columns: repeat(2, minmax(0, 1fr));
+					`}
+				>
+					<ScFormControl label={true}>
+						<span slot="label">
+							{__('Purchase Revoke Behavior', 'surecart')}
+							{!scData?.entitlements
+								?.revoke_purchases_on_past_due && (
+								<ScUpgradeRequired />
+							)}
+						</span>
+
+						<ScSelect
+							value={
+								item?.revoke_purchases_on_past_due
+									? 'true'
+									: 'false'
+							}
+							unselect={false}
+							onScChange={(e) =>
+								editItem({
+									revoke_purchases_on_past_due: !scData
+										?.entitlements
+										?.revoke_purchases_on_past_due
+										? false
+										: e.target.value === 'true',
+								})
+							}
+							choices={[
+								{
+									value: 'true',
+									label: __('Revoke Immediately', 'surecart'),
+								},
+								{
+									value: 'false',
+									label: __(
+										'Revoke Purchase After All Payment Retries Fail',
+										'surecart'
+									),
+								},
+							]}
+						/>
+					</ScFormControl>
+				</div>
 			</SettingsBox>
 		</SettingsTemplate>
 	);

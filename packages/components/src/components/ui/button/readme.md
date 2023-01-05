@@ -67,6 +67,7 @@
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-pagination](../pagination)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
+ - [sc-payment-method](../sc-payment-method)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-stripe-add-method](../sc-stripe-add-method)
@@ -80,6 +81,7 @@
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-tax-id-input](../tax-id-input)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-upgrade-required](../sc-upgrade-required)
  - [sc-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
  - [sc-wordpress-user](../../controllers/dashboard/wordpress-user)
  - [sc-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
@@ -110,6 +112,7 @@ graph TD;
   sc-orders-list --> sc-button
   sc-pagination --> sc-button
   sc-password-nag --> sc-button
+  sc-payment-method --> sc-button
   sc-payment-methods-list --> sc-button
   sc-purchase-downloads-list --> sc-button
   sc-stripe-add-method --> sc-button
@@ -123,6 +126,7 @@ graph TD;
   sc-subscriptions-list --> sc-button
   sc-tax-id-input --> sc-button
   sc-upcoming-invoice --> sc-button
+  sc-upgrade-required --> sc-button
   sc-wordpress-password-edit --> sc-button
   sc-wordpress-user --> sc-button
   sc-wordpress-user-edit --> sc-button
