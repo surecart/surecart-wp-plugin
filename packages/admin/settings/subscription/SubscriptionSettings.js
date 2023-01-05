@@ -220,22 +220,42 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
-				<ScSwitch
-					checked={item?.revoke_purchases_on_past_due}
-					onScChange={(e) =>
-						editItem({
-							revoke_purchases_on_past_due: e.target.checked,
-						})
-					}
+				<div
+					css={css`
+						gap: var(--sc-form-row-spacing);
+						display: grid;
+						grid-template-columns: repeat(2, minmax(0, 1fr));
+					`}
 				>
-					{__('Revoke Purchases on Past Due', 'surecart')}
-					<span slot="description" style={{ lineHeight: '1.4' }}>
-						{__(
-							'Whether or not a purchase should be revoked when a subscription becomes past due. If the subscription becomes active or trialing again the purchase will be automatically restored again.',
-							'surecart'
-						)}
-					</span>
-				</ScSwitch>
+					<ScSelect
+						value={
+							item?.revoke_purchases_on_past_due
+								? 'true'
+								: 'false'
+						}
+						label={__('Purchase Revoke Behavior', 'surecart')}
+						unselect={false}
+						onScChange={(e) =>
+							editItem({
+								revoke_purchases_on_past_due:
+									e.target.value === 'true',
+							})
+						}
+						choices={[
+							{
+								value: 'true',
+								label: __('Revoke Immediately', 'surecart'),
+							},
+							{
+								value: 'false',
+								label: __(
+									'Revoke Purchase After All Payment Retries Fail',
+									'surecart'
+								),
+							},
+						]}
+					/>
+				</div>
 			</SettingsBox>
 		</SettingsTemplate>
 	);
