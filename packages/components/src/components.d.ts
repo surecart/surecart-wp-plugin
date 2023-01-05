@@ -614,7 +614,7 @@ export namespace Components {
         /**
           * Selector label
          */
-        "rule_groups": string;
+        "rule_groups": object;
         /**
           * The currently selected processor
          */
@@ -5109,7 +5109,7 @@ declare namespace LocalJSX {
         /**
           * Selector label
          */
-        "rule_groups"?: string;
+        "rule_groups"?: object;
         /**
           * The currently selected processor
          */

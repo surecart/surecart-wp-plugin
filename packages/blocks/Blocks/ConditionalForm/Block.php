@@ -9,6 +9,13 @@ use SureCartBlocks\Blocks\BaseBlock;
  */
 class Block extends BaseBlock {
 	/**
+	 * Keep track of number of instances.
+	 *
+	 * @var integer
+	 */
+	public static $instance = 0;
+
+	/**
 	 * Render the block
 	 *
 	 * @param array  $attributes Block attributes.
@@ -18,21 +25,16 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content, $block = null ) {
-		return "Sandesh";
-		var_dump( $attributes );
-		ob_start(); ?>
-		<div>I am a conditional form</div>
-		<?php /*<sc-flex
-			slot="<?php echo esc_attr( 'cart-' . ( $attributes['slot'] ?? 'header' ) ); ?>"
-			justify-content="space-between"
-			align-items="center">
-			<sc-text style="--font-size: var(--sc-font-size-x-small); --line-height: var(--sc-line-height-dense); --color: var(--sc-color-gray-700)">
-				<?php echo wp_kses_post( $attributes['text'] ?? '' ); ?>
-			</sc-text>
-			<sc-button href="#" size="small" type="primary">Try It</sc-button>
-		</sc-flex>
-		*/ ?>
-		<?php
-		return ob_get_clean();
+		self::$instance++;
+
+		\SureCart::assets()->addComponentData(
+			'sc-conditional-form',
+			'#sc-conditional-form-' . (int) self::$instance,
+			[
+				'rule_groups' => $attributes['rule_groups'],
+			]
+		);
+
+		return '<sc-conditional-form id="sc-conditional-form-' . (int) self::$instance . '">' . $content . '</sc-conditional-form>';
 	}
 }

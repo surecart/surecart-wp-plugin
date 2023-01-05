@@ -14,7 +14,7 @@ import * as logic from './conditional-functions';
 
 export class ScConditionalForm {
   /** Selector label */
-  @Prop() rule_groups: string = '';
+  @Prop() rule_groups: object = [];
 
   /** Checkout Session from sc-checkout. */
   @Prop() checkout: Checkout;
@@ -24,18 +24,11 @@ export class ScConditionalForm {
 
 
   render() {
-    { console.log( 'this.selectedProcessorId' ) }
-    { console.log( this.selectedProcessorId ) }
-
-    let parsedRules = this.rule_groups ? JSON.parse( this.rule_groups ) : [];
-
-    let show = logic.is_any_rule_group_passed( parsedRules, { checkout: this.checkout, processor: this.selectedProcessorId } );
+    let show = logic.is_any_rule_group_passed( this.rule_groups, { checkout: this.checkout, processor: this.selectedProcessorId } );
     if ( ! show ) return null;
     return (
       <Host>
-        <p>-------------- Temp divider start -------------------</p>
         <slot></slot>
-        <p>-------------- Temp divider end -------------------</p>
       </Host>
     );
   }

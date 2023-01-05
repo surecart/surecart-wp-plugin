@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-01-02T06:00:13",
+  "timestamp": "2023-01-05T14:28:19",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -5094,16 +5094,15 @@
         },
         {
           "name": "rule_groups",
-          "type": "string",
+          "type": "object",
           "mutable": false,
-          "attr": "rule_groups",
           "reflectToAttr": false,
           "docs": "Selector label",
           "docsTags": [],
-          "default": "''",
+          "default": "[]",
           "values": [
             {
-              "type": "string"
+              "type": "object"
             }
           ],
           "optional": false,

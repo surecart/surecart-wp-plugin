@@ -9,13 +9,15 @@ export const is_any_rule_group_passed = ( groups, props ) => {
 
   let result = false;
 
-  groups.forEach( element => {
+  if( Array.isArray(groups) ) {
+    groups.forEach( element => {
 
-    if ( result ) {
-      return;
-    }
-    result = is_rules_passed( element['rules'], props );
-  });
+      if ( result ) {
+        return;
+      }
+      result = is_rules_passed( element['rules'], props );
+    });
+  }
 
   return result;
 }
@@ -29,8 +31,7 @@ export const is_any_rule_group_passed = ( groups, props ) => {
  */
 export const is_rules_passed = ( rules, props ) => {
   const { checkout, processor } = props;
-  console.log( 'checkout' );
-  console.log( checkout );
+
   let result = true;
 
   rules.forEach( rule => {
@@ -40,14 +41,6 @@ export const is_rules_passed = ( rules, props ) => {
     }
     let ruleOperator = rule['operator'];
 		let ruleValue    = rule['value'];
-
-    console.log( "=========================" );
-    console.log( 'rule' );
-    console.log( rule );
-    console.log( rule['condition'] );
-    console.log( ruleOperator );
-    console.log( ruleValue );
-    console.log( "=========================" );
 
     switch (rule['condition']) {
       case 'cart_total':
