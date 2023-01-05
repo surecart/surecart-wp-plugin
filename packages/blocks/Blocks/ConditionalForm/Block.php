@@ -21,7 +21,7 @@ class Block extends BaseBlock {
 
 		\SureCart::assets()->addComponentData(
 			'sc-conditional-form',
-			'sc-conditional-form-1',
+			'#sc-conditional-form-1',
 			[
 				'rule_groups' => $attributes['rule_groups']
 			]
