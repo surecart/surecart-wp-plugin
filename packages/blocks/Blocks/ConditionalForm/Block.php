@@ -18,9 +18,22 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content, $block = null ) {
-		return "Sandesh";
-		var_dump( $attributes );
+
+		\SureCart::assets()->addComponentData(
+			'sc-conditional-form',
+			'sc-conditional-form-1',
+			[
+				'rule_groups' => $attributes['rule_groups']
+			]
+		);
+
+		// var_dump( $attributes );
+
+		return $content;
+
+		// return "Sandesh";
 		ob_start(); ?>
+		<sc-conditional-form rule_groups={ JSON.stringify( rule_groups ) }>$content</sc-conditional-form>
 		<div>I am a conditional form</div>
 		<?php /*<sc-flex
 			slot="<?php echo esc_attr( 'cart-' . ( $attributes['slot'] ?? 'header' ) ); ?>"

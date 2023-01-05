@@ -26,6 +26,7 @@ export class ScConditionalForm {
   render() {
     { console.log( 'this.selectedProcessorId' ) }
     { console.log( this.selectedProcessorId ) }
+    { console.log( this ) }
 
     let parsedRules = this.rule_groups ? JSON.parse( this.rule_groups ) : [];
 
