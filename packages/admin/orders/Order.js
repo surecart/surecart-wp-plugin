@@ -24,6 +24,7 @@ import UpdateModel from '../templates/UpdateModel';
 import Charges from './modules/Charges';
 import Details from './modules/Details';
 import LineItems from './modules/LineItems';
+import OrderCancelConfirmModal from './modules/OrderCancelConfirmModal';
 import OrderStatusConfirmModal from './modules/OrderStatusConfirmModal';
 import PaymentFailures from './modules/PaymentFailures';
 import Refunds from './modules/Refunds';
@@ -51,6 +52,23 @@ export default () => {
 		],
 	});
 	const [modal, setModal] = useState();
+
+	const renderMarkPaidButton = () => {
+		return order?.status === 'processing' &&
+			order?.checkout?.manual_payment ? (
+			<ScMenuItem onClick={() => setModal('order_status_update')}>
+				{__('Mark as Paid', 'surecart')}
+			</ScMenuItem>
+		) : null;
+	};
+
+	const renderOrderCancelButton = () => {
+		return (
+			<ScMenuItem onClick={() => setModal('order_cancel')}>
+				{__('Cancel Order', 'surecart')}
+			</ScMenuItem>
+		);
+	};
 
 	useEffect(() => {
 		if (order?.checkout) {
@@ -139,23 +157,24 @@ export default () => {
 					position="bottom-right"
 					style={{ '--panel-width': '14em' }}
 				>
-					{order?.status === 'processing' &&
-						order?.checkout?.manual_payment && (
-							<>
-								<ScButton type="primary" slot="trigger" caret>
-									{__('Actions', 'surecart')}
-								</ScButton>
-								<ScMenu>
-									<ScMenuItem
-										onClick={() =>
-											setModal('order_status_update')
-										}
-									>
-										{__('Mark as Paid', 'surecart')}
-									</ScMenuItem>
-								</ScMenu>
-							</>
-						)}
+					{(order?.status === 'processing' ||
+						(!!order?.checkout?.charge &&
+							order?.status !== 'canceled')) && (
+						<>
+							<ScButton
+								type="primary"
+								slot="trigger"
+								caret
+								loading={!hasLoadedOrder}
+							>
+								{__('Actions', 'surecart')}
+							</ScButton>
+							<ScMenu>
+								{renderMarkPaidButton()}{' '}
+								{renderOrderCancelButton()}
+							</ScMenu>
+						</>
+					)}
 				</ScDropdown>
 			}
 			sidebar={
@@ -184,11 +203,17 @@ export default () => {
 					failures={order?.checkout?.payment_failures}
 					loading={!hasLoadedOrder}
 				/>
-        <Refunds chargeId={order?.checkout?.charge?.id} />
+				<Refunds chargeId={order?.checkout?.charge?.id} />
 				<Subscriptions checkoutId={order?.checkout?.id} />
 				<OrderStatusConfirmModal
 					order={order}
 					open={modal === 'order_status_update'}
+					onRequestClose={() => setModal(false)}
+					loading={!hasLoadedOrder}
+				/>
+				<OrderCancelConfirmModal
+					order={order}
+					open={modal === 'order_cancel'}
 					onRequestClose={() => setModal(false)}
 					loading={!hasLoadedOrder}
 				/>
