@@ -12,6 +12,7 @@ import SelectProducts from './selectProducts';
 import SelectCoupons from './selectCoupons';
 import Select2 from './select2';
 import { countryChoices } from '@surecart/components';
+import { ScPriceInput } from '@surecart/components-react';
 
 
 function Conditions( props ) {
@@ -151,7 +152,7 @@ function Conditions( props ) {
         'operator': mathOperators,
         'fields': [
             {
-                'type': 'number'
+                'type': 'price'
             }
         ]
     },
@@ -272,6 +273,20 @@ function Conditions( props ) {
             />
           );
           break;
+
+        case 'price':
+          renderFields = (
+            <ScPriceInput
+              name={ `${ name }[]` }
+              value={ value }
+              currencyCode={ scBlockData?.currency }
+              label={''}
+              placeholder={ field.placeholder }
+              help={field.tooltip}
+							onScInput={ (e) => { updateConditionOptionInRuleGroup( ruleIndex, e.target.value, 'value' ); } }
+						></ScPriceInput>
+          );
+          break
 
 				case 'number':
           renderFields = (
