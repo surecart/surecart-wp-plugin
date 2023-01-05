@@ -55,6 +55,7 @@
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscription-status-badge](../subscription-status-badge)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
+ - [sc-upgrade-required](../sc-upgrade-required)
 
 ### Graph
 ```mermaid
@@ -80,6 +81,7 @@ graph TD;
   sc-subscription-payment-method --> sc-tag
   sc-subscription-status-badge --> sc-tag
   sc-subscription-switch --> sc-tag
+  sc-upgrade-required --> sc-tag
   style sc-tag fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

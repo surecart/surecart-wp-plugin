@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-12-15T20:59:01",
+  "timestamp": "2022-12-29T20:01:01",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -1659,6 +1659,7 @@
         "sc-orders-list",
         "sc-pagination",
         "sc-password-nag",
+        "sc-payment-method",
         "sc-payment-methods-list",
         "sc-purchase-downloads-list",
         "sc-stripe-add-method",
@@ -1672,6 +1673,7 @@
         "sc-subscriptions-list",
         "sc-tax-id-input",
         "sc-upcoming-invoice",
+        "sc-upgrade-required",
         "sc-wordpress-password-edit",
         "sc-wordpress-user",
         "sc-wordpress-user-edit"
@@ -1737,6 +1739,9 @@
         "sc-password-nag": [
           "sc-button"
         ],
+        "sc-payment-method": [
+          "sc-button"
+        ],
         "sc-payment-methods-list": [
           "sc-button"
         ],
@@ -1774,6 +1779,9 @@
           "sc-button"
         ],
         "sc-upcoming-invoice": [
+          "sc-button"
+        ],
+        "sc-upgrade-required": [
           "sc-button"
         ],
         "sc-wordpress-password-edit": [
@@ -6048,9 +6056,9 @@
         "sc-tag",
         "sc-card",
         "sc-form",
-        "sc-input",
         "sc-columns",
         "sc-column",
+        "sc-input",
         "sc-address",
         "sc-switch",
         "sc-tax-id-input",
@@ -6063,9 +6071,9 @@
           "sc-tag",
           "sc-card",
           "sc-form",
-          "sc-input",
           "sc-columns",
           "sc-column",
+          "sc-input",
           "sc-address",
           "sc-switch",
           "sc-tax-id-input",
@@ -8315,7 +8323,8 @@
       ],
       "dependents": [
         "sc-login-provider",
-        "sc-subscription-details"
+        "sc-subscription-details",
+        "sc-upgrade-required"
       ],
       "dependencies": [
         "sc-button",
@@ -8333,6 +8342,9 @@
           "sc-dialog"
         ],
         "sc-subscription-details": [
+          "sc-dialog"
+        ],
+        "sc-upgrade-required": [
           "sc-dialog"
         ]
       }
@@ -9791,6 +9803,7 @@
       ],
       "dependents": [
         "sc-downloads-list",
+        "sc-login-form",
         "sc-order",
         "sc-pagination",
         "sc-password-nag",
@@ -9804,6 +9817,9 @@
       "dependencies": [],
       "dependencyGraph": {
         "sc-downloads-list": [
+          "sc-flex"
+        ],
+        "sc-login-form": [
           "sc-flex"
         ],
         "sc-order": [
@@ -11756,6 +11772,7 @@
         "sc-tax-id-input",
         "sc-toggle",
         "sc-upcoming-invoice",
+        "sc-upgrade-required",
         "sc-wordpress-user"
       ],
       "dependencies": [],
@@ -11857,6 +11874,9 @@
           "sc-icon"
         ],
         "sc-upcoming-invoice": [
+          "sc-icon"
+        ],
+        "sc-upgrade-required": [
           "sc-icon"
         ],
         "sc-wordpress-user": [
@@ -13755,37 +13775,39 @@
       ],
       "dependents": [],
       "dependencies": [
-        "sc-alert",
-        "sc-icon",
         "sc-form",
-        "sc-button",
-        "sc-divider",
         "sc-input",
+        "sc-button",
+        "sc-icon",
+        "sc-flex",
+        "sc-divider",
         "sc-card",
+        "sc-alert",
         "sc-block-ui"
       ],
       "dependencyGraph": {
         "sc-login-form": [
-          "sc-alert",
-          "sc-icon",
           "sc-form",
-          "sc-button",
-          "sc-divider",
           "sc-input",
+          "sc-button",
+          "sc-icon",
+          "sc-flex",
+          "sc-divider",
           "sc-card",
+          "sc-alert",
           "sc-block-ui"
-        ],
-        "sc-alert": [
-          "sc-icon"
-        ],
-        "sc-button": [
-          "sc-spinner"
         ],
         "sc-input": [
           "sc-form-control"
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-alert": [
+          "sc-icon"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -14283,16 +14305,18 @@
           "sc-tag"
         ],
         "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
           "sc-tag",
           "sc-cc-logo",
-          "sc-icon",
           "sc-text"
-        ],
-        "sc-cc-logo": [
-          "sc-icon"
         ],
         "sc-button": [
           "sc-spinner"
+        ],
+        "sc-cc-logo": [
+          "sc-icon"
         ],
         "sc-purchase-downloads-list": [
           "sc-divider",
@@ -17679,6 +17703,38 @@
       "usage": {},
       "props": [
         {
+          "name": "externalLink",
+          "type": "string",
+          "mutable": false,
+          "attr": "external-link",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "externalLinkTooltipText",
+          "type": "string",
+          "mutable": false,
+          "attr": "external-link-tooltip-text",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "full",
           "type": "boolean",
           "mutable": false,
@@ -17727,6 +17783,10 @@
         {
           "name": "card",
           "docs": ""
+        },
+        {
+          "name": "instrument",
+          "docs": ""
         }
       ],
       "dependents": [
@@ -17737,17 +17797,24 @@
         "sc-upcoming-invoice"
       ],
       "dependencies": [
+        "sc-tooltip",
+        "sc-button",
+        "sc-icon",
         "sc-tag",
         "sc-cc-logo",
-        "sc-icon",
         "sc-text"
       ],
       "dependencyGraph": {
         "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
           "sc-tag",
           "sc-cc-logo",
-          "sc-icon",
           "sc-text"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-cc-logo": [
           "sc-icon"
@@ -18055,10 +18122,15 @@
           "sc-icon"
         ],
         "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
           "sc-tag",
           "sc-cc-logo",
-          "sc-icon",
           "sc-text"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-cc-logo": [
           "sc-icon"
@@ -18068,9 +18140,6 @@
         ],
         "sc-alert": [
           "sc-icon"
-        ],
-        "sc-button": [
-          "sc-spinner"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -23787,9 +23856,11 @@
           "sc-tooltip"
         ],
         "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
           "sc-tag",
           "sc-cc-logo",
-          "sc-icon",
           "sc-text"
         ],
         "sc-cc-logo": [
@@ -23902,9 +23973,11 @@
           "sc-spinner"
         ],
         "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
           "sc-tag",
           "sc-cc-logo",
-          "sc-icon",
           "sc-text"
         ],
         "sc-cc-logo": [
@@ -25328,7 +25401,8 @@
         "sc-subscription-details",
         "sc-subscription-payment-method",
         "sc-subscription-status-badge",
-        "sc-subscription-switch"
+        "sc-subscription-switch",
+        "sc-upgrade-required"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -25393,6 +25467,9 @@
           "sc-tag"
         ],
         "sc-subscription-switch": [
+          "sc-tag"
+        ],
+        "sc-upgrade-required": [
           "sc-tag"
         ]
       }
@@ -26788,11 +26865,15 @@
         }
       ],
       "dependents": [
-        "sc-form-control"
+        "sc-form-control",
+        "sc-payment-method"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-form-control": [
+          "sc-tooltip"
+        ],
+        "sc-payment-method": [
           "sc-tooltip"
         ]
       }
@@ -27110,9 +27191,11 @@
           "sc-spinner"
         ],
         "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
           "sc-tag",
           "sc-cc-logo",
-          "sc-icon",
           "sc-text"
         ],
         "sc-cc-logo": [
@@ -27120,6 +27203,71 @@
         ],
         "sc-dashboard-module": [
           "sc-alert"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/sc-upgrade-required/sc-upgrade-required.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-upgrade-required",
+      "readme": "# sc-upgrade-required\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The tag's size.",
+          "docsTags": [],
+          "default": "'small'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-tag",
+        "sc-dialog",
+        "sc-icon",
+        "sc-button"
+      ],
+      "dependencyGraph": {
+        "sc-upgrade-required": [
+          "sc-tag",
+          "sc-dialog",
+          "sc-icon",
+          "sc-button"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ]
       }
     },

@@ -22,9 +22,9 @@
 - [sc-tag](../../../ui/tag)
 - [sc-card](../../../ui/card)
 - [sc-form](../../../ui/form)
-- [sc-input](../../../ui/input)
 - [sc-columns](../../../ui/columns)
 - [sc-column](../../../ui/column)
+- [sc-input](../../../ui/input)
 - [sc-address](../../../ui/address)
 - [sc-switch](../../../ui/switch)
 - [sc-tax-id-input](../../../ui/tax-id-input)
@@ -38,9 +38,9 @@ graph TD;
   sc-customer-edit --> sc-tag
   sc-customer-edit --> sc-card
   sc-customer-edit --> sc-form
-  sc-customer-edit --> sc-input
   sc-customer-edit --> sc-columns
   sc-customer-edit --> sc-column
+  sc-customer-edit --> sc-input
   sc-customer-edit --> sc-address
   sc-customer-edit --> sc-switch
   sc-customer-edit --> sc-tax-id-input

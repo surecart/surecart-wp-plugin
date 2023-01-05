@@ -1993,6 +1993,8 @@ export namespace Components {
         "processors": Processor[];
     }
     interface ScPaymentMethod {
+        "externalLink": string;
+        "externalLinkTooltipText": string;
         "full": boolean;
         "paymentMethod": PaymentMethod;
     }
@@ -3099,6 +3101,12 @@ export namespace Components {
         "quantityUpdatesEnabled": boolean;
         "subscriptionId": string;
         "successUrl": string;
+    }
+    interface ScUpgradeRequired {
+        /**
+          * The tag's size.
+         */
+        "size": 'small' | 'medium' | 'large';
     }
     interface ScWordpressPasswordEdit {
         "heading": string;
@@ -4270,6 +4278,12 @@ declare global {
         prototype: HTMLScUpcomingInvoiceElement;
         new (): HTMLScUpcomingInvoiceElement;
     };
+    interface HTMLScUpgradeRequiredElement extends Components.ScUpgradeRequired, HTMLStencilElement {
+    }
+    var HTMLScUpgradeRequiredElement: {
+        prototype: HTMLScUpgradeRequiredElement;
+        new (): HTMLScUpgradeRequiredElement;
+    };
     interface HTMLScWordpressPasswordEditElement extends Components.ScWordpressPasswordEdit, HTMLStencilElement {
     }
     var HTMLScWordpressPasswordEditElement: {
@@ -4442,6 +4456,7 @@ declare global {
         "sc-tooltip": HTMLScTooltipElement;
         "sc-total": HTMLScTotalElement;
         "sc-upcoming-invoice": HTMLScUpcomingInvoiceElement;
+        "sc-upgrade-required": HTMLScUpgradeRequiredElement;
         "sc-wordpress-password-edit": HTMLScWordpressPasswordEditElement;
         "sc-wordpress-user": HTMLScWordpressUserElement;
         "sc-wordpress-user-edit": HTMLScWordpressUserEditElement;
@@ -6690,6 +6705,8 @@ declare namespace LocalJSX {
         "processors"?: Processor[];
     }
     interface ScPaymentMethod {
+        "externalLink"?: string;
+        "externalLinkTooltipText"?: string;
         "full"?: boolean;
         "paymentMethod"?: PaymentMethod;
     }
@@ -7928,6 +7945,12 @@ declare namespace LocalJSX {
         "subscriptionId"?: string;
         "successUrl"?: string;
     }
+    interface ScUpgradeRequired {
+        /**
+          * The tag's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+    }
     interface ScWordpressPasswordEdit {
         "heading"?: string;
         "successUrl"?: string;
@@ -8096,6 +8119,7 @@ declare namespace LocalJSX {
         "sc-tooltip": ScTooltip;
         "sc-total": ScTotal;
         "sc-upcoming-invoice": ScUpcomingInvoice;
+        "sc-upgrade-required": ScUpgradeRequired;
         "sc-wordpress-password-edit": ScWordpressPasswordEdit;
         "sc-wordpress-user": ScWordpressUser;
         "sc-wordpress-user-edit": ScWordpressUserEdit;
@@ -8258,6 +8282,7 @@ declare module "@stencil/core" {
             "sc-tooltip": LocalJSX.ScTooltip & JSXBase.HTMLAttributes<HTMLScTooltipElement>;
             "sc-total": LocalJSX.ScTotal & JSXBase.HTMLAttributes<HTMLScTotalElement>;
             "sc-upcoming-invoice": LocalJSX.ScUpcomingInvoice & JSXBase.HTMLAttributes<HTMLScUpcomingInvoiceElement>;
+            "sc-upgrade-required": LocalJSX.ScUpgradeRequired & JSXBase.HTMLAttributes<HTMLScUpgradeRequiredElement>;
             "sc-wordpress-password-edit": LocalJSX.ScWordpressPasswordEdit & JSXBase.HTMLAttributes<HTMLScWordpressPasswordEditElement>;
             "sc-wordpress-user": LocalJSX.ScWordpressUser & JSXBase.HTMLAttributes<HTMLScWordpressUserElement>;
             "sc-wordpress-user-edit": LocalJSX.ScWordpressUserEdit & JSXBase.HTMLAttributes<HTMLScWordpressUserEditElement>;
