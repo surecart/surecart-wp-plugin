@@ -19,33 +19,16 @@ class Block extends BaseBlock {
 	 */
 	public function render( $attributes, $content, $block = null ) {
 
+		$id = wp_rand( 10000, 99999 );
+
 		\SureCart::assets()->addComponentData(
 			'sc-conditional-form',
-			'#sc-conditional-form-1',
+			'#sc-conditional-form-' . $id,
 			[
 				'rule_groups' => $attributes['rule_groups']
 			]
 		);
 
-		// var_dump( $attributes );
-
-		return $content;
-
-		// return "Sandesh";
-		ob_start(); ?>
-		<sc-conditional-form rule_groups={ JSON.stringify( rule_groups ) }>$content</sc-conditional-form>
-		<div>I am a conditional form</div>
-		<?php /*<sc-flex
-			slot="<?php echo esc_attr( 'cart-' . ( $attributes['slot'] ?? 'header' ) ); ?>"
-			justify-content="space-between"
-			align-items="center">
-			<sc-text style="--font-size: var(--sc-font-size-x-small); --line-height: var(--sc-line-height-dense); --color: var(--sc-color-gray-700)">
-				<?php echo wp_kses_post( $attributes['text'] ?? '' ); ?>
-			</sc-text>
-			<sc-button href="#" size="small" type="primary">Try It</sc-button>
-		</sc-flex>
-		*/ ?>
-		<?php
-		return ob_get_clean();
+		return '<sc-conditional-form id="sc-conditional-form-' . $id . '">' . $content . '</sc-conditional-form>';
 	}
 }
