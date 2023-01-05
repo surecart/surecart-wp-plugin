@@ -9,6 +9,13 @@ use SureCartBlocks\Blocks\BaseBlock;
  */
 class Block extends BaseBlock {
 	/**
+	 * Keep track of number of instances.
+	 *
+	 * @var integer
+	 */
+	public static $instance = 0;
+
+	/**
 	 * Render the block
 	 *
 	 * @param array  $attributes Block attributes.
@@ -18,17 +25,16 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content, $block = null ) {
-
-		$id = wp_rand( 10000, 99999 );
+		self::$instance++;
 
 		\SureCart::assets()->addComponentData(
 			'sc-conditional-form',
-			'#sc-conditional-form-' . $id,
+			'#sc-conditional-form-' . (int) self::$instance,
 			[
-				'rule_groups' => $attributes['rule_groups']
+				'rule_groups' => $attributes['rule_groups'],
 			]
 		);
 
-		return '<sc-conditional-form id="sc-conditional-form-' . $id . '">' . $content . '</sc-conditional-form>';
+		return '<sc-conditional-form id="sc-conditional-form-' . (int) self::$instance . '">' . $content . '</sc-conditional-form>';
 	}
 }
