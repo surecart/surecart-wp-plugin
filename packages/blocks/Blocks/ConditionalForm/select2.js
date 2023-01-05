@@ -18,9 +18,6 @@ function Select2( props ) {
 
 	const [ selectedValue, setSelectedValue ] = useState( value );
 
-	// handle selection
-	// should fix, need proper naming for variables
-	//eslint-disable-next-line no-shadow
 	const handleChange = ( value ) => {
 		setSelectedValue( value );
 
@@ -50,7 +47,6 @@ function Select2( props ) {
 					options={ options }
 					onChange={ handleChange }
 					placeholder={ placeholder }
-					// cacheOptions
 					{ ...attr }
 				/>
 			</div>

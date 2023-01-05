@@ -260,7 +260,6 @@ function Conditions( props ) {
 					);
 					break;
         case 'select2':
-          // debugger
           renderFields = (
             <Select2
               name={ `${ name }[]` }
@@ -335,7 +334,6 @@ function Conditions( props ) {
   return (
 		<Fragment>
 			{ rules.map( ( rule, ruleIndex ) => {
-        // debugger;
 				const rule_data = rules[ ruleIndex ];
 				const rule_field_data = rule_settings_field_data[ rule_data.condition ];
 
