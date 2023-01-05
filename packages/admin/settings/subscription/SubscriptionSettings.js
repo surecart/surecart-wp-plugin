@@ -231,7 +231,7 @@ export default () => {
 					{__('Revoke Purchases on Past Due', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							'Whether or not a purchase should be revoked when a subscription becomes past due. If the subscription transitions to the active or trialing state the associated purchase will be automatically invoked again.',
+							'Whether or not a purchase should be revoked when a subscription becomes past due. If the subscription becomes active or trialing again the purchase will be automatically restored again.',
 							'surecart'
 						)}
 					</span>
