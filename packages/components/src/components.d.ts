@@ -2103,6 +2103,12 @@ export namespace Components {
          */
         "order": Checkout;
     }
+    interface ScPremiumTag {
+        /**
+          * The tag's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+    }
     interface ScPriceChoice {
         /**
           * Is this checked by default
@@ -3121,6 +3127,7 @@ export namespace Components {
         "successUrl": string;
     }
     interface ScUpgradeRequired {
+        "required": boolean;
         /**
           * The tag's size.
          */
@@ -4042,6 +4049,12 @@ declare global {
         prototype: HTMLScPaypalButtonsElement;
         new (): HTMLScPaypalButtonsElement;
     };
+    interface HTMLScPremiumTagElement extends Components.ScPremiumTag, HTMLStencilElement {
+    }
+    var HTMLScPremiumTagElement: {
+        prototype: HTMLScPremiumTagElement;
+        new (): HTMLScPremiumTagElement;
+    };
     interface HTMLScPriceChoiceElement extends Components.ScPriceChoice, HTMLStencilElement {
     }
     var HTMLScPriceChoiceElement: {
@@ -4463,6 +4476,7 @@ declare global {
         "sc-payment-selected": HTMLScPaymentSelectedElement;
         "sc-paypal-add-method": HTMLScPaypalAddMethodElement;
         "sc-paypal-buttons": HTMLScPaypalButtonsElement;
+        "sc-premium-tag": HTMLScPremiumTagElement;
         "sc-price-choice": HTMLScPriceChoiceElement;
         "sc-price-choices": HTMLScPriceChoicesElement;
         "sc-price-input": HTMLScPriceInputElement;
@@ -6897,6 +6911,12 @@ declare namespace LocalJSX {
          */
         "order"?: Checkout;
     }
+    interface ScPremiumTag {
+        /**
+          * The tag's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+    }
     interface ScPriceChoice {
         /**
           * Is this checked by default
@@ -8023,6 +8043,7 @@ declare namespace LocalJSX {
         "successUrl"?: string;
     }
     interface ScUpgradeRequired {
+        "required"?: boolean;
         /**
           * The tag's size.
          */
@@ -8151,6 +8172,7 @@ declare namespace LocalJSX {
         "sc-payment-selected": ScPaymentSelected;
         "sc-paypal-add-method": ScPaypalAddMethod;
         "sc-paypal-buttons": ScPaypalButtons;
+        "sc-premium-tag": ScPremiumTag;
         "sc-price-choice": ScPriceChoice;
         "sc-price-choices": ScPriceChoices;
         "sc-price-input": ScPriceInput;
@@ -8317,6 +8339,7 @@ declare module "@stencil/core" {
             "sc-payment-selected": LocalJSX.ScPaymentSelected & JSXBase.HTMLAttributes<HTMLScPaymentSelectedElement>;
             "sc-paypal-add-method": LocalJSX.ScPaypalAddMethod & JSXBase.HTMLAttributes<HTMLScPaypalAddMethodElement>;
             "sc-paypal-buttons": LocalJSX.ScPaypalButtons & JSXBase.HTMLAttributes<HTMLScPaypalButtonsElement>;
+            "sc-premium-tag": LocalJSX.ScPremiumTag & JSXBase.HTMLAttributes<HTMLScPremiumTagElement>;
             "sc-price-choice": LocalJSX.ScPriceChoice & JSXBase.HTMLAttributes<HTMLScPriceChoiceElement>;
             "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;

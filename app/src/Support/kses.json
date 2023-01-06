@@ -1215,6 +1215,13 @@
     "class": true,
     "slot": true
   },
+  "sc-premium-tag": {
+    "size": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-price-choice": {
     "checked": true,
     "description": true,
@@ -1779,6 +1786,7 @@
     "slot": true
   },
   "sc-upgrade-required": {
+    "required": true,
     "size": true,
     "style": true,
     "id": true,

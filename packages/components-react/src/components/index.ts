@@ -116,6 +116,7 @@ export const ScPaymentMethodsList = /*@__PURE__*/createReactComponent<JSX.ScPaym
 export const ScPaymentSelected = /*@__PURE__*/createReactComponent<JSX.ScPaymentSelected, HTMLScPaymentSelectedElement>('sc-payment-selected');
 export const ScPaypalAddMethod = /*@__PURE__*/createReactComponent<JSX.ScPaypalAddMethod, HTMLScPaypalAddMethodElement>('sc-paypal-add-method');
 export const ScPaypalButtons = /*@__PURE__*/createReactComponent<JSX.ScPaypalButtons, HTMLScPaypalButtonsElement>('sc-paypal-buttons');
+export const ScPremiumTag = /*@__PURE__*/createReactComponent<JSX.ScPremiumTag, HTMLScPremiumTagElement>('sc-premium-tag');
 export const ScPriceChoice = /*@__PURE__*/createReactComponent<JSX.ScPriceChoice, HTMLScPriceChoiceElement>('sc-price-choice');
 export const ScPriceChoices = /*@__PURE__*/createReactComponent<JSX.ScPriceChoices, HTMLScPriceChoicesElement>('sc-price-choices');
 export const ScPriceInput = /*@__PURE__*/createReactComponent<JSX.ScPriceInput, HTMLScPriceInputElement>('sc-price-input');
