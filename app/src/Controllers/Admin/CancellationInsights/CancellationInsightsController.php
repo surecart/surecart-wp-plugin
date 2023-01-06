@@ -29,7 +29,7 @@ class CancellationInsightsController extends AdminController {
 		return \SureCart::view( 'admin/cancellation-insights/index' )->with(
 			[
 				'table'   => $table,
-				'enabled' => true,
+				'enabled' => \SureCart::account()->entitlements->subscription_preservation ?? false,
 			]
 		);
 	}
