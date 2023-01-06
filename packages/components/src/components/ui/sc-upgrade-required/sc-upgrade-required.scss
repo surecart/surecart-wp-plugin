@@ -1,6 +1,7 @@
 :host {
   display: inline-block;
   cursor: initial;
+  color: var(--sc-color-gray-900);
 }
 
 p {
@@ -8,6 +9,7 @@ p {
   font-weight: var(--sc-font-weight-normal);
   margin: 0 0 var(--sc-spacing-medium) 0;
   line-height: var(--sc-line-height-dense);
+  white-space: normal;
 }
 
 .dialog__title {

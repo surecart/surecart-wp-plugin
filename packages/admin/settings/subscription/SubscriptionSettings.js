@@ -1,17 +1,19 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
 import {
-	ScFormControl,
+	ScPremiumTag,
 	ScSelect,
 	ScSwitch,
 	ScUpgradeRequired,
+	ScFormControl,
 } from '@surecart/components-react';
-import SettingsTemplate from '../SettingsTemplate';
-import SettingsBox from '../SettingsBox';
-import useEntity from '../../hooks/useEntity';
+import { useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+
 import Error from '../../components/Error';
+import useEntity from '../../hooks/useEntity';
+import SettingsBox from '../SettingsBox';
+import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
 
 export default () => {
@@ -193,34 +195,43 @@ export default () => {
 				)}
 				loading={!hasLoadedItem}
 			>
-				<ScSwitch
-					checked={
-						scData?.entitlements?.optional_upfront_payment_method
-							? item?.require_upfront_payment_method
-							: true
-					}
-					disabled={
+				<ScUpgradeRequired
+					required={
 						!scData?.entitlements?.optional_upfront_payment_method
 					}
-					onScChange={(e) => {
-						e.preventDefault();
-						editItem({
-							require_upfront_payment_method:
-								!item?.require_upfront_payment_method,
-						});
-					}}
 				>
-					{__('Require Upfront Payment Method', 'surecart')}
-					{!scData?.entitlements?.optional_upfront_payment_method && (
-						<ScUpgradeRequired />
-					)}
-					<span slot="description" style={{ lineHeight: '1.4' }}>
-						{__(
-							'Whether or not a payment method should be required for subscriptions that have an initial period amount of $0 (free trial or coupon). This is useful if you want to offer a "no credit card required" free trials.',
-							'surecart'
+					<ScSwitch
+						checked={
+							scData?.entitlements
+								?.optional_upfront_payment_method
+								? item?.require_upfront_payment_method
+								: true
+						}
+						onScChange={(e) => {
+							e.preventDefault();
+							editItem({
+								require_upfront_payment_method: scData
+									?.entitlements
+									?.optional_upfront_payment_method
+									? !item?.require_upfront_payment_method
+									: true,
+							});
+						}}
+					>
+						{__('Require Upfront Payment Method', 'surecart')}
+						{!scData?.entitlements
+							?.optional_upfront_payment_method && (
+							<ScPremiumTag />
 						)}
-					</span>
-				</ScSwitch>
+						<span slot="description" style={{ lineHeight: '1.4' }}>
+							{__(
+								'Whether or not a payment method should be required for subscriptions that have an initial period amount of $0 (free trial or coupon). This is useful if you want to offer a "no credit card required" free trials.',
+								'surecart'
+							)}
+						</span>
+					</ScSwitch>
+				</ScUpgradeRequired>
+
 				<div
 					css={css`
 						gap: var(--sc-form-row-spacing);
@@ -233,7 +244,9 @@ export default () => {
 							{__('Purchase Revoke Behavior', 'surecart')}
 							{!scData?.entitlements
 								?.revoke_purchases_on_past_due && (
-								<ScUpgradeRequired />
+								<ScUpgradeRequired>
+									<ScPremiumTag />
+								</ScUpgradeRequired>
 							)}
 						</span>
 

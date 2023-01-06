@@ -135,6 +135,21 @@ export interface License {
   updated_at: number;
 }
 
+export interface CancellationReason {
+  id: string;
+  object: 'cancellation_reason';
+  archived: boolean;
+  comment_enabled: false;
+  comment_prompt: string | null;
+  coupon_enabled: boolean;
+  label: string;
+  position: number;
+  archived_at: number;
+  discarded_at: number;
+  created_at: number;
+  updated_at: number;
+}
+
 export interface Period {
   id: string;
   object: 'period';
@@ -547,6 +562,17 @@ export interface SubscriptionProtocol {
   downgrade_behavior: 'pending' | 'immediate';
   payment_retry_window_weeks: number;
   upgrade_behavior: 'pending' | 'immediate';
+  preservation_enabled: boolean;
+  preservation_locales: {
+    reasons_title: string;
+    reasons_description: string;
+    skip_link: string;
+    preserve_title: string;
+    preserve_description: string;
+    preserve_button: string;
+    cancel_link: string;
+  };
+  preservation_coupon: Coupon | string;
   created_at: number;
   updated_at: number;
 }
