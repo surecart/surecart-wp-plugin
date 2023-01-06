@@ -6,8 +6,9 @@ import {
 	ScFlex,
 	ScFormatNumber,
 	ScIcon,
+	ScPremiumTag,
 	ScTag,
-  ScUpgradeRequired,
+	ScUpgradeRequired,
 } from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
@@ -82,7 +83,11 @@ export default () => {
 
 	const badge = ({ previous, current, currency = false }) => {
 		if (!hasAccess) {
-			return <ScUpgradeRequired />;
+			return (
+				<ScUpgradeRequired>
+					<ScPremiumTag />
+				</ScUpgradeRequired>
+			);
 		}
 
 		if (loading) return null;
