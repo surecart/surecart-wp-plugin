@@ -1,10 +1,8 @@
-/** @jsx jsx */
 import Error from '../../components/Error';
 import useEntity from '../../hooks/useEntity';
 import SettingsBox from '../SettingsBox';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
-import { css, jsx } from '@emotion/core';
 import {
 	ScFlex,
 	ScInput,
@@ -80,6 +78,7 @@ export default () => {
 						onScChange={(e) =>
 							editItem({ number_type: e.target.value })
 						}
+						unselect={false}
 						choices={[
 							{
 								value: 'sequential',
