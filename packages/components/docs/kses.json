@@ -1562,17 +1562,6 @@
     "class": true,
     "slot": true
   },
-  "sc-subscription-renew": {
-    "back-url": true,
-    "heading": true,
-    "subscription": true,
-    "subscription-id": true,
-    "success-url": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "sc-subscription-status-badge": {
     "clearable": true,
     "pill": true,

@@ -2748,13 +2748,6 @@ export namespace Components {
          */
         "subscription": Subscription;
     }
-    interface ScSubscriptionRenew {
-        "backUrl": string;
-        "heading": string;
-        "subscription": Subscription;
-        "subscriptionId": string;
-        "successUrl": string;
-    }
     interface ScSubscriptionStatusBadge {
         /**
           * Makes the tag clearable.
@@ -4217,12 +4210,6 @@ declare global {
         prototype: HTMLScSubscriptionPaymentMethodElement;
         new (): HTMLScSubscriptionPaymentMethodElement;
     };
-    interface HTMLScSubscriptionRenewElement extends Components.ScSubscriptionRenew, HTMLStencilElement {
-    }
-    var HTMLScSubscriptionRenewElement: {
-        prototype: HTMLScSubscriptionRenewElement;
-        new (): HTMLScSubscriptionRenewElement;
-    };
     interface HTMLScSubscriptionStatusBadgeElement extends Components.ScSubscriptionStatusBadge, HTMLStencilElement {
     }
     var HTMLScSubscriptionStatusBadgeElement: {
@@ -4504,7 +4491,6 @@ declare global {
         "sc-subscription-next-payment": HTMLScSubscriptionNextPaymentElement;
         "sc-subscription-payment": HTMLScSubscriptionPaymentElement;
         "sc-subscription-payment-method": HTMLScSubscriptionPaymentMethodElement;
-        "sc-subscription-renew": HTMLScSubscriptionRenewElement;
         "sc-subscription-status-badge": HTMLScSubscriptionStatusBadgeElement;
         "sc-subscription-switch": HTMLScSubscriptionSwitchElement;
         "sc-subscriptions-list": HTMLScSubscriptionsListElement;
@@ -7637,13 +7623,6 @@ declare namespace LocalJSX {
          */
         "subscription"?: Subscription;
     }
-    interface ScSubscriptionRenew {
-        "backUrl"?: string;
-        "heading"?: string;
-        "subscription"?: Subscription;
-        "subscriptionId"?: string;
-        "successUrl"?: string;
-    }
     interface ScSubscriptionStatusBadge {
         /**
           * Makes the tag clearable.
@@ -8200,7 +8179,6 @@ declare namespace LocalJSX {
         "sc-subscription-next-payment": ScSubscriptionNextPayment;
         "sc-subscription-payment": ScSubscriptionPayment;
         "sc-subscription-payment-method": ScSubscriptionPaymentMethod;
-        "sc-subscription-renew": ScSubscriptionRenew;
         "sc-subscription-status-badge": ScSubscriptionStatusBadge;
         "sc-subscription-switch": ScSubscriptionSwitch;
         "sc-subscriptions-list": ScSubscriptionsList;
@@ -8367,7 +8345,6 @@ declare module "@stencil/core" {
             "sc-subscription-next-payment": LocalJSX.ScSubscriptionNextPayment & JSXBase.HTMLAttributes<HTMLScSubscriptionNextPaymentElement>;
             "sc-subscription-payment": LocalJSX.ScSubscriptionPayment & JSXBase.HTMLAttributes<HTMLScSubscriptionPaymentElement>;
             "sc-subscription-payment-method": LocalJSX.ScSubscriptionPaymentMethod & JSXBase.HTMLAttributes<HTMLScSubscriptionPaymentMethodElement>;
-            "sc-subscription-renew": LocalJSX.ScSubscriptionRenew & JSXBase.HTMLAttributes<HTMLScSubscriptionRenewElement>;
             "sc-subscription-status-badge": LocalJSX.ScSubscriptionStatusBadge & JSXBase.HTMLAttributes<HTMLScSubscriptionStatusBadgeElement>;
             "sc-subscription-switch": LocalJSX.ScSubscriptionSwitch & JSXBase.HTMLAttributes<HTMLScSubscriptionSwitchElement>;
             "sc-subscriptions-list": LocalJSX.ScSubscriptionsList & JSXBase.HTMLAttributes<HTMLScSubscriptionsListElement>;
