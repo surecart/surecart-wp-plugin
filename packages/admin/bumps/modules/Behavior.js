@@ -1,25 +1,21 @@
 import { __ } from '@wordpress/i18n';
 import { ScSwitch } from '@surecart/components-react';
-import Box from '../../ui/Box';
 
-export default ({ bump, updateBump, loading }) => {
+export default ({ bump, updateBump }) => {
 	return (
-		<Box title={__('Behavior', 'surecart')} loading={loading}>
-			<ScSwitch
-				checked={bump?.auto_apply}
-				onScChange={(e) => {
-					updateBump({ auto_apply: e.target.checked });
-				}}
-				reversed
-			>
-				{__('Auto Apply')}
-				<span slot="description">
-					{__(
-						'Automatically apply the order bump if the customer has the required items in the cart.',
-						'surecart'
-					)}
-				</span>
-			</ScSwitch>
-		</Box>
+		<ScSwitch
+			checked={bump?.auto_apply}
+			onScChange={(e) => {
+				updateBump({ auto_apply: e.target.checked });
+			}}
+		>
+			{__('Auto Apply Discount')}
+			<span slot="description">
+				{__(
+					'If enabled, the discount will be applied if the display conditions are satisfied, even if they do not click the bump. If disabled, the discount will only be applied if the customer clicks the order bump.',
+					'surecart'
+				)}
+			</span>
+		</ScSwitch>
 	);
 };
