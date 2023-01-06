@@ -657,6 +657,16 @@ export interface ResponseError {
 
 export type ProcessorName = 'stripe' | 'paypal' | 'paypal-card';
 
+export interface VerificationCode {
+  id: string;
+  object: 'verification_code';
+  code: number;
+  verified: boolean;
+  verified_at: number | null;
+  created_at: number;
+  updated_at: number;
+}
+
 export interface PaymentIntent extends Object {
   id: string;
   object: 'payment_intent';
