@@ -155,14 +155,14 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 				unselect={false}
 				label={zoneName[region] || __('Region', 'surecart')}
 				onScChange={(e) => updateData({ tax_zone: e.target.value })}
-				choices={(zones || []).map(
-					({ state_name, country_name, id }) => {
+				choices={(zones || [])
+					.reverse()
+					.map(({ state_name, country_name, id }) => {
 						return {
 							label: state_name || country_name,
 							value: id,
 						};
-					}
-				)}
+					})}
 				required
 			/>
 
@@ -231,10 +231,15 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 			)}
 
 			<ScAlert type="info" open>
-				{__(
-					'Tax is calculated and applied to orders. Make sure you’re registered with the appropriate tax jurisdictions before enabling tax collection.',
-					'surecart'
-				)}
+				{region === 'other' || taxType === 'manual'
+					? __(
+							'Make sure you’re registered with the appropriate tax jurisdictions before enabling tax collection.',
+							'surecart'
+					  )
+					: __(
+							'Tax is automatically calculated and applied to orders. Make sure you’re registered with the appropriate tax jurisdictions before enabling tax collection.',
+							'surecart'
+					  )}
 			</ScAlert>
 
 			<sc-flex justify-content="space-between">

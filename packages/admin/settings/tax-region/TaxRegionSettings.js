@@ -120,6 +120,10 @@ export default () => {
 		};
 	}, []);
 
+	const hasManualTax = (registrations || []).some(
+		(registration) => registration?.manual_rate
+	);
+
 	/**
 	 * Form is submitted.
 	 */
@@ -207,9 +211,7 @@ export default () => {
 							<ScTableCell slot="head">
 								{__('Country', 'surecart')}
 							</ScTableCell>
-							{registrations.some(
-								(registration) => registration.manual_rate
-							) && (
+							{hasManualTax && (
 								<ScTableCell
 									slot="head"
 									style={{ width: '100px' }}
@@ -235,9 +237,18 @@ export default () => {
 											{tax_zone?.state_name ||
 												tax_zone?.country_name}
 										</ScTableCell>
-										{registration?.manual_rate && (
+										{hasManualTax && (
 											<ScTableCell>
-												{registration?.manual_rate}%
+												{registration?.manual_rate ? (
+													`${registration?.manual_rate}%`
+												) : (
+													<sc-tag>
+														{__(
+															'Automatic',
+															'surecart'
+														)}
+													</sc-tag>
+												)}
 											</ScTableCell>
 										)}
 										<ScTableCell>
