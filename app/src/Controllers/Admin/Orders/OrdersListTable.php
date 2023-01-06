@@ -66,6 +66,7 @@ class OrdersListTable extends ListTable {
 			'paid'           => __( 'Paid', 'surecart' ),
 			'processing'     => __( 'Processing', 'surecart' ),
 			'payment_failed' => __( 'Failed', 'surecart' ),
+			'canceled'       => __( 'Canceled', 'surecart' ),
 		];
 
 		$link = \SureCart::getUrl()->index( 'orders' );
@@ -165,7 +166,7 @@ class OrdersListTable extends ListTable {
 	 * @return boolean|null
 	 */
 	public function getStatus() {
-		$status = sanitize_text_field( wp_unslash( $_GET['status'] ?? 'paid' ) );
+		$status = sanitize_text_field( wp_unslash( $_GET['status'] ?? 'all' ) );
 		if ( 'paid' === $status ) {
 			return [ 'paid' ];
 		}
@@ -174,6 +175,9 @@ class OrdersListTable extends ListTable {
 		}
 		if ( 'processing' === $status ) {
 			return [ 'processing' ];
+		}
+		if ( 'canceled' === $status ) {
+			return [ 'canceled' ];
 		}
 		if ( 'all' === $status ) {
 			return [];
