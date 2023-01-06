@@ -2,7 +2,6 @@
 
 namespace SureCart\Integrations\AffiliateWP;
 
-use SureCart\Models\Checkout;
 use SureCart\Models\Purchase;
 use SureCart\Support\Currency;
 
@@ -35,40 +34,6 @@ class AffiliateWPRecurringIntegration extends \Affiliate_WP_Recurring_Base {
 	public function init() {
 		// Add referral when subscription renewed.
 		add_action( 'surecart/subscription_renewed', [ $this, 'renewedSubscription' ], 10, 1 );
-
-		// Automated test for subscription renewed
-		$json = '{
-			"id": "697dbfee-e758-439a-a7a7-ca95804b7791",
-			"object": "subscription",
-			"ad_hoc_amount": null,
-			"cancel_at_period_end": false,
-			"currency": "usd",
-			"current_period_end_at": null,
-			"current_period_start_at": null,
-			"end_behavior": "cancel",
-			"ended_at": null,
-			"finite": false,
-			"live_mode": true,
-			"metadata": {},
-			"pending_update": {},
-			"quantity": 1,
-			"remaining_period_count": null,
-			"status": "active",
-			"tax_enabled": false,
-			"trial_end_at": null,
-			"trial_start_at": null,
-			"current_cancellation_act": null,
-			"current_period": null,
-			"customer": "567b3130-c1bc-4982-acf1-df28b626afd1",
-			"discount": null,
-			"payment_method": "ae67e307-2e8d-46a0-9aee-3f88999a274d",
-			"price": "30eacbd7-5746-4dc3-97fb-b951048116ab",
-			"purchase": "1034b845-d743-4873-ba27-8940311a214a",
-			"created_at": 1672340602,
-			"updated_at": 1672340602
-		}';
-		$subscription = json_decode($json);
-		// do_action( 'surecart/subscription_renewed', $subscription);
 	}
 
 	/**
@@ -104,7 +69,7 @@ class AffiliateWPRecurringIntegration extends \Affiliate_WP_Recurring_Base {
 			return false;
 		}
 
-		$amount_due    = $reference->checkout->amount_due;
+		$amount_due    = $subscription->current_period->checkout->amount_due;
 		$currency      = $reference->currency;
 		$description   = $purchase->product->name;
 
