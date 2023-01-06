@@ -243,6 +243,9 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.4.1 - January 6, 2023 =
+* Fix: Issue with order summary not loading if no Stripe processors are enabled.
+
 = 1.4.0 - January 5, 2023 =
 * New: Sign in codes and login flow.
 * New: Add max redemptions per customer UI to coupon.
