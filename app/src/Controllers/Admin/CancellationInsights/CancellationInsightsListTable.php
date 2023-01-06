@@ -49,7 +49,7 @@ class CancellationInsightsListTable extends ListTable {
 			'plan'                => __( 'Plan', 'surecart' ),
 			'cancellation_reason' => __( 'Cancellation Reason', 'surecart' ),
 			'comment'             => __( 'Comment', 'surecart' ),
-			'status'              => __( 'Status', 'surecart' ),
+			'status'              => __( 'Plan Status', 'surecart' ),
 			'date'                => __( 'Date', 'surecart' ),
 		];
 	}
@@ -83,7 +83,7 @@ class CancellationInsightsListTable extends ListTable {
 	 * We only have one default view.
 	 */
 	protected function get_views() {
-		return [ 'all' => __( 'Cancellation Acts', 'surecart' ) ];
+		return [ 'all' => __( 'Cancellations Attempts', 'surecart' ) ];
 	}
 
 	/**
