@@ -5,6 +5,7 @@ import {
 	ScSelect,
 	ScSwitch,
 	ScUpgradeRequired,
+	ScFormControl,
 } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -206,15 +207,14 @@ export default () => {
 								? item?.require_upfront_payment_method
 								: true
 						}
-						disabled={
-							!scData?.entitlements
-								?.optional_upfront_payment_method
-						}
 						onScChange={(e) => {
 							e.preventDefault();
 							editItem({
-								require_upfront_payment_method:
-									!item?.require_upfront_payment_method,
+								require_upfront_payment_method: scData
+									?.entitlements
+									?.optional_upfront_payment_method
+									? !item?.require_upfront_payment_method
+									: true,
 							});
 						}}
 					>
@@ -230,58 +230,58 @@ export default () => {
 							)}
 						</span>
 					</ScSwitch>
-					<div
-						css={css`
-							gap: var(--sc-form-row-spacing);
-							display: grid;
-							grid-template-columns: repeat(2, minmax(0, 1fr));
-						`}
-					>
-						<ScFormControl label={true}>
-							<span slot="label">
-								{__('Purchase Revoke Behavior', 'surecart')}
-								{!scData?.entitlements
-									?.revoke_purchases_on_past_due && (
-									<ScUpgradeRequired />
-								)}
-							</span>
-
-							<ScSelect
-								value={
-									item?.revoke_purchases_on_past_due
-										? 'true'
-										: 'false'
-								}
-								unselect={false}
-								onScChange={(e) =>
-									editItem({
-										revoke_purchases_on_past_due: !scData
-											?.entitlements
-											?.revoke_purchases_on_past_due
-											? false
-											: e.target.value === 'true',
-									})
-								}
-								choices={[
-									{
-										value: 'true',
-										label: __(
-											'Revoke Immediately',
-											'surecart'
-										),
-									},
-									{
-										value: 'false',
-										label: __(
-											'Revoke Purchase After All Payment Retries Fail',
-											'surecart'
-										),
-									},
-								]}
-							/>
-						</ScFormControl>
-					</div>
 				</ScUpgradeRequired>
+
+				<div
+					css={css`
+						gap: var(--sc-form-row-spacing);
+						display: grid;
+						grid-template-columns: repeat(2, minmax(0, 1fr));
+					`}
+				>
+					<ScFormControl label={true}>
+						<span slot="label">
+							{__('Purchase Revoke Behavior', 'surecart')}
+							{!scData?.entitlements
+								?.revoke_purchases_on_past_due && (
+								<ScUpgradeRequired>
+									<ScPremiumTag />
+								</ScUpgradeRequired>
+							)}
+						</span>
+
+						<ScSelect
+							value={
+								item?.revoke_purchases_on_past_due
+									? 'true'
+									: 'false'
+							}
+							unselect={false}
+							onScChange={(e) =>
+								editItem({
+									revoke_purchases_on_past_due: !scData
+										?.entitlements
+										?.revoke_purchases_on_past_due
+										? false
+										: e.target.value === 'true',
+								})
+							}
+							choices={[
+								{
+									value: 'true',
+									label: __('Revoke Immediately', 'surecart'),
+								},
+								{
+									value: 'false',
+									label: __(
+										'Revoke Purchase After All Payment Retries Fail',
+										'surecart'
+									),
+								},
+							]}
+						/>
+					</ScFormControl>
+				</div>
 			</SettingsBox>
 		</SettingsTemplate>
 	);
