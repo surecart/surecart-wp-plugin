@@ -433,56 +433,6 @@ class SubscriptionController extends BaseController {
 	}
 
 	/**
-	 * Confirm renew subscription
-	 *
-	 * @return function
-	 */
-	public function renew() {
-		$back_url              = add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$edit_subscription_url = add_query_arg(
-			[
-				'tab'    => $this->getTab(),
-				'action' => 'edit',
-				'model'  => 'subscription',
-				'id'     => $this->getId(),
-			],
-			remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		);
-		ob_start();
-		?>
-		<sc-spacing style="--spacing: var(--sc-spacing-xx-large)">
-			<sc-breadcrumbs>
-				<sc-breadcrumb href="<?php echo esc_url( $back_url ); ?>">
-					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
-				</sc-breadcrumb>
-				<sc-breadcrumb href="<?php echo esc_url( $edit_subscription_url ); ?>" >
-					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
-				</sc-breadcrumb>
-				<sc-breadcrumb>
-					<?php esc_html_e( 'Renew', 'surecart' ); ?>
-				</sc-breadcrumb>
-			</sc-breadcrumbs>
-
-			<?php
-			echo wp_kses_post(
-				Component::tag( 'sc-subscription-renew' )
-				->id( 'customer-subscription-renew' )
-				->with(
-					[
-						'subscriptionId' => $this->getId(),
-						'backUrl'        => esc_url_raw( $edit_subscription_url ),
-						'successUrl'     => esc_url_raw( $back_url ),
-					]
-				)->render()
-			);
-			?>
-
-		</sc-spacing>
-		<?php
-		return ob_get_clean();
-	}
-
-	/**
 	 * Update payment
 	 *
 	 * @return function
