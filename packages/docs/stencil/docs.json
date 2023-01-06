@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-01-06T17:28:28",
+  "timestamp": "2023-01-06T20:21:29",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -657,7 +657,6 @@
         "sc-price-choice",
         "sc-stripe-add-method",
         "sc-stripe-payment-request",
-        "sc-subscription-renew",
         "sc-subscription-switch",
         "sc-upcoming-invoice"
       ],
@@ -717,9 +716,6 @@
           "sc-alert"
         ],
         "sc-stripe-payment-request": [
-          "sc-alert"
-        ],
-        "sc-subscription-renew": [
           "sc-alert"
         ],
         "sc-subscription-switch": [
@@ -943,7 +939,6 @@
         "sc-subscription-cancel",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
-        "sc-subscription-renew",
         "sc-subscription-switch",
         "sc-subscriptions-list",
         "sc-upcoming-invoice",
@@ -1024,9 +1019,6 @@
           "sc-block-ui"
         ],
         "sc-subscription-payment-method": [
-          "sc-block-ui"
-        ],
-        "sc-subscription-renew": [
           "sc-block-ui"
         ],
         "sc-subscription-switch": [
@@ -1671,7 +1663,6 @@
         "sc-subscription-cancel",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
-        "sc-subscription-renew",
         "sc-subscription-switch",
         "sc-subscriptions-list",
         "sc-tax-id-input",
@@ -1776,9 +1767,6 @@
           "sc-button"
         ],
         "sc-subscription-payment-method": [
-          "sc-button"
-        ],
-        "sc-subscription-renew": [
           "sc-button"
         ],
         "sc-subscription-switch": [
@@ -2399,7 +2387,6 @@
         "sc-subscription-next-payment",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
-        "sc-subscription-renew",
         "sc-subscriptions-list",
         "sc-upcoming-invoice",
         "sc-wordpress-password-edit",
@@ -2466,9 +2453,6 @@
           "sc-card"
         ],
         "sc-subscription-payment-method": [
-          "sc-card"
-        ],
-        "sc-subscription-renew": [
           "sc-card"
         ],
         "sc-subscriptions-list": [
@@ -8495,7 +8479,6 @@
         "sc-subscription-cancel",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
-        "sc-subscription-renew",
         "sc-subscription-switch",
         "sc-subscriptions-list",
         "sc-upcoming-invoice",
@@ -8568,9 +8551,6 @@
           "sc-dashboard-module"
         ],
         "sc-subscription-payment-method": [
-          "sc-dashboard-module"
-        ],
-        "sc-subscription-renew": [
           "sc-dashboard-module"
         ],
         "sc-subscription-switch": [
@@ -11584,7 +11564,6 @@
         "sc-subscription",
         "sc-subscription-cancel",
         "sc-subscription-details",
-        "sc-subscription-renew",
         "sc-subscription-status-badge",
         "sc-upcoming-invoice"
       ],
@@ -11609,9 +11588,6 @@
           "sc-format-date"
         ],
         "sc-subscription-details": [
-          "sc-format-date"
-        ],
-        "sc-subscription-renew": [
           "sc-format-date"
         ],
         "sc-subscription-status-badge": [
@@ -19065,6 +19041,58 @@
       }
     },
     {
+      "filePath": "./src/components/ui/sc-premium-tag/sc-premium-tag.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-premium-tag",
+      "readme": "# sc-premium-tag\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The tag's size.",
+          "docsTags": [],
+          "default": "'small'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-tag"
+      ],
+      "dependencyGraph": {
+        "sc-premium-tag": [
+          "sc-tag"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/controllers/checkout-form/price-choice/sc-price-choice.tsx",
       "encapsulation": "none",
       "tag": "sc-price-choice",
@@ -22334,7 +22362,6 @@
         "sc-subscription-next-payment",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
-        "sc-subscription-renew",
         "sc-subscription-switch",
         "sc-subscriptions-list",
         "sc-upcoming-invoice"
@@ -22420,9 +22447,6 @@
           "sc-skeleton"
         ],
         "sc-subscription-payment-method": [
-          "sc-skeleton"
-        ],
-        "sc-subscription-renew": [
           "sc-skeleton"
         ],
         "sc-subscription-switch": [
@@ -24261,7 +24285,6 @@
       "dependents": [
         "sc-subscription",
         "sc-subscription-next-payment",
-        "sc-subscription-renew",
         "sc-subscriptions-list"
       ],
       "dependencies": [
@@ -24306,9 +24329,6 @@
           "sc-subscription-details"
         ],
         "sc-subscription-next-payment": [
-          "sc-subscription-details"
-        ],
-        "sc-subscription-renew": [
           "sc-subscription-details"
         ],
         "sc-subscriptions-list": [
@@ -24710,158 +24730,6 @@
         ],
         "sc-alert": [
           "sc-icon"
-        ],
-        "sc-block-ui": [
-          "sc-spinner"
-        ]
-      }
-    },
-    {
-      "filePath": "./src/components/controllers/dashboard/subscription-renew/sc-subscription-renew.tsx",
-      "encapsulation": "shadow",
-      "tag": "sc-subscription-renew",
-      "readme": "# ce-subscription-renew\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "backUrl",
-          "type": "string",
-          "mutable": false,
-          "attr": "back-url",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "heading",
-          "type": "string",
-          "mutable": false,
-          "attr": "heading",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "subscription",
-          "type": "Subscription",
-          "mutable": true,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Subscription"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "subscriptionId",
-          "type": "string",
-          "mutable": false,
-          "attr": "subscription-id",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "successUrl",
-          "type": "string",
-          "mutable": false,
-          "attr": "success-url",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
-      "methods": [],
-      "events": [],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
-      "dependents": [],
-      "dependencies": [
-        "sc-subscription-details",
-        "sc-alert",
-        "sc-format-date",
-        "sc-skeleton",
-        "sc-dashboard-module",
-        "sc-card",
-        "sc-button",
-        "sc-block-ui"
-      ],
-      "dependencyGraph": {
-        "sc-subscription-renew": [
-          "sc-subscription-details",
-          "sc-alert",
-          "sc-format-date",
-          "sc-skeleton",
-          "sc-dashboard-module",
-          "sc-card",
-          "sc-button",
-          "sc-block-ui"
-        ],
-        "sc-subscription-details": [
-          "sc-subscription-status-badge",
-          "sc-format-date",
-          "sc-skeleton",
-          "sc-format-number",
-          "sc-flex",
-          "sc-tag",
-          "sc-text",
-          "sc-dialog",
-          "sc-card",
-          "sc-stacked-list",
-          "sc-stacked-list-row"
-        ],
-        "sc-subscription-status-badge": [
-          "sc-format-date",
-          "sc-tag"
-        ],
-        "sc-dialog": [
-          "sc-button",
-          "sc-icon"
-        ],
-        "sc-button": [
-          "sc-spinner"
-        ],
-        "sc-alert": [
-          "sc-icon"
-        ],
-        "sc-dashboard-module": [
-          "sc-alert"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -26120,11 +25988,11 @@
         "sc-payment",
         "sc-payment-method",
         "sc-payment-methods-list",
+        "sc-premium-tag",
         "sc-subscription-details",
         "sc-subscription-payment-method",
         "sc-subscription-status-badge",
-        "sc-subscription-switch",
-        "sc-upgrade-required"
+        "sc-subscription-switch"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -26179,6 +26047,9 @@
         "sc-payment-methods-list": [
           "sc-tag"
         ],
+        "sc-premium-tag": [
+          "sc-tag"
+        ],
         "sc-subscription-details": [
           "sc-tag"
         ],
@@ -26189,9 +26060,6 @@
           "sc-tag"
         ],
         "sc-subscription-switch": [
-          "sc-tag"
-        ],
-        "sc-upgrade-required": [
           "sc-tag"
         ]
       }
@@ -27959,6 +27827,23 @@
       "usage": {},
       "props": [
         {
+          "name": "required",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "required",
+          "reflectToAttr": true,
+          "docs": "",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "size",
           "type": "\"large\" | \"medium\" | \"small\"",
           "mutable": false,
@@ -27993,14 +27878,12 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
-        "sc-tag",
         "sc-dialog",
         "sc-icon",
         "sc-button"
       ],
       "dependencyGraph": {
         "sc-upgrade-required": [
-          "sc-tag",
           "sc-dialog",
           "sc-icon",
           "sc-button"

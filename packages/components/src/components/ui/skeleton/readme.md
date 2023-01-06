@@ -60,7 +60,6 @@
  - [sc-subscription-next-payment](../../controllers/dashboard/subscription-details)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
- - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
@@ -95,7 +94,6 @@ graph TD;
   sc-subscription-next-payment --> sc-skeleton
   sc-subscription-payment --> sc-skeleton
   sc-subscription-payment-method --> sc-skeleton
-  sc-subscription-renew --> sc-skeleton
   sc-subscription-switch --> sc-skeleton
   sc-subscriptions-list --> sc-skeleton
   sc-upcoming-invoice --> sc-skeleton
