@@ -67,6 +67,23 @@ export class ScSubscription {
     }
   }
 
+  async renewSubscription() {
+    try {
+      this.error = '';
+      this.busy = true;
+      this.subscription = (await apiFetch({
+        path: addQueryArgs(`surecart/v1/subscriptions/${this.subscription?.id}/renew`, {
+          expand: ['price', 'price.product', 'current_period', 'period.checkout', 'purchase', 'purchase.license', 'license.activations', 'discount', 'discount.coupon'],
+        }),
+        method: 'PATCH',
+      })) as Subscription;
+    } catch (e) {
+      this.error = e?.message || __('Something went wrong', 'surecart');
+    } finally {
+      this.busy = false;
+    }
+  }
+
   /** Get all subscriptions */
   async getSubscription() {
     try {
@@ -183,12 +200,7 @@ export class ScSubscription {
               </sc-button>
             )}
             {this?.subscription?.cancel_at_period_end ? (
-              <sc-button
-                type="link"
-                href={addQueryArgs(window.location.href, {
-                  action: 'renew',
-                })}
-              >
+              <sc-button type="link" onClick={() => this.renewSubscription()}>
                 <sc-icon name="repeat" slot="prefix"></sc-icon>
                 {__('Restore Plan', 'surecart')}
               </sc-button>
