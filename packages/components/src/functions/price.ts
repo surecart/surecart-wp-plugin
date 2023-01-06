@@ -67,8 +67,8 @@ export const intervalString = (price: Price, options: IntervalOptions = {}) => {
     return '';
   }
   const { showOnce, labels } = options;
-  const { interval = __('every', 'surecart'), period = __('for', 'surecart') } = labels || {};
-  return `${intervalCountString(price, interval, !!showOnce ? __('once', 'surecart') : '')} ${periodCountString(price, period)}`;
+  const { interval = __('every', 'surecart') } = labels || {};
+  return `${intervalCountString(price, interval, !!showOnce ? __('once', 'surecart') : '')} ${periodCountString(price)}`;
 };
 
 export const intervalCountString = (price: Price, prefix, fallback = __('once', 'surecart')) => {
@@ -78,9 +78,10 @@ export const intervalCountString = (price: Price, prefix, fallback = __('once', 
   return translateInterval(price.recurring_interval_count, price.recurring_interval, ` ${prefix}`, fallback);
 };
 
-export const periodCountString = (price: Price, prefix, fallback = '') => {
-  if (!price?.recurring_period_count || !price?.recurring_interval) {
+export const periodCountString = (price: Price) => {
+  if (!price?.recurring_period_count) {
     return '';
   }
-  return translateInterval((price?.recurring_period_count || 0) * price?.recurring_interval_count, price?.recurring_interval, ` ${prefix}`, fallback, true);
+
+  return ` ( ${sprintf(_n('%d payment', '%d payments', price.recurring_period_count, 'surecart'), price.recurring_period_count)} )`;
 };
