@@ -135,17 +135,14 @@ export default () => {
 
 				<ScSwitch
 					checked={item?.free_order_enabled}
-					onClick={(e) => {
-						e.preventDefault();
-						editItem({
-							free_order_enabled: !item?.free_order_enabled,
-						});
+					onScChange={(e) => {
+						editItem({ free_order_enabled: e.target.checked });
 					}}
 				>
 					{__('Free Order Emails', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							'This allows the merchant to turn off customer order emails when the order is free.',
+							'Send an order email to customers even when the order is free.',
 							'surecart'
 						)}
 					</span>
