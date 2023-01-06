@@ -13,4 +13,7 @@ import CancellationInsights from './CancellationInsights';
 /**
  * Render
  */
-render(<CancellationInsights />, document.getElementById('app'));
+const app = document.getElementById('app');
+if (app) {
+	render(<CancellationInsights />, document.getElementById('app'));
+}
