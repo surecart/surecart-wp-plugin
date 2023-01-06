@@ -1,14 +1,22 @@
 <div class="wrap">
 	<?php
-		\SureCart::render(
-			'layouts/partials/admin-index-header',
-			[ 'title' => __( 'Cancellation Insights', 'surecart' ) ]
-		);
-		?>
+	\SureCart::render(
+		'layouts/partials/admin-index-header',
+		[ 'title' => __( 'Cancellations', 'surecart' ) ]
+	);
+	?>
 
-	<div id="app"></div>
+	<?php
+	if ( ! $enabled ) :
+		\SureCart::render(
+			'admin/cancellation-insights/cta-banner',
+		);
+		endif;
+	?>
 
 	<?php if ( $enabled ) : ?>
-		<?php $table->display(); ?>
+		<div id="app"></div>
 	<?php endif; ?>
+
+	<?php $table->display(); ?>
 </div>
