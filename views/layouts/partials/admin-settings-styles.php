@@ -31,16 +31,16 @@
 	#wpfooter {
 		display:none;
 	}
-	#wpbody, #wpbody-content, #wpcontent, #wpwrap, body, html {
-		height: 100% !important;
-		background-color: transparent;
+
+	body {
+		background: var(--sc-color-brand-main-background);
 	}
+
 	#sc-settings-container {
-		position: absolute;
+		min-height: calc(100vh - 66px);
 		top: 0;
 		width: 100% !important;
 		left: 0;
-		background: var(--sc-color-brand-main-background);
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
@@ -55,19 +55,35 @@
 		display: flex;
 		flex: 1;
 	}
+
+	#sc-settings-content::before {
+		-webkit-animation-fill-mode: both;
+		animation-fill-mode: both;
+		background: #ffffff;
+		content: " ";
+		height: 100%;
+		position: fixed;
+		left: 0;
+		top: 0;
+		-webkit-transform-origin: right;
+		-ms-transform-origin: right;
+		transform-origin: right;
+		width: 450px;
+		border-right: 1px solid var(--sc-color-gray-200);
+		z-index: 0;
+	}
 	#sc-settings {
 		flex: 1;
 	}
 	#sc-nav {
-		background: #fff;
 		padding: 20px;
-		border-right: 1px solid var(--sc-color-gray-200);
 		display: flex;
 		flex-direction: column;
 		gap: 2px;
 		width: 100%;
 		max-width: 255px;
 		overflow: auto;
+		position: relative;
 	}
 
 	.surecart-cta {
