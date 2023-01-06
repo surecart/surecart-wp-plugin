@@ -16,4 +16,14 @@ describe('sc-customer-email', () => {
     });
     expect(page.root).toMatchSnapshot();
   });
+  it('set url data', async () => {
+    const email = {
+      ...window.location,
+      search: '?email=test@gmail.com',
+    };
+    Object.defineProperty(window, 'email', {
+      writable: true,
+      value: email,
+    })
+  });
 });
