@@ -8,11 +8,9 @@ exports[`sc-subscription-details renders 1`] = `
         <sc-text style="--font-weight: var(--sc-font-weight-bold);"></sc-text>
       </sc-flex>
       <div>
-        <sc-format-number type="currency"></sc-format-number>
-      </div>
-      <div>
         <sc-subscription-status-badge></sc-subscription-status-badge>
       </div>
+      <slot></slot>
       <sc-dialog label="Activations">
         <sc-card no-padding="" style="--overflow: hidden;">
           <sc-stacked-list></sc-stacked-list>

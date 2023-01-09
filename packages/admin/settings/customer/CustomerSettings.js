@@ -2,9 +2,16 @@
 import { css, jsx } from '@emotion/core';
 import {
 	ScInput,
+<<<<<<< HEAD
 	ScStackedList,
 	ScSwitch,
 	ScTag,
+=======
+	ScPremiumTag,
+	ScStackedList,
+	ScSwitch,
+	ScUpgradeRequired,
+>>>>>>> next
 } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -53,7 +60,7 @@ export default () => {
 			<SettingsBox
 				title={__('Notification Settings', 'surecart')}
 				description={__(
-					"Use these settings to configure how notifications are sent to your customers. Currently, all emails are sent from notifications@surecart.com, but in the future you'll be able to set your own email server if you'd like.",
+					'Use these settings to configure how notifications are sent to your customers. Currently, all emails are sent from notifications@surecart.com.',
 					'surecart'
 				)}
 				loading={!hasLoadedItem}
@@ -211,41 +218,44 @@ export default () => {
 					</span>
 				</ScSwitch>
 
-				<ScSwitch
-					checked={
-						scData?.entitlements?.payment_failure_notifications
-							? item?.payment_failure_enabled
-							: false
-					}
-					disabled={
+				<ScUpgradeRequired
+					required={
 						!scData?.entitlements?.payment_failure_notifications
 					}
-					onScChange={(e) => {
-						e.preventDefault();
-						editItem({
-							payment_failure_enabled:
-								!item?.payment_failure_enabled,
-						});
-					}}
-					css={css`
-						::part(base) {
-							opacity: 1;
-						}
-					`}
 				>
-					{__('Subscription Recovery Emails', 'surecart')}{' '}
-					{!scData?.entitlements?.payment_failure_notifications && (
-						<ScTag type="success" size="small" pill>
-							{__('Pro', 'surecart')}
-						</ScTag>
-					)}
-					<span slot="description" style={{ lineHeight: '1.4' }}>
-						{__(
-							"Subscription payments fail all the time. Don't leave your recurring revenue to chance - turn on recovery emails to increase your chances of recovering subscriptions with failed payments.",
-							'surecart'
-						)}
-					</span>
-				</ScSwitch>
+					<ScSwitch
+						checked={
+							scData?.entitlements?.payment_failure_notifications
+								? item?.payment_failure_enabled
+								: false
+						}
+						disabled={
+							!scData?.entitlements?.payment_failure_notifications
+						}
+						onScChange={(e) => {
+							e.preventDefault();
+							editItem({
+								payment_failure_enabled:
+									!item?.payment_failure_enabled,
+							});
+						}}
+						css={css`
+							::part(base) {
+								opacity: 1;
+							}
+						`}
+					>
+						{__('Subscription Recovery Emails', 'surecart')}{' '}
+						{!scData?.entitlements
+							?.payment_failure_notifications && <ScPremiumTag />}
+						<span slot="description" style={{ lineHeight: '1.4' }}>
+							{__(
+								"Subscription payments fail all the time. Don't leave your recurring revenue to chance - turn on recovery emails to increase your chances of recovering subscriptions with failed payments.",
+								'surecart'
+							)}
+						</span>
+					</ScSwitch>
+				</ScUpgradeRequired>
 			</SettingsBox>
 
 			<SettingsBox

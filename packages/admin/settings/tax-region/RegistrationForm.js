@@ -6,9 +6,11 @@ import {
 	ScAlert,
 	ScButton,
 	ScForm,
+	ScInput,
 	ScSelect,
 	ScTaxIdInput,
 } from '@surecart/components-react';
+import Error from '../../components/Error';
 
 const types = {
 	au: 'au_abn',
@@ -30,9 +32,15 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 	const [type, setType] = useState('other');
 	const [additionalErrors, setAdditionalErrors] = useState([]);
 	const { saveEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
+	const [taxType, setTaxType] = useState(
+		registration?.manual_rate ? 'manual' : 'automatic'
+	);
+
+	const { tax_zone, tax_identifier, ...registrationData } = registration;
 	const [data, setData] = useState({
-		tax_zone: registration?.tax_zone?.id,
-		tax_identifier: registration?.tax_identifier,
+		tax_zone: tax_zone?.id,
+		tax_identifier,
+		...registrationData,
 	});
 	const updateData = (updated) => setData({ ...data, ...updated });
 
@@ -77,8 +85,13 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 		}
 	}, [zones]);
 
+	useEffect(() => {
+		if (taxType === 'automatic') {
+			setData({ ...data, ...{ manual_rate: null } });
+		}
+	}, [taxType]);
+
 	const onSubmit = async (e) => {
-		const json = await e.target.getFormJson();
 		e.preventDefault();
 		try {
 			setLoading(true);
@@ -87,11 +100,7 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 				'tax_registration',
 				{
 					...(registration?.id ? { id: registration?.id } : {}),
-					tax_identifier: {
-						number: json?.['tax_identifier.number'],
-						number_type: json?.['tax_identifier.number_type'],
-					},
-					tax_zone: data?.tax_zone,
+					...data,
 				},
 				{
 					throwOnError: true,
@@ -133,13 +142,11 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 	};
 
 	return (
-		<ScForm onScSubmit={onSubmit}>
-			<sc-alert type="danger" open={error?.length}>
-				<span slot="title">{error}</span>
-				{additionalErrors.map((e) => (
-					<div>{e?.message}</div>
-				))}
-			</sc-alert>
+		<ScForm
+			onScSubmit={onSubmit}
+			style={{ '--sc-form-row-spacing': 'var(--sc-spacing-large)' }}
+		>
+			<Error error={error} setError={setError} />
 			<ScSelect
 				search
 				loading={fetching}
@@ -148,16 +155,52 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 				unselect={false}
 				label={zoneName[region] || __('Region', 'surecart')}
 				onScChange={(e) => updateData({ tax_zone: e.target.value })}
-				choices={(zones || []).map(
-					({ state_name, country_name, id }) => {
+				choices={(zones || [])
+					.reverse()
+					.map(({ state_name, country_name, id }) => {
 						return {
 							label: state_name || country_name,
 							value: id,
 						};
-					}
-				)}
+					})}
 				required
 			/>
+
+			{region !== 'other' && (
+				<ScSelect
+					label={__('Tax Calculation', 'surecart')}
+					value={taxType}
+					onScChange={(e) => setTaxType(e.target.value)}
+					choices={[
+						{
+							value: 'manual',
+							label: __('Manual', 'surecart'),
+						},
+						{
+							value: 'automatic',
+							label: __('Automatic', 'surecart'),
+						},
+					]}
+				/>
+			)}
+
+			{(region === 'other' || taxType === 'manual') && (
+				<ScInput
+					type="number"
+					min="0"
+					max="100"
+					required
+					label={__('Tax Rate', 'surecart')}
+					value={data?.manual_rate}
+					onScInput={(e) =>
+						updateData({
+							manual_rate: e.target.value,
+						})
+					}
+				>
+					<span slot="suffix">%</span>
+				</ScInput>
+			)}
 
 			{region !== 'us' && (
 				<ScTaxIdInput
@@ -188,10 +231,15 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 			)}
 
 			<ScAlert type="info" open>
-				{__(
-					'Sales tax is automatically calculated and applied to orders. Make sure you’re registered with the appropriate tax jurisdictions before enabling tax collection.',
-					'surecart'
-				)}
+				{region === 'other' || taxType === 'manual'
+					? __(
+							'Make sure you’re registered with the appropriate tax jurisdictions before enabling tax collection.',
+							'surecart'
+					  )
+					: __(
+							'Tax is automatically calculated and applied to orders. Make sure you’re registered with the appropriate tax jurisdictions before enabling tax collection.',
+							'surecart'
+					  )}
 			</ScAlert>
 
 			<sc-flex justify-content="space-between">

@@ -16,7 +16,7 @@ import { _n, sprintf, __ } from '@wordpress/i18n';
 export default ({ id, onSelect }) => {
 	const { product, loading } = useSelect(
 		(select) => {
-			if (!id) return null;
+			if (!id) return {};
 			const entityData = [
 				'surecart',
 				'product',

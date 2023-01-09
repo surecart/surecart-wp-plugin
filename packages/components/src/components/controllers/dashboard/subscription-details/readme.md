@@ -7,11 +7,9 @@
 
 ## Properties
 
-| Property          | Attribute           | Description | Type           | Default     |
-| ----------------- | ------------------- | ----------- | -------------- | ----------- |
-| `hideRenewalText` | `hide-renewal-text` |             | `boolean`      | `undefined` |
-| `pendingPrice`    | --                  |             | `Price`        | `undefined` |
-| `subscription`    | --                  |             | `Subscription` | `undefined` |
+| Property       | Attribute | Description | Type           | Default     |
+| -------------- | --------- | ----------- | -------------- | ----------- |
+| `subscription` | --        |             | `Subscription` | `undefined` |
 
 
 ## Dependencies
@@ -19,27 +17,36 @@
 ### Used by
 
  - [sc-subscription](../subscription)
- - [sc-subscription-cancel](../subscription-cancel)
- - [sc-subscription-renew](../subscription-renew)
- - [sc-subscriptions-list](../subscriptions-list)
 
 ### Depends on
 
-- [sc-subscription-status-badge](../../../ui/subscription-status-badge)
-- [sc-format-date](../../../util/format-date)
-- [sc-skeleton](../../../ui/skeleton)
-- [sc-format-number](../../../util/format-number)
+- [sc-toggle](../../../ui/sc-toggle)
 - [sc-flex](../../../ui/flex)
-- [sc-tag](../../../ui/tag)
-- [sc-text](../../../ui/text)
-- [sc-dialog](../../../ui/sc-dialog)
+- [sc-skeleton](../../../ui/skeleton)
+- [sc-subscription-details](.)
+- [sc-format-number](../../../util/format-number)
 - [sc-card](../../../ui/card)
-- [sc-stacked-list](../../../ui/stacked-list)
-- [sc-stacked-list-row](../../../ui/stacked-list-row)
+- [sc-product-line-item](../../../ui/product-line-item)
+- [sc-line-item](../../../ui/line-item)
+- [sc-divider](../../../ui/divider)
+- [sc-payment-method](../../../ui/sc-payment-method)
+- [sc-icon](../../../ui/icon)
 
 ### Graph
 ```mermaid
 graph TD;
+  sc-subscription-next-payment --> sc-toggle
+  sc-subscription-next-payment --> sc-flex
+  sc-subscription-next-payment --> sc-skeleton
+  sc-subscription-next-payment --> sc-subscription-details
+  sc-subscription-next-payment --> sc-format-number
+  sc-subscription-next-payment --> sc-card
+  sc-subscription-next-payment --> sc-product-line-item
+  sc-subscription-next-payment --> sc-line-item
+  sc-subscription-next-payment --> sc-divider
+  sc-subscription-next-payment --> sc-payment-method
+  sc-subscription-next-payment --> sc-icon
+  sc-toggle --> sc-icon
   sc-subscription-details --> sc-subscription-status-badge
   sc-subscription-details --> sc-format-date
   sc-subscription-details --> sc-skeleton
@@ -56,11 +63,19 @@ graph TD;
   sc-dialog --> sc-button
   sc-dialog --> sc-icon
   sc-button --> sc-spinner
-  sc-subscription --> sc-subscription-details
-  sc-subscription-cancel --> sc-subscription-details
-  sc-subscription-renew --> sc-subscription-details
-  sc-subscriptions-list --> sc-subscription-details
-  style sc-subscription-details fill:#f9f,stroke:#333,stroke-width:4px
+  sc-product-line-item --> sc-format-number
+  sc-product-line-item --> sc-quantity-select
+  sc-product-line-item --> sc-icon
+  sc-quantity-select --> sc-icon
+  sc-payment-method --> sc-tooltip
+  sc-payment-method --> sc-button
+  sc-payment-method --> sc-icon
+  sc-payment-method --> sc-tag
+  sc-payment-method --> sc-cc-logo
+  sc-payment-method --> sc-text
+  sc-cc-logo --> sc-icon
+  sc-subscription --> sc-subscription-next-payment
+  style sc-subscription-next-payment fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
