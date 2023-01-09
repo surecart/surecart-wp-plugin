@@ -363,7 +363,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @return boolean
 	 */
 	public function hasAttribute( $key ) {
-		return $this->user->$key;
+		return $this->user->$key ?? false;
 	}
 
 	/**
