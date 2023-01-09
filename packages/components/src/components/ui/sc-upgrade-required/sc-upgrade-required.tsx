@@ -29,7 +29,7 @@ export class ScUpgradeRequired {
             <span>{__('Boost Your Revenue', 'surecart')}</span>
           </span>
           <p>{__('Unlock revenue boosting features when you upgrade your plan!', 'surecart')}</p>
-          <sc-button href="https://api.surecart.com/billing" type="primary" target="_blank" full>
+          <sc-button href="https://app.surecart.com/billing" type="primary" target="_blank" full>
             {__('Upgrade Now!', 'surecart')}
           </sc-button>
         </sc-dialog>
