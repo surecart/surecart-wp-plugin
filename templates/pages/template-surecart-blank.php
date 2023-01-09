@@ -19,7 +19,7 @@ Template Post Type: sc-product
 		max-width: 1160px;
 		margin: 0 auto;
 		display: flex;
-		margin-top: 8vh;
+		padding-top: 8vh;
 		position: relative;
 	}
 	#layout_checkout::after {
