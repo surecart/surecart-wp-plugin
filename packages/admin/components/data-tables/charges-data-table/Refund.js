@@ -229,7 +229,7 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 													{quantity}
 												</span>
 												{!!subscription && (
-													<sc-tag type="warning" pill>
+													<sc-tag type="warning">
 														{__(
 															'The associated subscription will also be cancelled',
 															'surecart'
