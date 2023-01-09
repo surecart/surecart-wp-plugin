@@ -12,7 +12,7 @@ import {
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { useState } from 'react';
@@ -37,6 +37,7 @@ import PaymentMethod from '../edit/modules/PaymentMethod';
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [modal, setModal] = useState();
+	const { saveEntityRecord } = useDispatch(coreStore);
 
 	const editSubscription = (data) =>
 		saveEntityRecord('surecart', 'subscription', { id, ...data });
