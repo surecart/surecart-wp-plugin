@@ -32,10 +32,14 @@ import Periods from './modules/Periods';
 import Purchases from './modules/Purchases';
 import Tax from './modules/Tax';
 import UpcomingPeriod from './modules/UpcomingPeriod';
+import PaymentMethod from '../edit/modules/PaymentMethod';
 
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [modal, setModal] = useState();
+
+	const editSubscription = (data) =>
+		saveEntityRecord('surecart', 'subscription', { id, ...data });
 
 	const { subscription, hasLoadedSubscription } = useSelect(
 		(select) => {
@@ -253,6 +257,14 @@ export default () => {
 				/>
 
 				<Periods subscriptionId={id} />
+
+				{subscription?.payment_method && (
+					<PaymentMethod
+						subscription={subscription}
+						updateSubscription={editSubscription}
+						loading={!hasLoadedSubscription}
+					/>
+				)}
 			</>
 
 			<CancelPendingUpdate
