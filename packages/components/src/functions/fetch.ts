@@ -22,9 +22,7 @@ if (window?.scData?.nonce_endpoint) {
 // Add a timestamp so it can bypass cache rest api
 apiFetch.use((options, next) => {
   options.path = addQueryArgs(options.path, { t: Date.now() });
-  const result = next(options);
-
-  return result;
+  return next(options);
 });
 
 export default apiFetch;
