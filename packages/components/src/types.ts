@@ -520,6 +520,7 @@ export interface Subscription extends Object {
   order: Order;
   customer: Customer;
   discount: DiscountResponse;
+  finite: boolean;
   pending_update: {
     ad_hoc_amount?: number;
     price?: string;
