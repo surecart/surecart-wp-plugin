@@ -229,23 +229,12 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 													{quantity}
 												</span>
 												{!!subscription && (
-													<p
-														css={css`
-															color: var(
-																--sc-color-danger-500
-															);
-															font-size: var(
-																--sc-font-size-small
-															);
-															margin: 0;
-															white-space: nowrap;
-														`}
-													>
+													<sc-tag type="warning" pill>
 														{__(
-															'This subscription will be cancelled if revoked',
+															'The associated subscription will also be cancelled',
 															'surecart'
 														)}
-													</p>
+													</sc-tag>
 												)}
 											</div>
 										</ScLineItem>
