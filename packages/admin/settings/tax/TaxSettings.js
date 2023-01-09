@@ -92,7 +92,6 @@ export default () => {
 				</ScSwitch>
 				{item?.default_tax_enabled && (
 					<ScInput
-						className="sc-default-rate"
 						type="number"
 						label={__('Fallback Rate', 'surecart')}
 						help={__(
