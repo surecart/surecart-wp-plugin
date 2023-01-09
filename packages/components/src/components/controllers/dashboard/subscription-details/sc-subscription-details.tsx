@@ -4,6 +4,7 @@ import { addQueryArgs } from '@wordpress/url';
 
 import apiFetch from '../../../../functions/fetch';
 import { intervalString } from '../../../../functions/price';
+// import { applyCoupon } from '../../../../functions/total';
 import { License, Price, Product, Purchase, Subscription } from '../../../../types';
 
 @Component({
@@ -146,7 +147,6 @@ export class ScSubscriptionDetails {
   }
 
   render() {
-    const price = this.subscription?.price as Price;
     return (
       <div class="subscription-details">
         {this.hasPendingUpdate && (
@@ -156,15 +156,15 @@ export class ScSubscriptionDetails {
             </sc-tag>
           </div>
         )}
+
         <sc-flex alignItems="center" justifyContent="flex-start">
           <sc-text style={{ '--font-weight': 'var(--sc-font-weight-bold)' }}>{this.renderName()}</sc-text>
           {this.renderActivations()}
         </sc-flex>
-        <div>
-          <sc-format-number type="currency" currency={price?.currency} value={this.subscription?.ad_hoc_amount || price?.amount}></sc-format-number>{' '}
-          {intervalString(this.subscription?.price)}
-        </div>
-        {!this.hideRenewalText && <div>{this.renderRenewalText()}</div>}
+
+        {!this.hideRenewalText && <div>{this.renderRenewalText()} </div>}
+
+        <slot />
 
         <sc-dialog label={__('Activations', 'surecart')} onScRequestClose={() => (this.activationsModal = false)} open={!!this.activationsModal}>
           <sc-card no-padding style={{ '--overflow': 'hidden' }}>

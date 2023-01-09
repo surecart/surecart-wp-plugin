@@ -10,14 +10,26 @@ export class ScUpgradeRequired {
   /** The tag's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'small';
 
+  @Prop({ reflect: true }) required: boolean = true;
+
   @State() open: boolean = false;
 
   render() {
+    if (!this.required) {
+      return (
+        <Host>
+          <slot />
+        </Host>
+      );
+    }
+
     return (
       <Host>
-        <sc-tag type="success" size={this.size} onClick={() => (this.open = true)}>
-          {__('Premium', 'surecart')}
-        </sc-tag>
+        <span class="trigger" onClick={() => (this.open = true)}>
+          <slot>
+            <sc-premium-badge />
+          </slot>
+        </span>
         <sc-dialog
           label={__('Boost Your Revenue', 'surecart')}
           open={this.open}
@@ -29,8 +41,9 @@ export class ScUpgradeRequired {
             <span>{__('Boost Your Revenue', 'surecart')}</span>
           </span>
           <p>{__('Unlock revenue boosting features when you upgrade your plan!', 'surecart')}</p>
-          <sc-button href="https://api.surecart.com/billing" type="primary" target="_blank" full>
-            {__('Upgrade Now!', 'surecart')}
+          <sc-button href="https://app.surecart.com/billing" type="primary" target="_blank" full>
+            {__('Upgrade Now', 'surecart')}
+            <sc-icon name="arrow-right" slot="suffix" />
           </sc-button>
         </sc-dialog>
       </Host>

@@ -126,6 +126,12 @@ export class ScTextarea {
     this.invalid = !this.input.checkValidity();
   }
 
+  /** Sets focus on the input. */
+  @Method()
+  async triggerFocus(options?: FocusOptions) {
+    return this.input.focus(options);
+  }
+
   /** Sets focus on the textarea. */
   focus(options?: FocusOptions) {
     this.input.focus(options);

@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.1
-Stable tag: 1.3.4
+Stable tag: 1.4.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -205,7 +205,7 @@ The second type of integrations are done with SureTriggers, which is like Zapier
 There are also some special features for site to site connections. So you can sell products on one site with SureCart then add the user to another site where your content may be. This is great for online courses or membership setups.
 
 ## Join The SureCart Facebook Group ##
-Join our Facebook group community: Learn the tricks and techniques that other SureCart users are using to grow their business. Also, get exciting insider information on upcoming feature releases.
+Join our [Facebook group community](https://www.facebook.com/groups/surecrafted): Learn the tricks and techniques that other SureCart users are using to grow their business. Also, get exciting insider information on upcoming feature releases.
 
 [Terms And Conditions](https://surecart.com/terms)
 [Privacy Policy](https://surecart.com/privacy)
@@ -242,6 +242,28 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.4.1 - January 6, 2023 =
+* New: Choose the start of your order numbers if using sequential order numbers.
+* Fix: Issue with order summary not loading if no Stripe processors are enabled.
+
+= 1.4.0 - January 5, 2023 =
+* New: Sign in codes and login flow.
+* New: Add max redemptions per customer UI to coupon.
+* Improvement: Rename “Checkout Page” to “Store Checkout” in pages list.
+* Improvement: Show if a processor is disabled on the settings page. Disallow showing disabled processor in forms.
+* Improvement: Keep customer data and Wordpress user in sync.
+* Improvement: Change the word Pro to Premium in plugin.
+* Improvement: Rename "default" to "store checkout" for store checkout page and store checkout form.
+* Improvement: Link the charge to the payment processor from the admin UI.
+* Improvement: Select box accessibility improvement.
+* Fix: Coupon field overflow on mobile screens.
+* Fix: Disallow payment plan update screen if not enabled in admin.
+* Fix: Scrolling issue on settings pages.
+* Fix: PHP8 compatibility issues on checkout page with debug mode turned on.
+* Fix: FCFA currency support.
+* Fix: global [hidden] conflicts.
+
 
 = 1.3.4 - December 15, 2022 =
 * Improvement: Coupon UX - set usage and customer limits per promotion code.

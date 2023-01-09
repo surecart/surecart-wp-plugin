@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export namespace Components {
     interface ScAddress {
         /**
@@ -177,6 +177,21 @@ export namespace Components {
     interface ScButtonGroup {
         "label": string;
         "separate": boolean;
+    }
+    interface ScCancelDialog {
+        "open": boolean;
+        "protocol": SubscriptionProtocol;
+        "subscription": Subscription;
+    }
+    interface ScCancelDiscount {
+        "comment": string;
+        "protocol": SubscriptionProtocol;
+        "reason": CancellationReason;
+        "subscription": Subscription;
+    }
+    interface ScCancelSurvey {
+        "protocol": SubscriptionProtocol;
+        "reasons": CancellationReason[];
     }
     interface ScCard {
         /**
@@ -2088,6 +2103,12 @@ export namespace Components {
          */
         "order": Checkout;
     }
+    interface ScPremiumTag {
+        /**
+          * The tag's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+    }
     interface ScPriceChoice {
         /**
           * Is this checked by default
@@ -2685,6 +2706,7 @@ export namespace Components {
     }
     interface ScSubscription {
         "heading": string;
+        "protocol": SubscriptionProtocol;
         "query": object;
         "showCancel": boolean;
         "subscription": Subscription;
@@ -2699,14 +2721,19 @@ export namespace Components {
     }
     interface ScSubscriptionCancel {
         "backUrl": string;
+        "comment": string;
         "heading": string;
+        "protocol": SubscriptionProtocol;
+        "reason": CancellationReason;
         "subscription": Subscription;
-        "subscriptionId": string;
         "successUrl": string;
     }
     interface ScSubscriptionDetails {
         "hideRenewalText": boolean;
         "pendingPrice": Price;
+        "subscription": Subscription;
+    }
+    interface ScSubscriptionNextPayment {
         "subscription": Subscription;
     }
     interface ScSubscriptionPayment {
@@ -2726,13 +2753,6 @@ export namespace Components {
           * The subscription
          */
         "subscription": Subscription;
-    }
-    interface ScSubscriptionRenew {
-        "backUrl": string;
-        "heading": string;
-        "subscription": Subscription;
-        "subscriptionId": string;
-        "successUrl": string;
     }
     interface ScSubscriptionStatusBadge {
         /**
@@ -3006,6 +3026,10 @@ export namespace Components {
          */
         "spellcheck": boolean;
         /**
+          * Sets focus on the input.
+         */
+        "triggerFocus": (options?: FocusOptions) => Promise<void>;
+        /**
           * The textarea's value attribute.
          */
         "value": string;
@@ -3103,6 +3127,7 @@ export namespace Components {
         "successUrl": string;
     }
     interface ScUpgradeRequired {
+        "required": boolean;
         /**
           * The tag's size.
          */
@@ -3134,6 +3159,18 @@ export interface ScAlertCustomEvent<T> extends CustomEvent<T> {
 export interface ScButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScButtonElement;
+}
+export interface ScCancelDialogCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCancelDialogElement;
+}
+export interface ScCancelDiscountCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCancelDiscountElement;
+}
+export interface ScCancelSurveyCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCancelSurveyElement;
 }
 export interface ScCartHeaderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -3331,6 +3368,10 @@ export interface ScStripePaymentRequestCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScStripePaymentRequestElement;
 }
+export interface ScSubscriptionCancelCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScSubscriptionCancelElement;
+}
 export interface ScSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScSwitchElement;
@@ -3407,6 +3448,24 @@ declare global {
     var HTMLScButtonGroupElement: {
         prototype: HTMLScButtonGroupElement;
         new (): HTMLScButtonGroupElement;
+    };
+    interface HTMLScCancelDialogElement extends Components.ScCancelDialog, HTMLStencilElement {
+    }
+    var HTMLScCancelDialogElement: {
+        prototype: HTMLScCancelDialogElement;
+        new (): HTMLScCancelDialogElement;
+    };
+    interface HTMLScCancelDiscountElement extends Components.ScCancelDiscount, HTMLStencilElement {
+    }
+    var HTMLScCancelDiscountElement: {
+        prototype: HTMLScCancelDiscountElement;
+        new (): HTMLScCancelDiscountElement;
+    };
+    interface HTMLScCancelSurveyElement extends Components.ScCancelSurvey, HTMLStencilElement {
+    }
+    var HTMLScCancelSurveyElement: {
+        prototype: HTMLScCancelSurveyElement;
+        new (): HTMLScCancelSurveyElement;
     };
     interface HTMLScCardElement extends Components.ScCard, HTMLStencilElement {
     }
@@ -3990,6 +4049,12 @@ declare global {
         prototype: HTMLScPaypalButtonsElement;
         new (): HTMLScPaypalButtonsElement;
     };
+    interface HTMLScPremiumTagElement extends Components.ScPremiumTag, HTMLStencilElement {
+    }
+    var HTMLScPremiumTagElement: {
+        prototype: HTMLScPremiumTagElement;
+        new (): HTMLScPremiumTagElement;
+    };
     interface HTMLScPriceChoiceElement extends Components.ScPriceChoice, HTMLStencilElement {
     }
     var HTMLScPriceChoiceElement: {
@@ -4140,6 +4205,12 @@ declare global {
         prototype: HTMLScSubscriptionDetailsElement;
         new (): HTMLScSubscriptionDetailsElement;
     };
+    interface HTMLScSubscriptionNextPaymentElement extends Components.ScSubscriptionNextPayment, HTMLStencilElement {
+    }
+    var HTMLScSubscriptionNextPaymentElement: {
+        prototype: HTMLScSubscriptionNextPaymentElement;
+        new (): HTMLScSubscriptionNextPaymentElement;
+    };
     interface HTMLScSubscriptionPaymentElement extends Components.ScSubscriptionPayment, HTMLStencilElement {
     }
     var HTMLScSubscriptionPaymentElement: {
@@ -4151,12 +4222,6 @@ declare global {
     var HTMLScSubscriptionPaymentMethodElement: {
         prototype: HTMLScSubscriptionPaymentMethodElement;
         new (): HTMLScSubscriptionPaymentMethodElement;
-    };
-    interface HTMLScSubscriptionRenewElement extends Components.ScSubscriptionRenew, HTMLStencilElement {
-    }
-    var HTMLScSubscriptionRenewElement: {
-        prototype: HTMLScSubscriptionRenewElement;
-        new (): HTMLScSubscriptionRenewElement;
     };
     interface HTMLScSubscriptionStatusBadgeElement extends Components.ScSubscriptionStatusBadge, HTMLStencilElement {
     }
@@ -4311,6 +4376,9 @@ declare global {
         "sc-breadcrumbs": HTMLScBreadcrumbsElement;
         "sc-button": HTMLScButtonElement;
         "sc-button-group": HTMLScButtonGroupElement;
+        "sc-cancel-dialog": HTMLScCancelDialogElement;
+        "sc-cancel-discount": HTMLScCancelDiscountElement;
+        "sc-cancel-survey": HTMLScCancelSurveyElement;
         "sc-card": HTMLScCardElement;
         "sc-cart": HTMLScCartElement;
         "sc-cart-form": HTMLScCartFormElement;
@@ -4408,6 +4476,7 @@ declare global {
         "sc-payment-selected": HTMLScPaymentSelectedElement;
         "sc-paypal-add-method": HTMLScPaypalAddMethodElement;
         "sc-paypal-buttons": HTMLScPaypalButtonsElement;
+        "sc-premium-tag": HTMLScPremiumTagElement;
         "sc-price-choice": HTMLScPriceChoiceElement;
         "sc-price-choices": HTMLScPriceChoicesElement;
         "sc-price-input": HTMLScPriceInputElement;
@@ -4433,9 +4502,9 @@ declare global {
         "sc-subscription-ad-hoc-confirm": HTMLScSubscriptionAdHocConfirmElement;
         "sc-subscription-cancel": HTMLScSubscriptionCancelElement;
         "sc-subscription-details": HTMLScSubscriptionDetailsElement;
+        "sc-subscription-next-payment": HTMLScSubscriptionNextPaymentElement;
         "sc-subscription-payment": HTMLScSubscriptionPaymentElement;
         "sc-subscription-payment-method": HTMLScSubscriptionPaymentMethodElement;
-        "sc-subscription-renew": HTMLScSubscriptionRenewElement;
         "sc-subscription-status-badge": HTMLScSubscriptionStatusBadgeElement;
         "sc-subscription-switch": HTMLScSubscriptionSwitchElement;
         "sc-subscriptions-list": HTMLScSubscriptionsListElement;
@@ -4648,6 +4717,27 @@ declare namespace LocalJSX {
     interface ScButtonGroup {
         "label"?: string;
         "separate"?: boolean;
+    }
+    interface ScCancelDialog {
+        "onScRefresh"?: (event: ScCancelDialogCustomEvent<void>) => void;
+        "onScRequestClose"?: (event: ScCancelDialogCustomEvent<'close-button' | 'keyboard' | 'overlay'>) => void;
+        "open"?: boolean;
+        "protocol"?: SubscriptionProtocol;
+        "subscription"?: Subscription;
+    }
+    interface ScCancelDiscount {
+        "comment"?: string;
+        "onScCancel"?: (event: ScCancelDiscountCustomEvent<void>) => void;
+        "onScPreserved"?: (event: ScCancelDiscountCustomEvent<void>) => void;
+        "protocol"?: SubscriptionProtocol;
+        "reason"?: CancellationReason;
+        "subscription"?: Subscription;
+    }
+    interface ScCancelSurvey {
+        "onScAbandon"?: (event: ScCancelSurveyCustomEvent<void>) => void;
+        "onScSubmitReason"?: (event: ScCancelSurveyCustomEvent<{ reason: CancellationReason; comment: string }>) => void;
+        "protocol"?: SubscriptionProtocol;
+        "reasons"?: CancellationReason[];
     }
     interface ScCard {
         /**
@@ -6821,6 +6911,12 @@ declare namespace LocalJSX {
          */
         "order"?: Checkout;
     }
+    interface ScPremiumTag {
+        /**
+          * The tag's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+    }
     interface ScPriceChoice {
         /**
           * Is this checked by default
@@ -7497,6 +7593,7 @@ declare namespace LocalJSX {
     }
     interface ScSubscription {
         "heading"?: string;
+        "protocol"?: SubscriptionProtocol;
         "query"?: object;
         "showCancel"?: boolean;
         "subscription"?: Subscription;
@@ -7511,14 +7608,21 @@ declare namespace LocalJSX {
     }
     interface ScSubscriptionCancel {
         "backUrl"?: string;
+        "comment"?: string;
         "heading"?: string;
+        "onScAbandon"?: (event: ScSubscriptionCancelCustomEvent<void>) => void;
+        "onScCancelled"?: (event: ScSubscriptionCancelCustomEvent<void>) => void;
+        "protocol"?: SubscriptionProtocol;
+        "reason"?: CancellationReason;
         "subscription"?: Subscription;
-        "subscriptionId"?: string;
         "successUrl"?: string;
     }
     interface ScSubscriptionDetails {
         "hideRenewalText"?: boolean;
         "pendingPrice"?: Price;
+        "subscription"?: Subscription;
+    }
+    interface ScSubscriptionNextPayment {
         "subscription"?: Subscription;
     }
     interface ScSubscriptionPayment {
@@ -7538,13 +7642,6 @@ declare namespace LocalJSX {
           * The subscription
          */
         "subscription"?: Subscription;
-    }
-    interface ScSubscriptionRenew {
-        "backUrl"?: string;
-        "heading"?: string;
-        "subscription"?: Subscription;
-        "subscriptionId"?: string;
-        "successUrl"?: string;
     }
     interface ScSubscriptionStatusBadge {
         /**
@@ -7946,6 +8043,7 @@ declare namespace LocalJSX {
         "successUrl"?: string;
     }
     interface ScUpgradeRequired {
+        "required"?: boolean;
         /**
           * The tag's size.
          */
@@ -7974,6 +8072,9 @@ declare namespace LocalJSX {
         "sc-breadcrumbs": ScBreadcrumbs;
         "sc-button": ScButton;
         "sc-button-group": ScButtonGroup;
+        "sc-cancel-dialog": ScCancelDialog;
+        "sc-cancel-discount": ScCancelDiscount;
+        "sc-cancel-survey": ScCancelSurvey;
         "sc-card": ScCard;
         "sc-cart": ScCart;
         "sc-cart-form": ScCartForm;
@@ -8071,6 +8172,7 @@ declare namespace LocalJSX {
         "sc-payment-selected": ScPaymentSelected;
         "sc-paypal-add-method": ScPaypalAddMethod;
         "sc-paypal-buttons": ScPaypalButtons;
+        "sc-premium-tag": ScPremiumTag;
         "sc-price-choice": ScPriceChoice;
         "sc-price-choices": ScPriceChoices;
         "sc-price-input": ScPriceInput;
@@ -8096,9 +8198,9 @@ declare namespace LocalJSX {
         "sc-subscription-ad-hoc-confirm": ScSubscriptionAdHocConfirm;
         "sc-subscription-cancel": ScSubscriptionCancel;
         "sc-subscription-details": ScSubscriptionDetails;
+        "sc-subscription-next-payment": ScSubscriptionNextPayment;
         "sc-subscription-payment": ScSubscriptionPayment;
         "sc-subscription-payment-method": ScSubscriptionPaymentMethod;
-        "sc-subscription-renew": ScSubscriptionRenew;
         "sc-subscription-status-badge": ScSubscriptionStatusBadge;
         "sc-subscription-switch": ScSubscriptionSwitch;
         "sc-subscriptions-list": ScSubscriptionsList;
@@ -8137,6 +8239,9 @@ declare module "@stencil/core" {
             "sc-breadcrumbs": LocalJSX.ScBreadcrumbs & JSXBase.HTMLAttributes<HTMLScBreadcrumbsElement>;
             "sc-button": LocalJSX.ScButton & JSXBase.HTMLAttributes<HTMLScButtonElement>;
             "sc-button-group": LocalJSX.ScButtonGroup & JSXBase.HTMLAttributes<HTMLScButtonGroupElement>;
+            "sc-cancel-dialog": LocalJSX.ScCancelDialog & JSXBase.HTMLAttributes<HTMLScCancelDialogElement>;
+            "sc-cancel-discount": LocalJSX.ScCancelDiscount & JSXBase.HTMLAttributes<HTMLScCancelDiscountElement>;
+            "sc-cancel-survey": LocalJSX.ScCancelSurvey & JSXBase.HTMLAttributes<HTMLScCancelSurveyElement>;
             "sc-card": LocalJSX.ScCard & JSXBase.HTMLAttributes<HTMLScCardElement>;
             "sc-cart": LocalJSX.ScCart & JSXBase.HTMLAttributes<HTMLScCartElement>;
             "sc-cart-form": LocalJSX.ScCartForm & JSXBase.HTMLAttributes<HTMLScCartFormElement>;
@@ -8234,6 +8339,7 @@ declare module "@stencil/core" {
             "sc-payment-selected": LocalJSX.ScPaymentSelected & JSXBase.HTMLAttributes<HTMLScPaymentSelectedElement>;
             "sc-paypal-add-method": LocalJSX.ScPaypalAddMethod & JSXBase.HTMLAttributes<HTMLScPaypalAddMethodElement>;
             "sc-paypal-buttons": LocalJSX.ScPaypalButtons & JSXBase.HTMLAttributes<HTMLScPaypalButtonsElement>;
+            "sc-premium-tag": LocalJSX.ScPremiumTag & JSXBase.HTMLAttributes<HTMLScPremiumTagElement>;
             "sc-price-choice": LocalJSX.ScPriceChoice & JSXBase.HTMLAttributes<HTMLScPriceChoiceElement>;
             "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
@@ -8259,9 +8365,9 @@ declare module "@stencil/core" {
             "sc-subscription-ad-hoc-confirm": LocalJSX.ScSubscriptionAdHocConfirm & JSXBase.HTMLAttributes<HTMLScSubscriptionAdHocConfirmElement>;
             "sc-subscription-cancel": LocalJSX.ScSubscriptionCancel & JSXBase.HTMLAttributes<HTMLScSubscriptionCancelElement>;
             "sc-subscription-details": LocalJSX.ScSubscriptionDetails & JSXBase.HTMLAttributes<HTMLScSubscriptionDetailsElement>;
+            "sc-subscription-next-payment": LocalJSX.ScSubscriptionNextPayment & JSXBase.HTMLAttributes<HTMLScSubscriptionNextPaymentElement>;
             "sc-subscription-payment": LocalJSX.ScSubscriptionPayment & JSXBase.HTMLAttributes<HTMLScSubscriptionPaymentElement>;
             "sc-subscription-payment-method": LocalJSX.ScSubscriptionPaymentMethod & JSXBase.HTMLAttributes<HTMLScSubscriptionPaymentMethodElement>;
-            "sc-subscription-renew": LocalJSX.ScSubscriptionRenew & JSXBase.HTMLAttributes<HTMLScSubscriptionRenewElement>;
             "sc-subscription-status-badge": LocalJSX.ScSubscriptionStatusBadge & JSXBase.HTMLAttributes<HTMLScSubscriptionStatusBadgeElement>;
             "sc-subscription-switch": LocalJSX.ScSubscriptionSwitch & JSXBase.HTMLAttributes<HTMLScSubscriptionSwitchElement>;
             "sc-subscriptions-list": LocalJSX.ScSubscriptionsList & JSXBase.HTMLAttributes<HTMLScSubscriptionsListElement>;

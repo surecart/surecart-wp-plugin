@@ -165,6 +165,16 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 	 * @return boolean Does user have permission.
 	 */
 	public function edit_sc_subscription( $user, $args, $allcaps ) {
+		// no user to check.
+		if ( empty( $user->ID ) ) {
+			return false;
+		}
+
+		// user is not a customer.
+		if ( ! $user->isCustomer() ) {
+			return false;
+		}
+
 		if ( ! empty( $allcaps['edit_sc_subscriptions'] ) ) {
 			return true;
 		}
