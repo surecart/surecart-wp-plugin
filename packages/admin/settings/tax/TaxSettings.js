@@ -82,10 +82,10 @@ export default () => {
 						});
 					}}
 				>
-					{__('Enable Default Tax', 'surecart')}
+					{__('Enable A Fallback Tax Rate', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							'Whether or not to use the default rate when a specific tax registration is not found.',
+							'If enabled, you can enter a default tax rate when a specific tax registration is not found.',
 							'surecart'
 						)}
 					</span>
@@ -96,13 +96,16 @@ export default () => {
 						type="number"
 						attribute="sc-default-rate"
 						label={__('Default Rate', 'surecart')}
-						help={__('The default tax rate to use for checkouts when a specific tax registration is not found. This will only apply if default tax enabled.', 'surecart')}
+						help={__(
+							'The default tax rate to use for checkouts when a specific tax registration is not found.',
+							'surecart'
+						)}
 						value={item?.default_rate || null}
 						onScInput={(e) => {
 							e.preventDefault();
 							editItem({
 								default_rate: e.target.value,
-							})
+							});
 						}}
 						required={item?.default_tax_enabled}
 					>
