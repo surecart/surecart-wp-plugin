@@ -55,7 +55,7 @@ export default () => {
 			<SettingsBox
 				title={__('Notification Settings', 'surecart')}
 				description={__(
-					"Use these settings to configure how notifications are sent to your customers. Currently, all emails are sent from notifications@surecart.com, but in the future you'll be able to set your own email server if you'd like.",
+					'Use these settings to configure how notifications are sent to your customers. Currently, all emails are sent from notifications@surecart.com.',
 					'surecart'
 				)}
 				loading={!hasLoadedItem}
