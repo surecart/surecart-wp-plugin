@@ -165,6 +165,16 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 	 * @return boolean Does user have permission.
 	 */
 	public function edit_sc_subscription( $user, $args, $allcaps ) {
+		// no user to check.
+		if ( empty( $user->ID ) ) {
+			return false;
+		}
+
+		// user is not a customer.
+		if ( ! $user->isCustomer() ) {
+			return false;
+		}
+
 		if ( ! empty( $allcaps['edit_sc_subscriptions'] ) ) {
 			return true;
 		}
@@ -188,6 +198,10 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 
 		// check if user can modify quantity.
 		if ( ! empty( $params['quantity'] ) && $params['quantity'] > 1 && ! $this->update_sc_subscription_quantity( $user, $args, $allcaps ) ) {
+			return false;
+		}
+
+		if ( empty( $args[2] ) ) {
 			return false;
 		}
 
