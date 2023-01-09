@@ -94,7 +94,6 @@ export default () => {
 					<ScInput
 						className="sc-default-rate"
 						type="number"
-						attribute="sc-default-rate"
 						label={__('Fallback Rate', 'surecart')}
 						help={__(
 							'The fallback tax rate to use for checkouts when a specific tax registration is not found.',
