@@ -44,6 +44,10 @@
     margin-right: var(--sc-spacing-xx-small);
   }
 
+  .total-price {
+    white-space: nowrap;
+  }
+
   &--open {
     .collapse-link__icon {
       transform: rotate(180deg);
