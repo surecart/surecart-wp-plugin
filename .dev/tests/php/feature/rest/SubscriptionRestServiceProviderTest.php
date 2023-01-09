@@ -28,7 +28,8 @@ class SubscriptionRestServiceProviderTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * @group failing
+	 * @group api
+	 * @group permissions
 	 */
 	public function test_can_preserve_permissions() {
 		// mock the requests in the container
