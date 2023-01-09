@@ -2,19 +2,15 @@
 import { css, jsx } from '@emotion/core';
 import {
 	ScInput,
-<<<<<<< HEAD
-	ScStackedList,
-	ScSwitch,
-	ScTag,
-=======
 	ScPremiumTag,
 	ScStackedList,
 	ScSwitch,
 	ScUpgradeRequired,
->>>>>>> next
 } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+
+/** @jsx jsx */
 import Error from '../../components/Error';
 import useEntity from '../../hooks/useEntity';
 import SettingsBox from '../SettingsBox';
@@ -60,7 +56,7 @@ export default () => {
 			<SettingsBox
 				title={__('Notification Settings', 'surecart')}
 				description={__(
-					'Use these settings to configure how notifications are sent to your customers. Currently, all emails are sent from notifications@surecart.com.',
+					'Use these settings to configure how notifications are sent to your customers.',
 					'surecart'
 				)}
 				loading={!hasLoadedItem}
