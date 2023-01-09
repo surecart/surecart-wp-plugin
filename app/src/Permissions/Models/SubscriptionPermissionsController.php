@@ -201,10 +201,6 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 			return false;
 		}
 
-		if ( empty( $args[2] ) ) {
-			return false;
-		}
-
 		return $this->belongsToUser( Subscription::class, $args[2], $user );
 	}
 }
