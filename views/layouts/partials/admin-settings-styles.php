@@ -72,6 +72,22 @@
 		border-right: 1px solid var(--sc-color-gray-200);
 		z-index: 0;
 	}
+
+	@media screen and (max-width:960px) {
+		#sc-settings-content::before {
+			width: 330px;
+		}
+	}
+
+	@media screen and (max-width:782px) {
+		#sc-settings-content {
+			flex-direction: column;
+		}
+		#sc-settings-content::before {
+			display: none;
+		}
+	}
+
 	#sc-settings {
 		flex: 1;
 	}
