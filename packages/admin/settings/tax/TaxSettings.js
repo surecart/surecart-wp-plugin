@@ -100,12 +100,11 @@ export default () => {
 							'surecart'
 						)}
 						value={item?.default_rate || null}
-						onScInput={(e) => {
-							e.preventDefault();
+						onScInput={(e) =>
 							editItem({
 								default_rate: e.target.value,
-							});
-						}}
+							})
+						}
 						required={item?.default_tax_enabled}
 					>
 						<span slot="suffix">%</span>
