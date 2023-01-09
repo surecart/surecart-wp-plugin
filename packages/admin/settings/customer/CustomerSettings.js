@@ -1,3 +1,4 @@
+/** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import {
 	ScInput,
@@ -7,8 +8,6 @@ import {
 } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-
-/** @jsx jsx */
 import Error from '../../components/Error';
 import useEntity from '../../hooks/useEntity';
 import SettingsBox from '../SettingsBox';
@@ -41,7 +40,7 @@ export default () => {
 
 	return (
 		<SettingsTemplate
-			title={__('Notifications', 'surecart')}
+			title={__('Notifications!', 'surecart')}
 			icon={<sc-icon name="bell"></sc-icon>}
 			onSubmit={onSubmit}
 		>
@@ -115,6 +114,23 @@ export default () => {
 					</span>
 				</ScSwitch>
 
+				{!!item?.order_enabled && (
+					<ScSwitch
+						checked={item?.free_order_enabled}
+						onScChange={(e) => {
+							editItem({ free_order_enabled: e.target.checked });
+						}}
+					>
+						{__('Free Order Emails', 'surecart')}
+						<span slot="description" style={{ lineHeight: '1.4' }}>
+							{__(
+								'Send an order email to customers even when the order is free.',
+								'surecart'
+							)}
+						</span>
+					</ScSwitch>
+				)}
+
 				<ScSwitch
 					checked={item?.refund_enabled}
 					onClick={(e) => {
@@ -128,21 +144,6 @@ export default () => {
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
 							'Send a quick reminder when a refund is created for a customer. These emails contain the amount and payment method being refunded.',
-							'surecart'
-						)}
-					</span>
-				</ScSwitch>
-
-				<ScSwitch
-					checked={item?.free_order_enabled}
-					onScChange={(e) => {
-						editItem({ free_order_enabled: e.target.checked });
-					}}
-				>
-					{__('Free Order Emails', 'surecart')}
-					<span slot="description" style={{ lineHeight: '1.4' }}>
-						{__(
-							'Send an order email to customers even when the order is free.',
 							'surecart'
 						)}
 					</span>
