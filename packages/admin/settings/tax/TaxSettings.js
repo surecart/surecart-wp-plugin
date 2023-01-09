@@ -5,6 +5,7 @@ import {
 	ScIcon,
 	ScSelect,
 	ScSwitch,
+	ScInput,
 } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
@@ -73,6 +74,44 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
+				<ScSwitch
+					checked={item?.default_tax_enabled}
+					onClick={(e) => {
+						e.preventDefault();
+						editItem({
+							default_tax_enabled: !item?.default_tax_enabled,
+						});
+					}}
+				>
+					{__('Enable A Fallback Tax Rate', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'If enabled, you can enter a tax rate to apply when a specific tax registration is not found.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				{item?.default_tax_enabled && (
+					<ScInput
+						type="number"
+						label={__('Fallback Rate', 'surecart')}
+						help={__(
+							'The fallback tax rate to use for checkouts when a specific tax registration is not found.',
+							'surecart'
+						)}
+						min="0"
+						max="100"
+						value={item?.default_rate}
+						onScInput={(e) =>
+							editItem({
+								default_rate: e.target.value,
+							})
+						}
+						required={item?.default_tax_enabled}
+					>
+						<span slot="suffix">%</span>
+					</ScInput>
+				)}
 				<ScAddress
 					label={__('Address', 'surecart')}
 					required={false}
