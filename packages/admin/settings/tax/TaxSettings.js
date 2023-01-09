@@ -85,7 +85,7 @@ export default () => {
 					{__('Enable A Fallback Tax Rate', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							'If enabled, you can enter a default tax rate when a specific tax registration is not found.',
+							'If enabled, you can enter a tax rate to apply when a specific tax registration is not found.',
 							'surecart'
 						)}
 					</span>
