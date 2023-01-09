@@ -95,9 +95,9 @@ export default () => {
 						className="sc-default-rate"
 						type="number"
 						attribute="sc-default-rate"
-						label={__('Default Rate', 'surecart')}
+						label={__('Fallback Rate', 'surecart')}
 						help={__(
-							'The default tax rate to use for checkouts when a specific tax registration is not found.',
+							'The fallback tax rate to use for checkouts when a specific tax registration is not found.',
 							'surecart'
 						)}
 						value={item?.default_rate || null}
