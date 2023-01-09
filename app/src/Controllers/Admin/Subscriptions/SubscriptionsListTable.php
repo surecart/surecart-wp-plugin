@@ -199,18 +199,13 @@ class SubscriptionsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_remaining_payments( $subscription ) {
-		if ( null === $subscription->remaining_period_count ) {
-			if ( 'completed' === $subscription->status ) {
-				return '-';
-			} else {
-				return '&infin;';
-			}
-		}
-		if ( 0 === $subscription->remaining_period_count ) {
-			return __( 'None', 'surecart' );
+		// handle non-finite subscriptions.
+		if ( ! $subscription->finite ) {
+			return 'completed' === $subscription->status ? '-' : '&infin;';
 		}
 
-		return (int) $subscription->remaining_period_count;
+		// handle payment plans.
+		return 0 === $subscription->remaining_period_count ? __( 'None', 'surecart' ) : (int) $subscription->remaining_period_count;
 	}
 
 	/**
