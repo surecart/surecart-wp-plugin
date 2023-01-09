@@ -1,3 +1,4 @@
+/** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import {
 	ScInput,
@@ -42,7 +43,7 @@ export default () => {
 
 	return (
 		<SettingsTemplate
-			title={__('Notifications', 'surecart')}
+			title={__('Notifications!', 'surecart')}
 			icon={<sc-icon name="bell"></sc-icon>}
 			onSubmit={onSubmit}
 		>
@@ -55,7 +56,7 @@ export default () => {
 			<SettingsBox
 				title={__('Notification Settings', 'surecart')}
 				description={__(
-					'Use these settings to configure how notifications are sent to your customers. Currently, all emails are sent from notifications@surecart.com.',
+					'Use these settings to configure how notifications are sent to your customers.',
 					'surecart'
 				)}
 				loading={!hasLoadedItem}
@@ -115,6 +116,23 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
+
+				{!!item?.order_enabled && (
+					<ScSwitch
+						checked={item?.free_order_enabled}
+						onScChange={(e) => {
+							editItem({ free_order_enabled: e.target.checked });
+						}}
+					>
+						{__('Free Order Emails', 'surecart')}
+						<span slot="description" style={{ lineHeight: '1.4' }}>
+							{__(
+								'Send an order email to customers even when the order is free.',
+								'surecart'
+							)}
+						</span>
+					</ScSwitch>
+				)}
 
 				<ScSwitch
 					checked={item?.refund_enabled}
