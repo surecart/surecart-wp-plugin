@@ -98,6 +98,8 @@ export default () => {
 							'The fallback tax rate to use for checkouts when a specific tax registration is not found.',
 							'surecart'
 						)}
+						min="0"
+						max="100"
 						value={item?.default_rate}
 						onScInput={(e) =>
 							editItem({
