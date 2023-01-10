@@ -116,15 +116,19 @@ export default ({ download, product, className }) => {
 	const downloadItem = async () => {
 		setLoading(true);
 		try {
-			const media = await apiFetch({
-				path: `surecart/v1/medias/${download?.media?.id}?expose_for=60`,
-			});
-			if (!media?.url) {
-				throw {
-					message: __('Could not download the file.', 'surecart'),
-				};
+			if (download?.url) {
+				downloadFile(download.url, download?.name ?? 'file');
+			} else {
+				const media = await apiFetch({
+					path: `surecart/v1/medias/${download?.media?.id}?expose_for=60`,
+				});
+				if (!media?.url) {
+					throw {
+						message: __('Could not download the file.', 'surecart'),
+					};
+				}
+				downloadFile(media?.url, media.filename);
 			}
-			downloadFile(media?.url, media.filename);
 		} catch (e) {
 			console.error(e);
 			handleError(e);
@@ -153,6 +157,21 @@ export default ({ download, product, className }) => {
 		}, 0);
 	};
 
+	const renderFileExt = () => {
+		if (download?.media?.filename) {
+			return download.media.filename.split?.('.')?.pop?.();
+		}
+		if (download?.url) {
+			try {
+				const url = new URL(download.url);
+				return url.pathname.split?.('.')?.pop?.();
+			} catch (err) {
+				console.error(err);
+			}
+		}
+		return <ScIcon name="file" />;
+	};
+
 	return (
 		<Fragment>
 			<ScStackedListRow
@@ -174,12 +193,13 @@ export default ({ download, product, className }) => {
 							display: flex;
 							align-items: center;
 							justify-content: center;
-							padding: 1.25em;
+							width: 4em;
+							height: 3.4em;
 							background: var(--sc-color-gray-200);
 							border-radius: var(--sc-border-radius-small);
 						`}
 					>
-						{download?.media?.filename?.split?.('.')?.pop?.()}
+						{renderFileExt()}
 					</div>
 					<div
 						css={css`
@@ -201,7 +221,7 @@ export default ({ download, product, className }) => {
 								font-weight: bold;
 							`}
 						>
-							{download?.media.filename}
+							{download?.media?.filename ?? download?.name}
 						</div>
 						<div
 							css={css`
@@ -210,7 +230,11 @@ export default ({ download, product, className }) => {
 								gap: 0.5em;
 							`}
 						>
-							<ScFormatBytes value={download?.media?.byte_size} />
+							{download?.media?.byte_size && (
+								<ScFormatBytes
+									value={download.media.byte_size}
+								/>
+							)}
 							{!!download?.media?.release_json?.version && (
 								<ScTag
 									type="primary"
@@ -240,20 +264,28 @@ export default ({ download, product, className }) => {
 						<ScIcon name="more-horizontal" />
 					</ScButton>
 					<ScMenu>
-						<MediaLibrary
-							onSelect={replaceItem}
-							multiple={false}
-							render={({ setOpen }) => {
-								return (
-									<ScMenuItem onClick={() => setOpen(true)}>
-										<ScIcon name="repeat" slot="prefix" />
-										{__('Replace', 'surecart')}
-									</ScMenuItem>
-								);
-							}}
-						></MediaLibrary>
-
-						<ScMenuDivider></ScMenuDivider>
+						{download?.media && (
+							<Fragment>
+								<MediaLibrary
+									onSelect={replaceItem}
+									multiple={false}
+									render={({ setOpen }) => {
+										return (
+											<ScMenuItem
+												onClick={() => setOpen(true)}
+											>
+												<ScIcon
+													name="repeat"
+													slot="prefix"
+												/>
+												{__('Replace', 'surecart')}
+											</ScMenuItem>
+										);
+									}}
+								></MediaLibrary>
+								<ScMenuDivider></ScMenuDivider>
+							</Fragment>
+						)}
 
 						<ScMenuItem onClick={downloadItem}>
 							<ScIcon name="download-cloud" slot="prefix" />
