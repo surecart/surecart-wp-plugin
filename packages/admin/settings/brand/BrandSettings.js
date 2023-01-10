@@ -7,6 +7,7 @@ import {
 	ScFormControl,
 	ScInput,
 	ScSelect,
+	ScSwitch,
 } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
@@ -73,8 +74,6 @@ export default () => {
 						grid-template-columns: repeat(2, minmax(0, 1fr));
 					`}
 				>
-					<Logo brand={item} editBrand={editItem} />
-
 					<ScFormControl
 						label={__('Brand Color', 'surecart')}
 						help={__(
@@ -114,6 +113,14 @@ export default () => {
 							</ScInput>
 						</div>
 					</ScFormControl>
+					<Logo brand={item} editBrand={editItem} />
+				</div>
+				<div
+					css={css`
+						gap: 2em;
+						display: grid;
+					`}
+				>
 					<ScSelect
 						label={__('Select Theme (Beta)', 'surecart')}
 						placeholder={__('Select Theme', 'surecart')}
@@ -134,7 +141,23 @@ export default () => {
 								value: 'dark',
 							},
 						]}
-					></ScSelect>
+					/>
+					<ScSwitch
+						checked={!item?.powered_by_enabled}
+						onScChange={(e) =>
+							editItem({
+								powered_by_enabled: !e.target.checked,
+							})
+						}
+					>
+						{__('Remove SureCart Branding', 'surecart')}
+						<span slot="description">
+							{__(
+								'Remove "Powered By SureCart" in the footer of emails and reciepts/invoices.',
+								'surecart'
+							)}
+						</span>
+					</ScSwitch>
 				</div>
 			</SettingsBox>
 
