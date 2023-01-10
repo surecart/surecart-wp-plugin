@@ -53,6 +53,8 @@ return [
 		\SureCart\Rest\StatisticRestServiceProvider::class,
 		\SureCart\Rest\IntegrationsRestServiceProvider::class,
 		\SureCart\Rest\IntegrationProvidersRestServiceProvider::class,
+		\SureCart\Rest\CancellationActRestServiceProvider::class,
+		\SureCart\Rest\CancellationReasonRestServiceProvider::class,
 		\SureCart\Rest\CustomerRestServiceProvider::class,
 		\SureCart\Rest\CustomerLinksRestServiceProvider::class,
 		\SureCart\Rest\PaymentMethodsRestServiceProvider::class,
@@ -262,6 +264,7 @@ return [
 	'models'                 => [
 		'abandoned_checkout' => \SureCart\Models\AbandonedCheckout::class,
 		'account'            => \SureCart\Models\Account::class,
+		'cancellation_reason'=> \SureCart\Models\CancellationReason::class,
 		'charge'             => \SureCart\Models\Charge::class,
 		'coupon'             => \SureCart\Models\Coupon::class,
 		'customer'           => \SureCart\Models\Customer::class,

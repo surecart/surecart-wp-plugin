@@ -72,18 +72,41 @@
 		border-right: 1px solid var(--sc-color-gray-200);
 		z-index: 0;
 	}
-	#sc-settings {
-		flex: 1;
-	}
+
 	#sc-nav {
 		padding: 20px;
 		display: flex;
 		flex-direction: column;
 		gap: 2px;
 		width: 100%;
-		max-width: 250px;
+		max-width: 255px;
 		overflow: auto;
 		position: relative;
+	}
+
+	@media screen and (max-width:960px) {
+		#sc-settings-content::before {
+			width: 330px;
+		}
+	}
+
+	@media screen and (max-width:782px) {
+		#sc-settings-content {
+			flex-direction: column;
+		}
+		#sc-nav {
+			width: 100%;
+			max-width: none;
+			background: white;
+			border-bottom: 1px solid var(--sc-color-gray-200);
+		}
+		#sc-settings-content::before {
+			display: none;
+		}
+	}
+
+	#sc-settings {
+		flex: 1;
 	}
 
 	.surecart-cta {

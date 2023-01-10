@@ -28,18 +28,8 @@ import Conditions from './modules/Conditions';
 import Name from './modules/Name';
 import Price from './modules/Price';
 import Priority from './modules/Priority';
-import Behavior from './modules/Behavior';
 import Description from './modules/Description';
 import CTA from './modules/CTA';
-import Preview from './modules/Preview';
-// import ActionsDropdown from './components/product/ActionsDropdown';
-// import SaveButton from './components/product/SaveButton';
-// import Details from './modules/Details';
-// import Downloads from './modules/Downloads';
-// import Integrations from './modules/integrations/Integrations';
-// import Licensing from './modules/Licensing';
-// import Prices from './modules/Prices';
-// import Sidebar from './Sidebar';
 
 export default () => {
 	const { createSuccessNotice, createErrorNotice } =
@@ -179,11 +169,6 @@ export default () => {
 				<>
 					{/* <Preview bump={bump} loading={!hasLoadedBump} /> */}
 					<Priority
-						bump={bump}
-						updateBump={editBump}
-						loading={!hasLoadedBump}
-					/>
-					<Behavior
 						bump={bump}
 						updateBump={editBump}
 						loading={!hasLoadedBump}

@@ -205,7 +205,7 @@ The second type of integrations are done with SureTriggers, which is like Zapier
 There are also some special features for site to site connections. So you can sell products on one site with SureCart then add the user to another site where your content may be. This is great for online courses or membership setups.
 
 ## Join The SureCart Facebook Group ##
-Join our Facebook group community: Learn the tricks and techniques that other SureCart users are using to grow their business. Also, get exciting insider information on upcoming feature releases.
+Join our [Facebook group community](https://www.facebook.com/groups/surecrafted): Learn the tricks and techniques that other SureCart users are using to grow their business. Also, get exciting insider information on upcoming feature releases.
 
 [Terms And Conditions](https://surecart.com/terms)
 [Privacy Policy](https://surecart.com/privacy)

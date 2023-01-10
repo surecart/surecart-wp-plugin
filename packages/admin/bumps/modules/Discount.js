@@ -9,6 +9,7 @@ import {
 	ScSelect,
 } from '@surecart/components-react';
 import useEntity from '../../hooks/useEntity';
+import Behavior from './Behavior';
 
 export default ({ bump, updateBump, loading }) => {
 	const [type, setType] = useState('percentage');
@@ -33,61 +34,77 @@ export default ({ bump, updateBump, loading }) => {
 			title={__('Discount', 'surecart')}
 			loading={loading || !hasLoadedPrice}
 		>
-			<ScFormControl label={__('Discount Amount', 'surecart')}>
-				<ScFlex>
-					<ScSelect
-						unselect={false}
-						style={{ width: '25%' }}
-						value={type}
-						choices={[
-							{
-								label: __('Percentage', 'surecart'),
-								value: 'percentage',
-							},
-							{
-								label: __('Fixed', 'surecart'),
-								value: 'fixed',
-							},
-						]}
-						onScChange={(e) => setType(e.target.value)}
-					/>
-					{type === 'percentage' ? (
-						<ScInput
-							style={{ flex: 1 }}
-							className="sc-percent-off"
-							type="number"
-							min="0"
-							disabled={type !== 'percentage'}
-							max="100"
-							attribute="percent_off"
-							value={bump?.percent_off || null}
-							onScInput={(e) =>
-								updateBump({
-									amount_off: null,
-									percent_off: e.target.value,
-								})
-							}
-						>
-							<span slot="suffix">%</span>
-						</ScInput>
-					) : (
-						<ScPriceInput
-							style={{ flex: 1 }}
-							className="sc-amount-off"
-							currencyCode={price?.currency || scData?.currency}
-							disabled={type === 'percentage'}
-							attribute="amount_off"
-							value={bump?.amount_off || null}
-							onScInput={(e) => {
-								updateBump({
-									percent_off: null,
-									amount_off: e.target.value,
-								});
-							}}
+			<ScFlex
+				flexDirection="column"
+				style={{ '--sc-flex-column-gap': '1.5em' }}
+			>
+				<ScFormControl label={__('Discount Amount', 'surecart')}>
+					<ScFlex>
+						<ScSelect
+							unselect={false}
+							style={{ width: '25%' }}
+							value={type}
+							choices={[
+								{
+									label: __('Percentage', 'surecart'),
+									value: 'percentage',
+								},
+								{
+									label: __('Fixed', 'surecart'),
+									value: 'fixed',
+								},
+							]}
+							onScChange={(e) => setType(e.target.value)}
 						/>
-					)}
-				</ScFlex>
-			</ScFormControl>
+						{type === 'percentage' ? (
+							<ScInput
+								style={{ flex: 1 }}
+								className="sc-percent-off"
+								type="number"
+								min="0"
+								disabled={type !== 'percentage'}
+								max="100"
+								attribute="percent_off"
+								value={bump?.percent_off || null}
+								onScInput={(e) => {
+									updateBump({
+										amount_off: null,
+										percent_off: e.target.value,
+									});
+								}}
+							>
+								<span slot="suffix">%</span>
+							</ScInput>
+						) : (
+							<ScPriceInput
+								style={{ flex: 1 }}
+								className="sc-amount-off"
+								currencyCode={
+									price?.currency || scData?.currency
+								}
+								disabled={type === 'percentage'}
+								attribute="amount_off"
+								value={bump?.amount_off || null}
+								onScInput={(e) => {
+									updateBump({
+										percent_off: null,
+										amount_off: e.target.value,
+									});
+								}}
+							/>
+						)}
+					</ScFlex>
+				</ScFormControl>
+				{(bump?.amount_off || bump?.percent_off) && (
+					<ScFlex>
+						<Behavior
+							bump={bump}
+							updateBump={updateBump}
+							loading={loading}
+						/>
+					</ScFlex>
+				)}
+			</ScFlex>
 		</Box>
 	);
 };

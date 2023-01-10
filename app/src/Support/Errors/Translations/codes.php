@@ -17,6 +17,7 @@ return [
 	'checkout.discount.coupon.invalid'                  => __( 'This coupon is not valid. Please double-check it and try again.', 'surecart' ),
 	'download.current_release'                          => __( 'This download cannot be removed or archived when it is set as the current release.', 'surecart' ),
 	'refund.amount.greater_than_refundable_amount'      => __( 'The refund amount is greater than the refundable amount.', 'surecart' ),
+	'subscription.payment_method.not_reusable'          => __( 'This payment method cannot be used for subscriptions.', 'surecart' ),
 	'subscription.product.one_time'                     => __( 'You cannot add a one-time product to a subscription.', 'surecart' ),
 	'price.blank'                                       => __( 'The price cannot be blank.', 'surecart' ),
 	'price.scratch_amount.greater_than'                 => __( 'The compare at price must be greater than the price.', 'surecart' ),

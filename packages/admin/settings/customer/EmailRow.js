@@ -2,6 +2,7 @@ import { __ } from '@wordpress/i18n';
 import {
 	ScButton,
 	ScIcon,
+	ScPremiumTag,
 	ScStackedListRow,
 	ScUpgradeRequired,
 } from '@surecart/components-react';
@@ -19,7 +20,9 @@ export default ({
 			<strong>
 				{title}
 				{disabled && (
-					<ScUpgradeRequired style={{ marginLeft: '5px' }} />
+					<ScUpgradeRequired style={{ marginLeft: '5px' }}>
+						<ScPremiumTag />
+					</ScUpgradeRequired>
 				)}
 			</strong>
 			<div style={{ opacity: '0.75' }}>{description}</div>
