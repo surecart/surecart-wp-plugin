@@ -8,6 +8,8 @@ import {
 	ScInput,
 	ScSelect,
 	ScSwitch,
+	ScUpgradeRequired,
+	ScPremiumTag,
 } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
@@ -142,22 +144,39 @@ export default () => {
 							},
 						]}
 					/>
-					<ScSwitch
-						checked={!item?.powered_by_enabled}
-						onScChange={(e) =>
-							editItem({
-								powered_by_enabled: !e.target.checked,
-							})
+					<ScUpgradeRequired
+						required={
+							!scData?.entitlements
+								?.optional_upfront_payment_method
 						}
 					>
-						{__('Remove SureCart Branding', 'surecart')}
-						<span slot="description">
-							{__(
-								'Remove "Powered By SureCart" in the footer of emails and reciepts/invoices.',
-								'surecart'
+						<ScSwitch
+							checked={
+								scData?.entitlements?.optional_powered_by
+									? !item?.powered_by_enabled
+									: false
+							}
+							onScChange={(e) =>
+								editItem({
+									powered_by_enabled: scData?.entitlements
+										?.optional_powered_by
+										? !e.target.checked
+										: true,
+								})
+							}
+						>
+							{__('Remove SureCart Branding', 'surecart')}{' '}
+							{!scData?.entitlements?.optional_powered_by && (
+								<ScPremiumTag />
 							)}
-						</span>
-					</ScSwitch>
+							<span slot="description">
+								{__(
+									'Remove "Powered By SureCart" in the footer of emails and reciepts/invoices.',
+									'surecart'
+								)}
+							</span>
+						</ScSwitch>
+					</ScUpgradeRequired>
 				</div>
 			</SettingsBox>
 
