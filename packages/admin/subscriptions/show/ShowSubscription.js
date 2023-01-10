@@ -12,6 +12,7 @@ import {
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
@@ -38,11 +39,24 @@ export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [modal, setModal] = useState();
 	const { saveEntityRecord } = useDispatch(coreStore);
+	const { createErrorNotice } = useDispatch(noticesStore);
 
-	const editSubscription = (data) =>
-		saveEntityRecord('surecart', 'subscription', { id, ...data });
+	const editSubscription = (data) => {
+		try {
+			saveEntityRecord(
+				'surecart',
+				'subscription',
+				{ id, ...data },
+				{ throwOnError: true }
+			);
+		} catch (e) {
+			createErrorNotice(
+				e?.message || __('Something went wrong', 'surecart')
+			);
+		}
+	};
 
-	const { subscription, hasLoadedSubscription } = useSelect(
+	const { subscription, hasLoadedSubscription, isSaving } = useSelect(
 		(select) => {
 			if (!id) return;
 			const queryArgs = [
@@ -77,6 +91,9 @@ export default () => {
 				hasLoadedSubscription: select(coreStore).hasFinishedResolution(
 					'getEntityRecords',
 					queryArgs
+				),
+				isSaving: select(coreStore)?.isSavingEntityRecord?.(
+					...queryArgs
 				),
 			};
 		},
@@ -188,12 +205,12 @@ export default () => {
 				<>
 					<Customer
 						customer={subscription?.customer}
-						loading={!hasLoadedSubscription}
+						loading={!hasLoadedSubscription || isSaving}
 					/>
 					<Purchases subscriptionId={id} />
 					<Tax
 						subscription={subscription}
-						loading={!hasLoadedSubscription}
+						loading={!hasLoadedSubscription || isSaving}
 					/>
 				</>
 			}
@@ -205,7 +222,7 @@ export default () => {
 					<ScButton
 						type="primary"
 						slot="trigger"
-						loading={!hasLoadedSubscription}
+						loading={!hasLoadedSubscription || isSaving}
 						caret
 					>
 						{__('Actions', 'surecart')}
@@ -232,7 +249,7 @@ export default () => {
 					subscription={subscription}
 					customer={subscription?.customer}
 					product={subscription?.price?.product}
-					loading={!hasLoadedSubscription}
+					loading={!hasLoadedSubscription || isSaving}
 				/>
 
 				<CurrentPlan
@@ -240,7 +257,7 @@ export default () => {
 						subscription?.current_period?.checkout?.line_items
 							?.data?.[0]
 					}
-					loading={!hasLoadedSubscription}
+					loading={!hasLoadedSubscription || isSaving}
 					subscription={subscription}
 				/>
 
@@ -254,7 +271,7 @@ export default () => {
 							?.data?.[0]
 					}
 					subscriptionId={id}
-					loading={!hasLoadedSubscription}
+					loading={!hasLoadedSubscription || isSaving}
 				/>
 
 				<Periods subscriptionId={id} />
@@ -263,7 +280,7 @@ export default () => {
 					<PaymentMethod
 						subscription={subscription}
 						updateSubscription={editSubscription}
-						loading={!hasLoadedSubscription}
+						loading={!hasLoadedSubscription || isSaving}
 					/>
 				)}
 			</>
