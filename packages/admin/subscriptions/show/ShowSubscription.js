@@ -9,6 +9,7 @@ import {
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
+	ScBlockUi,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import { store as coreStore } from '@wordpress/core-data';
@@ -39,20 +40,32 @@ export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [modal, setModal] = useState();
 	const { saveEntityRecord } = useDispatch(coreStore);
-	const { createErrorNotice } = useDispatch(noticesStore);
+	const { createErrorNotice, createSuccessNotice } =
+		useDispatch(noticesStore);
 
-	const editSubscription = (data) => {
+	const editSubscription = async (data) => {
 		try {
-			saveEntityRecord(
+			await saveEntityRecord(
 				'surecart',
 				'subscription',
 				{ id, ...data },
 				{ throwOnError: true }
 			);
+			createSuccessNotice(__('Payment method updated.', 'surecart'), {
+				type: 'snackbar',
+			});
 		} catch (e) {
 			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart')
+				e?.message || __('Something went wrong', 'surecart'),
+				{ type: 'snackbar' }
 			);
+			if (e?.additional_errors?.length) {
+				e.additional_errors.forEach(
+					({ message }) =>
+						message &&
+						createErrorNotice(message, { type: 'snackbar' })
+				);
+			}
 		}
 	};
 
@@ -93,7 +106,9 @@ export default () => {
 					queryArgs
 				),
 				isSaving: select(coreStore)?.isSavingEntityRecord?.(
-					...queryArgs
+					'surecart',
+					'subscription',
+					id
 				),
 			};
 		},
@@ -205,12 +220,12 @@ export default () => {
 				<>
 					<Customer
 						customer={subscription?.customer}
-						loading={!hasLoadedSubscription || isSaving}
+						loading={!hasLoadedSubscription}
 					/>
 					<Purchases subscriptionId={id} />
 					<Tax
 						subscription={subscription}
-						loading={!hasLoadedSubscription || isSaving}
+						loading={!hasLoadedSubscription}
 					/>
 				</>
 			}
@@ -222,7 +237,7 @@ export default () => {
 					<ScButton
 						type="primary"
 						slot="trigger"
-						loading={!hasLoadedSubscription || isSaving}
+						loading={!hasLoadedSubscription}
 						caret
 					>
 						{__('Actions', 'surecart')}
@@ -249,7 +264,7 @@ export default () => {
 					subscription={subscription}
 					customer={subscription?.customer}
 					product={subscription?.price?.product}
-					loading={!hasLoadedSubscription || isSaving}
+					loading={!hasLoadedSubscription}
 				/>
 
 				<CurrentPlan
@@ -257,7 +272,7 @@ export default () => {
 						subscription?.current_period?.checkout?.line_items
 							?.data?.[0]
 					}
-					loading={!hasLoadedSubscription || isSaving}
+					loading={!hasLoadedSubscription}
 					subscription={subscription}
 				/>
 
@@ -271,7 +286,7 @@ export default () => {
 							?.data?.[0]
 					}
 					subscriptionId={id}
-					loading={!hasLoadedSubscription || isSaving}
+					loading={!hasLoadedSubscription}
 				/>
 
 				<Periods subscriptionId={id} />
@@ -280,7 +295,7 @@ export default () => {
 					<PaymentMethod
 						subscription={subscription}
 						updateSubscription={editSubscription}
-						loading={!hasLoadedSubscription || isSaving}
+						loading={!hasLoadedSubscription}
 					/>
 				)}
 			</>
@@ -306,6 +321,7 @@ export default () => {
 				open={modal === 'restore'}
 				onRequestClose={() => setModal(false)}
 			/>
+			{isSaving && <ScBlockUi spinner />}
 		</Template>
 	);
 };
