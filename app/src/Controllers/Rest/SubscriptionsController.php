@@ -60,6 +60,21 @@ class SubscriptionsController extends RestController {
 		return $model->where( $request->get_query_params() )->restore( $request['id'] );
 	}
 
+	/**
+	 * Restore a subscription.
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \WP_REST_Response
+	 */
+	public function preserve( \WP_REST_Request $request ) {
+		$model = $this->middleware( new $this->class(), $request );
+		if ( is_wp_error( $model ) ) {
+			return $model;
+		}
+		return $model->where( $request->get_query_params() )->preserve( $request['id'] );
+	}
+
 
 	/**
 	 * Renew a subscription.

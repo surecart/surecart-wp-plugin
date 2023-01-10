@@ -146,6 +146,7 @@ export class ScOrdersList {
   renderList() {
     return this.orders.map(order => {
       const { checkout, created_at, id } = order;
+      if (!checkout) return null;
       const { line_items, total_amount, currency, charge } = checkout as Checkout;
       return (
         <sc-stacked-list-row

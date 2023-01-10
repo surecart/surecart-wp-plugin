@@ -26,9 +26,6 @@ class VerificationCodeRestServiceProviderTest extends SureCartUnitTestCase {
 		], false);
 	}
 
-	/**
-	 * @group failing
-	 */
 	public function test_verify_validation() {
 		// validation - needs email.
 		$request = new \WP_REST_Request('POST', '/surecart/v1/verification_codes/verify');
@@ -37,9 +34,6 @@ class VerificationCodeRestServiceProviderTest extends SureCartUnitTestCase {
 		$this->assertSame('invalid_email', $response->as_error()->get_error_code());
 	}
 
-	/**
-	 * @group failing
-	 */
 	public function test_verify_success() {
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
@@ -58,9 +52,6 @@ class VerificationCodeRestServiceProviderTest extends SureCartUnitTestCase {
 		$this->assertTrue(is_user_logged_in(), 'User is not logged in when verifying a code.');
 	}
 
-	/**
-	 * @group failing
-	 */
 	public function test_verify_failure() {
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
