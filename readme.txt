@@ -251,6 +251,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * New: Disable "Powered By Surecart" footers for Premium users.
 * Improvement: Add "Fallback Tax" setting for merchants wanting to have a fallback tax for their store.
 * Improvement: Add the ability to revoke purchases when refunding a charge.
+* Improvement: Add expandable details to customer dashboard subscriptions view (quantity, discounts, etc.).
 * Improvement: Reword Order Bump "Auto Apply Discount" functionality.
 * Improvement: Change order "Metadata" wording in admin to "Additional Order Data".
 * Improvement: Add facebook group link in readme.
