@@ -24,11 +24,13 @@ export class ScUpgradeRequired {
     }
 
     return (
-      <Host>
-        <span class="trigger" onClick={() => (this.open = true)}>
-          <slot>
-            <sc-premium-badge />
-          </slot>
+      <Host onClick={() => (this.open = true)}>
+        <span class="trigger">
+          <span class="trigger__disabled">
+            <slot>
+              <sc-premium-badge />
+            </slot>
+          </span>
         </span>
         <sc-dialog
           label={__('Boost Your Revenue', 'surecart')}
