@@ -4,7 +4,7 @@
 	"env": {
 		"development": {
 			"config": {
-				"SURECART_APP_URL": "https://staging.surecart.com",
+				"SURECART_API_URL": "https://staging.surecart.com",
 				"WP_DEBUG": true
 			},
 			"port": 8000
@@ -14,7 +14,7 @@
 				"FS_METHOD": "direct",
 				"WP_DEBUG": true,
 				"SURECART_API_TOKEN": "5mpGxDdaJ5iahGY2bnVkijs4",
-				"SURECART_APP_URL": "https://surecart-pr-9.herokuapp.com",
+				"SURECART_API_URL": "https://surecart-pr-9.herokuapp.com",
 				"CE_TESTING": true
 			},
 			"port": 8009
