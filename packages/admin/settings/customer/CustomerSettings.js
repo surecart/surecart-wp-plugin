@@ -43,7 +43,7 @@ export default () => {
 
 	return (
 		<SettingsTemplate
-			title={__('Notifications!', 'surecart')}
+			title={__('Notifications', 'surecart')}
 			icon={<sc-icon name="bell"></sc-icon>}
 			onSubmit={onSubmit}
 		>
