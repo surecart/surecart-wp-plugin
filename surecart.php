@@ -28,7 +28,10 @@ define( 'SURECART_PLUGIN_FILE', __FILE__ );
 
 // define host url.
 if ( ! defined( 'SURECART_APP_URL' ) ) {
-	define( 'SURECART_APP_URL', 'https://api.surecart.com' );
+	define( 'SURECART_APP_URL', 'https://app.surecart.com' );
+}
+if ( ! defined( 'SURECART_API_URL' ) ) {
+	define( 'SURECART_API_URL', 'https://api.surecart.com' );
 }
 
 // Load composer dependencies.
