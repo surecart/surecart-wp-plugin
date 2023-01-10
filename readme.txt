@@ -243,6 +243,24 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.5.0 - January 11, 2023 =
+* New: Subscription saver and cancellation insights.
+* New: Manual tax registrations.
+* New: Option to turn off emails for free orders.
+* New: Option to revoke purchases immediately when orders become past due.
+* New: Disable "Powered By Surecart" footers for Premium users.
+* Improvement: Add "Fallback Tax" setting for merchants wanting to have a fallback tax for their store.
+* Improvement: Add the ability to revoke purchases when refunding a charge.
+* Improvement: Reword Order Bump "Auto Apply Discount" functionality.
+* Improvement: Change order "Metadata" wording in admin to "Additional Order Data".
+* Improvement: Add facebook group link in readme.
+* Improvement: Add timestamp to API requests to increase compatibility with plugins that cache the WordPress REST API.
+* Improvement: Update subscription list table status to include if the subscription will cancel as well as the date.
+* Improvement: Allow updating subscription payment method, even for canceled subscriptions.
+* Fix: Subscriptions not showing discount on Merchant admin for upcoming period preview.
+* Fix: Address display formatting issues on customer dashboard.
+* Fix: Issues where links were to api.surecart.com instead of app.surecart.com
+
 = 1.4.2 - January 10, 2023 =
 * Fix: Coupon product restrictions dropdown not selectable after search.
 
