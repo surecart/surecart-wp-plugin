@@ -49,7 +49,7 @@ class AffiliateWPRecurringIntegration extends \Affiliate_WP_Recurring_Base {
 		}
 
 		// Get details purchase information
-		$purchase = Purchase::with( [ 'initial_order', 'order.checkout', 'product', 'customer' ] )->find( $subscription->purchase );
+		$purchase = Purchase::with( [ 'initial_order', 'subscription', 'subscription.current_period', 'period.checkout', 'product' ] )->find( $subscription->purchase );
 
 		// Get the order reference.
 		$reference = $purchase->initial_order ?? null;
@@ -69,7 +69,7 @@ class AffiliateWPRecurringIntegration extends \Affiliate_WP_Recurring_Base {
 			return false;
 		}
 
-		$amount_due    = $subscription->current_period->checkout->amount_due;
+		$amount_due    = $purchase->subscription->current_period->checkout->amount_due;
 		$currency      = $reference->currency;
 		$description   = $purchase->product->name;
 
