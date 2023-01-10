@@ -31,8 +31,6 @@ export class ScOrderSummary {
   componentDidLoad() {
     this.body.hidden = this.collapsed;
     this.body.style.height = !this.collapsed ? 'auto' : '0';
-    const bodyRect = document.body.getClientRects();
-    if (bodyRect.length) this.collapsed = bodyRect[0]?.width < 781;
   }
 
   handleClick(e) {
@@ -74,7 +72,7 @@ export class ScOrderSummary {
                 currency={this.order?.currency || 'usd'}
               />
             )}
-            <sc-total total={'total'} order={this.order} class="total-price"></sc-total>
+            <sc-total total={'total'} order={this.order}></sc-total>
           </span>
         )}
       </sc-line-item>
