@@ -164,7 +164,9 @@ export default ({ download, product, className }) => {
 		if (download?.url) {
 			try {
 				const url = new URL(download.url);
-				return url.pathname.split?.('.')?.pop?.();
+				if (url.pathname.includes('.')) {
+					return url.pathname.split?.('.')?.pop?.();
+				}
 			} catch (err) {
 				console.error(err);
 			}
