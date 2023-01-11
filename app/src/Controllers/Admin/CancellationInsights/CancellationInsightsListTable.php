@@ -183,7 +183,7 @@ class CancellationInsightsListTable extends ListTable {
 		if ( $act->preserved ) {
 			ob_start();
 			?>
-			<sc-tag type="success"><?php echo esc_html__( 'Preserved', 'surecart' ); ?> </sc-tag>
+			<sc-tag type="success"><?php echo esc_html__( 'Saved', 'surecart' ); ?> </sc-tag>
 			<?php if ( $act->coupon_applied ) { ?>
 				<sc-tag type="info"><?php echo esc_html__( 'Coupon Applied', 'surecart' ); ?></sc-tag>
 			<?php } ?>
