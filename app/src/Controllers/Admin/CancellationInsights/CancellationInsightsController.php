@@ -19,7 +19,7 @@ class CancellationInsightsController extends AdminController {
 		$this->withHeader(
 			[
 				'subscriptions' => [
-					'title' => __( 'Cancellation Insights', 'surecart' ),
+					'title' => __( 'Subscription Saver & Insights', 'surecart' ),
 				],
 			]
 		);

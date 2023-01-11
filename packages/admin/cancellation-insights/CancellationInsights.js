@@ -211,14 +211,6 @@ export default () => {
 						gap: 1.5em;
 					`}
 				>
-					{/* Order
-						// Cancellations Attempts
-						// Preserved Count
-						// Preserved By Coupon
-						// Total Lost
-						// Preserved Rate %
-						// Preserved Rate By Coupon %
-					*/}
 					<Stat
 						title={__('Cancellation Attempts', 'surecart')}
 						description={__(
@@ -236,8 +228,8 @@ export default () => {
 					</Stat>
 
 					<Stat
-						title={__('Preserved Count', 'surecart')}
-						description={__('Total Preserved Count', 'surecart')}
+						title={__('Saved Count', 'surecart')}
+						description={__('Total Saved Count', 'surecart')}
 						loading={loading}
 						compare={badge({
 							current: totalProperties('preserved_count', data),
@@ -251,11 +243,8 @@ export default () => {
 					</Stat>
 
 					<Stat
-						title={__('Preserved By Coupon', 'surecart')}
-						description={__(
-							'Total Preserved By Coupon',
-							'surecart'
-						)}
+						title={__('Saved By Coupon', 'surecart')}
+						description={__('Total Saved By Coupon', 'surecart')}
 						loading={loading}
 						compare={badge({
 							current: totalProperties(
@@ -290,9 +279,9 @@ export default () => {
 					</Stat>
 
 					<Stat
-						title={__('Preserved Rate', 'surecart')}
+						title={__('Saved Rate', 'surecart')}
 						description={__(
-							'Percentage of Preserved Rate',
+							'Percentage Of Subscriptions Saved',
 							'surecart'
 						)}
 						loading={loading}
@@ -307,9 +296,9 @@ export default () => {
 					</Stat>
 
 					<Stat
-						title={__('Preserved Rate By Coupon', 'surecart')}
+						title={__('Saved Rate By Coupon', 'surecart')}
 						description={__(
-							'Percentage of Preserved Rate By Coupon',
+							'Percentage Of Subscriptions Saved By Coupon',
 							'surecart'
 						)}
 						loading={loading}

@@ -83,7 +83,7 @@ class CancellationInsightsListTable extends ListTable {
 	 * We only have one default view.
 	 */
 	protected function get_views() {
-		return [ 'all' => __( 'Cancellations Attempts', 'surecart' ) ];
+		return [ 'all' => __( 'All Cancellation Attempts', 'surecart' ) ];
 	}
 
 	/**
