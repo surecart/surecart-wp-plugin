@@ -114,7 +114,6 @@
 	}
 	.sc-container {
 		width: 100%;
-		overflow-y: auto;
 	}
 
 	.sc-content {
