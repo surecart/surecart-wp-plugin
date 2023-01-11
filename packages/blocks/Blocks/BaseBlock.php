@@ -21,6 +21,43 @@ abstract class BaseBlock {
 	protected $block;
 
 	/**
+	 * Get the class name for the color.
+	 *
+	 * @param string $color_context_name The color context name (color, background-color).
+	 * @param string $color_slug (foreground, background, etc.).
+	 *
+	 * @return string
+	 */
+	public function getColorClassName( $color_context_name, $color_slug ) {
+		if ( ! $color_context_name || ! $color_slug ) {
+			return false;
+		}
+		$color_slug = _wp_to_kebab_case( $color_slug );
+		return "has-$color_slug-$color_context_name";
+	}
+
+	/**
+	 * Get the spacing preset css variable.
+	 *
+	 * @param string $value The value
+	 *
+	 * @return string|void
+	 */
+	public function getSpacingPresetCssVar( $value ) {
+		if ( ! $value ) {
+			return;
+		}
+
+		preg_match( '/var:preset\|spacing\|(.+)/', $value, $matches );
+
+		if ( ! $matches ) {
+			return $value;
+		}
+
+		return "var(--wp--preset--spacing--$matches[1])";
+	}
+
+	/**
 	 * Register the block for dynamic output
 	 *
 	 * @param \Pimple\Container $container Service container.

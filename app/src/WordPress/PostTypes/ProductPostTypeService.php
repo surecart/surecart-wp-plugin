@@ -224,7 +224,8 @@ class ProductPostTypeService {
 				'supports'          => array(
 					'title',
 					'editor',
-					'custom-fields', // todo: maybe remove.
+					'custom-fields',
+					'thumbnail',
 					'revisions',
 					'page-attributes',
 				),

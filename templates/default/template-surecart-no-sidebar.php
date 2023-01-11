@@ -90,8 +90,6 @@ while ( have_posts() ) :
 	?>
 
 <!--
-<h1><?php the_title(); ?></h1>
-
 <sc-cart-form>
 	<sc-choices label="<?php esc_attr_e( 'Choose a price', 'surecart' ); ?>">
 		<?php foreach ( $prices as $price ) : ?>
@@ -101,8 +99,8 @@ while ( have_posts() ) :
 		<?php endforeach; ?>
 	</sc-choices>
 	<sc-button submit type="primary"><?php esc_attr_e( 'Add To Cart', 'surecart' ); ?>
-</sc-cart-form>
-		-->
+</sc-cart-form> -->
+
 
 	<?php
 	do_action( 'surecart_page_elements' );
