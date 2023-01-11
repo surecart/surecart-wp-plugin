@@ -5,7 +5,7 @@ import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
 import { intervalString } from '../../../../functions/price';
-import { Checkout, Order, Product, Purchase } from '../../../../types';
+import { Checkout, ManualPaymentMethod, Order, Product, Purchase } from '../../../../types';
 
 @Component({
   tag: 'sc-order',
@@ -74,6 +74,9 @@ export class ScOrder {
         expand: [
           'checkout',
           'checkout.line_items',
+          'line_item.price',
+          'price.product',
+          'checkout.manual_payment_method',
           'checkout.payment_method',
           'payment_method.card',
           'payment_method.payment_instrument',
@@ -115,7 +118,7 @@ export class ScOrder {
           return (
             <sc-product-line-item
               key={item.id}
-              imageUrl={item?.price?.metadata?.wp_attachment_src}
+              imageUrl={(item?.price?.product as Product)?.image_url}
               name={(item?.price?.product as Product)?.name}
               editable={false}
               removable={false}
@@ -228,6 +231,7 @@ export class ScOrder {
 
   render() {
     const checkout = this?.order?.checkout as Checkout;
+    const manualPaymentMethod = checkout?.manual_payment_method as ManualPaymentMethod;
     return (
       <sc-spacing style={{ '--spacing': 'var(--sc-spacing-large)' }}>
         <sc-dashboard-module error={this.error}>
@@ -238,31 +242,37 @@ export class ScOrder {
             </sc-tag>
           )}
 
+          {!!manualPaymentMethod?.name && !!manualPaymentMethod?.instructions && (
+            <sc-order-manual-instructions manualPaymentTitle={manualPaymentMethod?.name} manualPaymentInstructions={manualPaymentMethod?.instructions} />
+          )}
+
           <sc-card no-padding={!this.loading}>
             {this.loading ? (
               this.renderLoading()
             ) : (
-              <sc-stacked-list>
-                <sc-stacked-list-row style={{ '--columns': '2' }}>
-                  <div>{__('Order Status', 'surecart')}</div>
-                  <sc-order-status-badge status={this?.order?.status}></sc-order-status-badge>
-                </sc-stacked-list-row>
-                <sc-stacked-list-row style={{ '--columns': '2' }}>
-                  <div>{__('Date', 'surecart')}</div>
-                  <sc-format-date type="timestamp" date={this.order?.created_at} month="short" day="numeric" year="numeric"></sc-format-date>
-                </sc-stacked-list-row>
+              <Fragment>
+                <sc-stacked-list>
+                  <sc-stacked-list-row style={{ '--columns': '2' }}>
+                    <div>{__('Order Status', 'surecart')}</div>
+                    <sc-order-status-badge status={this?.order?.status}></sc-order-status-badge>
+                  </sc-stacked-list-row>
+                  <sc-stacked-list-row style={{ '--columns': '2' }}>
+                    <div>{__('Date', 'surecart')}</div>
+                    <sc-format-date type="timestamp" date={this.order?.created_at} month="short" day="numeric" year="numeric"></sc-format-date>
+                  </sc-stacked-list-row>
 
-                <sc-stacked-list-row style={{ '--columns': '2' }}>
-                  <div>{__('Payment Method', 'surecart')}</div>
-                  <sc-payment-method paymentMethod={checkout?.payment_method}></sc-payment-method>
-                </sc-stacked-list-row>
-              </sc-stacked-list>
+                  <sc-stacked-list-row style={{ '--columns': '2' }}>
+                    <div>{__('Payment Method', 'surecart')}</div>
+                    <sc-payment-method paymentMethod={checkout?.payment_method}></sc-payment-method>
+                  </sc-stacked-list-row>
+                </sc-stacked-list>
+              </Fragment>
             )}
           </sc-card>
         </sc-dashboard-module>
 
-        {this.order?.pdf_url && (
-          <sc-button type="primary" href={this.order?.pdf_url} target="_blank">
+        {this.order?.statement_url && (
+          <sc-button type="primary" href={this.order?.statement_url} target="_blank">
             <sc-icon name="inbox" slot="prefix"></sc-icon>
             {__('Download Receipt/Invoice', 'surecart')}
           </sc-button>

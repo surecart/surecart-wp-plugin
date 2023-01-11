@@ -22,6 +22,7 @@ import Notifications from './modules/Notifications';
 import Orders from './modules/Orders';
 import Purchases from './modules/Purchases';
 import Subscriptions from './modules/Subscriptions';
+import PaymentMethods from './modules/PaymentMethods';
 import User from './modules/User';
 
 export default () => {
@@ -118,6 +119,7 @@ export default () => {
 			<Orders customerId={id} />
 			<Charges customerId={id} />
 			<Subscriptions customerId={id} />
+			<PaymentMethods customerId={id} />
 
 			{/* <Fragment>
 				<Details

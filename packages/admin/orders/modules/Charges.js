@@ -1,9 +1,10 @@
-import ChargesDataTable from '../../components/data-tables/charges-data-table';
-import Refund from '../../components/data-tables/charges-data-table/Refund';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __, _n } from '@wordpress/i18n';
 import { useState } from 'react';
+
+import ChargesDataTable from '../../components/data-tables/charges-data-table';
+import Refund from '../../components/data-tables/charges-data-table/Refund';
 
 export default ({ checkoutId }) => {
 	const [refundCharge, setRefundCharge] = useState(false);
@@ -43,10 +44,42 @@ export default ({ checkoutId }) => {
 		[checkoutId]
 	);
 
-	const onRefunded = (refunded) => {
+	const { purchases, loadingPurchases } = useSelect(
+		(select) => {
+			if (!checkoutId) {
+				return {
+					purchases: [],
+					loading: true,
+				};
+			}
+			const entityData = [
+				'surecart',
+				'purchase',
+				{
+					checkout_ids: checkoutId ? [checkoutId] : null,
+					expand: ['product'],
+				},
+			];
+			return {
+				purchases: select(coreStore)?.getEntityRecords?.(...entityData),
+				loading: !select(coreStore)?.hasFinishedResolution?.(
+					'getEntityRecords',
+					[...entityData]
+				),
+			};
+		},
+		[checkoutId]
+	);
+
+	const onRefunded = () => {
 		invalidateCharges();
 		setRefundCharge(false);
 	};
+
+	// empty, don't render anything.
+	if (!loading && !charges?.length) {
+		return null;
+	}
 
 	return (
 		<>
@@ -78,6 +111,7 @@ export default ({ checkoutId }) => {
 			{!!refundCharge && (
 				<Refund
 					charge={refundCharge}
+					purchases={purchases}
 					onRefunded={onRefunded}
 					onRequestClose={() => setRefundCharge(false)}
 				/>

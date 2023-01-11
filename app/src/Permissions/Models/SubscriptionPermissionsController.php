@@ -165,6 +165,16 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 	 * @return boolean Does user have permission.
 	 */
 	public function edit_sc_subscription( $user, $args, $allcaps ) {
+		// no user to check.
+		if ( empty( $user->ID ) ) {
+			return false;
+		}
+
+		// user is not a customer.
+		if ( ! $user->isCustomer() ) {
+			return false;
+		}
+
 		if ( ! empty( $allcaps['edit_sc_subscriptions'] ) ) {
 			return true;
 		}
@@ -177,7 +187,7 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 		$params = $args[3];
 
 		// request has blacklisted keys.
-		if ( ! $this->requestOnlyHasKeys( $params, [ 'cancel_at_period_end', 'quantity', 'price', 'purge_pending_update' ] ) ) {
+		if ( ! $this->requestOnlyHasKeys( $params, [ 'cancel_at_period_end', 'quantity', 'price', 'purge_pending_update', 'payment_method' ] ) ) {
 			return false;
 		}
 
@@ -187,7 +197,7 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 		}
 
 		// check if user can modify quantity.
-		if ( ! empty( $params['quantity'] ) && ! $this->update_sc_subscription_quantity( $user, $args, $allcaps ) ) {
+		if ( ! empty( $params['quantity'] ) && $params['quantity'] > 1 && ! $this->update_sc_subscription_quantity( $user, $args, $allcaps ) ) {
 			return false;
 		}
 

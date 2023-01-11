@@ -23,10 +23,14 @@ class PluginServiceProvider implements ServiceProviderInterface {
 		$container['surecart.actions'] = function() {
 			return new ActionsService();
 		};
+		$container['surecart.config.setting'] = function($c) {
+			return json_decode(json_encode($c[SURECART_CONFIG_KEY]));
+		};
 
 		$app = $container[ SURECART_APPLICATION_KEY ];
 		$app->alias( 'plugin', 'surecart.plugin' );
 		$app->alias( 'actions', 'surecart.actions' );
+		$app->alias( 'config', 'surecart.config.setting' );
 	}
 
 	/**

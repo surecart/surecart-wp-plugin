@@ -3,6 +3,12 @@ import { FormSubmitController } from '../../../functions/form-data';
 
 let id = 0;
 
+/**
+ * @part base - The elements base wrapper.
+ * @part control - The control wrapper.
+ * @part checked-icon - Checked icon.
+ * @part label - The label.
+ */
 @Component({
   tag: 'sc-radio',
   styleUrl: 'sc-radio.scss',
@@ -63,6 +69,7 @@ export class ScRadio {
 
   @Watch('checked')
   handleCheckedChange() {
+    if (!this.input) return;
     if (this.checked) {
       this.getSiblingRadios().map(radio => (radio.checked = false));
     }
@@ -96,7 +103,7 @@ export class ScRadio {
     if (!radioGroup) {
       return [];
     }
-    return [...radioGroup.querySelectorAll('sc-radio')].filter((radio: HTMLScRadioElement) => radio.name === this.name) as HTMLScRadioElement[];
+    return [...radioGroup.querySelectorAll('sc-radio')] as HTMLScRadioElement[];
   }
 
   getSiblingRadios() {

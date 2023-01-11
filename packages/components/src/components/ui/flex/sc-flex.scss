@@ -36,3 +36,21 @@ $direction: row, row-reverse, column, column-reverse;
     flex-direction: $value;
   }
 }
+
+@media (max-width: 480px) {
+  .stack-mobile {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  .stack-tablet {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 1180px) {
+  .stack-desktop {
+    flex-direction: column;
+  }
+}

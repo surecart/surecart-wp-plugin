@@ -1294,7 +1294,7 @@
 								"type": "string",
 								"description": "One of either `checkout` or `subscription`."
 							},
-							"pdf_url": {
+							"statement_url": {
 								"type": "string",
 								"nullable": true,
 								"description": "The link to download the PDF invoice or receipt of this order. To generate the receipt variation of the PDF add the `receipt=true` parameter."
@@ -3874,7 +3874,7 @@
 											"shipping_address": null,
 											"tax_identifier": null,
 											"number": null,
-											"pdf_url": null,
+											"statement_url": null,
 											"created_at": 1660689452,
 											"updated_at": 1660689452
 										}
@@ -3951,7 +3951,7 @@
 									"shipping_address": null,
 									"tax_identifier": null,
 									"number": null,
-									"pdf_url": null,
+									"statement_url": null,
 									"created_at": 1660689452,
 									"updated_at": 1660689452
 								},
@@ -4059,7 +4059,7 @@
 									"shipping_address": null,
 									"tax_identifier": null,
 									"number": null,
-									"pdf_url": null,
+									"statement_url": null,
 									"created_at": 1660689452,
 									"updated_at": 1660689452
 								},
@@ -4134,7 +4134,7 @@
 									"shipping_address": null,
 									"tax_identifier": null,
 									"number": null,
-									"pdf_url": null,
+									"statement_url": null,
 									"created_at": 1660689453,
 									"updated_at": 1660689453
 								},
@@ -4258,7 +4258,7 @@
 									"shipping_address": null,
 									"tax_identifier": null,
 									"number": null,
-									"pdf_url": null,
+									"statement_url": null,
 									"created_at": 1660689453,
 									"updated_at": 1660689453
 								},
@@ -5360,7 +5360,7 @@
 													"live_mode": true,
 													"number": "0001",
 													"order_type": "checkout",
-													"pdf_url": "http://localhost:5000/pdf/orders/faa05a84-2745-442c-bfa8-501adcfcba03",
+													"statement_url": "http://localhost:5000/pdf/orders/faa05a84-2745-442c-bfa8-501adcfcba03",
 													"status": "paid",
 													"checkout": "73058412-4502-4a4c-8a2e-1dfe9269f172",
 													"created_at": 1660689457,
@@ -6103,7 +6103,7 @@
 											"live_mode": true,
 											"number": "0002",
 											"order_type": "checkout",
-											"pdf_url": "http://localhost:5000/pdf/orders/78133920-38a5-4dfa-889b-4608e73f4671",
+											"statement_url": "http://localhost:5000/pdf/orders/78133920-38a5-4dfa-889b-4608e73f4671",
 											"status": "processing",
 											"checkout": "509e639f-ac9c-4600-a249-c27f4597421e",
 											"created_at": 1660689461,
@@ -6115,7 +6115,7 @@
 											"live_mode": true,
 											"number": "0001",
 											"order_type": "checkout",
-											"pdf_url": "http://localhost:5000/pdf/orders/a2418a10-ad3c-48a0-be60-a3aa425e466f",
+											"statement_url": "http://localhost:5000/pdf/orders/a2418a10-ad3c-48a0-be60-a3aa425e466f",
 											"status": "paid",
 											"checkout": "509e639f-ac9c-4600-a249-c27f4597421e",
 											"created_at": 1660689461,
@@ -6157,7 +6157,7 @@
 									"live_mode": true,
 									"number": "0002",
 									"order_type": "checkout",
-									"pdf_url": "http://localhost:5000/pdf/orders/e0994e95-5d1f-477f-9091-6327f5e426b8",
+									"statement_url": "http://localhost:5000/pdf/orders/e0994e95-5d1f-477f-9091-6327f5e426b8",
 									"status": "processing",
 									"checkout": "98aab23e-1ddb-497f-b4a7-dde1afca2152",
 									"created_at": 1660689462,

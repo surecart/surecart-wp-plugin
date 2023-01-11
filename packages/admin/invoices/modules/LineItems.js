@@ -38,7 +38,7 @@ export default ({ invoice, charge: chargeInput, loading }) => {
 						`}
 					>
 						<ScButton
-							href={addQueryArgs(invoice?.pdf_url, {
+							href={addQueryArgs(invoice?.statement_url, {
 								receipt: true,
 							})}
 							type="default"
@@ -48,7 +48,7 @@ export default ({ invoice, charge: chargeInput, loading }) => {
 							<sc-icon slot="prefix" name="download"></sc-icon>
 						</ScButton>
 						<ScButton
-							href={invoice?.pdf_url}
+							href={invoice?.statement_url}
 							type="primary"
 							size="small"
 						>
@@ -95,9 +95,7 @@ export default ({ invoice, charge: chargeInput, loading }) => {
 						return (
 							<sc-product-line-item
 								key={item.id}
-								imageUrl={
-									item?.price?.metadata?.wp_attachment_src
-								}
+								imageUrl={item?.price?.product?.image_url}
 								name={item?.price?.product?.name}
 								editable={false}
 								removable={false}

@@ -169,18 +169,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
-| Abandoned Orders
+| Abandoned Checkouts
 |--------------------------------------------------------------------------
 */
 \SureCart::route()
-->where( 'admin', 'sc-abandoned-orders' )
+->where( 'admin', 'sc-abandoned-checkouts' )
 ->middleware( 'user.can:edit_sc_orders' )
 ->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Abandoned\\' )
 ->group(
 	function() {
-		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AbandonedOrderViewController@index' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AbandonedOrderViewController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AbandonedCheckoutViewController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AbandonedCheckoutViewController@edit' );
 	}
 );
 
@@ -201,6 +201,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'SubscriptionsController@edit' );
 	}
 );
+
+/*
+|--------------------------------------------------------------------------
+| Cancellation Insights
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+->where( 'admin', 'sc-cancellation-insights' )
+->middleware( 'user.can:edit_sc_subscriptions' )
+->middleware( 'assets.components' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\CancellationInsights\\' )
+->group(
+	function() {
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'CancellationInsightsController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'show', 'action' )->handle( 'CancellationInsightsController@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'CancellationInsightsController@edit' );
+	}
+);
+
 
 \SureCart::route()
 ->where( 'admin', 'cart' )
@@ -287,11 +306,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'tab' )->name( 'settings.account' )->handle( 'AccountSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'brand', 'tab' )->name( 'settings.brand' )->handle( 'BrandSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'order', 'tab' )->name( 'settings.order' )->handle( 'OrderSettings@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'abandoned_checkout', 'tab' )->name( 'settings.abandoned_checkout' )->handle( 'AbandonedCheckoutSettings@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'subscription_preservation', 'tab' )->name( 'settings.subscription_preservation' )->handle( 'SubscriptionPreservationSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'customer_notification_protocol', 'tab' )->name( 'settings.customer' )->handle( 'CustomerSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'subscription_protocol', 'tab' )->name( 'settings.subscription' )->handle( 'SubscriptionSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'portal_protocol', 'tab' )->name( 'settings.portal' )->handle( 'PortalSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'tax_protocol', 'tab' )->where( 'sc_url_var', 'region', 'type' )->name( 'settings.tax.region' )->handle( 'TaxRegionSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'tax_protocol', 'tab' )->name( 'settings.tax' )->handle( 'TaxSettings@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'upgrade', 'tab' )->name( 'settings.upgrade' )->handle( 'UpgradeSettings@show' );
 
 		// Connection.
 		\SureCart::route()->get()->where( 'sc_url_var', 'connection', 'tab' )->name( 'settings.connection' )->handle( 'ConnectionSettings@show' );

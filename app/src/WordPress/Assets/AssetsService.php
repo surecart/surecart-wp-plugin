@@ -68,6 +68,9 @@ class AssetsService {
 		// block editor.
 		add_action( 'enqueue_block_editor_assets', [ $this, 'editorAssets' ] );
 
+		// Shortcode usages scripts load.
+		add_action( 'wp_head', [ $this, 'maybeEnqueueScriptsForNonBlocks' ] );
+
 		// front-end styles. These only load when the block is being rendered on the page.
 		$this->loader->whenRendered( 'surecart/form', [ $this, 'enqueueForm' ] );
 		$this->loader->whenRendered( 'surecart/buy-button', [ $this, 'enqueueComponents' ] );
@@ -131,6 +134,22 @@ class AssetsService {
 	}
 
 	/**
+	 * Shortcodes scripts add.
+	 *
+	 * @return void
+	 */
+	public function maybeEnqueueScriptsForNonBlocks() {
+		global $post;
+
+		// match all of our shortcodes and already rendered components.
+		if ( false === strpos( $post->post_content ?? '', '[sc_' ) && false === strpos( $post->post_content ?? '', '<sc-' ) ) {
+			return;
+		}
+
+		$this->enqueueComponents();
+	}
+
+	/**
 	 * This adds component data to the component when it's defined at runtime.
 	 *
 	 * @param string $tag Tag of the web component.
@@ -144,6 +163,12 @@ class AssetsService {
 		}
 		add_action(
 			'wp_footer',
+			function () use ( $tag, $selector, $data ) {
+				return $this->outputComponentScript( $tag, $selector, $data );
+			}
+		);
+		add_action(
+			'admin_footer',
 			function () use ( $tag, $selector, $data ) {
 				return $this->outputComponentScript( $tag, $selector, $data );
 			}

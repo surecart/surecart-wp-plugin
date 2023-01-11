@@ -12,6 +12,11 @@
   margin: var(--sc-spacing-small);
 }
 
+.select {
+  font-family: var(--sc-input-font-family);
+  font-weight: var(--sc-font-weight-normal);
+}
+
 sc-dropdown {
   display: block;
 }
@@ -26,8 +31,6 @@ sc-dropdown {
   width: 100%;
   border-style: solid;
   border-width: var(--sc-input-border-width);
-  font-family: var(--sc-input-font-family);
-  font-weight: var(--sc-font-weight-normal);
   background-color: var(--sc-select-background-color, var(--sc-color-white));
   border-color: var(--sc-select-border-color, var(--sc-color-gray-300));
   color: var(--sc-input-color);
@@ -89,6 +92,7 @@ sc-dropdown {
     padding: 0px;
     margin: 0px;
     pointer-events: none;
+    width: 0;
   }
 }
 

@@ -1,15 +1,14 @@
 /** @jsx jsx */
-import DataTable from '../../../components/DataTable';
-import { intervalString } from '../../../util/translations';
-import LineItems from './LineItems';
 import { css, jsx } from '@emotion/core';
 import { ScButton, ScFormatNumber } from '@surecart/components-react';
-import apiFetch from '@wordpress/api-fetch';
-import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
-export default ({ subscriptionId, lineItem, loading }) => {
+/** @jsx jsx */
+import DataTable from '../../../components/DataTable';
+import { intervalString } from '../../../util/translations';
+
+export default ({ lineItem, loading, subscription }) => {
 	return (
 		<div
 			css={css`
@@ -69,17 +68,18 @@ export default ({ subscriptionId, lineItem, loading }) => {
 											})}
 										</div>
 									</div>
-
-									<ScButton
-										size="small"
-										href={addQueryArgs('admin.php', {
-											page: 'sc-subscriptions',
-											action: 'edit',
-											id: subscriptionId,
-										})}
-									>
-										{__('Change', 'surecart')}
-									</ScButton>
+									{!subscription?.finite && (
+										<ScButton
+											size="small"
+											href={addQueryArgs('admin.php', {
+												page: 'sc-subscriptions',
+												action: 'edit',
+												id: subscription?.id,
+											})}
+										>
+											{__('Change', 'surecart')}
+										</ScButton>
+									)}
 								</div>
 							</div>
 						),

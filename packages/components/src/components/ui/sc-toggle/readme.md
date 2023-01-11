@@ -43,7 +43,7 @@
 
 ### Used by
 
- - [sc-payment](../../controllers/checkout-form/payment)
+ - [sc-subscription-next-payment](../../controllers/dashboard/subscription-details)
 
 ### Depends on
 
@@ -53,7 +53,7 @@
 ```mermaid
 graph TD;
   sc-toggle --> sc-icon
-  sc-payment --> sc-toggle
+  sc-subscription-next-payment --> sc-toggle
   style sc-toggle fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

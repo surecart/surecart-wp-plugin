@@ -62,7 +62,6 @@ class LicensesListTable extends ListTable {
 			'purchase' => __( 'Purchase', 'surecart' ),
 			'status'   => __( 'Status', 'surecart' ),
 			'created'  => __( 'Created', 'surecart' ),
-			'mode'     => '',
 		];
 	}
 

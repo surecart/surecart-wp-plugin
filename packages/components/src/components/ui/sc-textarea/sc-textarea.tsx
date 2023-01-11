@@ -1,7 +1,15 @@
-import { Component, h, State, Prop, Element, Watch, Event, EventEmitter } from '@stencil/core';
+import { Component, h, State, Prop, Element, Watch, Event, EventEmitter, Method } from '@stencil/core';
+import { FormSubmitController } from '../../../functions/form-data';
 
 let id = 0;
 
+/**
+ * @part base - The elements base wrapper.
+ * @part input - The html input element.
+ * @part form-control - The form control wrapper.
+ * @part label - The input label.
+ * @part help-text - Help text that describes how to use the input.
+ */
 @Component({
   tag: 'sc-textarea',
   styleUrl: 'sc-textarea.css',
@@ -13,6 +21,8 @@ export class ScTextarea {
   private labelId = `textarea-label-${id}`;
 
   @Element() el: HTMLScTextareaElement;
+
+  private formController: any;
 
   private input: HTMLTextAreaElement;
   private resizeObserver: ResizeObserver;
@@ -38,7 +48,7 @@ export class ScTextarea {
   @Prop() showLabel: boolean = true;
 
   /** The textarea's help text. Alternatively, you can use the help-text slot. */
-  @Prop({ attribute: 'help-text' }) help = '';
+  @Prop() help = '';
 
   /** The textarea's placeholder text. */
   @Prop() placeholder: string;
@@ -116,8 +126,10 @@ export class ScTextarea {
     this.invalid = !this.input.checkValidity();
   }
 
-  disconnectedCallback() {
-    this.resizeObserver.unobserve(this.input);
+  /** Sets focus on the input. */
+  @Method()
+  async triggerFocus(options?: FocusOptions) {
+    return this.input.focus(options);
   }
 
   /** Sets focus on the textarea. */
@@ -173,7 +185,8 @@ export class ScTextarea {
   }
 
   /** Checks for validity and shows the browser's validation message if the control is invalid. */
-  reportValidity() {
+  @Method()
+  async reportValidity() {
     return this.input.reportValidity();
   }
 
@@ -213,10 +226,16 @@ export class ScTextarea {
   }
 
   componentDidLoad() {
+    this.formController = new FormSubmitController(this.el).addFormData();
     if (!window?.ResizeObserver) {
       return;
     }
     this.resizeObserver.observe(this.input);
+  }
+
+  disconnectedCallback() {
+    this.formController?.removeFormData();
+    this.resizeObserver.unobserve(this.input);
   }
 
   setTextareaHeight() {
@@ -240,6 +259,7 @@ export class ScTextarea {
         }}
       >
         <sc-form-control
+          exportparts="label, help-text, form-control"
           size={this.size}
           required={this.required}
           label={this.label}

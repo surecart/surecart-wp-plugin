@@ -35,16 +35,20 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part        | Description |
-| ----------- | ----------- |
-| `"base"`    |             |
-| `"choices"` |             |
+| Part             | Description                                    |
+| ---------------- | ---------------------------------------------- |
+| `"base"`         | The elements base wrapper.                     |
+| `"choices"`      | The choices wrapper.                           |
+| `"form-control"` | The form control wrapper.                      |
+| `"help-text"`    | Help text that describes how to use the input. |
+| `"label"`        | The input label.                               |
 
 
 ## Dependencies
 
 ### Used by
 
+ - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
  - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
  - [sc-price-choices](../../controllers/checkout-form/price-choices)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
@@ -60,6 +64,7 @@ Type: `Promise<void>`
 graph TD;
   sc-choices --> sc-form-control
   sc-form-control --> sc-tooltip
+  sc-cancel-survey --> sc-choices
   sc-donation-choices --> sc-choices
   sc-price-choices --> sc-choices
   sc-subscription-payment --> sc-choices

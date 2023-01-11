@@ -132,6 +132,41 @@ class CheckoutsController extends RestController {
 	}
 
 	/**
+	 * Manually pay an order.
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \SureCart\Models\Checkout|\WP_Error
+	 */
+	public function manuallyPay( \WP_REST_Request $request ) {
+		$checkout = $this->middleware( new $this->class( $request['id'] ), $request );
+		if ( is_wp_error( $checkout ) ) {
+			return $checkout;
+		}
+
+		if ( ! empty( $this->with ) ) {
+			$checkout = $checkout->with( $this->with );
+		}
+
+		$paid = $checkout->where( $request->get_query_params() )->with(
+			[
+				'purchases', // Important: we need to make sure we expand the purchase to provide access.
+			]
+		)->manuallyPay();
+
+		// purchase created.
+		if ( ! empty( $paid->purchases->data ) ) {
+			foreach ( $paid->purchases->data as $purchase ) {
+				if ( empty( $purchase->revoked ) ) {
+					// broadcast the webhook.
+					do_action( 'surecart/purchase_created', $purchase );
+				}
+			}
+		}
+		return $paid;
+	}
+
+	/**
 	 * Finalize an order.
 	 *
 	 * @param \WP_REST_Request $request Rest Request.
@@ -151,8 +186,7 @@ class CheckoutsController extends RestController {
 
 		// finalize the order.
 		$checkout  = new $this->class( [ 'id' => $request['id'] ] );
-		$finalized = $checkout->setProcessor( $request['processor_type'] )
-			->where( $request->get_query_params() )
+		$finalized = $checkout->where( $request->get_query_params() )
 			->finalize( $request->get_body_params() );
 
 		// bail if error.

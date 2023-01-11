@@ -2,15 +2,14 @@ import { __ } from '@wordpress/i18n';
 import {
 	ScBlockUi,
 	ScButton,
+	ScChoice,
+	ScChoices,
 	ScDialog,
-	ScRadio,
-	ScRadioGroup,
-	ScStripePaymentElement,
+	ScPaymentMethod,
 	ScTag,
 } from '@surecart/components-react';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import PaymentMethod from './PaymentMethod';
 import { useState } from 'react';
 
 export default ({
@@ -31,7 +30,12 @@ export default ({
 				{
 					context: 'edit',
 					customer_ids: [customerId],
-					expand: ['card'],
+					expand: [
+						'card',
+						'payment_instrument',
+						'paypal_account',
+						'bank_account',
+					],
 					per_page: 100,
 				},
 			];
@@ -54,32 +58,34 @@ export default ({
 			open={open}
 			onScRequestClose={() => setOpen(false)}
 		>
-			<ScRadioGroup onScChange={(e) => setPaymentMethod(e.target.value)}>
+			<ScChoices onScChange={(e) => setPaymentMethod(e.target.value)}>
 				{(payment_methods || []).map((payment_method) => {
 					return (
-						<ScRadio
-							style={{ display: 'block' }}
+						<ScChoice
 							value={payment_method?.id}
 							checked={payment_method?.id === paymentMethod}
 						>
-							<PaymentMethod paymentMethod={payment_method}>
-								{payment_method?.id === paymentMethodId && (
-									<ScTag type="info">
-										{__('Current', 'surecart')}
-									</ScTag>
+							<ScPaymentMethod paymentMethod={payment_method} />
+							<div slot="description">
+								{!!payment_method?.card?.exp_month && (
+									<span>
+										{__('Exp.', 'surecart')}
+										{payment_method?.card?.exp_month}/
+										{payment_method?.card?.exp_year}
+									</span>
 								)}
-							</PaymentMethod>
-						</ScRadio>
+								{!!payment_method?.paypal_account?.email &&
+									payment_method?.paypal_account?.email}
+							</div>
+							{payment_method?.id === paymentMethodId && (
+								<ScTag type="info" slot="price">
+									{__('Current', 'surecart')}
+								</ScTag>
+							)}
+						</ScChoice>
 					);
 				})}
-				{/* <ScRadio
-					value={null}
-					checked={paymentMethod === null}
-					style={{ display: 'block' }}
-				>
-					{__('Add New Payment Method', 'surecart')}
-				</ScRadio> */}
-			</ScRadioGroup>
+			</ScChoices>
 			{loading && <ScBlockUi spinner />}
 			<ScButton
 				type="primary"

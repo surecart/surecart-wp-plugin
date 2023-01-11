@@ -77,7 +77,7 @@ class AccountService {
 	 * @return \SureCart\Models\Account
 	 */
 	protected function fetchAccount() {
-		$this->account = Account::with( [ 'brand', 'portal_protocol', 'tax_protocol' ] )->find();
+		$this->account = Account::with( [ 'brand', 'brand.address', 'portal_protocol', 'tax_protocol', 'tax_protocol.address', 'subscription_protocol' ] )->find();
 		return $this->account;
 	}
 

@@ -12,7 +12,7 @@
 | `clickEl`  | --          |              | `HTMLElement` | `undefined` |
 | `disabled` | `disabled`  |              | `boolean`     | `undefined` |
 | `hasFocus` | `has-focus` | Inputs focus | `boolean`     | `undefined` |
-| `max`      | `max`       |              | `number`      | `100`       |
+| `max`      | `max`       |              | `number`      | `Infinity`  |
 | `min`      | `min`       |              | `number`      | `1`         |
 | `quantity` | `quantity`  |              | `number`      | `0`         |
 
@@ -29,9 +29,14 @@
 
 ## Shadow Parts
 
-| Part     | Description |
-| -------- | ----------- |
-| `"base"` |             |
+| Part           | Description                |
+| -------------- | -------------------------- |
+| `"base"`       | The elements base wrapper. |
+| `"input"`      | The input control.         |
+| `"minus"`      | The minus control.         |
+| `"minus-icon"` | The minus icon.            |
+| `"plus"`       | The plus control.          |
+| `"plus-icon"`  | The plus icon.             |
 
 
 ## Dependencies

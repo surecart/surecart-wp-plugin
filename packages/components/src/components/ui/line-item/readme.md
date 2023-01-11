@@ -27,12 +27,17 @@
 
 ## Shadow Parts
 
-| Part      | Description |
-| --------- | ----------- |
-| `"base"`  |             |
-| `"image"` |             |
-| `"price"` |             |
-| `"text"`  |             |
+| Part                  | Description                              |
+| --------------------- | ---------------------------------------- |
+| `"base"`              | The elements base wrapper.               |
+| `"currency"`          | Used for the 3 character currency code.  |
+| `"description"`       | Line item description (below the title)  |
+| `"image"`             | The image wrapper.                       |
+| `"price"`             | Price amount, including currency sign.   |
+| `"price-description"` | Description for the price (i.e. monthly) |
+| `"price-text"`        | The price text.                          |
+| `"text"`              | The text.                                |
+| `"title"`             | The title.                               |
 
 
 ## Dependencies
@@ -49,6 +54,7 @@
  - [sc-order-confirmation-line-items](../../controllers/confirmation/order-confirmation-line-items)
  - [sc-order-confirmation-totals](../../controllers/confirmation/order-confirmation-totals)
  - [sc-order-summary](../../controllers/checkout-form/order-summary)
+ - [sc-subscription-next-payment](../../controllers/dashboard/subscription-details)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Graph
@@ -64,6 +70,7 @@ graph TD;
   sc-order-confirmation-line-items --> sc-line-item
   sc-order-confirmation-totals --> sc-line-item
   sc-order-summary --> sc-line-item
+  sc-subscription-next-payment --> sc-line-item
   sc-upcoming-invoice --> sc-line-item
   style sc-line-item fill:#f9f,stroke:#333,stroke-width:4px
 ```

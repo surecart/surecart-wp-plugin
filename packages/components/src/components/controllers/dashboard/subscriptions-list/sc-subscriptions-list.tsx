@@ -80,7 +80,7 @@ export class ScSubscriptionsList {
 
     const response = (await await apiFetch({
       path: addQueryArgs(`surecart/v1/subscriptions/`, {
-        expand: ['price', 'price.product', 'current_period', 'period.checkout'],
+        expand: ['price', 'price.product', 'current_period', 'period.checkout', 'purchase', 'purchase.license', 'license.activations', 'discount', 'discount.coupon'],
         ...this.query,
       }),
       parse: false,
@@ -134,15 +134,11 @@ export class ScSubscriptionsList {
     return this.subscriptions.map(subscription => {
       return (
         <sc-stacked-list-row
-          href={
-            subscription?.status !== 'canceled'
-              ? addQueryArgs(window.location.href, {
-                  action: 'edit',
-                  model: 'subscription',
-                  id: subscription.id,
-                })
-              : null
-          }
+          href={addQueryArgs(window.location.href, {
+            action: 'edit',
+            model: 'subscription',
+            id: subscription.id,
+          })}
           key={subscription.id}
           mobile-size={0}
         >

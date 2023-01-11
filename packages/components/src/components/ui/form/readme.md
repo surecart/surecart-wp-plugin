@@ -69,12 +69,14 @@ Type: `Promise<boolean>`
 | Part     | Description |
 | -------- | ----------- |
 | `"base"` |             |
+| `"form"` |             |
 
 
 ## Dependencies
 
 ### Used by
 
+ - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
  - [sc-cart-form](../../controllers/cart/sc-cart-form)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-login-form](../../controllers/login)
@@ -92,6 +94,7 @@ Type: `Promise<boolean>`
 ### Graph
 ```mermaid
 graph TD;
+  sc-cancel-survey --> sc-form
   sc-cart-form --> sc-form
   sc-customer-edit --> sc-form
   sc-login-form --> sc-form

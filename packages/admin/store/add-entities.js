@@ -1,6 +1,7 @@
 import { store as coreStore } from '@wordpress/core-data';
 import { dispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
+import './ui/register';
 
 dispatch(coreStore).addEntities([
 	{
@@ -23,6 +24,20 @@ dispatch(coreStore).addEntities([
 		kind: 'surecart',
 		label: __('Bump', 'surecart'),
 		baseURL: 'surecart/v1/bumps',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'cancellation_act',
+		kind: 'surecart',
+		label: __('Cancellation Acts', 'surecart'),
+		baseURL: 'surecart/v1/cancellation_acts',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'cancellation_reason',
+		kind: 'surecart',
+		label: __('Cancellation Reason', 'surecart'),
+		baseURL: 'surecart/v1/cancellation_reasons',
 		baseURLParams: { context: 'edit' },
 	},
 	{
@@ -111,6 +126,13 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'abandoned_checkout',
+		kind: 'surecart',
+		label: __('Abandoned Checkouts', 'surecart'),
+		baseURL: 'surecart/v1/abandoned_checkouts',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'payment_intent',
 		kind: 'surecart',
 		label: __('Payment Intent', 'surecart'),
@@ -125,6 +147,13 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'manual_payment_method',
+		kind: 'surecart',
+		label: __('Manual Payment Method', 'surecart'),
+		baseURL: 'surecart/v1/manual_payment_methods',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'period',
 		kind: 'surecart',
 		label: __('Billing Period', 'surecart'),
@@ -136,6 +165,13 @@ dispatch(coreStore).addEntities([
 		kind: 'surecart',
 		label: __('Product', 'surecart'),
 		baseURL: 'surecart/v1/products',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'processor',
+		kind: 'surecart',
+		label: __('Processor', 'surecart'),
+		baseURL: 'surecart/v1/processors',
 		baseURLParams: { context: 'edit' },
 	},
 	{

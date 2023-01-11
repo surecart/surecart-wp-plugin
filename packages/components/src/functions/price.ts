@@ -1,17 +1,28 @@
-import { Coupon, Price } from '../types';
 import { __, _n, sprintf } from '@wordpress/i18n';
 
+import { Coupon, Price } from '../types';
+
 export const convertAmount = (amount: number, currency: string) => {
-  return ['bif', 'clp', 'djf', 'gnf', 'jpy', 'kmf', 'krw'].includes(currency) ? amount : amount / 100;
+  return ['bif', 'clp', 'djf', 'gnf', 'jpy', 'kmf', 'krw', 'xaf'].includes(currency) ? amount : amount / 100;
 };
 
 export const getHumanDiscount = (coupon: Coupon) => {
-  if (coupon.amount_off && coupon.currency) {
+  if (coupon?.amount_off && coupon?.currency) {
     return getFormattedPrice({ amount: coupon.amount_off, currency: coupon.currency });
   }
-  if (coupon.percent_off) {
-    // TODO: Translators.
-    return `${coupon.percent_off | 0}% off`;
+  if (coupon?.percent_off) {
+    // Translators: Percent off.
+    return sprintf(__('%1d%% off', 'surecart'), coupon.percent_off | 0);
+  }
+  return '';
+};
+
+export const getFormattedDiscount = (coupon: Coupon) => {
+  if (coupon?.percent_off) {
+    return `${coupon.percent_off | 0}%`;
+  }
+  if (coupon?.amount_off && coupon?.currency) {
+    return getFormattedPrice({ amount: coupon.amount_off, currency: coupon.currency });
   }
   return '';
 };
@@ -30,7 +41,7 @@ export const getCurrencySymbol = (code: string = 'usd') => {
   const [currency] = new Intl.NumberFormat(undefined, {
     style: 'currency',
     currency: code,
-  }).formatToParts();
+  }).formatToParts(0);
   return currency?.value;
 };
 

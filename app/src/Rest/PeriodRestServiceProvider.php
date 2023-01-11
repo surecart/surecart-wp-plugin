@@ -30,6 +30,27 @@ class PeriodRestServiceProvider extends RestServiceProvider implements RestServi
 	 */
 	protected $methods = [ 'index', 'find' ];
 
+	/**
+	 * Register REST Routes
+	 *
+	 * @return void
+	 */
+	public function registerRoutes() {
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/retry_payment/',
+			[
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'retryPayment' ),
+					'permission_callback' => [ $this, 'retry_payment_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+	}
+
 
 	/**
 	 * Get our sample schema for a post.
@@ -80,5 +101,15 @@ class PeriodRestServiceProvider extends RestServiceProvider implements RestServi
 	 */
 	public function get_items_permissions_check( $request ) {
 		return current_user_can( 'read_sc_subscriptions', $request->get_params() );
+	}
+
+	/**
+	 * Retry payment permissions
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function retry_payment_permissions_check( $request ) {
+		return current_user_can( 'edit_sc_subscription', $request->get_params() );
 	}
 }

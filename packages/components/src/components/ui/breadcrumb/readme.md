@@ -16,13 +16,13 @@
 
 ## Shadow Parts
 
-| Part          | Description |
-| ------------- | ----------- |
-| `"base"`      |             |
-| `"label"`     |             |
-| `"prefix"`    |             |
-| `"separator"` |             |
-| `"suffix"`    |             |
+| Part          | Description                |
+| ------------- | -------------------------- |
+| `"base"`      | The elements base wrapper. |
+| `"label"`     | The label.                 |
+| `"prefix"`    | The prefix item.           |
+| `"separator"` | The separator.             |
+| `"suffix"`    | The suffix item.           |
 
 
 ## Dependencies

@@ -4,13 +4,18 @@ exports[`sc-subscription-details renders 1`] = `
 <sc-subscription-details>
   <mock:shadow-root>
     <div class="subscription-details">
-      <sc-text style="--font-weight: var(--sc-font-weight-bold);"></sc-text>
-      <div>
-        <sc-format-number type="currency"></sc-format-number>
-      </div>
+      <sc-flex alignitems="center" justifycontent="flex-start">
+        <sc-text style="--font-weight: var(--sc-font-weight-bold);"></sc-text>
+      </sc-flex>
       <div>
         <sc-subscription-status-badge></sc-subscription-status-badge>
       </div>
+      <slot></slot>
+      <sc-dialog label="Activations">
+        <sc-card no-padding="" style="--overflow: hidden;">
+          <sc-stacked-list></sc-stacked-list>
+        </sc-card>
+      </sc-dialog>
     </div>
   </mock:shadow-root>
 </sc-subscription-details>

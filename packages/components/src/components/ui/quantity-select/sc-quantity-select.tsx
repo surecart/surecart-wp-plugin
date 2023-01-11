@@ -1,6 +1,14 @@
 import { Component, h, Prop, Element, Event, EventEmitter } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
+/**
+ * @part base - The elements base wrapper.
+ * @part input - The input control.
+ * @part minus - The minus control.
+ * @part minus-icon - The minus icon.
+ * @part plus - The plus control.
+ * @part plus-icon - The plus icon.
+ */
 @Component({
   tag: 'sc-quantity-select',
   styleUrl: 'sc-quantity-select.scss',
@@ -13,7 +21,7 @@ export class ScQuantitySelect {
   @Prop() clickEl?: HTMLElement;
 
   @Prop() disabled: boolean;
-  @Prop() max: number = 100;
+  @Prop() max: number = Infinity;
   @Prop() min: number = 1;
   @Prop({ mutable: true, reflect: true }) quantity: number = 0;
   /** Inputs focus */
@@ -59,7 +67,7 @@ export class ScQuantitySelect {
   }
 
   handleChange() {
-    this.quantity = parseInt(this.input.value);
+    this.quantity = parseInt(this.input.value) > this.max ? this.max : parseInt(this.input.value);
     this.scChange.emit(this.quantity);
   }
 
@@ -80,15 +88,17 @@ export class ScQuantitySelect {
         }}
       >
         <span
+          part="minus"
           role="button"
           aria-label={__('decrease number', 'surecart')}
-          class={{ 'button__decrease': true, 'button--disabled': this.quantity <= this.min }}
+          class={{ 'button__decrease': true, 'button--disabled': this.quantity <= this.min && this.min > 1 }}
           onClick={() => this.quantity > this.min && this.decrease()}
         >
-          <sc-icon name="minus"></sc-icon>
+          <sc-icon name="minus" exportparts="base:minus__icon"></sc-icon>
         </span>
 
         <input
+          part="input"
           class="input__control"
           ref={el => (this.input = el as HTMLInputElement)}
           step="1"
@@ -110,12 +120,13 @@ export class ScQuantitySelect {
         />
 
         <span
+          part="plus"
           role="button"
           aria-label={__('increase number', 'surecart')}
           class={{ 'button__increase': true, 'button--disabled': this.quantity >= this.max }}
           onClick={() => this.quantity < this.max && this.increase()}
         >
-          <sc-icon name="plus"></sc-icon>
+          <sc-icon name="plus" exportparts="base:plus__icon"></sc-icon>
         </span>
       </div>
     );

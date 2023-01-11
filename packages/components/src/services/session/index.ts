@@ -28,7 +28,7 @@ export const parsePath = (id, endpoint = '') => {
   });
 };
 
-export const createOrUpdateSession = async ({ id, data, query = {} }) => {
+export const createOrUpdateSession = async ({ id = null, data, query = {} }) => {
   return await apiFetch({
     method: id ? 'PATCH' : 'POST', // create or update
     path: addQueryArgs(parsePath(id), query),
@@ -36,7 +36,7 @@ export const createOrUpdateSession = async ({ id, data, query = {} }) => {
   });
 };
 
-export const createOrUpdateOrder = async ({ id, data = {}, query = {} }) => {
+export const createOrUpdateOrder = async ({ id = null, data = {}, query = {} }) => {
   return await apiFetch({
     method: id ? 'PATCH' : 'POST', // create or update
     path: addQueryArgs(parsePath(id), query),
@@ -52,7 +52,7 @@ export const updateOrder = async ({ id, data = {}, query = {} }) => {
   });
 };
 
-export const getCheckout = async ({ id, query }) => {
+export const getCheckout = async ({ id, query = {} }) => {
   return await apiFetch({
     path: addQueryArgs(parsePath(id), query),
   });
@@ -61,11 +61,11 @@ export const getCheckout = async ({ id, query }) => {
 /**
  * Finalize a checkout session
  */
-export const finalizeSession = async ({ id, data = {}, query = {}, processor }) => {
+export const finalizeSession = async ({ id, data = {}, query = {}, processor }: { id: string; data?: any; query?: any; processor: { id: string; manual: boolean } }) => {
   return (await apiFetch({
     method: 'POST',
-    path: addQueryArgs(parsePath(id, `/finalize/`), {
-      processor_type: processor,
+    path: addQueryArgs(parsePath(id, '/finalize'), {
+      ...(processor?.manual ? { manual_payment: true, manual_payment_method_id: processor?.id } : { processor_type: processor?.id }),
       ...query,
     }),
     data,
@@ -75,6 +75,12 @@ export const finalizeSession = async ({ id, data = {}, query = {}, processor }) 
 export const getSession = async id => {
   return (await apiFetch({
     path: parsePath(id),
+  })) as Checkout;
+};
+
+export const fetchCheckout = async ({ id, query = {} }) => {
+  return (await apiFetch({
+    path: addQueryArgs(parsePath(id), query),
   })) as Checkout;
 };
 

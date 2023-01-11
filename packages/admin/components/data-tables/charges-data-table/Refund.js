@@ -3,27 +3,38 @@ import { css, jsx } from '@emotion/core';
 import {
 	ScAlert,
 	ScButton,
+	ScChoices,
+	ScChoice,
 	ScFlex,
 	ScForm,
 	ScFormControl,
+	ScLineItem,
 	ScPriceInput,
 	ScSelect,
+	ScIcon,
 } from '@surecart/components-react';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { store as noticesStore } from '@wordpress/notices';
 import { Modal } from '@wordpress/components';
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
-export default ({ charge, onRequestClose, onRefunded }) => {
+export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 	const [loading, setLoading] = useState(false);
-	const { createErrorNotice } = useDispatch(noticesStore);
-	const [amount, setAmount] = useState(charge?.amount - charge?.refunded_amount);
+	const [amount, setAmount] = useState(
+		charge?.amount - charge?.refunded_amount
+	);
 	const [reason, setReason] = useState('requested_by_customer');
 	const [error, setError] = useState(null);
+	const [revokedPurchaseIds, setRevokedPurchaseIds] = useState([]);
+	const [selectedAllPurchases, setSelectedAllPurchases] = useState(false);
 
-	const { saveEntityRecord } = useDispatch(coreStore);
+	const { saveEntityRecord, invalidateResolutionForStore } =
+		useDispatch(coreStore);
+
+	const revokablePurchases = (purchases || []).filter(
+		(purchase) => !purchase?.revoked
+	);
 
 	/**
 	 * Handle submit.
@@ -40,6 +51,7 @@ export default ({ charge, onRequestClose, onRefunded }) => {
 					amount,
 					reason,
 					charge: charge?.id,
+					revoked_purchases: revokedPurchaseIds,
 				},
 				{ throwOnError: true }
 			);
@@ -47,11 +59,14 @@ export default ({ charge, onRequestClose, onRefunded }) => {
 			if (refund?.status === 'failed') {
 				throw {
 					message: __(
-						'Could not refund the charge. Please check with the processor for more details.',
+						'We were unable to issue a refund with this payment processor. Please check with your payment processor and try issuing the refund directly through the processor.',
 						'surecart'
 					),
 				};
 			}
+
+			// invalidate page.
+			await invalidateResolutionForStore();
 
 			onRefunded(refund);
 		} catch (e) {
@@ -65,6 +80,22 @@ export default ({ charge, onRequestClose, onRefunded }) => {
 		} finally {
 			setLoading(false);
 		}
+	};
+
+	// handle purchased item click for revoke
+	const onTogglePurchase = (id, checked) => {
+		setRevokedPurchaseIds((state) =>
+			checked ? state.filter((item) => id !== item) : [...state, id]
+		);
+		if (selectedAllPurchases) setSelectedAllPurchases(false);
+	};
+
+	// toggle select all purchases for revoke
+	const onToggleAllPurchaseSelect = (checked) => {
+		setRevokedPurchaseIds(() =>
+			!checked ? revokablePurchases?.map((purchase) => purchase.id) : []
+		);
+		setSelectedAllPurchases(!checked);
 	};
 
 	return (
@@ -128,6 +159,91 @@ export default ({ charge, onRequestClose, onRefunded }) => {
 						/>
 					</ScFormControl>
 				</div>
+				{!!revokablePurchases?.length && (
+					<ScFormControl label={__('Revoke Purchase(s)', 'surecart')}>
+						<ScButton
+							type="link"
+							size="small"
+							slot="label-end"
+							onClick={() =>
+								onToggleAllPurchaseSelect(selectedAllPurchases)
+							}
+						>
+							{selectedAllPurchases
+								? __('Unselect All', 'surecart')
+								: __('Select All', 'surecart')}
+						</ScButton>
+						<ScChoices>
+							{revokablePurchases.map((purchase) => {
+								const { id, product, quantity, subscription } =
+									purchase;
+								const checked = revokedPurchaseIds.includes(id);
+								return (
+									<ScChoice
+										key={id}
+										type="checkbox"
+										checked={checked}
+										onScChange={() =>
+											onTogglePurchase(id, checked)
+										}
+									>
+										<ScLineItem>
+											{!!product?.image_url ? (
+												<img
+													src={product?.image_url}
+													slot="image"
+												/>
+											) : (
+												<div
+													css={css`
+														width: 48px;
+														height: 48px;
+														object-fit: cover;
+														background: var(
+															--sc-color-gray-100
+														);
+														display: flex;
+														align-items: center;
+														justify-content: center;
+														border-radius: var(
+															--sc-border-radius-small
+														);
+													`}
+													slot="image"
+												>
+													<ScIcon
+														style={{
+															width: '18px',
+															height: '18px',
+														}}
+														name={'image'}
+													/>
+												</div>
+											)}
+											<span slot="title">
+												{product?.name}
+											</span>
+											<div slot="description">
+												<span>
+													{__('Qty', 'surecart')}:{' '}
+													{quantity}
+												</span>
+												{!!subscription && (
+													<sc-tag type="info">
+														{__(
+															'The associated subscription will also be cancelled.',
+															'surecart'
+														)}
+													</sc-tag>
+												)}
+											</div>
+										</ScLineItem>
+									</ScChoice>
+								);
+							})}
+						</ScChoices>
+					</ScFormControl>
+				)}
 
 				<ScAlert type="danger" open={error}>
 					{error}

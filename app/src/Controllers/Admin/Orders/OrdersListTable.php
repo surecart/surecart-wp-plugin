@@ -2,7 +2,6 @@
 
 namespace SureCart\Controllers\Admin\Orders;
 
-use SureCart\Support\TimeDate;
 use SureCart\Models\Order;
 use SureCart\Controllers\Admin\Tables\ListTable;
 
@@ -63,10 +62,10 @@ class OrdersListTable extends ListTable {
 	 */
 	protected function get_views() {
 		$stati = [
+			'all'            => __( 'All', 'surecart' ),
 			'paid'           => __( 'Paid', 'surecart' ),
 			'processing'     => __( 'Processing', 'surecart' ),
 			'payment_failed' => __( 'Failed', 'surecart' ),
-			'all'            => __( 'All', 'surecart' ),
 		];
 
 		$link = \SureCart::getUrl()->index( 'orders' );
@@ -78,7 +77,7 @@ class OrdersListTable extends ListTable {
 				if ( $status === $_GET['status'] ) {
 					$current_link_attributes = ' class="current" aria-current="page"';
 				}
-			} elseif ( 'paid' === $status ) {
+			} elseif ( 'all' === $status ) {
 				$current_link_attributes = ' class="current" aria-current="page"';
 			}
 
@@ -151,7 +150,7 @@ class OrdersListTable extends ListTable {
 				'status' => $this->getStatus(),
 				'query'  => $this->get_search_query(),
 			]
-		)->with( [ 'checkout', 'checkout.charge', 'checkout.customer', 'checkout.payment_method', 'checkout.purchases', 'payment_method.card', 'payment_method.payment_instrument', 'payment_method.paypal_account', 'payment_method.bank_account' ] )
+		)->with( [ 'checkout', 'checkout.charge', 'checkout.customer', 'checkout.payment_method', 'checkout.manual_payment_method', 'checkout.purchases', 'payment_method.card', 'payment_method.payment_instrument', 'payment_method.paypal_account', 'payment_method.bank_account' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'orders' ),
@@ -201,6 +200,9 @@ class OrdersListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_method( $order ) {
+		if ( isset( $order->checkout->manual_payment_method->name ) ) {
+			return '<sc-tag>' . $order->checkout->manual_payment_method->name . '</sc-tag>';
+		}
 		ob_start();
 		?>
 			<sc-payment-method id="sc-method-<?php echo esc_attr( $order->id ); ?>"></sc-payment-method>
@@ -238,7 +240,7 @@ class OrdersListTable extends ListTable {
 			return '<sc-tag type="danger">' . __( 'Refunded', 'surecart' ) . '</sc-tag>';
 		}
 
-		if ( ! empty( $order->checkout->payment_intent->processor_type ) && 'paypal' === $order->checkout->payment_intent->processor_type ) {
+		if ( ! empty( $order->checkout->payment_method->processor_type ) && 'paypal' === $order->checkout->payment_method->processor_type ) {
 			if ( 'requires_approval' === $order->status ) {
 				return '<sc-tooltip text="' . __( 'Paypal is taking a closer look at this payment. It’s required for some payments and normally takes up to 3 business days.', 'surecart' ) . '" type="warning"><sc-order-status-badge status="' . esc_attr( $order->status ) . '"></sc-order-status-badge></sc-tooltip>';
 			}

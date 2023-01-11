@@ -2,16 +2,14 @@
 import { formatTime } from '../../../util/time';
 import { css, jsx } from '@emotion/core';
 import {
+	ScFlex,
 	ScFormatDate,
+	ScSkeleton,
 	ScSubscriptionStatusBadge,
 } from '@surecart/components-react';
 import { __, sprintf } from '@wordpress/i18n';
 
 export default ({ subscription, customer, product, loading }) => {
-	if (!subscription?.id) {
-		return null;
-	}
-
 	const renderStartDate = () => {
 		if (subscription?.current_period_end_at == null) {
 			return (
@@ -79,6 +77,7 @@ export default ({ subscription, customer, product, loading }) => {
 				</div>
 			);
 		}
+
 		if (
 			['past_due', 'active'].includes(subscription?.status) &&
 			subscription.current_period_end_at
@@ -100,8 +99,38 @@ export default ({ subscription, customer, product, loading }) => {
 		}
 	};
 
+	const renderRemainingPayments = () => {
+		if (subscription?.remaining_period_count) {
+			return (
+				<div>
+					<div>
+						<strong>{__('Payments', 'surecart')}</strong>
+					</div>
+					{sprintf(
+						__('%d Remaining', 'surecart'),
+						subscription?.remaining_period_count
+					)}
+				</div>
+			);
+		}
+	};
+
 	if (loading) {
-		return 'looding';
+		return (
+			<div>
+				<ScFlex flexDirection="column" style={{ '--spacing': '1em' }}>
+					<ScSkeleton style={{ width: '40%', height: '2em' }} />
+					<ScSkeleton style={{ width: '50%' }} />
+					<div></div>
+					<ScSkeleton style={{ width: '5%' }} />
+					<ScSkeleton style={{ width: '10%' }} />
+				</ScFlex>
+			</div>
+		);
+	}
+
+	if (!subscription?.id) {
+		return;
 	}
 
 	return (
@@ -144,11 +173,12 @@ export default ({ subscription, customer, product, loading }) => {
 					display: flex;
 					justify-content: flex-start;
 					align-items: center;
-					gap: 1em;
+					gap: 2em;
 					margin-bottom: 2em;
 				`}
 			>
 				{renderStartDate()}
+				{renderRemainingPayments()}
 			</div>
 		</div>
 	);

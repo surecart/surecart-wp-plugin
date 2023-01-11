@@ -35,19 +35,23 @@
 
 ## Shadow Parts
 
-| Part       | Description |
-| ---------- | ----------- |
-| `"base"`   |             |
-| `"caret"`  |             |
-| `"label"`  |             |
-| `"prefix"` |             |
-| `"suffix"` |             |
+| Part        | Description                |
+| ----------- | -------------------------- |
+| `"base"`    | The elements base wrapper. |
+| `"caret"`   | The button caret.          |
+| `"label"`   | The button label.          |
+| `"prefix"`  | The button prefix.         |
+| `"spinner"` | The button spinner.        |
+| `"suffix"`  | The button suffix.         |
 
 
 ## Dependencies
 
 ### Used by
 
+ - [sc-cancel-dialog](../../controllers/dashboard/sc-cancel-dialog)
+ - [sc-cancel-discount](../../controllers/dashboard/sc-cancel-discount)
+ - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
  - [sc-cart-form-submit](../../controllers/cart/cart-form-submit)
  - [sc-cart-submit](../../controllers/cart/cart-submit)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
@@ -66,6 +70,7 @@
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-pagination](../pagination)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
+ - [sc-payment-method](../sc-payment-method)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-stripe-add-method](../sc-stripe-add-method)
@@ -74,11 +79,11 @@
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
- - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-tax-id-input](../tax-id-input)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-upgrade-required](../sc-upgrade-required)
  - [sc-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
  - [sc-wordpress-user](../../controllers/dashboard/wordpress-user)
  - [sc-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
@@ -91,6 +96,9 @@
 ```mermaid
 graph TD;
   sc-button --> sc-spinner
+  sc-cancel-dialog --> sc-button
+  sc-cancel-discount --> sc-button
+  sc-cancel-survey --> sc-button
   sc-cart-form-submit --> sc-button
   sc-cart-submit --> sc-button
   sc-charges-list --> sc-button
@@ -109,6 +117,7 @@ graph TD;
   sc-orders-list --> sc-button
   sc-pagination --> sc-button
   sc-password-nag --> sc-button
+  sc-payment-method --> sc-button
   sc-payment-methods-list --> sc-button
   sc-purchase-downloads-list --> sc-button
   sc-stripe-add-method --> sc-button
@@ -117,11 +126,11 @@ graph TD;
   sc-subscription-cancel --> sc-button
   sc-subscription-payment --> sc-button
   sc-subscription-payment-method --> sc-button
-  sc-subscription-renew --> sc-button
   sc-subscription-switch --> sc-button
   sc-subscriptions-list --> sc-button
   sc-tax-id-input --> sc-button
   sc-upcoming-invoice --> sc-button
+  sc-upgrade-required --> sc-button
   sc-wordpress-password-edit --> sc-button
   sc-wordpress-user --> sc-button
   sc-wordpress-user-edit --> sc-button

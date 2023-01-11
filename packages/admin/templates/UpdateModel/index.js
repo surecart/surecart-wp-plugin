@@ -9,6 +9,9 @@ import { ScForm } from '@surecart/components-react';
 import { PostLockedModal } from '@wordpress/editor';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { store as uiStore } from '../../store/ui';
+import { useDispatch, useSelect } from '@wordpress/data';
+import UpgradeModal from '../../components/UpgradeModal';
 
 export default ({
 	children,
@@ -19,6 +22,10 @@ export default ({
 	sidebar,
 	onError,
 }) => {
+	const modal = useSelect((select) => select(uiStore).showUpgradeModal());
+	const { setUpgradeModal } = useDispatch(uiStore);
+	const onRequestClose = () => setUpgradeModal(false);
+
 	return (
 		<Fragment>
 			<Global
@@ -60,30 +67,6 @@ export default ({
 						}
 						.components-snackbar-list__notice-container {
 							float: right;
-						}
-
-						.components-text-control__input,
-						.components-input-control__container
-							.components-input-control__input {
-							&[type='text'],
-							&[type='tel'],
-							&[type='time'],
-							&[type='url'],
-							&[type='week'],
-							&[type='password'],
-							&[type='color'],
-							&[type='date'],
-							&[type='datetime'],
-							&[type='datetime-local'],
-							&[type='email'],
-							&[type='month'],
-							&[type='number'] {
-								height: 40px;
-								border-radius: 4px;
-								border: 1px solid #9898a0;
-								padding: 10px 12px;
-								box-shadow: rgb(0 0 0 / 5%) 0px 1px 2px 0px;
-							}
 						}
 
 						.is-error {
@@ -206,6 +189,7 @@ export default ({
 						`}
 					/>
 				</ScForm>
+				{modal && <UpgradeModal onRequestClose={onRequestClose} />}
 			</ErrorBoundary>
 			<PostLockedModal />
 		</Fragment>

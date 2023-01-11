@@ -3,8 +3,8 @@ Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
-Tested up to: 6.0
-Stable tag: 1.1.15
+Tested up to: 6.1
+Stable tag: 1.4.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -205,7 +205,7 @@ The second type of integrations are done with SureTriggers, which is like Zapier
 There are also some special features for site to site connections. So you can sell products on one site with SureCart then add the user to another site where your content may be. This is great for online courses or membership setups.
 
 ## Join The SureCart Facebook Group ##
-Join our Facebook group community: Learn the tricks and techniques that other SureCart users are using to grow their business. Also, get exciting insider information on upcoming feature releases.
+Join our [Facebook group community](https://www.facebook.com/groups/surecrafted): Learn the tricks and techniques that other SureCart users are using to grow their business. Also, get exciting insider information on upcoming feature releases.
 
 [Terms And Conditions](https://surecart.com/terms)
 [Privacy Policy](https://surecart.com/privacy)
@@ -242,6 +242,156 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.5.0 - January 11, 2023 =
+* New: Subscription saver and cancellation insights.
+* New: Manual tax registrations.
+* New: Option to turn off emails for free orders.
+* New: Option to revoke purchases immediately when orders become past due.
+* New: Disable "Powered By Surecart" footers for Premium users.
+* Improvement: Add "Fallback Tax" setting for merchants wanting to have a fallback tax for their store.
+* Improvement: Add the ability to revoke purchases when refunding a charge.
+* Improvement: Add expandable details to customer dashboard subscriptions view (quantity, discounts, etc.).
+* Improvement: Reword Order Bump "Auto Apply Discount" functionality.
+* Improvement: Change order "Metadata" wording in admin to "Additional Order Data".
+* Improvement: Add facebook group link in readme.
+* Improvement: Add timestamp to API requests to increase compatibility with plugins that cache the WordPress REST API.
+* Improvement: Update subscription list table status to include if the subscription will cancel as well as the date.
+* Improvement: Allow updating subscription payment method, even for canceled subscriptions.
+* Fix: Subscriptions not showing discount on Merchant admin for upcoming period preview.
+* Fix: Address display formatting issues on customer dashboard.
+* Fix: Issues where links were to api.surecart.com instead of app.surecart.com
+
+= 1.4.2 - January 10, 2023 =
+* Fix: Coupon product restrictions dropdown not selectable after search.
+
+= 1.4.1 - January 6, 2023 =
+* New: Choose the start of your order numbers if using sequential order numbers.
+* Fix: Issue with order summary not loading if no Stripe processors are enabled.
+
+= 1.4.0 - January 5, 2023 =
+* New: Sign in codes and login flow.
+* New: Add max redemptions per customer UI to coupon.
+* Improvement: Rename “Checkout Page” to “Store Checkout” in pages list.
+* Improvement: Show if a processor is disabled on the settings page. Disallow showing disabled processor in forms.
+* Improvement: Keep customer data and Wordpress user in sync.
+* Improvement: Change the word Pro to Premium in plugin.
+* Improvement: Rename "default" to "store checkout" for store checkout page and store checkout form.
+* Improvement: Link the charge to the payment processor from the admin UI.
+* Improvement: Select box accessibility improvement.
+* Fix: Coupon field overflow on mobile screens.
+* Fix: Disallow payment plan update screen if not enabled in admin.
+* Fix: Scrolling issue on settings pages.
+* Fix: PHP8 compatibility issues on checkout page with debug mode turned on.
+* Fix: FCFA currency support.
+* Fix: global [hidden] conflicts.
+
+
+= 1.3.4 - December 15, 2022 =
+* Improvement: Coupon UX - set usage and customer limits per promotion code.
+* Fix: Product restrictions on coupons not applying to specific products only.
+
+= 1.3.3 - December 14, 2022 =
+* New: Separate first name and last name fields.
+* Improvement: Coupon entry UX.
+* Improvement: Order bump UI to work better on mobile devices.
+* Improvement: Display per-file upload limits.
+* Improvement: Show storage limits if reaching upper limits of storage.
+* Fix: Flexbox wrapping issue on admin dashboard.
+* Fix: SureCart columns block category incorrect.
+* Fix: Issue with taxes being taken into account with scratch prices.
+* Fix: Add missing "Email Address" translation in login form.
+
+= 1.3.2 - December 1, 2022 =
+* Improvement: Switch form block now allows rich text (links, formatting, etc.)
+* Improvement: Show notice in admin if SSL is not enabled on your site.
+* Fix: Unable to search all products product, price selectors.
+* Fix: Setting free trial on admin subscription edit getting cut off.
+* Fix: Upgrade groups no longer show archived prices.
+* Fix: Show refunds list on admin order page.
+
+= 1.3.1  - November 30, 2022 =
+* Hotfix: Scratch prices not able to be created with decimal points.
+
+= 1.3.0  - November 30, 2022 =
+* New: Restrict coupons to products, prices or customers.
+* Improvement: Ability to filter error messages.
+* Improvement: New documentation on styling with shadow parts and css variables.
+* Improvement: Show all orders by default on admin orders page.
+* Improvement: Option for the address component to not be required.
+* Improvement: Show remaining payment for payment plan on individual admin plan page.
+* Improvement: Show customer's payment methods in the admin.
+* Fix: Unable to update PayPal payment method on existing subscription in admin.
+* Fix: Disabled integrations are no longer selectable.
+* Fix: Customer dashboard full setting not taking effect.
+* Fix: Abandoned checkouts missing recovered state.
+* Fix: Added correct premium label to free trials.
+* Fix: Validate compare at price in browser.
+
+= 1.2.5  - Novermber 29, 2022 =
+* Hotfix: Fix fatal error happening on some servers that are not supporting our get route url function.
+
+= 1.2.4  - Novermber 29, 2022 =
+* Improvement: Abandoned checkout email links with multi-website stores.
+* Improvement: Add filter to manual payment method summary to allow customization.
+* Fix: AffiliateWP not showing product in list.
+
+= 1.2.3  - Novermber 25, 2022 =
+* Fix: Issue with admin prices search closing on keypresses, not allowing search functionality.
+* Fix: Issue with customers not able to update subscription if subscription quantity changes were disabled.
+
+= 1.2.2  - Novermber 23, 2022 =
+* New: “Compare at” option for creating sale prices.
+* Improvement: Slide out cart width compatibility with some themes that make it too narrow.
+* Fix: Recapcha not working with manual processors change.
+* Fix: Scripts sometimes not loading with specific page builders if shortcodes are used and cart is turned off.
+* Fix: Subscription email edit had incorrect pro badge.
+* Fix: Some users having permission issues when updating payment methods in dashboard.
+
+= 1.2.1  - Novermber 15, 2022 =
+* New: Textarea field.
+* Improvement: Show scratch price on order summary if discount is present.
+* Improvement: Edit store (admin) email templates.
+* Improvement: Button style consistency on product page.
+* Improvement: Enable or disable customer subscription reminder emails is now a free feature.
+* Fix: Some custom form fields not saving metadata for some processors.
+* Fix: sc_order_confirmation shortcode not displaying.
+* Fix: Overflow issue on some themes with address component.
+* Fix: Issue with some shortcodes not displaying if slide-out cart is disabled by admin.
+
+= 1.2.0  - Novermber 14, 2022 =
+* New: Manual payment methods.
+* New: Abandoned Checkouts (Pro).
+* Improvement: Add Dutch notifications and invoice language.
+* Fix: Issue with default country selection in address block not initializing with new checkout.
+* Fix: Prevent false positive notice from Sucuri for our honeypot field.
+* Fix: Issue with Stripe Payment Element redirect processors not working on iOS devices.
+
+= 1.1.19  - Novermber 2, 2022 =
+* Improvement: WordPress 6.1 Compatibility.
+
+= 1.1.18  - October 31, 2022 =
+* Improvement: Set custom background and text colors for cart, buy buttons and submit buttons.
+* Improvement: Set placeholder labels for address block.
+* Improvement: Set a default country for shipping address.
+* Improvement: Admin ability "restore" a subscription that has been canceled.
+* Improvement: Admin ability to mark an order as paid.
+* Improvement: Admin ability to turn off tax on individual subscriptions.
+* Improvement: Show payment failure list on orders if failed payments.
+* Fix: Radio button individual selection not working in forms.
+* Fix: Issue with PayPal not working on Safari mobile browsers.
+* Fix: Issue with certain embeds not appearing on dashboard pages.
+
+= 1.1.17  - October 22, 2022 =
+* Fix: Quantity selector not working in some cases.
+
+= 1.1.16  - October 19, 2022 =
+* Improvement: Wording for price select options.
+* Fix: Limit line item quantity selector based on product purchase limit.
+* Fix: Nested shortcodes not rendering with some themes.
+* Fix: Buy button shortcode text not customizable.
+* Fix: Payment limit field disappearing when amount is removed.
+* Fix: Checkout form intermittently hanging when submitted.
 
 = 1.1.15 - October 14, 2022 =
 * New: Buddyboss groups integration with purchases.

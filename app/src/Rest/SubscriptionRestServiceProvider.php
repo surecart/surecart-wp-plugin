@@ -65,11 +65,39 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 
 		register_rest_route(
 			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/restore/',
+			[
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'restore' ),
+					'permission_callback' => [ $this, 'cancel_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+
+		register_rest_route(
+			"$this->name/v$this->version",
 			$this->endpoint . '/(?P<id>\S+)/renew/',
 			[
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => $this->callback( $this->controller, 'renew' ),
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/preserve/',
+			[
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'preserve' ),
 					'permission_callback' => [ $this, 'update_item_permissions_check' ],
 				],
 				// Register our schema callback.

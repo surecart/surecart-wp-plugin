@@ -46,7 +46,7 @@ class ShortcodesBlockConversionService {
 					$this->attributes,
 					$name
 				),
-				$this->content
+				do_shortcode( $this->content )
 			),
 			$name
 		);

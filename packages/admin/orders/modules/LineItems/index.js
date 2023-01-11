@@ -62,7 +62,7 @@ export default ({ order, checkout, loading }) => {
 			title={__('Order Details', 'surecart')}
 			loading={loading}
 			header_action={
-				order?.pdf_url && (
+				order?.statement_url && (
 					<div
 						css={css`
 							display: flex;
@@ -73,7 +73,7 @@ export default ({ order, checkout, loading }) => {
 						`}
 					>
 						<ScButton
-							href={addQueryArgs(order?.pdf_url, {
+							href={addQueryArgs(order?.statement_url, {
 								receipt: true,
 							})}
 							type="primary"
@@ -131,7 +131,7 @@ export default ({ order, checkout, loading }) => {
 					return (
 						<ScProductLineItem
 							key={item.id}
-							imageUrl={item?.price?.metadata?.wp_attachment_src}
+							imageUrl={item?.price?.product?.image_url}
 							name={item?.price?.product?.name}
 							editable={false}
 							removable={false}
