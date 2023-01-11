@@ -250,6 +250,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * New: Option to revoke purchases immediately when orders become past due.
 * New: Disable "Powered By Surecart" footers for Premium users.
 * Improvement: Add "Fallback Tax" setting for merchants wanting to have a fallback tax for their store.
+* Improvement: Add български (Bŭlgarski), 日本 (Nihon) Polski, Português - Brasil languages.
 * Improvement: Add the ability to revoke purchases when refunding a charge.
 * Improvement: Add expandable details to customer dashboard subscriptions view (quantity, discounts, etc.).
 * Improvement: Reword Order Bump "Auto Apply Discount" functionality.
