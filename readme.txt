@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.1
-Stable tag: 1.4.2
+Stable tag: 1.5.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -244,7 +244,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 == Changelog ==
 
 = 1.5.0 - January 11, 2023 =
-* New: Subscription saver and cancellation insights.
+* New: Subscription saver [Learn More](https://www.youtube.com/watch?v=9Bx4u4DV4_Q)
 * New: Manual tax registrations.
 * New: Option to turn off emails for free orders.
 * New: Option to revoke purchases immediately when orders become past due.
