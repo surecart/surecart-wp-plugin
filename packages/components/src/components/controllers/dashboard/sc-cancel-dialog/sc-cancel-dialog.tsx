@@ -72,7 +72,8 @@ export class ScCancelDialog {
               onScAbandon={() => this.close()}
               onScCancelled={() => {
                 this.scRefresh.emit();
-                this.close();
+                this.reset();
+                this.scRequestClose.emit('close-button');
               }}
             />
           )}
