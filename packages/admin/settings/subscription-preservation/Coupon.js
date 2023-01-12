@@ -146,6 +146,23 @@ export default ({ coupon, updateCoupon }) => {
 					required={coupon?.duration === 'repeating'}
 				/>
 			)}
+
+			<ScInput
+				label={__('Usage limit per customer', 'surecart')}
+				placeholder={__('Unlimited Usage', 'surecart')}
+				help={__(
+					'The amount of times a single customer use the renewal discount.',
+					'surecart'
+				)}
+				class="max-redemptions-input"
+				value={coupon?.max_redemptions_per_customer}
+				onScChange={(e) => {
+					updateCoupon({
+						max_redemptions_per_customer: e.target.value,
+					});
+				}}
+				type="number"
+			/>
 		</>
 	);
 };
