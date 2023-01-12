@@ -19,7 +19,8 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		$prices = (array) get_post_meta( get_the_ID(), 'prices' );
+		// get prices from post meta.
+		$prices = (array) get_post_meta( get_the_ID(), 'prices' ); // we don't want to return true here since we are looking for the array.
 
 		// get block classes and styles.
 		[ 'classes' => $classes, 'styles' => $styles ] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes );
