@@ -1,11 +1,10 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-
-import { __ } from '@wordpress/i18n';
+import { ScInput, ScSwitch } from '@surecart/components-react';
 import { BaseControl, DateTimePicker } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
 
 import Box from '../../ui/Box';
-import { ScInput, ScSwitch } from '@surecart/components-react';
 
 export default ({ coupon, loading, updateCoupon }) => {
 	return (
@@ -16,6 +15,50 @@ export default ({ coupon, loading, updateCoupon }) => {
 					gap: 2em;
 				`}
 			>
+				<div
+					css={css`
+						display: grid;
+						gap: 1em;
+					`}
+				>
+					<BaseControl>
+						<ScInput
+							label={__('Usage limit per coupon', 'surecart')}
+							help={__(
+								"This limit applies across customers so it won't prevent a single customer from redeeming multiple times.",
+								'surecart'
+							)}
+							placeholder={__('Unlimited Usage', 'surecart')}
+							class="max-redemptions-input"
+							value={coupon?.max_redemptions}
+							onScChange={(e) => {
+								updateCoupon({
+									max_redemptions: e.target.value,
+								});
+							}}
+							type="number"
+						/>
+					</BaseControl>
+					<BaseControl>
+						<ScInput
+							label={__('Usage limit per customer', 'surecart')}
+							placeholder={__('Unlimited Usage', 'surecart')}
+							help={__(
+								'The number of times a single customer can use this coupon.',
+								'surecart'
+							)}
+							class="max-redemptions-input"
+							value={coupon?.max_redemptions_per_customer}
+							onScChange={(e) => {
+								updateCoupon({
+									max_redemptions_per_customer:
+										e.target.value,
+								});
+							}}
+							type="number"
+						/>
+					</BaseControl>
+				</div>
 				<div>
 					<ScSwitch
 						class="sc-redeem-by"
@@ -59,51 +102,6 @@ export default ({ coupon, loading, updateCoupon }) => {
 								}}
 							/>
 						</div>
-					)}
-				</div>
-
-				<div
-					css={css`
-						display: grid;
-						gap: 1em;
-					`}
-				>
-					<ScSwitch
-						class="sc-max-redemptions"
-						checked={!!coupon?.max_redemptions}
-						onScChange={(e) => {
-							updateCoupon({
-								max_redemptions: e.target.checked ? 1 : null,
-							});
-						}}
-					>
-						{__('Max Redemptions', 'surecart')}
-						<span slot="description">
-							{__(
-								'Limit the total number of times this coupon can be redeemed.',
-								'surecart'
-							)}
-						</span>
-					</ScSwitch>
-
-					{!!coupon?.max_redemptions && (
-						<BaseControl>
-							<ScInput
-								label={__('Number of Times', 'surecart')}
-								help={__(
-									"This limit applies across customers so it won't prevent a single customer from redeeming multiple times.",
-									'surecart'
-								)}
-								class="max-redemptions-input"
-								value={coupon?.max_redemptions || 1}
-								onScChange={(e) => {
-									updateCoupon({
-										max_redemptions: e.target.value,
-									});
-								}}
-								type="number"
-							/>
-						</BaseControl>
 					)}
 				</div>
 			</div>

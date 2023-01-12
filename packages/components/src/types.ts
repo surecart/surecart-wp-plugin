@@ -135,6 +135,21 @@ export interface License {
   updated_at: number;
 }
 
+export interface CancellationReason {
+  id: string;
+  object: 'cancellation_reason';
+  archived: boolean;
+  comment_enabled: false;
+  comment_prompt: string | null;
+  coupon_enabled: boolean;
+  label: string;
+  position: number;
+  archived_at: number;
+  discarded_at: number;
+  created_at: number;
+  updated_at: number;
+}
+
 export interface Period {
   id: string;
   object: 'period';
@@ -358,7 +373,7 @@ export interface Order extends Object {
   object: 'order';
   number?: string;
   order_type?: 'checkout' | 'subscription';
-  pdf_url?: string;
+  statement_url?: string;
   status?: OrderStatus;
   checkout?: Checkout | string;
   created_at: number;
@@ -515,11 +530,13 @@ export interface Subscription extends Object {
   status: SubscriptionStatus;
   live_mode: boolean;
   external_subscription_id: string;
+  current_cancellation_act: string | CancellationAct;
   trial_end_at: number;
   processor_type: 'stripe' | 'paypal';
   order: Order;
   customer: Customer;
   discount: DiscountResponse;
+  finite: boolean;
   pending_update: {
     ad_hoc_amount?: number;
     price?: string;
@@ -540,6 +557,19 @@ export interface Subscription extends Object {
   updated_at: number;
 }
 
+export interface CancellationAct {
+  id: string;
+  object: 'cancellation_act';
+  cancellation_reason: string | CancellationReason;
+  comment: string;
+  coupon_applied: boolean;
+  preserved: boolean;
+  subscription: string | Subscription;
+  performed_at: number;
+  created_at: number;
+  updated_at: number;
+}
+
 export interface SubscriptionProtocol {
   id: string;
   object: 'subscription_protocol';
@@ -547,6 +577,17 @@ export interface SubscriptionProtocol {
   downgrade_behavior: 'pending' | 'immediate';
   payment_retry_window_weeks: number;
   upgrade_behavior: 'pending' | 'immediate';
+  preservation_enabled: boolean;
+  preservation_locales: {
+    reasons_title: string;
+    reasons_description: string;
+    skip_link: string;
+    preserve_title: string;
+    preserve_description: string;
+    preserve_button: string;
+    cancel_link: string;
+  };
+  preservation_coupon: Coupon | string;
   created_at: number;
   updated_at: number;
 }
@@ -656,6 +697,16 @@ export interface ResponseError {
 }
 
 export type ProcessorName = 'stripe' | 'paypal' | 'paypal-card';
+
+export interface VerificationCode {
+  id: string;
+  object: 'verification_code';
+  code: number;
+  verified: boolean;
+  verified_at: number | null;
+  created_at: number;
+  updated_at: number;
+}
 
 export interface PaymentIntent extends Object {
   id: string;

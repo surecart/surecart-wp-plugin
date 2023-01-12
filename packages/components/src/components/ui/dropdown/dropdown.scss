@@ -28,6 +28,7 @@
 
 .dropdown__positioner {
   position: absolute;
+  right: 0;
   width: 100%;
   z-index: var(--sc-z-index-dropdown);
   opacity: 0;

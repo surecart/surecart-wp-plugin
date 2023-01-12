@@ -1,6 +1,12 @@
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { ScAddress, ScSelect, ScSwitch } from '@surecart/components-react';
+import {
+	ScAddress,
+	ScIcon,
+	ScSelect,
+	ScSwitch,
+	ScInput,
+} from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
 import useEntity from '../../hooks/useEntity';
@@ -34,7 +40,7 @@ export default () => {
 	return (
 		<SettingsTemplate
 			title={__('Taxes', 'surecart')}
-			icon={<sc-icon name="tag"></sc-icon>}
+			icon={<ScIcon name="tag" />}
 			onSubmit={onSubmit}
 		>
 			<Error
@@ -68,6 +74,44 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
+				<ScSwitch
+					checked={item?.default_tax_enabled}
+					onClick={(e) => {
+						e.preventDefault();
+						editItem({
+							default_tax_enabled: !item?.default_tax_enabled,
+						});
+					}}
+				>
+					{__('Enable A Fallback Tax Rate', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'If enabled, you can enter a tax rate to apply when a specific tax registration is not found.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				{item?.default_tax_enabled && (
+					<ScInput
+						type="number"
+						label={__('Fallback Rate', 'surecart')}
+						help={__(
+							'The fallback tax rate to use for checkouts when a specific tax registration is not found.',
+							'surecart'
+						)}
+						min="0"
+						max="100"
+						value={item?.default_rate}
+						onScInput={(e) =>
+							editItem({
+								default_rate: e.target.value,
+							})
+						}
+						required={item?.default_tax_enabled}
+					>
+						<span slot="suffix">%</span>
+					</ScInput>
+				)}
 				<ScAddress
 					label={__('Address', 'surecart')}
 					required={false}
@@ -180,29 +224,34 @@ export default () => {
 			>
 				<sc-card no-padding>
 					<TaxRow
-						icon={<sc-icon name="australia-flag"></sc-icon>}
+						icon={<ScIcon name="australia-flag" />}
 						title={__('Australia', 'surecart')}
 						region="au"
 					/>
 					<TaxRow
-						icon={<sc-icon name="canada-flag"></sc-icon>}
+						icon={<ScIcon name="canada-flag" />}
 						title={__('Canada', 'surecart')}
 						region="ca"
 					/>
 					<TaxRow
-						icon={<sc-icon name="eu-flag"></sc-icon>}
+						icon={<ScIcon name="eu-flag" />}
 						title={__('European Union', 'surecart')}
 						region="eu"
 					/>
 					<TaxRow
-						icon={<sc-icon name="uk-flag"></sc-icon>}
+						icon={<ScIcon name="uk-flag" />}
 						title={__('United Kingdom', 'surecart')}
 						region="uk"
 					/>
 					<TaxRow
-						icon={<sc-icon name="us-flag"></sc-icon>}
+						icon={<ScIcon name="us-flag" />}
 						title={__('United States', 'surecart')}
 						region="us"
+					/>
+					<TaxRow
+						icon={<ScIcon name="globe" />}
+						title={__('Rest Of The World', 'surecart')}
+						region="other"
 					/>
 				</sc-card>
 			</SettingsBox>
