@@ -24,7 +24,7 @@ class PageService {
 	 * @param boolean $delete Delete status.
 	 * @param boject  $post Post object.
 	 *
-	 * @return boolean|void
+	 * @return void
 	 */
 	public function restrictDefaultPageDeletion( $delete, $post ) {
 		$default_checkout = \SureCart::pages()->getID('checkout');
