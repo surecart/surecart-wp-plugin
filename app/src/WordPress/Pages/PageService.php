@@ -32,7 +32,7 @@ class PageService {
 		$post_id          = $post->ID;
 
 		if ( in_array( $post_id, [ $default_checkout, $default_form ], true ) ) {
-			return false;
+			wp_die( __( 'SureCart default checkout form/page can\'t be delete!', 'surecart' ) );
 		}
 	}
 
