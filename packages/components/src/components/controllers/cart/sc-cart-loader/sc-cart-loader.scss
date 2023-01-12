@@ -1,5 +1,5 @@
 :host {
-  position: relative;
+  position: fixed;
   z-index: var(--sc-cart-z-index, 999999);
   font-family: var(--sc-font-sans);
 }
