@@ -1,27 +1,24 @@
 body {
-	background-color: #fbfbfb !important;
+	background-color: white !important;
 }
 #layout_checkout {
-	min-height: 100vh;
-	max-width: 1160px;
+  padding: 0;
 	margin: 0 auto;
 	display: flex;
-	padding-top: 8vh;
 	position: relative;
 }
 #layout_checkout > div {
 	width: 100%;
 	z-index: 99;
 }
-@media screen and (min-width: 782px) {
-  #layout_checkout::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 50%;
-    height: 100vh;
-    background-color: white;
-    box-shadow: 5px 0px 20px rgba(0, 0, 0, 0.12);
+
+@media (max-width: 782px) {
+  .wp-block-column:not(.is-not-stacked-on-mobile) > :where(:not(.alignleft):not(.alignright):not(.alignfull)) {
+    max-width: none !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .wp-block-column:first-child {
+    order: 2;
   }
 }

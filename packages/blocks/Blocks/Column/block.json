@@ -36,6 +36,14 @@
 			"gradients": true,
 			"link": true
 		},
+		"__experimentalBorder": {
+			"width": true,
+			"color": true,
+			"__experimentalDefaultControls": {
+				"width": true,
+				"color": true
+			}
+		},
 		"spacing": {
 			"padding": true,
 			"__experimentalDefaultControls": {

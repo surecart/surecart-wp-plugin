@@ -1,7 +1,6 @@
 <?php
 /*
 Template Name: SureCart Blank
-Template Post Type: sc-product
 */
 ?>
 <!DOCTYPE html>
