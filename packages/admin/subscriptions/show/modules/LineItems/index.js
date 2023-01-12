@@ -87,7 +87,7 @@ export default ({ period, loading }) => {
 					/>
 				)}
 
-				{!!checkout?.discounts && (
+				{!!checkout?.discount_amount && (
 					<LineItem
 						label={__('Discounts', 'surecart')}
 						currency={checkout?.currency}

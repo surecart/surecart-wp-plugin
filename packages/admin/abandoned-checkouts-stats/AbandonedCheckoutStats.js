@@ -1,16 +1,14 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
 
-dayjs.extend(duration);
 import {
 	ScFlex,
 	ScFormatNumber,
 	ScIcon,
+	ScPremiumTag,
 	ScTag,
-  ScUpgradeRequired,
+	ScUpgradeRequired,
 } from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
@@ -20,6 +18,7 @@ import Stat from './Stat';
 import Tab from './Tab';
 import { averageProperties, totalProperties } from './util';
 import { getFormattedPrice, maybeConvertAmount } from '../util';
+import { getFilterData } from '../util/filter';
 
 export default () => {
 	const [data, setData] = useState([]);
@@ -29,57 +28,8 @@ export default () => {
 	const [filter, setFilter] = useState('30days');
 
 	const getAbandonedData = async () => {
-		// defaults.
-		let startDate = dayjs().startOf('day');
-		let endDate = dayjs().endOf('day');
-		let prevEndDate = startDate;
-		let prevStartDate = dayjs(startDate).add(-1, 'day');
-		let interval = 'day';
-
-		// change current and previous dates.
-		switch (filter) {
-			case '30days':
-				endDate = dayjs();
-				startDate = dayjs().add(-1, 'month');
-				prevEndDate = startDate;
-				prevStartDate = dayjs().add(-2, 'month');
-				break;
-			case 'yesterday':
-				endDate = dayjs().startOf('day');
-				startDate = dayjs().startOf('day').add(-1, 'day');
-				prevEndDate = startDate;
-				prevStartDate = dayjs(startDate).add(-1, 'day');
-				break;
-			case 'thisweek':
-				startDate = dayjs().startOf('week');
-				endDate = dayjs().endOf('day');
-				prevEndDate = startDate;
-				prevStartDate = dayjs(startDate).add(-1, 'week');
-				break;
-			case 'lastweek':
-				startDate = dayjs().startOf('week').add(-1, 'week');
-				endDate = dayjs().startOf('week');
-				prevEndDate = startDate;
-				prevStartDate = dayjs(startDate).add(-1, 'week');
-				break;
-			case 'thismonth':
-				startDate = dayjs().startOf('month');
-				endDate = dayjs().endOf('day');
-				prevEndDate = startDate;
-				prevStartDate = dayjs(startDate).add(-1, 'month');
-				break;
-			case 'lastmonth':
-				startDate = dayjs().startOf('month').add(-1, 'month');
-				endDate = dayjs().startOf('month');
-				prevEndDate = startDate;
-				prevStartDate = dayjs(startDate).add(-1, 'month');
-				break;
-		}
-
-		// set interval to hour if day is not enough
-		if (endDate.diff(startDate, 'day') < 1) {
-			interval = 'hour';
-		}
+		const { startDate, endDate, prevEndDate, prevStartDate, interval } =
+			getFilterData(filter);
 
 		try {
 			setError(false);
@@ -121,8 +71,8 @@ export default () => {
 	const fetchData = async ({ startDate, endDate, interval }) => {
 		const { data } = await apiFetch({
 			path: addQueryArgs('surecart/v1/stats/abandoned_checkouts', {
-				start_at: startDate.toISOString(),
-				end_at: endDate.toISOString(),
+				start_at: startDate.format(),
+				end_at: endDate.format(),
 				interval: interval,
 			}),
 		});
@@ -133,7 +83,11 @@ export default () => {
 
 	const badge = ({ previous, current, currency = false }) => {
 		if (!hasAccess) {
-			return <ScUpgradeRequired />;
+			return (
+				<ScUpgradeRequired>
+					<ScPremiumTag />
+				</ScUpgradeRequired>
+			);
 		}
 
 		if (loading) return null;

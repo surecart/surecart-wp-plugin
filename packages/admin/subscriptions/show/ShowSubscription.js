@@ -9,10 +9,12 @@ import {
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
+	ScBlockUi,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
+import { store as noticesStore } from '@wordpress/notices';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { useState } from 'react';
@@ -32,12 +34,42 @@ import Periods from './modules/Periods';
 import Purchases from './modules/Purchases';
 import Tax from './modules/Tax';
 import UpcomingPeriod from './modules/UpcomingPeriod';
+import PaymentMethod from '../edit/modules/PaymentMethod';
 
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [modal, setModal] = useState();
+	const { saveEntityRecord } = useDispatch(coreStore);
+	const { createErrorNotice, createSuccessNotice } =
+		useDispatch(noticesStore);
 
-	const { subscription, hasLoadedSubscription } = useSelect(
+	const editSubscription = async (data) => {
+		try {
+			await saveEntityRecord(
+				'surecart',
+				'subscription',
+				{ id, ...data },
+				{ throwOnError: true }
+			);
+			createSuccessNotice(__('Payment method updated.', 'surecart'), {
+				type: 'snackbar',
+			});
+		} catch (e) {
+			createErrorNotice(
+				e?.message || __('Something went wrong', 'surecart'),
+				{ type: 'snackbar' }
+			);
+			if (e?.additional_errors?.length) {
+				e.additional_errors.forEach(
+					({ message }) =>
+						message &&
+						createErrorNotice(message, { type: 'snackbar' })
+				);
+			}
+		}
+	};
+
+	const { subscription, hasLoadedSubscription, isSaving } = useSelect(
 		(select) => {
 			if (!id) return;
 			const queryArgs = [
@@ -55,7 +87,10 @@ export default () => {
 						'customer',
 						'customer.balances',
 						'purchase',
+						'discount',
+						'discount.coupon',
 						'order',
+						'current_cancellation_act',
 						'payment_method',
 						'payment_method.card',
 						'payment_method.payment_instrument',
@@ -72,6 +107,11 @@ export default () => {
 				hasLoadedSubscription: select(coreStore).hasFinishedResolution(
 					'getEntityRecords',
 					queryArgs
+				),
+				isSaving: select(coreStore)?.isSavingEntityRecord?.(
+					'surecart',
+					'subscription',
+					id
 				),
 			};
 		},
@@ -253,6 +293,14 @@ export default () => {
 				/>
 
 				<Periods subscriptionId={id} />
+
+				{subscription?.payment_method && (
+					<PaymentMethod
+						subscription={subscription}
+						updateSubscription={editSubscription}
+						loading={!hasLoadedSubscription}
+					/>
+				)}
 			</>
 
 			<CancelPendingUpdate
@@ -276,6 +324,7 @@ export default () => {
 				open={modal === 'restore'}
 				onRequestClose={() => setModal(false)}
 			/>
+			{isSaving && <ScBlockUi spinner />}
 		</Template>
 	);
 };

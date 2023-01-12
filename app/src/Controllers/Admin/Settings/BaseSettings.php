@@ -46,6 +46,7 @@ abstract class BaseSettings {
 				'is_free'      => (bool) ( \SureCart::account()->plan->free ?? true ),
 				'entitlements' => \SureCart::account()->entitlements,
 				'upgrade_url'  => \SureCart::config()->links->purchase,
+				'brand_color'  => \SureCart::account()->brand->color ?? null,
 				'status'       => $request->query( 'status' ),
 			]
 		);
@@ -105,6 +106,7 @@ abstract class BaseSettings {
 				'api_url'              => defined( 'SURECART_API_URL' ) ? untrailingslashit( SURECART_API_URL ) : \SureCart::requests()->getBaseUrl(),
 				'time_zones'           => TimeDate::timezoneOptions(),
 				'entitlements'         => \SureCart::account()->entitlements,
+				'brand_color'          => \SureCart::account()->brand->color ?? null,
 				'plan_name'            => \SureCart::account()->plan->name ?? '',
 				'processors'           => Processor::get(),
 			]
