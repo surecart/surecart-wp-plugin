@@ -136,6 +136,7 @@ return [
 		\SureCartBlocks\Blocks\Dashboard\DashboardTab\Block::class,
 
 		\SureCartBlocks\Blocks\ProductTitle\Block::class,
+		\SureCartBlocks\Blocks\ProductPrices\Block::class,
 	],
 
 	/** Which components to preload for each block. */

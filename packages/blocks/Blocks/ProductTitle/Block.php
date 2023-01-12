@@ -3,13 +3,12 @@
 namespace SureCartBlocks\Blocks\ProductTitle;
 
 use SureCartBlocks\Blocks\BaseBlock;
+use SureCartBlocks\Util\BlockStyleAttributes;
 
 /**
- * Checkout block
+ * Product Title Block
  */
 class Block extends BaseBlock {
-
-
 	/**
 	 * Render the block
 	 *
@@ -20,11 +19,25 @@ class Block extends BaseBlock {
 	 */
 	public function render( $attributes, $content ) {
 		$product = get_post_meta( get_the_ID(), 'product' );
-		var_dump( $attributes );
-		$tagname = 'h' . $attributes['level'] ?? 1;
+		// no product found.
+		if ( ! $product ) {
+			return false;
+		}
 
-		return "<$tagname class='" . esc_attr( $attributes['className'] ) . "'>"
-			. $product->name .
-			" </$tagname>";
+		// get block classes and styles.
+		['classes' => $classes, 'styles' => $styles] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes );
+		// get text align class.
+		['class' => $text_align_class] = BlockStyleAttributes::getTextAlignClassAndStyle( $attributes );
+
+		return sprintf(
+			'<%1$s class="surecart-block %2$s %3$s" style="%4$s">
+				%5$s
+			</%1$s>',
+			'h' . (int) ( $attributes['level'] ?? 1 ),
+			esc_attr( $text_align_class ?? '' ),
+			esc_attr( $classes ?? '' ),
+			esc_attr( $styles ?? '' ),
+			$product->name
+		);
 	}
 }
