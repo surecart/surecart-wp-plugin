@@ -2,40 +2,51 @@
   display: block;
 }
 
+sc-button {
+  color: var(--sc-color-primary-500);
+}
+
 .coupon-form {
   position: relative;
-}
-// .coupon-tag {
-//   margin-bottom: 4px;
-// }
 
-// sc-input {
-//   margin-bottom: var(--sc-spacing-small);
-// }
+  .coupon-button {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.90);
+    transition: all var(--sc-transition-fast) ease;
+  }
+
+  &--has-value {
+    .coupon-button {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+    }
+  }
+}
 
 .form {
   opacity: 0;
   visibility: hidden;
   height: 0;
-  transition: opacity var(--sc-transition-fast) ease-in-out;
+  transform: translateY(5px);
+  transition: opacity var(--sc-transition-fast) ease, transform var(--sc-transition-fast) ease;
+  position: relative;
+  gap: var(--sc-spacing-small);
 }
 
 .coupon-form--is-open {
   .form {
     opacity: 1;
     visibility: visible;
+    transform: translateY(0);
     height: auto;
-    margin-top: var(--sc-spacing-small);
-    display: grid;
-    gap: var(--sc-spacing-small);
+    margin: var(--sc-spacing-small) 0;
   }
 
   .trigger {
     color: var(--sc-input-label-color);
-
-    &:hover {
-      text-decoration: none;
-    }
+    display: none;
   }
 }
 

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-09-23T20:59:00",
+  "timestamp": "2022-12-29T20:01:01",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -12,7 +12,80 @@
       "tag": "sc-address",
       "readme": "# ce-address\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "input__base - The inputs base element."
+        },
+        {
+          "name": "part",
+          "text": "select__base - The select boxes base element."
+        },
+        {
+          "name": "part",
+          "text": "input - The html input element."
+        },
+        {
+          "name": "part",
+          "text": "form-control - The form control wrapper."
+        },
+        {
+          "name": "part",
+          "text": "label - The input label."
+        },
+        {
+          "name": "part",
+          "text": "help-text - Help text that describes how to use the input."
+        },
+        {
+          "name": "part",
+          "text": "trigger - The select box trigger."
+        },
+        {
+          "name": "part",
+          "text": "panel - The select box panel."
+        },
+        {
+          "name": "part",
+          "text": "caret - The select box caret."
+        },
+        {
+          "name": "part",
+          "text": "search__base - The select search base."
+        },
+        {
+          "name": "part",
+          "text": "search__input - The select search input."
+        },
+        {
+          "name": "part",
+          "text": "search__form-control - The select search form control."
+        },
+        {
+          "name": "part",
+          "text": "menu__base - The select menu base."
+        },
+        {
+          "name": "part",
+          "text": "spinner__base  - The select spinner base."
+        },
+        {
+          "name": "part",
+          "text": "empty - The select empty message."
+        },
+        {
+          "name": "part",
+          "text": "block-ui - The block ui base component."
+        },
+        {
+          "name": "part",
+          "text": "block-ui__content - The block ui content (spinner)."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -103,7 +176,7 @@
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
-          "default": "{\n    name: __('Name or Company Name', 'surecart'),\n    country: __('Country', 'surecart'),\n    city: __('City', 'surecart'),\n    line_1: __('Address', 'surecart'),\n    line_2: __('Address Line 2', 'surecart'),\n    postal_code: __('Postal Code/Zip', 'surecart'),\n    state: __('State/Province/Region', 'surecart'),\n  }",
+          "default": "{}",
           "values": [
             {
               "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
@@ -120,7 +193,7 @@
           "reflectToAttr": true,
           "docs": "Is this required?",
           "docsTags": [],
-          "default": "true",
+          "default": "false",
           "values": [
             {
               "type": "boolean"
@@ -200,8 +273,84 @@
       "slots": [],
       "parts": [
         {
-          "name": "control",
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "block-ui",
+          "docs": "The block ui base component."
+        },
+        {
+          "name": "block-ui__content",
+          "docs": "The block ui content (spinner)."
+        },
+        {
+          "name": "caret",
+          "docs": "The select box caret."
+        },
+        {
+          "name": "columns",
           "docs": ""
+        },
+        {
+          "name": "empty",
+          "docs": "The select empty message."
+        },
+        {
+          "name": "form-control",
+          "docs": "The form control wrapper."
+        },
+        {
+          "name": "help-text",
+          "docs": "Help text that describes how to use the input."
+        },
+        {
+          "name": "input",
+          "docs": "The html input element."
+        },
+        {
+          "name": "input__base",
+          "docs": "The inputs base element."
+        },
+        {
+          "name": "label",
+          "docs": "The input label."
+        },
+        {
+          "name": "menu__base",
+          "docs": "The select menu base."
+        },
+        {
+          "name": "name__input",
+          "docs": ""
+        },
+        {
+          "name": "panel",
+          "docs": "The select box panel."
+        },
+        {
+          "name": "search__base",
+          "docs": "The select search base."
+        },
+        {
+          "name": "search__form-control",
+          "docs": "The select search form control."
+        },
+        {
+          "name": "search__input",
+          "docs": "The select search input."
+        },
+        {
+          "name": "select__base",
+          "docs": "The select boxes base element."
+        },
+        {
+          "name": "spinner__base",
+          "docs": "The select spinner base."
+        },
+        {
+          "name": "trigger",
+          "docs": "The select box trigger."
         }
       ],
       "dependents": [
@@ -254,7 +403,32 @@
       "tag": "sc-alert",
       "readme": "# ce-alert\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "icon - The alert icon."
+        },
+        {
+          "name": "part",
+          "text": "text - The alert text."
+        },
+        {
+          "name": "part",
+          "text": "title - The alert title."
+        },
+        {
+          "name": "part",
+          "text": "message - The alert message."
+        },
+        {
+          "name": "part",
+          "text": "close - The close icon."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -286,6 +460,22 @@
           "values": [
             {
               "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "noIcon",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "no-icon",
+          "reflectToAttr": false,
+          "docs": "No icon",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -426,27 +616,27 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
         },
         {
-          "name": "close-icon",
-          "docs": ""
+          "name": "close",
+          "docs": "The close icon."
         },
         {
           "name": "icon",
-          "docs": ""
+          "docs": "The alert icon."
         },
         {
           "name": "message",
-          "docs": ""
+          "docs": "The alert message."
         },
         {
           "name": "text",
-          "docs": ""
+          "docs": "The alert text."
         },
         {
           "name": "title",
-          "docs": ""
+          "docs": "The alert title."
         }
       ],
       "dependents": [
@@ -458,7 +648,9 @@
         "sc-error",
         "sc-form-error-provider",
         "sc-login-form",
+        "sc-login-provider",
         "sc-order-confirmation",
+        "sc-order-manual-instructions",
         "sc-password-nag",
         "sc-payment",
         "sc-paypal-add-method",
@@ -501,7 +693,13 @@
         "sc-login-form": [
           "sc-alert"
         ],
+        "sc-login-provider": [
+          "sc-alert"
+        ],
         "sc-order-confirmation": [
+          "sc-alert"
+        ],
+        "sc-order-manual-instructions": [
           "sc-alert"
         ],
         "sc-password-nag": [
@@ -648,7 +846,16 @@
       "tag": "sc-block-ui",
       "readme": "# ce-block-ui\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "content - The content (spinner)"
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -706,7 +913,16 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "content",
+          "docs": "The content (spinner)"
+        }
+      ],
       "dependents": [
         "sc-address",
         "sc-cart",
@@ -729,6 +945,7 @@
         "sc-subscription-ad-hoc-confirm",
         "sc-subscription-cancel",
         "sc-subscription-payment",
+        "sc-subscription-payment-method",
         "sc-subscription-renew",
         "sc-subscription-switch",
         "sc-subscriptions-list",
@@ -806,6 +1023,9 @@
         "sc-subscription-payment": [
           "sc-block-ui"
         ],
+        "sc-subscription-payment-method": [
+          "sc-block-ui"
+        ],
         "sc-subscription-renew": [
           "sc-block-ui"
         ],
@@ -832,7 +1052,28 @@
       "tag": "sc-breadcrumb",
       "readme": "# ce-breadcrumb\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "label - The label."
+        },
+        {
+          "name": "part",
+          "text": "suffix - The suffix item."
+        },
+        {
+          "name": "part",
+          "text": "prefix - The prefix item."
+        },
+        {
+          "name": "part",
+          "text": "separator - The separator."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -906,23 +1147,23 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
         },
         {
           "name": "label",
-          "docs": ""
+          "docs": "The label."
         },
         {
           "name": "prefix",
-          "docs": ""
+          "docs": "The prefix item."
         },
         {
           "name": "separator",
-          "docs": ""
+          "docs": "The separator."
         },
         {
           "name": "suffix",
-          "docs": ""
+          "docs": "The suffix item."
         }
       ],
       "dependents": [],
@@ -941,7 +1182,16 @@
       "tag": "sc-breadcrumbs",
       "readme": "# ce-breadcrumbs\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "separator - The separator."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -970,7 +1220,11 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "separator",
+          "docs": "The separator."
         }
       ],
       "dependents": [],
@@ -989,7 +1243,32 @@
       "tag": "sc-button",
       "readme": "# ce-button\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "label - The button label."
+        },
+        {
+          "name": "part",
+          "text": "prefix - The button prefix."
+        },
+        {
+          "name": "part",
+          "text": "suffix - The button suffix."
+        },
+        {
+          "name": "part",
+          "text": "caret - The button caret."
+        },
+        {
+          "name": "part",
+          "text": "spinner - The button spinner."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -1338,23 +1617,27 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
         },
         {
           "name": "caret",
-          "docs": ""
+          "docs": "The button caret."
         },
         {
           "name": "label",
-          "docs": ""
+          "docs": "The button label."
         },
         {
           "name": "prefix",
-          "docs": ""
+          "docs": "The button prefix."
+        },
+        {
+          "name": "spinner",
+          "docs": "The button spinner."
         },
         {
           "name": "suffix",
-          "docs": ""
+          "docs": "The button suffix."
         }
       ],
       "dependents": [
@@ -1370,11 +1653,13 @@
         "sc-invoices-list",
         "sc-licenses-list",
         "sc-login-form",
+        "sc-login-provider",
         "sc-order",
         "sc-order-submit",
         "sc-orders-list",
         "sc-pagination",
         "sc-password-nag",
+        "sc-payment-method",
         "sc-payment-methods-list",
         "sc-purchase-downloads-list",
         "sc-stripe-add-method",
@@ -1382,11 +1667,13 @@
         "sc-subscription-ad-hoc-confirm",
         "sc-subscription-cancel",
         "sc-subscription-payment",
+        "sc-subscription-payment-method",
         "sc-subscription-renew",
         "sc-subscription-switch",
         "sc-subscriptions-list",
         "sc-tax-id-input",
         "sc-upcoming-invoice",
+        "sc-upgrade-required",
         "sc-wordpress-password-edit",
         "sc-wordpress-user",
         "sc-wordpress-user-edit"
@@ -1434,6 +1721,9 @@
         "sc-login-form": [
           "sc-button"
         ],
+        "sc-login-provider": [
+          "sc-button"
+        ],
         "sc-order": [
           "sc-button"
         ],
@@ -1447,6 +1737,9 @@
           "sc-button"
         ],
         "sc-password-nag": [
+          "sc-button"
+        ],
+        "sc-payment-method": [
           "sc-button"
         ],
         "sc-payment-methods-list": [
@@ -1470,6 +1763,9 @@
         "sc-subscription-payment": [
           "sc-button"
         ],
+        "sc-subscription-payment-method": [
+          "sc-button"
+        ],
         "sc-subscription-renew": [
           "sc-button"
         ],
@@ -1483,6 +1779,9 @@
           "sc-button"
         ],
         "sc-upcoming-invoice": [
+          "sc-button"
+        ],
+        "sc-upgrade-required": [
           "sc-button"
         ],
         "sc-wordpress-password-edit": [
@@ -1568,7 +1867,12 @@
       "tag": "sc-card",
       "readme": "# ce-card\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -1582,6 +1886,22 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "href",
+          "type": "string",
+          "mutable": false,
+          "attr": "href",
+          "reflectToAttr": false,
+          "docs": "A link for the card.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -1644,7 +1964,7 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
         }
       ],
       "dependents": [
@@ -1659,13 +1979,15 @@
         "sc-order-confirmation-details",
         "sc-orders-list",
         "sc-password-nag",
-        "sc-payment",
+        "sc-payment-method-choice",
         "sc-payment-methods-list",
         "sc-purchase-downloads-list",
         "sc-subscription",
         "sc-subscription-ad-hoc-confirm",
         "sc-subscription-cancel",
+        "sc-subscription-details",
         "sc-subscription-payment",
+        "sc-subscription-payment-method",
         "sc-subscription-renew",
         "sc-subscriptions-list",
         "sc-upcoming-invoice",
@@ -1708,7 +2030,7 @@
         "sc-password-nag": [
           "sc-card"
         ],
-        "sc-payment": [
+        "sc-payment-method-choice": [
           "sc-card"
         ],
         "sc-payment-methods-list": [
@@ -1726,7 +2048,13 @@
         "sc-subscription-cancel": [
           "sc-card"
         ],
+        "sc-subscription-details": [
+          "sc-card"
+        ],
         "sc-subscription-payment": [
+          "sc-card"
+        ],
+        "sc-subscription-payment-method": [
           "sc-card"
         ],
         "sc-subscription-renew": [
@@ -2248,7 +2576,20 @@
       "tag": "sc-cart-icon",
       "readme": "# sc-cart-icon\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "container - The container."
+        },
+        {
+          "name": "part",
+          "text": "icon__base - The icon base wrapper."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -2294,7 +2635,15 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "container",
+          "docs": "The container."
+        },
+        {
+          "name": "icon__base",
+          "docs": "The icon base wrapper."
         }
       ],
       "dependents": [
@@ -2645,7 +2994,12 @@
       "tag": "sc-cc-logo",
       "readme": "# ce-cc-logo\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -2673,7 +3027,7 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
         }
       ],
       "dependents": [
@@ -2828,7 +3182,28 @@
       "tag": "sc-checkbox",
       "readme": "# ce-checkbox\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "control - The control wrapper."
+        },
+        {
+          "name": "part",
+          "text": "checked-icon - Checked icon."
+        },
+        {
+          "name": "part",
+          "text": "indeterminate-icon - Indeterminate icon."
+        },
+        {
+          "name": "part",
+          "text": "label - The label."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -2855,6 +3230,23 @@
           "attr": "disabled",
           "reflectToAttr": true,
           "docs": "Disables the checkbox.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "edit",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "edit",
+          "reflectToAttr": true,
+          "docs": "Makes this edit and not editable.",
           "docsTags": [],
           "default": "false",
           "values": [
@@ -2922,23 +3314,6 @@
           "attr": "required",
           "reflectToAttr": true,
           "docs": "Makes the checkbox a required field.",
-          "docsTags": [],
-          "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "static",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "static",
-          "reflectToAttr": true,
-          "docs": "Makes this static and not editable.",
           "docsTags": [],
           "default": "false",
           "values": [
@@ -3047,23 +3422,23 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
         },
         {
           "name": "checked-icon",
-          "docs": ""
+          "docs": "Checked icon."
         },
         {
           "name": "control",
-          "docs": ""
+          "docs": "The control wrapper."
         },
         {
           "name": "indeterminate-icon",
-          "docs": ""
+          "docs": "Indeterminate icon."
         },
         {
           "name": "label",
-          "docs": ""
+          "docs": "The label."
         }
       ],
       "dependents": [],
@@ -3079,6 +3454,22 @@
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "abandonedCheckoutReturnUrl",
+          "type": "string",
+          "mutable": false,
+          "attr": "abandoned-checkout-return-url",
+          "reflectToAttr": false,
+          "docs": "The abandoned checkout return url.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
         {
           "name": "alignment",
           "type": "\"center\" | \"full\" | \"wide\"",
@@ -3203,7 +3594,7 @@
         {
           "name": "loggedIn",
           "type": "boolean",
-          "mutable": false,
+          "mutable": true,
           "attr": "logged-in",
           "reflectToAttr": false,
           "docs": "Is this user logged in?",
@@ -3211,6 +3602,21 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "manualPaymentMethods",
+          "type": "ManualPaymentMethod[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Manual payment methods enabled for this form.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "ManualPaymentMethod[]"
             }
           ],
           "optional": false,
@@ -3373,10 +3779,10 @@
         {
           "name": "submit",
           "returns": {
-            "type": "Promise<any>",
+            "type": "Promise<Checkout>",
             "docs": ""
           },
-          "signature": "submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<any>",
+          "signature": "submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout>",
           "parameters": [],
           "docs": "Submit the form",
           "docsTags": []
@@ -3451,6 +3857,7 @@
       "dependencies": [
         "sc-alert",
         "sc-checkout-unsaved-changes-warning",
+        "sc-login-provider",
         "sc-form-state-provider",
         "sc-form-error-provider",
         "sc-form-components-validator",
@@ -3462,6 +3869,7 @@
         "sc-checkout": [
           "sc-alert",
           "sc-checkout-unsaved-changes-warning",
+          "sc-login-provider",
           "sc-form-state-provider",
           "sc-form-error-provider",
           "sc-form-components-validator",
@@ -3471,6 +3879,26 @@
         ],
         "sc-alert": [
           "sc-icon"
+        ],
+        "sc-login-provider": [
+          "sc-alert",
+          "sc-dialog",
+          "sc-form",
+          "sc-input",
+          "sc-button"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-input": [
+          "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
         ],
         "sc-form-state-provider": [
           "sc-block-ui"
@@ -3497,12 +3925,6 @@
           "sc-input",
           "sc-select",
           "sc-block-ui"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
-        "sc-input": [
-          "sc-form-control"
         ],
         "sc-select": [
           "sc-icon",
@@ -3531,9 +3953,6 @@
           "sc-button",
           "sc-menu",
           "sc-menu-item"
-        ],
-        "sc-button": [
-          "sc-spinner"
         ],
         "sc-order-bumps": [
           "sc-form-control",
@@ -3882,6 +4301,17 @@
           "parameters": [],
           "docs": "Simulates a click on the choice.",
           "docsTags": []
+        },
+        {
+          "name": "triggerFocus",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "signature": "triggerFocus() => Promise<void>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
         }
       ],
       "events": [
@@ -3950,6 +4380,7 @@
         "sc-order-bump",
         "sc-price-choice",
         "sc-subscription-payment",
+        "sc-subscription-payment-method",
         "sc-subscription-switch"
       ],
       "dependencies": [],
@@ -3963,6 +4394,9 @@
         "sc-subscription-payment": [
           "sc-choice"
         ],
+        "sc-subscription-payment-method": [
+          "sc-choice"
+        ],
         "sc-subscription-switch": [
           "sc-choice"
         ]
@@ -3974,7 +4408,28 @@
       "tag": "sc-choices",
       "readme": "# ce-choices\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "choices - The choices wrapper."
+        },
+        {
+          "name": "part",
+          "text": "form-control - The form control wrapper."
+        },
+        {
+          "name": "part",
+          "text": "label - The input label."
+        },
+        {
+          "name": "part",
+          "text": "help-text - Help text that describes how to use the input."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -4139,7 +4594,19 @@
           "required": false
         }
       ],
-      "methods": [],
+      "methods": [
+        {
+          "name": "triggerFocus",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "signature": "triggerFocus() => Promise<void>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        }
+      ],
       "events": [],
       "listeners": [],
       "styles": [],
@@ -4147,17 +4614,30 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
         },
         {
           "name": "choices",
-          "docs": ""
+          "docs": "The choices wrapper."
+        },
+        {
+          "name": "form-control",
+          "docs": "The form control wrapper."
+        },
+        {
+          "name": "help-text",
+          "docs": "Help text that describes how to use the input."
+        },
+        {
+          "name": "label",
+          "docs": "The input label."
         }
       ],
       "dependents": [
         "sc-donation-choices",
         "sc-price-choices",
         "sc-subscription-payment",
+        "sc-subscription-payment-method",
         "sc-subscription-switch"
       ],
       "dependencies": [
@@ -4177,6 +4657,9 @@
           "sc-choices"
         ],
         "sc-subscription-payment": [
+          "sc-choices"
+        ],
+        "sc-subscription-payment-method": [
           "sc-choices"
         ],
         "sc-subscription-switch": [
@@ -4281,7 +4764,80 @@
       "tag": "sc-compact-address",
       "readme": "# sc-compact-address\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "input__base - The inputs base element."
+        },
+        {
+          "name": "part",
+          "text": "select__base - The select boxes base element."
+        },
+        {
+          "name": "part",
+          "text": "input - The html input element."
+        },
+        {
+          "name": "part",
+          "text": "form-control - The form control wrapper."
+        },
+        {
+          "name": "part",
+          "text": "label - The input label."
+        },
+        {
+          "name": "part",
+          "text": "help-text - Help text that describes how to use the input."
+        },
+        {
+          "name": "part",
+          "text": "trigger - The select box trigger."
+        },
+        {
+          "name": "part",
+          "text": "panel - The select box panel."
+        },
+        {
+          "name": "part",
+          "text": "caret - The select box caret."
+        },
+        {
+          "name": "part",
+          "text": "search__base - The select search base."
+        },
+        {
+          "name": "part",
+          "text": "search__input - The select search input."
+        },
+        {
+          "name": "part",
+          "text": "search__form-control - The select search form control."
+        },
+        {
+          "name": "part",
+          "text": "menu__base - The select menu base."
+        },
+        {
+          "name": "part",
+          "text": "spinner__base  - The select spinner base."
+        },
+        {
+          "name": "part",
+          "text": "empty - The select empty message."
+        },
+        {
+          "name": "part",
+          "text": "block-ui - The block ui base component."
+        },
+        {
+          "name": "part",
+          "text": "block-ui__content - The block ui content (spinner)."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -4404,8 +4960,80 @@
       "slots": [],
       "parts": [
         {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "block-ui",
+          "docs": "The block ui base component."
+        },
+        {
+          "name": "block-ui__content",
+          "docs": "The block ui content (spinner)."
+        },
+        {
+          "name": "caret",
+          "docs": "The select box caret."
+        },
+        {
           "name": "control",
           "docs": ""
+        },
+        {
+          "name": "empty",
+          "docs": "The select empty message."
+        },
+        {
+          "name": "form-control",
+          "docs": "The form control wrapper."
+        },
+        {
+          "name": "help-text",
+          "docs": "Help text that describes how to use the input."
+        },
+        {
+          "name": "input",
+          "docs": "The html input element."
+        },
+        {
+          "name": "input__base",
+          "docs": "The inputs base element."
+        },
+        {
+          "name": "label",
+          "docs": "The input label."
+        },
+        {
+          "name": "menu__base",
+          "docs": "The select menu base."
+        },
+        {
+          "name": "panel",
+          "docs": "The select box panel."
+        },
+        {
+          "name": "search__base",
+          "docs": "The select search base."
+        },
+        {
+          "name": "search__form-control",
+          "docs": "The select search form control."
+        },
+        {
+          "name": "search__input",
+          "docs": "The select search input."
+        },
+        {
+          "name": "select__base",
+          "docs": "The select boxes base element."
+        },
+        {
+          "name": "spinner__base",
+          "docs": "The select spinner base."
+        },
+        {
+          "name": "trigger",
+          "docs": "The select box trigger."
         }
       ],
       "dependents": [
@@ -4500,7 +5128,84 @@
       "tag": "sc-coupon-form",
       "readme": "# ce-coupon-form\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "form - The form."
+        },
+        {
+          "name": "part",
+          "text": "input__base - The input base."
+        },
+        {
+          "name": "part",
+          "text": "input - The input."
+        },
+        {
+          "name": "part",
+          "text": "input__form-control - The input form control."
+        },
+        {
+          "name": "part",
+          "text": "button__base - The button base element."
+        },
+        {
+          "name": "part",
+          "text": "button__label - The button label."
+        },
+        {
+          "name": "part",
+          "text": "info - The discount info."
+        },
+        {
+          "name": "part",
+          "text": "discount - The discount displayed (% off)"
+        },
+        {
+          "name": "part",
+          "text": "amount - The discount amount."
+        },
+        {
+          "name": "part",
+          "text": "discount-label - The discount label."
+        },
+        {
+          "name": "part",
+          "text": "coupon-tag - The coupon tag."
+        },
+        {
+          "name": "part",
+          "text": "error__base - The error base."
+        },
+        {
+          "name": "part",
+          "text": "error__icon - The error icon"
+        },
+        {
+          "name": "part",
+          "text": "error__text - The error text."
+        },
+        {
+          "name": "part",
+          "text": "error_title - The error title."
+        },
+        {
+          "name": "part",
+          "text": "error__message - The error message."
+        },
+        {
+          "name": "part",
+          "text": "block-ui - The block ui base component."
+        },
+        {
+          "name": "part",
+          "text": "block-ui__content - The block ui content (spinner)."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -4662,7 +5367,88 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "amount",
+          "docs": "The discount amount."
+        },
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "block-ui",
+          "docs": "The block ui base component."
+        },
+        {
+          "name": "block-ui__content",
+          "docs": "The block ui content (spinner)."
+        },
+        {
+          "name": "button__base",
+          "docs": "The button base element."
+        },
+        {
+          "name": "button__label",
+          "docs": "The button label."
+        },
+        {
+          "name": "coupon-tag",
+          "docs": "The coupon tag."
+        },
+        {
+          "name": "discount",
+          "docs": "The discount displayed (% off)"
+        },
+        {
+          "name": "discount-label",
+          "docs": "The discount label."
+        },
+        {
+          "name": "error__base",
+          "docs": "The error base."
+        },
+        {
+          "name": "error__icon",
+          "docs": "The error icon"
+        },
+        {
+          "name": "error__message",
+          "docs": "The error message."
+        },
+        {
+          "name": "error__text",
+          "docs": "The error text."
+        },
+        {
+          "name": "error_title",
+          "docs": "The error title."
+        },
+        {
+          "name": "form",
+          "docs": "The form."
+        },
+        {
+          "name": "info",
+          "docs": "The discount info."
+        },
+        {
+          "name": "input",
+          "docs": "The input."
+        },
+        {
+          "name": "input__base",
+          "docs": "The input base."
+        },
+        {
+          "name": "input__form-control",
+          "docs": "The input form control."
+        },
+        {
+          "name": "label",
+          "docs": ""
+        }
+      ],
       "dependents": [
         "sc-order-coupon-form",
         "sc-upcoming-invoice"
@@ -4673,8 +5459,8 @@
         "sc-tag",
         "sc-format-number",
         "sc-input",
-        "sc-alert",
         "sc-button",
+        "sc-alert",
         "sc-block-ui"
       ],
       "dependencyGraph": {
@@ -4684,8 +5470,8 @@
           "sc-tag",
           "sc-format-number",
           "sc-input",
-          "sc-alert",
           "sc-button",
+          "sc-alert",
           "sc-block-ui"
         ],
         "sc-input": [
@@ -4694,11 +5480,11 @@
         "sc-form-control": [
           "sc-tooltip"
         ],
-        "sc-alert": [
-          "sc-icon"
-        ],
         "sc-button": [
           "sc-spinner"
+        ],
+        "sc-alert": [
+          "sc-icon"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -4941,7 +5727,68 @@
       "tag": "sc-customer-details",
       "readme": "# ce-customer-details\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "heading - The heading."
+        },
+        {
+          "name": "part",
+          "text": "heading-text - The heading text wrapper."
+        },
+        {
+          "name": "part",
+          "text": "heading-title - The heading title."
+        },
+        {
+          "name": "part",
+          "text": "heading-description - The heading description."
+        },
+        {
+          "name": "part",
+          "text": "error__base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "error__icon - The alert icon."
+        },
+        {
+          "name": "part",
+          "text": "error__text - The alert text."
+        },
+        {
+          "name": "part",
+          "text": "error__title - The alert title."
+        },
+        {
+          "name": "part",
+          "text": "error__ message - The alert message."
+        },
+        {
+          "name": "part",
+          "text": "test-tag__base - The base test tag."
+        },
+        {
+          "name": "part",
+          "text": "text-tag__content - The base test tag content."
+        },
+        {
+          "name": "part",
+          "text": "button__base - The button base."
+        },
+        {
+          "name": "part",
+          "text": "button__label - The button label."
+        },
+        {
+          "name": "part",
+          "text": "button__prefix - The button prefix."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -5029,7 +5876,68 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "button__base",
+          "docs": "The button base."
+        },
+        {
+          "name": "button__label",
+          "docs": "The button label."
+        },
+        {
+          "name": "button__prefix",
+          "docs": "The button prefix."
+        },
+        {
+          "name": "error__ message",
+          "docs": "The alert message."
+        },
+        {
+          "name": "error__base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "error__icon",
+          "docs": "The alert icon."
+        },
+        {
+          "name": "error__text",
+          "docs": "The alert text."
+        },
+        {
+          "name": "error__title",
+          "docs": "The alert title."
+        },
+        {
+          "name": "heading",
+          "docs": "The heading."
+        },
+        {
+          "name": "heading-description",
+          "docs": "The heading description."
+        },
+        {
+          "name": "heading-text",
+          "docs": "The heading text wrapper."
+        },
+        {
+          "name": "heading-title",
+          "docs": "The heading title."
+        },
+        {
+          "name": "test-tag__base",
+          "docs": "The base test tag."
+        },
+        {
+          "name": "text-tag__content",
+          "docs": "The base test tag content."
+        }
+      ],
       "dependents": [
         "sc-dashboard-customer-details",
         "sc-order-confirmation-customer"
@@ -5148,9 +6056,9 @@
         "sc-tag",
         "sc-card",
         "sc-form",
-        "sc-input",
         "sc-columns",
         "sc-column",
+        "sc-input",
         "sc-address",
         "sc-switch",
         "sc-tax-id-input",
@@ -5163,9 +6071,9 @@
           "sc-tag",
           "sc-card",
           "sc-form",
-          "sc-input",
           "sc-columns",
           "sc-column",
+          "sc-input",
           "sc-address",
           "sc-switch",
           "sc-tax-id-input",
@@ -5222,6 +6130,427 @@
       "encapsulation": "shadow",
       "tag": "sc-customer-email",
       "readme": "# ce-email\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "abandonedCheckoutEnabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "abandoned-checkout-enabled",
+          "reflectToAttr": false,
+          "docs": "Is abandoned checkout enabled?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "autofocus",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "autofocus",
+          "reflectToAttr": false,
+          "docs": "The input's autofocus attribute.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "customer",
+          "type": "Customer",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Force a customer.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Customer"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "disabled",
+          "reflectToAttr": true,
+          "docs": "Disables the input.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "hasFocus",
+          "type": "boolean",
+          "mutable": true,
+          "attr": "has-focus",
+          "reflectToAttr": true,
+          "docs": "Inputs focus",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "help",
+          "type": "string",
+          "mutable": false,
+          "attr": "help",
+          "reflectToAttr": false,
+          "docs": "The input's help text.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "mutable": true,
+          "attr": "invalid",
+          "reflectToAttr": true,
+          "docs": "This will be true when the control is in an invalid state. Validity is determined by props such as `type`,\n`required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "The input's label.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "loggedIn",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "logged-in",
+          "reflectToAttr": false,
+          "docs": "Is the user logged in.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "order",
+          "type": "Checkout",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "(passed from the sc-checkout component automatically)",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Checkout"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "pill",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "pill",
+          "reflectToAttr": true,
+          "docs": "Draws a pill-style input with rounded edges.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "placeholder",
+          "reflectToAttr": false,
+          "docs": "The input's placeholder text.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "readonly",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "readonly",
+          "reflectToAttr": true,
+          "docs": "Makes the input readonly.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "required",
+          "reflectToAttr": true,
+          "docs": "Makes the input a required field.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showLabel",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-label",
+          "reflectToAttr": false,
+          "docs": "Should we show the label",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The input's size.",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "trackingConfirmationMessage",
+          "type": "string",
+          "mutable": false,
+          "attr": "tracking-confirmation-message",
+          "reflectToAttr": false,
+          "docs": "A message for tracking confirmation.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "mutable": true,
+          "attr": "value",
+          "reflectToAttr": false,
+          "docs": "The input's value attribute.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [
+        {
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<boolean>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "events": [
+        {
+          "event": "scBlur",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the control loses focus.",
+          "docsTags": []
+        },
+        {
+          "event": "scChange",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the control's value changes.",
+          "docsTags": []
+        },
+        {
+          "event": "scClear",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the clear button is activated.",
+          "docsTags": []
+        },
+        {
+          "event": "scFocus",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the control gains focus.",
+          "docsTags": []
+        },
+        {
+          "event": "scInput",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the control receives input.",
+          "docsTags": []
+        },
+        {
+          "event": "scLoginPrompt",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Prompt for login.",
+          "docsTags": []
+        },
+        {
+          "event": "scUpdateAbandonedCart",
+          "detail": "boolean",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Update the abandoned cart.",
+          "docsTags": []
+        },
+        {
+          "event": "scUpdateOrderState",
+          "detail": "Checkout",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Update the order state.",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-input"
+      ],
+      "dependencyGraph": {
+        "sc-customer-email": [
+          "sc-input"
+        ],
+        "sc-input": [
+          "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/checkout-form/customer-firstname/sc-customer-firstname.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-customer-firstname",
+      "readme": "# ce-customer-name\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -5559,8 +6888,17 @@
           "docsTags": []
         },
         {
+          "event": "scUpdateCustomer",
+          "detail": "{ email: string; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
           "event": "scUpdateOrderState",
-          "detail": "Checkout",
+          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\" | \"requires_approval\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -5577,7 +6915,387 @@
         "sc-input"
       ],
       "dependencyGraph": {
-        "sc-customer-email": [
+        "sc-customer-firstname": [
+          "sc-input"
+        ],
+        "sc-input": [
+          "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/checkout-form/customer-lastname/sc-customer-lastname.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-customer-lastname",
+      "readme": "# ce-customer-name\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "autofocus",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "autofocus",
+          "reflectToAttr": false,
+          "docs": "The input's autofocus attribute.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "customer",
+          "type": "Customer",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Force a customer.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Customer"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "disabled",
+          "reflectToAttr": true,
+          "docs": "Disables the input.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "hasFocus",
+          "type": "boolean",
+          "mutable": true,
+          "attr": "has-focus",
+          "reflectToAttr": true,
+          "docs": "Inputs focus",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "help",
+          "type": "string",
+          "mutable": false,
+          "attr": "help",
+          "reflectToAttr": false,
+          "docs": "The input's help text.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "mutable": true,
+          "attr": "invalid",
+          "reflectToAttr": true,
+          "docs": "This will be true when the control is in an invalid state. Validity is determined by props such as `type`,\n`required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "The input's label.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "loggedIn",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "logged-in",
+          "reflectToAttr": false,
+          "docs": "Is the user logged in.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "order",
+          "type": "Checkout",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "(passed from the sc-checkout component automatically)",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Checkout"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "pill",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "pill",
+          "reflectToAttr": true,
+          "docs": "Draws a pill-style input with rounded edges.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "placeholder",
+          "reflectToAttr": false,
+          "docs": "The input's placeholder text.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "readonly",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "readonly",
+          "reflectToAttr": true,
+          "docs": "Makes the input readonly.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "required",
+          "reflectToAttr": true,
+          "docs": "Makes the input a required field.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showLabel",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-label",
+          "reflectToAttr": false,
+          "docs": "Should we show the label",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The input's size.",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "mutable": true,
+          "attr": "value",
+          "reflectToAttr": false,
+          "docs": "The input's value attribute.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [
+        {
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<boolean>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "events": [
+        {
+          "event": "scBlur",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the control loses focus.",
+          "docsTags": []
+        },
+        {
+          "event": "scChange",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the control's value changes.",
+          "docsTags": []
+        },
+        {
+          "event": "scClear",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the clear button is activated.",
+          "docsTags": []
+        },
+        {
+          "event": "scFocus",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the control gains focus.",
+          "docsTags": []
+        },
+        {
+          "event": "scInput",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the control receives input.",
+          "docsTags": []
+        },
+        {
+          "event": "scUpdateCustomer",
+          "detail": "{ email: string; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scUpdateOrderState",
+          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\" | \"requires_approval\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-input"
+      ],
+      "dependencyGraph": {
+        "sc-customer-lastname": [
           "sc-input"
         ],
         "sc-input": [
@@ -5940,7 +7658,7 @@
         },
         {
           "event": "scUpdateOrderState",
-          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\" | \"requires_approval\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; bump_amount?: number; payment_method_required?: boolean; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; proration_amount?: number; applied_balance_amount?: number; discounts?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: Object; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\" | \"requires_approval\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -6198,7 +7916,48 @@
       "tag": "sc-dashboard-module",
       "readme": "# ce-dashboard-module\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "heading - The heading."
+        },
+        {
+          "name": "part",
+          "text": "heading-text - The heading text wrapper."
+        },
+        {
+          "name": "part",
+          "text": "heading-title - The heading title."
+        },
+        {
+          "name": "part",
+          "text": "heading-description - The heading description."
+        },
+        {
+          "name": "part",
+          "text": "error__base - The alert base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "error__icon - The alert icon."
+        },
+        {
+          "name": "part",
+          "text": "error__text - The alert text."
+        },
+        {
+          "name": "part",
+          "text": "error__title - The alert title."
+        },
+        {
+          "name": "part",
+          "text": "error__ message - The alert message."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -6257,12 +8016,44 @@
       "slots": [],
       "parts": [
         {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "error__ message",
+          "docs": "The alert message."
+        },
+        {
+          "name": "error__base",
+          "docs": "The alert base wrapper."
+        },
+        {
+          "name": "error__icon",
+          "docs": "The alert icon."
+        },
+        {
+          "name": "error__text",
+          "docs": "The alert text."
+        },
+        {
+          "name": "error__title",
+          "docs": "The alert title."
+        },
+        {
+          "name": "heading",
+          "docs": "The heading."
+        },
+        {
           "name": "heading-description",
-          "docs": ""
+          "docs": "The heading description."
+        },
+        {
+          "name": "heading-text",
+          "docs": "The heading text wrapper."
         },
         {
           "name": "heading-title",
-          "docs": ""
+          "docs": "The heading title."
         }
       ],
       "dependents": [
@@ -6282,6 +8073,7 @@
         "sc-subscription-ad-hoc-confirm",
         "sc-subscription-cancel",
         "sc-subscription-payment",
+        "sc-subscription-payment-method",
         "sc-subscription-renew",
         "sc-subscription-switch",
         "sc-subscriptions-list",
@@ -6346,6 +8138,9 @@
           "sc-dashboard-module"
         ],
         "sc-subscription-payment": [
+          "sc-dashboard-module"
+        ],
+        "sc-subscription-payment-method": [
           "sc-dashboard-module"
         ],
         "sc-subscription-renew": [
@@ -6526,7 +8321,11 @@
           "docs": ""
         }
       ],
-      "dependents": [],
+      "dependents": [
+        "sc-login-provider",
+        "sc-subscription-details",
+        "sc-upgrade-required"
+      ],
       "dependencies": [
         "sc-button",
         "sc-icon"
@@ -6538,6 +8337,15 @@
         ],
         "sc-button": [
           "sc-spinner"
+        ],
+        "sc-login-provider": [
+          "sc-dialog"
+        ],
+        "sc-subscription-details": [
+          "sc-dialog"
+        ],
+        "sc-upgrade-required": [
+          "sc-dialog"
         ]
       }
     },
@@ -6547,7 +8355,28 @@
       "tag": "sc-divider",
       "readme": "# ce-divider\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "line-container - The line container."
+        },
+        {
+          "name": "part",
+          "text": "line - The line."
+        },
+        {
+          "name": "part",
+          "text": "text-container - The text container."
+        },
+        {
+          "name": "part",
+          "text": "text - The text."
+        }
+      ],
       "usage": {},
       "props": [],
       "methods": [],
@@ -6558,15 +8387,23 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
         },
         {
           "name": "line",
-          "docs": ""
+          "docs": "The line."
+        },
+        {
+          "name": "line-container",
+          "docs": "The line container."
         },
         {
           "name": "text",
-          "docs": ""
+          "docs": "The text."
+        },
+        {
+          "name": "text-container",
+          "docs": "The text container."
         }
       ],
       "dependents": [
@@ -7187,7 +9024,20 @@
       "tag": "sc-dropdown",
       "readme": "# ce-dropdown\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "trigger - The trigger."
+        },
+        {
+          "name": "part",
+          "text": "panel - The panel."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -7424,12 +9274,16 @@
       "slots": [],
       "parts": [
         {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
           "name": "panel",
-          "docs": ""
+          "docs": "The panel."
         },
         {
           "name": "trigger",
-          "docs": ""
+          "docs": "The trigger."
         }
       ],
       "dependents": [
@@ -7456,7 +9310,16 @@
       "tag": "sc-empty",
       "readme": "# ce-empty\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "icon - The icon."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -7481,7 +9344,16 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "icon",
+          "docs": "The icon."
+        }
+      ],
       "dependents": [
         "sc-customer-details",
         "sc-invoices-list",
@@ -7490,6 +9362,7 @@
         "sc-payment-methods-list",
         "sc-purchase-downloads-list",
         "sc-subscription-payment",
+        "sc-subscription-payment-method",
         "sc-subscriptions-list"
       ],
       "dependencies": [
@@ -7520,6 +9393,9 @@
         "sc-subscription-payment": [
           "sc-empty"
         ],
+        "sc-subscription-payment-method": [
+          "sc-empty"
+        ],
         "sc-subscriptions-list": [
           "sc-empty"
         ]
@@ -7530,8 +9406,33 @@
       "encapsulation": "shadow",
       "tag": "sc-error",
       "readme": "# sc-error\n\n\n",
-      "docs": "This component listens for a confirmed event and redirects to the success url.",
-      "docsTags": [],
+      "docs": "",
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "icon - The alert icon."
+        },
+        {
+          "name": "part",
+          "text": "text - The alert text."
+        },
+        {
+          "name": "part",
+          "text": "title - The alert title."
+        },
+        {
+          "name": "part",
+          "text": "message - The alert message."
+        },
+        {
+          "name": "part",
+          "text": "close - The close icon."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -7571,7 +9472,32 @@
       ],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "close",
+          "docs": "The close icon."
+        },
+        {
+          "name": "icon",
+          "docs": "The alert icon."
+        },
+        {
+          "name": "message",
+          "docs": "The alert message."
+        },
+        {
+          "name": "text",
+          "docs": "The alert text."
+        },
+        {
+          "name": "title",
+          "docs": "The alert title."
+        }
+      ],
       "dependents": [
         "sc-cart"
       ],
@@ -7846,6 +9772,22 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "stack",
+          "type": "string",
+          "mutable": false,
+          "attr": "stack",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -7853,20 +9795,31 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        }
+      ],
       "dependents": [
         "sc-downloads-list",
+        "sc-login-form",
         "sc-order",
         "sc-pagination",
         "sc-password-nag",
         "sc-payment-methods-list",
         "sc-subscription",
+        "sc-subscription-details",
+        "sc-subscription-payment-method",
         "sc-subscription-switch",
         "sc-upcoming-invoice"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-downloads-list": [
+          "sc-flex"
+        ],
+        "sc-login-form": [
           "sc-flex"
         ],
         "sc-order": [
@@ -7882,6 +9835,12 @@
           "sc-flex"
         ],
         "sc-subscription": [
+          "sc-flex"
+        ],
+        "sc-subscription-details": [
+          "sc-flex"
+        ],
+        "sc-subscription-payment-method": [
           "sc-flex"
         ],
         "sc-subscription-switch": [
@@ -8007,16 +9966,22 @@
         {
           "name": "base",
           "docs": ""
+        },
+        {
+          "name": "form",
+          "docs": ""
         }
       ],
       "dependents": [
         "sc-cart-form",
         "sc-customer-edit",
         "sc-login-form",
+        "sc-login-provider",
         "sc-password-nag",
         "sc-stripe-add-method",
         "sc-subscription-ad-hoc-confirm",
         "sc-subscription-payment",
+        "sc-subscription-payment-method",
         "sc-subscription-switch",
         "sc-upcoming-invoice",
         "sc-wordpress-password-edit",
@@ -8033,6 +9998,9 @@
         "sc-login-form": [
           "sc-form"
         ],
+        "sc-login-provider": [
+          "sc-form"
+        ],
         "sc-password-nag": [
           "sc-form"
         ],
@@ -8043,6 +10011,9 @@
           "sc-form"
         ],
         "sc-subscription-payment": [
+          "sc-form"
+        ],
+        "sc-subscription-payment-method": [
           "sc-form"
         ],
         "sc-subscription-switch": [
@@ -8217,7 +10188,32 @@
       "tag": "sc-form-control",
       "readme": "# ce-form-control\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "form-control - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "label - The label."
+        },
+        {
+          "name": "part",
+          "text": "input - The input wrapper."
+        },
+        {
+          "name": "part",
+          "text": "help-text - Help text."
+        },
+        {
+          "name": "part",
+          "text": "tooltip - Tooltip"
+        },
+        {
+          "name": "part",
+          "text": "tooltip-text - Tooltip text."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -8417,15 +10413,27 @@
       "parts": [
         {
           "name": "form-control",
-          "docs": ""
+          "docs": "The elements base wrapper."
         },
         {
           "name": "help-text",
-          "docs": ""
+          "docs": "Help text."
+        },
+        {
+          "name": "input",
+          "docs": "The input wrapper."
         },
         {
           "name": "label",
-          "docs": ""
+          "docs": "The label."
+        },
+        {
+          "name": "tooltip",
+          "docs": "Tooltip"
+        },
+        {
+          "name": "tooltip-text",
+          "docs": "Tooltip text."
         }
       ],
       "dependents": [
@@ -8610,7 +10618,12 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        }
+      ],
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
@@ -9488,6 +11501,7 @@
         "sc-order-bump",
         "sc-order-confirmation-totals",
         "sc-order-detail",
+        "sc-order-summary",
         "sc-orders-list",
         "sc-price-choice",
         "sc-product-line-item",
@@ -9526,6 +11540,9 @@
           "sc-format-number"
         ],
         "sc-order-detail": [
+          "sc-format-number"
+        ],
+        "sc-order-summary": [
           "sc-format-number"
         ],
         "sc-orders-list": [
@@ -9595,6 +11612,14 @@
       "parts": [
         {
           "name": "base",
+          "docs": ""
+        },
+        {
+          "name": "description",
+          "docs": ""
+        },
+        {
+          "name": "title",
           "docs": ""
         }
       ],
@@ -9733,7 +11758,6 @@
         "sc-order-submit",
         "sc-orders-list",
         "sc-password-nag",
-        "sc-payment",
         "sc-payment-method",
         "sc-payment-methods-list",
         "sc-product-line-item",
@@ -9742,11 +11766,13 @@
         "sc-select",
         "sc-subscription",
         "sc-subscription-ad-hoc-confirm",
+        "sc-subscription-payment-method",
         "sc-subscription-switch",
         "sc-subscriptions-list",
         "sc-tax-id-input",
         "sc-toggle",
         "sc-upcoming-invoice",
+        "sc-upgrade-required",
         "sc-wordpress-user"
       ],
       "dependencies": [],
@@ -9808,9 +11834,6 @@
         "sc-password-nag": [
           "sc-icon"
         ],
-        "sc-payment": [
-          "sc-icon"
-        ],
         "sc-payment-method": [
           "sc-icon"
         ],
@@ -9835,6 +11858,9 @@
         "sc-subscription-ad-hoc-confirm": [
           "sc-icon"
         ],
+        "sc-subscription-payment-method": [
+          "sc-icon"
+        ],
         "sc-subscription-switch": [
           "sc-icon"
         ],
@@ -9848,6 +11874,9 @@
           "sc-icon"
         ],
         "sc-upcoming-invoice": [
+          "sc-icon"
+        ],
+        "sc-upgrade-required": [
           "sc-icon"
         ],
         "sc-wordpress-user": [
@@ -9872,7 +11901,15 @@
         },
         {
           "name": "part",
-          "text": "base - The elements base wrapper."
+          "text": "form-control - The form control wrapper."
+        },
+        {
+          "name": "part",
+          "text": "label - The input label."
+        },
+        {
+          "name": "part",
+          "text": "help-text - Help text that describes how to use the input."
         },
         {
           "name": "part",
@@ -9881,10 +11918,6 @@
         {
           "name": "part",
           "text": "suffix - Used to prepend an icon or element to the input."
-        },
-        {
-          "name": "part",
-          "text": "help-text - Help text that describes how to use the input."
         }
       ],
       "usage": {},
@@ -10616,12 +12649,20 @@
           "docs": ""
         },
         {
+          "name": "form-control",
+          "docs": "The form control wrapper."
+        },
+        {
           "name": "help-text",
           "docs": "Help text that describes how to use the input."
         },
         {
           "name": "input",
           "docs": "The html input element."
+        },
+        {
+          "name": "label",
+          "docs": "The input label."
         },
         {
           "name": "prefix",
@@ -10638,9 +12679,12 @@
         "sc-coupon-form",
         "sc-customer-edit",
         "sc-customer-email",
+        "sc-customer-firstname",
+        "sc-customer-lastname",
         "sc-customer-name",
         "sc-licenses-list",
         "sc-login-form",
+        "sc-login-provider",
         "sc-order-password",
         "sc-password-nag",
         "sc-price-input",
@@ -10675,6 +12719,12 @@
         "sc-customer-email": [
           "sc-input"
         ],
+        "sc-customer-firstname": [
+          "sc-input"
+        ],
+        "sc-customer-lastname": [
+          "sc-input"
+        ],
         "sc-customer-name": [
           "sc-input"
         ],
@@ -10682,6 +12732,9 @@
           "sc-input"
         ],
         "sc-login-form": [
+          "sc-input"
+        ],
+        "sc-login-provider": [
           "sc-input"
         ],
         "sc-order-password": [
@@ -10990,6 +13043,42 @@
         {
           "name": "slot",
           "text": "price-description - Description for the price (i.e. monthly)"
+        },
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "image - The image wrapper."
+        },
+        {
+          "name": "part",
+          "text": "text - The text."
+        },
+        {
+          "name": "part",
+          "text": "title - The title."
+        },
+        {
+          "name": "part",
+          "text": "description - Line item description (below the title)"
+        },
+        {
+          "name": "part",
+          "text": "currency - Used for the 3 character currency code."
+        },
+        {
+          "name": "part",
+          "text": "price - Price amount, including currency sign."
+        },
+        {
+          "name": "part",
+          "text": "price-text - The price text."
+        },
+        {
+          "name": "part",
+          "text": "price-description - Description for the price (i.e. monthly)"
         }
       ],
       "usage": {},
@@ -11060,19 +13149,39 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "currency",
+          "docs": "Used for the 3 character currency code."
+        },
+        {
+          "name": "description",
+          "docs": "Line item description (below the title)"
         },
         {
           "name": "image",
-          "docs": ""
+          "docs": "The image wrapper."
         },
         {
           "name": "price",
-          "docs": ""
+          "docs": "Price amount, including currency sign."
+        },
+        {
+          "name": "price-description",
+          "docs": "Description for the price (i.e. monthly)"
+        },
+        {
+          "name": "price-text",
+          "docs": "The price text."
         },
         {
           "name": "text",
-          "docs": ""
+          "docs": "The text."
+        },
+        {
+          "name": "title",
+          "docs": "The title."
         }
       ],
       "dependents": [
@@ -11666,27 +13775,140 @@
       ],
       "dependents": [],
       "dependencies": [
-        "sc-alert",
-        "sc-icon",
         "sc-form",
-        "sc-button",
-        "sc-divider",
         "sc-input",
+        "sc-button",
+        "sc-icon",
+        "sc-flex",
+        "sc-divider",
         "sc-card",
+        "sc-alert",
         "sc-block-ui"
       ],
       "dependencyGraph": {
         "sc-login-form": [
-          "sc-alert",
-          "sc-icon",
           "sc-form",
-          "sc-button",
-          "sc-divider",
           "sc-input",
+          "sc-button",
+          "sc-icon",
+          "sc-flex",
+          "sc-divider",
           "sc-card",
+          "sc-alert",
           "sc-block-ui"
         ],
+        "sc-input": [
+          "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
         "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-block-ui": [
+          "sc-spinner"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/providers/sc-login-provider/sc-login-provider.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-login-provider",
+      "readme": "# sc-login-provider\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "loggedIn",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "logged-in",
+          "reflectToAttr": false,
+          "docs": "Is the user logged in.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "order",
+          "type": "Order",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Order"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scSetCustomer",
+          "detail": "{ email: string; name?: string; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scSetLoggedIn",
+          "detail": "boolean",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [
+        {
+          "event": "scLoginPrompt",
+          "capture": false,
+          "passive": false
+        }
+      ],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-checkout"
+      ],
+      "dependencies": [
+        "sc-alert",
+        "sc-dialog",
+        "sc-form",
+        "sc-input",
+        "sc-button"
+      ],
+      "dependencyGraph": {
+        "sc-login-provider": [
+          "sc-alert",
+          "sc-dialog",
+          "sc-form",
+          "sc-input",
+          "sc-button"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-dialog": [
+          "sc-button",
           "sc-icon"
         ],
         "sc-button": [
@@ -11698,8 +13920,8 @@
         "sc-form-control": [
           "sc-tooltip"
         ],
-        "sc-block-ui": [
-          "sc-spinner"
+        "sc-checkout": [
+          "sc-login-provider"
         ]
       }
     },
@@ -12025,6 +14247,7 @@
         "sc-spacing",
         "sc-dashboard-module",
         "sc-tag",
+        "sc-order-manual-instructions",
         "sc-card",
         "sc-stacked-list",
         "sc-stacked-list-row",
@@ -12047,6 +14270,7 @@
           "sc-spacing",
           "sc-dashboard-module",
           "sc-tag",
+          "sc-order-manual-instructions",
           "sc-card",
           "sc-stacked-list",
           "sc-stacked-list-row",
@@ -12074,20 +14298,25 @@
         "sc-alert": [
           "sc-icon"
         ],
+        "sc-order-manual-instructions": [
+          "sc-alert"
+        ],
         "sc-order-status-badge": [
           "sc-tag"
         ],
         "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
           "sc-tag",
           "sc-cc-logo",
-          "sc-icon",
           "sc-text"
-        ],
-        "sc-cc-logo": [
-          "sc-icon"
         ],
         "sc-button": [
           "sc-spinner"
+        ],
+        "sc-cc-logo": [
+          "sc-icon"
         ],
         "sc-purchase-downloads-list": [
           "sc-divider",
@@ -12337,6 +14566,58 @@
       }
     },
     {
+      "filePath": "./src/components/providers/sc-order-confirm-components-validator/sc-order-confirm-components-validator.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-order-confirm-components-validator",
+      "readme": "# sc-order-confirm-components-validator\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "checkout",
+          "type": "Checkout",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "The checkout",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Checkout"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-order-confirmation"
+      ],
+      "dependencies": [
+        "sc-order-manual-instructions"
+      ],
+      "dependencyGraph": {
+        "sc-order-confirm-components-validator": [
+          "sc-order-manual-instructions"
+        ],
+        "sc-order-manual-instructions": [
+          "sc-alert"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-order-confirmation": [
+          "sc-order-confirm-components-validator"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/providers/order-confirm-provider/sc-order-confirm-provider.tsx",
       "encapsulation": "shadow",
       "tag": "sc-order-confirm-provider",
@@ -12385,14 +14666,14 @@
         },
         {
           "name": "order",
-          "type": "Order",
+          "type": "Checkout",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "The current order.",
           "docsTags": [],
           "values": [
             {
-              "type": "Order"
+              "type": "Checkout"
             }
           ],
           "optional": false,
@@ -12428,7 +14709,7 @@
         },
         {
           "event": "scOrderPaid",
-          "detail": "Order",
+          "detail": "Checkout",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -12499,15 +14780,23 @@
       "dependents": [],
       "dependencies": [
         "sc-alert",
+        "sc-order-confirm-components-validator",
         "sc-heading"
       ],
       "dependencyGraph": {
         "sc-order-confirmation": [
           "sc-alert",
+          "sc-order-confirm-components-validator",
           "sc-heading"
         ],
         "sc-alert": [
           "sc-icon"
+        ],
+        "sc-order-confirm-components-validator": [
+          "sc-order-manual-instructions"
+        ],
+        "sc-order-manual-instructions": [
+          "sc-alert"
         ]
       }
     },
@@ -13027,8 +15316,8 @@
           "sc-tag",
           "sc-format-number",
           "sc-input",
-          "sc-alert",
           "sc-button",
+          "sc-alert",
           "sc-block-ui"
         ],
         "sc-input": [
@@ -13037,11 +15326,11 @@
         "sc-form-control": [
           "sc-tooltip"
         ],
-        "sc-alert": [
-          "sc-icon"
-        ],
         "sc-button": [
           "sc-spinner"
+        ],
+        "sc-alert": [
+          "sc-icon"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -13185,6 +15474,76 @@
       }
     },
     {
+      "filePath": "./src/components/controllers/confirmation/manual-instructions/sc-order-manual-instructions.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-order-manual-instructions",
+      "readme": "# sc-order-manual-instructions\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "manualPaymentInstructions",
+          "type": "string",
+          "mutable": false,
+          "attr": "manual-payment-instructions",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "manualPaymentTitle",
+          "type": "string",
+          "mutable": false,
+          "attr": "manual-payment-title",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-order",
+        "sc-order-confirm-components-validator"
+      ],
+      "dependencies": [
+        "sc-alert"
+      ],
+      "dependencyGraph": {
+        "sc-order-manual-instructions": [
+          "sc-alert"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-order": [
+          "sc-order-manual-instructions"
+        ],
+        "sc-order-confirm-components-validator": [
+          "sc-order-manual-instructions"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/controllers/checkout-form/order-password/sc-order-password.tsx",
       "encapsulation": "shadow",
       "tag": "sc-order-password",
@@ -13210,6 +15569,71 @@
           "required": false
         },
         {
+          "name": "confirmation",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "confirmation",
+          "reflectToAttr": true,
+          "docs": "The input's password confirmation attribute.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "confirmationHelp",
+          "type": "string",
+          "mutable": false,
+          "attr": "confirmation-help",
+          "reflectToAttr": false,
+          "docs": "The input's confirmation help text.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "confirmationLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "confirmation-label",
+          "reflectToAttr": false,
+          "docs": "The input's confirmation label text.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "confirmationPlaceholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "confirmation-placeholder",
+          "reflectToAttr": false,
+          "docs": "The input's confirmation placeholder text.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "disabled",
           "type": "boolean",
           "mutable": false,
@@ -13218,6 +15642,22 @@
           "docs": "Disables the input.",
           "docsTags": [],
           "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "emailExists",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "email-exists",
+          "reflectToAttr": false,
+          "docs": "Does the email exist?",
+          "docsTags": [],
           "values": [
             {
               "type": "boolean"
@@ -13447,6 +15887,56 @@
       "usage": {},
       "props": [
         {
+          "name": "cityPlaceholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "city-placeholder",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "__('City', 'surecart')",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "countryPlaceholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "country-placeholder",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "__('Country', 'surecart')",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "defaultCountry",
+          "type": "string",
+          "mutable": false,
+          "attr": "default-country",
+          "reflectToAttr": false,
+          "docs": "Default country for address",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "full",
           "type": "boolean",
           "mutable": false,
@@ -13479,6 +15969,40 @@
           "required": false
         },
         {
+          "name": "line1Placeholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "line-1-placeholder",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "__('Address', 'surecart')",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "line2Placeholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "line-2-placeholder",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "__('Address Line 2', 'surecart')",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "loading",
           "type": "boolean",
           "mutable": false,
@@ -13489,6 +16013,23 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "namePlaceholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "name-placeholder",
+          "reflectToAttr": false,
+          "docs": "Show the placeholder fields.",
+          "docsTags": [],
+          "default": "__('Name or Company Name', 'surecart')",
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -13511,14 +16052,31 @@
           "required": false
         },
         {
+          "name": "postalCodePlaceholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "postal-code-placeholder",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "__('Postal Code/Zip', 'surecart')",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "required",
           "type": "boolean",
-          "mutable": false,
+          "mutable": true,
           "attr": "required",
           "reflectToAttr": false,
-          "docs": "Is this required (defaults to true)",
+          "docs": "Is this required (defaults to false)",
           "docsTags": [],
-          "default": "true",
+          "default": "false",
           "values": [
             {
               "type": "boolean"
@@ -13565,6 +16123,39 @@
           "attr": "show-name",
           "reflectToAttr": false,
           "docs": "Show the name field.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "statePlaceholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "state-placeholder",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "__('State/Province/Region', 'surecart')",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "taxEnabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "tax-enabled",
+          "reflectToAttr": false,
+          "docs": "Tax enabled status of the order",
           "docsTags": [],
           "values": [
             {
@@ -13763,7 +16354,7 @@
         },
         {
           "name": "status",
-          "type": "\"paid\" | \"payment_failed\" | \"processing\"",
+          "type": "\"paid\" | \"payment_failed\" | \"processing\" | \"void\"",
           "mutable": false,
           "attr": "status",
           "reflectToAttr": false,
@@ -13780,6 +16371,10 @@
             },
             {
               "value": "processing",
+              "type": "string"
+            },
+            {
+              "value": "void",
               "type": "string"
             }
           ],
@@ -14277,12 +16872,14 @@
       "dependencies": [
         "sc-line-item",
         "sc-skeleton",
+        "sc-format-number",
         "sc-total"
       ],
       "dependencyGraph": {
         "sc-order-summary": [
           "sc-line-item",
           "sc-skeleton",
+          "sc-format-number",
           "sc-total"
         ],
         "sc-total": [
@@ -14318,7 +16915,7 @@
         },
         {
           "name": "order",
-          "type": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\" | \"requires_approval\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; bump_amount?: number; payment_method_required?: boolean; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; proration_amount?: number; applied_balance_amount?: number; discounts?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: Object; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "type": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\" | \"requires_approval\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "The order",
@@ -14336,10 +16933,13 @@
               "type": "string"
             },
             {
-              "type": "\"requires_approval\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; bump_amount?: number; payment_method_required?: boolean; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string"
+              "type": "\"requires_approval\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string"
             },
             {
-              "type": "Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; proration_amount?: number; applied_balance_amount?: number; discounts?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\""
+              "type": "ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string"
+            },
+            {
+              "type": "Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\""
             },
             {
               "value": "address_invalid",
@@ -14350,7 +16950,7 @@
               "type": "string"
             },
             {
-              "type": "\"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: Object; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string"
+              "type": "\"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string"
             },
             {
               "type": "Order; customer?: string"
@@ -14892,67 +17492,48 @@
     },
     {
       "filePath": "./src/components/controllers/checkout-form/payment/sc-payment.tsx",
-      "encapsulation": "none",
+      "encapsulation": "shadow",
       "tag": "sc-payment",
       "readme": "# ce-payment\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "form-control - The form control wrapper."
+        },
+        {
+          "name": "part",
+          "text": "label - The input label."
+        },
+        {
+          "name": "part",
+          "text": "help-text - Help text that describes how to use the input."
+        },
+        {
+          "name": "part",
+          "text": "test-badge__base - Test badge base."
+        },
+        {
+          "name": "part",
+          "text": "test-badge__content - Test badge content."
+        }
+      ],
       "usage": {},
       "props": [
         {
-          "name": "busy",
-          "type": "boolean",
+          "name": "checkout",
+          "type": "Checkout",
           "mutable": false,
-          "attr": "busy",
           "reflectToAttr": false,
-          "docs": "Is this busy.",
+          "docs": "Checkout Session from sc-checkout.",
           "docsTags": [],
           "values": [
             {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "currencyCode",
-          "type": "string",
-          "mutable": false,
-          "attr": "currency-code",
-          "reflectToAttr": false,
-          "docs": "The currency code.",
-          "docsTags": [],
-          "default": "'usd'",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "defaultProcessor",
-          "type": "\"paypal\" | \"paypal-card\" | \"stripe\"",
-          "mutable": false,
-          "attr": "default-processor",
-          "reflectToAttr": false,
-          "docs": "Default",
-          "docsTags": [],
-          "default": "'stripe'",
-          "values": [
-            {
-              "value": "paypal",
-              "type": "string"
-            },
-            {
-              "value": "paypal-card",
-              "type": "string"
-            },
-            {
-              "value": "stripe",
-              "type": "string"
+              "type": "Checkout"
             }
           ],
           "optional": false,
@@ -14991,22 +17572,6 @@
           "required": false
         },
         {
-          "name": "loading",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "loading",
-          "reflectToAttr": false,
-          "docs": "Is this loading.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "mode",
           "type": "\"live\" | \"test\"",
           "mutable": false,
@@ -15029,46 +17594,13 @@
           "required": false
         },
         {
-          "name": "order",
-          "type": "Checkout",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Checkout Session from sc-checkout.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Checkout"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "paymentMethod",
-          "type": "\"stripe-payment-request\"",
-          "mutable": false,
-          "attr": "payment-method",
-          "reflectToAttr": false,
-          "docs": "Payment mode inside individual payment method (i.e. Payment Buttons)",
-          "docsTags": [],
-          "values": [
-            {
-              "value": "stripe-payment-request",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "processor",
           "type": "string",
-          "mutable": true,
+          "mutable": false,
           "attr": "processor",
           "reflectToAttr": false,
-          "docs": "The current payment method for the payment",
+          "docs": "The current selected processor.",
           "docsTags": [],
-          "default": "'stripe'",
           "values": [
             {
               "type": "string"
@@ -15092,122 +17624,69 @@
           ],
           "optional": false,
           "required": false
-        },
-        {
-          "name": "secureNotice",
-          "type": "string",
-          "mutable": false,
-          "attr": "secure-notice",
-          "reflectToAttr": false,
-          "docs": "Secure notice",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "stripePaymentElement",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "stripe-payment-element",
-          "reflectToAttr": false,
-          "docs": "Use the Stripe payment element.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "stripePaymentIntent",
-          "type": "PaymentIntent",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "The stripe payment intent.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "PaymentIntent"
-            }
-          ],
-          "optional": false,
-          "required": false
         }
       ],
       "methods": [],
       "events": [
         {
           "event": "scSetProcessor",
-          "detail": "\"paypal\" | \"paypal-card\" | \"stripe\"",
+          "detail": "{ id: string; manual: boolean; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
-          "docs": "Set the order procesor.",
+          "docs": "Set the checkout procesor.",
           "docsTags": []
         }
       ],
-      "listeners": [],
+      "listeners": [
+        {
+          "event": "scProcessorInvalid",
+          "capture": false,
+          "passive": false
+        }
+      ],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "form-control",
+          "docs": "The form control wrapper."
+        },
+        {
+          "name": "help-text",
+          "docs": "Help text that describes how to use the input."
+        },
+        {
+          "name": "label",
+          "docs": "The input label."
+        },
+        {
+          "name": "test-badge__base",
+          "docs": "Test badge base."
+        },
+        {
+          "name": "test-badge__content",
+          "docs": "Test badge content."
+        }
+      ],
       "dependents": [],
       "dependencies": [
-        "sc-stripe-payment-element",
-        "sc-stripe-element",
-        "sc-secure-notice",
-        "sc-tag",
         "sc-form-control",
-        "sc-toggles",
-        "sc-toggle",
-        "sc-icon",
-        "sc-card",
-        "sc-payment-selected",
-        "sc-skeleton",
-        "sc-alert",
-        "sc-processor-provider"
+        "sc-tag",
+        "sc-alert"
       ],
       "dependencyGraph": {
         "sc-payment": [
-          "sc-stripe-payment-element",
-          "sc-stripe-element",
-          "sc-secure-notice",
-          "sc-tag",
           "sc-form-control",
-          "sc-toggles",
-          "sc-toggle",
-          "sc-icon",
-          "sc-card",
-          "sc-payment-selected",
-          "sc-skeleton",
-          "sc-alert",
-          "sc-processor-provider"
-        ],
-        "sc-stripe-payment-element": [
-          "sc-text",
-          "sc-skeleton"
-        ],
-        "sc-stripe-element": [
-          "sc-input",
-          "sc-text"
-        ],
-        "sc-input": [
-          "sc-form-control"
+          "sc-tag",
+          "sc-alert"
         ],
         "sc-form-control": [
           "sc-tooltip"
-        ],
-        "sc-toggle": [
-          "sc-icon"
-        ],
-        "sc-payment-selected": [
-          "sc-divider"
         ],
         "sc-alert": [
           "sc-icon"
@@ -15223,6 +17702,38 @@
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "externalLink",
+          "type": "string",
+          "mutable": false,
+          "attr": "external-link",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "externalLinkTooltipText",
+          "type": "string",
+          "mutable": false,
+          "attr": "external-link-tooltip-text",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
         {
           "name": "full",
           "type": "boolean",
@@ -15262,7 +17773,19 @@
       "slots": [],
       "parts": [
         {
+          "name": "bank",
+          "docs": ""
+        },
+        {
           "name": "base",
+          "docs": ""
+        },
+        {
+          "name": "card",
+          "docs": ""
+        },
+        {
+          "name": "instrument",
           "docs": ""
         }
       ],
@@ -15270,20 +17793,28 @@
         "sc-order",
         "sc-payment-methods-list",
         "sc-subscription-payment",
+        "sc-subscription-payment-method",
         "sc-upcoming-invoice"
       ],
       "dependencies": [
+        "sc-tooltip",
+        "sc-button",
+        "sc-icon",
         "sc-tag",
         "sc-cc-logo",
-        "sc-icon",
         "sc-text"
       ],
       "dependencyGraph": {
         "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
           "sc-tag",
           "sc-cc-logo",
-          "sc-icon",
           "sc-text"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-cc-logo": [
           "sc-icon"
@@ -15297,8 +17828,192 @@
         "sc-subscription-payment": [
           "sc-payment-method"
         ],
+        "sc-subscription-payment-method": [
+          "sc-payment-method"
+        ],
         "sc-upcoming-invoice": [
           "sc-payment-method"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/processors/sc-payment-method-choice/sc-payment-method-choice.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-payment-method-choice",
+      "readme": "# sc-payment-method-choice\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "card",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "card",
+          "reflectToAttr": false,
+          "docs": "Should we show this in a card?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "checkout",
+          "type": "Checkout",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "The checkout.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Checkout"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "hasOthers",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "has-others",
+          "reflectToAttr": false,
+          "docs": "Does this have others?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "isDisabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "is-disabled",
+          "reflectToAttr": true,
+          "docs": "Is this disabled?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "isManual",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "is-manual",
+          "reflectToAttr": false,
+          "docs": "Is this a manual processor",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "processor",
+          "type": "string",
+          "mutable": false,
+          "attr": "processor",
+          "reflectToAttr": true,
+          "docs": "The current processor",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "processorId",
+          "type": "string",
+          "mutable": false,
+          "attr": "processor-id",
+          "reflectToAttr": false,
+          "docs": "The processor ID",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "recurringEnabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "recurring-enabled",
+          "reflectToAttr": false,
+          "docs": "Is this recurring-enabled?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scProcessorInvalid",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "The currenct processor is invalid.",
+          "docsTags": []
+        },
+        {
+          "event": "scSetProcessor",
+          "detail": "{ id: string; manual: boolean; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Set the order procesor.",
+          "docsTags": []
+        },
+        {
+          "event": "scShow",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Show the toggle",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-card"
+      ],
+      "dependencyGraph": {
+        "sc-payment-method-choice": [
+          "sc-card"
         ]
       }
     },
@@ -15407,10 +18122,15 @@
           "sc-icon"
         ],
         "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
           "sc-tag",
           "sc-cc-logo",
-          "sc-icon",
           "sc-text"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-cc-logo": [
           "sc-icon"
@@ -15420,9 +18140,6 @@
         ],
         "sc-alert": [
           "sc-icon"
-        ],
-        "sc-button": [
-          "sc-spinner"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -15435,7 +18152,16 @@
       "tag": "sc-payment-selected",
       "readme": "# sc-payment-selected\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "divider - The divider."
+        },
+        {
+          "name": "part",
+          "text": "divider__line - The divider line."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -15480,20 +18206,35 @@
         {
           "name": "base",
           "docs": ""
+        },
+        {
+          "name": "divider",
+          "docs": "The divider."
+        },
+        {
+          "name": "divider__line",
+          "docs": "The divider line."
+        },
+        {
+          "name": "icon",
+          "docs": ""
+        },
+        {
+          "name": "instructions",
+          "docs": ""
+        },
+        {
+          "name": "text",
+          "docs": ""
         }
       ],
-      "dependents": [
-        "sc-payment"
-      ],
+      "dependents": [],
       "dependencies": [
         "sc-divider"
       ],
       "dependencyGraph": {
         "sc-payment-selected": [
           "sc-divider"
-        ],
-        "sc-payment": [
-          "sc-payment-selected"
         ]
       }
     },
@@ -15773,7 +18514,7 @@
         {
           "name": "order",
           "type": "Checkout",
-          "mutable": false,
+          "mutable": true,
           "reflectToAttr": false,
           "docs": "The order.",
           "docsTags": [],
@@ -15819,7 +18560,16 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "paypal-button",
+          "docs": ""
+        },
+        {
+          "name": "paypal-card-button",
+          "docs": ""
+        }
+      ],
       "dependents": [
         "sc-order-submit"
       ],
@@ -16785,95 +19535,73 @@
       }
     },
     {
-      "filePath": "./src/components/providers/processor-provider/sc-processor-provider.tsx",
-      "encapsulation": "shadow",
-      "tag": "sc-processor-provider",
-      "readme": "# sc-processor-provider\n\n\n",
-      "docs": "This component listens to the order status\nand confirms the order when payment is successful.",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "checkout",
-          "type": "Checkout",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "The current checkout",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Checkout"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "processor",
-          "type": "string",
-          "mutable": false,
-          "attr": "processor",
-          "reflectToAttr": false,
-          "docs": "The currently selected processor",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "processors",
-          "type": "Processor[]",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "A list of available processors",
-          "docsTags": [],
-          "default": "[]",
-          "values": [
-            {
-              "type": "Processor[]"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
-      "methods": [],
-      "events": [
-        {
-          "event": "scSetProcessor",
-          "detail": "string",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Event to set a processor in the checkout.",
-          "docsTags": []
-        }
-      ],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
-      "dependents": [
-        "sc-payment"
-      ],
-      "dependencies": [],
-      "dependencyGraph": {
-        "sc-payment": [
-          "sc-processor-provider"
-        ]
-      }
-    },
-    {
       "filePath": "./src/components/ui/product-line-item/sc-product-line-item.tsx",
       "encapsulation": "shadow",
       "tag": "sc-product-line-item",
       "readme": "# ce-product-line-item\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "text - The text wrapper."
+        },
+        {
+          "name": "part",
+          "text": "title - The product title."
+        },
+        {
+          "name": "part",
+          "text": "static-quantity - The statically displayed quantity."
+        },
+        {
+          "name": "part",
+          "text": "quantity__base - The quantity base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "input - The input control."
+        },
+        {
+          "name": "part",
+          "text": "minus - The minus control."
+        },
+        {
+          "name": "part",
+          "text": "minus-icon - The minus icon."
+        },
+        {
+          "name": "part",
+          "text": "plus - The plus control."
+        },
+        {
+          "name": "part",
+          "text": "plus-icon - The plus icon."
+        },
+        {
+          "name": "part",
+          "text": "remove-icon__base - The remove icon base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "price - The price wrapper."
+        },
+        {
+          "name": "part",
+          "text": "price__amount - The price amount."
+        },
+        {
+          "name": "part",
+          "text": "price__description - The price description."
+        },
+        {
+          "name": "part",
+          "text": "suffix - The suffix items."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -16958,6 +19686,23 @@
           "required": false
         },
         {
+          "name": "max",
+          "type": "number",
+          "mutable": false,
+          "attr": "max",
+          "reflectToAttr": false,
+          "docs": "The max allowed.",
+          "docsTags": [],
+          "default": "100",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "name",
           "type": "string",
           "mutable": false,
@@ -17006,6 +19751,22 @@
           "required": false
         },
         {
+          "name": "scratchAmount",
+          "type": "number",
+          "mutable": false,
+          "attr": "scratch-amount",
+          "reflectToAttr": false,
+          "docs": "The line item scratch amount",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "trialDurationDays",
           "type": "number",
           "mutable": false,
@@ -17046,7 +19807,76 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "image",
+          "docs": ""
+        },
+        {
+          "name": "input",
+          "docs": "The input control."
+        },
+        {
+          "name": "minus",
+          "docs": "The minus control."
+        },
+        {
+          "name": "minus-icon",
+          "docs": "The minus icon."
+        },
+        {
+          "name": "plus",
+          "docs": "The plus control."
+        },
+        {
+          "name": "plus-icon",
+          "docs": "The plus icon."
+        },
+        {
+          "name": "price",
+          "docs": "The price wrapper."
+        },
+        {
+          "name": "price__amount",
+          "docs": "The price amount."
+        },
+        {
+          "name": "price__description",
+          "docs": "The price description."
+        },
+        {
+          "name": "price__scratch",
+          "docs": ""
+        },
+        {
+          "name": "quantity__base",
+          "docs": "The quantity base wrapper."
+        },
+        {
+          "name": "remove-icon__base",
+          "docs": "The remove icon base wrapper."
+        },
+        {
+          "name": "static-quantity",
+          "docs": "The statically displayed quantity."
+        },
+        {
+          "name": "suffix",
+          "docs": "The suffix items."
+        },
+        {
+          "name": "text",
+          "docs": "The text wrapper."
+        },
+        {
+          "name": "title",
+          "docs": "The product title."
+        }
+      ],
       "dependents": [
         "sc-line-items",
         "sc-order",
@@ -17322,7 +20152,32 @@
       "tag": "sc-quantity-select",
       "readme": "# ce-quantity-select\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "input - The input control."
+        },
+        {
+          "name": "part",
+          "text": "minus - The minus control."
+        },
+        {
+          "name": "part",
+          "text": "minus-icon - The minus icon."
+        },
+        {
+          "name": "part",
+          "text": "plus - The plus control."
+        },
+        {
+          "name": "part",
+          "text": "plus-icon - The plus icon."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -17380,7 +20235,7 @@
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
-          "default": "100",
+          "default": "Infinity",
           "values": [
             {
               "type": "number"
@@ -17469,7 +20324,27 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "input",
+          "docs": "The input control."
+        },
+        {
+          "name": "minus",
+          "docs": "The minus control."
+        },
+        {
+          "name": "minus-icon",
+          "docs": "The minus icon."
+        },
+        {
+          "name": "plus",
+          "docs": "The plus control."
+        },
+        {
+          "name": "plus-icon",
+          "docs": "The plus icon."
         }
       ],
       "dependents": [
@@ -17493,7 +20368,24 @@
       "tag": "sc-radio",
       "readme": "# ce-radio\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "control - The control wrapper."
+        },
+        {
+          "name": "part",
+          "text": "checked-icon - Checked icon."
+        },
+        {
+          "name": "part",
+          "text": "label - The label."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -17522,6 +20414,22 @@
           "docs": "Is the radio disabled",
           "docsTags": [],
           "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "edit",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "edit",
+          "reflectToAttr": false,
+          "docs": "This will be true as a workaround in the block editor to focus on the content.",
+          "docsTags": [],
           "values": [
             {
               "type": "boolean"
@@ -17656,19 +20564,19 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
         },
         {
           "name": "checked-icon",
-          "docs": ""
+          "docs": "Checked icon."
         },
         {
           "name": "control",
-          "docs": ""
+          "docs": "The control wrapper."
         },
         {
           "name": "label",
-          "docs": ""
+          "docs": "The label."
         }
       ],
       "dependents": [],
@@ -17685,6 +20593,22 @@
       "usage": {},
       "props": [
         {
+          "name": "invalid",
+          "type": "boolean",
+          "mutable": true,
+          "attr": "invalid",
+          "reflectToAttr": true,
+          "docs": "This will be true when the control is in an invalid state. Validity is determined by props such as `type`,\n`required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "label",
           "type": "string",
           "mutable": false,
@@ -17700,11 +20624,62 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "required",
+          "reflectToAttr": false,
+          "docs": "Is one of these items required.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "mutable": true,
+          "attr": "value",
+          "reflectToAttr": true,
+          "docs": "The selected value of the control.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
-      "methods": [],
+      "methods": [
+        {
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<boolean>",
+          "parameters": [],
+          "docs": "Checks for validity and shows the browser's validation message if the control is invalid.",
+          "docsTags": []
+        }
+      ],
       "events": [],
-      "listeners": [],
+      "listeners": [
+        {
+          "event": "click",
+          "capture": false,
+          "passive": false
+        }
+      ],
       "styles": [],
       "slots": [],
       "parts": [
@@ -17749,15 +20724,9 @@
           "docs": ""
         }
       ],
-      "dependents": [
-        "sc-payment"
-      ],
+      "dependents": [],
       "dependencies": [],
-      "dependencyGraph": {
-        "sc-payment": [
-          "sc-secure-notice"
-        ]
-      }
+      "dependencyGraph": {}
     },
     {
       "filePath": "./src/components/ui/select/sc-select.tsx",
@@ -17765,7 +20734,64 @@
       "tag": "sc-select",
       "readme": "# ce-select-dropdown\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "input - The html input element."
+        },
+        {
+          "name": "part",
+          "text": "form-control - The form control wrapper."
+        },
+        {
+          "name": "part",
+          "text": "label - The input label."
+        },
+        {
+          "name": "part",
+          "text": "help-text - Help text that describes how to use the input."
+        },
+        {
+          "name": "part",
+          "text": "trigger - The trigger for the dropdown."
+        },
+        {
+          "name": "part",
+          "text": "panel - Them panel for the dropdown."
+        },
+        {
+          "name": "part",
+          "text": "caret - The caret."
+        },
+        {
+          "name": "part",
+          "text": "search___base - The search base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "search__input - The search input element."
+        },
+        {
+          "name": "part",
+          "text": "search__form-control - The search form control wrapper."
+        },
+        {
+          "name": "part",
+          "text": "menu__base - The menu base."
+        },
+        {
+          "name": "part",
+          "text": "spinner__base - The spinner base."
+        },
+        {
+          "name": "part",
+          "text": "empty - The empty message."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -18267,12 +21293,64 @@
       "slots": [],
       "parts": [
         {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
           "name": "caret",
-          "docs": ""
+          "docs": "The caret."
+        },
+        {
+          "name": "empty",
+          "docs": "The empty message."
+        },
+        {
+          "name": "form-control",
+          "docs": "The form control wrapper."
+        },
+        {
+          "name": "help-text",
+          "docs": "Help text that describes how to use the input."
+        },
+        {
+          "name": "input",
+          "docs": "The html input element."
+        },
+        {
+          "name": "label",
+          "docs": "The input label."
+        },
+        {
+          "name": "menu__base",
+          "docs": "The menu base."
+        },
+        {
+          "name": "panel",
+          "docs": "Them panel for the dropdown."
         },
         {
           "name": "search",
           "docs": ""
+        },
+        {
+          "name": "search___base",
+          "docs": "The search base wrapper."
+        },
+        {
+          "name": "search__form-control",
+          "docs": "The search form control wrapper."
+        },
+        {
+          "name": "search__input",
+          "docs": "The search input element."
+        },
+        {
+          "name": "spinner__base",
+          "docs": "The spinner base."
+        },
+        {
+          "name": "trigger",
+          "docs": "The trigger for the dropdown."
         }
       ],
       "dependents": [
@@ -18324,6 +21402,22 @@
       "usage": {},
       "props": [
         {
+          "name": "abandonedCheckoutReturnUrl",
+          "type": "string",
+          "mutable": false,
+          "attr": "abandoned-checkout-return-url",
+          "reflectToAttr": false,
+          "docs": "The abandoned checkout return url.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "currencyCode",
           "type": "string",
           "mutable": false,
@@ -18367,6 +21461,22 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "isManualProcessor",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "is-manual-processor",
+          "reflectToAttr": false,
+          "docs": "Is this a manual payment?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -18433,6 +21543,7 @@
           "reflectToAttr": false,
           "docs": "Should we persist the session.",
           "docsTags": [],
+          "default": "true",
           "values": [
             {
               "type": "boolean"
@@ -18535,10 +21646,10 @@
         {
           "name": "finalize",
           "returns": {
-            "type": "Promise<any>",
+            "type": "Promise<Checkout>",
             "docs": ""
           },
-          "signature": "finalize() => Promise<any>",
+          "signature": "finalize() => Promise<Checkout>",
           "parameters": [],
           "docs": "Finalize the order.",
           "docsTags": [
@@ -18613,6 +21724,11 @@
         },
         {
           "event": "scPayError",
+          "capture": false,
+          "passive": false
+        },
+        {
+          "event": "scUpdateAbandonedCart",
           "capture": false,
           "passive": false
         },
@@ -18722,7 +21838,6 @@
         "sc-order-detail",
         "sc-order-summary",
         "sc-orders-list",
-        "sc-payment",
         "sc-payment-methods-list",
         "sc-paypal-buttons",
         "sc-price-choice",
@@ -18733,6 +21848,7 @@
         "sc-subscription-cancel",
         "sc-subscription-details",
         "sc-subscription-payment",
+        "sc-subscription-payment-method",
         "sc-subscription-renew",
         "sc-subscription-switch",
         "sc-subscriptions-list",
@@ -18782,9 +21898,6 @@
         "sc-orders-list": [
           "sc-skeleton"
         ],
-        "sc-payment": [
-          "sc-skeleton"
-        ],
         "sc-payment-methods-list": [
           "sc-skeleton"
         ],
@@ -18813,6 +21926,9 @@
           "sc-skeleton"
         ],
         "sc-subscription-payment": [
+          "sc-skeleton"
+        ],
+        "sc-subscription-payment-method": [
           "sc-skeleton"
         ],
         "sc-subscription-renew": [
@@ -18941,6 +22057,8 @@
         "sc-payment-methods-list",
         "sc-purchase-downloads-list",
         "sc-subscription",
+        "sc-subscription-details",
+        "sc-subscription-payment-method",
         "sc-subscriptions-list",
         "sc-wordpress-user"
       ],
@@ -18971,6 +22089,12 @@
           "sc-stacked-list"
         ],
         "sc-subscription": [
+          "sc-stacked-list"
+        ],
+        "sc-subscription-details": [
+          "sc-stacked-list"
+        ],
+        "sc-subscription-payment-method": [
           "sc-stacked-list"
         ],
         "sc-subscriptions-list": [
@@ -19062,6 +22186,8 @@
         "sc-payment-methods-list",
         "sc-purchase-downloads-list",
         "sc-subscription",
+        "sc-subscription-details",
+        "sc-subscription-payment-method",
         "sc-subscriptions-list",
         "sc-wordpress-user"
       ],
@@ -19092,6 +22218,12 @@
           "sc-stacked-list-row"
         ],
         "sc-subscription": [
+          "sc-stacked-list-row"
+        ],
+        "sc-subscription-details": [
+          "sc-stacked-list-row"
+        ],
+        "sc-subscription-payment-method": [
           "sc-stacked-list-row"
         ],
         "sc-subscriptions-list": [
@@ -19231,6 +22363,63 @@
           "required": false
         },
         {
+          "name": "formState",
+          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"updating\"",
+          "mutable": false,
+          "attr": "form-state",
+          "reflectToAttr": false,
+          "docs": "The form state",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "confirmed",
+              "type": "string"
+            },
+            {
+              "value": "confirming",
+              "type": "string"
+            },
+            {
+              "value": "draft",
+              "type": "string"
+            },
+            {
+              "value": "expired",
+              "type": "string"
+            },
+            {
+              "value": "failure",
+              "type": "string"
+            },
+            {
+              "value": "finalizing",
+              "type": "string"
+            },
+            {
+              "value": "idle",
+              "type": "string"
+            },
+            {
+              "value": "loading",
+              "type": "string"
+            },
+            {
+              "value": "paid",
+              "type": "string"
+            },
+            {
+              "value": "paying",
+              "type": "string"
+            },
+            {
+              "value": "updating",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "hasFocus",
           "type": "boolean",
           "mutable": true,
@@ -19326,6 +22515,31 @@
           "default": "''",
           "values": [
             {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "selectedProcessorId",
+          "type": "\"paypal\" | \"paypal-card\" | \"stripe\"",
+          "mutable": false,
+          "attr": "selected-processor-id",
+          "reflectToAttr": false,
+          "docs": "The selected processor id",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "paypal",
+              "type": "string"
+            },
+            {
+              "value": "paypal-card",
+              "type": "string"
+            },
+            {
+              "value": "stripe",
               "type": "string"
             }
           ],
@@ -19433,9 +22647,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "sc-payment"
-      ],
+      "dependents": [],
       "dependencies": [
         "sc-input",
         "sc-text"
@@ -19450,9 +22662,6 @@
         ],
         "sc-form-control": [
           "sc-tooltip"
-        ],
-        "sc-payment": [
-          "sc-stripe-element"
         ]
       }
     },
@@ -19482,6 +22691,63 @@
           "required": false
         },
         {
+          "name": "formState",
+          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"updating\"",
+          "mutable": false,
+          "attr": "form-state",
+          "reflectToAttr": false,
+          "docs": "The current form state.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "confirmed",
+              "type": "string"
+            },
+            {
+              "value": "confirming",
+              "type": "string"
+            },
+            {
+              "value": "draft",
+              "type": "string"
+            },
+            {
+              "value": "expired",
+              "type": "string"
+            },
+            {
+              "value": "failure",
+              "type": "string"
+            },
+            {
+              "value": "finalizing",
+              "type": "string"
+            },
+            {
+              "value": "idle",
+              "type": "string"
+            },
+            {
+              "value": "loading",
+              "type": "string"
+            },
+            {
+              "value": "paid",
+              "type": "string"
+            },
+            {
+              "value": "paying",
+              "type": "string"
+            },
+            {
+              "value": "updating",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "order",
           "type": "Checkout",
           "mutable": false,
@@ -19497,7 +22763,32 @@
           "required": false
         },
         {
-          "name": "paymentIntent",
+          "name": "selectedProcessorId",
+          "type": "\"paypal\" | \"paypal-card\" | \"stripe\"",
+          "mutable": false,
+          "attr": "selected-processor-id",
+          "reflectToAttr": false,
+          "docs": "The selected processor name.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "paypal",
+              "type": "string"
+            },
+            {
+              "value": "paypal-card",
+              "type": "string"
+            },
+            {
+              "value": "stripe",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "stripePaymentIntent",
           "type": "PaymentIntent",
           "mutable": false,
           "reflectToAttr": false,
@@ -19574,9 +22865,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "sc-payment"
-      ],
+      "dependents": [],
       "dependencies": [
         "sc-text",
         "sc-skeleton"
@@ -19585,9 +22874,6 @@
         "sc-stripe-payment-element": [
           "sc-text",
           "sc-skeleton"
-        ],
-        "sc-payment": [
-          "sc-stripe-payment-element"
         ]
       }
     },
@@ -20032,17 +23318,26 @@
           "sc-format-date",
           "sc-skeleton",
           "sc-format-number",
+          "sc-flex",
+          "sc-tag",
           "sc-text",
-          "sc-tag"
+          "sc-dialog",
+          "sc-card",
+          "sc-stacked-list",
+          "sc-stacked-list-row"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-dashboard-module": [
           "sc-alert"
         ],
         "sc-alert": [
           "sc-icon"
-        ],
-        "sc-button": [
-          "sc-spinner"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -20261,21 +23556,30 @@
           "sc-format-date",
           "sc-skeleton",
           "sc-format-number",
+          "sc-flex",
+          "sc-tag",
           "sc-text",
-          "sc-tag"
+          "sc-dialog",
+          "sc-card",
+          "sc-stacked-list",
+          "sc-stacked-list-row"
         ],
         "sc-subscription-status-badge": [
           "sc-format-date",
           "sc-tag"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-alert": [
           "sc-icon"
         ],
         "sc-dashboard-module": [
           "sc-alert"
-        ],
-        "sc-button": [
-          "sc-spinner"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -20355,8 +23659,13 @@
         "sc-format-date",
         "sc-skeleton",
         "sc-format-number",
+        "sc-flex",
+        "sc-tag",
         "sc-text",
-        "sc-tag"
+        "sc-dialog",
+        "sc-card",
+        "sc-stacked-list",
+        "sc-stacked-list-row"
       ],
       "dependencyGraph": {
         "sc-subscription-details": [
@@ -20364,12 +23673,24 @@
           "sc-format-date",
           "sc-skeleton",
           "sc-format-number",
+          "sc-flex",
+          "sc-tag",
           "sc-text",
-          "sc-tag"
+          "sc-dialog",
+          "sc-card",
+          "sc-stacked-list",
+          "sc-stacked-list-row"
         ],
         "sc-subscription-status-badge": [
           "sc-format-date",
           "sc-tag"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-subscription": [
           "sc-subscription-details"
@@ -20535,9 +23856,128 @@
           "sc-tooltip"
         ],
         "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
           "sc-tag",
           "sc-cc-logo",
+          "sc-text"
+        ],
+        "sc-cc-logo": [
+          "sc-icon"
+        ],
+        "sc-dashboard-module": [
+          "sc-alert"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-block-ui": [
+          "sc-spinner"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/dashboard/sc-subscription-payment-method/sc-subscription-payment-method.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-subscription-payment-method",
+      "readme": "# sc-subscription-payment-method\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "heading",
+          "type": "string",
+          "mutable": false,
+          "attr": "heading",
+          "reflectToAttr": false,
+          "docs": "The heading",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "subscription",
+          "type": "Subscription",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "The subscription",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Subscription"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-card",
+        "sc-stacked-list",
+        "sc-stacked-list-row",
+        "sc-skeleton",
+        "sc-empty",
+        "sc-form",
+        "sc-choices",
+        "sc-button",
+        "sc-icon",
+        "sc-choice",
+        "sc-flex",
+        "sc-payment-method",
+        "sc-tag",
+        "sc-dashboard-module",
+        "sc-block-ui"
+      ],
+      "dependencyGraph": {
+        "sc-subscription-payment-method": [
+          "sc-card",
+          "sc-stacked-list",
+          "sc-stacked-list-row",
+          "sc-skeleton",
+          "sc-empty",
+          "sc-form",
+          "sc-choices",
+          "sc-button",
           "sc-icon",
+          "sc-choice",
+          "sc-flex",
+          "sc-payment-method",
+          "sc-tag",
+          "sc-dashboard-module",
+          "sc-block-ui"
+        ],
+        "sc-empty": [
+          "sc-icon"
+        ],
+        "sc-choices": [
+          "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
+          "sc-tag",
+          "sc-cc-logo",
           "sc-text"
         ],
         "sc-cc-logo": [
@@ -20676,21 +24116,30 @@
           "sc-format-date",
           "sc-skeleton",
           "sc-format-number",
+          "sc-flex",
+          "sc-tag",
           "sc-text",
-          "sc-tag"
+          "sc-dialog",
+          "sc-card",
+          "sc-stacked-list",
+          "sc-stacked-list-row"
         ],
         "sc-subscription-status-badge": [
           "sc-format-date",
           "sc-tag"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-alert": [
           "sc-icon"
         ],
         "sc-dashboard-module": [
           "sc-alert"
-        ],
-        "sc-button": [
-          "sc-spinner"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -21150,21 +24599,30 @@
           "sc-format-date",
           "sc-skeleton",
           "sc-format-number",
+          "sc-flex",
+          "sc-tag",
           "sc-text",
-          "sc-tag"
+          "sc-dialog",
+          "sc-card",
+          "sc-stacked-list",
+          "sc-stacked-list-row"
         ],
         "sc-subscription-status-badge": [
           "sc-format-date",
           "sc-tag"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-dashboard-module": [
           "sc-alert"
         ],
         "sc-alert": [
           "sc-icon"
-        ],
-        "sc-button": [
-          "sc-spinner"
         ],
         "sc-pagination": [
           "sc-flex",
@@ -21208,6 +24666,23 @@
           "attr": "disabled",
           "reflectToAttr": true,
           "docs": "Disables the switch.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "edit",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "edit",
+          "reflectToAttr": false,
+          "docs": "This will be true as a workaround in the block editor to focus on the content.",
           "docsTags": [],
           "default": "false",
           "values": [
@@ -21924,8 +25399,10 @@
         "sc-payment-method",
         "sc-payment-methods-list",
         "sc-subscription-details",
+        "sc-subscription-payment-method",
         "sc-subscription-status-badge",
-        "sc-subscription-switch"
+        "sc-subscription-switch",
+        "sc-upgrade-required"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -21983,10 +25460,16 @@
         "sc-subscription-details": [
           "sc-tag"
         ],
+        "sc-subscription-payment-method": [
+          "sc-tag"
+        ],
         "sc-subscription-status-badge": [
           "sc-tag"
         ],
         "sc-subscription-switch": [
+          "sc-tag"
+        ],
+        "sc-upgrade-required": [
           "sc-tag"
         ]
       }
@@ -22328,7 +25811,28 @@
       "tag": "sc-textarea",
       "readme": "# sc-textarea\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "input - The html input element."
+        },
+        {
+          "name": "part",
+          "text": "form-control - The form control wrapper."
+        },
+        {
+          "name": "part",
+          "text": "label - The input label."
+        },
+        {
+          "name": "part",
+          "text": "help-text - Help text that describes how to use the input."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -22495,7 +25999,7 @@
           "name": "help",
           "type": "string",
           "mutable": false,
-          "attr": "help-text",
+          "attr": "help",
           "reflectToAttr": false,
           "docs": "The textarea's help text. Alternatively, you can use the help-text slot.",
           "docsTags": [],
@@ -22805,7 +26309,19 @@
           "required": false
         }
       ],
-      "methods": [],
+      "methods": [
+        {
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<boolean>",
+          "parameters": [],
+          "docs": "Checks for validity and shows the browser's validation message if the control is invalid.",
+          "docsTags": []
+        }
+      ],
       "events": [
         {
           "event": "scBlur",
@@ -22850,15 +26366,27 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
         },
         {
           "name": "form-control",
-          "docs": ""
+          "docs": "The form control wrapper."
         },
         {
           "name": "form-control-input",
           "docs": ""
+        },
+        {
+          "name": "help-text",
+          "docs": "Help text that describes how to use the input."
+        },
+        {
+          "name": "input",
+          "docs": "The html input element."
+        },
+        {
+          "name": "label",
+          "docs": "The input label."
         },
         {
           "name": "textarea",
@@ -23073,18 +26601,13 @@
           "docs": ""
         }
       ],
-      "dependents": [
-        "sc-payment"
-      ],
+      "dependents": [],
       "dependencies": [
         "sc-icon"
       ],
       "dependencyGraph": {
         "sc-toggle": [
           "sc-icon"
-        ],
-        "sc-payment": [
-          "sc-toggle"
         ]
       }
     },
@@ -23171,15 +26694,9 @@
           "docs": ""
         }
       ],
-      "dependents": [
-        "sc-payment"
-      ],
+      "dependents": [],
       "dependencies": [],
-      "dependencyGraph": {
-        "sc-payment": [
-          "sc-toggles"
-        ]
-      }
+      "dependencyGraph": {}
     },
     {
       "filePath": "./src/components/ui/tooltip/sc-tooltip.tsx",
@@ -23187,7 +26704,16 @@
       "tag": "sc-tooltip",
       "readme": "# ce-tooltip\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "text - The tooltip text."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -23331,19 +26857,23 @@
       "parts": [
         {
           "name": "base",
-          "docs": ""
+          "docs": "The elements base wrapper."
         },
         {
           "name": "text",
-          "docs": ""
+          "docs": "The tooltip text."
         }
       ],
       "dependents": [
-        "sc-form-control"
+        "sc-form-control",
+        "sc-payment-method"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-form-control": [
+          "sc-tooltip"
+        ],
+        "sc-payment-method": [
           "sc-tooltip"
         ]
       }
@@ -23641,8 +27171,8 @@
           "sc-tag",
           "sc-format-number",
           "sc-input",
-          "sc-alert",
           "sc-button",
+          "sc-alert",
           "sc-block-ui"
         ],
         "sc-input": [
@@ -23651,19 +27181,21 @@
         "sc-form-control": [
           "sc-tooltip"
         ],
-        "sc-alert": [
-          "sc-icon"
-        ],
         "sc-button": [
           "sc-spinner"
+        ],
+        "sc-alert": [
+          "sc-icon"
         ],
         "sc-block-ui": [
           "sc-spinner"
         ],
         "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
           "sc-tag",
           "sc-cc-logo",
-          "sc-icon",
           "sc-text"
         ],
         "sc-cc-logo": [
@@ -23671,6 +27203,71 @@
         ],
         "sc-dashboard-module": [
           "sc-alert"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/sc-upgrade-required/sc-upgrade-required.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-upgrade-required",
+      "readme": "# sc-upgrade-required\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The tag's size.",
+          "docsTags": [],
+          "default": "'small'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-tag",
+        "sc-dialog",
+        "sc-icon",
+        "sc-button"
+      ],
+      "dependencyGraph": {
+        "sc-upgrade-required": [
+          "sc-tag",
+          "sc-dialog",
+          "sc-icon",
+          "sc-button"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ]
       }
     },

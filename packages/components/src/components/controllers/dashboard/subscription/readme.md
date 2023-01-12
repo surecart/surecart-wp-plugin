@@ -54,11 +54,18 @@ graph TD;
   sc-subscription-details --> sc-format-date
   sc-subscription-details --> sc-skeleton
   sc-subscription-details --> sc-format-number
-  sc-subscription-details --> sc-text
+  sc-subscription-details --> sc-flex
   sc-subscription-details --> sc-tag
+  sc-subscription-details --> sc-text
+  sc-subscription-details --> sc-dialog
+  sc-subscription-details --> sc-card
+  sc-subscription-details --> sc-stacked-list
+  sc-subscription-details --> sc-stacked-list-row
+  sc-dialog --> sc-button
+  sc-dialog --> sc-icon
+  sc-button --> sc-spinner
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon
-  sc-button --> sc-spinner
   sc-block-ui --> sc-spinner
   style sc-subscription fill:#f9f,stroke:#333,stroke-width:4px
 ```

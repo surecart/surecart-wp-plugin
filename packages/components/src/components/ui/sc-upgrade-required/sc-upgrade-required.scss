@@ -1,0 +1,24 @@
+:host {
+  display: inline-block;
+  cursor: initial;
+}
+
+p {
+  font-size: var(--sc-font-size-medium);
+  font-weight: var(--sc-font-weight-normal);
+  margin: 0 0 var(--sc-spacing-medium) 0;
+  line-height: var(--sc-line-height-dense);
+}
+
+.dialog__title {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+
+  sc-icon {
+    font-size: 18px;
+    width: 22px;
+    stroke-width: 4;
+    color: var(--sc-color-primary-500);
+  }
+}

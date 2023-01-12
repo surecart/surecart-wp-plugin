@@ -5,6 +5,23 @@ import { formatAddress } from 'localized-address-format';
 import { countryChoices } from '../../../functions/address';
 import { zones } from '../../../functions/tax';
 
+/**
+ * @part base - The elements base wrapper.
+ * @part heading - The heading.
+ * @part heading-text - The heading text wrapper.
+ * @part heading-title - The heading title.
+ * @part heading-description - The heading description.
+ * @part error__base - The elements base wrapper.
+ * @part error__icon - The alert icon.
+ * @part error__text - The alert text.
+ * @part error__title - The alert title.
+ * @part error__ message - The alert message.
+ * @part test-tag__base - The base test tag.
+ * @part text-tag__content - The base test tag content.
+ * @part button__base - The button base.
+ * @part button__label - The button label.
+ * @part button__prefix - The button prefix.
+ */
 @Component({
   tag: 'sc-customer-details',
   styleUrl: 'sc-customer-details.css',
@@ -134,18 +151,18 @@ export class ScCustomerDetails {
 
   render() {
     return (
-      <sc-dashboard-module class="customer-details" error={this.error}>
+      <sc-dashboard-module exportparts="base, heading, heading-text, heading-title, heading-description" class="customer-details" error={this.error}>
         <span slot="heading">
           {this.heading || __('Billing Details', 'surecart')}{' '}
           {!!this?.customer?.id && !this?.customer?.live_mode && (
-            <sc-tag type="warning" size="small">
+            <sc-tag exportparts="base:test-tag__base, content:test-tag__content" type="warning" size="small">
               {__('Test', 'surecart')}
             </sc-tag>
           )}
         </span>
 
         {!!this.editLink && !!this.customer?.id && (
-          <sc-button type="link" href={this.editLink} slot="end">
+          <sc-button exportparts="base:button__base, label:button__label, prefix:button__prefix" type="link" href={this.editLink} slot="end">
             <sc-icon name="edit-3" slot="prefix"></sc-icon>
             {__('Update', 'surecart')}
           </sc-button>

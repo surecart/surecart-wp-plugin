@@ -1,198 +1,56 @@
-import { Component, Event, EventEmitter, h, Host, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 
-import { getProcessorData } from '../../../../functions/processor';
-import { Checkout, PaymentIntent, Processor, ProcessorName } from '../../../../types';
+import { Checkout, Processor } from '../../../../types';
 
+/**
+ * @part base - The elements base wrapper.
+ * @part form-control - The form control wrapper.
+ * @part label - The input label.
+ * @part help-text - Help text that describes how to use the input.
+ * @part test-badge__base - Test badge base.
+ * @part test-badge__content - Test badge content.
+ */
 @Component({
   tag: 'sc-payment',
   styleUrl: 'sc-payment.scss',
-  shadow: false,
+  shadow: true,
 })
 export class ScPayment {
-  /** The current payment method for the payment */
-  @Prop({ mutable: true }) processor: string = 'stripe';
+  private paymentChoices: HTMLScPaymentMethodChoiceElement[] = [];
+
+  /** This element. */
+  @Element() el: HTMLScPaymentElement;
+
+  /** The current selected processor. */
+  @Prop() processor: string;
 
   /** List of available processors. */
   @Prop() processors: Processor[] = [];
 
   /** Checkout Session from sc-checkout. */
-  @Prop() order: Checkout;
-
-  /** Is this loading. */
-  @Prop() loading: boolean;
-
-  /** Is this busy. */
-  @Prop() busy: boolean;
+  @Prop() checkout: Checkout;
 
   /** Is this created in "test" mode */
   @Prop() mode: 'test' | 'live' = 'live';
 
-  /** Secure notice */
-  @Prop() secureNotice: string;
-
   /** The input's label. */
   @Prop() label: string;
-
-  /** Payment mode inside individual payment method (i.e. Payment Buttons) */
-  @Prop() paymentMethod: 'stripe-payment-request' | null;
-
-  /** The currency code. */
-  @Prop() currencyCode: string = 'usd';
-
-  /** Default */
-  @Prop() defaultProcessor: ProcessorName = 'stripe';
 
   /** Hide the test mode badge */
   @Prop() hideTestModeBadge: boolean;
 
-  /** Use the Stripe payment element. */
-  @Prop() stripePaymentElement: boolean;
+  /** Does this have multiple choices */
+  @State() hasMultiple: boolean;
 
-  /** The stripe payment intent. */
-  @Prop() stripePaymentIntent: PaymentIntent;
+  /** Set the checkout procesor. */
+  @Event() scSetProcessor: EventEmitter<{ id: string; manual: boolean } | null>;
 
-  /** Hold the stripe processor */
-  @State() stripe: Processor;
+  private mutationObserver: MutationObserver;
 
-  /** Holds the paypal processor. */
-  @State() paypal: Processor;
-
-  /** Set the order procesor. */
-  @Event() scSetProcessor: EventEmitter<ProcessorName>;
-
-  componentWillLoad() {
-    this.scSetProcessor.emit(this.defaultProcessor);
-    this.processor = this.defaultProcessor;
-    this.setProcessors();
-  }
-
-  /** Set the processors for this order. */
-  @Watch('processors')
-  @Watch('mode')
-  setProcessors() {
-    this.stripe = (this.processors || []).find(processor => processor.processor_type === 'stripe' && processor?.live_mode === (this.mode === 'live'));
-    this.paypal = (this.processors || []).find(processor => processor.processor_type === 'paypal' && processor?.live_mode === (this.mode === 'live'));
-  }
-
-  /**
-   * Render the payment element.
-   */
-  renderStripePaymentElement() {
-    if (this.stripePaymentElement) {
-      return <sc-stripe-payment-element order={this.order} paymentIntent={this.stripePaymentIntent} />;
-    }
-
-    const data = getProcessorData(this.processors, 'stripe', this.mode);
-    return (
-      <div class="sc-payment__stripe-card-element">
-        <sc-stripe-element order={this.order} mode={this.mode} publishableKey={data?.publishable_key} accountId={data?.account_id} secureText={this.secureNotice} />
-        <sc-secure-notice>{this.secureNotice}</sc-secure-notice>
-      </div>
-    );
-  }
-
-  renderTestModeBadge() {
-    if (this.hideTestModeBadge) return null;
-    return (
-      this.mode === 'test' && (
-        <sc-tag type="warning" size="small">
-          {__('Test Mode', 'surecart')}
-        </sc-tag>
-      )
-    );
-  }
-
-  /**
-   * Render Stripe and Paypal radio buttons.
-   */
-  renderStripeAndPayPal() {
-    return (
-      <sc-form-control label={this.label}>
-        <div class="sc-payment-label" slot="label">
-          <div>{this.label}</div>
-          {this.renderTestModeBadge()}
-        </div>
-        <sc-toggles collapsible={false} theme="container">
-          <sc-toggle class="sc-stripe-toggle" show-control shady borderless open={this.processor === 'stripe'} onScShow={() => this.scSetProcessor.emit('stripe')}>
-            <span slot="summary" class="sc-payment-toggle-summary">
-              <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
-              <span>{__('Credit Card', 'surecart')}</span>
-            </span>
-            {this.renderStripePaymentElement()}
-          </sc-toggle>
-
-          <sc-toggle class="sc-paypal-toggle" show-control shady borderless open={this.processor === 'paypal'} onScShow={() => this.scSetProcessor.emit('paypal')}>
-            <span slot="summary" class="sc-payment-toggle-summary">
-              <sc-icon name={window?.scData?.theme === 'dark' ? 'paypal-white' : 'paypal'} style={{ width: '80px', fontSize: '24px' }}></sc-icon>
-            </span>
-            <sc-card>
-              <sc-payment-selected label={__('PayPal selected for check out.', 'surecart')}>
-                <sc-icon slot="icon" name={window?.scData?.theme === 'dark' ? 'paypal-white' : 'paypal'} style={{ width: '80px' }} />
-                {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
-              </sc-payment-selected>
-            </sc-card>
-          </sc-toggle>
-        </sc-toggles>
-      </sc-form-control>
-    );
-  }
-
-  /**
-   * Render PayPal options.
-   */
-  renderPayPal() {
-    return (
-      <sc-form-control label={this.label}>
-        <div class="sc-payment-label" slot="label">
-          <div>{this.label}</div>
-          {this.renderTestModeBadge()}
-        </div>
-        <sc-toggles collapsible={false} theme="container">
-          <sc-toggle
-            data-test-id="paypal-credit-card-toggle"
-            show-control
-            shady
-            borderless
-            open={this.processor === 'paypal-card'}
-            onScShow={() => this.scSetProcessor.emit('paypal-card')}
-          >
-            <span slot="summary" class="sc-payment-toggle-summary">
-              <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
-              <span>{__('Credit Card', 'surecart')}</span>
-            </span>
-            <sc-card>
-              <sc-payment-selected label={__('Credit Card selected for check out.', 'surecart')}>
-                <sc-icon slot="icon" name="credit-card" />
-                {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
-              </sc-payment-selected>
-            </sc-card>
-          </sc-toggle>
-          <sc-toggle data-test-id="paypal-toggle" show-control shady borderless open={this.processor === 'paypal'} onScShow={() => this.scSetProcessor.emit('paypal')}>
-            <span slot="summary" class="sc-payment-toggle-summary">
-              <sc-icon name={window?.scData?.theme === 'dark' ? 'paypal-white' : 'paypal'} style={{ width: '80px', fontSize: '24px' }}></sc-icon>
-            </span>
-            <sc-card>
-              <sc-payment-selected label={__('PayPal selected for check out.', 'surecart')}>
-                <sc-icon slot="icon" name={window?.scData?.theme === 'dark' ? 'paypal-white' : 'paypal'} style={{ width: '80px' }} />
-                {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
-              </sc-payment-selected>
-            </sc-card>
-          </sc-toggle>
-        </sc-toggles>
-      </sc-form-control>
-    );
-  }
-
-  renderLoading() {
-    return (
-      <div>
-        <sc-skeleton style={{ width: '10%', marginBottom: '1em' }}></sc-skeleton>
-        <sc-skeleton style={{ width: '100%', marginBottom: '1em' }}></sc-skeleton>
-        <sc-skeleton style={{ width: '35%' }}></sc-skeleton>
-      </div>
-    );
+  getAllProcessors() {
+    return Array.from(this.el.querySelectorAll('sc-payment-method-choice') as NodeListOf<HTMLScPaymentMethodChoiceElement>) || null;
   }
 
   getProcessor() {
@@ -205,65 +63,69 @@ export class ScPayment {
     }
   }
 
-  renderNoProcessors() {
-    return (
-      <sc-form-control label={this.label}>
-        <sc-alert type="info" open>
-          {__('Please contact us for payment', 'surecart')}
-        </sc-alert>
-      </sc-form-control>
-    );
+  /** Handle processor invalid state. */
+  @Listen('scProcessorInvalid')
+  selectFirstProcessor() {
+    // set the first processor that is showing and set that one.
+    // use settimeout to wait for display:none rendering to finish.
+    setTimeout(() => {
+      const processor = (this.el.querySelector('sc-payment-method-choice:not([style*="display: none"])') as HTMLScPaymentMethodChoiceElement) || null;
+      if (processor?.processorId) {
+        this.scSetProcessor.emit({ id: processor?.processorId, manual: processor.isManual });
+      }
+    }, 50);
   }
 
-  renderProcessors() {
-    // payment is not required for this order.
-    if (this.order?.payment_method_required === false) {
-      return null;
-    }
+  componentDidLoad() {
+    this.checkMethodsNumber();
+    this.selectFirstProcessor();
+    this.mutationObserver = new MutationObserver(() => this.checkMethodsNumber());
+    this.mutationObserver.observe(this.el, { attributes: true, childList: true, subtree: false });
+  }
 
-    // we don't have any processors.
-    if (!this.processors?.length) {
-      console.warn('No processors are configured for this merchant.');
-      return this.renderNoProcessors();
-    }
+  disconnectedCallback() {
+    this.mutationObserver.disconnect();
+  }
 
-    // both stripe and paypal are enabled.
-    if (this.stripe && this.paypal) {
-      return this.renderStripeAndPayPal();
-    }
-
-    // we have stripe.
-    if (this.stripe) {
-      return (
-        <sc-form-control label={this.label}>
-          <div class="sc-payment-label" slot="label">
-            <div>{this.label}</div>
-            {this.renderTestModeBadge()}
-          </div>
-          {this.stripePaymentElement ? <sc-card>{this.renderStripePaymentElement()}</sc-card> : this.renderStripePaymentElement()}
-        </sc-form-control>
-      );
-    }
-
-    // we have paypal.
-    if (this.paypal) {
-      return this.renderPayPal();
-    }
-
-    console.warn(`No processors are configured for the current cart items and mode. (${this.mode})`);
-    // render no processors message.
-    return this.renderNoProcessors();
+  checkMethodsNumber() {
+    this.paymentChoices = this.getAllProcessors();
+    const active = this.paymentChoices.filter(choice => !choice?.isDisabled);
+    this.hasMultiple = active?.length > 1;
+    this.paymentChoices.forEach(choice => {
+      choice.hasOthers = this?.hasMultiple;
+    });
   }
 
   render() {
+    // payment is not required for this order.
+    if (this.checkout?.payment_method_required === false) {
+      return null;
+    }
+
+    const Tag = this.hasMultiple ? 'sc-toggles' : 'div';
+
     return (
       <Host>
-        {/* Handles the automatic filtering and selection of processors */}
-        <sc-processor-provider checkout={this.order} processors={this.processors} processor={this.processor} />
-        {this.renderProcessors()}
+        <sc-form-control label={this.label} exportparts="label, help-text, form-control">
+          <div class="sc-payment-label" slot="label">
+            <div>{this.label}</div>
+            {this.mode === 'test' && !this.hideTestModeBadge && (
+              <sc-tag type="warning" size="small" exportparts="base:test-badge__base, content:test-badge__content">
+                {__('Test Mode', 'surecart')}
+              </sc-tag>
+            )}
+          </div>
+          <Tag collapsible={false} theme="container">
+            <slot>
+              <sc-alert type="info" open>
+                {__('Please contact us for payment', 'surecart')}
+              </sc-alert>
+            </slot>
+          </Tag>
+        </sc-form-control>
       </Host>
     );
   }
 }
 
-openWormhole(ScPayment, ['processor', 'processors', 'order', 'mode', 'paymentMethod', 'loading', 'busy', 'currencyCode', 'stripePaymentElement', 'stripePaymentIntent'], false);
+openWormhole(ScPayment, ['processor', 'processors', 'checkout', 'mode'], false);

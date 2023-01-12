@@ -1,23 +1,46 @@
 import { __ } from '@wordpress/i18n';
+import {
+	ScButton,
+	ScIcon,
+	ScStackedListRow,
+	ScUpgradeRequired,
+} from '@surecart/components-react';
 
-export default ({ title, description, model, action = 'notification' }) => {
+export default ({
+	title,
+	description,
+	link = 'customer_notifications',
+	model,
+	action = 'notification',
+	disabled = false,
+}) => {
 	return (
-		<sc-stacked-list-row style={{ '--columns': '3' }}>
-			<strong>{title}</strong>
+		<ScStackedListRow style={{ '--columns': '3' }}>
+			<strong>
+				{title}
+				{disabled && (
+					<ScUpgradeRequired style={{ marginLeft: '5px' }} />
+				)}
+			</strong>
 			<div style={{ opacity: '0.75' }}>{description}</div>
-			<sc-button
+			<ScButton
 				size="small"
 				slot="suffix"
-				href={`${scData?.app_url}/notification_templates/:customer_notifications/${model}/${action}/edit`}
+				href={
+					disabled
+						? `#`
+						: `${scData?.app_url}/notification_templates/:${link}/${model}/${action}/edit`
+				}
 				target="_blank"
+				disabled={disabled}
 			>
 				{__('Edit', 'surecart')}
-				<sc-icon
+				<ScIcon
 					name="external-link"
 					slot="suffix"
 					style={{ width: '12px', height: '12px' }}
-				></sc-icon>
-			</sc-button>
-		</sc-stacked-list-row>
+				/>
+			</ScButton>
+		</ScStackedListRow>
 	);
 };

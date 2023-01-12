@@ -95,9 +95,7 @@ export default ({ invoice, charge: chargeInput, loading }) => {
 						return (
 							<sc-product-line-item
 								key={item.id}
-								imageUrl={
-									item?.price?.metadata?.wp_attachment_src
-								}
+								imageUrl={item?.price?.product?.image_url}
 								name={item?.price?.product?.name}
 								editable={false}
 								removable={false}

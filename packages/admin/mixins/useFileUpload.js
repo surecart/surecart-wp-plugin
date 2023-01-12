@@ -1,4 +1,3 @@
-import apiFetch from '@wordpress/api-fetch';
 import { DirectUpload } from '@rails/activestorage';
 
 export default () => {

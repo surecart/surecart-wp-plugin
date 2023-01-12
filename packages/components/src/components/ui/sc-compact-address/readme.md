@@ -39,9 +39,27 @@ Type: `Promise<boolean>`
 
 ## Shadow Parts
 
-| Part        | Description |
-| ----------- | ----------- |
-| `"control"` |             |
+| Part                     | Description                                    |
+| ------------------------ | ---------------------------------------------- |
+| `"base"`                 | The elements base wrapper.                     |
+| `"block-ui"`             | The block ui base component.                   |
+| `"block-ui__content"`    | The block ui content (spinner).                |
+| `"caret"`                | The select box caret.                          |
+| `"control"`              |                                                |
+| `"empty"`                | The select empty message.                      |
+| `"form-control"`         | The form control wrapper.                      |
+| `"help-text"`            | Help text that describes how to use the input. |
+| `"input"`                | The html input element.                        |
+| `"input__base"`          | The inputs base element.                       |
+| `"label"`                | The input label.                               |
+| `"menu__base"`           | The select menu base.                          |
+| `"panel"`                | The select box panel.                          |
+| `"search__base"`         | The select search base.                        |
+| `"search__form-control"` | The select search form control.                |
+| `"search__input"`        | The select search input.                       |
+| `"select__base"`         | The select boxes base element.                 |
+| `"spinner__base"`        | The select spinner base.                       |
+| `"trigger"`              | The select box trigger.                        |
 
 
 ## Dependencies

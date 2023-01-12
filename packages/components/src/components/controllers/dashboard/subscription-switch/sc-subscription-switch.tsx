@@ -228,43 +228,46 @@ export class ScSubscriptionSwitch {
     return (
       <sc-choices required>
         <div>
-          {(this.prices || []).map(price => {
-            const currentPlan = (this.subscription?.price as Price)?.id === price?.id;
-            const product = this.products.find(product => product.id === price?.product);
+          {(this.prices || [])
+            .filter(price => !price.archived)
+            .filter(price => price?.currency === this.subscription?.currency)
+            .map(price => {
+              const currentPlan = (this.subscription?.price as Price)?.id === price?.id;
+              const product = this.products.find(product => product.id === price?.product);
 
-            return (
-              <sc-choice
-                key={price?.id}
-                checked={currentPlan}
-                name="plan"
-                value={price?.id}
-                hidden={this.isHidden(price)}
-                onScChange={e => {
-                  if (e.detail) {
-                    this.selectedPrice = this.prices.find(p => p.id === price?.id);
-                  }
-                }}
-              >
-                <div>
-                  <strong>{product?.name}</strong>
-                </div>
-                <div slot="description">
-                  {price?.ad_hoc ? (
-                    `${__('Custom amount', 'surecart')} ${intervalString(price)}`
-                  ) : (
-                    <Fragment>
-                      <sc-format-number type="currency" currency={price?.currency || 'usd'} value={price?.amount}></sc-format-number> {intervalString(price, { showOnce: true })}
-                    </Fragment>
+              return (
+                <sc-choice
+                  key={price?.id}
+                  checked={currentPlan}
+                  name="plan"
+                  value={price?.id}
+                  hidden={this.isHidden(price)}
+                  onScChange={e => {
+                    if (e.detail) {
+                      this.selectedPrice = this.prices.find(p => p.id === price?.id);
+                    }
+                  }}
+                >
+                  <div>
+                    <strong>{product?.name}</strong>
+                  </div>
+                  <div slot="description">
+                    {price?.ad_hoc ? (
+                      `${__('Custom amount', 'surecart')} ${intervalString(price)}`
+                    ) : (
+                      <Fragment>
+                        <sc-format-number type="currency" currency={price?.currency || 'usd'} value={price?.amount}></sc-format-number> {intervalString(price, { showOnce: true })}
+                      </Fragment>
+                    )}
+                  </div>
+                  {currentPlan && (
+                    <sc-tag type="warning" slot="price">
+                      {__('Current Plan', 'surecart')}
+                    </sc-tag>
                   )}
-                </div>
-                {currentPlan && (
-                  <sc-tag type="warning" slot="price">
-                    {__('Current Plan', 'surecart')}
-                  </sc-tag>
-                )}
-              </sc-choice>
-            );
-          })}
+                </sc-choice>
+              );
+            })}
         </div>
       </sc-choices>
     );
@@ -290,7 +293,7 @@ export class ScSubscriptionSwitch {
     }
 
     // subscription is a payment plan.
-    if (this.subscription?.remaining_period_count) {
+    if (this.subscription?.finite) {
       return (
         <sc-alert type="info" open>
           {__('To make changes to your payment plan, please contact us.', 'surecart')}

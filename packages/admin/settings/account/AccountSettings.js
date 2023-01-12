@@ -7,6 +7,8 @@ import {
 	ScInput,
 	ScSelect,
 	ScSwitch,
+	ScButton,
+	ScIcon,
 } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
@@ -25,7 +27,7 @@ export default () => {
 	);
 
 	// honeypot.
-	const [honeypotEnabled, setHoneyPotEnabled] = useEntityProp(
+	const [honeypotEnabled, setHoneypotEnabled] = useEntityProp(
 		'root',
 		'site',
 		'surecart_honeypot_enabled'
@@ -45,6 +47,12 @@ export default () => {
 		'root',
 		'site',
 		'surecart_recaptcha_secret_key'
+	);
+	// enable stripe script.
+	const [stripeScriptEnabled, setStripeScriptEnabled] = useEntityProp(
+		'root',
+		'site',
+		'surecart_load_stripe_js'
 	);
 
 	/**
@@ -170,6 +178,52 @@ export default () => {
 						)}
 						required
 					></ScSelect>
+
+					<ScSelect
+						value={item?.customer_locale}
+						onScChange={(e) =>
+							editItem({ customer_locale: e.target.value })
+						}
+						choices={[
+							{
+								value: 'nl',
+								label: 'Nederlands',
+							},
+              {
+								value: 'de',
+								label: 'Deutsch',
+							},
+							{
+								value: 'en',
+								label: 'English (United States)',
+							},
+							{
+								value: 'es',
+								label: 'Español',
+							},
+							{
+								value: 'fr',
+								label: 'Français',
+							},
+							{
+								value: 'it',
+								label: 'Italiano',
+							},
+							{
+								value: 'pt',
+								label: 'Português',
+							},
+						]}
+						label={__(
+							'Notifications and Invoice Language',
+							'surecart'
+						)}
+						help={__(
+							'The default language for notification and invoices.',
+							'surecart'
+						)}
+						required
+					></ScSelect>
 				</div>
 			</SettingsBox>
 
@@ -281,6 +335,43 @@ export default () => {
 						)}
 					</>
 				)}
+				{(scData.processors || []).some(
+					(processor) => processor.processor_type === 'stripe'
+				) && (
+					<ScSwitch
+						checked={stripeScriptEnabled}
+						onScChange={(e) =>
+							setStripeScriptEnabled(e.target.checked)
+						}
+					>
+						{__('Stripe Fraud Monitoring', 'surecart')}
+						<span slot="description" style={{ lineHeight: '1.4' }}>
+							{__(
+								'This will load stripe.js on every page to help with Fraud monitoring.',
+								'surecart'
+							)}
+						</span>
+					</ScSwitch>
+				)}
+			</SettingsBox>
+			<SettingsBox
+				title={__('Clear Test Data', 'surecart')}
+				description={__(
+					'Clear out all of your test data with one-click.',
+					'surecart'
+				)}
+				loading={!hasLoadedItem}
+				noButton={true}
+			>
+				<ScButton
+					type="danger"
+					href={'https://app.surecart.com/account/edit'}
+					target="_blank"
+					outline
+				>
+					{__('Clear Test Data', 'surecart')}
+					<ScIcon name="external-link" slot="suffix" />
+				</ScButton>
 			</SettingsBox>
 		</SettingsTemplate>
 	);

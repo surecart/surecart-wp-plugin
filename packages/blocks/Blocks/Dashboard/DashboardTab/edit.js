@@ -14,6 +14,7 @@ import {
 	PanelRow,
 	TextControl,
 } from '@wordpress/components';
+import { cleanForSlug } from '@wordpress/url';
 import { useEffect, useRef, Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import feather from 'feather-icons';
@@ -28,10 +29,7 @@ export default ({ attributes, setAttributes }) => {
 
 	useEffect(() => {
 		setAttributes({
-			panel: (title || '')
-				.toLowerCase()
-				.replace(/ /g, '-')
-				.replace(/[^\w-]+/g, ''),
+			panel: cleanForSlug(title),
 		});
 	}, [title]);
 

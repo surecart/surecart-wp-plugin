@@ -3,6 +3,12 @@ import { FormSubmitController } from '../../../functions/form-data';
 
 let id = 0;
 
+/**
+ * @part base - The elements base wrapper.
+ * @part control - The control wrapper.
+ * @part checked-icon - Checked icon.
+ * @part label - The label.
+ */
 @Component({
   tag: 'sc-radio',
   styleUrl: 'sc-radio.scss',
@@ -35,6 +41,9 @@ export class ScRadio {
 
   /** This will be true when the control is in an invalid state. Validity is determined by the `required` prop. */
   @Prop({ reflect: true, mutable: true }) invalid: boolean = false;
+
+  /** This will be true as a workaround in the block editor to focus on the content. */
+  @Prop() edit: boolean;
 
   /** Emitted when the control loses focus. */
   @Event() scBlur: EventEmitter<void>;
@@ -93,7 +102,7 @@ export class ScRadio {
     if (!radioGroup) {
       return [];
     }
-    return [...radioGroup.querySelectorAll('sc-radio')].filter((radio: HTMLScRadioElement) => radio.name === this.name) as HTMLScRadioElement[];
+    return [...radioGroup.querySelectorAll('sc-radio')] as HTMLScRadioElement[];
   }
 
   getSiblingRadios() {
@@ -101,6 +110,8 @@ export class ScRadio {
   }
 
   handleKeyDown(event: KeyboardEvent) {
+    if (this.edit) return true;
+
     if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
       const radios = this.getAllRadios().filter(radio => !radio.disabled);
       const incr = ['ArrowUp', 'ArrowLeft'].includes(event.key) ? -1 : 1;
@@ -118,6 +129,7 @@ export class ScRadio {
 
   // Prevent clicks on the label from briefly blurring the input
   handleMouseDown(event: MouseEvent) {
+    if (this.edit) return true;
     event.preventDefault();
     this.input.focus();
   }
@@ -133,14 +145,16 @@ export class ScRadio {
   }
 
   render() {
+    const Tag = this.edit ? 'div' : 'label';
     return (
-      <label
+      <Tag
         part="base"
         class={{
           'radio': true,
           'radio--checked': this.checked,
           'radio--disabled': this.disabled,
           'radio--focused': this.hasFocus,
+          'radio--editing': this.edit,
         }}
         htmlFor={this.inputId}
         onKeyDown={e => this.handleKeyDown(e)}
@@ -176,7 +190,7 @@ export class ScRadio {
         <span part="label" id={this.labelId} class="radio__label">
           <slot></slot>
         </span>
-      </label>
+      </Tag>
     );
   }
 }

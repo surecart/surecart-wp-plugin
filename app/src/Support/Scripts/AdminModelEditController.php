@@ -116,6 +116,7 @@ abstract class AdminModelEditController {
 		);
 
 		// pass app url.
+		$this->data['upgrade_url']      = \SureCart::config()->links->purchase;
 		$this->data['surecart_app_url'] = defined( 'SURECART_APP_URL' ) ? SURECART_APP_URL : '';
 		$this->data['api_url']          = defined( 'SURECART_API_URL' ) ? untrailingslashit( SURECART_API_URL ) : \SureCart::requests()->getBaseUrl();
 		$this->data['plugin_url']       = \SureCart::core()->assets()->getUrl();
@@ -141,6 +142,7 @@ abstract class AdminModelEditController {
 
 		// pass entitlements to page.
 		$this->data['entitlements'] = \SureCart::account()->entitlements;
+		$this->data['get_locale']   = str_replace( '_', '-', get_locale() );
 
 		wp_set_script_translations( $this->handle, 'surecart' );
 

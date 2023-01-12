@@ -18,7 +18,6 @@ import {
 import {
 	useInnerBlocksProps as __stableUseInnerBlocksProps,
 	__experimentalUseInnerBlocksProps,
-	__experimentalUseNoRecursiveRenders as useNoRecursiveRenders,
 	// __experimentalBlockContentOverlay as BlockContentOverlay, // TODO when gutenberg releases it: https://github.com/WordPress/gutenberg/blob/afee31ee020b8965e811f5d68a5ca8001780af9d/packages/block-editor/src/components/block-content-overlay/index.js#L17
 	InspectorControls,
 	useBlockProps,
@@ -32,8 +31,6 @@ export default ({ attributes, setAttributes }) => {
 
 	// TODO: Let's store a unique hash in both meta and attribute to find.
 	const { id } = attributes;
-
-	const [hasAlreadyRendered, RecursionProvider] = useNoRecursiveRenders(id);
 
 	const blockProps = useBlockProps();
 
@@ -75,16 +72,6 @@ export default ({ attributes, setAttributes }) => {
 		};
 	});
 
-	if (hasAlreadyRendered) {
-		return (
-			<div {...blockProps}>
-				<Warning>
-					{__('Form cannot be rendered inside itself.', 'surecart')}
-				</Warning>
-			</div>
-		);
-	}
-
 	// form has resolved
 	if (!hasResolved) {
 		return (
@@ -111,7 +98,7 @@ export default ({ attributes, setAttributes }) => {
 	}
 
 	return (
-		<RecursionProvider>
+		<>
 			<InspectorControls>
 				<PanelBody title={__('Form Title', 'surecart')}>
 					<PanelRow>
@@ -124,6 +111,6 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 			<div {...blockProps}>{<div {...innerBlocksProps} />}</div>
-		</RecursionProvider>
+		</>
 	);
 };

@@ -10,6 +10,7 @@
 		background: #fff;
 		border-bottom: 1px solid var(--sc-color-gray-200);
 		height: 66px;
+		z-index:9;
 	}
 </style>
 <div>

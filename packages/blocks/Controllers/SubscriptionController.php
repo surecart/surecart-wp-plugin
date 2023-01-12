@@ -23,9 +23,9 @@ class SubscriptionController extends BaseController {
 			->id( 'customer-subscriptions-preview' )
 			->with(
 				[
-					'heading' => $attributes['title'] ?? null,
+					'heading'    => $attributes['title'] ?? null,
 					'isCustomer' => User::current()->isCustomer(),
-					'allLink' => add_query_arg(
+					'allLink'    => add_query_arg(
 						[
 							'tab'    => $this->getTab(),
 							'model'  => 'subscription',
@@ -33,7 +33,7 @@ class SubscriptionController extends BaseController {
 						],
 						remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 					),
-					'query'   => [
+					'query'      => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
 						'status'       => [ 'active', 'trialing', 'past_due', 'canceled' ],
 						'page'         => 1,
@@ -54,9 +54,9 @@ class SubscriptionController extends BaseController {
 			'sc-subscriptions-list',
 			'#customer-subscriptions-index',
 			[
-				'heading' => $attributes['title'] ?? __( 'Subscriptions', 'surecart' ),
+				'heading'    => $attributes['title'] ?? __( 'Subscriptions', 'surecart' ),
 				'isCustomer' => User::current()->isCustomer(),
-				'query'   => [
+				'query'      => [
 					'customer_ids' => array_values( User::current()->customerIds() ),
 					'status'       => [ 'active', 'trialing', 'canceled' ],
 					'page'         => 1,
@@ -86,6 +86,9 @@ class SubscriptionController extends BaseController {
 				'price.product',
 				'current_period',
 				'period.checkout',
+				'purchase',
+				'purchase.license',
+				'license.activations',
 			]
 		)->find( $id );
 
@@ -138,6 +141,92 @@ class SubscriptionController extends BaseController {
 		<?php
 		return ob_get_clean();
 	}
+
+	/**
+	 * Update the subscription payment method
+	 *
+	 * @return string
+	 */
+	public function update_payment_method() {
+		$id = $this->getId();
+
+		if ( ! $id ) {
+			return $this->notFound();
+		}
+
+		// fetch subscription.
+		$subscription = Subscription::with(
+			[
+				'price',
+				'price.product',
+				'current_period',
+				'period.checkout',
+			]
+		)->find( $id );
+
+		ob_start();
+		?>
+
+		<sc-spacing style="--spacing: var(--sc-spacing-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>">
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb href="
+				<?php
+				echo esc_url(
+					add_query_arg(
+						[
+							'tab'    => $this->getTab(),
+							'action' => 'edit',
+							'model'  => 'subscription',
+							'id'     => $this->getId(),
+						],
+						remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+					)
+				);
+				?>
+				">
+					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
+					<?php esc_html_e( 'Update Payment Method', 'surecart' ); ?>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
+
+		<?php
+			echo wp_kses_post(
+				Component::tag( 'sc-subscription' )
+				->id( 'customer-subscription-edit' )
+				->with(
+					[
+						'heading'      => __( 'Current Plan', 'surecart' ),
+						'showCancel'   => false,
+						'subscription' => $subscription,
+					]
+				)->render()
+			);
+		?>
+
+		<?php
+		echo wp_kses_post(
+			Component::tag( 'sc-subscription-payment-method' )
+			->id( 'customer-subscription-payment-method' )
+			->with(
+				[
+					'heading'      => __( 'Change Payment Method', 'surecart' ),
+					'subscription' => $subscription,
+				]
+			)->render()
+		);
+		?>
+
+		</sc-spacing>
+
+		<?php
+		return ob_get_clean();
+	}
+
 
 	/**
 	 * Get the terms text.

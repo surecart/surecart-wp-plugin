@@ -52,7 +52,16 @@ class CheckoutsController extends RestController {
 		}
 
 		// edit the checkout.
-		return parent::edit( $request );
+		$response = parent::edit( $request );
+
+		// check if the email exists and set on record.
+		if ( apply_filters( 'surecart/checkout/finduser', true ) ) {
+			if ( ! empty( $response->email ) ) {
+				$response->email_exists = (bool) email_exists( $response->email );
+			}
+		}
+
+		return $response;
 	}
 
 	/**
@@ -123,6 +132,41 @@ class CheckoutsController extends RestController {
 	}
 
 	/**
+	 * Manually pay an order.
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \SureCart\Models\Checkout|\WP_Error
+	 */
+	public function manuallyPay( \WP_REST_Request $request ) {
+		$checkout = $this->middleware( new $this->class( $request['id'] ), $request );
+		if ( is_wp_error( $checkout ) ) {
+			return $checkout;
+		}
+
+		if ( ! empty( $this->with ) ) {
+			$checkout = $checkout->with( $this->with );
+		}
+
+		$paid = $checkout->where( $request->get_query_params() )->with(
+			[
+				'purchases', // Important: we need to make sure we expand the purchase to provide access.
+			]
+		)->manuallyPay();
+
+		// purchase created.
+		if ( ! empty( $paid->purchases->data ) ) {
+			foreach ( $paid->purchases->data as $purchase ) {
+				if ( empty( $purchase->revoked ) ) {
+					// broadcast the webhook.
+					do_action( 'surecart/purchase_created', $purchase );
+				}
+			}
+		}
+		return $paid;
+	}
+
+	/**
 	 * Finalize an order.
 	 *
 	 * @param \WP_REST_Request $request Rest Request.
@@ -142,8 +186,7 @@ class CheckoutsController extends RestController {
 
 		// finalize the order.
 		$checkout  = new $this->class( [ 'id' => $request['id'] ] );
-		$finalized = $checkout->setProcessor( $request['processor_type'] )
-			->where( $request->get_query_params() )
+		$finalized = $checkout->where( $request->get_query_params() )
 			->finalize( $request->get_body_params() );
 
 		// bail if error.
@@ -179,6 +222,7 @@ class CheckoutsController extends RestController {
 		)->with(
 			[
 				'purchases', // Important: we need to make sure we expand the purchase to provide access.
+				'customer', // Important: we need to use this to create the WP User with the same info.
 			]
 		)->find( $request['id'] );
 
@@ -244,10 +288,10 @@ class CheckoutsController extends RestController {
 
 		// Check if honeypot checkbox checked or not.
 		$metadata = $request->get_param( 'metadata' );
-		if ( $metadata && ! empty($metadata['get_feedback'] ) ) {
-			$errors->add( 'invalid', __('Invalid request. Please try again.', 'surecart') );  
-    }
-    
+		if ( $metadata && ! empty( $metadata['get_feedback'] ) ) {
+			$errors->add( 'invalid', __( 'Invalid request. Please try again.', 'surecart' ) );
+		}
+
 		// check recaptcha.
 		$service = new RecaptchaValidationService();
 		if ( $service->isEnabled() ) {

@@ -102,10 +102,9 @@ class SubscriptionsListTable extends ListTable {
 			'customer'           => __( 'Customer', 'surecart' ),
 			'status'             => __( 'Status', 'surecart' ),
 			'plan'               => __( 'Plan', 'surecart' ),
+			'remaining_payments' => __( 'Remaining Payments', 'surecart' ),
 			'product'            => __( 'Product', 'surecart' ),
 			'integrations'       => __( 'Integrations', 'surecart' ),
-			'remaining_payments' => __( 'Remaining Payments', 'surecart' ),
-			'type'               => __( 'Type', 'surecart' ),
 			'created'            => __( 'Created', 'surecart' ),
 			'mode'               => '',
 		];
@@ -200,18 +199,13 @@ class SubscriptionsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_remaining_payments( $subscription ) {
-		if ( null === $subscription->remaining_period_count ) {
-			if ( 'completed' === $subscription->status ) {
-				return '-';
-			} else {
-				return '&infin;';
-			}
-		}
-		if ( 0 === $subscription->remaining_period_count ) {
-			return __( 'None', 'surecart' );
+		// handle non-finite subscriptions.
+		if ( ! $subscription->finite ) {
+			return 'completed' === $subscription->status ? '-' : '&infin;';
 		}
 
-		return (int) $subscription->remaining_period_count;
+		// handle payment plans.
+		return 0 === $subscription->remaining_period_count ? __( 'None', 'surecart' ) : (int) $subscription->remaining_period_count;
 	}
 
 	/**
@@ -221,12 +215,12 @@ class SubscriptionsListTable extends ListTable {
 	 *
 	 * @return string
 	 */
-	public function column_type( $subscription ) {
-		if ( null === $subscription->remaining_period_count ) {
-			return '<sc-tag type="success">' . __( 'Subscription', 'surecart' ) . '</sc-tag>';
-		}
-		return '<sc-tag type="info">' . __( 'Payment Plan', 'surecart' ) . '</sc-tag>';
-	}
+	// public function column_type( $subscription ) {
+	// if ( null === $subscription->remaining_period_count ) {
+	// return '<sc-tag type="success">' . __( 'Subscription', 'surecart' ) . '</sc-tag>';
+	// }
+	// return '<sc-tag type="info">' . __( 'Payment Plan', 'surecart' ) . '</sc-tag>';
+	// }
 
 	/**
 	 * Handle the total column
@@ -236,7 +230,7 @@ class SubscriptionsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_plan( $subscription ) {
-		$amount       = $subscription->price->amount ?? 0;
+		$amount       = $subscription->price->ad_hoc_amount ?? $subscription->price->amount ?? 0;
 		$interval     = $subscription->price->recurring_interval ?? '';
 		$count        = $subscription->price->recurring_interval_count ?? 1;
 		$period_count = $subscription->price->recurring_period_count ?? null;

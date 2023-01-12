@@ -1,19 +1,15 @@
-const { __ } = wp.i18n;
-
-export const convertAmount = (amount, currency) => {
-	return ['bif', 'clp', 'djf', 'gnf', 'jpy', 'kmf', 'krw'].includes(currency)
-		? amount
-		: amount / 100;
-};
+import { __ } from '@wordpress/i18n';
 
 export const maybeConvertAmount = (amount, currency) => {
-	return ['BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW'].includes(currency)
+	return ['BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW', 'XAF'].includes(
+		currency.toUpperCase()
+	)
 		? amount
 		: amount / 100;
 };
 
 export const getFormattedPrice = ({ amount, currency = 'usd' }) => {
-	const converted = convertAmount(parseFloat(amount), currency);
+	const converted = maybeConvertAmount(parseFloat(amount), currency);
 
 	return `${new Intl.NumberFormat(undefined, {
 		style: 'currency',

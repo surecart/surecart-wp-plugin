@@ -106,9 +106,10 @@ export class ScOrderBump {
         <div part="base-content" class="bump">
           <div class="bump__text">
             <div class="bump__title">{this.bump?.metadata?.cta || this.bump?.name || product?.name}</div>
-            {this.renderPrice()}
+            <div class="bump__amount">
+              {this.renderPrice()} {this.renderDiscount()}
+            </div>
           </div>
-          {this.renderDiscount()}
         </div>
 
         {this.bump?.metadata?.description && (

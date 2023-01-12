@@ -1,14 +1,12 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import {
-	ScAlert,
 	ScBlockUi,
 	ScButton,
 	ScChoice,
 	ScChoices,
 	ScDialog,
 	ScForm,
-	ScFormatDate,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import apiFetch from '@wordpress/api-fetch';
@@ -18,24 +16,7 @@ import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
-
-const expand = [
-	'current_period',
-	'period.checkout',
-	'checkout.line_items',
-	'line_item.price',
-	'price',
-	'price.product',
-	'customer',
-	'customer.balances',
-	'purchase',
-	'order',
-	'payment_method',
-	'payment_method.card',
-	'payment_method.payment_instrument',
-	'payment_method.paypal_account',
-	'payment_method.bank_account',
-];
+import Error from '../../../../components/Error';
 
 export default ({ subscription, open, onRequestClose }) => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
@@ -43,7 +24,7 @@ export default ({ subscription, open, onRequestClose }) => {
 	const [error, setError] = useState(false);
 	const [checked, setChecked] = useState('immediate');
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { receiveEntityRecords } = useDispatch(coreStore);
+	const { invalidateResolutionForStore } = useDispatch(coreStore);
 
 	const onSubmit = async (e) => {
 		const { cancel_behavior } = await e.target.getFormJson();
@@ -51,22 +32,19 @@ export default ({ subscription, open, onRequestClose }) => {
 			setLoading(true);
 			setError(null);
 
-			const subscription = await apiFetch({
+			await apiFetch({
 				method: 'PATCH',
 				path: addQueryArgs(`surecart/v1/subscriptions/${id}/cancel`, {
-					expand,
 					cancel_behavior,
 				}),
 			});
 
-			receiveEntityRecords('surecart', 'subscription', subscription, {
-				expand,
-			});
+			await invalidateResolutionForStore();
 
 			createSuccessNotice(
 				cancel_behavior === 'immediate'
 					? __('Subscription canceled.', 'surecart')
-					: __('Subscription scheduled for cancelation', 'surecart'),
+					: __('Subscription scheduled for cancelation.', 'surecart'),
 				{
 					type: 'snackbar',
 				}
@@ -74,7 +52,7 @@ export default ({ subscription, open, onRequestClose }) => {
 			onRequestClose();
 		} catch (e) {
 			console.error(e);
-			setError(e?.message);
+			setError(e);
 		} finally {
 			setLoading(false);
 		}
@@ -92,9 +70,7 @@ export default ({ subscription, open, onRequestClose }) => {
 				open={open}
 				onScRequestClose={onRequestClose}
 			>
-				<ScAlert open={error} type="error">
-					{error}
-				</ScAlert>
+				<Error error={error} setError={setError} />
 				<ScChoices
 					label={__(
 						'When do you want to cancel the subscription?',

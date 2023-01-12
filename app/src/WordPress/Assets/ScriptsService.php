@@ -2,6 +2,9 @@
 
 namespace SureCart\WordPress\Assets;
 
+use SureCart\Models\ManualPaymentMethod;
+use SureCart\Models\Processor;
+
 /**
  * Handles the component theme.
  */
@@ -154,6 +157,11 @@ class ScriptsService {
 
 		// regsiter recaptcha.
 		wp_register_script( 'surecart-google-recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . \SureCart::settings()->recaptcha()->getSiteKey(), [], \SureCart::plugin()->version(), true );
+
+		// register stripe if enabled.
+		if ( get_option( 'surecart_load_stripe_js', false ) ) {
+			wp_enqueue_script( 'surecart-stripe-script', 'https://js.stripe.com/v3', [], \SureCart::plugin()->version(), false );
+		}
 	}
 
 	/**
@@ -245,15 +253,17 @@ class ScriptsService {
 			'surecart-blocks',
 			'scBlockData',
 			[
-				'processors'   => (array) \SureCart::account()->processors ?? [],
-				'plugin_url'   => \SureCart::core()->assets()->getUrl(),
-				'currency'     => \SureCart::account()->currency,
-				'theme'        => get_option( 'surecart_theme', 'light' ),
-				'entitlements' => \SureCart::account()->entitlements,
-				'beta'         => [
+				'processors'           => (array) Processor::get() ?? [],
+				'manualPaymentMethods' => (array) ManualPaymentMethod::get() ?? [],
+				'plugin_url'           => \SureCart::core()->assets()->getUrl(),
+				'currency'             => \SureCart::account()->currency,
+				'theme'                => get_option( 'surecart_theme', 'light' ),
+				'entitlements'         => \SureCart::account()->entitlements,
+				'upgrade_url'          => \SureCart::config()->links->purchase,
+				'beta'                 => [
 					'stripe_payment_element' => (bool) get_option( 'sc_stripe_payment_element', false ),
 				],
-				'pages'        => [
+				'pages'                => [
 					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 					'checkout'  => \SureCart::pages()->url( 'checkout' ),
 				],

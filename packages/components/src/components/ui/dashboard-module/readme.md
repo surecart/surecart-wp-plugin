@@ -16,10 +16,18 @@
 
 ## Shadow Parts
 
-| Part                    | Description |
-| ----------------------- | ----------- |
-| `"heading-description"` |             |
-| `"heading-title"`       |             |
+| Part                    | Description                |
+| ----------------------- | -------------------------- |
+| `"base"`                | The elements base wrapper. |
+| `"error__ message"`     | The alert message.         |
+| `"error__base"`         | The alert base wrapper.    |
+| `"error__icon"`         | The alert icon.            |
+| `"error__text"`         | The alert text.            |
+| `"error__title"`        | The alert title.           |
+| `"heading"`             | The heading.               |
+| `"heading-description"` | The heading description.   |
+| `"heading-text"`        | The heading text wrapper.  |
+| `"heading-title"`       | The heading title.         |
 
 
 ## Dependencies
@@ -42,6 +50,7 @@
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
@@ -75,6 +84,7 @@ graph TD;
   sc-subscription-ad-hoc-confirm --> sc-dashboard-module
   sc-subscription-cancel --> sc-dashboard-module
   sc-subscription-payment --> sc-dashboard-module
+  sc-subscription-payment-method --> sc-dashboard-module
   sc-subscription-renew --> sc-dashboard-module
   sc-subscription-switch --> sc-dashboard-module
   sc-subscriptions-list --> sc-dashboard-module

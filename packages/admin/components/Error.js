@@ -19,7 +19,7 @@ export default ({
 			closable
 			scrollOnOpen={scrollOnOpen}
 			scrollMargin={margin}
-			onScHide={() => setError(null)}
+			onScHide={() => !!setError && setError(null)}
 		>
 			<span slot="title">
 				{error?.message || __('Something went wrong.', 'surecart')}

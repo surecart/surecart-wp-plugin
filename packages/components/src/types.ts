@@ -8,6 +8,7 @@ declare global {
       blocks: any;
       i18n: any;
     };
+    scStore: any;
     registerSureCartIconPath: (path: string) => void;
     registerSureCartIconLibrary: (name: string, options: { resolver: IconLibraryResolver; mutator?: IconLibraryMutator }) => void;
     scIcons: { path: string };
@@ -159,6 +160,7 @@ export interface Activation {
   id: string;
   object: 'activation';
   name: string;
+  counted: boolean;
   fingerprint: string;
   license: string | License;
   created_at: number;
@@ -176,6 +178,7 @@ export interface Product extends Object {
   recurring: boolean;
   tax_category: string;
   tax_enabled: boolean;
+  purchase_limit: number;
   prices: {
     object: 'list';
     pagination: Pagination;
@@ -233,6 +236,8 @@ export interface LineItem extends Object {
   discount_amount: number;
   subtotal_amount: number;
   total_amount: number;
+  scratch_amount: number;
+  total_savings_amount: number;
   created_at: number;
   updated_at: number;
   price?: Price;
@@ -369,6 +374,8 @@ export interface Checkout extends Object {
   };
   bump_amount: number;
   payment_method_required?: boolean;
+  manual_payment: boolean;
+  manual_payment_method?: string | ManualPaymentMethod;
   reusable_payment_method_required?: boolean;
   number?: string;
   amount_due?: number;
@@ -380,7 +387,9 @@ export interface Checkout extends Object {
   currency?: string;
   total_amount?: number;
   subtotal_amount?: number;
+  full_amount?: number;
   proration_amount?: number;
+  total_savings_amount?: number;
   applied_balance_amount?: number;
   discounts?: number;
   tax_amount: number;
@@ -395,7 +404,7 @@ export interface Checkout extends Object {
     pagination: Pagination;
     data: Array<Bump>;
   };
-  metadata?: Object;
+  metadata?: any;
   payment_intent?: PaymentIntent;
   payment_method?: PaymentMethod;
   order?: string | Order;
@@ -438,6 +447,18 @@ export interface ProcessorData {
   };
 }
 
+export interface ManualPaymentMethod {
+  id: string;
+  object: 'manual_payment_method';
+  archived: boolean;
+  archived_at: number;
+  description: string;
+  instructions: string;
+  name: string;
+  created_at: number;
+  updated_at: number;
+}
+
 export interface Processor {
   live_mode: boolean;
   processor_data: {
@@ -465,6 +486,7 @@ export interface Purchase {
   product: string | Product;
   refund: string | Refund;
   subscription: string | Subscription;
+  license: string | License;
   created_at: number;
   updated_at: number;
 }
@@ -498,11 +520,13 @@ export interface Subscription extends Object {
   order: Order;
   customer: Customer;
   discount: DiscountResponse;
+  finite: boolean;
   pending_update: {
     ad_hoc_amount?: number;
     price?: string;
     quantity?: number;
   };
+  purchase: Purchase | string;
   cancel_at_period_end: number | false;
   current_period: string | Period;
   current_period_end_at: number | false;
@@ -531,7 +555,7 @@ export interface SubscriptionProtocol {
 export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid' | 'completed';
 
 export type CheckoutStatus = 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'requires_approval';
-export type OrderStatus = 'paid' | 'payment_failed' | 'processing';
+export type OrderStatus = 'paid' | 'payment_failed' | 'processing' | 'void';
 
 export interface PaymentMethod extends Object {
   id: string;
@@ -634,6 +658,16 @@ export interface ResponseError {
 
 export type ProcessorName = 'stripe' | 'paypal' | 'paypal-card';
 
+export interface VerificationCode {
+  id: string;
+  object: 'verification_code';
+  code: number;
+  verified: boolean;
+  verified_at: number | null;
+  created_at: number;
+  updated_at: number;
+}
+
 export interface PaymentIntent extends Object {
   id: string;
   object: 'payment_intent';
@@ -678,6 +712,8 @@ export interface Customer extends Object {
   id: string;
   email: string;
   name?: string;
+  first_name?: string;
+  last_name?: string;
   phone?: string;
   billing_address?: string | Address;
   shipping_address?: string | Address;

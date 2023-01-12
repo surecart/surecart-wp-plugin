@@ -59,7 +59,7 @@ class PageServiceTest extends SureCartUnitTestCase {
 		// checkout page.
 		$created = $this->service->findOrCreate( 'test_slug', 'checkout', 'test_title', 'test_content');
 		$post = $created;
-		$this->assertSame($this->service->displayDefaultPageStatuses([]), ['Checkout Page']);
+		$this->assertSame($this->service->displayDefaultPageStatuses([]), ['Store Checkout']);
 
 		// dashboard.
 		$created = $this->service->findOrCreate( 'test_slug', 'dashboard', 'test_title', 'test_content');

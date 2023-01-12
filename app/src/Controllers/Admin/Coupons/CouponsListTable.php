@@ -191,7 +191,7 @@ class CouponsListTable extends ListTable {
 		}
 		if ( ! empty( $coupon->percent_off ) ) {
 			// translators: Coupon % off.
-			return esc_html( sprintf( __( '%d off', 'surecart' ), $coupon->percent_off ) );
+			return esc_html( sprintf( __( '%d%% off', 'surecart' ), $coupon->percent_off ) );
 		}
 
 		if ( ! empty( $coupon->amount_off ) ) {
@@ -279,7 +279,8 @@ class CouponsListTable extends ListTable {
 		}
 		$and = '';
 		if ( $coupon->promotions->pagination->count > 1 ) {
-			$and = sprintf( __( '+ %d more', 'surecart' ), number_format_i18n( $coupon->promotions->pagination->count ) );
+			$coupon_count = $coupon->promotions->pagination->count - 1;
+			$and = sprintf( __( '+ %d more', 'surecart' ), number_format_i18n( $coupon_count ) );
 		}
 		return '<code>' . sanitize_text_field( $coupon->promotions->data[0]->code ) . '</code> ' . $and;
 	}

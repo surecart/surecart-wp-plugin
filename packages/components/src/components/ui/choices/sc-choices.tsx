@@ -1,7 +1,14 @@
-import { Component, Prop, h, State, Element, Watch } from '@stencil/core';
+import { Component, Prop, h, State, Element, Watch, Method } from '@stencil/core';
 
 let id = 0;
 
+/**
+ * @part base - The elements base wrapper.
+ * @part choices - The choices wrapper.
+ * @part form-control - The form control wrapper.
+ * @part label - The input label.
+ * @part help-text - Help text that describes how to use the input.
+ */
 @Component({
   tag: 'sc-choices',
   styleUrl: 'sc-choices.scss',
@@ -41,6 +48,11 @@ export class ScChoices {
   @Prop() errorMessage: string = '';
 
   @State() width: number;
+
+  @Method()
+  async triggerFocus() {
+    this.el.focus();
+  }
 
   componentDidLoad() {
     this.handleRequiredChange();
@@ -85,6 +97,7 @@ export class ScChoices {
         role="radiogroup"
       >
         <sc-form-control
+          exportparts="label, help-text, form-control"
           size={this.size}
           required={this.required}
           label={this.label}

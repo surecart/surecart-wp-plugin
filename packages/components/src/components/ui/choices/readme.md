@@ -20,12 +20,28 @@
 | `size`         | `size`          | Input size                                                                                              | `"large" \| "medium" \| "small"` | `'medium'`  |
 
 
+## Methods
+
+### `triggerFocus() => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+
 ## Shadow Parts
 
-| Part        | Description |
-| ----------- | ----------- |
-| `"base"`    |             |
-| `"choices"` |             |
+| Part             | Description                                    |
+| ---------------- | ---------------------------------------------- |
+| `"base"`         | The elements base wrapper.                     |
+| `"choices"`      | The choices wrapper.                           |
+| `"form-control"` | The form control wrapper.                      |
+| `"help-text"`    | Help text that describes how to use the input. |
+| `"label"`        | The input label.                               |
 
 
 ## Dependencies
@@ -35,6 +51,7 @@
  - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
  - [sc-price-choices](../../controllers/checkout-form/price-choices)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
 
 ### Depends on
@@ -49,6 +66,7 @@ graph TD;
   sc-donation-choices --> sc-choices
   sc-price-choices --> sc-choices
   sc-subscription-payment --> sc-choices
+  sc-subscription-payment-method --> sc-choices
   sc-subscription-switch --> sc-choices
   style sc-choices fill:#f9f,stroke:#333,stroke-width:4px
 ```

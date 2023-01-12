@@ -1,5 +1,13 @@
 import { Component, Prop, Method, State, Event, EventEmitter, Watch, h, Element, Host } from '@stencil/core';
 
+/**
+ * @part base - The elements base wrapper.
+ * @part icon - The alert icon.
+ * @part text - The alert text.
+ * @part title - The alert title.
+ * @part message - The alert message.
+ * @part close - The close icon.
+ */
 @Component({
   tag: 'sc-alert',
   styleUrl: 'sc-alert.scss',
@@ -28,6 +36,9 @@ export class ScAlert {
 
   /** Scroll margin */
   @Prop() scrollMargin: string = '0px';
+
+  /** No icon */
+  @Prop() noIcon: boolean;
 
   @State() autoHideTimeout: any;
 
@@ -132,7 +143,7 @@ export class ScAlert {
             </div>
           </div>
           {this.closable && (
-            <span class="alert__close" part="close-icon" onClick={() => this.handleCloseClick()}>
+            <span part="close" class="alert__close" onClick={() => this.handleCloseClick()}>
               <span class="sr-only">Dismiss</span>
               <svg class="h-5 w-5" x-description="Heroicon name: solid/x" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path

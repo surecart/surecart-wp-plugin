@@ -1,6 +1,6 @@
 import { Component, Element, h, Prop, State } from '@stencil/core';
 import { sprintf, __ } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
+import { addQueryArgs, getQueryArg } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
 import { Subscription } from '../../../../types';
 import { onFirstVisible } from '../../../../functions/lazy';
@@ -41,7 +41,9 @@ export class ScSubscription {
     try {
       this.busy = true;
       this.subscription = (await apiFetch({
-        path: addQueryArgs(`surecart/v1/subscriptions/${this.subscription?.id}/`, { expand: ['price', 'price.product', 'current_period', 'period.checkout'] }),
+        path: addQueryArgs(`surecart/v1/subscriptions/${this.subscription?.id}/`, {
+          expand: ['price', 'price.product', 'current_period', 'period.checkout', 'purchase', 'purchase.license', 'license.activations'],
+        }),
         method: 'PATCH',
         data: {
           purge_pending_update: true,
@@ -156,6 +158,17 @@ export class ScSubscription {
       <sc-dashboard-module heading={this.heading || __('Current Plan', 'surecart')} class="subscription" error={this.error}>
         {!!this.subscription && (
           <sc-flex slot="end">
+            {getQueryArg(window.location.href, 'action') !== 'update_payment_method' && (
+              <sc-button
+                type="link"
+                href={addQueryArgs(window.location.href, {
+                  action: 'update_payment_method',
+                })}
+              >
+                <sc-icon name="credit-card" slot="prefix"></sc-icon>
+                {__('Update Payment Method', 'surecart')}
+              </sc-button>
+            )}
             {!!Object.keys(this.subscription?.pending_update).length && (
               <sc-button type="link" onClick={() => this.cancelPendingUpdate()}>
                 <sc-icon name="x-octagon" slot="prefix"></sc-icon>

@@ -15,7 +15,8 @@ import { useDispatch, useSelect } from '@wordpress/data';
 
 export default ({ product }) => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { saveEntityRecord } = useDispatch(coreStore);
+	const { saveEntityRecord, invalidateResolutionForStore } =
+		useDispatch(coreStore);
 	const savingProduct = useSelect((select) =>
 		select(coreStore).isSavingEntityRecord(
 			'surecart',
@@ -29,6 +30,7 @@ export default ({ product }) => {
 			id: product?.id,
 			product_group: null,
 		});
+		await invalidateResolutionForStore();
 		createSuccessNotice(__('Product removed.', 'surecart'), {
 			type: 'snackbar',
 		});
@@ -46,23 +48,24 @@ export default ({ product }) => {
 						{product?.name}
 					</ScText>
 					{(product?.prices?.data || []).map((price) => {
-						return (
-							<div
-								css={css`
-									opacity: 0.5;
-								`}
-								key={price?.id}
-							>
-								<sc-format-number
-									type="currency"
-									value={price?.amount}
-									currency={price?.currency}
-								/>
-								{intervalString(price, {
-									labels: { interval: '/' },
-								})}
-							</div>
-						);
+						if (price.archived) return null;
+            return (
+              <div
+                css={css`
+                  opacity: 0.5;
+                `}
+                key={price?.id}
+              >
+                <sc-format-number
+                  type="currency"
+                  value={price?.amount}
+                  currency={price?.currency}
+                />
+                {intervalString(price, {
+                  labels: { interval: '/' },
+                })}
+              </div>
+            );
 					})}
 				</div>
 				<div>

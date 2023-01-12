@@ -6,8 +6,9 @@ exports[`sc-form-control renders 1`] = `
     <div class="form-control form-control--medium" part="form-control">
       <label aria-hidden="true" class="form-control__label" part="label">
         <slot name="label"></slot>
+        <slot name="label-end"></slot>
       </label>
-      <div class="form-control__input">
+      <div class="form-control__input" part="input">
         <slot></slot>
       </div>
     </div>

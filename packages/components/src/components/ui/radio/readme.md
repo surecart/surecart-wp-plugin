@@ -11,6 +11,7 @@
 | ---------- | ---------- | --------------------------------------------------------------------------------------------------------- | --------- | ----------- |
 | `checked`  | `checked`  | Draws the radio in a checked state.                                                                       | `boolean` | `false`     |
 | `disabled` | `disabled` | Is the radio disabled                                                                                     | `boolean` | `false`     |
+| `edit`     | `edit`     | This will be true as a workaround in the block editor to focus on the content.                            | `boolean` | `undefined` |
 | `invalid`  | `invalid`  | This will be true when the control is in an invalid state. Validity is determined by the `required` prop. | `boolean` | `false`     |
 | `name`     | `name`     | The radios name attribute                                                                                 | `string`  | `undefined` |
 | `required` | `required` | Is this required                                                                                          | `boolean` | `false`     |
@@ -51,12 +52,12 @@ Type: `Promise<boolean>`
 
 ## Shadow Parts
 
-| Part             | Description |
-| ---------------- | ----------- |
-| `"base"`         |             |
-| `"checked-icon"` |             |
-| `"control"`      |             |
-| `"label"`        |             |
+| Part             | Description                |
+| ---------------- | -------------------------- |
+| `"base"`         | The elements base wrapper. |
+| `"checked-icon"` | Checked icon.              |
+| `"control"`      | The control wrapper.       |
+| `"label"`        | The label.                 |
 
 
 ----------------------------------------------

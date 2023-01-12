@@ -25,7 +25,10 @@ export default ({ id }) => {
 			);
 			const products = (
 				select(coreStore).getEntityRecords(...queryArgs) || []
-			).filter((p) => p.product_group === id);
+			).filter(
+				(value, index, self) =>
+					self.findIndex((v) => v.id === value.id) === index
+			);
 			return {
 				products,
 				loading: loading && !products?.length,

@@ -17,12 +17,20 @@ class Block extends BaseBlock {
 	 */
 	public function render( $attributes, $content = '' ) {
 
+		$styles = '';
+		if ( ! empty( $attributes['backgroundColor'] ) ) {
+			$styles .= '--primary-background: ' . $attributes['backgroundColor'] . '; ';
+		}
+		if ( ! empty( $attributes['textColor'] ) ) {
+			$styles .= '--primary-color: ' . $attributes['textColor'] . '; ';
+		}
+
 		return \SureCart::blocks()->render(
 			'blocks/buy-button',
 			[
 				'type'  => $attributes['type'] ?? 'primary',
 				'size'  => $attributes['size'] ?? 'medium',
-				'style' => '',
+				'style' => $styles,
 				'href'  => $this->href( $attributes['line_items'] ?? [] ),
 				'label' => $attributes['label'] ?? __( 'Buy Now', 'surecart' ),
 			]

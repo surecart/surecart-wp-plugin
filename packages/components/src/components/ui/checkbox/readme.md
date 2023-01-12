@@ -11,11 +11,11 @@
 | --------------- | --------------- | --------------------------------------------------------------------------------------------------------- | --------- | ----------- |
 | `checked`       | `checked`       | Draws the checkbox in a checked state.                                                                    | `boolean` | `false`     |
 | `disabled`      | `disabled`      | Disables the checkbox.                                                                                    | `boolean` | `false`     |
+| `edit`          | `edit`          | Makes this edit and not editable.                                                                         | `boolean` | `false`     |
 | `indeterminate` | `indeterminate` | Draws the checkbox in an indeterminate state.                                                             | `boolean` | `false`     |
 | `invalid`       | `invalid`       | This will be true when the control is in an invalid state. Validity is determined by the `required` prop. | `boolean` | `false`     |
 | `name`          | `name`          | The checkbox's name attribute.                                                                            | `string`  | `undefined` |
 | `required`      | `required`      | Makes the checkbox a required field.                                                                      | `boolean` | `false`     |
-| `static`        | `static`        | Makes this static and not editable.                                                                       | `boolean` | `false`     |
 | `value`         | `value`         | The checkbox's value attribute.                                                                           | `string`  | `undefined` |
 
 
@@ -73,13 +73,13 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part                   | Description |
-| ---------------------- | ----------- |
-| `"base"`               |             |
-| `"checked-icon"`       |             |
-| `"control"`            |             |
-| `"indeterminate-icon"` |             |
-| `"label"`              |             |
+| Part                   | Description                |
+| ---------------------- | -------------------------- |
+| `"base"`               | The elements base wrapper. |
+| `"checked-icon"`       | Checked icon.              |
+| `"control"`            | The control wrapper.       |
+| `"indeterminate-icon"` | Indeterminate icon.        |
+| `"label"`              | The label.                 |
 
 
 ----------------------------------------------

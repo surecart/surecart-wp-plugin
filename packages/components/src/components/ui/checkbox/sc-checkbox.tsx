@@ -3,6 +3,13 @@ import { FormSubmitController } from '../../../functions/form-data';
 
 let id = 0;
 
+/**
+ * @part base - The elements base wrapper.
+ * @part control - The control wrapper.
+ * @part checked-icon - Checked icon.
+ * @part indeterminate-icon - Indeterminate icon.
+ * @part label - The label.
+ */
 @Component({
   tag: 'sc-checkbox',
   styleUrl: 'sc-checkbox.scss',
@@ -26,8 +33,8 @@ export class ScCheckbox {
   /** Disables the checkbox. */
   @Prop({ reflect: true }) disabled: boolean = false;
 
-  /** Makes this static and not editable. */
-  @Prop({ reflect: true }) static: boolean = false;
+  /** Makes this edit and not editable. */
+  @Prop({ reflect: true }) edit: boolean = false;
 
   /** Makes the checkbox a required field. */
   @Prop({ reflect: true }) required: boolean = false;
@@ -125,7 +132,7 @@ export class ScCheckbox {
   }
 
   render() {
-    const Tag = this.static ? 'div' : 'label';
+    const Tag = this.edit ? 'div' : 'label';
     return (
       <Tag
         part="base"

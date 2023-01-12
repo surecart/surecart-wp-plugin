@@ -28,6 +28,7 @@
 - [sc-spacing](../../../ui/spacing)
 - [sc-dashboard-module](../../../ui/dashboard-module)
 - [sc-tag](../../../ui/tag)
+- [sc-order-manual-instructions](../../confirmation/manual-instructions)
 - [sc-card](../../../ui/card)
 - [sc-stacked-list](../../../ui/stacked-list)
 - [sc-stacked-list-row](../../../ui/stacked-list-row)
@@ -51,6 +52,7 @@ graph TD;
   sc-order --> sc-spacing
   sc-order --> sc-dashboard-module
   sc-order --> sc-tag
+  sc-order --> sc-order-manual-instructions
   sc-order --> sc-card
   sc-order --> sc-stacked-list
   sc-order --> sc-stacked-list-row
@@ -67,13 +69,16 @@ graph TD;
   sc-quantity-select --> sc-icon
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon
+  sc-order-manual-instructions --> sc-alert
   sc-order-status-badge --> sc-tag
+  sc-payment-method --> sc-tooltip
+  sc-payment-method --> sc-button
+  sc-payment-method --> sc-icon
   sc-payment-method --> sc-tag
   sc-payment-method --> sc-cc-logo
-  sc-payment-method --> sc-icon
   sc-payment-method --> sc-text
-  sc-cc-logo --> sc-icon
   sc-button --> sc-spinner
+  sc-cc-logo --> sc-icon
   sc-purchase-downloads-list --> sc-divider
   sc-purchase-downloads-list --> sc-empty
   sc-purchase-downloads-list --> sc-card

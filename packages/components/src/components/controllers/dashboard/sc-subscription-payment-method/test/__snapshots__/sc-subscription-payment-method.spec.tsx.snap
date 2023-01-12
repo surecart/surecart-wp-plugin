@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-subscription-payment-method renders 1`] = `
+<sc-subscription-payment-method>
+  <mock:shadow-root>
+    <sc-dashboard-module class="subscription" heading="Update Payment Method">
+      <slot name="empty">
+        <sc-card>
+          <sc-empty icon="credit-card">
+            You do not have any payment methods.
+          </sc-empty>
+        </sc-card>
+      </slot>
+    </sc-dashboard-module>
+  </mock:shadow-root>
+</sc-subscription-payment-method>
+`;
