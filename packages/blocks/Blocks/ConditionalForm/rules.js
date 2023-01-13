@@ -8,7 +8,7 @@ import Conditions from './conditions';
 const Rules = ({ attributes, setAttributes, closeModal }) => {
 	const { rule_groups } = attributes;
 
-	const getInitialGroups = function () {
+	const getInitialGroups = () => {
 		let defaultData = [
 			{
 				group_id: Math.random().toString(36).substring(2, 5),
@@ -39,21 +39,21 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 	console.log('draftRuleGroups');
 	console.log(draftRuleGroups);
 
-	const updateRuleGroupData = function (data) {
+	const updateRuleGroupData = (data) => {
 		setDraftRuleGroups([...data]);
 	};
-	const addConditionToRuleGroup = function (groupIndex, newCondition) {
+
+	const addConditionToRuleGroup = (groupIndex, newCondition) => {
 		if (draftRuleGroups[groupIndex]?.rules) {
 			draftRuleGroups[groupIndex].rules.push(newCondition);
-
 			setDraftRuleGroups([...draftRuleGroups]);
 		}
 	};
 
-	const removeConditionFromRuleGroup = function (groupIndex, conditionIndex) {
+	const removeConditionFromRuleGroup = (groupIndex, conditionIndex) => {
 		const newGroupData = draftRuleGroups.filter((group, i) => {
 			if (i === groupIndex) {
-				group.rules = group.rules.filter((rule, j) => {
+				group.rules = group.rules.filter((_, j) => {
 					if (j === conditionIndex) {
 						return false;
 					}
@@ -70,11 +70,11 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 		setDraftRuleGroups([...newGroupData]);
 	};
 
-	const updateConditionInRuleGroup = function (
+	const updateConditionInRuleGroup = (
 		groupIndex,
 		conditionIndex,
 		currentValue
-	) {
+	) => {
 		let savedRule = draftRuleGroups[groupIndex]['rules'][conditionIndex];
 
 		savedRule.condition = currentValue;
@@ -90,12 +90,12 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 		setDraftRuleGroups([...draftRuleGroups]);
 	};
 
-	const updateConditionOptionInRuleGroup = function (
+	const updateConditionOptionInRuleGroup = (
 		groupIndex,
 		conditionIndex,
 		currentValue,
 		optionName
-	) {
+	) => {
 		draftRuleGroups[groupIndex]['rules'][conditionIndex][optionName] =
 			currentValue;
 
