@@ -169,7 +169,6 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 									`}
 								>
 									<div className="sc-rules--group_header__left">
-										<span className="sc-rules__handle dashicons dashicons-menu"></span>
 										{sprintf(
 											__('Rule Group - %s', 'surecart'),
 											groupIndex + 1
