@@ -30,11 +30,13 @@ class PageService {
 		$default_checkout = \SureCart::pages()->getID('checkout');
 		$default_form     = \SureCart::forms()->getDefault()->ID;
 		$post_id          = $post->ID;
-		$message 		  = $post_id === $default_form ? __( 'Sorry, you are not allowed to delete this default checkout form.', 'surecart' ) : __( 'Sorry, you are not allowed to delete this default checkout page.', 'surecart' );
 
 		if ( in_array( $post_id, [ $default_checkout, $default_form ], true ) ) {
+			$message = $post_id === $default_form ? __( 'Sorry, you are not allowed to delete this default checkout form.', 'surecart' ) : __( 'Sorry, you are not allowed to delete this default checkout page.', 'surecart' );
 			wp_die( $message );
 		}
+
+		return $delete;
 	}
 
 	/**
