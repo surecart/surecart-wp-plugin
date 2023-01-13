@@ -11,6 +11,13 @@ use SureCartBlocks\Util\BlockStyleAttributes;
  */
 class Block extends BaseBlock {
 	/**
+	 * Keep track of the instance number of this block.
+	 *
+	 * @var integer
+	 */
+	public static $instance;
+
+	/**
 	 * Render the block
 	 *
 	 * @param array  $attributes Block attributes.
@@ -29,7 +36,7 @@ class Block extends BaseBlock {
 
 		ob_start(); ?>
 
-		<div class="surecart-block <?php echo esc_attr( $classes ); ?> <?php echo esc_attr( $text_align_class ); ?>" style="<?php echo esc_attr( $styles ); ?>">
+		<div id="surecart-product-prices<?php self::$instance++; ?>" class="surecart-block <?php echo esc_attr( $classes ); ?> <?php echo esc_attr( $text_align_class ); ?>" style="<?php echo esc_attr( $styles ); ?>">
 			<sc-format-number type="currency" currency="<?php echo esc_attr( $prices[0]->currency ); ?>" value="<?php echo (int) $prices[0]->amount; ?>"></sc-format-number>
 		</div>
 
