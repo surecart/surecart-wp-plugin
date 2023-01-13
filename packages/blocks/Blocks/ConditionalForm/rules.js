@@ -148,10 +148,8 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 	return (
 		<>
 			<form className="sc-rules-group-form" onSubmit={handleFormSubmit}>
-				{draftRuleGroups.map((group, groupIndex) => {
+				{draftRuleGroups.map(({ group_id, rules }, groupIndex) => {
 					const isActiveGroup = activeRuleGroup === groupIndex;
-					const group_id = group.group_id;
-					const rules = group.rules;
 					return (
 						<div
 							className="sc-rules-page--group_wrapper"
