@@ -112,21 +112,20 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 		addConditionToRuleGroup(groupIndex, newCondition);
 	};
 
-	const addNewGroup = function () {
-		const newGroup = {
-			group_id: Math.random().toString(36).substring(2, 5),
-			rules: [
-				{
-					condition: 'cart_item',
-					operator: 'any',
-					value: '',
-				},
-			],
-		};
-
-		draftRuleGroups.push(newGroup);
-
-		updateRuleGroupData(draftRuleGroups);
+	const addNewGroup = () => {
+		updateRuleGroupData([
+			...draftRuleGroups,
+			{
+				group_id: Math.random().toString(36).substring(2, 5),
+				rules: [
+					{
+						condition: 'cart_item',
+						operator: 'any',
+						value: '',
+					},
+				],
+			},
+		]);
 	};
 
 	const showRules = (groupIndex) =>
