@@ -1,11 +1,12 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, Button, Modal } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import Rules from './rules';
 import translations from './translations';
+import { ScTag } from '@surecart/components-react';
 
 const Settings = ({ attributes, setAttributes }) => {
 	const { rule_groups } = attributes;
@@ -20,17 +21,26 @@ const Settings = ({ attributes, setAttributes }) => {
 		<>
 			<InspectorControls>
 				<PanelBody title={__('Conditions', 'surecart')}>
-					{rule_data
-						.map(({ rules }) => {
-							return (rules || []).map((rule) => {
-								return translations?.[rule?.condition];
-							});
-						})
-						.flat()
-						.join(', ')}
+					<PanelRow
+						css={css`
+							flex-wrap: wrap;
+							justify-content: flex-start;
+						`}
+					>
+						{!rule_data?.length &&
+							__(
+								'Configure different visibility conditions to control when the contents appear to customers.',
+								'surecart'
+							)}
+						{(rule_data || []).map(({ rules }) => {
+							return (rules || []).map((rule) => (
+								<ScTag>{translations?.[rule?.condition]}</ScTag>
+							));
+						})}
+					</PanelRow>
 					<PanelRow>
 						<Button variant="secondary" onClick={openModal}>
-							{__('Configure', 'surecart')}
+							{__('Configure Conditions', 'surecart')}
 						</Button>
 						{isOpen && (
 							<Modal
