@@ -12,6 +12,9 @@ body {
 	width: 100%;
 	z-index: 99;
 }
+.wp-block-columns {
+  min-height: 100vh;
+}
 .wp-block-column > :not(:last-child):not(.is-empty) {
   margin-bottom: var(--sc-form-row-spacing, 0.75em);
   display: block;
