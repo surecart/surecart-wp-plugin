@@ -129,19 +129,12 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 		updateRuleGroupData(draftRuleGroups);
 	};
 
-	const showRules = function (groupIndex) {
-		if (activeRuleGroup !== groupIndex) {
-			setActiveRuleGroup(groupIndex);
-		} else {
-			setActiveRuleGroup(-1);
-		}
-	};
+	const showRules = (groupIndex) =>
+		setActiveRuleGroup(activeRuleGroup !== groupIndex ? groupIndex : -1);
 
 	const handleFormSubmit = function (e) {
 		e.preventDefault();
-
 		setAttributes({ rule_groups: draftRuleGroups });
-
 		closeModal();
 	};
 
