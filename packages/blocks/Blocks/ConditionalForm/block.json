@@ -9,10 +9,10 @@
 		"reusable": false,
 		"html": false,
 		"multiple": true,
-    "align": ["wide", "full"]
+		"align": ["wide", "full"]
 	},
 	"attributes": {
-    "rule_groups": {
+		"rule_groups": {
 			"type": "array",
 			"default": []
 		}

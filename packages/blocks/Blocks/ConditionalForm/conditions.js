@@ -385,7 +385,7 @@ function Conditions(props) {
 
 	return (
 		<Fragment>
-			{rules.map((rule, ruleIndex) => {
+			{rules.map((_, ruleIndex) => {
 				const rule_data = rules[ruleIndex];
 				const rule_field_data =
 					rule_settings_field_data[rule_data.condition];
