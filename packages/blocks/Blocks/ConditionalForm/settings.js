@@ -13,7 +13,7 @@ const Settings = ({ attributes, setAttributes }) => {
 	const openModal = () => setOpen(true);
 	const closeModal = () => setOpen(false);
 
-	let rule_data = rule_groups ? rule_groups : [];
+	let rule_data = rule_groups || [];
 
 	return (
 		<>
@@ -24,7 +24,7 @@ const Settings = ({ attributes, setAttributes }) => {
 					</PanelRow>
 					{rule_data.map((rule) => {
 						return (
-							<PanelRow>
+							<PanelRow key={rule.group_id}>
 								{sprintf(
 									__('Group - %s', 'surecart'),
 									rule.group_id
