@@ -9,50 +9,44 @@ import {
 } from '@wordpress/block-editor';
 import Settings from './settings';
 
-export default ( props ) => {
+export default (props) => {
 	const blockProps = useBlockProps({
-    className: 'sc-coditional-form',
+		className: 'sc-coditional-form',
 		style: {
 			fontSize: '16px',
 			fontFamily: 'var(--sc-font-sans)',
 		},
+		css: css`
+			flex: 1 1 auto;
+			overflow: auto;
+			max-width: 400px;
+			width: 100%;
+			margin: auto;
+			border: var(--sc-drawer-border);
+			box-shadow: 0 1px 2px #0d131e1a;
+
+			.block-list-appender {
+				position: relative;
+			}
+
+			> .wp-block:not(:last-child) {
+				margin: 0 !important;
+			}
+		`,
 	});
 
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
 		? __stableUseInnerBlocksProps
 		: __experimentalUseInnerBlocksProps;
 
-	const innerBlocksProps = useInnerBlocksProps(
-		{
-			css: css`
-				flex: 1 1 auto;
-				overflow: auto;
-				max-width: 400px;
-				width: 100%;
-				margin: auto;
-				border: var(--sc-drawer-border);
-				box-shadow: 0 1px 2px #0d131e1a;
-
-				.block-list-appender {
-					position: relative;
-				}
-
-				> .wp-block:not(:last-child) {
-					margin: 0 !important;
-				}
-			`,
-		},
-		{
-			renderAppender: InnerBlocks.ButtonBlockAppender
-		}
-	);
+	const innerBlocksProps = useInnerBlocksProps(blockProps, {
+		renderAppender: InnerBlocks.ButtonBlockAppender,
+	});
 
 	return (
-    <>
-      <Settings {...props } />
-      <div {...blockProps}>
-        <div {...innerBlocksProps}></div>
-      </div>
-    </>
+		<>
+			<Settings {...props} />
+			<div {...innerBlocksProps}></div>
+		</>
 	);
 };
