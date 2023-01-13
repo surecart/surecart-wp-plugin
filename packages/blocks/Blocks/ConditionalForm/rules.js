@@ -4,6 +4,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { Button } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import Conditions from './conditions';
+import translations from './translations';
 
 const Rules = ({ attributes, setAttributes, closeModal }) => {
 	const { rule_groups } = attributes;
@@ -131,10 +132,18 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 	const showRules = (groupIndex) =>
 		setActiveRuleGroup(activeRuleGroup !== groupIndex ? groupIndex : -1);
 
-	const handleFormSubmit = function (e) {
+	const handleFormSubmit = (e) => {
 		e.preventDefault();
 		setAttributes({ rule_groups: draftRuleGroups });
 		closeModal();
+	};
+
+	const renderRuleTitle = (rules) => {
+		return (rules || [])
+			.map((rule) => {
+				return translations?.[rule?.condition];
+			})
+			.join(', ');
 	};
 
 	return (
@@ -169,10 +178,7 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 									`}
 								>
 									<div className="sc-rules--group_header__left">
-										{sprintf(
-											__('Rule Group - %s', 'surecart'),
-											groupIndex + 1
-										)}
+										{renderRuleTitle(rules)}
 									</div>
 									<div className="sc-rules--group_header">
 										<span className="sc-rules--group_id">

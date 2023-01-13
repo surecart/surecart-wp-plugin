@@ -5,6 +5,7 @@ import { InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, Button, Modal } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import Rules from './rules';
+import translations from './translations';
 
 const Settings = ({ attributes, setAttributes }) => {
 	const { rule_groups } = attributes;
@@ -19,26 +20,21 @@ const Settings = ({ attributes, setAttributes }) => {
 		<>
 			<InspectorControls>
 				<PanelBody title={__('Conditions', 'surecart')}>
-					<PanelRow>
-						<div>{__('Active Groups', 'surecart')}</div>
-					</PanelRow>
-					{rule_data.map((rule) => {
-						return (
-							<PanelRow key={rule.group_id}>
-								{sprintf(
-									__('Group - %s', 'surecart'),
-									rule.group_id
-								)}
-							</PanelRow>
-						);
-					})}
+					{rule_data
+						.map(({ rules }) => {
+							return (rules || []).map((rule) => {
+								return translations?.[rule?.condition];
+							});
+						})
+						.flat()
+						.join(', ')}
 					<PanelRow>
 						<Button variant="secondary" onClick={openModal}>
-							{__('Configure Rules', 'surecart')}
+							{__('Configure', 'surecart')}
 						</Button>
 						{isOpen && (
 							<Modal
-								title={__('Configure Rules', 'surecart')}
+								title={__('Configure Conditions', 'surecart')}
 								onRequestClose={closeModal}
 								css={css`
 									width: 75%;

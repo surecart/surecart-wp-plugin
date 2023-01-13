@@ -13,6 +13,8 @@ import SelectCoupons from './selectCoupons';
 import Select2 from './select2';
 import { countryChoices } from '@surecart/components';
 import { ScPriceInput } from '@surecart/components-react';
+import SelectConditions from './selectConditions';
+import SelectOperator from './selectOperator';
 
 function Conditions(props) {
 	const {
@@ -59,98 +61,9 @@ function Conditions(props) {
 		return processors;
 	};
 
-	const conditions_select = [
-		{ label: __('Product(s)', 'surecart'), value: 'cart_item' },
-		{ label: __('Total', 'surecart'), value: 'cart_total' },
-		{ label: __('Coupon(s)', 'surecart'), value: 'cart_coupons' },
-		{
-			label: __('Payment Processor', 'surecart'),
-			value: 'cart_payment_method',
-		},
-		{
-			label: __('Billing country', 'surecart'),
-			value: 'cart_billing_country',
-		},
-		{
-			label: __('Shipping country', 'surecart'),
-			value: 'cart_shipping_country',
-		},
-	];
-	const stringOperators = [
-		{
-			label: __('matches any of', 'surecart'),
-			value: 'any',
-		},
-		{
-			label: __('matches all of', 'surecart'),
-			value: 'all',
-		},
-		{
-			label: __('matches none of', 'surecart'),
-			value: 'none',
-		},
-	];
-	const mathOperators = [
-		{
-			label: __('is equal to', 'surecart'),
-			value: '==',
-		},
-		{
-			label: __('is not equal to', 'surecart'),
-			value: '!=',
-		},
-		{
-			label: __('is greater than', 'surecart'),
-			value: '>',
-		},
-		{
-			label: __('is less than', 'surecart'),
-			value: '<',
-		},
-		{
-			label: __('is greater or equal to', 'surecart'),
-			value: '>=',
-		},
-		{
-			label: __('is less or equal to', 'surecart'),
-			value: '<=',
-		},
-	];
-	const couponOperators = [
-		{
-			label: __('matches any of', 'surecart'),
-			value: 'any',
-		},
-		{
-			label: __('matches all of', 'surecart'),
-			value: 'all',
-		},
-		{
-			label: __('matches none of', 'surecart'),
-			value: 'none',
-		},
-		{
-			label: __('exist', 'surecart'),
-			value: 'exist',
-		},
-		{
-			label: __('not exist', 'surecart'),
-			value: 'not_exist',
-		},
-	];
-	const shippingOperators = [
-		{
-			label: __('matches any of', 'surecart'),
-			value: 'any',
-		},
-		{
-			label: __('matches none of', 'surecart'),
-			value: 'none',
-		},
-	];
 	const rule_settings_field_data = {
 		cart_item: {
-			operator: stringOperators,
+			operatorType: 'string',
 			fields: [
 				{
 					type: 'products',
@@ -160,7 +73,7 @@ function Conditions(props) {
 			],
 		},
 		cart_total: {
-			operator: mathOperators,
+			operatorType: 'math',
 			fields: [
 				{
 					type: 'price',
@@ -168,7 +81,7 @@ function Conditions(props) {
 			],
 		},
 		cart_coupons: {
-			operator: couponOperators,
+			operatorType: 'coupon',
 			fields: [
 				{
 					type: 'coupons',
@@ -178,7 +91,7 @@ function Conditions(props) {
 			],
 		},
 		cart_billing_country: {
-			operator: shippingOperators,
+			operatorType: 'shipping',
 			fields: [
 				{
 					type: 'select2',
@@ -189,7 +102,7 @@ function Conditions(props) {
 			],
 		},
 		cart_shipping_country: {
-			operator: shippingOperators,
+			operatorType: 'shipping',
 			fields: [
 				{
 					type: 'select2',
@@ -200,7 +113,7 @@ function Conditions(props) {
 			],
 		},
 		cart_payment_method: {
-			operator: shippingOperators,
+			operatorType: 'shipping',
 			fields: [
 				{
 					type: 'select2',
@@ -212,15 +125,17 @@ function Conditions(props) {
 		},
 	};
 
-	const valueFields = function (fields, ruleIndex, rule_data) {
-		let renderFields = '';
-		const value = rule_data.value;
+	const renderValueFields = function (
+		fields,
+		ruleIndex,
+		{ value, operator }
+	) {
 		const name = `sc-form-rules[${groupIndex}][rules][${ruleIndex}][value]`;
 
 		return fields.map((field) => {
 			switch (field.type) {
 				case 'products':
-					renderFields = (
+					return (
 						<SelectProducts
 							name={`${name}[]`}
 							value={value}
@@ -237,16 +152,12 @@ function Conditions(props) {
 							}}
 						/>
 					);
-					break;
 
 				case 'coupons':
-					if (
-						'exist' === rule_data.operator ||
-						'not_exist' === rule_data.operator
-					) {
+					if ('exist' === operator || 'not_exist' === operator) {
 						// If required we will add field here for these two option
 					} else {
-						renderFields = (
+						return (
 							<SelectCoupons
 								name={`${name}[]`}
 								value={value}
@@ -264,9 +175,9 @@ function Conditions(props) {
 							/>
 						);
 					}
-					break;
+
 				case 'select':
-					renderFields = (
+					return (
 						<SelectControl
 							name={`${name}[]`}
 							value={value}
@@ -283,9 +194,9 @@ function Conditions(props) {
 							}}
 						/>
 					);
-					break;
+
 				case 'select2':
-					renderFields = (
+					return (
 						<Select2
 							name={`${name}[]`}
 							value={value}
@@ -302,10 +213,9 @@ function Conditions(props) {
 							}}
 						/>
 					);
-					break;
 
 				case 'price':
-					renderFields = (
+					return (
 						<ScPriceInput
 							name={`${name}[]`}
 							value={value}
@@ -322,10 +232,9 @@ function Conditions(props) {
 							}}
 						></ScPriceInput>
 					);
-					break;
 
 				case 'number':
-					renderFields = (
+					return (
 						<NumberControl
 							name={name}
 							value={value}
@@ -342,10 +251,9 @@ function Conditions(props) {
 							shiftStep={1}
 						/>
 					);
-					break;
 
 				case 'text':
-					renderFields = (
+					return (
 						<TextControl
 							name={name}
 							value={value}
@@ -360,14 +268,11 @@ function Conditions(props) {
 							}}
 						/>
 					);
-					break;
-				default:
 			}
-			return renderFields;
 		});
 	};
 
-	const removeConditionIcon = function (rulesLength, ruleIndex) {
+	const renderRemoveConditionIcon = function (rulesLength, ruleIndex) {
 		if (1 === rulesLength && 1 === groupsLength) {
 			return '';
 		}
@@ -389,7 +294,6 @@ function Conditions(props) {
 				const rule_data = rules[ruleIndex];
 				const rule_field_data =
 					rule_settings_field_data[rule_data.condition];
-
 				return (
 					<>
 						{0 !== ruleIndex && (
@@ -419,9 +323,8 @@ function Conditions(props) {
 							`}
 						>
 							<div className="sc-rules--rule_fields">
-								<SelectControl
+								<SelectConditions
 									name={`sc-form-rules[${groupIndex}][rules][${ruleIndex}][condition]`}
-									options={conditions_select}
 									onChange={(selection) => {
 										updateConditionInRuleGroup(
 											ruleIndex,
@@ -430,9 +333,10 @@ function Conditions(props) {
 									}}
 									value={rule_data.condition}
 								/>
-								<SelectControl
+
+								<SelectOperator
 									name={`sc-form-rules[${groupIndex}][rules][${ruleIndex}][operator]`}
-									options={rule_field_data.operator}
+									type={rule_field_data.operatorType}
 									value={rule_data.operator}
 									onChange={(selection) => {
 										updateConditionOptionInRuleGroup(
@@ -443,7 +347,7 @@ function Conditions(props) {
 									}}
 								/>
 
-								{valueFields(
+								{renderValueFields(
 									rule_field_data.fields,
 									ruleIndex,
 									rule_data
@@ -455,7 +359,10 @@ function Conditions(props) {
 									margin-top: 15px;
 								`}
 							>
-								{removeConditionIcon(rules.length, ruleIndex)}
+								{renderRemoveConditionIcon(
+									rules.length,
+									ruleIndex
+								)}
 							</div>
 						</div>
 					</>
