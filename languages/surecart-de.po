@@ -8,11 +8,10 @@ msgstr ""
 "PO-Revision-Date: 2023-01-16 12:08\n"
 "Last-Translator: lokalise.com\n"
 "Language-Team: lokalise.com\n\n"
-"Language: fr\n"
+"Language: de\n"
 
-#, fuzzy
 msgid "Checkout Form"
-msgstr "Formulaire de paiement"
+msgstr "Checkout-Formular"
 
 #, fuzzy
 msgid "SureCart"
