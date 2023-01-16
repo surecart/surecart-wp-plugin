@@ -1,0 +1,8475 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: lokalise.com\n"
+"Project-Id-Version: SureCart WP\n"
+"PO-Revision-Date: 2023-01-16 11:27\n"
+"Last-Translator: lokalise.com\n"
+"Language-Team: lokalise.com\n\n"
+"Language: fr\n"
+
+#, fuzzy
+msgid "Checkout Form"
+msgstr "Formulaire de paiement"
+
+#, fuzzy
+msgid "SureCart"
+msgstr ""
+
+#, fuzzy
+msgid "Cart"
+msgstr ""
+
+#, fuzzy
+msgid "All"
+msgstr ""
+
+#, fuzzy
+msgid "Scheduled"
+msgstr ""
+
+#, fuzzy
+msgid "Sent"
+msgstr ""
+
+#, fuzzy
+msgid "Not Scheduled"
+msgstr ""
+
+#, fuzzy
+msgid "Search Abanonded Orders"
+msgstr ""
+
+#, fuzzy
+msgid "Placed By"
+msgstr ""
+
+#, fuzzy
+msgid "Date"
+msgstr ""
+
+#, fuzzy
+msgid "Email Status"
+msgstr ""
+
+#, fuzzy
+msgid "Recovery Status"
+msgstr ""
+
+#, fuzzy
+msgid "Total"
+msgstr ""
+
+#, fuzzy
+msgid "Email Sent"
+msgstr ""
+
+#, fuzzy
+msgid "Recovered"
+msgstr ""
+
+#, fuzzy
+msgid "Abandoned"
+msgstr ""
+
+#, fuzzy
+msgid "Edit Order"
+msgstr ""
+
+#, fuzzy
+msgid "By %s"
+msgstr ""
+
+#, fuzzy
+msgid "View Checkout"
+msgstr ""
+
+#, fuzzy
+msgid "Abandoned Checkouts"
+msgstr ""
+
+#, fuzzy
+msgid "Bumps"
+msgstr ""
+
+#, fuzzy
+msgid "Product archived."
+msgstr ""
+
+#, fuzzy
+msgid "Product restored."
+msgstr ""
+
+#, fuzzy
+msgid "Active"
+msgstr ""
+
+#, fuzzy
+msgid "Archived"
+msgstr ""
+
+#, fuzzy
+msgid "Name"
+msgstr ""
+
+#, fuzzy
+msgid "Price"
+msgstr ""
+
+#, fuzzy
+msgid "Select comment"
+msgstr ""
+
+#, fuzzy
+msgid "No order bumps found."
+msgstr ""
+
+#, fuzzy
+msgid "Subscription"
+msgstr ""
+
+#, fuzzy
+msgid "One-Time"
+msgstr ""
+
+#, fuzzy
+msgid "Updated"
+msgstr ""
+
+#, fuzzy
+msgid "Edit"
+msgstr ""
+
+#, fuzzy
+msgid "Coupons"
+msgstr ""
+
+#, fuzzy
+msgid "Search Coupons"
+msgstr ""
+
+#, fuzzy
+msgid "Code"
+msgstr ""
+
+#, fuzzy
+msgid "Usage"
+msgstr ""
+
+#, fuzzy
+msgid "Valid until %s"
+msgstr ""
+
+#, fuzzy
+msgid "%d%% off"
+msgstr ""
+
+#, fuzzy
+msgid "No discount."
+msgstr ""
+
+#, fuzzy
+msgid "Forever"
+msgstr ""
+
+#, fuzzy
+msgid "For %d months"
+msgstr ""
+
+#, fuzzy
+msgid "Once"
+msgstr ""
+
+#, fuzzy
+msgid "Expired"
+msgstr ""
+
+#, fuzzy
+msgid "No code specified"
+msgstr ""
+
+#, fuzzy
+msgid "+ %d more"
+msgstr ""
+
+#, fuzzy
+msgid "Un-Archive"
+msgstr ""
+
+#, fuzzy
+msgid "Archive"
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you want to restore this coupon? This will be be available to purchase."
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you want to archive this coupon? This will be unavailable for purchase."
+msgstr ""
+
+#, fuzzy
+msgid "Toggle Coupon Archive"
+msgstr ""
+
+#, fuzzy
+msgid "Unapprove"
+msgstr ""
+
+#, fuzzy
+msgid "Approve"
+msgstr ""
+
+#, fuzzy
+msgctxt "comment"
+msgid "Mark as spam"
+msgstr ""
+
+#, fuzzy
+msgid "Restore"
+msgstr ""
+
+#, fuzzy
+msgctxt "comment"
+msgid "Not spam"
+msgstr ""
+
+#, fuzzy
+msgid "Delete permanently"
+msgstr ""
+
+#, fuzzy
+msgid "Move to Trash"
+msgstr ""
+
+#, fuzzy
+msgid "Customers"
+msgstr ""
+
+#, fuzzy
+msgid "Email"
+msgstr ""
+
+#, fuzzy
+msgid "Created"
+msgstr ""
+
+#, fuzzy
+msgid "No customers found."
+msgstr ""
+
+#, fuzzy
+msgid "No price"
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you want to restore this product? This will be be available to purchase."
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you want to archive this product? This will be unavailable for purchase."
+msgstr ""
+
+#, fuzzy
+msgid "Toggle Product Archive"
+msgstr ""
+
+#, fuzzy
+msgid "Search Invoices"
+msgstr ""
+
+#, fuzzy
+msgid "Invoice"
+msgstr ""
+
+#, fuzzy
+msgid "Status"
+msgstr ""
+
+#, fuzzy
+msgid "Method"
+msgstr ""
+
+#, fuzzy
+msgid "Refunded"
+msgstr ""
+
+#, fuzzy
+msgid "Invoices"
+msgstr ""
+
+#, fuzzy
+msgid "Licenses"
+msgstr ""
+
+#, fuzzy
+msgid "Search Licenses"
+msgstr ""
+
+#, fuzzy
+msgid "Key"
+msgstr ""
+
+#, fuzzy
+msgid "Customer"
+msgstr ""
+
+#, fuzzy
+msgid "Purchase"
+msgstr ""
+
+#, fuzzy
+msgid "No licenses found."
+msgstr ""
+
+#, fuzzy
+msgid "Revoked"
+msgstr ""
+
+#, fuzzy
+msgid "Inactive"
+msgstr ""
+
+#, fuzzy
+msgid "Donation"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid API Token"
+msgstr ""
+
+#, fuzzy
+msgid "Paid"
+msgstr ""
+
+#, fuzzy
+msgid "Processing"
+msgstr ""
+
+#, fuzzy
+msgid "Failed"
+msgstr ""
+
+#, fuzzy
+msgid "Order"
+msgstr ""
+
+#, fuzzy
+msgid "Integrations"
+msgstr ""
+
+#, fuzzy
+msgid "Type"
+msgstr ""
+
+#, fuzzy
+msgid "Subscription Renewal"
+msgstr ""
+
+#, fuzzy
+msgid "Checkout"
+msgstr ""
+
+#, fuzzy
+msgid "Paypal is taking a closer look at this payment. It’s required for some payments and normally takes up to 3 business days."
+msgstr ""
+
+#, fuzzy
+msgid "Orders"
+msgstr ""
+
+#, fuzzy
+msgid "Search Orders"
+msgstr ""
+
+#, fuzzy
+msgid "Live"
+msgstr ""
+
+#, fuzzy
+msgid "View"
+msgstr ""
+
+#, fuzzy
+msgid "Products"
+msgstr ""
+
+#, fuzzy
+msgid "No products found."
+msgstr ""
+
+#, fuzzy
+msgid "Starting at %s"
+msgstr ""
+
+#, fuzzy
+msgid "and %d other price."
+msgid_plural "and %d other prices."
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy
+msgid "Name your own price"
+msgstr ""
+
+#, fuzzy
+msgid "Copied!"
+msgstr ""
+
+#, fuzzy
+msgid "Subscriptions"
+msgstr ""
+
+#, fuzzy
+msgid "Search Subscriptions"
+msgstr ""
+
+#, fuzzy
+msgid "Canceled"
+msgstr ""
+
+#, fuzzy
+msgid "Plan"
+msgstr ""
+
+#, fuzzy
+msgid "Remaining Payments"
+msgstr ""
+
+#, fuzzy
+msgid "Product"
+msgstr ""
+
+#, fuzzy
+msgid "No product"
+msgstr ""
+
+#, fuzzy
+msgid "None"
+msgstr ""
+
+#, fuzzy
+msgid "for"
+msgstr ""
+
+#, fuzzy
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy
+msgid "day"
+msgid_plural "%d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy
+msgid "%d week"
+msgid_plural "%d weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy
+msgid "week"
+msgid_plural "%d weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy
+msgid "month"
+msgid_plural "%d months"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy
+msgid "%d year"
+msgid_plural "%d years"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy
+msgid "year"
+msgid_plural "%d years"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy
+msgid "%1d%% off"
+msgstr ""
+
+#, fuzzy
+msgid "No name provided"
+msgstr ""
+
+#, fuzzy
+msgid "Edit Subscription"
+msgstr ""
+
+#, fuzzy
+msgid "Test"
+msgstr ""
+
+#, fuzzy
+msgid "There is no account with that username or email address."
+msgstr ""
+
+#, fuzzy
+msgid "The username <strong>%s</strong> is not registered on this site. If you are unsure of your username, try your email address instead."
+msgstr ""
+
+#, fuzzy
+msgid "Invalid request. Please try again."
+msgstr ""
+
+#, fuzzy
+msgid "Not Found"
+msgstr ""
+
+#, fuzzy
+msgid "The integration has been removed or is unavailable."
+msgstr ""
+
+#, fuzzy
+msgid "The user could not be found."
+msgstr ""
+
+#, fuzzy
+msgid "Invalid verification code"
+msgstr ""
+
+#, fuzzy
+msgid "This user could not be found."
+msgstr ""
+
+#, fuzzy
+msgctxt "Form slug"
+msgid "checkout"
+msgstr ""
+
+#, fuzzy
+msgctxt "Form title"
+msgid "Checkout"
+msgstr ""
+
+#, fuzzy
+msgctxt "Page slug"
+msgid "checkout"
+msgstr ""
+
+#, fuzzy
+msgctxt "Page title"
+msgid "Checkout"
+msgstr ""
+
+#, fuzzy
+msgctxt "Page slug"
+msgid "order-confirmation"
+msgstr ""
+
+#, fuzzy
+msgctxt "Page title"
+msgid "Thank you!"
+msgstr ""
+
+#, fuzzy
+msgctxt "Page slug"
+msgid "customer-dashboard"
+msgstr ""
+
+#, fuzzy
+msgctxt "Page title"
+msgid "Dashboard"
+msgstr ""
+
+#, fuzzy
+msgid "Method '%s' not implemented. Must be overridden in subclass."
+msgstr ""
+
+#, fuzzy
+msgid "SureCart Form"
+msgstr ""
+
+#, fuzzy
+msgid "Select a form"
+msgstr ""
+
+#, fuzzy
+msgid "Settings"
+msgstr ""
+
+#, fuzzy
+msgid "Create"
+msgstr ""
+
+#, fuzzy
+msgid "BuddyBoss Group"
+msgstr ""
+
+#, fuzzy
+msgid "Group Access"
+msgstr ""
+
+#, fuzzy
+msgid "Enable access to a BuddyBoss Group."
+msgstr ""
+
+#, fuzzy
+msgid "Select Form"
+msgstr ""
+
+#, fuzzy
+msgid "Edit Form"
+msgstr ""
+
+#, fuzzy
+msgid "Create New Form"
+msgstr ""
+
+#, fuzzy
+msgid "LearnDash Course"
+msgstr ""
+
+#, fuzzy
+msgid "Course Access"
+msgstr ""
+
+#, fuzzy
+msgid "Enable access to a LearnDash course."
+msgstr ""
+
+#, fuzzy
+msgid "LearnDash Groups"
+msgstr ""
+
+#, fuzzy
+msgid "Enable access to a LearnDash group."
+msgstr ""
+
+#, fuzzy
+msgid "LearnDash Group"
+msgstr ""
+
+#, fuzzy
+msgid "LifterLMS Course"
+msgstr ""
+
+#, fuzzy
+msgid "Enable access to a LifterLMS course."
+msgstr ""
+
+#, fuzzy
+msgid "MemberPress Membership"
+msgstr ""
+
+#, fuzzy
+msgid "Membership Access"
+msgstr ""
+
+#, fuzzy
+msgid "Enable access to a MemberPress membership."
+msgstr ""
+
+#, fuzzy
+msgid "Previous Product ID"
+msgstr ""
+
+#, fuzzy
+msgid "Product ID"
+msgstr ""
+
+#, fuzzy
+msgid "A specific product id."
+msgstr ""
+
+#, fuzzy
+msgid "Product Name"
+msgstr ""
+
+#, fuzzy
+msgid "A specific product name."
+msgstr ""
+
+#, fuzzy
+msgid "SureCart product object"
+msgstr ""
+
+#, fuzzy
+msgid "SureCart eCommerce Platform"
+msgstr ""
+
+#, fuzzy
+msgid "Product or subscription is purchased"
+msgstr ""
+
+#, fuzzy
+msgid "This trigger will be fired when someone first purchases a product."
+msgstr ""
+
+#, fuzzy
+msgid "Admin unrevokes a purchase"
+msgstr ""
+
+#, fuzzy
+msgid "This trigger will be fired when a purchase is unrevoked."
+msgstr ""
+
+#, fuzzy
+msgid "Product purchase is revoked or subscription cancels"
+msgstr ""
+
+#, fuzzy
+msgid "This trigger will be fired when a subscription cancels after failed payment or by customer request, or when the purchase is manually revoked by the merchant."
+msgstr ""
+
+#, fuzzy
+msgid "Subscription plan changed"
+msgstr ""
+
+#, fuzzy
+msgid "This trigger will be fired when a subscription plan is changed to something else."
+msgstr ""
+
+#, fuzzy
+msgid "Custom amount"
+msgstr ""
+
+#, fuzzy
+msgid "TutorLMS Course"
+msgstr ""
+
+#, fuzzy
+msgid "Enable access to a TutorLMS course."
+msgstr ""
+
+#, fuzzy
+msgid "Add WordPress User Role"
+msgstr ""
+
+#, fuzzy
+msgid "Add User Role"
+msgstr ""
+
+#, fuzzy
+msgid "Add the user role of the user who purchased the product."
+msgstr ""
+
+#, fuzzy
+msgid "Your session expired - please try again."
+msgstr ""
+
+#, fuzzy
+msgid "You do not have permission do this."
+msgstr ""
+
+#, fuzzy
+msgid "Something is wrong with the provided link."
+msgstr ""
+
+#, fuzzy
+msgid "This user is already linked to a customer."
+msgstr ""
+
+#, fuzzy
+msgid "SureCart Shop Manager"
+msgstr ""
+
+#, fuzzy
+msgid "SureCart Accountant"
+msgstr ""
+
+#, fuzzy
+msgid "SureCart Shop Worker"
+msgstr ""
+
+#, fuzzy
+msgid "SureCart Customer"
+msgstr ""
+
+#, fuzzy
+msgid "Unique identifier for the object."
+msgstr ""
+
+#, fuzzy
+msgid "The current notification status for this abandonded checkout, which can be one of not_sent, scheduled, or sent."
+msgstr ""
+
+#, fuzzy
+msgid "The current status of this abandonded checkout, which can be one of not_notified, notified, or recovered."
+msgstr ""
+
+#, fuzzy
+msgid "The checkout id for the checkout."
+msgstr ""
+
+#, fuzzy
+msgid "The customer for the checkout."
+msgstr ""
+
+#, fuzzy
+msgid "This customer's most recent checkout that has been abandoned."
+msgstr ""
+
+#, fuzzy
+msgid "Type of object (Account)"
+msgstr ""
+
+#, fuzzy
+msgid "Created at timestamp"
+msgstr ""
+
+#, fuzzy
+msgid "The name of the account."
+msgstr ""
+
+#, fuzzy
+msgid "The default currency for the account."
+msgstr ""
+
+#, fuzzy
+msgid "Owner data."
+msgstr ""
+
+#, fuzzy
+msgid "Connected processors"
+msgstr ""
+
+#, fuzzy
+msgid "The unique identifier for this activation. For example a URL, a machine fingerprint, etc."
+msgstr ""
+
+#, fuzzy
+msgid "The name of this activation."
+msgstr ""
+
+#, fuzzy
+msgid "The UUID of the license."
+msgstr ""
+
+#, fuzzy
+msgid "The page of items you want returned."
+msgstr ""
+
+#, fuzzy
+msgid "A limit on the number of items to be returned, between 1 and 100."
+msgstr ""
+
+#, fuzzy
+msgid "Ensure result set excludes specific IDs."
+msgstr ""
+
+#, fuzzy
+msgid "Ensure result set excludes specific license IDs."
+msgstr ""
+
+#, fuzzy
+msgid "Sorry, you are not allowed to view the registered form patterns."
+msgstr ""
+
+#, fuzzy
+msgid "The pattern name."
+msgstr ""
+
+#, fuzzy
+msgid "The pattern title, in human readable format."
+msgstr ""
+
+#, fuzzy
+msgid "The pattern detailed description."
+msgstr ""
+
+#, fuzzy
+msgid "The pattern viewport width for inserter preview."
+msgstr ""
+
+#, fuzzy
+msgid "Block types that the pattern is intended to be used with."
+msgstr ""
+
+#, fuzzy
+msgid "The pattern category slugs."
+msgstr ""
+
+#, fuzzy
+msgid "The pattern keywords."
+msgstr ""
+
+#, fuzzy
+msgid "The pattern content."
+msgstr ""
+
+#, fuzzy
+msgid "Determines whether the pattern is visible in inserter."
+msgstr ""
+
+#, fuzzy
+msgid "The brand color."
+msgstr ""
+
+#, fuzzy
+msgid "The email address that will be shown to customers for support, on invoices, etc."
+msgstr ""
+
+#, fuzzy
+msgid "The phone number that will be shown to customers for support, on invoices, etc."
+msgstr ""
+
+#, fuzzy
+msgid "The website that will be shown to customers for support, on invoices, etc."
+msgstr ""
+
+#, fuzzy
+msgid "The URL of the brand logo."
+msgstr ""
+
+#, fuzzy
+msgid "The associated address."
+msgstr ""
+
+#, fuzzy
+msgid "The default memo for invoices and receipts."
+msgstr ""
+
+#, fuzzy
+msgid "The default footer for invoices and receipts."
+msgstr ""
+
+#, fuzzy
+msgid "Type of object (bump)"
+msgstr ""
+
+#, fuzzy
+msgid "Amount (in the currency of the price) that will be taken off line items associated with this bump."
+msgstr ""
+
+#, fuzzy
+msgid "Whether or not this bump is currently enabled and being shown to customers."
+msgstr ""
+
+#, fuzzy
+msgid "The conditions that will filter this bump to be recommeneded. Accepted keys are price_ids, product_ids, and product_group_ids with array values."
+msgstr ""
+
+#, fuzzy
+msgid "A name for this bump that will be visible to customers. If empty, the product name will be used."
+msgstr ""
+
+#, fuzzy
+msgid "Percent that will be taken off line items associated with this bump."
+msgstr ""
+
+#, fuzzy
+msgid "The priority of this bump in relation to other bumps. Must be in the range of 1 - 5."
+msgstr ""
+
+#, fuzzy
+msgid "The UUID of the price."
+msgstr ""
+
+#, fuzzy
+msgid "Login"
+msgstr ""
+
+#, fuzzy
+msgid "The currency for the session."
+msgstr ""
+
+#, fuzzy
+msgid "Metadata for the order."
+msgstr ""
+
+#, fuzzy
+msgid "The customer id for the order."
+msgstr ""
+
+#, fuzzy
+msgid "The customer for the session."
+msgstr ""
+
+#, fuzzy
+msgid "The line items for the session."
+msgstr ""
+
+#, fuzzy
+msgid "The discount for the session."
+msgstr ""
+
+#, fuzzy
+msgid "Form ID is required."
+msgstr ""
+
+#, fuzzy
+msgid "Form ID is invalid."
+msgstr ""
+
+#, fuzzy
+msgid "Email or username for the request"
+msgstr ""
+
+#, fuzzy
+msgid "The URL that the customer should be directed to when the click the link from their email."
+msgstr ""
+
+#, fuzzy
+msgid "If set to true abandonded order reminder emails will be sent to customers."
+msgstr ""
+
+#, fuzzy
+msgid "If set to true order confirmation emails will be sent to customers."
+msgstr ""
+
+#, fuzzy
+msgid "If set to true subscription dunning emails will be sent to customers."
+msgstr ""
+
+#, fuzzy
+msgid "If set to true refund emails will be sent to customers."
+msgstr ""
+
+#, fuzzy
+msgid "The from name to use when sending emails to customers."
+msgstr ""
+
+#, fuzzy
+msgid "The language that will be used for all customer notifications. Current available locales are de, en, es, and fr."
+msgstr ""
+
+#, fuzzy
+msgid "The reply-to email address to use when sending emails to customers."
+msgstr ""
+
+#, fuzzy
+msgid "The model to get integration providers for."
+msgstr ""
+
+#, fuzzy
+msgid "The SureCart model name."
+msgstr ""
+
+#, fuzzy
+msgid "The SureCart model id."
+msgstr ""
+
+#, fuzzy
+msgid "Password"
+msgstr ""
+
+#, fuzzy
+msgid "The default footer that is shown on all order statements (i.e. invoices and receipts)."
+msgstr ""
+
+#, fuzzy
+msgid "The default memo that is shown on all order statements (i.e. invoices and receipts)."
+msgstr ""
+
+#, fuzzy
+msgid "The prefix that is added to all order numbers. Must be between 3-12 characters and only include letters."
+msgstr ""
+
+#, fuzzy
+msgid "The type of number to use for orders – one of sequential or token."
+msgstr ""
+
+#, fuzzy
+msgid "Whether or not customers can cancel subscriptions from the customer portal."
+msgstr ""
+
+#, fuzzy
+msgid "Whether or not customers can make subscription changes from the customer portal."
+msgstr ""
+
+#, fuzzy
+msgid "Whether or not customers can change subscription quantities from the customer portal."
+msgstr ""
+
+#, fuzzy
+msgid "The terms of service link that is shown to customers on the customer portal."
+msgstr ""
+
+#, fuzzy
+msgid "The content for the object."
+msgstr ""
+
+#, fuzzy
+msgid "Whether to get archived products or not."
+msgstr ""
+
+#, fuzzy
+msgid "Only return prices that allow ad hoc amounts or not."
+msgstr ""
+
+#, fuzzy
+msgid "The query to be used for full text search of this collection."
+msgstr ""
+
+#, fuzzy
+msgid "Only return objects that belong to the given products."
+msgstr ""
+
+#, fuzzy
+msgid "Files attached to the product."
+msgstr ""
+
+#, fuzzy
+msgid "Stored product metadata"
+msgstr ""
+
+#, fuzzy
+msgid "Top level metrics for the product."
+msgstr ""
+
+#, fuzzy
+msgid "Only return products that are recurring or not recurring (one time)."
+msgstr ""
+
+#, fuzzy
+msgid "Only return objects that belong to the given product groups."
+msgstr ""
+
+#, fuzzy
+msgid "Sorry, you are not allowed to edit products."
+msgstr ""
+
+#, fuzzy
+msgid "Type of object (Settings)"
+msgstr ""
+
+#, fuzzy
+msgid "Only return objects that have this currency. If not set, this will fallback to the account's default currency."
+msgstr ""
+
+#, fuzzy
+msgid "The end of the date range to query."
+msgstr ""
+
+#, fuzzy
+msgid "The interval to group statistics on – one of hour, day, week, month, or year."
+msgstr ""
+
+#, fuzzy
+msgid "The start of the date range to query."
+msgstr ""
+
+#, fuzzy
+msgid "Payment retry window in weeks."
+msgstr ""
+
+#, fuzzy
+msgid "Cancel behavior. Either pending or immediate."
+msgstr ""
+
+#, fuzzy
+msgid "Downgrade behavior. Either pending or immediate."
+msgstr ""
+
+#, fuzzy
+msgid "Upgrade behavior. Either pending or immediate."
+msgstr ""
+
+#, fuzzy
+msgid "If set to true GST taxes will be calculated for all Canadian provinces."
+msgstr ""
+
+#, fuzzy
+msgid "If set to true VAT taxes will be calculated using the account's home country VAT rate."
+msgstr ""
+
+#, fuzzy
+msgid "If set to true VAT taxes will be calculated for all EU countries."
+msgstr ""
+
+#, fuzzy
+msgid "If set to true taxes will be automatically calculated."
+msgstr ""
+
+#, fuzzy
+msgid "The associated Canadian tax identifier."
+msgstr ""
+
+#, fuzzy
+msgid "The associated EU tax identifier."
+msgstr ""
+
+#, fuzzy
+msgid "The associated tax identifier."
+msgstr ""
+
+#, fuzzy
+msgid "The associated tax zone."
+msgstr ""
+
+#, fuzzy
+msgid "Your email and cart are saved so we can send email reminders about this order."
+msgstr ""
+
+#, fuzzy
+msgid "Albanian Lek"
+msgstr ""
+
+#, fuzzy
+msgid "Algerian Dinar"
+msgstr ""
+
+#, fuzzy
+msgid "Angolan Kwanza"
+msgstr ""
+
+#, fuzzy
+msgid "Argentine Peso"
+msgstr ""
+
+#, fuzzy
+msgid "Armenian Dram"
+msgstr ""
+
+#, fuzzy
+msgid "Aruban Florin"
+msgstr ""
+
+#, fuzzy
+msgid "Australian Dollar"
+msgstr ""
+
+#, fuzzy
+msgid "Azerbaijani Manat"
+msgstr ""
+
+#, fuzzy
+msgid "Bahamian Dollar"
+msgstr ""
+
+#, fuzzy
+msgid "Bangladeshi Taka"
+msgstr ""
+
+#, fuzzy
+msgid "Barbadian Dollar"
+msgstr ""
+
+#, fuzzy
+msgid "Belarusian Ruble"
+msgstr ""
+
+#, fuzzy
+msgid "Belize Dollar"
+msgstr ""
+
+#, fuzzy
+msgid "Bermudian Dollar"
+msgstr ""
+
+#, fuzzy
+msgid "Bolivian Boliviano"
+msgstr ""
+
+#, fuzzy
+msgid "Bosnia and Herzegovina Convertible Mark"
+msgstr ""
+
+#, fuzzy
+msgid "Botswana Pula"
+msgstr ""
+
+#, fuzzy
+msgid "Brazilian Real"
+msgstr ""
+
+#, fuzzy
+msgid "British Pound"
+msgstr ""
+
+#, fuzzy
+msgid "Brunei Dollar"
+msgstr ""
+
+#, fuzzy
+msgid "Bulgarian Lev"
+msgstr ""
+
+#, fuzzy
+msgid "Burundian Franc"
+msgstr ""
+
+#, fuzzy
+msgid "Cambodian Riel"
+msgstr ""
+
+#, fuzzy
+msgid "Canadian Dollar"
+msgstr ""
+
+#, fuzzy
+msgid "Cape Verdean Escudo"
+msgstr ""
+
+#, fuzzy
+msgid "Cayman Islands Dollar"
+msgstr ""
+
+#, fuzzy
+msgid "Central African Cfa Franc"
+msgstr ""
+
+#, fuzzy
+msgid "Cfp Franc"
+msgstr ""
+
+#, fuzzy
+msgid "Chilean Peso"
+msgstr ""
+
+#, fuzzy
+msgid "Chinese Renminbi Yuan"
+msgstr ""
+
+#, fuzzy
+msgid "Colombian Peso"
+msgstr ""
+
+#, fuzzy
+msgid "Comorian Franc"
+msgstr ""
+
+#, fuzzy
+msgid "Congolese Franc"
+msgstr ""
+
+#, fuzzy
+msgid "Costa Rican Colón"
+msgstr ""
+
+#, fuzzy
+msgid "Croatian Kuna"
+msgstr ""
+
+#, fuzzy
+msgid "Czech Koruna"
+msgstr ""
+
+#, fuzzy
+msgid "Danish Krone"
+msgstr ""
+
+#, fuzzy
+msgid "Djiboutian Franc"
+msgstr ""
+
+#, fuzzy
+msgid "Dominican Peso"
+msgstr ""
+
+#, fuzzy
+msgid "East Caribbean Dollar"
+msgstr ""
+
+#, fuzzy
+msgid "Egyptian Pound"
+msgstr ""
+
+#, fuzzy
+msgid "Ethiopian Birr"
+msgstr ""
+
+#, fuzzy
+msgid "Euro"
+msgstr ""
+
+#, fuzzy
+msgid "Falkland Pound"
+msgstr ""
+
+#, fuzzy
+msgid "Fijian Dollar"
+msgstr ""
+
+#, fuzzy
+msgid "Gambian Dalasi"
+msgstr ""
+
+#, fuzzy
+msgid "Georgian Lari"
+msgstr ""
+
+#, fuzzy
+msgid "Gibraltar Pound"
+msgstr ""
+
+#, fuzzy
+msgid "Guatemalan Quetzal"
+msgstr ""
+
+#, fuzzy
+msgid "Guinean Franc"
+msgstr ""
+
+#, fuzzy
+msgid "Guyanese Dollar"
+msgstr ""
+
+#, fuzzy
+msgid "Haitian Gourde"
+msgstr ""
+
+#, fuzzy
+msgid "Honduran Lempira"
+msgstr ""
+
+#, fuzzy
+msgid "Hong Kong Dollar"
+msgstr ""
+
+#, fuzzy
+msgid "Hungarian Forint"
+msgstr ""
+
+#, fuzzy
+msgid "Icelandic Króna"
+msgstr ""
+
+#, fuzzy
+msgid "Indian Rupee"
+msgstr ""
+
+#, fuzzy
+msgid "Indonesian Rupiah"
+msgstr ""
+
+#, fuzzy
+msgid "Israeli New Sheqel"
+msgstr ""
+
+#, fuzzy
+msgid "Jamaican Dollar"
+msgstr ""
+
+#, fuzzy
+msgid "Japanese Yen"
+msgstr ""
+
+#, fuzzy
+msgid "Kazakhstani Tenge"
+msgstr ""
+
+#, fuzzy
+msgid "Kenyan Shilling"
+msgstr ""
+
+#, fuzzy
+msgid "Kyrgyzstani Som"
+msgstr ""
+
+#, fuzzy
+msgid "Lao Kip"
+msgstr ""
+
+#, fuzzy
+msgid "Lebanese Pound"
+msgstr ""
+
+#, fuzzy
+msgid "Lesotho Loti"
+msgstr ""
+
+#, fuzzy
+msgid "Liberian Dollar"
+msgstr ""
+
+#, fuzzy
+msgid "Macanese Pataca"
+msgstr ""
+
+#, fuzzy
+msgid "Macedonian Denar"
+msgstr ""
+
+#, fuzzy
+msgid "Malagasy Ariary"
+msgstr ""
+
+#, fuzzy
+msgid "Malawian Kwacha"
+msgstr ""
+
+#, fuzzy
+msgid "Malaysian Ringgit"
+msgstr ""
+
+#, fuzzy
+msgid "Maldivian Rufiyaa"
+msgstr ""
+
+#, fuzzy
+msgid "Mauritanian Ouguiya"
+msgstr ""
+
+#, fuzzy
+msgid "Mauritian Rupee"
+msgstr ""
+
+#, fuzzy
+msgid "Mexican Peso"
+msgstr ""
+
+#, fuzzy
+msgid "Moldovan Leu"
+msgstr ""
+
+#, fuzzy
+msgid "Mongolian Tögrög"
+msgstr ""
+
+#, fuzzy
+msgid "Moroccan Dirham"
+msgstr ""
+
+#, fuzzy
+msgid "Mozambican Metical"
+msgstr ""
+
+#, fuzzy
+msgid "Myanmar Kyat"
+msgstr ""
+
+#, fuzzy
+msgid "Namibian Dollar"
+msgstr ""
+
+#, fuzzy
+msgid "Nepalese Rupee"
+msgstr ""
+
+#, fuzzy
+msgid "Netherlands Antillean Gulden"
+msgstr ""
+
+#, fuzzy
+msgid "New Taiwan Dollar"
+msgstr ""
+
+#, fuzzy
+msgid "New Zealand Dollar"
+msgstr ""
+
+#, fuzzy
+msgid "Nicaraguan Córdoba"
+msgstr ""
+
+#, fuzzy
+msgid "Nigerian Naira"
+msgstr ""
+
+#, fuzzy
+msgid "Norwegian Krone"
+msgstr ""
+
+#, fuzzy
+msgid "Pakistani Rupee"
+msgstr ""
+
+#, fuzzy
+msgid "Panamanian Balboa"
+msgstr ""
+
+#, fuzzy
+msgid "Papua New Guinean Kina"
+msgstr ""
+
+#, fuzzy
+msgid "Paraguayan Guaraní"
+msgstr ""
+
+#, fuzzy
+msgid "Peruvian Sol"
+msgstr ""
+
+#, fuzzy
+msgid "Philippine Peso"
+msgstr ""
+
+#, fuzzy
+msgid "Polish Złoty"
+msgstr ""
+
+#, fuzzy
+msgid "Qatari Riyal"
+msgstr ""
+
+#, fuzzy
+msgid "Romanian Leu"
+msgstr ""
+
+#, fuzzy
+msgid "Russian Ruble"
+msgstr ""
+
+#, fuzzy
+msgid "Rwandan Franc"
+msgstr ""
+
+#, fuzzy
+msgid "Saint Helenian Pound"
+msgstr ""
+
+#, fuzzy
+msgid "Samoan Tala"
+msgstr ""
+
+#, fuzzy
+msgid "Saudi Riyal"
+msgstr ""
+
+#, fuzzy
+msgid "Serbian Dinar"
+msgstr ""
+
+#, fuzzy
+msgid "Seychellois Rupee"
+msgstr ""
+
+#, fuzzy
+msgid "Sierra Leonean Leone"
+msgstr ""
+
+#, fuzzy
+msgid "Singapore Dollar"
+msgstr ""
+
+#, fuzzy
+msgid "Solomon Islands Dollar"
+msgstr ""
+
+#, fuzzy
+msgid "Somali Shilling"
+msgstr ""
+
+#, fuzzy
+msgid "South African Rand"
+msgstr ""
+
+#, fuzzy
+msgid "South Korean Won"
+msgstr ""
+
+#, fuzzy
+msgid "Sri Lankan Rupee"
+msgstr ""
+
+#, fuzzy
+msgid "Surinamese Dollar"
+msgstr ""
+
+#, fuzzy
+msgid "Swazi Lilangeni"
+msgstr ""
+
+#, fuzzy
+msgid "Swedish Krona"
+msgstr ""
+
+#, fuzzy
+msgid "Swiss Franc"
+msgstr ""
+
+#, fuzzy
+msgid "São Tomé and Príncipe Dobra"
+msgstr ""
+
+#, fuzzy
+msgid "Tajikistani Somoni"
+msgstr ""
+
+#, fuzzy
+msgid "Tanzanian Shilling"
+msgstr ""
+
+#, fuzzy
+msgid "Thai Baht"
+msgstr ""
+
+#, fuzzy
+msgid "Tongan Paʻanga"
+msgstr ""
+
+#, fuzzy
+msgid "Trinidad and Tobago Dollar"
+msgstr ""
+
+#, fuzzy
+msgid "Turkish Lira"
+msgstr ""
+
+#, fuzzy
+msgid "Ugandan Shilling"
+msgstr ""
+
+#, fuzzy
+msgid "Ukrainian Hryvnia"
+msgstr ""
+
+#, fuzzy
+msgid "United Arab Emirates Dirham"
+msgstr ""
+
+#, fuzzy
+msgid "United States Dollar"
+msgstr ""
+
+#, fuzzy
+msgid "Uruguayan Peso"
+msgstr ""
+
+#, fuzzy
+msgid "Uzbekistan Som"
+msgstr ""
+
+#, fuzzy
+msgid "Vanuatu Vatu"
+msgstr ""
+
+#, fuzzy
+msgid "Vietnamese Đồng"
+msgstr ""
+
+#, fuzzy
+msgid "West African Cfa Franc"
+msgstr ""
+
+#, fuzzy
+msgid "Yemeni Rial"
+msgstr ""
+
+#, fuzzy
+msgid "Zambian Kwacha"
+msgstr ""
+
+#, fuzzy
+msgid "%s is invalid."
+msgstr ""
+
+#, fuzzy
+msgid "You must enter an amount between %1$s and %2$s"
+msgstr ""
+
+#, fuzzy
+msgid "Error."
+msgstr ""
+
+#, fuzzy
+msgid "Promotion code"
+msgstr ""
+
+#, fuzzy
+msgid "Amount Off"
+msgstr ""
+
+#, fuzzy
+msgid "Percent Off"
+msgstr ""
+
+#, fuzzy
+msgid "Amount"
+msgstr ""
+
+#, fuzzy
+msgid "Pay what you want"
+msgstr ""
+
+#, fuzzy
+msgid "Repeat payment"
+msgstr ""
+
+#, fuzzy
+msgid "Could not complete the request. Please try again."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to save coupon."
+msgstr ""
+
+#, fuzzy
+msgid "This coupon is for a different currency and cannot be applied."
+msgstr ""
+
+#, fuzzy
+msgid "The price is already being used in subscriptions or checkout sessions. Please archive the price and create another one."
+msgstr ""
+
+#, fuzzy
+msgid "Invalid promotion code."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to update. Please check for errors and try again."
+msgstr ""
+
+#, fuzzy
+msgid "Please add at least one product."
+msgstr ""
+
+#, fuzzy
+msgid "Please fill out your address."
+msgstr ""
+
+#, fuzzy
+msgid "This coupon is not valid. Please double-check it and try again."
+msgstr ""
+
+#, fuzzy
+msgid "This download cannot be removed or archived when it is set as the current release."
+msgstr ""
+
+#, fuzzy
+msgid "The refund amount is greater than the refundable amount."
+msgstr ""
+
+#, fuzzy
+msgid "You cannot add a one-time product to a subscription."
+msgstr ""
+
+#, fuzzy
+msgid "The price cannot be blank."
+msgstr ""
+
+#, fuzzy
+msgid "The compare at price must be greater than the price."
+msgstr ""
+
+#, fuzzy
+msgid "A price with this currency and recurring interval already exists. Please create a new product to create this price."
+msgstr ""
+
+#, fuzzy
+msgid "This promotion code already exists. Please archive the old code or use a different code."
+msgstr ""
+
+#, fuzzy
+msgid "There are no processors to make the payment. Please contact us for assistance."
+msgstr ""
+
+#, fuzzy
+msgid "This product has prices that are currently being used. Please archive the product instead if it is not already archived."
+msgstr ""
+
+#, fuzzy
+msgid "The product image must be an image."
+msgstr ""
+
+#, fuzzy
+msgid "Please enter a valid tax number."
+msgstr ""
+
+#, fuzzy
+msgid "The prices in this checkout session have changed. Please recheck it before submitting again."
+msgstr ""
+
+#, fuzzy
+msgid "This coupon code is invalid."
+msgstr ""
+
+#, fuzzy
+msgid "You cannot enable abandoned checkouts until you have updated your business contact address. Please add an address to your store branding."
+msgstr ""
+
+#, fuzzy
+msgid "Your postal code is not valid."
+msgstr ""
+
+#, fuzzy
+msgid "This coupon has expired."
+msgstr ""
+
+#, fuzzy
+msgid "This discount code does not apply to this currency."
+msgstr ""
+
+#, fuzzy
+msgid "This is not a valid coupon code"
+msgstr ""
+
+#, fuzzy
+msgid "Please double-check your prefix does not contain any spaces, underscores, dashes or special characters."
+msgstr ""
+
+#, fuzzy
+msgid "This prefix is too long. Please enter a shorter prefix."
+msgstr ""
+
+#, fuzzy
+msgid "This prefix is too short. Please enter a longer prefix."
+msgstr ""
+
+#, fuzzy
+msgid "You can only apply this offer once."
+msgstr ""
+
+#, fuzzy
+msgid "This product is no longer purchaseable."
+msgstr ""
+
+#, fuzzy
+msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
+msgstr ""
+
+#, fuzzy
+msgid "The maximum price must be smaller."
+msgstr ""
+
+#, fuzzy
+msgid "The minimum price must be smaller."
+msgstr ""
+
+#, fuzzy
+msgid "The maximum price must be greater than the minimum price."
+msgstr ""
+
+#, fuzzy
+msgid "You are already collecting tax for this zone."
+msgstr ""
+
+#, fuzzy
+msgid "You cannot enable EU Micro Exemption if your address is outside of the EU."
+msgstr ""
+
+#, fuzzy
+msgid "You cannot enable taxes unless a valid tax address is provided"
+msgstr ""
+
+#, fuzzy
+msgid "You cannot delete this media item because it is currently being used."
+msgstr ""
+
+#, fuzzy
+msgid "You have already requested a code in the last 60 seconds. Please wait before requesting again."
+msgstr ""
+
+#, fuzzy
+msgid "%s can't be blank."
+msgstr ""
+
+#, fuzzy
+msgid "%s must be a number."
+msgstr ""
+
+#, fuzzy
+msgid "%s is not available with subscriptions."
+msgstr ""
+
+#, fuzzy
+msgid "%s is too high."
+msgstr ""
+
+#, fuzzy
+msgid "%s is no longer purchasable."
+msgstr ""
+
+#, fuzzy
+msgid "Invalid."
+msgstr ""
+
+#, fuzzy
+msgid "There were some validation errors."
+msgstr ""
+
+#, fuzzy
+msgid "Can't be empty."
+msgstr ""
+
+#, fuzzy
+msgid "Can't be blank."
+msgstr ""
+
+#, fuzzy
+msgid "Must be blank"
+msgstr ""
+
+#, fuzzy
+msgid "Not found."
+msgstr ""
+
+#, fuzzy
+msgid "Not a number"
+msgstr ""
+
+#, fuzzy
+msgid "Must be an integer"
+msgstr ""
+
+#, fuzzy
+msgid "Validation failed"
+msgstr ""
+
+#, fuzzy
+msgid "This is not included in the list."
+msgstr ""
+
+#, fuzzy
+msgid "This is reserved."
+msgstr ""
+
+#, fuzzy
+msgid "This doesn't match"
+msgstr ""
+
+#, fuzzy
+msgid "Must be accepted."
+msgstr ""
+
+#, fuzzy
+msgid "Too long."
+msgstr ""
+
+#, fuzzy
+msgid "Too short."
+msgstr ""
+
+#, fuzzy
+msgid "Must be larger."
+msgstr ""
+
+#, fuzzy
+msgid "Must be smaller."
+msgstr ""
+
+#, fuzzy
+msgid "Wrong length."
+msgstr ""
+
+#, fuzzy
+msgid "Must be odd"
+msgstr ""
+
+#, fuzzy
+msgid "Must be even"
+msgstr ""
+
+#, fuzzy
+msgid "It is archived."
+msgstr ""
+
+#, fuzzy
+msgid "It does not match parent currency."
+msgstr ""
+
+#, fuzzy
+msgid "It is expired."
+msgstr ""
+
+#, fuzzy
+msgid "It is not valid or enabled."
+msgstr ""
+
+#, fuzzy
+msgid "It is not a valid hex color."
+msgstr ""
+
+#, fuzzy
+msgid "Only one active abandoned checkout is allowed at a time"
+msgstr ""
+
+#, fuzzy
+msgid "must be 15 minutes or more"
+msgstr ""
+
+#, fuzzy
+msgid "must be less than 1 week"
+msgstr ""
+
+#, fuzzy
+msgid "must be at least 12 hours between emails"
+msgstr ""
+
+#, fuzzy
+msgid "max count reached"
+msgstr ""
+
+#, fuzzy
+msgid "must be between %1$s and %2$s"
+msgstr ""
+
+#, fuzzy
+msgctxt "%s = human-readable time difference"
+msgid "%s ago"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-10:00) America/Adak"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-10:00) Hawaii"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-09:00) Alaska"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-09:00) America/Anchorage"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-09:00) America/Metlakatla"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-09:00) America/Nome"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-09:00) America/Sitka"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-09:00) America/Yakutat"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-08:00) Pacific Time (US & Canada)"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-07:00) America/Boise"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-07:00) Arizona"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-07:00) Mountain Time (US & Canada)"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-06:00) America/Indiana/Knox"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-06:00) America/Indiana/Tell_City"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-06:00) America/Menominee"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-06:00) America/North_Dakota/Beulah"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-06:00) America/North_Dakota/Center"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-06:00) America/North_Dakota/New_Salem"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-06:00) Central Time (US & Canada)"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-05:00) America/Detroit"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-05:00) America/Indiana/Marengo"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-05:00) America/Indiana/Petersburg"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-05:00) America/Indiana/Vevay"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-05:00) America/Indiana/Vincennes"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-05:00) America/Indiana/Winamac"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-05:00) America/Kentucky/Louisville"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-05:00) America/Kentucky/Monticello"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-05:00) Eastern Time (US & Canada)"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-05:00) Indiana (East)"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-12:00) International Date Line West"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-11:00) American Samoa"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-11:00) Midway Island"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-08:00) Tijuana"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-07:00) Chihuahua"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-07:00) Mazatlan"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-06:00) Central America"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-06:00) Guadalajara"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-06:00) Mexico City"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-06:00) Monterrey"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-06:00) Saskatchewan"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-05:00) Bogota"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-05:00) Lima"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-05:00) Quito"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-04:00) Atlantic Time (Canada)"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-04:00) Caracas"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-04:00) Georgetown"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-04:00) La Paz"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-04:00) Puerto Rico"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-04:00) Santiago"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-03:30) Newfoundland"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-03:00) Brasilia"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-03:00) Buenos Aires"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-03:00) Greenland"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-03:00) Montevideo"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-02:00) Mid-Atlantic"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-01:00) Azores"
+msgstr ""
+
+#, fuzzy
+msgid "GMT-01:00) Cape Verde Is."
+msgstr ""
+
+#, fuzzy
+msgid "GMT+00:00) Edinburgh"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+00:00) Lisbon"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+00:00) London"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+00:00) Monrovia"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+00:00) UTC"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+01:00) Amsterdam"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+01:00) Belgrade"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+01:00) Berlin"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+01:00) Bern"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+01:00) Bratislava"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+01:00) Brussels"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+01:00) Budapest"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+01:00) Casablanca"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+01:00) Copenhagen"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+01:00) Dublin"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+01:00) Ljubljana"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+01:00) Madrid"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+01:00) Paris"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+01:00) Prague"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+01:00) Rome"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+01:00) Sarajevo"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+01:00) Skopje"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+01:00) Stockholm"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+01:00) Vienna"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+01:00) Warsaw"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+01:00) West Central Africa"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+01:00) Zagreb"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+01:00) Zurich"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+02:00) Athens"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+02:00) Bucharest"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+02:00) Cairo"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+02:00) Harare"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+02:00) Helsinki"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+02:00) Jerusalem"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+02:00) Kaliningrad"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+02:00) Kyiv"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+02:00) Pretoria"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+02:00) Riga"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+02:00) Sofia"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+02:00) Tallinn"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+02:00) Vilnius"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+03:00) Baghdad"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+03:00) Istanbul"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+03:00) Kuwait"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+03:00) Minsk"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+03:00) Moscow"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+03:00) Nairobi"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+03:00) Riyadh"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+03:00) St. Petersburg"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+03:00) Volgograd"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+03:30) Tehran"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+04:00) Abu Dhabi"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+04:00) Baku"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+04:00) Muscat"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+04:00) Samara"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+04:00) Tbilisi"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+04:00) Yerevan"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+04:30) Kabul"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+05:00) Ekaterinburg"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+05:00) Islamabad"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+05:00) Karachi"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+05:00) Tashkent"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+05:30) Chennai"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+05:30) Kolkata"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+05:30) Mumbai"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+05:30) New Delhi"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+05:30) Sri Jayawardenepura"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+05:45) Kathmandu"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+06:00) Almaty"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+06:00) Astana"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+06:00) Dhaka"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+06:00) Urumqi"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+06:30) Rangoon"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+07:00) Bangkok"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+07:00) Hanoi"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+07:00) Jakarta"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+07:00) Krasnoyarsk"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+07:00) Novosibirsk"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+08:00) Beijing"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+08:00) Chongqing"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+08:00) Hong Kong"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+08:00) Irkutsk"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+08:00) Kuala Lumpur"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+08:00) Perth"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+08:00) Singapore"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+08:00) Taipei"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+08:00) Ulaanbaatar"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+09:00) Osaka"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+09:00) Sapporo"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+09:00) Seoul"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+09:00) Tokyo"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+09:00) Yakutsk"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+09:30) Adelaide"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+09:30) Darwin"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+10:00) Brisbane"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+10:00) Canberra"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+10:00) Guam"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+10:00) Hobart"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+10:00) Melbourne"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+10:00) Port Moresby"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+10:00) Sydney"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+10:00) Vladivostok"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+11:00) Magadan"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+11:00) New Caledonia"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+11:00) Solomon Is."
+msgstr ""
+
+#, fuzzy
+msgid "GMT+11:00) Srednekolymsk"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+12:00) Auckland"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+12:00) Fiji"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+12:00) Kamchatka"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+12:00) Marshall Is."
+msgstr ""
+
+#, fuzzy
+msgid "GMT+12:00) Wellington"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+12:45) Chatham Is."
+msgstr ""
+
+#, fuzzy
+msgid "GMT+13:00) Nuku&#39;alofa"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+13:00) Samoa"
+msgstr ""
+
+#, fuzzy
+msgid "GMT+13:00) Tokelau Is."
+msgstr ""
+
+#, fuzzy
+msgid "It looks like this site has moved or has been duplicated. SureCart has created new webhooks for the domain to prevent purchase sync issues. Should we remove the previous webook?"
+msgstr ""
+
+#, fuzzy
+msgid "Ignore notice."
+msgstr ""
+
+#, fuzzy
+msgid "Ignore this notice. This is a duplicate or staging site."
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you want to remove this webhook?"
+msgstr ""
+
+#, fuzzy
+msgid "Remove webhook"
+msgstr ""
+
+#, fuzzy
+msgid "My website domain has permanently changed. Remove webhook for %s"
+msgstr ""
+
+#, fuzzy
+msgid "Remove webhook."
+msgstr ""
+
+#, fuzzy
+msgid "SureCart webhooks could not be created."
+msgstr ""
+
+#, fuzzy
+msgid "Dashboard"
+msgstr ""
+
+#, fuzzy
+msgid "Get Started"
+msgstr ""
+
+#, fuzzy
+msgid "Complete Signup"
+msgstr ""
+
+#, fuzzy
+msgid "Upgrade Groups"
+msgstr ""
+
+#, fuzzy
+msgid "Order Bumps"
+msgstr ""
+
+#, fuzzy
+msgid "Forms"
+msgstr ""
+
+#, fuzzy
+msgid "Dismiss Notice"
+msgstr ""
+
+#, fuzzy
+msgid "Your store does not appear to be using a secure connection. A secure connection (https) is required to use SureCart to process live transactions."
+msgstr ""
+
+#, fuzzy
+msgctxt "Cart slug"
+msgid "cart"
+msgstr ""
+
+#, fuzzy
+msgctxt "Cart title"
+msgid "Cart"
+msgstr ""
+
+#, fuzzy
+msgid "Store Checkout"
+msgstr ""
+
+#, fuzzy
+msgid "Customer Dashboard"
+msgstr ""
+
+#, fuzzy
+msgid "Order Confirmation"
+msgstr ""
+
+#, fuzzy
+msgctxt "post type general name"
+msgid "Carts"
+msgstr ""
+
+#, fuzzy
+msgctxt "post type singular name"
+msgid "Cart"
+msgstr ""
+
+#, fuzzy
+msgctxt "Cart"
+msgid "Add New"
+msgstr ""
+
+#, fuzzy
+msgid "Add new Cart"
+msgstr ""
+
+#, fuzzy
+msgid "New Cart"
+msgstr ""
+
+#, fuzzy
+msgid "Edit Cart"
+msgstr ""
+
+#, fuzzy
+msgid "View Cart"
+msgstr ""
+
+#, fuzzy
+msgid "All Carts"
+msgstr ""
+
+#, fuzzy
+msgid "Search Carts"
+msgstr ""
+
+#, fuzzy
+msgid "No checkout forms found."
+msgstr ""
+
+#, fuzzy
+msgid "No checkout forms found in Trash."
+msgstr ""
+
+#, fuzzy
+msgid "Filter checkout forms list"
+msgstr ""
+
+#, fuzzy
+msgid "Carts list navigation"
+msgstr ""
+
+#, fuzzy
+msgid "Carts list"
+msgstr ""
+
+#, fuzzy
+msgid "Cart published."
+msgstr ""
+
+#, fuzzy
+msgid "Cart published privately."
+msgstr ""
+
+#, fuzzy
+msgid "Cart reverted to draft."
+msgstr ""
+
+#, fuzzy
+msgid "Cart scheduled."
+msgstr ""
+
+#, fuzzy
+msgid "Cart updated."
+msgstr ""
+
+#, fuzzy
+msgid "Default"
+msgstr ""
+
+#, fuzzy
+msgctxt "post type general name"
+msgid "Checkout Forms"
+msgstr ""
+
+#, fuzzy
+msgctxt "post type singular name"
+msgid "Checkout Form"
+msgstr ""
+
+#, fuzzy
+msgctxt "Checkout Form"
+msgid "Add New"
+msgstr ""
+
+#, fuzzy
+msgid "Add new Checkout Form"
+msgstr ""
+
+#, fuzzy
+msgid "New Checkout Form"
+msgstr ""
+
+#, fuzzy
+msgid "Edit Checkout Form"
+msgstr ""
+
+#, fuzzy
+msgid "View Checkout Form"
+msgstr ""
+
+#, fuzzy
+msgid "All Checkout Forms"
+msgstr ""
+
+#, fuzzy
+msgid "Search Checkout Forms"
+msgstr ""
+
+#, fuzzy
+msgid "Checkout Forms list navigation"
+msgstr ""
+
+#, fuzzy
+msgid "Checkout Forms list"
+msgstr ""
+
+#, fuzzy
+msgid "Checkout Form published."
+msgstr ""
+
+#, fuzzy
+msgid "Checkout Form published privately."
+msgstr ""
+
+#, fuzzy
+msgid "Checkout Form reverted to draft."
+msgstr ""
+
+#, fuzzy
+msgid "Checkout Form scheduled."
+msgstr ""
+
+#, fuzzy
+msgid "Checkout Form updated."
+msgstr ""
+
+#, fuzzy
+msgid "Published In"
+msgstr ""
+
+#, fuzzy
+msgid "Mode"
+msgstr ""
+
+#, fuzzy
+msgid "Shortcode"
+msgstr ""
+
+#, fuzzy
+msgid "(no title)"
+msgstr ""
+
+#, fuzzy
+msgid "Your request could not be validated. Please try again."
+msgstr ""
+
+#, fuzzy
+msgid "This form is not available or has been deleted."
+msgstr ""
+
+#, fuzzy
+msgid "Limit result set to users with a customer."
+msgstr ""
+
+#, fuzzy
+msgid "Limit result set to users with specific customer ids."
+msgstr ""
+
+#, fuzzy
+msgid "Recover lost sales with abandoned checkouts."
+msgstr ""
+
+#, fuzzy
+msgid "69% of shoppers abandon their checkouts before completing a purchase. Recover lost revenue with automated, high-converting emails."
+msgstr ""
+
+#, fuzzy
+msgid "Upgrade"
+msgstr ""
+
+#, fuzzy
+msgid "Advanced Settings"
+msgstr ""
+
+#, fuzzy
+msgid "Save"
+msgstr ""
+
+#, fuzzy
+msgid "Performance"
+msgstr ""
+
+#, fuzzy
+msgid "Change your plugin performance settings."
+msgstr ""
+
+#, fuzzy
+msgid "Use JavaScript ESM Loader"
+msgstr ""
+
+#, fuzzy
+msgid "This can slightly increase page load speed, but may require you to enable CORS headers for .js files on your CDN. Please check your checkout forms after you enable this option in a private browser window."
+msgstr ""
+
+#, fuzzy
+msgid "Beta Features"
+msgstr ""
+
+#, fuzzy
+msgid "Opt-in to some beta features of the plugin."
+msgstr ""
+
+#, fuzzy
+msgid "Use the Stripe Payment Element"
+msgstr ""
+
+#, fuzzy
+msgid "Use Stripe's Payment Element instead of the Card Element in all forms."
+msgstr ""
+
+#, fuzzy
+msgid "Uninstall"
+msgstr ""
+
+#, fuzzy
+msgid "Change your plugin uninstall settings."
+msgstr ""
+
+#, fuzzy
+msgid "Remove Plugin Data"
+msgstr ""
+
+#, fuzzy
+msgid "Completely remove all plugin data when deleted. This cannot be undone."
+msgstr ""
+
+#, fuzzy
+msgid "Coming soon..."
+msgstr ""
+
+#, fuzzy
+msgid "We are currently working on our Pro features. Please check back once we release new revenue and time saving features."
+msgstr ""
+
+#, fuzzy
+msgid "Update Your Connection"
+msgstr ""
+
+#, fuzzy
+msgid "Connection Details"
+msgstr ""
+
+#, fuzzy
+msgid "Add your API token to connect to SureCart."
+msgstr ""
+
+#, fuzzy
+msgid "Api Token"
+msgstr ""
+
+#, fuzzy
+msgid "Enter your api token."
+msgstr ""
+
+#, fuzzy
+msgid "Find My Api Token"
+msgstr ""
+
+#, fuzzy
+msgid "Connection Settings"
+msgstr ""
+
+#, fuzzy
+msgid "Update your api token to change or update the connection to SureCart."
+msgstr ""
+
+#, fuzzy
+msgid "Search Customers"
+msgstr ""
+
+#, fuzzy
+msgid "What are Invoices?"
+msgstr ""
+
+#, fuzzy
+msgid "Invoices are similar to orders, but are used for payments and plan changes on active subscriptions. In the future you will be able to create an invoice to send out."
+msgstr ""
+
+#, fuzzy
+msgid "Please enter an API key."
+msgstr ""
+
+#, fuzzy
+msgid "Just one last step!"
+msgstr ""
+
+#, fuzzy
+msgid "Enter your API Token"
+msgstr ""
+
+#, fuzzy
+msgid "Api token"
+msgstr ""
+
+#, fuzzy
+msgid "Complete Installation"
+msgstr ""
+
+#, fuzzy
+msgid "Welcome to SureCart!"
+msgstr ""
+
+#, fuzzy
+msgid "Commerce on WordPress has never been easier, faster, or more flexible."
+msgstr ""
+
+#, fuzzy
+msgid "Set Up My Store"
+msgstr ""
+
+#, fuzzy
+msgid "Get started by creating your first product or creating a new checkout form."
+msgstr ""
+
+#, fuzzy
+msgid "Create A Product"
+msgstr ""
+
+#, fuzzy
+msgid "Create A Form"
+msgstr ""
+
+#, fuzzy
+msgid "Get Help"
+msgstr ""
+
+#, fuzzy
+msgid "Saved."
+msgstr ""
+
+#, fuzzy
+msgid "Plugin Settings"
+msgstr ""
+
+#, fuzzy
+msgid "Save Settings"
+msgstr ""
+
+#, fuzzy
+msgid "Processors"
+msgstr ""
+
+#, fuzzy
+msgid "Connect with Stripe to accept credit cards and other payment methods."
+msgstr ""
+
+#, fuzzy
+msgid "Test and Live Payments Enabled"
+msgstr ""
+
+#, fuzzy
+msgid "Live Payments Enabled"
+msgstr ""
+
+#, fuzzy
+msgid "Test Payment Not Enabled"
+msgstr ""
+
+#, fuzzy
+msgid "Test Payments Enabled"
+msgstr ""
+
+#, fuzzy
+msgid "Live Payments Not Enabled"
+msgstr ""
+
+#, fuzzy
+msgid "Connect with PayPal to add a PayPal express button to your checkout."
+msgstr ""
+
+#, fuzzy
+msgid "What are Upgrade Groups?"
+msgstr ""
+
+#, fuzzy
+msgid "An upgrade groups is how you define upgrade and downgrade paths for your customers. It is based on products they have previously purchased."
+msgstr ""
+
+#, fuzzy
+msgid "Search Products"
+msgstr ""
+
+#, fuzzy
+msgid "What are Subscriptions?"
+msgstr ""
+
+#, fuzzy
+msgid "This is a list for all your subscription plans. Subscriptions represent recurring payment plans for your users."
+msgstr ""
+
+#, fuzzy
+msgid "This user is not a customer."
+msgstr ""
+
+#, fuzzy
+msgid "Add New"
+msgstr ""
+
+#, fuzzy
+msgid "Cache cleared."
+msgstr ""
+
+#, fuzzy
+msgid "Clear Account Cache"
+msgstr ""
+
+#, fuzzy
+msgid "SureCart Status"
+msgstr ""
+
+#, fuzzy
+msgid "Version %s"
+msgstr ""
+
+#, fuzzy
+msgid "Your API key is incorrect. Please double-check it is correct and update it."
+msgstr ""
+
+#, fuzzy
+msgid "Store Settings"
+msgstr ""
+
+#, fuzzy
+msgid "Design & Branding"
+msgstr ""
+
+#, fuzzy
+msgid "Orders & Receipts"
+msgstr ""
+
+#, fuzzy
+msgid "Abandoned Checkout"
+msgstr ""
+
+#, fuzzy
+msgid "Pro"
+msgstr ""
+
+#, fuzzy
+msgid "Notifications"
+msgstr ""
+
+#, fuzzy
+msgid "Customer Portal"
+msgstr ""
+
+#, fuzzy
+msgid "Taxes"
+msgstr ""
+
+#, fuzzy
+msgid "Data Export"
+msgstr ""
+
+#, fuzzy
+msgid "Connection"
+msgstr ""
+
+#, fuzzy
+msgid "Advanced"
+msgstr ""
+
+#, fuzzy
+msgid "Boost Your Revenue"
+msgstr ""
+
+#, fuzzy
+msgid "Unlock revenue boosting features when you upgrade to Pro!"
+msgstr ""
+
+#, fuzzy
+msgid "Upgrade To Pro"
+msgstr ""
+
+#, fuzzy
+msgid "Help"
+msgstr ""
+
+#, fuzzy
+msgid "Order Details"
+msgstr ""
+
+#, fuzzy
+msgid "Payment"
+msgstr ""
+
+#, fuzzy
+msgid "You have not been charged for this order."
+msgstr ""
+
+#, fuzzy
+msgid "Sign in to your account"
+msgstr ""
+
+#, fuzzy
+msgid "It looks like you are not yet a customer."
+msgstr ""
+
+#, fuzzy
+msgid "You must first purchase something to access your dashboard."
+msgstr ""
+
+#, fuzzy
+msgid "Home"
+msgstr ""
+
+#, fuzzy
+msgid "Logout"
+msgstr ""
+
+#, fuzzy
+msgid "Last 30 Days"
+msgstr ""
+
+#, fuzzy
+msgid "Today"
+msgstr ""
+
+#, fuzzy
+msgid "Yesterday"
+msgstr ""
+
+#, fuzzy
+msgid "This Week"
+msgstr ""
+
+#, fuzzy
+msgid "Last Week"
+msgstr ""
+
+#, fuzzy
+msgid "This Month"
+msgstr ""
+
+#, fuzzy
+msgid "Last Month"
+msgstr ""
+
+#, fuzzy
+msgid "Recoverable Checkouts"
+msgstr ""
+
+#, fuzzy
+msgid "Total Recoverable Checkouts"
+msgstr ""
+
+#, fuzzy
+msgid "Recovered Checkouts"
+msgstr ""
+
+#, fuzzy
+msgid "Potential Recovered Checkouts"
+msgstr ""
+
+#, fuzzy
+msgid "Total recovered checkouts"
+msgstr ""
+
+#, fuzzy
+msgid "Checkout Recovery Rate"
+msgstr ""
+
+#, fuzzy
+msgid "Potential Checkout Recovery Rate"
+msgstr ""
+
+#, fuzzy
+msgid "Percentage of checkouts recovered"
+msgstr ""
+
+#, fuzzy
+msgid "Recoverable Revenue"
+msgstr ""
+
+#, fuzzy
+msgid "Total recoverable revenue"
+msgstr ""
+
+#, fuzzy
+msgid "Recovered Revenue"
+msgstr ""
+
+#, fuzzy
+msgid "Potential Recovered Revenue"
+msgstr ""
+
+#, fuzzy
+msgid "Total recovered revenue"
+msgstr ""
+
+#, fuzzy
+msgid "Revenue Recovery Rate"
+msgstr ""
+
+#, fuzzy
+msgid "Potential Revenue Recovery Rate"
+msgstr ""
+
+#, fuzzy
+msgid "Percentage of revenue recovered"
+msgstr ""
+
+#, fuzzy
+msgid "Something went wrong"
+msgstr ""
+
+#, fuzzy
+msgid "View Abandoned Checkout"
+msgstr ""
+
+#, fuzzy
+msgid "Shipping & Tax Address"
+msgstr ""
+
+#, fuzzy
+msgid "Error copying to clipboard"
+msgstr ""
+
+#, fuzzy
+msgid "Cart Recovery Link"
+msgstr ""
+
+#, fuzzy
+msgid "Copy"
+msgstr ""
+
+#, fuzzy
+msgid "To adjust your abandoned checkout notifications,"
+msgstr ""
+
+#, fuzzy
+msgid "adjust your settings"
+msgstr ""
+
+#, fuzzy
+msgid "Address"
+msgstr ""
+
+#, fuzzy
+msgid "Discount"
+msgstr ""
+
+#, fuzzy
+msgid "Redeemed"
+msgstr ""
+
+#, fuzzy
+msgid "Not Redeemed"
+msgstr ""
+
+#, fuzzy
+msgid "Redeem By"
+msgstr ""
+
+#, fuzzy
+msgid "View Customer"
+msgstr ""
+
+#, fuzzy
+msgid "Test Mode"
+msgstr ""
+
+#, fuzzy
+msgid "Created on %s"
+msgstr ""
+
+#, fuzzy
+msgid "Checkout Details"
+msgstr ""
+
+#, fuzzy
+msgid "View Order"
+msgstr ""
+
+#, fuzzy
+msgid "Subtotal"
+msgstr ""
+
+#, fuzzy
+msgid "Proration"
+msgstr ""
+
+#, fuzzy
+msgid "Applied Balance"
+msgstr ""
+
+#, fuzzy
+msgid "Discounts"
+msgstr ""
+
+#, fuzzy
+msgid "Coupon:"
+msgstr ""
+
+#, fuzzy
+msgid "Bump Discounts"
+msgstr ""
+
+#, fuzzy
+msgid "Tax"
+msgstr ""
+
+#, fuzzy
+msgid "Metadata"
+msgstr ""
+
+#, fuzzy
+msgid "Schedule"
+msgstr ""
+
+#, fuzzy
+msgid "Email #%d"
+msgstr ""
+
+#, fuzzy
+msgid "Upcoming"
+msgstr ""
+
+#, fuzzy
+msgid "Something went wrong."
+msgstr ""
+
+#, fuzzy
+msgid "Create New Order Bump"
+msgstr ""
+
+#, fuzzy
+msgid "Order Bump Price"
+msgstr ""
+
+#, fuzzy
+msgid "This is the price for the bump."
+msgstr ""
+
+#, fuzzy
+msgid "Cancel"
+msgstr ""
+
+#, fuzzy
+msgid "Order Bump updated."
+msgstr ""
+
+#, fuzzy
+msgid "Permanently delete this order bump? You cannot undo this action."
+msgstr ""
+
+#, fuzzy
+msgid "Bump deleted."
+msgstr ""
+
+#, fuzzy
+msgid "Un-Archive this bump? This will make the product purchaseable again."
+msgstr ""
+
+#, fuzzy
+msgid "Archive this bump? This bump will not be purchaseable and all unsaved changes will be lost."
+msgstr ""
+
+#, fuzzy
+msgid "Bump archived."
+msgstr ""
+
+#, fuzzy
+msgid "Bump un-archived."
+msgstr ""
+
+#, fuzzy
+msgid "Delete"
+msgstr ""
+
+#, fuzzy
+msgid "Save Order Bump"
+msgstr ""
+
+#, fuzzy
+msgid "Edit Bump"
+msgstr ""
+
+#, fuzzy
+msgid "Behavior"
+msgstr ""
+
+#, fuzzy
+msgid "Auto Apply"
+msgstr ""
+
+#, fuzzy
+msgid "Automatically apply the order bump if the customer has the required items in the cart."
+msgstr ""
+
+#, fuzzy
+msgid "Display Conditions"
+msgstr ""
+
+#, fuzzy
+msgid "Add A Condition"
+msgstr ""
+
+#, fuzzy
+msgid "Show Bump Offer If"
+msgstr ""
+
+#, fuzzy
+msgid "All of these items are in the cart."
+msgstr ""
+
+#, fuzzy
+msgid "Any of these items are in the cart."
+msgstr ""
+
+#, fuzzy
+msgid "None of these items are in the cart."
+msgstr ""
+
+#, fuzzy
+msgid "Prices"
+msgstr ""
+
+#, fuzzy
+msgid "Add some conditions to display this bump."
+msgstr ""
+
+#, fuzzy
+msgid "Custom Call to action"
+msgstr ""
+
+#, fuzzy
+msgid "Optional"
+msgstr ""
+
+#, fuzzy
+msgid "Call to action"
+msgstr ""
+
+#, fuzzy
+msgid "Set a custom call to action for the bump."
+msgstr ""
+
+#, fuzzy
+msgid "Add a description"
+msgstr ""
+
+#, fuzzy
+msgid "Bump Description"
+msgstr ""
+
+#, fuzzy
+msgid "Add a descirption that will get your customers excited about the offer."
+msgstr ""
+
+#, fuzzy
+msgid "Discount Amount"
+msgstr ""
+
+#, fuzzy
+msgid "Percentage"
+msgstr ""
+
+#, fuzzy
+msgid "Fixed"
+msgstr ""
+
+#, fuzzy
+msgid "Add a name"
+msgstr ""
+
+#, fuzzy
+msgid "Bump Name"
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you want to discard this condition?"
+msgstr ""
+
+#, fuzzy
+msgid "Choose An Item"
+msgstr ""
+
+#, fuzzy
+msgid "Select A Price"
+msgstr ""
+
+#, fuzzy
+msgid "Select A Product"
+msgstr ""
+
+#, fuzzy
+msgid "Select An Upgrade Group"
+msgstr ""
+
+#, fuzzy
+msgid "Add Condition"
+msgstr ""
+
+#, fuzzy
+msgid "Preview"
+msgstr ""
+
+#, fuzzy
+msgid "Change"
+msgstr ""
+
+#, fuzzy
+msgid "Priority"
+msgstr ""
+
+#, fuzzy
+msgid "Bump Priority (1-5)"
+msgstr ""
+
+#, fuzzy
+msgid "The priority of this bump in relation to other bumps. The higher the number, the higher the priority."
+msgstr ""
+
+#, fuzzy
+msgid "Standalone Editor top bar."
+msgstr ""
+
+#, fuzzy
+msgid "Standalone Block Editor"
+msgstr ""
+
+#, fuzzy
+msgid "Standalone Block Editor advanced settings."
+msgstr ""
+
+#, fuzzy
+msgid "Inspector"
+msgstr ""
+
+#, fuzzy
+msgid "Partially Refunded"
+msgstr ""
+
+#, fuzzy
+msgid "Refund"
+msgstr ""
+
+#, fuzzy
+msgid "Charges"
+msgstr ""
+
+#, fuzzy
+msgid "No charges"
+msgstr ""
+
+#, fuzzy
+msgid "View charge on "
+msgstr ""
+
+#, fuzzy
+msgid "We were unable to issue a refund with this payment processor. Please check with your payment processor and try issuing the refund directly through the processor."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to create refund."
+msgstr ""
+
+#, fuzzy
+msgid "Refund Payment"
+msgstr ""
+
+#, fuzzy
+msgid "Refunds can take 5-10 days to appear on a customer's statement. Processor fees are typically not returned."
+msgstr ""
+
+#, fuzzy
+msgid "Reason"
+msgstr ""
+
+#, fuzzy
+msgid "Select a reason"
+msgstr ""
+
+#, fuzzy
+msgid "Duplicate"
+msgstr ""
+
+#, fuzzy
+msgid "Fraudulent"
+msgstr ""
+
+#, fuzzy
+msgid "Requested By Customer"
+msgstr ""
+
+#, fuzzy
+msgid "None found."
+msgstr ""
+
+#, fuzzy
+msgid "%s item"
+msgid_plural "%s items"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy
+msgid "Load More"
+msgstr ""
+
+#, fuzzy
+msgid "Purchases"
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure? This action will remove the associated access and trigger any cancelation automations you have set up."
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure? This action will re-enable associated access."
+msgstr ""
+
+#, fuzzy
+msgid "To unrevoke this purchase, the customer must purchase a new subscription."
+msgstr ""
+
+#, fuzzy
+msgid "Unrevoke access to this purchase"
+msgstr ""
+
+#, fuzzy
+msgid "Unrevoke"
+msgstr ""
+
+#, fuzzy
+msgid "To revoke this purchase you must cancel the subscription."
+msgstr ""
+
+#, fuzzy
+msgid "Revoke access to this purchase"
+msgstr ""
+
+#, fuzzy
+msgid "Revoke"
+msgstr ""
+
+#, fuzzy
+msgid "Could not cancel subscription."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to cancel subscription."
+msgstr ""
+
+#, fuzzy
+msgid "Cancel Subscription"
+msgstr ""
+
+#, fuzzy
+msgid "\tAt end of current period"
+msgstr ""
+
+#, fuzzy
+msgid "Immediately"
+msgstr ""
+
+#, fuzzy
+msgid "Don't Cancel"
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you want to start the subscription? This will immediately charge the customer."
+msgstr ""
+
+#, fuzzy
+msgid "Could not start subscription."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to start subscription."
+msgstr ""
+
+#, fuzzy
+msgid "Activate"
+msgstr ""
+
+#, fuzzy
+msgid "Cancels"
+msgstr ""
+
+#, fuzzy
+msgid "Begins"
+msgstr ""
+
+#, fuzzy
+msgid "Renews"
+msgstr ""
+
+#, fuzzy
+msgid "Ended"
+msgstr ""
+
+#, fuzzy
+msgid "Start Plan"
+msgstr ""
+
+#, fuzzy
+msgid "Could not un-cancel subscription."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to un-cancel subscription."
+msgstr ""
+
+#, fuzzy
+msgid "Select date"
+msgstr ""
+
+#, fuzzy
+msgid "Choose"
+msgstr ""
+
+#, fuzzy
+msgid "Remove"
+msgstr ""
+
+#, fuzzy
+msgid "Any price"
+msgstr ""
+
+#, fuzzy
+msgid "Could not download the file."
+msgstr ""
+
+#, fuzzy
+msgid "No items found"
+msgstr ""
+
+#, fuzzy
+msgid "Something went wrong. Please try again."
+msgstr ""
+
+#, fuzzy
+msgid "Upload Media"
+msgstr ""
+
+#, fuzzy
+msgid "or drag and drop a file to upload."
+msgstr ""
+
+#, fuzzy
+msgid "Max"
+msgstr ""
+
+#, fuzzy
+msgid "Previous Page"
+msgstr ""
+
+#, fuzzy
+msgid "Next Page"
+msgstr ""
+
+#, fuzzy
+msgid "SureCart Media"
+msgstr ""
+
+#, fuzzy
+msgid "Private"
+msgstr ""
+
+#, fuzzy
+msgid "Public"
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you wish to delete this media item? This cannot be undone."
+msgstr ""
+
+#, fuzzy
+msgid "Filename"
+msgstr ""
+
+#, fuzzy
+msgid "Size"
+msgstr ""
+
+#, fuzzy
+msgid "Added"
+msgstr ""
+
+#, fuzzy
+msgid "Download"
+msgstr ""
+
+#, fuzzy
+msgid "Add Media"
+msgstr ""
+
+#, fuzzy
+msgid "Select a price"
+msgstr ""
+
+#, fuzzy
+msgid "Search for a price..."
+msgstr ""
+
+#, fuzzy
+msgid "Add New Product"
+msgstr ""
+
+#, fuzzy
+msgid "Select an upgrade group"
+msgstr ""
+
+#, fuzzy
+msgid "Search for an upgrade group..."
+msgstr ""
+
+#, fuzzy
+msgid "Add New Upgrade Group"
+msgstr ""
+
+#, fuzzy
+msgid "Select a product"
+msgstr ""
+
+#, fuzzy
+msgid "Search for a product..."
+msgstr ""
+
+#, fuzzy
+msgid "of"
+msgstr ""
+
+#, fuzzy
+msgid "Your storage space is low"
+msgstr ""
+
+#, fuzzy
+msgid "Change Product And Increase Quantity"
+msgstr ""
+
+#, fuzzy
+msgid "Change Product Decrease Quantity"
+msgstr ""
+
+#, fuzzy
+msgid "Change Product"
+msgstr ""
+
+#, fuzzy
+msgid "Increase quantity"
+msgstr ""
+
+#, fuzzy
+msgid "Decrease quantity"
+msgstr ""
+
+#, fuzzy
+msgid "Manage Scheduled Update"
+msgstr ""
+
+#, fuzzy
+msgid "Delete Update"
+msgstr ""
+
+#, fuzzy
+msgid "Keep Update"
+msgstr ""
+
+#, fuzzy
+msgid "You have unsaved changes. If you proceed, they will be lost."
+msgstr ""
+
+#, fuzzy
+msgid "Unlock revenue boosting features when you upgrade your plan!"
+msgstr ""
+
+#, fuzzy
+msgid "Upgrade Your Plan"
+msgstr ""
+
+#, fuzzy
+msgid "Select a user"
+msgstr ""
+
+#, fuzzy
+msgid "Search for a user..."
+msgstr ""
+
+#, fuzzy
+msgid "Un-Archive %s? This will make the coupon useable again."
+msgstr ""
+
+#, fuzzy
+msgid "This coupon will not be usable and all unsaved changes will be lost."
+msgstr ""
+
+#, fuzzy
+msgid "Permanently delete %s? You cannot undo this action."
+msgstr ""
+
+#, fuzzy
+msgid "Disable \"%s\"?"
+msgstr ""
+
+#, fuzzy
+msgid "This discount code will not be usable and all unsaved changes will be lost."
+msgstr ""
+
+#, fuzzy
+msgid "Disable"
+msgstr ""
+
+#, fuzzy
+msgid "Coupon created."
+msgstr ""
+
+#, fuzzy
+msgid "Create New Coupon"
+msgstr ""
+
+#, fuzzy
+msgid "Coupon Name"
+msgstr ""
+
+#, fuzzy
+msgid "This is an internal name for your coupon. This is not visible to customers."
+msgstr ""
+
+#, fuzzy
+msgid "Promotion Code"
+msgstr ""
+
+#, fuzzy
+msgid "Customers will enter this discount code at checkout. Leave this blank and we will generate one for you."
+msgstr ""
+
+#, fuzzy
+msgid "Create Coupon"
+msgstr ""
+
+#, fuzzy
+msgid "Deleted."
+msgstr ""
+
+#, fuzzy
+msgid "Coupon updated."
+msgstr ""
+
+#, fuzzy
+msgid "Edit Coupon"
+msgstr ""
+
+#, fuzzy
+msgid "Update Coupon"
+msgstr ""
+
+#, fuzzy
+msgid "Delete this coupon?"
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you want to delete this coupon?"
+msgstr ""
+
+#, fuzzy
+msgid "Archived."
+msgstr ""
+
+#, fuzzy
+msgid "Restored."
+msgstr ""
+
+#, fuzzy
+msgid "Uses"
+msgstr ""
+
+#, fuzzy
+msgid "Delete this promotion code?"
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you want to delete this promotion code?"
+msgstr ""
+
+#, fuzzy
+msgid "Promotion Codes"
+msgstr ""
+
+#, fuzzy
+msgid "Add Promotion Code"
+msgstr ""
+
+#, fuzzy
+msgid "Show %d Archived Promotion Codes"
+msgstr ""
+
+#, fuzzy
+msgid "Hide %d Archived Promotion Codes"
+msgstr ""
+
+#, fuzzy
+msgid "Customer created."
+msgstr ""
+
+#, fuzzy
+msgid "Add Customer"
+msgstr ""
+
+#, fuzzy
+msgid "First Name"
+msgstr ""
+
+#, fuzzy
+msgid "Last Name"
+msgstr ""
+
+#, fuzzy
+msgid "Promotion updated."
+msgstr ""
+
+#, fuzzy
+msgid "Promotion created."
+msgstr ""
+
+#, fuzzy
+msgid "Edit Promotion Code"
+msgstr ""
+
+#, fuzzy
+msgid "New Promotion Code"
+msgstr ""
+
+#, fuzzy
+msgid "Leave this blank and we will generate one for you."
+msgstr ""
+
+#, fuzzy
+msgid "Limit the usage of this promotion code"
+msgstr ""
+
+#, fuzzy
+msgid "Usage Limit"
+msgstr ""
+
+#, fuzzy
+msgid "Limit the number of times this code can be redeemed."
+msgstr ""
+
+#, fuzzy
+msgid "time"
+msgid_plural "times"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy
+msgid "Update"
+msgstr ""
+
+#, fuzzy
+msgid "Redemption Limits"
+msgstr ""
+
+#, fuzzy
+msgid "Usage limit per coupon"
+msgstr ""
+
+#, fuzzy
+msgid "This limit applies across customers so it won't prevent a single customer from redeeming multiple times."
+msgstr ""
+
+#, fuzzy
+msgid "Unlimited Usage"
+msgstr ""
+
+#, fuzzy
+msgid "Usage limit per customer"
+msgstr ""
+
+#, fuzzy
+msgid "This limit applies across per customer."
+msgstr ""
+
+#, fuzzy
+msgid "End Date"
+msgstr ""
+
+#, fuzzy
+msgid "Limit the end date when customers can redeem this coupon."
+msgstr ""
+
+#, fuzzy
+msgid "Users must redeem this coupon by:"
+msgstr ""
+
+#, fuzzy
+msgid "Add A Restriction"
+msgstr ""
+
+#, fuzzy
+msgid "Coupon is valid for"
+msgstr ""
+
+#, fuzzy
+msgid "Select A Customer"
+msgstr ""
+
+#, fuzzy
+msgid "Add Filter"
+msgstr ""
+
+#, fuzzy
+msgid "%d prices"
+msgstr ""
+
+#, fuzzy
+msgid "Product Restrictions"
+msgstr ""
+
+#, fuzzy
+msgid "Add Product Restriction"
+msgstr ""
+
+#, fuzzy
+msgid "Find a product..."
+msgstr ""
+
+#, fuzzy
+msgid "Restrictions"
+msgstr ""
+
+#, fuzzy
+msgid "Restrict this coupon"
+msgstr ""
+
+#, fuzzy
+msgid "Allow Coupon"
+msgstr ""
+
+#, fuzzy
+msgid "If all of these conditions are true"
+msgstr ""
+
+#, fuzzy
+msgid "If any of these conditions are true"
+msgstr ""
+
+#, fuzzy
+msgid "If none of these conditions are true"
+msgstr ""
+
+#, fuzzy
+msgid "Limit To A Specific Customer"
+msgstr ""
+
+#, fuzzy
+msgid "Any Customer"
+msgstr ""
+
+#, fuzzy
+msgid "Repeating"
+msgstr ""
+
+#, fuzzy
+msgid "Choose a type"
+msgstr ""
+
+#, fuzzy
+msgid "Percentage Discount"
+msgstr ""
+
+#, fuzzy
+msgid "Fixed Discount"
+msgstr ""
+
+#, fuzzy
+msgid "Discount Duration"
+msgstr ""
+
+#, fuzzy
+msgid "Number of months"
+msgstr ""
+
+#, fuzzy
+msgid "%s%% off"
+msgstr ""
+
+#, fuzzy
+msgid "%d months"
+msgstr ""
+
+#, fuzzy
+msgid "Summary"
+msgstr ""
+
+#, fuzzy
+msgid "Duration"
+msgstr ""
+
+#, fuzzy
+msgid "Last Updated"
+msgstr ""
+
+#, fuzzy
+msgid "Archived On"
+msgstr ""
+
+#, fuzzy
+msgid "Create New Customer"
+msgstr ""
+
+#, fuzzy
+msgid "Customer Name"
+msgstr ""
+
+#, fuzzy
+msgid "Your customer's full name."
+msgstr ""
+
+#, fuzzy
+msgid "Customer Email"
+msgstr ""
+
+#, fuzzy
+msgid "Your customer's email."
+msgstr ""
+
+#, fuzzy
+msgid "Create this customer in test mode if you are going to use this account for test mode purchasing."
+msgstr ""
+
+#, fuzzy
+msgid "Customer updated."
+msgstr ""
+
+#, fuzzy
+msgid "Edit Customer"
+msgstr ""
+
+#, fuzzy
+msgid "Save Customer"
+msgstr ""
+
+#, fuzzy
+msgid "Balance"
+msgstr ""
+
+#, fuzzy
+msgid "View Transactions"
+msgstr ""
+
+#, fuzzy
+msgid "Credit Balance"
+msgstr ""
+
+#, fuzzy
+msgid "Credit"
+msgstr ""
+
+#, fuzzy
+msgid "Applied"
+msgstr ""
+
+#, fuzzy
+msgid "There are no transactions"
+msgstr ""
+
+#, fuzzy
+msgid "Ending Balance"
+msgstr ""
+
+#, fuzzy
+msgid "Balance Transactions"
+msgstr ""
+
+#, fuzzy
+msgid "No more charges."
+msgstr ""
+
+#, fuzzy
+msgid "Customer Details"
+msgstr ""
+
+#, fuzzy
+msgid "Your customer's first name."
+msgstr ""
+
+#, fuzzy
+msgid "Your customer's last name."
+msgstr ""
+
+#, fuzzy
+msgid "Your customer's email address."
+msgstr ""
+
+#, fuzzy
+msgid "Subscribed to emails"
+msgstr ""
+
+#, fuzzy
+msgid "Number"
+msgstr ""
+
+#, fuzzy
+msgid "Items"
+msgstr ""
+
+#, fuzzy
+msgid "No more orders."
+msgstr ""
+
+#, fuzzy
+msgid "This will save any changes on the page. Do you want to save your changes?"
+msgstr ""
+
+#, fuzzy
+msgid "Default payment method changed."
+msgstr ""
+
+#, fuzzy
+msgid "Make Default"
+msgstr ""
+
+#, fuzzy
+msgid "Payment method deleted."
+msgstr ""
+
+#, fuzzy
+msgid "Delete this payment method?"
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you want to delete this payment method?"
+msgstr ""
+
+#, fuzzy
+msgid "Payment Methods"
+msgstr ""
+
+#, fuzzy
+msgid "Exp."
+msgstr ""
+
+#, fuzzy
+msgid "Item"
+msgstr ""
+
+#, fuzzy
+msgid "No more subscriptions."
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you want to disconnect this from this customer? This will cause them to lose access to their purchases."
+msgstr ""
+
+#, fuzzy
+msgid "User disconnected."
+msgstr ""
+
+#, fuzzy
+msgid "User connected."
+msgstr ""
+
+#, fuzzy
+msgid "WordPress User"
+msgstr ""
+
+#, fuzzy
+msgid "Disconnect"
+msgstr ""
+
+#, fuzzy
+msgid "Connect a user"
+msgstr ""
+
+#, fuzzy
+msgid "Get started with SureCart"
+msgstr ""
+
+#, fuzzy
+msgid "Setup"
+msgstr ""
+
+#, fuzzy
+msgid "Create products"
+msgstr ""
+
+#, fuzzy
+msgid "Create products to start selling."
+msgstr ""
+
+#, fuzzy
+msgid "Tutorial"
+msgstr ""
+
+#, fuzzy
+msgid "Add buy and cart buttons"
+msgstr ""
+
+#, fuzzy
+msgid "Add cart and buy buttons to your site."
+msgstr ""
+
+#, fuzzy
+msgid "How To Add Buttons"
+msgstr ""
+
+#, fuzzy
+msgid "Customize"
+msgstr ""
+
+#, fuzzy
+msgid "Customize forms"
+msgstr ""
+
+#, fuzzy
+msgid "Customize your checkout forms with a no-code experience."
+msgstr ""
+
+#, fuzzy
+msgid "Quick Actions"
+msgstr ""
+
+#, fuzzy
+msgid "Create a new checkout form."
+msgstr ""
+
+#, fuzzy
+msgid "Contact support for additional help"
+msgstr ""
+
+#, fuzzy
+msgid "Average Order Value"
+msgstr ""
+
+#, fuzzy
+msgid "vs %s last period"
+msgstr ""
+
+#, fuzzy
+msgid "Revenue"
+msgstr ""
+
+#, fuzzy
+msgid "Overview"
+msgstr ""
+
+#, fuzzy
+msgid "Daily"
+msgstr ""
+
+#, fuzzy
+msgid "Weekly"
+msgstr ""
+
+#, fuzzy
+msgid "Monthly"
+msgstr ""
+
+#, fuzzy
+msgid "Yearly"
+msgstr ""
+
+#, fuzzy
+msgid "You don't have any orders."
+msgstr ""
+
+#, fuzzy
+msgid "Recent Orders"
+msgstr ""
+
+#, fuzzy
+msgid "View All"
+msgstr ""
+
+#, fuzzy
+msgid "Apply"
+msgstr ""
+
+#, fuzzy
+msgid "Okay"
+msgstr ""
+
+#, fuzzy
+msgid "Confirm"
+msgstr ""
+
+#, fuzzy
+msgid "Back to All Invoices"
+msgstr ""
+
+#, fuzzy
+msgid "View Invoice"
+msgstr ""
+
+#, fuzzy
+msgid "Create Invoice"
+msgstr ""
+
+#, fuzzy
+msgid "Charge"
+msgstr ""
+
+#, fuzzy
+msgid "Invoice Details"
+msgstr ""
+
+#, fuzzy
+msgid "Download Receipt"
+msgstr ""
+
+#, fuzzy
+msgid "Download Invoice"
+msgstr ""
+
+#, fuzzy
+msgid "Amount Paid"
+msgstr ""
+
+#, fuzzy
+msgid "Proration Credit"
+msgstr ""
+
+#, fuzzy
+msgid "Total Due"
+msgstr ""
+
+#, fuzzy
+msgid "Shipping Address"
+msgstr ""
+
+#, fuzzy
+msgid "License updated."
+msgstr ""
+
+#, fuzzy
+msgid "Save License"
+msgstr ""
+
+#, fuzzy
+msgid "View License"
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you want to remove this activation? This site will no longer get updates."
+msgstr ""
+
+#, fuzzy
+msgid "Activation deleted."
+msgstr ""
+
+#, fuzzy
+msgid "Please refresh the page and try again."
+msgstr ""
+
+#, fuzzy
+msgid "Activation updated."
+msgstr ""
+
+#, fuzzy
+msgid "Edit Activation"
+msgstr ""
+
+#, fuzzy
+msgid "Fingerprint"
+msgstr ""
+
+#, fuzzy
+msgid "This is a unique identifier for the license. For example, a website url."
+msgstr ""
+
+#, fuzzy
+msgid "Local / Staging"
+msgstr ""
+
+#, fuzzy
+msgid "This license has not been activated."
+msgstr ""
+
+#, fuzzy
+msgid "Activations"
+msgstr ""
+
+#, fuzzy
+msgid "%1s of %2s Activations Used"
+msgstr ""
+
+#, fuzzy
+msgid "License"
+msgstr ""
+
+#, fuzzy
+msgid "License Key"
+msgstr ""
+
+#, fuzzy
+msgid "Activation Limit"
+msgstr ""
+
+#, fuzzy
+msgid "Enter the number of unique activations for this key. Leave blank for infinite."
+msgstr ""
+
+#, fuzzy
+msgid "View Product"
+msgstr ""
+
+#, fuzzy
+msgid "Download Receipt / Invoice"
+msgstr ""
+
+#, fuzzy
+msgid "Net Payment"
+msgstr ""
+
+#, fuzzy
+msgid "Order Marked as Paid."
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you wish to mark the order as paid?"
+msgstr ""
+
+#, fuzzy
+msgid "Mark Paid"
+msgstr ""
+
+#, fuzzy
+msgid "Payment Failures"
+msgstr ""
+
+#, fuzzy
+msgid "Attempt"
+msgstr ""
+
+#, fuzzy
+msgid "Pending"
+msgstr ""
+
+#, fuzzy
+msgid "Succeeded"
+msgstr ""
+
+#, fuzzy
+msgid "Unknown"
+msgstr ""
+
+#, fuzzy
+msgid "Refunds"
+msgstr ""
+
+#, fuzzy
+msgid "Amount Refunded"
+msgstr ""
+
+#, fuzzy
+msgid "Insufficient Funds"
+msgstr ""
+
+#, fuzzy
+msgid "CA GST"
+msgstr ""
+
+#, fuzzy
+msgid "AU ABN"
+msgstr ""
+
+#, fuzzy
+msgid "UK VAT"
+msgstr ""
+
+#, fuzzy
+msgid "EU VAT"
+msgstr ""
+
+#, fuzzy
+msgid "Other"
+msgstr ""
+
+#, fuzzy
+msgid "Tax Information"
+msgstr ""
+
+#, fuzzy
+msgid "Tax Number"
+msgstr ""
+
+#, fuzzy
+msgid "Number Type"
+msgstr ""
+
+#, fuzzy
+msgid "Validity"
+msgstr ""
+
+#, fuzzy
+msgid "Valid"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid"
+msgstr ""
+
+#, fuzzy
+msgid "Unverified"
+msgstr ""
+
+#, fuzzy
+msgid "Actions"
+msgstr ""
+
+#, fuzzy
+msgid "Mark as Paid"
+msgstr ""
+
+#, fuzzy
+msgid "Add Another Product"
+msgstr ""
+
+#, fuzzy
+msgid "Create Upgrade Group"
+msgstr ""
+
+#, fuzzy
+msgid "Group Name"
+msgstr ""
+
+#, fuzzy
+msgid "A name for your product group. It is not shown to customers."
+msgstr ""
+
+#, fuzzy
+msgid "Product group updated."
+msgstr ""
+
+#, fuzzy
+msgid "Save Group"
+msgstr ""
+
+#, fuzzy
+msgid "Product Groups"
+msgstr ""
+
+#, fuzzy
+msgid "Edit Product Group"
+msgstr ""
+
+#, fuzzy
+msgid "Details"
+msgstr ""
+
+#, fuzzy
+msgid "New Upgrade Group"
+msgstr ""
+
+#, fuzzy
+msgid "A name for your product group."
+msgstr ""
+
+#, fuzzy
+msgid "Product added."
+msgstr ""
+
+#, fuzzy
+msgid "Add Product"
+msgstr ""
+
+#, fuzzy
+msgid "Choose a product"
+msgstr ""
+
+#, fuzzy
+msgid "Product removed."
+msgstr ""
+
+#, fuzzy
+msgid "Add some products to this upgrade group. A customer who has purchased one of these products can switch between others in this group."
+msgstr ""
+
+#, fuzzy
+msgid "Number of Payments"
+msgstr ""
+
+#, fuzzy
+msgid "Payments"
+msgstr ""
+
+#, fuzzy
+msgid "Allow customers to pay what they want"
+msgstr ""
+
+#, fuzzy
+msgid "Minimum Price"
+msgstr ""
+
+#, fuzzy
+msgid "Maximum Price"
+msgstr ""
+
+#, fuzzy
+msgid "Repeat Payment Every"
+msgstr ""
+
+#, fuzzy
+msgid "Day"
+msgstr ""
+
+#, fuzzy
+msgid "Week"
+msgstr ""
+
+#, fuzzy
+msgid "Month"
+msgstr ""
+
+#, fuzzy
+msgid "Year"
+msgstr ""
+
+#, fuzzy
+msgid "Compare at price"
+msgstr ""
+
+#, fuzzy
+msgid "If this item is on sale, enter a pre-sale price that is greater than the price."
+msgstr ""
+
+#, fuzzy
+msgid "Default Price"
+msgstr ""
+
+#, fuzzy
+msgid "Tax is included"
+msgstr ""
+
+#, fuzzy
+msgid "Free Trial Days"
+msgstr ""
+
+#, fuzzy
+msgid "Premium"
+msgstr ""
+
+#, fuzzy
+msgid "Days"
+msgstr ""
+
+#, fuzzy
+msgid "Create New Product"
+msgstr ""
+
+#, fuzzy
+msgid "A name for your product."
+msgstr ""
+
+#, fuzzy
+msgid "Product updated."
+msgstr ""
+
+#, fuzzy
+msgid "Un-Archive %s? This will make the product purchaseable again."
+msgstr ""
+
+#, fuzzy
+msgid "Archive %s? This product will not be purchaseable and all unsaved changes will be lost."
+msgstr ""
+
+#, fuzzy
+msgid "Save Product"
+msgstr ""
+
+#, fuzzy
+msgid "Edit Product"
+msgstr ""
+
+#, fuzzy
+msgid "Limit Per-Customer Purchases"
+msgstr ""
+
+#, fuzzy
+msgid "Limit the number of times a single customer can purchase this product."
+msgstr ""
+
+#, fuzzy
+msgid "Customer Purchase Limit"
+msgstr ""
+
+#, fuzzy
+msgid "Download added."
+msgstr ""
+
+#, fuzzy
+msgid "Downloads"
+msgstr ""
+
+#, fuzzy
+msgid "File"
+msgstr ""
+
+#, fuzzy
+msgid "Add Downloads"
+msgstr ""
+
+#, fuzzy
+msgid "Show Archived"
+msgstr ""
+
+#, fuzzy
+msgid "Replace"
+msgstr ""
+
+#, fuzzy
+msgid "Add Image"
+msgstr ""
+
+#, fuzzy
+msgid "Product Image"
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you want to remove this integration? This will affect existing customers who have purchased this product."
+msgstr ""
+
+#, fuzzy
+msgid "Integration deleted."
+msgstr ""
+
+#, fuzzy
+msgid "An error occurred"
+msgstr ""
+
+#, fuzzy
+msgid "%s not found"
+msgstr ""
+
+#, fuzzy
+msgid "The provider is not installed or unavailable."
+msgstr ""
+
+#, fuzzy
+msgid "Disabled"
+msgstr ""
+
+#, fuzzy
+msgid "Sync purchases with the plugins you already use."
+msgstr ""
+
+#, fuzzy
+msgid "Leave the heavy-lifting to us. Use SureCart's built-in native integrations with all the plugins you use. Purchases and subscriptions are automatically synced with your plugins."
+msgstr ""
+
+#, fuzzy
+msgid "Set it and forget it."
+msgstr ""
+
+#, fuzzy
+msgid "Purchases syncing happens in both directions. For example, access is automatically revoked during a subscription cancellation or expiration."
+msgstr ""
+
+#, fuzzy
+msgid "Grow your store worry-free."
+msgstr ""
+
+#, fuzzy
+msgid "Since SureCart's integrations are native, there's no need to worry about the complexity of growing your store."
+msgstr ""
+
+#, fuzzy
+msgid "Add New Integration"
+msgstr ""
+
+#, fuzzy
+msgid "To sync purchases of this product, add an integration."
+msgstr ""
+
+#, fuzzy
+msgid "Integration saved."
+msgstr ""
+
+#, fuzzy
+msgid "Add Integration"
+msgstr ""
+
+#, fuzzy
+msgid "A product purchase will be automatically synced with this item."
+msgstr ""
+
+#, fuzzy
+msgid "Integration"
+msgstr ""
+
+#, fuzzy
+msgid "Select An Integration"
+msgstr ""
+
+#, fuzzy
+msgid "Select an Item"
+msgstr ""
+
+#, fuzzy
+msgid "Licensing"
+msgstr ""
+
+#, fuzzy
+msgid "Enable license creation"
+msgstr ""
+
+#, fuzzy
+msgid "Enter the number of unique activations per license key. Leave blank for infinite."
+msgstr ""
+
+#, fuzzy
+msgid "Current Release"
+msgstr ""
+
+#, fuzzy
+msgid "This is the current release zip of your software."
+msgstr ""
+
+#, fuzzy
+msgid "Add Another Price"
+msgstr ""
+
+#, fuzzy
+msgid "Pricing"
+msgstr ""
+
+#, fuzzy
+msgid "Set up pricing for your product."
+msgstr ""
+
+#, fuzzy
+msgid "Add A Price"
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you want to discard this price?"
+msgstr ""
+
+#, fuzzy
+msgid "Price created."
+msgstr ""
+
+#, fuzzy
+msgid "Payment Type"
+msgstr ""
+
+#, fuzzy
+msgid "One Time"
+msgstr ""
+
+#, fuzzy
+msgid "Installment"
+msgstr ""
+
+#, fuzzy
+msgid "Create Price"
+msgstr ""
+
+#, fuzzy
+msgid "Copied to clipboard."
+msgstr ""
+
+#, fuzzy
+msgid "Error copying to clipboard."
+msgstr ""
+
+#, fuzzy
+msgid "Free Trial"
+msgstr ""
+
+#, fuzzy
+msgid "Payment Plan"
+msgstr ""
+
+#, fuzzy
+msgid "Custom Amount"
+msgstr ""
+
+#, fuzzy
+msgid "every"
+msgstr ""
+
+#, fuzzy
+msgid "Copy Links"
+msgstr ""
+
+#, fuzzy
+msgid "Links and Shortcodes"
+msgstr ""
+
+#, fuzzy
+msgid "Buy Link"
+msgstr ""
+
+#, fuzzy
+msgid "Shortcodes"
+msgstr ""
+
+#, fuzzy
+msgid "Add To Cart Button Shortcode"
+msgstr ""
+
+#, fuzzy
+msgid "Buy Button Shortcode"
+msgstr ""
+
+#, fuzzy
+msgid "Miscellaneous"
+msgstr ""
+
+#, fuzzy
+msgid "Price ID"
+msgstr ""
+
+#, fuzzy
+msgid "Done"
+msgstr ""
+
+#, fuzzy
+msgid "Un-Archive this price? This will make the product purchaseable again."
+msgstr ""
+
+#, fuzzy
+msgid "Archive this price? This product will not be purchaseable and all unsaved changes will be lost."
+msgstr ""
+
+#, fuzzy
+msgid "Price unarchived."
+msgstr ""
+
+#, fuzzy
+msgid "Price archived."
+msgstr ""
+
+#, fuzzy
+msgid "Permanently delete this price? You cannot undo this action."
+msgstr ""
+
+#, fuzzy
+msgid "Price deleted."
+msgstr ""
+
+#, fuzzy
+msgid "Show %d Archived Prices"
+msgstr ""
+
+#, fuzzy
+msgid "Hide %d Archived Prices"
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you want to replace the file in this download? This may push out a new release to everyone."
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you want to remove the download from this product?"
+msgstr ""
+
+#, fuzzy
+msgid "Download removed."
+msgstr ""
+
+#, fuzzy
+msgid "Download un-archived."
+msgstr ""
+
+#, fuzzy
+msgid "Download archived."
+msgstr ""
+
+#, fuzzy
+msgid "Charge tax on this product"
+msgstr ""
+
+#, fuzzy
+msgid "This is a physical product"
+msgstr ""
+
+#, fuzzy
+msgid "To charge tax, please set up your tax information on the settings page."
+msgstr ""
+
+#, fuzzy
+msgid "Tax and Shipping"
+msgstr ""
+
+#, fuzzy
+msgid "This product requires shipping"
+msgstr ""
+
+#, fuzzy
+msgid "Upgrade Group"
+msgstr ""
+
+#, fuzzy
+msgid "Add this product to a group with others you want the purchaser to switch between."
+msgstr ""
+
+#, fuzzy
+msgid "Create Product Group"
+msgstr ""
+
+#, fuzzy
+msgid "This is not shown to the customer, but is used help you identify the group."
+msgstr ""
+
+#, fuzzy
+msgid "Available for purchase"
+msgstr ""
+
+#, fuzzy
+msgid "Created On"
+msgstr ""
+
+#, fuzzy
+msgid "Settings Updated."
+msgstr ""
+
+#, fuzzy
+msgid "Notification Settings"
+msgstr ""
+
+#, fuzzy
+msgid "Notification settings for abandoned checkouts"
+msgstr ""
+
+#, fuzzy
+msgid "Enabled"
+msgstr ""
+
+#, fuzzy
+msgid "Turn on abandoned cart for your store."
+msgstr ""
+
+#, fuzzy
+msgid "First Email Delay"
+msgstr ""
+
+#, fuzzy
+msgid "Second Email Delay"
+msgstr ""
+
+#, fuzzy
+msgid "Final Email Delay"
+msgstr ""
+
+#, fuzzy
+msgid "Discount Settings"
+msgstr ""
+
+#, fuzzy
+msgid "Your discount settings for abandoned cart."
+msgstr ""
+
+#, fuzzy
+msgid "Abandoned Checkout Discount"
+msgstr ""
+
+#, fuzzy
+msgid "Add a discount incentive for abandoned cart."
+msgstr ""
+
+#, fuzzy
+msgid "When should we offer the discount?"
+msgstr ""
+
+#, fuzzy
+msgid "On the first email"
+msgstr ""
+
+#, fuzzy
+msgid "On the second email"
+msgstr ""
+
+#, fuzzy
+msgid "On the final email"
+msgstr ""
+
+#, fuzzy
+msgid "Discount Expires"
+msgstr ""
+
+#, fuzzy
+msgid "Number of days until expiration"
+msgstr ""
+
+#, fuzzy
+msgid "GDPR Settings"
+msgstr ""
+
+#, fuzzy
+msgid "Data collection settings for GDPR."
+msgstr ""
+
+#, fuzzy
+msgid "Tracking Confirmation"
+msgstr ""
+
+#, fuzzy
+msgid "Note: By checking this, it will show confirmation text below the email on checkout forms."
+msgstr ""
+
+#, fuzzy
+msgid "GDPR Message"
+msgstr ""
+
+#, fuzzy
+msgid "Minutes"
+msgstr ""
+
+#, fuzzy
+msgid "Hours"
+msgstr ""
+
+#, fuzzy
+msgid "Weeks"
+msgstr ""
+
+#, fuzzy
+msgid "1 Hour"
+msgstr ""
+
+#, fuzzy
+msgid "2 Hours"
+msgstr ""
+
+#, fuzzy
+msgid "3 Hours"
+msgstr ""
+
+#, fuzzy
+msgid "6 Hours"
+msgstr ""
+
+#, fuzzy
+msgid "12 Hours"
+msgstr ""
+
+#, fuzzy
+msgid "1 Day"
+msgstr ""
+
+#, fuzzy
+msgid "1.5 Days"
+msgstr ""
+
+#, fuzzy
+msgid "2 Days"
+msgstr ""
+
+#, fuzzy
+msgid "3 Days"
+msgstr ""
+
+#, fuzzy
+msgid "4 Days"
+msgstr ""
+
+#, fuzzy
+msgid "5 Days"
+msgstr ""
+
+#, fuzzy
+msgid "6 Days"
+msgstr ""
+
+#, fuzzy
+msgid "1 week"
+msgstr ""
+
+#, fuzzy
+msgid "Store Details"
+msgstr ""
+
+#, fuzzy
+msgid "The name of your store will be visible to customers, so you should use a name that is recognizable and identifies your store to your customers."
+msgstr ""
+
+#, fuzzy
+msgid "Store Name"
+msgstr ""
+
+#, fuzzy
+msgid "This is displayed in the UI and in notifications."
+msgstr ""
+
+#, fuzzy
+msgid "Store URL"
+msgstr ""
+
+#, fuzzy
+msgid "https://example.com"
+msgstr ""
+
+#, fuzzy
+msgid "This should be your live storefront URL."
+msgstr ""
+
+#, fuzzy
+msgid "Default Currency"
+msgstr ""
+
+#, fuzzy
+msgid "The default currency for new products."
+msgstr ""
+
+#, fuzzy
+msgid "Time Zone"
+msgstr ""
+
+#, fuzzy
+msgid "Change this if you want the store to be in a different time zone than your server."
+msgstr ""
+
+#, fuzzy
+msgid "Notifications and Invoice Language"
+msgstr ""
+
+#, fuzzy
+msgid "The default language for notification and invoices."
+msgstr ""
+
+#, fuzzy
+msgid "Spam Protection & Security"
+msgstr ""
+
+#, fuzzy
+msgid "Change your checkout spam protection and security settings."
+msgstr ""
+
+#, fuzzy
+msgid "Honeypot"
+msgstr ""
+
+#, fuzzy
+msgid "This adds a field that is invisible to users, but visible to bots in an attempt to trick them into filling it out."
+msgstr ""
+
+#, fuzzy
+msgid "Recaptcha v3"
+msgstr ""
+
+#, fuzzy
+msgid "Enable Recaptcha spam protection on checkout forms."
+msgstr ""
+
+#, fuzzy
+msgid "Important"
+msgstr ""
+
+#, fuzzy
+msgid "Please clear checkout page cache after changing this setting."
+msgstr ""
+
+#, fuzzy
+msgid "reCaptcha Site Key"
+msgstr ""
+
+#, fuzzy
+msgid "You can find this on your google Recaptcha dashboard."
+msgstr ""
+
+#, fuzzy
+msgid "reCaptcha Secret Key"
+msgstr ""
+
+#, fuzzy
+msgid "To get your Recaptcha keys"
+msgstr ""
+
+#, fuzzy
+msgid "register a new site and choose v3."
+msgstr ""
+
+#, fuzzy
+msgid "Stripe Fraud Monitoring"
+msgstr ""
+
+#, fuzzy
+msgid "This will load stripe.js on every page to help with Fraud monitoring."
+msgstr ""
+
+#, fuzzy
+msgid "Clear Test Data"
+msgstr ""
+
+#, fuzzy
+msgid "Clear out all of your test data with one-click."
+msgstr ""
+
+#, fuzzy
+msgid "Enable Slide-Out Cart"
+msgstr ""
+
+#, fuzzy
+msgid "If you do not wish to use the slide-out cart, you can disable this to prevent scripts from loading on your pages."
+msgstr ""
+
+#, fuzzy
+msgid "Brand Settings"
+msgstr ""
+
+#, fuzzy
+msgid "Customize how your brand appears globally across SureCart. Your logo and colors will be used on hosted pages and emails that are sent to your customers."
+msgstr ""
+
+#, fuzzy
+msgid "Brand Color"
+msgstr ""
+
+#, fuzzy
+msgid "This color will be used for the main button color, links, and various UI elements."
+msgstr ""
+
+#, fuzzy
+msgid "Select Theme (Beta)"
+msgstr ""
+
+#, fuzzy
+msgid "Select Theme"
+msgstr ""
+
+#, fuzzy
+msgid "Choose \"Dark\" if your theme already has a dark background."
+msgstr ""
+
+#, fuzzy
+msgid "Light"
+msgstr ""
+
+#, fuzzy
+msgid "Dark"
+msgstr ""
+
+#, fuzzy
+msgid "Contact Information"
+msgstr ""
+
+#, fuzzy
+msgid "This information helps customers recognize your business and contact you when necessary. It will be visible on invoices/receipts and any emails that need to be CAN-SPAM compliant (i.e. abandoned order emails)."
+msgstr ""
+
+#, fuzzy
+msgid "Enter an email"
+msgstr ""
+
+#, fuzzy
+msgid "Phone"
+msgstr ""
+
+#, fuzzy
+msgid "Enter an phone number"
+msgstr ""
+
+#, fuzzy
+msgid "Website"
+msgstr ""
+
+#, fuzzy
+msgid "Enter a website URL"
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you want to remove this logo?"
+msgstr ""
+
+#, fuzzy
+msgid "Logo"
+msgstr ""
+
+#, fuzzy
+msgid "API Token"
+msgstr ""
+
+#, fuzzy
+msgid "Enter your api token"
+msgstr ""
+
+#, fuzzy
+msgid "Use these settings to configure how notifications are sent to your customers. Currently, all emails are sent from notifications@surecart.com, but in the future you'll be able to set your own email server if you'd like."
+msgstr ""
+
+#, fuzzy
+msgid "Sender Name"
+msgstr ""
+
+#, fuzzy
+msgid "Enter the sender name"
+msgstr ""
+
+#, fuzzy
+msgid "Reply To Email"
+msgstr ""
+
+#, fuzzy
+msgid "notifications@surecart.com"
+msgstr ""
+
+#, fuzzy
+msgid "Manage which notifications are sent to your customers."
+msgstr ""
+
+#, fuzzy
+msgid "Order Confirmation Emails"
+msgstr ""
+
+#, fuzzy
+msgid "Send a general order confirmation email to your customers when an order is paid. These emails include a breakdown of the order, and a link to a page where they can download their invoice and receipt."
+msgstr ""
+
+#, fuzzy
+msgid "Refund Emails"
+msgstr ""
+
+#, fuzzy
+msgid "Send a quick reminder when a refund is created for a customer. These emails contain the amount and payment method being refunded."
+msgstr ""
+
+#, fuzzy
+msgid "Subscription Renewal Emails"
+msgstr ""
+
+#, fuzzy
+msgid "Send an email customers when their subscription renews."
+msgstr ""
+
+#, fuzzy
+msgid "Subscription Cancellation Notification"
+msgstr ""
+
+#, fuzzy
+msgid "Send a general subscription cancellation confirmation email to your customers when subscription canceled."
+msgstr ""
+
+#, fuzzy
+msgid "Subscription Reminder Notifications"
+msgstr ""
+
+#, fuzzy
+msgid "Send a reminder to your subscribers 3 days before their subscription renews."
+msgstr ""
+
+#, fuzzy
+msgid "Subscription Recovery Emails"
+msgstr ""
+
+#, fuzzy
+msgid "Subscription payments fail all the time. Don't leave your recurring revenue to chance - turn on recovery emails to increase your chances of recovering subscriptions with failed payments."
+msgstr ""
+
+#, fuzzy
+msgid "Customer Emails"
+msgstr ""
+
+#, fuzzy
+msgid "Customize the content of each notification that is sent to your customers."
+msgstr ""
+
+#, fuzzy
+msgid "Abandoned Checkout #1"
+msgstr ""
+
+#, fuzzy
+msgid "First email sent when a checkout is abandoned."
+msgstr ""
+
+#, fuzzy
+msgid "Abandoned Checkout #2"
+msgstr ""
+
+#, fuzzy
+msgid "Second email sent when a checkout is abandoned."
+msgstr ""
+
+#, fuzzy
+msgid "Abandoned Checkout #3"
+msgstr ""
+
+#, fuzzy
+msgid "Third (final) email sent when a checkout is abandoned."
+msgstr ""
+
+#, fuzzy
+msgid "Magic Sign In"
+msgstr ""
+
+#, fuzzy
+msgid "Sent to customers to login to the customer portal without a password."
+msgstr ""
+
+#, fuzzy
+msgid "Sent to customers after they place an order."
+msgstr ""
+
+#, fuzzy
+msgid "Subscription Recovery"
+msgstr ""
+
+#, fuzzy
+msgid "Sent to customers when their subscription's payment method fails."
+msgstr ""
+
+#, fuzzy
+msgid "Subscription Reminder"
+msgstr ""
+
+#, fuzzy
+msgid "Sent to customers 3 days before a subscription renews."
+msgstr ""
+
+#, fuzzy
+msgid "Sent to customers when their subscription renews."
+msgstr ""
+
+#, fuzzy
+msgid "Subscription Cancellation"
+msgstr ""
+
+#, fuzzy
+msgid "Sent to customers when their subscription cancellation."
+msgstr ""
+
+#, fuzzy
+msgid "Product Access"
+msgstr ""
+
+#, fuzzy
+msgid "Sent to customers when a purchase is downloadable or has a license."
+msgstr ""
+
+#, fuzzy
+msgid "Sent to customers when a charge is refunded."
+msgstr ""
+
+#, fuzzy
+msgid "Store Emails"
+msgstr ""
+
+#, fuzzy
+msgid "These are the emails that are sent to you and other team members of this store."
+msgstr ""
+
+#, fuzzy
+msgid "New Order"
+msgstr ""
+
+#, fuzzy
+msgid "Sent when an order is created."
+msgstr ""
+
+#, fuzzy
+msgid "Sent when a subscription is canceled."
+msgstr ""
+
+#, fuzzy
+msgid "Subscription Payment"
+msgstr ""
+
+#, fuzzy
+msgid "Sent when a subscription renews."
+msgstr ""
+
+#, fuzzy
+msgid "Subscription Payment Failure"
+msgstr ""
+
+#, fuzzy
+msgid "Sent when a subscription payment fails."
+msgstr ""
+
+#, fuzzy
+msgid "Export CSV"
+msgstr ""
+
+#, fuzzy
+msgid "Products/Prices"
+msgstr ""
+
+#, fuzzy
+msgid "Promotions"
+msgstr ""
+
+#, fuzzy
+msgid "Order Numbering"
+msgstr ""
+
+#, fuzzy
+msgid "Configure your order numbering style."
+msgstr ""
+
+#, fuzzy
+msgid "Order Number Prefix"
+msgstr ""
+
+#, fuzzy
+msgid "If you would like your order numbers to have a special prefix, you can enter it here. It must not contain underscores, spaces or dashes."
+msgstr ""
+
+#, fuzzy
+msgid "Order Numbers Counter"
+msgstr ""
+
+#, fuzzy
+msgid "Choose the style of order numbers."
+msgstr ""
+
+#, fuzzy
+msgid "Sequential"
+msgstr ""
+
+#, fuzzy
+msgid "Random Numbers And Letters"
+msgstr ""
+
+#, fuzzy
+msgid "Invoices & Receipts"
+msgstr ""
+
+#, fuzzy
+msgid "Add additional information to receipts and invoices."
+msgstr ""
+
+#, fuzzy
+msgid "Memo"
+msgstr ""
+
+#, fuzzy
+msgid "This appears in the memo area of your invoices and receipts."
+msgstr ""
+
+#, fuzzy
+msgid "Footer"
+msgstr ""
+
+#, fuzzy
+msgid "Functionality"
+msgstr ""
+
+#, fuzzy
+msgid "Manage what your customers are able to see and do from the customer portal."
+msgstr ""
+
+#, fuzzy
+msgid "Allow Subscription Changes"
+msgstr ""
+
+#, fuzzy
+msgid "Customers will be able to switch pricing plans from the customer portal. You can configure what happens when a subscription change happens from the Subscriptions settings page."
+msgstr ""
+
+#, fuzzy
+msgid "Allow Subscription Quantity Changes"
+msgstr ""
+
+#, fuzzy
+msgid "Customers will be able to change subscription quantities from the customer portal."
+msgstr ""
+
+#, fuzzy
+msgid "Allow Subscription Cancellations"
+msgstr ""
+
+#, fuzzy
+msgid "Customers will be able to cancel their subscriptions from the customer portal. You can configure what happens when a subscription cancellation happens from the Subscriptions settings page."
+msgstr ""
+
+#, fuzzy
+msgid "Set additional customer portal details for your store."
+msgstr ""
+
+#, fuzzy
+msgid "Terms of Service"
+msgstr ""
+
+#, fuzzy
+msgid "A link to your privacy terms page."
+msgstr ""
+
+#, fuzzy
+msgid "Privacy Policy"
+msgstr ""
+
+#, fuzzy
+msgid "A link to your privacy policy page."
+msgstr ""
+
+#, fuzzy
+msgid "Edit Manual Payment Method"
+msgstr ""
+
+#, fuzzy
+msgid "Create Manual Payment Method"
+msgstr ""
+
+#, fuzzy
+msgid "Custom payment method name"
+msgstr ""
+
+#, fuzzy
+msgid "I.E. Cash On Delivery"
+msgstr ""
+
+#, fuzzy
+msgid "Description"
+msgstr ""
+
+#, fuzzy
+msgid "The description of this payment method that will be shown in the checkout."
+msgstr ""
+
+#, fuzzy
+msgid "I.E. Pay with cash upon delivery."
+msgstr ""
+
+#, fuzzy
+msgid "Payment instructions"
+msgstr ""
+
+#, fuzzy
+msgid "The instructions that you want your customers to follow to pay for an order. These instructions are shown on the confirmation page after a customer completes the checkout."
+msgstr ""
+
+#, fuzzy
+msgid "Instructions on how to pay."
+msgstr ""
+
+#, fuzzy
+msgid "Payment method disabled."
+msgstr ""
+
+#, fuzzy
+msgid "Payment method enabled."
+msgstr ""
+
+#, fuzzy
+msgid "Enable"
+msgstr ""
+
+#, fuzzy
+msgid "No manual payment methods."
+msgstr ""
+
+#, fuzzy
+msgid "Manual Payment Methods"
+msgstr ""
+
+#, fuzzy
+msgid "Payments that are made outside your online store. When a customer selects a manual payment method, you'll need to approve their order before it can be fulfilled"
+msgstr ""
+
+#, fuzzy
+msgid "Next Billing Period"
+msgstr ""
+
+#, fuzzy
+msgid "Upgrades, Downgrades, and Cancellations"
+msgstr ""
+
+#, fuzzy
+msgid "Manage how your store handles subscription upgrades, downgrades, and cancellations."
+msgstr ""
+
+#, fuzzy
+msgid "Downgrades Happen"
+msgstr ""
+
+#, fuzzy
+msgid "Upgrades Happen"
+msgstr ""
+
+#, fuzzy
+msgid "When an upgrade or downgrade happens immediately, a prorated invoice will be generated and paid. If the invoice payment fails, the subscription will not be updated. In the case of a downgrade, the invoice will likely have a $0 balance and a credit may be applied to the customer. When an upgrade or downgrade happens at the next billing period, the subscription won't be updated until the next payment date."
+msgstr ""
+
+#, fuzzy
+msgid "Cancellations Happen"
+msgstr ""
+
+#, fuzzy
+msgid "When a cancellation happens immediately, the subscription is canceled right away. When a cancellation happens at the billing period end, the subscription remains active until the end of the current billing period."
+msgstr ""
+
+#, fuzzy
+msgid "Failed Payments"
+msgstr ""
+
+#, fuzzy
+msgid "Manage how your store handles failed subscription payments."
+msgstr ""
+
+#, fuzzy
+msgid "Cancel Subscriptions After"
+msgstr ""
+
+#, fuzzy
+msgid "One Week"
+msgstr ""
+
+#, fuzzy
+msgid "Two Weeks"
+msgstr ""
+
+#, fuzzy
+msgid "Three Weeks"
+msgstr ""
+
+#, fuzzy
+msgid "If a subscription payment fails, the subscription is marked past due. When this happens we automatically retry the payment based on our smart retry logic. If the payment is still unsuccessful after the duration set above, the subscription will be canceled."
+msgstr ""
+
+#, fuzzy
+msgid "Manage your subscription purchase behavior."
+msgstr ""
+
+#, fuzzy
+msgid "Require Upfront Payment Method"
+msgstr ""
+
+#, fuzzy
+msgid "Whether or not a payment method should be required for subscriptions that have an initial period amount of $0 (free trial or coupon). This is useful if you want to offer a \"no credit card required\" free trials."
+msgstr ""
+
+#, fuzzy
+msgid "Canada GST/HST"
+msgstr ""
+
+#, fuzzy
+msgid "Manage how your store collects GST/HST for all Canadian provinces."
+msgstr ""
+
+#, fuzzy
+msgid "Collect Canada GST/HST"
+msgstr ""
+
+#, fuzzy
+msgid "If enabled, your store will collect Canada GST/HST for all provinces. If you need to collect additional provincial taxes for Quebec, British Columbia, Manitoba, or Saskatchewan then you will need to additionally create separate tax registrations for these provinces."
+msgstr ""
+
+#, fuzzy
+msgid "In applicable tax jurisdictions, your tax ID will show on invoices. If you don't have your tax ID number yet, you can enter it later."
+msgstr ""
+
+#, fuzzy
+msgid "Collect EU VAT"
+msgstr ""
+
+#, fuzzy
+msgid "Manage how your store collects EU VAT for all EU countries."
+msgstr ""
+
+#, fuzzy
+msgid "If enabled, your store will collect EU VAT for all EU countries. You should enable this option if you are registered via \"One-Stop Shop\" and plan to submit a single VAT return for all EU countries. If you are planning to submit separate VAT returns for each EU country then you should not enable this option. You should instead create separate tax registrations for each EU country."
+msgstr ""
+
+#, fuzzy
+msgid "Micro-Business Exemption"
+msgstr ""
+
+#, fuzzy
+msgid "Enable this if your business makes up to €10,000 EUR in sales to other EU countries and you only plan to submit a domestic VAT return. If enabled, your home country VAT rate will apply to all EU orders."
+msgstr ""
+
+#, fuzzy
+msgid "Collect Tax"
+msgstr ""
+
+#, fuzzy
+msgid "Country"
+msgstr ""
+
+#, fuzzy
+msgid "Province"
+msgstr ""
+
+#, fuzzy
+msgid "State"
+msgstr ""
+
+#, fuzzy
+msgid "Region"
+msgstr ""
+
+#, fuzzy
+msgid "Sales tax is automatically calculated and applied to orders. Make sure you’re registered with the appropriate tax jurisdictions before enabling tax collection."
+msgstr ""
+
+#, fuzzy
+msgid "Tax Registration"
+msgstr ""
+
+#, fuzzy
+msgid "Tax Zone"
+msgstr ""
+
+#, fuzzy
+msgid "Australia"
+msgstr ""
+
+#, fuzzy
+msgid "European Union"
+msgstr ""
+
+#, fuzzy
+msgid "United Kingdom"
+msgstr ""
+
+#, fuzzy
+msgid "Canada"
+msgstr ""
+
+#, fuzzy
+msgid "United States"
+msgstr ""
+
+#, fuzzy
+msgid "GST Registration"
+msgstr ""
+
+#, fuzzy
+msgid "Country-Specific VAT Registrations"
+msgstr ""
+
+#, fuzzy
+msgid "VAT Registration"
+msgstr ""
+
+#, fuzzy
+msgid "State Sales Tax Registrations"
+msgstr ""
+
+#, fuzzy
+msgid "If you do business in Australia, you may be required to collect GST on sales in Australia."
+msgstr ""
+
+#, fuzzy
+msgid "If you need to collect provincial tax (British Columbia, Manitoba, Quebec, and Saskatchewan) in addition to GST/HST, then you'll need to setup registrations for each province."
+msgstr ""
+
+#, fuzzy
+msgid "If you plan to submit a separate VAT return to each EU country, then you'll need to setup tax registrations for each country."
+msgstr ""
+
+#, fuzzy
+msgid "If you do business in the United Kingdom, you may be required to collect Value Added Tax (VAT)."
+msgstr ""
+
+#, fuzzy
+msgid "You’ll need to collect sales tax if you meet certain state requirements, also known as nexus. To start collecting tax, you need to register with the appropriate state tax authority."
+msgstr ""
+
+#, fuzzy
+msgid "You're not collecting GST in Australia. Add a tax registration to start collecting tax."
+msgstr ""
+
+#, fuzzy
+msgid "You're not collecting any provincial tax in Canada. Add a tax registration to start collecting tax."
+msgstr ""
+
+#, fuzzy
+msgid "You don't have any country-specific VAT registrations. If you're registered under one-stop shop then you don't need to create country-specific tax registrations. If you're not, add a tax registration to start collecting tax."
+msgstr ""
+
+#, fuzzy
+msgid "You're not collecting VAT in the UK. Add a tax registration to start collecting tax."
+msgstr ""
+
+#, fuzzy
+msgid "You're not collecting sales tax for any states. Add a tax registration to start collecting tax."
+msgstr ""
+
+#, fuzzy
+msgid "%s Tax Region"
+msgstr ""
+
+#, fuzzy
+msgid "You don't have any tax registrations. Add a tax registration to start collecting tax."
+msgstr ""
+
+#, fuzzy
+msgid "Store Tax Settings"
+msgstr ""
+
+#, fuzzy
+msgid "Manage how your store charges sales tax on orders, invoices, and subscriptions."
+msgstr ""
+
+#, fuzzy
+msgid "Tax Collection"
+msgstr ""
+
+#, fuzzy
+msgid "If enabled, you need to configure which tax regions you have tax nexus. Tax will only be collected for tax regions that are enabled. If disabled, no tax will be collected."
+msgstr ""
+
+#, fuzzy
+msgid "EU VAT Settings"
+msgstr ""
+
+#, fuzzy
+msgid "Change how your store manages EU VAT collection and validation."
+msgstr ""
+
+#, fuzzy
+msgid "Require VAT Number"
+msgstr ""
+
+#, fuzzy
+msgid "If enabled, require all customer’s in the EU to enter a EU VAT number when checking out."
+msgstr ""
+
+#, fuzzy
+msgid "Local Reverse Charge"
+msgstr ""
+
+#, fuzzy
+msgid "If enabled, apply reverse charge when applicable even when customers are in your home country."
+msgstr ""
+
+#, fuzzy
+msgid "VAT Number Verification Failure"
+msgstr ""
+
+#, fuzzy
+msgid "Choose the checkout behavior when VAT verification fails."
+msgstr ""
+
+#, fuzzy
+msgid "Reject the order and show an error."
+msgstr ""
+
+#, fuzzy
+msgid "Accept the order but don’t apply reverse charge."
+msgstr ""
+
+#, fuzzy
+msgid "Accept the order and apply reverse charge."
+msgstr ""
+
+#, fuzzy
+msgid "Tax Regions"
+msgstr ""
+
+#, fuzzy
+msgid "Manage how your store charges sales tax within each tax region. Check with a tax expert to understand your tax obligations."
+msgstr ""
+
+#, fuzzy
+msgid "Upgrade to Pro"
+msgstr ""
+
+#, fuzzy
+msgid "Upgrade This Store"
+msgstr ""
+
+#, fuzzy
+msgid "Enter your license key to activate your plan on thie store."
+msgstr ""
+
+#, fuzzy
+msgid "Enter your license key"
+msgstr ""
+
+#, fuzzy
+msgid "Store"
+msgstr ""
+
+#, fuzzy
+msgid "Activation"
+msgstr ""
+
+#, fuzzy
+msgid "Bump"
+msgstr ""
+
+#, fuzzy
+msgid "Coupon"
+msgstr ""
+
+#, fuzzy
+msgid "Integration Provider"
+msgstr ""
+
+#, fuzzy
+msgid "Integration Provider Items"
+msgstr ""
+
+#, fuzzy
+msgid "Media"
+msgstr ""
+
+#, fuzzy
+msgid "Payment Intent"
+msgstr ""
+
+#, fuzzy
+msgid "Payment Method"
+msgstr ""
+
+#, fuzzy
+msgid "Manual Payment Method"
+msgstr ""
+
+#, fuzzy
+msgid "Billing Period"
+msgstr ""
+
+#, fuzzy
+msgid "Processor"
+msgstr ""
+
+#, fuzzy
+msgid "Product Group"
+msgstr ""
+
+#, fuzzy
+msgid "Promotion"
+msgstr ""
+
+#, fuzzy
+msgid "Statistic"
+msgstr ""
+
+#, fuzzy
+msgid "Failed to save."
+msgstr ""
+
+#, fuzzy
+msgid "Integration Providers"
+msgstr ""
+
+#, fuzzy
+msgid "Subscription updated."
+msgstr ""
+
+#, fuzzy
+msgid "Subscription Details"
+msgstr ""
+
+#, fuzzy
+msgid "Update Immediately"
+msgstr ""
+
+#, fuzzy
+msgid "Update Subscription"
+msgstr ""
+
+#, fuzzy
+msgid "Schedule Update"
+msgstr ""
+
+#, fuzzy
+msgid "Update Payment Method"
+msgstr ""
+
+#, fuzzy
+msgid "Current"
+msgstr ""
+
+#, fuzzy
+msgid "Qty"
+msgstr ""
+
+#, fuzzy
+msgid "Started"
+msgstr ""
+
+#, fuzzy
+msgid "Trial"
+msgstr ""
+
+#, fuzzy
+msgid "Free Trial Ends"
+msgstr ""
+
+#, fuzzy
+msgid "Add Free Trial"
+msgstr ""
+
+#, fuzzy
+msgid "Choose a trial end date"
+msgstr ""
+
+#, fuzzy
+msgid "Bills Now"
+msgstr ""
+
+#, fuzzy
+msgid "Bills on"
+msgstr ""
+
+#, fuzzy
+msgid "Customer Credit"
+msgstr ""
+
+#, fuzzy
+msgid "Applied to balance"
+msgstr ""
+
+#, fuzzy
+msgid "%d day left in trial"
+msgid_plural "%d days left in trial"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy
+msgid "Ends on"
+msgstr ""
+
+#, fuzzy
+msgid "Prorate Charges"
+msgstr ""
+
+#, fuzzy
+msgid "Lifetime"
+msgstr ""
+
+#, fuzzy
+msgid "Lifetime Subscription"
+msgstr ""
+
+#, fuzzy
+msgid "Cancels on"
+msgstr ""
+
+#, fuzzy
+msgid "Trial ends on"
+msgstr ""
+
+#, fuzzy
+msgid "Renews on"
+msgstr ""
+
+#, fuzzy
+msgid "%d Remaining"
+msgstr ""
+
+#, fuzzy
+msgid "Upcoming Billing Period"
+msgstr ""
+
+#, fuzzy
+msgid "Amount Due"
+msgstr ""
+
+#, fuzzy
+msgid "Subscription canceled."
+msgstr ""
+
+#, fuzzy
+msgid "Subscription scheduled for cancelation."
+msgstr ""
+
+#, fuzzy
+msgid "When do you want to cancel the subscription?"
+msgstr ""
+
+#, fuzzy
+msgid "Don't cancel"
+msgstr ""
+
+#, fuzzy
+msgid "Update canceled."
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you wish to cancel the pending update?"
+msgstr ""
+
+#, fuzzy
+msgid "Subscription completed."
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you want to complete this payment plan? This will eliminate any additional payments and mark the plan as complete. You cannot undo this."
+msgstr ""
+
+#, fuzzy
+msgid "Nevermind"
+msgstr ""
+
+#, fuzzy
+msgid "Complete Subscription"
+msgstr ""
+
+#, fuzzy
+msgid "Subscription resumed."
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you wish to resume this subscription?"
+msgstr ""
+
+#, fuzzy
+msgid "Resume Subscription"
+msgstr ""
+
+#, fuzzy
+msgid "Subscription restored."
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you want to restore this subscription? This will make it active again."
+msgstr ""
+
+#, fuzzy
+msgid "Could not complete the payment. Please check the order for additional details."
+msgstr ""
+
+#, fuzzy
+msgid "Payment retry successful!"
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you want to retry the payment? This will attempt to charge the customer."
+msgstr ""
+
+#, fuzzy
+msgid "Retry Payment"
+msgstr ""
+
+#, fuzzy
+msgid "Pending Update"
+msgstr ""
+
+#, fuzzy
+msgid "Billing Periods"
+msgstr ""
+
+#, fuzzy
+msgid "Time Period"
+msgstr ""
+
+#, fuzzy
+msgid "No billing periods"
+msgstr ""
+
+#, fuzzy
+msgid "Next retry:"
+msgstr ""
+
+#, fuzzy
+msgid "Tax enabled."
+msgstr ""
+
+#, fuzzy
+msgid "Tax disabled."
+msgstr ""
+
+#, fuzzy
+msgid "Restore Subscription"
+msgstr ""
+
+#, fuzzy
+msgid "Cancel Pending Update"
+msgstr ""
+
+#, fuzzy
+msgid "Go back."
+msgstr ""
+
+#, fuzzy
+msgid "Previous"
+msgstr ""
+
+#, fuzzy
+msgid "Next"
+msgstr ""
+
+#, fuzzy
+msgid "Draft"
+msgstr ""
+
+#, fuzzy
+msgid "once"
+msgstr ""
+
+#, fuzzy
+msgid "Update Plan"
+msgstr ""
+
+#, fuzzy
+msgid "Payment History"
+msgstr ""
+
+#, fuzzy
+msgid "Billing Details"
+msgstr ""
+
+#, fuzzy
+msgid "Update Billing Details"
+msgstr ""
+
+#, fuzzy
+msgid "Order History"
+msgstr ""
+
+#, fuzzy
+msgid "License Keys"
+msgstr ""
+
+#, fuzzy
+msgid "Current Plan"
+msgstr ""
+
+#, fuzzy
+msgid "Enter An Amount"
+msgstr ""
+
+#, fuzzy
+msgid "New Plan"
+msgstr ""
+
+#, fuzzy
+msgid "Account Details"
+msgstr ""
+
+#, fuzzy
+msgid "Update Password"
+msgstr ""
+
+#, fuzzy
+msgid "Bundle Discount"
+msgstr ""
+
+#, fuzzy
+msgid "Billing Email"
+msgstr ""
+
+#, fuzzy
+msgid "Billing Address"
+msgstr ""
+
+#, fuzzy
+msgid "View all"
+msgstr ""
+
+#, fuzzy
+msgid "Add"
+msgstr ""
+
+#, fuzzy
+msgid "Display Name"
+msgstr ""
+
+#, fuzzy
+msgid "Email Address"
+msgstr ""
+
+#, fuzzy
+msgid "Processing payment..."
+msgstr ""
+
+#, fuzzy
+msgid "Finalizing order..."
+msgstr ""
+
+#, fuzzy
+msgid "Success! Redirecting..."
+msgstr ""
+
+#, fuzzy
+msgid "Recommended"
+msgstr ""
+
+#, fuzzy
+msgid "Add Coupon Code"
+msgstr ""
+
+#, fuzzy
+msgid "Total Due Today"
+msgstr ""
+
+#, fuzzy
+msgid "Afghanistan"
+msgstr ""
+
+#, fuzzy
+msgid "Albania"
+msgstr ""
+
+#, fuzzy
+msgid "Algeria"
+msgstr ""
+
+#, fuzzy
+msgid "American Samoa"
+msgstr ""
+
+#, fuzzy
+msgid "Andorra"
+msgstr ""
+
+#, fuzzy
+msgid "Angola"
+msgstr ""
+
+#, fuzzy
+msgid "Anguilla"
+msgstr ""
+
+#, fuzzy
+msgid "Antarctica"
+msgstr ""
+
+#, fuzzy
+msgid "Antigua and Barbuda"
+msgstr ""
+
+#, fuzzy
+msgid "Argentina"
+msgstr ""
+
+#, fuzzy
+msgid "Armenia"
+msgstr ""
+
+#, fuzzy
+msgid "Aruba"
+msgstr ""
+
+#, fuzzy
+msgid "Austria"
+msgstr ""
+
+#, fuzzy
+msgid "Azerbaijan"
+msgstr ""
+
+#, fuzzy
+msgid "Bahamas"
+msgstr ""
+
+#, fuzzy
+msgid "Bahrain"
+msgstr ""
+
+#, fuzzy
+msgid "Bangladesh"
+msgstr ""
+
+#, fuzzy
+msgid "Barbados"
+msgstr ""
+
+#, fuzzy
+msgid "Belarus"
+msgstr ""
+
+#, fuzzy
+msgid "Belgium"
+msgstr ""
+
+#, fuzzy
+msgid "Belize"
+msgstr ""
+
+#, fuzzy
+msgid "Benin"
+msgstr ""
+
+#, fuzzy
+msgid "Bermuda"
+msgstr ""
+
+#, fuzzy
+msgid "Bhutan"
+msgstr ""
+
+#, fuzzy
+msgid "Bolivia"
+msgstr ""
+
+#, fuzzy
+msgid "Bonaire, Sint Eustatius and Saba"
+msgstr ""
+
+#, fuzzy
+msgid "Bosnia and Herzegovina"
+msgstr ""
+
+#, fuzzy
+msgid "Botswana"
+msgstr ""
+
+#, fuzzy
+msgid "Bouvet Island"
+msgstr ""
+
+#, fuzzy
+msgid "Brazil"
+msgstr ""
+
+#, fuzzy
+msgid "British Indian Ocean Territory"
+msgstr ""
+
+#, fuzzy
+msgid "Brunei Darussalam"
+msgstr ""
+
+#, fuzzy
+msgid "Bulgaria"
+msgstr ""
+
+#, fuzzy
+msgid "Burkina Faso"
+msgstr ""
+
+#, fuzzy
+msgid "Burundi"
+msgstr ""
+
+#, fuzzy
+msgid "Cabo Verde"
+msgstr ""
+
+#, fuzzy
+msgid "Cambodia"
+msgstr ""
+
+#, fuzzy
+msgid "Cameroon"
+msgstr ""
+
+#, fuzzy
+msgid "Cayman Islands"
+msgstr ""
+
+#, fuzzy
+msgid "Central African Republic"
+msgstr ""
+
+#, fuzzy
+msgid "Chad"
+msgstr ""
+
+#, fuzzy
+msgid "Chile"
+msgstr ""
+
+#, fuzzy
+msgid "China"
+msgstr ""
+
+#, fuzzy
+msgid "Christmas Island"
+msgstr ""
+
+#, fuzzy
+msgid "Cocos (Keeling) Islands"
+msgstr ""
+
+#, fuzzy
+msgid "Colombia"
+msgstr ""
+
+#, fuzzy
+msgid "Comoros"
+msgstr ""
+
+#, fuzzy
+msgid "Congo"
+msgstr ""
+
+#, fuzzy
+msgid "Congo, The Democratic Republic of the"
+msgstr ""
+
+#, fuzzy
+msgid "Cook Islands"
+msgstr ""
+
+#, fuzzy
+msgid "Costa Rica"
+msgstr ""
+
+#, fuzzy
+msgid "Croatia"
+msgstr ""
+
+#, fuzzy
+msgid "Cuba"
+msgstr ""
+
+#, fuzzy
+msgid "Curaçao"
+msgstr ""
+
+#, fuzzy
+msgid "Cyprus"
+msgstr ""
+
+#, fuzzy
+msgid "Czechia"
+msgstr ""
+
+#, fuzzy
+msgid "Côte d'Ivoire"
+msgstr ""
+
+#, fuzzy
+msgid "Denmark"
+msgstr ""
+
+#, fuzzy
+msgid "Djibouti"
+msgstr ""
+
+#, fuzzy
+msgid "Dominica"
+msgstr ""
+
+#, fuzzy
+msgid "Dominican Republic"
+msgstr ""
+
+#, fuzzy
+msgid "Ecuador"
+msgstr ""
+
+#, fuzzy
+msgid "Egypt"
+msgstr ""
+
+#, fuzzy
+msgid "El Salvador"
+msgstr ""
+
+#, fuzzy
+msgid "Equatorial Guinea"
+msgstr ""
+
+#, fuzzy
+msgid "Eritrea"
+msgstr ""
+
+#, fuzzy
+msgid "Estonia"
+msgstr ""
+
+#, fuzzy
+msgid "Eswatini"
+msgstr ""
+
+#, fuzzy
+msgid "Ethiopia"
+msgstr ""
+
+#, fuzzy
+msgid "Falkland Islands (Malvinas)"
+msgstr ""
+
+#, fuzzy
+msgid "Faroe Islands"
+msgstr ""
+
+#, fuzzy
+msgid "Fiji"
+msgstr ""
+
+#, fuzzy
+msgid "Finland"
+msgstr ""
+
+#, fuzzy
+msgid "France"
+msgstr ""
+
+#, fuzzy
+msgid "French Guiana"
+msgstr ""
+
+#, fuzzy
+msgid "French Polynesia"
+msgstr ""
+
+#, fuzzy
+msgid "French Southern Territories"
+msgstr ""
+
+#, fuzzy
+msgid "Gabon"
+msgstr ""
+
+#, fuzzy
+msgid "Gambia"
+msgstr ""
+
+#, fuzzy
+msgid "Georgia"
+msgstr ""
+
+#, fuzzy
+msgid "Germany"
+msgstr ""
+
+#, fuzzy
+msgid "Ghana"
+msgstr ""
+
+#, fuzzy
+msgid "Gibraltar"
+msgstr ""
+
+#, fuzzy
+msgid "Greece"
+msgstr ""
+
+#, fuzzy
+msgid "Greenland"
+msgstr ""
+
+#, fuzzy
+msgid "Grenada"
+msgstr ""
+
+#, fuzzy
+msgid "Guadeloupe"
+msgstr ""
+
+#, fuzzy
+msgid "Guam"
+msgstr ""
+
+#, fuzzy
+msgid "Guatemala"
+msgstr ""
+
+#, fuzzy
+msgid "Guernsey"
+msgstr ""
+
+#, fuzzy
+msgid "Guinea"
+msgstr ""
+
+#, fuzzy
+msgid "Guinea-Bissau"
+msgstr ""
+
+#, fuzzy
+msgid "Guyana"
+msgstr ""
+
+#, fuzzy
+msgid "Haiti"
+msgstr ""
+
+#, fuzzy
+msgid "Heard Island and McDonald Islands"
+msgstr ""
+
+#, fuzzy
+msgid "Holy See (Vatican City State)"
+msgstr ""
+
+#, fuzzy
+msgid "Honduras"
+msgstr ""
+
+#, fuzzy
+msgid "Hong Kong"
+msgstr ""
+
+#, fuzzy
+msgid "Hungary"
+msgstr ""
+
+#, fuzzy
+msgid "Iceland"
+msgstr ""
+
+#, fuzzy
+msgid "India"
+msgstr ""
+
+#, fuzzy
+msgid "Indonesia"
+msgstr ""
+
+#, fuzzy
+msgid "Iran, Islamic Republic of"
+msgstr ""
+
+#, fuzzy
+msgid "Iraq"
+msgstr ""
+
+#, fuzzy
+msgid "Ireland"
+msgstr ""
+
+#, fuzzy
+msgid "Isle of Man"
+msgstr ""
+
+#, fuzzy
+msgid "Israel"
+msgstr ""
+
+#, fuzzy
+msgid "Italy"
+msgstr ""
+
+#, fuzzy
+msgid "Jamaica"
+msgstr ""
+
+#, fuzzy
+msgid "Japan"
+msgstr ""
+
+#, fuzzy
+msgid "Jersey"
+msgstr ""
+
+#, fuzzy
+msgid "Jordan"
+msgstr ""
+
+#, fuzzy
+msgid "Kazakhstan"
+msgstr ""
+
+#, fuzzy
+msgid "Kenya"
+msgstr ""
+
+#, fuzzy
+msgid "Kiribati"
+msgstr ""
+
+#, fuzzy
+msgid "Kuwait"
+msgstr ""
+
+#, fuzzy
+msgid "Kyrgyzstan"
+msgstr ""
+
+#, fuzzy
+msgid "Lao People's Democratic Republic"
+msgstr ""
+
+#, fuzzy
+msgid "Latvia"
+msgstr ""
+
+#, fuzzy
+msgid "Lebanon"
+msgstr ""
+
+#, fuzzy
+msgid "Lesotho"
+msgstr ""
+
+#, fuzzy
+msgid "Liberia"
+msgstr ""
+
+#, fuzzy
+msgid "Libya"
+msgstr ""
+
+#, fuzzy
+msgid "Liechtenstein"
+msgstr ""
+
+#, fuzzy
+msgid "Lithuania"
+msgstr ""
+
+#, fuzzy
+msgid "Luxembourg"
+msgstr ""
+
+#, fuzzy
+msgid "Macao"
+msgstr ""
+
+#, fuzzy
+msgid "Madagascar"
+msgstr ""
+
+#, fuzzy
+msgid "Malawi"
+msgstr ""
+
+#, fuzzy
+msgid "Malaysia"
+msgstr ""
+
+#, fuzzy
+msgid "Maldives"
+msgstr ""
+
+#, fuzzy
+msgid "Mali"
+msgstr ""
+
+#, fuzzy
+msgid "Malta"
+msgstr ""
+
+#, fuzzy
+msgid "Marshall Islands"
+msgstr ""
+
+#, fuzzy
+msgid "Martinique"
+msgstr ""
+
+#, fuzzy
+msgid "Mauritania"
+msgstr ""
+
+#, fuzzy
+msgid "Mauritius"
+msgstr ""
+
+#, fuzzy
+msgid "Mayotte"
+msgstr ""
+
+#, fuzzy
+msgid "Mexico"
+msgstr ""
+
+#, fuzzy
+msgid "Micronesia, Federated States of"
+msgstr ""
+
+#, fuzzy
+msgid "Moldova"
+msgstr ""
+
+#, fuzzy
+msgid "Monaco"
+msgstr ""
+
+#, fuzzy
+msgid "Mongolia"
+msgstr ""
+
+#, fuzzy
+msgid "Montenegro"
+msgstr ""
+
+#, fuzzy
+msgid "Montserrat"
+msgstr ""
+
+#, fuzzy
+msgid "Morocco"
+msgstr ""
+
+#, fuzzy
+msgid "Mozambique"
+msgstr ""
+
+#, fuzzy
+msgid "Myanmar"
+msgstr ""
+
+#, fuzzy
+msgid "Namibia"
+msgstr ""
+
+#, fuzzy
+msgid "Nauru"
+msgstr ""
+
+#, fuzzy
+msgid "Nepal"
+msgstr ""
+
+#, fuzzy
+msgid "Netherlands"
+msgstr ""
+
+#, fuzzy
+msgid "New Caledonia"
+msgstr ""
+
+#, fuzzy
+msgid "New Zealand"
+msgstr ""
+
+#, fuzzy
+msgid "Nicaragua"
+msgstr ""
+
+#, fuzzy
+msgid "Niger"
+msgstr ""
+
+#, fuzzy
+msgid "Nigeria"
+msgstr ""
+
+#, fuzzy
+msgid "Niue"
+msgstr ""
+
+#, fuzzy
+msgid "Norfolk Island"
+msgstr ""
+
+#, fuzzy
+msgid "North Korea"
+msgstr ""
+
+#, fuzzy
+msgid "North Macedonia"
+msgstr ""
+
+#, fuzzy
+msgid "Northern Mariana Islands"
+msgstr ""
+
+#, fuzzy
+msgid "Norway"
+msgstr ""
+
+#, fuzzy
+msgid "Oman"
+msgstr ""
+
+#, fuzzy
+msgid "Pakistan"
+msgstr ""
+
+#, fuzzy
+msgid "Palau"
+msgstr ""
+
+#, fuzzy
+msgid "Palestine, State of"
+msgstr ""
+
+#, fuzzy
+msgid "Panama"
+msgstr ""
+
+#, fuzzy
+msgid "Papua New Guinea"
+msgstr ""
+
+#, fuzzy
+msgid "Paraguay"
+msgstr ""
+
+#, fuzzy
+msgid "Peru"
+msgstr ""
+
+#, fuzzy
+msgid "Philippines"
+msgstr ""
+
+#, fuzzy
+msgid "Pitcairn"
+msgstr ""
+
+#, fuzzy
+msgid "Poland"
+msgstr ""
+
+#, fuzzy
+msgid "Portugal"
+msgstr ""
+
+#, fuzzy
+msgid "Puerto Rico"
+msgstr ""
+
+#, fuzzy
+msgid "Qatar"
+msgstr ""
+
+#, fuzzy
+msgid "Romania"
+msgstr ""
+
+#, fuzzy
+msgid "Russian Federation"
+msgstr ""
+
+#, fuzzy
+msgid "Rwanda"
+msgstr ""
+
+#, fuzzy
+msgid "Réunion"
+msgstr ""
+
+#, fuzzy
+msgid "Saint Barthélemy"
+msgstr ""
+
+#, fuzzy
+msgid "Saint Helena, Ascension and Tristan da Cunha"
+msgstr ""
+
+#, fuzzy
+msgid "Saint Kitts and Nevis"
+msgstr ""
+
+#, fuzzy
+msgid "Saint Lucia"
+msgstr ""
+
+#, fuzzy
+msgid "Saint Martin (French part)"
+msgstr ""
+
+#, fuzzy
+msgid "Saint Pierre and Miquelon"
+msgstr ""
+
+#, fuzzy
+msgid "Saint Vincent and the Grenadines"
+msgstr ""
+
+#, fuzzy
+msgid "Samoa"
+msgstr ""
+
+#, fuzzy
+msgid "San Marino"
+msgstr ""
+
+#, fuzzy
+msgid "Sao Tome and Principe"
+msgstr ""
+
+#, fuzzy
+msgid "Saudi Arabia"
+msgstr ""
+
+#, fuzzy
+msgid "Senegal"
+msgstr ""
+
+#, fuzzy
+msgid "Serbia"
+msgstr ""
+
+#, fuzzy
+msgid "Seychelles"
+msgstr ""
+
+#, fuzzy
+msgid "Sierra Leone"
+msgstr ""
+
+#, fuzzy
+msgid "Singapore"
+msgstr ""
+
+#, fuzzy
+msgid "Sint Maarten (Dutch part)"
+msgstr ""
+
+#, fuzzy
+msgid "Slovakia"
+msgstr ""
+
+#, fuzzy
+msgid "Slovenia"
+msgstr ""
+
+#, fuzzy
+msgid "Solomon Islands"
+msgstr ""
+
+#, fuzzy
+msgid "Somalia"
+msgstr ""
+
+#, fuzzy
+msgid "South Africa"
+msgstr ""
+
+#, fuzzy
+msgid "South Georgia and the South Sandwich Islands"
+msgstr ""
+
+#, fuzzy
+msgid "South Korea"
+msgstr ""
+
+#, fuzzy
+msgid "South Sudan"
+msgstr ""
+
+#, fuzzy
+msgid "Spain"
+msgstr ""
+
+#, fuzzy
+msgid "Sri Lanka"
+msgstr ""
+
+#, fuzzy
+msgid "Sudan"
+msgstr ""
+
+#, fuzzy
+msgid "Suriname"
+msgstr ""
+
+#, fuzzy
+msgid "Svalbard and Jan Mayen"
+msgstr ""
+
+#, fuzzy
+msgid "Sweden"
+msgstr ""
+
+#, fuzzy
+msgid "Switzerland"
+msgstr ""
+
+#, fuzzy
+msgid "Syrian Arab Republic"
+msgstr ""
+
+#, fuzzy
+msgid "Taiwan"
+msgstr ""
+
+#, fuzzy
+msgid "Tajikistan"
+msgstr ""
+
+#, fuzzy
+msgid "Tanzania"
+msgstr ""
+
+#, fuzzy
+msgid "Thailand"
+msgstr ""
+
+#, fuzzy
+msgid "Timor-Leste"
+msgstr ""
+
+#, fuzzy
+msgid "Togo"
+msgstr ""
+
+#, fuzzy
+msgid "Tokelau"
+msgstr ""
+
+#, fuzzy
+msgid "Tonga"
+msgstr ""
+
+#, fuzzy
+msgid "Trinidad and Tobago"
+msgstr ""
+
+#, fuzzy
+msgid "Tunisia"
+msgstr ""
+
+#, fuzzy
+msgid "Turkey"
+msgstr ""
+
+#, fuzzy
+msgid "Turkmenistan"
+msgstr ""
+
+#, fuzzy
+msgid "Turks and Caicos Islands"
+msgstr ""
+
+#, fuzzy
+msgid "Tuvalu"
+msgstr ""
+
+#, fuzzy
+msgid "Uganda"
+msgstr ""
+
+#, fuzzy
+msgid "Ukraine"
+msgstr ""
+
+#, fuzzy
+msgid "United Arab Emirates"
+msgstr ""
+
+#, fuzzy
+msgid "United States Minor Outlying Islands"
+msgstr ""
+
+#, fuzzy
+msgid "Uruguay"
+msgstr ""
+
+#, fuzzy
+msgid "Uzbekistan"
+msgstr ""
+
+#, fuzzy
+msgid "Vanuatu"
+msgstr ""
+
+#, fuzzy
+msgid "Venezuela"
+msgstr ""
+
+#, fuzzy
+msgid "Vietnam"
+msgstr ""
+
+#, fuzzy
+msgid "Virgin Islands, British"
+msgstr ""
+
+#, fuzzy
+msgid "Virgin Islands, U.S."
+msgstr ""
+
+#, fuzzy
+msgid "Wallis and Futuna"
+msgstr ""
+
+#, fuzzy
+msgid "Western Sahara"
+msgstr ""
+
+#, fuzzy
+msgid "Yemen"
+msgstr ""
+
+#, fuzzy
+msgid "Zambia"
+msgstr ""
+
+#, fuzzy
+msgid "Zimbabwe"
+msgstr ""
+
+#, fuzzy
+msgid "Åland Islands"
+msgstr ""
+
+#, fuzzy
+msgid "The response is not a valid JSON response."
+msgstr ""
+
+#, fuzzy
+msgid "An unknown error occurred."
+msgstr ""
+
+#, fuzzy
+msgid "Media upload failed. If this is a photo or a large image, please scale it down and try again."
+msgstr ""
+
+#, fuzzy
+msgid "You are probably offline."
+msgstr ""
+
+#, fuzzy
+msgid "The payment did not process. Please try again."
+msgstr ""
+
+#, fuzzy
+msgid "Something went wrong. Please contact us for payment."
+msgstr ""
+
+#, fuzzy
+msgid "Name or Company Name"
+msgstr ""
+
+#, fuzzy
+msgid "Address Line 2"
+msgstr ""
+
+#, fuzzy
+msgid "City"
+msgstr ""
+
+#, fuzzy
+msgid "Postal Code/Zip"
+msgstr ""
+
+#, fuzzy
+msgid "State/Province/Region"
+msgstr ""
+
+#, fuzzy
+msgid "Error"
+msgstr ""
+
+#, fuzzy
+msgid "You have no saved payment methods."
+msgstr ""
+
+#, fuzzy
+msgid "#%s"
+msgstr ""
+
+#, fuzzy
+msgid "Your payment is processing. Exiting this page could cause an error in your order. Please do not navigate away from this page."
+msgstr ""
+
+#, fuzzy
+msgid "Due to processor restrictions, only one checkout form is allowed on the page."
+msgstr ""
+
+#, fuzzy
+msgid "Submitting order..."
+msgstr ""
+
+#, fuzzy
+msgid "Please choose one."
+msgstr ""
+
+#, fuzzy
+msgid "Please choose at least one."
+msgstr ""
+
+#, fuzzy
+msgid "Country or region"
+msgstr ""
+
+#, fuzzy
+msgid "Select Your Country"
+msgstr ""
+
+#, fuzzy
+msgid "Province/Region"
+msgstr ""
+
+#, fuzzy
+msgid "Enter coupon code"
+msgstr ""
+
+#, fuzzy
+msgid "This price has been archived."
+msgstr ""
+
+#, fuzzy
+msgid "Billing address same as shipping"
+msgstr ""
+
+#, fuzzy
+msgid "No Thanks"
+msgstr ""
+
+#, fuzzy
+msgid "You won't receive further emails from us."
+msgstr ""
+
+#, fuzzy
+msgid "Close"
+msgstr ""
+
+#, fuzzy
+msgid "This product is no longer purchasable."
+msgstr ""
+
+#, fuzzy
+msgid "Please refresh the page."
+msgstr ""
+
+#, fuzzy
+msgid "You don't have any invoices."
+msgstr ""
+
+#, fuzzy
+msgid "Invoice History"
+msgstr ""
+
+#, fuzzy
+msgid "Estimated %s"
+msgstr ""
+
+#, fuzzy
+msgid "included"
+msgstr ""
+
+#, fuzzy
+msgid "or"
+msgstr ""
+
+#, fuzzy
+msgid "Enter your password"
+msgstr ""
+
+#, fuzzy
+msgid "Welcome back!"
+msgstr ""
+
+#, fuzzy
+msgid "You have logged in successfully."
+msgstr ""
+
+#, fuzzy
+msgid "Login to your account"
+msgstr ""
+
+#, fuzzy
+msgid "Email or Username"
+msgstr ""
+
+#, fuzzy
+msgid "Free"
+msgstr ""
+
+#, fuzzy
+msgid "Save %s%%"
+msgstr ""
+
+#, fuzzy
+msgid "On Hold"
+msgstr ""
+
+#, fuzzy
+msgid "Order #%s"
+msgstr ""
+
+#, fuzzy
+msgid "Order not found."
+msgstr ""
+
+#, fuzzy
+msgid "This order could not be found. Please try again."
+msgstr ""
+
+#, fuzzy
+msgid "Password does not match."
+msgstr ""
+
+#, fuzzy
+msgid "Confirm Password"
+msgstr ""
+
+#, fuzzy
+msgid "Payment Failed"
+msgstr ""
+
+#, fuzzy
+msgid "Void"
+msgstr ""
+
+#, fuzzy
+msgid "Show Summary"
+msgstr ""
+
+#, fuzzy
+msgid "Your cart is empty."
+msgstr ""
+
+#, fuzzy
+msgid "Order Status"
+msgstr ""
+
+#, fuzzy
+msgid "Download Receipt/Invoice"
+msgstr ""
+
+#, fuzzy
+msgid "Displaying %1d to %2d of %3d items"
+msgstr ""
+
+#, fuzzy
+msgid "Passwords do not match."
+msgstr ""
+
+#, fuzzy
+msgid "Succcess!"
+msgstr ""
+
+#, fuzzy
+msgid "You have successfully set your password."
+msgstr ""
+
+#, fuzzy
+msgid "Set A Password"
+msgstr ""
+
+#, fuzzy
+msgid "New Password"
+msgstr ""
+
+#, fuzzy
+msgid "Confirm New Password"
+msgstr ""
+
+#, fuzzy
+msgid "Reminder"
+msgstr ""
+
+#, fuzzy
+msgid "You have not yet set a password. Please set a password for your account."
+msgstr ""
+
+#, fuzzy
+msgid "Dismiss"
+msgstr ""
+
+#, fuzzy
+msgid "Checking"
+msgstr ""
+
+#, fuzzy
+msgid "Savings"
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you want to remove this payment method?"
+msgstr ""
+
+#, fuzzy
+msgid "You don't have any saved payment methods."
+msgstr ""
+
+#, fuzzy
+msgid "Please contact us for payment"
+msgstr ""
+
+#, fuzzy
+msgid "Failed to load the PayPal JS SDK script"
+msgstr ""
+
+#, fuzzy
+msgid "This product has been archived."
+msgstr ""
+
+#, fuzzy
+msgid "%d day free"
+msgid_plural "%d days free"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy
+msgid "Then"
+msgstr ""
+
+#, fuzzy
+msgid "Qty:"
+msgstr ""
+
+#, fuzzy
+msgid "You don't have any downloads."
+msgstr ""
+
+#, fuzzy
+msgid "%s file"
+msgid_plural "%s files"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy
+msgid "decrease number"
+msgstr ""
+
+#, fuzzy
+msgid "increase number"
+msgstr ""
+
+#, fuzzy
+msgid "Nothing Found"
+msgstr ""
+
+#, fuzzy
+msgid "Payment unsuccessful. Please try again."
+msgstr ""
+
+#, fuzzy
+msgid "Could not find checkout. Please contact us before attempting to purchase again."
+msgstr ""
+
+#, fuzzy
+msgid "Stripe could not be loaded"
+msgstr ""
+
+#, fuzzy
+msgid "Save Payment Method"
+msgstr ""
+
+#, fuzzy
+msgid "You must serve this page over HTTPS to display express payment buttons."
+msgstr ""
+
+#, fuzzy
+msgid "You do not have any wallets set up in your browser."
+msgstr ""
+
+#, fuzzy
+msgid "Express Payment"
+msgstr ""
+
+#, fuzzy
+msgid "Your plan will be canceled, but is still available until the end of your billing period on"
+msgstr ""
+
+#, fuzzy
+msgid "If you change your mind, you can renew your subscription."
+msgstr ""
+
+#, fuzzy
+msgid "Your plan will be canceled immediately. You cannot change your mind."
+msgstr ""
+
+#, fuzzy
+msgid "Cancel your plan"
+msgstr ""
+
+#, fuzzy
+msgid "Cancel Plan"
+msgstr ""
+
+#, fuzzy
+msgid "Go Back"
+msgstr ""
+
+#, fuzzy
+msgid "Your plan will be canceled on"
+msgstr ""
+
+#, fuzzy
+msgid "Your plan switches to"
+msgstr ""
+
+#, fuzzy
+msgid "on"
+msgstr ""
+
+#, fuzzy
+msgid "Your plan begins on"
+msgstr ""
+
+#, fuzzy
+msgid "Your plan renews on"
+msgstr ""
+
+#, fuzzy
+msgid "Your next payment is on"
+msgstr ""
+
+#, fuzzy
+msgid "Update Scheduled"
+msgstr ""
+
+#, fuzzy
+msgid "You do not have any payment methods."
+msgstr ""
+
+#, fuzzy
+msgid "Current Payment Method"
+msgstr ""
+
+#, fuzzy
+msgid "Select a payment method"
+msgstr ""
+
+#, fuzzy
+msgid "This plan will no longer be canceled. It will renew on"
+msgstr ""
+
+#, fuzzy
+msgid "Renew your plan"
+msgstr ""
+
+#, fuzzy
+msgid "Renew Plan"
+msgstr ""
+
+#, fuzzy
+msgid "Incomplete"
+msgstr ""
+
+#, fuzzy
+msgid "Trialing"
+msgstr ""
+
+#, fuzzy
+msgid "Past Due"
+msgstr ""
+
+#, fuzzy
+msgid "Completed"
+msgstr ""
+
+#, fuzzy
+msgid "Unpaid"
+msgstr ""
+
+#, fuzzy
+msgid "Update Amount"
+msgstr ""
+
+#, fuzzy
+msgid "Choose Amount"
+msgstr ""
+
+#, fuzzy
+msgid "To make changes to your payment plan, please contact us."
+msgstr ""
+
+#, fuzzy
+msgid "Are you sure you want to cancel the pending update to your plan?"
+msgstr ""
+
+#, fuzzy
+msgid "This subscription does not exist."
+msgstr ""
+
+#, fuzzy
+msgid "Cancel Scheduled Update"
+msgstr ""
+
+#, fuzzy
+msgid "You don't have any subscriptions."
+msgstr ""
+
+#, fuzzy
+msgid "You'll be switched to this plan"
+msgstr ""
+
+#, fuzzy
+msgid "at the end of your billing cycle on"
+msgstr ""
+
+#, fuzzy
+msgid "immediately"
+msgstr ""
+
+#, fuzzy
+msgid "User not found."
+msgstr ""
+
+#, fuzzy
+msgid "Account Email"
+msgstr ""
+
+#, fuzzy
+msgid "GST Number"
+msgstr ""
+
+#, fuzzy
+msgid "ABN Number"
+msgstr ""
+
+#, fuzzy
+msgid "VAT Number"
+msgstr ""
+
+#, fuzzy
+msgid "Tax ID"
+msgstr ""
+
+#, fuzzy
+msgid "Start Order Number At"
+msgstr ""
+
+#, fuzzy
+msgid "It must be greater than the largest existing order number."
+msgstr ""
+
+#, fuzzy
+msgctxt "text direction"
+msgid "ltr"
+msgstr ""
+
+#, fuzzy
+msgid "Sent!"
+msgstr ""
+
+#, fuzzy
+msgid "You should receive an email shortly with a link to login."
+msgstr ""
+
+#, fuzzy
+msgid "Send a magic link"
+msgstr ""
