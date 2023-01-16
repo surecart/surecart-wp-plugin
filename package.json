@@ -33,6 +33,7 @@
 		"pot:download": "node scripts/po-files.js",
 		"pot:merge": "node scripts/merge-po.js",
 		"pot:translate": "node scripts/google-translate.js",
+    "pot:mo": "./vendor/bin/wp i18n make-mo languages/.",
 		"pot:test": "vendor/bin/potrans google languages/surecart.pot ./ --credentials=credentials.json --from=en --to=mr",
 		"wp-env": "wp-env",
 		"dev": "composer install && yarn start:workspace",
