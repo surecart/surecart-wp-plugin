@@ -1,5 +1,6 @@
 import Address from './modules/Address';
 import Customer from './modules/Customer';
+import Phone from './modules/Phone';
 import MetaData from './modules/MetaData';
 import Purchases from './modules/Purchases';
 import TaxInfo from './modules/TaxInfo';
@@ -10,6 +11,13 @@ export default ({ order, checkout, customer, loading }) => {
 	return (
 		<Fragment>
 			<Customer customer={customer} loading={loading} />
+			{checkout?.phone && (
+				<Phone
+					phone={checkout?.phone}
+					label={__('Phone', 'surecart')}
+					loading={loading}
+				/>
+			)}
 			<Purchases checkoutId={checkout?.id} />
 			{!!checkout?.shipping_address && (
 				<Address

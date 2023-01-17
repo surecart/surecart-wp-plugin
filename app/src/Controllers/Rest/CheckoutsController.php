@@ -87,10 +87,11 @@ class CheckoutsController extends RestController {
 		}
 
 		// fetch the user's customer object.
-		$customer = $user->customerId( ! empty( $request['live_mode'] ) ? 'live' : 'test' );
+		$customer = $user->customer( ! empty( $request['live_mode'] ) ? 'live' : 'test' );
 
 		if ( ! empty( $customer->id ) ) {
-			$class['customer'] = $customer->id;
+			$class['customer'] = $customer;
+			$class['phone']    = isset( $customer->phone ) ? $customer->phone : '';
 		}
 
 		$class['email'] = $customer->email ?? $user->user_email;

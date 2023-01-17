@@ -92,6 +92,17 @@ describe('sc-phone-input', () => {
     expect(scChange).toHaveReceivedEvent();
   });
 
+  // it('Allow only number', async () => {
+  //   let value = await input.getProperty('value');
+
+  //   await page.$eval(selector, (elm: any) => {
+  //     elm.value = 2323232;
+  //   });
+  //   await page.waitForChanges();
+  //   value = await input.getProperty('value');
+  //   expect(typeof value).toBe('number');
+  // });
+
   it('Has a name', async () => {
     let prop = await input.getAttribute('name');
     expect(prop).toBe(null);
