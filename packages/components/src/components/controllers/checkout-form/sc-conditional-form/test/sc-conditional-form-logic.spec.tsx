@@ -4,7 +4,7 @@ describe('Conditional form logic', () => {
 
   describe('Actual Rule data', () => {
 
-    let rulesData = '[{"group_id":"me7","rules":[{"rule_id":"m2v","condition":"cart_total","operator":"==","value":"10000"}]}]';
+    let rulesData = '[{"group_id":"me7","rules":[{"condition":"cart_total","operator":"==","value":"10000"}]}]';
 
     let parsedRules = rulesData ? JSON.parse( rulesData ) : [];
 
@@ -29,7 +29,6 @@ describe('Conditional form logic', () => {
           "group_id": "4ej",
           "rules": [
               {
-                  "rule_id": "gz0",
                   "condition": "cart_item",
                   "operator": "",
                   "value": [
@@ -46,7 +45,6 @@ describe('Conditional form logic', () => {
     it('Order total is less than 100', () => {
 
       const rule_group = {
-          "rule_id": "ac3",
           "condition": "cart_total",
           "operator": "<",
           "value": "100"
@@ -76,7 +74,6 @@ describe('Conditional form logic', () => {
   describe('Cart Items', () => {
 
     const rule_group = {
-      "rule_id": "gz0",
       "condition": "cart_item",
       "operator": "any",
       "value": [
@@ -142,7 +139,6 @@ describe('Conditional form logic', () => {
   describe('Coupons', () => {
 
     const rule_group =   {
-      "rule_id": "ac3",
       "condition": "cart_coupons",
       "operator": "any",
       "value": [
@@ -231,7 +227,6 @@ describe('Conditional form logic', () => {
   describe('Shipping & Billing Country', () => {
 
     const rule_group =   {
-      "rule_id": "ac3",
       "condition": "cart_billing_country",
       "operator": "any",
       "value": [
@@ -274,7 +269,6 @@ describe('Conditional form logic', () => {
   describe('Payment Processor', () => {
 
     const rule_group =   {
-      "rule_id": "ac3",
       "condition": "cart_payment_method",
       "operator": "any",
       "value": [
