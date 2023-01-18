@@ -16,7 +16,7 @@ describe('sc-customer-email', () => {
     });
     expect(page.root).toMatchSnapshot();
   });
-  it('set url data', async () => {
+  it('set data from url', async () => {
     const email = {
       ...window.location,
       search: '?email=test@gmail.com',
