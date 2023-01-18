@@ -46,6 +46,7 @@ const Settings = ({ attributes, setAttributes }) => {
 							<Modal
 								title={__('Configure Conditions', 'surecart')}
 								onRequestClose={closeModal}
+                shouldCloseOnClickOutside={false}
 								css={css`
 									width: 75%;
 									max-width: 650px;

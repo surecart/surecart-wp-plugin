@@ -325,10 +325,10 @@ function Conditions(props) {
 							<div className="sc-rules--rule_fields">
 								<SelectConditions
 									name={`sc-form-rules[${groupIndex}][rules][${ruleIndex}][condition]`}
-									onChange={(selection) => {
+									onScChange={(e) => {
 										updateConditionInRuleGroup(
 											ruleIndex,
-											selection
+											e.target.value
 										);
 									}}
 									value={rule_data.condition}
@@ -338,10 +338,10 @@ function Conditions(props) {
 									name={`sc-form-rules[${groupIndex}][rules][${ruleIndex}][operator]`}
 									type={rule_field_data.operatorType}
 									value={rule_data.operator}
-									onChange={(selection) => {
+									onScChange={(e) => {
 										updateConditionOptionInRuleGroup(
 											ruleIndex,
-											selection,
+											e.target.value,
 											'operator'
 										);
 									}}
