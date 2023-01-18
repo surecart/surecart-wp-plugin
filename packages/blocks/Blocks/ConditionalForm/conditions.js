@@ -12,7 +12,7 @@ import SelectProducts from './selectProducts';
 import SelectCoupons from './selectCoupons';
 import Select2 from './select2';
 import { countryChoices } from '@surecart/components';
-import { ScPriceInput } from '@surecart/components-react';
+import { ScPriceInput, ScCard, ScButton } from '@surecart/components-react';
 import SelectConditions from './selectConditions';
 import SelectOperator from './selectOperator';
 
@@ -283,14 +283,14 @@ function Conditions(props) {
           margin-top: 15px;
         `}
       >
-        <div
-          className="button"
+        <ScButton
+          // className="button"
           onClick={() => {
             removeConditionFromRuleGroup(ruleIndex);
           }}
         >
           {__('Remove Condition', 'surecart')}
-        </div>
+        </ScButton>
 			</div>
 		);
 	};
@@ -321,13 +321,17 @@ function Conditions(props) {
 								</div>
 							</div>
 						)}
+            <ScCard className="sc-rules--group_rules-card" style={{
+								background: '#ffffff',
+								// border: '1px #d4d4d4 solid'
+            }}>
 						<div
 							className="sc-rules--group_rules"
-							css={css`
+							/*css={css`
 								background: #ffffff;
 								padding: 15px 14px;
 								border: 1px #d4d4d4 solid;
-							`}
+							`}*/
 						>
 							<div className="sc-rules--rule_fields">
 								<SelectConditions
@@ -365,6 +369,7 @@ function Conditions(props) {
 									ruleIndex
 								)}
 						</div>
+            </ScCard>
 					</>
 				);
 			})}

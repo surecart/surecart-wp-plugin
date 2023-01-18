@@ -5,6 +5,7 @@ import { Button } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import Conditions from './conditions';
 import translations from './translations';
+import { ScCard, ScButton } from '@surecart/components-react';
 
 const Rules = ({ attributes, setAttributes, closeModal }) => {
 	const { rule_groups } = attributes;
@@ -156,13 +157,17 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 							className="sc-rules-page--group_wrapper"
 							key={group_id}
 						>
+              <ScCard className="sc-rules--group_rules-card" style={{
+								background: '#fafafa',
+								// border: 1px dashed #fafafa;
+              }}>
 							<div
 								className="sc-rules--group"
-								css={css`
+								/*css={css`
 									padding: 15px;
 									background-color: #fafafa;
 									border: 1px dashed #fafafa;
-								`}
+								`}*/
 							>
 								<input
 									type="hidden"
@@ -249,17 +254,19 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 									</div>
 
 									<div className="sc-rules--add-rule__repeater">
-										<div
-											className="sc-button sc-button--secondary button"
+										<ScButton
+                      /*style={{ background: '#fffffff' }}
+											className="sc-button sc-button--secondary button"*/
 											onClick={(e) => {
 												addNewCondition(groupIndex);
 											}}
 										>
 											{__('Add Condition', 'surecart')}
-										</div>
+										</ScButton>
 									</div>
 								</div>
 							</div>
+              </ScCard>
 							<div
 								className="sc-rules-page--group_wrapper__footer"
 								css={css`
@@ -287,12 +294,12 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 								{parseInt(groupIndex) + 1 ===
 									draftRuleGroups.length && (
 									<div className="sc-rules--or_group__button">
-										<span
-											className="sc-rules--or_group_button or-button sc-button sc-button--secondary button"
+										<ScButton
+											// className="sc-rules--or_group_button or-button sc-button sc-button--secondary button"
 											onClick={addNewGroup}
 										>
 											{__('Add Rule Group', 'surecart')}
-										</span>
+										</ScButton>
 									</div>
 								)}
 							</div>
@@ -307,18 +314,19 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 						margin-top: -33px;
 					`}
 				>
-					<Button variant="secondary" onClick={closeModal}>
+					<ScButton variant="secondary" onClick={closeModal}>
 						{__('Cancel', 'surecart')}
-					</Button>
-					<Button
-						variant="primary"
-						type="submit"
+					</ScButton>
+					<ScButton
+						type="primary"
+						/*variant="primary"
+						type="submit"*/
 						css={css`
 							margin-left: 15px;
 						`}
 					>
 						{__('Save', 'surecart')}
-					</Button>
+					</ScButton>
 				</div>
 			</form>
 		</>
