@@ -70,7 +70,7 @@ class CancellationReasonRestServiceProvider extends RestServiceProvider implemen
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return current_user_can( 'edit_sc_subscriptions' );
+		return current_user_can( 'edit_sc_subscriptions' ) || current_user_can( 'subscriber' );
 	}
 
 	/**
@@ -80,7 +80,7 @@ class CancellationReasonRestServiceProvider extends RestServiceProvider implemen
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		return current_user_can( 'edit_sc_subscriptions' );
+		return current_user_can( 'edit_sc_subscriptions' ) || current_user_can( 'subscriber' );
 	}
 
 	/**
@@ -90,7 +90,7 @@ class CancellationReasonRestServiceProvider extends RestServiceProvider implemen
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function create_item_permissions_check( $request ) {
-		return current_user_can( 'edit_sc_subscriptions' );
+		return current_user_can( 'edit_sc_subscriptions' ) || current_user_can( 'subscriber' );
 	}
 
 	/**
@@ -100,7 +100,7 @@ class CancellationReasonRestServiceProvider extends RestServiceProvider implemen
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		return current_user_can( 'edit_sc_subscriptions' );
+		return current_user_can( 'edit_sc_subscriptions' ) || current_user_can( 'subscriber' );
 	}
 
 	/**
@@ -110,6 +110,6 @@ class CancellationReasonRestServiceProvider extends RestServiceProvider implemen
 	 * @return false
 	 */
 	public function delete_item_permissions_check( $request ) {
-		return current_user_can( 'edit_sc_subscriptions' );
+		return current_user_can( 'edit_sc_subscriptions' ) || current_user_can( 'subscriber' );
 	}
 }
