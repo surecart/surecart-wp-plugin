@@ -277,13 +277,20 @@ function Conditions(props) {
 			return '';
 		}
 		return (
-			<div
-				className="button"
-				onClick={() => {
-					removeConditionFromRuleGroup(ruleIndex);
-				}}
-			>
-				{__('Remove Condition', 'surecart')}
+      <div
+        className="sc-rules--rule_actions"
+        css={css`
+          margin-top: 15px;
+        `}
+      >
+        <div
+          className="button"
+          onClick={() => {
+            removeConditionFromRuleGroup(ruleIndex);
+          }}
+        >
+          {__('Remove Condition', 'surecart')}
+        </div>
 			</div>
 		);
 	};
@@ -353,17 +360,10 @@ function Conditions(props) {
 									rule_data
 								)}
 							</div>
-							<div
-								className="sc-rules--rule_actions"
-								css={css`
-									margin-top: 15px;
-								`}
-							>
 								{renderRemoveConditionIcon(
 									rules.length,
 									ruleIndex
 								)}
-							</div>
 						</div>
 					</>
 				);
