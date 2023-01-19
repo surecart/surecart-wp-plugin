@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export namespace Components {
     interface ScAddress {
         /**
@@ -2334,6 +2334,9 @@ export namespace Components {
          */
         "trialDurationDays": number;
     }
+    interface ScProducts {
+        "products": Product[];
+    }
     interface ScProvider {
         "STENCIL_CONTEXT": { [key: string]: any };
     }
@@ -4079,6 +4082,12 @@ declare global {
         prototype: HTMLScProductLineItemElement;
         new (): HTMLScProductLineItemElement;
     };
+    interface HTMLScProductsElement extends Components.ScProducts, HTMLStencilElement {
+    }
+    var HTMLScProductsElement: {
+        prototype: HTMLScProductsElement;
+        new (): HTMLScProductsElement;
+    };
     interface HTMLScProviderElement extends Components.ScProvider, HTMLStencilElement {
     }
     var HTMLScProviderElement: {
@@ -4481,6 +4490,7 @@ declare global {
         "sc-price-choices": HTMLScPriceChoicesElement;
         "sc-price-input": HTMLScPriceInputElement;
         "sc-product-line-item": HTMLScProductLineItemElement;
+        "sc-products": HTMLScProductsElement;
         "sc-provider": HTMLScProviderElement;
         "sc-purchase-downloads-list": HTMLScPurchaseDownloadsListElement;
         "sc-quantity-select": HTMLScQuantitySelectElement;
@@ -7161,6 +7171,9 @@ declare namespace LocalJSX {
          */
         "trialDurationDays"?: number;
     }
+    interface ScProducts {
+        "products"?: Product[];
+    }
     interface ScProvider {
         "STENCIL_CONTEXT"?: { [key: string]: any };
         "onMountConsumer"?: (event: ScProviderCustomEvent<any>) => void;
@@ -8177,6 +8190,7 @@ declare namespace LocalJSX {
         "sc-price-choices": ScPriceChoices;
         "sc-price-input": ScPriceInput;
         "sc-product-line-item": ScProductLineItem;
+        "sc-products": ScProducts;
         "sc-provider": ScProvider;
         "sc-purchase-downloads-list": ScPurchaseDownloadsList;
         "sc-quantity-select": ScQuantitySelect;
@@ -8344,6 +8358,7 @@ declare module "@stencil/core" {
             "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
             "sc-product-line-item": LocalJSX.ScProductLineItem & JSXBase.HTMLAttributes<HTMLScProductLineItemElement>;
+            "sc-products": LocalJSX.ScProducts & JSXBase.HTMLAttributes<HTMLScProductsElement>;
             "sc-provider": LocalJSX.ScProvider & JSXBase.HTMLAttributes<HTMLScProviderElement>;
             "sc-purchase-downloads-list": LocalJSX.ScPurchaseDownloadsList & JSXBase.HTMLAttributes<HTMLScPurchaseDownloadsListElement>;
             "sc-quantity-select": LocalJSX.ScQuantitySelect & JSXBase.HTMLAttributes<HTMLScQuantitySelectElement>;
