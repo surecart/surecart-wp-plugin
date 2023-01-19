@@ -8,14 +8,14 @@ msgstr ""
 "PO-Revision-Date: 2023-01-19 14:51\n"
 "Last-Translator: lokalise.com\n"
 "Language-Team: lokalise.com\n\n"
-"Language: de_DE\n"
+"Language: fr_FR\n"
 
 #: src/BlockLibrary/BlockPatternsService.php:28
 #: src/Integrations/Beaver/BeaverFormModule.php:67
 #: src/Integrations/Elementor/ReusableFormWidget.php:42
 #: src/Integrations/Elementor/ReusableFormWidget.php:101
 msgid "Checkout Form"
-msgstr "Checkout-Formular"
+msgstr "Formulaire de paiement"
 
 #: src/BlockLibrary/BlockServiceProvider.php:101
 #: src/Integrations/AffiliateWP/AffiliateWPService.php:29
@@ -6847,7 +6847,7 @@ msgstr ""
 #: dashboard/components/GetStarted.js:56
 #, fuzzy
 msgid "Get started with SureCart"
-msgstr "Beginnen Sie mit SureCart"
+msgstr "Démarrer avec SureCart"
 
 #: dashboard/components/GetStarted.js:61
 #, fuzzy
