@@ -47,10 +47,6 @@ msgstr ""
 msgid "All Test"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:68
-msgid "Test"
-msgstr ""
-
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:43
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:175
 #: abandoned-checkouts/modules/Details.js:16
