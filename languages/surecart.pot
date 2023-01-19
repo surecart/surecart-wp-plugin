@@ -53,5 +53,5 @@ msgstr ""
 
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:78
-msgid "Ne Test"
+msgid "N Test"
 msgstr ""
