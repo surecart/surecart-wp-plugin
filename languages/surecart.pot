@@ -44,7 +44,11 @@ msgstr ""
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:63
 #: src/Controllers/Admin/Products/ProductsListTable.php:56
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:60
-msgid "All"
+msgid "All Test"
+msgstr ""
+
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:68
+msgid "Test"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:43
