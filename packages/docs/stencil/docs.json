@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-01-12T17:59:47",
+  "timestamp": "2023-01-18T07:18:04",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -20421,6 +20421,42 @@
           "sc-product-line-item"
         ]
       }
+    },
+    {
+      "filePath": "./src/components/ui/sc-products/sc-products.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-products",
+      "readme": "# sc-grid\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "products",
+          "type": "Product[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "[]",
+          "values": [
+            {
+              "type": "Product[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
     },
     {
       "filePath": "./src/components/context/provider/sc-provider.tsx",
