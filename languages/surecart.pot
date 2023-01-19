@@ -50,7 +50,3 @@ msgstr ""
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:68
 msgid "Test"
 msgstr ""
-
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:78
-msgid "New Test"
-msgstr ""
