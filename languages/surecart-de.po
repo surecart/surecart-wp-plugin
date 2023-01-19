@@ -8,14 +8,14 @@ msgstr ""
 "PO-Revision-Date: 2023-01-19 12:34\n"
 "Last-Translator: lokalise.com\n"
 "Language-Team: lokalise.com\n\n"
-"Language: es\n"
+"Language: de\n"
 
 #: src/BlockLibrary/BlockPatternsService.php:28
 #: src/Integrations/Beaver/BeaverFormModule.php:67
 #: src/Integrations/Elementor/ReusableFormWidget.php:42
 #: src/Integrations/Elementor/ReusableFormWidget.php:101
 msgid "Checkout Form"
-msgstr "Formulario de pago"
+msgstr "Checkout-Formular"
 
 #: src/BlockLibrary/BlockServiceProvider.php:101
 #: src/Integrations/AffiliateWP/AffiliateWPService.php:29
@@ -34,8 +34,9 @@ msgstr "SureCart"
 
 #: src/Cart/CartService.php:51
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:134
+#, fuzzy
 msgid "Cart"
-msgstr "Carrito"
+msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:43
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:175
