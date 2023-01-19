@@ -38,15 +38,6 @@ msgstr ""
 msgid "Cart"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:42
-#: src/Controllers/Admin/Bumps/BumpsListTable.php:56
-#: src/Controllers/Admin/Orders/OrdersListTable.php:65
-#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:63
-#: src/Controllers/Admin/Products/ProductsListTable.php:56
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:60
-msgid "All Test"
-msgstr ""
-
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:43
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:175
 #: abandoned-checkouts/modules/Details.js:16
