@@ -7117,6 +7117,7 @@ __metadata:
     react: 17.0.2
     react-apexcharts: ^1.4.0
     react-dom: 17.0.2
+    react-smooth-dnd: ^0.11.1
     react-test-renderer: 17.0.2
     replace-in-file: ^6.0.0
     sass-loader: ^10
@@ -28337,7 +28338,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.0.0, prop-types@npm:^15.5.6, prop-types@npm:^15.5.7, prop-types@npm:^15.5.8, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.0, prop-types@npm:^15.7.2":
+"prop-types@npm:>=15.6.0, prop-types@npm:^15.0.0, prop-types@npm:^15.5.6, prop-types@npm:^15.5.7, prop-types@npm:^15.5.8, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.0, prop-types@npm:^15.7.2":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -29227,6 +29228,18 @@ __metadata:
     shallowequal: ^1.1.0
     throttle-debounce: ^3.0.1
   checksum: 97cb852c24bbd50acb310da89df564e0d069415f6635676dae3d3bdc583ece88090c0f2ee88a6b0dc36d2793af4a11e83bf6bbb41b86225dd0cf338e8f7e8552
+  languageName: node
+  linkType: hard
+
+"react-smooth-dnd@npm:^0.11.1":
+  version: 0.11.1
+  resolution: "react-smooth-dnd@npm:0.11.1"
+  dependencies:
+    prop-types: ">=15.6.0"
+    smooth-dnd: 0.12.1
+  peerDependencies:
+    react: ^16.3.0
+  checksum: 11e2fb5da2da46c1eb96e01ea9444742269f9d812cb014caffed0ab094e37e20d796d1a36ea6fbf6b2cee5bb399f65100138fe2bb2ad3d03037577bd841a1e70
   languageName: node
   linkType: hard
 
@@ -31449,6 +31462,13 @@ __metadata:
   version: 4.2.0
   resolution: "smart-buffer@npm:4.2.0"
   checksum: b5167a7142c1da704c0e3af85c402002b597081dd9575031a90b4f229ca5678e9a36e8a374f1814c8156a725d17008ae3bde63b92f9cfd132526379e580bec8b
+  languageName: node
+  linkType: hard
+
+"smooth-dnd@npm:0.12.1":
+  version: 0.12.1
+  resolution: "smooth-dnd@npm:0.12.1"
+  checksum: 533befb0552f04b2f27113436bf1851a2c672ebe8c384de3d65a2d87a86ce728cb5cfd8b039522252bf2cef66181d3ebaef92a5d6662184b1906acadd1568203
   languageName: node
   linkType: hard
 

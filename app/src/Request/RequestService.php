@@ -81,7 +81,7 @@ class RequestService {
 	 * Get the base url.
 	 */
 	public function getBaseUrl() {
-		return untrailingslashit( SURECART_APP_URL ) . trailingslashit( $this->base_path );
+		return untrailingslashit( SURECART_API_URL ) . trailingslashit( $this->base_path );
 	}
 
 	/**

@@ -67,6 +67,10 @@ class Block extends BaseBlock {
 	 * @return \SureCart/Models/Processor|null;
 	 */
 	protected function getProcessorByType( $type, $processors ) {
+		if ( is_wp_error( $processors ) ) {
+			return null;
+		}
+
 		$key = array_search( $type, array_column( (array) $processors, 'processor_type' ), true );
 		if ( ! is_int( $key ) ) {
 			return null;

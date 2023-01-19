@@ -30,8 +30,8 @@ export class ScStackedListRow {
   }
 
   handleSlotChange() {
-    this.hasPrefix = !!this.el.querySelector('.list-row__prefix [slot="prefix"]');
-    this.hasSuffix = !!this.el.querySelector('[slot="suffix"]');
+    this.hasPrefix = !!Array.from(this.el.children).some(child => child.slot === 'prefix');
+    this.hasSuffix = !!Array.from(this.el.children).some(child => child.slot === 'suffix');
   }
 
   render() {

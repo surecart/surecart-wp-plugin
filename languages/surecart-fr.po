@@ -1,14 +1,16 @@
 msgid ""
 msgstr ""
+"Project-Id-Version: SureCart WP\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: lokalise.com\n"
+"Language-Team: lokalise.com\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: lokalise.com\n"
-"Project-Id-Version: SureCart WP\n"
+"POT-Creation-Date: 2023-01-19T10:46:24+00:00\n"
 "PO-Revision-Date: 2023-01-16 12:08\n"
-"Last-Translator: lokalise.com\n"
-"Language-Team: lokalise.com\n\n"
 "Language: fr\n"
+"X-Generator: lokalise.com\n"
 
 #, fuzzy
 msgid "Checkout Form"
@@ -4665,7 +4667,7 @@ msgstr ""
 
 #, fuzzy
 msgid "Get started with SureCart"
-msgstr ""
+msgstr "FR Get started with SureCart"
 
 #, fuzzy
 msgid "Setup"

@@ -1,4 +1,5 @@
 import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
 
 apiFetch.fetchAllMiddleware = null;
 
@@ -17,5 +18,11 @@ if (window?.scData?.nonce_endpoint) {
   // @ts-ignore
   apiFetch.nonceEndpoint = window?.scData?.nonce_endpoint;
 }
+
+// Add a timestamp so it can bypass cache rest api
+apiFetch.use((options, next) => {
+  options.path = addQueryArgs(options.path, { t: Date.now() });
+  return next(options);
+});
 
 export default apiFetch;
