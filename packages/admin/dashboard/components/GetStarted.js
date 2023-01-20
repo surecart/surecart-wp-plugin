@@ -19,6 +19,12 @@ export default () => {
 		return null;
 	}
 
+  console.log('hello');
+  debugger;
+
+  let y = __('Get started with SureCart', 'surecart');
+  console.log(y);
+
 	return (
 		<ScCard
 			css={css`
