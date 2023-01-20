@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-01-19T11:05:24+00:00\n"
+"POT-Creation-Date: 2023-01-20T08:11:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -36,6 +36,15 @@ msgstr ""
 #: src/Cart/CartService.php:51
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:135
 msgid "Cart"
+msgstr ""
+
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:42
+#: src/Controllers/Admin/Bumps/BumpsListTable.php:56
+#: src/Controllers/Admin/Orders/OrdersListTable.php:65
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:63
+#: src/Controllers/Admin/Products/ProductsListTable.php:56
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:60
+msgid "All"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:43
@@ -264,7 +273,7 @@ msgstr ""
 #: Controllers/SubscriptionController.php:409
 #: Controllers/SubscriptionController.php:475
 #: sc-subscription-details2.js:33
-#: sc-subscription.js:99
+#: sc-subscription.js:137
 msgid "Subscription"
 msgstr ""
 
@@ -844,7 +853,7 @@ msgstr ""
 #: settings/subscription/SubscriptionSettings.js:55
 #: subscriptions/show/ShowSubscription.js:212
 #: Controllers/SubscriptionController.php:57
-#: sc-subscriptions-list.js:133
+#: sc-subscriptions-list.js:131
 msgid "Subscriptions"
 msgstr ""
 
@@ -4135,7 +4144,7 @@ msgstr ""
 
 #: layouts/partials/admin-settings-sidebar.php:94
 #: components/UpgradeModal.js:19
-#: sc-upgrade-required.js:20
+#: sc-upgrade-required.js:23
 msgid "Boost Your Revenue"
 msgstr ""
 
@@ -4170,6 +4179,7 @@ msgstr ""
 
 #: web/dashboard/orders/show.php:34
 #: invoices/modules/Refunds.js:11
+#: sc-subscription-next-payment2.js:96
 #: sc-upcoming-invoice.js:201
 msgid "Payment"
 msgstr ""
@@ -4338,18 +4348,16 @@ msgstr ""
 #: sc-paypal-add-method.js:94
 #: sc-stripe-add-method.js:94
 #: sc-stripe-add-method.js:121
-#: sc-subscription-cancel.js:41
-#: sc-subscription-cancel.js:77
+#: sc-subscription-cancel2.js:41
 #: sc-subscription-payment-method.js:59
 #: sc-subscription-payment-method.js:91
 #: sc-subscription-payment-method.js:116
 #: sc-subscription-payment.js:43
 #: sc-subscription-payment.js:90
-#: sc-subscription-renew.js:41
-#: sc-subscription-renew.js:72
 #: sc-subscription-switch.js:47
-#: sc-subscription.js:60
-#: sc-subscription.js:86
+#: sc-subscription.js:80
+#: sc-subscription.js:101
+#: sc-subscription.js:124
 #: sc-subscriptions-list.js:58
 #: sc-subscriptions-list.js:71
 #: sc-upcoming-invoice.js:56
@@ -4475,6 +4483,7 @@ msgstr ""
 #: Blocks/Totals/edit.js:46
 #: sc-order-confirmation-totals2.js:33
 #: sc-order.js:120
+#: sc-subscription-next-payment2.js:96
 #: sc-upcoming-invoice.js:201
 msgid "Subtotal"
 msgstr ""
@@ -4490,6 +4499,7 @@ msgstr ""
 #: orders/modules/LineItems/index.js:167
 #: subscriptions/show/modules/LineItems/index.js:76
 #: sc-order.js:126
+#: sc-subscription-next-payment2.js:96
 #: sc-upcoming-invoice.js:201
 msgid "Applied Balance"
 msgstr ""
@@ -4499,6 +4509,7 @@ msgstr ""
 #: orders/modules/LineItems/index.js:177
 #: subscriptions/show/modules/LineItems/index.js:92
 #: subscriptions/show/modules/SubscriptionItems.js:82
+#: sc-subscription-next-payment2.js:96
 msgid "Discounts"
 msgstr ""
 
@@ -4520,6 +4531,7 @@ msgstr ""
 #: subscriptions/show/modules/Tax.js:55
 #: sc-order-confirmation-totals2.js:33
 #: sc-order.js:132
+#: sc-subscription-next-payment2.js:96
 #: sc-upcoming-invoice.js:201
 msgid "Tax"
 msgstr ""
@@ -4997,7 +5009,7 @@ msgstr ""
 #: Blocks/Dashboard/CustomerOrders/edit.js:71
 #: Blocks/Dashboard/CustomerOrders/edit.js:120
 #: sc-invoices-list.js:123
-#: sc-orders-list.js:132
+#: sc-orders-list.js:134
 msgid "%s item"
 msgid_plural "%s items"
 msgstr[0] ""
@@ -5325,7 +5337,7 @@ msgid "You have unsaved changes. If you proceed, they will be lost."
 msgstr ""
 
 #: components/UpgradeModal.js:25
-#: sc-upgrade-required.js:20
+#: sc-upgrade-required.js:23
 msgid "Unlock revenue boosting features when you upgrade your plan!"
 msgstr ""
 
@@ -6075,11 +6087,13 @@ msgid "Amount Paid"
 msgstr ""
 
 #: invoices/modules/LineItems.js:138
+#: sc-subscription-next-payment2.js:96
 #: sc-upcoming-invoice.js:201
 msgid "Proration Credit"
 msgstr ""
 
 #: invoices/modules/LineItems.js:175
+#: sc-subscription-next-payment2.js:98
 #: sc-upcoming-invoice.js:203
 msgid "Total Due"
 msgstr ""
@@ -6142,7 +6156,7 @@ msgstr ""
 
 #: licenses/modules/Activations/index.js:94
 #: sc-licenses-list.js:52
-#: sc-subscription-details2.js:105
+#: sc-subscription-details2.js:103
 msgid "Activations"
 msgstr ""
 
@@ -6435,7 +6449,7 @@ msgid "Free Trial Days"
 msgstr ""
 
 #: products/components/price/parts/Trial.js:16
-#: sc-upgrade-required.js:20
+#: sc-premium-tag.js:13
 msgid "Premium"
 msgstr ""
 
@@ -6690,6 +6704,7 @@ msgstr ""
 #: products/modules/Prices/Price/Header.js:43
 #: subscriptions/edit/modules/Trial.js:14
 #: subscriptions/edit/modules/UpcomingPeriod.js:77
+#: sc-subscription-next-payment2.js:96
 #: sc-upcoming-invoice.js:201
 msgid "Free Trial"
 msgstr ""
@@ -8315,7 +8330,7 @@ msgstr ""
 #: Controllers/SubscriptionController.php:198
 #: sc-subscription-payment-method.js:131
 #: sc-subscription-payment-method.js:150
-#: sc-subscription.js:133
+#: sc-subscription.js:171
 msgid "Update Payment Method"
 msgstr ""
 
@@ -8915,7 +8930,7 @@ msgstr ""
 
 #: Controllers/DownloadController.php:62
 #: Controllers/OrderController.php:69
-#: sc-orders-list.js:147
+#: sc-orders-list.js:149
 msgid "Order History"
 msgstr ""
 
@@ -8956,7 +8971,7 @@ msgstr ""
 #: Controllers/SubscriptionController.php:115
 #: Controllers/SubscriptionController.php:208
 #: sc-subscription-switch.js:169
-#: sc-subscription.js:131
+#: sc-subscription.js:169
 msgid "Current Plan"
 msgstr ""
 
@@ -9651,9 +9666,9 @@ msgstr ""
 #: Blocks/Dashboard/OrderDownloads/edit.js:41
 #: sc-charges-list.js:121
 #: sc-invoices-list.js:138
-#: sc-orders-list.js:147
+#: sc-orders-list.js:149
 #: sc-purchase-downloads-list2.js:60
-#: sc-subscriptions-list.js:133
+#: sc-subscriptions-list.js:131
 msgid "View all"
 msgstr ""
 
@@ -12147,19 +12162,19 @@ msgstr ""
 msgid "Åland Islands"
 msgstr ""
 
-#: fetch.js:692
+#: fetch.js:694
 msgid "The response is not a valid JSON response."
 msgstr ""
 
-#: fetch.js:735
+#: fetch.js:737
 msgid "An unknown error occurred."
 msgstr ""
 
-#: fetch.js:805
+#: fetch.js:807
 msgid "Media upload failed. If this is a photo or a large image, please scale it down and try again."
 msgstr ""
 
-#: fetch.js:923
+#: fetch.js:925
 msgid "You are probably offline."
 msgstr ""
 
@@ -12205,6 +12220,18 @@ msgstr ""
 #: sc-order-shipping-address2.js:34
 #: sc-order-shipping-address2.js:43
 msgid "State/Province/Region"
+msgstr ""
+
+#: sc-cancel-survey2.js:82
+msgid "Choose a reason"
+msgstr ""
+
+#: sc-cancel-survey2.js:82
+msgid "Additional Comments"
+msgstr ""
+
+#: sc-cancel-survey2.js:82
+msgid "Continue"
 msgstr ""
 
 #: sc-cart-form.js:126
@@ -12554,36 +12581,33 @@ msgstr ""
 msgid "Express Payment"
 msgstr ""
 
-#: sc-subscription-cancel.js:86
+#: sc-subscription-cancel2.js:50
 msgid "Your plan will be canceled, but is still available until the end of your billing period on"
 msgstr ""
 
-#: sc-subscription-cancel.js:86
+#: sc-subscription-cancel2.js:50
 msgid "If you change your mind, you can renew your subscription."
 msgstr ""
 
-#: sc-subscription-cancel.js:86
+#: sc-subscription-cancel2.js:50
 msgid "Your plan will be canceled immediately. You cannot change your mind."
 msgstr ""
 
-#: sc-subscription-cancel.js:92
+#: sc-subscription-cancel2.js:56
 msgid "Cancel your plan"
 msgstr ""
 
-#: sc-subscription-cancel.js:92
-#: sc-subscription.js:139
+#: sc-subscription-cancel2.js:56
+#: sc-subscription.js:173
 msgid "Cancel Plan"
 msgstr ""
 
-#: sc-subscription-cancel.js:92
-#: sc-subscription-payment.js:103
-#: sc-subscription-payment.js:110
-#: sc-subscription-renew.js:87
-msgid "Go Back"
+#: sc-subscription-cancel2.js:56
+msgid "Keep My Plan"
 msgstr ""
 
 #: sc-subscription-details2.js:66
-#: sc-subscription.js:104
+#: sc-subscription.js:142
 msgid "Your plan will be canceled on"
 msgstr ""
 
@@ -12598,12 +12622,12 @@ msgid "on"
 msgstr ""
 
 #: sc-subscription-details2.js:78
-#: sc-subscription.js:107
+#: sc-subscription.js:145
 msgid "Your plan begins on"
 msgstr ""
 
 #: sc-subscription-details2.js:81
-#: sc-subscription.js:110
+#: sc-subscription.js:148
 msgid "Your plan renews on"
 msgstr ""
 
@@ -12611,8 +12635,12 @@ msgstr ""
 msgid "Your next payment is on"
 msgstr ""
 
-#: sc-subscription-details2.js:105
+#: sc-subscription-details2.js:103
 msgid "Update Scheduled"
+msgstr ""
+
+#: sc-subscription-next-payment2.js:92
+msgid "Your next payment is"
 msgstr ""
 
 #: sc-subscription-payment-method.js:39
@@ -12623,21 +12651,13 @@ msgstr ""
 msgid "Current Payment Method"
 msgstr ""
 
+#: sc-subscription-payment.js:103
+#: sc-subscription-payment.js:110
+msgid "Go Back"
+msgstr ""
+
 #: sc-subscription-payment.js:113
 msgid "Select a payment method"
-msgstr ""
-
-#: sc-subscription-renew.js:81
-msgid "This plan will no longer be canceled. It will renew on"
-msgstr ""
-
-#: sc-subscription-renew.js:87
-msgid "Renew your plan"
-msgstr ""
-
-#: sc-subscription-renew.js:87
-#: sc-subscription.js:135
-msgid "Renew Plan"
 msgstr ""
 
 #: sc-subscription-status-badge2.js:48
@@ -12672,16 +12692,20 @@ msgstr ""
 msgid "To make changes to your payment plan, please contact us."
 msgstr ""
 
-#: sc-subscription.js:40
+#: sc-subscription.js:60
 msgid "Are you sure you want to cancel the pending update to your plan?"
 msgstr ""
 
-#: sc-subscription.js:115
+#: sc-subscription.js:153
 msgid "This subscription does not exist."
 msgstr ""
 
-#: sc-subscription.js:133
+#: sc-subscription.js:171
 msgid "Cancel Scheduled Update"
+msgstr ""
+
+#: sc-subscription.js:171
+msgid "Restore Plan"
 msgstr ""
 
 #: sc-subscriptions-list.js:105
@@ -12701,8 +12725,8 @@ msgstr ""
 msgid "immediately"
 msgstr ""
 
-#: sc-upgrade-required.js:20
-msgid "Upgrade Now!"
+#: sc-upgrade-required.js:23
+msgid "Upgrade Now"
 msgstr ""
 
 #: sc-wordpress-password-edit.js:24
