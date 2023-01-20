@@ -26,6 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'SURECART_PLUGIN_FILE', __FILE__ );
 
+define( 'SURECART_PLUGIN_DIR_NAME', dirname( plugin_basename( SURECART_PLUGIN_FILE ) ) );
 define( 'SURECART_LANGUAGE_DIR', __DIR__ . DIRECTORY_SEPARATOR . 'languages' );
 
 // define host url.
@@ -52,7 +53,7 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'help
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'hooks.php';
 
 
-add_action( 'plugins_loaded', 'sc_load_textdomain' );
+// add_action( 'plugins_loaded', 'sc_load_textdomain' );
 
 /**
  * Load Plugin Text Domain.

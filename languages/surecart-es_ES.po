@@ -6844,7 +6844,6 @@ msgid "Connect a user"
 msgstr ""
 
 #: dashboard/components/GetStarted.js:56
-#, fuzzy
 msgid "Get started with SureCart"
 msgstr "Comience con SureCart"
 
