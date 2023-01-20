@@ -5,7 +5,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: lokalise.com\n"
 "Project-Id-Version: SureCart WP\n"
-"PO-Revision-Date: 2023-01-19 14:51\n"
+"PO-Revision-Date: 2023-01-20 09:19\n"
 "Last-Translator: lokalise.com\n"
 "Language-Team: lokalise.com\n\n"
 "Language: fr_FR\n"
@@ -34,9 +34,8 @@ msgstr "SureCart"
 
 #: src/Cart/CartService.php:51
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:134
-#, fuzzy
 msgid "Cart"
-msgstr ""
+msgstr "Chariot"
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:43
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:175
@@ -1022,6 +1021,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: Coupon % off.
+#. Translators: Percent off.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:313
 #: price.js:13
 #, fuzzy
@@ -2711,6 +2711,7 @@ msgid "Zambian Kwacha"
 msgstr ""
 
 #. translators: field name.
+#. translators: attribute.
 #: src/Support/Errors/ErrorsTranslationService.php:60
 #: src/Support/Errors/Translations/types-replaceable.php:10
 #, fuzzy
@@ -14735,22 +14736,6 @@ msgstr ""
 msgid "Select a payment method"
 msgstr ""
 
-#: sc-subscription-renew.js:83
-#, fuzzy
-msgid "This plan will no longer be canceled. It will renew on"
-msgstr ""
-
-#: sc-subscription-renew.js:89
-#, fuzzy
-msgid "Renew your plan"
-msgstr ""
-
-#: sc-subscription-renew.js:89
-#: sc-subscription.js:137
-#, fuzzy
-msgid "Renew Plan"
-msgstr ""
-
 #: sc-subscription-status-badge2.js:50
 #, fuzzy
 msgid "Incomplete"
@@ -15356,7 +15341,39 @@ msgstr ""
 msgid "Username or Email Address"
 msgstr ""
 
-#: sc-upgrade-required.js:20
-#, fuzzy
-msgid "Upgrade Now!"
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:42
+#: src/Controllers/Admin/Bumps/BumpsListTable.php:56
+#: src/Controllers/Admin/Orders/OrdersListTable.php:65
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:63
+#: src/Controllers/Admin/Products/ProductsListTable.php:56
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:60
+msgid "All"
+msgstr ""
+
+#: sc-cancel-survey2.js:82
+msgid "Choose a reason"
+msgstr ""
+
+#: sc-cancel-survey2.js:82
+msgid "Additional Comments"
+msgstr ""
+
+#: sc-cancel-survey2.js:82
+msgid "Continue"
+msgstr ""
+
+#: sc-subscription-cancel2.js:56
+msgid "Keep My Plan"
+msgstr ""
+
+#: sc-subscription-next-payment2.js:92
+msgid "Your next payment is"
+msgstr ""
+
+#: sc-subscription.js:171
+msgid "Restore Plan"
+msgstr ""
+
+#: sc-upgrade-required.js:23
+msgid "Upgrade Now"
 msgstr ""
