@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - next
+      - fixes
     paths:
       - "app/**/*.php"
 
