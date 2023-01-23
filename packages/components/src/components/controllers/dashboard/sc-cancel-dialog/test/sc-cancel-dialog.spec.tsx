@@ -7,12 +7,6 @@ describe('sc-cancel-dialog', () => {
       components: [ScCancelDialog],
       html: `<sc-cancel-dialog></sc-cancel-dialog>`,
     });
-    expect(page.root).toEqualHtml(`
-      <sc-cancel-dialog>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </sc-cancel-dialog>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

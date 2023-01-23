@@ -70,7 +70,7 @@
 		transform-origin: right;
 		width: 450px;
 		border-right: 1px solid var(--sc-color-gray-200);
-		z-index: 0;
+		z-index: -1;
 	}
 
 	#sc-nav {
