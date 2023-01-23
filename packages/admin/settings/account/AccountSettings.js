@@ -180,9 +180,9 @@ export default () => {
 					></ScSelect>
 
 					<ScSelect
-						value={item?.customer_locale}
+						value={item?.locale}
 						onScChange={(e) =>
-							editItem({ customer_locale: e.target.value })
+							editItem({ locale: e.target.value })
 						}
 						choices={[
 							{
