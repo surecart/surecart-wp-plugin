@@ -30,12 +30,8 @@
 	],
 	"prettier": "@wordpress/prettier-config",
 	"scripts": {
-		"pot:download": "node scripts/po-files.js",
-		"pot:merge": "node scripts/merge-po.js",
-		"pot:translate": "node scripts/google-translate.js",
 		"pot:mo": "./vendor/bin/wp i18n make-mo languages/.",
-    "pot:json": "node scripts/make-json.js",
-		"pot:test": "vendor/bin/potrans google languages/surecart.pot ./ --credentials=credentials.json --from=en --to=mr",
+		"pot:json": "node scripts/make-json.js",
 		"wp-env": "wp-env",
 		"dev": "composer install && yarn start:workspace",
 		"docs:release": "yarn workspaces foreach run docs:release",
