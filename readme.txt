@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.1
-Stable tag: 1.3.4
+Stable tag: 1.5.5
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -205,7 +205,7 @@ The second type of integrations are done with SureTriggers, which is like Zapier
 There are also some special features for site to site connections. So you can sell products on one site with SureCart then add the user to another site where your content may be. This is great for online courses or membership setups.
 
 ## Join The SureCart Facebook Group ##
-Join our Facebook group community: Learn the tricks and techniques that other SureCart users are using to grow their business. Also, get exciting insider information on upcoming feature releases.
+Join our [Facebook group community](https://www.facebook.com/groups/surecrafted): Learn the tricks and techniques that other SureCart users are using to grow their business. Also, get exciting insider information on upcoming feature releases.
 
 [Terms And Conditions](https://surecart.com/terms)
 [Privacy Policy](https://surecart.com/privacy)
@@ -242,6 +242,70 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.5.5 - January 23, 2023 =
+* Fix: Issue with subscription saver modal not closing for some users.
+
+= 1.5.4 - January 18, 2023 =
+* Fix: Issue with some users not seeing subscription saver survey reasons.
+
+= 1.5.3 - January 16, 2023 =
+* Fix: Customer locale not updating on settings page.
+* Fix: Add stripe payment stuck loading in customer dashboard with some themes.
+
+= 1.5.2 - January 13, 2023 =
+* Fix: 2 Column layout squished on price selector block.
+* Fix: Some customers not having permissions to switch their subscription.
+
+= 1.5.1 - January 12, 2023 =
+* New: Limit the number of times a customer can use a Subscription Saver discount.
+* Fix: Image uploads failing.
+* Fix: Z-index issue with cart icon in Safari browsers.
+
+= 1.5.0 - January 11, 2023 =
+* New: Subscription saver [Learn More](https://www.youtube.com/watch?v=9Bx4u4DV4_Q)
+* New: Manual tax registrations.
+* New: Option to turn off emails for free orders.
+* New: Option to revoke purchases immediately when orders become past due.
+* New: Disable "Powered By Surecart" footers for Premium users.
+* Improvement: Add "Fallback Tax" setting for merchants wanting to have a fallback tax for their store.
+* Improvement: Add български (Bŭlgarski), 日本 (Nihon) Polski, Português - Brasil languages.
+* Improvement: Add the ability to revoke purchases when refunding a charge.
+* Improvement: Add expandable details to customer dashboard subscriptions view (quantity, discounts, etc.).
+* Improvement: Reword Order Bump "Auto Apply Discount" functionality.
+* Improvement: Change order "Metadata" wording in admin to "Additional Order Data".
+* Improvement: Add facebook group link in readme.
+* Improvement: Add timestamp to API requests to increase compatibility with plugins that cache the WordPress REST API.
+* Improvement: Update subscription list table status to include if the subscription will cancel as well as the date.
+* Improvement: Allow updating subscription payment method, even for canceled subscriptions.
+* Fix: Subscriptions not showing discount on Merchant admin for upcoming period preview.
+* Fix: Address display formatting issues on customer dashboard.
+* Fix: Issues where links were to api.surecart.com instead of app.surecart.com
+
+= 1.4.2 - January 10, 2023 =
+* Fix: Coupon product restrictions dropdown not selectable after search.
+
+= 1.4.1 - January 6, 2023 =
+* New: Choose the start of your order numbers if using sequential order numbers.
+* Fix: Issue with order summary not loading if no Stripe processors are enabled.
+
+= 1.4.0 - January 5, 2023 =
+* New: Sign in codes and login flow.
+* New: Add max redemptions per customer UI to coupon.
+* Improvement: Rename “Checkout Page” to “Store Checkout” in pages list.
+* Improvement: Show if a processor is disabled on the settings page. Disallow showing disabled processor in forms.
+* Improvement: Keep customer data and Wordpress user in sync.
+* Improvement: Change the word Pro to Premium in plugin.
+* Improvement: Rename "default" to "store checkout" for store checkout page and store checkout form.
+* Improvement: Link the charge to the payment processor from the admin UI.
+* Improvement: Select box accessibility improvement.
+* Fix: Coupon field overflow on mobile screens.
+* Fix: Disallow payment plan update screen if not enabled in admin.
+* Fix: Scrolling issue on settings pages.
+* Fix: PHP8 compatibility issues on checkout page with debug mode turned on.
+* Fix: FCFA currency support.
+* Fix: global [hidden] conflicts.
+
 
 = 1.3.4 - December 15, 2022 =
 * Improvement: Coupon UX - set usage and customer limits per promotion code.

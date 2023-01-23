@@ -69,6 +69,7 @@ export class ScRadio {
 
   @Watch('checked')
   handleCheckedChange() {
+    if (!this.input) return;
     if (this.checked) {
       this.getSiblingRadios().map(radio => (radio.checked = false));
     }

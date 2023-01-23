@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-12-15T20:59:01",
+  "timestamp": "2023-01-12T17:59:47",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -657,8 +657,6 @@
         "sc-price-choice",
         "sc-stripe-add-method",
         "sc-stripe-payment-request",
-        "sc-subscription-cancel",
-        "sc-subscription-renew",
         "sc-subscription-switch",
         "sc-upcoming-invoice"
       ],
@@ -718,12 +716,6 @@
           "sc-alert"
         ],
         "sc-stripe-payment-request": [
-          "sc-alert"
-        ],
-        "sc-subscription-cancel": [
-          "sc-alert"
-        ],
-        "sc-subscription-renew": [
           "sc-alert"
         ],
         "sc-subscription-switch": [
@@ -925,6 +917,7 @@
       ],
       "dependents": [
         "sc-address",
+        "sc-cancel-discount",
         "sc-cart",
         "sc-charges-list",
         "sc-checkout",
@@ -946,7 +939,6 @@
         "sc-subscription-cancel",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
-        "sc-subscription-renew",
         "sc-subscription-switch",
         "sc-subscriptions-list",
         "sc-upcoming-invoice",
@@ -961,6 +953,9 @@
           "sc-spinner"
         ],
         "sc-address": [
+          "sc-block-ui"
+        ],
+        "sc-cancel-discount": [
           "sc-block-ui"
         ],
         "sc-cart": [
@@ -1024,9 +1019,6 @@
           "sc-block-ui"
         ],
         "sc-subscription-payment-method": [
-          "sc-block-ui"
-        ],
-        "sc-subscription-renew": [
           "sc-block-ui"
         ],
         "sc-subscription-switch": [
@@ -1641,6 +1633,9 @@
         }
       ],
       "dependents": [
+        "sc-cancel-dialog",
+        "sc-cancel-discount",
+        "sc-cancel-survey",
         "sc-cart-form-submit",
         "sc-cart-submit",
         "sc-charges-list",
@@ -1659,6 +1654,7 @@
         "sc-orders-list",
         "sc-pagination",
         "sc-password-nag",
+        "sc-payment-method",
         "sc-payment-methods-list",
         "sc-purchase-downloads-list",
         "sc-stripe-add-method",
@@ -1667,11 +1663,11 @@
         "sc-subscription-cancel",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
-        "sc-subscription-renew",
         "sc-subscription-switch",
         "sc-subscriptions-list",
         "sc-tax-id-input",
         "sc-upcoming-invoice",
+        "sc-upgrade-required",
         "sc-wordpress-password-edit",
         "sc-wordpress-user",
         "sc-wordpress-user-edit"
@@ -1682,6 +1678,15 @@
       "dependencyGraph": {
         "sc-button": [
           "sc-spinner"
+        ],
+        "sc-cancel-dialog": [
+          "sc-button"
+        ],
+        "sc-cancel-discount": [
+          "sc-button"
+        ],
+        "sc-cancel-survey": [
+          "sc-button"
         ],
         "sc-cart-form-submit": [
           "sc-button"
@@ -1737,6 +1742,9 @@
         "sc-password-nag": [
           "sc-button"
         ],
+        "sc-payment-method": [
+          "sc-button"
+        ],
         "sc-payment-methods-list": [
           "sc-button"
         ],
@@ -1761,9 +1769,6 @@
         "sc-subscription-payment-method": [
           "sc-button"
         ],
-        "sc-subscription-renew": [
-          "sc-button"
-        ],
         "sc-subscription-switch": [
           "sc-button"
         ],
@@ -1774,6 +1779,9 @@
           "sc-button"
         ],
         "sc-upcoming-invoice": [
+          "sc-button"
+        ],
+        "sc-upgrade-required": [
           "sc-button"
         ],
         "sc-wordpress-password-edit": [
@@ -1850,6 +1858,405 @@
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/dashboard/sc-cancel-dialog/sc-cancel-dialog.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-cancel-dialog",
+      "readme": "# sc-cancel-dialog\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "open",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "open",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "protocol",
+          "type": "SubscriptionProtocol",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "SubscriptionProtocol"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "subscription",
+          "type": "Subscription",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Subscription"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scRefresh",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scRequestClose",
+          "detail": "\"close-button\" | \"keyboard\" | \"overlay\"",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-subscription"
+      ],
+      "dependencies": [
+        "sc-dialog",
+        "sc-button",
+        "sc-icon",
+        "sc-subscription-cancel",
+        "sc-cancel-survey",
+        "sc-cancel-discount"
+      ],
+      "dependencyGraph": {
+        "sc-cancel-dialog": [
+          "sc-dialog",
+          "sc-button",
+          "sc-icon",
+          "sc-subscription-cancel",
+          "sc-cancel-survey",
+          "sc-cancel-discount"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-subscription-cancel": [
+          "sc-format-date",
+          "sc-skeleton",
+          "sc-dashboard-module",
+          "sc-flex",
+          "sc-button",
+          "sc-block-ui"
+        ],
+        "sc-dashboard-module": [
+          "sc-alert"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-block-ui": [
+          "sc-spinner"
+        ],
+        "sc-cancel-survey": [
+          "sc-choice",
+          "sc-skeleton",
+          "sc-dashboard-module",
+          "sc-form",
+          "sc-choices",
+          "sc-textarea",
+          "sc-flex",
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-choices": [
+          "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
+        ],
+        "sc-textarea": [
+          "sc-form-control"
+        ],
+        "sc-cancel-discount": [
+          "sc-dashboard-module",
+          "sc-flex",
+          "sc-button",
+          "sc-block-ui"
+        ],
+        "sc-subscription": [
+          "sc-cancel-dialog"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/dashboard/sc-cancel-discount/sc-cancel-discount.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-cancel-discount",
+      "readme": "# sc-cancel-discount\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "comment",
+          "type": "string",
+          "mutable": false,
+          "attr": "comment",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "protocol",
+          "type": "SubscriptionProtocol",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "SubscriptionProtocol"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "reason",
+          "type": "CancellationReason",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "CancellationReason"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "subscription",
+          "type": "Subscription",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Subscription"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scCancel",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scPreserved",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-cancel-dialog"
+      ],
+      "dependencies": [
+        "sc-dashboard-module",
+        "sc-flex",
+        "sc-button",
+        "sc-block-ui"
+      ],
+      "dependencyGraph": {
+        "sc-cancel-discount": [
+          "sc-dashboard-module",
+          "sc-flex",
+          "sc-button",
+          "sc-block-ui"
+        ],
+        "sc-dashboard-module": [
+          "sc-alert"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-block-ui": [
+          "sc-spinner"
+        ],
+        "sc-cancel-dialog": [
+          "sc-cancel-discount"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/dashboard/sc-cancel-survey/sc-cancel-survey.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-cancel-survey",
+      "readme": "# sc-cancel-survey\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "protocol",
+          "type": "SubscriptionProtocol",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "SubscriptionProtocol"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "reasons",
+          "type": "CancellationReason[]",
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "CancellationReason[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scAbandon",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scSubmitReason",
+          "detail": "{ reason: CancellationReason; comment: string; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-cancel-dialog"
+      ],
+      "dependencies": [
+        "sc-choice",
+        "sc-skeleton",
+        "sc-dashboard-module",
+        "sc-form",
+        "sc-choices",
+        "sc-textarea",
+        "sc-flex",
+        "sc-button",
+        "sc-icon"
+      ],
+      "dependencyGraph": {
+        "sc-cancel-survey": [
+          "sc-choice",
+          "sc-skeleton",
+          "sc-dashboard-module",
+          "sc-form",
+          "sc-choices",
+          "sc-textarea",
+          "sc-flex",
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-dashboard-module": [
+          "sc-alert"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-choices": [
+          "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
+        ],
+        "sc-textarea": [
+          "sc-form-control"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-cancel-dialog": [
+          "sc-cancel-survey"
         ]
       }
     },
@@ -1976,11 +2383,10 @@
         "sc-purchase-downloads-list",
         "sc-subscription",
         "sc-subscription-ad-hoc-confirm",
-        "sc-subscription-cancel",
         "sc-subscription-details",
+        "sc-subscription-next-payment",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
-        "sc-subscription-renew",
         "sc-subscriptions-list",
         "sc-upcoming-invoice",
         "sc-wordpress-password-edit",
@@ -2037,19 +2443,16 @@
         "sc-subscription-ad-hoc-confirm": [
           "sc-card"
         ],
-        "sc-subscription-cancel": [
+        "sc-subscription-details": [
           "sc-card"
         ],
-        "sc-subscription-details": [
+        "sc-subscription-next-payment": [
           "sc-card"
         ],
         "sc-subscription-payment": [
           "sc-card"
         ],
         "sc-subscription-payment-method": [
-          "sc-card"
-        ],
-        "sc-subscription-renew": [
           "sc-card"
         ],
         "sc-subscriptions-list": [
@@ -4369,6 +4772,7 @@
         }
       ],
       "dependents": [
+        "sc-cancel-survey",
         "sc-order-bump",
         "sc-price-choice",
         "sc-subscription-payment",
@@ -4377,6 +4781,9 @@
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "sc-cancel-survey": [
+          "sc-choice"
+        ],
         "sc-order-bump": [
           "sc-choice"
         ],
@@ -4626,6 +5033,7 @@
         }
       ],
       "dependents": [
+        "sc-cancel-survey",
         "sc-donation-choices",
         "sc-price-choices",
         "sc-subscription-payment",
@@ -4641,6 +5049,9 @@
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ],
+        "sc-cancel-survey": [
+          "sc-choices"
         ],
         "sc-donation-choices": [
           "sc-choices"
@@ -6048,9 +6459,9 @@
         "sc-tag",
         "sc-card",
         "sc-form",
-        "sc-input",
         "sc-columns",
         "sc-column",
+        "sc-input",
         "sc-address",
         "sc-switch",
         "sc-tax-id-input",
@@ -6063,9 +6474,9 @@
           "sc-tag",
           "sc-card",
           "sc-form",
-          "sc-input",
           "sc-columns",
           "sc-column",
+          "sc-input",
           "sc-address",
           "sc-switch",
           "sc-tax-id-input",
@@ -8049,6 +8460,8 @@
         }
       ],
       "dependents": [
+        "sc-cancel-discount",
+        "sc-cancel-survey",
         "sc-charges-list",
         "sc-customer-details",
         "sc-customer-edit",
@@ -8066,7 +8479,6 @@
         "sc-subscription-cancel",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
-        "sc-subscription-renew",
         "sc-subscription-switch",
         "sc-subscriptions-list",
         "sc-upcoming-invoice",
@@ -8083,6 +8495,12 @@
         ],
         "sc-alert": [
           "sc-icon"
+        ],
+        "sc-cancel-discount": [
+          "sc-dashboard-module"
+        ],
+        "sc-cancel-survey": [
+          "sc-dashboard-module"
         ],
         "sc-charges-list": [
           "sc-dashboard-module"
@@ -8133,9 +8551,6 @@
           "sc-dashboard-module"
         ],
         "sc-subscription-payment-method": [
-          "sc-dashboard-module"
-        ],
-        "sc-subscription-renew": [
           "sc-dashboard-module"
         ],
         "sc-subscription-switch": [
@@ -8314,8 +8729,10 @@
         }
       ],
       "dependents": [
+        "sc-cancel-dialog",
         "sc-login-provider",
-        "sc-subscription-details"
+        "sc-subscription-details",
+        "sc-upgrade-required"
       ],
       "dependencies": [
         "sc-button",
@@ -8329,10 +8746,16 @@
         "sc-button": [
           "sc-spinner"
         ],
+        "sc-cancel-dialog": [
+          "sc-dialog"
+        ],
         "sc-login-provider": [
           "sc-dialog"
         ],
         "sc-subscription-details": [
+          "sc-dialog"
+        ],
+        "sc-upgrade-required": [
           "sc-dialog"
         ]
       }
@@ -8407,6 +8830,7 @@
         "sc-payment-methods-list",
         "sc-payment-selected",
         "sc-purchase-downloads-list",
+        "sc-subscription-next-payment",
         "sc-subscriptions-list",
         "sc-upcoming-invoice"
       ],
@@ -8446,6 +8870,9 @@
           "sc-divider"
         ],
         "sc-purchase-downloads-list": [
+          "sc-divider"
+        ],
+        "sc-subscription-next-payment": [
           "sc-divider"
         ],
         "sc-subscriptions-list": [
@@ -9790,20 +10217,34 @@
         }
       ],
       "dependents": [
+        "sc-cancel-discount",
+        "sc-cancel-survey",
         "sc-downloads-list",
+        "sc-login-form",
         "sc-order",
         "sc-pagination",
         "sc-password-nag",
         "sc-payment-methods-list",
         "sc-subscription",
+        "sc-subscription-cancel",
         "sc-subscription-details",
+        "sc-subscription-next-payment",
         "sc-subscription-payment-method",
         "sc-subscription-switch",
         "sc-upcoming-invoice"
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "sc-cancel-discount": [
+          "sc-flex"
+        ],
+        "sc-cancel-survey": [
+          "sc-flex"
+        ],
         "sc-downloads-list": [
+          "sc-flex"
+        ],
+        "sc-login-form": [
           "sc-flex"
         ],
         "sc-order": [
@@ -9821,7 +10262,13 @@
         "sc-subscription": [
           "sc-flex"
         ],
+        "sc-subscription-cancel": [
+          "sc-flex"
+        ],
         "sc-subscription-details": [
+          "sc-flex"
+        ],
+        "sc-subscription-next-payment": [
           "sc-flex"
         ],
         "sc-subscription-payment-method": [
@@ -9957,6 +10404,7 @@
         }
       ],
       "dependents": [
+        "sc-cancel-survey",
         "sc-cart-form",
         "sc-customer-edit",
         "sc-login-form",
@@ -9973,6 +10421,9 @@
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "sc-cancel-survey": [
+          "sc-form"
+        ],
         "sc-cart-form": [
           "sc-form"
         ],
@@ -11113,7 +11564,6 @@
         "sc-subscription",
         "sc-subscription-cancel",
         "sc-subscription-details",
-        "sc-subscription-renew",
         "sc-subscription-status-badge",
         "sc-upcoming-invoice"
       ],
@@ -11138,9 +11588,6 @@
           "sc-format-date"
         ],
         "sc-subscription-details": [
-          "sc-format-date"
-        ],
-        "sc-subscription-renew": [
           "sc-format-date"
         ],
         "sc-subscription-status-badge": [
@@ -11490,6 +11937,7 @@
         "sc-price-choice",
         "sc-product-line-item",
         "sc-subscription-details",
+        "sc-subscription-next-payment",
         "sc-subscription-switch",
         "sc-total",
         "sc-upcoming-invoice"
@@ -11539,6 +11987,9 @@
           "sc-format-number"
         ],
         "sc-subscription-details": [
+          "sc-format-number"
+        ],
+        "sc-subscription-next-payment": [
           "sc-format-number"
         ],
         "sc-subscription-switch": [
@@ -11726,6 +12177,8 @@
         "sc-alert",
         "sc-breadcrumb",
         "sc-breadcrumbs",
+        "sc-cancel-dialog",
+        "sc-cancel-survey",
         "sc-cart-form-submit",
         "sc-cart-header",
         "sc-cart-icon",
@@ -11750,12 +12203,14 @@
         "sc-select",
         "sc-subscription",
         "sc-subscription-ad-hoc-confirm",
+        "sc-subscription-next-payment",
         "sc-subscription-payment-method",
         "sc-subscription-switch",
         "sc-subscriptions-list",
         "sc-tax-id-input",
         "sc-toggle",
         "sc-upcoming-invoice",
+        "sc-upgrade-required",
         "sc-wordpress-user"
       ],
       "dependencies": [],
@@ -11767,6 +12222,12 @@
           "sc-icon"
         ],
         "sc-breadcrumbs": [
+          "sc-icon"
+        ],
+        "sc-cancel-dialog": [
+          "sc-icon"
+        ],
+        "sc-cancel-survey": [
           "sc-icon"
         ],
         "sc-cart-form-submit": [
@@ -11841,6 +12302,9 @@
         "sc-subscription-ad-hoc-confirm": [
           "sc-icon"
         ],
+        "sc-subscription-next-payment": [
+          "sc-icon"
+        ],
         "sc-subscription-payment-method": [
           "sc-icon"
         ],
@@ -11857,6 +12321,9 @@
           "sc-icon"
         ],
         "sc-upcoming-invoice": [
+          "sc-icon"
+        ],
+        "sc-upgrade-required": [
           "sc-icon"
         ],
         "sc-wordpress-user": [
@@ -13175,6 +13642,7 @@
         "sc-order-confirmation-line-items",
         "sc-order-confirmation-totals",
         "sc-order-summary",
+        "sc-subscription-next-payment",
         "sc-upcoming-invoice"
       ],
       "dependencies": [],
@@ -13207,6 +13675,9 @@
           "sc-line-item"
         ],
         "sc-order-summary": [
+          "sc-line-item"
+        ],
+        "sc-subscription-next-payment": [
           "sc-line-item"
         ],
         "sc-upcoming-invoice": [
@@ -13755,37 +14226,39 @@
       ],
       "dependents": [],
       "dependencies": [
-        "sc-alert",
-        "sc-icon",
         "sc-form",
-        "sc-button",
-        "sc-divider",
         "sc-input",
+        "sc-button",
+        "sc-icon",
+        "sc-flex",
+        "sc-divider",
         "sc-card",
+        "sc-alert",
         "sc-block-ui"
       ],
       "dependencyGraph": {
         "sc-login-form": [
-          "sc-alert",
-          "sc-icon",
           "sc-form",
-          "sc-button",
-          "sc-divider",
           "sc-input",
+          "sc-button",
+          "sc-icon",
+          "sc-flex",
+          "sc-divider",
           "sc-card",
+          "sc-alert",
           "sc-block-ui"
-        ],
-        "sc-alert": [
-          "sc-icon"
-        ],
-        "sc-button": [
-          "sc-spinner"
         ],
         "sc-input": [
           "sc-form-control"
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-alert": [
+          "sc-icon"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -14283,16 +14756,18 @@
           "sc-tag"
         ],
         "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
           "sc-tag",
           "sc-cc-logo",
-          "sc-icon",
           "sc-text"
-        ],
-        "sc-cc-logo": [
-          "sc-icon"
         ],
         "sc-button": [
           "sc-spinner"
+        ],
+        "sc-cc-logo": [
+          "sc-icon"
         ],
         "sc-purchase-downloads-list": [
           "sc-divider",
@@ -17679,6 +18154,38 @@
       "usage": {},
       "props": [
         {
+          "name": "externalLink",
+          "type": "string",
+          "mutable": false,
+          "attr": "external-link",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "externalLinkTooltipText",
+          "type": "string",
+          "mutable": false,
+          "attr": "external-link-tooltip-text",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "full",
           "type": "boolean",
           "mutable": false,
@@ -17727,27 +18234,39 @@
         {
           "name": "card",
           "docs": ""
+        },
+        {
+          "name": "instrument",
+          "docs": ""
         }
       ],
       "dependents": [
         "sc-order",
         "sc-payment-methods-list",
+        "sc-subscription-next-payment",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
         "sc-upcoming-invoice"
       ],
       "dependencies": [
+        "sc-tooltip",
+        "sc-button",
+        "sc-icon",
         "sc-tag",
         "sc-cc-logo",
-        "sc-icon",
         "sc-text"
       ],
       "dependencyGraph": {
         "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
           "sc-tag",
           "sc-cc-logo",
-          "sc-icon",
           "sc-text"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-cc-logo": [
           "sc-icon"
@@ -17756,6 +18275,9 @@
           "sc-payment-method"
         ],
         "sc-payment-methods-list": [
+          "sc-payment-method"
+        ],
+        "sc-subscription-next-payment": [
           "sc-payment-method"
         ],
         "sc-subscription-payment": [
@@ -18055,10 +18577,15 @@
           "sc-icon"
         ],
         "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
           "sc-tag",
           "sc-cc-logo",
-          "sc-icon",
           "sc-text"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-cc-logo": [
           "sc-icon"
@@ -18068,9 +18595,6 @@
         ],
         "sc-alert": [
           "sc-icon"
-        ],
-        "sc-button": [
-          "sc-spinner"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -18513,6 +19037,58 @@
         ],
         "sc-order-submit": [
           "sc-paypal-buttons"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/sc-premium-tag/sc-premium-tag.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-premium-tag",
+      "readme": "# sc-premium-tag\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The tag's size.",
+          "docsTags": [],
+          "default": "'small'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-tag"
+      ],
+      "dependencyGraph": {
+        "sc-premium-tag": [
+          "sc-tag"
         ]
       }
     },
@@ -19812,6 +20388,7 @@
         "sc-line-items",
         "sc-order",
         "sc-order-confirmation-line-items",
+        "sc-subscription-next-payment",
         "sc-upcoming-invoice"
       ],
       "dependencies": [
@@ -19835,6 +20412,9 @@
           "sc-product-line-item"
         ],
         "sc-order-confirmation-line-items": [
+          "sc-product-line-item"
+        ],
+        "sc-subscription-next-payment": [
           "sc-product-line-item"
         ],
         "sc-upcoming-invoice": [
@@ -21755,6 +22335,7 @@
         }
       ],
       "dependents": [
+        "sc-cancel-survey",
         "sc-charges-list",
         "sc-coupon-form",
         "sc-custom-order-price-input",
@@ -21778,15 +22359,18 @@
         "sc-subscription",
         "sc-subscription-cancel",
         "sc-subscription-details",
+        "sc-subscription-next-payment",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
-        "sc-subscription-renew",
         "sc-subscription-switch",
         "sc-subscriptions-list",
         "sc-upcoming-invoice"
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "sc-cancel-survey": [
+          "sc-skeleton"
+        ],
         "sc-charges-list": [
           "sc-skeleton"
         ],
@@ -21856,13 +22440,13 @@
         "sc-subscription-details": [
           "sc-skeleton"
         ],
+        "sc-subscription-next-payment": [
+          "sc-skeleton"
+        ],
         "sc-subscription-payment": [
           "sc-skeleton"
         ],
         "sc-subscription-payment-method": [
-          "sc-skeleton"
-        ],
-        "sc-subscription-renew": [
           "sc-skeleton"
         ],
         "sc-subscription-switch": [
@@ -21987,7 +22571,6 @@
         "sc-orders-list",
         "sc-payment-methods-list",
         "sc-purchase-downloads-list",
-        "sc-subscription",
         "sc-subscription-details",
         "sc-subscription-payment-method",
         "sc-subscriptions-list",
@@ -22017,9 +22600,6 @@
           "sc-stacked-list"
         ],
         "sc-purchase-downloads-list": [
-          "sc-stacked-list"
-        ],
-        "sc-subscription": [
           "sc-stacked-list"
         ],
         "sc-subscription-details": [
@@ -23142,6 +23722,21 @@
           "required": false
         },
         {
+          "name": "protocol",
+          "type": "SubscriptionProtocol",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "SubscriptionProtocol"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "query",
           "type": "object",
           "mutable": false,
@@ -23216,14 +23811,15 @@
         "sc-format-date",
         "sc-stacked-list-row",
         "sc-skeleton",
+        "sc-subscription-next-payment",
         "sc-subscription-details",
         "sc-dashboard-module",
         "sc-flex",
         "sc-button",
         "sc-icon",
         "sc-card",
-        "sc-stacked-list",
-        "sc-block-ui"
+        "sc-block-ui",
+        "sc-cancel-dialog"
       ],
       "dependencyGraph": {
         "sc-subscription": [
@@ -23231,18 +23827,35 @@
           "sc-format-date",
           "sc-stacked-list-row",
           "sc-skeleton",
+          "sc-subscription-next-payment",
           "sc-subscription-details",
           "sc-dashboard-module",
           "sc-flex",
           "sc-button",
           "sc-icon",
           "sc-card",
-          "sc-stacked-list",
-          "sc-block-ui"
+          "sc-block-ui",
+          "sc-cancel-dialog"
         ],
         "sc-subscription-status-badge": [
           "sc-format-date",
           "sc-tag"
+        ],
+        "sc-subscription-next-payment": [
+          "sc-toggle",
+          "sc-flex",
+          "sc-skeleton",
+          "sc-subscription-details",
+          "sc-format-number",
+          "sc-card",
+          "sc-product-line-item",
+          "sc-line-item",
+          "sc-divider",
+          "sc-payment-method",
+          "sc-icon"
+        ],
+        "sc-toggle": [
+          "sc-icon"
         ],
         "sc-subscription-details": [
           "sc-subscription-status-badge",
@@ -23264,6 +23877,25 @@
         "sc-button": [
           "sc-spinner"
         ],
+        "sc-product-line-item": [
+          "sc-format-number",
+          "sc-quantity-select",
+          "sc-icon"
+        ],
+        "sc-quantity-select": [
+          "sc-icon"
+        ],
+        "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
+          "sc-tag",
+          "sc-cc-logo",
+          "sc-text"
+        ],
+        "sc-cc-logo": [
+          "sc-icon"
+        ],
         "sc-dashboard-module": [
           "sc-alert"
         ],
@@ -23272,6 +23904,48 @@
         ],
         "sc-block-ui": [
           "sc-spinner"
+        ],
+        "sc-cancel-dialog": [
+          "sc-dialog",
+          "sc-button",
+          "sc-icon",
+          "sc-subscription-cancel",
+          "sc-cancel-survey",
+          "sc-cancel-discount"
+        ],
+        "sc-subscription-cancel": [
+          "sc-format-date",
+          "sc-skeleton",
+          "sc-dashboard-module",
+          "sc-flex",
+          "sc-button",
+          "sc-block-ui"
+        ],
+        "sc-cancel-survey": [
+          "sc-choice",
+          "sc-skeleton",
+          "sc-dashboard-module",
+          "sc-form",
+          "sc-choices",
+          "sc-textarea",
+          "sc-flex",
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-choices": [
+          "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
+        ],
+        "sc-textarea": [
+          "sc-form-control"
+        ],
+        "sc-cancel-discount": [
+          "sc-dashboard-module",
+          "sc-flex",
+          "sc-button",
+          "sc-block-ui"
         ]
       }
     },
@@ -23391,6 +24065,22 @@
           "required": false
         },
         {
+          "name": "comment",
+          "type": "string",
+          "mutable": false,
+          "attr": "comment",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "heading",
           "type": "string",
           "mutable": false,
@@ -23407,31 +24097,45 @@
           "required": false
         },
         {
-          "name": "subscription",
-          "type": "Subscription",
-          "mutable": true,
+          "name": "protocol",
+          "type": "SubscriptionProtocol",
+          "mutable": false,
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
           "values": [
             {
-              "type": "Subscription"
+              "type": "SubscriptionProtocol"
             }
           ],
           "optional": false,
           "required": false
         },
         {
-          "name": "subscriptionId",
-          "type": "string",
+          "name": "reason",
+          "type": "CancellationReason",
           "mutable": false,
-          "attr": "subscription-id",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
           "values": [
             {
-              "type": "string"
+              "type": "CancellationReason"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "subscription",
+          "type": "Subscription",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Subscription"
             }
           ],
           "optional": false,
@@ -23455,65 +24159,64 @@
         }
       ],
       "methods": [],
-      "events": [],
+      "events": [
+        {
+          "event": "scAbandon",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scCancelled",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "sc-cancel-dialog"
+      ],
       "dependencies": [
-        "sc-subscription-details",
-        "sc-alert",
         "sc-format-date",
         "sc-skeleton",
         "sc-dashboard-module",
-        "sc-card",
+        "sc-flex",
         "sc-button",
         "sc-block-ui"
       ],
       "dependencyGraph": {
         "sc-subscription-cancel": [
-          "sc-subscription-details",
-          "sc-alert",
           "sc-format-date",
           "sc-skeleton",
           "sc-dashboard-module",
-          "sc-card",
+          "sc-flex",
           "sc-button",
           "sc-block-ui"
         ],
-        "sc-subscription-details": [
-          "sc-subscription-status-badge",
-          "sc-format-date",
-          "sc-skeleton",
-          "sc-format-number",
-          "sc-flex",
-          "sc-tag",
-          "sc-text",
-          "sc-dialog",
-          "sc-card",
-          "sc-stacked-list",
-          "sc-stacked-list-row"
+        "sc-dashboard-module": [
+          "sc-alert"
         ],
-        "sc-subscription-status-badge": [
-          "sc-format-date",
-          "sc-tag"
-        ],
-        "sc-dialog": [
-          "sc-button",
+        "sc-alert": [
           "sc-icon"
         ],
         "sc-button": [
           "sc-spinner"
         ],
-        "sc-alert": [
-          "sc-icon"
-        ],
-        "sc-dashboard-module": [
-          "sc-alert"
-        ],
         "sc-block-ui": [
           "sc-spinner"
+        ],
+        "sc-cancel-dialog": [
+          "sc-subscription-cancel"
         ]
       }
     },
@@ -23581,8 +24284,7 @@
       "parts": [],
       "dependents": [
         "sc-subscription",
-        "sc-subscription-cancel",
-        "sc-subscription-renew",
+        "sc-subscription-next-payment",
         "sc-subscriptions-list"
       ],
       "dependencies": [
@@ -23626,14 +24328,123 @@
         "sc-subscription": [
           "sc-subscription-details"
         ],
-        "sc-subscription-cancel": [
-          "sc-subscription-details"
-        ],
-        "sc-subscription-renew": [
+        "sc-subscription-next-payment": [
           "sc-subscription-details"
         ],
         "sc-subscriptions-list": [
           "sc-subscription-details"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/dashboard/subscription-details/sc-subscription-next-payment.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-subscription-next-payment",
+      "readme": "# ce-subscription-details\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "subscription",
+          "type": "Subscription",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Subscription"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-subscription"
+      ],
+      "dependencies": [
+        "sc-toggle",
+        "sc-flex",
+        "sc-skeleton",
+        "sc-subscription-details",
+        "sc-format-number",
+        "sc-card",
+        "sc-product-line-item",
+        "sc-line-item",
+        "sc-divider",
+        "sc-payment-method",
+        "sc-icon"
+      ],
+      "dependencyGraph": {
+        "sc-subscription-next-payment": [
+          "sc-toggle",
+          "sc-flex",
+          "sc-skeleton",
+          "sc-subscription-details",
+          "sc-format-number",
+          "sc-card",
+          "sc-product-line-item",
+          "sc-line-item",
+          "sc-divider",
+          "sc-payment-method",
+          "sc-icon"
+        ],
+        "sc-toggle": [
+          "sc-icon"
+        ],
+        "sc-subscription-details": [
+          "sc-subscription-status-badge",
+          "sc-format-date",
+          "sc-skeleton",
+          "sc-format-number",
+          "sc-flex",
+          "sc-tag",
+          "sc-text",
+          "sc-dialog",
+          "sc-card",
+          "sc-stacked-list",
+          "sc-stacked-list-row"
+        ],
+        "sc-subscription-status-badge": [
+          "sc-format-date",
+          "sc-tag"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-product-line-item": [
+          "sc-format-number",
+          "sc-quantity-select",
+          "sc-icon"
+        ],
+        "sc-quantity-select": [
+          "sc-icon"
+        ],
+        "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
+          "sc-tag",
+          "sc-cc-logo",
+          "sc-text"
+        ],
+        "sc-cc-logo": [
+          "sc-icon"
+        ],
+        "sc-subscription": [
+          "sc-subscription-next-payment"
         ]
       }
     },
@@ -23787,9 +24598,11 @@
           "sc-tooltip"
         ],
         "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
           "sc-tag",
           "sc-cc-logo",
-          "sc-icon",
           "sc-text"
         ],
         "sc-cc-logo": [
@@ -23902,9 +24715,11 @@
           "sc-spinner"
         ],
         "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
           "sc-tag",
           "sc-cc-logo",
-          "sc-icon",
           "sc-text"
         ],
         "sc-cc-logo": [
@@ -23915,158 +24730,6 @@
         ],
         "sc-alert": [
           "sc-icon"
-        ],
-        "sc-block-ui": [
-          "sc-spinner"
-        ]
-      }
-    },
-    {
-      "filePath": "./src/components/controllers/dashboard/subscription-renew/sc-subscription-renew.tsx",
-      "encapsulation": "shadow",
-      "tag": "sc-subscription-renew",
-      "readme": "# ce-subscription-renew\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "backUrl",
-          "type": "string",
-          "mutable": false,
-          "attr": "back-url",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "heading",
-          "type": "string",
-          "mutable": false,
-          "attr": "heading",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "subscription",
-          "type": "Subscription",
-          "mutable": true,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Subscription"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "subscriptionId",
-          "type": "string",
-          "mutable": false,
-          "attr": "subscription-id",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "successUrl",
-          "type": "string",
-          "mutable": false,
-          "attr": "success-url",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
-      "methods": [],
-      "events": [],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
-      "dependents": [],
-      "dependencies": [
-        "sc-subscription-details",
-        "sc-alert",
-        "sc-format-date",
-        "sc-skeleton",
-        "sc-dashboard-module",
-        "sc-card",
-        "sc-button",
-        "sc-block-ui"
-      ],
-      "dependencyGraph": {
-        "sc-subscription-renew": [
-          "sc-subscription-details",
-          "sc-alert",
-          "sc-format-date",
-          "sc-skeleton",
-          "sc-dashboard-module",
-          "sc-card",
-          "sc-button",
-          "sc-block-ui"
-        ],
-        "sc-subscription-details": [
-          "sc-subscription-status-badge",
-          "sc-format-date",
-          "sc-skeleton",
-          "sc-format-number",
-          "sc-flex",
-          "sc-tag",
-          "sc-text",
-          "sc-dialog",
-          "sc-card",
-          "sc-stacked-list",
-          "sc-stacked-list-row"
-        ],
-        "sc-subscription-status-badge": [
-          "sc-format-date",
-          "sc-tag"
-        ],
-        "sc-dialog": [
-          "sc-button",
-          "sc-icon"
-        ],
-        "sc-button": [
-          "sc-spinner"
-        ],
-        "sc-alert": [
-          "sc-icon"
-        ],
-        "sc-dashboard-module": [
-          "sc-alert"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -25325,6 +25988,7 @@
         "sc-payment",
         "sc-payment-method",
         "sc-payment-methods-list",
+        "sc-premium-tag",
         "sc-subscription-details",
         "sc-subscription-payment-method",
         "sc-subscription-status-badge",
@@ -25381,6 +26045,9 @@
           "sc-tag"
         ],
         "sc-payment-methods-list": [
+          "sc-tag"
+        ],
+        "sc-premium-tag": [
           "sc-tag"
         ],
         "sc-subscription-details": [
@@ -26243,6 +26910,17 @@
           "parameters": [],
           "docs": "Checks for validity and shows the browser's validation message if the control is invalid.",
           "docsTags": []
+        },
+        {
+          "name": "triggerFocus",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "signature": "triggerFocus(options?: FocusOptions) => Promise<void>",
+          "parameters": [],
+          "docs": "Sets focus on the input.",
+          "docsTags": []
         }
       ],
       "events": [
@@ -26316,7 +26994,9 @@
           "docs": ""
         }
       ],
-      "dependents": [],
+      "dependents": [
+        "sc-cancel-survey"
+      ],
       "dependencies": [
         "sc-form-control"
       ],
@@ -26326,6 +27006,9 @@
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ],
+        "sc-cancel-survey": [
+          "sc-textarea"
         ]
       }
     },
@@ -26524,13 +27207,18 @@
           "docs": ""
         }
       ],
-      "dependents": [],
+      "dependents": [
+        "sc-subscription-next-payment"
+      ],
       "dependencies": [
         "sc-icon"
       ],
       "dependencyGraph": {
         "sc-toggle": [
           "sc-icon"
+        ],
+        "sc-subscription-next-payment": [
+          "sc-toggle"
         ]
       }
     },
@@ -26788,11 +27476,15 @@
         }
       ],
       "dependents": [
-        "sc-form-control"
+        "sc-form-control",
+        "sc-payment-method"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-form-control": [
+          "sc-tooltip"
+        ],
+        "sc-payment-method": [
           "sc-tooltip"
         ]
       }
@@ -27110,9 +27802,11 @@
           "sc-spinner"
         ],
         "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
           "sc-tag",
           "sc-cc-logo",
-          "sc-icon",
           "sc-text"
         ],
         "sc-cc-logo": [
@@ -27120,6 +27814,86 @@
         ],
         "sc-dashboard-module": [
           "sc-alert"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/sc-upgrade-required/sc-upgrade-required.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-upgrade-required",
+      "readme": "# sc-upgrade-required\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "required",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "required",
+          "reflectToAttr": true,
+          "docs": "",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The tag's size.",
+          "docsTags": [],
+          "default": "'small'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-dialog",
+        "sc-icon",
+        "sc-button"
+      ],
+      "dependencyGraph": {
+        "sc-upgrade-required": [
+          "sc-dialog",
+          "sc-icon",
+          "sc-button"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ]
       }
     },

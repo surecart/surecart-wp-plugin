@@ -27,6 +27,7 @@
 ### Used by
 
  - [sc-address](../address)
+ - [sc-cancel-discount](../../controllers/dashboard/sc-cancel-discount)
  - [sc-cart](../../controllers/cart/sc-cart)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-checkout](../../controllers/checkout-form/checkout)
@@ -48,7 +49,6 @@
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
- - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
@@ -64,6 +64,7 @@
 graph TD;
   sc-block-ui --> sc-spinner
   sc-address --> sc-block-ui
+  sc-cancel-discount --> sc-block-ui
   sc-cart --> sc-block-ui
   sc-charges-list --> sc-block-ui
   sc-checkout --> sc-block-ui
@@ -85,7 +86,6 @@ graph TD;
   sc-subscription-cancel --> sc-block-ui
   sc-subscription-payment --> sc-block-ui
   sc-subscription-payment-method --> sc-block-ui
-  sc-subscription-renew --> sc-block-ui
   sc-subscription-switch --> sc-block-ui
   sc-subscriptions-list --> sc-block-ui
   sc-upcoming-invoice --> sc-block-ui

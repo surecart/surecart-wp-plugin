@@ -17,6 +17,7 @@ return [
 	'checkout.discount.coupon.invalid'                  => __( 'This coupon is not valid. Please double-check it and try again.', 'surecart' ),
 	'download.current_release'                          => __( 'This download cannot be removed or archived when it is set as the current release.', 'surecart' ),
 	'refund.amount.greater_than_refundable_amount'      => __( 'The refund amount is greater than the refundable amount.', 'surecart' ),
+	'subscription.payment_method.not_reusable'          => __( 'This payment method cannot be used for subscriptions.', 'surecart' ),
 	'subscription.product.one_time'                     => __( 'You cannot add a one-time product to a subscription.', 'surecart' ),
 	'price.blank'                                       => __( 'The price cannot be blank.', 'surecart' ),
 	'price.scratch_amount.greater_than'                 => __( 'The compare at price must be greater than the price.', 'surecart' ),
@@ -47,4 +48,5 @@ return [
 	'tax_protocol.eu_micro_exemption_enabled.address_outside_eu' => __( 'You cannot enable EU Micro Exemption if your address is outside of the EU.', 'surecart' ),
 	'tax_protocol.tax_enabled.invalid_address'          => __( 'You cannot enable taxes unless a valid tax address is provided', 'surecart' ),
 	'media.restrict_dependent_destroy.has_one'          => __( 'You cannot delete this media item because it is currently being used.', 'surecart' ),
+	'verification_code.email.blocked_duplicate'         => __( 'You have already requested a code in the last 60 seconds. Please wait before requesting again.', 'surecart' ),
 ];

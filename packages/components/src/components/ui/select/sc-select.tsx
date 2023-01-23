@@ -351,9 +351,10 @@ export class ScSelectDropdown {
 
     // All other "printable" keys open the menu and initiate type to select
     // TODO: this is closing out the dropdown during typing events.
-    // if (!this.open && event.key.length === 1) {
-    //   this.handleShow();
-    // }
+    // FIX: It must have focus as well. And it fix the random closing issue.
+    if (!this.open && this.hasFocus && event.key.length === 1) {
+      this.handleShow();
+    }
   }
 
   disconnectedCallback() {
