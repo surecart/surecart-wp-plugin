@@ -44,7 +44,7 @@ export default ({ coupon, loading, updateCoupon }) => {
 							label={__('Usage limit per customer', 'surecart')}
 							placeholder={__('Unlimited Usage', 'surecart')}
 							help={__(
-								'This limit applies across per customer.',
+								'The number of times a single customer can use this coupon.',
 								'surecart'
 							)}
 							class="max-redemptions-input"
