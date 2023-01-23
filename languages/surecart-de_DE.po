@@ -5,7 +5,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: lokalise.com\n"
 "Project-Id-Version: SureCart WP\n"
-"PO-Revision-Date: 2023-01-20 09:19\n"
+"PO-Revision-Date: 2023-01-23 11:25\n"
 "Last-Translator: lokalise.com\n"
 "Language-Team: lokalise.com\n\n"
 "Language: de_DE\n"
@@ -6932,9 +6932,8 @@ msgid "Revenue"
 msgstr ""
 
 #: dashboard/components/overview/Overview.js:128
-#, fuzzy
 msgid "Overview"
-msgstr ""
+msgstr "Überblick"
 
 #: dashboard/components/overview/parts/ReportByDropdown.js:11
 #: dashboard/components/overview/parts/ReportByDropdown.js:24
@@ -15376,4 +15375,10 @@ msgstr ""
 
 #: sc-upgrade-required.js:23
 msgid "Upgrade Now"
+msgstr ""
+
+#: default-i18n.js:470
+#: fetch.js:443
+msgctxt "text direction"
+msgid "ltr"
 msgstr ""
