@@ -60,6 +60,7 @@
  - [sc-line-items](../../controllers/checkout-form/line-items)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirmation-line-items](../../controllers/confirmation/order-confirmation-line-items)
+ - [sc-subscription-next-payment](../../controllers/dashboard/subscription-details)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Depends on
@@ -78,6 +79,7 @@ graph TD;
   sc-line-items --> sc-product-line-item
   sc-order --> sc-product-line-item
   sc-order-confirmation-line-items --> sc-product-line-item
+  sc-subscription-next-payment --> sc-product-line-item
   sc-upcoming-invoice --> sc-product-line-item
   style sc-product-line-item fill:#f9f,stroke:#333,stroke-width:4px
 ```

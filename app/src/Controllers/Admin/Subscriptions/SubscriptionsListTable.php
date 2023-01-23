@@ -199,18 +199,13 @@ class SubscriptionsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_remaining_payments( $subscription ) {
-		if ( null === $subscription->remaining_period_count ) {
-			if ( 'completed' === $subscription->status ) {
-				return '-';
-			} else {
-				return '&infin;';
-			}
-		}
-		if ( 0 === $subscription->remaining_period_count ) {
-			return __( 'None', 'surecart' );
+		// handle non-finite subscriptions.
+		if ( ! $subscription->finite ) {
+			return 'completed' === $subscription->status ? '-' : '&infin;';
 		}
 
-		return (int) $subscription->remaining_period_count;
+		// handle payment plans.
+		return 0 === $subscription->remaining_period_count ? __( 'None', 'surecart' ) : (int) $subscription->remaining_period_count;
 	}
 
 	/**
@@ -351,35 +346,19 @@ class SubscriptionsListTable extends ListTable {
 	/**
 	 * Handle the status
 	 *
-	 * @param \SureCart\Models\Price $product Product model.
+	 * @param \SureCart\Models\Subscription $subscription Subscription model.
 	 *
 	 * @return string
 	 */
 	public function column_status( $subscription ) {
-		return wp_kses_post( "<sc-subscription-status-badge status='$subscription->status'></sc-subscription-status-badge>" );
-		// switch ( $subscription->status ) {
-		// case 'active':
-		// $status = '<sc-tag type="success">' . __( 'Active', 'surecart' ) . '</sc-tag>';
-		// break;
-		// case 'canceled':
-		// $status = '<sc-tag type="danger">' . __( 'Canceled', 'surecart' ) . '</sc-tag>';
-		// break;
-		// case 'trialing':
-		// $status = '<sc-tag type="primary">' . __( 'Trialing', 'surecart' ) . '</sc-tag>';
-		// break;
-		// case 'draft':
-		// $status = '<sc-tag>' . __( 'Draft', 'surecart' ) . '</sc-tag>';
-		// break;
-		// default:
-		// $status = '<sc-tag>' . $subscription->status . '</sc-tag>';
-		// break;
-		// }
-
-		// if ( ! empty( (array) $subscription->pending_update ) ) {
-		// $status .= ' <sc-tag type="info">' . __( 'Update Pending', 'surecart' ) . '</sc-tag>';
-		// }
-
-		// return $status;
+		\SureCart::assets()->addComponentData(
+			'sc-subscription-status-badge',
+			'#subscription-' . esc_attr( $subscription->id ),
+			[
+				'subscription' => $subscription,
+			]
+		);
+		return '<sc-subscription-status-badge id="subscription-' . esc_attr( $subscription->id ) . '"></sc-subscription-status-badge>';
 	}
 
 	/**

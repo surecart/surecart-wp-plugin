@@ -293,7 +293,7 @@ export class ScSubscriptionSwitch {
     }
 
     // subscription is a payment plan.
-    if (this.subscription?.remaining_period_count) {
+    if (this.subscription?.finite) {
       return (
         <sc-alert type="info" open>
           {__('To make changes to your payment plan, please contact us.', 'surecart')}

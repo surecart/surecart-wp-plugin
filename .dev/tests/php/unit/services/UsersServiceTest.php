@@ -27,9 +27,6 @@ class UsersServiceTest extends SureCartUnitTestCase
 		parent::setUp();
 	}
 
-	/**
-	 * @group failing
-	 */
 	public function test_profile_update_syncs_customer_model() {
 		$user = User::find(self::factory()->user->create([
 			'user_email' => 'testemail@test.com',

@@ -56,6 +56,16 @@ Type: `Promise<boolean>`
 
 
 
+### `triggerFocus(options?: FocusOptions) => Promise<void>`
+
+Sets focus on the input.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 
 ## Shadow Parts
 
@@ -72,6 +82,10 @@ Type: `Promise<boolean>`
 
 ## Dependencies
 
+### Used by
+
+ - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
+
 ### Depends on
 
 - [sc-form-control](../form-control)
@@ -81,6 +95,7 @@ Type: `Promise<boolean>`
 graph TD;
   sc-textarea --> sc-form-control
   sc-form-control --> sc-tooltip
+  sc-cancel-survey --> sc-textarea
   style sc-textarea fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

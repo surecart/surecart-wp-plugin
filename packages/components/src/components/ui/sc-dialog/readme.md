@@ -44,6 +44,7 @@
 
 ### Used by
 
+ - [sc-cancel-dialog](../../controllers/dashboard/sc-cancel-dialog)
  - [sc-login-provider](../../providers/sc-login-provider)
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
  - [sc-upgrade-required](../sc-upgrade-required)
@@ -59,6 +60,7 @@ graph TD;
   sc-dialog --> sc-button
   sc-dialog --> sc-icon
   sc-button --> sc-spinner
+  sc-cancel-dialog --> sc-dialog
   sc-login-provider --> sc-dialog
   sc-subscription-details --> sc-dialog
   sc-upgrade-required --> sc-dialog

@@ -167,6 +167,12 @@ class AssetsService {
 				return $this->outputComponentScript( $tag, $selector, $data );
 			}
 		);
+		add_action(
+			'admin_footer',
+			function () use ( $tag, $selector, $data ) {
+				return $this->outputComponentScript( $tag, $selector, $data );
+			}
+		);
 	}
 
 	/**
