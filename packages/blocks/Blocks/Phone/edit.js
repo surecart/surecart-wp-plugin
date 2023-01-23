@@ -1,16 +1,11 @@
+import { ScPhoneInput } from '@surecart/components-react';
+import { InspectorControls } from '@wordpress/block-editor';
+import { Disabled, PanelBody, PanelRow, TextControl, ToggleControl } from '@wordpress/components';
+import { Fragment } from '@wordpress/element';
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/block-editor';
-import { Fragment } from '@wordpress/element';
-import {
-	PanelBody,
-	PanelRow,
-	TextControl,
-	Disabled,
-	ToggleControl,
-} from '@wordpress/components';
 
 export default ({ attributes, setAttributes }) => {
 	const { label, placeholder, help, required } = attributes;
@@ -53,13 +48,11 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<Disabled>
-				<sc-customer-phone
-					required={required}
+        <ScPhoneInput
+        	required={required}
 					label={label}
 					placeholder={placeholder}
-					name="phone"
-					help={help}
-				></sc-customer-phone>
+					help={help} />
 			</Disabled>
 		</Fragment>
 	);
