@@ -1,4 +1,5 @@
-import { Component, Prop, Watch, h, Event, EventEmitter, Method, Element, Host } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, Watch } from '@stencil/core';
+
 import { FormSubmitController } from '../../../functions/form-data';
 
 let id = 0;
@@ -176,7 +177,8 @@ export class ScPhoneInput {
   }
 
   handleInput() {
-    this.value = this.input.value;
+    this.value = this.input.value.replace(/\s/g, '');
+    this.input.value = this.value;
     this.scInput.emit();
   }
 
@@ -261,7 +263,7 @@ export class ScPhoneInput {
                 id={this.inputId}
                 class="input__control"
                 ref={el => (this.input = el as HTMLInputElement)}
-                type={'number'}
+                type="text"
                 name={this.name}
                 disabled={this.disabled}
                 readonly={this.readonly}
