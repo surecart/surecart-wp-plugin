@@ -4,9 +4,11 @@ import { ScButton, ScForm, ScInput } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { Fragment, useState } from '@wordpress/element';
 import { Modal } from '@wordpress/components';
+import { useEffect, useRef } from 'react';
 
 export default ({ onRequestClose, onSubmit, loading }) => {
 	const [linkData, setLinkData] = useState();
+	const field = useRef();
 
 	const onLinkDataChange = (e) => {
 		setLinkData((state) => ({ ...state, [e.target.name]: e.target.value }));
@@ -15,6 +17,12 @@ export default ({ onRequestClose, onSubmit, loading }) => {
 	const onFormSubmit = () => {
 		onSubmit(linkData);
 	};
+
+	useEffect(() => {
+		setTimeout(() => {
+			field.current.triggerFocus();
+		});
+	}, []);
 
 	return (
 		<Fragment>
@@ -50,6 +58,7 @@ export default ({ onRequestClose, onSubmit, loading }) => {
 							onScInput={onLinkDataChange}
 							name="name"
 							required
+							ref={field}
 						/>
 						<ScInput
 							label={__('Link URL', 'surecart')}
