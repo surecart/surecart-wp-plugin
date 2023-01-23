@@ -1247,6 +1247,7 @@
   "sc-price-choices": {
     "columns": true,
     "label": true,
+    "order": true,
     "required": true,
     "style": true,
     "id": true,
