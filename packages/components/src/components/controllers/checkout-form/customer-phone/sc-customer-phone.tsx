@@ -16,7 +16,7 @@ export class ScCustomerPhone {
   @Prop() loggedIn: boolean;
 
   /** (passed from the sc-checkout component automatically) */
-  @Prop() order: Checkout;
+  @Prop() checkout: Checkout;
 
   /** Force a customer. */
   @Prop() customer: Customer;
@@ -95,25 +95,29 @@ export class ScCustomerPhone {
     return this.input?.reportValidity?.();
   }
 
+  componentWillLoad() {
+    this.handleCheckoutChange();
+    this.handleCustomerChange();
+  }
+
   /** Sync customer phone with session if it's updated by other means */
-  @Watch('order')
-  handleSessionChange(val) {
-    if (val?.phone) {
-      if (val.phone !== this.value) {
-        this.value = val?.phone;
-      }
-    }
+  @Watch('checkout')
+  handleCheckoutChange() {
+    if (!this.checkout?.phone) return;
+    // set the value.
+    this.value = this.checkout?.phone;
   }
 
   @Watch('customer')
-  handleCustomerChange(val, prev) {
+  handleCustomerChange(_ = '', prev = false) {
     // we only want to do this the first time.
     if (prev) return;
-    if (val?.phone) {
-      if (val.phone !== this.value) {
-        this.value = val?.phone;
-      }
-    }
+    // if there is no phone.
+    if (!this.customer?.phone) return;
+    // we don't want to replace this if there is already a value.
+    if (this.checkout?.phone) return;
+    // set the value
+    this.value = this.customer?.phone;
   }
 
   render() {
@@ -121,7 +125,7 @@ export class ScCustomerPhone {
       <sc-phone-input
         name="phone"
         ref={el => (this.input = el as HTMLScInputElement)}
-        value={this.customer?.phone || this.value}
+        value={this.value}
         disabled={!!this.loggedIn}
         label={this.label}
         help={this.help}
@@ -141,4 +145,4 @@ export class ScCustomerPhone {
   }
 }
 
-openWormhole(ScCustomerPhone, ['order', 'customer'], false);
+openWormhole(ScCustomerPhone, ['checkout', 'customer'], false);
