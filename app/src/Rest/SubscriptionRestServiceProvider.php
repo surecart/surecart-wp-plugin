@@ -182,7 +182,7 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		return current_user_can( 'edit_sc_subscription', $request['id'], $request->get_params() ) || current_user_can( 'subscriber', $request['id'], $request->get_params() );
+		return current_user_can( 'edit_sc_subscription', $request['id'], $request->get_params() );
 	}
 
 	/**
