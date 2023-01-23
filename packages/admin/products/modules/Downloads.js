@@ -121,7 +121,18 @@ export default ({ id, product, updateProduct, loading }) => {
 														setOpen(true)
 													}
 												>
+													<ScIcon
+														name="upload-cloud"
+														slot="prefix"
+													/>
 													{__('Upload', 'surecart')}
+													<ScIcon
+														css={css`
+															opacity: 0.5;
+														`}
+														name="lock"
+														slot="suffix"
+													/>
 												</ScMenuItem>
 											);
 										}}
@@ -132,6 +143,7 @@ export default ({ id, product, updateProduct, loading }) => {
 										setModal('external_link_modal')
 									}
 								>
+									<ScIcon name="link" slot="prefix" />
 									{__('External Link', 'surecart')}
 								</ScMenuItem>
 							</ScMenu>
