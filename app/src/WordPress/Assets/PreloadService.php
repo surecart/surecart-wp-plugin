@@ -120,7 +120,7 @@ class PreloadService {
 		}
 
 		foreach ( $names as $name ) {
-			// echo "<link rel='preload' href='" . esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . trailingslashit( $path ) . $name ) . "' as='script' crossorigin />\n";
+			echo "<link rel='preload' href='" . esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . trailingslashit( $path ) . $name ) . "' as='script' crossorigin />\n";
 		}
 	}
 

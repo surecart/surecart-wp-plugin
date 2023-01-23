@@ -58,8 +58,14 @@ class TranslationsServiceProvider implements ServiceProviderInterface {
 	 */
 	public function loadSingleTranslationFile( $file, $handle, $domain ) {
 		if ( 'surecart' === $domain && is_string( $file ) ) {
-			$first_part = substr( $file, 0, strpos( $file, 'plugins/surecart' ) );
-			$file       = $first_part . 'plugins/' . SURECART_PLUGIN_DIR_NAME . '/languages/surecart-' . get_locale() . '.json';
+
+			if ( false !== strpos( $file, SURECART_PLUGIN_DIR_NAME . '/languages/' ) ) {
+				$first_part = substr( $file, 0, strpos( $file, SURECART_PLUGIN_DIR_NAME . '/languages/' ) );
+				$file       = $first_part . SURECART_PLUGIN_DIR_NAME . '/languages/surecart-' . get_locale() . '.json';
+			} else {
+				$first_part = substr( $file, 0, strpos( $file, 'plugins/' . SURECART_PLUGIN_DIR_NAME . '/' ) );
+				$file       = $first_part . 'plugins/surecart-' . get_locale() . '.json';
+			}
 		}
 		return $file;
 	}
