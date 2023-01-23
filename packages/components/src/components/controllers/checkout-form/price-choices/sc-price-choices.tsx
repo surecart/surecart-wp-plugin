@@ -39,13 +39,7 @@ export class ScPriceChoices {
         this.scRemoveLineItem.emit({ price_id: priceChoice.priceId, quantity: priceChoice.quantity });
       } else {
         const lineItem = getLineItemByPriceId(this.order?.line_items, choice.value);
-        let quantity = priceChoice.quantity;
-
-        if(lineItem?.quantity) {
-          quantity = lineItem?.quantity;
-        }
-
-        this.scUpdateLineItem.emit({ price_id: priceChoice.priceId, quantity: quantity });
+        this.scUpdateLineItem.emit({ price_id: priceChoice.priceId, quantity: lineItem?.quantity || priceChoice?.quantity || 1 });
       }
     });
   }
