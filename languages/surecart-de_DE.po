@@ -5,7 +5,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: lokalise.com\n"
 "Project-Id-Version: SureCart WP\n"
-"PO-Revision-Date: 2023-01-24 13:22\n"
+"PO-Revision-Date: 2023-01-24 15:29\n"
 "Last-Translator: lokalise.com\n"
 "Language-Team: lokalise.com\n\n"
 "Language: de_DE\n"
@@ -47,9 +47,8 @@ msgstr "Geplant"
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:44
 #: abandoned-checkouts/modules/Details.js:13
-#, fuzzy
 msgid "Sent"
-msgstr ""
+msgstr "Gesendet"
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:45
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:177

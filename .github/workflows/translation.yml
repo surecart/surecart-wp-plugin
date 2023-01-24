@@ -17,15 +17,15 @@ jobs:
         with:
           node-version: 16.19
 
-       - name: Initialize mandatory git config
+      - name: Initialize mandatory git config
         run: |
           git config user.name "GitHub Actions"
           git config user.email "noreply@github.com"
 
-      # - name: Dump GitHub context
-      #   env:
-      #     GITHUB_CONTEXT: ${{ toJson(github) }}
-      #   run: echo "$GITHUB_CONTEXT"
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
 
       - name: Get PR number
         id: get_pr_number
@@ -42,7 +42,7 @@ jobs:
           echo "$GITHUB_HEAD_REF"
 
       - name: Install dependencies and and create mo and json files
-        run: yarn && yarn pot:mo && yarn:json
+        run: composer install && yarn && yarn pot:mo && yarn pot:json
 
       - name: Create Pull Request
         id: cpr
@@ -56,7 +56,7 @@ jobs:
           body: |
             Update report
             Hi!
-              This PR was created in response workflow running.
+              This PR was created in response to translation workflow.
               I've updated the build files.
 
       - name: Check outputs
@@ -76,5 +76,6 @@ jobs:
           reactions: hooray
 
       - uses: andymckay/labeler@1.0.4
+        if: always()
         with:
           remove-labels: "translation build"
