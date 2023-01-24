@@ -284,7 +284,6 @@ function Conditions(props) {
         `}
       >
         <ScButton
-          // className="button"
           onClick={() => {
             removeConditionFromRuleGroup(ruleIndex);
           }}
@@ -323,52 +322,44 @@ function Conditions(props) {
 						)}
             <ScCard className="sc-rules--group_rules-card" style={{
 								background: '#ffffff',
-								// border: '1px #d4d4d4 solid'
             }}>
-						<div
-							className="sc-rules--group_rules"
-							/*css={css`
-								background: #ffffff;
-								padding: 15px 14px;
-								border: 1px #d4d4d4 solid;
-							`}*/
-						>
-							<div className="sc-rules--rule_fields">
-								<SelectConditions
-									name={`sc-form-rules[${groupIndex}][rules][${ruleIndex}][condition]`}
-									onScChange={(e) => {
-										updateConditionInRuleGroup(
-											ruleIndex,
-											e.target.value
-										);
-									}}
-									value={rule_data.condition}
-								/>
+              <div className="sc-rules--group_rules">
+                <div className="sc-rules--rule_fields">
+                  <SelectConditions
+                    name={`sc-form-rules[${groupIndex}][rules][${ruleIndex}][condition]`}
+                    onScChange={(e) => {
+                      updateConditionInRuleGroup(
+                        ruleIndex,
+                        e.target.value
+                      );
+                    }}
+                    value={rule_data.condition}
+                  />
 
-								<SelectOperator
-									name={`sc-form-rules[${groupIndex}][rules][${ruleIndex}][operator]`}
-									type={rule_field_data.operatorType}
-									value={rule_data.operator}
-									onScChange={(e) => {
-										updateConditionOptionInRuleGroup(
-											ruleIndex,
-											e.target.value,
-											'operator'
-										);
-									}}
-								/>
+                  <SelectOperator
+                    name={`sc-form-rules[${groupIndex}][rules][${ruleIndex}][operator]`}
+                    type={rule_field_data.operatorType}
+                    value={rule_data.operator}
+                    onScChange={(e) => {
+                      updateConditionOptionInRuleGroup(
+                        ruleIndex,
+                        e.target.value,
+                        'operator'
+                      );
+                    }}
+                  />
 
-								{renderValueFields(
-									rule_field_data.fields,
-									ruleIndex,
-									rule_data
-								)}
-							</div>
-								{renderRemoveConditionIcon(
-									rules.length,
-									ruleIndex
-								)}
-						</div>
+                  {renderValueFields(
+                    rule_field_data.fields,
+                    ruleIndex,
+                    rule_data
+                  )}
+                </div>
+                  {renderRemoveConditionIcon(
+                    rules.length,
+                    ruleIndex
+                  )}
+              </div>
             </ScCard>
 					</>
 				);
