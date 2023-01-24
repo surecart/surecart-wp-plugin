@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import AsyncSelect from 'react-select/async';
+import Select2InternalStyles, { select2StyleOptions } from './select2styles';
 
 function SelectCoupons(props) {
 	const {
@@ -52,6 +53,7 @@ function SelectCoupons(props) {
 
 	return (
 		<div className="sc-select2-field sc-product-field">
+      <Select2InternalStyles />
 			<div className="sc-selection-field">
 				{label && <label>{label}</label>}
 
@@ -69,6 +71,7 @@ function SelectCoupons(props) {
 					placeholder={placeholder}
 					cacheOptions
 					{...attr}
+          styles={select2StyleOptions}
 				/>
 			</div>
 			{desc && <div className="sc-field__desc">{desc}</div>}

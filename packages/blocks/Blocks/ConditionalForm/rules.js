@@ -36,11 +36,6 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 	const [draftRuleGroups, setDraftRuleGroups] = useState(getInitialGroups());
 	const [activeRuleGroup, setActiveRuleGroup] = useState(0);
 
-	console.log('rule_groups');
-	console.log(rule_groups);
-	console.log('draftRuleGroups');
-	console.log(draftRuleGroups);
-
 	const updateRuleGroupData = (data) => {
 		setDraftRuleGroups([...data]);
 	};
@@ -319,8 +314,7 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 					</ScButton>
 					<ScButton
 						type="primary"
-						/*variant="primary"
-						type="submit"*/
+            submit={true}
 						css={css`
 							margin-left: 15px;
 						`}
