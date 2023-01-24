@@ -1,10 +1,11 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
+import { ScButton, ScIcon, ScToggle } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+
 import Conditions from './conditions';
 import translations from './translations';
-import { ScCard, ScButton } from '@surecart/components-react';
 
 const Rules = ({ attributes, setAttributes, closeModal }) => {
 	const { rule_groups } = attributes;
@@ -33,7 +34,6 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 	};
 
 	const [draftRuleGroups, setDraftRuleGroups] = useState(getInitialGroups());
-	const [activeRuleGroup, setActiveRuleGroup] = useState(0);
 
 	const updateRuleGroupData = (data) => {
 		setDraftRuleGroups([...data]);
@@ -124,9 +124,6 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 		]);
 	};
 
-	const showRules = (groupIndex) =>
-		setActiveRuleGroup(activeRuleGroup !== groupIndex ? groupIndex : -1);
-
 	const handleFormSubmit = (e) => {
 		e.preventDefault();
 		setAttributes({ rule_groups: draftRuleGroups });
@@ -143,157 +140,117 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 
 	return (
 		<>
-			<form className="sc-rules-group-form" onSubmit={handleFormSubmit}>
+			<form onSubmit={handleFormSubmit}>
 				{draftRuleGroups.map(({ group_id, rules }, groupIndex) => {
-					const isActiveGroup = activeRuleGroup === groupIndex;
 					return (
-						<div
-							className="sc-rules-page--group_wrapper"
-							key={group_id}
-						>
-              <ScCard className="sc-rules--group_rules-card"
-                style={{
-								  background: '#fafafa',
-                }}
-              >
-                <div className="sc-rules--group" >
-                  <input
-                    type="hidden"
-                    name={`sc-form-rules[${groupIndex}][group_id]`}
-                    value={group_id}
-                  />
-
-                  <div
-                    className="sc-rules--redirection-step"
-                    css={css`
-                      display: flex;
-                      justify-content: space-between;
-                    `}
-                  >
-                    <div className="sc-rules--group_header__left">
-                      {renderRuleTitle(rules)}
-                    </div>
-                    <div className="sc-rules--group_header">
-                      <span className="sc-rules--group_id">
-                        {__('ID - ', 'surecart')}
-                        {group_id}
-                      </span>
-                      <span
-                        className={`dashicons ${
-                          isActiveGroup
-                            ? 'dashicons-arrow-up'
-                            : 'dashicons-arrow-down'
-                        }`}
-                        onClick={() => {
-                          showRules(groupIndex);
-                        }}
-                      ></span>
-                    </div>
-                  </div>
-                  <div
-                    id={`sc-rules--group-${group_id}`}
-                    className={!isActiveGroup && 'hidden'}
-                  >
-                    <div
-                      className="sc-rules--group_rules--wrapper"
-                      css={css`
-                        margin: 15px 0;
-                      `}
-                    >
-                      {rules.length !== 0 && (
-                        <Conditions
-                          rules={rules}
-                          groupIndex={groupIndex}
-                          groupsLength={
-                            draftRuleGroups.length
-                          }
-                          removeConditionFromRuleGroup={(
-                            conditionIndex
-                          ) =>
-                            removeConditionFromRuleGroup(
-                              groupIndex,
-                              conditionIndex
-                            )
-                          }
-                          updateConditionInRuleGroup={(
-                            conditionIndex,
-                            currentValue
-                          ) => {
-                            updateConditionInRuleGroup(
-                              groupIndex,
-                              conditionIndex,
-                              currentValue
-                            );
-                          }}
-                          updateConditionOptionInRuleGroup={(
-                            conditionIndex,
-                            currentValue,
-                            optionName
-                          ) => {
-                            updateConditionOptionInRuleGroup(
-                              groupIndex,
-                              conditionIndex,
-                              currentValue,
-                              optionName
-                            );
-                          }}
-                        />
-                      )}
-                    </div>
-
-                    <div className="sc-rules--add-rule__repeater">
-                      <ScButton onClick={(e) => {
-                          addNewCondition(groupIndex);
-                        }}
-                      >
-                        {__('Add Condition', 'surecart')}
-                      </ScButton>
-                    </div>
-                  </div>
-                </div>
-              </ScCard>
-							<div
-								className="sc-rules-page--group_wrapper__footer"
-								css={css`
-									margin: 20px 0 0;
-								`}
+						<div key={group_id}>
+							<ScToggle
+								shady
+								summary={renderRuleTitle(rules)}
+								open
 							>
-								{parseInt(groupIndex) + 1 <
-									draftRuleGroups.length && (
-									<div
-										className="sc-rules--or-group"
-										css={css`
-											padding: 4px 6px;
-											border: 1px solid #d4d4d4;
-											margin: 15px auto;
-											width: 48px;
-											text-align: center;
-										`}
-									>
-										<span className="sc-rules--or_group__text">
-											{__('OR', 'surecart')}
-										</span>
-									</div>
-								)}
+								<div
+									css={css`
+										margin-bottom: 15px;
+									`}
+								>
+									{rules.length !== 0 && (
+										<Conditions
+											rules={rules}
+											groupIndex={groupIndex}
+											groupsLength={
+												draftRuleGroups.length
+											}
+											removeConditionFromRuleGroup={(
+												conditionIndex
+											) =>
+												removeConditionFromRuleGroup(
+													groupIndex,
+													conditionIndex
+												)
+											}
+											updateConditionInRuleGroup={(
+												conditionIndex,
+												currentValue
+											) => {
+												updateConditionInRuleGroup(
+													groupIndex,
+													conditionIndex,
+													currentValue
+												);
+											}}
+											updateConditionOptionInRuleGroup={(
+												conditionIndex,
+												currentValue,
+												optionName
+											) => {
+												updateConditionOptionInRuleGroup(
+													groupIndex,
+													conditionIndex,
+													currentValue,
+													optionName
+												);
+											}}
+										/>
+									)}
+								</div>
 
-								{parseInt(groupIndex) + 1 ===
-									draftRuleGroups.length && (
-									<div className="sc-rules--or_group__button">
-										<ScButton onClick={addNewGroup} >
-											{__('Add Rule Group', 'surecart')}
-										</ScButton>
-									</div>
-								)}
-							</div>
+								<div
+									css={css`
+										text-align: center;
+									`}
+								>
+									<ScButton
+										type="link"
+										onClick={() =>
+											addNewCondition(groupIndex)
+										}
+									>
+										<ScIcon name="plus" slot="prefix" />
+										{__('AND', 'surecart')}
+									</ScButton>
+								</div>
+							</ScToggle>
+
+							{parseInt(groupIndex) + 1 <
+							draftRuleGroups.length ? (
+								<div
+									css={css`
+										text-align: center;
+										margin: 25px auto;
+									`}
+								>
+									<ScButton
+										css={css`
+											pointer-events: none;
+										`}
+										pill
+										type="default"
+										size="small"
+									>
+										{__('OR', 'surecart')}
+									</ScButton>
+								</div>
+							) : (
+								<div
+									css={css`
+										margin: 15px 0 0;
+										text-align: center;
+									`}
+								>
+									<ScButton type="link" onClick={addNewGroup}>
+										<ScIcon name="plus" slot="prefix" />
+										{__('OR', 'surecart')}
+									</ScButton>
+								</div>
+							)}
 						</div>
 					);
 				})}
 				<div
-					className="sc-rules-page--footer"
 					css={css`
 						display: flex;
 						justify-content: flex-end;
-						margin-top: -33px;
 					`}
 				>
 					<ScButton variant="secondary" onClick={closeModal}>
@@ -301,7 +258,7 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 					</ScButton>
 					<ScButton
 						type="primary"
-            submit={true}
+						submit={true}
 						css={css`
 							margin-left: 15px;
 						`}

@@ -12,7 +12,14 @@ import SelectProducts from './selectProducts';
 import SelectCoupons from './selectCoupons';
 import Select2 from './select2';
 import { countryChoices } from '@surecart/components';
-import { ScPriceInput, ScCard, ScButton } from '@surecart/components-react';
+import {
+	ScPriceInput,
+	ScCard,
+	ScButton,
+	ScTag,
+	ScIcon,
+	ScFlex,
+} from '@surecart/components-react';
 import SelectConditions from './selectConditions';
 import SelectOperator from './selectOperator';
 
@@ -277,19 +284,18 @@ function Conditions(props) {
 			return '';
 		}
 		return (
-      <div
-        className="sc-rules--rule_actions"
-        css={css`
-          margin-top: 15px;
-        `}
-      >
-        <ScButton
-          onClick={() => {
-            removeConditionFromRuleGroup(ruleIndex);
-          }}
-        >
-          {__('Remove Condition', 'surecart')}
-        </ScButton>
+			<div className="sc-rules--rule_actions">
+				<ScButton
+					circle
+					css={css`
+						--sc-input-height-medium: 30px;
+					`}
+					onClick={() => {
+						removeConditionFromRuleGroup(ruleIndex);
+					}}
+				>
+					<ScIcon name="trash" />
+				</ScButton>
 			</div>
 		);
 	};
@@ -303,64 +309,76 @@ function Conditions(props) {
 				return (
 					<>
 						{0 !== ruleIndex && (
-							<div className="sc-rules--group_rules__condition-label">
-								<div
-									className="sc--condition-label__and_group"
-									css={css`
-										padding: 4px 6px;
-										border: 1px solid #d4d4d4;
-										margin: 15px auto;
-										width: 48px;
-										text-align: center;
-									`}
-								>
-									<span className="sc--condition-label__and_group__text">
-										{__('AND', 'surecart')}
-									</span>
-								</div>
+							<div
+								css={css`
+									text-align: center;
+									margin: 15px auto;
+									pointer-events: none;
+								`}
+							>
+								<ScButton pill size="small">
+									{__('AND', 'surecart')}
+								</ScButton>
 							</div>
 						)}
-            <ScCard className="sc-rules--group_rules-card" style={{
+						<ScCard
+							className="sc-rules--group_rules-card"
+							style={{
 								background: '#ffffff',
-            }}>
-              <div className="sc-rules--group_rules">
-                <div className="sc-rules--rule_fields">
-                  <SelectConditions
-                    name={`sc-form-rules[${groupIndex}][rules][${ruleIndex}][condition]`}
-                    onScChange={(e) => {
-                      updateConditionInRuleGroup(
-                        ruleIndex,
-                        e.target.value
-                      );
-                    }}
-                    value={rule_data.condition}
-                  />
+								flex: 1,
+							}}
+						>
+							<ScFlex alignItems="center">
+								<div
+									css={css`
+										flex: 1;
+									`}
+								>
+									<ScFlex>
+										<SelectConditions
+											css={css`
+												flex: 1;
+											`}
+											name={`sc-form-rules[${groupIndex}][rules][${ruleIndex}][condition]`}
+											onScChange={(e) => {
+												updateConditionInRuleGroup(
+													ruleIndex,
+													e.target.value
+												);
+											}}
+											value={rule_data.condition}
+										/>
 
-                  <SelectOperator
-                    name={`sc-form-rules[${groupIndex}][rules][${ruleIndex}][operator]`}
-                    type={rule_field_data.operatorType}
-                    value={rule_data.operator}
-                    onScChange={(e) => {
-                      updateConditionOptionInRuleGroup(
-                        ruleIndex,
-                        e.target.value,
-                        'operator'
-                      );
-                    }}
-                  />
+										<SelectOperator
+											css={css`
+												flex: 1;
+											`}
+											name={`sc-form-rules[${groupIndex}][rules][${ruleIndex}][operator]`}
+											type={rule_field_data.operatorType}
+											value={rule_data.operator}
+											onScChange={(e) => {
+												updateConditionOptionInRuleGroup(
+													ruleIndex,
+													e.target.value,
+													'operator'
+												);
+											}}
+										/>
+									</ScFlex>
 
-                  {renderValueFields(
-                    rule_field_data.fields,
-                    ruleIndex,
-                    rule_data
-                  )}
-                </div>
-                  {renderRemoveConditionIcon(
-                    rules.length,
-                    ruleIndex
-                  )}
-              </div>
-            </ScCard>
+									{renderValueFields(
+										rule_field_data.fields,
+										ruleIndex,
+										rule_data
+									)}
+								</div>
+
+								{renderRemoveConditionIcon(
+									rules.length,
+									ruleIndex
+								)}
+							</ScFlex>
+						</ScCard>
 					</>
 				);
 			})}
