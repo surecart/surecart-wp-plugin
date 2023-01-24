@@ -10,18 +10,36 @@ import {
 import Settings from './settings';
 
 export default (props) => {
+
 	const blockProps = useBlockProps({
-		className: 'sc-coditional-form',
+		className: 'sc-conditional-form',
 		style: {
 			fontSize: '16px',
 			fontFamily: 'var(--sc-font-sans)',
+			outline: '1px dashed var(--wp-admin-theme-color)'
 		},
 		css: css`
 			flex: 1 1 auto;
-			overflow: auto;
 			width: 100%;
 			margin: auto;
 			box-shadow: 0 1px 2px #0d131e1a;
+
+      ::before {
+        content: 'Conditional';
+        z-index: 10;
+        font-size: 10px;
+        color: white;
+        background: var(--wp-admin-theme-color);
+        padding: 0 5px;
+        text-align: center;
+        display: block;
+        width: max-content;
+        font-weight: 600;
+        line-height: normal;
+        position: absolute;
+        top: -13px;
+        left: -1px;
+      }
 
 			.block-list-appender {
 				position: relative;
