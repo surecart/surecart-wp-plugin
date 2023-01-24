@@ -14,7 +14,7 @@ import { __ } from '@wordpress/i18n';
 import Settings from './settings';
 
 export default (props) => {
-	const { clientId } = props;
+	const { clientId, isSelected } = props;
 
 	const blockProps = useBlockProps({
 		css: css`
@@ -53,9 +53,10 @@ export default (props) => {
 			`,
 		},
 		{
-			renderAppender: !children?.length
-				? InnerBlocks.ButtonBlockAppender
-				: false,
+			renderAppender:
+				!children?.length || isSelected
+					? InnerBlocks.ButtonBlockAppender
+					: false,
 		}
 	);
 
@@ -71,7 +72,9 @@ export default (props) => {
 					font-size: 14px;
 					position: absolute;
 					right: -1px;
-					top: -19px;
+					top: -18px;
+					--sc-color-info-700: white;
+					--sc-color-info-100: var(--wp-admin-theme-color);
 					--sc-input-border-radius-small: 0;
 				`}
 			>
