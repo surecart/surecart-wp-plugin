@@ -5,7 +5,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: lokalise.com\n"
 "Project-Id-Version: SureCart WP\n"
-"PO-Revision-Date: 2023-01-23 11:25\n"
+"PO-Revision-Date: 2023-01-24 13:22\n"
 "Last-Translator: lokalise.com\n"
 "Language-Team: lokalise.com\n\n"
 "Language: fr_FR\n"
@@ -42,9 +42,8 @@ msgstr "Chariot"
 #: abandoned-checkouts/modules/Details.js:16
 #: subscriptions/show/modules/PendingUpdate.js:58
 #: subscriptions/show/modules/PendingUpdate.js:91
-#, fuzzy
 msgid "Scheduled"
-msgstr ""
+msgstr "Programmé"
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:44
 #: abandoned-checkouts/modules/Details.js:13
@@ -15346,39 +15345,48 @@ msgstr ""
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:63
 #: src/Controllers/Admin/Products/ProductsListTable.php:56
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:60
+#, fuzzy
 msgid "All"
 msgstr ""
 
 #: sc-cancel-survey2.js:82
+#, fuzzy
 msgid "Choose a reason"
 msgstr ""
 
 #: sc-cancel-survey2.js:82
+#, fuzzy
 msgid "Additional Comments"
 msgstr ""
 
 #: sc-cancel-survey2.js:82
+#, fuzzy
 msgid "Continue"
 msgstr ""
 
 #: sc-subscription-cancel2.js:56
+#, fuzzy
 msgid "Keep My Plan"
 msgstr ""
 
 #: sc-subscription-next-payment2.js:92
+#, fuzzy
 msgid "Your next payment is"
 msgstr ""
 
 #: sc-subscription.js:171
+#, fuzzy
 msgid "Restore Plan"
 msgstr ""
 
 #: sc-upgrade-required.js:23
+#, fuzzy
 msgid "Upgrade Now"
 msgstr ""
 
 #: default-i18n.js:470
 #: fetch.js:443
+#, fuzzy
 msgctxt "text direction"
 msgid "ltr"
 msgstr ""
