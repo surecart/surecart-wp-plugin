@@ -7,6 +7,7 @@ import {
 	InnerBlocks,
 	__experimentalUseInnerBlocksProps,
 } from '@wordpress/block-editor';
+import { ScTag } from '@surecart/components-react';
 import Settings from './settings';
 
 export default (props) => {
@@ -24,24 +25,7 @@ export default (props) => {
 			margin: auto;
 			box-shadow: 0 1px 2px #0d131e1a;
 
-      ::before {
-        content: 'Conditional';
-        z-index: 10;
-        font-size: 10px;
-        color: white;
-        background: var(--wp-admin-theme-color);
-        padding: 0 5px;
-        text-align: center;
-        display: block;
-        width: max-content;
-        font-weight: 600;
-        line-height: normal;
-        position: absolute;
-        top: -13px;
-        left: -1px;
-      }
-
-			.block-list-appender {
+    	.block-list-appender {
 				position: relative;
 			}
 
@@ -62,7 +46,23 @@ export default (props) => {
 	return (
 		<>
 			<Settings {...props} />
-			<div {...innerBlocksProps}></div>
+			<div className='sc-conditional-form__wrapper' >
+        <ScTag className="sc-conditional-form__tag"
+          type="info"
+          css={css`z-index: 10;
+          font-size: 10px;
+          text-align: center;
+          display: block;
+          width: max-content;
+          font-weight: 600;
+          line-height: normal;
+          position: relative;
+          left: -1px;
+          bottom: 1px;`}
+        >{ __( 'Conditional', 'surecart' ) }</ScTag>
+			  <div {...innerBlocksProps}>
+        </div>
+      </div>
 		</>
 	);
 };
