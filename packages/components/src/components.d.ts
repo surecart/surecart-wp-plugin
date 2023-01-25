@@ -2185,6 +2185,10 @@ export namespace Components {
          */
         "label": string;
         /**
+          * Session
+         */
+        "order": Checkout;
+        /**
           * Required by default
          */
         "required": boolean;
@@ -7012,6 +7016,10 @@ declare namespace LocalJSX {
           * Toggle line item event
          */
         "onScUpdateLineItem"?: (event: ScPriceChoicesCustomEvent<LineItemData>) => void;
+        /**
+          * Session
+         */
+        "order"?: Checkout;
         /**
           * Required by default
          */
