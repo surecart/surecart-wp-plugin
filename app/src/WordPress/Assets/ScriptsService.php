@@ -207,25 +207,6 @@ class ScriptsService {
 		);
 
 		wp_localize_script( 'surecart-components', 'scIcons', [ 'path' => esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) ] );
-
-		$this->enqueuePageTemplateStyles();
-	}
-
-	/**
-	 * Enqueuye
-	 *
-	 * @return void
-	 */
-	public function enqueuePageTemplateStyles() {
-		if ( 'pages/template-surecart-blank.php' ) :
-			$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/templates/checkout.asset.php';
-			wp_enqueue_style(
-				'surecart-checkout-template',
-				trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/templates/checkout.css',
-				$asset_file['dependencies'],
-				$asset_file['version'] . '-' . \SureCart::plugin()->version()
-			);
-		endif;
 	}
 
 	/**
