@@ -593,6 +593,14 @@ export namespace Components {
     }
     interface ScColumns {
         /**
+          * Is this full vertical height
+         */
+        "isFullHeight": boolean;
+        /**
+          * Is this reverse ordered on mobile
+         */
+        "isReversedOnMobile": boolean;
+        /**
           * Is this stacked on mobile
          */
         "isStackedOnMobile": boolean;
@@ -5149,6 +5157,14 @@ declare namespace LocalJSX {
     interface ScColumn {
     }
     interface ScColumns {
+        /**
+          * Is this full vertical height
+         */
+        "isFullHeight"?: boolean;
+        /**
+          * Is this reverse ordered on mobile
+         */
+        "isReversedOnMobile"?: boolean;
         /**
           * Is this stacked on mobile
          */

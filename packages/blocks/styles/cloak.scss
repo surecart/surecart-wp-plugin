@@ -79,7 +79,7 @@ sc-tab-group, sc-tab {
 sc-columns {
 	display: flex;
 	box-sizing: border-box;
-  gap: var(--sc-column-spacing, var(--sc-spacing-xxxx-large)) !important;
+  gap: var(--sc-column-spacing, var(--sc-spacing-xxxx-large));
   margin-left: auto;
   margin-right: auto;
   width: 100%;

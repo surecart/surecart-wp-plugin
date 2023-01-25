@@ -15,7 +15,7 @@ Template Name: SureCart Blank
 
 <?php do_action( 'surecart_before_content_wrapper' ); ?>
 
-<div id="layout_checkout">
+<div>
 	<?php
 	while ( have_posts() ) :
 		the_post();

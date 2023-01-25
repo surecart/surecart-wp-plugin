@@ -308,6 +308,8 @@
     "slot": true
   },
   "sc-columns": {
+    "is-full-height": true,
+    "is-reversed-on-mobile": true,
     "is-stacked-on-mobile": true,
     "vertical-alignment": true,
     "style": true,
