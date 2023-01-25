@@ -11,7 +11,7 @@ import {
 	TextControl,
 } from '@wordpress/components';
 import PaymentMethodCheckbox from './PaymentMethodCheckbox';
-import { ScTag } from '@surecart/components-react';
+import { ScPremiumTag, ScUpgradeRequired } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes }) => {
 	const { label, secure_notice } = attributes;
@@ -42,15 +42,9 @@ export default ({ attributes, setAttributes }) => {
 						{__('Enabled Processors', 'surecart')}{' '}
 						{!scBlockData?.entitlements
 							?.form_specific_payment_methods && (
-							<ScTag
-								pill
-								style={{
-									'--sc-tag-default-background-color':
-										'var(--sc-color-gray-200)',
-								}}
-							>
-								{__('Pro', 'surecart')}
-							</ScTag>
+							<ScUpgradeRequired>
+								<ScPremiumTag />
+							</ScUpgradeRequired>
 						)}
 					</Flex>
 				}

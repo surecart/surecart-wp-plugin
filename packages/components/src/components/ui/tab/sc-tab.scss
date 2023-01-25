@@ -26,7 +26,7 @@
 
   &.tab--disabled {
     cursor: not-allowed;
-    opacity: 0.5;
+    color: var(--sc-color-gray-400);
   }
 }
 

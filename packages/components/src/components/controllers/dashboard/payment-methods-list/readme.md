@@ -55,14 +55,16 @@ graph TD;
   sc-payment-methods-list --> sc-button
   sc-payment-methods-list --> sc-block-ui
   sc-empty --> sc-icon
+  sc-payment-method --> sc-tooltip
+  sc-payment-method --> sc-button
+  sc-payment-method --> sc-icon
   sc-payment-method --> sc-tag
   sc-payment-method --> sc-cc-logo
-  sc-payment-method --> sc-icon
   sc-payment-method --> sc-text
+  sc-button --> sc-spinner
   sc-cc-logo --> sc-icon
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon
-  sc-button --> sc-spinner
   sc-block-ui --> sc-spinner
   style sc-payment-methods-list fill:#f9f,stroke:#333,stroke-width:4px
 ```

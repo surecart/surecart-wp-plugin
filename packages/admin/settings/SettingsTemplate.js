@@ -6,6 +6,7 @@ import { css, jsx, Global } from '@emotion/core';
 import { ScForm } from '@surecart/components-react';
 import { SnackbarList } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import Notifications from '../components/Notifications';
 
 export default ({
 	title,
@@ -85,6 +86,20 @@ export default ({
 			>
 				{children}
 			</div>
+
+			<Notifications
+				css={css`
+					position: fixed !important;
+					left: auto !important;
+					right: 40px;
+					bottom: 40px;
+					width: auto !important;
+
+					:first-letter {
+						text-transform: uppercase;
+					}
+				`}
+			/>
 
 			<SnackbarList
 				css={css`

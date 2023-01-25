@@ -37,6 +37,8 @@
  - [sc-alert](../alert)
  - [sc-breadcrumb](../breadcrumb)
  - [sc-breadcrumbs](../breadcrumbs)
+ - [sc-cancel-dialog](../../controllers/dashboard/sc-cancel-dialog)
+ - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
  - [sc-cart-form-submit](../../controllers/cart/cart-form-submit)
  - [sc-cart-header](../../controllers/cart/cart-header)
  - [sc-cart-icon](../sc-cart-icon)
@@ -61,12 +63,14 @@
  - [sc-select](../select)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
+ - [sc-subscription-next-payment](../../controllers/dashboard/subscription-details)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-tax-id-input](../tax-id-input)
  - [sc-toggle](../sc-toggle)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-upgrade-required](../sc-upgrade-required)
  - [sc-wordpress-user](../../controllers/dashboard/wordpress-user)
 
 ### Graph
@@ -75,6 +79,8 @@ graph TD;
   sc-alert --> sc-icon
   sc-breadcrumb --> sc-icon
   sc-breadcrumbs --> sc-icon
+  sc-cancel-dialog --> sc-icon
+  sc-cancel-survey --> sc-icon
   sc-cart-form-submit --> sc-icon
   sc-cart-header --> sc-icon
   sc-cart-icon --> sc-icon
@@ -99,12 +105,14 @@ graph TD;
   sc-select --> sc-icon
   sc-subscription --> sc-icon
   sc-subscription-ad-hoc-confirm --> sc-icon
+  sc-subscription-next-payment --> sc-icon
   sc-subscription-payment-method --> sc-icon
   sc-subscription-switch --> sc-icon
   sc-subscriptions-list --> sc-icon
   sc-tax-id-input --> sc-icon
   sc-toggle --> sc-icon
   sc-upcoming-invoice --> sc-icon
+  sc-upgrade-required --> sc-icon
   sc-wordpress-user --> sc-icon
   style sc-icon fill:#f9f,stroke:#333,stroke-width:4px
 ```
