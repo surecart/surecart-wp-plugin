@@ -246,6 +246,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 = 1.5.6 - January 25, 2023 =
 * Fix: Allow percentages with decimals in manual tax rates.
 * Fix: Quantity getting reset in cart when price selector uses multiple options.
+* Fix: Notifications in the SureCart settings pages getting overlapped by sidebar.
 
 = 1.5.5 - January 23, 2023 =
 * Fix: Issue with subscription saver modal not closing for some users.
