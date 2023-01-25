@@ -1,5 +1,5 @@
-import { SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import { ScSelect } from '@surecart/components-react';
 
 const OPTIONS = {
 	string: [
@@ -77,5 +77,10 @@ const OPTIONS = {
 };
 
 export default ({ type, ...props }) => (
-	<SelectControl options={OPTIONS?.[type] || []} {...props} />
+  <ScSelect
+			choices={OPTIONS?.[type] || []}
+      unselect={false}
+      {...props}
+      style={{ 'margin-bottom': '15px' }}
+		/>
 );

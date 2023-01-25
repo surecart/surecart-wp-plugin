@@ -1,12 +1,14 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, PanelRow, Button, Modal } from '@wordpress/components';
+import { ScTag } from '@surecart/components-react';
+import { BlockControls, InspectorControls } from '@wordpress/block-editor';
+import { Button, Modal, PanelBody, PanelRow, ToolbarButton, ToolbarGroup } from '@wordpress/components';
 import { useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { edit } from '@wordpress/icons';
+
 import Rules from './rules';
 import translations from './translations';
-import { ScTag } from '@surecart/components-react';
 
 const Settings = ({ attributes, setAttributes }) => {
 	const { rule_groups } = attributes;
@@ -19,6 +21,15 @@ const Settings = ({ attributes, setAttributes }) => {
 
 	return (
 		<>
+			<BlockControls>
+				<ToolbarGroup>
+					<ToolbarButton
+						icon={edit}
+						label={__('Edit Conditions', 'surecart')}
+						onClick={openModal}
+					/>
+				</ToolbarGroup>
+			</BlockControls>
 			<InspectorControls>
 				<PanelBody title={__('Conditions', 'surecart')}>
 					<PanelRow
@@ -32,9 +43,11 @@ const Settings = ({ attributes, setAttributes }) => {
 								'Configure different visibility conditions to control when the contents appear to customers.',
 								'surecart'
 							)}
-						{(rule_data || []).map(({ rules }) => {
-							return (rules || []).map((rule) => (
-								<ScTag>{translations?.[rule?.condition]}</ScTag>
+						{(rule_data || []).map(({ rules, rulesIndex }) => {
+							return (rules || []).map((rule, index) => (
+								<ScTag key={`${rulesIndex}${index}`}>
+									{translations?.[rule?.condition]}
+								</ScTag>
 							));
 						})}
 					</PanelRow>
@@ -46,6 +59,7 @@ const Settings = ({ attributes, setAttributes }) => {
 							<Modal
 								title={__('Configure Conditions', 'surecart')}
 								onRequestClose={closeModal}
+								shouldCloseOnClickOutside={false}
 								css={css`
 									width: 75%;
 									max-width: 650px;
