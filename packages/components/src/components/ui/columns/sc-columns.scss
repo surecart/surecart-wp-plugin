@@ -36,6 +36,10 @@
     // important since the Column assigns its own width as an inline style.
     flex-basis: 100% !important;
 
+    @media (max-width: 781px) {
+      padding: 30px !important;
+    }
+
     // At large viewports, show all columns horizontally.
     @media (min-width: 782px) {
       // Available space should be divided equally amongst columns without an
