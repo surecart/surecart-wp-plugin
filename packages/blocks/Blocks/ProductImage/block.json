@@ -6,8 +6,12 @@
 	"description": "Displays a product image.",
 	"category": "surecart",
 	"keywords": ["product", "image", "thumbnail"],
+	"ancestor": ["surecart/product-list"],
 	"attributes": {
-		"url": {
+		"src": {
+			"type": "string"
+		},
+		"sizing": {
 			"type": "string"
 		},
 		"alt": {
@@ -18,6 +22,14 @@
 	"supports": {
 		"reusable": false,
 		"html": false,
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true
+			}
+		},
 		"color": {
 			"__experimentalDuotone": "img",
 			"text": false,
@@ -27,7 +39,7 @@
 			"color": true,
 			"radius": true,
 			"width": true,
-			"__experimentalSelector": "img",
+			"__experimentalSelector": ".product-img",
 			"__experimentalSkipSerialization": true,
 			"__experimentalDefaultControls": {
 				"color": true,

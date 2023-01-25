@@ -1280,6 +1280,15 @@
     "class": true,
     "slot": true
   },
+  "sc-product-image": {
+    "alt": true,
+    "sizing": true,
+    "src": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-product-line-item": {
     "amount": true,
     "currency": true,
@@ -1292,13 +1301,6 @@
     "removable": true,
     "scratch-amount": true,
     "trial-duration-days": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "sc-products": {
-    "products": true,
     "style": true,
     "id": true,
     "class": true,

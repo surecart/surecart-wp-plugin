@@ -1,49 +1,66 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import { grid } from '@wordpress/icons';
 import { Button, Placeholder } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { InnerBlocks } from '@wordpress/block-editor';
 
+const ALLOWED_BLOCKS = [
+	'surecart/product-title',
+	'surecart/product-price',
+	'surecart/product-image',
+];
+
 const DEFAULT_TEMPLATE = [
 	[
-		'core/paragraph',
+		'surecart/product-title',
 		{
-			content: __('Product Name', 'surecart'),
+			text: 'Product Title',
+		},
+	],
+	[
+		'surecart/product-price',
+		{
+			amount: '$249.99',
+			scratchAmount: '$300',
 		},
 	],
 	[
 		'surecart/product-image',
 		{
-			url: 'https://i.picsum.photos/id/1016/600/600.jpg?hmac=cFjlj-fuzpd0BofY0YlXjH-ccjalkAe30I8A7peBtYk',
+			src: 'https://i.picsum.photos/id/295/300/400.jpg?hmac=46TmcFytDsif4HXrwWO87IpjgeODl2xffBYSfNtezDQ',
+			alt: 'Image Alt',
+			sizing: 'cover',
 		},
 	],
 ];
 
-export default function EditModal({ attributes }) {
+export default function EditModal() {
 	return (
 		<Placeholder icon={grid} label={__('All Products', 'surecart')}>
 			<div
-				style={{
-					display: 'flex',
-					flexDirection: 'column',
-					flex: '1 0 0px',
-				}}
+				css={css`
+					display: flex;
+					flex-direction: column;
+					flex: 1 0 0px;
+				`}
 			>
 				{__(
 					'Display all products from your store as a grid.',
 					'surecart'
 				)}
 				<div
-					style={{
-						marginTop: '2rem',
-						padding: '1rem',
-						backgroundColor: 'var(--sc-color-gray-200)',
-					}}
+					css={css`
+						margin-top: 2rem;
+						padding: 1rem;
+						background-color: var(--sc-color-gray-200);
+					`}
 				>
 					<div
 						style={{
 							backgroundColor: 'white',
 							maxWidth: '22rem',
-							height: '28rem',
+							minHeight: '22rem',
 							margin: '0 auto',
 							padding: '1rem',
 						}}
@@ -51,27 +68,22 @@ export default function EditModal({ attributes }) {
 						<InnerBlocks
 							templateLock={false}
 							template={DEFAULT_TEMPLATE}
+							allowedBlocks={ALLOWED_BLOCKS}
+							renderAppender={false}
 						/>
 					</div>
 				</div>
 				<div
-					style={{
-						display: 'flex',
-						justifyContent: 'flex-end',
-						padding: '1rem 1rem 0',
-					}}
+					css={css`
+						display: flex;
+						justify-content: flex-end;
+						padding: 1rem 1rem 0;
+					`}
 				>
-					<Button
-						variant="primary"
-						style={{ marginBottom: 0 }}
-						// onClick={onDone}
-					>
+					<Button variant="primary" style={{ marginBottom: 0 }}>
 						{__('Done', 'surecart')}
 					</Button>
-					<Button
-						variant="tertiary"
-						// onClick={onCancel}
-					>
+					<Button variant="tertiary">
 						{__('Cancel', 'surecart')}
 					</Button>
 				</div>

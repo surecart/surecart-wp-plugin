@@ -4,12 +4,21 @@ namespace SureCartBlocks\Blocks\ProductList;
 
 use SureCartBlocks\Blocks\BaseBlock;
 use SureCart\Models\Product;
-use SureCartBlocks\Controllers\ProductsController;
 
 /**
  * ProductList block
  */
 class Block extends BaseBlock {
+	/**
+	 * Get the style for the block
+	 *
+	 * @param  array $attributes Block attributes.
+	 * @return string
+	 */
+	public function getProductsData( ) {
+		return Product::where( [ 'archived' => false, ])->with( [ 'prices' ] )->get();
+	}
+	
 	/**
 	 * Render the block
 	 *
@@ -19,6 +28,17 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		return ( new ProductsController() )->index( $attributes );
+		$products = $this->getProductsData();
+
+		ob_start(); ?>
+		<div style="display: grid; gap: 1rem; grid-template-columns: repeat(4, 1fr);">
+			<?php foreach($products as $item): ?>
+				<div>
+					<?php echo filter_block_content( $content, 'post' ); ?>
+				</div>
+			<?php endforeach; ?>
+		</div>
+		<?php
+		return ob_get_clean();
 	}
 }

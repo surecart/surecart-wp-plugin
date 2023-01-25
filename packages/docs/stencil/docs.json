@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-01-18T07:18:04",
+  "timestamp": "2023-01-23T14:52:49",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -20042,6 +20042,79 @@
       }
     },
     {
+      "filePath": "./src/components/ui/sc-product-image/sc-product-image.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-product-image",
+      "readme": "# sc-product-image\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "alt",
+          "type": "string",
+          "mutable": false,
+          "attr": "alt",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "sizing",
+          "type": "\"contain\" | \"cover\"",
+          "mutable": false,
+          "attr": "sizing",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "contain",
+              "type": "string"
+            },
+            {
+              "value": "cover",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "src",
+          "type": "string",
+          "mutable": false,
+          "attr": "src",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
       "filePath": "./src/components/ui/product-line-item/sc-product-line-item.tsx",
       "encapsulation": "shadow",
       "tag": "sc-product-line-item",
@@ -20421,42 +20494,6 @@
           "sc-product-line-item"
         ]
       }
-    },
-    {
-      "filePath": "./src/components/ui/sc-products/sc-products.tsx",
-      "encapsulation": "shadow",
-      "tag": "sc-products",
-      "readme": "# sc-grid\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "products",
-          "type": "Product[]",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "[]",
-          "values": [
-            {
-              "type": "Product[]"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
-      "methods": [],
-      "events": [],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
-      "dependents": [],
-      "dependencies": [],
-      "dependencyGraph": {}
     },
     {
       "filePath": "./src/components/context/provider/sc-provider.tsx",

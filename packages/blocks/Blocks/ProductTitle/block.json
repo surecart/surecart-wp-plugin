@@ -1,0 +1,15 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"name": "surecart/product-title",
+	"title": "Product Title",
+	"description": "Displays the product title.",
+	"category": "surecart",
+	"keywords": ["product", "title", "list"],
+	"ancestor": ["surecart/product-list"],
+	"attributes": {
+		"text": {
+			"type": "string"
+		}
+	}
+}

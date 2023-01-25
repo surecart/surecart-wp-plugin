@@ -5,8 +5,9 @@ import {
 	BlockControls,
 	InspectorControls,
 	useBlockProps,
+	useInnerBlocksProps as __stableUseInnerBlocksProps,
+	__experimentalUseInnerBlocksProps,
 } from '@wordpress/block-editor';
-import { ScProducts } from '@surecart/components-react';
 import {
 	PanelBody,
 	RangeControl,
@@ -14,15 +15,15 @@ import {
 	ToolbarGroup,
 	Disabled,
 } from '@wordpress/components';
-import { useState } from '@wordpress/element';
+import { Fragment, useState } from '@wordpress/element';
+
 import EditModal from './components/EditModal';
+import { renderNoProductsPlaceholder } from './utils';
 
 export default ({ attributes, setAttributes }) => {
 	const [isEditing, setIsEditing] = useState(false);
-	const { columns, rows, gap } = attributes;
+	const { columns, gap } = attributes;
 	const blockProps = useBlockProps();
-
-	// console.log('attributes', attributes);
 
 	function togglePreview() {
 		setIsEditing((flag) => !flag);
@@ -59,24 +60,10 @@ export default ({ attributes, setAttributes }) => {
 						min={1}
 						max={10}
 					/>
-					{columns > 10 && (
+					{columns > 6 && (
 						<Notice status="warning" isDismissible={false}>
 							{__(
 								'This column count exceeds the recommended amount and may cause visual breakage.'
-							)}
-						</Notice>
-					)}
-					<RangeControl
-						label={__('Rows', 'surecart')}
-						value={rows}
-						onChange={(rows) => setAttributes({ rows })}
-						min={1}
-						max={10}
-					/>
-					{columns > 10 && (
-						<Notice status="warning" isDismissible={false}>
-							{__(
-								'This row count exceeds the recommended amount and may cause visual breakage.'
 							)}
 						</Notice>
 					)}
@@ -85,17 +72,23 @@ export default ({ attributes, setAttributes }) => {
 		);
 	}
 
+	// const containerStyles = {
+	// 	display: 'grid',
+	// 	gap,
+	// 	gridTemplateColumns: `repeat(${columns}, 1fr)`,
+	// };
+
 	return (
-		<div {...blockProps}>
+		<Fragment>
 			{getBlockControls()}
 			{getInspectorControls()}
-			{isEditing ? (
-				<EditModal attributes={attributes} />
-			) : (
-				<Disabled>
-					<ScProducts />
-				</Disabled>
-			)}
-		</div>
+			<div {...blockProps}>
+				{isEditing ? (
+					<EditModal attributes={attributes} />
+				) : (
+					<Disabled>{renderNoProductsPlaceholder()}</Disabled>
+				)}
+			</div>
+		</Fragment>
 	);
 };
