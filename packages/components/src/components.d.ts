@@ -491,6 +491,16 @@ export namespace Components {
          */
         "validate": () => Promise<boolean>;
     }
+    interface ScCheckoutFormErrors {
+        /**
+          * The current order.
+         */
+        "checkoutState": FormState;
+        /**
+          * Error to display.
+         */
+        "error": ResponseError | null;
+    }
     interface ScCheckoutUnsavedChangesWarning {
         "state": FormState;
     }
@@ -3553,6 +3563,12 @@ declare global {
         prototype: HTMLScCheckoutElement;
         new (): HTMLScCheckoutElement;
     };
+    interface HTMLScCheckoutFormErrorsElement extends Components.ScCheckoutFormErrors, HTMLStencilElement {
+    }
+    var HTMLScCheckoutFormErrorsElement: {
+        prototype: HTMLScCheckoutFormErrorsElement;
+        new (): HTMLScCheckoutFormErrorsElement;
+    };
     interface HTMLScCheckoutUnsavedChangesWarningElement extends Components.ScCheckoutUnsavedChangesWarning, HTMLStencilElement {
     }
     var HTMLScCheckoutUnsavedChangesWarningElement: {
@@ -4400,6 +4416,7 @@ declare global {
         "sc-charges-list": HTMLScChargesListElement;
         "sc-checkbox": HTMLScCheckboxElement;
         "sc-checkout": HTMLScCheckoutElement;
+        "sc-checkout-form-errors": HTMLScCheckoutFormErrorsElement;
         "sc-checkout-unsaved-changes-warning": HTMLScCheckoutUnsavedChangesWarningElement;
         "sc-choice": HTMLScChoiceElement;
         "sc-choices": HTMLScChoicesElement;
@@ -5057,6 +5074,16 @@ declare namespace LocalJSX {
           * The account tax protocol
          */
         "taxProtocol"?: TaxProtocol;
+    }
+    interface ScCheckoutFormErrors {
+        /**
+          * The current order.
+         */
+        "checkoutState"?: FormState;
+        /**
+          * Error to display.
+         */
+        "error"?: ResponseError | null;
     }
     interface ScCheckoutUnsavedChangesWarning {
         "state"?: FormState;
@@ -8104,6 +8131,7 @@ declare namespace LocalJSX {
         "sc-charges-list": ScChargesList;
         "sc-checkbox": ScCheckbox;
         "sc-checkout": ScCheckout;
+        "sc-checkout-form-errors": ScCheckoutFormErrors;
         "sc-checkout-unsaved-changes-warning": ScCheckoutUnsavedChangesWarning;
         "sc-choice": ScChoice;
         "sc-choices": ScChoices;
@@ -8271,6 +8299,7 @@ declare module "@stencil/core" {
             "sc-charges-list": LocalJSX.ScChargesList & JSXBase.HTMLAttributes<HTMLScChargesListElement>;
             "sc-checkbox": LocalJSX.ScCheckbox & JSXBase.HTMLAttributes<HTMLScCheckboxElement>;
             "sc-checkout": LocalJSX.ScCheckout & JSXBase.HTMLAttributes<HTMLScCheckoutElement>;
+            "sc-checkout-form-errors": LocalJSX.ScCheckoutFormErrors & JSXBase.HTMLAttributes<HTMLScCheckoutFormErrorsElement>;
             "sc-checkout-unsaved-changes-warning": LocalJSX.ScCheckoutUnsavedChangesWarning & JSXBase.HTMLAttributes<HTMLScCheckoutUnsavedChangesWarningElement>;
             "sc-choice": LocalJSX.ScChoice & JSXBase.HTMLAttributes<HTMLScChoiceElement>;
             "sc-choices": LocalJSX.ScChoices & JSXBase.HTMLAttributes<HTMLScChoicesElement>;

@@ -262,6 +262,14 @@
     "class": true,
     "slot": true
   },
+  "sc-checkout-form-errors": {
+    "checkout-state": true,
+    "error": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-checkout-unsaved-changes-warning": {
     "state": true,
     "style": true,
