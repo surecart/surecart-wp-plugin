@@ -2,7 +2,7 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 2,
 	"name": "surecart/columns",
-	"title": "Columns",
+	"title": "SureCart Columns",
 	"category": "surecart",
 	"description": "Display content in multiple columns, with blocks added to each column.",
 	"textdomain": "surecart",
