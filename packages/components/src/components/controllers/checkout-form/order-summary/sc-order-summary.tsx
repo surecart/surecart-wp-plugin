@@ -87,16 +87,20 @@ export class ScOrderSummary {
       this.scShow.emit();
       await stopAnimations(this.body);
       this.body.hidden = false;
+      this.body.style.overflow = 'hidden';
       const { keyframes, options } = getAnimation(this.el, 'summary.show');
       await animateTo(this.body, shimKeyframesHeightAuto(keyframes, this.body.scrollHeight), options);
       this.body.style.height = 'auto';
+      this.body.style.overflow = 'visible';
     } else {
       this.scHide.emit();
       await stopAnimations(this.body);
+      this.body.style.overflow = 'hidden';
       const { keyframes, options } = getAnimation(this.el, 'summary.hide');
       await animateTo(this.body, shimKeyframesHeightAuto(keyframes, this.body.scrollHeight), options);
       this.body.hidden = true;
       this.body.style.height = 'auto';
+      this.body.style.overflow = 'visible';
     }
   }
 
