@@ -17,11 +17,15 @@ export default function save({ attributes }) {
 		? __stableUseInnerBlocksProps
 		: __experimentalUseInnerBlocksProps;
 
-	const { verticalAlignment, width, sticky, stickyOffset } = attributes;
+	const { verticalAlignment, width, sticky, stickyOffset, layout } =
+		attributes;
 
 	const wrapperClasses = classnames({
 		[`is-vertically-aligned-${verticalAlignment}`]: verticalAlignment,
 		[`is-sticky`]: sticky,
+		['is-layout-constrained']: layout?.type === 'constrained',
+		[`is-horizontally-aligned-${layout?.justifyContent}`]:
+			layout?.justifyContent,
 	});
 
 	let style;
@@ -38,6 +42,13 @@ export default function save({ attributes }) {
 				'%';
 		}
 		style = { flexBasis };
+	}
+
+	if (layout?.contentSize) {
+		style = {
+			...style,
+			'--sc-column-content-width': layout.contentSize,
+		};
 	}
 
 	const blockProps = useBlockProps.save({
