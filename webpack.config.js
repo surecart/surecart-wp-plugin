@@ -161,14 +161,6 @@ module.exports = {
 			__dirname,
 			'packages/components/static-loader.js'
 		),
-
-		/**
-		 * Page Templates
-		 */
-		['templates/checkout']: path.resolve(
-			__dirname,
-			'packages/styles/templates/checkout/index.js'
-		),
 	},
 	output: {
 		filename: '[name].js',
