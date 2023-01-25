@@ -54,6 +54,7 @@ export class ScCustomerDetails {
               </div>
               <div>{this.customer?.name}</div>
               <div></div>
+              {/** Needed for formatting */}
             </sc-stacked-list-row>
           )}
           {!!this?.customer?.email && (

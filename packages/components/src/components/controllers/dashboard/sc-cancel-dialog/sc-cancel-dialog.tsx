@@ -28,11 +28,11 @@ export class ScCancelDialog {
 
   reset() {
     this.reason = null;
-    this.step = this.protocol.preservation_enabled ? 'survey' : 'cancel';
+    this.step = this.protocol?.preservation_enabled ? 'survey' : 'cancel';
   }
 
   async trackAttempt() {
-    if (!this.protocol.preservation_enabled) return;
+    if (!this.protocol?.preservation_enabled) return;
     await apiFetch({
       method: 'PATCH',
       path: `surecart/v1/subscriptions/${this.subscription?.id}/preserve`,
