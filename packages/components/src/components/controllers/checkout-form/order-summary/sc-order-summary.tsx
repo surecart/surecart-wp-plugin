@@ -31,6 +31,8 @@ export class ScOrderSummary {
   componentDidLoad() {
     this.body.hidden = this.collapsed;
     this.body.style.height = !this.collapsed ? 'auto' : '0';
+    const bodyRect = document.body.getClientRects();
+    if (bodyRect.length) this.collapsed = bodyRect[0]?.width < 781;
   }
 
   handleClick(e) {
