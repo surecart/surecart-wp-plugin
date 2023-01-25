@@ -116,11 +116,12 @@ sc-column {
   }
 
   // if block constrained
-  &.is-layout-constrained {
-    > :where(:not(.alignleft):not(.alignright):not(.alignfull)) {
-      max-width: var(--sc-column-content-width) !important;
-    }
-    @media (min-width: 782px) {
+  @media (min-width: 782px) {
+    &.is-layout-constrained {
+      > :where(:not(.alignleft):not(.alignright):not(.alignfull)) {
+        max-width: var(--sc-column-content-width) !important;
+      }
+
       &.is-horizontally-aligned-right {
         > :where(:not(.alignleft):not(.alignright):not(.alignfull)) {
           margin-left: auto !important;
