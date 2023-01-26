@@ -1097,6 +1097,7 @@
     "busy": true,
     "closed-text": true,
     "collapsed": true,
+    "collapsed-on-mobile": true,
     "collapsible": true,
     "empty": true,
     "open-text": true,
