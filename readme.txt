@@ -245,6 +245,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 = 1.5.7 - January 26, 2023 =
 * Fix: Issue with creating order bumps due to API change where they now require a name.
+* Fix: Sometimes blocks inside columns are not able to be selected in the block editor.
 
 = 1.5.6 - January 25, 2023 =
 * Fix: Allow percentages with decimals in manual tax rates.
