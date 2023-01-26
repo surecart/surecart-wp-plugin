@@ -8,13 +8,15 @@ import {
 	InnerBlocks,
 	useBlockProps,
 } from '@wordpress/block-editor';
+import { Button, Placeholder } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
 import Settings from './settings';
 
 export default (props) => {
-	const { clientId, isSelected } = props;
+	const { attributes, clientId, isSelected } = props;
+	const { rule_groups } = attributes;
 
 	const blockProps = useBlockProps({
 		css: css`
@@ -80,7 +82,38 @@ export default (props) => {
 			>
 				{__('Conditional', 'surecart')}
 			</ScTag>
-			<div {...innerBlocksProps}></div>
+			{rule_groups?.length ? (
+				<div {...innerBlocksProps}></div>
+			) : (
+				<Placeholder
+					icon={
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							viewBox="0 0 24 24"
+							fill="none"
+							style={{ fill: 'none' }}
+							stroke="currentColor"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+						>
+							<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+							<circle cx="12" cy="12" r="3"></circle>
+						</svg>
+					}
+					label={__('Conditional Form Group', 'surecart')}
+					instructions={__(
+						'Add some conditions to you want to display.',
+						'surecart'
+					)}
+				>
+					<Button isPrimary>
+						{__('Add Conditions', 'surecart')}
+					</Button>
+				</Placeholder>
+			)}
 		</div>
 	);
 };
