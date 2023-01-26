@@ -130,3 +130,9 @@
   height: auto;
   resize: none;
 }
+
+.textarea__char-limit-warning{
+  margin-top: var(--sc-input-spacing-small);
+  text-align: right;
+  color: var(--sc-color-danger-500);
+}
