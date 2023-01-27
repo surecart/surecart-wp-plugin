@@ -1,83 +1,77 @@
-import React, { useState } from 'react';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
-import AsyncSelect from 'react-select/async';
-import Select2InternalStyles, { select2StyleOptions } from './select2styles';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+import { useState } from '@wordpress/element';
+import ModelSelector from '../../../admin/components/ModelSelector';
+import {
+	ScButton,
+	ScCard,
+	ScFormControl,
+	ScIcon,
+	ScStackedList,
+} from '@surecart/components-react';
+import { __ } from '@wordpress/i18n';
+import ProductItem from './ProductItem';
 
-function SelectProducts(props) {
-	const {
-		label,
-		name,
-		desc,
-		value,
-		placeholder,
-		onChangeCB,
-		attr,
-		isMulti = false,
-	} = props;
-
-	const [selectedValue, setSelectedValue] = useState(value);
-
-	const handleChange = (value) => {
-		setSelectedValue(value);
-
-		if (onChangeCB) {
-			onChangeCB(value);
-		}
-	};
-
-	const loadOptions = (inputValue) => {
-		if (inputValue.length >= 3) {
-			return new Promise((resolve) => {
-				apiFetch({
-					path: addQueryArgs(`surecart/v1/products`, {
-						query: inputValue,
-						archived: false,
-						expand: ['prices'],
-					}),
-				}).then((res) => {
-					let results = [];
-
-					if (res) {
-						results = res.map(function (element, index) {
-							return {
-								label: element.name,
-								value: element.id,
-							};
-						});
-					}
-					resolve(results);
-				});
-			});
-		}
-	};
+export default (props) => {
+	const { label, value, placeholder, onChange } = props;
+	const [addNew, setAddNew] = useState(false);
 
 	return (
-		<div className="sc-select2-field sc-product-field">
-      <Select2InternalStyles />
-			<div className="sc-selection-field">
-				{label && <label>{label}</label>}
-
-				<AsyncSelect
-					className="sc-select2-input"
-					classNamePrefix="sc"
-					name={`${name}`}
-					isMulti={isMulti}
-					isClearable={true}
-					value={selectedValue}
-					getOptionLabel={(e) => e.label}
-					getOptionValue={(e) => e.value}
-					loadOptions={loadOptions}
-					onChange={handleChange}
-					placeholder={placeholder}
-					cacheOptions
-					{...attr}
-          styles={select2StyleOptions}
-				/>
-			</div>
-			{desc && <div className="sc-field__desc">{desc}</div>}
-		</div>
+		<>
+			{!!(value || [])?.length && (
+				<ScCard noPadding>
+					<ScStackedList>
+						{(value || []).map((id) => (
+							<ProductItem
+								id={id}
+								key={id}
+								onRemove={() =>
+									onChange(
+										(value || []).filter(
+											(existing) => existing !== id
+										)
+									)
+								}
+							/>
+						))}
+					</ScStackedList>
+				</ScCard>
+			)}
+			{!(value || [])?.length || addNew ? (
+				<ScFormControl
+					label={label}
+					showLabel={false}
+					css={css`
+						display: grid;
+						gap: var(--sc-spacing-medium);
+					`}
+				>
+					<ModelSelector
+						placeholder={placeholder}
+						name="product"
+						requestQuery={{
+							archived: false,
+						}}
+						exclude={value}
+						onSelect={(id) => {
+							if (id) {
+								onChange([
+									...new Set([...(value || []), ...[id]]),
+								]);
+							}
+						}}
+						onClose={() => setAddNew(false)}
+						open={addNew}
+					/>
+				</ScFormControl>
+			) : (
+				<div>
+					<ScButton type="link" onClick={() => setAddNew(true)}>
+						<ScIcon name="plus" slot="prefix" />
+						{__('Add Another Product', 'surecart')}
+					</ScButton>
+				</div>
+			)}
+		</>
 	);
-}
-
-export default SelectProducts;
+};

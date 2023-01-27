@@ -144,13 +144,9 @@ function Conditions(props) {
 				case 'products':
 					return (
 						<SelectProducts
-							name={`${name}[]`}
 							value={value}
 							placeholder={field.placeholder}
-							tooltip={field.tooltip}
-							options={field.options}
-							isMulti={field.isMulti}
-							onChangeCB={(selection) => {
+							onChange={(selection) => {
 								updateConditionOptionInRuleGroup(
 									ruleIndex,
 									selection,
@@ -166,13 +162,9 @@ function Conditions(props) {
 					} else {
 						return (
 							<SelectCoupons
-								name={`${name}[]`}
 								value={value}
 								placeholder={field.placeholder}
-								tooltip={field.tooltip}
-								options={field.options}
-								isMulti={field.isMulti}
-								onChangeCB={(selection) => {
+								onChange={(selection) => {
 									updateConditionOptionInRuleGroup(
 										ruleIndex,
 										selection,
@@ -332,6 +324,8 @@ function Conditions(props) {
 								<div
 									css={css`
 										flex: 1;
+										display: grid;
+										gap: var(--sc-spacing-small);
 									`}
 								>
 									<ScFlex>

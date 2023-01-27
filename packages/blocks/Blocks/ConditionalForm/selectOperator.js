@@ -77,10 +77,5 @@ const OPTIONS = {
 };
 
 export default ({ type, ...props }) => (
-  <ScSelect
-			choices={OPTIONS?.[type] || []}
-      unselect={false}
-      {...props}
-      style={{ 'margin-bottom': '15px' }}
-		/>
+	<ScSelect choices={OPTIONS?.[type] || []} unselect={false} {...props} />
 );

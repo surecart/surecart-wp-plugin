@@ -36,8 +36,8 @@ export const is_rules_passed = (rules, props) => {
     if (false === result) {
       return;
     }
-    let ruleOperator = rule['operator'];
-    let ruleValue = rule['value'];
+    const ruleOperator = rule['operator'];
+    const ruleValue = rule?.['value'] || rule;
 
     switch (rule['condition']) {
       case 'cart_total':

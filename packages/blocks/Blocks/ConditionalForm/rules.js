@@ -140,7 +140,16 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 
 	return (
 		<>
-			<form onSubmit={handleFormSubmit}>
+			<form
+				onSubmit={handleFormSubmit}
+				style={{
+					'--sc-color-primary-500': 'var(--wp-admin-theme-color)',
+					'--sc-focus-ring-color-primary':
+						'var(--wp-admin-theme-color)',
+					'--sc-input-border-color-focus':
+						'var(--wp-admin-theme-color)',
+				}}
+			>
 				{draftRuleGroups.map(({ group_id, rules }, groupIndex) => {
 					return (
 						<div key={group_id}>
@@ -263,7 +272,7 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 							margin-left: 15px;
 						`}
 					>
-						{__('Save', 'surecart')}
+						{__('Set Rules', 'surecart')}
 					</ScButton>
 				</div>
 			</form>
