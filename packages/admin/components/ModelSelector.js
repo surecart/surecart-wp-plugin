@@ -74,10 +74,14 @@ export default (props) => {
 
 	useEffect(() => {
 		if (error) setPagination((state) => ({ ...state, enabled: false }));
-		if (!loading) return;
+		if (loading) return;
 
 		if (is_searched) {
-			setSearchedChoices((state) => [...state, ...mapData(data)]);
+			setSearchedChoices((state) =>
+				pagination.page === 1
+					? mapData(data)
+					: [...state, ...mapData(data)]
+			);
 		} else {
 			setChoices((state) => [...state, ...mapData(data)]);
 		}
