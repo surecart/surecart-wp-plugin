@@ -13,7 +13,6 @@ import { __ } from '@wordpress/i18n';
 
 export default ({ period, loading }) => {
 	const checkout = period?.checkout;
-	const subscription = period?.subscription;
 	const line_items = period?.checkout?.line_items?.data;
 
 	return (
@@ -38,18 +37,23 @@ export default ({ period, loading }) => {
 			<Fragment>
 				{(line_items || []).map((item) => {
 					return (
-						<ScProductLineItem
-							key={item.id}
-							imageUrl={item?.price?.product?.image_url}
-							name={item?.price?.product?.name}
-							editable={false}
-							removable={false}
-							quantity={item.quantity}
-							amount={item.subtotal_amount}
-							currency={item?.price?.currency}
-							trialDurationDays={item?.price?.trial_duration_days}
-							interval={intervalString(item?.price)}
-						></ScProductLineItem>
+						<>
+							<ScProductLineItem
+								key={item.id}
+								imageUrl={item?.price?.product?.image_url}
+								name={item?.price?.product?.name}
+								editable={false}
+								removable={false}
+								fees={item?.fees?.data}
+								quantity={item.quantity}
+								amount={item.subtotal_amount}
+								currency={item?.price?.currency}
+								trialDurationDays={
+									item?.price?.trial_duration_days
+								}
+								interval={intervalString(item?.price)}
+							></ScProductLineItem>
+						</>
 					);
 				})}
 
