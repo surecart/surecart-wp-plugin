@@ -20,7 +20,6 @@ class ProductPageController {
 		}
 
 		// check to see if the product has a page or template.
-
 		return \SureCart::view( 'web/product' )->with(
 			[
 				'product' => $product,
