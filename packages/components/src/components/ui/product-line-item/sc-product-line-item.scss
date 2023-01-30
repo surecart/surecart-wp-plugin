@@ -114,3 +114,12 @@
   opacity: 0.25;
   margin: 0 0.2em;
 }
+
+.base {
+  display: grid;
+  gap: var(--sc-spacing-x-small);
+}
+
+.fee__description {
+  opacity: 0.75;
+}
