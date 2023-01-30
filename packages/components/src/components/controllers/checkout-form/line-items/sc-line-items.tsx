@@ -109,6 +109,7 @@ export class ScLineItems {
                   editable={this.isEditable(item)}
                   removable={this.isRemovable()}
                   quantity={item.quantity}
+                  fees={item?.fees?.data}
                   amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.subtotal_amount}
                   scratchAmount={item.ad_hoc_amount == null && item?.scratch_amount}
                   currency={this.order?.currency}
@@ -117,14 +118,6 @@ export class ScLineItems {
                   onScUpdateQuantity={e => this.updateQuantity(item, e.detail)}
                   onScRemove={() => this.removeLineItem(item)}
                 ></sc-product-line-item>
-                {(item?.fees?.data || []).map(fee => (
-                  <sc-line-item>
-                    <sc-format-number slot="price-description" type="currency" value={fee?.amount} currency={this.order?.currency || 'usd'} />
-                    <span slot="price-description" class="fee__description">
-                      {fee?.description}
-                    </span>
-                  </sc-line-item>
-                ))}
               </div>
             );
           })}

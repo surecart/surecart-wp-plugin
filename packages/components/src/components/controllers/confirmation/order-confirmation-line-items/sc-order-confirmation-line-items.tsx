@@ -41,19 +41,12 @@ export class ScOrderConfirmationLineItems {
                   editable={false}
                   removable={false}
                   quantity={item.quantity}
+                  fees={item?.fees?.data}
                   amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.subtotal_amount}
                   currency={this.order?.currency}
                   trialDurationDays={item?.price?.trial_duration_days}
                   interval={intervalString(item?.price, { showOnce: hasSubscription(this.order) })}
                 ></sc-product-line-item>
-                {(item?.fees?.data || []).map(fee => (
-                  <sc-line-item>
-                    <sc-format-number slot="price-description" type="currency" value={fee?.amount} currency={this.order?.currency || 'usd'} />
-                    <span slot="price-description" class="fee__description">
-                      {fee?.description}
-                    </span>
-                  </sc-line-item>
-                ))}
               </div>
             );
           })}
