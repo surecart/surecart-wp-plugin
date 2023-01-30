@@ -247,6 +247,11 @@ export interface LineItem extends Object {
   object: string;
   quantity: number;
   bump: string | Bump;
+  fees?: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Fee>;
+  };
   bump_amount: number;
   discount_amount: number;
   subtotal_amount: number;
@@ -257,6 +262,17 @@ export interface LineItem extends Object {
   updated_at: number;
   price?: Price;
   price_id: string;
+}
+
+export interface Fee {
+  id: string;
+  object: 'fee';
+  amount: number;
+  description: string;
+  fee_type: 'manual' | 'bump';
+  line_item: string | LineItem;
+  created_at: number;
+  updated_at: number;
 }
 
 export interface InvoiceItem extends LineItem {}
