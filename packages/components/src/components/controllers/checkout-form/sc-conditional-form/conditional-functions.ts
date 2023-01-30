@@ -40,26 +40,26 @@ export const is_rules_passed = (rules, props) => {
     const ruleValue = rule?.['value'] || rule;
 
     switch (rule['condition']) {
-      case 'cart_total':
+      case 'total':
         result = compare_number_values(parseFloat(checkout.total_amount), parseFloat(ruleValue), ruleOperator);
         break;
-      case 'cart_item':
+      case 'products':
         const cart_products = get_cart_products(checkout);
         result = compare_object_values(cart_products, ruleValue, ruleOperator);
         break;
-      case 'cart_coupons':
+      case 'coupons':
         const cart_coupons = get_cart_coupons(checkout);
         result = compare_object_values(cart_coupons, ruleValue, ruleOperator);
         break;
-      case 'cart_shipping_country':
+      case 'shipping_country':
         const temp_cart_scountry = [{ value: checkout?.shipping_address?.country }];
         result = compare_object_values(temp_cart_scountry, ruleValue, ruleOperator);
         break;
-      case 'cart_billing_country':
+      case 'billing_country':
         const temp_cart_bcountry = [{ value: checkout?.billing_address?.country }];
         result = compare_object_values(temp_cart_bcountry, ruleValue, ruleOperator);
         break;
-      case 'cart_payment_method':
+      case 'payment_methods':
         const temp_cart_processor = [{ value: processor }];
         result = compare_object_values(temp_cart_processor, ruleValue, ruleOperator);
         break;

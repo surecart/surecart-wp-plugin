@@ -69,7 +69,7 @@ function Conditions(props) {
 	};
 
 	const rule_settings_field_data = {
-		cart_item: {
+		products: {
 			operatorType: 'string',
 			fields: [
 				{
@@ -79,7 +79,7 @@ function Conditions(props) {
 				},
 			],
 		},
-		cart_total: {
+		total: {
 			operatorType: 'math',
 			fields: [
 				{
@@ -87,7 +87,7 @@ function Conditions(props) {
 				},
 			],
 		},
-		cart_coupons: {
+		coupons: {
 			operatorType: 'coupon',
 			fields: [
 				{
@@ -97,7 +97,7 @@ function Conditions(props) {
 				},
 			],
 		},
-		cart_billing_country: {
+		billing_country: {
 			operatorType: 'shipping',
 			fields: [
 				{
@@ -108,7 +108,7 @@ function Conditions(props) {
 				},
 			],
 		},
-		cart_shipping_country: {
+		shipping_country: {
 			operatorType: 'shipping',
 			fields: [
 				{
@@ -119,7 +119,7 @@ function Conditions(props) {
 				},
 			],
 		},
-		cart_payment_method: {
+		payment_methods: {
 			operatorType: 'shipping',
 			fields: [
 				{
