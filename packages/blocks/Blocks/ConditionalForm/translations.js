@@ -1,12 +1,12 @@
 import { __ } from '@wordpress/i18n';
 
 export const translations = {
-	cart_item: __('Product(s)', 'surecart'),
-	cart_total: __('Total', 'surecart'),
-	cart_coupons: __('Coupon(s)', 'surecart'),
-	cart_payment_method: __('Payment Processor', 'surecart'),
-	cart_billing_country: __('Billing Country', 'surecart'),
-	cart_shipping_country: __('Shipping Country', 'surecart'),
+	products: __('Product(s)', 'surecart'),
+	total: __('Total', 'surecart'),
+	coupons: __('Coupon(s)', 'surecart'),
+	payment_methods: __('Payment Processor', 'surecart'),
+	billing_country: __('Billing Country', 'surecart'),
+	shipping_country: __('Shipping Country', 'surecart'),
 	any: __('matches any of', 'surecart'),
 	all: __('matches all of', 'surecart'),
 	none: __('matches none of', 'surecart'),

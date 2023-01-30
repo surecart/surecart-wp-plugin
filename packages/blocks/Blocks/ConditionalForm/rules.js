@@ -16,7 +16,7 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 				group_id: Math.random().toString(36).substring(2, 5),
 				rules: [
 					{
-						condition: 'cart_item',
+						condition: 'products',
 						operator: 'any',
 						value: '',
 					},
@@ -77,7 +77,7 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 		savedRule.value = '';
 		savedRule.operator = 'any';
 
-		if ('cart_total' === currentValue) {
+		if ('total' === currentValue) {
 			savedRule.operator = '==';
 		}
 
@@ -100,7 +100,7 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 
 	const addNewCondition = (groupIndex) => {
 		const newCondition = {
-			condition: 'cart_item',
+			condition: 'products',
 			operator: 'any',
 			value: '',
 		};
@@ -115,7 +115,7 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 				group_id: Math.random().toString(36).substring(2, 5),
 				rules: [
 					{
-						condition: 'cart_item',
+						condition: 'products',
 						operator: 'any',
 						value: '',
 					},

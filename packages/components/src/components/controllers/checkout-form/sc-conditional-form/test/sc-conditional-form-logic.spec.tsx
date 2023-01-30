@@ -6,7 +6,7 @@ describe('Conditional form logic', () => {
       let result = logic.is_any_rule_group_passed(
         [
           {
-            rules: [{ condition: 'cart_total', operator: '==', value: '10000' }],
+            rules: [{ condition: 'total', operator: '==', value: '10000' }],
           },
         ],
         {
@@ -25,7 +25,7 @@ describe('Conditional form logic', () => {
 
     it('Order total is less than 100', () => {
       const rule_group = {
-        condition: 'cart_total',
+        condition: 'total',
         operator: '<',
         value: '100',
       };
@@ -46,7 +46,7 @@ describe('Conditional form logic', () => {
 
   describe('compare_object_values', () => {
     const rule_group = {
-      condition: 'cart_item',
+      condition: 'products',
       operator: 'any',
       value: [
         {
@@ -101,7 +101,7 @@ describe('Conditional form logic', () => {
 
     describe('Coupons', () => {
       const rule_group = {
-        condition: 'cart_coupons',
+        condition: 'coupons',
         operator: 'any',
         value: [
           {
@@ -173,7 +173,7 @@ describe('Conditional form logic', () => {
 
     describe('Shipping & Billing Country', () => {
       const rule_group = {
-        condition: 'cart_billing_country',
+        condition: 'billing_country',
         operator: 'any',
         value: [
           {
@@ -208,7 +208,7 @@ describe('Conditional form logic', () => {
 
     describe('Payment Processor', () => {
       const rule_group = {
-        condition: 'cart_payment_method',
+        condition: 'payment_methods',
         operator: 'any',
         value: [
           {

@@ -5,12 +5,12 @@ export default (props) => {
 	return (
     <ScSelect
 			choices={createOptions([
-        'cart_item',
-        'cart_total',
-        'cart_coupons',
-        'cart_payment_method',
-        'cart_billing_country',
-        'cart_shipping_country',
+        'products',
+        'total',
+        'coupons',
+        'payment_methods',
+        'billing_country',
+        'shipping_country',
       ])}
       unselect={false}
       {...props}
