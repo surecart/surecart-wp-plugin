@@ -1,18 +1,18 @@
-import { createOptions } from './translations';
+import { createOptions } from '../translations';
 import { ScSelect } from '@surecart/components-react';
 
-export default (props) => {
+export default ({ onChange, ...props }) => {
 	return (
 		<ScSelect
 			choices={createOptions([
 				'products',
 				'total',
 				'coupons',
-				'payment_methods',
-				'billing_country',
+				'processors',
 				'shipping_country',
 			])}
 			unselect={false}
+			onScChange={(e) => onChange(e.target.value)}
 			{...props}
 		/>
 	);

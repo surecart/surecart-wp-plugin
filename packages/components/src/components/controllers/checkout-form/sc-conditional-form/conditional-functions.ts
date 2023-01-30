@@ -59,7 +59,7 @@ export const is_rules_passed = (rules, props) => {
         const temp_cart_bcountry = [{ value: checkout?.billing_address?.country }];
         result = compare_object_values(temp_cart_bcountry, ruleValue, ruleOperator);
         break;
-      case 'payment_methods':
+      case 'processors':
         const temp_cart_processor = [{ value: processor }];
         result = compare_object_values(temp_cart_processor, ruleValue, ruleOperator);
         break;

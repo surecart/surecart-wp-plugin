@@ -208,7 +208,7 @@ describe('Conditional form logic', () => {
 
     describe('Payment Processor', () => {
       const rule_group = {
-        condition: 'payment_methods',
+        condition: 'processors',
         operator: 'any',
         value: [
           {

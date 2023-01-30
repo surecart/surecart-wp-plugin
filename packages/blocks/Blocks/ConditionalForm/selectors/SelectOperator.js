@@ -76,6 +76,11 @@ const OPTIONS = {
 	],
 };
 
-export default ({ type, ...props }) => (
-	<ScSelect choices={OPTIONS?.[type] || []} unselect={false} {...props} />
+export default ({ type, onChange, ...props }) => (
+	<ScSelect
+		choices={OPTIONS?.[type] || []}
+		unselect={false}
+		onScChange={(e) => onChange(e.target.value)}
+		{...props}
+	/>
 );

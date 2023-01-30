@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { useState } from '@wordpress/element';
-import ModelSelector from '../../../admin/components/ModelSelector';
+import ModelSelector from '../../../../../admin/components/ModelSelector';
 import {
 	ScButton,
 	ScCard,
@@ -10,11 +10,28 @@ import {
 	ScStackedList,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
-import ProductItem from './ProductItem';
+import CouponItem from './CouponItem';
+import { getFormattedPrice } from '../../../../../admin/util';
 
 export default (props) => {
 	const { label, value, placeholder, onChange } = props;
 	const [addNew, setAddNew] = useState(false);
+
+	const formattedDiscount = (item) => {
+		if (item?.percent_off) {
+			return sprintf(__('%s%% off', 'surecart'), item?.percent_off);
+		}
+		if (item?.amount_off) {
+			return sprintf(
+				__('%s off', 'surecart'),
+				getFormattedPrice({
+					amount: item?.amount_off,
+					currency: item?.currency,
+				})
+			);
+		}
+		return null;
+	};
 
 	return (
 		<>
@@ -22,7 +39,7 @@ export default (props) => {
 				<ScCard noPadding>
 					<ScStackedList>
 						{(value || []).map((id) => (
-							<ProductItem
+							<CouponItem
 								id={id}
 								key={id}
 								onRemove={() =>
@@ -48,11 +65,13 @@ export default (props) => {
 				>
 					<ModelSelector
 						placeholder={placeholder}
-						name="product"
+						name="coupon"
 						requestQuery={{
 							archived: false,
-							expand: ['prices'],
 						}}
+						display={(item) =>
+							`${item?.name} - ${formattedDiscount(item)}`
+						}
 						exclude={value}
 						onSelect={(id) => {
 							if (id) {
@@ -69,7 +88,7 @@ export default (props) => {
 				<div>
 					<ScButton type="link" onClick={() => setAddNew(true)}>
 						<ScIcon name="plus" slot="prefix" />
-						{__('Add Another Product', 'surecart')}
+						{__('Add Another Coupon', 'surecart')}
 					</ScButton>
 				</div>
 			)}

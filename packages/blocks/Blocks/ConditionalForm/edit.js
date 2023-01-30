@@ -159,9 +159,9 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 							<circle cx="12" cy="12" r="3"></circle>
 						</svg>
 					}
-					label={__('Conditional Form Group', 'surecart')}
+					label={__('Conditional', 'surecart')}
 					instructions={__(
-						'First, add some conditions for the display of this group.',
+						'First, add some conditions for the display of this group of blocks.',
 						'surecart'
 					)}
 				>

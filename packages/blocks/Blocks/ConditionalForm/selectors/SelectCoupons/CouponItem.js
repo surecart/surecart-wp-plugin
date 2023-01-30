@@ -1,7 +1,7 @@
 import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
-import FilterItem from '../../../admin/components/filters/FilterItem';
+import FilterItem from '../../../../../admin/components/filters/FilterItem';
 
 export default (props) => {
 	const { id } = props;
