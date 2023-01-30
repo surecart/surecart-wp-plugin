@@ -42,7 +42,7 @@ jobs:
           echo "$GITHUB_HEAD_REF"
 
       - name: Install dependencies and and create mo and json files
-        run: composer install && yarn && yarn pot:mo && yarn pot:json
+        run: composer install && yarn && yarn pot:download && yarn pot:mo && yarn pot:json
 
       - name: Create Pull Request
         id: cpr

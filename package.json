@@ -32,6 +32,7 @@
 	"scripts": {
 		"pot:mo": "./vendor/bin/wp i18n make-mo languages/.",
 		"pot:json": "node scripts/make-json.js",
+		"pot:download": "lokalise2 --config ./scripts/config.yml file download --format po --filter-langs es_ES,fr_FR,de_DE --original-filenames=false --bundle-structure surecart-%LANG_ISO%.%FORMAT% --unzip-to ./languages",
 		"wp-env": "wp-env",
 		"dev": "composer install && yarn start:workspace",
 		"docs:release": "yarn workspaces foreach run docs:release",
