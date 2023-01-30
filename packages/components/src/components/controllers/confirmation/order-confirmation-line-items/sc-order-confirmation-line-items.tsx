@@ -33,18 +33,28 @@ export class ScOrderConfirmationLineItems {
         <div class="line-items" part="line-items">
           {this.order?.line_items?.data.map(item => {
             return (
-              <sc-product-line-item
-                key={item.id}
-                imageUrl={(item?.price?.product as Product)?.image_url}
-                name={`${(item?.price?.product as Product)?.name}`}
-                editable={false}
-                removable={false}
-                quantity={item.quantity}
-                amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.subtotal_amount}
-                currency={this.order?.currency}
-                trialDurationDays={item?.price?.trial_duration_days}
-                interval={intervalString(item?.price, { showOnce: hasSubscription(this.order) })}
-              ></sc-product-line-item>
+              <div class="line-item">
+                <sc-product-line-item
+                  key={item.id}
+                  imageUrl={(item?.price?.product as Product)?.image_url}
+                  name={`${(item?.price?.product as Product)?.name}`}
+                  editable={false}
+                  removable={false}
+                  quantity={item.quantity}
+                  amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.subtotal_amount}
+                  currency={this.order?.currency}
+                  trialDurationDays={item?.price?.trial_duration_days}
+                  interval={intervalString(item?.price, { showOnce: hasSubscription(this.order) })}
+                ></sc-product-line-item>
+                {(item?.fees?.data || []).map(fee => (
+                  <sc-line-item>
+                    <sc-format-number slot="price-description" type="currency" value={fee?.amount} currency={this.order?.currency || 'usd'} />
+                    <span slot="price-description" class="fee__description">
+                      {fee?.description}
+                    </span>
+                  </sc-line-item>
+                ))}
+              </div>
             );
           })}
         </div>
