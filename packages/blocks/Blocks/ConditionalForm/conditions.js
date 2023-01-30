@@ -281,6 +281,9 @@ function Conditions(props) {
 					circle
 					css={css`
 						--sc-input-height-medium: 30px;
+						position: absolute;
+						top: -10px;
+						right: -10px;
 					`}
 					onClick={() => {
 						removeConditionFromRuleGroup(ruleIndex);
@@ -318,6 +321,7 @@ function Conditions(props) {
 							style={{
 								background: '#ffffff',
 								flex: 1,
+								position: 'relative',
 							}}
 						>
 							<ScFlex alignItems="center">

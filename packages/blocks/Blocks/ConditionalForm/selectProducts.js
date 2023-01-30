@@ -51,6 +51,7 @@ export default (props) => {
 						name="product"
 						requestQuery={{
 							archived: false,
+							expand: ['prices'],
 						}}
 						exclude={value}
 						onSelect={(id) => {
