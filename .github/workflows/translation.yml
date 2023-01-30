@@ -17,6 +17,9 @@ jobs:
         with:
           node-version: 16.19
 
+      - name: Set up the Lokalise2 CLI
+        uses: frenck/action-setup-lokalise@v1
+
       - name: Initialize mandatory git config
         run: |
           git config user.name "GitHub Actions"
@@ -41,11 +44,11 @@ jobs:
           echo "${{ github.head_ref }}"
           echo "$GITHUB_HEAD_REF"
 
-      - name: Install dependencies and and create mo and json files
-        run: curl -sfL https://raw.githubusercontent.com/lokalise/lokalise-cli-2-go/master/install.sh | sh
+      - name: Install dependencies
+        run: composer install && yarn
 
-      - name: Install dependencies and and create mo and json files
-        run: composer install && yarn && yarn pot:download && yarn pot:mo && yarn pot:json
+      - name: Download latest po & create mo and json files
+        run: yarn pot:download && yarn pot:mo && yarn pot:json
 
       - name: Create Pull Request
         id: cpr
