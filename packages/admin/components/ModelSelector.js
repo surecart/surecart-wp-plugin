@@ -1,68 +1,26 @@
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
+import { select } from '@wordpress/data';
+import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
+
 import SelectModel from './SelectModel';
 
 export default (props) => {
 	const { name, requestQuery = {}, display } = props;
 	const [query, setQuery] = useState(null);
 	const [choices, setChoices] = useState([]);
-	const [searchedChoices, setSearchedChoices] = useState(null);
+	const [isLoading, setIsLoading] = useState(false);
 	const [pagination, setPagination] = useState({
 		enabled: true,
 		page: 1,
 		per_page: 10,
 	});
 
-	const { data, loading, error, is_searched } = useSelect(
-		(select) => {
-			const queryArgs = [
-				'surecart',
-				name,
-				{
-					query,
-					page: pagination.page,
-					per_page: pagination.per_page,
-					...requestQuery,
-				},
-			];
-			return {
-				data:
-					query !== null
-						? select(coreStore).getEntityRecords(...queryArgs)
-						: [],
-				loading:
-					query !== null
-						? select(coreStore).isResolving(
-								'getEntityRecords',
-								queryArgs
-						  )
-						: false,
-				error:
-					select(coreStore)?.getResolutionError(
-						'getEntityRecords',
-						queryArgs
-					) ?? null,
-				is_searched: !!query?.length,
-			};
-		},
-		[query, pagination]
-	);
-
 	const handleOnScrollEnd = () => {
-		if (!pagination.enabled || loading) return;
+		if (!pagination.enabled || isLoading) return;
 		setPagination((state) => ({ ...state, page: (state.page += 1) }));
-	};
-
-	const handleOnQuery = (val) => {
-		if (query === val) return;
-		if (val === '') setChoices([]);
-		if (pagination.page !== 1 || val === '')
-			setPagination((state) => ({ ...state, page: 1, enabled: true }));
-
-		setSearchedChoices([]);
-		setQuery(val);
 	};
 
 	const mapData = (data) => {
@@ -72,27 +30,46 @@ export default (props) => {
 		}));
 	};
 
-	useEffect(() => {
-		if (error) setPagination((state) => ({ ...state, enabled: false }));
-		if (loading) return;
+	const fetchData = async (pagination) => {
+		const { baseURL } = select(coreStore).getEntityConfig('surecart', name);
+		if (!baseURL) return;
+		if (pagination.page === 1) setChoices([]);
 
-		if (is_searched) {
-			setSearchedChoices((state) =>
-				pagination.page === 1
-					? mapData(data)
-					: [...state, ...mapData(data)]
-			);
-		} else {
+		try {
+			setIsLoading(true);
+			const data = await apiFetch({
+				path: addQueryArgs(baseURL, {
+					query,
+					page: pagination.page,
+					per_page: pagination.per_page,
+					...requestQuery,
+				}),
+			});
 			setChoices((state) => [...state, ...mapData(data)]);
+		} catch (error) {
+			setPagination((state) => ({ ...state, enabled: false }));
+			console.error(error);
+		} finally {
+			setIsLoading(false);
 		}
-	}, [data, error, loading, is_searched]);
+	};
+
+	useEffect(() => {
+		if (query === null) return;
+		setPagination((state) => ({ ...state, page: 1 }));
+	}, [query]);
+
+	useEffect(() => {
+		if (query === null || isLoading) return;
+		fetchData(pagination);
+	}, [pagination]);
 
 	return (
 		<SelectModel
-			choices={is_searched ? searchedChoices : choices}
-			onQuery={handleOnQuery}
+			choices={choices}
+			onQuery={setQuery}
 			onFetch={() => setQuery('')}
-			loading={loading}
+			loading={isLoading}
 			onScrollEnd={handleOnScrollEnd}
 			{...props}
 		/>
