@@ -1,82 +1,64 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
-
 import { useState, useEffect } from '@wordpress/element';
-import SelectPrice from './SelectPrice';
 import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
+import { select } from '@wordpress/data';
+import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
+
+import SelectPrice from './SelectPrice';
 
 export default ({ onSelect, ad_hoc, value, open = false }) => {
 	const [query, setQuery] = useState(null);
 	const [products, setProducts] = useState([]);
-	const [searchedProducts, setSearchedProducts] = useState(null);
+	const [isLoading, setIsLoading] = useState(false);
 	const [pagination, setPagination] = useState({
 		enabled: true,
 		page: 1,
 		per_page: 10,
 	});
 
-	const { data, loading, error, is_searched } = useSelect(
-		(select) => {
-			const queryArgs = [
-				'surecart',
-				'product',
-				{
+	const handleOnScrollEnd = () => {
+		if (!pagination.enabled || isLoading) return;
+		setPagination((state) => ({ ...state, page: (state.page += 1) }));
+	};
+
+	const fetchData = async (pagination) => {
+		const { baseURL } = select(coreStore).getEntityConfig(
+			'surecart',
+			'product'
+		);
+		if (!baseURL) return;
+		if (pagination.page === 1) setProducts([]);
+
+		try {
+			setIsLoading(true);
+			const data = await apiFetch({
+				path: addQueryArgs(baseURL, {
 					query,
 					expand: ['prices'],
 					page: pagination.page,
 					per_page: pagination.per_page,
-				},
-			];
-			return {
-				data:
-					query !== null
-						? select(coreStore).getEntityRecords(...queryArgs)
-						: [],
-				loading:
-					query !== null
-						? select(coreStore).isResolving(
-								'getEntityRecords',
-								queryArgs
-						  )
-						: false,
-				error:
-					select(coreStore)?.getResolutionError(
-						'getEntityRecords',
-						queryArgs
-					) ?? null,
-				is_searched: !!query?.length,
-			};
-		},
-		[query, pagination]
-	);
-
-	const handleOnScrollEnd = () => {
-		if (!pagination.enabled || loading) return;
-		setPagination((state) => ({ ...state, page: (state.page += 1) }));
-	};
-
-	const handleOnQuery = (val) => {
-		if (query === val) return;
-		if (val === '') setProducts([]);
-		if (pagination.page !== 1 || val === '')
-			setPagination((state) => ({ ...state, page: 1, enabled: true }));
-
-		setSearchedProducts([]);
-		setQuery(val);
+				}),
+			});
+			setProducts((state) => [...state, ...(data || [])]);
+		} catch (error) {
+			setPagination((state) => ({ ...state, enabled: false }));
+			console.error(error);
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	useEffect(() => {
-		if (error) setPagination((state) => ({ ...state, enabled: false }));
-		if (!loading) return;
+		if (query === null) return;
+		setPagination((state) => ({ ...state, page: 1 }));
+	}, [query]);
 
-		if (is_searched) {
-			setSearchedProducts((state) => [...state, ...(data || [])]);
-		} else {
-			setProducts((state) => [...state, ...(data || [])]);
-		}
-	}, [data, error, loading, is_searched]);
+	useEffect(() => {
+		if (query === null || isLoading) return;
+		fetchData(pagination);
+	}, [pagination]);
 
 	return (
 		<SelectPrice
@@ -87,10 +69,10 @@ export default ({ onSelect, ad_hoc, value, open = false }) => {
 			value={value}
 			ad_hoc={ad_hoc}
 			open={open}
-			choices={is_searched ? searchedProducts : products}
+			products={products}
 			onQuery={setQuery}
 			onFetch={() => setQuery('')}
-			loading={loading}
+			loading={isLoading}
 			onSelect={onSelect}
 			onScrollEnd={handleOnScrollEnd}
 		/>
