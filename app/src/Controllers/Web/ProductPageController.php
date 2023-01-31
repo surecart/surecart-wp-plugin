@@ -19,11 +19,37 @@ class ProductPageController {
 			return $this->handleError( $product );
 		}
 
+		// add a link to the WP Toolbar.
+		$this->addEditButton();
+
 		// check to see if the product has a page or template.
 		return \SureCart::view( 'web/product' )->with(
 			[
 				'product' => $product,
 			]
+		);
+	}
+
+	/**
+	 * Add admin bar edit button.
+	 *
+	 * @return void
+	 */
+	public function addEditButton() {
+		global $wp_query;
+		$wp_query->is_404 = false;
+		add_action(
+			'admin_bar_menu',
+			function( $wp_admin_bar ) {
+				$wp_admin_bar->add_node(
+					[
+						'id'    => 'template',
+						'title' => __( 'Edit Product Page', 'surecart' ),
+						'href'  => admin_url( 'admin.php?page=custom-page' ),
+					]
+				);
+			},
+			99
 		);
 	}
 

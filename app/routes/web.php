@@ -26,10 +26,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 |--------------------------------------------------------------------------
 */
 \SureCart::route()
-	->get()
-	->url( '/product/{id}' )
-	->name( 'product' )
-	->handle( 'ProductPageController@show' );
+->get()
+->url( '/product/{id}' )
+->name( 'product' )
+->handle( 'ProductPageController@show' );
 
 /*
 |--------------------------------------------------------------------------

@@ -45,12 +45,11 @@ class TemplatesService {
 		add_filter( 'theme_' . $this->post_type . '_templates', [ $this, 'addTemplates' ] );
 		add_filter( 'template_include', [ $this, 'includeTemplate' ] );
 		add_filter( 'body_class', [ $this, 'bodyClass' ] );
-		add_filter( 'get_block_templates', [ $this, 'productTemplates' ], 10, 3 );
+		// add_filter( 'get_block_templates', [ $this, 'productTemplates' ], 10, 3 );
 	}
 
 	/** Product Templates. */
 	public function productTemplates( $query_result, $query, $template_type ) {
-
 		array_push(
 			$query_result,
 			(object) [

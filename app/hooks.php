@@ -22,10 +22,44 @@ add_filter(
 		if ( ( strpos( $_SERVER['REQUEST_URI'], '/product/' ) !== false ) ) {
 			return false;
 		}
+		if ( ( strpos( $_SERVER['REQUEST_URI'], 'surecart/webhooks' ) !== false ) ) {
+			return false;
+		}
 		return $guess;
 	},
 	9999999999
 );
+
+// add_filter(
+// 'query_vars',
+// function( $query_vars ) {
+// $query_vars[] = 'product';
+// return $query_vars;
+// }
+// );
+// add_action(
+// 'init',
+// function() {
+// add_rewrite_rule( 'product/([a-z0-9-]+)[/]?$', 'index.php?product=$matches[1]', 'top' );
+// }
+// );
+// add_action(
+// 'template_include',
+// function( $template ) {
+// if ( empty( get_query_var( 'product' ) ) ) {
+// return $template;
+// }
+
+// return plugin_dir_path( SURECART_PLUGIN_FILE ) . '/templates/default/template-surecart-no-sidebar.php';
+
+// global $_wp_current_template_content;
+// $_wp_current_template_content = '<!-- wp:template-part {"slug":"header","tagName":"header","theme":"twentytwentythree"} /-->
+// <!-- wp:template-part {"slug":"footer","tagName":"footer","theme":"twentytwentythree"} /-->';
+
+// return $template;
+// }
+// );
+
 
 // register uninstall.
 register_uninstall_hook( SURECART_PLUGIN_FILE, 'surecart_uninstall' );
