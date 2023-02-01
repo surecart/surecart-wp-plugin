@@ -128,6 +128,38 @@ exports[`sc-tax-id-input Renders UK VAT Tax Type 1`] = `
 </sc-tax-id-input>
 `;
 
+exports[`sc-tax-id-input Shows the updated labels when modified labels are passed 1`] = `
+<sc-tax-id-input other-label="Other test">
+  <mock:shadow-root>
+    <sc-input name="tax_identifier.number_type" value="other" style="display: none;"></sc-input>
+    <sc-input label="Other test" name="tax_identifier.number">
+      <sc-dropdown position="bottom-right" slot="suffix">
+        <sc-button caret="" slot="trigger" type="text" style="color: var(--sc-input-label-color);">
+          Other
+        </sc-button>
+        <sc-menu>
+          <sc-menu-item>
+            CA GST
+          </sc-menu-item>
+          <sc-menu-item>
+            AU ABN
+          </sc-menu-item>
+          <sc-menu-item>
+            UK VAT
+          </sc-menu-item>
+          <sc-menu-item>
+            EU VAT
+          </sc-menu-item>
+          <sc-menu-item checked="">
+            Other
+          </sc-menu-item>
+        </sc-menu>
+      </sc-dropdown>
+    </sc-input>
+  </mock:shadow-root>
+</sc-tax-id-input>
+`;
+
 exports[`sc-tax-id-input renders 1`] = `
 <sc-tax-id-input>
   <mock:shadow-root>

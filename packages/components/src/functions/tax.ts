@@ -1,5 +1,6 @@
 import { __ } from '@wordpress/i18n';
-export const zones = {
+import { TaxZones } from '../types';
+export const zones:TaxZones = {
   ca_gst: {
     label: __('GST Number', 'surecart'),
     label_small: __('CA GST', 'surecart'),

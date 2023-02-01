@@ -29,6 +29,21 @@ export class ScTaxIdInput {
   /** Help text. */
   @Prop() help: string;
 
+  /** Other zones label */
+  @Prop() otherLabel:string;
+
+  /** GST zone label */
+  @Prop() caGstLabel:string;
+
+  /** AU zone label */
+  @Prop() auAbnLabel:string;
+
+  /** UK zone label */
+  @Prop() gbVatLabel:string;
+
+   /** EU zone label */
+  @Prop() euVatLabel:string;
+
   /** Make a request to update the order. */
   @Event() scChange: EventEmitter<{ number: string; number_type: string }>;
 
@@ -48,10 +63,24 @@ export class ScTaxIdInput {
     }
   }
 
+  @Watch('otherLabel')
+  @Watch('caGstLabel')
+  @Watch('auAbnLabel')
+  @Watch('gbVatLabel')
+  @Watch('euVatLabel')
+  onLabelChange (){
+    zones.ca_gst.label= this.caGstLabel;
+    zones.au_abn.label= this.auAbnLabel;
+    zones.gb_vat.label= this.gbVatLabel;
+    zones.eu_vat.label= this.euVatLabel;
+    zones.other.label= this.otherLabel;
+  }
+
   componentWillLoad() {
     if (this.country) {
       this.type = getType(this.country);
     }
+    this.onLabelChange()
   }
 
   renderStatus() {

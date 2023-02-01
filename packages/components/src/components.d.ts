@@ -1931,13 +1931,33 @@ export namespace Components {
     }
     interface ScOrderTaxIdInput {
         /**
+          * AU zone label
+         */
+        "auAbnLabel": string;
+        /**
           * Is this busy
          */
         "busy": boolean;
         /**
+          * GST zone label
+         */
+        "caGstLabel": string;
+        /**
+          * EU zone label
+         */
+        "euVatLabel": string;
+        /**
+          * UK zone label
+         */
+        "gbVatLabel": string;
+        /**
           * The order
          */
         "order": Partial<Checkout>;
+        /**
+          * Other zones label
+         */
+        "otherLabel": string;
         /**
           * Force show the field.
          */
@@ -2904,9 +2924,25 @@ export namespace Components {
     }
     interface ScTaxIdInput {
         /**
+          * AU zone label
+         */
+        "auAbnLabel": string;
+        /**
+          * GST zone label
+         */
+        "caGstLabel": string;
+        /**
           * The country code.
          */
         "country": string;
+        /**
+          * EU zone label
+         */
+        "euVatLabel": string;
+        /**
+          * UK zone label
+         */
+        "gbVatLabel": string;
         /**
           * Help text.
          */
@@ -2919,6 +2955,10 @@ export namespace Components {
           * Tax ID Number
          */
         "number": string;
+        /**
+          * Other zones label
+         */
+        "otherLabel": string;
         /**
           * Force show the field.
          */
@@ -6709,9 +6749,25 @@ declare namespace LocalJSX {
     }
     interface ScOrderTaxIdInput {
         /**
+          * AU zone label
+         */
+        "auAbnLabel"?: string;
+        /**
           * Is this busy
          */
         "busy"?: boolean;
+        /**
+          * GST zone label
+         */
+        "caGstLabel"?: string;
+        /**
+          * EU zone label
+         */
+        "euVatLabel"?: string;
+        /**
+          * UK zone label
+         */
+        "gbVatLabel"?: string;
         /**
           * Make a request to update the order.
          */
@@ -6723,6 +6779,10 @@ declare namespace LocalJSX {
           * The order
          */
         "order"?: Partial<Checkout>;
+        /**
+          * Other zones label
+         */
+        "otherLabel"?: string;
         /**
           * Force show the field.
          */
@@ -7804,9 +7864,25 @@ declare namespace LocalJSX {
     }
     interface ScTaxIdInput {
         /**
+          * AU zone label
+         */
+        "auAbnLabel"?: string;
+        /**
+          * GST zone label
+         */
+        "caGstLabel"?: string;
+        /**
           * The country code.
          */
         "country"?: string;
+        /**
+          * EU zone label
+         */
+        "euVatLabel"?: string;
+        /**
+          * UK zone label
+         */
+        "gbVatLabel"?: string;
         /**
           * Help text.
          */
@@ -7835,6 +7911,10 @@ declare namespace LocalJSX {
           * Set the checkout state.
          */
         "onScSetState"?: (event: ScTaxIdInputCustomEvent<string>) => void;
+        /**
+          * Other zones label
+         */
+        "otherLabel"?: string;
         /**
           * Force show the field.
          */

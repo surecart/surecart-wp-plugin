@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-01-12T18:00:19+00:00\n"
+"POT-Creation-Date: 2023-02-01T08:00:19+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -216,6 +216,7 @@ msgstr ""
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:103
 #: src/Controllers/Admin/Products/ProductsListTable.php:97
 #: src/Support/Errors/Translations/attributes.php:11
+#: bumps/modules/Name.js:7
 #: licenses/modules/Activations/Activation.js:149
 #: products/modules/Details.js:17
 #: Blocks/Checkbox/components/Inspector.js:16
@@ -427,12 +428,12 @@ msgstr ""
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:217
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:336
 #: coupons/modules/Types.js:37
-#: coupons/modules/Types.js:119
+#: coupons/modules/Types.js:120
 #: coupons/Sidebar.js:37
 #: settings/abandoned/Coupon.js:58
 #: settings/abandoned/Coupon.js:137
 #: settings/subscription-preservation/Coupon.js:33
-#: settings/subscription-preservation/Coupon.js:110
+#: settings/subscription-preservation/Coupon.js:111
 msgid "Forever"
 msgstr ""
 
@@ -445,12 +446,12 @@ msgstr ""
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:224
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:343
 #: coupons/modules/Types.js:33
-#: coupons/modules/Types.js:126
+#: coupons/modules/Types.js:127
 #: coupons/Sidebar.js:29
 #: settings/abandoned/Coupon.js:54
 #: settings/abandoned/Coupon.js:144
 #: settings/subscription-preservation/Coupon.js:29
-#: settings/subscription-preservation/Coupon.js:117
+#: settings/subscription-preservation/Coupon.js:118
 msgid "Once"
 msgstr ""
 
@@ -1109,7 +1110,7 @@ msgstr ""
 
 #: src/Integrations/Beaver/BeaverFormModule.php:92
 #: src/Integrations/Elementor/ReusableFormWidget.php:134
-#: bumps/CreateBump.js:81
+#: bumps/CreateBump.js:98
 #: coupons/modules/CustomerSelector.js:149
 #: coupons/modules/EditPromotionCode.js:162
 #: coupons/modules/SelectCustomer.js:240
@@ -1563,7 +1564,6 @@ msgid "The conditions that will filter this bump to be recommeneded. Accepted ke
 msgstr ""
 
 #: src/Rest/BumpRestServiceProvider.php:93
-#: bumps/modules/Name.js:18
 msgid "A name for this bump that will be visible to customers. If empty, the product name will be used."
 msgstr ""
 
@@ -2388,16 +2388,16 @@ msgid "Promotion code"
 msgstr ""
 
 #: src/Support/Errors/Translations/attributes.php:12
-#: coupons/modules/Types.js:87
+#: coupons/modules/Types.js:88
 #: settings/abandoned/Coupon.js:102
-#: settings/subscription-preservation/Coupon.js:76
+#: settings/subscription-preservation/Coupon.js:77
 msgid "Amount Off"
 msgstr ""
 
 #: src/Support/Errors/Translations/attributes.php:13
-#: coupons/modules/Types.js:69
+#: coupons/modules/Types.js:70
 #: settings/abandoned/Coupon.js:84
-#: settings/subscription-preservation/Coupon.js:59
+#: settings/subscription-preservation/Coupon.js:60
 msgid "Percent Off"
 msgstr ""
 
@@ -4407,7 +4407,7 @@ msgstr ""
 #: invoices/modules/Address.js:7
 #: orders/modules/Address.js:10
 #: settings/brand/BrandSettings.js:222
-#: settings/tax/TaxSettings.js:116
+#: settings/tax/TaxSettings.js:117
 #: sc-address2.js:106
 #: sc-form-components-validator2.js:77
 #: sc-order-shipping-address2.js:31
@@ -4552,7 +4552,7 @@ msgstr ""
 msgid "Upcoming"
 msgstr ""
 
-#: bumps/CreateBump.js:40
+#: bumps/CreateBump.js:43
 #: components/Error.js:25
 #: coupons/CreateCoupon.js:60
 #: customers/CreateCustomer.js:44
@@ -4571,21 +4571,31 @@ msgstr ""
 msgid "Something went wrong."
 msgstr ""
 
-#: bumps/CreateBump.js:51
+#: bumps/CreateBump.js:54
 msgid "Create New Order Bump"
 msgstr ""
 
-#: bumps/CreateBump.js:60
+#: bumps/CreateBump.js:64
+#: bumps/modules/Name.js:9
+msgid "Bump Name"
+msgstr ""
+
+#: bumps/CreateBump.js:65
+#: bumps/modules/Name.js:11
+msgid "A name for this bump that will be visible to customers."
+msgstr ""
+
+#: bumps/CreateBump.js:74
 #: bumps/modules/Price.js:29
 msgid "Order Bump Price"
 msgstr ""
 
-#: bumps/CreateBump.js:61
+#: bumps/CreateBump.js:75
 #: bumps/modules/Price.js:30
 msgid "This is the price for the bump."
 msgstr ""
 
-#: bumps/CreateBump.js:87
+#: bumps/CreateBump.js:104
 #: bumps/modules/NewCondition.js:167
 #: components/data-tables/charges-data-table/Refund.js:257
 #: components/data-tables/subscriptions-data-table/Cancel.js:70
@@ -4677,7 +4687,7 @@ msgstr ""
 #: products/modules/Prices/Price/Header.js:188
 #: settings/processors/ManualPaymentMethod.js:148
 #: settings/subscription-preservation/Reason.js:106
-#: settings/tax-region/RegistrationForm.js:249
+#: settings/tax-region/RegistrationForm.js:250
 #: sc-payment-methods-list.js:130
 msgid "Delete"
 msgstr ""
@@ -4738,7 +4748,6 @@ msgstr ""
 
 #: bumps/modules/CTA.js:11
 #: bumps/modules/Description.js:11
-#: bumps/modules/Name.js:11
 msgid "Optional"
 msgstr ""
 
@@ -4772,14 +4781,6 @@ msgstr ""
 
 #: bumps/modules/Discount.js:53
 msgid "Fixed"
-msgstr ""
-
-#: bumps/modules/Name.js:10
-msgid "Add a name"
-msgstr ""
-
-#: bumps/modules/Name.js:17
-msgid "Bump Name"
 msgstr ""
 
 #: bumps/modules/NewCondition.js:23
@@ -5567,12 +5568,12 @@ msgstr ""
 
 #: coupons/modules/Limits.js:31
 #: coupons/modules/Limits.js:45
-#: settings/subscription-preservation/Coupon.js:152
+#: settings/subscription-preservation/Coupon.js:153
 msgid "Unlimited Usage"
 msgstr ""
 
 #: coupons/modules/Limits.js:44
-#: settings/subscription-preservation/Coupon.js:151
+#: settings/subscription-preservation/Coupon.js:152
 msgid "Usage limit per customer"
 msgstr ""
 
@@ -5658,11 +5659,11 @@ msgid "Any Customer"
 msgstr ""
 
 #: coupons/modules/Types.js:35
-#: coupons/modules/Types.js:136
+#: coupons/modules/Types.js:137
 #: settings/abandoned/Coupon.js:56
 #: settings/abandoned/Coupon.js:154
 #: settings/subscription-preservation/Coupon.js:31
-#: settings/subscription-preservation/Coupon.js:127
+#: settings/subscription-preservation/Coupon.js:128
 msgid "Repeating"
 msgstr ""
 
@@ -5684,15 +5685,15 @@ msgstr ""
 msgid "Fixed Discount"
 msgstr ""
 
-#: coupons/modules/Types.js:99
+#: coupons/modules/Types.js:100
 #: settings/abandoned/Coupon.js:115
-#: settings/subscription-preservation/Coupon.js:88
+#: settings/subscription-preservation/Coupon.js:89
 msgid "Discount Duration"
 msgstr ""
 
-#: coupons/modules/Types.js:145
+#: coupons/modules/Types.js:146
 #: settings/abandoned/Coupon.js:163
-#: settings/subscription-preservation/Coupon.js:136
+#: settings/subscription-preservation/Coupon.js:137
 msgid "Number of months"
 msgstr ""
 
@@ -7652,7 +7653,7 @@ msgstr ""
 msgid "Payments that are made outside your online store. When a customer selects a manual payment method, you'll need to approve their order before it can be fulfilled"
 msgstr ""
 
-#: settings/subscription-preservation/Coupon.js:153
+#: settings/subscription-preservation/Coupon.js:154
 msgid "The amount of times a single customer use the renewal discount."
 msgstr ""
 
@@ -7932,7 +7933,7 @@ msgstr ""
 
 #: settings/tax-region/RegionSettings.js:38
 #: settings/tax-region/RegionSettings.js:104
-#: settings/tax-region/RegistrationForm.js:209
+#: settings/tax-region/RegistrationForm.js:210
 msgid "In applicable tax jurisdictions, your tax ID will show on invoices. If you don't have your tax ID number yet, you can enter it later."
 msgstr ""
 
@@ -7958,7 +7959,7 @@ msgid "Enable this if your business makes up to €10,000 EUR in sales to other 
 msgstr ""
 
 #: settings/tax-region/RegistrationDialog.js:17
-#: settings/tax-region/RegistrationForm.js:254
+#: settings/tax-region/RegistrationForm.js:255
 #: settings/tax-region/TaxRegionSettings.js:203
 #: subscriptions/show/modules/Tax.js:60
 msgid "Collect Tax"
@@ -8001,16 +8002,16 @@ msgstr ""
 msgid "Automatic"
 msgstr ""
 
-#: settings/tax-region/RegistrationForm.js:193
+#: settings/tax-region/RegistrationForm.js:194
 #: settings/tax-region/TaxRegionSettings.js:219
 msgid "Tax Rate"
 msgstr ""
 
-#: settings/tax-region/RegistrationForm.js:235
+#: settings/tax-region/RegistrationForm.js:236
 msgid "Make sure you’re registered with the appropriate tax jurisdictions before enabling tax collection."
 msgstr ""
 
-#: settings/tax-region/RegistrationForm.js:239
+#: settings/tax-region/RegistrationForm.js:240
 msgid "Tax is automatically calculated and applied to orders. Make sure you’re registered with the appropriate tax jurisdictions before enabling tax collection."
 msgstr ""
 
@@ -8024,36 +8025,36 @@ msgid "Tax Zone"
 msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:29
-#: settings/tax/TaxSettings.js:228
+#: settings/tax/TaxSettings.js:229
 #: address.js:26
 msgid "Australia"
 msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:30
-#: settings/tax/TaxSettings.js:238
+#: settings/tax/TaxSettings.js:239
 msgid "European Union"
 msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:31
-#: settings/tax/TaxSettings.js:243
+#: settings/tax/TaxSettings.js:244
 #: address.js:247
 msgid "United Kingdom"
 msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:32
-#: settings/tax/TaxSettings.js:233
+#: settings/tax/TaxSettings.js:234
 #: address.js:53
 msgid "Canada"
 msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:33
-#: settings/tax/TaxSettings.js:248
+#: settings/tax/TaxSettings.js:249
 #: address.js:248
 msgid "United States"
 msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:34
-#: settings/tax/TaxSettings.js:253
+#: settings/tax/TaxSettings.js:254
 msgid "Rest Of The World"
 msgstr ""
 
@@ -8157,55 +8158,55 @@ msgstr ""
 msgid "The fallback tax rate to use for checkouts when a specific tax registration is not found."
 msgstr ""
 
-#: settings/tax/TaxSettings.js:128
+#: settings/tax/TaxSettings.js:129
 msgid "EU VAT Settings"
 msgstr ""
 
-#: settings/tax/TaxSettings.js:129
+#: settings/tax/TaxSettings.js:130
 msgid "Change how your store manages EU VAT collection and validation."
 msgstr ""
 
-#: settings/tax/TaxSettings.js:144
+#: settings/tax/TaxSettings.js:145
 msgid "Require VAT Number"
 msgstr ""
 
-#: settings/tax/TaxSettings.js:146
+#: settings/tax/TaxSettings.js:147
 msgid "If enabled, require all customer’s in the EU to enter a EU VAT number when checking out."
 msgstr ""
 
-#: settings/tax/TaxSettings.js:163
+#: settings/tax/TaxSettings.js:164
 msgid "Local Reverse Charge"
 msgstr ""
 
-#: settings/tax/TaxSettings.js:165
+#: settings/tax/TaxSettings.js:166
 msgid "If enabled, apply reverse charge when applicable even when customers are in your home country."
 msgstr ""
 
-#: settings/tax/TaxSettings.js:173
+#: settings/tax/TaxSettings.js:174
 msgid "VAT Number Verification Failure"
 msgstr ""
 
-#: settings/tax/TaxSettings.js:183
+#: settings/tax/TaxSettings.js:184
 msgid "Choose the checkout behavior when VAT verification fails."
 msgstr ""
 
-#: settings/tax/TaxSettings.js:190
+#: settings/tax/TaxSettings.js:191
 msgid "Reject the order and show an error."
 msgstr ""
 
-#: settings/tax/TaxSettings.js:197
+#: settings/tax/TaxSettings.js:198
 msgid "Accept the order but don’t apply reverse charge."
 msgstr ""
 
-#: settings/tax/TaxSettings.js:204
+#: settings/tax/TaxSettings.js:205
 msgid "Accept the order and apply reverse charge."
 msgstr ""
 
-#: settings/tax/TaxSettings.js:216
+#: settings/tax/TaxSettings.js:217
 msgid "Tax Regions"
 msgstr ""
 
-#: settings/tax/TaxSettings.js:217
+#: settings/tax/TaxSettings.js:218
 msgid "Manage how your store charges sales tax within each tax region. Check with a tax expert to understand your tax obligations."
 msgstr ""
 
@@ -9075,6 +9076,7 @@ msgstr ""
 #: Blocks/Subtotal/edit.js:12
 #: Blocks/Switch/components/Inspector.js:13
 #: Blocks/Switch/edit.js:26
+#: Blocks/TaxIdInput/edit.js:18
 #: Blocks/Textarea/edit.js:25
 #: Blocks/Total/edit.js:12
 #: Blocks/Totals/edit.js:74
@@ -9998,6 +10000,26 @@ msgstr ""
 
 #: Blocks/Switch/edit.js:78
 msgid "Enter a description..."
+msgstr ""
+
+#: Blocks/TaxIdInput/edit.js:21
+msgid "CA GST Label"
+msgstr ""
+
+#: Blocks/TaxIdInput/edit.js:30
+msgid "AU ABN Label"
+msgstr ""
+
+#: Blocks/TaxIdInput/edit.js:39
+msgid "UK VAT Label"
+msgstr ""
+
+#: Blocks/TaxIdInput/edit.js:48
+msgid "EU VAT Label"
+msgstr ""
+
+#: Blocks/TaxIdInput/edit.js:57
+msgid "Other Label"
 msgstr ""
 
 #: Blocks/Total/edit.js:22

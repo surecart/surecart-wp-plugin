@@ -1097,8 +1097,13 @@
     "slot": true
   },
   "sc-order-tax-id-input": {
+    "au-abn-label": true,
     "busy": true,
+    "ca-gst-label": true,
+    "eu-vat-label": true,
+    "gb-vat-label": true,
     "order": true,
+    "other-label": true,
     "show": true,
     "tax-identifier": true,
     "tax-protocol": true,
@@ -1679,10 +1684,15 @@
     "slot": true
   },
   "sc-tax-id-input": {
+    "au-abn-label": true,
+    "ca-gst-label": true,
     "country": true,
+    "eu-vat-label": true,
+    "gb-vat-label": true,
     "help": true,
     "loading": true,
     "number": true,
+    "other-label": true,
     "show": true,
     "status": true,
     "type": true,

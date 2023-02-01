@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-01-12T17:59:47",
+  "timestamp": "2023-02-01T07:57:36",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -17348,6 +17348,22 @@
       "usage": {},
       "props": [
         {
+          "name": "auAbnLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "au-abn-label",
+          "reflectToAttr": false,
+          "docs": "AU zone label",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "busy",
           "type": "boolean",
           "mutable": false,
@@ -17359,6 +17375,54 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "caGstLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "ca-gst-label",
+          "reflectToAttr": false,
+          "docs": "GST zone label",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "euVatLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "eu-vat-label",
+          "reflectToAttr": false,
+          "docs": "EU zone label",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "gbVatLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "gb-vat-label",
+          "reflectToAttr": false,
+          "docs": "UK zone label",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -17414,6 +17478,22 @@
             },
             {
               "type": "Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "otherLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "other-label",
+          "reflectToAttr": false,
+          "docs": "Other zones label",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -19466,6 +19546,21 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "order",
+          "type": "Checkout",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Session",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Checkout"
             }
           ],
           "optional": false,
@@ -26074,12 +26169,76 @@
       "usage": {},
       "props": [
         {
+          "name": "auAbnLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "au-abn-label",
+          "reflectToAttr": false,
+          "docs": "AU zone label",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "caGstLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "ca-gst-label",
+          "reflectToAttr": false,
+          "docs": "GST zone label",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "country",
           "type": "string",
           "mutable": false,
           "attr": "country",
           "reflectToAttr": false,
           "docs": "The country code.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "euVatLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "eu-vat-label",
+          "reflectToAttr": false,
+          "docs": "EU zone label",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "gbVatLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "gb-vat-label",
+          "reflectToAttr": false,
+          "docs": "UK zone label",
           "docsTags": [],
           "values": [
             {
@@ -26130,6 +26289,22 @@
           "docs": "Tax ID Number",
           "docsTags": [],
           "default": "null",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "otherLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "other-label",
+          "reflectToAttr": false,
+          "docs": "Other zones label",
+          "docsTags": [],
           "values": [
             {
               "type": "string"

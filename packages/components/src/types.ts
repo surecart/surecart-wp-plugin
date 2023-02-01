@@ -784,3 +784,13 @@ export interface PriceData extends Object {
   quantity: number;
   removeable: boolean;
 }
+
+
+export type TaxZone=  {
+  label:string,
+  label_small:string
+}
+
+export type TaxZones  = {
+  [key in "ca_gst"|"au_abn"|"gb_vat"|"eu_vat"|"other"]:TaxZone
+}
