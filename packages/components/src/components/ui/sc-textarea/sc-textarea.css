@@ -133,6 +133,6 @@
 
 .textarea__char-limit-warning{
   margin-top: var(--sc-input-spacing-small);
-  text-align: right;
-  color: var(--sc-color-danger-500);
+  color: var(--sc-input-help-text-color);
+  font-size: var(--sc-input-help-text-font-size-medium);
 }
