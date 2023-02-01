@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export namespace Components {
     interface ScAddress {
         /**
@@ -2298,6 +2298,9 @@ export namespace Components {
          */
         "prices": Price[];
     }
+    interface ScProduct {
+        "product": Product;
+    }
     interface ScProductLineItem {
         /**
           * Product monetary amount
@@ -2343,6 +2346,12 @@ export namespace Components {
           * Trial duration days
          */
         "trialDurationDays": number;
+    }
+    interface ScProductPrices {
+        "prices": Price[];
+    }
+    interface ScProductTitle {
+        "product": Product;
     }
     interface ScProvider {
         "STENCIL_CONTEXT": { [key: string]: any };
@@ -4089,11 +4098,29 @@ declare global {
         prototype: HTMLScPriceRangeElement;
         new (): HTMLScPriceRangeElement;
     };
+    interface HTMLScProductElement extends Components.ScProduct, HTMLStencilElement {
+    }
+    var HTMLScProductElement: {
+        prototype: HTMLScProductElement;
+        new (): HTMLScProductElement;
+    };
     interface HTMLScProductLineItemElement extends Components.ScProductLineItem, HTMLStencilElement {
     }
     var HTMLScProductLineItemElement: {
         prototype: HTMLScProductLineItemElement;
         new (): HTMLScProductLineItemElement;
+    };
+    interface HTMLScProductPricesElement extends Components.ScProductPrices, HTMLStencilElement {
+    }
+    var HTMLScProductPricesElement: {
+        prototype: HTMLScProductPricesElement;
+        new (): HTMLScProductPricesElement;
+    };
+    interface HTMLScProductTitleElement extends Components.ScProductTitle, HTMLStencilElement {
+    }
+    var HTMLScProductTitleElement: {
+        prototype: HTMLScProductTitleElement;
+        new (): HTMLScProductTitleElement;
     };
     interface HTMLScProviderElement extends Components.ScProvider, HTMLStencilElement {
     }
@@ -4497,7 +4524,10 @@ declare global {
         "sc-price-choices": HTMLScPriceChoicesElement;
         "sc-price-input": HTMLScPriceInputElement;
         "sc-price-range": HTMLScPriceRangeElement;
+        "sc-product": HTMLScProductElement;
         "sc-product-line-item": HTMLScProductLineItemElement;
+        "sc-product-prices": HTMLScProductPricesElement;
+        "sc-product-title": HTMLScProductTitleElement;
         "sc-provider": HTMLScProviderElement;
         "sc-purchase-downloads-list": HTMLScPurchaseDownloadsListElement;
         "sc-quantity-select": HTMLScQuantitySelectElement;
@@ -7134,6 +7164,9 @@ declare namespace LocalJSX {
          */
         "prices"?: Price[];
     }
+    interface ScProduct {
+        "product"?: Product;
+    }
     interface ScProductLineItem {
         /**
           * Product monetary amount
@@ -7187,6 +7220,12 @@ declare namespace LocalJSX {
           * Trial duration days
          */
         "trialDurationDays"?: number;
+    }
+    interface ScProductPrices {
+        "prices"?: Price[];
+    }
+    interface ScProductTitle {
+        "product"?: Product;
     }
     interface ScProvider {
         "STENCIL_CONTEXT"?: { [key: string]: any };
@@ -8204,7 +8243,10 @@ declare namespace LocalJSX {
         "sc-price-choices": ScPriceChoices;
         "sc-price-input": ScPriceInput;
         "sc-price-range": ScPriceRange;
+        "sc-product": ScProduct;
         "sc-product-line-item": ScProductLineItem;
+        "sc-product-prices": ScProductPrices;
+        "sc-product-title": ScProductTitle;
         "sc-provider": ScProvider;
         "sc-purchase-downloads-list": ScPurchaseDownloadsList;
         "sc-quantity-select": ScQuantitySelect;
@@ -8372,7 +8414,10 @@ declare module "@stencil/core" {
             "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
             "sc-price-range": LocalJSX.ScPriceRange & JSXBase.HTMLAttributes<HTMLScPriceRangeElement>;
+            "sc-product": LocalJSX.ScProduct & JSXBase.HTMLAttributes<HTMLScProductElement>;
             "sc-product-line-item": LocalJSX.ScProductLineItem & JSXBase.HTMLAttributes<HTMLScProductLineItemElement>;
+            "sc-product-prices": LocalJSX.ScProductPrices & JSXBase.HTMLAttributes<HTMLScProductPricesElement>;
+            "sc-product-title": LocalJSX.ScProductTitle & JSXBase.HTMLAttributes<HTMLScProductTitleElement>;
             "sc-provider": LocalJSX.ScProvider & JSXBase.HTMLAttributes<HTMLScProviderElement>;
             "sc-purchase-downloads-list": LocalJSX.ScPurchaseDownloadsList & JSXBase.HTMLAttributes<HTMLScPurchaseDownloadsListElement>;
             "sc-quantity-select": LocalJSX.ScQuantitySelect & JSXBase.HTMLAttributes<HTMLScQuantitySelectElement>;

@@ -2,6 +2,8 @@
 
 namespace SureCartBlocks\Blocks;
 
+use SureCartBlocks\Util\BlockStyleAttributes;
+
 /**
  * Checkout block
  */
@@ -34,6 +36,35 @@ abstract class BaseBlock {
 		}
 		$color_slug = _wp_to_kebab_case( $color_slug );
 		return "has-$color_slug-$color_context_name";
+	}
+
+	/**
+	 * Get the classes.
+	 *
+	 * @param array  $attributes The block attributes.
+	 * @param string $additional_classes Any additional classes.
+	 *
+	 * @return string
+	 */
+	public function getClasses( $attributes, $additional_classes = '' ) {
+		// get block classes and styles.
+		[ 'classes' => $classes ] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes );
+		// get text align class.
+		['class' => $text_align_class] = BlockStyleAttributes::getTextAlignClassAndStyle( $attributes );
+		return implode( ' ', array_filter( [ $classes, $text_align_class, $additional_classes ] ) );
+	}
+
+	/**
+	 * Get the styles
+	 *
+	 * @param array  $attributes The block attributes.
+	 * @param string $additional_styles Any additional styles.
+	 *
+	 * @return string
+	 */
+	public function getStyles( $attributes, $additional_styles = '' ) {
+		[ 'styles' => $styles ] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes );
+		return implode( ' ', array_filter( [ $styles, $additional_styles ] ) );
 	}
 
 	/**

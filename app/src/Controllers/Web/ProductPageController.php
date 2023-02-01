@@ -1,6 +1,8 @@
 <?php
 namespace SureCart\Controllers\Web;
 
+use WP_Post;
+
 /**
  * Handles webhooks
  */
@@ -14,18 +16,47 @@ class ProductPageController {
 	 * @return function
 	 */
 	public function show( $request, $view, $id ) {
-		$product = \SureCart\Models\Product::with( [ 'prices' ] )->find( $id );
-		if ( is_wp_error( $product ) ) {
-			return $this->handleError( $product );
+		global $post, $wp_query, $sc_product;
+
+		$sc_product = \SureCart\Models\Product::with( [ 'prices' ] )->find( $id );
+		if ( is_wp_error( $sc_product ) ) {
+			return $this->handleError( $sc_product );
 		}
 
-		// add a link to the WP Toolbar.
-		$this->addEditButton();
+		$post               = get_post( 1230 ); //phpcs:ignore
+		$post->post_title   = $sc_product->name;
+		$post->post_excerpt = $sc_product->description;
+		$post->post_name    = $sc_product->slug;
+		global $wp_query;
+		$wp_query->post              = $post;
+		$wp_query->is_404            = false;
+		$wp_query->queried_object_id = $post->ID;
+		$wp_query->queried_object    = $post;
+		$wp_query->is_single         = true;
+		$wp_query->is_singular       = true;
+		setup_postdata( $GLOBALS['post'] =& $post ); //phpcs:ignore
+
+		// // add a link to the WP Toolbar.
+		$this->addEditButton( $sc_product->id );
+		$this->setPageTitle( $sc_product );
+
+		// TODO: for Canonical url.
+		add_filter(
+			'post_link',
+			function( $permalink, $requested_post ) use ( $post, $sc_product ) {
+				if ( $requested_post->ID === $post->ID ) {
+					return \SureCart::routeUrl( 'product', [ 'id' => $sc_product->id ] );
+				}
+				return $permalink;
+			},
+			10,
+			2
+		);
 
 		// check to see if the product has a page or template.
 		return \SureCart::view( 'web/product' )->with(
 			[
-				'product' => $product,
+				'product' => $sc_product,
 			]
 		);
 	}
@@ -35,21 +66,32 @@ class ProductPageController {
 	 *
 	 * @return void
 	 */
-	public function addEditButton() {
-		global $wp_query;
-		$wp_query->is_404 = false;
+	public function addEditButton( $id ) {
 		add_action(
 			'admin_bar_menu',
-			function( $wp_admin_bar ) {
+			function( $wp_admin_bar ) use ( $id ) {
 				$wp_admin_bar->add_node(
 					[
 						'id'    => 'template',
-						'title' => __( 'Edit Product Page', 'surecart' ),
-						'href'  => admin_url( 'admin.php?page=custom-page' ),
+						'title' => __( 'Edit Product', 'surecart' ),
+						'href'  => esc_url( \SureCart::getUrl()->edit( 'product', $id ) ),
 					]
 				);
 			},
 			99
+		);
+	}
+
+	/**
+	 * Set the page title.
+	 */
+	public function setPageTitle( $product ) {
+		add_action(
+			'document_title_parts',
+			function( $parts ) use ( $product ) {
+				$parts['title'] = $product->name;
+				return $parts;
+			}
 		);
 	}
 

@@ -11,17 +11,6 @@ use SureCartBlocks\Blocks\BaseBlock;
  */
 class Block extends BaseBlock {
 	/**
-	 * Get the classes for the block
-	 *
-	 * @param  array $attributes Block attributes.
-	 * @return string
-	 */
-	public function getClasses( $attributes ) {
-		$block_alignment = isset( $attributes['align'] ) ? sanitize_text_field( $attributes['align'] ) : '';
-		return ! empty( $block_alignment ) ? 'align' . $block_alignment : '';
-	}
-
-	/**
 	 * Get the style for the block
 	 *
 	 * @param  array $attributes Block attributes.

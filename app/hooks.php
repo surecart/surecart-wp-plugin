@@ -30,36 +30,43 @@ add_filter(
 	9999999999
 );
 
-// add_filter(
-// 'query_vars',
-// function( $query_vars ) {
-// $query_vars[] = 'product';
-// return $query_vars;
-// }
-// );
-// add_action(
-// 'init',
-// function() {
-// add_rewrite_rule( 'product/([a-z0-9-]+)[/]?$', 'index.php?product=$matches[1]', 'top' );
-// }
-// );
-// add_action(
-// 'template_include',
-// function( $template ) {
-// if ( empty( get_query_var( 'product' ) ) ) {
-// return $template;
-// }
-
-// return plugin_dir_path( SURECART_PLUGIN_FILE ) . '/templates/default/template-surecart-no-sidebar.php';
-
-// global $_wp_current_template_content;
-// $_wp_current_template_content = '<!-- wp:template-part {"slug":"header","tagName":"header","theme":"twentytwentythree"} /-->
-// <!-- wp:template-part {"slug":"footer","tagName":"footer","theme":"twentytwentythree"} /-->';
-
-// return $template;
-// }
-// );
-
+add_filter(
+	'query_vars',
+	function( $query_vars ) {
+		$query_vars[] = 'product';
+		return $query_vars;
+	}
+);
+add_filter(
+	'get_canonical_url',
+	function( $url ) {
+		global $sc_product;
+		if ( empty( $sc_product->id ) ) {
+			return $url;
+		}
+		return \SureCart::routeUrl( 'product', [ 'id' => $sc_product->id ] );
+	}
+);
+add_filter(
+	'get_shortlink',
+	function( $url ) {
+		global $sc_product;
+		if ( empty( $sc_product->id ) ) {
+			return $url;
+		}
+		return \SureCart::routeUrl( 'product', [ 'id' => $sc_product->id ] );
+	}
+);
+add_filter(
+	'post_link',
+	function( $permalink ) {
+		global $sc_product;
+		if ( empty( $sc_product->id ) ) {
+			return $permalink;
+		}
+		return \SureCart::routeUrl( 'product', [ 'id' => $sc_product->id ] );
+	}
+);
 
 // register uninstall.
 register_uninstall_hook( SURECART_PLUGIN_FILE, 'surecart_uninstall' );

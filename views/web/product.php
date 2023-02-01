@@ -1,7 +1,6 @@
 <?php get_header(); ?>
 <?php
-
-var_dump( $product );
+the_content();
 ?>
 <?php
 get_footer();

@@ -34,7 +34,7 @@ class AdminURLService {
 				[
 					'action' => 'edit',
 				],
-				menu_page_url( $this->page_names[ $name ], false )
+				admin_url( 'admin.php?page=' . $this->page_names[ $name ] )
 			)
 		);
 	}
@@ -54,7 +54,7 @@ class AdminURLService {
 					'action' => 'edit',
 					'id'     => $id,
 				],
-				menu_page_url( $this->page_names[ $name ] ?? '', false )
+				admin_url( 'admin.php?page=' . $this->page_names[ $name ] )
 			)
 		);
 	}
@@ -74,7 +74,7 @@ class AdminURLService {
 					'action' => 'show',
 					'id'     => $id,
 				],
-				menu_page_url( $this->page_names[ $name ] ?? '', false )
+				admin_url( 'admin.php?page=' . $this->page_names[ $name ] )
 			)
 		);
 	}
@@ -86,7 +86,7 @@ class AdminURLService {
 	 * @return string URL for the page.
 	 */
 	public function index( $name ) {
-		return esc_url( menu_page_url( $this->page_names[ $name ], false ) );
+		return esc_url( admin_url( 'admin.php?page=' . $this->page_names[ $name ] ) );
 	}
 
 	/**

@@ -232,6 +232,7 @@ export default ({ id }) => {
 					<Publishing
 						id={id}
 						product={product}
+						updateProduct={editProduct}
 						post={post}
 						loading={!hasLoadedPost}
 					/>
