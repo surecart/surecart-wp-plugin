@@ -24,34 +24,49 @@ describe('Conditional form logic', () => {
 
   describe('hasRulesPassed', () => {
     it('Order total and processor', () => {
-      expect(hasRulesPassed([
-        { condition: 'total', operator: '==', value: '10000' },
-        { condition: 'processors', operator: 'any', value: ['test_processor_id'] }
-      ], {
-        checkout: {
-          total_amount: 10000,
-        },
-        processor: 'test_processor_id'
-      })).toBe(true);
-      expect(hasRulesPassed([
-        { condition: 'total', operator: '==', value: '10000' },
-        { condition: 'processors', operator: 'any', value: ['test_processor_id'] }
-      ], {
-        checkout: {
-          total_amount: 10001,
-        },
-        processor: 'test_processor_id'
-      })).toBe(false);
-      expect(hasRulesPassed([
-        { condition: 'total', operator: '==', value: '10000' },
-        { condition: 'processors', operator: 'any', value: ['test_processor_id'] }
-      ], {
-        checkout: {
-          total_amount: 10000,
-        },
-        processor: 'test_processor_id1'
-      })).toBe(false);
-    })
+      expect(
+        hasRulesPassed(
+          [
+            { condition: 'total', operator: '==', value: '10000' },
+            { condition: 'processors', operator: 'any', value: ['test_processor_id'] },
+          ],
+          {
+            checkout: {
+              total_amount: 10000,
+            },
+            processor: 'test_processor_id',
+          },
+        ),
+      ).toBe(true);
+      expect(
+        hasRulesPassed(
+          [
+            { condition: 'total', operator: '==', value: '10000' },
+            { condition: 'processors', operator: 'any', value: ['test_processor_id'] },
+          ],
+          {
+            checkout: {
+              total_amount: 10001,
+            },
+            processor: 'test_processor_id',
+          },
+        ),
+      ).toBe(false);
+      expect(
+        hasRulesPassed(
+          [
+            { condition: 'total', operator: '==', value: '10000' },
+            { condition: 'processors', operator: 'any', value: ['test_processor_id'] },
+          ],
+          {
+            checkout: {
+              total_amount: 10000,
+            },
+            processor: 'test_processor_id1',
+          },
+        ),
+      ).toBe(false);
+    });
   });
 
   describe('compareNumberValues', () => {
@@ -82,9 +97,7 @@ describe('Conditional form logic', () => {
     const rule_group = {
       condition: 'products',
       operator: 'any',
-      value: ['c08275a8-4a1a-4e69-a488-e508f92e9dac',
-        '5aaf576f-6bcb-49cd-8c4c-f2ef264f03d8',
-      ],
+      value: ['c08275a8-4a1a-4e69-a488-e508f92e9dac', '5aaf576f-6bcb-49cd-8c4c-f2ef264f03d8'],
     };
 
     describe('Products', () => {
@@ -105,10 +118,7 @@ describe('Conditional form logic', () => {
       const rule_group = {
         condition: 'coupons',
         operator: 'any',
-        value: [
-          'c638aa78-5b51-4d4f-a96a-bf1a462db6c5',
-          '93363978-1ba8-4d87-9108-68d90825b386',
-        ],
+        value: ['c638aa78-5b51-4d4f-a96a-bf1a462db6c5', '93363978-1ba8-4d87-9108-68d90825b386'],
       };
 
       it('Cart contains any of the coupon', () => {
@@ -116,10 +126,7 @@ describe('Conditional form logic', () => {
       });
 
       it('Cart contains all of the coupons', () => {
-        expect(compareObjectValues([
-          'c638aa78-5b51-4d4f-a96a-bf1a462db6c5',
-          '93363978-1ba8-4d87-9108-68d90825b386',
-        ], rule_group.value, 'all')).toBe(true);
+        expect(compareObjectValues(['c638aa78-5b51-4d4f-a96a-bf1a462db6c5', '93363978-1ba8-4d87-9108-68d90825b386'], rule_group.value, 'all')).toBe(true);
       });
 
       it('Cart contains none of the coupon', () => {
