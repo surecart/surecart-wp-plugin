@@ -326,6 +326,15 @@
     "class": true,
     "slot": true
   },
+  "sc-conditional-form": {
+    "checkout": true,
+    "rule_groups": true,
+    "selected-processor-id": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-consumer": {
     "renderer": true,
     "style": true,
@@ -1276,6 +1285,13 @@
     "show-label": true,
     "size": true,
     "value": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-price-range": {
+    "prices": true,
     "style": true,
     "id": true,
     "class": true,

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-01-12T17:59:47",
+  "timestamp": "2023-01-27T18:42:27",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -5478,6 +5478,82 @@
           "sc-compact-address"
         ]
       }
+    },
+    {
+      "filePath": "./src/components/controllers/checkout-form/sc-conditional-form/sc-conditional-form.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-conditional-form",
+      "readme": "# sc-conditional-form\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "checkout",
+          "type": "Checkout",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Checkout Session from sc-checkout.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Checkout"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "rule_groups",
+          "type": "object",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Selector label",
+          "docsTags": [],
+          "default": "[]",
+          "values": [
+            {
+              "type": "object"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "selectedProcessorId",
+          "type": "\"paypal\" | \"paypal-card\" | \"stripe\"",
+          "mutable": false,
+          "attr": "selected-processor-id",
+          "reflectToAttr": false,
+          "docs": "The currently selected processor",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "paypal",
+              "type": "string"
+            },
+            {
+              "value": "paypal-card",
+              "type": "string"
+            },
+            {
+              "value": "stripe",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
     },
     {
       "filePath": "./src/components/context/consumer/sc-consumer.tsx",
@@ -19466,6 +19542,21 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "order",
+          "type": "Checkout",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Session",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Checkout"
             }
           ],
           "optional": false,

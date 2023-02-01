@@ -133,6 +133,8 @@ return [
 		\SureCartBlocks\Blocks\Dashboard\CustomerInvoices\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\DashboardPage\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\DashboardTab\Block::class,
+		\SureCartBlocks\Blocks\ConditionalForm\Block::class,
+
 	],
 
 	/** Which components to preload for each block. */
@@ -175,6 +177,7 @@ return [
 		'surecart/subtotal'                  => [ 'sc-line-item-total', 'sc-format-number' ],
 		'surecart/total'                     => [ 'sc-line-item-total', 'sc-format-number' ],
 		'surecart/totals'                    => [ 'sc-order-summary' ],
+		'surecart/conditional-from'          => [ 'sc-conditional-form' ],
 	],
 
 	/**
