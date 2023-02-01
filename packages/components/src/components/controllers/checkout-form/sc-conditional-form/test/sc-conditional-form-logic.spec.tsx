@@ -1,18 +1,20 @@
-import * as logic from '../conditional-functions';
+import { Checkout } from '../../../../../types';
+import { hasAnyRuleGroupPassed, compareNumberValues, compareObjectValues, hasRulesPassed } from '../conditional-functions';
 
 describe('Conditional form logic', () => {
-  describe('is_any_rule_group_passed', () => {
+  describe('hasAnyRuleGroupPassed', () => {
     it('Test Rule groups', () => {
-      let result = logic.is_any_rule_group_passed(
+      let result = hasAnyRuleGroupPassed(
         [
           {
+            group_id: 'asdf',
             rules: [{ condition: 'total', operator: '==', value: '10000' }],
           },
         ],
         {
           checkout: {
             total_amount: 10000,
-          },
+          } as Checkout,
           processor: 'stripe',
         },
       );
@@ -20,7 +22,39 @@ describe('Conditional form logic', () => {
     });
   });
 
-  describe('compare_number_values', () => {
+  describe('hasRulesPassed', () => {
+    it('Order total and processor', () => {
+      expect(hasRulesPassed([
+        { condition: 'total', operator: '==', value: '10000' },
+        { condition: 'processors', operator: 'any', value: ['test_processor_id'] }
+      ], {
+        checkout: {
+          total_amount: 10000,
+        },
+        processor: 'test_processor_id'
+      })).toBe(true);
+      expect(hasRulesPassed([
+        { condition: 'total', operator: '==', value: '10000' },
+        { condition: 'processors', operator: 'any', value: ['test_processor_id'] }
+      ], {
+        checkout: {
+          total_amount: 10001,
+        },
+        processor: 'test_processor_id'
+      })).toBe(false);
+      expect(hasRulesPassed([
+        { condition: 'total', operator: '==', value: '10000' },
+        { condition: 'processors', operator: 'any', value: ['test_processor_id'] }
+      ], {
+        checkout: {
+          total_amount: 10000,
+        },
+        processor: 'test_processor_id1'
+      })).toBe(false);
+    })
+  });
+
+  describe('compareNumberValues', () => {
     let rule_order_value = 100;
 
     it('Order total is less than 100', () => {
@@ -29,73 +63,41 @@ describe('Conditional form logic', () => {
         operator: '<',
         value: '100',
       };
-      let result = logic.compare_number_values(90, rule_group.value, rule_group.operator);
+      let result = compareNumberValues(90, parseFloat(rule_group.value), rule_group.operator);
       expect(result).toBe(true);
     });
 
     it('Order total is greater than 100', () => {
-      let result = logic.compare_number_values(120, rule_order_value, '>');
+      let result = compareNumberValues(120, rule_order_value, '>');
       expect(result).toBe(true);
     });
 
     it('Order total is equal to 100', () => {
-      let result = logic.compare_number_values(100, rule_order_value, '==');
+      let result = compareNumberValues(100, rule_order_value, '==');
       expect(result).toBe(true);
     });
   });
 
-  describe('compare_object_values', () => {
+  describe('compareObjectValues', () => {
     const rule_group = {
       condition: 'products',
       operator: 'any',
-      value: [
-        {
-          label: 'OT 100',
-          value: 'c08275a8-4a1a-4e69-a488-e508f92e9dac',
-        },
-        {
-          label: 'OT 50',
-          value: '5aaf576f-6bcb-49cd-8c4c-f2ef264f03d8',
-        },
+      value: ['c08275a8-4a1a-4e69-a488-e508f92e9dac',
+        '5aaf576f-6bcb-49cd-8c4c-f2ef264f03d8',
       ],
     };
 
     describe('Products', () => {
       it('Cart contains any of the product', () => {
-        let cart_products = [
-          {
-            label: 'OT 100',
-            value: 'c08275a8-4a1a-4e69-a488-e508f92e9dac',
-          },
-        ];
-        let result = logic.compare_object_values(cart_products, rule_group.value, 'any');
-        expect(result).toBe(true);
+        expect(compareObjectValues(['c08275a8-4a1a-4e69-a488-e508f92e9dac'], rule_group.value, 'any')).toBe(true);
       });
 
       it('Cart contains all of the product', () => {
-        let cart_products = [
-          {
-            label: 'OT 100',
-            value: 'c08275a8-4a1a-4e69-a488-e508f92e9dac',
-          },
-          {
-            label: 'OT 50',
-            value: '5aaf576f-6bcb-49cd-8c4c-f2ef264f03d8',
-          },
-        ];
-        let result = logic.compare_object_values(cart_products, rule_group.value, 'all');
-        expect(result).toBe(true);
+        expect(compareObjectValues(['c08275a8-4a1a-4e69-a488-e508f92e9dac', '5aaf576f-6bcb-49cd-8c4c-f2ef264f03d8'], rule_group.value, 'all')).toBe(true);
       });
 
       it('Cart contains none of the product', () => {
-        let cart_products = [
-          {
-            label: 'OT 100',
-            value: 'c08275a8-4a1a-4e69-a488-e508f92e9daq',
-          },
-        ];
-        let result = logic.compare_object_values(cart_products, rule_group.value, 'none');
-        expect(result).toBe(true);
+        expect(compareObjectValues(['c08275a8-4a1a-4e69-a488-e508f92e9daq'], rule_group.value, 'none')).toBe(true);
       });
     });
 
@@ -104,70 +106,34 @@ describe('Conditional form logic', () => {
         condition: 'coupons',
         operator: 'any',
         value: [
-          {
-            label: '100off',
-            value: 'c638aa78-5b51-4d4f-a96a-bf1a462db6c5',
-          },
-          {
-            label: '50off',
-            value: '93363978-1ba8-4d87-9108-68d90825b386',
-          },
+          'c638aa78-5b51-4d4f-a96a-bf1a462db6c5',
+          '93363978-1ba8-4d87-9108-68d90825b386',
         ],
       };
 
       it('Cart contains any of the coupon', () => {
-        let cart_coupons = [
-          {
-            label: '100off',
-            value: 'c638aa78-5b51-4d4f-a96a-bf1a462db6c5',
-          },
-        ];
-        let result = logic.compare_object_values(cart_coupons, rule_group.value, 'any');
-        expect(result).toBe(true);
+        expect(compareObjectValues(['c638aa78-5b51-4d4f-a96a-bf1a462db6c5'], rule_group.value, 'any')).toBe(true);
       });
 
       it('Cart contains all of the coupons', () => {
-        let cart_coupons = [
-          {
-            label: '100off',
-            value: 'c638aa78-5b51-4d4f-a96a-bf1a462db6c5',
-          },
-          {
-            label: '50off',
-            value: '93363978-1ba8-4d87-9108-68d90825b386',
-          },
-        ];
-
-        let result = logic.compare_object_values(cart_coupons, rule_group.value, 'all');
-        expect(result).toBe(true);
+        expect(compareObjectValues([
+          'c638aa78-5b51-4d4f-a96a-bf1a462db6c5',
+          '93363978-1ba8-4d87-9108-68d90825b386',
+        ], rule_group.value, 'all')).toBe(true);
       });
 
       it('Cart contains none of the coupon', () => {
-        let cart_coupons = [
-          {
-            label: 'OT 100',
-            value: 'c08275a8-4a1a-4e69-a488-e508f92e9daq',
-          },
-        ];
-        let result = logic.compare_object_values(cart_coupons, rule_group.value, 'none');
-        expect(result).toBe(true);
+        expect(compareObjectValues(['c08275a8-4a1a-4e69-a488-e508f92e9daq'], rule_group.value, 'none')).toBe(true);
       });
 
       it('Cart - coupon exists', () => {
-        let cart_coupons = [
-          {
-            label: 'OT 100',
-            value: 'c08275a8-4a1a-4e69-a488-e508f92e9daq',
-          },
-        ];
-        let result = logic.compare_object_values(cart_coupons, rule_group.value, 'exist');
-        expect(result).toBe(true);
+        expect(compareObjectValues(['c08275a8-4a1a-4e69-a488-e508f92e9daq'], rule_group.value, 'exist')).toBe(true);
+        expect(compareObjectValues([], rule_group.value, 'exist')).toBe(false);
       });
 
       it('Cart - coupon not exist', () => {
-        let cart_coupons = [];
-        let result = logic.compare_object_values(cart_coupons, rule_group.value, 'not_exist');
-        expect(result).toBe(true);
+        expect(compareObjectValues(['asdf'], rule_group.value, 'not_exist')).toBe(false);
+        expect(compareObjectValues([], rule_group.value, 'not_exist')).toBe(true);
       });
     });
 
@@ -175,33 +141,16 @@ describe('Conditional form logic', () => {
       const rule_group = {
         condition: 'billing_country',
         operator: 'any',
-        value: [
-          {
-            label: 'India',
-            value: 'IN',
-          },
-        ],
+        value: ['IN'],
       };
 
       it('Cart contains any of the country', () => {
-        let cart_data = [
-          {
-            label: 'India',
-            value: 'IN',
-          },
-        ];
-        let result = logic.compare_object_values(cart_data, rule_group.value, 'any');
+        let result = compareObjectValues(['IN'], rule_group.value, 'any');
         expect(result).toBe(true);
       });
 
       it('Cart contains none of the country', () => {
-        let cart_data = [
-          {
-            label: 'US',
-            value: 'US',
-          },
-        ];
-        let result = logic.compare_object_values(cart_data, rule_group.value, 'none');
+        let result = compareObjectValues(['US'], rule_group.value, 'none');
         expect(result).toBe(true);
       });
     });
@@ -210,33 +159,14 @@ describe('Conditional form logic', () => {
       const rule_group = {
         condition: 'processors',
         operator: 'any',
-        value: [
-          {
-            label: 'Stripe',
-            value: 'stripe',
-          },
-        ],
+        value: ['stripe'],
       };
       it('Selected payment for cart - any', () => {
-        let cart_data = [
-          {
-            label: 'Stripe',
-            value: 'stripe',
-          },
-        ];
-        let result = logic.compare_object_values(cart_data, rule_group.value, 'any');
-        expect(result).toBe(true);
+        expect(compareObjectValues(['stripe'], rule_group.value, 'any')).toBe(true);
       });
 
       it('Selected payment for cart - none', () => {
-        let cart_data = [
-          {
-            label: 'PayPal',
-            value: 'paypal',
-          },
-        ];
-        let result = logic.compare_object_values(cart_data, rule_group.value, 'none');
-        expect(result).toBe(true);
+        expect(compareObjectValues(['paypal'], rule_group.value, 'none')).toBe(true);
       });
     });
   });

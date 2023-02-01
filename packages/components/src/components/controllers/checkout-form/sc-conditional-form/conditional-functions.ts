@@ -1,3 +1,5 @@
+import { ArrayOperators, Checkout, NumberOperators, Product, Rule, RuleGroup } from '../../../../types';
+
 /**
  * Check if any of the rule groups is passed or not.
  *
@@ -5,19 +7,8 @@
  * @param {object} props Data.
  * @returns {boolean}
  */
-export const is_any_rule_group_passed = (groups, props) => {
-  let result = false;
-
-  if (Array.isArray(groups)) {
-    groups.forEach(element => {
-      if (result) {
-        return;
-      }
-      result = is_rules_passed(element['rules'], props);
-    });
-  }
-
-  return result;
+export const hasAnyRuleGroupPassed = (groups: RuleGroup[], props: { checkout: Checkout; processor: string }) => {
+  return (groups || []).some(({ rules }) => hasRulesPassed(rules, props));
 };
 
 /**
@@ -27,46 +18,28 @@ export const is_any_rule_group_passed = (groups, props) => {
  * @param {object} props Data.
  * @returns {boolean}
  */
-export const is_rules_passed = (rules, props) => {
-  const { checkout, processor } = props;
-
-  let result = true;
-
-  rules.forEach(rule => {
-    if (false === result) {
-      return;
-    }
-    const ruleOperator = rule['operator'];
-    const ruleValue = rule?.['value'] || rule;
-
-    switch (rule['condition']) {
-      case 'total':
-        result = compare_number_values(parseFloat(checkout.total_amount), parseFloat(ruleValue), ruleOperator);
-        break;
-      case 'products':
-        const cart_products = get_cart_products(checkout);
-        result = compare_object_values(cart_products, ruleValue, ruleOperator);
-        break;
-      case 'coupons':
-        const cart_coupons = get_cart_coupons(checkout);
-        result = compare_object_values(cart_coupons, ruleValue, ruleOperator);
-        break;
-      case 'shipping_country':
-        const temp_cart_scountry = [{ value: checkout?.shipping_address?.country }];
-        result = compare_object_values(temp_cart_scountry, ruleValue, ruleOperator);
-        break;
-      case 'billing_country':
-        const temp_cart_bcountry = [{ value: checkout?.billing_address?.country }];
-        result = compare_object_values(temp_cart_bcountry, ruleValue, ruleOperator);
-        break;
-      case 'processors':
-        const temp_cart_processor = [{ value: processor }];
-        result = compare_object_values(temp_cart_processor, ruleValue, ruleOperator);
-        break;
-    }
-  });
-
-  return result;
+export const hasRulesPassed = (rules: Rule[], { checkout, processor }) => {
+  return rules
+    .map(rule => {
+      const ruleValue = Array.isArray(rule?.value) ? (rule?.value).map(ruleValue => ruleValue?.value || ruleValue) : rule?.value;
+      switch (rule?.condition) {
+        case 'total':
+          return compareNumberValues(parseFloat(checkout.total_amount), parseFloat(ruleValue as string), rule?.operator as NumberOperators);
+        case 'products':
+          return compareObjectValues(getCartProductIds(checkout), ruleValue as string[], rule?.operator as ArrayOperators);
+        case 'coupons':
+          return compareObjectValues(getCartCouponIds(checkout), ruleValue as string[], rule?.operator as ArrayOperators);
+        case 'shipping_country':
+          return compareObjectValues([checkout?.shipping_address?.country], ruleValue as string[], rule?.operator as ArrayOperators);
+        case 'billing_country':
+          return compareObjectValues([checkout?.billing_address?.country], ruleValue as string[], rule?.operator as ArrayOperators);
+        case 'processors':
+          return compareObjectValues([processor], ruleValue as string[], rule?.operator as ArrayOperators);
+        default:
+          return false;
+      }
+    })
+    .every(rules => rules);
 };
 
 /**
@@ -75,17 +48,8 @@ export const is_rules_passed = (rules, props) => {
  * @param {object} checkout CHeckout data.
  * @returns {array}
  */
-export const get_cart_products = checkout => {
-  let products = [];
-
-  checkout.line_items.data.forEach(element => {
-    products.push({
-      label: element.price.product.name,
-      value: element.price.product.id,
-    });
-  });
-
-  return products;
+export const getCartProductIds = (checkout: Checkout) => {
+  return (checkout?.line_items?.data || []).map(({ price }) => (price?.product as Product)?.id);
 };
 
 /**
@@ -94,17 +58,8 @@ export const get_cart_products = checkout => {
  * @param {object} checkout CHeckout data.
  * @returns {array}
  */
-export const get_cart_coupons = checkout => {
-  let coupons = [];
-
-  if (checkout?.discount?.coupon) {
-    coupons.push({
-      label: checkout.discount.coupon.name,
-      value: checkout.discount.coupon.id,
-    });
-  }
-
-  return coupons;
+export const getCartCouponIds = (checkout: Checkout) => {
+  return checkout?.discount?.coupon?.id ? [checkout?.discount?.coupon?.id] : [];
 };
 
 /**
@@ -116,31 +71,21 @@ export const get_cart_coupons = checkout => {
  * @returns {boolean}
  */
 
-export const compare_object_values = (cart_values, rule_values, operator) => {
-  let result = false;
-
+export const compareObjectValues = (cart_values: string[], rule_values: string[], operator: 'all' | 'any' | 'none' | 'exist' | 'not_exist') => {
   switch (operator) {
     case 'all':
-      result = rule_values.filter(n1 => cart_values.some(n2 => n1.value == n2.value)).length === rule_values.length;
-      break;
+      return rule_values.filter(n1 => cart_values.some(n2 => n1 == n2)).length === rule_values.length;
     case 'any':
-      result = cart_values.filter(n1 => rule_values.some(n2 => n1.value == n2.value)).length >= 1;
-      break;
+      return cart_values.filter(n1 => rule_values.some(n2 => n1 == n2)).length >= 1;
     case 'none':
-      result = cart_values.filter(n1 => rule_values.some(n2 => n1.value == n2.value)).length === 0;
-      break;
+      return cart_values.filter(n1 => rule_values.some(n2 => n1 == n2)).length === 0;
     case 'exist':
-      result = cart_values.length >= 1;
-      break;
+      return cart_values.length >= 1;
     case 'not_exist':
-      result = cart_values.length === 0;
-      break;
+      return cart_values.length === 0;
     default:
-      result = false;
-      break;
+      return false;
   }
-
-  return result;
 };
 
 /**
@@ -151,32 +96,21 @@ export const compare_object_values = (cart_values, rule_values, operator) => {
  * @param string operator Rule operator.
  * @returns {boolean}
  */
-export const compare_number_values = (number1, number2, operator) => {
-  let result = false;
-
+export const compareNumberValues = (number1: number, number2: number, operator: string) => {
   switch (operator) {
     case '==':
-      result = number1 === number2;
-      break;
+      return number1 === number2;
     case '!=':
-      result = number1 !== number2;
-      break;
+      return number1 !== number2;
     case '>':
-      result = number1 > number2;
-      break;
+      return number1 > number2;
     case '<':
-      result = number1 < number2;
-      break;
+      return number1 < number2;
     case '<=':
-      result = number1 <= number2;
-      break;
+      return number1 <= number2;
     case '>=':
-      result = number1 >= number2;
-      break;
-    default:
-      result = false;
-      break;
+      return number1 >= number2;
   }
 
-  return result;
+  return false;
 };
