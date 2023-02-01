@@ -4,7 +4,7 @@ export const translations = {
 	products: __('Product(s)', 'surecart'),
 	total: __('Total', 'surecart'),
 	coupons: __('Coupon(s)', 'surecart'),
-	payment_methods: __('Payment Processor', 'surecart'),
+	processors: __('Processor', 'surecart'),
 	billing_country: __('Billing Country', 'surecart'),
 	shipping_country: __('Shipping Country', 'surecart'),
 	any: __('matches any of', 'surecart'),

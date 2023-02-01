@@ -1,17 +1,19 @@
 import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
-import FilterItem from '../FilterItem';
+import { ScPriceRange } from '@surecart/components-react';
+import FilterItem from '../../../../../admin/components/filters/FilterItem';
 
-export default (props) => {
-	const { id } = props;
+export default ({ id, ...props }) => {
 	const { item, hasLoadedItem } = useSelect(
 		(select) => {
 			const queryArgs = [
 				'surecart',
 				'product',
 				id,
-				{ expand: ['prices'] },
+				{
+					expand: ['prices'],
+				},
 			];
 			return {
 				item: select(coreStore).getEntityRecord(...queryArgs),
@@ -32,7 +34,7 @@ export default (props) => {
 			{...props}
 		>
 			<strong style={{ display: 'block' }}>{item?.name}</strong>
-			{__('Any price', 'surecart')}
+			<ScPriceRange prices={item?.prices?.data || []} />
 		</FilterItem>
 	);
 };

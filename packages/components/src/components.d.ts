@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export namespace Components {
     interface ScAddress {
         /**
@@ -629,7 +629,7 @@ export namespace Components {
         /**
           * Selector label
          */
-        "rule_groups": object;
+        "rule_groups": RuleGroup[];
         /**
           * The currently selected processor
          */
@@ -2305,6 +2305,12 @@ export namespace Components {
           * The input's value attribute.
          */
         "value": string;
+    }
+    interface ScPriceRange {
+        /**
+          * The array of price objects
+         */
+        "prices": Price[];
     }
     interface ScProductLineItem {
         /**
@@ -4097,6 +4103,12 @@ declare global {
         prototype: HTMLScPriceInputElement;
         new (): HTMLScPriceInputElement;
     };
+    interface HTMLScPriceRangeElement extends Components.ScPriceRange, HTMLStencilElement {
+    }
+    var HTMLScPriceRangeElement: {
+        prototype: HTMLScPriceRangeElement;
+        new (): HTMLScPriceRangeElement;
+    };
     interface HTMLScProductLineItemElement extends Components.ScProductLineItem, HTMLStencilElement {
     }
     var HTMLScProductLineItemElement: {
@@ -4505,6 +4517,7 @@ declare global {
         "sc-price-choice": HTMLScPriceChoiceElement;
         "sc-price-choices": HTMLScPriceChoicesElement;
         "sc-price-input": HTMLScPriceInputElement;
+        "sc-price-range": HTMLScPriceRangeElement;
         "sc-product-line-item": HTMLScProductLineItemElement;
         "sc-provider": HTMLScProviderElement;
         "sc-purchase-downloads-list": HTMLScPurchaseDownloadsListElement;
@@ -5218,7 +5231,7 @@ declare namespace LocalJSX {
         /**
           * Selector label
          */
-        "rule_groups"?: object;
+        "rule_groups"?: RuleGroup[];
         /**
           * The currently selected processor
          */
@@ -7150,6 +7163,12 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface ScPriceRange {
+        /**
+          * The array of price objects
+         */
+        "prices"?: Price[];
+    }
     interface ScProductLineItem {
         /**
           * Product monetary amount
@@ -8220,6 +8239,7 @@ declare namespace LocalJSX {
         "sc-price-choice": ScPriceChoice;
         "sc-price-choices": ScPriceChoices;
         "sc-price-input": ScPriceInput;
+        "sc-price-range": ScPriceRange;
         "sc-product-line-item": ScProductLineItem;
         "sc-provider": ScProvider;
         "sc-purchase-downloads-list": ScPurchaseDownloadsList;
@@ -8388,6 +8408,7 @@ declare module "@stencil/core" {
             "sc-price-choice": LocalJSX.ScPriceChoice & JSXBase.HTMLAttributes<HTMLScPriceChoiceElement>;
             "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
+            "sc-price-range": LocalJSX.ScPriceRange & JSXBase.HTMLAttributes<HTMLScPriceRangeElement>;
             "sc-product-line-item": LocalJSX.ScProductLineItem & JSXBase.HTMLAttributes<HTMLScProductLineItemElement>;
             "sc-provider": LocalJSX.ScProvider & JSXBase.HTMLAttributes<HTMLScProviderElement>;
             "sc-purchase-downloads-list": LocalJSX.ScPurchaseDownloadsList & JSXBase.HTMLAttributes<HTMLScPurchaseDownloadsListElement>;

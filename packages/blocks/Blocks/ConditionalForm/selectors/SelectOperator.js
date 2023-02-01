@@ -76,11 +76,11 @@ const OPTIONS = {
 	],
 };
 
-export default ({ type, ...props }) => (
-  <ScSelect
-			choices={OPTIONS?.[type] || []}
-      unselect={false}
-      {...props}
-      style={{ 'margin-bottom': '15px' }}
-		/>
+export default ({ type, onChange, ...props }) => (
+	<ScSelect
+		choices={OPTIONS?.[type] || []}
+		unselect={false}
+		onScChange={(e) => onChange(e.target.value)}
+		{...props}
+	/>
 );

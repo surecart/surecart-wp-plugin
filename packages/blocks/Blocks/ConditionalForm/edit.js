@@ -2,20 +2,35 @@
 import { css, jsx } from '@emotion/core';
 import { ScTag } from '@surecart/components-react';
 import {
+	Button,
+	Modal,
+	PanelBody,
+	PanelRow,
+	Placeholder,
+	ToolbarButton,
+	ToolbarGroup,
+} from '@wordpress/components';
+import {
 	__experimentalUseInnerBlocksProps,
 	useInnerBlocksProps as __stableUseInnerBlocksProps,
 	store as blockEditorStore,
 	InnerBlocks,
 	useBlockProps,
+	BlockControls,
+	InspectorControls,
 } from '@wordpress/block-editor';
-import { Button, Placeholder } from '@wordpress/components';
+
+import { edit } from '@wordpress/icons';
 import { useSelect } from '@wordpress/data';
+import { useState } from 'react';
 import { __ } from '@wordpress/i18n';
 
-import Settings from './settings';
+import Rules from './rules';
 
-export default (props) => {
-	const { attributes, clientId, isSelected } = props;
+import translations from './translations';
+
+export default ({ attributes, setAttributes, clientId, isSelected }) => {
+	const [editRules, setEditRules] = useState(false);
 	const { rule_groups } = attributes;
 
 	const blockProps = useBlockProps({
@@ -64,7 +79,47 @@ export default (props) => {
 
 	return (
 		<div {...blockProps}>
-			<Settings {...props} />
+			<BlockControls>
+				<ToolbarGroup>
+					<ToolbarButton
+						icon={edit}
+						label={__('Edit Conditions', 'surecart')}
+						onClick={() => setEditRules(true)}
+					/>
+				</ToolbarGroup>
+			</BlockControls>
+			<InspectorControls>
+				<PanelBody title={__('Conditions', 'surecart')}>
+					<PanelRow
+						css={css`
+							flex-wrap: wrap;
+							justify-content: flex-start;
+						`}
+					>
+						{!rule_groups?.length &&
+							__(
+								'Configure different visibility conditions to control when the contents appear to customers.',
+								'surecart'
+							)}
+						{(rule_groups || []).map(({ rules, rulesIndex }) => {
+							return (rules || []).map((rule, index) => (
+								<ScTag key={`${rulesIndex}${index}`}>
+									{translations?.[rule?.condition]}
+								</ScTag>
+							));
+						})}
+					</PanelRow>
+					<PanelRow>
+						<Button
+							variant="secondary"
+							onClick={() => setEditRules(true)}
+						>
+							{__('Configure Conditions', 'surecart')}
+						</Button>
+					</PanelRow>
+				</PanelBody>
+			</InspectorControls>
+
 			<ScTag
 				className="sc-conditional-form__tag"
 				type="info"
@@ -82,6 +137,7 @@ export default (props) => {
 			>
 				{__('Conditional', 'surecart')}
 			</ScTag>
+
 			{rule_groups?.length ? (
 				<div {...innerBlocksProps}></div>
 			) : (
@@ -103,16 +159,35 @@ export default (props) => {
 							<circle cx="12" cy="12" r="3"></circle>
 						</svg>
 					}
-					label={__('Conditional Form Group', 'surecart')}
+					label={__('Conditional', 'surecart')}
 					instructions={__(
-						'Add some conditions to you want to display.',
+						'First, add some conditions for the display of this group of blocks.',
 						'surecart'
 					)}
 				>
-					<Button isPrimary>
+					<Button isPrimary onClick={() => setEditRules(true)}>
 						{__('Add Conditions', 'surecart')}
 					</Button>
 				</Placeholder>
+			)}
+
+			{editRules && (
+				<Modal
+					title={__('Configure Conditions', 'surecart')}
+					onRequestClose={() => setEditRules(false)}
+					shouldCloseOnClickOutside={false}
+					css={css`
+						width: 75%;
+						max-width: 650px;
+						max-height: 80%;
+					`}
+				>
+					<Rules
+						attributes={attributes}
+						setAttributes={setAttributes}
+						closeModal={() => setEditRules(false)}
+					/>
+				</Modal>
 			)}
 		</div>
 	);

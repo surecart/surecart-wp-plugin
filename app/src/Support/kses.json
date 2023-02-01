@@ -1290,6 +1290,13 @@
     "class": true,
     "slot": true
   },
+  "sc-price-range": {
+    "prices": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-product-line-item": {
     "amount": true,
     "currency": true,
