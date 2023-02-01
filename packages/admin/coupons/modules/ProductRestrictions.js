@@ -86,6 +86,7 @@ export default ({ coupon, updateCoupon, loading }) => {
 											'surecart'
 										)}
 										requestQuery={{ archived: false }}
+										exclude={productIds}
 										onSelect={(id) => {
 											if (!id) return;
 											setDrafts(drafts - 1);
