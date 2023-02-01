@@ -58,6 +58,10 @@ class SubscriptionRestServiceProviderTest extends SureCartUnitTestCase {
 		$user->setCustomerId('testcustomerid');
 		wp_set_current_user($user->ID);
 		$request = new \WP_REST_Request('PATCH', '/surecart/v1/subscriptions/test_id/preserve');
+		$request->set_body_params(['cancellation_act' => [
+			'cancellation_id' => '123',
+			'comment' => 'sadsf'
+		]]);
 		$response = rest_do_request( $request );
 		$this->assertSame(200, $response->get_status());
 	}

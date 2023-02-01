@@ -18,6 +18,13 @@ export default ({ renderTrigger, protocol, coupon }) => {
 				style={{
 					'--width': '500px',
 					'--body-spacing': 'var(--sc-spacing-xxx-large)',
+					...(scData?.brand_color
+						? {
+								'--sc-color-primary-500': `#${scData?.brand_color}`,
+								'--sc-focus-ring-color-primary': `#${scData?.brand_color}`,
+								'--sc-input-border-color-focus': `#${scData?.brand_color}`,
+						  }
+						: {}),
 				}}
 				noHeader
 				open={open}

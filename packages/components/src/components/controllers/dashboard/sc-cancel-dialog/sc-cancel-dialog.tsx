@@ -1,5 +1,7 @@
 import { Component, Event, EventEmitter, h, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+import apiFetch from '../../../../functions/fetch';
+
 import { CancellationReason, Subscription, SubscriptionProtocol } from '../../../../types';
 
 @Component({
@@ -20,12 +22,21 @@ export class ScCancelDialog {
 
   close() {
     this.reset();
+    this.trackAttempt();
     this.scRequestClose.emit('close-button');
   }
 
   reset() {
     this.reason = null;
-    this.step = this.protocol.preservation_enabled ? 'survey' : 'cancel';
+    this.step = this.protocol?.preservation_enabled ? 'survey' : 'cancel';
+  }
+
+  async trackAttempt() {
+    if (!this.protocol?.preservation_enabled) return;
+    await apiFetch({
+      method: 'PATCH',
+      path: `surecart/v1/subscriptions/${this.subscription?.id}/preserve`,
+    });
   }
 
   componentWillLoad() {
@@ -61,7 +72,8 @@ export class ScCancelDialog {
               onScAbandon={() => this.close()}
               onScCancelled={() => {
                 this.scRefresh.emit();
-                this.close();
+                this.reset();
+                this.scRequestClose.emit('close-button');
               }}
             />
           )}
@@ -88,7 +100,8 @@ export class ScCancelDialog {
               onScCancel={() => (this.step = 'cancel')}
               onScPreserved={() => {
                 this.scRefresh.emit();
-                this.close();
+                this.reset();
+                this.scRequestClose.emit('close-button');
               }}
             />
           )}

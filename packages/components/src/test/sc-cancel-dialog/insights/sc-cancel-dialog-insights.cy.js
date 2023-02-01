@@ -88,4 +88,26 @@ describe('Cancel Dialog (basic) ', () => {
     .should('include', 'cancellation_act%5Bcomment%5D=This%20is%20prompt%20text')
     .should('include','cancellation_act%5Bcancellation_reason_id%5D=comment_reason_id')
   })
+
+  it('Records the attempt if the dialog is closed', () => {
+    cy.intercept('**/surecart/v1/cancellation_reasons*', [ {
+      id: 'comment_reason_id',
+      "comment_enabled":true,
+      "comment_prompt": 'Prompt',
+      "coupon_enabled": false,
+      "label": "Non coupon",
+    }]).as('getReasons');
+
+    cy.intercept('**/surecart/v1/subscriptions/subscription_id/preserve*', { object: 'subscription'}).as('preserve');
+
+    cy.visit('/test/sc-cancel-dialog/insights');
+    cy.get('sc-cancel-dialog').find('sc-cancel-survey').find('sc-dashboard-module').as('surveyContent');
+    cy.get('@surveyContent').find('sc-button.cancel-survey__abort-link')
+    .find('.button')
+    .click({force: true});
+    cy.wait('@preserve').its('request.url').should('not.include', 'cancellation_act');
+
+    cy.get('sc-cancel-dialog').find('sc-dialog').find('.dialog__overlay').click({force: true});
+    cy.wait('@preserve').its('request.url').should('not.include', 'cancellation_act');
+  });
 });

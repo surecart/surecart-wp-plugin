@@ -83,7 +83,7 @@ class CancellationInsightsListTable extends ListTable {
 	 * We only have one default view.
 	 */
 	protected function get_views() {
-		return [ 'all' => __( 'Cancellations Attempts', 'surecart' ) ];
+		return [ 'all' => __( 'All Cancellation Attempts', 'surecart' ) ];
 	}
 
 	/**
@@ -183,7 +183,7 @@ class CancellationInsightsListTable extends ListTable {
 		if ( $act->preserved ) {
 			ob_start();
 			?>
-			<sc-tag type="success"><?php echo esc_html__( 'Preserved', 'surecart' ); ?> </sc-tag>
+			<sc-tag type="success"><?php echo esc_html__( 'Saved', 'surecart' ); ?> </sc-tag>
 			<?php if ( $act->coupon_applied ) { ?>
 				<sc-tag type="info"><?php echo esc_html__( 'Coupon Applied', 'surecart' ); ?></sc-tag>
 			<?php } ?>

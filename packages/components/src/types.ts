@@ -530,6 +530,7 @@ export interface Subscription extends Object {
   status: SubscriptionStatus;
   live_mode: boolean;
   external_subscription_id: string;
+  current_cancellation_act: string | CancellationAct;
   trial_end_at: number;
   processor_type: 'stripe' | 'paypal';
   order: Order;
@@ -552,6 +553,19 @@ export interface Subscription extends Object {
   payment_method: PaymentMethod | string;
   price: Price;
   ad_hoc_amount: number;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface CancellationAct {
+  id: string;
+  object: 'cancellation_act';
+  cancellation_reason: string | CancellationReason;
+  comment: string;
+  coupon_applied: boolean;
+  preserved: boolean;
+  subscription: string | Subscription;
+  performed_at: number;
   created_at: number;
   updated_at: number;
 }

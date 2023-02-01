@@ -96,7 +96,7 @@ export class ScCancelSurvey {
           <span slot="description">{reasons_description}</span>
           <sc-form onScSubmit={e => this.handleSubmit(e)} style={{ '--sc-form-row-spacing': '2em' }}>
             <sc-choices showLabel={false} label={__('Choose a reason', 'surecart')} style={{ '--columns': '2' }} required>
-              {this.renderReasons()}
+              <div>{this.renderReasons()}</div>
             </sc-choices>
             {this.selectedReason?.comment_enabled && (
               <sc-textarea

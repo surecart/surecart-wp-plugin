@@ -189,6 +189,7 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 					type="number"
 					min="0"
 					max="100"
+					step="0.01"
 					required
 					label={__('Tax Rate', 'surecart')}
 					value={data?.manual_rate}

@@ -2,7 +2,7 @@
 	<?php
 	\SureCart::render(
 		'layouts/partials/admin-index-header',
-		[ 'title' => __( 'Cancellations', 'surecart' ) ]
+		[ 'title' => __( 'Subscription Saver', 'surecart' ) ]
 	);
 	?>
 
@@ -18,5 +18,11 @@
 		<div id="app"></div>
 	<?php endif; ?>
 
+	<?php
+		\SureCart::render(
+			'layouts/partials/admin-index-header',
+			[ 'title' => __( 'Cancellation Attempts', 'surecart' ) ]
+		);
+		?>
 	<?php $table->display(); ?>
 </div>
