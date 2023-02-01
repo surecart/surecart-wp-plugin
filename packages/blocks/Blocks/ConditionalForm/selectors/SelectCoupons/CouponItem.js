@@ -2,6 +2,7 @@ import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import FilterItem from '../../../../../admin/components/filters/FilterItem';
+import { ScFormatNumber } from '@surecart/components-react';
 
 export default (props) => {
 	const { id } = props;
@@ -28,11 +29,11 @@ export default (props) => {
 		}
 		if (item?.amount_off) {
 			return (
-				<sc-format-number
+				<ScFormatNumber
 					type="currency"
 					currency={item?.currency}
 					value={item?.amount_off}
-				></sc-format-number>
+				/>
 			);
 		}
 	};
