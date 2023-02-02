@@ -22,13 +22,13 @@ export default ({ subscription, customer, product, loading }) => {
 			);
 		}
 
-    if (
-			subscription.restore_at
-		) {
+		if (subscription?.restore_at) {
 			return (
 				<div>
 					<div>
-						<strong>{sprintf(__('Restores on', 'surecart'))}</strong>
+						<strong>
+							{sprintf(__('Restores on', 'surecart'))}
+						</strong>
 					</div>
 					<ScFormatDate
 						date={subscription.restore_at}
@@ -40,7 +40,6 @@ export default ({ subscription, customer, product, loading }) => {
 				</div>
 			);
 		}
-	};
 
 		if (
 			subscription?.cancel_at_period_end &&

@@ -196,7 +196,7 @@ export default () => {
 	};
 
 	const renderRestoreAtButton = () => {
-		if (!subscription.restore_at) return null;
+		if (!subscription?.restore_at) return null;
 
 		return (
 			<ScMenuItem onClick={() => setModal('restore_at')}>
