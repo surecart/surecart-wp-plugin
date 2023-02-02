@@ -1,28 +1,11 @@
 {
 	"apiVersion": 2,
-	"name": "surecart/product-prices",
-	"title": "Product Prices",
-	"description": "Displays product price amounts",
+	"name": "surecart/product-description",
+	"title": "Product Description",
+	"description": "Display the product description",
 	"category": "surecart",
-	"keywords": ["price", "product"],
-	"attributes": {
-		"text": {
-			"type": "string",
-			"default": "Add To Cart"
-		},
-		"type": {
-			"type": "string",
-			"default": "primary"
-		},
-		"size": {
-			"type": "string",
-			"default": "large"
-		},
-		"full": {
-			"type": "boolean",
-			"default": true
-		}
-	},
+	"ancestor": ["surecart/product-info"],
+	"keywords": ["description"],
 	"supports": {
 		"reusable": false,
 		"html": false,

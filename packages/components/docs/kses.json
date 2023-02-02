@@ -1295,6 +1295,13 @@
     "class": true,
     "slot": true
   },
+  "sc-product-image": {
+    "product": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-product-line-item": {
     "amount": true,
     "currency": true,
@@ -1314,6 +1321,14 @@
   },
   "sc-product-prices": {
     "prices": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-text": {
+    "product": true,
+    "text": true,
     "style": true,
     "id": true,
     "class": true,

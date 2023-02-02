@@ -4,7 +4,7 @@
 	"title": "Product Quantity",
 	"description": "Displays quantity selector for a product.",
 	"category": "surecart",
-	"ancestor": ["surecart/product-form"],
+	"ancestor": ["surecart/product-info"],
 	"keywords": ["quantity", "form", "product"],
 	"attributes": {
 		"label": {

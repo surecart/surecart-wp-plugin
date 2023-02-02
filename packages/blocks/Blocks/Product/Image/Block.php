@@ -1,8 +1,7 @@
 <?php
 
-namespace SureCartBlocks\Blocks\ProductPrices;
+namespace SureCartBlocks\Blocks\Product\Image;
 
-use SureCart\Support\Currency;
 use SureCartBlocks\Blocks\BaseBlock;
 
 /**
@@ -28,13 +27,12 @@ class Block extends BaseBlock {
 		global $sc_product;
 		ob_start(); ?>
 
-		<sc-product-prices
-			class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
+		<div class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
 			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
-			<?php if ( ! empty( $sc_product->prices->data[0] ) ) : ?>
-				<?php echo esc_html( Currency::format( $sc_product->prices->data[0]->amount, $sc_product->prices->data[0]->currency ) ); ?>
-			<?php endif; ?>
-		</sc-product-prices>
+			<sc-product-image>
+				<img href="<?php echo esc_url( $sc_product->image ); ?>">
+			</sc-product-image>
+		</div>
 
 		<?php
 		return ob_get_clean();

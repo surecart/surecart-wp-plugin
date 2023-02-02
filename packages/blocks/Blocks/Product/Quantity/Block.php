@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCartBlocks\Blocks\ProductQuantity;
+namespace SureCartBlocks\Blocks\Product\Quantity;
 
 use SureCartBlocks\Blocks\BaseBlock;
 
@@ -18,12 +18,13 @@ class Block extends BaseBlock {
 	 */
 	public function render( $attributes, $content ) {
 		ob_start(); ?>
-		<sc-form-control
-		label="<?php echo esc_attr( $attributes['label'] ); ?>"
-		class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
+		<div class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
 		style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
-			<sc-quantity-select></sc-quantity-select>
-		</sc-form-control>
+			<sc-form-control
+			label="<?php echo esc_attr( $attributes['label'] ); ?>">
+				<sc-quantity-select></sc-quantity-select>
+			</sc-form-control>
+		</div>
 		<?php
 		return ob_get_clean();
 	}

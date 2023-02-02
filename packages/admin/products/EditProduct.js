@@ -41,29 +41,6 @@ export default ({ id }) => {
 		productError,
 	} = useEntity('product', id);
 
-	// the the product page post.
-	const { post, hasLoadedPost } = useSelect(
-		(select) => {
-			const queryArgs = [
-				'postType',
-				'sc-product',
-				{
-					status: ['publish', 'future', 'draft'],
-					meta_key: 'sc_product_id',
-					meta_value: id,
-				},
-			];
-			return {
-				post: select(coreStore).getEntityRecords(...queryArgs)?.[0],
-				hasLoadedPost: select(coreStore).hasFinishedResolution(
-					'getEntityRecords',
-					queryArgs
-				),
-			};
-		},
-		[id]
-	);
-
 	/**
 	 * Handle the form submission
 	 */
@@ -223,7 +200,6 @@ export default ({ id }) => {
 				<>
 					<Summary
 						id={id}
-						post={post}
 						product={product}
 						isSaving={savingProduct}
 						onToggleArchiveProduct={onToggleArchiveProduct}
@@ -233,8 +209,7 @@ export default ({ id }) => {
 						id={id}
 						product={product}
 						updateProduct={editProduct}
-						post={post}
-						loading={!hasLoadedPost}
+						loading={!hasLoadedProduct}
 					/>
 					<Tax
 						product={product}

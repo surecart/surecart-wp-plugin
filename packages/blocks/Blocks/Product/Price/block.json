@@ -1,32 +1,19 @@
 {
 	"apiVersion": 2,
-	"name": "surecart/product-title",
-	"title": "Product Title",
-	"description": "Displays the product title.",
+	"name": "surecart/product-price",
+	"title": "Product Price",
+	"description": "Displays the product price or price range.",
 	"category": "surecart",
-	"ancestor": ["surecart/product-form"],
-	"keywords": ["title", "form", "product"],
-	"usesContext": ["surecart/product"],
+	"ancestor": ["surecart/product-info"],
+	"keywords": ["price", "product"],
+	"attributes": {},
 	"supports": {
 		"reusable": false,
 		"html": false,
-		"multiple": false
-	},
-	"attributes": {
-		"textAlign": {
-			"type": "string"
-		},
-		"level": {
-			"type": "number",
-			"default": 2
-		}
-	},
-	"supports": {
-		"align": ["wide", "full"],
-		"html": false,
+		"multiple": false,
 		"color": {
 			"gradients": true,
-			"link": true,
+			"link": false,
 			"__experimentalDefaultControls": {
 				"background": true,
 				"text": true,

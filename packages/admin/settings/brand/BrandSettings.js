@@ -19,6 +19,7 @@ import ColorPopup from '../../../blocks/components/ColorPopup';
 import Error from '../../components/Error';
 import useSave from '../UseSave';
 import Logo from './Logo';
+import { getEntityRecord } from '@wordpress/core-data/selectors';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -32,6 +33,14 @@ export default () => {
 		'site',
 		'surecart_theme'
 	);
+
+	const {
+		brand: { logo },
+	} = useSelect((select) => {
+		return {
+			brand: getEntityRecord('surecart', 'store', 'brand'),
+		};
+	});
 
 	/**
 	 * Form is submitted.

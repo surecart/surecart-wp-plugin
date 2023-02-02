@@ -136,9 +136,12 @@ return [
 		\SureCartBlocks\Blocks\Dashboard\DashboardTab\Block::class,
 
 		\SureCartBlocks\Blocks\Product\Info\Block::class,
-		\SureCartBlocks\Blocks\ProductTitle\Block::class,
-		\SureCartBlocks\Blocks\ProductPrices\Block::class,
-		\SureCartBlocks\Blocks\ProductQuantity\Block::class,
+		\SureCartBlocks\Blocks\Product\Description\Block::class,
+		\SureCartBlocks\Blocks\Product\Title\Block::class,
+		\SureCartBlocks\Blocks\Product\Price\Block::class,
+		\SureCartBlocks\Blocks\Product\Image\Block::class,
+		\SureCartBlocks\Blocks\Product\Quantity\Block::class,
+		\SureCartBlocks\Blocks\Product\BuyButtons\Block::class,
 
 	],
 

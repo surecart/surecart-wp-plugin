@@ -1,10 +1,11 @@
 {
 	"apiVersion": 2,
-	"name": "surecart/product-cart-button",
-	"title": "Product Add To Cart Button",
-	"description": "Displays product add to cart button",
+	"name": "surecart/product-buy-buttons",
+	"title": "Product Buy Buttons",
+	"description": "Displays product buy and add to cart buttons",
 	"category": "surecart",
-	"keywords": ["cart", "form", "product"],
+	"ancestor": ["surecart/product-info"],
+	"keywords": ["button", "buy", "product"],
 	"attributes": {
 		"text": {
 			"type": "string",

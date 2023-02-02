@@ -2301,6 +2301,9 @@ export namespace Components {
     interface ScProduct {
         "product": Product;
     }
+    interface ScProductImage {
+        "product": Product;
+    }
     interface ScProductLineItem {
         /**
           * Product monetary amount
@@ -2349,6 +2352,10 @@ export namespace Components {
     }
     interface ScProductPrices {
         "prices": Price[];
+    }
+    interface ScProductText {
+        "product": Product;
+        "text": 'name' | 'description';
     }
     interface ScProductTitle {
         "product": Product;
@@ -4104,6 +4111,12 @@ declare global {
         prototype: HTMLScProductElement;
         new (): HTMLScProductElement;
     };
+    interface HTMLScProductImageElement extends Components.ScProductImage, HTMLStencilElement {
+    }
+    var HTMLScProductImageElement: {
+        prototype: HTMLScProductImageElement;
+        new (): HTMLScProductImageElement;
+    };
     interface HTMLScProductLineItemElement extends Components.ScProductLineItem, HTMLStencilElement {
     }
     var HTMLScProductLineItemElement: {
@@ -4115,6 +4128,12 @@ declare global {
     var HTMLScProductPricesElement: {
         prototype: HTMLScProductPricesElement;
         new (): HTMLScProductPricesElement;
+    };
+    interface HTMLScProductTextElement extends Components.ScProductText, HTMLStencilElement {
+    }
+    var HTMLScProductTextElement: {
+        prototype: HTMLScProductTextElement;
+        new (): HTMLScProductTextElement;
     };
     interface HTMLScProductTitleElement extends Components.ScProductTitle, HTMLStencilElement {
     }
@@ -4525,8 +4544,10 @@ declare global {
         "sc-price-input": HTMLScPriceInputElement;
         "sc-price-range": HTMLScPriceRangeElement;
         "sc-product": HTMLScProductElement;
+        "sc-product-image": HTMLScProductImageElement;
         "sc-product-line-item": HTMLScProductLineItemElement;
         "sc-product-prices": HTMLScProductPricesElement;
+        "sc-product-text": HTMLScProductTextElement;
         "sc-product-title": HTMLScProductTitleElement;
         "sc-provider": HTMLScProviderElement;
         "sc-purchase-downloads-list": HTMLScPurchaseDownloadsListElement;
@@ -7167,6 +7188,9 @@ declare namespace LocalJSX {
     interface ScProduct {
         "product"?: Product;
     }
+    interface ScProductImage {
+        "product"?: Product;
+    }
     interface ScProductLineItem {
         /**
           * Product monetary amount
@@ -7223,6 +7247,10 @@ declare namespace LocalJSX {
     }
     interface ScProductPrices {
         "prices"?: Price[];
+    }
+    interface ScProductText {
+        "product"?: Product;
+        "text"?: 'name' | 'description';
     }
     interface ScProductTitle {
         "product"?: Product;
@@ -8244,8 +8272,10 @@ declare namespace LocalJSX {
         "sc-price-input": ScPriceInput;
         "sc-price-range": ScPriceRange;
         "sc-product": ScProduct;
+        "sc-product-image": ScProductImage;
         "sc-product-line-item": ScProductLineItem;
         "sc-product-prices": ScProductPrices;
+        "sc-product-text": ScProductText;
         "sc-product-title": ScProductTitle;
         "sc-provider": ScProvider;
         "sc-purchase-downloads-list": ScPurchaseDownloadsList;
@@ -8415,8 +8445,10 @@ declare module "@stencil/core" {
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
             "sc-price-range": LocalJSX.ScPriceRange & JSXBase.HTMLAttributes<HTMLScPriceRangeElement>;
             "sc-product": LocalJSX.ScProduct & JSXBase.HTMLAttributes<HTMLScProductElement>;
+            "sc-product-image": LocalJSX.ScProductImage & JSXBase.HTMLAttributes<HTMLScProductImageElement>;
             "sc-product-line-item": LocalJSX.ScProductLineItem & JSXBase.HTMLAttributes<HTMLScProductLineItemElement>;
             "sc-product-prices": LocalJSX.ScProductPrices & JSXBase.HTMLAttributes<HTMLScProductPricesElement>;
+            "sc-product-text": LocalJSX.ScProductText & JSXBase.HTMLAttributes<HTMLScProductTextElement>;
             "sc-product-title": LocalJSX.ScProductTitle & JSXBase.HTMLAttributes<HTMLScProductTitleElement>;
             "sc-provider": LocalJSX.ScProvider & JSXBase.HTMLAttributes<HTMLScProviderElement>;
             "sc-purchase-downloads-list": LocalJSX.ScPurchaseDownloadsList & JSXBase.HTMLAttributes<HTMLScPurchaseDownloadsListElement>;

@@ -17,7 +17,7 @@ export class ScProduct {
   state() {
     return {
       product: this.product,
-      prices: this.product.prices?.data || [],
+      prices: this.product?.prices?.data || [],
     };
   }
 

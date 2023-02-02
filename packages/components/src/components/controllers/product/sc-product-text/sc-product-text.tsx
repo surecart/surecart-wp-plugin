@@ -3,17 +3,17 @@ import { openWormhole } from 'stencil-wormhole';
 import { Product } from '../../../../types';
 
 @Component({
-  tag: 'sc-product-title',
-  styleUrl: 'sc-product-title.css',
+  tag: 'sc-product-text',
+  styleUrl: 'sc-product-text.css',
   shadow: true,
 })
-export class ScProductTitle {
+export class ScProductText {
   @Prop() product: Product;
+  @Prop() text: 'name' | 'description' = 'name';
 
   render() {
-    console.log(this.product);
-    if (this.product?.name) {
-      return this.product.name;
+    if (this.product?.[this.text]) {
+      return this.product[this.text];
     }
     return (
       <Host>
@@ -23,4 +23,4 @@ export class ScProductTitle {
   }
 }
 
-openWormhole(ScProductTitle, ['product'], false);
+openWormhole(ScProductText, ['product'], false);

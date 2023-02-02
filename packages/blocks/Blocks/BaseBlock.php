@@ -62,9 +62,9 @@ abstract class BaseBlock {
 	 *
 	 * @return string
 	 */
-	public function getStyles( $attributes, $additional_styles = '' ) {
+	public function getStyles( $attributes ) {
 		[ 'styles' => $styles ] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes );
-		return implode( ' ', array_filter( [ $styles, $additional_styles ] ) );
+		return $styles;
 	}
 
 	/**

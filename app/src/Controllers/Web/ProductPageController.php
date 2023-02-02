@@ -23,10 +23,22 @@ class ProductPageController {
 			return $this->handleError( $sc_product );
 		}
 
-		$post               = get_post( 1230 ); //phpcs:ignore
-		$post->post_title   = $sc_product->name;
-		$post->post_excerpt = $sc_product->description;
-		$post->post_name    = $sc_product->slug;
+		$template_id = $sc_product->metadata->wp_template_id ?? 'default';
+		if ( is_int( $template_id ) ) {
+			$post               = get_post( $template_id ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+			$post->post_title   = $sc_product->name;
+			$post->post_excerpt = $sc_product->description;
+			$post->post_name    = $sc_product->slug;
+		} else {
+			$post = new \WP_Post( // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+				(object) [
+					'post_title'    => $sc_product->name,
+					'post_excerpt'  => $sc_product->description,
+					'post_name'     => $sc_product->slug,
+					'comment_count' => 0,
+				]
+			);
+		}
 		global $wp_query;
 		$wp_query->post              = $post;
 		$wp_query->is_404            = false;
