@@ -134,6 +134,7 @@ return [
 		\SureCartBlocks\Blocks\Dashboard\CustomerInvoices\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\DashboardPage\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\DashboardTab\Block::class,
+		\SureCartBlocks\Blocks\StoreLogo\Block::class,
 	],
 
 	/** Which components to preload for each block. */
