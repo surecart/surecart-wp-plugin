@@ -24,6 +24,7 @@ import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
+import Coupon from './modules/Coupon';
 
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
@@ -184,6 +185,7 @@ export default () => {
 		});
 	};
 
+	console.log(subscription);
 	return (
 		<UpdateModel
 			onSubmit={onSubmit}
@@ -238,7 +240,9 @@ export default () => {
 								checked={updateBehavior === 'immediate'}
 								onScChange={(e) =>
 									setUpdateBehavior(
-										e.target.checked ? 'immediate' : 'pending'
+										e.target.checked
+											? 'immediate'
+											: 'pending'
 									)
 								}
 							>
@@ -278,6 +282,11 @@ export default () => {
 					priceId={subscription?.price?.id || subscription?.price}
 				/>
 				<Trial
+					subscription={subscription}
+					updateSubscription={editSubscription}
+					loading={!hasLoadedSubscription}
+				/>
+				<Coupon
 					subscription={subscription}
 					updateSubscription={editSubscription}
 					loading={!hasLoadedSubscription}

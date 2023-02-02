@@ -35,6 +35,8 @@ import Purchases from './modules/Purchases';
 import Tax from './modules/Tax';
 import UpcomingPeriod from './modules/UpcomingPeriod';
 import PaymentMethod from '../edit/modules/PaymentMethod';
+import Coupon from '../edit/modules/Coupon';
+import CouponDisplay from './modules/CouponDisplay';
 
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
@@ -183,6 +185,8 @@ export default () => {
 		);
 	};
 
+	console.log(subscription);
+
 	return (
 		<Template
 			title={
@@ -301,6 +305,12 @@ export default () => {
 						loading={!hasLoadedSubscription}
 					/>
 				)}
+				{subscription?.discount && (
+					<CouponDisplay
+						coupon={subscription.discount.coupon}
+						loading={!hasLoadedSubscription}
+					/>
+				)}
 			</>
 
 			<CancelPendingUpdate
@@ -324,6 +334,7 @@ export default () => {
 				open={modal === 'restore'}
 				onRequestClose={() => setModal(false)}
 			/>
+
 			{isSaving && <ScBlockUi spinner />}
 		</Template>
 	);
