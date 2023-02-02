@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
-import { select } from '@wordpress/data';
+import { select, useDispatch } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 
@@ -17,6 +17,7 @@ export default (props) => {
 		page: 1,
 		per_page: 10,
 	});
+	const { receiveEntityRecords } = useDispatch(coreStore);
 
 	const handleOnScrollEnd = () => {
 		if (!pagination.enabled || isLoading) return;
@@ -33,19 +34,34 @@ export default (props) => {
 	const fetchData = async (pagination) => {
 		const { baseURL } = select(coreStore).getEntityConfig('surecart', name);
 		if (!baseURL) return;
-		if (pagination.page === 1) setChoices([]);
+		if (pagination.page === 1) {
+			setChoices([]);
+			setPagination((state) => ({ ...state, enabled: true }));
+		}
+
+		const queryArgs = {
+			query,
+			page: pagination.page,
+			per_page: pagination.per_page,
+			...requestQuery,
+		};
+
+		const data = select(coreStore).getEntityRecords('surecart', name, {
+			...queryArgs,
+		});
+
+		if (data && data.length) {
+			setChoices((state) => [...state, ...mapData(data)]);
+			return;
+		}
 
 		try {
 			setIsLoading(true);
 			const data = await apiFetch({
-				path: addQueryArgs(baseURL, {
-					query,
-					page: pagination.page,
-					per_page: pagination.per_page,
-					...requestQuery,
-				}),
+				path: addQueryArgs(baseURL, queryArgs),
 			});
 			setChoices((state) => [...state, ...mapData(data)]);
+			receiveEntityRecords('surecart', name, data, queryArgs);
 		} catch (error) {
 			setPagination((state) => ({ ...state, enabled: false }));
 			console.error(error);
