@@ -21,7 +21,7 @@ class TemplatesServiceProvider implements ServiceProviderInterface {
 				[
 					'template-surecart-no-sidebar.php' => esc_html__( 'SureCart: Full Width No Sidebar', 'surecart' ),
 				],
-				$c['surecart.product.post']->getPostType()
+				'page'
 			);
 		};
 

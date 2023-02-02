@@ -55,38 +55,14 @@ class Product extends Model {
 	}
 
 	/**
-	 * Create a new model
+	 * Get the product permalink.
 	 *
-	 * @param array $attributes Attributes to create.
-	 *
-	 * @return $this|false
+	 * @return string|false
 	 */
-	// protected function create( $attributes = [] ) {
-	// $created = parent::create( $attributes );
-
-	// handle error.
-	// if ( is_wp_error( $created ) ) {
-	// return $created;
-	// }
-
-	// already creating product page.
-	// if ( $this->fireModelEvent( 'creating_product_page' ) === false ) {
-	// return false;
-	// }
-
-	// create the draft product page.
-	// \SureCart::productPage()->create(
-	// [
-	// 'post_title'  => $created->name,
-	// 'post_status' => 'draft',
-	// ],
-	// $created->id
-	// );
-
-	// fire event.
-	// $this->fireModelEvent( 'created_product_page' );
-
-	// created.
-	// return $created;
-	// }
+	public function getPermalinkAttribute() {
+		if ( ! $this->attributes['id'] ) {
+			return false;
+		}
+		return get_home_url( null, '/product/' . $this->attributes['id'] );
+	}
 }

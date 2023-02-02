@@ -16,37 +16,74 @@ class ProductPageController {
 	 * @return function
 	 */
 	public function show( $request, $view, $id ) {
-		global $post, $wp_query, $sc_product;
+		global $post, $sc_product, $_wp_current_template_content;
 
 		$sc_product = \SureCart\Models\Product::with( [ 'prices' ] )->find( $id );
 		if ( is_wp_error( $sc_product ) ) {
 			return $this->handleError( $sc_product );
 		}
 
-		$template_id = $sc_product->metadata->wp_template_id ?? 'default';
-		if ( is_int( $template_id ) ) {
-			$post               = get_post( $template_id ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-			$post->post_title   = $sc_product->name;
-			$post->post_excerpt = $sc_product->description;
-			$post->post_name    = $sc_product->slug;
-		} else {
-			$post = new \WP_Post( // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-				(object) [
-					'post_title'    => $sc_product->name,
-					'post_excerpt'  => $sc_product->description,
-					'post_name'     => $sc_product->slug,
-					'comment_count' => 0,
-				]
+		$template_id                  = $sc_product->metadata->wp_template_id ?? 'default';
+		$template                     = get_block_template( $template_id );
+		$_wp_current_template_content = $template->content;
+
+		// $post = new \WP_Post( // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		// (object) [
+		// 'post_title'   => $sc_product->name,
+		// 'post_excerpt' => $sc_product->description,
+		// 'post_content' => $template->content,
+		// 'post_name'    => $sc_product->slug,
+		// ]
+		// );
+
+		// global $wp_query;
+		// $wp_query->post              = $post;
+		// $wp_query->is_404            = false;
+		// $wp_query->queried_object_id = $post->ID;
+		// $wp_query->queried_object    = $post;
+		// $wp_query->is_single         = true;
+		// $wp_query->is_singular       = true;
+		// setup_postdata( $GLOBALS['post'] =& $post ); //phpcs:ignore
+		// wp_die();
+		// if ( is_int( $template_id ) ) {
+		// $post               = get_post( $template_id ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		// $post->post_title   = $sc_product->name;
+		// $post->post_excerpt = $sc_product->description;
+		// $post->post_name    = $sc_product->slug;
+		// } else {
+		// $post = new \WP_Post( // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		// (object) [
+		// 'post_title'    => $sc_product->name,
+		// 'post_excerpt'  => $sc_product->description,
+		// 'post_name'     => $sc_product->slug,
+		// 'comment_count' => 0,
+		// ]
+		// );
+		// }
+		// global $wp_query;
+		// $wp_query->post              = $post;
+		// $wp_query->is_404            = false;
+		// $wp_query->queried_object_id = $post->ID;
+		// $wp_query->queried_object    = $post;
+		// $wp_query->is_single         = true;
+		// $wp_query->is_singular       = true;
+		// setup_postdata( $GLOBALS['post'] =& $post ); //phpcs:ignore
+
+		if ( $template->wp_id ) {
+			add_action(
+				'admin_bar_menu',
+				function( $wp_admin_bar ) use ( $template ) {
+					$wp_admin_bar->add_node(
+						[
+							'id'    => 'edit',
+							'title' => __( 'Edit Template', 'surecart' ),
+							'href'  => admin_url( sprintf( 'post.php?post=%d&action=edit', $template->wp_id ) ),
+						]
+					);
+				},
+				99
 			);
 		}
-		global $wp_query;
-		$wp_query->post              = $post;
-		$wp_query->is_404            = false;
-		$wp_query->queried_object_id = $post->ID;
-		$wp_query->queried_object    = $post;
-		$wp_query->is_single         = true;
-		$wp_query->is_singular       = true;
-		setup_postdata( $GLOBALS['post'] =& $post ); //phpcs:ignore
 
 		// // add a link to the WP Toolbar.
 		$this->addEditButton( $sc_product->id );
@@ -56,7 +93,7 @@ class ProductPageController {
 		add_filter(
 			'post_link',
 			function( $permalink, $requested_post ) use ( $post, $sc_product ) {
-				if ( $requested_post->ID === $post->ID ) {
+				if ( $requested_post->ID === $post->wp_id ) {
 					return \SureCart::routeUrl( 'product', [ 'id' => $sc_product->id ] );
 				}
 				return $permalink;
@@ -68,7 +105,8 @@ class ProductPageController {
 		// check to see if the product has a page or template.
 		return \SureCart::view( 'web/product' )->with(
 			[
-				'product' => $sc_product,
+				'product'  => $sc_product,
+				'template' => $template->content,
 			]
 		);
 	}

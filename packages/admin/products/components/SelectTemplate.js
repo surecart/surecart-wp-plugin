@@ -1,21 +1,40 @@
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import SelectModel from '../../../admin/components/SelectModel';
 import { ScIcon, ScMenuDivider, ScMenuItem } from '@surecart/components-react';
 
 export default (props) => {
 	const [query, setQuery] = useState(null);
+	const { saveEntityRecord } = useDispatch(coreStore);
+
+	const addNew = async () => {
+		const newTemplate = await saveEntityRecord(
+			'postType',
+			'wp_template',
+			{
+				description: 'test',
+				// Slugs need to be strings, so this is for template `404`
+				slug: 'this-is-a-test',
+				status: 'publish',
+				title: 'SureCart Template',
+				content: 'asdfasdf',
+				is_surecart_template: true,
+			},
+			{
+				throwOnError: true,
+			}
+		); // Set template before navigating away to avoid initial stale value.
+	};
 
 	const { templates, loading } = useSelect(
 		(select) => {
 			const queryArgs = [
 				'postType',
-				'sc-product',
+				'wp_template',
 				{
 					query,
-					status: 'publish',
 				},
 			];
 			return {
@@ -49,7 +68,7 @@ export default (props) => {
 			loading={loading}
 			prefix={
 				<div slot="prefix">
-					<ScMenuItem onClick={() => {}}>
+					<ScMenuItem onClick={() => addNew()}>
 						<ScIcon slot="prefix" name="plus" />
 						{__('Add New', 'surecart')}
 					</ScMenuItem>

@@ -21,7 +21,7 @@ class Block extends BaseBlock {
 		<div class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
 		style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
 			<sc-form-control
-			label="<?php echo esc_attr( $attributes['label'] ); ?>">
+			label="<?php echo esc_attr( $attributes['label'] ?? '' ); ?>">
 				<sc-quantity-select></sc-quantity-select>
 			</sc-form-control>
 		</div>

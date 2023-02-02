@@ -8,12 +8,10 @@
  * @package SureCart
  */
 
-use SureCart\Models\Price;
-use SureCart\Models\Product;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
 
 // don't let WordPress redirect 404 permalink for product pages.
 add_filter(
@@ -28,44 +26,6 @@ add_filter(
 		return $guess;
 	},
 	9999999999
-);
-
-add_filter(
-	'query_vars',
-	function( $query_vars ) {
-		$query_vars[] = 'product';
-		return $query_vars;
-	}
-);
-add_filter(
-	'get_canonical_url',
-	function( $url ) {
-		global $sc_product;
-		if ( empty( $sc_product->id ) ) {
-			return $url;
-		}
-		return \SureCart::routeUrl( 'product', [ 'id' => $sc_product->id ] );
-	}
-);
-add_filter(
-	'get_shortlink',
-	function( $url ) {
-		global $sc_product;
-		if ( empty( $sc_product->id ) ) {
-			return $url;
-		}
-		return \SureCart::routeUrl( 'product', [ 'id' => $sc_product->id ] );
-	}
-);
-add_filter(
-	'post_link',
-	function( $permalink ) {
-		global $sc_product;
-		if ( empty( $sc_product->id ) ) {
-			return $permalink;
-		}
-		return \SureCart::routeUrl( 'product', [ 'id' => $sc_product->id ] );
-	}
 );
 
 // register uninstall.
@@ -86,75 +46,4 @@ add_filter(
 		}
 		return $url;
 	}
-);
-
-
-add_filter(
-	'get_post_metadata',
-	function( $value, $object_id, $meta_key, $single, $meta_type ) {
-		// we only care about our post type.
-		if ( 'sc-product' !== get_post_type( $object_id ) ) {
-			return $value;
-		}
-
-		// we want to leave this one alone.
-		if ( 'sc_product_id' === $meta_key ) {
-			return $value;
-		}
-
-		// get the associated product id.
-		$product_id = get_post_meta( $object_id, 'sc_product_id', true );
-		if ( empty( $product_id ) ) {
-			return $value;
-		}
-
-		// asking for the product.
-		if ( 'product' === $meta_key ) {
-			return Product::with( [ 'prices' ] )->find( $product_id );
-		}
-
-		// asking for prices.
-		if ( 'prices' === $meta_key ) {
-			return Price::where(
-				[
-					'archived'    => false,
-					'product_ids' => [ $product_id ],
-				]
-			)->get();
-		}
-
-		return $value;
-	},
-	9,
-	5
-);
-
-register_meta(
-	'post',
-	'sc_product_id',
-	[
-		'type'              => 'string',
-		'show_in_rest'      => true,
-		'single'            => true,
-		'sanitize_callback' => 'sanitize_text_field',
-		'auth_callback'     => function () {
-			return current_user_can( 'edit_sc_products' );
-		},
-	]
-);
-
-
-add_filter(
-	'rest_sc-product_query',
-	function( $args, $request ) {
-		$args += [
-			'meta_key'   => $request['meta_key'],
-			'meta_value' => $request['meta_value'],
-			'meta_query' => $request['meta_query'],
-		];
-
-		return $args;
-	},
-	99,
-	2
 );

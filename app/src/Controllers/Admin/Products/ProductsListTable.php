@@ -22,15 +22,9 @@ class ProductsListTable extends ListTable {
 	 * @return Void
 	 */
 	public function prepare_items() {
-		$this->pages = \SureCart::productPage()->get();
-		$columns     = $this->get_columns();
-		$hidden      = $this->get_hidden_columns();
-		$sortable    = $this->get_sortable_columns();
-
-		// don't show the product page if there is no pages created.
-		if ( empty( $this->pages ) ) {
-			unset( $columns['product_page'] );
-		}
+		$columns  = $this->get_columns();
+		$hidden   = $this->get_hidden_columns();
+		$sortable = $this->get_sortable_columns();
 
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 
@@ -107,7 +101,7 @@ class ProductsListTable extends ListTable {
 			'price'        => __( 'Price', 'surecart' ),
 			// 'type'         => __( 'Type', 'surecart' ),
 			'integrations' => __( 'Integrations', 'surecart' ),
-			'product_page' => __( 'Product Page' ),
+			'status'       => __( 'Published' ),
 			'date'         => __( 'Date', 'surecart' ),
 		];
 	}
@@ -283,36 +277,14 @@ class ProductsListTable extends ListTable {
 	 *
 	 * @return string
 	 */
-	public function column_product_page( $product ) {
+	public function column_status( $product ) {
 		ob_start();
-		$edit_page = $this->get_page( $product );
 		?>
-
-			<?php
-			$status       = get_post_status( $edit_page );
-			$status_label = $status ? get_post_status_object( $status )->label : false;
-			switch ( $status ) {
-				case 'trash':
-					$type = 'danger';
-					break;
-				case 'draft':
-					$type = 'info';
-					break;
-				case 'publish':
-					$type = 'success';
-					break;
-				default:
-					$type = 'default';
-					break;
-			}
-			?>
-
-			<?php if ( $status_label ) { ?>
-				<sc-tag type="<?php echo esc_attr( $type ); ?>"><?php echo esc_html( $status_label ); ?></sc-tag>
-			<?php } else { ?>
-				-
-			<?php } ?>
-
+		<?php if ( 'published' === ( $product->status ?? '' ) ) : ?>
+			<sc-tag type="success"><?php esc_html_e( 'Published', 'surecart' ); ?></sc-tag>
+		<?php else : ?>
+			<sc-tag><?php esc_html_e( 'Draft', 'surecart' ); ?></sc-tag>
+		<?php endif; ?>
 		<?php
 		return ob_get_clean();
 	}
@@ -325,8 +297,6 @@ class ProductsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_name( $product ) {
-		$edit_page = $this->get_page( $product );
-
 		ob_start();
 		?>
 
@@ -351,9 +321,8 @@ class ProductsListTable extends ListTable {
 			array_filter(
 				[
 					'edit'         => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
-					'edit_product' => $edit_page ? '<a href="' . esc_url( get_edit_post_link( $edit_page->ID ) ) . '" aria-label="' . esc_attr( 'Edit Product Page', 'surecart' ) . '">' . esc_html__( 'Edit Page', 'surecart' ) . '</a>' : null,
-					'view_product' => $edit_page ? '<a href="' . esc_url( get_the_permalink( $edit_page->ID ) ) . '" aria-label="' . esc_attr( 'View Page', 'surecart' ) . '">' . esc_html__( 'View Page', 'surecart' ) . '</a>' : null,
 					'trash'        => $this->action_toggle_archive( $product ),
+					'view_product' => '<a href="' . esc_url( $product->permalink ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
 				]
 			),
 		);
@@ -363,23 +332,6 @@ class ProductsListTable extends ListTable {
 		</div>
 		<?php
 		return ob_get_clean();
-	}
-
-	/**
-	 * Get the page for the product.
-	 *
-	 * @param \SureCart\Models\Product $product
-	 *
-	 * @return void
-	 */
-	public function get_page( $product ) {
-		$edit_page = null;
-		foreach ( $this->pages as $page ) {
-			if ( $product->id === $page->sc_product_id ) {
-				$edit_page = $page;
-			}
-		}
-		return $edit_page;
 	}
 
 	/**

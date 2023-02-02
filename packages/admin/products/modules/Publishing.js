@@ -22,7 +22,7 @@ export default ({ product, updateProduct, loading }) => {
 		(select) => {
 			const queryArgs = [
 				'postType',
-				'sc-product',
+				'wp_template',
 				product?.metadata?.wp_template_id, // || default template id.
 			];
 			return {
@@ -102,10 +102,10 @@ export default ({ product, updateProduct, loading }) => {
 							})
 						}
 					/>
-					{template?.id && (
+					{template?.wp_id && (
 						<ScButton
 							href={addQueryArgs('post.php', {
-								post: template?.id,
+								post: template?.wp_id,
 								action: 'edit',
 							})}
 							type="link"
