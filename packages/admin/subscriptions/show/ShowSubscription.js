@@ -35,6 +35,7 @@ import Purchases from './modules/Purchases';
 import Tax from './modules/Tax';
 import UpcomingPeriod from './modules/UpcomingPeriod';
 import PaymentMethod from '../edit/modules/PaymentMethod';
+import PauseSubscriptionModal from './modules/modals/PauseSubscriptionModal';
 
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
@@ -183,6 +184,31 @@ export default () => {
 		);
 	};
 
+	const renderPauseButton = () => {
+		if (['completed', 'canceled'].includes(subscription?.status))
+			return null;
+
+		return (
+			<ScMenuItem onClick={() => setModal('pause')}>
+				{__('Pause Subscription', 'surecart')}
+			</ScMenuItem>
+		);
+	};
+
+	const renderRestoreAtButton = () => {
+		if (!subscription.restore_at) return null;
+
+		return (
+			<ScMenuItem onClick={() => setModal('restore_at')}>
+				{__('Restore At', 'surecart')}
+			</ScMenuItem>
+		);
+	};
+
+	const onRequestCloseModal = () => {
+		setModal(false);
+	};
+
 	return (
 		<Template
 			title={
@@ -255,8 +281,10 @@ export default () => {
 							</ScMenuItem>
 						)}
 						{renderUpdateButton()}
+						{renderPauseButton()}
 						{renderCompleteButton()}
 						{renderCancelButton()}
+						{renderRestoreAtButton()}
 						{renderRestoreButton()}
 					</ScMenu>
 				</ScDropdown>
@@ -305,24 +333,29 @@ export default () => {
 
 			<CancelPendingUpdate
 				open={modal === 'cancel_update'}
-				onRequestClose={() => setModal(false)}
+				onRequestClose={onRequestCloseModal}
 			/>
 			<CancelSubscriptionModal
 				subscription={subscription}
 				open={modal === 'cancel'}
-				onRequestClose={() => setModal(false)}
+				onRequestClose={onRequestCloseModal}
 			/>
 			<DontCancelModal
 				open={modal === 'dont_cancel'}
-				onRequestClose={() => setModal(false)}
+				onRequestClose={onRequestCloseModal}
 			/>
 			<CompleteSubscriptionModal
 				open={modal === 'complete'}
-				onRequestClose={() => setModal(false)}
+				onRequestClose={onRequestCloseModal}
 			/>
 			<RestoreSubscriptionModal
 				open={modal === 'restore'}
-				onRequestClose={() => setModal(false)}
+				onRequestClose={onRequestCloseModal}
+			/>
+			<PauseSubscriptionModal
+				open={modal === 'pause'}
+				onRequestClose={onRequestCloseModal}
+				subscription={subscription}
 			/>
 			{isSaving && <ScBlockUi spinner />}
 		</Template>
