@@ -185,7 +185,6 @@ export default () => {
 		});
 	};
 
-	console.log(subscription);
 	return (
 		<UpdateModel
 			onSubmit={onSubmit}

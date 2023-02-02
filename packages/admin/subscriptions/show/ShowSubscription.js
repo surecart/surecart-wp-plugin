@@ -185,8 +185,6 @@ export default () => {
 		);
 	};
 
-	console.log(subscription);
-
 	return (
 		<Template
 			title={
