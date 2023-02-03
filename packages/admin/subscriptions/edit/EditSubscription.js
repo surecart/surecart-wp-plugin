@@ -47,7 +47,12 @@ export default () => {
 				'subscription',
 				id,
 				{
-					expand: ['current_period', 'current_period.checkout'],
+					expand: [
+						'current_period',
+						'current_period.checkout',
+						'discount',
+						'discount.coupon',
+					],
 				},
 			];
 

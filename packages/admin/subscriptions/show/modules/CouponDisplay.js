@@ -17,7 +17,7 @@ export default ({ id, onRemoveCoupon, loading, coupon }) => {
 			const queryArgs = ['surecart', 'coupon', id];
 
 			return {
-				coupon: select(coreStore).getEntityRecord(...queryArgs),
+				selectedCoupon: select(coreStore).getEntityRecord(...queryArgs),
 				couponLoading: select(coreStore).isResolving(
 					'getEntityRecord',
 					queryArgs

@@ -28,11 +28,15 @@ export default ({
 		});
 	};
 
-	if (subscription.discount) {
+	if (subscription.discount && subscription.discount.coupon) {
 		return (
 			<CouponDisplay
 				onRemoveCoupon={hideEdit ? null : onRemoveCoupon}
-				id={subscription.discount?.coupon || subscription.discount}
+				coupon={subscription.discount.coupon}
+				id={
+					typeof subscription.discount.coupon === 'string' &&
+					subscription.discount.coupon
+				}
 			/>
 		);
 	}
