@@ -1396,6 +1396,22 @@
     "class": true,
     "slot": true
   },
+  "sc-rich-text": {
+    "disabled": true,
+    "help": true,
+    "label": true,
+    "name": true,
+    "placeholder": true,
+    "readonly": true,
+    "required": true,
+    "show-label": true,
+    "size": true,
+    "value": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-secure-notice": {
     "style": true,
     "id": true,

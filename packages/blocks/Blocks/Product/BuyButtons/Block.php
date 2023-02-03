@@ -26,10 +26,17 @@ class Block extends BaseBlock {
 	public function render( $attributes, $content ) {
 		ob_start(); ?>
 
-		<sc-button class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
-			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
-			<?php echo wp_kses_post( $attributes['text'] ); ?>
-		</sc-button>
+		<sc-spacing style="--spacing: var(--sc-spacing-small)">
+			<sc-button full class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
+				style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
+				<?php echo wp_kses_post( $attributes['text'] ); ?>
+			</sc-button>
+
+			<sc-button full type="primary" class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
+				style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
+				<?php esc_html_e( 'Buy Now', 'surecart' ); ?>
+			</sc-button>
+		</sc-spacing>
 
 		<?php
 		return ob_get_clean();

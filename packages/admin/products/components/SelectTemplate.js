@@ -54,7 +54,7 @@ export default (props) => {
 				...[
 					{
 						label: __('Default Template', 'surecart'),
-						value: 'default',
+						value: null,
 					},
 				],
 				...(templates || []).map((template) => ({
@@ -63,6 +63,7 @@ export default (props) => {
 					value: template.id,
 				})),
 			]}
+			placeholder={__('Default Template', 'surecart')}
 			onQuery={setQuery}
 			onFetch={() => setQuery('')}
 			loading={loading}

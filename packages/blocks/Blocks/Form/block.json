@@ -9,6 +9,8 @@
 		"reusable": false,
 		"html": false
 	},
+	"script": "surecart-components",
+	"editorStyle": "surecart-themes-default",
 	"attributes": {
 		"mode": {
 			"type": "string",

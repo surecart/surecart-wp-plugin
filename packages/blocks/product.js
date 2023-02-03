@@ -6,7 +6,18 @@ import * as Prices from './Blocks/Product/Price';
 import * as Quantity from './Blocks/Product/Quantity';
 import * as Title from './Blocks/Product/Title';
 import { registerBlocks } from './register-block';
+import { __ } from '@wordpress/i18n';
 
 import './plugins/product-panel';
+
+window.setTimeout(() => {
+	// Delaying autosaves we avoid creating drafts to remote
+	const settings = window.wp.data.select('core/editor').getEditorSettings();
+	settings.autosaveInterval = 60 * 60 * 24 * 7; // Let's wait a week for it to autosave.
+	window.wp.data.dispatch('core/editor').updateEditorSettings(settings);
+}, 0);
+// We need to return a string or null, otherwise executing this script will error.
+// eslint-disable-next-line no-unused-expressions
+('');
 
 registerBlocks([Info, BuyButtons, Quantity, Title, Image, Description, Prices]);

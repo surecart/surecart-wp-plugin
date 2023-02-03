@@ -45,51 +45,6 @@ class TemplatesService {
 		add_filter( 'theme_' . $this->post_type . '_templates', [ $this, 'addTemplates' ] );
 		add_filter( 'template_include', [ $this, 'includeTemplate' ] );
 		add_filter( 'body_class', [ $this, 'bodyClass' ] );
-		// add_filter( 'get_block_templates', [ $this, 'productTemplates' ], 10, 3 );
-	}
-
-	/** Product Templates. */
-	public function productTemplates( $query_result, $query, $template_type ) {
-		array_push(
-			$query_result,
-			(object) [
-				'type'           => 'wp_template',
-				'theme'          => wp_get_theme()->get_stylesheet(),
-				'slug'           => 'sc-single-product-page',
-				'id'             => 'surecart//sc-single-product-page',
-				'title'          => __( 'Single Product Page', 'textdomain' ),
-				'content'        => '<!-- wp:template-part {"slug":"header","tagName":"header","theme":"twentytwentythree"} /-->
-
-				<!-- wp:group {"tagName":"main","style":{"spacing":{"margin":{"top":"var:preset|spacing|50"}}}} -->
-				<main class="wp-block-group" style="margin-top:var(--wp--preset--spacing--50)">
-					<!-- wp:group {"layout":{"type":"constrained"}} -->
-					<div class="wp-block-group">
-						<!-- wp:post-featured-image {"overlayColor":"contrast","dimRatio":50,"align":"wide","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|50","top":"calc(-1 * var(\u002d\u002dwp\u002d\u002dpreset\u002d\u002dspacing\u002d\u002d50))"}}}} /-->
-						<!-- wp:post-title {"level":1,"style":{"spacing":{"margin":{"bottom":"var:preset|spacing|40"}}}} /-->
-					</div>
-					<!-- /wp:group -->
-
-					<!-- wp:post-content {"layout":{"type":"constrained"}} /-->
-					<!-- wp:template-part {"slug":"comments","tagName":"section","theme":"twentytwentythree"} /-->
-				</main>
-				<!-- /wp:group -->
-
-				<!-- wp:template-part {"slug":"footer","tagName":"footer","theme":"twentytwentythree"} /-->',
-
-				'description'    => '',
-				'source'         => 'custom',
-				'origin'         => null,
-				'wp_id'          => 12345,
-				'status'         => 'publish',
-				'has_theme_file' => false,
-				'is_custom'      => true,
-				'author'         => null,
-				'post_types'     => null,
-				'area'           => null,
-			]
-		);
-
-		return $query_result;
 	}
 
 

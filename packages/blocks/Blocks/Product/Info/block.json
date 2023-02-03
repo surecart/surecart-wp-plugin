@@ -5,10 +5,13 @@
 	"description": "A container to display product information",
 	"category": "surecart",
 	"keywords": ["price", "product"],
+	"script": "surecart-components",
+	"editorStyle": "surecart-themes-default",
 	"supports": {
 		"reusable": false,
 		"html": false,
 		"multiple": false,
+		"align": true,
 		"color": {
 			"gradients": true,
 			"link": false,

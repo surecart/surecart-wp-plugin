@@ -43,6 +43,7 @@
  - [sc-input](../input)
  - [sc-order-bumps](../../controllers/checkout-form/sc-order-bumps)
  - [sc-payment](../../controllers/checkout-form/payment)
+ - [sc-rich-text](../sc-rich-text)
  - [sc-select](../select)
  - [sc-textarea](../sc-textarea)
 
@@ -61,6 +62,7 @@ graph TD;
   sc-input --> sc-form-control
   sc-order-bumps --> sc-form-control
   sc-payment --> sc-form-control
+  sc-rich-text --> sc-form-control
   sc-select --> sc-form-control
   sc-textarea --> sc-form-control
   style sc-form-control fill:#f9f,stroke:#333,stroke-width:4px

@@ -58,15 +58,16 @@ export default ({ product, updateProduct, loading }) => {
 				`}
 			>
 				<ScFormControl label={__('Permalink', 'surecart')}>
-					<a href={`https://surecart.test/product/${product.id}`}>
-						https://surecart.test/product/spectra
+					<a href={`https://surecart.test/product/${product.slug}`}>
+						{`https://surecart.test/product/${product.slug}`}
 					</a>
 				</ScFormControl>
 				<ScInput
 					label={__('URL Slug')}
 					help={__('The last part of the URL', 'surecart')}
-					value={'spectra'}
-					onScInput={(e) => {}}
+					value={product?.slug}
+					onScInput={(e) => updateProduct({ slug: e.target.value })}
+					required
 				/>
 
 				<ScRadioGroup
@@ -75,15 +76,15 @@ export default ({ product, updateProduct, loading }) => {
 					}}
 				>
 					<ScRadio
-						checked={product?.status !== 'publish'}
+						checked={product?.status !== 'published'}
 						value="draft"
 						name="publishing"
 					>
 						{__('Draft', 'surecart')}
 					</ScRadio>
 					<ScRadio
-						checked={product?.status === 'publish'}
-						value="publish"
+						checked={product?.status === 'published'}
+						value="published"
 						name="publishing"
 					>
 						{__('Published', 'surecart')}
@@ -92,7 +93,7 @@ export default ({ product, updateProduct, loading }) => {
 				<div>
 					<SelectTemplate
 						label={__('Template', 'surecart')}
-						value={product?.metadata?.wp_template_id || 'default'}
+						value={product?.metadata?.wp_template_id || null}
 						onSelect={(id) =>
 							updateProduct({
 								metadata: {

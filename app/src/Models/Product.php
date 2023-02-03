@@ -65,4 +65,13 @@ class Product extends Model {
 		}
 		return get_home_url( null, '/product/' . $this->attributes['id'] );
 	}
+
+	/**
+	 * Get the product template
+	 *
+	 * @return \WP_Template
+	 */
+	public function getTemplateAttribute() {
+		return get_block_template( $this->attributes['metadata']->wp_template_id ?? get_stylesheet() . '//default-product-page' );
+	}
 }

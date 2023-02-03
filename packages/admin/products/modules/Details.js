@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { ScInput, ScTextarea } from '@surecart/components-react';
+import { ScInput, ScTextarea, ScRichText } from '@surecart/components-react';
 import Box from '../../ui/Box';
 
 export default ({ product, updateProduct, loading }) => {
@@ -23,17 +23,16 @@ export default ({ product, updateProduct, loading }) => {
 					name="name"
 					required
 				/>
-				<ScTextarea
+				<ScRichText
 					label={__('Description', 'surecart')}
 					help={__(
-						'The product’s description, meant to be displayable to the customer.',
+						'The product’s description, typically displayed on the product page.',
 						'surecart'
 					)}
 					value={product?.description}
 					onScInput={(e) => {
 						updateProduct({ description: e.target.value });
 					}}
-					name="description"
 				/>
 			</div>
 		</Box>

@@ -13,7 +13,7 @@ export class ScProductText {
 
   render() {
     if (this.product?.[this.text]) {
-      return this.product[this.text];
+      return <span style={{ whiteSpace: 'pre-line' }} innerHTML={this.product[this.text]}></span>;
     }
     return (
       <Host>

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-02-01T22:48:12",
+  "timestamp": "2023-02-03T21:47:33",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -1657,6 +1657,7 @@
         "sc-payment-method",
         "sc-payment-methods-list",
         "sc-purchase-downloads-list",
+        "sc-rich-text",
         "sc-stripe-add-method",
         "sc-subscription",
         "sc-subscription-ad-hoc-confirm",
@@ -1749,6 +1750,9 @@
           "sc-button"
         ],
         "sc-purchase-downloads-list": [
+          "sc-button"
+        ],
+        "sc-rich-text": [
           "sc-button"
         ],
         "sc-stripe-add-method": [
@@ -10879,6 +10883,7 @@
         "sc-input",
         "sc-order-bumps",
         "sc-payment",
+        "sc-rich-text",
         "sc-select",
         "sc-textarea"
       ],
@@ -10908,6 +10913,9 @@
           "sc-form-control"
         ],
         "sc-payment": [
+          "sc-form-control"
+        ],
+        "sc-rich-text": [
           "sc-form-control"
         ],
         "sc-select": [
@@ -12204,6 +12212,7 @@
         "sc-product-line-item",
         "sc-purchase-downloads-list",
         "sc-quantity-select",
+        "sc-rich-text",
         "sc-select",
         "sc-subscription",
         "sc-subscription-ad-hoc-confirm",
@@ -12295,6 +12304,9 @@
           "sc-icon"
         ],
         "sc-quantity-select": [
+          "sc-icon"
+        ],
+        "sc-rich-text": [
           "sc-icon"
         ],
         "sc-select": [
@@ -20150,6 +20162,7 @@
       "filePath": "./src/components/controllers/product/sc-product-image/sc-product-image.tsx",
       "encapsulation": "shadow",
       "tag": "sc-product-image",
+      "readme": "# sc-product-image\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -21481,6 +21494,227 @@
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/ui/sc-rich-text/sc-rich-text.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-rich-text",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "disabled",
+          "reflectToAttr": true,
+          "docs": "Disables the textarea.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "help",
+          "type": "string",
+          "mutable": false,
+          "attr": "help",
+          "reflectToAttr": false,
+          "docs": "The textarea's help text. Alternatively, you can use the help-text slot.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "The textarea's label. Alternatively, you can use the label slot.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "mutable": false,
+          "attr": "name",
+          "reflectToAttr": false,
+          "docs": "The textarea's name attribute.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "placeholder",
+          "reflectToAttr": false,
+          "docs": "The textarea's placeholder text.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "readonly",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "readonly",
+          "reflectToAttr": true,
+          "docs": "Makes the textarea readonly.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "required",
+          "reflectToAttr": true,
+          "docs": "Makes the textarea a required field.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showLabel",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-label",
+          "reflectToAttr": false,
+          "docs": "Should we show the label",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The textarea's size.",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "mutable": false,
+          "attr": "value",
+          "reflectToAttr": false,
+          "docs": "The textarea's value attribute.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        },
+        {
+          "name": "editor",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "sc-form-control",
+        "sc-button",
+        "sc-icon"
+      ],
+      "dependencyGraph": {
+        "sc-rich-text": [
+          "sc-form-control",
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/secure-notice/sc-secure-notice.tsx",

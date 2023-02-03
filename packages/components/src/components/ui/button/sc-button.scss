@@ -370,7 +370,7 @@
   &:hover:not(.button--disabled) {
     background: transparent;
     border-color: transparent;
-    color: var(--sc-color-gray-600);
+    color: var(--sc-button-color-text, var(--sc-color-gray-600));
   }
 
   &:focus:not(.button--disabled) {
