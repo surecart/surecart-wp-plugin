@@ -2,6 +2,8 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
 import {
 	InspectorControls,
 	useInnerBlocksProps as __stableUseInnerBlocksProps,
@@ -10,6 +12,7 @@ import {
 import { Fragment, useState } from '@wordpress/element';
 import {
 	PanelBody,
+	Placeholder,
 	ResizableBox,
 	TextControl,
 	ToggleControl,
@@ -21,11 +24,24 @@ export default ({
 }) => {
 	const [{ naturalWidth, naturalHeight }, setNaturalSize] = useState({});
 
+	const data = useSelect((select) => {
+		return select(coreStore).getEntityRecord('surecart', 'store', 'brand');
+	});
+
+	if (!data?.logo_url) {
+		return (
+			<Placeholder
+				title="Surecart Store Logo"
+				style={{ width: maxWidth, height: maxHeight }}
+			>
+				<p>Please wait while we fetch your store logo.</p>
+			</Placeholder>
+		);
+	}
+
 	const img = (
 		<img
-			src={
-				'https://fastly.picsum.photos/id/802/200/350.jpg?hmac=XD10XkzaiSy1IgMbEXdbHFpxeKBFzizbbkaF3d5ZsZU'
-			}
+			src={data?.logo_url}
 			style={{ width: '100%' }}
 			onLoad={(event) => {
 				setNaturalSize({
@@ -52,18 +68,24 @@ export default ({
 
 	const MIN_SIZE = 20;
 	const ratio = naturalWidth / naturalHeight;
+	const isPortrait = naturalWidth < naturalHeight;
+	const isLandscape = naturalHeight < naturalWidth;
 
-	const minWidth =
-		naturalWidth < naturalHeight ? MIN_SIZE : Math.ceil(MIN_SIZE * ratio);
-	const minHeight =
-		naturalHeight < naturalWidth ? MIN_SIZE : Math.ceil(MIN_SIZE / ratio);
+	const minWidth = isPortrait ? MIN_SIZE : Math.ceil(MIN_SIZE * ratio);
+	const minHeight = isLandscape ? MIN_SIZE : Math.ceil(MIN_SIZE / ratio);
 
-	const currentWidth = width || maxWidth;
-	const currentHeight = height || maxHeight;
+	let currentWidth;
+	let currentHeight;
 
-	console.log('____', ratio);
-	console.log('____', naturalWidth, maxWidth, currentWidth);
-	console.log('____', naturalHeight, maxHeight, currentHeight);
+	if (isPortrait) {
+		currentHeight = height || maxHeight;
+		currentWidth = currentHeight * ratio;
+	}
+
+	if (isLandscape) {
+		currentWidth = width || maxWidth;
+		currentHeight = currentWidth / ratio;
+	}
 
 	return (
 		<Fragment>

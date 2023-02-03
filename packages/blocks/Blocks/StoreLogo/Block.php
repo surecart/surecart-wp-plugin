@@ -17,6 +17,12 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
+		$logo = \SureCart::account()->brand->logo_url;
+
+		if( empty($logo) ) {
+			return;
+		}
+
 		$styles = "";
 		if ( ! empty( $attributes['width'] ) ) {
 			$styles .= 'width: ' . $attributes['width'] . 'px; ';
@@ -31,13 +37,13 @@ class Block extends BaseBlock {
 		ob_start(); ?>
 
 		<?php if ( $attributes['isLinkToHome'] ) { ?>
-			<a href="/" rel="home">
+			<a href="<?php echo esc_url( get_home_url() ); ?>" rel="home">
 		<?php } ?>
 
 			<img
-				src="http://trobogames.local/wp-content/uploads/2023/01/cropped-surecart-logo-4-1.png"
-				alt=""
+				src="<?php echo esc_url( $logo ); ?>"
 				style="<?php echo esc_attr( $styles ); ?>"
+				alt=""
 			/>
 		
 		<?php if ( $attributes['isLinkToHome'] ) { ?>
