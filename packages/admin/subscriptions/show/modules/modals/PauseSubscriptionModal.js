@@ -39,9 +39,7 @@ export default ({ open, onRequestClose }) => {
 					cancel_behavior: 'immediate',
 				}),
 				data: {
-					subscription: {
-						restore_at: Date.parse(pauseUntil) / 1000,
-					},
+					restore_at: Date.parse(pauseUntil) / 1000,
 				},
 			});
 

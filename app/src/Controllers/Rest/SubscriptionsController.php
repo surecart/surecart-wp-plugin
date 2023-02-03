@@ -23,7 +23,7 @@ class SubscriptionsController extends RestController {
 	 * @return \WP_REST_Response
 	 */
 	public function cancel( \WP_REST_Request $request ) {
-		$model = $this->middleware( new $this->class(), $request );
+		$model = $this->middleware( new $this->class( array_diff_assoc( $request->get_params(), $request->get_query_params() ) ), $request );
 		if ( is_wp_error( $model ) ) {
 			return $model;
 		}

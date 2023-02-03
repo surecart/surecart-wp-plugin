@@ -85,6 +85,9 @@ class Subscription extends Model {
 			return new \WP_Error( 'not_saved', 'Please create the subscription.' );
 		}
 
+		$attributes = $this->attributes;
+		unset( $attributes['id'] );
+
 		$canceled = $this->with(
 			[
 				'purchase',
@@ -93,6 +96,9 @@ class Subscription extends Model {
 			[
 				'method' => 'PATCH',
 				'query'  => $this->query,
+				'body'   => [
+					$this->object_name => $attributes,
+				],
 			],
 			$this->endpoint . '/' . $this->attributes['id'] . '/cancel/'
 		);
