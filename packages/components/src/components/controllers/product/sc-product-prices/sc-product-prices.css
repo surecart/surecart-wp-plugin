@@ -3,7 +3,7 @@
 }
 
 .price {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: var(--sc-spacing-x-small);
 }
