@@ -7,10 +7,9 @@
 }
 
 .item {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  display: grid;
+  align-items: center;
+  grid-template-columns: auto 1fr 1fr;
 }
 
 @media screen and (min-width: var(--mobile-size)) {

@@ -19,11 +19,11 @@ class Block extends BaseBlock {
 	public function render( $attributes, $content ) {
 		$logo = \SureCart::account()->brand->logo_url;
 
-		if( empty($logo) ) {
+		if ( empty( $logo ) ) {
 			return;
 		}
 
-		$styles = "";
+		$styles = 'object-fit: contain; object-position: left;';
 		if ( ! empty( $attributes['width'] ) ) {
 			$styles .= 'width: ' . $attributes['width'] . 'px; ';
 		}
@@ -45,7 +45,7 @@ class Block extends BaseBlock {
 				style="<?php echo esc_attr( $styles ); ?>"
 				alt=""
 			/>
-		
+
 		<?php if ( $attributes['isLinkToHome'] ) { ?>
 			</a>
 		<?php } ?>

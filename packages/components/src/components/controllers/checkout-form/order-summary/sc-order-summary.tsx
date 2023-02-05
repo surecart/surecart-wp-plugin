@@ -29,9 +29,7 @@ export class ScOrderSummary {
   /** Show the toggle */
   @Event() scHide: EventEmitter<void>;
 
-  componentDidLoad() {
-    this.body.hidden = this.collapsed;
-    this.body.style.height = !this.collapsed ? 'auto' : '0';
+  componentWillLoad() {
     if (this.collapsedOnMobile) {
       const bodyRect = document.body.getClientRects();
       if (bodyRect.length) this.collapsed = bodyRect[0]?.width < 781;

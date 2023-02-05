@@ -23,8 +23,7 @@
 			"default": 180
 		},
 		"maxHeight": {
-			"type": "number",
-			"default": 80
+			"type": "number"
 		},
 		"isLinkToHome": {
 			"type": "boolean",
