@@ -17,8 +17,16 @@ export default function save({ attributes }) {
 		? __stableUseInnerBlocksProps
 		: __experimentalUseInnerBlocksProps;
 
-	const { verticalAlignment, width, sticky, stickyOffset, layout } =
-		attributes;
+	const {
+		verticalAlignment,
+		width,
+		sticky,
+		stickyOffset,
+		layout,
+		style: styleAttribute,
+	} = attributes;
+
+	const { blockGap } = styleAttribute?.spacing || {};
 
 	const wrapperClasses = classnames({
 		[`is-vertically-aligned-${verticalAlignment}`]: verticalAlignment,
@@ -55,6 +63,7 @@ export default function save({ attributes }) {
 		className: wrapperClasses,
 		style: {
 			...style,
+			...(!!blockGap ? { '--sc-form-row-spacing': blockGap } : {}),
 			top: stickyOffset,
 		},
 		sticky,
