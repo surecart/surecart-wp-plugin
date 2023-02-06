@@ -51,6 +51,33 @@ class CartPostTypeService {
 		// cannot delete cart post.
 		add_filter( 'map_meta_cap', [ $this, 'disallowDelete' ], 10, 4 );
 		add_filter( 'wp_insert_post_data', [ $this, 'forcePublish' ], 10, 4 );
+
+		add_action( 'wp_insert_post', [ $this, 'preventMultiplePosts' ], 50, 3 );
+	}
+
+	/**
+	 * Prevent multiple cart posts.
+	 *
+	 * @param int     $post_ID Post ID.
+	 * @param WP_Post $post    Post object.
+	 * @param bool    $update  Whether this is an existing post being updated.
+	 */
+	public function preventMultiplePosts( $post_ID, $post, $update ) {
+
+		if ( $post_ID && $this->post_type === $post->post_type && false === $update ) {
+
+			$posts = get_posts(
+				[
+					'post_type' => $this->post_type,
+					'per_page'  => 2,
+					'status'    => 'publish',
+				]
+			);
+
+			if ( isset( $posts[1] ) ) {
+				wp_delete_post( $post_ID );
+			}
+		}
 	}
 
 	/**
@@ -61,8 +88,8 @@ class CartPostTypeService {
 	public function redirectFromListPage() {
 		global $pagenow, $typenow;
 		if ( 'sc_cart' === $typenow && 'edit.php' === $pagenow ) {
-			wp_safe_redirect( esc_url_raw( admin_url( 'edit.php?post_type=sc_form' ) ) );
-			die();
+			// wp_safe_redirect( esc_url_raw( admin_url( 'edit.php?post_type=sc_form' ) ) );
+			// die();
 		}
 	}
 
