@@ -1,11 +1,7 @@
 /**
  * WordPress dependencies
  */
-import {
-	__experimentalUseInnerBlocksProps,
-	useInnerBlocksProps as __stableUseInnerBlocksProps,
-	useBlockProps,
-} from '@wordpress/block-editor';
+import { __experimentalUseInnerBlocksProps, useInnerBlocksProps as __stableUseInnerBlocksProps, useBlockProps } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies
@@ -38,9 +34,9 @@ export default function save({ attributes }) {
 	return (
 		<sc-columns
 			vertical-alignment={verticalAlignment}
-			is-stacked-on-mobile={isStackedOnMobile}
-			is-full-height={isFullHeight}
-			is-reversed-on-mobile={isReversedOnMobile}
+			is-stacked-on-mobile={isStackedOnMobile ? '1': null}
+			is-full-height={isFullHeight ? '1' : null}
+			is-reversed-on-mobile={isReversedOnMobile ? '1': null}
 			{...innerBlocksPropsObj}
 		/>
 	);
