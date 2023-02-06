@@ -31,7 +31,7 @@ return [
 
 	<!-- wp:surecart/column {"width":"","style":{"spacing":{"padding":{"top":"60px","right":"60px","bottom":"60px","left":"60px"},"blockGap":"30px"},"color":{"background":"#f3f4f6"},"border":{"color":"#dce0e6","width":"1px"}},"layout":{"type":"constrained","contentSize":"400px","justifyContent":"left"}} -->
 	<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-left has-border-color has-background" style="border-color:#dce0e6;border-width:1px;background-color:#f3f4f6;padding-top:60px;padding-right:60px;padding-bottom:60px;padding-left:60px;--sc-column-content-width:400px;--sc-form-row-spacing:30px"><!-- wp:surecart/totals {"collapsible":true} -->
-	<sc-order-summary collapsible="1" closed-text="Show Summary" open-text="Summary" class="wp-block-surecart-totals"><!-- wp:surecart/divider -->
+	<sc-order-summary collapsible="1" closed-text="Show Summary" open-text="Summary" collapsed-on-mobile="1" class="wp-block-surecart-totals"><!-- wp:surecart/divider -->
 	<sc-divider></sc-divider>
 	<!-- /wp:surecart/divider -->
 
