@@ -1,4 +1,4 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Prop, Watch } from '@stencil/core';
 import { Product } from '../../../../types';
 import state from '../../../../store/product';
 
@@ -18,11 +18,16 @@ export class ScProduct {
   @Prop() mode: 'test' | 'live' = 'live';
 
   componentWillLoad() {
+    this.handleProductChange();
+    state.formId = this.formId;
+    state.mode = this.mode;
+  }
+
+  @Watch('product')
+  handleProductChange() {
     state.product = this.product;
     state.prices = this.product?.prices?.data || [];
     state.selectedPrice = this.product?.prices?.data?.[0];
-    state.formId = this.formId;
-    state.mode = this.mode;
   }
 
   render() {

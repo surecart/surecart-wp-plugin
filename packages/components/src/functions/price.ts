@@ -71,6 +71,7 @@ interface IntervalOptions {
   labels?: {
     interval?: string;
     period?: string;
+    once?: string;
   };
 }
 export const intervalString = (price: Price, options: IntervalOptions = {}) => {
@@ -78,14 +79,11 @@ export const intervalString = (price: Price, options: IntervalOptions = {}) => {
     return '';
   }
   const { showOnce, labels } = options;
-  const { interval = __('every', 'surecart'), period = __('for', 'surecart') } = labels || {};
-  return `${intervalCountString(price, interval, !!showOnce ? __('once', 'surecart') : '')} ${periodCountString(price, period)}`;
+  const { interval = __('every', 'surecart'), period = __('for', 'surecart'), once = __('once', 'surecart') } = labels || {};
+  return `${intervalCountString(price, interval, !!showOnce ? once : '')} ${periodCountString(price, period)}`;
 };
 
 export const intervalCountString = (price: Price, prefix, fallback = __('once', 'surecart')) => {
-  if (!price.recurring_interval_count || !price.recurring_interval) {
-    return '';
-  }
   return translateInterval(price.recurring_interval_count, price.recurring_interval, ` ${prefix}`, fallback);
 };
 

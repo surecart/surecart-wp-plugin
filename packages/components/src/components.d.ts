@@ -2406,6 +2406,7 @@ export namespace Components {
         "prices": Price[];
     }
     interface ScProductPriceChoices {
+        "label": string;
     }
     interface ScProductQuantity {
         /**
@@ -7455,6 +7456,7 @@ declare namespace LocalJSX {
         "prices"?: Price[];
     }
     interface ScProductPriceChoices {
+        "label"?: string;
     }
     interface ScProductQuantity {
         /**

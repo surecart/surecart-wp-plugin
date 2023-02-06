@@ -1351,6 +1351,7 @@
     "slot": true
   },
   "sc-product-price-choices": {
+    "label": true,
     "style": true,
     "id": true,
     "class": true,
