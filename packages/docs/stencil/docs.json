@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-02-03T21:47:33",
+  "timestamp": "2023-02-06T13:58:09",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -11945,6 +11945,7 @@
         "sc-price-choice",
         "sc-price-range",
         "sc-product-line-item",
+        "sc-product-prices",
         "sc-subscription-details",
         "sc-subscription-next-payment",
         "sc-subscription-switch",
@@ -11996,6 +11997,9 @@
           "sc-format-number"
         ],
         "sc-product-line-item": [
+          "sc-format-number"
+        ],
+        "sc-product-prices": [
           "sc-format-number"
         ],
         "sc-subscription-details": [
@@ -20604,13 +20608,22 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "price__scratch",
+          "docs": ""
+        }
+      ],
       "dependents": [],
       "dependencies": [
+        "sc-format-number",
+        "sc-tag",
         "sc-price-range"
       ],
       "dependencyGraph": {
         "sc-product-prices": [
+          "sc-format-number",
+          "sc-tag",
           "sc-price-range"
         ],
         "sc-price-range": [
@@ -21499,6 +21512,7 @@
       "filePath": "./src/components/ui/sc-rich-text/sc-rich-text.tsx",
       "encapsulation": "shadow",
       "tag": "sc-rich-text",
+      "readme": "# sc-rich-text\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -21682,7 +21696,44 @@
         }
       ],
       "methods": [],
-      "events": [],
+      "events": [
+        {
+          "event": "scBlur",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scChange",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scFocus",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scInput",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -26498,6 +26549,7 @@
         "sc-payment-method",
         "sc-payment-methods-list",
         "sc-premium-tag",
+        "sc-product-prices",
         "sc-subscription-details",
         "sc-subscription-payment-method",
         "sc-subscription-status-badge",
@@ -26557,6 +26609,9 @@
           "sc-tag"
         ],
         "sc-premium-tag": [
+          "sc-tag"
+        ],
+        "sc-product-prices": [
           "sc-tag"
         ],
         "sc-subscription-details": [

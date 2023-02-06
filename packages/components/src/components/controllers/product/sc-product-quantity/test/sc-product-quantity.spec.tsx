@@ -1,18 +1,18 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { ScProductTitle } from '../sc-product-title';
+import { ScProductQuantity } from '../sc-product-quantity';
 
-describe('sc-product-title', () => {
+describe('sc-product-quantity', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [ScProductTitle],
-      html: `<sc-product-title></sc-product-title>`,
+      components: [ScProductQuantity],
+      html: `<sc-product-quantity></sc-product-quantity>`,
     });
     expect(page.root).toEqualHtml(`
-      <sc-product-title>
+      <sc-product-quantity>
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
-      </sc-product-title>
+      </sc-product-quantity>
     `);
   });
 });

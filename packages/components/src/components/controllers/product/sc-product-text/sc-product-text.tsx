@@ -1,6 +1,5 @@
 import { Component, Host, h, Prop } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
-import { Product } from '../../../../types';
+import state from '../../../../store/product';
 
 @Component({
   tag: 'sc-product-text',
@@ -8,12 +7,11 @@ import { Product } from '../../../../types';
   shadow: true,
 })
 export class ScProductText {
-  @Prop() product: Product;
   @Prop() text: 'name' | 'description' = 'name';
 
   render() {
-    if (this.product?.[this.text]) {
-      return <span style={{ whiteSpace: 'pre-line' }} innerHTML={this.product[this.text]}></span>;
+    if (state.product?.[this.text]) {
+      return <span style={{ whiteSpace: 'pre-line' }} innerHTML={state.product[this.text]}></span>;
     }
     return (
       <Host>
@@ -22,5 +20,3 @@ export class ScProductText {
     );
   }
 }
-
-openWormhole(ScProductText, ['product'], false);

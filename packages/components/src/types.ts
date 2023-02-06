@@ -1,8 +1,16 @@
+import { ObservableMap } from '@stencil/store';
 import { IconLibraryMutator, IconLibraryResolver } from './components/ui/icon/library';
 
 declare global {
   interface Window {
     grecaptcha: any;
+    surecart?: {
+      product?: {
+        store: ObservableMap<any>;
+        state: any;
+        update: Function;
+      };
+    };
     wp: {
       apiFetch: any;
       blocks: any;

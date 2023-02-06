@@ -1,6 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
-import { Creator, Universe } from 'stencil-wormhole';
 import { Product } from '../../../../types';
+import state from '../../../../store/product';
 
 @Component({
   tag: 'sc-product',
@@ -11,22 +11,15 @@ export class ScProduct {
   @Prop() product: Product;
 
   componentWillLoad() {
-    Universe.create(this as Creator, this.state());
-  }
-
-  state() {
-    return {
-      product: this.product,
-      prices: this.product?.prices?.data || [],
-    };
+    state.product = this.product;
+    state.prices = this.product?.prices?.data || [];
+    state.selectedPrice = this.product?.prices?.data?.[0];
   }
 
   render() {
     return (
       <div part="base">
-        <Universe.Provider state={this.state()}>
-          <slot />
-        </Universe.Provider>
+        <slot />
       </div>
     );
   }

@@ -48,12 +48,14 @@ export class ScQuantitySelect {
     if (this.disabled) return;
     this.quantity = Math.max(this.quantity - 1, this.min);
     this.scChange.emit(this.quantity);
+    this.scInput.emit(this.quantity);
   }
 
   increase() {
     if (this.disabled) return;
     this.quantity = Math.min(this.quantity + 1, this.max);
     this.scChange.emit(this.quantity);
+    this.scInput.emit(this.quantity);
   }
 
   handleBlur() {

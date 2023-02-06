@@ -19,7 +19,7 @@ class ProductPageController {
 		global  $sc_product, $_wp_current_template_content;
 
 		// fetch the product by id/slug.
-		$sc_product = \SureCart\Models\Product::with( [ 'prices' ] )->find( $id );
+		$sc_product = \SureCart\Models\Product::with( [ 'prices', 'image' ] )->find( $id );
 		if ( is_wp_error( $sc_product ) ) {
 			return $this->handleError( $sc_product );
 		}
