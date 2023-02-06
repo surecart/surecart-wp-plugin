@@ -27,18 +27,17 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { sprintf, __ } from '@wordpress/i18n';
 import { ScColumn } from '@surecart/components-react';
 
-function ColumnEdit({
-	attributes: {
+function ColumnEdit({ attributes, setAttributes, clientId }) {
+	const {
 		verticalAlignment,
 		width,
 		sticky,
 		stickyOffset,
 		templateLock = false,
 		allowedBlocks,
-	},
-	setAttributes,
-	clientId,
-}) {
+		layout,
+	} = attributes;
+
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
 		? __stableUseInnerBlocksProps
 		: __experimentalUseInnerBlocksProps;
@@ -93,6 +92,7 @@ function ColumnEdit({
 		style: {
 			...(widthWithUnit ? { flexBasis: widthWithUnit } : undefined),
 			top: stickyOffset,
+			'--sc-column-content-width': layout?.contentSize,
 		},
 	});
 
