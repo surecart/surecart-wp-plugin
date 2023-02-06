@@ -22,7 +22,7 @@ export default ({ subscription, customer, product, loading }) => {
 			);
 		}
 
-		if (subscription?.restore_at) {
+		if (subscription?.restore_at && subscription?.status === 'canceled') {
 			return (
 				<div>
 					<div>

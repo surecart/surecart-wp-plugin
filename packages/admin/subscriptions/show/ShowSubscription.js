@@ -199,7 +199,7 @@ export default () => {
 		if (!subscription?.restore_at) return null;
 
 		return (
-			<ScMenuItem onClick={() => setModal('restore_at')}>
+			<ScMenuItem onClick={() => setModal('restore')}>
 				{__('Restore At', 'surecart')}
 			</ScMenuItem>
 		);
