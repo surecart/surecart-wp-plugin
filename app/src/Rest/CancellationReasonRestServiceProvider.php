@@ -64,23 +64,23 @@ class CancellationReasonRestServiceProvider extends RestServiceProvider implemen
 
 
 	/**
-	 * Need edit permissions to read.
+	 * Can read a reason if the user is logged in.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return current_user_can( 'edit_sc_subscriptions' );
+		return is_user_logged_in();
 	}
 
 	/**
-	 * Need edit priveleges to list.
+	 * Can list reasons if the user is logged in.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		return current_user_can( 'edit_sc_subscriptions' );
+		return is_user_logged_in();
 	}
 
 	/**

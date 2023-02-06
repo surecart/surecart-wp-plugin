@@ -61,9 +61,10 @@ export default ({ bump, updateBump, loading }) => {
 								style={{ flex: 1 }}
 								className="sc-percent-off"
 								type="number"
-								min="0"
 								disabled={type !== 'percentage'}
+								min="0"
 								max="100"
+								step="0.01"
 								attribute="percent_off"
 								value={bump?.percent_off || null}
 								onScInput={(e) => {

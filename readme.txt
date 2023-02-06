@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.1
-Stable tag: 1.5.2
+Stable tag: 1.5.7
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,25 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.5.7 - January 26, 2023 =
+* Fix: Issue with creating order bumps due to API change where they now require a name.
+* Fix: Sometimes blocks inside columns are not able to be selected in the block editor.
+
+= 1.5.6 - January 25, 2023 =
+* Fix: Allow percentages with decimals in manual tax rates.
+* Fix: Quantity getting reset in cart when price selector uses multiple options.
+* Fix: Notifications in the SureCart settings pages getting overlapped by sidebar.
+
+= 1.5.5 - January 23, 2023 =
+* Fix: Issue with subscription saver modal not closing for some users.
+
+= 1.5.4 - January 18, 2023 =
+* Fix: Issue with some users not seeing subscription saver survey reasons.
+
+= 1.5.3 - January 16, 2023 =
+* Fix: Customer locale not updating on settings page.
+* Fix: Add stripe payment stuck loading in customer dashboard with some themes.
 
 = 1.5.2 - January 13, 2023 =
 * Fix: 2 Column layout squished on price selector block.

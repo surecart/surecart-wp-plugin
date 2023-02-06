@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export namespace Components {
     interface ScAddress {
         /**
@@ -491,6 +491,16 @@ export namespace Components {
          */
         "validate": () => Promise<boolean>;
     }
+    interface ScCheckoutFormErrors {
+        /**
+          * The current order.
+         */
+        "checkoutState": FormState;
+        /**
+          * Error to display.
+         */
+        "error": ResponseError | null;
+    }
     interface ScCheckoutUnsavedChangesWarning {
         "state": FormState;
     }
@@ -593,6 +603,14 @@ export namespace Components {
     }
     interface ScColumns {
         /**
+          * Is this full vertical height
+         */
+        "isFullHeight": boolean;
+        /**
+          * Is this reverse ordered on mobile
+         */
+        "isReversedOnMobile": boolean;
+        /**
           * Is this stacked on mobile
          */
         "isStackedOnMobile": boolean;
@@ -620,6 +638,20 @@ export namespace Components {
           * Is this required?
          */
         "required": boolean;
+    }
+    interface ScConditionalForm {
+        /**
+          * Checkout Session from sc-checkout.
+         */
+        "checkout": Checkout;
+        /**
+          * Selector label
+         */
+        "rule_groups": RuleGroup[];
+        /**
+          * The currently selected processor
+         */
+        "selectedProcessorId": ProcessorName;
     }
     interface ScConsumer {
         "renderer": any;
@@ -1924,6 +1956,7 @@ export namespace Components {
         "busy": boolean;
         "closedText": string;
         "collapsed": boolean;
+        "collapsedOnMobile": boolean;
         "collapsible": boolean;
         "empty": boolean;
         "openText": string;
@@ -2185,6 +2218,10 @@ export namespace Components {
          */
         "label": string;
         /**
+          * Session
+         */
+        "order": Checkout;
+        /**
           * Required by default
          */
         "required": boolean;
@@ -2288,6 +2325,12 @@ export namespace Components {
          */
         "value": string;
     }
+    interface ScPriceRange {
+        /**
+          * The array of price objects
+         */
+        "prices": Price[];
+    }
     interface ScProductLineItem {
         /**
           * Product monetary amount
@@ -2301,6 +2344,10 @@ export namespace Components {
           * Can we select the quantity
          */
         "editable": boolean;
+        /**
+          * Product line item fees.
+         */
+        "fees": Fee[];
         /**
           * Url for the product image
          */
@@ -3545,6 +3592,12 @@ declare global {
         prototype: HTMLScCheckoutElement;
         new (): HTMLScCheckoutElement;
     };
+    interface HTMLScCheckoutFormErrorsElement extends Components.ScCheckoutFormErrors, HTMLStencilElement {
+    }
+    var HTMLScCheckoutFormErrorsElement: {
+        prototype: HTMLScCheckoutFormErrorsElement;
+        new (): HTMLScCheckoutFormErrorsElement;
+    };
     interface HTMLScCheckoutUnsavedChangesWarningElement extends Components.ScCheckoutUnsavedChangesWarning, HTMLStencilElement {
     }
     var HTMLScCheckoutUnsavedChangesWarningElement: {
@@ -3580,6 +3633,12 @@ declare global {
     var HTMLScCompactAddressElement: {
         prototype: HTMLScCompactAddressElement;
         new (): HTMLScCompactAddressElement;
+    };
+    interface HTMLScConditionalFormElement extends Components.ScConditionalForm, HTMLStencilElement {
+    }
+    var HTMLScConditionalFormElement: {
+        prototype: HTMLScConditionalFormElement;
+        new (): HTMLScConditionalFormElement;
     };
     interface HTMLScConsumerElement extends Components.ScConsumer, HTMLStencilElement {
     }
@@ -4073,6 +4132,12 @@ declare global {
         prototype: HTMLScPriceInputElement;
         new (): HTMLScPriceInputElement;
     };
+    interface HTMLScPriceRangeElement extends Components.ScPriceRange, HTMLStencilElement {
+    }
+    var HTMLScPriceRangeElement: {
+        prototype: HTMLScPriceRangeElement;
+        new (): HTMLScPriceRangeElement;
+    };
     interface HTMLScProductLineItemElement extends Components.ScProductLineItem, HTMLStencilElement {
     }
     var HTMLScProductLineItemElement: {
@@ -4392,12 +4457,14 @@ declare global {
         "sc-charges-list": HTMLScChargesListElement;
         "sc-checkbox": HTMLScCheckboxElement;
         "sc-checkout": HTMLScCheckoutElement;
+        "sc-checkout-form-errors": HTMLScCheckoutFormErrorsElement;
         "sc-checkout-unsaved-changes-warning": HTMLScCheckoutUnsavedChangesWarningElement;
         "sc-choice": HTMLScChoiceElement;
         "sc-choices": HTMLScChoicesElement;
         "sc-column": HTMLScColumnElement;
         "sc-columns": HTMLScColumnsElement;
         "sc-compact-address": HTMLScCompactAddressElement;
+        "sc-conditional-form": HTMLScConditionalFormElement;
         "sc-consumer": HTMLScConsumerElement;
         "sc-coupon-form": HTMLScCouponFormElement;
         "sc-custom-order-price-input": HTMLScCustomOrderPriceInputElement;
@@ -4480,6 +4547,7 @@ declare global {
         "sc-price-choice": HTMLScPriceChoiceElement;
         "sc-price-choices": HTMLScPriceChoicesElement;
         "sc-price-input": HTMLScPriceInputElement;
+        "sc-price-range": HTMLScPriceRangeElement;
         "sc-product-line-item": HTMLScProductLineItemElement;
         "sc-provider": HTMLScProviderElement;
         "sc-purchase-downloads-list": HTMLScPurchaseDownloadsListElement;
@@ -5050,6 +5118,16 @@ declare namespace LocalJSX {
          */
         "taxProtocol"?: TaxProtocol;
     }
+    interface ScCheckoutFormErrors {
+        /**
+          * The current order.
+         */
+        "checkoutState"?: FormState;
+        /**
+          * Error to display.
+         */
+        "error"?: ResponseError | null;
+    }
     interface ScCheckoutUnsavedChangesWarning {
         "state"?: FormState;
     }
@@ -5150,6 +5228,14 @@ declare namespace LocalJSX {
     }
     interface ScColumns {
         /**
+          * Is this full vertical height
+         */
+        "isFullHeight"?: boolean;
+        /**
+          * Is this reverse ordered on mobile
+         */
+        "isReversedOnMobile"?: boolean;
+        /**
           * Is this stacked on mobile
          */
         "isStackedOnMobile"?: boolean;
@@ -5184,6 +5270,20 @@ declare namespace LocalJSX {
           * Is this required?
          */
         "required"?: boolean;
+    }
+    interface ScConditionalForm {
+        /**
+          * Checkout Session from sc-checkout.
+         */
+        "checkout"?: Checkout;
+        /**
+          * Selector label
+         */
+        "rule_groups"?: RuleGroup[];
+        /**
+          * The currently selected processor
+         */
+        "selectedProcessorId"?: ProcessorName;
     }
     interface ScConsumer {
         "onMountConsumer"?: (event: ScConsumerCustomEvent<any>) => void;
@@ -6690,6 +6790,7 @@ declare namespace LocalJSX {
         "busy"?: boolean;
         "closedText"?: string;
         "collapsed"?: boolean;
+        "collapsedOnMobile"?: boolean;
         "collapsible"?: boolean;
         "empty"?: boolean;
         /**
@@ -7013,6 +7114,10 @@ declare namespace LocalJSX {
          */
         "onScUpdateLineItem"?: (event: ScPriceChoicesCustomEvent<LineItemData>) => void;
         /**
+          * Session
+         */
+        "order"?: Checkout;
+        /**
           * Required by default
          */
         "required"?: boolean;
@@ -7107,6 +7212,12 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface ScPriceRange {
+        /**
+          * The array of price objects
+         */
+        "prices"?: Price[];
+    }
     interface ScProductLineItem {
         /**
           * Product monetary amount
@@ -7120,6 +7231,10 @@ declare namespace LocalJSX {
           * Can we select the quantity
          */
         "editable"?: boolean;
+        /**
+          * Product line item fees.
+         */
+        "fees"?: Fee[];
         /**
           * Url for the product image
          */
@@ -8088,12 +8203,14 @@ declare namespace LocalJSX {
         "sc-charges-list": ScChargesList;
         "sc-checkbox": ScCheckbox;
         "sc-checkout": ScCheckout;
+        "sc-checkout-form-errors": ScCheckoutFormErrors;
         "sc-checkout-unsaved-changes-warning": ScCheckoutUnsavedChangesWarning;
         "sc-choice": ScChoice;
         "sc-choices": ScChoices;
         "sc-column": ScColumn;
         "sc-columns": ScColumns;
         "sc-compact-address": ScCompactAddress;
+        "sc-conditional-form": ScConditionalForm;
         "sc-consumer": ScConsumer;
         "sc-coupon-form": ScCouponForm;
         "sc-custom-order-price-input": ScCustomOrderPriceInput;
@@ -8176,6 +8293,7 @@ declare namespace LocalJSX {
         "sc-price-choice": ScPriceChoice;
         "sc-price-choices": ScPriceChoices;
         "sc-price-input": ScPriceInput;
+        "sc-price-range": ScPriceRange;
         "sc-product-line-item": ScProductLineItem;
         "sc-provider": ScProvider;
         "sc-purchase-downloads-list": ScPurchaseDownloadsList;
@@ -8255,12 +8373,14 @@ declare module "@stencil/core" {
             "sc-charges-list": LocalJSX.ScChargesList & JSXBase.HTMLAttributes<HTMLScChargesListElement>;
             "sc-checkbox": LocalJSX.ScCheckbox & JSXBase.HTMLAttributes<HTMLScCheckboxElement>;
             "sc-checkout": LocalJSX.ScCheckout & JSXBase.HTMLAttributes<HTMLScCheckoutElement>;
+            "sc-checkout-form-errors": LocalJSX.ScCheckoutFormErrors & JSXBase.HTMLAttributes<HTMLScCheckoutFormErrorsElement>;
             "sc-checkout-unsaved-changes-warning": LocalJSX.ScCheckoutUnsavedChangesWarning & JSXBase.HTMLAttributes<HTMLScCheckoutUnsavedChangesWarningElement>;
             "sc-choice": LocalJSX.ScChoice & JSXBase.HTMLAttributes<HTMLScChoiceElement>;
             "sc-choices": LocalJSX.ScChoices & JSXBase.HTMLAttributes<HTMLScChoicesElement>;
             "sc-column": LocalJSX.ScColumn & JSXBase.HTMLAttributes<HTMLScColumnElement>;
             "sc-columns": LocalJSX.ScColumns & JSXBase.HTMLAttributes<HTMLScColumnsElement>;
             "sc-compact-address": LocalJSX.ScCompactAddress & JSXBase.HTMLAttributes<HTMLScCompactAddressElement>;
+            "sc-conditional-form": LocalJSX.ScConditionalForm & JSXBase.HTMLAttributes<HTMLScConditionalFormElement>;
             "sc-consumer": LocalJSX.ScConsumer & JSXBase.HTMLAttributes<HTMLScConsumerElement>;
             "sc-coupon-form": LocalJSX.ScCouponForm & JSXBase.HTMLAttributes<HTMLScCouponFormElement>;
             "sc-custom-order-price-input": LocalJSX.ScCustomOrderPriceInput & JSXBase.HTMLAttributes<HTMLScCustomOrderPriceInputElement>;
@@ -8343,6 +8463,7 @@ declare module "@stencil/core" {
             "sc-price-choice": LocalJSX.ScPriceChoice & JSXBase.HTMLAttributes<HTMLScPriceChoiceElement>;
             "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
+            "sc-price-range": LocalJSX.ScPriceRange & JSXBase.HTMLAttributes<HTMLScPriceRangeElement>;
             "sc-product-line-item": LocalJSX.ScProductLineItem & JSXBase.HTMLAttributes<HTMLScProductLineItemElement>;
             "sc-provider": LocalJSX.ScProvider & JSXBase.HTMLAttributes<HTMLScProviderElement>;
             "sc-purchase-downloads-list": LocalJSX.ScPurchaseDownloadsList & JSXBase.HTMLAttributes<HTMLScPurchaseDownloadsListElement>;

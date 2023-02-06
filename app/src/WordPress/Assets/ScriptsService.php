@@ -180,6 +180,7 @@ class ScriptsService {
 			[
 				'root_url'            => esc_url_raw( get_rest_url() ),
 				'plugin_url'          => \SureCart::core()->assets()->getUrl(),
+				'api_url'             => \SureCart::requests()->getBaseUrl(),
 				'currency'            => \SureCart::account()->currency,
 				'do_not_persist_cart' => is_admin(),
 				'theme'               => get_option( 'surecart_theme', 'light' ),

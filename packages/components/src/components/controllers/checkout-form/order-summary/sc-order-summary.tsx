@@ -20,6 +20,7 @@ export class ScOrderSummary {
   @Prop() closedText: string = __('Show Summary', 'surecart');
   @Prop() openText: string = __('Summary', 'surecart');
   @Prop() collapsible: boolean = false;
+  @Prop() collapsedOnMobile: boolean = false;
   @Prop({ mutable: true }) collapsed: boolean;
 
   /** Show the toggle */
@@ -28,9 +29,11 @@ export class ScOrderSummary {
   /** Show the toggle */
   @Event() scHide: EventEmitter<void>;
 
-  componentDidLoad() {
-    this.body.hidden = this.collapsed;
-    this.body.style.height = !this.collapsed ? 'auto' : '0';
+  componentWillLoad() {
+    if (this.collapsedOnMobile) {
+      const bodyRect = document.body.getClientRects();
+      if (bodyRect.length) this.collapsed = bodyRect[0]?.width < 781;
+    }
   }
 
   handleClick(e) {
@@ -85,16 +88,20 @@ export class ScOrderSummary {
       this.scShow.emit();
       await stopAnimations(this.body);
       this.body.hidden = false;
+      this.body.style.overflow = 'hidden';
       const { keyframes, options } = getAnimation(this.el, 'summary.show');
       await animateTo(this.body, shimKeyframesHeightAuto(keyframes, this.body.scrollHeight), options);
       this.body.style.height = 'auto';
+      this.body.style.overflow = 'visible';
     } else {
       this.scHide.emit();
       await stopAnimations(this.body);
+      this.body.style.overflow = 'hidden';
       const { keyframes, options } = getAnimation(this.el, 'summary.hide');
       await animateTo(this.body, shimKeyframesHeightAuto(keyframes, this.body.scrollHeight), options);
       this.body.hidden = true;
       this.body.style.height = 'auto';
+      this.body.style.overflow = 'visible';
     }
   }
 
