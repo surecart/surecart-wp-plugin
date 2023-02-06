@@ -36,6 +36,8 @@ class Block extends BaseBlock {
 
 		ob_start(); ?>
 
+		<div>
+
 		<?php if ( $attributes['isLinkToHome'] ) { ?>
 			<a href="<?php echo esc_url( get_home_url() ); ?>" rel="home">
 		<?php } ?>
@@ -49,6 +51,8 @@ class Block extends BaseBlock {
 		<?php if ( $attributes['isLinkToHome'] ) { ?>
 			</a>
 		<?php } ?>
+
+		</div>
 
 		<?php
 		return ob_get_clean();
