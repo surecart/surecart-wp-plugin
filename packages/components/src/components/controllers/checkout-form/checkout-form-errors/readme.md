@@ -1,4 +1,4 @@
-# sc-form-error-provider
+# sc-checkout-form-errors
 
 
 
@@ -10,34 +10,26 @@
 | Property        | Attribute        | Description        | Type                                                                                                                                          | Default     |
 | --------------- | ---------------- | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
 | `checkoutState` | `checkout-state` | The current order. | `"confirmed" \| "confirming" \| "draft" \| "expired" \| "failure" \| "finalizing" \| "idle" \| "loading" \| "paid" \| "paying" \| "updating"` | `undefined` |
-
-
-## Events
-
-| Event           | Description       | Type                                                                                            |
-| --------------- | ----------------- | ----------------------------------------------------------------------------------------------- |
-| `scSetState`    | Form state event. | `CustomEvent<"EXPIRE" \| "FETCH" \| "FINALIZE" \| "PAID" \| "PAYING" \| "REJECT" \| "RESOLVE">` |
-| `scUpdateError` | Set the state.    | `CustomEvent<ResponseError>`                                                                    |
+| `error`         | --               | Error to display.  | `ResponseError`                                                                                                                               | `undefined` |
 
 
 ## Dependencies
 
 ### Used by
 
- - [sc-checkout](../../controllers/checkout-form/checkout)
+ - [sc-form-error-provider](../../../providers/form-error-provider)
 
 ### Depends on
 
-- [sc-checkout-form-errors](../../controllers/checkout-form/checkout-form-errors)
+- [sc-alert](../../../ui/alert)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-form-error-provider --> sc-checkout-form-errors
   sc-checkout-form-errors --> sc-alert
   sc-alert --> sc-icon
-  sc-checkout --> sc-form-error-provider
-  style sc-form-error-provider fill:#f9f,stroke:#333,stroke-width:4px
+  sc-form-error-provider --> sc-checkout-form-errors
+  style sc-checkout-form-errors fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

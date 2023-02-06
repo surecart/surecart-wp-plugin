@@ -10,7 +10,7 @@
 | Property              | Attribute               | Description                        | Type                                    | Default     |
 | --------------------- | ----------------------- | ---------------------------------- | --------------------------------------- | ----------- |
 | `checkout`            | --                      | Checkout Session from sc-checkout. | `Checkout`                              | `undefined` |
-| `rule_groups`         | --                      | Selector label                     | `object`                                | `[]`        |
+| `rule_groups`         | --                      | Selector label                     | `RuleGroup[]`                           | `undefined` |
 | `selectedProcessorId` | `selected-processor-id` | The currently selected processor   | `"paypal" \| "paypal-card" \| "stripe"` | `undefined` |
 
 

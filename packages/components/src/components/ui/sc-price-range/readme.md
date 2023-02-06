@@ -7,16 +7,16 @@
 
 ## Properties
 
-| Property | Attribute | Description             | Type                             | Default   |
-| -------- | --------- | ----------------------- | -------------------------------- | --------- |
-| `prices` | `prices`  | Array of price objects  | `Price[]`                        | []        |
+| Property | Attribute | Description                | Type      | Default     |
+| -------- | --------- | -------------------------- | --------- | ----------- |
+| `prices` | --        | The array of price objects | `Price[]` | `undefined` |
 
 
 ## Dependencies
 
 ### Depends on
 
-- [sc-format-number](../../util/format-number/)
+- [sc-format-number](../../util/format-number)
 
 ### Graph
 ```mermaid
