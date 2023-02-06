@@ -2,6 +2,7 @@ import { Component, State, h, Watch, Prop, Event, EventEmitter } from '@stencil/
 import { Checkout } from '../../../../types';
 import { openWormhole } from 'stencil-wormhole';
 import { __ } from '@wordpress/i18n';
+import { isRtl } from '../../../../functions/page-align';
 
 @Component({
   tag: 'sc-order-coupon-form',
@@ -38,6 +39,9 @@ export class ScOrderCouponForm {
         discount={this?.order?.discount}
         currency={this?.order?.currency}
         discount-amount={this?.order?.discount_amount}
+        class={{
+          'order-coupon-form--is-rtl':isRtl()
+        }}
       >
         <slot>{__('Apply', 'surecart')}</slot>
       </sc-coupon-form>

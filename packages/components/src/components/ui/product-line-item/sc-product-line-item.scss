@@ -114,3 +114,9 @@
   opacity: 0.25;
   margin: 0 0.2em;
 }
+
+.item--is-rtl{
+  &.price {
+    text-align: right;
+  }
+}

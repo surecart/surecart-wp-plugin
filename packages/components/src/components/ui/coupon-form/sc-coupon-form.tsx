@@ -1,5 +1,6 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+import { isRtl } from '../../../functions/page-align';
 
 import { getHumanDiscount } from '../../../functions/price';
 import { DiscountResponse } from '../../../types';
@@ -106,7 +107,12 @@ export class ScCouponForm {
       }
 
       return (
-        <sc-line-item exportparts="description:info, price-description:discount, price:amount">
+        <sc-line-item
+          exportparts="description:info, price-description:discount, price:amount"
+          class={{
+            'coupon-form--is-rtl': isRtl(),
+          }}
+        >
           <span slot="description">
             <div part="discount-label">{__('Discount', 'surecart')}</div>
             <sc-tag

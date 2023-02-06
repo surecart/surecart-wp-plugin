@@ -1,5 +1,6 @@
 import { Component, h, Prop, Event, EventEmitter, Element, Fragment } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
+import { isRtl } from '../../../functions/page-align';
 
 /**
  * @part base - The elements base wrapper.
@@ -106,7 +107,7 @@ export class ScProductLineItem {
 
   render() {
     return (
-      <div part="base" class={{ 'item': true, 'item--has-image': !!this.imageUrl }}>
+      <div part="base" class={{ 'item': true, 'item--has-image': !!this.imageUrl, 'item--is-rtl': isRtl() }}>
         {!!this.imageUrl && <img part="image" src={this.imageUrl} class="item__image" />}
         <div class="item__text" part="text">
           <div class="item__title" part="title">
