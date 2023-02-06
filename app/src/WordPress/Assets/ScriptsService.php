@@ -90,7 +90,7 @@ class ScriptsService {
 			);
 		}
 
-		wp_set_script_translations( 'surecart-components', 'surecart' );
+		wp_set_script_translations( 'surecart-components', 'surecart', SURECART_LANGUAGE_DIR );
 
 		// core-data.
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/data.asset.php';

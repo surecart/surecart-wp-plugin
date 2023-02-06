@@ -26,6 +26,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'SURECART_PLUGIN_FILE', __FILE__ );
 
+define( 'SURECART_PLUGIN_DIR_NAME', dirname( plugin_basename( SURECART_PLUGIN_FILE ) ) );
+define( 'SURECART_LANGUAGE_DIR', __DIR__ . DIRECTORY_SEPARATOR . 'languages' );
+
 // define host url.
 if ( ! defined( 'SURECART_APP_URL' ) ) {
 	define( 'SURECART_APP_URL', 'https://app.surecart.com' );
