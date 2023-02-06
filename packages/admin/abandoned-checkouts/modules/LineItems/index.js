@@ -44,6 +44,7 @@ export default ({ checkout, loading, abandoned }) => {
 							name={item?.price?.product?.name}
 							editable={false}
 							removable={false}
+							fees={item?.fees?.data}
 							quantity={item.quantity}
 							amount={item.subtotal_amount}
 							currency={item?.price?.currency}
@@ -100,14 +101,6 @@ export default ({ checkout, loading, abandoned }) => {
 						}
 						currency={checkout?.currency}
 						value={checkout?.discount_amount}
-					/>
-				)}
-
-				{!!checkout?.bump_amount && (
-					<LineItem
-						label={__('Bump Discounts', 'surecart')}
-						currency={checkout?.currency}
-						value={checkout?.bump_amount}
 					/>
 				)}
 

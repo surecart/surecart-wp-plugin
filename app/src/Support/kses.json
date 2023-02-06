@@ -1312,6 +1312,7 @@
     "amount": true,
     "currency": true,
     "editable": true,
+    "fees": true,
     "image-url": true,
     "interval": true,
     "max": true,

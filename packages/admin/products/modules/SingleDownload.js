@@ -124,7 +124,7 @@ export default ({ download, product, className }) => {
 					message: __('Could not download the file.', 'surecart'),
 				};
 			}
-			downloadFile(media?.url, media.filename);
+			downloadFile(media?.url, media?.filename);
 		} catch (e) {
 			console.error(e);
 			handleError(e);
@@ -201,7 +201,7 @@ export default ({ download, product, className }) => {
 								font-weight: bold;
 							`}
 						>
-							{download?.media.filename}
+							{download?.media?.filename}
 						</div>
 						<div
 							css={css`
