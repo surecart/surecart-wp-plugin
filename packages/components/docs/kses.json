@@ -1289,7 +1289,22 @@
     "slot": true
   },
   "sc-product": {
+    "form-id": true,
+    "mode": true,
     "product": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-buy-button": {
+    "add-to-cart": true,
+    "busy": true,
+    "full": true,
+    "icon": true,
+    "show-total": true,
+    "size": true,
+    "type": true,
     "style": true,
     "id": true,
     "class": true,

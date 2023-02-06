@@ -255,6 +255,7 @@ export interface LineItem extends Object {
   name: string;
   object: string;
   quantity: number;
+  checkout: string | Checkout;
   bump: string | Bump;
   bump_amount: number;
   discount_amount: number;
@@ -266,6 +267,13 @@ export interface LineItem extends Object {
   updated_at: number;
   price?: Price;
   price_id: string;
+}
+
+export interface DeletedItem {
+  cache_status: string;
+  deleted: boolean;
+  id: string;
+  object: string;
 }
 
 export interface InvoiceItem extends LineItem {}

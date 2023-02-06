@@ -2,9 +2,10 @@ import * as BuyButtons from './Blocks/Product/BuyButtons';
 import * as Description from './Blocks/Product/Description';
 import * as Image from './Blocks/Product/Image';
 import * as Info from './Blocks/Product/Info';
-import * as Prices from './Blocks/Product/Price';
+import * as Price from './Blocks/Product/Price';
 import * as Quantity from './Blocks/Product/Quantity';
 import * as Title from './Blocks/Product/Title';
+import * as PriceChoices from './Blocks/Product/PriceChoices';
 import { registerBlocks } from './register-block';
 import { __ } from '@wordpress/i18n';
 
@@ -20,4 +21,13 @@ window.setTimeout(() => {
 // eslint-disable-next-line no-unused-expressions
 ('');
 
-registerBlocks([Info, BuyButtons, Quantity, Title, Image, Description, Prices]);
+registerBlocks([
+	Info,
+	BuyButtons,
+	Quantity,
+	Title,
+	Image,
+	Description,
+	Price,
+	PriceChoices,
+]);

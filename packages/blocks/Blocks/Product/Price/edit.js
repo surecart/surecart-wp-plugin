@@ -1,4 +1,4 @@
-import { ScFormatNumber, ScProductPrices } from '@surecart/components-react';
+import { ScFormatNumber, ScProductPrice } from '@surecart/components-react';
 import {
 	AlignmentControl,
 	BlockControls,
@@ -20,13 +20,13 @@ export default ({ attributes: { textAlign }, setAttributes }) => {
 				/>
 			</BlockControls>
 
-			<ScProductPrices {...blockProps}>
+			<ScProductPrice {...blockProps}>
 				<ScFormatNumber
 					type="currency"
 					currency={scBlockData?.currency}
 					value={1234}
 				/>
-			</ScProductPrices>
+			</ScProductPrice>
 		</>
 	);
 };

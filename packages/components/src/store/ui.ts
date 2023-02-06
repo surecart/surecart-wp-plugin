@@ -1,6 +1,6 @@
 import { createStore } from '@stencil/store';
 
-export default createStore<any>(
+export const store = createStore<any>(
   () => ({
     cart: {
       open: false,
@@ -10,3 +10,8 @@ export default createStore<any>(
     return JSON.stringify(newValue) !== JSON.stringify(oldValue);
   },
 );
+
+const { state } = store;
+
+export const toggleCart = (open = null) => store.set('cart', { ...state.cart, ...{ open: open !== null ? open : !state.cart.open } });
+export default store;

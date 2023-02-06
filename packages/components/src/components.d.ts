@@ -2299,7 +2299,48 @@ export namespace Components {
         "prices": Price[];
     }
     interface ScProduct {
+        /**
+          * The form id to use for the cart.
+         */
+        "formId": number;
+        /**
+          * Are we in test or live mode.
+         */
+        "mode": 'test' | 'live';
+        /**
+          * The product.
+         */
         "product": Product;
+    }
+    interface ScProductBuyButton {
+        /**
+          * Is this an add to cart button?
+         */
+        "addToCart": boolean;
+        /**
+          * Is the order busy
+         */
+        "busy": boolean;
+        /**
+          * Show a full-width button.
+         */
+        "full": boolean;
+        /**
+          * Icon to show.
+         */
+        "icon": string;
+        /**
+          * Show the total.
+         */
+        "showTotal": boolean;
+        /**
+          * The button's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The button type.
+         */
+        "type": 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
     }
     interface ScProductBuyButtons {
         /**
@@ -4196,6 +4237,12 @@ declare global {
         prototype: HTMLScProductElement;
         new (): HTMLScProductElement;
     };
+    interface HTMLScProductBuyButtonElement extends Components.ScProductBuyButton, HTMLStencilElement {
+    }
+    var HTMLScProductBuyButtonElement: {
+        prototype: HTMLScProductBuyButtonElement;
+        new (): HTMLScProductBuyButtonElement;
+    };
     interface HTMLScProductBuyButtonsElement extends Components.ScProductBuyButtons, HTMLStencilElement {
     }
     var HTMLScProductBuyButtonsElement: {
@@ -4647,6 +4694,7 @@ declare global {
         "sc-price-input": HTMLScPriceInputElement;
         "sc-price-range": HTMLScPriceRangeElement;
         "sc-product": HTMLScProductElement;
+        "sc-product-buy-button": HTMLScProductBuyButtonElement;
         "sc-product-buy-buttons": HTMLScProductBuyButtonsElement;
         "sc-product-image": HTMLScProductImageElement;
         "sc-product-line-item": HTMLScProductLineItemElement;
@@ -7292,7 +7340,48 @@ declare namespace LocalJSX {
         "prices"?: Price[];
     }
     interface ScProduct {
+        /**
+          * The form id to use for the cart.
+         */
+        "formId"?: number;
+        /**
+          * Are we in test or live mode.
+         */
+        "mode"?: 'test' | 'live';
+        /**
+          * The product.
+         */
         "product"?: Product;
+    }
+    interface ScProductBuyButton {
+        /**
+          * Is this an add to cart button?
+         */
+        "addToCart"?: boolean;
+        /**
+          * Is the order busy
+         */
+        "busy"?: boolean;
+        /**
+          * Show a full-width button.
+         */
+        "full"?: boolean;
+        /**
+          * Icon to show.
+         */
+        "icon"?: string;
+        /**
+          * Show the total.
+         */
+        "showTotal"?: boolean;
+        /**
+          * The button's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The button type.
+         */
+        "type"?: 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
     }
     interface ScProductBuyButtons {
         /**
@@ -8463,6 +8552,7 @@ declare namespace LocalJSX {
         "sc-price-input": ScPriceInput;
         "sc-price-range": ScPriceRange;
         "sc-product": ScProduct;
+        "sc-product-buy-button": ScProductBuyButton;
         "sc-product-buy-buttons": ScProductBuyButtons;
         "sc-product-image": ScProductImage;
         "sc-product-line-item": ScProductLineItem;
@@ -8639,6 +8729,7 @@ declare module "@stencil/core" {
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
             "sc-price-range": LocalJSX.ScPriceRange & JSXBase.HTMLAttributes<HTMLScPriceRangeElement>;
             "sc-product": LocalJSX.ScProduct & JSXBase.HTMLAttributes<HTMLScProductElement>;
+            "sc-product-buy-button": LocalJSX.ScProductBuyButton & JSXBase.HTMLAttributes<HTMLScProductBuyButtonElement>;
             "sc-product-buy-buttons": LocalJSX.ScProductBuyButtons & JSXBase.HTMLAttributes<HTMLScProductBuyButtonsElement>;
             "sc-product-image": LocalJSX.ScProductImage & JSXBase.HTMLAttributes<HTMLScProductImageElement>;
             "sc-product-line-item": LocalJSX.ScProductLineItem & JSXBase.HTMLAttributes<HTMLScProductLineItemElement>;

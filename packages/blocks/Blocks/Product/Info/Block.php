@@ -2,6 +2,7 @@
 
 namespace SureCartBlocks\Blocks\Product\Info;
 
+use SureCart\Models\Form;
 use SureCartBlocks\Blocks\BaseBlock;
 
 /**
@@ -26,10 +27,25 @@ class Block extends BaseBlock {
 				'product' => $sc_product,
 			]
 		);
+
+		// need a form for checkout.
+		$form = \SureCart::forms()->getDefault();
+		if ( empty( $form->ID ) ) {
+			return current_user_can( 'edit_products' ) ? '<sc-alert type="warning" open>' . esc_html__( 'Your default store checkout form has been deleted. Please deactivate and reactivate the plugin to regenerate this form.', 'surecart' ) . '</sc-alert>' : '';
+		}
+
+		// need a page to checkout.
+		$checkout_link = \SureCart::pages()->url( 'checkout' );
+		if ( empty( $checkout_link ) ) {
+			return current_user_can( 'edit_products' ) ? '<sc-alert type="warning" open>' . esc_html__( 'Your default store checkout page has been deleted. Please deactivate and reactivate the plugin to regenerate this page.', 'surecart' ) . '</sc-alert>' : '';
+		}
 		ob_start(); ?>
 
 		<sc-product
 			id="product-<?php echo esc_attr( $sc_product->id ); ?>"
+			form-id="<?php echo esc_attr( $form->ID ); ?>"
+			mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>"
+			checkout-url="<?php echo esc_url( $checkout_link ); ?>"
 			class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
 			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>"
 		>
