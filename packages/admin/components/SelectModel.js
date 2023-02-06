@@ -18,6 +18,7 @@ export default ({
 	name,
 	prefix,
 	loading,
+	...props
 }) => {
 	const findItem = throttle(
 		(value) => {
@@ -46,6 +47,7 @@ export default ({
 				onSelect(e.target.value);
 			}}
 			choices={choices}
+			{...props}
 		>
 			{!!prefix && prefix}
 		</ScSelect>

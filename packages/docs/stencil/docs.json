@@ -1,5 +1,5 @@
 {
-	"timestamp": "2023-01-25T15:00:42",
+	"timestamp": "2023-01-12T17:59:47",
 	"compiler": {
 		"name": "@stencil/core",
 		"version": "2.17.1",
@@ -4648,38 +4648,6 @@
 			"docsTags": [],
 			"usage": {},
 			"props": [
-				{
-					"name": "isFullHeight",
-					"type": "boolean",
-					"mutable": false,
-					"attr": "is-full-height",
-					"reflectToAttr": false,
-					"docs": "Is this full vertical height",
-					"docsTags": [],
-					"values": [
-						{
-							"type": "boolean"
-						}
-					],
-					"optional": false,
-					"required": false
-				},
-				{
-					"name": "isReversedOnMobile",
-					"type": "boolean",
-					"mutable": false,
-					"attr": "is-reversed-on-mobile",
-					"reflectToAttr": false,
-					"docs": "Is this reverse ordered on mobile",
-					"docsTags": [],
-					"values": [
-						{
-							"type": "boolean"
-						}
-					],
-					"optional": false,
-					"required": false
-				},
 				{
 					"name": "isStackedOnMobile",
 					"type": "boolean",

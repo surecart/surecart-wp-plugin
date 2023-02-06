@@ -23,9 +23,6 @@
   ::slotted(div) {
     grid-template-columns: repeat(var(--columns, 1), 1fr);
   }
-  .choices__items {
-    grid-template-columns: repeat(var(--columns, 1), 1fr);
-  }
 }
 .choices {
   .choices__items {
