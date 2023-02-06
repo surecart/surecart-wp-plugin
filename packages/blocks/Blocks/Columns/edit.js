@@ -1,7 +1,6 @@
 /**
  * External dependencies
  */
-import classnames from 'classnames';
 import { dropRight, get, times } from 'lodash';
 
 /**
@@ -66,7 +65,12 @@ function ColumnsEditContainer({
 		? __stableUseInnerBlocksProps
 		: __experimentalUseInnerBlocksProps;
 
-	const { isStackedOnMobile, verticalAlignment } = attributes;
+	const {
+		isStackedOnMobile,
+		verticalAlignment,
+		isFullHeight,
+		isReversedOnMobile,
+	} = attributes;
 
 	const { count } = useSelect(
 		(select) => {
@@ -117,11 +121,31 @@ function ColumnsEditContainer({
 							})
 						}
 					/>
+					<ToggleControl
+						label={__('Full vertical height')}
+						checked={isFullHeight}
+						onChange={() =>
+							setAttributes({
+								isFullHeight: !isFullHeight,
+							})
+						}
+					/>
+					<ToggleControl
+						label={__('Reverse order on mobile')}
+						checked={isReversedOnMobile}
+						onChange={() =>
+							setAttributes({
+								isReversedOnMobile: !isReversedOnMobile,
+							})
+						}
+					/>
 				</PanelBody>
 			</InspectorControls>
 			<ScColumns
 				vertical-alignment={verticalAlignment}
 				is-stacked-on-mobile={isStackedOnMobile}
+				is-full-height={isFullHeight}
+				is-reversed-on-mobile={isReversedOnMobile}
 				{...innerBlocksProps}
 			/>
 		</>

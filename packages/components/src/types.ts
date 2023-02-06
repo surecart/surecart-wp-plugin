@@ -800,3 +800,16 @@ export interface PriceData extends Object {
   quantity: number;
   removeable: boolean;
 }
+
+export type RuleName = 'total' | 'coupons' | 'products' | 'shipping_country' | 'billing_country' | 'processors';
+export type ArrayOperators = 'all' | 'any' | 'none' | 'exist' | 'not_exist';
+export type NumberOperators = '==' | '!=' | '<' | '>' | '<=' | '>=';
+export interface RuleGroup {
+  group_id: string;
+  rules: Rule[];
+}
+export interface Rule {
+  condition: RuleName;
+  operator: NumberOperators | ArrayOperators;
+  value: string | string[] | { value: string }[];
+}
