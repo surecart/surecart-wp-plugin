@@ -50,7 +50,7 @@ export default ({ attributes, setAttributes }) => {
 						<TextControl
 							label={__('EU VAT Label', 'surecart')}
 							value={eu_vat_label}
-							placeholder="UK VAT"
+							placeholder="EU VAT"
 							onChange={(eu_vat_label) =>
 								setAttributes({ eu_vat_label })
 							}
@@ -70,11 +70,11 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 			<ScOrderTaxIdInput
 				show={true}
-				otherLabel={other_label}
-				caGstLabel={ca_gst_label}
-				auAbnLabel={au_abn_label}
-				gbVatLabel={gb_vat_label}
-				euVatLabel={eu_vat_label}
+				otherLabel={other_label || null}
+				caGstLabel={ca_gst_label || null}
+				auAbnLabel={au_abn_label || null}
+				gbVatLabel={gb_vat_label || null}
+				euVatLabel={eu_vat_label || null}
 			></ScOrderTaxIdInput>
 		</Fragment>
 	);
