@@ -22,6 +22,7 @@ import Integrations from './modules/integrations/Integrations';
 import Licensing from './modules/Licensing';
 import Prices from './modules/Prices';
 import Publishing from './modules/Publishing';
+import SearchEngine from './modules/SearchEngine';
 import Summary from './modules/Summary';
 import Tax from './modules/Tax';
 
@@ -259,6 +260,12 @@ export default ({ id }) => {
 				/>
 
 				<Licensing
+					id={id}
+					product={product}
+					updateProduct={editProduct}
+					loading={!hasLoadedProduct}
+				/>
+				<SearchEngine
 					id={id}
 					product={product}
 					updateProduct={editProduct}
