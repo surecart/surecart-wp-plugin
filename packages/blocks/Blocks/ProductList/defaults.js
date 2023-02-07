@@ -1,6 +1,8 @@
-export const DEFAULT_PRODUCT_ITEM_LAYOUT = [
-	['surecart/product-title'],
-	['surecart/product-price'],
-	['surecart/product-image'],
-	['surecart/buy-button'],
-];
+import { DEFAULT_PRODUCT_LIST_LAYOUT } from './consts';
+
+export default {
+	columns: 4,
+	rows: 4,
+	layoutConfig: DEFAULT_PRODUCT_LIST_LAYOUT,
+	isPreview: false,
+};

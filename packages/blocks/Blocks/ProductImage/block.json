@@ -8,9 +8,6 @@
 	"keywords": ["product", "image", "thumbnail"],
 	"ancestor": ["surecart/product-list"],
 	"attributes": {
-		"src": {
-			"type": "string"
-		},
 		"sizing": {
 			"type": "string"
 		},

@@ -5,37 +5,9 @@ import { Button, Placeholder } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { InnerBlocks } from '@wordpress/block-editor';
 
-const ALLOWED_BLOCKS = [
-	'surecart/product-title',
-	'surecart/product-price',
-	'surecart/product-image',
-];
+import { DEFAULT_PRODUCT_ITEM_LAYOUT } from '../consts';
 
-const DEFAULT_TEMPLATE = [
-	[
-		'surecart/product-title',
-		{
-			text: 'Product Title',
-		},
-	],
-	[
-		'surecart/product-price',
-		{
-			amount: '$249.99',
-			scratchAmount: '$300',
-		},
-	],
-	[
-		'surecart/product-image',
-		{
-			src: 'https://i.picsum.photos/id/295/300/400.jpg?hmac=46TmcFytDsif4HXrwWO87IpjgeODl2xffBYSfNtezDQ',
-			alt: 'Image Alt',
-			sizing: 'cover',
-		},
-	],
-];
-
-export default function EditModal() {
+export default function EditLayoutConfig() {
 	return (
 		<Placeholder icon={grid} label={__('All Products', 'surecart')}>
 			<div
@@ -66,9 +38,9 @@ export default function EditModal() {
 						}}
 					>
 						<InnerBlocks
-							templateLock={false}
-							template={DEFAULT_TEMPLATE}
-							allowedBlocks={ALLOWED_BLOCKS}
+							templateLock={'insert'}
+							template={DEFAULT_PRODUCT_ITEM_LAYOUT}
+							allowedBlocks={DEFAULT_PRODUCT_ITEM_LAYOUT}
 							renderAppender={false}
 						/>
 					</div>

@@ -6,10 +6,5 @@
 	"description": "Displays the product title.",
 	"category": "surecart",
 	"keywords": ["product", "title", "list"],
-	"ancestor": ["surecart/product-list"],
-	"attributes": {
-		"text": {
-			"type": "string"
-		}
-	}
+	"ancestor": ["surecart/product-list"]
 }

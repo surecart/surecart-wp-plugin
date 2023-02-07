@@ -28,6 +28,7 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
+		// print_r( $attributes );
 		$products = $this->getProductsData();
 
 		ob_start(); ?>

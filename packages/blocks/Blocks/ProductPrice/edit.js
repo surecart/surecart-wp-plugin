@@ -3,10 +3,13 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import { useBlockProps } from '@wordpress/block-editor';
+import { useProductDataContext } from '../../context/product-data-context';
 
-export default ({ attributes }) => {
-	const { amount, scratchAmount } = attributes;
+export default () => {
 	const blockProps = useBlockProps();
+	const { product, isLoading } = useProductDataContext();
+
+	if (isLoading) return null;
 
 	return (
 		<Fragment>
@@ -20,8 +23,8 @@ export default ({ attributes }) => {
 						margin-top: 0.8rem;
 					`}
 				>
-					<strong>{amount}</strong>
-					<span>{scratchAmount}</span>
+					<strong>$545</strong>
+					<span>$656</span>
 				</div>
 			</div>
 		</Fragment>

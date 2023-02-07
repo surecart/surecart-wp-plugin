@@ -6,13 +6,5 @@
 	"description": "Displays the price of the product with the scratched price.",
 	"category": "surecart",
 	"keywords": ["product", "price", "discount"],
-	"ancestor": ["surecart/product-list"],
-	"attributes": {
-		"amount": {
-			"type": "string"
-		},
-		"scratchAmount": {
-			"type": "string"
-		}
-	}
+	"ancestor": ["surecart/product-list"]
 }

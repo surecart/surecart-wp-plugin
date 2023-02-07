@@ -15,10 +15,11 @@ import {
 	ToolbarGroup,
 	Disabled,
 } from '@wordpress/components';
-import { Fragment, useState } from '@wordpress/element';
+import { Fragment, useEffect, useState } from '@wordpress/element';
 
-import EditModal from './components/EditModal';
-import { renderNoProductsPlaceholder } from './utils';
+import EditLayoutConfig from './modules/EditLayoutConfig';
+import { InnerBlockLayoutContextProvider } from '../../context/inner-block-layout-context';
+import ProductListContainer from './modules/ProductListContainer';
 
 export default ({ attributes, setAttributes }) => {
 	const [isEditing, setIsEditing] = useState(false);
@@ -60,7 +61,7 @@ export default ({ attributes, setAttributes }) => {
 						min={1}
 						max={10}
 					/>
-					{columns > 6 && (
+					{columns > 5 && (
 						<Notice status="warning" isDismissible={false}>
 							{__(
 								'This column count exceeds the recommended amount and may cause visual breakage.'
@@ -77,6 +78,7 @@ export default ({ attributes, setAttributes }) => {
 	// 	gap,
 	// 	gridTemplateColumns: `repeat(${columns}, 1fr)`,
 	// };
+	console.log(attributes);
 
 	return (
 		<Fragment>
@@ -84,9 +86,13 @@ export default ({ attributes, setAttributes }) => {
 			{getInspectorControls()}
 			<div {...blockProps}>
 				{isEditing ? (
-					<EditModal attributes={attributes} />
+					<EditLayoutConfig attributes={attributes} />
 				) : (
-					<Disabled>{renderNoProductsPlaceholder()}</Disabled>
+					<Disabled>
+						<InnerBlockLayoutContextProvider parentName="surecart/product-list">
+							<ProductListContainer attributes={attributes} />
+						</InnerBlockLayoutContextProvider>
+					</Disabled>
 				)}
 			</div>
 		</Fragment>

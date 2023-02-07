@@ -17,13 +17,17 @@ import {
 } from '@wordpress/components';
 import { ScProductImage } from '@surecart/components-react';
 import { getSpacingPresetCssVar } from '../../util';
+import { useProductDataContext } from '../../context/product-data-context';
 
 export default ({ attributes, setAttributes }) => {
-	const { src, alt, sizing, style: styleAttribute } = attributes;
+	const { alt, sizing, style: styleAttribute } = attributes;
 	const { padding, margin } = styleAttribute?.spacing || {};
+	const { product, isLoading } = useProductDataContext();
 
 	const blockProps = useBlockProps();
 	const { style } = useBorderProps(attributes);
+
+	if (isLoading) return null;
 
 	return (
 		<Fragment>
@@ -55,7 +59,7 @@ export default ({ attributes, setAttributes }) => {
 			>
 				<ScProductImage
 					alt={alt}
-					src={src}
+					src={product?.image_url}
 					sizing={sizing}
 					style={{
 						'--sc-product-image-border-color': style?.borderColor,
