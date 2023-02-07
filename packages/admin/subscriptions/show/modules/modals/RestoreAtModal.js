@@ -31,7 +31,7 @@ export default ({ subscription, open, onRequestClose }) => {
 
 	useEffect(() => {
 		setPauseUntil(new Date(subscription?.restore_at * 1000));
-	}, [subscription.restore_at]);
+	}, [subscription?.restore_at]);
 
 	const onSubmit = async (e) => {
 		try {
@@ -61,6 +61,8 @@ export default ({ subscription, open, onRequestClose }) => {
 			setLoading(false);
 		}
 	};
+
+	console.log(pauseUntil);
 
 	return (
 		<ScForm
@@ -98,7 +100,7 @@ export default ({ subscription, open, onRequestClose }) => {
 					disabled={loading}
 					slot="footer"
 				>
-					{__("Don't pause", 'surecart')}
+					{__("Don't update", 'surecart')}
 				</ScButton>{' '}
 				<ScButton
 					type="primary"
@@ -106,7 +108,7 @@ export default ({ subscription, open, onRequestClose }) => {
 					disabled={loading}
 					slot="footer"
 				>
-					{__('Pause Subscription', 'surecart')}
+					{__('Update', 'surecart')}
 				</ScButton>
 				{loading && (
 					<ScBlockUi

@@ -36,6 +36,7 @@ import Tax from './modules/Tax';
 import UpcomingPeriod from './modules/UpcomingPeriod';
 import PaymentMethod from '../edit/modules/PaymentMethod';
 import PauseSubscriptionModal from './modules/modals/PauseSubscriptionModal';
+import RestoreAtModal from './modules/modals/RestoreAtModal';
 
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
@@ -199,7 +200,7 @@ export default () => {
 		if (!subscription?.restore_at) return null;
 
 		return (
-			<ScMenuItem onClick={() => setModal('restore')}>
+			<ScMenuItem onClick={() => setModal('restore_at')}>
 				{__('Restore At', 'surecart')}
 			</ScMenuItem>
 		);
@@ -351,6 +352,11 @@ export default () => {
 			<RestoreSubscriptionModal
 				open={modal === 'restore'}
 				onRequestClose={onRequestCloseModal}
+			/>
+			<RestoreAtModal
+				open={modal === 'restore_at'}
+				onRequestClose={onRequestCloseModal}
+				subscription={subscription}
 			/>
 			<PauseSubscriptionModal
 				open={modal === 'pause'}
