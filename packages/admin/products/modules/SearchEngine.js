@@ -1,42 +1,11 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import {
-	ScHeading,
-	ScInput,
-	ScSelect,
-	ScSwitch,
-	ScText,
-	ScTextarea,
-} from '@surecart/components-react';
-import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
+import { ScInput, ScText, ScTextarea } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
 import Box from '../../ui/Box';
 
-export default ({ loading, id, product, updateProduct }) => {
-	if (!scData?.entitlements?.licensing) {
-		return null;
-	}
-
-	const { downloads, fetching } = useSelect(
-		(select) => {
-			const queryArgs = [
-				'surecart',
-				'download',
-				{ context: 'edit', product_ids: [id], per_page: 100 },
-			];
-			return {
-				downloads: select(coreStore).getEntityRecords(...queryArgs),
-				fetching: select(coreStore).isResolving(
-					'getEntityRecords',
-					queryArgs
-				),
-			};
-		},
-		[id]
-	);
-
+export default ({ loading, product, updateProduct }) => {
 	return (
 		<Box
 			loading={loading}

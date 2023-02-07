@@ -266,7 +266,6 @@ export default ({ id }) => {
 					loading={!hasLoadedProduct}
 				/>
 				<SearchEngine
-					id={id}
 					product={product}
 					updateProduct={editProduct}
 					loading={!hasLoadedProduct}
