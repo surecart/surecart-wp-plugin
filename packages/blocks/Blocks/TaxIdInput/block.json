@@ -11,19 +11,24 @@
 	},
 	"attributes": {
 		"other_label": {
-			"type": "string"
+			"type": "string",
+			"default": ""
 		},
 		"ca_gst_label": {
-			"type": "string"
+			"type": "string",
+			"default": ""
 		},
 		"au_abn_label": {
-			"type": "string"
+			"type": "string",
+			"default": ""
 		},
 		"gb_vat_label": {
-			"type": "string"
+			"type": "string",
+			"default": ""
 		},
 		"eu_vat_label": {
-			"type": "string"
+			"type": "string",
+			"default": ""
 		}
 	}
 }
