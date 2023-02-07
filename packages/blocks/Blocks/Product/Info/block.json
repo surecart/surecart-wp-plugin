@@ -7,6 +7,25 @@
 	"keywords": ["price", "product"],
 	"script": "surecart-components",
 	"editorStyle": "surecart-themes-default",
+	"attributes": {
+		"media_position": {
+			"type": "string",
+			"enum": ["left", "right"],
+			"default": "left"
+		},
+		"media_width": {
+			"type": "stringr",
+			"default": "65%"
+		},
+		"column_gap": {
+			"type": "string",
+			"default": "2em"
+		},
+		"sticky_content": {
+			"type": "boolean",
+			"default": true
+		}
+	},
 	"supports": {
 		"reusable": false,
 		"html": false,
@@ -23,7 +42,8 @@
 		},
 		"spacing": {
 			"margin": true,
-			"padding": true
+			"padding": true,
+			"blockGap": true
 		},
 		"typography": {
 			"fontSize": true,

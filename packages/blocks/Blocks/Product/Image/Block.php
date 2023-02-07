@@ -30,7 +30,7 @@ class Block extends BaseBlock {
 		<div class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
 			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
 			<sc-product-image>
-				<img href="<?php echo esc_url( $sc_product->image->url ); ?>">
+				<img href="<?php echo esc_url( $sc_product->image->url ?? '' ); ?>">
 			</sc-product-image>
 		</div>
 

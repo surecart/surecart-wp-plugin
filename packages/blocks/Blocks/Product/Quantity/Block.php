@@ -18,10 +18,13 @@ class Block extends BaseBlock {
 	 */
 	public function render( $attributes, $content ) {
 		ob_start(); ?>
-		<div class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
-		style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
-			<sc-product-quantity label="<?php echo esc_attr( $attributes['label'] ?? '' ); ?>"></sc-product-quantity>
-		</div>
+
+		<sc-product-quantity
+			label="<?php echo esc_attr( $attributes['label'] ?? '' ); ?>"
+			class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
+			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
+		</sc-product-quantity>
+
 		<?php
 		return ob_get_clean();
 	}

@@ -121,7 +121,7 @@ class TemplatePostTypeService {
 		);
 
 		if ( ! empty( $sc_product->template->wp_id ) ) {
-			$link = admin_url( sprintf( 'post.php?post=%d&action=edit', $sc_product->template->wp_id ) );
+			$link = admin_url( sprintf( 'post.php?post=%1d&action=edit&product=%2s', $sc_product->template->wp_id, $sc_product->id ) );
 			// ( current_theme_supports( 'block-template-parts' ) || wp_is_block_theme() ) ? admin_url( sprintf( 'site-editor.php?postType=wp_template&postId=%s', $sc_product->template->id ) ) :
 			$wp_admin_bar->add_node(
 				[
@@ -219,24 +219,19 @@ class TemplatePostTypeService {
 		$template                 = new WP_Block_Template();
 		$template->id             = $id;
 		$template->theme          = get_stylesheet();
-		$template->content        = '<!-- wp:surecart/product-info {"style":{"spacing":{"margin":{"top":"var:preset|spacing|70","right":"0","bottom":"var:preset|spacing|70","left":"0"}}}} -->
-		<!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"var:preset|spacing|60","left":"var:preset|spacing|60"}}}} -->
-		<div class="wp-block-columns"><!-- wp:column {"width":"65%"} -->
-		<div class="wp-block-column" style="flex-basis:65%"><!-- wp:surecart/product-image /--></div>
-		<!-- /wp:column -->
+		$template->content        = '<!-- wp:surecart/product-info {"media_position":"right","column_gap":"3em","align":"wide","style":{"spacing":{"margin":{"top":"var:preset|spacing|70","right":"0","bottom":"var:preset|spacing|70","left":"0"}}}} -->
+		<!-- wp:surecart/product-title {"fontSize":"x-large"} /-->
 
-		<!-- wp:column -->
-		<div class="wp-block-column"><!-- wp:surecart/product-title /-->
+		<!-- wp:surecart/product-price {"style":{"typography":{"fontSize":"16px"}}} /-->
+
+		<!-- wp:surecart/product-price-choices /-->
+
+		<!-- wp:surecart/product-quantity {"label":"Quantity","style":{"spacing":{"margin":{"top":"0px","bottom":"0px"}}}} /-->
+
+		<!-- wp:surecart/product-buy-buttons /-->
 
 		<!-- wp:surecart/product-description /-->
 
-		<!-- wp:surecart/product-price /-->
-
-		<!-- wp:surecart/product-quantity /-->
-
-		<!-- wp:surecart/product-buy-buttons /--></div>
-		<!-- /wp:column --></div>
-		<!-- /wp:columns -->
 		<!-- /wp:surecart/product-info -->';
 		$template->source         = 'surecart';
 		$template->origin         = null;

@@ -35,7 +35,7 @@ abstract class AdminModelEditController {
 	 *
 	 * @var array
 	 */
-	protected $dependencies = [ 'sc-core-data', 'sc-ui-data', 'wp-tinymce' ];
+	protected $dependencies = [ 'sc-core-data', 'sc-ui-data' ];
 
 	/**
 	 * Data to pass to the page.

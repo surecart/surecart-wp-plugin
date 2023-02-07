@@ -24,6 +24,9 @@ export class ScQuantitySelect {
   @Prop() max: number = Infinity;
   @Prop() min: number = 1;
   @Prop({ mutable: true, reflect: true }) quantity: number = 0;
+
+  @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
+
   /** Inputs focus */
   @Prop({ mutable: true, reflect: true }) hasFocus: boolean;
 

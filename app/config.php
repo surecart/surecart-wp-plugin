@@ -120,6 +120,7 @@ return [
 		\SureCartBlocks\Blocks\CheckoutForm\Block::class,
 		\SureCartBlocks\Blocks\CartSubtotal\Block::class,
 		\SureCartBlocks\Blocks\CartBumpLineItem\Block::class,
+		\SureCartBlocks\Blocks\CollapsibleRow\Block::class,
 		\SureCartBlocks\Blocks\OrderConfirmationLineItems\Block::class,
 		\SureCartBlocks\Blocks\Form\Block::class,
 		\SureCartBlocks\Blocks\Payment\Block::class,

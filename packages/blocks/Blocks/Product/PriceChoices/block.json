@@ -5,6 +5,12 @@
 	"description": "Displays possible choices for product prices.",
 	"category": "surecart",
 	"keywords": ["price", "product", "choice"],
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": "Choose one"
+		}
+	},
 	"supports": {
 		"reusable": false,
 		"html": false,

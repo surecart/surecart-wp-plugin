@@ -10,6 +10,7 @@ import { registerBlocks } from './register-block';
 import { __ } from '@wordpress/i18n';
 
 import './plugins/product-panel';
+import './plugins/toolbar-button';
 
 window.setTimeout(() => {
 	// Delaying autosaves we avoid creating drafts to remote

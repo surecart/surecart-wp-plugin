@@ -28,7 +28,7 @@ class Block extends BaseBlock {
 				<sc-product-text text="name">%4$s</sc-product-text>
 			</%1$s>',
 			'h' . (int) ( $attributes['level'] ?? 1 ),
-			esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ),
+			esc_attr( $this->getClasses( $attributes, 'surecart-block product-title' ) ),
 			esc_attr( $this->getStyles( $attributes ) ),
 			$sc_product->name
 		);

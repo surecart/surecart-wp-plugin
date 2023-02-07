@@ -2299,10 +2299,19 @@ export namespace Components {
         "prices": Price[];
     }
     interface ScProduct {
+        "columnGap": string;
         /**
           * The form id to use for the cart.
          */
         "formId": number;
+        /**
+          * The media position.
+         */
+        "mediaPosition": 'left' | 'right';
+        /**
+          * The media width.
+         */
+        "mediaWidth": string;
         /**
           * Are we in test or live mode.
          */
@@ -2434,7 +2443,7 @@ export namespace Components {
          */
         "showLabel": boolean;
         /**
-          * Size of the label
+          * Size of the control
          */
         "size": 'small' | 'medium' | 'large';
     }
@@ -2463,6 +2472,7 @@ export namespace Components {
         "max": number;
         "min": number;
         "quantity": number;
+        "size": 'small' | 'medium' | 'large';
     }
     interface ScRadio {
         /**
@@ -7341,10 +7351,19 @@ declare namespace LocalJSX {
         "prices"?: Price[];
     }
     interface ScProduct {
+        "columnGap"?: string;
         /**
           * The form id to use for the cart.
          */
         "formId"?: number;
+        /**
+          * The media position.
+         */
+        "mediaPosition"?: 'left' | 'right';
+        /**
+          * The media width.
+         */
+        "mediaWidth"?: string;
         /**
           * Are we in test or live mode.
          */
@@ -7484,7 +7503,7 @@ declare namespace LocalJSX {
          */
         "showLabel"?: boolean;
         /**
-          * Size of the label
+          * Size of the control
          */
         "size"?: 'small' | 'medium' | 'large';
     }
@@ -7527,6 +7546,7 @@ declare namespace LocalJSX {
          */
         "onScInput"?: (event: ScQuantitySelectCustomEvent<number>) => void;
         "quantity"?: number;
+        "size"?: 'small' | 'medium' | 'large';
     }
     interface ScRadio {
         /**

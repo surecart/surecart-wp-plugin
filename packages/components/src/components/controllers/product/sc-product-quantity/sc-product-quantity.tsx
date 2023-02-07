@@ -12,7 +12,7 @@ export class ScProductQuantity {
   private helpId = `sc-quantity-help-text-${id}`;
   private labelId = `sc-quantity-label-${id}`;
 
-  /** Size of the label */
+  /** Size of the control */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
 
   /** Name for the input. Used for validation errors. */
@@ -48,7 +48,7 @@ export class ScProductQuantity {
           labelId={this.labelId}
           name={this.name}
         >
-          <sc-quantity-select quantity={state.quantity} onScInput={e => (state.quantity = e.detail)}></sc-quantity-select>
+          <sc-quantity-select size={this.size} quantity={state.quantity} onScInput={e => (state.quantity = e.detail)}></sc-quantity-select>
         </sc-form-control>
       </Host>
     );

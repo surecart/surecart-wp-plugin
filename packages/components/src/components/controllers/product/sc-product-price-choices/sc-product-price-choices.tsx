@@ -1,4 +1,4 @@
-import { Component, h, Prop, Fragment } from '@stencil/core';
+import { Component, h, Prop, Fragment, Host } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { intervalString } from '../../../../functions/price';
 import state from '../../../../store/product';
@@ -30,8 +30,9 @@ export class ScProductPriceChoices {
   }
 
   render() {
-    if (!state?.prices?.length) return null;
+    if (state?.prices?.length < 2) return <Host style={{ display: 'none' }}></Host>;
 
+    console.log(state.prices);
     return (
       <sc-choices label={this.label} required>
         {(state.prices || []).map(price => (

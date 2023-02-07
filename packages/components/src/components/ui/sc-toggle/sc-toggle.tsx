@@ -166,7 +166,7 @@ export class ScToggle {
           )}
         </header>
 
-        <div class="details__body" ref={el => (this.body = el as HTMLElement)}>
+        <div class="details__body" ref={el => (this.body = el as HTMLElement)} part="body">
           <div part="content" id="content" class="details__content" role="region" aria-labelledby="header">
             <slot></slot>
           </div>

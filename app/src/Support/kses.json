@@ -1289,7 +1289,10 @@
     "slot": true
   },
   "sc-product": {
+    "column-gap": true,
     "form-id": true,
+    "media-position": true,
+    "media-width": true,
     "mode": true,
     "product": true,
     "style": true,
@@ -1404,6 +1407,7 @@
     "max": true,
     "min": true,
     "quantity": true,
+    "size": true,
     "style": true,
     "id": true,
     "class": true,
