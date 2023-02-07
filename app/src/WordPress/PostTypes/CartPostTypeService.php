@@ -66,7 +66,7 @@ class CartPostTypeService {
 
 		if ( $post_ID && $this->post_type === $post->post_type && false === $update ) {
 
-			$posts = get_posts(
+			$cart_posts = get_posts(
 				[
 					'post_type' => $this->post_type,
 					'per_page'  => 2,
@@ -74,8 +74,17 @@ class CartPostTypeService {
 				]
 			);
 
-			if ( isset( $posts[1] ) ) {
-				wp_delete_post( $post_ID );
+			if ( is_array( $cart_posts ) && ! empty( $cart_posts ) ) {
+
+				$saved_cart_post = \SureCart::cartPost()->get();
+
+				foreach ( $cart_posts as $cart_post ) {
+
+					if( $cart_post->ID !== $saved_cart_post->ID ) {
+						wp_delete_post( $cart_post->ID );
+					}
+
+				}
 			}
 		}
 	}
@@ -181,6 +190,7 @@ class CartPostTypeService {
 				'post_type' => $this->post_type,
 				'per_page'  => 1,
 				'status'    => 'publish',
+				'order' 	=> 'ASC',
 			]
 		);
 
