@@ -74,8 +74,6 @@ export class ScTaxIdInput {
     zones.gb_vat.label = this.gbVatLabel || zones.gb_vat.label;
     zones.eu_vat.label = this.euVatLabel || zones.eu_vat.label;
     zones.other.label = this.otherLabel || zones.other.label;
-
-    console.log({zones})
   }
 
   componentWillLoad() {
