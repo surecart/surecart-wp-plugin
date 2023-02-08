@@ -12,6 +12,7 @@ export default ({ attributes, setAttributes }) => {
 		gb_vat_label,
 		eu_vat_label,
 	} = attributes;
+
 	return (
 		<Fragment>
 			<InspectorControls>
