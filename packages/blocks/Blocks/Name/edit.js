@@ -25,6 +25,13 @@ export default ({ attributes, setAttributes }) => {
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
+						<ToggleControl
+							label={__('Required', 'surecart')}
+							checked={required}
+							onChange={(required) => setAttributes({ required })}
+						/>
+					</PanelRow>
+					<PanelRow>
 						<TextControl
 							label={__('Label', 'surecart')}
 							value={label}
@@ -52,7 +59,7 @@ export default ({ attributes, setAttributes }) => {
 
 			<Disabled>
 				<ScInput
-					required
+					required={required}
 					label={label}
 					placeholder={placeholder}
 					name="name"
