@@ -1,20 +1,14 @@
 /** @jsx jsx */
 import { registerPlugin } from '@wordpress/plugins';
 import { render } from '@wordpress/element';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 import { getQueryArg } from '@wordpress/url';
 import { store as coreStore } from '@wordpress/core-data';
-import { store as blockEditorStore } from '@wordpress/block-editor';
 import { store as editorStore } from '@wordpress/editor';
 import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
-import {
-	ScBlockUi,
-	ScButton,
-	ScCard,
-	ScFlex,
-	ScFormControl,
-} from '@surecart/components-react';
+import { productStore } from '@surecart/components';
+import { ScBlockUi, ScFlex } from '@surecart/components-react';
 import { useEffect, useState } from 'react';
 import ModelSelector from '../../admin/components/ModelSelector';
 
@@ -26,6 +20,10 @@ function ProductPreview() {
 	const [productId, setProductId] = useState(
 		getQueryArg(window.location.href, 'product')
 	);
+
+	const {
+		store: { state },
+	} = productStore;
 
 	const { product, loading } = useSelect(
 		(select) => {
@@ -69,11 +67,11 @@ function ProductPreview() {
 	);
 
 	useEffect(() => {
-		const surecart = window?.surecart || window.parent?.surecart;
-		if (product && surecart.product?.state?.product) {
-			surecart.product.state.product = product;
-			surecart.product.state.prices = product.prices?.data || [];
-			surecart.product.state.selectedPrice = product?.prices?.data?.[0];
+		console.log(product?.name);
+		if (product) {
+			state.product = product;
+			state.prices = product.prices?.data || [];
+			state.selectedPrice = product?.prices?.data?.[0];
 		}
 	}, [product]);
 
