@@ -57,7 +57,7 @@ export class ScOrderSummary {
     return (
       <sc-line-item style={{ '--price-size': 'var(--sc-font-size-x-large)' }}>
         <span class="collapse-link" slot="title" onClick={e => this.handleClick(e)}>
-          {this.collapsed ? this.closedText || __('Show Summary', 'surecart') : this.openText || __('Summary', 'surecart')}
+          {this.collapsed ? this.closedText || __('Show Order Summary', 'surecart') : this.openText || __('Order Summary', 'surecart')}
           <svg xmlns="http://www.w3.org/2000/svg" class="collapse-link__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
           </svg>
