@@ -3,7 +3,22 @@ import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
 
 import { getOrder, setOrder } from '../../../../store/checkouts';
-import { Bump, Checkout, Customer, FormState, ManualPaymentMethod, PaymentIntent, PaymentIntents, PriceChoice, Prices, Processor, ProcessorName, Products, ResponseError, TaxProtocol } from '../../../../types';
+import {
+  Bump,
+  Checkout,
+  Customer,
+  FormState,
+  ManualPaymentMethod,
+  PaymentIntent,
+  PaymentIntents,
+  PriceChoice,
+  Prices,
+  Processor,
+  ProcessorName,
+  Products,
+  ResponseError,
+  TaxProtocol,
+} from '../../../../types';
 
 @Component({
   tag: 'sc-checkout',
@@ -93,6 +108,9 @@ export class ScCheckout {
   /** The currenly selected processor */
   @State() processor: ProcessorName = 'stripe';
 
+  /** The processor method. */
+  @State() method: string;
+
   /** Is the processor manual? */
   @State() isManualProcessor: boolean;
 
@@ -128,6 +146,11 @@ export class ScCheckout {
     const { id, manual } = e.detail;
     this.processor = id;
     this.isManualProcessor = manual;
+  }
+
+  @Listen('scSetMethod')
+  handleMethodChange(e) {
+    this.method = e.detail;
   }
 
   @Listen('scAddEntities')
@@ -182,6 +205,7 @@ export class ScCheckout {
   state() {
     return {
       processor: this.processor,
+      method: this.method,
       selectedProcessorId: this.processor,
       processors: (this.processors || []).filter(processor => {
         return !(this?.order().reusable_payment_method_required && !processor?.recurring_enabled);
@@ -281,6 +305,7 @@ export class ScCheckout {
                       form-id={this.formId}
                       group-id={this.el.id}
                       processor={this.processor}
+                      method={this.method}
                       currency-code={this.currencyCode}
                       onScError={e => (this.error = e.detail as ResponseError)}
                     >

@@ -477,7 +477,7 @@ export namespace Components {
         /**
           * Submit the form
          */
-        "submit": ({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout>;
+        "submit": ({ skip_validation }?: { skip_validation: boolean; }) => Promise<void | Checkout>;
         /**
           * Where to go on success
          */
@@ -2034,6 +2034,8 @@ export namespace Components {
           * Is this a manual processor
          */
         "isManual": boolean;
+        "method": string;
+        "methodId": string;
         /**
           * The current processor
          */
@@ -2506,7 +2508,7 @@ export namespace Components {
           * Finalize the order.
           * @returns
          */
-        "finalize": () => Promise<Checkout>;
+        "finalize": () => Promise<void | Checkout>;
         /**
           * The checkout form id
          */
@@ -2519,6 +2521,7 @@ export namespace Components {
           * Is this a manual payment?
          */
         "isManualProcessor": boolean;
+        "method": string;
         /**
           * Are we in test or live mode.
          */
@@ -6785,6 +6788,7 @@ declare namespace LocalJSX {
           * Is this created in "test" mode
          */
         "mode"?: 'test' | 'live';
+        "onScSetMethod"?: (event: ScPaymentCustomEvent<string | null>) => void;
         /**
           * Set the checkout procesor.
          */
@@ -6825,10 +6829,16 @@ declare namespace LocalJSX {
           * Is this a manual processor
          */
         "isManual"?: boolean;
+        "method"?: string;
+        "methodId"?: string;
         /**
           * The currenct processor is invalid.
          */
         "onScProcessorInvalid"?: (event: ScPaymentMethodChoiceCustomEvent<void>) => void;
+        /**
+          * Set the order procesor.
+         */
+        "onScSetMethod"?: (event: ScPaymentMethodChoiceCustomEvent<string>) => void;
         /**
           * Set the order procesor.
          */
@@ -7378,6 +7388,7 @@ declare namespace LocalJSX {
           * Is this a manual payment?
          */
         "isManualProcessor"?: boolean;
+        "method"?: string;
         /**
           * Are we in test or live mode.
          */

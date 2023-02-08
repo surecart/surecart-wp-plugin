@@ -46,6 +46,7 @@ export class ScPayment {
 
   /** Set the checkout procesor. */
   @Event() scSetProcessor: EventEmitter<{ id: string; manual: boolean } | null>;
+  @Event() scSetMethod: EventEmitter<string | null>;
 
   private mutationObserver: MutationObserver;
 
@@ -72,6 +73,7 @@ export class ScPayment {
       const processor = (this.el.querySelector('sc-payment-method-choice:not([style*="display: none"])') as HTMLScPaymentMethodChoiceElement) || null;
       if (processor?.processorId) {
         this.scSetProcessor.emit({ id: processor?.processorId, manual: processor.isManual });
+        this.scSetMethod.emit(processor?.methodId || null);
       }
     }, 50);
   }

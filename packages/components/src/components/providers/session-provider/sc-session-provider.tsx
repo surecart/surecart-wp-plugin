@@ -42,6 +42,8 @@ export class ScSessionProvider {
   /** The processor. */
   @Prop() processor: ProcessorName = 'stripe';
 
+  @Prop() method: string;
+
   /** Is this a manual payment? */
   @Prop() isManualProcessor: boolean;
 
@@ -164,6 +166,7 @@ export class ScSessionProvider {
         id: this.order()?.id,
         query: {
           ...this.defaultFormQuery(),
+          ...(this.method ? { payment_method_type: this.method } : {}),
         },
         data,
         processor: {
@@ -177,6 +180,10 @@ export class ScSessionProvider {
       // the order is paid
       if (['paid', 'processing'].includes(order?.status)) {
         this.scPaid.emit();
+      }
+
+      if (order?.payment_intent?.processor_data?.mollie?.checkout_url) {
+        return window.location.assign(order?.payment_intent?.processor_data?.mollie?.checkout_url);
       }
 
       setTimeout(() => {
@@ -434,7 +441,7 @@ export class ScSessionProvider {
       currency: this.order()?.currency || this.currencyCode,
       live_mode: this.mode !== 'test',
       group_key: this.groupId,
-      ...(this.abandonedCheckoutReturnUrl ? {abandoned_checkout_return_url: this.abandonedCheckoutReturnUrl} : {}),
+      ...(this.abandonedCheckoutReturnUrl ? { abandoned_checkout_return_url: this.abandonedCheckoutReturnUrl } : {}),
     };
   }
 
