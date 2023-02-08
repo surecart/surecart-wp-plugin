@@ -76,5 +76,7 @@ registerBlocks([
 	switchBlock,
 	total,
 	totals,
-  conditionalForm,
+	...(!!scBlockData?.entitlements?.conditional_forms
+		? [conditionalForm]
+		: []),
 ]);
