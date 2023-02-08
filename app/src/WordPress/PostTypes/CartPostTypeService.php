@@ -69,12 +69,12 @@ class CartPostTypeService {
 			$cart_posts = get_posts(
 				[
 					'post_type' => $this->post_type,
-					'per_page'  => 2,
+					'per_page'  => 5,
 					'status'    => 'publish',
 				]
 			);
 
-			if ( is_array( $cart_posts ) && ! empty( $cart_posts ) ) {
+			if ( is_array( $cart_posts ) && count( $cart_posts ) > 1 ) {
 
 				$saved_cart_post = \SureCart::cartPost()->get();
 
@@ -83,7 +83,6 @@ class CartPostTypeService {
 					if( $cart_post->ID !== $saved_cart_post->ID ) {
 						wp_delete_post( $cart_post->ID );
 					}
-
 				}
 			}
 		}
@@ -97,8 +96,8 @@ class CartPostTypeService {
 	public function redirectFromListPage() {
 		global $pagenow, $typenow;
 		if ( 'sc_cart' === $typenow && 'edit.php' === $pagenow ) {
-			// wp_safe_redirect( esc_url_raw( admin_url( 'edit.php?post_type=sc_form' ) ) );
-			// die();
+			wp_safe_redirect( esc_url_raw( admin_url( 'edit.php?post_type=sc_form' ) ) );
+			die();
 		}
 	}
 
@@ -223,11 +222,11 @@ class CartPostTypeService {
 	public function createPost() {
 		$post_id = wp_insert_post(
 			[
-				'name'      => _x( 'cart', 'Cart slug', 'surecart' ),
-				'title'     => _x( 'Cart', 'Cart title', 'surecart' ),
-				'post_type' => $this->post_type,
-				'status'    => 'publish',
-				'content'   => '<!-- wp:surecart/cart --><sc-order-summary>
+				'post_name'		=> _x( 'cart', 'Cart slug', 'surecart' ),
+				'post_title'	=> _x( 'Cart', 'Cart title', 'surecart' ),
+				'post_type'		=> $this->post_type,
+				'post_status'	=> 'publish',
+				'post_content'	=> '<!-- wp:surecart/cart --><sc-order-summary>
 				<sc-line-items></sc-line-items>
 			</sc-order-summary><!-- /wp:surecart/cart -->',
 			]
