@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: SureCart Blank
+Template Name: SureCart
 */
 ?>
 <!DOCTYPE html>

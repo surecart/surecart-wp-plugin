@@ -29,7 +29,7 @@ class TemplatesServiceProvider implements ServiceProviderInterface {
 			return new TemplatesService(
 				$c,
 				[
-					'pages/template-surecart-blank.php' => esc_html__( 'SureCart: Full Width No Sidebar', 'surecart' ),
+					'pages/template-surecart-blank.php' => esc_html__( 'SureCart', 'surecart' ),
 				],
 				'page'
 			);
