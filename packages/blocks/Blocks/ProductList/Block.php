@@ -4,6 +4,8 @@ namespace SureCartBlocks\Blocks\ProductList;
 
 use SureCartBlocks\Blocks\BaseBlock;
 use SureCart\Models\Product;
+use SureCartBlocks\Blocks\ProductListTitle\Block as ProductListTitleBlock;
+use SureCartBlocks\Blocks\ProductListImage\Block as ProductListImageBlock;
 
 /**
  * ProductList block
@@ -35,7 +37,20 @@ class Block extends BaseBlock {
 		<div style="display: grid; gap: 1rem; grid-template-columns: repeat(4, 1fr);">
 			<?php foreach($products as $item): ?>
 				<div>
-					<?php echo filter_block_content( $content, 'post' ); ?>
+					<!-- <?php var_dump($item) ?> -->
+					<?php foreach($this->block->inner_blocks as $block) : ?>
+
+						<?php if ( $block->name === 'surecart/product-list-title'): ?>
+							<?php $attributes = array_merge($block->parsed_block['attrs'], ['title' => $item->name]); ?>
+							<?php echo (new ProductListTitleBlock())->render($attributes, ''); ?>
+						<?php endif; ?>
+
+						<?php if ( $block->name === 'surecart/product-list-image'): ?>
+							<?php $attributes = array_merge($block->parsed_block['attrs'], ['src' => $item->image_url]); ?>
+							<?php echo (new ProductListImageBlock())->render($attributes, ''); ?>
+						<?php endif; ?>
+
+					<?php endforeach; ?>
 				</div>
 			<?php endforeach; ?>
 		</div>

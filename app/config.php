@@ -123,6 +123,8 @@ return [
 		\SureCartBlocks\Blocks\Payment\Block::class,
 		\SureCartBlocks\Blocks\LogoutButton\Block::class,
 		\SureCartBlocks\Blocks\ProductList\Block::class,
+		\SureCartBlocks\Blocks\ProductListTitle\Block::class,
+		\SureCartBlocks\Blocks\ProductListImage\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\WordPressAccount\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerCharges\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerDashboard\Block::class,

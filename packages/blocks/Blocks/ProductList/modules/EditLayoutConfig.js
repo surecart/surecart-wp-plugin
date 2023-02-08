@@ -5,9 +5,25 @@ import { Button, Placeholder } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { InnerBlocks } from '@wordpress/block-editor';
 
-import { DEFAULT_PRODUCT_ITEM_LAYOUT } from '../consts';
+const PRODUCT_ITEM_BLOCKS = [
+	[
+		'surecart/product-list-title',
+		{
+			title: 'Product Title',
+		},
+	],
+	[
+		'surecart/product-list-image',
+		{
+			src: 'https://images.unsplash.com/photo-1617360547704-3da8b5363369?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=420&ixid=MnwxfDB8MXxyYW5kb218MHx8cHJvZHVjdHx8fHx8fDE2NzU3OTY4NjM&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=360',
+			sizing: 'contain',
+		},
+	],
+];
 
-export default function EditLayoutConfig() {
+const ALLOWED_BLOCKS = ['surecart/product-list-title'];
+
+export default function EditLayoutConfig({ onDone }) {
 	return (
 		<Placeholder icon={grid} label={__('All Products', 'surecart')}>
 			<div
@@ -39,8 +55,8 @@ export default function EditLayoutConfig() {
 					>
 						<InnerBlocks
 							templateLock={'insert'}
-							template={DEFAULT_PRODUCT_ITEM_LAYOUT}
-							allowedBlocks={DEFAULT_PRODUCT_ITEM_LAYOUT}
+							template={PRODUCT_ITEM_BLOCKS}
+							allowedBlocks={ALLOWED_BLOCKS}
 							renderAppender={false}
 						/>
 					</div>
@@ -52,11 +68,12 @@ export default function EditLayoutConfig() {
 						padding: 1rem 1rem 0;
 					`}
 				>
-					<Button variant="primary" style={{ marginBottom: 0 }}>
+					<Button
+						variant="primary"
+						style={{ marginBottom: 0 }}
+						onClick={onDone}
+					>
 						{__('Done', 'surecart')}
-					</Button>
-					<Button variant="tertiary">
-						{__('Cancel', 'surecart')}
 					</Button>
 				</div>
 			</div>

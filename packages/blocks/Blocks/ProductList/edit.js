@@ -13,13 +13,11 @@ import {
 	RangeControl,
 	Notice,
 	ToolbarGroup,
-	Disabled,
 } from '@wordpress/components';
-import { Fragment, useEffect, useState } from '@wordpress/element';
+import { Fragment, useState } from '@wordpress/element';
+import ServerSideRender from '@wordpress/server-side-render';
 
 import EditLayoutConfig from './modules/EditLayoutConfig';
-import { InnerBlockLayoutContextProvider } from '../../context/inner-block-layout-context';
-import ProductListContainer from './modules/ProductListContainer';
 
 export default ({ attributes, setAttributes }) => {
 	const [isEditing, setIsEditing] = useState(false);
@@ -30,8 +28,8 @@ export default ({ attributes, setAttributes }) => {
 		setIsEditing((flag) => !flag);
 	}
 
-	function getBlockControls() {
-		return (
+	return (
+		<Fragment>
 			<BlockControls>
 				<ToolbarGroup
 					controls={[
@@ -47,11 +45,6 @@ export default ({ attributes, setAttributes }) => {
 					]}
 				/>
 			</BlockControls>
-		);
-	}
-
-	function getInspectorControls() {
-		return (
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<RangeControl
@@ -70,29 +63,17 @@ export default ({ attributes, setAttributes }) => {
 					)}
 				</PanelBody>
 			</InspectorControls>
-		);
-	}
-
-	// const containerStyles = {
-	// 	display: 'grid',
-	// 	gap,
-	// 	gridTemplateColumns: `repeat(${columns}, 1fr)`,
-	// };
-	console.log(attributes);
-
-	return (
-		<Fragment>
-			{getBlockControls()}
-			{getInspectorControls()}
 			<div {...blockProps}>
 				{isEditing ? (
-					<EditLayoutConfig attributes={attributes} />
+					<EditLayoutConfig
+						attributes={attributes}
+						onDone={togglePreview}
+					/>
 				) : (
-					<Disabled>
-						<InnerBlockLayoutContextProvider parentName="surecart/product-list">
-							<ProductListContainer attributes={attributes} />
-						</InnerBlockLayoutContextProvider>
-					</Disabled>
+					<ServerSideRender
+						block="surecart/product-list"
+						attributes={attributes}
+					/>
 				)}
 			</div>
 		</Fragment>

@@ -1,19 +1,18 @@
 {
 	"$schema": "https://json.schemastore.org/block.json",
 	"apiVersion": 2,
-	"name": "surecart/product-image",
+	"name": "surecart/product-list-image",
 	"title": "Product Image",
 	"description": "Displays a product image.",
 	"category": "surecart",
 	"keywords": ["product", "image", "thumbnail"],
 	"ancestor": ["surecart/product-list"],
 	"attributes": {
-		"sizing": {
+		"src": {
 			"type": "string"
 		},
-		"alt": {
-			"type": "string",
-			"default": ""
+		"sizing": {
+			"type": "string"
 		}
 	},
 	"supports": {

@@ -1,14 +1,14 @@
 import { getSpacingPresetCssVar } from '../../util';
 
 export default function save({ attributes }) {
-	const { src, sizing, alt, style: styleAttribute } = attributes;
+	const { src, sizing, style: styleAttribute } = attributes;
 	const { padding, margin } = styleAttribute?.spacing || {};
 
 	return (
 		<sc-product-image
+			alt=""
 			src={src}
 			sizing={sizing}
-			alt={alt}
 			style={{
 				'--sc-product-image-border-color': ' ',
 				'--sc-product-image-border-radius': ' ',

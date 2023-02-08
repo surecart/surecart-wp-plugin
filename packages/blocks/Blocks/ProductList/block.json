@@ -12,13 +12,12 @@
 	},
 	"attributes": {
 		"columns": {
-			"type": "number"
+			"type": "number",
+			"default": 4
 		},
 		"gap": {
-			"type": "string"
-		},
-		"layoutConfig": {
-			"type": "array"
+			"type": "string",
+			"default": "1rem"
 		}
 	}
 }
