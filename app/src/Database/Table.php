@@ -60,7 +60,7 @@ class Table {
 	 */
 	public function drop( $name ) {
 		global $wpdb;
-		$dropped = $wpdb->query( $wpdb->prepare( 'DROP TABLE IF EXISTS `%s`', $name ) );
+		$dropped = $wpdb->query( $wpdb->prepare( 'DROP TABLE IF EXISTS %s', $name ) );
 		if ( true === $dropped ) {
 			delete_option( "{$name}_database_version" );
 		}
