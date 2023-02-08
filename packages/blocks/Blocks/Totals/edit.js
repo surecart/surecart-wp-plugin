@@ -135,8 +135,8 @@ export default ({ attributes, setAttributes }) => {
 			<ScOrderSummary
 				collapsible={collapsible}
 				collapsed={collapsed}
-				closedText={closed_text}
-				openText={open_text}
+				closedText={closed_text || null}
+				openText={open_text || null}
 				collapsedOnMobile={collapsedOnMobile}
 				{...innerBlocksProps}
 			></ScOrderSummary>
