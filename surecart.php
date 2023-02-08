@@ -48,17 +48,3 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'help
 
 // Register hooks.
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'hooks.php';
-
-add_action( 'wp', function(){
-	wp_insert_post(
-		[
-			'post_name'      => _x( 'cart', 'Cart slug', 'surecart' ),
-			'post_title'     => _x( 'Cart', 'Cart title', 'surecart' ),
-			'post_type' 	 => 'sc_cart',
-			'post_status'    => 'publish',
-			'post_content'   => '<!-- wp:surecart/cart --><sc-order-summary>
-			<sc-line-items></sc-line-items>
-		</sc-order-summary><!-- /wp:surecart/cart -->',
-		]
-	);
-});
