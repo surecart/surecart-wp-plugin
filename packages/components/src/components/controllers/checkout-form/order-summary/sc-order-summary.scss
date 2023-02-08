@@ -28,6 +28,24 @@
   color: var(--sc-order-summary-color, var(--sc-color-gray-500));
 }
 
+[slot=price] {
+  margin: -10px 0;
+}
+
+.price {
+  display: inline-block;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(5px);
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) visibility ease, var(--sc-input-transition, var(--sc-transition-medium)) opacity ease, var(--sc-input-transition, var(--sc-transition-medium)) transform ease;
+
+  &--collapsed {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
 .summary {
   position: relative;
   user-select: none;

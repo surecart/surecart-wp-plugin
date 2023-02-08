@@ -57,7 +57,7 @@ export class ScOrderSummary {
     return (
       <sc-line-item style={{ '--price-size': 'var(--sc-font-size-x-large)' }}>
         <span class="collapse-link" slot="title" onClick={e => this.handleClick(e)}>
-          {this.collapsed ? this.closedText || __('Show Order Summary', 'surecart') : this.openText || __('Order Summary', 'surecart')}
+          {this.collapsed ? this.closedText || __('Order Summary', 'surecart') : this.openText || __('Order Summary', 'surecart')}
           <svg xmlns="http://www.w3.org/2000/svg" class="collapse-link__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
           </svg>
@@ -65,19 +65,12 @@ export class ScOrderSummary {
         <span slot="description">
           <slot name="description" />
         </span>
-        {this.collapsed && (
-          <span slot="price">
-            {!!this.order?.total_savings_amount && (
-              <sc-format-number
-                class="scratch-price"
-                type="currency"
-                value={-this.order?.total_savings_amount + this.order?.total_amount}
-                currency={this.order?.currency || 'usd'}
-              />
-            )}
-            <sc-total total={'total'} order={this.order}></sc-total>
-          </span>
-        )}
+        <span slot="price" class={{ 'price': true, 'price--collapsed': this.collapsed }}>
+          {!!this.order?.total_savings_amount && (
+            <sc-format-number class="scratch-price" type="currency" value={-this.order?.total_savings_amount + this.order?.total_amount} currency={this.order?.currency || 'usd'} />
+          )}
+          <sc-total total={'total'} order={this.order}></sc-total>
+        </span>
       </sc-line-item>
     );
   }

@@ -6,15 +6,15 @@ return [
 	'title'      => __( 'Checkout', 'surecart' ),
 	'categories' => [],
 	'blockTypes' => [],
-	'content'    => '<!-- wp:surecart/columns {"isFullHeight":true,"isReversedOnMobile":true,"style":{"spacing":{"blockGap":{"top":"0px","left":"0px"}}}} -->
-	<sc-columns is-stacked-on-mobile="1" is-full-height="1" is-reversed-on-mobile="1" class="wp-block-surecart-columns" style="gap:0px 0px"><!-- wp:surecart/column {"backgroundColor":"white","style":{"spacing":{"padding":{"top":"60px","right":"60px","bottom":"60px","left":"60px"},"blockGap":"30px"}},"layout":{"type":"constrained","contentSize":"500px","justifyContent":"right"}} -->
-	<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right has-white-background-color has-background" style="padding-top:60px;padding-right:60px;padding-bottom:60px;padding-left:60px;--sc-column-content-width:500px;--sc-form-row-spacing:30px"><!-- wp:surecart/store-logo {"width":120,"maxHeight":100,"isLinkToHome":false} /-->
+	'content'    => '<!-- wp:surecart/columns {"isFullHeight":true,"isReversedOnMobile":true,"style":{"spacing":{"blockGap":{"top":"0px","left":"0px"}},"color":{"background":"#f3f4f6"}}} -->
+	<sc-columns is-stacked-on-mobile="1" is-full-height="1" is-reversed-on-mobile="1" class="wp-block-surecart-columns has-background" style="background-color:#f3f4f6;gap:0px 0px"><!-- wp:surecart/column {"layout":{"type":"constrained","contentSize":"450px","justifyContent":"right"},"backgroundColor":"white","style":{"spacing":{"padding":{"top":"60px","right":"60px","bottom":"60px","left":"60px"},"blockGap":"30px"}}} -->
+	<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right has-white-background-color has-background" style="padding-top:60px;padding-right:60px;padding-bottom:60px;padding-left:60px;--sc-column-content-width:450px;--sc-form-row-spacing:30px"><!-- wp:surecart/store-logo {"width":120,"maxHeight":100,"isLinkToHome":false} /-->
 
-	<!-- wp:surecart/name -->
-	<sc-customer-name label="Name" required class="wp-block-surecart-name"></sc-customer-name>
+	<!-- wp:surecart/email {"placeholder":"your@email.com"} /-->
+
+	<!-- wp:surecart/name {"required":true,"placeholder":"Your Full Name"} -->
+	<sc-customer-name label="Name" placeholder="Your Full Name" required class="wp-block-surecart-name"></sc-customer-name>
 	<!-- /wp:surecart/name -->
-
-	<!-- wp:surecart/email /-->
 
 	<!-- wp:surecart/address /-->
 
@@ -27,9 +27,9 @@ return [
 	<!-- /wp:surecart/submit --></sc-column>
 	<!-- /wp:surecart/column -->
 
-	<!-- wp:surecart/column {"width":"","style":{"spacing":{"padding":{"top":"60px","right":"60px","bottom":"60px","left":"60px"},"blockGap":"30px"},"color":{"background":"#f3f4f6"},"border":{"color":"#dce0e6","width":"1px"}},"layout":{"type":"constrained","contentSize":"400px","justifyContent":"left"}} -->
-	<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-left has-border-color has-background" style="border-color:#dce0e6;border-width:1px;background-color:#f3f4f6;padding-top:60px;padding-right:60px;padding-bottom:60px;padding-left:60px;--sc-column-content-width:400px;--sc-form-row-spacing:30px"><!-- wp:surecart/totals {"collapsible":true,"collapsedOnMobile":true} -->
-	<sc-order-summary collapsible="1" closed-text="Show Summary" open-text="Summary" collapsed-on-mobile="1" class="wp-block-surecart-totals"><!-- wp:surecart/divider -->
+	<!-- wp:surecart/column {"layout":{"type":"constrained","justifyContent":"left","contentSize":"450px"},"width":"","sticky":true,"style":{"spacing":{"padding":{"top":"60px","right":"60px","bottom":"60px","left":"60px"},"blockGap":"30px"}}} -->
+	<sc-column class="wp-block-surecart-column is-sticky is-layout-constrained is-horizontally-aligned-left" style="padding-top:60px;padding-right:60px;padding-bottom:60px;padding-left:60px;--sc-column-content-width:450px;--sc-form-row-spacing:30px"><!-- wp:surecart/totals {"collapsible":true,"closed_text":"","open_text":"","collapsedOnMobile":true} -->
+	<sc-order-summary collapsible="1" closed-text="" open-text="" collapsed-on-mobile="1" class="wp-block-surecart-totals"><!-- wp:surecart/divider -->
 	<sc-divider></sc-divider>
 	<!-- /wp:surecart/divider -->
 
@@ -45,8 +45,8 @@ return [
 	<sc-line-item-total total="subtotal" class="wp-block-surecart-subtotal"><span slot="description">Subtotal</span></sc-line-item-total>
 	<!-- /wp:surecart/subtotal -->
 
-	<!-- wp:surecart/coupon -->
-	<sc-order-coupon-form label="Add Coupon Code">Apply Coupon</sc-order-coupon-form>
+	<!-- wp:surecart/coupon {"text":"","button_text":""} -->
+	<sc-order-coupon-form></sc-order-coupon-form>
 	<!-- /wp:surecart/coupon -->
 
 	<!-- wp:surecart/tax-line-item -->

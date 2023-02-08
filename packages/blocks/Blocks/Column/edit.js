@@ -26,6 +26,7 @@ import {
 import { useSelect, useDispatch } from '@wordpress/data';
 import { sprintf, __ } from '@wordpress/i18n';
 import { ScColumn } from '@surecart/components-react';
+import Spacing from './Inspector/Spacing';
 
 function ColumnEdit({ attributes, setAttributes, clientId }) {
 	const {
@@ -35,16 +36,19 @@ function ColumnEdit({ attributes, setAttributes, clientId }) {
 		stickyOffset,
 		templateLock = false,
 		allowedBlocks,
-		layout,
+		layout = {},
 	} = attributes;
 
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
 		? __stableUseInnerBlocksProps
 		: __experimentalUseInnerBlocksProps;
 
-	const classes = classnames('block-core-columns', {
+	const classes = classnames({
 		[`is-vertically-aligned-${verticalAlignment}`]: verticalAlignment,
 		[`is-sticky`]: sticky,
+		['is-layout-constrained']: layout?.type === 'constrained',
+		[`is-horizontally-aligned-${layout?.justifyContent}`]:
+			layout?.justifyContent,
 	});
 
 	const units = useCustomUnits({
@@ -127,6 +131,35 @@ function ColumnEdit({ attributes, setAttributes, clientId }) {
 				/>
 			</BlockControls>
 			<InspectorControls>
+				<PanelBody title={__('Layout')}>
+					<Spacing
+						attributes={attributes}
+						setAttributes={setAttributes}
+					/>
+
+					{/* { ! inherit && allowSwitching && (
+						<LayoutTypeSwitcher
+							type={ type }
+							onChange={ onChangeType }
+						/>
+					) }
+
+					{ layoutType && layoutType.name !== 'default' && (
+						<layoutType.inspectorControls
+							layout={ usedLayout }
+							onChange={ onChangeLayout }
+							layoutBlockSupport={ layoutBlockSupport }
+						/>
+					) }
+					{ constrainedType && displayControlsForLegacyLayouts && (
+						<constrainedType.inspectorControls
+							layout={ usedLayout }
+							onChange={ onChangeLayout }
+							layoutBlockSupport={ layoutBlockSupport }
+						/>
+					) } */}
+				</PanelBody>
+
 				<PanelBody title={__('Column settings')}>
 					<UnitControl
 						label={__('Width')}
