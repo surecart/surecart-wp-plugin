@@ -40,7 +40,7 @@ export default ({ subscription, open, onRequestClose }) => {
 
 			await apiFetch({
 				method: 'PATCH',
-				path: addQueryArgs(`surecart/v1/subscriptions/${id}/cancel`, {
+				path: addQueryArgs(`surecart/v1/subscriptions/${id}`, {
 					cancel_behavior: 'immediate',
 				}),
 				data: {
@@ -61,8 +61,6 @@ export default ({ subscription, open, onRequestClose }) => {
 			setLoading(false);
 		}
 	};
-
-	console.log(pauseUntil);
 
 	return (
 		<ScForm
