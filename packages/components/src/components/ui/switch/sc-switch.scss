@@ -42,7 +42,7 @@
   background-color: var(--sc-switch-control-background-color, var(--sc-color-gray-300));
   border: solid var(--sc-input-border-width) var(--sc-switch-border-color, var(--sc-color-gray-300));
   border-radius: var(--height);
-  transition: var(--sc-transition-fast) border-color, var(--sc-transition-fast) background-color;
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) border-color, var(--sc-input-transition, var(--sc-transition-medium)) background-color;
 
   .switch__thumb {
     width: var(--thumb-size);
@@ -51,7 +51,7 @@
     border-radius: 50%;
     border: solid var(--sc-input-border-width) var(--sc-input-border-color);
     transform: translateX(calc(var(--width) / -2 + var(--thumb-size) / 2 - (var(--thumb-size) - var(--height)) / 2));
-    transition: var(--sc-transition-fast) transform ease, var(--sc-transition-fast) background-color, var(--sc-transition-fast) border-color, var(--sc-transition-fast) box-shadow;
+    transition: var(--sc-input-transition, var(--sc-transition-medium)) transform ease, var(--sc-input-transition, var(--sc-transition-medium)) background-color, var(--sc-input-transition, var(--sc-transition-medium)) border-color, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
   }
 
   input[type='checkbox'] {

@@ -127,7 +127,7 @@ export default ({ download, product, className }) => {
 						message: __('Could not download the file.', 'surecart'),
 					};
 				}
-				downloadFile(media?.url, media.filename);
+				downloadFile(media?.url, media?.filename);
 			}
 		} catch (e) {
 			console.error(e);

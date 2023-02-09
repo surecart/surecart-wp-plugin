@@ -115,7 +115,11 @@ export default () => {
 							</ScInput>
 						</div>
 					</ScFormControl>
-					<Logo brand={item} editBrand={editItem} />
+					<Logo
+						label={__('Logo', 'surecart')}
+						brand={item}
+						editBrand={editItem}
+					/>
 				</div>
 				<div
 					css={css`
