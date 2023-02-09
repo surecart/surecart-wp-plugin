@@ -38,7 +38,7 @@
   color: var(--sc-input-label-color);
 }
 
-::slotted([slot="price-description"]) {
+::slotted([slot='price-description']) {
   margin-top: var(--sc-line-item-text-margin, 5px);
   color: var(--sc-input-label-color);
   text-decoration: none;
@@ -61,6 +61,11 @@
     margin-left: 20px;
     margin-top: 0;
   }
+
+  .item--is-rtl .item__end {
+    margin-left: 0;
+    margin-right: 20px;
+  }
   .item__price-text {
     text-align: right;
   }
@@ -77,12 +82,11 @@
   flex: 1;
 }
 
-
 .item__price-description {
   display: -webkit-box;
 }
 
-::slotted([slot="image"])  {
+::slotted([slot='image']) {
   margin-right: 20px;
   width: 50px;
   height: 50px;
@@ -93,7 +97,7 @@
   box-shadow: var(--sc-input-box-shadow);
 }
 
-::slotted([slot="price-description"]) {
+::slotted([slot='price-description']) {
   display: inline-block;
   width: 100%;
   line-height: 1;
@@ -116,4 +120,15 @@
   color: var(--sc-input-label-color);
   margin-right: var(--sc-spacing-small);
   text-transform: var(--sc-currency-text-transform, uppercase);
+}
+
+.item--is-rtl {
+  &.item__description,
+  &.item__price-description {
+    text-align: right;
+  }
+
+  .item__text{
+    text-align: right;
+  }
 }
