@@ -248,7 +248,10 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * New: Default checkout page design.
 * New: French, Spanish and German languages in plugin UI.
 * New: Form error display block to customize where form errors will display.
+* Improvement: Form focus animation improvements.
+* Improvement: Order summary collapse animation improvements.
 * Improvement: Display order bump discounts next to their line items.
+* Improvement: Inner layout options for column block.
 * Improvement: Responsive options for our columns block.
 * Improvement: Display character limit on textarea input for checkout forms.
 * Improvement: Allow recurring referrals with AffiliateWP.
