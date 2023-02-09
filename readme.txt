@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.1
-Stable tag: 1.5.7
+Stable tag: 1.5.8
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -256,6 +256,11 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * Improvement: Display character limit on textarea input for checkout forms.
 * Improvement: Allow recurring referrals with AffiliateWP.
 * Fix: Removing subscription line item on checkout sometimes causing payment block styling issues.
+
+= 1.5.8 - February 9, 2023 =
+* Fix: Issue with most recent Safari update causing focus issues on card element.
+* Fix: Link to external charges not working for test payments.
+* Fix: Edge case with removing card elements with a subscription sometimes breaking payment element styles.
 
 = 1.5.7 - January 26, 2023 =
 * Fix: Issue with creating order bumps due to API change where they now require a name.
