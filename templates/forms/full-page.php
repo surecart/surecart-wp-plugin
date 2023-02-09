@@ -3,12 +3,18 @@
  * Donation form block pattern
  */
 return [
-	'title'      => __( 'Checkout', 'surecart' ),
+	'title'      => __( 'Full Page', 'surecart' ),
 	'categories' => [ 'surecart_form' ],
 	'blockTypes' => [ 'surecart/form' ],
 	'content'    => '<!-- wp:surecart/columns {"isFullHeight":true,"isReversedOnMobile":true,"style":{"spacing":{"blockGap":{"top":"0px","left":"0px"}},"color":{"background":"#f3f4f6"}}} -->
 	<sc-columns is-stacked-on-mobile="1" is-full-height="1" is-reversed-on-mobile="1" class="wp-block-surecart-columns has-background" style="background-color:#f3f4f6;gap:0px 0px"><!-- wp:surecart/column {"layout":{"type":"constrained","contentSize":"450px","justifyContent":"right"},"backgroundColor":"white","style":{"spacing":{"padding":{"top":"60px","right":"60px","bottom":"60px","left":"60px"},"blockGap":"30px"}}} -->
 	<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right has-white-background-color has-background" style="padding-top:60px;padding-right:60px;padding-bottom:60px;padding-left:60px;--sc-column-content-width:450px;--sc-form-row-spacing:30px"><!-- wp:surecart/store-logo {"width":120,"maxHeight":100,"isLinkToHome":false} /-->
+
+	<!-- wp:surecart/price-selector {"label":"Choose A Product"} -->
+	<sc-price-choices label="Choose A Product" type="radio" columns="1"><div><!-- wp:surecart/price-choice -->
+		<sc-price-choice type="radio" show-label="1" show-price="1" show-control="1"></sc-price-choice>
+	<!-- /wp:surecart/price-choice --></div></sc-price-choices>
+	<!-- /wp:surecart/price-selector -->
 
 	<!-- wp:surecart/email {"placeholder":"your@email.com"} /-->
 
