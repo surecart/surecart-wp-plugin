@@ -13,7 +13,7 @@ export default ({ order, loading }) => {
 		order?.checkout?.metadata || {};
 
 	return (
-		<Box title={__('Metadata', 'surecart')}>
+		<Box title={__('Additional Order Data', 'surecart')}>
 			<div
 				css={css`
 					display: grid;

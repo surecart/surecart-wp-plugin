@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 
 export const maybeConvertAmount = (amount, currency) => {
-	return ['BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW'].includes(
+	return ['BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW', 'XAF'].includes(
 		currency.toUpperCase()
 	)
 		? amount
@@ -61,4 +61,13 @@ export const snakeToCamel = (str) =>
 export const camelName = (name) => {
 	const camelName = snakeToCamel(name);
 	return camelName.charAt(0).toUpperCase() + camelName.toLowerCase().slice(1);
+};
+
+export const createErrorString = (error) => {
+	const additionalErrors = (error?.additional_errors || [])
+		.map((error) => error?.message)
+		.filter((n) => n);
+	return `${error?.message || __('Something went wrong.', 'surecart')}${
+		additionalErrors?.length && ` ${additionalErrors.join('. ')}`
+	}`;
 };

@@ -1,0 +1,34 @@
+:host {
+  display: inline-block;
+  color: var(--sc-color-gray-900);
+  cursor: pointer;
+}
+
+p {
+  font-size: var(--sc-font-size-medium);
+  font-weight: var(--sc-font-weight-normal);
+  margin: 0 0 var(--sc-spacing-medium) 0;
+  line-height: var(--sc-line-height-dense);
+  white-space: normal;
+}
+
+.trigger {
+  pointer-events: auto;
+
+  &__disabled {
+    pointer-events: none;
+  }
+}
+
+.dialog__title {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+
+  sc-icon {
+    font-size: 18px;
+    width: 22px;
+    stroke-width: 4;
+    color: var(--sc-color-primary-500);
+  }
+}
