@@ -1,26 +1,17 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import {
-	ScBreadcrumb,
-	ScBreadcrumbs,
-	ScButton,
-	ScDropdown,
-	ScFlex,
-	ScIcon,
-	ScMenu,
-	ScMenuItem,
-	ScBlockUi,
-} from '@surecart/components-react';
+import { ScBlockUi, ScBreadcrumb, ScBreadcrumbs, ScButton, ScDropdown, ScFlex, ScIcon, ScMenu, ScMenuItem } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { store as noticesStore } from '@wordpress/notices';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
+import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
 import { useState } from 'react';
 
 import Logo from '../../templates/Logo';
 import Template from '../../templates/UpdateModel';
+import PaymentMethod from '../edit/modules/PaymentMethod';
 import CurrentPlan from './modules/CurrentPlan';
 import Customer from './modules/Customer';
 import Details from './modules/Details';
@@ -28,15 +19,14 @@ import CancelSubscriptionModal from './modules/modals/CancelSubscriptionModal';
 import CancelPendingUpdate from './modules/modals/CancelUpdateModal';
 import CompleteSubscriptionModal from './modules/modals/CompleteSubscriptionModal';
 import DontCancelModal from './modules/modals/DontCancelModal';
+import PauseSubscriptionModal from './modules/modals/PauseSubscriptionModal';
+import RestoreAtModal from './modules/modals/RestoreAtModal';
 import RestoreSubscriptionModal from './modules/modals/RestoreSubscriptionModal';
 import PendingUpdate from './modules/PendingUpdate';
 import Periods from './modules/Periods';
 import Purchases from './modules/Purchases';
 import Tax from './modules/Tax';
 import UpcomingPeriod from './modules/UpcomingPeriod';
-import PaymentMethod from '../edit/modules/PaymentMethod';
-import PauseSubscriptionModal from './modules/modals/PauseSubscriptionModal';
-import RestoreAtModal from './modules/modals/RestoreAtModal';
 
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
@@ -161,7 +151,7 @@ export default () => {
 		if (subscription?.status !== 'canceled') return null;
 		return (
 			<ScMenuItem onClick={() => setModal('restore')}>
-				{__('Restore Subscription', 'surecart')}
+				{__('Restore Now', 'surecart')}
 			</ScMenuItem>
 		);
 	};
@@ -197,11 +187,11 @@ export default () => {
 	};
 
 	const renderRestoreAtButton = () => {
-		if (!subscription?.restore_at) return null;
+		if (subscription?.status !== 'canceled') return null;
 
 		return (
 			<ScMenuItem onClick={() => setModal('restore_at')}>
-				{__('Restore At', 'surecart')}
+				{__('Restore At...', 'surecart')}
 			</ScMenuItem>
 		);
 	};
