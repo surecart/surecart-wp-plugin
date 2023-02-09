@@ -32,7 +32,7 @@ export class ScOrderCouponForm {
   render() {
     return (
       <sc-coupon-form
-        label={this.label}
+        label={this.label || __('Add Coupon Code', 'surecart')}
         loading={this.busy && !this.order?.line_items?.data?.length}
         busy={this.busy}
         error={this.errorMessage}

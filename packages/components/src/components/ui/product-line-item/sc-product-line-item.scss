@@ -107,7 +107,7 @@
 .item__remove {
   cursor: pointer;
   color: var(--sc-color-gray-400);
-  margin-bottom: var(--sc-spacing-medium);
+  margin-bottom: var(--sc-spacing-small);
 }
 
 .actions__divider {
@@ -119,4 +119,13 @@
   &.price {
     text-align: right;
   }
+}
+
+.base {
+  display: grid;
+  gap: var(--sc-spacing-x-small);
+}
+
+.fee__description {
+  opacity: 0.75;
 }

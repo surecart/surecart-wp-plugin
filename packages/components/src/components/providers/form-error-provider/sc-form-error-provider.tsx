@@ -1,5 +1,6 @@
-import { Component, h, State, Event, EventEmitter, Listen, Watch, Prop, Host } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Listen, Prop, State, Watch, Element } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+
 import { FormState, FormStateSetter, ResponseError } from '../../../types';
 
 /**
@@ -10,6 +11,9 @@ import { FormState, FormStateSetter, ResponseError } from '../../../types';
   shadow: true,
 })
 export class ScFormErrorProvider {
+  /** The element. */
+  @Element() el: HTMLScFormErrorProviderElement;
+
   /** The current order. */
   @Prop() checkoutState: FormState;
 
@@ -53,34 +57,18 @@ export class ScFormErrorProvider {
     };
   }
 
-  /** This filters the error message with some more client friendly error messages. */
-  getErrorMessage(error) {
-    if (error.code === 'order.line_items.price.blank') {
-      return __('This product is no longer purchasable.', 'surecart');
-    }
-    return <span innerHTML={error?.message}></span>;
+  componentWillLoad() {
+    this.maybeAddErrorsComponent();
   }
 
-  /** First will display validation error, then main error if no validation errors. */
-  errorMessage() {
-    if (this.error?.additional_errors?.[0]?.message) {
-      return this.getErrorMessage(this.error?.additional_errors?.[0]);
-    } else if (this?.error?.message) {
-      return this.getErrorMessage(this?.error);
-    }
-    return '';
+  maybeAddErrorsComponent() {
+    if (!!this.el.querySelector('sc-checkout-form-errors')) return;
+    const errorsComponent = document.createElement('sc-checkout-form-errors');
+    console.log(this.el.querySelector('sc-form'));
+    this.el.querySelector('sc-form').prepend(errorsComponent);
   }
 
   render() {
-    return (
-      <Host>
-        {!!this.errorMessage() && (
-          <sc-alert type="danger" scrollOnOpen={true} style={{ marginBottom: 'var(--sc-form-row-spacing)' }} open={!!this.errorMessage()}>
-            <span slot="title">{this.errorMessage()}</span>
-          </sc-alert>
-        )}
-        <slot />
-      </Host>
-    );
+    return <slot />;
   }
 }

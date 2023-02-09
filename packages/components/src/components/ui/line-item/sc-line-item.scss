@@ -7,10 +7,9 @@
 }
 
 .item {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  display: grid;
+  align-items: center;
+  grid-template-columns: auto 1fr 1fr;
 }
 
 @media screen and (min-width: var(--mobile-size)) {
@@ -35,7 +34,7 @@
 .item__description,
 .item__price-description {
   font-size: var(--sc-font-size-small);
-  line-height: var(--sc-line-height-normal);
+  line-height: var(--sc-line-height-dense);
   color: var(--sc-input-label-color);
 }
 

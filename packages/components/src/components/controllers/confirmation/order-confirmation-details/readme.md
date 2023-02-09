@@ -48,6 +48,7 @@ graph TD;
   sc-product-line-item --> sc-format-number
   sc-product-line-item --> sc-quantity-select
   sc-product-line-item --> sc-icon
+  sc-product-line-item --> sc-line-item
   sc-quantity-select --> sc-icon
   sc-order-confirmation-totals --> sc-line-item
   sc-order-confirmation-totals --> sc-tag
