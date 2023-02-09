@@ -243,7 +243,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.6.0 - February 6, 2023 =
+= 1.6.0 - February 9, 2023 =
 * New: Conditional form areas.
 * New: Default checkout page design.
 * New: French, Spanish and German languages in plugin UI.
