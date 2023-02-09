@@ -23,7 +23,6 @@ export default ({ attributes, setAttributes }) => {
 	const { layout } = attributes;
 	const { wideSize, contentSize, justifyContent = 'center' } = layout || {};
 
-	console.log(layout);
 	const onChange = (layout) => setAttributes({ layout });
 	const onJustificationChange = (value) => {
 		onChange({
@@ -36,17 +35,17 @@ export default ({ attributes, setAttributes }) => {
 		{
 			value: 'left',
 			icon: justifyLeft,
-			label: __('Justify items left'),
+			label: __('Justify items left', 'surecart'),
 		},
 		{
 			value: 'center',
 			icon: justifyCenter,
-			label: __('Justify items center'),
+			label: __('Justify items center', 'surecart'),
 		},
 		{
 			value: 'right',
 			icon: justifyRight,
-			label: __('Justify items right'),
+			label: __('Justify items right', 'surecart'),
 		},
 	];
 
@@ -64,7 +63,7 @@ export default ({ attributes, setAttributes }) => {
 		<>
 			<ToggleControl
 				className="block-editor-hooks__toggle-control"
-				label={__('Inner blocks use content width')}
+				label={__('Inner blocks use content width', 'surecart')}
 				checked={layout?.type === 'constrained'}
 				onChange={() =>
 					setAttributes({
@@ -79,10 +78,12 @@ export default ({ attributes, setAttributes }) => {
 				help={
 					layout?.type === 'constrained'
 						? __(
-								'Nested blocks use content width with options for full and wide widths.'
+								'Nested blocks use content width with options for full and wide widths.',
+								'surecart'
 						  )
 						: __(
-								'Nested blocks will fill the width of this container. Toggle to constrain.'
+								'Nested blocks will fill the width of this container. Toggle to constrain.',
+								'surecart'
 						  )
 				}
 			/>
@@ -92,7 +93,7 @@ export default ({ attributes, setAttributes }) => {
 					<div className="block-editor-hooks__layout-controls">
 						<div className="block-editor-hooks__layout-controls-unit">
 							<UnitControl
-								label={__('Content')}
+								label={__('Content', 'surecart')}
 								labelPosition="top"
 								__unstableInputWidth="80px"
 								value={contentSize || wideSize || ''}
@@ -112,7 +113,7 @@ export default ({ attributes, setAttributes }) => {
 						</div>
 						<div className="block-editor-hooks__layout-controls-unit">
 							<UnitControl
-								label={__('Wide')}
+								label={__('Wide', 'surecart')}
 								labelPosition="top"
 								__unstableInputWidth="80px"
 								value={wideSize || contentSize || ''}
@@ -133,12 +134,13 @@ export default ({ attributes, setAttributes }) => {
 					</div>
 					<p className="block-editor-hooks__layout-controls-helptext">
 						{__(
-							'Customize the width for all elements that are assigned to the center or wide columns.'
+							'Customize the width for all elements that are assigned to the center or wide columns.',
+							'surecart'
 						)}
 					</p>
 					<ToggleGroupControl
 						__experimentalIsBorderless
-						label={__('Justification')}
+						label={__('Justification', 'surecart')}
 						value={justifyContent}
 						onChange={onJustificationChange}
 					>
