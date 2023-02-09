@@ -21,10 +21,35 @@ class CartPostTypeServiceTest extends SureCartUnitTestCase {
 		], false);
 	}
 
+	/**
+	 * @group failing
+	 *
+	 * @return void
+	 */
 	public function test_preventMultipleCartPosts()
 	{
+		// Should be zero.
+		$this->assertCount( 0, get_posts(
+			[
+				'post_type' => 'sc_cart',
+				'per_page'  => 5,
+				'status'    => 'publish',
+				'order' 	=> 'ASC',
+			]
+		) );
+
 		// To create our 1st default cart.
 		\SureCart::cartPost()->get();
+
+		// Should be one.
+		$this->assertCount( 1, get_posts(
+			[
+				'post_type' => 'sc_cart',
+				'per_page'  => 5,
+				'status'    => 'publish',
+				'order' 	=> 'ASC',
+			]
+		) );
 
 		// Try to add another cart page.
 		wp_insert_post(
@@ -33,11 +58,10 @@ class CartPostTypeServiceTest extends SureCartUnitTestCase {
 				'post_title'	=> _x( 'Cart', 'Cart title', 'surecart' ),
 				'post_type'		=> 'sc_cart',
 				'post_status'	=> 'publish',
-				'post_content'	=> '<!-- wp:surecart/cart --><sc-order-summary><sc-line-items></sc-line-items></sc-order-summary><!-- /wp:surecart/cart -->',
+				'post_content'	=> 'asdf',
 			]
 		);
 
-		// Get cart posts.
 		$posts = get_posts(
 			[
 				'post_type' => 'sc_cart',
@@ -49,5 +73,6 @@ class CartPostTypeServiceTest extends SureCartUnitTestCase {
 
 		// Count should be 1 always.
 		$this->assertCount( 1, $posts );
+		$this->assertSame( $posts[0]->ID, \SureCart::cartPost()->get()->ID );
 	}
 }
