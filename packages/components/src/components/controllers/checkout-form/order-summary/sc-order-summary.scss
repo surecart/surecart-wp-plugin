@@ -28,10 +28,6 @@
   color: var(--sc-order-summary-color, var(--sc-color-gray-500));
 }
 
-[slot=price] {
-  margin: -10px 0;
-}
-
 .price {
   display: inline-block;
   opacity: 0;
