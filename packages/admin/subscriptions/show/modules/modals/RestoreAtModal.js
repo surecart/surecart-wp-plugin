@@ -81,7 +81,7 @@ export default ({ subscription, open, onRequestClose }) => {
 				>
 					<div>
 						{__(
-							'Which date would you like to restore subscription?',
+							'When would you like to restore subscription?',
 							'surecart'
 						)}
 					</div>
