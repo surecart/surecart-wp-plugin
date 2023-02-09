@@ -145,13 +145,13 @@ class PageService {
 	 *
 	 * @return \WP_Post
 	 */
-	public function findOrCreate( $slug, $option = '', $page_title = '', $page_content = '', $post_parent = 0, $post_status = 'publish', $post_type = 'page' ) {
+	public function findOrCreate( $slug, $option = '', $page_title = '', $page_content = '', $post_parent = 0, $post_status = 'publish', $post_type = 'page', $page_template = null ) {
 		$page = $this->get( $option, $post_type );
 		if ( $page ) {
 			return $page;
 		}
 
-		return $this->create( $slug, $option, $page_title, $page_content, $post_parent, $post_status, $post_type );
+		return $this->create( $slug, $option, $page_title, $page_content, $post_parent, $post_status, $post_type, $page_template );
 	}
 
 	/**
@@ -167,7 +167,7 @@ class PageService {
 	 *
 	 * @return int page ID.
 	 */
-	public function create( $slug, $option = '', $page_title = '', $page_content = '', $post_parent = 0, $post_status = 'publish', $post_type = 'post' ) {
+	public function create( $slug, $option = '', $page_title = '', $page_content = '', $post_parent = 0, $post_status = 'publish', $post_type = 'post', $page_template = null ) {
 		$page_data = [
 			'post_status'    => $post_status,
 			'post_type'      => $post_type,
@@ -177,6 +177,7 @@ class PageService {
 			'post_content'   => $page_content,
 			'post_parent'    => $post_parent,
 			'comment_status' => 'closed',
+			'page_template'  => $page_template,
 		];
 
 		$page_id = wp_insert_post( $page_data );

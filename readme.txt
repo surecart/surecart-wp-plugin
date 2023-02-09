@@ -243,6 +243,17 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.6.0 - February 6, 2023 =
+* New: Conditional form areas.
+* New: Default checkout page design.
+* New: French, Spanish and German languages in plugin UI.
+* New: Form error display block to customize where form errors will display.
+* Improvement: Display order bump discounts next to their line items.
+* Improvement: Responsive options for our columns block.
+* Improvement: Display character limit on textarea input for checkout forms.
+* Improvement: Allow recurring referrals with AffiliateWP.
+* Fix: Removing subscription line item on checkout sometimes causing payment block styling issues.
+
 = 1.5.7 - January 26, 2023 =
 * Fix: Issue with creating order bumps due to API change where they now require a name.
 * Fix: Sometimes blocks inside columns are not able to be selected in the block editor.

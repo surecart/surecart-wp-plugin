@@ -31,7 +31,13 @@ export default ({ attributes, setAttributes }) => {
 		? __stableUseInnerBlocksProps
 		: __experimentalUseInnerBlocksProps;
 
-	const { collapsible, collapsed, closed_text, open_text } = attributes;
+	const {
+		collapsible,
+		collapsed,
+		closed_text,
+		open_text,
+		collapsedOnMobile,
+	} = attributes;
 
 	const innerBlocksProps = useInnerBlocksProps(
 		{},
@@ -97,6 +103,15 @@ export default ({ attributes, setAttributes }) => {
 						/>
 					</PanelRow>
 					<PanelRow>
+						<ToggleControl
+							label={__('Collapsed On Mobile', 'surecart')}
+							checked={collapsedOnMobile}
+							onChange={(collapsedOnMobile) => {
+								setAttributes({ collapsedOnMobile });
+							}}
+						/>
+					</PanelRow>
+					<PanelRow>
 						<TextControl
 							label={__('Closed Text', 'surecart')}
 							value={closed_text}
@@ -120,8 +135,9 @@ export default ({ attributes, setAttributes }) => {
 			<ScOrderSummary
 				collapsible={collapsible}
 				collapsed={collapsed}
-				closedText={closed_text}
-				openText={open_text}
+				closedText={closed_text || null}
+				openText={open_text || null}
+				collapsedOnMobile={collapsedOnMobile}
 				{...innerBlocksProps}
 			></ScOrderSummary>
 		</Fragment>
