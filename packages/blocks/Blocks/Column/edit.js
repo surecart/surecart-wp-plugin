@@ -136,28 +136,6 @@ function ColumnEdit({ attributes, setAttributes, clientId }) {
 						attributes={attributes}
 						setAttributes={setAttributes}
 					/>
-
-					{/* { ! inherit && allowSwitching && (
-						<LayoutTypeSwitcher
-							type={ type }
-							onChange={ onChangeType }
-						/>
-					) }
-
-					{ layoutType && layoutType.name !== 'default' && (
-						<layoutType.inspectorControls
-							layout={ usedLayout }
-							onChange={ onChangeLayout }
-							layoutBlockSupport={ layoutBlockSupport }
-						/>
-					) }
-					{ constrainedType && displayControlsForLegacyLayouts && (
-						<constrainedType.inspectorControls
-							layout={ usedLayout }
-							onChange={ onChangeLayout }
-							layoutBlockSupport={ layoutBlockSupport }
-						/>
-					) } */}
 				</PanelBody>
 
 				<PanelBody title={__('Column settings')}>
