@@ -54,12 +54,11 @@ export default () => {
 	const [modal, setModal] = useState();
 
 	const renderMarkPaidButton = () => {
-		return order?.status === 'processing' &&
-			order?.checkout?.manual_payment ? (
+		return (
 			<ScMenuItem onClick={() => setModal('order_status_update')}>
 				{__('Mark as Paid', 'surecart')}
 			</ScMenuItem>
-		) : null;
+		);
 	};
 
 	const renderOrderCancelButton = () => {
@@ -157,24 +156,24 @@ export default () => {
 					position="bottom-right"
 					style={{ '--panel-width': '14em' }}
 				>
-					{(order?.status === 'processing' ||
-						(!!order?.checkout?.charge &&
-							order?.status !== 'canceled')) && (
-						<>
-							<ScButton
-								type="primary"
-								slot="trigger"
-								caret
-								loading={!hasLoadedOrder}
-							>
-								{__('Actions', 'surecart')}
-							</ScButton>
-							<ScMenu>
-								{renderMarkPaidButton()}{' '}
-								{renderOrderCancelButton()}
-							</ScMenu>
-						</>
-					)}
+					{order?.status === 'processing' &&
+						order?.checkout?.manual_payment &&
+						order?.status !== 'canceled' && (
+							<>
+								<ScButton
+									type="primary"
+									slot="trigger"
+									caret
+									loading={!hasLoadedOrder}
+								>
+									{__('Actions', 'surecart')}
+								</ScButton>
+								<ScMenu>
+									{renderMarkPaidButton()}{' '}
+									{renderOrderCancelButton()}
+								</ScMenu>
+							</>
+						)}
 				</ScDropdown>
 			}
 			sidebar={

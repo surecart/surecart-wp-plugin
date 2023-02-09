@@ -22,7 +22,9 @@ export default ({ order, open, onRequestClose, hasLoading }) => {
 			setError(null);
 			const checkout = await apiFetch({
 				method: 'PATCH',
-				path: addQueryArgs(`surecart/v1/orders/${order?.id}/cancel`),
+				path: addQueryArgs(
+					`surecart/v1/checkouts/${order?.checkout?.id}/cancel`
+				),
 			});
 
 			// refetch entities.
