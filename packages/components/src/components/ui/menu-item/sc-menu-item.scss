@@ -14,7 +14,7 @@
   text-align: left;
   color: var(--sc-menu-item-color, var(--sc-color-gray-700));
   padding: var(--sc-spacing-xx-small) var(--sc-spacing-x-large);
-  transition: var(--sc-transition-fast) fill;
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) fill, var(--sc-input-transition, var(--sc-transition-medium)) background-color;
   user-select: none;
   white-space: nowrap;
   cursor: pointer;
