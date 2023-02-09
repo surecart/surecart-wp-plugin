@@ -69,11 +69,9 @@ export class ScOrderBump {
         ></sc-format-number>{' '}
         {this.newPrice() === 0 && __('Free', 'surecart')}
         {this.newPrice() !== null && this.newPrice() > 0 && (
-          <Fragment>
-            <sc-format-number type="currency" class="bump__new-price" value={this.newPrice()} currency={(this.bump?.price as Price).currency} />
-            <span class="bump__interval">{intervalString(this.bump?.price as Price, { labels: { interval: '/', period: __('for', 'surecart') } })}</span>
-          </Fragment>
+          <sc-format-number type="currency" class="bump__new-price" value={this.newPrice()} currency={(this.bump?.price as Price).currency} />
         )}
+        <span class="bump__interval">{intervalString(this.bump?.price as Price, { labels: { interval: '/', period: __('for', 'surecart') } })}</span>
       </div>
     );
   }
