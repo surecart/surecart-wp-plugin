@@ -246,6 +246,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 = 1.5.8 - February 9, 2023 =
 * Fix: Issue with most recent Safari update causing focus issues on card element.
 * Fix: Link to external charges not working for test payments.
+* Fix: Edge case with removing card elements with a subscription sometimes breaking payment element styles.
 
 = 1.5.7 - January 26, 2023 =
 * Fix: Issue with creating order bumps due to API change where they now require a name.
