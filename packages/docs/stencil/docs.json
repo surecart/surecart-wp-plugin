@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-01-12T17:59:47",
+  "timestamp": "2023-02-09T20:54:56",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -3836,9 +3836,15 @@
           "docs": "The label."
         }
       ],
-      "dependents": [],
+      "dependents": [
+        "sc-payment-methods-list"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "sc-payment-methods-list": [
+          "sc-checkbox"
+        ]
+      }
     },
     {
       "filePath": "./src/components/controllers/checkout-form/checkout/sc-checkout.tsx",
@@ -8731,6 +8737,7 @@
       "dependents": [
         "sc-cancel-dialog",
         "sc-login-provider",
+        "sc-payment-methods-list",
         "sc-subscription-details",
         "sc-upgrade-required"
       ],
@@ -8750,6 +8757,9 @@
           "sc-dialog"
         ],
         "sc-login-provider": [
+          "sc-dialog"
+        ],
+        "sc-payment-methods-list": [
           "sc-dialog"
         ],
         "sc-subscription-details": [
@@ -18552,6 +18562,9 @@
         "sc-menu-item",
         "sc-dashboard-module",
         "sc-button",
+        "sc-dialog",
+        "sc-text",
+        "sc-checkbox",
         "sc-block-ui"
       ],
       "dependencyGraph": {
@@ -18571,6 +18584,9 @@
           "sc-menu-item",
           "sc-dashboard-module",
           "sc-button",
+          "sc-dialog",
+          "sc-text",
+          "sc-checkbox",
           "sc-block-ui"
         ],
         "sc-empty": [
@@ -18594,6 +18610,10 @@
           "sc-alert"
         ],
         "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-dialog": [
+          "sc-button",
           "sc-icon"
         ],
         "sc-block-ui": [
@@ -19466,6 +19486,21 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "order",
+          "type": "Checkout",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Session",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Checkout"
             }
           ],
           "optional": false,
@@ -26362,6 +26397,7 @@
         "sc-invoices-list",
         "sc-orders-list",
         "sc-payment-method",
+        "sc-payment-methods-list",
         "sc-stripe-element",
         "sc-stripe-payment-element",
         "sc-subscription-details",
@@ -26379,6 +26415,9 @@
           "sc-text"
         ],
         "sc-payment-method": [
+          "sc-text"
+        ],
+        "sc-payment-methods-list": [
           "sc-text"
         ],
         "sc-stripe-element": [

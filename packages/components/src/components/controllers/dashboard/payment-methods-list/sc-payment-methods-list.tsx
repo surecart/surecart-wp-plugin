@@ -29,6 +29,15 @@ export class ScPaymentMethodsList {
   /** Does this have a title slot */
   @State() hasTitleSlot: boolean;
 
+  /** Whether to show mark default modal */
+  @State() showConfirmDefault: boolean = false;
+
+  /** The selected payment method */
+  @State() selectedPaymentMethod: PaymentMethod;
+
+  /** Whether to cascade default payment method */
+  @State() cascadeDefaultPaymentMethod: boolean = false;
+
   /** Only fetch if visible */
   componentWillLoad() {
     onFirstVisible(this.el, () => {
@@ -59,16 +68,20 @@ export class ScPaymentMethodsList {
     }
   }
 
-  async setDefault(method: PaymentMethod) {
+  async setDefault() {
     try {
       this.busy = true;
       (await apiFetch({
-        path: `surecart/v1/customers/${(method?.customer as Customer)?.id}`,
+        path: `surecart/v1/customers/${(this.selectedPaymentMethod?.customer as Customer)?.id}`,
         method: 'PATCH',
         data: {
-          default_payment_method: method.id,
+          default_payment_method: this.selectedPaymentMethod?.id,
+          cascade_default_payment_method: this.cascadeDefaultPaymentMethod,
         },
       })) as PaymentMethod;
+
+      this.onCloseConfirmModal();
+
       this.paymentMethods = (await apiFetch({
         path: addQueryArgs(`surecart/v1/payment_methods/`, {
           expand: ['card', 'customer', 'billing_agreement', 'paypal_account', 'payment_instrument', 'bank_account'],
@@ -136,7 +149,6 @@ export class ScPaymentMethodsList {
   renderList() {
     return this.paymentMethods.map(paymentMethod => {
       const { id, card, customer, live_mode, billing_agreement, paypal_account } = paymentMethod;
-      console.log(paymentMethod);
       return (
         <sc-stacked-list-row style={{ '--columns': billing_agreement ? '2' : '3' }}>
           <sc-payment-method paymentMethod={paymentMethod} />
@@ -160,7 +172,7 @@ export class ScPaymentMethodsList {
             <sc-icon name="more-horizontal" slot="trigger"></sc-icon>
             <sc-menu>
               {typeof customer !== 'string' && customer?.default_payment_method !== id && (
-                <sc-menu-item onClick={() => this.setDefault(paymentMethod)}>{__('Make Default', 'surecart')}</sc-menu-item>
+                <sc-menu-item onClick={() => this.onMarkPaymentDefault(paymentMethod)}>{__('Make Default', 'surecart')}</sc-menu-item>
               )}
               <sc-menu-item onClick={() => this.deleteMethod(paymentMethod)}>{__('Delete', 'surecart')}</sc-menu-item>
             </sc-menu>
@@ -189,6 +201,16 @@ export class ScPaymentMethodsList {
       </sc-card>
     );
   }
+
+  onMarkPaymentDefault(paymentMethod: PaymentMethod) {
+    this.selectedPaymentMethod = { ...paymentMethod };
+    this.showConfirmDefault = true;
+  }
+
+  onCloseConfirmModal = () => {
+    this.selectedPaymentMethod = undefined;
+    this.showConfirmDefault = false;
+  };
 
   render() {
     return (
@@ -223,6 +245,24 @@ export class ScPaymentMethodsList {
         )}
 
         {this.renderContent()}
+
+        <sc-dialog open={this.showConfirmDefault} label="Confirm" onScRequestClose={this.onCloseConfirmModal}>
+          <sc-flex flexDirection="column" style={{ '--sc-flex-column-gap': 'var(--sc-spacing-small)' }}>
+            <sc-text>{__('Are you sure? A default payment method will be preferred for your future payments over other payment methods.', 'surecart')}</sc-text>
+            <sc-checkbox name="cascade_payment_method" value="1" onScChange={e => (this.cascadeDefaultPaymentMethod = e.target.checked)}>
+              {__('Update my existing subscriptions to this new payment method', 'surecart')}
+            </sc-checkbox>
+          </sc-flex>
+          <div slot="footer">
+            <sc-button type="text" onClick={this.onCloseConfirmModal}>
+              {__("Don't make default", 'surecart')}
+            </sc-button>
+            <sc-button type="primary" onClick={() => this.setDefault()}>
+              {__('Make Default', 'surecart')}
+            </sc-button>
+          </div>
+          {this.busy && <sc-block-ui spinner></sc-block-ui>}
+        </sc-dialog>
 
         {this.busy && <sc-block-ui spinner></sc-block-ui>}
       </sc-dashboard-module>
