@@ -61,6 +61,11 @@
     margin-left: 20px;
     margin-top: 0;
   }
+
+  .item--is-rtl .item__end {
+    margin-left: 0;
+    margin-right: 20px;
+  }
   .item__price-text {
     text-align: right;
   }

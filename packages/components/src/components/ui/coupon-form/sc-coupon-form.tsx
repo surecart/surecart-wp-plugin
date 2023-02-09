@@ -107,12 +107,7 @@ export class ScCouponForm {
       }
 
       return (
-        <sc-line-item
-          exportparts="description:info, price-description:discount, price:amount"
-          class={{
-            'coupon-form--is-rtl': isRtl(),
-          }}
-        >
+        <sc-line-item exportparts="description:info, price-description:discount, price:amount">
           <span slot="description">
             <div part="discount-label">{__('Discount', 'surecart')}</div>
             <sc-tag
@@ -149,6 +144,7 @@ export class ScCouponForm {
           'coupon-form': true,
           'coupon-form--is-open': this.open || this.forceOpen,
           'coupon-form--has-value': !!this.value,
+          'coupon-form--is-rtl': isRtl(),
         }}
       >
         <div

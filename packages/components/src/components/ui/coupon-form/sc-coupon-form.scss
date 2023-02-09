@@ -63,8 +63,6 @@ sc-button {
 
 .coupon-form--is-rtl{
   .trigger{
-    &,&:hover{
-      text-align: right;
-    }
+    text-align: right;
   }
 }
