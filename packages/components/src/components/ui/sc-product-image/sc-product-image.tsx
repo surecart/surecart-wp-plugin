@@ -16,8 +16,6 @@ export class ScProductImage {
   @Prop() sizing: 'cover' | 'contain';
 
   render() {
-    console.log(this.src, !!this.src);
-
     return (
       <div
         class={{

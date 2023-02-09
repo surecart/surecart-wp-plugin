@@ -5,23 +5,8 @@ import { Button, Placeholder } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { InnerBlocks } from '@wordpress/block-editor';
 
-const PRODUCT_ITEM_BLOCKS = [
-	[
-		'surecart/product-list-title',
-		{
-			title: 'Product Title',
-		},
-	],
-	[
-		'surecart/product-list-image',
-		{
-			src: 'https://images.unsplash.com/photo-1617360547704-3da8b5363369?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=420&ixid=MnwxfDB8MXxyYW5kb218MHx8cHJvZHVjdHx8fHx8fDE2NzU3OTY4NjM&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=360',
-			sizing: 'contain',
-		},
-	],
-];
-
-const ALLOWED_BLOCKS = ['surecart/product-list-title'];
+const PRODUCT_BLOCKS = [['surecart/product-list-item']];
+const ALLOWED_BLOCKS = ['surecart/product-list-item'];
 
 export default function EditLayoutConfig({ onDone }) {
 	return (
@@ -50,12 +35,12 @@ export default function EditLayoutConfig({ onDone }) {
 							maxWidth: '22rem',
 							minHeight: '22rem',
 							margin: '0 auto',
-							padding: '1rem',
+							padding: '1.6rem',
 						}}
 					>
 						<InnerBlocks
 							templateLock={'insert'}
-							template={PRODUCT_ITEM_BLOCKS}
+							template={PRODUCT_BLOCKS}
 							allowedBlocks={ALLOWED_BLOCKS}
 							renderAppender={false}
 						/>

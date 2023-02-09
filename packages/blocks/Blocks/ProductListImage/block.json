@@ -6,7 +6,7 @@
 	"description": "Displays a product image.",
 	"category": "surecart",
 	"keywords": ["product", "image", "thumbnail"],
-	"ancestor": ["surecart/product-list"],
+	"ancestor": ["surecart/product-list-item"],
 	"attributes": {
 		"src": {
 			"type": "string"
