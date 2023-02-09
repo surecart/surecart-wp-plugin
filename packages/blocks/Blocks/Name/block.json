@@ -4,7 +4,7 @@
 	"description": "Display a name collection field.",
 	"category": "surecart",
 	"keywords": ["name", "customer"],
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,
