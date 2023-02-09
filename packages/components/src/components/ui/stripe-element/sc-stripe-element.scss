@@ -1,5 +1,6 @@
 sc-stripe-element {
   display: block;
+  --focus-ring: 0 0 0 var(--sc-focus-ring-width) var(--sc-focus-ring-color-primary);
 }
 
 sc-stripe-element sc-input {
@@ -10,6 +11,29 @@ sc-stripe-element sc-input {
   font-family: var(--sc-input-font-family);
   font-weight: var(--sc-input-font-weight);
   font-size: var(--sc-input-font-size);
+}
+
+.sc-stripe-element {
+  border-radius: var(--sc-input-border-radius-medium);
+  font-size: var(--sc-input-font-size-medium);
+  height: var(--sc-input-height-medium);
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--sc-input-background-color);
+  border: solid 1px var(--sc-input-border-color, var(--sc-input-border));
+  box-shadow: var(--sc-input-box-shadow);
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) border, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
+
+  &:hover {
+    background-color: var(--sc-input-background-color-hover);
+    border-color: var(--sc-input-border-color-hover);
+  }
+
+  &.StripeElement--focus {
+    background-color: var(--sc-input-background-color-focus);
+    border-color: var(--sc-input-border-color-focus);
+    box-shadow: var(--focus-ring);
+  }
 }
 
 .sc-stripe fieldset {
