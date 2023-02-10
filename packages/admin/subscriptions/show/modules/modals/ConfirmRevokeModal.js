@@ -33,17 +33,29 @@ export default ({ purchase, open, onRequestClose }) => {
 		}
 
 		confirmProps.questionMessage = purchase?.subscription
-			? 'Are you sure? Revoking a purchase will trigger cancellation of the associated subscription.'
-			: 'Are you sure? This action will remove the associated access and trigger any cancelation automations you have set up.';
-		confirmProps.yesText = 'Revoke Purchase';
-		confirmProps.noText = "Don't revoke purchase";
+			? __(
+					'Are you sure? Revoking a purchase will trigger cancellation of the associated subscription.',
+					'surecart'
+			  )
+			: __(
+					'Are you sure? This action will remove the associated access and trigger any cancelation automations you have set up.',
+					'surecart'
+			  );
+		confirmProps.yesText = __('Revoke Purchase', 'surecart');
+		confirmProps.noText = __("Don't revoke purchase", 'surecart');
 
 		if (purchase.revoked) {
 			confirmProps.questionMessage = purchase?.subscription
-				? 'Are you sure? Unrevoking a purchase will re-enable the associated subscription.'
-				: 'Are you sure? This action will re-enable associated access.';
-			confirmProps.yesText = 'Unrevoke Purchase';
-			confirmProps.noText = "Don't unrevoke purchase";
+				? __(
+						'Are you sure? Unrevoking a purchase will re-enable the associated subscription.',
+						'surecart'
+				  )
+				: __(
+						'Are you sure? This action will re-enable associated access.',
+						'surecart'
+				  );
+			confirmProps.yesText = __('Unrevoke Purchase', 'surecart');
+			confirmProps.noText = __("Don't unrevoke purchase", 'surecart');
 		}
 
 		setConfirmProps({
@@ -98,14 +110,14 @@ export default ({ purchase, open, onRequestClose }) => {
 				onScRequestClose={onRequestClose}
 			>
 				<Error error={error} setError={setError} />
-				<ScText>{__(confirmProps.questionMessage, 'surecart')}</ScText>
+				<ScText>{confirmProps.questionMessage}</ScText>
 				<ScButton
 					type="text"
 					onClick={onRequestClose}
 					disabled={loading}
 					slot="footer"
 				>
-					{__(confirmProps.noText, 'surecart')}
+					{confirmProps.noText}
 				</ScButton>{' '}
 				<ScButton
 					type="primary"
@@ -113,7 +125,7 @@ export default ({ purchase, open, onRequestClose }) => {
 					disabled={loading}
 					slot="footer"
 				>
-					{__(confirmProps.yesText, 'surecart')}
+					{confirmProps.yesText}
 				</ScButton>
 				{loading && (
 					<ScBlockUi
