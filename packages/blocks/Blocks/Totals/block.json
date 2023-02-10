@@ -23,6 +23,10 @@
 		"open_text": {
 			"type": "string",
 			"default": "Summary"
+		},
+		"collapsedOnMobile": {
+			"type": "boolean",
+			"default": false
 		}
 	}
 }

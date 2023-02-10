@@ -1,4 +1,5 @@
 import { Component, Fragment, h, Prop } from '@stencil/core';
+import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 import { getProcessorData } from '../../../../functions/processor';
 import { Checkout, Processor, ProcessorName } from '../../../../types';
@@ -83,7 +84,7 @@ export class ScOrderSubmit {
           disabled={this.loading || this.paying || this.busy}
         >
           {!!this.icon && <sc-icon name={this.icon} slot="prefix"></sc-icon>}
-          <slot />
+          <slot>{__('Purchase', 'surecart')}</slot>
           {this.showTotal && (
             <span>
               {'\u00A0'}

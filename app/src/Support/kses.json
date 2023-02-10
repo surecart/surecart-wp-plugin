@@ -262,6 +262,14 @@
     "class": true,
     "slot": true
   },
+  "sc-checkout-form-errors": {
+    "checkout-state": true,
+    "error": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-checkout-mollie-payment": {
     "currency-code": true,
     "method": true,
@@ -321,6 +329,8 @@
     "slot": true
   },
   "sc-columns": {
+    "is-full-height": true,
+    "is-reversed-on-mobile": true,
     "is-stacked-on-mobile": true,
     "vertical-alignment": true,
     "style": true,
@@ -334,6 +344,15 @@
     "loading": true,
     "names": true,
     "required": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-conditional-form": {
+    "checkout": true,
+    "rule_groups": true,
+    "selected-processor-id": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1100,6 +1119,7 @@
     "busy": true,
     "closed-text": true,
     "collapsed": true,
+    "collapsed-on-mobile": true,
     "collapsible": true,
     "empty": true,
     "open-text": true,
@@ -1294,10 +1314,18 @@
     "class": true,
     "slot": true
   },
+  "sc-price-range": {
+    "prices": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-product-line-item": {
     "amount": true,
     "currency": true,
     "editable": true,
+    "fees": true,
     "image-url": true,
     "interval": true,
     "max": true,

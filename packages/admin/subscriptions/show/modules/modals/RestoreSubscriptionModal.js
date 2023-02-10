@@ -45,7 +45,7 @@ export default ({ open, onRequestClose }) => {
 		>
 			<Error error={error} setError={setError} />
 			{__(
-				'Are you sure you want to restore this subscription? This will make it active again.',
+				'Are you sure you want to restore this subscription? When you click Restore Subscription this customer will immediately be charged for the first billing period.',
 				'surecart'
 			)}
 			<div slot="footer">
