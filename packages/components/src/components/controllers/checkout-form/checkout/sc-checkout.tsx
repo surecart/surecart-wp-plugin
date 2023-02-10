@@ -1,7 +1,8 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
-
+import processorsState from '../../../../store/processors';
+import checkoutState from '../../../../store/checkout';
 import { getOrder, setOrder } from '../../../../store/checkouts';
 import {
   Bump,
@@ -141,13 +142,6 @@ export class ScCheckout {
     setOrder(e?.detail, this?.formId);
   }
 
-  @Listen('scSetProcessor')
-  handleProcessorChange(e) {
-    const { id, manual } = e.detail;
-    this.processor = id;
-    this.isManualProcessor = manual;
-  }
-
   @Listen('scSetMethod')
   handleMethodChange(e) {
     this.method = e.detail;
@@ -194,8 +188,12 @@ export class ScCheckout {
   }
 
   componentWillLoad() {
-    Universe.create(this as Creator, this.state());
     this.isDuplicate = document.querySelector('sc-checkout') !== this.el;
+    if (this.isDuplicate) return;
+    Universe.create(this as Creator, this.state());
+    processorsState.processors = this.processors;
+    checkoutState.formId = this.formId;
+    checkoutState.mode = this.mode;
   }
 
   order() {

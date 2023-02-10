@@ -40,7 +40,7 @@ class Block extends BaseBlock {
 		$this->mode       = $this->block->context['surecart/form/mode'] ?? 'live';
 
 		$processors        = Processor::where( [ 'live_mode' => 'test' === $this->mode ? false : true ] )->get();
-		$has_mollie        = (bool) $this->getProcessorByType( 'mollie', $processors );
+		$has_mollie        = (bool) $this->getProcessorByType( 'mollie', $processors )->enabled ?? false;
 		$default_processor = $has_mollie ? 'mollie' : ( $attributes['default_processor'] ?? null );
 
 		ob_start();

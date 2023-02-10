@@ -1,9 +1,8 @@
 import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
-
 import { Checkout, Processor } from '../../../../types';
-
+import selectedProcessor from '../../../../store/selected-processor';
 /**
  * @part base - The elements base wrapper.
  * @part form-control - The form control wrapper.
@@ -45,7 +44,6 @@ export class ScPayment {
   @State() hasMultiple: boolean;
 
   /** Set the checkout procesor. */
-  @Event() scSetProcessor: EventEmitter<{ id: string; manual: boolean } | null>;
   @Event() scSetMethod: EventEmitter<string | null>;
 
   private mutationObserver: MutationObserver;
@@ -72,8 +70,8 @@ export class ScPayment {
     setTimeout(() => {
       const processor = (this.el.querySelector('sc-payment-method-choice:not([style*="display: none"])') as HTMLScPaymentMethodChoiceElement) || null;
       if (processor?.processorId) {
-        this.scSetProcessor.emit({ id: processor?.processorId, manual: processor.isManual });
-        this.scSetMethod.emit(processor?.methodId || null);
+        selectedProcessor.id = processor.processorId;
+        selectedProcessor.method = processor?.methodId || null;
       }
     }, 50);
   }

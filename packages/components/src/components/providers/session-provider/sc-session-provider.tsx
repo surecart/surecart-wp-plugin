@@ -6,6 +6,7 @@ import { parseFormData } from '../../../functions/form-data';
 import { createOrUpdateOrder, fetchCheckout, finalizeSession } from '../../../services/session';
 import { clearOrder, getOrder, setOrder } from '../../../store/checkouts';
 import { Checkout, FormStateSetter, LineItemData, PaymentIntents, PriceChoice, ProcessorName } from '../../../types';
+import selectedProcessor from '../../../store/selected-processor';
 
 @Component({
   tag: 'sc-session-provider',
@@ -166,12 +167,12 @@ export class ScSessionProvider {
         id: this.order()?.id,
         query: {
           ...this.defaultFormQuery(),
-          ...(this.method ? { payment_method_type: this.method } : {}),
+          ...(selectedProcessor?.method ? { payment_method_type: selectedProcessor?.method } : {}),
         },
         data,
         processor: {
-          id: this.getProcessor(),
-          manual: this.isManualProcessor,
+          id: selectedProcessor.id,
+          manual: selectedProcessor.manual,
         },
       });
 

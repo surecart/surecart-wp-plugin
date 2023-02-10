@@ -2043,12 +2043,7 @@ export namespace Components {
           * Is this a manual processor
          */
         "isManual": boolean;
-        "method": string;
         "methodId": string;
-        /**
-          * The current processor
-         */
-        "processor": string;
         /**
           * The processor ID
          */
@@ -5084,11 +5079,6 @@ declare namespace LocalJSX {
           * Error event
          */
         "onScError"?: (event: ScCheckoutMolliePaymentCustomEvent<ResponseError>) => void;
-        /**
-          * Set the order method.
-         */
-        "onScSetMethod"?: (event: ScCheckoutMolliePaymentCustomEvent<string>) => void;
-        "onScSetProcessor"?: (event: ScCheckoutMolliePaymentCustomEvent<{ id: 'mollie'; manual: false }>) => void;
         "processorId"?: string;
         "reusablePaymentMethodRequired"?: boolean;
         "shippingAddress"?: ShippingAddress;
@@ -6826,11 +6816,10 @@ declare namespace LocalJSX {
           * Is this created in "test" mode
          */
         "mode"?: 'test' | 'live';
-        "onScSetMethod"?: (event: ScPaymentCustomEvent<string | null>) => void;
         /**
           * Set the checkout procesor.
          */
-        "onScSetProcessor"?: (event: ScPaymentCustomEvent<{ id: string; manual: boolean } | null>) => void;
+        "onScSetMethod"?: (event: ScPaymentCustomEvent<string | null>) => void;
         /**
           * The current selected processor.
          */
@@ -6867,7 +6856,6 @@ declare namespace LocalJSX {
           * Is this a manual processor
          */
         "isManual"?: boolean;
-        "method"?: string;
         "methodId"?: string;
         /**
           * The currenct processor is invalid.
@@ -6878,17 +6866,9 @@ declare namespace LocalJSX {
          */
         "onScSetMethod"?: (event: ScPaymentMethodChoiceCustomEvent<string>) => void;
         /**
-          * Set the order procesor.
-         */
-        "onScSetProcessor"?: (event: ScPaymentMethodChoiceCustomEvent<{ id: string; manual: boolean }>) => void;
-        /**
           * Show the toggle
          */
         "onScShow"?: (event: ScPaymentMethodChoiceCustomEvent<void>) => void;
-        /**
-          * The current processor
-         */
-        "processor"?: string;
         /**
           * The processor ID
          */

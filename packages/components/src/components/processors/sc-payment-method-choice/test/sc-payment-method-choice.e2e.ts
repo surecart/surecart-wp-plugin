@@ -25,49 +25,20 @@ describe('sc-payment-method-choice', () => {
     expect(await toggle.getProperty('open')).toBeTruthy();
   });
 
-  it('Emits a scSetProcessor event when clicked', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<sc-payment-method-choice processor-id="test" has-others></sc-payment-method-choice>');
-    await page.waitForChanges();
-    const setProcessor = await page.spyOnEvent('scSetProcessor');
 
-    const toggle = await page.find('sc-payment-method-choice >>> sc-toggle');
-    await toggle.click();
-    await page.waitForChanges();
-    expect(setProcessor).toHaveReceivedEventDetail({
-      id: 'test',
-      manual: false
-    });
-  });
+  // it('Emits a scProcessorInvalid if selected and invalid', async () => {
+  //   const page = await newE2EPage();
+  //   await page.setContent('<sc-payment-method-choice processor-id="test" processor="test" has-others recurring-enabled="false"></sc-payment-method-choice>');
+  //   await page.waitForChanges();
+  //   const processorInvalid = await page.spyOnEvent('scProcessorInvalid');
 
-  it('Emits a scSetProcessor with manual data event when clicked', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<sc-payment-method-choice processor-id="test" has-others is-manual></sc-payment-method-choice>');
-    await page.waitForChanges();
-    const setProcessor = await page.spyOnEvent('scSetProcessor');
+  //   const element = await page.find('sc-payment-method-choice');
+  //   element.setProperty("checkout", {
+  //     reusable_payment_method_required: true,
+  //   });
 
-    const toggle = await page.find('sc-payment-method-choice >>> sc-toggle');
-    await toggle.click();
-    await page.waitForChanges();
-    expect(setProcessor).toHaveReceivedEventDetail({
-      id: 'test',
-      manual: true
-    });
-  });
+  //   await page.waitForChanges();
 
-  it('Emits a scProcessorInvalid if selected and invalid', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<sc-payment-method-choice processor-id="test" processor="test" has-others recurring-enabled="false"></sc-payment-method-choice>');
-    await page.waitForChanges();
-    const processorInvalid = await page.spyOnEvent('scProcessorInvalid');
-
-    const element = await page.find('sc-payment-method-choice');
-    element.setProperty("checkout", {
-      reusable_payment_method_required: true,
-    });
-
-    await page.waitForChanges();
-
-    expect(processorInvalid).toHaveReceivedEvent();
-  });
+  //   expect(processorInvalid).toHaveReceivedEvent();
+  // });
 });

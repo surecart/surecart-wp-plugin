@@ -1,6 +1,7 @@
 import { Component, Event, EventEmitter, h, Host, Prop, Watch } from '@stencil/core';
 import { Checkout } from '../../../types';
 import { openWormhole } from 'stencil-wormhole';
+import selectedProcessor from '../../../store/selected-processor';
 
 @Component({
   tag: 'sc-payment-method-choice',
@@ -11,15 +12,10 @@ export class ScPaymentMethodChoice {
   /** Does this have others? */
   @Prop() hasOthers: boolean;
 
-  /** The current processor */
-  @Prop({ reflect: true }) processor: string;
-
   @Prop({ reflect: true }) methodId: string;
 
   /** The processor ID */
   @Prop() processorId: string;
-
-  @Prop() method: string;
 
   /** Is this a manual processor */
   @Prop() isManual: boolean;
@@ -37,9 +33,6 @@ export class ScPaymentMethodChoice {
   @Prop() card: boolean;
 
   /** Set the order procesor. */
-  @Event() scSetProcessor: EventEmitter<{ id: string; manual: boolean }>;
-
-  /** Set the order procesor. */
   @Event() scSetMethod: EventEmitter<string>;
 
   /** The currenct processor is invalid. */
@@ -53,18 +46,11 @@ export class ScPaymentMethodChoice {
     this.isDisabled = this.checkout?.reusable_payment_method_required && !this.recurringEnabled;
   }
 
-  @Watch('isDisabled')
-  handleHiddenChange() {
-    if (this.isDisabled && this.isSelected()) {
-      this.scProcessorInvalid.emit();
-    }
-  }
-
   isSelected() {
     if (this.methodId) {
-      return this.processor === this.processorId && this.method === this.methodId;
+      return selectedProcessor?.id === this.processorId && selectedProcessor?.method == this.methodId;
     }
-    return this.processor === this.processorId;
+    return selectedProcessor?.id === this.processorId;
   }
 
   render() {
@@ -82,8 +68,9 @@ export class ScPaymentMethodChoice {
         borderless
         open={this.isSelected()}
         onScShow={() => {
-          this.scSetProcessor.emit({ id: this.processorId, manual: !!this.isManual });
-          this.scSetMethod.emit(this.methodId);
+          selectedProcessor.id = this.processorId;
+          selectedProcessor.manual = !!this.isManual;
+          selectedProcessor.method = this.methodId;
         }}
       >
         {this.hasOthers && <slot name="summary" slot="summary"></slot>}
@@ -99,4 +86,4 @@ export class ScPaymentMethodChoice {
   }
 }
 
-openWormhole(ScPaymentMethodChoice, ['processor', 'method', 'checkout'], false);
+openWormhole(ScPaymentMethodChoice, ['checkout'], false);

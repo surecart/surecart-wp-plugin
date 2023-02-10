@@ -32,6 +32,12 @@ export const getOrder = (formId: number | string, mode: 'live' | 'test') => {
     staged_payment_intents: payment_intents || {},
   };
 };
+export const getCheckout = (formId: number | string, mode: 'live' | 'test') => {
+  return {
+    ...(store.state[mode]?.[formId] || {}),
+    staged_payment_intents: payment_intents || {},
+  };
+};
 
 /** Set the order. */
 export const setOrder = (data: Checkout, formId: number | string) => {
