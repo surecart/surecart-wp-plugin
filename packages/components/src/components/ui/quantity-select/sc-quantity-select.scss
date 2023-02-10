@@ -64,7 +64,7 @@
   border-radius: var(--sc-input-border-radius-small);
   vertical-align: middle;
   box-shadow: var(--sc-input-box-shadow);
-  transition: var(--sc-transition-fast) color, var(--sc-transition-fast) border, var(--sc-transition-fast) box-shadow;
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) border, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
 
   &:hover:not(.quantity--disabled) {
     background-color: var(--sc-input-background-color-hover);

@@ -190,7 +190,7 @@ export class ScLogin {
                   onKeyDown={e => e.key === 'Enter' && this.login()}
                   autofocus
                   required
-                  onScChange={e => (this.password = (e.target as HTMLScInputElement).value)}
+                  onScInput={e => (this.password = (e.target as HTMLScInputElement).value)}
                 ></sc-input>
                 <sc-button type="primary" outline submit full>
                   <sc-icon name="lock" slot="prefix" />

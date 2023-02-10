@@ -32,7 +32,7 @@
     color: transparent;
     width: var(--sc-radio-size);
     height: var(--sc-radio-size);
-    transition: var(--sc-transition-fast) border-color, var(--sc-transition-fast) background-color, var(--sc-transition-fast) color, var(--sc-transition-fast) box-shadow;
+    transition: var(--sc-input-transition, var(--sc-transition-medium)) border-color, var(--sc-input-transition, var(--sc-transition-medium)) background-color, var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
 
 
     svg {

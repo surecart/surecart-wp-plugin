@@ -11,8 +11,8 @@
   line-height: var(--sc-line-height-normal);
   letter-spacing: var(--sc-input-letter-spacing);
   vertical-align: middle;
-  transition: var(--sc-transition-fast) color, var(--sc-transition-fast) border, var(--sc-transition-fast) box-shadow,
-    var(--sc-transition-fast) background-color;
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) border, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow,
+    var(--sc-input-transition, var(--sc-transition-medium)) background-color;
   cursor: text;
 }
 /* Standard textareas */

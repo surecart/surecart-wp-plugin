@@ -8,6 +8,9 @@
 	"parent": ["surecart/columns"],
 	"description": "A single column within a columns block.",
 	"attributes": {
+		"layout": {
+			"type": "object"
+		},
 		"verticalAlignment": {
 			"type": "string"
 		},
@@ -51,7 +54,6 @@
 				"padding": true,
 				"blockGap": true
 			}
-		},
-		"__experimentalLayout": true
+		}
 	}
 }
