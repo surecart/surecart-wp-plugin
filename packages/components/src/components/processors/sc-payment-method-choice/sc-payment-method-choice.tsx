@@ -14,8 +14,12 @@ export class ScPaymentMethodChoice {
   /** The current processor */
   @Prop({ reflect: true }) processor: string;
 
+  @Prop({ reflect: true }) methodId: string;
+
   /** The processor ID */
   @Prop() processorId: string;
+
+  @Prop() method: string;
 
   /** Is this a manual processor */
   @Prop() isManual: boolean;
@@ -34,6 +38,9 @@ export class ScPaymentMethodChoice {
 
   /** Set the order procesor. */
   @Event() scSetProcessor: EventEmitter<{ id: string; manual: boolean }>;
+
+  /** Set the order procesor. */
+  @Event() scSetMethod: EventEmitter<string>;
 
   /** The currenct processor is invalid. */
   @Event() scProcessorInvalid: EventEmitter<void>;
@@ -54,6 +61,9 @@ export class ScPaymentMethodChoice {
   }
 
   isSelected() {
+    if (this.methodId) {
+      return this.processor === this.processorId && this.method === this.methodId;
+    }
     return this.processor === this.processorId;
   }
 
@@ -66,7 +76,16 @@ export class ScPaymentMethodChoice {
     const Tag = this.hasOthers ? 'sc-toggle' : 'div';
 
     return (
-      <Tag show-control shady borderless open={this.isSelected()} onScShow={() => this.scSetProcessor.emit({ id: this.processorId, manual: !!this.isManual })}>
+      <Tag
+        show-control
+        shady
+        borderless
+        open={this.isSelected()}
+        onScShow={() => {
+          this.scSetProcessor.emit({ id: this.processorId, manual: !!this.isManual });
+          this.scSetMethod.emit(this.methodId);
+        }}
+      >
         {this.hasOthers && <slot name="summary" slot="summary"></slot>}
         {this.card && !this.hasOthers ? (
           <sc-card>
@@ -80,4 +99,4 @@ export class ScPaymentMethodChoice {
   }
 }
 
-openWormhole(ScPaymentMethodChoice, ['processor', 'checkout'], false);
+openWormhole(ScPaymentMethodChoice, ['processor', 'method', 'checkout'], false);

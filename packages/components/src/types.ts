@@ -460,6 +460,10 @@ export interface ProcessorData {
     client_id: string;
     merchant_initiated: boolean;
   };
+  mollie?: {
+    account_id: 'string';
+    checkout_url: 'string';
+  };
 }
 
 export interface ManualPaymentMethod {
