@@ -1,14 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import {
-	ScBlockUi,
-	ScButton,
-	ScChoice,
-	ScChoices,
-	ScDialog,
-	ScFlex,
-	ScForm,
-} from '@surecart/components-react';
+import { ScBlockUi, ScButton, ScDialog, ScFlex, ScForm } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import apiFetch from '@wordpress/api-fetch';
 import { store as coreStore } from '@wordpress/core-data';
@@ -18,6 +10,7 @@ import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
 import { useEffect } from 'react';
+
 import DatePicker from '../../../../components/DatePicker';
 import Error from '../../../../components/Error';
 
@@ -30,7 +23,9 @@ export default ({ subscription, open, onRequestClose }) => {
 	const [pauseUntil, setPauseUntil] = useState();
 
 	useEffect(() => {
-		setPauseUntil(new Date(subscription?.restore_at * 1000));
+		if (subscription?.restore_at) {
+			setPauseUntil(new Date(subscription?.restore_at * 1000));
+		}
 	}, [subscription?.restore_at]);
 
 	const onSubmit = async (e) => {
