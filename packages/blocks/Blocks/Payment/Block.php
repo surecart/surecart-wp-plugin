@@ -39,8 +39,9 @@ class Block extends BaseBlock {
 		$this->attributes = $attributes;
 		$this->mode       = $this->block->context['surecart/form/mode'] ?? 'live';
 
-		$processors = Processor::where( [ 'live_mode' => 'test' === $this->mode ? false : true ] )->get();
-		$has_mollie = (bool) $this->getProcessorByType( 'mollie', $processors );
+		$processors        = Processor::where( [ 'live_mode' => 'test' === $this->mode ? false : true ] )->get();
+		$has_mollie        = (bool) $this->getProcessorByType( 'mollie', $processors );
+		$default_processor = $has_mollie ? 'mollie' : ( $attributes['default_processor'] ?? null );
 
 		ob_start();
 		?>
@@ -48,7 +49,7 @@ class Block extends BaseBlock {
 		<sc-payment
 			class="<?php echo esc_attr( $attributes['className'] ?? '' ); ?>"
 			label="<?php echo esc_attr( $attributes['label'] ?? '' ); ?>"
-			default-processor="<?php echo esc_attr( $attributes['default_processor'] ); ?>"
+			default-processor="<?php echo esc_attr( $default_processor ); ?>"
 			secure-notice="<?php echo esc_attr( $attributes['secure_notice'] ); ?>"
 		>
 			<?php if ( $has_mollie ) : ?>
@@ -65,39 +66,8 @@ class Block extends BaseBlock {
 
 	public function renderMollie( $processors ) {
 		$processor = $this->getProcessorByType( 'mollie', $processors );
-		$methods   = ( new Processor( [ 'id' => $processor->id ] ) )->paymentMethodTypes();
-		$data      = $methods->data;
-
-		$key = array_search( 'paypal', array_column( $data, 'id' ) );
-		$val = $data[ $key ];
-		unset( $data[ $key ] );
-		$data = array_merge( array( $key => $val ), $data );
-
-		$card = array_search( 'creditcard', array_column( $data, 'id' ) );
-		$val  = $data[ $card ];
-		unset( $data[ $card ] );
-		$data = array_merge( array( $card => $val ), $data );
-
 		?>
-			<?php foreach ( $data as $method ) : ?>
-				<sc-payment-method-choice
-					processor-id="mollie"
-					method-id="<?php echo esc_attr( $method->id ); ?>"
-					has-others>
-					<span slot="summary" class="sc-payment-toggle-summary">
-						<img src="<?php echo esc_url( $method->image ); ?>" />
-						<span><?php echo esc_html( $method->description ); ?></span>
-					</span>
-
-				<sc-card>
-					<sc-payment-selected label="<?php echo esc_attr( sprintf( __( '%s selected for check out.', 'surecart' ), $method->description ) ); ?>">
-						<img slot="icon" src="<?php echo esc_url( $method->image ); ?>" style="width: 32px" />
-						<?php esc_html_e( 'Another step will appear after submitting your order to complete your purchase details.', 'surecart' ); ?>
-					</sc-payment-selected>
-				</sc-card>
-
-			</sc-payment-method-choice>
-			<?php endforeach; ?>
+		<sc-checkout-mollie-payment processor-id="<?php echo esc_attr( $processor->id ); ?>"></sc-checkout-mollie-payment>
 		<?php
 	}
 

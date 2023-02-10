@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, ShippingAddress, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export namespace Components {
     interface ScAddress {
         /**
@@ -490,6 +490,15 @@ export namespace Components {
           * Validate the form.
          */
         "validate": () => Promise<boolean>;
+    }
+    interface ScCheckoutMolliePayment {
+        "currencyCode": string;
+        "method": string;
+        "processorId": string;
+        "reusablePaymentMethodRequired": boolean;
+        "shippingAddress": ShippingAddress;
+        "sortOrder": string[];
+        "totalAmount": number;
     }
     interface ScCheckoutUnsavedChangesWarning {
         "state": FormState;
@@ -3195,6 +3204,10 @@ export interface ScCheckoutCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScCheckoutElement;
 }
+export interface ScCheckoutMolliePaymentCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCheckoutMolliePaymentElement;
+}
 export interface ScChoiceCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScChoiceElement;
@@ -3551,6 +3564,12 @@ declare global {
     var HTMLScCheckoutElement: {
         prototype: HTMLScCheckoutElement;
         new (): HTMLScCheckoutElement;
+    };
+    interface HTMLScCheckoutMolliePaymentElement extends Components.ScCheckoutMolliePayment, HTMLStencilElement {
+    }
+    var HTMLScCheckoutMolliePaymentElement: {
+        prototype: HTMLScCheckoutMolliePaymentElement;
+        new (): HTMLScCheckoutMolliePaymentElement;
     };
     interface HTMLScCheckoutUnsavedChangesWarningElement extends Components.ScCheckoutUnsavedChangesWarning, HTMLStencilElement {
     }
@@ -4399,6 +4418,7 @@ declare global {
         "sc-charges-list": HTMLScChargesListElement;
         "sc-checkbox": HTMLScCheckboxElement;
         "sc-checkout": HTMLScCheckoutElement;
+        "sc-checkout-mollie-payment": HTMLScCheckoutMolliePaymentElement;
         "sc-checkout-unsaved-changes-warning": HTMLScCheckoutUnsavedChangesWarningElement;
         "sc-choice": HTMLScChoiceElement;
         "sc-choices": HTMLScChoicesElement;
@@ -5056,6 +5076,24 @@ declare namespace LocalJSX {
           * The account tax protocol
          */
         "taxProtocol"?: TaxProtocol;
+    }
+    interface ScCheckoutMolliePayment {
+        "currencyCode"?: string;
+        "method"?: string;
+        /**
+          * Error event
+         */
+        "onScError"?: (event: ScCheckoutMolliePaymentCustomEvent<ResponseError>) => void;
+        /**
+          * Set the order method.
+         */
+        "onScSetMethod"?: (event: ScCheckoutMolliePaymentCustomEvent<string>) => void;
+        "onScSetProcessor"?: (event: ScCheckoutMolliePaymentCustomEvent<{ id: 'mollie'; manual: false }>) => void;
+        "processorId"?: string;
+        "reusablePaymentMethodRequired"?: boolean;
+        "shippingAddress"?: ShippingAddress;
+        "sortOrder"?: string[];
+        "totalAmount"?: number;
     }
     interface ScCheckoutUnsavedChangesWarning {
         "state"?: FormState;
@@ -8107,6 +8145,7 @@ declare namespace LocalJSX {
         "sc-charges-list": ScChargesList;
         "sc-checkbox": ScCheckbox;
         "sc-checkout": ScCheckout;
+        "sc-checkout-mollie-payment": ScCheckoutMolliePayment;
         "sc-checkout-unsaved-changes-warning": ScCheckoutUnsavedChangesWarning;
         "sc-choice": ScChoice;
         "sc-choices": ScChoices;
@@ -8274,6 +8313,7 @@ declare module "@stencil/core" {
             "sc-charges-list": LocalJSX.ScChargesList & JSXBase.HTMLAttributes<HTMLScChargesListElement>;
             "sc-checkbox": LocalJSX.ScCheckbox & JSXBase.HTMLAttributes<HTMLScCheckboxElement>;
             "sc-checkout": LocalJSX.ScCheckout & JSXBase.HTMLAttributes<HTMLScCheckoutElement>;
+            "sc-checkout-mollie-payment": LocalJSX.ScCheckoutMolliePayment & JSXBase.HTMLAttributes<HTMLScCheckoutMolliePaymentElement>;
             "sc-checkout-unsaved-changes-warning": LocalJSX.ScCheckoutUnsavedChangesWarning & JSXBase.HTMLAttributes<HTMLScCheckoutUnsavedChangesWarningElement>;
             "sc-choice": LocalJSX.ScChoice & JSXBase.HTMLAttributes<HTMLScChoiceElement>;
             "sc-choices": LocalJSX.ScChoices & JSXBase.HTMLAttributes<HTMLScChoicesElement>;

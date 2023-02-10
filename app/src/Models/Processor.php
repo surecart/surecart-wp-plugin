@@ -48,11 +48,12 @@ class Processor extends Model {
 			return new \WP_Error( 'not_saved', 'Please create the payment method.' );
 		}
 
-		$types = \SureCart::request(
-			$this->endpoint . '/' . $this->attributes['id'] . '/payment_method_types/',
+		$types = $this->makeRequest(
 			[
 				'method' => 'GET',
-			]
+				'query'  => $this->getQuery(),
+			],
+			$this->endpoint . '/' . $this->attributes['id'] . '/payment_method_types/',
 		);
 
 		return $types;

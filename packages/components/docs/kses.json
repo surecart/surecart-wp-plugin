@@ -262,6 +262,19 @@
     "class": true,
     "slot": true
   },
+  "sc-checkout-mollie-payment": {
+    "currency-code": true,
+    "method": true,
+    "processor-id": true,
+    "reusable-payment-method-required": true,
+    "shipping-address": true,
+    "sort-order": true,
+    "total-amount": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-checkout-unsaved-changes-warning": {
     "state": true,
     "style": true,

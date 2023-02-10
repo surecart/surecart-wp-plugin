@@ -478,6 +478,12 @@ export interface ManualPaymentMethod {
   updated_at: number;
 }
 
+export interface PaymentMethodType {
+  id: string;
+  description: string;
+  image: string;
+}
+
 export interface Processor {
   live_mode: boolean;
   processor_data: {

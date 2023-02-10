@@ -210,6 +210,7 @@ export class ScCheckout {
       processors: (this.processors || []).filter(processor => {
         return !(this?.order().reusable_payment_method_required && !processor?.recurring_enabled);
       }),
+      reusablePaymentMethodRequired: this?.order().reusable_payment_method_required,
       manualPaymentMethods: this.manualPaymentMethods,
       processor_data: this.order()?.processor_data,
       state: this.checkoutState,
@@ -245,6 +246,7 @@ export class ScCheckout {
       shippingAddress: this.order()?.shipping_address,
       taxStatus: this.order()?.tax_status,
       taxIdentifier: this.order()?.tax_identifier,
+      totalAmount: this.order()?.total_amount,
       taxProtocol: this.taxProtocol,
       lockedChoices: this.prices,
       products: this.productsEntities,
