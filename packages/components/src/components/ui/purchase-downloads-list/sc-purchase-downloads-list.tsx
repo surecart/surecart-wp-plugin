@@ -1,4 +1,4 @@
-import { Component, Element, h, Prop } from '@stencil/core';
+import { Component, Element, Fragment, h, Prop } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { Download, Media, Product, Purchase } from '../../../types';
@@ -49,6 +49,7 @@ export class ScPurchaseDownloadsList {
     return this.purchases.map(purchase => {
       const downloads = (purchase?.product as Product)?.downloads?.data.filter((d: Download) => !d.archived);
       const mediaBytesList = (downloads || []).map(item => (item?.media ? (item?.media as Media)?.byte_size : 0));
+      const mediaByteTotalSize = mediaBytesList.reduce((prev, curr) => prev + curr, 0);
 
       return (
         <sc-stacked-list-row
@@ -74,8 +75,13 @@ export class ScPurchaseDownloadsList {
               <strong>{(purchase?.product as Product)?.name}</strong>
             </div>
             <div class="download__details">
-              {sprintf(_n('%s file', '%s files', downloads?.length, 'surecart'), downloads?.length)} &bull;{' '}
-              <sc-format-bytes value={mediaBytesList.reduce((prev, curr) => prev + curr, 0)}></sc-format-bytes>
+              {sprintf(_n('%s file', '%s files', downloads?.length, 'surecart'), downloads?.length)}
+              {!!mediaByteTotalSize && (
+                <Fragment>
+                  {' '}
+                  &bull; <sc-format-bytes value={mediaByteTotalSize}></sc-format-bytes>
+                </Fragment>
+              )}
             </div>
           </sc-spacing>
 
