@@ -89,7 +89,7 @@ export class ScPaymentMethodsList {
         }),
       })) as PaymentMethod[];
     } catch (e) {
-      alert(e?.messsage || __('Something went wrong', 'surecart'));
+      this.error = e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.busy = false;
     }
@@ -202,9 +202,15 @@ export class ScPaymentMethodsList {
     );
   }
 
+  disconnectedCallback() {
+    this.selectedPaymentMethod = undefined;
+    this.cascadeDefaultPaymentMethod = false;
+  }
+
   onMarkPaymentDefault(paymentMethod: PaymentMethod) {
     this.selectedPaymentMethod = { ...paymentMethod };
     this.showConfirmDefault = true;
+    this.error = '';
   }
 
   onCloseConfirmModal = () => {
@@ -247,6 +253,9 @@ export class ScPaymentMethodsList {
         {this.renderContent()}
 
         <sc-dialog open={this.showConfirmDefault} label="Confirm" onScRequestClose={this.onCloseConfirmModal}>
+          <sc-alert type="danger" open={!!this.error}>
+            {this.error}
+          </sc-alert>
           <sc-flex flexDirection="column" style={{ '--sc-flex-column-gap': 'var(--sc-spacing-small)' }}>
             <sc-text>{__('Are you sure? A default payment method will be preferred for your future payments over other payment methods.', 'surecart')}</sc-text>
             <sc-checkbox name="cascade_payment_method" value="1" onScChange={e => (this.cascadeDefaultPaymentMethod = e.target.checked)}>
