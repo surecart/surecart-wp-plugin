@@ -222,12 +222,37 @@ export default () => {
 				placeholder={__('Choose date', 'surecart')}
 				title={__('Restore subscription at?', 'surecart')}
 				currentDate={new Date(subscription?.restore_at * 1000)}
-				onChoose={(date) => onUpdateRestoreAt(date)}
+				onChoose={(date) =>
+					onUpdateSubscriptionDate('restore_at', date)
+				}
 				minDate={new Date()}
 				required={true}
 				chooseDateLabel={__('Update subscription', 'surecart')}
 			>
 				<ScMenuItem>{__('Restore At...', 'surecart')}</ScMenuItem>
+			</DatePicker>
+		);
+	};
+
+	/** Render the renew at button */
+	const renderRenewAtButton = () => {
+		if (!['past_due', 'active'].includes(subscription?.status)) return null;
+
+		return (
+			<DatePicker
+				placeholder={__('Choose date', 'surecart')}
+				title={__('Renew subscription at?', 'surecart')}
+				currentDate={
+					new Date(subscription?.current_period_end_at * 1000)
+				}
+				onChoose={(date) =>
+					onUpdateSubscriptionDate('current_period_end_at', date)
+				}
+				minDate={new Date()}
+				required={true}
+				chooseDateLabel={__('Update subscription', 'surecart')}
+			>
+				<ScMenuItem>{__('Renew At...', 'surecart')}</ScMenuItem>
 			</DatePicker>
 		);
 	};
@@ -266,7 +291,7 @@ export default () => {
 		}
 	};
 
-	const onUpdateRestoreAt = async (date) => {
+	const onUpdateSubscriptionDate = async (dateKey, date) => {
 		setLoading(true);
 		try {
 			await apiFetch({
@@ -275,7 +300,7 @@ export default () => {
 					cancel_behavior: 'immediate',
 				}),
 				data: {
-					restore_at: Date.parse(date) / 1000,
+					[dateKey]: Date.parse(date) / 1000,
 				},
 			});
 
@@ -359,6 +384,7 @@ export default () => {
 							</ScMenuItem>
 						)}
 						{renderUpdateButton()}
+						{renderRenewAtButton()}
 						{renderPauseButton()}
 						{renderCompleteButton()}
 						{renderCancelButton()}

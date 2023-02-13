@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-02-13T03:47:00+00:00\n"
+"POT-Creation-Date: 2023-02-13T05:52:16+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -852,7 +852,7 @@ msgstr ""
 #: customers/modules/Subscriptions.js:51
 #: settings/export/ExportSettings.js:43
 #: settings/subscription/SubscriptionSettings.js:55
-#: subscriptions/show/ShowSubscription.js:318
+#: subscriptions/show/ShowSubscription.js:341
 #: Controllers/SubscriptionController.php:57
 #: sc-subscriptions-list.js:131
 msgid "Subscriptions"
@@ -4601,7 +4601,7 @@ msgstr ""
 #: components/data-tables/subscriptions-data-table/Cancel.js:70
 #: components/data-tables/subscriptions-data-table/Cancel.js:92
 #: components/data-tables/subscriptions-data-table/subscription-item.js:124
-#: components/DatePicker.js:136
+#: components/DatePicker.js:139
 #: components/subscriptions/Cancel.js:32
 #: components/subscriptions/Cancel.js:54
 #: components/subscriptions/CancelPendingUpdate.js:150
@@ -5144,23 +5144,23 @@ msgstr ""
 msgid "Failed to un-cancel subscription."
 msgstr ""
 
-#: components/DatePicker.js:38
+#: components/DatePicker.js:41
 msgid "Please choose date to continue."
 msgstr ""
 
-#: components/DatePicker.js:47
+#: components/DatePicker.js:50
 msgid "Date cannot be before "
 msgstr ""
 
-#: components/DatePicker.js:64
+#: components/DatePicker.js:67
 msgid "Date cannot be after "
 msgstr ""
 
-#: components/DatePicker.js:105
+#: components/DatePicker.js:108
 msgid "Select date"
 msgstr ""
 
-#: components/DatePicker.js:133
+#: components/DatePicker.js:136
 #: components/MediaLibrary/index.js:328
 #: Blocks/CheckoutForm/components/Empty.js:147
 msgid "Choose"
@@ -6314,7 +6314,7 @@ msgid "Unverified"
 msgstr ""
 
 #: orders/Order.js:146
-#: subscriptions/show/ShowSubscription.js:349
+#: subscriptions/show/ShowSubscription.js:372
 msgid "Actions"
 msgstr ""
 
@@ -8317,13 +8317,13 @@ msgid "Integration Providers"
 msgstr ""
 
 #: subscriptions/edit/EditSubscription.js:112
-#: subscriptions/show/ShowSubscription.js:282
+#: subscriptions/show/ShowSubscription.js:306
 msgid "Subscription updated."
 msgstr ""
 
 #: subscriptions/edit/EditSubscription.js:223
 #: subscriptions/show/modules/SubscriptionItems.js:39
-#: subscriptions/show/ShowSubscription.js:322
+#: subscriptions/show/ShowSubscription.js:345
 msgid "Subscription Details"
 msgstr ""
 
@@ -8332,7 +8332,7 @@ msgid "Update Immediately"
 msgstr ""
 
 #: subscriptions/edit/EditSubscription.js:253
-#: subscriptions/show/ShowSubscription.js:190
+#: subscriptions/show/ShowSubscription.js:191
 msgid "Update Subscription"
 msgstr ""
 
@@ -8563,44 +8563,54 @@ msgstr ""
 msgid "Restore Now"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:201
-#: subscriptions/show/ShowSubscription.js:219
+#: subscriptions/show/ShowSubscription.js:203
+#: subscriptions/show/ShowSubscription.js:222
+#: subscriptions/show/ShowSubscription.js:244
 msgid "Choose date"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:202
+#: subscriptions/show/ShowSubscription.js:204
 msgid "Pause subscription until?"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:207
+#: subscriptions/show/ShowSubscription.js:209
 msgid "Pause subscription"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:209
+#: subscriptions/show/ShowSubscription.js:211
 msgid "Pause Subscription"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:220
+#: subscriptions/show/ShowSubscription.js:223
 msgid "Restore subscription at?"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:225
+#: subscriptions/show/ShowSubscription.js:232
+#: subscriptions/show/ShowSubscription.js:250
 msgid "Update subscription"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:227
+#: subscriptions/show/ShowSubscription.js:234
 msgid "Restore At..."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:238
+#: subscriptions/show/ShowSubscription.js:245
+msgid "Renew subscription at?"
+msgstr ""
+
+#: subscriptions/show/ShowSubscription.js:252
+msgid "Renew At..."
+msgstr ""
+
+#: subscriptions/show/ShowSubscription.js:263
 msgid "Please choose valid date."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:257
+#: subscriptions/show/ShowSubscription.js:282
 msgid "Subscription paused."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:357
+#: subscriptions/show/ShowSubscription.js:380
 msgid "Cancel Pending Update"
 msgstr ""
 
