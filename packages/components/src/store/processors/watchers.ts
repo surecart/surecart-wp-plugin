@@ -3,6 +3,9 @@ import selectedProcessor from '../selected-processor';
 import { onChange as onChangeCheckout } from '../checkout';
 import { availableManualPaymentMethods, availableProcessors } from './getters';
 
+/**
+ * Look through available processors and maybe switch if the processor has been removed.
+ */
 const maybeUpdateProcessor = () => {
   // get array of manual and regular processors ids.
   const ids = [...availableProcessors().map(({ processor_type }) => processor_type), ...availableManualPaymentMethods().map(({ id }) => id)];
@@ -12,6 +15,9 @@ const maybeUpdateProcessor = () => {
   selectedProcessor.id = ids?.length ? ids?.[0] : null;
 };
 
+/**
+ * Look through available methods and maybe switch if the processor has been removed.
+ */
 const maybeUpdateMethod = () => {
   // get method ids.
   const ids = (state.methods || []).map(({ id }) => id);

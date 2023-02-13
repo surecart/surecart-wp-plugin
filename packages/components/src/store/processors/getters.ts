@@ -15,9 +15,7 @@ export const availableProcessors = () =>
 /**
  * Gets an available processor type.
  */
-export const getAvailableProcessor = type => {
-  return availableProcessors().find(({ processor_type }) => processor_type === type);
-};
+export const getAvailableProcessor = type => availableProcessors().find(({ processor_type }) => processor_type === type);
 
 /**
  * Get a sorted array of manual payment methods
