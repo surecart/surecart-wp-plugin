@@ -271,13 +271,8 @@
     "slot": true
   },
   "sc-checkout-mollie-payment": {
-    "currency-code": true,
     "method": true,
     "processor-id": true,
-    "reusable-payment-method-required": true,
-    "shipping-address": true,
-    "sort-order": true,
-    "total-amount": true,
     "style": true,
     "id": true,
     "class": true,
@@ -350,9 +345,7 @@
     "slot": true
   },
   "sc-conditional-form": {
-    "checkout": true,
     "rule_groups": true,
-    "selected-processor-id": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1171,12 +1164,11 @@
     "slot": true
   },
   "sc-payment": {
-    "checkout": true,
     "hide-test-mode-badge": true,
     "label": true,
     "mode": true,
-    "processor": true,
-    "processors": true,
+    "secure-notice": true,
+    "stripe-payment-element": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1195,7 +1187,6 @@
   "sc-payment-method-choice": {
     "card": true,
     "checkout": true,
-    "has-others": true,
     "is-disabled": true,
     "is-manual": true,
     "method-id": true,

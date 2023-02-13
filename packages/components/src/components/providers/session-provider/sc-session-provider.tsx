@@ -109,15 +109,6 @@ export class ScSessionProvider {
     return getOrder(this?.formId, this.mode) as Checkout;
   }
 
-  getProcessor() {
-    switch (this.processor) {
-      case 'paypal':
-      case 'paypal-card':
-        return 'paypal';
-    }
-    return this.processor;
-  }
-
   async getFormData() {
     let data = {};
     const form = this.el.querySelector('sc-form');

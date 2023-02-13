@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, RuleGroup, ShippingAddress, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export namespace Components {
     interface ScAddress {
         /**
@@ -502,13 +502,8 @@ export namespace Components {
         "error": ResponseError | null;
     }
     interface ScCheckoutMolliePayment {
-        "currencyCode": string;
         "method": string;
         "processorId": string;
-        "reusablePaymentMethodRequired": boolean;
-        "shippingAddress": ShippingAddress;
-        "sortOrder": string[];
-        "totalAmount": number;
     }
     interface ScCheckoutUnsavedChangesWarning {
         "state": FormState;
@@ -650,17 +645,9 @@ export namespace Components {
     }
     interface ScConditionalForm {
         /**
-          * Checkout Session from sc-checkout.
-         */
-        "checkout": Checkout;
-        /**
           * Selector label
          */
         "rule_groups": RuleGroup[];
-        /**
-          * The currently selected processor
-         */
-        "selectedProcessorId": ProcessorName;
     }
     interface ScConsumer {
         "renderer": any;
@@ -2025,10 +2012,6 @@ export namespace Components {
     }
     interface ScPayment {
         /**
-          * Checkout Session from sc-checkout.
-         */
-        "checkout": Checkout;
-        /**
           * Hide the test mode badge
          */
         "hideTestModeBadge": boolean;
@@ -2040,14 +2023,8 @@ export namespace Components {
           * Is this created in "test" mode
          */
         "mode": 'test' | 'live';
-        /**
-          * The current selected processor.
-         */
-        "processor": string;
-        /**
-          * List of available processors.
-         */
-        "processors": Processor[];
+        "secureNotice": string;
+        "stripePaymentElement": boolean;
     }
     interface ScPaymentMethod {
         "externalLink": string;
@@ -2064,10 +2041,6 @@ export namespace Components {
           * The checkout.
          */
         "checkout": Checkout;
-        /**
-          * Does this have others?
-         */
-        "hasOthers": boolean;
         /**
           * Is this disabled?
          */
@@ -3365,10 +3338,6 @@ export interface ScOrderTaxIdInputCustomEvent<T> extends CustomEvent<T> {
 export interface ScPaginationCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScPaginationElement;
-}
-export interface ScPaymentCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScPaymentElement;
 }
 export interface ScPaymentMethodChoiceCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -5147,17 +5116,12 @@ declare namespace LocalJSX {
         "error"?: ResponseError | null;
     }
     interface ScCheckoutMolliePayment {
-        "currencyCode"?: string;
         "method"?: string;
         /**
           * Error event
          */
         "onScError"?: (event: ScCheckoutMolliePaymentCustomEvent<ResponseError>) => void;
         "processorId"?: string;
-        "reusablePaymentMethodRequired"?: boolean;
-        "shippingAddress"?: ShippingAddress;
-        "sortOrder"?: string[];
-        "totalAmount"?: number;
     }
     interface ScCheckoutUnsavedChangesWarning {
         "state"?: FormState;
@@ -5304,17 +5268,9 @@ declare namespace LocalJSX {
     }
     interface ScConditionalForm {
         /**
-          * Checkout Session from sc-checkout.
-         */
-        "checkout"?: Checkout;
-        /**
           * Selector label
          */
         "rule_groups"?: RuleGroup[];
-        /**
-          * The currently selected processor
-         */
-        "selectedProcessorId"?: ProcessorName;
     }
     interface ScConsumer {
         "onMountConsumer"?: (event: ScConsumerCustomEvent<any>) => void;
@@ -6898,10 +6854,6 @@ declare namespace LocalJSX {
     }
     interface ScPayment {
         /**
-          * Checkout Session from sc-checkout.
-         */
-        "checkout"?: Checkout;
-        /**
           * Hide the test mode badge
          */
         "hideTestModeBadge"?: boolean;
@@ -6913,18 +6865,8 @@ declare namespace LocalJSX {
           * Is this created in "test" mode
          */
         "mode"?: 'test' | 'live';
-        /**
-          * Set the checkout procesor.
-         */
-        "onScSetMethod"?: (event: ScPaymentCustomEvent<string | null>) => void;
-        /**
-          * The current selected processor.
-         */
-        "processor"?: string;
-        /**
-          * List of available processors.
-         */
-        "processors"?: Processor[];
+        "secureNotice"?: string;
+        "stripePaymentElement"?: boolean;
     }
     interface ScPaymentMethod {
         "externalLink"?: string;
@@ -6941,10 +6883,6 @@ declare namespace LocalJSX {
           * The checkout.
          */
         "checkout"?: Checkout;
-        /**
-          * Does this have others?
-         */
-        "hasOthers"?: boolean;
         /**
           * Is this disabled?
          */

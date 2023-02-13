@@ -1,7 +1,8 @@
 import { Component, Host, h, Prop } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
-import { Checkout, ProcessorName, RuleGroup } from '../../../../types';
+import { RuleGroup } from '../../../../types';
 import { hasAnyRuleGroupPassed } from './conditional-functions';
+import { state as checkoutState } from '../../../../store/checkout';
+import selectedProcessor from '../../../../store/selected-processor';
 
 @Component({
   tag: 'sc-conditional-form',
@@ -12,14 +13,8 @@ export class ScConditionalForm {
   /** Selector label */
   @Prop() rule_groups: RuleGroup[];
 
-  /** Checkout Session from sc-checkout. */
-  @Prop() checkout: Checkout;
-
-  /** The currently selected processor */
-  @Prop() selectedProcessorId: ProcessorName;
-
   render() {
-    let show = hasAnyRuleGroupPassed(this.rule_groups, { checkout: this.checkout, processor: this.selectedProcessorId });
+    let show = hasAnyRuleGroupPassed(this.rule_groups, { checkout: checkoutState.checkout, processor: selectedProcessor?.id });
     if (!show) return null;
     return (
       <Host>
@@ -28,5 +23,3 @@ export class ScConditionalForm {
     );
   }
 }
-
-openWormhole(ScConditionalForm, ['checkout', 'selectedProcessorId'], false);

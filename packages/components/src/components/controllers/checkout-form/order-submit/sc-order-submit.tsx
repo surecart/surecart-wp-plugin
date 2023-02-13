@@ -4,6 +4,7 @@ import { openWormhole } from 'stencil-wormhole';
 import { getProcessorData } from '../../../../functions/processor';
 import { Checkout, Processor, ProcessorName } from '../../../../types';
 import selectedProcessor from '../../../../store/selected-processor';
+import { checkoutIsLocked } from '../../../../store/checkout';
 
 @Component({
   tag: 'sc-order-submit',
@@ -81,7 +82,7 @@ export class ScOrderSubmit {
           size={this.size}
           full={this.full}
           loading={this.loading || this.paying}
-          disabled={this.loading || this.paying || this.busy}
+          disabled={this.loading || this.paying || this.busy || checkoutIsLocked()}
         >
           {!!this.icon && <sc-icon name={this.icon} slot="prefix"></sc-icon>}
           <slot>{__('Purchase', 'surecart')}</slot>

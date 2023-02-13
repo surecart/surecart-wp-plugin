@@ -1,8 +1,8 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
-import processorsState from '../../../../store/processors';
-import checkoutState from '../../../../store/checkout';
+import { state as processorsState } from '../../../../store/processors';
+import { state as checkoutState } from '../../../../store/checkout';
 import { getOrder, setOrder } from '../../../../store/checkouts';
 import {
   Bump,
@@ -192,6 +192,7 @@ export class ScCheckout {
     if (this.isDuplicate) return;
     Universe.create(this as Creator, this.state());
     processorsState.processors = this.processors;
+    processorsState.manualPaymentMethods = this.manualPaymentMethods;
     checkoutState.formId = this.formId;
     checkoutState.mode = this.mode;
   }
