@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-02-10T20:23:06+00:00\n"
+"POT-Creation-Date: 2023-02-13T03:47:00+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -193,7 +193,7 @@ msgstr ""
 #: licenses/modules/Details/index.js:14
 #: util.js:44
 #: sc-licenses-list.js:28
-#: sc-subscription-status-badge2.js:56
+#: sc-subscription-status-badge2.js:55
 msgid "Active"
 msgstr ""
 
@@ -852,7 +852,7 @@ msgstr ""
 #: customers/modules/Subscriptions.js:51
 #: settings/export/ExportSettings.js:43
 #: settings/subscription/SubscriptionSettings.js:55
-#: subscriptions/show/ShowSubscription.js:270
+#: subscriptions/show/ShowSubscription.js:318
 #: Controllers/SubscriptionController.php:57
 #: sc-subscriptions-list.js:131
 msgid "Subscriptions"
@@ -865,7 +865,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:62
 #: orders/modules/Refunds.js:56
-#: sc-subscription-status-badge2.js:63
+#: sc-subscription-status-badge2.js:62
 msgid "Canceled"
 msgstr ""
 
@@ -4601,7 +4601,7 @@ msgstr ""
 #: components/data-tables/subscriptions-data-table/Cancel.js:70
 #: components/data-tables/subscriptions-data-table/Cancel.js:92
 #: components/data-tables/subscriptions-data-table/subscription-item.js:124
-#: components/DatePicker.js:90
+#: components/DatePicker.js:136
 #: components/subscriptions/Cancel.js:32
 #: components/subscriptions/Cancel.js:54
 #: components/subscriptions/CancelPendingUpdate.js:150
@@ -5071,7 +5071,7 @@ msgstr ""
 #: components/subscriptions/Cancel.js:37
 #: components/subscriptions/Cancel.js:86
 #: subscriptions/show/modules/modals/CancelSubscriptionModal.js:115
-#: subscriptions/show/ShowSubscription.js:142
+#: subscriptions/show/ShowSubscription.js:146
 msgid "Cancel Subscription"
 msgstr ""
 
@@ -5092,7 +5092,7 @@ msgstr ""
 #: components/data-tables/subscriptions-data-table/subscription-item.js:117
 #: components/data-tables/subscriptions-data-table/UnCancel.js:58
 #: components/subscriptions/Cancel.js:92
-#: subscriptions/show/ShowSubscription.js:136
+#: subscriptions/show/ShowSubscription.js:140
 msgid "Don't Cancel"
 msgstr ""
 
@@ -5113,7 +5113,7 @@ msgid "Activate"
 msgstr ""
 
 #: components/data-tables/subscriptions-data-table/subscription-item.js:26
-#: sc-subscription-status-badge2.js:48
+#: sc-subscription-status-badge2.js:47
 msgid "Cancels"
 msgstr ""
 
@@ -5144,11 +5144,23 @@ msgstr ""
 msgid "Failed to un-cancel subscription."
 msgstr ""
 
-#: components/DatePicker.js:54
+#: components/DatePicker.js:38
+msgid "Please choose date to continue."
+msgstr ""
+
+#: components/DatePicker.js:47
+msgid "Date cannot be before "
+msgstr ""
+
+#: components/DatePicker.js:64
+msgid "Date cannot be after "
+msgstr ""
+
+#: components/DatePicker.js:105
 msgid "Select date"
 msgstr ""
 
-#: components/DatePicker.js:87
+#: components/DatePicker.js:133
 #: components/MediaLibrary/index.js:328
 #: Blocks/CheckoutForm/components/Empty.js:147
 msgid "Choose"
@@ -5546,8 +5558,6 @@ msgstr[1] ""
 #: settings/processors/CreateEditPaymentMethod.js:124
 #: settings/subscription-preservation/EditReason.js:145
 #: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:95
-#: subscriptions/show/modules/modals/RestoreAtModal.js:68
-#: subscriptions/show/modules/modals/RestoreAtModal.js:104
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:44
 #: Blocks/Dashboard/WordPressAccount/edit.js:44
 #: sc-donation-choices.js:124
@@ -6046,7 +6056,6 @@ msgstr ""
 #: subscriptions/show/modules/modals/CancelUpdateModal.js:43
 #: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:41
 #: subscriptions/show/modules/modals/DontCancelModal.js:43
-#: subscriptions/show/modules/modals/PauseSubscriptionModal.js:68
 #: subscriptions/show/modules/modals/RestoreSubscriptionModal.js:42
 #: subscriptions/show/modules/modals/RetryPaymentModal.js:74
 #: Controllers/SubscriptionController.php:349
@@ -6305,7 +6314,7 @@ msgid "Unverified"
 msgstr ""
 
 #: orders/Order.js:146
-#: subscriptions/show/ShowSubscription.js:304
+#: subscriptions/show/ShowSubscription.js:349
 msgid "Actions"
 msgstr ""
 
@@ -8308,12 +8317,13 @@ msgid "Integration Providers"
 msgstr ""
 
 #: subscriptions/edit/EditSubscription.js:112
+#: subscriptions/show/ShowSubscription.js:282
 msgid "Subscription updated."
 msgstr ""
 
 #: subscriptions/edit/EditSubscription.js:223
 #: subscriptions/show/modules/SubscriptionItems.js:39
-#: subscriptions/show/ShowSubscription.js:274
+#: subscriptions/show/ShowSubscription.js:322
 msgid "Subscription Details"
 msgstr ""
 
@@ -8322,7 +8332,7 @@ msgid "Update Immediately"
 msgstr ""
 
 #: subscriptions/edit/EditSubscription.js:253
-#: subscriptions/show/ShowSubscription.js:186
+#: subscriptions/show/ShowSubscription.js:190
 msgid "Update Subscription"
 msgstr ""
 
@@ -8476,7 +8486,7 @@ msgid "Nevermind"
 msgstr ""
 
 #: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:63
-#: subscriptions/show/ShowSubscription.js:158
+#: subscriptions/show/ShowSubscription.js:162
 msgid "Complete Subscription"
 msgstr ""
 
@@ -8490,48 +8500,6 @@ msgstr ""
 
 #: subscriptions/show/modules/modals/DontCancelModal.js:65
 msgid "Resume Subscription"
-msgstr ""
-
-#: subscriptions/show/modules/modals/PauseSubscriptionModal.js:48
-#: subscriptions/show/modules/modals/RestoreAtModal.js:48
-#: subscriptions/show/ShowSubscription.js:236
-msgid "Subscription paused."
-msgstr ""
-
-#: subscriptions/show/modules/modals/PauseSubscriptionModal.js:78
-msgid "Which date would you like to restore subscription?"
-msgstr ""
-
-#: subscriptions/show/modules/modals/PauseSubscriptionModal.js:84
-#: subscriptions/show/modules/modals/RestoreAtModal.js:84
-#: subscriptions/show/ShowSubscription.js:197
-msgid "Choose date"
-msgstr ""
-
-#: subscriptions/show/modules/modals/PauseSubscriptionModal.js:85
-#: subscriptions/show/ShowSubscription.js:198
-msgid "Pause subscription until?"
-msgstr ""
-
-#: subscriptions/show/modules/modals/PauseSubscriptionModal.js:98
-msgid "Don't pause"
-msgstr ""
-
-#: subscriptions/show/modules/modals/PauseSubscriptionModal.js:106
-#: subscriptions/show/ShowSubscription.js:202
-msgid "Pause Subscription"
-msgstr ""
-
-#: subscriptions/show/modules/modals/RestoreAtModal.js:78
-msgid "When would you like to restore subscription?"
-msgstr ""
-
-#: subscriptions/show/modules/modals/RestoreAtModal.js:85
-msgid "Restore subscription at?"
-msgstr ""
-
-#: subscriptions/show/modules/modals/RestoreAtModal.js:96
-msgid "Don't update"
 msgstr ""
 
 #: subscriptions/show/modules/modals/RestoreSubscriptionModal.js:28
@@ -8591,15 +8559,48 @@ msgstr ""
 msgid "Payment method updated."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:167
+#: subscriptions/show/ShowSubscription.js:171
 msgid "Restore Now"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:212
+#: subscriptions/show/ShowSubscription.js:201
+#: subscriptions/show/ShowSubscription.js:219
+msgid "Choose date"
+msgstr ""
+
+#: subscriptions/show/ShowSubscription.js:202
+msgid "Pause subscription until?"
+msgstr ""
+
+#: subscriptions/show/ShowSubscription.js:207
+msgid "Pause subscription"
+msgstr ""
+
+#: subscriptions/show/ShowSubscription.js:209
+msgid "Pause Subscription"
+msgstr ""
+
+#: subscriptions/show/ShowSubscription.js:220
+msgid "Restore subscription at?"
+msgstr ""
+
+#: subscriptions/show/ShowSubscription.js:225
+msgid "Update subscription"
+msgstr ""
+
+#: subscriptions/show/ShowSubscription.js:227
 msgid "Restore At..."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:312
+#: subscriptions/show/ShowSubscription.js:238
+msgid "Please choose valid date."
+msgstr ""
+
+#: subscriptions/show/ShowSubscription.js:257
+msgid "Subscription paused."
+msgstr ""
+
+#: subscriptions/show/ShowSubscription.js:357
 msgid "Cancel Pending Update"
 msgstr ""
 
@@ -12714,23 +12715,23 @@ msgstr ""
 msgid "Select a payment method"
 msgstr ""
 
-#: sc-subscription-status-badge2.js:52
+#: sc-subscription-status-badge2.js:51
 msgid "Incomplete"
 msgstr ""
 
-#: sc-subscription-status-badge2.js:54
+#: sc-subscription-status-badge2.js:53
 msgid "Trialing"
 msgstr ""
 
-#: sc-subscription-status-badge2.js:58
+#: sc-subscription-status-badge2.js:57
 msgid "Past Due"
 msgstr ""
 
-#: sc-subscription-status-badge2.js:65
+#: sc-subscription-status-badge2.js:64
 msgid "Completed"
 msgstr ""
 
-#: sc-subscription-status-badge2.js:67
+#: sc-subscription-status-badge2.js:66
 msgid "Unpaid"
 msgstr ""
 

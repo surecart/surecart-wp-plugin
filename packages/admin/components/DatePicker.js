@@ -5,6 +5,7 @@ import { DateTimePicker, Modal } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { css, jsx } from '@emotion/core';
 import { useEffect } from 'react';
+import Error from './Error';
 
 export default (props) => {
 	const {
@@ -13,18 +14,71 @@ export default (props) => {
 		onChoose,
 		placeholder,
 		title,
+		chooseDateLabel,
+		required,
 		children,
+		minDate,
+		maxDate,
 		...rest
 	} = props;
 	const [isVisible, setIsVisible] = useState(false);
 	const [date, setDate] = useState(currentDate);
+	const [error, setError] = useState();
 
+	useEffect(() => {
+		if (!isVisible) {
+			setDate();
+			setError();
+		}
+	}, [isVisible]);
 	const toggleVisible = () => {
 		setIsVisible((state) => !state);
 	};
 
 	const onChooseDate = () => {
+		if (!date && required) {
+			setError({
+				message: __('Please choose date to continue.', 'surecart'),
+			});
+			return;
+		}
+
+		if (minDate && Date.parse(minDate) > Date.parse(date)) {
+			setError({
+				message: (
+					<>
+						{__('Date cannot be before ', 'surecart')}{' '}
+						<ScFormatDate
+							date={minDate}
+							month="short"
+							day="numeric"
+							year="numeric"
+						/>
+					</>
+				),
+			});
+			return;
+		}
+
+		if (maxDate && Date.parse(maxDate) < Date.parse(date)) {
+			setError({
+				message: (
+					<>
+						{__('Date cannot be after ', 'surecart')}{' '}
+						<ScFormatDate
+							date={maxDate}
+							month="short"
+							day="numeric"
+							year="numeric"
+						/>
+					</>
+				),
+			});
+			return;
+		}
+
 		onChoose(date);
+		toggleVisible();
 	};
 
 	const onChangeDate = (date) => {
@@ -64,6 +118,7 @@ export default (props) => {
 
 			{isVisible && (
 				<Modal title={title} onRequestClose={toggleVisible}>
+					<Error error={error} />
 					<DateTimePicker
 						currentDate={date}
 						onChange={onChangeDate}
@@ -77,14 +132,8 @@ export default (props) => {
 							gap: 1em;
 						`}
 					>
-						<ScButton
-							type="primary"
-							onClick={() => {
-								onChooseDate();
-								toggleVisible();
-							}}
-						>
-							{__('Choose', 'surecart')}
+						<ScButton type="primary" onClick={onChooseDate}>
+							{chooseDateLabel || __('Choose', 'surecart')}
 						</ScButton>
 						<ScButton onClick={toggleVisible}>
 							{__('Cancel', 'surecart')}

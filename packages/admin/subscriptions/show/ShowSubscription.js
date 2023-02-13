@@ -163,7 +163,7 @@ export default () => {
 			</ScMenuItem>
 		);
 	};
-
+	/** Render the restore button */
 	const renderRestoreButton = () => {
 		if (subscription?.status !== 'canceled') return null;
 		return (
@@ -173,6 +173,7 @@ export default () => {
 		);
 	};
 
+	/** Render the update button */
 	const renderUpdateButton = () => {
 		if (!!Object.keys(subscription?.pending_update || {})?.length)
 			return null;
@@ -192,6 +193,7 @@ export default () => {
 		);
 	};
 
+	/** Render the pause button */
 	const renderPauseButton = () => {
 		if (['completed', 'canceled'].includes(subscription?.status))
 			return null;
@@ -202,21 +204,28 @@ export default () => {
 				title={__('Pause subscription until?', 'surecart')}
 				currentDate={''}
 				onChoose={(date) => onPauseSubscription(date)}
+				minDate={new Date()}
+				required={true}
+				chooseDateLabel={__('Pause subscription', 'surecart')}
 			>
 				<ScMenuItem>{__('Pause Subscription', 'surecart')}</ScMenuItem>
 			</DatePicker>
 		);
 	};
 
+	/** Render the restore at button */
 	const renderRestoreAtButton = () => {
 		if (subscription?.status !== 'canceled') return null;
 
 		return (
 			<DatePicker
 				placeholder={__('Choose date', 'surecart')}
-				title={__('Pause subscription until?', 'surecart')}
+				title={__('Restore subscription at?', 'surecart')}
 				currentDate={new Date(subscription?.restore_at * 1000)}
 				onChoose={(date) => onUpdateRestoreAt(date)}
+				minDate={new Date()}
+				required={true}
+				chooseDateLabel={__('Update subscription', 'surecart')}
 			>
 				<ScMenuItem>{__('Restore At...', 'surecart')}</ScMenuItem>
 			</DatePicker>
@@ -253,7 +262,6 @@ export default () => {
 			});
 		} catch (e) {
 			console.error(e);
-		} finally {
 			setLoading(false);
 		}
 	};
@@ -278,7 +286,6 @@ export default () => {
 			});
 		} catch (e) {
 			console.error(e);
-		} finally {
 			setLoading(false);
 		}
 	};
