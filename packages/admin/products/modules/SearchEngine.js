@@ -6,6 +6,8 @@ import { __ } from '@wordpress/i18n';
 import Box from '../../ui/Box';
 
 export default ({ loading, product, updateProduct }) => {
+	const metaData = product?.metadata || {};
+
 	return (
 		<Box
 			loading={loading}
@@ -27,14 +29,14 @@ export default ({ loading, product, updateProduct }) => {
 					gap: var(--sc-spacing-large);
 				`}
 			>
-				{product?.page_title && product?.meta_description ? (
+				{metaData.page_title && metaData.meta_description ? (
 					<div>
 						<ScText
 							style={{
 								'--color': 'var(--sc-color-info-800)',
 							}}
 						>
-							{product.page_title}
+							{metaData.page_title}
 						</ScText>
 						<ScText
 							style={{
@@ -52,7 +54,7 @@ export default ({ loading, product, updateProduct }) => {
 								'--line-height': 'var(--sc-line-height-small)',
 							}}
 						>
-							{product.meta_description}
+							{metaData.meta_description}
 						</ScText>
 					</div>
 				) : (
@@ -65,9 +67,14 @@ export default ({ loading, product, updateProduct }) => {
 				)}
 				<ScInput
 					label={__('Page title', 'surecart')}
-					value={product?.page_title}
+					value={metaData.page_title}
 					onScInput={(e) => {
-						updateProduct({ page_title: e.target.value });
+						updateProduct({
+							metadata: {
+								...metaData,
+								page_title: e.target.value,
+							},
+						});
 					}}
 					name="page_title"
 					maxlength={70}
@@ -76,10 +83,13 @@ export default ({ loading, product, updateProduct }) => {
 					label={__('Meta description', 'surecart')}
 					onScInput={(e) =>
 						updateProduct({
-							meta_description: e.target.value,
+							metadata: {
+								...metaData,
+								meta_description: e.target.value,
+							},
 						})
 					}
-					value={product?.meta_description}
+					value={metaData.meta_description}
 					name="meta_description"
 					maxlength={320}
 				/>
