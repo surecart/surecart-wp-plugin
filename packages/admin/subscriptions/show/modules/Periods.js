@@ -11,7 +11,8 @@ import {
 	ScMenu,
 	ScMenuItem,
 	ScOrderStatusBadge,
-	ScText,
+	ScPremiumTag,
+	ScUpgradeRequired,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
@@ -73,7 +74,21 @@ export default ({ subscriptionId }) => {
 	return (
 		<>
 			<DataTable
-				title={__('Billing Periods', 'surecart')}
+				title={
+					<ScFlex flexDirection="row" justifyContent="space-between">
+						{__('Billing Periods', 'surecart')}{' '}
+						<ScUpgradeRequired>
+							<ScButton type="default" size="small">
+								{__('Enable Automatic Retries', 'surecart')}
+								<ScPremiumTag
+									slot="suffix"
+									size="small"
+									class="hydrated"
+								/>
+							</ScButton>
+						</ScUpgradeRequired>
+					</ScFlex>
+				}
 				loading={loading}
 				updating={updating}
 				columns={{
