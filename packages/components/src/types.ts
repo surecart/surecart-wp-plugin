@@ -15,7 +15,7 @@ declare global {
     scData: {
       root_url: string;
       page_id: string;
-      do_not_persist_cart: string;
+      do_not_persist_cart: boolean;
       nonce: string;
       base_url: string;
       nonce_endpoint: string;

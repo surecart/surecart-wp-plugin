@@ -1,7 +1,6 @@
 import { sortByArray } from '../../functions/util';
 import state from './store';
 import { state as checkoutState } from '@store/checkout';
-import { currentCheckout } from '@store/checkout/getters';
 
 /**
  * Gets a sorted array of available processors based on
@@ -10,7 +9,7 @@ import { currentCheckout } from '@store/checkout/getters';
 export const availableProcessors = () =>
   sortByArray(state.processors, 'processor_type', state.sortOrder.processors)
     .filter(processor => processor?.live_mode === (checkoutState?.mode === 'live'))
-    .filter(processor => (!!currentCheckout()?.reusable_payment_method_required ? !!processor?.recurring_enabled : true))
+    .filter(processor => (!!checkoutState?.checkout?.reusable_payment_method_required ? !!processor?.recurring_enabled : true))
     .filter((processor, _, filtered) => (filtered.some(p => p.processor_type === 'mollie') ? processor.processor_type === 'mollie' : true));
 
 /**
@@ -23,7 +22,7 @@ export const getAvailableProcessor = (type: string) => availableProcessors().fin
  * based on recurring requirements.
  */
 export const availableManualPaymentMethods = () =>
-  !currentCheckout()?.reusable_payment_method_required ? sortByArray(state.manualPaymentMethods, 'id', state.sortOrder.manualPaymentMethods) : [];
+  !checkoutState?.checkout?.reusable_payment_method_required ? sortByArray(state.manualPaymentMethods, 'id', state.sortOrder.manualPaymentMethods) : [];
 
 /**
  * Get a sorted array of mollie payment method types.

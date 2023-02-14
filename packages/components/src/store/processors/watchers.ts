@@ -1,5 +1,5 @@
 import state, { onChange } from './store';
-import { state as selectedProcessor } from '../selected-processor';
+import { state as selectedProcessor, onChange as onChangeProcessor } from '../selected-processor';
 import { onChange as onChangeCheckout } from '../checkout';
 import { availableManualPaymentMethods, availableProcessors } from './getters';
 
@@ -32,6 +32,7 @@ onChangeCheckout('checkout', () => {
   maybeUpdateProcessor();
   maybeUpdateMethod();
 });
+onChangeProcessor('id', () => maybeUpdateProcessor());
 
 // when processors and methods are first loaded, select first one.
 onChange('processors', () => maybeUpdateProcessor());

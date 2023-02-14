@@ -1,7 +1,6 @@
 import { Component, Element, Fragment, h, Host, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { state as checkoutState } from '@store/checkout';
-import { currentCheckout } from '@store/checkout/getters';
 import { ManualPaymentMethods } from './ManualPaymentMethods';
 import { getAvailableProcessor, hasMultipleProcessorChoices, availableManualPaymentMethods, availableProcessors } from '@store/processors/getters';
 
@@ -85,7 +84,7 @@ export class ScPayment {
 
   render() {
     // payment is not required for this order.
-    if (currentCheckout()?.payment_method_required === false) {
+    if (checkoutState.checkout?.payment_method_required === false) {
       return null;
     }
 

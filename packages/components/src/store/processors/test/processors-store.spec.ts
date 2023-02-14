@@ -11,6 +11,7 @@ import {
   hasMultipleProcessorChoices,
 } from '../getters';
 import { state as processorsState, dispose as disposeProcessors } from '../index';
+import { state as selectedProcessor } from '@store/selected-processor';
 
 describe('Processors store', () => {
   beforeEach(() => {
@@ -376,6 +377,60 @@ describe('Processors store', () => {
         ]);
         expect(hasMultipleProcessorChoices()).toBeFalsy();
       });
+    });
+  });
+
+  describe('watchers', () => {
+    it('changes the selected processor if it is not available', () => {
+      processorsState.processors = [
+        {
+          live_mode: true,
+          recurring_enabled: true,
+          processor_type: 'stripe',
+        },
+        {
+          live_mode: true,
+          recurring_enabled: false,
+          processor_type: 'paypal',
+        },
+      ] as Processor[];
+      processorsState.manualPaymentMethods = [
+        {
+          id: 'test1',
+          name: 'Test 1',
+          description: 'Test 1',
+        },
+        {
+          id: 'test2',
+          name: 'Test 2',
+          description: 'Test 2',
+        },
+      ] as ManualPaymentMethod[];
+      selectedProcessor.id = 'test1';
+      expect(selectedProcessor.id).toBe('test1');
+
+      checkoutState.formId = 2;
+      checkoutState.mode = 'live';
+      checkoutState.checkout = {
+        live_mode: true,
+        reusable_payment_method_required: true,
+      } as Checkout;
+
+      expect(selectedProcessor.id).toBe('stripe');
+
+      checkoutState.checkout = {
+        live_mode: true,
+        reusable_payment_method_required: false,
+      } as Checkout;
+
+      selectedProcessor.id = 'test2';
+      expect(selectedProcessor.id).toBe('test2');
+      checkoutState.checkout = {
+        live_mode: true,
+        reusable_payment_method_required: true,
+        amount_due: 1000,
+      } as Checkout;
+      expect(selectedProcessor.id).toBe('stripe');
     });
   });
 });

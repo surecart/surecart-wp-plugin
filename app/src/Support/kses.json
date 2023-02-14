@@ -1166,7 +1166,6 @@
   "sc-payment": {
     "hide-test-mode-badge": true,
     "label": true,
-    "mode": true,
     "secure-notice": true,
     "stripe-payment-element": true,
     "style": true,
