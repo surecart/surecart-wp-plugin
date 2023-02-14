@@ -477,7 +477,7 @@ export namespace Components {
         /**
           * Submit the form
          */
-        "submit": ({ skip_validation }?: { skip_validation: boolean; }) => Promise<void | Checkout>;
+        "submit": ({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout | NodeJS.Timeout>;
         /**
           * Where to go on success
          */
@@ -2524,7 +2524,7 @@ export namespace Components {
           * Finalize the order.
           * @returns
          */
-        "finalize": () => Promise<void | Checkout>;
+        "finalize": () => Promise<Checkout | NodeJS.Timeout>;
         /**
           * The checkout form id
          */

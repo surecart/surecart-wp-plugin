@@ -397,7 +397,7 @@ export interface Order extends Object {
 }
 export interface Checkout extends Object {
   id?: string;
-  status?: 'finalized' | 'draft' | 'paid' | 'requires_approval';
+  status?: 'canceled' | 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'processing';
   staged_payment_intents: {
     object: 'list';
     pagination: Pagination;

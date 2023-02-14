@@ -8,7 +8,7 @@ interface Store {
   checkout: Checkout;
 }
 
-const { state, onChange, on, set, dispose } = createStore<Store>(
+const { state, onChange, on, set, get, dispose } = createStore<Store>(
   {
     formId: null,
     mode: 'live',
@@ -21,4 +21,4 @@ const { state, onChange, on, set, dispose } = createStore<Store>(
 );
 
 export default state;
-export { state, onChange, on, set, dispose };
+export { state, onChange, on, set, get, dispose };

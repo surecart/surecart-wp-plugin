@@ -10,7 +10,6 @@ import { state as checkoutState } from '@store/checkout';
 import { listenTo } from '@store/checkout/functions';
 import { checkoutIsLocked } from '@store/checkout/getters';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
-const { checkout } = checkoutState;
 
 import apiFetch from '../../../../functions/fetch';
 
@@ -38,6 +37,7 @@ export class ScCheckoutMolliePayment {
   }
 
   async fetchMethods() {
+    const checkout = checkoutState.checkout;
     try {
       lockCheckout('methods');
       const response = (await apiFetch({
@@ -45,7 +45,7 @@ export class ScCheckoutMolliePayment {
           amount: checkout?.total_amount,
           country: (checkout?.shipping_address as Address)?.country || 'us',
           currency: checkout?.currency,
-          reusable: checkout?.reusable_payment_method_required,
+          ...(checkout?.reusable_payment_method_required ? { reusable: checkout?.reusable_payment_method_required } : {}),
           per_page: 100,
         }),
       })) as {
@@ -103,7 +103,7 @@ export class ScCheckoutMolliePayment {
           ))}
           <ManualPaymentMethods methods={availableManualPaymentMethods()} />
         </Tag>
-        {!!checkoutIsLocked('methods') && <sc-block-ui class="busy-block-ui" z-index={9}></sc-block-ui>}
+        {!!checkoutIsLocked('methods') && <sc-block-ui class="busy-block-ui" z-index={9} style={{ '--sc-block-ui-opacity': '0.4' }}></sc-block-ui>}
       </Fragment>
     );
   }

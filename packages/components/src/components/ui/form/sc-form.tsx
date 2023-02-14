@@ -111,7 +111,6 @@ export class ScForm {
             e.preventDefault();
             const isValid = await this.validate();
             if (!isValid) {
-              console.log('not valid');
               return false;
             }
             this.scSubmit.emit();

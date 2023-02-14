@@ -1,9 +1,10 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { getQueryArg, getQueryArgs, removeQueryArgs } from '@wordpress/url';
+import { addQueryArgs, getQueryArg, getQueryArgs, removeQueryArgs } from '@wordpress/url';
 
 import { parseFormData } from '../../../functions/form-data';
 import { createOrUpdateOrder, fetchCheckout, finalizeSession } from '../../../services/session';
+import { state as checkoutState } from '@store/checkout';
 import { clearOrder, getOrder, setOrder } from '@store/checkouts';
 import { Checkout, FormStateSetter, LineItemData, PaymentIntents, PriceChoice, ProcessorName } from '../../../types';
 import { state as selectedProcessor } from '@store/selected-processor';
@@ -159,6 +160,10 @@ export class ScSessionProvider {
         query: {
           ...this.defaultFormQuery(),
           ...(selectedProcessor?.method ? { payment_method_type: selectedProcessor?.method } : {}),
+          return_url: addQueryArgs(window.location.href, {
+            ...(checkoutState?.checkout?.id ? { confirm_checkout_id: checkoutState?.checkout?.id } : {}),
+            is_surecart_payment_redirect: true,
+          }),
         },
         data,
         processor: {
@@ -175,7 +180,8 @@ export class ScSessionProvider {
       }
 
       if (order?.payment_intent?.processor_data?.mollie?.checkout_url) {
-        return window.location.assign(order?.payment_intent?.processor_data?.mollie?.checkout_url);
+        this.scSetState.emit('PAYING');
+        return setTimeout(() => window.location.assign(order?.payment_intent?.processor_data?.mollie?.checkout_url), 50);
       }
 
       setTimeout(() => {
@@ -230,9 +236,16 @@ export class ScSessionProvider {
   /** Find or create an order */
   async findOrCreateOrder() {
     // get URL params.
-    const { redirect_status, checkout_id, line_items, coupon } = getQueryArgs(window.location.href);
+    const { redirect_status, checkout_id, line_items, coupon, confirm_checkout_id } = getQueryArgs(window.location.href);
     // remove params we don't want.
-    window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'redirect_status', 'coupon', 'line_items'));
+    window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'redirect_status', 'coupon', 'line_items', 'confirm_checkout_id', 'checkout_id'));
+
+    // handle abandoned checkout.
+    if (!!confirm_checkout_id) {
+      this.scSetState.emit('FINALIZE');
+      this.scSetState.emit('PAYING');
+      return this.handleAbandonedCheckout(confirm_checkout_id, coupon as string);
+    }
 
     // handle redirect status.
     if (!!redirect_status) {
@@ -241,21 +254,21 @@ export class ScSessionProvider {
 
     // handle abandoned checkout.
     if (!!checkout_id) {
-      return this.handleAbandonedCheckout(checkout_id, coupon);
+      return this.handleAbandonedCheckout(checkout_id, coupon as string);
     }
 
     // handle initial line items.
     if (!!line_items) {
-      return this.handleInitialLineItems(line_items, coupon);
+      return this.handleInitialLineItems(line_items, coupon as string);
     }
 
     // we have an existing saved checkout id in the session, and we are persisting.
     const id = this.order()?.id;
     if (id && this.persist) {
-      return this.handleExistingCheckout(id, coupon);
+      return this.handleExistingCheckout(id, coupon as string);
     }
 
-    return this.handleNewCheckout(coupon);
+    return this.handleNewCheckout(coupon as string);
   }
 
   /** Handle payment instrument redirect status */
@@ -301,8 +314,9 @@ export class ScSessionProvider {
   }
 
   /** Handle abandoned checkout from URL */
-  async handleAbandonedCheckout(id, promotion_code) {
+  async handleAbandonedCheckout(id, promotion_code = '') {
     console.info('Handling abandoned checkout.');
+
     // if coupon code, load the checkout with the code.
     if (promotion_code) {
       return this.loadUpdate({
@@ -317,7 +331,32 @@ export class ScSessionProvider {
         refresh_status: true,
       },
     })) as Checkout;
+
     setOrder(checkout, this.formId);
+
+    // handle status.
+    switch (checkout?.status) {
+      case 'paid':
+      case 'processing':
+        this.scSetState.emit('FINALIZE');
+        this.scSetState.emit('PAID');
+        return setTimeout(() => {
+          this.scPaid.emit();
+        }, 100);
+
+      case 'payment_failed':
+        clearOrder(this.formId, this.mode);
+        return this.scError.emit({
+          message: __('Payment unsuccessful. Please try again.', 'surecart'),
+        });
+
+      case 'payment_intent_canceled':
+      case 'canceled':
+        clearOrder(this.formId, this.mode);
+        return this.scError.emit({
+          message: __('Payment canceled. Please try again.', 'surecart'),
+        });
+    }
   }
 
   /** Handle line items (and maybe ) */
