@@ -4,7 +4,7 @@ import { addQueryArgs } from '@wordpress/url';
 
 import apiFetch from '../../../functions/fetch';
 import { expand } from '../../../services/session';
-import { clearOrder } from '../../../store/checkouts';
+import { clearOrder } from '@store/checkouts';
 import { Checkout } from '../../../types';
 
 /**

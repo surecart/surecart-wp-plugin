@@ -1,4 +1,10 @@
+import { getCheckout } from '../checkouts';
 import state from './store';
+
+/**
+ * Gets the current checkout for the page.
+ */
+export const currentCheckout = () => getCheckout(state.formId, state.mode);
 
 /**
  * Is the checkout currently locked.

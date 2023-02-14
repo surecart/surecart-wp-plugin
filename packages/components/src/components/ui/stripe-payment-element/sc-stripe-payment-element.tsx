@@ -4,7 +4,7 @@ import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { openWormhole } from 'stencil-wormhole';
-import { state as selectedProcessor } from '../../../store/selected-processor';
+import { state as selectedProcessor } from '@store/selected-processor';
 
 import { Checkout, FormState, FormStateSetter, PaymentIntent, ProcessorName } from '../../../types';
 

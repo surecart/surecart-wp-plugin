@@ -2019,10 +2019,6 @@ export namespace Components {
           * The input's label.
          */
         "label": string;
-        /**
-          * Is this created in "test" mode
-         */
-        "mode": 'test' | 'live';
         "secureNotice": string;
         "stripePaymentElement": boolean;
     }
@@ -6861,10 +6857,6 @@ declare namespace LocalJSX {
           * The input's label.
          */
         "label"?: string;
-        /**
-          * Is this created in "test" mode
-         */
-        "mode"?: 'test' | 'live';
         "secureNotice"?: string;
         "stripePaymentElement"?: boolean;
     }

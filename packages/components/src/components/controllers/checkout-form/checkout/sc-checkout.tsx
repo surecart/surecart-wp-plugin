@@ -1,9 +1,9 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
-import { state as processorsState } from '../../../../store/processors';
-import { state as checkoutState } from '../../../../store/checkout';
-import { getOrder, setOrder } from '../../../../store/checkouts';
+import { state as processorsState } from '@store/processors';
+import { state as checkoutState } from '@store/checkout';
+import { getOrder, setOrder } from '@store/checkouts';
 import {
   Bump,
   Checkout,

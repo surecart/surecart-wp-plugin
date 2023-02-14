@@ -501,6 +501,7 @@ export interface PaymentMethodType {
 }
 
 export interface Processor {
+  id: string;
   live_mode: boolean;
   processor_data: {
     account_id: string;
@@ -509,7 +510,7 @@ export interface Processor {
     merchant_initiated?: boolean;
   };
   recurring_enabled: boolean;
-  processor_type: 'paypal' | 'stripe';
+  processor_type: 'paypal' | 'stripe' | 'mollie';
 }
 
 export interface Purchase {

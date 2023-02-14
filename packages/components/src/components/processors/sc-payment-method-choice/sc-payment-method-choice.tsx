@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Host, Prop } from '@stencil/core';
 import { Checkout } from '../../../types';
 import { openWormhole } from 'stencil-wormhole';
-import { state as selectedProcessor } from '../../../store/selected-processor';
+import { state as selectedProcessor } from '@store/selected-processor';
 @Component({
   tag: 'sc-payment-method-choice',
   styleUrl: 'sc-payment-method-choice.css',

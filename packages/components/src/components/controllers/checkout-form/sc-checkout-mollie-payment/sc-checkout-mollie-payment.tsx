@@ -2,14 +2,14 @@ import { Component, Event, EventEmitter, Fragment, h, Prop, State } from '@stenc
 import { Address, Pagination, PaymentMethodType, ResponseError } from '../../../../types';
 import { sprintf, __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
-import { state as selectedProcessor } from '../../../../store/selected-processor';
-import { state as processorsState } from '../../../../store/processors';
-import { hasMultipleMethodChoices, availableMethodTypes, availableManualPaymentMethods } from '../../../../store/processors/getters';
+import { state as selectedProcessor } from '@store/selected-processor';
+import { state as processorsState } from '@store/processors';
+import { hasMultipleMethodChoices, availableMethodTypes, availableManualPaymentMethods } from '@store/processors/getters';
 // checkout store.
-import { state as checkoutState } from '../../../../store/checkout';
-import { listenTo } from '../../../../store/checkout/functions';
-import { checkoutIsLocked } from '../../../../store/checkout/getters';
-import { lockCheckout, unLockCheckout } from '../../../../store/checkout/mutations';
+import { state as checkoutState } from '@store/checkout';
+import { listenTo } from '@store/checkout/functions';
+import { checkoutIsLocked } from '@store/checkout/getters';
+import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 const { checkout } = checkoutState;
 
 import apiFetch from '../../../../functions/fetch';

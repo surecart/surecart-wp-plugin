@@ -1,8 +1,9 @@
-import { Component, Element, Fragment, h, Host, Prop, State } from '@stencil/core';
+import { Component, Element, Fragment, h, Host, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { state as checkoutState } from '../../../../store/checkout';
+import { state as checkoutState } from '@store/checkout';
+import { currentCheckout } from '@store/checkout/getters';
 import { ManualPaymentMethods } from './ManualPaymentMethods';
-import { getAvailableProcessor, hasMultipleProcessorChoices, availableManualPaymentMethods, availableProcessors } from '../../../../store/processors/getters';
+import { getAvailableProcessor, hasMultipleProcessorChoices, availableManualPaymentMethods, availableProcessors } from '@store/processors/getters';
 
 /**
  * @part base - The elements base wrapper.
@@ -25,17 +26,11 @@ export class ScPayment {
 
   @Prop() secureNotice: string;
 
-  /** Is this created in "test" mode */
-  @Prop() mode: 'test' | 'live' = 'live';
-
   /** The input's label. */
   @Prop() label: string;
 
   /** Hide the test mode badge */
   @Prop() hideTestModeBadge: boolean;
-
-  /** Does this have multiple choices */
-  @State() hasMultiple: boolean;
 
   renderStripe(processor) {
     return (
@@ -90,7 +85,7 @@ export class ScPayment {
 
   render() {
     // payment is not required for this order.
-    if (checkoutState.checkout?.payment_method_required === false) {
+    if (currentCheckout()?.payment_method_required === false) {
       return null;
     }
 

@@ -1,5 +1,88 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`sc-payment does not render non-recurring if recurring is required 1`] = `
+<sc-payment>
+  <mock:shadow-root>
+    <sc-form-control exportparts="label, help-text, form-control">
+      <div class="sc-payment-label" slot="label">
+        <div></div>
+        <sc-tag exportparts="base:test-badge__base, content:test-badge__content" size="small" type="warning">
+          Test Mode
+        </sc-tag>
+      </div>
+      <div theme="container">
+        <sc-payment-method-choice processor-id="stripe" recurringenabled="">
+          <span class="sc-payment-toggle-summary" slot="summary">
+            <sc-icon name="credit-card" style="font-size: 24px;"></sc-icon>
+            <span>
+              Credit Card
+            </span>
+          </span>
+          <div class="sc-payment__stripe-card-element">
+            <slot name="stripe"></slot>
+          </div>
+        </sc-payment-method-choice>
+      </div>
+    </sc-form-control>
+  </mock:shadow-root>
+</sc-payment>
+`;
+
+exports[`sc-payment only renders only mollie component if mollie is active 1`] = `
+<sc-payment>
+  <mock:shadow-root>
+    <sc-form-control exportparts="label, help-text, form-control">
+      <div class="sc-payment-label" slot="label">
+        <div></div>
+      </div>
+      <sc-checkout-mollie-payment processor-id="mollieid"></sc-checkout-mollie-payment>
+    </sc-form-control>
+  </mock:shadow-root>
+</sc-payment>
+`;
+
+exports[`sc-payment only renders processors with the right mode 1`] = `
+<sc-payment>
+  <mock:shadow-root>
+    <sc-form-control exportparts="label, help-text, form-control">
+      <div class="sc-payment-label" slot="label">
+        <div></div>
+        <sc-tag exportparts="base:test-badge__base, content:test-badge__content" size="small" type="warning">
+          Test Mode
+        </sc-tag>
+      </div>
+      <div theme="container">
+        <sc-payment-method-choice method-id="card" processor-id="paypal">
+          <span class="sc-payment-toggle-summary" slot="summary">
+            <sc-icon name="credit-card" style="font-size: 24px;"></sc-icon>
+            <span>
+              Credit Card
+            </span>
+          </span>
+          <sc-card>
+            <sc-payment-selected label="Credit Card selected for check out.">
+              <sc-icon name="credit-card" slot="icon" style="font-size: 24px;"></sc-icon>
+              Another step will appear after submitting your order to complete your purchase details.
+            </sc-payment-selected>
+          </sc-card>
+        </sc-payment-method-choice>
+        <sc-payment-method-choice processor-id="paypal">
+          <span class="sc-payment-toggle-summary" slot="summary">
+            <sc-icon name="paypal" style="width: 80px; font-size: 24px;"></sc-icon>
+          </span>
+          <sc-card>
+            <sc-payment-selected label="PayPal selected for check out.">
+              <sc-icon name="paypal" slot="icon" style="width: 80px;"></sc-icon>
+              Another step will appear after submitting your order to complete your purchase details.
+            </sc-payment-selected>
+          </sc-card>
+        </sc-payment-method-choice>
+      </div>
+    </sc-form-control>
+  </mock:shadow-root>
+</sc-payment>
+`;
+
 exports[`sc-payment renders no processors 1`] = `
 <sc-payment>
   <mock:shadow-root>
@@ -8,12 +91,46 @@ exports[`sc-payment renders no processors 1`] = `
         <div></div>
       </div>
       <div theme="container">
-        <slot>
-          <sc-alert open="" type="info">
-            Please contact us for payment
-          </sc-alert>
-        </slot>
+        <sc-alert open="" type="info">
+          You do not have any processors enabled for this mode and cart. Please configure your processors.
+        </sc-alert>
       </div>
+    </sc-form-control>
+  </mock:shadow-root>
+</sc-payment>
+`;
+
+exports[`sc-payment renders stripe and paypal with no checkout 1`] = `
+<sc-payment>
+  <mock:shadow-root>
+    <sc-form-control exportparts="label, help-text, form-control">
+      <div class="sc-payment-label" slot="label">
+        <div></div>
+      </div>
+      <sc-toggles theme="container">
+        <sc-payment-method-choice processor-id="stripe" recurringenabled="">
+          <span class="sc-payment-toggle-summary" slot="summary">
+            <sc-icon name="credit-card" style="font-size: 24px;"></sc-icon>
+            <span>
+              Credit Card
+            </span>
+          </span>
+          <div class="sc-payment__stripe-card-element">
+            <slot name="stripe"></slot>
+          </div>
+        </sc-payment-method-choice>
+        <sc-payment-method-choice processor-id="paypal">
+          <span class="sc-payment-toggle-summary" slot="summary">
+            <sc-icon name="paypal" style="width: 80px; font-size: 24px;"></sc-icon>
+          </span>
+          <sc-card>
+            <sc-payment-selected label="PayPal selected for check out.">
+              <sc-icon name="paypal" slot="icon" style="width: 80px;"></sc-icon>
+              Another step will appear after submitting your order to complete your purchase details.
+            </sc-payment-selected>
+          </sc-card>
+        </sc-payment-method-choice>
+      </sc-toggles>
     </sc-form-control>
   </mock:shadow-root>
 </sc-payment>

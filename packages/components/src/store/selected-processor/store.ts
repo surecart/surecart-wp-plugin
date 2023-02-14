@@ -6,11 +6,11 @@ interface Store {
   manual: boolean;
 }
 
-const { state, onChange } = createStore<Store>({
+const { state, onChange, dispose } = createStore<Store>({
   id: '',
   method: '',
   manual: false,
 });
 
 export default state;
-export { state, onChange };
+export { state, onChange, dispose };

@@ -14,7 +14,7 @@ interface Store {
   };
 }
 
-const { state, onChange, on } = createStore<Store>(
+const { state, onChange, on, dispose } = createStore<Store>(
   {
     processors: [],
     methods: [],
@@ -33,4 +33,4 @@ const { state, onChange, on } = createStore<Store>(
 );
 
 export default state;
-export { state, onChange, on };
+export { state, onChange, on, dispose };
