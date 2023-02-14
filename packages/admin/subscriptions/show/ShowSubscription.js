@@ -222,9 +222,7 @@ export default () => {
 				placeholder={__('Choose date', 'surecart')}
 				title={__('Restore subscription at?', 'surecart')}
 				currentDate={new Date(subscription?.restore_at * 1000)}
-				onChoose={(date) =>
-					onUpdateSubscriptionDate('restore_at', date)
-				}
+				onChoose={(date) => onUpdateRestoreAt(date)}
 				minDate={new Date()}
 				required={true}
 				chooseDateLabel={__('Update subscription', 'surecart')}
@@ -245,9 +243,7 @@ export default () => {
 				currentDate={
 					new Date(subscription?.current_period_end_at * 1000)
 				}
-				onChoose={(date) =>
-					onUpdateSubscriptionDate('current_period_end_at', date)
-				}
+				onChoose={(date) => onUpdateRenewAt(date)}
 				minDate={new Date()}
 				required={true}
 				chooseDateLabel={__('Update subscription', 'surecart')}
@@ -291,7 +287,7 @@ export default () => {
 		}
 	};
 
-	const onUpdateSubscriptionDate = async (dateKey, date) => {
+	const onUpdateRestoreAt = async (date) => {
 		setLoading(true);
 		try {
 			await apiFetch({
@@ -300,12 +296,35 @@ export default () => {
 					cancel_behavior: 'immediate',
 				}),
 				data: {
-					[dateKey]: Date.parse(date) / 1000,
+					restore_at: Date.parse(date) / 1000,
 				},
 			});
 
 			await invalidateResolutionForStore();
 
+			createSuccessNotice(__('Subscription updated.', 'surecart'), {
+				type: 'snackbar',
+			});
+		} catch (e) {
+			console.error(e);
+			setLoading(false);
+		}
+	};
+
+	const onUpdateRenewAt = async (date) => {
+		setLoading(true);
+		try {
+			await apiFetch({
+				method: 'PATCH',
+				path: addQueryArgs(
+					`surecart/v1/periods/${subscription?.current_period?.id}`
+				),
+				data: {
+					end_at: date,
+				},
+			});
+
+			await invalidateResolutionForStore();
 			createSuccessNotice(__('Subscription updated.', 'surecart'), {
 				type: 'snackbar',
 			});
