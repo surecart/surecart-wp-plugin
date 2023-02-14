@@ -13,6 +13,8 @@ export default ({ attributes, setAttributes }) => {
 		eu_vat_label,
 	} = attributes;
 
+	console.log(attributes);
+
 	return (
 		<Fragment>
 			<InspectorControls>
