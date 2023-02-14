@@ -2,8 +2,8 @@
 
 exports[`sc-stripe-element renders 1`] = `
 <sc-stripe-element publishable-key="pk_test_51IGqEQFOGhs5FBqkukQRgXOUWl4zEUF8t9NAEz9QdTozrZ9QlWNXbKROsKICnpY808sEfhZYLfSAeSX3arrT8A6K00gf5F5845" size="medium">
-  <sc-input class="sc-stripe" size="medium">
-    <div></div>
-  </sc-input>
+  <sc-form-control class="sc-stripe" size="medium">
+    <div class="sc-stripe-element"></div>
+  </sc-form-control>
 </sc-stripe-element>
 `;

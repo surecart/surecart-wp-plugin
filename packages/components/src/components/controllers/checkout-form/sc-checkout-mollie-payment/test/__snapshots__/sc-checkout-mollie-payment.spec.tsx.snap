@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-checkout-mollie-payment renders 1`] = `
+<sc-checkout-mollie-payment>
+  <mock:shadow-root>
+    <sc-alert open="" type="warning">
+      No available payment methods
+    </sc-alert>
+  </mock:shadow-root>
+</sc-checkout-mollie-payment>
+`;

@@ -7,12 +7,6 @@ describe('sc-checkout-mollie-payment', () => {
       components: [ScCheckoutMolliePayment],
       html: `<sc-checkout-mollie-payment></sc-checkout-mollie-payment>`,
     });
-    expect(page.root).toEqualHtml(`
-      <sc-checkout-mollie-payment>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </sc-checkout-mollie-payment>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });
