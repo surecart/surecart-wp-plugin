@@ -8,7 +8,7 @@ import { addQueryArgs } from '@wordpress/url';
 import SelectModel from './SelectModel';
 
 export default (props) => {
-	const { name, requestQuery = {}, display } = props;
+	const { name, requestQuery = {}, display, exclude = [] } = props;
 	const [query, setQuery] = useState(null);
 	const [choices, setChoices] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
@@ -28,6 +28,7 @@ export default (props) => {
 		return (data || []).map((item) => ({
 			label: !!display ? display(item) : item.name,
 			value: item.id,
+			disabled: exclude.includes(item.id),
 		}));
 	};
 

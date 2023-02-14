@@ -19,6 +19,7 @@ export default ({
 	prefix,
 	loading,
 	onScrollEnd = () => {},
+	...props
 }) => {
 	const findItem = throttle(
 		(value) => {
@@ -47,6 +48,7 @@ export default ({
 				onSelect(e.target.value);
 			}}
 			choices={choices}
+			{...props}
 			onScScrollEnd={onScrollEnd}
 		>
 			{!!prefix && prefix}

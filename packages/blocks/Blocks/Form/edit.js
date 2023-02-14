@@ -531,6 +531,14 @@ export default function edit({ clientId, attributes, setAttributes }) {
 									> .wp-block:not(sc-choice):not(sc-column):not(sc-radio):not(:last-child) {
 									margin-bottom: ${gap} !important;
 								}
+								// prevents issues with our shadow dom.
+								[data-type*='surecart/'] {
+									pointer-events: all !important;
+								}
+								.wp-block,
+								.block-editor-inserter {
+									pointer-events: all !important;
+								}
 							`}
 						>
 							<InnerBlocks

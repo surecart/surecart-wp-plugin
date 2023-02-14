@@ -20,6 +20,7 @@ export class ScOrderSummary {
   @Prop() closedText: string = __('Show Summary', 'surecart');
   @Prop() openText: string = __('Summary', 'surecart');
   @Prop() collapsible: boolean = false;
+  @Prop() collapsedOnMobile: boolean = false;
   @Prop({ mutable: true }) collapsed: boolean;
 
   /** Show the toggle */
@@ -28,9 +29,11 @@ export class ScOrderSummary {
   /** Show the toggle */
   @Event() scHide: EventEmitter<void>;
 
-  componentDidLoad() {
-    this.body.hidden = this.collapsed;
-    this.body.style.height = !this.collapsed ? 'auto' : '0';
+  componentWillLoad() {
+    if (this.collapsedOnMobile) {
+      const bodyRect = document.body.getClientRects();
+      if (bodyRect.length) this.collapsed = bodyRect[0]?.width < 781;
+    }
   }
 
   handleClick(e) {
@@ -54,7 +57,7 @@ export class ScOrderSummary {
     return (
       <sc-line-item style={{ '--price-size': 'var(--sc-font-size-x-large)' }}>
         <span class="collapse-link" slot="title" onClick={e => this.handleClick(e)}>
-          {this.collapsed ? this.closedText : this.openText}
+          {this.collapsed ? this.closedText || __('Order Summary', 'surecart') : this.openText || __('Order Summary', 'surecart')}
           <svg xmlns="http://www.w3.org/2000/svg" class="collapse-link__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
           </svg>
@@ -62,19 +65,12 @@ export class ScOrderSummary {
         <span slot="description">
           <slot name="description" />
         </span>
-        {this.collapsed && (
-          <span slot="price">
-            {!!this.order?.total_savings_amount && (
-              <sc-format-number
-                class="scratch-price"
-                type="currency"
-                value={-this.order?.total_savings_amount + this.order?.total_amount}
-                currency={this.order?.currency || 'usd'}
-              />
-            )}
-            <sc-total total={'total'} order={this.order}></sc-total>
-          </span>
-        )}
+        <span slot="price" class={{ 'price': true, 'price--collapsed': this.collapsed }}>
+          {!!this.order?.total_savings_amount && (
+            <sc-format-number class="scratch-price" type="currency" value={-this.order?.total_savings_amount + this.order?.total_amount} currency={this.order?.currency || 'usd'} />
+          )}
+          <sc-total total={'total'} order={this.order}></sc-total>
+        </span>
       </sc-line-item>
     );
   }
@@ -85,16 +81,20 @@ export class ScOrderSummary {
       this.scShow.emit();
       await stopAnimations(this.body);
       this.body.hidden = false;
+      this.body.style.overflow = 'hidden';
       const { keyframes, options } = getAnimation(this.el, 'summary.show');
       await animateTo(this.body, shimKeyframesHeightAuto(keyframes, this.body.scrollHeight), options);
       this.body.style.height = 'auto';
+      this.body.style.overflow = 'visible';
     } else {
       this.scHide.emit();
       await stopAnimations(this.body);
+      this.body.style.overflow = 'hidden';
       const { keyframes, options } = getAnimation(this.el, 'summary.hide');
       await animateTo(this.body, shimKeyframesHeightAuto(keyframes, this.body.scrollHeight), options);
       this.body.hidden = true;
       this.body.style.height = 'auto';
+      this.body.style.overflow = 'visible';
     }
   }
 

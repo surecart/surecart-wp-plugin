@@ -1,6 +1,7 @@
 import { Component, Prop, h, Event, EventEmitter, Method, State, Element, Watch, Host } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { FormSubmitController } from '../../../functions/form-data';
+import { isRtl } from '../../../functions/page-align';
 
 let id = 0;
 
@@ -216,6 +217,7 @@ export class ScChoice {
             'choice--disabled': this.disabled,
             'choice--focused': this.hasFocus,
             'choice--layout-columns': !this.isStacked,
+            'choice--is-rtl': isRtl(),
             [`choice--size-${this.size}`]: true,
           }}
           onKeyDown={e => this.handleKeyDown(e)}

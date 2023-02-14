@@ -1,6 +1,6 @@
 <?php
 
-namespace Surecart\Integrations\AffiliateWP;
+namespace SureCart\Integrations\AffiliateWP;
 
 use SureCart\Models\Checkout;
 use SureCart\Models\Purchase;
@@ -182,4 +182,5 @@ class AffiliateWPIntegration extends \Affiliate_WP_Base {
 
 		$this->log( 'Referral failed to be set to completed with complete_referral()' );
 	}
+
 }

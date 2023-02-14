@@ -178,6 +178,11 @@ export default () => {
 		>
 			<>
 				<Error error={saveBumpError || bumpError} margin="80px" />
+				<Name
+					bump={bump}
+					updateBump={editBump}
+					loading={!hasLoadedBump}
+				/>
 				<Price
 					bump={bump}
 					updateBump={editBump}
@@ -189,11 +194,6 @@ export default () => {
 					loading={!hasLoadedBump}
 				/>
 				<Discount
-					bump={bump}
-					updateBump={editBump}
-					loading={!hasLoadedBump}
-				/>
-				<Name
 					bump={bump}
 					updateBump={editBump}
 					loading={!hasLoadedBump}
