@@ -6,7 +6,8 @@ import { state as selectedProcessor } from '../../../../store/selected-processor
 import { state as processorsState } from '../../../../store/processors';
 import { hasMultipleMethodChoices, availableMethodTypes, availableManualPaymentMethods } from '../../../../store/processors/getters';
 // checkout store.
-import { state as checkoutState, listenTo } from '../../../../store/checkout';
+import { state as checkoutState } from '../../../../store/checkout';
+import { listenTo } from '../../../../store/checkout/functions';
 import { checkoutIsLocked } from '../../../../store/checkout/getters';
 import { lockCheckout, unLockCheckout } from '../../../../store/checkout/mutations';
 const { checkout } = checkoutState;
@@ -63,7 +64,13 @@ export class ScCheckoutMolliePayment {
 
   render() {
     if (checkoutIsLocked('methods') && !availableMethodTypes()?.length) {
-      return <sc-skeleton></sc-skeleton>;
+      return (
+        <sc-card>
+          <sc-skeleton style={{ width: '50%', marginBottom: '0.5em' }}></sc-skeleton>
+          <sc-skeleton style={{ width: '30%', marginBottom: '0.5em' }}></sc-skeleton>
+          <sc-skeleton style={{ width: '60%', marginBottom: '0.5em' }}></sc-skeleton>
+        </sc-card>
+      );
     }
 
     if (!availableMethodTypes()?.length) {
