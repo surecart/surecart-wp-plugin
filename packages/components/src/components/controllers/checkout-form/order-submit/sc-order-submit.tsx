@@ -3,8 +3,8 @@ import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 import { getProcessorData } from '../../../../functions/processor';
 import { Checkout, Processor, ProcessorName } from '../../../../types';
-import selectedProcessor from '../../../../store/selected-processor';
-import { checkoutIsLocked } from '../../../../store/checkout';
+import { state as selectedProcessor } from '../../../../store/selected-processor';
+import { checkoutIsLocked } from '../../../../store/checkout/getters';
 
 @Component({
   tag: 'sc-order-submit',

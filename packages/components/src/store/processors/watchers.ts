@@ -1,5 +1,5 @@
 import state, { onChange } from './store';
-import selectedProcessor from '../selected-processor';
+import { state as selectedProcessor } from '../selected-processor';
 import { onChange as onChangeCheckout } from '../checkout';
 import { availableManualPaymentMethods, availableProcessors } from './getters';
 

@@ -6,7 +6,7 @@ import { parseFormData } from '../../../functions/form-data';
 import { createOrUpdateOrder, fetchCheckout, finalizeSession } from '../../../services/session';
 import { clearOrder, getOrder, setOrder } from '../../../store/checkouts';
 import { Checkout, FormStateSetter, LineItemData, PaymentIntents, PriceChoice, ProcessorName } from '../../../types';
-import selectedProcessor from '../../../store/selected-processor';
+import { state as selectedProcessor } from '../../../store/selected-processor';
 
 @Component({
   tag: 'sc-session-provider',

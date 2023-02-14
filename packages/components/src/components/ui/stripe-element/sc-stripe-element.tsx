@@ -2,7 +2,7 @@ import { Component, Element, Event, EventEmitter, Fragment, h, Method, Prop, Sta
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
-import selectedProcessor from '../../../store/selected-processor';
+import { state as selectedProcessor } from '../../../store/selected-processor';
 
 import { Checkout, FormState, FormStateSetter, ProcessorName } from '../../../types';
 

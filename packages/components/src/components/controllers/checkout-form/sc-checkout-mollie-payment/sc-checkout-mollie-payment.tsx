@@ -1,11 +1,14 @@
 import { Component, Event, EventEmitter, Fragment, h, Prop, State } from '@stencil/core';
-import { Pagination, PaymentMethodType, ResponseError } from '../../../../types';
+import { Address, Pagination, PaymentMethodType, ResponseError } from '../../../../types';
 import { sprintf, __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
-import selectedProcessor from '../../../../store/selected-processor';
+import { state as selectedProcessor } from '../../../../store/selected-processor';
 import { state as processorsState } from '../../../../store/processors';
 import { hasMultipleMethodChoices, availableMethodTypes, availableManualPaymentMethods } from '../../../../store/processors/getters';
-import { state as checkoutState, lockCheckout, unLockCheckout, checkoutIsLocked, listenTo } from '../../../../store/checkout';
+// checkout store.
+import { state as checkoutState, listenTo } from '../../../../store/checkout';
+import { checkoutIsLocked } from '../../../../store/checkout/getters';
+import { lockCheckout, unLockCheckout } from '../../../../store/checkout/mutations';
 const { checkout } = checkoutState;
 
 import apiFetch from '../../../../functions/fetch';
@@ -39,7 +42,7 @@ export class ScCheckoutMolliePayment {
       const response = (await apiFetch({
         path: addQueryArgs(`surecart/v1/processors/${this.processorId}/payment_method_types`, {
           amount: checkout?.total_amount,
-          country: checkout?.shipping_address?.country || 'us',
+          country: (checkout?.shipping_address as Address)?.country || 'us',
           currency: checkout?.currency,
           reusable: checkout?.reusable_payment_method_required,
           per_page: 100,

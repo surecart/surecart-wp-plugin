@@ -2,7 +2,7 @@ import { Component, Host, h, Prop } from '@stencil/core';
 import { RuleGroup } from '../../../../types';
 import { hasAnyRuleGroupPassed } from './conditional-functions';
 import { state as checkoutState } from '../../../../store/checkout';
-import selectedProcessor from '../../../../store/selected-processor';
+import { state as selectedProcessor } from '../../../../store/selected-processor';
 
 @Component({
   tag: 'sc-conditional-form',
