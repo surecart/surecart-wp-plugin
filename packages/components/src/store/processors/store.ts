@@ -1,7 +1,21 @@
 import { createStore } from '@stencil/store';
+import { ManualPaymentMethod, PaymentMethodType, Processor } from '../../types';
 
-const { state, onChange, on } = createStore<any>(
-  () => ({
+interface Store {
+  processors: Processor[];
+  methods: PaymentMethodType[];
+  manualPaymentMethods: ManualPaymentMethod[];
+  sortOrder: {
+    processors: string[];
+    manualPaymentMethods: string[];
+    paymentMethods: {
+      mollie: string[];
+    };
+  };
+}
+
+const { state, onChange, on } = createStore<Store>(
+  {
     processors: [],
     methods: [],
     manualPaymentMethods: [],
@@ -12,7 +26,7 @@ const { state, onChange, on } = createStore<any>(
         mollie: ['creditcard', 'paypal'],
       },
     },
-  }),
+  },
   (newValue, oldValue) => {
     return JSON.stringify(newValue) !== JSON.stringify(oldValue);
   },

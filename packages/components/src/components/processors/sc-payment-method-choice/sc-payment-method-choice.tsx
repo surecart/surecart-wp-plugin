@@ -2,17 +2,12 @@ import { Component, Element, Event, EventEmitter, h, Host, Prop } from '@stencil
 import { Checkout } from '../../../types';
 import { openWormhole } from 'stencil-wormhole';
 import selectedProcessor from '../../../store/selected-processor';
-import { onChange } from '../../../store/processors';
-
 @Component({
   tag: 'sc-payment-method-choice',
   styleUrl: 'sc-payment-method-choice.css',
   shadow: true,
 })
 export class ScPaymentMethodChoice {
-  /** Checkout watcher */
-  private checkoutWatcher: Function;
-
   @Element() el: HTMLScPaymentMethodChoiceElement;
 
   @Prop({ reflect: true }) methodId: string;
@@ -43,16 +38,6 @@ export class ScPaymentMethodChoice {
 
   /** Show the toggle */
   @Event() scShow: EventEmitter<void>;
-
-  componentWillLoad() {
-    this.checkoutWatcher = onChange('availableProcessors', val => {
-      this.isDisabled = !(val || []).map(({ processor_type }) => processor_type).includes(this.processorId);
-    });
-  }
-
-  disconnectedCallback() {
-    this.checkoutWatcher();
-  }
 
   isSelected() {
     if (this.methodId) {

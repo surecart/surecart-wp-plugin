@@ -22,7 +22,7 @@ export const getAvailableProcessor = type => availableProcessors().find(({ proce
  * based on recurring requirements.
  */
 export const availableManualPaymentMethods = () =>
-  !checkoutState?.checkout?.reusable_payment_method_required ? sortByArray(state.manualPaymentMethods, 'id', state.sortOrder.manuaPaymentMethods) : [];
+  !checkoutState?.checkout?.reusable_payment_method_required ? sortByArray(state.manualPaymentMethods, 'id', state.sortOrder.manualPaymentMethods) : [];
 
 /**
  * Get a sorted array of mollie payment method types.
