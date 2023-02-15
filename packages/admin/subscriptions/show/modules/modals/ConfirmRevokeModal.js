@@ -13,7 +13,6 @@ import { useDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
-import { useEffect } from 'react';
 import Error from '../../../../components/Error';
 
 export default ({ purchase, open, onRequestClose }) => {
@@ -21,57 +20,14 @@ export default ({ purchase, open, onRequestClose }) => {
 		useDispatch(coreStore);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
-	const [confirmProps, setConfirmProps] = useState({
-		questionMessage: '',
-		yesText: '',
-		noText: '',
-	});
 
-	useEffect(() => {
-		if (!purchase) {
-			return () => {};
-		}
-
-		confirmProps.questionMessage = purchase?.subscription
-			? __(
-					'Are you sure? Revoking a purchase will trigger cancellation of the associated subscription.',
-					'surecart'
-			  )
-			: __(
-					'Are you sure? This action will remove the associated access and trigger any cancelation automations you have set up.',
-					'surecart'
-			  );
-		confirmProps.yesText = __('Revoke Purchase', 'surecart');
-		confirmProps.noText = __("Don't revoke purchase", 'surecart');
-
-		if (purchase.revoked) {
-			confirmProps.questionMessage = purchase?.subscription
-				? __(
-						'Are you sure? Unrevoking a purchase will re-enable the associated subscription.',
-						'surecart'
-				  )
-				: __(
-						'Are you sure? This action will re-enable associated access.',
-						'surecart'
-				  );
-			confirmProps.yesText = __('Unrevoke Purchase', 'surecart');
-			confirmProps.noText = __("Don't unrevoke purchase", 'surecart');
-		}
-
-		setConfirmProps({
-			...confirmProps,
-		});
-	}, [purchase, purchase?.subscription]);
-
-	const onSubmit = async (e) => {
-		setLoading(true);
-		const revoke = !purchase?.revoked;
-
+	const onSubmit = async () => {
 		try {
+			setLoading(true);
 			const result = await apiFetch({
 				path: addQueryArgs(
 					`surecart/v1/purchases/${purchase?.id}/${
-						revoke ? 'revoke' : 'invoke'
+						!purchase?.revoked ? 'revoke' : 'invoke'
 					}`,
 					{
 						expand: ['product', 'product.price'],
@@ -90,7 +46,8 @@ export default ({ purchase, open, onRequestClose }) => {
 			await invalidateResolutionForStore();
 			onRequestClose();
 		} catch (e) {
-			throw e;
+			console.error(e);
+			setError(e);
 		} finally {
 			setLoading(false);
 		}
@@ -110,14 +67,24 @@ export default ({ purchase, open, onRequestClose }) => {
 				onScRequestClose={onRequestClose}
 			>
 				<Error error={error} setError={setError} />
-				<ScText>{confirmProps.questionMessage}</ScText>
+				<ScText>
+					{purchase?.subscription
+						? __(
+								'Are you sure? Revoking a purchase will also cancel the associated subscription.',
+								'surecart'
+						  )
+						: __(
+								'Are you sure? This action will remove the associated access and trigger any cancelation automations you have set up.',
+								'surecart'
+						  )}
+				</ScText>
 				<ScButton
 					type="text"
 					onClick={onRequestClose}
 					disabled={loading}
 					slot="footer"
 				>
-					{confirmProps.noText}
+					{__('Cancel', 'surecart')}
 				</ScButton>{' '}
 				<ScButton
 					type="primary"
@@ -125,7 +92,9 @@ export default ({ purchase, open, onRequestClose }) => {
 					disabled={loading}
 					slot="footer"
 				>
-					{confirmProps.yesText}
+					{purchase?.revoked
+						? __('Unrevoke Purchase', 'surecart')
+						: __('Revoke Purchase', 'surecart')}
 				</ScButton>
 				{loading && (
 					<ScBlockUi
