@@ -56,6 +56,21 @@ class Customer extends Model {
 	}
 
 	/**
+	 * Create a new model
+	 *
+	 * @param array   $attributes Attributes to create.
+	 * @param boolean $create_user Whether to create a corresponding WordPress user.
+	 *
+	 * @return $this|\WP_Error|false
+	 */
+	protected function delete( $id = 0 ) {
+
+		$deleted = parent::delete( $id );
+
+		return $deleted;
+	}
+
+	/**
 	 * Expose media for a customer
 	 *
 	 * @param string $media_id The media id.

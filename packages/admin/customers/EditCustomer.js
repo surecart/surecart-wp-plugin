@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import {
 	ScBreadcrumb,
 	ScBreadcrumbs,
@@ -9,6 +11,9 @@ import { store as dataStore } from '@surecart/data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
+import { Fragment, useState } from '@wordpress/element';
+
+import Error from '../components/Error';
 
 import useDirty from '../hooks/useDirty';
 import useEntity from '../hooks/useEntity';
@@ -24,8 +29,11 @@ import Purchases from './modules/Purchases';
 import Subscriptions from './modules/Subscriptions';
 import PaymentMethods from './modules/PaymentMethods';
 import User from './modules/User';
+import ActionsDropdown from './components/ActionsDropdown';
 
 export default () => {
+  debugger;
+  const [error, setError] = useState(null);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 	const { saveDirtyRecords } = useDirty();
@@ -33,6 +41,7 @@ export default () => {
 	const {
 		customer,
 		editCustomer,
+    deleteCustomer,
 		hasLoadedCustomer,
 		deletingCustomer,
 		savingCustomer,
@@ -59,6 +68,30 @@ export default () => {
 					}
 				});
 			}
+		}
+	};
+
+  /**
+	 * Toggle customer delete.
+	 */
+	const onCustomerDelete = async () => {
+		const r = confirm(
+			sprintf(
+				__(
+					'Permanently delete %s? You cannot undo this action.',
+					'surecart'
+				),
+				customer?.email || 'Customer'
+			)
+		);
+		if (!r) return;
+
+		try {
+			setError(null);
+			await deleteCustomer({ throwOnError: true });
+		} catch (e) {
+      debugger;
+			setError(e);
 		}
 	};
 
@@ -90,12 +123,24 @@ export default () => {
 				</ScFlex>
 			}
 			button={
-				<SaveButton
-					loading={!hasLoadedCustomer}
-					busy={deletingCustomer || savingCustomer}
-				>
-					{__('Save Customer', 'surecart')}
-				</SaveButton>
+        <div
+          css={css`
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+          `}
+        >
+          <ActionsDropdown
+            customer={customer}
+            onDelete={onCustomerDelete}
+          />
+          <SaveButton
+            loading={!hasLoadedCustomer}
+            busy={deletingCustomer || savingCustomer}
+          >
+            {__('Save Customer', 'surecart')}
+          </SaveButton>
+        </div>
 			}
 			sidebar={
 				<>
@@ -110,6 +155,11 @@ export default () => {
 				</>
 			}
 		>
+      <Error
+        error={error}
+        setError={setError}
+        margin="80px"
+      />
 			<Details
 				customer={customer}
 				updateCustomer={editCustomer}
