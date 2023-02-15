@@ -261,7 +261,7 @@ export class ScPaymentMethodsList {
           </sc-alert>
           <sc-flex flexDirection="column" style={{ '--sc-flex-column-gap': 'var(--sc-spacing-small)' }}>
             <sc-alert type="info" open>
-              {__('A default payment method will be used as a fallback in case other payment methods get removed from a subscription', 'surecart')}
+              {__('A default payment method will be used as a fallback in case other payment methods get removed from a subscription.', 'surecart')}
             </sc-alert>
             <sc-switch checked={this.cascadeDefaultPaymentMethod} onScChange={e => (this.cascadeDefaultPaymentMethod = e.target.checked)}>
               {__('Update All Subscriptions', 'surecart')}

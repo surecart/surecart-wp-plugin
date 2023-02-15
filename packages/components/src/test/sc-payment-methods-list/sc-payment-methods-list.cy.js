@@ -184,11 +184,11 @@ describe('Payment Methods', () => {
     cy.get('sc-menu').find('sc-menu-item').contains('Make Default').click();
 
     cy.get('sc-dialog')
-      .find('sc-text')
-      .contains('Are you sure? A default payment method will be preferred for your future payments over other payment methods.')
+      .find('sc-alert')
+      .contains('A default payment method will be used as a fallback in case other payment methods get removed from a subscription.')
       .should('be.visible');
 
-    cy.get('sc-dialog').find('sc-checkbox').contains('Update my existing subscriptions to this new payment method').should('be.visible');
+    cy.get('sc-dialog').find('sc-switch').contains('Update All Subscriptions').should('be.visible');
 
     cy.get('sc-button').contains('Make Default').click();
     cy.wait('@markDefault').then(({ request }) => {
@@ -198,7 +198,7 @@ describe('Payment Methods', () => {
 
     cy.get('sc-stacked-list-row').last().find('sc-dropdown').click();
     cy.get('sc-menu').find('sc-menu-item').contains('Make Default').click();
-    cy.get('sc-dialog sc-checkbox').shadow().find('label').click({ force: true });
+    cy.get('sc-dialog sc-switch').find('label').click({ force: true });
 
     cy.get('sc-button').contains('Make Default').click();
     cy.wait('@markDefault').then(({ request }) => {
@@ -206,50 +206,4 @@ describe('Payment Methods', () => {
       expect(request.body.cascade_default_payment_method).to.eq(true);
     });
   });
-
-  // it('Should delete payment method', () => {
-  //   cy.intercept(
-  //     {
-  //       path: '**/surecart/v1/payment_methods/*',
-  //       method: 'GET',
-  //     },
-  //     TEST_PAYMENT_METHODS,
-  //   ).as('fetchPaymentMethods');
-  //   cy.intercept(
-  //     {
-  //       path: `**/surecart/v1/payment_methods/b7341ced-554b-4852-86be-735c83b88ff0/detach/*`,
-  //       method: 'POST',
-  //     },
-  //     {
-  //       id: 'b7341ced-554b-4852-86be-735c83b88ff0',
-  //       object: 'payment_method',
-  //       external_payment_method_id: 'pm_1MZaBiBX0q9V2KAZlTNsOYIo',
-  //       live_mode: false,
-  //       processor_type: 'stripe',
-  //       reusable: true,
-  //       supported_currencies: null,
-  //       type: 'card',
-  //       bank_account: null,
-  //       card: '0cb52f58-8caf-476a-b3ed-b0ddfe0b2bbd',
-  //       payment_instrument: null,
-  //       paypal_account: null,
-  //       created_at: 1675949364,
-  //       updated_at: 1676023071,
-  //       customer_id: null,
-  //       payment_intent_id: null,
-  //     },
-  //   ).as('deletePaymentMethod');
-  //   cy.visit('/test/sc-payment-methods-list/');
-  //   cy.wait('@fetchPaymentMethods');
-
-  //   cy.get('sc-stacked-list-row').first().find('sc-dropdown').click();
-  //   cy.get('sc-menu').find('sc-menu-item.hydrated').contains('Delete').click({ force: true });
-
-  //   cy.on('window:confirm', text => {
-  //     expect(text).to.contains('Are you sure you want to remove this payment method?');
-  //     return true;
-  //   });
-
-  //   cy.wait('@deletePaymentMethod');
-  // });
 });
