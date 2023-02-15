@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Listen, Prop } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
@@ -18,6 +18,9 @@ import { Checkout } from '../../../types';
 export class ScOrderConfirmProvider {
   /** The order confirm provider element */
   @Element() el: HTMLScOrderConfirmProviderElement;
+
+  /**Whether the success modal is open */
+  @State() isSuccessModalOpen: boolean = false;
 
   /** The form id */
   @Prop() formId: number;
@@ -61,17 +64,32 @@ export class ScOrderConfirmProvider {
     } finally {
       // we always want to redirect, regardless of the outcome here.
       const order = this.order?.id;
+
+      let displaySuccess = () => {
+        this.isSuccessModalOpen = true;
+      };
+
+      if (this?.order?.metadata?.success_url || this.successUrl) {
+        displaySuccess = () => {
+          const success_url = this?.order?.metadata?.success_url || this.successUrl;
+          window.location.assign(addQueryArgs(success_url, { order }));
+        };
+      }
       // make sure form state changes before redirecting
       setTimeout(() => {
         // make sure we clear the order state no matter what.
-        const success_url = this?.order?.metadata?.success_url || this.successUrl;
         clearOrder(this.formId, this.mode);
-        window.location.assign(addQueryArgs(success_url, { order }));
+        displaySuccess();
       }, 50);
     }
   }
 
   render() {
-    return <slot />;
+    return (
+      <Host>
+        <slot />
+        <order-confirm-modal open={this.isSuccessModalOpen}></order-confirm-modal>
+      </Host>
+    );
   }
 }

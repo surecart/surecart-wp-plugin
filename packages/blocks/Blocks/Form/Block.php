@@ -89,7 +89,7 @@ class Block extends BaseBlock {
 				'id'                            => 'sc-checkout-' . $sc_form_id,
 				'prices'                        => $attributes['prices'] ?? [],
 				'loading_text'                  => $attributes['loading_text'] ?? [],
-				'success_url'                   => ! empty( $attributes['success_url'] ) ? $attributes['success_url'] : \SureCart::pages()->url( 'order-confirmation' ),
+				'success_url'                   => $attributes['success_url'] ?? '',
 			]
 		);
 	}

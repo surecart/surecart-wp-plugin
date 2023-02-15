@@ -310,7 +310,7 @@ export class ScCheckout {
           )}
           {this.checkoutState === 'confirmed' && (
             <sc-block-ui z-index={9} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
-              {this.loadingText?.confirmed || __('Success! Redirecting...', 'surecart')}
+              {this.successUrl?(this.loadingText?.confirmed || __('Success! Redirecting...', 'surecart')):''}
             </sc-block-ui>
           )}
         </Universe.Provider>
