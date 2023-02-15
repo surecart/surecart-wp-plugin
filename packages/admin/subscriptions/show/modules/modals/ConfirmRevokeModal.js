@@ -9,7 +9,7 @@ import {
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import apiFetch from '@wordpress/api-fetch';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
