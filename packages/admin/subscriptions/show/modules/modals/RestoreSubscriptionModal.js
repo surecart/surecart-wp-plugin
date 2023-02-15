@@ -14,8 +14,9 @@ import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import Error from '../../../../components/Error';
+import { formatNumber } from '../../../../util';
 
-export default ({ open, onRequestClose }) => {
+export default ({ open, onRequestClose, amountDue, currency }) => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
@@ -46,17 +47,29 @@ export default ({ open, onRequestClose }) => {
 
 	return (
 		<ScDialog
-			label={__('Confirm', 'surecart')}
+			label={__('Restore Subscription', 'surecart')}
 			open={open}
 			onScRequestClose={onRequestClose}
 		>
 			<Error error={error} setError={setError} />
 			<ScFlex flexDirection="column">
-				<ScAlert type="warning" title={__('Warning', 'surecart')} open>
-					{__(
-						'This will charge the customer for their current billing period.',
-						'surecart'
-					)}
+				<ScAlert
+					type="warning"
+					title={__('Confirm Charge', 'surecart')}
+					open
+				>
+					{!!amountDue && !!currency
+						? sprintf(
+								__(
+									'The customer will immediately be charged %s for the first billing period.',
+									'surecart'
+								),
+								formatNumber(amountDue, currency)
+						  )
+						: __(
+								'The customer will immediately be charged the first billing period.',
+								'surecart'
+						  )}
 				</ScAlert>
 				<ScText
 					style={{
@@ -66,7 +79,7 @@ export default ({ open, onRequestClose }) => {
 					}}
 				>
 					{__(
-						'Are you sure you want to restore this subscription? This will make it active again and charge the customer immediately.',
+						'This will make the subscription active again and charge the customer immediately.',
 						'surecart'
 					)}
 				</ScText>
