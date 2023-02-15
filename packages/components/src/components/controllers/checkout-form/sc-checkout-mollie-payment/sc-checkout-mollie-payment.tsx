@@ -38,6 +38,7 @@ export class ScCheckoutMolliePayment {
 
   async fetchMethods() {
     const checkout = checkoutState.checkout;
+    if (!checkout.currency) return; // wait until we have a currency.
     try {
       lockCheckout('methods');
       const response = (await apiFetch({
@@ -62,15 +63,23 @@ export class ScCheckoutMolliePayment {
     }
   }
 
+  renderLoading() {
+    return (
+      <sc-card>
+        <sc-skeleton style={{ width: '50%', marginBottom: '0.5em' }}></sc-skeleton>
+        <sc-skeleton style={{ width: '30%', marginBottom: '0.5em' }}></sc-skeleton>
+        <sc-skeleton style={{ width: '60%', marginBottom: '0.5em' }}></sc-skeleton>
+      </sc-card>
+    );
+  }
+
   render() {
     if (checkoutIsLocked('methods') && !availableMethodTypes()?.length) {
-      return (
-        <sc-card>
-          <sc-skeleton style={{ width: '50%', marginBottom: '0.5em' }}></sc-skeleton>
-          <sc-skeleton style={{ width: '30%', marginBottom: '0.5em' }}></sc-skeleton>
-          <sc-skeleton style={{ width: '60%', marginBottom: '0.5em' }}></sc-skeleton>
-        </sc-card>
-      );
+      return this.renderLoading();
+    }
+
+    if (!checkoutState.checkout?.currency) {
+      return this.renderLoading();
     }
 
     if (!availableMethodTypes()?.length) {
