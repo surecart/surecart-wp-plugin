@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-02-09T20:56:22+00:00\n"
+"POT-Creation-Date: 2023-02-06T20:20:27+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -19,7 +19,7 @@ msgid "Checkout Form"
 msgstr ""
 
 #: src/BlockLibrary/BlockServiceProvider.php:101
-#: src/Integrations/AffiliateWP/AffiliateWPService.php:29
+#: src/Integrations/AffiliateWP/AffiliateWPService.php:39
 #: src/Integrations/Beaver/BeaverFormModule.php:20
 #: src/Integrations/Beaver/BeaverFormModule.php:21
 #: src/Integrations/Elementor/ElementorServiceProvider.php:62
@@ -85,7 +85,7 @@ msgstr ""
 #: invoices/modules/Refunds.js:17
 #: orders/modules/Charges.js:93
 #: orders/modules/Refunds.js:74
-#: sc-order.js:144
+#: sc-order.js:146
 msgid "Date"
 msgstr ""
 
@@ -100,22 +100,23 @@ msgstr ""
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:101
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:67
 #: src/Controllers/Admin/Orders/OrdersListTable.php:105
-#: abandoned-checkouts/modules/LineItems/index.js:135
+#: abandoned-checkouts/modules/LineItems/index.js:128
 #: customers/modules/Orders.js:58
 #: dashboard/components/overview/charts/ChartSummary.js:142
-#: orders/modules/LineItems/index.js:226
+#: orders/modules/LineItems/index.js:219
 #: subscriptions/edit/modules/Price.js:51
 #: subscriptions/show/modules/CurrentPlan.js:37
 #: subscriptions/show/modules/SubscriptionItems.js:96
 #: Blocks/CartSubtotal/Block.php:29
 #: Blocks/CheckoutForm/components/PriceChoices.js:65
+#: Blocks/ConditionalForm/translations.js:5
 #: Blocks/Dashboard/CustomerCharges/edit.js:35
-#: Blocks/Totals/edit.js:61
+#: Blocks/Totals/edit.js:67
 #: components/PriceChoices.js:20
-#: sc-order-confirmation-totals2.js:33
-#: sc-order.js:138
-#: sc-stripe-payment-request2.js:98
-#: sc-stripe-payment-request2.js:136
+#: sc-order-confirmation-totals2.js:35
+#: sc-order.js:140
+#: sc-stripe-payment-request2.js:100
+#: sc-stripe-payment-request2.js:138
 msgid "Total"
 msgstr ""
 
@@ -192,8 +193,8 @@ msgstr ""
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:61
 #: licenses/modules/Details/index.js:14
 #: util.js:44
-#: sc-licenses-list.js:28
-#: sc-subscription-status-badge2.js:52
+#: sc-licenses-list.js:30
+#: sc-subscription-status-badge2.js:54
 msgid "Active"
 msgstr ""
 
@@ -273,8 +274,8 @@ msgstr ""
 #: Controllers/SubscriptionController.php:346
 #: Controllers/SubscriptionController.php:409
 #: Controllers/SubscriptionController.php:475
-#: sc-subscription-details2.js:33
-#: sc-subscription.js:137
+#: sc-subscription-details2.js:35
+#: sc-subscription.js:139
 msgid "Subscription"
 msgstr ""
 
@@ -331,7 +332,7 @@ msgstr ""
 #: invoices/modules/Subscriptions.js:16
 #: orders/modules/Subscriptions.js:52
 #: Blocks/Dashboard/CustomerSubscriptions/Block.php:79
-#: sc-upcoming-invoice.js:162
+#: sc-upcoming-invoice.js:164
 msgid "Plan"
 msgstr ""
 
@@ -552,7 +553,7 @@ msgstr ""
 #: coupons/modules/CustomerSelector.js:132
 #: coupons/modules/SelectCustomer.js:223
 #: customers/modules/Details.js:59
-#: settings/brand/BrandSettings.js:199
+#: settings/brand/BrandSettings.js:203
 msgid "Email"
 msgstr ""
 
@@ -627,7 +628,7 @@ msgstr ""
 #: subscriptions/show/modules/Orders.js:21
 #: subscriptions/show/modules/Periods.js:89
 #: Blocks/Dashboard/CustomerCharges/edit.js:38
-#: sc-licenses-list.js:52
+#: sc-licenses-list.js:54
 msgid "Status"
 msgstr ""
 
@@ -646,12 +647,12 @@ msgstr ""
 #: components/data-tables/charges-data-table/index.js:24
 #: components/data-tables/charges-data-table/index.js:119
 #: invoices/modules/LineItems.js:193
-#: orders/modules/LineItems/index.js:244
+#: orders/modules/LineItems/index.js:237
 #: Blocks/Dashboard/CustomerInvoices/edit.js:132
 #: Blocks/Dashboard/CustomerOrders/edit.js:132
-#: sc-charges-list.js:80
-#: sc-invoices-list.js:103
-#: sc-orders-list.js:107
+#: sc-charges-list.js:82
+#: sc-invoices-list.js:105
+#: sc-orders-list.js:109
 msgid "Refunded"
 msgstr ""
 
@@ -675,7 +676,7 @@ msgid "Search Licenses"
 msgstr ""
 
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:60
-#: sc-licenses-list.js:52
+#: sc-licenses-list.js:54
 msgid "Key"
 msgstr ""
 
@@ -695,13 +696,13 @@ msgstr ""
 #: components/data-tables/purchases-data-table/purchase-item.js:19
 #: licenses/modules/Details/index.js:17
 #: licenses/modules/Purchase.js:66
-#: sc-licenses-list.js:31
+#: sc-licenses-list.js:33
 msgid "Revoked"
 msgstr ""
 
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:127
 #: licenses/modules/Details/index.js:20
-#: sc-licenses-list.js:34
+#: sc-licenses-list.js:36
 msgid "Inactive"
 msgstr ""
 
@@ -718,13 +719,13 @@ msgstr ""
 #: orders/modules/LineItems/index.js:109
 #: Blocks/Dashboard/CustomerInvoices/edit.js:83
 #: Blocks/Dashboard/CustomerOrders/edit.js:83
-#: sc-charges-list.js:85
-#: sc-order-status-badge2.js:37
+#: sc-charges-list.js:87
+#: sc-order-status-badge2.js:39
 msgid "Paid"
 msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersListTable.php:67
-#: sc-order-status-badge2.js:33
+#: sc-order-status-badge2.js:35
 msgid "Processing"
 msgstr ""
 
@@ -766,7 +767,7 @@ msgid "Checkout"
 msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersListTable.php:245
-#: sc-order-confirmation.js:93
+#: sc-order-confirmation.js:96
 msgid "Paypal is taking a closer look at this payment. It’s required for some payments and normally takes up to 3 business days."
 msgstr ""
 
@@ -776,7 +777,7 @@ msgstr ""
 #: components/data-tables/OrdersDataTable.js:28
 #: customers/modules/Orders.js:48
 #: dashboard/components/overview/charts/Orders.js:21
-#: orders/Order.js:127
+#: orders/Order.js:128
 #: settings/export/ExportSettings.js:27
 #: Controllers/DownloadController.php:107
 #: Controllers/OrderController.php:59
@@ -839,7 +840,7 @@ msgstr ""
 #: src/Controllers/Admin/Products/ProductsListTable.php:299
 #: abandoned-checkouts/components/Link.js:52
 #: licenses/modules/Details/Copy.js:10
-#: sc-licenses-list.js:54
+#: sc-licenses-list.js:56
 msgid "Copied!"
 msgstr ""
 
@@ -852,9 +853,9 @@ msgstr ""
 #: customers/modules/Subscriptions.js:51
 #: settings/export/ExportSettings.js:43
 #: settings/subscription/SubscriptionSettings.js:55
-#: subscriptions/show/ShowSubscription.js:212
+#: subscriptions/show/ShowSubscription.js:213
 #: Controllers/SubscriptionController.php:57
-#: sc-subscriptions-list.js:131
+#: sc-subscriptions-list.js:133
 msgid "Subscriptions"
 msgstr ""
 
@@ -865,7 +866,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:62
 #: orders/modules/Refunds.js:56
-#: sc-subscription-status-badge2.js:56
+#: sc-subscription-status-badge2.js:58
 msgid "Canceled"
 msgstr ""
 
@@ -897,16 +898,16 @@ msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:241
 #: util/translations.js:51
-#: price.js:48
-#: sc-order-bump2.js:51
-#: sc-price-choice.js:785
+#: price.js:51
+#: sc-order-bump2.js:53
+#: sc-price-choice.js:787
 msgid "for"
 msgstr ""
 
 #. translators: number of days.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:251
 #: util/translations.js:14
-#: price.js:32
+#: price.js:35
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] ""
@@ -915,7 +916,7 @@ msgstr[1] ""
 #. translators: number of days.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:251
 #: util/translations.js:15
-#: price.js:32
+#: price.js:35
 msgid "day"
 msgid_plural "%d days"
 msgstr[0] ""
@@ -924,7 +925,7 @@ msgstr[1] ""
 #. translators: number of weeks.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:257
 #: util/translations.js:21
-#: price.js:34
+#: price.js:37
 msgid "%d week"
 msgid_plural "%d weeks"
 msgstr[0] ""
@@ -933,7 +934,7 @@ msgstr[1] ""
 #. translators: number of weeks.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:257
 #: util/translations.js:22
-#: price.js:34
+#: price.js:37
 msgid "week"
 msgid_plural "%d weeks"
 msgstr[0] ""
@@ -942,7 +943,7 @@ msgstr[1] ""
 #. translators: number of months
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:263
 #: util/translations.js:28
-#: price.js:36
+#: price.js:39
 msgid "%d month"
 msgid_plural "%d months"
 msgstr[0] ""
@@ -951,7 +952,7 @@ msgstr[1] ""
 #. translators: number of months
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:263
 #: util/translations.js:29
-#: price.js:36
+#: price.js:39
 msgid "month"
 msgid_plural "%d months"
 msgstr[0] ""
@@ -960,7 +961,7 @@ msgstr[1] ""
 #. translators: number of yearls
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:269
 #: util/translations.js:35
-#: price.js:38
+#: price.js:41
 msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] ""
@@ -969,7 +970,7 @@ msgstr[1] ""
 #. translators: number of yearls
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:269
 #: util/translations.js:36
-#: price.js:38
+#: price.js:41
 msgid "year"
 msgid_plural "%d years"
 msgstr[0] ""
@@ -978,7 +979,7 @@ msgstr[1] ""
 #. translators: Coupon % off.
 #. Translators: Percent off.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:313
-#: price.js:10
+#: price.js:13
 msgid "%1d%% off"
 msgstr ""
 
@@ -994,9 +995,9 @@ msgstr ""
 #: dashboard/components/RecentOrders.js:184
 #: Blocks/Form/components/Mode.js:11
 #: Blocks/Form/components/Mode.js:31
-#: sc-customer-edit.js:89
-#: sc-payment-methods-list.js:142
-#: sc-subscription-payment-method.js:143
+#: sc-customer-edit.js:91
+#: sc-payment-methods-list.js:132
+#: sc-subscription-payment-method.js:145
 msgid "Test"
 msgstr ""
 
@@ -1061,25 +1062,25 @@ msgid "Checkout"
 msgstr ""
 
 #: src/Install/InstallService.php:131
-#: src/WordPress/Pages/PageSeeder.php:120
+#: src/WordPress/Pages/PageSeeder.php:121
 msgctxt "Page slug"
 msgid "order-confirmation"
 msgstr ""
 
 #: src/Install/InstallService.php:132
-#: src/WordPress/Pages/PageSeeder.php:121
+#: src/WordPress/Pages/PageSeeder.php:122
 msgctxt "Page title"
 msgid "Thank you!"
 msgstr ""
 
 #: src/Install/InstallService.php:136
-#: src/WordPress/Pages/PageSeeder.php:125
+#: src/WordPress/Pages/PageSeeder.php:126
 msgctxt "Page slug"
 msgid "customer-dashboard"
 msgstr ""
 
 #: src/Install/InstallService.php:137
-#: src/WordPress/Pages/PageSeeder.php:126
+#: src/WordPress/Pages/PageSeeder.php:127
 msgctxt "Page title"
 msgid "Dashboard"
 msgstr ""
@@ -1105,6 +1106,7 @@ msgstr ""
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:115
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:138
 #: layouts/partials/admin-settings-header.php:25
+#: Blocks/StoreLogo/edit.js:150
 msgid "Settings"
 msgstr ""
 
@@ -1264,7 +1266,7 @@ msgid "This trigger will be fired when a subscription plan is changed to somethi
 msgstr ""
 
 #: src/Integrations/TutorLMS/TutorLMSService.php:127
-#: sc-subscription-switch.js:169
+#: sc-subscription-switch.js:171
 msgid "Custom amount"
 msgstr ""
 
@@ -1581,8 +1583,8 @@ msgstr ""
 
 #: src/Rest/CheckEmailRestServiceProvider.php:66
 #: src/Rest/LoginRestServiceProvider.php:67
-#: sc-login-form.js:148
-#: sc-login-provider2.js:77
+#: sc-login-form.js:150
+#: sc-login-provider2.js:79
 msgid "Login"
 msgstr ""
 
@@ -1667,7 +1669,7 @@ msgid "The SureCart model id."
 msgstr ""
 
 #: src/Rest/LoginRestServiceProvider.php:71
-#: sc-login-provider2.js:77
+#: sc-login-provider2.js:79
 msgid "Password"
 msgstr ""
 
@@ -3739,6 +3741,10 @@ msgstr ""
 msgid "This form is not available or has been deleted."
 msgstr ""
 
+#: src/WordPress/Templates/TemplatesServiceProvider.php:32
+msgid "SureCart: Full Width No Sidebar"
+msgstr ""
+
 #: src/WordPress/Users/UsersService.php:73
 msgid "Limit result set to users with a customer."
 msgstr ""
@@ -3770,9 +3776,9 @@ msgstr ""
 #: admin/connection.php:37
 #: settings/SettingsBox.js:51
 #: settings/SettingsTemplate.js:76
-#: sc-customer-edit.js:114
-#: sc-order-bump2.js:56
-#: sc-wordpress-user-edit.js:56
+#: sc-customer-edit.js:116
+#: sc-order-bump2.js:58
+#: sc-wordpress-user-edit.js:58
 msgid "Save"
 msgstr ""
 
@@ -4064,8 +4070,8 @@ msgstr ""
 #: coupons/modules/SelectCustomer.js:167
 #: settings/processors/ManualPaymentMethods.js:80
 #: settings/subscription-preservation/Reasons.js:154
-#: sc-subscription-payment-method.js:136
-#: sc-subscription-payment-method.js:155
+#: sc-subscription-payment-method.js:138
+#: sc-subscription-payment-method.js:157
 msgid "Add New"
 msgstr ""
 
@@ -4106,7 +4112,7 @@ msgid "Orders & Receipts"
 msgstr ""
 
 #: layouts/partials/admin-settings-sidebar.php:26
-#: abandoned-checkouts/AbandonedCheckout.js:112
+#: abandoned-checkouts/AbandonedCheckout.js:113
 #: settings/abandoned/AbandonedSettings.js:79
 msgid "Abandoned Checkout"
 msgstr ""
@@ -4144,7 +4150,7 @@ msgstr ""
 
 #: layouts/partials/admin-settings-sidebar.php:94
 #: components/UpgradeModal.js:19
-#: sc-upgrade-required.js:23
+#: sc-upgrade-required.js:25
 msgid "Boost Your Revenue"
 msgstr ""
 
@@ -4168,7 +4174,7 @@ msgstr ""
 #: Blocks/Password/components/Inspector.js:39
 #: Blocks/Password/edit.js:60
 #: Blocks/Switch/components/Inspector.js:39
-#: Blocks/Textarea/edit.js:58
+#: Blocks/Textarea/edit.js:67
 msgid "Help"
 msgstr ""
 
@@ -4179,8 +4185,8 @@ msgstr ""
 
 #: web/dashboard/orders/show.php:34
 #: invoices/modules/Refunds.js:11
-#: sc-subscription-next-payment2.js:96
-#: sc-upcoming-invoice.js:201
+#: sc-subscription-next-payment2.js:98
+#: sc-upcoming-invoice.js:203
 msgid "Payment"
 msgstr ""
 
@@ -4308,7 +4314,7 @@ msgstr ""
 msgid "Percentage of revenue recovered"
 msgstr ""
 
-#: abandoned-checkouts/AbandonedCheckout.js:85
+#: abandoned-checkouts/AbandonedCheckout.js:86
 #: components/MediaLibrary/DownloadMedia.js:30
 #: coupons/modules/Code.js:45
 #: customers/EditCustomer.js:53
@@ -4316,7 +4322,7 @@ msgstr ""
 #: customers/modules/PaymentMethods/Actions.js:69
 #: customers/modules/User/index.js:24
 #: licenses/modules/Activations/index.js:65
-#: orders/Order.js:100
+#: orders/Order.js:101
 #: products/modules/SingleDownload.js:46
 #: settings/processors/ManualPaymentMethod.js:50
 #: settings/processors/ManualPaymentMethod.js:81
@@ -4324,63 +4330,63 @@ msgstr ""
 #: subscriptions/edit/EditSubscription.js:181
 #: subscriptions/show/modules/Tax.js:42
 #: subscriptions/show/ShowSubscription.js:59
-#: sc-cart-form.js:65
-#: sc-charges-list.js:69
-#: sc-customer-edit.js:83
-#: sc-dashboard-customer-details.js:49
-#: sc-dashboard-downloads-list.js:56
-#: sc-dashboard-downloads-list.js:72
-#: sc-downloads-list.js:41
-#: sc-invoices-list.js:56
-#: sc-invoices-list.js:69
-#: sc-login-form.js:57
-#: sc-login-provider2.js:67
-#: sc-order-confirmation.js:68
-#: sc-order.js:57
-#: sc-order.js:77
-#: sc-orders-list.js:56
-#: sc-orders-list.js:69
-#: sc-password-nag.js:49
-#: sc-password-nag.js:76
-#: sc-payment-methods-list.js:70
-#: sc-payment-methods-list.js:97
-#: sc-payment-methods-list.js:122
-#: sc-paypal-add-method.js:94
-#: sc-stripe-add-method.js:94
-#: sc-stripe-add-method.js:121
-#: sc-subscription-cancel2.js:41
-#: sc-subscription-payment-method.js:59
-#: sc-subscription-payment-method.js:91
-#: sc-subscription-payment-method.js:116
-#: sc-subscription-payment.js:43
-#: sc-subscription-payment.js:90
-#: sc-subscription-switch.js:47
-#: sc-subscription.js:80
-#: sc-subscription.js:101
-#: sc-subscription.js:124
-#: sc-subscriptions-list.js:58
-#: sc-subscriptions-list.js:71
-#: sc-upcoming-invoice.js:56
-#: sc-upcoming-invoice.js:111
-#: sc-upcoming-invoice.js:125
-#: sc-upcoming-invoice.js:153
-#: sc-wordpress-password-edit.js:52
-#: sc-wordpress-user-edit.js:50
+#: sc-cart-form.js:67
+#: sc-charges-list.js:71
+#: sc-customer-edit.js:85
+#: sc-dashboard-customer-details.js:51
+#: sc-dashboard-downloads-list.js:58
+#: sc-dashboard-downloads-list.js:74
+#: sc-downloads-list.js:43
+#: sc-invoices-list.js:58
+#: sc-invoices-list.js:71
+#: sc-login-form.js:59
+#: sc-login-provider2.js:69
+#: sc-order-confirmation.js:71
+#: sc-order.js:59
+#: sc-order.js:79
+#: sc-orders-list.js:58
+#: sc-orders-list.js:71
+#: sc-password-nag.js:51
+#: sc-password-nag.js:78
+#: sc-payment-methods-list.js:62
+#: sc-payment-methods-list.js:87
+#: sc-payment-methods-list.js:112
+#: sc-paypal-add-method.js:96
+#: sc-stripe-add-method.js:96
+#: sc-stripe-add-method.js:123
+#: sc-subscription-cancel2.js:43
+#: sc-subscription-payment-method.js:61
+#: sc-subscription-payment-method.js:93
+#: sc-subscription-payment-method.js:118
+#: sc-subscription-payment.js:45
+#: sc-subscription-payment.js:92
+#: sc-subscription-switch.js:49
+#: sc-subscription.js:82
+#: sc-subscription.js:103
+#: sc-subscription.js:126
+#: sc-subscriptions-list.js:60
+#: sc-subscriptions-list.js:73
+#: sc-upcoming-invoice.js:58
+#: sc-upcoming-invoice.js:113
+#: sc-upcoming-invoice.js:127
+#: sc-upcoming-invoice.js:155
+#: sc-wordpress-password-edit.js:54
+#: sc-wordpress-user-edit.js:52
 msgid "Something went wrong"
 msgstr ""
 
-#: abandoned-checkouts/AbandonedCheckout.js:116
+#: abandoned-checkouts/AbandonedCheckout.js:117
 msgid "View Abandoned Checkout"
 msgstr ""
 
-#: abandoned-checkouts/AbandonedCheckout.js:138
+#: abandoned-checkouts/AbandonedCheckout.js:139
 #: orders/Sidebar.js:17
 msgid "Shipping & Tax Address"
 msgstr ""
 
 #: abandoned-checkouts/components/Link.js:35
 #: licenses/modules/Details/Copy.js:16
-#: sc-licenses-list.js:48
+#: sc-licenses-list.js:50
 msgid "Error copying to clipboard"
 msgstr ""
 
@@ -4391,7 +4397,7 @@ msgstr ""
 #: abandoned-checkouts/components/Link.js:53
 #: licenses/modules/Details/Copy.js:21
 #: products/modules/Prices/Price/CopyInput.js:34
-#: sc-licenses-list.js:54
+#: sc-licenses-list.js:56
 msgid "Copy"
 msgstr ""
 
@@ -4406,12 +4412,12 @@ msgstr ""
 #: abandoned-checkouts/modules/Address.js:10
 #: invoices/modules/Address.js:7
 #: orders/modules/Address.js:10
-#: settings/brand/BrandSettings.js:222
+#: settings/brand/BrandSettings.js:226
 #: settings/tax/TaxSettings.js:117
-#: sc-address2.js:106
-#: sc-form-components-validator2.js:77
-#: sc-order-shipping-address2.js:31
-#: sc-order-shipping-address2.js:40
+#: sc-address2.js:108
+#: sc-form-components-validator2.js:74
+#: sc-order-shipping-address2.js:33
+#: sc-order-shipping-address2.js:42
 msgid "Address"
 msgstr ""
 
@@ -4420,9 +4426,9 @@ msgstr ""
 #: bumps/modules/Discount.js:34
 #: coupons/Sidebar.js:61
 #: settings/subscription-preservation/Reason.js:67
-#: sc-coupon-form2.js:57
-#: sc-order-confirmation-totals2.js:29
-#: sc-order.js:129
+#: sc-coupon-form2.js:59
+#: sc-order-confirmation-totals2.js:31
+#: sc-order.js:131
 msgid "Discount"
 msgstr ""
 
@@ -4450,8 +4456,8 @@ msgstr ""
 #: Blocks/Dashboard/DashboardPage/Block.php:34
 #: Blocks/Dashboard/DashboardPage/Block.php:42
 #: Controllers/PaymentMethodController.php:112
-#: sc-order.js:144
-#: sc-payment.js:70
+#: sc-order.js:146
+#: sc-payment.js:72
 msgid "Test Mode"
 msgstr ""
 
@@ -4469,70 +4475,64 @@ msgstr ""
 
 #: abandoned-checkouts/modules/LineItems/index.js:33
 #: components/data-tables/charges-data-table/index.js:157
-#: orders/Order.js:131
+#: orders/Order.js:132
 #: subscriptions/show/modules/modals/RetryPaymentModal.js:51
 #: subscriptions/show/modules/Periods.js:194
 msgid "View Order"
 msgstr ""
 
-#: abandoned-checkouts/modules/LineItems/index.js:61
+#: abandoned-checkouts/modules/LineItems/index.js:62
 #: invoices/modules/LineItems.js:115
-#: orders/modules/LineItems/index.js:152
-#: subscriptions/show/modules/LineItems/index.js:61
+#: orders/modules/LineItems/index.js:153
+#: subscriptions/show/modules/LineItems/index.js:65
 #: subscriptions/show/modules/SubscriptionItems.js:71
-#: Blocks/Totals/edit.js:46
-#: sc-order-confirmation-totals2.js:33
-#: sc-order.js:120
-#: sc-subscription-next-payment2.js:96
-#: sc-upcoming-invoice.js:201
+#: Blocks/Totals/edit.js:52
+#: sc-order-confirmation-totals2.js:35
+#: sc-order.js:122
+#: sc-subscription-next-payment2.js:98
+#: sc-upcoming-invoice.js:203
 msgid "Subtotal"
 msgstr ""
 
-#: abandoned-checkouts/modules/LineItems/index.js:68
-#: orders/modules/LineItems/index.js:159
-#: subscriptions/show/modules/LineItems/index.js:68
-#: sc-order.js:123
+#: abandoned-checkouts/modules/LineItems/index.js:69
+#: orders/modules/LineItems/index.js:160
+#: subscriptions/show/modules/LineItems/index.js:72
+#: sc-order.js:125
 msgid "Proration"
 msgstr ""
 
-#: abandoned-checkouts/modules/LineItems/index.js:76
-#: orders/modules/LineItems/index.js:167
-#: subscriptions/show/modules/LineItems/index.js:76
-#: sc-order.js:126
-#: sc-subscription-next-payment2.js:96
-#: sc-upcoming-invoice.js:201
+#: abandoned-checkouts/modules/LineItems/index.js:77
+#: orders/modules/LineItems/index.js:168
+#: subscriptions/show/modules/LineItems/index.js:80
+#: sc-order.js:128
+#: sc-subscription-next-payment2.js:98
+#: sc-upcoming-invoice.js:203
 msgid "Applied Balance"
 msgstr ""
 
-#: abandoned-checkouts/modules/LineItems/index.js:86
+#: abandoned-checkouts/modules/LineItems/index.js:87
 #: invoices/modules/LineItems.js:126
-#: orders/modules/LineItems/index.js:177
-#: subscriptions/show/modules/LineItems/index.js:92
+#: orders/modules/LineItems/index.js:178
+#: subscriptions/show/modules/LineItems/index.js:96
 #: subscriptions/show/modules/SubscriptionItems.js:82
-#: sc-subscription-next-payment2.js:96
+#: sc-subscription-next-payment2.js:98
 msgid "Discounts"
 msgstr ""
 
-#: abandoned-checkouts/modules/LineItems/index.js:91
-#: orders/modules/LineItems/index.js:182
+#: abandoned-checkouts/modules/LineItems/index.js:92
+#: orders/modules/LineItems/index.js:183
 msgid "Coupon:"
 msgstr ""
 
-#: abandoned-checkouts/modules/LineItems/index.js:108
-#: orders/modules/LineItems/index.js:199
-#: subscriptions/show/modules/LineItems/index.js:100
-msgid "Bump Discounts"
-msgstr ""
-
-#: abandoned-checkouts/modules/LineItems/index.js:118
+#: abandoned-checkouts/modules/LineItems/index.js:111
 #: invoices/modules/LineItems.js:153
-#: orders/modules/LineItems/index.js:209
-#: subscriptions/show/modules/LineItems/index.js:110
+#: orders/modules/LineItems/index.js:202
+#: subscriptions/show/modules/LineItems/index.js:106
 #: subscriptions/show/modules/Tax.js:55
-#: sc-order-confirmation-totals2.js:33
-#: sc-order.js:132
-#: sc-subscription-next-payment2.js:96
-#: sc-upcoming-invoice.js:201
+#: sc-order-confirmation-totals2.js:35
+#: sc-order.js:134
+#: sc-subscription-next-payment2.js:98
+#: sc-upcoming-invoice.js:203
 msgid "Tax"
 msgstr ""
 
@@ -4567,7 +4567,7 @@ msgstr ""
 #: store/notices/reducer.js:25
 #: store/ui/reducer.js:130
 #: util.js:70
-#: sc-upcoming-invoice.js:172
+#: sc-upcoming-invoice.js:174
 msgid "Something went wrong."
 msgstr ""
 
@@ -4635,10 +4635,11 @@ msgstr ""
 #: Blocks/CheckoutForm/components/Empty.js:157
 #: Blocks/CheckoutForm/components/SelectProductModal.js:142
 #: Blocks/CheckoutForm/components/Setup.js:228
+#: Blocks/ConditionalForm/rules.js:266
 #: components/ColorPopup.js:80
 #: controls/AddPriceUI.js:89
 #: formats/AddPriceUI.js:113
-#: sc-password-nag.js:84
+#: sc-password-nag.js:86
 msgid "Cancel"
 msgstr ""
 
@@ -4688,7 +4689,7 @@ msgstr ""
 #: settings/processors/ManualPaymentMethod.js:148
 #: settings/subscription-preservation/Reason.js:106
 #: settings/tax-region/RegistrationForm.js:250
-#: sc-payment-methods-list.js:142
+#: sc-payment-methods-list.js:132
 msgid "Delete"
 msgstr ""
 
@@ -4905,9 +4906,9 @@ msgid "Inspector"
 msgstr ""
 
 #: components/data-tables/charges-data-table/index.js:30
-#: sc-charges-list.js:83
-#: sc-invoices-list.js:106
-#: sc-orders-list.js:110
+#: sc-charges-list.js:85
+#: sc-invoices-list.js:108
+#: sc-orders-list.js:112
 msgid "Partially Refunded"
 msgstr ""
 
@@ -5009,8 +5010,8 @@ msgstr ""
 #: Blocks/Dashboard/CustomerInvoices/edit.js:120
 #: Blocks/Dashboard/CustomerOrders/edit.js:71
 #: Blocks/Dashboard/CustomerOrders/edit.js:120
-#: sc-invoices-list.js:123
-#: sc-orders-list.js:134
+#: sc-invoices-list.js:125
+#: sc-orders-list.js:136
 msgid "%s item"
 msgid_plural "%s items"
 msgstr[0] ""
@@ -5071,7 +5072,7 @@ msgstr ""
 #: components/subscriptions/Cancel.js:37
 #: components/subscriptions/Cancel.js:86
 #: subscriptions/show/modules/modals/CancelSubscriptionModal.js:115
-#: subscriptions/show/ShowSubscription.js:137
+#: subscriptions/show/ShowSubscription.js:138
 msgid "Cancel Subscription"
 msgstr ""
 
@@ -5092,7 +5093,7 @@ msgstr ""
 #: components/data-tables/subscriptions-data-table/subscription-item.js:117
 #: components/data-tables/subscriptions-data-table/UnCancel.js:58
 #: components/subscriptions/Cancel.js:92
-#: subscriptions/show/ShowSubscription.js:131
+#: subscriptions/show/ShowSubscription.js:132
 msgid "Don't Cancel"
 msgstr ""
 
@@ -5113,7 +5114,7 @@ msgid "Activate"
 msgstr ""
 
 #: components/data-tables/subscriptions-data-table/subscription-item.js:26
-#: sc-subscription-status-badge2.js:44
+#: sc-subscription-status-badge2.js:46
 msgid "Cancels"
 msgstr ""
 
@@ -5154,9 +5155,9 @@ msgstr ""
 msgid "Choose"
 msgstr ""
 
-#: components/filters/FilterItem.js:89
+#: components/filters/FilterItem.js:92
 #: coupons/modules/ProductRestrictions.js:68
-#: coupons/modules/ProductRestrictions.js:124
+#: coupons/modules/ProductRestrictions.js:125
 #: coupons/modules/SelectCustomer.js:146
 #: product-groups/modules/Product.js:77
 #: products/modules/Image.js:81
@@ -5164,17 +5165,18 @@ msgstr ""
 #: settings/brand/Logo.js:81
 #: subscriptions/edit/modules/Trial.js:43
 #: Blocks/CheckoutForm/components/PriceChoice.js:82
+#: Blocks/ConditionalForm/selectors/SelectProcessors/ProcessorItem.js:26
 #: components/PriceChoice.js:116
 msgid "Remove"
 msgstr ""
 
-#: components/filters/product/ProductFilter.js:33
+#: components/filters/product/ProductFilter.js:35
 msgid "Any price"
 msgstr ""
 
 #: components/MediaLibrary/DownloadMedia.js:24
 #: products/modules/SingleDownload.js:124
-#: sc-downloads-list.js:34
+#: sc-downloads-list.js:36
 msgid "Could not download the file."
 msgstr ""
 
@@ -5246,7 +5248,7 @@ msgstr ""
 #: products/modules/SingleDownload.js:260
 #: store/add-entities.js:74
 #: Controllers/DownloadController.php:110
-#: sc-downloads-list.js:72
+#: sc-downloads-list.js:74
 msgid "Download"
 msgstr ""
 
@@ -5338,7 +5340,7 @@ msgid "You have unsaved changes. If you proceed, they will be lost."
 msgstr ""
 
 #: components/UpgradeModal.js:25
-#: sc-upgrade-required.js:23
+#: sc-upgrade-required.js:25
 msgid "Unlock revenue boosting features when you upgrade your plan!"
 msgstr ""
 
@@ -5487,9 +5489,9 @@ msgstr ""
 #: coupons/modules/SelectCustomer.js:202
 #: customers/modules/Details.js:34
 #: Blocks/Dashboard/WordPressAccount/edit.js:60
-#: sc-customer-edit.js:89
-#: sc-wordpress-user-edit.js:56
-#: sc-wordpress-user.js:25
+#: sc-customer-edit.js:91
+#: sc-wordpress-user-edit.js:58
+#: sc-wordpress-user.js:27
 msgid "First Name"
 msgstr ""
 
@@ -5497,9 +5499,9 @@ msgstr ""
 #: coupons/modules/SelectCustomer.js:214
 #: customers/modules/Details.js:46
 #: Blocks/Dashboard/WordPressAccount/edit.js:65
-#: sc-customer-edit.js:89
-#: sc-wordpress-user-edit.js:56
-#: sc-wordpress-user.js:25
+#: sc-customer-edit.js:91
+#: sc-wordpress-user-edit.js:58
+#: sc-wordpress-user.js:27
 msgid "Last Name"
 msgstr ""
 
@@ -5548,9 +5550,9 @@ msgstr[1] ""
 #: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:95
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:44
 #: Blocks/Dashboard/WordPressAccount/edit.js:44
-#: sc-donation-choices.js:124
-#: sc-subscription-payment.js:110
-#: sc-wordpress-user.js:34
+#: sc-donation-choices.js:126
+#: sc-subscription-payment.js:112
+#: sc-wordpress-user.js:36
 msgid "Update"
 msgstr ""
 
@@ -5698,6 +5700,8 @@ msgid "Number of months"
 msgstr ""
 
 #: coupons/Sidebar.js:14
+#: Blocks/ConditionalForm/selectors/SelectCoupons/CouponItem.js:28
+#: Blocks/ConditionalForm/selectors/SelectCoupons/index.js:22
 msgid "%s%% off"
 msgstr ""
 
@@ -5709,8 +5713,8 @@ msgstr ""
 #: products/Sidebar.js:34
 #: subscriptions/edit/modules/Summary.js:8
 #: subscriptions/edit/modules/UpcomingPeriod.js:109
-#: sc-order-summary.js:19
-#: sc-upcoming-invoice.js:206
+#: sc-order-summary.js:21
+#: sc-upcoming-invoice.js:208
 msgid "Summary"
 msgstr ""
 
@@ -5831,7 +5835,7 @@ msgstr ""
 
 #: customers/modules/Orders.js:55
 #: Blocks/Dashboard/CustomerCharges/edit.js:32
-#: sc-purchase-downloads-list2.js:60
+#: sc-purchase-downloads-list2.js:62
 msgid "Items"
 msgstr ""
 
@@ -5848,7 +5852,7 @@ msgid "Default payment method changed."
 msgstr ""
 
 #: customers/modules/PaymentMethods/Actions.js:87
-#: sc-payment-methods-list.js:142
+#: sc-payment-methods-list.js:132
 msgid "Make Default"
 msgstr ""
 
@@ -5867,7 +5871,7 @@ msgid "Are you sure you want to delete this payment method?"
 msgstr ""
 
 #: customers/modules/PaymentMethods/index.js:46
-#: sc-payment-methods-list.js:164
+#: sc-payment-methods-list.js:149
 msgid "Payment Methods"
 msgstr ""
 
@@ -5876,8 +5880,8 @@ msgstr ""
 #: subscriptions/edit/modules/PaymentMethod/index.js:65
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:78
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:117
-#: sc-payment-methods-list.js:140
-#: sc-subscription-payment-method.js:143
+#: sc-payment-methods-list.js:130
+#: sc-subscription-payment-method.js:145
 msgid "Exp."
 msgstr ""
 
@@ -5999,24 +6003,24 @@ msgstr ""
 
 #: dashboard/components/overview/parts/ReportByDropdown.js:12
 #: dashboard/components/overview/parts/ReportByDropdown.js:27
-#: sc-subscription-switch.js:132
+#: sc-subscription-switch.js:134
 msgid "Weekly"
 msgstr ""
 
 #: dashboard/components/overview/parts/ReportByDropdown.js:13
 #: dashboard/components/overview/parts/ReportByDropdown.js:30
-#: sc-subscription-switch.js:132
+#: sc-subscription-switch.js:134
 msgid "Monthly"
 msgstr ""
 
 #: dashboard/components/overview/parts/ReportByDropdown.js:14
 #: dashboard/components/overview/parts/ReportByDropdown.js:33
-#: sc-subscription-switch.js:132
+#: sc-subscription-switch.js:134
 msgid "Yearly"
 msgstr ""
 
 #: dashboard/components/RecentOrders.js:68
-#: sc-orders-list.js:119
+#: sc-orders-list.js:121
 msgid "You don't have any orders."
 msgstr ""
 
@@ -6030,7 +6034,7 @@ msgstr ""
 
 #: dashboard/DatePicker.js:24
 #: components/ColorPopup.js:83
-#: sc-order-coupon-form.js:33
+#: sc-order-coupon-form.js:35
 msgid "Apply"
 msgstr ""
 
@@ -6048,7 +6052,7 @@ msgstr ""
 #: subscriptions/show/modules/modals/RetryPaymentModal.js:74
 #: Controllers/SubscriptionController.php:349
 #: Controllers/SubscriptionController.php:478
-#: sc-upcoming-invoice.js:206
+#: sc-upcoming-invoice.js:208
 msgid "Confirm"
 msgstr ""
 
@@ -6088,21 +6092,21 @@ msgid "Amount Paid"
 msgstr ""
 
 #: invoices/modules/LineItems.js:138
-#: sc-subscription-next-payment2.js:96
-#: sc-upcoming-invoice.js:201
+#: sc-subscription-next-payment2.js:98
+#: sc-upcoming-invoice.js:203
 msgid "Proration Credit"
 msgstr ""
 
 #: invoices/modules/LineItems.js:175
-#: sc-subscription-next-payment2.js:98
-#: sc-upcoming-invoice.js:203
+#: sc-subscription-next-payment2.js:100
+#: sc-upcoming-invoice.js:205
 msgid "Total Due"
 msgstr ""
 
 #: invoices/Sidebar.js:15
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:60
-#: sc-customer-edit.js:89
-#: sc-order-shipping-address2.js:87
+#: sc-customer-edit.js:91
+#: sc-order-shipping-address2.js:89
 msgid "Shipping Address"
 msgstr ""
 
@@ -6156,8 +6160,8 @@ msgid "This license has not been activated."
 msgstr ""
 
 #: licenses/modules/Activations/index.js:94
-#: sc-licenses-list.js:52
-#: sc-subscription-details2.js:103
+#: sc-licenses-list.js:54
+#: sc-subscription-details2.js:105
 msgid "Activations"
 msgstr ""
 
@@ -6246,22 +6250,22 @@ msgid "Insufficient Funds"
 msgstr ""
 
 #: orders/modules/TaxInfo.js:7
-#: tax.js:4
+#: tax.js:7
 msgid "CA GST"
 msgstr ""
 
 #: orders/modules/TaxInfo.js:8
-#: tax.js:8
+#: tax.js:11
 msgid "AU ABN"
 msgstr ""
 
 #: orders/modules/TaxInfo.js:9
-#: tax.js:12
+#: tax.js:15
 msgid "UK VAT"
 msgstr ""
 
 #: orders/modules/TaxInfo.js:10
-#: tax.js:16
+#: tax.js:19
 msgid "EU VAT"
 msgstr ""
 
@@ -6269,7 +6273,7 @@ msgstr ""
 #: orders/modules/TaxInfo.js:23
 #: Blocks/Donation/edit.js:210
 #: Blocks/Donation/save.js:17
-#: tax.js:20
+#: tax.js:23
 msgid "Other"
 msgstr ""
 
@@ -6301,16 +6305,17 @@ msgstr ""
 msgid "Unverified"
 msgstr ""
 
-#: orders/Order.js:146
-#: subscriptions/show/ShowSubscription.js:246
+#: orders/Order.js:147
+#: subscriptions/show/ShowSubscription.js:247
 msgid "Actions"
 msgstr ""
 
-#: orders/Order.js:154
+#: orders/Order.js:155
 msgid "Mark as Paid"
 msgstr ""
 
 #: product-groups/components/SelectProduct.js:50
+#: Blocks/ConditionalForm/selectors/SelectProducts/index.js:72
 msgid "Add Another Product"
 msgstr ""
 
@@ -6450,7 +6455,7 @@ msgid "Free Trial Days"
 msgstr ""
 
 #: products/components/price/parts/Trial.js:16
-#: sc-premium-tag.js:13
+#: sc-premium-tag.js:15
 msgid "Premium"
 msgstr ""
 
@@ -6509,9 +6514,9 @@ msgstr ""
 
 #: products/modules/Downloads.js:75
 #: Controllers/DownloadController.php:120
-#: sc-dashboard-downloads-list.js:106
-#: sc-downloads-list.js:65
-#: sc-order.js:144
+#: sc-dashboard-downloads-list.js:108
+#: sc-downloads-list.js:67
+#: sc-order.js:146
 msgid "Downloads"
 msgstr ""
 
@@ -6534,13 +6539,12 @@ msgid "Replace"
 msgstr ""
 
 #: products/modules/Image.js:98
-#: settings/brand/Logo.js:100
+#: settings/brand/Logo.js:97
 msgid "Add Image"
 msgstr ""
 
 #: products/modules/Image.js:109
 #: products/modules/Image.js:113
-#: settings/brand/Logo.js:91
 msgid "Product Image"
 msgstr ""
 
@@ -6705,13 +6709,13 @@ msgstr ""
 #: products/modules/Prices/Price/Header.js:43
 #: subscriptions/edit/modules/Trial.js:14
 #: subscriptions/edit/modules/UpcomingPeriod.js:77
-#: sc-subscription-next-payment2.js:96
-#: sc-upcoming-invoice.js:201
+#: sc-subscription-next-payment2.js:98
+#: sc-upcoming-invoice.js:203
 msgid "Free Trial"
 msgstr ""
 
 #: products/modules/Prices/Price/Header.js:64
-#: sc-subscription-switch.js:132
+#: sc-subscription-switch.js:134
 msgid "Payment Plan"
 msgstr ""
 
@@ -6722,8 +6726,8 @@ msgstr ""
 #: products/modules/Prices/Price/Header.js:143
 #: util/translations.js:6
 #: util/translations.js:50
-#: price.js:29
-#: price.js:48
+#: price.js:32
+#: price.js:51
 msgid "every"
 msgstr ""
 
@@ -7183,70 +7187,70 @@ msgstr ""
 msgid "This color will be used for the main button color, links, and various UI elements."
 msgstr ""
 
-#: settings/brand/BrandSettings.js:127
-msgid "Select Theme (Beta)"
-msgstr ""
-
-#: settings/brand/BrandSettings.js:128
-msgid "Select Theme"
+#: settings/brand/BrandSettings.js:119
+msgid "Logo"
 msgstr ""
 
 #: settings/brand/BrandSettings.js:131
+msgid "Select Theme (Beta)"
+msgstr ""
+
+#: settings/brand/BrandSettings.js:132
+msgid "Select Theme"
+msgstr ""
+
+#: settings/brand/BrandSettings.js:135
 msgid "Choose \"Dark\" if your theme already has a dark background."
 msgstr ""
 
-#: settings/brand/BrandSettings.js:138
+#: settings/brand/BrandSettings.js:142
 msgid "Light"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:142
+#: settings/brand/BrandSettings.js:146
 msgid "Dark"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:168
+#: settings/brand/BrandSettings.js:172
 msgid "Remove SureCart Branding"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:173
+#: settings/brand/BrandSettings.js:177
 msgid "Remove \"Powered By SureCart\" in the footer of emails and reciepts/invoices."
 msgstr ""
 
-#: settings/brand/BrandSettings.js:184
+#: settings/brand/BrandSettings.js:188
 msgid "Contact Information"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:185
+#: settings/brand/BrandSettings.js:189
 msgid "This information helps customers recognize your business and contact you when necessary. It will be visible on invoices/receipts and any emails that need to be CAN-SPAM compliant (i.e. abandoned order emails)."
 msgstr ""
 
-#: settings/brand/BrandSettings.js:201
+#: settings/brand/BrandSettings.js:205
 msgid "Enter an email"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:206
+#: settings/brand/BrandSettings.js:210
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:82
-#: sc-customer-edit.js:89
+#: sc-customer-edit.js:91
 msgid "Phone"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:208
+#: settings/brand/BrandSettings.js:212
 msgid "Enter an phone number"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:213
+#: settings/brand/BrandSettings.js:217
 msgid "Website"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:215
+#: settings/brand/BrandSettings.js:219
 msgid "Enter a website URL"
 msgstr ""
 
 #: settings/brand/Logo.js:20
 msgid "Are you sure you want to remove this logo?"
-msgstr ""
-
-#: settings/brand/Logo.js:110
-msgid "Logo"
 msgstr ""
 
 #: settings/connection/ConnectionSettings.js:54
@@ -7970,9 +7974,9 @@ msgstr ""
 #: settings/tax-region/RegistrationForm.js:24
 #: settings/tax-region/TaxRegionSettings.js:212
 #: Blocks/Address/edit.js:155
-#: sc-address2.js:106
-#: sc-order-shipping-address2.js:29
-#: sc-order-shipping-address2.js:38
+#: sc-address2.js:108
+#: sc-order-shipping-address2.js:31
+#: sc-order-shipping-address2.js:40
 msgid "Country"
 msgstr ""
 
@@ -7981,7 +7985,7 @@ msgid "Province"
 msgstr ""
 
 #: settings/tax-region/RegistrationForm.js:26
-#: sc-compact-address2.js:100
+#: sc-compact-address2.js:102
 msgid "State"
 msgstr ""
 
@@ -8026,7 +8030,7 @@ msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:29
 #: settings/tax/TaxSettings.js:229
-#: address.js:26
+#: address.js:29
 msgid "Australia"
 msgstr ""
 
@@ -8037,19 +8041,19 @@ msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:31
 #: settings/tax/TaxSettings.js:244
-#: address.js:247
+#: address.js:250
 msgid "United Kingdom"
 msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:32
 #: settings/tax/TaxSettings.js:234
-#: address.js:53
+#: address.js:56
 msgid "Canada"
 msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:33
 #: settings/tax/TaxSettings.js:249
-#: address.js:248
+#: address.js:251
 msgid "United States"
 msgstr ""
 
@@ -8266,7 +8270,7 @@ msgstr ""
 #: store/add-entities.js:145
 #: subscriptions/edit/modules/PaymentMethod/index.js:52
 #: Controllers/SubscriptionController.php:481
-#: sc-order.js:144
+#: sc-order.js:146
 msgid "Payment Method"
 msgstr ""
 
@@ -8279,6 +8283,7 @@ msgid "Billing Period"
 msgstr ""
 
 #: store/add-entities.js:173
+#: Blocks/ConditionalForm/translations.js:7
 msgid "Processor"
 msgstr ""
 
@@ -8310,7 +8315,7 @@ msgstr ""
 
 #: subscriptions/edit/EditSubscription.js:223
 #: subscriptions/show/modules/SubscriptionItems.js:39
-#: subscriptions/show/ShowSubscription.js:216
+#: subscriptions/show/ShowSubscription.js:217
 msgid "Subscription Details"
 msgstr ""
 
@@ -8319,7 +8324,7 @@ msgid "Update Immediately"
 msgstr ""
 
 #: subscriptions/edit/EditSubscription.js:253
-#: subscriptions/show/ShowSubscription.js:181
+#: subscriptions/show/ShowSubscription.js:182
 msgid "Update Subscription"
 msgstr ""
 
@@ -8329,9 +8334,9 @@ msgstr ""
 
 #: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:57
 #: Controllers/SubscriptionController.php:198
-#: sc-subscription-payment-method.js:131
-#: sc-subscription-payment-method.js:150
-#: sc-subscription.js:171
+#: sc-subscription-payment-method.js:133
+#: sc-subscription-payment-method.js:152
+#: sc-subscription.js:173
 msgid "Update Payment Method"
 msgstr ""
 
@@ -8344,7 +8349,7 @@ msgid "Started"
 msgstr ""
 
 #: subscriptions/edit/modules/Trial.js:8
-#: subscriptions/show/modules/LineItems/index.js:84
+#: subscriptions/show/modules/LineItems/index.js:88
 msgid "Trial"
 msgstr ""
 
@@ -8365,7 +8370,7 @@ msgid "Bills Now"
 msgstr ""
 
 #: subscriptions/edit/modules/UpcomingPeriod.js:47
-#: subscriptions/show/modules/LineItems/index.js:26
+#: subscriptions/show/modules/LineItems/index.js:25
 msgid "Bills on"
 msgstr ""
 
@@ -8394,7 +8399,7 @@ msgstr ""
 #: subscriptions/shared/EndDate.js:9
 #: subscriptions/show/modules/Details.js:18
 #: util.js:41
-#: sc-subscription-switch.js:132
+#: sc-subscription-switch.js:134
 msgid "Lifetime"
 msgstr ""
 
@@ -8422,11 +8427,11 @@ msgstr ""
 msgid "%d Remaining"
 msgstr ""
 
-#: subscriptions/show/modules/LineItems/index.js:21
+#: subscriptions/show/modules/LineItems/index.js:20
 msgid "Upcoming Billing Period"
 msgstr ""
 
-#: subscriptions/show/modules/LineItems/index.js:127
+#: subscriptions/show/modules/LineItems/index.js:123
 msgid "Amount Due"
 msgstr ""
 
@@ -8469,7 +8474,7 @@ msgid "Nevermind"
 msgstr ""
 
 #: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:63
-#: subscriptions/show/ShowSubscription.js:153
+#: subscriptions/show/ShowSubscription.js:154
 msgid "Complete Subscription"
 msgstr ""
 
@@ -8490,7 +8495,7 @@ msgid "Subscription restored."
 msgstr ""
 
 #: subscriptions/show/modules/modals/RestoreSubscriptionModal.js:47
-msgid "Are you sure you want to restore this subscription? This will make it active again."
+msgid "Are you sure you want to restore this subscription? When you click Restore Subscription this customer will immediately be charged for the first billing period."
 msgstr ""
 
 #: subscriptions/show/modules/modals/RetryPaymentModal.js:31
@@ -8542,11 +8547,11 @@ msgstr ""
 msgid "Payment method updated."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:162
+#: subscriptions/show/ShowSubscription.js:163
 msgid "Restore Subscription"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:254
+#: subscriptions/show/ShowSubscription.js:255
 msgid "Cancel Pending Update"
 msgstr ""
 
@@ -8556,17 +8561,17 @@ msgid "Go back."
 msgstr ""
 
 #: ui/PrevNextButtons.js:28
-#: sc-pagination2.js:35
+#: sc-pagination2.js:37
 msgid "Previous"
 msgstr ""
 
 #: ui/PrevNextButtons.js:37
 #: Blocks/CheckoutForm/components/Empty.js:107
 #: Blocks/Form/components/ChooseDesign.js:28
-#: sc-login-form.js:150
-#: sc-pagination2.js:35
-#: sc-subscription-ad-hoc-confirm.js:34
-#: sc-subscription-switch.js:182
+#: sc-login-form.js:152
+#: sc-pagination2.js:37
+#: sc-subscription-ad-hoc-confirm.js:36
+#: sc-subscription-switch.js:184
 msgid "Next"
 msgstr ""
 
@@ -8577,9 +8582,9 @@ msgstr ""
 #: util/translations.js:7
 #: util/translations.js:56
 #: util/translations.js:63
-#: price.js:29
-#: price.js:49
-#: price.js:51
+#: price.js:32
+#: price.js:52
+#: price.js:54
 msgid "once"
 msgstr ""
 
@@ -8600,7 +8605,7 @@ msgstr ""
 #: Blocks/Dashboard/CustomerSubscriptions/Block.php:59
 #: Blocks/Dashboard/CustomerSubscriptions/Block.php:67
 #: Controllers/SubscriptionController.php:132
-#: sc-subscription-switch.js:196
+#: sc-subscription-switch.js:198
 msgid "Update Plan"
 msgstr ""
 
@@ -8914,29 +8919,29 @@ msgstr ""
 #: Controllers/ChargeController.php:22
 #: Controllers/ChargeController.php:32
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:43
-#: sc-charges-list.js:121
-#: sc-payment-methods-list.js:167
+#: sc-charges-list.js:123
+#: sc-payment-methods-list.js:152
 msgid "Payment History"
 msgstr ""
 
 #: Controllers/CustomerController.php:65
-#: sc-order-confirmation-customer.js:29
+#: sc-order-confirmation-customer.js:31
 msgid "Billing Details"
 msgstr ""
 
 #: Controllers/CustomerController.php:79
-#: sc-customer-edit.js:89
+#: sc-customer-edit.js:91
 msgid "Update Billing Details"
 msgstr ""
 
 #: Controllers/DownloadController.php:62
 #: Controllers/OrderController.php:69
-#: sc-orders-list.js:149
+#: sc-orders-list.js:151
 msgid "Order History"
 msgstr ""
 
 #: Controllers/DownloadController.php:142
-#: sc-licenses-list.js:52
+#: sc-licenses-list.js:54
 msgid "License Keys"
 msgstr ""
 
@@ -8971,8 +8976,8 @@ msgstr ""
 
 #: Controllers/SubscriptionController.php:115
 #: Controllers/SubscriptionController.php:208
-#: sc-subscription-switch.js:169
-#: sc-subscription.js:169
+#: sc-subscription-switch.js:171
+#: sc-subscription.js:171
 msgid "Current Plan"
 msgstr ""
 
@@ -8999,19 +9004,19 @@ msgid "Enter Amount"
 msgstr ""
 
 #: Controllers/SubscriptionController.php:303
-#: sc-subscription-ad-hoc-confirm.js:34
+#: sc-subscription-ad-hoc-confirm.js:36
 msgid "Enter An Amount"
 msgstr ""
 
 #: Controllers/SubscriptionController.php:365
-#: sc-upcoming-invoice.js:206
+#: sc-upcoming-invoice.js:208
 msgid "New Plan"
 msgstr ""
 
 #: Controllers/UserController.php:32
 #: Controllers/UserController.php:64
-#: sc-wordpress-user-edit.js:56
-#: sc-wordpress-user.js:31
+#: sc-wordpress-user-edit.js:58
+#: sc-wordpress-user.js:33
 msgid "Account Details"
 msgstr ""
 
@@ -9020,8 +9025,8 @@ msgid "Update Account Details"
 msgstr ""
 
 #: Controllers/UserController.php:95
-#: sc-password-nag.js:84
-#: sc-wordpress-password-edit.js:57
+#: sc-password-nag.js:86
+#: sc-wordpress-password-edit.js:59
 msgid "Update Password"
 msgstr ""
 
@@ -9078,7 +9083,7 @@ msgstr ""
 #: Blocks/Switch/edit.js:26
 #: Blocks/Textarea/edit.js:25
 #: Blocks/Total/edit.js:12
-#: Blocks/Totals/edit.js:74
+#: Blocks/Totals/edit.js:80
 msgid "Attributes"
 msgstr ""
 
@@ -9256,8 +9261,8 @@ msgid "Add text…"
 msgstr ""
 
 #: Blocks/BumpLineItem/edit.js:26
-#: sc-line-item-bump2.js:19
-#: sc-order-confirmation-totals2.js:33
+#: sc-line-item-bump.js:21
+#: sc-order-confirmation-totals2.js:35
 msgid "Bundle Discount"
 msgstr ""
 
@@ -9384,6 +9389,10 @@ msgstr ""
 msgid "Add some checkbox text..."
 msgstr ""
 
+#: Blocks/CheckoutErrors/edit.js:9
+msgid "If there are errors in the checkout, they will display here."
+msgstr ""
+
 #: Blocks/CheckoutForm/components/Edit.js:91
 msgid "This form has been deleted or is unavailable."
 msgstr ""
@@ -9478,7 +9487,7 @@ msgstr ""
 
 #: Blocks/CheckoutForm/components/Setup.js:184
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:82
-#: sc-payment-methods-list.js:142
+#: sc-payment-methods-list.js:132
 msgid "Default"
 msgstr ""
 
@@ -9520,6 +9529,7 @@ msgid "Column settings"
 msgstr ""
 
 #: Blocks/Column/edit.js:132
+#: Blocks/StoreLogo/edit.js:153
 msgid "Width"
 msgstr ""
 
@@ -9532,17 +9542,25 @@ msgstr ""
 msgid "Top Offset"
 msgstr ""
 
-#: Blocks/Columns/edit.js:98
+#: Blocks/Columns/edit.js:102
 #: Blocks/PriceSelector/edit.js:122
 msgid "Columns"
 msgstr ""
 
-#: Blocks/Columns/edit.js:106
+#: Blocks/Columns/edit.js:110
 msgid "This column count exceeds the recommended amount and may cause visual breakage."
 msgstr ""
 
-#: Blocks/Columns/edit.js:112
+#: Blocks/Columns/edit.js:116
 msgid "Stack on mobile"
+msgstr ""
+
+#: Blocks/Columns/edit.js:125
+msgid "Full vertical height"
+msgstr ""
+
+#: Blocks/Columns/edit.js:134
+msgid "Reverse order on mobile"
 msgstr ""
 
 #: Blocks/Columns/variations.js:17
@@ -9593,6 +9611,174 @@ msgstr ""
 msgid "Three columns; wide center column"
 msgstr ""
 
+#: Blocks/ConditionalForm/conditions.js:34
+msgid "Search for products.."
+msgstr ""
+
+#: Blocks/ConditionalForm/conditions.js:52
+msgid "Search for coupons.."
+msgstr ""
+
+#: Blocks/ConditionalForm/conditions.js:62
+#: Blocks/ConditionalForm/conditions.js:73
+msgid "Search for country.."
+msgstr ""
+
+#: Blocks/ConditionalForm/conditions.js:84
+msgid "Search for payment method..."
+msgstr ""
+
+#: Blocks/ConditionalForm/conditions.js:284
+#: Blocks/ConditionalForm/rules.js:219
+msgid "AND"
+msgstr ""
+
+#: Blocks/ConditionalForm/edit.js:86
+msgid "Edit Conditions"
+msgstr ""
+
+#: Blocks/ConditionalForm/edit.js:92
+msgid "Conditions"
+msgstr ""
+
+#: Blocks/ConditionalForm/edit.js:100
+msgid "Configure different visibility conditions to control when the contents appear to customers."
+msgstr ""
+
+#: Blocks/ConditionalForm/edit.js:117
+#: Blocks/ConditionalForm/edit.js:176
+msgid "Configure Conditions"
+msgstr ""
+
+#: Blocks/ConditionalForm/edit.js:138
+#: Blocks/ConditionalForm/edit.js:162
+msgid "Conditional"
+msgstr ""
+
+#: Blocks/ConditionalForm/edit.js:163
+msgid "First, add some conditions for the display of this group of blocks."
+msgstr ""
+
+#: Blocks/ConditionalForm/edit.js:169
+msgid "Add Conditions"
+msgstr ""
+
+#: Blocks/ConditionalForm/rules.js:240
+#: Blocks/ConditionalForm/rules.js:252
+msgid "OR"
+msgstr ""
+
+#: Blocks/ConditionalForm/rules.js:275
+msgid "Set Rules"
+msgstr ""
+
+#: Blocks/ConditionalForm/selectors/SelectCoupons/index.js:26
+msgid "%s off"
+msgstr ""
+
+#: Blocks/ConditionalForm/selectors/SelectCoupons/index.js:91
+msgid "Add Another Coupon"
+msgstr ""
+
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:7
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:47
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:69
+#: Blocks/ConditionalForm/translations.js:10
+msgid "matches any of"
+msgstr ""
+
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:11
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:51
+#: Blocks/ConditionalForm/translations.js:11
+msgid "matches all of"
+msgstr ""
+
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:15
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:55
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:73
+#: Blocks/ConditionalForm/translations.js:12
+msgid "matches none of"
+msgstr ""
+
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:21
+#: Blocks/ConditionalForm/translations.js:15
+#: Blocks/ConditionalForm/translations.js:16
+msgid "is equal to"
+msgstr ""
+
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:25
+msgid "is not equal to"
+msgstr ""
+
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:29
+#: Blocks/ConditionalForm/translations.js:17
+msgid "is greater than"
+msgstr ""
+
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:33
+#: Blocks/ConditionalForm/translations.js:18
+msgid "is less than"
+msgstr ""
+
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:37
+#: Blocks/ConditionalForm/translations.js:19
+msgid "is greater or equal to"
+msgstr ""
+
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:41
+msgid "is less or equal to"
+msgstr ""
+
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:59
+msgid "exist"
+msgstr ""
+
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:63
+msgid "not exist"
+msgstr ""
+
+#: Blocks/ConditionalForm/selectors/SelectProcessors/index.js:27
+#: Blocks/Payment/components/Inspector.js:66
+msgid "Stripe"
+msgstr ""
+
+#: Blocks/ConditionalForm/selectors/SelectProcessors/index.js:38
+#: Blocks/Payment/components/Inspector.js:76
+msgid "PayPal"
+msgstr ""
+
+#: Blocks/ConditionalForm/selectors/SelectProcessors/index.js:115
+msgid "Add Another Processor"
+msgstr ""
+
+#: Blocks/ConditionalForm/translations.js:4
+msgid "Product(s)"
+msgstr ""
+
+#: Blocks/ConditionalForm/translations.js:6
+msgid "Coupon(s)"
+msgstr ""
+
+#: Blocks/ConditionalForm/translations.js:8
+msgid "Billing Country"
+msgstr ""
+
+#: Blocks/ConditionalForm/translations.js:9
+msgid "Shipping Country"
+msgstr ""
+
+#: Blocks/ConditionalForm/translations.js:13
+msgid "exists"
+msgstr ""
+
+#: Blocks/ConditionalForm/translations.js:14
+msgid "does not exist"
+msgstr ""
+
+#: Blocks/ConditionalForm/translations.js:20
+msgid "is less than or equal to"
+msgstr ""
+
 #: Blocks/Confirmation/edit.js:11
 msgid "Thank you for your purchase! Please check your inbox for additional information."
 msgstr ""
@@ -9640,7 +9826,7 @@ msgid "Billing Email"
 msgstr ""
 
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:71
-#: sc-customer-edit.js:104
+#: sc-customer-edit.js:106
 msgid "Billing Address"
 msgstr ""
 
@@ -9665,11 +9851,11 @@ msgstr ""
 #: Blocks/Dashboard/CustomerOrders/edit.js:42
 #: Blocks/Dashboard/CustomerSubscriptions/edit.js:52
 #: Blocks/Dashboard/OrderDownloads/edit.js:41
-#: sc-charges-list.js:121
-#: sc-invoices-list.js:138
-#: sc-orders-list.js:149
-#: sc-purchase-downloads-list2.js:60
-#: sc-subscriptions-list.js:131
+#: sc-charges-list.js:123
+#: sc-invoices-list.js:140
+#: sc-orders-list.js:151
+#: sc-purchase-downloads-list2.js:62
+#: sc-subscriptions-list.js:133
 msgid "View all"
 msgstr ""
 
@@ -9684,7 +9870,7 @@ msgid "Application UI Icon Pack"
 msgstr ""
 
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:47
-#: sc-payment-methods-list.js:170
+#: sc-payment-methods-list.js:155
 msgid "Add"
 msgstr ""
 
@@ -9709,8 +9895,8 @@ msgid "Add a tab name"
 msgstr ""
 
 #: Blocks/Dashboard/WordPressAccount/edit.js:50
-#: sc-wordpress-user-edit.js:56
-#: sc-wordpress-user.js:25
+#: sc-wordpress-user-edit.js:58
+#: sc-wordpress-user.js:27
 msgid "Display Name"
 msgstr ""
 
@@ -9827,7 +10013,7 @@ msgid "Processing Payment"
 msgstr ""
 
 #: Blocks/Form/edit.js:322
-#: sc-checkout.js:192
+#: sc-checkout.js:194
 msgid "Processing payment..."
 msgstr ""
 
@@ -9836,7 +10022,7 @@ msgid "Confirming Payment"
 msgstr ""
 
 #: Blocks/Form/edit.js:340
-#: sc-checkout.js:192
+#: sc-checkout.js:194
 msgid "Finalizing order..."
 msgstr ""
 
@@ -9845,7 +10031,7 @@ msgid "Success Text"
 msgstr ""
 
 #: Blocks/Form/edit.js:355
-#: sc-checkout.js:192
+#: sc-checkout.js:194
 msgid "Success! Redirecting..."
 msgstr ""
 
@@ -9891,7 +10077,7 @@ msgid "Show Currency Code"
 msgstr ""
 
 #: Blocks/OrderBumps/edit.js:16
-#: sc-order-bumps2.js:23
+#: sc-order-bumps2.js:25
 msgid "Recommended"
 msgstr ""
 
@@ -9928,16 +10114,8 @@ msgstr ""
 msgid "Disable or enable specific processors for this form."
 msgstr ""
 
-#: Blocks/Payment/components/Inspector.js:66
-msgid "Stripe"
-msgstr ""
-
 #: Blocks/Payment/components/Inspector.js:67
 msgid "Enable Stripe payment"
-msgstr ""
-
-#: Blocks/Payment/components/Inspector.js:76
-msgid "PayPal"
 msgstr ""
 
 #: Blocks/Payment/components/Inspector.js:77
@@ -9984,6 +10162,26 @@ msgstr ""
 msgid "(Not in this example order, but will be conditionally displayed)"
 msgstr ""
 
+#: Blocks/StoreLogo/edit.js:81
+msgid "Store Logo"
+msgstr ""
+
+#: Blocks/StoreLogo/edit.js:83
+msgid "This is also displayed on your invoices, receipts and emails."
+msgstr ""
+
+#: Blocks/StoreLogo/edit.js:166
+msgid "Set a maximum height"
+msgstr ""
+
+#: Blocks/StoreLogo/edit.js:176
+msgid "Maximum height"
+msgstr ""
+
+#: Blocks/StoreLogo/edit.js:193
+msgid "Link image to home"
+msgstr ""
+
 #: Blocks/Submit/edit.js:44
 msgid "Show total due in button text."
 msgstr ""
@@ -10001,37 +10199,45 @@ msgstr ""
 msgid "Enter a description..."
 msgstr ""
 
+#: Blocks/Textarea/edit.js:58
+msgid "Max Length"
+msgstr ""
+
 #: Blocks/Total/edit.js:22
 msgid "Label with Free Trial"
 msgstr ""
 
-#: Blocks/Totals/edit.js:52
-#: sc-upcoming-invoice.js:201
+#: Blocks/Totals/edit.js:58
+#: sc-upcoming-invoice.js:203
 msgid "Add Coupon Code"
 msgstr ""
 
-#: Blocks/Totals/edit.js:53
+#: Blocks/Totals/edit.js:59
 msgid "Apply Coupon"
 msgstr ""
 
-#: Blocks/Totals/edit.js:62
-#: sc-line-item-total2.js:32
+#: Blocks/Totals/edit.js:68
+#: sc-line-item-total2.js:34
 msgid "Total Due Today"
 msgstr ""
 
-#: Blocks/Totals/edit.js:77
+#: Blocks/Totals/edit.js:83
 msgid "Collapsible"
 msgstr ""
 
-#: Blocks/Totals/edit.js:89
+#: Blocks/Totals/edit.js:95
 msgid "Collapsed By Default"
 msgstr ""
 
-#: Blocks/Totals/edit.js:101
+#: Blocks/Totals/edit.js:107
+msgid "Collapsed On Mobile"
+msgstr ""
+
+#: Blocks/Totals/edit.js:116
 msgid "Closed Text"
 msgstr ""
 
-#: Blocks/Totals/edit.js:110
+#: Blocks/Totals/edit.js:125
 msgid "Open Text"
 msgstr ""
 
@@ -10203,6 +10409,7 @@ msgstr ""
 #: Blocks/BumpLineItem/block.json
 #: Blocks/Button/block.json
 #: Blocks/Checkbox/block.json
+#: Blocks/CheckoutErrors/block.json
 #: Blocks/CheckoutForm/block.json
 #: Blocks/PriceChoice/block.json
 #: Blocks/PriceSelector/block.json
@@ -10408,6 +10615,26 @@ msgctxt "block keyword"
 msgid "toggle"
 msgstr ""
 
+#: Blocks/CheckoutErrors/block.json
+msgctxt "block title"
+msgid "Checkout Errors"
+msgstr ""
+
+#: Blocks/CheckoutErrors/block.json
+msgctxt "block description"
+msgid "Display any checkout-related errors. By default the checkout form shows these at the top. Add this block to change the location."
+msgstr ""
+
+#: Blocks/CheckoutErrors/block.json
+msgctxt "block keyword"
+msgid "error"
+msgstr ""
+
+#: Blocks/CheckoutErrors/block.json
+msgctxt "block keyword"
+msgid "notice"
+msgstr ""
+
 #: Blocks/CheckoutForm/block.json
 msgctxt "block title"
 msgid "Checkout Form"
@@ -10425,7 +10652,7 @@ msgstr ""
 
 #: Blocks/Column/block.json
 msgctxt "block title"
-msgid "Column"
+msgid "SureCart Column"
 msgstr ""
 
 #: Blocks/Column/block.json
@@ -10435,12 +10662,22 @@ msgstr ""
 
 #: Blocks/Columns/block.json
 msgctxt "block title"
-msgid "Columns"
+msgid "SureCart Columns"
 msgstr ""
 
 #: Blocks/Columns/block.json
 msgctxt "block description"
 msgid "Display content in multiple columns, with blocks added to each column."
+msgstr ""
+
+#: Blocks/ConditionalForm/block.json
+msgctxt "block title"
+msgid "Conditional"
+msgstr ""
+
+#: Blocks/ConditionalForm/block.json
+msgctxt "block description"
+msgid "Display an area of the form based on conditions."
 msgstr ""
 
 #: Blocks/Confirmation/block.json
@@ -11080,6 +11317,36 @@ msgctxt "block keyword"
 msgid "meta"
 msgstr ""
 
+#: Blocks/StoreLogo/block.json
+msgctxt "block title"
+msgid "Store Logo"
+msgstr ""
+
+#: Blocks/StoreLogo/block.json
+msgctxt "block description"
+msgid "Display the store logo."
+msgstr ""
+
+#: Blocks/StoreLogo/block.json
+msgctxt "block keyword"
+msgid "logo"
+msgstr ""
+
+#: Blocks/StoreLogo/block.json
+msgctxt "block keyword"
+msgid "image"
+msgstr ""
+
+#: Blocks/StoreLogo/block.json
+msgctxt "block keyword"
+msgid "store"
+msgstr ""
+
+#: Blocks/StoreLogo/block.json
+msgctxt "block keyword"
+msgid "store logo"
+msgstr ""
+
 #: Blocks/Submit/block.json
 msgctxt "block title"
 msgid "Submit Button"
@@ -11183,1577 +11450,1587 @@ msgctxt "block description"
 msgid "Display the session totals."
 msgstr ""
 
-#: address.js:14
+#: address.js:17
 msgid "Afghanistan"
 msgstr ""
 
-#: address.js:15
+#: address.js:18
 msgid "Albania"
 msgstr ""
 
-#: address.js:16
+#: address.js:19
 msgid "Algeria"
 msgstr ""
 
-#: address.js:17
+#: address.js:20
 msgid "American Samoa"
 msgstr ""
 
-#: address.js:18
+#: address.js:21
 msgid "Andorra"
 msgstr ""
 
-#: address.js:19
+#: address.js:22
 msgid "Angola"
 msgstr ""
 
-#: address.js:20
+#: address.js:23
 msgid "Anguilla"
 msgstr ""
 
-#: address.js:21
+#: address.js:24
 msgid "Antarctica"
 msgstr ""
 
-#: address.js:22
+#: address.js:25
 msgid "Antigua and Barbuda"
 msgstr ""
 
-#: address.js:23
+#: address.js:26
 msgid "Argentina"
 msgstr ""
 
-#: address.js:24
+#: address.js:27
 msgid "Armenia"
 msgstr ""
 
-#: address.js:25
+#: address.js:28
 msgid "Aruba"
 msgstr ""
 
-#: address.js:27
+#: address.js:30
 msgid "Austria"
 msgstr ""
 
-#: address.js:28
+#: address.js:31
 msgid "Azerbaijan"
 msgstr ""
 
-#: address.js:29
+#: address.js:32
 msgid "Bahamas"
 msgstr ""
 
-#: address.js:30
+#: address.js:33
 msgid "Bahrain"
 msgstr ""
 
-#: address.js:31
+#: address.js:34
 msgid "Bangladesh"
 msgstr ""
 
-#: address.js:32
+#: address.js:35
 msgid "Barbados"
 msgstr ""
 
-#: address.js:33
+#: address.js:36
 msgid "Belarus"
 msgstr ""
 
-#: address.js:34
+#: address.js:37
 msgid "Belgium"
 msgstr ""
 
-#: address.js:35
+#: address.js:38
 msgid "Belize"
 msgstr ""
 
-#: address.js:36
+#: address.js:39
 msgid "Benin"
 msgstr ""
 
-#: address.js:37
+#: address.js:40
 msgid "Bermuda"
 msgstr ""
 
-#: address.js:38
+#: address.js:41
 msgid "Bhutan"
 msgstr ""
 
-#: address.js:39
+#: address.js:42
 msgid "Bolivia"
 msgstr ""
 
-#: address.js:40
+#: address.js:43
 msgid "Bonaire, Sint Eustatius and Saba"
 msgstr ""
 
-#: address.js:41
+#: address.js:44
 msgid "Bosnia and Herzegovina"
 msgstr ""
 
-#: address.js:42
+#: address.js:45
 msgid "Botswana"
 msgstr ""
 
-#: address.js:43
+#: address.js:46
 msgid "Bouvet Island"
 msgstr ""
 
-#: address.js:44
+#: address.js:47
 msgid "Brazil"
 msgstr ""
 
-#: address.js:45
+#: address.js:48
 msgid "British Indian Ocean Territory"
 msgstr ""
 
-#: address.js:46
+#: address.js:49
 msgid "Brunei Darussalam"
 msgstr ""
 
-#: address.js:47
+#: address.js:50
 msgid "Bulgaria"
 msgstr ""
 
-#: address.js:48
+#: address.js:51
 msgid "Burkina Faso"
 msgstr ""
 
-#: address.js:49
+#: address.js:52
 msgid "Burundi"
 msgstr ""
 
-#: address.js:50
+#: address.js:53
 msgid "Cabo Verde"
 msgstr ""
 
-#: address.js:51
+#: address.js:54
 msgid "Cambodia"
 msgstr ""
 
-#: address.js:52
+#: address.js:55
 msgid "Cameroon"
 msgstr ""
 
-#: address.js:54
+#: address.js:57
 msgid "Cayman Islands"
 msgstr ""
 
-#: address.js:55
+#: address.js:58
 msgid "Central African Republic"
 msgstr ""
 
-#: address.js:56
+#: address.js:59
 msgid "Chad"
 msgstr ""
 
-#: address.js:57
+#: address.js:60
 msgid "Chile"
 msgstr ""
 
-#: address.js:58
+#: address.js:61
 msgid "China"
 msgstr ""
 
-#: address.js:59
+#: address.js:62
 msgid "Christmas Island"
 msgstr ""
 
-#: address.js:60
+#: address.js:63
 msgid "Cocos (Keeling) Islands"
 msgstr ""
 
-#: address.js:61
+#: address.js:64
 msgid "Colombia"
 msgstr ""
 
-#: address.js:62
+#: address.js:65
 msgid "Comoros"
 msgstr ""
 
-#: address.js:63
+#: address.js:66
 msgid "Congo"
 msgstr ""
 
-#: address.js:64
+#: address.js:67
 msgid "Congo, The Democratic Republic of the"
 msgstr ""
 
-#: address.js:65
+#: address.js:68
 msgid "Cook Islands"
 msgstr ""
 
-#: address.js:66
+#: address.js:69
 msgid "Costa Rica"
 msgstr ""
 
-#: address.js:67
+#: address.js:70
 msgid "Croatia"
 msgstr ""
 
-#: address.js:68
+#: address.js:71
 msgid "Cuba"
 msgstr ""
 
-#: address.js:69
+#: address.js:72
 msgid "Curaçao"
 msgstr ""
 
-#: address.js:70
+#: address.js:73
 msgid "Cyprus"
 msgstr ""
 
-#: address.js:71
+#: address.js:74
 msgid "Czechia"
 msgstr ""
 
-#: address.js:72
+#: address.js:75
 msgid "Côte d'Ivoire"
 msgstr ""
 
-#: address.js:73
+#: address.js:76
 msgid "Denmark"
 msgstr ""
 
-#: address.js:74
+#: address.js:77
 msgid "Djibouti"
 msgstr ""
 
-#: address.js:75
+#: address.js:78
 msgid "Dominica"
 msgstr ""
 
-#: address.js:76
+#: address.js:79
 msgid "Dominican Republic"
 msgstr ""
 
-#: address.js:77
+#: address.js:80
 msgid "Ecuador"
 msgstr ""
 
-#: address.js:78
+#: address.js:81
 msgid "Egypt"
 msgstr ""
 
-#: address.js:79
+#: address.js:82
 msgid "El Salvador"
 msgstr ""
 
-#: address.js:80
+#: address.js:83
 msgid "Equatorial Guinea"
 msgstr ""
 
-#: address.js:81
+#: address.js:84
 msgid "Eritrea"
 msgstr ""
 
-#: address.js:82
+#: address.js:85
 msgid "Estonia"
 msgstr ""
 
-#: address.js:83
+#: address.js:86
 msgid "Eswatini"
 msgstr ""
 
-#: address.js:84
+#: address.js:87
 msgid "Ethiopia"
 msgstr ""
 
-#: address.js:85
+#: address.js:88
 msgid "Falkland Islands (Malvinas)"
 msgstr ""
 
-#: address.js:86
+#: address.js:89
 msgid "Faroe Islands"
 msgstr ""
 
-#: address.js:87
+#: address.js:90
 msgid "Fiji"
 msgstr ""
 
-#: address.js:88
+#: address.js:91
 msgid "Finland"
 msgstr ""
 
-#: address.js:89
+#: address.js:92
 msgid "France"
 msgstr ""
 
-#: address.js:90
+#: address.js:93
 msgid "French Guiana"
 msgstr ""
 
-#: address.js:91
+#: address.js:94
 msgid "French Polynesia"
 msgstr ""
 
-#: address.js:92
+#: address.js:95
 msgid "French Southern Territories"
 msgstr ""
 
-#: address.js:93
+#: address.js:96
 msgid "Gabon"
 msgstr ""
 
-#: address.js:94
+#: address.js:97
 msgid "Gambia"
 msgstr ""
 
-#: address.js:95
+#: address.js:98
 msgid "Georgia"
 msgstr ""
 
-#: address.js:96
+#: address.js:99
 msgid "Germany"
 msgstr ""
 
-#: address.js:97
+#: address.js:100
 msgid "Ghana"
 msgstr ""
 
-#: address.js:98
+#: address.js:101
 msgid "Gibraltar"
 msgstr ""
 
-#: address.js:99
+#: address.js:102
 msgid "Greece"
 msgstr ""
 
-#: address.js:100
+#: address.js:103
 msgid "Greenland"
 msgstr ""
 
-#: address.js:101
+#: address.js:104
 msgid "Grenada"
 msgstr ""
 
-#: address.js:102
+#: address.js:105
 msgid "Guadeloupe"
 msgstr ""
 
-#: address.js:103
+#: address.js:106
 msgid "Guam"
 msgstr ""
 
-#: address.js:104
+#: address.js:107
 msgid "Guatemala"
 msgstr ""
 
-#: address.js:105
+#: address.js:108
 msgid "Guernsey"
 msgstr ""
 
-#: address.js:106
+#: address.js:109
 msgid "Guinea"
 msgstr ""
 
-#: address.js:107
+#: address.js:110
 msgid "Guinea-Bissau"
 msgstr ""
 
-#: address.js:108
+#: address.js:111
 msgid "Guyana"
 msgstr ""
 
-#: address.js:109
+#: address.js:112
 msgid "Haiti"
 msgstr ""
 
-#: address.js:110
+#: address.js:113
 msgid "Heard Island and McDonald Islands"
 msgstr ""
 
-#: address.js:111
+#: address.js:114
 msgid "Holy See (Vatican City State)"
 msgstr ""
 
-#: address.js:112
+#: address.js:115
 msgid "Honduras"
 msgstr ""
 
-#: address.js:113
+#: address.js:116
 msgid "Hong Kong"
 msgstr ""
 
-#: address.js:114
+#: address.js:117
 msgid "Hungary"
 msgstr ""
 
-#: address.js:115
+#: address.js:118
 msgid "Iceland"
 msgstr ""
 
-#: address.js:116
+#: address.js:119
 msgid "India"
 msgstr ""
 
-#: address.js:117
+#: address.js:120
 msgid "Indonesia"
 msgstr ""
 
-#: address.js:118
+#: address.js:121
 msgid "Iran, Islamic Republic of"
 msgstr ""
 
-#: address.js:119
+#: address.js:122
 msgid "Iraq"
 msgstr ""
 
-#: address.js:120
+#: address.js:123
 msgid "Ireland"
 msgstr ""
 
-#: address.js:121
+#: address.js:124
 msgid "Isle of Man"
 msgstr ""
 
-#: address.js:122
+#: address.js:125
 msgid "Israel"
 msgstr ""
 
-#: address.js:123
+#: address.js:126
 msgid "Italy"
 msgstr ""
 
-#: address.js:124
+#: address.js:127
 msgid "Jamaica"
 msgstr ""
 
-#: address.js:125
+#: address.js:128
 msgid "Japan"
 msgstr ""
 
-#: address.js:126
+#: address.js:129
 msgid "Jersey"
 msgstr ""
 
-#: address.js:127
+#: address.js:130
 msgid "Jordan"
 msgstr ""
 
-#: address.js:128
+#: address.js:131
 msgid "Kazakhstan"
 msgstr ""
 
-#: address.js:129
+#: address.js:132
 msgid "Kenya"
 msgstr ""
 
-#: address.js:130
+#: address.js:133
 msgid "Kiribati"
 msgstr ""
 
-#: address.js:131
+#: address.js:134
 msgid "Kuwait"
 msgstr ""
 
-#: address.js:132
+#: address.js:135
 msgid "Kyrgyzstan"
 msgstr ""
 
-#: address.js:133
+#: address.js:136
 msgid "Lao People's Democratic Republic"
 msgstr ""
 
-#: address.js:134
+#: address.js:137
 msgid "Latvia"
 msgstr ""
 
-#: address.js:135
+#: address.js:138
 msgid "Lebanon"
 msgstr ""
 
-#: address.js:136
+#: address.js:139
 msgid "Lesotho"
 msgstr ""
 
-#: address.js:137
+#: address.js:140
 msgid "Liberia"
 msgstr ""
 
-#: address.js:138
+#: address.js:141
 msgid "Libya"
 msgstr ""
 
-#: address.js:139
+#: address.js:142
 msgid "Liechtenstein"
 msgstr ""
 
-#: address.js:140
+#: address.js:143
 msgid "Lithuania"
 msgstr ""
 
-#: address.js:141
+#: address.js:144
 msgid "Luxembourg"
 msgstr ""
 
-#: address.js:142
+#: address.js:145
 msgid "Macao"
 msgstr ""
 
-#: address.js:143
+#: address.js:146
 msgid "Madagascar"
 msgstr ""
 
-#: address.js:144
+#: address.js:147
 msgid "Malawi"
 msgstr ""
 
-#: address.js:145
+#: address.js:148
 msgid "Malaysia"
 msgstr ""
 
-#: address.js:146
+#: address.js:149
 msgid "Maldives"
 msgstr ""
 
-#: address.js:147
+#: address.js:150
 msgid "Mali"
 msgstr ""
 
-#: address.js:148
+#: address.js:151
 msgid "Malta"
 msgstr ""
 
-#: address.js:149
+#: address.js:152
 msgid "Marshall Islands"
 msgstr ""
 
-#: address.js:150
+#: address.js:153
 msgid "Martinique"
 msgstr ""
 
-#: address.js:151
+#: address.js:154
 msgid "Mauritania"
 msgstr ""
 
-#: address.js:152
+#: address.js:155
 msgid "Mauritius"
 msgstr ""
 
-#: address.js:153
+#: address.js:156
 msgid "Mayotte"
 msgstr ""
 
-#: address.js:154
+#: address.js:157
 msgid "Mexico"
 msgstr ""
 
-#: address.js:155
+#: address.js:158
 msgid "Micronesia, Federated States of"
 msgstr ""
 
-#: address.js:156
+#: address.js:159
 msgid "Moldova"
 msgstr ""
 
-#: address.js:157
+#: address.js:160
 msgid "Monaco"
 msgstr ""
 
-#: address.js:158
+#: address.js:161
 msgid "Mongolia"
 msgstr ""
 
-#: address.js:159
+#: address.js:162
 msgid "Montenegro"
 msgstr ""
 
-#: address.js:160
+#: address.js:163
 msgid "Montserrat"
 msgstr ""
 
-#: address.js:161
+#: address.js:164
 msgid "Morocco"
 msgstr ""
 
-#: address.js:162
+#: address.js:165
 msgid "Mozambique"
 msgstr ""
 
-#: address.js:163
+#: address.js:166
 msgid "Myanmar"
 msgstr ""
 
-#: address.js:164
+#: address.js:167
 msgid "Namibia"
 msgstr ""
 
-#: address.js:165
+#: address.js:168
 msgid "Nauru"
 msgstr ""
 
-#: address.js:166
+#: address.js:169
 msgid "Nepal"
 msgstr ""
 
-#: address.js:167
+#: address.js:170
 msgid "Netherlands"
 msgstr ""
 
-#: address.js:168
+#: address.js:171
 msgid "New Caledonia"
 msgstr ""
 
-#: address.js:169
+#: address.js:172
 msgid "New Zealand"
 msgstr ""
 
-#: address.js:170
+#: address.js:173
 msgid "Nicaragua"
 msgstr ""
 
-#: address.js:171
+#: address.js:174
 msgid "Niger"
 msgstr ""
 
-#: address.js:172
+#: address.js:175
 msgid "Nigeria"
 msgstr ""
 
-#: address.js:173
+#: address.js:176
 msgid "Niue"
 msgstr ""
 
-#: address.js:174
+#: address.js:177
 msgid "Norfolk Island"
 msgstr ""
 
-#: address.js:175
+#: address.js:178
 msgid "North Korea"
 msgstr ""
 
-#: address.js:176
+#: address.js:179
 msgid "North Macedonia"
 msgstr ""
 
-#: address.js:177
+#: address.js:180
 msgid "Northern Mariana Islands"
 msgstr ""
 
-#: address.js:178
+#: address.js:181
 msgid "Norway"
 msgstr ""
 
-#: address.js:179
+#: address.js:182
 msgid "Oman"
 msgstr ""
 
-#: address.js:180
+#: address.js:183
 msgid "Pakistan"
 msgstr ""
 
-#: address.js:181
+#: address.js:184
 msgid "Palau"
 msgstr ""
 
-#: address.js:182
+#: address.js:185
 msgid "Palestine, State of"
 msgstr ""
 
-#: address.js:183
+#: address.js:186
 msgid "Panama"
 msgstr ""
 
-#: address.js:184
+#: address.js:187
 msgid "Papua New Guinea"
 msgstr ""
 
-#: address.js:185
+#: address.js:188
 msgid "Paraguay"
 msgstr ""
 
-#: address.js:186
+#: address.js:189
 msgid "Peru"
 msgstr ""
 
-#: address.js:187
+#: address.js:190
 msgid "Philippines"
 msgstr ""
 
-#: address.js:188
+#: address.js:191
 msgid "Pitcairn"
 msgstr ""
 
-#: address.js:189
+#: address.js:192
 msgid "Poland"
 msgstr ""
 
-#: address.js:190
+#: address.js:193
 msgid "Portugal"
 msgstr ""
 
-#: address.js:191
+#: address.js:194
 msgid "Puerto Rico"
 msgstr ""
 
-#: address.js:192
+#: address.js:195
 msgid "Qatar"
 msgstr ""
 
-#: address.js:193
+#: address.js:196
 msgid "Romania"
 msgstr ""
 
-#: address.js:194
+#: address.js:197
 msgid "Russian Federation"
 msgstr ""
 
-#: address.js:195
+#: address.js:198
 msgid "Rwanda"
 msgstr ""
 
-#: address.js:196
+#: address.js:199
 msgid "Réunion"
 msgstr ""
 
-#: address.js:197
+#: address.js:200
 msgid "Saint Barthélemy"
 msgstr ""
 
-#: address.js:198
+#: address.js:201
 msgid "Saint Helena, Ascension and Tristan da Cunha"
 msgstr ""
 
-#: address.js:199
+#: address.js:202
 msgid "Saint Kitts and Nevis"
 msgstr ""
 
-#: address.js:200
+#: address.js:203
 msgid "Saint Lucia"
 msgstr ""
 
-#: address.js:201
+#: address.js:204
 msgid "Saint Martin (French part)"
 msgstr ""
 
-#: address.js:202
+#: address.js:205
 msgid "Saint Pierre and Miquelon"
 msgstr ""
 
-#: address.js:203
+#: address.js:206
 msgid "Saint Vincent and the Grenadines"
 msgstr ""
 
-#: address.js:204
+#: address.js:207
 msgid "Samoa"
 msgstr ""
 
-#: address.js:205
+#: address.js:208
 msgid "San Marino"
 msgstr ""
 
-#: address.js:206
+#: address.js:209
 msgid "Sao Tome and Principe"
 msgstr ""
 
-#: address.js:207
+#: address.js:210
 msgid "Saudi Arabia"
 msgstr ""
 
-#: address.js:208
+#: address.js:211
 msgid "Senegal"
 msgstr ""
 
-#: address.js:209
+#: address.js:212
 msgid "Serbia"
 msgstr ""
 
-#: address.js:210
+#: address.js:213
 msgid "Seychelles"
 msgstr ""
 
-#: address.js:211
+#: address.js:214
 msgid "Sierra Leone"
 msgstr ""
 
-#: address.js:212
+#: address.js:215
 msgid "Singapore"
 msgstr ""
 
-#: address.js:213
+#: address.js:216
 msgid "Sint Maarten (Dutch part)"
 msgstr ""
 
-#: address.js:214
+#: address.js:217
 msgid "Slovakia"
 msgstr ""
 
-#: address.js:215
+#: address.js:218
 msgid "Slovenia"
 msgstr ""
 
-#: address.js:216
+#: address.js:219
 msgid "Solomon Islands"
 msgstr ""
 
-#: address.js:217
+#: address.js:220
 msgid "Somalia"
 msgstr ""
 
-#: address.js:218
+#: address.js:221
 msgid "South Africa"
 msgstr ""
 
-#: address.js:219
+#: address.js:222
 msgid "South Georgia and the South Sandwich Islands"
 msgstr ""
 
-#: address.js:220
+#: address.js:223
 msgid "South Korea"
 msgstr ""
 
-#: address.js:221
+#: address.js:224
 msgid "South Sudan"
 msgstr ""
 
-#: address.js:222
+#: address.js:225
 msgid "Spain"
 msgstr ""
 
-#: address.js:223
+#: address.js:226
 msgid "Sri Lanka"
 msgstr ""
 
-#: address.js:224
+#: address.js:227
 msgid "Sudan"
 msgstr ""
 
-#: address.js:225
+#: address.js:228
 msgid "Suriname"
 msgstr ""
 
-#: address.js:226
+#: address.js:229
 msgid "Svalbard and Jan Mayen"
 msgstr ""
 
-#: address.js:227
+#: address.js:230
 msgid "Sweden"
 msgstr ""
 
-#: address.js:228
+#: address.js:231
 msgid "Switzerland"
 msgstr ""
 
-#: address.js:229
+#: address.js:232
 msgid "Syrian Arab Republic"
 msgstr ""
 
-#: address.js:230
+#: address.js:233
 msgid "Taiwan"
 msgstr ""
 
-#: address.js:231
+#: address.js:234
 msgid "Tajikistan"
 msgstr ""
 
-#: address.js:232
+#: address.js:235
 msgid "Tanzania"
 msgstr ""
 
-#: address.js:233
+#: address.js:236
 msgid "Thailand"
 msgstr ""
 
-#: address.js:234
+#: address.js:237
 msgid "Timor-Leste"
 msgstr ""
 
-#: address.js:235
+#: address.js:238
 msgid "Togo"
 msgstr ""
 
-#: address.js:236
+#: address.js:239
 msgid "Tokelau"
 msgstr ""
 
-#: address.js:237
+#: address.js:240
 msgid "Tonga"
 msgstr ""
 
-#: address.js:238
+#: address.js:241
 msgid "Trinidad and Tobago"
 msgstr ""
 
-#: address.js:239
+#: address.js:242
 msgid "Tunisia"
 msgstr ""
 
-#: address.js:240
+#: address.js:243
 msgid "Turkey"
 msgstr ""
 
-#: address.js:241
+#: address.js:244
 msgid "Turkmenistan"
 msgstr ""
 
-#: address.js:242
+#: address.js:245
 msgid "Turks and Caicos Islands"
 msgstr ""
 
-#: address.js:243
+#: address.js:246
 msgid "Tuvalu"
 msgstr ""
 
-#: address.js:244
+#: address.js:247
 msgid "Uganda"
 msgstr ""
 
-#: address.js:245
+#: address.js:248
 msgid "Ukraine"
 msgstr ""
 
-#: address.js:246
+#: address.js:249
 msgid "United Arab Emirates"
 msgstr ""
 
-#: address.js:249
+#: address.js:252
 msgid "United States Minor Outlying Islands"
 msgstr ""
 
-#: address.js:250
+#: address.js:253
 msgid "Uruguay"
 msgstr ""
 
-#: address.js:251
+#: address.js:254
 msgid "Uzbekistan"
 msgstr ""
 
-#: address.js:252
+#: address.js:255
 msgid "Vanuatu"
 msgstr ""
 
-#: address.js:253
+#: address.js:256
 msgid "Venezuela"
 msgstr ""
 
-#: address.js:254
+#: address.js:257
 msgid "Vietnam"
 msgstr ""
 
-#: address.js:255
+#: address.js:258
 msgid "Virgin Islands, British"
 msgstr ""
 
-#: address.js:256
+#: address.js:259
 msgid "Virgin Islands, U.S."
 msgstr ""
 
-#: address.js:257
+#: address.js:260
 msgid "Wallis and Futuna"
 msgstr ""
 
-#: address.js:258
+#: address.js:261
 msgid "Western Sahara"
 msgstr ""
 
-#: address.js:259
+#: address.js:262
 msgid "Yemen"
 msgstr ""
 
-#: address.js:260
+#: address.js:263
 msgid "Zambia"
 msgstr ""
 
-#: address.js:261
+#: address.js:264
 msgid "Zimbabwe"
 msgstr ""
 
-#: address.js:262
+#: address.js:265
 msgid "Åland Islands"
 msgstr ""
 
-#: fetch.js:694
+#: default-i18n.js:470
+#: fetch.js:443
+msgctxt "text direction"
+msgid "ltr"
+msgstr ""
+
+#: fetch.js:1846
 msgid "The response is not a valid JSON response."
 msgstr ""
 
-#: fetch.js:737
+#: fetch.js:1889
 msgid "An unknown error occurred."
 msgstr ""
 
-#: fetch.js:807
+#: fetch.js:1959
 msgid "Media upload failed. If this is a photo or a large image, please scale it down and try again."
 msgstr ""
 
-#: fetch.js:925
+#: fetch.js:2077
 msgid "You are probably offline."
 msgstr ""
 
-#: paypal-buttons.js:87
-#: paypal-buttons.js:101
-#: paypal-buttons.js:107
-#: sc-paypal-add-method.js:54
-#: sc-paypal-add-method.js:59
-#: sc-paypal-add-method.js:65
+#: paypal-buttons.js:89
+#: paypal-buttons.js:103
+#: paypal-buttons.js:109
+#: sc-paypal-add-method.js:56
+#: sc-paypal-add-method.js:61
+#: sc-paypal-add-method.js:67
 msgid "The payment did not process. Please try again."
 msgstr ""
 
-#: paypal-buttons.js:142
+#: paypal-buttons.js:144
 msgid "Something went wrong. Please contact us for payment."
 msgstr ""
 
-#: sc-address2.js:103
-#: sc-order-shipping-address2.js:28
-#: sc-order-shipping-address2.js:37
+#: sc-address2.js:105
+#: sc-order-shipping-address2.js:30
+#: sc-order-shipping-address2.js:39
 msgid "Name or Company Name"
 msgstr ""
 
-#: sc-address2.js:106
-#: sc-order-shipping-address2.js:32
-#: sc-order-shipping-address2.js:41
+#: sc-address2.js:108
+#: sc-order-shipping-address2.js:34
+#: sc-order-shipping-address2.js:43
 msgid "Address Line 2"
 msgstr ""
 
-#: sc-address2.js:106
-#: sc-order-shipping-address2.js:30
-#: sc-order-shipping-address2.js:39
+#: sc-address2.js:108
+#: sc-order-shipping-address2.js:32
+#: sc-order-shipping-address2.js:41
 msgid "City"
 msgstr ""
 
-#: sc-address2.js:106
-#: sc-compact-address2.js:100
-#: sc-order-shipping-address2.js:33
-#: sc-order-shipping-address2.js:42
+#: sc-address2.js:108
+#: sc-compact-address2.js:102
+#: sc-order-shipping-address2.js:35
+#: sc-order-shipping-address2.js:44
 msgid "Postal Code/Zip"
 msgstr ""
 
-#: sc-address2.js:106
-#: sc-order-shipping-address2.js:34
-#: sc-order-shipping-address2.js:43
+#: sc-address2.js:108
+#: sc-order-shipping-address2.js:36
+#: sc-order-shipping-address2.js:45
 msgid "State/Province/Region"
 msgstr ""
 
-#: sc-cancel-survey2.js:82
+#: sc-cancel-survey2.js:84
 msgid "Choose a reason"
 msgstr ""
 
-#: sc-cancel-survey2.js:82
+#: sc-cancel-survey2.js:84
 msgid "Additional Comments"
 msgstr ""
 
-#: sc-cancel-survey2.js:82
+#: sc-cancel-survey2.js:84
 msgid "Continue"
 msgstr ""
 
-#: sc-cart-form.js:126
-#: sc-dashboard-module2.js:14
-#: sc-paypal-add-method.js:101
-#: sc-stripe-add-method.js:126
-#: sc-upcoming-invoice.js:206
+#: sc-cart-form.js:128
+#: sc-dashboard-module2.js:16
+#: sc-paypal-add-method.js:103
+#: sc-stripe-add-method.js:128
+#: sc-upcoming-invoice.js:208
 msgid "Error"
 msgstr ""
 
-#: sc-charges-list.js:88
-#: sc-subscription-payment.js:103
+#: sc-charges-list.js:90
+#: sc-subscription-payment.js:105
 msgid "You have no saved payment methods."
 msgstr ""
 
-#: sc-charges-list.js:108
+#: sc-charges-list.js:110
 msgid "#%s"
 msgstr ""
 
-#: sc-checkout-unsaved-changes-warning2.js:22
-msgid "Your payment is processing. Exiting this page could cause an error in your order. Please do not navigate away from this page."
-msgstr ""
-
-#: sc-checkout.js:185
-msgid "Due to processor restrictions, only one checkout form is allowed on the page."
-msgstr ""
-
-#: sc-checkout.js:192
-msgid "Submitting order..."
-msgstr ""
-
-#: sc-choice2.js:53
-msgid "Please choose one."
-msgstr ""
-
-#: sc-choice2.js:53
-msgid "Please choose at least one."
-msgstr ""
-
-#: sc-compact-address2.js:43
-msgid "Country or region"
-msgstr ""
-
-#: sc-compact-address2.js:100
-msgid "Select Your Country"
-msgstr ""
-
-#: sc-compact-address2.js:100
-msgid "Province/Region"
-msgstr ""
-
-#: sc-coupon-form2.js:71
-msgid "Enter coupon code"
-msgstr ""
-
-#: sc-custom-order-price-input.js:70
-msgid "This price has been archived."
-msgstr ""
-
-#: sc-customer-edit.js:104
-msgid "Billing address same as shipping"
-msgstr ""
-
-#: sc-customer-email.js:77
-msgid "No Thanks"
-msgstr ""
-
-#: sc-customer-email.js:79
-msgid "You won't receive further emails from us."
-msgstr ""
-
-#: sc-dialog2.js:162
-#: sc-drawer2.js:152
-msgid "Close"
-msgstr ""
-
-#: sc-error2.js:23
-#: sc-form-error-provider2.js:40
+#: sc-checkout-form-errors2.js:17
+#: sc-error2.js:25
 msgid "This product is no longer purchasable."
 msgstr ""
 
-#: sc-form-state-provider2.js:123
+#: sc-checkout-unsaved-changes-warning2.js:24
+msgid "Your payment is processing. Exiting this page could cause an error in your order. Please do not navigate away from this page."
+msgstr ""
+
+#: sc-checkout.js:187
+msgid "Due to processor restrictions, only one checkout form is allowed on the page."
+msgstr ""
+
+#: sc-checkout.js:194
+msgid "Submitting order..."
+msgstr ""
+
+#: sc-choice2.js:55
+msgid "Please choose one."
+msgstr ""
+
+#: sc-choice2.js:55
+msgid "Please choose at least one."
+msgstr ""
+
+#: sc-compact-address2.js:45
+msgid "Country or region"
+msgstr ""
+
+#: sc-compact-address2.js:102
+msgid "Select Your Country"
+msgstr ""
+
+#: sc-compact-address2.js:102
+msgid "Province/Region"
+msgstr ""
+
+#: sc-coupon-form2.js:73
+msgid "Enter coupon code"
+msgstr ""
+
+#: sc-custom-order-price-input.js:72
+msgid "This price has been archived."
+msgstr ""
+
+#: sc-customer-edit.js:106
+msgid "Billing address same as shipping"
+msgstr ""
+
+#: sc-customer-email.js:79
+msgid "No Thanks"
+msgstr ""
+
+#: sc-customer-email.js:81
+msgid "You won't receive further emails from us."
+msgstr ""
+
+#: sc-dialog2.js:164
+#: sc-drawer2.js:154
+msgid "Close"
+msgstr ""
+
+#: sc-form-state-provider2.js:125
 msgid "Please refresh the page."
 msgstr ""
 
-#: sc-invoices-list.js:115
+#: sc-invoices-list.js:117
 msgid "You don't have any invoices."
 msgstr ""
 
-#: sc-invoices-list.js:138
+#: sc-invoices-list.js:140
 msgid "Invoice History"
 msgstr ""
 
-#: sc-line-item-tax2.js:16
+#: sc-line-item-tax2.js:18
 msgid "Estimated %s"
 msgstr ""
 
-#: sc-line-item-tax2.js:31
+#: sc-line-item-tax2.js:33
 msgid "included"
 msgstr ""
 
-#: sc-login-form.js:92
+#: sc-login-form.js:94
 msgid "Verification code is not valid. Please try again."
 msgstr ""
 
-#: sc-login-form.js:145
+#: sc-login-form.js:147
 msgid "Check your email for a confirmation code"
 msgstr ""
 
-#: sc-login-form.js:145
+#: sc-login-form.js:147
 msgid "Confirmation code"
 msgstr ""
 
-#: sc-login-form.js:145
+#: sc-login-form.js:147
 msgid "Login with Code"
 msgstr ""
 
-#: sc-login-form.js:148
+#: sc-login-form.js:150
 msgid "Welcome"
 msgstr ""
 
-#: sc-login-form.js:148
+#: sc-login-form.js:150
 msgid "Send a login code"
 msgstr ""
 
-#: sc-login-form.js:148
+#: sc-login-form.js:150
 msgid "or"
 msgstr ""
 
-#: sc-login-form.js:148
+#: sc-login-form.js:150
 msgid "Enter your password"
 msgstr ""
 
-#: sc-login-form.js:150
+#: sc-login-form.js:152
 msgid "Username or Email Address"
 msgstr ""
 
-#: sc-login-provider2.js:74
+#: sc-login-provider2.js:76
 msgid "Welcome back!"
 msgstr ""
 
-#: sc-login-provider2.js:74
+#: sc-login-provider2.js:76
 msgid "You have logged in successfully."
 msgstr ""
 
-#: sc-login-provider2.js:74
+#: sc-login-provider2.js:76
 msgid "Login to your account"
 msgstr ""
 
-#: sc-login-provider2.js:77
+#: sc-login-provider2.js:79
 msgid "Email or Username"
 msgstr ""
 
-#: sc-order-bump2.js:51
+#: sc-order-bump2.js:53
 msgid "Free"
 msgstr ""
 
-#: sc-order-bump2.js:59
+#: sc-order-bump2.js:61
 msgid "Save %s%%"
 msgstr ""
 
-#: sc-order-confirmation-details.js:31
+#: sc-order-confirmation-details.js:33
 msgid "On Hold"
 msgstr ""
 
-#: sc-order-confirmation-details.js:42
+#: sc-order-confirmation-details.js:44
 msgid "Order #%s"
 msgstr ""
 
-#: sc-order-confirmation.js:109
-#: sc-order.js:106
+#: sc-order-confirmation.js:112
+#: sc-order.js:108
 msgid "Order not found."
 msgstr ""
 
-#: sc-order-confirmation.js:109
+#: sc-order-confirmation.js:112
 msgid "This order could not be found. Please try again."
 msgstr ""
 
-#: sc-order-password.js:41
+#: sc-order-password.js:43
 msgid "Password does not match."
 msgstr ""
 
-#: sc-order-password.js:61
+#: sc-order-password.js:63
 msgid "Confirm Password"
 msgstr ""
 
-#: sc-order-status-badge2.js:35
+#: sc-order-status-badge2.js:37
 msgid "Payment Failed"
 msgstr ""
 
-#: sc-order-status-badge2.js:39
+#: sc-order-status-badge2.js:41
 msgid "Void"
 msgstr ""
 
-#: sc-order-summary.js:18
+#: sc-order-summary.js:20
 msgid "Show Summary"
 msgstr ""
 
-#: sc-order-summary.js:62
+#: sc-order-summary.js:73
 msgid "Your cart is empty."
 msgstr ""
 
-#: sc-order.js:144
+#: sc-order.js:146
 msgid "Order Status"
 msgstr ""
 
-#: sc-order.js:144
+#: sc-order.js:146
 msgid "Download Receipt/Invoice"
 msgstr ""
 
-#: sc-pagination2.js:35
+#: sc-pagination2.js:37
 msgid "Displaying %1d to %2d of %3d items"
 msgstr ""
 
-#: sc-password-nag.js:60
-#: sc-wordpress-password-edit.js:32
+#: sc-password-nag.js:62
+#: sc-wordpress-password-edit.js:34
 msgid "Passwords do not match."
 msgstr ""
 
-#: sc-password-nag.js:82
+#: sc-password-nag.js:84
 msgid "Succcess!"
 msgstr ""
 
-#: sc-password-nag.js:82
+#: sc-password-nag.js:84
 msgid "You have successfully set your password."
 msgstr ""
 
-#: sc-password-nag.js:84
+#: sc-password-nag.js:86
 msgid "Set A Password"
 msgstr ""
 
-#: sc-password-nag.js:84
-#: sc-wordpress-password-edit.js:57
+#: sc-password-nag.js:86
+#: sc-wordpress-password-edit.js:59
 msgid "New Password"
 msgstr ""
 
-#: sc-password-nag.js:84
-#: sc-wordpress-password-edit.js:57
+#: sc-password-nag.js:86
+#: sc-wordpress-password-edit.js:59
 msgid "Confirm New Password"
 msgstr ""
 
-#: sc-password-nag.js:84
+#: sc-password-nag.js:86
 msgid "Reminder"
 msgstr ""
 
-#: sc-password-nag.js:84
+#: sc-password-nag.js:86
 msgid "You have not yet set a password. Please set a password for your account."
 msgstr ""
 
-#: sc-password-nag.js:84
+#: sc-password-nag.js:86
 msgid "Dismiss"
 msgstr ""
 
-#: sc-payment-method2.js:20
+#: sc-payment-method2.js:22
 msgid "Checking"
 msgstr ""
 
-#: sc-payment-method2.js:23
+#: sc-payment-method2.js:25
 msgid "Savings"
 msgstr ""
 
-#: sc-payment-methods-list.js:57
-#: sc-subscription-payment-method.js:78
+#: sc-payment-methods-list.js:49
+#: sc-subscription-payment-method.js:80
 msgid "Are you sure you want to remove this payment method?"
 msgstr ""
 
-#: sc-payment-methods-list.js:134
+#: sc-payment-methods-list.js:124
 msgid "You don't have any saved payment methods."
 msgstr ""
 
-#: sc-payment.js:70
+#: sc-payment.js:72
 msgid "Please contact us for payment"
 msgstr ""
 
-#: sc-paypal-add-method.js:72
+#: sc-paypal-add-method.js:74
 msgid "Failed to load the PayPal JS SDK script"
 msgstr ""
 
-#: sc-price-choice.js:780
+#: sc-price-choice.js:782
 msgid "This product has been archived."
 msgstr ""
 
-#: sc-product-line-item2.js:22
+#: sc-product-line-item2.js:25
 msgid "%d day free"
 msgid_plural "%d days free"
 msgstr[0] ""
 msgstr[1] ""
 
-#: sc-product-line-item2.js:22
+#: sc-product-line-item2.js:25
 msgid "Then"
 msgstr ""
 
-#: sc-product-line-item2.js:27
+#: sc-product-line-item2.js:30
 msgid "Qty:"
 msgstr ""
 
-#: sc-purchase-downloads-list2.js:28
+#: sc-purchase-downloads-list2.js:30
 msgid "You don't have any downloads."
 msgstr ""
 
-#: sc-purchase-downloads-list2.js:46
+#: sc-purchase-downloads-list2.js:48
 msgid "%s file"
 msgid_plural "%s files"
 msgstr[0] ""
 msgstr[1] ""
 
-#: sc-quantity-select2.js:58
+#: sc-quantity-select2.js:60
 msgid "decrease number"
 msgstr ""
 
-#: sc-quantity-select2.js:58
+#: sc-quantity-select2.js:60
 msgid "increase number"
 msgstr ""
 
-#: sc-select2.js:2059
+#: sc-select2.js:2061
 msgid "Nothing Found"
 msgstr ""
 
-#: sc-session-provider2.js:231
+#: sc-session-provider2.js:233
 msgid "Payment unsuccessful. Please try again."
 msgstr ""
 
-#: sc-session-provider2.js:238
+#: sc-session-provider2.js:240
 msgid "Could not find checkout. Please contact us before attempting to purchase again."
 msgstr ""
 
-#: sc-stripe-add-method.js:33
-#: sc-stripe-element.js:36
-#: sc-stripe-payment-element.js:49
-#: sc-stripe-payment-request2.js:58
+#: sc-stripe-add-method.js:35
+#: sc-stripe-element.js:38
+#: sc-stripe-payment-element.js:51
+#: sc-stripe-payment-request2.js:60
 msgid "Stripe could not be loaded"
 msgstr ""
 
-#: sc-stripe-add-method.js:126
+#: sc-stripe-add-method.js:128
 msgid "Save Payment Method"
 msgstr ""
 
-#: sc-stripe-payment-request2.js:164
+#: sc-stripe-payment-request2.js:166
 msgid "You must serve this page over HTTPS to display express payment buttons."
 msgstr ""
 
-#: sc-stripe-payment-request2.js:170
+#: sc-stripe-payment-request2.js:172
 msgid "You do not have any wallets set up in your browser."
 msgstr ""
 
-#: sc-stripe-payment-request2.js:285
+#: sc-stripe-payment-request2.js:287
 msgid "Express Payment"
 msgstr ""
 
-#: sc-subscription-cancel2.js:50
+#: sc-subscription-cancel2.js:52
 msgid "Your plan will be canceled, but is still available until the end of your billing period on"
 msgstr ""
 
-#: sc-subscription-cancel2.js:50
+#: sc-subscription-cancel2.js:52
 msgid "If you change your mind, you can renew your subscription."
 msgstr ""
 
-#: sc-subscription-cancel2.js:50
+#: sc-subscription-cancel2.js:52
 msgid "Your plan will be canceled immediately. You cannot change your mind."
 msgstr ""
 
-#: sc-subscription-cancel2.js:56
+#: sc-subscription-cancel2.js:58
 msgid "Cancel your plan"
 msgstr ""
 
-#: sc-subscription-cancel2.js:56
-#: sc-subscription.js:173
+#: sc-subscription-cancel2.js:58
+#: sc-subscription.js:175
 msgid "Cancel Plan"
 msgstr ""
 
-#: sc-subscription-cancel2.js:56
+#: sc-subscription-cancel2.js:58
 msgid "Keep My Plan"
 msgstr ""
 
-#: sc-subscription-details2.js:66
-#: sc-subscription.js:142
+#: sc-subscription-details2.js:68
+#: sc-subscription.js:144
 msgid "Your plan will be canceled on"
 msgstr ""
 
-#: sc-subscription-details2.js:73
 #: sc-subscription-details2.js:75
+#: sc-subscription-details2.js:77
 msgid "Your plan switches to"
 msgstr ""
 
-#: sc-subscription-details2.js:73
 #: sc-subscription-details2.js:75
+#: sc-subscription-details2.js:77
 msgid "on"
 msgstr ""
 
-#: sc-subscription-details2.js:78
-#: sc-subscription.js:145
+#: sc-subscription-details2.js:80
+#: sc-subscription.js:147
 msgid "Your plan begins on"
 msgstr ""
 
-#: sc-subscription-details2.js:81
-#: sc-subscription.js:148
+#: sc-subscription-details2.js:83
+#: sc-subscription.js:150
 msgid "Your plan renews on"
 msgstr ""
 
-#: sc-subscription-details2.js:81
+#: sc-subscription-details2.js:83
 msgid "Your next payment is on"
 msgstr ""
 
-#: sc-subscription-details2.js:103
+#: sc-subscription-details2.js:105
 msgid "Update Scheduled"
 msgstr ""
 
-#: sc-subscription-next-payment2.js:92
+#: sc-subscription-next-payment2.js:94
 msgid "Your next payment is"
 msgstr ""
 
-#: sc-subscription-payment-method.js:39
+#: sc-subscription-payment-method.js:41
 msgid "You do not have any payment methods."
 msgstr ""
 
-#: sc-subscription-payment-method.js:145
+#: sc-subscription-payment-method.js:147
 msgid "Current Payment Method"
 msgstr ""
 
-#: sc-subscription-payment.js:103
-#: sc-subscription-payment.js:110
+#: sc-subscription-payment.js:105
+#: sc-subscription-payment.js:112
 msgid "Go Back"
 msgstr ""
 
-#: sc-subscription-payment.js:113
+#: sc-subscription-payment.js:115
 msgid "Select a payment method"
 msgstr ""
 
-#: sc-subscription-status-badge2.js:48
+#: sc-subscription-status-badge2.js:50
 msgid "Incomplete"
 msgstr ""
 
-#: sc-subscription-status-badge2.js:50
+#: sc-subscription-status-badge2.js:52
 msgid "Trialing"
 msgstr ""
 
-#: sc-subscription-status-badge2.js:54
+#: sc-subscription-status-badge2.js:56
 msgid "Past Due"
 msgstr ""
 
-#: sc-subscription-status-badge2.js:58
+#: sc-subscription-status-badge2.js:60
 msgid "Completed"
 msgstr ""
 
-#: sc-subscription-status-badge2.js:60
+#: sc-subscription-status-badge2.js:62
 msgid "Unpaid"
 msgstr ""
 
-#: sc-subscription-switch.js:176
+#: sc-subscription-switch.js:178
 msgid "Update Amount"
 msgstr ""
 
-#: sc-subscription-switch.js:179
+#: sc-subscription-switch.js:181
 msgid "Choose Amount"
 msgstr ""
 
-#: sc-subscription-switch.js:194
+#: sc-subscription-switch.js:196
 msgid "To make changes to your payment plan, please contact us."
 msgstr ""
 
-#: sc-subscription.js:60
+#: sc-subscription.js:62
 msgid "Are you sure you want to cancel the pending update to your plan?"
 msgstr ""
 
-#: sc-subscription.js:153
+#: sc-subscription.js:155
 msgid "This subscription does not exist."
 msgstr ""
 
-#: sc-subscription.js:171
+#: sc-subscription.js:173
 msgid "Cancel Scheduled Update"
 msgstr ""
 
-#: sc-subscription.js:171
+#: sc-subscription.js:173
 msgid "Restore Plan"
 msgstr ""
 
-#: sc-subscriptions-list.js:105
+#: sc-subscriptions-list.js:107
 msgid "You don't have any subscriptions."
 msgstr ""
 
-#: sc-upcoming-invoice.js:167
+#: sc-textarea2.js:189
+msgid "%d characters remaining"
+msgstr ""
+
 #: sc-upcoming-invoice.js:169
+#: sc-upcoming-invoice.js:171
 msgid "You'll be switched to this plan"
 msgstr ""
 
-#: sc-upcoming-invoice.js:167
+#: sc-upcoming-invoice.js:169
 msgid "at the end of your billing cycle on"
 msgstr ""
 
-#: sc-upcoming-invoice.js:169
+#: sc-upcoming-invoice.js:171
 msgid "immediately"
 msgstr ""
 
-#: sc-upgrade-required.js:23
+#: sc-upgrade-required.js:25
 msgid "Upgrade Now"
 msgstr ""
 
-#: sc-wordpress-password-edit.js:24
-#: sc-wordpress-user-edit.js:26
-#: sc-wordpress-user.js:28
+#: sc-wordpress-password-edit.js:26
+#: sc-wordpress-user-edit.js:28
+#: sc-wordpress-user.js:30
 msgid "User not found."
 msgstr ""
 
-#: sc-wordpress-user-edit.js:56
-#: sc-wordpress-user.js:25
+#: sc-wordpress-user-edit.js:58
+#: sc-wordpress-user.js:27
 msgid "Account Email"
 msgstr ""
 
-#: tax.js:3
+#: tax.js:6
 msgid "GST Number"
 msgstr ""
 
-#: tax.js:7
+#: tax.js:10
 msgid "ABN Number"
 msgstr ""
 
-#: tax.js:11
-#: tax.js:15
+#: tax.js:14
+#: tax.js:18
 msgid "VAT Number"
 msgstr ""
 
-#: tax.js:19
+#: tax.js:22
 msgid "Tax ID"
 msgstr ""

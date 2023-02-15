@@ -27,7 +27,7 @@
   }
 
   &--is-required .radio-group__label:after {
-    content: " *";
+    content: ' *';
     color: var(--sc-color-danger-500);
   }
 }
@@ -52,3 +52,12 @@
 //   overflow: hidden;
 //   white-space: nowrap;
 // }
+
+.radio-group--is-rtl {
+  &.radio-group {
+    &,
+    .radio-group__label {
+      text-align: right;
+    }
+  }
+}

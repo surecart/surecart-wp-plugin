@@ -228,7 +228,7 @@ describe('Payment Instrument Redirects', () => {
       },
     ).as('createUpdate');
     cy.visit('/test/sc-checkout/url-params?redirect_status=failed&checkout_id=test');
-    cy.get('sc-checkout sc-form-error-provider').shadow().find('sc-alert').should('be.visible').should('have.attr', 'type', 'danger')
+    cy.get('sc-checkout sc-checkout-form-errors').shadow().find('sc-alert').should('be.visible').should('have.attr', 'type', 'danger')
   });
 });
 

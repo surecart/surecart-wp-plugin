@@ -187,9 +187,9 @@ export class ScStripeElement {
   render() {
     return (
       <Fragment>
-        <sc-input class="sc-stripe" size={this.size} label={this.label} hasFocus={this.hasFocus}>
-          <div ref={el => (this.container = el as HTMLDivElement)}></div>
-        </sc-input>
+        <sc-form-control class="sc-stripe" size={this.size} label={this.label}>
+          <div class="sc-stripe-element" ref={el => (this.container = el as HTMLDivElement)}></div>
+        </sc-form-control>
         {this.error && (
           <sc-text
             style={{
