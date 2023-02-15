@@ -33,6 +33,9 @@
 - [sc-menu-item](../../../ui/menu-item)
 - [sc-dashboard-module](../../../ui/dashboard-module)
 - [sc-button](../../../ui/button)
+- [sc-dialog](../../../ui/sc-dialog)
+- [sc-text](../../../ui/text)
+- [sc-checkbox](../../../ui/checkbox)
 - [sc-block-ui](../../../ui/block-ui)
 
 ### Graph
@@ -53,6 +56,9 @@ graph TD;
   sc-payment-methods-list --> sc-menu-item
   sc-payment-methods-list --> sc-dashboard-module
   sc-payment-methods-list --> sc-button
+  sc-payment-methods-list --> sc-dialog
+  sc-payment-methods-list --> sc-text
+  sc-payment-methods-list --> sc-checkbox
   sc-payment-methods-list --> sc-block-ui
   sc-empty --> sc-icon
   sc-payment-method --> sc-tooltip
@@ -65,6 +71,8 @@ graph TD;
   sc-cc-logo --> sc-icon
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon
+  sc-dialog --> sc-button
+  sc-dialog --> sc-icon
   sc-block-ui --> sc-spinner
   style sc-payment-methods-list fill:#f9f,stroke:#333,stroke-width:4px
 ```

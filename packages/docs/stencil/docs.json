@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-02-08T20:03:24",
+  "timestamp": "2023-02-15T21:51:15",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -653,6 +653,7 @@
         "sc-order-manual-instructions",
         "sc-password-nag",
         "sc-payment",
+        "sc-payment-methods-list",
         "sc-paypal-add-method",
         "sc-price-choice",
         "sc-stripe-add-method",
@@ -704,6 +705,9 @@
           "sc-alert"
         ],
         "sc-payment": [
+          "sc-alert"
+        ],
+        "sc-payment-methods-list": [
           "sc-alert"
         ],
         "sc-paypal-add-method": [
@@ -8942,6 +8946,7 @@
       "dependents": [
         "sc-cancel-dialog",
         "sc-login-provider",
+        "sc-payment-methods-list",
         "sc-subscription-details",
         "sc-upgrade-required"
       ],
@@ -8961,6 +8966,9 @@
           "sc-dialog"
         ],
         "sc-login-provider": [
+          "sc-dialog"
+        ],
+        "sc-payment-methods-list": [
           "sc-dialog"
         ],
         "sc-subscription-details": [
@@ -11085,6 +11093,7 @@
         "sc-order-bumps",
         "sc-payment",
         "sc-select",
+        "sc-stripe-element",
         "sc-textarea"
       ],
       "dependencies": [
@@ -11116,6 +11125,9 @@
           "sc-form-control"
         ],
         "sc-select": [
+          "sc-form-control"
+        ],
+        "sc-stripe-element": [
           "sc-form-control"
         ],
         "sc-textarea": [
@@ -13348,7 +13360,6 @@
         "sc-password-nag",
         "sc-price-input",
         "sc-select",
-        "sc-stripe-element",
         "sc-tax-id-input",
         "sc-wordpress-password-edit",
         "sc-wordpress-user-edit"
@@ -13406,9 +13417,6 @@
           "sc-input"
         ],
         "sc-select": [
-          "sc-input"
-        ],
-        "sc-stripe-element": [
           "sc-input"
         ],
         "sc-tax-id-input": [
@@ -17020,13 +17028,17 @@
         },
         {
           "name": "status",
-          "type": "\"paid\" | \"payment_failed\" | \"processing\" | \"void\"",
+          "type": "\"canceled\" | \"paid\" | \"payment_failed\" | \"processing\" | \"void\"",
           "mutable": false,
           "attr": "status",
           "reflectToAttr": false,
           "docs": "The tag's statux type.",
           "docsTags": [],
           "values": [
+            {
+              "value": "canceled",
+              "type": "string"
+            },
             {
               "value": "paid",
               "type": "string"
@@ -18719,7 +18731,7 @@
           "mutable": false,
           "attr": "heading",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "The heading",
           "docsTags": [],
           "values": [
             {
@@ -18735,7 +18747,7 @@
           "mutable": false,
           "attr": "is-customer",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Is this a customer",
           "docsTags": [],
           "values": [
             {
@@ -18784,7 +18796,11 @@
         "sc-menu-item",
         "sc-dashboard-module",
         "sc-button",
-        "sc-block-ui"
+        "sc-dialog",
+        "sc-alert",
+        "sc-switch",
+        "sc-block-ui",
+        "sc-text"
       ],
       "dependencyGraph": {
         "sc-payment-methods-list": [
@@ -18803,7 +18819,11 @@
           "sc-menu-item",
           "sc-dashboard-module",
           "sc-button",
-          "sc-block-ui"
+          "sc-dialog",
+          "sc-alert",
+          "sc-switch",
+          "sc-block-ui",
+          "sc-text"
         ],
         "sc-empty": [
           "sc-icon"
@@ -18826,6 +18846,10 @@
           "sc-alert"
         ],
         "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-dialog": [
+          "sc-button",
           "sc-icon"
         ],
         "sc-block-ui": [
@@ -23469,16 +23493,13 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
-        "sc-input",
+        "sc-form-control",
         "sc-text"
       ],
       "dependencyGraph": {
         "sc-stripe-element": [
-          "sc-input",
+          "sc-form-control",
           "sc-text"
-        ],
-        "sc-input": [
-          "sc-form-control"
         ],
         "sc-form-control": [
           "sc-tooltip"
@@ -25761,11 +25782,15 @@
         }
       ],
       "dependents": [
-        "sc-customer-edit"
+        "sc-customer-edit",
+        "sc-payment-methods-list"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-customer-edit": [
+          "sc-switch"
+        ],
+        "sc-payment-methods-list": [
           "sc-switch"
         ]
       }
@@ -26673,6 +26698,7 @@
         "sc-invoices-list",
         "sc-orders-list",
         "sc-payment-method",
+        "sc-payment-methods-list",
         "sc-stripe-element",
         "sc-stripe-payment-element",
         "sc-subscription-details",
@@ -26690,6 +26716,9 @@
           "sc-text"
         ],
         "sc-payment-method": [
+          "sc-text"
+        ],
+        "sc-payment-methods-list": [
           "sc-text"
         ],
         "sc-stripe-element": [
