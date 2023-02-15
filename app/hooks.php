@@ -17,10 +17,6 @@ register_uninstall_hook( SURECART_PLUGIN_FILE, 'surecart_uninstall' );
 function surecart_uninstall() {
 	if ( (bool) get_option( 'sc_uninstall', false ) ) {
 		\SureCart::activation()->uninstall();
-
-		// Delete the table.
-		$integrations = new \SureCart\Database\Tables\Integrations( new \SureCart\Database\Table() );
-		$integrations->uninstall();
 	}
 }
 
