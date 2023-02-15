@@ -21,6 +21,7 @@
     "open": true,
     "scroll-margin": true,
     "scroll-on-open": true,
+    "title": true,
     "type": true,
     "style": true,
     "id": true,

@@ -1,4 +1,11 @@
-import { ScBlockUi, ScButton, ScDialog } from '@surecart/components-react';
+import {
+	ScAlert,
+	ScBlockUi,
+	ScButton,
+	ScDialog,
+	ScFlex,
+	ScText,
+} from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import apiFetch from '@wordpress/api-fetch';
 import { store as coreStore } from '@wordpress/core-data';
@@ -44,10 +51,27 @@ export default ({ open, onRequestClose }) => {
 			onScRequestClose={onRequestClose}
 		>
 			<Error error={error} setError={setError} />
-			{__(
-				'Are you sure you want to restore this subscription? This will make it active again.',
-				'surecart'
-			)}
+			<ScFlex flexDirection="column">
+				<ScAlert type="warning" title={__('Warning', 'surecart')} open>
+					{__(
+						'This will charge the customer for their current billing period.',
+						'surecart'
+					)}
+				</ScAlert>
+				<ScText
+					style={{
+						'--font-size': 'var(--sc-font-size-medium)',
+						'--color': 'var(--sc-input-label-color)',
+						'--line-height': 'var(--sc-line-height-dense)',
+					}}
+				>
+					{__(
+						'Are you sure you want to restore this subscription? This will make it active again and charge the customer immediately.',
+						'surecart'
+					)}
+				</ScText>
+			</ScFlex>
+
 			<div slot="footer">
 				<ScButton
 					type="text"
