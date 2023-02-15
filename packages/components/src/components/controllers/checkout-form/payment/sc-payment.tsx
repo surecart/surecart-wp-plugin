@@ -1,6 +1,7 @@
 import { Component, Element, Fragment, h, Host, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { state as checkoutState } from '@store/checkout';
+import { state as processorsState } from '@store/processors';
 import { ManualPaymentMethods } from './ManualPaymentMethods';
 import { getAvailableProcessor, hasMultipleProcessorChoices, availableManualPaymentMethods, availableProcessors } from '@store/processors/getters';
 
@@ -23,6 +24,9 @@ export class ScPayment {
 
   @Prop() stripePaymentElement: boolean;
 
+  /** Disabled processor types */
+  @Prop() disabledProcessorTypes: string[];
+
   @Prop() secureNotice: string;
 
   /** The input's label. */
@@ -30,6 +34,10 @@ export class ScPayment {
 
   /** Hide the test mode badge */
   @Prop() hideTestModeBadge: boolean;
+
+  componentWillLoad() {
+    processorsState.disabled.processors = this.disabledProcessorTypes;
+  }
 
   renderStripe(processor) {
     return (

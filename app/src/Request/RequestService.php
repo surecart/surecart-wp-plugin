@@ -250,8 +250,6 @@ class RequestService {
 			}
 		}
 
-		error_log( print_r( $url, 1 ) );
-		error_log( print_r( $args, 1 ) );
 		// make request.
 		$response = $this->remoteRequest( $url, $args );
 
@@ -388,6 +386,11 @@ class RequestService {
 			// convert bool to int to prevent getting unset.
 			if ( is_bool( $arg ) ) {
 				$args[ $key ] = $arg ? 1 : 0;
+			}
+
+			// url encode any strings.
+			if ( is_string( $arg ) ) {
+				$args[ $key ] = urlencode( $arg );
 			}
 		}
 

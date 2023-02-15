@@ -1164,6 +1164,7 @@
     "slot": true
   },
   "sc-payment": {
+    "disabled-processor-types": true,
     "hide-test-mode-badge": true,
     "label": true,
     "secure-notice": true,

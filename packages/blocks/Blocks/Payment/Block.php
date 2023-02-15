@@ -45,23 +45,21 @@ class Block extends BaseBlock {
 		$this->attributes = $attributes;
 		$this->mode       = $this->block->context['surecart/form/mode'] ?? 'live';
 
+		$processors      = Processor::where( [ 'live_mode' => 'test' === $this->mode ? false : true ] )->get();
+		$stripe          = $this->getProcessorByType( 'stripe', $processors ) ?? null;
+		$payment_element = (bool) get_option( 'sc_stripe_payment_element', false );
+
 		\SureCart::assets()->addComponentData(
 			'sc-payment',
 			'#sc-payment-' . (int) self::$instance,
 			[
-				'label'                => $attributes['label'] ?? '',
-				'processors'           => Processor::where( [ 'live_mode' => 'test' === $this->mode ? false : true ] )->get(),
-				'default_processor'    => $attributes['default_processor'] ?? null,
-				'manualPaymentMethods' => ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? [],
-				'secureNotice'         => $attributes['secure_notice'],
+				'label'                  => $attributes['label'] ?? '',
+				'processors'             => $processors,
+				'disabledProcessorTypes' => $attributes['disabled_methods'] ?? [],
+				'manualPaymentMethods'   => ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? [],
+				'secureNotice'           => $attributes['secure_notice'],
 			]
 		);
-
-		$processors        = Processor::where( [ 'live_mode' => 'test' === $this->mode ? false : true ] )->get();
-		$has_mollie        = (bool) $this->getProcessorByType( 'mollie', $processors )->enabled ?? false;
-		$default_processor = $has_mollie ? 'mollie' : ( $attributes['default_processor'] ?? null );
-		$stripe            = $this->getProcessorByType( 'stripe', $processors ) ?? null;
-		$payment_element   = (bool) get_option( 'sc_stripe_payment_element', false );
 
 		ob_start();
 		?>

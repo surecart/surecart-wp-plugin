@@ -2012,6 +2012,10 @@ export namespace Components {
     }
     interface ScPayment {
         /**
+          * Disabled processor types
+         */
+        "disabledProcessorTypes": string[];
+        /**
           * Hide the test mode badge
          */
         "hideTestModeBadge": boolean;
@@ -6849,6 +6853,10 @@ declare namespace LocalJSX {
         "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger';
     }
     interface ScPayment {
+        /**
+          * Disabled processor types
+         */
+        "disabledProcessorTypes"?: string[];
         /**
           * Hide the test mode badge
          */
