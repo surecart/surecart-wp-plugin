@@ -16,6 +16,7 @@ import { addQueryArgs } from '@wordpress/url';
 
 /** @jsx jsx */
 import Box from '../../../ui/Box';
+import { formatTaxDisplay } from '../../../util/tax';
 import { intervalString } from '../../../util/translations';
 import LineItem from './LineItem';
 
@@ -197,12 +198,9 @@ export default ({ order, checkout, loading }) => {
 
 				{!!checkout?.tax_amount && (
 					<LineItem
-						label={
-							<>
-								{__('Tax', 'surecart')} -{' '}
-								{checkout?.tax_percent}%
-							</>
-						}
+						label={`${formatTaxDisplay(checkout?.tax_label)} (${
+							checkout?.tax_percent
+						}%)`}
 						currency={checkout?.currency}
 						value={checkout?.tax_amount}
 					/>

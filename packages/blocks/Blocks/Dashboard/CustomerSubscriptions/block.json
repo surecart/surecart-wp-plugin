@@ -5,6 +5,7 @@
 	"description": "Displays a customer's subscriptions.",
 	"category": "surecart",
 	"keywords": ["name", "customer", "dashboard"],
+  "textdomain": "surecart",
 	"ancestor": ["surecart/dashboard-page"],
 	"supports": {
 		"reusable": false,

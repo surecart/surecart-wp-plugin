@@ -6,6 +6,7 @@
 	"category": "surecart",
 	"ancestor": ["surecart/form", "surecart/dashboard-page"],
 	"keywords": ["divider", "hr"],
+  "textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false,
