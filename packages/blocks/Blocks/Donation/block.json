@@ -6,6 +6,7 @@
 	"category": "surecart",
 	"ancestor": ["surecart/form"],
 	"keywords": ["donation", "ad hoc", "custom", "amount"],
+  "textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false

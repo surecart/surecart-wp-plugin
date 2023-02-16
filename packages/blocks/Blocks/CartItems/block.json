@@ -5,6 +5,7 @@
 	"title": "Cart Items",
 	"description": "The cart",
 	"category": "surecart",
+  "textdomain": "surecart",
 	"ancestor": ["surecart/cart"],
 	"supports": {
 		"reusable": false,
