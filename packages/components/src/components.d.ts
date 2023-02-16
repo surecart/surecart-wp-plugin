@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export namespace Components {
     interface ScAddress {
         /**
@@ -602,6 +602,14 @@ export namespace Components {
     interface ScColumn {
     }
     interface ScColumns {
+        /**
+          * Is this full vertical height
+         */
+        "isFullHeight": boolean;
+        /**
+          * Is this reverse ordered on mobile
+         */
+        "isReversedOnMobile": boolean;
         /**
           * Is this stacked on mobile
          */
@@ -1948,6 +1956,7 @@ export namespace Components {
         "busy": boolean;
         "closedText": string;
         "collapsed": boolean;
+        "collapsedOnMobile": boolean;
         "collapsible": boolean;
         "empty": boolean;
         "openText": string;
@@ -2335,6 +2344,10 @@ export namespace Components {
           * Can we select the quantity
          */
         "editable": boolean;
+        /**
+          * Product line item fees.
+         */
+        "fees": Fee[];
         /**
           * Url for the product image
          */
@@ -5215,6 +5228,14 @@ declare namespace LocalJSX {
     }
     interface ScColumns {
         /**
+          * Is this full vertical height
+         */
+        "isFullHeight"?: boolean;
+        /**
+          * Is this reverse ordered on mobile
+         */
+        "isReversedOnMobile"?: boolean;
+        /**
           * Is this stacked on mobile
          */
         "isStackedOnMobile"?: boolean;
@@ -6769,6 +6790,7 @@ declare namespace LocalJSX {
         "busy"?: boolean;
         "closedText"?: string;
         "collapsed"?: boolean;
+        "collapsedOnMobile"?: boolean;
         "collapsible"?: boolean;
         "empty"?: boolean;
         /**
@@ -7209,6 +7231,10 @@ declare namespace LocalJSX {
           * Can we select the quantity
          */
         "editable"?: boolean;
+        /**
+          * Product line item fees.
+         */
+        "fees"?: Fee[];
         /**
           * Url for the product image
          */
