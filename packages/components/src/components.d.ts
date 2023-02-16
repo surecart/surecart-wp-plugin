@@ -12,6 +12,10 @@ export namespace Components {
           * Whether modal is open
          */
         "open": boolean;
+        /**
+          * The success url
+         */
+        "successUrl": string;
     }
     interface ScAddress {
         /**
@@ -4618,6 +4622,10 @@ declare namespace LocalJSX {
           * Whether modal is open
          */
         "open"?: boolean;
+        /**
+          * The success url
+         */
+        "successUrl"?: string;
     }
     interface ScAddress {
         /**

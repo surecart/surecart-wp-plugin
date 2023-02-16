@@ -28,6 +28,7 @@
 
 ### Used by
 
+ - [order-confirm-modal](../order-confirm-modal)
  - [sc-cancel-discount](../../controllers/dashboard/sc-cancel-discount)
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
@@ -47,6 +48,7 @@
 ### Graph
 ```mermaid
 graph TD;
+  order-confirm-modal --> sc-flex
   sc-cancel-discount --> sc-flex
   sc-cancel-survey --> sc-flex
   sc-downloads-list --> sc-flex

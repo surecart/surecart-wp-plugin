@@ -22,6 +22,9 @@ export class ScOrderConfirmProvider {
   /**Whether the success modal is open */
   @State() isSuccessModalOpen: boolean = false;
 
+  /**The current order id */
+  @State() orderId: string = '';
+
   /** The form id */
   @Prop() formId: number;
 
@@ -65,22 +68,22 @@ export class ScOrderConfirmProvider {
       // we always want to redirect, regardless of the outcome here.
       const order = this.order?.id;
 
-      let displaySuccess = () => {
-        this.isSuccessModalOpen = true;
-      };
-
-      if (this?.order?.metadata?.success_url || this.successUrl) {
-        displaySuccess = () => {
-          const success_url = this?.order?.metadata?.success_url || this.successUrl;
-          window.location.assign(addQueryArgs(success_url, { order }));
-        };
+      if (this?.order?.metadata?.success_url) {
+        this.orderSuccessUrl = addQueryArgs(this?.order?.metadata?.success_url, { order });
       }
       // make sure form state changes before redirecting
       setTimeout(() => {
         // make sure we clear the order state no matter what.
         clearOrder(this.formId, this.mode);
-        displaySuccess();
+        this.isSuccessModalOpen = true;
       }, 50);
+    }
+  }
+
+  getSuccessUrl() {
+    if (this?.order?.metadata?.success_url || this.successUrl) {
+      const success_url = this?.order?.metadata?.success_url || this.successUrl;
+      return addQueryArgs(success_url, { order: this.orderId });
     }
   }
 
@@ -88,7 +91,7 @@ export class ScOrderConfirmProvider {
     return (
       <Host>
         <slot />
-        <order-confirm-modal open={this.isSuccessModalOpen}></order-confirm-modal>
+        <order-confirm-modal open={this.isSuccessModalOpen} successUrl={this.getSuccessUrl()}></order-confirm-modal>
       </Host>
     );
   }

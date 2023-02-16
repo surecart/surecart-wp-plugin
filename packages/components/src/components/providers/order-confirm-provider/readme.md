@@ -30,9 +30,21 @@
 
  - [sc-checkout](../../controllers/checkout-form/checkout)
 
+### Depends on
+
+- [order-confirm-modal](../../ui/order-confirm-modal)
+
 ### Graph
 ```mermaid
 graph TD;
+  sc-order-confirm-provider --> order-confirm-modal
+  order-confirm-modal --> sc-dialog
+  order-confirm-modal --> sc-flex
+  order-confirm-modal --> sc-text
+  order-confirm-modal --> sc-button
+  sc-dialog --> sc-button
+  sc-dialog --> sc-icon
+  sc-button --> sc-spinner
   sc-checkout --> sc-order-confirm-provider
   style sc-order-confirm-provider fill:#f9f,stroke:#333,stroke-width:4px
 ```

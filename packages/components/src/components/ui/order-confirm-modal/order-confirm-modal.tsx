@@ -9,8 +9,11 @@ export class OrderConfirmModal {
   /**Whether modal is open */
   @Prop() open: boolean = false;
 
+  /**The success url */
+  @Prop() successUrl: string = '';
+
   onRedirectClick = () => {
-    window.location.assign(window?.scData?.pages?.dashboard)
+    window.location.assign(this.successUrl || window?.scData?.pages?.dashboard);
   };
 
   render() {
@@ -33,9 +36,11 @@ export class OrderConfirmModal {
           >
             Thanks for your order!
           </sc-text>
-          <sc-text style={{ '--text-align': 'center' }}>{__('Woohoo! Your payment was successful, and your orders is complete. A receipt is on its way to your inbox.','surecart')}</sc-text>
+          <sc-text style={{ '--text-align': 'center' }}>
+            {__('Woohoo! Your payment was successful, and your orders is complete. A receipt is on its way to your inbox.', 'surecart')}
+          </sc-text>
           <sc-button style={{ width: '60%' }} type="primary" onClick={this.onRedirectClick}>
-            {__('Continue','surecart')}
+            {__('Continue', 'surecart')}
           </sc-button>
         </sc-flex>
       </sc-dialog>
