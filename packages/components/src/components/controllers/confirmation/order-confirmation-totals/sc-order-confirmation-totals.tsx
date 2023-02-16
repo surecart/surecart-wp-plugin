@@ -3,6 +3,7 @@ import { Checkout } from '../../../../types';
 import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
+import { formatTaxDisplay } from '../../../../functions/tax';
 
 @Component({
   tag: 'sc-order-confirmation-totals',
@@ -61,7 +62,7 @@ export class ScOrderConfirmationTotals {
 
         {!!this.order?.tax_amount && (
           <sc-line-item style={{ marginTop: 'var(--sc-spacing-small)' }}>
-            <span slot="description">{`${__('Tax', 'surecart')}: ${this.order?.tax_label || ''}`}</span>
+            <span slot="description">{formatTaxDisplay(this.order?.tax_label)}</span>
             <sc-format-number slot="price" type="currency" currency={this.order?.currency} value={this.order?.tax_amount}></sc-format-number>
           </sc-line-item>
         )}

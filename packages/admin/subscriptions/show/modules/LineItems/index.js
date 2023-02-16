@@ -10,6 +10,7 @@ import {
 } from '@surecart/components-react';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { formatTaxDisplay } from '../../../../util/tax-format';
 
 export default ({ period, loading }) => {
 	const checkout = period?.checkout;
@@ -101,12 +102,7 @@ export default ({ period, loading }) => {
 
 				{!!checkout?.tax_amount && (
 					<LineItem
-						label={
-							<>
-								{__('Tax', 'surecart')} -{' '}
-								{checkout?.tax_percent}%
-							</>
-						}
+						label={formatTaxDisplay(`${checkout?.tax_percent}%`)}
 						currency={checkout?.currency}
 						value={checkout?.tax_amount}
 					/>

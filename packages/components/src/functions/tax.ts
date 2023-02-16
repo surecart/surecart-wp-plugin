@@ -40,3 +40,8 @@ export const getType = key => {
   }
   return null;
 };
+
+
+export function formatTaxDisplay(taxLabel:string):string {
+	return `${__('Tax')}: ${taxLabel ||''}`;
+}
