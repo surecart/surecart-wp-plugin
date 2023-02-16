@@ -62,7 +62,9 @@ export class ScOrderConfirmationTotals {
 
         {!!this.order?.tax_amount && (
           <sc-line-item style={{ marginTop: 'var(--sc-spacing-small)' }}>
-            <span slot="description">{formatTaxDisplay(this.order?.tax_label)}</span>
+            <span slot="description">
+              {formatTaxDisplay(this.order?.tax_label)} {`(${this.order.tax_percent}%)`}
+            </span>
             <sc-format-number slot="price" type="currency" currency={this.order?.currency} value={this.order?.tax_amount}></sc-format-number>
           </sc-line-item>
         )}
