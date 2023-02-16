@@ -102,7 +102,9 @@ export default ({ period, loading }) => {
 
 				{!!checkout?.tax_amount && (
 					<LineItem
-						label={formatTaxDisplay(`${checkout?.tax_percent}%`)}
+						label={`${formatTaxDisplay(checkout?.tax_label)} (${
+							checkout?.tax_percent
+						}%)`}
 						currency={checkout?.currency}
 						value={checkout?.tax_amount}
 					/>
