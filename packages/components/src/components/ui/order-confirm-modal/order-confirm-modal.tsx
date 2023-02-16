@@ -10,12 +10,7 @@ export class OrderConfirmModal {
   @Prop() open: boolean = false;
 
   onRedirectClick = () => {
-    let currentUrl = window.location.href;
-    let dashboardPath = '/customer-dashboard'
-    currentUrl = currentUrl.replace('/home',dashboardPath);
-    currentUrl+='?tab=dashboard'
-
-    window.location.assign(currentUrl)
+    window.location.assign(window?.scData?.pages?.dashboard)
   };
 
   render() {
