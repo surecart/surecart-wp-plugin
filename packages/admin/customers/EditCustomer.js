@@ -32,7 +32,6 @@ import User from './modules/User';
 import ActionsDropdown from './components/ActionsDropdown';
 
 export default () => {
-  debugger;
   const [error, setError] = useState(null);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
@@ -88,9 +87,8 @@ export default () => {
 
 		try {
 			setError(null);
-			await deleteCustomer({ throwOnError: true });
+			await deleteCustomer({ throwOnError: true }, {live_mode: customer?.live_mode || false});
 		} catch (e) {
-      debugger;
 			setError(e);
 		}
 	};

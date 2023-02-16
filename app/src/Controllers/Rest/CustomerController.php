@@ -82,4 +82,28 @@ class CustomerController extends RestController {
 
 		return parent::edit( $request );
 	}
+
+	/**
+	 * Delete model.
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function delete( \WP_REST_Request $request ) {
+		$customer = $this->middleware( new $this->class(), $request );
+		if ( is_wp_error( $customer ) ) {
+			return $customer;
+		}
+
+		if ( ! empty( $this->with ) ) {
+			$customer = $customer->with( $this->with );
+		}
+
+		$args = [];
+
+		$args['live_mode'] = isset( $request['live_mode'] ) && 'true' === $request['live_mode'] ? true : false;
+
+		return $customer->delete( $request['id'], $args );
+	}
 }

@@ -122,6 +122,26 @@ class User implements ArrayAccess, JsonSerializable {
 	}
 
 	/**
+	 * Set the customer id in the user meta.
+	 *
+	 * @param string $id Customer id.
+	 * @return $this|bool
+	 */
+	protected function removeCustomerId( $mode = 'live' ) {
+		$meta = (array) get_user_meta( $this->user->ID, $this->customer_id_key, true );
+
+		// if we are setting something here.
+		if ( ! empty( $meta[ $mode ] ) ) {
+			// set mode empty.
+			unset( $meta[ $mode ] );
+		}
+
+		// update meta.
+		update_user_meta( $this->user->ID, $this->customer_id_key, $meta );
+		return $this;
+	}
+
+	/**
 	 * Disallow overriding the constructor in child classes and make the code safe that way.
 	 */
 	final public function __construct() {
