@@ -10,6 +10,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import Box from '../../../ui/Box';
 import { __ } from '@wordpress/i18n';
+import { getHumanDiscount } from '../../../util';
 
 export default ({ id, onRemoveCoupon, loading, coupon }) => {
 	const { selectedCoupon, couponLoading } = useSelect(
@@ -26,13 +27,17 @@ export default ({ id, onRemoveCoupon, loading, coupon }) => {
 		},
 		[id]
 	);
+
 	return (
 		<Box
 			title={__('Coupon', 'surecart')}
 			loading={loading || couponLoading}
 		>
 			<ScStackedListRow>
-				{coupon?.name || selectedCoupon?.name}
+				<div>
+					<strong>{coupon?.name || selectedCoupon?.name}</strong>
+					<div>{getHumanDiscount(selectedCoupon || coupon)}</div>
+				</div>
 				{onRemoveCoupon && (
 					<ScDropdown slot="suffix" placement="bottom-end">
 						<ScButton type="text" slot="trigger" circle>
