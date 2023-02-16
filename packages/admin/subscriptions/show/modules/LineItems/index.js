@@ -10,7 +10,7 @@ import {
 } from '@surecart/components-react';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { formatTaxDisplay } from '../../../../util/tax-format';
+import { formatTaxDisplay } from '../../../../util/tax';
 
 export default ({ period, loading }) => {
 	const checkout = period?.checkout;

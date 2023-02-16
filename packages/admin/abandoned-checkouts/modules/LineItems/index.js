@@ -10,7 +10,7 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
 import Box from '../../../ui/Box';
-import { formatTaxDisplay } from '../../../util/tax-format';
+import { formatTaxDisplay } from '../../../util/tax';
 import { intervalString } from '../../../util/translations';
 import LineItem from './LineItem';
 

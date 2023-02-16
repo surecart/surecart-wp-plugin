@@ -41,11 +41,4 @@ export const getType = key => {
   return null;
 };
 
-
-export function formatTaxDisplay(taxLabel:string):string {
-  if (!taxLabel) {
-		return __('Tax', 'surecart');
-	}
-
-	return `${__('Tax')}: ${taxLabel ||''}`;
-}
+export const formatTaxDisplay = (taxLabel: string): string => (!taxLabel ? __('Tax', 'surecart') : `${__('Tax')}: ${taxLabel || ''}`);

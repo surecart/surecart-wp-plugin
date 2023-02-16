@@ -16,7 +16,7 @@ import { addQueryArgs } from '@wordpress/url';
 
 /** @jsx jsx */
 import Box from '../../../ui/Box';
-import { formatTaxDisplay } from '../../../util/tax-format';
+import { formatTaxDisplay } from '../../../util/tax';
 import { intervalString } from '../../../util/translations';
 import LineItem from './LineItem';
 
