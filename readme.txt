@@ -243,6 +243,14 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.6.1 - February 16, 2023 =
+* Fix: Remove integrations table on uninstall.
+* Fix: Block names not getting translated.
+* Fix: Password not submitted after hitting enter on login.
+* Fix: Tax line items are not properly translated.
+* Fix: Stripe card element sometimes expanded for themes that don't implement box-sizing.
+* Fix: Integration lists on product page only showing 10 items.
+
 = 1.6.0 - February 9, 2023 =
 * New: Conditional form areas.
 * New: Default checkout page design.
