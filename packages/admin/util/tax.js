@@ -1,9 +1,4 @@
-import { __ } from '@wordpress/i18n/build-types';
+import { __ } from '@wordpress/i18n';
 
-export function formatTaxDisplay(taxLabel) {
-	if (!taxLabel) {
-		return __('Tax', 'surecart');
-	}
-
-	return `${__('Tax')}: ${taxLabel}`;
-}
+export const formatTaxDisplay = (taxLabel) =>
+	!taxLabel ? __('Tax', 'surecart') : `${__('Tax')}: ${taxLabel}`;
