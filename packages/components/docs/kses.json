@@ -913,6 +913,17 @@
     "class": true,
     "slot": true
   },
+  "sc-mollie-add-method": {
+    "country": true,
+    "currency": true,
+    "customer-id": true,
+    "live-mode": true,
+    "processor-id": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-order": {
     "customer-ids": true,
     "heading": true,

@@ -49,6 +49,45 @@ export class ScPaymentMethod {
 
     if ((this?.paymentMethod?.payment_instrument as PaymentInstrument)?.instrument_type) {
       const type = (this?.paymentMethod?.payment_instrument as PaymentInstrument)?.instrument_type;
+      if (
+        [
+          'applepay',
+          'bancontact',
+          'banktransfer',
+          'belfius',
+          'creditcard',
+          'directdebit',
+          'eps',
+          'giftcard',
+          'giropay',
+          'ideal',
+          'in3',
+          'kbc',
+          'klarna',
+          'mybank',
+          'paysafecard',
+          'przelewy24',
+          'sofort',
+          'Voucher',
+        ].includes(type)
+      ) {
+        return (
+          <div class="payment-method" part="instrument">
+            <sc-icon style={{ fontSize: '36px' }} name={type} />
+            <span style={{ textTransform: 'capitalize' }}>{type}</span>
+            {this.renderExternalLink()}
+          </div>
+        );
+      }
+
+      if (type === 'paypal') {
+        return (
+          <div class="payment-method" part="instrument">
+            <sc-icon style={{ fontSize: '56px', lineHeight: '1', height: '28px' }} name="paypal"></sc-icon>
+          </div>
+        );
+      }
+
       return (
         <div class="payment-method" part="instrument">
           <sc-tag exportparts="base:payment_instrument" type="info" pill>
@@ -72,14 +111,7 @@ export class ScPaymentMethod {
     if (this.paymentMethod?.paypal_account?.id) {
       return (
         <div class="payment-method" part="base" style={{ gap: 'var(--sc-spacing-small)' }}>
-          <sc-icon
-            name="paypal"
-            style={{
-              fontSize: '56px',
-              lineHeight: '1',
-              height: '28px',
-            }}
-          ></sc-icon>
+          <sc-icon style={{ fontSize: '56px', lineHeight: '1', height: '28px' }} name="paypal"></sc-icon>
           {this.full && (
             <sc-text style={{ '--font-size': 'var(--sc-font-size-small)' }} truncate>
               {this.paymentMethod?.paypal_account?.email}

@@ -90,6 +90,7 @@ export const ScMenu = /*@__PURE__*/createReactComponent<JSX.ScMenu, HTMLScMenuEl
 export const ScMenuDivider = /*@__PURE__*/createReactComponent<JSX.ScMenuDivider, HTMLScMenuDividerElement>('sc-menu-divider');
 export const ScMenuItem = /*@__PURE__*/createReactComponent<JSX.ScMenuItem, HTMLScMenuItemElement>('sc-menu-item');
 export const ScMenuLabel = /*@__PURE__*/createReactComponent<JSX.ScMenuLabel, HTMLScMenuLabelElement>('sc-menu-label');
+export const ScMollieAddMethod = /*@__PURE__*/createReactComponent<JSX.ScMollieAddMethod, HTMLScMollieAddMethodElement>('sc-mollie-add-method');
 export const ScOrder = /*@__PURE__*/createReactComponent<JSX.ScOrder, HTMLScOrderElement>('sc-order');
 export const ScOrderBump = /*@__PURE__*/createReactComponent<JSX.ScOrderBump, HTMLScOrderBumpElement>('sc-order-bump');
 export const ScOrderBumps = /*@__PURE__*/createReactComponent<JSX.ScOrderBumps, HTMLScOrderBumpsElement>('sc-order-bumps');

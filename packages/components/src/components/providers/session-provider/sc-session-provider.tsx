@@ -161,7 +161,7 @@ export class ScSessionProvider {
           ...this.defaultFormQuery(),
           ...(selectedProcessor?.method ? { payment_method_type: selectedProcessor?.method } : {}),
           return_url: addQueryArgs(window.location.href, {
-            ...(checkoutState?.checkout?.id ? { confirm_checkout_id: checkoutState?.checkout?.id } : {}),
+            ...(checkoutState?.checkout?.id ? { checkout_id: checkoutState?.checkout?.id } : {}),
             is_surecart_payment_redirect: true,
           }),
         },
@@ -236,15 +236,15 @@ export class ScSessionProvider {
   /** Find or create an order */
   async findOrCreateOrder() {
     // get URL params.
-    const { redirect_status, checkout_id, line_items, coupon, confirm_checkout_id } = getQueryArgs(window.location.href);
+    const { redirect_status, checkout_id, line_items, coupon, is_surecart_payment_redirect } = getQueryArgs(window.location.href);
     // remove params we don't want.
     window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'redirect_status', 'coupon', 'line_items', 'confirm_checkout_id', 'checkout_id'));
 
     // handle abandoned checkout.
-    if (!!confirm_checkout_id) {
+    if (!!is_surecart_payment_redirect && !!checkout_id) {
       this.scSetState.emit('FINALIZE');
       this.scSetState.emit('PAYING');
-      return this.handleAbandonedCheckout(confirm_checkout_id, coupon as string);
+      return this.handleAbandonedCheckout(checkout_id, coupon as string);
     }
 
     // handle redirect status.
@@ -356,6 +356,12 @@ export class ScSessionProvider {
         return this.scError.emit({
           message: __('Payment canceled. Please try again.', 'surecart'),
         });
+
+      case 'finalized':
+        this.scError.emit({
+          message: __('Payment unsuccessful. Please try again.', 'surecart'),
+        });
+        this.scSetState.emit('REJECT');
     }
   }
 

@@ -1648,6 +1648,13 @@ export namespace Components {
     }
     interface ScMenuLabel {
     }
+    interface ScMollieAddMethod {
+        "country": string;
+        "currency": string;
+        "customerId": string;
+        "liveMode": boolean;
+        "processorId": string;
+    }
     interface ScOrder {
         "customerIds": string[];
         "heading": string;
@@ -3920,6 +3927,12 @@ declare global {
         prototype: HTMLScMenuLabelElement;
         new (): HTMLScMenuLabelElement;
     };
+    interface HTMLScMollieAddMethodElement extends Components.ScMollieAddMethod, HTMLStencilElement {
+    }
+    var HTMLScMollieAddMethodElement: {
+        prototype: HTMLScMollieAddMethodElement;
+        new (): HTMLScMollieAddMethodElement;
+    };
     interface HTMLScOrderElement extends Components.ScOrder, HTMLStencilElement {
     }
     var HTMLScOrderElement: {
@@ -4501,6 +4514,7 @@ declare global {
         "sc-menu-divider": HTMLScMenuDividerElement;
         "sc-menu-item": HTMLScMenuItemElement;
         "sc-menu-label": HTMLScMenuLabelElement;
+        "sc-mollie-add-method": HTMLScMollieAddMethodElement;
         "sc-order": HTMLScOrderElement;
         "sc-order-bump": HTMLScOrderBumpElement;
         "sc-order-bumps": HTMLScOrderBumpsElement;
@@ -6450,6 +6464,13 @@ declare namespace LocalJSX {
     }
     interface ScMenuLabel {
     }
+    interface ScMollieAddMethod {
+        "country"?: string;
+        "currency"?: string;
+        "customerId"?: string;
+        "liveMode"?: boolean;
+        "processorId"?: string;
+    }
     interface ScOrder {
         "customerIds"?: string[];
         "heading"?: string;
@@ -8228,6 +8249,7 @@ declare namespace LocalJSX {
         "sc-menu-divider": ScMenuDivider;
         "sc-menu-item": ScMenuItem;
         "sc-menu-label": ScMenuLabel;
+        "sc-mollie-add-method": ScMollieAddMethod;
         "sc-order": ScOrder;
         "sc-order-bump": ScOrderBump;
         "sc-order-bumps": ScOrderBumps;
@@ -8399,6 +8421,7 @@ declare module "@stencil/core" {
             "sc-menu-divider": LocalJSX.ScMenuDivider & JSXBase.HTMLAttributes<HTMLScMenuDividerElement>;
             "sc-menu-item": LocalJSX.ScMenuItem & JSXBase.HTMLAttributes<HTMLScMenuItemElement>;
             "sc-menu-label": LocalJSX.ScMenuLabel & JSXBase.HTMLAttributes<HTMLScMenuLabelElement>;
+            "sc-mollie-add-method": LocalJSX.ScMollieAddMethod & JSXBase.HTMLAttributes<HTMLScMollieAddMethodElement>;
             "sc-order": LocalJSX.ScOrder & JSXBase.HTMLAttributes<HTMLScOrderElement>;
             "sc-order-bump": LocalJSX.ScOrderBump & JSXBase.HTMLAttributes<HTMLScOrderBumpElement>;
             "sc-order-bumps": LocalJSX.ScOrderBumps & JSXBase.HTMLAttributes<HTMLScOrderBumpsElement>;
