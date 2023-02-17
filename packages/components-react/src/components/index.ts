@@ -123,6 +123,7 @@ export const ScPriceChoice = /*@__PURE__*/createReactComponent<JSX.ScPriceChoice
 export const ScPriceChoices = /*@__PURE__*/createReactComponent<JSX.ScPriceChoices, HTMLScPriceChoicesElement>('sc-price-choices');
 export const ScPriceInput = /*@__PURE__*/createReactComponent<JSX.ScPriceInput, HTMLScPriceInputElement>('sc-price-input');
 export const ScPriceRange = /*@__PURE__*/createReactComponent<JSX.ScPriceRange, HTMLScPriceRangeElement>('sc-price-range');
+export const ScProductBuyPage = /*@__PURE__*/createReactComponent<JSX.ScProductBuyPage, HTMLScProductBuyPageElement>('sc-product-buy-page');
 export const ScProductLineItem = /*@__PURE__*/createReactComponent<JSX.ScProductLineItem, HTMLScProductLineItemElement>('sc-product-line-item');
 export const ScProvider = /*@__PURE__*/createReactComponent<JSX.ScProvider, HTMLScProviderElement>('sc-provider');
 export const ScPurchaseDownloadsList = /*@__PURE__*/createReactComponent<JSX.ScPurchaseDownloadsList, HTMLScPurchaseDownloadsListElement>('sc-purchase-downloads-list');
