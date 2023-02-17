@@ -6,7 +6,7 @@ describe('sc-format-date', () => {
   it('renders', async () => {
     const page = await newSpecPage({
       components: [ScFormatDate],
-      template: () => <sc-format-date date={1646774470} type="timestamp"></sc-format-date>,
+      template: () => <sc-format-date date={1676612655} type="timestamp"></sc-format-date>,
     });
     expect(page.root).toMatchSnapshot();
   });
