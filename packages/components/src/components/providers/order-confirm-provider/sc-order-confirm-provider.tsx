@@ -13,17 +13,15 @@ import { Checkout } from '../../../types';
  */
 @Component({
   tag: 'sc-order-confirm-provider',
+  styleUrl: 'sc-order-confirm-provider.scss',
   shadow: true,
 })
 export class ScOrderConfirmProvider {
   /** The order confirm provider element */
   @Element() el: HTMLScOrderConfirmProviderElement;
 
-  /**Whether the success modal is open */
-  @State() isSuccessModalOpen: boolean = false;
-
-  /**The current order id */
-  @State() orderId: string = '';
+  /** Holds the completed order id */
+  @State() completedOrderId: string;
 
   /** The form id */
   @Prop() formId: number;
@@ -65,60 +63,37 @@ export class ScOrderConfirmProvider {
       console.error(e);
       this.scError.emit(e);
     } finally {
-      const order = this.order?.id;
-
-      if (this?.order?.metadata?.success_url || this.successUrl) {
-        this.orderId = order;
-      }
       // make sure form state changes before redirecting
       setTimeout(() => {
+        this.completedOrderId = this.order?.id;
         // make sure we clear the order state no matter what.
         clearOrder(this.formId, this.mode);
-        this.isSuccessModalOpen = true;
       }, 50);
     }
   }
 
   getSuccessUrl() {
-    if (this?.order?.metadata?.success_url || this.successUrl) {
-      const success_url = this?.order?.metadata?.success_url || this.successUrl;
-      return addQueryArgs(success_url, { order: this.orderId });
-    }
-  }
-
-  onRedirectClick=()=> {
-    window.location.assign(this.getSuccessUrl() || window?.scData?.pages?.dashboard);
+    const url = this?.order?.metadata?.success_url || this.successUrl;
+    return url ? addQueryArgs(url, { order: this.completedOrderId }) : window?.scData?.pages?.dashboard;
   }
 
   render() {
     return (
       <Host>
         <slot />
-        <sc-dialog open={this.isSuccessModalOpen} noHeader onScRequestClose={this.onRedirectClick}>
-          <sc-flex flexDirection="column" alignItems="center" style={{ '--sc-flex-column-gap': 'var(--sc-spacing-large)' }}>
-            <div>
-              <svg width="70px" height="70px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C17.51 22 22 17.51 22 12C22 6.49 17.51 2 12 2ZM16.78 9.7L11.11 15.37C10.97 15.51 10.78 15.59 10.58 15.59C10.38 15.59 10.19 15.51 10.05 15.37L7.22 12.54C6.93 12.25 6.93 11.77 7.22 11.48C7.51 11.19 7.99 11.19 8.28 11.48L10.58 13.78L15.72 8.64C16.01 8.35 16.49 8.35 16.78 8.64C17.07 8.93 17.07 9.4 16.78 9.7Z"
-                  style={{ fill: 'var(--sc-color-primary-500)' }}
-                />
-              </svg>
+        <sc-dialog open={!!this.completedOrderId} style={{ '--body-spacing': 'var(--sc-spacing-xxx-large)' }} noHeader onScRequestClose={e => e.preventDefault()}>
+          <div class="confirm__icon">
+            <div class="confirm__icon-container">
+              <sc-icon name="check" />
             </div>
-            <sc-text
-              style={{
-                '--font-weight': 'var(--sc-font-weight-bold)',
-                '--font-size': 'var(--sc-font-size-large)',
-              }}
-            >
-              {__('Thanks for your order!', 'surecart')}
-            </sc-text>
-            <sc-text style={{ '--text-align': 'center' }}>
-              {__('Woohoo! Your payment was successful, and your orders is complete. A receipt is on its way to your inbox.', 'surecart')}
-            </sc-text>
-            <sc-button style={{ width: '60%' }} type="primary" onClick={this.onRedirectClick}>
+          </div>
+          <sc-dashboard-module heading={__('Thanks for your order!', 'surecart')} style={{ '--sc-dashboard-module-spacing': 'var(--sc-spacing-x-large)', 'textAlign': 'center' }}>
+            <span slot="description"> {__('Your payment was successful, and your order is complete. A receipt is on its way to your inbox.', 'surecart')}</span>
+            <sc-button href={this.getSuccessUrl()} size="large" type="primary">
               {__('Continue', 'surecart')}
+              <sc-icon name="arrow-right" slot="suffix" />
             </sc-button>
-          </sc-flex>
+          </sc-dashboard-module>
         </sc-dialog>
       </Host>
     );
