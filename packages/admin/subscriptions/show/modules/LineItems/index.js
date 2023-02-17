@@ -10,10 +10,10 @@ import {
 } from '@surecart/components-react';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { formatTaxDisplay } from '../../../../util/tax';
 
 export default ({ period, loading }) => {
 	const checkout = period?.checkout;
-	const subscription = period?.subscription;
 	const line_items = period?.checkout?.line_items?.data;
 
 	return (
@@ -38,18 +38,23 @@ export default ({ period, loading }) => {
 			<Fragment>
 				{(line_items || []).map((item) => {
 					return (
-						<ScProductLineItem
-							key={item.id}
-							imageUrl={item?.price?.product?.image_url}
-							name={item?.price?.product?.name}
-							editable={false}
-							removable={false}
-							quantity={item.quantity}
-							amount={item.subtotal_amount}
-							currency={item?.price?.currency}
-							trialDurationDays={item?.price?.trial_duration_days}
-							interval={intervalString(item?.price)}
-						></ScProductLineItem>
+						<>
+							<ScProductLineItem
+								key={item.id}
+								imageUrl={item?.price?.product?.image_url}
+								name={item?.price?.product?.name}
+								editable={false}
+								removable={false}
+								fees={item?.fees?.data}
+								quantity={item.quantity}
+								amount={item.subtotal_amount}
+								currency={item?.price?.currency}
+								trialDurationDays={
+									item?.price?.trial_duration_days
+								}
+								interval={intervalString(item?.price)}
+							></ScProductLineItem>
+						</>
 					);
 				})}
 
@@ -95,22 +100,11 @@ export default ({ period, loading }) => {
 					/>
 				)}
 
-				{!!checkout?.bump_amount && (
-					<LineItem
-						label={__('Bump Discounts', 'surecart')}
-						currency={checkout?.currency}
-						value={checkout?.bump_amount}
-					/>
-				)}
-
 				{!!checkout?.tax_amount && (
 					<LineItem
-						label={
-							<>
-								{__('Tax', 'surecart')} -{' '}
-								{checkout?.tax_percent}%
-							</>
-						}
+						label={`${formatTaxDisplay(checkout?.tax_label)} (${
+							checkout?.tax_percent
+						}%)`}
 						currency={checkout?.currency}
 						value={checkout?.tax_amount}
 					/>

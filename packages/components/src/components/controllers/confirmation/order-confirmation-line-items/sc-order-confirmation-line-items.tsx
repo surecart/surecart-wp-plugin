@@ -33,18 +33,21 @@ export class ScOrderConfirmationLineItems {
         <div class="line-items" part="line-items">
           {this.order?.line_items?.data.map(item => {
             return (
-              <sc-product-line-item
-                key={item.id}
-                imageUrl={(item?.price?.product as Product)?.image_url}
-                name={`${(item?.price?.product as Product)?.name}`}
-                editable={false}
-                removable={false}
-                quantity={item.quantity}
-                amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.subtotal_amount}
-                currency={this.order?.currency}
-                trialDurationDays={item?.price?.trial_duration_days}
-                interval={intervalString(item?.price, { showOnce: hasSubscription(this.order) })}
-              ></sc-product-line-item>
+              <div class="line-item">
+                <sc-product-line-item
+                  key={item.id}
+                  imageUrl={(item?.price?.product as Product)?.image_url}
+                  name={`${(item?.price?.product as Product)?.name}`}
+                  editable={false}
+                  removable={false}
+                  quantity={item.quantity}
+                  fees={item?.fees?.data}
+                  amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.subtotal_amount}
+                  currency={this.order?.currency}
+                  trialDurationDays={item?.price?.trial_duration_days}
+                  interval={intervalString(item?.price, { showOnce: hasSubscription(this.order) })}
+                ></sc-product-line-item>
+              </div>
             );
           })}
         </div>

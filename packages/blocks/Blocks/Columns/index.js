@@ -4,11 +4,12 @@
 import { __ } from '@wordpress/i18n';
 import { columns as icon } from '@wordpress/icons';
 
+import metadata from './block.json';
+import deprecated from './deprecated';
 /**
  * Internal dependencies
  */
 import edit from './edit';
-import metadata from './block.json';
 import save from './save';
 import variations from './variations';
 
@@ -21,4 +22,5 @@ export const settings = {
 	variations,
 	edit,
 	save,
+  deprecated
 };

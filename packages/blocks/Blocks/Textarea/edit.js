@@ -17,7 +17,7 @@ import {
 import { ScTextarea } from '@surecart/components-react';
 
 export default ({ className, attributes, setAttributes, isSelected }) => {
-	const { label, placeholder, help, name, required } = attributes;
+	const { label, placeholder, help, name, required, maxlength } = attributes;
 
 	return (
 		<Fragment>
@@ -50,6 +50,15 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 							value={placeholder}
 							onChange={(placeholder) =>
 								setAttributes({ placeholder })
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Max Length', 'surecart')}
+							value={maxlength}
+							onChange={(maxlength) =>
+								setAttributes({ maxlength })
 							}
 						/>
 					</PanelRow>

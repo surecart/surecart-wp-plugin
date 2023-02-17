@@ -40,7 +40,8 @@
 	},
 	"dependencies": {
 		"@surecart/components": "^0.0.10",
-		"@surecart/components-react": "^0.0.7"
+		"@surecart/components-react": "^0.0.7",
+		"react-select": "^5.7.0"
 	},
 	"devDependencies": {
 		"@wordpress/prettier-config": "^1.1.1",

@@ -23,11 +23,11 @@ const registerBlock = (block) => {
 	registerBlockType(
 		{
 			...metadata,
-			text_domain: 'surecart', // set our textdomain for everything.
+			textdomain: 'surecart', // set our textdomain for everything.
 		},
 		{
 			...settings,
-			title: metadata.title || settings.title,
+			// title: metadata.title || settings.title,
 		}
 	);
 };
