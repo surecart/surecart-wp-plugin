@@ -56,10 +56,10 @@ class Customer extends Model {
 	}
 
 	/**
-	 * Create a new model
+	 * Delete the model.
 	 *
-	 * @param array   $attributes Attributes to create.
-	 * @param boolean $create_user Whether to create a corresponding WordPress user.
+	 * @param int   $id Customer ID.
+	 * @param array $args Other arguments.
 	 *
 	 * @return $this|\WP_Error|false
 	 */

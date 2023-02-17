@@ -51,8 +51,3 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'help
 
 // Register hooks.
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'hooks.php';
-
-
-// $int = new \SureCart\Database\Tables\Integrations( new \SureCart\Database\Table() );
-
-// $int->install();

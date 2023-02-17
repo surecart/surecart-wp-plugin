@@ -122,10 +122,10 @@ class User implements ArrayAccess, JsonSerializable {
 	}
 
 	/**
-	 * Set the customer id in the user meta.
+	 * Remove the the customer id from the user meta.
 	 *
-	 * @param string $id Customer id.
-	 * @return $this|bool
+	 * @param string $mode Customer mode.
+	 * @return $this
 	 */
 	protected function removeCustomerId( $mode = 'live' ) {
 		$meta = (array) get_user_meta( $this->user->ID, $this->customer_id_key, true );
