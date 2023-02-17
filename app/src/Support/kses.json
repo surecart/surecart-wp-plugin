@@ -1280,10 +1280,44 @@
     "class": true,
     "slot": true
   },
-  "sc-product-image": {
+  "sc-product-item": {
+    "layout-config": true,
+    "product": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-item-button": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-item-image": {
     "alt": true,
     "sizing": true,
     "src": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-item-list": {
+    "item-styles": true,
+    "layout-config": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-item-price": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-item-title": {
     "style": true,
     "id": true,
     "class": true,

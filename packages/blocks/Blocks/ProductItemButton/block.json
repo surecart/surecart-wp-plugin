@@ -1,0 +1,10 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"name": "surecart/product-item-button",
+	"title": "Product Item Buy Button",
+	"description": "Displays the product buy button.",
+	"category": "surecart",
+	"keywords": ["product", "button", "list"],
+	"ancestor": ["surecart/product-item-list"]
+}

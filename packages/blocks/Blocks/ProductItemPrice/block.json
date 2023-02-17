@@ -1,0 +1,10 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"name": "surecart/product-item-price",
+	"title": "Product Item Price",
+	"description": "Displays the price of the product with the scratched price.",
+	"category": "surecart",
+	"keywords": ["product", "price", "discount"],
+	"ancestor": ["surecart/product-item-list"]
+}

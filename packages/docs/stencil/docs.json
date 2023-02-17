@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-02-07T18:35:50",
+  "timestamp": "2023-02-16T13:22:22",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -1656,6 +1656,7 @@
         "sc-password-nag",
         "sc-payment-method",
         "sc-payment-methods-list",
+        "sc-product-item-button",
         "sc-purchase-downloads-list",
         "sc-stripe-add-method",
         "sc-subscription",
@@ -1746,6 +1747,9 @@
           "sc-button"
         ],
         "sc-payment-methods-list": [
+          "sc-button"
+        ],
+        "sc-product-item-button": [
           "sc-button"
         ],
         "sc-purchase-downloads-list": [
@@ -20042,9 +20046,102 @@
       }
     },
     {
-      "filePath": "./src/components/ui/sc-product-image/sc-product-image.tsx",
+      "filePath": "./src/components/controllers/products/sc-product-item/sc-product-item.tsx",
       "encapsulation": "shadow",
-      "tag": "sc-product-image",
+      "tag": "sc-product-item",
+      "readme": "# sc-product-item\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "layoutConfig",
+          "type": "{ blockName: string; attributes: any; }[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "{ blockName: string; attributes: any; }[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "product",
+          "type": "Product",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Product"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-product-item-list"
+      ],
+      "dependencies": [
+        "sc-product-item-title",
+        "sc-product-item-image",
+        "sc-product-item-price"
+      ],
+      "dependencyGraph": {
+        "sc-product-item": [
+          "sc-product-item-title",
+          "sc-product-item-image",
+          "sc-product-item-price"
+        ],
+        "sc-product-item-list": [
+          "sc-product-item"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/products/sc-product-item-button/sc-product-item-button.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-product-item-button",
+      "readme": "# sc-product-item-button\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-button"
+      ],
+      "dependencyGraph": {
+        "sc-product-item-button": [
+          "sc-button"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/products/sc-product-item-image/sc-product-item-image.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-product-item-image",
       "readme": "# sc-product-image\n\n\n",
       "docs": "",
       "docsTags": [],
@@ -20110,9 +20207,128 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "sc-product-item"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "sc-product-item": [
+          "sc-product-item-image"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-product-item-list",
+      "readme": "# sc-product-item-list\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "itemStyles",
+          "type": "any",
+          "mutable": false,
+          "attr": "item-styles",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "{}",
+          "values": [
+            {
+              "type": "any"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "layoutConfig",
+          "type": "{ blockName: string; attributes: any; }[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "{ blockName: string; attributes: any; }[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-product-item"
+      ],
+      "dependencyGraph": {
+        "sc-product-item-list": [
+          "sc-product-item"
+        ],
+        "sc-product-item": [
+          "sc-product-item-title",
+          "sc-product-item-image",
+          "sc-product-item-price"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/products/sc-product-item-price/sc-product-item-price.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-product-item-price",
+      "readme": "# sc-product-item-price\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-product-item"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "sc-product-item": [
+          "sc-product-item-price"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/products/sc-product-item-title/sc-product-item-title.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-product-item-title",
+      "readme": "# sc-product-item-title\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-product-item"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "sc-product-item": [
+          "sc-product-item-title"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/product-line-item/sc-product-line-item.tsx",

@@ -1,0 +1,27 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"name": "surecart/product-item-title",
+	"title": "Product Title",
+	"description": "Displays the product title.",
+	"category": "surecart",
+	"keywords": ["product", "title", "list"],
+	"ancestor": ["surecart/product-item-list"],
+	"attributes": {
+		"title": {
+			"type": "string"
+		},
+		"fontSize": {
+			"type": "number",
+			"default": 18
+		}
+	},
+	"supports": {
+		"spacing": {
+			"padding": ["top", "bottom"],
+			"__experimentalDefaultControls": {
+				"padding": true
+			}
+		}
+	}
+}

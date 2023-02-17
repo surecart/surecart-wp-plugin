@@ -31,11 +31,6 @@ import * as password from '@blocks/Password';
 import * as payment from '@blocks/Payment';
 import * as priceChoice from '@blocks/PriceChoice';
 import * as priceSelector from '@blocks/PriceSelector';
-import * as productList from '@blocks/ProductList';
-import * as productListImage from '@blocks/ProductListImage';
-import * as productListItem from '@blocks/ProductListItem';
-import * as productListPrice from '@blocks/ProductListPrice';
-import * as productListTitle from '@blocks/ProductListTitle';
 import * as submit from '@blocks/Submit';
 import * as subtotal from '@blocks/Subtotal';
 import * as switchBlock from '@blocks/Switch';
@@ -73,11 +68,6 @@ registerBlocks([
 	payment,
 	priceChoice,
 	priceSelector,
-	productList,
-	productListImage,
-	productListItem,
-	productListPrice,
-	productListTitle,
 	submit,
 	subtotal,
 	switchBlock,

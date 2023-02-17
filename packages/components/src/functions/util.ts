@@ -39,3 +39,17 @@ export const isValidURL = str => {
 
   return url.protocol === 'http:' || url.protocol === 'https:';
 };
+
+export const getSpacingPresetCssVar = (value: string) => {
+	if (!value) {
+		return;
+	}
+
+	const slug = value.match(/var:preset\|spacing\|(.+)/);
+
+	if (!slug) {
+		return value;
+	}
+
+	return `var(--wp--preset--spacing--${slug[1]})`;
+};

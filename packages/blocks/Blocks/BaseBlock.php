@@ -113,4 +113,25 @@ abstract class BaseBlock {
 	public function render( $attributes, $content ) {
 		return '';
 	}
+
+	/**
+	 * Get the spacing preset css variable.
+	 *
+	 * @param string $value The value
+	 *
+	 * @return string|void
+	 */
+	public function getSpacingPresetCssVar( $value ) {
+		if ( ! $value ) {
+			return;
+		}
+
+		preg_match( '/var:preset\|spacing\|(.+)/', $value, $matches );
+
+		if ( ! $matches ) {
+			return $value;
+		}
+
+		return "var(--wp--preset--spacing--$matches[1])";
+	}
 }
