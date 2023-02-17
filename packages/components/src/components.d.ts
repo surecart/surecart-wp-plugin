@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export namespace Components {
@@ -2327,6 +2327,12 @@ export namespace Components {
          */
         "value": string;
     }
+    interface ScPriceRange {
+        /**
+          * The array of price objects
+         */
+        "prices": Price[];
+    }
     interface ScProductItem {
         "layoutConfig": LayoutConfig;
         "product": Product;
@@ -4147,6 +4153,12 @@ declare global {
         prototype: HTMLScPriceInputElement;
         new (): HTMLScPriceInputElement;
     };
+    interface HTMLScPriceRangeElement extends Components.ScPriceRange, HTMLStencilElement {
+    }
+    var HTMLScPriceRangeElement: {
+        prototype: HTMLScPriceRangeElement;
+        new (): HTMLScPriceRangeElement;
+    };
     interface HTMLScProductItemElement extends Components.ScProductItem, HTMLStencilElement {
     }
     var HTMLScProductItemElement: {
@@ -4592,6 +4604,7 @@ declare global {
         "sc-price-choice": HTMLScPriceChoiceElement;
         "sc-price-choices": HTMLScPriceChoicesElement;
         "sc-price-input": HTMLScPriceInputElement;
+        "sc-price-range": HTMLScPriceRangeElement;
         "sc-product-item": HTMLScProductItemElement;
         "sc-product-item-button": HTMLScProductItemButtonElement;
         "sc-product-item-image": HTMLScProductItemImageElement;
@@ -7262,6 +7275,12 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface ScPriceRange {
+        /**
+          * The array of price objects
+         */
+        "prices"?: Price[];
+    }
     interface ScProductItem {
         "layoutConfig"?: LayoutConfig;
         "product"?: Product;
@@ -8356,6 +8375,7 @@ declare namespace LocalJSX {
         "sc-price-choice": ScPriceChoice;
         "sc-price-choices": ScPriceChoices;
         "sc-price-input": ScPriceInput;
+        "sc-price-range": ScPriceRange;
         "sc-product-item": ScProductItem;
         "sc-product-item-button": ScProductItemButton;
         "sc-product-item-image": ScProductItemImage;
@@ -8531,6 +8551,7 @@ declare module "@stencil/core" {
             "sc-price-choice": LocalJSX.ScPriceChoice & JSXBase.HTMLAttributes<HTMLScPriceChoiceElement>;
             "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
+            "sc-price-range": LocalJSX.ScPriceRange & JSXBase.HTMLAttributes<HTMLScPriceRangeElement>;
             "sc-product-item": LocalJSX.ScProductItem & JSXBase.HTMLAttributes<HTMLScProductItemElement>;
             "sc-product-item-button": LocalJSX.ScProductItemButton & JSXBase.HTMLAttributes<HTMLScProductItemButtonElement>;
             "sc-product-item-image": LocalJSX.ScProductItemImage & JSXBase.HTMLAttributes<HTMLScProductItemImageElement>;
