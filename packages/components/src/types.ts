@@ -21,6 +21,10 @@ declare global {
       nonce_endpoint: string;
       recaptcha_site_key: string;
       theme: string;
+      pages:{
+        dashboard:string,
+        checkout:string
+      }
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;
@@ -247,6 +251,11 @@ export interface LineItem extends Object {
   object: string;
   quantity: number;
   bump: string | Bump;
+  fees?: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Fee>;
+  };
   bump_amount: number;
   discount_amount: number;
   subtotal_amount: number;
@@ -257,6 +266,17 @@ export interface LineItem extends Object {
   updated_at: number;
   price?: Price;
   price_id: string;
+}
+
+export interface Fee {
+  id: string;
+  object: 'fee';
+  amount: number;
+  description: string;
+  fee_type: 'manual' | 'bump';
+  line_item: string | LineItem;
+  created_at: number;
+  updated_at: number;
 }
 
 export interface InvoiceItem extends LineItem {}
@@ -595,7 +615,7 @@ export interface SubscriptionProtocol {
 export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid' | 'completed';
 
 export type CheckoutStatus = 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'requires_approval';
-export type OrderStatus = 'paid' | 'payment_failed' | 'processing' | 'void';
+export type OrderStatus = 'paid' | 'payment_failed' | 'processing' | 'void' | 'canceled';
 
 export interface PaymentMethod extends Object {
   id: string;
@@ -783,4 +803,17 @@ export interface PriceData extends Object {
   price_id: string;
   quantity: number;
   removeable: boolean;
+}
+
+export type RuleName = 'total' | 'coupons' | 'products' | 'shipping_country' | 'billing_country' | 'processors';
+export type ArrayOperators = 'all' | 'any' | 'none' | 'exist' | 'not_exist';
+export type NumberOperators = '==' | '!=' | '<' | '>' | '<=' | '>=';
+export interface RuleGroup {
+  group_id: string;
+  rules: Rule[];
+}
+export interface Rule {
+  condition: RuleName;
+  operator: NumberOperators | ArrayOperators;
+  value: string | string[] | { value: string }[];
 }

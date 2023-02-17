@@ -16,6 +16,7 @@ import { addQueryArgs } from '@wordpress/url';
 
 /** @jsx jsx */
 import Box from '../../../ui/Box';
+import { formatTaxDisplay } from '../../../util/tax';
 import { intervalString } from '../../../util/translations';
 import LineItem from './LineItem';
 
@@ -135,6 +136,7 @@ export default ({ order, checkout, loading }) => {
 							name={item?.price?.product?.name}
 							editable={false}
 							removable={false}
+							fees={item?.fees?.data}
 							quantity={item.quantity}
 							amount={item.subtotal_amount}
 							currency={item?.price?.currency}
@@ -194,22 +196,11 @@ export default ({ order, checkout, loading }) => {
 					/>
 				)}
 
-				{!!checkout?.bump_amount && (
-					<LineItem
-						label={__('Bump Discounts', 'surecart')}
-						currency={checkout?.currency}
-						value={checkout?.bump_amount}
-					/>
-				)}
-
 				{!!checkout?.tax_amount && (
 					<LineItem
-						label={
-							<>
-								{__('Tax', 'surecart')} -{' '}
-								{checkout?.tax_percent}%
-							</>
-						}
+						label={`${formatTaxDisplay(checkout?.tax_label)} (${
+							checkout?.tax_percent
+						}%)`}
 						currency={checkout?.currency}
 						value={checkout?.tax_amount}
 					/>

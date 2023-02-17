@@ -6,6 +6,7 @@
 	"category": "surecart",
 	"parent": ["surecart/price-selector"],
 	"keywords": ["price", "product", "choice", "checkout"],
+  "textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false

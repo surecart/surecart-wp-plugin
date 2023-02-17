@@ -30,6 +30,7 @@
 		'alignment'                  => $align ?? '',
 		'taxProtocol'                => $tax_protocol ?? [],
 		'loadingText'                => $loading_text ?? [],
+		'successText'                => $success_text ?? [],
 		'stripePaymentElement'       => $stripe_payment_element ?? false,
 		'successUrl'                 => esc_url_raw( $success_url ?? \SureCart::pages()->url( 'order-confirmation' ) ),
 		'processors'                 => $processors,

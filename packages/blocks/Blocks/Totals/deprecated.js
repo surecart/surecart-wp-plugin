@@ -20,13 +20,18 @@ export default [
 				type: 'string',
 				default: 'Summary',
 			},
+			collapsedOnMobile: {
+				type: 'boolean',
+				default: false,
+			},
 		},
 		save({ attributes }) {
-			const { collapsed, collapsible } = attributes;
+			const { collapsed, collapsible, collapsedOnMobile } = attributes;
 			return (
 				<sc-order-summary
 					collapsible={collapsible ? '1' : false}
 					collapsed={collapsed ? '1' : false}
+					collapsedOnMobile={collapsedOnMobile ? '1' : false}
 				>
 					<InnerBlocks.Content />
 				</sc-order-summary>

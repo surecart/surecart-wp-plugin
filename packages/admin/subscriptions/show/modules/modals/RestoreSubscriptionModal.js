@@ -84,7 +84,6 @@ export default ({ open, onRequestClose, amountDue, currency }) => {
 					)}
 				</ScText>
 			</ScFlex>
-
 			<div slot="footer">
 				<ScButton
 					type="text"
