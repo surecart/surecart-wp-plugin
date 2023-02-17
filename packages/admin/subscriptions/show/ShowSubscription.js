@@ -82,6 +82,7 @@ export default () => {
 						'period.checkout',
 						'checkout.line_items',
 						'line_item.price',
+						'line_item.fees',
 						'price',
 						'price.product',
 						'customer',

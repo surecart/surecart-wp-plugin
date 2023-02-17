@@ -112,9 +112,10 @@ class PageSeeder {
 			'surecart/create_pages',
 			array(
 				'checkout'           => [
-					'name'    => _x( 'checkout', 'Page slug', 'surecart' ),
-					'title'   => _x( 'Checkout', 'Page title', 'surecart' ),
-					'content' => '<!-- wp:surecart/checkout-form {"id":' . (int) $form->ID . '} --><!-- /wp:surecart/checkout-form -->',
+					'name'          => _x( 'checkout', 'Page slug', 'surecart' ),
+					'title'         => _x( 'Checkout', 'Page title', 'surecart' ),
+					'content'       => '<!-- wp:surecart/checkout-form {"id":' . (int) $form->ID . '} --><!-- /wp:surecart/checkout-form -->',
+					'page_template' => 'pages/template-surecart-blank.php',
 				],
 				'order-confirmation' => [
 					'name'    => _x( 'order-confirmation', 'Page slug', 'surecart' ),
@@ -169,7 +170,8 @@ class PageSeeder {
 				$post['content'],
 				! empty( $post['parent'] ) ? \SureCart::pages()->findOrCreate( $post['parent'] ) : '',
 				! empty( $post['post_status'] ) ? $post['post_status'] : 'publish',
-				! empty( $post['post_type'] ) ? $post['post_type'] : 'page'
+				! empty( $post['post_type'] ) ? $post['post_type'] : 'page',
+				! empty( $post['page_template'] ) ? $post['page_template'] : null
 			);
 		}
 	}

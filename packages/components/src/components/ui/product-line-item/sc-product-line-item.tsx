@@ -1,5 +1,6 @@
 import { Component, h, Prop, Event, EventEmitter, Element, Fragment } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
+import { Fee } from '../../../types';
 
 /**
  * @part base - The elements base wrapper.
@@ -37,6 +38,9 @@ export class ScProductLineItem {
 
   /** Product monetary amount */
   @Prop() amount: number;
+
+  /** Product line item fees. */
+  @Prop() fees: Fee[];
 
   /** The line item scratch amount */
   @Prop() scratchAmount: number;
@@ -106,31 +110,41 @@ export class ScProductLineItem {
 
   render() {
     return (
-      <div part="base" class={{ 'item': true, 'item--has-image': !!this.imageUrl }}>
-        {!!this.imageUrl && <img part="image" src={this.imageUrl} class="item__image" />}
-        <div class="item__text" part="text">
-          <div class="item__title" part="title">
-            <slot name="title">{this.name}</slot>
+      <div class="base" part="base">
+        <div part="product-line-item" class={{ 'item': true, 'item--has-image': !!this.imageUrl }}>
+          {!!this.imageUrl && <img part="image" src={this.imageUrl} class="item__image" />}
+          <div class="item__text" part="text">
+            <div class="item__title" part="title">
+              <slot name="title">{this.name}</slot>
+            </div>
+            {this.editable && (
+              <sc-quantity-select
+                max={this.max || Infinity}
+                exportparts="base:quantity__base, minus, minus-icon, plus, plus-icon, input"
+                clickEl={this.el}
+                quantity={this.quantity}
+                onScChange={e => e.detail && this.scUpdateQuantity.emit(e.detail)}
+              ></sc-quantity-select>
+            )}
+            {!this.editable && this.quantity > 1 && (
+              <span class="item__description" part="static-quantity">
+                {__('Qty:', 'surecart')} {this.quantity}
+              </span>
+            )}
           </div>
-          {this.editable && (
-            <sc-quantity-select
-              max={this.max || Infinity}
-              exportparts="base:quantity__base, minus, minus-icon, plus, plus-icon, input"
-              clickEl={this.el}
-              quantity={this.quantity}
-              onScChange={e => e.detail && this.scUpdateQuantity.emit(e.detail)}
-            ></sc-quantity-select>
-          )}
-          {!this.editable && this.quantity > 1 && (
-            <span class="item__description" part="static-quantity">
-              {__('Qty:', 'surecart')} {this.quantity}
+          <div class="item__suffix" part="suffix">
+            {this.removable ? <sc-icon exportparts="base:remove-icon__base" class="item__remove" name="x" onClick={() => this.scRemove.emit()}></sc-icon> : <div></div>}
+            {this.renderPriceAndInterval()}
+          </div>
+        </div>
+        {(this.fees || []).map(fee => (
+          <sc-line-item>
+            <sc-format-number slot="price-description" type="currency" value={fee?.amount} currency={this.currency || 'usd'} />
+            <span slot="price-description" class="fee__description">
+              {fee?.description}
             </span>
-          )}
-        </div>
-        <div class="item__suffix" part="suffix">
-          {this.removable ? <sc-icon exportparts="base:remove-icon__base" class="item__remove" name="x" onClick={() => this.scRemove.emit()}></sc-icon> : <div></div>}
-          {this.renderPriceAndInterval()}
-        </div>
+          </sc-line-item>
+        ))}
       </div>
     );
   }

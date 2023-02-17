@@ -11,6 +11,7 @@ import {
 	ScButton,
 	ScForm,
 	ScFormControl,
+	ScInput,
 } from '@surecart/components-react';
 import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
@@ -18,6 +19,7 @@ import Box from '../ui/Box';
 export default ({ id, setId }) => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [price, setPrice] = useState('');
+	const [name, setName] = useState('');
 	const [error, setError] = useState('');
 	const { saveEntityRecord } = useDispatch(coreStore);
 
@@ -30,6 +32,7 @@ export default ({ id, setId }) => {
 				'surecart',
 				'bump',
 				{
+					name,
 					price,
 				},
 				{ throwOnError: true }
@@ -56,6 +59,17 @@ export default ({ id, setId }) => {
 							gap: var(--sc-spacing-large);
 						`}
 					>
+						<ScInput
+							required
+							label={__('Bump Name', 'surecart')}
+							help={__(
+								'A name for this bump that will be visible to customers.',
+								'surecart'
+							)}
+							onScInput={(e) => setName(e.target.value)}
+							value={name}
+							name="name"
+						/>
 						<ScFormControl
 							label={__('Order Bump Price', 'surecart')}
 							help={__(
@@ -75,7 +89,10 @@ export default ({ id, setId }) => {
 						</ScFormControl>
 
 						<div
-							css={css`display: flex; gap: var(--sc-spacing-small);`}
+							css={css`
+								display: flex;
+								gap: var(--sc-spacing-small);
+							`}
 						>
 							<ScButton type="primary" submit loading={isSaving}>
 								{__('Create', 'surecart')}

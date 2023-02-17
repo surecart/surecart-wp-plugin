@@ -80,7 +80,7 @@ export class ScPayment {
     this.checkMethodsNumber();
     this.selectFirstProcessor();
     this.mutationObserver = new MutationObserver(() => this.checkMethodsNumber());
-    this.mutationObserver.observe(this.el, { attributes: true, childList: true, subtree: false });
+    this.mutationObserver.observe(this.el, { attributes: true, childList: true, subtree: true });
   }
 
   disconnectedCallback() {

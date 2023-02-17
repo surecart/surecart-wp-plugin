@@ -5,6 +5,7 @@
 	"description": "Display a checkbox input",
 	"category": "surecart",
 	"keywords": ["checkbox", "toggle", "checkout", "engine"],
+  "textdomain": "surecart",
 	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,

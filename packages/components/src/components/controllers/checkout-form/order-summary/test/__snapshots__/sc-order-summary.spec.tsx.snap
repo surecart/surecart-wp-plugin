@@ -14,11 +14,11 @@ exports[`sc-order-summary does not render scratch price if the same as amount an
         <span slot="description">
           <slot name="description"></slot>
         </span>
-        <span slot="price">
+        <span class="price price--collapsed" slot="price">
           <sc-total total="total"></sc-total>
         </span>
       </sc-line-item>
-      <div class="summary__content" hidden="" style="height: 0;">
+      <div class="summary__content">
         <slot></slot>
       </div>
     </div>
@@ -30,7 +30,7 @@ exports[`sc-order-summary renders 1`] = `
 <sc-order-summary>
   <mock:shadow-root>
     <div class="summary summary--open">
-      <div class="summary__content" style="height: auto;">
+      <div class="summary__content">
         <slot></slot>
       </div>
     </div>
@@ -52,11 +52,11 @@ exports[`sc-order-summary renders scratch price if different from amount and col
         <span slot="description">
           <slot name="description"></slot>
         </span>
-        <span slot="price">
+        <span class="price price--collapsed" slot="price">
           <sc-total total="total"></sc-total>
         </span>
       </sc-line-item>
-      <div class="summary__content" hidden="" style="height: 0;">
+      <div class="summary__content">
         <slot></slot>
       </div>
     </div>
