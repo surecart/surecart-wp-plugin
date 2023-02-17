@@ -62,7 +62,7 @@ export class ScButton {
   @Prop() value: string;
 
   /** When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`. */
-  @Prop() href: string;
+  @Prop({ reflect: true }) href: string;
 
   /** Tells the browser where to open the link. Only used when `href` is set. */
   @Prop() target: '_blank' | '_parent' | '_self' | '_top';

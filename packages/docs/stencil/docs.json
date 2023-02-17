@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-02-15T21:51:15",
+  "timestamp": "2023-02-17T17:10:18",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -1654,6 +1654,7 @@
         "sc-login-form",
         "sc-login-provider",
         "sc-order",
+        "sc-order-confirm-provider",
         "sc-order-submit",
         "sc-orders-list",
         "sc-pagination",
@@ -1732,6 +1733,9 @@
           "sc-button"
         ],
         "sc-order": [
+          "sc-button"
+        ],
+        "sc-order-confirm-provider": [
           "sc-button"
         ],
         "sc-order-submit": [
@@ -4367,6 +4371,12 @@
         "sc-line-item-tax": [
           "sc-line-item",
           "sc-format-number"
+        ],
+        "sc-order-confirm-provider": [
+          "sc-dialog",
+          "sc-flex",
+          "sc-text",
+          "sc-button"
         ],
         "sc-session-provider": [
           "sc-line-items-provider"
@@ -8946,6 +8956,7 @@
       "dependents": [
         "sc-cancel-dialog",
         "sc-login-provider",
+        "sc-order-confirm-provider",
         "sc-payment-methods-list",
         "sc-subscription-details",
         "sc-upgrade-required"
@@ -8966,6 +8977,9 @@
           "sc-dialog"
         ],
         "sc-login-provider": [
+          "sc-dialog"
+        ],
+        "sc-order-confirm-provider": [
           "sc-dialog"
         ],
         "sc-payment-methods-list": [
@@ -10441,6 +10455,7 @@
         "sc-downloads-list",
         "sc-login-form",
         "sc-order",
+        "sc-order-confirm-provider",
         "sc-pagination",
         "sc-password-nag",
         "sc-payment-methods-list",
@@ -10467,6 +10482,9 @@
           "sc-flex"
         ],
         "sc-order": [
+          "sc-flex"
+        ],
+        "sc-order-confirm-provider": [
           "sc-flex"
         ],
         "sc-pagination": [
@@ -15411,8 +15429,26 @@
       "dependents": [
         "sc-checkout"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "sc-dialog",
+        "sc-flex",
+        "sc-text",
+        "sc-button"
+      ],
       "dependencyGraph": {
+        "sc-order-confirm-provider": [
+          "sc-dialog",
+          "sc-flex",
+          "sc-text",
+          "sc-button"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
         "sc-checkout": [
           "sc-order-confirm-provider"
         ]
@@ -26696,6 +26732,7 @@
       "dependents": [
         "sc-charges-list",
         "sc-invoices-list",
+        "sc-order-confirm-provider",
         "sc-orders-list",
         "sc-payment-method",
         "sc-payment-methods-list",
@@ -26710,6 +26747,9 @@
           "sc-text"
         ],
         "sc-invoices-list": [
+          "sc-text"
+        ],
+        "sc-order-confirm-provider": [
           "sc-text"
         ],
         "sc-orders-list": [

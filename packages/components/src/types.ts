@@ -21,6 +21,10 @@ declare global {
       nonce_endpoint: string;
       recaptcha_site_key: string;
       theme: string;
+      pages:{
+        dashboard:string,
+        checkout:string
+      }
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;

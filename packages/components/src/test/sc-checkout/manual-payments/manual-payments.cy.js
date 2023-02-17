@@ -43,7 +43,8 @@ describe('Manual Payments', () => {
       .should('include', 'manual_payment_method_id=test')
       .should('include', 'form_id=1');
 
-    cy.location('pathname').should('contain', 'success');
-    cy.location('search').should('contain', 'order=test');
+    cy.get('sc-dialog').find('sc-dashboard-module').should('be.visible');
+    cy.get('sc-button').contains('Continue').should('be.visible').click()
+    cy.get('sc-button[href]').should('have.attr', 'href').and('contain', 'success').and('contain', 'order=test');
   });
 });
