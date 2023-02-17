@@ -2100,7 +2100,13 @@ export namespace Components {
         "recurringEnabled": boolean;
     }
     interface ScPaymentMethodsList {
+        /**
+          * The heading
+         */
         "heading": string;
+        /**
+          * Is this a customer
+         */
         "isCustomer": boolean;
         /**
           * Query to fetch paymentMethods
@@ -6986,7 +6992,13 @@ declare namespace LocalJSX {
         "recurringEnabled"?: boolean;
     }
     interface ScPaymentMethodsList {
+        /**
+          * The heading
+         */
         "heading"?: string;
+        /**
+          * Is this a customer
+         */
         "isCustomer"?: boolean;
         /**
           * Query to fetch paymentMethods

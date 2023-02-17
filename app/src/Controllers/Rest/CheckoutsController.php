@@ -344,4 +344,19 @@ class CheckoutsController extends RestController {
 			]
 		);
 	}
+
+	/**
+	 * Cancel an checkout
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \SureCart\Models\Checkout|\WP_Error
+	 */
+	public function cancel( \WP_REST_Request $request ) {
+		$order = $this->middleware( new $this->class( $request['id'] ), $request );
+		if ( is_wp_error( $order ) ) {
+			return $order;
+		}
+		return $order->where( $request->get_query_params() )->cancel();
+	}
 }

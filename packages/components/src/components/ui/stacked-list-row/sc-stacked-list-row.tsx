@@ -1,4 +1,5 @@
 import { Component, Element, h, Prop, State } from '@stencil/core';
+import { isRtl } from '../../../functions/page-align';
 
 @Component({
   tag: 'sc-stacked-list-row',
@@ -47,6 +48,7 @@ export class ScStackedListRow {
           'list-row--has-prefix': this.hasPrefix,
           'list-row--has-suffix': this.hasSuffix,
           'breakpoint-lg': this.width >= this.mobileSize,
+          'list-row--is-rtl':isRtl()
         }}
       >
         <span class="list-row__prefix">

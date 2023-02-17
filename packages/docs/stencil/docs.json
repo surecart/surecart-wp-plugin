@@ -653,6 +653,7 @@
         "sc-order-manual-instructions",
         "sc-password-nag",
         "sc-payment",
+        "sc-payment-methods-list",
         "sc-paypal-add-method",
         "sc-price-choice",
         "sc-stripe-add-method",
@@ -704,6 +705,9 @@
           "sc-alert"
         ],
         "sc-payment": [
+          "sc-alert"
+        ],
+        "sc-payment-methods-list": [
           "sc-alert"
         ],
         "sc-paypal-add-method": [
@@ -8953,6 +8957,7 @@
         "sc-cancel-dialog",
         "sc-login-provider",
         "sc-order-confirm-provider",
+        "sc-payment-methods-list",
         "sc-subscription-details",
         "sc-upgrade-required"
       ],
@@ -8975,6 +8980,9 @@
           "sc-dialog"
         ],
         "sc-order-confirm-provider": [
+          "sc-dialog"
+        ],
+        "sc-payment-methods-list": [
           "sc-dialog"
         ],
         "sc-subscription-details": [
@@ -17056,13 +17064,17 @@
         },
         {
           "name": "status",
-          "type": "\"paid\" | \"payment_failed\" | \"processing\" | \"void\"",
+          "type": "\"canceled\" | \"paid\" | \"payment_failed\" | \"processing\" | \"void\"",
           "mutable": false,
           "attr": "status",
           "reflectToAttr": false,
           "docs": "The tag's statux type.",
           "docsTags": [],
           "values": [
+            {
+              "value": "canceled",
+              "type": "string"
+            },
             {
               "value": "paid",
               "type": "string"
@@ -18755,7 +18767,7 @@
           "mutable": false,
           "attr": "heading",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "The heading",
           "docsTags": [],
           "values": [
             {
@@ -18771,7 +18783,7 @@
           "mutable": false,
           "attr": "is-customer",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Is this a customer",
           "docsTags": [],
           "values": [
             {
@@ -18820,7 +18832,11 @@
         "sc-menu-item",
         "sc-dashboard-module",
         "sc-button",
-        "sc-block-ui"
+        "sc-dialog",
+        "sc-alert",
+        "sc-switch",
+        "sc-block-ui",
+        "sc-text"
       ],
       "dependencyGraph": {
         "sc-payment-methods-list": [
@@ -18839,7 +18855,11 @@
           "sc-menu-item",
           "sc-dashboard-module",
           "sc-button",
-          "sc-block-ui"
+          "sc-dialog",
+          "sc-alert",
+          "sc-switch",
+          "sc-block-ui",
+          "sc-text"
         ],
         "sc-empty": [
           "sc-icon"
@@ -18862,6 +18882,10 @@
           "sc-alert"
         ],
         "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-dialog": [
+          "sc-button",
           "sc-icon"
         ],
         "sc-block-ui": [
@@ -25794,11 +25818,15 @@
         }
       ],
       "dependents": [
-        "sc-customer-edit"
+        "sc-customer-edit",
+        "sc-payment-methods-list"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-customer-edit": [
+          "sc-switch"
+        ],
+        "sc-payment-methods-list": [
           "sc-switch"
         ]
       }
@@ -26707,6 +26735,7 @@
         "sc-order-confirm-provider",
         "sc-orders-list",
         "sc-payment-method",
+        "sc-payment-methods-list",
         "sc-stripe-element",
         "sc-stripe-payment-element",
         "sc-subscription-details",
@@ -26727,6 +26756,9 @@
           "sc-text"
         ],
         "sc-payment-method": [
+          "sc-text"
+        ],
+        "sc-payment-methods-list": [
           "sc-text"
         ],
         "sc-stripe-element": [

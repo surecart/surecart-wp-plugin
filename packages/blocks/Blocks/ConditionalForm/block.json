@@ -5,6 +5,7 @@
 	"title": "Conditional",
 	"description": "Display an area of the form based on conditions.",
 	"category": "surecart",
+  "textdomain": "surecart",
 	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,

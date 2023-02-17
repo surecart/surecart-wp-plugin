@@ -22,6 +22,7 @@
  - [sc-order-confirm-provider](../../providers/order-confirm-provider)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-payment-method](../sc-payment-method)
+ - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-stripe-element](../stripe-element)
  - [sc-stripe-payment-element](../stripe-payment-element)
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
@@ -35,6 +36,7 @@ graph TD;
   sc-order-confirm-provider --> sc-text
   sc-orders-list --> sc-text
   sc-payment-method --> sc-text
+  sc-payment-methods-list --> sc-text
   sc-stripe-element --> sc-text
   sc-stripe-payment-element --> sc-text
   sc-subscription-details --> sc-text

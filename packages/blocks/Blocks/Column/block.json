@@ -4,9 +4,9 @@
 	"name": "surecart/column",
 	"title": "SureCart Column",
 	"category": "surecart",
+	"textdomain": "surecart",
 	"parent": ["surecart/columns"],
 	"description": "A single column within a columns block.",
-	"textdomain": "default",
 	"attributes": {
 		"layout": {
 			"type": "object"

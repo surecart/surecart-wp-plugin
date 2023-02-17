@@ -5,6 +5,7 @@
 	"category": "surecart",
 	"parent": ["surecart/checkout-form"],
 	"keywords": ["email", "mail"],
+  "textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false
