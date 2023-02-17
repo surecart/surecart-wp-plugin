@@ -28,12 +28,12 @@
 
 ### Used by
 
- - [order-confirm-modal](../order-confirm-modal)
  - [sc-cancel-discount](../../controllers/dashboard/sc-cancel-discount)
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-login-form](../../controllers/login)
  - [sc-order](../../controllers/dashboard/order)
+ - [sc-order-confirm-provider](../../providers/order-confirm-provider)
  - [sc-pagination](../pagination)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
@@ -48,12 +48,12 @@
 ### Graph
 ```mermaid
 graph TD;
-  order-confirm-modal --> sc-flex
   sc-cancel-discount --> sc-flex
   sc-cancel-survey --> sc-flex
   sc-downloads-list --> sc-flex
   sc-login-form --> sc-flex
   sc-order --> sc-flex
+  sc-order-confirm-provider --> sc-flex
   sc-pagination --> sc-flex
   sc-password-nag --> sc-flex
   sc-payment-methods-list --> sc-flex

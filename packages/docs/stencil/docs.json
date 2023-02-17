@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-02-08T20:03:24",
+  "timestamp": "2023-02-17T02:28:14",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -1650,6 +1650,7 @@
         "sc-login-form",
         "sc-login-provider",
         "sc-order",
+        "sc-order-confirm-provider",
         "sc-order-submit",
         "sc-orders-list",
         "sc-pagination",
@@ -1728,6 +1729,9 @@
           "sc-button"
         ],
         "sc-order": [
+          "sc-button"
+        ],
+        "sc-order-confirm-provider": [
           "sc-button"
         ],
         "sc-order-submit": [
@@ -4363,6 +4367,12 @@
         "sc-line-item-tax": [
           "sc-line-item",
           "sc-format-number"
+        ],
+        "sc-order-confirm-provider": [
+          "sc-dialog",
+          "sc-flex",
+          "sc-text",
+          "sc-button"
         ],
         "sc-session-provider": [
           "sc-line-items-provider"
@@ -8942,6 +8952,7 @@
       "dependents": [
         "sc-cancel-dialog",
         "sc-login-provider",
+        "sc-order-confirm-provider",
         "sc-subscription-details",
         "sc-upgrade-required"
       ],
@@ -8961,6 +8972,9 @@
           "sc-dialog"
         ],
         "sc-login-provider": [
+          "sc-dialog"
+        ],
+        "sc-order-confirm-provider": [
           "sc-dialog"
         ],
         "sc-subscription-details": [
@@ -10433,6 +10447,7 @@
         "sc-downloads-list",
         "sc-login-form",
         "sc-order",
+        "sc-order-confirm-provider",
         "sc-pagination",
         "sc-password-nag",
         "sc-payment-methods-list",
@@ -10459,6 +10474,9 @@
           "sc-flex"
         ],
         "sc-order": [
+          "sc-flex"
+        ],
+        "sc-order-confirm-provider": [
           "sc-flex"
         ],
         "sc-pagination": [
@@ -11085,6 +11103,7 @@
         "sc-order-bumps",
         "sc-payment",
         "sc-select",
+        "sc-stripe-element",
         "sc-textarea"
       ],
       "dependencies": [
@@ -11116,6 +11135,9 @@
           "sc-form-control"
         ],
         "sc-select": [
+          "sc-form-control"
+        ],
+        "sc-stripe-element": [
           "sc-form-control"
         ],
         "sc-textarea": [
@@ -13348,7 +13370,6 @@
         "sc-password-nag",
         "sc-price-input",
         "sc-select",
-        "sc-stripe-element",
         "sc-tax-id-input",
         "sc-wordpress-password-edit",
         "sc-wordpress-user-edit"
@@ -13406,9 +13427,6 @@
           "sc-input"
         ],
         "sc-select": [
-          "sc-input"
-        ],
-        "sc-stripe-element": [
           "sc-input"
         ],
         "sc-tax-id-input": [
@@ -15403,8 +15421,26 @@
       "dependents": [
         "sc-checkout"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "sc-dialog",
+        "sc-flex",
+        "sc-text",
+        "sc-button"
+      ],
       "dependencyGraph": {
+        "sc-order-confirm-provider": [
+          "sc-dialog",
+          "sc-flex",
+          "sc-text",
+          "sc-button"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
         "sc-checkout": [
           "sc-order-confirm-provider"
         ]
@@ -23469,16 +23505,13 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
-        "sc-input",
+        "sc-form-control",
         "sc-text"
       ],
       "dependencyGraph": {
         "sc-stripe-element": [
-          "sc-input",
+          "sc-form-control",
           "sc-text"
-        ],
-        "sc-input": [
-          "sc-form-control"
         ],
         "sc-form-control": [
           "sc-tooltip"
@@ -26671,6 +26704,7 @@
       "dependents": [
         "sc-charges-list",
         "sc-invoices-list",
+        "sc-order-confirm-provider",
         "sc-orders-list",
         "sc-payment-method",
         "sc-stripe-element",
@@ -26684,6 +26718,9 @@
           "sc-text"
         ],
         "sc-invoices-list": [
+          "sc-text"
+        ],
+        "sc-order-confirm-provider": [
           "sc-text"
         ],
         "sc-orders-list": [

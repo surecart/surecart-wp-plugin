@@ -32,16 +32,18 @@
 
 ### Depends on
 
-- [order-confirm-modal](../../ui/order-confirm-modal)
+- [sc-dialog](../../ui/sc-dialog)
+- [sc-flex](../../ui/flex)
+- [sc-text](../../ui/text)
+- [sc-button](../../ui/button)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-order-confirm-provider --> order-confirm-modal
-  order-confirm-modal --> sc-dialog
-  order-confirm-modal --> sc-flex
-  order-confirm-modal --> sc-text
-  order-confirm-modal --> sc-button
+  sc-order-confirm-provider --> sc-dialog
+  sc-order-confirm-provider --> sc-flex
+  sc-order-confirm-provider --> sc-text
+  sc-order-confirm-provider --> sc-button
   sc-dialog --> sc-button
   sc-dialog --> sc-icon
   sc-button --> sc-spinner

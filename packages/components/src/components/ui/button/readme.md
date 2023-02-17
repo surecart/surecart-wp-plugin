@@ -49,7 +49,6 @@
 
 ### Used by
 
- - [order-confirm-modal](../order-confirm-modal)
  - [sc-cancel-dialog](../../controllers/dashboard/sc-cancel-dialog)
  - [sc-cancel-discount](../../controllers/dashboard/sc-cancel-discount)
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
@@ -67,6 +66,7 @@
  - [sc-login-form](../../controllers/login)
  - [sc-login-provider](../../providers/sc-login-provider)
  - [sc-order](../../controllers/dashboard/order)
+ - [sc-order-confirm-provider](../../providers/order-confirm-provider)
  - [sc-order-submit](../../controllers/checkout-form/order-submit)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-pagination](../pagination)
@@ -97,7 +97,6 @@
 ```mermaid
 graph TD;
   sc-button --> sc-spinner
-  order-confirm-modal --> sc-button
   sc-cancel-dialog --> sc-button
   sc-cancel-discount --> sc-button
   sc-cancel-survey --> sc-button
@@ -115,6 +114,7 @@ graph TD;
   sc-login-form --> sc-button
   sc-login-provider --> sc-button
   sc-order --> sc-button
+  sc-order-confirm-provider --> sc-button
   sc-order-submit --> sc-button
   sc-orders-list --> sc-button
   sc-pagination --> sc-button

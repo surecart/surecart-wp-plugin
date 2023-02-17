@@ -7,16 +7,6 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export namespace Components {
-    interface OrderConfirmModal {
-        /**
-          * Whether modal is open
-         */
-        "open": boolean;
-        /**
-          * The success url
-         */
-        "successUrl": string;
-    }
     interface ScAddress {
         /**
           * The address.
@@ -3458,12 +3448,6 @@ export interface ScToggleCustomEvent<T> extends CustomEvent<T> {
     target: HTMLScToggleElement;
 }
 declare global {
-    interface HTMLOrderConfirmModalElement extends Components.OrderConfirmModal, HTMLStencilElement {
-    }
-    var HTMLOrderConfirmModalElement: {
-        prototype: HTMLOrderConfirmModalElement;
-        new (): HTMLOrderConfirmModalElement;
-    };
     interface HTMLScAddressElement extends Components.ScAddress, HTMLStencilElement {
     }
     var HTMLScAddressElement: {
@@ -4449,7 +4433,6 @@ declare global {
         new (): HTMLScWordpressUserEditElement;
     };
     interface HTMLElementTagNameMap {
-        "order-confirm-modal": HTMLOrderConfirmModalElement;
         "sc-address": HTMLScAddressElement;
         "sc-alert": HTMLScAlertElement;
         "sc-badge-notice": HTMLScBadgeNoticeElement;
@@ -4617,16 +4600,6 @@ declare global {
     }
 }
 declare namespace LocalJSX {
-    interface OrderConfirmModal {
-        /**
-          * Whether modal is open
-         */
-        "open"?: boolean;
-        /**
-          * The success url
-         */
-        "successUrl"?: string;
-    }
     interface ScAddress {
         /**
           * The address.
@@ -8206,7 +8179,6 @@ declare namespace LocalJSX {
         "user"?: WordPressUser;
     }
     interface IntrinsicElements {
-        "order-confirm-modal": OrderConfirmModal;
         "sc-address": ScAddress;
         "sc-alert": ScAlert;
         "sc-badge-notice": ScBadgeNotice;
@@ -8377,7 +8349,6 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "order-confirm-modal": LocalJSX.OrderConfirmModal & JSXBase.HTMLAttributes<HTMLOrderConfirmModalElement>;
             "sc-address": LocalJSX.ScAddress & JSXBase.HTMLAttributes<HTMLScAddressElement>;
             "sc-alert": LocalJSX.ScAlert & JSXBase.HTMLAttributes<HTMLScAlertElement>;
             "sc-badge-notice": LocalJSX.ScBadgeNotice & JSXBase.HTMLAttributes<HTMLScBadgeNoticeElement>;

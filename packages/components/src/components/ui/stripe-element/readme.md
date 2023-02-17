@@ -59,15 +59,14 @@ Type: `Promise<any>`
 
 ### Depends on
 
-- [sc-input](../input)
+- [sc-form-control](../form-control)
 - [sc-text](../text)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-stripe-element --> sc-input
+  sc-stripe-element --> sc-form-control
   sc-stripe-element --> sc-text
-  sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
   style sc-stripe-element fill:#f9f,stroke:#333,stroke-width:4px
 ```

@@ -44,9 +44,9 @@
 
 ### Used by
 
- - [order-confirm-modal](../order-confirm-modal)
  - [sc-cancel-dialog](../../controllers/dashboard/sc-cancel-dialog)
  - [sc-login-provider](../../providers/sc-login-provider)
+ - [sc-order-confirm-provider](../../providers/order-confirm-provider)
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
  - [sc-upgrade-required](../sc-upgrade-required)
 
@@ -61,9 +61,9 @@ graph TD;
   sc-dialog --> sc-button
   sc-dialog --> sc-icon
   sc-button --> sc-spinner
-  order-confirm-modal --> sc-dialog
   sc-cancel-dialog --> sc-dialog
   sc-login-provider --> sc-dialog
+  sc-order-confirm-provider --> sc-dialog
   sc-subscription-details --> sc-dialog
   sc-upgrade-required --> sc-dialog
   style sc-dialog fill:#f9f,stroke:#333,stroke-width:4px

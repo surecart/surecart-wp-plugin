@@ -8,7 +8,6 @@ import type { JSX } from '@surecart/components';
 import { defineCustomElements } from '@surecart/components/loader';
 
 defineCustomElements();
-export const OrderConfirmModal = /*@__PURE__*/createReactComponent<JSX.OrderConfirmModal, HTMLOrderConfirmModalElement>('order-confirm-modal');
 export const ScAddress = /*@__PURE__*/createReactComponent<JSX.ScAddress, HTMLScAddressElement>('sc-address');
 export const ScAlert = /*@__PURE__*/createReactComponent<JSX.ScAlert, HTMLScAlertElement>('sc-alert');
 export const ScBadgeNotice = /*@__PURE__*/createReactComponent<JSX.ScBadgeNotice, HTMLScBadgeNoticeElement>('sc-badge-notice');
