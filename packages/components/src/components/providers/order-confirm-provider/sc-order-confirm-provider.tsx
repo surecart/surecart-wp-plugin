@@ -67,7 +67,7 @@ export class ScOrderConfirmProvider {
     } finally {
       const order = this.order?.id;
 
-      if (this?.order?.metadata?.success_url) {
+      if (this?.order?.metadata?.success_url || this.successUrl) {
         this.orderId = order;
       }
       // make sure form state changes before redirecting
