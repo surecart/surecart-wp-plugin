@@ -28,9 +28,7 @@ export class ScProductBuyPage {
               >
                 <sc-input label={__('Email Address', 'surecart')} type="email" />
                 <sc-input label={__('Name', 'surecart')} type="text" />
-                <sc-button type="primary" submit full>
-                  {__('Purchase', 'surecart')}
-                </sc-button>
+                <sc-order-submit>{__('Purchase', 'surecart')}</sc-order-submit>
               </sc-column>
               <sc-column
                 class="wp-block-surecart-column is-sticky is-layout-constrained is-horizontally-aligned-left hydrated"
