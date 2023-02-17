@@ -294,8 +294,6 @@ export default () => {
 			>
 				<ScInput
 					type="number"
-					min="1"
-					required
 					label={__('Grace Period Days', 'surecart')}
 					value={item?.grace_period_days}
 					onScInput={(e) => {
