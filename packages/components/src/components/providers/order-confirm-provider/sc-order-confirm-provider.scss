@@ -7,13 +7,18 @@
 
   &__icon-container {
     background: var(--sc-color-primary-500);
-    width: 70px;
-    height: 70px;
+    width: 55px;
+    height: 55px;
     border-radius: 999999px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 34px;
+    font-size: 26px;
+    line-height: 1;
     color: white;
   }
+}
+
+sc-dialog::part(overlay) {
+  backdrop-filter: blur(4px);
 }

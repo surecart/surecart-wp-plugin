@@ -35,6 +35,13 @@ export class ScOrderConfirmProvider {
   /** Success url. */
   @Prop() successUrl: string;
 
+  /** Success text for the form. */
+  @Prop() successText: {
+    title: string;
+    description: string;
+    button: string;
+  };
+
   /** The order is paid event. */
   @Event() scOrderPaid: EventEmitter<Checkout>;
 
@@ -87,10 +94,15 @@ export class ScOrderConfirmProvider {
               <sc-icon name="check" />
             </div>
           </div>
-          <sc-dashboard-module heading={__('Thanks for your order!', 'surecart')} style={{ '--sc-dashboard-module-spacing': 'var(--sc-spacing-x-large)', 'textAlign': 'center' }}>
-            <span slot="description"> {__('Your payment was successful, and your order is complete. A receipt is on its way to your inbox.', 'surecart')}</span>
+          <sc-dashboard-module
+            heading={this.successText?.title || __('Thanks for your order!', 'surecart')}
+            style={{ '--sc-dashboard-module-spacing': 'var(--sc-spacing-x-large)', 'textAlign': 'center' }}
+          >
+            <span slot="description">
+              {this.successText?.description || __('Your payment was successful, and your order is complete. A receipt is on its way to your inbox.', 'surecart')}
+            </span>
             <sc-button href={this.getSuccessUrl()} size="large" type="primary">
-              {__('Continue', 'surecart')}
+              {this.successText?.button || __('Continue', 'surecart')}
               <sc-icon name="arrow-right" slot="suffix" />
             </sc-button>
           </sc-dashboard-module>

@@ -39,6 +39,14 @@
 				"confirming": "",
 				"confirmed": ""
 			}
+		},
+		"success_text": {
+			"type": "object",
+			"default": {
+				"title": "",
+				"description": "",
+				"button": ""
+			}
 		}
 	},
 	"providesContext": {

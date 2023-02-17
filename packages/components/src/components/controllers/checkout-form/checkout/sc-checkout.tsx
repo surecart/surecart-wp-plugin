@@ -3,7 +3,22 @@ import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
 
 import { getOrder, setOrder } from '../../../../store/checkouts';
-import { Bump, Checkout, Customer, FormState, ManualPaymentMethod, PaymentIntent, PaymentIntents, PriceChoice, Prices, Processor, ProcessorName, Products, ResponseError, TaxProtocol } from '../../../../types';
+import {
+  Bump,
+  Checkout,
+  Customer,
+  FormState,
+  ManualPaymentMethod,
+  PaymentIntent,
+  PaymentIntents,
+  PriceChoice,
+  Prices,
+  Processor,
+  ProcessorName,
+  Products,
+  ResponseError,
+  TaxProtocol,
+} from '../../../../types';
 
 @Component({
   tag: 'sc-checkout',
@@ -71,11 +86,19 @@ export class ScCheckout {
   /** Use the Stripe payment element. */
   @Prop() stripePaymentElement: boolean = false;
 
+  /** Text for the loading states of the form. */
   @Prop() loadingText: {
     finalizing: string;
     paying: string;
     confirming: string;
     confirmed: string;
+  };
+
+  /** Success text for the form. */
+  @Prop() successText: {
+    title: string;
+    description: string;
+    button: string;
   };
 
   /** Stores fetched prices for use throughout component.  */
@@ -204,8 +227,8 @@ export class ScCheckout {
 
       // checkout states
       loading: this.checkoutState === 'loading',
-      busy: ['updating', 'finalizing', 'paying', 'confirming', 'confirmed'].includes(this?.checkoutState),
-      paying: ['finalizing', 'paying', 'confirming', 'confirmed'].includes(this?.checkoutState),
+      busy: ['updating', 'finalizing', 'paying', 'confirming'].includes(this?.checkoutState),
+      paying: ['finalizing', 'paying', 'confirming'].includes(this?.checkoutState),
       empty: !['loading', 'updating'].includes(this.checkoutState) && !this.order()?.line_items?.pagination?.count,
       // checkout states
 
@@ -266,7 +289,7 @@ export class ScCheckout {
                 {/* Validate components in the form based on order state. */}
                 <sc-form-components-validator order={this.order()} disabled={this.disableComponentsValidation} taxProtocol={this.taxProtocol}>
                   {/* Handle confirming of order after it is "Paid" by processors. */}
-                  <sc-order-confirm-provider order={this.order()} success-url={this.successUrl} form-id={this.formId} mode={this.mode}>
+                  <sc-order-confirm-provider order={this.order()} success-url={this.successUrl} form-id={this.formId} mode={this.mode} successText={this.successText}>
                     {/* Handles the current session. */}
                     <sc-session-provider
                       ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)}
@@ -306,11 +329,6 @@ export class ScCheckout {
           {this.checkoutState === 'confirming' && (
             <sc-block-ui z-index={9} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
               {this.loadingText?.confirming || __('Finalizing order...', 'surecart')}
-            </sc-block-ui>
-          )}
-          {this.checkoutState === 'confirmed' && (
-            <sc-block-ui z-index={9} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
-              {this.successUrl?(this.loadingText?.confirmed || __('Success! Redirecting...', 'surecart')):''}
             </sc-block-ui>
           )}
         </Universe.Provider>
