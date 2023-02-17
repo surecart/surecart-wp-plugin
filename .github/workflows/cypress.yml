@@ -25,7 +25,7 @@ jobs:
           start: yarn start
           browser: chrome
           wait-on: "http://localhost:3456"
-          record: true
+          record: false
           parallel: true
       # after the test run completes
       # store videos and any screenshots
@@ -37,11 +37,11 @@ jobs:
         if: failure()
         with:
           name: cypress-screenshots
-          path: cypress/screenshots
+          path: packages/components/cypress/screenshots
       # Test run video was always captured, so this action uses "always()" condition
       - uses: actions/upload-artifact@v3
         if: always()
         with:
           name: cypress-videos
-          path: cypress/videos
+          path: packages/components/cypress/videos
 

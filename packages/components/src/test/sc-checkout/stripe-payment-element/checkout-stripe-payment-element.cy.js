@@ -111,9 +111,8 @@ describe('Checkout Stripe', () => {
 
     cy.wait('@confirm');
     cy.get('@confirmPayment').should('have.been.calledOnce');
-    cy.get('sc-dialog').find('sc-text').contains('Thanks for your order').should('be.visible');
+    cy.get('sc-dialog').find('sc-dashboard-module').should('be.visible');
     cy.get('sc-button').contains('Continue').should('be.visible').click()
-    cy.location('pathname').should('contain', 'success');
-    cy.location('search').should('contain', 'order=test');
+    cy.get('sc-button[href]').should('have.attr', 'href').and('contain', 'success').and('contain', 'order=test');
   });
 });
