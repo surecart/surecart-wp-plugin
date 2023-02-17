@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-02-08T20:03:24",
+  "timestamp": "2023-02-17T05:21:50",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -11085,6 +11085,7 @@
         "sc-order-bumps",
         "sc-payment",
         "sc-select",
+        "sc-stripe-element",
         "sc-textarea"
       ],
       "dependencies": [
@@ -11116,6 +11117,9 @@
           "sc-form-control"
         ],
         "sc-select": [
+          "sc-form-control"
+        ],
+        "sc-stripe-element": [
           "sc-form-control"
         ],
         "sc-textarea": [
@@ -13348,7 +13352,6 @@
         "sc-password-nag",
         "sc-price-input",
         "sc-select",
-        "sc-stripe-element",
         "sc-tax-id-input",
         "sc-wordpress-password-edit",
         "sc-wordpress-user-edit"
@@ -13406,9 +13409,6 @@
           "sc-input"
         ],
         "sc-select": [
-          "sc-input"
-        ],
-        "sc-stripe-element": [
           "sc-input"
         ],
         "sc-tax-id-input": [
@@ -23469,16 +23469,13 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
-        "sc-input",
+        "sc-form-control",
         "sc-text"
       ],
       "dependencyGraph": {
         "sc-stripe-element": [
-          "sc-input",
+          "sc-form-control",
           "sc-text"
-        ],
-        "sc-input": [
-          "sc-form-control"
         ],
         "sc-form-control": [
           "sc-tooltip"
