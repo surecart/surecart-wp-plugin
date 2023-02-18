@@ -11,19 +11,24 @@
 	},
 	"attributes": {
 		"other_label": {
-			"type": "string"
+			"type": "string",
+			"default": "Tax ID"
 		},
 		"ca_gst_label": {
-			"type": "string"
+			"type": "string",
+			"default": "GST Number"
 		},
 		"au_abn_label": {
-			"type": "string"
+			"type": "string",
+			"default": "ABN Number"
 		},
 		"gb_vat_label": {
-			"type": "string"
+			"type": "string",
+			"default": "UK VAT"
 		},
 		"eu_vat_label": {
-			"type": "string"
+			"type": "string",
+			"default": "EU VAT"
 		}
 	}
 }
