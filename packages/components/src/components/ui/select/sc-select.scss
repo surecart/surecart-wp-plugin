@@ -39,7 +39,7 @@ sc-dropdown {
   white-space: nowrap;
   vertical-align: middle;
   padding: 0;
-  transition: var(--sc-transition-fast) background-color, var(--sc-transition-fast) color, var(--sc-transition-fast) border, var(--sc-transition-fast) box-shadow;
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) background-color, var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) border, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
   cursor: inherit;
   box-shadow: var(--sc-shadow-small);
   font-size: var(--sc-button-font-size-medium);

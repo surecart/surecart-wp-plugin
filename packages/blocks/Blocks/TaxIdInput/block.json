@@ -4,6 +4,7 @@
 	"description": "Display a VAT/GST field for VAT collection.",
 	"category": "surecart",
 	"keywords": ["totals", "summary"],
+  "textdomain": "surecart",
 	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,

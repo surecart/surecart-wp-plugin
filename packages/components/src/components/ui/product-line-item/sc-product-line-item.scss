@@ -107,10 +107,25 @@
 .item__remove {
   cursor: pointer;
   color: var(--sc-color-gray-400);
-  margin-bottom: var(--sc-spacing-medium);
+  margin-bottom: var(--sc-spacing-small);
 }
 
 .actions__divider {
   opacity: 0.25;
   margin: 0 0.2em;
+}
+
+.item--is-rtl{
+  &.price {
+    text-align: right;
+  }
+}
+
+.base {
+  display: grid;
+  gap: var(--sc-spacing-x-small);
+}
+
+.fee__description {
+  opacity: 0.75;
 }

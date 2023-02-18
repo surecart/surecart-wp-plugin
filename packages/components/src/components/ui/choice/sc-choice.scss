@@ -35,9 +35,14 @@
   height: 100%; // TODO: test this.
   transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
 
+  &--is-rtl {
+    text-align: right;
+  }
+
   &__content {
     cursor: pointer;
     display: flex;
+    gap: 0.75em;
   }
 
   &--checked {
@@ -77,11 +82,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-right: 0.75em;
   border: solid var(--sc-input-border-width) var(--sc-input-border-color);
   background-color: var(--sc-input-background-color);
   color: transparent;
-  transition: var(--sc-transition-fast) border-color, var(--sc-transition-fast) background-color, var(--sc-transition-fast) color, var(--sc-transition-fast) box-shadow;
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) border-color, var(--sc-input-transition, var(--sc-transition-medium)) background-color, var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
 
   &.choice__radio {
     width: var(--sc-radio-size);

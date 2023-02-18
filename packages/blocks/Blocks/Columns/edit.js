@@ -1,7 +1,6 @@
 /**
  * External dependencies
  */
-import classnames from 'classnames';
 import { dropRight, get, times } from 'lodash';
 
 /**
@@ -14,6 +13,8 @@ import {
 	RangeControl,
 	ToggleControl,
 } from '@wordpress/components';
+import { store as editorStore } from '@wordpress/editor';
+import { store as preferencesStore } from '@wordpress/preferences';
 
 import {
 	InspectorControls,
@@ -31,6 +32,7 @@ import {
 	createBlocksFromInnerBlocksTemplate,
 	store as blocksStore,
 } from '@wordpress/blocks';
+import { store as noticesStore } from '@wordpress/notices';
 
 /**
  * Internal dependencies
@@ -43,6 +45,8 @@ import {
 } from './utils';
 
 import { ScColumns } from '@surecart/components-react';
+import { useEffect } from 'react';
+import { select } from '@wordpress/data';
 
 /**
  * Allowed blocks constant is passed to InnerBlocks precisely as specified here.
@@ -65,8 +69,71 @@ function ColumnsEditContainer({
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
 		? __stableUseInnerBlocksProps
 		: __experimentalUseInnerBlocksProps;
+	const { editPost } = useDispatch(editorStore);
+	const { createInfoNotice, removeNotice } = useDispatch(noticesStore);
+	const { set, setDefaults } = useDispatch(preferencesStore);
 
-	const { isStackedOnMobile, verticalAlignment } = attributes;
+	const {
+		isStackedOnMobile,
+		verticalAlignment,
+		isFullHeight,
+		isReversedOnMobile,
+	} = attributes;
+
+	const { template, postType, id } = useSelect((select) => {
+		return {
+			template: select(editorStore).getEditedPostAttribute('template'),
+			postType: select(editorStore).getCurrentPostType(),
+			id: select(editorStore).getCurrentPostId(),
+		};
+	});
+
+	setDefaults('surecart/templates', {
+		'full-columns-page-tempalte-dismissedd': [],
+	});
+
+	const dismissed = useSelect((select) =>
+		select(preferencesStore).get(
+			'surecart/templates',
+			'full-columns-page-tempalte-dismissedd'
+		)
+	);
+	const removeTemplateNotice = () => {
+		set('surecart/templates', 'full-columns-page-tempalte-dismissedd', [
+			...dismissed,
+			id,
+		]);
+	};
+
+	useEffect(() => {
+		if (postType !== 'page') return;
+		if (!isFullHeight) return;
+		if (template === 'pages/template-surecart-blank.php') return;
+		if (dismissed.includes(id)) return;
+
+		createInfoNotice(
+			__(
+				'It looks like you are using full height columns. Did you want to change your page template to the SureCart full height template?'
+			),
+			{
+				onDismiss: removeTemplateNotice,
+				actions: [
+					{
+						label: __('Change Template to Full Height', 'surecart'),
+						onClick: (e) => {
+							editPost({
+								template: 'pages/template-surecart-blank.php',
+							});
+							const notices = select(noticesStore).getNotices();
+							notices.forEach((notice) =>
+								removeNotice(notice.id)
+							);
+						},
+					},
+				],
+			}
+		);
+	}, [isFullHeight, template, postType]);
 
 	const { count } = useSelect(
 		(select) => {
@@ -117,11 +184,31 @@ function ColumnsEditContainer({
 							})
 						}
 					/>
+					<ToggleControl
+						label={__('Full vertical height')}
+						checked={isFullHeight}
+						onChange={() =>
+							setAttributes({
+								isFullHeight: !isFullHeight,
+							})
+						}
+					/>
+					<ToggleControl
+						label={__('Reverse order on mobile')}
+						checked={isReversedOnMobile}
+						onChange={() =>
+							setAttributes({
+								isReversedOnMobile: !isReversedOnMobile,
+							})
+						}
+					/>
 				</PanelBody>
 			</InspectorControls>
 			<ScColumns
 				vertical-alignment={verticalAlignment}
 				is-stacked-on-mobile={isStackedOnMobile}
+				is-full-height={isFullHeight}
+				is-reversed-on-mobile={isReversedOnMobile}
 				{...innerBlocksProps}
 			/>
 		</>

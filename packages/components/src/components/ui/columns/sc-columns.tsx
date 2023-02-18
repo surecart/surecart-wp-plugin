@@ -14,6 +14,14 @@ export class ScColumns {
    * Is this stacked on mobile
    */
   @Prop() isStackedOnMobile: boolean;
+  /**
+   * Is this full vertical height
+   */
+  @Prop() isFullHeight: boolean;
+  /**
+   * Is this reverse ordered on mobile
+   */
+  @Prop() isReversedOnMobile: boolean;
 
   render() {
     return (
@@ -21,7 +29,9 @@ export class ScColumns {
         class={{
           'sc-columns': true,
           [`are-vertically-aligned-${this.verticalAlignment}`]: !!this.verticalAlignment,
-          'is-not-stacked-on-mobile': !!this.isStackedOnMobile,
+          'is-not-stacked-on-mobile': !this.isStackedOnMobile,
+          'is-full-height': !!this.isFullHeight,
+          'is-reversed-on-mobile': !!this.isReversedOnMobile,
         }}
       >
         <slot />
