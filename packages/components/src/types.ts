@@ -805,6 +805,15 @@ export interface PriceData extends Object {
   removeable: boolean;
 }
 
+export type TaxZone = {
+  label: string;
+  label_small: string;
+};
+
+export type TaxZones = {
+  [key in 'ca_gst' | 'au_abn' | 'gb_vat' | 'eu_vat' | 'other']: TaxZone;
+};
+
 export type RuleName = 'total' | 'coupons' | 'products' | 'shipping_country' | 'billing_country' | 'processors';
 export type ArrayOperators = 'all' | 'any' | 'none' | 'exist' | 'not_exist';
 export type NumberOperators = '==' | '!=' | '<' | '>' | '<=' | '>=';
