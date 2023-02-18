@@ -4,6 +4,7 @@
 	"description": "Display payment options",
 	"category": "surecart",
 	"keywords": ["credit", "card", "paypal", "stripe"],
+  "textdomain": "surecart",
 	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,

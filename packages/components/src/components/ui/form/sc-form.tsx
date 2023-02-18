@@ -68,10 +68,13 @@ export class ScForm {
 
     if (!this.novalidate) {
       for (const el of formControlsThatReport) {
-        const isValid = await el.reportValidity();
+        // must be not hidden to validate.
+        if (el.offsetParent !== null) {
+          const isValid = await el.reportValidity();
 
-        if (!isValid) {
-          return false;
+          if (!isValid) {
+            return false;
+          }
         }
       }
     }

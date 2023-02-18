@@ -232,25 +232,29 @@ export default () => {
 			}
 			button={
 				<ScFlex alignItems="center">
-					<ScSwitch
-						checked={updateBehavior === 'immediate'}
-						onScChange={(e) =>
-							setUpdateBehavior(
-								e.target.checked ? 'immediate' : 'pending'
-							)
-						}
-					>
-						{__('Update Immediately', 'surecart')}
-					</ScSwitch>
-					<SaveButton
-						loading={!hasLoadedSubscription}
-						busy={savingSubscription}
-						disabled={!hasEdits}
-					>
-						{updateBehavior === 'immediate'
-							? __('Update Subscription', 'surecart')
-							: __('Schedule Update', 'surecart')}
-					</SaveButton>
+					{!subscription?.finite && (
+						<>
+							<ScSwitch
+								checked={updateBehavior === 'immediate'}
+								onScChange={(e) =>
+									setUpdateBehavior(
+										e.target.checked ? 'immediate' : 'pending'
+									)
+								}
+							>
+								{__('Update Immediately', 'surecart')}
+							</ScSwitch>
+							<SaveButton
+								loading={!hasLoadedSubscription}
+								busy={savingSubscription}
+								disabled={!hasEdits}
+							>
+								{updateBehavior === 'immediate'
+									? __('Update Subscription', 'surecart')
+									: __('Schedule Update', 'surecart')}
+							</SaveButton>
+						</>
+					)}
 				</ScFlex>
 			}
 			sidebar={

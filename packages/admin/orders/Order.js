@@ -46,6 +46,7 @@ export default () => {
 			'checkout.line_items',
 			'discount.promotion',
 			'line_item.price',
+			'line_item.fees',
 			'customer.balances',
 			'price.product',
 		],
@@ -184,7 +185,7 @@ export default () => {
 					failures={order?.checkout?.payment_failures}
 					loading={!hasLoadedOrder}
 				/>
-        <Refunds chargeId={order?.checkout?.charge?.id} />
+				<Refunds chargeId={order?.checkout?.charge?.id} />
 				<Subscriptions checkoutId={order?.checkout?.id} />
 				<OrderStatusConfirmModal
 					order={order}

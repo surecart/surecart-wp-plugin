@@ -1,11 +1,10 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { ScButton, ScCard, ScStackedList } from '@surecart/components-react';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
-import { store as dataStore } from '@surecart/data';
 
 import Box from '../../../ui/Box';
 import NewIntegration from './NewIntegration';
@@ -21,7 +20,7 @@ export default ({ id }) => {
 			const queryArgs = [
 				'surecart',
 				'integration',
-				{ context: 'edit', model_ids: [id] },
+				{ context: 'edit', model_ids: [id], per_page: 50 },
 			];
 			return {
 				integrations: select(coreStore).getEntityRecords(...queryArgs),

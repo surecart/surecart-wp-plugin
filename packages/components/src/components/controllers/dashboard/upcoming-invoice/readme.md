@@ -65,6 +65,7 @@ graph TD;
   sc-product-line-item --> sc-format-number
   sc-product-line-item --> sc-quantity-select
   sc-product-line-item --> sc-icon
+  sc-product-line-item --> sc-line-item
   sc-quantity-select --> sc-icon
   sc-coupon-form --> sc-skeleton
   sc-coupon-form --> sc-line-item
@@ -79,9 +80,11 @@ graph TD;
   sc-button --> sc-spinner
   sc-alert --> sc-icon
   sc-block-ui --> sc-spinner
+  sc-payment-method --> sc-tooltip
+  sc-payment-method --> sc-button
+  sc-payment-method --> sc-icon
   sc-payment-method --> sc-tag
   sc-payment-method --> sc-cc-logo
-  sc-payment-method --> sc-icon
   sc-payment-method --> sc-text
   sc-cc-logo --> sc-icon
   sc-dashboard-module --> sc-alert

@@ -74,11 +74,13 @@ class Block extends BaseBlock {
 				'style'                         => $this->getStyle( $attributes ),
 				'content'                       => $content,
 				'abandoned_checkout_return_url' => esc_url( trailingslashit( get_site_url() ) . 'surecart/redirect' ),
-				'processors'                    => array_filter(
-					$processors ?? [],
-					function( $processor ) {
-						return $processor->approved && $processor->enabled;
-					}
+				'processors'                    => array_values(
+					array_filter(
+						$processors ?? [],
+						function( $processor ) {
+							return $processor->approved && $processor->enabled;
+						}
+					)
 				),
 				'manual_payment_methods'        => (array) ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? [],
 				'stripe_payment_element'        => (bool) get_option( 'sc_stripe_payment_element', false ),

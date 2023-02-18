@@ -5,7 +5,7 @@ import { useSelect } from '@wordpress/data';
 import SelectModel from './SelectModel';
 
 export default (props) => {
-	const { name, requestQuery = {}, display } = props;
+	const { name, requestQuery = {}, display, exclude = [] } = props;
 	const [query, setQuery] = useState(null);
 
 	const { items, loading } = useSelect(
@@ -34,6 +34,7 @@ export default (props) => {
 			choices={(items || []).map((item) => ({
 				label: !!display ? display(item) : item.name,
 				value: item.id,
+				disabled: exclude.includes(item.id),
 			}))}
 			onQuery={setQuery}
 			onFetch={() => setQuery('')}

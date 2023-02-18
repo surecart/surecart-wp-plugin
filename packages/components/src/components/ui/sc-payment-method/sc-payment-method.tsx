@@ -11,6 +11,8 @@ import { BankAccount, PaymentInstrument, PaymentMethod } from '../../../types';
 export class ScPaymentMethod {
   @Prop() paymentMethod: PaymentMethod;
   @Prop() full: boolean;
+  @Prop() externalLink: string;
+  @Prop() externalLinkTooltipText: string;
 
   renderBankAccountType(type) {
     if (type === 'checking') {
@@ -21,6 +23,18 @@ export class ScPaymentMethod {
     }
   }
 
+  renderExternalLink() {
+    return (
+      !!this.externalLink && (
+        <sc-tooltip text={this.externalLinkTooltipText} type="text">
+          <sc-button style={{ color: 'var(--sc-color-gray-500)' }} type="text" size="small" href={this.externalLink} target="_blank">
+            <sc-icon name="external-link" style={{ fontSize: '16px' }}></sc-icon>
+          </sc-button>
+        </sc-tooltip>
+      )
+    );
+  }
+
   render() {
     if ((this.paymentMethod?.bank_account as BankAccount)?.id) {
       const account = this.paymentMethod?.bank_account as BankAccount;
@@ -28,6 +42,7 @@ export class ScPaymentMethod {
         <div class="payment-method" part="bank">
           <span>{this.renderBankAccountType(account?.account_type)}</span>
           **** {account?.last4}
+          {this.renderExternalLink()}
         </div>
       );
     }
@@ -35,9 +50,12 @@ export class ScPaymentMethod {
     if ((this?.paymentMethod?.payment_instrument as PaymentInstrument)?.instrument_type) {
       const type = (this?.paymentMethod?.payment_instrument as PaymentInstrument)?.instrument_type;
       return (
-        <sc-tag exportparts="base:payment_instrument" type="info" pill>
-          <span style={{ textTransform: 'capitalize' }}>{type} </span>
-        </sc-tag>
+        <div class="payment-method" part="instrument">
+          <sc-tag exportparts="base:payment_instrument" type="info" pill>
+            <span style={{ textTransform: 'capitalize' }}>{type} </span>
+          </sc-tag>
+          {this.renderExternalLink()}
+        </div>
       );
     }
 
@@ -45,7 +63,8 @@ export class ScPaymentMethod {
       return (
         <div class="payment-method" part="card">
           <sc-cc-logo style={{ fontSize: '36px' }} brand={this.paymentMethod?.card?.brand}></sc-cc-logo>
-          **** {this.paymentMethod?.card?.last4}
+          <sc-text style={{ whiteSpace: 'nowrap', paddingRight: '6px' }}>**** {this.paymentMethod?.card?.last4}</sc-text>
+          {this.renderExternalLink()}
         </div>
       );
     }
@@ -66,6 +85,7 @@ export class ScPaymentMethod {
               {this.paymentMethod?.paypal_account?.email}
             </sc-text>
           )}
+          {this.renderExternalLink()}
         </div>
       );
     }

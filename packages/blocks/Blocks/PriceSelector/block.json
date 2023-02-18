@@ -5,6 +5,7 @@
 	"description": "Displays a selector for product prices.",
 	"category": "surecart",
 	"keywords": ["price", "product", "choice", "checkout"],
+  "textdomain": "surecart",
 	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,

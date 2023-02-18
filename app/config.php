@@ -20,6 +20,7 @@ return [
 		\SureCart\WordPress\PluginServiceProvider::class,
 		\SureCart\WordPress\TranslationsServiceProvider::class,
 		\SureCart\WordPress\ThemeServiceProvider::class,
+		\SureCart\WordPress\Templates\TemplatesServiceProvider::class,
 		\SureCart\WordPress\Pages\PageServiceProvider::class,
 		\SureCart\WordPress\Users\UsersServiceProvider::class,
 		\SureCart\WordPress\Admin\Profile\UserProfileServiceProvider::class,
@@ -53,6 +54,8 @@ return [
 		\SureCart\Rest\StatisticRestServiceProvider::class,
 		\SureCart\Rest\IntegrationsRestServiceProvider::class,
 		\SureCart\Rest\IntegrationProvidersRestServiceProvider::class,
+		\SureCart\Rest\CancellationActRestServiceProvider::class,
+		\SureCart\Rest\CancellationReasonRestServiceProvider::class,
 		\SureCart\Rest\CustomerRestServiceProvider::class,
 		\SureCart\Rest\CustomerLinksRestServiceProvider::class,
 		\SureCart\Rest\PaymentMethodsRestServiceProvider::class,
@@ -86,6 +89,8 @@ return [
 		\SureCart\Rest\CheckoutRestServiceProvider::class,
 		\SureCart\Rest\InvoicesRestServiceProvider::class,
 		\SureCart\Rest\WebhooksRestServiceProvider::class,
+		\SureCart\Rest\VerificationCodeRestServiceProvider::class,
+		\SureCart\Rest\CheckEmailRestServiceProvider::class,
 
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,
@@ -129,6 +134,8 @@ return [
 		\SureCartBlocks\Blocks\Dashboard\CustomerInvoices\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\DashboardPage\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\DashboardTab\Block::class,
+		\SureCartBlocks\Blocks\ConditionalForm\Block::class,
+		\SureCartBlocks\Blocks\StoreLogo\Block::class,
 	],
 
 	/** Which components to preload for each block. */
@@ -171,6 +178,7 @@ return [
 		'surecart/subtotal'                  => [ 'sc-line-item-total', 'sc-format-number' ],
 		'surecart/total'                     => [ 'sc-line-item-total', 'sc-format-number' ],
 		'surecart/totals'                    => [ 'sc-order-summary' ],
+		'surecart/conditional-from'          => [ 'sc-conditional-form' ],
 	],
 
 	/**
@@ -258,23 +266,24 @@ return [
 	 * This lets you reference a model based on a simple string.
 	 */
 	'models'                 => [
-		'abandoned_checkout' => \SureCart\Models\AbandonedCheckout::class,
-		'account'            => \SureCart\Models\Account::class,
-		'charge'             => \SureCart\Models\Charge::class,
-		'coupon'             => \SureCart\Models\Coupon::class,
-		'customer'           => \SureCart\Models\Customer::class,
-		'customer_link'      => \SureCart\Models\CustomerLink::class,
-		'form'               => \SureCart\Models\Form::class,
-		'line_item'          => \SureCart\Models\LineItem::class,
-		'order'              => \SureCart\Models\Order::class,
-		'price'              => \SureCart\Models\Price::class,
-		'processor'          => \SureCart\Models\Processor::class,
-		'product'            => \SureCart\Models\Product::class,
-		'promotion'          => \SureCart\Models\Promotion::class,
-		'subscription'       => \SureCart\Models\Subscription::class,
-		'upload'             => \SureCart\Models\Upload::class,
-		'user'               => \SureCart\Models\User::class,
-		'webhook'            => \SureCart\Models\Webhook::class,
+		'abandoned_checkout'  => \SureCart\Models\AbandonedCheckout::class,
+		'account'             => \SureCart\Models\Account::class,
+		'cancellation_reason' => \SureCart\Models\CancellationReason::class,
+		'charge'              => \SureCart\Models\Charge::class,
+		'coupon'              => \SureCart\Models\Coupon::class,
+		'customer'            => \SureCart\Models\Customer::class,
+		'customer_link'       => \SureCart\Models\CustomerLink::class,
+		'form'                => \SureCart\Models\Form::class,
+		'line_item'           => \SureCart\Models\LineItem::class,
+		'order'               => \SureCart\Models\Order::class,
+		'price'               => \SureCart\Models\Price::class,
+		'processor'           => \SureCart\Models\Processor::class,
+		'product'             => \SureCart\Models\Product::class,
+		'promotion'           => \SureCart\Models\Promotion::class,
+		'subscription'        => \SureCart\Models\Subscription::class,
+		'upload'              => \SureCart\Models\Upload::class,
+		'user'                => \SureCart\Models\User::class,
+		'webhook'             => \SureCart\Models\Webhook::class,
 	],
 
 	/**

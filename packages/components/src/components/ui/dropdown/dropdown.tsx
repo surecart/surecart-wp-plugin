@@ -122,6 +122,7 @@ export class ScDropdown {
         position: this.hoist ? 'fixed' : 'absolute',
         left: `${x}px`,
         top: `${y}px`,
+        right: 'auto',
       });
     });
   }
@@ -135,28 +136,26 @@ export class ScDropdown {
   }
 
   show() {
+    this.scShow.emit();
     // Prevent subsequent calls to the method, whether manually or triggered by the `open` watcher
     if (this.isVisible) {
       return;
     }
-
     this.isVisible = true;
     this.open = true;
     this.startPositioner();
     this.panel.focus();
-    this.scShow.emit();
   }
 
   hide() {
+    this.scHide.emit();
     // Prevent subsequent calls to the method, whether manually or triggered by the `open` watcher
     if (!this.isVisible) {
       return;
     }
-
     this.stopPositioner();
     this.isVisible = false;
     this.open = false;
-    this.scHide.emit();
   }
 
   handleClick(e) {

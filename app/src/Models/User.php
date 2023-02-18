@@ -149,21 +149,18 @@ class User implements ArrayAccess, JsonSerializable {
 	/**
 	 * Login the user.
 	 *
-	 * @return void
+	 * @return true|\WP_Error
 	 */
 	protected function login() {
 		if ( empty( $this->user->ID ) ) {
 			return new \Error( 'not_found', esc_html__( 'This user could not be found.', 'surecart' ) );
 		}
 
-		$current_user = wp_get_current_user();
-		if ( $current_user && $current_user->ID === $this->user->ID ) {
-			return;
-		}
-
 		wp_clear_auth_cookie();
 		wp_set_current_user( $this->user->ID );
 		wp_set_auth_cookie( $this->user->ID );
+
+		return true;
 	}
 
 	/**
@@ -294,6 +291,11 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @return $this
 	 */
 	protected function findByCustomerId( $id ) {
+
+		if ( ! is_string( $id ) || empty( $id ) ) {
+			return false;
+		}
+
 		$users = new \WP_User_Query(
 			[
 				'meta_query' => [
@@ -361,7 +363,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @return boolean
 	 */
 	public function hasAttribute( $key ) {
-		return $this->user->$key;
+		return $this->user->$key ?? false;
 	}
 
 	/**

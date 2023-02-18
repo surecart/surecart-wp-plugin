@@ -91,6 +91,33 @@
     "class": true,
     "slot": true
   },
+  "sc-cancel-dialog": {
+    "open": true,
+    "protocol": true,
+    "subscription": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-cancel-discount": {
+    "comment": true,
+    "protocol": true,
+    "reason": true,
+    "subscription": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-cancel-survey": {
+    "protocol": true,
+    "reasons": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-card": {
     "borderless": true,
     "href": true,
@@ -235,6 +262,14 @@
     "class": true,
     "slot": true
   },
+  "sc-checkout-form-errors": {
+    "checkout-state": true,
+    "error": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-checkout-unsaved-changes-warning": {
     "state": true,
     "style": true,
@@ -281,6 +316,8 @@
     "slot": true
   },
   "sc-columns": {
+    "is-full-height": true,
+    "is-reversed-on-mobile": true,
     "is-stacked-on-mobile": true,
     "vertical-alignment": true,
     "style": true,
@@ -294,6 +331,15 @@
     "loading": true,
     "names": true,
     "required": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-conditional-form": {
+    "checkout": true,
+    "rule_groups": true,
+    "selected-processor-id": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1060,6 +1106,7 @@
     "busy": true,
     "closed-text": true,
     "collapsed": true,
+    "collapsed-on-mobile": true,
     "collapsible": true,
     "empty": true,
     "open-text": true,
@@ -1123,6 +1170,8 @@
     "slot": true
   },
   "sc-payment-method": {
+    "external-link": true,
+    "external-link-tooltip-text": true,
     "full": true,
     "payment-method": true,
     "style": true,
@@ -1186,6 +1235,13 @@
     "class": true,
     "slot": true
   },
+  "sc-premium-tag": {
+    "size": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-price-choice": {
     "checked": true,
     "description": true,
@@ -1211,6 +1267,7 @@
   "sc-price-choices": {
     "columns": true,
     "label": true,
+    "order": true,
     "required": true,
     "style": true,
     "id": true,
@@ -1244,10 +1301,18 @@
     "class": true,
     "slot": true
   },
+  "sc-price-range": {
+    "prices": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-product-line-item": {
     "amount": true,
     "currency": true,
     "editable": true,
+    "fees": true,
     "image-url": true,
     "interval": true,
     "max": true,
@@ -1466,6 +1531,7 @@
   },
   "sc-subscription": {
     "heading": true,
+    "protocol": true,
     "query": true,
     "show-cancel": true,
     "subscription": true,
@@ -1485,9 +1551,11 @@
   },
   "sc-subscription-cancel": {
     "back-url": true,
+    "comment": true,
     "heading": true,
+    "protocol": true,
+    "reason": true,
     "subscription": true,
-    "subscription-id": true,
     "success-url": true,
     "style": true,
     "id": true,
@@ -1497,6 +1565,13 @@
   "sc-subscription-details": {
     "hide-renewal-text": true,
     "pending-price": true,
+    "subscription": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-subscription-next-payment": {
     "subscription": true,
     "style": true,
     "id": true,
@@ -1518,17 +1593,6 @@
   "sc-subscription-payment-method": {
     "heading": true,
     "subscription": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "sc-subscription-renew": {
-    "back-url": true,
-    "heading": true,
-    "subscription": true,
-    "subscription-id": true,
-    "success-url": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1745,6 +1809,14 @@
     "quantity-updates-enabled": true,
     "subscription-id": true,
     "success-url": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-upgrade-required": {
+    "required": true,
+    "size": true,
     "style": true,
     "id": true,
     "class": true,

@@ -66,17 +66,20 @@ graph TD;
   sc-product-line-item --> sc-format-number
   sc-product-line-item --> sc-quantity-select
   sc-product-line-item --> sc-icon
+  sc-product-line-item --> sc-line-item
   sc-quantity-select --> sc-icon
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon
   sc-order-manual-instructions --> sc-alert
   sc-order-status-badge --> sc-tag
+  sc-payment-method --> sc-tooltip
+  sc-payment-method --> sc-button
+  sc-payment-method --> sc-icon
   sc-payment-method --> sc-tag
   sc-payment-method --> sc-cc-logo
-  sc-payment-method --> sc-icon
   sc-payment-method --> sc-text
-  sc-cc-logo --> sc-icon
   sc-button --> sc-spinner
+  sc-cc-logo --> sc-icon
   sc-purchase-downloads-list --> sc-divider
   sc-purchase-downloads-list --> sc-empty
   sc-purchase-downloads-list --> sc-card

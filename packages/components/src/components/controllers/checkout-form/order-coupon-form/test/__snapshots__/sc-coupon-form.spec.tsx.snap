@@ -3,9 +3,9 @@
 exports[`sc-order-coupon-form renders 1`] = `
 <sc-order-coupon-form>
   <mock:shadow-root>
-    <sc-coupon-form>
+    <sc-coupon-form label="Add Coupon Code">
       <slot>
-        Apply Coupon
+        Apply
       </slot>
     </sc-coupon-form>
   </mock:shadow-root>
