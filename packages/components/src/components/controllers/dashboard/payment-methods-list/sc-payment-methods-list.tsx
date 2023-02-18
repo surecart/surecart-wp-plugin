@@ -90,10 +90,11 @@ export class ScPaymentMethodsList {
 
     try {
       this.loading = true;
-      this.paymentMethods = (await await apiFetch({
+      this.paymentMethods = (await apiFetch({
         path: addQueryArgs(`surecart/v1/payment_methods/`, {
           expand: ['card', 'customer', 'billing_agreement', 'paypal_account', 'payment_instrument', 'bank_account'],
           ...this.query,
+          per_page: 100,
         }),
       })) as PaymentMethod[];
     } catch (e) {

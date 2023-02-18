@@ -2,7 +2,6 @@
 /@surecart
 .dev/
 .github/
-**/test/
 **/components-react
 **.d.ts
 **/build/**/*

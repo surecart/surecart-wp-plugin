@@ -15,7 +15,7 @@ export class ScCcLogo {
     if (['visa', 'mastercard', 'amex', 'discover', 'diners', 'jcb', 'unionpay'].includes(this.brand)) {
       return <sc-icon name={this.brand} style={{ '--height': '0.63em' }}></sc-icon>;
     }
-    return <sc-icon name="credit-card" style={{ '--height': '0.63em' }}></sc-icon>;
+    return <sc-icon name="creditcard" style={{ '--height': '0.63em' }}></sc-icon>;
   }
   render() {
     return (

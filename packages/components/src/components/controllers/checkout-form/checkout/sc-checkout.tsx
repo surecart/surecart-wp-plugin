@@ -1,8 +1,9 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
-
-import { getOrder, setOrder } from '../../../../store/checkouts';
+import { state as processorsState } from '@store/processors';
+import { state as checkoutState } from '@store/checkout';
+import { getOrder, setOrder } from '@store/checkouts';
 import {
   Bump,
   Checkout,
@@ -108,6 +109,9 @@ export class ScCheckout {
   /** The currenly selected processor */
   @State() processor: ProcessorName = 'stripe';
 
+  /** The processor method. */
+  @State() method: string;
+
   /** Is the processor manual? */
   @State() isManualProcessor: boolean;
 
@@ -138,11 +142,9 @@ export class ScCheckout {
     setOrder(e?.detail, this?.formId);
   }
 
-  @Listen('scSetProcessor')
-  handleProcessorChange(e) {
-    const { id, manual } = e.detail;
-    this.processor = id;
-    this.isManualProcessor = manual;
+  @Listen('scSetMethod')
+  handleMethodChange(e) {
+    this.method = e.detail;
   }
 
   @Listen('scAddEntities')
@@ -186,9 +188,14 @@ export class ScCheckout {
   }
 
   componentWillLoad() {
-    Universe.create(this as Creator, this.state());
     const checkout = document.querySelector('sc-checkout');
     this.isDuplicate = !!checkout && checkout !== this.el;
+    if (this.isDuplicate) return;
+    Universe.create(this as Creator, this.state());
+    processorsState.processors = this.processors;
+    processorsState.manualPaymentMethods = this.manualPaymentMethods;
+    checkoutState.formId = this.formId;
+    checkoutState.mode = this.mode;
   }
 
   order() {
@@ -198,10 +205,12 @@ export class ScCheckout {
   state() {
     return {
       processor: this.processor,
+      method: this.method,
       selectedProcessorId: this.processor,
       processors: (this.processors || []).filter(processor => {
         return !(this?.order().reusable_payment_method_required && !processor?.recurring_enabled);
       }),
+      reusablePaymentMethodRequired: this?.order().reusable_payment_method_required,
       manualPaymentMethods: this.manualPaymentMethods,
       processor_data: this.order()?.processor_data,
       state: this.checkoutState,
@@ -237,6 +246,7 @@ export class ScCheckout {
       shippingAddress: this.order()?.shipping_address,
       taxStatus: this.order()?.tax_status,
       taxIdentifier: this.order()?.tax_identifier,
+      totalAmount: this.order()?.total_amount,
       taxProtocol: this.taxProtocol,
       lockedChoices: this.prices,
       products: this.productsEntities,
@@ -297,6 +307,7 @@ export class ScCheckout {
                       form-id={this.formId}
                       group-id={this.el.id}
                       processor={this.processor}
+                      method={this.method}
                       currency-code={this.currencyCode}
                       onScError={e => (this.error = e.detail as ResponseError)}
                     >

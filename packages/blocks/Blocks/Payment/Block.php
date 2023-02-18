@@ -10,6 +10,12 @@ use SureCartBlocks\Blocks\BaseBlock;
  * Checkout block
  */
 class Block extends BaseBlock {
+	/**
+	 * Keep track of number of instances.
+	 *
+	 * @var integer
+	 */
+	public static $instance = 0;
 
 	/**
 	 * Attributes.
@@ -39,23 +45,57 @@ class Block extends BaseBlock {
 		$this->attributes = $attributes;
 		$this->mode       = $this->block->context['surecart/form/mode'] ?? 'live';
 
-		$processors = Processor::where( [ 'live_mode' => 'test' === $this->mode ? false : true ] )->get();
+		$processors      = Processor::where( [ 'live_mode' => 'test' === $this->mode ? false : true ] )->get();
+		$stripe          = $this->getProcessorByType( 'stripe', $processors ) ?? null;
+		$payment_element = (bool) get_option( 'sc_stripe_payment_element', false );
+
+		\SureCart::assets()->addComponentData(
+			'sc-payment',
+			'#sc-payment-' . (int) self::$instance,
+			[
+				'label'                  => $attributes['label'] ?? '',
+				'processors'             => $processors,
+				'disabledProcessorTypes' => $attributes['disabled_methods'] ?? [],
+				'manualPaymentMethods'   => ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? [],
+				'secureNotice'           => $attributes['secure_notice'],
+			]
+		);
 
 		ob_start();
 		?>
 
 		<sc-payment
+			id="<?php echo esc_attr( 'sc-payment-' . (int) self::$instance ); ?>"
 			class="<?php echo esc_attr( $attributes['className'] ?? '' ); ?>"
-			label="<?php echo esc_attr( $attributes['label'] ?? '' ); ?>"
-			default-processor="<?php echo esc_attr( $attributes['default_processor'] ); ?>"
-			secure-notice="<?php echo esc_attr( $attributes['secure_notice'] ); ?>"
 		>
-			<?php $this->renderStripe( $processors, $attributes ); ?>
-			<?php $this->renderPayPal( $processors ); ?>
-			<?php $this->renderManualPaymentMethods(); ?>
+			<?php if ( $payment_element ) : ?>
+				<sc-stripe-payment-element slot="stripe"></sc-stripe-payment-element>
+			<?php else : ?>
+				<span slot="stripe">
+					<sc-stripe-element
+						mode="<?php echo esc_attr( $this->mode ); ?>"
+						account-id="<?php echo esc_attr( $stripe->processor_data->account_id ?? null ); ?>"
+						publishable-key="<?php echo esc_attr( $stripe->processor_data->publishable_key ?? null ); ?>">
+					</sc-stripe-element>
+					<?php if ( ! empty( $this->attributes['secure_notice'] ) ) : ?>
+						<sc-secure-notice>
+							<?php echo wp_kses_post( $this->attributes['secure_notice'] ); ?>
+						</sc-secure-notice>
+					<?php endif; ?>
+				</span>
+			<?php endif; ?>
 		</sc-payment>
 		<?php
 		return ob_get_clean();
+	}
+
+	public function renderMollie( $processors ) {
+		$processor = $this->getProcessorByType( 'mollie', $processors );
+		?>
+		<sc-checkout-mollie-payment processor-id="<?php echo esc_attr( $processor->id ); ?>">
+			<?php $this->renderManualPaymentMethods(); ?>
+		</sc-checkout-mollie-payment>
+		<?php
 	}
 
 	/**

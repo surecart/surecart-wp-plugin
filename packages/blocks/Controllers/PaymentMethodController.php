@@ -2,6 +2,7 @@
 namespace SureCartBlocks\Controllers;
 
 use SureCart\Models\Component;
+use SureCart\Models\Customer;
 use SureCart\Models\Processor;
 use SureCart\Models\User;
 
@@ -39,6 +40,37 @@ class PaymentMethodController extends BaseController {
 		);
 	}
 
+	public function getProcessors() {
+		return array_values(
+			array_filter(
+				Processor::get() ?? [],
+				function( $processor ) {
+					return $processor->live_mode === $this->isLiveMode() && $processor->recurring_enabled;
+				}
+			)
+		);
+	}
+
+	/**
+	 * Get the processor by type.
+	 *
+	 * @param string $type The processor type.
+	 * @param array  $processors Array of processors.
+	 *
+	 * @return \SureCart/Models/Processor|null;
+	 */
+	protected function getProcessorByType( $type ) {
+		$processors = $this->getProcessors();
+		if ( empty( $processors ) ) {
+			return null;
+		}
+		$key = array_search( $type, array_column( (array) $processors, 'processor_type' ), true );
+		if ( ! is_int( $key ) ) {
+			return null;
+		}
+		return $processors[ $key ] ?? null;
+	}
+
 	/**
 	 * Show a view to add a payment method.
 	 *
@@ -70,20 +102,13 @@ class PaymentMethodController extends BaseController {
 			return ob_get_clean();
 		}
 
-		$applicable_processors = array_filter(
-			Processor::get() ?? [],
-			function( $processor ) {
-				return $processor->live_mode === $this->isLiveMode() && $processor->recurring_enabled;
-			}
-		);
-
 		$processor_names = array_filter(
 			array_values(
 				array_map(
 					function( $processor ) {
 						return $processor->processor_type;
 					},
-					$applicable_processors ?? []
+					$this->getProcessors() ?? []
 				)
 			)
 		);
@@ -112,12 +137,24 @@ class PaymentMethodController extends BaseController {
 			<?php echo ! $this->isLiveMode() ? '<sc-tag type="warning" slot="end">' . esc_html__( 'Test Mode', 'surecart' ) . '</sc-tag>' : ''; ?>
 			</sc-heading>
 
+			<?php if ( $mollie = $this->getProcessorByType( 'mollie' ) ) : ?>
+				<?php $customer = Customer::with( [ 'shipping_address' ] )->find( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) ); ?>
+				<sc-mollie-add-method
+					processor-id="<?php echo esc_attr( $mollie->id ); ?>"
+					success-url="<?php echo esc_url( $success_url ); ?>"
+					live-mode="<?php echo esc_attr( $this->isLiveMode() ? 'true' : 'false' ); ?>"
+					country="<?php echo esc_attr( $customer->shipping_address->country ?? '' ); ?>"
+					currency="<?php echo esc_attr( \SureCart::account()->currency ); ?>"
+					customer-id="<?php echo esc_attr( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) ); ?>">
+				</sc-mollie-add-method>
+			<?php else : ?>
+
 			<sc-toggles collapsible="false" theme="container" accordion>
-			<?php if ( in_array( 'stripe', $processor_names ) ) : ?>
+				<?php if ( in_array( 'stripe', $processor_names ) ) : ?>
 					<sc-toggle class="sc-stripe-toggle" show-control shady borderless>
 						<span slot="summary" class="sc-payment-toggle-summary">
 							<sc-flex>
-								<sc-icon name="credit-card" style="font-size:24px"></sc-icon>
+								<sc-icon name="creditcard" style="font-size:24px"></sc-icon>
 								<span><?php esc_html_e( 'Credit Card', 'surecart' ); ?></span>
 							</sc-flex>
 						</span>
@@ -129,7 +166,7 @@ class PaymentMethodController extends BaseController {
 					</sc-toggle>
 				<?php endif; ?>
 
-			<?php if ( in_array( 'paypal', $processor_names ) ) : ?>
+				<?php if ( in_array( 'paypal', $processor_names ) ) : ?>
 					<sc-toggle class="sc-paypal-toggle" show-control shady borderless>
 						<span slot="summary" class="sc-payment-toggle-summary">
 							<sc-icon name="paypal" style="width: 80px; font-size: 24px"></sc-icon>
@@ -143,6 +180,8 @@ class PaymentMethodController extends BaseController {
 					</sc-toggle>
 				<?php endif; ?>
 			</sc-toggles>
+
+			<?php endif; ?>
 		</sc-spacing>
 		<?php
 		return ob_get_clean();
