@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Listen, Prop } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
@@ -13,11 +13,15 @@ import { Checkout } from '../../../types';
  */
 @Component({
   tag: 'sc-order-confirm-provider',
+  styleUrl: 'sc-order-confirm-provider.scss',
   shadow: true,
 })
 export class ScOrderConfirmProvider {
   /** The order confirm provider element */
   @Element() el: HTMLScOrderConfirmProviderElement;
+
+  /** Holds the completed order id */
+  @State() completedOrderId: string;
 
   /** The form id */
   @Prop() formId: number;
@@ -30,6 +34,13 @@ export class ScOrderConfirmProvider {
 
   /** Success url. */
   @Prop() successUrl: string;
+
+  /** Success text for the form. */
+  @Prop() successText: {
+    title: string;
+    description: string;
+    button: string;
+  };
 
   /** The order is paid event. */
   @Event() scOrderPaid: EventEmitter<Checkout>;
@@ -59,19 +70,44 @@ export class ScOrderConfirmProvider {
       console.error(e);
       this.scError.emit(e);
     } finally {
-      // we always want to redirect, regardless of the outcome here.
-      const order = this.order?.id;
       // make sure form state changes before redirecting
       setTimeout(() => {
+        this.completedOrderId = this.order?.id;
         // make sure we clear the order state no matter what.
-        const success_url = this?.order?.metadata?.success_url || this.successUrl;
         clearOrder(this.formId, this.mode);
-        window.location.assign(addQueryArgs(success_url, { order }));
       }, 50);
     }
   }
 
+  getSuccessUrl() {
+    const url = this?.order?.metadata?.success_url || this.successUrl;
+    return url ? addQueryArgs(url, { order: this.completedOrderId }) : window?.scData?.pages?.dashboard;
+  }
+
   render() {
-    return <slot />;
+    return (
+      <Host>
+        <slot />
+        <sc-dialog open={!!this.completedOrderId} style={{ '--body-spacing': 'var(--sc-spacing-xxx-large)' }} noHeader onScRequestClose={e => e.preventDefault()}>
+          <div class="confirm__icon">
+            <div class="confirm__icon-container">
+              <sc-icon name="check" />
+            </div>
+          </div>
+          <sc-dashboard-module
+            heading={this.successText?.title || __('Thanks for your order!', 'surecart')}
+            style={{ '--sc-dashboard-module-spacing': 'var(--sc-spacing-x-large)', 'textAlign': 'center' }}
+          >
+            <span slot="description">
+              {this.successText?.description || __('Your payment was successful, and your order is complete. A receipt is on its way to your inbox.', 'surecart')}
+            </span>
+            <sc-button href={this.getSuccessUrl()} size="large" type="primary">
+              {this.successText?.button || __('Continue', 'surecart')}
+              <sc-icon name="arrow-right" slot="suffix" />
+            </sc-button>
+          </sc-dashboard-module>
+        </sc-dialog>
+      </Host>
+    );
   }
 }

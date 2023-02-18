@@ -432,6 +432,9 @@ export namespace Components {
           * The checkout form id
          */
         "formId": number;
+        /**
+          * Text for the loading states of the form.
+         */
         "loadingText": {
     finalizing: string;
     paying: string;
@@ -478,6 +481,14 @@ export namespace Components {
           * Submit the form
          */
         "submit": ({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout>;
+        /**
+          * Success text for the form.
+         */
+        "successText": {
+    title: string;
+    description: string;
+    button: string;
+  };
         /**
           * Where to go on success
          */
@@ -1697,6 +1708,14 @@ export namespace Components {
           * The current order.
          */
         "order": Checkout;
+        /**
+          * Success text for the form.
+         */
+        "successText": {
+    title: string;
+    description: string;
+    button: string;
+  };
         /**
           * Success url.
          */
@@ -5101,6 +5120,9 @@ declare namespace LocalJSX {
           * The checkout form id
          */
         "formId"?: number;
+        /**
+          * Text for the loading states of the form.
+         */
         "loadingText"?: {
     finalizing: string;
     paying: string;
@@ -5155,6 +5177,14 @@ declare namespace LocalJSX {
           * Use the Stripe payment element.
          */
         "stripePaymentElement"?: boolean;
+        /**
+          * Success text for the form.
+         */
+        "successText"?: {
+    title: string;
+    description: string;
+    button: string;
+  };
         /**
           * Where to go on success
          */
@@ -6571,6 +6601,14 @@ declare namespace LocalJSX {
           * The current order.
          */
         "order"?: Checkout;
+        /**
+          * Success text for the form.
+         */
+        "successText"?: {
+    title: string;
+    description: string;
+    button: string;
+  };
         /**
           * Success url.
          */
