@@ -24,16 +24,19 @@ class PageService {
 	 * @param boolean $delete Delete status.
 	 * @param boject  $post Post object.
 	 *
-	 * @return void
+	 * @return null;
 	 */
 	public function restrictDefaultPageDeletion( $delete, $post ) {
-		$default_checkout = \SureCart::pages()->getID('checkout');
+		$default_checkout = \SureCart::pages()->getID( 'checkout' );
 		$default_form     = \SureCart::forms()->getDefault()->ID;
 		$post_id          = $post->ID;
 
 		if ( in_array( $post_id, [ $default_checkout, $default_form ], true ) ) {
-			$message = $post_id === $default_form ? __( 'Sorry, you are not allowed to delete this default checkout form.', 'surecart' ) : __( 'Sorry, you are not allowed to delete this default checkout page.', 'surecart' );
-			wp_die( $message );
+			$message = $post_id === $default_form ? esc_html__( 'To prevent misconfiguration, you cannot delete the default checkout form. Please deactivate SureCart to delete this form.', 'surecart' ) : esc_html__( 'To prevent misconfiguration, you cannot delete the default checkout page. Please deactivate SureCart to delete this page.', 'surecart' );
+			wp_die(
+				esc_html( $message ),
+				esc_html__( 'Deleting This is Restricted', 'surecart' ),
+			);
 		}
 
 		return $delete;
@@ -48,7 +51,7 @@ class PageService {
 	 * @return boolean|void
 	 */
 	public function restrictDefaultFormRemove( $maybe_empty, $post ) {
-		$default_checkout = \SureCart::pages()->getID('checkout');
+		$default_checkout = \SureCart::pages()->getID( 'checkout' );
 		$post_id          = $post['ID'];
 
 		if ( $post_id !== $default_checkout ) {
