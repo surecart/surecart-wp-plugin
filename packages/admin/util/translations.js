@@ -75,7 +75,7 @@ export const periodCountString = (price) => {
 		return '';
 	}
 
-	return ` ( ${sprintf(
+	return ` (${sprintf(
 		_n(
 			'%d payment',
 			'%d payments',
@@ -83,5 +83,5 @@ export const periodCountString = (price) => {
 			'surecart'
 		),
 		price.recurring_period_count
-	)} )`;
+	)})`;
 };
