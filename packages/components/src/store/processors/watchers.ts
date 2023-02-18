@@ -1,7 +1,7 @@
-import state, { onChange } from './store';
-import { state as selectedProcessor, onChange as onChangeProcessor } from '../selected-processor';
 import { onChange as onChangeCheckout } from '../checkout';
-import { availableManualPaymentMethods, availableProcessors } from './getters';
+import { onChange as onChangeProcessor, state as selectedProcessor } from '../selected-processor';
+import { availableManualPaymentMethods, availableMethodTypes, availableProcessors } from './getters';
+import { onChange } from './store';
 
 /**
  * Look through available processors and maybe switch if the processor has been removed.
@@ -20,7 +20,7 @@ const maybeUpdateProcessor = () => {
  */
 const maybeUpdateMethod = () => {
   // get method ids.
-  const ids = (state.methods || []).map(({ id }) => id);
+  const ids = (availableMethodTypes() || []).map(({ id }) => id);
   // selected method is available
   if (ids.includes(selectedProcessor.method)) return;
   // if the current method is not available, set the first method.
