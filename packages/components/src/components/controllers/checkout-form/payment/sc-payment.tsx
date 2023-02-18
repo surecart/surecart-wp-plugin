@@ -41,7 +41,7 @@ export class ScPayment {
 
   renderStripe(processor) {
     return (
-      <sc-payment-method-choice key={processor?.id} processor-id="stripe" card={this.stripePaymentElement} recurringEnabled={processor?.recurring_enabled}>
+      <sc-payment-method-choice key={processor?.id} processor-id="stripe" card={this.stripePaymentElement}>
         <span slot="summary" class="sc-payment-toggle-summary">
           <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
           <span>{__('Credit Card', 'surecart')}</span>
@@ -59,7 +59,7 @@ export class ScPayment {
     return (
       <Fragment>
         {!stripe && (
-          <sc-payment-method-choice key={processor?.id} processor-id="paypal" recurringEnabled={processor?.recurring_enabled} method-id="card">
+          <sc-payment-method-choice key={processor?.id} processor-id="paypal" method-id="card">
             <span slot="summary" class="sc-payment-toggle-summary">
               <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
               <span>{__('Credit Card', 'surecart')}</span>
@@ -74,7 +74,7 @@ export class ScPayment {
           </sc-payment-method-choice>
         )}
 
-        <sc-payment-method-choice key={processor?.id} processor-id="paypal" recurringEnabled={processor?.recurring_enabled}>
+        <sc-payment-method-choice key={processor?.id} processor-id="paypal">
           <span slot="summary" class="sc-payment-toggle-summary">
             <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
           </span>

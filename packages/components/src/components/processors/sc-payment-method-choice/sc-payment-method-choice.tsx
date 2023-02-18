@@ -8,6 +8,7 @@ import { state as selectedProcessor } from '@store/selected-processor';
 export class ScPaymentMethodChoice {
   @Element() el: HTMLScPaymentMethodChoiceElement;
 
+  /** The method id */
   @Prop({ reflect: true }) methodId: string;
 
   /** The processor ID */
