@@ -1197,7 +1197,6 @@
   },
   "sc-payment-method-choice": {
     "card": true,
-    "checkout": true,
     "is-disabled": true,
     "is-manual": true,
     "method-id": true,
