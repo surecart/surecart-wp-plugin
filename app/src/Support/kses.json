@@ -1197,11 +1197,9 @@
   },
   "sc-payment-method-choice": {
     "card": true,
-    "is-disabled": true,
     "is-manual": true,
     "method-id": true,
     "processor-id": true,
-    "recurring-enabled": true,
     "style": true,
     "id": true,
     "class": true,

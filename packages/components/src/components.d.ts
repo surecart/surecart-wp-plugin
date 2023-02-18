@@ -2048,6 +2048,9 @@ export namespace Components {
           * Is this a manual processor
          */
         "isManual": boolean;
+        /**
+          * The method id
+         */
         "methodId": string;
         /**
           * The processor ID
@@ -6888,6 +6891,9 @@ declare namespace LocalJSX {
           * Is this a manual processor
          */
         "isManual"?: boolean;
+        /**
+          * The method id
+         */
         "methodId"?: string;
         /**
           * The processor ID
