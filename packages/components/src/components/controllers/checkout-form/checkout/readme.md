@@ -64,6 +64,10 @@ Type: `Promise<boolean>`
 
 ## Dependencies
 
+### Used by
+
+ - [sc-product-buy-page](../../buy-page/sc-product-buy-page)
+
 ### Depends on
 
 - [sc-alert](../../../ui/alert)
@@ -141,6 +145,7 @@ graph TD;
   sc-line-item-tax --> sc-line-item
   sc-line-item-tax --> sc-format-number
   sc-session-provider --> sc-line-items-provider
+  sc-product-buy-page --> sc-checkout
   style sc-checkout fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

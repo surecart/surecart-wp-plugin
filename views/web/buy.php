@@ -2,6 +2,9 @@
 /*
 Template Name: SureCart
 */
+
+use SureCartBlocks\Blocks\Payment\Block;
+
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -23,11 +26,16 @@ Template Name: SureCart
 
 					<sc-customer-name label="Name" placeholder="Your Full Name" required></sc-customer-name>
 
-					<sc-payment id="checkout-buy-payment">
-						<sc-stripe-payment-element slot="stripe"></sc-stripe-payment-element>
-					</sc-payment>
-
-					<sc-order-submit type="primary" full="true" size="large" icon="lock" show-total="true">Purchase</sc-order-submit>
+					<?php
+					echo wp_kses_post(
+						( new Block() )->render(
+							[
+								'label' => __( 'Payment', 'surecart' ),
+							]
+						)
+					);
+					?>
+					<sc-order-submit type="primary" full="true" size="large" icon="lock" show-total="true"><?php esc_html_e( 'Purchase', 'surecart' ); ?></sc-order-submit>
 				</sc-column>
 
 				<sc-column class="wp-block-surecart-column is-sticky is-layout-constrained is-horizontally-aligned-left" style="padding-top:60px;padding-right:60px;padding-bottom:60px;padding-left:60px;--sc-column-content-width:450px;--sc-form-row-spacing:30px">

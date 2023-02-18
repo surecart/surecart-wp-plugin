@@ -20,12 +20,14 @@
 ### Used by
 
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
+ - [sc-product-buy-page](../../controllers/buy-page/sc-product-buy-page)
  - [sc-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-customer-edit --> sc-columns
+  sc-product-buy-page --> sc-columns
   sc-wordpress-user-edit --> sc-columns
   style sc-columns fill:#f9f,stroke:#333,stroke-width:4px
 ```

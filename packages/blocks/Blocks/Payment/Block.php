@@ -41,7 +41,7 @@ class Block extends BaseBlock {
 	 *
 	 * @return string
 	 */
-	public function render( $attributes, $content ) {
+	public function render( $attributes, $content = '' ) {
 		$this->attributes = $attributes;
 		$this->mode       = $this->block->context['surecart/form/mode'] ?? 'live';
 
@@ -57,7 +57,7 @@ class Block extends BaseBlock {
 				'processors'             => $processors,
 				'disabledProcessorTypes' => $attributes['disabled_methods'] ?? [],
 				'manualPaymentMethods'   => ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? [],
-				'secureNotice'           => $attributes['secure_notice'],
+				'secureNotice'           => $attributes['secure_notice'] ?? '',
 			]
 		);
 
