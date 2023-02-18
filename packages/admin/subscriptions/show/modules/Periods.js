@@ -77,16 +77,18 @@ export default ({ subscriptionId }) => {
 				title={
 					<ScFlex flexDirection="row" justifyContent="space-between">
 						{__('Billing Periods', 'surecart')}{' '}
-						<ScUpgradeRequired>
-							<ScButton type="default" size="small">
-								{__('Enable Automatic Retries', 'surecart')}
-								<ScPremiumTag
-									slot="suffix"
-									size="small"
-									class="hydrated"
-								/>
-							</ScButton>
-						</ScUpgradeRequired>
+						{!scData?.entitlements?.automatic_payment_retries && (
+							<ScUpgradeRequired>
+								<ScButton type="default" size="small">
+									{__('Enable Automatic Retries', 'surecart')}
+									<ScPremiumTag
+										slot="suffix"
+										size="small"
+										class="hydrated"
+									/>
+								</ScButton>
+							</ScUpgradeRequired>
+						)}
 					</ScFlex>
 				}
 				loading={loading}
