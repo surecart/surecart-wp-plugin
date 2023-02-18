@@ -15,7 +15,7 @@ class PageService {
 		add_action( 'display_post_states', [ $this, 'displayDefaultPageStatuses' ] );
 		add_filter( 'pre_delete_post', [ $this, 'restrictDefaultPageDeletion' ], 11, 2 );
 		add_filter( 'pre_trash_post', [ $this, 'restrictDefaultPageDeletion' ], 11, 2 );
-		add_filter( 'wp_insert_post_empty_content', [ $this, 'restrictDefaultFormRemove' ], 11, 2 );
+		add_filter( 'wp_insert_post_empty_content', [ $this, 'restrictDefaultCheckoutRemove' ], 11, 2 );
 	}
 
 	/**
@@ -50,16 +50,20 @@ class PageService {
 	 *
 	 * @return boolean|void
 	 */
-	public function restrictDefaultFormRemove( $maybe_empty, $post ) {
+	public function restrictDefaultCheckoutRemove( $maybe_empty, $post ) {
 		$default_checkout = \SureCart::pages()->getID( 'checkout' );
+		$default_form     = \SureCart::forms()->getDefault()->ID;
 		$post_id          = $post['ID'];
 
-		if ( $post_id !== $default_checkout ) {
-			return $maybe_empty;
-		}
-
-		if ( ! has_block( 'surecart/checkout-form', $post['post_content'] ) ) {
-			return true;
+		if ( in_array( $post_id, [ $default_checkout, $default_form ], true ) ) {
+			if ( ! has_block( 'surecart/checkout-form', $post['post_content'] ) && ! has_block( 'surecart/form', $post['post_content'] ) ) {
+				$message = esc_html__( 'To prevent misconfiguration, you cannot delete the default checkout form. Please deactivate SureCart to delete this form.', 'surecart' );
+				wp_die(
+					esc_html( $message ),
+					esc_html__( 'Deleting This is Restricted', 'surecart' ),
+				);
+				return true;
+			}
 		}
 
 		return $maybe_empty;
