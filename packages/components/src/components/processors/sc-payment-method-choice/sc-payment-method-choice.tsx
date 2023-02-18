@@ -1,6 +1,4 @@
 import { Component, Element, Event, EventEmitter, h, Host, Prop } from '@stencil/core';
-import { Checkout } from '../../../types';
-import { openWormhole } from 'stencil-wormhole';
 import { state as selectedProcessor } from '@store/selected-processor';
 @Component({
   tag: 'sc-payment-method-choice',
@@ -20,9 +18,6 @@ export class ScPaymentMethodChoice {
 
   /** Is this recurring-enabled? */
   @Prop() recurringEnabled: boolean;
-
-  /** The checkout. */
-  @Prop() checkout: Checkout;
 
   /** Is this disabled? */
   @Prop({ reflect: true }) isDisabled: boolean;
@@ -92,5 +87,3 @@ export class ScPaymentMethodChoice {
     );
   }
 }
-
-openWormhole(ScPaymentMethodChoice, ['checkout'], false);
