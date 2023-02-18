@@ -38,7 +38,7 @@ export class ScCheckoutMolliePayment {
 
   async fetchMethods() {
     const checkout = checkoutState.checkout;
-    if (!checkout.currency) return; // wait until we have a currency.
+    if (!checkout.currency || !checkout?.total_amount) return; // wait until we have a currency.
     try {
       lockCheckout('methods');
       const response = (await apiFetch({

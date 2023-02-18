@@ -2045,26 +2045,17 @@ export namespace Components {
          */
         "card": boolean;
         /**
-          * The checkout.
-         */
-        "checkout": Checkout;
-        /**
-          * Is this disabled?
-         */
-        "isDisabled": boolean;
-        /**
           * Is this a manual processor
          */
         "isManual": boolean;
+        /**
+          * The method id
+         */
         "methodId": string;
         /**
           * The processor ID
          */
         "processorId": string;
-        /**
-          * Is this recurring-enabled?
-         */
-        "recurringEnabled": boolean;
     }
     interface ScPaymentMethodsList {
         "heading": string;
@@ -3348,10 +3339,6 @@ export interface ScOrderTaxIdInputCustomEvent<T> extends CustomEvent<T> {
 export interface ScPaginationCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScPaginationElement;
-}
-export interface ScPaymentMethodChoiceCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScPaymentMethodChoiceElement;
 }
 export interface ScPaypalButtonsCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -6911,38 +6898,17 @@ declare namespace LocalJSX {
          */
         "card"?: boolean;
         /**
-          * The checkout.
-         */
-        "checkout"?: Checkout;
-        /**
-          * Is this disabled?
-         */
-        "isDisabled"?: boolean;
-        /**
           * Is this a manual processor
          */
         "isManual"?: boolean;
+        /**
+          * The method id
+         */
         "methodId"?: string;
-        /**
-          * The currenct processor is invalid.
-         */
-        "onScProcessorInvalid"?: (event: ScPaymentMethodChoiceCustomEvent<void>) => void;
-        /**
-          * Set the order procesor.
-         */
-        "onScSetMethod"?: (event: ScPaymentMethodChoiceCustomEvent<string>) => void;
-        /**
-          * Show the toggle
-         */
-        "onScShow"?: (event: ScPaymentMethodChoiceCustomEvent<void>) => void;
         /**
           * The processor ID
          */
         "processorId"?: string;
-        /**
-          * Is this recurring-enabled?
-         */
-        "recurringEnabled"?: boolean;
     }
     interface ScPaymentMethodsList {
         "heading"?: string;

@@ -1,6 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Host, Prop } from '@stencil/core';
-import { Checkout } from '../../../types';
-import { openWormhole } from 'stencil-wormhole';
+import { Component, Element, h, Prop } from '@stencil/core';
 import { state as selectedProcessor } from '@store/selected-processor';
 @Component({
   tag: 'sc-payment-method-choice',
@@ -10,6 +8,7 @@ import { state as selectedProcessor } from '@store/selected-processor';
 export class ScPaymentMethodChoice {
   @Element() el: HTMLScPaymentMethodChoiceElement;
 
+  /** The method id */
   @Prop({ reflect: true }) methodId: string;
 
   /** The processor ID */
@@ -18,26 +17,8 @@ export class ScPaymentMethodChoice {
   /** Is this a manual processor */
   @Prop() isManual: boolean;
 
-  /** Is this recurring-enabled? */
-  @Prop() recurringEnabled: boolean;
-
-  /** The checkout. */
-  @Prop() checkout: Checkout;
-
-  /** Is this disabled? */
-  @Prop({ reflect: true }) isDisabled: boolean;
-
   /** Should we show this in a card? */
   @Prop() card: boolean;
-
-  /** Set the order procesor. */
-  @Event() scSetMethod: EventEmitter<string>;
-
-  /** The currenct processor is invalid. */
-  @Event() scProcessorInvalid: EventEmitter<void>;
-
-  /** Show the toggle */
-  @Event() scShow: EventEmitter<void>;
 
   isSelected() {
     if (this.methodId) {
@@ -54,18 +35,13 @@ export class ScPaymentMethodChoice {
     return [...parentGroup.querySelectorAll(this.el.tagName)] as HTMLScPaymentMethodChoiceElement[];
   }
   getSiblingItems() {
-    return this.getAllOptions().filter(choice => choice !== this.el && !choice.isDisabled) as HTMLScPaymentMethodChoiceElement[];
+    return this.getAllOptions().filter(choice => choice !== this.el) as HTMLScPaymentMethodChoiceElement[];
   }
   hasOthers() {
     return !!this.getSiblingItems()?.length;
   }
 
   render() {
-    // do not render if needs recurring and is not supported
-    if (this.isDisabled) {
-      return <Host style={{ display: 'none' }} />;
-    }
-
     const Tag = this.hasOthers() ? 'sc-toggle' : 'div';
 
     return (
@@ -92,5 +68,3 @@ export class ScPaymentMethodChoice {
     );
   }
 }
-
-openWormhole(ScPaymentMethodChoice, ['checkout'], false);
