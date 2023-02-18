@@ -7,20 +7,20 @@
 
 ## Properties
 
-| Property     | Attribute      | Description           | Type                                | Default     |
-| ------------ | -------------- | --------------------- | ----------------------------------- | ----------- |
-| `auAbnLabel` | `au-abn-label` | AU zone label         | `string`                            | `undefined` |
-| `caGstLabel` | `ca-gst-label` | GST zone label        | `string`                            | `undefined` |
-| `country`    | `country`      | The country code.     | `string`                            | `undefined` |
-| `euVatLabel` | `eu-vat-label` | EU zone label         | `string`                            | `undefined` |
-| `gbVatLabel` | `gb-vat-label` | UK zone label         | `string`                            | `undefined` |
-| `help`       | `help`         | Help text.            | `string`                            | `undefined` |
-| `loading`    | `loading`      | Is this loading?      | `boolean`                           | `undefined` |
-| `number`     | `number`       | Tax ID Number         | `string`                            | `null`      |
-| `otherLabel` | `other-label`  | Other zones label     | `string`                            | `undefined` |
-| `show`       | `show`         | Force show the field. | `boolean`                           | `false`     |
-| `status`     | `status`       | The status            | `"invalid" \| "unknown" \| "valid"` | `'unknown'` |
-| `type`       | `type`         | Type of tax id        | `string`                            | `'other'`   |
+| Property     | Attribute      | Description           | Type                                | Default        |
+| ------------ | -------------- | --------------------- | ----------------------------------- | -------------- |
+| `auAbnLabel` | `au-abn-label` | AU zone label         | `string`                            | `'ABN Number'` |
+| `caGstLabel` | `ca-gst-label` | GST zone label        | `string`                            | `'GST Number'` |
+| `country`    | `country`      | The country code.     | `string`                            | `undefined`    |
+| `euVatLabel` | `eu-vat-label` | EU zone label         | `string`                            | `'EU VAT'`     |
+| `gbVatLabel` | `gb-vat-label` | UK zone label         | `string`                            | `'UK VAT'`     |
+| `help`       | `help`         | Help text.            | `string`                            | `undefined`    |
+| `loading`    | `loading`      | Is this loading?      | `boolean`                           | `undefined`    |
+| `number`     | `number`       | Tax ID Number         | `string`                            | `null`         |
+| `otherLabel` | `other-label`  | Other zones label     | `string`                            | `'Other'`      |
+| `show`       | `show`         | Force show the field. | `boolean`                           | `false`        |
+| `status`     | `status`       | The status            | `"invalid" \| "unknown" \| "valid"` | `'unknown'`    |
+| `type`       | `type`         | Type of tax id        | `string`                            | `'other'`      |
 
 
 ## Events

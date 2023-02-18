@@ -30,19 +30,19 @@ export class ScTaxIdInput {
   @Prop() help: string;
 
   /** Other zones label */
-  @Prop() otherLabel:string;
+  @Prop() otherLabel: string = 'Other';
 
   /** GST zone label */
-  @Prop() caGstLabel:string;
+  @Prop() caGstLabel: string = 'GST Number';
 
   /** AU zone label */
-  @Prop() auAbnLabel:string;
+  @Prop() auAbnLabel: string = 'ABN Number';
 
   /** UK zone label */
-  @Prop() gbVatLabel:string;
+  @Prop() gbVatLabel: string = 'UK VAT';
 
-   /** EU zone label */
-  @Prop() euVatLabel:string;
+  /** EU zone label */
+  @Prop() euVatLabel: string = 'EU VAT';
 
   /** Make a request to update the order. */
   @Event() scChange: EventEmitter<{ number: string; number_type: string }>;
@@ -68,19 +68,19 @@ export class ScTaxIdInput {
   @Watch('auAbnLabel')
   @Watch('gbVatLabel')
   @Watch('euVatLabel')
-  onLabelChange (){
-    zones.ca_gst.label= this.caGstLabel;
-    zones.au_abn.label= this.auAbnLabel;
-    zones.gb_vat.label= this.gbVatLabel;
-    zones.eu_vat.label= this.euVatLabel;
-    zones.other.label= this.otherLabel;
+  onLabelChange() {
+    zones.ca_gst.label = this.caGstLabel || zones.ca_gst.label;
+    zones.au_abn.label = this.auAbnLabel || zones.au_abn.label;
+    zones.gb_vat.label = this.gbVatLabel || zones.gb_vat.label;
+    zones.eu_vat.label = this.euVatLabel || zones.eu_vat.label;
+    zones.other.label = this.otherLabel || zones.other.label;
   }
 
   componentWillLoad() {
     if (this.country) {
       this.type = getType(this.country);
     }
-    this.onLabelChange()
+    this.onLabelChange();
   }
 
   renderStatus() {

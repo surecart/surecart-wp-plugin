@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-02-01T07:57:36",
+  "timestamp": "2023-02-14T03:52:09",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -26176,6 +26176,7 @@
           "reflectToAttr": false,
           "docs": "AU zone label",
           "docsTags": [],
+          "default": "'ABN Number'",
           "values": [
             {
               "type": "string"
@@ -26192,6 +26193,7 @@
           "reflectToAttr": false,
           "docs": "GST zone label",
           "docsTags": [],
+          "default": "'GST Number'",
           "values": [
             {
               "type": "string"
@@ -26224,6 +26226,7 @@
           "reflectToAttr": false,
           "docs": "EU zone label",
           "docsTags": [],
+          "default": "'EU VAT'",
           "values": [
             {
               "type": "string"
@@ -26240,6 +26243,7 @@
           "reflectToAttr": false,
           "docs": "UK zone label",
           "docsTags": [],
+          "default": "'UK VAT'",
           "values": [
             {
               "type": "string"
@@ -26305,6 +26309,7 @@
           "reflectToAttr": false,
           "docs": "Other zones label",
           "docsTags": [],
+          "default": "'Other'",
           "values": [
             {
               "type": "string"
