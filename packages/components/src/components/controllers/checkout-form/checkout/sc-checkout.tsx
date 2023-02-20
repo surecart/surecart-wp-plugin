@@ -3,7 +3,22 @@ import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
 
 import { getOrder, setOrder } from '../../../../store/checkouts';
-import { Bump, Checkout, Customer, FormState, ManualPaymentMethod, PaymentIntent, PaymentIntents, PriceChoice, Prices, Processor, ProcessorName, Products, ResponseError, TaxProtocol } from '../../../../types';
+import {
+  Bump,
+  Checkout,
+  Customer,
+  FormState,
+  ManualPaymentMethod,
+  PaymentIntent,
+  PaymentIntents,
+  PriceChoice,
+  Prices,
+  Processor,
+  ProcessorName,
+  Products,
+  ResponseError,
+  TaxProtocol,
+} from '../../../../types';
 
 @Component({
   tag: 'sc-checkout',
