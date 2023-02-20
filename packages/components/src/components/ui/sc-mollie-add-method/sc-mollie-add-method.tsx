@@ -11,6 +11,7 @@ import apiFetch from '../../../functions/fetch';
 })
 export class ScMollieAddMethod {
   @Prop() country: string;
+  @Prop() successUrl: string;
   @Prop() processorId: string;
   @Prop() currency: string;
   @Prop() liveMode: boolean;
@@ -23,7 +24,6 @@ export class ScMollieAddMethod {
   @State() paymentIntent: PaymentIntent;
 
   componentWillLoad() {
-    this.createPaymentIntent();
     this.fetchMethods();
   }
 
@@ -33,7 +33,7 @@ export class ScMollieAddMethod {
       this.error = '';
       this.paymentIntent = await apiFetch({
         method: 'POST',
-        path: 'surecart/v1/payment_intents',
+        path: addQueryArgs('surecart/v1/payment_intents', { payment_method_type: this.selectedMethodId, return_url: this.successUrl }),
         data: {
           processor_type: 'mollie',
           live_mode: this.liveMode,
@@ -41,9 +41,12 @@ export class ScMollieAddMethod {
           currency: this.currency,
         },
       });
+      if (this.paymentIntent.processor_data?.mollie?.checkout_url) {
+        window.location.assign(this.paymentIntent.processor_data?.mollie?.checkout_url);
+      }
     } catch (e) {
+      console.error(e);
       this.error = e?.message || __('Something went wrong', 'surecart');
-    } finally {
       this.loading = false;
     }
   }
@@ -74,25 +77,50 @@ export class ScMollieAddMethod {
       this.loading = false;
     }
   }
-  render() {
-    return (
-      <sc-toggles collapsible={false} theme="container">
-        {(this.methods || []).map(method => (
-          <sc-toggle show-control shady borderless open={this.selectedMethodId === method?.id}>
-            <span slot="summary" class="sc-payment-toggle-summary">
-              {!!method?.image && <img src={method?.image} />}
-              <span>{method?.description}</span>
-            </span>
 
-            <sc-card>
-              <sc-payment-selected label={sprintf(__('%s selected.', 'surecart'), method?.description)}>
-                {!!method?.image && <img slot="icon" src={method?.image} style={{ width: '32px' }} />}
-                {__('Another step will appear after submitting your order to add this payment method.', 'surecart')}
-              </sc-payment-selected>
-            </sc-card>
-          </sc-toggle>
-        ))}
-      </sc-toggles>
+  handleSubmit() {
+    this.createPaymentIntent();
+  }
+
+  renderLoading() {
+    return (
+      <sc-card>
+        <sc-skeleton style={{ width: '50%', marginBottom: '0.5em' }}></sc-skeleton>
+        <sc-skeleton style={{ width: '30%', marginBottom: '0.5em' }}></sc-skeleton>
+        <sc-skeleton style={{ width: '60%', marginBottom: '0.5em' }}></sc-skeleton>
+      </sc-card>
+    );
+  }
+
+  render() {
+    if (this.loading && !this.methods?.length) {
+      return this.renderLoading();
+    }
+
+    return (
+      <sc-form onScFormSubmit={() => this.handleSubmit()} style={{ position: 'relative' }}>
+        <sc-toggles collapsible={false} theme="container">
+          {(this.methods || []).map(method => (
+            <sc-toggle show-control shady borderless open={this.selectedMethodId === method?.id} onScShow={() => (this.selectedMethodId = method?.id)}>
+              <span slot="summary" class="sc-payment-toggle-summary">
+                {!!method?.image && <img src={method?.image} />}
+                <span>{method?.description}</span>
+              </span>
+
+              <sc-card>
+                <sc-payment-selected label={sprintf(__('%s selected.', 'surecart'), method?.description)}>
+                  {!!method?.image && <img slot="icon" src={method?.image} style={{ width: '32px' }} />}
+                  {__('Another step will appear after submitting your order to add this payment method.', 'surecart')}
+                </sc-payment-selected>
+              </sc-card>
+            </sc-toggle>
+          ))}
+        </sc-toggles>
+        <sc-button type="primary" submit full loading={this.loading}>
+          {__('Add Payment Method', 'surecart')}
+        </sc-button>
+        {this.loading && <sc-block-ui z-index={9} style={{ '--sc-block-ui-opacity': '0.75' }} />}
+      </sc-form>
     );
   }
 }
