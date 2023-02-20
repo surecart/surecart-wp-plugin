@@ -60,3 +60,9 @@ sc-button {
     text-decoration: underline;
   }
 }
+
+.coupon-form--is-rtl{
+  .trigger{
+    text-align: right;
+  }
+}
