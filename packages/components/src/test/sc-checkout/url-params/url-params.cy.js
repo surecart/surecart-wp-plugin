@@ -68,7 +68,7 @@ beforeEach(() => {
 });
 
 describe('Line Items', () => {
-  it.only('Handles line items as URL params', () => {
+  it('Handles line items as URL params', () => {
     cy.intercept(
       {
         path: '**/surecart/v1/checkouts/*',
@@ -92,7 +92,10 @@ describe('Line Items', () => {
 describe('Coupons', () => {
   it('Applies a coupon', () => {
     cy.visit('/test/sc-checkout/url-params?coupon=TESTCOUPON');
-    cy.wait('@createUpdate').its('request.body.discount').should('have.property', 'promotion_code', 'TESTCOUPON');
+    cy.wait('@createUpdate').then(({ request }) => {
+      expect(request.body.discount.promotion_code).to.eq('TESTCOUPON');
+      expect((request.body.shipping_address.country)).to.eq('DK');
+    })
   })
 });
 

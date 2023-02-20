@@ -346,6 +346,7 @@ export class ScSessionProvider {
     // get existing form data from defaults (default country selection, etc).
     const data = this.getFormData();
     const line_items = this.addPriceChoices(this.addInitialPrices() || []);
+    const address = this.el.querySelector('sc-order-shipping-address');
 
     try {
       this.scSetState.emit('FETCH');
@@ -354,6 +355,13 @@ export class ScSessionProvider {
           ...this.defaultFormData(),
           ...data,
           ...(promotion_code ? { discount: { promotion_code } } : {}),
+          ...(address?.defaultCountry
+            ? {
+                shipping_address: {
+                  country: address?.defaultCountry,
+                },
+              }
+            : {}),
           line_items,
         },
         query: this.defaultFormQuery(),
