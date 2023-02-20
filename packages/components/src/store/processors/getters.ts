@@ -9,7 +9,7 @@ import { state as checkoutState } from '@store/checkout';
 export const availableProcessors = () =>
   sortByArray(state.processors, 'processor_type', state.sortOrder.processors) // sort.
     .filter(processor => processor?.live_mode === (checkoutState?.mode === 'live')) // match mode.
-    .filter(processor => !state.disabled.processors.includes(processor.processor_type)) // make sure it's not disabled.
+    .filter(processor => !(state.disabled.processors || []).includes(processor.processor_type)) // make sure it's not disabled.
     .filter(processor => (!!checkoutState?.checkout?.reusable_payment_method_required ? !!processor?.recurring_enabled : true)) // recurring.
     .filter((processor, _, filtered) => (filtered.some(p => p.processor_type === 'mollie') ? processor.processor_type === 'mollie' : true)); // only allow mollie if preset.
 
