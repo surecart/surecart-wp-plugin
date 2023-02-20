@@ -44,6 +44,7 @@
  - [sc-order-bumps](../../controllers/checkout-form/sc-order-bumps)
  - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-select](../select)
+ - [sc-stripe-element](../stripe-element)
  - [sc-textarea](../sc-textarea)
 
 ### Depends on
@@ -62,6 +63,7 @@ graph TD;
   sc-order-bumps --> sc-form-control
   sc-payment --> sc-form-control
   sc-select --> sc-form-control
+  sc-stripe-element --> sc-form-control
   sc-textarea --> sc-form-control
   style sc-form-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
