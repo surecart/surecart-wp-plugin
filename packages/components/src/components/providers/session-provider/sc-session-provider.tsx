@@ -324,10 +324,19 @@ export class ScSessionProvider {
   /** Handle line items (and maybe ) */
   async handleInitialLineItems(line_items, promotion_code) {
     console.info('Handling initial line items.');
+    // TODO: move this to central store.
+    const address = this.el.querySelector('sc-order-shipping-address');
     clearOrder(this.formId, this.mode);
     return this.loadUpdate({
       line_items,
       ...(promotion_code ? { discount: { promotion_code } } : {}),
+      ...(address?.defaultCountry
+        ? {
+            shipping_address: {
+              country: address?.defaultCountry,
+            },
+          }
+        : {}),
     });
   }
 
@@ -434,7 +443,7 @@ export class ScSessionProvider {
       currency: this.order()?.currency || this.currencyCode,
       live_mode: this.mode !== 'test',
       group_key: this.groupId,
-      ...(this.abandonedCheckoutReturnUrl ? {abandoned_checkout_return_url: this.abandonedCheckoutReturnUrl} : {}),
+      ...(this.abandonedCheckoutReturnUrl ? { abandoned_checkout_return_url: this.abandonedCheckoutReturnUrl } : {}),
     };
   }
 

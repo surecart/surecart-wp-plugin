@@ -68,7 +68,7 @@ beforeEach(() => {
 });
 
 describe('Line Items', () => {
-  it('Handles line items as URL params', () => {
+  it.only('Handles line items as URL params', () => {
     cy.intercept(
       {
         path: '**/surecart/v1/checkouts/*',
@@ -84,6 +84,7 @@ describe('Line Items', () => {
       expect(request.body.line_items.length).to.eq(1);
       expect(request.body.line_items[0]['price_id']).to.eq('price_id');
       expect((request.body.line_items[0]['quantity']).toString()).to.eq('2');
+      expect((request.body.shipping_address.country)).to.eq('DK');
     })
   });
 });
