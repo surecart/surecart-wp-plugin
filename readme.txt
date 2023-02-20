@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.1
-Stable tag: 1.6.0
+Stable tag: 1.6.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,23 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.6.3 - February 20, 2023 =
+* Fix: Default country not being sent with direct checkout links.
+
+= 1.6.2 - February 20, 2023 =
+* Fix: Order bump recurring time not being shown properly if discount is applied.
+* Fix: Payment history block title not properly wrapping on mobile.
+* Fix: Default country not being sent with initial checkout.
+* Fix: Output buffer not cleaned causing conflict with FacetWP.
+
+= 1.6.1 - February 16, 2023 =
+* Fix: Remove integrations table on uninstall.
+* Fix: Block names not getting translated.
+* Fix: Password not submitted after hitting enter on login.
+* Fix: Tax line items are not properly translated.
+* Fix: Stripe card element sometimes expanded for themes that don't implement box-sizing.
+* Fix: Integration lists on product page only showing 10 items.
 
 = 1.6.0 - February 9, 2023 =
 * New: Conditional form areas.
