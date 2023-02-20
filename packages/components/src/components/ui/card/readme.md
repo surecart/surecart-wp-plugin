@@ -35,6 +35,7 @@
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-login-form](../../controllers/login)
+ - [sc-mollie-add-method](../sc-mollie-add-method)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
@@ -66,6 +67,7 @@ graph TD;
   sc-invoices-list --> sc-card
   sc-licenses-list --> sc-card
   sc-login-form --> sc-card
+  sc-mollie-add-method --> sc-card
   sc-order --> sc-card
   sc-order-confirmation-details --> sc-card
   sc-orders-list --> sc-card

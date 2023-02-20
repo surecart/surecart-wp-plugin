@@ -65,6 +65,7 @@
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-login-form](../../controllers/login)
  - [sc-login-provider](../../providers/sc-login-provider)
+ - [sc-mollie-add-method](../sc-mollie-add-method)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-submit](../../controllers/checkout-form/order-submit)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
@@ -112,6 +113,7 @@ graph TD;
   sc-licenses-list --> sc-button
   sc-login-form --> sc-button
   sc-login-provider --> sc-button
+  sc-mollie-add-method --> sc-button
   sc-order --> sc-button
   sc-order-submit --> sc-button
   sc-orders-list --> sc-button

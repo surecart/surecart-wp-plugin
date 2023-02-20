@@ -33,17 +33,20 @@ export class ScMollieAddMethod {
       this.error = '';
       this.paymentIntent = await apiFetch({
         method: 'POST',
-        path: addQueryArgs('surecart/v1/payment_intents', { payment_method_type: this.selectedMethodId, return_url: this.successUrl }),
+        path: 'surecart/v1/payment_intents',
         data: {
           processor_type: 'mollie',
           live_mode: this.liveMode,
           customer_id: this.customerId,
+          return_url: this.successUrl,
+          payment_method_type: this.selectedMethodId,
           currency: this.currency,
         },
       });
-      if (this.paymentIntent.processor_data?.mollie?.checkout_url) {
-        window.location.assign(this.paymentIntent.processor_data?.mollie?.checkout_url);
-      }
+      console.log(this.paymentIntent);
+      // if (this.paymentIntent.processor_data?.mollie?.checkout_url) {
+      //   window.location.assign(this.paymentIntent.processor_data?.mollie?.checkout_url);
+      // }
     } catch (e) {
       console.error(e);
       this.error = e?.message || __('Something went wrong', 'surecart');
