@@ -79,6 +79,7 @@ Type: `Promise<void>`
  - [sc-order-manual-instructions](../../controllers/confirmation/manual-instructions)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment](../../controllers/checkout-form/payment)
+ - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-paypal-add-method](../sc-paypal-add-method)
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
  - [sc-stripe-add-method](../sc-stripe-add-method)
@@ -108,6 +109,7 @@ graph TD;
   sc-order-manual-instructions --> sc-alert
   sc-password-nag --> sc-alert
   sc-payment --> sc-alert
+  sc-payment-methods-list --> sc-alert
   sc-paypal-add-method --> sc-alert
   sc-price-choice --> sc-alert
   sc-stripe-add-method --> sc-alert

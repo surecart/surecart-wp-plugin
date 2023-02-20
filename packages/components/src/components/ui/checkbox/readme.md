@@ -82,19 +82,6 @@ Type: `Promise<void>`
 | `"label"`              | The label.                 |
 
 
-## Dependencies
-
-### Used by
-
- - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
-
-### Graph
-```mermaid
-graph TD;
-  sc-payment-methods-list --> sc-checkbox
-  style sc-checkbox fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
