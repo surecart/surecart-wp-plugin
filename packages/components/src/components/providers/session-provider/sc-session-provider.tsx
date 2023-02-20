@@ -249,7 +249,7 @@ export class ScSessionProvider {
 
     // handle redirect status.
     if (!!redirect_status) {
-      return this.handleRedirectStatus(redirect_status);
+      return this.handleRedirectStatus(redirect_status, checkout_id);
     }
 
     // handle abandoned checkout.
@@ -272,7 +272,7 @@ export class ScSessionProvider {
   }
 
   /** Handle payment instrument redirect status */
-  async handleRedirectStatus(status) {
+  async handleRedirectStatus(status, id) {
     console.info('Handling payment redirect.');
     // status failed.
     if (status === 'failed') {
@@ -282,7 +282,6 @@ export class ScSessionProvider {
     }
 
     // get the
-    const id = this.getSessionId();
     if (!id) {
       return this.scError.emit({
         message: __('Could not find checkout. Please contact us before attempting to purchase again.', 'surecart'),
@@ -315,11 +314,12 @@ export class ScSessionProvider {
 
   /** Handle abandoned checkout from URL */
   async handleAbandonedCheckout(id, promotion_code = '') {
-    console.info('Handling abandoned checkout.');
+    console.info('Handling abandoned checkout.', promotion_code, id);
 
     // if coupon code, load the checkout with the code.
     if (promotion_code) {
       return this.loadUpdate({
+        id,
         discount: { promotion_code },
       });
     }
@@ -618,7 +618,7 @@ export class ScSessionProvider {
   async update(data: any = {}, query = {}) {
     try {
       const order = (await createOrUpdateOrder({
-        id: this.getSessionId(),
+        id: data?.id ? data.id : this.getSessionId(),
         data: {
           ...this.defaultFormData(),
           ...data,
