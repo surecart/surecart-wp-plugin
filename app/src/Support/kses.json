@@ -253,6 +253,7 @@
     "persist-session": true,
     "prices": true,
     "processors": true,
+    "product": true,
     "remove-line-items": true,
     "stripe-payment-element": true,
     "success-url": true,

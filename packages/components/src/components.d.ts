@@ -467,6 +467,10 @@ export namespace Components {
          */
         "processors": Processor[];
         /**
+          * A product to pre-fill the form.
+         */
+        "product": Product;
+        /**
           * Can we remove line items?
          */
         "removeLineItems": boolean;
@@ -5099,6 +5103,10 @@ declare namespace LocalJSX {
           * Processors enabled for this form.
          */
         "processors"?: Processor[];
+        /**
+          * A product to pre-fill the form.
+         */
+        "product"?: Product;
         /**
           * Can we remove line items?
          */

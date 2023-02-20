@@ -1,10 +1,11 @@
 import { createStore } from '@stencil/store';
-import { Checkout } from '../../types';
+import { Checkout, Product } from '../../types';
 
 interface Store {
   formId: number;
   mode: 'live' | 'test';
   locks: string[];
+  product: Product;
   checkout: Checkout;
 }
 
@@ -13,6 +14,7 @@ const { state, onChange, on, set, get, dispose } = createStore<Store>(
     formId: null,
     mode: 'live',
     locks: [],
+    product: null,
     checkout: null,
   },
   (newValue, oldValue) => {

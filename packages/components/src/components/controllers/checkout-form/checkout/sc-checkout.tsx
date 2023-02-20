@@ -16,6 +16,7 @@ import {
   Prices,
   Processor,
   ProcessorName,
+  Product,
   Products,
   ResponseError,
   TaxProtocol,
@@ -35,6 +36,9 @@ export class ScCheckout {
 
   /** An array of prices to pre-fill in the form. */
   @Prop() prices: Array<PriceChoice> = [];
+
+  /** A product to pre-fill the form. */
+  @Prop() product: Product;
 
   /** Are we in test or live mode. */
   @Prop() mode: 'test' | 'live' = 'live';
@@ -196,6 +200,9 @@ export class ScCheckout {
     processorsState.manualPaymentMethods = this.manualPaymentMethods;
     checkoutState.formId = this.formId;
     checkoutState.mode = this.mode;
+    if (this.product) {
+      checkoutState.product = this.product;
+    }
   }
 
   order() {
