@@ -32,13 +32,8 @@
 <body>
   <sc-checkout success-url="/success" form-id="1" mode="test" stripe-payment-element>
     <sc-form>
-      <sc-payment label="Payment" default-processor='stripe' secure-notice="This is secure">
-        <sc-payment-method-choice processor-id="stripe" card>
-          <span slot="summary">
-            Credit Card
-          </span>
-          <sc-stripe-payment-element></sc-stripe-payment-element>
-        </sc-payment-method-choice>
+      <sc-payment label="Payment">
+        <sc-stripe-payment-element slot="stripe"></sc-stripe-payment-element>
       </sc-payment>
       <sc-order-submit>Submit</sc-order-submit>
     </sc-form>
