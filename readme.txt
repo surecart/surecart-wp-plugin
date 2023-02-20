@@ -247,6 +247,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * Fix: Order bump recurring time not being shown properly if discount is applied.
 * Fix: Payment history block title not properly wrapping on mobile.
 * Fix: Default country not being sent with initial checkout.
+* Fix: Output buffer not cleaned causing conflict with FacetWP.
 
 = 1.6.1 - February 16, 2023 =
 * Fix: Remove integrations table on uninstall.
