@@ -35,6 +35,7 @@ import Purchases from './modules/Purchases';
 import Tax from './modules/Tax';
 import UpcomingPeriod from './modules/UpcomingPeriod';
 import PaymentMethod from '../edit/modules/PaymentMethod';
+import PayOffSubscriptionModal from './modules/modals/PayOffSubscriptionModal';
 
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
@@ -170,7 +171,7 @@ export default () => {
 			return null;
 		if (['completed', 'canceled'].includes(subscription?.status))
 			return null;
-		if (subscription?.finite) return null;
+		if (!subscription?.finite) return null;
 		return (
 			<ScMenuItem
 				href={addQueryArgs('admin.php', {
@@ -180,6 +181,19 @@ export default () => {
 				})}
 			>
 				{__('Update Subscription', 'surecart')}
+			</ScMenuItem>
+		);
+	};
+
+	const renderPayOffButton = () => {
+		if (['completed', 'canceled'].includes(subscription?.status))
+			return null;
+
+		if (!subscription?.finite) return null;
+
+		return (
+			<ScMenuItem onClick={() => setModal('pay_off')}>
+				{__('Pay Off Subscription', 'surecart')}
 			</ScMenuItem>
 		);
 	};
@@ -256,6 +270,7 @@ export default () => {
 							</ScMenuItem>
 						)}
 						{renderUpdateButton()}
+						{renderPayOffButton()}
 						{renderCompleteButton()}
 						{renderCancelButton()}
 						{renderRestoreButton()}
@@ -323,6 +338,10 @@ export default () => {
 			/>
 			<RestoreSubscriptionModal
 				open={modal === 'restore'}
+				onRequestClose={() => setModal(false)}
+			/>
+			<PayOffSubscriptionModal
+				open={modal === 'pay_off'}
 				onRequestClose={() => setModal(false)}
 			/>
 			{isSaving && <ScBlockUi spinner />}

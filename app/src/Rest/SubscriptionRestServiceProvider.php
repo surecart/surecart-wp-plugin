@@ -118,6 +118,20 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 				'schema' => [ $this, 'get_item_schema' ],
 			]
 		);
+
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint. '/(?P<id>\S+)/pay_off/',
+			[
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'payOff' ),
+					'permission_callback' => [ $this, 'get_item_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
 	}
 
 	/**
