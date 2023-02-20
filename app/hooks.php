@@ -12,6 +12,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// don't let WordPress redirect 404 permalink for product pages.
+add_filter(
+	'do_redirect_guess_404_permalink',
+	function( $guess ) {
+		if ( ( strpos( $_SERVER['REQUEST_URI'], '/buy/' ) !== false ) ) {
+			return false;
+		}
+		if ( ( strpos( $_SERVER['REQUEST_URI'], 'surecart/webhooks' ) !== false ) ) {
+			return false;
+		}
+		return $guess;
+	},
+	9999999999
+);
+
 // register uninstall.
 register_uninstall_hook( SURECART_PLUGIN_FILE, 'surecart_uninstall' );
 function surecart_uninstall() {
