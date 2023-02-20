@@ -73,8 +73,8 @@ export class ScOrderSubmit {
   render() {
     return (
       <Fragment>
-        {selectedProcessor.id === 'paypal' && this.renderPayPalButton(['paypal'])}
-        {selectedProcessor.id === 'paypal-card' && this.renderPayPalButton(['card'])}
+        {selectedProcessor.id === 'paypal' && !selectedProcessor?.method && this.renderPayPalButton(['paypal'])}
+        {selectedProcessor.id === 'paypal' && selectedProcessor?.method === 'card' && this.renderPayPalButton(['card'])}
         <sc-button
           hidden={['paypal', 'paypal-card'].includes(selectedProcessor.id)}
           submit

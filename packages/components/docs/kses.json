@@ -919,6 +919,7 @@
     "customer-id": true,
     "live-mode": true,
     "processor-id": true,
+    "success-url": true,
     "style": true,
     "id": true,
     "class": true,

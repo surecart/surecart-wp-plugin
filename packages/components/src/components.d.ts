@@ -1654,6 +1654,7 @@ export namespace Components {
         "customerId": string;
         "liveMode": boolean;
         "processorId": string;
+        "successUrl": string;
     }
     interface ScOrder {
         "customerIds": string[];
@@ -6457,6 +6458,7 @@ declare namespace LocalJSX {
         "customerId"?: string;
         "liveMode"?: boolean;
         "processorId"?: string;
+        "successUrl"?: string;
     }
     interface ScOrder {
         "customerIds"?: string[];
