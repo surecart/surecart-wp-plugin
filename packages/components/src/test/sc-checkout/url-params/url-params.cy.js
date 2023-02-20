@@ -191,7 +191,7 @@ describe('Abandoned Cart', () => {
 });
 
 describe('Payment Instrument Redirects', () => {
-  it.only('Handles redirect success', () => {
+  it('Handles redirect success', () => {
     cy.intercept(
       {
         path: '**/surecart/v1/checkouts/*',
@@ -213,6 +213,34 @@ describe('Payment Instrument Redirects', () => {
       },
     ).as('confirm');
     cy.visit('/test/sc-checkout/url-params?checkout_id=test&redirect_status=succeeded');
+    cy.wait('@createUpdate');
+    cy.wait('@confirm');
+    cy.location('pathname').should('contain', 'success');
+    cy.location('search').should('contain', 'order=test');
+  });
+
+  it('Handles mollie success', () => {
+    cy.intercept(
+      {
+        path: '**/surecart/v1/checkouts/*',
+      },
+      {
+        id: 'test',
+        object: 'checkout',
+        status: 'paid',
+      },
+    ).as('createUpdate');
+    cy.intercept(
+      {
+        method: 'POST',
+        path: '**/surecart/v1/checkouts/test/confirm*',
+      },
+      {
+        id: 'test',
+        status: 'paid',
+      },
+    ).as('confirm');
+    cy.visit('/test/sc-checkout/url-params?checkout_id=test&redirect_status=succeeded&is_surecart_payment_redirect=true');
     cy.wait('@createUpdate');
     cy.wait('@confirm');
     cy.location('pathname').should('contain', 'success');
