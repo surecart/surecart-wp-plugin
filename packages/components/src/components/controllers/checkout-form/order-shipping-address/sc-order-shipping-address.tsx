@@ -104,6 +104,12 @@ export class ScOrderShippingAddress {
   componentWillLoad() {
     if (this.defaultCountry && !this.address.country) {
       this.address.country = this.defaultCountry;
+      // make sure order is updated before it is created.
+      this.scUpdateOrder.emit({
+        data: {
+          shipping_address: this.address as Address,
+        },
+      });
     }
 
     this.handleRequirementChange();
