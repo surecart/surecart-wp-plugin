@@ -65,6 +65,8 @@ class Customer extends Model {
 	 */
 	protected function delete( $id = 0, $args = [] ) {
 
+		$customer = self::find( $id );
+
 		$deleted = parent::delete( $id );
 
 		if ( ! is_wp_error( $deleted ) ) {
@@ -73,7 +75,11 @@ class Customer extends Model {
 
 			if( $user ) {
 
-				$mode = isset( $args['live_mode'] ) && $args['live_mode'] ? 'live' : 'test';
+				if ( is_wp_error( $customer ) ) {
+					return $customer;
+				}
+
+				$mode = $customer->getAttribute( 'live_mode' ) ? 'live' : 'test';
 
 				$user->removeCustomerId( $mode );
 			}

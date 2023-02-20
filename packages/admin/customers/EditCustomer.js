@@ -11,7 +11,7 @@ import { store as dataStore } from '@surecart/data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
-import { Fragment, useState } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 
 import Error from '../components/Error';
 
@@ -87,7 +87,7 @@ export default () => {
 
 		try {
 			setError(null);
-			await deleteCustomer({ throwOnError: true }, {live_mode: customer?.live_mode || false});
+			await deleteCustomer({ throwOnError: true });
 		} catch (e) {
 			setError(e);
 		}
