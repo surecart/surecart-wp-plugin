@@ -59,11 +59,10 @@ class Customer extends Model {
 	 * Delete the model.
 	 *
 	 * @param int   $id Customer ID.
-	 * @param array $args Other arguments.
 	 *
 	 * @return $this|\WP_Error|false
 	 */
-	protected function delete( $id = 0, $args = [] ) {
+	protected function delete( $id = 0 ) {
 
 		$customer = self::find( $id );
 
