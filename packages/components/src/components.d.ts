@@ -74,6 +74,10 @@ export namespace Components {
          */
         "show": () => Promise<void>;
         /**
+          * The title.
+         */
+        "title": string;
+        /**
           * The type of alert.
          */
         "type": 'primary' | 'success' | 'info' | 'warning' | 'danger';
@@ -4738,6 +4742,10 @@ declare namespace LocalJSX {
           * Scroll into view.
          */
         "scrollOnOpen"?: boolean;
+        /**
+          * The title.
+         */
+        "title"?: string;
         /**
           * The type of alert.
          */
