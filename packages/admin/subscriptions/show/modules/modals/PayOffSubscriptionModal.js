@@ -1,4 +1,9 @@
-import { ScBlockUi, ScButton, ScDialog } from '@surecart/components-react';
+import {
+	ScAlert,
+	ScBlockUi,
+	ScButton,
+	ScDialog,
+} from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import apiFetch from '@wordpress/api-fetch';
 import { store as coreStore } from '@wordpress/core-data';
@@ -35,6 +40,7 @@ export default ({ open, onRequestClose }) => {
 			});
 			onRequestClose();
 		} catch (e) {
+			console.error(e);
 			setError(e);
 		} finally {
 			setLoading(false);
@@ -48,17 +54,24 @@ export default ({ open, onRequestClose }) => {
 			onScRequestClose={onRequestClose}
 		>
 			<Error error={error} setError={setError} />
-			{__(
-				'Are you sure you want to pay off subscription? This will pay off all the remaining periods of this subscription.',
-				'surecart'
-			)}
+
+			<ScAlert
+				type="warning"
+				title={__('Confirm Charge', 'surecart')}
+				open
+			>
+				{__(
+					'Are you sure you want to pay off subscription? This will immediately charge the customer the remaining payments on their plan.',
+					'surecart'
+				)}
+			</ScAlert>
 			<div slot="footer">
 				<ScButton
 					type="text"
 					onClick={onRequestClose}
 					disabled={loading}
 				>
-					{__("Don't pay off", 'surecart')}
+					{__('Cancel', 'surecart')}
 				</ScButton>{' '}
 				<ScButton type="primary" onClick={onPayOff} disabled={loading}>
 					{__('Pay off', 'surecart')}
