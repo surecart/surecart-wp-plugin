@@ -78,7 +78,7 @@ export default (
 
 	/** Delete the entity. */
 	const deleteEntity = (options = {}, query = {}) =>
-    deleteEntityRecord(name, type, id, query, options);
+		deleteEntityRecord(name, type, id, query, options);
 
 	/** Save the entity. */
 	const saveEntity = (data, options) =>
