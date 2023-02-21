@@ -127,7 +127,6 @@ export const ScProductItem = /*@__PURE__*/createReactComponent<JSX.ScProductItem
 export const ScProductItemButton = /*@__PURE__*/createReactComponent<JSX.ScProductItemButton, HTMLScProductItemButtonElement>('sc-product-item-button');
 export const ScProductItemImage = /*@__PURE__*/createReactComponent<JSX.ScProductItemImage, HTMLScProductItemImageElement>('sc-product-item-image');
 export const ScProductItemList = /*@__PURE__*/createReactComponent<JSX.ScProductItemList, HTMLScProductItemListElement>('sc-product-item-list');
-export const ScProductItemPrice = /*@__PURE__*/createReactComponent<JSX.ScProductItemPrice, HTMLScProductItemPriceElement>('sc-product-item-price');
 export const ScProductItemTitle = /*@__PURE__*/createReactComponent<JSX.ScProductItemTitle, HTMLScProductItemTitleElement>('sc-product-item-title');
 export const ScProductLineItem = /*@__PURE__*/createReactComponent<JSX.ScProductLineItem, HTMLScProductLineItemElement>('sc-product-line-item');
 export const ScProvider = /*@__PURE__*/createReactComponent<JSX.ScProvider, HTMLScProviderElement>('sc-provider');

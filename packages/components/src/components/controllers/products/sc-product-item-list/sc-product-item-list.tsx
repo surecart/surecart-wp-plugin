@@ -1,4 +1,4 @@
-import { Component, h, Prop, State } from '@stencil/core';
+import { Component, h, Host, Prop, State } from '@stencil/core';
 import { addQueryArgs } from '@wordpress/url';
 
 import { Product } from '../../../../types';
@@ -48,20 +48,30 @@ export class ScProductItemList {
   }
 
   render() {
+    console.log(this.layoutConfig);
     return (
-      <div
-        class={{
-          'product-item-list': true,
-        }}
-      >
-        {this.loading ? (
-          <p>Loading products...</p>
-        ) : this.products?.length ? (
-          this.products.map(product => <sc-product-item product={product} layoutConfig={this.layoutConfig}></sc-product-item>)
-        ) : (
-          <p>No Product Found.</p>
-        )}
-      </div>
+      <Host>
+        <div
+          class={{
+            'product-item-list': true,
+          }}
+        >
+          {this.loading ? (
+            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(() => (
+              <div class="product-item-list__loader">
+                <sc-skeleton style={{ width: '80%' }}></sc-skeleton>
+                <sc-skeleton style={{ width: '40%' }}></sc-skeleton>
+                <sc-skeleton style={{ 'width': '100%', 'minHeight': '90%', 'aspectRatio': '1/1', '--sc-border-radius-pill': '12px' }}></sc-skeleton>
+                <sc-skeleton style={{ 'width': '8rem', 'height': '2.5rem', '--sc-border-radius-pill': '12px' }}></sc-skeleton>
+              </div>
+            ))
+          ) : this.products?.length ? (
+            this.products.map(product => <sc-product-item product={product} layoutConfig={this.layoutConfig}></sc-product-item>)
+          ) : (
+            <p>No Product Found.</p>
+          )}
+        </div>
+      </Host>
     );
   }
 }

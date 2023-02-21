@@ -32,14 +32,15 @@ export default ({ attributes, setAttributes }) => {
 				<ScProductItemTitle
 					style={{
 						'--sc-product-title-padding-top':
-							getSpacingPresetCssVar(padding?.top),
+							getSpacingPresetCssVar(padding?.top) ?? '0',
 						'--sc-product-title-padding-bottom':
-							getSpacingPresetCssVar(padding?.bottom) ?? '1rem',
+							getSpacingPresetCssVar(padding?.bottom) ??
+							'0.44rem',
 						'--sc-product-title-padding-left':
-							getSpacingPresetCssVar(padding?.left),
+							getSpacingPresetCssVar(padding?.left) ?? '0',
 						'--sc-product-title-padding-right':
-							getSpacingPresetCssVar(padding?.right),
-						'--sc-product-title-font-size': fontSize + 'px',
+							getSpacingPresetCssVar(padding?.right) ?? '0',
+						'--sc-product-title-font-size': `${fontSize ?? 18}px`,
 					}}
 				>
 					{title}

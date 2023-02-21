@@ -5,7 +5,35 @@ import { Button, Placeholder } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { InnerBlocks } from '@wordpress/block-editor';
 
-const PRODUCT_BLOCKS = [['surecart/product-item']];
+const PRODUCT_BLOCKS = [
+	[
+		'surecart/product-item',
+		{
+			style: {
+				spacing: {
+					padding: {
+						top: '0.88rem',
+						bottom: '0.88rem',
+						left: '0.88rem',
+						right: '0.88rem',
+					},
+					margin: {
+						top: 0,
+						bottom: 0,
+						left: 0,
+						right: 0,
+					},
+				},
+				border: {
+					width: '1px',
+					radius: '4px',
+				},
+				borderColor: 'cyan-bluish-gray',
+			},
+		},
+	],
+];
+
 const ALLOWED_BLOCKS = ['surecart/product-item'];
 
 export default function EditLayoutConfig({ onDone }) {

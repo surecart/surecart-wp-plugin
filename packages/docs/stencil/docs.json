@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-02-17T05:14:53",
+  "timestamp": "2023-02-21T13:36:09",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -20323,13 +20323,18 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "sc-product-item"
+      ],
       "dependencies": [
         "sc-format-number"
       ],
       "dependencyGraph": {
         "sc-price-range": [
           "sc-format-number"
+        ],
+        "sc-product-item": [
+          "sc-price-range"
         ]
       }
     },
@@ -20385,13 +20390,24 @@
       "dependencies": [
         "sc-product-item-title",
         "sc-product-item-image",
-        "sc-product-item-price"
+        "sc-price-range",
+        "sc-product-item-button"
       ],
       "dependencyGraph": {
         "sc-product-item": [
           "sc-product-item-title",
           "sc-product-item-image",
-          "sc-product-item-price"
+          "sc-price-range",
+          "sc-product-item-button"
+        ],
+        "sc-price-range": [
+          "sc-format-number"
+        ],
+        "sc-product-item-button": [
+          "sc-button"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-product-item-list": [
           "sc-product-item"
@@ -20413,7 +20429,9 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "sc-product-item"
+      ],
       "dependencies": [
         "sc-button"
       ],
@@ -20423,6 +20441,9 @@
         ],
         "sc-button": [
           "sc-spinner"
+        ],
+        "sc-product-item": [
+          "sc-product-item-button"
         ]
       }
     },
@@ -20555,41 +20576,28 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
+        "sc-skeleton",
         "sc-product-item"
       ],
       "dependencyGraph": {
         "sc-product-item-list": [
+          "sc-skeleton",
           "sc-product-item"
         ],
         "sc-product-item": [
           "sc-product-item-title",
           "sc-product-item-image",
-          "sc-product-item-price"
-        ]
-      }
-    },
-    {
-      "filePath": "./src/components/controllers/products/sc-product-item-price/sc-product-item-price.tsx",
-      "encapsulation": "shadow",
-      "tag": "sc-product-item-price",
-      "readme": "# sc-product-item-price\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [],
-      "methods": [],
-      "events": [],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
-      "dependents": [
-        "sc-product-item"
-      ],
-      "dependencies": [],
-      "dependencyGraph": {
-        "sc-product-item": [
-          "sc-product-item-price"
+          "sc-price-range",
+          "sc-product-item-button"
+        ],
+        "sc-price-range": [
+          "sc-format-number"
+        ],
+        "sc-product-item-button": [
+          "sc-button"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ]
       }
     },
@@ -22951,6 +22959,7 @@
         "sc-payment-methods-list",
         "sc-paypal-buttons",
         "sc-price-choice",
+        "sc-product-item-list",
         "sc-purchase-downloads-list",
         "sc-stripe-add-method",
         "sc-stripe-payment-element",
@@ -23018,6 +23027,9 @@
           "sc-skeleton"
         ],
         "sc-price-choice": [
+          "sc-skeleton"
+        ],
+        "sc-product-item-list": [
           "sc-skeleton"
         ],
         "sc-purchase-downloads-list": [

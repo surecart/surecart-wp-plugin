@@ -1,3 +1,5 @@
+import { priceList } from './edit';
+
 export default function save() {
-	return <sc-product-item-price></sc-product-item-price>;
+	return <sc-price-range product={priceList}></sc-price-range>;
 }

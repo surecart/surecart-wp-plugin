@@ -18,7 +18,7 @@ export default function save({ attributes }) {
 				'--sc-product-title-padding-right': getSpacingPresetCssVar(
 					padding?.right
 				),
-				'--sc-product-title-font-size': fontSize + 'px',
+				'--sc-product-title-font-size': `${fontSize ?? 18}px`,
 			}}
 		>
 			{title}

@@ -28,7 +28,7 @@ export class ScProductItem {
                 return (
                   <sc-product-item-title
                     style={{
-                      '--sc-product-title-font-size': layout.attributes?.fontSize + 'px',
+                      '--sc-product-title-font-size': `${layout.attributes?.fontSize ?? 18}px`,
                       '--sc-product-title-padding-top': spacing?.padding?.top && getSpacingPresetCssVar(spacing.padding.top),
                       '--sc-product-title-padding-bottom': spacing?.padding?.bottom && getSpacingPresetCssVar(spacing.padding.bottom),
                     }}
@@ -59,7 +59,10 @@ export class ScProductItem {
                 );
 
               case 'surecart/product-item-price':
-                return <sc-product-item-price></sc-product-item-price>;
+                return <sc-price-range prices={this.product.prices?.data}></sc-price-range>;
+
+              case 'surecart/product-item-button':
+                return <sc-product-item-button></sc-product-item-button>;
 
               default:
                 return null;

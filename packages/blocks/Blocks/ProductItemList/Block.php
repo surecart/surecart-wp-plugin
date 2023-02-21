@@ -42,19 +42,19 @@ class Block extends BaseBlock {
 	public function getProductItemStyle( $attr ) {
 		$style  = '';
 		// var_dump($attr);
-		$padding = $attr['style']['spacing']['padding'];
-		$margin = $attr['style']['spacing']['margin'];
-		if ( ! empty( $padding ) ) {
+		if ( ! empty( $attr['style']['spacing']['padding'] ) ) {
+			$padding = $attr['style']['spacing']['padding'];
 			$style .= '--sc-product-item-padding-top: ' . $this->getSpacingPresetCssVar( array_key_exists('top', $padding) ? $padding['top'] : '0.88rem' ) . ';';
 			$style .= '--sc-product-item-padding-bottom: ' . $this->getSpacingPresetCssVar( array_key_exists('bottom', $padding) ? $padding['bottom'] : '0.88rem' ) . ';';
 			$style .= '--sc-product-item-padding-left: ' . $this->getSpacingPresetCssVar( array_key_exists('left', $padding) ? $padding['left'] : '0.88rem' ) . ';';
 			$style .= '--sc-product-item-padding-right: ' . $this->getSpacingPresetCssVar( array_key_exists('right', $padding) ? $padding['right'] : '0.88rem' ) . ';';
 		}
-		if ( ! empty( $margin ) ) {
-			$style .= '--sc-product-item-margin-top: ' . $this->getSpacingPresetCssVar( array_key_exists('top', $margin ) ? $margin['top'] : '' ) . ';';
-			$style .= '--sc-product-item-margin-bottom: ' . $this->getSpacingPresetCssVar( array_key_exists('bottom', $margin ) ? $margin['bottom'] : '' ) . ';';
-			$style .= '--sc-product-item-margin-left: ' . $this->getSpacingPresetCssVar( array_key_exists('left', $margin ) ? $margin['left'] : '' ) . ';';
-			$style .= '--sc-product-item-margin-right: ' . $this->getSpacingPresetCssVar( array_key_exists('right', $margin ) ? $margin['right'] : '' ) . ';';
+		if ( ! empty( $attr['style']['spacing']['margin'] ) ) {
+			$margin = $attr['style']['spacing']['margin'];
+			$style .= '--sc-product-item-margin-top: ' . $this->getSpacingPresetCssVar( array_key_exists('top', $margin ) ? $margin['top'] : '0' ) . ';';
+			$style .= '--sc-product-item-margin-bottom: ' . $this->getSpacingPresetCssVar( array_key_exists('bottom', $margin ) ? $margin['bottom'] : '0' ) . ';';
+			$style .= '--sc-product-item-margin-left: ' . $this->getSpacingPresetCssVar( array_key_exists('left', $margin ) ? $margin['left'] : '0' ) . ';';
+			$style .= '--sc-product-item-margin-right: ' . $this->getSpacingPresetCssVar( array_key_exists('right', $margin ) ? $margin['right'] : '0' ) . ';';
 		}
 		if ( ! empty( $attr['borderColor'] ) ) {
 			$style .= '--sc-product-item-border-color: var(--' . $attr['borderColor'] . ');';
