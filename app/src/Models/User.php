@@ -138,6 +138,8 @@ class User implements ArrayAccess, JsonSerializable {
 
 		// update meta.
 		update_user_meta( $this->user->ID, $this->customer_id_key, $meta );
+
+		// return this.
 		return $this;
 	}
 
