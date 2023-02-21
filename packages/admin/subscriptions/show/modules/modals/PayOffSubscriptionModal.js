@@ -3,8 +3,6 @@ import {
 	ScBlockUi,
 	ScButton,
 	ScDialog,
-	ScFlex,
-	ScText,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import apiFetch from '@wordpress/api-fetch';
@@ -14,26 +12,30 @@ import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import Error from '../../../../components/Error';
-import { formatNumber } from '../../../../util';
+import { addQueryArgs } from '@wordpress/url';
 
-export default ({ open, onRequestClose, amountDue, currency }) => {
+export default ({ open, onRequestClose }) => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { invalidateResolutionForStore } = useDispatch(coreStore);
 
-	const restoreSubscription = async () => {
+	const onPayOff = async () => {
 		try {
 			setLoading(true);
 			setError(null);
 			await apiFetch({
 				method: 'PATCH',
-				path: `surecart/v1/subscriptions/${id}/restore/`,
+				path: addQueryArgs(`surecart/v1/subscriptions/${id}/pay_off`, {
+					update_behavior: 'immediate',
+					pay_off: 1,
+				}),
+				data: {},
 			});
-			// invalidate page.
+
 			await invalidateResolutionForStore();
-			createSuccessNotice(__('Subscription restored.', 'surecart'), {
+			createSuccessNotice(__('Subscription paid off.', 'surecart'), {
 				type: 'snackbar',
 			});
 			onRequestClose();
@@ -47,43 +49,22 @@ export default ({ open, onRequestClose, amountDue, currency }) => {
 
 	return (
 		<ScDialog
-			label={__('Restore Subscription', 'surecart')}
+			label={__('Confirm', 'surecart')}
 			open={open}
 			onScRequestClose={onRequestClose}
 		>
 			<Error error={error} setError={setError} />
-			<ScFlex flexDirection="column">
-				<ScAlert
-					type="warning"
-					title={__('Confirm Charge', 'surecart')}
-					open
-				>
-					{!!amountDue && !!currency
-						? sprintf(
-								__(
-									'The customer will immediately be charged %s for the first billing period.',
-									'surecart'
-								),
-								formatNumber(amountDue, currency)
-						  )
-						: __(
-								'The customer will immediately be charged the first billing period.',
-								'surecart'
-						  )}
-				</ScAlert>
-				<ScText
-					style={{
-						'--font-size': 'var(--sc-font-size-medium)',
-						'--color': 'var(--sc-input-label-color)',
-						'--line-height': 'var(--sc-line-height-dense)',
-					}}
-				>
-					{__(
-						'This will make the subscription active again and charge the customer immediately.',
-						'surecart'
-					)}
-				</ScText>
-			</ScFlex>
+
+			<ScAlert
+				type="warning"
+				title={__('Confirm Charge', 'surecart')}
+				open
+			>
+				{__(
+					'Are you sure you want to pay off subscription? This will immediately charge the customer the remaining payments on their plan.',
+					'surecart'
+				)}
+			</ScAlert>
 			<div slot="footer">
 				<ScButton
 					type="text"
@@ -92,12 +73,8 @@ export default ({ open, onRequestClose, amountDue, currency }) => {
 				>
 					{__('Cancel', 'surecart')}
 				</ScButton>{' '}
-				<ScButton
-					type="primary"
-					onClick={() => restoreSubscription()}
-					disabled={loading}
-				>
-					{__('Restore', 'surecart')}
+				<ScButton type="primary" onClick={onPayOff} disabled={loading}>
+					{__('Pay off', 'surecart')}
 				</ScButton>
 			</div>
 			{loading && (

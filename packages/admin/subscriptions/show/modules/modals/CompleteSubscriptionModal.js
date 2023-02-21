@@ -53,7 +53,7 @@ export default ({ open, onRequestClose }) => {
 					onClick={onRequestClose}
 					disabled={loading}
 				>
-					{__('Nevermind', 'surecart')}
+					{__('Cancel', 'surecart')}
 				</ScButton>{' '}
 				<ScButton
 					type="primary"
