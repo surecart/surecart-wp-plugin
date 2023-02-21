@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-02-18T16:26:38",
+  "timestamp": "2023-02-17T05:21:50",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -13506,9 +13506,6 @@
           "sc-input"
         ],
         "sc-product-buy-page": [
-          "sc-input"
-        ],
-        "sc-select": [
           "sc-input"
         ],
         "sc-tax-id-input": [

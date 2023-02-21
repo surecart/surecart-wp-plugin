@@ -2448,6 +2448,48 @@ export namespace Components {
          */
         "value": string;
     }
+    interface ScRichText {
+        /**
+          * Disables the textarea.
+         */
+        "disabled": boolean;
+        /**
+          * The textarea's help text. Alternatively, you can use the help-text slot.
+         */
+        "help": string;
+        /**
+          * The textarea's label. Alternatively, you can use the label slot.
+         */
+        "label": string;
+        /**
+          * The textarea's name attribute.
+         */
+        "name": string;
+        /**
+          * The textarea's placeholder text.
+         */
+        "placeholder": string;
+        /**
+          * Makes the textarea readonly.
+         */
+        "readonly": boolean;
+        /**
+          * Makes the textarea a required field.
+         */
+        "required": boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel": boolean;
+        /**
+          * The textarea's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The textarea's value attribute.
+         */
+        "value": string;
+    }
     interface ScSecureNotice {
     }
     interface ScSelect {
@@ -3376,6 +3418,10 @@ export interface ScRadioCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScRadioElement;
 }
+export interface ScRichTextCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScRichTextElement;
+}
 export interface ScSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScSelectElement;
@@ -4173,6 +4219,12 @@ declare global {
         prototype: HTMLScRadioGroupElement;
         new (): HTMLScRadioGroupElement;
     };
+    interface HTMLScRichTextElement extends Components.ScRichText, HTMLStencilElement {
+    }
+    var HTMLScRichTextElement: {
+        prototype: HTMLScRichTextElement;
+        new (): HTMLScRichTextElement;
+    };
     interface HTMLScSecureNoticeElement extends Components.ScSecureNotice, HTMLStencilElement {
     }
     var HTMLScSecureNoticeElement: {
@@ -4556,6 +4608,7 @@ declare global {
         "sc-quantity-select": HTMLScQuantitySelectElement;
         "sc-radio": HTMLScRadioElement;
         "sc-radio-group": HTMLScRadioGroupElement;
+        "sc-rich-text": HTMLScRichTextElement;
         "sc-secure-notice": HTMLScSecureNoticeElement;
         "sc-select": HTMLScSelectElement;
         "sc-session-provider": HTMLScSessionProviderElement;
@@ -7347,6 +7400,52 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface ScRichText {
+        /**
+          * Disables the textarea.
+         */
+        "disabled"?: boolean;
+        /**
+          * The textarea's help text. Alternatively, you can use the help-text slot.
+         */
+        "help"?: string;
+        /**
+          * The textarea's label. Alternatively, you can use the label slot.
+         */
+        "label"?: string;
+        /**
+          * The textarea's name attribute.
+         */
+        "name"?: string;
+        "onScBlur"?: (event: ScRichTextCustomEvent<void>) => void;
+        "onScChange"?: (event: ScRichTextCustomEvent<void>) => void;
+        "onScFocus"?: (event: ScRichTextCustomEvent<void>) => void;
+        "onScInput"?: (event: ScRichTextCustomEvent<void>) => void;
+        /**
+          * The textarea's placeholder text.
+         */
+        "placeholder"?: string;
+        /**
+          * Makes the textarea readonly.
+         */
+        "readonly"?: boolean;
+        /**
+          * Makes the textarea a required field.
+         */
+        "required"?: boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel"?: boolean;
+        /**
+          * The textarea's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The textarea's value attribute.
+         */
+        "value"?: string;
+    }
     interface ScSecureNotice {
     }
     interface ScSelect {
@@ -8278,6 +8377,7 @@ declare namespace LocalJSX {
         "sc-quantity-select": ScQuantitySelect;
         "sc-radio": ScRadio;
         "sc-radio-group": ScRadioGroup;
+        "sc-rich-text": ScRichText;
         "sc-secure-notice": ScSecureNotice;
         "sc-select": ScSelect;
         "sc-session-provider": ScSessionProvider;
@@ -8451,6 +8551,7 @@ declare module "@stencil/core" {
             "sc-quantity-select": LocalJSX.ScQuantitySelect & JSXBase.HTMLAttributes<HTMLScQuantitySelectElement>;
             "sc-radio": LocalJSX.ScRadio & JSXBase.HTMLAttributes<HTMLScRadioElement>;
             "sc-radio-group": LocalJSX.ScRadioGroup & JSXBase.HTMLAttributes<HTMLScRadioGroupElement>;
+            "sc-rich-text": LocalJSX.ScRichText & JSXBase.HTMLAttributes<HTMLScRichTextElement>;
             "sc-secure-notice": LocalJSX.ScSecureNotice & JSXBase.HTMLAttributes<HTMLScSecureNoticeElement>;
             "sc-select": LocalJSX.ScSelect & JSXBase.HTMLAttributes<HTMLScSelectElement>;
             "sc-session-provider": LocalJSX.ScSessionProvider & JSXBase.HTMLAttributes<HTMLScSessionProviderElement>;
