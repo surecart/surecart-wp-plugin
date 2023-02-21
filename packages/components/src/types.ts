@@ -21,6 +21,10 @@ declare global {
       nonce_endpoint: string;
       recaptcha_site_key: string;
       theme: string;
+      pages:{
+        dashboard:string,
+        checkout:string
+      }
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;
@@ -110,10 +114,13 @@ export interface Download {
   id: string;
   object: 'download';
   archived: boolean;
+  archived_at?: number;
   media: string | Media;
+  name?: string;
   product: string | Product;
   update_at: number;
   created_at: number;
+  url?: string;
 }
 
 export type FormState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalizing' | 'paying' | 'confirming' | 'confirmed' | 'paid' | 'failure' | 'expired';
@@ -611,7 +618,7 @@ export interface SubscriptionProtocol {
 export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid' | 'completed';
 
 export type CheckoutStatus = 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'requires_approval';
-export type OrderStatus = 'paid' | 'payment_failed' | 'processing' | 'void';
+export type OrderStatus = 'paid' | 'payment_failed' | 'processing' | 'void' | 'canceled';
 
 export interface PaymentMethod extends Object {
   id: string;
@@ -800,6 +807,15 @@ export interface PriceData extends Object {
   quantity: number;
   removeable: boolean;
 }
+
+export type TaxZone = {
+  label: string;
+  label_small: string;
+};
+
+export type TaxZones = {
+  [key in 'ca_gst' | 'au_abn' | 'gb_vat' | 'eu_vat' | 'other']: TaxZone;
+};
 
 export type RuleName = 'total' | 'coupons' | 'products' | 'shipping_country' | 'billing_country' | 'processors';
 export type ArrayOperators = 'all' | 'any' | 'none' | 'exist' | 'not_exist';

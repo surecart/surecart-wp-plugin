@@ -1,6 +1,7 @@
 import { Component, Prop, h, Watch, Element, Event, EventEmitter } from '@stencil/core';
 import { getAnimation, setDefaultAnimation } from '../../../functions/animation-registry';
 import { animateTo, shimKeyframesHeightAuto, stopAnimations } from '../../../functions/animate';
+import { isRtl } from '../../../functions/page-align';
 
 @Component({
   tag: 'sc-toggle',
@@ -130,6 +131,7 @@ export class ScToggle {
           'details--disabled': this.disabled,
           'details--borderless': this.borderless,
           'details--shady': this.shady,
+          'details--is-rtl': isRtl(),
         }}
       >
         <header

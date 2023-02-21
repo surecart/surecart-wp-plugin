@@ -66,6 +66,8 @@ Cypress.Commands.add('getPayPalButton', fieldName => {
     throw new Error('To get stripe element `chromeWebSecurity` must be disabled');
   }
 
+  cy.wait(1000);
+
   return cy
     .get('sc-paypal-buttons')
     .find('iframe.visible')
