@@ -250,7 +250,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * New: The ability to delete a customer on the merchant customer page.
 * New: Add grace period to abandoned checkouts.
 * New: Ignore purchased products setting for abandoned checkouts.
-* Improvement: Checkouts now show a confirmation modal instead of a thank you page if a custom url is not set.
+* Improvement: Checkouts now show a confirmation modal before the thank you page.
 * Improvement: Update payment plan wording to be more clear about number of payments.
 * Improvement: RTL improvements.
 * Improvement: Tax ID Input field - allow labels to be editable.
