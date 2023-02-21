@@ -34,6 +34,7 @@ import Periods from './modules/Periods';
 import Purchases from './modules/Purchases';
 import Tax from './modules/Tax';
 import PaymentMethod from '../edit/modules/PaymentMethod';
+import PayOffSubscriptionModal from './modules/modals/PayOffSubscriptionModal';
 import LineItems from './modules/LineItems';
 import apiFetch from '@wordpress/api-fetch';
 
@@ -210,7 +211,7 @@ export default () => {
 			return null;
 		if (['completed', 'canceled'].includes(subscription?.status))
 			return null;
-		if (subscription?.finite) return null;
+		if (!subscription?.finite) return null;
 		return (
 			<ScMenuItem
 				href={addQueryArgs('admin.php', {
@@ -220,6 +221,19 @@ export default () => {
 				})}
 			>
 				{__('Update Subscription', 'surecart')}
+			</ScMenuItem>
+		);
+	};
+
+	const renderPayOffButton = () => {
+		if (['completed', 'canceled'].includes(subscription?.status))
+			return null;
+
+		if (!subscription?.finite) return null;
+
+		return (
+			<ScMenuItem onClick={() => setModal('pay_off')}>
+				{__('Pay Off Subscription', 'surecart')}
 			</ScMenuItem>
 		);
 	};
@@ -296,6 +310,7 @@ export default () => {
 							</ScMenuItem>
 						)}
 						{renderUpdateButton()}
+						{renderPayOffButton()}
 						{renderCompleteButton()}
 						{renderCancelButton()}
 						{renderRestoreButton()}
@@ -358,6 +373,10 @@ export default () => {
 				amountDue={upcoming?.checkout?.amount_due}
 				currency={upcoming?.checkout?.currency}
 				open={modal === 'restore'}
+				onRequestClose={() => setModal(false)}
+			/>
+			<PayOffSubscriptionModal
+				open={modal === 'pay_off'}
 				onRequestClose={() => setModal(false)}
 			/>
 			{isSaving && <ScBlockUi spinner />}
