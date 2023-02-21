@@ -4,6 +4,7 @@
 	"description": "Displays the users customer dashboard.",
 	"category": "surecart",
 	"keywords": ["name", "customer", "dashboard"],
+  "textdomain": "surecart",
 	"parent": null,
 	"supports": {
 		"reusable": false,

@@ -18,7 +18,7 @@ import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DatePicker from '../../components/DatePicker';
 
 import Logo from '../../templates/Logo';
@@ -36,17 +36,55 @@ import PendingUpdate from './modules/PendingUpdate';
 import Periods from './modules/Periods';
 import Purchases from './modules/Purchases';
 import Tax from './modules/Tax';
-import UpcomingPeriod from './modules/UpcomingPeriod';
-import { useEffect } from 'react';
+import LineItems from './modules/LineItems';
 
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [modal, setModal] = useState();
+	const [upcoming, setUpcoming] = useState();
+	const [loadingUpcoming, setLoadingUpcoming] = useState(false);
 	const { saveEntityRecord, invalidateResolutionForStore } =
 		useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
 	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		if (id) {
+			fetchUpcomingPeriod();
+		}
+	}, [id]);
+
+	const fetchUpcomingPeriod = async () => {
+		setLoadingUpcoming(true);
+		try {
+			const response = await apiFetch({
+				method: 'PATCH',
+				path: addQueryArgs(
+					`surecart/v1/subscriptions/${id}/upcoming_period`,
+					{
+						skip_product_group_validation: true,
+						expand: [
+							'period.checkout',
+							'checkout.line_items',
+							'line_item.price',
+							'price.product',
+							'period.subscription',
+						],
+					}
+				),
+				data: {
+					purge_pending_update: false,
+				},
+			});
+			setUpcoming(response);
+		} catch (e) {
+			console.error(e);
+			createErrorNotice(e?.message, { type: 'snackbar' });
+		} finally {
+			setLoadingUpcoming(false);
+		}
+	};
 
 	const editSubscription = async (data) => {
 		try {
@@ -87,6 +125,7 @@ export default () => {
 						'period.checkout',
 						'checkout.line_items',
 						'line_item.price',
+						'line_item.fees',
 						'price',
 						'price.product',
 						'customer',
@@ -222,10 +261,12 @@ export default () => {
 		return (
 			<DatePicker
 				placeholder={__('Choose date', 'surecart')}
-				title={__('Restore subscription at?', 'surecart')}
+				title={__('Restore Subscription At', 'surecart')}
 				currentDate={new Date(subscription?.restore_at * 1000)}
 				onChoose={(date) => onUpdateRestoreAt(date)}
-				minDate={new Date()}
+				isInvalidDate={(date) =>
+					Date.parse(new Date()) > Date.parse(date)
+				}
 				required={true}
 				chooseDateLabel={__('Update subscription', 'surecart')}
 			>
@@ -234,17 +275,10 @@ export default () => {
 		);
 	};
 
-	const onRequestCloseModal = () => {
-		setModal(false);
-	};
+	const onRequestCloseModal = () => setModal(false);
 
 	const onPauseSubscription = async (date) => {
-		if (!date) {
-			createErrorNotice(__('Please choose valid date.', 'surecart'), {
-				type: 'snackbar',
-			});
-			return;
-		}
+		if (!date) return;
 		setLoading(true);
 		try {
 			await apiFetch({
@@ -269,6 +303,7 @@ export default () => {
 	};
 
 	const onUpdateRestoreAt = async (date) => {
+		if (!date) return;
 		setLoading(true);
 		try {
 			await apiFetch({
@@ -288,6 +323,10 @@ export default () => {
 			});
 		} catch (e) {
 			console.error(e);
+			createErrorNotice(
+				e?.message || __('Something went wrong', 'surecart'),
+				{ type: 'snackbar' }
+			);
 			setLoading(false);
 		}
 	};
@@ -391,14 +430,7 @@ export default () => {
 					<PendingUpdate subscription={subscription} />
 				)}
 
-				<UpcomingPeriod
-					lineItem={
-						subscription?.current_period?.checkout?.line_items
-							?.data?.[0]
-					}
-					subscriptionId={id}
-					loading={loading}
-				/>
+				<LineItems period={upcoming} loading={loadingUpcoming} />
 
 				<Periods subscriptionId={id} />
 
@@ -429,6 +461,8 @@ export default () => {
 				onRequestClose={onRequestCloseModal}
 			/>
 			<RestoreSubscriptionModal
+				amountDue={upcoming?.checkout?.amount_due}
+				currency={upcoming?.checkout?.currency}
 				open={modal === 'restore'}
 				onRequestClose={onRequestCloseModal}
 			/>

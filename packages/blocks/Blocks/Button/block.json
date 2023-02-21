@@ -5,6 +5,7 @@
 	"description": "Display a checkout form button.",
 	"category": "surecart",
 	"keywords": ["button", "submit", "checkout", "engine"],
+  "textdomain": "surecart",
 	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,

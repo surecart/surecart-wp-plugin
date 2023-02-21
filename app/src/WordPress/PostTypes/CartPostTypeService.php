@@ -48,9 +48,38 @@ class CartPostTypeService {
 		add_action( 'init', [ $this, 'registerPostType' ] );
 		add_action( 'use_block_editor_for_post', [ $this, 'forceGutenberg' ], 999, 2 );
 		add_action( 'admin_init', [ $this, 'redirectFromListPage' ] );
-		// cannot delete cart post.
 		add_filter( 'map_meta_cap', [ $this, 'disallowDelete' ], 10, 4 );
 		add_filter( 'wp_insert_post_data', [ $this, 'forcePublish' ], 10, 4 );
+		add_action( 'wp_insert_post', [ $this, 'preventMultiplePosts' ], 50, 3 );
+	}
+
+	/**
+	 * Prevent multiple cart posts.
+	 *
+	 * @param int     $post_ID Post ID.
+	 * @param WP_Post $post    Post object.
+	 * @param bool    $update  Whether this is an existing post being updated.
+	 */
+	public function preventMultiplePosts( $post_ID, $post, $update ) {
+		if ( $post_ID && $this->post_type === $post->post_type && false === $update ) {
+			$cart_posts = get_posts(
+				[
+					'post_type' => $this->post_type,
+					'per_page'  => 5,
+					'status'    => 'publish',
+				]
+			);
+
+			if ( is_array( $cart_posts ) && count( $cart_posts ) > 1 ) {
+				$saved_cart_post = \SureCart::cartPost()->get();
+
+				foreach ( $cart_posts as $cart_post ) {
+					if ( $cart_post->ID !== $saved_cart_post->ID ) {
+						wp_delete_post( $cart_post->ID );
+					}
+				}
+			}
+		}
 	}
 
 	/**
@@ -154,6 +183,7 @@ class CartPostTypeService {
 				'post_type' => $this->post_type,
 				'per_page'  => 1,
 				'status'    => 'publish',
+				'order'     => 'ASC',
 			]
 		);
 
@@ -186,11 +216,11 @@ class CartPostTypeService {
 	public function createPost() {
 		$post_id = wp_insert_post(
 			[
-				'name'      => _x( 'cart', 'Cart slug', 'surecart' ),
-				'title'     => _x( 'Cart', 'Cart title', 'surecart' ),
-				'post_type' => $this->post_type,
-				'status'    => 'publish',
-				'content'   => '<!-- wp:surecart/cart --><sc-order-summary>
+				'post_name'    => _x( 'cart', 'Cart slug', 'surecart' ),
+				'post_title'   => _x( 'Cart', 'Cart title', 'surecart' ),
+				'post_type'    => $this->post_type,
+				'post_status'  => 'publish',
+				'post_content' => '<!-- wp:surecart/cart --><sc-order-summary>
 				<sc-line-items></sc-line-items>
 			</sc-order-summary><!-- /wp:surecart/cart -->',
 			]

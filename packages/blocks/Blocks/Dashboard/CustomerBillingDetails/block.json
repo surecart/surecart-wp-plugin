@@ -5,6 +5,7 @@
 	"description": "Displays the customers billing details.",
 	"category": "surecart",
 	"keywords": ["name", "customer", "dashboard"],
+  "textdomain": "surecart",
 	"ancestor": ["surecart/dashboard-page"],
 	"supports": {
 		"reusable": false,
