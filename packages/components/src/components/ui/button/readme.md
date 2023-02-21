@@ -66,6 +66,7 @@
  - [sc-login-form](../../controllers/login)
  - [sc-login-provider](../../providers/sc-login-provider)
  - [sc-order](../../controllers/dashboard/order)
+ - [sc-order-confirm-provider](../../providers/order-confirm-provider)
  - [sc-order-submit](../../controllers/checkout-form/order-submit)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-pagination](../pagination)
@@ -113,6 +114,7 @@ graph TD;
   sc-login-form --> sc-button
   sc-login-provider --> sc-button
   sc-order --> sc-button
+  sc-order-confirm-provider --> sc-button
   sc-order-submit --> sc-button
   sc-orders-list --> sc-button
   sc-pagination --> sc-button

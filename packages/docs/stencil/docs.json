@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-02-20T08:14:31",
+  "timestamp": "2023-02-17T17:10:18",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -653,6 +653,7 @@
         "sc-order-manual-instructions",
         "sc-password-nag",
         "sc-payment",
+        "sc-payment-methods-list",
         "sc-paypal-add-method",
         "sc-price-choice",
         "sc-stripe-add-method",
@@ -704,6 +705,9 @@
           "sc-alert"
         ],
         "sc-payment": [
+          "sc-alert"
+        ],
+        "sc-payment-methods-list": [
           "sc-alert"
         ],
         "sc-paypal-add-method": [
@@ -1650,6 +1654,7 @@
         "sc-login-form",
         "sc-login-provider",
         "sc-order",
+        "sc-order-confirm-provider",
         "sc-order-submit",
         "sc-orders-list",
         "sc-pagination",
@@ -1728,6 +1733,9 @@
           "sc-button"
         ],
         "sc-order": [
+          "sc-button"
+        ],
+        "sc-order-confirm-provider": [
           "sc-button"
         ],
         "sc-order-submit": [
@@ -4363,6 +4371,12 @@
         "sc-line-item-tax": [
           "sc-line-item",
           "sc-format-number"
+        ],
+        "sc-order-confirm-provider": [
+          "sc-dialog",
+          "sc-flex",
+          "sc-text",
+          "sc-button"
         ],
         "sc-session-provider": [
           "sc-line-items-provider"
@@ -8942,6 +8956,8 @@
       "dependents": [
         "sc-cancel-dialog",
         "sc-login-provider",
+        "sc-order-confirm-provider",
+        "sc-payment-methods-list",
         "sc-subscription-details",
         "sc-upgrade-required"
       ],
@@ -8961,6 +8977,12 @@
           "sc-dialog"
         ],
         "sc-login-provider": [
+          "sc-dialog"
+        ],
+        "sc-order-confirm-provider": [
+          "sc-dialog"
+        ],
+        "sc-payment-methods-list": [
           "sc-dialog"
         ],
         "sc-subscription-details": [
@@ -10433,6 +10455,7 @@
         "sc-downloads-list",
         "sc-login-form",
         "sc-order",
+        "sc-order-confirm-provider",
         "sc-pagination",
         "sc-password-nag",
         "sc-payment-methods-list",
@@ -10459,6 +10482,9 @@
           "sc-flex"
         ],
         "sc-order": [
+          "sc-flex"
+        ],
+        "sc-order-confirm-provider": [
           "sc-flex"
         ],
         "sc-pagination": [
@@ -15403,8 +15429,26 @@
       "dependents": [
         "sc-checkout"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "sc-dialog",
+        "sc-flex",
+        "sc-text",
+        "sc-button"
+      ],
       "dependencyGraph": {
+        "sc-order-confirm-provider": [
+          "sc-dialog",
+          "sc-flex",
+          "sc-text",
+          "sc-button"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
         "sc-checkout": [
           "sc-order-confirm-provider"
         ]
@@ -17020,13 +17064,17 @@
         },
         {
           "name": "status",
-          "type": "\"paid\" | \"payment_failed\" | \"processing\" | \"void\"",
+          "type": "\"canceled\" | \"paid\" | \"payment_failed\" | \"processing\" | \"void\"",
           "mutable": false,
           "attr": "status",
           "reflectToAttr": false,
           "docs": "The tag's statux type.",
           "docsTags": [],
           "values": [
+            {
+              "value": "canceled",
+              "type": "string"
+            },
             {
               "value": "paid",
               "type": "string"
@@ -17580,6 +17628,22 @@
       "usage": {},
       "props": [
         {
+          "name": "auAbnLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "au-abn-label",
+          "reflectToAttr": false,
+          "docs": "AU zone label",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "busy",
           "type": "boolean",
           "mutable": false,
@@ -17591,6 +17655,54 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "caGstLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "ca-gst-label",
+          "reflectToAttr": false,
+          "docs": "GST zone label",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "euVatLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "eu-vat-label",
+          "reflectToAttr": false,
+          "docs": "EU zone label",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "gbVatLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "gb-vat-label",
+          "reflectToAttr": false,
+          "docs": "UK zone label",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -17646,6 +17758,22 @@
             },
             {
               "type": "Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "otherLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "other-label",
+          "reflectToAttr": false,
+          "docs": "Other zones label",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -18719,7 +18847,7 @@
           "mutable": false,
           "attr": "heading",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "The heading",
           "docsTags": [],
           "values": [
             {
@@ -18735,7 +18863,7 @@
           "mutable": false,
           "attr": "is-customer",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Is this a customer",
           "docsTags": [],
           "values": [
             {
@@ -18784,7 +18912,11 @@
         "sc-menu-item",
         "sc-dashboard-module",
         "sc-button",
-        "sc-block-ui"
+        "sc-dialog",
+        "sc-alert",
+        "sc-switch",
+        "sc-block-ui",
+        "sc-text"
       ],
       "dependencyGraph": {
         "sc-payment-methods-list": [
@@ -18803,7 +18935,11 @@
           "sc-menu-item",
           "sc-dashboard-module",
           "sc-button",
-          "sc-block-ui"
+          "sc-dialog",
+          "sc-alert",
+          "sc-switch",
+          "sc-block-ui",
+          "sc-text"
         ],
         "sc-empty": [
           "sc-icon"
@@ -18826,6 +18962,10 @@
           "sc-alert"
         ],
         "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-dialog": [
+          "sc-button",
           "sc-icon"
         ],
         "sc-block-ui": [
@@ -25758,11 +25898,15 @@
         }
       ],
       "dependents": [
-        "sc-customer-edit"
+        "sc-customer-edit",
+        "sc-payment-methods-list"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-customer-edit": [
+          "sc-switch"
+        ],
+        "sc-payment-methods-list": [
           "sc-switch"
         ]
       }
@@ -26382,6 +26526,40 @@
       "usage": {},
       "props": [
         {
+          "name": "auAbnLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "au-abn-label",
+          "reflectToAttr": false,
+          "docs": "AU zone label",
+          "docsTags": [],
+          "default": "'ABN Number'",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "caGstLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "ca-gst-label",
+          "reflectToAttr": false,
+          "docs": "GST zone label",
+          "docsTags": [],
+          "default": "'GST Number'",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "country",
           "type": "string",
           "mutable": false,
@@ -26389,6 +26567,40 @@
           "reflectToAttr": false,
           "docs": "The country code.",
           "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "euVatLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "eu-vat-label",
+          "reflectToAttr": false,
+          "docs": "EU zone label",
+          "docsTags": [],
+          "default": "'EU VAT'",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "gbVatLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "gb-vat-label",
+          "reflectToAttr": false,
+          "docs": "UK zone label",
+          "docsTags": [],
+          "default": "'UK VAT'",
           "values": [
             {
               "type": "string"
@@ -26438,6 +26650,23 @@
           "docs": "Tax ID Number",
           "docsTags": [],
           "default": "null",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "otherLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "other-label",
+          "reflectToAttr": false,
+          "docs": "Other zones label",
+          "docsTags": [],
+          "default": "'Other'",
           "values": [
             {
               "type": "string"
@@ -26668,8 +26897,10 @@
       "dependents": [
         "sc-charges-list",
         "sc-invoices-list",
+        "sc-order-confirm-provider",
         "sc-orders-list",
         "sc-payment-method",
+        "sc-payment-methods-list",
         "sc-stripe-element",
         "sc-stripe-payment-element",
         "sc-subscription-details",
@@ -26683,10 +26914,16 @@
         "sc-invoices-list": [
           "sc-text"
         ],
+        "sc-order-confirm-provider": [
+          "sc-text"
+        ],
         "sc-orders-list": [
           "sc-text"
         ],
         "sc-payment-method": [
+          "sc-text"
+        ],
+        "sc-payment-methods-list": [
           "sc-text"
         ],
         "sc-stripe-element": [

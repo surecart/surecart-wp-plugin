@@ -7,12 +7,12 @@
 
 ## Properties
 
-| Property    | Attribute   | Description                                | Type                                                   | Default     |
-| ----------- | ----------- | ------------------------------------------ | ------------------------------------------------------ | ----------- |
-| `clearable` | `clearable` | Makes the tag clearable.                   | `boolean`                                              | `false`     |
-| `pill`      | `pill`      | Draws a pill-style tag with rounded edges. | `boolean`                                              | `false`     |
-| `size`      | `size`      | The tag's size.                            | `"large" \| "medium" \| "small"`                       | `'medium'`  |
-| `status`    | `status`    | The tag's statux type.                     | `"paid" \| "payment_failed" \| "processing" \| "void"` | `undefined` |
+| Property    | Attribute   | Description                                | Type                                                                 | Default     |
+| ----------- | ----------- | ------------------------------------------ | -------------------------------------------------------------------- | ----------- |
+| `clearable` | `clearable` | Makes the tag clearable.                   | `boolean`                                                            | `false`     |
+| `pill`      | `pill`      | Draws a pill-style tag with rounded edges. | `boolean`                                                            | `false`     |
+| `size`      | `size`      | The tag's size.                            | `"large" \| "medium" \| "small"`                                     | `'medium'`  |
+| `status`    | `status`    | The tag's statux type.                     | `"canceled" \| "paid" \| "payment_failed" \| "processing" \| "void"` | `undefined` |
 
 
 ## Dependencies
