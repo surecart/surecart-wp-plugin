@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScButton } from '@surecart/components-react';
+import { ScButton, ScDrawer } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { select, useDispatch } from '@wordpress/data';
 import { Fragment, useState } from '@wordpress/element';
@@ -13,6 +13,7 @@ import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import ActionsDropdown from './components/product/ActionsDropdown';
 import SaveButton from './components/product/SaveButton';
+import BuyPage from './modules/BuyPage';
 import Details from './modules/Details';
 import Downloads from './modules/Downloads';
 import Integrations from './modules/integrations/Integrations';
@@ -22,6 +23,7 @@ import Sidebar from './Sidebar';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
+	const [drawer, setDrawer] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { saveEditedEntityRecord } = useDispatch(coreStore);
 	const {
@@ -143,11 +145,23 @@ export default ({ id }) => {
 				onDelete={onDeleteProduct}
 				onToggleArchive={onToggleArchiveProduct}
 			/>
-			{!!product?.slug && (
-				<ScButton href={`${scData?.home_url}/buy/${product?.slug}`}>
-					{__('Instant Buy Page', 'surecart')}
+			{/* {!!product?.slug && (
+				<ScButton onClick={() => setDrawer(true)}>
+					<div
+						slot="prefix"
+						css={css`
+							width: 6px;
+							height: 6px;
+							background-color: ${product?.metadata
+								?.wp_buy_link_enabled
+								? 'var(--sc-color-success-500)'
+								: 'var(--sc-color-gray-300)'};
+							border-radius: 999px;
+						`}
+					></div>
+					{__('Instant Buy Link', 'surecart')}
 				</ScButton>
-			)}
+			)} */}
 			<SaveButton busy={deletingProduct || savingProduct}>
 				{__('Save Product', 'surecart')}
 			</SaveButton>
@@ -243,6 +257,13 @@ export default ({ id }) => {
 					loading={!hasLoadedProduct}
 				/>
 			</Fragment>
+			<ScDrawer
+				style={{ '--sc-drawer-size': '100%' }}
+				open={drawer}
+				onScRequestClose={() => setDrawer(false)}
+			>
+				asdf
+			</ScDrawer>
 		</UpdateModel>
 	);
 };

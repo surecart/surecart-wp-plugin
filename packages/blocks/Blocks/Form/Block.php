@@ -62,7 +62,7 @@ class Block extends BaseBlock {
 				'align'                         => $attributes['align'] ?? '',
 				'label'                         => $attributes['label'] ?? '',
 				'font_size'                     => $attributes['font_size'] ?? 16,
-				'modified'                      => $post->post_modified_gmt,
+				'modified'                      => $post->post_modified_gmt ?? '',
 				'customer'                      => [
 					'email' => $user->user_email,
 					'name'  => $user->display_name,

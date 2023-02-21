@@ -3,7 +3,7 @@
 Template Name: SureCart
 */
 
-use SureCartBlocks\Blocks\Payment\Block;
+use SureCartBlocks\Blocks\Form\Block as FormBlock;
 
 ?>
 <!DOCTYPE html>
@@ -18,73 +18,61 @@ use SureCartBlocks\Blocks\Payment\Block;
 <body <?php body_class(); ?>>
 	<?php do_action( 'surecart_buy_page_body_open' ); ?>
 
-	<sc-checkout id="checkout-buy-form" style="text-align: left;--sc-form-row-spacing: 25px;">
-		<sc-form>
-			<sc-columns is-stacked-on-mobile="1" is-full-height="1" is-reversed-on-mobile="1" class="wp-block-surecart-columns has-background" style="background-color:#f3f4f6;gap:0px 0px">
-				<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right has-white-background-color has-background" style="padding-top:60px;padding-right:60px;padding-bottom:60px;padding-left:60px;--sc-column-content-width:450px;--sc-form-row-spacing:30px">
-					<sc-customer-email label="Email" placeholder="your@email.com" required></sc-customer-email>
+	<?php
+	ob_start();
+	?>
 
-					<sc-customer-name label="Name" placeholder="Your Full Name" required></sc-customer-name>
+	<sc-columns is-stacked-on-mobile="1" is-full-height="1" style="gap:0">
+		<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right has-background" style="border-style:none;border-width:0px;background-color:#fafafa;padding-top:100px;padding-right:100px;padding-bottom:100px;padding-left:100px;--sc-column-content-width:550px;--sc-form-row-spacing:30px">
+			<!-- Product Image -->
+			<?php if ( $product->image->url ) : ?>
+			<figure class="wp-block-image size-full is-resized has-custom-border">
+				<img decoding="async" src="<?php echo esc_url( $product->image->url ); ?>" alt="<?php esc_attr( $product->name ); ?>" style="border-radius:5px" /></figure>
+			<?php endif; ?>
+			<!-- Product Name -->
+			<p class="has-medium-font-size"><strong><?php echo wp_kses_post( $product->name ); ?></strong></p>
+			<!-- Product Description -->
+			<?php echo wp_kses_post( $product->description ); ?>
 
-					<?php
-					echo wp_kses_post(
-						( new Block() )->render(
-							[
-								'label' => __( 'Payment', 'surecart' ),
-							]
-						)
-					);
-					?>
-					<sc-order-submit type="primary" full="true" size="large" icon="lock" show-total="true"><?php esc_html_e( 'Purchase', 'surecart' ); ?></sc-order-submit>
-				</sc-column>
+			<?php if ( ! empty( $product->prices->data ) ) : ?>
+				<sc-price-choices type="radio" columns="1" class="wp-block-surecart-price-selector">
+					<?php foreach ( $product->prices->data as $price ) : ?>
+						<sc-price-choice price-id="<?php echo esc_attr( $price->id ); ?>" type="radio" show-label show-price show-control></sc-price-choice>
+					<?php endforeach; ?>
+				</sc-price-choices>
+			<?php endif; ?>
+		</sc-column>
 
-				<sc-column class="wp-block-surecart-column is-sticky is-layout-constrained is-horizontally-aligned-left" style="padding-top:60px;padding-right:60px;padding-bottom:60px;padding-left:60px;--sc-column-content-width:450px;--sc-form-row-spacing:30px">
-					<sc-order-summary collapsible="1" closed-text="" open-text="" collapsed-on-mobile="1" class="wp-block-surecart-totals">
-						<sc-divider></sc-divider>
+		<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-left has-ast-global-color-5-background-color has-background" style="padding-top:100px;padding-right:100px;padding-bottom:100px;padding-left:100px;--sc-column-content-width:550px;--sc-form-row-spacing:30px">
+			<sc-customer-email class="" label="Email" placeholder="Your email address" required autocomplete='email' inputmode='email'></sc-customer-email>
 
-						<sc-line-items removable="1" editable="1" class="wp-block-surecart-line-items"></sc-line-items>
+			<sc-customer-name label="Name" placeholder="Your name" required class="wp-block-surecart-name"></sc-customer-name>
 
-						<sc-divider></sc-divider>
+			<sc-order-shipping-address label="Address" full required="true" default-country="US" name-placeholder="Name or Company Name" country-placeholder="Country" city-placeholder="City" line-1-placeholder="Address" line-2-placeholder="Address Line 2" postal-code-placeholder="Postal Code/Zip" state-placeholder="State/Province/Region"></sc-order-shipping-address>
 
-						<sc-line-item-total total="subtotal" class="wp-block-surecart-subtotal"><span slot="description">Subtotal</span></sc-line-item-total>
+			<sc-payment label="Payment"></sc-payment>
 
-						<sc-order-coupon-form></sc-order-coupon-form>
-
-						<sc-line-item-tax class="wp-block-surecart-tax-line-item"></sc-line-item-tax>
-
-						<sc-divider></sc-divider>
-
-						<sc-line-item-total total="total" size="large" show-currency="1" class="wp-block-surecart-total"><span slot="title">Total</span><span slot="subscription-title">Total Due Today</span></sc-line-item-total>
-					</sc-order-summary>
-				</sc-column>
-			</sc-columns>
-		</sc-form>
-	</sc-checkout>
+			<sc-order-summary closed-text="Order Summary" open-text="Order Summary" class="wp-block-surecart-totals">
+				<sc-order-coupon-form label="Add Coupon Code">Apply</sc-order-coupon-form>
+				<sc-line-item-total total="subtotal" class="wp-block-surecart-subtotal"><span slot="description">Subtotal</span></sc-line-item-total>
+				<sc-line-item-tax class="wp-block-surecart-tax-line-item"></sc-line-item-tax>
+				<sc-line-item-total total="total" size="large" show-currency="1" class="wp-block-surecart-total"><span slot="title">Total</span><span slot="subscription-title">Total Due Today</span></sc-line-item-total>
+			</sc-order-summary>
+			<sc-order-submit type="primary" full="true" size="large" icon="lock" show-total="true" class="wp-block-surecart-submit">Buy Now</sc-order-submit>
+		</sc-column>
+	</sc-columns>
 
 	<?php
-	\SureCart::assets()->addComponentData(
-		'sc-checkout',
-		'#checkout-buy-form',
-		[
-			'product'                    => $product,
-			'prices'                     => $prices,
-			'customer'                   => $customer ?? '',
-			'formId'                     => $form_id ?? '',
-			'currencyCode'               => $currency_code ?? null,
-			'modified'                   => $modified ?? null,
-			'loggedIn'                   => is_user_logged_in(),
-			'mode'                       => $mode ?? 'live',
-			'alignment'                  => $align ?? '',
-			'taxProtocol'                => $tax_protocol ?? [],
-			'loadingText'                => $loading_text ?? [],
-			'stripePaymentElement'       => $stripe_payment_element ?? false,
-			'successUrl'                 => esc_url_raw( $success_url ?? \SureCart::pages()->url( 'order-confirmation' ) ),
-			'processors'                 => $processors,
-			'manualPaymentMethods'       => $manual_payment_methods,
-			'abandonedCheckoutReturnUrl' => $abandoned_checkout_return_url,
-		]
+	echo wp_kses_post(
+		( new FormBlock() )->render(
+			[
+				'label' => __( 'Payment', 'surecart' ),
+			],
+			ob_get_clean()
+		)
 	);
 	?>
+
 
 	<?php
 	wp_footer();
