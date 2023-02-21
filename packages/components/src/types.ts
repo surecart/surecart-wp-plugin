@@ -114,10 +114,13 @@ export interface Download {
   id: string;
   object: 'download';
   archived: boolean;
+  archived_at?: number;
   media: string | Media;
+  name?: string;
   product: string | Product;
   update_at: number;
   created_at: number;
+  url?: string;
 }
 
 export type FormState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalizing' | 'paying' | 'confirming' | 'confirmed' | 'paid' | 'failure' | 'expired';
