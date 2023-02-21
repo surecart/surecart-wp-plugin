@@ -201,11 +201,13 @@ export default () => {
 		return (
 			<DatePicker
 				placeholder={__('Choose date', 'surecart')}
-				title={__('Pause subscription until?', 'surecart')}
+				title={__('Pause Subscription Until', 'surecart')}
 				currentDate={''}
 				onChoose={(date) => onPauseSubscription(date)}
-				minDate={new Date()}
 				required={true}
+				isInvalidDate={(date) =>
+					Date.parse(new Date()) > Date.parse(date)
+				}
 				chooseDateLabel={__('Pause subscription', 'surecart')}
 			>
 				<ScMenuItem>{__('Pause Subscription', 'surecart')}</ScMenuItem>

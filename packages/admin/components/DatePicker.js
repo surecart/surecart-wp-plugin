@@ -17,8 +17,6 @@ export default (props) => {
 		chooseDateLabel,
 		required,
 		children,
-		minDate,
-		maxDate,
 		...rest
 	} = props;
 	const [isVisible, setIsVisible] = useState(false);
@@ -39,40 +37,6 @@ export default (props) => {
 		if (!date && required) {
 			setError({
 				message: __('Please choose date to continue.', 'surecart'),
-			});
-			return;
-		}
-
-		if (minDate && Date.parse(minDate) > Date.parse(date)) {
-			setError({
-				message: (
-					<>
-						{__('Date cannot be before ', 'surecart')}{' '}
-						<ScFormatDate
-							date={minDate}
-							month="short"
-							day="numeric"
-							year="numeric"
-						/>
-					</>
-				),
-			});
-			return;
-		}
-
-		if (maxDate && Date.parse(maxDate) < Date.parse(date)) {
-			setError({
-				message: (
-					<>
-						{__('Date cannot be after ', 'surecart')}{' '}
-						<ScFormatDate
-							date={maxDate}
-							month="short"
-							day="numeric"
-							year="numeric"
-						/>
-					</>
-				),
 			});
 			return;
 		}
