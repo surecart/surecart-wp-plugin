@@ -71,7 +71,6 @@ export class ScOrderSubmit {
   }
 
   render() {
-    console.log(selectedProcessor);
     return (
       <Fragment>
         {selectedProcessor.id === 'paypal' && this.renderPayPalButton(['paypal'])}

@@ -69,7 +69,9 @@ class Block extends BaseBlock {
 			class="<?php echo esc_attr( $attributes['className'] ?? '' ); ?>"
 		>
 			<?php if ( $payment_element ) : ?>
-				<sc-stripe-payment-element slot="stripe"></sc-stripe-payment-element>
+				<sc-card slot="stripe">
+					<sc-stripe-payment-element></sc-stripe-payment-element>
+				</sc-card>
 			<?php else : ?>
 				<span slot="stripe">
 					<sc-stripe-element

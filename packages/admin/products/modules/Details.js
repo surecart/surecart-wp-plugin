@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { ScInput } from '@surecart/components-react';
+import { ScInput, ScRichText } from '@surecart/components-react';
 import Box from '../../ui/Box';
 
 export default ({ product, updateProduct, loading }) => {
@@ -23,6 +23,17 @@ export default ({ product, updateProduct, loading }) => {
 					}}
 					name="name"
 					required
+				/>
+				<ScRichText
+					label={__('Description', 'surecart')}
+					help={__(
+						'A short description for your product that is displayed on product and buy pages.',
+						'surecart'
+					)}
+					value={product?.description}
+					onScInput={(e) => {
+						updateProduct({ description: e.target.value });
+					}}
 				/>
 			</div>
 		</Box>

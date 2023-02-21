@@ -132,6 +132,7 @@ export const ScPurchaseDownloadsList = /*@__PURE__*/createReactComponent<JSX.ScP
 export const ScQuantitySelect = /*@__PURE__*/createReactComponent<JSX.ScQuantitySelect, HTMLScQuantitySelectElement>('sc-quantity-select');
 export const ScRadio = /*@__PURE__*/createReactComponent<JSX.ScRadio, HTMLScRadioElement>('sc-radio');
 export const ScRadioGroup = /*@__PURE__*/createReactComponent<JSX.ScRadioGroup, HTMLScRadioGroupElement>('sc-radio-group');
+export const ScRichText = /*@__PURE__*/createReactComponent<JSX.ScRichText, HTMLScRichTextElement>('sc-rich-text');
 export const ScSecureNotice = /*@__PURE__*/createReactComponent<JSX.ScSecureNotice, HTMLScSecureNoticeElement>('sc-secure-notice');
 export const ScSelect = /*@__PURE__*/createReactComponent<JSX.ScSelect, HTMLScSelectElement>('sc-select');
 export const ScSessionProvider = /*@__PURE__*/createReactComponent<JSX.ScSessionProvider, HTMLScSessionProviderElement>('sc-session-provider');

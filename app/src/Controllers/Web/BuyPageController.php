@@ -15,6 +15,42 @@ class BuyPageController {
 	 */
 	protected $product;
 
+	/**
+	 * Preload these blocks.
+	 *
+	 * @var array
+	 */
+	protected $preload = [
+		'surecart/column',
+		'surecart/columns',
+		'surecart/coupon',
+		'surecart/name',
+		'surecart/email',
+		'surecart/address',
+		'surecart/totals',
+		'surecart/total',
+		'surecart/submit',
+		'surecart/price-selector',
+		'surecart/price-choice',
+		'surecart/payment',
+	];
+
+	/**
+	 * Holds the config.
+	 *
+	 * @var array
+	 */
+	protected $config;
+
+	public function __construct() {
+		 $this->config = \SureCart::resolve( SURECART_CONFIG_KEY );
+	}
+
+	/**
+	 * Handle filters.
+	 *
+	 * @return void
+	 */
 	public function filters() {
 		// it's not a 404 page.
 		global $wp_query;
@@ -56,6 +92,10 @@ class BuyPageController {
 		}
 
 		$this->filters();
+
+		foreach ( $this->preload as $name ) {
+			\SureCart::preload()->add( $this->config['preload'][ $name ] );
+		}
 
 		$user = wp_get_current_user();
 
