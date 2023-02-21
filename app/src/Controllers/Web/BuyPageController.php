@@ -16,12 +16,18 @@ class BuyPageController {
 	protected $product;
 
 	public function filters() {
+		// it's not a 404 page.
+		global $wp_query;
+		$wp_query->is_404 = false;
+
 		// set the canonical url.
 		add_filter( 'get_canonical_url', [ $this, 'maybeSetUrl' ] );
 		// set the shortlink.
 		add_filter( 'get_shortlink', [ $this, 'maybeSetUrl' ] );
 		// set the post link.
 		add_filter( 'post_link', [ $this, 'maybeSetUrl' ] );
+		// set the document title.
+		add_filter( 'document_title_parts', [ $this, 'documentTitle' ] );
 	}
 
 	/**
@@ -85,8 +91,6 @@ class BuyPageController {
 				'form_id'                       => $this->product->id,
 				'id'                            => 'sc-checkout-' . $this->product->id,
 				'prices'                        => $this->product->prices->data ?? [],
-				'loading_text'                  => [],
-				'success_url'                   => ! empty( $attributes['success_url'] ) ? $attributes['success_url'] : \SureCart::pages()->url( 'order-confirmation' ),
 			]
 		);
 	}
