@@ -143,6 +143,11 @@ export default ({ id }) => {
 				onDelete={onDeleteProduct}
 				onToggleArchive={onToggleArchiveProduct}
 			/>
+			{!!product?.slug && (
+				<ScButton href={`${scData?.home_url}/buy/${product?.slug}`}>
+					{__('Instant Buy Page', 'surecart')}
+				</ScButton>
+			)}
 			<SaveButton busy={deletingProduct || savingProduct}>
 				{__('Save Product', 'surecart')}
 			</SaveButton>

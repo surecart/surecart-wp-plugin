@@ -9,6 +9,7 @@ import Box from '../ui/Box';
 import Definition from '../ui/Definition';
 import Advanced from './modules/Advanced';
 import Image from './modules/Image';
+import Publishing from './modules/Publishing';
 import Taxes from './modules/Tax';
 
 export default ({
@@ -82,6 +83,12 @@ export default ({
 					)}
 				</Fragment>
 			</Box>
+
+			<Publishing
+				product={product}
+				updateProduct={updateProduct}
+				loading={loading}
+			/>
 
 			<Taxes
 				product={product}
