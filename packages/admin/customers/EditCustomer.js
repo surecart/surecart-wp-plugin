@@ -32,7 +32,7 @@ import User from './modules/User';
 import ActionsDropdown from './components/ActionsDropdown';
 
 export default () => {
-  const [error, setError] = useState(null);
+	const [error, setError] = useState(null);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 	const { saveDirtyRecords } = useDirty();
@@ -40,7 +40,7 @@ export default () => {
 	const {
 		customer,
 		editCustomer,
-    deleteCustomer,
+		deleteCustomer,
 		hasLoadedCustomer,
 		deletingCustomer,
 		savingCustomer,
@@ -70,7 +70,7 @@ export default () => {
 		}
 	};
 
-  /**
+	/**
 	 * Toggle customer delete.
 	 */
 	const onCustomerDelete = async () => {
@@ -80,7 +80,9 @@ export default () => {
 					'Permanently delete %s? You cannot undo this action.',
 					'surecart'
 				),
-				customer?.email || 'Customer'
+				customer?.name ||
+					customer?.email ||
+					__('this customer', 'surecart')
 			)
 		);
 		if (!r) return;
@@ -89,6 +91,7 @@ export default () => {
 			setError(null);
 			await deleteCustomer({ throwOnError: true });
 		} catch (e) {
+			console.error(e);
 			setError(e);
 		}
 	};
@@ -121,24 +124,24 @@ export default () => {
 				</ScFlex>
 			}
 			button={
-        <div
-          css={css`
-            display: flex;
-            align-items: center;
-            gap: 0.5em;
-          `}
-        >
-          <ActionsDropdown
-            customer={customer}
-            onDelete={onCustomerDelete}
-          />
-          <SaveButton
-            loading={!hasLoadedCustomer}
-            busy={deletingCustomer || savingCustomer}
-          >
-            {__('Save Customer', 'surecart')}
-          </SaveButton>
-        </div>
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: 0.5em;
+					`}
+				>
+					<ActionsDropdown
+						customer={customer}
+						onDelete={onCustomerDelete}
+					/>
+					<SaveButton
+						loading={!hasLoadedCustomer}
+						busy={deletingCustomer || savingCustomer}
+					>
+						{__('Save Customer', 'surecart')}
+					</SaveButton>
+				</div>
 			}
 			sidebar={
 				<>
@@ -153,11 +156,7 @@ export default () => {
 				</>
 			}
 		>
-      <Error
-        error={error}
-        setError={setError}
-        margin="80px"
-      />
+			<Error error={error} setError={setError} margin="80px" />
 			<Details
 				customer={customer}
 				updateCustomer={editCustomer}
