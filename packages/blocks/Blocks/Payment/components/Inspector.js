@@ -3,13 +3,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { InspectorControls } from '@wordpress/block-editor';
-import {
-	BaseControl,
-	Flex,
-	PanelBody,
-	PanelRow,
-	TextControl,
-} from '@wordpress/components';
+import { Flex, PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import PaymentMethodCheckbox from './PaymentMethodCheckbox';
 import { ScPremiumTag, ScUpgradeRequired } from '@surecart/components-react';
 
