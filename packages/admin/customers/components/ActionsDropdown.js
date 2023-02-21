@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n';
 import {
 	ScButton,
 	ScDropdown,
+	ScIcon,
 	ScMenu,
 	ScMenuItem,
 } from '@surecart/components-react';
@@ -15,16 +16,16 @@ export default ({ customer, onDelete }) => {
 	return (
 		<ScDropdown slot="suffix" placement="bottom-end">
 			<ScButton type="text" slot="trigger">
-				<sc-icon name="more-horizontal" />
+				<ScIcon name="more-horizontal" />
 			</ScButton>
 			<ScMenu>
 				{!!onDelete && (
 					<ScMenuItem onClick={onDelete}>
-						<sc-icon
+						<ScIcon
 							slot="prefix"
 							style={{ opacity: 0.5 }}
 							name="trash"
-						></sc-icon>
+						/>
 						{__('Delete', 'surecart')}
 					</ScMenuItem>
 				)}
