@@ -37,4 +37,13 @@ describe('sc-tax-id-input', () => {
     });
     expect(page.root).toMatchSnapshot();
   });
+
+  it('Shows the updated labels when modified labels are passed',async()=>{
+    const page = await newSpecPage({
+      components:[ScTaxIdInput],
+      html:`<sc-tax-id-input other-label="Other test"></sc-tax-id-input>`
+    });
+
+    expect(page.root).toMatchSnapshot();
+  })
 });

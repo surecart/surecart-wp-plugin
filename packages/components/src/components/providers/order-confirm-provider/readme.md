@@ -30,9 +30,23 @@
 
  - [sc-checkout](../../controllers/checkout-form/checkout)
 
+### Depends on
+
+- [sc-dialog](../../ui/sc-dialog)
+- [sc-flex](../../ui/flex)
+- [sc-text](../../ui/text)
+- [sc-button](../../ui/button)
+
 ### Graph
 ```mermaid
 graph TD;
+  sc-order-confirm-provider --> sc-dialog
+  sc-order-confirm-provider --> sc-flex
+  sc-order-confirm-provider --> sc-text
+  sc-order-confirm-provider --> sc-button
+  sc-dialog --> sc-button
+  sc-dialog --> sc-icon
+  sc-button --> sc-spinner
   sc-checkout --> sc-order-confirm-provider
   style sc-order-confirm-provider fill:#f9f,stroke:#333,stroke-width:4px
 ```

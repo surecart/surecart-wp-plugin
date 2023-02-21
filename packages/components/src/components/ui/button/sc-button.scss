@@ -728,3 +728,31 @@ sc-spinner::part(base) {
     background-position: 200px 0;
   }
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// RTL support
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+.button--is-rtl{
+   &.button--has-prefix {
+    &.button--small,
+    &.button--medium,
+    &.button--large {
+        padding-left: 0;
+        .button__label {
+          padding-left: 0;
+          padding-right: var(--sc-spacing-xx-small);
+        }
+    }
+  }
+  &.button--has-suffix {
+    &.button--small,
+    &.button--medium,
+    &.button--large {
+        padding-right: 0;
+        .button__label {
+          padding-right: 0;
+          padding-left: var(--sc-spacing-xx-small);
+        }
+    }
+  }
+}

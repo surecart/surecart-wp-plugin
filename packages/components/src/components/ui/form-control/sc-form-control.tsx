@@ -1,5 +1,6 @@
 import { Component, h, Prop, Element, Watch } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
+import { isRtl } from '../../../functions/page-align';
 
 /**
  * @part form-control - The elements base wrapper.
@@ -67,6 +68,7 @@ export class ScFormControl {
           'form-control--has-label': !!this.label && this.showLabel,
           'form-control--has-help-text': !!this.help,
           'form-control--is-required': !!this.required,
+          'form-control--is-rtl':isRtl()
         }}
       >
         <label part="label" id={this.labelId} class="form-control__label" htmlFor={this.inputId} aria-hidden={!!this.label ? 'false' : 'true'}>
