@@ -11,7 +11,7 @@ exports[`sc-payment does not render non-recurring if recurring is required 1`] =
         </sc-tag>
       </div>
       <div theme="container">
-        <sc-payment-method-choice processor-id="stripe" recurringenabled="">
+        <sc-payment-method-choice processor-id="stripe">
           <span class="sc-payment-toggle-summary" slot="summary">
             <sc-icon name="credit-card" style="font-size: 24px;"></sc-icon>
             <span>
@@ -51,7 +51,18 @@ exports[`sc-payment only renders processors with the right mode 1`] = `
           Test Mode
         </sc-tag>
       </div>
-      <div theme="container">
+      <sc-toggles theme="container">
+        <sc-payment-method-choice processor-id="paypal">
+          <span class="sc-payment-toggle-summary" slot="summary">
+            <sc-icon name="paypal" style="width: 80px; font-size: 24px;"></sc-icon>
+          </span>
+          <sc-card>
+            <sc-payment-selected label="PayPal selected for check out.">
+              <sc-icon name="paypal" slot="icon" style="width: 80px;"></sc-icon>
+              Another step will appear after submitting your order to complete your purchase details.
+            </sc-payment-selected>
+          </sc-card>
+        </sc-payment-method-choice>
         <sc-payment-method-choice method-id="card" processor-id="paypal">
           <span class="sc-payment-toggle-summary" slot="summary">
             <sc-icon name="credit-card" style="font-size: 24px;"></sc-icon>
@@ -66,18 +77,7 @@ exports[`sc-payment only renders processors with the right mode 1`] = `
             </sc-payment-selected>
           </sc-card>
         </sc-payment-method-choice>
-        <sc-payment-method-choice processor-id="paypal">
-          <span class="sc-payment-toggle-summary" slot="summary">
-            <sc-icon name="paypal" style="width: 80px; font-size: 24px;"></sc-icon>
-          </span>
-          <sc-card>
-            <sc-payment-selected label="PayPal selected for check out.">
-              <sc-icon name="paypal" slot="icon" style="width: 80px;"></sc-icon>
-              Another step will appear after submitting your order to complete your purchase details.
-            </sc-payment-selected>
-          </sc-card>
-        </sc-payment-method-choice>
-      </div>
+      </sc-toggles>
     </sc-form-control>
   </mock:shadow-root>
 </sc-payment>
@@ -108,7 +108,7 @@ exports[`sc-payment renders stripe and paypal with no checkout 1`] = `
         <div></div>
       </div>
       <sc-toggles theme="container">
-        <sc-payment-method-choice processor-id="stripe" recurringenabled="">
+        <sc-payment-method-choice processor-id="stripe">
           <span class="sc-payment-toggle-summary" slot="summary">
             <sc-icon name="credit-card" style="font-size: 24px;"></sc-icon>
             <span>

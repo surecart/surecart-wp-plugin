@@ -7,12 +7,6 @@ describe('sc-mollie-add-method', () => {
       components: [ScMollieAddMethod],
       html: `<sc-mollie-add-method></sc-mollie-add-method>`,
     });
-    expect(page.root).toEqualHtml(`
-      <sc-mollie-add-method>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </sc-mollie-add-method>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });
