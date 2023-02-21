@@ -58,29 +58,23 @@ class Customer extends Model {
 	/**
 	 * Delete the model.
 	 *
-	 * @param int   $id Customer ID.
+	 * @param int $id Customer ID.
 	 *
 	 * @return $this|\WP_Error|false
 	 */
 	protected function delete( $id = 0 ) {
-
 		$customer = self::find( $id );
-
-		$deleted = parent::delete( $id );
+		$deleted  = parent::delete( $id );
 
 		if ( ! is_wp_error( $deleted ) ) {
-
 			$user = User::findByCustomerId( $id );
 
-			if( $user ) {
-
+			if ( $user ) {
 				if ( is_wp_error( $customer ) ) {
 					return $customer;
 				}
 
-				$mode = $customer->getAttribute( 'live_mode' ) ? 'live' : 'test';
-
-				$user->removeCustomerId( $mode );
+				$user->removeCustomerId( $customer->live_mode ? 'live' : 'test' );
 			}
 		}
 
