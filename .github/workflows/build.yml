@@ -31,7 +31,7 @@ jobs:
           ini-values: post_max_size=256M, short_open_tag=On #optional, setup php.ini configuration
 
       - name: Set up the Lokalise2 CLI
-        uses: frenck/action-setup-lokalise@v1
+        uses: frenck/action-setup-lokalise@v1.0.0
 
       - name: Check PHP Version
         run: php -v
