@@ -80,6 +80,7 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 				label={label}
 				placeholder={placeholder}
 				help={help}
+				maxlength={maxlength?.length ? maxlength : 500}
 			></ScTextarea>
 		</Fragment>
 	);

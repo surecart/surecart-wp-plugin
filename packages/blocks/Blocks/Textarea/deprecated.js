@@ -72,7 +72,7 @@ export default [
 					autofocus={autofocus ? '1' : null}
 					autocomplete={autocomplete ? '1' : null}
 					inputmode={inputmode}
-					maxlength={maxlength}
+					maxlength={maxlength?.length ? maxlength : 500}
 					minlength={minlength}
 					name={name}
 					placeholder={placeholder}
