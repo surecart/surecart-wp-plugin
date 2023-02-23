@@ -1,3 +1,4 @@
 import './watchers';
-export * as getters from './getters';
+import * as getters from './getters';
+export { getters };
 export * from './store';

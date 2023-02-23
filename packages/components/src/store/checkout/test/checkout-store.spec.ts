@@ -1,7 +1,6 @@
 import { state as checkoutState, dispose as disposeCheckout } from '..';
 import store, { getCheckout } from '../../checkouts';
-import { Checkout, Processor } from '../../../types';
-import { state as processorsState, dispose as disposeProcessors } from '../index';
+import { Checkout } from '../../../types';
 
 describe('Checkout Store store', () => {
   beforeEach(() => {

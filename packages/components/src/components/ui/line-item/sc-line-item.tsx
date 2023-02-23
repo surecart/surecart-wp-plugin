@@ -1,4 +1,5 @@
 import { Component, Prop, h, Element, State } from '@stencil/core';
+import { isRtl } from '../../../functions/page-align';
 
 /**
  * @slot image - Line item image
@@ -60,6 +61,7 @@ export class ScLineItem {
           'item--has-price': this.hasPriceSlot,
           'item--has-price-description': this.hasPriceDescriptionSlot,
           'item--has-price-currency': this.hasCurrencySlot,
+          'item--is-rtl':isRtl()
         }}
       >
         <div class="item__image" part="image">

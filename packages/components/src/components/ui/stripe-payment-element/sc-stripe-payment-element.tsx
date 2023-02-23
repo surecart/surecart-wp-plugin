@@ -6,7 +6,7 @@ import { addQueryArgs } from '@wordpress/url';
 import { openWormhole } from 'stencil-wormhole';
 import { state as selectedProcessor } from '@store/selected-processor';
 
-import { Checkout, FormState, FormStateSetter, PaymentIntent, ProcessorName } from '../../../types';
+import { Checkout, FormState, FormStateSetter, PaymentIntent, ProcessorName, ShippingAddress } from '../../../types';
 
 @Component({
   tag: 'sc-stripe-payment-element',
@@ -103,13 +103,30 @@ export class ScStripePaymentElement {
   handleUpdateElement() {
     if (!this.element) return;
     if (this.order?.status !== 'draft') return;
+    const { name, email } = this.order;
+    const { line_1: line1, line_2: line2, city, state, country, postal_code } = this.order?.shipping_address as ShippingAddress;
     this.element.update({
+      defaultValues: {
+        billingDetails: {
+          name,
+          email,
+          address: {
+            line1,
+            line2,
+            city,
+            state,
+            country,
+            postal_code,
+          },
+        },
+      },
       fields: {
         billingDetails: {
           email: 'never',
         },
       },
     });
+    this.elements.fetchUpdates();
   }
 
   /**
@@ -207,9 +224,25 @@ export class ScStripePaymentElement {
       },
     });
 
+    const { line_1: line1, line_2: line2, city, state, country, postal_code } = this.order?.shipping_address as ShippingAddress;
+
     // create the payment element.
     this.elements
       .create('payment', {
+        defaultValues: {
+          billingDetails: {
+            name: this.order?.name,
+            email: this.order?.email,
+            address: {
+              line1,
+              line2,
+              city,
+              state,
+              country,
+              postal_code,
+            },
+          },
+        },
         fields: {
           billingDetails: {
             email: 'never',

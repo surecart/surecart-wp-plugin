@@ -13,8 +13,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1.25em;
     background: var(--sc-color-gray-200);
     border-radius: var(--sc-border-radius-small);
+    height: 4rem;
+    min-width: 4rem;
+    width: 4rem;
   }
 }

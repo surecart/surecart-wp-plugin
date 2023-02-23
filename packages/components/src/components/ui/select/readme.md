@@ -37,14 +37,15 @@
 
 ## Events
 
-| Event      | Description                                       | Type                  |
-| ---------- | ------------------------------------------------- | --------------------- |
-| `scBlur`   | Emitted when the control loses focus.             | `CustomEvent<void>`   |
-| `scChange` | Emitted when the control's value changes.         | `CustomEvent<void>`   |
-| `scClose`  | Emitted whent the components search query changes | `CustomEvent<string>` |
-| `scFocus`  | Emitted when the control gains focus.             | `CustomEvent<void>`   |
-| `scOpen`   | Emitted whent the components search query changes | `CustomEvent<string>` |
-| `scSearch` | Emitted whent the components search query changes | `CustomEvent<string>` |
+| Event         | Description                                       | Type                  |
+| ------------- | ------------------------------------------------- | --------------------- |
+| `scBlur`      | Emitted when the control loses focus.             | `CustomEvent<void>`   |
+| `scChange`    | Emitted when the control's value changes.         | `CustomEvent<void>`   |
+| `scClose`     | Emitted whent the components search query changes | `CustomEvent<string>` |
+| `scFocus`     | Emitted when the control gains focus.             | `CustomEvent<void>`   |
+| `scOpen`      | Emitted whent the components search query changes | `CustomEvent<string>` |
+| `scScrollEnd` | Emitted when the list scrolls to the end.         | `CustomEvent<void>`   |
+| `scSearch`    | Emitted whent the components search query changes | `CustomEvent<string>` |
 
 
 ## Methods

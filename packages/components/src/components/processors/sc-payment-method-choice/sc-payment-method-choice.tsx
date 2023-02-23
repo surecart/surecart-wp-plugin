@@ -24,7 +24,7 @@ export class ScPaymentMethodChoice {
     if (this.methodId) {
       return selectedProcessor?.id === this.processorId && selectedProcessor?.method == this.methodId;
     }
-    return selectedProcessor?.id === this.processorId;
+    return !selectedProcessor?.method && selectedProcessor?.id === this.processorId;
   }
 
   getAllOptions() {

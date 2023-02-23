@@ -41,6 +41,7 @@
  - [sc-form-state-provider](../../providers/form-state-provider)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-login-form](../../controllers/login)
+ - [sc-mollie-add-method](../sc-mollie-add-method)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
@@ -79,6 +80,7 @@ graph TD;
   sc-form-state-provider --> sc-block-ui
   sc-invoices-list --> sc-block-ui
   sc-login-form --> sc-block-ui
+  sc-mollie-add-method --> sc-block-ui
   sc-orders-list --> sc-block-ui
   sc-password-nag --> sc-block-ui
   sc-payment-methods-list --> sc-block-ui

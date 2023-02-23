@@ -2,6 +2,7 @@ import { Component, Element, Fragment, h, Host, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { state as checkoutState } from '@store/checkout';
 import { state as processorsState } from '@store/processors';
+import { state as selectedProcessor } from '@store/selected-processor';
 import { ManualPaymentMethods } from './ManualPaymentMethods';
 import { getAvailableProcessor, hasMultipleProcessorChoices, availableManualPaymentMethods, availableProcessors } from '@store/processors/getters';
 
@@ -58,6 +59,19 @@ export class ScPayment {
     const stripe = getAvailableProcessor('stripe');
     return (
       <Fragment>
+        <sc-payment-method-choice key={processor?.id} processor-id="paypal">
+          <span slot="summary" class="sc-payment-toggle-summary">
+            <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
+          </span>
+
+          <sc-card>
+            <sc-payment-selected label={__('PayPal selected for check out.', 'surecart')}>
+              <sc-icon slot="icon" name="paypal" style={{ width: '80px' }}></sc-icon>
+              {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
+            </sc-payment-selected>
+          </sc-card>
+        </sc-payment-method-choice>
+
         {!stripe && (
           <sc-payment-method-choice key={processor?.id} processor-id="paypal" method-id="card">
             <span slot="summary" class="sc-payment-toggle-summary">
@@ -73,19 +87,6 @@ export class ScPayment {
             </sc-card>
           </sc-payment-method-choice>
         )}
-
-        <sc-payment-method-choice key={processor?.id} processor-id="paypal">
-          <span slot="summary" class="sc-payment-toggle-summary">
-            <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
-          </span>
-
-          <sc-card>
-            <sc-payment-selected label={__('PayPal selected for check out.', 'surecart')}>
-              <sc-icon slot="icon" name="paypal" style={{ width: '80px' }}></sc-icon>
-              {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
-            </sc-payment-selected>
-          </sc-card>
-        </sc-payment-method-choice>
       </Fragment>
     );
   }
@@ -96,7 +97,7 @@ export class ScPayment {
       return null;
     }
 
-    const Tag = hasMultipleProcessorChoices() ? 'sc-toggles' : 'div';
+    const Tag = hasMultipleProcessorChoices() || selectedProcessor?.id === 'paypal' ? 'sc-toggles' : 'div';
     const mollie = getAvailableProcessor('mollie');
 
     return (

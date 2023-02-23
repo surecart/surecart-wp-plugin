@@ -49,3 +49,12 @@
     text-decoration: underline;
   }
 }
+
+.order-coupon-form--is-rtl {
+  .trigger {
+    &,
+    &:hover {
+      text-align: right;
+    }
+  }
+}

@@ -16,7 +16,7 @@
 | `disableComponentsValidation` | `disable-components-validation` | Should we disable components validation                       | `boolean`                                                                        | `undefined` |
 | `editLineItems`               | `edit-line-items`               | Can we edit line items?                                       | `boolean`                                                                        | `true`      |
 | `formId`                      | `form-id`                       | The checkout form id                                          | `number`                                                                         | `undefined` |
-| `loadingText`                 | --                              |                                                               | `{ finalizing: string; paying: string; confirming: string; confirmed: string; }` | `undefined` |
+| `loadingText`                 | --                              | Text for the loading states of the form.                      | `{ finalizing: string; paying: string; confirming: string; confirmed: string; }` | `undefined` |
 | `loggedIn`                    | `logged-in`                     | Is this user logged in?                                       | `boolean`                                                                        | `undefined` |
 | `manualPaymentMethods`        | --                              | Manual payment methods enabled for this form.                 | `ManualPaymentMethod[]`                                                          | `undefined` |
 | `mode`                        | `mode`                          | Are we in test or live mode.                                  | `"live" \| "test"`                                                               | `'live'`    |
@@ -26,6 +26,7 @@
 | `processors`                  | --                              | Processors enabled for this form.                             | `Processor[]`                                                                    | `undefined` |
 | `removeLineItems`             | `remove-line-items`             | Can we remove line items?                                     | `boolean`                                                                        | `true`      |
 | `stripePaymentElement`        | `stripe-payment-element`        | Use the Stripe payment element.                               | `boolean`                                                                        | `false`     |
+| `successText`                 | --                              | Success text for the form.                                    | `{ title: string; description: string; button: string; }`                        | `undefined` |
 | `successUrl`                  | `success-url`                   | Where to go on success                                        | `string`                                                                         | `''`        |
 | `taxProtocol`                 | --                              | The account tax protocol                                      | `TaxProtocol`                                                                    | `undefined` |
 
@@ -144,6 +145,11 @@ graph TD;
   sc-order-bump --> sc-divider
   sc-line-item-tax --> sc-line-item
   sc-line-item-tax --> sc-format-number
+  sc-order-confirm-provider --> sc-dialog
+  sc-order-confirm-provider --> sc-icon
+  sc-order-confirm-provider --> sc-dashboard-module
+  sc-order-confirm-provider --> sc-button
+  sc-dashboard-module --> sc-alert
   sc-session-provider --> sc-line-items-provider
   sc-product-buy-page --> sc-checkout
   style sc-checkout fill:#f9f,stroke:#333,stroke-width:4px

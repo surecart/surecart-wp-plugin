@@ -74,6 +74,10 @@ export namespace Components {
          */
         "show": () => Promise<void>;
         /**
+          * The title.
+         */
+        "title": string;
+        /**
           * The type of alert.
          */
         "type": 'primary' | 'success' | 'info' | 'warning' | 'danger';
@@ -432,6 +436,9 @@ export namespace Components {
           * The checkout form id
          */
         "formId": number;
+        /**
+          * Text for the loading states of the form.
+         */
         "loadingText": {
     finalizing: string;
     paying: string;
@@ -482,6 +489,14 @@ export namespace Components {
           * Submit the form
          */
         "submit": ({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout | NodeJS.Timeout>;
+        /**
+          * Success text for the form.
+         */
+        "successText": {
+    title: string;
+    description: string;
+    button: string;
+  };
         /**
           * Where to go on success
          */
@@ -1658,6 +1673,7 @@ export namespace Components {
         "customerId": string;
         "liveMode": boolean;
         "processorId": string;
+        "successUrl": string;
     }
     interface ScOrder {
         "customerIds": string[];
@@ -1704,6 +1720,14 @@ export namespace Components {
           * The current order.
          */
         "order": Checkout;
+        /**
+          * Success text for the form.
+         */
+        "successText": {
+    title: string;
+    description: string;
+    button: string;
+  };
         /**
           * Success url.
          */
@@ -1971,13 +1995,33 @@ export namespace Components {
     }
     interface ScOrderTaxIdInput {
         /**
+          * AU zone label
+         */
+        "auAbnLabel": string;
+        /**
           * Is this busy
          */
         "busy": boolean;
         /**
+          * GST zone label
+         */
+        "caGstLabel": string;
+        /**
+          * EU zone label
+         */
+        "euVatLabel": string;
+        /**
+          * UK zone label
+         */
+        "gbVatLabel": string;
+        /**
           * The order
          */
         "order": Partial<Checkout>;
+        /**
+          * Other zones label
+         */
+        "otherLabel": string;
         /**
           * Force show the field.
          */
@@ -2062,7 +2106,13 @@ export namespace Components {
         "processorId": string;
     }
     interface ScPaymentMethodsList {
+        /**
+          * The heading
+         */
         "heading": string;
+        /**
+          * Is this a customer
+         */
         "isCustomer": boolean;
         /**
           * Query to fetch paymentMethods
@@ -2974,9 +3024,25 @@ export namespace Components {
     }
     interface ScTaxIdInput {
         /**
+          * AU zone label
+         */
+        "auAbnLabel": string;
+        /**
+          * GST zone label
+         */
+        "caGstLabel": string;
+        /**
           * The country code.
          */
         "country": string;
+        /**
+          * EU zone label
+         */
+        "euVatLabel": string;
+        /**
+          * UK zone label
+         */
+        "gbVatLabel": string;
         /**
           * Help text.
          */
@@ -2989,6 +3055,10 @@ export namespace Components {
           * Tax ID Number
          */
         "number": string;
+        /**
+          * Other zones label
+         */
+        "otherLabel": string;
         /**
           * Force show the field.
          */
@@ -4729,6 +4799,10 @@ declare namespace LocalJSX {
          */
         "scrollOnOpen"?: boolean;
         /**
+          * The title.
+         */
+        "title"?: string;
+        /**
           * The type of alert.
          */
         "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger';
@@ -5110,6 +5184,9 @@ declare namespace LocalJSX {
           * The checkout form id
          */
         "formId"?: number;
+        /**
+          * Text for the loading states of the form.
+         */
         "loadingText"?: {
     finalizing: string;
     paying: string;
@@ -5168,6 +5245,14 @@ declare namespace LocalJSX {
           * Use the Stripe payment element.
          */
         "stripePaymentElement"?: boolean;
+        /**
+          * Success text for the form.
+         */
+        "successText"?: {
+    title: string;
+    description: string;
+    button: string;
+  };
         /**
           * Where to go on success
          */
@@ -6528,6 +6613,7 @@ declare namespace LocalJSX {
         "customerId"?: string;
         "liveMode"?: boolean;
         "processorId"?: string;
+        "successUrl"?: string;
     }
     interface ScOrder {
         "customerIds"?: string[];
@@ -6591,6 +6677,14 @@ declare namespace LocalJSX {
           * The current order.
          */
         "order"?: Checkout;
+        /**
+          * Success text for the form.
+         */
+        "successText"?: {
+    title: string;
+    description: string;
+    button: string;
+  };
         /**
           * Success url.
          */
@@ -6872,9 +6966,25 @@ declare namespace LocalJSX {
     }
     interface ScOrderTaxIdInput {
         /**
+          * AU zone label
+         */
+        "auAbnLabel"?: string;
+        /**
           * Is this busy
          */
         "busy"?: boolean;
+        /**
+          * GST zone label
+         */
+        "caGstLabel"?: string;
+        /**
+          * EU zone label
+         */
+        "euVatLabel"?: string;
+        /**
+          * UK zone label
+         */
+        "gbVatLabel"?: string;
         /**
           * Make a request to update the order.
          */
@@ -6886,6 +6996,10 @@ declare namespace LocalJSX {
           * The order
          */
         "order"?: Partial<Checkout>;
+        /**
+          * Other zones label
+         */
+        "otherLabel"?: string;
         /**
           * Force show the field.
          */
@@ -6972,7 +7086,13 @@ declare namespace LocalJSX {
         "processorId"?: string;
     }
     interface ScPaymentMethodsList {
+        /**
+          * The heading
+         */
         "heading"?: string;
+        /**
+          * Is this a customer
+         */
         "isCustomer"?: boolean;
         /**
           * Query to fetch paymentMethods
@@ -7497,6 +7617,10 @@ declare namespace LocalJSX {
          */
         "onScOpen"?: (event: ScSelectCustomEvent<string>) => void;
         /**
+          * Emitted when the list scrolls to the end.
+         */
+        "onScScrollEnd"?: (event: ScSelectCustomEvent<void>) => void;
+        /**
           * Emitted whent the components search query changes
          */
         "onScSearch"?: (event: ScSelectCustomEvent<string>) => void;
@@ -7985,9 +8109,25 @@ declare namespace LocalJSX {
     }
     interface ScTaxIdInput {
         /**
+          * AU zone label
+         */
+        "auAbnLabel"?: string;
+        /**
+          * GST zone label
+         */
+        "caGstLabel"?: string;
+        /**
           * The country code.
          */
         "country"?: string;
+        /**
+          * EU zone label
+         */
+        "euVatLabel"?: string;
+        /**
+          * UK zone label
+         */
+        "gbVatLabel"?: string;
         /**
           * Help text.
          */
@@ -8016,6 +8156,10 @@ declare namespace LocalJSX {
           * Set the checkout state.
          */
         "onScSetState"?: (event: ScTaxIdInputCustomEvent<string>) => void;
+        /**
+          * Other zones label
+         */
+        "otherLabel"?: string;
         /**
           * Force show the field.
          */

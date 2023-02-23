@@ -1,5 +1,6 @@
 import { Component, Prop, State, h, Event, EventEmitter, Method, Watch, Element } from '@stencil/core';
 import { FormSubmitController } from '../../../functions/form-data';
+import { isRtl } from '../../../functions/page-align';
 
 let id = 0;
 
@@ -143,6 +144,7 @@ export class ScCheckbox {
           'checkbox--disabled': this.disabled,
           'checkbox--focused': this.hasFocus,
           'checkbox--indeterminate': this.indeterminate,
+          'checkbox--is-rtl':isRtl()
         }}
         htmlFor={this.inputId}
         onMouseDown={() => this.handleLabelMouseDown()}

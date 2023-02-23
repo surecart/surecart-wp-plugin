@@ -45,7 +45,7 @@ class PaymentMethodController extends BaseController {
 			array_filter(
 				Processor::get() ?? [],
 				function( $processor ) {
-					return $processor->live_mode === $this->isLiveMode() && $processor->recurring_enabled;
+					return $processor->live_mode === $this->isLiveMode() && $processor->recurring_enabled && $processor->enabled;
 				}
 			)
 		);
@@ -137,7 +137,10 @@ class PaymentMethodController extends BaseController {
 			<?php echo ! $this->isLiveMode() ? '<sc-tag type="warning" slot="end">' . esc_html__( 'Test Mode', 'surecart' ) . '</sc-tag>' : ''; ?>
 			</sc-heading>
 
-			<?php if ( $mollie = $this->getProcessorByType( 'mollie' ) ) : ?>
+			<?php
+			$mollie = $this->getProcessorByType( 'mollie' );
+			if ( $mollie ) :
+				?>
 				<?php $customer = Customer::with( [ 'shipping_address' ] )->find( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) ); ?>
 				<sc-mollie-add-method
 					processor-id="<?php echo esc_attr( $mollie->id ); ?>"

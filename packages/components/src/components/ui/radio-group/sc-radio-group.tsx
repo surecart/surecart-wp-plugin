@@ -1,4 +1,5 @@
 import { Component, Prop, h, Method, Listen } from '@stencil/core';
+import { isRtl } from '../../../functions/page-align';
 
 @Component({
   tag: 'sc-radio-group',
@@ -49,6 +50,7 @@ export class ScRadioGroup {
           'radio-group': true,
           'radio-group--invalid': this.invalid,
           'radio-group--is-required': this.required,
+          'radio-group--is-rtl':isRtl()
         }}
         aria-invalid={this.invalid}
         role="radiogroup"

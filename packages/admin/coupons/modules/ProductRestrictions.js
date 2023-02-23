@@ -85,7 +85,10 @@ export default ({ coupon, updateCoupon, loading }) => {
 											'Find a product...',
 											'surecart'
 										)}
-										requestQuery={{ archived: false }}
+										requestQuery={{
+											archived: false,
+											expand: ['prices'],
+										}}
 										exclude={productIds}
 										onSelect={(id) => {
 											if (!id) return;

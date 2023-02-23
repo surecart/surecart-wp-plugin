@@ -81,6 +81,7 @@ Type: `Promise<boolean>`
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-login-form](../../controllers/login)
  - [sc-login-provider](../../providers/sc-login-provider)
+ - [sc-mollie-add-method](../sc-mollie-add-method)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-product-buy-page](../../controllers/buy-page/sc-product-buy-page)
  - [sc-stripe-add-method](../sc-stripe-add-method)
@@ -100,6 +101,7 @@ graph TD;
   sc-customer-edit --> sc-form
   sc-login-form --> sc-form
   sc-login-provider --> sc-form
+  sc-mollie-add-method --> sc-form
   sc-password-nag --> sc-form
   sc-product-buy-page --> sc-form
   sc-stripe-add-method --> sc-form

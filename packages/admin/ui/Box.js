@@ -53,6 +53,7 @@ export default ({
 					style={{
 						'--font-size': '15px',
 						'--font-weight': 'var(--sc-font-weight-bold)',
+						width: '100%',
 					}}
 				>
 					{title}
