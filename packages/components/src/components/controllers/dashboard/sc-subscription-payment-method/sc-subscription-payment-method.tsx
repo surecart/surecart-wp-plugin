@@ -183,7 +183,10 @@ export class ScSubscriptionPaymentMethod {
           <div slot="description">
             {!!card?.exp_month && (
               <span>
-                {__('Exp.', 'surecart')}
+                {
+                  /** Translators: Credit Card Expires (Exp. 11/27) */
+                  __('Exp.', 'surecart')
+                }
                 {card?.exp_month}/{card?.exp_year}
               </span>
             )}

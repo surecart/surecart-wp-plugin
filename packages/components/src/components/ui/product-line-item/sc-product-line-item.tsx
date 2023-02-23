@@ -77,7 +77,10 @@ export class ScProductLineItem {
             {sprintf(_n('%d day free', '%d days free', this.trialDurationDays, 'surecart'), this.trialDurationDays)}
           </div>
           <div class="price__description" part="price__description">
-            {__('Then', 'surecart')}{' '}
+            {
+              /** translators: 30 days free, Then $99 per month. */
+              __('Then', 'surecart')
+            }{' '}
             {!!this.scratchAmount && this.scratchAmount > this.amount && (
               <Fragment>
                 <sc-format-number class="item__scratch-price" part="price__scratch" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>{' '}
