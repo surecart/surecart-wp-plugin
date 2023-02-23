@@ -1,5 +1,6 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+import { isRtl } from '../../../functions/page-align';
 
 import { getHumanDiscount } from '../../../functions/price';
 import { DiscountResponse } from '../../../types';
@@ -143,6 +144,7 @@ export class ScCouponForm {
           'coupon-form': true,
           'coupon-form--is-open': this.open || this.forceOpen,
           'coupon-form--has-value': !!this.value,
+          'coupon-form--is-rtl': isRtl(),
         }}
       >
         <div

@@ -4,6 +4,7 @@
 	"description": "Display a button to add a specific price to the cart.",
 	"category": "surecart",
 	"keywords": ["name", "customer"],
+  "textdomain": "surecart",
 	"parent": null,
 	"supports": {
 		"html": false

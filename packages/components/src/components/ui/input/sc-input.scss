@@ -32,7 +32,7 @@
   border: solid 1px var(--sc-input-border-color, var(--sc-input-border));
   vertical-align: middle;
   box-shadow: var(--sc-input-box-shadow);
-  transition: var(--sc-transition-fast) color, var(--sc-transition-fast) border, var(--sc-transition-fast) box-shadow;
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) border, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
   cursor: text;
 
   &:hover:not(.input--disabled) {
@@ -248,7 +248,7 @@
   border: none;
   background: none;
   padding: 0;
-  transition: var(--sc-transition-fast) color;
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) color;
   cursor: pointer;
 
   &:hover {

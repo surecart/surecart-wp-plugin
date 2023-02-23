@@ -4,6 +4,7 @@
 	"description": "Displays an email form field.",
 	"category": "surecart",
 	"keywords": ["email", "mail"],
+  "textdomain": "surecart",
 	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,

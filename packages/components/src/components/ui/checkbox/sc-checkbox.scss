@@ -25,7 +25,7 @@
   border-radius: 2px;
   background-color: var(--sc-input-background-color);
   color: var(--sc-color-white);
-  transition: var(--sc-transition-fast) border-color, var(--sc-transition-fast) opacity, var(--sc-transition-fast) background-color, var(--sc-transition-fast) color, var(--sc-transition-fast) box-shadow;
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) border-color, var(--sc-input-transition, var(--sc-transition-medium)) opacity, var(--sc-input-transition, var(--sc-transition-medium)) background-color, var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
 
   input[type='checkbox'] {
     position: absolute;
@@ -94,12 +94,18 @@
   // user-select: none;
 }
 
-
 .checkbox--is-required .checkbox__label:after {
-  content: " *";
+  content: ' *';
   color: var(--sc-color-danger-500);
 }
 
 ::slotted(*) {
   display: inline-block;
+}
+
+.checkbox--is-rtl {
+  .checkbox__label {
+    margin-left: 0;
+    margin-right: 0.5em;
+  }
 }

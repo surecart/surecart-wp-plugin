@@ -19,6 +19,7 @@
   left: 0;
   z-index: var(--sc-z-index-dialog);
   box-sizing: border-box;
+  text-align: left;
 }
 .dialog__panel {
   display: flex;
