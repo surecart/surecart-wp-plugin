@@ -47,11 +47,13 @@
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-customer-details](../customer-details)
  - [sc-dialog](../sc-dialog)
+ - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-drawer](../sc-drawer)
  - [sc-empty](../empty)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-login-form](../../controllers/login)
  - [sc-order](../../controllers/dashboard/order)
+ - [sc-order-confirm-provider](../../providers/order-confirm-provider)
  - [sc-order-submit](../../controllers/checkout-form/order-submit)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
@@ -89,11 +91,13 @@ graph TD;
   sc-charges-list --> sc-icon
   sc-customer-details --> sc-icon
   sc-dialog --> sc-icon
+  sc-downloads-list --> sc-icon
   sc-drawer --> sc-icon
   sc-empty --> sc-icon
   sc-invoices-list --> sc-icon
   sc-login-form --> sc-icon
   sc-order --> sc-icon
+  sc-order-confirm-provider --> sc-icon
   sc-order-submit --> sc-icon
   sc-orders-list --> sc-icon
   sc-password-nag --> sc-icon

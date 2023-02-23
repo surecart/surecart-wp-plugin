@@ -37,6 +37,8 @@ import Periods from './modules/Periods';
 import Purchases from './modules/Purchases';
 import Tax from './modules/Tax';
 import LineItems from './modules/LineItems';
+import RestoreSubscriptionAtModal from './modules/modals/RestoreSubscriptionAtModal';
+import PauseSubscriptionUntilModal from './modules/modals/PauseSubscriptionUntilModal';
 
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
@@ -47,7 +49,6 @@ export default () => {
 		useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
-	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		if (id) {
@@ -162,10 +163,6 @@ export default () => {
 		[id]
 	);
 
-	useEffect(() => {
-		setLoading(!hasLoadedSubscription);
-	}, [hasLoadedSubscription]);
-
 	/** Render the cancel button */
 	const renderCancelButton = () => {
 		if (
@@ -238,19 +235,9 @@ export default () => {
 			return null;
 
 		return (
-			<DatePicker
-				placeholder={__('Choose date', 'surecart')}
-				title={__('Pause Subscription Until', 'surecart')}
-				currentDate={''}
-				onChoose={(date) => onPauseSubscription(date)}
-				required={true}
-				isInvalidDate={(date) =>
-					Date.parse(new Date()) > Date.parse(date)
-				}
-				chooseDateLabel={__('Pause subscription', 'surecart')}
-			>
-				<ScMenuItem>{__('Pause Subscription', 'surecart')}</ScMenuItem>
-			</DatePicker>
+			<ScMenuItem onClick={() => setModal('pause')}>
+				{__('Pause Subscription', 'surecart')}
+			</ScMenuItem>
 		);
 	};
 
@@ -259,77 +246,13 @@ export default () => {
 		if (subscription?.status !== 'canceled') return null;
 
 		return (
-			<DatePicker
-				placeholder={__('Choose date', 'surecart')}
-				title={__('Restore Subscription At', 'surecart')}
-				currentDate={new Date(subscription?.restore_at * 1000)}
-				onChoose={(date) => onUpdateRestoreAt(date)}
-				isInvalidDate={(date) =>
-					Date.parse(new Date()) > Date.parse(date)
-				}
-				required={true}
-				chooseDateLabel={__('Update subscription', 'surecart')}
-			>
-				<ScMenuItem>{__('Restore At...', 'surecart')}</ScMenuItem>
-			</DatePicker>
+			<ScMenuItem onClick={() => setModal('restore_at')}>
+				{__('Restore At...', 'surecart')}
+			</ScMenuItem>
 		);
 	};
 
 	const onRequestCloseModal = () => setModal(false);
-
-	const onPauseSubscription = async (date) => {
-		if (!date) return;
-		setLoading(true);
-		try {
-			await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(`surecart/v1/subscriptions/${id}/cancel`, {
-					cancel_behavior: 'immediate',
-				}),
-				data: {
-					restore_at: Date.parse(date) / 1000,
-				},
-			});
-
-			await invalidateResolutionForStore();
-
-			createSuccessNotice(__('Subscription paused.', 'surecart'), {
-				type: 'snackbar',
-			});
-		} catch (e) {
-			console.error(e);
-			setLoading(false);
-		}
-	};
-
-	const onUpdateRestoreAt = async (date) => {
-		if (!date) return;
-		setLoading(true);
-		try {
-			await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(`surecart/v1/subscriptions/${id}`, {
-					cancel_behavior: 'immediate',
-				}),
-				data: {
-					restore_at: Date.parse(date) / 1000,
-				},
-			});
-
-			await invalidateResolutionForStore();
-
-			createSuccessNotice(__('Subscription updated.', 'surecart'), {
-				type: 'snackbar',
-			});
-		} catch (e) {
-			console.error(e);
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart'),
-				{ type: 'snackbar' }
-			);
-			setLoading(false);
-		}
-	};
 
 	return (
 		<Template
@@ -371,10 +294,13 @@ export default () => {
 				<>
 					<Customer
 						customer={subscription?.customer}
-						loading={loading}
+						loading={!hasLoadedSubscription}
 					/>
 					<Purchases subscriptionId={id} />
-					<Tax subscription={subscription} loading={loading} />
+					<Tax
+						subscription={subscription}
+						loading={!hasLoadedSubscription}
+					/>
 				</>
 			}
 			button={
@@ -385,7 +311,7 @@ export default () => {
 					<ScButton
 						type="primary"
 						slot="trigger"
-						loading={loading}
+						loading={!hasLoadedSubscription}
 						caret
 					>
 						{__('Actions', 'surecart')}
@@ -414,7 +340,7 @@ export default () => {
 					subscription={subscription}
 					customer={subscription?.customer}
 					product={subscription?.price?.product}
-					loading={loading}
+					loading={!hasLoadedSubscription}
 				/>
 
 				<CurrentPlan
@@ -422,7 +348,7 @@ export default () => {
 						subscription?.current_period?.checkout?.line_items
 							?.data?.[0]
 					}
-					loading={loading}
+					loading={!hasLoadedSubscription}
 					subscription={subscription}
 				/>
 
@@ -438,7 +364,7 @@ export default () => {
 					<PaymentMethod
 						subscription={subscription}
 						updateSubscription={editSubscription}
-						loading={loading}
+						loading={!hasLoadedSubscription}
 					/>
 				)}
 			</>
@@ -464,6 +390,16 @@ export default () => {
 				amountDue={upcoming?.checkout?.amount_due}
 				currency={upcoming?.checkout?.currency}
 				open={modal === 'restore'}
+				onRequestClose={onRequestCloseModal}
+			/>
+
+			<RestoreSubscriptionAtModal
+				open={modal === 'restore_at'}
+				onRequestClose={onRequestCloseModal}
+				currentRestoreAt={subscription?.restore_at}
+			/>
+			<PauseSubscriptionUntilModal
+				open={modal === 'pause'}
 				onRequestClose={onRequestCloseModal}
 			/>
 			{isSaving && <ScBlockUi spinner />}

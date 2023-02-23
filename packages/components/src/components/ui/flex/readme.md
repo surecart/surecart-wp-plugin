@@ -33,7 +33,6 @@
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-login-form](../../controllers/login)
  - [sc-order](../../controllers/dashboard/order)
- - [sc-order-confirm-provider](../../providers/order-confirm-provider)
  - [sc-pagination](../pagination)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
@@ -53,7 +52,6 @@ graph TD;
   sc-downloads-list --> sc-flex
   sc-login-form --> sc-flex
   sc-order --> sc-flex
-  sc-order-confirm-provider --> sc-flex
   sc-pagination --> sc-flex
   sc-password-nag --> sc-flex
   sc-payment-methods-list --> sc-flex
