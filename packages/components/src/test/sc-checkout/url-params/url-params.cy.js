@@ -84,6 +84,7 @@ describe('Line Items', () => {
       expect(request.body.line_items.length).to.eq(1);
       expect(request.body.line_items[0]['price_id']).to.eq('price_id');
       expect((request.body.line_items[0]['quantity']).toString()).to.eq('2');
+      expect((request.body.shipping_address.country)).to.eq('DK');
     })
   });
 });
@@ -91,7 +92,10 @@ describe('Line Items', () => {
 describe('Coupons', () => {
   it('Applies a coupon', () => {
     cy.visit('/test/sc-checkout/url-params?coupon=TESTCOUPON');
-    cy.wait('@createUpdate').its('request.body.discount').should('have.property', 'promotion_code', 'TESTCOUPON');
+    cy.wait('@createUpdate').then(({ request }) => {
+      expect(request.body.discount.promotion_code).to.eq('TESTCOUPON');
+      expect((request.body.shipping_address.country)).to.eq('DK');
+    })
   })
 });
 
