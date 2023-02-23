@@ -36,11 +36,11 @@ import PendingUpdate from './modules/PendingUpdate';
 import Periods from './modules/Periods';
 import Purchases from './modules/Purchases';
 import Tax from './modules/Tax';
-import PaymentMethod from '../edit/modules/PaymentMethod';
 import PayOffSubscriptionModal from './modules/modals/PayOffSubscriptionModal';
 import LineItems from './modules/LineItems';
 import RestoreSubscriptionAtModal from './modules/modals/RestoreSubscriptionAtModal';
 import PauseSubscriptionUntilModal from './modules/modals/PauseSubscriptionUntilModal';
+import RenewSubscriptionAtModal from './modules/modals/RenewSubscriptionAtModal';
 
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
@@ -271,46 +271,13 @@ export default () => {
 		if (!['past_due', 'active'].includes(subscription?.status)) return null;
 
 		return (
-			<DatePicker
-				placeholder={__('Choose date', 'surecart')}
-				title={__('Renew subscription at?', 'surecart')}
-				currentDate={
-					new Date(subscription?.current_period_end_at * 1000)
-				}
-				onChoose={(date) => onUpdateRenewAt(date)}
-				minDate={new Date()}
-				required={true}
-				chooseDateLabel={__('Update subscription', 'surecart')}
-			>
-				<ScMenuItem>{__('Renew At...', 'surecart')}</ScMenuItem>
-			</DatePicker>
+			<ScMenuItem onClick={() => setModal('renew_at')}>
+				{__('Renew At...', 'surecart')}
+			</ScMenuItem>
 		);
 	};
 
 	const onRequestCloseModal = () => setModal(false);
-
-	const onUpdateRenewAt = async (date) => {
-		setLoading(true);
-		try {
-			await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(
-					`surecart/v1/periods/${subscription?.current_period?.id}`
-				),
-				data: {
-					end_at: date,
-				},
-			});
-
-			await invalidateResolutionForStore();
-			createSuccessNotice(__('Subscription updated.', 'surecart'), {
-				type: 'snackbar',
-			});
-		} catch (e) {
-			console.error(e);
-			setLoading(false);
-		}
-	};
 
 	return (
 		<Template
@@ -461,6 +428,11 @@ export default () => {
 			<PauseSubscriptionUntilModal
 				open={modal === 'pause'}
 				onRequestClose={onRequestCloseModal}
+			/>
+			<RenewSubscriptionAtModal
+				open={modal === 'renew_at'}
+				onRequestClose={onRequestCloseModal}
+				subscription={subscription}
 			/>
 			<PayOffSubscriptionModal
 				open={modal === 'pay_off'}
