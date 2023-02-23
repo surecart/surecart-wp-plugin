@@ -6,7 +6,7 @@
 	"category": "surecart",
 	"keywords": ["account", "user", "dashboard"],
   "textdomain": "surecart",
-	"ancestor": ["surecart/dashboard-page"],
+	"ancestor": ["surecart/customer-dashboard"],
 	"supports": {
 		"reusable": false,
 		"html": false

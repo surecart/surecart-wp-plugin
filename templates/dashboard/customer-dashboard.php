@@ -1,52 +1,42 @@
 <?php
 /**
- * Donation form block pattern
+ * Customer dashboard pattern
  */
 return [
-	'title'      => __( 'Order Confirmation', 'surecart' ),
+	'title'      => __( 'Customer Dashboard', 'surecart' ),
 	'categories' => [],
 	'blockTypes' => [],
-	'content'    => '<!-- wp:surecart/customer-dashboard -->
-	<sc-tab-group style="font-size:16px;font-family:var(--sc-font-sans)" class="wp-block-surecart-customer-dashboard alignwide"><!-- wp:surecart/dashboard-tabs -->
-		<!-- wp:surecart/dashboard-tab {"id":"6494481d-dd18-4323-8a68-2eec728a531c","title":"Dashboard","panel":"dashboard","icon":"shopping-bag"} -->
-		<sc-tab slot="nav"><sc-icon style="font-size:18px" slot="prefix" name="shopping-bag"></sc-icon>Dashboard</sc-tab>
-		<!-- /wp:surecart/dashboard-tab -->
+	'content'    => '<!-- wp:surecart/columns -->
+	<sc-columns is-stacked-on-mobile="1" class="wp-block-surecart-columns"><!-- wp:surecart/column {"layout":{"type":"constrained","justifyContent":"center","contentSize":"100%"},"width":"33.33%","sticky":false,"style":{"color":{"background":"#f2fafc"},"spacing":{"blockGap":"var:preset|spacing|80","padding":{"top":"6.7rem","right":"6.7rem","bottom":"6.7rem","left":"6.7rem"}}}} -->
+	<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-center has-background" style="background-color:#f2fafc;padding-top:6.7rem;padding-right:6.7rem;padding-bottom:6.7rem;padding-left:6.7rem;flex-basis:33.33%;--sc-column-content-width:100%;--sc-form-row-spacing:var:preset|spacing|80"><!-- wp:surecart/store-logo {"width":201} /-->
 
-		<!-- wp:surecart/dashboard-tab {"id":"1543ae69-a38d-4e74-b1fd-bad2b8ae9e49","title":"Account","panel":"account","icon":"user"} -->
-		<sc-tab slot="nav"><sc-icon style="font-size:18px" slot="prefix" name="user"></sc-icon>Account</sc-tab>
-		<!-- /wp:surecart/dashboard-tab -->
+	<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"left"},"style":{"spacing":{"blockGap":"var:preset|spacing|30"}}} -->
+	<div class="wp-block-buttons"><!-- wp:button {"line_items":[{"quantity":1}]} -->
+	<div class="wp-block-button"><a class="wp-block-button__link wp-element-button">Terms</a></div>
+	<!-- /wp:button -->
 
-		<!-- wp:surecart/dashboard-tab {"id":"8d7824d1-bd96-4d25-99ae-e68bfc8d63c1","title":"Logout","panel":"logout","icon":"log-out"} -->
-		<sc-tab slot="nav"><sc-icon style="font-size:18px" slot="prefix" name="log-out"></sc-icon>Logout</sc-tab>
-		<!-- /wp:surecart/dashboard-tab -->
-		<!-- /wp:surecart/dashboard-tabs -->
+	<!-- wp:button {"line_items":[{"quantity":1}]} -->
+	<div class="wp-block-button"><a class="wp-block-button__link wp-element-button">Privacy</a></div>
+	<!-- /wp:button --></div>
+	<!-- /wp:buttons -->
 
-		<!-- wp:surecart/dashboard-pages -->
-		<!-- wp:surecart/dashboard-page {"id":"8d7824d1-bd96-4d25-99ae-e68bfc8d63c1","name":"logout","title":"New Tab 6"} -->
-		<!-- wp:surecart/heading {"title":"Are you sure you want to logout?"} -->
-		<sc-heading>Are you sure you want to logout?<span slot="description"></span><span slot="end"></span></sc-heading>
-		<!-- /wp:surecart/heading -->
+	<!-- wp:loginout /--></sc-column>
+	<!-- /wp:surecart/column -->
 
-		<!-- wp:surecart/logout-button /-->
-		<!-- /wp:surecart/dashboard-page -->
+	<!-- wp:surecart/column {"layout":{"type":"constrained","contentSize":"800px"},"width":"66.66%","style":{"spacing":{"blockGap":"0","padding":{"top":"var:preset|spacing|70","right":"var:preset|spacing|70","bottom":"var:preset|spacing|70","left":"var:preset|spacing|70"}}}} -->
+	<sc-column class="wp-block-surecart-column is-layout-constrained" style="padding-top:var(--wp--preset--spacing--70);padding-right:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--70);padding-left:var(--wp--preset--spacing--70);flex-basis:66.66%;--sc-column-content-width:800px;--sc-form-row-spacing:0"><!-- wp:surecart/customer-dashboard -->
+	<div style="font-size:16px;font-family:var(--sc-font-sans)" class="wp-block-surecart-customer-dashboard alignwide"><!-- wp:surecart/customer-subscriptions /-->
 
-		<!-- wp:surecart/dashboard-page {"id":"1543ae69-a38d-4e74-b1fd-bad2b8ae9e49","name":"account","title":"New Tab 5"} -->
-		<!-- wp:surecart/wordpress-account /-->
+	<!-- wp:surecart/customer-downloads /-->
 
-		<!-- wp:surecart/customer-billing-details /-->
-		<!-- /wp:surecart/dashboard-page -->
+	<!-- wp:surecart/customer-payment-methods /-->
 
-		<!-- wp:surecart/dashboard-page {"id":"6494481d-dd18-4323-8a68-2eec728a531c","name":"dashboard","title":"New Tab 2"} -->
-		<!-- wp:surecart/customer-subscriptions /-->
+	<!-- wp:surecart/customer-orders /-->
 
-		<!-- wp:surecart/customer-downloads /-->
+	<!-- wp:surecart/customer-invoices /-->
 
-		<!-- wp:surecart/customer-payment-methods {"title":"Payment Methods"} /-->
-
-		<!-- wp:surecart/customer-orders /-->
-
-		<!-- /wp:surecart/dashboard-page -->
-		<!-- /wp:surecart/dashboard-pages --></sc-tab-group>
-		<!-- /wp:surecart/customer-dashboard -->
-	',
+	<!-- wp:surecart/customer-billing-details /--></div>
+	<!-- /wp:surecart/customer-dashboard --></sc-column>
+	<!-- /wp:surecart/column --></sc-columns>
+	<!-- /wp:surecart/columns -->',
 ];
