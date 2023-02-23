@@ -68,12 +68,12 @@
   width: var(--sc-drawer-size, 400px);
   height: 100%;
 }
-/* .drawer__header {
+.drawer__header {
   display: flex;
   align-items: center;
   padding: var(--sc-drawer-header-spacing);
   border-bottom: var(--sc-drawer-border);
-} */
+}
 
 .drawer__title {
   flex: 1 1 auto;
@@ -94,6 +94,11 @@
   flex: 1 1 auto;
 }
 
+
+.drawer__footer {
+  border-top: var(--sc-drawer-border);
+  padding: var(--sc-drawer-footer-spacing);
+}
 /* slot[name='footer']::slotted(*) {
   border-top: var(--sc-drawer-border);
   padding: var(--sc-drawer-footer-spacing);

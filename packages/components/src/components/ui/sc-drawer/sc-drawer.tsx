@@ -204,20 +204,22 @@ export class ScDrawer {
           ref={el => (this.panel = el as HTMLElement)}
         >
           {!this.noHeader && (
-            <header part="header" class="drawer__header">
+            <header part="header">
               <slot name="header">
-                <h2 part="title" class="drawer__title" id="title">
-                  {/** If there's no label, use an invisible character to prevent the header from collapsing */}
-                  <slot name="label">{this.label.length > 0 ? this.label : ' '} </slot>
-                </h2>
-                <sc-icon
-                  part="close-button"
-                  exportparts="base:close-button__base"
-                  class="drawer__close"
-                  name="x"
-                  label={__('Close', 'surecart')}
-                  onClick={() => this.requestClose('close-button')}
-                ></sc-icon>
+                <div class="drawer__header">
+                  <h2 part="title" class="drawer__title" id="title">
+                    {/** If there's no label, use an invisible character to prevent the header from collapsing */}
+                    <slot name="label">{this.label.length > 0 ? this.label : ' '} </slot>
+                  </h2>
+                  <sc-icon
+                    part="close-button"
+                    exportparts="base:close-button__base"
+                    class="drawer__close"
+                    name="x"
+                    label={__('Close', 'surecart')}
+                    onClick={() => this.requestClose('close-button')}
+                  ></sc-icon>
+                </div>
               </slot>
             </header>
           )}

@@ -8,8 +8,6 @@ import {
 	ScIcon,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
-import { useState } from 'react';
-
 import Box from '../../ui/Box';
 
 export default ({ product, updateProduct, loading }) => {

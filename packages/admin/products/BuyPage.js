@@ -13,6 +13,9 @@ import {
 	ScDropdown,
 	ScIcon,
 	ScForm,
+	ScFlex,
+	ScBreadcrumb,
+	ScBreadcrumbs,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { select, useDispatch } from '@wordpress/data';
@@ -188,29 +191,21 @@ export default ({ id }) => {
 						size="small"
 						href="admin.php?page=sc-products"
 					>
-						<sc-icon name="arrow-left"></sc-icon>
+						<ScIcon name="arrow-left" />
 					</ScButton>
-					<sc-breadcrumbs>
-						<sc-breadcrumb>
+					<ScBreadcrumbs>
+						<ScBreadcrumb>
 							<Logo display="block" />
-						</sc-breadcrumb>
-						<sc-breadcrumb href="admin.php?page=sc-products">
+						</ScBreadcrumb>
+						<ScBreadcrumb href="admin.php?page=sc-products">
 							{__('Products', 'surecart')}
-						</sc-breadcrumb>
-						<sc-breadcrumb>
-							<sc-flex style={{ gap: '1em' }}>
-								{__('Edit Product', 'surecart')}
-								{product?.archived && (
-									<>
-										{' '}
-										<sc-tag type="warning">
-											{__('Archived', 'surecart')}
-										</sc-tag>
-									</>
-								)}
-							</sc-flex>
-						</sc-breadcrumb>
-					</sc-breadcrumbs>
+						</ScBreadcrumb>
+						<ScBreadcrumb>
+							<ScFlex style={{ gap: '1em' }}>
+								{__('Edit Buy Page', 'surecart')}
+							</ScFlex>
+						</ScBreadcrumb>
+					</ScBreadcrumbs>
 				</div>
 			}
 			button={button}
