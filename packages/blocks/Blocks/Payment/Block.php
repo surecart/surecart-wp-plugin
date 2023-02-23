@@ -28,6 +28,7 @@ class Block extends BaseBlock {
 	public function render( $attributes, $content ) {
 		$mode = $this->block->context['surecart/form/mode'] ?? 'live';
 
+		$processors      = Processor::where( [ 'live_mode' => 'test' === $mode ? false : true ] )->get();
 		$stripe          = $this->getProcessorByType( 'stripe', $processors ) ?? null;
 		$payment_element = (bool) get_option( 'sc_stripe_payment_element', false );
 
