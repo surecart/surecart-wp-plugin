@@ -4,11 +4,11 @@
 
 
 		<?php if ( ! empty( $product->image->url ) ) : ?>
-		<!-- wp:image {"sizeSlug":"full","linkDestination":"none","style":{"border":{"radius":"5px"}}} -->
-			<figure class="wp-block-image size-full is-resized has-custom-border">
-				<img src="<?php echo esc_url( $product->image->url ); ?>" alt="" style="border-radius:5px" />
-			</figure>
-		<!-- /wp:image -->
+			<!-- wp:image {"sizeSlug":"full","linkDestination":"none","style":{"border":{"radius":"5px"}}} -->
+				<figure class="wp-block-image size-full is-resized has-custom-border">
+					<img src="<?php echo esc_url( $product->image->url ); ?>" alt="" style="border-radius:5px" />
+				</figure>
+			<!-- /wp:image -->
 		<?php endif; ?>
 
 		<!-- wp:paragraph {"fontSize":"medium"} -->
