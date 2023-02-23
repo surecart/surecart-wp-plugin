@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { ScFlex } from '@surecart/components-react';
 import {
 	ScBlockUi,
 	ScButton,
@@ -211,9 +212,11 @@ export default ({ download, product, className }) => {
 						`}
 					>
 						{isCurrentRelease && (
-							<ScTag type="info" size="small">
-								{__('Current Release', 'surecart')}
-							</ScTag>
+							<>
+								<ScTag type="info" size="small">
+									{__('Current Release', 'surecart')}
+								</ScTag>{' '}
+							</>
 						)}
 						<div
 							css={css`
@@ -261,54 +264,66 @@ export default ({ download, product, className }) => {
 					</div>
 				</div>
 
-				<ScDropdown slot="suffix" placement="bottom-end">
-					<ScButton type="text" slot="trigger" circle>
-						<ScIcon name="more-horizontal" />
-					</ScButton>
-					<ScMenu>
-						{download?.media && (
-							<Fragment>
-								<MediaLibrary
-									onSelect={replaceItem}
-									multiple={false}
-									render={({ setOpen }) => {
-										return (
-											<ScMenuItem
-												onClick={() => setOpen(true)}
-											>
-												<ScIcon
-													name="repeat"
-													slot="prefix"
-												/>
-												{__('Replace', 'surecart')}
-											</ScMenuItem>
-										);
-									}}
-								></MediaLibrary>
-								<ScMenuDivider></ScMenuDivider>
-							</Fragment>
-						)}
+				<ScFlex alignItems="center" slot="suffix">
+					{!download?.url && (
+						<ScTag type="success" size="small">
+							<ScFlex alignItems="center">
+								<ScIcon name="shield" />
+								<span>{__('Secure', 'surecart')}</span>
+							</ScFlex>
+						</ScTag>
+					)}
+					<ScDropdown placement="bottom-end">
+						<ScButton type="text" slot="trigger" circle>
+							<ScIcon name="more-horizontal" />
+						</ScButton>
+						<ScMenu>
+							{download?.media && (
+								<Fragment>
+									<MediaLibrary
+										onSelect={replaceItem}
+										multiple={false}
+										render={({ setOpen }) => {
+											return (
+												<ScMenuItem
+													onClick={() =>
+														setOpen(true)
+													}
+												>
+													<ScIcon
+														name="repeat"
+														slot="prefix"
+													/>
+													{__('Replace', 'surecart')}
+												</ScMenuItem>
+											);
+										}}
+									></MediaLibrary>
+									<ScMenuDivider></ScMenuDivider>
+								</Fragment>
+							)}
 
-						<ScMenuItem onClick={downloadItem}>
-							<ScIcon name="download-cloud" slot="prefix" />
-							{__('Download', 'surecart')}
-						</ScMenuItem>
+							<ScMenuItem onClick={downloadItem}>
+								<ScIcon name="download-cloud" slot="prefix" />
+								{__('Download', 'surecart')}
+							</ScMenuItem>
 
-						<ScMenuDivider></ScMenuDivider>
+							<ScMenuDivider></ScMenuDivider>
 
-						<ScMenuItem onClick={toggleDisable}>
-							<ScIcon name="archive" slot="prefix" />
-							{download?.archived
-								? __('Un-Archive', 'surecart')
-								: __('Archive', 'surecart')}
-						</ScMenuItem>
+							<ScMenuItem onClick={toggleDisable}>
+								<ScIcon name="archive" slot="prefix" />
+								{download?.archived
+									? __('Un-Archive', 'surecart')
+									: __('Archive', 'surecart')}
+							</ScMenuItem>
 
-						<ScMenuItem onClick={onRemove}>
-							<ScIcon name="trash" slot="prefix" />
-							{__('Remove', 'surecart')}
-						</ScMenuItem>
-					</ScMenu>
-				</ScDropdown>
+							<ScMenuItem onClick={onRemove}>
+								<ScIcon name="trash" slot="prefix" />
+								{__('Remove', 'surecart')}
+							</ScMenuItem>
+						</ScMenu>
+					</ScDropdown>
+				</ScFlex>
 			</ScStackedListRow>
 			{loading && <ScBlockUi spinner />}
 		</Fragment>
