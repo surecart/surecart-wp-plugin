@@ -5,7 +5,7 @@ import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../functions/fetch';
 import { expand } from '../../../services/session';
 import { clearOrder } from '../../../store/checkouts';
-import { Checkout } from '../../../types';
+import { Checkout, ManualPaymentMethod } from '../../../types';
 
 /**
  * This component listens to the order status
@@ -22,6 +22,9 @@ export class ScOrderConfirmProvider {
 
   /** Holds the completed order id */
   @State() completedOrderId: string;
+
+  /** Whether to show success modal */
+  @State() showSuccessModal: boolean = false;
 
   /** The form id */
   @Prop() formId: number;
@@ -73,6 +76,14 @@ export class ScOrderConfirmProvider {
       // make sure form state changes before redirecting
       setTimeout(() => {
         this.completedOrderId = this.order?.id;
+        const successUrl = this?.order?.metadata?.success_url || this.successUrl;
+        if(successUrl){
+          window.location.assign(addQueryArgs(successUrl, { order:this.completedOrderId }));
+        }
+        else{
+          this.showSuccessModal = true;
+        }
+
         // make sure we clear the order state no matter what.
         clearOrder(this.formId, this.mode);
       }, 50);
@@ -85,6 +96,8 @@ export class ScOrderConfirmProvider {
   }
 
   render() {
+    const manualPaymentMethod = this.order?.manual_payment_method as ManualPaymentMethod;
+
     return (
       <Host>
         <slot />
@@ -101,6 +114,9 @@ export class ScOrderConfirmProvider {
             <span slot="description">
               {this.successText?.description || __('Your payment was successful, and your order is complete. A receipt is on its way to your inbox.', 'surecart')}
             </span>
+            {!!manualPaymentMethod?.name && !!manualPaymentMethod?.instructions && (
+            <sc-order-manual-instructions manualPaymentTitle={manualPaymentMethod?.name} manualPaymentInstructions={manualPaymentMethod?.instructions} />
+          )}
             <sc-button href={this.getSuccessUrl()} size="large" type="primary">
               {this.successText?.button || __('Continue', 'surecart')}
               <sc-icon name="arrow-right" slot="suffix" />
