@@ -36,6 +36,8 @@ import PendingUpdate from './modules/PendingUpdate';
 import Periods from './modules/Periods';
 import Purchases from './modules/Purchases';
 import Tax from './modules/Tax';
+import PaymentMethod from '../edit/modules/PaymentMethod';
+import PayOffSubscriptionModal from './modules/modals/PayOffSubscriptionModal';
 import LineItems from './modules/LineItems';
 import RestoreSubscriptionAtModal from './modules/modals/RestoreSubscriptionAtModal';
 import PauseSubscriptionUntilModal from './modules/modals/PauseSubscriptionUntilModal';
@@ -215,7 +217,7 @@ export default () => {
 			return null;
 		if (['completed', 'canceled'].includes(subscription?.status))
 			return null;
-		if (subscription?.finite) return null;
+		if (!subscription?.finite) return null;
 		return (
 			<ScMenuItem
 				href={addQueryArgs('admin.php', {
@@ -237,6 +239,18 @@ export default () => {
 		return (
 			<ScMenuItem onClick={() => setModal('pause')}>
 				{__('Pause Subscription', 'surecart')}
+			</ScMenuItem>
+		);
+	};
+	const renderPayOffButton = () => {
+		if (['completed', 'canceled'].includes(subscription?.status))
+			return null;
+
+		if (!subscription?.finite) return null;
+
+		return (
+			<ScMenuItem onClick={() => setModal('pay_off')}>
+				{__('Pay Off Subscription', 'surecart')}
 			</ScMenuItem>
 		);
 	};
@@ -327,6 +341,7 @@ export default () => {
 						)}
 						{renderUpdateButton()}
 						{renderPauseButton()}
+						{renderPayOffButton()}
 						{renderCompleteButton()}
 						{renderCancelButton()}
 						{renderRestoreAtButton()}
@@ -400,6 +415,10 @@ export default () => {
 			/>
 			<PauseSubscriptionUntilModal
 				open={modal === 'pause'}
+				onRequestClose={onRequestCloseModal}
+			/>
+			<PayOffSubscriptionModal
+				open={modal === 'pay_off'}
 				onRequestClose={onRequestCloseModal}
 			/>
 			{isSaving && <ScBlockUi spinner />}

@@ -1,4 +1,9 @@
-import { ScBlockUi, ScButton, ScDialog } from '@surecart/components-react';
+import {
+	ScAlert,
+	ScBlockUi,
+	ScButton,
+	ScDialog,
+} from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import apiFetch from '@wordpress/api-fetch';
 import { store as coreStore } from '@wordpress/core-data';
@@ -7,6 +12,7 @@ import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import Error from '../../../../components/Error';
+import { addQueryArgs } from '@wordpress/url';
 
 export default ({ open, onRequestClose }) => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
@@ -15,19 +21,21 @@ export default ({ open, onRequestClose }) => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { invalidateResolutionForStore } = useDispatch(coreStore);
 
-	const cancelUpdate = async () => {
+	const onPayOff = async () => {
 		try {
 			setLoading(true);
 			setError(null);
 			await apiFetch({
 				method: 'PATCH',
-				path: `surecart/v1/subscriptions/${id}`,
-				data: {
-					purge_pending_update: true,
-				},
+				path: addQueryArgs(`surecart/v1/subscriptions/${id}/pay_off`, {
+					update_behavior: 'immediate',
+					pay_off: 1,
+				}),
+				data: {},
 			});
+
 			await invalidateResolutionForStore();
-			createSuccessNotice(__('Update canceled.', 'surecart'), {
+			createSuccessNotice(__('Subscription paid off.', 'surecart'), {
 				type: 'snackbar',
 			});
 			onRequestClose();
@@ -46,24 +54,27 @@ export default ({ open, onRequestClose }) => {
 			onScRequestClose={onRequestClose}
 		>
 			<Error error={error} setError={setError} />
-			{__(
-				'Are you sure you wish to cancel the pending update?',
-				'surecart'
-			)}
+
+			<ScAlert
+				type="warning"
+				title={__('Confirm Charge', 'surecart')}
+				open
+			>
+				{__(
+					'Are you sure you want to pay off subscription? This will immediately charge the customer the remaining payments on their plan.',
+					'surecart'
+				)}
+			</ScAlert>
 			<div slot="footer">
 				<ScButton
 					type="text"
 					onClick={onRequestClose}
 					disabled={loading}
 				>
-					{__("Don't cancel", 'surecart')}
-				</ScButton>{' '}
-				<ScButton
-					type="primary"
-					onClick={() => cancelUpdate()}
-					disabled={loading}
-				>
 					{__('Cancel', 'surecart')}
+				</ScButton>{' '}
+				<ScButton type="primary" onClick={onPayOff} disabled={loading}>
+					{__('Pay off', 'surecart')}
 				</ScButton>
 			</div>
 			{loading && (
