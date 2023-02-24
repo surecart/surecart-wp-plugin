@@ -27,7 +27,11 @@ export default ({ onRequestClose, product }) => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	// update the price.
-	const updatePrice = (data) => {
+	const updatePrice = (data, isOverride = false) => {
+		if (isOverride) {
+			setPrice({ ...data });
+			return;
+		}
 		setPrice({ ...price, ...data });
 	};
 
