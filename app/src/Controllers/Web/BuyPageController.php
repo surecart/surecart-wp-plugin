@@ -81,8 +81,9 @@ class BuyPageController {
 			return $this->handleError( $this->product );
 		}
 
+		$enabled = ! empty( $this->product->metadata->wp_buy_link_enabled ) ? 'true' === $this->product->metadata->wp_buy_link_enabled : false;
 		// if this product is a draft, check read permissions.
-		if ( 'draft' === $this->product->status && ! current_user_can( 'read_sc_products' ) ) {
+		if ( ! $enabled && ! current_user_can( 'read_sc_products' ) ) {
 			return $this->notFound();
 		}
 

@@ -159,13 +159,13 @@ export default ({ id }) => {
 				onDelete={onDeleteProduct}
 				onToggleArchive={onToggleArchiveProduct}
 			/>
-			{!!product?.slug && (
-				<BuyLink
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-			)}
+
+			<BuyLink
+				product={product}
+				updateProduct={editProduct}
+				loading={!hasLoadedProduct}
+			/>
+
 			<SaveButton busy={deletingProduct || savingProduct}>
 				{__('Save Product', 'surecart')}
 			</SaveButton>

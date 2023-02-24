@@ -13,18 +13,54 @@ import {
 	ScDropdown,
 	ScIcon,
 	ScForm,
+	ScDivider,
+	ScFormControl,
+	ScInput,
 } from '@surecart/components-react';
+import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
+import { BlockPreview } from '@wordpress/block-editor';
+import { store as noticesStore } from '@wordpress/notices';
 import { __ } from '@wordpress/i18n';
 import { useState } from 'react';
+import { useDispatch } from '@wordpress/data';
 
 export default ({ product, updateProduct, loading }) => {
+	const { createSuccessNotice, createErrorNotice } =
+		useDispatch(noticesStore);
 	const [drawer, setDrawer] = useState(false);
 	const updateMeta = (data) =>
 		updateProduct({ metadata: { ...(product?.metadata || {}), ...data } });
 
+	const menuCss = css`
+		position: relative;
+		display: grid;
+		gap: var(--sc-spacing-large);
+		align-items: stretch;
+		text-align: left;
+		color: var(--sc-menu-item-color, var(--sc-color-gray-700));
+		padding: var(--sc-spacing-x-large);
+	`;
+
+	const copy = async (text) => {
+		try {
+			await navigator.clipboard.writeText(text);
+			createSuccessNotice(__('Copied to clipboard.', 'surecart'), {
+				type: 'snackbar',
+			});
+		} catch (err) {
+			console.error(err);
+			createErrorNotice(__('Error copying to clipboard.', 'surecart'), {
+				type: 'snackbar',
+			});
+		}
+	};
+
 	return (
 		<>
-			<ScDropdown placement="bottom-end">
+			<ScDropdown
+				placement="bottom-end"
+				style={{ '--panel-width': '380px' }}
+			>
 				<ScButton slot="trigger" caret>
 					<div
 						slot="prefix"
@@ -32,7 +68,7 @@ export default ({ product, updateProduct, loading }) => {
 							width: 6px;
 							height: 6px;
 							background-color: ${product?.metadata
-								?.wp_buy_link_enabled
+								?.wp_buy_link_enabled === 'true'
 								? 'var(--sc-color-success-500)'
 								: 'var(--sc-color-gray-300)'};
 							border-radius: 999px;
@@ -41,40 +77,119 @@ export default ({ product, updateProduct, loading }) => {
 					{__('Instant Buy Link', 'surecart')}
 				</ScButton>
 				<ScMenu>
-					<div
-						css={css`
-							position: relative;
-							display: flex;
-							align-items: stretch;
-							text-align: left;
-							color: var(
-								--sc-menu-item-color,
-								var(--sc-color-gray-700)
-							);
-							padding: var(--sc-spacing-xx-small)
-								var(--sc-spacing-x-large);
-						`}
-					>
+					<div css={menuCss}>
 						<ScSwitch
-							checked={product?.metadata?.wp_buy_link_enabled}
+							checked={
+								product?.metadata?.wp_buy_link_enabled ===
+								'true'
+							}
 							onScChange={(e) =>
 								updateMeta({
-									wp_buy_link_enabled: e.target.checked,
+									wp_buy_link_enabled: e.target.checked
+										? 'true'
+										: 'false',
 								})
 							}
 						>
-							{__('Enabled', 'surecart')}
+							{__('Published', 'surecart')}
+
+							<span slot="description">
+								{__(
+									'Instantly publish a shareable page for this product.',
+									'surecart'
+								)}
+							</span>
 						</ScSwitch>
+
+						<ScMenuDivider />
+						<ScSwitch
+							checked={
+								product?.metadata
+									?.wp_buy_link_product_image_disabled !==
+								'true'
+							}
+							onScChange={(e) =>
+								updateMeta({
+									wp_buy_link_product_image_disabled: e.target
+										.checked
+										? 'false'
+										: 'true',
+								})
+							}
+						>
+							{__('Show product image', 'surecart')}
+						</ScSwitch>
+
+						<ScSwitch
+							checked={
+								product?.metadata
+									?.wp_buy_link_product_description_disabled !==
+								'true'
+							}
+							onScChange={(e) =>
+								updateMeta({
+									wp_buy_link_product_description_disabled: e
+										.target.checked
+										? 'false'
+										: 'true',
+								})
+							}
+						>
+							{__('Show product description', 'surecart')}
+						</ScSwitch>
+						<ScSwitch
+							checked={
+								product?.metadata
+									?.wp_buy_link_coupon_field_disabled !==
+								'true'
+							}
+							onScChange={(e) =>
+								updateMeta({
+									wp_buy_link_coupon_field_disabled: e.target
+										.checked
+										? 'false'
+										: 'true',
+								})
+							}
+						>
+							{__('Show coupon field', 'surecart')}
+						</ScSwitch>
+						<ScDivider />
+						<ScInput
+							label={__('URL Slug', 'surecart')}
+							help={__('The last part of the URL', 'surecart')}
+							value={product?.slug}
+							onScInput={(e) =>
+								updateProduct({ slug: e.target.value })
+							}
+							required
+						/>
+						<ScInput
+							label={__('Link', 'surecart')}
+							readonly
+							value={`${scData?.home_url}/buy/${product?.slug}`}
+						>
+							<ScButton
+								type="text"
+								slot="suffix"
+								onClick={() =>
+									copy(
+										`${scData?.home_url}/buy/${product?.slug}`
+									)
+								}
+							>
+								<ScIcon name="copy" />
+							</ScButton>
+						</ScInput>
+						<ScButton
+							href={`${scData?.home_url}/buy/${product?.slug}`}
+						>
+							{product?.metadata?.wp_buy_link_enabled === 'true'
+								? __('View Page', 'surecart')
+								: __('Preview Page', 'surecart')}
+							<ScIcon name="external-link" slot="suffix" />
+						</ScButton>
 					</div>
-					{!!product?.metadata?.wp_buy_link_enabled && (
-						<>
-							<ScMenuDivider />
-							<ScMenuItem onClick={() => setDrawer(true)}>
-								<ScIcon name="sliders" slot="prefix" />
-								{__('Edit Settings', 'surecart')}
-							</ScMenuItem>
-						</>
-					)}
 				</ScMenu>
 			</ScDropdown>
 
@@ -156,6 +271,12 @@ export default ({ product, updateProduct, loading }) => {
 							'--sc-form-row-spacing': '30px',
 						}}
 					>
+						<BlockPreview
+							blocks={createBlocksFromInnerBlocksTemplate([
+								['surecart/button', { placeholder: 'Summary' }],
+							])}
+							viewportWidth={800}
+						/>
 						{/* <div>
 							<sc-columns
 								is-stacked-on-mobile="1"

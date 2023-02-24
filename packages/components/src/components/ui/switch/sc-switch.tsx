@@ -109,7 +109,7 @@ export class ScSwitch {
     this.formController = new FormSubmitController(this.el, {
       value: (control: HTMLScChoiceElement) => (control.checked ? control.value : undefined),
     }).addFormData();
-    this.hasDescription = !!this.el.querySelector('[slot="suffix"]');
+    this.hasDescription = !!this.el.querySelector('[slot="description"]');
   }
 
   disconnectedCallback() {

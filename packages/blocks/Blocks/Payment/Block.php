@@ -27,7 +27,7 @@ class Block extends BaseBlock {
 	 */
 	public function render( $attributes, $content = '' ) {
 		$this->attributes = $attributes;
-		$this->mode       = $this->block->context['surecart/form/mode'] ?? 'live';
+		$mode             = $this->block->context['surecart/form/mode'] ?? 'live';
 
 		$processors      = Processor::where( [ 'live_mode' => 'test' === $mode ? false : true ] )->get();
 		$stripe          = $this->getProcessorByType( 'stripe', $processors ) ?? null;
