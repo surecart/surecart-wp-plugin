@@ -342,6 +342,11 @@ export class ScCheckout {
               {this.loadingText?.confirming || __('Finalizing order...', 'surecart')}
             </sc-block-ui>
           )}
+           {this.checkoutState === 'confirmed'  && (this?.order()?.metadata?.success_url || this.successUrl)&& (
+            <sc-block-ui z-index={9} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
+              {this.loadingText?.confirmed || __('Success! Redirecting...', 'surecart')}
+            </sc-block-ui>
+          )}
         </Universe.Provider>
       </div>
     );

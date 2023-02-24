@@ -20,9 +20,6 @@ export class ScOrderConfirmProvider {
   /** The order confirm provider element */
   @Element() el: HTMLScOrderConfirmProviderElement;
 
-  /** Holds the completed order id */
-  @State() completedOrderId: string;
-
   /** Whether to show success modal */
   @State() showSuccessModal: boolean = false;
 
@@ -75,10 +72,9 @@ export class ScOrderConfirmProvider {
     } finally {
       // make sure form state changes before redirecting
       setTimeout(() => {
-        this.completedOrderId = this.order?.id;
         const successUrl = this?.order?.metadata?.success_url || this.successUrl;
         if(successUrl){
-          window.location.assign(addQueryArgs(successUrl, { order:this.completedOrderId }));
+          window.location.assign(addQueryArgs(successUrl, { order:this.order?.id }));
         }
         else{
           this.showSuccessModal = true;
@@ -92,7 +88,7 @@ export class ScOrderConfirmProvider {
 
   getSuccessUrl() {
     const url = this?.order?.metadata?.success_url || this.successUrl;
-    return url ? addQueryArgs(url, { order: this.completedOrderId }) : window?.scData?.pages?.dashboard;
+    return url ? addQueryArgs(url, { order: this.order?.id }) : window?.scData?.pages?.dashboard;
   }
 
   render() {
@@ -101,7 +97,7 @@ export class ScOrderConfirmProvider {
     return (
       <Host>
         <slot />
-        <sc-dialog open={!!this.completedOrderId} style={{ '--body-spacing': 'var(--sc-spacing-xxx-large)' }} noHeader onScRequestClose={e => e.preventDefault()}>
+        <sc-dialog open={!!this.showSuccessModal} style={{ '--body-spacing': 'var(--sc-spacing-xxx-large)' }} noHeader onScRequestClose={e => e.preventDefault()}>
           <div class="confirm__icon">
             <div class="confirm__icon-container">
               <sc-icon name="check" />
