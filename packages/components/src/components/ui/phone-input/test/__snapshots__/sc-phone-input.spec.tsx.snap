@@ -10,7 +10,7 @@ exports[`sc-phone-input renders 1`] = `
           <slot name="prefix"></slot>
         </span>
         <slot>
-          <input class="input__control" id="phone-input-1" inputmode="numeric" part="input" type="number" value="">
+          <input class="input__control" id="phone-input-1" inputmode="numeric" part="input" type="text" value="">
         </slot>
         <span class="input__suffix" part="suffix">
           <slot name="suffix"></slot>
