@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/block.json",
+  "apiVersion": 2,
+	"name": "surecart/customer-login-logout",
+	"title": "Customer Login/Logout",
+	"description": "Displays the customers login/logout.",
+	"category": "surecart",
+	"keywords": ["customer", "login", "logout"],
+  "textdomain": "surecart",
+	"supports": {
+		"reusable": false,
+		"html": false,
+    "multiple": true
+	},
+	"attributes": {
+    "rule_groups": {
+			"type": "array",
+			"default": []
+		}
+	}
+}
