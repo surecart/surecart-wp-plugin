@@ -38,6 +38,7 @@ export class ScProductItemList {
       const response = (await apiFetch({
         path: addQueryArgs(`surecart/v1/products/`, {
           expand: ['prices'],
+          archived: 0,
         }),
       })) as Product[];
       this.products = response;
