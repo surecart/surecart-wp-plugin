@@ -148,8 +148,10 @@ graph TD;
   sc-order-confirm-provider --> sc-dialog
   sc-order-confirm-provider --> sc-icon
   sc-order-confirm-provider --> sc-dashboard-module
+  sc-order-confirm-provider --> sc-order-manual-instructions
   sc-order-confirm-provider --> sc-button
   sc-dashboard-module --> sc-alert
+  sc-order-manual-instructions --> sc-alert
   sc-session-provider --> sc-line-items-provider
   sc-product-buy-page --> sc-checkout
   style sc-checkout fill:#f9f,stroke:#333,stroke-width:4px

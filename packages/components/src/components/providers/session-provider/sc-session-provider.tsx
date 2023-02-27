@@ -338,9 +338,9 @@ export class ScSessionProvider {
     switch (checkout?.status) {
       case 'paid':
       case 'processing':
-        this.scSetState.emit('FINALIZE');
-        this.scSetState.emit('PAID');
         return setTimeout(() => {
+          this.scSetState.emit('FINALIZE');
+          this.scSetState.emit('PAID');
           this.scPaid.emit();
         }, 100);
 

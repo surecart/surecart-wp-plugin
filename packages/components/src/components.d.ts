@@ -1709,18 +1709,6 @@ export namespace Components {
     }
     interface ScOrderConfirmProvider {
         /**
-          * The form id
-         */
-        "formId": number;
-        /**
-          * Are we in test or live mode.
-         */
-        "mode": 'test' | 'live';
-        /**
-          * The current order.
-         */
-        "order": Checkout;
-        /**
           * Success text for the form.
          */
         "successText": {
@@ -6657,14 +6645,6 @@ declare namespace LocalJSX {
     }
     interface ScOrderConfirmProvider {
         /**
-          * The form id
-         */
-        "formId"?: number;
-        /**
-          * Are we in test or live mode.
-         */
-        "mode"?: 'test' | 'live';
-        /**
           * Error event.
          */
         "onScError"?: (event: ScOrderConfirmProviderCustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
@@ -6673,10 +6653,6 @@ declare namespace LocalJSX {
          */
         "onScOrderPaid"?: (event: ScOrderConfirmProviderCustomEvent<Checkout>) => void;
         "onScSetState"?: (event: ScOrderConfirmProviderCustomEvent<string>) => void;
-        /**
-          * The current order.
-         */
-        "order"?: Checkout;
         /**
           * Success text for the form.
          */

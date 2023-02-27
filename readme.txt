@@ -243,7 +243,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.7.0 - February 21, 2023 =
+= 1.7.0 - February 28, 2023 =
 * New: Revoke subscription purchases.
 * New: Ability to cancel manual orders.
 * New: Allow external URLs in downloads.

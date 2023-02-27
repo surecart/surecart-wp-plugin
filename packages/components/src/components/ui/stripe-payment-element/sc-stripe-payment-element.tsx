@@ -104,7 +104,7 @@ export class ScStripePaymentElement {
     if (!this.element) return;
     if (this.order?.status !== 'draft') return;
     const { name, email } = this.order;
-    const { line_1: line1, line_2: line2, city, state, country, postal_code } = this.order?.shipping_address as ShippingAddress;
+    const { line_1: line1, line_2: line2, city, state, country, postal_code } = (this.order?.shipping_address as ShippingAddress) || {};
     this.element.update({
       defaultValues: {
         billingDetails: {
@@ -224,7 +224,7 @@ export class ScStripePaymentElement {
       },
     });
 
-    const { line_1: line1, line_2: line2, city, state, country, postal_code } = this.order?.shipping_address as ShippingAddress;
+    const { line_1: line1, line_2: line2, city, state, country, postal_code } = (this.order?.shipping_address as ShippingAddress) || {};
 
     // create the payment element.
     this.elements
