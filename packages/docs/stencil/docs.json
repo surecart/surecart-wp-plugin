@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-02-27T21:38:55",
+  "timestamp": "2023-02-27T23:02:24",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -21309,6 +21309,42 @@
           "sc-product-line-item"
         ]
       }
+    },
+    {
+      "filePath": "./src/components/controllers/checkout-form/sc-product-selected-price/sc-product-selected-price.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-product-selected-price",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/ui/sc-prose/sc-prose.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-prose",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
     },
     {
       "filePath": "./src/components/context/provider/sc-provider.tsx",

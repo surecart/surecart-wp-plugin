@@ -2404,6 +2404,9 @@ export namespace Components {
         "trialDurationDays": number;
     }
     interface ScProductSelectedPrice {
+        "productId": string;
+    }
+    interface ScProse {
     }
     interface ScProvider {
         "STENCIL_CONTEXT": { [key: string]: any };
@@ -4255,6 +4258,12 @@ declare global {
         prototype: HTMLScProductSelectedPriceElement;
         new (): HTMLScProductSelectedPriceElement;
     };
+    interface HTMLScProseElement extends Components.ScProse, HTMLStencilElement {
+    }
+    var HTMLScProseElement: {
+        prototype: HTMLScProseElement;
+        new (): HTMLScProseElement;
+    };
     interface HTMLScProviderElement extends Components.ScProvider, HTMLStencilElement {
     }
     var HTMLScProviderElement: {
@@ -4670,6 +4679,7 @@ declare global {
         "sc-product-buy-page": HTMLScProductBuyPageElement;
         "sc-product-line-item": HTMLScProductLineItemElement;
         "sc-product-selected-price": HTMLScProductSelectedPriceElement;
+        "sc-prose": HTMLScProseElement;
         "sc-provider": HTMLScProviderElement;
         "sc-purchase-downloads-list": HTMLScPurchaseDownloadsListElement;
         "sc-quantity-select": HTMLScQuantitySelectElement;
@@ -7409,6 +7419,9 @@ declare namespace LocalJSX {
         "trialDurationDays"?: number;
     }
     interface ScProductSelectedPrice {
+        "productId"?: string;
+    }
+    interface ScProse {
     }
     interface ScProvider {
         "STENCIL_CONTEXT"?: { [key: string]: any };
@@ -8504,6 +8517,7 @@ declare namespace LocalJSX {
         "sc-product-buy-page": ScProductBuyPage;
         "sc-product-line-item": ScProductLineItem;
         "sc-product-selected-price": ScProductSelectedPrice;
+        "sc-prose": ScProse;
         "sc-provider": ScProvider;
         "sc-purchase-downloads-list": ScPurchaseDownloadsList;
         "sc-quantity-select": ScQuantitySelect;
@@ -8679,6 +8693,7 @@ declare module "@stencil/core" {
             "sc-product-buy-page": LocalJSX.ScProductBuyPage & JSXBase.HTMLAttributes<HTMLScProductBuyPageElement>;
             "sc-product-line-item": LocalJSX.ScProductLineItem & JSXBase.HTMLAttributes<HTMLScProductLineItemElement>;
             "sc-product-selected-price": LocalJSX.ScProductSelectedPrice & JSXBase.HTMLAttributes<HTMLScProductSelectedPriceElement>;
+            "sc-prose": LocalJSX.ScProse & JSXBase.HTMLAttributes<HTMLScProseElement>;
             "sc-provider": LocalJSX.ScProvider & JSXBase.HTMLAttributes<HTMLScProviderElement>;
             "sc-purchase-downloads-list": LocalJSX.ScPurchaseDownloadsList & JSXBase.HTMLAttributes<HTMLScPurchaseDownloadsListElement>;
             "sc-quantity-select": LocalJSX.ScQuantitySelect & JSXBase.HTMLAttributes<HTMLScQuantitySelectElement>;

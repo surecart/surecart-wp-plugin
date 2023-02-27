@@ -15,7 +15,7 @@
 			<?php echo wp_kses_post( $product->name ); ?>
 		</sc-text>
 
-		<sc-product-selected-price></sc-product-selected-price>
+		<sc-product-selected-price product-id="<?php echo esc_attr( $product->id ); ?>"></sc-product-selected-price>
 
 		<?php if ( $show_description ) : ?>
 			<sc-prose>
@@ -36,8 +36,6 @@
 			<!-- /wp:surecart/price-selector -->
 		<?php endif; ?>
 
-		<sc-order-bumps label="<?php esc_attr_e( 'Recommended', 'surecart' ); ?>"></sc-order-bumps>
-
 	</sc-column>
 	<!-- /wp:surecart/column -->
 
@@ -52,6 +50,7 @@
 		<sc-payment label="Payment" default-processor="stripe" secure-notice="This is a secure, encrypted payment" class="wp-block-surecart-payment"></sc-payment>
 		<!-- /wp:surecart/payment -->
 
+		<sc-order-bumps label="<?php esc_attr_e( 'Recommended', 'surecart' ); ?>"></sc-order-bumps>
 
 		<sc-order-summary collapsible="true" collapsed="true" closed-text="Total" open-text="Total">
 

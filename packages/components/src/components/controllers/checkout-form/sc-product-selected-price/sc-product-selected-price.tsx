@@ -1,4 +1,7 @@
-import { Component, Host, h } from '@stencil/core';
+import { Component, Host, h, Prop } from '@stencil/core';
+import { state as checkoutState } from '@store/checkout';
+import { translateInterval } from 'src/functions/price';
+import { Product } from 'src/types';
 
 @Component({
   tag: 'sc-product-selected-price',
@@ -6,14 +9,19 @@ import { Component, Host, h } from '@stencil/core';
   shadow: true,
 })
 export class ScProductSelectedPrice {
+  @Prop() productId: string;
+
   render() {
+    const price = (checkoutState.checkout?.line_items?.data || []).map(line_item => line_item.price).find(price => (price?.product as Product)?.id === this.productId);
+    console.log({ price });
+    if (!price) return <Host style={{ display: 'none' }}></Host>;
     return (
-      <Host>
-        <div class="selected-price">
-          <span class="selected-price__price">$179 USD</span>
-          <span class="selected-price__interval"> / every 3 months</span>
-        </div>
-      </Host>
+      <div class="selected-price">
+        <span class="selected-price__price">
+          <sc-format-number type="currency" currency={price?.currency} value={price?.amount} />
+        </span>
+        <span class="selected-price__interval">{translateInterval(price?.recurring_interval_count, price?.recurring_interval, '/', '')}</span>
+      </div>
     );
   }
 }

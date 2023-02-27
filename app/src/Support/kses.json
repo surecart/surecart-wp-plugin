@@ -1353,6 +1353,13 @@
     "slot": true
   },
   "sc-product-selected-price": {
+    "product-id": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-prose": {
     "style": true,
     "id": true,
     "class": true,

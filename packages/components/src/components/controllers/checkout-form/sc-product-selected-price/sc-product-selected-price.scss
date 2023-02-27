@@ -9,13 +9,12 @@
   color: var(--sc-color-gray-800);
 
   &__price {
-    font-size: var(--sc-font-size-xx-large);
+    font-size: var(--sc-font-size-xxx-large);
     font-weight: var(--sc-font-weight-bold);
   }
 
   &__interval {
-    color: var(--sc-color-gray-400);
     font-weight: var(--sc-font-weight-bold);
-    opacity: 0.75;
+    opacity: 0.65;
   }
 }
