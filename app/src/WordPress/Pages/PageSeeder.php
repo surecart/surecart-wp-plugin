@@ -124,7 +124,7 @@ class PageSeeder {
 				],
 			)
 		);
-	}f
+	}
 
 	/**
 	 * Create pages that the plugin relies on, storing page IDs in variables.
