@@ -77,6 +77,8 @@ export class ScOrderConfirmProvider {
       // clear the order.
       clearOrder(this.formId, this.mode);
       if (successUrl) {
+        // set state to redirecting.
+        this.scSetState.emit('REDIRECT');
         setTimeout(() => window.location.assign(addQueryArgs(successUrl, { order: this.confirmedCheckout?.id })), 50);
       } else {
         this.showSuccessModal = true;
