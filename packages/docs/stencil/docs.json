@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-02-21T19:31:21",
+  "timestamp": "2023-02-24T08:40:14",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -4435,9 +4435,13 @@
           "sc-dialog",
           "sc-icon",
           "sc-dashboard-module",
+          "sc-order-manual-instructions",
           "sc-button"
         ],
         "sc-dashboard-module": [
+          "sc-alert"
+        ],
+        "sc-order-manual-instructions": [
           "sc-alert"
         ],
         "sc-session-provider": [
@@ -15731,6 +15735,7 @@
         "sc-dialog",
         "sc-icon",
         "sc-dashboard-module",
+        "sc-order-manual-instructions",
         "sc-button"
       ],
       "dependencyGraph": {
@@ -15738,6 +15743,7 @@
           "sc-dialog",
           "sc-icon",
           "sc-dashboard-module",
+          "sc-order-manual-instructions",
           "sc-button"
         ],
         "sc-dialog": [
@@ -15752,6 +15758,9 @@
         ],
         "sc-alert": [
           "sc-icon"
+        ],
+        "sc-order-manual-instructions": [
+          "sc-alert"
         ],
         "sc-checkout": [
           "sc-order-confirm-provider"
@@ -16537,7 +16546,8 @@
       "parts": [],
       "dependents": [
         "sc-order",
-        "sc-order-confirm-components-validator"
+        "sc-order-confirm-components-validator",
+        "sc-order-confirm-provider"
       ],
       "dependencies": [
         "sc-alert"
@@ -16553,6 +16563,9 @@
           "sc-order-manual-instructions"
         ],
         "sc-order-confirm-components-validator": [
+          "sc-order-manual-instructions"
+        ],
+        "sc-order-confirm-provider": [
           "sc-order-manual-instructions"
         ]
       }

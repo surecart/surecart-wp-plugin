@@ -5,7 +5,7 @@ import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../functions/fetch';
 import { expand } from '../../../services/session';
 import { clearOrder } from '../../../store/checkouts';
-import { Checkout } from '../../../types';
+import { Checkout, ManualPaymentMethod } from '../../../types';
 
 /**
  * This component listens to the order status
@@ -20,8 +20,10 @@ export class ScOrderConfirmProvider {
   /** The order confirm provider element */
   @Element() el: HTMLScOrderConfirmProviderElement;
 
-  /** Holds the completed order id */
-  @State() completedOrderId: string;
+  /** Whether to show success modal */
+  @State() showSuccessModal: boolean = false;
+
+  @State() confirmedCheckout: Checkout;
 
   /** The form id */
   @Prop() formId: number;
@@ -59,36 +61,43 @@ export class ScOrderConfirmProvider {
   /** Confirm the order. */
   async confirmOrder() {
     try {
-      const confirmed = (await apiFetch({
+      this.confirmedCheckout = (await apiFetch({
         method: 'PATCH',
         path: addQueryArgs(`surecart/v1/checkouts/${this.order?.id}/confirm`, [expand]),
       })) as Checkout;
       this.scSetState.emit('CONFIRMED');
       // emit the order paid event for tracking scripts.
-      this.scOrderPaid.emit(confirmed);
+      this.scOrderPaid.emit(this.confirmedCheckout);
     } catch (e) {
       console.error(e);
       this.scError.emit(e);
     } finally {
-      // make sure form state changes before redirecting
-      setTimeout(() => {
-        this.completedOrderId = this.order?.id;
-        // make sure we clear the order state no matter what.
-        clearOrder(this.formId, this.mode);
-      }, 50);
+      // get success url.
+      const successUrl = this?.order?.metadata?.success_url || this.successUrl;
+      // clear the order.
+      clearOrder(this.formId, this.mode);
+      if (successUrl) {
+        // set state to redirecting.
+        this.scSetState.emit('REDIRECT');
+        setTimeout(() => window.location.assign(addQueryArgs(successUrl, { order: this.confirmedCheckout?.id })), 50);
+      } else {
+        this.showSuccessModal = true;
+      }
     }
   }
 
   getSuccessUrl() {
-    const url = this?.order?.metadata?.success_url || this.successUrl;
-    return url ? addQueryArgs(url, { order: this.completedOrderId }) : window?.scData?.pages?.dashboard;
+    const url = this.confirmedCheckout?.metadata?.success_url || this.successUrl;
+    return url ? addQueryArgs(url, { order: this.confirmedCheckout?.id }) : window?.scData?.pages?.dashboard;
   }
 
   render() {
+    const manualPaymentMethod = this.confirmedCheckout?.manual_payment_method as ManualPaymentMethod;
+
     return (
       <Host>
         <slot />
-        <sc-dialog open={!!this.completedOrderId} style={{ '--body-spacing': 'var(--sc-spacing-xxx-large)' }} noHeader onScRequestClose={e => e.preventDefault()}>
+        <sc-dialog open={!!this.showSuccessModal} style={{ '--body-spacing': 'var(--sc-spacing-xxx-large)' }} noHeader onScRequestClose={e => e.preventDefault()}>
           <div class="confirm__icon">
             <div class="confirm__icon-container">
               <sc-icon name="check" />
@@ -101,6 +110,14 @@ export class ScOrderConfirmProvider {
             <span slot="description">
               {this.successText?.description || __('Your payment was successful, and your order is complete. A receipt is on its way to your inbox.', 'surecart')}
             </span>
+            {!!manualPaymentMethod?.name && !!manualPaymentMethod?.instructions && (
+              <sc-alert type="info" open style={{ 'text-align': 'left' }}>
+                <span slot="title">{manualPaymentMethod?.name}</span>
+                {manualPaymentMethod?.instructions.split('\n').map(i => {
+                  return <p>{i}</p>;
+                })}
+              </sc-alert>
+            )}
             <sc-button href={this.getSuccessUrl()} size="large" type="primary">
               {this.successText?.button || __('Continue', 'surecart')}
               <sc-icon name="arrow-right" slot="suffix" />

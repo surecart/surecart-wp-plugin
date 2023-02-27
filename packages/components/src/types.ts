@@ -21,10 +21,10 @@ declare global {
       nonce_endpoint: string;
       recaptcha_site_key: string;
       theme: string;
-      pages:{
-        dashboard:string,
-        checkout:string
-      }
+      pages: {
+        dashboard: string;
+        checkout: string;
+      };
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;
@@ -123,7 +123,7 @@ export interface Download {
   url?: string;
 }
 
-export type FormState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalizing' | 'paying' | 'confirming' | 'confirmed' | 'paid' | 'failure' | 'expired';
+export type FormState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalizing' | 'paying' | 'confirming' | 'confirmed' | 'paid' | 'failure' | 'expired' | 'redirecting';
 export type FormStateSetter = 'RESOLVE' | 'REJECT' | 'FINALIZE' | 'PAYING' | 'PAID' | 'EXPIRE' | 'FETCH';
 
 export interface License {
