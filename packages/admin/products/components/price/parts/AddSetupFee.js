@@ -3,42 +3,32 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 
 import { ScInput, ScPriceInput, ScSwitch } from '@surecart/components-react';
-import { useEffect, useState } from 'react';
 
 export default ({ price, updatePrice }) => {
-	const [addSetupFee, setAddSetupFee] = useState(false);
-
-	useEffect(() => {
-		if (price?.setup_fee_name && price?.setup_fee_amount) {
-			setAddSetupFee(true);
-		}
-	}, [price?.setup_fee_name, price?.setup_fee_amount]);
-
 	const onToggleSwitch = (e) => {
-		setAddSetupFee(e.target.checked);
-		if (!e.target.checked) {
-			delete price.setup_fee_amount;
-			delete price.setup_fee_name;
+		const setupFeeEnabled = e.target.checked;
+		if (!setupFeeEnabled) {
+			updatePrice({
+				setup_fee_enabled: false,
+				setup_fee_name: null,
+				setup_fee_amount: 0,
+			});
 
-			updatePrice({ ...price }, true);
+			return;
 		}
-	};
-
-	const isToggleDisabled = () => {
-		return !!price && price?.setup_fee_name && price?.setup_fee_amount;
+		updatePrice({ setup_fee_enabled: true });
 	};
 
 	return (
 		<>
 			<ScSwitch
-				checked={addSetupFee}
+				checked={price.setup_fee_enabled}
 				onScChange={onToggleSwitch}
-				disabled={isToggleDisabled()}
 			>
 				{__('Add setup fee', 'surecart')}
 			</ScSwitch>
 
-			{addSetupFee && (
+			{price.setup_fee_enabled && (
 				<div
 					css={css`
 						display: flex;
