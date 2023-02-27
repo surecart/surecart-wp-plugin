@@ -223,6 +223,7 @@ class CheckoutsController extends RestController {
 			[
 				'purchases', // Important: we need to make sure we expand the purchase to provide access.
 				'customer', // Important: we need to use this to create the WP User with the same info.
+				'manual_payment_method', // Important: we need to use this to display manual payment instructions.
 			]
 		)->find( $request['id'] );
 
