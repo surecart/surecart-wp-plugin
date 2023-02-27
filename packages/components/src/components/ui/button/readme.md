@@ -75,6 +75,7 @@
  - [sc-payment-method](../sc-payment-method)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
+ - [sc-rich-text](../rich-text)
  - [sc-stripe-add-method](../sc-stripe-add-method)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
@@ -124,6 +125,7 @@ graph TD;
   sc-payment-method --> sc-button
   sc-payment-methods-list --> sc-button
   sc-purchase-downloads-list --> sc-button
+  sc-rich-text --> sc-button
   sc-stripe-add-method --> sc-button
   sc-subscription --> sc-button
   sc-subscription-ad-hoc-confirm --> sc-button

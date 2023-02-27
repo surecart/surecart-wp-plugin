@@ -19,7 +19,6 @@
 
  - [sc-order](../../dashboard/order)
  - [sc-order-confirm-components-validator](../../../providers/sc-order-confirm-components-validator)
- - [sc-order-confirm-provider](../../../providers/order-confirm-provider)
 
 ### Depends on
 
@@ -32,7 +31,6 @@ graph TD;
   sc-alert --> sc-icon
   sc-order --> sc-order-manual-instructions
   sc-order-confirm-components-validator --> sc-order-manual-instructions
-  sc-order-confirm-provider --> sc-order-manual-instructions
   style sc-order-manual-instructions fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

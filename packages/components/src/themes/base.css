@@ -187,8 +187,8 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-font-size-large: 1.15em;
   --sc-font-size-x-large: 1.25em;
   --sc-font-size-xx-large: 1.45em;
-  --sc-font-size-xxx-large: 3em;
-  --sc-font-size-xxxx-large: 4.5em;
+  --sc-font-size-xxx-large: 2.25em;
+  --sc-font-size-xxxx-large: 3em;
   --sc-font-weight-light: 300;
   --sc-font-weight-normal: 400;
   --sc-font-weight-semibold: 500;

@@ -21,6 +21,16 @@
 | `value`       | `value`       | The textarea's value attribute.                                          | `string`                         | `''`        |
 
 
+## Events
+
+| Event      | Description | Type                |
+| ---------- | ----------- | ------------------- |
+| `scBlur`   |             | `CustomEvent<void>` |
+| `scChange` |             | `CustomEvent<void>` |
+| `scFocus`  |             | `CustomEvent<void>` |
+| `scInput`  |             | `CustomEvent<void>` |
+
+
 ## Shadow Parts
 
 | Part       | Description |

@@ -42,6 +42,9 @@ class BuyPageController {
 	 */
 	protected $config;
 
+	/**
+	 * Instantiate the config.
+	 */
 	public function __construct() {
 		 $this->config = \SureCart::resolve( SURECART_CONFIG_KEY );
 	}
@@ -64,7 +67,30 @@ class BuyPageController {
 		add_filter( 'post_link', [ $this, 'maybeSetUrl' ] );
 		// set the document title.
 		add_filter( 'document_title_parts', [ $this, 'documentTitle' ] );
+		// add edit product link.
+		add_action( 'admin_bar_menu', [ $this, 'addEditProductLink' ], 99 );
 	}
+
+	/**
+	 * Add edit links
+	 *
+	 * @param \WP_Admin_bar $wp_admin_bar The admin bar.
+	 *
+	 * @return void
+	 */
+	public function addEditProductLink( $wp_admin_bar ) {
+		if ( empty( $this->product->id ) ) {
+			return;
+		}
+		$wp_admin_bar->add_node(
+			[
+				'id'    => 'edit',
+				'title' => __( 'Edit Product', 'surecart' ),
+				'href'  => esc_url( \SureCart::getUrl()->edit( 'product', $this->product->id ) ),
+			]
+		);
+	}
+
 
 	/**
 	 * Show the product page
@@ -98,40 +124,12 @@ class BuyPageController {
 			\SureCart::preload()->add( $this->config['preload'][ $name ] );
 		}
 
-		$user = wp_get_current_user();
-
-		$processors = Processor::get();
-		if ( is_wp_error( $processors ) ) {
-			$processors = [];
-		}
-		$processors = array_values(
-			array_filter(
-				$processors ?? [],
-				function( $processor ) {
-					return $processor->approved && $processor->enabled;
-				}
-			)
-		);
-
 		return \SureCart::view( 'web/buy' )->with(
 			[
-				'product'                       => $this->product,
-				'font_size'                     => 16,
-				'customer'                      => [
-					'email' => $user->user_email,
-					'name'  => $user->display_name,
-				],
-				'honeypot_enabled'              => (bool) get_option( 'surecart_honeypot_enabled', true ),
-				'currency_code'                 => $attributes['currency'] ?? \SureCart::account()->currency,
-				'tax_protocol'                  => \SureCart::account()->tax_protocol,
-				'abandoned_checkout_return_url' => esc_url( trailingslashit( get_site_url() ) . 'surecart/redirect' ),
-				'processors'                    => (array) $processors,
-				'manual_payment_methods'        => (array) ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? [],
-				'stripe_payment_element'        => (bool) get_option( 'sc_stripe_payment_element', false ),
-				'mode'                          => apply_filters( 'surecart/payments/mode', $attributes['mode'] ?? 'live' ),
-				'form_id'                       => $this->product->id,
-				'id'                            => 'sc-checkout-' . $this->product->id,
-				'prices'                        => $this->product->prices->data ?? [],
+				'product'          => $this->product,
+				'show_image'       => 'true' !== ( $this->product->metadata->wp_buy_link_product_image_disabled ?? '' ),
+				'show_description' => 'true' !== ( $this->product->metadata->wp_buy_link_product_description_disabled ?? '' ),
+				'show_coupon'      => 'true' !== ( $this->product->metadata->wp_buy_link_coupon_field_disabled ?? '' ),
 			]
 		);
 	}

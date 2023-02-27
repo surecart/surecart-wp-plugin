@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-02-24T08:40:14",
+  "timestamp": "2023-02-27T21:38:55",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -666,6 +666,7 @@
         "sc-error",
         "sc-login-form",
         "sc-login-provider",
+        "sc-order-confirm-provider",
         "sc-order-confirmation",
         "sc-order-manual-instructions",
         "sc-password-nag",
@@ -713,6 +714,9 @@
           "sc-alert"
         ],
         "sc-login-provider": [
+          "sc-alert"
+        ],
+        "sc-order-confirm-provider": [
           "sc-alert"
         ],
         "sc-order-confirmation": [
@@ -1691,6 +1695,7 @@
         "sc-payment-method",
         "sc-payment-methods-list",
         "sc-purchase-downloads-list",
+        "sc-rich-text",
         "sc-stripe-add-method",
         "sc-subscription",
         "sc-subscription-ad-hoc-confirm",
@@ -1789,6 +1794,9 @@
           "sc-button"
         ],
         "sc-purchase-downloads-list": [
+          "sc-button"
+        ],
+        "sc-rich-text": [
           "sc-button"
         ],
         "sc-stripe-add-method": [
@@ -4156,6 +4164,21 @@
           "required": false
         },
         {
+          "name": "product",
+          "type": "Product",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "A product to pre-fill the form.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Product"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "removeLineItems",
           "type": "boolean",
           "mutable": false,
@@ -4315,7 +4338,9 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "sc-product-buy-page"
+      ],
       "dependencies": [
         "sc-alert",
         "sc-checkout-unsaved-changes-warning",
@@ -4435,17 +4460,17 @@
           "sc-dialog",
           "sc-icon",
           "sc-dashboard-module",
-          "sc-order-manual-instructions",
+          "sc-alert",
           "sc-button"
         ],
         "sc-dashboard-module": [
           "sc-alert"
         ],
-        "sc-order-manual-instructions": [
-          "sc-alert"
-        ],
         "sc-session-provider": [
           "sc-line-items-provider"
+        ],
+        "sc-product-buy-page": [
+          "sc-checkout"
         ]
       }
     },
@@ -4460,7 +4485,7 @@
       "props": [
         {
           "name": "checkoutState",
-          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"updating\"",
+          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"redirecting\" | \"updating\"",
           "mutable": false,
           "attr": "checkout-state",
           "reflectToAttr": false,
@@ -4505,6 +4530,10 @@
             },
             {
               "value": "paying",
+              "type": "string"
+            },
+            {
+              "value": "redirecting",
               "type": "string"
             },
             {
@@ -4661,7 +4690,7 @@
       "props": [
         {
           "name": "state",
-          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"updating\"",
+          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"redirecting\" | \"updating\"",
           "mutable": false,
           "attr": "state",
           "reflectToAttr": false,
@@ -4706,6 +4735,10 @@
             },
             {
               "value": "paying",
+              "type": "string"
+            },
+            {
+              "value": "redirecting",
               "type": "string"
             },
             {
@@ -5366,11 +5399,15 @@
       "parts": [],
       "dependents": [
         "sc-customer-edit",
+        "sc-product-buy-page",
         "sc-wordpress-user-edit"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-customer-edit": [
+          "sc-column"
+        ],
+        "sc-product-buy-page": [
           "sc-column"
         ],
         "sc-wordpress-user-edit": [
@@ -5460,11 +5497,15 @@
       "parts": [],
       "dependents": [
         "sc-customer-edit",
+        "sc-product-buy-page",
         "sc-wordpress-user-edit"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-customer-edit": [
+          "sc-columns"
+        ],
+        "sc-product-buy-page": [
           "sc-columns"
         ],
         "sc-wordpress-user-edit": [
@@ -10771,6 +10812,7 @@
         "sc-login-provider",
         "sc-mollie-add-method",
         "sc-password-nag",
+        "sc-product-buy-page",
         "sc-stripe-add-method",
         "sc-subscription-ad-hoc-confirm",
         "sc-subscription-payment",
@@ -10801,6 +10843,9 @@
           "sc-form"
         ],
         "sc-password-nag": [
+          "sc-form"
+        ],
+        "sc-product-buy-page": [
           "sc-form"
         ],
         "sc-stripe-add-method": [
@@ -11237,6 +11282,7 @@
         "sc-input",
         "sc-order-bumps",
         "sc-payment",
+        "sc-rich-text",
         "sc-select",
         "sc-stripe-element",
         "sc-textarea"
@@ -11269,6 +11315,9 @@
         "sc-payment": [
           "sc-form-control"
         ],
+        "sc-rich-text": [
+          "sc-form-control"
+        ],
         "sc-select": [
           "sc-form-control"
         ],
@@ -11291,7 +11340,7 @@
       "props": [
         {
           "name": "checkoutState",
-          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"updating\"",
+          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"redirecting\" | \"updating\"",
           "mutable": false,
           "attr": "checkout-state",
           "reflectToAttr": false,
@@ -11336,6 +11385,10 @@
             },
             {
               "value": "paying",
+              "type": "string"
+            },
+            {
+              "value": "redirecting",
               "type": "string"
             },
             {
@@ -11441,7 +11494,7 @@
       "events": [
         {
           "event": "scSetCheckoutFormState",
-          "detail": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"updating\"",
+          "detail": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"redirecting\" | \"updating\"",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -12572,6 +12625,7 @@
         "sc-product-line-item",
         "sc-purchase-downloads-list",
         "sc-quantity-select",
+        "sc-rich-text",
         "sc-select",
         "sc-subscription",
         "sc-subscription-ad-hoc-confirm",
@@ -12672,6 +12726,9 @@
           "sc-icon"
         ],
         "sc-quantity-select": [
+          "sc-icon"
+        ],
+        "sc-rich-text": [
           "sc-icon"
         ],
         "sc-select": [
@@ -13516,6 +13573,7 @@
         "sc-order-password",
         "sc-password-nag",
         "sc-price-input",
+        "sc-product-buy-page",
         "sc-select",
         "sc-tax-id-input",
         "sc-wordpress-password-edit",
@@ -13571,6 +13629,9 @@
           "sc-input"
         ],
         "sc-price-input": [
+          "sc-input"
+        ],
+        "sc-product-buy-page": [
           "sc-input"
         ],
         "sc-select": [
@@ -15604,59 +15665,6 @@
       "usage": {},
       "props": [
         {
-          "name": "formId",
-          "type": "number",
-          "mutable": false,
-          "attr": "form-id",
-          "reflectToAttr": false,
-          "docs": "The form id",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "number"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "mode",
-          "type": "\"live\" | \"test\"",
-          "mutable": false,
-          "attr": "mode",
-          "reflectToAttr": false,
-          "docs": "Are we in test or live mode.",
-          "docsTags": [],
-          "default": "'live'",
-          "values": [
-            {
-              "value": "live",
-              "type": "string"
-            },
-            {
-              "value": "test",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "order",
-          "type": "Checkout",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "The current order.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Checkout"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "successText",
           "type": "{ title: string; description: string; button: string; }",
           "mutable": false,
@@ -15735,7 +15743,7 @@
         "sc-dialog",
         "sc-icon",
         "sc-dashboard-module",
-        "sc-order-manual-instructions",
+        "sc-alert",
         "sc-button"
       ],
       "dependencyGraph": {
@@ -15743,7 +15751,7 @@
           "sc-dialog",
           "sc-icon",
           "sc-dashboard-module",
-          "sc-order-manual-instructions",
+          "sc-alert",
           "sc-button"
         ],
         "sc-dialog": [
@@ -15758,9 +15766,6 @@
         ],
         "sc-alert": [
           "sc-icon"
-        ],
-        "sc-order-manual-instructions": [
-          "sc-alert"
         ],
         "sc-checkout": [
           "sc-order-confirm-provider"
@@ -16546,8 +16551,7 @@
       "parts": [],
       "dependents": [
         "sc-order",
-        "sc-order-confirm-components-validator",
-        "sc-order-confirm-provider"
+        "sc-order-confirm-components-validator"
       ],
       "dependencies": [
         "sc-alert"
@@ -16563,9 +16567,6 @@
           "sc-order-manual-instructions"
         ],
         "sc-order-confirm-components-validator": [
-          "sc-order-manual-instructions"
-        ],
-        "sc-order-confirm-provider": [
           "sc-order-manual-instructions"
         ]
       }
@@ -17725,7 +17726,9 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "sc-product-buy-page"
+      ],
       "dependencies": [
         "sc-paypal-buttons",
         "sc-button",
@@ -17747,6 +17750,9 @@
         ],
         "sc-total": [
           "sc-format-number"
+        ],
+        "sc-product-buy-page": [
+          "sc-order-submit"
         ]
       }
     },
@@ -20719,6 +20725,190 @@
       }
     },
     {
+      "filePath": "./src/components/controllers/buy-page/sc-product-buy-page/sc-product-buy-page.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-product-buy-page",
+      "readme": "# sc-product-buy-page\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "product",
+          "type": "Product",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Product"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "sc-checkout",
+        "sc-form",
+        "sc-columns",
+        "sc-column",
+        "sc-input",
+        "sc-order-submit"
+      ],
+      "dependencyGraph": {
+        "sc-product-buy-page": [
+          "sc-checkout",
+          "sc-form",
+          "sc-columns",
+          "sc-column",
+          "sc-input",
+          "sc-order-submit"
+        ],
+        "sc-checkout": [
+          "sc-alert",
+          "sc-checkout-unsaved-changes-warning",
+          "sc-login-provider",
+          "sc-form-state-provider",
+          "sc-form-error-provider",
+          "sc-form-components-validator",
+          "sc-order-confirm-provider",
+          "sc-session-provider",
+          "sc-block-ui"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-login-provider": [
+          "sc-alert",
+          "sc-dialog",
+          "sc-form",
+          "sc-input",
+          "sc-button"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-input": [
+          "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
+        ],
+        "sc-form-state-provider": [
+          "sc-block-ui"
+        ],
+        "sc-block-ui": [
+          "sc-spinner"
+        ],
+        "sc-form-error-provider": [
+          "sc-checkout-form-errors"
+        ],
+        "sc-checkout-form-errors": [
+          "sc-alert"
+        ],
+        "sc-form-components-validator": [
+          "sc-order-shipping-address",
+          "sc-order-tax-id-input",
+          "sc-order-bumps",
+          "sc-line-item-tax"
+        ],
+        "sc-order-shipping-address": [
+          "sc-address",
+          "sc-compact-address"
+        ],
+        "sc-address": [
+          "sc-form-control",
+          "sc-input",
+          "sc-select",
+          "sc-block-ui"
+        ],
+        "sc-select": [
+          "sc-icon",
+          "sc-menu-label",
+          "sc-menu-item",
+          "sc-form-control",
+          "sc-dropdown",
+          "sc-input",
+          "sc-spinner",
+          "sc-menu"
+        ],
+        "sc-compact-address": [
+          "sc-form-control",
+          "sc-select",
+          "sc-input",
+          "sc-block-ui"
+        ],
+        "sc-order-tax-id-input": [
+          "sc-tax-id-input"
+        ],
+        "sc-tax-id-input": [
+          "sc-icon",
+          "sc-input",
+          "sc-spinner",
+          "sc-dropdown",
+          "sc-button",
+          "sc-menu",
+          "sc-menu-item"
+        ],
+        "sc-order-bumps": [
+          "sc-form-control",
+          "sc-order-bump"
+        ],
+        "sc-order-bump": [
+          "sc-format-number",
+          "sc-choice",
+          "sc-divider"
+        ],
+        "sc-line-item-tax": [
+          "sc-line-item",
+          "sc-format-number"
+        ],
+        "sc-order-confirm-provider": [
+          "sc-dialog",
+          "sc-icon",
+          "sc-dashboard-module",
+          "sc-alert",
+          "sc-button"
+        ],
+        "sc-dashboard-module": [
+          "sc-alert"
+        ],
+        "sc-session-provider": [
+          "sc-line-items-provider"
+        ],
+        "sc-order-submit": [
+          "sc-paypal-buttons",
+          "sc-button",
+          "sc-icon",
+          "sc-total"
+        ],
+        "sc-paypal-buttons": [
+          "sc-skeleton"
+        ],
+        "sc-total": [
+          "sc-format-number"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/ui/product-line-item/sc-product-line-item.tsx",
       "encapsulation": "shadow",
       "tag": "sc-product-line-item",
@@ -21904,6 +22094,265 @@
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/ui/rich-text/sc-rich-text.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-rich-text",
+      "readme": "# sc-rich-text\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "disabled",
+          "reflectToAttr": true,
+          "docs": "Disables the textarea.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "help",
+          "type": "string",
+          "mutable": false,
+          "attr": "help",
+          "reflectToAttr": false,
+          "docs": "The textarea's help text. Alternatively, you can use the help-text slot.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "The textarea's label. Alternatively, you can use the label slot.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "mutable": false,
+          "attr": "name",
+          "reflectToAttr": false,
+          "docs": "The textarea's name attribute.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "placeholder",
+          "reflectToAttr": false,
+          "docs": "The textarea's placeholder text.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "readonly",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "readonly",
+          "reflectToAttr": true,
+          "docs": "Makes the textarea readonly.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "required",
+          "reflectToAttr": true,
+          "docs": "Makes the textarea a required field.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showLabel",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-label",
+          "reflectToAttr": false,
+          "docs": "Should we show the label",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The textarea's size.",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "mutable": false,
+          "attr": "value",
+          "reflectToAttr": false,
+          "docs": "The textarea's value attribute.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scBlur",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scChange",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scFocus",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scInput",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        },
+        {
+          "name": "editor",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "sc-form-control",
+        "sc-button",
+        "sc-icon"
+      ],
+      "dependencyGraph": {
+        "sc-rich-text": [
+          "sc-form-control",
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/secure-notice/sc-secure-notice.tsx",
@@ -23606,7 +24055,7 @@
         },
         {
           "name": "formState",
-          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"updating\"",
+          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"redirecting\" | \"updating\"",
           "mutable": false,
           "attr": "form-state",
           "reflectToAttr": false,
@@ -23651,6 +24100,10 @@
             },
             {
               "value": "paying",
+              "type": "string"
+            },
+            {
+              "value": "redirecting",
               "type": "string"
             },
             {
@@ -23931,7 +24384,7 @@
         },
         {
           "name": "formState",
-          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"updating\"",
+          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"redirecting\" | \"updating\"",
           "mutable": false,
           "attr": "form-state",
           "reflectToAttr": false,
@@ -23976,6 +24429,10 @@
             },
             {
               "value": "paying",
+              "type": "string"
+            },
+            {
+              "value": "redirecting",
               "type": "string"
             },
             {

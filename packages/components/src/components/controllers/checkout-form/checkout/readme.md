@@ -24,6 +24,7 @@
 | `persistSession`              | `persist-session`               | Whether to persist the session in the browser between visits. | `boolean`                                                                        | `true`      |
 | `prices`                      | --                              | An array of prices to pre-fill in the form.                   | `PriceChoice[]`                                                                  | `[]`        |
 | `processors`                  | --                              | Processors enabled for this form.                             | `Processor[]`                                                                    | `undefined` |
+| `product`                     | --                              | A product to pre-fill the form.                               | `Product`                                                                        | `undefined` |
 | `removeLineItems`             | `remove-line-items`             | Can we remove line items?                                     | `boolean`                                                                        | `true`      |
 | `stripePaymentElement`        | `stripe-payment-element`        | Use the Stripe payment element.                               | `boolean`                                                                        | `false`     |
 | `successText`                 | --                              | Success text for the form.                                    | `{ title: string; description: string; button: string; }`                        | `undefined` |
@@ -148,10 +149,9 @@ graph TD;
   sc-order-confirm-provider --> sc-dialog
   sc-order-confirm-provider --> sc-icon
   sc-order-confirm-provider --> sc-dashboard-module
-  sc-order-confirm-provider --> sc-order-manual-instructions
+  sc-order-confirm-provider --> sc-alert
   sc-order-confirm-provider --> sc-button
   sc-dashboard-module --> sc-alert
-  sc-order-manual-instructions --> sc-alert
   sc-session-provider --> sc-line-items-provider
   sc-product-buy-page --> sc-checkout
   style sc-checkout fill:#f9f,stroke:#333,stroke-width:4px

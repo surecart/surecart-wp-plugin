@@ -34,6 +34,7 @@ export class ScOrderSummary {
       const bodyRect = document.body.getClientRects();
       if (bodyRect.length) this.collapsed = bodyRect[0]?.width < 781;
     }
+    this.handleOpenChange();
   }
 
   handleClick(e) {

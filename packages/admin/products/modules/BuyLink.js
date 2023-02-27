@@ -60,6 +60,9 @@ export default ({ product, updateProduct, loading }) => {
 			<ScDropdown
 				placement="bottom-end"
 				style={{ '--panel-width': '380px' }}
+				onScHide={(e) => {
+					console.log(e);
+				}}
 			>
 				<ScButton slot="trigger" caret>
 					<div

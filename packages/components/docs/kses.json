@@ -1352,6 +1352,12 @@
     "class": true,
     "slot": true
   },
+  "sc-product-selected-price": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-provider": {
     "-s-t-e-n-c-i-l_-c-o-n-t-e-x-t": true,
     "style": true,

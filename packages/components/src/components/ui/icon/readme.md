@@ -63,6 +63,7 @@
  - [sc-product-line-item](../product-line-item)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-quantity-select](../quantity-select)
+ - [sc-rich-text](../rich-text)
  - [sc-select](../select)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
@@ -108,6 +109,7 @@ graph TD;
   sc-product-line-item --> sc-icon
   sc-purchase-downloads-list --> sc-icon
   sc-quantity-select --> sc-icon
+  sc-rich-text --> sc-icon
   sc-select --> sc-icon
   sc-subscription --> sc-icon
   sc-subscription-ad-hoc-confirm --> sc-icon

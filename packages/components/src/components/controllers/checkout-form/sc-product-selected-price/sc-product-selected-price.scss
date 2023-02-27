@@ -1,0 +1,21 @@
+:host {
+  display: block;
+}
+
+.selected-price {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sc-spacing-xx-small);
+  color: var(--sc-color-gray-800);
+
+  &__price {
+    font-size: var(--sc-font-size-xx-large);
+    font-weight: var(--sc-font-weight-bold);
+  }
+
+  &__interval {
+    color: var(--sc-color-gray-400);
+    font-weight: var(--sc-font-weight-bold);
+    opacity: 0.75;
+  }
+}
