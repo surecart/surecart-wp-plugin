@@ -50,7 +50,7 @@ describe('Checkout Stripe', () => {
     cy.visit('/test/sc-checkout/stripe/', {
       onBeforeLoad: window => {
         window.mockStripeMethods = {
-          confirmCardPayment
+          confirmCardPayment,
         };
       },
     });
@@ -73,11 +73,9 @@ describe('Checkout Stripe', () => {
 
     cy.wait('@finalize').its('request.url').should('include', 'form_id=1').should('include', 'processor_type=stripe');
     cy.wait('@confirm');
-    cy.get('@confirmCardPayment').should('have.been.calledOnceWith', Cypress.sinon.match(
-      'test_client_secret'
-    ));
+    cy.get('@confirmCardPayment').should('have.been.calledOnceWith', Cypress.sinon.match('test_client_secret'));
     cy.get('sc-dialog').find('sc-dashboard-module').should('be.visible');
-    cy.get('sc-button').contains('Continue').should('be.visible').click()
-    cy.get('sc-button[href]').should('have.attr', 'href').and('contain', 'success').and('contain', 'order=test');
+    cy.get('sc-button').contains('Continue').should('be.visible').click();
+    cy.get('sc-button[href]').should('have.attr', 'href').and('contain', '/success');
   });
 });

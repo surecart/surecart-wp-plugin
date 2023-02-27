@@ -1,4 +1,10 @@
 import state from './store';
+import { clearCheckout as clearSavedCheckout } from '../checkouts';
+
+/**
+ * Clear the current checkout.
+ */
+export const clearCheckout = () => clearSavedCheckout(state.formId, state.mode);
 
 /**
  * Lock the checkout (disables input and submission)

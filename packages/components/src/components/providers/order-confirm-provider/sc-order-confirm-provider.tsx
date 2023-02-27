@@ -4,8 +4,9 @@ import { addQueryArgs } from '@wordpress/url';
 
 import apiFetch from '../../../functions/fetch';
 import { expand } from '../../../services/session';
-import { clearOrder } from '../../../store/checkouts';
+import { state as checkoutState } from '@store/checkout';
 import { Checkout, ManualPaymentMethod } from '../../../types';
+import { clearCheckout } from '@store/checkout/mutations';
 
 /**
  * This component listens to the order status
@@ -24,15 +25,6 @@ export class ScOrderConfirmProvider {
   @State() showSuccessModal: boolean = false;
 
   @State() confirmedCheckout: Checkout;
-
-  /** The form id */
-  @Prop() formId: number;
-
-  /** Are we in test or live mode. */
-  @Prop() mode: 'test' | 'live' = 'live';
-
-  /** The current order. */
-  @Prop() order: Checkout;
 
   /** Success url. */
   @Prop() successUrl: string;
@@ -63,7 +55,7 @@ export class ScOrderConfirmProvider {
     try {
       this.confirmedCheckout = (await apiFetch({
         method: 'PATCH',
-        path: addQueryArgs(`surecart/v1/checkouts/${this.order?.id}/confirm`, [expand]),
+        path: addQueryArgs(`surecart/v1/checkouts/${checkoutState?.checkout?.id}/confirm`, [expand]),
       })) as Checkout;
       this.scSetState.emit('CONFIRMED');
       // emit the order paid event for tracking scripts.
@@ -72,10 +64,10 @@ export class ScOrderConfirmProvider {
       console.error(e);
       this.scError.emit(e);
     } finally {
+      // always clear the checkout.
+      clearCheckout();
       // get success url.
-      const successUrl = this?.order?.metadata?.success_url || this.successUrl;
-      // clear the order.
-      clearOrder(this.formId, this.mode);
+      const successUrl = this.confirmedCheckout?.metadata?.success_url || this.successUrl;
       if (successUrl) {
         // set state to redirecting.
         this.scSetState.emit('REDIRECT');

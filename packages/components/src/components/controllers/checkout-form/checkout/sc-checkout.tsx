@@ -299,7 +299,7 @@ export class ScCheckout {
                 {/* Validate components in the form based on order state. */}
                 <sc-form-components-validator order={this.order()} disabled={this.disableComponentsValidation} taxProtocol={this.taxProtocol}>
                   {/* Handle confirming of order after it is "Paid" by processors. */}
-                  <sc-order-confirm-provider order={this.order()} success-url={this.successUrl} form-id={this.formId} mode={this.mode} successText={this.successText}>
+                  <sc-order-confirm-provider success-url={this.successUrl} successText={this.successText}>
                     {/* Handles the current session. */}
                     <sc-session-provider
                       ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)}

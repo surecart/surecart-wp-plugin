@@ -12,19 +12,20 @@ describe('Checkout Stripe', () => {
         email: 'test@test.com',
         staged_payment_intents: {
           data: [
-            {processor_type: 'stripe',
-            processor_data: {
-              stripe: {
-                account_id: "acct_1KgGVf2E2Wr9trjm",
-                client_secret: "pi_3M0V4s2E2Wr9trjm1pRpX2oW_secret_lj5k8dgk8oJjaUxBXJQkFTr63",
-                payment_method_id: null,
-                publishable_key: "pk_test_51KeWoQFugiAKLuJycCZesY1aYEzfauqW2SHSZSUj5xCorx7h7oZd5i6Vz2whx7Y5fMZr6WQQTeOoQEtaEnpk4fkB00dinySlbK",
-                type: "payment"
-              }
-            }
-          }
-          ]
-        }
+            {
+              processor_type: 'stripe',
+              processor_data: {
+                stripe: {
+                  account_id: 'acct_1KgGVf2E2Wr9trjm',
+                  client_secret: 'pi_3M0V4s2E2Wr9trjm1pRpX2oW_secret_lj5k8dgk8oJjaUxBXJQkFTr63',
+                  payment_method_id: null,
+                  publishable_key: 'pk_test_51KeWoQFugiAKLuJycCZesY1aYEzfauqW2SHSZSUj5xCorx7h7oZd5i6Vz2whx7Y5fMZr6WQQTeOoQEtaEnpk4fkB00dinySlbK',
+                  type: 'payment',
+                },
+              },
+            },
+          ],
+        },
       },
     ).as('createUpdate');
 
@@ -39,18 +40,20 @@ describe('Checkout Stripe', () => {
         email: 'test@test.com',
         staged_payment_intents: {
           data: [
-            {processor_type: 'stripe',
-            processor_data: {
-              stripe: {
-                account_id: "acct_1KgGVf2E2Wr9trjm",
-                client_secret: "pi_3M0V4s2E2Wr9trjm1pRpX2oW_secret_lj5k8dgk8oJjaUxBXJQkFTr63",
-                payment_method_id: null,
-                publishable_key: "pk_test_51KeWoQFugiAKLuJycCZesY1aYEzfauqW2SHSZSUj5xCorx7h7oZd5i6Vz2whx7Y5fMZr6WQQTeOoQEtaEnpk4fkB00dinySlbK",
-                type: "payment"
-              }
-            }
-          }
-          ]},
+            {
+              processor_type: 'stripe',
+              processor_data: {
+                stripe: {
+                  account_id: 'acct_1KgGVf2E2Wr9trjm',
+                  client_secret: 'pi_3M0V4s2E2Wr9trjm1pRpX2oW_secret_lj5k8dgk8oJjaUxBXJQkFTr63',
+                  payment_method_id: null,
+                  publishable_key: 'pk_test_51KeWoQFugiAKLuJycCZesY1aYEzfauqW2SHSZSUj5xCorx7h7oZd5i6Vz2whx7Y5fMZr6WQQTeOoQEtaEnpk4fkB00dinySlbK',
+                  type: 'payment',
+                },
+              },
+            },
+          ],
+        },
         payment_intent: {
           processor_type: 'stripe',
           external_intent_id: 'test',
@@ -81,7 +84,7 @@ describe('Checkout Stripe', () => {
     cy.visit('/test/sc-checkout/stripe-payment-element/', {
       onBeforeLoad: window => {
         window.mockStripeMethods = {
-          confirmPayment
+          confirmPayment,
         };
       },
     });
@@ -89,7 +92,7 @@ describe('Checkout Stripe', () => {
     cy.wait('@createUpdate').then(({ request, response }) => {
       expect(request.url).to.include('stage_processor_type=stripe');
       expect(response.body.email).to.eq('test@test.com');
-    })
+    });
 
     cy.get('sc-block-ui.busy-block-ui').should('not.exist');
 
@@ -112,7 +115,7 @@ describe('Checkout Stripe', () => {
     cy.wait('@confirm');
     cy.get('@confirmPayment').should('have.been.calledOnce');
     cy.get('sc-dialog').find('sc-dashboard-module').should('be.visible');
-    cy.get('sc-button').contains('Continue').should('be.visible').click()
-    cy.get('sc-button[href]').should('have.attr', 'href').and('contain', 'success').and('contain', 'order=test');
+    cy.get('sc-button').contains('Continue').should('be.visible').click();
+    cy.get('sc-button[href]').should('have.attr', 'href').and('contain', 'success');
   });
 });
