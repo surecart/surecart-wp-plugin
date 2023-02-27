@@ -964,9 +964,6 @@
     "slot": true
   },
   "sc-order-confirm-provider": {
-    "form-id": true,
-    "mode": true,
-    "order": true,
     "success-text": true,
     "success-url": true,
     "style": true,
