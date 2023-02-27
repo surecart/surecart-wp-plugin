@@ -18,9 +18,9 @@
 		<sc-product-selected-price></sc-product-selected-price>
 
 		<?php if ( $show_description ) : ?>
-			<sc-text style="--font-size: var(--sc-font-size-medium);">
+			<sc-prose>
 				<?php echo wp_kses_post( $product->description ); ?>
-			</sc-text>
+			</sc-prose>
 		<?php endif; ?>
 
 
