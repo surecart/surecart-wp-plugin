@@ -16,6 +16,7 @@ export class ScOrderCouponForm {
   @Prop() error: any;
   @Prop() order: Checkout;
   @Prop() collapsed: boolean;
+  @Prop() placeholder: string;
 
   @State() open: boolean;
   @State() value: string;
@@ -34,6 +35,7 @@ export class ScOrderCouponForm {
       <sc-coupon-form
         label={this.label || __('Add Coupon Code', 'surecart')}
         collapsed={this.collapsed}
+        placeholder={this.placeholder}
         loading={this.busy && !this.order?.line_items?.data?.length}
         busy={this.busy}
         error={this.errorMessage}
