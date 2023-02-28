@@ -1,10 +1,10 @@
 {
 	"name": "surecart/session-detail",
 	"title": "Session Info",
-	"description": "Display infor for a specific session.",
+	"description": "Display information for a specific session.",
 	"category": "surecart",
 	"keywords": ["meta", "customer"],
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false,
