@@ -8338,11 +8338,7 @@ msgstr ""
 
 #: subscriptions/edit/EditSubscription.js:223
 #: subscriptions/show/modules/SubscriptionItems.js:39
-<<<<<<< HEAD
 #: subscriptions/show/ShowSubscription.js:367
-=======
-#: subscriptions/show/ShowSubscription.js:217
->>>>>>> SC-1517-subscription-pausing-on-merchant-ui
 msgid "Subscription Details"
 msgstr ""
 
@@ -8351,11 +8347,7 @@ msgid "Update Immediately"
 msgstr ""
 
 #: subscriptions/edit/EditSubscription.js:253
-<<<<<<< HEAD
 #: subscriptions/show/ShowSubscription.js:191
-=======
-#: subscriptions/show/ShowSubscription.js:182
->>>>>>> SC-1517-subscription-pausing-on-merchant-ui
 msgid "Update Subscription"
 msgstr ""
 
