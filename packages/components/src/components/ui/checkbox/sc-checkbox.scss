@@ -94,12 +94,18 @@
   // user-select: none;
 }
 
-
 .checkbox--is-required .checkbox__label:after {
-  content: " *";
+  content: ' *';
   color: var(--sc-color-danger-500);
 }
 
 ::slotted(*) {
   display: inline-block;
+}
+
+.checkbox--is-rtl {
+  .checkbox__label {
+    margin-left: 0;
+    margin-right: 0.5em;
+  }
 }

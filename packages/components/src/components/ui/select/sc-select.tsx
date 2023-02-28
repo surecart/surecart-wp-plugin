@@ -129,6 +129,9 @@ export class ScSelectDropdown {
   @Event({ composed: true })
   scChange: EventEmitter<void>;
 
+  /** Emitted when the list scrolls to the end. */
+  @Event() scScrollEnd: EventEmitter<void>;
+
   /** Trigger focus on show */
   handleShow() {
     this.open = true;
@@ -233,6 +236,14 @@ export class ScSelectDropdown {
     } else {
       this.scClose.emit();
     }
+  }
+
+  handleMenuScroll(e) {
+    const scrollTop = e.target.scrollTop;
+    const scrollHeight = e.target.scrollHeight;
+    const offsetHeight = e.target.offsetHeight;
+    const contentHeight = scrollHeight - offsetHeight;
+    if (contentHeight - scrollTop < 5) this.scScrollEnd.emit();
   }
 
   componentWillLoad() {
@@ -446,16 +457,16 @@ export class ScSelectDropdown {
               </sc-input>
             )}
 
-            <sc-menu style={{ maxHeight: '210px', overflow: 'auto' }} exportparts="base:menu__base">
+            <sc-menu style={{ maxHeight: '210px', overflow: 'auto' }} exportparts="base:menu__base" onScroll={e => this.handleMenuScroll(e)}>
               <slot name="prefix"></slot>
-              {this.loading && !this.filteredChoices.length && (
+              {(this.filteredChoices || []).map((choice, index) => {
+                return [this.renderItem(choice, index), (choice.choices || []).map(choice => this.renderItem(choice, index))];
+              })}
+              {this.loading && (
                 <div class="loading">
                   <sc-spinner exportparts="base:spinner__base"></sc-spinner>
                 </div>
               )}
-              {(this.filteredChoices || []).map((choice, index) => {
-                return [this.renderItem(choice, index), (choice.choices || []).map(choice => this.renderItem(choice, index))];
-              })}
               {!this.loading && !this.filteredChoices.length && (
                 <div class="select__empty" part="empty">
                   {__('Nothing Found', 'surecart')}

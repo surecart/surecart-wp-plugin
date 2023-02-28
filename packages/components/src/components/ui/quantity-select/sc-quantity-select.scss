@@ -140,3 +140,16 @@
   border-radius: 0 var(--sc-input-border-radius-small) var(--sc-input-border-radius-small) 0;
   border-left: var(--sc-input-border);
 }
+
+.quantity--is-rtl {
+  .button__decrease {
+    right: 1px;
+    border-left: var(--sc-input-border);
+    border-right: 0;
+  }
+  .button__increase {
+    left: 1px;
+    border-right: var(--sc-input-border);
+    border-left: 0;
+  }
+}

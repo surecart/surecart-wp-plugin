@@ -2,6 +2,6 @@
 
 exports[`sc-format-date renders 1`] = `
 <sc-format-date>
-  2/16/2023
+  3/8/2022
 </sc-format-date>
 `;

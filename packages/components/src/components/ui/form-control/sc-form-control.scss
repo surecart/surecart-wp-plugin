@@ -42,12 +42,12 @@
   margin-top: var(--sc-spacing-small);
   color: var(--sc-color-danger-500);
 }
-::slotted([slot=label-end]) {
+::slotted([slot='label-end']) {
   float: right;
 }
 
-.form-control--is-required slot[name=label]:after {
-  content: " *";
+.form-control--is-required slot[name='label']:after {
+  content: ' *';
   color: var(--sc-color-danger-500);
 }
 
@@ -92,5 +92,13 @@
 
   ::part(base) {
     border-color: rgb(var(--sl-color-danger-500));
+  }
+}
+
+.form-control--is-rtl {
+  &.form-control--has-label {
+    .form-control__label {
+      text-align: right;
+    }
   }
 }

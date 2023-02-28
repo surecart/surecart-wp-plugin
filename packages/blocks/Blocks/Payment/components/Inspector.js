@@ -3,18 +3,17 @@
  */
 import { __ } from '@wordpress/i18n';
 import { InspectorControls } from '@wordpress/block-editor';
-import {
-	BaseControl,
-	Flex,
-	PanelBody,
-	PanelRow,
-	TextControl,
-} from '@wordpress/components';
+import { Flex, PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import PaymentMethodCheckbox from './PaymentMethodCheckbox';
 import { ScPremiumTag, ScUpgradeRequired } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes }) => {
-	const { label, secure_notice } = attributes;
+	const { label, secure_notice, disabled_methods } = attributes;
+
+	const hasProcessor = (name) =>
+		scBlockData?.processors?.some((p) => p.processor_type === name);
+	const isDisabled = (name) => (disabled_methods || []).includes(name);
+	const isMollieEnabled = hasProcessor('mollie') && !isDisabled('mollie');
 
 	return (
 		<InspectorControls>
@@ -61,25 +60,55 @@ export default ({ attributes, setAttributes }) => {
 					</p>
 				</PanelRow>
 
-				<PanelRow>
-					<PaymentMethodCheckbox
-						name={__('Stripe', 'surecart')}
-						help={__('Enable Stripe payment', 'surecart')}
-						id={'stripe'}
-						attributes={attributes}
-						setAttributes={setAttributes}
-					/>
-				</PanelRow>
+				{hasProcessor('mollie') && (
+					<PanelRow>
+						<PaymentMethodCheckbox
+							name={__('Mollie', 'surecart')}
+							help={__('Enable Mollie processor', 'surecart')}
+							id={'mollie'}
+							attributes={attributes}
+							setAttributes={setAttributes}
+							disabled={
+								!scBlockData?.entitlements
+									?.form_specific_payment_methods
+							}
+						/>
+					</PanelRow>
+				)}
 
-				<PanelRow>
-					<PaymentMethodCheckbox
-						name={__('PayPal', 'surecart')}
-						help={__('Enable PayPal payment', 'surecart')}
-						id={'paypal'}
-						attributes={attributes}
-						setAttributes={setAttributes}
-					/>
-				</PanelRow>
+				{hasProcessor('stripe') && (
+					<PanelRow>
+						<PaymentMethodCheckbox
+							name={__('Stripe', 'surecart')}
+							help={__('Enable Stripe payment', 'surecart')}
+							id={'stripe'}
+							attributes={attributes}
+							setAttributes={setAttributes}
+							disabled={
+								!scBlockData?.entitlements
+									?.form_specific_payment_methods ||
+								isMollieEnabled
+							}
+						/>
+					</PanelRow>
+				)}
+
+				{hasProcessor('paypal') && (
+					<PanelRow>
+						<PaymentMethodCheckbox
+							name={__('PayPal', 'surecart')}
+							help={__('Enable PayPal payment', 'surecart')}
+							id={'paypal'}
+							attributes={attributes}
+							setAttributes={setAttributes}
+							disabled={
+								!scBlockData?.entitlements
+									?.form_specific_payment_methods ||
+								isMollieEnabled
+							}
+						/>
+					</PanelRow>
+				)}
 
 				{scBlockData?.manualPaymentMethods.map((method) => (
 					<PanelRow key={method?.id}>

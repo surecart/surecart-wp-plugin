@@ -32,6 +32,7 @@ export default ({ open, onRequestClose }) => {
 			});
 			onRequestClose();
 		} catch (e) {
+			console.error(e);
 			setError(e);
 		} finally {
 			setLoading(false);
@@ -55,7 +56,7 @@ export default ({ open, onRequestClose }) => {
 					onClick={onRequestClose}
 					disabled={loading}
 				>
-					{__('Nevermind', 'surecart')}
+					{__('Cancel', 'surecart')}
 				</ScButton>{' '}
 				<ScButton
 					type="primary"

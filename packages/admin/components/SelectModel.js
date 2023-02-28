@@ -18,6 +18,7 @@ export default ({
 	name,
 	prefix,
 	loading,
+	onScrollEnd = () => {},
 	...props
 }) => {
 	const findItem = throttle(
@@ -48,6 +49,7 @@ export default ({
 			}}
 			choices={choices}
 			{...props}
+			onScScrollEnd={onScrollEnd}
 		>
 			{!!prefix && prefix}
 		</ScSelect>
