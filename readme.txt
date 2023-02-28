@@ -49,7 +49,7 @@ However you can still sell physical products with SureCart and we have merchants
 These are just some of the features that make SureCart the perfect ecommerce platform for everyone.
 
 * **Multiple Payment Processors, Express Checkout ApplePay & GooglePay:**
-Easily connect to Stripe or PayPal to collect payments. You can use multiple processors on a single checkout form. Also you can optionally accept ApplePay or GooglePay express checkout options. We are working on adding additional gateways (Mollie, Square, PayStack, RazorPay, Mercado Pago) in the future.
+Easily connect to Stripe, PayPal or Mollie to collect payments. You can use multiple processors on a single checkout form. Also you can optionally accept ApplePay or GooglePay express checkout options. We are working on adding additional gateways (PayStack, RazorPay, Mercado Pago) in the future.
 
 * **Powerful Payment Options:**
 One-time payments, subscriptions, subscriptions with free trials, payment plans (installments), pay what you want, donations. SureCart covers most ways you may want to be paid, all included for free.
