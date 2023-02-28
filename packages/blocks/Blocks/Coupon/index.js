@@ -20,5 +20,5 @@ export const settings = {
 	icon,
 	edit,
 	deprecated,
-	// save,
+	save,
 };
