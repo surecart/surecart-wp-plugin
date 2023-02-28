@@ -1,5 +1,6 @@
 import { Component, h, Prop, Event, EventEmitter, Element, State, Method } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+import { isRtl } from '../../../functions/page-align';
 let id = 0;
 
 @Component({
@@ -64,6 +65,7 @@ export class ScTab {
           'tab--disabled': this.disabled,
           'tab--has-prefix': this.hasPrefix,
           'tab--has-suffix': this.hasSuffix,
+          'tab--is-rtl':isRtl()
         }}
         ref={el => (this.tab = el)}
         role="tab"

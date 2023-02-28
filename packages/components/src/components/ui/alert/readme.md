@@ -15,6 +15,7 @@
 | `open`         | `open`           | Indicates whether or not the alert is open. You can use this in lieu of the show/hide methods.                                                                                                                        | `boolean`                                                   | `false`     |
 | `scrollMargin` | `scroll-margin`  | Scroll margin                                                                                                                                                                                                         | `string`                                                    | `'0px'`     |
 | `scrollOnOpen` | `scroll-on-open` | Scroll into view.                                                                                                                                                                                                     | `boolean`                                                   | `undefined` |
+| `title`        | `title`          | The title.                                                                                                                                                                                                            | `string`                                                    | `undefined` |
 | `type`         | `type`           | The type of alert.                                                                                                                                                                                                    | `"danger" \| "info" \| "primary" \| "success" \| "warning"` | `'primary'` |
 
 
@@ -68,6 +69,7 @@ Type: `Promise<void>`
  - [sc-cart-form](../../controllers/cart/sc-cart-form)
  - [sc-checkout](../../controllers/checkout-form/checkout)
  - [sc-checkout-form-errors](../../controllers/checkout-form/checkout-form-errors)
+ - [sc-checkout-mollie-payment](../../controllers/checkout-form/sc-checkout-mollie-payment)
  - [sc-coupon-form](../coupon-form)
  - [sc-custom-order-price-input](../../controllers/checkout-form/custom-order-price-input)
  - [sc-dashboard-module](../dashboard-module)
@@ -78,6 +80,7 @@ Type: `Promise<void>`
  - [sc-order-manual-instructions](../../controllers/confirmation/manual-instructions)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment](../../controllers/checkout-form/payment)
+ - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-paypal-add-method](../sc-paypal-add-method)
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
  - [sc-stripe-add-method](../sc-stripe-add-method)
@@ -96,6 +99,7 @@ graph TD;
   sc-cart-form --> sc-alert
   sc-checkout --> sc-alert
   sc-checkout-form-errors --> sc-alert
+  sc-checkout-mollie-payment --> sc-alert
   sc-coupon-form --> sc-alert
   sc-custom-order-price-input --> sc-alert
   sc-dashboard-module --> sc-alert
@@ -106,6 +110,7 @@ graph TD;
   sc-order-manual-instructions --> sc-alert
   sc-password-nag --> sc-alert
   sc-payment --> sc-alert
+  sc-payment-methods-list --> sc-alert
   sc-paypal-add-method --> sc-alert
   sc-price-choice --> sc-alert
   sc-stripe-add-method --> sc-alert

@@ -24,6 +24,21 @@ export class ScOrderTaxIdInput {
   /** Is this busy */
   @Prop() busy: boolean = false;
 
+ /** Other zones label */
+  @Prop() otherLabel:string;
+
+  /** GST zone label */
+  @Prop() caGstLabel:string;
+
+  /** AU zone label */
+  @Prop() auAbnLabel:string;
+
+  /** UK zone label */
+  @Prop() gbVatLabel:string;
+
+   /** EU zone label */
+  @Prop() euVatLabel:string;
+
   /** Make a request to update the order. */
   @Event() scUpdateOrder: EventEmitter<{
     data: Partial<Checkout>;
@@ -59,6 +74,11 @@ export class ScOrderTaxIdInput {
           e.stopImmediatePropagation();
           this.maybeUpdateOrder(e.detail);
         }}
+        otherLabel={this.otherLabel}
+        caGstLabel={this.caGstLabel}
+        auAbnLabel={this.auAbnLabel}
+        gbVatLabel={this.gbVatLabel}
+        euVatLabel={this.euVatLabel}
       ></sc-tax-id-input>
     );
   }

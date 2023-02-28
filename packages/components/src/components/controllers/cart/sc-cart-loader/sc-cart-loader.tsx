@@ -1,7 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 
-import { clearOrder, getOrder } from '../../../../store/checkouts';
-import uiStore from '../../../../store/ui';
+import { clearOrder, getOrder } from '@store/checkouts';
+import uiStore from '@store/ui';
 
 @Component({
   tag: 'sc-cart-loader',

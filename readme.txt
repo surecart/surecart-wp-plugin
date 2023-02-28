@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.1
-Stable tag: 1.6.4
+Stable tag: 1.7.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -49,7 +49,7 @@ However you can still sell physical products with SureCart and we have merchants
 These are just some of the features that make SureCart the perfect ecommerce platform for everyone.
 
 * **Multiple Payment Processors, Express Checkout ApplePay & GooglePay:**
-Easily connect to Stripe or PayPal to collect payments. You can use multiple processors on a single checkout form. Also you can optionally accept ApplePay or GooglePay express checkout options. We are working on adding additional gateways (Mollie, Square, PayStack, RazorPay, Mercado Pago) in the future.
+Easily connect to Stripe, PayPal or Mollie to collect payments. You can use multiple processors on a single checkout form. Also you can optionally accept ApplePay or GooglePay express checkout options. We are working on adding additional gateways (PayStack, RazorPay, Mercado Pago) in the future.
 
 * **Powerful Payment Options:**
 One-time payments, subscriptions, subscriptions with free trials, payment plans (installments), pay what you want, donations. SureCart covers most ways you may want to be paid, all included for free.
@@ -242,6 +242,26 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.7.0 - February 28, 2023 =
+* New: Mollie processor (Beta).
+* New: Revoke subscription purchases.
+* New: Ability to cancel manual orders.
+* New: Allow external URLs in downloads.
+* New: The ability to delete a customer on the merchant customer page.
+* New: Add grace period to abandoned checkouts.
+* New: Ignore purchased products setting for abandoned checkouts.
+* Improvement: Checkouts now show a confirmation modal before the thank you page.
+* Improvement: Update payment plan wording to be more clear about number of payments.
+* Improvement: RTL improvements.
+* Improvement: Tax ID Input field - allow labels to be editable.
+* Improvement: Stripe Payment Element now will inherit name, address, email fields for payment types that require it.
+* Improvement: Product/Price/Customer select dropdowns now paginate.
+* Improvement: Prevent cart posts from being misconfigured.
+* Improvement: Prevent "Store Checkout" forms and pages from being misconfigured.
+* Improvement: Customers can update their subscriptions to a default payment method when they switch default payment methods.
+* Fix: Block names not being translated.
+* Fix: Product restrictions on coupon page not showing prices until subsequent load.
 
 = 1.6.4 - February 22, 2023 =
 * Fix: Some webhooks data being mangled preventing hooks from correctly firing.

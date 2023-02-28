@@ -273,4 +273,42 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 		$this->assertNotFalse($user);
 		$this->assertSame($user->customerId('test'), 'test_id');
 	}
+
+	/**
+	 * @group failing
+	 */
+	public function test_can_cancel()
+	{
+		// mock the requests in the container
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		$requests->shouldReceive('makeRequest')
+		->once()
+		->withSomeOfArgs('checkouts/testid/cancel/')
+		->andReturn([]);
+
+		// unauthed.
+		$request = new WP_REST_Request('PATCH', '/surecart/v1/checkouts/testid/cancel');
+		$response = rest_do_request($request);
+		$this->assertSame($response->get_status(), 401);
+
+		// without cap
+		$user = self::factory()->user->create_and_get();
+		wp_set_current_user($user->ID);
+		$request = new WP_REST_Request('PATCH', '/surecart/v1/checkouts/testid/cancel');
+		$response = rest_do_request($request);
+		$this->assertSame($response->get_status(), 403);
+
+		// has cap.
+		$user = self::factory()->user->create_and_get();
+		$user->add_cap('edit_sc_orders');
+		wp_set_current_user($user->ID);
+
+		$request = new WP_REST_Request('PATCH', '/surecart/v1/checkouts/testid/cancel');
+		$response = rest_do_request($request);
+		$this->assertSame($response->get_status(), 200);
+	}
 }
