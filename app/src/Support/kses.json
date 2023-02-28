@@ -272,6 +272,14 @@
     "class": true,
     "slot": true
   },
+  "sc-checkout-mollie-payment": {
+    "method": true,
+    "processor-id": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-checkout-unsaved-changes-warning": {
     "state": true,
     "style": true,
@@ -339,9 +347,7 @@
     "slot": true
   },
   "sc-conditional-form": {
-    "checkout": true,
     "rule_groups": true,
-    "selected-processor-id": true,
     "style": true,
     "id": true,
     "class": true,
@@ -909,6 +915,18 @@
     "class": true,
     "slot": true
   },
+  "sc-mollie-add-method": {
+    "country": true,
+    "currency": true,
+    "customer-id": true,
+    "live-mode": true,
+    "processor-id": true,
+    "success-url": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-order": {
     "customer-ids": true,
     "heading": true,
@@ -946,9 +964,6 @@
     "slot": true
   },
   "sc-order-confirm-provider": {
-    "form-id": true,
-    "mode": true,
-    "order": true,
     "success-text": true,
     "success-url": true,
     "style": true,
@@ -1166,12 +1181,11 @@
     "slot": true
   },
   "sc-payment": {
-    "checkout": true,
+    "disabled-processor-types": true,
     "hide-test-mode-badge": true,
     "label": true,
-    "mode": true,
-    "processor": true,
-    "processors": true,
+    "secure-notice": true,
+    "stripe-payment-element": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1189,13 +1203,9 @@
   },
   "sc-payment-method-choice": {
     "card": true,
-    "checkout": true,
-    "has-others": true,
-    "is-disabled": true,
     "is-manual": true,
-    "processor": true,
+    "method-id": true,
     "processor-id": true,
-    "recurring-enabled": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1431,6 +1441,7 @@
     "form-id": true,
     "group-id": true,
     "is-manual-processor": true,
+    "method": true,
     "mode": true,
     "modified": true,
     "payment-intents": true,

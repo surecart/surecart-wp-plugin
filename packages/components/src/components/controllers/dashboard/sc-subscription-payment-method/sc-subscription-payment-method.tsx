@@ -172,7 +172,7 @@ export class ScSubscriptionPaymentMethod {
 
       return (
         <sc-choice checked={subscription_payment_method_id === id} name="payment_method" value={id} required>
-          <sc-flex justifyContent="flex-start">
+          <sc-flex justifyContent="flex-start" align-items="center">
             <sc-payment-method paymentMethod={paymentMethod} />{' '}
             {!live_mode && (
               <sc-tag type="warning" size="small">

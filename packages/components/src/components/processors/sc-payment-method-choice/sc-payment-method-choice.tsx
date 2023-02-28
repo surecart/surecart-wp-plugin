@@ -1,18 +1,15 @@
-import { Component, Event, EventEmitter, h, Host, Prop, Watch } from '@stencil/core';
-import { Checkout } from '../../../types';
-import { openWormhole } from 'stencil-wormhole';
-
+import { Component, Element, h, Prop } from '@stencil/core';
+import { state as selectedProcessor } from '@store/selected-processor';
 @Component({
   tag: 'sc-payment-method-choice',
   styleUrl: 'sc-payment-method-choice.css',
   shadow: true,
 })
 export class ScPaymentMethodChoice {
-  /** Does this have others? */
-  @Prop() hasOthers: boolean;
+  @Element() el: HTMLScPaymentMethodChoiceElement;
 
-  /** The current processor */
-  @Prop({ reflect: true }) processor: string;
+  /** The method id */
+  @Prop({ reflect: true }) methodId: string;
 
   /** The processor ID */
   @Prop() processorId: string;
@@ -20,55 +17,47 @@ export class ScPaymentMethodChoice {
   /** Is this a manual processor */
   @Prop() isManual: boolean;
 
-  /** Is this recurring-enabled? */
-  @Prop() recurringEnabled: boolean;
-
-  /** The checkout. */
-  @Prop() checkout: Checkout;
-
-  /** Is this disabled? */
-  @Prop({ reflect: true }) isDisabled: boolean;
-
   /** Should we show this in a card? */
   @Prop() card: boolean;
 
-  /** Set the order procesor. */
-  @Event() scSetProcessor: EventEmitter<{ id: string; manual: boolean }>;
-
-  /** The currenct processor is invalid. */
-  @Event() scProcessorInvalid: EventEmitter<void>;
-
-  /** Show the toggle */
-  @Event() scShow: EventEmitter<void>;
-
-  @Watch('checkout')
-  handleCheckoutChange() {
-    this.isDisabled = this.checkout?.reusable_payment_method_required && !this.recurringEnabled;
-  }
-
-  @Watch('isDisabled')
-  handleHiddenChange() {
-    if (this.isDisabled && this.isSelected()) {
-      this.scProcessorInvalid.emit();
-    }
-  }
-
   isSelected() {
-    return this.processor === this.processorId;
+    if (this.methodId) {
+      return selectedProcessor?.id === this.processorId && selectedProcessor?.method == this.methodId;
+    }
+    return !selectedProcessor?.method && selectedProcessor?.id === this.processorId;
+  }
+
+  getAllOptions() {
+    const parentGroup = this.el.closest('sc-payment') || this.el.parentElement;
+    if (!parentGroup) {
+      return [];
+    }
+    return [...parentGroup.querySelectorAll(this.el.tagName)] as HTMLScPaymentMethodChoiceElement[];
+  }
+  getSiblingItems() {
+    return this.getAllOptions().filter(choice => choice !== this.el) as HTMLScPaymentMethodChoiceElement[];
+  }
+  hasOthers() {
+    return !!this.getSiblingItems()?.length;
   }
 
   render() {
-    // do not render if needs recurring and is not supported
-    if (this.isDisabled) {
-      return <Host style={{ display: 'none' }} />;
-    }
-
-    const Tag = this.hasOthers ? 'sc-toggle' : 'div';
+    const Tag = this.hasOthers() ? 'sc-toggle' : 'div';
 
     return (
-      <Tag show-control shady borderless open={this.isSelected()} onScShow={() => this.scSetProcessor.emit({ id: this.processorId, manual: !!this.isManual })}>
-        {this.hasOthers && <slot name="summary" slot="summary"></slot>}
-        {this.card && !this.hasOthers ? (
+      <Tag
+        show-control
+        shady
+        borderless
+        open={this.isSelected()}
+        onScShow={() => {
+          selectedProcessor.id = this.processorId;
+          selectedProcessor.manual = !!this.isManual;
+          selectedProcessor.method = this.methodId;
+        }}
+      >
+        {this.hasOthers() && <slot name="summary" slot="summary"></slot>}
+        {this.card && !this.hasOthers() ? (
           <sc-card>
             <slot />
           </sc-card>
@@ -79,5 +68,3 @@ export class ScPaymentMethodChoice {
     );
   }
 }
-
-openWormhole(ScPaymentMethodChoice, ['processor', 'checkout'], false);

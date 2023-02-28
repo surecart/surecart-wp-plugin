@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-02-17T09:23:03",
+  "timestamp": "2023-02-24T08:40:14",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -532,6 +532,22 @@
           "required": false
         },
         {
+          "name": "title",
+          "type": "string",
+          "mutable": false,
+          "attr": "title",
+          "reflectToAttr": false,
+          "docs": "The title.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "type",
           "type": "\"danger\" | \"info\" | \"primary\" | \"success\" | \"warning\"",
           "mutable": false,
@@ -643,6 +659,7 @@
         "sc-cart-form",
         "sc-checkout",
         "sc-checkout-form-errors",
+        "sc-checkout-mollie-payment",
         "sc-coupon-form",
         "sc-custom-order-price-input",
         "sc-dashboard-module",
@@ -675,6 +692,9 @@
           "sc-alert"
         ],
         "sc-checkout-form-errors": [
+          "sc-alert"
+        ],
+        "sc-checkout-mollie-payment": [
           "sc-alert"
         ],
         "sc-coupon-form": [
@@ -925,6 +945,7 @@
         "sc-cart",
         "sc-charges-list",
         "sc-checkout",
+        "sc-checkout-mollie-payment",
         "sc-compact-address",
         "sc-coupon-form",
         "sc-custom-order-price-input",
@@ -934,6 +955,7 @@
         "sc-form-state-provider",
         "sc-invoices-list",
         "sc-login-form",
+        "sc-mollie-add-method",
         "sc-orders-list",
         "sc-password-nag",
         "sc-payment-methods-list",
@@ -971,6 +993,9 @@
         "sc-checkout": [
           "sc-block-ui"
         ],
+        "sc-checkout-mollie-payment": [
+          "sc-block-ui"
+        ],
         "sc-compact-address": [
           "sc-block-ui"
         ],
@@ -996,6 +1021,9 @@
           "sc-block-ui"
         ],
         "sc-login-form": [
+          "sc-block-ui"
+        ],
+        "sc-mollie-add-method": [
           "sc-block-ui"
         ],
         "sc-orders-list": [
@@ -1373,7 +1401,7 @@
           "type": "string",
           "mutable": false,
           "attr": "href",
-          "reflectToAttr": false,
+          "reflectToAttr": true,
           "docs": "When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`.",
           "docsTags": [],
           "values": [
@@ -1653,6 +1681,7 @@
         "sc-licenses-list",
         "sc-login-form",
         "sc-login-provider",
+        "sc-mollie-add-method",
         "sc-order",
         "sc-order-confirm-provider",
         "sc-order-submit",
@@ -1730,6 +1759,9 @@
           "sc-button"
         ],
         "sc-login-provider": [
+          "sc-button"
+        ],
+        "sc-mollie-add-method": [
           "sc-button"
         ],
         "sc-order": [
@@ -2376,16 +2408,19 @@
       ],
       "dependents": [
         "sc-charges-list",
+        "sc-checkout-mollie-payment",
         "sc-customer-details",
         "sc-customer-edit",
         "sc-downloads-list",
         "sc-invoices-list",
         "sc-licenses-list",
         "sc-login-form",
+        "sc-mollie-add-method",
         "sc-order",
         "sc-order-confirmation-details",
         "sc-orders-list",
         "sc-password-nag",
+        "sc-payment",
         "sc-payment-method-choice",
         "sc-payment-methods-list",
         "sc-purchase-downloads-list",
@@ -2406,6 +2441,9 @@
         "sc-charges-list": [
           "sc-card"
         ],
+        "sc-checkout-mollie-payment": [
+          "sc-card"
+        ],
         "sc-customer-details": [
           "sc-card"
         ],
@@ -2424,6 +2462,9 @@
         "sc-login-form": [
           "sc-card"
         ],
+        "sc-mollie-add-method": [
+          "sc-card"
+        ],
         "sc-order": [
           "sc-card"
         ],
@@ -2434,6 +2475,9 @@
           "sc-card"
         ],
         "sc-password-nag": [
+          "sc-card"
+        ],
+        "sc-payment": [
           "sc-card"
         ],
         "sc-payment-method-choice": [
@@ -3984,7 +4028,7 @@
           "type": "{ finalizing: string; paying: string; confirming: string; confirmed: string; }",
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Text for the loading states of the form.",
           "docsTags": [],
           "values": [
             {
@@ -4146,6 +4190,21 @@
           "required": false
         },
         {
+          "name": "successText",
+          "type": "{ title: string; description: string; button: string; }",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Success text for the form.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "{ title: string; description: string; button: string; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "successUrl",
           "type": "string",
           "mutable": false,
@@ -4182,10 +4241,10 @@
         {
           "name": "submit",
           "returns": {
-            "type": "Promise<Checkout>",
+            "type": "Promise<Checkout | Timeout>",
             "docs": ""
           },
-          "signature": "submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout>",
+          "signature": "submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout | NodeJS.Timeout>",
           "parameters": [],
           "docs": "Submit the form",
           "docsTags": []
@@ -4243,7 +4302,7 @@
           "passive": false
         },
         {
-          "event": "scSetProcessor",
+          "event": "scSetMethod",
           "capture": false,
           "passive": false
         },
@@ -4374,9 +4433,16 @@
         ],
         "sc-order-confirm-provider": [
           "sc-dialog",
-          "sc-flex",
-          "sc-text",
+          "sc-icon",
+          "sc-dashboard-module",
+          "sc-order-manual-instructions",
           "sc-button"
+        ],
+        "sc-dashboard-module": [
+          "sc-alert"
+        ],
+        "sc-order-manual-instructions": [
+          "sc-alert"
         ],
         "sc-session-provider": [
           "sc-line-items-provider"
@@ -4486,6 +4552,101 @@
         ],
         "sc-form-error-provider": [
           "sc-checkout-form-errors"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/checkout-form/sc-checkout-mollie-payment/sc-checkout-mollie-payment.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-checkout-mollie-payment",
+      "readme": "# sc-checkout-mollie-payment\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "method",
+          "type": "string",
+          "mutable": false,
+          "attr": "method",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "processorId",
+          "type": "string",
+          "mutable": false,
+          "attr": "processor-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scError",
+          "detail": "ResponseError",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Error event",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-payment"
+      ],
+      "dependencies": [
+        "sc-card",
+        "sc-skeleton",
+        "sc-alert",
+        "sc-payment-method-choice",
+        "sc-payment-selected",
+        "sc-block-ui"
+      ],
+      "dependencyGraph": {
+        "sc-checkout-mollie-payment": [
+          "sc-card",
+          "sc-skeleton",
+          "sc-alert",
+          "sc-payment-method-choice",
+          "sc-payment-selected",
+          "sc-block-ui"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-payment-method-choice": [
+          "sc-card"
+        ],
+        "sc-payment-selected": [
+          "sc-divider"
+        ],
+        "sc-block-ui": [
+          "sc-spinner"
+        ],
+        "sc-payment": [
+          "sc-checkout-mollie-payment"
         ]
       }
     },
@@ -5639,21 +5800,6 @@
       "usage": {},
       "props": [
         {
-          "name": "checkout",
-          "type": "Checkout",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Checkout Session from sc-checkout.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Checkout"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "rule_groups",
           "type": "RuleGroup[]",
           "mutable": false,
@@ -5663,31 +5809,6 @@
           "values": [
             {
               "type": "RuleGroup[]"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "selectedProcessorId",
-          "type": "\"paypal\" | \"paypal-card\" | \"stripe\"",
-          "mutable": false,
-          "attr": "selected-processor-id",
-          "reflectToAttr": false,
-          "docs": "The currently selected processor",
-          "docsTags": [],
-          "values": [
-            {
-              "value": "paypal",
-              "type": "string"
-            },
-            {
-              "value": "paypal-card",
-              "type": "string"
-            },
-            {
-              "value": "stripe",
-              "type": "string"
             }
           ],
           "optional": false,
@@ -7526,7 +7647,7 @@
         },
         {
           "event": "scUpdateOrderState",
-          "detail": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"requires_approval\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "detail": "{ id?: string; status?: \"draft\" | \"paid\" | \"canceled\" | \"finalized\" | \"payment_intent_canceled\" | \"payment_failed\" | \"processing\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -7906,7 +8027,7 @@
         },
         {
           "event": "scUpdateOrderState",
-          "detail": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"requires_approval\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "detail": "{ id?: string; status?: \"draft\" | \"paid\" | \"canceled\" | \"finalized\" | \"payment_intent_canceled\" | \"payment_failed\" | \"processing\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -8286,7 +8407,7 @@
         },
         {
           "event": "scUpdateOrderState",
-          "detail": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"requires_approval\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "detail": "{ id?: string; status?: \"draft\" | \"paid\" | \"canceled\" | \"finalized\" | \"payment_intent_canceled\" | \"payment_failed\" | \"processing\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -8694,6 +8815,7 @@
         "sc-invoices-list",
         "sc-licenses-list",
         "sc-order",
+        "sc-order-confirm-provider",
         "sc-order-confirmation-details",
         "sc-orders-list",
         "sc-password-nag",
@@ -8746,6 +8868,9 @@
           "sc-dashboard-module"
         ],
         "sc-order": [
+          "sc-dashboard-module"
+        ],
+        "sc-order-confirm-provider": [
           "sc-dashboard-module"
         ],
         "sc-order-confirmation-details": [
@@ -9414,6 +9539,7 @@
       ],
       "dependents": [],
       "dependencies": [
+        "sc-icon",
         "sc-dashboard-module",
         "sc-card",
         "sc-stacked-list",
@@ -9425,6 +9551,7 @@
       ],
       "dependencyGraph": {
         "sc-downloads-list": [
+          "sc-icon",
           "sc-dashboard-module",
           "sc-card",
           "sc-stacked-list",
@@ -10455,7 +10582,6 @@
         "sc-downloads-list",
         "sc-login-form",
         "sc-order",
-        "sc-order-confirm-provider",
         "sc-pagination",
         "sc-password-nag",
         "sc-payment-methods-list",
@@ -10482,9 +10608,6 @@
           "sc-flex"
         ],
         "sc-order": [
-          "sc-flex"
-        ],
-        "sc-order-confirm-provider": [
           "sc-flex"
         ],
         "sc-pagination": [
@@ -10646,6 +10769,7 @@
         "sc-customer-edit",
         "sc-login-form",
         "sc-login-provider",
+        "sc-mollie-add-method",
         "sc-password-nag",
         "sc-stripe-add-method",
         "sc-subscription-ad-hoc-confirm",
@@ -10671,6 +10795,9 @@
           "sc-form"
         ],
         "sc-login-provider": [
+          "sc-form"
+        ],
+        "sc-mollie-add-method": [
           "sc-form"
         ],
         "sc-password-nag": [
@@ -12429,14 +12556,17 @@
         "sc-charges-list",
         "sc-customer-details",
         "sc-dialog",
+        "sc-downloads-list",
         "sc-drawer",
         "sc-empty",
         "sc-invoices-list",
         "sc-login-form",
         "sc-order",
+        "sc-order-confirm-provider",
         "sc-order-submit",
         "sc-orders-list",
         "sc-password-nag",
+        "sc-payment",
         "sc-payment-method",
         "sc-payment-methods-list",
         "sc-product-line-item",
@@ -12496,6 +12626,9 @@
         "sc-dialog": [
           "sc-icon"
         ],
+        "sc-downloads-list": [
+          "sc-icon"
+        ],
         "sc-drawer": [
           "sc-icon"
         ],
@@ -12511,6 +12644,9 @@
         "sc-order": [
           "sc-icon"
         ],
+        "sc-order-confirm-provider": [
+          "sc-icon"
+        ],
         "sc-order-submit": [
           "sc-icon"
         ],
@@ -12518,6 +12654,9 @@
           "sc-icon"
         ],
         "sc-password-nag": [
+          "sc-icon"
+        ],
+        "sc-payment": [
           "sc-icon"
         ],
         "sc-payment-method": [
@@ -14862,6 +15001,154 @@
       }
     },
     {
+      "filePath": "./src/components/ui/sc-mollie-add-method/sc-mollie-add-method.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-mollie-add-method",
+      "readme": "# sc-mollie-add-method\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "country",
+          "type": "string",
+          "mutable": false,
+          "attr": "country",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "currency",
+          "type": "string",
+          "mutable": false,
+          "attr": "currency",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "customerId",
+          "type": "string",
+          "mutable": false,
+          "attr": "customer-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "liveMode",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "live-mode",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "processorId",
+          "type": "string",
+          "mutable": false,
+          "attr": "processor-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "successUrl",
+          "type": "string",
+          "mutable": false,
+          "attr": "success-url",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-card",
+        "sc-skeleton",
+        "sc-form",
+        "sc-toggles",
+        "sc-toggle",
+        "sc-payment-selected",
+        "sc-button",
+        "sc-block-ui"
+      ],
+      "dependencyGraph": {
+        "sc-mollie-add-method": [
+          "sc-card",
+          "sc-skeleton",
+          "sc-form",
+          "sc-toggles",
+          "sc-toggle",
+          "sc-payment-selected",
+          "sc-button",
+          "sc-block-ui"
+        ],
+        "sc-toggle": [
+          "sc-icon"
+        ],
+        "sc-payment-selected": [
+          "sc-divider"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-block-ui": [
+          "sc-spinner"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/controllers/dashboard/order/sc-order.tsx",
       "encapsulation": "shadow",
       "tag": "sc-order",
@@ -15370,6 +15657,21 @@
           "required": false
         },
         {
+          "name": "successText",
+          "type": "{ title: string; description: string; button: string; }",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Success text for the form.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "{ title: string; description: string; button: string; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "successUrl",
           "type": "string",
           "mutable": false,
@@ -15431,15 +15733,17 @@
       ],
       "dependencies": [
         "sc-dialog",
-        "sc-flex",
-        "sc-text",
+        "sc-icon",
+        "sc-dashboard-module",
+        "sc-order-manual-instructions",
         "sc-button"
       ],
       "dependencyGraph": {
         "sc-order-confirm-provider": [
           "sc-dialog",
-          "sc-flex",
-          "sc-text",
+          "sc-icon",
+          "sc-dashboard-module",
+          "sc-order-manual-instructions",
           "sc-button"
         ],
         "sc-dialog": [
@@ -15448,6 +15752,15 @@
         ],
         "sc-button": [
           "sc-spinner"
+        ],
+        "sc-dashboard-module": [
+          "sc-alert"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-order-manual-instructions": [
+          "sc-alert"
         ],
         "sc-checkout": [
           "sc-order-confirm-provider"
@@ -16233,7 +16546,8 @@
       "parts": [],
       "dependents": [
         "sc-order",
-        "sc-order-confirm-components-validator"
+        "sc-order-confirm-components-validator",
+        "sc-order-confirm-provider"
       ],
       "dependencies": [
         "sc-alert"
@@ -16249,6 +16563,9 @@
           "sc-order-manual-instructions"
         ],
         "sc-order-confirm-components-validator": [
+          "sc-order-manual-instructions"
+        ],
+        "sc-order-confirm-provider": [
           "sc-order-manual-instructions"
         ]
       }
@@ -17710,7 +18027,7 @@
         },
         {
           "name": "order",
-          "type": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"requires_approval\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "type": "{ id?: string; status?: \"draft\" | \"paid\" | \"canceled\" | \"finalized\" | \"payment_intent_canceled\" | \"payment_failed\" | \"processing\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_amount?: number; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "The order",
@@ -17724,11 +18041,23 @@
               "type": "string"
             },
             {
+              "value": "canceled",
+              "type": "string"
+            },
+            {
               "value": "finalized",
               "type": "string"
             },
             {
-              "type": "\"requires_approval\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string"
+              "value": "payment_intent_canceled",
+              "type": "string"
+            },
+            {
+              "value": "payment_failed",
+              "type": "string"
+            },
+            {
+              "type": "\"processing\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string"
             },
             {
               "type": "ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string"
@@ -18336,15 +18665,15 @@
       "usage": {},
       "props": [
         {
-          "name": "checkout",
-          "type": "Checkout",
+          "name": "disabledProcessorTypes",
+          "type": "string[]",
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "Checkout Session from sc-checkout.",
+          "docs": "Disabled processor types",
           "docsTags": [],
           "values": [
             {
-              "type": "Checkout"
+              "type": "string[]"
             }
           ],
           "optional": false,
@@ -18383,34 +18712,12 @@
           "required": false
         },
         {
-          "name": "mode",
-          "type": "\"live\" | \"test\"",
-          "mutable": false,
-          "attr": "mode",
-          "reflectToAttr": false,
-          "docs": "Is this created in \"test\" mode",
-          "docsTags": [],
-          "default": "'live'",
-          "values": [
-            {
-              "value": "live",
-              "type": "string"
-            },
-            {
-              "value": "test",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "processor",
+          "name": "secureNotice",
           "type": "string",
           "mutable": false,
-          "attr": "processor",
+          "attr": "secure-notice",
           "reflectToAttr": false,
-          "docs": "The current selected processor.",
+          "docs": "",
           "docsTags": [],
           "values": [
             {
@@ -18421,16 +18728,16 @@
           "required": false
         },
         {
-          "name": "processors",
-          "type": "Processor[]",
+          "name": "stripePaymentElement",
+          "type": "boolean",
           "mutable": false,
+          "attr": "stripe-payment-element",
           "reflectToAttr": false,
-          "docs": "List of available processors.",
+          "docs": "",
           "docsTags": [],
-          "default": "[]",
           "values": [
             {
-              "type": "Processor[]"
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -18438,24 +18745,8 @@
         }
       ],
       "methods": [],
-      "events": [
-        {
-          "event": "scSetProcessor",
-          "detail": "{ id: string; manual: boolean; }",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Set the checkout procesor.",
-          "docsTags": []
-        }
-      ],
-      "listeners": [
-        {
-          "event": "scProcessorInvalid",
-          "capture": false,
-          "passive": false
-        }
-      ],
+      "events": [],
+      "listeners": [],
       "styles": [],
       "slots": [],
       "parts": [
@@ -18486,21 +18777,48 @@
       ],
       "dependents": [],
       "dependencies": [
+        "sc-payment-method-choice",
+        "sc-icon",
+        "sc-card",
+        "sc-payment-selected",
         "sc-form-control",
         "sc-tag",
+        "sc-checkout-mollie-payment",
         "sc-alert"
       ],
       "dependencyGraph": {
         "sc-payment": [
+          "sc-payment-method-choice",
+          "sc-icon",
+          "sc-card",
+          "sc-payment-selected",
           "sc-form-control",
           "sc-tag",
+          "sc-checkout-mollie-payment",
           "sc-alert"
+        ],
+        "sc-payment-method-choice": [
+          "sc-card"
+        ],
+        "sc-payment-selected": [
+          "sc-divider"
         ],
         "sc-form-control": [
           "sc-tooltip"
         ],
+        "sc-checkout-mollie-payment": [
+          "sc-card",
+          "sc-skeleton",
+          "sc-alert",
+          "sc-payment-method-choice",
+          "sc-payment-selected",
+          "sc-block-ui"
+        ],
         "sc-alert": [
           "sc-icon"
+        ],
+        "sc-block-ui": [
+          "sc-spinner"
         ]
       }
     },
@@ -18677,53 +18995,6 @@
           "required": false
         },
         {
-          "name": "checkout",
-          "type": "Checkout",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "The checkout.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Checkout"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "hasOthers",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "has-others",
-          "reflectToAttr": false,
-          "docs": "Does this have others?",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "isDisabled",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "is-disabled",
-          "reflectToAttr": true,
-          "docs": "Is this disabled?",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "isManual",
           "type": "boolean",
           "mutable": false,
@@ -18740,12 +19011,12 @@
           "required": false
         },
         {
-          "name": "processor",
+          "name": "methodId",
           "type": "string",
           "mutable": false,
-          "attr": "processor",
+          "attr": "method-id",
           "reflectToAttr": true,
-          "docs": "The current processor",
+          "docs": "The method id",
           "docsTags": [],
           "values": [
             {
@@ -18770,65 +19041,30 @@
           ],
           "optional": false,
           "required": false
-        },
-        {
-          "name": "recurringEnabled",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "recurring-enabled",
-          "reflectToAttr": false,
-          "docs": "Is this recurring-enabled?",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
         }
       ],
       "methods": [],
-      "events": [
-        {
-          "event": "scProcessorInvalid",
-          "detail": "void",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "The currenct processor is invalid.",
-          "docsTags": []
-        },
-        {
-          "event": "scSetProcessor",
-          "detail": "{ id: string; manual: boolean; }",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Set the order procesor.",
-          "docsTags": []
-        },
-        {
-          "event": "scShow",
-          "detail": "void",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Show the toggle",
-          "docsTags": []
-        }
-      ],
+      "events": [],
       "listeners": [],
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "sc-checkout-mollie-payment",
+        "sc-payment"
+      ],
       "dependencies": [
         "sc-card"
       ],
       "dependencyGraph": {
         "sc-payment-method-choice": [
           "sc-card"
+        ],
+        "sc-checkout-mollie-payment": [
+          "sc-payment-method-choice"
+        ],
+        "sc-payment": [
+          "sc-payment-method-choice"
         ]
       }
     },
@@ -19055,13 +19291,26 @@
           "docs": ""
         }
       ],
-      "dependents": [],
+      "dependents": [
+        "sc-checkout-mollie-payment",
+        "sc-mollie-add-method",
+        "sc-payment"
+      ],
       "dependencies": [
         "sc-divider"
       ],
       "dependencyGraph": {
         "sc-payment-selected": [
           "sc-divider"
+        ],
+        "sc-checkout-mollie-payment": [
+          "sc-payment-selected"
+        ],
+        "sc-mollie-add-method": [
+          "sc-payment-selected"
+        ],
+        "sc-payment": [
+          "sc-payment-selected"
         ]
       }
     },
@@ -22233,6 +22482,15 @@
           "docsTags": []
         },
         {
+          "event": "scScrollEnd",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the list scrolls to the end.",
+          "docsTags": []
+        },
+        {
           "event": "scSearch",
           "detail": "string",
           "bubbles": true,
@@ -22443,6 +22701,22 @@
           "required": false
         },
         {
+          "name": "method",
+          "type": "string",
+          "mutable": false,
+          "attr": "method",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "mode",
           "type": "\"live\" | \"test\"",
           "mutable": false,
@@ -22606,10 +22880,10 @@
         {
           "name": "finalize",
           "returns": {
-            "type": "Promise<Checkout>",
+            "type": "Promise<Checkout | Timeout>",
             "docs": ""
           },
-          "signature": "finalize() => Promise<Checkout>",
+          "signature": "finalize() => Promise<Checkout | NodeJS.Timeout>",
           "parameters": [],
           "docs": "Finalize the order.",
           "docsTags": [
@@ -22786,6 +23060,7 @@
       "dependents": [
         "sc-cancel-survey",
         "sc-charges-list",
+        "sc-checkout-mollie-payment",
         "sc-coupon-form",
         "sc-custom-order-price-input",
         "sc-customer-details",
@@ -22793,6 +23068,7 @@
         "sc-invoices-list",
         "sc-line-item-total",
         "sc-line-items",
+        "sc-mollie-add-method",
         "sc-order",
         "sc-order-confirmation-details",
         "sc-order-confirmation-line-items",
@@ -22823,6 +23099,9 @@
         "sc-charges-list": [
           "sc-skeleton"
         ],
+        "sc-checkout-mollie-payment": [
+          "sc-skeleton"
+        ],
         "sc-coupon-form": [
           "sc-skeleton"
         ],
@@ -22842,6 +23121,9 @@
           "sc-skeleton"
         ],
         "sc-line-items": [
+          "sc-skeleton"
+        ],
+        "sc-mollie-add-method": [
           "sc-skeleton"
         ],
         "sc-order": [
@@ -26897,7 +27179,6 @@
       "dependents": [
         "sc-charges-list",
         "sc-invoices-list",
-        "sc-order-confirm-provider",
         "sc-orders-list",
         "sc-payment-method",
         "sc-payment-methods-list",
@@ -26912,9 +27193,6 @@
           "sc-text"
         ],
         "sc-invoices-list": [
-          "sc-text"
-        ],
-        "sc-order-confirm-provider": [
           "sc-text"
         ],
         "sc-orders-list": [
@@ -27753,6 +28031,7 @@
         }
       ],
       "dependents": [
+        "sc-mollie-add-method",
         "sc-subscription-next-payment"
       ],
       "dependencies": [
@@ -27761,6 +28040,9 @@
       "dependencyGraph": {
         "sc-toggle": [
           "sc-icon"
+        ],
+        "sc-mollie-add-method": [
+          "sc-toggle"
         ],
         "sc-subscription-next-payment": [
           "sc-toggle"
@@ -27850,9 +28132,15 @@
           "docs": ""
         }
       ],
-      "dependents": [],
+      "dependents": [
+        "sc-mollie-add-method"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "sc-mollie-add-method": [
+          "sc-toggles"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/tooltip/sc-tooltip.tsx",

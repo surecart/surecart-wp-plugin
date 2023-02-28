@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.1
-Stable tag: 1.6.1
+Stable tag: 1.6.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,34 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.7.0 - February 28, 2023 =
+* New: Revoke subscription purchases.
+* New: Ability to cancel manual orders.
+* New: Allow external URLs in downloads.
+* New: The ability to delete a customer on the merchant customer page.
+* New: Add grace period to abandoned checkouts.
+* New: Ignore purchased products setting for abandoned checkouts.
+* Improvement: Checkouts now show a confirmation modal before the thank you page.
+* Improvement: Update payment plan wording to be more clear about number of payments.
+* Improvement: RTL improvements.
+* Improvement: Tax ID Input field - allow labels to be editable.
+* Improvement: Stripe Payment Element now will inherit name, address, email fields for payment types that require it.
+* Improvement: Product/Price/Customer select dropdowns now paginate.
+* Improvement: Prevent cart posts from being misconfigured.
+* Improvement: Prevent "Store Checkout" forms and pages from being misconfigured.
+* Improvement: Customers can update their subscriptions to a default payment method when they switch default payment methods.
+* Fix: Block names not being translated.
+* Fix: Product restrictions on coupon page not showing prices until subsequent load.
+
+= 1.6.3 - February 20, 2023 =
+* Fix: Default country not being sent with direct checkout links.
+
+= 1.6.2 - February 20, 2023 =
+* Fix: Order bump recurring time not being shown properly if discount is applied.
+* Fix: Payment history block title not properly wrapping on mobile.
+* Fix: Default country not being sent with initial checkout.
+* Fix: Output buffer not cleaned causing conflict with FacetWP.
 
 = 1.6.1 - February 16, 2023 =
 * Fix: Remove integrations table on uninstall.

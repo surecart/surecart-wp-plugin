@@ -1,4 +1,3 @@
-
 beforeEach(() => {
   cy.intercept(
     {
@@ -61,8 +60,8 @@ beforeEach(() => {
             updated_at: 1647382132,
             price_id: 'ac7b1d56-0b7d-4e29-b2e5-e01ace8bf4ac',
           },
-        ]
-      }
+        ],
+      },
     },
   ).as('createUpdate');
 });
@@ -83,16 +82,20 @@ describe('Line Items', () => {
     cy.wait('@createUpdate').then(({ request }) => {
       expect(request.body.line_items.length).to.eq(1);
       expect(request.body.line_items[0]['price_id']).to.eq('price_id');
-      expect((request.body.line_items[0]['quantity']).toString()).to.eq('2');
-    })
+      expect(request.body.line_items[0]['quantity'].toString()).to.eq('2');
+      expect(request.body.shipping_address.country).to.eq('DK');
+    });
   });
 });
 
 describe('Coupons', () => {
   it('Applies a coupon', () => {
     cy.visit('/test/sc-checkout/url-params?coupon=TESTCOUPON');
-    cy.wait('@createUpdate').its('request.body.discount').should('have.property', 'promotion_code', 'TESTCOUPON');
-  })
+    cy.wait('@createUpdate').then(({ request }) => {
+      expect(request.body.discount.promotion_code).to.eq('TESTCOUPON');
+      expect(request.body.shipping_address.country).to.eq('DK');
+    });
+  });
 });
 
 describe('Abandoned Cart', () => {
@@ -106,11 +109,11 @@ describe('Abandoned Cart', () => {
       expect(request.url).to.include('testcheckoutid');
       expect(request.method).to.eq('POST');
       expect(request.body.discount.promotion_code).to.eq('TESTCOUPON');
-    })
-  })
+    });
+  });
   it('Ignores existing sessions', () => {
     cy.visit('/test/sc-checkout/url-params?checkout_id=test&coupon=TESTCOUPON');
-    cy.wait('@createUpdate')
+    cy.wait('@createUpdate');
     cy.visit('/test/sc-checkout/url-params?checkout_id=test2&coupon=TESTCOUPON');
     cy.wait('@createUpdate').its('request.url').should('include', 'checkouts/test2');
   });
@@ -176,15 +179,15 @@ describe('Abandoned Cart', () => {
               updated_at: 1647382132,
               price_id: 'ac7b1d56-0b7d-4e29-b2e5-e01ace8bf4ac',
             },
-          ]
-        }
-      }
+          ],
+        },
+      },
     ).as('fetchMismatchLiveMode');
 
     cy.visit('/test/sc-checkout/url-params?checkout_id=test&coupon=TESTCOUPON');
     cy.wait('@fetchMismatchLiveMode');
     cy.get('sc-order-summary').shadow().find('p').contains('Your cart is empty');
-  })
+  });
 });
 
 describe('Payment Instrument Redirects', () => {
@@ -213,9 +216,37 @@ describe('Payment Instrument Redirects', () => {
     cy.wait('@createUpdate');
     cy.wait('@confirm');
     cy.get('sc-dialog').find('sc-dashboard-module').should('be.visible');
-    cy.get('sc-dialog').find('.dialog__overlay').first().click({force: true});
+    cy.get('sc-dialog').find('.dialog__overlay').first().click({ force: true });
     cy.get('sc-dialog').find('sc-dashboard-module').should('be.visible');
-    cy.get('sc-button[href]').should('have.attr', 'href').and('contain', 'success').and('contain', 'order=test');
+    cy.get('sc-button[href]').should('have.attr', 'href').and('contain', 'success');
+  });
+
+  it('Handles mollie success', () => {
+    cy.intercept(
+      {
+        path: '**/surecart/v1/checkouts/*',
+      },
+      {
+        id: 'test',
+        object: 'checkout',
+        status: 'paid',
+      },
+    ).as('createUpdate');
+    cy.intercept(
+      {
+        method: 'POST',
+        path: '**/surecart/v1/checkouts/test/confirm*',
+      },
+      {
+        id: 'test',
+        status: 'paid',
+      },
+    ).as('confirm');
+    cy.visit('/test/sc-checkout/url-params?checkout_id=test&redirect_status=succeeded&is_surecart_payment_redirect=true');
+    cy.wait('@createUpdate');
+    cy.wait('@confirm');
+    // cy.location('pathname').should('contain', 'success');
+    // cy.location('search').should('contain', 'order=test');
   });
 
   it('Handles redirect errors', () => {
@@ -230,7 +261,6 @@ describe('Payment Instrument Redirects', () => {
       },
     ).as('createUpdate');
     cy.visit('/test/sc-checkout/url-params?redirect_status=failed&checkout_id=test');
-    cy.get('sc-checkout sc-checkout-form-errors').shadow().find('sc-alert').should('be.visible').should('have.attr', 'type', 'danger')
+    cy.get('sc-checkout sc-checkout-form-errors').shadow().find('sc-alert').should('be.visible').should('have.attr', 'type', 'danger');
   });
 });
-

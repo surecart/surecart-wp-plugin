@@ -19,6 +19,7 @@ export const expand = [
   'shipping_address',
   'staged_payment_intents',
   'tax_identifier',
+  'manual_payment_method'
 ];
 
 export const parsePath = (id, endpoint = '') => {
