@@ -23,7 +23,7 @@
 		},
 		"button_text": {
 			"type": "string",
-			"default": "Apply Coupon"
+			"default": "Apply"
 		},
 		"placeholder": {
 			"type": "string",
