@@ -5,25 +5,13 @@ import { __ } from '@wordpress/i18n';
 import { ScInput, ScPriceInput, ScSwitch } from '@surecart/components-react';
 
 export default ({ price, updatePrice }) => {
-	const onToggleSwitch = (e) => {
-		const setupFeeEnabled = e.target.checked;
-		if (!setupFeeEnabled) {
-			updatePrice({
-				setup_fee_enabled: false,
-				setup_fee_name: null,
-				setup_fee_amount: 0,
-			});
-
-			return;
-		}
-		updatePrice({ setup_fee_enabled: true });
-	};
-
 	return (
 		<>
 			<ScSwitch
 				checked={price.setup_fee_enabled}
-				onScChange={onToggleSwitch}
+				onScChange={(e) =>
+					updatePrice({ setup_fee_enabled: e.target.checked })
+				}
 			>
 				{__('Add setup fee', 'surecart')}
 			</ScSwitch>
@@ -48,6 +36,7 @@ export default ({ price, updatePrice }) => {
 							});
 						}}
 						name="name"
+						required
 					/>
 					<ScPriceInput
 						label={__('Setup fee amount', 'surecart')}
@@ -58,6 +47,7 @@ export default ({ price, updatePrice }) => {
 								setup_fee_amount: e.target.value,
 							})
 						}
+						required
 					/>
 				</div>
 			)}
