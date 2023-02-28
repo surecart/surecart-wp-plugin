@@ -77,6 +77,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/cart/edit/index.js'
 		),
+		['admin/cancellation-insights']: path.resolve(
+			__dirname,
+			'packages/admin/cancellation-insights/index.js'
+		),
 
 		/**
 		 * Settings.
@@ -92,6 +96,10 @@ module.exports = {
 		['admin/settings/subscription']: path.resolve(
 			__dirname,
 			'packages/admin/settings/subscription/index.js'
+		),
+		['admin/settings/subscription-preservation']: path.resolve(
+			__dirname,
+			'packages/admin/settings/subscription-preservation/index.js'
 		),
 		['admin/settings/portal']: path.resolve(
 			__dirname,
@@ -169,7 +177,7 @@ module.exports = {
 				{
 					from: path.resolve(
 						__dirname,
-						'node_modules/@surecart/components/dist/surecart/icon-assets'
+						'./packages/components/src/components/ui/icon/icon-assets'
 					),
 					to: path.resolve(__dirname, 'dist/icon-assets'),
 				},

@@ -5,6 +5,7 @@
 	"title": "Cart",
 	"description": "The cart",
 	"category": "surecart",
+  "textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false,

@@ -12,6 +12,7 @@
 | `amount`            | `amount`              | Product monetary amount                       | `number`  | `undefined` |
 | `currency`          | `currency`            | Currency for the product                      | `string`  | `undefined` |
 | `editable`          | `editable`            | Can we select the quantity                    | `boolean` | `true`      |
+| `fees`              | --                    | Product line item fees.                       | `Fee[]`   | `undefined` |
 | `imageUrl`          | `image-url`           | Url for the product image                     | `string`  | `undefined` |
 | `interval`          | `interval`            | Recurring interval (i.e. monthly, once, etc.) | `string`  | `undefined` |
 | `max`               | `max`                 | The max allowed.                              | `number`  | `100`       |
@@ -45,6 +46,7 @@
 | `"price__amount"`      | The price amount.                  |
 | `"price__description"` | The price description.             |
 | `"price__scratch"`     |                                    |
+| `"product-line-item"`  |                                    |
 | `"quantity__base"`     | The quantity base wrapper.         |
 | `"remove-icon__base"`  | The remove icon base wrapper.      |
 | `"static-quantity"`    | The statically displayed quantity. |
@@ -60,6 +62,7 @@
  - [sc-line-items](../../controllers/checkout-form/line-items)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirmation-line-items](../../controllers/confirmation/order-confirmation-line-items)
+ - [sc-subscription-next-payment](../../controllers/dashboard/subscription-details)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Depends on
@@ -67,6 +70,7 @@
 - [sc-format-number](../../util/format-number)
 - [sc-quantity-select](../quantity-select)
 - [sc-icon](../icon)
+- [sc-line-item](../line-item)
 
 ### Graph
 ```mermaid
@@ -74,10 +78,12 @@ graph TD;
   sc-product-line-item --> sc-format-number
   sc-product-line-item --> sc-quantity-select
   sc-product-line-item --> sc-icon
+  sc-product-line-item --> sc-line-item
   sc-quantity-select --> sc-icon
   sc-line-items --> sc-product-line-item
   sc-order --> sc-product-line-item
   sc-order-confirmation-line-items --> sc-product-line-item
+  sc-subscription-next-payment --> sc-product-line-item
   sc-upcoming-invoice --> sc-product-line-item
   style sc-product-line-item fill:#f9f,stroke:#333,stroke-width:4px
 ```

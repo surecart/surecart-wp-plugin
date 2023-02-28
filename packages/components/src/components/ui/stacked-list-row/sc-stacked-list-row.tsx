@@ -1,4 +1,5 @@
 import { Component, Element, h, Prop, State } from '@stencil/core';
+import { isRtl } from '../../../functions/page-align';
 
 @Component({
   tag: 'sc-stacked-list-row',
@@ -30,8 +31,8 @@ export class ScStackedListRow {
   }
 
   handleSlotChange() {
-    this.hasPrefix = !!this.el.querySelector('.list-row__prefix [slot="prefix"]');
-    this.hasSuffix = !!this.el.querySelector('[slot="suffix"]');
+    this.hasPrefix = !!Array.from(this.el.children).some(child => child.slot === 'prefix');
+    this.hasSuffix = !!Array.from(this.el.children).some(child => child.slot === 'suffix');
   }
 
   render() {
@@ -47,6 +48,7 @@ export class ScStackedListRow {
           'list-row--has-prefix': this.hasPrefix,
           'list-row--has-suffix': this.hasSuffix,
           'breakpoint-lg': this.width >= this.mobileSize,
+          'list-row--is-rtl':isRtl()
         }}
       >
         <span class="list-row__prefix">

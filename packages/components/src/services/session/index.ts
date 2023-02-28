@@ -6,6 +6,7 @@ export const baseUrl = 'surecart/v1/checkouts/';
 export const expand = [
   'line_items',
   'line_item.price',
+  'line_item.fees',
   'price.product',
   'customer',
   'customer.shipping_address',
@@ -18,6 +19,7 @@ export const expand = [
   'shipping_address',
   'staged_payment_intents',
   'tax_identifier',
+  'manual_payment_method'
 ];
 
 export const parsePath = (id, endpoint = '') => {

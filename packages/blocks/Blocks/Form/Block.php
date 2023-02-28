@@ -74,11 +74,13 @@ class Block extends BaseBlock {
 				'style'                         => $this->getStyle( $attributes ),
 				'content'                       => $content,
 				'abandoned_checkout_return_url' => esc_url( trailingslashit( get_site_url() ) . 'surecart/redirect' ),
-				'processors'                    => array_filter(
-					$processors ?? [],
-					function( $processor ) {
-						return $processor->approved && $processor->enabled;
-					}
+				'processors'                    => array_values(
+					array_filter(
+						$processors ?? [],
+						function( $processor ) {
+							return $processor->approved && $processor->enabled;
+						}
+					)
 				),
 				'manual_payment_methods'        => (array) ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? [],
 				'stripe_payment_element'        => (bool) get_option( 'sc_stripe_payment_element', false ),
@@ -86,7 +88,8 @@ class Block extends BaseBlock {
 				'form_id'                       => $sc_form_id,
 				'id'                            => 'sc-checkout-' . $sc_form_id,
 				'prices'                        => $attributes['prices'] ?? [],
-				'loading_text'                  => $attributes['loading_text'] ?? [],
+				'loading_text'                  => array_filter( $attributes['loading_text'] ?? [] ),
+				'success_text'                  => array_filter( $attributes['success_text'] ?? [] ),
 				'success_url'                   => ! empty( $attributes['success_url'] ) ? $attributes['success_url'] : \SureCart::pages()->url( 'order-confirmation' ),
 			]
 		);

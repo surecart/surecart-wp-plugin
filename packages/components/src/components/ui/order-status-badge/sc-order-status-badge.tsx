@@ -33,6 +33,8 @@ export class ScOrderStatusBadge {
         return 'danger';
       case 'void':
         return 'default';
+      case 'canceled':
+        return 'danger';
     }
   }
 
@@ -48,6 +50,8 @@ export class ScOrderStatusBadge {
         return __('Canceled', 'surecart');
       case 'void':
         return __('Void', 'surecart');
+      case 'canceled':
+        return __('Canceled', 'surecart');
       default:
         return this.status;
     }

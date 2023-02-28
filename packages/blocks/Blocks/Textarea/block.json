@@ -4,6 +4,7 @@
 	"description": "Displays a form text textarea field. This is saved with the order as additional metadata.",
 	"category": "surecart",
 	"keywords": ["textarea", "input", "custom", "field"],
+  "textdomain": "surecart",
 	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,

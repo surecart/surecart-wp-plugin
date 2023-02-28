@@ -34,6 +34,8 @@
 
 ### Used by
 
+ - [sc-cancel-discount](../../controllers/dashboard/sc-cancel-discount)
+ - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-customer-details](../customer-details)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
@@ -41,6 +43,7 @@
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-order](../../controllers/dashboard/order)
+ - [sc-order-confirm-provider](../../providers/order-confirm-provider)
  - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
@@ -51,7 +54,6 @@
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
- - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
@@ -68,6 +70,8 @@
 graph TD;
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon
+  sc-cancel-discount --> sc-dashboard-module
+  sc-cancel-survey --> sc-dashboard-module
   sc-charges-list --> sc-dashboard-module
   sc-customer-details --> sc-dashboard-module
   sc-customer-edit --> sc-dashboard-module
@@ -75,6 +79,7 @@ graph TD;
   sc-invoices-list --> sc-dashboard-module
   sc-licenses-list --> sc-dashboard-module
   sc-order --> sc-dashboard-module
+  sc-order-confirm-provider --> sc-dashboard-module
   sc-order-confirmation-details --> sc-dashboard-module
   sc-orders-list --> sc-dashboard-module
   sc-password-nag --> sc-dashboard-module
@@ -85,7 +90,6 @@ graph TD;
   sc-subscription-cancel --> sc-dashboard-module
   sc-subscription-payment --> sc-dashboard-module
   sc-subscription-payment-method --> sc-dashboard-module
-  sc-subscription-renew --> sc-dashboard-module
   sc-subscription-switch --> sc-dashboard-module
   sc-subscriptions-list --> sc-dashboard-module
   sc-upcoming-invoice --> sc-dashboard-module

@@ -5,6 +5,7 @@ import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
 import { intervalString } from '../../../../functions/price';
+import { formatTaxDisplay } from '../../../../functions/tax';
 import { Checkout, ManualPaymentMethod, Order, Product, Purchase } from '../../../../types';
 
 @Component({
@@ -197,7 +198,7 @@ export class ScOrder {
 
         {!!checkout?.tax_amount && (
           <sc-line-item>
-            <span slot="description">{__('Tax', 'surecart')}</span>
+            <span slot="description">{formatTaxDisplay(checkout?.tax_label)}</span>
             <sc-format-number
               slot="price"
               style={{
@@ -271,8 +272,8 @@ export class ScOrder {
           </sc-card>
         </sc-dashboard-module>
 
-        {this.order?.pdf_url && (
-          <sc-button type="primary" href={this.order?.pdf_url} target="_blank">
+        {this.order?.statement_url && (
+          <sc-button type="primary" href={this.order?.statement_url} target="_blank">
             <sc-icon name="inbox" slot="prefix"></sc-icon>
             {__('Download Receipt/Invoice', 'surecart')}
           </sc-button>

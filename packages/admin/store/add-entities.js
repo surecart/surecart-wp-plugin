@@ -27,6 +27,20 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'cancellation_act',
+		kind: 'surecart',
+		label: __('Cancellation Acts', 'surecart'),
+		baseURL: 'surecart/v1/cancellation_acts',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'cancellation_reason',
+		kind: 'surecart',
+		label: __('Cancellation Reason', 'surecart'),
+		baseURL: 'surecart/v1/cancellation_reasons',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'charge',
 		kind: 'surecart',
 		label: __('Charge', 'surecart'),

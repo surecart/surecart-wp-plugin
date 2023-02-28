@@ -27,9 +27,11 @@
 ### Used by
 
  - [sc-address](../address)
+ - [sc-cancel-discount](../../controllers/dashboard/sc-cancel-discount)
  - [sc-cart](../../controllers/cart/sc-cart)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-checkout](../../controllers/checkout-form/checkout)
+ - [sc-checkout-mollie-payment](../../controllers/checkout-form/sc-checkout-mollie-payment)
  - [sc-compact-address](../sc-compact-address)
  - [sc-coupon-form](../coupon-form)
  - [sc-custom-order-price-input](../../controllers/checkout-form/custom-order-price-input)
@@ -39,6 +41,7 @@
  - [sc-form-state-provider](../../providers/form-state-provider)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-login-form](../../controllers/login)
+ - [sc-mollie-add-method](../sc-mollie-add-method)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
@@ -48,7 +51,6 @@
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
- - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
@@ -64,9 +66,11 @@
 graph TD;
   sc-block-ui --> sc-spinner
   sc-address --> sc-block-ui
+  sc-cancel-discount --> sc-block-ui
   sc-cart --> sc-block-ui
   sc-charges-list --> sc-block-ui
   sc-checkout --> sc-block-ui
+  sc-checkout-mollie-payment --> sc-block-ui
   sc-compact-address --> sc-block-ui
   sc-coupon-form --> sc-block-ui
   sc-custom-order-price-input --> sc-block-ui
@@ -76,6 +80,7 @@ graph TD;
   sc-form-state-provider --> sc-block-ui
   sc-invoices-list --> sc-block-ui
   sc-login-form --> sc-block-ui
+  sc-mollie-add-method --> sc-block-ui
   sc-orders-list --> sc-block-ui
   sc-password-nag --> sc-block-ui
   sc-payment-methods-list --> sc-block-ui
@@ -85,7 +90,6 @@ graph TD;
   sc-subscription-cancel --> sc-block-ui
   sc-subscription-payment --> sc-block-ui
   sc-subscription-payment-method --> sc-block-ui
-  sc-subscription-renew --> sc-block-ui
   sc-subscription-switch --> sc-block-ui
   sc-subscriptions-list --> sc-block-ui
   sc-upcoming-invoice --> sc-block-ui

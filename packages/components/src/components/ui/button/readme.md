@@ -49,6 +49,9 @@
 
 ### Used by
 
+ - [sc-cancel-dialog](../../controllers/dashboard/sc-cancel-dialog)
+ - [sc-cancel-discount](../../controllers/dashboard/sc-cancel-discount)
+ - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
  - [sc-cart-form-submit](../../controllers/cart/cart-form-submit)
  - [sc-cart-submit](../../controllers/cart/cart-submit)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
@@ -62,7 +65,9 @@
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-login-form](../../controllers/login)
  - [sc-login-provider](../../providers/sc-login-provider)
+ - [sc-mollie-add-method](../sc-mollie-add-method)
  - [sc-order](../../controllers/dashboard/order)
+ - [sc-order-confirm-provider](../../providers/order-confirm-provider)
  - [sc-order-submit](../../controllers/checkout-form/order-submit)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-pagination](../pagination)
@@ -76,7 +81,6 @@
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
- - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-tax-id-input](../tax-id-input)
@@ -94,6 +98,9 @@
 ```mermaid
 graph TD;
   sc-button --> sc-spinner
+  sc-cancel-dialog --> sc-button
+  sc-cancel-discount --> sc-button
+  sc-cancel-survey --> sc-button
   sc-cart-form-submit --> sc-button
   sc-cart-submit --> sc-button
   sc-charges-list --> sc-button
@@ -107,7 +114,9 @@ graph TD;
   sc-licenses-list --> sc-button
   sc-login-form --> sc-button
   sc-login-provider --> sc-button
+  sc-mollie-add-method --> sc-button
   sc-order --> sc-button
+  sc-order-confirm-provider --> sc-button
   sc-order-submit --> sc-button
   sc-orders-list --> sc-button
   sc-pagination --> sc-button
@@ -121,7 +130,6 @@ graph TD;
   sc-subscription-cancel --> sc-button
   sc-subscription-payment --> sc-button
   sc-subscription-payment-method --> sc-button
-  sc-subscription-renew --> sc-button
   sc-subscription-switch --> sc-button
   sc-subscriptions-list --> sc-button
   sc-tax-id-input --> sc-button

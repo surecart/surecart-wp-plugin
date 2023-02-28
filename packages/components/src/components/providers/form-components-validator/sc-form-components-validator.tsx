@@ -46,9 +46,6 @@ export class ScFormComponentsValidator {
     if (this?.order?.recommended_bumps?.data?.length) {
       this.addBumps();
     }
-    if (!!this.order?.bump_amount) {
-      this.addBumpLine();
-    }
     if (!!this.order?.tax_amount) {
       this.addTaxLine();
     }
@@ -59,7 +56,6 @@ export class ScFormComponentsValidator {
     this.hasTaxIDField = !!this.el.querySelector('sc-order-tax-id-input');
     this.hasBumpsField = !!this.el.querySelector('sc-order-bumps');
     this.hasTaxLine = !!this.el.querySelector('sc-line-item-tax');
-    this.hasBumpLine = !!this.el.querySelector('sc-line-item-bump');
 
     // automatically add address field if tax is enabled.
     if (this.taxProtocol?.tax_enabled) {
@@ -112,18 +108,6 @@ export class ScFormComponentsValidator {
       total.parentNode.insertBefore(tax, total);
     }
     this.hasTaxLine = true;
-  }
-
-  addBumpLine() {
-    if (this.hasBumpLine) return;
-    const total = this.el.querySelector('sc-line-item-total[total=total]');
-    const tax = document.createElement('sc-line-item-bump');
-    if (total?.previousElementSibling?.tagName === 'SC-DIVIDER') {
-      total.parentNode.insertBefore(tax, total.previousElementSibling);
-    } else {
-      total.parentNode.insertBefore(tax, total);
-    }
-    this.hasBumpLine = true;
   }
 
   render() {

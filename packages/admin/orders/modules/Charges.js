@@ -44,6 +44,33 @@ export default ({ checkoutId }) => {
 		[checkoutId]
 	);
 
+	const { purchases, loadingPurchases } = useSelect(
+		(select) => {
+			if (!checkoutId) {
+				return {
+					purchases: [],
+					loading: true,
+				};
+			}
+			const entityData = [
+				'surecart',
+				'purchase',
+				{
+					checkout_ids: checkoutId ? [checkoutId] : null,
+					expand: ['product'],
+				},
+			];
+			return {
+				purchases: select(coreStore)?.getEntityRecords?.(...entityData),
+				loading: !select(coreStore)?.hasFinishedResolution?.(
+					'getEntityRecords',
+					[...entityData]
+				),
+			};
+		},
+		[checkoutId]
+	);
+
 	const onRefunded = () => {
 		invalidateCharges();
 		setRefundCharge(false);
@@ -84,6 +111,7 @@ export default ({ checkoutId }) => {
 			{!!refundCharge && (
 				<Refund
 					charge={refundCharge}
+					purchases={purchases}
 					onRefunded={onRefunded}
 					onRequestClose={() => setRefundCharge(false)}
 				/>

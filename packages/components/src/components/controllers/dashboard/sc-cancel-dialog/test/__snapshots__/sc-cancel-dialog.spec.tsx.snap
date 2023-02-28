@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-cancel-dialog renders 1`] = `
+<sc-cancel-dialog>
+  <mock:shadow-root>
+    <sc-dialog noheader="" style="--width: 500px; --body-spacing: var(--sc-spacing-xxx-large);">
+      <div class="cancel">
+        <sc-button circle="" class="close__button" type="text">
+          <sc-icon name="x"></sc-icon>
+        </sc-button>
+        <sc-subscription-cancel></sc-subscription-cancel>
+      </div>
+    </sc-dialog>
+  </mock:shadow-root>
+</sc-cancel-dialog>
+`;

@@ -81,7 +81,7 @@ class RequestService {
 	 * Get the base url.
 	 */
 	public function getBaseUrl() {
-		return untrailingslashit( SURECART_APP_URL ) . trailingslashit( $this->base_path );
+		return untrailingslashit( SURECART_API_URL ) . trailingslashit( $this->base_path );
 	}
 
 	/**
@@ -386,6 +386,11 @@ class RequestService {
 			// convert bool to int to prevent getting unset.
 			if ( is_bool( $arg ) ) {
 				$args[ $key ] = $arg ? 1 : 0;
+			}
+
+			// url encode any strings.
+			if ( is_string( $arg ) ) {
+				$args[ $key ] = urlencode( $arg );
 			}
 		}
 

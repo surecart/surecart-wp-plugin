@@ -1,5 +1,9 @@
 sc-stripe-payment-element {
   display: block;
+
+  [hidden] {
+    display: none;
+  }
 }
 
 .loader {

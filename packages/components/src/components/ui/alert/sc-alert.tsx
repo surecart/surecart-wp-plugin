@@ -19,6 +19,9 @@ export class ScAlert {
   /** Indicates whether or not the alert is open. You can use this in lieu of the show/hide methods. */
   @Prop({ reflect: true, mutable: true }) open: boolean = false;
 
+  /** The title. */
+  @Prop() title: string;
+
   /** Makes the alert closable. */
   @Prop({ reflect: true }) closable: boolean = false;
 
@@ -136,7 +139,7 @@ export class ScAlert {
           </div>
           <div class="alert__text" part="text">
             <div class="alert__title" part="title">
-              <slot name="title" />
+              <slot name="title">{this.title}</slot>
             </div>
             <div class="alert__message" part="message">
               <slot />

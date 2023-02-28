@@ -42,6 +42,7 @@ export default ({ coupon, updateCoupon, loading }) => {
 					<ScCard noPadding>
 						<div>
 							{productIds.map((id) => {
+								if (!id) return null;
 								return (
 									<ScStackedListRow>
 										<Product id={id} onSetId={() => {}} />
@@ -78,15 +79,20 @@ export default ({ coupon, updateCoupon, loading }) => {
 										css={css`
 											min-width: 380px;
 										`}
-										required
 										key={index}
 										name="product"
 										placeholder={__(
 											'Find a product...',
 											'surecart'
 										)}
-										requestQuery={{ archived: false }}
+										requestQuery={{
+											archived: false,
+											expand: ['prices'],
+										}}
+										exclude={productIds}
 										onSelect={(id) => {
+											if (!id) return;
+											setDrafts(drafts - 1);
 											updateCoupon({
 												product_ids: [
 													...new Set([
@@ -96,7 +102,6 @@ export default ({ coupon, updateCoupon, loading }) => {
 													]),
 												],
 											});
-											setDrafts(drafts - 1);
 										}}
 									/>
 									<ScDropdown

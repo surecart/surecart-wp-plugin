@@ -245,13 +245,53 @@ class Subscription extends Model {
 	}
 
 	/**
+	 * Preserve a subscription.
+	 *
+	 * @param string $id Model id.
+	 * @return $this|\WP_Error
+	 */
+	protected function preserve( $id = null ) {
+		if ( $id ) {
+			$this->setAttribute( 'id', $id );
+		}
+
+		if ( $this->fireModelEvent( 'preserving' ) === false ) {
+			return false;
+		}
+
+		if ( empty( $this->attributes['id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please create the subscription.' );
+		}
+
+		$preserved = $this->makeRequest(
+			[
+				'method' => 'PATCH',
+				'query'  => $this->query,
+			],
+			$this->endpoint . '/' . $this->attributes['id'] . '/preserve/'
+		);
+
+		if ( is_wp_error( $preserved ) ) {
+			return $preserved;
+		}
+
+		$this->resetAttributes();
+
+		$this->fill( $preserved );
+
+		$this->fireModelEvent( 'preserved' );
+
+		return $this;
+	}
+
+	/**
 	 * Preview the upcoming invoice.
 	 *
 	 * @param string $args Arguments
 	 * @return $this|\WP_Error
 	 */
 	protected function upcomingPeriod( $args = [] ) {
-		if ( $args['id'] ) {
+		if ( ! empty( $args['id'] ) ) {
 			$this->setAttribute( 'id', $args['id'] );
 			unset( $args['id'] );
 		}
@@ -264,17 +304,15 @@ class Subscription extends Model {
 			return new \WP_Error( 'not_saved', 'Please create the subscription' );
 		}
 
-		$upcoming_period = \SureCart::request(
-			$this->endpoint . '/' . $this->attributes['id'] . '/upcoming_period/',
+		$upcoming_period = $this->makeRequest(
 			[
 				'method' => 'PATCH',
-				'query'  => array_merge(
-					$this->query,
-				),
+				'query'  => $this->query,
 				'body'   => [
 					$this->object_name => $args,
 				],
-			]
+			],
+			$this->endpoint . '/' . $this->attributes['id'] . '/upcoming_period/'
 		);
 
 		if ( is_wp_error( $upcoming_period ) ) {
@@ -286,6 +324,46 @@ class Subscription extends Model {
 		$this->fill( $upcoming_period );
 
 		$this->fireModelEvent( 'previewedUpcomingPeriod' );
+
+		return $this;
+	}
+
+	/**
+	 * Pay off a subscription
+	 *
+	 * @param string $id Model id.
+	 * @return $this|\WP_Error
+	 */
+	protected function payOff ($id = null){
+		if($id){
+			$this->setAttribute('id',$id);
+		}
+
+		if($this->fireModelEvent('payingOff') === false){
+			return false;
+		}
+
+		if(empty($this->attributes['id'])){
+			return new \WP_Error('not_saved','Please create the subscription');
+		}
+
+		$paid_off =  $this->makeRequest(
+			[
+				'method' => 'PATCH',
+				'query'  => $this->query,
+			],
+			$this->endpoint . '/' . $this->attributes['id'] . '/pay_off/'
+		);
+
+		if ( is_wp_error( $paid_off ) ) {
+			return $paid_off;
+		}
+
+		$this->resetAttributes();
+
+		$this->fill( $paid_off );
+
+		$this->fireModelEvent( 'paidOff' );
 
 		return $this;
 	}

@@ -118,7 +118,7 @@ abstract class AdminModelEditController {
 		// pass app url.
 		$this->data['upgrade_url']      = \SureCart::config()->links->purchase;
 		$this->data['surecart_app_url'] = defined( 'SURECART_APP_URL' ) ? SURECART_APP_URL : '';
-		$this->data['api_url']          = defined( 'SURECART_API_URL' ) ? untrailingslashit( SURECART_API_URL ) : \SureCart::requests()->getBaseUrl();
+		$this->data['api_url']          = \SureCart::requests()->getBaseUrl();
 		$this->data['plugin_url']       = \SureCart::core()->assets()->getUrl();
 
 		if ( in_array( 'currency', $this->with_data ) ) {
@@ -144,7 +144,7 @@ abstract class AdminModelEditController {
 		$this->data['entitlements'] = \SureCart::account()->entitlements;
 		$this->data['get_locale']   = str_replace( '_', '-', get_locale() );
 
-		wp_set_script_translations( $this->handle, 'surecart' );
+		wp_set_script_translations( $this->handle, 'surecart', SURECART_LANGUAGE_DIR );
 
 		// common localizations.
 		wp_localize_script(

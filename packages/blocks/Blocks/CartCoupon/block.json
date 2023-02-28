@@ -5,6 +5,7 @@
 	"description": "Display a coupon form in the cart.",
 	"category": "surecart",
 	"keywords": ["coupon", "promo"],
+  "textdomain": "surecart",
 	"ancestor": ["surecart/cart"],
 	"supports": {
 		"reusable": false,

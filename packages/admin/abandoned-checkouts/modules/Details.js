@@ -6,21 +6,23 @@ import { ScSkeleton, ScTag } from '@surecart/components-react';
 
 export default ({ abandoned, checkout, loading }) => {
 	const renderNotificationStatus = () => {
-		if ( abandoned?.recovered_checkout?.id ) {
-			return <ScTag type="success">{__('Recovered', 'surecart')}</ScTag>;
+		switch (abandoned?.recovery_status) {
+			case 'abandoned':
+				return (
+					<ScTag type="warning">{__('Abandoned', 'surecart')}</ScTag>
+				);
+			case 'assisted_recovered':
+				return (
+					<ScTag type="success">{__('Recovered', 'surecart')}</ScTag>
+				);
+			case 'unassisted_recovered':
+				return (
+					<ScTag type="info">
+						{__('Recovered Before Email Was Sent', 'surecart')}
+					</ScTag>
+				);
 		}
-		if (abandoned?.notification_status === 'sent') {
-			return <ScTag type="success">{__('Sent', 'surecart')}</ScTag>;
-		}
-		if (abandoned?.notification_status === 'scheduled') {
-			return <ScTag type="info">{__('Scheduled', 'surecart')}</ScTag>;
-		}
-		if (abandoned?.notification_status === 'not_scheduled') {
-			return (
-				<ScTag type="warning">{__('Not Scheduled', 'surecart')}</ScTag>
-			);
-		}
-		return <ScTag>{abandoned?.notification_status}</ScTag>;
+		return <ScTag>{abandoned?.recovery_status}</ScTag>;
 	};
 
 	if (loading) {
