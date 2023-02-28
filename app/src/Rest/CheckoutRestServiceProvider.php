@@ -163,6 +163,10 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 			return new \WP_Error( 'form_id_required', esc_html__( 'Form ID is required.', 'surecart' ), [ 'status' => 400 ] );
 		}
 
+		if ( '-1' === $request['form_id'] ) {
+			return true;
+		}
+
 		// get form.
 		$form = get_post( $request['form_id'] );
 
