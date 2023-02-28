@@ -150,7 +150,7 @@ class PageService {
 	 */
 	public function url( $option, $post_type = 'page' ) {
 		$post = $this->get( $option, $post_type );
-		return get_permalink( $post );
+		return $post ? get_permalink( $post ) : '';
 	}
 
 	/**
