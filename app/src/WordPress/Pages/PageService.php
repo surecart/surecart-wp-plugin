@@ -12,6 +12,9 @@ class PageService {
 	 * @return void
 	 */
 	public function bootstrap() {
+		if ( defined( 'SURECART_RUNNING_TESTS' ) ) {
+			return;
+		}
 		add_action( 'display_post_states', [ $this, 'displayDefaultPageStatuses' ] );
 		add_filter( 'pre_delete_post', [ $this, 'restrictDefaultPageDeletion' ], 11, 2 );
 		add_filter( 'pre_trash_post', [ $this, 'restrictDefaultPageDeletion' ], 11, 2 );
@@ -150,7 +153,7 @@ class PageService {
 	 */
 	public function url( $option, $post_type = 'page' ) {
 		$post = $this->get( $option, $post_type );
-		return get_permalink( $post );
+		return $post ? get_permalink( $post ) : '';
 	}
 
 	/**

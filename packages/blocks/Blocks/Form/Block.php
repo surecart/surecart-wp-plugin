@@ -90,7 +90,7 @@ class Block extends BaseBlock {
 				'prices'                        => $attributes['prices'] ?? [],
 				'loading_text'                  => array_filter( $attributes['loading_text'] ?? [] ),
 				'success_text'                  => array_filter( $attributes['success_text'] ?? [] ),
-				'success_url'                   => $attributes['success_url'] ?? '',
+				'success_url'                   => ! empty( $attributes['success_url'] ) ? $attributes['success_url'] : \SureCart::pages()->url( 'order-confirmation' ),
 			]
 		);
 	}
