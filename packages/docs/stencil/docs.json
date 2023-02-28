@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-02-27T23:02:24",
+  "timestamp": "2023-02-28T21:21:22",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -6015,6 +6015,22 @@
           "required": false
         },
         {
+          "name": "collapsed",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "collapsed",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "currency",
           "type": "string",
           "mutable": false,
@@ -6140,6 +6156,22 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "placeholder",
+          "reflectToAttr": false,
+          "docs": "The placeholder for the input",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -6251,7 +6283,8 @@
         "sc-input",
         "sc-button",
         "sc-alert",
-        "sc-block-ui"
+        "sc-block-ui",
+        "sc-form-control"
       ],
       "dependencyGraph": {
         "sc-coupon-form": [
@@ -6262,7 +6295,8 @@
           "sc-input",
           "sc-button",
           "sc-alert",
-          "sc-block-ui"
+          "sc-block-ui",
+          "sc-form-control"
         ],
         "sc-input": [
           "sc-form-control"
@@ -11279,6 +11313,7 @@
         "sc-button-group",
         "sc-choices",
         "sc-compact-address",
+        "sc-coupon-form",
         "sc-input",
         "sc-order-bumps",
         "sc-payment",
@@ -11304,6 +11339,9 @@
           "sc-form-control"
         ],
         "sc-compact-address": [
+          "sc-form-control"
+        ],
+        "sc-coupon-form": [
           "sc-form-control"
         ],
         "sc-input": [
@@ -16235,6 +16273,22 @@
           "required": false
         },
         {
+          "name": "collapsed",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "collapsed",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "error",
           "type": "any",
           "mutable": false,
@@ -16245,22 +16299,6 @@
           "values": [
             {
               "type": "any"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "forceOpen",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "force-open",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
             }
           ],
           "optional": false,
@@ -16346,7 +16384,8 @@
           "sc-input",
           "sc-button",
           "sc-alert",
-          "sc-block-ui"
+          "sc-block-ui",
+          "sc-form-control"
         ],
         "sc-input": [
           "sc-form-control"
@@ -29111,7 +29150,8 @@
           "sc-input",
           "sc-button",
           "sc-alert",
-          "sc-block-ui"
+          "sc-block-ui",
+          "sc-form-control"
         ],
         "sc-input": [
           "sc-form-control"

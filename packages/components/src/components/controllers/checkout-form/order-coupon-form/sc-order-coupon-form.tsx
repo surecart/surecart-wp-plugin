@@ -15,7 +15,7 @@ export class ScOrderCouponForm {
   @Prop() busy: boolean;
   @Prop() error: any;
   @Prop() order: Checkout;
-  @Prop() forceOpen: boolean;
+  @Prop() collapsed: boolean;
 
   @State() open: boolean;
   @State() value: string;
@@ -33,6 +33,7 @@ export class ScOrderCouponForm {
     return (
       <sc-coupon-form
         label={this.label || __('Add Coupon Code', 'surecart')}
+        collapsed={this.collapsed}
         loading={this.busy && !this.order?.line_items?.data?.length}
         busy={this.busy}
         error={this.errorMessage}
@@ -40,7 +41,7 @@ export class ScOrderCouponForm {
         currency={this?.order?.currency}
         discount-amount={this?.order?.discount_amount}
         class={{
-          'order-coupon-form--is-rtl':isRtl()
+          'order-coupon-form--is-rtl': isRtl(),
         }}
       >
         <slot>{__('Apply', 'surecart')}</slot>
