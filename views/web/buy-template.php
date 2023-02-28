@@ -40,15 +40,30 @@
 	<!-- /wp:surecart/column -->
 
 	<!-- wp:surecart/column {"layout":{"type":"constrained","contentSize":"550px","justifyContent":"left"},"backgroundColor":"ast-global-color-5","style":{"spacing":{"padding":{"top":"100px","right":"100px","bottom":"100px","left":"100px"},"blockGap":"30px"}}} -->
-	<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-left has-ast-global-color-5-background-color has-background" style="padding:5rem;--sc-column-content-width:450px;--sc-form-row-spacing:30px"><!-- wp:surecart/email {"placeholder":"Your email address"} /-->
+	<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-left has-ast-global-color-5-background-color has-background" style="padding:5rem;--sc-column-content-width:450px;--sc-form-row-spacing:30px">
+		<!-- wp:surecart/checkout-errors -->
+			<sc-checkout-form-errors></sc-checkout-form-errors>
+		<!-- /wp:surecart/checkout-errors -->
+
+		<!-- wp:surecart/email {"placeholder":"Your email address"} /-->
 
 		<!-- wp:surecart/name {"required":true,"placeholder":"Your name"} -->
 		<sc-customer-name label="<?php esc_attr_e( 'Name', 'surecart' ); ?>" placeholder="<?php esc_attr_e( 'Your name', 'surecart' ); ?>" required></sc-customer-name>
 		<!-- /wp:surecart/name -->
 
+		<!-- wp:surecart/address {"full":false} /-->
+
 		<!-- wp:surecart/payment {"secure_notice":"This is a secure, encrypted payment"} -->
 		<sc-payment label="Payment" default-processor="stripe" secure-notice="This is a secure, encrypted payment" class="wp-block-surecart-payment"></sc-payment>
 		<!-- /wp:surecart/payment -->
+
+		<?php if ( $show_coupon ) : ?>
+			<!-- wp:surecart/coupon {"button_text":"Apply"} -->
+			<sc-order-coupon-form label="<?php esc_attr_e( 'Coupon Code', 'surecart' ); ?>" placeholder="<?php esc_attr_e( 'Enter a coupon code', 'surecart' ); ?>">
+				<?php esc_html_e( 'Apply', 'surecart' ); ?>
+			</sc-order-coupon-form>
+			<!-- /wp:surecart/coupon -->
+		<?php endif; ?>
 
 		<sc-order-bumps label="<?php esc_attr_e( 'Recommended', 'surecart' ); ?>"></sc-order-bumps>
 
@@ -59,12 +74,6 @@
 			<sc-line-items removable="false" editable="false" class="wp-block-surecart-line-items"></sc-line-items>
 
 			<sc-divider></sc-divider>
-
-			<?php if ( $show_coupon ) : ?>
-				<!-- wp:surecart/coupon {"button_text":"Apply"} -->
-				<sc-order-coupon-form label="Add Coupon Code">Apply</sc-order-coupon-form>
-				<!-- /wp:surecart/coupon -->
-			<?php endif; ?>
 
 			<!-- wp:surecart/subtotal -->
 			<sc-line-item-total total="subtotal" class="wp-block-surecart-subtotal"><span slot="description">Subtotal</span></sc-line-item-total>
