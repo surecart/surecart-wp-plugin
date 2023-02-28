@@ -57,6 +57,8 @@
 		<sc-payment label="Payment" default-processor="stripe" secure-notice="This is a secure, encrypted payment" class="wp-block-surecart-payment"></sc-payment>
 		<!-- /wp:surecart/payment -->
 
+		<sc-order-bumps label="<?php esc_attr_e( 'Recommended', 'surecart' ); ?>"></sc-order-bumps>
+
 		<?php if ( $show_coupon ) : ?>
 			<!-- wp:surecart/coupon {"button_text":"Apply"} -->
 			<sc-order-coupon-form label="<?php esc_attr_e( 'Coupon Code', 'surecart' ); ?>" placeholder="<?php esc_attr_e( 'Enter a coupon code', 'surecart' ); ?>">
@@ -64,8 +66,6 @@
 			</sc-order-coupon-form>
 			<!-- /wp:surecart/coupon -->
 		<?php endif; ?>
-
-		<sc-order-bumps label="<?php esc_attr_e( 'Recommended', 'surecart' ); ?>"></sc-order-bumps>
 
 		<sc-order-summary collapsible="true" collapsed="true" closed-text="Total" open-text="Total">
 
