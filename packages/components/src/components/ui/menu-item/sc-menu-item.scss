@@ -71,3 +71,14 @@
 .menu-item--checked .menu-item__check {
   visibility: visible;
 }
+
+.menu-item--is-rtl{
+  &.menu-item{
+    text-align: right;
+
+    .menu-item__check{
+      left: auto;
+      right: 0.5em;
+    }
+  }
+}

@@ -13,6 +13,11 @@
     window.scIcons = {
       path: '/build/icon-assets'
     }
+    window.scData = {
+      pages: {
+        dashboard: '/success'
+      }
+    }
     window.wp = {
       i18n: {
         __: () => { }
@@ -30,7 +35,7 @@
 </head>
 
 <body>
-  <sc-checkout success-url="/success" form-id="1" mode="test">
+  <sc-checkout form-id="1" mode="test">
     <sc-form>
       <sc-payment label="Payment" default-processor='stripe' secure-notice="This is secure"></sc-payment>
       <sc-order-summary>

@@ -43,11 +43,17 @@ export const checkoutMachine = createMachine({
     paid: {
       on: {
         CONFIRMED: 'confirmed',
+        REDIRECT: 'redirecting',
         REJECT: 'draft',
       },
     },
     expired: {},
-    confirmed: {},
+    confirmed: {
+      on: {
+        REDIRECT: 'redirecting',
+      },
+    },
+    redirecting: {},
     failure: {
       on: {
         RETRY: {

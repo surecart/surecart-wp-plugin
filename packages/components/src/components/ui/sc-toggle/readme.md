@@ -43,6 +43,7 @@
 
 ### Used by
 
+ - [sc-mollie-add-method](../sc-mollie-add-method)
  - [sc-subscription-next-payment](../../controllers/dashboard/subscription-details)
 
 ### Depends on
@@ -53,6 +54,7 @@
 ```mermaid
 graph TD;
   sc-toggle --> sc-icon
+  sc-mollie-add-method --> sc-toggle
   sc-subscription-next-payment --> sc-toggle
   style sc-toggle fill:#f9f,stroke:#333,stroke-width:4px
 ```

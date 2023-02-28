@@ -111,18 +111,13 @@ class PageSeeder {
 		return apply_filters(
 			'surecart/create_pages',
 			array(
-				'checkout'           => [
+				'checkout'  => [
 					'name'          => _x( 'checkout', 'Page slug', 'surecart' ),
 					'title'         => _x( 'Checkout', 'Page title', 'surecart' ),
 					'content'       => '<!-- wp:surecart/checkout-form {"id":' . (int) $form->ID . '} --><!-- /wp:surecart/checkout-form -->',
 					'page_template' => 'pages/template-surecart-blank.php',
 				],
-				'order-confirmation' => [
-					'name'    => _x( 'order-confirmation', 'Page slug', 'surecart' ),
-					'title'   => _x( 'Thank you!', 'Page title', 'surecart' ),
-					'content' => $order_confirmation['content'],
-				],
-				'dashboard'          => [
+				'dashboard' => [
 					'name'    => _x( 'customer-dashboard', 'Page slug', 'surecart' ),
 					'title'   => _x( 'Dashboard', 'Page title', 'surecart' ),
 					'content' => $customer_dashboard['content'],
