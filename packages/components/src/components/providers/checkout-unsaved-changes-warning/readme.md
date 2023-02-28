@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type                                                                                                                                          | Default     |
-| -------- | --------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `state`  | `state`   |             | `"confirmed" \| "confirming" \| "draft" \| "expired" \| "failure" \| "finalizing" \| "idle" \| "loading" \| "paid" \| "paying" \| "updating"` | `undefined` |
+| Property | Attribute | Description | Type                                                                                                                                                           | Default     |
+| -------- | --------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `state`  | `state`   |             | `"confirmed" \| "confirming" \| "draft" \| "expired" \| "failure" \| "finalizing" \| "idle" \| "loading" \| "paid" \| "paying" \| "redirecting" \| "updating"` | `undefined` |
 
 
 ## Dependencies

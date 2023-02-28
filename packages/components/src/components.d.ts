@@ -672,6 +672,7 @@ export namespace Components {
           * Is the form calculating
          */
         "busy": boolean;
+        "collapsed": boolean;
         /**
           * Currency
          */
@@ -704,6 +705,10 @@ export namespace Components {
           * Is it open
          */
         "open": boolean;
+        /**
+          * The placeholder for the input
+         */
+        "placeholder": string;
     }
     interface ScCustomOrderPriceInput {
         /**
@@ -1755,8 +1760,8 @@ export namespace Components {
     }
     interface ScOrderCouponForm {
         "busy": boolean;
+        "collapsed": boolean;
         "error": any;
-        "forceOpen": boolean;
         "label": string;
         "loading": boolean;
         "order": Checkout;
@@ -5355,6 +5360,7 @@ declare namespace LocalJSX {
           * Is the form calculating
          */
         "busy"?: boolean;
+        "collapsed"?: boolean;
         /**
           * Currency
          */
@@ -5391,6 +5397,10 @@ declare namespace LocalJSX {
           * Is it open
          */
         "open"?: boolean;
+        /**
+          * The placeholder for the input
+         */
+        "placeholder"?: string;
     }
     interface ScCustomOrderPriceInput {
         /**
@@ -6633,8 +6643,8 @@ declare namespace LocalJSX {
     }
     interface ScOrderCouponForm {
         "busy"?: boolean;
+        "collapsed"?: boolean;
         "error"?: any;
-        "forceOpen"?: boolean;
         "label"?: string;
         "loading"?: boolean;
         "onScApplyCoupon"?: (event: ScOrderCouponFormCustomEvent<string>) => void;

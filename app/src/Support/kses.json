@@ -362,6 +362,7 @@
   },
   "sc-coupon-form": {
     "busy": true,
+    "collapsed": true,
     "currency": true,
     "discount": true,
     "discount-amount": true,
@@ -370,6 +371,7 @@
     "label": true,
     "loading": true,
     "open": true,
+    "placeholder": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1014,8 +1016,8 @@
   },
   "sc-order-coupon-form": {
     "busy": true,
+    "collapsed": true,
     "error": true,
-    "force-open": true,
     "label": true,
     "loading": true,
     "order": true,

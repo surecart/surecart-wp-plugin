@@ -27,6 +27,21 @@
 </head>
 
 <body>
+  <sc-flex flex-direction="column" style="max-width: 300px">
+    <sc-input label="Name"></sc-input>
+    <sc-coupon-form label="Discount Code">Apply</sc-coupon-form>
+    <sc-order-summary>
+      <sc-coupon-form label="Add coupon" placeholder="Enter coupon code" collapsed>Apply</sc-coupon-form>
+      <sc-line-item>
+        <span slot="description">Subtotal</span>
+        <span slot="price">$20.00</span>
+      </sc-line-item>
+      <sc-line-item>
+        <span slot="title">Total</span>
+        <span slot="price">$20.00</span>
+      </sc-line-item>
+    </sc-order-summary>
+  </sc-flex>
 </body>
 
 </html>
