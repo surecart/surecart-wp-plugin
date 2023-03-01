@@ -24,7 +24,7 @@ export class ScSessionProvider {
   @Prop() mode: 'test' | 'live' = 'live';
 
   /** The checkout form id */
-  @Prop() formId: number;
+  @Prop() formId: number | string;
 
   /** Whent the post was modified. */
   @Prop() modified: string;
@@ -500,6 +500,7 @@ export class ScSessionProvider {
   }
 
   defaultFormQuery() {
+    console.log({ formId: this.formId });
     return {
       form_id: this.formId,
       ...(this.stripePaymentElement ? { stage_processor_type: 'stripe' } : {}),

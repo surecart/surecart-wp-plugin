@@ -35,8 +35,8 @@ use SureCartBlocks\Blocks\Form\Block as FormBlock;
 							'quantity'   => 1,
 						],
 					],
-					'mode'    => 'live',
-					'form_id' => -1,
+					'mode'    => $mode,
+					'form_id' => $product->id,
 				],
 				do_blocks( $content )
 			)

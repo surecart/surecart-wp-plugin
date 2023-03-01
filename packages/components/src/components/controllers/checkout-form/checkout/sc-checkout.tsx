@@ -44,7 +44,7 @@ export class ScCheckout {
   @Prop() mode: 'test' | 'live' = 'live';
 
   /** The checkout form id */
-  @Prop() formId: number;
+  @Prop() formId: number | string;
 
   /** When the form was modified. */
   @Prop() modified: string;

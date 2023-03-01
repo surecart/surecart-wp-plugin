@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-02-28T21:21:22",
+  "timestamp": "2023-02-28T22:47:37",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -12393,6 +12393,7 @@
         "sc-price-choice",
         "sc-price-range",
         "sc-product-line-item",
+        "sc-product-selected-price",
         "sc-subscription-details",
         "sc-subscription-next-payment",
         "sc-subscription-switch",
@@ -12444,6 +12445,9 @@
           "sc-format-number"
         ],
         "sc-product-line-item": [
+          "sc-format-number"
+        ],
+        "sc-product-selected-price": [
           "sc-format-number"
         ],
         "sc-subscription-details": [
@@ -21353,10 +21357,28 @@
       "filePath": "./src/components/controllers/checkout-form/sc-product-selected-price/sc-product-selected-price.tsx",
       "encapsulation": "shadow",
       "tag": "sc-product-selected-price",
+      "readme": "# sc-product-selected-price\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
-      "props": [],
+      "props": [
+        {
+          "name": "productId",
+          "type": "string",
+          "mutable": false,
+          "attr": "product-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
       "methods": [],
       "events": [],
       "listeners": [],
@@ -21364,13 +21386,20 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [],
-      "dependencyGraph": {}
+      "dependencies": [
+        "sc-format-number"
+      ],
+      "dependencyGraph": {
+        "sc-product-selected-price": [
+          "sc-format-number"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/sc-prose/sc-prose.tsx",
       "encapsulation": "shadow",
       "tag": "sc-prose",
+      "readme": "# sc-prose\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},

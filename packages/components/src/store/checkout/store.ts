@@ -2,7 +2,7 @@ import { createStore } from '@stencil/store';
 import { Checkout, Product } from '../../types';
 
 interface Store {
-  formId: number;
+  formId: number | string;
   mode: 'live' | 'test';
   locks: string[];
   product: Product;

@@ -127,6 +127,7 @@ class BuyPageController {
 		return \SureCart::view( 'web/buy' )->with(
 			[
 				'product'          => $this->product,
+				'mode'             => 'true' === ( $this->product->metadata->wp_buy_link_test_mode_enabled ?? '' ) ? 'test' : 'live',
 				'show_image'       => 'true' !== ( $this->product->metadata->wp_buy_link_product_image_disabled ?? '' ),
 				'show_description' => 'true' !== ( $this->product->metadata->wp_buy_link_product_description_disabled ?? '' ),
 				'show_coupon'      => 'true' !== ( $this->product->metadata->wp_buy_link_coupon_field_disabled ?? '' ),

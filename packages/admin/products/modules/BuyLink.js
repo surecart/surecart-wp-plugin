@@ -104,7 +104,31 @@ export default ({ product, updateProduct, loading }) => {
 							</span>
 						</ScSwitch>
 
+						<ScSwitch
+							checked={
+								product?.metadata
+									?.wp_buy_link_test_mode_enabled === 'true'
+							}
+							onScChange={(e) =>
+								updateMeta({
+									wp_buy_link_test_mode_enabled: e.target
+										.checked
+										? 'true'
+										: 'false',
+								})
+							}
+						>
+							{__('Test Mode', 'surecart')}
+							<span slot="description">
+								{__(
+									'Make test payments with this product.',
+									'surecart'
+								)}
+							</span>
+						</ScSwitch>
+
 						<ScMenuDivider />
+
 						<ScSwitch
 							checked={
 								product?.metadata

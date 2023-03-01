@@ -435,7 +435,7 @@ export namespace Components {
         /**
           * The checkout form id
          */
-        "formId": number;
+        "formId": number | string;
         /**
           * Text for the loading states of the form.
          */
@@ -1769,6 +1769,7 @@ export namespace Components {
         "label": string;
         "loading": boolean;
         "order": Checkout;
+        "placeholder": string;
     }
     interface ScOrderDetail {
         "fallback": string;
@@ -2627,7 +2628,7 @@ export namespace Components {
         /**
           * The checkout form id
          */
-        "formId": number;
+        "formId": number | string;
         /**
           * Group id
          */
@@ -5195,7 +5196,7 @@ declare namespace LocalJSX {
         /**
           * The checkout form id
          */
-        "formId"?: number;
+        "formId"?: number | string;
         /**
           * Text for the loading states of the form.
          */
@@ -6739,6 +6740,7 @@ declare namespace LocalJSX {
         "loading"?: boolean;
         "onScApplyCoupon"?: (event: ScOrderCouponFormCustomEvent<string>) => void;
         "order"?: Checkout;
+        "placeholder"?: string;
     }
     interface ScOrderDetail {
         "fallback"?: string;
@@ -7683,7 +7685,7 @@ declare namespace LocalJSX {
         /**
           * The checkout form id
          */
-        "formId"?: number;
+        "formId"?: number | string;
         /**
           * Group id
          */
