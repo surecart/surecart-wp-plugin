@@ -14,6 +14,7 @@ import OneTime from '../../../components/price/OneTime';
 import Tax from '../../../components/price/parts/Tax';
 import Subscription from '../../../components/price/Subscription';
 import Header from './Header';
+import PriceName from '../../../components/price/parts/PriceName';
 
 export default ({ id, prices, product }) => {
 	// are the price details open?
@@ -164,6 +165,8 @@ export default ({ id, prices, product }) => {
 					display: ${isOpen ? 'grid' : 'none'};
 				`}
 			>
+				<PriceName price={price} updatePrice={editPrice} />
+
 				{getPriceType() === 'subscription' && (
 					<Subscription price={price} updatePrice={editPrice} />
 				)}

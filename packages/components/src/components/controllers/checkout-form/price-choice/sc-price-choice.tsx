@@ -237,7 +237,7 @@ export class ScPriceChoice {
           showControl={this.showControl}
           checked={this.isChecked()}
         >
-          {this.label || this?.product?.name}
+          {this.label || this?.price?.name || this?.product?.name}
           {this.description && <span slot="description">{this.description}</span>}
           {this.renderPrice()}
         </sc-choice>

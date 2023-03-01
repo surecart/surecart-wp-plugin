@@ -7,14 +7,15 @@
 
 ## Properties
 
-| Property    | Attribute   | Description | Type       | Default     |
-| ----------- | ----------- | ----------- | ---------- | ----------- |
-| `busy`      | `busy`      |             | `boolean`  | `undefined` |
-| `collapsed` | `collapsed` |             | `boolean`  | `undefined` |
-| `error`     | `error`     |             | `any`      | `undefined` |
-| `label`     | `label`     |             | `string`   | `undefined` |
-| `loading`   | `loading`   |             | `boolean`  | `undefined` |
-| `order`     | --          |             | `Checkout` | `undefined` |
+| Property      | Attribute     | Description | Type       | Default     |
+| ------------- | ------------- | ----------- | ---------- | ----------- |
+| `busy`        | `busy`        |             | `boolean`  | `undefined` |
+| `collapsed`   | `collapsed`   |             | `boolean`  | `undefined` |
+| `error`       | `error`       |             | `any`      | `undefined` |
+| `label`       | `label`       |             | `string`   | `undefined` |
+| `loading`     | `loading`     |             | `boolean`  | `undefined` |
+| `order`       | --            |             | `Checkout` | `undefined` |
+| `placeholder` | `placeholder` |             | `string`   | `undefined` |
 
 
 ## Events

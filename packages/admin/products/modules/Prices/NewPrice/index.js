@@ -15,6 +15,7 @@ import { store as noticesStore } from '@wordpress/notices';
 
 import Multiple from '../../../components/price/Multiple';
 import OneTime from '../../../components/price/OneTime';
+import PriceName from '../../../components/price/parts/PriceName';
 import Subscription from '../../../components/price/Subscription';
 
 export default ({ onRequestClose, product }) => {
@@ -136,6 +137,8 @@ export default ({ onRequestClose, product }) => {
 						<div>{e?.message}</div>
 					))}
 				</sc-alert>
+
+				<PriceName price={price} updatePrice={updatePrice} />
 
 				<ScSelect
 					label={__('Payment Type', 'surecart')}

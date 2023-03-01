@@ -99,6 +99,11 @@ export default ({
 						gap: 0.5em;
 					`}
 				>
+					{!!price?.name && (
+						<div>
+							<strong>{price?.name}</strong> &mdash;
+						</div>
+					)}
 					{price?.ad_hoc ? (
 						__('Custom Amount', 'surecart')
 					) : (
