@@ -119,10 +119,21 @@ class BuyPageController {
 		// preload the components.
 		$this->preloadComponents();
 
+		$active_prices = array_values(
+			array_filter(
+				$this->product->prices->data ?? [],
+				function( $price ) {
+					return ! $price->archived;
+				}
+			)
+		);
+
 		// render the view.
 		return \SureCart::view( 'web/buy' )->with(
 			[
 				'product'          => $this->product,
+				'prices'           => $active_prices,
+				'price'            => $active_prices[0] ?? null,
 				'mode'             => $this->product->buyLink()->getMode(),
 				'show_logo'        => $this->product->buyLink()->templatePartEnabled( 'logo' ),
 				'show_image'       => $this->product->buyLink()->templatePartEnabled( 'image' ),
