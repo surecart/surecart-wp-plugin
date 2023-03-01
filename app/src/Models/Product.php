@@ -53,4 +53,32 @@ class Product extends Model {
 	public function setPurchaseAttribute( $value ) {
 		$this->setRelation( 'purchase', $value, Purchase::class );
 	}
+
+	/**
+	 * Buy link model
+	 *
+	 * @return \SureCart\Models\BuyLink
+	 */
+	public function buyLink() {
+		return new BuyLink( $this );
+	}
+
+		/**
+		 * Should we show this item?
+		 *
+		 * @param string $item The name of the item.
+		 *
+		 * @return boolean
+		 */
+	public function showItem( $item ) {
+		switch ( $item ) {
+			case 'image':
+				return 'true' !== ( $this->product->metadata->wp_buy_link_product_image_disabled ?? '' );
+			case 'description':
+				return 'true' !== ( $this->product->metadata->wp_buy_link_product_description_disabled ?? '' );
+			case 'coupon':
+				return 'true' !== ( $this->product->metadata->wp_buy_link_coupon_field_disabled ?? '' );
+		}
+		return false;
+	}
 }
