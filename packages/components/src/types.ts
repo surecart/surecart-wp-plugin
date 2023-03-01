@@ -410,6 +410,7 @@ export interface Checkout extends Object {
     pagination: Pagination;
     data: Array<PaymentIntent>;
   };
+  abandoned_checkout_enabled: boolean;
   bump_amount: number;
   payment_method_required?: boolean;
   manual_payment: boolean;
@@ -430,7 +431,9 @@ export interface Checkout extends Object {
   total_savings_amount?: number;
   applied_balance_amount?: number;
   discounts?: number;
+  tax_enabled: boolean;
   tax_amount: number;
+  email_exists: boolean;
   tax_inclusive_amount: number;
   tax_exclusive_amount: number;
   tax_status: 'disabled' | 'address_invalid' | 'estimated' | 'calculated';

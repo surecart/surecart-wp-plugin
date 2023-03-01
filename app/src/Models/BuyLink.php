@@ -27,7 +27,7 @@ class BuyLink {
 	 * @return boolean
 	 */
 	public function isEnabled() {
-		return 'true' !== ( $this->product->metadata->wp_buy_link_enabled ?? '' );
+		return 'true' === ( $this->product->metadata->wp_buy_link_enabled ?? '' );
 	}
 
 	/**
@@ -54,6 +54,8 @@ class BuyLink {
 				return 'true' !== ( $this->product->metadata->wp_buy_link_product_description_disabled ?? '' );
 			case 'coupon':
 				return 'true' !== ( $this->product->metadata->wp_buy_link_coupon_field_disabled ?? '' );
+			case 'logo':
+				return 'true' !== ( $this->product->metadata->wp_buy_link_logo_disabled ?? '' );
 		}
 		return false;
 	}

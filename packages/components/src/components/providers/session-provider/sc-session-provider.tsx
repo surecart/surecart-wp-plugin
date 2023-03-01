@@ -5,9 +5,9 @@ import { addQueryArgs, getQueryArg, getQueryArgs, removeQueryArgs } from '@wordp
 import { parseFormData } from '../../../functions/form-data';
 import { createOrUpdateOrder, fetchCheckout, finalizeSession } from '../../../services/session';
 import { state as checkoutState } from '@store/checkout';
-import { clearOrder, getOrder, setOrder } from '@store/checkouts';
 import { Checkout, FormStateSetter, LineItemData, PaymentIntents, PriceChoice, ProcessorName } from '../../../types';
 import { state as selectedProcessor } from '@store/selected-processor';
+import { clearCheckout } from '@store/checkout/mutations';
 
 @Component({
   tag: 'sc-session-provider',
@@ -24,7 +24,7 @@ export class ScSessionProvider {
   @Prop() mode: 'test' | 'live' = 'live';
 
   /** The checkout form id */
-  @Prop() formId: number | string;
+  @Prop() formId: number;
 
   /** Whent the post was modified. */
   @Prop() modified: string;
@@ -105,11 +105,6 @@ export class ScSessionProvider {
     return await this.handleFormSubmit();
   }
 
-  /** Get the order from the store. */
-  order() {
-    return getOrder(this?.formId, this.mode) as Checkout;
-  }
-
   async getFormData() {
     let data = {};
     const form = this.el.querySelector('sc-form');
@@ -155,8 +150,8 @@ export class ScSessionProvider {
 
     // first validate server-side and get key
     try {
-      const order = await finalizeSession({
-        id: this.order()?.id,
+      checkoutState.checkout = await finalizeSession({
+        id: checkoutState?.checkout?.id,
         query: {
           ...this.defaultFormQuery(),
           ...(selectedProcessor?.method ? { payment_method_type: selectedProcessor?.method } : {}),
@@ -172,23 +167,21 @@ export class ScSessionProvider {
         },
       });
 
-      setOrder(order, this.formId);
-
-      // the order is paid
-      if (['paid', 'processing'].includes(order?.status)) {
+      // the checkout is paid.
+      if (['paid', 'processing'].includes(checkoutState.checkout?.status)) {
         this.scPaid.emit();
       }
 
-      if (order?.payment_intent?.processor_data?.mollie?.checkout_url) {
+      if (checkoutState.checkout?.payment_intent?.processor_data?.mollie?.checkout_url) {
         this.scSetState.emit('PAYING');
-        return setTimeout(() => window.location.assign(order?.payment_intent?.processor_data?.mollie?.checkout_url), 50);
+        return setTimeout(() => window.location.assign(checkoutState.checkout?.payment_intent?.processor_data?.mollie?.checkout_url), 50);
       }
 
       setTimeout(() => {
         this.scSetState.emit('PAYING');
       }, 50);
 
-      return this.order();
+      return checkoutState.checkout;
     } catch (e) {
       console.error(e);
       this.handleErrorResponse(e);
@@ -263,7 +256,7 @@ export class ScSessionProvider {
     }
 
     // we have an existing saved checkout id in the session, and we are persisting.
-    const id = this.order()?.id;
+    const id = checkoutState?.checkout?.id;
     if (id && this.persist) {
       return this.handleExistingCheckout(id, coupon as string);
     }
@@ -292,17 +285,16 @@ export class ScSessionProvider {
     try {
       this.scSetState.emit('FINALIZE');
       this.scSetState.emit('PAID');
-      const checkout = (await fetchCheckout({
+      checkoutState.checkout = (await fetchCheckout({
         id,
         query: {
           ...this.defaultFormQuery(),
           refresh_status: true,
         },
       })) as Checkout;
-      setOrder(checkout, this.formId);
 
       // TODO: should we even check this?
-      if (checkout?.status && ['paid', 'processing'].includes(checkout?.status)) {
+      if (checkoutState.checkout?.status && ['paid', 'processing'].includes(checkoutState.checkout?.status)) {
         setTimeout(() => {
           this.scPaid.emit();
         }, 100);
@@ -324,7 +316,7 @@ export class ScSessionProvider {
       });
     }
 
-    const checkout = (await fetchCheckout({
+    checkoutState.checkout = (await fetchCheckout({
       id,
       query: {
         ...this.defaultFormQuery(),
@@ -332,10 +324,8 @@ export class ScSessionProvider {
       },
     })) as Checkout;
 
-    setOrder(checkout, this.formId);
-
     // handle status.
-    switch (checkout?.status) {
+    switch (checkoutState.checkout?.status) {
       case 'paid':
       case 'processing':
         return setTimeout(() => {
@@ -345,14 +335,14 @@ export class ScSessionProvider {
         }, 100);
 
       case 'payment_failed':
-        clearOrder(this.formId, this.mode);
+        clearCheckout();
         return this.scError.emit({
           message: __('Payment unsuccessful. Please try again.', 'surecart'),
         });
 
       case 'payment_intent_canceled':
       case 'canceled':
-        clearOrder(this.formId, this.mode);
+        clearCheckout();
         return this.scError.emit({
           message: __('Payment canceled. Please try again.', 'surecart'),
         });
@@ -370,7 +360,7 @@ export class ScSessionProvider {
     console.info('Handling initial line items.');
     // TODO: move this to central store.
     const address = this.el.querySelector('sc-order-shipping-address');
-    clearOrder(this.formId, this.mode);
+    clearCheckout();
     return this.loadUpdate({
       line_items,
       ...(promotion_code ? { discount: { promotion_code } } : {}),
@@ -394,7 +384,7 @@ export class ScSessionProvider {
 
     try {
       this.scSetState.emit('FETCH');
-      const order = (await createOrUpdateOrder({
+      checkoutState.checkout = (await createOrUpdateOrder({
         data: {
           ...this.defaultFormData(),
           ...data,
@@ -410,7 +400,6 @@ export class ScSessionProvider {
         },
         query: this.defaultFormQuery(),
       })) as Checkout;
-      setOrder(order, this.formId);
       this.scSetState.emit('RESOLVE');
     } catch (e) {
       console.error(e);
@@ -424,7 +413,7 @@ export class ScSessionProvider {
     console.info('Handling existing checkout.');
     try {
       this.scSetState.emit('FETCH');
-      const order = (await createOrUpdateOrder({
+      checkoutState.checkout = (await createOrUpdateOrder({
         id,
         data: {
           ...this.defaultFormData(),
@@ -432,7 +421,6 @@ export class ScSessionProvider {
         },
         query: this.defaultFormQuery(),
       })) as Checkout;
-      setOrder(order, this.formId);
       this.scSetState.emit('RESOLVE');
     } catch (e) {
       console.error(e);
@@ -445,13 +433,13 @@ export class ScSessionProvider {
     // reinitalize if order not found.
     if (['checkout.not_found'].includes(e?.code)) {
       window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'checkout_id'));
-      clearOrder(this.formId, this.mode);
+      clearCheckout();
       return this.handleNewCheckout(false);
     }
 
     if (e?.additional_errors?.[0]?.code === 'order.line_items.old_price_versions') {
       await this.loadUpdate({
-        id: this.order()?.id,
+        id: checkoutState?.checkout?.id,
         data: {
           status: 'draft',
           refresh_price_versions: true,
@@ -462,7 +450,7 @@ export class ScSessionProvider {
 
     if (['order.invalid_status_transition'].includes(e?.code)) {
       await this.loadUpdate({
-        id: this.order()?.id,
+        id: checkoutState?.checkout?.id,
         data: {
           status: 'draft',
         },
@@ -479,7 +467,7 @@ export class ScSessionProvider {
 
     // paid
     if (e?.code === 'readonly') {
-      clearOrder(this.formId, this.mode);
+      clearCheckout();
       window.location.assign(removeQueryArgs(window.location.href, 'order'));
       return;
     }
@@ -492,7 +480,7 @@ export class ScSessionProvider {
   /** Default data always sent with the session. */
   defaultFormData() {
     return {
-      currency: this.order()?.currency || this.currencyCode,
+      currency: checkoutState?.checkout?.currency || this.currencyCode,
       live_mode: this.mode !== 'test',
       group_key: this.groupId,
       ...(this.abandonedCheckoutReturnUrl ? { abandoned_checkout_return_url: this.abandonedCheckoutReturnUrl } : {}),
@@ -500,10 +488,10 @@ export class ScSessionProvider {
   }
 
   defaultFormQuery() {
-    console.log({ formId: this.formId });
     return {
-      form_id: this.formId,
-      ...(this.stripePaymentElement ? { stage_processor_type: 'stripe' } : {}),
+      ...(!!checkoutState?.formId && { form_id: checkoutState?.formId }),
+      ...(!!checkoutState?.product?.id && { product_id: checkoutState?.product?.id }),
+      ...(!!this.stripePaymentElement && { stage_processor_type: 'stripe' }),
     };
   }
 
@@ -571,8 +559,8 @@ export class ScSessionProvider {
     }
 
     // check existing order.
-    if (this.order()?.id) {
-      return this.order()?.id;
+    if (checkoutState?.checkout?.id) {
+      return checkoutState?.checkout?.id;
     }
 
     // we don't have and order id.
@@ -601,14 +589,13 @@ export class ScSessionProvider {
   async fetch(query = {}) {
     try {
       this.scSetState.emit('FETCH');
-      const checkout = (await fetchCheckout({
+      checkoutState.checkout = (await fetchCheckout({
         id: this.getSessionId(),
         query: {
           ...this.defaultFormQuery(),
           ...query,
         },
       })) as Checkout;
-      setOrder(checkout, this.formId);
       this.scSetState.emit('RESOLVE');
     } catch (e) {
       this.handleErrorResponse(e);
@@ -618,7 +605,7 @@ export class ScSessionProvider {
   /** Update a session */
   async update(data: any = {}, query = {}) {
     try {
-      const order = (await createOrUpdateOrder({
+      checkoutState.checkout = (await createOrUpdateOrder({
         id: data?.id ? data.id : this.getSessionId(),
         data: {
           ...this.defaultFormData(),
@@ -634,11 +621,10 @@ export class ScSessionProvider {
           ...query,
         },
       })) as Checkout;
-      setOrder(order, this.formId);
     } catch (e) {
       // reinitalize if order not found.
       if (['checkout.not_found'].includes(e?.code)) {
-        clearOrder(this.formId, this.mode);
+        clearCheckout();
         return this.initialize();
       }
       console.error(e);
@@ -659,7 +645,7 @@ export class ScSessionProvider {
 
   render() {
     return (
-      <sc-line-items-provider order={this.order()} onScUpdateLineItems={e => this.loadUpdate({ line_items: e.detail as Array<LineItemData> })}>
+      <sc-line-items-provider order={checkoutState?.checkout} onScUpdateLineItems={e => this.loadUpdate({ line_items: e.detail as Array<LineItemData> })}>
         <slot />
       </sc-line-items-provider>
     );

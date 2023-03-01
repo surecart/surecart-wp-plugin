@@ -13,7 +13,6 @@ export class ScProductSelectedPrice {
 
   render() {
     const price = (checkoutState.checkout?.line_items?.data || []).map(line_item => line_item.price).find(price => (price?.product as Product)?.id === this.productId);
-    console.log({ price });
     if (!price) return <Host style={{ display: 'none' }}></Host>;
     return (
       <div class="selected-price">

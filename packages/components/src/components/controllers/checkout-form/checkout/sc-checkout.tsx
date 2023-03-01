@@ -3,14 +3,12 @@ import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
 import { state as processorsState } from '@store/processors';
 import { state as checkoutState } from '@store/checkout';
-import { getOrder, setOrder } from '@store/checkouts';
 import {
   Bump,
   Checkout,
   Customer,
   FormState,
   ManualPaymentMethod,
-  PaymentIntent,
   PaymentIntents,
   PriceChoice,
   Prices,
@@ -44,7 +42,7 @@ export class ScCheckout {
   @Prop() mode: 'test' | 'live' = 'live';
 
   /** The checkout form id */
-  @Prop() formId: number | string;
+  @Prop() formId: number;
 
   /** When the form was modified. */
   @Prop() modified: string;
@@ -142,16 +140,9 @@ export class ScCheckout {
   /** Checkout has an error. */
   @Event() scOrderError: EventEmitter<ResponseError>;
 
-  @Listen('scSetPaymentIntent')
-  handleSetPaymentIntent(e) {
-    const paymentIntent = e.detail?.payment_intent as PaymentIntent;
-    const processor = e.detail?.processor;
-    this.paymentIntents[processor] = paymentIntent;
-  }
-
   @Listen('scUpdateOrderState')
   handleOrderStateUpdate(e: { detail: Checkout }) {
-    setOrder(e?.detail, this?.formId);
+    checkoutState.checkout = e.detail;
   }
 
   @Listen('scSetMethod')
@@ -203,18 +194,13 @@ export class ScCheckout {
     const checkout = document.querySelector('sc-checkout');
     this.isDuplicate = !!checkout && checkout !== this.el;
     if (this.isDuplicate) return;
+
     Universe.create(this as Creator, this.state());
     processorsState.processors = this.processors;
     processorsState.manualPaymentMethods = this.manualPaymentMethods;
     checkoutState.formId = this.formId;
     checkoutState.mode = this.mode;
-    if (this.product) {
-      checkoutState.product = this.product;
-    }
-  }
-
-  order() {
-    return getOrder(this?.formId, this.mode);
+    checkoutState.product = this.product || null;
   }
 
   state() {
@@ -222,23 +208,19 @@ export class ScCheckout {
       processor: this.processor,
       method: this.method,
       selectedProcessorId: this.processor,
-      processors: (this.processors || []).filter(processor => {
-        return !(this?.order().reusable_payment_method_required && !processor?.recurring_enabled);
-      }),
-      reusablePaymentMethodRequired: this?.order().reusable_payment_method_required,
       manualPaymentMethods: this.manualPaymentMethods,
-      processor_data: this.order()?.processor_data,
+      processor_data: checkoutState.checkout?.processor_data,
       state: this.checkoutState,
       formState: this.checkoutState,
       paymentIntents: this.paymentIntents,
       successUrl: this.successUrl,
-      bumps: this.order()?.recommended_bumps?.data as Bump[],
+      bumps: checkoutState.checkout?.recommended_bumps?.data as Bump[],
 
-      order: this.order(),
-      abandonedCheckoutEnabled: this.order()?.abandoned_checkout_enabled,
-      checkout: this.order(),
-      shippingEnabled: this.order()?.shipping_enabled,
-      lineItems: this.order()?.line_items?.data || [],
+      order: checkoutState.checkout,
+      abandonedCheckoutEnabled: checkoutState.checkout?.abandoned_checkout_enabled,
+      checkout: checkoutState.checkout,
+      shippingEnabled: checkoutState.checkout?.shipping_enabled,
+      lineItems: checkoutState.checkout?.line_items?.data || [],
       editLineItems: this.editLineItems,
       removeLineItems: this.removeLineItems,
 
@@ -246,29 +228,29 @@ export class ScCheckout {
       loading: this.checkoutState === 'loading',
       busy: ['updating', 'finalizing', 'paying', 'confirming'].includes(this?.checkoutState),
       paying: ['finalizing', 'paying', 'confirming'].includes(this?.checkoutState),
-      empty: !['loading', 'updating'].includes(this.checkoutState) && !this.order()?.line_items?.pagination?.count,
+      empty: !['loading', 'updating'].includes(this.checkoutState) && !checkoutState.checkout?.line_items?.pagination?.count,
       // checkout states
 
       // stripe.
       stripePaymentElement: this.stripePaymentElement,
-      stripePaymentIntent: (this.order()?.staged_payment_intents?.data || []).find(intent => intent.processor_type === 'stripe'),
+      stripePaymentIntent: (checkoutState.checkout?.staged_payment_intents?.data || []).find(intent => intent.processor_type === 'stripe'),
 
       error: this.error,
       customer: this.customer,
-      tax_status: this.order()?.tax_status,
-      taxEnabled: this.order()?.tax_enabled,
-      customerShippingAddress: typeof this.order()?.customer !== 'string' ? this.order()?.customer?.shipping_address : {},
-      shippingAddress: this.order()?.shipping_address,
-      taxStatus: this.order()?.tax_status,
-      taxIdentifier: this.order()?.tax_identifier,
-      totalAmount: this.order()?.total_amount,
+      tax_status: checkoutState.checkout?.tax_status,
+      taxEnabled: checkoutState.checkout?.tax_enabled,
+      customerShippingAddress: typeof checkoutState.checkout?.customer !== 'string' ? checkoutState.checkout?.customer?.shipping_address : {},
+      shippingAddress: checkoutState.checkout?.shipping_address,
+      taxStatus: checkoutState.checkout?.tax_status,
+      taxIdentifier: checkoutState.checkout?.tax_identifier,
+      totalAmount: checkoutState.checkout?.total_amount,
       taxProtocol: this.taxProtocol,
       lockedChoices: this.prices,
       products: this.productsEntities,
       prices: this.pricesEntities,
       country: 'US',
       loggedIn: this.loggedIn,
-      emailExists: this.order()?.email_exists,
+      emailExists: checkoutState.checkout?.email_exists,
       formId: this.formId,
       mode: this.mode,
       currencyCode: this.currencyCode,
@@ -298,14 +280,14 @@ export class ScCheckout {
             loggedIn={this.loggedIn}
             onScSetCustomer={e => (this.customer = e.detail as Customer)}
             onScSetLoggedIn={e => (this.loggedIn = e.detail)}
-            order={this.order()}
+            order={checkoutState.checkout}
           >
             {/* Handles the current checkout form state. */}
             <sc-form-state-provider onScSetCheckoutFormState={e => (this.checkoutState = e.detail)}>
               {/* Handles errors in the form. */}
               <sc-form-error-provider checkoutState={this.checkoutState} onScUpdateError={e => (this.error = e.detail)}>
                 {/* Validate components in the form based on order state. */}
-                <sc-form-components-validator order={this.order()} disabled={this.disableComponentsValidation} taxProtocol={this.taxProtocol}>
+                <sc-form-components-validator order={checkoutState.checkout} disabled={this.disableComponentsValidation} taxProtocol={this.taxProtocol}>
                   {/* Handle confirming of order after it is "Paid" by processors. */}
                   <sc-order-confirm-provider success-url={this.successUrl} successText={this.successText}>
                     {/* Handles the current session. */}

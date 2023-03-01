@@ -114,6 +114,7 @@ return [
 		\SureCartBlocks\Blocks\Email\Block::class,
 		\SureCartBlocks\Blocks\Address\Block::class,
 		\SureCartBlocks\Blocks\BuyButton\Block::class,
+		\SureCartBlocks\Blocks\Coupon\Block::class,
 		\SureCartBlocks\Blocks\AddToCartButton\Block::class,
 		\SureCartBlocks\Blocks\CustomerDashboardButton\Block::class,
 		\SureCartBlocks\Blocks\CheckoutForm\Block::class,

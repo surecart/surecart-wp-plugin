@@ -8,14 +8,13 @@ import {
 	ScDashboardModule,
 	ScSwitch,
 	ScMenu,
-	ScMenuItem,
 	ScMenuDivider,
 	ScDropdown,
 	ScIcon,
 	ScForm,
 	ScDivider,
-	ScFormControl,
 	ScInput,
+	ScSkeleton,
 } from '@surecart/components-react';
 import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
 import { BlockPreview } from '@wordpress/block-editor';
@@ -55,25 +54,29 @@ export default ({ product, updateProduct, loading }) => {
 		}
 	};
 
+	const backgroundColor = () => {
+		if (product?.metadata?.wp_buy_link_enabled !== 'true') {
+			return 'var(--sc-color-gray-300)';
+		}
+		if (product?.metadata?.wp_buy_link_test_mode_enabled === 'true') {
+			return 'var(--sc-color-warning-500)';
+		}
+		return 'var(--sc-color-success-500)';
+	};
+
 	return (
 		<>
 			<ScDropdown
 				placement="bottom-end"
 				style={{ '--panel-width': '380px' }}
-				onScHide={(e) => {
-					console.log(e);
-				}}
 			>
-				<ScButton slot="trigger" caret>
+				<ScButton slot="trigger" busy={loading} caret>
 					<div
 						slot="prefix"
 						css={css`
 							width: 6px;
 							height: 6px;
-							background-color: ${product?.metadata
-								?.wp_buy_link_enabled === 'true'
-								? 'var(--sc-color-success-500)'
-								: 'var(--sc-color-gray-300)'};
+							background-color: ${backgroundColor()};
 							border-radius: 999px;
 						`}
 					></div>
@@ -128,6 +131,22 @@ export default ({ product, updateProduct, loading }) => {
 						</ScSwitch>
 
 						<ScMenuDivider />
+
+						<ScSwitch
+							checked={
+								product?.metadata?.wp_buy_link_logo_disabled !==
+								'true'
+							}
+							onScChange={(e) =>
+								updateMeta({
+									wp_buy_link_logo_disabled: e.target.checked
+										? 'false'
+										: 'true',
+								})
+							}
+						>
+							{__('Show store logo', 'surecart')}
+						</ScSwitch>
 
 						<ScSwitch
 							checked={

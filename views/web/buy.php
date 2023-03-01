@@ -19,6 +19,7 @@ use SureCartBlocks\Blocks\Form\Block as FormBlock;
 <body <?php body_class(); ?>>
 	<?php do_action( 'surecart_buy_page_body_open' ); ?>
 
+
 	<?php
 	ob_start();
 	require 'buy-template.php';
@@ -35,8 +36,8 @@ use SureCartBlocks\Blocks\Form\Block as FormBlock;
 							'quantity'   => 1,
 						],
 					],
+					'product' => $product,
 					'mode'    => $mode,
-					'form_id' => $product->id,
 				],
 				do_blocks( $content )
 			)

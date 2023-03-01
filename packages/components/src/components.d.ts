@@ -435,7 +435,7 @@ export namespace Components {
         /**
           * The checkout form id
          */
-        "formId": number | string;
+        "formId": number;
         /**
           * Text for the loading states of the form.
          */
@@ -1637,7 +1637,7 @@ export namespace Components {
           * Is the user logged in.
          */
         "loggedIn": boolean;
-        "order": Order;
+        "order": Checkout;
     }
     interface ScMenu {
         "setCurrentItem": (item: HTMLScMenuItemElement) => Promise<void>;
@@ -2628,7 +2628,7 @@ export namespace Components {
         /**
           * The checkout form id
          */
-        "formId": number | string;
+        "formId": number;
         /**
           * Group id
          */
@@ -2699,10 +2699,6 @@ export namespace Components {
     }
     interface ScStripeElement {
         /**
-          * Your stripe connected account id.
-         */
-        "accountId": string;
-        /**
           * Confirm card payment
          */
         "confirmCardPayment": (secret: any) => Promise<any>;
@@ -2734,10 +2730,6 @@ export namespace Components {
           * The checkout session object for finalizing intents
          */
         "order": Checkout;
-        /**
-          * Stripe publishable key
-         */
-        "publishableKey": string;
         /**
           * The input's help text. Alternatively, you can use the help-text slot.
          */
@@ -5196,7 +5188,7 @@ declare namespace LocalJSX {
         /**
           * The checkout form id
          */
-        "formId"?: number | string;
+        "formId"?: number;
         /**
           * Text for the loading states of the form.
          */
@@ -6598,7 +6590,7 @@ declare namespace LocalJSX {
         "loggedIn"?: boolean;
         "onScSetCustomer"?: (event: ScLoginProviderCustomEvent<{ email: string; name?: string }>) => void;
         "onScSetLoggedIn"?: (event: ScLoginProviderCustomEvent<boolean>) => void;
-        "order"?: Order;
+        "order"?: Checkout;
     }
     interface ScMenu {
         "onScSelect"?: (event: ScMenuCustomEvent<{ item: HTMLScMenuItemElement }>) => void;
@@ -7685,7 +7677,7 @@ declare namespace LocalJSX {
         /**
           * The checkout form id
          */
-        "formId"?: number | string;
+        "formId"?: number;
         /**
           * Group id
          */
@@ -7773,10 +7765,6 @@ declare namespace LocalJSX {
     }
     interface ScStripeElement {
         /**
-          * Your stripe connected account id.
-         */
-        "accountId"?: string;
-        /**
           * Whether this field is disabled
          */
         "disabled"?: boolean;
@@ -7806,10 +7794,6 @@ declare namespace LocalJSX {
           * The checkout session object for finalizing intents
          */
         "order"?: Checkout;
-        /**
-          * Stripe publishable key
-         */
-        "publishableKey"?: string;
         /**
           * The input's help text. Alternatively, you can use the help-text slot.
          */

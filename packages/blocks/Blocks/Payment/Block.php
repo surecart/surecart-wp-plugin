@@ -57,11 +57,7 @@ class Block extends BaseBlock {
 				</sc-card>
 			<?php else : ?>
 				<span slot="stripe">
-					<sc-stripe-element
-						mode="<?php echo esc_attr( $mode ); ?>"
-						account-id="<?php echo esc_attr( $stripe->processor_data->account_id ?? null ); ?>"
-						publishable-key="<?php echo esc_attr( $stripe->processor_data->publishable_key ?? null ); ?>">
-					</sc-stripe-element>
+					<sc-stripe-element></sc-stripe-element>
 					<?php if ( ! empty( $attributes['secure_notice'] ) ) : ?>
 						<sc-secure-notice>
 							<?php echo wp_kses_post( $attributes['secure_notice'] ); ?>

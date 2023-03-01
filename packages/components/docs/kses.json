@@ -1540,14 +1540,12 @@
     "slot": true
   },
   "sc-stripe-element": {
-    "account-id": true,
     "disabled": true,
     "form-state": true,
     "has-focus": true,
     "label": true,
     "mode": true,
     "order": true,
-    "publishable-key": true,
     "secure-text": true,
     "selected-processor-id": true,
     "show-label": true,

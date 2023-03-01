@@ -1,9 +1,6 @@
 <?php
 namespace SureCart\Controllers\Web;
 
-use SureCart\Models\ManualPaymentMethod;
-use SureCart\Models\Processor;
-
 /**
  * Handles webhooks
  */
@@ -36,20 +33,6 @@ class BuyPageController {
 	];
 
 	/**
-	 * Holds the config.
-	 *
-	 * @var array
-	 */
-	protected $config;
-
-	/**
-	 * Instantiate the config.
-	 */
-	public function __construct() {
-		 $this->config = \SureCart::resolve( SURECART_CONFIG_KEY );
-	}
-
-	/**
 	 * Handle filters.
 	 *
 	 * @return void
@@ -69,6 +52,20 @@ class BuyPageController {
 		add_filter( 'document_title_parts', [ $this, 'documentTitle' ] );
 		// add edit product link.
 		add_action( 'admin_bar_menu', [ $this, 'addEditProductLink' ], 99 );
+		// do not persist the cart for this page.
+		add_filter( 'surecart-components/scData', [ $this, 'doNotPersistCart' ], 10, 2 );
+	}
+
+	/**
+	 * Preload components.
+	 *
+	 * @return void
+	 */
+	public function preloadComponents() {
+		$config = \SureCart::resolve( SURECART_CONFIG_KEY );
+		foreach ( $this->preload as $name ) {
+			\SureCart::preload()->add( $config['preload'][ $name ] );
+		}
 	}
 
 	/**
@@ -91,7 +88,6 @@ class BuyPageController {
 		);
 	}
 
-
 	/**
 	 * Show the product page
 	 *
@@ -107,9 +103,8 @@ class BuyPageController {
 			return $this->handleError( $this->product );
 		}
 
-		$enabled = ! empty( $this->product->metadata->wp_buy_link_enabled ) ? 'true' === $this->product->metadata->wp_buy_link_enabled : false;
-		// if this product is a draft, check read permissions.
-		if ( ! $enabled && ! current_user_can( 'read_sc_products' ) ) {
+		// if this buy page is not enabled, check read permissions.
+		if ( ! $this->product->buyLink()->isEnabled() && ! current_user_can( 'read_sc_products' ) ) {
 			return $this->notFound();
 		}
 
@@ -118,23 +113,36 @@ class BuyPageController {
 			return \SureCart::redirect()->to( esc_url_raw( \SureCart::routeUrl( 'product', [ 'id' => $this->product->slug ] ) ) );
 		}
 
+		// add the filters.
 		$this->filters();
 
-		foreach ( $this->preload as $name ) {
-			\SureCart::preload()->add( $this->config['preload'][ $name ] );
-		}
+		// preload the components.
+		$this->preloadComponents();
 
+		// render the view.
 		return \SureCart::view( 'web/buy' )->with(
 			[
 				'product'          => $this->product,
-				'mode'             => 'true' === ( $this->product->metadata->wp_buy_link_test_mode_enabled ?? '' ) ? 'test' : 'live',
-				'show_image'       => 'true' !== ( $this->product->metadata->wp_buy_link_product_image_disabled ?? '' ),
-				'show_description' => 'true' !== ( $this->product->metadata->wp_buy_link_product_description_disabled ?? '' ),
-				'show_coupon'      => 'true' !== ( $this->product->metadata->wp_buy_link_coupon_field_disabled ?? '' ),
+				'mode'             => $this->product->buyLink()->getMode(),
+				'show_logo'        => $this->product->buyLink()->templatePartEnabled( 'logo' ),
+				'show_image'       => $this->product->buyLink()->templatePartEnabled( 'image' ),
+				'show_description' => $this->product->buyLink()->templatePartEnabled( 'description' ),
+				'show_coupon'      => $this->product->buyLink()->templatePartEnabled( 'coupon' ),
 			]
 		);
 	}
 
+	/**
+	 * Do not persist the cart on the buy page.
+	 *
+	 * @param array $data ScData array.
+	 *
+	 * @return array
+	 */
+	public function doNotPersistCart( $data ) {
+		$data['do_not_persist_cart'] = true;
+		return $data;
+	}
 
 	/**
 	 * Maybe set the url if needed.
@@ -150,11 +158,11 @@ class BuyPageController {
 		return \SureCart::routeUrl( 'buy', [ 'id' => $this->product->id ] );
 	}
 
-		/**
-		 * Update the document title name to match the product name.
-		 *
-		 * @param array $parts The parts of the document title.
-		 */
+	/**
+	 * Update the document title name to match the product name.
+	 *
+	 * @param array $parts The parts of the document title.
+	 */
 	public function documentTitle( $parts ) {
 		$parts['title'] = $this->product->name ?? $parts['title'];
 		return $parts;
@@ -163,9 +171,9 @@ class BuyPageController {
 	/**
 	 * Handle fetching error.
 	 *
-	 * @param \WP_Error $wp_error
+	 * @param \WP_Error $wp_error The error.
 	 *
-	 * @return void
+	 * @return void|function
 	 */
 	public function handleError( \WP_Error $wp_error ) {
 		$data = (array) $wp_error->get_error_data();

@@ -2,6 +2,10 @@
 <sc-columns is-stacked-on-mobile="1" is-full-height="1" class="wp-block-surecart-columns" style="gap:0px 0px"><!-- wp:surecart/column {"layout":{"type":"constrained","contentSize":"550px","justifyContent":"right"},"width":"","style":{"spacing":{"padding":{"top":"100px","right":"100px","bottom":"100px","left":"100px"},"blockGap":"30px"},"border":{"width":"0px","style":"none"},"color":{"background":"#fafafa"}}} -->
 	<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right has-background" style="border-style:none;border-width:0px;background-color:#fafafa;padding:5rem;--sc-column-content-width:450px;--sc-form-row-spacing:20px">
 
+		<?php if ( $show_logo ) : ?>
+		<!-- wp:surecart/store-logo {"width":120,"maxHeight":100,"isLinkToHome":false} /-->
+		<?php endif; ?>
+
 		<?php if ( $show_image && ! empty( $product->image->url ) ) : ?>
 			<!-- wp:image {"sizeSlug":"full","linkDestination":"none","style":{"border":{"radius":"5px"}}} -->
 				<figure class="wp-block-image size-full is-resized has-custom-border">
@@ -60,11 +64,7 @@
 		<sc-order-bumps label="<?php esc_attr_e( 'Recommended', 'surecart' ); ?>"></sc-order-bumps>
 
 		<?php if ( $show_coupon ) : ?>
-			<!-- wp:surecart/coupon {"button_text":"Apply"} -->
-			<sc-order-coupon-form label="<?php esc_attr_e( 'Coupon Code', 'surecart' ); ?>" placeholder="<?php esc_attr_e( 'Enter a coupon code', 'surecart' ); ?>">
-				<?php esc_html_e( 'Apply', 'surecart' ); ?>
-			</sc-order-coupon-form>
-			<!-- /wp:surecart/coupon -->
+			<!-- wp:surecart/coupon {"text":"Coupon Code","collapsed":false} /-->
 		<?php endif; ?>
 
 		<sc-order-summary collapsible="true" collapsed="true" closed-text="Total" open-text="Total">

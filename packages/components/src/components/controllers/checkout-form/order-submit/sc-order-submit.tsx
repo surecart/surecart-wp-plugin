@@ -5,6 +5,7 @@ import { getProcessorData } from '../../../../functions/processor';
 import { Checkout, Processor, ProcessorName } from '../../../../types';
 import { state as selectedProcessor } from '@store/selected-processor';
 import { checkoutIsLocked } from '@store/checkout/getters';
+import { availableProcessors } from '@store/processors/getters';
 
 @Component({
   tag: 'sc-order-submit',
@@ -51,7 +52,7 @@ export class ScOrderSubmit {
   @Prop() processor: ProcessorName;
 
   renderPayPalButton(buttons) {
-    const { client_id, account_id, merchant_initiated } = getProcessorData(this.processors, 'paypal', this.mode);
+    const { client_id, account_id, merchant_initiated } = getProcessorData(availableProcessors(), 'paypal', this.mode);
     if (!client_id && !account_id) return null;
 
     return (
