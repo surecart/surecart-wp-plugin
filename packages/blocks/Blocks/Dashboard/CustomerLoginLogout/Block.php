@@ -34,17 +34,29 @@ class Block extends BaseBlock {
 	public function render( $attributes, $content, $block = null ) {
 		// Build the redirect URL.
 		$current_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+		$current_user = wp_get_current_user();
 
-		return \SureCart::blocks()->render(
-			'blocks/logout-button',
-			[
-				'href'      => esc_url( wp_logout_url( $current_url ) ),
-				'type'      => 'primary',
-				'size'      => 'medium',
-				'show_icon' => false,
-				'label'     => __( 'Logout', 'surecart' ),
-			]
-		);
-		return '<p>Login/Logout</p>';
+		ob_start() ?>
+
+		<div>
+			<sc-dropdown style="margin-top: auto;">
+				<sc-button type="text" slot="trigger">
+					<sc-avatar image="<?php echo esc_url( get_avatar_url( $current_user->ID, [ 'size' => 80 ] ) ); ?>"
+					slot="prefix" style="--sc-avatar-size: 2em"></sc-avatar>
+					<?php echo esc_html( $current_user->display_name ); ?>
+					<sc-icon name="chevron-up" slot="suffix"></sc-icon>
+				</sc-button>
+
+				<sc-menu>
+					<sc-menu-item href="<?php echo esc_url( wp_logout_url( $current_url ) ); ?>">
+						<sc-icon slot="prefix" name="log-out"></sc-icon>
+						<?php echo esc_html__( 'Logout', 'surecart' ); ?>
+					</sc-menu-item>
+				</sc-menu>
+			</sc-dropdown>
+		</div>
+		<?php
+
+		return ob_get_clean();
 	}
 }

@@ -27,6 +27,17 @@
     "class": true,
     "slot": true
   },
+  "sc-avatar": {
+    "image": true,
+    "initials": true,
+    "label": true,
+    "loading": true,
+    "shape": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-badge-notice": {
     "label": true,
     "size": true,
