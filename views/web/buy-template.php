@@ -28,10 +28,10 @@
 		<?php endif; ?>
 
 
-		<?php if ( ! empty( $product->prices->data ) && count( $product->prices->data ) > 1 ) : ?>
+		<?php if ( ! empty( $prices ) && count( $prices ) > 1 ) : ?>
 			<!-- wp:surecart/price-selector -->
 			<sc-price-choices type="radio" columns="1">
-				<?php foreach ( $product->prices->data as $price ) : ?>
+				<?php foreach ( $prices as $price ) : ?>
 					<!-- wp:surecart/price-choice {"price_id":"<?php echo esc_attr( $price->id ); ?>","checked":true} -->
 					<sc-price-choice price-id="<?php echo esc_attr( $price->id ); ?>" type="radio" show-label="1" show-price="1" show-control="1"></sc-price-choice>
 					<!-- /wp:surecart/price-choice -->
