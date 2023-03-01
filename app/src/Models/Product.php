@@ -62,23 +62,4 @@ class Product extends Model {
 	public function buyLink() {
 		return new BuyLink( $this );
 	}
-
-		/**
-		 * Should we show this item?
-		 *
-		 * @param string $item The name of the item.
-		 *
-		 * @return boolean
-		 */
-	public function showItem( $item ) {
-		switch ( $item ) {
-			case 'image':
-				return 'true' !== ( $this->product->metadata->wp_buy_link_product_image_disabled ?? '' );
-			case 'description':
-				return 'true' !== ( $this->product->metadata->wp_buy_link_product_description_disabled ?? '' );
-			case 'coupon':
-				return 'true' !== ( $this->product->metadata->wp_buy_link_coupon_field_disabled ?? '' );
-		}
-		return false;
-	}
 }
