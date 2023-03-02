@@ -43,9 +43,6 @@
 		"max": {
 			"type": ["string", "number"]
 		},
-		"maxlength": {
-			"type": "string"
-		},
 		"name": {
 			"type": "string",
 			"default": "textarea"
