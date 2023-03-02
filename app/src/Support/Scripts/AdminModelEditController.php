@@ -144,7 +144,8 @@ abstract class AdminModelEditController {
 		$this->data['entitlements'] = \SureCart::account()->entitlements;
 		$this->data['get_locale']   = str_replace( '_', '-', get_locale() );
 
-		wp_set_script_translations( $this->handle, 'surecart', SURECART_LANGUAGE_DIR );
+		// wp_set_script_translations( $this->handle, 'surecart', SURECART_LANGUAGE_DIR );
+		wp_set_script_translations( $this->handle, 'surecart' );
 
 		// common localizations.
 		wp_localize_script(
