@@ -5,7 +5,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: lokalise.com\n"
 "Project-Id-Version: SureCart WP\n"
-"PO-Revision-Date: 2023-03-02 07:04\n"
+"PO-Revision-Date: 2023-03-02 11:00\n"
 "Last-Translator: lokalise.com\n"
 "Language-Team: lokalise.com\n\n"
 "Language: fr_FR\n"
@@ -2333,7 +2333,6 @@ msgstr "Titre de la carte"
 
 #: src/Cart/CartService.php:51
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:134
-#, fuzzy
 msgid "Cart"
 msgstr "Panier"
 
@@ -2624,9 +2623,8 @@ msgstr "Erreurs de paiement"
 #: src/Integrations/Beaver/BeaverFormModule.php:67
 #: src/Integrations/Elementor/ReusableFormWidget.php:42
 #: src/Integrations/Elementor/ReusableFormWidget.php:101
-#, fuzzy
 msgid "Checkout Form"
-msgstr "Formulaire de paiement"
+msgstr "Formulaire de commande"
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:205
 #, fuzzy
@@ -8493,9 +8491,8 @@ msgstr "Non échangé"
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:45
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:177
 #: abandoned-checkouts/modules/Details.js:20
-#, fuzzy
 msgid "Not Scheduled"
-msgstr "Non prévu"
+msgstr "Non Programmé"
 
 #: src/Support/Errors/Translations/types.php:15
 #, fuzzy
@@ -10481,12 +10478,10 @@ msgstr "Mise à jour du calendrier"
 #: abandoned-checkouts/modules/Details.js:16
 #: subscriptions/show/modules/PendingUpdate.js:58
 #: subscriptions/show/modules/PendingUpdate.js:91
-#, fuzzy
 msgid "Scheduled"
 msgstr "Programmé"
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:82
-#, fuzzy
 msgid "Search Abanonded Orders"
 msgstr "Rechercher des commandes abandonnées"
 
@@ -11783,7 +11778,6 @@ msgstr "Résumé"
 #: src/WordPress/ThemeServiceProvider.php:87
 #: admin/user-profile.php:1
 #: error.php:2
-#, fuzzy
 msgid "SureCart"
 msgstr "SureCart"
 
