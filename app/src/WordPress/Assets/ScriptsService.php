@@ -90,7 +90,6 @@ class ScriptsService {
 			);
 		}
 
-		// wp_set_script_translations( 'surecart-components', 'surecart', SURECART_LANGUAGE_DIR );
 		wp_set_script_translations( 'surecart-components', 'surecart' );
 
 		// core-data.
