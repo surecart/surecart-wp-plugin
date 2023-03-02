@@ -1,7 +1,7 @@
 {
 	"name": "@surecart/components-react",
 	"sideEffects": false,
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "React specific wrapper for surecart/components",
 	"repository": {
 		"type": "git",
