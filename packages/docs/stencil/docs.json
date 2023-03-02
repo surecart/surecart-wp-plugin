@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-02-24T08:40:14",
+  "timestamp": "2023-03-02T09:59:45",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -666,6 +666,7 @@
         "sc-error",
         "sc-login-form",
         "sc-login-provider",
+        "sc-order-confirm-provider",
         "sc-order-confirmation",
         "sc-order-manual-instructions",
         "sc-password-nag",
@@ -713,6 +714,9 @@
           "sc-alert"
         ],
         "sc-login-provider": [
+          "sc-alert"
+        ],
+        "sc-order-confirm-provider": [
           "sc-alert"
         ],
         "sc-order-confirmation": [
@@ -4435,13 +4439,10 @@
           "sc-dialog",
           "sc-icon",
           "sc-dashboard-module",
-          "sc-order-manual-instructions",
+          "sc-alert",
           "sc-button"
         ],
         "sc-dashboard-module": [
-          "sc-alert"
-        ],
-        "sc-order-manual-instructions": [
           "sc-alert"
         ],
         "sc-session-provider": [
@@ -4460,7 +4461,7 @@
       "props": [
         {
           "name": "checkoutState",
-          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"updating\"",
+          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"redirecting\" | \"updating\"",
           "mutable": false,
           "attr": "checkout-state",
           "reflectToAttr": false,
@@ -4505,6 +4506,10 @@
             },
             {
               "value": "paying",
+              "type": "string"
+            },
+            {
+              "value": "redirecting",
               "type": "string"
             },
             {
@@ -4661,7 +4666,7 @@
       "props": [
         {
           "name": "state",
-          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"updating\"",
+          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"redirecting\" | \"updating\"",
           "mutable": false,
           "attr": "state",
           "reflectToAttr": false,
@@ -4706,6 +4711,10 @@
             },
             {
               "value": "paying",
+              "type": "string"
+            },
+            {
+              "value": "redirecting",
               "type": "string"
             },
             {
@@ -11291,7 +11300,7 @@
       "props": [
         {
           "name": "checkoutState",
-          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"updating\"",
+          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"redirecting\" | \"updating\"",
           "mutable": false,
           "attr": "checkout-state",
           "reflectToAttr": false,
@@ -11336,6 +11345,10 @@
             },
             {
               "value": "paying",
+              "type": "string"
+            },
+            {
+              "value": "redirecting",
               "type": "string"
             },
             {
@@ -11441,7 +11454,7 @@
       "events": [
         {
           "event": "scSetCheckoutFormState",
-          "detail": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"updating\"",
+          "detail": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"redirecting\" | \"updating\"",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -15604,59 +15617,6 @@
       "usage": {},
       "props": [
         {
-          "name": "formId",
-          "type": "number",
-          "mutable": false,
-          "attr": "form-id",
-          "reflectToAttr": false,
-          "docs": "The form id",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "number"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "mode",
-          "type": "\"live\" | \"test\"",
-          "mutable": false,
-          "attr": "mode",
-          "reflectToAttr": false,
-          "docs": "Are we in test or live mode.",
-          "docsTags": [],
-          "default": "'live'",
-          "values": [
-            {
-              "value": "live",
-              "type": "string"
-            },
-            {
-              "value": "test",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "order",
-          "type": "Checkout",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "The current order.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Checkout"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "successText",
           "type": "{ title: string; description: string; button: string; }",
           "mutable": false,
@@ -15735,7 +15695,7 @@
         "sc-dialog",
         "sc-icon",
         "sc-dashboard-module",
-        "sc-order-manual-instructions",
+        "sc-alert",
         "sc-button"
       ],
       "dependencyGraph": {
@@ -15743,7 +15703,7 @@
           "sc-dialog",
           "sc-icon",
           "sc-dashboard-module",
-          "sc-order-manual-instructions",
+          "sc-alert",
           "sc-button"
         ],
         "sc-dialog": [
@@ -15758,9 +15718,6 @@
         ],
         "sc-alert": [
           "sc-icon"
-        ],
-        "sc-order-manual-instructions": [
-          "sc-alert"
         ],
         "sc-checkout": [
           "sc-order-confirm-provider"
@@ -16546,8 +16503,7 @@
       "parts": [],
       "dependents": [
         "sc-order",
-        "sc-order-confirm-components-validator",
-        "sc-order-confirm-provider"
+        "sc-order-confirm-components-validator"
       ],
       "dependencies": [
         "sc-alert"
@@ -16563,9 +16519,6 @@
           "sc-order-manual-instructions"
         ],
         "sc-order-confirm-components-validator": [
-          "sc-order-manual-instructions"
-        ],
-        "sc-order-confirm-provider": [
           "sc-order-manual-instructions"
         ]
       }
@@ -23606,7 +23559,7 @@
         },
         {
           "name": "formState",
-          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"updating\"",
+          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"redirecting\" | \"updating\"",
           "mutable": false,
           "attr": "form-state",
           "reflectToAttr": false,
@@ -23651,6 +23604,10 @@
             },
             {
               "value": "paying",
+              "type": "string"
+            },
+            {
+              "value": "redirecting",
               "type": "string"
             },
             {
@@ -23931,7 +23888,7 @@
         },
         {
           "name": "formState",
-          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"updating\"",
+          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"redirecting\" | \"updating\"",
           "mutable": false,
           "attr": "form-state",
           "reflectToAttr": false,
@@ -23976,6 +23933,10 @@
             },
             {
               "value": "paying",
+              "type": "string"
+            },
+            {
+              "value": "redirecting",
               "type": "string"
             },
             {
