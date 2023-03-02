@@ -58,7 +58,6 @@ class TranslationsServiceProvider implements ServiceProviderInterface {
 	 */
 	public function loadSingleTranslationFile( $file, $handle, $domain ) {
 		if ( 'surecart' === $domain ) {
-
 			if ( is_string( $file ) ) {
 				if ( false !== strpos( $file, SURECART_PLUGIN_DIR_NAME . '/languages/' ) ) {
 					$first_part = substr( $file, 0, strpos( $file, SURECART_PLUGIN_DIR_NAME . '/languages/' ) );
@@ -80,11 +79,10 @@ class TranslationsServiceProvider implements ServiceProviderInterface {
 		return $file;
 	}
 
-	 /**
-	  * This is needed for Loco translate to work properly.
-	  */
+	/**
+	 * This is needed for Loco translate to work properly.
+	 */
 	public function loadPluginTextDomain() {
-
 		// Default languages directory for CartFlows Pro.
 		$lang_dir = trailingslashit( SURECART_LANGUAGE_DIR );
 
