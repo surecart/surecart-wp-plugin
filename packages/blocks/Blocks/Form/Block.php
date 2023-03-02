@@ -73,7 +73,7 @@ class Block extends BaseBlock {
 				'classes'                       => $this->getClasses( $attributes ),
 				'style'                         => $this->getStyle( $attributes ),
 				'content'                       => $content,
-				'abandoned_checkout_return_url' => esc_url( trailingslashit( get_site_url() ) . 'surecart/redirect' ),
+				'abandoned_checkout_return_url' => esc_url( trailingslashit( get_home_url() ) . 'surecart/redirect' ),
 				'processors'                    => array_values(
 					array_filter(
 						$processors ?? [],
