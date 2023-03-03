@@ -21,6 +21,7 @@ import ToggleHeader from '../../../../components/ToggleHeader';
 import { intervalString } from '../../../../util/translations';
 import { useState } from 'react';
 import CopyInput from './CopyInput';
+import { getFormattedPrice } from '../../../../util';
 
 export default ({
 	isOpen,
@@ -110,32 +111,48 @@ export default ({
 						<>
 							{!!price?.scratch_amount &&
 								price?.scratch_amount > price?.amount && (
-									<ScFormatNumber
+									<div
 										css={css`
 											font-weight: bold;
 											font-size: 14px;
 											opacity: 0.75;
 											text-decoration: line-through;
 										`}
-										type="currency"
-										currency={
-											price?.currency ||
-											scData.currency_code
-										}
-										value={price?.scratch_amount}
-									/>
+									>
+										{getFormattedPrice({
+											amount: price?.scratch_amount,
+											currency:
+												price?.currency ||
+												scData.currency_code,
+										})}
+									</div>
 								)}
-							<ScFormatNumber
+							{/* <ScFormatNumber
 								css={css`
 									font-weight: bold;
 									font-size: 14px;
+									opacity: 0.75;
+									text-decoration: line-through;
 								`}
 								type="currency"
 								currency={
 									price?.currency || scData.currency_code
 								}
-								value={price?.amount}
+								value={price?.scratch_amount}
 							/>
+							)} */}
+							<div
+								css={css`
+									font-weight: bold;
+									font-size: 14px;
+								`}
+							>
+								{getFormattedPrice({
+									amount: price?.amount,
+									currency:
+										price?.currency || scData.currency_code,
+								})}
+							</div>
 						</>
 					)}{' '}
 					<div
