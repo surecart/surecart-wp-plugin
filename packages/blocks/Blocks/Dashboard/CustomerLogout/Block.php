@@ -38,7 +38,7 @@ class Block extends BaseBlock {
 
 		ob_start() ?>
 
-		<div>
+		<div class="sc-customer-logout">
 			<sc-dropdown style="margin-top: auto;">
 				<sc-button type="text" slot="trigger" style="<?php echo isset( $attributes['color'] ) ? 'color:' . $attributes['color'] . ';' : ''; ?>">
 					<sc-avatar image="<?php echo esc_url( get_avatar_url( $current_user->ID, [ 'size' => 80 ] ) ); ?>"

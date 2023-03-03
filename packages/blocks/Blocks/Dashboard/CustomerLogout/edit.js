@@ -44,7 +44,7 @@ export default ({ attributes, setAttributes }) => {
             ]}
           ></PanelColorSettings>
 			</InspectorControls>
-			<div className="sc-customer-login-logout">
+			<div className="sc-customer-logout">
         <sc-dropdown>
           <sc-button type="text" slot="trigger" style={ { 'color' : color } }>
             <sc-avatar image={avatarUrl} slot="prefix" style={ { '--sc-avatar-size' : '2em', 'color' : color } }></sc-avatar>
