@@ -10,17 +10,9 @@ return [
 	<sc-columns is-stacked-on-mobile="1" class="wp-block-surecart-columns"><!-- wp:surecart/column {"layout":{"type":"constrained","justifyContent":"center","contentSize":"100%"},"width":"33.33%","sticky":false,"style":{"color":{"background":"#f2fafc"},"spacing":{"blockGap":"var:preset|spacing|80","padding":{"top":"6.7rem","right":"6.7rem","bottom":"6.7rem","left":"6.7rem"}}}} -->
 	<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-center has-background" style="background-color:#f2fafc;padding-top:6.7rem;padding-right:6.7rem;padding-bottom:6.7rem;padding-left:6.7rem;flex-basis:33.33%;--sc-column-content-width:100%;--sc-form-row-spacing:var:preset|spacing|80"><!-- wp:surecart/store-logo {"width":201} /-->
 
-	<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"left"},"style":{"spacing":{"blockGap":"var:preset|spacing|30"}}} -->
-	<div class="wp-block-buttons"><!-- wp:button {"line_items":[{"quantity":1}]} -->
-	<div class="wp-block-button"><a class="wp-block-button__link wp-element-button">Terms</a></div>
-	<!-- /wp:button -->
+	<!-- wp:surecart/customer-store-links /-->
 
-	<!-- wp:button {"line_items":[{"quantity":1}]} -->
-	<div class="wp-block-button"><a class="wp-block-button__link wp-element-button">Privacy</a></div>
-	<!-- /wp:button --></div>
-	<!-- /wp:buttons -->
-
-	<!-- wp:loginout /--></sc-column>
+	<!-- wp:surecart/customer-login-logout /--></sc-column>
 	<!-- /wp:surecart/column -->
 
 	<!-- wp:surecart/column {"layout":{"type":"constrained","contentSize":"800px"},"width":"66.66%","style":{"spacing":{"blockGap":"0","padding":{"top":"var:preset|spacing|70","right":"var:preset|spacing|70","bottom":"var:preset|spacing|70","left":"var:preset|spacing|70"}}}} -->
