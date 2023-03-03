@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCartBlocks\Blocks\Dashboard\CustomerLoginLogout;
+namespace SureCartBlocks\Blocks\Dashboard\CustomerLogout;
 
 use SureCartBlocks\Blocks\Dashboard\DashboardPage;
 use SureCartBlocks\Blocks\BaseBlock;
@@ -40,7 +40,7 @@ class Block extends BaseBlock {
 
 		<div>
 			<sc-dropdown style="margin-top: auto;">
-				<sc-button type="text" slot="trigger">
+				<sc-button type="text" slot="trigger" style="<?php echo isset( $attributes['color'] ) ? 'color:' . $attributes['color'] . ';' : ''; ?>">
 					<sc-avatar image="<?php echo esc_url( get_avatar_url( $current_user->ID, [ 'size' => 80 ] ) ); ?>"
 					slot="prefix" style="--sc-avatar-size: 2em"></sc-avatar>
 					<?php echo esc_html( $current_user->display_name ); ?>
@@ -48,7 +48,7 @@ class Block extends BaseBlock {
 				</sc-button>
 
 				<sc-menu>
-					<sc-menu-item href="<?php echo esc_url( wp_logout_url( $current_url ) ); ?>">
+					<sc-menu-item href="<?php echo esc_url( wp_logout_url( $attributes['redirectToCurrent'] ? $current_url : '' ) ); ?>">
 						<sc-icon slot="prefix" name="log-out"></sc-icon>
 						<?php echo esc_html__( 'Logout', 'surecart' ); ?>
 					</sc-menu-item>

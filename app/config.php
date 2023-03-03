@@ -136,7 +136,7 @@ return [
 		\SureCartBlocks\Blocks\Dashboard\DashboardTab\Block::class,
 		\SureCartBlocks\Blocks\ConditionalForm\Block::class,
 		\SureCartBlocks\Blocks\StoreLogo\Block::class,
-		\SureCartBlocks\Blocks\Dashboard\CustomerLoginLogout\Block::class,
+		\SureCartBlocks\Blocks\Dashboard\CustomerLogout\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerStoreLinks\Block::class,
 	],
 
