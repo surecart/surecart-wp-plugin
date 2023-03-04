@@ -137,6 +137,7 @@ export default ({ id, prices, product }) => {
 				border-radius: var(--sc-border-radius-medium);
 				box-shadow: var(--sc-shadow-small);
 				display: grid;
+				background: #fff;
 			`}
 		>
 			<Header

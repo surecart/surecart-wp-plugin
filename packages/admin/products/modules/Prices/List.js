@@ -50,10 +50,8 @@ export default ({ prices, product, children }) => {
 				.smooth-dnd-container.vertical > .smooth-dnd-draggable-wrapper {
 					background: #fff;
 					overflow: visible;
-					margin-top: 0px;
-					margin-left: -1px;
-					margin-right: -1px;
-					margin-bottom: var(--sc-spacing-medium);
+					padding-top: var(--sc-spacing-x-small);
+					padding-bottom: var(--sc-spacing-x-small);
 				}
 			`}
 		>

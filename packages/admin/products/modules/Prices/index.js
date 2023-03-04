@@ -109,9 +109,8 @@ export default ({ product, productId }) => {
 					{!!archivedPrices?.length && (
 						<div
 							css={css`
-								> *:not(:last-child) {
-									margin-bottom: 20px;
-								}
+								display: grid;
+								gap: var(--sc-spacing-medium);
 							`}
 						>
 							{!!showArchived && (
