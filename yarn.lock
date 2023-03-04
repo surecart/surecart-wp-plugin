@@ -7125,8 +7125,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@surecart/blocks@workspace:packages/blocks"
   dependencies:
-    "@surecart/components": ^0.0.10
-    "@surecart/components-react": ^0.0.7
+    "@surecart/components": ^1.0.0
+    "@surecart/components-react": ^1.0.1
     "@wordpress/prettier-config": ^1.1.1
     "@wordpress/scripts": ^21.0.2
     prettier: ^2.5.1
@@ -7135,11 +7135,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@surecart/components-react@^0.0.7, @surecart/components-react@workspace:packages/components-react":
+"@surecart/components-react@^1.0.1, @surecart/components-react@workspace:packages/components-react":
   version: 0.0.0-use.local
   resolution: "@surecart/components-react@workspace:packages/components-react"
   dependencies:
-    "@surecart/components": ^0.0.10
+    "@surecart/components": ^1.0.0
     "@types/jest": 23.3.9
     "@types/node": ^15.12.2
     "@types/react": ^17.0.34
@@ -7154,7 +7154,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@surecart/components@^0.0.10, @surecart/components@workspace:packages/components":
+"@surecart/components@^1.0.0, @surecart/components@workspace:packages/components":
   version: 0.0.0-use.local
   resolution: "@surecart/components@workspace:packages/components"
   dependencies:
@@ -7216,8 +7216,8 @@ __metadata:
     "@docusaurus/core": 2.1.0
     "@docusaurus/preset-classic": 2.1.0
     "@mdx-js/react": ^1.6.22
-    "@surecart/components": ^0.0.10
-    "@surecart/components-react": ^0.0.7
+    "@surecart/components": ^1.0.0
+    "@surecart/components-react": ^1.0.1
     clsx: ^1.1.1
     docusaurus-plugin-sass: ^0.1.14
     dotenv: ^8.2.0

@@ -1,6 +1,6 @@
 {
   "name": "@surecart/components",
-  "version": "0.0.10",
+  "version": "1.0.0",
   "description": "The @surecart/components package contains all the core web components that other packages rely on.",
   "main": "dist/index.cjs.js",
   "docs": "docs/docs.json",

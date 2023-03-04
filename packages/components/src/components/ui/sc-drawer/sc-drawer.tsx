@@ -216,7 +216,10 @@ export class ScDrawer {
                     exportparts="base:close-button__base"
                     class="drawer__close"
                     name="x"
-                    label={__('Close', 'surecart')}
+                    label={
+                      /** translators: Close this modal window. */
+                      __('Close', 'surecart')
+                    }
                     onClick={() => this.requestClose('close-button')}
                   ></sc-icon>
                 </div>

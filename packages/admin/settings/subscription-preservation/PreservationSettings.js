@@ -157,7 +157,7 @@ export default () => {
 					)}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							'Turning this one will collect subscription cancelation reasons and optionally offer a discount to keep their subscription active.',
+							'Turning this on will collect subscription cancelation reasons and optionally offer a discount to keep their subscription active.',
 							'surecart'
 						)}
 					</span>
