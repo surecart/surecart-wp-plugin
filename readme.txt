@@ -243,7 +243,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.7.2 - March 2, 2023 =
+= 1.7.2 - March 4, 2023 =
 * Fix: Issue with some page builders not saving default checkout page due to validations.
 * Fix: Issue with webhooks not being set properly if the WordPress install domain is different than the home url.
 
