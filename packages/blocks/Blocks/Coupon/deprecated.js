@@ -1,9 +1,8 @@
+import { __ } from '@wordpress/i18n';
+
 export default [
 	{
 		attributes: {
-			lock: {
-				remove: true,
-			},
 			text: {
 				type: 'string',
 				default: 'Add Coupon Code',
@@ -12,17 +11,23 @@ export default [
 				type: 'string',
 				default: 'Apply Coupon',
 			},
-			placeholder: {
-				type: 'string',
-				default: 'Enter coupon code',
-			},
-			collapsed: {
-				type: 'boolean',
-				default: true,
-			},
 			disabled: {
 				type: 'boolean',
 			},
+		},
+		supports: {
+			className: false,
+		},
+		migrate(attributes) {
+			const { button_text } = attributes;
+			return {
+				collapsed: true,
+				placeholder: __('Enter coupon code', 'surecart'),
+				button_text: button_text
+					? button_text
+					: __('Apply', 'surecart'),
+				...attributes,
+			};
 		},
 		save({ attributes }) {
 			const { text, button_text, disabled } = attributes;
