@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, Fragment } from '@stencil/core';
 import { state as checkoutState } from '@store/checkout';
 import { __ } from '@wordpress/i18n';
-import { intervalString } from 'src/functions/price';
+import { intervalString } from '../../../../functions/price';
 import { Product } from 'src/types';
 
 @Component({
