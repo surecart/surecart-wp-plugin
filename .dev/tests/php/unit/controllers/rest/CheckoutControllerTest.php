@@ -102,9 +102,15 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 			'status' => 'finalized'
 		];
 
+		$form_id = self::factory()->post->create([
+			'post_type' => 'sc_form',
+			'content' => '<!-- wp:surecart/form {"mode":"live"} --> <!-- /wp:surecart/form --> '
+		]);
+
 		// set up request.
 		$request = new WP_REST_Request('POST', '/surecart/v1/checkouts/testcheckout/finalize');
 		$request->set_param('id', 'test_checkout');
+		$request->set_param('form_id', $form_id);
 		$request->set_param('processor_type', 'stripe');
 
 		// mock controller.
