@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-rich-text renders 1`] = `
+<sc-rich-text size="medium">
+  <mock:shadow-root>
+    <sc-form-control exportparts="label, help-text, form-control" help="" helpid="sc-richtext-help-text-1" inputid="sc-richtext-1" label="" labelid="sc-richtext-label-1" showlabel="" size="medium">
+      <div class="editor-base" part="base">
+        <div class="menu">
+          <sc-button disabled="" size="small" type="text">
+            <sc-icon name="bold"></sc-icon>
+          </sc-button>
+          <sc-button disabled="" size="small" type="text">
+            <sc-icon name="italic"></sc-icon>
+          </sc-button>
+          <sc-button size="small" type="text">
+            <sc-icon name="list"></sc-icon>
+          </sc-button>
+          <sc-button size="small" type="text">
+            <sc-icon name="minus"></sc-icon>
+          </sc-button>
+          <sc-button class="right" disabled="" size="small" type="text">
+            <sc-icon name="corner-up-left"></sc-icon>
+          </sc-button>
+          <sc-button disabled="" size="small" type="text">
+            <sc-icon name="corner-up-right"></sc-icon>
+          </sc-button>
+        </div>
+        <div class="editor" part="editor">
+          <div class="ProseMirror" contenteditable="true" tabindex="0" translate="no">
+            <p>
+              <br class="ProseMirror-trailingBreak">
+            </p>
+          </div>
+        </div>
+      </div>
+    </sc-form-control>
+  </mock:shadow-root>
+</sc-rich-text>
+`;
