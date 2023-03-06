@@ -1330,13 +1330,6 @@
     "class": true,
     "slot": true
   },
-  "sc-product-buy-page": {
-    "product": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "sc-product-line-item": {
     "amount": true,
     "currency": true,
