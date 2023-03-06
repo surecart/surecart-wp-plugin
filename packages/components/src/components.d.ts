@@ -2356,9 +2356,6 @@ export namespace Components {
          */
         "prices": Price[];
     }
-    interface ScProductBuyPage {
-        "product": Product;
-    }
     interface ScProductLineItem {
         /**
           * Product monetary amount
@@ -4238,12 +4235,6 @@ declare global {
         prototype: HTMLScPriceRangeElement;
         new (): HTMLScPriceRangeElement;
     };
-    interface HTMLScProductBuyPageElement extends Components.ScProductBuyPage, HTMLStencilElement {
-    }
-    var HTMLScProductBuyPageElement: {
-        prototype: HTMLScProductBuyPageElement;
-        new (): HTMLScProductBuyPageElement;
-    };
     interface HTMLScProductLineItemElement extends Components.ScProductLineItem, HTMLStencilElement {
     }
     var HTMLScProductLineItemElement: {
@@ -4674,7 +4665,6 @@ declare global {
         "sc-price-choices": HTMLScPriceChoicesElement;
         "sc-price-input": HTMLScPriceInputElement;
         "sc-price-range": HTMLScPriceRangeElement;
-        "sc-product-buy-page": HTMLScProductBuyPageElement;
         "sc-product-line-item": HTMLScProductLineItemElement;
         "sc-product-selected-price": HTMLScProductSelectedPriceElement;
         "sc-prose": HTMLScProseElement;
@@ -7361,9 +7351,6 @@ declare namespace LocalJSX {
          */
         "prices"?: Price[];
     }
-    interface ScProductBuyPage {
-        "product"?: Product;
-    }
     interface ScProductLineItem {
         /**
           * Product monetary amount
@@ -8510,7 +8497,6 @@ declare namespace LocalJSX {
         "sc-price-choices": ScPriceChoices;
         "sc-price-input": ScPriceInput;
         "sc-price-range": ScPriceRange;
-        "sc-product-buy-page": ScProductBuyPage;
         "sc-product-line-item": ScProductLineItem;
         "sc-product-selected-price": ScProductSelectedPrice;
         "sc-prose": ScProse;
@@ -8686,7 +8672,6 @@ declare module "@stencil/core" {
             "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
             "sc-price-range": LocalJSX.ScPriceRange & JSXBase.HTMLAttributes<HTMLScPriceRangeElement>;
-            "sc-product-buy-page": LocalJSX.ScProductBuyPage & JSXBase.HTMLAttributes<HTMLScProductBuyPageElement>;
             "sc-product-line-item": LocalJSX.ScProductLineItem & JSXBase.HTMLAttributes<HTMLScProductLineItemElement>;
             "sc-product-selected-price": LocalJSX.ScProductSelectedPrice & JSXBase.HTMLAttributes<HTMLScProductSelectedPriceElement>;
             "sc-prose": LocalJSX.ScProse & JSXBase.HTMLAttributes<HTMLScProseElement>;
