@@ -31,9 +31,9 @@
 		<?php if ( ! empty( $prices ) && count( $prices ) > 1 ) : ?>
 			<!-- wp:surecart/price-selector -->
 			<sc-price-choices type="radio" columns="1">
-				<?php foreach ( $prices as $price ) : ?>
-					<!-- wp:surecart/price-choice {"price_id":"<?php echo esc_attr( $price->id ); ?>","checked":true} -->
-					<sc-price-choice price-id="<?php echo esc_attr( $price->id ); ?>" type="radio" show-label="1" show-price="1" show-control="1"></sc-price-choice>
+				<?php foreach ( $prices as $option ) : ?>
+					<!-- wp:surecart/price-choice {"price_id":"<?php echo esc_attr( $option->id ); ?>","checked":true} -->
+					<sc-price-choice price-id="<?php echo esc_attr( $option->id ); ?>" type="radio" show-label="1" show-price="1" show-control="1"></sc-price-choice>
 					<!-- /wp:surecart/price-choice -->
 				<?php endforeach; ?>
 			</sc-price-choices>
@@ -54,8 +54,6 @@
 		<!-- wp:surecart/name {"required":true,"placeholder":"Your name"} -->
 		<sc-customer-name label="<?php esc_attr_e( 'Name', 'surecart' ); ?>" placeholder="<?php esc_attr_e( 'Your name', 'surecart' ); ?>" required></sc-customer-name>
 		<!-- /wp:surecart/name -->
-
-		<!-- wp:surecart/address {"full":false} /-->
 
 		<!-- wp:surecart/payment {"secure_notice":"This is a secure, encrypted payment"} -->
 		<sc-payment label="Payment" default-processor="stripe" secure-notice="This is a secure, encrypted payment" class="wp-block-surecart-payment"></sc-payment>
