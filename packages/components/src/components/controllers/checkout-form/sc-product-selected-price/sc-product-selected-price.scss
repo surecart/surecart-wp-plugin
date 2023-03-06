@@ -17,4 +17,10 @@
     font-weight: var(--sc-font-weight-bold);
     opacity: 0.65;
   }
+
+  &__scratch-price {
+    opacity: 0.65;
+    font-weight: var(--sc-font-weight-normal);
+    text-decoration: line-through;
+  }
 }

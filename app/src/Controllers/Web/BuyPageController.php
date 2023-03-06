@@ -98,7 +98,7 @@ class BuyPageController {
 	 */
 	public function show( $request, $view, $id ) {
 		// fetch the product by id/slug.
-		$this->product = \SureCart\Models\Product::with( [ 'prices', 'image' ] )->find( $id );
+		$this->product = \SureCart\Models\Product::with( [ 'image', 'prices' ] )->find( $id );
 		if ( is_wp_error( $this->product ) ) {
 			return $this->handleError( $this->product );
 		}
@@ -113,27 +113,26 @@ class BuyPageController {
 			return \SureCart::redirect()->to( esc_url_raw( \SureCart::routeUrl( 'product', [ 'id' => $this->product->slug ] ) ) );
 		}
 
+		// get active prices.
+		$active_prices = $this->product->activePrices();
+
+		// must have at least one active price.
+		if ( empty( $active_prices[0] ) ) {
+			return $this->notFound();
+		}
+
 		// add the filters.
 		$this->filters();
 
 		// preload the components.
 		$this->preloadComponents();
 
-		$active_prices = array_values(
-			array_filter(
-				$this->product->prices->data ?? [],
-				function( $price ) {
-					return ! $price->archived;
-				}
-			)
-		);
-
 		// render the view.
 		return \SureCart::view( 'web/buy' )->with(
 			[
 				'product'          => $this->product,
 				'prices'           => $active_prices,
-				'price'            => $active_prices[0] ?? null,
+				'selected_price'   => $active_prices[0] ?? null,
 				'mode'             => $this->product->buyLink()->getMode(),
 				'show_logo'        => $this->product->buyLink()->templatePartEnabled( 'logo' ),
 				'show_image'       => $this->product->buyLink()->templatePartEnabled( 'image' ),
