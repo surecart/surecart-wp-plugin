@@ -59,7 +59,7 @@
   padding: var(--sc-toggle-header-padding, var(--sc-toggle-padding));
   user-select: none;
   cursor: pointer;
-  color: var(--sc-toggle-details-color, var(--sc-input-label-color));
+  color: var(--sc-toggle-header-color, var(--sc-input-label-color));
   gap: 0.75em;
 }
 .details__header:focus {
