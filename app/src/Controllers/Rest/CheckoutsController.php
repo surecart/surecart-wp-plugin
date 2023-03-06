@@ -14,18 +14,6 @@ use SureCart\WordPress\RecaptchaValidationService;
  */
 class CheckoutsController extends RestController {
 	/**
-	 * Always fetch with line items and associated data.
-	 *
-	 * @var array
-	 */
-	protected $with = [
-		'line_items',
-		'line_item.price',
-		'line_item.fees',
-		'price.product',
-	];
-
-	/**
 	 * Class to make the requests.
 	 *
 	 * @var string
