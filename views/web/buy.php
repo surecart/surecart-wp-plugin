@@ -31,24 +31,23 @@ use SureCartBlocks\Blocks\Form\Block as FormBlock;
 	require 'buy-template.php';
 	$content = ob_get_clean();
 
-	if ( $price ) {
-		echo filter_block_content(
-			( new FormBlock() )->render(
-				[
-					'prices'  => [
-						[
-							'id'         => $price->id,
-							'product_id' => $product->id,
-							'quantity'   => 1,
-						],
+	echo filter_block_content(
+		( new FormBlock() )->render(
+			[
+				'prices'  => [
+					[
+						'id'         => $selected_price->id,
+						'product_id' => $product->id,
+						'quantity'   => 1,
 					],
-					'product' => $product,
-					'mode'    => $mode,
 				],
-				do_blocks( $content )
-			),
-		);
-	}
+				'product' => $product,
+				'mode'    => $mode,
+			],
+			do_blocks( $content )
+		),
+	);
+
 	?>
 
 	<?php wp_footer(); ?>
