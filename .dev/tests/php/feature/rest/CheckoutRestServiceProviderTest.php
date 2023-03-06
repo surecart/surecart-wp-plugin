@@ -183,7 +183,7 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 		});
 
 		$requests->shouldReceive('makeRequest')->withSomeOfArgs('checkouts/testid/finalize/')->andReturn((object) ['live_mode' => false, 'line_items' => (object) ['data' => [(object) ['price' => (object) ['product' => (object) ['id' => 'testid']]]]]]);
-		$requests->shouldReceive('makeRequest')->once()->withSomeOfArgs('products/testid')->andReturn((object) ['id' =>'testid', 'metadata' => (object) ['wp_buy_link_enabled' => 'true']]);
+		$requests->shouldReceive('makeRequest')->once()->withSomeOfArgs('products/testid')->andReturn((object) ['id' =>'testid', 'metadata' => (object) ['wp_buy_link_enabled' => 'true', 'wp_buy_link_test_mode_enabled' => 'true']]);
 
 		$request = new WP_REST_Request('POST', '/surecart/v1/checkouts/testid/finalize');
 		$request->set_param('live_mode', false);

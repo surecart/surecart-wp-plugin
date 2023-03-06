@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-03-04T15:58:28",
+  "timestamp": "2023-03-06T22:12:41",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -4333,9 +4333,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "sc-product-buy-page"
-      ],
+      "dependents": [],
       "dependencies": [
         "sc-alert",
         "sc-checkout-unsaved-changes-warning",
@@ -4463,9 +4461,6 @@
         ],
         "sc-session-provider": [
           "sc-line-items-provider"
-        ],
-        "sc-product-buy-page": [
-          "sc-checkout"
         ]
       }
     },
@@ -5394,15 +5389,11 @@
       "parts": [],
       "dependents": [
         "sc-customer-edit",
-        "sc-product-buy-page",
         "sc-wordpress-user-edit"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-customer-edit": [
-          "sc-column"
-        ],
-        "sc-product-buy-page": [
           "sc-column"
         ],
         "sc-wordpress-user-edit": [
@@ -5492,15 +5483,11 @@
       "parts": [],
       "dependents": [
         "sc-customer-edit",
-        "sc-product-buy-page",
         "sc-wordpress-user-edit"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-customer-edit": [
-          "sc-columns"
-        ],
-        "sc-product-buy-page": [
           "sc-columns"
         ],
         "sc-wordpress-user-edit": [
@@ -10841,7 +10828,6 @@
         "sc-login-provider",
         "sc-mollie-add-method",
         "sc-password-nag",
-        "sc-product-buy-page",
         "sc-stripe-add-method",
         "sc-subscription-ad-hoc-confirm",
         "sc-subscription-payment",
@@ -10872,9 +10858,6 @@
           "sc-form"
         ],
         "sc-password-nag": [
-          "sc-form"
-        ],
-        "sc-product-buy-page": [
           "sc-form"
         ],
         "sc-stripe-add-method": [
@@ -13610,7 +13593,6 @@
         "sc-order-password",
         "sc-password-nag",
         "sc-price-input",
-        "sc-product-buy-page",
         "sc-select",
         "sc-tax-id-input",
         "sc-wordpress-password-edit",
@@ -13666,9 +13648,6 @@
           "sc-input"
         ],
         "sc-price-input": [
-          "sc-input"
-        ],
-        "sc-product-buy-page": [
           "sc-input"
         ],
         "sc-select": [
@@ -17780,9 +17759,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "sc-product-buy-page"
-      ],
+      "dependents": [],
       "dependencies": [
         "sc-paypal-buttons",
         "sc-button",
@@ -17804,9 +17781,6 @@
         ],
         "sc-total": [
           "sc-format-number"
-        ],
-        "sc-product-buy-page": [
-          "sc-order-submit"
         ]
       }
     },
@@ -20779,190 +20753,6 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/buy-page/sc-product-buy-page/sc-product-buy-page.tsx",
-      "encapsulation": "shadow",
-      "tag": "sc-product-buy-page",
-      "readme": "# sc-product-buy-page\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "product",
-          "type": "Product",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Product"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
-      "methods": [],
-      "events": [],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [
-        {
-          "name": "base",
-          "docs": ""
-        }
-      ],
-      "dependents": [],
-      "dependencies": [
-        "sc-checkout",
-        "sc-form",
-        "sc-columns",
-        "sc-column",
-        "sc-input",
-        "sc-order-submit"
-      ],
-      "dependencyGraph": {
-        "sc-product-buy-page": [
-          "sc-checkout",
-          "sc-form",
-          "sc-columns",
-          "sc-column",
-          "sc-input",
-          "sc-order-submit"
-        ],
-        "sc-checkout": [
-          "sc-alert",
-          "sc-checkout-unsaved-changes-warning",
-          "sc-login-provider",
-          "sc-form-state-provider",
-          "sc-form-error-provider",
-          "sc-form-components-validator",
-          "sc-order-confirm-provider",
-          "sc-session-provider",
-          "sc-block-ui"
-        ],
-        "sc-alert": [
-          "sc-icon"
-        ],
-        "sc-login-provider": [
-          "sc-alert",
-          "sc-dialog",
-          "sc-form",
-          "sc-input",
-          "sc-button"
-        ],
-        "sc-dialog": [
-          "sc-button",
-          "sc-icon"
-        ],
-        "sc-button": [
-          "sc-spinner"
-        ],
-        "sc-input": [
-          "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
-        "sc-form-state-provider": [
-          "sc-block-ui"
-        ],
-        "sc-block-ui": [
-          "sc-spinner"
-        ],
-        "sc-form-error-provider": [
-          "sc-checkout-form-errors"
-        ],
-        "sc-checkout-form-errors": [
-          "sc-alert"
-        ],
-        "sc-form-components-validator": [
-          "sc-order-shipping-address",
-          "sc-order-tax-id-input",
-          "sc-order-bumps",
-          "sc-line-item-tax"
-        ],
-        "sc-order-shipping-address": [
-          "sc-address",
-          "sc-compact-address"
-        ],
-        "sc-address": [
-          "sc-form-control",
-          "sc-input",
-          "sc-select",
-          "sc-block-ui"
-        ],
-        "sc-select": [
-          "sc-icon",
-          "sc-menu-label",
-          "sc-menu-item",
-          "sc-form-control",
-          "sc-dropdown",
-          "sc-input",
-          "sc-spinner",
-          "sc-menu"
-        ],
-        "sc-compact-address": [
-          "sc-form-control",
-          "sc-select",
-          "sc-input",
-          "sc-block-ui"
-        ],
-        "sc-order-tax-id-input": [
-          "sc-tax-id-input"
-        ],
-        "sc-tax-id-input": [
-          "sc-icon",
-          "sc-input",
-          "sc-spinner",
-          "sc-dropdown",
-          "sc-button",
-          "sc-menu",
-          "sc-menu-item"
-        ],
-        "sc-order-bumps": [
-          "sc-form-control",
-          "sc-order-bump"
-        ],
-        "sc-order-bump": [
-          "sc-format-number",
-          "sc-choice",
-          "sc-divider"
-        ],
-        "sc-line-item-tax": [
-          "sc-line-item",
-          "sc-format-number"
-        ],
-        "sc-order-confirm-provider": [
-          "sc-dialog",
-          "sc-icon",
-          "sc-dashboard-module",
-          "sc-alert",
-          "sc-button"
-        ],
-        "sc-dashboard-module": [
-          "sc-alert"
-        ],
-        "sc-session-provider": [
-          "sc-line-items-provider"
-        ],
-        "sc-order-submit": [
-          "sc-paypal-buttons",
-          "sc-button",
-          "sc-icon",
-          "sc-total"
-        ],
-        "sc-paypal-buttons": [
-          "sc-skeleton"
-        ],
-        "sc-total": [
-          "sc-format-number"
-        ]
-      }
-    },
-    {
       "filePath": "./src/components/ui/product-line-item/sc-product-line-item.tsx",
       "encapsulation": "shadow",
       "tag": "sc-product-line-item",
@@ -21395,7 +21185,12 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "price__scratch",
+          "docs": ""
+        }
+      ],
       "dependents": [],
       "dependencies": [
         "sc-format-number"

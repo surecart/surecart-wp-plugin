@@ -323,39 +323,71 @@ class CheckoutsController extends RestController {
 
 		// make sure the form id is valid.
 		if ( ! empty( $request['form_id'] ) ) {
-			// the form's mode must be test.
-			$mode = $this->getFormMode( (int) $request['form_id'] );
-			// if the request is for test mode, but the form is not test, return an error.
-			if ( false === $finalized->live_mode && 'test' !== $mode ) {
-				return new \WP_Error( 'invalid_mode', 'The form is set to live mode, but the request is for test mode.', [ 'status' => 400 ] );
-			}
-			return $finalized;
+			return $this->validateFormId( $finalized, $request );
 		}
 
-		// if we are passing a product id.
-		if ( ! empty( $request['product_id'] ) ) {
-			// make sure the product is valid.
-			$product = Product::find( $request['product_id'] );
-			if ( empty( $product->id ) ) {
-				return new \WP_Error( 'product_id_invalid', esc_html__( 'This product is invalid.', 'surecart' ), [ 'status' => 400 ] );
-			}
+		return $this->validateProductId( $finalized, $request );
+	}
 
-			// check to make sure the product buy page is enabled.
-			if ( ! $product->buyLink()->isEnabled() ) {
-				return new \WP_Error( 'product_buy_page_disabled', esc_html__( 'This product is not available for purchase.', 'surecart' ), [ 'status' => 400 ] );
-			}
-
-			// At least one line item must be for this product.
-			foreach ( $finalized->line_items->data as $line_item ) {
-				if ( $line_item->price->product->id === $product->id ) {
-					return $finalized;
-				}
-			}
-
-			return new \WP_Error( 'product_id_mismatch', esc_html__( 'You are attempting to purchase items that do not match this product.', 'surecart' ), [ 'status' => 400 ] );
+	/**
+	 * Validate the product id.
+	 *
+	 * @param \WP_REST_Request       $request The rest request.
+	 * @param \SureCart\Models\Order $finalized The finalized order.
+	 *
+	 * @return \WP_Error|\SureCart\Models\Order
+	 */
+	public function validateProductId( $finalized, $request ) {
+		// make sure the product is valid.
+		if ( empty( $request['product_id'] ) ) {
+			return new \WP_Error( 'missing_parameters', 'You must pass a form id or product id in order to make this payment.', [ 'status' => 400 ] );
+		}
+		// make sure the product is valid.
+		$product = Product::find( $request['product_id'] );
+		if ( empty( $product->id ) ) {
+			return new \WP_Error( 'product_id_invalid', esc_html__( 'This product is invalid.', 'surecart' ), [ 'status' => 400 ] );
 		}
 
-		return new \WP_Error( 'missing_parameters', 'You must pass a form id or product id in order to make this payment.', [ 'status' => 400 ] );
+		// check to make sure the product buy page is enabled.
+		if ( ! $product->buyLink()->isEnabled() ) {
+			return new \WP_Error( 'product_buy_page_disabled', esc_html__( 'This product is not available for purchase.', 'surecart' ), [ 'status' => 400 ] );
+		}
+
+		// the mode must match.
+		$mode = $product->buyLink()->getMode();
+		// if the request is for test mode, but the form is not test, return an error.
+		if ( false === $finalized->live_mode && 'test' !== $mode ) {
+			return new \WP_Error( 'invalid_mode', 'This page is set to live mode, but the request is for test mode. Please clear any site caching and try again.', [ 'status' => 400 ] );
+		}
+
+		// At least one line item must be for this product.
+		foreach ( $finalized->line_items->data as $line_item ) {
+			if ( $line_item->price->product->id === $product->id ) {
+				return $finalized;
+			}
+		}
+
+		return new \WP_Error( 'product_buy_page_disabled', esc_html__( 'This product is not available for purchase.', 'surecart' ), [ 'status' => 400 ] );
+	}
+
+	/**
+	 * Validate the form id.
+	 *
+	 * @param \WP_REST_Request       $request The rest request.
+	 * @param \SureCart\Models\Order $finalized The finalized order.
+	 *
+	 * @return \WP_Error|\SureCart\Models\Order
+	 */
+	public function validateFormId( $finalized, $request ) {
+		// the form's mode must be test.
+		$mode = $this->getFormMode( (int) $request['form_id'] );
+
+		// if the request is for test mode, but the form is not test, return an error.
+		if ( false === $finalized->live_mode && 'test' !== $mode ) {
+			return new \WP_Error( 'invalid_mode', 'The form is set to live mode, but the request is for test mode.', [ 'status' => 400 ] );
+		}
+
+		return $finalized;
 	}
 
 	/**

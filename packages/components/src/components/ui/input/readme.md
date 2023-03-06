@@ -135,7 +135,6 @@ Type: `Promise<void>`
  - [sc-order-password](../../controllers/checkout-form/order-password)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-price-input](../price-input)
- - [sc-product-buy-page](../../controllers/buy-page/sc-product-buy-page)
  - [sc-select](../select)
  - [sc-tax-id-input](../tax-id-input)
  - [sc-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
@@ -164,7 +163,6 @@ graph TD;
   sc-order-password --> sc-input
   sc-password-nag --> sc-input
   sc-price-input --> sc-input
-  sc-product-buy-page --> sc-input
   sc-select --> sc-input
   sc-tax-id-input --> sc-input
   sc-wordpress-password-edit --> sc-input

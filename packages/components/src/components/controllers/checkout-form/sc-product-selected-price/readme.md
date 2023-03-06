@@ -12,6 +12,13 @@
 | `productId` | `product-id` |             | `string` | `undefined` |
 
 
+## Shadow Parts
+
+| Part               | Description |
+| ------------------ | ----------- |
+| `"price__scratch"` |             |
+
+
 ## Dependencies
 
 ### Depends on

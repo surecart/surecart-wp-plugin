@@ -26,10 +26,6 @@
 
 ## Dependencies
 
-### Used by
-
- - [sc-product-buy-page](../../buy-page/sc-product-buy-page)
-
 ### Depends on
 
 - [sc-paypal-buttons](../../../ui/paypal-buttons)
@@ -47,7 +43,6 @@ graph TD;
   sc-paypal-buttons --> sc-skeleton
   sc-button --> sc-spinner
   sc-total --> sc-format-number
-  sc-product-buy-page --> sc-order-submit
   style sc-order-submit fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
