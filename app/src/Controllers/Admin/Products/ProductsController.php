@@ -11,7 +11,6 @@ use SureCart\Controllers\Admin\Products\ProductsListTable;
  * Handles product admin requests.
  */
 class ProductsController extends AdminController {
-
 	/**
 	 * Products index.
 	 */

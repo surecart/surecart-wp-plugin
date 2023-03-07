@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 \SureCart::route()
 ->get()
-->url( '/buy/{id}' )
+->url( '/' . untrailingslashit( \SureCart::permalinks()->getBase( 'buy_page' ) ) . '/{id}' )
 ->name( 'buy' )
 ->handle( 'BuyPageController@show' );
 
