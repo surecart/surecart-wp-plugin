@@ -4452,7 +4452,7 @@ msgstr ""
 #: dashboard/Dashboard.js:51
 #: invoices/modules/Details.js:77
 #: orders/modules/Details.js:55
-#: subscriptions/show/modules/Details.js:166
+#: subscriptions/show/modules/Details.js:185
 #: Blocks/Dashboard/DashboardPage/Block.php:34
 #: Blocks/Dashboard/DashboardPage/Block.php:42
 #: Controllers/PaymentMethodController.php:112
@@ -4465,7 +4465,7 @@ msgstr ""
 #: invoices/modules/Details.js:70
 #: licenses/modules/Details/index.js:39
 #: orders/modules/Details.js:60
-#: subscriptions/show/modules/Details.js:158
+#: subscriptions/show/modules/Details.js:177
 msgid "Created on %s"
 msgstr ""
 
@@ -4601,7 +4601,7 @@ msgstr ""
 #: components/data-tables/subscriptions-data-table/Cancel.js:70
 #: components/data-tables/subscriptions-data-table/Cancel.js:92
 #: components/data-tables/subscriptions-data-table/subscription-item.js:124
-#: components/DatePicker.js:77
+#: components/DatePicker.js:136
 #: components/subscriptions/Cancel.js:32
 #: components/subscriptions/Cancel.js:54
 #: components/subscriptions/CancelPendingUpdate.js:150
@@ -5129,7 +5129,7 @@ msgstr ""
 
 #: components/data-tables/subscriptions-data-table/subscription-item.js:74
 #: subscriptions/shared/EndDate.js:40
-#: subscriptions/show/modules/Details.js:49
+#: subscriptions/show/modules/Details.js:68
 msgid "Ended"
 msgstr ""
 
@@ -5145,11 +5145,23 @@ msgstr ""
 msgid "Failed to un-cancel subscription."
 msgstr ""
 
-#: components/DatePicker.js:43
+#: components/DatePicker.js:38
+msgid "Please choose date to continue."
+msgstr ""
+
+#: components/DatePicker.js:47
+msgid "Date cannot be before "
+msgstr ""
+
+#: components/DatePicker.js:64
+msgid "Date cannot be after "
+msgstr ""
+
+#: components/DatePicker.js:105
 msgid "Select date"
 msgstr ""
 
-#: components/DatePicker.js:74
+#: components/DatePicker.js:133
 #: components/MediaLibrary/index.js:328
 #: Blocks/CheckoutForm/components/Empty.js:147
 msgid "Choose"
@@ -6393,7 +6405,7 @@ msgid "Number of Payments"
 msgstr ""
 
 #: products/components/price/Multiple.js:37
-#: subscriptions/show/modules/Details.js:107
+#: subscriptions/show/modules/Details.js:126
 msgid "Payments"
 msgstr ""
 
@@ -8310,6 +8322,7 @@ msgid "Integration Providers"
 msgstr ""
 
 #: subscriptions/edit/EditSubscription.js:112
+#: subscriptions/show/ShowSubscription.js:282
 msgid "Subscription updated."
 msgstr ""
 
@@ -8409,21 +8422,25 @@ msgid "Lifetime Subscription"
 msgstr ""
 
 #: subscriptions/shared/EndDate.js:23
-#: subscriptions/show/modules/Details.js:32
+#: subscriptions/show/modules/Details.js:51
 msgid "Cancels on"
 msgstr ""
 
 #: subscriptions/shared/EndDate.js:57
-#: subscriptions/show/modules/Details.js:67
+#: subscriptions/show/modules/Details.js:86
 msgid "Trial ends on"
 msgstr ""
 
 #: subscriptions/shared/EndDate.js:76
-#: subscriptions/show/modules/Details.js:88
+#: subscriptions/show/modules/Details.js:107
 msgid "Renews on"
 msgstr ""
 
-#: subscriptions/show/modules/Details.js:110
+#: subscriptions/show/modules/Details.js:30
+msgid "Restores on"
+msgstr ""
+
+#: subscriptions/show/modules/Details.js:129
 msgid "%d Remaining"
 msgstr ""
 
@@ -8543,7 +8560,7 @@ msgstr ""
 msgid "Tax disabled."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:54
+#: subscriptions/show/ShowSubscription.js:59
 msgid "Payment method updated."
 msgstr ""
 
