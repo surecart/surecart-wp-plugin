@@ -142,7 +142,7 @@
 .switch__description {
   display: none;
   color: var(--sc-switch-description-color, var(--sc-color-gray-500));
-  line-height: 1em;
+  line-height: var(--sc-line-height-dense);
   margin: 0.5em 0 0;
   font-size: var(--sc-font-size-small);
 }
@@ -154,6 +154,6 @@
 
 slot[name='description']::slotted(*) {
   margin: 0.75em 0;
-  line-height: 1em;
+  line-height: var(--sc-line-height-dense);
   vertical-align: center;
 }
