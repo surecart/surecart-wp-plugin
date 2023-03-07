@@ -95,22 +95,10 @@
 }
 
 
-.drawer__footer {
+.drawer--has-footer .drawer__footer {
   border-top: var(--sc-drawer-border);
   padding: var(--sc-drawer-footer-spacing);
 }
-/* slot[name='footer']::slotted(*) {
-  border-top: var(--sc-drawer-border);
-  padding: var(--sc-drawer-footer-spacing);
-}
-
-.drawer__footer ::slotted(sl-button:not(:last-of-type)) {
-  margin-right: var(--sc-spacing-x-small);
-} */
-
-/* .drawer:not(.drawer--has-footer) .drawer__footer {
-  display: none;
-} */
 
 .drawer__overlay {
   display: block;

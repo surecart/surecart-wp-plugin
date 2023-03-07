@@ -186,7 +186,7 @@ export class ScDrawer {
           'drawer--start': this.placement === 'start',
           'drawer--contained': this.contained,
           'drawer--fixed': !this.contained,
-          // 'drawer--has-footer': this.hasSlotController.test('footer'),
+          'drawer--has-footer': this.el.querySelector('[slot="footer"]') !== null,
         }}
         ref={el => (this.drawer = el as HTMLElement)}
         onKeyDown={(e: KeyboardEvent) => this.handleKeyDown(e)}
