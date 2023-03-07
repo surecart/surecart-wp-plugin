@@ -127,20 +127,6 @@ export default ({
 										})}
 									</div>
 								)}
-							{/* <ScFormatNumber
-								css={css`
-									font-weight: bold;
-									font-size: 14px;
-									opacity: 0.75;
-									text-decoration: line-through;
-								`}
-								type="currency"
-								currency={
-									price?.currency || scData.currency_code
-								}
-								value={price?.scratch_amount}
-							/>
-							)} */}
 							<div
 								css={css`
 									font-weight: bold;
