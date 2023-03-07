@@ -1,9 +1,7 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import { ScBlockUi, ScButton, ScFlex } from '@surecart/components-react';
+import { ScBlockUi, ScButton } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import apiFetch from '@wordpress/api-fetch';
-import { DateTimePicker, Modal } from '@wordpress/components';
+import { DateTimePicker } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
@@ -76,15 +74,14 @@ export default ({ open, onRequestClose }) => {
 			}}
 		>
 			<Error error={error} setError={setError} />
-			<ScFlex flexDirection="column">
-				<DateTimePicker
-					currentDate={pauseUntil}
-					onChange={onChangeDate}
-					isInvalidDate={(date) => {
-						return Date.parse(new Date()) > Date.parse(date);
-					}}
-				/>
-			</ScFlex>
+
+			<DateTimePicker
+				currentDate={pauseUntil}
+				onChange={onChangeDate}
+				isInvalidDate={(date) => {
+					return Date.parse(new Date()) > Date.parse(date);
+				}}
+			/>
 
 			<ScButton
 				type="text"

@@ -236,7 +236,7 @@ export default () => {
 
 		return (
 			<ScMenuItem onClick={() => setModal('pause')}>
-				{__('Pause Subscription', 'surecart')}
+				{__('Pause Subscription...', 'surecart')}
 			</ScMenuItem>
 		);
 	};
