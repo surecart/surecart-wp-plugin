@@ -31,12 +31,17 @@
     align-items: flex-end;
   }
 
+  &:not(.is-not-stacked-on-mobile).is-full-height > sc-column {
+    @media (max-width: 781px) {
+      padding: 30px !important;
+    }
+  }
+
   &:not(.is-not-stacked-on-mobile) > sc-column {
     // Responsiveness: Show at most one columns on mobile. This must be
     // important since the Column assigns its own width as an inline style.
     @media (max-width: 781px) {
       flex-basis: 100% !important;
-      padding: 30px !important;
     }
 
     // At large viewports, show all columns horizontally.
