@@ -21,7 +21,7 @@ import { useBlockProps } from '@wordpress/block-editor';
  */
 import { ScCouponForm } from '@surecart/components-react';
 
-export default ({ attributes, setAttributes, isSelected }) => {
+export default ({ attributes, setAttributes }) => {
 	const { text, button_text, disabled, collapsed, placeholder } = attributes;
 	const blockProps = useBlockProps({
 		style: {
@@ -73,7 +73,6 @@ export default ({ attributes, setAttributes, isSelected }) => {
 			<div {...blockProps}>
 				<Disabled>
 					<ScCouponForm
-						forceOpen={isSelected}
 						collapsed={collapsed}
 						placeholder={placeholder}
 						label={text}
