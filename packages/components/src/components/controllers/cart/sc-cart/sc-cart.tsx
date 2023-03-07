@@ -4,8 +4,8 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { Creator, Universe } from 'stencil-wormhole';
 import { baseUrl } from '../../../../services/session';
-import { getOrder, setOrder } from '../../../../store/checkouts';
-import uiStore from '../../../../store/ui';
+import { getOrder, setOrder } from '@store/checkouts';
+import uiStore from '@store/ui';
 import { Checkout, ResponseError } from '../../../../types';
 
 @Component({

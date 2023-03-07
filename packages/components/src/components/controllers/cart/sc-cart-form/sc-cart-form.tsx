@@ -4,8 +4,8 @@ import { Creator, Universe } from 'stencil-wormhole';
 
 import { convertLineItemsToLineItemData } from '../../../../functions/line-items';
 import { createOrUpdateOrder } from '../../../../services/session';
-import { getOrder, setOrder } from '../../../../store/checkouts';
-import uiStore from '../../../../store/ui';
+import { getOrder, setOrder } from '@store/checkouts';
+import uiStore from '@store/ui';
 import { Checkout, LineItemData } from '../../../../types';
 
 const query = {

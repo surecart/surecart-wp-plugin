@@ -42,13 +42,13 @@
 
 ## Methods
 
-### `submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout>`
+### `submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout | NodeJS.Timeout>`
 
 Submit the form
 
 #### Returns
 
-Type: `Promise<Checkout>`
+Type: `Promise<Checkout | Timeout>`
 
 
 
@@ -144,6 +144,7 @@ graph TD;
   sc-order-confirm-provider --> sc-dialog
   sc-order-confirm-provider --> sc-icon
   sc-order-confirm-provider --> sc-dashboard-module
+  sc-order-confirm-provider --> sc-alert
   sc-order-confirm-provider --> sc-button
   sc-dashboard-module --> sc-alert
   sc-session-provider --> sc-line-items-provider

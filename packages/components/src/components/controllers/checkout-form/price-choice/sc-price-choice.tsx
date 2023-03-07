@@ -202,7 +202,16 @@ export class ScPriceChoice {
         <span slot="price">
           <sc-format-number type="currency" value={this.price.amount} currency={this.price.currency}></sc-format-number>
         </span>
-        <span slot="per">{intervalString(this.price, { labels: { interval: '/', period: __('for', 'surecart') } })}</span>
+        <span slot="per">
+          {intervalString(this.price, {
+            labels: {
+              interval: '/',
+              period:
+                /** translators: used as in time period: "for 3 months" */
+                __('for', 'surecart'),
+            },
+          })}
+        </span>
       </Fragment>
     );
   }

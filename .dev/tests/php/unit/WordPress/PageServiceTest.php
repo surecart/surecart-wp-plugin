@@ -3,6 +3,7 @@ namespace SureCart\Tests\WordPress\Admin;
 
 use SureCart\Tests\SureCartUnitTestCase;
 use SureCart\WordPress\Pages\PageService;
+use SureCart\WordPress\Pages\PageServiceProvider;
 
 class PageServiceTest extends SureCartUnitTestCase {
 	public $service;
@@ -13,6 +14,11 @@ class PageServiceTest extends SureCartUnitTestCase {
 	 */
 	public function setUp()
 	{
+		\SureCart::make()->bootstrap([
+			'providers' => [
+				PageServiceProvider::class,
+			]
+		], false);
 		parent::setUp();
 		$this->service = new PageService();
 	}

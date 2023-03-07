@@ -49,7 +49,7 @@ export class ScSubscriptionStatusBadge {
   }
 
   getText() {
-    if (this.subscription?.cancel_at_period_end && this.subscription.current_period_end_at) {
+    if (this.subscription?.cancel_at_period_end && this.subscription.current_period_end_at && this.subscription?.status !== 'canceled') {
       return (
         <Fragment>
           {__('Cancels', 'surecart')} <sc-format-date type="timestamp" date={this.subscription.current_period_end_at} month="short" day="numeric"></sc-format-date>
