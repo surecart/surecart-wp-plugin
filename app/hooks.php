@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 add_filter(
 	'do_redirect_guess_404_permalink',
 	function( $guess ) {
-		if ( ( strpos( $_SERVER['REQUEST_URI'], '/buy/' ) !== false ) ) {
+		if ( ( strpos( $_SERVER['REQUEST_URI'], '/' . untrailingslashit( \SureCart::permalinks()->getBase( 'buy_page' ) ) . '/' ) !== false ) ) {
 			return false;
 		}
 		if ( ( strpos( $_SERVER['REQUEST_URI'], 'surecart/webhooks' ) !== false ) ) {
