@@ -3,7 +3,7 @@ import Trial from './parts/Trial';
 import Amount from './parts/Amount';
 import AdHoc from './parts/AdHoc';
 import ScratchAmount from './parts/ScratchAmount';
-import AddSetupFee from './parts/AddSetupFee';
+import SetupFee from './parts/SetupFee';
 
 export default ({ price, updatePrice }) => {
 	return (
@@ -11,8 +11,8 @@ export default ({ price, updatePrice }) => {
 			<Amount price={price} updatePrice={updatePrice} />
 			<ScratchAmount price={price} updatePrice={updatePrice} />
 			<AdHoc price={price} updatePrice={updatePrice} />
-			<AddSetupFee price={price} updatePrice={updatePrice} />
 			<Trial price={price} updatePrice={updatePrice} />
+			<SetupFee price={price} updatePrice={updatePrice} />
 		</>
 	);
 };

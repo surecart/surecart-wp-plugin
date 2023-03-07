@@ -2,18 +2,36 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 
-import { ScInput, ScPriceInput, ScSwitch } from '@surecart/components-react';
+import {
+	ScInput,
+	ScPremiumTag,
+	ScPriceInput,
+	ScSwitch,
+	ScUpgradeRequired,
+} from '@surecart/components-react';
 
 export default ({ price, updatePrice }) => {
 	return (
-		<>
+		<ScUpgradeRequired
+			required={!scData?.entitlements?.subscription_setup_fees}
+			css={css`
+				display: grid;
+				gap: var(--sc-spacing-small);
+			`}
+		>
 			<ScSwitch
 				checked={price.setup_fee_enabled}
 				onScChange={(e) =>
 					updatePrice({ setup_fee_enabled: e.target.checked })
 				}
 			>
-				{__('Add setup fee', 'surecart')}
+				{__('Setup fee', 'surecart')}
+				{!scData?.entitlements?.subscription_setup_fees && (
+					<>
+						{' '}
+						<ScPremiumTag />
+					</>
+				)}
 			</ScSwitch>
 
 			{price.setup_fee_enabled && (
@@ -21,7 +39,6 @@ export default ({ price, updatePrice }) => {
 					css={css`
 						display: flex;
 						gap: var(--sc-form-row-spacing);
-
 						> * {
 							flex: 1;
 						}
@@ -51,6 +68,6 @@ export default ({ price, updatePrice }) => {
 					/>
 				</div>
 			)}
-		</>
+		</ScUpgradeRequired>
 	);
 };
