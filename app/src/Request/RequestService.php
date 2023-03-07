@@ -387,6 +387,11 @@ class RequestService {
 			if ( is_bool( $arg ) ) {
 				$args[ $key ] = $arg ? 1 : 0;
 			}
+
+			// url encode any strings.
+			if ( is_string( $arg ) ) {
+				$args[ $key ] = urlencode( $arg );
+			}
 		}
 
 		return $args;

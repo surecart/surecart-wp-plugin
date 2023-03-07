@@ -13,7 +13,7 @@ glob('*.po', { cwd: dirPath}, function (er, files) {
 
     // Convert .po to .json file
     shell.exec(
-      'po2json languages/' + file + ' languages/' + target_filename + ' -f jed1.x'
+      'po2json languages/' + file + ' languages/' + target_filename + ' -f jed1.x --fuzzy true'
     );
   });
 })

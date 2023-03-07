@@ -177,7 +177,7 @@ module.exports = {
 				{
 					from: path.resolve(
 						__dirname,
-						'node_modules/@surecart/components/dist/surecart/icon-assets'
+						'./packages/components/src/components/ui/icon/icon-assets'
 					),
 					to: path.resolve(__dirname, 'dist/icon-assets'),
 				},

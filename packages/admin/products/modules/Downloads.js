@@ -99,7 +99,10 @@ export default ({ id, product, updateProduct, loading }) => {
 							align-items: center;
 						`}
 					>
-						<ScDropdown placement="bottom-start">
+						<ScDropdown
+							placement="bottom-start"
+							style={{ '--panel-width': '14em' }}
+						>
 							<ScButton slot="trigger">
 								<ScIcon name="plus" slot="prefix" />
 								{__('Add Downloads', 'surecart')}
@@ -122,17 +125,13 @@ export default ({ id, product, updateProduct, loading }) => {
 													}
 												>
 													<ScIcon
-														name="upload-cloud"
+														name="shield"
 														slot="prefix"
 													/>
-													{__('Upload', 'surecart')}
-													<ScIcon
-														css={css`
-															opacity: 0.5;
-														`}
-														name="lock"
-														slot="suffix"
-													/>
+													{__(
+														'Secure Storage',
+														'surecart'
+													)}
 												</ScMenuItem>
 											);
 										}}

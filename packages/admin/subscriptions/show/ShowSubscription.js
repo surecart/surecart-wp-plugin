@@ -19,7 +19,6 @@ import { store as noticesStore } from '@wordpress/notices';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useEffect, useState } from 'react';
-import DatePicker from '../../components/DatePicker';
 
 import Logo from '../../templates/Logo';
 import Template from '../../templates/UpdateModel';
@@ -47,8 +46,7 @@ export default () => {
 	const [modal, setModal] = useState();
 	const [upcoming, setUpcoming] = useState();
 	const [loadingUpcoming, setLoadingUpcoming] = useState(false);
-	const { saveEntityRecord, invalidateResolutionForStore } =
-		useDispatch(coreStore);
+	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
 

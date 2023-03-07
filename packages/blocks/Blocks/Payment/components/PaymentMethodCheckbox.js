@@ -5,9 +5,9 @@ export default ({
 	setAttributes,
 	name,
 	help,
+	disabled,
 	id,
 }) => {
-	const disabled = !scBlockData?.entitlements?.form_specific_payment_methods;
 	return (
 		<CheckboxControl
 			style={{

@@ -15,16 +15,16 @@ declare global {
     scData: {
       root_url: string;
       page_id: string;
-      do_not_persist_cart: string;
+      do_not_persist_cart: boolean;
       nonce: string;
       base_url: string;
       nonce_endpoint: string;
       recaptcha_site_key: string;
       theme: string;
-      pages:{
-        dashboard:string,
-        checkout:string
-      }
+      pages: {
+        dashboard: string;
+        checkout: string;
+      };
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;
@@ -123,7 +123,7 @@ export interface Download {
   url?: string;
 }
 
-export type FormState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalizing' | 'paying' | 'confirming' | 'confirmed' | 'paid' | 'failure' | 'expired';
+export type FormState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalizing' | 'paying' | 'confirming' | 'confirmed' | 'paid' | 'failure' | 'expired' | 'redirecting';
 export type FormStateSetter = 'RESOLVE' | 'REJECT' | 'FINALIZE' | 'PAYING' | 'PAID' | 'EXPIRE' | 'FETCH';
 
 export interface License {
@@ -404,7 +404,7 @@ export interface Order extends Object {
 }
 export interface Checkout extends Object {
   id?: string;
-  status?: 'finalized' | 'draft' | 'paid' | 'requires_approval';
+  status?: 'canceled' | 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'processing';
   staged_payment_intents: {
     object: 'list';
     pagination: Pagination;
@@ -483,6 +483,10 @@ export interface ProcessorData {
     client_id: string;
     merchant_initiated: boolean;
   };
+  mollie?: {
+    account_id: 'string';
+    checkout_url: 'string';
+  };
 }
 
 export interface ManualPaymentMethod {
@@ -497,7 +501,14 @@ export interface ManualPaymentMethod {
   updated_at: number;
 }
 
+export interface PaymentMethodType {
+  id: string;
+  description: string;
+  image: string;
+}
+
 export interface Processor {
+  id: string;
   live_mode: boolean;
   processor_data: {
     account_id: string;
@@ -506,7 +517,7 @@ export interface Processor {
     merchant_initiated?: boolean;
   };
   recurring_enabled: boolean;
-  processor_type: 'paypal' | 'stripe';
+  processor_type: 'paypal' | 'stripe' | 'mollie';
 }
 
 export interface Purchase {

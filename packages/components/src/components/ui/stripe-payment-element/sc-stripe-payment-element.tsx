@@ -4,6 +4,7 @@ import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { openWormhole } from 'stencil-wormhole';
+import { state as selectedProcessor } from '@store/selected-processor';
 
 import { Checkout, FormState, FormStateSetter, PaymentIntent, ProcessorName, ShippingAddress } from '../../../types';
 
@@ -103,7 +104,7 @@ export class ScStripePaymentElement {
     if (!this.element) return;
     if (this.order?.status !== 'draft') return;
     const { name, email } = this.order;
-    const { line_1: line1, line_2: line2, city, state, country, postal_code } = this.order?.shipping_address as ShippingAddress;
+    const { line_1: line1, line_2: line2, city, state, country, postal_code } = (this.order?.shipping_address as ShippingAddress) || {};
     this.element.update({
       defaultValues: {
         billingDetails: {
@@ -136,7 +137,7 @@ export class ScStripePaymentElement {
     // must be finalized
     if (val !== 'paying') return;
     // this processor is not selected.
-    if (this.selectedProcessorId !== 'stripe') return;
+    if (selectedProcessor?.id !== 'stripe') return;
     // must be a stripe session
     if (this.order?.payment_intent?.processor_type !== 'stripe') return;
     // need an external_type
@@ -223,7 +224,7 @@ export class ScStripePaymentElement {
       },
     });
 
-    const { line_1: line1, line_2: line2, city, state, country, postal_code } = this.order?.shipping_address as ShippingAddress;
+    const { line_1: line1, line_2: line2, city, state, country, postal_code } = (this.order?.shipping_address as ShippingAddress) || {};
 
     // create the payment element.
     this.elements

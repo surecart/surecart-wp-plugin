@@ -35,6 +35,11 @@ export default ({ open, onRequestClose, currentRestoreAt }) => {
 		setRestoreAt(date);
 	};
 
+	const cancel = () => {
+		setRestoreAt(new Date());
+		onRequestClose();
+	};
+
 	const onUpdateRestoreAt = async () => {
 		if (!restoreAt) return;
 		try {
@@ -70,7 +75,13 @@ export default ({ open, onRequestClose, currentRestoreAt }) => {
 		<ScDialog
 			label={__('Restore Subscription At', 'surecart')}
 			open={open}
-			onScRequestClose={onRequestClose}
+			onScRequestClose={cancel}
+			style={{
+				'--width': '23rem',
+				'--body-spacing':
+					'var(--sc-spacing-xx-large) var(--sc-spacing-xx-large) 0 var(--sc-spacing-xx-large)',
+				'--footer-spacing': 'var(--sc-spacing-xx-large)',
+			}}
 		>
 			<Error error={error} setError={setError} />
 			<ScFlex flexDirection="column">
@@ -94,22 +105,26 @@ export default ({ open, onRequestClose, currentRestoreAt }) => {
 					}}
 				/>
 			</ScFlex>
-			<div slot="footer">
-				<ScButton
-					type="text"
-					onClick={onRequestClose}
-					disabled={loading}
-				>
-					{__("Don't update subscription", 'surecart')}
-				</ScButton>{' '}
-				<ScButton
-					type="primary"
-					onClick={() => onUpdateRestoreAt()}
-					disabled={loading}
-				>
-					{__('Update subscription', 'surecart')}
-				</ScButton>
-			</div>
+
+			<ScButton
+				type="text"
+				slot="footer"
+				onClick={onRequestClose}
+				disabled={loading}
+			>
+				{__('Cancel', 'surecart')}
+			</ScButton>
+			<ScButton
+				type="primary"
+				slot="footer"
+				onClick={() => onUpdateRestoreAt()}
+				disabled={
+					loading || restoreAt <= new Date(currentRestoreAt * 1000)
+				}
+			>
+				{__('Update Subscription', 'surecart')}
+			</ScButton>
+
 			{loading && (
 				<ScBlockUi
 					style={{ '--sc-block-ui-opacity': '0.75' }}

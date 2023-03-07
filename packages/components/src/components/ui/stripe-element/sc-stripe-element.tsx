@@ -2,6 +2,7 @@ import { Component, Element, Event, EventEmitter, Fragment, h, Method, Prop, Sta
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
+import { state as selectedProcessor } from '@store/selected-processor';
 
 import { Checkout, FormState, FormStateSetter, ProcessorName } from '../../../types';
 
@@ -81,9 +82,8 @@ export class ScStripeElement {
   async maybeConfirmOrder(val: FormState) {
     // must be paying
     if (val !== 'paying') return;
-    console.log('id', this.selectedProcessorId);
     // this processor is not selected.
-    if (this.selectedProcessorId !== 'stripe') return;
+    if (selectedProcessor?.id !== 'stripe') return;
     // must be a stripe session
     if (this.order?.payment_intent?.processor_type !== 'stripe') return;
     // must have an external intent id

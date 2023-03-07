@@ -5,7 +5,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: lokalise.com\n"
 "Project-Id-Version: SureCart WP\n"
-"PO-Revision-Date: 2023-01-30 15:05\n"
+"PO-Revision-Date: 2023-03-02 11:00\n"
 "Last-Translator: lokalise.com\n"
 "Language-Team: lokalise.com\n\n"
 "Language: de_DE\n"
@@ -29,7 +29,7 @@ msgstr "%1$s ( %2$d von %3$d )"
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:313
 #: price.js:13
 msgid "%1d%% off"
-msgstr "%1d %%"
+msgstr "%1d %% reduziert"
 
 #: licenses/modules/Activations/index.js:100
 msgid "%1s of %2s Activations Used"
@@ -38,6 +38,10 @@ msgstr "%1s von %2s Aktivierungen verwendet"
 #: subscriptions/show/modules/Details.js:110
 msgid "%d Remaining"
 msgstr "%d verbleibend"
+
+#: sc-textarea2.js:189
+msgid "%d characters remaining"
+msgstr "%d verbleibende Zeichen"
 
 #. translators: number of days.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:251
@@ -58,7 +62,7 @@ msgstr[1] "%d Tage kostenlos"
 msgid "%d day left in trial"
 msgid_plural "%d days left in trial"
 msgstr[0] "%d Testtag übrig"
-msgstr[1] "%d Tage in der Testphase"
+msgstr[1] "%d Tage in der Testphase übrig"
 
 #. translators: number of months
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:263
@@ -99,7 +103,7 @@ msgstr[1] "%d Jahre"
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:194
 #: abandoned-checkouts/modules/Coupon.js:25
 msgid "%d%% off"
-msgstr "%d %%"
+msgstr "%d %% reduziert"
 
 #: settings/tax-region/TaxRegionSettings.js:147
 msgid "%s Tax Region"
@@ -165,6 +169,10 @@ msgstr "%s muss eine Zahl sein."
 msgid "%s not found"
 msgstr "%s nicht gefunden"
 
+#: Blocks/ConditionalForm/selectors/SelectCoupons/index.js:26
+msgid "%s off"
+msgstr "%s reduziert"
+
 #. translators: Manual payment method.
 #: Blocks/Payment/Block.php:228
 #: Blocks/Payment/components/ManualPaymentMethod.js:20
@@ -173,7 +181,7 @@ msgstr "%s zum Auschecken ausgewählt."
 
 #: coupons/Sidebar.js:14
 msgid "%s%% off"
-msgstr "%s %%"
+msgstr "%s %% reduziert"
 
 #: Blocks/SessionDetail/edit.js:83
 msgid "(Not in this example order, but will be conditionally displayed)"
@@ -261,7 +269,7 @@ msgstr "6 Stunden"
 
 #: admin/abandoned-orders/cta-banner.php:102
 msgid "69% of shoppers abandon their checkouts before completing a purchase. Recover lost revenue with automated, high-converting emails."
-msgstr "69 % der Käufer brechen den Checkout ab, bevor sie einen Kauf abschließen. Gewinnen Sie entgangene Einnahmen mit automatisierten, hochkonvertierenden E-Mails zurück."
+msgstr "69 % der Käufer brechen den Bestellvorgang ab, bevor sie einen Kauf abschließen. Gewinnen Sie entgangene Einnahmen mit automatisierten, hochkonvertierenden E-Mails zurück."
 
 #: Blocks/Columns/variations.js:84
 msgid "70 / 30"
@@ -281,16 +289,21 @@ msgstr "Eine Begrenzung der Anzahl der zurückzusendenden Artikel zwischen 1 und
 
 #: settings/portal/PortalSettings.js:153
 msgid "A link to your privacy policy page."
-msgstr "Ein Link zu Ihrer Datenschutzrichtlinie."
+msgstr "Ein Link zu Ihrer Datenschutzrichtlinien."
 
 #: settings/portal/PortalSettings.js:139
 msgid "A link to your privacy terms page."
 msgstr "Ein Link zu Ihrer Seite mit den Datenschutzbestimmungen."
 
+#: bumps/CreateBump.js:65
+#: bumps/modules/Name.js:11
+msgid "A name for this bump that will be visible to customers."
+msgstr "Ein Name für diese Erhöhung, der für Kunden sichtbar ist."
+
 #: src/Rest/BumpRestServiceProvider.php:93
 #: bumps/modules/Name.js:18
 msgid "A name for this bump that will be visible to customers. If empty, the product name will be used."
-msgstr "Ein Name für diese Erhebung, der für Kunden sichtbar ist. Wenn leer, wird der Produktname verwendet."
+msgstr "Ein Name für diesen Bump, der für Kunden sichtbar ist. Wenn leer, wird der Produktname verwendet."
 
 #: product-groups/modules/Details.js:28
 msgid "A name for your product group."
@@ -330,6 +343,11 @@ msgstr "Ein bestimmter Produktname."
 msgid "ABN Number"
 msgstr "ABN-Nummer"
 
+#: Blocks/ConditionalForm/conditions.js:284
+#: Blocks/ConditionalForm/rules.js:219
+msgid "AND"
+msgstr "UND"
+
 #: settings/connection/ConnectionSettings.js:54
 msgid "API Token"
 msgstr "API-Token"
@@ -348,29 +366,29 @@ msgstr "Verlassen"
 #: abandoned-checkouts/AbandonedCheckout.js:112
 #: settings/abandoned/AbandonedSettings.js:79
 msgid "Abandoned Checkout"
-msgstr "Abgebrochene Kasse"
+msgstr "Abgebrochene Käufe"
 
 #: settings/customer/CustomerSettings.js:241
 msgid "Abandoned Checkout #1"
-msgstr "Verlassene Kasse Nr. 1"
+msgstr "Abgebrochener Kauf Nr. 1"
 
 #: settings/customer/CustomerSettings.js:253
 msgid "Abandoned Checkout #2"
-msgstr "Verlassene Kasse Nr. 2"
+msgstr "Abgebrochener Kauf Nr. 2"
 
 #: settings/customer/CustomerSettings.js:265
 msgid "Abandoned Checkout #3"
-msgstr "Verlassene Kasse Nr. 3"
+msgstr "Abgebrochener Kauf Nr. 3"
 
 #: settings/abandoned/AbandonedSettings.js:160
 msgid "Abandoned Checkout Discount"
-msgstr "Verlassener Checkout-Rabatt"
+msgstr "Abgebrochener Kauf-Rabatt"
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutViewController.php:22
 #: admin/abandoned-orders/index.php:13
 #: store/add-entities.js:117
 msgid "Abandoned Checkouts"
-msgstr "Abgebrochene Kassen"
+msgstr "Abgebrochene Bestellvorgänge"
 
 #: settings/tax/TaxSettings.js:160
 msgid "Accept the order and apply reverse charge."
@@ -389,7 +407,7 @@ msgstr "Kontodetails"
 
 #: sc-wordpress-user.js:27
 msgid "Account Email"
-msgstr "Konto-E-Mail"
+msgstr "Konto E-Mail Adresse"
 
 #: orders/Order.js:146
 #: subscriptions/show/ShowSubscription.js:206
@@ -398,7 +416,7 @@ msgstr "Aktionen"
 
 #: components/data-tables/subscriptions-data-table/StartPlan.js:73
 msgid "Activate"
-msgstr "aktivieren Sie"
+msgstr "Aktivieren"
 
 #: store/add-entities.js:18
 msgid "Activation"
@@ -473,15 +491,23 @@ msgstr "Einschränkung hinzufügen"
 #: Blocks/Dashboard/OrderDownloads/edit.js:32
 #: Blocks/Dashboard/WordPressAccount/edit.js:34
 msgid "Add A Title…"
-msgstr "Füge einen Titel hinzu…"
+msgstr "Füge einen Titel hinzu …"
 
 #: Blocks/Donation/edit.js:216
 msgid "Add Amount"
 msgstr "Betrag hinzufügen"
 
+#: Blocks/ConditionalForm/selectors/SelectCoupons/index.js:91
+msgid "Add Another Coupon"
+msgstr "Fügen Sie einen weiteren Gutschein hinzu."
+
 #: products/modules/Prices/index.js:58
 msgid "Add Another Price"
 msgstr "Fügen Sie einen weiteren Preis hinzu"
+
+#: Blocks/ConditionalForm/selectors/SelectProcessors/index.js:115
+msgid "Add Another Processor"
+msgstr "Fügen Sie einen weiteren Zahlungsabwickler hinzu."
 
 #: product-groups/components/SelectProduct.js:50
 msgid "Add Another Product"
@@ -490,6 +516,10 @@ msgstr "Weiteres Produkt hinzufügen"
 #: bumps/modules/NewCondition.js:164
 msgid "Add Condition"
 msgstr "Bedingung hinzufügen"
+
+#: Blocks/ConditionalForm/edit.js:169
+msgid "Add Conditions"
+msgstr "Bedingungen hinzufügen"
 
 #: Blocks/Totals/edit.js:52
 #: sc-upcoming-invoice.js:203
@@ -535,12 +565,12 @@ msgstr "Medien hinzufügen"
 #: src/WordPress/PostTypes/CartPostTypeService.php:213
 msgctxt "Cart"
 msgid "Add New"
-msgstr "Neue hinzufügen"
+msgstr "Neu hinzufügen"
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:206
 msgctxt "Checkout Form"
 msgid "Add New"
-msgstr "Neue hinzufügen"
+msgstr "Neu hinzufügen"
 
 #: layouts/partials/admin-index-header.php:14
 #: coupons/modules/CustomerSelector.js:77
@@ -549,7 +579,7 @@ msgstr "Neue hinzufügen"
 #: sc-subscription-payment-method.js:138
 #: sc-subscription-payment-method.js:157
 msgid "Add New"
-msgstr "Neue hinzufügen"
+msgstr "Neu hinzufügen"
 
 #: products/modules/integrations/Integrations.js:57
 msgid "Add New Integration"
@@ -598,7 +628,7 @@ msgstr "In den Warenkorb legen"
 #: Blocks/AddToCartButton/block.json
 msgctxt "block title"
 msgid "Add To Cart Button"
-msgstr "Schaltfläche zum Warenkorb hinzufügen"
+msgstr "\"In den Warenkorb hinzufügen\"-Button"
 
 #: products/modules/Prices/Price/Header.js:261
 msgid "Add To Cart Button Shortcode"
@@ -614,7 +644,7 @@ msgstr "WordPress-Benutzerrolle hinzufügen"
 
 #: Blocks/CheckoutForm/components/Empty.js:174
 msgid "Add a checkout form"
-msgstr "Fügen Sie ein Checkout-Formular hinzu"
+msgstr "Fügen Sie ein Bestellformular hinzu"
 
 #: bumps/modules/Description.js:18
 msgid "Add a descirption that will get your customers excited about the offer."
@@ -626,19 +656,15 @@ msgstr "Fügen Sie eine Beschreibung hinzu"
 
 #: settings/abandoned/AbandonedSettings.js:162
 msgid "Add a discount incentive for abandoned cart."
-msgstr "Fügen Sie einen Rabattanreiz für verlassene Warenkörbe hinzu."
-
-#: bumps/modules/Name.js:10
-msgid "Add a name"
-msgstr "Fügen Sie einen Namen hinzu"
+msgstr "Fügen Sie einen Rabattanreiz für abgebrochene Käufe hinzu."
 
 #: Blocks/Dashboard/DashboardTab/edit.js:117
 msgid "Add a tab name"
-msgstr "Fügen Sie einen Registerkartennamen hinzu"
+msgstr "Fügen Sie einen Tab-Namen hinzu"
 
 #: Blocks/CartHeader/edit.js:39
 msgid "Add a title…"
-msgstr "Füge einen Titel hinzu…"
+msgstr "Füge einen Titel hinzu …"
 
 #: settings/order/OrderProtocol.js:118
 msgid "Add additional information to receipts and invoices."
@@ -646,31 +672,31 @@ msgstr "Fügen Sie Quittungen und Rechnungen zusätzliche Informationen hinzu."
 
 #: dashboard/components/GetStarted.js:73
 msgid "Add buy and cart buttons"
-msgstr "Fügen Sie Kauf- und Einkaufswagen-Schaltflächen hinzu"
+msgstr "Fügen Sie Kauf- und Warenkorb-Button hinzu"
 
 #: dashboard/components/GetStarted.js:74
 msgid "Add cart and buy buttons to your site."
-msgstr "Fügen Sie Einkaufswagen hinzu und kaufen Sie Schaltflächen zu Ihrer Website."
+msgstr "Fügen Sie einen \"In den Warenkorb\"- oder \"Kaufen\"-Button auf Ihrer Webseite hinzu."
 
 #: settings/tax-region/TaxRegionSettings.js:66
 msgid "Add custom manual tax rates for specific countries."
-msgstr "Fügen Sie benutzerdefinierte manuelle Steuersätze für bestimmte Länder hinzu."
+msgstr "Fügen Sie benutzerdefinierte und manuelle Steuersätze für bestimmte Länder hinzu."
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:214
 msgid "Add new Cart"
-msgstr "Neuen Einkaufswagen hinzufügen"
+msgstr "Neuen Warenkorb hinzufügen"
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:207
 msgid "Add new Checkout Form"
-msgstr "Fügen Sie ein neues Checkout-Formular hinzu"
+msgstr "Neues Bestellformular hinzufügen"
 
 #: Blocks/Checkbox/edit.js:69
 msgid "Add some checkbox text..."
-msgstr "Fügen Sie einen Kontrollkästchentext hinzu ..."
+msgstr "Fügen Sie einen Checkbox Text hinzu ..."
 
 #: bumps/modules/Conditions.js:87
 msgid "Add some conditions to display this bump."
-msgstr "Fügen Sie einige Bedingungen hinzu, um diese Erhebung anzuzeigen."
+msgstr "Fügen Sie einige Bedingungen hinzu, um diese Erhöhung anzuzeigen."
 
 #: product-groups/modules/Products.js:53
 msgid "Add some products to this upgrade group. A customer who has purchased one of these products can switch between others in this group."
@@ -678,7 +704,7 @@ msgstr "Fügen Sie dieser Upgrade-Gruppe einige Produkte hinzu. Ein Kunde, der e
 
 #: Blocks/Switch/edit.js:69
 msgid "Add some text..."
-msgstr "Text hinzufügen..."
+msgstr "Text hinzufügen ..."
 
 #: Blocks/AddToCartButton/edit.js:210
 #: Blocks/Button/edit.js:20
@@ -689,7 +715,7 @@ msgstr "Text hinzufügen..."
 #: Blocks/OrderConfirmationCustomer/edit.js:37
 #: Blocks/Submit/edit.js:121
 msgid "Add text…"
-msgstr "Text hinzufügen…"
+msgstr "Text hinzufügen …"
 
 #: src/Integrations/User/UserService.php:66
 msgid "Add the user role of the user who purchased the product."
@@ -701,7 +727,7 @@ msgstr "Fügen Sie dieses Produkt zu einer Gruppe mit anderen hinzu, zwischen de
 
 #: Blocks/Card/edit.js:57
 msgid "Add title…"
-msgstr "Titel hinzufügen…"
+msgstr "Titel hinzufügen …"
 
 #: admin/connection-invalid.php:37
 msgid "Add your API token to connect to SureCart."
@@ -709,11 +735,11 @@ msgstr "Fügen Sie Ihr API-Token hinzu, um eine Verbindung zu SureCart herzustel
 
 #: Blocks/Heading/edit.js:57
 msgid "Add your description..."
-msgstr "Beschreibung hinzufügen..."
+msgstr "Beschreibung hinzufügen ..."
 
 #: Blocks/Heading/edit.js:46
 msgid "Add your title..."
-msgstr "Titel hinzufügen..."
+msgstr "Titel hinzufügen ..."
 
 #: components/MediaLibrary/Preview.js:117
 msgid "Added"
@@ -737,7 +763,7 @@ msgstr "Zusätzliche Bestelldaten"
 #: sc-order-shipping-address2.js:33
 #: sc-order-shipping-address2.js:42
 msgid "Address"
-msgstr "Die Anschrift"
+msgstr "Anschrift"
 
 #: sc-address2.js:108
 #: sc-order-shipping-address2.js:34
@@ -747,7 +773,7 @@ msgstr "Adresszeile 2"
 
 #: Blocks/Address/edit.js:125
 msgid "Address Placeholder"
-msgstr "Adressplatzhalter"
+msgstr "Adress Platzhalter"
 
 #: src/Integrations/ThriveAutomator/Triggers/PurchaseInvokedTrigger.php:66
 msgid "Admin unrevokes a purchase"
@@ -798,15 +824,15 @@ msgstr "Alle Stornierungsversuche"
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:218
 msgid "All Carts"
-msgstr "Alle Karren"
+msgstr "Alle Warenkörbe"
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:211
 msgid "All Checkout Forms"
-msgstr "Alle Checkout-Formulare"
+msgstr "Alle Bestellformulare"
 
 #: bumps/modules/Conditions.js:39
 msgid "All of these items are in the cart."
-msgstr "Alle diese Artikel befinden sich im Warenkorb."
+msgstr "Alle dieser Artikel befinden sich im Warenkorb."
 
 #: coupons/modules/Restrictions.js:73
 msgid "Allow Coupon"
@@ -826,7 +852,7 @@ msgstr "Änderungen der Abonnementmenge zulassen"
 
 #: Blocks/Donation/edit.js:169
 msgid "Allow custom amount to be entered"
-msgstr "Erlauben Sie die Eingabe eines benutzerdefinierten Betrags"
+msgstr "Erlauben Sie die Eingabe eines benutzerdefinierten Betrages"
 
 #: products/components/price/parts/AdHoc.js:14
 msgid "Allow customers to pay what they want"
@@ -835,12 +861,12 @@ msgstr "Lassen Sie Kunden bezahlen, was sie wollen"
 #: Blocks/CartItems/edit.js:45
 #: Blocks/LineItems/edit.js:37
 msgid "Allow line item quantities to be editable."
-msgstr "Bearbeitbare Einzelpostenmengen zulassen."
+msgstr "Bearbeitbare Mengen der Einzelposten zulassen."
 
 #: Blocks/CartItems/edit.js:32
 #: Blocks/LineItems/edit.js:24
 msgid "Allow line items to be removed."
-msgstr "Lassen Sie zu, dass Werbebuchungen entfernt werden."
+msgstr "Lassen Sie zu, dass einzele Artikel entfernt werden."
 
 #: address.js:20
 msgid "American Samoa"
@@ -875,7 +901,7 @@ msgstr "Offener Betrag"
 #: coupons/modules/Types.js:87
 #: settings/abandoned/Coupon.js:102
 msgid "Amount Off"
-msgstr "Betrag aus"
+msgstr "Betrag reduziert"
 
 #: invoices/modules/LineItems.js:71
 msgid "Amount Paid"
@@ -958,7 +984,7 @@ msgstr "Jeder Kunde"
 
 #: bumps/modules/Conditions.js:46
 msgid "Any of these items are in the cart."
-msgstr "Alle diese Artikel befinden sich im Warenkorb."
+msgstr "Alle dieser Artikel befinden sich im Warenkorb."
 
 #: components/filters/product/ProductFilter.js:33
 msgid "Any price"
@@ -981,7 +1007,7 @@ msgstr "Anwendungs-UI-Icon-Pack"
 
 #: customers/modules/Balance/ViewTransactions.js:59
 msgid "Applied"
-msgstr "Angewandt"
+msgstr "Anwenden"
 
 #: abandoned-checkouts/modules/LineItems/index.js:76
 #: orders/modules/LineItems/index.js:167
@@ -1029,7 +1055,7 @@ msgstr "%s ? Dieses Produkt kann nicht gekauft werden und alle nicht gespeichert
 
 #: bumps/EditBump.js:103
 msgid "Archive this bump? This bump will not be purchaseable and all unsaved changes will be lost."
-msgstr "Diese Beule archivieren? Dieser Bump kann nicht gekauft werden und alle nicht gespeicherten Änderungen gehen verloren."
+msgstr "Diesen Order Bump archivieren? Dieser Order Bump kann nicht gekauft werden und alle nicht gespeicherten Änderungen gehen verloren."
 
 #: products/modules/Prices/Price/index.js:70
 msgid "Archive this price? This product will not be purchaseable and all unsaved changes will be lost."
@@ -1155,8 +1181,8 @@ msgid "Are you sure you want to restore this product? This will be be available 
 msgstr "Möchten Sie dieses Produkt wirklich wiederherstellen? Diese wird käuflich zu erwerben sein."
 
 #: subscriptions/show/modules/modals/RestoreSubscriptionModal.js:47
-msgid "Are you sure you want to restore this subscription? This will make it active again."
-msgstr "Möchten Sie dieses Abonnement wirklich wiederherstellen? Dadurch wird es wieder aktiv."
+msgid "Are you sure you want to restore this subscription? When you click Restore Subscription this customer will immediately be charged for the first billing period."
+msgstr "Möchten Sie dieses Abonnement wirklich wiederherstellen? Wenn Sie auf Abonnement wiederherstellen klicken, wird diesem Kunden sofort der erste Abrechnungszeitraum in Rechnung gestellt."
 
 #: subscriptions/show/modules/modals/RetryPaymentModal.js:78
 msgid "Are you sure you want to retry the payment? This will attempt to charge the customer."
@@ -1172,7 +1198,7 @@ msgstr "Möchten Sie das ausstehende Update wirklich abbrechen?"
 
 #: components/MediaLibrary/Preview.js:52
 msgid "Are you sure you wish to delete this media item? This cannot be undone."
-msgstr "Möchten Sie dieses Medienelement wirklich löschen? Das kann nicht rückgängig gemacht werden."
+msgstr "Möchten Sie diese Mediendatei wirklich löschen? Das kann nicht rückgängig gemacht werden."
 
 #: orders/modules/OrderStatusConfirmModal.js:71
 msgid "Are you sure you wish to mark the order as paid?"
@@ -1303,6 +1329,7 @@ msgid "Automatic"
 msgstr "Automatisch"
 
 #: admin/cancellation-insights/cta-banner.php:103
+#, fuzzy
 msgid "Automatically lower your subscription canccellation while making customers happy and saving more revenue with Subscription Saver."
 msgstr "Senken Sie automatisch Ihre Abonnementkündigung, während Sie Kunden glücklich machen und mehr Umsatz mit Subscription Saver sparen."
 
@@ -1324,11 +1351,11 @@ msgstr "Aserbaidschanischer Manat"
 
 #: Blocks/Form/components/Setup.js:66
 msgid "Back"
-msgstr "Der Rücken"
+msgstr "Zurück"
 
 #: invoices/Invoice.js:65
 msgid "Back to All Invoices"
-msgstr "Zurück zu Alle Rechnungen"
+msgstr "Zurück zu allen Rechnungen"
 
 #: Blocks/AddToCartButton/edit.js:163
 #: Blocks/BuyButton/edit.js:143
@@ -1354,7 +1381,7 @@ msgstr "Balance"
 
 #: customers/modules/Balance/ViewTransactions.js:169
 msgid "Balance Transactions"
-msgstr "Saldentransaktionen"
+msgstr "Saldo Transaktionen"
 
 #: address.js:34
 msgid "Bangladesh"
@@ -1416,7 +1443,7 @@ msgstr "Bermuda-Dollar"
 #: admin/advanced.php:52
 #: settings/advanced/AdvancedSettings.js:91
 msgid "Beta Features"
-msgstr "Beta-Funktionen"
+msgstr "Beta Funktionen"
 
 #: address.js:41
 msgid "Bhutan"
@@ -1427,6 +1454,10 @@ msgstr "Bhutan"
 msgid "Billing Address"
 msgstr "Rechnungsadresse"
 
+#: Blocks/ConditionalForm/translations.js:8
+msgid "Billing Country"
+msgstr "Land der Rechnungsadresse"
+
 #: Controllers/CustomerController.php:65
 #: sc-order-confirmation-customer.js:31
 msgid "Billing Details"
@@ -1436,11 +1467,11 @@ msgstr "Rechnungsdetails"
 #: sc-customer-edit.js:90
 #: sc-wordpress-user-edit.js:58
 msgid "Billing Email"
-msgstr "Abrechnung per E-Mail"
+msgstr "Rechnung E-Mail"
 
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:50
 msgid "Billing Name"
-msgstr "Abrechnungsname"
+msgstr "Rechnung Name"
 
 #: store/add-entities.js:145
 msgid "Billing Period"
@@ -1486,7 +1517,7 @@ msgstr "Steigern Sie Ihren Umsatz"
 
 #: components/CartInspectorControls.js:46
 msgid "Border"
-msgstr "Grenze"
+msgstr "Border"
 
 #: Blocks/Card/edit.js:35
 msgid "Borderless"
@@ -1514,11 +1545,11 @@ msgstr "Botswana Pula"
 
 #: components/CartInspectorControls.js:49
 msgid "Bottom Border"
-msgstr "Untere Grenze"
+msgstr "Border unten"
 
 #: address.js:46
 msgid "Bouvet Island"
-msgstr "Bouvet-Insel"
+msgstr "Bouvetinsel"
 
 #: settings/brand/BrandSettings.js:79
 msgid "Brand Color"
@@ -1567,26 +1598,20 @@ msgstr "Bulgarischer Lew"
 
 #: store/add-entities.js:25
 msgid "Bump"
-msgstr "Stoßen"
+msgstr "Bump"
 
 #: bumps/modules/Description.js:17
 msgid "Bump Description"
-msgstr "Bump-Beschreibung"
+msgstr "Bump Beschreibung"
 
 #: Blocks/BumpLineItem/block.json
 msgctxt "block title"
 msgid "Bump Discount"
-msgstr "Bump-Rabatt"
-
-#: abandoned-checkouts/modules/LineItems/index.js:108
-#: orders/modules/LineItems/index.js:199
-#: subscriptions/show/modules/LineItems/index.js:100
-msgid "Bump Discounts"
-msgstr "Bump-Rabatte"
+msgstr "Bump Rabatt"
 
 #: bumps/modules/Name.js:17
 msgid "Bump Name"
-msgstr "Bump-Name"
+msgstr "Bump Name"
 
 #: bumps/modules/Priority.js:9
 msgid "Bump Priority (1-5)"
@@ -1598,7 +1623,7 @@ msgstr "Bump archiviert."
 
 #: bumps/EditBump.js:85
 msgid "Bump deleted."
-msgstr "Stoß gelöscht."
+msgstr "Order Bump gelöscht."
 
 #: bumps/EditBump.js:116
 msgid "Bump un-archived."
@@ -1607,7 +1632,7 @@ msgstr "Bump nicht archiviert."
 #: src/Controllers/Admin/Bumps/BumpsController.php:24
 #: admin/bumps/index.php:8
 msgid "Bumps"
-msgstr "Beulen"
+msgstr "Bumps"
 
 #: Blocks/BumpLineItem/edit.js:26
 #: sc-line-item-bump2.js:21
@@ -1630,16 +1655,16 @@ msgstr "Burundischer Franc"
 #: Blocks/BuyButton/edit.js:127
 #: Blocks/CustomerDashboardButton/edit.js:93
 msgid "Button"
-msgstr "Knopf"
+msgstr "Button"
 
 #: Blocks/Button/block.json
 msgctxt "block title"
 msgid "Button"
-msgstr "Knopf"
+msgstr "Button"
 
 #: Blocks/AddToCartButton/edit.js:106
 msgid "Button Size"
-msgstr "Knopfgröße"
+msgstr "Buttongröße"
 
 #: Blocks/AddToCartButton/edit.js:97
 #: Blocks/BuyButton/edit.js:84
@@ -1649,11 +1674,11 @@ msgstr "Knopfgröße"
 #: Blocks/CustomerDashboardButton/edit.js:34
 #: Blocks/Submit/edit.js:30
 msgid "Button Text"
-msgstr "Schaltflächentext"
+msgstr "Buttontext"
 
 #: Blocks/AddToCartButton/edit.js:134
 msgid "Button Type"
-msgstr "Schaltflächentyp"
+msgstr "Button Typ"
 
 #: Blocks/AddToCartButton/edit.js:209
 #: Blocks/Button/edit.js:19
@@ -1664,28 +1689,28 @@ msgstr "Schaltflächentyp"
 #: Blocks/OrderConfirmationCustomer/edit.js:36
 #: Blocks/Submit/edit.js:120
 msgid "Button text"
-msgstr "Schaltflächentext"
+msgstr "Buttontext"
 
 #: Blocks/BuyButton/block.json
 msgctxt "block title"
 msgid "Buy Button"
-msgstr "Kaufen-Schaltfläche"
+msgstr "Kaufen Button"
 
 #: products/modules/Prices/Price/Header.js:265
 msgid "Buy Button Shortcode"
-msgstr "Button-Shortcode kaufen"
+msgstr "Kaufen Button Shortcode"
 
 #: products/modules/Prices/Price/Header.js:252
 #: controls/index.js:82
 #: formats/index.js:24
 #: formats/ShowPrice.js:87
 msgid "Buy Link"
-msgstr "Link kaufen"
+msgstr "Kaufen Link"
 
 #: Blocks/AddToCartButton/Block.php:63
 #: Blocks/BuyButton/Block.php:35
 msgid "Buy Now"
-msgstr "Kaufe jetzt"
+msgstr "Jetzt Kaufen"
 
 #: Blocks/DonationAmount/edit.js:23
 msgid "Buy me coffee!"
@@ -1704,7 +1729,7 @@ msgstr "Indem Sie Ihren Plan aktualisieren oder kündigen, stimmen Sie den <a hr
 
 #: Controllers/SubscriptionController.php:240
 msgid "By updating or canceling your plan, you agree to the <a href=\"%1$1s\" target=\"_blank\">%2$2s</a> and <a href=\"%3$3s\" target=\"_blank\">%4$4s</a>"
-msgstr "Indem Sie Ihren Tarif aktualisieren oder kündigen, stimmen Sie den <a href=\"%1$1s\" target=\"_blank\"> %2$2s </a> und <a href=\"%3$3s\" target=\"_blank\"> zu <a href=\"%3$3s\" target=\"_blank\"> %4$4s </a>"
+msgstr "Indem Sie Ihren Tarif aktualisieren oder kündigen, stimmen Sie den <a href=\"%1$1s\" target=\"_blank\"> %2$2s </a> und <a href=\"%3$3s\" target=\"_blank\">  <a href=\"%3$3s\" target=\"_blank\"> %4$4s </a> zu"
 
 #: orders/modules/TaxInfo.js:7
 #: tax.js:7
@@ -1713,7 +1738,7 @@ msgstr "CA GST"
 
 #: address.js:53
 msgid "Cabo Verde"
-msgstr "Cabo Verde"
+msgstr "Kap Verde"
 
 #: layouts/partials/admin-settings-header.php:18
 msgid "Cache cleared."
@@ -1721,7 +1746,7 @@ msgstr "Cache gelöscht."
 
 #: bumps/modules/CTA.js:17
 msgid "Call to action"
-msgstr "Aufruf zum Handeln"
+msgstr "Call-to-Action"
 
 #: address.js:54
 msgid "Cambodia"
@@ -1811,7 +1836,7 @@ msgstr "Kanadischer Dollar"
 #: formats/AddPriceUI.js:113
 #: sc-password-nag.js:86
 msgid "Cancel"
-msgstr "Absagen"
+msgstr "Abbrechen"
 
 #: settings/subscription-preservation/PreservationSettings.js:269
 msgid "Cancel Link"
@@ -1824,7 +1849,7 @@ msgstr "Ausstehendes Update abbrechen"
 #: sc-subscription-cancel.js:94
 #: sc-subscription.js:141
 msgid "Cancel Plan"
-msgstr "Tarif kündigen"
+msgstr "Plan kündigen"
 
 #: sc-subscription.js:135
 msgid "Cancel Scheduled Update"
@@ -1837,7 +1862,7 @@ msgstr "Geplantes Update abbrechen"
 #: subscriptions/show/modules/modals/CancelSubscriptionModal.js:115
 #: subscriptions/show/ShowSubscription.js:97
 msgid "Cancel Subscription"
-msgstr "Abonnement beenden"
+msgstr "Abonnement kündigen"
 
 #: settings/subscription/SubscriptionSettings.js:149
 msgid "Cancel Subscriptions After"
@@ -1868,7 +1893,7 @@ msgstr "Stornierungsversuche"
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:133
 msgid "Cancellation Insights"
-msgstr "Einblicke in Stornierungen"
+msgstr "Auswertung Stornierungen"
 
 #: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:50
 #: store/add-entities.js:39
@@ -1918,23 +1943,23 @@ msgstr "Kartentitel"
 #: src/Cart/CartService.php:51
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:134
 msgid "Cart"
-msgstr "Wagen"
+msgstr "Warenkorb"
 
 #: src/WordPress/Pages/PageSeeder.php:67
 #: src/WordPress/PostTypes/CartPostTypeService.php:190
 msgctxt "Cart title"
 msgid "Cart"
-msgstr "Wagen"
+msgstr "Warenkorb"
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:212
 msgctxt "post type singular name"
 msgid "Cart"
-msgstr "Wagen"
+msgstr "Warenkorb"
 
 #: Blocks/Cart/block.json
 msgctxt "block title"
 msgid "Cart"
-msgstr "Wagen"
+msgstr "Warenkorb"
 
 #: Blocks/CartBumpLineItem/block.json
 msgctxt "block title"
@@ -1944,7 +1969,7 @@ msgstr "Warenkorb-Bump-Werbebuchung"
 #: Blocks/CartCoupon/block.json
 msgctxt "block title"
 msgid "Cart Coupon"
-msgstr "Einkaufswagen-Gutschein"
+msgstr "Einkaufswagen Gutschein"
 
 #: Blocks/CartHeader/block.json
 msgctxt "block title"
@@ -1959,21 +1984,21 @@ msgstr "Warenkorb Artikel"
 #: Blocks/CartMessage/block.json
 msgctxt "block title"
 msgid "Cart Message"
-msgstr "Warenkorb-Nachricht"
+msgstr "Warenkorb Nachricht"
 
 #: abandoned-checkouts/components/Link.js:43
 msgid "Cart Recovery Link"
-msgstr "Warenkorb-Wiederherstellungslink"
+msgstr "Warenkorb Wiederherstellungslink"
 
 #: Blocks/CartSubmit/block.json
 msgctxt "block title"
 msgid "Cart Submit Button"
-msgstr "Einkaufswagen-Senden-Schaltfläche"
+msgstr "Kaufen-Button"
 
 #: Blocks/CartSubtotal/block.json
 msgctxt "block title"
 msgid "Cart Subtotal"
-msgstr "Warenkorb Zwischensumme"
+msgstr "Zwischensumme"
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:226
 msgid "Cart published privately."
@@ -1998,19 +2023,19 @@ msgstr "Warenkorb aktualisiert."
 #: src/WordPress/PostTypes/CartPostTypeService.php:211
 msgctxt "post type general name"
 msgid "Carts"
-msgstr "Karren"
+msgstr "Warenlörbe"
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:224
 msgid "Carts list"
-msgstr "Wagenliste"
+msgstr "Warenkorb Liste"
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:223
 msgid "Carts list navigation"
-msgstr "Warenkorblistennavigation"
+msgstr "Warenkorb Listen Navigation"
 
 #: address.js:57
 msgid "Cayman Islands"
-msgstr "Cayman Inseln"
+msgstr "Kaimaninseln"
 
 #: src/Support/Currency.php:265
 msgid "Cayman Islands Dollar"
@@ -2068,7 +2093,7 @@ msgstr "Ändern Sie dies, wenn Sie möchten, dass sich der Shop in einer anderen
 
 #: settings/account/AccountSettings.js:232
 msgid "Change your checkout spam protection and security settings."
-msgstr "Ändern Sie Ihren Spamschutz und Ihre Sicherheitseinstellungen für die Kasse."
+msgstr "Ändern Sie Ihren Spamschutz und Ihre Sicherheitseinstellungen für den Bestellprozess."
 
 #: admin/advanced.php:42
 #: admin/plugin.php:96
@@ -2087,7 +2112,7 @@ msgstr "Ändern Sie Ihre Plugin-Deinstallationseinstellungen."
 #: orders/modules/Charges.js:60
 #: store/add-entities.js:32
 msgid "Charge"
-msgstr "Aufladen"
+msgstr "Belastung"
 
 #: products/modules/Tax.js:16
 #: products/modules/Tax.js:58
@@ -2102,7 +2127,7 @@ msgstr "Gebühren"
 
 #: sc-login-form.js:145
 msgid "Check your email for a confirmation code"
-msgstr "Überprüfen Sie Ihre E-Mail auf einen Bestätigungscode"
+msgstr "Überprüfen Sie Ihre E-Mail auf einen Bestätigungscode."
 
 #: Blocks/Checkbox/block.json
 msgctxt "block title"
@@ -2111,7 +2136,7 @@ msgstr "Kontrollkästchen"
 
 #: Blocks/Checkbox/edit.js:68
 msgid "Checkbox Text"
-msgstr "Kontrollkästchen-Text"
+msgstr "Checkbox Text"
 
 #: Blocks/PriceChoice/edit.js:70
 msgid "Checked By Default"
@@ -2130,77 +2155,82 @@ msgstr "Überprüfung"
 #: src/Controllers/Admin/Orders/OrdersListTable.php:228
 #: store/add-entities.js:39
 msgid "Checkout"
-msgstr "Auschecken"
+msgstr "Bestellvorgang"
 
 #: src/Install/InstallService.php:26
 #: src/WordPress/Pages/PageSeeder.php:90
 msgctxt "Form title"
 msgid "Checkout"
-msgstr "Auschecken"
+msgstr "Bestellvorgang"
 
 #: src/Install/InstallService.php:125
 #: src/WordPress/Pages/PageSeeder.php:116
 msgctxt "Page title"
 msgid "Checkout"
-msgstr "Auschecken"
+msgstr "Bestellvorgang"
 
 #: abandoned-checkouts/modules/LineItems/index.js:21
 msgid "Checkout Details"
-msgstr "Checkout-Details"
+msgstr "Bestelldetails"
+
+#: Blocks/CheckoutErrors/block.json
+msgctxt "block title"
+msgid "Checkout Errors"
+msgstr "Fehler im Bestellprozess"
 
 #: src/BlockLibrary/BlockPatternsService.php:28
 #: src/Integrations/Beaver/BeaverFormModule.php:67
 #: src/Integrations/Elementor/ReusableFormWidget.php:42
 #: src/Integrations/Elementor/ReusableFormWidget.php:101
 msgid "Checkout Form"
-msgstr "Checkout-Formular"
+msgstr "Bestellformular"
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:205
 msgctxt "post type singular name"
 msgid "Checkout Form"
-msgstr "Checkout-Formular"
+msgstr "Bestellformular"
 
 #: Blocks/CheckoutForm/block.json
 msgctxt "block title"
 msgid "Checkout Form"
-msgstr "Checkout-Formular"
+msgstr "Bestellformular"
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:219
 msgid "Checkout Form published privately."
-msgstr "Checkout-Formular privat veröffentlicht."
+msgstr "Bestellformular privat veröffentlicht."
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:218
 msgid "Checkout Form published."
-msgstr "Checkout-Formular veröffentlicht."
+msgstr "Bestellformlar veröffentlicht."
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:220
 msgid "Checkout Form reverted to draft."
-msgstr "Das Checkout-Formular wurde auf den Entwurf zurückgesetzt."
+msgstr "Das Bestellformular wurde auf den Entwurf zurückgesetzt."
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:221
 msgid "Checkout Form scheduled."
-msgstr "Checkout-Formular geplant."
+msgstr "Bestellformular geplant."
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:222
 msgid "Checkout Form updated."
-msgstr "Checkout-Formular aktualisiert."
+msgstr "Bestellformular aktualisiert."
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:204
 msgctxt "post type general name"
 msgid "Checkout Forms"
-msgstr "Checkout-Formulare"
+msgstr "Bestellformulare"
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:217
 msgid "Checkout Forms list"
-msgstr "Checkout-Formularliste"
+msgstr "Bestellformular Liste"
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:216
 msgid "Checkout Forms list navigation"
-msgstr "Listennavigation für Checkout-Formulare"
+msgstr "Bestellformular Listen Navidaation"
 
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:296
 msgid "Checkout Recovery Rate"
-msgstr "Checkout-Wiederherstellungsrate"
+msgstr "Kauf-Wiederherstellungsrate"
 
 #: address.js:60
 msgid "Chile"
@@ -2315,11 +2345,11 @@ msgstr "Klicken Sie hier, um Radiotext hinzuzufügen..."
 #: sc-dialog2.js:164
 #: sc-drawer2.js:154
 msgid "Close"
-msgstr "Nah dran"
+msgstr "Schließen"
 
 #: Blocks/Totals/edit.js:101
 msgid "Closed Text"
-msgstr "Geschlossener Text"
+msgstr "Text schließen"
 
 #: address.js:63
 msgid "Cocos (Keeling) Islands"
@@ -2332,10 +2362,16 @@ msgid "Code"
 msgstr "Code"
 
 #: Blocks/Totals/edit.js:89
+#, fuzzy
 msgid "Collapsed By Default"
 msgstr "Standardmäßig reduziert"
 
+#: Blocks/Totals/edit.js:107
+msgid "Collapsed On Mobile"
+msgstr "Auf Mobilgerät minimieren."
+
 #: Blocks/Totals/edit.js:77
+#, fuzzy
 msgid "Collapsible"
 msgstr "Zusammenklappbar"
 
@@ -2369,11 +2405,6 @@ msgstr "Kolumbianischer Peso"
 msgid "Color Settings"
 msgstr "Farbeinstellungen"
 
-#: Blocks/Column/block.json
-msgctxt "block title"
-msgid "Column"
-msgstr "Spalte"
-
 #: Blocks/Column/edit.js:130
 msgid "Column settings"
 msgstr "Spalteneinstellungen"
@@ -2381,16 +2412,11 @@ msgstr "Spalteneinstellungen"
 #: Blocks/Columns/edit.js:98
 #: Blocks/PriceSelector/edit.js:122
 msgid "Columns"
-msgstr "Säulen"
-
-#: Blocks/Columns/block.json
-msgctxt "block title"
-msgid "Columns"
-msgstr "Säulen"
+msgstr "Spalten"
 
 #: admin/coming-soon.php:48
 msgid "Coming soon..."
-msgstr "Kommt bald..."
+msgstr "Kommt bald ..."
 
 #: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:51
 msgid "Comment"
@@ -2402,7 +2428,7 @@ msgstr "Kommentaraufforderung"
 
 #: admin/onboarding/install.php:54
 msgid "Commerce on WordPress has never been easier, faster, or more flexible."
-msgstr "Commerce auf WordPress war noch nie einfacher, schneller oder flexibler."
+msgstr "E-Commerce auf WordPress war noch nie einfacher, schneller oder flexibler."
 
 #: src/Support/Currency.php:271
 msgid "Comorian Franc"
@@ -2428,17 +2454,40 @@ msgstr "Schließe die Anmeldung ab"
 #: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:63
 #: subscriptions/show/ShowSubscription.js:113
 msgid "Complete Subscription"
-msgstr "Vollständiges Abonnement"
+msgstr "Abonnement vervollständigen"
 
 #: sc-subscription-status-badge2.js:60
 msgid "Completed"
-msgstr "Vollendet"
+msgstr "Abgeschlossen"
 
 #: admin/advanced.php:68
 #: admin/plugin.php:111
 #: settings/advanced/AdvancedSettings.js:137
 msgid "Completely remove all plugin data when deleted. This cannot be undone."
 msgstr "Entfernen Sie beim Löschen alle Plugin-Daten vollständig. Das kann nicht rückgängig gemacht werden."
+
+#: Blocks/ConditionalForm/edit.js:138
+#: Blocks/ConditionalForm/edit.js:162
+msgid "Conditional"
+msgstr "Bedingt"
+
+#: Blocks/ConditionalForm/block.json
+msgctxt "block title"
+msgid "Conditional"
+msgstr "Bedingt"
+
+#: Blocks/ConditionalForm/edit.js:92
+msgid "Conditions"
+msgstr "Bedingungen"
+
+#: Blocks/ConditionalForm/edit.js:117
+#: Blocks/ConditionalForm/edit.js:176
+msgid "Configure Conditions"
+msgstr "Bedingungen konfigurieren"
+
+#: Blocks/ConditionalForm/edit.js:100
+msgid "Configure different visibility conditions to control when the contents appear to customers."
+msgstr "Konfigurieren Sie verschiedene Sichtbarkeitsbedingungen, um zu steuern, wann die Inhalte den Kunden angezeigt werden."
 
 #: settings/order/OrderProtocol.js:52
 msgid "Configure your order numbering style."
@@ -2461,7 +2510,7 @@ msgstr "Bestätigen"
 #: sc-password-nag.js:86
 #: sc-wordpress-password-edit.js:59
 msgid "Confirm New Password"
-msgstr "Bestätige neues Passwort"
+msgstr "Neues Passwort bestätigen"
 
 #: sc-order-password.js:63
 msgid "Confirm Password"
@@ -2481,7 +2530,7 @@ msgstr "Kongo"
 
 #: address.js:67
 msgid "Congo, The Democratic Republic of the"
-msgstr "Kongo, die Demokratische Republik der"
+msgstr "Demokratische Republik Kongo"
 
 #: src/Support/Currency.php:272
 msgid "Congolese Franc"
@@ -2493,7 +2542,7 @@ msgstr "Verbinden Sie einen Benutzer"
 
 #: admin/processors.php:135
 msgid "Connect with PayPal to add a PayPal express button to your checkout."
-msgstr "Verbinden Sie sich mit PayPal, um Ihrer Kasse einen PayPal-Express-Button hinzuzufügen."
+msgstr "Verbinden Sie sich mit PayPal, um Ihrem Bestellformular einen PayPal-Express-Button hinzuzufügen."
 
 #: admin/processors.php:57
 msgid "Connect with Stripe to accept credit cards and other payment methods."
@@ -2502,7 +2551,7 @@ msgstr "Verbinden Sie sich mit Stripe, um Kreditkarten und andere Zahlungsmethod
 #: src/Rest/AccountRestServiceProvider.php:115
 #: src/Rest/SettingsRestServiceProvider.php:115
 msgid "Connected processors"
-msgstr "Verbundene Prozessoren"
+msgstr "Verbundene Zahlungsabwickler"
 
 #: layouts/partials/admin-settings-sidebar.php:58
 msgid "Connection"
@@ -2530,7 +2579,7 @@ msgstr "Wenden Sie sich an den Support, um weitere Hilfe zu erhalten"
 
 #: sc-cancel-survey2.js:82
 msgid "Continue"
-msgstr "Weitermachen"
+msgstr "Fortsetzen"
 
 #: address.js:68
 msgid "Cook Islands"
@@ -2552,11 +2601,11 @@ msgstr "Kopiert!"
 #: products/modules/Prices/Price/CopyInput.js:34
 #: sc-licenses-list.js:56
 msgid "Copy"
-msgstr "Kopieren"
+msgstr "kopieren"
 
 #: products/modules/Prices/Price/Header.js:210
 msgid "Copy Links"
-msgstr "Verknüpfungen kopieren"
+msgstr "Links kopieren"
 
 #: address.js:69
 msgid "Costa Rica"
@@ -2586,7 +2635,7 @@ msgstr "Die Datei konnte nicht heruntergeladen werden."
 
 #: sc-session-provider2.js:240
 msgid "Could not find checkout. Please contact us before attempting to purchase again."
-msgstr "Kasse konnte nicht gefunden werden. Bitte kontaktieren Sie uns, bevor Sie erneut versuchen, etwas zu kaufen."
+msgstr "Das Bestellformular konnte nicht gefunden werden. Bitte kontaktieren Sie uns, bevor Sie erneut versuchen, etwas zu kaufen."
 
 #: components/data-tables/subscriptions-data-table/StartPlan.js:46
 msgid "Could not start subscription."
@@ -2609,7 +2658,7 @@ msgstr "Land"
 
 #: Blocks/Address/edit.js:107
 msgid "Country Placeholder"
-msgstr "Länderplatzhalter"
+msgstr "Land Platzhalter"
 
 #: sc-compact-address2.js:45
 msgid "Country or region"
@@ -2621,12 +2670,12 @@ msgstr "Länderspezifische Mehrwertsteuerregistrierungen"
 
 #: store/add-entities.js:46
 msgid "Coupon"
-msgstr "Coupon"
+msgstr "Gutschein"
 
 #: Blocks/Coupon/block.json
 msgctxt "block title"
 msgid "Coupon"
-msgstr "Coupon"
+msgstr "Gutschein"
 
 #: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:188
 msgid "Coupon Applied"
@@ -2649,10 +2698,14 @@ msgstr "Gutschein ist gültig für"
 msgid "Coupon updated."
 msgstr "Gutschein aktualisiert."
 
+#: Blocks/ConditionalForm/translations.js:6
+msgid "Coupon(s)"
+msgstr "Gutschein(e)"
+
 #: abandoned-checkouts/modules/LineItems/index.js:91
 #: orders/modules/LineItems/index.js:182
 msgid "Coupon:"
-msgstr "Coupon:"
+msgstr "Gutschein:"
 
 #: src/Controllers/Admin/Coupons/CouponsController.php:23
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:130
@@ -2762,11 +2815,11 @@ msgstr "Upgrade-Gruppe erstellen"
 
 #: Blocks/CheckoutForm/components/Empty.js:77
 msgid "Create a Checkout Form"
-msgstr "Erstellen Sie ein Checkout-Formular"
+msgstr "Erstellen Sie ein Bestellformular"
 
 #: dashboard/components/LearnMore.js:45
 msgid "Create a new checkout form."
-msgstr "Erstellen Sie ein neues Checkout-Formular."
+msgstr "Erstellen Sie ein neues Bestellformular."
 
 #: dashboard/components/GetStarted.js:62
 msgid "Create products"
@@ -2819,7 +2872,7 @@ msgstr "Erstellt am %s"
 
 #: customers/modules/Balance/ViewTransactions.js:56
 msgid "Credit"
-msgstr "Kredit"
+msgstr "Konto"
 
 #: customers/modules/Balance/index.js:38
 #: orders/modules/Customer.js:49
@@ -2838,7 +2891,7 @@ msgstr "Kreditkarte"
 #: Blocks/Payment/Block.php:157
 #: Blocks/Payment/components/PayPal.js:55
 msgid "Credit Card selected for check out."
-msgstr "Kreditkarte zum Auschecken ausgewählt."
+msgstr "Kreditkarte zum Bestellvorgang ausgewählt."
 
 #: address.js:70
 msgid "Croatia"
@@ -2888,17 +2941,17 @@ msgstr "Benutzerdefinierter Betrag"
 
 #: hooks/controls/button.js:53
 msgid "Custom Button"
-msgstr "Benutzerdefinierte Schaltfläche"
+msgstr "Benutzerdefinierter Button"
 
 #: bumps/modules/CTA.js:10
 msgid "Custom Call to action"
-msgstr "Benutzerdefinierter Aufruf zum Handeln"
+msgstr "Benutzerdefinierter Call-to-Action"
 
 #: Blocks/CheckoutForm/components/Setup.js:205
 #: Blocks/Form/components/Setup.js:87
 #: Blocks/Form/edit.js:258
 msgid "Custom Thank You Page"
-msgstr "Benutzerdefinierte Dankesseite"
+msgstr "Benutzerdefinierte Danke-Seite"
 
 #: src/Integrations/TutorLMS/TutorLMSService.php:127
 #: sc-subscription-switch.js:171
@@ -2936,22 +2989,22 @@ msgstr "Kundengebühren"
 
 #: subscriptions/edit/modules/UpcomingPeriod.js:62
 msgid "Customer Credit"
-msgstr "Kundenkredit"
+msgstr "Kunden Konto"
 
 #: src/WordPress/Pages/PageService.php:65
 #: Blocks/Confirmation/edit.js:20
 msgid "Customer Dashboard"
-msgstr "Kunden-Dashboard"
+msgstr "Kunden Dashboard"
 
 #: Blocks/Dashboard/CustomerDashboard/block.json
 msgctxt "block title"
 msgid "Customer Dashboard"
-msgstr "Kunden-Dashboard"
+msgstr "Kunden Dashboard"
 
 #: Blocks/CustomerDashboardButton/block.json
 msgctxt "block title"
 msgid "Customer Dashboard Button"
-msgstr "Kunden-Dashboard-Schaltfläche"
+msgstr "Kunden Dashboard Button"
 
 #: Blocks/Dashboard/DashboardPage/block.json
 msgctxt "block title"
@@ -2985,11 +3038,11 @@ msgstr "Kunden-Downloads"
 
 #: customers/CreateCustomer.js:81
 msgid "Customer Email"
-msgstr "Kunden-eMail"
+msgstr "Kunden E-Mail"
 
 #: settings/customer/CustomerSettings.js:229
 msgid "Customer Emails"
-msgstr "Kunden-E-Mails"
+msgstr "Kunden E-Mails"
 
 #: Blocks/Dashboard/CustomerInvoices/block.json
 msgctxt "block title"
@@ -3027,7 +3080,7 @@ msgstr "Versand- und Steueradresse des Kunden"
 #: Blocks/Dashboard/CustomerSubscriptions/block.json
 msgctxt "block title"
 msgid "Customer Subscriptions"
-msgstr "Kundenabonnements"
+msgstr "Abonnenten"
 
 #: Blocks/Form/components/SelectPrices.js:119
 msgid "Customer can select multiple options."
@@ -3107,7 +3160,7 @@ msgstr "Passen Sie den Inhalt jeder Benachrichtigung an, die an Ihre Kunden gese
 
 #: dashboard/components/GetStarted.js:87
 msgid "Customize your checkout forms with a no-code experience."
-msgstr "Passen Sie Ihre Checkout-Formulare ohne Code an."
+msgstr "Passen Sie Ihre Bestellformulare ohne Code an."
 
 #: address.js:73
 msgid "Cyprus"
@@ -3142,7 +3195,7 @@ msgstr "Dunkel"
 #: src/WordPress/Pages/PageSeeder.php:126
 msgctxt "Page title"
 msgid "Dashboard"
-msgstr "Armaturenbrett"
+msgstr "Dashboard"
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:108
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:123
@@ -3165,7 +3218,7 @@ msgstr "Armaturenbrett"
 #: Controllers/UserController.php:61
 #: Blocks/Dashboard/CustomerDashboard/edit.js:170
 msgid "Dashboard"
-msgstr "Armaturenbrett"
+msgstr "Dashboard"
 
 #: layouts/partials/admin-settings-sidebar.php:52
 #: settings/export/ExportSettings.js:8
@@ -3322,12 +3375,12 @@ msgstr "\" %s \" deaktivieren?"
 
 #: Blocks/Payment/components/Inspector.js:55
 msgid "Disable or enable specific processors for this form."
-msgstr "Deaktivieren oder aktivieren Sie bestimmte Prozessoren für dieses Formular."
+msgstr "Deaktivieren oder aktivieren Sie bestimmte Zahlungsabwickler für dieses Formular."
 
 #: products/modules/integrations/Integration.js:163
 #: Blocks/Coupon/edit.js:38
 msgid "Disabled"
-msgstr "Behinderte"
+msgstr "Ausschalten"
 
 #: customers/modules/User/index.js:199
 #: customers/modules/User/WPUser.js:67
@@ -3359,7 +3412,7 @@ msgstr "Rabatt verfällt"
 
 #: settings/abandoned/AbandonedSettings.js:143
 msgid "Discount Settings"
-msgstr "Rabatteinstellungen"
+msgstr "Rabatt Einstellungen"
 
 #: abandoned-checkouts/modules/LineItems/index.js:86
 #: invoices/modules/LineItems.js:126
@@ -3371,11 +3424,11 @@ msgstr "Rabatte"
 
 #: sc-password-nag.js:86
 msgid "Dismiss"
-msgstr "Zurückweisen"
+msgstr "Ablehnen"
 
 #: src/WordPress/Admin/Notices/AdminNoticesService.php:159
 msgid "Dismiss Notice"
-msgstr "Kündigungsmitteilung"
+msgstr "Ablehnungsmittelung"
 
 #: bumps/modules/Conditions.js:23
 msgid "Display Conditions"
@@ -3385,7 +3438,7 @@ msgstr "Bedingungen anzeigen"
 #: sc-wordpress-user-edit.js:58
 #: sc-wordpress-user.js:27
 msgid "Display Name"
-msgstr "Anzeigename"
+msgstr "Name anzeigen"
 
 #: Blocks/TaxIdInput/block.json
 msgctxt "block description"
@@ -3395,37 +3448,37 @@ msgstr "Zeigen Sie ein MwSt./GST-Feld für die MwSt.-Erhebung an."
 #: Blocks/AddToCartButton/block.json
 msgctxt "block description"
 msgid "Display a button to add a specific price to the cart."
-msgstr "Zeigen Sie eine Schaltfläche an, um dem Einkaufswagen einen bestimmten Preis hinzuzufügen."
+msgstr "Zeigen Sie einen Button an, um im Einkaufswagen einen bestimmten Preis hinzuzufügen."
 
 #: Blocks/BuyButton/block.json
 msgctxt "block description"
 msgid "Display a button to immediately redirect to the checkout page with the product in the cart."
-msgstr "Zeigen Sie eine Schaltfläche an, um mit dem Produkt im Warenkorb sofort zur Checkout-Seite umzuleiten."
+msgstr "Zeigen Sie einen Button an, um mit dem Produkt im Warenkorb sofort zur Bestellseite umzuleiten."
 
 #: Blocks/CustomerDashboardButton/block.json
 msgctxt "block description"
 msgid "Display a button to link the user to their customer dashboard."
-msgstr "Zeigen Sie eine Schaltfläche an, um den Benutzer mit seinem Kunden-Dashboard zu verknüpfen."
+msgstr "Zeigen Sie einen Button an, um den Benutzer mit seinem Kunden Dashboard zu verknüpfen."
 
 #: Blocks/CartHeader/block.json
 msgctxt "block description"
 msgid "Display a cart header"
-msgstr "Zeigen Sie eine Warenkorbkopfzeile an"
+msgstr "Zeigen Sie eine Warenkorb-Kopfzeige an"
 
 #: Blocks/Checkbox/block.json
 msgctxt "block description"
 msgid "Display a checkbox input"
-msgstr "Zeigen Sie eine Checkbox-Eingabe an"
+msgstr "Zeigen Sie einen Checkbox-Eingabefeld an"
 
 #: Blocks/CheckoutForm/block.json
 msgctxt "block description"
 msgid "Display a checkout form"
-msgstr "Zeigen Sie ein Checkout-Formular an"
+msgstr "Zeigen Sie ein Bestellformular an"
 
 #: Blocks/Button/block.json
 msgctxt "block description"
 msgid "Display a checkout form button."
-msgstr "Zeigen Sie eine Checkout-Formularschaltfläche an."
+msgstr "Zeigen Sie einen Bestellformular Button an."
 
 #: Blocks/CartCoupon/block.json
 msgctxt "block description"
@@ -3445,22 +3498,22 @@ msgstr "Zeigen Sie eine benutzerdefinierte Nachricht im Warenkorb an"
 #: Blocks/FirstName/block.json
 msgctxt "block description"
 msgid "Display a first name collection field."
-msgstr "Zeigen Sie ein Vornamen-Erfassungsfeld an."
+msgstr "Zeigen Sie ein Vornamen-Eingabefeld an."
 
 #: Blocks/LastName/block.json
 msgctxt "block description"
 msgid "Display a last name collection field."
-msgstr "Zeigen Sie ein Nachnamen-Erfassungsfeld an."
+msgstr "Zeigen Sie ein Nachnamen-Eingabefeld an."
 
 #: Blocks/LogoutButton/block.json
 msgctxt "block description"
 msgid "Display a logout button."
-msgstr "Zeigen Sie eine Abmeldeschaltfläche an."
+msgstr "Zeigen Sie einen Logout-Button an."
 
 #: Blocks/Name/block.json
 msgctxt "block description"
 msgid "Display a name collection field."
-msgstr "Zeigen Sie ein Namenssammlungsfeld an."
+msgstr "Zeigen Sie ein Namensammlungs-Feld an."
 
 #: Blocks/NameYourPrice/block.json
 msgctxt "block description"
@@ -3470,27 +3523,33 @@ msgstr "Zeigen Sie einen Namen für Ihr eigenes Preisfeld an."
 #: Blocks/Radio/block.json
 msgctxt "block description"
 msgid "Display a radio input"
-msgstr "Zeigen Sie einen Funkeingang an"
+msgstr "Zeigen Sie eine Radio-Eingabe an."
 
 #: Blocks/RadioGroup/block.json
 msgctxt "block description"
 msgid "Display a radio select input. This is saved with the order as additional metadata."
-msgstr "Zeigen Sie einen Radio Select-Eingang an. Diese werden mit der Bestellung als zusätzliche Metadaten gespeichert."
+msgstr "Zeigen Sie einen Radio-Eingabe-Feld an. Diese werden mit der Bestellung als zusätzliche Metadaten gespeichert."
 
 #: Blocks/Submit/block.json
 msgctxt "block description"
 msgid "Display a submit button."
-msgstr "Zeigen Sie eine Senden-Schaltfläche an."
+msgstr "Zeigen Sie einen Senden Button an."
 
 #: Blocks/Subtotal/block.json
 msgctxt "block description"
 msgid "Display a subtotal line item."
-msgstr "Zeigen Sie einen Zwischensummenposten an."
+msgstr "Zeigen Sie einen Zwischensummen der Einzelposten an."
 
 #: Blocks/Switch/block.json
+#, fuzzy
 msgctxt "block description"
 msgid "Display a toggle switch."
 msgstr "Zeigen Sie einen Kippschalter an."
+
+#: Blocks/ConditionalForm/block.json
+msgctxt "block description"
+msgid "Display an area of the form based on conditions."
+msgstr "Zeigen Sie einen Bereich des Formulars basierend auf  Bedingungen an."
 
 #: Blocks/Card/block.json
 msgctxt "block description"
@@ -3505,7 +3564,7 @@ msgstr "Zeigen Sie einen Bestellbestätigungs-Kundenbereich an."
 #: Blocks/OrderConfirmationLineItems/block.json
 msgctxt "block description"
 msgid "Display an order confirmation line items summary section."
-msgstr "Zeigen Sie einen Abschnitt mit einer Zusammenfassung der Auftragsbestätigungspositionen an."
+msgstr "Zeigen Sie einen Abschnitt mit einer Zusammenfassung der Auftragsbestätigung an, anhand der Einzelposten."
 
 #: Blocks/Confirmation/block.json
 msgctxt "block description"
@@ -3516,6 +3575,11 @@ msgstr "Zeigen Sie einen Bestellbestätigungsabschnitt an."
 msgctxt "block description"
 msgid "Display an shipping address form. This is used for shipping and tax calculations."
 msgstr "Zeigen Sie ein Versandadressenformular an. Dies wird für Versand- und Steuerberechnungen verwendet."
+
+#: Blocks/CheckoutErrors/block.json
+msgctxt "block description"
+msgid "Display any checkout-related errors. By default the checkout form shows these at the top. Add this block to change the location."
+msgstr "Zeigen Sie alle im Bestellvorgang bezogene Fehler an. Standardmäßig zeigt das Bestellformular diese oben an. Fügen Sie diesen Block hinzu, um den Standort zu ändern."
 
 #: Blocks/Columns/block.json
 msgctxt "block description"
@@ -3552,10 +3616,15 @@ msgctxt "block description"
 msgid "Display the session totals."
 msgstr "Zeigt die Sitzungssummen an."
 
+#: Blocks/StoreLogo/block.json
+msgctxt "block description"
+msgid "Display the store logo."
+msgstr "Zeigen Sie das Geschäftslogo an."
+
 #: Blocks/OrderBumps/block.json
 msgctxt "block description"
 msgid "Display your order bumps."
-msgstr "Zeigen Sie Ihre Bestellstöße an."
+msgstr "Zeigen Sie Ihre Order Bumps an."
 
 #: sc-pagination2.js:37
 msgid "Displaying %1d to %2d of %3d items"
@@ -3624,7 +3693,7 @@ msgstr "Zeigt ein E-Mail-Formularfeld an."
 #: Blocks/LineItems/block.json
 msgctxt "block description"
 msgid "Displays checkout line items."
-msgstr "Zeigt Checkout-Werbebuchungen an."
+msgstr "Zeigt Einzelposten der Bestellung an."
 
 #: Blocks/Dashboard/CustomerDownloads/block.json
 #: Blocks/Dashboard/OrderDownloads/block.json
@@ -3660,12 +3729,12 @@ msgstr "Zeigt die Versandadressen der Kunden an und ermöglicht ihnen, Details z
 #: Blocks/BumpLineItem/block.json
 msgctxt "block description"
 msgid "Displays the order bump discount."
-msgstr "Zeigt den Bestellstoßrabatt an."
+msgstr "Zeigt den Order Bump-Rabatt an."
 
 #: Blocks/TaxLineItem/block.json
 msgctxt "block description"
 msgid "Displays the order tax. (if there is tax)"
-msgstr "Zeigt die Bestellsteuer an. (wenn es steuer gibt)"
+msgstr "Zeigt die MwSt. an. (wenn es eine MwSt. gibt)"
 
 #: Blocks/Total/block.json
 msgctxt "block description"
@@ -3675,7 +3744,7 @@ msgstr "Zeigt die Gesamtposition an."
 #: Blocks/Dashboard/DashboardPages/block.json
 msgctxt "block description"
 msgid "Displays the users customer dashboard pages."
-msgstr "Zeigt die Kunden-Dashboard-Seiten des Benutzers an."
+msgstr "Zeigt die Kunden-Dashboard-Seiten an."
 
 #: Blocks/Dashboard/DashboardPage/block.json
 #: Blocks/Dashboard/DashboardTab/block.json
@@ -3686,7 +3755,7 @@ msgstr "Zeigt die Kunden-Dashboard-Registerkarte des Benutzers an."
 #: Blocks/Dashboard/DashboardTabs/block.json
 msgctxt "block description"
 msgid "Displays the users customer dashboard tabs."
-msgstr "Zeigt die Registerkarten des Benutzer-Kunden-Dashboards an."
+msgstr "Zeigt die Registerkarten des Kunden-Dashboards an."
 
 #: Blocks/Dashboard/CustomerDashboard/block.json
 msgctxt "block description"
@@ -3696,7 +3765,7 @@ msgstr "Zeigt das Kunden-Dashboard des Benutzers an."
 #: Blocks/Divider/block.json
 msgctxt "block title"
 msgid "Divider"
-msgstr "Teiler"
+msgstr "Trennlinie"
 
 #: address.js:77
 msgid "Djibouti"
@@ -3747,7 +3816,7 @@ msgstr "Spendenbetrag"
 
 #: products/modules/Prices/Price/Header.js:282
 msgid "Done"
-msgstr "Getan"
+msgstr "Erledigt"
 
 #: src/Rest/SubscriptionProtocolRestServiceProvider.php:105
 msgid "Downgrade behavior. Either pending or immediate."
@@ -3764,7 +3833,7 @@ msgstr "Downgrades passieren"
 #: Controllers/DownloadController.php:110
 #: sc-downloads-list.js:74
 msgid "Download"
-msgstr "Herunterladen"
+msgstr "Download"
 
 #: invoices/modules/LineItems.js:55
 msgid "Download Invoice"
@@ -3784,19 +3853,19 @@ msgstr "Quittung/Rechnung herunterladen"
 
 #: products/modules/Downloads.js:58
 msgid "Download added."
-msgstr "Herunterladen hinzugefügt."
+msgstr "Download hinzugefügt."
 
 #: products/modules/SingleDownload.js:103
 msgid "Download archived."
-msgstr "Archiviert herunterladen."
+msgstr "Archivierte herunterladen."
 
 #: products/modules/SingleDownload.js:77
 msgid "Download removed."
-msgstr "Herunterladen entfernt."
+msgstr "Download entfernt."
 
 #: products/modules/SingleDownload.js:102
 msgid "Download un-archived."
-msgstr "Unarchiviert herunterladen."
+msgstr "Download Nicht-Archivierte"
 
 #: products/modules/Downloads.js:75
 #: Controllers/DownloadController.php:120
@@ -3808,11 +3877,11 @@ msgstr "Downloads"
 
 #: util.js:43
 msgid "Draft"
-msgstr "Luftzug"
+msgstr "Entwurf"
 
 #: sc-checkout.js:187
 msgid "Due to processor restrictions, only one checkout form is allowed on the page."
-msgstr "Aufgrund von Verarbeitungseinschränkungen ist nur ein Checkout-Formular auf der Seite zulässig."
+msgstr "Aufgrund von Verarbeitungseinschränkungen ist nur ein Bestellformular auf der Seite zulässig."
 
 #: components/data-tables/charges-data-table/Refund.js:121
 msgid "Duplicate"
@@ -3868,11 +3937,15 @@ msgstr "Stornierungsgrund bearbeiten"
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:216
 msgid "Edit Cart"
-msgstr "Einkaufswagen bearbeiten"
+msgstr "Warenkorb bearbeiten"
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:209
 msgid "Edit Checkout Form"
-msgstr "Checkout-Formular bearbeiten"
+msgstr "Bestellformulare bearbeiten"
+
+#: Blocks/ConditionalForm/edit.js:86
+msgid "Edit Conditions"
+msgstr "Bedingungen bearbeiten"
 
 #: coupons/EditCoupon.js:139
 msgid "Edit Coupon"
@@ -3940,12 +4013,12 @@ msgstr "El Salvador"
 #: customers/modules/Details.js:59
 #: settings/brand/BrandSettings.js:157
 msgid "Email"
-msgstr "Email"
+msgstr "E-Mail"
 
 #: Blocks/Email/block.json
 msgctxt "block title"
 msgid "Email"
-msgstr "Email"
+msgstr "E-Mail"
 
 #: abandoned-checkouts/modules/Schedule.js:31
 msgid "Email #%d"
@@ -3954,7 +4027,7 @@ msgstr "E-Mail # %d"
 #: Blocks/Dashboard/WordPressAccount/edit.js:55
 #: sc-login-form.js:102
 msgid "Email Address"
-msgstr "E-Mail-Addresse"
+msgstr "E-Mail-Adresse"
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:179
 msgid "Email Sent"
@@ -3986,11 +4059,11 @@ msgstr "Aktivieren Sie die PayPal-Zahlung"
 
 #: settings/account/AccountSettings.js:260
 msgid "Enable Recaptcha spam protection on checkout forms."
-msgstr "Aktivieren Sie den Recaptcha-Spamschutz für Checkout-Formulare."
+msgstr "Aktivieren Sie den Recaptcha-Spamschutz für die Bestellformulare."
 
 #: settings/advanced/AdvancedSettings.js:80
 msgid "Enable Slide-Out Cart"
-msgstr "Slide-Out Cart aktivieren"
+msgstr "Slide-Out Warenkorb aktivieren"
 
 #: Blocks/Payment/components/Inspector.js:65
 msgid "Enable Stripe payment"
@@ -4030,11 +4103,11 @@ msgstr "Aktivieren Sie dies, wenn Ihr Unternehmen bis zu 10.000 EUR Umsatz in an
 
 #: settings/abandoned/AbandonedSettings.js:102
 msgid "Enabled"
-msgstr "Ermöglicht"
+msgstr "Einschalten"
 
 #: Blocks/Payment/components/Inspector.js:42
 msgid "Enabled Processors"
-msgstr "Aktivierte Prozessoren"
+msgstr "Aktivierte Zahlungsabwickler"
 
 #: coupons/modules/Limits.js:72
 msgid "End Date"
@@ -4075,7 +4148,7 @@ msgstr "Geben Sie einen Betrag ein"
 
 #: Blocks/Switch/edit.js:78
 msgid "Enter a description..."
-msgstr "Geben Sie eine Beschreibung ein..."
+msgstr "Geben Sie eine Beschreibung ein ..."
 
 #: Blocks/CheckoutForm/components/Empty.js:92
 #: Blocks/CheckoutForm/components/Setup.js:103
@@ -4100,7 +4173,7 @@ msgstr "Gutschein-Code eingeben"
 
 #: licenses/modules/Details/index.js:56
 msgid "Enter the number of unique activations for this key. Leave blank for infinite."
-msgstr "Geben Sie die Anzahl der eindeutigen Aktivierungen für diesen Schlüssel ein. Leer lassen für unendlich."
+msgstr "Geben Sie die Anzahl der eindeutigen Aktivierungen für diesen Schlüssel ein- leer lassen für unendlich."
 
 #: products/modules/Licensing.js:64
 msgid "Enter the number of unique activations per license key. Leave blank for infinite."
@@ -4130,7 +4203,7 @@ msgstr "Gib deinen Lizenz-Schlüssel ein"
 
 #: settings/upgrade/UpgradeSettings.js:58
 msgid "Enter your license key to activate your plan on thie store."
-msgstr "Geben Sie Ihren Lizenzschlüssel ein, um Ihren Plan in diesem Geschäft zu aktivieren."
+msgstr "Geben Sie Ihren Lizenzschlüssel ein, um Ihren Plan in diesem Shop zu aktivieren."
 
 #: sc-login-form.js:100
 msgid "Enter your password"
@@ -4209,6 +4282,7 @@ msgstr "Beispielprodukt"
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:117
 #: sc-payment-methods-list.js:129
 #: sc-subscription-payment-method.js:145
+#, fuzzy
 msgid "Exp."
 msgstr "Erw."
 
@@ -4262,7 +4336,7 @@ msgstr "Speichern fehlgeschlagen."
 
 #: components/data-tables/subscriptions-data-table/StartPlan.js:55
 msgid "Failed to start subscription."
-msgstr "Abonnement konnte nicht gestartet werden."
+msgstr "Fehler beim Starten des Abonnements."
 
 #: components/data-tables/subscriptions-data-table/UnCancel.js:44
 msgid "Failed to un-cancel subscription."
@@ -4311,7 +4385,7 @@ msgstr "An das Produkt angehängte Dateien."
 #: src/WordPress/PostTypes/CartPostTypeService.php:222
 #: src/WordPress/PostTypes/FormPostTypeService.php:215
 msgid "Filter checkout forms list"
-msgstr "Checkout-Formularliste filtern"
+msgstr "Bestellformulare filtern"
 
 #: settings/abandoned/AbandonedSettings.js:130
 msgid "Final Email Delay"
@@ -4320,17 +4394,17 @@ msgstr "Endgültige E-Mail-Verzögerung"
 #: Blocks/Form/edit.js:340
 #: sc-checkout.js:194
 msgid "Finalizing order..."
-msgstr "Bestellung abschließen..."
+msgstr "Bestellung abschließen ..."
 
 #: admin/connection-invalid.php:44
 #: admin/connection.php:53
 #: admin/plugin.php:87
 msgid "Find My Api Token"
-msgstr "Finden Sie mein API-Token"
+msgstr "Mein API-Token finden"
 
 #: coupons/modules/ProductRestrictions.js:84
 msgid "Find a product..."
-msgstr "Produkt finden..."
+msgstr "Produkt finden ..."
 
 #: licenses/modules/Activations/Activation.js:160
 msgid "Fingerprint"
@@ -4365,11 +4439,15 @@ msgstr "Hilfe beim Vornamen"
 
 #: Blocks/Name/components/Inspector.js:17
 msgid "First Name Label"
-msgstr "Vorname-Etikett"
+msgstr "Vorname Label"
 
 #: settings/customer/CustomerSettings.js:242
 msgid "First email sent when a checkout is abandoned."
-msgstr "Erste E-Mail, die gesendet wird, wenn ein Checkout abgebrochen wird."
+msgstr "Erste E-Mail, die gesendet wird, wenn ein Kauf abgebrochen wird."
+
+#: Blocks/ConditionalForm/edit.js:163
+msgid "First, add some conditions for the display of this group of blocks."
+msgstr "Fügen Sie zunächst einige Bedingungen für die Anzeige dieser Gruppe von Blöcken hinzu."
 
 #: bumps/modules/Discount.js:48
 msgid "Fixed"
@@ -4402,12 +4480,12 @@ msgstr "Für immer"
 
 #: Blocks/Form/edit.js:427
 msgid "Form"
-msgstr "Bilden"
+msgstr "Formular"
 
 #: Blocks/Form/block.json
 msgctxt "block title"
 msgid "Form"
-msgstr "Bilden"
+msgstr "Formular"
 
 #: Blocks/Form/edit.js:230
 msgid "Form Highlight Color"
@@ -4436,7 +4514,7 @@ msgstr "Formulartitel"
 #: src/WordPress/PostTypes/CartPostTypeService.php:124
 #: src/WordPress/PostTypes/FormPostTypeService.php:81
 msgid "Forms"
-msgstr "Formen"
+msgstr "Formulare"
 
 #: address.js:92
 msgid "France"
@@ -4459,7 +4537,7 @@ msgstr "Kostenlose Bestell-E-Mails"
 #: subscriptions/edit/modules/UpcomingPeriod.js:77
 #: sc-upcoming-invoice.js:203
 msgid "Free Trial"
-msgstr "Kostenlose Testphase"
+msgstr "Kostenlose Testversion"
 
 #: products/components/price/parts/Trial.js:14
 #: products/components/price/parts/Trial.js:40
@@ -4492,17 +4570,21 @@ msgctxt "block title"
 msgid "Full Name"
 msgstr "Vollständiger Name"
 
+#: Blocks/Columns/edit.js:125
+msgid "Full vertical height"
+msgstr "Volle vertikale Höhe"
+
 #: settings/portal/PortalSettings.js:50
 msgid "Functionality"
 msgstr "Funktionalität"
 
 #: settings/abandoned/AbandonedSettings.js:278
 msgid "GDPR Message"
-msgstr "DSGVO-Nachricht"
+msgstr "DSGVO Nachricht"
 
 #: settings/abandoned/AbandonedSettings.js:254
 msgid "GDPR Settings"
-msgstr "DSGVO-Einstellungen"
+msgstr "DSGVO Einstellungen"
 
 #: src/Support/TimeDate.php:142
 msgid "GMT+00:00) Edinburgh"
@@ -5186,7 +5268,7 @@ msgstr "GMT-11:00) Amerikanisch-Samoa"
 
 #: src/Support/TimeDate.php:116
 msgid "GMT-11:00) Midway Island"
-msgstr "GMT-11:00) Midway Island"
+msgstr "GMT-11:00) Midwayinseln"
 
 #: src/Support/TimeDate.php:114
 msgid "GMT-12:00) International Date Line West"
@@ -5239,7 +5321,7 @@ msgstr "Holen Sie sich den Abonnement-Sparer"
 
 #: admin/onboarding/show.php:56
 msgid "Get started by creating your first product or creating a new checkout form."
-msgstr "Legen Sie los, indem Sie Ihr erstes Produkt erstellen oder ein neues Checkout-Formular erstellen."
+msgstr "Legen Sie los, indem Sie Ihr erstes Produkt erstellen oder ein neues Checkout-Formular erstellen"
 
 #: Blocks/CheckoutForm/components/Empty.js:170
 msgid "Get started by selecting a form or start build a new form."
@@ -5266,12 +5348,12 @@ msgstr "Gibraltar-Pfund"
 #: sc-subscription-payment.js:112
 #: sc-subscription-renew.js:89
 msgid "Go Back"
-msgstr "Geh zurück"
+msgstr "Zurück"
 
 #: templates/Model.js:177
 #: templates/SingleModel.js:150
 msgid "Go back."
-msgstr "Geh zurück."
+msgstr "Zurück."
 
 #: address.js:102
 msgid "Greece"
@@ -5386,7 +5468,7 @@ msgstr "Heiliger Stuhl (Staat Vatikanstadt)"
 
 #: web/no-customer.php:8
 msgid "Home"
-msgstr "Heim"
+msgstr "Home"
 
 #: src/Support/Currency.php:292
 msgid "Honduran Lempira"
@@ -5398,7 +5480,7 @@ msgstr "Honduras"
 
 #: settings/account/AccountSettings.js:242
 msgid "Honeypot"
-msgstr "Honigtopf"
+msgstr "Honeypot"
 
 #: address.js:116
 msgid "Hong Kong"
@@ -5414,7 +5496,7 @@ msgstr "Std"
 
 #: dashboard/components/GetStarted.js:78
 msgid "How To Add Buttons"
-msgstr "So fügen Sie Schaltflächen hinzu"
+msgstr "So fügen Sie Buttons hinzu"
 
 #: src/Support/Currency.php:294
 msgid "Hungarian Forint"
@@ -5430,7 +5512,7 @@ msgstr "IE Nachnahme"
 
 #: Blocks/CartMessage/edit.js:58
 msgid "I.E. Free shipping on all orders…"
-msgstr "IE Kostenloser Versand für alle Bestellungen…"
+msgstr "IE Kostenloser Versand für alle Bestellungen …"
 
 #: settings/processors/CreateEditPaymentMethod.js:97
 msgid "I.E. Pay with cash upon delivery."
@@ -5465,6 +5547,7 @@ msgid "If enabled, require all customer’s in the EU to enter a EU VAT number w
 msgstr "Wenn aktiviert, müssen alle Kunden in der EU beim Bezahlen eine EU-Umsatzsteuernummer eingeben."
 
 #: bumps/modules/Behavior.js:14
+#, fuzzy
 msgid "If enabled, the discount will be applied if the display conditions are satisfied, even if they do not click the bump. If disabled, the discount will only be applied if the customer clicks the order bump."
 msgstr "Wenn aktiviert, wird der Rabatt angewendet, wenn die Anzeigebedingungen erfüllt sind, auch wenn sie nicht auf die Erhebung klicken. Wenn deaktiviert, wird der Rabatt nur angewendet, wenn der Kunde auf die Bestellbestätigung klickt."
 
@@ -5494,39 +5577,43 @@ msgstr "Wenn für Produkte im Einkaufswagen Steuern, aber kein Versand erforderl
 
 #: src/Rest/TaxProtocolRestServiceProvider.php:95
 msgid "If set to true GST taxes will be calculated for all Canadian provinces."
-msgstr "Bei Einstellung auf True werden GST-Steuern für alle kanadischen Provinzen berechnet."
+msgstr "Bei Einstellung auf \"wahr\" werden GST-Steuern für alle kanadischen Provinzen berechnet."
 
 #: src/Rest/TaxProtocolRestServiceProvider.php:105
 msgid "If set to true VAT taxes will be calculated for all EU countries."
-msgstr "Bei Einstellung auf true werden die Mehrwertsteuern für alle EU-Länder berechnet."
+msgstr "Bei Einstellung auf \"wahr\" werden die Mehrwertsteuern für alle EU-Länder berechnet."
 
 #: src/Rest/TaxProtocolRestServiceProvider.php:100
 msgid "If set to true VAT taxes will be calculated using the account's home country VAT rate."
-msgstr "Wenn dies auf True gesetzt ist, werden die Mehrwertsteuersteuern anhand des Mehrwertsteuersatzes des Heimatlandes des Kontos berechnet."
+msgstr "Wenn dies auf \"wahr\" gesetzt ist, werden die Mehrwertsteuersteuern anhand des Mehrwertsteuersatzes des Heimatlandes des Kontos berechnet."
 
 #: src/Rest/CustomerNotificationProtocolRestServiceProvider.php:95
 msgid "If set to true abandonded order reminder emails will be sent to customers."
-msgstr "Bei Einstellung auf „true“ werden E-Mails zur Erinnerung an abgebrochene Bestellungen an Kunden gesendet."
+msgstr "Bei Einstellung auf „wahr“ werden E-Mails zur Erinnerung an abgebrochene Bestellungen an Kunden gesendet."
 
 #: src/Rest/CustomerNotificationProtocolRestServiceProvider.php:100
 msgid "If set to true order confirmation emails will be sent to customers."
-msgstr "Wenn auf true gesetzt, werden Auftragsbestätigungs-E-Mails an Kunden gesendet."
+msgstr "Wenn auf \"wahr\" gesetzt, werden Auftragsbestätigungs-E-Mails an Kunden gesendet."
 
 #: src/Rest/CustomerNotificationProtocolRestServiceProvider.php:110
 msgid "If set to true refund emails will be sent to customers."
-msgstr "Bei Einstellung auf „true“ werden Rückerstattungs-E-Mails an Kunden gesendet."
+msgstr "Bei Einstellung auf „wahr“ werden Rückerstattungs-E-Mails an Kunden gesendet."
 
 #: src/Rest/CustomerNotificationProtocolRestServiceProvider.php:105
 msgid "If set to true subscription dunning emails will be sent to customers."
-msgstr "Wenn das Abonnement auf True gesetzt ist, werden Mahn-E-Mails an Kunden gesendet."
+msgstr "Wenn das Abonnement auf \"wahr\" gesetzt ist, werden Mahn-E-Mails an Kunden gesendet."
 
 #: src/Rest/TaxProtocolRestServiceProvider.php:110
 msgid "If set to true taxes will be automatically calculated."
-msgstr "Bei True werden die Steuern automatisch berechnet."
+msgstr "Bei \"wahr\" werden die Steuern automatisch berechnet."
 
 #: Blocks/Address/edit.js:47
 msgid "If tax or shipping is required for checkout the address field will automatically be required."
-msgstr "Wenn Steuern oder Versand für den Checkout erforderlich sind, wird das Adressfeld automatisch ausgefüllt."
+msgstr "Wenn Steuern oder Versand für den Bestellprozess erforderlich sind, wird das Adressfeld automatisch ausgefüllt."
+
+#: Blocks/CheckoutErrors/edit.js:9
+msgid "If there are errors in the checkout, they will display here."
+msgstr "Wenn beim Bestellprozess Fehler auftreten, werden diese hier angezeigt."
 
 #: products/components/price/parts/ScratchAmount.js:12
 msgid "If this item is on sale, enter a pre-sale price that is greater than the price."
@@ -5546,7 +5633,7 @@ msgstr "Wenn Sie im Vereinigten Königreich geschäftlich tätig sind, müssen S
 
 #: settings/advanced/AdvancedSettings.js:82
 msgid "If you do not wish to use the slide-out cart, you can disable this to prevent scripts from loading on your pages."
-msgstr "Wenn Sie den ausziehbaren Warenkorb nicht verwenden möchten, können Sie diesen deaktivieren, um zu verhindern, dass Skripte auf Ihre Seiten geladen werden."
+msgstr "Wenn Sie den Slide-Out-Warenkorb nicht verwenden möchten, können Sie diesen deaktivieren, um zu verhindern, dass Skripte auf Ihre Seiten geladen werden."
 
 #: settings/tax-region/TaxRegionSettings.js:43
 msgid "If you need to collect provincial tax (British Columbia, Manitoba, Quebec, and Saskatchewan) in addition to GST/HST, then you'll need to setup registrations for each province."
@@ -5558,7 +5645,7 @@ msgstr "Wenn Sie beabsichtigen, für jedes EU-Land eine separate Umsatzsteuererk
 
 #: settings/order/OrderProtocol.js:64
 msgid "If you would like your order numbers to have a special prefix, you can enter it here. It must not contain underscores, spaces or dashes."
-msgstr "Wenn Sie möchten, dass Ihre Bestellnummern ein spezielles Präfix haben, können Sie es hier eingeben. Es darf keine Unterstriche, Leerzeichen oder Bindestriche enthalten."
+msgstr "Wenn Sie möchten, dass Ihre Bestellnummern einen speziellen Präfix haben, können Sie diesen hier eingeben. Es darf keine Unterstriche, Leerzeichen oder Bindestriche enthalten."
 
 #: src/Webhooks/WebhooksHistoryService.php:145
 msgid "Ignore notice."
@@ -5617,7 +5704,7 @@ msgstr "Indonesische Rupiah"
 
 #: Blocks/CustomerDashboardButton/edit.js:97
 msgid "Info"
-msgstr "Die Info"
+msgstr "Info"
 
 #: Blocks/AddToCartButton/edit.js:79
 msgid "Input Help"
@@ -5625,7 +5712,7 @@ msgstr "Eingabehilfe"
 
 #: Blocks/AddToCartButton/edit.js:70
 msgid "Input Label"
-msgstr "Eingabeetikett"
+msgstr "Eingabe Label"
 
 #: Blocks/AddToCartButton/edit.js:86
 msgid "Input Placeholder"
@@ -5718,7 +5805,7 @@ msgstr "Rechnung"
 
 #: invoices/modules/LineItems.js:28
 msgid "Invoice Details"
-msgstr "Rechnungs-Details"
+msgstr "Rechnungsdetails"
 
 #: sc-invoices-list.js:140
 msgid "Invoice History"
@@ -5793,7 +5880,7 @@ msgstr "Anscheinend sind Sie noch kein Kunde."
 
 #: settings/order/OrderProtocol.js:107
 msgid "It must be greater than the largest existing order number."
-msgstr "Sie muss größer sein als die größte vorhandene Bestellnummer."
+msgstr "Sie muss größer sein, als die größte vorhandene Bestellnummer."
 
 #: address.js:126
 msgid "Italy"
@@ -5855,7 +5942,7 @@ msgstr "Behalte meinen Plan"
 
 #: components/subscriptions/CancelPendingUpdate.js:197
 msgid "Keep Update"
-msgstr "Update halten"
+msgstr "Update behalten"
 
 #: address.js:132
 msgid "Kenya"
@@ -5868,7 +5955,7 @@ msgstr "Kenianischer Schilling"
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:60
 #: sc-licenses-list.js:54
 msgid "Key"
-msgstr "Taste"
+msgstr "Schlüssel"
 
 #: address.js:133
 msgid "Kiribati"
@@ -5912,19 +5999,19 @@ msgstr "Kirgisischer Som"
 #: Blocks/Textarea/edit.js:42
 #: Blocks/Total/edit.js:15
 msgid "Label"
-msgstr "Etikett"
+msgstr "Label"
 
 #: Blocks/RadioGroup/edit.js:65
 msgid "Label Name"
-msgstr "Markenname"
+msgstr "Label Name"
 
 #: Blocks/DonationAmount/edit.js:22
 msgid "Label for donation"
-msgstr "Etikett für Spende"
+msgstr "Label für Spende"
 
 #: Blocks/Total/edit.js:22
 msgid "Label with Free Trial"
-msgstr "Etikett mit kostenloser Testversion"
+msgstr "Label mit kostenloser Testversion"
 
 #: src/Support/Currency.php:304
 msgid "Lao Kip"
@@ -5957,16 +6044,16 @@ msgstr "Im vergangenen Monat"
 #: sc-wordpress-user-edit.js:58
 #: sc-wordpress-user.js:27
 msgid "Last Name"
-msgstr "Familienname, Nachname"
+msgstr "Nachname"
 
 #: Blocks/LastName/block.json
 msgctxt "block title"
 msgid "Last Name"
-msgstr "Familienname, Nachname"
+msgstr "Nachname"
 
 #: Blocks/Name/components/Inspector.js:35
 msgid "Last Name Label"
-msgstr "Nachname-Etikett"
+msgstr "Nachname Label"
 
 #: coupons/Sidebar.js:88
 #: products/Sidebar.js:67
@@ -6074,12 +6161,12 @@ msgstr "Liechtenstein"
 #: util.js:41
 #: sc-subscription-switch.js:134
 msgid "Lifetime"
-msgstr "Lebensdauer"
+msgstr "Lifetime"
 
 #: subscriptions/shared/EndDate.js:11
 #: subscriptions/show/modules/Details.js:20
 msgid "Lifetime Subscription"
-msgstr "Lebenslanges Abonnement"
+msgstr "Lifetime Abonnement"
 
 #: src/Integrations/LifterLMS/LifterLMSService.php:46
 #: src/Integrations/LifterLMS/LifterLMSService.php:122
@@ -6125,7 +6212,11 @@ msgstr "Beschränken Sie die Verwendung dieses Aktionscodes"
 #: Blocks/LineItems/block.json
 msgctxt "block title"
 msgid "Line Items"
-msgstr "Werbebuchungen"
+msgstr "Einzelposten"
+
+#: Blocks/StoreLogo/edit.js:193
+msgid "Link image to home"
+msgstr "Bild mit Startseite verlinken"
 
 #: formats/index.js:55
 msgid "Link removed."
@@ -6144,7 +6235,7 @@ msgstr "Litauen"
 #: Blocks/Form/components/Mode.js:18
 #: Blocks/Form/components/Mode.js:37
 msgid "Live"
-msgstr "Wohnen"
+msgstr "Live"
 
 #: admin/processors.php:65
 #: admin/processors.php:143
@@ -6164,7 +6255,7 @@ msgstr "Mehr laden"
 
 #: Blocks/Form/edit.js:300
 msgid "Loading Text"
-msgstr "Text laden"
+msgstr "Text wird geladen"
 
 #: licenses/modules/Activations/Activation.js:193
 msgid "Local / Staging"
@@ -6179,11 +6270,11 @@ msgstr "Lokales Reverse-Charge"
 #: sc-login-form.js:100
 #: sc-login-provider2.js:79
 msgid "Login"
-msgstr "Anmeldung"
+msgstr "Login"
 
 #: sc-login-provider2.js:76
 msgid "Login to your account"
-msgstr "ins Konto einloggen"
+msgstr "Kundenportal einloggen"
 
 #: sc-login-form.js:145
 msgid "Login with Code"
@@ -6201,11 +6292,11 @@ msgstr "Ausloggen"
 #: Blocks/LogoutButton/block.json
 msgctxt "block title"
 msgid "Logout Button"
-msgstr "Abmelden-Schaltfläche"
+msgstr "Logout Button"
 
 #: Blocks/LogoutButton/edit.js:26
 msgid "Logout button settings"
-msgstr "Einstellungen der Abmeldeschaltfläche"
+msgstr "Einstellungen Logout Button"
 
 #: address.js:144
 msgid "Luxembourg"
@@ -6229,16 +6320,16 @@ msgstr "Madagaskar"
 
 #: settings/customer/CustomerSettings.js:277
 msgid "Magic Sign In"
-msgstr "Magische Anmeldung"
+msgstr "Magic Sign In"
 
 #: customers/modules/PaymentMethods/Actions.js:87
 #: sc-payment-methods-list.js:131
 msgid "Make Default"
-msgstr "Machen Standard"
+msgstr "als Standard machen"
 
 #: settings/tax-region/RegistrationForm.js:235
 msgid "Make sure you’re registered with the appropriate tax jurisdictions before enabling tax collection."
-msgstr "Stellen Sie sicher, dass Sie bei den entsprechenden Steuerhoheiten registriert sind, bevor Sie die Steuererhebung aktivieren."
+msgstr "Stellen Sie sicher, dass Sie bei den zuständigen Finanzämtern registriert sind, bevor Sie die Steuererhebung aktivieren."
 
 #: src/Support/Currency.php:310
 msgid "Malagasy Ariary"
@@ -6369,9 +6460,17 @@ msgstr "Mauritius"
 msgid "Max"
 msgstr "max"
 
+#: Blocks/Textarea/edit.js:58
+msgid "Max Length"
+msgstr "maximale Länge"
+
 #: products/components/price/parts/AdHoc.js:40
 msgid "Maximum Price"
 msgstr "Höchstpreis"
+
+#: Blocks/StoreLogo/edit.js:176
+msgid "Maximum height"
+msgstr "maximale Höhe"
 
 #: address.js:156
 msgid "Mayotte"
@@ -6447,11 +6546,11 @@ msgstr "Mexiko"
 
 #: settings/tax-region/RegionSettings.js:90
 msgid "Micro-Business Exemption"
-msgstr "Ausnahmeregelung für Kleinstunternehmen"
+msgstr "Ausnahmeregelung für Kleinunternehmen"
 
 #: address.js:158
 msgid "Micronesia, Federated States of"
-msgstr "Mikronesien, Föderierte Staaten von"
+msgstr "Föderierte Staaten von Mikronesien"
 
 #: products/components/price/parts/AdHoc.js:29
 msgid "Minimum Price"
@@ -6459,11 +6558,11 @@ msgstr "Minimaler Preis"
 
 #: settings/abandoned/Delay.js:17
 msgid "Minutes"
-msgstr "Protokoll"
+msgstr "min"
 
 #: products/modules/Prices/Price/Header.js:269
 msgid "Miscellaneous"
-msgstr "Sonstig"
+msgstr "sonstiges"
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:275
 msgid "Mode"
@@ -6518,7 +6617,7 @@ msgstr "Marokko"
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:366
 msgid "Move to Trash"
-msgstr "Ab in den Müll"
+msgstr "Löschen"
 
 #: src/Support/Currency.php:320
 msgid "Mozambican Metical"
@@ -6541,6 +6640,7 @@ msgid "Must be blank"
 msgstr "Muss leer sein"
 
 #: src/Support/Errors/Translations/types.php:30
+#, fuzzy
 msgid "Must be even"
 msgstr "Muss eben sein"
 
@@ -6550,6 +6650,7 @@ msgid "Must be larger."
 msgstr "Muss größer sein."
 
 #: src/Support/Errors/Translations/types.php:29
+#, fuzzy
 msgid "Must be odd"
 msgstr "Muss seltsam sein"
 
@@ -6594,7 +6695,7 @@ msgstr "Name"
 
 #: Blocks/Address/edit.js:97
 msgid "Name Placeholder"
-msgstr "Namensplatzhalter"
+msgstr "Nachnamen Platzhalter"
 
 #: Blocks/NameYourPrice/block.json
 msgctxt "block title"
@@ -6667,15 +6768,15 @@ msgstr "Neuer Warenkorb"
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:208
 msgid "New Checkout Form"
-msgstr "Neues Checkout-Formular"
+msgstr "Neues Bestellformular"
 
 #: Blocks/CheckoutForm/components/Empty.js:186
 msgid "New Form"
-msgstr "Neue Form"
+msgstr "Neues Formular"
 
 #: settings/customer/CustomerSettings.js:364
 msgid "New Order"
-msgstr "Neue Ordnung"
+msgstr "Neue Bestellung"
 
 #: sc-password-nag.js:86
 #: sc-wordpress-password-edit.js:59
@@ -6765,7 +6866,7 @@ msgstr "Kein Grund angegeben"
 
 #: sc-customer-email.js:79
 msgid "No Thanks"
-msgstr "Nein danke"
+msgstr "Nein, danke."
 
 #: subscriptions/show/modules/Periods.js:96
 msgid "No billing periods"
@@ -6782,12 +6883,12 @@ msgstr "Keine Gebühren"
 #: src/WordPress/PostTypes/CartPostTypeService.php:221
 #: src/WordPress/PostTypes/FormPostTypeService.php:214
 msgid "No checkout forms found in Trash."
-msgstr "Keine Checkout-Formulare im Papierkorb gefunden."
+msgstr "Keine Bestellformulare im Papierkorb gefunden."
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:220
 #: src/WordPress/PostTypes/FormPostTypeService.php:213
 msgid "No checkout forms found."
-msgstr "Keine Checkout-Formulare gefunden."
+msgstr "Keine Bestellformulare gefunden."
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:278
 msgid "No code specified"
@@ -6816,7 +6917,7 @@ msgstr "Keine manuellen Zahlungsmethoden."
 
 #: customers/modules/Charges.js:88
 msgid "No more charges."
-msgstr "Keine Gebühren mehr."
+msgstr "Keine Belastungen mehr."
 
 #: customers/modules/Orders.js:80
 msgid "No more orders."
@@ -6832,7 +6933,7 @@ msgstr "Kein Name angegeben"
 
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:175
 msgid "No order bumps found."
-msgstr "Keine Bestelllücken gefunden."
+msgstr "Keine Order Bumps gefunden."
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:119
 #: src/Controllers/Admin/Products/ProductsListTable.php:222
@@ -6851,7 +6952,7 @@ msgstr "Keine Produkte gefunden."
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:208
 msgid "None"
-msgstr "Keiner"
+msgstr "Nichts"
 
 #: components/data-tables/OrdersDataTable.js:30
 #: components/data-tables/purchases-data-table/index.js:22
@@ -6861,7 +6962,7 @@ msgstr "Keiner"
 #: customers/modules/PaymentMethods/index.js:47
 #: customers/modules/Subscriptions.js:80
 msgid "None found."
-msgstr "Keine gefunden."
+msgstr "Nichts gefunden."
 
 #: bumps/modules/Conditions.js:53
 msgid "None of these items are in the cart."
@@ -6917,11 +7018,11 @@ msgstr "Nicht gefunden."
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:360
 msgctxt "comment"
 msgid "Not spam"
-msgstr "Kein spam"
+msgstr "Kein Spam"
 
 #: settings/abandoned/AbandonedSettings.js:269
 msgid "Note: By checking this, it will show confirmation text below the email on checkout forms."
-msgstr "Hinweis: Wenn Sie dies aktivieren, wird der Bestätigungstext unter der E-Mail auf Checkout-Formularen angezeigt."
+msgstr "Hinweis: Wenn Sie dies aktivieren, wird der Bestätigungstext unter der E-Mail auf Bestellformularen angezeigt."
 
 #: sc-select2.js:2060
 msgid "Nothing Found"
@@ -6934,7 +7035,7 @@ msgstr "Benachrichtigungseinstellungen"
 
 #: settings/abandoned/AbandonedSettings.js:92
 msgid "Notification settings for abandoned checkouts"
-msgstr "Benachrichtigungseinstellungen für abgebrochene Checkouts"
+msgstr "Benachrichtigungseinstellungen für abgebrochene Bestellprozesse."
 
 #: layouts/partials/admin-settings-sidebar.php:32
 #: customers/modules/Notifications.js:9
@@ -6967,13 +7068,18 @@ msgstr "Anzahl der Tage bis zum Ablauf"
 msgid "Number of months"
 msgstr "Anzahl der Monate"
 
+#: Blocks/ConditionalForm/rules.js:240
+#: Blocks/ConditionalForm/rules.js:252
+msgid "OR"
+msgstr "ODER"
+
 #: settings/subscription-preservation/EditReason.js:105
 msgid "Offer Discount"
 msgstr "Rabatt anbieten"
 
 #: settings/subscription-preservation/EditReason.js:107
 msgid "Offer the rewewal discount when this option is selected"
-msgstr "Bieten Sie den Wiederholungsrabatt an, wenn diese Option ausgewählt ist"
+msgstr "Bieten Sie den Verlängerungsrabatt an, wenn diese Option ausgewählt ist."
 
 #: hocs/withConfirm.js:21
 msgid "Okay"
@@ -7053,7 +7159,7 @@ msgstr "Einmal"
 
 #: src/Support/Errors/Translations/types.php:36
 msgid "Only one active abandoned checkout is allowed at a time"
-msgstr "Es ist jeweils nur ein aktiver abgebrochener Checkout zulässig"
+msgstr "Es ist jeweils nur ein aktiver abgebrochene Kauf zulässig"
 
 #: src/Rest/ProductsRestServiceProvider.php:125
 msgid "Only return objects that belong to the given product groups."
@@ -7061,7 +7167,7 @@ msgstr "Geben Sie nur Objekte zurück, die zu den angegebenen Produktgruppen geh
 
 #: src/Rest/PriceRestServiceProvider.php:90
 msgid "Only return objects that belong to the given products."
-msgstr "Geben Sie nur Gegenstände zurück, die zu den angegebenen Produkten gehören."
+msgstr "Geben Sie nur Objekte zurück, die zu den angegebenen Produkten gehören."
 
 #: src/Rest/StatisticRestServiceProvider.php:80
 msgid "Only return objects that have this currency. If not set, this will fallback to the account's default currency."
@@ -7095,16 +7201,16 @@ msgstr "Optional"
 #: subscriptions/show/modules/Orders.js:15
 #: Controllers/OrderController.php:120
 msgid "Order"
-msgstr "Befehl"
+msgstr "Bestellung"
 
 #: sc-order-confirmation-details.js:44
 msgid "Order #%s"
-msgstr "Bestellen Sie # %s"
+msgstr "Bestellung # %s"
 
 #: bumps/CreateBump.js:60
 #: bumps/modules/Price.js:29
 msgid "Order Bump Price"
-msgstr "Bestellhöchstpreis"
+msgstr "Order Bump Preis"
 
 #: bumps/EditBump.js:66
 msgid "Order Bump updated."
@@ -7113,12 +7219,12 @@ msgstr "Order Bump aktualisiert."
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:129
 #: bumps/EditBump.js:170
 msgid "Order Bumps"
-msgstr "Bumps bestellen"
+msgstr "Order Bumps"
 
 #: Blocks/OrderBumps/block.json
 msgctxt "block title"
 msgid "Order Bumps"
-msgstr "Bumps bestellen"
+msgstr "Order Bumps"
 
 #: src/WordPress/Pages/PageService.php:69
 #: settings/customer/CustomerSettings.js:285
@@ -7133,7 +7239,7 @@ msgstr "Bestellbestätigung"
 #: Blocks/OrderConfirmationCustomer/block.json
 msgctxt "block title"
 msgid "Order Confirmation Customer Details"
-msgstr "Bestellbestätigung Kundendaten"
+msgstr "Bestellbestätigung Kundendetails"
 
 #: settings/customer/CustomerSettings.js:104
 msgid "Order Confirmation Emails"
@@ -7192,7 +7298,7 @@ msgstr "Bestellung nicht gefunden."
 #: Controllers/OrderController.php:59
 #: Controllers/OrderController.php:117
 msgid "Orders"
-msgstr "Aufträge"
+msgstr "Bestellungen"
 
 #: layouts/partials/admin-settings-sidebar.php:13
 #: settings/order/OrderProtocol.js:40
@@ -7218,7 +7324,7 @@ msgstr "Eigentümerdaten."
 
 #: components/CartInspectorControls.js:35
 msgid "Padding"
-msgstr "Polsterung"
+msgstr "Padding"
 
 #: src/Controllers/Admin/Orders/OrdersListTable.php:66
 #: components/data-tables/charges-data-table/index.js:35
@@ -7244,7 +7350,7 @@ msgstr "Palau"
 
 #: address.js:185
 msgid "Palestine, State of"
-msgstr "Palästina, Bundesstaat"
+msgstr "Bundesstaat Palästina"
 
 #: address.js:186
 msgid "Panama"
@@ -7297,11 +7403,11 @@ msgstr "Hilfe zur Passwortbestätigung"
 
 #: Blocks/Password/edit.js:78
 msgid "Password Confirmation Label"
-msgstr "Kennwort-Bestätigungsetikett"
+msgstr "Passwort Bestätigung Label"
 
 #: Blocks/Password/edit.js:90
 msgid "Password Confirmation Placeholder"
-msgstr "Platzhalter für die Kennwortbestätigung"
+msgstr "Passwort Bestätigung Platzhalter"
 
 #: sc-order-password.js:43
 msgid "Password does not match."
@@ -7375,7 +7481,7 @@ msgstr "Zahlungsmethoden"
 #: products/modules/Prices/Price/Header.js:64
 #: sc-subscription-switch.js:134
 msgid "Payment Plan"
-msgstr "Zahlungs Plan"
+msgstr "Zahlungsplan"
 
 #: products/modules/Prices/NewPrice/index.js:141
 msgid "Payment Type"
@@ -7448,7 +7554,7 @@ msgstr "Pro Seite"
 #: coupons/modules/Types.js:69
 #: settings/abandoned/Coupon.js:84
 msgid "Percent Off"
-msgstr "Prozent aus"
+msgstr "Rabatt in %"
 
 #: src/Rest/BumpRestServiceProvider.php:98
 msgid "Percent that will be taken off line items associated with this bump."
@@ -7464,16 +7570,17 @@ msgid "Percentage Discount"
 msgstr "Prozentualer Rabatt"
 
 #: cancellation-insights/CancellationInsights.js:283
+#, fuzzy
 msgid "Percentage Of Subscriptions Saved"
 msgstr "Prozentsatz der gespeicherten Abonnements"
 
 #: cancellation-insights/CancellationInsights.js:300
 msgid "Percentage Of Subscriptions Saved By Coupon"
-msgstr "Prozentsatz der durch Coupon eingesparten Abonnements"
+msgstr "Prozentsatz der durch Gutschein eingesparten Abonnements"
 
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:299
 msgid "Percentage of checkouts recovered"
-msgstr "Prozentsatz der wiederhergestellten Kassen"
+msgstr "Prozentsatz der wiederhergestellten Bestellvorgänge"
 
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:368
 msgid "Percentage of revenue recovered"
@@ -7492,7 +7599,7 @@ msgstr "%s dauerhaft löschen? Sie können diese Aktion nicht rückgängig mache
 
 #: bumps/EditBump.js:76
 msgid "Permanently delete this order bump? You cannot undo this action."
-msgstr "Diese Bestellerhöhung endgültig löschen? Sie können diese Aktion nicht rückgängig machen."
+msgstr "Diesen Order Bump endgültig löschen? Sie können diese Aktion nicht rückgängig machen."
 
 #: products/modules/Prices/Price/index.js:99
 msgid "Permanently delete this price? You cannot undo this action."
@@ -7549,11 +7656,11 @@ msgstr "Platzhalter"
 #: Blocks/Dashboard/CustomerSubscriptions/Block.php:79
 #: sc-upcoming-invoice.js:164
 msgid "Plan"
-msgstr "Planen"
+msgstr "Plan"
 
 #: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:52
 msgid "Plan Status"
-msgstr "Planstatus"
+msgstr "Plan Status"
 
 #: Blocks/Dashboard/CustomerSubscriptions/Block.php:106
 msgid "Plans"
@@ -7565,7 +7672,7 @@ msgstr "Bitte fügen Sie mindestens ein Produkt hinzu."
 
 #: sc-choice2.js:55
 msgid "Please choose at least one."
-msgstr "Bitte wählen Sie mindestens eine aus."
+msgstr "Bitte wählen Sie mindestens eines aus."
 
 #: sc-choice2.js:55
 msgid "Please choose one."
@@ -7573,7 +7680,7 @@ msgstr "Bitte wähle eines."
 
 #: settings/account/AccountSettings.js:270
 msgid "Please clear checkout page cache after changing this setting."
-msgstr "Bitte löschen Sie den Cache der Checkout-Seite, nachdem Sie diese Einstellung geändert haben."
+msgstr "Bitte löschen Sie den Cache der Bestellseite, nachdem Sie diese Einstellung geändert haben."
 
 #: sc-payment.js:72
 msgid "Please contact us for payment"
@@ -7612,7 +7719,7 @@ msgstr "Bitte aktualisieren Sie die Seite."
 
 #: admin/plugin.php:68
 msgid "Plugin Settings"
-msgstr "Plugin-Einstellungen"
+msgstr "Plugin Einstellungen"
 
 #: address.js:192
 msgid "Poland"
@@ -7628,22 +7735,22 @@ msgstr "Portugal"
 
 #: Blocks/Address/edit.js:134
 msgid "Postal Code Placeholder"
-msgstr "Postleitzahl-Platzhalter"
+msgstr "PLZ Platzhalter"
 
 #: sc-address2.js:108
 #: sc-compact-address2.js:102
 #: sc-order-shipping-address2.js:35
 #: sc-order-shipping-address2.js:44
 msgid "Postal Code/Zip"
-msgstr "Postleitzahl/PLZ"
+msgstr "PLZ"
 
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:297
 msgid "Potential Checkout Recovery Rate"
-msgstr "Potenzielle Wiederherstellungsrate an der Kasse"
+msgstr "Potenzielle Wiederherstellungsrate der Käufe"
 
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:277
 msgid "Potential Recovered Checkouts"
-msgstr "Mögliche wiederhergestellte Checkouts"
+msgstr "Mögliche wiederhergestellte Käufe"
 
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:337
 msgid "Potential Recovered Revenue"
@@ -7655,7 +7762,7 @@ msgstr "Potenzielle Einnahmenrückgewinnungsrate"
 
 #: products/components/price/parts/Trial.js:16
 msgid "Premium"
-msgstr "Prämie"
+msgstr "Premium"
 
 #: Blocks/Dashboard/CustomerCharges/edit.js:110
 msgid "Prev Page"
@@ -7735,7 +7842,7 @@ msgstr "Preisgestaltung"
 
 #: Blocks/AddToCartButton/edit.js:142
 msgid "Primary Button"
-msgstr "Primäre Schaltfläche"
+msgstr "Primärer Button"
 
 #: bumps/modules/Priority.js:7
 msgid "Priority"
@@ -7745,7 +7852,7 @@ msgstr "Priorität"
 #: Controllers/SubscriptionController.php:240
 #: Controllers/SubscriptionController.php:244
 msgid "Privacy Policy"
-msgstr "Datenschutz-Bestimmungen"
+msgstr "Datenschutzbestimmung"
 
 #: components/MediaLibrary/index.js:287
 #: components/MediaLibrary/MediaItem.js:93
@@ -7754,12 +7861,12 @@ msgstr "Privat"
 
 #: layouts/partials/admin-settings-sidebar.php:27
 msgid "Pro"
-msgstr "Profi"
+msgstr "Pro"
 
 #: src/Controllers/Admin/Orders/OrdersListTable.php:67
 #: sc-order-status-badge2.js:35
 msgid "Processing"
-msgstr "wird bearbeitet"
+msgstr "Im Prozess"
 
 #: Blocks/Form/edit.js:320
 msgid "Processing Payment"
@@ -7768,16 +7875,16 @@ msgstr "Zahlung verarbeiten"
 #: Blocks/Form/edit.js:322
 #: sc-checkout.js:194
 msgid "Processing payment..."
-msgstr "Zahlung verarbeiten..."
+msgstr "Zahlung verarbeiten ..."
 
 #: store/add-entities.js:159
 msgid "Processor"
-msgstr "Prozessor"
+msgstr "Zahlungsabwickler"
 
 #: admin/processors.php:30
 #: layouts/partials/admin-settings-sidebar.php:48
 msgid "Processors"
-msgstr "Prozessoren"
+msgstr "Zahlungsabwickler"
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:106
 #: src/Integrations/ThriveAutomator/DataFields/ProductDataField.php:109
@@ -7875,11 +7982,15 @@ msgstr "Produkt entfernt."
 #: src/Controllers/Admin/Licenses/LicensesController.php:68
 #: src/Controllers/Admin/Products/ProductsController.php:66
 msgid "Product restored."
-msgstr "Produkt restauriert."
+msgstr "Produkt wiederhergestellt."
 
 #: products/EditProduct.js:63
 msgid "Product updated."
 msgstr "Produkt aktualisiert."
+
+#: Blocks/ConditionalForm/translations.js:4
+msgid "Product(s)"
+msgstr "Produkt(e)"
 
 #: src/Controllers/Admin/Products/ProductsController.php:24
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:127
@@ -7903,7 +8014,7 @@ msgstr "Produkte/Preise"
 
 #: store/add-entities.js:180
 msgid "Promotion"
-msgstr "Werbung"
+msgstr "Promotion"
 
 #: coupons/CreateCoupon.js:98
 msgid "Promotion Code"
@@ -8046,7 +8157,7 @@ msgstr "Recaptcha v3"
 
 #: dashboard/components/RecentOrders.js:218
 msgid "Recent Orders"
-msgstr "letzte Bestellungen"
+msgstr "Letzte Bestellungen"
 
 #: Blocks/OrderBumps/edit.js:16
 #: sc-order-bumps2.js:25
@@ -8055,11 +8166,11 @@ msgstr "Empfohlen"
 
 #: admin/abandoned-orders/cta-banner.php:99
 msgid "Recover lost sales with abandoned checkouts."
-msgstr "Gewinnen Sie verlorene Verkäufe mit verlassenen Kassen zurück."
+msgstr "Gewinnen Sie verlorene Verkäufe mit abgebrochenen Bestellvorgängen zurück."
 
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:262
 msgid "Recoverable Checkouts"
-msgstr "Wiederherstellbare Checkouts"
+msgstr "Wiederherstellbare Bestellprozesse"
 
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:317
 msgid "Recoverable Revenue"
@@ -8077,7 +8188,7 @@ msgstr "Wiederhergestellt, bevor die E-Mail gesendet wurde"
 
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:276
 msgid "Recovered Checkouts"
-msgstr "Wiederhergestellte Kassen"
+msgstr "Wiederhergestellte Bestellprozesse"
 
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:336
 msgid "Recovered Revenue"
@@ -8141,7 +8252,7 @@ msgstr "Rückerstattungen"
 
 #: components/data-tables/charges-data-table/Refund.js:91
 msgid "Refunds can take 5-10 days to appear on a customer's statement. Processor fees are typically not returned."
-msgstr "Es kann 5–10 Tage dauern, bis Rückerstattungen auf dem Kontoauszug des Kunden erscheinen. Prozessorgebühren werden in der Regel nicht erstattet."
+msgstr "Es kann 5–10 Tage dauern, bis Rückerstattungen auf dem Kontoauszug des Kunden erscheinen. Zahlungsabwicklergebühren werden in der Regel nicht erstattet."
 
 #: settings/tax-region/RegistrationForm.js:149
 msgid "Region"
@@ -8161,6 +8272,7 @@ msgstr "Erinnerung"
 
 #: Blocks/CartItems/edit.js:31
 #: Blocks/LineItems/edit.js:23
+#, fuzzy
 msgid "Removable"
 msgstr "Abnehmbar"
 
@@ -8190,7 +8302,7 @@ msgstr "Plug-in-Daten entfernen"
 
 #: settings/brand/BrandSettings.js:168
 msgid "Remove SureCart Branding"
-msgstr "Entfernen Sie das SureCart-Branding"
+msgstr "Entfernen Sie das SureCart Branding"
 
 #: src/Webhooks/WebhooksHistoryService.php:151
 msgid "Remove webhook"
@@ -8212,7 +8324,7 @@ msgstr "Erneuert"
 #: subscriptions/shared/EndDate.js:76
 #: subscriptions/show/modules/Details.js:88
 msgid "Renews on"
-msgstr "Erneuert an"
+msgstr "Erneuerung am"
 
 #: products/components/price/parts/RecurringAmount.js:42
 msgid "Repeat Payment Every"
@@ -8285,7 +8397,7 @@ msgstr "Wiederherstellen"
 
 #: sc-subscription.js:171
 msgid "Restore Plan"
-msgstr "Wiederherstellungsplan"
+msgstr "Plan wiederherstellen"
 
 #: subscriptions/show/ShowSubscription.js:122
 msgid "Restore Subscription"
@@ -8293,7 +8405,7 @@ msgstr "Abonnement wiederherstellen"
 
 #: coupons/modules/Code.js:59
 msgid "Restored."
-msgstr "Restauriert."
+msgstr "Wiederhergestellt."
 
 #: coupons/modules/Restrictions.js:44
 msgid "Restrict this coupon"
@@ -8319,6 +8431,10 @@ msgstr "Einnahmen"
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:365
 msgid "Revenue Recovery Rate"
 msgstr "Umsatzrückgewinnungsrate"
+
+#: Blocks/Columns/edit.js:134
+msgid "Reverse order on mobile"
+msgstr "Umgekehrte Reihenfolge auf dem Handy"
 
 #: components/data-tables/purchases-data-table/RevokeToggleButton.js:100
 msgid "Revoke"
@@ -8459,7 +8575,7 @@ msgstr "Speichern"
 
 #: sc-order-bump2.js:61
 msgid "Save %s%%"
-msgstr "Speichern Sie %s %%"
+msgstr "Sichern Sie %s %%"
 
 #: customers/EditCustomer.js:97
 msgid "Save Customer"
@@ -8475,7 +8591,7 @@ msgstr "Lizenz speichern"
 
 #: bumps/EditBump.js:146
 msgid "Save Order Bump"
-msgstr "Bestellstoß speichern"
+msgstr "Order Bump speichern"
 
 #: sc-stripe-add-method.js:128
 msgid "Save Payment Method"
@@ -8491,28 +8607,30 @@ msgstr "Einstellungen speichern"
 
 #: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:186
 msgid "Saved"
-msgstr "Gerettet"
+msgstr "Gesichert"
 
 #: cancellation-insights/CancellationInsights.js:246
 msgid "Saved By Coupon"
 msgstr "Per Gutschein gespeichert"
 
 #: cancellation-insights/CancellationInsights.js:231
+#, fuzzy
 msgid "Saved Count"
 msgstr "Anzahl gespeichert"
 
 #: cancellation-insights/CancellationInsights.js:282
+#, fuzzy
 msgid "Saved Rate"
 msgstr "Gespeicherte Rate"
 
 #: cancellation-insights/CancellationInsights.js:299
 msgid "Saved Rate By Coupon"
-msgstr "Gesparter Preis nach Coupon"
+msgstr "Gesparter Preis mit Gutschein"
 
 #: admin/plugin.php:54
 #: layouts/partials/admin-settings-notices.php:16
 msgid "Saved."
-msgstr "Gerettet."
+msgstr "Gesichert."
 
 #: sc-payment-method2.js:22
 msgid "Savings"
@@ -8536,15 +8654,15 @@ msgstr "Geplant"
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:82
 msgid "Search Abanonded Orders"
-msgstr "Suche nach aufgegebenen Bestellungen"
+msgstr "Suche nach abgebrochene Käufe"
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:219
 msgid "Search Carts"
-msgstr "Einkaufswagen suchen"
+msgstr "Warenkorb suchen"
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:212
 msgid "Search Checkout Forms"
-msgstr "Checkout-Formulare durchsuchen"
+msgstr "Bestellformulare suchen"
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:59
 #: admin/coupons/index.php:12
@@ -8567,7 +8685,7 @@ msgstr "Lizenzen suchen"
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:46
 #: admin/orders/index.php:12
 msgid "Search Orders"
-msgstr "Aufträge durchsuchen"
+msgstr "Bestellungen suchen"
 
 #: admin/products/index.php:35
 msgid "Search Products"
@@ -8580,17 +8698,17 @@ msgstr "Abonnements suchen"
 
 #: Blocks/CheckoutForm/components/SelectForm.js:50
 msgid "Search for a form..."
-msgstr "Suche nach einem Formular..."
+msgstr "Suche nach einem Formular ..."
 
 #: components/SelectPrice.js:65
 msgid "Search for a price..."
-msgstr "Preis suchen..."
+msgstr "Preis suchen ..."
 
 #: components/SelectReduxProduct.js:42
 #: components/SelectPrice.js:103
 #: components/SelectProduct.js:80
 msgid "Search for a product..."
-msgstr "Suche nach einem Produkt..."
+msgstr "Suche nach einem Produkt ..."
 
 #: components/UserSelect.js:58
 msgid "Search for a user..."
@@ -8598,7 +8716,24 @@ msgstr "Suchen Sie nach einem Benutzer ..."
 
 #: components/SelectProductGroup.js:45
 msgid "Search for an upgrade group..."
-msgstr "Suchen Sie nach einer Upgrade-Gruppe..."
+msgstr "Suchen Sie nach einer Upgrade-Gruppe ..."
+
+#: Blocks/ConditionalForm/conditions.js:62
+#: Blocks/ConditionalForm/conditions.js:73
+msgid "Search for country.."
+msgstr "Land suchen ..."
+
+#: Blocks/ConditionalForm/conditions.js:52
+msgid "Search for coupons.."
+msgstr "Gutscheine suchen ..."
+
+#: Blocks/ConditionalForm/conditions.js:84
+msgid "Search for payment method..."
+msgstr "Zahlungsmethode suchen ..."
+
+#: Blocks/ConditionalForm/conditions.js:34
+msgid "Search for products.."
+msgstr "Suche nach Produkten ..."
 
 #: settings/abandoned/AbandonedSettings.js:122
 msgid "Second Email Delay"
@@ -8606,11 +8741,11 @@ msgstr "Zweite E-Mail-Verzögerung"
 
 #: settings/customer/CustomerSettings.js:254
 msgid "Second email sent when a checkout is abandoned."
-msgstr "Zweite E-Mail, die gesendet wird, wenn ein Checkout abgebrochen wird."
+msgstr "Zweite E-Mail, die gesendet wird, wenn ein Kauf abgebrochen wird."
 
 #: Blocks/AddToCartButton/edit.js:146
 msgid "Secondary Button"
-msgstr "Sekundäre Taste"
+msgstr "Sekundärer Button"
 
 #: Blocks/CheckoutForm/components/Setup.js:188
 msgid "Sections"
@@ -8671,7 +8806,7 @@ msgstr "Wählen Sie eine Formularvorlage aus"
 
 #: Blocks/CheckoutForm/components/Empty.js:130
 msgid "Select a checkout form"
-msgstr "Wählen Sie ein Checkout-Formular aus"
+msgstr "Wählen Sie ein Bestellformular aus"
 
 #: src/Integrations/Beaver/BeaverFormModule.php:52
 msgid "Select a form"
@@ -8728,7 +8863,7 @@ msgstr "Datum auswählen"
 
 #: Blocks/PriceSelector/edit.js:113
 msgid "Select many"
-msgstr "Wählen Sie viele aus"
+msgstr "Wählen Sie mehrere aus"
 
 #: Blocks/PriceSelector/edit.js:109
 msgid "Select one"
@@ -8754,7 +8889,7 @@ msgstr "Senden Sie eine allgemeine Bestätigungs-E-Mail für die Abonnementkünd
 
 #: sc-login-form.js:148
 msgid "Send a login code"
-msgstr "Senden Sie einen Login-Code"
+msgstr "Senden Sie einen Login Code."
 
 #: settings/customer/CustomerSettings.js:124
 msgid "Send a quick reminder when a refund is created for a customer. These emails contain the amount and payment method being refunded."
@@ -8807,11 +8942,11 @@ msgstr "Wird an Kunden gesendet, wenn ein Kauf herunterladbar ist oder eine Lize
 
 #: settings/customer/CustomerSettings.js:324
 msgid "Sent to customers when their subscription cancellation."
-msgstr "Wird an Kunden gesendet, wenn ihr Abonnement gekündigt wird."
+msgstr "Wird an Kunden gesendet, wenn dessen Abonnement gekündigt wird."
 
 #: settings/customer/CustomerSettings.js:315
 msgid "Sent to customers when their subscription renews."
-msgstr "Wird an Kunden gesendet, wenn ihr Abonnement verlängert wird."
+msgstr "Wird an Kunden gesendet, wenn dessen Abonnement verlängert wird."
 
 #: settings/customer/CustomerSettings.js:294
 msgid "Sent to customers when their subscription's payment method fails."
@@ -8854,6 +8989,10 @@ msgstr "Sitzungsinfo"
 msgid "Set A Password"
 msgstr "Legen Sie ein Passwort fest"
 
+#: Blocks/ConditionalForm/rules.js:275
+msgid "Set Rules"
+msgstr "Festgelegte Regeln"
+
 #: admin/onboarding/install.php:57
 msgid "Set Up My Store"
 msgstr "Meinen Shop einrichten"
@@ -8862,9 +9001,13 @@ msgstr "Meinen Shop einrichten"
 msgid "Set a custom call to action for the bump."
 msgstr "Legen Sie einen benutzerdefinierten Call-to-Action für den Bump fest."
 
+#: Blocks/StoreLogo/edit.js:166
+msgid "Set a maximum height"
+msgstr "Legen Sie eine maximale Höhe fest."
+
 #: settings/portal/PortalSettings.js:117
 msgid "Set additional customer portal details for your store."
-msgstr "Legen Sie zusätzliche Kundenportaldetails für Ihr Geschäft fest."
+msgstr "Legen Sie zusätzliche Kundenportal-Details für Ihr Geschäft fest."
 
 #: products/modules/integrations/IntegrationHelp.js:79
 msgid "Set it and forget it."
@@ -8898,7 +9041,7 @@ msgstr "Einstellungen aktualisiert."
 
 #: dashboard/components/GetStarted.js:61
 msgid "Setup"
-msgstr "Aufstellen"
+msgstr "Setup"
 
 #: address.js:213
 msgid "Seychelles"
@@ -8925,13 +9068,17 @@ msgctxt "block title"
 msgid "Shipping Address"
 msgstr "Lieferanschrift"
 
+#: Blocks/ConditionalForm/translations.js:9
+msgid "Shipping Country"
+msgstr "Lieferungsland"
+
 #: src/WordPress/PostTypes/FormPostTypeService.php:276
 msgid "Shortcode"
-msgstr "Kurzwahl"
+msgstr "Shortcode"
 
 #: products/modules/Prices/Price/Header.js:258
 msgid "Shortcodes"
-msgstr "Kurzwahlen"
+msgstr "Shortcodes"
 
 #: settings/subscription-preservation/EditReason.js:122
 msgid "Should the customer be prompted for additional information?"
@@ -8947,7 +9094,7 @@ msgstr "%d archivierte Aktionscodes anzeigen"
 
 #: products/modules/Downloads.js:106
 msgid "Show Archived"
-msgstr "Archiviert anzeigen"
+msgstr "Archivierte anzeigen"
 
 #: bumps/modules/Conditions.js:35
 msgid "Show Bump Offer If"
@@ -8963,7 +9110,7 @@ msgstr "Symbol anzeigen"
 
 #: Blocks/PriceChoice/edit.js:77
 msgid "Show Label"
-msgstr "Etikett anzeigen"
+msgstr "Label anzeigen"
 
 #: Blocks/PriceChoice/edit.js:86
 msgid "Show Price Amount"
@@ -8985,7 +9132,7 @@ msgstr "Kontrolle zeigen"
 
 #: Blocks/LogoutButton/edit.js:47
 msgid "Show icon"
-msgstr "Symbol anzeigen"
+msgstr "Icon anzeigen"
 
 #: Blocks/Address/edit.js:83
 msgid "Show the \"name or company name\" field in the form."
@@ -8993,7 +9140,7 @@ msgstr "Zeigen Sie das Feld \"Name oder Firmenname\" im Formular an."
 
 #: Blocks/Submit/edit.js:44
 msgid "Show total due in button text."
-msgstr "Gesamtbetrag im Schaltflächentext anzeigen."
+msgstr "Gesamtbetrag im Button-Text anzeigen."
 
 #: Blocks/Dashboard/CustomerCharges/edit.js:106
 msgid "Showing 1 to 10 of 20 results"
@@ -9231,7 +9378,7 @@ msgstr "Eigenständiger Block-Editor"
 
 #: cart/edit/components/sidebar/index.js:16
 msgid "Standalone Block Editor advanced settings."
-msgstr "Erweiterte Einstellungen des eigenständigen Blockeditors."
+msgstr "Erweiterte Einstellungen des eigenständigen Block Editors."
 
 #: cart/edit/components/header/index.js:11
 msgid "Standalone Editor top bar."
@@ -9257,11 +9404,11 @@ msgstr "Ab %s"
 #: settings/tax-region/RegistrationForm.js:24
 #: sc-compact-address2.js:102
 msgid "State"
-msgstr "Zustand"
+msgstr "Staat"
 
 #: Blocks/Address/edit.js:143
 msgid "State Placeholder"
-msgstr "Staatlicher Platzhalter"
+msgstr "Staat Platzhalter"
 
 #: settings/tax-region/TaxRegionSettings.js:35
 msgid "State Sales Tax Registrations"
@@ -9303,11 +9450,11 @@ msgstr "Status"
 #: Blocks/Column/edit.js:144
 #: Blocks/Column/edit.js:146
 msgid "Sticky"
-msgstr "Klebrig"
+msgstr "Sticky"
 
 #: store/add-entities.js:10
 msgid "Store"
-msgstr "Speichern"
+msgstr "Shop"
 
 #: src/WordPress/Pages/PageService.php:61
 #: src/WordPress/PostTypes/FormPostTypeService.php:129
@@ -9317,15 +9464,24 @@ msgstr "Shop-Kasse"
 #: settings/account/AccountSettings.js:98
 #: settings/portal/PortalSettings.js:116
 msgid "Store Details"
-msgstr "Shop-Details"
+msgstr "Geschäftsdetails"
 
 #: settings/customer/CustomerSettings.js:352
 msgid "Store Emails"
-msgstr "E-Mails speichern"
+msgstr "Shop E-Mails"
 
 #: settings/account/AccountSettings.js:233
 msgid "Store Language"
-msgstr "Sprache speichern"
+msgstr "Shop Sprache"
+
+#: Blocks/StoreLogo/edit.js:81
+msgid "Store Logo"
+msgstr "Shop Logo"
+
+#: Blocks/StoreLogo/block.json
+msgctxt "block title"
+msgid "Store Logo"
+msgstr "Geschäftslogo"
 
 #: settings/account/AccountSettings.js:114
 #: settings/account/AccountSettings.js:115
@@ -9335,23 +9491,23 @@ msgstr "Geschäftsname"
 #: layouts/partials/admin-settings-sidebar.php:5
 #: settings/account/AccountSettings.js:86
 msgid "Store Settings"
-msgstr "Einstellungen speichern"
+msgstr "Shop Einstellungen"
 
 #: settings/tax/TaxSettings.js:47
 msgid "Store Tax Settings"
-msgstr "Steuereinstellungen speichern"
+msgstr "Shop Steuereinstellung"
 
 #: settings/account/AccountSettings.js:126
 msgid "Store URL"
-msgstr "URL speichern"
+msgstr "Shop URL"
 
 #: src/Rest/ProductsRestServiceProvider.php:61
 msgid "Stored product metadata"
-msgstr "Gespeicherte Produktmetadaten"
+msgstr "Gesicherte Produktmetadaten"
 
 #: Blocks/Payment/components/Inspector.js:64
 msgid "Stripe"
-msgstr "Streifen"
+msgstr "Stripe"
 
 #: settings/account/AccountSettings.js:347
 msgid "Stripe Fraud Monitoring"
@@ -9371,7 +9527,7 @@ msgstr "Stil"
 #: Blocks/Submit/block.json
 msgctxt "block title"
 msgid "Submit Button"
-msgstr "Senden-Schaltfläche"
+msgstr "Senden Button"
 
 #: Blocks/Form/edit.js:305
 msgid "Submitting Order"
@@ -9379,13 +9535,14 @@ msgstr "Bestellung einreichen"
 
 #: Blocks/Form/edit.js:307
 msgid "Submitting Order..."
-msgstr "Bestellung absenden..."
+msgstr "Bestellung absenden ..."
 
 #: sc-checkout.js:194
 msgid "Submitting order..."
-msgstr "Bestellung absenden..."
+msgstr "Bestellung absenden ..."
 
 #: customers/modules/Notifications.js:16
+#, fuzzy
 msgid "Subscribed to emails"
 msgstr "E-Mails abonniert"
 
@@ -9442,7 +9599,7 @@ msgstr "Abonnement-Wiederherstellungs-E-Mails"
 
 #: settings/customer/CustomerSettings.js:305
 msgid "Subscription Reminder"
-msgstr "Abonnement-Erinnerung"
+msgstr "Abonnement Erinnerung"
 
 #: settings/customer/CustomerSettings.js:184
 msgid "Subscription Reminder Notifications"
@@ -9451,7 +9608,7 @@ msgstr "Abonnement-Erinnerungsbenachrichtigungen"
 #: src/Controllers/Admin/Orders/OrdersListTable.php:225
 #: settings/customer/CustomerSettings.js:314
 msgid "Subscription Renewal"
-msgstr "Abo-Verlängerung"
+msgstr "Abonnement Verlängerung"
 
 #: settings/customer/CustomerSettings.js:141
 msgid "Subscription Renewal Emails"
@@ -9464,15 +9621,15 @@ msgstr "Abo-Sparer"
 
 #: settings/subscription-preservation/PreservationSettings.js:132
 msgid "Subscription Saver & Cancelation Insights"
-msgstr "Einblicke in Abo-Sparer und Kündigung"
+msgstr "Subscription Saver & Kündigung Auswertung"
 
 #: settings/subscription-preservation/PreservationSettings.js:121
 msgid "Subscription Saver & Cancellation Insights"
-msgstr "Einblicke in Abonnementsparer und Kündigung"
+msgstr "Subscription Saver & Kündigung Auswertung"
 
 #: src/Controllers/Admin/CancellationInsights/CancellationInsightsController.php:22
 msgid "Subscription Saver & Insights"
-msgstr "Abonnement Saver & Insights"
+msgstr "Abonnement Saver & Auswertung"
 
 #: subscriptions/show/modules/modals/CancelSubscriptionModal.js:46
 msgid "Subscription canceled."
@@ -9553,7 +9710,7 @@ msgstr "Erfolgstext"
 #: Blocks/Form/edit.js:355
 #: sc-checkout.js:194
 msgid "Success! Redirecting..."
-msgstr "Erfolg! Umleitung..."
+msgstr "Erfolg! Weiterleitung ..."
 
 #: address.js:227
 msgid "Sudan"
@@ -9587,18 +9744,28 @@ msgstr "SureCart"
 msgid "SureCart Accountant"
 msgstr "SureCart Buchhalter"
 
+#: Blocks/Column/block.json
+msgctxt "block title"
+msgid "SureCart Column"
+msgstr "SureCart Spalte"
+
+#: Blocks/Columns/block.json
+msgctxt "block title"
+msgid "SureCart Columns"
+msgstr "SureCart Spalten"
+
 #: src/Permissions/RolesService.php:92
 msgid "SureCart Customer"
-msgstr "SureCart-Kunde"
+msgstr "SureCart Kunde"
 
 #: src/Integrations/Beaver/BeaverFormModule.php:18
 #: src/Integrations/Beaver/BeaverFormModule.php:19
 msgid "SureCart Form"
-msgstr "SureCart-Formular"
+msgstr "SureCart Formular"
 
 #: components/MediaLibrary/index.js:281
 msgid "SureCart Media"
-msgstr "SureCart-Medien"
+msgstr "SureCart Medien"
 
 #: src/Permissions/RolesService.php:36
 msgid "SureCart Shop Manager"
@@ -9610,7 +9777,7 @@ msgstr "SureCart Shop-Mitarbeiter"
 
 #: layouts/partials/admin-settings-header.php:44
 msgid "SureCart Status"
-msgstr "SureCart-Status"
+msgstr "SureCart Status"
 
 #: src/Integrations/ThriveAutomator/ThriveAutomatorApp.php:34
 msgid "SureCart eCommerce Platform"
@@ -9618,11 +9785,15 @@ msgstr "SureCart E-Commerce-Plattform"
 
 #: src/Integrations/ThriveAutomator/DataObjects/ProductDataObject.php:35
 msgid "SureCart product object"
-msgstr "SureCart-Produktobjekt"
+msgstr "SureCart Produktobjekt"
 
 #: src/Webhooks/WebhooksService.php:121
 msgid "SureCart webhooks could not be created."
-msgstr "SureCart-Webhooks konnten nicht erstellt werden."
+msgstr "SureCart Webhooks konnten nicht erstellt werden."
+
+#: src/WordPress/Templates/TemplatesServiceProvider.php:32
+msgid "SureCart: Full Width No Sidebar"
+msgstr "SureCart: Volle Breite, keine Seitenleiste"
 
 #: address.js:228
 msgid "Suriname"
@@ -9659,12 +9830,12 @@ msgstr "Schweizerfranken"
 #: Blocks/Switch/block.json
 msgctxt "block title"
 msgid "Switch"
-msgstr "Schalter"
+msgstr "Wechsel"
 
 #: Blocks/Switch/edit.js:68
 #: Blocks/Switch/edit.js:77
 msgid "Switch label"
-msgstr "Etikett wechseln"
+msgstr "Label wechseln"
 
 #: Controllers/PaymentMethodController.php:62
 msgid "Switch to live mode."
@@ -9748,7 +9919,7 @@ msgstr "Steuerinformation"
 #: Blocks/TaxLineItem/block.json
 msgctxt "block title"
 msgid "Tax Line Item"
-msgstr "Steuereinzelposten"
+msgstr "Steuer Einzelposten"
 
 #: orders/modules/TaxInfo.js:16
 msgid "Tax Number"
@@ -9786,7 +9957,7 @@ msgstr "Steuer aktiviert."
 
 #: settings/tax-region/RegistrationForm.js:239
 msgid "Tax is automatically calculated and applied to orders. Make sure you’re registered with the appropriate tax jurisdictions before enabling tax collection."
-msgstr "Die Steuer wird automatisch berechnet und auf Bestellungen angewendet. Stellen Sie sicher, dass Sie bei den entsprechenden Steuerhoheiten registriert sind, bevor Sie die Steuererhebung aktivieren."
+msgstr "Die Steuer wird automatisch berechnet und auf Bestellungen angewendet. Stellen Sie sicher, dass Sie bei den zuständigen Finanzämtern registriert sind, bevor Sie die Steuererhebung aktivieren."
 
 #: products/components/price/parts/Tax.js:20
 #: products/modules/Prices/NewPrice/index.js:218
@@ -9818,7 +9989,7 @@ msgstr "Nutzungsbedingungen"
 #: sc-payment-methods-list.js:131
 #: sc-subscription-payment-method.js:145
 msgid "Test"
-msgstr "Prüfen"
+msgstr "Test"
 
 #: abandoned-checkouts/modules/Details.js:67
 #: customers/CreateCustomer.js:99
@@ -9907,11 +10078,11 @@ msgstr "Danke dir!"
 
 #: Blocks/Form/Block.php:167
 msgid "The API key provided by your Connect platform has expired. This occurs if your platform has either generated a new key or the connected account has been disconnected from the platform. Obtain your current API keys from the Dashboard and update your integration, or reach out to the user and reconnect the account."
-msgstr "Der von Ihrer Connect-Plattform bereitgestellte API-Schlüssel ist abgelaufen. Dies tritt auf, wenn Ihre Plattform entweder einen neuen Schlüssel generiert hat oder das verbundene Konto von der Plattform getrennt wurde. Rufen Sie Ihre aktuellen API-Schlüssel vom Dashboard ab und aktualisieren Sie Ihre Integration oder wenden Sie sich an den Benutzer und verbinden Sie das Konto erneut."
+msgstr "Der von Ihrer Connect-Plattform bereitgestellte API-Key ist abgelaufen. Dies tritt auf, wenn Ihre Plattform entweder einen neuen Key generiert hat oder das verbundene Konto von der Plattform getrennt wurde. Rufen Sie Ihre aktuellen API-Key vom Dashboard ab und aktualisieren Sie Ihre Integration oder wenden Sie sich an den Benutzer und verbinden Sie das Konto erneut."
 
 #: Blocks/Form/Block.php:110
 msgid "The API key provided has expired. Obtain your current API keys from the Dashboard and update your integration to use them."
-msgstr "Der bereitgestellte API-Schlüssel ist abgelaufen. Rufen Sie Ihre aktuellen API-Schlüssel vom Dashboard ab und aktualisieren Sie Ihre Integration, um sie zu verwenden."
+msgstr "Der bereitgestellte API-Key ist abgelaufen. Rufen Sie Ihre aktuellen API-Key vom Dashboard ab und aktualisieren Sie Ihre Integration, um sie zu verwenden."
 
 #: Blocks/Form/Block.php:160
 msgid "The PaymentIntent expected a payment method with different properties than what was provided."
@@ -9931,7 +10102,7 @@ msgstr "Die SureCart-Modell-ID."
 
 #: src/Rest/IntegrationsRestServiceProvider.php:84
 msgid "The SureCart model name."
-msgstr "Der Name des SureCart-Modells."
+msgstr "Der Name des SureCart Modells."
 
 #: src/Rest/BrandRestServiceProvider.php:134
 msgid "The URL of the brand logo."
@@ -10045,12 +10216,12 @@ msgstr "Der Sicherheitscode der Karte ist ungültig. Überprüfen Sie den Sicher
 #: Blocks/CartItems/block.json
 msgctxt "block description"
 msgid "The cart"
-msgstr "Der Wagen"
+msgstr "Warenkorb"
 
 #: Blocks/CartSubmit/block.json
 msgctxt "block description"
 msgid "The cart submit button"
-msgstr "Die Warenkorb-Senden-Schaltfläche"
+msgstr "Der Kaufen-Button"
 
 #: Blocks/Form/Block.php:121
 msgid "The charge cannot be captured as the authorization has expired. Auth and capture charges must be captured within seven days."
@@ -10062,7 +10233,7 @@ msgstr "Die Belastung kann nicht erstellt werden, da die verwendete Zahlungsmeth
 
 #: Blocks/Form/Block.php:117
 msgid "The charge you’re attempting to capture has already been captured. Update the request with an uncaptured charge ID."
-msgstr "Die Anklage, die Sie zu erfassen versuchen, wurde bereits erfasst. Aktualisieren Sie die Anforderung mit einer nicht erfassten Belastungs-ID."
+msgstr "Die Belastung, die Sie zu erfassen versuchen, wurde bereits erfasst. Aktualisieren Sie die Anforderung mit einer nicht erfassten Belastungs-ID."
 
 #: Blocks/Form/Block.php:118
 msgid "The charge you’re attempting to refund has already been refunded. Update the request to use the ID of a charge that has not been refunded."
@@ -10074,7 +10245,7 @@ msgstr "Die Belastung, die Sie erstatten möchten, wurde zurückgebucht. Sehen S
 
 #: src/Rest/AbandonedCheckoutRestServiceProvider.php:69
 msgid "The checkout id for the checkout."
-msgstr "Die Kassen-ID für die Kasse."
+msgstr "Die Kassen-ID für den Bestellvorgang."
 
 #: src/Support/Errors/Translations/codes.php:22
 msgid "The compare at price must be greater than the price."
@@ -10082,7 +10253,7 @@ msgstr "Der Vergleichspreis muss größer sein als der Preis."
 
 #: src/Rest/BumpRestServiceProvider.php:88
 msgid "The conditions that will filter this bump to be recommeneded. Accepted keys are price_ids, product_ids, and product_group_ids with array values."
-msgstr "Die Bedingungen, die diese Unebenheit filtern, werden empfohlen. Akzeptierte Schlüssel sind price_ids, product_ids und product_group_ids mit Array-Werten."
+msgstr "Die Bedingungen, die diesen Order Bump filtern, werden empfohlen. Akzeptierte Schlüssel sind price_ids, product_ids und product_group_ids mit Array-Werten."
 
 #: src/Rest/PriceRestServiceProvider.php:53
 #: src/Rest/ProductGroupsRestServiceProvider.php:53
@@ -10104,15 +10275,15 @@ msgstr "Die Währung für die Sitzung."
 
 #: src/Rest/AbandonedCheckoutRestServiceProvider.php:59
 msgid "The current notification status for this abandonded checkout, which can be one of not_sent, scheduled, or sent."
-msgstr "Der aktuelle Benachrichtigungsstatus für diesen abgebrochenen Checkout, der „not_sent“, „geplant“ oder „gesendet“ sein kann."
+msgstr "Der aktuelle Benachrichtigungsstatus für diesen abgebrochenen Kaufes, der „not_sent“, „geplant“ oder „gesendet“ sein kann."
 
 #: src/Rest/AbandonedCheckoutRestServiceProvider.php:64
 msgid "The current status of this abandonded checkout, which can be one of not_notified, notified, or recovered."
-msgstr "Der aktuelle Status dieses abgebrochenen Checkouts, der „nicht_benachrichtigt“, „benachrichtigt“ oder „wiederhergestellt“ sein kann."
+msgstr "Der aktuelle Status dieses abgebrochenen Kaufes, der „nicht_benachrichtigt“, „benachrichtigt“ oder „wiederhergestellt“ sein kann."
 
 #: src/Rest/AbandonedCheckoutRestServiceProvider.php:75
 msgid "The customer for the checkout."
-msgstr "Der Kunde für die Kasse."
+msgstr "Der Kunde für den Bestellvorgang."
 
 #: src/Rest/CheckoutRestServiceProvider.php:123
 msgid "The customer for the session."
@@ -10124,7 +10295,7 @@ msgstr "Die Kunden-ID für die Bestellung."
 
 #: settings/subscription-preservation/EditReason.js:89
 msgid "The customer-facing label for this cancellation reason."
-msgstr "Das kundenseitige Etikett für diesen Stornierungsgrund."
+msgstr "Das kundenseitige Label für diesen Stornierungsgrund."
 
 #: Blocks/Form/Block.php:132
 msgid "The debit card provided as an external account does not support instant payouts. Provide another debit card or use a bank account instead."
@@ -10149,7 +10320,7 @@ msgstr "Die Standard-Fußzeile, die auf allen Bestellauszügen (dh Rechnungen un
 
 #: src/Rest/BrandRestServiceProvider.php:144
 msgid "The default memo for invoices and receipts."
-msgstr "Das Standardmemo für Rechnungen und Quittungen."
+msgstr "Das Standardnotiz für Rechnungen und Quittungen."
 
 #: src/Rest/OrderProtocolRestServiceProvider.php:100
 #: settings/order/OrderProtocol.js:137
@@ -10158,7 +10329,7 @@ msgstr "Die Standardnotiz, die auf allen Bestellauszügen (dh Rechnungen und Qui
 
 #: settings/processors/CreateEditPaymentMethod.js:93
 msgid "The description of this payment method that will be shown in the checkout."
-msgstr "Die Beschreibung dieser Zahlungsmethode, die an der Kasse angezeigt wird."
+msgstr "Die Beschreibung dieser Zahlungsmethode, die Bestellprozess angezeigt wird."
 
 #: src/Rest/CheckoutRestServiceProvider.php:132
 msgid "The discount for the session."
@@ -10186,19 +10357,20 @@ msgstr "Das Ende des abzufragenden Datumsbereichs."
 
 #: settings/tax/TaxSettings.js:98
 msgid "The fallback tax rate to use for checkouts when a specific tax registration is not found."
-msgstr "Der Fallback-Steuersatz, der für Checkouts verwendet werden soll, wenn eine bestimmte Steuerregistrierung nicht gefunden wird."
+msgstr "Der Fallback-Steuersatz, der für den Bestellprozess verwendet werden soll, wenn eine bestimmte Steuerregistrierung nicht gefunden wird."
 
 #: src/Rest/CustomerNotificationProtocolRestServiceProvider.php:115
 msgid "The from name to use when sending emails to customers."
 msgstr "Der Absendername, der beim Senden von E-Mails an Kunden verwendet werden soll."
 
 #: Blocks/Form/Block.php:127
+#, fuzzy
 msgid "The idempotency key provided is currently being used in another request. This occurs if your integration is making duplicate requests simultaneously."
 msgstr "Der bereitgestellte Idempotenzschlüssel wird derzeit in einer anderen Anfrage verwendet. Dies tritt auf, wenn Ihre Integration gleichzeitig doppelte Anforderungen stellt."
 
 #: settings/processors/CreateEditPaymentMethod.js:109
 msgid "The instructions that you want your customers to follow to pay for an order. These instructions are shown on the confirmation page after a customer completes the checkout."
-msgstr "Die Anweisungen, die Ihre Kunden befolgen sollen, um eine Bestellung zu bezahlen. Diese Anweisungen werden auf der Bestätigungsseite angezeigt, nachdem ein Kunde den Checkout abgeschlossen hat."
+msgstr "Die Anweisungen, die Ihre Kunden befolgen sollen, um eine Bestellung zu bezahlen. Diese Anweisungen werden auf der Bestätigungsseite angezeigt, nachdem ein Kunde den Bestellprozess abgeschlossen hat."
 
 #: src/Controllers/Rest/IntegrationProvidersController.php:36
 msgid "The integration has been removed or is unavailable."
@@ -10283,11 +10455,11 @@ msgstr "Die Bestellung konnte nicht bearbeitet werden, da erforderliche Informat
 #: src/Rest/ProductsRestServiceProvider.php:133
 #: src/Rest/StatisticRestServiceProvider.php:72
 msgid "The page of items you want returned."
-msgstr "Die Seite mit Elementen, die Sie zurückgeben möchten."
+msgstr "Die Seite mit Artikeln, die Sie zurückgeben möchten."
 
 #: src/Rest/BlockPatternsRestServiceProvider.php:201
 msgid "The pattern category slugs."
-msgstr "Die Musterkategorie Schnecken."
+msgstr "Die Muster-Kategorie-Slugs."
 
 #: src/Rest/BlockPatternsRestServiceProvider.php:213
 msgid "The pattern content."
@@ -10295,15 +10467,15 @@ msgstr "Der Musterinhalt."
 
 #: src/Rest/BlockPatternsRestServiceProvider.php:183
 msgid "The pattern detailed description."
-msgstr "Das Muster detaillierte Beschreibung."
+msgstr "Das Muster detaillierter Beschreibung."
 
 #: src/Rest/BlockPatternsRestServiceProvider.php:207
 msgid "The pattern keywords."
-msgstr "Die Musterschlüsselwörter."
+msgstr "Die Muster Keywords."
 
 #: src/Rest/BlockPatternsRestServiceProvider.php:171
 msgid "The pattern name."
-msgstr "Der Mustername."
+msgstr "Mustername"
 
 #: src/Rest/BlockPatternsRestServiceProvider.php:177
 msgid "The pattern title, in human readable format."
@@ -10340,11 +10512,11 @@ msgstr "Der Preis darf nicht leer sein."
 
 #: src/Support/Errors/Translations/codes.php:12
 msgid "The price is already being used in subscriptions or checkout sessions. Please archive the price and create another one."
-msgstr "Der Preis wird bereits in Abonnements oder Checkout-Sitzungen verwendet. Bitte archivieren Sie den Preis und erstellen Sie einen anderen."
+msgstr "Der Preis wird bereits in Abonnements oder Bestellprozess-Sitzungen verwendet. Bitte archivieren Sie den Preis und erstellen Sie einen anderen."
 
 #: src/Support/Errors/Translations/codes.php:30
 msgid "The prices in this checkout session have changed. Please recheck it before submitting again."
-msgstr "Die Preise in dieser Checkout-Sitzung haben sich geändert. Bitte überprüfen Sie es erneut, bevor Sie es erneut senden."
+msgstr "Die Preise in dieser Bestellprozess-Sitzung haben sich geändert. Bitte überprüfen Sie es erneut, bevor Sie es erneut senden."
 
 #: src/Rest/BumpRestServiceProvider.php:103
 msgid "The priority of this bump in relation to other bumps. Must be in the range of 1 - 5."
@@ -10429,7 +10601,7 @@ msgstr "Der Link zu den Nutzungsbedingungen, der Kunden im Kundenportal angezeig
 
 #: Blocks/Form/edit.js:244
 msgid "The this is the space between the rows of form elements."
-msgstr "Dies ist der Abstand zwischen den Reihen von Formularelementen."
+msgstr "Dies ist der Abstand zwischen den Reihen der  Formularelementen."
 
 #: Blocks/Form/Block.php:111
 msgid "The transfer or payout could not be completed because the associated account does not have a sufficient balance available. Create a new transfer or payout using an amount less than or equal to the account’s available balance."
@@ -10467,7 +10639,7 @@ msgstr "Für diesen Zeitraum bestehen keine Stornogründe."
 
 #: src/Support/Errors/Translations/codes.php:25
 msgid "There are no processors to make the payment. Please contact us for assistance."
-msgstr "Es gibt keine Prozessoren, um die Zahlung vorzunehmen. Bitte kontaktieren Sie uns für Unterstützung."
+msgstr "Es gibt keine Zahlungsabwickler, um die Zahlung vorzunehmen. Bitte kontaktieren Sie uns für Unterstützung."
 
 #: customers/modules/Balance/ViewTransactions.js:91
 msgid "There are no transactions"
@@ -10492,7 +10664,7 @@ msgstr "Dies sind die E-Mails, die an Sie und andere Teammitglieder dieses Shops
 
 #: settings/customer/CustomerSettings.js:266
 msgid "Third (final) email sent when a checkout is abandoned."
-msgstr "Dritte (letzte) E-Mail, die gesendet wird, wenn ein Checkout abgebrochen wird."
+msgstr "Dritte (letzte) E-Mail, die gesendet wird, wenn ein Bestellprozess abgebrochen wird."
 
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:234
 msgid "This Month"
@@ -10504,7 +10676,7 @@ msgstr "In dieser Woche"
 
 #: settings/account/AccountSettings.js:244
 msgid "This adds a field that is invisible to users, but visible to bots in an attempt to trick them into filling it out."
-msgstr "Dadurch wird ein Feld hinzugefügt, das für Benutzer unsichtbar, aber für Bots sichtbar ist, um sie zum Ausfüllen zu verleiten."
+msgstr "Dadurch wird ein Feld hinzugefügt, dass für Benutzer unsichtbar, aber für Bots sichtbar ist, um sie zum Ausfüllen zu verleiten."
 
 #: settings/order/OrderProtocol.js:128
 msgid "This appears in the memo area of your invoices and receipts."
@@ -10514,19 +10686,20 @@ msgstr "Diese erscheint im Notizbereich Ihrer Rechnungen und Quittungen."
 #: admin/plugin.php:100
 #: settings/advanced/AdvancedSettings.js:64
 msgid "This can slightly increase page load speed, but may require you to enable CORS headers for .js files on your CDN. Please check your checkout forms after you enable this option in a private browser window."
-msgstr "Dies kann die Seitenladegeschwindigkeit leicht erhöhen, erfordert aber möglicherweise, dass Sie CORS-Header für .js-Dateien in Ihrem CDN aktivieren. Bitte überprüfen Sie Ihre Checkout-Formulare, nachdem Sie diese Option in einem privaten Browserfenster aktiviert haben."
+msgstr "Dies kann die Seitenladegeschwindigkeit leicht erhöhen, erfordert aber möglicherweise, dass Sie CORS-Header für .js-Dateien in Ihrem CDN aktivieren. Bitte überprüfen Sie Ihre Bestellformulare, nachdem Sie diese Option in einem privaten Browserfenster aktiviert haben."
 
 #: Blocks/Form/Block.php:120
+#, fuzzy
 msgid "This charge would cause you to exceed your rolling-window processing limit for this source type. Please retry the charge later, or contact us to request a higher processing limit."
 msgstr "Diese Gebühr würde dazu führen, dass Sie Ihr Rolling-Window-Verarbeitungslimit für diesen Quelltyp überschreiten. Bitte versuchen Sie die Belastung später erneut oder kontaktieren Sie uns, um ein höheres Verarbeitungslimit anzufordern."
 
 #: settings/brand/BrandSettings.js:80
 msgid "This color will be used for the main button color, links, and various UI elements."
-msgstr "Diese Farbe wird für die Hauptschaltflächenfarbe, Links und verschiedene UI-Elemente verwendet."
+msgstr "Diese Farbe wird für die Hauptsbuttonfarbe, Links und verschiedene UI-Elemente verwendet."
 
 #: Blocks/Columns/edit.js:106
 msgid "This column count exceeds the recommended amount and may cause visual breakage."
-msgstr "Diese Spaltenanzahl überschreitet die empfohlene Menge und kann zu sichtbaren Brüchen führen."
+msgstr "Diese Spaltenanzahl überschreitet die empfohlene Menge und kann zu sichtbaren Umbrüchen führen."
 
 #: src/Support/Errors/Translations/codes.php:31
 msgid "This coupon code is invalid."
@@ -10550,7 +10723,7 @@ msgstr "Dieser Coupon kann nicht verwendet werden und alle nicht gespeicherten �
 
 #: src/Rest/AbandonedCheckoutRestServiceProvider.php:81
 msgid "This customer's most recent checkout that has been abandoned."
-msgstr "Der letzte Checkout dieses Kunden, der abgebrochen wurde."
+msgstr "Der letzte Bestellprozess dieses Kunden, der abgebrochen wurde."
 
 #: src/Support/Errors/Translations/codes.php:35
 msgid "This discount code does not apply to this currency."
@@ -10582,7 +10755,7 @@ msgstr "Diese Informationen helfen Kunden, Ihr Unternehmen zu erkennen und Sie b
 
 #: admin/subscriptions/index.php:9
 msgid "This is a list for all your subscription plans. Subscriptions represent recurring payment plans for your users."
-msgstr "Dies ist eine Liste aller Ihrer Abonnementpläne. Abonnements stellen wiederkehrende Zahlungspläne für Ihre Benutzer dar."
+msgstr "Dies ist eine Liste all Ihrer Abonnementpläne. Abonnements stellen wiederkehrende Zahlungspläne für Ihre Benutzer dar."
 
 #: products/modules/Tax.js:28
 msgid "This is a physical product"
@@ -10591,6 +10764,10 @@ msgstr "Dies ist ein physisches Produkt"
 #: licenses/modules/Activations/Activation.js:162
 msgid "This is a unique identifier for the license. For example, a website url."
 msgstr "Dies ist eine eindeutige Kennung für die Lizenz. Zum Beispiel eine Website-URL."
+
+#: Blocks/StoreLogo/edit.js:83
+msgid "This is also displayed on your invoices, receipts and emails."
+msgstr "Dies wird auch auf Ihren Rechnungen, Quittungen und E-Mails angezeigt."
 
 #: coupons/CreateCoupon.js:84
 #: coupons/modules/Name.js:13
@@ -10624,7 +10801,7 @@ msgstr "Dies ist die ZIP-Datei der aktuellen Version Ihrer Software."
 #: bumps/CreateBump.js:61
 #: bumps/modules/Price.js:30
 msgid "This is the price for the bump."
-msgstr "Das ist der Preis für die Beule."
+msgstr "Das ist der Preis für den Order Bump."
 
 #: licenses/modules/Activations/index.js:73
 msgid "This license has not been activated."
@@ -10664,7 +10841,7 @@ msgstr "Dieser Preis wurde archiviert."
 
 #: src/Support/Errors/Translations/codes.php:42
 msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
-msgstr "Dieser Preis wird derzeit in Abonnements oder Checkout-Sitzungen verwendet. Bitte archivieren Sie den Preis und erstellen Sie einen anderen."
+msgstr "Dieser Preis wird derzeit in Abonnements oder Bestell-Sitzungen verwendet. Bitte archivieren Sie den Preis und erstellen Sie einen anderen."
 
 #: sc-price-choice.js:782
 msgid "This product has been archived."
@@ -10791,7 +10968,7 @@ msgstr "Abschnitt Titel/Überschrift"
 
 #: components/PriceChoices.js:54
 msgid "To add some default checkout products, click the \"Add Products\" button."
-msgstr "Um einige standardmäßige Checkout-Produkte hinzuzufügen, klicken Sie auf die Schaltfläche „Produkte hinzufügen“."
+msgstr "Um einige standardmäßige Produkte für diesen Bestellprozess hinzuzufügen, klicken Sie auf die Schaltfläche „Produkte hinzufügen“."
 
 #: Blocks/CheckoutForm/components/PriceChoices.js:103
 msgid "To add some products \"Add Products\" button."
@@ -10799,15 +10976,15 @@ msgstr "Um einige Produkte hinzuzufügen, klicken Sie auf die Schaltfläche \"Pr
 
 #: abandoned-checkouts/components/Link.js:62
 msgid "To adjust your abandoned checkout notifications,"
-msgstr "Um Ihre Benachrichtigungen über abgebrochene Käufe anzupassen,"
+msgstr "Um Ihre Benachrichtigungen über abgebrochene Käufe anzupassen."
 
 #: products/modules/Tax.js:48
 msgid "To charge tax, please set up your tax information on the settings page."
-msgstr "Um Steuern zu berechnen, richten Sie bitte Ihre Steuerinformationen auf der Einstellungsseite ein."
+msgstr "Um Steuern zu berechnen, richten Sie bitte Ihre Steuerinformationen in den Einstellungen ein."
 
 #: settings/account/AccountSettings.js:324
 msgid "To get your Recaptcha keys"
-msgstr "Um Ihre Recaptcha-Schlüssel zu erhalten"
+msgstr "Um Ihren Recaptcha-Key zu erhalten"
 
 #: sc-subscription-switch.js:196
 msgid "To make changes to your payment plan, please contact us."
@@ -10914,21 +11091,22 @@ msgstr "Insgesamt heute fällig"
 
 #: cancellation-insights/CancellationInsights.js:264
 msgid "Total Lost"
-msgstr "Total verloren"
+msgstr "Gesamtverlust"
 
 #: cancellation-insights/CancellationInsights.js:265
 msgid "Total Lost Cancellations"
-msgstr "Total verlorene Stornierungen"
+msgstr "Gesamtsumme durch Stornierungen"
 
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:263
 msgid "Total Recoverable Checkouts"
-msgstr "Gesamtzahl wiederherstellbarer Checkouts"
+msgstr "Gesamtzahl wiederherstellbarer Bestellprozesse"
 
 #: cancellation-insights/CancellationInsights.js:247
 msgid "Total Saved By Coupon"
-msgstr "Insgesamt gespart durch Coupon"
+msgstr "Insgesamt gespart durch Gutschein"
 
 #: cancellation-insights/CancellationInsights.js:232
+#, fuzzy
 msgid "Total Saved Count"
 msgstr "Gespeicherte Gesamtzahl"
 
@@ -10938,7 +11116,7 @@ msgstr "Gesamterstattungsfähiger Umsatz"
 
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:279
 msgid "Total recovered checkouts"
-msgstr "Insgesamt wiederhergestellte Kassen"
+msgstr "Insgesamt wiederhergestellte Bestellprozesse"
 
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:339
 msgid "Total recovered revenue"
@@ -10951,7 +11129,7 @@ msgstr "Summen"
 
 #: settings/abandoned/AbandonedSettings.js:267
 msgid "Tracking Confirmation"
-msgstr "Tracking-Bestätigung"
+msgstr "Tracking Bestätigung"
 
 #: Blocks/Form/Block.php:146
 msgid "Transfers and payouts on behalf of a Standard connected account are not allowed."
@@ -10960,16 +11138,16 @@ msgstr "Überweisungen und Auszahlungen im Namen eines verbundenen Standardkonto
 #: subscriptions/edit/modules/Trial.js:8
 #: subscriptions/show/modules/LineItems/index.js:84
 msgid "Trial"
-msgstr "Gerichtsverhandlung"
+msgstr "Testversion"
 
 #: subscriptions/shared/EndDate.js:57
 #: subscriptions/show/modules/Details.js:67
 msgid "Trial ends on"
-msgstr "Die Probezeit endet am"
+msgstr "Die Testversion endet am"
 
 #: sc-subscription-status-badge2.js:52
 msgid "Trialing"
-msgstr "Erprobung"
+msgstr "Testphase"
 
 #: address.js:241
 msgid "Trinidad and Tobago"
@@ -10985,7 +11163,7 @@ msgstr "Tunesien"
 
 #: address.js:243
 msgid "Turkey"
-msgstr "Truthahn"
+msgstr "Türkei"
 
 #: src/Support/Currency.php:363
 msgid "Turkish Lira"
@@ -11001,7 +11179,7 @@ msgstr "Turks- und Caicosinseln"
 
 #: settings/abandoned/AbandonedSettings.js:104
 msgid "Turn on abandoned cart for your store."
-msgstr "Aktiviere verlassenen Einkaufswagen für deinen Shop."
+msgstr "Aktiviere abgebrochene Käufe für deinen Shop."
 
 #: settings/subscription-preservation/PreservationSettings.js:159
 msgid "Turning this one will collect subscription cancelation reasons and optionally offer a discount to keep their subscription active."
@@ -11014,7 +11192,7 @@ msgstr "TutorLMS-Kurs"
 
 #: dashboard/components/GetStarted.js:72
 msgid "Tutorial"
-msgstr "Lernprogramm"
+msgstr "Tutorial"
 
 #: address.js:246
 msgid "Tuvalu"
@@ -11063,7 +11241,7 @@ msgstr "Art des Objekts (Einstellungen)"
 
 #: src/Rest/BumpRestServiceProvider.php:60
 msgid "Type of object (bump)"
-msgstr "Art des Objekts (Beule)"
+msgstr "Art des Objekts (Bump)"
 
 #: orders/modules/TaxInfo.js:9
 #: tax.js:15
@@ -11110,7 +11288,7 @@ msgstr "%s aus dem Archiv entfernen? Dadurch wird das Produkt wieder käuflich."
 
 #: bumps/EditBump.js:99
 msgid "Un-Archive this bump? This will make the product purchaseable again."
-msgstr "Diesen Bump aus dem Archiv entfernen? Dadurch wird das Produkt wieder käuflich."
+msgstr "Diesen Order Bump aus dem Archiv entfernen? Dadurch wird das Produkt wieder käuflich."
 
 #: products/modules/Prices/Price/index.js:66
 msgid "Un-Archive this price? This will make the product purchaseable again."
@@ -11118,7 +11296,7 @@ msgstr "Diesen Preis aus dem Archiv entfernen? Dadurch wird das Produkt wieder k
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:348
 msgid "Unapprove"
-msgstr "Genehmigen"
+msgstr "Freigeben"
 
 #: admin/advanced.php:63
 #: admin/plugin.php:106
@@ -11230,7 +11408,7 @@ msgstr "Widerrufen Sie den Zugriff auf diesen Kauf"
 
 #: components/data-tables/charges-data-table/Refund.js:173
 msgid "Unselect All"
-msgstr "Alles wiederufen"
+msgstr "Alles abwählen"
 
 #: Blocks/CheckoutForm/components/Empty.js:53
 msgid "Untitled Form"
@@ -11242,7 +11420,7 @@ msgstr "Unbestätigt"
 
 #: abandoned-checkouts/modules/Schedule.js:37
 msgid "Upcoming"
-msgstr "Bevorstehende"
+msgstr "Anstehend"
 
 #: subscriptions/show/modules/LineItems/index.js:21
 msgid "Upcoming Billing Period"
@@ -11289,7 +11467,7 @@ msgstr "Link aktualisieren"
 #: sc-password-nag.js:86
 #: sc-wordpress-password-edit.js:59
 msgid "Update Password"
-msgstr "Passwort erneuern"
+msgstr "Passwort aktualisieren"
 
 #: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:57
 #: Controllers/SubscriptionController.php:193
@@ -11339,7 +11517,7 @@ msgstr "Aktualisiert"
 #: admin/abandoned-orders/cta-banner.php:105
 #: components/StorageLimitWarning.js:99
 msgid "Upgrade"
-msgstr "Aktualisierung"
+msgstr "Upgrade"
 
 #: products/modules/Upgrades.js:73
 msgid "Upgrade Group"
@@ -11382,7 +11560,7 @@ msgstr "Upgrades passieren"
 
 #: settings/subscription/SubscriptionSettings.js:59
 msgid "Upgrades, Downgrades, and Cancellations"
-msgstr "Upgrades, Downgrades und Stornierungen"
+msgstr "Upgrades, Downgrades und Kündigungen"
 
 #: components/MediaLibrary/index.js:176
 msgid "Upload Media"
@@ -11425,7 +11603,7 @@ msgstr "Verwenden Sie den JavaScript-ESM-Loader"
 #: admin/advanced.php:57
 #: settings/advanced/AdvancedSettings.js:110
 msgid "Use Stripe's Payment Element instead of the Card Element in all forms."
-msgstr "Verwenden Sie in allen Formen das Zahlungselement von Stripe anstelle des Kartenelements."
+msgstr "Verwenden Sie in allen Bestellformularen das Zahlungselement von Stripe anstelle des Kartenelements."
 
 #: Blocks/Address/edit.js:63
 msgid "Use a compact address if possible"
@@ -11456,7 +11634,7 @@ msgstr "Benutzer nicht gefunden."
 
 #: sc-login-form.js:150
 msgid "Username or Email Address"
-msgstr "Benutzername oder E-mail Adresse"
+msgstr "Benutzername oder E-Mail Adresse"
 
 #: coupons/modules/Limits.js:89
 msgid "Users must redeem this coupon by:"
@@ -11465,7 +11643,7 @@ msgstr "Benutzer müssen diesen Coupon wie folgt einlösen:"
 #: coupons/modules/Code.js:126
 #: coupons/Sidebar.js:66
 msgid "Uses"
-msgstr "Verwendet"
+msgstr "Verwendung"
 
 #: address.js:254
 msgid "Uzbekistan"
@@ -11553,15 +11731,15 @@ msgstr "Vietnamesisch Đồng"
 #: Blocks/Dashboard/CustomerCharges/edit.js:88
 #: formats/ShowPrice.js:91
 msgid "View"
-msgstr "Sicht"
+msgstr "Ansicht"
 
 #: abandoned-checkouts/AbandonedCheckout.js:116
 msgid "View Abandoned Checkout"
-msgstr "Abgebrochene Kasse anzeigen"
+msgstr "Abgebrochene Käufe anzeigen"
 
 #: dashboard/components/RecentOrders.js:220
 msgid "View All"
-msgstr "Alle ansehen"
+msgstr "Alle anzeigen"
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:217
 msgid "View Cart"
@@ -11574,7 +11752,7 @@ msgstr "Kasse ansehen"
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:210
 msgid "View Checkout Form"
-msgstr "Checkout-Formular anzeigen"
+msgstr "Bestellformulare anzeigen"
 
 #: abandoned-checkouts/modules/Customer.js:26
 #: invoices/modules/Customer.js:27
@@ -11624,17 +11802,18 @@ msgstr "Alle ansehen"
 
 #: components/data-tables/charges-data-table/index.js:137
 msgid "View charge on "
-msgstr "Ladung anzeigen"
+msgstr "Belastungen anzeigen"
 
 #: address.js:258
 msgid "Virgin Islands, British"
-msgstr "Virgin Inseln, Britisch"
+msgstr "Britische Jungferninseln, Britanien"
 
 #: address.js:259
 msgid "Virgin Islands, U.S."
 msgstr "Jungferninseln, USA"
 
 #: sc-order-status-badge2.js:41
+#, fuzzy
 msgid "Void"
 msgstr "Leere"
 
@@ -11670,7 +11849,7 @@ msgstr "Wochen"
 
 #: sc-login-form.js:148
 msgid "Welcome"
-msgstr "Herzlich willkommen"
+msgstr "Herzlich Willkommen"
 
 #: sc-login-provider2.js:76
 msgid "Welcome back!"
@@ -11706,7 +11885,7 @@ msgstr "Wenn eine Kündigung sofort erfolgt, wird das Abonnement sofort gekündi
 
 #: settings/subscription/SubscriptionSettings.js:100
 msgid "When an upgrade or downgrade happens immediately, a prorated invoice will be generated and paid. If the invoice payment fails, the subscription will not be updated. In the case of a downgrade, the invoice will likely have a $0 balance and a credit may be applied to the customer. When an upgrade or downgrade happens at the next billing period, the subscription won't be updated until the next payment date."
-msgstr "Wenn ein Upgrade oder Downgrade sofort erfolgt, wird eine anteilige Rechnung erstellt und bezahlt. Wenn die Rechnungszahlung fehlschlägt, wird das Abonnement nicht aktualisiert. Im Falle einer Herabstufung weist die Rechnung wahrscheinlich einen Saldo von 0 USD auf, und dem Kunden kann eine Gutschrift gutgeschrieben werden. Wenn im nächsten Abrechnungszeitraum ein Upgrade oder Downgrade erfolgt, wird das Abonnement erst zum nächsten Zahlungsdatum aktualisiert."
+msgstr "Wenn ein Upgrade oder Downgrade sofort erfolgt, wird eine anteilige Rechnung erstellt und bezahlt. Wenn die Rechnungszahlung fehlschlägt, wird das Abonnement nicht aktualisiert. Im Falle einer Herabstufung weist die Rechnung wahrscheinlich einen Saldo von 0 auf, und dem Kunden kann eine Gutschrift gutgeschrieben werden. Wenn im nächsten Abrechnungszeitraum ein Upgrade oder Downgrade erfolgt, wird das Abonnement erst zum nächsten Zahlungsdatum aktualisiert."
 
 #: subscriptions/show/modules/modals/CancelSubscriptionModal.js:75
 msgid "When do you want to cancel the subscription?"
@@ -11833,7 +12012,7 @@ msgstr "Sie können die EU-Mikrobefreiung nicht aktivieren, wenn sich Ihre Adres
 
 #: src/Support/Errors/Translations/codes.php:32
 msgid "You cannot enable abandoned checkouts until you have updated your business contact address. Please add an address to your store branding."
-msgstr "Sie können abgebrochene Checkouts erst aktivieren, wenn Sie Ihre geschäftliche Kontaktadresse aktualisiert haben. Bitte fügen Sie Ihrem Store-Branding eine Adresse hinzu."
+msgstr "Sie können abgebrochene Käufe erst aktivieren, wenn Sie Ihre geschäftliche Kontaktadresse aktualisiert haben. Bitte fügen Sie Ihrem Store-Branding eine Adresse hinzu."
 
 #: src/Support/Errors/Translations/codes.php:48
 msgid "You cannot enable taxes unless a valid tax address is provided"
@@ -11845,7 +12024,7 @@ msgstr "Sie haben keine Zahlungsmethoden."
 
 #: sc-stripe-payment-request2.js:172
 msgid "You do not have any wallets set up in your browser."
-msgstr "Sie haben keine Wallets in Ihrem Browser eingerichtet."
+msgstr "Sie haben keine Wallets in Ihrem Browser eingerichtet"
 
 #: src/Middleware/ArchiveModelMiddleware.php:28
 #: src/Middleware/EditModelMiddleware.php:28
@@ -11854,7 +12033,7 @@ msgstr "Sie haben dazu keine Berechtigung."
 
 #: Controllers/BaseController.php:72
 msgid "You do not have permission to do this."
-msgstr "Du hast keine Erlaubnis das zu tun."
+msgstr "Sie haben keine Erlaubnis das zu tun."
 
 #: settings/tax-region/TaxRegionSettings.js:70
 msgid "You don't have any country-specific VAT registrations. If you're registered under one-stop shop then you don't need to create country-specific tax registrations. If you're not, add a tax registration to start collecting tax."
@@ -11871,7 +12050,7 @@ msgstr "Sie haben keine Rechnungen."
 #: dashboard/components/RecentOrders.js:68
 #: sc-orders-list.js:121
 msgid "You don't have any orders."
-msgstr "Sie haben keine Befehle."
+msgstr "Sie haben keine Bestellungen."
 
 #: sc-payment-methods-list.js:123
 msgid "You don't have any saved payment methods."
@@ -11929,7 +12108,7 @@ msgstr "Sie müssen zuerst etwas kaufen, um auf Ihr Dashboard zugreifen zu könn
 
 #: sc-stripe-payment-request2.js:166
 msgid "You must serve this page over HTTPS to display express payment buttons."
-msgstr "Sie müssen diese Seite über HTTPS bereitstellen, um Schaltflächen für Expresszahlungen anzuzeigen."
+msgstr "Sie müssen diese Seite über HTTPS bereitstellen, um Buttons für Expresszahlungen sich anzuzeigen zu lassen."
 
 #: sc-customer-email.js:81
 msgid "You won't receive further emails from us."
@@ -11938,7 +12117,7 @@ msgstr "Sie erhalten keine weiteren E-Mails von uns."
 #: sc-upcoming-invoice.js:169
 #: sc-upcoming-invoice.js:171
 msgid "You'll be switched to this plan"
-msgstr "Sie werden auf diesen Tarif umgestellt"
+msgstr "Sie werden auf diesen Tarif umgestellt."
 
 #: settings/tax-region/TaxRegionSettings.js:62
 msgid "You're not collecting GST in Australia. Add a tax registration to start collecting tax."
@@ -11990,7 +12169,7 @@ msgstr "Der Nachname Ihres Kunden."
 
 #: settings/abandoned/AbandonedSettings.js:144
 msgid "Your discount settings for abandoned cart."
-msgstr "Ihre Rabatteinstellungen für verlassene Warenkörbe."
+msgstr "Ihre Rabatteinstellungen für abgebrochene Käufe."
 
 #: src/Settings/SettingService.php:98
 #: Blocks/Email/Block.php:21
@@ -12031,11 +12210,11 @@ msgstr "Ihr Plan wird sofort storniert. Sie können Ihre Meinung nicht ändern."
 #: sc-subscription-details2.js:68
 #: sc-subscription.js:106
 msgid "Your plan will be canceled on"
-msgstr "Ihr Tarif wird am storniert"
+msgstr "Ihr Tarif wird storniert am"
 
 #: sc-subscription-cancel.js:88
 msgid "Your plan will be canceled, but is still available until the end of your billing period on"
-msgstr "Ihr Plan wird gekündigt, ist aber noch bis zum Ende Ihres Abrechnungszeitraums verfügbar"
+msgstr "Ihr Plan wird gekündigt, ist aber noch bis zum Ende Ihres Abrechnungszeitraums verfügbar."
 
 #: Blocks/Form/Block.php:122
 msgid "Your platform attempted to create a custom account in a country that is not yet supported. Make sure that users can only sign up in countries supported by custom accounts."
@@ -12101,7 +12280,7 @@ msgstr "ad hoc"
 #: Blocks/Address/block.json
 msgctxt "block keyword"
 msgid "address"
-msgstr "die Anschrift"
+msgstr "Adresse"
 
 #: abandoned-checkouts/components/Link.js:70
 msgid "adjust your settings"
@@ -12128,7 +12307,7 @@ msgstr "Android"
 #: Blocks/ExpressPayment/block.json
 msgctxt "block keyword"
 msgid "apple"
-msgstr "Apfel"
+msgstr "Apple"
 
 #: sc-upcoming-invoice.js:169
 msgid "at the end of your billing cycle on"
@@ -12137,7 +12316,7 @@ msgstr "am Ende Ihres Abrechnungszeitraums an"
 #: Blocks/BumpLineItem/block.json
 msgctxt "block keyword"
 msgid "bump"
-msgstr "stoßen"
+msgstr "bump"
 
 #: Blocks/Button/block.json
 #: Blocks/Submit/block.json
@@ -12145,7 +12324,7 @@ msgstr "stoßen"
 #: Blocks/Switch/block.json
 msgctxt "block keyword"
 msgid "button"
-msgstr "Knopf"
+msgstr "Button"
 
 #: Blocks/Card/block.json
 #: Blocks/Payment/block.json
@@ -12157,7 +12336,7 @@ msgstr "Karte"
 #: src/WordPress/PostTypes/CartPostTypeService.php:189
 msgctxt "Cart slug"
 msgid "cart"
-msgstr "Wagen"
+msgstr "Wagenkorb"
 
 #: Blocks/Checkbox/block.json
 msgctxt "block keyword"
@@ -12168,13 +12347,13 @@ msgstr "Kontrollkästchen"
 #: src/WordPress/Pages/PageSeeder.php:89
 msgctxt "Form slug"
 msgid "checkout"
-msgstr "Auschecken"
+msgstr "Bestellvorgang"
 
 #: src/Install/InstallService.php:124
 #: src/WordPress/Pages/PageSeeder.php:115
 msgctxt "Page slug"
 msgid "checkout"
-msgstr "Auschecken"
+msgstr "Bestellvorgang"
 
 #: Blocks/BumpLineItem/block.json
 #: Blocks/Button/block.json
@@ -12186,7 +12365,7 @@ msgstr "Auschecken"
 #: Blocks/Total/block.json
 msgctxt "block keyword"
 msgid "checkout"
-msgstr "Auschecken"
+msgstr "Bestellvorgang"
 
 #: Blocks/PriceChoice/block.json
 #: Blocks/PriceSelector/block.json
@@ -12207,7 +12386,7 @@ msgstr "bestätigen"
 #: Blocks/Coupon/block.json
 msgctxt "block keyword"
 msgid "coupon"
-msgstr "Coupon"
+msgstr "Gutschein"
 
 #: Blocks/Payment/block.json
 msgctxt "block keyword"
@@ -12220,7 +12399,7 @@ msgstr "Kredit"
 #: Blocks/Textarea/block.json
 msgctxt "block keyword"
 msgid "custom"
-msgstr "Benutzerdefiniert"
+msgstr "benutzerdefiniert"
 
 #: Blocks/AddToCartButton/block.json
 #: Blocks/BuyButton/block.json
@@ -12255,7 +12434,7 @@ msgstr "Kunde"
 #: src/WordPress/Pages/PageSeeder.php:125
 msgctxt "Page slug"
 msgid "customer-dashboard"
-msgstr "Kunden-Dashboard"
+msgstr "Kunden Dashboard"
 
 #: Blocks/CustomerDashboardButton/block.json
 #: Blocks/Dashboard/CustomerBillingDetails/block.json
@@ -12276,7 +12455,7 @@ msgstr "Kunden-Dashboard"
 #: Blocks/LogoutButton/block.json
 msgctxt "block keyword"
 msgid "dashboard"
-msgstr "Armaturenbrett"
+msgstr "dashboard"
 
 #. translators: number of days.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:251
@@ -12294,7 +12473,7 @@ msgstr "Zahl verringern"
 #: Blocks/Card/block.json
 msgctxt "block keyword"
 msgid "details"
-msgstr "Einzelheiten"
+msgstr "Details"
 
 #: Blocks/BumpLineItem/block.json
 msgctxt "block keyword"
@@ -12304,7 +12483,11 @@ msgstr "Rabatt"
 #: Blocks/Divider/block.json
 msgctxt "block keyword"
 msgid "divider"
-msgstr "Teiler"
+msgstr "Trennlinie"
+
+#: Blocks/ConditionalForm/translations.js:14
+msgid "does not exist"
+msgstr "ist nicht vorhanden"
 
 #: Blocks/Donation/block.json
 #: Blocks/DonationAmount/block.json
@@ -12322,14 +12505,19 @@ msgstr "herunterladen"
 #: Blocks/Form/block.json
 msgctxt "block keyword"
 msgid "email"
-msgstr "Email"
+msgstr "E-Mail"
 
 #: Blocks/Button/block.json
 #: Blocks/Checkbox/block.json
 #: Blocks/Total/block.json
 msgctxt "block keyword"
 msgid "engine"
-msgstr "Motor"
+msgstr "engine"
+
+#: Blocks/CheckoutErrors/block.json
+msgctxt "block keyword"
+msgid "error"
+msgstr "Fehler"
 
 #: products/modules/Prices/Price/Header.js:143
 #: util/translations.js:6
@@ -12342,6 +12530,14 @@ msgstr "jeder"
 #: Blocks/CartItems/edit.js:78
 msgid "every month"
 msgstr "jeden Monat"
+
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:59
+msgid "exist"
+msgstr "existieren"
+
+#: Blocks/ConditionalForm/translations.js:13
+msgid "exists"
+msgstr "existiert"
 
 #: Blocks/Input/block.json
 #: Blocks/Textarea/block.json
@@ -12359,13 +12555,14 @@ msgstr "Vorname"
 #: price.js:51
 #: sc-order-bump2.js:53
 #: sc-price-choice.js:787
+#, fuzzy
 msgid "for"
 msgstr "Pro"
 
 #: Blocks/CheckoutForm/block.json
 msgctxt "block keyword"
 msgid "form"
-msgstr "bilden"
+msgstr "Formular"
 
 #: Blocks/ExpressPayment/block.json
 msgctxt "block keyword"
@@ -12386,6 +12583,11 @@ msgstr "Std"
 msgid "https://example.com"
 msgstr "https://beispiel.com"
 
+#: Blocks/StoreLogo/block.json
+msgctxt "block keyword"
+msgid "image"
+msgstr "Bild"
+
 #: sc-upcoming-invoice.js:171
 msgid "immediately"
 msgstr "sofort"
@@ -12403,12 +12605,45 @@ msgstr "Zahl erhöhen"
 #: Blocks/Textarea/block.json
 msgctxt "block keyword"
 msgid "input"
-msgstr "Eingang"
+msgstr "eingabe"
+
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:21
+#: Blocks/ConditionalForm/translations.js:15
+#: Blocks/ConditionalForm/translations.js:16
+msgid "is equal to"
+msgstr "ist gleich"
+
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:37
+#: Blocks/ConditionalForm/translations.js:19
+msgid "is greater or equal to"
+msgstr "größer oder gleich ist"
+
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:29
+#: Blocks/ConditionalForm/translations.js:17
+msgid "is greater than"
+msgstr "ist größer als"
+
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:41
+msgid "is less or equal to"
+msgstr "kleiner oder gleich ist"
+
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:33
+#: Blocks/ConditionalForm/translations.js:18
+msgid "is less than"
+msgstr "ist weniger als"
+
+#: Blocks/ConditionalForm/translations.js:20
+msgid "is less than or equal to"
+msgstr "kleiner oder gleich ist"
+
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:25
+msgid "is not equal to"
+msgstr "ist ungleich zu"
 
 #: Blocks/LastName/block.json
 msgctxt "block keyword"
 msgid "last-name"
-msgstr "Familienname, Nachname"
+msgstr "Nachname"
 
 #: Blocks/BumpLineItem/block.json
 msgctxt "block keyword"
@@ -12418,10 +12653,16 @@ msgstr "Linie"
 #: Blocks/LineItems/block.json
 msgctxt "block keyword"
 msgid "line-items"
-msgstr "Werbebuchungen"
+msgstr "einzelposten"
+
+#: Blocks/StoreLogo/block.json
+msgctxt "block keyword"
+msgid "logo"
+msgstr "Logo"
 
 #: default-i18n.js:470
 #: fetch.js:443
+#, fuzzy
 msgctxt "text direction"
 msgid "ltr"
 msgstr "ltr"
@@ -12430,7 +12671,27 @@ msgstr "ltr"
 #: Blocks/Form/block.json
 msgctxt "block keyword"
 msgid "mail"
-msgstr "Post"
+msgstr "mail"
+
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:11
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:51
+#: Blocks/ConditionalForm/translations.js:11
+msgid "matches all of"
+msgstr "passt zu allen"
+
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:7
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:47
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:69
+#: Blocks/ConditionalForm/translations.js:10
+msgid "matches any of"
+msgstr "passt zu einem von"
+
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:15
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:55
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:73
+#: Blocks/ConditionalForm/translations.js:12
+msgid "matches none of"
+msgstr "passt zu keinem von"
 
 #: src/Support/Errors/Translations/types.php:40
 msgid "max count reached"
@@ -12490,9 +12751,18 @@ msgctxt "block keyword"
 msgid "name"
 msgstr "Name"
 
+#: Blocks/ConditionalForm/selectors/SelectOperator.js:63
+msgid "not exist"
+msgstr "nicht existieren"
+
+#: Blocks/CheckoutErrors/block.json
+msgctxt "block keyword"
+msgid "notice"
+msgstr "Notiz"
+
 #: settings/customer/CustomerSettings.js:74
 msgid "notifications@surecart.com"
-msgstr "Benachrichtigungen@surecart.com"
+msgstr "notifications@surecart.com"
 
 #: components/StorageLimitWarning.js:70
 msgid "of"
@@ -12524,7 +12794,7 @@ msgstr "oder ziehen Sie eine hochzuladende Datei per Drag-and-Drop."
 #: src/WordPress/Pages/PageSeeder.php:120
 msgctxt "Page slug"
 msgid "order-confirmation"
-msgstr "Bestellbestätigung"
+msgstr "bestell-bestätigung"
 
 #: Blocks/Password/block.json
 msgctxt "block keyword"
@@ -12558,22 +12828,22 @@ msgstr "Werbeaktion"
 #: Blocks/RadioGroup/block.json
 msgctxt "block keyword"
 msgid "radio"
-msgstr "Radio"
+msgstr "radio"
 
 #: Blocks/RadioGroup/block.json
 msgctxt "block keyword"
 msgid "radio-group"
-msgstr "Radio-Gruppe"
+msgstr "radio-gruppe"
 
 #: settings/account/AccountSettings.js:307
 #: settings/account/AccountSettings.js:308
 msgid "reCaptcha Secret Key"
-msgstr "reCaptcha-Geheimschlüssel"
+msgstr "reCaptcha-Secret-Key"
 
 #: settings/account/AccountSettings.js:291
 #: settings/account/AccountSettings.js:292
 msgid "reCaptcha Site Key"
-msgstr "reCaptcha-Site-Schlüssel"
+msgstr "reCaptcha-Site-Key"
 
 #: settings/account/AccountSettings.js:329
 msgid "register a new site and choose v3."
@@ -12589,10 +12859,21 @@ msgctxt "block keyword"
 msgid "shipping"
 msgstr "Versand"
 
+#: Blocks/StoreLogo/block.json
+#, fuzzy
+msgctxt "block keyword"
+msgid "store"
+msgstr "speichern"
+
+#: Blocks/StoreLogo/block.json
+msgctxt "block keyword"
+msgid "store logo"
+msgstr "geschäftslogo"
+
 #: Blocks/Payment/block.json
 msgctxt "block keyword"
 msgid "stripe"
-msgstr "Streifen"
+msgstr "Stripe"
 
 #: Blocks/Button/block.json
 #: Blocks/Submit/block.json
@@ -12618,13 +12899,13 @@ msgstr "Zusammenfassung"
 #: Blocks/RadioGroup/block.json
 msgctxt "block keyword"
 msgid "surecart"
-msgstr "sicher"
+msgstr "surecart"
 
 #: Blocks/Address/block.json
 #: Blocks/TaxLineItem/block.json
 msgctxt "block keyword"
 msgid "tax"
-msgstr "MwSt"
+msgstr "MwSt."
 
 #: Blocks/Input/block.json
 msgctxt "block keyword"
@@ -12640,7 +12921,7 @@ msgstr "Textbereich"
 #: Blocks/OrderConfirmationLineItems/block.json
 msgctxt "block keyword"
 msgid "thank"
-msgstr "danken"
+msgstr "danke"
 
 #: Blocks/Confirmation/block.json
 #: Blocks/OrderBumps/block.json
@@ -12653,8 +12934,8 @@ msgstr "danke schön"
 #: coupons/modules/EditPromotionCode.js:147
 msgid "time"
 msgid_plural "times"
-msgstr[0] "Zeit"
-msgstr[1] "mal"
+msgstr[0] "mal"
+msgstr[1] "weitere male"
 
 #: Blocks/Heading/block.json
 msgctxt "block keyword"

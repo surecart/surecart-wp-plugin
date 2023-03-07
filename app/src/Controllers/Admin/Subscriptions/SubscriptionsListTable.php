@@ -59,6 +59,8 @@ class SubscriptionsListTable extends ListTable {
 		$stati = [
 			'all'      => __( 'All', 'surecart' ),
 			'active'   => __( 'Active', 'surecart' ),
+			'trialing' => __( 'Trialing', 'surecart' ),
+			'past_due' => __( 'Past Due', 'surecart' ),
 			'canceled' => __( 'Canceled', 'surecart' ),
 		];
 

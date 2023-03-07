@@ -39,18 +39,16 @@ describe('Checkout PayPal', () => {
     ).as('confirm');
   });
 
-
   it('Can checkout', () => {
     cy.visit('/test/sc-checkout/paypal/');
 
     cy.wait('@createUpdate');
     cy.get('sc-block-ui.busy-block-ui').should('not.exist');
 
-    cy.get('sc-payment-method-choice[processor-id="paypal"]').shadow().find('sc-toggle').click();
     cy.get('sc-paypal-buttons').shadow().find('.sc-paypal-button').should('be.visible');
 
     // submit.
-    cy.getPayPalButton('paypal').click({force: true, multiple: true});
+    cy.getPayPalButton('paypal').click({ force: true, multiple: true });
 
     cy.wait('@finalize').its('request.url').should('include', 'form_id=1').should('include', 'processor_type=paypal');
   });
