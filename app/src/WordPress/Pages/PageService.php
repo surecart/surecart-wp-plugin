@@ -16,9 +16,9 @@ class PageService {
 			return;
 		}
 		add_action( 'display_post_states', [ $this, 'displayDefaultPageStatuses' ] );
-		add_filter( 'pre_delete_post', [ $this, 'restrictDefaultPageDeletion' ], 11, 2 );
-		add_filter( 'pre_trash_post', [ $this, 'restrictDefaultPageDeletion' ], 11, 2 );
-		add_filter( 'wp_insert_post_empty_content', [ $this, 'restrictDefaultCheckoutRemove' ], 11, 2 );
+		// add_filter( 'pre_delete_post', [ $this, 'restrictDefaultPageDeletion' ], 11, 2 );
+		// add_filter( 'pre_trash_post', [ $this, 'restrictDefaultPageDeletion' ], 11, 2 );
+		// add_filter( 'wp_insert_post_empty_content', [ $this, 'restrictDefaultCheckoutRemove' ], 11, 2 );
 	}
 
 	/**

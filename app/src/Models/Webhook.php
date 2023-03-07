@@ -2,8 +2,6 @@
 
 namespace SureCart\Models;
 
-use SureCart\Support\Encryption;
-
 /**
  * Price model
  */
