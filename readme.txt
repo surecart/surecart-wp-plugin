@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.1
-Stable tag: 1.7.1
+Stable tag: 1.7.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,10 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.7.2 - March 4, 2023 =
+* Fix: Issue with some page builders not saving default checkout page due to validations.
+* Fix: Issue with webhooks not being set properly if the WordPress install domain is different than the home url.
 
 = 1.7.1 - March 2, 2023 =
 * Improvement: Add translation contexts for translators.
