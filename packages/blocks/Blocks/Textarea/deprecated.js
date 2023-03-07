@@ -33,9 +33,6 @@ export default [
 			max: {
 				type: ['string', 'number'],
 			},
-			maxlength: {
-				type: 'number',
-			},
 			name: {
 				type: 'string',
 				default: 'textarea',
@@ -50,7 +47,6 @@ export default [
 				autocomplete,
 				inputmode,
 				max,
-				maxlength,
 				min,
 				minlength,
 				name,
@@ -72,7 +68,7 @@ export default [
 					autofocus={autofocus ? '1' : null}
 					autocomplete={autocomplete ? '1' : null}
 					inputmode={inputmode}
-					maxlength={maxlength}
+					maxlength={500}
 					minlength={minlength}
 					name={name}
 					placeholder={placeholder}
