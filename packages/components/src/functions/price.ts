@@ -96,3 +96,7 @@ export const periodCountString = (price: Price) => {
 
   return ` (${sprintf(_n('%d payment', '%d payments', price.recurring_period_count, 'surecart'), price.recurring_period_count)})`;
 };
+
+export const translateRemainingPayments = payments => {
+  return sprintf(_n('%d payment remaining', '%d payments remaining', payments, 'surecart'), payments);
+};

@@ -49,6 +49,21 @@ export default ({
 		);
 	};
 
+	const setupFee = () => {
+		return (
+			<>
+				{!!price?.setup_fee_enabled && (
+					<>
+						{' '}
+						<sc-tag type="default" size="small">
+							{__('Setup Fee', 'surecart')}
+						</sc-tag>
+					</>
+				)}
+			</>
+		);
+	};
+
 	const priceType = () => {
 		if (!price?.id) return;
 		if (price?.recurring_interval) {
@@ -91,6 +106,7 @@ export default ({
 				<div>
 					{priceType()}
 					{trial()}
+					{setupFee()}
 				</div>
 
 				<div

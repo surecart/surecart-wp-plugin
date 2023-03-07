@@ -593,6 +593,7 @@ export interface Subscription extends Object {
   ad_hoc_amount: number;
   created_at: number;
   updated_at: number;
+  restore_at?:number
 }
 
 export interface CancellationAct {

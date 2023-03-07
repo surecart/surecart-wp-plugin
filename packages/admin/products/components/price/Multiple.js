@@ -2,6 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { ScInput } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
+import SetupFee from './parts/SetupFee';
 
 import AdHoc from './parts/AdHoc';
 import Amount from './parts/Amount';
@@ -45,6 +46,7 @@ export default ({ price, updatePrice }) => {
 					updatePrice={updatePrice}
 				/>
 			</sc-flex>
+			<SetupFee price={price} updatePrice={updatePrice} />
 		</>
 	);
 };
