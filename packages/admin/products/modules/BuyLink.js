@@ -12,13 +12,11 @@ import {
 } from '@surecart/components-react';
 import { store as noticesStore } from '@wordpress/notices';
 import { __ } from '@wordpress/i18n';
-import { useState } from 'react';
 import { useDispatch } from '@wordpress/data';
 
 export default ({ product, updateProduct, loading }) => {
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
-	const [drawer, setDrawer] = useState(false);
 	const updateMeta = (data) =>
 		updateProduct({ metadata: { ...(product?.metadata || {}), ...data } });
 
