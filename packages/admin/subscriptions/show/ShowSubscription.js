@@ -19,7 +19,6 @@ import { store as noticesStore } from '@wordpress/notices';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useEffect, useState } from 'react';
-import DatePicker from '../../components/DatePicker';
 
 import Logo from '../../templates/Logo';
 import Template from '../../templates/UpdateModel';
@@ -36,7 +35,6 @@ import PendingUpdate from './modules/PendingUpdate';
 import Periods from './modules/Periods';
 import Purchases from './modules/Purchases';
 import Tax from './modules/Tax';
-import PaymentMethod from '../edit/modules/PaymentMethod';
 import PayOffSubscriptionModal from './modules/modals/PayOffSubscriptionModal';
 import LineItems from './modules/LineItems';
 import RestoreSubscriptionAtModal from './modules/modals/RestoreSubscriptionAtModal';
@@ -47,8 +45,7 @@ export default () => {
 	const [modal, setModal] = useState();
 	const [upcoming, setUpcoming] = useState();
 	const [loadingUpcoming, setLoadingUpcoming] = useState(false);
-	const { saveEntityRecord, invalidateResolutionForStore } =
-		useDispatch(coreStore);
+	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
 
