@@ -39,6 +39,7 @@ import PayOffSubscriptionModal from './modules/modals/PayOffSubscriptionModal';
 import LineItems from './modules/LineItems';
 import RestoreSubscriptionAtModal from './modules/modals/RestoreSubscriptionAtModal';
 import PauseSubscriptionUntilModal from './modules/modals/PauseSubscriptionUntilModal';
+import RenewSubscriptionAtModal from './modules/modals/RenewSubscriptionAtModal';
 
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
@@ -235,7 +236,7 @@ export default () => {
 
 		return (
 			<ScMenuItem onClick={() => setModal('pause')}>
-				{__('Pause Subscription', 'surecart')}
+				{__('Pause Subscription...', 'surecart')}
 			</ScMenuItem>
 		);
 	};
@@ -259,6 +260,17 @@ export default () => {
 		return (
 			<ScMenuItem onClick={() => setModal('restore_at')}>
 				{__('Restore At...', 'surecart')}
+			</ScMenuItem>
+		);
+	};
+
+	/** Render the renew at button */
+	const renderRenewAtButton = () => {
+		if (!['past_due', 'active'].includes(subscription?.status)) return null;
+
+		return (
+			<ScMenuItem onClick={() => setModal('renew_at')}>
+				{__('Renew At...', 'surecart')}
 			</ScMenuItem>
 		);
 	};
@@ -337,6 +349,7 @@ export default () => {
 							</ScMenuItem>
 						)}
 						{renderUpdateButton()}
+						{renderRenewAtButton()}
 						{renderPauseButton()}
 						{renderPayOffButton()}
 						{renderCompleteButton()}
@@ -413,6 +426,11 @@ export default () => {
 			<PauseSubscriptionUntilModal
 				open={modal === 'pause'}
 				onRequestClose={onRequestCloseModal}
+			/>
+			<RenewSubscriptionAtModal
+				open={modal === 'renew_at'}
+				onRequestClose={onRequestCloseModal}
+				subscription={subscription}
 			/>
 			<PayOffSubscriptionModal
 				open={modal === 'pay_off'}

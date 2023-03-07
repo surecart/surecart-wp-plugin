@@ -1,10 +1,4 @@
-import {
-	ScBlockUi,
-	ScButton,
-	ScDialog,
-	ScFlex,
-	ScText,
-} from '@surecart/components-react';
+import { ScBlockUi, ScButton, ScDialog } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import apiFetch from '@wordpress/api-fetch';
 import { DateTimePicker } from '@wordpress/components';
@@ -84,27 +78,14 @@ export default ({ open, onRequestClose, currentRestoreAt }) => {
 			}}
 		>
 			<Error error={error} setError={setError} />
-			<ScFlex flexDirection="column">
-				<ScText
-					style={{
-						'--font-size': 'var(--sc-font-size-medium)',
-						'--color': 'var(--sc-input-label-color)',
-						'--line-height': 'var(--sc-line-height-dense)',
-					}}
-				>
-					{__(
-						'When should the subscription be restored?',
-						'surecart'
-					)}
-				</ScText>
-				<DateTimePicker
-					currentDate={restoreAt}
-					onChange={onChangeDate}
-					isInvalidDate={(date) => {
-						return Date.parse(new Date()) > Date.parse(date);
-					}}
-				/>
-			</ScFlex>
+
+			<DateTimePicker
+				currentDate={restoreAt}
+				onChange={onChangeDate}
+				isInvalidDate={(date) => {
+					return Date.parse(new Date()) > Date.parse(date);
+				}}
+			/>
 
 			<ScButton
 				type="text"
@@ -114,6 +95,7 @@ export default ({ open, onRequestClose, currentRestoreAt }) => {
 			>
 				{__('Cancel', 'surecart')}
 			</ScButton>
+
 			<ScButton
 				type="primary"
 				slot="footer"
