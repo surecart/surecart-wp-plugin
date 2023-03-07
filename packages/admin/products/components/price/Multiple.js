@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { ScInput } from '@surecart/components-react';
-import { Flex, FlexBlock } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 import AdHoc from './parts/AdHoc';
@@ -12,14 +11,8 @@ import Trial from './parts/Trial';
 export default ({ price, updatePrice }) => {
 	return (
 		<>
-			<Flex>
-				<FlexBlock>
-					<Amount price={price} updatePrice={updatePrice} />
-				</FlexBlock>
-				<FlexBlock>
-					<ScratchAmount price={price} updatePrice={updatePrice} />
-				</FlexBlock>
-			</Flex>
+			<Amount price={price} updatePrice={updatePrice} />
+			<ScratchAmount price={price} updatePrice={updatePrice} />
 			<AdHoc price={price} updatePrice={updatePrice} />
 			<sc-flex>
 				{!price?.id && (
