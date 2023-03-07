@@ -1,6 +1,6 @@
 <!-- wp:surecart/columns {"isFullHeight":true,"style":{"spacing":{"blockGap":{"top":"0px","left":"0px"}}}} -->
 <sc-columns is-stacked-on-mobile="1" is-full-height="1" class="wp-block-surecart-columns" style="gap:0px 0px"><!-- wp:surecart/column {"layout":{"type":"constrained","contentSize":"550px","justifyContent":"right"},"width":"","style":{"spacing":{"padding":{"top":"100px","right":"100px","bottom":"100px","left":"100px"},"blockGap":"30px"},"border":{"width":"0px","style":"none"},"color":{"background":"#fafafa"}}} -->
-	<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right has-background" style="border-style:none;border-width:0px;background-color:#fafafa;padding:5rem;--sc-column-content-width:450px;--sc-form-row-spacing:20px">
+	<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right has-background" style="border-style:none;border-width:0px;background-color:#fafafa;padding:5rem;--sc-column-content-width:450px;--sc-form-row-spacing:30px">
 
 		<?php if ( $show_logo ) : ?>
 		<!-- wp:surecart/store-logo {"width":120,"maxHeight":100,"isLinkToHome":false} /-->
@@ -15,7 +15,7 @@
 		<?php endif; ?>
 
 
-		<sc-text style="--font-size: var(--sc-font-size-x-large); font-weight: var(--sc-font-weight-bold)">
+		<sc-text style="--font-size: var(--sc-font-size-x-large); font-weight: var(--sc-font-weight-bold); --line-height: 1">
 			<?php echo wp_kses_post( $product->name ); ?>
 		</sc-text>
 
