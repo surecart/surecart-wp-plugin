@@ -66,12 +66,25 @@ export class ScOrderSummary {
         <span slot="description">
           <slot name="description" />
         </span>
-        <span slot="price" class={{ 'price': true, 'price--collapsed': this.collapsed }}>
-          {!!this.order?.total_savings_amount && (
-            <sc-format-number class="scratch-price" type="currency" value={-this.order?.total_savings_amount + this.order?.total_amount} currency={this.order?.currency || 'usd'} />
-          )}
-          <sc-total total={'total'} order={this.order}></sc-total>
-        </span>
+
+        {/* We have a trial, do not show total_savings_amount since it's based on the total_amount */}
+        {this.order?.total_amount !== this.order?.amount_due ? (
+          <span slot="price" class={{ 'price': true, 'price--collapsed': this.collapsed }}>
+            <sc-format-number type="currency" currency={this.order?.currency} value={this.order?.amount_due}></sc-format-number>
+          </span>
+        ) : (
+          <span slot="price" class={{ 'price': true, 'price--collapsed': this.collapsed }}>
+            {!!this.order?.total_savings_amount && (
+              <sc-format-number
+                class="scratch-price"
+                type="currency"
+                value={-this.order?.total_savings_amount + this.order?.total_amount}
+                currency={this.order?.currency || 'usd'}
+              />
+            )}
+            <sc-total total={'total'} order={this.order}></sc-total>
+          </span>
+        )}
       </sc-line-item>
     );
   }

@@ -55,22 +55,16 @@ export default ({ className, price, updatePrice }) => {
 
 					{!!price?.setup_fee_enabled && (
 						<ScSwitch
-							checked={!!price.setup_fee_trial_enabled}
+							checked={!price.setup_fee_trial_enabled}
 							onScChange={(e) =>
 								updatePrice({
-									setup_fee_trial_enabled: e.target.checked,
+									setup_fee_trial_enabled: !e.target.checked,
 								})
 							}
 						>
 							{__(
 								'Charge setup fee during free trial',
 								'surecart'
-							)}
-							{!scData?.entitlements?.subscription_trials && (
-								<>
-									{' '}
-									<ScPremiumTag />
-								</>
 							)}
 						</ScSwitch>
 					)}

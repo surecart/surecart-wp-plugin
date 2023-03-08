@@ -2402,7 +2402,7 @@ export namespace Components {
          */
         "scratchAmount": number;
         /**
-          * Is the setup fee included in the free trial?
+          * Is the setup fee not included in the free trial?
          */
         "setupFeeTrialEnabled": boolean;
         /**
@@ -7409,7 +7409,7 @@ declare namespace LocalJSX {
          */
         "scratchAmount"?: number;
         /**
-          * Is the setup fee included in the free trial?
+          * Is the setup fee not included in the free trial?
          */
         "setupFeeTrialEnabled"?: boolean;
         /**

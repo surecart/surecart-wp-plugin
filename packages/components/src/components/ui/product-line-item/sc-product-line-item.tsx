@@ -43,8 +43,8 @@ export class ScProductLineItem {
   /** Product line item fees. */
   @Prop() fees: Fee[];
 
-  /** Is the setup fee included in the free trial? */
-  @Prop() setupFeeTrialEnabled: boolean;
+  /** Is the setup fee not included in the free trial? */
+  @Prop() setupFeeTrialEnabled: boolean = true;
 
   /** The line item scratch amount */
   @Prop() scratchAmount: number;
@@ -79,7 +79,7 @@ export class ScProductLineItem {
       return (
         <div class="item__price" part="price">
           <div class="price" part="price__amount">
-            {!!setupFee && this.setupFeeTrialEnabled ? (
+            {!!setupFee && !this.setupFeeTrialEnabled ? (
               <Fragment>
                 {setupFee?.description} &mdash; <sc-format-number part="price__amount" type="currency" currency={this.currency} value={setupFee.amount}></sc-format-number>
               </Fragment>
@@ -152,7 +152,7 @@ export class ScProductLineItem {
           </div>
         </div>
         {(this.fees || []).map(fee => {
-          if (this.trialDurationDays && this.setupFeeTrialEnabled && fee.fee_type === 'setup') return null;
+          if (this.trialDurationDays && !this.setupFeeTrialEnabled && fee.fee_type === 'setup') return null;
           return (
             <sc-line-item>
               <sc-format-number slot="price-description" type="currency" value={fee?.amount} currency={this.currency || 'usd'} />

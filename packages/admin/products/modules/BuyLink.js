@@ -70,7 +70,7 @@ export default ({ product, updateProduct, loading }) => {
 							border-radius: 999px;
 						`}
 					></div>
-					{__('Instant Buy Link', 'surecart')}
+					{__('Instant Checkout', 'surecart')}
 				</ScButton>
 				<ScMenu>
 					<div css={menuCss}>
@@ -189,6 +189,21 @@ export default ({ product, updateProduct, loading }) => {
 							}
 						>
 							{__('Show coupon field', 'surecart')}
+						</ScSwitch>
+						<ScSwitch
+							checked={
+								product?.metadata
+									?.wp_buy_link_terms_disabled !== 'true'
+							}
+							onScChange={(e) =>
+								updateMeta({
+									wp_buy_link_terms_disabled: e.target.checked
+										? 'false'
+										: 'true',
+								})
+							}
+						>
+							{__('Require terms and conditions', 'surecart')}
 						</ScSwitch>
 						<ScDivider />
 						<ScInput
