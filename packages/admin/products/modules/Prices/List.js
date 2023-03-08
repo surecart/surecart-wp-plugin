@@ -48,7 +48,6 @@ export default ({ prices, product, children }) => {
 			css={css`
 				position: relative;
 				.smooth-dnd-container.vertical > .smooth-dnd-draggable-wrapper {
-					background: #fff;
 					overflow: visible;
 					padding-top: var(--sc-spacing-x-small);
 					padding-bottom: var(--sc-spacing-x-small);
