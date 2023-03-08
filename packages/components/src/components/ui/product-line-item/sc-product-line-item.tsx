@@ -43,6 +43,9 @@ export class ScProductLineItem {
   /** Product line item fees. */
   @Prop() fees: Fee[];
 
+  /** Is the setup fee included in the free trial? */
+  @Prop() setupFeeTrialEnabled: boolean;
+
   /** The line item scratch amount */
   @Prop() scratchAmount: number;
 
@@ -71,11 +74,18 @@ export class ScProductLineItem {
   @Event({ bubbles: false }) scRemove: EventEmitter<void>;
 
   renderPriceAndInterval() {
+    const setupFee = (this.fees || []).find(fee => fee.fee_type === 'setup');
     if (this.trialDurationDays) {
       return (
         <div class="item__price" part="price">
           <div class="price" part="price__amount">
-            {sprintf(_n('%d day free', '%d days free', this.trialDurationDays, 'surecart'), this.trialDurationDays)}
+            {!!setupFee && this.setupFeeTrialEnabled ? (
+              <Fragment>
+                {setupFee?.description} &mdash; <sc-format-number part="price__amount" type="currency" currency={this.currency} value={setupFee.amount}></sc-format-number>
+              </Fragment>
+            ) : (
+              sprintf(_n('%d day free', '%d days free', this.trialDurationDays, 'surecart'), this.trialDurationDays)
+            )}
           </div>
           <div class="price__description" part="price__description">
             {
@@ -141,14 +151,17 @@ export class ScProductLineItem {
             {this.renderPriceAndInterval()}
           </div>
         </div>
-        {(this.fees || []).map(fee => (
-          <sc-line-item>
-            <sc-format-number slot="price-description" type="currency" value={fee?.amount} currency={this.currency || 'usd'} />
-            <span slot="price-description" class="fee__description">
-              {fee?.description}
-            </span>
-          </sc-line-item>
-        ))}
+        {(this.fees || []).map(fee => {
+          if (this.trialDurationDays && this.setupFeeTrialEnabled && fee.fee_type === 'setup') return null;
+          return (
+            <sc-line-item>
+              <sc-format-number slot="price-description" type="currency" value={fee?.amount} currency={this.currency || 'usd'} />
+              <span slot="price-description" class="fee__description">
+                {fee?.description}
+              </span>
+            </sc-line-item>
+          );
+        })}
       </div>
     );
   }

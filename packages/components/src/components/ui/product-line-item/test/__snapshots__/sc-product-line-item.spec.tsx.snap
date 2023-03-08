@@ -112,3 +112,100 @@ exports[`sc-product-line-item renders scratch amount if different from amount 1`
   </mock:shadow-root>
 </sc-product-line-item>
 `;
+
+exports[`sc-product-line-item renders trial duration 1`] = `
+<sc-product-line-item trial-duration-days="30">
+  <mock:shadow-root>
+    <div class="base" part="base">
+      <div class="item" part="product-line-item">
+        <div class="item__text" part="text">
+          <div class="item__title" part="title">
+            <slot name="title"></slot>
+          </div>
+          <sc-quantity-select exportparts="base:quantity__base, minus, minus-icon, plus, plus-icon, input" max="100"></sc-quantity-select>
+        </div>
+        <div class="item__suffix" part="suffix">
+          <div></div>
+          <div class="item__price" part="price">
+            <div class="price" part="price__amount">
+              30 days free
+            </div>
+            <div class="price__description" part="price__description">
+              Then
+              <sc-format-number currency="CAD" part="price__amount" type="currency"></sc-format-number>
+              monthly
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-product-line-item>
+`;
+
+exports[`sc-product-line-item renders trial duration with setup fee 1`] = `
+<sc-product-line-item setup-fee-trial-enabled="" trial-duration-days="30">
+  <mock:shadow-root>
+    <div class="base" part="base">
+      <div class="item" part="product-line-item">
+        <div class="item__text" part="text">
+          <div class="item__title" part="title">
+            <slot name="title"></slot>
+          </div>
+          <sc-quantity-select exportparts="base:quantity__base, minus, minus-icon, plus, plus-icon, input" max="100"></sc-quantity-select>
+        </div>
+        <div class="item__suffix" part="suffix">
+          <div></div>
+          <div class="item__price" part="price">
+            <div class="price" part="price__amount">
+              Paid Trial —
+              <sc-format-number currency="CAD" part="price__amount" type="currency" value="10000"></sc-format-number>
+            </div>
+            <div class="price__description" part="price__description">
+              Then
+              <sc-format-number currency="CAD" part="price__amount" type="currency"></sc-format-number>
+              monthly
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-product-line-item>
+`;
+
+exports[`sc-product-line-item renders trial duration without setup fee 1`] = `
+<sc-product-line-item trial-duration-days="30">
+  <mock:shadow-root>
+    <div class="base" part="base">
+      <div class="item" part="product-line-item">
+        <div class="item__text" part="text">
+          <div class="item__title" part="title">
+            <slot name="title"></slot>
+          </div>
+          <sc-quantity-select exportparts="base:quantity__base, minus, minus-icon, plus, plus-icon, input" max="100"></sc-quantity-select>
+        </div>
+        <div class="item__suffix" part="suffix">
+          <div></div>
+          <div class="item__price" part="price">
+            <div class="price" part="price__amount">
+              30 days free
+            </div>
+            <div class="price__description" part="price__description">
+              Then
+              <sc-format-number currency="CAD" part="price__amount" type="currency"></sc-format-number>
+              monthly
+            </div>
+          </div>
+        </div>
+      </div>
+      <sc-line-item>
+        <sc-format-number currency="CAD" slot="price-description" type="currency" value="10000"></sc-format-number>
+        <span class="fee__description" slot="price-description">
+          Paid Trial
+        </span>
+      </sc-line-item>
+    </div>
+  </mock:shadow-root>
+</sc-product-line-item>
+`;
