@@ -86,6 +86,12 @@
 			<!-- /wp:surecart/total -->
 		</sc-order-summary>
 
+		<?php if ( $show_terms ) : ?>
+		<!-- wp:surecart/checkbox {"label":"I agree to the terms."} -->
+			<sc-checkbox name="terms_and_privacy" value="accepted" required><?php echo sprintf( __( 'I agree to %s terms and privacy policy', 'Surecart' ), esc_html( $store_name ) ); ?></sc-checkbox>
+		<!-- /wp:surecart/checkbox -->
+		<?php endif; ?>
+
 		<!-- wp:surecart/submit {"text":"Buy Now","show_total":true,"full":true} -->
 		<sc-order-submit type="primary" full="true" size="large" icon="lock" show-total="true" class="wp-block-surecart-submit">Buy Now</sc-order-submit>
 		<!-- /wp:surecart/submit --></sc-column>

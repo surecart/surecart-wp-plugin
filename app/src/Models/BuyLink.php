@@ -56,6 +56,8 @@ class BuyLink {
 				return 'true' !== ( $this->product->metadata->wp_buy_link_coupon_field_disabled ?? '' );
 			case 'logo':
 				return 'true' !== ( $this->product->metadata->wp_buy_link_logo_disabled ?? '' );
+			case 'terms':
+				return 'true' !== ( $this->product->metadata->wp_buy_link_terms_disabled ?? '' );
 		}
 		return false;
 	}
