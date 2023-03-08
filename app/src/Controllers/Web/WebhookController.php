@@ -55,42 +55,6 @@ class WebhookController {
 	}
 
 	/**
-	 * Create a webhook for this install.
-	 */
-	public function create() {
-		return Webhook::create(
-			[
-				'description' => 'Main webhook for SureCart',
-				'enabled'     => true,
-				'url'         => \SureCart::routeUrl( 'webhooks.receive' ),
-				'webhook_events' => [
-					// "cancellation_act.updated",
-					// "customer.created",
-					// "customer.updated",
-					// "order.created",
-					// "order.made_processing",
-					// 'order.paid', // There is documention in plugin
-					// "order.payment_failed",
-					'purchase.created',
-					'purchase.invoked',
-					'purchase.updated',
-					'purchase.revoked',
-					// "refund.created",
-					// 'refund.succeeded', // We have it in a plugin doc
-					// "subscription.canceled", // In doc
-					// "subscription.created",
-					// "subscription.completed",
-					// "subscription.made_active", // In doc
-					// "subscription.made_past_due",
-					// "subscription.made_trialing", // In doc
-					'subscription.renewed',
-					// "subscription.updated",
-				],
-			]
-		);
-	}
-
-	/**
 	 * Recieve webhook
 	 */
 	public function receive( $request ) {
