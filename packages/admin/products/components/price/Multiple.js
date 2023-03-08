@@ -35,14 +35,8 @@ export default ({ price, updatePrice }) => {
 			)}
 			<ScratchAmount price={price} updatePrice={updatePrice} />
 			<AdHoc price={price} updatePrice={updatePrice} />
-			<Trial
-				css={css`
-					flex: 1;
-				`}
-				price={price}
-				updatePrice={updatePrice}
-			/>
 			<SetupFee price={price} updatePrice={updatePrice} />
+			<Trial price={price} updatePrice={updatePrice} />
 		</>
 	);
 };

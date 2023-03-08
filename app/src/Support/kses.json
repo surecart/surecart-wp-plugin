@@ -1342,6 +1342,7 @@
     "quantity": true,
     "removable": true,
     "scratch-amount": true,
+    "setup-fee-trial-enabled": true,
     "trial-duration-days": true,
     "style": true,
     "id": true,

@@ -180,6 +180,7 @@ export default ({ onRequestClose, product }) => {
 						align-items: center;
 						justify-content: space-between;
 						gap: 0.5em;
+						margin-top: var(--sc-spacing-xx-large);
 					`}
 				>
 					<div

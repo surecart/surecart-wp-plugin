@@ -10,6 +10,7 @@ export default ({ price, updatePrice }) => {
 			onScInput={(e) => {
 				updatePrice({ name: e.target.value });
 			}}
+			autoFocus
 		/>
 	);
 };

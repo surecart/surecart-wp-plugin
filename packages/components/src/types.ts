@@ -65,6 +65,7 @@ export interface Price {
   ad_hoc_max_amount: number;
   ad_hoc_min_amount: number;
   scratch_amount: number;
+  setup_fee_trial_enabled: boolean;
   recurring_period_count: number;
   archived: boolean;
   product_id?: string;
@@ -277,7 +278,7 @@ export interface Fee {
   object: 'fee';
   amount: number;
   description: string;
-  fee_type: 'manual' | 'bump';
+  fee_type: 'manual' | 'bump' | 'setup';
   line_item: string | LineItem;
   created_at: number;
   updated_at: number;
@@ -593,7 +594,7 @@ export interface Subscription extends Object {
   ad_hoc_amount: number;
   created_at: number;
   updated_at: number;
-  restore_at?:number
+  restore_at?: number;
 }
 
 export interface CancellationAct {

@@ -39,6 +39,7 @@ export default ({ price, updatePrice }) => {
 					css={css`
 						display: flex;
 						gap: var(--sc-form-row-spacing);
+						margin-bottom: var(--sc-spacing-small);
 						> * {
 							flex: 1;
 						}
