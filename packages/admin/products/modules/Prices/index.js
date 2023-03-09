@@ -15,24 +15,46 @@ export default ({ product, productId }) => {
 	const [newPriceModal, setNewPriceModal] = useState(false);
 	const [showArchived, setShowArchived] = useState(false);
 
-	const { activePrices, archivedPrices, updating, loading } = useSelect(
+	const { active, archived, updating, loading } = useSelect(
 		(select) => {
 			const queryArgs = [
 				'surecart',
 				'price',
 				{ context: 'edit', product_ids: [productId], per_page: 100 },
 			];
+
+			// get all prices for this product.
 			const prices = select(coreStore).getEntityRecords(...queryArgs);
+
+			// are we loading prices?
 			const loading = select(coreStore).isResolving(
 				'getEntityRecords',
 				queryArgs
 			);
 
+			// are we saving any prices?
+			const saving = (prices || []).some((price) =>
+				select(coreStore).isSavingEntityRecord(
+					'surecart',
+					'price',
+					price?.id
+				)
+			);
+
+			const deleting = (prices || []).some((price) =>
+				select(coreStore)?.isDeletingEntityRecord?.(
+					'surecart',
+					'price',
+					price?.id
+				)
+			);
+
 			// for all prices, merge with edits
+			// we always show the edited version of the price.
 			const editedPrices = (prices || [])
 				.map((price) => {
 					return {
-            ...price,
+						...price,
 						...select(coreStore).getRawEntityRecord(
 							'surecart',
 							'price',
@@ -49,36 +71,34 @@ export default ({ product, productId }) => {
 				.sort((a, b) => a?.position - b?.position);
 
 			return {
-				activePrices: (editedPrices || []).filter(
-					(price) => !price.archived
-				),
-				archivedPrices: (editedPrices || []).filter(
+				active: (editedPrices || []).filter((price) => !price.archived),
+				archived: (editedPrices || []).filter(
 					(price) => price.archived
 				),
 				loading: loading && !prices?.length,
-				updating: loading && prices?.length,
+				updating: (loading && prices?.length) || saving || deleting,
 			};
 		},
 		[productId]
 	);
 
 	const footer = () => {
-		if (!archivedPrices?.length && !activePrices?.length) {
+		if (!archived?.length && !active?.length) {
 			return null;
 		}
 
 		return (
 			<>
-				{!!activePrices?.length && (
+				{!!active?.length && (
 					<ScButton onClick={() => setNewPriceModal(true)}>
 						<ScIcon name="plus" slot="prefix"></ScIcon>
 						{__('Add Another Price', 'surecart')}
 					</ScButton>
 				)}
 
-				{!!archivedPrices?.length && (
+				{!!archived?.length && (
 					<ShowArchivedToggle
-						prices={archivedPrices}
+						prices={archived}
 						show={showArchived}
 						setShow={setShowArchived}
 					/>
@@ -100,7 +120,7 @@ export default ({ product, productId }) => {
 						gap: 1em;
 					`}
 				>
-					<List prices={activePrices} product={product}>
+					<List prices={active} product={product}>
 						<ScEmpty icon="shopping-bag">
 							<ScSpacing>
 								<p
@@ -123,7 +143,7 @@ export default ({ product, productId }) => {
 						</ScEmpty>
 					</List>
 
-					{!!archivedPrices?.length && (
+					{!!archived?.length && (
 						<div
 							css={css`
 								display: grid;
@@ -131,10 +151,7 @@ export default ({ product, productId }) => {
 							`}
 						>
 							{!!showArchived && (
-								<List
-									prices={archivedPrices}
-									product={product}
-								/>
+								<List prices={archived} product={product} />
 							)}
 						</div>
 					)}

@@ -22,18 +22,13 @@ export default ({ price, product }) => {
 	const [error, setError] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 
-	const { savingPrice, deletingPrice, savePriceError } = useSelect(
+	// get any save errors.
+	const { savePriceError } = useSelect(
 		(select) => {
 			if (!price?.id) return {};
 			const entityData = ['surecart', 'price', price?.id];
 			return {
-				savingPrice: select(coreStore)?.isSavingEntityRecord?.(
-					...entityData
-				),
 				savePriceError: select(coreStore)?.getLastEntitySaveError?.(
-					...entityData
-				),
-				deletingPrice: select(coreStore)?.isDeletingEntityRecord?.(
 					...entityData
 				),
 			};
@@ -180,10 +175,6 @@ export default ({ price, product }) => {
 					updatePrice={editPrice}
 				/>
 			</div>
-
-			{(savingPrice || deletingPrice) && (
-				<sc-block-ui spinner></sc-block-ui>
-			)}
 		</div>
 	);
 };
