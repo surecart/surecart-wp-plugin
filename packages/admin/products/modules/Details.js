@@ -27,9 +27,9 @@ export default ({ product, updateProduct, loading }) => {
 				/>
 				<ScRichText
 					label={__('Description', 'surecart')}
-          placeholder={__('Enter a description...', 'surecart')}
+					placeholder={__('Enter a description...', 'surecart')}
 					help={__(
-						'A short description for your product that is displayed on product and buy pages.',
+						'A short description for your product that is displayed on product and instant checkouts.',
 						'surecart'
 					)}
 					value={product?.description}
