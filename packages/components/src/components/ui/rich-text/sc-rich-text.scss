@@ -1,6 +1,15 @@
 :host {
   display: block;
 }
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  color: var(--sc-input-placeholder-color);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
 .ProseMirror [class~="lead"] {
   color: var(--sc-input-color);
   font-size: var(--sc-input-spacing-small);

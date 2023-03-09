@@ -1,22 +1,22 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { store as noticesStore } from '@wordpress/notices';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { store as noticesStore } from '@wordpress/notices';
 
 import Error from '../../../../components/Error';
 // hocs
 import Multiple from '../../../components/price/Multiple';
 import OneTime from '../../../components/price/OneTime';
+import PriceName from '../../../components/price/parts/PriceName';
 // components
 import Tax from '../../../components/price/parts/Tax';
 import Subscription from '../../../components/price/Subscription';
 import Header from './Header';
-import PriceName from '../../../components/price/parts/PriceName';
 
-export default ({ id, prices, product }) => {
+export default ({ id, product }) => {
 	// are the price details open?
 	const [isOpen, setIsOpen] = useState(false);
 	const [error, setError] = useState(null);

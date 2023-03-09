@@ -33,9 +33,34 @@ export default ({ product, productId }) => {
 				'getEntityRecords',
 				queryArgs
 			);
+
+			// for all prices, merge with edits
+			const editedPrices = (prices || [])
+				.map((price) => {
+					return {
+						...select(coreStore).getRawEntityRecord(
+							'surecart',
+							'price',
+							price?.id
+						),
+						...select(coreStore).getEntityRecordEdits(
+							'surecart',
+							'price',
+							price?.id
+						),
+					};
+				})
+				// sort by position.
+				.sort((a, b) => a?.position - b?.position);
+
+			console.log((prices || []).map((price) => price?.position));
+			console.log((editedPrices || []).map((price) => price?.position));
+
 			return {
-				activePrices: (prices || []).filter((price) => !price.archived),
-				archivedPrices: (prices || []).filter(
+				activePrices: (editedPrices || []).filter(
+					(price) => !price.archived
+				),
+				archivedPrices: (editedPrices || []).filter(
 					(price) => price.archived
 				),
 				loading: loading && !prices?.length,

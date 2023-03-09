@@ -1,6 +1,8 @@
 import { Component, Event, EventEmitter, h, Host, Prop, State } from '@stencil/core';
 import { Editor } from '@tiptap/core';
+import Placeholder from '@tiptap/extension-placeholder';
 import StarterKit from '@tiptap/starter-kit';
+
 let id = 0;
 
 @Component({
@@ -58,7 +60,13 @@ export class ScRichText {
     if (this.editor) return;
     this.editor = new Editor({
       element: this.element,
-      extensions: [StarterKit],
+      extensions: [
+        StarterKit,
+        Placeholder.configure({
+          // Use a placeholder:
+          placeholder: this.placeholder,
+        }),
+      ],
       content: this.value,
       onCreate: ({ editor }) => {
         this.value = editor.getHTML();

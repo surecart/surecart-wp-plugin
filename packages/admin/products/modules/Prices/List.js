@@ -1,10 +1,11 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import Price from './Price';
-import { Container, Draggable } from 'react-smooth-dnd';
-import { select, useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
+import { Container, Draggable } from 'react-smooth-dnd';
+
+import Price from './Price';
 
 export default ({ prices, product, children }) => {
 	const { editEntityRecord } = useDispatch(coreStore);
@@ -24,7 +25,7 @@ export default ({ prices, product, children }) => {
 		// edit entity record to update indexes.
 		(result || []).forEach((price, index) =>
 			editEntityRecord('surecart', 'price', price.id, {
-				position: index + 1,
+				position: index,
 			})
 		);
 	};
@@ -32,16 +33,6 @@ export default ({ prices, product, children }) => {
 	if (!prices || !prices.length) {
 		return children;
 	}
-
-	const sorted = (prices || [])
-		.map((price) =>
-			select(coreStore).getEditedEntityRecord(
-				'surecart',
-				'price',
-				price?.id
-			)
-		)
-		.sort((a, b) => a?.position - b?.position);
 
 	return (
 		<div
@@ -55,16 +46,17 @@ export default ({ prices, product, children }) => {
 			`}
 		>
 			<Container
-				onDrop={(e) => applyDrag(sorted, e)}
-				getChildPayload={(index) => sorted?.[index]}
+				onDrop={(e) => applyDrag(prices, e)}
+				getChildPayload={(index) => prices?.[index]}
 				dragHandleSelector=".dragger"
 			>
-				{(sorted || []).map((price) => {
+				{(prices || []).map((price) => {
 					return (
 						<Draggable key={price.id}>
+							{price?.position}
 							<Price
 								id={price?.id}
-								prices={sorted}
+								prices={prices}
 								product={product}
 							/>
 						</Draggable>

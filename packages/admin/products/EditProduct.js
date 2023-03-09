@@ -1,20 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import {
-	ScButton,
-	ScDrawer,
-	ScColumns,
-	ScColumn,
-	ScDashboardModule,
-	ScSwitch,
-	ScMenu,
-	ScMenuItem,
-	ScMenuDivider,
-	ScDropdown,
-	ScIcon,
-	ScForm,
-	ScSkeleton,
-} from '@surecart/components-react';
+import { ScButton } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { select, useDispatch } from '@wordpress/data';
 import { Fragment, useState } from '@wordpress/element';
@@ -37,7 +23,6 @@ import Sidebar from './Sidebar';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
-	const [drawer, setDrawer] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { saveEditedEntityRecord } = useDispatch(coreStore);
 	const {
