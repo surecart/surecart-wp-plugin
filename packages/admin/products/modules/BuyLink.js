@@ -236,8 +236,8 @@ export default ({ product, updateProduct, loading }) => {
 							href={`${scData?.home_url}/${scData?.buy_page_slug}/${product?.slug}`}
 						>
 							{product?.metadata?.wp_buy_link_enabled === 'true'
-								? __('View Page', 'surecart')
-								: __('Preview Page', 'surecart')}
+								? __('View', 'surecart')
+								: __('Preview', 'surecart')}
 							<ScIcon name="external-link" slot="suffix" />
 						</ScButton>
 					</div>
