@@ -1,12 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import {
-	ScBlockUi,
-	ScButton,
-	ScEmpty,
-	ScIcon,
-	ScSpacing,
-} from '@surecart/components-react';
+import { ScBlockUi, ScButton, ScEmpty, ScIcon, ScSpacing } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
@@ -38,6 +32,7 @@ export default ({ product, productId }) => {
 			const editedPrices = (prices || [])
 				.map((price) => {
 					return {
+            ...price,
 						...select(coreStore).getRawEntityRecord(
 							'surecart',
 							'price',
@@ -52,9 +47,6 @@ export default ({ product, productId }) => {
 				})
 				// sort by position.
 				.sort((a, b) => a?.position - b?.position);
-
-			console.log((prices || []).map((price) => price?.position));
-			console.log((editedPrices || []).map((price) => price?.position));
 
 			return {
 				activePrices: (editedPrices || []).filter(

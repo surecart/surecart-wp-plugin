@@ -53,11 +53,7 @@ export default ({ prices, product, children }) => {
 				{(prices || []).map((price) => {
 					return (
 						<Draggable key={price.id}>
-							<Price
-								id={price?.id}
-								prices={prices}
-								product={product}
-							/>
+							<Price price={price} product={product} />
 						</Draggable>
 					);
 				})}

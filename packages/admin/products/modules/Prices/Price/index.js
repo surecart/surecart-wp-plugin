@@ -16,27 +16,17 @@ import Tax from '../../../components/price/parts/Tax';
 import Subscription from '../../../components/price/Subscription';
 import Header from './Header';
 
-export default ({ id, product }) => {
+export default ({ price, product }) => {
 	// are the price details open?
 	const [isOpen, setIsOpen] = useState(false);
 	const [error, setError] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 
-	const {
-		price,
-		hasLoadedPrice,
-		savingPrice,
-		deletingPrice,
-		savePriceError,
-	} = useSelect(
+	const { savingPrice, deletingPrice, savePriceError } = useSelect(
 		(select) => {
-			const entityData = ['surecart', 'price', id];
+			if (!price?.id) return {};
+			const entityData = ['surecart', 'price', price?.id];
 			return {
-				price: select(coreStore).getEditedEntityRecord(...entityData),
-				hasLoadedPrice: select(coreStore)?.hasFinishedResolution?.(
-					'getEditedEntityRecord',
-					[...entityData]
-				),
 				savingPrice: select(coreStore)?.isSavingEntityRecord?.(
 					...entityData
 				),
@@ -48,17 +38,18 @@ export default ({ id, product }) => {
 				),
 			};
 		},
-		[id]
+		[price?.id]
 	);
 
 	// dispatchers.
 	const { editEntityRecord, deleteEntityRecord, saveEditedEntityRecord } =
 		useDispatch(coreStore);
 	const savePrice = (options = {}) =>
-		saveEditedEntityRecord('surecart', 'price', id, options);
+		saveEditedEntityRecord('surecart', 'price', price?.id, options);
 	const deletePrice = (options = {}) =>
-		deleteEntityRecord('surecart', 'price', id, {}, options);
-	const editPrice = (data) => editEntityRecord('surecart', 'price', id, data);
+		deleteEntityRecord('surecart', 'price', price?.id, {}, options);
+	const editPrice = (data) =>
+		editEntityRecord('surecart', 'price', price?.id, data);
 
 	// toggle the archive.
 	const toggleArchive = async () => {
@@ -146,7 +137,6 @@ export default ({ id, product }) => {
 				price={price}
 				onArchive={toggleArchive}
 				onDelete={onDelete}
-				loading={!hasLoadedPrice}
 				css={css`
 					padding: var(--sc-spacing-large);
 				`}
