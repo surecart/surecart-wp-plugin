@@ -21,6 +21,7 @@ export const ScCancelDiscount = /*@__PURE__*/createReactComponent<JSX.ScCancelDi
 export const ScCancelSurvey = /*@__PURE__*/createReactComponent<JSX.ScCancelSurvey, HTMLScCancelSurveyElement>('sc-cancel-survey');
 export const ScCard = /*@__PURE__*/createReactComponent<JSX.ScCard, HTMLScCardElement>('sc-card');
 export const ScCart = /*@__PURE__*/createReactComponent<JSX.ScCart, HTMLScCartElement>('sc-cart');
+export const ScCartButton = /*@__PURE__*/createReactComponent<JSX.ScCartButton, HTMLScCartButtonElement>('sc-cart-button');
 export const ScCartForm = /*@__PURE__*/createReactComponent<JSX.ScCartForm, HTMLScCartFormElement>('sc-cart-form');
 export const ScCartFormSubmit = /*@__PURE__*/createReactComponent<JSX.ScCartFormSubmit, HTMLScCartFormSubmitElement>('sc-cart-form-submit');
 export const ScCartHeader = /*@__PURE__*/createReactComponent<JSX.ScCartHeader, HTMLScCartHeaderElement>('sc-cart-header');

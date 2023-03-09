@@ -143,6 +143,15 @@
     "class": true,
     "slot": true
   },
+  "sc-cart-button": {
+    "form-id": true,
+    "icon": true,
+    "mode": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-cart-form": {
     "form-id": true,
     "mode": true,

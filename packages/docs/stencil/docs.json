@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-03-04T15:00:22",
+  "timestamp": "2023-03-07T17:03:47",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -2711,6 +2711,104 @@
         ],
         "sc-block-ui": [
           "sc-spinner"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/sc-cart-button/sc-cart-button.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-cart-button",
+      "docs": "",
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "count - The icon base wrapper."
+        }
+      ],
+      "usage": {},
+      "props": [
+        {
+          "name": "formId",
+          "type": "string",
+          "mutable": false,
+          "attr": "form-id",
+          "reflectToAttr": true,
+          "docs": "The form id to use for the cart.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "icon",
+          "type": "string",
+          "mutable": false,
+          "attr": "icon",
+          "reflectToAttr": false,
+          "docs": "The icon to show.",
+          "docsTags": [],
+          "default": "'shopping-bag'",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "mode",
+          "type": "\"live\" | \"test\"",
+          "mutable": false,
+          "attr": "mode",
+          "reflectToAttr": false,
+          "docs": "Are we in test or live mode.",
+          "docsTags": [],
+          "default": "'live'",
+          "values": [
+            {
+              "value": "live",
+              "type": "string"
+            },
+            {
+              "value": "test",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "count",
+          "docs": "The icon base wrapper."
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "sc-icon"
+      ],
+      "dependencyGraph": {
+        "sc-cart-button": [
+          "sc-icon"
         ]
       }
     },
@@ -12561,6 +12659,7 @@
         "sc-breadcrumbs",
         "sc-cancel-dialog",
         "sc-cancel-survey",
+        "sc-cart-button",
         "sc-cart-form-submit",
         "sc-cart-header",
         "sc-cart-icon",
@@ -12613,6 +12712,9 @@
           "sc-icon"
         ],
         "sc-cancel-survey": [
+          "sc-icon"
+        ],
+        "sc-cart-button": [
           "sc-icon"
         ],
         "sc-cart-form-submit": [

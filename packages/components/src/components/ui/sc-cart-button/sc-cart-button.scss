@@ -1,0 +1,22 @@
+:host {
+  display: inline-block;
+}
+
+.cart_button {
+  position: relative;
+  cursor: pointer;
+  --width: 1em;
+  --height: 1em;
+  &_count {
+    position: absolute;
+    inset: -14px -14px auto auto;
+    font-size: 12px;
+    border-radius: var(--sc-cart-counter-border-radius, 9999px);
+    color: var(--sc-cart-counter-color, var(--sc-color-white));
+    background: var(--sc-cart-counter-background, var(--sc-color-gray-900));
+    box-shadow: var(--sc-cart-icon-box-shadow, var(--sc-shadow-x-large));
+    padding: 2px 8px;
+    line-height: 18px;
+    z-index: 1;
+  }
+}

@@ -246,6 +246,20 @@ export namespace Components {
          */
         "mode": 'test' | 'live';
     }
+    interface ScCartButton {
+        /**
+          * The form id to use for the cart.
+         */
+        "formId": string;
+        /**
+          * The icon to show.
+         */
+        "icon": string;
+        /**
+          * Are we in test or live mode.
+         */
+        "mode": 'test' | 'live';
+    }
     interface ScCartForm {
         /**
           * The form id to use for the cart.
@@ -3558,6 +3572,12 @@ declare global {
         prototype: HTMLScCartElement;
         new (): HTMLScCartElement;
     };
+    interface HTMLScCartButtonElement extends Components.ScCartButton, HTMLStencilElement {
+    }
+    var HTMLScCartButtonElement: {
+        prototype: HTMLScCartButtonElement;
+        new (): HTMLScCartButtonElement;
+    };
     interface HTMLScCartFormElement extends Components.ScCartForm, HTMLStencilElement {
     }
     var HTMLScCartFormElement: {
@@ -4490,6 +4510,7 @@ declare global {
         "sc-cancel-survey": HTMLScCancelSurveyElement;
         "sc-card": HTMLScCardElement;
         "sc-cart": HTMLScCartElement;
+        "sc-cart-button": HTMLScCartButtonElement;
         "sc-cart-form": HTMLScCartFormElement;
         "sc-cart-form-submit": HTMLScCartFormSubmitElement;
         "sc-cart-header": HTMLScCartHeaderElement;
@@ -4901,6 +4922,20 @@ declare namespace LocalJSX {
           * The header for the popout.
          */
         "header"?: string;
+        /**
+          * Are we in test or live mode.
+         */
+        "mode"?: 'test' | 'live';
+    }
+    interface ScCartButton {
+        /**
+          * The form id to use for the cart.
+         */
+        "formId"?: string;
+        /**
+          * The icon to show.
+         */
+        "icon"?: string;
         /**
           * Are we in test or live mode.
          */
@@ -8266,6 +8301,7 @@ declare namespace LocalJSX {
         "sc-cancel-survey": ScCancelSurvey;
         "sc-card": ScCard;
         "sc-cart": ScCart;
+        "sc-cart-button": ScCartButton;
         "sc-cart-form": ScCartForm;
         "sc-cart-form-submit": ScCartFormSubmit;
         "sc-cart-header": ScCartHeader;
@@ -8438,6 +8474,7 @@ declare module "@stencil/core" {
             "sc-cancel-survey": LocalJSX.ScCancelSurvey & JSXBase.HTMLAttributes<HTMLScCancelSurveyElement>;
             "sc-card": LocalJSX.ScCard & JSXBase.HTMLAttributes<HTMLScCardElement>;
             "sc-cart": LocalJSX.ScCart & JSXBase.HTMLAttributes<HTMLScCartElement>;
+            "sc-cart-button": LocalJSX.ScCartButton & JSXBase.HTMLAttributes<HTMLScCartButtonElement>;
             "sc-cart-form": LocalJSX.ScCartForm & JSXBase.HTMLAttributes<HTMLScCartFormElement>;
             "sc-cart-form-submit": LocalJSX.ScCartFormSubmit & JSXBase.HTMLAttributes<HTMLScCartFormSubmitElement>;
             "sc-cart-header": LocalJSX.ScCartHeader & JSXBase.HTMLAttributes<HTMLScCartHeaderElement>;
