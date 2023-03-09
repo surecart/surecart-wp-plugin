@@ -22,6 +22,15 @@ class BuyLink {
 	}
 
 	/**
+	 * The buy page url.
+	 *
+	 * @return void
+	 */
+	public function url() {
+		return trailingslashit( get_home_url() ) . trailingslashit( \SureCart::permalinks()->getBase( 'buy_page' ) ) . $this->product->slug;
+	}
+
+	/**
 	 * Is the buy link enabled.
 	 *
 	 * @return boolean
