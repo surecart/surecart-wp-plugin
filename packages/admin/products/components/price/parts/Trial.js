@@ -55,7 +55,7 @@ export default ({ className, price, updatePrice }) => {
 
 					{!!price?.setup_fee_enabled && (
 						<ScSwitch
-							checked={!price.setup_fee_trial_enabled}
+							checked={price.setup_fee_trial_enabled === false}
 							onScChange={(e) =>
 								updatePrice({
 									setup_fee_trial_enabled: !e.target.checked,
