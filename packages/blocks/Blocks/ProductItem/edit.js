@@ -4,13 +4,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import {
-	InnerBlocks,
-	useBlockProps,
-	__experimentalUseBorderProps as useBorderProps,
-} from '@wordpress/block-editor';
-
-import { getSpacingPresetCssVar } from '../../util';
+import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
 
 export const PRODUCT_ITEM_LAYOUT = [
 	[
@@ -53,43 +47,13 @@ const ALLOWED_BLOCKS = [
 	'surecart/product-item-button',
 ];
 
-export default ({ attributes }) => {
-	const { style: styleAttribute } = attributes;
-	const { padding, margin } = styleAttribute?.spacing || {};
-
+export default () => {
 	const blockProps = useBlockProps();
-	const { style } = useBorderProps(attributes);
-
-	const defaultPadding = '0.88rem';
-
-	return (
-		<div
-			{...blockProps}
-			style={{
-				borderColor: style?.borderColor ?? 'var(--sc-color-gray-200)',
-				borderRadius: style?.borderRadius ?? '4px',
-				borderWidth: style?.borderWidth ?? '1px',
-				paddingTop:
-					getSpacingPresetCssVar(padding?.top) ?? defaultPadding,
-				paddingBottom:
-					getSpacingPresetCssVar(padding?.bottom) ?? defaultPadding,
-				paddingLeft:
-					getSpacingPresetCssVar(padding?.left) ?? defaultPadding,
-				paddingRight:
-					getSpacingPresetCssVar(padding?.right) ?? defaultPadding,
-				marginTop: getSpacingPresetCssVar(margin?.top),
-				marginBottom: getSpacingPresetCssVar(margin?.bottom),
-				marginLeft: getSpacingPresetCssVar(margin?.left),
-				marginRight: getSpacingPresetCssVar(margin?.right),
-			}}
-		>
-			<InnerBlocks
-				templateLock={'insert'}
-				// templateLock={false}
-				template={PRODUCT_ITEM_LAYOUT}
-				allowedBlocks={ALLOWED_BLOCKS}
-				renderAppender={false}
-			/>
-		</div>
-	);
+	const innerBlocksProps = useInnerBlocksProps(blockProps, {
+		templateLock: 'insert',
+		template: PRODUCT_ITEM_LAYOUT,
+		allowedBlocks: ALLOWED_BLOCKS,
+		renderAppender: false,
+	});
+	return <div {...innerBlocksProps} />;
 };
