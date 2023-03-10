@@ -1,3 +1,4 @@
+import { css } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, RangeControl } from '@wordpress/components';
@@ -10,8 +11,6 @@ export default ({ attributes, setAttributes }) => {
 	const { padding } = styleAttribute?.spacing || {};
 
 	const blockProps = useBlockProps();
-
-	console.log('attributes', attributes);
 
 	return (
 		<>
@@ -28,19 +27,10 @@ export default ({ attributes, setAttributes }) => {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<div style={{ paddingBottom: '1rem' }} {...blockProps}>
+			<div {...blockProps}>
 				<ScProductItemTitle
 					style={{
-						'--sc-product-title-padding-top':
-							getSpacingPresetCssVar(padding?.top) ?? '0',
-						'--sc-product-title-padding-bottom':
-							getSpacingPresetCssVar(padding?.bottom) ??
-							'0.44rem',
-						'--sc-product-title-padding-left':
-							getSpacingPresetCssVar(padding?.left) ?? '0',
-						'--sc-product-title-padding-right':
-							getSpacingPresetCssVar(padding?.right) ?? '0',
-						'--sc-product-title-font-size': `${fontSize ?? 18}px`,
+						'--sc-product-title-font-size': `${fontSize ?? 16}px`,
 					}}
 				>
 					{title}

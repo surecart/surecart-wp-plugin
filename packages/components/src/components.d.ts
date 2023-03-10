@@ -2334,10 +2334,21 @@ export namespace Components {
         "prices": Price[];
     }
     interface ScProductItem {
+        "formId": string;
         "layoutConfig": LayoutConfig;
+        "mode": 'test' | 'live';
         "product": Product;
     }
     interface ScProductItemButton {
+        "btnText": string;
+        "formId": string;
+        "mode": 'test' | 'live';
+        "priceId": string;
+        "size": 'large' | 'medium' | 'small';
+        /**
+          * The button type.
+         */
+        "type": 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
     }
     interface ScProductItemImage {
         "alt": string;
@@ -2345,8 +2356,10 @@ export namespace Components {
         "src": string;
     }
     interface ScProductItemList {
+        "formId": string;
         "itemStyles": any;
         "layoutConfig": LayoutConfig;
+        "mode": 'test' | 'live';
     }
     interface ScProductItemTitle {
     }
@@ -7273,10 +7286,21 @@ declare namespace LocalJSX {
         "prices"?: Price[];
     }
     interface ScProductItem {
+        "formId"?: string;
         "layoutConfig"?: LayoutConfig;
+        "mode"?: 'test' | 'live';
         "product"?: Product;
     }
     interface ScProductItemButton {
+        "btnText"?: string;
+        "formId"?: string;
+        "mode"?: 'test' | 'live';
+        "priceId"?: string;
+        "size"?: 'large' | 'medium' | 'small';
+        /**
+          * The button type.
+         */
+        "type"?: 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
     }
     interface ScProductItemImage {
         "alt"?: string;
@@ -7284,8 +7308,10 @@ declare namespace LocalJSX {
         "src"?: string;
     }
     interface ScProductItemList {
+        "formId"?: string;
         "itemStyles"?: any;
         "layoutConfig"?: LayoutConfig;
+        "mode"?: 'test' | 'live';
     }
     interface ScProductItemTitle {
     }

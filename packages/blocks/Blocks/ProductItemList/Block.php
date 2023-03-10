@@ -4,6 +4,7 @@ namespace SureCartBlocks\Blocks\ProductItemList;
 
 use SureCartBlocks\Blocks\BaseBlock;
 use SureCart\Models\Product;
+use SureCart\Models\Form;
 
 /**
  * ProductItemList block
@@ -98,7 +99,14 @@ class Block extends BaseBlock {
 		if ( empty($product_inner_blocks) ) {
 			return;
 		}
-		
+
+		$form = \SureCart::forms()->getDefault();
+		$mode = Form::getMode( $form->ID );
+
+		if ( empty( $form->ID ) ) {
+			return '';
+		}
+
 		$product_item_inner_blocks   = $product_inner_blocks[0]['innerBlocks'];
 		$product_item_attributes     = $product_inner_blocks[0]['attrs'];
 		
@@ -121,6 +129,8 @@ class Block extends BaseBlock {
 			'#selector-' . self::$instance,
 			[
 				'layoutConfig'  	=> $layout_config,
+				'formId'  			=> $form->ID,
+				'mode'  			=> $mode,
 				'style'				=> $this->getStyle($attributes, $product_item_attributes),
 			]
 		);

@@ -6,5 +6,22 @@
 	"description": "Displays the product buy button.",
 	"category": "surecart",
 	"keywords": ["product", "button", "list"],
-	"ancestor": ["surecart/product-item-list"]
+	"ancestor": ["surecart/product-item-list"],
+	"supports": {
+		"reusable": false,
+		"html": false,
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true
+			}
+		}
+	},
+	"attributes": {
+		"text": {
+			"type": "string"
+		}
+	}
 }

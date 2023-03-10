@@ -10,8 +10,9 @@ export default function save({ attributes }) {
 				'--sc-product-title-padding-top': getSpacingPresetCssVar(
 					padding?.top
 				),
-				'--sc-product-title-padding-bottom':
-					getSpacingPresetCssVar(padding?.bottom) ?? '1rem',
+				'--sc-product-title-padding-bottom': getSpacingPresetCssVar(
+					padding?.bottom
+				),
 				'--sc-product-title-padding-left': getSpacingPresetCssVar(
 					padding?.left
 				),

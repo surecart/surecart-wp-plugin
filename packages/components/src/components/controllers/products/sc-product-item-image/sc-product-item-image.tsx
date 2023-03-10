@@ -1,4 +1,4 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Host, Prop } from '@stencil/core';
 
 @Component({
   tag: 'sc-product-item-image',
@@ -17,15 +17,17 @@ export class ScProductItemImage {
 
   render() {
     return (
-      <div
-        class={{
-          'product-img': true,
-          'is_contained': this.sizing === 'contain',
-          'is_covered': this.sizing === 'cover',
-        }}
-      >
-        {!!this.src ? <img src={this.src} alt={this.alt} /> : <div class="product-img_placeholder" />}
-      </div>
+      <Host style={{ borderStyle: 'none' }}>
+        <div
+          class={{
+            'product-img': true,
+            'is_contained': this.sizing === 'contain',
+            'is_covered': this.sizing === 'cover',
+          }}
+        >
+          {!!this.src ? <img src={this.src} alt={this.alt} /> : <div class="product-img_placeholder" />}
+        </div>
+      </Host>
     );
   }
 }

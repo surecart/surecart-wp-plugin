@@ -17,18 +17,12 @@ const PRODUCT_BLOCKS = [
 						left: '0.88rem',
 						right: '0.88rem',
 					},
-					margin: {
-						top: 0,
-						bottom: 0,
-						left: 0,
-						right: 0,
-					},
 				},
 				border: {
 					width: '1px',
 					radius: '4px',
 				},
-				borderColor: 'cyan-bluish-gray',
+				borderColor: '#777777',
 			},
 		},
 	],
@@ -52,9 +46,10 @@ export default function EditLayoutConfig({ onDone }) {
 				)}
 				<div
 					css={css`
-						margin-top: 2rem;
+						margin-top: 1.4rem;
 						padding: 1rem;
 						background-color: var(--sc-color-gray-200);
+						font-size: var(--wp--preset--font-size--medium);
 					`}
 				>
 					<div

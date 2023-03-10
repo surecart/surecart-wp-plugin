@@ -1,3 +1,8 @@
 :host {
   display: block;
+  line-height: 1;
+}
+
+.price-range-display {
+  font-size: var(--sc-price-range-font-size, 14px);
 }

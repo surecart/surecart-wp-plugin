@@ -1309,7 +1309,9 @@
     "slot": true
   },
   "sc-product-item": {
+    "form-id": true,
     "layout-config": true,
+    "mode": true,
     "product": true,
     "style": true,
     "id": true,
@@ -1317,6 +1319,12 @@
     "slot": true
   },
   "sc-product-item-button": {
+    "btn-text": true,
+    "form-id": true,
+    "mode": true,
+    "price-id": true,
+    "size": true,
+    "type": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1332,8 +1340,10 @@
     "slot": true
   },
   "sc-product-item-list": {
+    "form-id": true,
     "item-styles": true,
     "layout-config": true,
+    "mode": true,
     "style": true,
     "id": true,
     "class": true,
