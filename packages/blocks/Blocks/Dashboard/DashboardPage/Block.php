@@ -83,6 +83,23 @@ class Block extends DashboardPage {
 		 */
 		$before = apply_filters( 'surecart/dashboard/block/before', '', $attributes, $content );
 
+		$before = '<style>
+		.sc-temp-left-section {
+			flex-direction: column;
+			display: flex;
+			height: 100vh;
+		}
+
+		.admin-bar .sc-temp-left-section {
+			top: 32px;
+			height: calc(100vh - 32px);
+		}
+
+		.sc-temp-pin {
+			margin-top: auto !important;
+		}
+		</style>' . $before;
+
 		/**
 		 * Filters content to display after the block.
 		 *

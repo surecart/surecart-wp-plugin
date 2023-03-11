@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-02-17T17:10:18",
+  "timestamp": "2023-03-10T22:16:12",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -731,6 +731,141 @@
       }
     },
     {
+      "filePath": "./src/components/ui/sc-avatar/sc-avatar.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-avatar",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "image",
+          "type": "string",
+          "mutable": false,
+          "attr": "image",
+          "reflectToAttr": false,
+          "docs": "The image source to use for the avatar.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "initials",
+          "type": "string",
+          "mutable": false,
+          "attr": "initials",
+          "reflectToAttr": false,
+          "docs": "Initials to use as a fallback when no image is available (1-2 characters max recommended).",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "A label to use to describe the avatar to assistive devices.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "loading",
+          "type": "\"eager\" | \"lazy\"",
+          "mutable": false,
+          "attr": "loading",
+          "reflectToAttr": false,
+          "docs": "Indicates how the browser should load the image.",
+          "docsTags": [],
+          "default": "'eager'",
+          "values": [
+            {
+              "value": "eager",
+              "type": "string"
+            },
+            {
+              "value": "lazy",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "shape",
+          "type": "\"circle\" | \"rounded\" | \"square\"",
+          "mutable": false,
+          "attr": "shape",
+          "reflectToAttr": true,
+          "docs": "The shape of the avatar.",
+          "docsTags": [],
+          "default": "'circle'",
+          "values": [
+            {
+              "value": "circle",
+              "type": "string"
+            },
+            {
+              "value": "rounded",
+              "type": "string"
+            },
+            {
+              "value": "square",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        },
+        {
+          "name": "icon",
+          "docs": ""
+        },
+        {
+          "name": "image",
+          "docs": ""
+        },
+        {
+          "name": "initials",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
       "filePath": "./src/components/ui/badge-notice/sc-badge-notice.tsx",
       "encapsulation": "shadow",
       "tag": "sc-badge-notice",
@@ -1373,7 +1508,7 @@
           "type": "string",
           "mutable": false,
           "attr": "href",
-          "reflectToAttr": false,
+          "reflectToAttr": true,
           "docs": "When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`.",
           "docsTags": [],
           "values": [
@@ -3984,7 +4119,7 @@
           "type": "{ finalizing: string; paying: string; confirming: string; confirmed: string; }",
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Text for the loading states of the form.",
           "docsTags": [],
           "values": [
             {
@@ -4140,6 +4275,21 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "successText",
+          "type": "{ title: string; description: string; button: string; }",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Success text for the form.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "{ title: string; description: string; button: string; }"
             }
           ],
           "optional": false,
@@ -4374,9 +4524,12 @@
         ],
         "sc-order-confirm-provider": [
           "sc-dialog",
-          "sc-flex",
-          "sc-text",
+          "sc-icon",
+          "sc-dashboard-module",
           "sc-button"
+        ],
+        "sc-dashboard-module": [
+          "sc-alert"
         ],
         "sc-session-provider": [
           "sc-line-items-provider"
@@ -8694,6 +8847,7 @@
         "sc-invoices-list",
         "sc-licenses-list",
         "sc-order",
+        "sc-order-confirm-provider",
         "sc-order-confirmation-details",
         "sc-orders-list",
         "sc-password-nag",
@@ -8746,6 +8900,9 @@
           "sc-dashboard-module"
         ],
         "sc-order": [
+          "sc-dashboard-module"
+        ],
+        "sc-order-confirm-provider": [
           "sc-dashboard-module"
         ],
         "sc-order-confirmation-details": [
@@ -10455,7 +10612,6 @@
         "sc-downloads-list",
         "sc-login-form",
         "sc-order",
-        "sc-order-confirm-provider",
         "sc-pagination",
         "sc-password-nag",
         "sc-payment-methods-list",
@@ -10482,9 +10638,6 @@
           "sc-flex"
         ],
         "sc-order": [
-          "sc-flex"
-        ],
-        "sc-order-confirm-provider": [
           "sc-flex"
         ],
         "sc-pagination": [
@@ -12434,6 +12587,7 @@
         "sc-invoices-list",
         "sc-login-form",
         "sc-order",
+        "sc-order-confirm-provider",
         "sc-order-submit",
         "sc-orders-list",
         "sc-password-nag",
@@ -12509,6 +12663,9 @@
           "sc-icon"
         ],
         "sc-order": [
+          "sc-icon"
+        ],
+        "sc-order-confirm-provider": [
           "sc-icon"
         ],
         "sc-order-submit": [
@@ -15370,6 +15527,21 @@
           "required": false
         },
         {
+          "name": "successText",
+          "type": "{ title: string; description: string; button: string; }",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Success text for the form.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "{ title: string; description: string; button: string; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "successUrl",
           "type": "string",
           "mutable": false,
@@ -15431,15 +15603,15 @@
       ],
       "dependencies": [
         "sc-dialog",
-        "sc-flex",
-        "sc-text",
+        "sc-icon",
+        "sc-dashboard-module",
         "sc-button"
       ],
       "dependencyGraph": {
         "sc-order-confirm-provider": [
           "sc-dialog",
-          "sc-flex",
-          "sc-text",
+          "sc-icon",
+          "sc-dashboard-module",
           "sc-button"
         ],
         "sc-dialog": [
@@ -15448,6 +15620,12 @@
         ],
         "sc-button": [
           "sc-spinner"
+        ],
+        "sc-dashboard-module": [
+          "sc-alert"
+        ],
+        "sc-alert": [
+          "sc-icon"
         ],
         "sc-checkout": [
           "sc-order-confirm-provider"
@@ -26897,7 +27075,6 @@
       "dependents": [
         "sc-charges-list",
         "sc-invoices-list",
-        "sc-order-confirm-provider",
         "sc-orders-list",
         "sc-payment-method",
         "sc-payment-methods-list",
@@ -26912,9 +27089,6 @@
           "sc-text"
         ],
         "sc-invoices-list": [
-          "sc-text"
-        ],
-        "sc-order-confirm-provider": [
           "sc-text"
         ],
         "sc-orders-list": [

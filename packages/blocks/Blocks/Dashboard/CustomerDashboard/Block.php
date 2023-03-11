@@ -28,6 +28,23 @@ class Block extends BaseBlock {
 			return \SureCart::blocks()->render( 'web/login' );
 		}
 
+		$content = '<style>
+		.sc-temp-left-section {
+			flex-direction: column;
+			display: flex;
+			height: 100vh;
+		}
+
+		.admin-bar .sc-temp-left-section {
+			top: 32px;
+			height: calc(100vh - 32px);
+		}
+
+		.sc-temp-pin {
+			margin-top: auto !important;
+		}
+		</style>' . $content;
+
 		return $content;
 	}
 }

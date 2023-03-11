@@ -2,7 +2,6 @@
 
 namespace SureCartBlocks\Blocks\Dashboard\CustomerLogout;
 
-use SureCartBlocks\Blocks\Dashboard\DashboardPage;
 use SureCartBlocks\Blocks\BaseBlock;
 
 
@@ -10,7 +9,6 @@ use SureCartBlocks\Blocks\BaseBlock;
  * Login Logout block
  */
 class Block extends BaseBlock {
-
 	/**
 	 * Run any block middleware before rendering.
 	 *
@@ -33,19 +31,20 @@ class Block extends BaseBlock {
 	 */
 	public function render( $attributes, $content, $block = null ) {
 		// Build the redirect URL.
-		$current_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+		$current_url  = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 		$current_user = wp_get_current_user();
 
 		ob_start() ?>
 
 		<div class="sc-customer-logout">
-			<sc-dropdown style="margin-top: auto;">
-				<sc-button type="text" slot="trigger" style="<?php echo isset( $attributes['color'] ) ? 'color:' . $attributes['color'] . ';' : ''; ?>">
-					<sc-avatar image="<?php echo esc_url( get_avatar_url( $current_user->ID, [ 'size' => 80 ] ) ); ?>"
-					slot="prefix" style="--sc-avatar-size: 2em"></sc-avatar>
-					<?php echo esc_html( $current_user->display_name ); ?>
-					<sc-icon name="chevron-up" slot="suffix"></sc-icon>
-				</sc-button>
+			<sc-dropdown style="width: 100%;">
+				<sc-flex align-items="center" justify-content="space-between" slot="trigger" style="<?php echo isset( $attributes['color'] ) ? 'color:' . esc_attr( $attributes['color'] ) . ';' : ''; ?>">
+					<sc-flex align-items="center" justify-content="space-between">
+						<sc-avatar image="<?php echo esc_url( get_avatar_url( $current_user->ID, [ 'size' => 80 ] ) ); ?>" style="--sc-avatar-size: 2em"></sc-avatar>
+						<?php echo esc_html( $current_user->display_name ); ?>
+					</sc-flex>
+					<sc-icon name="chevron-up"></sc-icon>
+				</sc-flex>
 
 				<sc-menu>
 					<sc-menu-item href="<?php echo esc_url( wp_logout_url( $attributes['redirectToCurrent'] ? $current_url : '' ) ); ?>">

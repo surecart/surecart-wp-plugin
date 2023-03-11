@@ -7,12 +7,13 @@
 
 ## Properties
 
-| Property     | Attribute     | Description                  | Type               | Default     |
-| ------------ | ------------- | ---------------------------- | ------------------ | ----------- |
-| `formId`     | `form-id`     | The form id                  | `number`           | `undefined` |
-| `mode`       | `mode`        | Are we in test or live mode. | `"live" \| "test"` | `'live'`    |
-| `order`      | --            | The current order.           | `Checkout`         | `undefined` |
-| `successUrl` | `success-url` | Success url.                 | `string`           | `undefined` |
+| Property      | Attribute     | Description                  | Type                                                      | Default     |
+| ------------- | ------------- | ---------------------------- | --------------------------------------------------------- | ----------- |
+| `formId`      | `form-id`     | The form id                  | `number`                                                  | `undefined` |
+| `mode`        | `mode`        | Are we in test or live mode. | `"live" \| "test"`                                        | `'live'`    |
+| `order`       | --            | The current order.           | `Checkout`                                                | `undefined` |
+| `successText` | --            | Success text for the form.   | `{ title: string; description: string; button: string; }` | `undefined` |
+| `successUrl`  | `success-url` | Success url.                 | `string`                                                  | `undefined` |
 
 
 ## Events
@@ -33,20 +34,22 @@
 ### Depends on
 
 - [sc-dialog](../../ui/sc-dialog)
-- [sc-flex](../../ui/flex)
-- [sc-text](../../ui/text)
+- [sc-icon](../../ui/icon)
+- [sc-dashboard-module](../../ui/dashboard-module)
 - [sc-button](../../ui/button)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-order-confirm-provider --> sc-dialog
-  sc-order-confirm-provider --> sc-flex
-  sc-order-confirm-provider --> sc-text
+  sc-order-confirm-provider --> sc-icon
+  sc-order-confirm-provider --> sc-dashboard-module
   sc-order-confirm-provider --> sc-button
   sc-dialog --> sc-button
   sc-dialog --> sc-icon
   sc-button --> sc-spinner
+  sc-dashboard-module --> sc-alert
+  sc-alert --> sc-icon
   sc-checkout --> sc-order-confirm-provider
   style sc-order-confirm-provider fill:#f9f,stroke:#333,stroke-width:4px
 ```

@@ -52,6 +52,7 @@
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-login-form](../../controllers/login)
  - [sc-order](../../controllers/dashboard/order)
+ - [sc-order-confirm-provider](../../providers/order-confirm-provider)
  - [sc-order-submit](../../controllers/checkout-form/order-submit)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
@@ -94,6 +95,7 @@ graph TD;
   sc-invoices-list --> sc-icon
   sc-login-form --> sc-icon
   sc-order --> sc-icon
+  sc-order-confirm-provider --> sc-icon
   sc-order-submit --> sc-icon
   sc-orders-list --> sc-icon
   sc-password-nag --> sc-icon

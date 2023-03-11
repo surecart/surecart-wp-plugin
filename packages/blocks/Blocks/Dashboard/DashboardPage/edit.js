@@ -49,7 +49,7 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<ScTabPanel {...innerBlocksProps}></ScTabPanel>
+			<div {...innerBlocksProps}></div>
 		</Fragment>
 	);
 };

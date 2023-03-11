@@ -1,65 +1,84 @@
-import { __, _n, sprintf } from '@wordpress/i18n';
+import {
+	ScAvatar,
+	ScButton,
+	ScDropdown,
+	ScIcon,
+	ScMenu,
+	ScMenuItem,
+} from '@surecart/components-react';
 import { InspectorControls, PanelColorSettings } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, ToggleControl } from '@wordpress/components';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
+import { __, _n } from '@wordpress/i18n';
 
-export default ({ attributes, setAttributes }) => {
+export default ({ attributes, setAttributes, className }) => {
 	const { color, redirectToCurrent } = attributes;
+	const currentUser = useSelect((select) =>
+		select(coreStore).getCurrentUser()
+	);
 
-  const currentUser = wp.data.select("core").getCurrentUser();
-
-  let avatarUrl = 'https://secure.gravatar.com/avatar/fd59ee0f8195887bcd910e658c896c21?s=80&d=mm&r=g';
-
-  if ( currentUser?.avatar_urls ) {
-
-    const avatars = Object.values( currentUser?.avatar_urls );
-
-      avatarUrl = avatars[ avatars.length - 1 ];
-  }
+	let avatarUrl =
+		currentUser?.avatar_urls?.[96] ||
+		currentUser?.avatar_urls?.[48] ||
+		currentUser?.avatar_urls?.[24] ||
+		'https://secure.gravatar.com/avatar/fd59ee0f8195887bcd910e658c896c21?s=80&d=mm&r=g';
 
 	return (
 		<div>
 			<InspectorControls>
-        <PanelBody title={__('Settings')}>
+				<PanelBody title={__('Settings', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
-							label={__('Redirect to current URL')}
+							label={__('Redirect to current URL', 'surecart')}
 							checked={redirectToCurrent}
-							onChange={() =>
+							onChange={(redirectToCurrent) =>
 								setAttributes({
-									redirectToCurrent: !redirectToCurrent,
+									redirectToCurrent,
 								})
 							}
 						/>
 					</PanelRow>
 				</PanelBody>
-        <PanelColorSettings
-            title={__('Color Settings')}
-            colorSettings={[
-              {
-                value: color,
-                onChange: (color) =>
-                  setAttributes({ color }),
-                label: __('Color', 'surecart'),
-              },
-            ]}
-          ></PanelColorSettings>
-			</InspectorControls>
-			<div className="sc-customer-logout">
-        <sc-dropdown>
-          <sc-button type="text" slot="trigger" style={ { 'color' : color } }>
-            <sc-avatar image={avatarUrl} slot="prefix" style={ { '--sc-avatar-size' : '2em', 'color' : color } }></sc-avatar>
-            { currentUser?.name || __( 'User', 'surecart' ) }
-            <sc-icon name="chevron-up" slot="suffix"></sc-icon>
-          </sc-button>
 
-          <sc-menu>
-            <sc-menu-item href="#">
-              <sc-icon slot="prefix" name="log-out"></sc-icon>
-              { __( 'Logout', 'surecart' ) }
-            </sc-menu-item>
-          </sc-menu>
-        </sc-dropdown>
-		  </div>
+				<PanelColorSettings
+					title={__('Color Settings', 'surecart')}
+					colorSettings={[
+						{
+							value: color,
+							onChange: (color) => setAttributes({ color }),
+							label: __('Color', 'surecart'),
+						},
+					]}
+				></PanelColorSettings>
+			</InspectorControls>
+
+			<div className={className}>
+				<ScDropdown>
+					<ScButton
+						type="text"
+						slot="trigger"
+						style={{ color: color }}
+					>
+						<ScAvatar
+							image={avatarUrl}
+							slot="prefix"
+							style={{ '--sc-avatar-size': '2em', color: color }}
+						></ScAvatar>
+						{currentUser?.name ||
+							currentUser?.email ||
+							__('User', 'surecart')}
+						<ScIcon name="chevron-up" slot="suffix" />
+					</ScButton>
+
+					<ScMenu>
+						<ScMenuItem href="#">
+							<ScIcon slot="prefix" name="log-out"></ScIcon>
+							{__('Logout', 'surecart')}
+						</ScMenuItem>
+					</ScMenu>
+				</ScDropdown>
+			</div>
 		</div>
 	);
 };
