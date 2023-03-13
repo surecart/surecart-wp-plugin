@@ -59,6 +59,7 @@
 .choices__items {
   display: grid;
   gap: 10px;
+  grid-auto-rows: 1fr;
 }
 
 // .breakpoint-md,

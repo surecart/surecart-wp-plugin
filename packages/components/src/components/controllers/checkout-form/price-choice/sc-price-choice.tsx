@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, Fragment, h, Host, Prop, State, Watch } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf, _n } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 
 import { isPriceInOrder } from '../../../../functions/line-items';
@@ -9,12 +9,12 @@ import { LineItemData, Checkout, Price, Prices, Product, Products, ResponseError
 
 @Component({
   tag: 'sc-price-choice',
-  styleUrl: 'sc-price-choice.css',
+  styleUrl: 'sc-price-choice.scss',
   shadow: false,
 })
 export class ScPriceChoice {
   private adHocInput: HTMLScPriceInputElement;
-  private choice: HTMLScChoiceElement;
+  private choice: HTMLScChoiceContainerElement;
 
   /** Id of the price. */
   @Prop({ reflect: true }) priceId: string;
@@ -27,12 +27,6 @@ export class ScPriceChoice {
 
   /** Label for the choice. */
   @Prop() label: string;
-
-  /** Show the label */
-  @Prop() showLabel: boolean = true;
-
-  /** Show the price amount */
-  @Prop() showPrice: boolean = true;
 
   /** Show the radio/checkbox control */
   @Prop() showControl: boolean = true;
@@ -63,6 +57,9 @@ export class ScPriceChoice {
 
   /** Is this an ad-hoc price choice */
   @Prop({ mutable: true, reflect: true }) isAdHoc: Boolean;
+
+  /** Is this blank? */
+  @Prop() blank: boolean = false;
 
   /** Toggle line item event */
   @Event() scUpdateLineItem: EventEmitter<LineItemData>;
@@ -98,7 +95,7 @@ export class ScPriceChoice {
   }
 
   @Watch('price')
-  handlePriscChange() {
+  handlePriseChange() {
     this.isAdHoc = this?.price?.ad_hoc;
   }
 
@@ -199,19 +196,17 @@ export class ScPriceChoice {
   renderPrice() {
     return (
       <Fragment>
-        <span slot="price">
-          <sc-format-number type="currency" value={this.price.amount} currency={this.price.currency}></sc-format-number>
-        </span>
-        <span slot="per">
-          {intervalString(this.price, {
-            labels: {
-              interval: '/',
-              period:
-                /** translators: used as in time period: "for 3 months" */
-                __('for', 'surecart'),
-            },
-          })}
-        </span>
+        <sc-format-number type="currency" value={this.price.amount} currency={this.price.currency}></sc-format-number>
+        {intervalString(this.price, {
+          showOnce: true,
+          abbreviate: true,
+          labels: {
+            interval: '/',
+            period:
+              /** translators: used as in time period: "for 3 months" */
+              __('for', 'surecart'),
+          },
+        })}
       </Fragment>
     );
   }
@@ -219,11 +214,12 @@ export class ScPriceChoice {
   render() {
     if (this.loading) {
       return (
-        <sc-choice name="loading" showLabel={this.showLabel} showPrice={this.showPrice} showControl={this.showControl} disabled>
-          <sc-skeleton style={{ width: '60px', display: 'inline-block' }}></sc-skeleton>
-          <sc-skeleton style={{ width: '80px', display: 'inline-block' }} slot="price"></sc-skeleton>
-          {this.description && <sc-skeleton style={{ width: '120px', display: 'inline-block' }} slot="description"></sc-skeleton>}
-        </sc-choice>
+        <sc-choice-container showControl={this.showControl} name="loading" disabled>
+          <div class="price-choice">
+            <sc-skeleton style={{ width: '60px', display: 'inline-block' }}></sc-skeleton>
+            <sc-skeleton style={{ width: '80px', display: 'inline-block' }}></sc-skeleton>
+          </div>
+        </sc-choice-container>
       );
     }
 
@@ -236,21 +232,40 @@ export class ScPriceChoice {
     }
 
     return (
-      <Fragment>
-        <sc-choice
-          ref={el => (this.choice = el as HTMLScChoiceElement)}
-          value={this.priceId}
-          type={this.type}
-          showLabel={this.showLabel}
-          showPrice={this.showPrice}
-          showControl={this.showControl}
-          checked={this.isChecked()}
-        >
-          {this.label || this?.price?.name || this?.product?.name}
-          {this.description && <span slot="description">{this.description}</span>}
-          {this.renderPrice()}
-        </sc-choice>
-      </Fragment>
+      <sc-choice-container
+        ref={el => (this.choice = el as HTMLScChoiceContainerElement)}
+        value={this.priceId}
+        type={this.type}
+        showControl={this.showControl}
+        checked={this.isChecked()}
+      >
+        <div class="price-choice">
+          <div class="price-choice__name">{this.label || this?.price?.name || this?.product?.name}</div>
+          <div class="price-choice__details">
+            <div>
+              <sc-format-number type="currency" value={this.price.amount} currency={this.price.currency}></sc-format-number>
+              {intervalString(this.price, {
+                showOnce: true,
+                abbreviate: true,
+                labels: {
+                  interval: '/',
+                  period:
+                    /** translators: used as in time period: "for 3 months" */
+                    __('for', 'surecart'),
+                },
+              })}
+            </div>
+            {!!this.price.trial_duration_days &&
+              sprintf(_n('Starting in %s day', 'Starting in %s days', this.price.trial_duration_days, 'surecart'), this.price.trial_duration_days)}
+            {!!this.price.setup_fee_enabled && this.price?.setup_fee_amount && (
+              <div>
+                <sc-format-number type="currency" value={this.price.setup_fee_amount} currency={this.price.currency}></sc-format-number>{' '}
+                {this.price.setup_fee_name || __('Setup Fee', 'surecart')} {!this.price?.setup_fee_trial_enabled && __('Today', 'surecart')}
+              </div>
+            )}
+          </div>
+        </div>
+      </sc-choice-container>
     );
   }
 }

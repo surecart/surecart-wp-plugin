@@ -1,0 +1,27 @@
+:host {
+  display: block;
+  min-width: 0;
+  width: 100%;
+}
+
+.price-choice  {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__name {
+    display: inline-block;
+    color: var(--sc-input-label-color);
+    font-weight: var(--sc-input-label-font-weight, normal);
+    text-transform: var(--sc-input-label-text-transform, none);
+    letter-spacing: var(--sc-input-label-letter-spacing, 0);
+  }
+  &__details {
+    text-align: right;
+    font-size: var(--sc-font-size-small);
+    color: var(--sc-input-help-text-color);
+    line-height: var(--sc-line-height-dense);
+    display: grid;
+    gap: var(--sc-spacing-xx-small);
+  }
+}
