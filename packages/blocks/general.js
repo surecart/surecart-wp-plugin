@@ -22,6 +22,7 @@ import * as customerInvoices from '@blocks/Dashboard/CustomerInvoices';
 import * as customerSubscriptions from '@blocks/Dashboard/CustomerSubscriptions';
 import * as customerPaymentMethods from '@blocks/Dashboard/CustomerPaymentMethods';
 import * as customerBillingDetails from '@blocks/Dashboard/CustomerBillingDetails';
+import * as customerLicenses from '@blocks/Dashboard/CustomerLicenses';
 import * as WordPressAccount from '@blocks/Dashboard/WordPressAccount';
 import * as dashboardPage from '@blocks/Dashboard/DashboardPage';
 import * as dashboardPages from '@blocks/Dashboard/DashboardPages';
@@ -46,6 +47,7 @@ registerBlocks([
 	customerSubscriptions,
 	customerPaymentMethods,
 	customerBillingDetails,
+  customerLicenses,
 	WordPressAccount,
 	dashboardPage,
 	dashboardPages,

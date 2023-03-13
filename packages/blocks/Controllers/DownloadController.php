@@ -134,6 +134,15 @@ class DownloadController extends BaseController {
 
 			<?php
 			if ( $purchase->license ) :
+				$activations = \SureCart\Models\Activation::where([
+					'license_ids' => [ $purchase->license->id ]
+				])->paginate([
+					'page' => 1,
+					'per_page' => 25
+				]);
+
+				var_dump( $activations->data );
+
 				echo wp_kses_post(
 					Component::tag( 'sc-licenses-list' )
 					->id( 'customer-licenses' )
@@ -144,7 +153,7 @@ class DownloadController extends BaseController {
 						]
 					)->render()
 				);
-				 endif;
+			endif;
 			?>
 
 		</sc-spacing>

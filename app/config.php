@@ -132,6 +132,7 @@ return [
 		\SureCartBlocks\Blocks\Dashboard\CustomerPaymentMethods\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerSubscriptions\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerInvoices\Block::class,
+		\SureCartBlocks\Blocks\Dashboard\CustomerLicenses\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\DashboardPage\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\DashboardTab\Block::class,
 		\SureCartBlocks\Blocks\ConditionalForm\Block::class,

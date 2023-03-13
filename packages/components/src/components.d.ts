@@ -1574,6 +1574,8 @@ export namespace Components {
     per_page: number;
   };
     }
+    interface ScLicenseActivations {
+    }
     interface ScLicensesList {
         "activations": Activation[];
         "copied": boolean;
@@ -3894,6 +3896,12 @@ declare global {
         prototype: HTMLScInvoicesListElement;
         new (): HTMLScInvoicesListElement;
     };
+    interface HTMLScLicenseActivationsElement extends Components.ScLicenseActivations, HTMLStencilElement {
+    }
+    var HTMLScLicenseActivationsElement: {
+        prototype: HTMLScLicenseActivationsElement;
+        new (): HTMLScLicenseActivationsElement;
+    };
     interface HTMLScLicensesListElement extends Components.ScLicensesList, HTMLStencilElement {
     }
     var HTMLScLicensesListElement: {
@@ -4546,6 +4554,7 @@ declare global {
         "sc-icon": HTMLScIconElement;
         "sc-input": HTMLScInputElement;
         "sc-invoices-list": HTMLScInvoicesListElement;
+        "sc-license-activations": HTMLScLicenseActivationsElement;
         "sc-licenses-list": HTMLScLicensesListElement;
         "sc-line-item": HTMLScLineItemElement;
         "sc-line-item-bump": HTMLScLineItemBumpElement;
@@ -6428,6 +6437,8 @@ declare namespace LocalJSX {
     page: number;
     per_page: number;
   };
+    }
+    interface ScLicenseActivations {
     }
     interface ScLicensesList {
         "activations"?: Activation[];
@@ -8322,6 +8333,7 @@ declare namespace LocalJSX {
         "sc-icon": ScIcon;
         "sc-input": ScInput;
         "sc-invoices-list": ScInvoicesList;
+        "sc-license-activations": ScLicenseActivations;
         "sc-licenses-list": ScLicensesList;
         "sc-line-item": ScLineItem;
         "sc-line-item-bump": ScLineItemBump;
@@ -8494,6 +8506,7 @@ declare module "@stencil/core" {
             "sc-icon": LocalJSX.ScIcon & JSXBase.HTMLAttributes<HTMLScIconElement>;
             "sc-input": LocalJSX.ScInput & JSXBase.HTMLAttributes<HTMLScInputElement>;
             "sc-invoices-list": LocalJSX.ScInvoicesList & JSXBase.HTMLAttributes<HTMLScInvoicesListElement>;
+            "sc-license-activations": LocalJSX.ScLicenseActivations & JSXBase.HTMLAttributes<HTMLScLicenseActivationsElement>;
             "sc-licenses-list": LocalJSX.ScLicensesList & JSXBase.HTMLAttributes<HTMLScLicensesListElement>;
             "sc-line-item": LocalJSX.ScLineItem & JSXBase.HTMLAttributes<HTMLScLineItemElement>;
             "sc-line-item-bump": LocalJSX.ScLineItemBump & JSXBase.HTMLAttributes<HTMLScLineItemBumpElement>;
