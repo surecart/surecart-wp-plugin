@@ -6,5 +6,5 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: var(--sc-spacing-xx-small);
+  gap: var(--sc-spacing-x-small);
 }

@@ -28,16 +28,19 @@
 ### Used by
 
  - [sc-charges-list](../../controllers/dashboard/charges-list)
+ - [sc-checkout-mollie-payment](../../controllers/checkout-form/sc-checkout-mollie-payment)
  - [sc-customer-details](../customer-details)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-login-form](../../controllers/login)
+ - [sc-mollie-add-method](../sc-mollie-add-method)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
+ - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-payment-method-choice](../../processors/sc-payment-method-choice)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
@@ -57,16 +60,19 @@
 ```mermaid
 graph TD;
   sc-charges-list --> sc-card
+  sc-checkout-mollie-payment --> sc-card
   sc-customer-details --> sc-card
   sc-customer-edit --> sc-card
   sc-downloads-list --> sc-card
   sc-invoices-list --> sc-card
   sc-licenses-list --> sc-card
   sc-login-form --> sc-card
+  sc-mollie-add-method --> sc-card
   sc-order --> sc-card
   sc-order-confirmation-details --> sc-card
   sc-orders-list --> sc-card
   sc-password-nag --> sc-card
+  sc-payment --> sc-card
   sc-payment-method-choice --> sc-card
   sc-payment-methods-list --> sc-card
   sc-purchase-downloads-list --> sc-card

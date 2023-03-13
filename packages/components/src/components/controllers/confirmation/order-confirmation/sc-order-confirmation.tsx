@@ -82,7 +82,7 @@ export class ScOrderConfirmation {
   }
 
   renderOnHold() {
-    if (this.order?.status !== 'requires_approval') return null;
+    if (this.order?.status !== 'processing') return null;
     if (this?.order?.payment_intent?.processor_type === 'paypal') {
       return (
         <sc-alert type="warning" open={true}>

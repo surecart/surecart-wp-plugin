@@ -7077,8 +7077,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@surecart/blocks@workspace:packages/blocks"
   dependencies:
-    "@surecart/components": ^0.0.10
-    "@surecart/components-react": ^0.0.7
+    "@surecart/components": ^1.0.0
+    "@surecart/components-react": ^1.0.1
     "@wordpress/prettier-config": ^1.1.1
     "@wordpress/scripts": ^21.0.2
     prettier: ^2.5.1
@@ -7087,11 +7087,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@surecart/components-react@^0.0.7, @surecart/components-react@workspace:packages/components-react":
+"@surecart/components-react@^1.0.1, @surecart/components-react@workspace:packages/components-react":
   version: 0.0.0-use.local
   resolution: "@surecart/components-react@workspace:packages/components-react"
   dependencies:
-    "@surecart/components": ^0.0.10
+    "@surecart/components": ^1.0.0
     "@types/jest": 23.3.9
     "@types/node": ^15.12.2
     "@types/react": ^17.0.34
@@ -7106,7 +7106,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@surecart/components@^0.0.10, @surecart/components@workspace:packages/components":
+"@surecart/components@^1.0.0, @surecart/components@workspace:packages/components":
   version: 0.0.0-use.local
   resolution: "@surecart/components@workspace:packages/components"
   dependencies:
@@ -7165,8 +7165,8 @@ __metadata:
     "@docusaurus/core": 2.1.0
     "@docusaurus/preset-classic": 2.1.0
     "@mdx-js/react": ^1.6.22
-    "@surecart/components": ^0.0.10
-    "@surecart/components-react": ^0.0.7
+    "@surecart/components": ^1.0.0
+    "@surecart/components-react": ^1.0.1
     clsx: ^1.1.1
     docusaurus-plugin-sass: ^0.1.14
     dotenv: ^8.2.0
@@ -13199,24 +13199,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001109, caniuse-lite@npm:^1.0.30001297, caniuse-lite@npm:^1.0.30001312":
-  version: 1.0.30001376
-  resolution: "caniuse-lite@npm:1.0.30001376"
-  checksum: bbb9e8f6d7430b3af8e03e03728637eb765feb6d591612b178f8e416db9098690fdefda00d741f21dc5297bc9aead51f4059769f3d19b15c2447eb818f993ce5
-  languageName: node
-  linkType: hard
-
-"caniuse-lite@npm:^1.0.30001370, caniuse-lite@npm:^1.0.30001373":
-  version: 1.0.30001390
-  resolution: "caniuse-lite@npm:1.0.30001390"
-  checksum: 5ba4ae64e27c61e1c7d7125223159d6cf7fa3cdbf8f00b9ec83a06f274ff45ddcbfebe509716fa31ae2664b70ef9e1d1c4a5b9430e717852992358121d9ee9be
-  languageName: node
-  linkType: hard
-
-"caniuse-lite@npm:^1.0.30001400":
-  version: 1.0.30001431
-  resolution: "caniuse-lite@npm:1.0.30001431"
-  checksum: bc8ab55cd194e240152946b54bfaff7456180cc018674fc7ed134f4f502192405f6643f422feaa0a5e7cc02b5bac564cfac7771ac6d29f5d129482fcfe335ba1
+"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001109, caniuse-lite@npm:^1.0.30001297, caniuse-lite@npm:^1.0.30001312, caniuse-lite@npm:^1.0.30001370, caniuse-lite@npm:^1.0.30001373, caniuse-lite@npm:^1.0.30001400":
+  version: 1.0.30001457
+  resolution: "caniuse-lite@npm:1.0.30001457"
+  checksum: f311a7c5098681962402a86a0a367014ee91c3135395ee68bbfaf45caf0e36d581e42d7c5b1526ce99484a228e6cf5cf0e400678292c65f5a21512a3fc7a5fb6
   languageName: node
   linkType: hard
 

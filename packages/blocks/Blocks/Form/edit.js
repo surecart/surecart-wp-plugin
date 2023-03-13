@@ -24,6 +24,7 @@ import {
 	UnitControl as __stableUnitControl,
 	__experimentalUnitControl,
 	TextControl,
+	TextareaControl,
 } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { Fragment, useState, useEffect } from '@wordpress/element';
@@ -41,6 +42,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 		prices,
 		font_size,
 		loading_text,
+		success_text,
 		choice_type,
 		mode,
 		gap,
@@ -361,6 +363,62 @@ export default function edit({ clientId, attributes, setAttributes }) {
 									loading_text: {
 										...loading_text,
 										confirmed,
+									},
+								})
+							}
+						/>
+					</PanelRow>
+				</PanelBody>
+				<PanelBody
+					title={__('Success Text', 'surecart')}
+					initialOpen={false}
+				>
+					<PanelRow>
+						<TextControl
+							label={__('Title', 'surecart')}
+							value={success_text?.title}
+							placeholder={__(
+								'Thanks for your order!',
+								'surecart'
+							)}
+							onChange={(title) =>
+								setAttributes({
+									success_text: {
+										...success_text,
+										title,
+									},
+								})
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextareaControl
+							label={__('Description', 'surecart')}
+							value={success_text?.description}
+							placeholder={__(
+								'Your payment was successful, and your order is complete. A receipt is on its way to your inbox.',
+								'surecart'
+							)}
+							onChange={(description) =>
+								setAttributes({
+									success_text: {
+										...success_text,
+										description,
+									},
+								})
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Button Text', 'surecart')}
+							value={success_text?.button}
+							placeholder={__('Continue', 'surecart')}
+							onChange={(button) =>
+								setAttributes({
+									success_text: {
+										...success_text,
+										button,
 									},
 								})
 							}

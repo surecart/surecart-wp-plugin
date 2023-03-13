@@ -35,6 +35,7 @@
 
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
+ - [sc-checkout-mollie-payment](../../controllers/checkout-form/sc-checkout-mollie-payment)
  - [sc-coupon-form](../coupon-form)
  - [sc-custom-order-price-input](../../controllers/checkout-form/custom-order-price-input)
  - [sc-customer-details](../customer-details)
@@ -42,6 +43,7 @@
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-line-item-total](../../controllers/checkout-form/line-item-total)
  - [sc-line-items](../../controllers/checkout-form/line-items)
+ - [sc-mollie-add-method](../sc-mollie-add-method)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
  - [sc-order-confirmation-line-items](../../controllers/confirmation/order-confirmation-line-items)
@@ -70,6 +72,7 @@
 graph TD;
   sc-cancel-survey --> sc-skeleton
   sc-charges-list --> sc-skeleton
+  sc-checkout-mollie-payment --> sc-skeleton
   sc-coupon-form --> sc-skeleton
   sc-custom-order-price-input --> sc-skeleton
   sc-customer-details --> sc-skeleton
@@ -77,6 +80,7 @@ graph TD;
   sc-invoices-list --> sc-skeleton
   sc-line-item-total --> sc-skeleton
   sc-line-items --> sc-skeleton
+  sc-mollie-add-method --> sc-skeleton
   sc-order --> sc-skeleton
   sc-order-confirmation-details --> sc-skeleton
   sc-order-confirmation-line-items --> sc-skeleton

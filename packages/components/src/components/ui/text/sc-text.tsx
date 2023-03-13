@@ -1,4 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
+import { isRtl } from '../../../functions/page-align';
 
 @Component({
   tag: 'sc-text',
@@ -17,6 +18,7 @@ export class ScText {
         class={{
           'text': true,
           'is-truncated': this.truncate,
+          'text--is-rtl':isRtl()
         }}
       >
         <slot />

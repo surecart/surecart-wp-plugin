@@ -21,6 +21,7 @@
     "open": true,
     "scroll-margin": true,
     "scroll-on-open": true,
+    "title": true,
     "type": true,
     "style": true,
     "id": true,
@@ -255,6 +256,7 @@
     "processors": true,
     "remove-line-items": true,
     "stripe-payment-element": true,
+    "success-text": true,
     "success-url": true,
     "tax-protocol": true,
     "style": true,
@@ -265,6 +267,14 @@
   "sc-checkout-form-errors": {
     "checkout-state": true,
     "error": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-checkout-mollie-payment": {
+    "method": true,
+    "processor-id": true,
     "style": true,
     "id": true,
     "class": true,
@@ -337,9 +347,7 @@
     "slot": true
   },
   "sc-conditional-form": {
-    "checkout": true,
     "rule_groups": true,
-    "selected-processor-id": true,
     "style": true,
     "id": true,
     "class": true,
@@ -907,6 +915,18 @@
     "class": true,
     "slot": true
   },
+  "sc-mollie-add-method": {
+    "country": true,
+    "currency": true,
+    "customer-id": true,
+    "live-mode": true,
+    "processor-id": true,
+    "success-url": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-order": {
     "customer-ids": true,
     "heading": true,
@@ -944,9 +964,7 @@
     "slot": true
   },
   "sc-order-confirm-provider": {
-    "form-id": true,
-    "mode": true,
-    "order": true,
+    "success-text": true,
     "success-url": true,
     "style": true,
     "id": true,
@@ -1117,8 +1135,13 @@
     "slot": true
   },
   "sc-order-tax-id-input": {
+    "au-abn-label": true,
     "busy": true,
+    "ca-gst-label": true,
+    "eu-vat-label": true,
+    "gb-vat-label": true,
     "order": true,
+    "other-label": true,
     "show": true,
     "tax-identifier": true,
     "tax-protocol": true,
@@ -1158,12 +1181,11 @@
     "slot": true
   },
   "sc-payment": {
-    "checkout": true,
+    "disabled-processor-types": true,
     "hide-test-mode-badge": true,
     "label": true,
-    "mode": true,
-    "processor": true,
-    "processors": true,
+    "secure-notice": true,
+    "stripe-payment-element": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1181,13 +1203,9 @@
   },
   "sc-payment-method-choice": {
     "card": true,
-    "checkout": true,
-    "has-others": true,
-    "is-disabled": true,
     "is-manual": true,
-    "processor": true,
+    "method-id": true,
     "processor-id": true,
-    "recurring-enabled": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1470,6 +1488,7 @@
     "form-id": true,
     "group-id": true,
     "is-manual-processor": true,
+    "method": true,
     "mode": true,
     "modified": true,
     "payment-intents": true,
@@ -1754,10 +1773,15 @@
     "slot": true
   },
   "sc-tax-id-input": {
+    "au-abn-label": true,
+    "ca-gst-label": true,
     "country": true,
+    "eu-vat-label": true,
+    "gb-vat-label": true,
     "help": true,
     "loading": true,
     "number": true,
+    "other-label": true,
     "show": true,
     "status": true,
     "type": true,

@@ -223,6 +223,7 @@ class CheckoutsController extends RestController {
 			[
 				'purchases', // Important: we need to make sure we expand the purchase to provide access.
 				'customer', // Important: we need to use this to create the WP User with the same info.
+				'manual_payment_method', // Important: we need to use this to display manual payment instructions.
 			]
 		)->find( $request['id'] );
 
@@ -343,5 +344,20 @@ class CheckoutsController extends RestController {
 				'user_password' => $password,
 			]
 		);
+	}
+
+	/**
+	 * Cancel an checkout
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \SureCart\Models\Checkout|\WP_Error
+	 */
+	public function cancel( \WP_REST_Request $request ) {
+		$order = $this->middleware( new $this->class( $request['id'] ), $request );
+		if ( is_wp_error( $order ) ) {
+			return $order;
+		}
+		return $order->where( $request->get_query_params() )->cancel();
 	}
 }

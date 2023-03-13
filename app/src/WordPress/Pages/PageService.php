@@ -12,7 +12,66 @@ class PageService {
 	 * @return void
 	 */
 	public function bootstrap() {
+		if ( defined( 'SURECART_RUNNING_TESTS' ) ) {
+			return;
+		}
 		add_action( 'display_post_states', [ $this, 'displayDefaultPageStatuses' ] );
+		// add_filter( 'pre_delete_post', [ $this, 'restrictDefaultPageDeletion' ], 11, 2 );
+		// add_filter( 'pre_trash_post', [ $this, 'restrictDefaultPageDeletion' ], 11, 2 );
+		// add_filter( 'wp_insert_post_empty_content', [ $this, 'restrictDefaultCheckoutRemove' ], 11, 2 );
+	}
+
+	/**
+	 * Restrict default page deletion
+	 *
+	 * @param boolean $delete Delete status.
+	 * @param boject  $post Post object.
+	 *
+	 * @return null;
+	 */
+	public function restrictDefaultPageDeletion( $delete, $post ) {
+		$default_checkout = \SureCart::pages()->getID( 'checkout' );
+		$default_form     = \SureCart::forms()->getDefault();
+		$default_form_id  = $default_form->ID ?? null;
+		$post_id          = $post->ID;
+
+		if ( in_array( $post_id, [ $default_checkout, $default_form_id ], true ) ) {
+			$message = $post_id === $default_form ? esc_html__( 'To prevent misconfiguration, you cannot delete the default checkout form. Please deactivate SureCart to delete this form.', 'surecart' ) : esc_html__( 'To prevent misconfiguration, you cannot delete the default checkout page. Please deactivate SureCart to delete this page.', 'surecart' );
+			wp_die(
+				esc_html( $message ),
+				esc_html__( 'Deleting This is Restricted', 'surecart' ),
+			);
+		}
+
+		return $delete;
+	}
+
+	/**
+	 * Restrict default form remove
+	 *
+	 * @param boolean $maybe_empty Maybe empty.
+	 * @param array   $post Post data.
+	 *
+	 * @return boolean|void
+	 */
+	public function restrictDefaultCheckoutRemove( $maybe_empty, $post ) {
+		$default_checkout = \SureCart::pages()->getID( 'checkout' );
+		$default_form     = \SureCart::forms()->getDefault();
+		$default_form_id  = $default_form->ID ?? null;
+		$post_id          = $post['ID'];
+
+		if ( in_array( $post_id, [ $default_checkout, $default_form_id ], true ) ) {
+			if ( ! has_block( 'surecart/checkout-form', $post['post_content'] ) && ! has_block( 'surecart/form', $post['post_content'] ) ) {
+				$message = esc_html__( 'To prevent misconfiguration, you cannot delete the default checkout form. Please deactivate SureCart to delete this form.', 'surecart' );
+				wp_die(
+					esc_html( $message ),
+					esc_html__( 'Deleting This is Restricted', 'surecart' ),
+				);
+				return true;
+			}
+		}
+
+		return $maybe_empty;
 	}
 
 	/**
@@ -94,7 +153,7 @@ class PageService {
 	 */
 	public function url( $option, $post_type = 'page' ) {
 		$post = $this->get( $option, $post_type );
-		return get_permalink( $post );
+		return $post ? get_permalink( $post ) : '';
 	}
 
 	/**

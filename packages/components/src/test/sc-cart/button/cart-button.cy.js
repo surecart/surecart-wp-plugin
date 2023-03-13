@@ -38,6 +38,8 @@ describe('Cart', () => {
         }
       }).as('createGetCart');
 
+      cy.wait(1000);
+
 			// click the add to cart button.
 			cy.get('sc-cart-form-submit.hydrated sc-button.hydrated').find('button').click({force: true});
 

@@ -14,6 +14,7 @@
 | `formId`                     | `form-id`                       | The checkout form id                        | `number`                                | `undefined` |
 | `groupId`                    | `group-id`                      | Group id                                    | `string`                                | `undefined` |
 | `isManualProcessor`          | `is-manual-processor`           | Is this a manual payment?                   | `boolean`                               | `undefined` |
+| `method`                     | `method`                        |                                             | `string`                                | `undefined` |
 | `mode`                       | `mode`                          | Are we in test or live mode.                | `"live" \| "test"`                      | `'live'`    |
 | `modified`                   | `modified`                      | Whent the post was modified.                | `string`                                | `undefined` |
 | `paymentIntents`             | --                              | Holds all available payment intents.        | `PaymentIntents`                        | `undefined` |
@@ -38,13 +39,13 @@
 
 ## Methods
 
-### `finalize() => Promise<Checkout>`
+### `finalize() => Promise<Checkout | NodeJS.Timeout>`
 
 Finalize the order.
 
 #### Returns
 
-Type: `Promise<Checkout>`
+Type: `Promise<Checkout | Timeout>`
 
 
 

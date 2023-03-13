@@ -3,6 +3,8 @@ import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 import { getProcessorData } from '../../../../functions/processor';
 import { Checkout, Processor, ProcessorName } from '../../../../types';
+import { state as selectedProcessor } from '@store/selected-processor';
+import { checkoutIsLocked } from '@store/checkout/getters';
 
 @Component({
   tag: 'sc-order-submit',
@@ -71,16 +73,16 @@ export class ScOrderSubmit {
   render() {
     return (
       <Fragment>
-        {this.processor === 'paypal' && this.renderPayPalButton(['paypal'])}
-        {this.processor === 'paypal-card' && this.renderPayPalButton(['card'])}
+        {selectedProcessor.id === 'paypal' && !selectedProcessor?.method && this.renderPayPalButton(['paypal'])}
+        {selectedProcessor.id === 'paypal' && selectedProcessor?.method === 'card' && this.renderPayPalButton(['card'])}
         <sc-button
-          hidden={['paypal', 'paypal-card'].includes(this.processor)}
+          hidden={['paypal', 'paypal-card'].includes(selectedProcessor.id)}
           submit
           type={this.type}
           size={this.size}
           full={this.full}
           loading={this.loading || this.paying}
-          disabled={this.loading || this.paying || this.busy}
+          disabled={this.loading || this.paying || this.busy || checkoutIsLocked()}
         >
           {!!this.icon && <sc-icon name={this.icon} slot="prefix"></sc-icon>}
           <slot>{__('Purchase', 'surecart')}</slot>

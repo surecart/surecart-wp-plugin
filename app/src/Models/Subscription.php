@@ -329,6 +329,46 @@ class Subscription extends Model {
 	}
 
 	/**
+	 * Pay off a subscription
+	 *
+	 * @param string $id Model id.
+	 * @return $this|\WP_Error
+	 */
+	protected function payOff ($id = null){
+		if($id){
+			$this->setAttribute('id',$id);
+		}
+
+		if($this->fireModelEvent('payingOff') === false){
+			return false;
+		}
+
+		if(empty($this->attributes['id'])){
+			return new \WP_Error('not_saved','Please create the subscription');
+		}
+
+		$paid_off =  $this->makeRequest(
+			[
+				'method' => 'PATCH',
+				'query'  => $this->query,
+			],
+			$this->endpoint . '/' . $this->attributes['id'] . '/pay_off/'
+		);
+
+		if ( is_wp_error( $paid_off ) ) {
+			return $paid_off;
+		}
+
+		$this->resetAttributes();
+
+		$this->fill( $paid_off );
+
+		$this->fireModelEvent( 'paidOff' );
+
+		return $this;
+	}
+
+	/**
 	 * Is this subscription a lifetime one?
 	 *
 	 * @return boolean
