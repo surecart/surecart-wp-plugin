@@ -32,6 +32,7 @@ export default ({ product, updateProduct, loading }) => {
 						'A short description for your product that is displayed on product and instant checkouts.',
 						'surecart'
 					)}
+					maxlength={2500}
 					value={product?.description}
 					onScInput={(e) => {
 						updateProduct({ description: e.target.value });

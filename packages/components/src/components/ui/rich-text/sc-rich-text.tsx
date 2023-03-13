@@ -2,6 +2,8 @@ import { Component, Event, EventEmitter, h, Host, Prop, State } from '@stencil/c
 import { Editor } from '@tiptap/core';
 import Placeholder from '@tiptap/extension-placeholder';
 import StarterKit from '@tiptap/starter-kit';
+import CharacterCount from '@tiptap/extension-character-count';
+import { sprintf, __ } from '@wordpress/i18n';
 
 let id = 0;
 
@@ -36,6 +38,9 @@ export class ScRichText {
   /** The textarea's placeholder text. */
   @Prop() placeholder: string;
 
+  /** The max length. */
+  @Prop() maxlength: number;
+
   /** Disables the textarea. */
   @Prop({ reflect: true }) disabled: boolean = false;
 
@@ -66,6 +71,12 @@ export class ScRichText {
           // Use a placeholder:
           placeholder: this.placeholder,
         }),
+        ...(!!this.maxlength && [
+          CharacterCount.configure({
+            limit: this.maxlength,
+            mode: 'nodeSize',
+          }),
+        ]),
       ],
       content: this.value,
       onCreate: ({ editor }) => {
@@ -122,6 +133,11 @@ export class ScRichText {
     return this.editor?.chain?.()?.focus?.()?.[property]?.()?.run?.();
   }
 
+  remainingCharacters() {
+    if (!this.maxlength) return 1000;
+    return this.maxlength - (this?.editor?.storage?.characterCount.characters() || 0);
+  }
+
   render() {
     return (
       <Host>
@@ -166,6 +182,7 @@ export class ScRichText {
               ref={el => (this.element = el as HTMLDivElement)}
             ></div>
           </div>
+          {this.remainingCharacters() < 20 && <div class={'textarea__char-limit-warning'}>{sprintf(__('%d characters remaining', 'surecart'), this.remainingCharacters())}</div>}
         </sc-form-control>
       </Host>
     );
