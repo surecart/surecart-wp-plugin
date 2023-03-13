@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-03-04T15:00:22",
+  "timestamp": "2023-03-13T07:59:30",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -1694,7 +1694,6 @@
         "sc-password-nag",
         "sc-payment-method",
         "sc-payment-methods-list",
-        "sc-product-item-button",
         "sc-purchase-downloads-list",
         "sc-stripe-add-method",
         "sc-subscription",
@@ -1791,9 +1790,6 @@
           "sc-button"
         ],
         "sc-payment-methods-list": [
-          "sc-button"
-        ],
-        "sc-product-item-button": [
           "sc-button"
         ],
         "sc-purchase-downloads-list": [
@@ -20690,6 +20686,22 @@
       "usage": {},
       "props": [
         {
+          "name": "formId",
+          "type": "string",
+          "mutable": false,
+          "attr": "form-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "layoutConfig",
           "type": "{ blockName: string; attributes: any; }[]",
           "mutable": false,
@@ -20699,6 +20711,27 @@
           "values": [
             {
               "type": "{ blockName: string; attributes: any; }[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "mode",
+          "type": "\"live\" | \"test\"",
+          "mutable": false,
+          "attr": "mode",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "live",
+              "type": "string"
+            },
+            {
+              "value": "test",
+              "type": "string"
             }
           ],
           "optional": false,
@@ -20732,60 +20765,19 @@
       "dependencies": [
         "sc-product-item-title",
         "sc-product-item-image",
-        "sc-price-range",
-        "sc-product-item-button"
+        "sc-price-range"
       ],
       "dependencyGraph": {
         "sc-product-item": [
           "sc-product-item-title",
           "sc-product-item-image",
-          "sc-price-range",
-          "sc-product-item-button"
+          "sc-price-range"
         ],
         "sc-price-range": [
           "sc-format-number"
         ],
-        "sc-product-item-button": [
-          "sc-button"
-        ],
-        "sc-button": [
-          "sc-spinner"
-        ],
         "sc-product-item-list": [
           "sc-product-item"
-        ]
-      }
-    },
-    {
-      "filePath": "./src/components/controllers/products/sc-product-item-button/sc-product-item-button.tsx",
-      "encapsulation": "shadow",
-      "tag": "sc-product-item-button",
-      "readme": "# sc-product-item-button\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [],
-      "methods": [],
-      "events": [],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
-      "dependents": [
-        "sc-product-item"
-      ],
-      "dependencies": [
-        "sc-button"
-      ],
-      "dependencyGraph": {
-        "sc-product-item-button": [
-          "sc-button"
-        ],
-        "sc-button": [
-          "sc-spinner"
-        ],
-        "sc-product-item": [
-          "sc-product-item-button"
         ]
       }
     },
@@ -20878,6 +20870,22 @@
       "usage": {},
       "props": [
         {
+          "name": "formId",
+          "type": "string",
+          "mutable": false,
+          "attr": "form-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "itemStyles",
           "type": "any",
           "mutable": false,
@@ -20908,6 +20916,27 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "mode",
+          "type": "\"live\" | \"test\"",
+          "mutable": false,
+          "attr": "mode",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "live",
+              "type": "string"
+            },
+            {
+              "value": "test",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -20929,17 +20958,10 @@
         "sc-product-item": [
           "sc-product-item-title",
           "sc-product-item-image",
-          "sc-price-range",
-          "sc-product-item-button"
+          "sc-price-range"
         ],
         "sc-price-range": [
           "sc-format-number"
-        ],
-        "sc-product-item-button": [
-          "sc-button"
-        ],
-        "sc-button": [
-          "sc-spinner"
         ]
       }
     },

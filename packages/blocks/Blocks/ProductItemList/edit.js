@@ -55,6 +55,8 @@ export default ({ attributes, setAttributes, clientId }) => {
 		setLayoutConfig(layoutConfig);
 	}, [block]);
 
+	console.log('productBlockAttr', productBlockAttr);
+
 	return (
 		<Fragment>
 			<BlockControls>
@@ -154,8 +156,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 									),
 								'--sc-product-item-border-color':
 									getSpacingPresetCssVar(
-										productBlockAttr?.borderColor ??
-											'--wp--preset--color--cyan-bluish-gray'
+										productBlockAttr?.style?.border?.color
 									),
 								'--sc-product-item-border-width':
 									getSpacingPresetCssVar(

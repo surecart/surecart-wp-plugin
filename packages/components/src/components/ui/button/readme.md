@@ -74,7 +74,6 @@
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment-method](../sc-payment-method)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
- - [sc-product-item-button](../../controllers/products/sc-product-item-button)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-stripe-add-method](../sc-stripe-add-method)
  - [sc-subscription](../../controllers/dashboard/subscription)
@@ -124,7 +123,6 @@ graph TD;
   sc-password-nag --> sc-button
   sc-payment-method --> sc-button
   sc-payment-methods-list --> sc-button
-  sc-product-item-button --> sc-button
   sc-purchase-downloads-list --> sc-button
   sc-stripe-add-method --> sc-button
   sc-subscription --> sc-button

@@ -9,8 +9,10 @@
 
 | Property       | Attribute     | Description | Type                                        | Default     |
 | -------------- | ------------- | ----------- | ------------------------------------------- | ----------- |
+| `formId`       | `form-id`     |             | `string`                                    | `undefined` |
 | `itemStyles`   | `item-styles` |             | `any`                                       | `{}`        |
 | `layoutConfig` | --            |             | `{ blockName: string; attributes: any; }[]` | `undefined` |
+| `mode`         | `mode`        |             | `"live" \| "test"`                          | `undefined` |
 
 
 ## Dependencies
@@ -28,10 +30,7 @@ graph TD;
   sc-product-item --> sc-product-item-title
   sc-product-item --> sc-product-item-image
   sc-product-item --> sc-price-range
-  sc-product-item --> sc-product-item-button
   sc-price-range --> sc-format-number
-  sc-product-item-button --> sc-button
-  sc-button --> sc-spinner
   style sc-product-item-list fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

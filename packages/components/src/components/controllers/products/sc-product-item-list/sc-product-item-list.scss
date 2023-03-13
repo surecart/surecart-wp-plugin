@@ -17,7 +17,7 @@
     margin-bottom: var(--sc-product-item-margin-bottom);
     margin-left: var(--sc-product-item-margin-left);
     margin-right: var(--sc-product-item-margin-right);
-    border: solid var(--sc-product-item-border-width) #cecece;
+    border: solid var(--sc-product-item-border-width) var(--sc-product-item-border-color);
     border-radius: var(--sc-product-item-border-radius);
   }
 }

@@ -3,8 +3,6 @@
 namespace SureCartBlocks\Blocks\ProductItemList;
 
 use SureCartBlocks\Blocks\BaseBlock;
-use SureCart\Models\Product;
-use SureCart\Models\Form;
 
 /**
  * ProductItemList block
@@ -57,8 +55,8 @@ class Block extends BaseBlock {
 			$style .= '--sc-product-item-margin-left: ' . $this->getSpacingPresetCssVar( array_key_exists('left', $margin ) ? $margin['left'] : '0' ) . ';';
 			$style .= '--sc-product-item-margin-right: ' . $this->getSpacingPresetCssVar( array_key_exists('right', $margin ) ? $margin['right'] : '0' ) . ';';
 		}
-		if ( ! empty( $attr['borderColor'] ) ) {
-			$style .= '--sc-product-item-border-color: var(--' . $attr['borderColor'] . ');';
+		if ( ! empty( $attr['style']['border']['color'] ) ) {
+			$style .= '--sc-product-item-border-color: ' . $attr['style']['border']['color'] . ';';
 		}
 		if ( ! empty( $attr['style']['border']['width'] ) ) {
 			$style .= '--sc-product-item-border-width: ' . $attr['style']['border']['width'] . ';';
@@ -100,13 +98,6 @@ class Block extends BaseBlock {
 			return;
 		}
 
-		$form = \SureCart::forms()->getDefault();
-		$mode = Form::getMode( $form->ID );
-
-		if ( empty( $form->ID ) ) {
-			return '';
-		}
-
 		$product_item_inner_blocks   = $product_inner_blocks[0]['innerBlocks'];
 		$product_item_attributes     = $product_inner_blocks[0]['attrs'];
 		
@@ -129,8 +120,6 @@ class Block extends BaseBlock {
 			'#selector-' . self::$instance,
 			[
 				'layoutConfig'  	=> $layout_config,
-				'formId'  			=> $form->ID,
-				'mode'  			=> $mode,
 				'style'				=> $this->getStyle($attributes, $product_item_attributes),
 			]
 		);

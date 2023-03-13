@@ -15,12 +15,6 @@ export class ScProductItem {
   /* Product Layout Config */
   @Prop() layoutConfig: LayoutConfig;
 
-  /* Checkout Form ID */
-  @Prop() formId: string;
-
-  /* Checkout Form Mode */
-  @Prop() mode: 'test' | 'live';
-
   render() {
     return (
       <div class={{ 'product-item': true }}>
@@ -66,29 +60,6 @@ export class ScProductItem {
 
               case 'surecart/product-item-price':
                 return <sc-price-range prices={this.product.prices?.data}></sc-price-range>;
-
-              case 'surecart/product-item-button':
-                if (!this.product.prices.data.length) {
-                  return <div></div>;
-                }
-                return (
-                  <sc-product-item-button
-                    style={{
-                      '--sc-product-button-padding-top': spacing?.padding?.top && getSpacingPresetCssVar(spacing.padding.top),
-                      '--sc-product-button-padding-bottom': spacing?.padding?.bottom && getSpacingPresetCssVar(spacing.padding.bottom),
-                      '--sc-product-button-padding-left': spacing?.padding?.left && getSpacingPresetCssVar(spacing.padding.left),
-                      '--sc-product-button-padding-right': spacing?.padding?.right && getSpacingPresetCssVar(spacing.padding.right),
-                      '--sc-product-button-margin-top': spacing?.margin?.top && getSpacingPresetCssVar(spacing.margin.top),
-                      '--sc-product-button-margin-bottom': spacing?.margin?.bottom && getSpacingPresetCssVar(spacing.margin.bottom),
-                      '--sc-product-button-margin-left': spacing?.margin?.left && getSpacingPresetCssVar(spacing.margin.left),
-                      '--sc-product-button-margin-right': spacing?.margin?.right && getSpacingPresetCssVar(spacing.margin.right),
-                    }}
-                    formId={this.formId}
-                    mode={this.mode}
-                    priceId={this.product.prices.data[0].id}
-                    btnText={layout.attributes?.text}
-                  ></sc-product-item-button>
-                );
 
               default:
                 return null;

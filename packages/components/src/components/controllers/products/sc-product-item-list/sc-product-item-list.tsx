@@ -27,12 +27,6 @@ export class ScProductItemList {
   /* Item styles */
   @Prop() itemStyles: any = {};
 
-  /* Checkout Form ID */
-  @Prop() formId: string;
-
-  /* Checkout Form Mode */
-  @Prop() mode: 'test' | 'live';
-
   componentWillLoad() {
     this.getProducts();
   }
@@ -68,12 +62,11 @@ export class ScProductItemList {
                 <sc-skeleton style={{ width: '80%' }}></sc-skeleton>
                 <sc-skeleton style={{ width: '40%' }}></sc-skeleton>
                 <sc-skeleton style={{ 'width': '100%', 'minHeight': '90%', 'aspectRatio': '1/1', '--sc-border-radius-pill': '12px' }}></sc-skeleton>
-                <sc-skeleton style={{ 'width': '8rem', 'height': '1.8rem', '--sc-border-radius-pill': '12px' }}></sc-skeleton>
               </div>
             ))
           ) : this.products?.length ? (
             this.products.map(product => {
-              return <sc-product-item product={product} layoutConfig={this.layoutConfig} formId={this.formId} mode={this.mode}></sc-product-item>;
+              return <sc-product-item product={product} layoutConfig={this.layoutConfig}></sc-product-item>;
             })
           ) : (
             <p>No Product Found.</p>

@@ -28,20 +28,17 @@ export const PRODUCT_ITEM_LAYOUT = [
 				spacing: {
 					margin: {
 						top: '0.44rem',
-						bottom: '0.44rem',
 					},
 				},
 			},
 		},
 	],
-	['surecart/product-item-button'],
 ];
 
 const ALLOWED_BLOCKS = [
 	'surecart/product-item-title',
 	'surecart/product-item-image',
 	'surecart/product-item-price',
-	'surecart/product-item-button',
 ];
 
 export default () => {

@@ -2349,21 +2349,8 @@ export namespace Components {
         "prices": Price[];
     }
     interface ScProductItem {
-        "formId": string;
         "layoutConfig": LayoutConfig;
-        "mode": 'test' | 'live';
         "product": Product;
-    }
-    interface ScProductItemButton {
-        "btnText": string;
-        "formId": string;
-        "mode": 'test' | 'live';
-        "priceId": string;
-        "size": 'large' | 'medium' | 'small';
-        /**
-          * The button type.
-         */
-        "type": 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
     }
     interface ScProductItemImage {
         "alt": string;
@@ -2371,10 +2358,8 @@ export namespace Components {
         "src": string;
     }
     interface ScProductItemList {
-        "formId": string;
         "itemStyles": any;
         "layoutConfig": LayoutConfig;
-        "mode": 'test' | 'live';
     }
     interface ScProductItemTitle {
     }
@@ -4220,12 +4205,6 @@ declare global {
         prototype: HTMLScProductItemElement;
         new (): HTMLScProductItemElement;
     };
-    interface HTMLScProductItemButtonElement extends Components.ScProductItemButton, HTMLStencilElement {
-    }
-    var HTMLScProductItemButtonElement: {
-        prototype: HTMLScProductItemButtonElement;
-        new (): HTMLScProductItemButtonElement;
-    };
     interface HTMLScProductItemImageElement extends Components.ScProductItemImage, HTMLStencilElement {
     }
     var HTMLScProductItemImageElement: {
@@ -4657,7 +4636,6 @@ declare global {
         "sc-price-input": HTMLScPriceInputElement;
         "sc-price-range": HTMLScPriceRangeElement;
         "sc-product-item": HTMLScProductItemElement;
-        "sc-product-item-button": HTMLScProductItemButtonElement;
         "sc-product-item-image": HTMLScProductItemImageElement;
         "sc-product-item-list": HTMLScProductItemListElement;
         "sc-product-item-title": HTMLScProductItemTitleElement;
@@ -7335,21 +7313,8 @@ declare namespace LocalJSX {
         "prices"?: Price[];
     }
     interface ScProductItem {
-        "formId"?: string;
         "layoutConfig"?: LayoutConfig;
-        "mode"?: 'test' | 'live';
         "product"?: Product;
-    }
-    interface ScProductItemButton {
-        "btnText"?: string;
-        "formId"?: string;
-        "mode"?: 'test' | 'live';
-        "priceId"?: string;
-        "size"?: 'large' | 'medium' | 'small';
-        /**
-          * The button type.
-         */
-        "type"?: 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
     }
     interface ScProductItemImage {
         "alt"?: string;
@@ -7357,10 +7322,8 @@ declare namespace LocalJSX {
         "src"?: string;
     }
     interface ScProductItemList {
-        "formId"?: string;
         "itemStyles"?: any;
         "layoutConfig"?: LayoutConfig;
-        "mode"?: 'test' | 'live';
     }
     interface ScProductItemTitle {
     }
@@ -8468,7 +8431,6 @@ declare namespace LocalJSX {
         "sc-price-input": ScPriceInput;
         "sc-price-range": ScPriceRange;
         "sc-product-item": ScProductItem;
-        "sc-product-item-button": ScProductItemButton;
         "sc-product-item-image": ScProductItemImage;
         "sc-product-item-list": ScProductItemList;
         "sc-product-item-title": ScProductItemTitle;
@@ -8645,7 +8607,6 @@ declare module "@stencil/core" {
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
             "sc-price-range": LocalJSX.ScPriceRange & JSXBase.HTMLAttributes<HTMLScPriceRangeElement>;
             "sc-product-item": LocalJSX.ScProductItem & JSXBase.HTMLAttributes<HTMLScProductItemElement>;
-            "sc-product-item-button": LocalJSX.ScProductItemButton & JSXBase.HTMLAttributes<HTMLScProductItemButtonElement>;
             "sc-product-item-image": LocalJSX.ScProductItemImage & JSXBase.HTMLAttributes<HTMLScProductItemImageElement>;
             "sc-product-item-list": LocalJSX.ScProductItemList & JSXBase.HTMLAttributes<HTMLScProductItemListElement>;
             "sc-product-item-title": LocalJSX.ScProductItemTitle & JSXBase.HTMLAttributes<HTMLScProductItemTitleElement>;

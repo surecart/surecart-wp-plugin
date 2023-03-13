@@ -21,8 +21,8 @@ const PRODUCT_BLOCKS = [
 				border: {
 					width: '1px',
 					radius: '4px',
+					color: '#D7D7D7',
 				},
-				borderColor: '#777777',
 			},
 		},
 	],
