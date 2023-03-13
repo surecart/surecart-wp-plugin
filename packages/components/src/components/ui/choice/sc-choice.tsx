@@ -1,4 +1,4 @@
-import { Component, Prop, h, Event, EventEmitter, Method, State, Element, Watch, Host } from '@stencil/core';
+import { Component, Prop, h, Event, EventEmitter, Method, State, Element, Watch, Host, Listen } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { FormSubmitController } from '../../../functions/form-data';
 import { isRtl } from '../../../functions/page-align';
@@ -111,16 +111,6 @@ export class ScChoice {
     this.input.checked = this.checked;
   }
 
-  handleClick() {
-    if (this.type === 'checkbox') {
-      this.checked = !this.checked;
-    } else {
-      this.checked = true;
-    }
-    // we only want to emit this when an action is actually taken
-    this.scChange.emit(this.input.checked);
-  }
-
   handleBlur() {
     this.hasFocus = false;
     this.scBlur.emit();
@@ -206,6 +196,17 @@ export class ScChoice {
     this.hasDefaultSlot = !!this.el.querySelector('[slot="default"]');
   }
 
+  @Listen('click')
+  handleClickEvent() {
+    if (this.type === 'checkbox') {
+      this.checked = !this.checked;
+    } else {
+      this.checked = true;
+    }
+    // we only want to emit this when an action is actually taken
+    this.scChange.emit(this.input.checked);
+  }
+
   render() {
     return (
       <Host tabindex="0" onFocus={() => this.input.focus()}>
@@ -269,7 +270,6 @@ export class ScChoice {
                 aria-labelledby={this.labelId}
                 tabindex="0"
                 // required={this.required}
-                onClick={() => this.handleClick()}
                 onBlur={() => this.handleBlur()}
                 onFocus={() => this.handleFocus()}
               />
