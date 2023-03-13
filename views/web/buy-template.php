@@ -1,10 +1,6 @@
 <!-- wp:surecart/columns {"isFullHeight":true,"style":{"spacing":{"blockGap":{"top":"0px","left":"0px"}}}} -->
-<sc-columns is-stacked-on-mobile="1" is-full-height="1" class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right has-background" style="gap:0px 0px"><!-- wp:surecart/column {"layout":{"type":"constrained","contentSize":"550px","justifyContent":"right"},"width":"","style":{"spacing":{"padding":{"top":"100px","right":"100px","bottom":"100px","left":"100px"},"blockGap":"30px"},"border":{"width":"0px","style":"none"},"color":{"background":"#fafafa"}}} -->
+<sc-columns is-stacked-on-mobile="1" is-full-height="1" class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right has-background" style="gap:0px 0px;"><!-- wp:surecart/column {"layout":{"type":"constrained","contentSize":"550px","justifyContent":"right"},"width":"","style":{"spacing":{"padding":{"top":"100px","right":"100px","bottom":"100px","left":"100px"},"blockGap":"30px"},"border":{"width":"0px","style":"none"},"color":{"background":"#fafafa"}}} -->
 	<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right has-background" style="border-style:none;border-width:0px;background-color:#fafafa;padding:5rem;--sc-column-content-width:450px;--sc-form-row-spacing:30px">
-
-		<?php if ( $show_logo ) : ?>
-		<!-- wp:surecart/store-logo {"width":120,"maxHeight":100,"isLinkToHome":false} /-->
-		<?php endif; ?>
 
 		<?php if ( $show_image && ! empty( $product->image->url ) ) : ?>
 			<!-- wp:image {"sizeSlug":"full","linkDestination":"none","style":{"border":{"radius":"5px"}}} -->
@@ -27,18 +23,18 @@
 			</sc-prose>
 		<?php endif; ?>
 
-
 		<?php if ( ! empty( $prices ) && count( $prices ) > 1 ) : ?>
 			<!-- wp:surecart/price-selector -->
 			<sc-price-choices type="radio" columns="1">
-				<?php foreach ( $prices as $option ) : ?>
+				<?php foreach ( $prices as $key => $option ) : ?>
 					<!-- wp:surecart/price-choice {"price_id":"<?php echo esc_attr( $option->id ); ?>","checked":true} -->
-					<sc-price-choice price-id="<?php echo esc_attr( $option->id ); ?>" type="radio" show-label="1" show-price="1" show-control="1"></sc-price-choice>
+					<sc-price-choice price-id="<?php echo esc_attr( $option->id ); ?>" type="radio" show-control="false"></sc-price-choice>
 					<!-- /wp:surecart/price-choice -->
 				<?php endforeach; ?>
 			</sc-price-choices>
 			<!-- /wp:surecart/price-selector -->
 		<?php endif; ?>
+
 
 	</sc-column>
 	<!-- /wp:surecart/column -->

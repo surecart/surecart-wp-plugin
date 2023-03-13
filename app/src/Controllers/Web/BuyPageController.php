@@ -54,6 +54,8 @@ class BuyPageController {
 		add_action( 'admin_bar_menu', [ $this, 'addEditProductLink' ], 99 );
 		// do not persist the cart for this page.
 		add_filter( 'surecart-components/scData', [ $this, 'doNotPersistCart' ], 10, 2 );
+		// add styles.
+		add_action( 'wp_enqueue_scripts', [ $this, 'styles' ] );
 	}
 
 	/**
@@ -135,12 +137,22 @@ class BuyPageController {
 				'selected_price'   => $active_prices[0] ?? null,
 				'terms_text'       => $this->termsText(),
 				'mode'             => $this->product->buyLink()->getMode(),
+				'logo_url'         => \SureCart::account()->brand->logo_url,
 				'show_logo'        => $this->product->buyLink()->templatePartEnabled( 'logo' ),
 				'show_terms'       => $this->product->buyLink()->templatePartEnabled( 'terms' ),
 				'show_image'       => $this->product->buyLink()->templatePartEnabled( 'image' ),
 				'show_description' => $this->product->buyLink()->templatePartEnabled( 'description' ),
 				'show_coupon'      => $this->product->buyLink()->templatePartEnabled( 'coupon' ),
 			]
+		);
+	}
+
+	public function styles() {
+		wp_enqueue_style(
+			'surecart/instant-checkout',
+			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/templates/buy.css',
+			[],
+			filemtime( trailingslashit( plugin_dir_path( SURECART_PLUGIN_FILE ) ) . 'dist/templates/buy.css' ),
 		);
 	}
 

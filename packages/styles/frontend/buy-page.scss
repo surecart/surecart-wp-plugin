@@ -1,0 +1,10 @@
+body.sc-buy-page {
+  background: linear-gradient(to right, var(--sc-color-gray-50) 50%, var(--sc-color-white) 50%);
+
+  header.sc-buy-header {
+    padding: 30px 30px 0 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

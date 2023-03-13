@@ -22,9 +22,20 @@ use SureCartBlocks\Blocks\Form\Block as FormBlock;
 	</style>
 </head>
 
-<body <?php body_class(); ?>>
+<body <?php body_class( 'sc-buy-page' ); ?>>
 	<?php do_action( 'surecart_buy_page_body_open' ); ?>
 
+	<?php if ( $show_logo ) : ?>
+		<header class="sc-buy-header">
+			<img src="<?php echo esc_url( $logo_url ); ?>"
+				style="object-fit: contain;
+				object-position: left;
+				max-width: 180px;
+				max-height: 100px;
+				alt="<?php echo esc_attr( get_bloginfo() ); ?>"
+			/>
+		</header>
+	<?php endif; ?>
 
 	<?php
 	ob_start();
