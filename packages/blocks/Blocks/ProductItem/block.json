@@ -28,8 +28,6 @@
 			"color": true,
 			"radius": true,
 			"width": true,
-			"__experimentalSelector": ".product-img",
-			"__experimentalSkipSerialization": true,
 			"__experimentalDefaultControls": {
 				"color": true,
 				"radius": true,
