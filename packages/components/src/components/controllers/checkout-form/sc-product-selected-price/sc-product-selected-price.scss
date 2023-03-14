@@ -2,12 +2,22 @@
   display: block;
 }
 
+sc-form {
+  width: 100%;
+}
+
 .selected-price {
   display: flex;
-  align-items: baseline;
-  gap: var(--sc-spacing-xx-small);
-  color: var(--sc-color-gray-800);
-  line-height: 1;
+  align-items: center;
+  gap: var(--sc-spacing-small);
+
+  &__wrap {
+    display: flex;
+    align-items: baseline;
+    gap: var(--sc-spacing-xx-small);
+    color: var(--sc-color-gray-800);
+    line-height: 1;
+  }
 
   &__price {
     font-size: var(--sc-font-size-xxx-large);
