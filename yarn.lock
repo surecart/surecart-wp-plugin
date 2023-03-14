@@ -7178,6 +7178,7 @@ __metadata:
     "@storybook/testing-library": ^0.0.11
     "@stripe/stripe-js": ^1.32.0
     "@tiptap/core": ^2.0.0-beta.212
+    "@tiptap/extension-character-count": ^2.0.0-beta.220
     "@tiptap/extension-placeholder": ^2.0.0-beta.220
     "@tiptap/pm": ^2.0.0-beta.212
     "@tiptap/starter-kit": ^2.0.0-beta.212
@@ -7734,6 +7735,16 @@ __metadata:
   peerDependencies:
     "@tiptap/core": ^2.0.0-beta.209
   checksum: cea48e296858d0bcd1b1117ffe74702dc1970741b1fafb44a511582348aa6dbd53b373584efca4d06904551de8d64053e37c50282b50b7e9f2753cbb3bc8a6da
+  languageName: node
+  linkType: hard
+
+"@tiptap/extension-character-count@npm:^2.0.0-beta.220":
+  version: 2.0.0-beta.220
+  resolution: "@tiptap/extension-character-count@npm:2.0.0-beta.220"
+  peerDependencies:
+    "@tiptap/core": ^2.0.0-beta.209
+    "@tiptap/pm": ^2.0.0-beta.209
+  checksum: eb2594be6efc5395f5ce178a4b69b33cb6e3fb5ee4f19657ad13d440c6681f8610f20aa92ecb6e94bc12130ea4a399e41720df4fc8aa68c2373a198ddcc114da
   languageName: node
   linkType: hard
 

@@ -365,6 +365,8 @@
   box-sizing: border-box;
   border-top: solid var(--sc-input-border-width) var(--sc-input-border-color);
   padding: var(--sc-input-spacing-medium);
+  overflow-y: auto;
+  max-height: var(--sc-rich-text-max-height, none);
 }
 
 .menu {
