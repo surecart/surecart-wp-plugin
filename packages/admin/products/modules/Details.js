@@ -32,6 +32,7 @@ export default ({ product, updateProduct, loading }) => {
 						'A short description for your product that is displayed on product and instant checkouts.',
 						'surecart'
 					)}
+					style={{ '--sc-rich-text-max-height': '200px' }}
 					maxlength={2500}
 					value={product?.description}
 					onScInput={(e) => {
