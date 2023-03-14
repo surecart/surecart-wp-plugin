@@ -44,6 +44,9 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 	};
 
 	const blockProps = useBlockProps({
+		label,
+		type,
+		columns,
 		css: css`
 			.block-list-appender {
 				position: relative;
@@ -63,17 +66,14 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 		};
 	});
 
-	const innerBlocksProps = useInnerBlocksProps(
-		{},
-		{
-			className: 'sc-choices',
-			allowedBlocks: ['surecart/price-choice'],
-			renderAppender:
-				isSelected || childIsSelected
-					? InnerBlocks.ButtonBlockAppender
-					: false,
-		}
-	);
+	const innerBlocksProps = useInnerBlocksProps(blockProps, {
+		className: 'sc-choices',
+		allowedBlocks: ['surecart/price-choice'],
+		renderAppender:
+			isSelected || childIsSelected
+				? InnerBlocks.ButtonBlockAppender
+				: false,
+	});
 
 	// update children when type or children changes.
 	useEffect(() => {
@@ -129,11 +129,7 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<div {...blockProps}>
-				<ScPriceChoices label={label} type={type} columns={columns}>
-					<div {...innerBlocksProps} />
-				</ScPriceChoices>
-			</div>
+			<ScPriceChoices {...innerBlocksProps} />
 		</Fragment>
 	);
 };
