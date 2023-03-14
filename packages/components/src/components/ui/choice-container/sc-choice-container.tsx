@@ -1,4 +1,4 @@
-import { Component, Prop, h, Event, EventEmitter, Method, State, Element, Watch, Host } from '@stencil/core';
+import { Component, Prop, h, Event, EventEmitter, Method, State, Element, Watch, Host, Listen } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { FormSubmitController } from '../../../functions/form-data';
 import { isRtl } from '../../../functions/page-align';
@@ -96,16 +96,6 @@ export class ScChoiceContainer {
     this.input.checked = this.checked;
   }
 
-  handleClick() {
-    if (this.type === 'checkbox') {
-      this.checked = !this.checked;
-    } else {
-      this.checked = true;
-    }
-    // we only want to emit this when an action is actually taken
-    this.scChange.emit(this.input.checked);
-  }
-
   handleBlur() {
     this.hasFocus = false;
     this.scBlur.emit();
@@ -155,9 +145,7 @@ export class ScChoiceContainer {
   // Prevent clicks on the label from briefly blurring the input
   handleMouseDown(event: MouseEvent) {
     event.preventDefault();
-    setTimeout(() => {
-      this.input.focus();
-    }, 50);
+    this.input.focus();
   }
 
   componentDidLoad() {
@@ -168,6 +156,19 @@ export class ScChoiceContainer {
 
   disconnectedCallback() {
     this.formController?.removeFormData();
+  }
+
+  @Listen('click')
+  handleClickEvent() {
+    if (this.type === 'checkbox') {
+      this.checked = !this.checked;
+      this.scChange.emit(this.input.checked);
+    } else {
+      if (!this.checked) {
+        this.checked = true;
+        this.scChange.emit(this.input.checked);
+      }
+    }
   }
 
   render() {
@@ -232,7 +233,6 @@ export class ScChoiceContainer {
                 aria-labelledby={this.labelId}
                 tabindex="0"
                 // required={this.required}
-                onClick={() => this.handleClick()}
                 onBlur={() => this.handleBlur()}
                 onFocus={() => this.handleFocus()}
               />
