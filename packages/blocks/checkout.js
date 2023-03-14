@@ -46,7 +46,6 @@ registerBlocks([
 	nameYourPrice,
 	bumpLineItem,
 	checkoutErrors,
-	...(!!window?.scBlockData?.entitlements?.bumps ? [orderBumps] : []),
 	address,
 	columns,
 	column,
@@ -76,7 +75,8 @@ registerBlocks([
 	switchBlock,
 	total,
 	totals,
-	...(!!window?.scBlockData?.entitlements?.conditional_forms
-		? [conditionalForm]
-		: []),
+	...(!!window?.scBlockData?.entitlements?.bumps && [orderBumps]),
+	...(!!window?.scBlockData?.entitlements?.conditional_forms && [
+		conditionalForm,
+	]),
 ]);
