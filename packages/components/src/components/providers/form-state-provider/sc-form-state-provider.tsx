@@ -3,6 +3,7 @@ import { checkoutMachine } from './checkout-machine';
 import { interpret } from '@xstate/fsm';
 import { __ } from '@wordpress/i18n';
 import { FormState, FormStateSetter } from '../../../types';
+import { updateFormState } from '@store/form/mutations';
 
 /**
  * This component listens for a confirmed event and redirects to the success url.
@@ -24,6 +25,7 @@ export class ScFormStateProvider {
   /** Set the state. */
   setState(name) {
     const { send } = this._stateService;
+    updateFormState(name);
     return send(name);
   }
 
