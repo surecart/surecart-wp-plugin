@@ -152,7 +152,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-color-danger-950: #481111;
   --sc-color-danger-text: var(--sc-color-white);
   --sc-border-radius-small: 0.15em;
-  --sc-border-radius-medium: 0.25em;
+  --sc-border-radius-medium: 0.35em;
   --sc-border-radius-large: 0.5em;
   --sc-border-radius-x-large: 0.75em;
   --sc-border-radius-circle: 50%;
