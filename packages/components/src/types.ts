@@ -65,6 +65,9 @@ export interface Price {
   ad_hoc_max_amount: number;
   ad_hoc_min_amount: number;
   scratch_amount: number;
+  setup_fee_enabled: boolean;
+  setup_fee_amount: number;
+  setup_fee_name: string;
   setup_fee_trial_enabled: boolean;
   recurring_period_count: number;
   archived: boolean;
