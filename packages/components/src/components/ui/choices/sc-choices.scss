@@ -3,6 +3,7 @@
 }
 
 .choices {
+  container-type: inline-size;
   ::slotted(div) {
     margin: 0;
     display: flex;
@@ -62,10 +63,12 @@
   grid-auto-rows: 1fr;
 }
 
-// .breakpoint-md,
-// .breakpoint-lg,
-// .breakpoint-xl {
-//   .choices__items {
-//     grid-template-columns: repeat(var(--columns, 1), 1fr);
-//   }
-// }
+.choices__items {
+  grid-template-columns: repeat(var(--columns, 1), 1fr);
+}
+
+@container (max-width: 780px) {
+  .choices__items {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
