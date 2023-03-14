@@ -28,6 +28,12 @@ export class ScPriceChoice {
   /** Label for the choice. */
   @Prop() label: string;
 
+  /** Show the label */
+  @Prop() showLabel: boolean = true;
+
+  /** Show the price amount */
+  @Prop() showPrice: boolean = true;
+
   /** Show the radio/checkbox control */
   @Prop() showControl: boolean = true;
 
@@ -168,20 +174,6 @@ export class ScPriceChoice {
     return this?.choice?.checked;
   }
 
-  renderAdHoc() {
-    return (
-      <sc-price-input
-        ref={el => (this.adHocInput = el as HTMLScPriceInputElement)}
-        required
-        label={'Enter an amount'}
-        value={(this.getLineItem()?.ad_hoc_amount || this.getLineItem()?.total_amount).toString()}
-        onScChange={e => this.onChangeAdHoc(e)}
-        min={this.price.ad_hoc_min_amount}
-        max={this.price.ad_hoc_max_amount}
-      ></sc-price-input>
-    );
-  }
-
   renderEmpty() {
     if (window?.wp?.blocks) {
       return (
@@ -240,30 +232,44 @@ export class ScPriceChoice {
         checked={this.isChecked()}
       >
         <div class="price-choice">
-          <div class="price-choice__name">{this.label || this?.price?.name || this?.product?.name}</div>
-          <div class="price-choice__details">
-            <div>
-              <sc-format-number type="currency" value={this.price.amount} currency={this.price.currency}></sc-format-number>
-              {intervalString(this.price, {
-                showOnce: true,
-                abbreviate: true,
-                labels: {
-                  interval: '/',
-                  period:
-                    /** translators: used as in time period: "for 3 months" */
-                    __('for', 'surecart'),
-                },
-              })}
-            </div>
-            {!!this.price.trial_duration_days &&
-              sprintf(_n('Starting in %s day', 'Starting in %s days', this.price.trial_duration_days, 'surecart'), this.price.trial_duration_days)}
-            {!!this.price.setup_fee_enabled && this.price?.setup_fee_amount && (
-              <div>
-                <sc-format-number type="currency" value={this.price.setup_fee_amount} currency={this.price.currency}></sc-format-number>{' '}
-                {this.price.setup_fee_name || __('Setup Fee', 'surecart')} {!this.price?.setup_fee_trial_enabled && __('Today', 'surecart')}
+          {this.showLabel && <div class="price-choice__name">{this.label || this?.price?.name || this?.product?.name}</div>}
+
+          {this.showPrice && (
+            <div class="price-choice__details">
+              <div class="price-choice__price">
+                {this.price?.ad_hoc ? (
+                  __('Custom Amount', 'surecart')
+                ) : (
+                  <Fragment>
+                    <sc-format-number type="currency" value={this.price.amount} currency={this.price.currency}></sc-format-number>
+                    {intervalString(this.price, {
+                      showOnce: true,
+                      abbreviate: true,
+                      labels: {
+                        interval: '/',
+                        period:
+                          /** translators: used as in time period: "for 3 months" */
+                          __('for', 'surecart'),
+                      },
+                    })}
+                  </Fragment>
+                )}
               </div>
-            )}
-          </div>
+
+              {!!this.price.trial_duration_days && (
+                <div class="price-choice__trial">
+                  {sprintf(_n('Starting in %s day', 'Starting in %s days', this.price.trial_duration_days, 'surecart'), this.price.trial_duration_days)}
+                </div>
+              )}
+
+              {!!this.price.setup_fee_enabled && this.price?.setup_fee_amount && (
+                <div class="price-choice__setup-fee">
+                  <sc-format-number type="currency" value={this.price.setup_fee_amount} currency={this.price.currency}></sc-format-number>{' '}
+                  {this.price.setup_fee_name || __('Setup Fee', 'surecart')} {!this.price?.setup_fee_trial_enabled && __('Today', 'surecart')}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </sc-choice-container>
     );
