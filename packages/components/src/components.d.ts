@@ -6,6 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { LineItemData as LineItemData1 } from "src/types";
 export namespace Components {
     interface ScAddress {
         /**
@@ -568,6 +569,57 @@ export namespace Components {
           * Show the price
          */
         "showPrice": boolean;
+        /**
+          * The size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * Simulates a click on the choice.
+         */
+        "triggerClick": () => Promise<void>;
+        "triggerFocus": () => Promise<void>;
+        /**
+          * The choice name attribute
+         */
+        "type": 'radio' | 'checkbox';
+        /**
+          * The choice value
+         */
+        "value": string;
+    }
+    interface ScChoiceContainer {
+        /**
+          * Draws the choice in a checked state.
+         */
+        "checked": boolean;
+        /**
+          * Is the choice disabled
+         */
+        "disabled": boolean;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
+         */
+        "invalid": boolean;
+        /**
+          * The choice name attribute
+         */
+        "name": string;
+        /**
+          * Checks for validity and shows the browser's validation message if the control is invalid.
+         */
+        "reportValidity": () => Promise<boolean>;
+        /**
+          * Is this required
+         */
+        "required": boolean;
+        /**
+          * Sets a custom validation message. If `message` is not empty, the field will be considered invalid.
+         */
+        "setCustomValidity": (message: string) => Promise<void>;
+        /**
+          * Show the radio/checkbox control
+         */
+        "showControl": boolean;
         /**
           * The size.
          */
@@ -2169,6 +2221,10 @@ export namespace Components {
     }
     interface ScPriceChoice {
         /**
+          * Is this blank?
+         */
+        "blank": boolean;
+        /**
           * Is this checked by default
          */
         "checked": boolean;
@@ -2411,6 +2467,9 @@ export namespace Components {
         "trialDurationDays": number;
     }
     interface ScProductSelectedPrice {
+        /**
+          * The product id.
+         */
         "productId": string;
     }
     interface ScProse {
@@ -2511,6 +2570,10 @@ export namespace Components {
           * The textarea's label. Alternatively, you can use the label slot.
          */
         "label": string;
+        /**
+          * The max length.
+         */
+        "maxlength": number;
         /**
           * The textarea's name attribute.
          */
@@ -3332,6 +3395,10 @@ export interface ScChoiceCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScChoiceElement;
 }
+export interface ScChoiceContainerCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScChoiceContainerElement;
+}
 export interface ScCompactAddressCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScCompactAddressElement;
@@ -3467,6 +3534,10 @@ export interface ScPriceInputCustomEvent<T> extends CustomEvent<T> {
 export interface ScProductLineItemCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScProductLineItemElement;
+}
+export interface ScProductSelectedPriceCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScProductSelectedPriceElement;
 }
 export interface ScProviderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -3704,6 +3775,12 @@ declare global {
     var HTMLScChoiceElement: {
         prototype: HTMLScChoiceElement;
         new (): HTMLScChoiceElement;
+    };
+    interface HTMLScChoiceContainerElement extends Components.ScChoiceContainer, HTMLStencilElement {
+    }
+    var HTMLScChoiceContainerElement: {
+        prototype: HTMLScChoiceContainerElement;
+        new (): HTMLScChoiceContainerElement;
     };
     interface HTMLScChoicesElement extends Components.ScChoices, HTMLStencilElement {
     }
@@ -4580,6 +4657,7 @@ declare global {
         "sc-checkout-mollie-payment": HTMLScCheckoutMolliePaymentElement;
         "sc-checkout-unsaved-changes-warning": HTMLScCheckoutUnsavedChangesWarningElement;
         "sc-choice": HTMLScChoiceElement;
+        "sc-choice-container": HTMLScChoiceContainerElement;
         "sc-choices": HTMLScChoicesElement;
         "sc-column": HTMLScColumnElement;
         "sc-columns": HTMLScColumnsElement;
@@ -5327,6 +5405,56 @@ declare namespace LocalJSX {
           * Show the price
          */
         "showPrice"?: boolean;
+        /**
+          * The size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The choice name attribute
+         */
+        "type"?: 'radio' | 'checkbox';
+        /**
+          * The choice value
+         */
+        "value"?: string;
+    }
+    interface ScChoiceContainer {
+        /**
+          * Draws the choice in a checked state.
+         */
+        "checked"?: boolean;
+        /**
+          * Is the choice disabled
+         */
+        "disabled"?: boolean;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
+         */
+        "invalid"?: boolean;
+        /**
+          * The choice name attribute
+         */
+        "name"?: string;
+        /**
+          * Emitted when the control loses focus.
+         */
+        "onScBlur"?: (event: ScChoiceContainerCustomEvent<void>) => void;
+        /**
+          * Emitted when the control's checked state changes.
+         */
+        "onScChange"?: (event: ScChoiceContainerCustomEvent<boolean>) => void;
+        /**
+          * Emitted when the control gains focus.
+         */
+        "onScFocus"?: (event: ScChoiceContainerCustomEvent<void>) => void;
+        /**
+          * Is this required
+         */
+        "required"?: boolean;
+        /**
+          * Show the radio/checkbox control
+         */
+        "showControl"?: boolean;
         /**
           * The size.
          */
@@ -7157,6 +7285,10 @@ declare namespace LocalJSX {
     }
     interface ScPriceChoice {
         /**
+          * Is this blank?
+         */
+        "blank"?: boolean;
+        /**
           * Is this checked by default
          */
         "checked"?: boolean;
@@ -7313,9 +7445,21 @@ declare namespace LocalJSX {
          */
         "name"?: string;
         /**
+          * Emitted when the control loses focus.
+         */
+        "onScBlur"?: (event: ScPriceInputCustomEvent<void>) => void;
+        /**
           * Emitted when the control's value changes.
          */
         "onScChange"?: (event: ScPriceInputCustomEvent<void>) => void;
+        /**
+          * Emitted when the control gains focus.
+         */
+        "onScFocus"?: (event: ScPriceInputCustomEvent<void>) => void;
+        /**
+          * Emitted when the control's value changes.
+         */
+        "onScInput"?: (event: ScPriceInputCustomEvent<void>) => void;
         /**
           * Draws a pill-style input with rounded edges.
          */
@@ -7418,6 +7562,13 @@ declare namespace LocalJSX {
         "trialDurationDays"?: number;
     }
     interface ScProductSelectedPrice {
+        /**
+          * Toggle line item event
+         */
+        "onScUpdateLineItem"?: (event: ScProductSelectedPriceCustomEvent<LineItemData1>) => void;
+        /**
+          * The product id.
+         */
         "productId"?: string;
     }
     interface ScProse {
@@ -7532,6 +7683,10 @@ declare namespace LocalJSX {
           * The textarea's label. Alternatively, you can use the label slot.
          */
         "label"?: string;
+        /**
+          * The max length.
+         */
+        "maxlength"?: number;
         /**
           * The textarea's name attribute.
          */
@@ -8416,6 +8571,7 @@ declare namespace LocalJSX {
         "sc-checkout-mollie-payment": ScCheckoutMolliePayment;
         "sc-checkout-unsaved-changes-warning": ScCheckoutUnsavedChangesWarning;
         "sc-choice": ScChoice;
+        "sc-choice-container": ScChoiceContainer;
         "sc-choices": ScChoices;
         "sc-column": ScColumn;
         "sc-columns": ScColumns;
@@ -8591,6 +8747,7 @@ declare module "@stencil/core" {
             "sc-checkout-mollie-payment": LocalJSX.ScCheckoutMolliePayment & JSXBase.HTMLAttributes<HTMLScCheckoutMolliePaymentElement>;
             "sc-checkout-unsaved-changes-warning": LocalJSX.ScCheckoutUnsavedChangesWarning & JSXBase.HTMLAttributes<HTMLScCheckoutUnsavedChangesWarningElement>;
             "sc-choice": LocalJSX.ScChoice & JSXBase.HTMLAttributes<HTMLScChoiceElement>;
+            "sc-choice-container": LocalJSX.ScChoiceContainer & JSXBase.HTMLAttributes<HTMLScChoiceContainerElement>;
             "sc-choices": LocalJSX.ScChoices & JSXBase.HTMLAttributes<HTMLScChoicesElement>;
             "sc-column": LocalJSX.ScColumn & JSXBase.HTMLAttributes<HTMLScColumnElement>;
             "sc-columns": LocalJSX.ScColumns & JSXBase.HTMLAttributes<HTMLScColumnsElement>;

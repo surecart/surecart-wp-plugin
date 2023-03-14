@@ -36,6 +36,7 @@ export const ScCheckoutFormErrors = /*@__PURE__*/createReactComponent<JSX.ScChec
 export const ScCheckoutMolliePayment = /*@__PURE__*/createReactComponent<JSX.ScCheckoutMolliePayment, HTMLScCheckoutMolliePaymentElement>('sc-checkout-mollie-payment');
 export const ScCheckoutUnsavedChangesWarning = /*@__PURE__*/createReactComponent<JSX.ScCheckoutUnsavedChangesWarning, HTMLScCheckoutUnsavedChangesWarningElement>('sc-checkout-unsaved-changes-warning');
 export const ScChoice = /*@__PURE__*/createReactComponent<JSX.ScChoice, HTMLScChoiceElement>('sc-choice');
+export const ScChoiceContainer = /*@__PURE__*/createReactComponent<JSX.ScChoiceContainer, HTMLScChoiceContainerElement>('sc-choice-container');
 export const ScChoices = /*@__PURE__*/createReactComponent<JSX.ScChoices, HTMLScChoicesElement>('sc-choices');
 export const ScColumn = /*@__PURE__*/createReactComponent<JSX.ScColumn, HTMLScColumnElement>('sc-column');
 export const ScColumns = /*@__PURE__*/createReactComponent<JSX.ScColumns, HTMLScColumnsElement>('sc-columns');

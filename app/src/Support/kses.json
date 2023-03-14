@@ -305,6 +305,21 @@
     "class": true,
     "slot": true
   },
+  "sc-choice-container": {
+    "checked": true,
+    "disabled": true,
+    "invalid": true,
+    "name": true,
+    "required": true,
+    "show-control": true,
+    "size": true,
+    "type": true,
+    "value": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-choices": {
     "auto-width": true,
     "columns": true,
@@ -1265,6 +1280,7 @@
     "slot": true
   },
   "sc-price-choice": {
+    "blank": true,
     "checked": true,
     "description": true,
     "error": true,
@@ -1421,6 +1437,7 @@
     "disabled": true,
     "help": true,
     "label": true,
+    "maxlength": true,
     "name": true,
     "placeholder": true,
     "readonly": true,

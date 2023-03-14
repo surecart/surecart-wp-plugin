@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-03-07T22:24:58",
+  "timestamp": "2023-03-11T15:07:59",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -20994,6 +20994,23 @@
           "values": [
             {
               "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "setupFeeTrialEnabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "setup-fee-trial-enabled",
+          "reflectToAttr": false,
+          "docs": "Is the setup fee not included in the free trial?",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
