@@ -237,7 +237,7 @@ export class ScSessionProvider {
     if (!!is_surecart_payment_redirect && !!checkout_id) {
       this.scSetState.emit('FINALIZE');
       this.scSetState.emit('PAYING');
-      return this.handleAbandonedCheckout(checkout_id, coupon as string);
+      return this.handleCheckoutIdFromUrl(checkout_id, coupon as string);
     }
 
     // handle redirect status.
@@ -247,7 +247,7 @@ export class ScSessionProvider {
 
     // handle abandoned checkout.
     if (!!checkout_id) {
-      return this.handleAbandonedCheckout(checkout_id, coupon as string);
+      return this.handleCheckoutIdFromUrl(checkout_id, coupon as string);
     }
 
     // handle initial line items.
@@ -305,8 +305,8 @@ export class ScSessionProvider {
   }
 
   /** Handle abandoned checkout from URL */
-  async handleAbandonedCheckout(id, promotion_code = '') {
-    console.info('Handling abandoned checkout.', promotion_code, id);
+  async handleCheckoutIdFromUrl(id, promotion_code = '') {
+    console.info('Handling existing checkout from url.', promotion_code, id);
 
     // if coupon code, load the checkout with the code.
     if (promotion_code) {
