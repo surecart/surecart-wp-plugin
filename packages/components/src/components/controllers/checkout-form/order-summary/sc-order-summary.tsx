@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Prop, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { openWormhole } from 'stencil-wormhole';
-
+import { state as checkoutState } from '@store/checkout';
+import { formBusy, formLoading } from '@store/form/getters';
 import { animateTo, shimKeyframesHeightAuto, stopAnimations } from '../../../../functions/animate';
 import { getAnimation, setDefaultAnimation } from '../../../../functions/animation-registry';
 import { Checkout } from '../../../../types';
@@ -16,7 +16,6 @@ export class ScOrderSummary {
   @Element() el: HTMLScOrderSummaryElement;
   @Prop() order: Checkout;
   @Prop() busy: boolean;
-  @Prop() empty: boolean;
   @Prop() closedText: string = __('Show Summary', 'surecart');
   @Prop() openText: string = __('Summary', 'surecart');
   @Prop() collapsible: boolean = false;
@@ -39,13 +38,17 @@ export class ScOrderSummary {
 
   handleClick(e) {
     e.preventDefault();
-    if (this.empty && !this.busy) return;
+    if (this.empty() && !formBusy()) return;
     this.collapsed = !this.collapsed;
+  }
+
+  empty() {
+    return !checkoutState.checkout?.line_items?.pagination?.count;
   }
 
   renderHeader() {
     // busy state
-    if (this.busy && !this.order?.line_items?.data?.length) {
+    if ((formBusy() || formLoading()) && !checkoutState.checkout?.line_items?.data?.length) {
       return (
         <sc-line-item>
           <sc-skeleton slot="title" style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>
@@ -68,21 +71,21 @@ export class ScOrderSummary {
         </span>
 
         {/* We have a trial, do not show total_savings_amount since it's based on the total_amount */}
-        {this.order?.total_amount !== this.order?.amount_due ? (
+        {checkoutState.checkout?.total_amount !== checkoutState.checkout?.amount_due ? (
           <span slot="price" class={{ 'price': true, 'price--collapsed': this.collapsed }}>
-            <sc-format-number type="currency" currency={this.order?.currency} value={this.order?.amount_due}></sc-format-number>
+            <sc-format-number type="currency" currency={checkoutState.checkout?.currency} value={checkoutState.checkout?.amount_due}></sc-format-number>
           </span>
         ) : (
           <span slot="price" class={{ 'price': true, 'price--collapsed': this.collapsed }}>
-            {!!this.order?.total_savings_amount && (
+            {!!checkoutState.checkout?.total_savings_amount && (
               <sc-format-number
                 class="scratch-price"
                 type="currency"
-                value={-this.order?.total_savings_amount + this.order?.total_amount}
-                currency={this.order?.currency || 'usd'}
+                value={-checkoutState.checkout?.total_savings_amount + checkoutState.checkout?.total_amount}
+                currency={checkoutState.checkout?.currency || 'usd'}
               />
             )}
-            <sc-total total={'total'} order={this.order}></sc-total>
+            <sc-total total={'total'} order={checkoutState.checkout}></sc-total>
           </span>
         )}
       </sc-line-item>
@@ -120,12 +123,12 @@ export class ScOrderSummary {
           ref={el => (this.body = el as HTMLElement)}
           class={{
             'summary__content': true,
-            'summary__content--empty': this.empty && !this.busy,
+            'summary__content--empty': this.empty() && !formBusy(),
           }}
         >
           <slot />
         </div>
-        {this.empty && !this.busy && <p class="empty">{__('Your cart is empty.', 'surecart')}</p>}
+        {this.empty() && !formBusy() && <p class="empty">{__('Your cart is empty.', 'surecart')}</p>}
       </div>
     );
   }
@@ -146,5 +149,3 @@ setDefaultAnimation('summary.hide', {
   ],
   options: { duration: 250, easing: 'ease' },
 });
-
-openWormhole(ScOrderSummary, ['order', 'busy', 'empty'], false);

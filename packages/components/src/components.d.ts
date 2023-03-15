@@ -2057,7 +2057,6 @@ export namespace Components {
         "collapsed": boolean;
         "collapsedOnMobile": boolean;
         "collapsible": boolean;
-        "empty": boolean;
         "openText": string;
         "order": Checkout;
     }
@@ -7075,7 +7074,6 @@ declare namespace LocalJSX {
         "collapsed"?: boolean;
         "collapsedOnMobile"?: boolean;
         "collapsible"?: boolean;
-        "empty"?: boolean;
         /**
           * Show the toggle
          */
