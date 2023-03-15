@@ -81,7 +81,7 @@ export class ScProductLineItem {
           <div class="price" part="price__amount">
             {!!setupFee && !this.setupFeeTrialEnabled ? (
               <Fragment>
-                {setupFee?.description} &mdash; <sc-format-number part="price__amount" type="currency" currency={this.currency} value={setupFee.amount}></sc-format-number>
+                {setupFee?.description} <sc-format-number part="price__amount" type="currency" currency={this.currency} value={setupFee.amount}></sc-format-number>
               </Fragment>
             ) : (
               sprintf(_n('%d day free', '%d days free', this.trialDurationDays, 'surecart'), this.trialDurationDays)
