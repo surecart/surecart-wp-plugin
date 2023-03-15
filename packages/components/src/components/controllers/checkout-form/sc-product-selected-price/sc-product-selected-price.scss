@@ -10,10 +10,12 @@ sc-form {
   display: flex;
   align-items: center;
   gap: var(--sc-spacing-small);
+  flex-wrap: wrap;
 
   &__wrap {
     display: flex;
     align-items: baseline;
+    flex-wrap: wrap;
     gap: var(--sc-spacing-xx-small);
     color: var(--sc-color-gray-800);
     line-height: 1;
@@ -22,11 +24,13 @@ sc-form {
   &__price {
     font-size: var(--sc-font-size-xxx-large);
     font-weight: var(--sc-font-weight-bold);
+    white-space: nowrap;
   }
 
   &__interval {
     font-weight: var(--sc-font-weight-bold);
     opacity: 0.65;
+    white-space: nowrap;
   }
 
   &__scratch-price {
