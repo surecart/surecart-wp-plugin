@@ -12,6 +12,7 @@
 | `disabled`    | `disabled`    | Disables the textarea.                                                   | `boolean`                        | `false`     |
 | `help`        | `help`        | The textarea's help text. Alternatively, you can use the help-text slot. | `string`                         | `''`        |
 | `label`       | `label`       | The textarea's label. Alternatively, you can use the label slot.         | `string`                         | `''`        |
+| `maxlength`   | `maxlength`   | The max length.                                                          | `number`                         | `undefined` |
 | `name`        | `name`        | The textarea's name attribute.                                           | `string`                         | `undefined` |
 | `placeholder` | `placeholder` | The textarea's placeholder text.                                         | `string`                         | `undefined` |
 | `readonly`    | `readonly`    | Makes the textarea readonly.                                             | `boolean`                        | `false`     |
