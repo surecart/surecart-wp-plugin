@@ -13,6 +13,9 @@
     window.scIcons = {
       path: '/build/icon-assets'
     }
+    window.scData = {
+      page_id: 1,
+    }
     window.wp = {
       i18n: {
         __: () => { }
@@ -22,34 +25,10 @@
 </head>
 
 <body>
-  <sc-checkout success-url="/success" form-id="1" mode="test"
-    abandoned-checkout-return-url="https://test.com/surecart/redirect">
-    <sc-form>
-      <sc-payment>
-        <sc-payment-method-choice processor-id="test1" is-manual>
-          <span slot="summary">
-            Manual
-          </span>
-
-          <sc-card>
-            <sc-payment-selected label="Test selected">description</sc-payment-selected>
-          </sc-card>
-        </sc-payment-method-choice>
-
-        <sc-payment-method-choice processor-id="test2" is-manual>
-          <span slot="summary">
-            Manual 2
-          </span>
-
-          <sc-card>
-            <sc-payment-selected label="Test 2 selected">description</sc-payment-selected>
-          </sc-card>
-        </sc-payment-method-choice>
-      </sc-payment>
-
-      <sc-order-submit>Submit</sc-order-submit>
-    </sc-form>
-  </sc-checkout>
+  <sc-checkout success-url="/success" form-id="1" mode="test"><sc-form><sc-payment></sc-payment></sc-form></sc-checkout>
+  <script>
+    document.querySelector('sc-checkout').product = { id: 'testproductid', name: 'Test Product' };
+  </script>
 </body>
 
 </html>
