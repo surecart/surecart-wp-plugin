@@ -7,7 +7,7 @@ import { addQueryArgs, getQueryArg, getQueryArgs, removeQueryArgs } from '@wordp
 
 import { parseFormData } from '../../../functions/form-data';
 import { createOrUpdateCheckout, fetchCheckout, finalizeCheckout } from '../../../services/session';
-import { Checkout, FormStateSetter, LineItemData, PaymentIntents, PriceChoice, ProcessorName } from '../../../types';
+import { Checkout, FormStateSetter, LineItemData, PriceChoice } from '../../../types';
 
 @Component({
   tag: 'sc-session-provider',
@@ -17,49 +17,11 @@ export class ScSessionProvider {
   /** Element */
   @Element() el: HTMLElement;
 
-  /** Group id */
-  @Prop() groupId: string;
-
-  /** Are we in test or live mode. */
-  @Prop() mode: 'test' | 'live' = 'live';
-
-  /** The checkout form id */
-  @Prop() formId: number;
-
-  /** Whent the post was modified. */
-  @Prop() modified: string;
-
   /** An array of prices to pre-fill in the form. */
   @Prop() prices: Array<PriceChoice> = [];
 
-  /** Currency Code */
-  @Prop() currencyCode: string = 'usd';
-
   /** Should we persist the session. */
   @Prop() persist: boolean = true;
-
-  /** Set the checkout state */
-  @Prop() setState: (state: string) => void;
-
-  /** The processor. */
-  @Prop() processor: ProcessorName = 'stripe';
-
-  @Prop() method: string;
-
-  /** Is this a manual payment? */
-  @Prop() isManualProcessor: boolean;
-
-  /** Url to redirect upon success. */
-  @Prop() successUrl: string;
-
-  /** Holds all available payment intents. */
-  @Prop() paymentIntents: PaymentIntents;
-
-  /** Are we using the Stripe payment element? */
-  @Prop() stripePaymentElement: boolean;
-
-  /** The abandoned checkout return url. */
-  @Prop() abandonedCheckoutReturnUrl: string;
 
   /** Update line items event */
   @Event() scUpdateOrderState: EventEmitter<Checkout>;
@@ -74,16 +36,6 @@ export class ScSessionProvider {
 
   /** Set the state */
   @Event() scSetState: EventEmitter<FormStateSetter>;
-
-  @Listen('scUpdateOrder')
-  handleUpdateSession(e) {
-    const { data, options } = e.detail;
-    if (options?.silent) {
-      this.update(data);
-    } else {
-      this.loadUpdate(data);
-    }
-  }
 
   @Watch('prices')
   handlePricesChange() {

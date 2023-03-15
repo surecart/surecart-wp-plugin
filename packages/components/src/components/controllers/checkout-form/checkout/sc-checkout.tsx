@@ -4,7 +4,22 @@ import { state as processorsState } from '@store/processors';
 import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
 
-import { Bump, Checkout, Customer, FormState, ManualPaymentMethod, PaymentIntents, PriceChoice, Prices, Processor, ProcessorName, Product, Products, ResponseError, TaxProtocol } from '../../../../types';
+import {
+  Bump,
+  Checkout,
+  Customer,
+  FormState,
+  ManualPaymentMethod,
+  PaymentIntents,
+  PriceChoice,
+  Prices,
+  Processor,
+  ProcessorName,
+  Product,
+  Products,
+  ResponseError,
+  TaxProtocol,
+} from '../../../../types';
 
 @Component({
   tag: 'sc-checkout',
@@ -283,18 +298,7 @@ export class ScCheckout {
                     <sc-session-provider
                       ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)}
                       prices={this.prices}
-                      abandonedCheckoutReturnUrl={this.abandonedCheckoutReturnUrl}
-                      stripePaymentElement={this.stripePaymentElement}
-                      paymentIntents={this.paymentIntents}
                       persist={this.persistSession}
-                      modified={this.modified}
-                      mode={this.mode}
-                      isManualProcessor={this.isManualProcessor}
-                      form-id={this.formId}
-                      group-id={this.el.id}
-                      processor={this.processor}
-                      method={this.method}
-                      currency-code={this.currencyCode}
                       onScError={e => (this.error = e.detail as ResponseError)}
                     >
                       <slot />
