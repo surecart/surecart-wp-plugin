@@ -1,5 +1,6 @@
-import { Component, Prop, h, Event, EventEmitter, Method, State, Element, Watch, Host, Listen } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+
 import { FormSubmitController } from '../../../functions/form-data';
 import { isRtl } from '../../../functions/page-align';
 
