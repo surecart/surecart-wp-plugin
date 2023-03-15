@@ -1,24 +1,10 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State } from '@stencil/core';
+import { state as checkoutState } from '@store/checkout';
+import { state as processorsState } from '@store/processors';
 import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
-import { state as processorsState } from '@store/processors';
-import { state as checkoutState } from '@store/checkout';
-import {
-  Bump,
-  Checkout,
-  Customer,
-  FormState,
-  ManualPaymentMethod,
-  PaymentIntents,
-  PriceChoice,
-  Prices,
-  Processor,
-  ProcessorName,
-  Product,
-  Products,
-  ResponseError,
-  TaxProtocol,
-} from '../../../../types';
+
+import { Bump, Checkout, Customer, FormState, ManualPaymentMethod, PaymentIntents, PriceChoice, Prices, Processor, ProcessorName, Product, Products, ResponseError, TaxProtocol } from '../../../../types';
 
 @Component({
   tag: 'sc-checkout',
@@ -198,9 +184,12 @@ export class ScCheckout {
     Universe.create(this as Creator, this.state());
     processorsState.processors = this.processors;
     processorsState.manualPaymentMethods = this.manualPaymentMethods;
+    processorsState.config.stripe.paymentElement = this.stripePaymentElement;
     checkoutState.formId = this.formId;
     checkoutState.mode = this.mode;
     checkoutState.product = this.product || null;
+    checkoutState.currencyCode = this.currencyCode;
+    checkoutState.groupId = this.el.id;
   }
 
   state() {

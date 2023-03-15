@@ -1,13 +1,13 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, Watch } from '@stencil/core';
+import { state as checkoutState } from '@store/checkout';
+import { clearCheckout } from '@store/checkout/mutations';
+import { state as selectedProcessor } from '@store/selected-processor';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs, getQueryArg, getQueryArgs, removeQueryArgs } from '@wordpress/url';
 
 import { parseFormData } from '../../../functions/form-data';
-import { createOrUpdateOrder, fetchCheckout, finalizeSession } from '../../../services/session';
-import { state as checkoutState } from '@store/checkout';
+import { createOrUpdateCheckout, fetchCheckout, finalizeCheckout } from '../../../services/session';
 import { Checkout, FormStateSetter, LineItemData, PaymentIntents, PriceChoice, ProcessorName } from '../../../types';
-import { state as selectedProcessor } from '@store/selected-processor';
-import { clearCheckout } from '@store/checkout/mutations';
 
 @Component({
   tag: 'sc-session-provider',
@@ -150,10 +150,9 @@ export class ScSessionProvider {
 
     // first validate server-side and get key
     try {
-      checkoutState.checkout = await finalizeSession({
+      checkoutState.checkout = await finalizeCheckout({
         id: checkoutState?.checkout?.id,
         query: {
-          ...this.defaultFormQuery(),
           ...(selectedProcessor?.method ? { payment_method_type: selectedProcessor?.method } : {}),
           return_url: addQueryArgs(window.location.href, {
             ...(checkoutState?.checkout?.id ? { checkout_id: checkoutState?.checkout?.id } : {}),
@@ -288,7 +287,6 @@ export class ScSessionProvider {
       checkoutState.checkout = (await fetchCheckout({
         id,
         query: {
-          ...this.defaultFormQuery(),
           refresh_status: true,
         },
       })) as Checkout;
@@ -319,7 +317,6 @@ export class ScSessionProvider {
     checkoutState.checkout = (await fetchCheckout({
       id,
       query: {
-        ...this.defaultFormQuery(),
         refresh_status: true,
       },
     })) as Checkout;
@@ -384,9 +381,8 @@ export class ScSessionProvider {
 
     try {
       this.scSetState.emit('FETCH');
-      checkoutState.checkout = (await createOrUpdateOrder({
+      checkoutState.checkout = (await createOrUpdateCheckout({
         data: {
-          ...this.defaultFormData(),
           ...data,
           ...(promotion_code ? { discount: { promotion_code } } : {}),
           ...(address?.defaultCountry
@@ -398,7 +394,6 @@ export class ScSessionProvider {
             : {}),
           line_items,
         },
-        query: this.defaultFormQuery(),
       })) as Checkout;
       this.scSetState.emit('RESOLVE');
     } catch (e) {
@@ -413,13 +408,11 @@ export class ScSessionProvider {
     console.info('Handling existing checkout.');
     try {
       this.scSetState.emit('FETCH');
-      checkoutState.checkout = (await createOrUpdateOrder({
+      checkoutState.checkout = (await createOrUpdateCheckout({
         id,
         data: {
-          ...this.defaultFormData(),
           ...(promotion_code ? { discount: { promotion_code } } : {}),
         },
-        query: this.defaultFormQuery(),
       })) as Checkout;
       this.scSetState.emit('RESOLVE');
     } catch (e) {
@@ -475,24 +468,6 @@ export class ScSessionProvider {
     console.log('emit', e);
     this.scError.emit(e);
     this.scSetState.emit('REJECT');
-  }
-
-  /** Default data always sent with the session. */
-  defaultFormData() {
-    return {
-      currency: checkoutState?.checkout?.currency || this.currencyCode,
-      live_mode: this.mode !== 'test',
-      group_key: this.groupId,
-      ...(this.abandonedCheckoutReturnUrl ? { abandoned_checkout_return_url: this.abandonedCheckoutReturnUrl } : {}),
-    };
-  }
-
-  defaultFormQuery() {
-    return {
-      ...(!!checkoutState?.formId && { form_id: checkoutState?.formId }),
-      ...(!!checkoutState?.product?.id && { product_id: checkoutState?.product?.id }),
-      ...(!!this.stripePaymentElement && { stage_processor_type: 'stripe' }),
-    };
   }
 
   /** Looks through children and finds items needed for initial session. */
@@ -570,12 +545,9 @@ export class ScSessionProvider {
   async fetchCheckout(id, { query = {}, data = {} } = {}) {
     try {
       this.scSetState.emit('FETCH');
-      const checkout = (await createOrUpdateOrder({
+      const checkout = (await createOrUpdateCheckout({
         id,
-        query: {
-          ...this.defaultFormQuery(),
-          ...query,
-        },
+        query,
         data,
       })) as Checkout;
       this.scSetState.emit('RESOLVE');
@@ -591,10 +563,7 @@ export class ScSessionProvider {
       this.scSetState.emit('FETCH');
       checkoutState.checkout = (await fetchCheckout({
         id: this.getSessionId(),
-        query: {
-          ...this.defaultFormQuery(),
-          ...query,
-        },
+        query,
       })) as Checkout;
       this.scSetState.emit('RESOLVE');
     } catch (e) {
@@ -605,21 +574,10 @@ export class ScSessionProvider {
   /** Update a session */
   async update(data: any = {}, query = {}) {
     try {
-      checkoutState.checkout = (await createOrUpdateOrder({
+      checkoutState.checkout = (await createOrUpdateCheckout({
         id: data?.id ? data.id : this.getSessionId(),
-        data: {
-          ...this.defaultFormData(),
-          ...data,
-          metadata: {
-            ...(data?.metadata || {}),
-            page_url: window.location.href,
-            page_id: window?.scData?.page_id,
-          },
-        },
-        query: {
-          ...this.defaultFormQuery(),
-          ...query,
-        },
+        data,
+        query,
       })) as Checkout;
     } catch (e) {
       // reinitalize if order not found.

@@ -4,8 +4,8 @@ import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 
-import { createOrUpdateOrder, finalizeSession } from '../../../services/session';
-import { LineItem, Checkout, Prices, Product, ResponseError } from '../../../types';
+import { createOrUpdateCheckout, finalizeCheckout } from '../../../services/session';
+import { Checkout, LineItem, Prices, Product, ResponseError } from '../../../types';
 
 @Component({
   tag: 'sc-stripe-payment-request',
@@ -119,7 +119,7 @@ export class ScStripePaymentRequest {
   async handleShippingChange(ev: any) {
     const { shippingAddress, updateWith } = ev;
     try {
-      const order = (await createOrUpdateOrder({
+      const order = (await createOrUpdateCheckout({
         id: this.order?.id,
         data: {
           shipping_address: {
@@ -234,7 +234,7 @@ export class ScStripePaymentRequest {
     try {
       this.scSetState.emit('FINALIZE');
       // update session with shipping/billing
-      (await createOrUpdateOrder({
+      (await createOrUpdateCheckout({
         id: this.order?.id,
         data: {
           email: billing_details?.email,
@@ -252,7 +252,7 @@ export class ScStripePaymentRequest {
       })) as Checkout;
 
       // finalize
-      const session = (await finalizeSession({
+      const session = (await finalizeCheckout({
         id: this.order.id,
         query: {
           form_id: this.formId,

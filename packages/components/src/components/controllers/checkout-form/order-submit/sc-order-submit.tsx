@@ -1,11 +1,12 @@
 import { Component, Fragment, h, Prop } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
-import { openWormhole } from 'stencil-wormhole';
-import { getProcessorData } from '../../../../functions/processor';
-import { Checkout, Processor, ProcessorName } from '../../../../types';
-import { state as selectedProcessor } from '@store/selected-processor';
 import { checkoutIsLocked } from '@store/checkout/getters';
 import { availableProcessors } from '@store/processors/getters';
+import { state as selectedProcessor } from '@store/selected-processor';
+import { __ } from '@wordpress/i18n';
+import { openWormhole } from 'stencil-wormhole';
+
+import { getProcessorData } from '../../../../functions/processor';
+import { Checkout, Processor, ProcessorName } from '../../../../types';
 
 @Component({
   tag: 'sc-order-submit',
@@ -58,7 +59,7 @@ export class ScOrderSubmit {
     return (
       <sc-paypal-buttons
         buttons={buttons}
-        busy={this.busy}
+        busy={this.busy || checkoutIsLocked()}
         mode={this.mode}
         order={this.order}
         merchantInitiated={merchant_initiated}
