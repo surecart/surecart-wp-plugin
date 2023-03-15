@@ -2,7 +2,7 @@ import { Component, Event, EventEmitter, h, Prop } from '@stencil/core';
 import { state as checkoutState } from '@store/checkout';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { __ } from '@wordpress/i18n';
-import { createOrUpdateCheckout } from 'src/services/session';
+import { createOrUpdateCheckout } from '../../../../services/session';
 import { openWormhole } from 'stencil-wormhole';
 
 import { Address, Checkout, ResponseError, TaxIdentifier, TaxProtocol } from '../../../../types';
