@@ -1,6 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State } from '@stencil/core';
 import { state as checkoutState } from '@store/checkout';
 import { state as processorsState } from '@store/processors';
+import { state as formState } from '@store/form';
 import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
 
@@ -216,7 +217,7 @@ export class ScCheckout {
       manualPaymentMethods: this.manualPaymentMethods,
       processor_data: checkoutState.checkout?.processor_data,
       state: this.checkoutState,
-      formState: this.checkoutState,
+      formState: formState.formState.value,
       paymentIntents: this.paymentIntents,
       successUrl: this.successUrl,
       bumps: checkoutState.checkout?.recommended_bumps?.data as Bump[],
@@ -230,10 +231,10 @@ export class ScCheckout {
       removeLineItems: this.removeLineItems,
 
       // checkout states
-      loading: this.checkoutState === 'loading',
-      busy: ['updating', 'finalizing', 'paying', 'confirming'].includes(this?.checkoutState),
-      paying: ['finalizing', 'paying', 'confirming'].includes(this?.checkoutState),
-      empty: !['loading', 'updating'].includes(this.checkoutState) && !checkoutState.checkout?.line_items?.pagination?.count,
+      loading: formState.formState.value === 'loading',
+      busy: ['updating', 'finalizing', 'paying', 'confirming'].includes(formState.formState.value),
+      paying: ['finalizing', 'paying', 'confirming'].includes(formState.formState.value),
+      empty: !['loading', 'updating'].includes(formState.formState.value) && !checkoutState.checkout?.line_items?.pagination?.count,
       // checkout states
 
       // stripe.
