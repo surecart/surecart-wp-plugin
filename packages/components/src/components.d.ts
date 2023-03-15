@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 import { LineItemData as LineItemData1 } from "src/types";
 export namespace Components {
     interface ScAddress {
@@ -2699,43 +2699,10 @@ export namespace Components {
     }
     interface ScSessionProvider {
         /**
-          * The abandoned checkout return url.
-         */
-        "abandonedCheckoutReturnUrl": string;
-        /**
-          * Currency Code
-         */
-        "currencyCode": string;
-        /**
           * Finalize the order.
           * @returns
          */
         "finalize": () => Promise<Checkout | NodeJS.Timeout>;
-        /**
-          * The checkout form id
-         */
-        "formId": number;
-        /**
-          * Group id
-         */
-        "groupId": string;
-        /**
-          * Is this a manual payment?
-         */
-        "isManualProcessor": boolean;
-        "method": string;
-        /**
-          * Are we in test or live mode.
-         */
-        "mode": 'test' | 'live';
-        /**
-          * Whent the post was modified.
-         */
-        "modified": string;
-        /**
-          * Holds all available payment intents.
-         */
-        "paymentIntents": PaymentIntents;
         /**
           * Should we persist the session.
          */
@@ -2744,22 +2711,6 @@ export namespace Components {
           * An array of prices to pre-fill in the form.
          */
         "prices": Array<PriceChoice>;
-        /**
-          * The processor.
-         */
-        "processor": ProcessorName;
-        /**
-          * Set the checkout state
-         */
-        "setState": (state: string) => void;
-        /**
-          * Are we using the Stripe payment element?
-         */
-        "stripePaymentElement": boolean;
-        /**
-          * Url to redirect upon success.
-         */
-        "successUrl": string;
     }
     interface ScSkeleton {
         /**
@@ -7158,6 +7109,10 @@ declare namespace LocalJSX {
          */
         "gbVatLabel"?: string;
         /**
+          * Error event
+         */
+        "onScError"?: (event: ScOrderTaxIdInputCustomEvent<ResponseError>) => void;
+        /**
           * Make a request to update the order.
          */
         "onScUpdateOrder"?: (event: ScOrderTaxIdInputCustomEvent<{
@@ -7868,35 +7823,6 @@ declare namespace LocalJSX {
     }
     interface ScSessionProvider {
         /**
-          * The abandoned checkout return url.
-         */
-        "abandonedCheckoutReturnUrl"?: string;
-        /**
-          * Currency Code
-         */
-        "currencyCode"?: string;
-        /**
-          * The checkout form id
-         */
-        "formId"?: number;
-        /**
-          * Group id
-         */
-        "groupId"?: string;
-        /**
-          * Is this a manual payment?
-         */
-        "isManualProcessor"?: boolean;
-        "method"?: string;
-        /**
-          * Are we in test or live mode.
-         */
-        "mode"?: 'test' | 'live';
-        /**
-          * Whent the post was modified.
-         */
-        "modified"?: string;
-        /**
           * Error event
          */
         "onScError"?: (event: ScSessionProviderCustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
@@ -7914,10 +7840,6 @@ declare namespace LocalJSX {
          */
         "onScUpdateOrderState"?: (event: ScSessionProviderCustomEvent<Checkout>) => void;
         /**
-          * Holds all available payment intents.
-         */
-        "paymentIntents"?: PaymentIntents;
-        /**
           * Should we persist the session.
          */
         "persist"?: boolean;
@@ -7925,22 +7847,6 @@ declare namespace LocalJSX {
           * An array of prices to pre-fill in the form.
          */
         "prices"?: Array<PriceChoice>;
-        /**
-          * The processor.
-         */
-        "processor"?: ProcessorName;
-        /**
-          * Set the checkout state
-         */
-        "setState"?: (state: string) => void;
-        /**
-          * Are we using the Stripe payment element?
-         */
-        "stripePaymentElement"?: boolean;
-        /**
-          * Url to redirect upon success.
-         */
-        "successUrl"?: string;
     }
     interface ScSkeleton {
         /**
