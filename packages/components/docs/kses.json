@@ -1280,9 +1280,9 @@
     "slot": true
   },
   "sc-price-choice": {
-    "blank": true,
     "checked": true,
     "description": true,
+    "disabled": true,
     "error": true,
     "is-ad-hoc": true,
     "label": true,
