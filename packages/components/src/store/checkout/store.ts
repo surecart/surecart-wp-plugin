@@ -10,6 +10,8 @@ interface Store {
   product: Product;
   checkout: Checkout;
   currencyCode: string;
+  abandonedCheckoutReturnUrl: string;
+  abandonedCheckoutEnabled: boolean;
 }
 
 const { state, onChange, on, set, get, dispose } = createStore<Store>(
@@ -21,6 +23,8 @@ const { state, onChange, on, set, get, dispose } = createStore<Store>(
     product: null,
     checkout: null,
     currencyCode: 'usd',
+    abandonedCheckoutReturnUrl: null,
+    abandonedCheckoutEnabled: true,
   },
   (newValue, oldValue) => {
     return JSON.stringify(newValue) !== JSON.stringify(oldValue);

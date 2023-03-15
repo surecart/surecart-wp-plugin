@@ -205,6 +205,7 @@ export class ScCheckout {
     checkoutState.product = this.product || null;
     checkoutState.currencyCode = this.currencyCode;
     checkoutState.groupId = this.el.id;
+    checkoutState.abandonedCheckoutReturnUrl = this.abandonedCheckoutReturnUrl;
   }
 
   state() {

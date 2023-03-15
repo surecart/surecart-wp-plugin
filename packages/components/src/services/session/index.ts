@@ -1,10 +1,9 @@
-import { Checkout } from '../../types';
-
 import { state as checkoutState } from '@store/checkout';
 import { state as processorsState } from '@store/processors';
 import { addQueryArgs, getQueryArg } from '@wordpress/url';
 
 import apiFetch from '../../functions/fetch';
+import { Checkout } from '../../types';
 
 /** The base url for this service. */
 export const baseUrl = 'surecart/v1/checkouts/';
@@ -34,6 +33,8 @@ export const withDefaultData = (data: { metadata?: any } = {}) => ({
   currency: checkoutState?.checkout?.currency || checkoutState?.currencyCode,
   live_mode: checkoutState.mode !== 'test',
   group_key: checkoutState.groupId,
+  abandoned_checkout_return_url: checkoutState.abandonedCheckoutReturnUrl,
+  abandoned_checkout_enabled: checkoutState.abandonedCheckoutEnabled,
   metadata: {
     ...(data?.metadata || {}),
     ...(window?.scData?.page_id && { page_id: window?.scData?.page_id }),
