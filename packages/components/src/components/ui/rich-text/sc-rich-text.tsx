@@ -1,9 +1,9 @@
 import { Component, Event, EventEmitter, h, Host, Prop, State } from '@stencil/core';
 import { Editor } from '@tiptap/core';
+import CharacterCount from '@tiptap/extension-character-count';
 import Placeholder from '@tiptap/extension-placeholder';
 import StarterKit from '@tiptap/starter-kit';
-import CharacterCount from '@tiptap/extension-character-count';
-import { sprintf, __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 let id = 0;
 
@@ -71,12 +71,14 @@ export class ScRichText {
           // Use a placeholder:
           placeholder: this.placeholder,
         }),
-        ...(!!this.maxlength && [
-          CharacterCount.configure({
-            limit: this.maxlength,
-            mode: 'nodeSize',
-          }),
-        ]),
+        ...(this?.maxlength > 0
+          ? [
+              CharacterCount.configure({
+                limit: this.maxlength,
+                mode: 'nodeSize',
+              }),
+            ]
+          : []),
       ],
       content: this.value,
       onCreate: ({ editor }) => {
