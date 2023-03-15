@@ -361,6 +361,7 @@
 }
 [contenteditable] {
   position: relative;
+  outline: none;
   width: 100%;
   box-sizing: border-box;
   border-top: solid var(--sc-input-border-width) var(--sc-input-border-color);
