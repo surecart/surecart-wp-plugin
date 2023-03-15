@@ -15,7 +15,7 @@ exports[`sc-order-summary does not render scratch price if the same as amount an
           <slot name="description"></slot>
         </span>
         <span class="price price--collapsed" slot="price">
-          <sc-total total="total"></sc-total>
+          <sc-format-number type="currency"></sc-format-number>
         </span>
       </sc-line-item>
       <div class="summary__content" style="overflow: hidden;">
@@ -53,7 +53,7 @@ exports[`sc-order-summary renders scratch price if different from amount and col
           <slot name="description"></slot>
         </span>
         <span class="price price--collapsed" slot="price">
-          <sc-total total="total"></sc-total>
+          <sc-format-number type="currency"></sc-format-number>
         </span>
       </sc-line-item>
       <div class="summary__content" style="overflow: hidden;">

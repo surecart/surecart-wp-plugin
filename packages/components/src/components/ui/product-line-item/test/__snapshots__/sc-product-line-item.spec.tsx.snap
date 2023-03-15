@@ -158,8 +158,7 @@ exports[`sc-product-line-item renders trial duration with setup fee 1`] = `
           <div></div>
           <div class="item__price" part="price">
             <div class="price" part="price__amount">
-              Paid Trial —
-              <sc-format-number currency="CAD" part="price__amount" type="currency" value="10000"></sc-format-number>
+              30 days free
             </div>
             <div class="price__description" part="price__description">
               Then
@@ -169,6 +168,12 @@ exports[`sc-product-line-item renders trial duration with setup fee 1`] = `
           </div>
         </div>
       </div>
+      <sc-line-item>
+        <sc-format-number currency="CAD" slot="price-description" type="currency" value="10000"></sc-format-number>
+        <span class="fee__description" slot="price-description">
+          Paid Trial
+        </span>
+      </sc-line-item>
     </div>
   </mock:shadow-root>
 </sc-product-line-item>
