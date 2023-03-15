@@ -25,8 +25,8 @@ use SureCartBlocks\Blocks\Form\Block as FormBlock;
 <body <?php body_class( 'sc-buy-page' ); ?>>
 	<?php do_action( 'surecart_buy_page_body_open' ); ?>
 
-	<?php if ( $show_logo ) : ?>
-		<header class="sc-buy-header">
+	<header class="sc-buy-header">
+		<?php if ( $show_logo ) : ?>
 			<img src="<?php echo esc_url( $logo_url ); ?>"
 				style="object-fit: contain;
 				object-position: left;
@@ -34,8 +34,29 @@ use SureCartBlocks\Blocks\Form\Block as FormBlock;
 				max-height: 100px;
 				alt="<?php echo esc_attr( get_bloginfo() ); ?>"
 			/>
-		</header>
-	<?php endif; ?>
+		<?php else : ?>
+			<sc-text style="--font-size: var(--sc-font-size-xx-large); --font-weight: var(--sc-font-weight-bold)"><?php echo esc_html( get_bloginfo() ); ?></sc-text>
+		<?php endif; ?>
+		<?php if ( ! empty( $user->ID ) ) : ?>
+			<sc-dropdown position="bottom-right" style="font-size: 15px;">
+				<sc-avatar image="<?php echo esc_url( get_avatar_url( $user->user_email, [ 'default' => '404' ] ) ); ?>" style="--sc-avatar-size: 34px" slot="trigger" initials="<?php echo esc_attr( substr( $user->display_name, 0, 1 ) ); ?>"></sc-avatar>
+				<sc-menu>
+					<?php if ( ! empty( $dashboard_link ) ) : ?>
+						<sc-menu-item href="<?php echo esc_url( $dashboard_link ); ?>">
+							<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+						</sc-menu-item>
+					<?php endif; ?>
+
+					<?php if ( ! empty( $logout_link ) ) : ?>
+						<sc-menu-item href="<?php echo esc_url( $logout_link ); ?>">
+							<?php esc_html_e( 'Logout', 'surecart' ); ?>
+						</sc-menu-item>
+					<?php endif; ?>
+				</sc-menu>
+			</sc-dropdown>
+		<?php endif; ?>
+	</header>
+
 
 	<?php
 	ob_start();
