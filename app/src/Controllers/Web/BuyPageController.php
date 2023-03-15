@@ -140,6 +140,8 @@ class BuyPageController {
 				'store_name'       => \SureCart::account()->name ?? get_bloginfo(),
 				'logo_url'         => \SureCart::account()->brand->logo_url,
 				'user'             => wp_get_current_user(),
+				'logout_link'      => wp_logout_url( $request->getUrl() ),
+				'dashboard_link'   => \SureCart::pages()->url( 'dashboard' ),
 				'show_logo'        => $this->product->buyLink()->templatePartEnabled( 'logo' ),
 				'show_terms'       => $this->product->buyLink()->templatePartEnabled( 'terms' ),
 				'show_image'       => $this->product->buyLink()->templatePartEnabled( 'image' ),
