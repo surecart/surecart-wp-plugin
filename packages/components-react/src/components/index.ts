@@ -10,6 +10,7 @@ import { defineCustomElements } from '@surecart/components/loader';
 defineCustomElements();
 export const ScAddress = /*@__PURE__*/createReactComponent<JSX.ScAddress, HTMLScAddressElement>('sc-address');
 export const ScAlert = /*@__PURE__*/createReactComponent<JSX.ScAlert, HTMLScAlertElement>('sc-alert');
+export const ScAvatar = /*@__PURE__*/createReactComponent<JSX.ScAvatar, HTMLScAvatarElement>('sc-avatar');
 export const ScBadgeNotice = /*@__PURE__*/createReactComponent<JSX.ScBadgeNotice, HTMLScBadgeNoticeElement>('sc-badge-notice');
 export const ScBlockUi = /*@__PURE__*/createReactComponent<JSX.ScBlockUi, HTMLScBlockUiElement>('sc-block-ui');
 export const ScBreadcrumb = /*@__PURE__*/createReactComponent<JSX.ScBreadcrumb, HTMLScBreadcrumbElement>('sc-breadcrumb');

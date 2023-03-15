@@ -28,6 +28,17 @@
     "class": true,
     "slot": true
   },
+  "sc-avatar": {
+    "image": true,
+    "initials": true,
+    "label": true,
+    "loading": true,
+    "shape": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-badge-notice": {
     "label": true,
     "size": true,
@@ -1280,9 +1291,9 @@
     "slot": true
   },
   "sc-price-choice": {
+    "blank": true,
     "checked": true,
     "description": true,
-    "disabled": true,
     "error": true,
     "is-ad-hoc": true,
     "label": true,

@@ -83,6 +83,28 @@ export namespace Components {
          */
         "type": 'primary' | 'success' | 'info' | 'warning' | 'danger';
     }
+    interface ScAvatar {
+        /**
+          * The image source to use for the avatar.
+         */
+        "image": string;
+        /**
+          * Initials to use as a fallback when no image is available (1-2 characters max recommended).
+         */
+        "initials": string;
+        /**
+          * A label to use to describe the avatar to assistive devices.
+         */
+        "label": string;
+        /**
+          * Indicates how the browser should load the image.
+         */
+        "loading": 'eager' | 'lazy';
+        /**
+          * The shape of the avatar.
+         */
+        "shape": 'circle' | 'square' | 'rounded';
+    }
     interface ScBadgeNotice {
         "label": string;
         "size": 'small' | 'medium' | 'large';
@@ -3620,6 +3642,12 @@ declare global {
         prototype: HTMLScAlertElement;
         new (): HTMLScAlertElement;
     };
+    interface HTMLScAvatarElement extends Components.ScAvatar, HTMLStencilElement {
+    }
+    var HTMLScAvatarElement: {
+        prototype: HTMLScAvatarElement;
+        new (): HTMLScAvatarElement;
+    };
     interface HTMLScBadgeNoticeElement extends Components.ScBadgeNotice, HTMLStencilElement {
     }
     var HTMLScBadgeNoticeElement: {
@@ -4631,6 +4659,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "sc-address": HTMLScAddressElement;
         "sc-alert": HTMLScAlertElement;
+        "sc-avatar": HTMLScAvatarElement;
         "sc-badge-notice": HTMLScBadgeNoticeElement;
         "sc-block-ui": HTMLScBlockUiElement;
         "sc-breadcrumb": HTMLScBreadcrumbElement;
@@ -4883,6 +4912,28 @@ declare namespace LocalJSX {
           * The type of alert.
          */
         "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger';
+    }
+    interface ScAvatar {
+        /**
+          * The image source to use for the avatar.
+         */
+        "image"?: string;
+        /**
+          * Initials to use as a fallback when no image is available (1-2 characters max recommended).
+         */
+        "initials"?: string;
+        /**
+          * A label to use to describe the avatar to assistive devices.
+         */
+        "label"?: string;
+        /**
+          * Indicates how the browser should load the image.
+         */
+        "loading"?: 'eager' | 'lazy';
+        /**
+          * The shape of the avatar.
+         */
+        "shape"?: 'circle' | 'square' | 'rounded';
     }
     interface ScBadgeNotice {
         "label"?: string;
@@ -8545,6 +8596,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "sc-address": ScAddress;
         "sc-alert": ScAlert;
+        "sc-avatar": ScAvatar;
         "sc-badge-notice": ScBadgeNotice;
         "sc-block-ui": ScBlockUi;
         "sc-breadcrumb": ScBreadcrumb;
@@ -8721,6 +8773,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "sc-address": LocalJSX.ScAddress & JSXBase.HTMLAttributes<HTMLScAddressElement>;
             "sc-alert": LocalJSX.ScAlert & JSXBase.HTMLAttributes<HTMLScAlertElement>;
+            "sc-avatar": LocalJSX.ScAvatar & JSXBase.HTMLAttributes<HTMLScAvatarElement>;
             "sc-badge-notice": LocalJSX.ScBadgeNotice & JSXBase.HTMLAttributes<HTMLScBadgeNoticeElement>;
             "sc-block-ui": LocalJSX.ScBlockUi & JSXBase.HTMLAttributes<HTMLScBlockUiElement>;
             "sc-breadcrumb": LocalJSX.ScBreadcrumb & JSXBase.HTMLAttributes<HTMLScBreadcrumbElement>;
