@@ -98,6 +98,7 @@ export class ScProductLineItem {
               </Fragment>
             )}
             <sc-format-number part="price__amount" type="currency" currency={this.currency} value={this.amount}></sc-format-number> {!!this.interval && this.interval}
+            {!!setupFee && !this.setupFeeTrialEnabled && sprintf(_n('starting in %d day', 'starting in %d days', this.trialDurationDays, 'surecart'), this.trialDurationDays)}
           </div>
         </div>
       );
