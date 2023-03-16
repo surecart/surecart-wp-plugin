@@ -50,7 +50,14 @@ export class ScOrderSubmit {
   /** Currency Code */
   @Prop() currencyCode: string = 'usd';
 
+  /** The selected processor. */
   @Prop() processor: ProcessorName;
+
+  /** Secure */
+  @Prop() secureNoticeText: string;
+
+  /** Show the secure notice */
+  @Prop() secureNotice: boolean = true;
 
   renderPayPalButton(buttons) {
     const { client_id, account_id, merchant_initiated } = getProcessorData(availableProcessors(), 'paypal', this.mode);
@@ -95,9 +102,9 @@ export class ScOrderSubmit {
             </span>
           )}
         </sc-button>
-        {location.protocol === 'https:' && (
+        {this.secureNotice && location.protocol === 'https:' && (
           <div class="sc-secure-notice">
-            <sc-secure-notice>{__('This is a secure, encrypted payment.', 'surecart')}</sc-secure-notice>
+            <sc-secure-notice>{this.secureNotice || __('This is a secure, encrypted payment.', 'surecart')}</sc-secure-notice>
           </div>
         )}
       </Fragment>
