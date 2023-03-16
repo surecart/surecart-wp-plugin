@@ -124,15 +124,14 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 							onChange={(type) => setAttributes({ type })}
 						/>
 					</PanelRow>
-					<PanelRow>
-						<RangeControl
-							label={__('Columns', 'surecart')}
-							value={columns}
-							onChange={(columns) => setAttributes({ columns })}
-							min={1}
-							max={3}
-						/>
-					</PanelRow>
+
+					<RangeControl
+						label={__('Columns', 'surecart')}
+						value={columns}
+						onChange={(columns) => setAttributes({ columns })}
+						min={1}
+						max={3}
+					/>
 				</PanelBody>
 			</InspectorControls>
 
