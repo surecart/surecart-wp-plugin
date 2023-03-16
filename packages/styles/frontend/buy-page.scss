@@ -4,6 +4,10 @@ body.sc-buy-page {
   display: flex;
   flex-direction: column;
 
+  * {
+    box-sizing: border-box;
+  }
+
   &.surecart-theme-dark {
     background: var(--sc-color-gray-950);
   }
