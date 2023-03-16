@@ -12,7 +12,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// don't let WordPress redirect 404 permalink for product pages.
+/**
+ * Don't let WordPress redirect guess our web routes.
+ *
+ * This prevents WordPress from finding a close match
+ * to one of our web routes in the database and redirecting.
+ */
 add_filter(
 	'do_redirect_guess_404_permalink',
 	function( $guess ) {
@@ -30,7 +35,12 @@ add_filter(
 	9999999999
 );
 
-// Fixes 404 redirection plugin issues.
+/**
+ * Add rewrite rules for surecart.
+ *
+ * We don't actually use these for routing, but these are
+ * needed to prevent other plugins from 404ing our web routes.
+ */
 add_action(
 	'init',
 	function() {
@@ -40,9 +50,12 @@ add_action(
 	}
 );
 
-
-// register uninstall.
 register_uninstall_hook( SURECART_PLUGIN_FILE, 'surecart_uninstall' );
+/**
+ * Uninstall.
+ *
+ * @return void
+ */
 function surecart_uninstall() {
 	if ( (bool) get_option( 'sc_uninstall', false ) ) {
 		\SureCart::activation()->uninstall();
