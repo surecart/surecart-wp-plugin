@@ -201,11 +201,11 @@ export class ScChoice {
   handleClickEvent() {
     if (this.type === 'checkbox') {
       this.checked = !this.checked;
-    } else {
+      this.scChange.emit(this.input.checked);
+    } else if (!this.checked) {
       this.checked = true;
+      this.scChange.emit(this.input.checked);
     }
-    // we only want to emit this when an action is actually taken
-    this.scChange.emit(this.input.checked);
   }
 
   render() {
@@ -273,6 +273,7 @@ export class ScChoice {
                 // required={this.required}
                 onBlur={() => this.handleBlur()}
                 onFocus={() => this.handleFocus()}
+                onChange={() => this.handleClickEvent()}
               />
             </span>
             <span part="label" id={this.labelId} class="choice__label">
