@@ -142,6 +142,7 @@ class BuyPageController {
 				'user'             => wp_get_current_user(),
 				'logout_link'      => wp_logout_url( $request->getUrl() ),
 				'dashboard_link'   => \SureCart::pages()->url( 'dashboard' ),
+				'enabled'          => $this->product->buyLink()->isEnabled(),
 				'show_logo'        => $this->product->buyLink()->templatePartEnabled( 'logo' ),
 				'show_terms'       => $this->product->buyLink()->templatePartEnabled( 'terms' ),
 				'show_image'       => $this->product->buyLink()->templatePartEnabled( 'image' ),
