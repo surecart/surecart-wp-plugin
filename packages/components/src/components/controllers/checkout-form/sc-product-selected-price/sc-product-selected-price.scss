@@ -17,7 +17,7 @@ sc-form {
     align-items: baseline;
     flex-wrap: wrap;
     gap: var(--sc-spacing-xx-small);
-    color: var(--sc-color-gray-800);
+    color: var(--sc-selected-price-color, var(--sc-color-gray-800));
     line-height: 1;
   }
 

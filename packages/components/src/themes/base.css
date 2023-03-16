@@ -277,6 +277,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-toggle-size: 1em;
   --sc-toggle-shady-color: var(--sc-color-gray-50);
   --sc-radio-size: 1em;
+  --sc-toggle-radio-size: 0.85em;
   --sc-checkbox-size: 1em;
   --sc-overlay-background-color: #37415180;
   --sc-panel-background-color: var(--sc-color-white);
@@ -325,7 +326,7 @@ sc-checkout [hidden] {
   --sc-color-gray-950: var(--sc-color-neutral-950);
 
   /* Inputs */
-  --sc-input-label-color: var(--sc-color-gray-300);
+  --sc-input-label-color: var(--sc-color-gray-200);
   --sc-input-background-color: var(--sc-color-gray-900);
   --sc-input-background-color-hover: var(--sc-color-gray-900);
   --sc-input-background-color-focus: var(--sc-color-gray-900);
@@ -453,6 +454,9 @@ sc-checkout [hidden] {
   /** Cart **/
   --sc-cart-counter-background: var(--sc-color-gray-50);
   --sc-cart-counter-color: var(--sc-color-gray-950);
+
+  /** Selected Price **/
+  --sc-selected-price-color: var(--sc-color-gray-50);
 }
 
 /* Avatar */
