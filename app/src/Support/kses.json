@@ -1142,6 +1142,8 @@
     "paying": true,
     "processor": true,
     "processors": true,
+    "secure-notice": true,
+    "secure-notice-text": true,
     "show-total": true,
     "size": true,
     "type": true,

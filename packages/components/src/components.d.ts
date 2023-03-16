@@ -2033,11 +2033,22 @@ export namespace Components {
           * Is the order paying.
          */
         "paying": boolean;
+        /**
+          * The selected processor.
+         */
         "processor": ProcessorName;
         /**
           * Keys and secrets for processors.
          */
         "processors": Processor[];
+        /**
+          * Show the secure notice
+         */
+        "secureNotice": boolean;
+        /**
+          * Secure
+         */
+        "secureNoticeText": string;
         /**
           * Show the total.
          */
@@ -7050,11 +7061,22 @@ declare namespace LocalJSX {
           * Is the order paying.
          */
         "paying"?: boolean;
+        /**
+          * The selected processor.
+         */
         "processor"?: ProcessorName;
         /**
           * Keys and secrets for processors.
          */
         "processors"?: Processor[];
+        /**
+          * Show the secure notice
+         */
+        "secureNotice"?: boolean;
+        /**
+          * Secure
+         */
+        "secureNoticeText"?: string;
         /**
           * Show the total.
          */
