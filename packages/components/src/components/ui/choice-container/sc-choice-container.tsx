@@ -163,11 +163,9 @@ export class ScChoiceContainer {
     if (this.type === 'checkbox') {
       this.checked = !this.checked;
       this.scChange.emit(this.input.checked);
-    } else {
-      if (!this.checked) {
-        this.checked = true;
-        this.scChange.emit(this.input.checked);
-      }
+    } else if (!this.checked) {
+      this.checked = true;
+      this.scChange.emit(this.input.checked);
     }
   }
 
@@ -235,6 +233,7 @@ export class ScChoiceContainer {
                 // required={this.required}
                 onBlur={() => this.handleBlur()}
                 onFocus={() => this.handleFocus()}
+                onChange={() => this.handleClickEvent()}
               />
             </span>
             <span part="label" id={this.labelId} class="choice__label">
