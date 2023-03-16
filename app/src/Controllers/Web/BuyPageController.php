@@ -50,6 +50,8 @@ class BuyPageController {
 		add_filter( 'post_link', [ $this, 'maybeSetUrl' ] );
 		// set the document title.
 		add_filter( 'document_title_parts', [ $this, 'documentTitle' ] );
+		// disallow pre title filter.
+		add_filter( 'pre_get_document_title', [ $this, 'disallowPreTitle' ], 214748364 );
 		// add edit product link.
 		add_action( 'admin_bar_menu', [ $this, 'addEditProductLink' ], 99 );
 		// do not persist the cart for this page.
@@ -122,6 +124,9 @@ class BuyPageController {
 		if ( empty( $active_prices[0] ) ) {
 			return $this->notFound();
 		}
+
+		// prevent 404 redirects by 3rd party plugins.
+		$_SERVER['REQUEST_URI'] = $request->getUrl();
 
 		// add the filters.
 		$this->filters();
@@ -239,6 +244,20 @@ class BuyPageController {
 	public function documentTitle( $parts ) {
 		$parts['title'] = $this->product->name ?? $parts['title'];
 		return $parts;
+	}
+
+	/**
+	 * Disallow the pre title.
+	 *
+	 * @param string $title The title.
+	 *
+	 * @return string
+	 */
+	public function disallowPreTitle( $title ) {
+		if ( ! empty( $this->product->id ) ) {
+			return '';
+		}
+		return $title;
 	}
 
 	/**
