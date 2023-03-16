@@ -26,17 +26,25 @@ use SureCartBlocks\Blocks\Form\Block as FormBlock;
 	<?php do_action( 'surecart_buy_page_body_open' ); ?>
 
 	<header class="sc-buy-header">
-		<?php if ( $show_logo ) : ?>
-			<img src="<?php echo esc_url( $logo_url ); ?>"
-				style="object-fit: contain;
-				object-position: left;
-				max-width: 180px;
-				max-height: 100px;
-				alt="<?php echo esc_attr( get_bloginfo() ); ?>"
-			/>
-		<?php else : ?>
-			<sc-text style="--font-size: var(--sc-font-size-xx-large); --font-weight: var(--sc-font-weight-bold)"><?php echo esc_html( get_bloginfo() ); ?></sc-text>
-		<?php endif; ?>
+		<div class="sc-buy-logo">
+			<?php if ( $show_logo ) : ?>
+				<img src="<?php echo esc_url( $logo_url ); ?>"
+					style="object-fit: contain;
+					object-position: left;
+					max-width: 180px;
+					max-height: 100px;
+					alt="<?php echo esc_attr( get_bloginfo() ); ?>"
+				/>
+			<?php else : ?>
+				<sc-text style="--font-size: var(--sc-font-size-xx-large); --font-weight: var(--sc-font-weight-bold)"><?php echo esc_html( get_bloginfo() ); ?></sc-text>
+			<?php endif; ?>
+			<?php if ( empty( $enabled ) ) : ?>
+				<sc-tag type="warning" size="small">
+					<?php esc_html_e( 'Not Published', 'surecart' ); ?>
+				</sc-tag>
+			<?php endif; ?>
+		</div>
+
 		<?php if ( ! empty( $user->ID ) ) : ?>
 			<sc-dropdown position="bottom-right" style="font-size: 15px;">
 				<sc-avatar image="<?php echo esc_url( get_avatar_url( $user->user_email, [ 'default' => '404' ] ) ); ?>" style="--sc-avatar-size: 34px" slot="trigger" initials="<?php echo esc_attr( substr( $user->display_name, 0, 1 ) ); ?>"></sc-avatar>

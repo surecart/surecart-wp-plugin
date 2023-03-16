@@ -46,4 +46,10 @@ body.sc-buy-page {
       padding: 30px;
     }
   }
+
+  .sc-buy-logo {
+    display: flex;
+    align-items: center;
+    gap: var(--sc-spacing-small);
+  }
 }
