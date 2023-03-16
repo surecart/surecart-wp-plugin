@@ -52,18 +52,9 @@ class Block extends BaseBlock {
 			class="<?php echo esc_attr( $attributes['className'] ?? '' ); ?>"
 		>
 			<?php if ( $payment_element ) : ?>
-				<sc-card slot="stripe">
-					<sc-stripe-payment-element></sc-stripe-payment-element>
-				</sc-card>
+				<sc-stripe-payment-element slot="stripe"></sc-stripe-payment-element>
 			<?php else : ?>
-				<span slot="stripe">
-					<sc-stripe-element></sc-stripe-element>
-					<?php if ( ! empty( $attributes['secure_notice'] ) ) : ?>
-						<sc-secure-notice>
-							<?php echo wp_kses_post( $attributes['secure_notice'] ); ?>
-						</sc-secure-notice>
-					<?php endif; ?>
-				</span>
+				<sc-stripe-element slot="stripe"></sc-stripe-element>
 			<?php endif; ?>
 		</sc-payment>
 		<?php
