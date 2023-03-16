@@ -95,6 +95,11 @@ export class ScOrderSubmit {
             </span>
           )}
         </sc-button>
+        {location.protocol === 'https:' && (
+          <div class="sc-secure-notice">
+            <sc-secure-notice>{__('This is a secure, encrypted payment.', 'surecart')}</sc-secure-notice>
+          </div>
+        )}
       </Fragment>
     );
   }
