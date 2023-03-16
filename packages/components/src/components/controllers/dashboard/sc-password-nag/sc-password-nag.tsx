@@ -48,6 +48,12 @@ export class ScPasswordNag {
     }
   }
 
+  validatePassword(password: string) {
+    const regex = new RegExp('^(?=.*?[#?!@$%^&*-]).{6,}$');
+    if (regex.test(password)) return true;
+    return false;
+  }
+
   /** Handle password submit. */
   async handleSubmit(e) {
     this.loading = true;
@@ -56,6 +62,9 @@ export class ScPasswordNag {
       const { password, password_confirm } = await e.target.getFormJson();
       if (password !== password_confirm) {
         throw { message: __('Passwords do not match.', 'surecart') };
+      }
+      if (!this.validatePassword(password)) {
+        throw { message: __('Passwords should at least 6 characters and contain one special character.', 'surecart') };
       }
       await apiFetch({
         path: `wp/v2/users/me`,
@@ -106,7 +115,7 @@ export class ScPasswordNag {
                 <sc-input label={__('Confirm New Password', 'surecart')} name="password_confirm" type="password" required />
                 <div>
                   <sc-button type="primary" full submit busy={this.loading}>
-                    {__('Update Password', 'surecart')}
+                    {__('Updateasd Password', 'surecart')}
                   </sc-button>
                 </div>
               </sc-form>
