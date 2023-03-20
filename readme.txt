@@ -245,7 +245,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 = 1.8.0 - March 20, 2023 =
 * New: "Instant Checkouts" for products.
-* New: Subscription setup fees.
+* New: Subscription setup fees and paid trials.
 * New: Administrators can pause subscriptions.
 * Improvement: Price selector stying.
 * Improvement: Secure notice is now automatically added below forms for secure connections.
