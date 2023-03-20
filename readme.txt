@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.1
-Stable tag: 1.7.2
+Stable tag: 1.8.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,23 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.8.0 - March 20, 2023 =
+* New: "Instant Checkouts" for products.
+* New: Subscription setup fees.
+* New: Administrators can pause subscriptions.
+* Improvement: Price selector stying.
+* Improvement: Secure notice is now automatically added below forms for secure connections.
+* Improvement: Allow editing compact address label.
+* Improvement: Show remaining payments on customer dashboard subscription details for payment plans.
+* Improvement: Price list on merchnat product page.
+* Fix: Customer dashboard orders list should show amount due instead of total amount.
+* Fix: Edge case where an order could be set to processing without a manual payment id.
+* Fix: Max lenth for textarea field on checkout forms.
+* Fix: Responsive issue with columns padding.
+* Fix: Switch block description sometimes saving as undefined.
+* Fix: RTL issue on order bump.
+* Fix: Wrapping of total line item if amount and scratch price were too wide.
 
 = 1.7.2 - March 4, 2023 =
 * Fix: Issue with some page builders not saving default checkout page due to validations.
