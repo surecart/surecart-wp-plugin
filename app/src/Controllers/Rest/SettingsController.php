@@ -18,12 +18,17 @@ class SettingsController {
 	public function find( \WP_REST_Request $request ) {
 		return rest_ensure_response(
 			[
-				'object'                  => 'settings',
-				'api_token'               => ApiToken::get(),
-				'uninstall'               => (bool) get_option( 'sc_uninstall', false ),
-				'stripe_payment_element'  => (bool) get_option( 'sc_stripe_payment_element', false ),
-				'use_esm_loader'          => (bool) get_option( 'surecart_use_esm_loader', false ),
-				'slide_out_cart_disabled' => (bool) get_option( 'sc_slide_out_cart_disabled', false ),
+				'object'                   			=> 'settings',
+				'api_token'                			=> ApiToken::get(),
+				'uninstall'                			=> (bool) get_option( 'sc_uninstall', false ),
+				'stripe_payment_element'   			=> (bool) get_option( 'sc_stripe_payment_element', false ),
+				'use_esm_loader'           			=> (bool) get_option( 'surecart_use_esm_loader', false ),
+				'slide_out_cart_disabled'  			=> (bool) get_option( 'sc_slide_out_cart_disabled', false ),
+				'cart_menu_button_enabled' 			=> (bool) get_option( 'sc_cart_menu_button_enabled', false ),
+				'cart_menu_button_always_shown' 	=> (bool) get_option( 'sc_cart_menu_button_always_shown', true ),
+				'cart_flyout_menu_enabled' 			=> (bool) get_option( 'sc_cart_flyout_menu_enabled', true ),
+				'cart_menu_id' 						=> get_option( 'sc_cart_menu_id' ),
+				'cart_menu_button_alignment' 		=> get_option( 'sc_cart_menu_button_alignment' ),
 			]
 		);
 	}
@@ -65,6 +70,31 @@ class SettingsController {
 		// update slide out cart option.
 		if ( isset( $request['slide_out_cart_disabled'] ) ) {
 			update_option( 'sc_slide_out_cart_disabled', (bool) $request->get_param( 'slide_out_cart_disabled' ) );
+		}
+
+		// update menu cart button visibility.
+		if ( isset( $request['cart_menu_button_enabled'] ) ) {
+			update_option( 'sc_cart_menu_button_enabled', (bool) $request->get_param( 'cart_menu_button_enabled' ) );
+		}
+
+		// update menu cart button always visibility.
+		if ( isset( $request['cart_menu_button_always_shown'] ) ) {
+			update_option( 'sc_cart_menu_button_always_shown', (bool) $request->get_param( 'cart_menu_button_always_shown' ) );
+		}
+
+		// update menu cart flyout option.
+		if ( isset( $request['cart_flyout_menu_enabled'] ) ) {
+			update_option( 'sc_cart_flyout_menu_enabled', (bool) $request->get_param( 'cart_flyout_menu_enabled' ) );
+		}
+
+		// update cart button menu id.
+		if ( isset( $request['cart_menu_id'] ) ) {
+			update_option( 'sc_cart_menu_id', $request->get_param( 'cart_menu_id' ) );
+		}
+
+		// update menu cart alignment.
+		if ( isset( $request['cart_menu_button_alignment'] ) ) {
+			update_option( 'sc_cart_menu_button_alignment', $request->get_param( 'cart_menu_button_alignment' ) );
 		}
 
 		return rest_ensure_response( $this->find( $request ) );
