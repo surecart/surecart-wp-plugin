@@ -42,8 +42,9 @@ export class ScOrderSummary {
     this.collapsed = !this.collapsed;
   }
 
+  /** It's empty if there are no items or the mode does not match. */
   empty() {
-    return !checkoutState.checkout?.line_items?.pagination?.count;
+    return !checkoutState.checkout?.line_items?.pagination?.count || (checkoutState?.checkout?.live_mode ? checkoutState?.mode === 'test' : checkoutState?.mode === 'live');
   }
 
   renderHeader() {
