@@ -1,8 +1,12 @@
 body.sc-buy-page {
   background: var(--sc-color-gray-50);
   --sc-checkout-font-size: 15px;
-  display: flex;
-  flex-direction: column;
+  box-sizing: border-box;
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
 
   * {
     box-sizing: border-box;
