@@ -15,7 +15,7 @@ class SettingService {
 	 */
 	public function bootstrap() {
 		$this->register(
-			'general',
+			'surecart',
 			'theme',
 			[
 				'type'              => 'string',
@@ -25,7 +25,7 @@ class SettingService {
 			]
 		);
 		$this->register(
-			'general',
+			'surecart',
 			'honeypot_enabled',
 			[
 				'type'              => 'boolean',
@@ -35,7 +35,7 @@ class SettingService {
 			]
 		);
 		$this->register(
-			'general',
+			'surecart',
 			'recaptcha_enabled',
 			[
 				'type'              => 'boolean',
@@ -44,7 +44,7 @@ class SettingService {
 			]
 		);
 		$this->register(
-			'general',
+			'surecart',
 			'recaptcha_site_key',
 			[
 				'type'              => 'string',
@@ -53,7 +53,7 @@ class SettingService {
 			]
 		);
 		$this->register(
-			'general',
+			'surecart',
 			'recaptcha_secret_key',
 			[
 				'type'              => 'string',
@@ -62,7 +62,7 @@ class SettingService {
 			]
 		);
 		$this->register(
-			'general',
+			'surecart',
 			'recaptcha_min_score',
 			[
 				'type'              => 'number',
@@ -72,7 +72,7 @@ class SettingService {
 			]
 		);
 		$this->register(
-			'general',
+			'surecart',
 			'load_stripe_js',
 			[
 				'type'              => 'boolean',
@@ -81,7 +81,7 @@ class SettingService {
 			]
 		);
 		$this->register(
-			'general',
+			'surecart',
 			'tracking_confirmation',
 			[
 				'type'              => 'boolean',
@@ -90,7 +90,7 @@ class SettingService {
 			]
 		);
 		$this->register(
-			'general',
+			'surecart',
 			'tracking_confirmation_message',
 			[
 				'type'              => 'string',
@@ -100,7 +100,7 @@ class SettingService {
 			]
 		);
 		$this->register(
-			'general',
+			'surecart',
 			'buy_link_logo_width',
 			[
 				'type'              => 'string',
@@ -115,7 +115,7 @@ class SettingService {
 	 * Register a setting.
 	 *
 	 * @param string $option_group A settings group name. Should correspond to an allowed option key name.
-	 *                             Default allowed option key names include 'general', 'discussion', 'media',
+	 *                             Default allowed option key names include 'surecart', 'discussion', 'media',
 	 *                             'reading', 'writing', and 'options'.
 	 * @param string $option_name The name of an option to sanitize and save.
 	 * @param array  $args {
