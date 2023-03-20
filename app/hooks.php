@@ -44,9 +44,10 @@ add_filter(
 add_action(
 	'init',
 	function() {
-		add_rewrite_rule( untrailingslashit( \SureCart::permalinks()->getBase( 'buy_page' ) ) . '/([a-z0-9-]+)[/]?$', 'index.php', 'top' );
-		add_rewrite_rule( 'surecart/redirect', 'index.php', 'top' );
-		add_rewrite_rule( 'surecart/webhooks', 'index.php', 'top' );
+		// This is causing issues.
+		// add_rewrite_rule( untrailingslashit( \SureCart::permalinks()->getBase( 'buy_page' ) ) . '/([a-z0-9-]+)[/]?$', 'index.php', 'top' );
+		// add_rewrite_rule( 'surecart/redirect', 'index.php', 'top' );
+		// add_rewrite_rule( 'surecart/webhooks', 'index.php', 'top' );
 	}
 );
 
