@@ -48,6 +48,7 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 		type,
 		columns,
 		css: css`
+			z-index: 9;
 			sc-choices::part(choices) {
 				grid-template-columns: repeat(1, 1fr);
 			}
