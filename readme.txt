@@ -248,14 +248,14 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * New: Subscription setup fees.
 * New: Subscription paid trials.
 * New: Administrators can pause subscriptions.
-* Improvement: Price selector stying.
+* Improvement: Price selector styling.
 * Improvement: Secure notice is now automatically added below forms for secure connections.
 * Improvement: Allow editing compact address label.
 * Improvement: Show remaining payments on customer dashboard subscription details for payment plans.
-* Improvement: Price list on merchnat product page.
+* Improvement: Price list on merchant product page.
 * Fix: Customer dashboard orders list should show amount due instead of total amount.
-* Fix: Edge case where an order could be set to processing without a manual payment id.
-* Fix: Max lenth for textarea field on checkout forms.
+* Fix: Edge case where an order could be set to processing without a manual payment ID.
+* Fix: Max length for textarea field on checkout forms.
 * Fix: Responsive issue with columns padding.
 * Fix: Switch block description sometimes saving as undefined.
 * Fix: RTL issue on order bump.
