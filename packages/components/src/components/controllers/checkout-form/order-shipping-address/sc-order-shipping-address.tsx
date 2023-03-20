@@ -158,6 +158,7 @@ export class ScOrderShippingAddress {
         required={this.required}
         loading={this.loading}
         address={this.address}
+        label={this.label}
         onScChangeAddress={e => this.updateAddressState(e.detail)}
       ></sc-compact-address>
     );
