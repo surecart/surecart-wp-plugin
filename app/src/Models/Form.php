@@ -69,6 +69,9 @@ class Form {
 	 */
 	protected function getMode( $id ) {
 		$this->post = get_post( $id );
+		if ( empty( $this->post ) ) {
+			return null;
+		}
 		$blocks     = parse_blocks( $this->post->post_content );
 		$form_block = $blocks[0] ?? false;
 		if ( ! $form_block || 'surecart/form' !== $form_block['blockName'] ) {

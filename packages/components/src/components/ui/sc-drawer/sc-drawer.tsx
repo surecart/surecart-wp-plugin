@@ -186,7 +186,7 @@ export class ScDrawer {
           'drawer--start': this.placement === 'start',
           'drawer--contained': this.contained,
           'drawer--fixed': !this.contained,
-          // 'drawer--has-footer': this.hasSlotController.test('footer'),
+          'drawer--has-footer': this.el.querySelector('[slot="footer"]') !== null,
         }}
         ref={el => (this.drawer = el as HTMLElement)}
         onKeyDown={(e: KeyboardEvent) => this.handleKeyDown(e)}
@@ -204,23 +204,25 @@ export class ScDrawer {
           ref={el => (this.panel = el as HTMLElement)}
         >
           {!this.noHeader && (
-            <header part="header" class="drawer__header">
+            <header part="header">
               <slot name="header">
-                <h2 part="title" class="drawer__title" id="title">
-                  {/** If there's no label, use an invisible character to prevent the header from collapsing */}
-                  <slot name="label">{this.label.length > 0 ? this.label : ' '} </slot>
-                </h2>
-                <sc-icon
-                  part="close-button"
-                  exportparts="base:close-button__base"
-                  class="drawer__close"
-                  name="x"
-                  label={
-                    /** translators: Close this modal window. */
-                    __('Close', 'surecart')
-                  }
-                  onClick={() => this.requestClose('close-button')}
-                ></sc-icon>
+                <div class="drawer__header">
+                  <h2 part="title" class="drawer__title" id="title">
+                    {/** If there's no label, use an invisible character to prevent the header from collapsing */}
+                    <slot name="label">{this.label.length > 0 ? this.label : ' '} </slot>
+                  </h2>
+                  <sc-icon
+                    part="close-button"
+                    exportparts="base:close-button__base"
+                    class="drawer__close"
+                    name="x"
+                    label={
+                      /** translators: Close this modal window. */
+                      __('Close', 'surecart')
+                    }
+                    onClick={() => this.requestClose('close-button')}
+                  ></sc-icon>
+                </div>
               </slot>
             </header>
           )}

@@ -44,7 +44,14 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 	};
 
 	const blockProps = useBlockProps({
+		label,
+		type,
+		columns,
 		css: css`
+			z-index: 9;
+			sc-choices::part(choices) {
+				grid-template-columns: repeat(1, 1fr);
+			}
 			.block-list-appender {
 				position: relative;
 			}
@@ -68,6 +75,7 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 		{
 			className: 'sc-choices',
 			allowedBlocks: ['surecart/price-choice'],
+			orientation: columns > 1 ? 'horizontal' : 'vertical',
 			renderAppender:
 				isSelected || childIsSelected
 					? InnerBlocks.ButtonBlockAppender
@@ -117,23 +125,20 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 							onChange={(type) => setAttributes({ type })}
 						/>
 					</PanelRow>
-					<PanelRow>
-						<RangeControl
-							label={__('Columns', 'surecart')}
-							value={columns}
-							onChange={(columns) => setAttributes({ columns })}
-							min={1}
-							max={3}
-						/>
-					</PanelRow>
+
+					<RangeControl
+						label={__('Columns', 'surecart')}
+						value={columns}
+						onChange={(columns) => setAttributes({ columns })}
+						min={1}
+						max={3}
+					/>
 				</PanelBody>
 			</InspectorControls>
 
-			<div {...blockProps}>
-				<ScPriceChoices label={label} type={type} columns={columns}>
-					<div {...innerBlocksProps} />
-				</ScPriceChoices>
-			</div>
+			<ScPriceChoices {...blockProps}>
+				<div {...innerBlocksProps}></div>
+			</ScPriceChoices>
 		</Fragment>
 	);
 };

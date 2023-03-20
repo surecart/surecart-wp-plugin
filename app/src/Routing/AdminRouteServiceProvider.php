@@ -14,11 +14,16 @@ class AdminRouteServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		$container['surecart.admin.route'] = function () {
+		$container['surecart.admin.route']      = function () {
 			return new AdminRouteService();
+		};
+		$container['surecart.admin.permalinks'] = function () {
+			return new PermalinksSettingsService();
 		};
 
 		$app = $container[ SURECART_APPLICATION_KEY ];
+
+		$app->alias( 'permalinks', 'surecart.admin.permalinks' );
 
 		$app->alias(
 			'getUrl',
@@ -40,5 +45,6 @@ class AdminRouteServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		// Nothing to bootstrap.
+		$container['surecart.admin.permalinks']->bootstrap();
 	}
 }
