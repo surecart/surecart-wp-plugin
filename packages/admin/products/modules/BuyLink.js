@@ -10,15 +10,31 @@ import {
 	ScDivider,
 	ScInput,
 } from '@surecart/components-react';
+import { useSetting } from '@wordpress/block-editor';
+import {
+	__experimentalUseCustomUnits as useCustomUnits,
+	__experimentalUnitControl as UnitControl,
+} from '@wordpress/components';
 import { store as noticesStore } from '@wordpress/notices';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { useDispatch } from '@wordpress/data';
+import { ScFormControl } from '@surecart/components-react';
 
 export default ({ product, updateProduct, loading }) => {
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 	const updateMeta = (data) =>
 		updateProduct({ metadata: { ...(product?.metadata || {}), ...data } });
+
+	const units = useCustomUnits({
+		availableUnits: useSetting('spacing.units') || [
+			'%',
+			'px',
+			'em',
+			'rem',
+			'vw',
+		],
+	});
 
 	const menuCss = css`
 		position: relative;
@@ -137,6 +153,39 @@ export default ({ product, updateProduct, loading }) => {
 						>
 							{__('Show store logo', 'surecart')}
 						</ScSwitch>
+
+						{product?.metadata?.wp_buy_link_logo_disabled !==
+							'true' && (
+							<>
+								<ScFormControl
+									label={__('Width')}
+									css={css`
+										.components-input-control {
+											border-radius: var(
+												--sc-input-border-radius-medium
+											);
+										}
+									`}
+								>
+									<UnitControl
+										value={
+											!product?.metadata
+												?.wp_buy_link_logo_width
+												? 180
+												: product?.metadata
+														?.wp_buy_link_logo_width
+										}
+										onChange={(wp_buy_link_logo_width) =>
+											updateMeta({
+												wp_buy_link_logo_width,
+											})
+										}
+										units={units}
+									/>
+								</ScFormControl>
+								<ScDivider />
+							</>
+						)}
 
 						<ScSwitch
 							checked={
