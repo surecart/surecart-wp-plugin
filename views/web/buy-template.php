@@ -40,7 +40,7 @@
 	<!-- /wp:surecart/column -->
 
 	<!-- wp:surecart/column {"layout":{"type":"constrained","contentSize":"550px","justifyContent":"left"},"backgroundColor":"ast-global-color-5","style":{"spacing":{"padding":{"top":"100px","right":"100px","bottom":"100px","left":"100px"},"blockGap":"30px"}}} -->
-	<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-left has-ast-global-color-5-background-color has-background" style="padding:30px 5rem 5rem 5rem;--sc-column-content-width:450px;--sc-form-row-spacing:30px">
+	<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-left" style="padding:30px 5rem 5rem 5rem;--sc-column-content-width:450px;--sc-form-row-spacing:30px">
 		<!-- wp:surecart/checkout-errors -->
 			<sc-checkout-form-errors></sc-checkout-form-errors>
 		<!-- /wp:surecart/checkout-errors -->
