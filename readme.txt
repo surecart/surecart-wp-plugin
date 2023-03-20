@@ -248,6 +248,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * New: Subscription setup fees.
 * New: Subscription paid trials.
 * New: Administrators can pause subscriptions.
+* New: Arabic language support.
 * Improvement: Price selector styling.
 * Improvement: Secure notice is now automatically added below forms for secure connections.
 * Improvement: Allow editing compact address label.
