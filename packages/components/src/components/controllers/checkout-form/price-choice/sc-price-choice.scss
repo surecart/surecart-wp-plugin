@@ -13,6 +13,7 @@ sc-choice-container {
   align-items: center;
   justify-content: space-between;
   line-height: var(--sc-line-height-dense);
+  gap: var(--sc-spacing-small);
 
   &__name {
     display: inline-block;
@@ -20,6 +21,10 @@ sc-choice-container {
     font-size: var(--sc-price-choice-name-size, var(--sc-input-label-font-size-medium));
     font-weight: var(--sc-price-choice-name-font-weight, var(--sc-font-weight-bold));
     text-transform: var(--sc-price-choice-text-transform, var(--sc-input-label-text-transform, none));
+  }
+
+  &__description {
+    color: var(--sc-input-help-text-color);
   }
 
   > *:not(:first-child):last-child {

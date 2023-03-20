@@ -232,7 +232,12 @@ export class ScPriceChoice {
         checked={this.isChecked()}
       >
         <div class="price-choice">
-          {this.showLabel && <div class="price-choice__name">{this.label || this?.price?.name || this?.product?.name}</div>}
+          {this.showLabel && (
+            <div class="price-choice__title">
+              <div class="price-choice__name">{this.label || this?.price?.name || this?.product?.name}</div>
+              {!!this.description && <div class="price-choice__description">{this.description}</div>}
+            </div>
+          )}
 
           {this.showPrice && (
             <div class="price-choice__details">
@@ -265,7 +270,7 @@ export class ScPriceChoice {
               {!!this.price.setup_fee_enabled && this.price?.setup_fee_amount && (
                 <div class="price-choice__setup-fee">
                   <sc-format-number type="currency" value={this.price.setup_fee_amount} currency={this.price.currency}></sc-format-number>{' '}
-                  {this.price.setup_fee_name || __('Setup Fee', 'surecart')} {!this.price?.setup_fee_trial_enabled && __('now', 'surecart')}
+                  {this.price.setup_fee_name || __('Setup Fee', 'surecart')}
                 </div>
               )}
             </div>
