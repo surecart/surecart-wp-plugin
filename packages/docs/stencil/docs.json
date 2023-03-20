@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-03-15T21:24:39",
+  "timestamp": "2023-03-20T19:01:10",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -758,6 +758,7 @@
       "filePath": "./src/components/ui/sc-avatar/sc-avatar.tsx",
       "encapsulation": "shadow",
       "tag": "sc-avatar",
+      "readme": "# sc-avatar\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -18070,7 +18071,7 @@
           "mutable": false,
           "attr": "processor",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "The selected processor.",
           "docsTags": [],
           "values": [
             {
@@ -18099,6 +18100,39 @@
           "values": [
             {
               "type": "Processor[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "secureNotice",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "secure-notice",
+          "reflectToAttr": false,
+          "docs": "Show the secure notice",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "secureNoticeText",
+          "type": "string",
+          "mutable": false,
+          "attr": "secure-notice-text",
+          "reflectToAttr": false,
+          "docs": "Secure",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -18204,14 +18238,16 @@
         "sc-paypal-buttons",
         "sc-button",
         "sc-icon",
-        "sc-total"
+        "sc-total",
+        "sc-secure-notice"
       ],
       "dependencyGraph": {
         "sc-order-submit": [
           "sc-paypal-buttons",
           "sc-button",
           "sc-icon",
-          "sc-total"
+          "sc-total",
+          "sc-secure-notice"
         ],
         "sc-paypal-buttons": [
           "sc-skeleton"
@@ -18308,22 +18344,6 @@
           "docs": "",
           "docsTags": [],
           "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "empty",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "empty",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
           "values": [
             {
               "type": "boolean"
@@ -22837,9 +22857,15 @@
           "docs": ""
         }
       ],
-      "dependents": [],
+      "dependents": [
+        "sc-order-submit"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "sc-order-submit": [
+          "sc-secure-notice"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/select/sc-select.tsx",
