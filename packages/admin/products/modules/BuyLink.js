@@ -2,29 +2,37 @@
 import { css, jsx } from '@emotion/core';
 import {
 	ScButton,
-	ScSwitch,
-	ScMenu,
-	ScMenuDivider,
+	ScDivider,
 	ScDropdown,
 	ScIcon,
-	ScDivider,
 	ScInput,
+	ScMenu,
+	ScMenuDivider,
+	ScSwitch,
 } from '@surecart/components-react';
+import { ScFormControl } from '@surecart/components-react';
 import { useSetting } from '@wordpress/block-editor';
 import {
-	__experimentalUseCustomUnits as useCustomUnits,
 	__experimentalUnitControl as UnitControl,
+	__experimentalUseCustomUnits as useCustomUnits,
 } from '@wordpress/components';
-import { store as noticesStore } from '@wordpress/notices';
-import { __, sprintf } from '@wordpress/i18n';
+import { useEntityProp } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
-import { ScFormControl } from '@surecart/components-react';
+import { __ } from '@wordpress/i18n';
+import { store as noticesStore } from '@wordpress/notices';
 
 export default ({ product, updateProduct, loading }) => {
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 	const updateMeta = (data) =>
 		updateProduct({ metadata: { ...(product?.metadata || {}), ...data } });
+
+	// honeypot.
+	const [logoWidth, setLogoWidth] = useEntityProp(
+		'root',
+		'site',
+		'surecart_buy_link_logo_width'
+	);
 
 	const units = useCustomUnits({
 		availableUnits: useSetting('spacing.units') || [
@@ -160,6 +168,11 @@ export default ({ product, updateProduct, loading }) => {
 								<ScFormControl
 									label={__('Width')}
 									css={css`
+										.components-input-control__backdrop {
+											border: var(
+												--sc-input-border
+											) !important;
+										}
 										.components-input-control {
 											border-radius: var(
 												--sc-input-border-radius-medium
@@ -168,17 +181,9 @@ export default ({ product, updateProduct, loading }) => {
 									`}
 								>
 									<UnitControl
-										value={
-											!product?.metadata
-												?.wp_buy_link_logo_width
-												? 180
-												: product?.metadata
-														?.wp_buy_link_logo_width
-										}
-										onChange={(wp_buy_link_logo_width) =>
-											updateMeta({
-												wp_buy_link_logo_width,
-											})
+										value={logoWidth}
+										onChange={(width) =>
+											setLogoWidth(width)
 										}
 										units={units}
 									/>

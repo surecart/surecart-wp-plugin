@@ -99,6 +99,16 @@ class SettingService {
 				'sanitize_callback' => 'sanitize_text_field',
 			]
 		);
+		$this->register(
+			'general',
+			'buy_link_logo_width',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'default'           => '180px',
+				'sanitize_callback' => 'sanitize_text_field',
+			]
+		);
 	}
 
 	/**
