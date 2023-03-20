@@ -14,7 +14,6 @@
 | `collapsed`         | `collapsed`           |             | `boolean`  | `undefined`                      |
 | `collapsedOnMobile` | `collapsed-on-mobile` |             | `boolean`  | `false`                          |
 | `collapsible`       | `collapsible`         |             | `boolean`  | `false`                          |
-| `empty`             | `empty`               |             | `boolean`  | `undefined`                      |
 | `openText`          | `open-text`           |             | `string`   | `__('Summary', 'surecart')`      |
 | `order`             | --                    |             | `Checkout` | `undefined`                      |
 
