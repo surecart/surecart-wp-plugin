@@ -95,7 +95,11 @@ class PermalinkService {
 	 * @return void
 	 */
 	public function addRewriteRule() {
+		$rules = get_option( 'rewrite_rules' );
 		add_rewrite_rule( $this->url, $this->query, $this->priority );
+		if ( ! isset( $rules[ $this->url ] ) ) {
+			flush_rewrite_rules();
+		}
 	}
 
 	/**
@@ -115,28 +119,10 @@ class PermalinkService {
 	 *
 	 * @return mixed
 	 */
-	public function route() {
+	public function create() {
 		// add the query vars.
 		add_filter( 'query_vars', [ $this, 'addQueryVars' ] );
 		// add the rewrite rule.
 		add_action( 'init', [ $this, 'addRewriteRule' ] );
-		// return the route with params.
-		return $this->routeWithParams();
-	}
-
-	/**
-	 * Get the route with params.
-	 *
-	 * @return SureCartCore\Routing\RouteInterface
-	 */
-	public function routeWithParams() {
-		// get the route.
-		$route = \SureCart::route()->get();
-		// add the params to the route.
-		foreach ( $this->params as $param ) {
-			$route = $route->where( 'query_var', $param );
-		}
-		// return the route.
-		return $route;
 	}
 }
