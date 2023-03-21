@@ -2,7 +2,7 @@ import { Checkout } from '../types';
 import { createLocalStore } from './local';
 import { createStore } from '@stencil/store';
 import { state as checkoutState } from '@store/checkout';
-import { addQueryArgs } from '@wordpress/url';
+import { addQueryArgs, removeQueryArgs } from '@wordpress/url';
 
 const store = window?.scData?.do_not_persist_cart
   ? createStore<{ live: any; test: any }>({
@@ -43,6 +43,7 @@ export const setCheckout = setOrder;
 /** Clear the order from the store. */
 export const clearOrder = (formId: number | string, mode: 'live' | 'test') => {
   const { [formId]: remove, ...checkouts } = store.state[mode];
+  window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'redirect_status', 'coupon', 'line_items', 'confirm_checkout_id', 'checkout_id'));
   return store.set(mode, checkouts);
 };
 export const clearCheckout = clearOrder;
