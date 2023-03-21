@@ -25,11 +25,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 | Buy Page
 |--------------------------------------------------------------------------
 */
-\SureCart::route()
-->get()
-->url( '/' . untrailingslashit( \SureCart::permalinks()->getBase( 'buy_page' ) ) . '/{id}' )
-->name( 'buy' )
-->handle( 'BuyPageController@show' );
+\SureCart::permalink()
+	->params( [ 'sc_checkout_product_id' ] )
+	->url( untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'buy_page' ) ) . '/([a-z0-9-]+)[/]?$' )
+	->query( 'index.php?sc_checkout_product_id=$matches[1]' )
+	->route()
+	->handle( 'BuyPageController@show' );
 
 /*
 |--------------------------------------------------------------------------
