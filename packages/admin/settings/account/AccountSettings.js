@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import {
 	ScAlert,
 	ScInput,
@@ -16,14 +16,29 @@ import useEntity from '../../hooks/useEntity';
 import Error from '../../components/Error';
 import useSave from '../UseSave';
 import { useEntityProp } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
 
 export default () => {
+	const [menus, setMenus] = useState(null);
 	const [error, setError] = useState(null);
 	const { save } = useSave();
 	const [showNotice, setShowNotice] = useState(false);
-	const { item, itemError, editItem, hasLoadedItem } = useEntity(
-		'store',
-		'account'
+	const {
+		item: accountItem,
+		itemError: accountItemError,
+		editItem: editAccountItem,
+		hasLoadedItem: hasLoadedAccountItem,
+	} = useEntity('store', 'account');
+
+	const {
+		item: settingItem,
+		itemError: settingItemError,
+		editItem: editSettingItem,
+		hasLoadedItem: hasLoadedSettingItem,
+	} = useEntity('store', 'settings');
+
+	const navMenuData = useSelect((select) =>
+		select('core').getEntityRecords('taxonomy', 'nav_menu')
 	);
 
 	// honeypot.
@@ -55,6 +70,24 @@ export default () => {
 		'surecart_load_stripe_js'
 	);
 
+	const [cartMenuAlignment, setCartMenuAlignment] = useEntityProp(
+		'root',
+		'site',
+		'surecart_cart_menu_alignment'
+	);
+
+	const [cartMenuAlwaysShown, setCartMenuAlwaysShown] = useEntityProp(
+		'root',
+		'site',
+		'surecart_cart_menu_always_shown'
+	);
+
+	const [cartMenuFlyoutEnabled, setCartMenuFlyoutEnabled] = useEntityProp(
+		'root',
+		'site',
+		'surecart_cart_menu_flyout_enabled'
+	);
+
 	/**
 	 * Form is submitted.
 	 */
@@ -81,15 +114,21 @@ export default () => {
 		return currency?.value;
 	};
 
+	useEffect(() => {
+		if (navMenuData && navMenuData.length) {
+			setMenus(navMenuData);
+		}
+	}, [navMenuData]);
+
 	return (
 		<SettingsTemplate
 			title={__('Store Settings', 'surecart')}
 			icon={<sc-icon name="sliders"></sc-icon>}
 			onSubmit={onSubmit}
-			loading={!hasLoadedItem}
+			loading={!hasLoadedAccountItem && !hasLoadedSettingItem}
 		>
 			<Error
-				error={itemError || error}
+				error={accountItemError || settingItemError || error}
 				setError={setError}
 				margin="80px"
 			/>
@@ -100,7 +139,7 @@ export default () => {
 					'The name of your store will be visible to customers, so you should use a name that is recognizable and identifies your store to your customers.',
 					'surecart'
 				)}
-				loading={!hasLoadedItem}
+				loading={!hasLoadedAccountItem || !hasLoadedSettingItem}
 			>
 				<div
 					css={css`
@@ -110,10 +149,12 @@ export default () => {
 					`}
 				>
 					<ScInput
-						value={item?.name}
+						value={accountItem?.name}
 						label={__('Store Name', 'surecart')}
 						placeholder={__('Store Name', 'surecart')}
-						onScInput={(e) => editItem({ name: e.target.value })}
+						onScInput={(e) =>
+							editAccountItem({ name: e.target.value })
+						}
 						help={__(
 							'This is displayed in the UI and in notifications.',
 							'surecart'
@@ -122,10 +163,12 @@ export default () => {
 					></ScInput>
 
 					<ScInput
-						value={item?.url}
+						value={accountItem?.url}
 						label={__('Store URL', 'surecart')}
 						placeholder={__('https://example.com', 'surecart')}
-						onScInput={(e) => editItem({ url: e.target.value })}
+						onScInput={(e) =>
+							editAccountItem({ url: e.target.value })
+						}
 						help={__(
 							'This should be your live storefront URL.',
 							'surecart'
@@ -135,9 +178,9 @@ export default () => {
 
 					<ScSelect
 						search
-						value={item?.currency}
+						value={accountItem?.currency}
 						onScChange={(e) =>
-							editItem({ currency: e.target.value })
+							editAccountItem({ currency: e.target.value })
 						}
 						choices={Object.keys(
 							scData?.supported_currencies || {}
@@ -158,9 +201,9 @@ export default () => {
 
 					<ScSelect
 						search
-						value={item?.time_zone}
+						value={accountItem?.time_zone}
 						onScChange={(e) =>
-							editItem({ time_zone: e.target.value })
+							editAccountItem({ time_zone: e.target.value })
 						}
 						choices={Object.keys(scData?.time_zones || {}).map(
 							(value) => {
@@ -180,9 +223,9 @@ export default () => {
 					></ScSelect>
 
 					<ScSelect
-						value={item?.locale}
+						value={accountItem?.locale}
 						onScChange={(e) =>
-							editItem({ locale: e.target.value })
+							editAccountItem({ locale: e.target.value })
 						}
 						choices={[
 							{
@@ -238,7 +281,150 @@ export default () => {
 						required
 					></ScSelect>
 				</div>
+				<div
+					css={css`
+						gap: var(--sc-form-row-spacing);
+						display: grid;
+						grid-template-columns: repeat(1, minmax(0, 1fr));
+						padding-top: var(--sc-form-row-spacing);
+					`}
+				>
+					<ScSwitch
+						checked={!settingItem?.slide_out_cart_disabled}
+						onClick={(e) => {
+							e.preventDefault();
+							editSettingItem({
+								slide_out_cart_disabled:
+									!settingItem?.slide_out_cart_disabled,
+							});
+						}}
+					>
+						{__('Enable Slide-Out Cart', 'surecart')}
+						<span slot="description" style={{ lineHeight: '1.4' }}>
+							{__(
+								'If you do not wish to use the slide-out cart, you can disable this to prevent scripts from loading on your pages.',
+								'surecart'
+							)}
+						</span>
+					</ScSwitch>
+
+					<ScSwitch
+						checked={settingItem?.cart_menu_button_enabled}
+						onClick={(e) => {
+							e.preventDefault();
+							editSettingItem({
+								cart_menu_button_enabled:
+									!settingItem?.cart_menu_button_enabled,
+							});
+						}}
+					>
+						{__('Enable Menu Cart Button', 'surecart')}
+						<span slot="description" style={{ lineHeight: '1.4' }}>
+							{__(
+								'If you wish to have a cart button in the navigation bar, you can enable this option.',
+								'surecart'
+							)}
+						</span>
+					</ScSwitch>
+				</div>
 			</SettingsBox>
+
+			{settingItem?.cart_menu_button_enabled && (
+				<SettingsBox
+					title={__('Menu Cart', 'surecart')}
+					loading={!hasLoadedAccountItem && !hasLoadedSettingItem}
+					description={__(
+						'Change menu cart button settings.',
+						'surecart'
+					)}
+				>
+					<div
+						css={css`
+							gap: 2em;
+							display: grid;
+							align-items: flex-start;
+							grid-template-columns: repeat(2, minmax(0, 1fr));
+						`}
+					>
+						{menus && (
+							<ScSelect
+								label={__('Select Menu(s)', 'surecart')}
+								placeholder={__('Select Menu', 'surecart')}
+								help={__(
+									'Select the menu(s) you wish to display the Menu Cart'
+								)}
+								choices={menus?.map((item) => ({
+									label: `${item.name} (slug - ${item.slug})`,
+									value: item.id,
+								}))}
+							/>
+						)}
+						<ScSelect
+							label={__('Alignment of cart button', 'surecart')}
+							placeholder={__('Select Alignment', 'surecart')}
+							value={cartMenuAlignment}
+							onScChange={(alignment) =>
+								setCartMenuAlignment(alignment)
+							}
+							unselect={false}
+							help={__(
+								'If your menu is right aligned, then placing the cart button to the right will look best.',
+								'surecart'
+							)}
+							choices={[
+								{
+									label: __('Right Align', 'surecart'),
+									value: 'right',
+								},
+								{
+									label: __('Left Align', 'surecart'),
+									value: 'left',
+								},
+							]}
+						/>
+
+						<ScSwitch
+							checked={cartMenuAlwaysShown}
+							onClick={(e) => {
+								e.preventDefault();
+								setCartMenuAlwaysShown(!cartMenuAlwaysShown);
+							}}
+						>
+							{__('Always show cart', 'surecart')}
+							<span
+								slot="description"
+								style={{ lineHeight: '1.4' }}
+							>
+								{__(
+									'Enable to always show the cart button, even your cart is empty.',
+									'surecart'
+								)}
+							</span>
+						</ScSwitch>
+
+						<ScSwitch
+							checked={cartMenuFlyoutEnabled}
+							onClick={(e) => {
+								e.preventDefault();
+								setCartMenuFlyoutEnabled(
+									!cartMenuFlyoutEnabled
+								);
+							}}
+						>
+							{__('Menu Fly-out', 'surecart')}
+							<span
+								slot="description"
+								style={{ lineHeight: '1.4' }}
+							>
+								{__(
+									"Disable if you don't wish to show cart contents in menu fly-out.",
+									'surecart'
+								)}
+							</span>
+						</ScSwitch>
+					</div>
+				</SettingsBox>
+			)}
 
 			<SettingsBox
 				title={__('Spam Protection & Security', 'surecart')}
@@ -246,7 +432,7 @@ export default () => {
 					'Change your checkout spam protection and security settings.',
 					'surecart'
 				)}
-				loading={!hasLoadedItem}
+				loading={!hasLoadedAccountItem}
 			>
 				<ScSwitch
 					checked={honeypotEnabled}
@@ -373,7 +559,7 @@ export default () => {
 					'Clear out all of your test data with one-click.',
 					'surecart'
 				)}
-				loading={!hasLoadedItem}
+				loading={!hasLoadedAccountItem}
 				noButton={true}
 			>
 				<ScButton
