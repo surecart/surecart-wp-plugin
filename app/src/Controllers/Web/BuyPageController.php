@@ -33,6 +33,30 @@ class BuyPageController {
 	];
 
 	/**
+	 * Rewrite Rules.
+	 */
+	public function __construct() {
+		add_rewrite_rule( untrailingslashit( \SureCart::permalinks()->getBase( 'buy_page' ) ) . '/([a-z0-9-]+)[/]?$', 'index.php?sc-checkout-product-id=$matches[1]', 'top' );
+		add_filter(
+			'sc-checkout-product-id',
+			function( $query_vars ) {
+				$query_vars[] = 'sc-checkout-product-id';
+				return $query_vars;
+			}
+		);
+		add_action(
+			'template_include',
+			function( $template ) {
+				if ( empty( get_query_var( 'sc-checkout-product-id' ) ) ) {
+					return $template;
+				}
+
+				return $this->show( get_query_var( 'sc-checkout-product-id' ) );
+			}
+		);
+	}
+
+	/**
 	 * Handle filters.
 	 *
 	 * @return void
@@ -97,14 +121,14 @@ class BuyPageController {
 	/**
 	 * Show the product page
 	 *
-	 * @param \SureCartCore\Requests\RequestInterface $request Request.
-	 * @param \SureCartCore\View                      $view View.
-	 * @param string                                  $id The id of the product.
+	 * @param string $slug The product slug.
 	 * @return function
 	 */
-	public function show( $request, $view, $id ) {
+	public function show( $slug ) {
+		global $wp;
+
 		// fetch the product by id/slug.
-		$this->product = \SureCart\Models\Product::with( [ 'image', 'prices' ] )->find( $id );
+		$this->product = \SureCart\Models\Product::with( [ 'image', 'prices' ] )->find( $slug );
 		if ( is_wp_error( $this->product ) ) {
 			return $this->handleError( $this->product );
 		}
@@ -115,7 +139,7 @@ class BuyPageController {
 		}
 
 		// slug changed or we are using the id, redirect.
-		if ( $this->product->slug !== $id ) {
+		if ( $this->product->slug !== $slug ) {
 			return \SureCart::redirect()->to( esc_url_raw( \SureCart::routeUrl( 'product', [ 'id' => $this->product->slug ] ) ) );
 		}
 
@@ -126,9 +150,6 @@ class BuyPageController {
 		if ( empty( $active_prices[0] ) ) {
 			return $this->notFound();
 		}
-
-		// prevent 404 redirects by 3rd party plugins.
-		$_SERVER['REQUEST_URI'] = $request->getUrl();
 
 		// add the filters.
 		$this->filters();
@@ -148,7 +169,7 @@ class BuyPageController {
 				'logo_url'         => \SureCart::account()->brand->logo_url,
 				'logo_width'       => \SureCart::settings()->get( 'buy_link_logo_width', '180px' ),
 				'user'             => wp_get_current_user(),
-				'logout_link'      => wp_logout_url( $request->getUrl() ),
+				'logout_link'      => wp_logout_url( home_url( add_query_arg( [], $wp->request ) ) ),
 				'dashboard_link'   => \SureCart::pages()->url( 'dashboard' ),
 				'enabled'          => $this->product->buyLink()->isEnabled(),
 				'show_logo'        => $this->product->buyLink()->templatePartEnabled( 'logo' ),
