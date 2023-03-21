@@ -2,6 +2,8 @@
 
 namespace SureCart\Routing;
 
+use SureCart\Routing\PermalinkService;
+
 /**
  * Permalinks settings service.
  */
@@ -36,12 +38,19 @@ class PermalinksSettingsService {
 	 */
 	public function addRewriteRules() {
 		// Buy pages.
-		\SureCart::permalink()
+		( new PermalinkService() )
 			->params( [ 'sc_checkout_product_id' ] )
 			->url( untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'buy_page' ) ) . '/([a-z0-9-]+)[/]?$' )
 			->query( 'index.php?sc_checkout_product_id=$matches[1]' )
 			->create();
+		// Redirect.
+		( new PermalinkService() )
+			->params( [ 'sc_redirect' ] )
+			->url( 'surecart/redirect' )
+			->query( 'index.php?sc_redirect=1' )
+			->create();
 	}
+
 
 	/**
 	 * Add sections to permalinks page.

@@ -49,8 +49,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 \SureCart::route()
 ->get()
-->url( '/surecart/redirect' )
-->name( 'redirect' )
+->where( 'query_var', 'sc_redirect' )
 // handle login.
 ->middleware( LoginLinkMiddleware::class )
 // redirect in this order.
