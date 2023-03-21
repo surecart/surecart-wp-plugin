@@ -27,6 +27,12 @@ export class ScCartButton {
   /** Are we in test or live mode. */
   @Prop() mode: 'test' | 'live' = 'live';
 
+  /** If the flyout menu should be visible. */
+  @Prop() flyout: boolean = true;
+
+  /** If the flyout menu should be visible. */
+  @Prop() menuAlignment: 'left' | 'right' = 'left';
+
   order() {
     return getOrder(this.formId, this.mode);
   }
@@ -47,13 +53,27 @@ export class ScCartButton {
 
   render() {
     return (
-      <div class={{ cart_button: true }} part="base" onClick={() => (this.open = !this.open)}>
+      <div class={{ cart_button: true }} part="base">
         {!!this.count && (
           <span class={{ cart_button_count: true }} part="count">
             {this.count}
           </span>
         )}
-        {this.icon && <sc-icon name={this.icon}></sc-icon>}
+        <div onClick={() => (this.open = !this.open)} class={{ cart_button_icon: true }}>
+          {this.icon && <sc-icon name={this.icon}></sc-icon>}
+        </div>
+        {this.flyout && (
+          <div
+            class={{
+              'cart_menu': true,
+              'is-left-aligned': this.menuAlignment === 'left',
+              'is-right-aligned': this.menuAlignment === 'right',
+            }}
+            part="menu"
+          >
+            <slot />
+          </div>
+        )}
       </div>
     );
   }

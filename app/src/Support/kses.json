@@ -144,8 +144,10 @@
     "slot": true
   },
   "sc-cart-button": {
+    "flyout": true,
     "form-id": true,
     "icon": true,
+    "menu-alignment": true,
     "mode": true,
     "style": true,
     "id": true,

@@ -248,6 +248,10 @@ export namespace Components {
     }
     interface ScCartButton {
         /**
+          * If the flyout menu should be visible.
+         */
+        "flyout": boolean;
+        /**
           * The form id to use for the cart.
          */
         "formId": string;
@@ -255,6 +259,10 @@ export namespace Components {
           * The icon to show.
          */
         "icon": string;
+        /**
+          * If the flyout menu should be visible.
+         */
+        "menuAlignment": 'left' | 'right';
         /**
           * Are we in test or live mode.
          */
@@ -4929,6 +4937,10 @@ declare namespace LocalJSX {
     }
     interface ScCartButton {
         /**
+          * If the flyout menu should be visible.
+         */
+        "flyout"?: boolean;
+        /**
           * The form id to use for the cart.
          */
         "formId"?: string;
@@ -4936,6 +4948,10 @@ declare namespace LocalJSX {
           * The icon to show.
          */
         "icon"?: string;
+        /**
+          * If the flyout menu should be visible.
+         */
+        "menuAlignment"?: 'left' | 'right';
         /**
           * Are we in test or live mode.
          */
