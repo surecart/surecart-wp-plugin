@@ -245,6 +245,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 = 1.8.2 - March 21, 2023 =
 * Fix: Issue with forms not loading on the backend for some non-premium users.
+* Fix: Issue with changing account currency not allowing add to cart buttons to work.
 
 = 1.8.1 - March 20, 2023 =
 * Fix: Disabled form manual payment methods still showing in form.
