@@ -75,8 +75,8 @@ registerBlocks([
 	switchBlock,
 	total,
 	totals,
-	...(!!window?.scBlockData?.entitlements?.bumps && [orderBumps]),
-	...(!!window?.scBlockData?.entitlements?.conditional_forms && [
-		conditionalForm,
-	]),
+	...(!!window?.scBlockData?.entitlements?.bumps ? [orderBumps] : []),
+	...(!!window?.scBlockData?.entitlements?.conditional_forms
+		? [conditionalForm]
+		: []),
 ]);
