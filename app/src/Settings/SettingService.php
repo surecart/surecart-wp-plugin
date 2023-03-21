@@ -3,6 +3,7 @@
 namespace SureCart\Settings;
 
 use SureCart\WordPress\RecaptchaValidationService;
+use SureCart\Routing\PermalinksSettingsService;
 
 /**
  * A service for registering settings.
@@ -151,5 +152,14 @@ class SettingService {
 	 */
 	public function get( $name, $default = false ) {
 		return get_option( "surecart_${name}", $default );
+	}
+
+	/**
+	 * Get the permalinks settings.
+	 *
+	 * @return PermalinksSettingsService
+	 */
+	public function permalinks() {
+		return new PermalinksSettingsService();
 	}
 }
