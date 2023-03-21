@@ -30,7 +30,6 @@ export const expand = [
 
 /** Default data we send with every request. */
 export const withDefaultData = (data: { metadata?: any } = {}) => ({
-  currency: checkoutState?.checkout?.currency || checkoutState?.currencyCode,
   live_mode: checkoutState.mode !== 'test',
   group_key: checkoutState.groupId,
   abandoned_checkout_return_url: checkoutState.abandonedCheckoutReturnUrl,
