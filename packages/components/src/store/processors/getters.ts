@@ -24,7 +24,7 @@ export const getAvailableProcessor = (type: string) => availableProcessors().fin
  */
 export const availableManualPaymentMethods = () =>
   !checkoutState?.checkout?.reusable_payment_method_required
-    ? sortByArray(state.manualPaymentMethods, 'id', state.sortOrder.manualPaymentMethods).filter(processor => !(state.disabled.processors || []).includes(processor.id))
+    ? sortByArray(state.manualPaymentMethods, 'id', state.sortOrder.manualPaymentMethods).filter(processor => !(state.disabled.processors || []).includes(processor?.id))
     : [];
 
 /**
