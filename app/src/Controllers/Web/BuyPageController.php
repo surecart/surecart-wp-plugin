@@ -58,6 +58,8 @@ class BuyPageController {
 		add_filter( 'surecart-components/scData', [ $this, 'doNotPersistCart' ], 10, 2 );
 		// add styles.
 		add_action( 'wp_enqueue_scripts', [ $this, 'styles' ] );
+		// add scripts.
+		add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ] );
 	}
 
 	/**
@@ -158,6 +160,11 @@ class BuyPageController {
 		);
 	}
 
+	/**
+	 * Enqueue styles.
+	 *
+	 * @return void
+	 */
 	public function styles() {
 		wp_enqueue_style(
 			'surecart/instant-checkout',
@@ -165,6 +172,16 @@ class BuyPageController {
 			[],
 			filemtime( trailingslashit( plugin_dir_path( SURECART_PLUGIN_FILE ) ) . 'dist/templates/buy.css' ),
 		);
+	}
+
+
+	/**
+	 * Enqueue scripts.
+	 *
+	 * @return void
+	 */
+	public function scripts() {
+		\SureCart::assets()->enqueueComponents();
 	}
 
 	/**
