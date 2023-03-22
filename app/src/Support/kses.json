@@ -807,6 +807,12 @@
     "class": true,
     "slot": true
   },
+  "sc-license-activations": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-licenses-list": {
     "activations": true,
     "copied": true,

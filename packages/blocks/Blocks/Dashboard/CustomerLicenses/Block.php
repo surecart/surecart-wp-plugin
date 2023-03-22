@@ -23,64 +23,70 @@ class Block extends DashboardPage {
 			return;
 		}
 
-		$ids = User::current()->customerIds();
+		$purchases = Purchase::where(
+			[
+				'customer_ids' => array_values( User::current()->customerIds() ),
+			]
+		)->with(
+			[
+				'product',
+				'license',
+			]
+		)->paginate(
+			[
+				'page'     => 1,
+				'per_page' => 100,
+			]
+		);
 
-		$cust_test_id = isset( $ids['test'] ) ? $ids['test'] : '';
-
-		$purchases = Purchase::where([
-			'customer_ids' => array_values( User::current()->customerIds() ),
-		])->with([
-			'product'
-		])->paginate([
-			'page' => 1,
-			'per_page' => 20
-		]);
-
-		// ->with( [
-		// 	'customer', 'checkout', 'license',
-		// 	'product', 'product.downloads',
-		// 	'product.product', 'download.media', 'license.activations'
-		// ] )
-
-		// if ( empty( $purchases->customer->id ) || ! User::current()->hasCustomerId( $purchases->customer->id ) ) {
-		// 	return null;
-		// }
-
-		if( ! is_array( $purchases->data ) || ! empty( $purchases->data ) ) {
-			return;
+		if ( is_wp_error( $purchases ) ) {
+			return '<sc-alert type="error" open>' . $purchases->get_error_message() . '</sc-alert>';
 		}
 
-		$rows_html = '';
-
-		foreach( $purchases->data as $purchase ) {
-			if( empty( $purchase->license ) ) {
-				continue;
+		$licensed_purchases = array_filter(
+			$purchases->data,
+			function( $purchase ) {
+				return ! empty( $purchase->license );
 			}
-			$rows_html .='<sc-stacked-list-row style="--columns: 3;">';
-			$rows_html .= '<span>' . $purchase->product->name . '</span>';
-			$rows_html .= '<span>' . $purchase->license . '</span>';
-			$rows_html .= '<a href="' . esc_url(
-				add_query_arg(
-					[
-						'license'    => $purchase->license,
-						'model'  => 'license',
-						'action' => 'show',
-						'customer' => $purchase->customer,
-						'nonce' => wp_create_nonce( 'customer-license' )
-					],
-					remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-				)
-			) . '"><span>' . __( 'View', 'surecart' ) . '</span></a>';
-			$rows_html .= '</sc-stacked-list-row>';
+		);
+
+		if ( empty( $licensed_purchases ) ) {
+			return;
 		}
 
 		ob_start();
 		?>
 
-		<sc-heading><?php echo __( 'Licenses', 'surecart' ); ?></sc-heading>
+		<sc-heading><?php esc_html_e( 'Licenses', 'surecart' ); ?></sc-heading>
 		<sc-card no-padding>
 			<sc-stacked-list>
-				<?php echo $rows_html; ?>
+			<?php foreach ( $licensed_purchases as $purchase ) : ?>
+				<sc-stacked-list-row style="--columns: 3;">
+				<sc-spacing style="--spacing:var(--sc-spacing-xx--small);">
+					<sc-text style="--font-weight:var(--sc-font-weight-bold);">
+						<?php echo wp_kses_post( $purchase->product->name ); ?>
+					</sc-text>
+					<sc-tag><?php sprintf( _n( '%s activation', '%s activations', $purchase->license->activations_count, 'surecart' ), $purchase->license->activations_count ); ?></sc-tag>
+				</sc-spacing>
+
+					<a href="
+					<?php
+					echo esc_url(
+						add_query_arg(
+							[
+								'license'  => $purchase->license,
+								'model'    => 'license',
+								'action'   => 'show',
+								'customer' => $purchase->customer,
+								'nonce'    => wp_create_nonce( 'customer-license' ),
+							],
+							remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+						)
+					);
+					?>
+					"><span><?php esc_html_e( 'View', 'surecart' ); ?> </span></a>
+				</sc-stacked-list-row>
+			<?php endforeach; ?>
 			</sc-stacked-list>
 		</sc-card>
 		<?php
