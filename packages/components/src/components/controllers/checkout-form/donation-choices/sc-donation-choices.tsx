@@ -141,7 +141,7 @@ export class ScDonationChoices {
   }
 
   updateCustomAmount() {
-    if (this.input.value === this.lineItem?.ad_hoc_amount.toString()) return;
+    if (this.input.value === this.lineItem?.ad_hoc_amount?.toString?.()) return;
     this.input.value
       ? this.scUpdateLineItem.emit({ price_id: this.priceId, quantity: 1, ad_hoc_amount: parseInt(this.input.value) })
       : this.scRemoveLineItem.emit({ price_id: this.priceId, quantity: 1 });
@@ -171,7 +171,7 @@ export class ScDonationChoices {
               required
               currencyCode={this.currencyCode}
               label={'Enter an amount'}
-              value={this.lineItem?.ad_hoc_amount.toString()}
+              value={this.lineItem?.ad_hoc_amount?.toString?.()}
             ></sc-price-input>
             <sc-button type="primary" onClick={() => this.updateCustomAmount()} full busy={this.busy}>
               {__('Update', 'surecart')}

@@ -161,6 +161,14 @@ module.exports = {
 			__dirname,
 			'packages/components/static-loader.js'
 		),
+
+		/**
+		 * Templates
+		 */
+		['templates/buy']: path.resolve(
+			__dirname,
+			'packages/styles/frontend/buy-page.js'
+		),
 	},
 	output: {
 		filename: '[name].js',

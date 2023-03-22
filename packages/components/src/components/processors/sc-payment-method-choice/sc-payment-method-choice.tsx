@@ -47,7 +47,6 @@ export class ScPaymentMethodChoice {
     return (
       <Tag
         show-control
-        shady
         borderless
         open={this.isSelected()}
         onScShow={() => {

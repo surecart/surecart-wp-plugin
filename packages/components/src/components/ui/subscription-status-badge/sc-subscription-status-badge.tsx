@@ -39,6 +39,9 @@ export class ScSubscriptionStatusBadge {
       case 'past_due':
         return 'warning';
       case 'canceled':
+         if(this.subscription?.restore_at){
+          return "info"
+        }
         return 'danger';
       case 'unpaid':
         return 'warning';
@@ -63,6 +66,9 @@ export class ScSubscriptionStatusBadge {
       case 'past_due':
         return __('Past Due', 'surecart');
       case 'canceled':
+        if(this.subscription?.restore_at){
+          return "Paused"
+        }
         return __('Canceled', 'surecart');
       case 'completed':
         return __('Completed', 'surecart');

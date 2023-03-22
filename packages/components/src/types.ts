@@ -64,6 +64,11 @@ export interface Price {
   ad_hoc: boolean;
   ad_hoc_max_amount: number;
   ad_hoc_min_amount: number;
+  scratch_amount: number;
+  setup_fee_enabled: boolean;
+  setup_fee_amount: number;
+  setup_fee_name: string;
+  setup_fee_trial_enabled: boolean;
   recurring_period_count: number;
   archived: boolean;
   product_id?: string;
@@ -276,7 +281,7 @@ export interface Fee {
   object: 'fee';
   amount: number;
   description: string;
-  fee_type: 'manual' | 'bump';
+  fee_type: 'manual' | 'bump' | 'setup';
   line_item: string | LineItem;
   created_at: number;
   updated_at: number;
@@ -410,6 +415,7 @@ export interface Checkout extends Object {
     pagination: Pagination;
     data: Array<PaymentIntent>;
   };
+  abandoned_checkout_enabled: boolean;
   bump_amount: number;
   payment_method_required?: boolean;
   manual_payment: boolean;
@@ -430,7 +436,9 @@ export interface Checkout extends Object {
   total_savings_amount?: number;
   applied_balance_amount?: number;
   discounts?: number;
+  tax_enabled: boolean;
   tax_amount: number;
+  email_exists: boolean;
   tax_inclusive_amount: number;
   tax_exclusive_amount: number;
   tax_status: 'disabled' | 'address_invalid' | 'estimated' | 'calculated';
@@ -589,6 +597,7 @@ export interface Subscription extends Object {
   ad_hoc_amount: number;
   created_at: number;
   updated_at: number;
+  restore_at?: number;
 }
 
 export interface CancellationAct {

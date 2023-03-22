@@ -46,13 +46,13 @@ describe('sc-choices', () => {
     expect(first).toHaveAttribute('checked');
     expect(second).not.toHaveAttribute('checked');
 
-    await second.click();
+    await second.triggerEvent('click');
     await page.waitForChanges();
 
     expect(first).toHaveAttribute('checked');
     expect(second).toHaveAttribute('checked');
 
-    await first.click();
+    await first.triggerEvent('click');
     await page.waitForChanges();
     expect(first).not.toHaveAttribute('checked');
   });

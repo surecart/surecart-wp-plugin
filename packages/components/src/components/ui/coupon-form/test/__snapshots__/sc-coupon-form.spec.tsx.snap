@@ -26,12 +26,26 @@ exports[`sc-coupon-form handles applied coupons 1`] = `
 exports[`sc-coupon-form renders 1`] = `
 <sc-coupon-form>
   <mock:shadow-root>
+    <sc-form-control class="coupon-form">
+      <sc-input exportparts="base:input__base, input, form-control:input__form-control">
+        <sc-button class="coupon-button" exportparts="base:button__base, label:button_label" size="medium" slot="suffix" type="text">
+          <slot></slot>
+        </sc-button>
+      </sc-input>
+    </sc-form-control>
+  </mock:shadow-root>
+</sc-coupon-form>
+`;
+
+exports[`sc-coupon-form renders collapsed 1`] = `
+<sc-coupon-form collapsed="">
+  <mock:shadow-root>
     <div class="coupon-form" part="base">
       <div class="trigger" part="label">
         <slot name="label"></slot>
       </div>
       <div class="form" part="form">
-        <sc-input exportparts="base:input__base, input, form-control:input__form-control" placeholder="Enter coupon code">
+        <sc-input exportparts="base:input__base, input, form-control:input__form-control">
           <sc-button class="coupon-button" exportparts="base:button__base, label:button_label" size="medium" slot="suffix" type="text">
             <slot></slot>
           </sc-button>

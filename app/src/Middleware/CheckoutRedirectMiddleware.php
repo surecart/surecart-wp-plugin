@@ -4,6 +4,7 @@ namespace SureCart\Middleware;
 
 use Closure;
 use SureCart\Models\Checkout;
+use SureCart\Models\Product;
 use SureCartCore\Requests\RequestInterface;
 use SureCartCore\Responses\RedirectResponse;
 
@@ -31,6 +32,21 @@ class CheckoutRedirectMiddleware {
 		// get checkout from page id.
 		if ( ! empty( $checkout->metadata->page_id ) ) {
 			$url = get_permalink( (int) $checkout->metadata->page_id );
+			if ( $url ) {
+				return ( new RedirectResponse( $request ) )->to(
+					esc_url_raw( $this->buildUrl( $url, $request ) )
+				);
+			}
+		}
+
+		// get checkout from page id.
+		if ( ! empty( $checkout->metadata->buy_page_product_id ) ) {
+			$product = Product::find( $checkout->metadata->buy_page_product_id );
+			if ( is_wp_error( $product ) ) {
+				wp_die( esc_html__( 'This product has been deleted or is not available for purchase.', 'surecart' ) );
+			}
+
+			$url = $product->buyLink()->url();
 			if ( $url ) {
 				return ( new RedirectResponse( $request ) )->to(
 					esc_url_raw( $this->buildUrl( $url, $request ) )
