@@ -1,0 +1,63 @@
+body.sc-buy-page {
+  background: var(--sc-color-gray-50);
+  --sc-checkout-font-size: 15px;
+  box-sizing: border-box;
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  &.surecart-theme-dark {
+    background: var(--sc-color-gray-950);
+  }
+
+  @media screen and (min-width: 782px) {
+    &:before {
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both;
+      background: var(--sc-color-white);
+      content: " ";
+      height: 100%;
+      position: fixed;
+      left: 0;
+      top: 0;
+      transform-origin: left;
+      width: 50%;
+      box-shadow: -15px 0 30px 0 rgba(0,0,0,.18);
+      z-index:0;
+    }
+
+    &.surecart-theme-dark {
+      &:before {
+        background: var(--sc-color-gray-900);
+      }
+    }
+  }
+
+  header.sc-buy-header {
+    padding: 30px;
+    padding-bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1730px;
+    margin: 0 auto;
+    position:relative;
+    width: 100%;
+
+    @media screen and (min-width: 782px) {
+      padding: 30px;
+    }
+  }
+
+  .sc-buy-logo {
+    display: flex;
+    align-items: center;
+    gap: var(--sc-spacing-small);
+  }
+}

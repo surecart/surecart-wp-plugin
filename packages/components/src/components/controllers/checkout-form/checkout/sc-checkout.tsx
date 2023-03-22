@@ -1,20 +1,22 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State } from '@stencil/core';
+import { state as checkoutState } from '@store/checkout';
+import { state as processorsState } from '@store/processors';
+import { state as formState } from '@store/form';
 import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
 
-import { getOrder, setOrder } from '../../../../store/checkouts';
 import {
   Bump,
   Checkout,
   Customer,
   FormState,
   ManualPaymentMethod,
-  PaymentIntent,
   PaymentIntents,
   PriceChoice,
   Prices,
   Processor,
   ProcessorName,
+  Product,
   Products,
   ResponseError,
   TaxProtocol,
@@ -34,6 +36,9 @@ export class ScCheckout {
 
   /** An array of prices to pre-fill in the form. */
   @Prop() prices: Array<PriceChoice> = [];
+
+  /** A product to pre-fill the form. */
+  @Prop() product: Product;
 
   /** Are we in test or live mode. */
   @Prop() mode: 'test' | 'live' = 'live';
@@ -116,6 +121,9 @@ export class ScCheckout {
   /** The currenly selected processor */
   @State() processor: ProcessorName = 'stripe';
 
+  /** The processor method. */
+  @State() method: string;
+
   /** Is the processor manual? */
   @State() isManualProcessor: boolean;
 
@@ -134,23 +142,14 @@ export class ScCheckout {
   /** Checkout has an error. */
   @Event() scOrderError: EventEmitter<ResponseError>;
 
-  @Listen('scSetPaymentIntent')
-  handleSetPaymentIntent(e) {
-    const paymentIntent = e.detail?.payment_intent as PaymentIntent;
-    const processor = e.detail?.processor;
-    this.paymentIntents[processor] = paymentIntent;
-  }
-
   @Listen('scUpdateOrderState')
   handleOrderStateUpdate(e: { detail: Checkout }) {
-    setOrder(e?.detail, this?.formId);
+    checkoutState.checkout = e.detail;
   }
 
-  @Listen('scSetProcessor')
-  handleProcessorChange(e) {
-    const { id, manual } = e.detail;
-    this.processor = id;
-    this.isManualProcessor = manual;
+  @Listen('scSetMethod')
+  handleMethodChange(e) {
+    this.method = e.detail;
   }
 
   @Listen('scAddEntities')
@@ -194,63 +193,70 @@ export class ScCheckout {
   }
 
   componentWillLoad() {
-    Universe.create(this as Creator, this.state());
-    this.isDuplicate = document.querySelector('sc-checkout') !== this.el;
-  }
+    const checkout = document.querySelector('sc-checkout');
+    this.isDuplicate = !!checkout && checkout !== this.el;
+    if (this.isDuplicate) return;
 
-  order() {
-    return getOrder(this?.formId, this.mode);
+    Universe.create(this as Creator, this.state());
+    processorsState.processors = this.processors;
+    processorsState.manualPaymentMethods = this.manualPaymentMethods;
+    processorsState.config.stripe.paymentElement = this.stripePaymentElement;
+    checkoutState.formId = this.formId;
+    checkoutState.mode = this.mode;
+    checkoutState.product = this.product || null;
+    checkoutState.currencyCode = this.currencyCode;
+    checkoutState.groupId = this.el.id;
+    checkoutState.abandonedCheckoutReturnUrl = this.abandonedCheckoutReturnUrl;
   }
 
   state() {
     return {
       processor: this.processor,
+      method: this.method,
       selectedProcessorId: this.processor,
-      processors: (this.processors || []).filter(processor => {
-        return !(this?.order().reusable_payment_method_required && !processor?.recurring_enabled);
-      }),
       manualPaymentMethods: this.manualPaymentMethods,
-      processor_data: this.order()?.processor_data,
+      processor_data: checkoutState.checkout?.processor_data,
       state: this.checkoutState,
-      formState: this.checkoutState,
+      formState: formState.formState.value,
       paymentIntents: this.paymentIntents,
       successUrl: this.successUrl,
-      bumps: this.order()?.recommended_bumps?.data as Bump[],
+      bumps: checkoutState.checkout?.recommended_bumps?.data as Bump[],
 
-      order: this.order(),
-      abandonedCheckoutEnabled: this.order()?.abandoned_checkout_enabled,
-      checkout: this.order(),
-      shippingEnabled: this.order()?.shipping_enabled,
-      lineItems: this.order()?.line_items?.data || [],
+      order: checkoutState.checkout,
+      abandonedCheckoutEnabled: checkoutState.checkout?.abandoned_checkout_enabled,
+      checkout: checkoutState.checkout,
+      shippingEnabled: checkoutState.checkout?.shipping_enabled,
+      lineItems: checkoutState.checkout?.line_items?.data || [],
       editLineItems: this.editLineItems,
       removeLineItems: this.removeLineItems,
 
       // checkout states
-      loading: this.checkoutState === 'loading',
-      busy: ['updating', 'finalizing', 'paying', 'confirming'].includes(this?.checkoutState),
-      paying: ['finalizing', 'paying', 'confirming'].includes(this?.checkoutState),
-      empty: !['loading', 'updating'].includes(this.checkoutState) && !this.order()?.line_items?.pagination?.count,
+      loading: formState.formState.value === 'loading',
+      busy: ['updating', 'finalizing', 'paying', 'confirming'].includes(formState.formState.value),
+      paying: ['finalizing', 'paying', 'confirming'].includes(formState.formState.value),
+      empty: !['loading', 'updating'].includes(formState.formState.value) && !checkoutState.checkout?.line_items?.pagination?.count,
       // checkout states
 
       // stripe.
       stripePaymentElement: this.stripePaymentElement,
-      stripePaymentIntent: (this.order()?.staged_payment_intents?.data || []).find(intent => intent.processor_type === 'stripe'),
+      stripePaymentIntent: (checkoutState.checkout?.staged_payment_intents?.data || []).find(intent => intent.processor_type === 'stripe'),
 
       error: this.error,
       customer: this.customer,
-      tax_status: this.order()?.tax_status,
-      taxEnabled: this.order()?.tax_enabled,
-      customerShippingAddress: typeof this.order()?.customer !== 'string' ? this.order()?.customer?.shipping_address : {},
-      shippingAddress: this.order()?.shipping_address,
-      taxStatus: this.order()?.tax_status,
-      taxIdentifier: this.order()?.tax_identifier,
+      tax_status: checkoutState.checkout?.tax_status,
+      taxEnabled: checkoutState.checkout?.tax_enabled,
+      customerShippingAddress: typeof checkoutState.checkout?.customer !== 'string' ? checkoutState.checkout?.customer?.shipping_address : {},
+      shippingAddress: checkoutState.checkout?.shipping_address,
+      taxStatus: checkoutState.checkout?.tax_status,
+      taxIdentifier: checkoutState.checkout?.tax_identifier,
+      totalAmount: checkoutState.checkout?.total_amount,
       taxProtocol: this.taxProtocol,
       lockedChoices: this.prices,
       products: this.productsEntities,
       prices: this.pricesEntities,
       country: 'US',
       loggedIn: this.loggedIn,
-      emailExists: this.order()?.email_exists,
+      emailExists: checkoutState.checkout?.email_exists,
       formId: this.formId,
       mode: this.mode,
       currencyCode: this.currencyCode,
@@ -280,31 +286,21 @@ export class ScCheckout {
             loggedIn={this.loggedIn}
             onScSetCustomer={e => (this.customer = e.detail as Customer)}
             onScSetLoggedIn={e => (this.loggedIn = e.detail)}
-            order={this.order()}
+            order={checkoutState.checkout}
           >
             {/* Handles the current checkout form state. */}
             <sc-form-state-provider onScSetCheckoutFormState={e => (this.checkoutState = e.detail)}>
               {/* Handles errors in the form. */}
-              <sc-form-error-provider checkoutState={this.checkoutState} onScUpdateError={e => (this.error = e.detail)}>
+              <sc-form-error-provider checkoutState={formState.formState.value} onScUpdateError={e => (this.error = e.detail)}>
                 {/* Validate components in the form based on order state. */}
-                <sc-form-components-validator order={this.order()} disabled={this.disableComponentsValidation} taxProtocol={this.taxProtocol}>
+                <sc-form-components-validator order={checkoutState.checkout} disabled={this.disableComponentsValidation} taxProtocol={this.taxProtocol}>
                   {/* Handle confirming of order after it is "Paid" by processors. */}
-                  <sc-order-confirm-provider order={this.order()} success-url={this.successUrl} form-id={this.formId} mode={this.mode} successText={this.successText}>
+                  <sc-order-confirm-provider success-url={this.successUrl} successText={this.successText}>
                     {/* Handles the current session. */}
                     <sc-session-provider
                       ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)}
                       prices={this.prices}
-                      abandonedCheckoutReturnUrl={this.abandonedCheckoutReturnUrl}
-                      stripePaymentElement={this.stripePaymentElement}
-                      paymentIntents={this.paymentIntents}
                       persist={this.persistSession}
-                      modified={this.modified}
-                      mode={this.mode}
-                      isManualProcessor={this.isManualProcessor}
-                      form-id={this.formId}
-                      group-id={this.el.id}
-                      processor={this.processor}
-                      currency-code={this.currencyCode}
                       onScError={e => (this.error = e.detail as ResponseError)}
                     >
                       <slot />
@@ -315,20 +311,29 @@ export class ScCheckout {
             </sc-form-state-provider>
           </sc-login-provider>
 
-          {this.state().busy && <sc-block-ui class="busy-block-ui" z-index={9}></sc-block-ui>}
-          {this.checkoutState === 'finalizing' && (
-            <sc-block-ui z-index={9} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
+          {this.state().busy && <sc-block-ui class="busy-block-ui" z-index={30}></sc-block-ui>}
+
+          {formState.formState.value === 'finalizing' && (
+            <sc-block-ui z-index={30} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
               {this.loadingText?.finalizing || __('Submitting order...', 'surecart')}
             </sc-block-ui>
           )}
-          {this.checkoutState === 'paying' && (
-            <sc-block-ui z-index={9} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
+
+          {formState.formState.value === 'paying' && (
+            <sc-block-ui z-index={30} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
               {this.loadingText?.paying || __('Processing payment...', 'surecart')}
             </sc-block-ui>
           )}
-          {this.checkoutState === 'confirming' && (
-            <sc-block-ui z-index={9} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
+
+          {formState.formState.value === 'confirming' && (
+            <sc-block-ui z-index={30} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
               {this.loadingText?.confirming || __('Finalizing order...', 'surecart')}
+            </sc-block-ui>
+          )}
+
+          {formState.formState.value === 'redirecting' && (
+            <sc-block-ui z-index={30} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
+              {this.loadingText?.confirmed || __('Success! Redirecting...', 'surecart')}
             </sc-block-ui>
           )}
         </Universe.Provider>

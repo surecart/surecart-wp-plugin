@@ -53,9 +53,5 @@ class InstallTest extends SureCartUnitTestCase {
 		$page = $page_service->get('dashboard');
 		$this->assertSame($page->post_type, 'page');
 		$this->assertStringContainsString('wp:surecart/dashboard', $page->post_content);
-
-		$page = $page_service->get('order-confirmation');
-		$this->assertSame($page->post_type, 'page');
-		$this->assertStringContainsString('wp:surecart/order-confirmation', $page->post_content);
 	}
 }

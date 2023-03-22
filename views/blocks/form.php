@@ -21,6 +21,7 @@
 	'#' . $id,
 	[
 		'prices'                     => $prices,
+		'product'                    => $product,
 		'customer'                   => $customer ?? '',
 		'formId'                     => $form_id ?? '',
 		'currencyCode'               => $currency_code ?? null,
@@ -32,7 +33,7 @@
 		'loadingText'                => $loading_text ?? [],
 		'successText'                => $success_text ?? [],
 		'stripePaymentElement'       => $stripe_payment_element ?? false,
-		'successUrl'                 => esc_url_raw( $success_url ?? \SureCart::pages()->url( 'order-confirmation' ) ),
+		'successUrl'                 => esc_url_raw( $success_url ?? null ),
 		'processors'                 => $processors,
 		'manualPaymentMethods'       => $manual_payment_methods,
 		'abandonedCheckoutReturnUrl' => $abandoned_checkout_return_url,

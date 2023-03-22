@@ -1,37 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sc-payment-method-choice Does not display if disabled 1`] = `
-<sc-payment-method-choice is-disabled="" style="display: none;">
-  <mock:shadow-root></mock:shadow-root>
-</sc-payment-method-choice>
-`;
-
-exports[`sc-payment-method-choice Is selected (and open) if the processor matches the processor id 1`] = `
-<sc-payment-method-choice>
-  <mock:shadow-root>
-    <sc-toggle borderless="" shady="" show-control="">
-      <slot name="summary" slot="summary"></slot>
-      <slot></slot>
-    </sc-toggle>
-  </mock:shadow-root>
-</sc-payment-method-choice>
-`;
-
-exports[`sc-payment-method-choice Renders toggle if it has others 1`] = `
-<sc-payment-method-choice has-others="">
-  <mock:shadow-root>
-    <sc-toggle borderless="" open="" shady="" show-control="">
-      <slot name="summary" slot="summary"></slot>
-      <slot></slot>
-    </sc-toggle>
-  </mock:shadow-root>
-</sc-payment-method-choice>
-`;
-
 exports[`sc-payment-method-choice renders 1`] = `
 <sc-payment-method-choice>
   <mock:shadow-root>
-    <div borderless="" open="" shady="" show-control="">
+    <div borderless="" shady="" show-control="">
       <slot></slot>
     </div>
   </mock:shadow-root>

@@ -19,7 +19,8 @@
 		</testsuite>
 	</testsuites>
 	<php>
-        <env name="SURECART_RUNNING_TESTS" value="true" force="true" />
+        <!-- <env name="SURECART_RUNNING_TESTS" value="true" force="true" /> -->
+		<const name="SURECART_RUNNING_TESTS" value="true"/>
     </php>
 	<filter>
 		<whitelist processUncoveredFilesFromWhitelist="true">

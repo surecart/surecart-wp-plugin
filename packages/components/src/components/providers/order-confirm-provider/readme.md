@@ -7,13 +7,10 @@
 
 ## Properties
 
-| Property      | Attribute     | Description                  | Type                                                      | Default     |
-| ------------- | ------------- | ---------------------------- | --------------------------------------------------------- | ----------- |
-| `formId`      | `form-id`     | The form id                  | `number`                                                  | `undefined` |
-| `mode`        | `mode`        | Are we in test or live mode. | `"live" \| "test"`                                        | `'live'`    |
-| `order`       | --            | The current order.           | `Checkout`                                                | `undefined` |
-| `successText` | --            | Success text for the form.   | `{ title: string; description: string; button: string; }` | `undefined` |
-| `successUrl`  | `success-url` | Success url.                 | `string`                                                  | `undefined` |
+| Property      | Attribute     | Description                | Type                                                      | Default     |
+| ------------- | ------------- | -------------------------- | --------------------------------------------------------- | ----------- |
+| `successText` | --            | Success text for the form. | `{ title: string; description: string; button: string; }` | `undefined` |
+| `successUrl`  | `success-url` | Success url.               | `string`                                                  | `undefined` |
 
 
 ## Events
@@ -36,6 +33,7 @@
 - [sc-dialog](../../ui/sc-dialog)
 - [sc-icon](../../ui/icon)
 - [sc-dashboard-module](../../ui/dashboard-module)
+- [sc-alert](../../ui/alert)
 - [sc-button](../../ui/button)
 
 ### Graph
@@ -44,6 +42,7 @@ graph TD;
   sc-order-confirm-provider --> sc-dialog
   sc-order-confirm-provider --> sc-icon
   sc-order-confirm-provider --> sc-dashboard-module
+  sc-order-confirm-provider --> sc-alert
   sc-order-confirm-provider --> sc-button
   sc-dialog --> sc-button
   sc-dialog --> sc-icon
