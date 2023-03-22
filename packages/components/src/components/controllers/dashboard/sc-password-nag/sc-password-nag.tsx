@@ -115,7 +115,7 @@ export class ScPasswordNag {
                 <sc-input label={__('Confirm New Password', 'surecart')} name="password_confirm" type="password" required />
                 <div>
                   <sc-button type="primary" full submit busy={this.loading}>
-                    {__('Updateasd Password', 'surecart')}
+                    {__('Update Password', 'surecart')}
                   </sc-button>
                 </div>
               </sc-form>
