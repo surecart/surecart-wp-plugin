@@ -48,6 +48,26 @@ class TemplatesService {
 		add_filter( 'theme_' . $this->post_type . '_templates', [ $this, 'addTemplates' ] );
 		add_filter( 'template_include', [ $this, 'includeTemplate' ] );
 		add_filter( 'body_class', [ $this, 'bodyClass' ] );
+		add_action( 'init', [ $this, 'registerMeta' ] );
+	}
+
+	/**
+	 * Register any template meta we need.
+	 */
+	public function registerMeta() {
+		register_meta(
+			'post',
+			'_surecart_dashboard_logo_width',
+			[
+				'auth_callback' => function( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+					return current_user_can( 'edit_post', $object_id );
+				},
+				'default'       => '180px',
+				'show_in_rest'  => true,
+				'single'        => true,
+				'type'          => 'string',
+			]
+		);
 	}
 
 	/**

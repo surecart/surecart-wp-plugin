@@ -162,6 +162,16 @@ class ScriptsService {
 		if ( get_option( 'surecart_load_stripe_js', false ) ) {
 			wp_enqueue_script( 'surecart-stripe-script', 'https://js.stripe.com/v3', [], \SureCart::plugin()->version(), false );
 		}
+
+		// templates.
+		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/templates/admin.asset.php';
+		wp_register_script(
+			'surecart-templates-admin',
+			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/templates/admin.js',
+			$asset_file['dependencies'],
+			$asset_file['version'],
+			true
+		);
 	}
 
 	/**
@@ -221,7 +231,17 @@ class ScriptsService {
 	public function enqueueEditor() {
 		$this->enqueueFront();
 		$this->enqueueBlocks();
+		$this->enqueuePageTemplateEditor();
 		$this->enqueueCartBlocks();
+	}
+
+	/**
+	 * Enqueue page templates.
+	 *
+	 * @return void
+	 */
+	public function enqueuePageTemplateEditor() {
+		wp_enqueue_script( 'surecart-templates-admin' );
 	}
 
 	/**

@@ -168,9 +168,9 @@ class BuyPageController {
 	public function styles() {
 		wp_enqueue_style(
 			'surecart/instant-checkout',
-			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/templates/buy.css',
+			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/templates/instant-checkout.css',
 			[],
-			filemtime( trailingslashit( plugin_dir_path( SURECART_PLUGIN_FILE ) ) . 'dist/templates/buy.css' ),
+			filemtime( trailingslashit( plugin_dir_path( SURECART_PLUGIN_FILE ) ) . 'dist/templates/instant-checkout.css' ),
 		);
 	}
 

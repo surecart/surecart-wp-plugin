@@ -1,0 +1,58 @@
+body.page-template-template-surecart-dashboard {
+  background: var(--sc-color-gray-50);
+  --sc-checkout-font-size: 15px;
+  box-sizing: border-box;
+
+  @media screen and (min-width: 782px) {
+    &:before {
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both;
+      background: var(--sc-color-white);
+      content: " ";
+      height: 100%;
+      position: fixed;
+      left: 0;
+      top: 0;
+      transform-origin: left;
+      width: 350px;
+      box-shadow: -15px 0 30px 0 rgba(0, 0, 0, .18);
+      z-index: 0;
+    }
+  }
+
+  sc-columns {
+    position: relative;
+  }
+
+  .dashboard-right {
+    padding: 30px 5rem 5rem 5rem;
+    --sc-column-content-width: 600px;
+    --sc-form-row-spacing: 30px
+  }
+
+  .sc-pin-bottom {
+    margin-top: auto;
+  }
+}
+
+
+@media screen and (min-width: 782px) {
+  body.page-template-template-surecart-dashboard {
+    .dashboard-left {
+      flex: 0 0 350px;
+      border-style: none;
+      border-width: 0px;
+      padding: 30px 5rem 5rem 5rem;
+      --sc-form-row-spacing: 30px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .admin-bar {
+      .dashboard-left {
+        top: 32px;
+      }
+    }
+  }
+}
