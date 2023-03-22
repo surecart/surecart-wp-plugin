@@ -87,7 +87,9 @@
 		<?php endif; ?>
 
 		<!-- wp:surecart/submit {"text":"Buy Now","show_total":true,"full":true} -->
-		<sc-order-submit type="primary" full="true" size="large" icon="lock" show-total="true" class="wp-block-surecart-submit">Buy Now</sc-order-submit>
+		<sc-order-submit type="primary" full="true" size="large" icon="lock" show-total="true" class="wp-block-surecart-submit">
+			<?php esc_html_e( 'Purchase', 'surecart' ); ?>
+		</sc-order-submit>
 		<!-- /wp:surecart/submit --></sc-column>
 	<!-- /wp:surecart/column --></sc-columns>
 <!-- /wp:surecart/columns -->
