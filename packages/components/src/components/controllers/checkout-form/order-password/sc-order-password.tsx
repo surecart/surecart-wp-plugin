@@ -65,6 +65,7 @@ export class ScOrderPassword {
   async reportValidity() {
     if (this.loggedIn) return true;
 
+    this.input?.setCustomValidity?.('');
     this.confirmInput?.setCustomValidity?.('');
 
     // confirmation is enabled.
@@ -72,6 +73,11 @@ export class ScOrderPassword {
       if (this.confirmInput?.value && this.input?.value !== this.confirmInput?.value) {
         this.confirmInput.setCustomValidity(__('Password does not match.', 'surecart'));
       }
+    }
+
+    const validPassword = this.validatePassword(this.input?.value);
+    if (!validPassword) {
+      this.input.setCustomValidity(__('Passwords should at least 6 characters and contain one special character.', 'surecart'));
     }
 
     const valid = await this.input.reportValidity();
@@ -84,6 +90,12 @@ export class ScOrderPassword {
     }
 
     return valid;
+  }
+
+  validatePassword(password: string) {
+    const regex = new RegExp('^(?=.*?[#?!@$%^&*-]).{6,}$');
+    if (regex.test(password)) return true;
+    return false;
   }
 
   render() {
