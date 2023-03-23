@@ -3,12 +3,15 @@
 Template Name: SureCart Dashboard
 */
 
-$logo_url    = \SureCart::account()->brand->logo_url;
-$logo_width  = get_post_meta( get_the_ID(), '_surecart_dashboard_logo_width', true );
-$current_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$user        = wp_get_current_user();
+$logo_url      = \SureCart::account()->brand->logo_url;
+$logo_width    = get_post_meta( get_the_ID(), '_surecart_dashboard_logo_width', true );
+$current_url   = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$user          = wp_get_current_user();
+$dashboard_url = get_permalink( get_the_ID() );
+$active_tab    = esc_html( $_GET['model'] ?? 'dashboard' );
 
 ?>
+
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -22,10 +25,17 @@ $user        = wp_get_current_user();
 
 	<sc-columns is-stacked-on-mobile="1" is-full-height class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right is-full-height is-sticky" style="gap:0px 0px;">
 		<sc-column class="dashboard-left is-sticky">
+			<div style="margin-bottom: var(--sc-spacing-x-large)">
+				<sc-button href="<?php echo esc_url( get_home_url() ); ?>" type="text" class="sc-link-home">
+					<sc-icon name="arrow-left" slot="prefix"></sc-icon>
+					<?php esc_html_e( 'Back Home' ); ?>
+				</sc-button>
+			</div>
+
 			<div class="sc-buy-logo">
 				<?php if ( $logo_url ) : ?>
 					<img src="<?php echo esc_url( $logo_url ); ?>"
-						style="max-width: <?php echo esc_attr( $logo_width ?? '180px' ); ?>; width: 100%; height: auto;"
+						style="max-width: <?php echo esc_attr( $logo_width ?? '130px' ); ?>; width: 100%; height: auto;"
 						alt="<?php echo esc_attr( get_bloginfo() ); ?>"
 					/>
 				<?php else : ?>
@@ -33,37 +43,53 @@ $user        = wp_get_current_user();
 				<?php endif; ?>
 			</div>
 
+			<sc-spacing style="--spacing: var(--sc-spacing-xx-small);">
+				<sc-tab href="<?php echo esc_url( $dashboard_url ); ?>" <?php echo 'dashboard' === $active_tab ? 'active' : ''; ?>>
+					<sc-icon style="opacity: 0.65; font-size: 18px;" name="home" slot="prefix"></sc-icon>
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+				</sc-tab>
+				<sc-tab <?php echo 'order' === $active_tab ? 'active' : ''; ?>>
+				<sc-icon  style="opacity: 0.65; font-size: 18px;" name="shopping-bag" slot="prefix"></sc-icon>
+					<?php esc_html_e( 'Orders', 'surecart' ); ?>
+				</sc-tab>
+				<sc-tab <?php echo 'subscription' === $active_tab ? 'active' : ''; ?>>
+					<sc-icon style="opacity: 0.65; font-size: 18px;" name="repeat" slot="prefix"></sc-icon>
+					<?php esc_html_e( 'Plans', 'surecart' ); ?>
+				</sc-tab>
+				<sc-tab <?php echo 'download' === $active_tab ? 'active' : ''; ?>>
+					<sc-icon style="opacity: 0.65; font-size: 18px;" name="download-cloud" slot="prefix"></sc-icon>
+					<?php esc_html_e( 'Downloads', 'surecart' ); ?>
+				</sc-tab>
+			</sc-spacing>
+
 			<div class="sc-pin-bottom">
-
-<svg width="751" height="139" viewBox="0 0 751 139" style="width: 100px; max-width: 100%;" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_101_2)">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M69.3231 138.646C107.609 138.646 138.646 107.609 138.646 69.3231C138.646 31.037 107.609 0 69.3231 0C31.037 0 0 31.037 0 69.3231C0 107.609 31.037 138.646 69.3231 138.646ZM69.6216 34.6615C64.0553 34.6615 56.3521 37.8448 52.4161 41.7716L41.726 52.4367H95.0098L112.827 34.6615H69.6216ZM86.1402 96.8745C82.2042 100.801 74.5011 103.985 68.9347 103.985H25.7297L43.5465 86.2095H96.8303L86.1402 96.8745ZM103.458 61.3243H32.8369L29.5011 64.6571C21.6022 71.7672 23.9449 77.3219 35.0069 77.3219H105.819L109.156 73.9891C116.978 66.9209 114.52 61.3243 103.458 61.3243Z" fill="#73767D"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M530.527 90.5386C525.03 100.267 515.089 109.762 498.013 109.762C474.505 109.762 456.377 93.3518 456.377 69.3231C456.377 45.1772 474.505 28.8846 498.013 28.8846C515.089 28.8846 525.03 38.1445 530.527 47.9904L516.258 55.0231C512.983 48.6936 505.966 43.6535 498.013 43.6535C483.745 43.6535 473.452 54.5543 473.452 69.3231C473.452 84.0919 483.745 94.9927 498.013 94.9927C505.966 94.9927 512.983 89.9526 516.258 83.6231L530.527 90.5386ZM582.302 30.174L612.36 108.355H593.53L588.617 95.11H555.168L550.256 108.355H531.426L561.484 30.174H582.302ZM559.729 80.4583H584.056L571.893 46.8182L559.729 80.4583ZM682.836 108.355L665.176 78.5829C673.597 76.5903 682.369 69.0887 682.369 55.3748C682.369 40.8404 672.31 30.174 656.054 30.174H619.563V108.355H636.171V80.5756H648.334L663.656 108.355H682.836ZM653.714 65.9239H636.171V44.8256H653.714C660.264 44.8256 665.293 48.8108 665.293 55.2576C665.293 61.9387 660.264 65.9239 653.714 65.9239ZM728.31 44.8256V108.355H711.586V44.8256H688.779V30.174H751V44.8256H728.31ZM179.282 88.978L173.308 97.6184C181.067 105.714 191.387 109.762 204.267 109.762C213.785 109.762 221.156 107.582 226.381 103.223C231.657 98.812 234.295 93.2333 234.295 86.4871C234.295 82.4394 233.416 78.9365 231.657 75.9786C229.899 73.0206 227.622 70.7632 224.829 69.2064C222.088 67.5977 219.01 66.2484 215.596 65.1586C212.233 64.0689 208.845 63.1607 205.431 62.4342C202.069 61.6558 198.991 60.8514 196.197 60.0211C193.456 59.1389 191.206 57.9454 189.447 56.4404C187.688 54.8836 186.809 52.9895 186.809 50.758C186.809 47.2811 188.361 44.401 191.464 42.1177C194.568 39.7824 198.68 38.6148 203.802 38.6148C208.664 38.6148 213.087 39.523 217.07 41.3393C221.105 43.1037 224.312 45.4389 226.691 48.345L232.2 40.0938C224.958 32.621 215.492 28.8847 203.802 28.8847C194.956 28.8847 187.998 31.0123 182.929 35.2676C177.86 39.4711 175.325 44.7383 175.325 51.0694C175.325 54.9096 176.204 58.2308 177.963 61.0331C179.722 63.7834 181.998 65.9111 184.791 67.416C187.585 68.921 190.663 70.1924 194.025 71.2302C197.439 72.2681 200.827 73.1763 204.19 73.9547C207.552 74.7331 210.63 75.5893 213.423 76.5234C216.216 77.4575 218.492 78.7808 220.251 80.4933C222.01 82.2058 222.889 84.3075 222.889 86.7985C222.889 90.7424 221.26 93.9339 218.001 96.3729C214.794 98.812 210.319 100.031 204.577 100.031C199.56 100.031 194.775 98.9676 190.223 96.84C185.671 94.7123 182.024 92.0917 179.282 88.978ZM247.337 30.8307V85.1638C247.337 101.562 255.484 109.762 271.779 109.762C277.159 109.762 282.254 108.542 287.065 106.103C291.875 103.664 295.884 100.628 299.092 96.9957V107.816H311.041V30.8307H299.092V87.4212C296.764 90.6905 293.531 93.4409 289.392 95.6724C285.254 97.9038 280.961 99.0195 276.512 99.0195C270.874 99.0195 266.58 97.7222 263.632 95.1275C260.683 92.4809 259.209 87.9401 259.209 81.5053V30.8307H247.337ZM328.505 107.816V30.8307H340.377V43.1296C343.688 38.8743 347.541 35.4752 351.938 32.9324C356.335 30.3377 361.017 29.0404 365.983 29.0404V41.3393C364.12 41.1317 362.594 41.0279 361.405 41.0279C357.732 41.0279 353.749 42.2993 349.455 44.8421C345.162 47.333 342.136 50.1612 340.377 53.3268V107.816H328.505ZM374.912 48.9677C371.705 55.0912 370.101 61.8374 370.101 69.2064C370.101 81.1939 373.774 90.95 381.119 98.4746C388.465 105.999 397.879 109.762 409.363 109.762C421.571 109.762 431.736 105.766 439.857 97.7741L434.193 89.99C431.089 93.1555 427.442 95.5945 423.252 97.307C419.114 99.0195 414.795 99.8758 410.294 99.8758C402.328 99.8758 395.862 97.333 390.896 92.2473C385.982 87.1617 383.292 80.8306 382.826 73.2541H444.823V70.2183C444.823 62.4342 443.375 55.4544 440.478 49.279C437.633 43.0518 433.391 38.0959 427.753 34.4114C422.114 30.7269 415.519 28.8847 407.966 28.8847C400.776 28.8847 394.284 30.701 388.491 34.3336C382.697 37.9142 378.171 42.7923 374.912 48.9677ZM433.029 64.3024H382.671C382.826 61.2925 383.473 58.3346 384.611 55.4285C385.749 52.4705 387.301 49.7461 389.267 47.2552C391.284 44.7124 393.896 42.6626 397.104 41.1057C400.311 39.5489 403.88 38.7705 407.811 38.7705C412.001 38.7705 415.752 39.5749 419.062 41.1836C422.373 42.7404 425.011 44.7902 426.977 47.333C428.942 49.8758 430.417 52.6003 431.399 55.5063C432.434 58.4124 432.977 61.3444 433.029 64.3024Z" fill="#73767D"/>
-</g>
-<defs>
-<clipPath id="clip0_101_2">
-<rect width="751" height="139" fill="white"/>
-</clipPath>
-</defs>
-</svg>
-
-				<sc-dropdown style="width: 100%;">
-					<sc-flex align-items="center" justify-content="space-between" slot="trigger" style="<?php echo isset( $attributes['color'] ) ? 'color:' . esc_attr( $attributes['color'] ) . ';' : ''; ?>">
+				<sc-dropdown style="width: 100%;" placement="top-right">
+					<sc-flex class="sc-user-menu" align-items="center" justify-content="space-between" slot="trigger" style="<?php echo isset( $attributes['color'] ) ? 'color:' . esc_attr( $attributes['color'] ) . ';' : ''; ?>">
 						<sc-flex align-items="center" justify-content="space-between">
-							<sc-avatar image="<?php echo esc_url( get_avatar_url( $user->ID, [ 'size' => 80 ] ) ); ?>" style="--sc-avatar-size: 2em"></sc-avatar>
-							<?php echo esc_html( $user->display_name ); ?>
+							<sc-avatar image="<?php echo esc_url( get_avatar_url( $user->user_email, [ 'default' => '404' ] ) ); ?>" style="--sc-avatar-size: 34px" initials="<?php echo esc_attr( substr( $user->display_name, 0, 1 ) ); ?>"></sc-avatar>
+							<?php echo esc_html( $current_user->display_name ); ?>
 						</sc-flex>
 						<sc-icon name="chevron-up"></sc-icon>
 					</sc-flex>
 
 					<sc-menu>
-						<sc-menu-item href="<?php echo esc_url( wp_logout_url( $attributes['redirectToCurrent'] ? $current_url : '' ) ); ?>">
-							<sc-icon slot="prefix" name="log-out"></sc-icon>
-							<?php echo esc_html__( 'Logout', 'surecart' ); ?>
+						<sc-menu-item>
+							<sc-icon name="credit-card" slot="prefix" style="opacity: 0.65;"></sc-icon>
+							<?php echo esc_html_e( 'Billing', 'surecart' ); ?>
+						</sc-menu-item>
+						<sc-menu-item>
+							<sc-icon name="user" slot="prefix" style="opacity: 0.65;"></sc-icon>
+							<?php echo esc_html_e( 'Account', 'surecart' ); ?>
+						</sc-menu-item>
+						<sc-menu-divider></sc-menu-divider>
+						<sc-menu-item>
+							<sc-icon name="log-out" slot="prefix" style="opacity: 0.65;"></sc-icon>
+							<?php echo esc_html_e( 'Log Out', 'surecart' ); ?>
 						</sc-menu-item>
 					</sc-menu>
 				</sc-dropdown>
 			</div>
+
 		</sc-column>
 
 		<sc-column class="dashboard-right is-layout-constrained">

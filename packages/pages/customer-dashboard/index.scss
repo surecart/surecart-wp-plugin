@@ -1,7 +1,27 @@
+$sidebar-width: 325px;
+
 body.page-template-template-surecart-dashboard {
   background: var(--sc-color-gray-50);
   --sc-checkout-font-size: 15px;
   box-sizing: border-box;
+
+  h2.sc-dashboard-title {
+    font-size: var(--sc-font-size-xx-large);
+    line-height: var(--sc-line-height-dense);
+  }
+
+  .sc-link-home {
+    opacity: 0.65;
+    transition: opacity var(--sc-transition-medium) ease-in-out;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .sc-user-menu {
+    font-weight: var(--sc-font-weight-semibold);
+  }
 
   @media screen and (min-width: 782px) {
     &:before {
@@ -14,7 +34,7 @@ body.page-template-template-surecart-dashboard {
       left: 0;
       top: 0;
       transform-origin: left;
-      width: 350px;
+      width: $sidebar-width;
       box-shadow: -15px 0 30px 0 rgba(0, 0, 0, .18);
       z-index: 0;
     }
@@ -22,16 +42,23 @@ body.page-template-template-surecart-dashboard {
 
   sc-columns {
     position: relative;
+    --sc-form-row-spacing: 45px
+  }
+
+  sc-column {
+    margin: 0 !important;
   }
 
   .dashboard-right {
-    padding: 30px 5rem 5rem 5rem;
-    --sc-column-content-width: 600px;
-    --sc-form-row-spacing: 30px
+    padding: 40px;
+    --sc-column-content-width: 900px;
+    --sc-form-row-spacing: var(--sc-spacing-small);
   }
 
   .sc-pin-bottom {
     margin-top: auto;
+    display: grid;
+    gap: var(--sc-spacing-xx-small);
   }
 }
 
@@ -39,19 +66,19 @@ body.page-template-template-surecart-dashboard {
 @media screen and (min-width: 782px) {
   body.page-template-template-surecart-dashboard {
     .dashboard-left {
-      flex: 0 0 350px;
+      flex: 0 0 $sidebar-width;
       border-style: none;
       border-width: 0px;
-      padding: 30px 5rem 5rem 5rem;
-      --sc-form-row-spacing: 30px;
+      padding: 40px;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
     }
 
-    .admin-bar {
-      .dashboard-left {
+    &.admin-bar {
+      sc-column.dashboard-left.is-sticky {
         top: 32px;
+        min-height: calc(100vh - 32px);
       }
     }
   }
