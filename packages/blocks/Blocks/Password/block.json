@@ -4,7 +4,7 @@
 	"description": "Displays a password field to let a new user set a password.",
 	"category": "surecart",
 	"keywords": ["password", "input"],
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,
@@ -12,7 +12,15 @@
 	},
 	"attributes": {
 		"required": {
-			"typoe": "boolean"
+			"type": "boolean"
+		},
+		"autofocus": {
+			"type": "boolean",
+			"default": false
+		},
+		"showLabel": {
+			"type": "boolean",
+			"default": true
 		},
 		"value": {
 			"type": "string",

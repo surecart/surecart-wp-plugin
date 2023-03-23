@@ -61,6 +61,9 @@ export class ScOrderPassword {
   /** The input's confirmation help text. */
   @Prop() confirmationHelp: string;
 
+  /** Ensures strong password validation. */
+  @Prop({ reflect: true }) enableValidation = true;
+
   @Method()
   async reportValidity() {
     if (this.loggedIn) return true;
@@ -75,9 +78,11 @@ export class ScOrderPassword {
       }
     }
 
-    const validPassword = this.validatePassword(this.input?.value);
-    if (!validPassword) {
-      this.input.setCustomValidity(__('Passwords should at least 6 characters and contain one special character.', 'surecart'));
+    if (this.enableValidation) {
+      const validPassword = this.validatePassword(this.input?.value);
+      if (!validPassword) {
+        this.input.setCustomValidity(__('Passwords should at least 6 characters and contain one special character.', 'surecart'));
+      }
     }
 
     const valid = await this.input.reportValidity();

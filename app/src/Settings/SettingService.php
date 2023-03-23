@@ -109,6 +109,16 @@ class SettingService {
 				'sanitize_callback' => 'sanitize_text_field',
 			]
 		);
+		$this->register(
+			'surecart',
+			'password_validation_enabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => true,
+			]
+		);
 	}
 
 	/**

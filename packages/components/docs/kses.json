@@ -1082,6 +1082,7 @@
     "confirmation-placeholder": true,
     "disabled": true,
     "email-exists": true,
+    "enable-validation": true,
     "help": true,
     "label": true,
     "logged-in": true,
@@ -1203,6 +1204,7 @@
     "slot": true
   },
   "sc-password-nag": {
+    "enable-validation": true,
     "open": true,
     "success-url": true,
     "type": true,
@@ -1895,6 +1897,7 @@
     "slot": true
   },
   "sc-wordpress-password-edit": {
+    "enable-validation": true,
     "heading": true,
     "success-url": true,
     "user": true,

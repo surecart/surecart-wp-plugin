@@ -20,6 +20,9 @@ export class ScPasswordNag {
   @State() error: string;
   @State() success: boolean;
 
+  /** Ensures strong password validation. */
+  @Prop({ reflect: true }) enableValidation = true;
+
   @Watch('set')
   handleSetChange() {
     setTimeout(() => {
@@ -63,7 +66,7 @@ export class ScPasswordNag {
       if (password !== password_confirm) {
         throw { message: __('Passwords do not match.', 'surecart') };
       }
-      if (!this.validatePassword(password)) {
+      if (this.enableValidation && !this.validatePassword(password)) {
         throw { message: __('Passwords should at least 6 characters and contain one special character.', 'surecart') };
       }
       await apiFetch({

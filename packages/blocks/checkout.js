@@ -21,7 +21,6 @@ import * as lineItems from '@blocks/LineItems';
 import * as name from '@blocks/Name';
 import * as nameYourPrice from '@blocks/NameYourPrice';
 import * as orderBumps from '@blocks/OrderBumps';
-import * as password from '@blocks/Password';
 import * as payment from '@blocks/Payment';
 import * as priceChoice from '@blocks/PriceChoice';
 import * as priceSelector from '@blocks/PriceSelector';
@@ -66,7 +65,6 @@ registerBlocks([
 	name,
 	firstName,
 	lastName,
-	password,
 	payment,
 	priceChoice,
 	priceSelector,

@@ -16,6 +16,9 @@ export class ScWordPressPasswordEdit {
   @State() loading: boolean;
   @State() error: string;
 
+  /** Ensures strong password validation. */
+  @Prop({ reflect: true }) enableValidation = true;
+
   renderEmpty() {
     return <slot name="empty">{__('User not found.', 'surecart')}</slot>;
   }
@@ -34,7 +37,7 @@ export class ScWordPressPasswordEdit {
       if (password !== password_confirm) {
         throw { message: __('Passwords do not match.', 'surecart') };
       }
-      if (!this.validatePassword(password)) {
+      if (this.enableValidation && !this.validatePassword(password)) {
         throw { message: __('Passwords should at least 6 characters and contain one special character.', 'surecart') };
       }
       await apiFetch({
