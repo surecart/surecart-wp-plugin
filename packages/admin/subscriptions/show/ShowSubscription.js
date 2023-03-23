@@ -231,14 +231,20 @@ export default () => {
 
 	/** Render the pause button */
 	const renderPauseButton = () => {
-		if (['completed', 'canceled'].includes(subscription?.status))
-			return null;
+    if (
+		subscription?.cancel_at_period_end &&
+		subscription.current_period_end_at &&
+		subscription.restore_at
+	)
+    return null
+  if (['completed', 'canceled'].includes(subscription?.status))
+    return null;
 
-		return (
-			<ScMenuItem onClick={() => setModal('pause')}>
-				{__('Pause Subscription...', 'surecart')}
-			</ScMenuItem>
-		);
+  return (
+    <ScMenuItem onClick={() => setModal('pause')}>
+      {__('Pause Subscription...', 'surecart')}
+    </ScMenuItem>
+  );
 	};
 	const renderPayOffButton = () => {
 		if (['completed', 'canceled'].includes(subscription?.status))
@@ -426,6 +432,7 @@ export default () => {
 			<PauseSubscriptionUntilModal
 				open={modal === 'pause'}
 				onRequestClose={onRequestCloseModal}
+				currentPeriodEndAt={subscription?.current_period_end_at}
 			/>
 			<RenewSubscriptionAtModal
 				open={modal === 'renew_at'}

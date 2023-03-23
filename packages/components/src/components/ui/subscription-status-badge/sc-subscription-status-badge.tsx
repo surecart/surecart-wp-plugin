@@ -39,8 +39,8 @@ export class ScSubscriptionStatusBadge {
       case 'past_due':
         return 'warning';
       case 'canceled':
-         if(this.subscription?.restore_at){
-          return "info"
+        if (this.subscription?.restore_at) {
+          return 'info';
         }
         return 'danger';
       case 'unpaid':
@@ -52,7 +52,8 @@ export class ScSubscriptionStatusBadge {
     if (this.subscription?.cancel_at_period_end && this.subscription.current_period_end_at && this.subscription?.status !== 'canceled') {
       return (
         <Fragment>
-          {__('Cancels', 'surecart')} <sc-format-date type="timestamp" date={this.subscription.current_period_end_at} month="short" day="numeric"></sc-format-date>
+          {__(!!this.subscription?.restore_at ? 'Pauses' : 'Cancels', 'surecart')}{' '}
+          <sc-format-date type="timestamp" date={this.subscription.current_period_end_at} month="short" day="numeric"></sc-format-date>
         </Fragment>
       );
     }
@@ -66,8 +67,8 @@ export class ScSubscriptionStatusBadge {
       case 'past_due':
         return __('Past Due', 'surecart');
       case 'canceled':
-        if(this.subscription?.restore_at){
-          return "Paused"
+        if (this.subscription?.restore_at) {
+          return 'Paused';
         }
         return __('Canceled', 'surecart');
       case 'completed':
