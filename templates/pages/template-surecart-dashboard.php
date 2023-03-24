@@ -45,7 +45,7 @@ $active_tab    = esc_html( $_GET['model'] ?? 'dashboard' );
 
 			<sc-spacing style="--spacing: var(--sc-spacing-xx-small);">
 				<sc-tab href="<?php echo esc_url( $dashboard_url ); ?>" <?php echo 'dashboard' === $active_tab ? 'active' : ''; ?>>
-					<sc-icon style="opacity: 0.65; font-size: 18px;" name="home" slot="prefix"></sc-icon>
+					<sc-icon style="opacity: 0.65; font-size: 18px;" name="server" slot="prefix"></sc-icon>
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</sc-tab>
 				<sc-tab <?php echo 'order' === $active_tab ? 'active' : ''; ?>>
