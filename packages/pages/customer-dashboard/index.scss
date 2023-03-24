@@ -39,6 +39,7 @@ body.page-template-template-surecart-dashboard {
 
     &__user-menu {
       display: none;
+      user-select: none;
     }
 
     &__mobile-menu {
@@ -64,6 +65,7 @@ body.page-template-template-surecart-dashboard {
       width: $sidebar-width;
       box-shadow: -15px 0 30px 0 rgba(0, 0, 0, .18);
       z-index: 0;
+      border-right: 1px solid var(--sc-color-gray-300);
     }
 
     .sc-dashboard {
@@ -131,7 +133,7 @@ body.page-template-template-surecart-dashboard {
     > *  {
       width: 100%;
       max-width: 900px;
-      margin: auto;
+      margin: 0 auto;
     }
   }
 

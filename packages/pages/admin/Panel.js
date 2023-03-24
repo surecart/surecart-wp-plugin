@@ -3,18 +3,43 @@ import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
 import { store as editorStore } from '@wordpress/editor';
 import { useSetting } from '@wordpress/block-editor';
 import {
+	BaseControl,
+	PanelRow,
+	ToggleControl,
 	__experimentalUnitControl as UnitControl,
 	__experimentalUseCustomUnits as useCustomUnits,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 export default () => {
-	const { template, _surecart_dashboard_logo_width } = useSelect((select) => {
-		const meta = select('core/editor').getEditedPostAttribute('meta');
+	const {
+		template,
+		_surecart_dashboard_logo_width,
+		_surecart_dashboard_show_logo,
+		_surecart_dashboard_navigation_orders,
+		_surecart_dashboard_navigation_subscriptions,
+		_surecart_dashboard_navigation_downloads,
+		_surecart_dashboard_navigation_account,
+		_surecart_dashboard_navigation_billing,
+	} = useSelect((select) => {
+		const {
+			_surecart_dashboard_logo_width,
+			_surecart_dashboard_show_logo,
+			_surecart_dashboard_navigation_orders,
+			_surecart_dashboard_navigation_subscriptions,
+			_surecart_dashboard_navigation_downloads,
+			_surecart_dashboard_navigation_account,
+			_surecart_dashboard_navigation_billing,
+		} = select('core/editor').getEditedPostAttribute('meta') || {};
 		return {
 			template: select(editorStore).getEditedPostAttribute('template'),
-			_surecart_dashboard_logo_width:
-				meta?._surecart_dashboard_logo_width,
+			_surecart_dashboard_logo_width,
+			_surecart_dashboard_show_logo,
+			_surecart_dashboard_navigation_orders,
+			_surecart_dashboard_navigation_subscriptions,
+			_surecart_dashboard_navigation_downloads,
+			_surecart_dashboard_navigation_account,
+			_surecart_dashboard_navigation_billing,
 		};
 	});
 
@@ -56,9 +81,9 @@ export default () => {
 				</svg>
 			}
 		>
-			<UnitControl
-				label={__('Logo Width', 'surecart')}
-				value={_surecart_dashboard_logo_width}
+			<ToggleControl
+				label={__('Show Logo', 'surecart')}
+				checked={_surecart_dashboard_logo_width}
 				onChange={(_surecart_dashboard_logo_width) =>
 					editPost({
 						meta: {
@@ -66,8 +91,85 @@ export default () => {
 						},
 					})
 				}
-				units={units}
 			/>
+			{_surecart_dashboard_show_logo && (
+				<UnitControl
+					label={__('Logo Width', 'surecart')}
+					value={_surecart_dashboard_logo_width}
+					onChange={(_surecart_dashboard_logo_width) =>
+						editPost({
+							meta: {
+								_surecart_dashboard_logo_width,
+							},
+						})
+					}
+					units={units}
+				/>
+			)}
+			<PanelRow>
+				<div>
+					<BaseControl.VisualLabel>
+						{__('Navigation', 'surecart')}
+					</BaseControl.VisualLabel>
+					<ToggleControl
+						label={__('Orders', 'surecart')}
+						checked={_surecart_dashboard_navigation_orders}
+						onChange={(_surecart_dashboard_navigation_orders) =>
+							editPost({
+								meta: {
+									_surecart_dashboard_navigation_orders,
+								},
+							})
+						}
+					/>
+					<ToggleControl
+						label={__('Plans', 'surecart')}
+						checked={_surecart_dashboard_navigation_subscriptions}
+						onChange={(
+							_surecart_dashboard_navigation_subscriptions
+						) =>
+							editPost({
+								meta: {
+									_surecart_dashboard_navigation_subscriptions,
+								},
+							})
+						}
+					/>
+					<ToggleControl
+						label={__('Downloads', 'surecart')}
+						checked={_surecart_dashboard_navigation_downloads}
+						onChange={(_surecart_dashboard_navigation_downloads) =>
+							editPost({
+								meta: {
+									_surecart_dashboard_navigation_downloads,
+								},
+							})
+						}
+					/>
+					<ToggleControl
+						label={__('WordPress Account', 'surecart')}
+						checked={_surecart_dashboard_navigation_account}
+						onChange={(_surecart_dashboard_navigation_account) =>
+							editPost({
+								meta: {
+									_surecart_dashboard_navigation_account,
+								},
+							})
+						}
+					/>
+					<ToggleControl
+						label={__('Billing Details', 'surecart')}
+						checked={_surecart_dashboard_navigation_billing}
+						onChange={(_surecart_dashboard_navigation_billing) =>
+							editPost({
+								meta: {
+									_surecart_dashboard_navigation_billing,
+								},
+							})
+						}
+					/>
+				</div>
+			</PanelRow>
 		</PluginDocumentSettingPanel>
 	);
 };

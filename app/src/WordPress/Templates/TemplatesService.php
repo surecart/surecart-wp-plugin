@@ -68,6 +68,29 @@ class TemplatesService {
 				'type'          => 'string',
 			]
 		);
+
+		foreach ( [
+			'show_logo',
+			'navigation_orders',
+			'navigation_subscriptions',
+			'navigation_downloads',
+			'navigation_billing',
+			'navigation_account',
+		] as $toggle ) {
+			register_meta(
+				'post',
+				'_surecart_dashboard_' . $toggle,
+				[
+					'auth_callback' => function( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+						return current_user_can( 'edit_post', $object_id );
+					},
+					'default'       => true,
+					'show_in_rest'  => true,
+					'single'        => true,
+					'type'          => 'boolean',
+				]
+			);
+		}
 	}
 
 	/**
