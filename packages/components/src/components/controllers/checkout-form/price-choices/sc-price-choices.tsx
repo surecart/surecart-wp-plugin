@@ -32,10 +32,8 @@ export class ScPriceChoices {
   @Listen('scChange')
   handleChange() {
     this.el.querySelectorAll('sc-price-choice').forEach(priceChoice => {
-      // get the underlying control
-      const choice = priceChoice.querySelector('sc-choice');
-
-      if (!choice.checked) {
+      const choice = priceChoice.querySelector('sc-choice') || priceChoice.querySelector('sc-choice-container');
+      if (!choice?.checked) {
         this.scRemoveLineItem.emit({ price_id: priceChoice.priceId, quantity: priceChoice.quantity });
       } else {
         const lineItem = getLineItemByPriceId(this.order?.line_items, choice.value);

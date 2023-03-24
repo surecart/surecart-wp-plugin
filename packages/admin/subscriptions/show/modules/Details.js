@@ -23,6 +23,25 @@ export default ({ subscription, customer, product, loading }) => {
 			);
 		}
 
+		if (subscription?.restore_at && subscription?.status === 'canceled') {
+			return (
+				<div>
+					<div>
+						<strong>
+							{sprintf(__('Restores on', 'surecart'))}
+						</strong>
+					</div>
+					<ScFormatDate
+						date={subscription.restore_at}
+						type="timestamp"
+						month="long"
+						day="numeric"
+						year="numeric"
+					></ScFormatDate>
+				</div>
+			);
+		}
+
 		if (
 			subscription?.cancel_at_period_end &&
 			subscription.current_period_end_at

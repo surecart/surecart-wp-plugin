@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sc-order-summary does not render scratch price if the same as amount and collapsed 1`] = `
+exports[`sc-order-summary does not render scratch price amount_due is different than total_amount 1`] = `
 <sc-order-summary>
   <mock:shadow-root>
     <div class="summary">
@@ -18,9 +18,12 @@ exports[`sc-order-summary does not render scratch price if the same as amount an
           <sc-total total="total"></sc-total>
         </span>
       </sc-line-item>
-      <div class="summary__content">
+      <div class="summary__content summary__content--empty" style="overflow: hidden;">
         <slot></slot>
       </div>
+      <p class="empty">
+        Your cart is empty.
+      </p>
     </div>
   </mock:shadow-root>
 </sc-order-summary>
@@ -30,15 +33,18 @@ exports[`sc-order-summary renders 1`] = `
 <sc-order-summary>
   <mock:shadow-root>
     <div class="summary summary--open">
-      <div class="summary__content">
+      <div class="summary__content summary__content--empty" style="overflow: hidden;">
         <slot></slot>
       </div>
+      <p class="empty">
+        Your cart is empty.
+      </p>
     </div>
   </mock:shadow-root>
 </sc-order-summary>
 `;
 
-exports[`sc-order-summary renders scratch price if different from amount and collapsed 1`] = `
+exports[`sc-order-summary renders scratch price if no trial has total savings amount 1`] = `
 <sc-order-summary>
   <mock:shadow-root>
     <div class="summary">
@@ -53,12 +59,16 @@ exports[`sc-order-summary renders scratch price if different from amount and col
           <slot name="description"></slot>
         </span>
         <span class="price price--collapsed" slot="price">
+          <sc-format-number class="scratch-price" currency="usd" type="currency" value="1100"></sc-format-number>
           <sc-total total="total"></sc-total>
         </span>
       </sc-line-item>
-      <div class="summary__content">
+      <div class="summary__content summary__content--empty" style="overflow: hidden;">
         <slot></slot>
       </div>
+      <p class="empty">
+        Your cart is empty.
+      </p>
     </div>
   </mock:shadow-root>
 </sc-order-summary>

@@ -47,8 +47,8 @@ class Block extends BaseBlock {
 		return array_map(
 			function( $item ) {
 				return [
-					'price_id' => $item['id'],
-					'quantity' => $item['quantity'],
+					'price_id' => $item['id'] ?? null,
+					'quantity' => $item['quantity'] ?? 1,
 				];
 			},
 			$line_items ?? []

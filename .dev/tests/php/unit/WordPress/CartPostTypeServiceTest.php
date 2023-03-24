@@ -21,11 +21,6 @@ class CartPostTypeServiceTest extends SureCartUnitTestCase {
 		], false);
 	}
 
-	/**
-	 * @group failing
-	 *
-	 * @return void
-	 */
 	public function test_preventMultipleCartPosts()
 	{
 		// Should be zero.

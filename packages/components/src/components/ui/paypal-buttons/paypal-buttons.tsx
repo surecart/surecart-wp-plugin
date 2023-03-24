@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 
 import apiFetch from '../../../functions/fetch';
 import { hasSubscription } from '../../../functions/line-items';
-import { getCheckout } from '../../../services/session';
+import { fetchCheckout } from '../../../services/session';
 import { Checkout, PaymentIntent } from '../../../types';
 import { getScriptLoadParams } from './functions';
 
@@ -123,7 +123,7 @@ export class ScPaypalButtons {
        */
       onApprove: async () => {
         try {
-          this.order = (await getCheckout({ id: this.order?.id })) as Checkout;
+          this.order = (await fetchCheckout({ id: this.order?.id })) as Checkout;
         } catch (e) {
           console.error(e);
           this.scError.emit({ code: 'could_not_capture', message: __('The payment did not process. Please try again.', 'surecart') });

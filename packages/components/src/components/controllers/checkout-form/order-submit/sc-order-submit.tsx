@@ -1,10 +1,12 @@
 import { Component, Fragment, h, Prop } from '@stencil/core';
+import { checkoutIsLocked } from '@store/checkout/getters';
+import { availableProcessors } from '@store/processors/getters';
+import { state as selectedProcessor } from '@store/selected-processor';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
+
 import { getProcessorData } from '../../../../functions/processor';
 import { Checkout, Processor, ProcessorName } from '../../../../types';
-import { state as selectedProcessor } from '@store/selected-processor';
-import { checkoutIsLocked } from '@store/checkout/getters';
 
 @Component({
   tag: 'sc-order-submit',
@@ -48,16 +50,23 @@ export class ScOrderSubmit {
   /** Currency Code */
   @Prop() currencyCode: string = 'usd';
 
+  /** The selected processor. */
   @Prop() processor: ProcessorName;
 
+  /** Secure */
+  @Prop() secureNoticeText: string;
+
+  /** Show the secure notice */
+  @Prop() secureNotice: boolean = true;
+
   renderPayPalButton(buttons) {
-    const { client_id, account_id, merchant_initiated } = getProcessorData(this.processors, 'paypal', this.mode);
+    const { client_id, account_id, merchant_initiated } = getProcessorData(availableProcessors(), 'paypal', this.mode);
     if (!client_id && !account_id) return null;
 
     return (
       <sc-paypal-buttons
         buttons={buttons}
-        busy={this.busy}
+        busy={this.busy || checkoutIsLocked()}
         mode={this.mode}
         order={this.order}
         merchantInitiated={merchant_initiated}
@@ -93,6 +102,11 @@ export class ScOrderSubmit {
             </span>
           )}
         </sc-button>
+        {this.secureNotice && location.protocol === 'https:' && (
+          <div class="sc-secure-notice">
+            <sc-secure-notice>{this.secureNoticeText || __('This is a secure, encrypted payment.', 'surecart')}</sc-secure-notice>
+          </div>
+        )}
       </Fragment>
     );
   }
