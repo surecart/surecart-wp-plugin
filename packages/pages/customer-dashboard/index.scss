@@ -1,26 +1,53 @@
 $sidebar-width: 325px;
+$gap: var(--sc-spacing-xx-large);
 
 body.page-template-template-surecart-dashboard {
   background: var(--sc-color-gray-50);
   --sc-checkout-font-size: 15px;
   box-sizing: border-box;
 
-  h2.sc-dashboard-title {
-    font-size: var(--sc-font-size-xx-large);
-    line-height: var(--sc-line-height-dense);
+  .dashboard-left {
+    align-self: flex-start;
+    width: 100%;
   }
 
-  .sc-link-home {
-    opacity: 0.65;
-    transition: opacity var(--sc-transition-medium) ease-in-out;
+  .sc-dashboard {
+    display: flex;
+    flex-direction: column;
 
-    &:hover {
-      opacity: 1;
+    &__header,
+    &__column {
+      position: relative;
+      gap: $gap;
     }
-  }
 
-  .sc-user-menu {
-    font-weight: var(--sc-font-weight-semibold);
+    &__column {
+      display: grid;
+      padding: 20px;
+    }
+
+    &__header {
+      display: none;
+    }
+
+    &__header-mobile {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--sc-spacing-small);
+    }
+
+    &__user-menu {
+      display: none;
+    }
+
+    &__mobile-menu {
+      --panel-width: calc(100vw - 5px);
+
+      sc-menu {
+        font-size: 16px;
+      }
+    }
   }
 
   @media screen and (min-width: 782px) {
@@ -38,48 +65,77 @@ body.page-template-template-surecart-dashboard {
       box-shadow: -15px 0 30px 0 rgba(0, 0, 0, .18);
       z-index: 0;
     }
-  }
 
-  sc-columns {
-    position: relative;
-    --sc-form-row-spacing: 45px
-  }
+    .sc-dashboard {
+      flex-direction: row;
 
-  sc-column {
-    margin: 0 !important;
-  }
+      &__header {
+        display: grid;
+      }
+      &__header-mobile {
+        display: none;
+      }
+      &__user-menu {
+        display: block;
+        font-weight: var(--sc-font-weight-semibold);
+      }
+      &__column {
+        padding: 40px;
+      }
+    }
 
-  .dashboard-right {
-    padding: 40px;
-    --sc-column-content-width: 900px;
-    --sc-form-row-spacing: var(--sc-spacing-small);
-  }
-
-  .sc-pin-bottom {
-    margin-top: auto;
-    display: grid;
-    gap: var(--sc-spacing-xx-small);
-  }
-}
-
-
-@media screen and (min-width: 782px) {
-  body.page-template-template-surecart-dashboard {
     .dashboard-left {
       flex: 0 0 $sidebar-width;
-      border-style: none;
-      border-width: 0px;
-      padding: 40px;
+      border: none;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      position: sticky;
+      top: 0;
     }
 
     &.admin-bar {
-      sc-column.dashboard-left.is-sticky {
+      .dashboard-left {
         top: 32px;
         min-height: calc(100vh - 32px);
       }
     }
+
+    .sc-dashboard-header {
+      display: flex !important;
+    }
+    .sc-user-menu {
+      display: block !important;
+    }
+    .sc-dashboard-header-mobile {
+      display: none !important;
+    }
+  }
+
+  .sc-link-home {
+    opacity: 0.65;
+    transition: opacity var(--sc-transition-medium) ease-in-out;
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .sc-user-menu {
+    font-weight: var(--sc-font-weight-semibold);
+  }
+
+  .dashboard-right {
+    flex:1;
+    --sc-form-row-spacing: var(--sc-spacing-small);
+
+    > *  {
+      width: 100%;
+      max-width: 900px;
+      margin: auto;
+    }
+  }
+
+  .sc-pin-bottom {
+    margin-top: auto;
   }
 }

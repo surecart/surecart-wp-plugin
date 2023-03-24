@@ -23,6 +23,103 @@ $active_tab    = esc_html( $_GET['model'] ?? 'dashboard' );
 <body <?php body_class(); ?>>
 	<?php do_action( 'surecart_template_dashboard_body_open' ); ?>
 
+	<div class="sc-dashboard">
+		<div class="sc-dashboard__column dashboard-left is-sticky">
+			<div class="sc-dashboard__back">
+				<sc-button href="<?php echo esc_url( get_home_url() ); ?>" type="text" class="sc-link-home">
+					<sc-icon name="arrow-left" slot="prefix"></sc-icon>
+					<?php esc_html_e( 'Back Home' ); ?>
+				</sc-button>
+			</div>
+
+			<header class="sc-dashboard__header">
+				<div class="sc-dashboard__logo">
+					<?php
+					\SureCart::render(
+						'layouts/partials/store-logo',
+						[
+							'logo_width' => $logo_width,
+						]
+					);
+					?>
+				</div>
+
+				<?php
+				\SureCart::render(
+					'layouts/partials/customer-dashboard/dashboard-navigation',
+					[
+						'active_tab' => esc_html( $_GET['model'] ?? 'dashboard' ),
+					]
+				);
+				?>
+			</header>
+
+			<header class="sc-dashboard__header-mobile">
+				<div class="sc-dashboard__logo">
+					<?php
+					\SureCart::render(
+						'layouts/partials/store-logo',
+						[
+							'logo_width' => $logo_width,
+						]
+					);
+					?>
+				</div>
+				<sc-dropdown class="sc-dashboard__mobile-menu" placement="bottom-right">
+					<sc-button circle slot="trigger"><sc-icon name="menu"></sc-icon></sc-button>
+					<?php
+					\SureCart::render(
+						'layouts/partials/customer-dashboard/dashboard-navigation',
+						[
+							'active_tab'   => esc_html( $_GET['model'] ?? 'dashboard' ),
+							'is_mobile'    => true,
+							'show_account' => true,
+						]
+					);
+					?>
+				</sc-dropdown>
+			</header>
+
+			<div class="sc-dashboard__user-menu sc-pin-bottom">
+				<sc-dropdown style="width: 100%;" placement="top-right">
+					<sc-flex  align-items="center" justify-content="space-between" slot="trigger" style="<?php echo isset( $attributes['color'] ) ? 'color:' . esc_attr( $attributes['color'] ) . ';' : ''; ?>">
+						<sc-flex align-items="center" justify-content="space-between">
+							<sc-avatar image="<?php echo esc_url( get_avatar_url( $user->user_email, [ 'default' => '404' ] ) ); ?>" style="--sc-avatar-size: 34px" initials="<?php echo esc_attr( substr( $user->display_name, 0, 1 ) ); ?>"></sc-avatar>
+							<?php echo esc_html( $current_user->display_name ); ?>
+						</sc-flex>
+						<sc-icon name="chevron-up"></sc-icon>
+					</sc-flex>
+
+					<sc-menu>
+						<sc-menu-item>
+							<sc-icon name="credit-card" slot="prefix" style="opacity: 0.65;"></sc-icon>
+							<?php echo esc_html_e( 'Billing', 'surecart' ); ?>
+						</sc-menu-item>
+						<sc-menu-item>
+							<sc-icon name="user" slot="prefix" style="opacity: 0.65;"></sc-icon>
+							<?php echo esc_html_e( 'Account', 'surecart' ); ?>
+						</sc-menu-item>
+						<sc-menu-divider></sc-menu-divider>
+						<sc-menu-item>
+							<sc-icon name="log-out" slot="prefix" style="opacity: 0.65;"></sc-icon>
+							<?php echo esc_html_e( 'Log Out', 'surecart' ); ?>
+						</sc-menu-item>
+					</sc-menu>
+				</sc-dropdown>
+			</div>
+		</div>
+
+		<div class="sc-dashboard__column dashboard-right">
+			<?php
+			while ( have_posts() ) :
+				the_post();
+				the_content();
+				endwhile;
+			?>
+		</div>
+	</div>
+
+	<!--
 	<sc-columns is-stacked-on-mobile="1" is-full-height class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right is-full-height is-sticky" style="gap:0px 0px;">
 		<sc-column class="dashboard-left is-sticky">
 			<div style="margin-bottom: var(--sc-spacing-x-large)">
@@ -32,37 +129,55 @@ $active_tab    = esc_html( $_GET['model'] ?? 'dashboard' );
 				</sc-button>
 			</div>
 
-			<div class="sc-buy-logo">
-				<?php if ( $logo_url ) : ?>
-					<img src="<?php echo esc_url( $logo_url ); ?>"
-						style="max-width: <?php echo esc_attr( $logo_width ?? '130px' ); ?>; width: 100%; height: auto;"
-						alt="<?php echo esc_attr( get_bloginfo() ); ?>"
-					/>
-				<?php else : ?>
-					<sc-text style="--font-size: var(--sc-font-size-xx-large); --font-weight: var(--sc-font-weight-bold)"><?php echo esc_html( get_bloginfo() ); ?></sc-text>
-				<?php endif; ?>
-			</div>
+			<header class="sc-dashboard-header">
+				<div class="sc-dashboard-logo">
+					<?php
+					\SureCart::render(
+						'layouts/partials/store-logo',
+						[
+							'logo_width' => $logo_width,
+						]
+					);
+					?>
+				</div>
 
-			<sc-spacing style="--spacing: var(--sc-spacing-xx-small);">
-				<sc-tab href="<?php echo esc_url( $dashboard_url ); ?>" <?php echo 'dashboard' === $active_tab ? 'active' : ''; ?>>
-					<sc-icon style="opacity: 0.65; font-size: 18px;" name="server" slot="prefix"></sc-icon>
-					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
-				</sc-tab>
-				<sc-tab <?php echo 'order' === $active_tab ? 'active' : ''; ?>>
-				<sc-icon  style="opacity: 0.65; font-size: 18px;" name="shopping-bag" slot="prefix"></sc-icon>
-					<?php esc_html_e( 'Orders', 'surecart' ); ?>
-				</sc-tab>
-				<sc-tab <?php echo 'subscription' === $active_tab ? 'active' : ''; ?>>
-					<sc-icon style="opacity: 0.65; font-size: 18px;" name="repeat" slot="prefix"></sc-icon>
-					<?php esc_html_e( 'Plans', 'surecart' ); ?>
-				</sc-tab>
-				<sc-tab <?php echo 'download' === $active_tab ? 'active' : ''; ?>>
-					<sc-icon style="opacity: 0.65; font-size: 18px;" name="download-cloud" slot="prefix"></sc-icon>
-					<?php esc_html_e( 'Downloads', 'surecart' ); ?>
-				</sc-tab>
-			</sc-spacing>
+				<?php
+				\SureCart::render(
+					'layouts/partials/customer-dashboard/dashboard-navigation',
+					[
+						'active_tab' => esc_html( $_GET['model'] ?? 'dashboard' ),
+					]
+				);
+				?>
+			</header>
 
-			<div class="sc-pin-bottom">
+			<header class="sc-dashboard-header-mobile">
+				<div class="sc-dashboard-logo">
+					<?php
+					\SureCart::render(
+						'layouts/partials/store-logo',
+						[
+							'logo_width' => $logo_width,
+						]
+					);
+					?>
+				</div>
+				<sc-dropdown class="sc-mobile-menu" placement="bottom-right">
+					<sc-button circle slot="trigger"><sc-icon name="menu"></sc-icon></sc-button>
+					<?php
+					\SureCart::render(
+						'layouts/partials/customer-dashboard/dashboard-navigation',
+						[
+							'active_tab'   => esc_html( $_GET['model'] ?? 'dashboard' ),
+							'is_mobile'    => true,
+							'show_account' => true,
+						]
+					);
+					?>
+				</sc-dropdown>
+			</header>
+
+			<div class="sc-user-menu sc-pin-bottom">
 				<sc-dropdown style="width: 100%;" placement="top-right">
 					<sc-flex class="sc-user-menu" align-items="center" justify-content="space-between" slot="trigger" style="<?php echo isset( $attributes['color'] ) ? 'color:' . esc_attr( $attributes['color'] ) . ';' : ''; ?>">
 						<sc-flex align-items="center" justify-content="space-between">
@@ -101,6 +216,7 @@ $active_tab    = esc_html( $_GET['model'] ?? 'dashboard' );
 			?>
 		</sc-column>
 	</sc-columns>
+		-->
 
 	<?php wp_footer(); ?>
 </body>
