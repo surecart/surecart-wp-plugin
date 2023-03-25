@@ -2,13 +2,13 @@ import { InnerBlocks } from '@wordpress/block-editor';
 
 export default () => {
 	return (
-		<div
+		<sc-tab-group
 			style={{
 				'font-size': '16px',
 				'font-family': 'var(--sc-font-sans)',
 			}}
 		>
 			<InnerBlocks.Content />
-		</div>
+		</sc-tab-group>
 	);
 };

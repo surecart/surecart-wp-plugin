@@ -5,8 +5,8 @@
 	"description": "Lets the customer update payment methods.",
 	"category": "surecart",
 	"keywords": ["name", "customer", "dashboard"],
-  "textdomain": "surecart",
-	"ancestor": ["surecart/customer-dashboard"],
+	"textdomain": "surecart",
+	"ancestor": ["surecart/dashboard-page"],
 	"supports": {
 		"reusable": false,
 		"html": false

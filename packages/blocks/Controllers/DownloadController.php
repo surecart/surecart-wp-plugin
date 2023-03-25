@@ -54,22 +54,38 @@ class DownloadController extends BaseController {
 			return;
 		}
 
-		return wp_kses_post(
-			Component::tag( 'sc-orders-list' )
-			->id( 'customer-orders-index' )
-			->with(
-				[
-					'heading' => __( 'Order History', 'surecart' ),
-					'isCustomer' => User::current()->isCustomer(),
-					'query'   => [
-						'customer_ids' => array_values( User::current()->customerIds() ),
-						'status'       => [ 'paid' ],
-						'page'         => 1,
-						'per_page'     => 10,
-					],
-				]
-			)->render()
-		);
+		ob_start(); ?>
+		<sc-spacing style="--spacing: var(--sc-spacing-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>">
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
+					<?php esc_html_e( 'Downloads', 'surecart' ); ?>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
+
+			<?php
+			echo wp_kses_post(
+				Component::tag( 'sc-dashboard-downloads-list' )
+				->id( 'customer-downloads-preview' )
+				->with(
+					[
+						'requestNonce' => wp_create_nonce( 'customer-download' ),
+						'isCustomer'   => User::current()->isCustomer(),
+						'query'        => [
+							'customer_ids' => array_values( User::current()->customerIds() ),
+							'page'         => 1,
+							'per_page'     => 10,
+						],
+					]
+				)->render( ! empty( $attributes['title'] ) ? "<span slot='heading'>" . $attributes['title'] . '</span>' : '' )
+			);
+			?>
+		</sc-spacing>
+
+		<?php
+		return ob_get_clean();
 	}
 
 	public function show() {
@@ -83,7 +99,8 @@ class DownloadController extends BaseController {
 			return null;
 		}
 
-		ob_start(); ?>
+		ob_start();
+		?>
 
 		<sc-spacing style="--spacing: var(--sc-spacing-large)">
 			<sc-breadcrumbs>

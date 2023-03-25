@@ -18,7 +18,7 @@ body.page-template-template-surecart-dashboard {
     &__header,
     &__column {
       position: relative;
-      gap: $gap;
+      gap: var(--sc-spacing-small);
     }
 
     &__column {
@@ -49,6 +49,10 @@ body.page-template-template-surecart-dashboard {
         font-size: 16px;
       }
     }
+
+    &__back {
+      order: -1;
+    }
   }
 
   @media screen and (min-width: 782px) {
@@ -65,24 +69,35 @@ body.page-template-template-surecart-dashboard {
       width: $sidebar-width;
       box-shadow: -15px 0 30px 0 rgba(0, 0, 0, .18);
       z-index: 0;
-      border-right: 1px solid var(--sc-color-gray-300);
     }
 
     .sc-dashboard {
       flex-direction: row;
 
+      &__header,
+      &__column {
+        gap: $gap;
+      }
+
       &__header {
         display: grid;
       }
+
       &__header-mobile {
         display: none;
       }
+
       &__user-menu {
         display: block;
         font-weight: var(--sc-font-weight-semibold);
       }
+
       &__column {
         padding: 40px;
+      }
+
+      &__back {
+        order: initial;
       }
     }
 
@@ -132,7 +147,7 @@ body.page-template-template-surecart-dashboard {
 
     > *  {
       width: 100%;
-      max-width: 900px;
+      max-width: 800px;
       margin: 0 auto;
     }
   }
