@@ -4,6 +4,7 @@ import {
 	ScChoice,
 	ScChoices,
 	ScDialog,
+	ScIcon,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import apiFetch from '@wordpress/api-fetch';
@@ -19,44 +20,36 @@ import { addQueryArgs } from '@wordpress/url';
 const CHOOSE_PAUSE_BEHAVIOR_SECTION = 1;
 const CHOOSE_DATE_SECTION = 2;
 
-export default ({ open, onRequestClose, currentPeriodEndAt }) => {
+export default ({ open, onRequestClose, currentPeriodEndAt, subscription }) => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 	const { invalidateResolutionForStore } = useDispatch(coreStore);
-	const [pauseParams, setPauseParams] = useState({
-		pauseUntil: new Date(),
-		pauseBehavior: 'pending',
-	});
+	const [cancelBehavior, setCancelBehavior] = useState('pending');
+	const [pauseUntil, setPauseUntil] = useState(new Date());
 	const [section, setSection] = useState(CHOOSE_PAUSE_BEHAVIOR_SECTION);
 
 	const cancel = () => {
-		setPauseParams({
-			pauseUntil: new Date(),
-			pauseBehavior: 'pending',
-		});
+		setCancelBehavior('pending');
+		setPauseUntil(new Date());
 		onRequestClose();
 		setSection(CHOOSE_PAUSE_BEHAVIOR_SECTION);
 	};
 
 	const onUpdatePauseUntil = async () => {
-		if (section !== CHOOSE_DATE_SECTION) {
-			setSection(CHOOSE_DATE_SECTION);
-			return;
-		}
+		if (!pauseUntil) return;
 
-		if (!pauseParams.pauseUntil) return;
 		try {
 			setLoading(true);
 			await apiFetch({
 				method: 'PATCH',
 				path: addQueryArgs(`surecart/v1/subscriptions/${id}/cancel`, {
-					cancel_behavior: pauseParams.pauseBehavior,
+					cancel_behavior: cancelBehavior,
 				}),
 				data: {
-					restore_at: Date.parse(pauseParams.pauseUntil) / 1000,
+					restore_at: Date.parse(pauseUntil) / 1000,
 				},
 			});
 
@@ -73,18 +66,76 @@ export default ({ open, onRequestClose, currentPeriodEndAt }) => {
 				e?.message || __('Something went wrong', 'surecart'),
 				{ type: 'snackbar' }
 			);
+			(e?.additional_errors || []).forEach((e) => {
+				createErrorNotice(
+					e?.message || __('Something went wrong', 'surecart'),
+					{ type: 'snackbar' }
+				);
+			});
 		} finally {
 			setLoading(false);
 		}
 	};
 
-	const onCancelButtonClick = () => {
-		if (section !== CHOOSE_PAUSE_BEHAVIOR_SECTION) {
-			setSection(CHOOSE_PAUSE_BEHAVIOR_SECTION);
-			return;
-		}
-		cancel();
-	};
+	if (section === CHOOSE_PAUSE_BEHAVIOR_SECTION) {
+		return (
+			<ScDialog
+				label={__('Pause Subscription', 'surecart')}
+				open={open}
+				onScRequestClose={cancel}
+				style={{
+					'--width': '23rem',
+					'--body-spacing': 'var(--sc-spacing-medium)',
+					'--footer-spacing': 'var(--sc-spacing-medium)',
+				}}
+			>
+				<Error error={error} setError={setError} />
+
+				<ScChoices>
+					{currentPeriodEndAt !== null && (
+						<ScChoice
+							name="pause_behavior"
+							checked={cancelBehavior === 'pending'}
+							value="pending"
+							onClick={() => setCancelBehavior('pending')}
+						>
+							{__('At end of current period', 'surecart')}
+							<div slot="description">
+								{__(
+									'Let customer finish their current period',
+									'surecart'
+								)}
+							</div>
+						</ScChoice>
+					)}
+
+					<ScChoice
+						name="pause_behavior"
+						value="immediate"
+						checked={cancelBehavior === 'immediate'}
+						onClick={() => setCancelBehavior('immediate')}
+					>
+						{__('Immediately', 'surecart')}
+						<div slot="description">
+							{__(
+								'This will revoke access immediately',
+								'surecart'
+							)}
+						</div>
+					</ScChoice>
+				</ScChoices>
+
+				<ScButton
+					type="primary"
+					slot="footer"
+					onClick={() => setSection(CHOOSE_DATE_SECTION)}
+				>
+					{__('Next', 'surecart')}
+					<ScIcon name="arrow-right" slot="suffix" />
+				</ScButton>
+			</ScDialog>
+		);
+	}
 
 	return (
 		<ScDialog
@@ -94,100 +145,48 @@ export default ({ open, onRequestClose, currentPeriodEndAt }) => {
 			style={{
 				'--width': '23rem',
 				'--body-spacing':
-					section === CHOOSE_DATE_SECTION
-						? 'var(--sc-spacing-xx-large) var(--sc-spacing-xx-large) 0 var(--sc-spacing-xx-large)'
-						: 'var(--sc-spacing-medium)',
-				'--footer-spacing':
-					section === CHOOSE_DATE_SECTION
-						? 'var(--sc-spacing-xx-large)'
-						: 'var(--sc-spacing-medium)',
+					'var(--sc-spacing-xx-large) var(--sc-spacing-xx-large) 0 var(--sc-spacing-xx-large)',
+				'--footer-spacing': 'var(--sc-spacing-xx-large)',
 			}}
 		>
 			<Error error={error} setError={setError} />
-			{section === CHOOSE_PAUSE_BEHAVIOR_SECTION ? (
-				<ScChoices
-					label={__(
-						'When do you want to pause the subscription?',
-						'surecart'
-					)}
-				>
-					<div>
-						<ScChoice
-							name="pause_behavior"
-							value="immediate"
-							checked={pauseParams.pauseBehavior === 'immediate'}
-							onClick={() =>
-								setPauseParams({
-									...pauseParams,
-									pauseBehavior: 'immediate',
-								})
-							}
-						>
-							{__('Immediately', 'surecart')}
-							<div slot="description">
-								This will revoke access immediately
-							</div>
-						</ScChoice>
-						{currentPeriodEndAt !== null && (
-							<ScChoice
-								name="pause_behavior"
-								checked={
-									pauseParams.pauseBehavior === 'pending'
-								}
-								value="pending"
-								onClick={() =>
-									setPauseParams({
-										...pauseParams,
-										pauseBehavior: 'pending',
-									})
-								}
-							>
-								{__('	At end of current period', 'surecart')}
-							</ScChoice>
-						)}
-					</div>
-				</ScChoices>
-			) : (
-				<DateTimePicker
-					currentDate={pauseParams.pauseUntil}
-					onChange={(pauseUntil) =>
-						setPauseParams({ ...pauseParams, pauseUntil })
+
+			<DateTimePicker
+				currentDate={pauseUntil}
+				onChange={(pauseUntil) => setPauseUntil(pauseUntil)}
+				isInvalidDate={(date) => {
+					if (
+						cancelBehavior === 'pending' &&
+						subscription?.current_period_end_at
+					) {
+						return (
+							Date.parse(
+								new Date(
+									subscription?.current_period_end_at * 1000
+								)
+							) > Date.parse(date)
+						);
 					}
-					isInvalidDate={(date) => {
-						return Date.parse(new Date()) > Date.parse(date);
-					}}
-				/>
-			)}
+					return Date.parse(new Date()) > Date.parse(date);
+				}}
+			/>
 
 			<ScButton
 				type="text"
 				slot="footer"
-				onClick={onCancelButtonClick}
+				onClick={() => setSection(CHOOSE_PAUSE_BEHAVIOR_SECTION)}
 				disabled={loading}
 			>
-				{__(
-					section === CHOOSE_PAUSE_BEHAVIOR_SECTION
-						? 'Cancel'
-						: 'Back',
-					'surecart'
-				)}
+				{__('Back', 'surecart')}
 			</ScButton>
 
 			<ScButton
 				type="primary"
 				slot="footer"
 				onClick={() => onUpdatePauseUntil()}
-				disabled={
-					section === CHOOSE_DATE_SECTION &&
-					(loading || pauseParams.pauseUntil <= new Date())
-				}
+				disabled={loading || pauseUntil <= new Date()}
 			>
-				{__(
-					section === CHOOSE_PAUSE_BEHAVIOR_SECTION
-						? 'Next'
-						: 'Pause',
-					'surecart'
-				)}
+				{__('Pause', 'surecart')}
 			</ScButton>
 
 			{loading && (
