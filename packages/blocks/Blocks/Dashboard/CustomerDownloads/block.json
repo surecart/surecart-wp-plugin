@@ -5,7 +5,7 @@
 	"category": "surecart",
 	"keywords": ["download", "customer", "dashboard"],
 	"textdomain": "surecart",
-	"ancestor": ["surecart/dashboard-page"],
+	"ancestor": ["surecart/dashboard-page", "surecart/dashboard-area"],
 	"supports": {
 		"reusable": false,
 		"html": false,

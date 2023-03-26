@@ -1,10 +1,10 @@
 {
 	"name": "surecart/customer-dashboard",
-	"title": "Customer Dashboard",
+	"title": "Customer Dashboard Tabs",
 	"description": "Displays the users customer dashboard.",
 	"category": "surecart",
 	"keywords": ["name", "customer", "dashboard"],
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"parent": null,
 	"supports": {
 		"reusable": false,
