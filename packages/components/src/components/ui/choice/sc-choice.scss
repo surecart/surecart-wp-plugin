@@ -55,6 +55,7 @@
     display: inline-block;
     font-weight: var(--sc-input-label-font-weight);
     font-size: var(--sc-input-label-font-size-medium);
+    white-space: nowrap;
   }
 
   &--size-small {
@@ -176,6 +177,8 @@
   .choice__price {
     text-align: right;
     margin: 0;
+    display: flex;
+    gap: var(--sc-spacing-xx-small);
   }
 }
 
@@ -183,6 +186,7 @@
   display: inline-block;
   color: var(--sc-color-gray-500);
   font-size: var(--sc-font-size-medium);
+  white-space: nowrap;
 }
 
 .choice__label-text {
@@ -191,11 +195,9 @@
   display: flex;
   flex-direction: column;
   gap: 0.2em;
-  flex: 1 0 200px;
+  flex: 1;
 }
 
 .choice__price {
   display: block;
-  white-space: nowrap;
-  margin-left: 20px;
 }

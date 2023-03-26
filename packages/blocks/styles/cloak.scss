@@ -76,6 +76,14 @@ sc-tab-group, sc-tab {
 }
 
 //// columns
+sc-column {
+  &:not(.hydrated),
+  &:not(:defined) {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
 sc-columns {
 	display: flex;
 	box-sizing: border-box;

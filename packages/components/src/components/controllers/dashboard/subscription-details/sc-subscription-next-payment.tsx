@@ -2,7 +2,7 @@ import { Component, h, Prop, State, Host, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
-import { intervalString } from '../../../../functions/price';
+import { intervalString, translateRemainingPayments } from '../../../../functions/price';
 import { formatTaxDisplay } from '../../../../functions/tax';
 import { Checkout, Period, Product, ResponseError, Subscription } from '../../../../types';
 
@@ -97,6 +97,7 @@ export class ScSubscriptionNextPayment {
                 <strong>
                   <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.amount_due} />
                 </strong>{' '}
+                {!!this.subscription?.finite && ' - ' + translateRemainingPayments(this.subscription?.remaining_period_count)}
               </div>
             </sc-subscription-details>
           </span>
