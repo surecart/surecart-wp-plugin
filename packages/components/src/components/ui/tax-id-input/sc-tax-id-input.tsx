@@ -30,19 +30,19 @@ export class ScTaxIdInput {
   @Prop() help: string;
 
   /** Other zones label */
-  @Prop() otherLabel: string = __('Tax ID','surecart');
+  @Prop() otherLabel: string = __('Tax ID', 'surecart');
 
   /** GST zone label */
-  @Prop() caGstLabel: string = __('GST Number','surecart');
+  @Prop() caGstLabel: string = __('GST Number', 'surecart');
 
   /** AU zone label */
-  @Prop() auAbnLabel: string = __('ABN Number','surecart');
+  @Prop() auAbnLabel: string = __('ABN Number', 'surecart');
 
   /** UK zone label */
-  @Prop() gbVatLabel: string = __('UK VAT','surecart');
+  @Prop() gbVatLabel: string = __('UK VAT', 'surecart');
 
   /** EU zone label */
-  @Prop() euVatLabel: string = __('EU VAT','surecart');
+  @Prop() euVatLabel: string = __('EU VAT', 'surecart');
 
   /** Make a request to update the order. */
   @Event() scChange: EventEmitter<{ number: string; number_type: string }>;
@@ -69,7 +69,6 @@ export class ScTaxIdInput {
   @Watch('gbVatLabel')
   @Watch('euVatLabel')
   onLabelChange() {
-    console.log("props",this.otherLabel,"zones",zones.other)
     zones.ca_gst.label = this.caGstLabel || zones.ca_gst.label;
     zones.au_abn.label = this.auAbnLabel || zones.au_abn.label;
     zones.gb_vat.label = this.gbVatLabel || zones.gb_vat.label;
