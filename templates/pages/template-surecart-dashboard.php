@@ -86,7 +86,10 @@ $data       = $controller->getData();
 							?>
 						<?php endforeach; ?>
 
-						<sc-menu-divider></sc-menu-divider>
+						<?php if ( ! empty( $data['account_navigation'] ) ) : ?>
+							<sc-menu-divider></sc-menu-divider>
+						<?php endif; ?>
+
 						<sc-menu-item>
 							<sc-icon name="log-out" slot="prefix" style="opacity: 0.65;"></sc-icon>
 							<?php echo esc_html_e( 'Log Out', 'surecart' ); ?>

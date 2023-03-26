@@ -83,16 +83,16 @@ export default () => {
 		>
 			<ToggleControl
 				label={__('Show Logo', 'surecart')}
-				checked={_surecart_dashboard_logo_width}
-				onChange={(_surecart_dashboard_logo_width) =>
+				checked={_surecart_dashboard_show_logo}
+				onChange={(_surecart_dashboard_show_logo) =>
 					editPost({
 						meta: {
-							_surecart_dashboard_logo_width,
+							_surecart_dashboard_show_logo,
 						},
 					})
 				}
 			/>
-			{_surecart_dashboard_show_logo && (
+			{!!_surecart_dashboard_show_logo && (
 				<UnitControl
 					label={__('Logo Width', 'surecart')}
 					value={_surecart_dashboard_logo_width}
@@ -106,6 +106,7 @@ export default () => {
 					units={units}
 				/>
 			)}
+
 			<PanelRow>
 				<div>
 					<BaseControl.VisualLabel>
