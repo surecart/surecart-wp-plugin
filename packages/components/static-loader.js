@@ -14,10 +14,11 @@ const surecartDomReady = function (callback) {
   document.readyState === 'interactive' || document.readyState === 'complete' ? callback() : document.addEventListener('DOMContentLoaded', callback);
 };
 surecartDomReady(function () {
-  if (window.surecartComponents && window.surecartComponents.url) {
+  const url = window?.surecartComponents?.url || window?.parent?.surecartComponents?.url;
+  if (url) {
     var script = document.createElement('script');
     script.type = 'module';
-    script.src = window.surecartComponents.url;
+    script.src = url;
     document.getElementsByTagName('head')[0].appendChild(script);
   }
 });
