@@ -144,11 +144,12 @@ body.page-template-template-surecart-dashboard {
   .dashboard-right {
     flex:1;
     --sc-form-row-spacing: var(--sc-spacing-small);
+    grid-template-rows: auto 1fr;
 
     > *  {
       width: 100%;
       max-width: 900px;
-      margin: auto;
+      margin: 0 auto;
     }
   }
 
