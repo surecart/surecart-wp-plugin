@@ -730,6 +730,10 @@ export namespace Components {
          */
         "loading": boolean;
         "names": Partial<Address>;
+        /**
+          * Placeholders
+         */
+        "placeholders": Partial<Address>;
         "reportValidity": () => Promise<boolean>;
         /**
           * Is this required?
@@ -5557,6 +5561,10 @@ declare namespace LocalJSX {
           * Address input event.
          */
         "onScInputAddress"?: (event: ScCompactAddressCustomEvent<Partial<Address>>) => void;
+        /**
+          * Placeholders
+         */
+        "placeholders"?: Partial<Address>;
         /**
           * Is this required?
          */
