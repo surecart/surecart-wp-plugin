@@ -4,7 +4,6 @@ import {
 	useBlockProps,
 	useInnerBlocksProps as __stableUseInnerBlocksProps,
 	__experimentalUseInnerBlocksProps,
-  InnerBlocks
 } from '@wordpress/block-editor';
 import { createBlock } from '@wordpress/blocks';
 import { useDispatch, useSelect } from '@wordpress/data';
@@ -111,9 +110,9 @@ export default ({ clientId }) => {
 	});
 
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
-		// orientation: 'horizontal',
-		renderAppender: InnerBlocks.ButtonBlockAppender,
-		// template: TEMPLATE,
+		orientation: 'horizontal',
+		renderAppender: false,
+		template: TEMPLATE,
 	});
 
 	const { tabBlocks, panelBlocks, panelsWrapper, tabsWrapper } = useSelect(
@@ -144,7 +143,6 @@ export default ({ clientId }) => {
 	const previousPanelBlocks = useRef(panelBlocks);
 
 	useEffect(() => {
-    return;
 		// sync panel
 		(tabBlocks || []).forEach((tabBlock) => {
 			const panelBlock = panelBlocks.find(
@@ -239,7 +237,7 @@ export default ({ clientId }) => {
 	}, [tabBlocks, panelBlocks]);
 
 	return (
-		<div
+		<ScTabGroup
 			{...innerBlocksProps}
 			css={css`
 				.block-list-appender {
@@ -253,6 +251,6 @@ export default ({ clientId }) => {
 					}
 				}
 			`}
-		></div>
+		></ScTabGroup>
 	);
 };
