@@ -4,7 +4,11 @@ $gap: var(--sc-spacing-xx-large);
 body.page-template-template-surecart-dashboard {
   background: var(--sc-color-gray-50);
   --sc-checkout-font-size: 15px;
-  box-sizing: border-box;
+  font-size: 15px;
+
+  * {
+    box-sizing: border-box;
+  }
 
   .dashboard-left {
     align-self: flex-start;
