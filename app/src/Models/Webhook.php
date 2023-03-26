@@ -69,7 +69,7 @@ class Webhook extends Model {
 					// 'subscription.made_active', // In doc
 					// 'subscription.made_past_due',
 					// 'subscription.made_trialing', // In doc
-					// 'subscription.renewed',
+					'subscription.renewed', // needed for AffiliateWP recurring referrals.
 					// 'subscription.updated',
 				],
 			]
