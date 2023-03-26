@@ -32,22 +32,13 @@ class BuyPageController {
 		'surecart/payment',
 	];
 
+
 	/**
 	 * Handle filters.
 	 *
 	 * @return void
 	 */
 	public function filters() {
-		// it's not a 404 page.
-		global $wp_query;
-		$wp_query->is_404 = false;
-
-		// set the canonical url.
-		add_filter( 'get_canonical_url', [ $this, 'maybeSetUrl' ] );
-		// set the shortlink.
-		add_filter( 'get_shortlink', [ $this, 'maybeSetUrl' ] );
-		// set the post link.
-		add_filter( 'post_link', [ $this, 'maybeSetUrl' ] );
 		// set the document title.
 		add_filter( 'document_title_parts', [ $this, 'documentTitle' ] );
 		// disallow pre title filter.
@@ -103,6 +94,8 @@ class BuyPageController {
 	 * @return function
 	 */
 	public function show( $request, $view, $id ) {
+		$id = get_query_var( 'sc_checkout_product_id' );
+
 		// fetch the product by id/slug.
 		$this->product = \SureCart\Models\Product::with( [ 'image', 'prices' ] )->find( $id );
 		if ( is_wp_error( $this->product ) ) {
