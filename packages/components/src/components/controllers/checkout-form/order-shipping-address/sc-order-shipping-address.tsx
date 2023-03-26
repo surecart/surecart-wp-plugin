@@ -147,6 +147,15 @@ export class ScOrderShippingAddress {
         required={this.required}
         loading={this.loading}
         address={this.address}
+        placeholders={{
+          name: this.namePlaceholder,
+          country: this.countryPlaceholder,
+          city: this.cityPlaceholder,
+          line_1: this.line1Placeholder,
+          line_2: this.line2Placeholder,
+          postal_code: this.postalCodePlaceholder,
+          state: this.statePlaceholder,
+        }}
         onScChangeAddress={e => this.updateAddressState(e.detail)}
       ></sc-compact-address>
     );
