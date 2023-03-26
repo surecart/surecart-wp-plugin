@@ -1,5 +1,8 @@
 import { Component, Event, EventEmitter, h, Method, Prop, State, Watch } from '@stencil/core';
+import { state as checkoutState } from '@store/checkout';
+import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { __ } from '@wordpress/i18n';
+import { createOrUpdateCheckout } from '../../../../services/session';
 import { openWormhole } from 'stencil-wormhole';
 
 import { Address, Checkout, TaxStatus } from '../../../../types';
@@ -86,14 +89,22 @@ export class ScOrderShippingAddress {
     }
   }
 
-  updateAddressState(address: Partial<Address>) {
+  async updateAddressState(address: Partial<Address>) {
     if (JSON.stringify(address) === JSON.stringify(this.address)) return; // no change, don't update.
     this.address = address;
-    this.scUpdateOrder.emit({
-      data: {
-        shipping_address: this.address as Address,
-      },
-    });
+    try {
+      lockCheckout('shipping-address');
+      checkoutState.checkout = (await createOrUpdateCheckout({
+        id: checkoutState.checkout.id,
+        data: {
+          shipping_address: this.address as Address,
+        },
+      })) as Checkout;
+    } catch (e) {
+      console.error(e);
+    } finally {
+      unLockCheckout('shipping-address');
+    }
   }
 
   @Method()
@@ -156,6 +167,7 @@ export class ScOrderShippingAddress {
           postal_code: this.postalCodePlaceholder,
           state: this.statePlaceholder,
         }}
+        label={this.label}
         onScChangeAddress={e => this.updateAddressState(e.detail)}
       ></sc-compact-address>
     );

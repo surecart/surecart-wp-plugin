@@ -2,6 +2,7 @@ import { ScFormatDate } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
 export default ({ subscription }) => {
+	if (subscription?.status === 'canceled') return null;
 	if (subscription?.current_period_end_at == null) {
 		return (
 			<div>

@@ -90,7 +90,7 @@ class ScriptsService {
 			);
 		}
 
-		wp_set_script_translations( 'surecart-components', 'surecart', SURECART_LANGUAGE_DIR );
+		wp_set_script_translations( 'surecart-components', 'surecart' );
 
 		// core-data.
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/data.asset.php';
@@ -177,22 +177,25 @@ class ScriptsService {
 		wp_localize_script(
 			'surecart-components',
 			'scData',
-			[
-				'root_url'            => esc_url_raw( get_rest_url() ),
-				'plugin_url'          => \SureCart::core()->assets()->getUrl(),
-				'api_url'             => \SureCart::requests()->getBaseUrl(),
-				'currency'            => \SureCart::account()->currency,
-				'do_not_persist_cart' => is_admin(),
-				'theme'               => get_option( 'surecart_theme', 'light' ),
-				'pages'               => [
-					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
-					'checkout'  => \SureCart::pages()->url( 'checkout' ),
-				],
-				'page_id'             => get_the_ID(),
-				'nonce'               => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
-				'nonce_endpoint'      => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
-				'recaptcha_site_key'  => \SureCart::settings()->recaptcha()->getSiteKey(),
-			]
+			apply_filters(
+				'surecart-components/scData',
+				[
+					'root_url'            => esc_url_raw( get_rest_url() ),
+					'plugin_url'          => \SureCart::core()->assets()->getUrl(),
+					'api_url'             => \SureCart::requests()->getBaseUrl(),
+					'currency'            => \SureCart::account()->currency,
+					'do_not_persist_cart' => is_admin(),
+					'theme'               => get_option( 'surecart_theme', 'light' ),
+					'pages'               => [
+						'dashboard' => \SureCart::pages()->url( 'dashboard' ),
+						'checkout'  => \SureCart::pages()->url( 'checkout' ),
+					],
+					'page_id'             => get_the_ID(),
+					'nonce'               => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
+					'nonce_endpoint'      => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
+					'recaptcha_site_key'  => \SureCart::settings()->recaptcha()->getSiteKey(),
+				]
+			)
 		);
 
 		// fix shitty jetpack issues key hijacking issues.

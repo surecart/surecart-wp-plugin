@@ -268,7 +268,7 @@ export class ScUpcomingInvoice {
           </sc-line-item>
         )}
 
-        <sc-coupon-form discount={checkout?.discount} label={__('Add Coupon Code')} onScApplyCoupon={e => this.applyCoupon(e)} error={this.couponError}>
+        <sc-coupon-form discount={checkout?.discount} label={__('Add Coupon Code')} onScApplyCoupon={e => this.applyCoupon(e)} error={this.couponError} collapsed>
           {__('Add Coupon Code')}
         </sc-coupon-form>
 

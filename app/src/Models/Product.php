@@ -53,4 +53,41 @@ class Product extends Model {
 	public function setPurchaseAttribute( $value ) {
 		$this->setRelation( 'purchase', $value, Purchase::class );
 	}
+
+	/**
+	 * Buy link model
+	 *
+	 * @return \SureCart\Models\BuyLink
+	 */
+	public function buyLink() {
+		return new BuyLink( $this );
+	}
+
+	/**
+	 * Return attached active prices.
+	 *
+	 * @return array
+	 */
+	public function activePrices() {
+		$active_prices = array_values(
+			array_filter(
+				$this->prices->data ?? [],
+				function( $price ) {
+					return ! $price->archived;
+				}
+			)
+		);
+
+		usort(
+			$active_prices,
+			function( $a, $b ) {
+				if ( $a->position == $b->position ) {
+					return 0;
+				}
+				return ( $a->position < $b->position ) ? -1 : 1;
+			}
+		);
+
+		return $active_prices;
+	}
 }
