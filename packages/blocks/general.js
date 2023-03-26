@@ -28,8 +28,6 @@ import * as dashboardPages from '@blocks/Dashboard/DashboardPages';
 import * as dashboardTab from '@blocks/Dashboard/DashboardTab';
 import * as dashboardTabs from '@blocks/Dashboard/DashboardTabs';
 import * as storeLogo from '@blocks/StoreLogo';
-import * as customerLogout from '@blocks/Dashboard/CustomerLogout';
-import * as customerStoreLinks from '@blocks/Dashboard/CustomerStoreLinks';
 
 registerBlocks([
 	checkout,
@@ -54,6 +52,4 @@ registerBlocks([
 	dashboardTab,
 	dashboardTabs,
 	storeLogo,
-  customerLogout,
-  customerStoreLinks,
 ]);
