@@ -55,19 +55,6 @@ class WebhookController {
 	}
 
 	/**
-	 * Create a webhook for this install.
-	 */
-	public function create() {
-		return Webhook::create(
-			[
-				'description' => 'Main webhook for SureCart',
-				'enabled'     => true,
-				'url'         => \SureCart::routeUrl( 'webhooks.receive' ),
-			]
-		);
-	}
-
-	/**
 	 * Recieve webhook
 	 */
 	public function receive( $request ) {
