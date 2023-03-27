@@ -37,7 +37,7 @@ class Block extends BaseBlock {
 			confirmation-label="<?php echo esc_attr( $attributes['confirmation_label'] ?? '' ); ?>"
 			confirmation-placeholder="<?php echo esc_attr( $attributes['confirmation_placeholder'] ?? '' ); ?>"
 			confirmation-help="<?php echo esc_attr( $attributes['confirmation_help'] ?? '' ); ?>"
-			enable-validation="<?php echo get_option( 'surecart_password_validation_enabled', true ); ?>"
+			enable-validation="<?php echo get_option( 'surecart_password_validation_enabled', true ) ? 'true' : 'false' ; ?>"
 		>
 		</sc-order-password>
 
