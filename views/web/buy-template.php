@@ -45,7 +45,7 @@
 			<sc-checkout-form-errors></sc-checkout-form-errors>
 		<!-- /wp:surecart/checkout-errors -->
 
-		<!-- wp:surecart/email {"placeholder":"<?php esc_attr_e( 'Your email address', 'surecart' ); ?>"} /-->
+		<!-- wp:surecart/email {"placeholder":"<?php esc_attr_e( 'Your email address', 'surecart' ); ?>","label":"<?php esc_attr_e( 'Email', 'surecart' ); ?>"} /-->
 
 		<!-- wp:surecart/name {"required":true,"placeholder":"<?php esc_attr_e( 'Your name', 'surecart' ); ?>"} -->
 		<sc-customer-name label="<?php esc_attr_e( 'Name', 'surecart' ); ?>" placeholder="<?php esc_attr_e( 'Your name', 'surecart' ); ?>" required></sc-customer-name>
@@ -56,10 +56,10 @@
 		<sc-order-bumps label="<?php esc_attr_e( 'Recommended', 'surecart' ); ?>"></sc-order-bumps>
 
 		<?php if ( $show_coupon ) : ?>
-			<!-- wp:surecart/coupon {"text":"<?php esc_attr_e( 'Coupon Code', 'surecart' ); ?>","collapsed":false} /-->
+			<!-- wp:surecart/coupon {"text":"<?php esc_attr_e( 'Coupon Code', 'surecart' ); ?>","collapsed":false,"placeholder":"<?php esc_attr_e( 'Enter coupon code', 'surecart' ); ?>","button_text":"<?php esc_attr_e( 'Apply', 'surecart' ); ?>"} /-->
 		<?php endif; ?>
 
-		<sc-order-summary collapsible="true" collapsed="true" closed-text="Total" open-text="Total">
+		<sc-order-summary collapsible="true" collapsed="true" closed-text="<?php esc_attr_e( 'Total', 'surecart' ); ?>" open-text="<?php esc_attr_e( 'Total', 'surecart' ); ?>">
 
 			<sc-divider></sc-divider>
 
