@@ -51,9 +51,7 @@
 		<sc-customer-name label="<?php esc_attr_e( 'Name', 'surecart' ); ?>" placeholder="<?php esc_attr_e( 'Your name', 'surecart' ); ?>" required></sc-customer-name>
 		<!-- /wp:surecart/name -->
 
-		<!-- wp:surecart/payment -->
-		<sc-payment label="<?php esc_attr_e( 'Payment', 'surecart' ); ?>"></sc-payment>
-		<!-- /wp:surecart/payment -->
+		<!-- wp:surecart/payment {"label":"<?php esc_attr_e( 'Payment', 'surecart' ); ?>"} --><!-- /wp:surecart/payment -->
 
 		<sc-order-bumps label="<?php esc_attr_e( 'Recommended', 'surecart' ); ?>"></sc-order-bumps>
 
