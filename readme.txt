@@ -245,6 +245,8 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 = 1.8.5 - March 27, 2023 =
 * Fix: Some missing translations on instant checkouts.
+* Fix: Tax ID input default translations.
+* Fix: Make sure block placeholder options apply to compact shipping address.
 
 = 1.8.4 - March 24, 2023 =
 * Fix: Issue with changing tax id input field not allowing checkout after update.
