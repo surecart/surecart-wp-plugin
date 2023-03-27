@@ -137,9 +137,9 @@ export class ScCompactAddress {
   }
 
   getStatePlaceholder() {
-    if (this.placeholders.state) return this.placeholders.state;
+    if (this.placeholders?.state) return this.placeholders.state;
 
-    if (this.address.country === 'US') return __('State', 'surecart');
+    if (this.address?.country === 'US') return __('State', 'surecart');
 
     return __('Province/Region', 'surecart');
   }
@@ -157,7 +157,7 @@ export class ScCompactAddress {
             }}
             choices={this.countryChoices}
             autocomplete={'country-name'}
-            placeholder={this.placeholders.country || __('Select Your Country', 'surecart')}
+            placeholder={this.placeholders?.country || __('Select Your Country', 'surecart')}
             name={this.names.country}
             search
             unselect={false}
@@ -185,7 +185,7 @@ export class ScCompactAddress {
             {this.showPostal && (
               <sc-input
                 exportparts="base:input__base, input, form-control, label, help-text"
-                placeholder={this.placeholders.postal_code || __('Postal Code/Zip', 'surecart')}
+                placeholder={this.placeholders?.postal_code || __('Postal Code/Zip', 'surecart')}
                 name={this.names.postal_code}
                 onScChange={(e: any) => this.updateAddress({ postal_code: e.target.value || null })}
                 onScInput={(e: any) => this.handleAddressInput({ name: e.target.value || null })}
