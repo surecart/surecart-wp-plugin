@@ -389,6 +389,7 @@
   },
   "sc-coupon-form": {
     "busy": true,
+    "button-text": true,
     "collapsed": true,
     "currency": true,
     "discount": true,
@@ -1043,6 +1044,7 @@
   },
   "sc-order-coupon-form": {
     "busy": true,
+    "button-text": true,
     "collapsed": true,
     "error": true,
     "label": true,

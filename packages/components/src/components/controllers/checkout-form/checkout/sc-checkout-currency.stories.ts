@@ -67,7 +67,7 @@ const Template = ({ mode }) => {
   <!-- /wp:surecart/tax-line-item -->
 
   <!-- wp:surecart/coupon {"text":"Add Coupon Code","button_text":"Apply Coupon"} -->
-  <sc-coupon-form label="Add Coupon Code">Apply Coupon</sc-coupon-form>
+  <sc-coupon-form label="Add Coupon Code" button-text="Apply Coupon"></sc-coupon-form>
   <!-- /wp:surecart/coupon -->
 
   <!-- wp:surecart/divider -->

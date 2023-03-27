@@ -80,7 +80,7 @@ class InstallService {
 					<!-- /wp:surecart/subtotal -->
 
 					<!-- wp:surecart/coupon {"text":"Add Coupon Code","button_text":"Apply"} -->
-					<sc-coupon-form label="Add Coupon Code">Apply</sc-coupon-form>
+					<sc-coupon-form label="Add Coupon Code" button-text="Apply"></sc-coupon-form>
 					<!-- /wp:surecart/coupon -->
 
 					<!-- wp:surecart/divider -->

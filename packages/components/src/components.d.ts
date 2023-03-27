@@ -750,6 +750,10 @@ export namespace Components {
           * Is the form calculating
          */
         "busy": boolean;
+        /**
+          * The text for apply button
+         */
+        "buttonText": string;
         "collapsed": boolean;
         /**
           * Currency
@@ -1838,6 +1842,7 @@ export namespace Components {
     }
     interface ScOrderCouponForm {
         "busy": boolean;
+        "buttonText": string;
         "collapsed": boolean;
         "error": any;
         "label": string;
@@ -5577,6 +5582,10 @@ declare namespace LocalJSX {
           * Is the form calculating
          */
         "busy"?: boolean;
+        /**
+          * The text for apply button
+         */
+        "buttonText"?: string;
         "collapsed"?: boolean;
         /**
           * Currency
@@ -6860,6 +6869,7 @@ declare namespace LocalJSX {
     }
     interface ScOrderCouponForm {
         "busy"?: boolean;
+        "buttonText"?: string;
         "collapsed"?: boolean;
         "error"?: any;
         "label"?: string;

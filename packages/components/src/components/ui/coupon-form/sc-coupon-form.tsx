@@ -72,6 +72,9 @@ export class ScCouponForm {
   /** When the coupon is applied */
   @Event() scApplyCoupon: EventEmitter<string>;
 
+  /** The text for apply button */
+  @Prop({ reflect: true }) buttonText: string;
+
   /** Auto focus the input when opened. */
   @Watch('open')
   handleOpenChange(val) {
@@ -184,9 +187,20 @@ export class ScCouponForm {
               class="coupon-button"
               onClick={() => this.applyCoupon()}
             >
-              <slot />
+              <slot>{this.buttonText}</slot>
             </sc-button>
           </sc-input>
+          <sc-button
+            exportparts="base:button__base, label:button_label"
+            slot="suffix"
+            type="text"
+            loading={this.busy}
+            size="medium"
+            class="coupon-button-mobile"
+            onClick={() => this.applyCoupon()}
+          >
+            <slot>{this.buttonText}</slot>
+          </sc-button>
           {!!this.error && (
             <sc-alert exportparts="base:error__base, icon:error__icon, text:error__text, title:error_title, message:error__message" type="danger" open>
               <span slot="title">{this.error}</span>

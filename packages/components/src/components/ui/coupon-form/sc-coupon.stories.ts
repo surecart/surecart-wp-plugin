@@ -54,7 +54,7 @@ const Template = ({ couponState, label, button, loading }) => {
       form.error = 'This coupon is not valid.';
     }
   });
-  return `<sc-coupon-form label="${label}" ${loading && 'loading'}>${button}</sc-coupon-form>`;
+  return `<sc-coupon-form label="${label}" ${loading && 'loading'} button-text="${button}"></sc-coupon-form>`;
 };
 
 export const Default = Template.bind({});

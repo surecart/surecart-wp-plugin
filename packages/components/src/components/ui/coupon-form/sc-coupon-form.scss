@@ -17,6 +17,14 @@ sc-button {
     transition: all var(--sc-transition-fast) ease;
   }
 
+  .coupon-button-mobile {
+    display: none;
+    width: fit-content;
+    &::part(label) {
+      padding: 0;
+    }
+  }
+
   &--has-value {
     .coupon-button {
       opacity: 1;
@@ -28,19 +36,11 @@ sc-button {
 
 @container (max-width: 320px) {
   .coupon-form {
-    sc-input {
-      margin-bottom: 2.4rem;
-    }
     .coupon-button {
-      opacity: 1;
-      visibility: visible;
-      transform: scale(1);
-      position: absolute;
-      left: 0;
-      top: 105%;
-      &::part(label) {
-        padding: 0 !important;
-      }
+      display: none;
+    }
+    .coupon-button-mobile {
+      display: block;
     }
   }
 }

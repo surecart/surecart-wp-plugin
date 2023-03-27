@@ -17,6 +17,7 @@ export class ScOrderCouponForm {
   @Prop() order: Checkout;
   @Prop() collapsed: boolean;
   @Prop() placeholder: string;
+  @Prop() buttonText: string;
 
   @State() open: boolean;
   @State() value: string;
@@ -45,9 +46,8 @@ export class ScOrderCouponForm {
         class={{
           'order-coupon-form--is-rtl': isRtl(),
         }}
-      >
-        <slot>{__('Apply', 'surecart')}</slot>
-      </sc-coupon-form>
+        button-text={this.buttonText || __('Apply', 'surecart')}
+      ></sc-coupon-form>
     );
   }
 }

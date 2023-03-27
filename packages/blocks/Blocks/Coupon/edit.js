@@ -76,9 +76,8 @@ export default ({ attributes, setAttributes }) => {
 						collapsed={collapsed}
 						placeholder={placeholder}
 						label={text}
-					>
-						{button_text}
-					</ScCouponForm>
+						buttonText={button_text}
+					></ScCouponForm>
 				</Disabled>
 			</div>
 		</Fragment>
