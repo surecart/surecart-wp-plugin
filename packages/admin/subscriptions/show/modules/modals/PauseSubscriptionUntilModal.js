@@ -16,11 +16,12 @@ import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import Error from '../../../../components/Error';
 import { addQueryArgs } from '@wordpress/url';
+import { useEffect } from 'react';
 
 const CHOOSE_PAUSE_BEHAVIOR_SECTION = 1;
 const CHOOSE_DATE_SECTION = 2;
 
-export default ({ open, onRequestClose, currentPeriodEndAt, subscription }) => {
+export default ({ open, onRequestClose, currentPeriodEndAt }) => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
@@ -30,6 +31,15 @@ export default ({ open, onRequestClose, currentPeriodEndAt, subscription }) => {
 	const [cancelBehavior, setCancelBehavior] = useState('pending');
 	const [pauseUntil, setPauseUntil] = useState(new Date());
 	const [section, setSection] = useState(CHOOSE_PAUSE_BEHAVIOR_SECTION);
+
+	useEffect(() => {
+		const pauseDate =
+			cancelBehavior === 'pending'
+				? new Date(currentPeriodEndAt * 1000)
+				: new Date();
+		pauseDate.setDate(pauseDate.getDate() + 1);
+		setPauseUntil(pauseDate);
+	}, [cancelBehavior, currentPeriodEndAt]);
 
 	const cancel = () => {
 		setCancelBehavior('pending');
@@ -97,7 +107,9 @@ export default ({ open, onRequestClose, currentPeriodEndAt, subscription }) => {
 							name="pause_behavior"
 							checked={cancelBehavior === 'pending'}
 							value="pending"
-							onClick={() => setCancelBehavior('pending')}
+							onClick={() => {
+								setCancelBehavior('pending');
+							}}
 						>
 							{__('At end of current period', 'surecart')}
 							<div slot="description">
@@ -155,16 +167,10 @@ export default ({ open, onRequestClose, currentPeriodEndAt, subscription }) => {
 				currentDate={pauseUntil}
 				onChange={(pauseUntil) => setPauseUntil(pauseUntil)}
 				isInvalidDate={(date) => {
-					if (
-						cancelBehavior === 'pending' &&
-						subscription?.current_period_end_at
-					) {
+					if (cancelBehavior === 'pending' && currentPeriodEndAt) {
 						return (
-							Date.parse(
-								new Date(
-									subscription?.current_period_end_at * 1000
-								)
-							) > Date.parse(date)
+							Date.parse(new Date(currentPeriodEndAt * 1000)) >
+							Date.parse(date)
 						);
 					}
 					return Date.parse(new Date()) > Date.parse(date);
@@ -184,7 +190,7 @@ export default ({ open, onRequestClose, currentPeriodEndAt, subscription }) => {
 				type="primary"
 				slot="footer"
 				onClick={() => onUpdatePauseUntil()}
-				disabled={loading || pauseUntil <= new Date()}
+				disabled={loading}
 			>
 				{__('Pause', 'surecart')}
 			</ScButton>

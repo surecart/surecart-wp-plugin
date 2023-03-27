@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-03-23T07:35:38",
+  "timestamp": "2023-03-27T09:47:47",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -27493,7 +27493,7 @@
           "reflectToAttr": false,
           "docs": "AU zone label",
           "docsTags": [],
-          "default": "__('ABN Number','surecart')",
+          "default": "'ABN Number'",
           "values": [
             {
               "type": "string"
@@ -27510,7 +27510,7 @@
           "reflectToAttr": false,
           "docs": "GST zone label",
           "docsTags": [],
-          "default": "__('GST Number','surecart')",
+          "default": "'GST Number'",
           "values": [
             {
               "type": "string"
@@ -27543,7 +27543,7 @@
           "reflectToAttr": false,
           "docs": "EU zone label",
           "docsTags": [],
-          "default": "__('EU VAT','surecart')",
+          "default": "'EU VAT'",
           "values": [
             {
               "type": "string"
@@ -27560,7 +27560,7 @@
           "reflectToAttr": false,
           "docs": "UK zone label",
           "docsTags": [],
-          "default": "__('UK VAT','surecart')",
+          "default": "'UK VAT'",
           "values": [
             {
               "type": "string"
@@ -27626,7 +27626,7 @@
           "reflectToAttr": false,
           "docs": "Other zones label",
           "docsTags": [],
-          "default": "__('Tax ID','surecart')",
+          "default": "'Other'",
           "values": [
             {
               "type": "string"

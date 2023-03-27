@@ -170,6 +170,13 @@ export default () => {
 			subscription?.status === 'completed'
 		)
 			return null;
+		if (subscription?.cancel_at_period_end && subscription?.restore_at) {
+			return (
+				<ScMenuItem onClick={() => setModal('dont_cancel')}>
+					{__("Don't Pause", 'surecart')}
+				</ScMenuItem>
+			);
+		}
 		if (subscription?.cancel_at_period_end) {
 			return (
 				<ScMenuItem onClick={() => setModal('dont_cancel')}>
