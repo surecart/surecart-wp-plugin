@@ -1,7 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { h } from '@stencil/core';
 import { ScPaymentMethodChoice } from '../sc-payment-method-choice';
-import { Checkout } from '../../../../types';
 
 describe('sc-payment-method-choice', () => {
   it('renders', async () => {
