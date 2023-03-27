@@ -10,7 +10,7 @@
 | Property         | Attribute         | Description                   | Type               | Default     |
 | ---------------- | ----------------- | ----------------------------- | ------------------ | ----------- |
 | `busy`           | `busy`            | Is the form calculating       | `boolean`          | `undefined` |
-| `buttonText`     | `button-text`     | When the coupon is applied    | `string`           | `undefined` |
+| `buttonText`     | `button-text`     | The text for apply button     | `string`           | `undefined` |
 | `collapsed`      | `collapsed`       |                               | `boolean`          | `undefined` |
 | `currency`       | `currency`        | Currency                      | `string`           | `undefined` |
 | `discount`       | --                | The discount                  | `DiscountResponse` | `undefined` |
