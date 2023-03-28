@@ -1,6 +1,6 @@
 {
 	"name": "surecart/customer-dashboard",
-	"title": "Customer Dashboard Tabs",
+	"title": "Tabbed Customer Dashboard",
 	"description": "Displays the users customer dashboard.",
 	"category": "surecart",
 	"keywords": ["name", "customer", "dashboard"],
