@@ -438,7 +438,6 @@ export default () => {
 			/>
 			<PauseSubscriptionUntilModal
 				open={modal === 'pause'}
-				subscription={subscription}
 				onRequestClose={onRequestCloseModal}
 				currentPeriodEndAt={subscription?.current_period_end_at}
 			/>
