@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { button as icon } from '@wordpress/icons';
+import { login as icon } from '@wordpress/icons';
 
 /**
  * Internal dependencies
