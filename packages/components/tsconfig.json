@@ -17,6 +17,7 @@
     "baseUrl": ".",
     "paths": {
       "@store/*": ["src/store/*"],
+      "@services/*": ["src/services/*"],
     }
   },
   "include": ["src", "static-loader.js"],

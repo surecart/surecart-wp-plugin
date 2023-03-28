@@ -28,6 +28,17 @@
     "class": true,
     "slot": true
   },
+  "sc-avatar": {
+    "image": true,
+    "initials": true,
+    "label": true,
+    "loading": true,
+    "shape": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-badge-notice": {
     "label": true,
     "size": true,
@@ -265,6 +276,7 @@
     "persist-session": true,
     "prices": true,
     "processors": true,
+    "product": true,
     "remove-line-items": true,
     "stripe-payment-element": true,
     "success-text": true,
@@ -315,6 +327,21 @@
     "class": true,
     "slot": true
   },
+  "sc-choice-container": {
+    "checked": true,
+    "disabled": true,
+    "invalid": true,
+    "name": true,
+    "required": true,
+    "show-control": true,
+    "size": true,
+    "type": true,
+    "value": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-choices": {
     "auto-width": true,
     "columns": true,
@@ -351,6 +378,7 @@
     "label": true,
     "loading": true,
     "names": true,
+    "placeholders": true,
     "required": true,
     "style": true,
     "id": true,
@@ -373,6 +401,7 @@
   },
   "sc-coupon-form": {
     "busy": true,
+    "collapsed": true,
     "currency": true,
     "discount": true,
     "discount-amount": true,
@@ -381,6 +410,7 @@
     "label": true,
     "loading": true,
     "open": true,
+    "placeholder": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1025,11 +1055,12 @@
   },
   "sc-order-coupon-form": {
     "busy": true,
+    "collapsed": true,
     "error": true,
-    "force-open": true,
     "label": true,
     "loading": true,
     "order": true,
+    "placeholder": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1123,6 +1154,8 @@
     "paying": true,
     "processor": true,
     "processors": true,
+    "secure-notice": true,
+    "secure-notice-text": true,
     "show-total": true,
     "size": true,
     "type": true,
@@ -1137,7 +1170,6 @@
     "collapsed": true,
     "collapsed-on-mobile": true,
     "collapsible": true,
-    "empty": true,
     "open-text": true,
     "order": true,
     "style": true,
@@ -1272,6 +1304,7 @@
     "slot": true
   },
   "sc-price-choice": {
+    "blank": true,
     "checked": true,
     "description": true,
     "error": true,
@@ -1349,7 +1382,21 @@
     "quantity": true,
     "removable": true,
     "scratch-amount": true,
+    "setup-fee-trial-enabled": true,
     "trial-duration-days": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-selected-price": {
+    "product-id": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-prose": {
     "style": true,
     "id": true,
     "class": true,
@@ -1410,6 +1457,23 @@
     "class": true,
     "slot": true
   },
+  "sc-rich-text": {
+    "disabled": true,
+    "help": true,
+    "label": true,
+    "maxlength": true,
+    "name": true,
+    "placeholder": true,
+    "readonly": true,
+    "required": true,
+    "show-label": true,
+    "size": true,
+    "value": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-secure-notice": {
     "style": true,
     "id": true,
@@ -1447,21 +1511,8 @@
     "slot": true
   },
   "sc-session-provider": {
-    "abandoned-checkout-return-url": true,
-    "currency-code": true,
-    "form-id": true,
-    "group-id": true,
-    "is-manual-processor": true,
-    "method": true,
-    "mode": true,
-    "modified": true,
-    "payment-intents": true,
     "persist": true,
     "prices": true,
-    "processor": true,
-    "set-state": true,
-    "stripe-payment-element": true,
-    "success-url": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1511,14 +1562,12 @@
     "slot": true
   },
   "sc-stripe-element": {
-    "account-id": true,
     "disabled": true,
     "form-state": true,
     "has-focus": true,
     "label": true,
     "mode": true,
     "order": true,
-    "publishable-key": true,
     "secure-text": true,
     "selected-processor-id": true,
     "show-label": true,

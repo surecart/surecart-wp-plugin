@@ -83,12 +83,10 @@ export default ({
 					<div
 						css={css`
 							position: sticky;
-							/* background: #fff; */
-							background-color: rgba(255, 255, 255, 0.75);
-							backdrop-filter: blur(5px);
+							background: #fff;
 							top: 32px;
 							width: 100%;
-							z-index: 4;
+							z-index: 99999;
 							margin-bottom: var(
 								--sc-spacing-xx-large
 							) !important;
