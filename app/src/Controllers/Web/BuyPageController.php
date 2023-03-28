@@ -32,22 +32,13 @@ class BuyPageController {
 		'surecart/payment',
 	];
 
+
 	/**
 	 * Handle filters.
 	 *
 	 * @return void
 	 */
 	public function filters() {
-		// it's not a 404 page.
-		global $wp_query;
-		$wp_query->is_404 = false;
-
-		// set the canonical url.
-		add_filter( 'get_canonical_url', [ $this, 'maybeSetUrl' ] );
-		// set the shortlink.
-		add_filter( 'get_shortlink', [ $this, 'maybeSetUrl' ] );
-		// set the post link.
-		add_filter( 'post_link', [ $this, 'maybeSetUrl' ] );
 		// set the document title.
 		add_filter( 'document_title_parts', [ $this, 'documentTitle' ] );
 		// disallow pre title filter.
@@ -103,6 +94,8 @@ class BuyPageController {
 	 * @return function
 	 */
 	public function show( $request, $view, $id ) {
+		$id = get_query_var( 'sc_checkout_product_id' );
+
 		// fetch the product by id/slug.
 		$this->product = \SureCart\Models\Product::with( [ 'image', 'prices' ] )->find( $id );
 		if ( is_wp_error( $this->product ) ) {
@@ -196,7 +189,7 @@ class BuyPageController {
 		if ( ! empty( $terms_url ) && ! empty( $privacy_url ) ) {
 			return sprintf(
 				// translators: %1$1s is the store name, %2$2s is the opening anchor tag, %3$3s is the closing anchor tag, %4$4s is the opening anchor tag, %5$5s is the closing anchor tag.
-				__( "I agree to %1$1s's %2$2sTerms%3$3s and %4$4sPrivacy Policy%5$5s", 'Surecart' ),
+				__( "I agree to %1$1s's %2$2sTerms%3$3s and %4$4sPrivacy Policy%5$5s", 'surecart' ),
 				esc_html( \SureCart::account()->name ),
 				'<a href="' . esc_url( $terms_url ) . '" target="_blank">',
 				'</a>',
@@ -208,7 +201,7 @@ class BuyPageController {
 		if ( $terms_url ) {
 			return sprintf(
 				// translators: %1$1s is the store name, %2$2s is the opening anchor tag, %3$3s is the closing anchor tag.
-				__( "I agree to %1$1s's %2$2sTerms%3$3s", 'Surecart' ),
+				__( "I agree to %1$1s's %2$2sTerms%3$3s", 'surecart' ),
 				esc_html( \SureCart::account()->name ),
 				'<a href="' . esc_url( $terms_url ) . '" target="_blank">',
 				'</a>'
@@ -218,7 +211,7 @@ class BuyPageController {
 		if ( $privacy_url ) {
 			return sprintf(
 				// translators: %1$1s is the store name, %2$2s is the opening anchor tag, %3$3s is the closing anchor tag.
-				__( "I agree to %1$1s's %2$2sPrivacy Policy%3$3s", 'Surecart' ),
+				__( "I agree to %1$1s's %2$2sPrivacy Policy%3$3s", 'surecart' ),
 				esc_html( \SureCart::account()->name ),
 				'<a href="' . esc_url( $privacy_url ) . '" target="_blank">',
 				'</a>'

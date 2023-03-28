@@ -367,6 +367,7 @@
     "label": true,
     "loading": true,
     "names": true,
+    "placeholders": true,
     "required": true,
     "style": true,
     "id": true,

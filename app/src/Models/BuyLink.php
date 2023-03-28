@@ -27,7 +27,7 @@ class BuyLink {
 	 * @return void
 	 */
 	public function url() {
-		return trailingslashit( get_home_url() ) . trailingslashit( \SureCart::permalinks()->getBase( 'buy_page' ) ) . $this->product->slug;
+		return trailingslashit( get_home_url() ) . trailingslashit( \SureCart::settings()->permalinks()->getBase( 'buy_page' ) ) . $this->product->slug;
 	}
 
 	/**
