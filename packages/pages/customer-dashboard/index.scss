@@ -6,6 +6,15 @@ body.page-template-template-surecart-dashboard {
   --sc-checkout-font-size: 15px;
   font-size: 15px;
 
+  &.surecart-theme-dark {
+    background: var(--sc-color-gray-950);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
+
   * {
     box-sizing: border-box;
   }
@@ -73,6 +82,12 @@ body.page-template-template-surecart-dashboard {
       width: $sidebar-width;
       box-shadow: -15px 0 30px 0 rgba(0, 0, 0, .18);
       z-index: 0;
+    }
+
+    &.surecart-theme-dark {
+      &:before {
+        background: var(--sc-color-gray-900);
+      }
     }
 
     .sc-dashboard {
