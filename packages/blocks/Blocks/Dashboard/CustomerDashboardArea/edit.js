@@ -16,7 +16,17 @@ export default () => {
 		? __stableUseInnerBlocksProps
 		: __experimentalUseInnerBlocksProps;
 
-	const blockProps = useBlockProps();
+	const blockProps = useBlockProps({
+		css: css`
+			> * {
+				margin-bottom: var(--sc-spacing-xx-large) !important;
+				font-size: 15px;
+			}
+			.block-list-appender {
+				position: relative;
+			}
+		`,
+	});
 
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		templateLock: false,
