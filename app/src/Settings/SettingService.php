@@ -110,6 +110,35 @@ class SettingService {
 				'sanitize_callback' => 'sanitize_text_field',
 			]
 		);
+		$this->register(
+			'surecart',
+			'cart_menu_alignment',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+				'defalt'			=> 'right',
+			]
+		);
+		$this->register(
+			'surecart',
+			'cart_menu_always_shown',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => true,
+			]
+		);
+		$this->register(
+			'surecart',
+			'cart_menu_selected_id',
+			[
+				'type'              => 'number',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+			]
+		);
 	}
 
 	/**

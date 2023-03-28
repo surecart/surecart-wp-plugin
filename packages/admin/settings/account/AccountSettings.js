@@ -75,18 +75,18 @@ export default () => {
 		'site',
 		'surecart_cart_menu_alignment'
 	);
-
 	const [cartMenuAlwaysShown, setCartMenuAlwaysShown] = useEntityProp(
 		'root',
 		'site',
 		'surecart_cart_menu_always_shown'
 	);
-
-	const [cartMenuFlyoutEnabled, setCartMenuFlyoutEnabled] = useEntityProp(
+	const [cartMenuSelectedId, setCartMenuSelectedId] = useEntityProp(
 		'root',
 		'site',
-		'surecart_cart_menu_flyout_enabled'
+		'surecart_cart_menu_selected_id'
 	);
+
+	console.log(cartMenuAlignment, cartMenuAlwaysShown, cartMenuSelectedId);
 
 	/**
 	 * Form is submitted.
@@ -348,23 +348,28 @@ export default () => {
 					>
 						{menus && (
 							<ScSelect
-								label={__('Select Menu(s)', 'surecart')}
+								label={__('Select Menu', 'surecart')}
 								placeholder={__('Select Menu', 'surecart')}
+								value={cartMenuSelectedId}
 								help={__(
-									'Select the menu(s) you wish to display the Menu Cart'
+									'Select the menu you wish to display the Menu Cart'
 								)}
 								choices={menus?.map((item) => ({
 									label: `${item.name} (slug - ${item.slug})`,
 									value: item.id,
 								}))}
+								unselect={false}
+								onScChange={(e) =>
+									setCartMenuSelectedId(e.target.value)
+								}
 							/>
 						)}
 						<ScSelect
 							label={__('Alignment of cart button', 'surecart')}
 							placeholder={__('Select Alignment', 'surecart')}
 							value={cartMenuAlignment}
-							onScChange={(alignment) =>
-								setCartMenuAlignment(alignment)
+							onScChange={(e) =>
+								setCartMenuAlignment(e.target.value)
 							}
 							unselect={false}
 							help={__(
@@ -397,27 +402,6 @@ export default () => {
 							>
 								{__(
 									'Enable to always show the cart button, even your cart is empty.',
-									'surecart'
-								)}
-							</span>
-						</ScSwitch>
-
-						<ScSwitch
-							checked={cartMenuFlyoutEnabled}
-							onClick={(e) => {
-								e.preventDefault();
-								setCartMenuFlyoutEnabled(
-									!cartMenuFlyoutEnabled
-								);
-							}}
-						>
-							{__('Menu Fly-out', 'surecart')}
-							<span
-								slot="description"
-								style={{ lineHeight: '1.4' }}
-							>
-								{__(
-									"Disable if you don't wish to show cart contents in menu fly-out.",
 									'surecart'
 								)}
 							</span>
