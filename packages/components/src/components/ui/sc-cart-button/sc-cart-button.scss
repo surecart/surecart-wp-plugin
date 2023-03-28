@@ -3,7 +3,6 @@
 }
 
 .cart_button {
-  position: relative;
   --width: 1em;
   --height: 1em;
   padding: 0 4px;
@@ -25,24 +24,6 @@
   @media screen and (min-width: 768px) {
     &:hover .cart_menu {
       display: block;
-    }
-  }
-  .cart_menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    background-color: white;
-    border: 1px solid var(--sc-color-neutral-300, var(--wp--preset--color--gray));
-    padding: var(--sc-spacing-small, 0.66rem);
-    font-size: var(--sc-font-size-small, var(--wp--preset--font-size--extra-small));
-    white-space: nowrap;
-    border-radius: 6px;
-    min-width: 240px;
-    &.is-left-aligned {
-      left: 0;
-    }
-    &.is-right-aligned {
-      right: 0;
     }
   }
 }

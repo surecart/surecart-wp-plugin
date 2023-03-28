@@ -28,9 +28,6 @@ export class ScCartButton {
   @Prop() mode: 'test' | 'live' = 'live';
 
   /** If the flyout menu should be visible. */
-  @Prop() flyout: boolean = true;
-
-  /** If the flyout menu should be visible. */
   @Prop() menuAlignment: 'left' | 'right' = 'left';
 
   order() {
@@ -62,18 +59,6 @@ export class ScCartButton {
         <div onClick={() => (this.open = !this.open)} class={{ cart_button_icon: true }}>
           {this.icon && <sc-icon name={this.icon}></sc-icon>}
         </div>
-        {this.flyout && (
-          <div
-            class={{
-              'cart_menu': true,
-              'is-left-aligned': this.menuAlignment === 'left',
-              'is-right-aligned': this.menuAlignment === 'right',
-            }}
-            part="menu"
-          >
-            <slot />
-          </div>
-        )}
       </div>
     );
   }
