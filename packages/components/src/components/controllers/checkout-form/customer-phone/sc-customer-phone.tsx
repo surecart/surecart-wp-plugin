@@ -96,20 +96,24 @@ export class ScCustomerPhone {
   }
 
   componentWillLoad() {
-    this.handleCheckoutChange();
-    this.handleCustomerChange();
+    const val = !!this.value.length;
+    this.handleCheckoutChange('', val);
+    this.handleCustomerChange('', val);
   }
 
   /** Sync customer phone with session if it's updated by other means */
   @Watch('checkout')
-  handleCheckoutChange() {
+  handleCheckoutChange(_ = '', prev: boolean) {
+    // we only want to do this the first time.
+    if (prev) return;
+    // if there is no checkout.phone
     if (!this.checkout?.phone) return;
     // set the value.
     this.value = this.checkout?.phone;
   }
 
   @Watch('customer')
-  handleCustomerChange(_ = '', prev = false) {
+  handleCustomerChange(_ = '', prev: boolean) {
     // we only want to do this the first time.
     if (prev) return;
     // if there is no phone.
