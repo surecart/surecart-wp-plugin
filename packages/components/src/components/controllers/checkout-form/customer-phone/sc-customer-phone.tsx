@@ -1,6 +1,6 @@
-import { Component, Event, EventEmitter, h, Method, Prop, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Method, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { openWormhole } from 'stencil-wormhole';
+import { state as checkoutState, onChange } from '@store/checkout';
 
 import { Checkout, Customer } from '../../../../types';
 
@@ -96,32 +96,23 @@ export class ScCustomerPhone {
   }
 
   componentWillLoad() {
-    const val = !!this.value.length;
-    this.handleCheckoutChange('', val);
-    this.handleCustomerChange('', val);
+    this.handleCheckoutChange();
+    onChange('checkout', () => this.handleCheckoutChange());
   }
 
-  /** Sync customer phone with session if it's updated by other means */
-  @Watch('checkout')
-  handleCheckoutChange(_ = '', prev: boolean) {
-    // we only want to do this the first time.
-    if (prev) return;
-    // if there is no checkout.phone
-    if (!this.checkout?.phone) return;
-    // set the value.
-    this.value = this.checkout?.phone;
-  }
-
-  @Watch('customer')
-  handleCustomerChange(_ = '', prev: boolean) {
-    // we only want to do this the first time.
-    if (prev) return;
-    // if there is no phone.
-    if (!this.customer?.phone) return;
-    // we don't want to replace this if there is already a value.
-    if (this.checkout?.phone) return;
-    // set the value
-    this.value = this.customer?.phone;
+  handleCheckoutChange() {
+    // we only want to do this  if we don't have a value.
+    if (this.value) return;
+    // if the checkout has a phone, use that.
+    if (checkoutState.checkout?.phone) {
+      this.value = checkoutState.checkout?.phone;
+      return;
+    }
+    // if the customer has a phone, use that.
+    if ((checkoutState.checkout?.customer as Customer)?.phone) {
+      this.value = (checkoutState.checkout?.customer as Customer)?.phone;
+      return;
+    }
   }
 
   render() {
@@ -148,5 +139,3 @@ export class ScCustomerPhone {
     );
   }
 }
-
-openWormhole(ScCustomerPhone, ['checkout', 'customer'], false);
