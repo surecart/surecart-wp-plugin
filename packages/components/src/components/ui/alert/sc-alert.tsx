@@ -1,4 +1,5 @@
 import { Component, Prop, Method, State, Event, EventEmitter, Watch, h, Element, Host } from '@stencil/core';
+import { isRtl } from '../../../functions/page-align';
 
 /**
  * @part base - The elements base wrapper.
@@ -18,6 +19,9 @@ export class ScAlert {
 
   /** Indicates whether or not the alert is open. You can use this in lieu of the show/hide methods. */
   @Prop({ reflect: true, mutable: true }) open: boolean = false;
+
+  /** The title. */
+  @Prop() title: string;
 
   /** Makes the alert closable. */
   @Prop({ reflect: true }) closable: boolean = false;
@@ -122,6 +126,7 @@ export class ScAlert {
             'alert--info': this.type === 'info',
             'alert--warning': this.type === 'warning',
             'alert--danger': this.type === 'danger',
+            'alert--is-rtl':isRtl()
           }}
           part="base"
           role="alert"
@@ -136,7 +141,7 @@ export class ScAlert {
           </div>
           <div class="alert__text" part="text">
             <div class="alert__title" part="title">
-              <slot name="title" />
+              <slot name="title">{this.title}</slot>
             </div>
             <div class="alert__message" part="message">
               <slot />

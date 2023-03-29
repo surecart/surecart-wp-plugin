@@ -24,6 +24,7 @@ import UpdateModel from '../templates/UpdateModel';
 import Charges from './modules/Charges';
 import Details from './modules/Details';
 import LineItems from './modules/LineItems';
+import OrderCancelConfirmModal from './modules/OrderCancelConfirmModal';
 import OrderStatusConfirmModal from './modules/OrderStatusConfirmModal';
 import PaymentFailures from './modules/PaymentFailures';
 import Refunds from './modules/Refunds';
@@ -46,11 +47,28 @@ export default () => {
 			'checkout.line_items',
 			'discount.promotion',
 			'line_item.price',
+			'line_item.fees',
 			'customer.balances',
 			'price.product',
 		],
 	});
 	const [modal, setModal] = useState();
+
+	const renderMarkPaidButton = () => {
+		return (
+			<ScMenuItem onClick={() => setModal('order_status_update')}>
+				{__('Mark as Paid', 'surecart')}
+			</ScMenuItem>
+		);
+	};
+
+	const renderOrderCancelButton = () => {
+		return (
+			<ScMenuItem onClick={() => setModal('order_cancel')}>
+				{__('Cancel Order', 'surecart')}
+			</ScMenuItem>
+		);
+	};
 
 	useEffect(() => {
 		if (order?.checkout) {
@@ -140,19 +158,20 @@ export default () => {
 					style={{ '--panel-width': '14em' }}
 				>
 					{order?.status === 'processing' &&
-						order?.checkout?.manual_payment && (
+						order?.checkout?.manual_payment &&
+						order?.status !== 'canceled' && (
 							<>
-								<ScButton type="primary" slot="trigger" caret>
+								<ScButton
+									type="primary"
+									slot="trigger"
+									caret
+									loading={!hasLoadedOrder}
+								>
 									{__('Actions', 'surecart')}
 								</ScButton>
 								<ScMenu>
-									<ScMenuItem
-										onClick={() =>
-											setModal('order_status_update')
-										}
-									>
-										{__('Mark as Paid', 'surecart')}
-									</ScMenuItem>
+									{renderMarkPaidButton()}{' '}
+									{renderOrderCancelButton()}
 								</ScMenu>
 							</>
 						)}
@@ -189,6 +208,12 @@ export default () => {
 				<OrderStatusConfirmModal
 					order={order}
 					open={modal === 'order_status_update'}
+					onRequestClose={() => setModal(false)}
+					loading={!hasLoadedOrder}
+				/>
+				<OrderCancelConfirmModal
+					order={order}
+					open={modal === 'order_cancel'}
 					onRequestClose={() => setModal(false)}
 					loading={!hasLoadedOrder}
 				/>

@@ -4,6 +4,22 @@ exports[`sc-order-confirm-provider renders 1`] = `
 <sc-order-confirm-provider>
   <mock:shadow-root>
     <slot></slot>
+    <sc-dialog noheader="" style="--body-spacing: var(--sc-spacing-xxx-large);">
+      <div class="confirm__icon">
+        <div class="confirm__icon-container">
+          <sc-icon name="check"></sc-icon>
+        </div>
+      </div>
+      <sc-dashboard-module heading="Thanks for your order!" style="--sc-dashboard-module-spacing: var(--sc-spacing-x-large); text-align: center;">
+        <span slot="description">
+          Your payment was successful, and your order is complete. A receipt is on its way to your inbox.
+        </span>
+        <sc-button size="large" type="primary">
+          Continue
+          <sc-icon name="arrow-right" slot="suffix"></sc-icon>
+        </sc-button>
+      </sc-dashboard-module>
+    </sc-dialog>
   </mock:shadow-root>
 </sc-order-confirm-provider>
 `;

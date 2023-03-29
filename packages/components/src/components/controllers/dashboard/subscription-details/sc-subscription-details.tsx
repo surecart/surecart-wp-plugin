@@ -4,7 +4,6 @@ import { addQueryArgs } from '@wordpress/url';
 
 import apiFetch from '../../../../functions/fetch';
 import { intervalString } from '../../../../functions/price';
-// import { applyCoupon } from '../../../../functions/total';
 import { License, Price, Product, Purchase, Subscription } from '../../../../types';
 
 @Component({

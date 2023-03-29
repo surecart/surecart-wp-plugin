@@ -2,8 +2,10 @@ import { Component, Element, Event, EventEmitter, Fragment, h, Method, Prop, Sta
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
+import { state as selectedProcessor } from '@store/selected-processor';
 
 import { Checkout, FormState, FormStateSetter, ProcessorName } from '../../../types';
+import { availableProcessors } from '@store/processors/getters';
 
 @Component({
   tag: 'sc-stripe-element',
@@ -22,12 +24,6 @@ export class ScStripeElement {
 
   /** The checkout session object for finalizing intents */
   @Prop() order: Checkout;
-
-  /** Your stripe connected account id. */
-  @Prop() accountId: string;
-
-  /** Stripe publishable key */
-  @Prop() publishableKey: string;
 
   /** Mode for the payment */
   @Prop() mode: 'live' | 'test' = 'live';
@@ -62,12 +58,13 @@ export class ScStripeElement {
   @State() confirming: boolean;
 
   async componentWillLoad() {
-    if (!this.publishableKey || !this.accountId) {
+    const processor = (availableProcessors() || []).find(processor => processor.processor_type === 'stripe');
+    if (!processor) {
       return;
     }
-
+    const { account_id, publishable_key } = processor?.processor_data || {};
     try {
-      this.stripe = await loadStripe(this.publishableKey, { stripeAccount: this.accountId });
+      this.stripe = await loadStripe(publishable_key, { stripeAccount: account_id });
       this.elements = this.stripe.elements();
     } catch (e) {
       this.error = e?.message || __('Stripe could not be loaded', 'surecart');
@@ -81,9 +78,8 @@ export class ScStripeElement {
   async maybeConfirmOrder(val: FormState) {
     // must be paying
     if (val !== 'paying') return;
-    console.log('id', this.selectedProcessorId);
     // this processor is not selected.
-    if (this.selectedProcessorId !== 'stripe') return;
+    if (selectedProcessor?.id !== 'stripe') return;
     // must be a stripe session
     if (this.order?.payment_intent?.processor_type !== 'stripe') return;
     // must have an external intent id
@@ -187,9 +183,9 @@ export class ScStripeElement {
   render() {
     return (
       <Fragment>
-        <sc-input class="sc-stripe" size={this.size} label={this.label} hasFocus={this.hasFocus}>
-          <div ref={el => (this.container = el as HTMLDivElement)}></div>
-        </sc-input>
+        <sc-form-control class="sc-stripe" size={this.size} label={this.label}>
+          <div class="sc-stripe-element" ref={el => (this.container = el as HTMLDivElement)}></div>
+        </sc-form-control>
         {this.error && (
           <sc-text
             style={{

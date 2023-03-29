@@ -6,6 +6,7 @@ use SureCart\Rest\RestServiceInterface;
 use SureCart\Controllers\Rest\CheckoutsController;
 use SureCart\Form\FormValidationService;
 use SureCart\Models\Form;
+use SureCart\Models\Product;
 use SureCart\Models\User;
 
 /**
@@ -78,6 +79,19 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 				'schema' => [ $this, 'get_item_schema' ],
 			]
 		);
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/cancel/',
+			[
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'cancel' ),
+					'permission_callback' => [ $this, 'cancel_item_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
 	}
 
 	/**
@@ -145,24 +159,23 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function finalize_permissions_check( \WP_REST_Request $request ) {
-		// form id is required.
-		if ( empty( $request['form_id'] ) ) {
+		// form id or a product id is required.
+		if ( empty( $request['form_id'] ) && empty( $request['product_id'] ) ) {
 			return new \WP_Error( 'form_id_required', esc_html__( 'Form ID is required.', 'surecart' ), [ 'status' => 400 ] );
 		}
 
 		// get form.
-		$form = get_post( $request['form_id'] );
-
-		if ( ! $form || 'sc_form' !== Form::getPostType() ) {
-			// form not found.
-			return new \WP_Error( 'form_id_invalid', esc_html__( 'Form ID is invalid.', 'surecart' ), [ 'status' => 400 ] );
-		}
-
-		// validate form input.
-		$validator = new FormValidationService( $form->post_content, $request->get_body_params() );
-		$validated = $validator->validate();
-		if ( is_wp_error( $validated ) ) {
-			return $validated;
+		if ( ! empty( $request['form_id'] ) ) {
+			$form = get_post( $request['form_id'] );
+			if ( ! $form || 'sc_form' !== $form->post_type ) {
+				return new \WP_Error( 'form_id_invalid', esc_html__( 'Form ID is invalid.', 'surecart' ), [ 'status' => 400 ] );
+			}
+			// validate form input based on saved form content.
+			$validator = new FormValidationService( $form->post_content, $request->get_body_params() );
+			$validated = $validator->validate();
+			if ( is_wp_error( $validated ) ) {
+				return $validated;
+			}
 		}
 
 		return true;
@@ -269,5 +282,15 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 	 */
 	public function manually_pay_permissions_check( $request ) {
 		return current_user_can( 'edit_sc_checkouts' );
+	}
+
+	/**
+	 * Cancelling orders.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function cancel_item_permissions_check( $request ) {
+		return current_user_can( 'edit_sc_orders' );
 	}
 }

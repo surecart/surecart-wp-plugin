@@ -50,4 +50,11 @@ describe('sc-order-bump', () => {
     });
     expect(page.root).toMatchSnapshot();
   });
+  it('renders bump with recurring interval', async () => {
+    const page = await newSpecPage({
+      components: [ScOrderBump],
+      template: () => <sc-order-bump bump={{ price: { recurring_interval: 'year', recurring_interval_count: 1 } } as Bump}></sc-order-bump>,
+    });
+    expect(page.root).toMatchSnapshot();
+  });
 });

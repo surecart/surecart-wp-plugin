@@ -10,7 +10,7 @@ trait HasDiscount {
 	 * @return $this
 	 */
 	protected function setDiscountAttribute( $value ) {
-		$this->attributes['discount'] = (object) $value;
+		$this->attributes['discount'] = is_string( $value ) ? $value : (object) $value;
 		return $this;
 	}
 }

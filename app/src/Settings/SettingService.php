@@ -3,6 +3,7 @@
 namespace SureCart\Settings;
 
 use SureCart\WordPress\RecaptchaValidationService;
+use SureCart\Routing\PermalinksSettingsService;
 
 /**
  * A service for registering settings.
@@ -15,7 +16,7 @@ class SettingService {
 	 */
 	public function bootstrap() {
 		$this->register(
-			'general',
+			'surecart',
 			'theme',
 			[
 				'type'              => 'string',
@@ -25,7 +26,7 @@ class SettingService {
 			]
 		);
 		$this->register(
-			'general',
+			'surecart',
 			'honeypot_enabled',
 			[
 				'type'              => 'boolean',
@@ -35,7 +36,7 @@ class SettingService {
 			]
 		);
 		$this->register(
-			'general',
+			'surecart',
 			'recaptcha_enabled',
 			[
 				'type'              => 'boolean',
@@ -44,7 +45,7 @@ class SettingService {
 			]
 		);
 		$this->register(
-			'general',
+			'surecart',
 			'recaptcha_site_key',
 			[
 				'type'              => 'string',
@@ -53,7 +54,7 @@ class SettingService {
 			]
 		);
 		$this->register(
-			'general',
+			'surecart',
 			'recaptcha_secret_key',
 			[
 				'type'              => 'string',
@@ -62,7 +63,7 @@ class SettingService {
 			]
 		);
 		$this->register(
-			'general',
+			'surecart',
 			'recaptcha_min_score',
 			[
 				'type'              => 'number',
@@ -72,7 +73,7 @@ class SettingService {
 			]
 		);
 		$this->register(
-			'general',
+			'surecart',
 			'load_stripe_js',
 			[
 				'type'              => 'boolean',
@@ -81,7 +82,7 @@ class SettingService {
 			]
 		);
 		$this->register(
-			'general',
+			'surecart',
 			'tracking_confirmation',
 			[
 				'type'              => 'boolean',
@@ -90,12 +91,22 @@ class SettingService {
 			]
 		);
 		$this->register(
-			'general',
+			'surecart',
 			'tracking_confirmation_message',
 			[
 				'type'              => 'string',
 				'show_in_rest'      => true,
 				'default'           => esc_html__( 'Your email and cart are saved so we can send email reminders about this order.', 'surecart' ),
+				'sanitize_callback' => 'sanitize_text_field',
+			]
+		);
+		$this->register(
+			'surecart',
+			'buy_link_logo_width',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'default'           => '180px',
 				'sanitize_callback' => 'sanitize_text_field',
 			]
 		);
@@ -105,7 +116,7 @@ class SettingService {
 	 * Register a setting.
 	 *
 	 * @param string $option_group A settings group name. Should correspond to an allowed option key name.
-	 *                             Default allowed option key names include 'general', 'discussion', 'media',
+	 *                             Default allowed option key names include 'surecart', 'discussion', 'media',
 	 *                             'reading', 'writing', and 'options'.
 	 * @param string $option_name The name of an option to sanitize and save.
 	 * @param array  $args {
@@ -141,5 +152,14 @@ class SettingService {
 	 */
 	public function get( $name, $default = false ) {
 		return get_option( "surecart_${name}", $default );
+	}
+
+	/**
+	 * Get the permalinks settings.
+	 *
+	 * @return PermalinksSettingsService
+	 */
+	public function permalinks() {
+		return new PermalinksSettingsService();
 	}
 }

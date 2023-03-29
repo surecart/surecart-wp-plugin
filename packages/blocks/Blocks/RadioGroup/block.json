@@ -5,6 +5,7 @@
 	"description": "Display a radio select input. This is saved with the order as additional metadata.",
 	"category": "surecart",
 	"keywords": ["radio", "select", "radio-group", "surecart"],
+  "textdomain": "surecart",
 	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,

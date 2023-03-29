@@ -7,15 +7,15 @@
 
 ## Properties
 
-| Property      | Attribute     | Description | Type       | Default                          |
-| ------------- | ------------- | ----------- | ---------- | -------------------------------- |
-| `busy`        | `busy`        |             | `boolean`  | `undefined`                      |
-| `closedText`  | `closed-text` |             | `string`   | `__('Show Summary', 'surecart')` |
-| `collapsed`   | `collapsed`   |             | `boolean`  | `undefined`                      |
-| `collapsible` | `collapsible` |             | `boolean`  | `false`                          |
-| `empty`       | `empty`       |             | `boolean`  | `undefined`                      |
-| `openText`    | `open-text`   |             | `string`   | `__('Summary', 'surecart')`      |
-| `order`       | --            |             | `Checkout` | `undefined`                      |
+| Property            | Attribute             | Description | Type       | Default                          |
+| ------------------- | --------------------- | ----------- | ---------- | -------------------------------- |
+| `busy`              | `busy`                |             | `boolean`  | `undefined`                      |
+| `closedText`        | `closed-text`         |             | `string`   | `__('Show Summary', 'surecart')` |
+| `collapsed`         | `collapsed`           |             | `boolean`  | `undefined`                      |
+| `collapsedOnMobile` | `collapsed-on-mobile` |             | `boolean`  | `false`                          |
+| `collapsible`       | `collapsible`         |             | `boolean`  | `false`                          |
+| `openText`          | `open-text`           |             | `string`   | `__('Summary', 'surecart')`      |
+| `order`             | --                    |             | `Checkout` | `undefined`                      |
 
 
 ## Events

@@ -5,6 +5,7 @@ import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
 import { intervalString } from '../../../../functions/price';
+import { formatTaxDisplay } from '../../../../functions/tax';
 import { Checkout, PaymentMethod, Period, Price, Product } from '../../../../types';
 
 @Component({
@@ -267,13 +268,13 @@ export class ScUpcomingInvoice {
           </sc-line-item>
         )}
 
-        <sc-coupon-form discount={checkout?.discount} label={__('Add Coupon Code')} onScApplyCoupon={e => this.applyCoupon(e)} error={this.couponError}>
+        <sc-coupon-form discount={checkout?.discount} label={__('Add Coupon Code')} onScApplyCoupon={e => this.applyCoupon(e)} error={this.couponError} collapsed>
           {__('Add Coupon Code')}
         </sc-coupon-form>
 
         {!!checkout.tax_amount && (
           <sc-line-item>
-            <span slot="description">{checkout?.tax_label || __('Tax', 'surecart')}</span>
+            <span slot="description">{formatTaxDisplay(checkout?.tax_label)}</span>
             <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={checkout?.tax_amount}></sc-format-number>
           </sc-line-item>
         )}

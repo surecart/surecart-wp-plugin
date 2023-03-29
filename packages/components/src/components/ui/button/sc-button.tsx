@@ -1,4 +1,5 @@
 import { Component, Prop, Event, EventEmitter, State, Element, Fragment, h } from '@stencil/core';
+import { isRtl } from '../../../functions/page-align';
 
 /**
  * @part base - The elements base wrapper.
@@ -61,7 +62,7 @@ export class ScButton {
   @Prop() value: string;
 
   /** When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`. */
-  @Prop() href: string;
+  @Prop({ reflect: true }) href: string;
 
   /** Tells the browser where to open the link. Only used when `href` is set. */
   @Prop() target: '_blank' | '_parent' | '_self' | '_top';
@@ -187,6 +188,7 @@ export class ScButton {
           'button--has-label': this.hasLabel,
           'button--has-prefix': this.hasPrefix,
           'button--has-suffix': this.hasSuffix,
+          'button--is-rtl':isRtl()
         }}
         href={this.href}
         target={this.target}

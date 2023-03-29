@@ -161,6 +161,14 @@ module.exports = {
 			__dirname,
 			'packages/components/static-loader.js'
 		),
+
+		/**
+		 * Templates
+		 */
+		['templates/buy']: path.resolve(
+			__dirname,
+			'packages/styles/frontend/buy-page.js'
+		),
 	},
 	output: {
 		filename: '[name].js',
@@ -177,7 +185,7 @@ module.exports = {
 				{
 					from: path.resolve(
 						__dirname,
-						'node_modules/@surecart/components/dist/surecart/icon-assets'
+						'./packages/components/src/components/ui/icon/icon-assets'
 					),
 					to: path.resolve(__dirname, 'dist/icon-assets'),
 				},

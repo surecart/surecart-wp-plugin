@@ -16,7 +16,7 @@
 | `disableComponentsValidation` | `disable-components-validation` | Should we disable components validation                       | `boolean`                                                                        | `undefined` |
 | `editLineItems`               | `edit-line-items`               | Can we edit line items?                                       | `boolean`                                                                        | `true`      |
 | `formId`                      | `form-id`                       | The checkout form id                                          | `number`                                                                         | `undefined` |
-| `loadingText`                 | --                              |                                                               | `{ finalizing: string; paying: string; confirming: string; confirmed: string; }` | `undefined` |
+| `loadingText`                 | --                              | Text for the loading states of the form.                      | `{ finalizing: string; paying: string; confirming: string; confirmed: string; }` | `undefined` |
 | `loggedIn`                    | `logged-in`                     | Is this user logged in?                                       | `boolean`                                                                        | `undefined` |
 | `manualPaymentMethods`        | --                              | Manual payment methods enabled for this form.                 | `ManualPaymentMethod[]`                                                          | `undefined` |
 | `mode`                        | `mode`                          | Are we in test or live mode.                                  | `"live" \| "test"`                                                               | `'live'`    |
@@ -24,8 +24,10 @@
 | `persistSession`              | `persist-session`               | Whether to persist the session in the browser between visits. | `boolean`                                                                        | `true`      |
 | `prices`                      | --                              | An array of prices to pre-fill in the form.                   | `PriceChoice[]`                                                                  | `[]`        |
 | `processors`                  | --                              | Processors enabled for this form.                             | `Processor[]`                                                                    | `undefined` |
+| `product`                     | --                              | A product to pre-fill the form.                               | `Product`                                                                        | `undefined` |
 | `removeLineItems`             | `remove-line-items`             | Can we remove line items?                                     | `boolean`                                                                        | `true`      |
 | `stripePaymentElement`        | `stripe-payment-element`        | Use the Stripe payment element.                               | `boolean`                                                                        | `false`     |
+| `successText`                 | --                              | Success text for the form.                                    | `{ title: string; description: string; button: string; }`                        | `undefined` |
 | `successUrl`                  | `success-url`                   | Where to go on success                                        | `string`                                                                         | `''`        |
 | `taxProtocol`                 | --                              | The account tax protocol                                      | `TaxProtocol`                                                                    | `undefined` |
 
@@ -41,13 +43,13 @@
 
 ## Methods
 
-### `submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout>`
+### `submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout | NodeJS.Timeout>`
 
 Submit the form
 
 #### Returns
 
-Type: `Promise<Checkout>`
+Type: `Promise<Checkout | Timeout>`
 
 
 
@@ -101,12 +103,12 @@ graph TD;
   sc-form-control --> sc-tooltip
   sc-form-state-provider --> sc-block-ui
   sc-block-ui --> sc-spinner
-  sc-form-error-provider --> sc-alert
+  sc-form-error-provider --> sc-checkout-form-errors
+  sc-checkout-form-errors --> sc-alert
   sc-form-components-validator --> sc-order-shipping-address
   sc-form-components-validator --> sc-order-tax-id-input
   sc-form-components-validator --> sc-order-bumps
   sc-form-components-validator --> sc-line-item-tax
-  sc-form-components-validator --> sc-line-item-bump
   sc-order-shipping-address --> sc-address
   sc-order-shipping-address --> sc-compact-address
   sc-address --> sc-form-control
@@ -140,8 +142,12 @@ graph TD;
   sc-order-bump --> sc-divider
   sc-line-item-tax --> sc-line-item
   sc-line-item-tax --> sc-format-number
-  sc-line-item-bump --> sc-line-item
-  sc-line-item-bump --> sc-format-number
+  sc-order-confirm-provider --> sc-dialog
+  sc-order-confirm-provider --> sc-icon
+  sc-order-confirm-provider --> sc-dashboard-module
+  sc-order-confirm-provider --> sc-alert
+  sc-order-confirm-provider --> sc-button
+  sc-dashboard-module --> sc-alert
   sc-session-provider --> sc-line-items-provider
   style sc-checkout fill:#f9f,stroke:#333,stroke-width:4px
 ```

@@ -54,6 +54,7 @@
  - [sc-order-confirmation-line-items](../../controllers/confirmation/order-confirmation-line-items)
  - [sc-order-confirmation-totals](../../controllers/confirmation/order-confirmation-totals)
  - [sc-order-summary](../../controllers/checkout-form/order-summary)
+ - [sc-product-line-item](../product-line-item)
  - [sc-subscription-next-payment](../../controllers/dashboard/subscription-details)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
@@ -70,6 +71,7 @@ graph TD;
   sc-order-confirmation-line-items --> sc-line-item
   sc-order-confirmation-totals --> sc-line-item
   sc-order-summary --> sc-line-item
+  sc-product-line-item --> sc-line-item
   sc-subscription-next-payment --> sc-line-item
   sc-upcoming-invoice --> sc-line-item
   style sc-line-item fill:#f9f,stroke:#333,stroke-width:4px
