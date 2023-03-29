@@ -14,10 +14,6 @@ describe('Customer phone fields', () => {
   });
 
   it('Should not replace the exising value if checkout.customer.phone is returned', () => {
-    cy.visit('/test/sc-checkout/phone-field/');
-
-    cy.get('sc-form sc-customer-phone').shadow().find('sc-phone-input').invoke('attr', 'value', '111111');
-
     cy.intercept(
       {
         method: 'POST',
@@ -29,6 +25,10 @@ describe('Customer phone fields', () => {
         customer: { phone: '666666' },
       },
     ).as('createUpdate');
+
+    cy.visit('/test/sc-checkout/phone-field/');
+
+    cy.get('sc-form sc-customer-phone').shadow().find('sc-phone-input').invoke('attr', 'value', '111111');
 
     cy.wait('@createUpdate').then(() => {
       cy.get('sc-form sc-customer-phone').shadow().find('sc-phone-input').should('have.attr', 'value', '111111');
@@ -43,10 +43,6 @@ describe('Customer phone fields', () => {
   });
 
   it('Should not replace the exising value if checkout.phone is returned', () => {
-    cy.visit('/test/sc-checkout/phone-field/');
-
-    cy.get('sc-form sc-customer-phone').shadow().find('sc-phone-input').invoke('attr', 'value', '111111');
-
     cy.intercept(
       {
         method: 'POST',
@@ -58,6 +54,10 @@ describe('Customer phone fields', () => {
         phone: '666666',
       },
     ).as('createUpdate');
+
+    cy.visit('/test/sc-checkout/phone-field/');
+
+    cy.get('sc-form sc-customer-phone').shadow().find('sc-phone-input').invoke('attr', 'value', '111111');
 
     cy.wait('@createUpdate').then(() => {
       cy.get('sc-form sc-customer-phone').shadow().find('sc-phone-input').should('have.attr', 'value', '111111');
@@ -72,8 +72,6 @@ describe('Customer phone fields', () => {
   });
 
   it('Should prefill if checkout.phone is returned', () => {
-    cy.visit('/test/sc-checkout/phone-field/');
-
     cy.intercept(
       {
         method: 'POST',
@@ -85,6 +83,8 @@ describe('Customer phone fields', () => {
         phone: '666666',
       },
     ).as('createUpdate');
+
+    cy.visit('/test/sc-checkout/phone-field/');
 
     cy.wait('@createUpdate').then(() => {
       cy.get('sc-form sc-customer-phone').shadow().find('sc-phone-input').should('have.attr', 'value', '666666');
@@ -99,7 +99,6 @@ describe('Customer phone fields', () => {
   });
 
   it('Should prefill if checkout.customer.phone is returned', () => {
-    cy.visit('/test/sc-checkout/phone-field/');
     cy.intercept(
       {
         method: 'POST',
@@ -111,6 +110,8 @@ describe('Customer phone fields', () => {
         phone: '666666',
       },
     ).as('createUpdate');
+
+    cy.visit('/test/sc-checkout/phone-field/');
 
     cy.wait('@createUpdate').then(() => {
       cy.get('sc-form sc-customer-phone').shadow().find('sc-phone-input').should('have.attr', 'value', '666666');
