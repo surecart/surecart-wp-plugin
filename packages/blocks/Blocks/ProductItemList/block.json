@@ -8,7 +8,13 @@
 	"keywords": ["products", "product", "list", "store"],
 	"supports": {
 		"reusable": false,
-		"html": false
+		"html": false,
+		"spacing": {
+			"blockGap": true,
+			"__experimentalDefaultControls": {
+				"blockGap": true
+			}
+		}
 	},
 	"attributes": {
 		"columns": {
