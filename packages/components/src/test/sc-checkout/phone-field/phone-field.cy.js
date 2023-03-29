@@ -11,6 +11,16 @@ describe('Customer phone fields', () => {
         status: 'processing',
       },
     ).as('finalize');
+    cy.intercept(
+      {
+        method: 'POST',
+        path: '**/surecart/v1/checkouts/test/confirm*',
+      },
+      {
+        id: 'test',
+        status: 'paid',
+      },
+    ).as('confirm');
   });
 
   it('Should not replace the exising value if checkout.customer.phone is returned', () => {
@@ -28,7 +38,7 @@ describe('Customer phone fields', () => {
 
     cy.visit('/test/sc-checkout/phone-field/');
 
-    cy.get('sc-form sc-customer-phone').shadow().find('sc-phone-input').invoke('attr', 'value', '111111');
+    cy.get('sc-form sc-customer-phone').invoke('attr', 'value', '111111');
 
     cy.wait('@createUpdate').then(() => {
       cy.get('sc-form sc-customer-phone').shadow().find('sc-phone-input').should('have.attr', 'value', '111111');
@@ -57,7 +67,7 @@ describe('Customer phone fields', () => {
 
     cy.visit('/test/sc-checkout/phone-field/');
 
-    cy.get('sc-form sc-customer-phone').shadow().find('sc-phone-input').invoke('attr', 'value', '111111');
+    cy.get('sc-form sc-customer-phone').invoke('attr', 'value', '111111');
 
     cy.wait('@createUpdate').then(() => {
       cy.get('sc-form sc-customer-phone').shadow().find('sc-phone-input').should('have.attr', 'value', '111111');
