@@ -22,13 +22,9 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function getProductListStyle( $attr ) {
-		$style = '';
-		if ( ! empty( $attr['columns'] ) ) {
-			$style .= '--sc-product-item-list-column: ' . $attr['columns'] . ';';
-		}
-		if ( ! empty( $attr['gap'] ) ) {
-			$style .= '--sc-product-item-list-gap: ' . $this->getSpacingPresetCssVar( $attr['style']['spacing']['blockGap'] ?? '1rem' ) . ';';
-		}
+		$style  = '--sc-product-item-list-column: ' . ( $attr['columns'] ?? 3 ) . ';';
+		$style .= '--sc-product-item-list-gap: ' . $this->getSpacingPresetCssVar( $attr['style']['spacing']['blockGap'] ?? '1rem' ) . ';';
+
 		return $style;
 	}
 
