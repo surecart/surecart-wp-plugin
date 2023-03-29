@@ -81,7 +81,7 @@ class DashboardController {
 				],
 				'billing_test' => ! empty( User::current()->customerId( 'test' ) ) ? [
 					'icon_name' => 'credit-card',
-					'name'      => __( 'Billing (Test)', 'surecart' ),
+					'name'      => __( 'Billing (Test Mode)', 'surecart' ),
 					'active'    => $this->isActive( 'billing' ),
 					'href'      => add_query_arg(
 						[
