@@ -113,7 +113,7 @@ class DownloadController extends BaseController {
 						add_query_arg(
 							[
 								'tab'    => $this->getTab(),
-								'model'  => 'order',
+								'model'  => 'download',
 								'action' => 'index',
 							],
 							remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -121,7 +121,7 @@ class DownloadController extends BaseController {
 					);
 					?>
 				 ">
-					<?php esc_html_e( 'Orders', 'surecart' ); ?>
+					<?php esc_html_e( 'Downloads', 'surecart' ); ?>
 				</sc-breadcrumb>
 				<sc-breadcrumb>
 					<?php esc_html_e( 'Download', 'surecart' ); ?>
