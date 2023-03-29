@@ -248,6 +248,10 @@ export namespace Components {
          */
         "alwaysShow": boolean;
         /**
+          * Whether the cart menu button is enabled
+         */
+        "cartMenuButtonEnabled": boolean;
+        /**
           * The template for the cart to inject when opened.
          */
         "cartTemplate": string;
@@ -5077,6 +5081,10 @@ declare namespace LocalJSX {
           * Should we force show the cart, even if there's a form on the page?
          */
         "alwaysShow"?: boolean;
+        /**
+          * Whether the cart menu button is enabled
+         */
+        "cartMenuButtonEnabled"?: boolean;
         /**
           * The template for the cart to inject when opened.
          */

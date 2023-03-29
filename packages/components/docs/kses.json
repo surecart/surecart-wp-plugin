@@ -143,6 +143,7 @@
   },
   "sc-cart": {
     "always-show": true,
+    "cart-menu-button-enabled": true,
     "cart-template": true,
     "checkout-link": true,
     "checkout-url": true,
@@ -157,7 +158,6 @@
   "sc-cart-button": {
     "form-id": true,
     "icon": true,
-    "menu-alignment": true,
     "mode": true,
     "style": true,
     "id": true,

@@ -7,86 +7,92 @@ use SureCart\Models\Form;
 /**
  * The cart service.
  */
-class CartService {
-	/**
-	 * Bootstrap the cart.
-	 *
-	 * @return void
-	 */
-	public function bootstrap() {
-		// Slide-out is disabled. Do not load scripts.
-		if ( (bool) get_option( 'sc_slide_out_cart_disabled', false ) ) {
-			return;
-		}
+class CartService
+{
+    /**
+     * Bootstrap the cart.
+     *
+     * @return void
+     */
+    public function bootstrap()
+    {
+        // Slide-out is disabled. Do not load scripts.
+        if ((bool) get_option('sc_slide_out_cart_disabled', false)) {
+            return;
+        }
 
-		// enqueue scripts needed for slide out cart.
-		add_action(
-			'wp_enqueue_scripts',
-			function() {
-				\SureCart::assets()->enqueueComponents();
-			}
-		);
-		add_action( 'wp_footer', [ $this, 'renderCartComponent' ] );
-	}
+        // enqueue scripts needed for slide out cart.
+        add_action(
+            'wp_enqueue_scripts',
+            function () {
+                \SureCart::assets()->enqueueComponents();
+            }
+        );
+        add_action('wp_footer', [$this, 'renderCartComponent']);
+    }
 
-	/**
-	 * Get the cart template.
-	 *
-	 * @return string
-	 */
-	public function cartTemplate() {
-		$form = $this->getForm();
-		if ( empty( $form->ID ) ) {
-			return '';
-		}
-		$cart = \SureCart::cartPost()->get();
-		if ( empty( $cart->post_content ) ) {
-			return '';
-		}
-		ob_start();
-		?>
+    /**
+     * Get the cart template.
+     *
+     * @return string
+     */
+    public function cartTemplate()
+    {
+        $form = $this->getForm();
+        if (empty($form->ID)) {
+            return '';
+        }
+        $cart = \SureCart::cartPost()->get();
+        if (empty($cart->post_content)) {
+            return '';
+        }
+        ob_start();
+        ?>
 
 		<sc-cart
 			id="sc-cart"
-			header="<?php esc_attr_e( 'Cart', 'surecart' ); ?>"
-			form-id="<?php echo esc_attr( $form->ID ); ?>"
-			mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>"
-			checkout-link="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>"
-			style="font-size: 16px">
-
-			<?php echo wp_kses_post( do_blocks( $cart->post_content ) ); ?>
+			header="<?php esc_attr_e('Cart', 'surecart');?>"
+			form-id="<?php echo esc_attr($form->ID); ?>"
+			mode="<?php echo esc_attr(Form::getMode($form->ID)); ?>"
+			checkout-link="<?php echo esc_attr(\SureCart::pages()->url('checkout')); ?>"
+			style="font-size: 16px"
+			cart-menu-button-enabled="<?php echo esc_attr((bool) get_option('sc_cart_menu_button_enabled', false) ? 'true' : 'false'); ?>"
+			>
+			<?php echo wp_kses_post(do_blocks($cart->post_content)); ?>
 
 		</sc-cart>
 		<?php
-		return trim( preg_replace( '/\s+/', ' ', ob_get_clean() ) );
-	}
+return trim(preg_replace('/\s+/', ' ', ob_get_clean()));
+    }
 
-	/**
-	 * Render the cart components.
-	 *
-	 * @return void
-	 */
-	public function renderCartComponent() {
-		$form = $this->getForm();
-		if ( empty( $form->ID ) ) {
-			return;
-		}
-		$template = $this->cartTemplate();
-		?>
+    /**
+     * Render the cart components.
+     *
+     * @return void
+     */
+    public function renderCartComponent()
+    {
+        $form = $this->getForm();
+        if (empty($form->ID)) {
+            return;
+        }
+        $template = $this->cartTemplate();
+        ?>
 		<sc-cart-loader
-			form-id="<?php echo esc_attr( $form->ID ); ?>"
-			mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>"
-			template='<?php echo esc_attr( $template ); ?>'>
+			form-id="<?php echo esc_attr($form->ID); ?>"
+			mode="<?php echo esc_attr(Form::getMode($form->ID)); ?>"
+			template='<?php echo esc_attr($template); ?>'>
 		</sc-cart-loader>
 		<?php
-	}
+}
 
-	/**
-	 * Get the form
-	 *
-	 * @return \WP_Post The default form post.
-	 */
-	public function getForm() {
-		return \SureCart::forms()->getDefault();
-	}
+    /**
+     * Get the form
+     *
+     * @return \WP_Post The default form post.
+     */
+    public function getForm()
+    {
+        return \SureCart::forms()->getDefault();
+    }
 }
