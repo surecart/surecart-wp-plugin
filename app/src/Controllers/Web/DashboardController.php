@@ -85,7 +85,7 @@ class DashboardController {
 					'active'    => $this->isActive( 'billing' ),
 					'href'      => add_query_arg(
 						[
-							'action' => 'edit',
+							'action' => 'show',
 							'model'  => 'customer',
 							'id'     => User::current()->customerId( 'test' ),
 						],
@@ -98,7 +98,7 @@ class DashboardController {
 					'active'    => $this->isActive( 'billing' ),
 					'href'      => add_query_arg(
 						[
-							'action' => 'edit',
+							'action' => 'show',
 							'model'  => 'customer',
 							'id'     => User::current()->customerId( 'live' ),
 						],
