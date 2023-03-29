@@ -20,10 +20,6 @@
 		"columns": {
 			"type": "number",
 			"default": 4
-		},
-		"gap": {
-			"type": "string",
-			"default": "1rem"
 		}
 	}
 }
