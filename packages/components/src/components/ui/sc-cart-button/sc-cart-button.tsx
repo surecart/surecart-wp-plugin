@@ -27,9 +27,6 @@ export class ScCartButton {
   /** Are we in test or live mode. */
   @Prop() mode: 'test' | 'live' = 'live';
 
-  /** If the flyout menu should be visible. */
-  @Prop() menuAlignment: 'left' | 'right' = 'left';
-
   order() {
     return getOrder(this.formId, this.mode);
   }

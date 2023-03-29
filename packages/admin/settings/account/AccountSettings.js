@@ -86,8 +86,6 @@ export default () => {
 		'surecart_cart_menu_selected_id'
 	);
 
-	console.log(cartMenuAlignment, cartMenuAlwaysShown, cartMenuSelectedId);
-
 	/**
 	 * Form is submitted.
 	 */
@@ -365,24 +363,24 @@ export default () => {
 							/>
 						)}
 						<ScSelect
-							label={__('Alignment of cart button', 'surecart')}
-							placeholder={__('Select Alignment', 'surecart')}
+							label={__('Position of cart button', 'surecart')}
+							placeholder={__('Select Position', 'surecart')}
 							value={cartMenuAlignment}
 							onScChange={(e) =>
 								setCartMenuAlignment(e.target.value)
 							}
 							unselect={false}
 							help={__(
-								'If your menu is right aligned, then placing the cart button to the right will look best.',
+								'Select the cart button position, i.e. left or right, where it will look best with your website design.',
 								'surecart'
 							)}
 							choices={[
 								{
-									label: __('Right Align', 'surecart'),
+									label: __('Right', 'surecart'),
 									value: 'right',
 								},
 								{
-									label: __('Left Align', 'surecart'),
+									label: __('Left', 'surecart'),
 									value: 'left',
 								},
 							]}

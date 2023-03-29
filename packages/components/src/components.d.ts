@@ -279,10 +279,6 @@ export namespace Components {
          */
         "icon": string;
         /**
-          * If the flyout menu should be visible.
-         */
-        "menuAlignment": 'left' | 'right';
-        /**
           * Are we in test or live mode.
          */
         "mode": 'test' | 'live';
@@ -5112,10 +5108,6 @@ declare namespace LocalJSX {
           * The icon to show.
          */
         "icon"?: string;
-        /**
-          * If the flyout menu should be visible.
-         */
-        "menuAlignment"?: 'left' | 'right';
         /**
           * Are we in test or live mode.
          */
