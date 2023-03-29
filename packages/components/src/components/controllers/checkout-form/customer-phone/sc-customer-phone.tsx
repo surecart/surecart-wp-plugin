@@ -103,11 +103,13 @@ export class ScCustomerPhone {
   handleCheckoutChange() {
     // we only want to do this  if we don't have a value.
     if (this.value) return;
+
     // if the checkout has a phone, use that.
     if (checkoutState.checkout?.phone) {
       this.value = checkoutState.checkout?.phone;
       return;
     }
+
     // if the customer has a phone, use that.
     if ((checkoutState.checkout?.customer as Customer)?.phone) {
       this.value = (checkoutState.checkout?.customer as Customer)?.phone;
