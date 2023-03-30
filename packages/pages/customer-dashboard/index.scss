@@ -28,6 +28,14 @@ body.page-template-template-surecart-dashboard {
     display: flex;
     flex-direction: column;
 
+    &__logged-out {
+      min-height: 100vh;
+      display: grid;
+      align-items: center;
+      text-align: center;
+      margin: var(--sc-spacing-xx-large) auto;
+    }
+
     &__header,
     &__column {
       position: relative;
@@ -69,7 +77,7 @@ body.page-template-template-surecart-dashboard {
   }
 
   @media screen and (min-width: 782px) {
-    &:before {
+    &.has-columns:before {
       -webkit-animation-fill-mode: both;
       animation-fill-mode: both;
       background: var(--sc-color-white);
