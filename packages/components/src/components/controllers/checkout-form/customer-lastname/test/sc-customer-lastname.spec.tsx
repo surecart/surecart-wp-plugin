@@ -7,7 +7,7 @@ const TEST_CUSTOMER: Customer = {
   id: 'd4f37b81-3448-4cae-ad46-4201432527ff',
   billing_matches_shipping: true,
   email: 'customer-21@example.com',
-  first_name: "Jack",
+  first_name: 'Jack',
   last_name: null,
   live_mode: true,
   name: null,
@@ -65,9 +65,7 @@ describe('sc-customer-lastname', () => {
 
     const page = await newSpecPage({
       components: [ScCustomerLastname],
-      template: () => (
-        <sc-customer-lastname loggedIn={true} customer={TEST_CUSTOMER}></sc-customer-lastname>
-      ),
+      template: () => <sc-customer-lastname loggedIn={true} customer={TEST_CUSTOMER}></sc-customer-lastname>,
     });
 
     expect(page.root).toMatchSnapshot();
