@@ -168,7 +168,7 @@ export const removeLineItem = async ({ checkoutId, itemId }) => {
     throw { code: 'error', message: __('Failed to delete', 'surecart') };
   }
 
-  return await getSession(checkoutId);
+  return await fetchCheckout({ id: checkoutId });
 };
 
 /**
