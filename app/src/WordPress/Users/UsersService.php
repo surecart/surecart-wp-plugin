@@ -43,7 +43,7 @@ class UsersService {
 					'first_name' => $userdata['first_name'],
 					'last_name'  => $userdata['last_name'],
 					'email'      => $userdata['user_email'],
-					'phone'      => $userdata['phone'],
+					'phone'      => $userdata['phone'] ?? null,
 				]
 			);
 		}
