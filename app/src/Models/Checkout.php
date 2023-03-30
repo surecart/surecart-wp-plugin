@@ -53,6 +53,20 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Create a new model
+	 *
+	 * @param array   $attributes Attributes to create.
+	 * @param boolean $create_user Whether to create a corresponding WordPress user.
+	 *
+	 * @return $this|\WP_Error|false
+	 */
+	protected function create($attributes = []){
+		$this->setAttribute('ip_address',$_SERVER['REMOTE_ADDR']);
+		$saved = parent::create($attributes);
+		return $saved;
+	}
+
+	/**
 	 * Set the product attribute
 	 *
 	 * @param  object $value Product properties.
