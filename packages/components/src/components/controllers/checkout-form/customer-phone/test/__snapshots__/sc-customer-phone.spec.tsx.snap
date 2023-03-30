@@ -8,34 +8,10 @@ exports[`sc-customer-phone Uses checkout as a preference if both customer and ch
 </sc-customer-phone>
 `;
 
-exports[`sc-customer-phone Uses checkout as a preference if both customer and checkout set a phone number. 1`] = `
-<sc-customer-phone size="medium">
-  <mock:shadow-root>
-    <sc-phone-input autocomplete="phone" help="" name="phone" value="111"></sc-phone-input>
-  </mock:shadow-root>
-</sc-customer-phone>
-`;
-
-exports[`sc-customer-phone Uses the checkout phone number if set  1`] = `
-<sc-customer-phone size="medium">
-  <mock:shadow-root>
-    <sc-phone-input autocomplete="phone" help="" name="phone" value="111"></sc-phone-input>
-  </mock:shadow-root>
-</sc-customer-phone>
-`;
-
 exports[`sc-customer-phone Uses the checkout phone number on load 1`] = `
 <sc-customer-phone size="medium">
   <mock:shadow-root>
     <sc-phone-input autocomplete="phone" help="" name="phone" value="111"></sc-phone-input>
-  </mock:shadow-root>
-</sc-customer-phone>
-`;
-
-exports[`sc-customer-phone Uses the customer phone number if set 1`] = `
-<sc-customer-phone size="medium">
-  <mock:shadow-root>
-    <sc-phone-input autocomplete="phone" help="" name="phone" value="999"></sc-phone-input>
   </mock:shadow-root>
 </sc-customer-phone>
 `;

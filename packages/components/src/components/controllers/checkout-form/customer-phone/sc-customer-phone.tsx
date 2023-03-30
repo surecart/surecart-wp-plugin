@@ -12,6 +12,9 @@ import { Customer } from '../../../../types';
 export class ScCustomerPhone {
   private input: HTMLScInputElement;
 
+  /** Remove the change listener */
+  private removeChangeListener: () => void;
+
   /** The input's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
 
@@ -84,12 +87,16 @@ export class ScCustomerPhone {
 
   componentWillLoad() {
     this.handleCheckoutChange();
-    onChange('checkout', () => this.handleCheckoutChange());
+    this.removeChangeListener = onChange('checkout', () => this.handleCheckoutChange());
+  }
+
+  disconnectedCallback() {
+    this.removeChangeListener();
   }
 
   handleCheckoutChange() {
     // we only want to do this  if we don't have a value.
-    if (this.value) return;
+    if (this?.value) return;
 
     // if the checkout has a phone, use that.
     if (checkoutState.checkout?.phone) {
