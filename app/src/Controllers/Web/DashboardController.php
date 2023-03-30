@@ -17,13 +17,16 @@ class DashboardController {
 	public function getEnabledNavigation( $id ) {
 		return array_values(
 			array_filter(
-				[ 'orders', 'subscriptions', 'downloads', 'account', 'billing', 'billing_test' ],
+				[ 'orders', 'subscriptions', 'downloads', 'account', 'billing' ],
 				function( $name ) use ( $id ) {
-					if ( 'billing_test' === $name ) {
-						return ! empty( User::current()->customerId( 'test' ) ) && get_post_meta( $id, '_surecart_dashboard_navigation_billing', true );
-					}
 					if ( 'billing' === $name ) {
-						return ! empty( User::current()->customerId( 'live' ) ) && get_post_meta( $id, '_surecart_dashboard_navigation_billing', true );
+						if ( ! get_post_meta( $id, '_surecart_dashboard_navigation_billing', true ) ) {
+							return false;
+						}
+						if ( empty( User::current()->customerId( 'live' ) ) && empty( User::current()->customerId( 'test' ) ) ) {
+							return false;
+						}
+						return true;
 					}
 					return get_post_meta( $id, '_surecart_dashboard_navigation_' . $name, true );
 				}
@@ -44,6 +47,7 @@ class DashboardController {
 			'current_url'        => ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
 			'user'               => wp_get_current_user(),
 			'dashboard_url'      => get_permalink( get_the_ID() ),
+			'logout_link'        => wp_logout_url( get_permalink( get_the_ID() ) ),
 			'active_tab'         => esc_html( $_GET['model'] ?? 'dashboard' ),
 			'navigation'         => $this->getNavigation(),
 			'account_navigation' => $this->getAccountNavigation(),
@@ -65,9 +69,10 @@ class DashboardController {
 	public function getAccountNavigation() {
 		$dashboard_url      = get_permalink( get_the_ID() );
 		$enabled_navigation = $this->getEnabledNavigation( get_the_ID() );
+		$customer_id        = ! empty( User::current()->customerId( 'live' ) ) ? User::current()->customerId( 'live' ) : User::current()->customerId( 'test' );
 		return array_filter(
 			[
-				'account'      => [
+				'account' => [
 					'icon_name' => 'user',
 					'name'      => __( 'Account', 'surecart' ),
 					'active'    => $this->isActive( 'account' ),
@@ -79,20 +84,7 @@ class DashboardController {
 						$dashboard_url
 					),
 				],
-				'billing_test' => ! empty( User::current()->customerId( 'test' ) ) ? [
-					'icon_name' => 'credit-card',
-					'name'      => __( 'Billing (Test Mode)', 'surecart' ),
-					'active'    => $this->isActive( 'billing' ),
-					'href'      => add_query_arg(
-						[
-							'action' => 'show',
-							'model'  => 'customer',
-							'id'     => User::current()->customerId( 'test' ),
-						],
-						$dashboard_url
-					),
-				] : false,
-				'billing'      => ! empty( User::current()->customerId( 'live' ) ) ? [
+				'billing' => ! empty( $customer_id ) ? [
 					'icon_name' => 'credit-card',
 					'name'      => __( 'Billing', 'surecart' ),
 					'active'    => $this->isActive( 'billing' ),
@@ -100,7 +92,7 @@ class DashboardController {
 						[
 							'action' => 'show',
 							'model'  => 'customer',
-							'id'     => User::current()->customerId( 'live' ),
+							'id'     => $customer_id,
 						],
 						$dashboard_url
 					),
