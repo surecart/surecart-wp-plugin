@@ -13,6 +13,5 @@ return [
 
 	<!-- wp:surecart/customer-downloads /-->
 
-	<!-- wp:surecart/customer-payment-methods /-->
 	<!-- /wp:surecart/dashboard-area -->',
 ];
