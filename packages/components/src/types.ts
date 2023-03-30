@@ -64,7 +64,6 @@ export interface Price {
   name: string;
   description?: string;
   amount: number;
-  scratch_amount?: number;
   currency: string;
   recurring: boolean;
   recurring_interval?: 'week' | 'month' | 'year' | 'never';
