@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 const { __ } = wp.i18n;
-import { ScButton } from '@surecart/components-react';
+import { ScButton, ScIcon } from '@surecart/components-react';
 
 export default ({
 	isOpen,
@@ -24,16 +24,25 @@ export default ({
 			<div
 				onClick={() => setIsOpen && setIsOpen(!isOpen)}
 				css={css`
+					display: flex;
+					gap: var(--sc-spacing-small);
 					cursor: pointer;
 					flex: 1;
 					user-select: none;
-					display: inline-block;
 					color: var(--sc-input-label-color);
 					font-weight: var(--sc-input-label-font-weight);
 					text-transform: var(--sc-input-label-text-transform, none);
 					letter-spacing: var(--sc-input-label-letter-spacing, 0);
 				`}
 			>
+				<ScIcon
+					class="dragger"
+					name="drag"
+					css={css`
+						font-size: 16px;
+						cursor: grab;
+					`}
+				/>
 				{children}
 			</div>
 			<div

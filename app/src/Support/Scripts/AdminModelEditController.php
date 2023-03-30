@@ -120,6 +120,8 @@ abstract class AdminModelEditController {
 		$this->data['surecart_app_url'] = defined( 'SURECART_APP_URL' ) ? SURECART_APP_URL : '';
 		$this->data['api_url']          = \SureCart::requests()->getBaseUrl();
 		$this->data['plugin_url']       = \SureCart::core()->assets()->getUrl();
+		$this->data['home_url']         = untrailingslashit( get_home_url() );
+		$this->data['buy_page_slug']    = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'buy_page' ) );
 
 		if ( in_array( 'currency', $this->with_data ) ) {
 			$this->data['currency_code'] = \SureCart::account()->currency;

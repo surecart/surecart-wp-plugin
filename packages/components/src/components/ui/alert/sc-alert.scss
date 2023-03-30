@@ -34,7 +34,7 @@
   box-shadow: var(--sc-shadow-small);
 
   &__text {
-    flex:1;
+    flex: 1;
   }
 
   &.alert--primary {
@@ -100,7 +100,7 @@
 }
 
 .alert__icon {
-  flex:1;
+  flex: 1;
   flex: 0 0 auto;
   display: flex;
   align-items: center;
@@ -119,7 +119,7 @@
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0,0,0,0);
+  clip: rect(0, 0, 0, 0);
   border: 0;
 }
 .alert__close {
@@ -128,11 +128,24 @@
   border-radius: var(--sc-border-radius-small);
   padding: var(--sc-spacing-x-small);
   margin-left: auto;
-  cursor:pointer;
+  cursor: pointer;
   svg {
     width: 1em;
     height: 1em;
   }
 }
 
+.alert--is-rtl {
+  text-align: right;
 
+  &.alert-close {
+    margin-right: auto;
+    margin-left: unset;
+  }
+
+  ::slotted(ul) {
+    margin: 0;
+    padding: 0;
+    padding-right: 20px;
+  }
+}

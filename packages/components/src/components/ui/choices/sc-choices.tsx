@@ -108,7 +108,7 @@ export class ScChoices {
           labelId={this.labelId}
         >
           <div part="choices" class="choices__items">
-            <slot></slot>
+            <slot />
           </div>
         </sc-form-control>
       </fieldset>

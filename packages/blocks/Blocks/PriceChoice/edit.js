@@ -31,6 +31,15 @@ export default ({ attributes, setAttributes, isSelected }) => {
 	} = attributes;
 
 	const blockProps = useBlockProps({
+		priceId: price_id,
+		type,
+		label,
+		showLabel: show_label,
+		showPrice: show_price,
+		showControl: show_control,
+		description,
+		checked,
+		quantity,
 		style: { width: '100%' },
 	});
 
@@ -107,20 +116,10 @@ export default ({ attributes, setAttributes, isSelected }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<div {...blockProps}>
-				<ScPriceChoice
-					onClick={(e) => e.preventDefault()}
-					priceId={price_id}
-					type={type}
-					label={label}
-					showLabel={show_label}
-					showPrice={show_price}
-					showControl={show_control}
-					description={description}
-					checked={checked}
-					quantity={quantity}
-				/>
-			</div>
+			<ScPriceChoice
+				onClick={(e) => e.preventDefault()}
+				{...blockProps}
+			/>
 		</Fragment>
 	);
 };
