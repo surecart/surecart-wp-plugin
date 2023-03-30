@@ -155,6 +155,10 @@ class ProductsListTable extends ListTable {
 				'archived' => $this->getArchiveStatus(),
 				'query'    => $this->get_search_query(),
 			]
+		)->with(
+			[
+				'prices',
+			]
 		)->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'products' ),
@@ -219,30 +223,35 @@ class ProductsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_price( $product ) {
-		$currency = $product->metrics->currency ?? 'usd';
+		$prices = $product->prices->data ?? [];
 
-		if ( empty( $product->metrics->prices_count ) ) {
+		// this has no prices.
+		if ( empty( $prices ) || ! is_array( $prices ) ) {
 			return '<sc-tag type="warning">' . esc_html__( 'No price', 'surecart' ) . '</sc-tag>';
 		}
 
-		if ( ! empty( $product->metrics->min_price_amount ) ) {
-			$amount = '<sc-format-number type="currency" currency="' . $currency . '" value="' . $product->metrics->min_price_amount . '"></sc-format-number>';
-			if ( $product->metrics->prices_count > 1 ) {
-				// translators: Price starting at.
-				$starting_at = sprintf( esc_html__( 'Starting at %s', 'surecart' ), $amount );
-				// translators: Other prices.
-				$others = sprintf( _n( 'and %d other price.', 'and %d other prices.', $product->metrics->prices_count - 1, 'surecart' ), $product->metrics->prices_count - 1 );
-				return $starting_at . '<br /><small style="opacity: 0.75">' . $others . '</small>';
-			} else {
-				return $amount;
-			}
+		// map the prices into an array of formatted price strings.
+		$price_display = array_map(
+			function( $price ) {
+				if ( $price->ad_hoc ) {
+					return esc_html__( 'Name your own price', 'surecart' );
+				}
+				if ( 0 === $price->amount ) {
+					return esc_html__( 'Free', 'surecart' );
+				}
+				return '<sc-format-number type="currency" currency="' . $price->currency . '" value="' . $price->amount . '"></sc-format-number>';     },
+			$prices
+		);
+
+		// combine into string with commas.
+		$price_output = implode( ', ', array_slice( $price_display, 0, 2 ) );
+
+		if ( $product->metrics->prices_count > 2 ) {
+			// translators: %d is the number of other prices.
+			$price_output .= sprintf( _n( ' and %d other price.', ' and %d other prices.', $product->metrics->prices_count - 2, 'surecart' ), $product->metrics->prices_count - 2 );
 		}
 
-		if ( 1 === $product->metrics->prices_count ) {
-			return esc_html__( 'Name your own price', 'surecart' );
-		}
-
-		return esc_html__( 'No price', 'surecart' );
+		return $price_output;
 	}
 
 	/**

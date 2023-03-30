@@ -161,6 +161,22 @@ module.exports = {
 			__dirname,
 			'packages/components/static-loader.js'
 		),
+
+		/**
+		 * Templates
+		 */
+		['templates/admin']: path.resolve(
+			__dirname,
+			'packages/pages/admin/index.js'
+		),
+		['templates/instant-checkout']: path.resolve(
+			__dirname,
+			'packages/pages/instant-checkout/index.js'
+		),
+		['templates/customer-dashboard']: path.resolve(
+			__dirname,
+			'packages/pages/customer-dashboard/index.js'
+		),
 	},
 	output: {
 		filename: '[name].js',
@@ -177,7 +193,7 @@ module.exports = {
 				{
 					from: path.resolve(
 						__dirname,
-						'node_modules/@surecart/components/dist/surecart/icon-assets'
+						'./packages/components/src/components/ui/icon/icon-assets'
 					),
 					to: path.resolve(__dirname, 'dist/icon-assets'),
 				},

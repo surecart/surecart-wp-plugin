@@ -4,10 +4,27 @@
 	"description": "Display a VAT/GST field for VAT collection.",
 	"category": "surecart",
 	"keywords": ["totals", "summary"],
+	"textdomain": "surecart",
 	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,
 		"html": false
 	},
-	"attributes": {}
+	"attributes": {
+		"other_label": {
+			"type": "string"
+		},
+		"ca_gst_label": {
+			"type": "string"
+		},
+		"au_abn_label": {
+			"type": "string"
+		},
+		"gb_vat_label": {
+			"type": "string"
+		},
+		"eu_vat_label": {
+			"type": "string"
+		}
+	}
 }

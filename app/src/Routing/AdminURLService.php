@@ -34,7 +34,7 @@ class AdminURLService {
 				[
 					'action' => 'edit',
 				],
-				admin_url( 'admin.php?page=' . $this->page_names[ $name ] )
+				admin_url( 'admin.php?page=' . $this->page_names[ $name ] ?? '' )
 			)
 		);
 	}
@@ -54,7 +54,7 @@ class AdminURLService {
 					'action' => 'edit',
 					'id'     => $id,
 				],
-				admin_url( 'admin.php?page=' . $this->page_names[ $name ] )
+				admin_url( 'admin.php?page=' . $this->page_names[ $name ] ?? '' )
 			)
 		);
 	}
@@ -74,7 +74,7 @@ class AdminURLService {
 					'action' => 'show',
 					'id'     => $id,
 				],
-				admin_url( 'admin.php?page=' . $this->page_names[ $name ] )
+				admin_url( 'admin.php?page=' . $this->page_names[ $name ] ?? '' )
 			)
 		);
 	}

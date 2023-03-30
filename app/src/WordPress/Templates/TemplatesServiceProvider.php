@@ -5,7 +5,7 @@ namespace SureCart\WordPress\Templates;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
- * Register translations.
+ * Templates service provider.
  */
 class TemplatesServiceProvider implements ServiceProviderInterface {
 	/**
@@ -15,11 +15,12 @@ class TemplatesServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.templates'] = function( $c ) {
+		$container['surecart.templates.page'] = function( $c ) {
 			return new TemplatesService(
 				$c,
 				[
-					'template-surecart-no-sidebar.php' => esc_html__( 'SureCart: Full Width No Sidebar', 'surecart' ),
+					'pages/template-surecart-blank.php' => esc_html__( 'SureCart', 'surecart' ),
+					'pages/template-surecart-dashboard.php' => esc_html__( 'SureCart Customer Dashboard', 'surecart' ),
 				],
 				'page'
 			);
@@ -36,6 +37,6 @@ class TemplatesServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function bootstrap( $container ) {
-		$container['surecart.templates']->bootstrap();
+		$container['surecart.templates.page']->bootstrap();
 	}
 }

@@ -5,6 +5,7 @@
 	"title": "Cart Bump Line Item",
 	"description": "Display the cart bump line item",
 	"category": "surecart",
+  "textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false,

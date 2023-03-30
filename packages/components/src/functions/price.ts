@@ -66,8 +66,24 @@ export const translateInterval = (
   }
 };
 
+export const translateAbbreviatedInterval = (amount: number, interval: string, fallback: string = __('once', 'surecart'), showSingle: boolean = false) => {
+  switch (interval) {
+    case 'day':
+      return ` / ${sprintf(showSingle ? _n('%d day', '%d days', amount, 'surecart') : _n('day', '%d days', amount, 'surecart'), amount)}`;
+    case 'week':
+      return ` / ${sprintf(showSingle ? _n('%d wk', '%d wks', amount, 'surecart') : _n('wk', '%d wks', amount, 'surecart'), amount)}`;
+    case 'month':
+      return ` / ${sprintf(showSingle ? _n('%d mo', '%d months', amount, 'surecart') : _n('mo', '%d mos', amount, 'surecart'), amount)}`;
+    case 'year':
+      return ` / ${sprintf(showSingle ? _n('%d yr', '%d yrs', amount, 'surecart') : _n('yr', '%d yrs', amount, 'surecart'), amount)}`;
+    default:
+      return fallback;
+  }
+};
+
 interface IntervalOptions {
   showOnce?: boolean;
+  abbreviate?: boolean;
   labels?: {
     interval?: string;
     period?: string;
@@ -78,18 +94,33 @@ export const intervalString = (price: Price, options: IntervalOptions = {}) => {
   if (!price) {
     return '';
   }
-  const { showOnce, labels } = options;
-  const { interval = __('every', 'surecart'), period = __('for', 'surecart'), once = __('once', 'surecart') } = labels || {};
-  return `${intervalCountString(price, interval, !!showOnce ? once : '')} ${periodCountString(price, period)}`;
+  const { showOnce, labels, abbreviate } = options;
+  const { interval = __('every', 'surecart') } = labels || {};
+
+  return `${intervalCountString(price, interval, !!showOnce ? __('once', 'surecart') : '', abbreviate)} ${periodCountString(price, abbreviate)}`;
 };
 
-export const intervalCountString = (price: Price, prefix, fallback = __('once', 'surecart')) => {
+export const intervalCountString = (price: Price, prefix, fallback = __('once', 'surecart'), abbreviate = false) => {
+  if (!price.recurring_interval_count || !price.recurring_interval) {
+    return '';
+  }
+  if (abbreviate) {
+    return translateAbbreviatedInterval(price.recurring_interval_count, price.recurring_interval, fallback);
+  }
   return translateInterval(price.recurring_interval_count, price.recurring_interval, ` ${prefix}`, fallback);
 };
 
-export const periodCountString = (price: Price, prefix, fallback = '') => {
-  if (!price?.recurring_period_count || !price?.recurring_interval) {
+export const periodCountString = (price: Price, abbreviate = false) => {
+  if (!price?.recurring_period_count) {
     return '';
   }
-  return translateInterval((price?.recurring_period_count || 0) * price?.recurring_interval_count, price?.recurring_interval, ` ${prefix}`, fallback, true);
+  if (abbreviate) {
+    return `x ${price.recurring_period_count}`;
+  }
+
+  return ` (${sprintf(_n('%d payment', '%d payments', price.recurring_period_count, 'surecart'), price.recurring_period_count)})`;
+};
+
+export const translateRemainingPayments = payments => {
+  return sprintf(_n('%d payment remaining', '%d payments remaining', payments, 'surecart'), payments);
 };

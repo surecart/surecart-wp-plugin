@@ -1,5 +1,6 @@
 import { Component, h, Prop, Element, Event, EventEmitter } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+import { isRtl } from '../../../functions/page-align';
 
 /**
  * @part base - The elements base wrapper.
@@ -90,6 +91,7 @@ export class ScQuantitySelect {
           // States
           'quantity--focused': this.hasFocus,
           'quantity--disabled': this.disabled,
+          'quantity--is-rtl': isRtl(),
         }}
       >
         <span

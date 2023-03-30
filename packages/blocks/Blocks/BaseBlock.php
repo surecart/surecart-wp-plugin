@@ -41,24 +41,22 @@ abstract class BaseBlock {
 	/**
 	 * Get the classes.
 	 *
-	 * @param array  $attributes The block attributes.
-	 * @param string $additional_classes Any additional classes.
+	 * @param array $attributes The block attributes.
 	 *
 	 * @return string
 	 */
-	public function getClasses( $attributes, $additional_classes = '' ) {
+	public function getClasses( $attributes ) {
 		// get block classes and styles.
 		[ 'classes' => $classes ] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes );
 		// get text align class.
 		['class' => $text_align_class] = BlockStyleAttributes::getTextAlignClassAndStyle( $attributes );
-		return implode( ' ', array_filter( [ $classes, $text_align_class, $additional_classes ] ) );
+		return implode( ' ', array_filter( [ $classes, $text_align_class ] ) );
 	}
 
 	/**
 	 * Get the styles
 	 *
-	 * @param array  $attributes The block attributes.
-	 * @param string $additional_styles Any additional styles.
+	 * @param array $attributes The block attributes.
 	 *
 	 * @return string
 	 */
@@ -70,7 +68,7 @@ abstract class BaseBlock {
 	/**
 	 * Get the spacing preset css variable.
 	 *
-	 * @param string $value The value
+	 * @param string $value The value.
 	 *
 	 * @return string|void
 	 */
@@ -87,6 +85,7 @@ abstract class BaseBlock {
 
 		return "var(--wp--preset--spacing--$matches[1])";
 	}
+
 
 	/**
 	 * Register the block for dynamic output

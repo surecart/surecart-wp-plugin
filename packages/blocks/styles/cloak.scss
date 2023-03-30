@@ -40,9 +40,9 @@ sc-form {
       margin-bottom: 0;
     }
   }
-  .wp-block-columns .wp-block-column {
-    margin: 50px;
-  }
+  // .wp-block-columns .wp-block-column {
+  //   margin: 50px;
+  // }
 }
 
 // inputs
@@ -76,10 +76,18 @@ sc-tab-group, sc-tab {
 }
 
 //// columns
+sc-column {
+  &:not(.hydrated),
+  &:not(:defined) {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
 sc-columns {
 	display: flex;
 	box-sizing: border-box;
-  gap: var(--sc-column-spacing, var(--sc-spacing-xxxx-large)) !important;
+  gap: var(--sc-column-spacing, var(--sc-spacing-xxxx-large));
   margin-left: auto;
   margin-right: auto;
   width: 100%;
@@ -109,10 +117,16 @@ sc-columns {
 		align-items: flex-end;
 	}
 
+  &:not(.is-not-stacked-on-mobile).is-full-height > sc-column {
+    @media (max-width: 781px) {
+      padding: 30px !important;
+    }
+  }
+
 	&:not(.is-not-stacked-on-mobile) > sc-column {
-    @media (max-width: 782px) {
-      // Responsiveness: Show at most one columns on mobile. This must be
-      // important since the Column assigns its own width as an inline style.
+    // Responsiveness: Show at most one columns on mobile. This must be
+    // important since the Column assigns its own width as an inline style.
+    @media (max-width: 781px) {
       flex-basis: 100% !important;
     }
 

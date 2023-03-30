@@ -5,7 +5,8 @@
 	"description": "WordPress User Account Information",
 	"category": "surecart",
 	"keywords": ["account", "user", "dashboard"],
-	"ancestor": ["surecart/dashboard-page"],
+	"textdomain": "surecart",
+	"ancestor": ["surecart/dashboard-page", "surecart/dashboard-area"],
 	"supports": {
 		"reusable": false,
 		"html": false

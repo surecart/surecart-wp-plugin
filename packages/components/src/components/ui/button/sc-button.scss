@@ -31,7 +31,7 @@
   white-space: nowrap;
   vertical-align: middle;
   padding: 0;
-  transition: var(--sc-transition-fast) background-color, var(--sc-transition-fast) color, var(--sc-transition-fast) border, var(--sc-transition-fast) box-shadow;
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) background-color, var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) border, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow, var(--sc-input-transition, var(--sc-transition-medium)) opacity;
   cursor: inherit;
 
   &::-moz-focus-inner {
@@ -401,7 +401,7 @@
   border-color: transparent;
   box-shadow: none;
   color: var(--sc-button-link-color, var(--primary-background));
-  transition: opacity var(--sc-transition-fast) ease;
+  transition: opacity var(--sc-input-transition, var(--sc-transition-medium)) ease;
 
   &.button--has-label {
     &.button--small,
@@ -429,7 +429,7 @@
     border-color: transparent;
   }
 
-  &.button--has-prefix {
+  &.button--has-prefix:not(.button--text) {
     &.button--small,
     &.button--medium,
     &.button--large {
@@ -439,7 +439,7 @@
         }
     }
   }
-  &.button--has-suffix {
+  &.button--has-suffix:not(.button--text) {
     &.button--small,
     &.button--medium,
     &.button--large {
@@ -624,7 +624,7 @@ sc-spinner::part(base) {
   }
 }
 
-.button--has-prefix {
+.button--has-prefix:not(.button--text) {
   &.button--small {
     padding-left: var(--sc-spacing-x-small);
 
@@ -726,5 +726,33 @@ sc-spinner::part(base) {
 @keyframes busy-animation {
   0% {
     background-position: 200px 0;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// RTL support
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+.button--is-rtl{
+   &.button--has-prefix {
+    &.button--small,
+    &.button--medium,
+    &.button--large {
+        padding-left: 0;
+        .button__label {
+          padding-left: 0;
+          padding-right: var(--sc-spacing-xx-small);
+        }
+    }
+  }
+  &.button--has-suffix {
+    &.button--small,
+    &.button--medium,
+    &.button--large {
+        padding-right: 0;
+        .button__label {
+          padding-right: 0;
+          padding-left: var(--sc-spacing-xx-small);
+        }
+    }
   }
 }

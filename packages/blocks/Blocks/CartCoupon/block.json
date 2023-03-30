@@ -5,6 +5,7 @@
 	"description": "Display a coupon form in the cart.",
 	"category": "surecart",
 	"keywords": ["coupon", "promo"],
+	"textdomain": "surecart",
 	"ancestor": ["surecart/cart"],
 	"supports": {
 		"reusable": false,
@@ -21,7 +22,15 @@
 		},
 		"button_text": {
 			"type": "string",
-			"default": "Apply Coupon"
+			"default": "Apply"
+		},
+		"placeholder": {
+			"type": "string",
+			"default": "Enter coupon code"
+		},
+		"collapsed": {
+			"type": "boolean",
+			"default": true
 		},
 		"disabled": {
 			"type": "boolean"

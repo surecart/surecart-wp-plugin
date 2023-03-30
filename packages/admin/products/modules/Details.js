@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { ScInput, ScRichText } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
-import { ScInput, ScTextarea, ScRichText } from '@surecart/components-react';
+
 import Box from '../../ui/Box';
 
 export default ({ product, updateProduct, loading }) => {
@@ -25,10 +26,13 @@ export default ({ product, updateProduct, loading }) => {
 				/>
 				<ScRichText
 					label={__('Description', 'surecart')}
+					placeholder={__('Enter a description...', 'surecart')}
 					help={__(
-						'The product’s description, typically displayed on the product page.',
+						'A short description for your product that is displayed on product and instant checkouts.',
 						'surecart'
 					)}
+					style={{ '--sc-rich-text-max-height': '200px' }}
+					maxlength={2500}
 					value={product?.description}
 					onScInput={(e) => {
 						updateProduct({ description: e.target.value });

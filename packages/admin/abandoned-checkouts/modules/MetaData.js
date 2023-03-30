@@ -9,8 +9,13 @@ export default ({ abandoned, loading }) => {
 		return null;
 	}
 
-	const { wp_created_by, page_id, page_url, ...metadata } =
-		abandoned?.checkout?.metadata || {};
+	const {
+		wp_created_by,
+		page_id,
+		page_url,
+		buy_page_product_id,
+		...metadata
+	} = abandoned?.checkout?.metadata || {};
 
 	if (!Object.keys(metadata || {}).length) {
 		return null;

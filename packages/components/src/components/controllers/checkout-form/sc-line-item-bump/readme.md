@@ -16,10 +16,6 @@
 
 ## Dependencies
 
-### Used by
-
- - [sc-form-components-validator](../../../providers/form-components-validator)
-
 ### Depends on
 
 - [sc-line-item](../../../ui/line-item)
@@ -30,7 +26,6 @@
 graph TD;
   sc-line-item-bump --> sc-line-item
   sc-line-item-bump --> sc-format-number
-  sc-form-components-validator --> sc-line-item-bump
   style sc-line-item-bump fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -4,6 +4,7 @@
 	"description": "Display a button to immediately redirect to the checkout page with the product in the cart.",
 	"category": "surecart",
 	"keywords": ["name", "customer"],
+  "textdomain": "surecart",
 	"parent": null,
 	"supports": {
 		"reusable": false,

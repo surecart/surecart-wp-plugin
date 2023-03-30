@@ -5,6 +5,7 @@ import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
 import { intervalString } from '../../../../functions/price';
+import { formatTaxDisplay } from '../../../../functions/tax';
 import { Checkout, ManualPaymentMethod, Order, Product, Purchase } from '../../../../types';
 
 @Component({
@@ -69,7 +70,7 @@ export class ScOrder {
 
   /** Get order */
   async getOrder() {
-    this.order = (await await apiFetch({
+    this.order = (await apiFetch({
       path: addQueryArgs(`surecart/v1/orders/${this.orderId}`, {
         expand: [
           'checkout',
@@ -197,7 +198,7 @@ export class ScOrder {
 
         {!!checkout?.tax_amount && (
           <sc-line-item>
-            <span slot="description">{__('Tax', 'surecart')}</span>
+            <span slot="description">{formatTaxDisplay(checkout?.tax_label)}</span>
             <sc-format-number
               slot="price"
               style={{

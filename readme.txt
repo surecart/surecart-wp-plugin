@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.1
-Stable tag: 1.5.7
+Stable tag: 1.9.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -49,7 +49,7 @@ However you can still sell physical products with SureCart and we have merchants
 These are just some of the features that make SureCart the perfect ecommerce platform for everyone.
 
 * **Multiple Payment Processors, Express Checkout ApplePay & GooglePay:**
-Easily connect to Stripe or PayPal to collect payments. You can use multiple processors on a single checkout form. Also you can optionally accept ApplePay or GooglePay express checkout options. We are working on adding additional gateways (Mollie, Square, PayStack, RazorPay, Mercado Pago) in the future.
+Easily connect to Stripe, PayPal or Mollie to collect payments. You can use multiple processors on a single checkout form. Also you can optionally accept ApplePay or GooglePay express checkout options. We are working on adding additional gateways (PayStack, RazorPay, Mercado Pago) in the future.
 
 * **Powerful Payment Options:**
 One-time payments, subscriptions, subscriptions with free trials, payment plans (installments), pay what you want, donations. SureCart covers most ways you may want to be paid, all included for free.
@@ -242,6 +242,125 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.9.0 - March 30, 2023 =
+* New: Paypal subscriptions enabled for all connected PayPal accounts.
+* New: Default customer dashboard template.
+* Fix: Issue with Elementor when no forms are published.
+* Fix: Issue with Elementor not loading when all forms are unpublished.
+* Fix: Invalid URL error notice on Elementor editor.
+
+= 1.8.5 - March 27, 2023 =
+* Fix: Some missing translations on instant checkouts.
+* Fix: Tax ID input default translations.
+* Fix: Make sure block placeholder options apply to compact shipping address.
+
+= 1.8.4 - March 24, 2023 =
+* Fix: Issue with changing tax id input field not allowing checkout after update.
+
+= 1.8.3 - March 23, 2023 =
+* Fix: Issue with buy page links compatibility with SEO plugins "404 redirect to homepage" setting.
+* Fix: Issue with download links not working in iOS.
+* Fix: New translations missing from pot file.
+
+= 1.8.2 - March 21, 2023 =
+* Fix: Issue with forms not loading on the backend for some non-premium users.
+* Fix: Issue with changing account currency not allowing add to cart buttons to work.
+
+= 1.8.1 - March 20, 2023 =
+* Fix: Disabled form manual payment methods still showing in form.
+* Fix: Issue with some themes setting max content width on instant checkout pages.
+* Fix: Issue with instant checkout pages not loading components if slide out cart is disabled.
+
+= 1.8.0 - March 20, 2023 =
+* New: "Instant Checkouts" for products.
+* New: Subscription setup fees.
+* New: Subscription paid trials.
+* New: Administrators can pause subscriptions.
+* New: Arabic language support.
+* Improvement: Price selector styling.
+* Improvement: Secure notice is now automatically added below forms for secure connections.
+* Improvement: Allow editing compact address label.
+* Improvement: Show remaining payments on customer dashboard subscription details for payment plans.
+* Improvement: Price list on merchant product page.
+* Fix: Customer dashboard orders list should show amount due instead of total amount.
+* Fix: Edge case where an order could be set to processing without a manual payment ID.
+* Fix: Max length for textarea field on checkout forms.
+* Fix: Responsive issue with columns padding.
+* Fix: Switch block description sometimes saving as undefined.
+* Fix: RTL issue on order bump.
+* Fix: Wrapping of total line item if amount and scratch price were too wide.
+
+= 1.7.2 - March 4, 2023 =
+* Fix: Issue with some page builders not saving default checkout page due to validations.
+* Fix: Issue with webhooks not being set properly if the WordPress install domain is different than the home url.
+
+= 1.7.1 - March 2, 2023 =
+* Improvement: Add translation contexts for translators.
+* Improvement: Add trialing and past due filters to subscriptions page.
+* Fix: Loco translate will now work with translations in any location.
+* Fix: Admin "All" orders page not showing all statuses on first load.
+* Fix: Cancelled subscriptions were sometimes showing as "cancels (date)".
+
+= 1.7.0 - February 28, 2023 =
+* New: Mollie processor (Beta).
+* New: Revoke subscription purchases.
+* New: Ability to cancel manual orders.
+* New: Allow external URLs in downloads.
+* New: The ability to delete a customer on the merchant customer page.
+* New: Add grace period to abandoned checkouts.
+* New: Ignore purchased products setting for abandoned checkouts.
+* Improvement: Checkouts now show a confirmation modal before the thank you page.
+* Improvement: Update payment plan wording to be more clear about number of payments.
+* Improvement: RTL improvements.
+* Improvement: Tax ID Input field - allow labels to be editable.
+* Improvement: Stripe Payment Element now will inherit name, address, email fields for payment types that require it.
+* Improvement: Product/Price/Customer select dropdowns now paginate.
+* Improvement: Prevent cart posts from being misconfigured.
+* Improvement: Prevent "Store Checkout" forms and pages from being misconfigured.
+* Improvement: Customers can update their subscriptions to a default payment method when they switch default payment methods.
+* Fix: Block names not being translated.
+* Fix: Product restrictions on coupon page not showing prices until subsequent load.
+
+= 1.6.4 - February 22, 2023 =
+* Fix: Some webhooks data being mangled preventing hooks from correctly firing.
+* Fix: Prevent some plugins from returning non-200 response to webhook endpoints.
+
+= 1.6.3 - February 20, 2023 =
+* Fix: Default country not being sent with direct checkout links.
+
+= 1.6.2 - February 20, 2023 =
+* Fix: Order bump recurring time not being shown properly if discount is applied.
+* Fix: Payment history block title not properly wrapping on mobile.
+* Fix: Default country not being sent with initial checkout.
+* Fix: Output buffer not cleaned causing conflict with FacetWP.
+
+= 1.6.1 - February 16, 2023 =
+* Fix: Remove integrations table on uninstall.
+* Fix: Block names not getting translated.
+* Fix: Password not submitted after hitting enter on login.
+* Fix: Tax line items are not properly translated.
+* Fix: Stripe card element sometimes expanded for themes that don't implement box-sizing.
+* Fix: Integration lists on product page only showing 10 items.
+
+= 1.6.0 - February 9, 2023 =
+* New: Conditional form areas.
+* New: Default checkout page design.
+* New: French, Spanish and German languages in plugin UI.
+* New: Form error display block to customize where form errors will display.
+* Improvement: Form focus animation improvements.
+* Improvement: Order summary collapse animation improvements.
+* Improvement: Display order bump discounts next to their line items.
+* Improvement: Inner layout options for column block.
+* Improvement: Responsive options for our columns block.
+* Improvement: Display character limit on textarea input for checkout forms.
+* Improvement: Allow recurring referrals with AffiliateWP.
+* Fix: Removing subscription line item on checkout sometimes causing payment block styling issues.
+
+= 1.5.8 - February 9, 2023 =
+* Fix: Issue with most recent Safari update causing focus issues on card element.
+* Fix: Link to external charges not working for test payments.
+* Fix: Edge case with removing card elements with a subscription sometimes breaking payment element styles.
 
 = 1.5.7 - January 26, 2023 =
 * Fix: Issue with creating order bumps due to API change where they now require a name.

@@ -5,6 +5,7 @@
 	"category": "surecart",
 	"parent": ["surecart/checkout-form"],
 	"keywords": ["email", "mail"],
+  "textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false
@@ -40,6 +41,14 @@
 				"paying": "",
 				"confirming": "",
 				"confirmed": ""
+			}
+		},
+		"success_text": {
+			"type": "object",
+			"default": {
+				"title": "",
+				"description": "",
+				"button": ""
 			}
 		}
 	},

@@ -55,6 +55,15 @@ class Product extends Model {
 	}
 
 	/**
+	 * Buy link model
+	 *
+	 * @return \SureCart\Models\BuyLink
+	 */
+	public function buyLink() {
+		return new BuyLink( $this );
+	}
+
+	/**
 	 * Get the product permalink.
 	 *
 	 * @return string|false
@@ -67,10 +76,38 @@ class Product extends Model {
 	}
 
 	/**
-	 * Get the product template
+	 * Return attached active prices.
 	 *
-	 * @return \WP_Template
+	 * @return array
 	 */
+	public function activePrices() {
+		$active_prices = array_values(
+			array_filter(
+				$this->prices->data ?? [],
+				function( $price ) {
+					return ! $price->archived;
+				}
+			)
+		);
+
+		usort(
+			$active_prices,
+			function( $a, $b ) {
+				if ( $a->position == $b->position ) {
+					return 0;
+				}
+				return ( $a->position < $b->position ) ? -1 : 1;
+			}
+		);
+
+		return $active_prices;
+	}
+
+		/**
+		 * Get the product template
+		 *
+		 * @return \WP_Template
+		 */
 	public function getTemplateAttribute() {
 		return get_block_template( $this->attributes['metadata']->wp_template_id ?? get_stylesheet() . '//default-product-page' );
 	}

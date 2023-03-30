@@ -27,9 +27,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 \SureCart::route()
 ->get()
-->url( '/product/{id}' )
-->name( 'product' )
+->where( 'query_var', 'sc_checkout_page_product_id' )
 ->handle( 'ProductPageController@show' );
+
+/*
+|--------------------------------------------------------------------------
+| Buy Page
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+	->get()
+	->where( 'query_var', 'sc_checkout_product_id' )
+	->handle( 'BuyPageController@show' );
 
 /*
 |--------------------------------------------------------------------------
@@ -45,13 +54,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
-| Receive Webhooks
+| Redirect
 |--------------------------------------------------------------------------
 */
 \SureCart::route()
 ->get()
-->url( '/surecart/redirect' )
-->name( 'redirect' )
+->where( 'query_var', 'sc_redirect' )
 // handle login.
 ->middleware( LoginLinkMiddleware::class )
 // redirect in this order.

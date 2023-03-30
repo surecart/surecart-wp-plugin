@@ -23,12 +23,16 @@ declare global {
     scData: {
       root_url: string;
       page_id: string;
-      do_not_persist_cart: string;
+      do_not_persist_cart: boolean;
       nonce: string;
       base_url: string;
       nonce_endpoint: string;
       recaptcha_site_key: string;
       theme: string;
+      pages: {
+        dashboard: string;
+        checkout: string;
+      };
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;
@@ -69,6 +73,11 @@ export interface Price {
   ad_hoc: boolean;
   ad_hoc_max_amount: number;
   ad_hoc_min_amount: number;
+  scratch_amount: number;
+  setup_fee_enabled: boolean;
+  setup_fee_amount: number;
+  setup_fee_name: string;
+  setup_fee_trial_enabled: boolean;
   recurring_period_count: number;
   archived: boolean;
   product_id?: string;
@@ -119,13 +128,16 @@ export interface Download {
   id: string;
   object: 'download';
   archived: boolean;
+  archived_at?: number;
   media: string | Media;
+  name?: string;
   product: string | Product;
   update_at: number;
   created_at: number;
+  url?: string;
 }
 
-export type FormState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalizing' | 'paying' | 'confirming' | 'confirmed' | 'paid' | 'failure' | 'expired';
+export type FormState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalizing' | 'paying' | 'confirming' | 'confirmed' | 'paid' | 'failure' | 'expired' | 'redirecting';
 export type FormStateSetter = 'RESOLVE' | 'REJECT' | 'FINALIZE' | 'PAYING' | 'PAID' | 'EXPIRE' | 'FETCH';
 
 export interface License {
@@ -257,6 +269,11 @@ export interface LineItem extends Object {
   quantity: number;
   checkout: string | Checkout;
   bump: string | Bump;
+  fees?: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Fee>;
+  };
   bump_amount: number;
   discount_amount: number;
   subtotal_amount: number;
@@ -274,6 +291,17 @@ export interface DeletedItem {
   deleted: boolean;
   id: string;
   object: string;
+}
+
+export interface Fee {
+  id: string;
+  object: 'fee';
+  amount: number;
+  description: string;
+  fee_type: 'manual' | 'bump' | 'setup';
+  line_item: string | LineItem;
+  created_at: number;
+  updated_at: number;
 }
 
 export interface InvoiceItem extends LineItem {}
@@ -398,12 +426,13 @@ export interface Order extends Object {
 }
 export interface Checkout extends Object {
   id?: string;
-  status?: 'finalized' | 'draft' | 'paid' | 'requires_approval';
+  status?: 'canceled' | 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'processing';
   staged_payment_intents: {
     object: 'list';
     pagination: Pagination;
     data: Array<PaymentIntent>;
   };
+  abandoned_checkout_enabled: boolean;
   bump_amount: number;
   payment_method_required?: boolean;
   manual_payment: boolean;
@@ -424,7 +453,9 @@ export interface Checkout extends Object {
   total_savings_amount?: number;
   applied_balance_amount?: number;
   discounts?: number;
+  tax_enabled: boolean;
   tax_amount: number;
+  email_exists: boolean;
   tax_inclusive_amount: number;
   tax_exclusive_amount: number;
   tax_status: 'disabled' | 'address_invalid' | 'estimated' | 'calculated';
@@ -477,6 +508,10 @@ export interface ProcessorData {
     client_id: string;
     merchant_initiated: boolean;
   };
+  mollie?: {
+    account_id: 'string';
+    checkout_url: 'string';
+  };
 }
 
 export interface ManualPaymentMethod {
@@ -491,7 +526,14 @@ export interface ManualPaymentMethod {
   updated_at: number;
 }
 
+export interface PaymentMethodType {
+  id: string;
+  description: string;
+  image: string;
+}
+
 export interface Processor {
+  id: string;
   live_mode: boolean;
   processor_data: {
     account_id: string;
@@ -500,7 +542,7 @@ export interface Processor {
     merchant_initiated?: boolean;
   };
   recurring_enabled: boolean;
-  processor_type: 'paypal' | 'stripe';
+  processor_type: 'paypal' | 'stripe' | 'mollie';
 }
 
 export interface Purchase {
@@ -572,6 +614,7 @@ export interface Subscription extends Object {
   ad_hoc_amount: number;
   created_at: number;
   updated_at: number;
+  restore_at?: number;
 }
 
 export interface CancellationAct {
@@ -612,7 +655,7 @@ export interface SubscriptionProtocol {
 export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid' | 'completed';
 
 export type CheckoutStatus = 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'requires_approval';
-export type OrderStatus = 'paid' | 'payment_failed' | 'processing' | 'void';
+export type OrderStatus = 'paid' | 'payment_failed' | 'processing' | 'void' | 'canceled';
 
 export interface PaymentMethod extends Object {
   id: string;
@@ -800,4 +843,26 @@ export interface PriceData extends Object {
   price_id: string;
   quantity: number;
   removeable: boolean;
+}
+
+export type TaxZone = {
+  label: string;
+  label_small: string;
+};
+
+export type TaxZones = {
+  [key in 'ca_gst' | 'au_abn' | 'gb_vat' | 'eu_vat' | 'other']: TaxZone;
+};
+
+export type RuleName = 'total' | 'coupons' | 'products' | 'shipping_country' | 'billing_country' | 'processors';
+export type ArrayOperators = 'all' | 'any' | 'none' | 'exist' | 'not_exist';
+export type NumberOperators = '==' | '!=' | '<' | '>' | '<=' | '>=';
+export interface RuleGroup {
+  group_id: string;
+  rules: Rule[];
+}
+export interface Rule {
+  condition: RuleName;
+  operator: NumberOperators | ArrayOperators;
+  value: string | string[] | { value: string }[];
 }

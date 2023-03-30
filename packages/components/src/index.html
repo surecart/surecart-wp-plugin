@@ -27,7 +27,25 @@
 </head>
 
 <body>
-  <sc-rich-text label="Description"></sc-rich-text>
+  <div
+    style="display: flex; flex-direction: column; align-items: flex-start; height: 100vh; box-sizing: border-box; padding: 3em; background: var(--sc-color-gray-100)">
+
+    <sc-dropdown style="margin-top: auto;">
+      <sc-button type="text" slot="trigger">
+        <sc-avatar initials="AG" image="https://s.gravatar.com/avatar/286186a3bf41fb8452d02941833caa24?s=80"
+          slot="prefix" style="--sc-avatar-size: 2em"></sc-avatar>
+        Andre Gagnon
+        <sc-icon name="chevron-up" slot="suffix"></sc-icon>
+      </sc-button>
+
+      <sc-menu>
+        <sc-menu-item href="#">
+          <sc-icon slot="prefix" name="log-out"></sc-icon>
+          Logout
+        </sc-menu-item>
+      </sc-menu>
+    </sc-dropdown>
+    </sc-flex>
 </body>
 
 </html>
