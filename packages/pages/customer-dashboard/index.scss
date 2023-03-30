@@ -28,6 +28,10 @@ body.page-template-template-surecart-dashboard {
     display: flex;
     flex-direction: column;
 
+    &__menu-user {
+      max-width: 100%;
+    }
+
     &__logged-out {
       min-height: 100vh;
       display: grid;
@@ -117,6 +121,13 @@ body.page-template-template-surecart-dashboard {
       &__user-menu {
         display: block;
         font-weight: var(--sc-font-weight-semibold);
+
+        &-name{
+          flex: 1 1 auto;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
 
       &__column {
@@ -130,6 +141,7 @@ body.page-template-template-surecart-dashboard {
 
     .dashboard-left {
       flex: 0 0 $sidebar-width;
+      max-width: $sidebar-width;
       border: none;
       display: flex;
       flex-direction: column;
