@@ -13,32 +13,40 @@ import {
 } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
-import useEntity from '../../hooks/useEntity';
 import { __ } from '@wordpress/i18n';
 import ColorPopup from '../../../blocks/components/ColorPopup';
 import Error from '../../components/Error';
 import useSave from '../UseSave';
 import Logo from './Logo';
-import { getEntityRecord } from '@wordpress/core-data/selectors';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
 
 export default () => {
 	const [error, setError] = useState(null);
 	const { save } = useSave();
-	const { item, itemError, editItem, hasLoadedItem } = useEntity(
-		'store',
-		'brand'
-	);
+
 	const [scThemeData, setScThemeData] = useEntityProp(
 		'root',
 		'site',
 		'surecart_theme'
 	);
 
-	const {
-		brand: { logo },
-	} = useSelect((select) => {
+	/** Edit Item */
+	const editItem = (data) => editEntityRecord(name, type, id, data);
+
+	/** Load Item */
+	const { item, itemError, hasLoadedItem } = useSelect((select) => {
+		const entityData = ['surecart', 'store', 'brand'];
 		return {
-			brand: getEntityRecord('surecart', 'store', 'brand'),
+			item: select(coreStore).getEditedEntityRecord(...entityData),
+			itemError: select(coreStore)?.getResolutionError?.(
+				'getEditedEntityRecord',
+				...entityData
+			),
+			hasLoadedItem: select(coreStore)?.hasFinishedResolution?.(
+				'getEditedEntityRecord',
+				[...entityData]
+			),
 		};
 	});
 

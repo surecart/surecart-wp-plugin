@@ -17,25 +17,25 @@ class TemplatePostTypeService {
 	public function bootstrap() {
 		// whitelist the ui editing the wp_template if it's a surecart template.
 		add_filter( 'register_post_type_args', [ $this, 'whitelistUI' ], 10, 2 );
-		// add a rest field to identify the wp_template as a surecart template.
-		add_action( 'rest_api_init', [ $this, 'addRestField' ] );
-		// set the canonical url.
-		add_filter( 'get_canonical_url', [ $this, 'maybeSetUrl' ] );
-		// set the shortlink.
-		add_filter( 'get_shortlink', [ $this, 'maybeSetUrl' ] );
-		// set the post link.
-		add_filter( 'post_link', [ $this, 'maybeSetUrl' ] );
-		// add edit links.
-		add_action( 'admin_bar_menu', [ $this, 'addEditLinks' ], 99 );
-		// add admin bar styles.
-		add_action( 'wp_enqueue_scripts', [ $this, 'adminBarStyles' ] );
-		// set the document title.
-		add_filter( 'document_title_parts', [ $this, 'documentTitle' ] );
-		// add default template if nothing is found in the database or theme.
+		// // add a rest field to identify the wp_template as a surecart template.
+		// add_action( 'rest_api_init', [ $this, 'addRestField' ] );
+		// // set the canonical url.
+		// add_filter( 'get_canonical_url', [ $this, 'maybeSetUrl' ] );
+		// // set the shortlink.
+		// add_filter( 'get_shortlink', [ $this, 'maybeSetUrl' ] );
+		// // set the post link.
+		// add_filter( 'post_link', [ $this, 'maybeSetUrl' ] );
+		// // add edit links.
+		// add_action( 'admin_bar_menu', [ $this, 'addEditLinks' ], 99 );
+		// // add admin bar styles.
+		// add_action( 'wp_enqueue_scripts', [ $this, 'adminBarStyles' ] );
+		// // set the document title.
+		// add_filter( 'document_title_parts', [ $this, 'documentTitle' ] );
+		// // add default template if nothing is found in the database or theme.
 		add_filter( 'get_block_file_template', [ $this, 'maybeAddDefaultTemplate' ], 20, 2 );
-		// set the default product template.
-		add_filter( 'sc-product_template', [ $this, 'setDefaultTemplate' ] );
-		// handle autosave functionality with rest api.
+		// // set the default product template.
+		// add_filter( 'sc-product_template', [ $this, 'setDefaultTemplate' ] );
+		// // handle autosave functionality with rest api.
 		add_filter( 'pre_get_block_template', [ $this, 'fixAutoSave' ], 10, 2 );
 	}
 

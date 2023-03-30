@@ -26,6 +26,11 @@ class TemplatesServiceProvider implements ServiceProviderInterface {
 			);
 		};
 
+		$container['surecart.templates.page'] = function( $c ) {
+			$root_path = trailingslashit( $c[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . '/templates/';
+			return new BlockTemplatesService( $root_path . 'templates', $root_path . 'parts' );
+		};
+
 		$app = $container[ SURECART_APPLICATION_KEY ];
 		$app->alias( 'templates', 'surecart.templates' );
 	}

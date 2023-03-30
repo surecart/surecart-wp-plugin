@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 \SureCart::route()
 ->get()
-->where( 'query_var', 'sc_checkout_page_product_id' )
+->where( 'query_var', 'sc_product_page_id' )
 ->handle( 'ProductPageController@show' );
 
 /*

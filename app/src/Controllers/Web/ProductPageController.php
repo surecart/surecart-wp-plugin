@@ -16,6 +16,7 @@ class ProductPageController {
 	 * @return function
 	 */
 	public function show( $request, $view, $id ) {
+		$id = get_query_var( 'sc_product_page_id' );
 		global  $sc_product, $_wp_current_template_content;
 
 		// fetch the product by id/slug.
@@ -31,11 +32,11 @@ class ProductPageController {
 
 		// slug changed or we are using the id, redirect.
 		if ( $sc_product->slug !== $id ) {
-			return \SureCart::redirect()->to( esc_url_raw( \SureCart::routeUrl( 'product', [ 'id' => $sc_product->slug ] ) ) );
+			return \SureCart::redirect()->to( $sc_product->permalink );
 		}
 
 		// set the current template for the block view.
-		$_wp_current_template_content = $sc_product->template->content;
+		$_wp_current_template_content = $sc_product->template->content ?? '';
 
 		// check to see if the product has a page or template.
 		return \SureCart::view( 'web/product' );

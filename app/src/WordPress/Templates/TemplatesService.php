@@ -52,6 +52,15 @@ class TemplatesService {
 	}
 
 	/**
+	 * The blocks template service.
+	 *
+	 * @return void
+	 */
+	public function blocks() {
+		return new BlockTemplatesService( $this->container );
+	}
+
+	/**
 	 * Register any template meta we need.
 	 */
 	public function registerMeta() {

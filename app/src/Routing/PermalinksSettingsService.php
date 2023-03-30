@@ -37,6 +37,13 @@ class PermalinksSettingsService {
 	 * @return void
 	 */
 	public function addRewriteRules() {
+		// Product pages.
+		( new PermalinkService() )
+			->params( [ 'sc_product_page_id' ] )
+			->url( untrailingslashit( 'product' ) . '/([a-z0-9-]+)[/]?$' )
+			->query( 'index.php?sc_product_page_id=$matches[1]' )
+			->create();
+
 		// Buy pages.
 		( new PermalinkService() )
 			->params( [ 'sc_checkout_product_id' ] )

@@ -32,12 +32,12 @@ export class ScProductPriceChoices {
   render() {
     if (state?.prices?.length < 2) return <Host style={{ display: 'none' }}></Host>;
 
-    console.log(state.prices);
     return (
-      <sc-choices label={this.label} required>
+      <sc-choices label={this.label} required style={{ '--columns': '2' }}>
         {(state.prices || []).map(price => (
           <sc-choice
             type="radio"
+            showControl={false}
             checked={state.selectedPrice?.id === price?.id}
             onScChange={e => {
               if (e.target.checked) {
