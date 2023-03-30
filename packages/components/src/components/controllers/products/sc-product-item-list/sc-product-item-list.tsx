@@ -57,7 +57,7 @@ export class ScProductItemList {
           }}
         >
           {this.loading ? (
-            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(() => (
+            [...Array(10)].map(() => (
               <div class="product-item-list__loader">
                 <sc-skeleton style={{ width: '80%' }}></sc-skeleton>
                 <sc-skeleton style={{ width: '40%' }}></sc-skeleton>

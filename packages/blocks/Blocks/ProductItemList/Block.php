@@ -10,7 +10,7 @@ use SureCartBlocks\Blocks\BaseBlock;
 class Block extends BaseBlock {
 	/**
 	 * Keeps track of instances of this block.
-	 * 
+	 *
 	 * @var integer
 	 */
 	static $instance;
@@ -22,13 +22,9 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function getProductListStyle( $attr ) {
-		$style  = '';
-		if ( ! empty( $attr['columns'] ) ) {
-			$style .= '--sc-product-item-list-column: ' . $attr['columns'] . ';';
-		}
-		if ( ! empty( $attr['gap'] ) ) {
-			$style .= '--sc-product-item-list-gap: ' . $attr['gap'] . ';';
-		}
+		$style  = '--sc-product-item-list-column: ' . ( $attr['columns'] ?? 3 ) . ';';
+		$style .= '--sc-product-item-list-gap: ' . $this->getSpacingPresetCssVar( $attr['style']['spacing']['blockGap'] ?? '1rem' ) . ';';
+
 		return $style;
 	}
 
@@ -39,21 +35,21 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function getProductItemStyle( $attr ) {
-		$style  = '';
+		$style = '';
 		// var_dump($attr);
 		if ( ! empty( $attr['style']['spacing']['padding'] ) ) {
 			$padding = $attr['style']['spacing']['padding'];
-			$style .= '--sc-product-item-padding-top: ' . $this->getSpacingPresetCssVar( array_key_exists('top', $padding) ? $padding['top'] : '0.88rem' ) . ';';
-			$style .= '--sc-product-item-padding-bottom: ' . $this->getSpacingPresetCssVar( array_key_exists('bottom', $padding) ? $padding['bottom'] : '0.88rem' ) . ';';
-			$style .= '--sc-product-item-padding-left: ' . $this->getSpacingPresetCssVar( array_key_exists('left', $padding) ? $padding['left'] : '0.88rem' ) . ';';
-			$style .= '--sc-product-item-padding-right: ' . $this->getSpacingPresetCssVar( array_key_exists('right', $padding) ? $padding['right'] : '0.88rem' ) . ';';
+			$style  .= '--sc-product-item-padding-top: ' . $this->getSpacingPresetCssVar( array_key_exists( 'top', $padding ) ? $padding['top'] : '0.88rem' ) . ';';
+			$style  .= '--sc-product-item-padding-bottom: ' . $this->getSpacingPresetCssVar( array_key_exists( 'bottom', $padding ) ? $padding['bottom'] : '0.88rem' ) . ';';
+			$style  .= '--sc-product-item-padding-left: ' . $this->getSpacingPresetCssVar( array_key_exists( 'left', $padding ) ? $padding['left'] : '0.88rem' ) . ';';
+			$style  .= '--sc-product-item-padding-right: ' . $this->getSpacingPresetCssVar( array_key_exists( 'right', $padding ) ? $padding['right'] : '0.88rem' ) . ';';
 		}
 		if ( ! empty( $attr['style']['spacing']['margin'] ) ) {
 			$margin = $attr['style']['spacing']['margin'];
-			$style .= '--sc-product-item-margin-top: ' . $this->getSpacingPresetCssVar( array_key_exists('top', $margin ) ? $margin['top'] : '0' ) . ';';
-			$style .= '--sc-product-item-margin-bottom: ' . $this->getSpacingPresetCssVar( array_key_exists('bottom', $margin ) ? $margin['bottom'] : '0' ) . ';';
-			$style .= '--sc-product-item-margin-left: ' . $this->getSpacingPresetCssVar( array_key_exists('left', $margin ) ? $margin['left'] : '0' ) . ';';
-			$style .= '--sc-product-item-margin-right: ' . $this->getSpacingPresetCssVar( array_key_exists('right', $margin ) ? $margin['right'] : '0' ) . ';';
+			$style .= '--sc-product-item-margin-top: ' . $this->getSpacingPresetCssVar( array_key_exists( 'top', $margin ) ? $margin['top'] : '0' ) . ';';
+			$style .= '--sc-product-item-margin-bottom: ' . $this->getSpacingPresetCssVar( array_key_exists( 'bottom', $margin ) ? $margin['bottom'] : '0' ) . ';';
+			$style .= '--sc-product-item-margin-left: ' . $this->getSpacingPresetCssVar( array_key_exists( 'left', $margin ) ? $margin['left'] : '0' ) . ';';
+			$style .= '--sc-product-item-margin-right: ' . $this->getSpacingPresetCssVar( array_key_exists( 'right', $margin ) ? $margin['right'] : '0' ) . ';';
 		}
 		if ( ! empty( $attr['style']['border']['color'] ) ) {
 			$style .= '--sc-product-item-border-color: ' . $attr['style']['border']['color'] . ';';
@@ -74,10 +70,10 @@ class Block extends BaseBlock {
 	 * @param  array $attributes Product list & Product item attributes.
 	 * @return string
 	 */
-	public function getStyle($attr, $item_attributes) {
+	public function getStyle( $attr, $item_attributes ) {
 		$style  = 'border-style: none !important;';
-		$style .= $this->getProductListStyle($attr);
-		$style .= $this->getProductItemStyle($item_attributes);
+		$style .= $this->getProductListStyle( $attr );
+		$style .= $this->getProductItemStyle( $item_attributes );
 		return $style;
 	}
 
@@ -92,38 +88,34 @@ class Block extends BaseBlock {
 	public function render( $attributes, $content ) {
 		self::$instance++;
 
+		// check for inner blocks.
 		$product_inner_blocks = $this->block->parsed_block['innerBlocks'];
-		
-		if ( empty($product_inner_blocks) ) {
+		if ( empty( $product_inner_blocks[0]['innerBlocks'] ) ) {
 			return;
 		}
 
-		$product_item_inner_blocks   = $product_inner_blocks[0]['innerBlocks'];
-		$product_item_attributes     = $product_inner_blocks[0]['attrs'];
-		
+		$product_item_inner_blocks = $product_inner_blocks[0]['innerBlocks'];
+		$product_item_attributes   = $product_inner_blocks[0]['attrs'];
+
 		$layout_config = array_map(
 			function( $inner_block ) {
 				return (object) [
-					'blockName'    => $inner_block['blockName'],
-					'attributes'   => $inner_block['attrs'],
+					'blockName'  => $inner_block['blockName'],
+					'attributes' => $inner_block['attrs'],
 				];
 			},
 			$product_item_inner_blocks
 		);
 
-		// var_dump($layout_config);
-
-		$product_list = '<sc-product-item-list id="selector-' . esc_attr( self::$instance ) . '"></sc-product-item-list>';
-
 		\SureCart::assets()->addComponentData(
 			'sc-product-item-list',
 			'#selector-' . self::$instance,
 			[
-				'layoutConfig'  	=> $layout_config,
-				'style'				=> $this->getStyle($attributes, $product_item_attributes),
+				'layoutConfig' => $layout_config,
+				'style'        => $this->getStyle( $attributes, $product_item_attributes ),
 			]
 		);
 
-		return $product_list;
+		return '<sc-product-item-list id="selector-' . esc_attr( self::$instance ) . '"></sc-product-item-list>';
 	}
 }

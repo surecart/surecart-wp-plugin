@@ -27,7 +27,7 @@ import { PRODUCT_ITEM_LAYOUT } from '../ProductItem/edit';
 export default ({ attributes, setAttributes, clientId }) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [layoutConfig, setLayoutConfig] = useState(null);
-	const { columns, gap } = attributes;
+	const { columns, style } = attributes;
 	const blockProps = useBlockProps();
 
 	function togglePreview() {
@@ -54,8 +54,6 @@ export default ({ attributes, setAttributes, clientId }) => {
 			}));
 		setLayoutConfig(layoutConfig);
 	}, [block]);
-
-	console.log('productBlockAttr', productBlockAttr);
 
 	return (
 		<Fragment>
@@ -113,7 +111,10 @@ export default ({ attributes, setAttributes, clientId }) => {
 						<ScProductItemList
 							style={{
 								'--sc-product-item-list-column': columns,
-								'--sc-product-item-list-gap': gap,
+								'--sc-product-item-list-gap':
+									getSpacingPresetCssVar(
+										style?.spacing?.blockGap
+									) || '40px',
 								'--sc-product-item-padding-top':
 									getSpacingPresetCssVar(
 										productBlockAttr?.style?.spacing

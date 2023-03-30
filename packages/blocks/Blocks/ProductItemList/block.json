@@ -7,17 +7,20 @@
 	"category": "surecart",
 	"keywords": ["products", "product", "list", "store"],
 	"supports": {
+		"align": true,
 		"reusable": false,
-		"html": false
+		"html": false,
+		"spacing": {
+			"blockGap": true,
+			"__experimentalDefaultControls": {
+				"blockGap": true
+			}
+		}
 	},
 	"attributes": {
 		"columns": {
 			"type": "number",
 			"default": 4
-		},
-		"gap": {
-			"type": "string",
-			"default": "1rem"
 		}
 	}
 }
