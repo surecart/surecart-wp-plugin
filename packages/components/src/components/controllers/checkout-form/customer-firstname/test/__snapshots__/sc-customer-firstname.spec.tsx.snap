@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-customer-email renders 1`] = `
+<sc-customer-firstname size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="first_name" help="" name="first_name" type="text"></sc-input>
+  </mock:shadow-root>
+</sc-customer-firstname>
+`;
+
+exports[`sc-customer-email renders the logged in customer firstname when logged in 1`] = `
+<sc-customer-firstname size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="first_name" disabled="" help="" name="first_name" type="text" value="Jack"></sc-input>
+  </mock:shadow-root>
+</sc-customer-firstname>
+`;
+
+exports[`sc-customer-email renders the passed first name when  not logged in 1`] = `
+<sc-customer-firstname size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="first_name" help="" name="first_name" type="text" value="John"></sc-input>
+  </mock:shadow-root>
+</sc-customer-firstname>
+`;

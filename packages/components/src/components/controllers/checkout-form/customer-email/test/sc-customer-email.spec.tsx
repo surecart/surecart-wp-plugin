@@ -1,6 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { h } from '@stencil/core';
-import { ScCustomerName } from '../sc-customer-name';
+import { ScCustomerEmail } from '../sc-customer-email';
 import { Customer } from '../../../../../types';
 
 const TEST_CUSTOMER: Customer = {
@@ -10,7 +10,7 @@ const TEST_CUSTOMER: Customer = {
   first_name: "Jack",
   last_name: null,
   live_mode: true,
-  name: "Jack Burrows",
+  name: null,
   phone: null,
   unsubscribed: false,
   billing_address: null,
@@ -21,17 +21,17 @@ const TEST_CUSTOMER: Customer = {
   updated_at: 1679586369,
 };
 
-describe('sc-customer-name', () => {
+describe('sc-customer-email', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [ScCustomerName],
-      html: `<sc-customer-name></sc-customer-name>`,
+      components: [ScCustomerEmail],
+      html: `<sc-customer-email></sc-customer-email>`,
     });
     expect(page.root).toMatchSnapshot();
   });
 
-  it('Renders the passed full name when the customer is not logged in', async () => {
-    const mockUrl = new URLSearchParams('?full_name=John Doe');
+  it('Renders the url email when the customer is not logged in',async ()=>{
+     const mockUrl = new URLSearchParams('?email=johndoe@gmail.com');
 
     // Set the mock URL as the window location
     global.window = Object.create(window);
@@ -42,16 +42,17 @@ describe('sc-customer-name', () => {
       writable: true,
     });
 
+
     const page = await newSpecPage({
-      components: [ScCustomerName],
-      html: `<sc-customer-name></sc-customer-name>`,
-    });
+      components:[ScCustomerEmail],
+      html:`<sc-customer-email></sc-customer-email>`
+    })
 
     expect(page.root).toMatchSnapshot();
-  });
+  })
 
-  it('Renders the logged in customer full name when logged in is true', async () => {
-    const mockUrl = new URLSearchParams('?full_name=John Doe');
+  it('Renders the logged in customer email when the customer is logged in',async()=>{
+    const mockUrl = new URLSearchParams('?email=johndoe@gmail.com');
 
     // Set the mock URL as the window location
     global.window = Object.create(window);
@@ -62,11 +63,12 @@ describe('sc-customer-name', () => {
       writable: true,
     });
 
+
     const page = await newSpecPage({
-      components: [ScCustomerName],
-      template:()=><sc-customer-name customer={TEST_CUSTOMER} loggedIn={true}></sc-customer-name>
-    });
+      components:[ScCustomerEmail],
+      template:()=><sc-customer-email customer={TEST_CUSTOMER} loggedIn={true}></sc-customer-email>
+    })
 
     expect(page.root).toMatchSnapshot();
-  });
+  })
 });
