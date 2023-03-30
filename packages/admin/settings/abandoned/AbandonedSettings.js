@@ -310,6 +310,23 @@ export default () => {
 				</ScSwitch>
 
 				<ScSwitch
+					checked={!!item?.test_mode_enabled}
+					onScChange={(e) =>
+						editItem({
+							test_mode_enabled: e.target.checked ? 1 : 0,
+						})
+					}
+				>
+					{__('Enabled in test mode', 'surecart')}
+					<span slot="description">
+						{__(
+							'Turn on abandoned checkouts completely in test mode.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				<ScSwitch
 					checked={!!item?.grace_period_days}
 					onScChange={(e) =>
 						editItem({
