@@ -246,6 +246,8 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 = 1.9.0 - March 30, 2023 =
 * New: Default customer dashboard template.
 * Fix: Issue with Elementor when no forms are published.
+* Fix: Issue with Elementor not loading when all forms are unpublished.
+* Fix: Invalid URL error notice on Elementor editor.
 
 = 1.8.5 - March 27, 2023 =
 * Fix: Some missing translations on instant checkouts.
