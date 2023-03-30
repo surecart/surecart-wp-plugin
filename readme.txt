@@ -243,6 +243,9 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.9.1 - March 30, 2023 =
+* Fix: Issue with store logo causing error due to missing file.
+
 = 1.9.0 - March 30, 2023 =
 * New: Paypal subscriptions enabled for all connected PayPal accounts.
 * New: Default customer dashboard template.
