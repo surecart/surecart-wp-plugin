@@ -7,10 +7,9 @@
 
 ## Properties
 
-| Property  | Attribute | Description | Type                      | Default     |
-| --------- | --------- | ----------- | ------------------------- | ----------- |
-| `product` | --        |             | `Product`                 | `undefined` |
-| `text`    | `text`    |             | `"description" \| "name"` | `'name'`    |
+| Property | Attribute | Description | Type                      | Default  |
+| -------- | --------- | ----------- | ------------------------- | -------- |
+| `text`   | `text`    |             | `"description" \| "name"` | `'name'` |
 
 
 ----------------------------------------------

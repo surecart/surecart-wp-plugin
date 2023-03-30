@@ -42,6 +42,8 @@
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
  - [sc-price-range](../../ui/sc-price-range)
  - [sc-product-line-item](../../ui/product-line-item)
+ - [sc-product-price](../../controllers/product/sc-product-price)
+ - [sc-product-price-choices](../../controllers/product/sc-product-price-choices)
  - [sc-product-selected-price](../../controllers/checkout-form/sc-product-selected-price)
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
  - [sc-subscription-next-payment](../../controllers/dashboard/subscription-details)
@@ -67,6 +69,8 @@ graph TD;
   sc-price-choice --> sc-format-number
   sc-price-range --> sc-format-number
   sc-product-line-item --> sc-format-number
+  sc-product-price --> sc-format-number
+  sc-product-price-choices --> sc-format-number
   sc-product-selected-price --> sc-format-number
   sc-subscription-details --> sc-format-number
   sc-subscription-next-payment --> sc-format-number

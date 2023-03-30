@@ -2569,11 +2569,50 @@ export namespace Components {
          */
         "trialDurationDays": number;
     }
+    interface ScProductPrice {
+        "prices": Price[];
+    }
+    interface ScProductPriceChoices {
+        "label": string;
+    }
+    interface ScProductQuantity {
+        /**
+          * Display server-side validation errors.
+         */
+        "errors": any;
+        /**
+          * Help text
+         */
+        "help": string;
+        /**
+          * Input label.
+         */
+        "label": string;
+        /**
+          * Name for the input. Used for validation errors.
+         */
+        "name": string;
+        /**
+          * Whether the input is required.
+         */
+        "required": boolean;
+        /**
+          * Show the label.
+         */
+        "showLabel": boolean;
+        /**
+          * Size of the control
+         */
+        "size": 'small' | 'medium' | 'large';
+    }
     interface ScProductSelectedPrice {
         /**
           * The product id.
          */
         "productId": string;
+    }
+    interface ScProductText {
+        "text": 'name' | 'description';
     }
     interface ScProse {
     }
@@ -4407,11 +4446,35 @@ declare global {
         prototype: HTMLScProductLineItemElement;
         new (): HTMLScProductLineItemElement;
     };
+    interface HTMLScProductPriceElement extends Components.ScProductPrice, HTMLStencilElement {
+    }
+    var HTMLScProductPriceElement: {
+        prototype: HTMLScProductPriceElement;
+        new (): HTMLScProductPriceElement;
+    };
+    interface HTMLScProductPriceChoicesElement extends Components.ScProductPriceChoices, HTMLStencilElement {
+    }
+    var HTMLScProductPriceChoicesElement: {
+        prototype: HTMLScProductPriceChoicesElement;
+        new (): HTMLScProductPriceChoicesElement;
+    };
+    interface HTMLScProductQuantityElement extends Components.ScProductQuantity, HTMLStencilElement {
+    }
+    var HTMLScProductQuantityElement: {
+        prototype: HTMLScProductQuantityElement;
+        new (): HTMLScProductQuantityElement;
+    };
     interface HTMLScProductSelectedPriceElement extends Components.ScProductSelectedPrice, HTMLStencilElement {
     }
     var HTMLScProductSelectedPriceElement: {
         prototype: HTMLScProductSelectedPriceElement;
         new (): HTMLScProductSelectedPriceElement;
+    };
+    interface HTMLScProductTextElement extends Components.ScProductText, HTMLStencilElement {
+    }
+    var HTMLScProductTextElement: {
+        prototype: HTMLScProductTextElement;
+        new (): HTMLScProductTextElement;
     };
     interface HTMLScProseElement extends Components.ScProse, HTMLStencilElement {
     }
@@ -4838,7 +4901,11 @@ declare global {
         "sc-product-buy-buttons": HTMLScProductBuyButtonsElement;
         "sc-product-image": HTMLScProductImageElement;
         "sc-product-line-item": HTMLScProductLineItemElement;
+        "sc-product-price": HTMLScProductPriceElement;
+        "sc-product-price-choices": HTMLScProductPriceChoicesElement;
+        "sc-product-quantity": HTMLScProductQuantityElement;
         "sc-product-selected-price": HTMLScProductSelectedPriceElement;
+        "sc-product-text": HTMLScProductTextElement;
         "sc-prose": HTMLScProseElement;
         "sc-provider": HTMLScProviderElement;
         "sc-purchase-downloads-list": HTMLScPurchaseDownloadsListElement;
@@ -7758,6 +7825,42 @@ declare namespace LocalJSX {
          */
         "trialDurationDays"?: number;
     }
+    interface ScProductPrice {
+        "prices"?: Price[];
+    }
+    interface ScProductPriceChoices {
+        "label"?: string;
+    }
+    interface ScProductQuantity {
+        /**
+          * Display server-side validation errors.
+         */
+        "errors"?: any;
+        /**
+          * Help text
+         */
+        "help"?: string;
+        /**
+          * Input label.
+         */
+        "label"?: string;
+        /**
+          * Name for the input. Used for validation errors.
+         */
+        "name"?: string;
+        /**
+          * Whether the input is required.
+         */
+        "required"?: boolean;
+        /**
+          * Show the label.
+         */
+        "showLabel"?: boolean;
+        /**
+          * Size of the control
+         */
+        "size"?: 'small' | 'medium' | 'large';
+    }
     interface ScProductSelectedPrice {
         /**
           * Toggle line item event
@@ -7767,6 +7870,9 @@ declare namespace LocalJSX {
           * The product id.
          */
         "productId"?: string;
+    }
+    interface ScProductText {
+        "text"?: 'name' | 'description';
     }
     interface ScProse {
     }
@@ -8816,7 +8922,11 @@ declare namespace LocalJSX {
         "sc-product-buy-buttons": ScProductBuyButtons;
         "sc-product-image": ScProductImage;
         "sc-product-line-item": ScProductLineItem;
+        "sc-product-price": ScProductPrice;
+        "sc-product-price-choices": ScProductPriceChoices;
+        "sc-product-quantity": ScProductQuantity;
         "sc-product-selected-price": ScProductSelectedPrice;
+        "sc-product-text": ScProductText;
         "sc-prose": ScProse;
         "sc-provider": ScProvider;
         "sc-purchase-downloads-list": ScPurchaseDownloadsList;
@@ -8997,7 +9107,11 @@ declare module "@stencil/core" {
             "sc-product-buy-buttons": LocalJSX.ScProductBuyButtons & JSXBase.HTMLAttributes<HTMLScProductBuyButtonsElement>;
             "sc-product-image": LocalJSX.ScProductImage & JSXBase.HTMLAttributes<HTMLScProductImageElement>;
             "sc-product-line-item": LocalJSX.ScProductLineItem & JSXBase.HTMLAttributes<HTMLScProductLineItemElement>;
+            "sc-product-price": LocalJSX.ScProductPrice & JSXBase.HTMLAttributes<HTMLScProductPriceElement>;
+            "sc-product-price-choices": LocalJSX.ScProductPriceChoices & JSXBase.HTMLAttributes<HTMLScProductPriceChoicesElement>;
+            "sc-product-quantity": LocalJSX.ScProductQuantity & JSXBase.HTMLAttributes<HTMLScProductQuantityElement>;
             "sc-product-selected-price": LocalJSX.ScProductSelectedPrice & JSXBase.HTMLAttributes<HTMLScProductSelectedPriceElement>;
+            "sc-product-text": LocalJSX.ScProductText & JSXBase.HTMLAttributes<HTMLScProductTextElement>;
             "sc-prose": LocalJSX.ScProse & JSXBase.HTMLAttributes<HTMLScProseElement>;
             "sc-provider": LocalJSX.ScProvider & JSXBase.HTMLAttributes<HTMLScProviderElement>;
             "sc-purchase-downloads-list": LocalJSX.ScPurchaseDownloadsList & JSXBase.HTMLAttributes<HTMLScPurchaseDownloadsListElement>;

@@ -16,7 +16,7 @@
 
 ### Used by
 
- - [sc-product-prices](../../controllers/product/sc-product-prices)
+ - [sc-product-price](../../controllers/product/sc-product-price)
 
 ### Depends on
 
@@ -26,7 +26,7 @@
 ```mermaid
 graph TD;
   sc-price-range --> sc-format-number
-  sc-product-prices --> sc-price-range
+  sc-product-price --> sc-price-range
   style sc-price-range fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

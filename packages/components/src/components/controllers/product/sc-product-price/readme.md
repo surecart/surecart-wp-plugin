@@ -23,18 +23,18 @@
 
 ### Depends on
 
+- [sc-price-range](../../../ui/sc-price-range)
 - [sc-format-number](../../../util/format-number)
 - [sc-tag](../../../ui/tag)
-- [sc-price-range](../../../ui/sc-price-range)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-product-prices --> sc-format-number
-  sc-product-prices --> sc-tag
-  sc-product-prices --> sc-price-range
+  sc-product-price --> sc-price-range
+  sc-product-price --> sc-format-number
+  sc-product-price --> sc-tag
   sc-price-range --> sc-format-number
-  style sc-product-prices fill:#f9f,stroke:#333,stroke-width:4px
+  style sc-product-price fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

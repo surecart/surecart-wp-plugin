@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-03-29T20:19:01",
+  "timestamp": "2023-03-30T19:21:42",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -1830,6 +1830,7 @@
         "sc-password-nag",
         "sc-payment-method",
         "sc-payment-methods-list",
+        "sc-product-buy-button",
         "sc-product-selected-price",
         "sc-purchase-downloads-list",
         "sc-rich-text",
@@ -1928,6 +1929,9 @@
           "sc-button"
         ],
         "sc-payment-methods-list": [
+          "sc-button"
+        ],
+        "sc-product-buy-button": [
           "sc-button"
         ],
         "sc-product-selected-price": [
@@ -5222,6 +5226,7 @@
       "dependents": [
         "sc-cancel-survey",
         "sc-order-bump",
+        "sc-product-price-choices",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
         "sc-subscription-switch"
@@ -5232,6 +5237,9 @@
           "sc-choice"
         ],
         "sc-order-bump": [
+          "sc-choice"
+        ],
+        "sc-product-price-choices": [
           "sc-choice"
         ],
         "sc-subscription-payment": [
@@ -5771,6 +5779,7 @@
         "sc-cancel-survey",
         "sc-donation-choices",
         "sc-price-choices",
+        "sc-product-price-choices",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
         "sc-subscription-switch"
@@ -5792,6 +5801,9 @@
           "sc-choices"
         ],
         "sc-price-choices": [
+          "sc-choices"
+        ],
+        "sc-product-price-choices": [
           "sc-choices"
         ],
         "sc-subscription-payment": [
@@ -5822,11 +5834,15 @@
       "parts": [],
       "dependents": [
         "sc-customer-edit",
+        "sc-product",
         "sc-wordpress-user-edit"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-customer-edit": [
+          "sc-column"
+        ],
+        "sc-product": [
           "sc-column"
         ],
         "sc-wordpress-user-edit": [
@@ -5916,11 +5932,15 @@
       "parts": [],
       "dependents": [
         "sc-customer-edit",
+        "sc-product",
         "sc-wordpress-user-edit"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-customer-edit": [
+          "sc-columns"
+        ],
+        "sc-product": [
           "sc-columns"
         ],
         "sc-wordpress-user-edit": [
@@ -11748,6 +11768,7 @@
         "sc-input",
         "sc-order-bumps",
         "sc-payment",
+        "sc-product-quantity",
         "sc-rich-text",
         "sc-select",
         "sc-stripe-element",
@@ -11782,6 +11803,9 @@
           "sc-form-control"
         ],
         "sc-payment": [
+          "sc-form-control"
+        ],
+        "sc-product-quantity": [
           "sc-form-control"
         ],
         "sc-rich-text": [
@@ -12824,6 +12848,8 @@
         "sc-price-choice",
         "sc-price-range",
         "sc-product-line-item",
+        "sc-product-price",
+        "sc-product-price-choices",
         "sc-product-selected-price",
         "sc-subscription-details",
         "sc-subscription-next-payment",
@@ -12876,6 +12902,12 @@
           "sc-format-number"
         ],
         "sc-product-line-item": [
+          "sc-format-number"
+        ],
+        "sc-product-price": [
+          "sc-format-number"
+        ],
+        "sc-product-price-choices": [
           "sc-format-number"
         ],
         "sc-product-selected-price": [
@@ -13095,6 +13127,7 @@
         "sc-payment",
         "sc-payment-method",
         "sc-payment-methods-list",
+        "sc-product-buy-button",
         "sc-product-line-item",
         "sc-product-selected-price",
         "sc-purchase-downloads-list",
@@ -13191,6 +13224,9 @@
           "sc-icon"
         ],
         "sc-payment-methods-list": [
+          "sc-icon"
+        ],
+        "sc-product-buy-button": [
           "sc-icon"
         ],
         "sc-product-line-item": [
@@ -21260,13 +21296,520 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "sc-product-price"
+      ],
       "dependencies": [
         "sc-format-number"
       ],
       "dependencyGraph": {
         "sc-price-range": [
           "sc-format-number"
+        ],
+        "sc-product-price": [
+          "sc-price-range"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/product/sc-product/sc-product.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-product",
+      "readme": "# sc-product\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "columnGap",
+          "type": "string",
+          "mutable": false,
+          "attr": "column-gap",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "'2em'",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "formId",
+          "type": "number",
+          "mutable": false,
+          "attr": "form-id",
+          "reflectToAttr": true,
+          "docs": "The form id to use for the cart.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "mediaPosition",
+          "type": "\"left\" | \"right\"",
+          "mutable": false,
+          "attr": "media-position",
+          "reflectToAttr": false,
+          "docs": "The media position.",
+          "docsTags": [],
+          "default": "'left'",
+          "values": [
+            {
+              "value": "left",
+              "type": "string"
+            },
+            {
+              "value": "right",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "mediaWidth",
+          "type": "string",
+          "mutable": false,
+          "attr": "media-width",
+          "reflectToAttr": false,
+          "docs": "The media width.",
+          "docsTags": [],
+          "default": "'65%'",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "mode",
+          "type": "\"live\" | \"test\"",
+          "mutable": false,
+          "attr": "mode",
+          "reflectToAttr": false,
+          "docs": "Are we in test or live mode.",
+          "docsTags": [],
+          "default": "'live'",
+          "values": [
+            {
+              "value": "live",
+              "type": "string"
+            },
+            {
+              "value": "test",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "product",
+          "type": "Product",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "The product.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Product"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "sc-columns",
+        "sc-column",
+        "sc-product-image"
+      ],
+      "dependencyGraph": {
+        "sc-product": [
+          "sc-columns",
+          "sc-column",
+          "sc-product-image"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/product/sc-product-buy-button/sc-product-buy-button.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-product-buy-button",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "addToCart",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "add-to-cart",
+          "reflectToAttr": false,
+          "docs": "Is this an add to cart button?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "busy",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "busy",
+          "reflectToAttr": false,
+          "docs": "Is the order busy",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "full",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "full",
+          "reflectToAttr": false,
+          "docs": "Show a full-width button.",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "icon",
+          "type": "string",
+          "mutable": false,
+          "attr": "icon",
+          "reflectToAttr": false,
+          "docs": "Icon to show.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showTotal",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-total",
+          "reflectToAttr": false,
+          "docs": "Show the total.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The button's size.",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "type",
+          "type": "\"danger\" | \"default\" | \"info\" | \"link\" | \"primary\" | \"success\" | \"text\" | \"warning\"",
+          "mutable": false,
+          "attr": "type",
+          "reflectToAttr": true,
+          "docs": "The button type.",
+          "docsTags": [],
+          "default": "'default'",
+          "values": [
+            {
+              "value": "danger",
+              "type": "string"
+            },
+            {
+              "value": "default",
+              "type": "string"
+            },
+            {
+              "value": "info",
+              "type": "string"
+            },
+            {
+              "value": "link",
+              "type": "string"
+            },
+            {
+              "value": "primary",
+              "type": "string"
+            },
+            {
+              "value": "success",
+              "type": "string"
+            },
+            {
+              "value": "text",
+              "type": "string"
+            },
+            {
+              "value": "warning",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-button",
+        "sc-icon",
+        "sc-total"
+      ],
+      "dependencyGraph": {
+        "sc-product-buy-button": [
+          "sc-button",
+          "sc-icon",
+          "sc-total"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-total": [
+          "sc-format-number"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/product/sc-product-buy-buttons/sc-product-buy-buttons.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-product-buy-buttons",
+      "docs": "",
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "label - The button label."
+        },
+        {
+          "name": "part",
+          "text": "prefix - The button prefix."
+        },
+        {
+          "name": "part",
+          "text": "suffix - The button suffix."
+        },
+        {
+          "name": "part",
+          "text": "caret - The button caret."
+        },
+        {
+          "name": "part",
+          "text": "spinner - The button spinner."
+        }
+      ],
+      "usage": {},
+      "props": [
+        {
+          "name": "checkoutUrl",
+          "type": "string",
+          "mutable": false,
+          "attr": "checkout-url",
+          "reflectToAttr": false,
+          "docs": "The link to the checkout",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "formId",
+          "type": "number",
+          "mutable": false,
+          "attr": "form-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "mode",
+          "type": "\"live\" | \"test\"",
+          "mutable": false,
+          "attr": "mode",
+          "reflectToAttr": false,
+          "docs": "Are we in test or live mode.",
+          "docsTags": [],
+          "default": "'live'",
+          "values": [
+            {
+              "value": "live",
+              "type": "string"
+            },
+            {
+              "value": "test",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [
+        {
+          "event": "click",
+          "capture": false,
+          "passive": false
+        }
+      ],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "caret",
+          "docs": "The button caret."
+        },
+        {
+          "name": "label",
+          "docs": "The button label."
+        },
+        {
+          "name": "prefix",
+          "docs": "The button prefix."
+        },
+        {
+          "name": "spinner",
+          "docs": "The button spinner."
+        },
+        {
+          "name": "suffix",
+          "docs": "The button suffix."
+        }
+      ],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/controllers/product/sc-product-image/sc-product-image.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-product-image",
+      "readme": "# sc-product-image\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "product",
+          "type": "Product",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Product"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-product"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "sc-product": [
+          "sc-product-image"
         ]
       }
     },
@@ -21690,6 +22233,267 @@
       }
     },
     {
+      "filePath": "./src/components/controllers/product/sc-product-price/sc-product-price.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-product-price",
+      "readme": "# sc-product-prices\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "prices",
+          "type": "Price[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Price[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "price__scratch",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "sc-price-range",
+        "sc-format-number",
+        "sc-tag"
+      ],
+      "dependencyGraph": {
+        "sc-product-price": [
+          "sc-price-range",
+          "sc-format-number",
+          "sc-tag"
+        ],
+        "sc-price-range": [
+          "sc-format-number"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/product/sc-product-price-choices/sc-product-price-choices.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-product-price-choices",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-format-number",
+        "sc-choices",
+        "sc-choice"
+      ],
+      "dependencyGraph": {
+        "sc-product-price-choices": [
+          "sc-format-number",
+          "sc-choices",
+          "sc-choice"
+        ],
+        "sc-choices": [
+          "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/product/sc-product-quantity/sc-product-quantity.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-product-quantity",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "errors",
+          "type": "any",
+          "mutable": false,
+          "attr": "errors",
+          "reflectToAttr": false,
+          "docs": "Display server-side validation errors.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "any"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "help",
+          "type": "string",
+          "mutable": false,
+          "attr": "help",
+          "reflectToAttr": false,
+          "docs": "Help text",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "Input label.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "mutable": false,
+          "attr": "name",
+          "reflectToAttr": false,
+          "docs": "Name for the input. Used for validation errors.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "required",
+          "reflectToAttr": false,
+          "docs": "Whether the input is required.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showLabel",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-label",
+          "reflectToAttr": false,
+          "docs": "Show the label.",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "Size of the control",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-form-control",
+        "sc-quantity-select"
+      ],
+      "dependencyGraph": {
+        "sc-product-quantity": [
+          "sc-form-control",
+          "sc-quantity-select"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
+        ],
+        "sc-quantity-select": [
+          "sc-icon"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/controllers/checkout-form/sc-product-selected-price/sc-product-selected-price.tsx",
       "encapsulation": "shadow",
       "tag": "sc-product-selected-price",
@@ -21765,6 +22569,48 @@
           "sc-spinner"
         ]
       }
+    },
+    {
+      "filePath": "./src/components/controllers/product/sc-product-text/sc-product-text.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-product-text",
+      "readme": "# sc-product-text\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "text",
+          "type": "\"description\" | \"name\"",
+          "mutable": false,
+          "attr": "text",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "'name'",
+          "values": [
+            {
+              "value": "description",
+              "type": "string"
+            },
+            {
+              "value": "name",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
     },
     {
       "filePath": "./src/components/ui/sc-prose/sc-prose.tsx",
@@ -22151,6 +22997,32 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -22222,7 +23094,8 @@
         }
       ],
       "dependents": [
-        "sc-product-line-item"
+        "sc-product-line-item",
+        "sc-product-quantity"
       ],
       "dependencies": [
         "sc-icon"
@@ -22232,6 +23105,9 @@
           "sc-icon"
         ],
         "sc-product-line-item": [
+          "sc-quantity-select"
+        ],
+        "sc-product-quantity": [
           "sc-quantity-select"
         ]
       }
@@ -27417,7 +28293,7 @@
         "sc-payment-method",
         "sc-payment-methods-list",
         "sc-premium-tag",
-        "sc-product-prices",
+        "sc-product-price",
         "sc-subscription-details",
         "sc-subscription-payment-method",
         "sc-subscription-status-badge",
@@ -27479,7 +28355,7 @@
         "sc-premium-tag": [
           "sc-tag"
         ],
-        "sc-product-prices": [
+        "sc-product-price": [
           "sc-tag"
         ],
         "sc-subscription-details": [
@@ -28708,6 +29584,10 @@
           "docs": ""
         },
         {
+          "name": "body",
+          "docs": ""
+        },
+        {
           "name": "content",
           "docs": ""
         },
@@ -29080,7 +29960,8 @@
       "dependents": [
         "sc-line-item-total",
         "sc-order-submit",
-        "sc-order-summary"
+        "sc-order-summary",
+        "sc-product-buy-button"
       ],
       "dependencies": [
         "sc-format-number"
@@ -29096,6 +29977,9 @@
           "sc-total"
         ],
         "sc-order-summary": [
+          "sc-total"
+        ],
+        "sc-product-buy-button": [
           "sc-total"
         ]
       }
