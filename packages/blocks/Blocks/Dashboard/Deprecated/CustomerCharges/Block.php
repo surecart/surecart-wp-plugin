@@ -1,16 +1,15 @@
 <?php
 
-namespace SureCartBlocks\Blocks\Dashboard\CustomerInvoices;
+namespace SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerCharges;
 
 use SureCartBlocks\Blocks\Dashboard\DashboardPage;
-use SureCartBlocks\Controllers\InvoiceController;
 
 /**
  * Checkout block
  */
 class Block extends DashboardPage {
 	/**
-	 * Render the preview (overview)
+	 * Render the block
 	 *
 	 * @param array  $attributes Block attributes.
 	 * @param string $content Post content.
@@ -18,6 +17,6 @@ class Block extends DashboardPage {
 	 * @return function
 	 */
 	public function render( $attributes, $content ) {
-		return ( new InvoiceController() )->preview( $attributes );
+		return null;
 	}
 }
