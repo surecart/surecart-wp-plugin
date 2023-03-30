@@ -244,6 +244,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 == Changelog ==
 
 = 1.9.0 - March 30, 2023 =
+* New: Paypal subscriptions enabled for all connected PayPal accounts.
 * New: Default customer dashboard template.
 * Fix: Issue with Elementor when no forms are published.
 * Fix: Issue with Elementor not loading when all forms are unpublished.
