@@ -2,7 +2,7 @@ import { Component, Event, EventEmitter, h, Method, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { state as checkoutState, onChange } from '@store/checkout';
 
-import { Checkout, Customer } from '../../../../types';
+import { Customer } from '../../../../types';
 
 @Component({
   tag: 'sc-customer-phone',
@@ -11,15 +11,6 @@ import { Checkout, Customer } from '../../../../types';
 })
 export class ScCustomerPhone {
   private input: HTMLScInputElement;
-
-  /** Is the user logged in. */
-  @Prop() loggedIn: boolean;
-
-  /** (passed from the sc-checkout component automatically) */
-  @Prop() checkout: Checkout;
-
-  /** Force a customer. */
-  @Prop() customer: Customer;
 
   /** The input's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
@@ -69,8 +60,6 @@ export class ScCustomerPhone {
   /** Emitted when the control's value changes. */
   @Event({ composed: true }) scChange: EventEmitter<void>;
 
-  @Event() scUpdateOrderState: EventEmitter<Partial<Checkout>>;
-
   /** Emitted when the clear button is activated. */
   @Event() scClear: EventEmitter<void>;
 
@@ -82,8 +71,6 @@ export class ScCustomerPhone {
 
   /** Emitted when the control loses focus. */
   @Event() scBlur: EventEmitter<void>;
-
-  @Event() scUpdateCustomer: EventEmitter<{ email: string }>;
 
   async handleChange() {
     this.value = this.input.value;
@@ -123,7 +110,6 @@ export class ScCustomerPhone {
         name="phone"
         ref={el => (this.input = el as HTMLScInputElement)}
         value={this.value}
-        disabled={!!this.loggedIn}
         label={this.label}
         help={this.help}
         autocomplete="phone"
@@ -137,7 +123,7 @@ export class ScCustomerPhone {
         onScInput={() => this.scInput.emit()}
         onScFocus={() => this.scFocus.emit()}
         onScBlur={() => this.scBlur.emit()}
-      ></sc-phone-input>
+      />
     );
   }
 }
