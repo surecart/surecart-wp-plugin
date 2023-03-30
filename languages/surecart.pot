@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-03-29T20:19:35+00:00\n"
+"POT-Creation-Date: 2023-03-30T21:34:14+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -787,7 +787,7 @@ msgid "Paypal is taking a closer look at this payment. It’s required for some 
 msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersViewController.php:21
-#: src/Controllers/Web/DashboardController.php:135
+#: src/Controllers/Web/DashboardController.php:127
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:125
 #: admin/orders/index.php:7
 #: components/data-tables/OrdersDataTable.js:28
@@ -1089,22 +1089,18 @@ msgstr ""
 msgid "I agree to %1$1s's %2$2sPrivacy Policy%3$3s"
 msgstr ""
 
-#: src/Controllers/Web/DashboardController.php:72
+#: src/Controllers/Web/DashboardController.php:77
 msgid "Account"
 msgstr ""
 
-#: src/Controllers/Web/DashboardController.php:84
-msgid "Billing (Test Mode)"
-msgstr ""
-
-#: src/Controllers/Web/DashboardController.php:97
+#: src/Controllers/Web/DashboardController.php:89
 #: Controllers/CustomerController.php:54
 #: Controllers/CustomerController.php:106
 #: Controllers/PaymentMethodController.php:145
 msgid "Billing"
 msgstr ""
 
-#: src/Controllers/Web/DashboardController.php:129
+#: src/Controllers/Web/DashboardController.php:121
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:108
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:123
 #: web/buy.php:51
@@ -1131,7 +1127,7 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-#: src/Controllers/Web/DashboardController.php:147
+#: src/Controllers/Web/DashboardController.php:139
 #: Blocks/Dashboard/CustomerSubscriptions/Block.php:106
 #: Controllers/SubscriptionController.php:57
 #: Controllers/SubscriptionController.php:75
@@ -1140,7 +1136,7 @@ msgstr ""
 msgid "Plans"
 msgstr ""
 
-#: src/Controllers/Web/DashboardController.php:159
+#: src/Controllers/Web/DashboardController.php:151
 #: products/modules/Downloads.js:91
 #: Controllers/DownloadController.php:64
 #: Controllers/DownloadController.php:124
@@ -1151,7 +1147,7 @@ msgstr ""
 msgid "Downloads"
 msgstr ""
 
-#: src/Controllers/Web/DashboardController.php:208
+#: src/Controllers/Web/DashboardController.php:200
 #: src/Models/User.php:178
 msgid "This user could not be found."
 msgstr ""
