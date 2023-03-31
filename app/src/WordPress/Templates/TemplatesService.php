@@ -29,9 +29,20 @@ class TemplatesService {
 	private $post_type = '';
 
 	/**
+	 * SureCart plugin slug
+	 *
+	 * This is used to save templates to the DB which are stored against this value in the wp_terms table.
+	 *
+	 * @var string
+	 */
+	const PLUGIN_SLUG = 'surecart/surecart';
+
+	/**
 	 * Get things going.
 	 *
-	 * @param array $templates The template file/name associations.
+	 * @param array  $container The service container.
+	 * @param array  $templates The template file/name associations.
+	 * @param string $post_type The post type for the templates.
 	 */
 	public function __construct( $container, $templates, $post_type ) {
 		$this->container = $container;
@@ -49,15 +60,6 @@ class TemplatesService {
 		add_filter( 'template_include', [ $this, 'includeTemplate' ] );
 		add_filter( 'body_class', [ $this, 'bodyClass' ] );
 		add_action( 'init', [ $this, 'registerMeta' ] );
-	}
-
-	/**
-	 * The blocks template service.
-	 *
-	 * @return void
-	 */
-	public function blocks() {
-		return new BlockTemplatesService( $this->container );
 	}
 
 	/**

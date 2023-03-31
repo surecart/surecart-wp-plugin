@@ -6,6 +6,7 @@
 	"category": "surecart",
 	"keywords": ["price", "product"],
 	"script": "surecart-components",
+	"style": "surecart-themes-default",
 	"editorStyle": "surecart-themes-default",
 	"attributes": {
 		"media_position": {

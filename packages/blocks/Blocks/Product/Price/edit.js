@@ -20,13 +20,15 @@ export default ({ attributes: { textAlign }, setAttributes }) => {
 				/>
 			</BlockControls>
 
-			<ScProductPrice {...blockProps}>
+			<div {...blockProps}>
+				{/* <ScProductPrice {...blockProps}> */}
 				<ScFormatNumber
 					type="currency"
 					currency={scBlockData?.currency}
 					value={1234}
 				/>
-			</ScProductPrice>
+				{/* </ScProductPrice> */}
+			</div>
 		</>
 	);
 };
