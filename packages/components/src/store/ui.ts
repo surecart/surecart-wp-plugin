@@ -4,7 +4,6 @@ export default createStore<any>(
   () => ({
     cart: {
       open: false,
-      count: 0,
     },
   }),
   (newValue, oldValue) => {

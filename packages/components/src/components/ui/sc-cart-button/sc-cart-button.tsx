@@ -1,6 +1,6 @@
-import { Component, h, Prop, State, Watch } from '@stencil/core';
+import { Component, h, Prop, State } from '@stencil/core';
 import uiStore from '@store/ui';
-import { getOrder } from '@store/checkouts';
+import { getCheckout } from '@store/checkouts';
 
 /**
  * @part base - The elements base wrapper.
@@ -28,21 +28,7 @@ export class ScCartButton {
   @Prop() mode: 'test' | 'live' = 'live';
 
   order() {
-    return getOrder(this.formId, this.mode);
-  }
-
-  @Watch('open')
-  handleOpenChange() {
-    uiStore.set('cart', { ...uiStore.state.cart, ...{ open: this.open } });
-  }
-
-  componentWillLoad() {
-    this.open = !!uiStore.state.cart.open;
-    this.count = uiStore.state.cart.count;
-    uiStore.onChange('cart', cart => {
-      this.open = cart.open;
-      this.count = cart.count;
-    });
+    return getCheckout(this.formId, this.mode);
   }
 
   render() {
@@ -53,7 +39,7 @@ export class ScCartButton {
             {this.count}
           </span>
         )}
-        <div onClick={() => (this.open = !this.open)} class={{ cart_button_icon: true }}>
+        <div onClick={() => (uiStore.state.cart.open = !uiStore.state.cart.open)} class={{ cart_button_icon: true }}>
           {this.icon && <sc-icon name={this.icon}></sc-icon>}
         </div>
       </div>
