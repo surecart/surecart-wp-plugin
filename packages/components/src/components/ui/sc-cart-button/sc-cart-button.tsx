@@ -43,14 +43,16 @@ export class ScCartButton {
 
   render() {
     return (
-      <div class={{ cart_button: true }} part="base">
-        {!!this.getItemsCount() && (
-          <span class={{ cart_button_count: true }} part="count">
-            {this.getItemsCount()}
-          </span>
-        )}
-        <div onClick={() => (uiStore.state.cart.open = !uiStore.state.cart.open)} class={{ cart_button_icon: true }}>
-          {this.icon && <sc-icon name={this.icon}></sc-icon>}
+      <div class="cart__button" part="base">
+        <div class="cart__content">
+          {!!this.getItemsCount() && (
+            <span class="cart__count" part="count">
+              {this.getItemsCount()}
+            </span>
+          )}
+          <div class="cart__icon" onClick={() => (uiStore.state.cart = { ...uiStore.state.cart, open: !uiStore.state.cart.open })}>
+            {this.icon && <sc-icon name={this.icon}></sc-icon>}
+          </div>
         </div>
       </div>
     );
