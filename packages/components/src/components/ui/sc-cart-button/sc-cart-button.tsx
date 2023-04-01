@@ -31,12 +31,22 @@ export class ScCartButton {
     return getCheckout(this.formId, this.mode);
   }
 
+  /** Count the number of items in the cart. */
+  getItemsCount() {
+    const items = this.order()?.line_items?.data;
+    let count = 0;
+    (items || []).forEach(item => {
+      count = count + item?.quantity;
+    });
+    return count;
+  }
+
   render() {
     return (
       <div class={{ cart_button: true }} part="base">
-        {!!this.count && (
+        {!!this.getItemsCount() && (
           <span class={{ cart_button_count: true }} part="count">
-            {this.count}
+            {this.getItemsCount()}
           </span>
         )}
         <div onClick={() => (uiStore.state.cart.open = !uiStore.state.cart.open)} class={{ cart_button_icon: true }}>
