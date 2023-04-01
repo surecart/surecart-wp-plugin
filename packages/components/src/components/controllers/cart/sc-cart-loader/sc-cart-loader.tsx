@@ -19,12 +19,6 @@ export class ScCartLoader {
   @Prop() template: string;
 
   render() {
-    /**
-     * Search for the sc-checkout component on a page to make sure
-     * we don't show the cart on a checkout page.
-     */
-    if (!!document.querySelector('sc-checkout')) return null;
-
     // clear the order if it's already paid.
     const order = getOrder(this.formId, this.mode);
     if (order?.status === 'paid') {
