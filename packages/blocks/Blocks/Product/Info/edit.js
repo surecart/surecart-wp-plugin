@@ -1,6 +1,5 @@
-/**
- * WordPress dependencies
- */
+/** @jsx jsx */
+import { css, jsx } from '@emotion/react';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -20,9 +19,9 @@ import {
 	ToggleControl,
 } from '@wordpress/components';
 
-import { getQueryArg } from '@wordpress/url';
 import { ScProduct } from '@surecart/components-react';
 import { PanelBody, PanelRow } from '@wordpress/components';
+import StyleProvider from '../../../components/StyleProvider';
 
 export default ({ attributes, setAttributes }) => {
 	const { column_gap, media_width, media_position, sticky_content } =
@@ -113,7 +112,22 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScProduct {...innerBlocksProps} />
+			<StyleProvider>
+				<div
+					css={css`
+						// prevents issues with our shadow dom.
+						[data-type*='surecart/'] {
+							pointer-events: all !important;
+						}
+						.wp-block,
+						.block-editor-inserter {
+							pointer-events: all !important;
+						}
+					`}
+				>
+					<ScProduct {...innerBlocksProps} />
+				</div>
+			</StyleProvider>
 		</>
 	);
 };

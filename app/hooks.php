@@ -35,6 +35,15 @@ add_filter(
 	9999999999
 );
 
+// TODO: Move to product controller maybe.
+add_filter(
+	'query_vars',
+	function( $vars ) {
+		$vars[] = 'surecart_current_product';
+		return $vars;
+	}
+);
+
 register_uninstall_hook( SURECART_PLUGIN_FILE, 'surecart_uninstall' );
 /**
  * Uninstall.

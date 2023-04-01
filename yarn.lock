@@ -4450,6 +4450,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@emotion/babel-plugin@npm:^11.10.6":
+  version: 11.10.6
+  resolution: "@emotion/babel-plugin@npm:11.10.6"
+  dependencies:
+    "@babel/helper-module-imports": ^7.16.7
+    "@babel/runtime": ^7.18.3
+    "@emotion/hash": ^0.9.0
+    "@emotion/memoize": ^0.8.0
+    "@emotion/serialize": ^1.1.1
+    babel-plugin-macros: ^3.1.0
+    convert-source-map: ^1.5.0
+    escape-string-regexp: ^4.0.0
+    find-root: ^1.1.0
+    source-map: ^0.5.7
+    stylis: 4.1.3
+  checksum: 3eed138932e8edf2598352e69ad949b9db3051a4d6fcff190dacbac9aa838d7ef708b9f3e6c48660625d9311dae82d73477ae4e7a31139feef5eb001a5528421
+  languageName: node
+  linkType: hard
+
 "@emotion/babel-plugin@npm:^11.2.0, @emotion/babel-plugin@npm:^11.7.2":
   version: 11.7.2
   resolution: "@emotion/babel-plugin@npm:11.7.2"
@@ -4548,6 +4567,19 @@ __metadata:
     "@emotion/utils": 0.11.3
     babel-plugin-emotion: ^10.0.27
   checksum: 1420f5b514fc3a8500bcf90384b309b0d9acc9f687ec3a655166b55dc81d1661d6b6132ea6fe6730d0071c10da93bf9427937c22a90a18088af4ba5e11d59141
+  languageName: node
+  linkType: hard
+
+"@emotion/css@npm:^11.10.6":
+  version: 11.10.6
+  resolution: "@emotion/css@npm:11.10.6"
+  dependencies:
+    "@emotion/babel-plugin": ^11.10.6
+    "@emotion/cache": ^11.10.5
+    "@emotion/serialize": ^1.1.1
+    "@emotion/sheet": ^1.2.1
+    "@emotion/utils": ^1.2.0
+  checksum: 010ca5e1d0434923c431eab2c6f8226ab4415310a053ece6e4133011c7dc621de099469e57314b013e682c3b6ffd09a91cc6473538c185095d2afca79d81fb95
   languageName: node
   linkType: hard
 
@@ -7238,8 +7270,9 @@ __metadata:
     "-": ^0.0.1
     "@emotion/babel-plugin": ^11.7.2
     "@emotion/babel-preset-css-prop": ^11.2.0
+    "@emotion/cache": ^11.10.5
     "@emotion/core": ^10.1.1
-    "@emotion/css": ^10.0.22
+    "@emotion/css": ^11.10.6
     "@emotion/hash": ^0.8.0
     "@emotion/native": ^10.0.22
     "@emotion/react": ^11.7.1
@@ -7304,6 +7337,7 @@ __metadata:
     litepicker: ^2.0.11
     loader-utils: ^1.1.0
     lodash: ^4.17.15
+    memize: ^1.1.0
     mini-css-extract-plugin: ^0.9.0
     node-sass: ^6.0.1
     node-wp-i18n: ^1.2.1
@@ -7334,6 +7368,7 @@ __metadata:
     swr: ^1.2.2
     thread-loader: ^3.0.4
     tmp: ^0.2.1
+    uuid: ^9.0.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^3.10.3
   languageName: unknown
@@ -35599,6 +35634,15 @@ __metadata:
   bin:
     uuid: dist/bin/uuid
   checksum: 5575a8a75c13120e2f10e6ddc801b2c7ed7d8f3c8ac22c7ed0c7b2ba6383ec0abda88c905085d630e251719e0777045ae3236f04c812184b7c765f63a70e58df
+  languageName: node
+  linkType: hard
+
+"uuid@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "uuid@npm:9.0.0"
+  bin:
+    uuid: dist/bin/uuid
+  checksum: 8dd2c83c43ddc7e1c71e36b60aea40030a6505139af6bee0f382ebcd1a56f6cd3028f7f06ffb07f8cf6ced320b76aea275284b224b002b289f89fe89c389b028
   languageName: node
   linkType: hard
 

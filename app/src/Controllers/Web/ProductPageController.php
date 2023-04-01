@@ -15,12 +15,15 @@ class ProductPageController {
 	 * @param string                                  $id The id of the product.
 	 * @return function
 	 */
-	public function show( $request, $view, $id ) {
+	public function show() {
+		global  $sc_product;
+
+		// get the product from the query var.
 		$id = get_query_var( 'sc_product_page_id' );
-		global  $sc_product, $_wp_current_template_content;
 
 		// fetch the product by id/slug.
 		$sc_product = \SureCart\Models\Product::with( [ 'prices', 'image' ] )->find( $id );
+
 		if ( is_wp_error( $sc_product ) ) {
 			return $this->handleError( $sc_product );
 		}
@@ -35,11 +38,16 @@ class ProductPageController {
 			return \SureCart::redirect()->to( $sc_product->permalink );
 		}
 
-		// set the current template for the block view.
-		$_wp_current_template_content = $sc_product->template->content ?? '';
+		set_query_var( 'surecart_current_product', $sc_product );
 
 		// check to see if the product has a page or template.
-		return \SureCart::view( 'web/product' );
+		return \SureCart::view(
+			wp_is_block_theme() ? 'web/product-canvas' : 'web/product'
+		)->with(
+			[
+				'content' => $sc_product->template->content ?? '',
+			]
+		);
 	}
 
 	/**

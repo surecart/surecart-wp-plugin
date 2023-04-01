@@ -18,26 +18,18 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		global $sc_product;
+		$product = get_query_var( 'surecart_current_product' );
+		if ( empty( $product ) ) {
+			return '';
+		}
+
 		// This dynamically adds prop data to a component since we cannot pass objects data as a prop.
 		\SureCart::assets()->addComponentData(
 			'sc-product',
-			'#product-' . $sc_product->id,
+			'#product-' . $product->id,
 			[
-				'product' => $sc_product,
+				'product' => $product,
 			]
-		);
-
-		add_action(
-			'wp_footer',
-			function() {  ?>
-	<style>
-			.wp-site-blocks {
-				width: 100%;
-			}
-		</style>
-				<?php
-			}
 		);
 
 		// need a form for checkout.
@@ -55,7 +47,7 @@ class Block extends BaseBlock {
 		?>
 
 		<sc-product
-			id="product-<?php echo esc_attr( $sc_product->id ); ?>"
+			id="product-<?php echo esc_attr( $product->id ); ?>"
 			form-id="<?php echo esc_attr( $form->ID ); ?>"
 			mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>"
 			checkout-url="<?php echo esc_url( $checkout_link ); ?>"

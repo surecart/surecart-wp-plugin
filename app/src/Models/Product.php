@@ -72,7 +72,7 @@ class Product extends Model {
 		if ( ! $this->attributes['id'] ) {
 			return false;
 		}
-		return trailingslashit( get_home_url() ) . trailingslashit( 'product' ) . $this->slug;
+		return trailingslashit( get_home_url() ) . trailingslashit( 'products' ) . $this->slug;
 	}
 
 	/**
@@ -109,6 +109,6 @@ class Product extends Model {
 	 * @return \WP_Template
 	 */
 	public function getTemplateAttribute() {
-		return get_block_template( $this->attributes['metadata']->wp_template_id ?? get_stylesheet() . '//default-product-page' );
+		return get_block_template( $this->attributes['metadata']->wp_template_id ?? 'surecart/surecart//surecart-product' );
 	}
 }

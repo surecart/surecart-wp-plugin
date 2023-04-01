@@ -46,13 +46,9 @@ class TemplateUtilityService {
 		$this->templates_directory      = $templates_directory;
 		$this->template_parts_directory = $template_parts_directory;
 		$this->plugin_template_types    = [
-			'single-product'  => [
+			'single-product' => [
 				'title'       => _x( 'Single Product', 'Template name', 'surecart' ),
 				'description' => __( 'Displays a single product.', 'surecart' ),
-			],
-			'archive-product' => [
-				'title'       => _x( 'Product Catalog', 'Template name', 'surecart' ),
-				'description' => __( 'Displays your products.', 'surecart' ),
 			],
 		];
 	}
@@ -330,7 +326,7 @@ class TemplateUtilityService {
 		$template->has_theme_file = true;
 		$template->origin         = $template_file->source;
 		$template->is_custom      = false; // Templates loaded from the filesystem aren't custom, ones that have been edited and loaded from the DB are.
-		$template->post_types     = array(); // Don't appear in any Edit Post template selector dropdown.
+		$template->post_types     = []; // Don't appear in any Edit Post template selector dropdown.
 		$template->area           = 'uncategorized';
 		return $template;
 	}

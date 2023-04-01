@@ -38,8 +38,11 @@ export class ScProductPrice {
     if (state.selectedPrice) {
       return this.renderPrice(state.selectedPrice);
     }
-    // TODO: if state.selectedVariation
 
-    return this.renderRange();
+    if (state.prices.length) {
+      return this.renderRange();
+    }
+
+    return <slot />;
   }
 }

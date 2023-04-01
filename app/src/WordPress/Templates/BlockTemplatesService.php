@@ -63,7 +63,6 @@ class BlockTemplatesService {
 	public function getBlockFileTemplate( $template, $id, $template_type ) {
 		$template_name_parts = explode( '//', $id );
 
-		error_log( print_r( $template_name_parts, 1 ) );
 		if ( count( $template_name_parts ) < 2 ) {
 			return $template;
 		}
@@ -113,9 +112,6 @@ class BlockTemplatesService {
 		$template_files = $this->getBlockTemplates( $slugs, $template_type );
 
 		foreach ( $template_files as $template_file ) {
-			if ( $template_file->source === 'plugin' ) {
-				error_log( print_r( $template_file, 1 ) );
-			}
 			// If the current $post_type is set (e.g. on an Edit Post screen), and isn't included in the available post_types
 			// on the template file, then lets skip it so that it doesn't get added. This is typically used to hide templates
 			// in the template dropdown on the Edit Post page.

@@ -58,8 +58,8 @@ export default ({ product, updateProduct, loading }) => {
 				`}
 			>
 				<ScFormControl label={__('Permalink', 'surecart')}>
-					<a href={`https://surecart.test/product/${product.slug}`}>
-						{`https://surecart.test/product/${product.slug}`}
+					<a href={`https://surecart.test/products/${product.slug}`}>
+						{`https://surecart.test/products/${product.slug}`}
 					</a>
 				</ScFormControl>
 				<ScInput
@@ -93,7 +93,10 @@ export default ({ product, updateProduct, loading }) => {
 				<div>
 					<SelectTemplate
 						label={__('Template', 'surecart')}
-						value={product?.metadata?.wp_template_id || null}
+						value={
+							product?.metadata?.wp_template_id ||
+							'surecart/surecart//single-product'
+						}
 						onSelect={(id) =>
 							updateProduct({
 								metadata: {
@@ -103,7 +106,7 @@ export default ({ product, updateProduct, loading }) => {
 							})
 						}
 					/>
-					{template?.wp_id && (
+					{!!template?.wp_id && (
 						<ScButton
 							href={addQueryArgs('post.php', {
 								post: template?.wp_id,

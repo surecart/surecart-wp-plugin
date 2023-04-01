@@ -49,7 +49,9 @@ export default (props) => {
 				},
 			];
 			return {
-				templates: select(coreStore).getEntityRecords(...queryArgs),
+				templates: (
+					select(coreStore).getEntityRecords(...queryArgs) || []
+				).filter((template) => template?.theme === 'surecart/surecart'),
 				loading: select(coreStore).isResolving(
 					'getEntityRecords',
 					queryArgs
@@ -63,12 +65,6 @@ export default (props) => {
 		<>
 			<SelectModel
 				choices={[
-					...[
-						{
-							label: __('Default Template', 'surecart'),
-							value: null,
-						},
-					],
 					...(templates || []).map((template) => ({
 						label:
 							template.title?.rendered ||

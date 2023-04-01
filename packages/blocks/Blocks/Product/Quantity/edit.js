@@ -41,17 +41,20 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScFormControl {...blockProps}>
-				<ScQuantitySelect
-					style={{
-						...(borderStyle?.borderRadius
-							? {
-									'--border-radius': borderStyle.borderRadius,
-							  }
-							: {}),
-					}}
-				/>
-			</ScFormControl>
+			<div {...blockProps}>
+				<ScFormControl>
+					<ScQuantitySelect
+						style={{
+							...(borderStyle?.borderRadius
+								? {
+										'--border-radius':
+											borderStyle.borderRadius,
+								  }
+								: {}),
+						}}
+					/>
+				</ScFormControl>
+			</div>
 		</>
 	);
 };

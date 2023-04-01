@@ -7,6 +7,8 @@ import Setup from './components/Setup';
 import { css, jsx } from '@emotion/core';
 import { ScCheckout, ScIcon } from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
+import StyleProvider from '../../components/StyleProvider';
+
 import {
 	InnerBlocks,
 	InspectorControls,
@@ -427,190 +429,198 @@ export default function edit({ clientId, attributes, setAttributes }) {
 				</PanelBody>
 			</InspectorControls>
 
-			{blockCount === 0 ? (
-				<Setup
-					templates={patterns}
-					onCreate={onCreate}
-					clientId={clientId}
-				/>
-			) : (
-				<div
-					css={css`
-						max-width: var(--ast-content-width-size);
-						margin-left: auto !important;
-						margin-right: auto !important;
-					`}
-				>
+			<StyleProvider>
+				{blockCount === 0 ? (
+					<Setup
+						templates={patterns}
+						onCreate={onCreate}
+						clientId={clientId}
+					/>
+				) : (
 					<div
-						style={styles}
 						css={css`
-							padding: 10px 16px;
-							border-radius: 8px;
-							display: grid;
-							gap: 0.5em;
-							border: 1px solid transparent;
-							background: var(
-								--sc-input-background-color-disabled
-							);
+							max-width: var(--ast-content-width-size);
+							margin-left: auto !important;
+							margin-right: auto !important;
 						`}
 					>
 						<div
+							style={styles}
 							css={css`
-								display: flex;
-								justify-content: space-between;
-								align-items: center;
-								font-size: 15px;
+								padding: 10px 16px;
+								border-radius: 8px;
+								display: grid;
+								gap: 0.5em;
+								border: 1px solid transparent;
+								background: var(
+									--sc-input-background-color-disabled
+								);
 							`}
 						>
 							<div
 								css={css`
-									cursor: pointer;
-									flex: 1;
-									user-select: none;
-									display: inline-block;
-									color: var(--sc-input-label-color);
-									font-weight: var(
-										--sc-input-label-font-weight
-									);
-									text-transform: var(
-										--sc-input-label-text-transform,
-										none
-									);
-									letter-spacing: var(
-										--sc-input-label-letter-spacing,
-										0
-									);
-								`}
-							>
-								{__('Form', 'surecart')}
-							</div>
-							<div
-								css={css`
 									display: flex;
+									justify-content: space-between;
 									align-items: center;
+									font-size: 15px;
 								`}
 							>
-								<Mode
-									attributes={attributes}
-									setAttributes={setAttributes}
-								/>
+								<div
+									css={css`
+										cursor: pointer;
+										flex: 1;
+										user-select: none;
+										display: inline-block;
+										color: var(--sc-input-label-color);
+										font-weight: var(
+											--sc-input-label-font-weight
+										);
+										text-transform: var(
+											--sc-input-label-text-transform,
+											none
+										);
+										letter-spacing: var(
+											--sc-input-label-letter-spacing,
+											0
+										);
+									`}
+								>
+									{__('Form', 'surecart')}
+								</div>
 								<div
 									css={css`
 										display: flex;
 										align-items: center;
 									`}
 								>
-									<Button
-										onClick={() =>
-											setTab(tab === 'cart' ? '' : 'cart')
-										}
+									<Mode
+										attributes={attributes}
+										setAttributes={setAttributes}
+									/>
+									<div
+										css={css`
+											display: flex;
+											align-items: center;
+										`}
 									>
-										<span
-											css={css`
-												display: inline-block;
-												vertical-align: top;
-												box-sizing: border-box;
-												margin: 1px 0 -1px 2px;
-												padding: 0 5px;
-												min-width: 18px;
-												height: 18px;
-												border-radius: 9px;
-												background-color: currentColor;
-												font-size: 11px;
-												line-height: 1.6;
-												text-align: center;
-												z-index: 26;
-											`}
+										<Button
+											onClick={() =>
+												setTab(
+													tab === 'cart' ? '' : 'cart'
+												)
+											}
 										>
 											<span
 												css={css`
-													color: #fff;
+													display: inline-block;
+													vertical-align: top;
+													box-sizing: border-box;
+													margin: 1px 0 -1px 2px;
+													padding: 0 5px;
+													min-width: 18px;
+													height: 18px;
+													border-radius: 9px;
+													background-color: currentColor;
+													font-size: 11px;
+													line-height: 1.6;
+													text-align: center;
+													z-index: 26;
 												`}
 											>
-												{
-													(prices || []).filter(
-														(p) => p?.id
-													)?.length
-												}
+												<span
+													css={css`
+														color: #fff;
+													`}
+												>
+													{
+														(prices || []).filter(
+															(p) => p?.id
+														)?.length
+													}
+												</span>
 											</span>
-										</span>
 
-										<ScIcon
-											name="shopping-bag"
-											style={{
-												fontSize: '18px',
-												color: 'var(--sc-input-label-color)',
-											}}
-										/>
-									</Button>
+											<ScIcon
+												name="shopping-bag"
+												style={{
+													fontSize: '18px',
+													color: 'var(--sc-input-label-color)',
+												}}
+											/>
+										</Button>
+									</div>
 								</div>
 							</div>
-						</div>
 
-						{tab === 'cart' && (
-							<Cart
-								attributes={attributes}
-								setAttributes={setAttributes}
-							/>
-						)}
-					</div>
-					<ScCheckout
-						mode="test"
-						formId={formId}
-						processors={scBlockData?.processors}
-						stripePaymentElement={
-							scBlockData?.beta?.stripe_payment_element
-						}
-						css={css`
-							margin-top: 2em;
-							font-size: ${font_size}px;
-						`}
-						className={className}
-						style={{
-							...(color
-								? {
-										'--sc-color-primary-500': color,
-										'--sc-focus-ring-color-primary': color,
-										'--sc-input-border-color-focus': color,
-								  }
-								: {}),
-						}}
-						disableComponentsValidation={true}
-						persistSession={false}
-						alignment={align}
-						currencyCode={scBlockData.currency || scData?.currency}
-						choiceType={choice_type}
-						prices={prices}
-					>
-						<div
-							css={css`
-								*
-									> *
-									> .wp-block:not(sc-choice):not(sc-column):not(sc-radio):not(sc-price-choice):not(:last-child) {
-									margin-bottom: ${gap} !important;
-								}
-								// prevents issues with our shadow dom.
-								[data-type*='surecart/'] {
-									pointer-events: all !important;
-								}
-								.wp-block,
-								.block-editor-inserter {
-									pointer-events: all !important;
-								}
-							`}
-						>
-							<InnerBlocks
-								templateLock={false}
-								renderAppender={
-									blockCount
-										? undefined
-										: InnerBlocks.ButtonBlockAppender
-								}
-							/>
+							{tab === 'cart' && (
+								<Cart
+									attributes={attributes}
+									setAttributes={setAttributes}
+								/>
+							)}
 						</div>
-					</ScCheckout>
-				</div>
-			)}
+						<ScCheckout
+							mode="test"
+							formId={formId}
+							processors={scBlockData?.processors}
+							stripePaymentElement={
+								scBlockData?.beta?.stripe_payment_element
+							}
+							css={css`
+								margin-top: 2em;
+								font-size: ${font_size}px;
+							`}
+							className={className}
+							style={{
+								...(color
+									? {
+											'--sc-color-primary-500': color,
+											'--sc-focus-ring-color-primary':
+												color,
+											'--sc-input-border-color-focus':
+												color,
+									  }
+									: {}),
+							}}
+							disableComponentsValidation={true}
+							persistSession={false}
+							alignment={align}
+							currencyCode={
+								scBlockData.currency || scData?.currency
+							}
+							choiceType={choice_type}
+							prices={prices}
+						>
+							<div
+								css={css`
+									*
+										> *
+										> .wp-block:not(sc-choice):not(sc-column):not(sc-radio):not(sc-price-choice):not(:last-child) {
+										margin-bottom: ${gap} !important;
+									}
+									// prevents issues with our shadow dom.
+									[data-type*='surecart/'] {
+										pointer-events: all !important;
+									}
+									.wp-block,
+									.block-editor-inserter {
+										pointer-events: all !important;
+									}
+								`}
+							>
+								<InnerBlocks
+									templateLock={false}
+									renderAppender={
+										blockCount
+											? undefined
+											: InnerBlocks.ButtonBlockAppender
+									}
+								/>
+							</div>
+						</ScCheckout>
+					</div>
+				)}
+			</StyleProvider>
 		</Fragment>
 	);
 }
