@@ -48,7 +48,7 @@ export class ScCart {
 
   @Watch('open')
   handleOpenChange() {
-    uiStore.set('cart', { ...uiStore.state.cart, ...{ open: this.open, count: this.getItemsCount() } });
+    uiStore.set('cart', { ...uiStore.state.cart, ...{ open: this.open } });
     if (this.open === true) {
       this.fetchOrder();
     }
