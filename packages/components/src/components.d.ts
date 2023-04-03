@@ -275,6 +275,10 @@ export namespace Components {
     }
     interface ScCartButton {
         /**
+          * Whether the cart icon is always shown when the cart is empty
+         */
+        "cartMenuAlwaysShown": boolean;
+        /**
           * The form id to use for the cart.
          */
         "formId": string;
@@ -5108,6 +5112,10 @@ declare namespace LocalJSX {
         "mode"?: 'test' | 'live';
     }
     interface ScCartButton {
+        /**
+          * Whether the cart icon is always shown when the cart is empty
+         */
+        "cartMenuAlwaysShown"?: boolean;
         /**
           * The form id to use for the cart.
          */

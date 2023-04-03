@@ -156,6 +156,7 @@
     "slot": true
   },
   "sc-cart-button": {
+    "cart-menu-always-shown": true,
     "form-id": true,
     "icon": true,
     "mode": true,
