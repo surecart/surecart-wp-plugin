@@ -10,40 +10,32 @@ import { addTemplate } from '@wordpress/icons';
 import { SelectControl, Button } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies
  */
 import PostTemplateCreateModal from './create-modal';
 
-export default function PostTemplateForm({ onClose }) {
-	const { templates, selectedTemplateSlug, canCreate, canEdit } = useSelect(
-		(select) => {
-			const { canUser, getEntityRecords } = select(coreStore);
-			const canCreateTemplates = canUser('create', 'templates');
-			return {
-				templates:
-					getEntityRecords('postType', 'wp_template', {
-						per_page: -1,
-					}) || [],
-				selectedTemplateSlug: 'test',
-				canCreate: canCreateTemplates,
-				canEdit: canCreateTemplates,
-			};
-		},
-		[]
-	);
+export default function PostTemplateForm({ onClose, product, updateProduct }) {
+	const { templates, canCreate, canEdit } = useSelect((select) => {
+		const { canUser, getEntityRecords } = select(coreStore);
+		const canCreateTemplates = canUser('create', 'templates');
+		return {
+			templates:
+				getEntityRecords('postType', 'wp_template', {
+					per_page: -1,
+					post_type: 'surecart-product',
+				}) || [],
+			canCreate: canCreateTemplates,
+			canEdit: canCreateTemplates,
+		};
+	}, []);
 
-	console.log({ templates });
-
-	const options = (templates ?? []).map(({ slug, title }) => ({
-		value: slug,
+	const options = (templates ?? []).map(({ id, title }) => ({
+		value: id,
 		label: title?.rendered || slug,
 	}));
-
-	const selectedOption =
-		options.find((option) => option.value === selectedTemplateSlug) ??
-		options.find((option) => !option.value); // The default option has '' value.
 
 	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
@@ -88,10 +80,15 @@ export default function PostTemplateForm({ onClose }) {
 				__nextHasNoMarginBottom
 				hideLabelFromVision
 				label={__('Template')}
-				value={selectedOption?.value ?? ''}
+				value={product?.metadata?.wp_template_id}
 				options={options}
 				onChange={(slug) => {
-					//editPost({ template: slug || '' })
+					updateProduct({
+						metadata: {
+							...product.metadata,
+							wp_template_id: slug,
+						},
+					});
 				}}
 			/>
 
@@ -99,7 +96,18 @@ export default function PostTemplateForm({ onClose }) {
 				<p>
 					<Button
 						variant="link"
-						onClick={() => __unstableSwitchToTemplateMode()}
+						href={
+							scData?.is_block_theme
+								? addQueryArgs('site-editor.php', {
+										postType: 'wp_template',
+										postId: product?.metadata
+											?.wp_template_id,
+										canvas: 'edit',
+								  })
+								: scData?.edit_template_url +
+								  '&post_type=surecart-product'
+						}
+						target="_blank"
 					>
 						{__('Edit template')}
 					</Button>

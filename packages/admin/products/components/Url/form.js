@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/react';
 
 /**
  * WordPress dependencies
@@ -39,13 +39,13 @@ export default ({ product, updateProduct, onClose }) => {
 				help={
 					<>
 						{__('The last part of the URL.')}{' '}
-						<ExternalLink
+						{/* <ExternalLink
 							href={__(
 								'https://wordpress.org/documentation/article/page-post-settings-sidebar/#permalink'
 							)}
 						>
 							{__('Learn more.')}
-						</ExternalLink>
+						</ExternalLink> */}
 					</>
 				}
 				onChange={(slug) => updateProduct({ slug })}
@@ -56,27 +56,26 @@ export default ({ product, updateProduct, onClose }) => {
 				}
 			/>
 
-			<h3 className="editor-post-url__link-label">
+			<h3
+				css={css`
+					line-height: 1.2;
+					color: rgb(30, 30, 30);
+					font-size: 13px;
+					font-weight: 600;
+					display: block;
+				`}
+			>
 				{__('View Product')}
 			</h3>
 
 			<p>
 				<ExternalLink
 					className="editor-post-url__link"
-					href={'#'}
+					href={`${scData?.home_url}/${scData?.product_page_slug}/${product?.slug}`}
 					target="_blank"
 				>
-					<>
-						<span className="editor-post-url__link-prefix">
-							prefix
-						</span>
-						<span className="editor-post-url__link-slug">
-							{product?.slug}
-						</span>
-						<span className="editor-post-url__link-suffix">
-							suffix
-						</span>
-					</>
+					{scData?.home_url}/{scData?.product_page_slug}/
+					{product?.slug}
 				</ExternalLink>
 			</p>
 		</div>

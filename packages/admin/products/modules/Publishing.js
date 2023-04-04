@@ -77,11 +77,11 @@ export default ({ product, updateProduct, loading }) => {
 			<div>
 				<Status product={product} updateProduct={updateProduct} />
 				<Availability product={product} updateProduct={updateProduct} />
-				<Url product={product} updateProduct={updateProduct} />
 				<SelectTemplate
 					product={product}
 					updateProduct={updateProduct}
 				/>
+				<Url product={product} updateProduct={updateProduct} />
 			</div>
 		</Box>
 	);

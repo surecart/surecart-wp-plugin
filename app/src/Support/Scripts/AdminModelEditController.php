@@ -123,6 +123,7 @@ abstract class AdminModelEditController {
 		$this->data['home_url']          = untrailingslashit( get_home_url() );
 		$this->data['buy_page_slug']     = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'buy_page' ) );
 		$this->data['product_page_slug'] = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) );
+		$this->data['is_block_theme']    = \SureCart::utility()->blockTemplates()->isFSETheme();
 
 		if ( in_array( 'currency', $this->with_data ) ) {
 			$this->data['currency_code'] = \SureCart::account()->currency;

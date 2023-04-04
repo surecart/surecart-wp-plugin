@@ -12,7 +12,7 @@ import { store as coreStore } from '@wordpress/core-data';
  */
 import PostTemplateForm from './form';
 
-export default function PostTemplate({ templateId, product, updateProduct }) {
+export default function PostTemplate({ product, updateProduct }) {
 	// Use internal state instead of a ref to make sure that the component
 	// re-renders when the popover's anchor updates.
 	const [popoverAnchor, setPopoverAnchor] = useState(null);
@@ -38,7 +38,11 @@ export default function PostTemplate({ templateId, product, updateProduct }) {
 					/>
 				)}
 				renderContent={({ onClose }) => (
-					<PostTemplateForm onClose={onClose} />
+					<PostTemplateForm
+						onClose={onClose}
+						product={product}
+						updateProduct={updateProduct}
+					/>
 				)}
 			/>
 		</PanelRow>
@@ -46,21 +50,24 @@ export default function PostTemplate({ templateId, product, updateProduct }) {
 }
 
 function PostTemplateToggle({ isOpen, onClick, product }) {
-	const templateTitle = useSelect((select) => {
-		const template =
-			select(coreStore).canUser('create', 'templates') &&
-			select(coreStore).getEntityRecord(
-				'postType',
-				'wp_template',
-				product?.metadata?.wp_template_id ||
-					'surecart/surecart//single-product'
+	const templateTitle = useSelect(
+		(select) => {
+			const template =
+				select(coreStore).canUser('create', 'templates') &&
+				select(coreStore).getEntityRecord(
+					'postType',
+					'wp_template',
+					product?.metadata?.wp_template_id ||
+						'surecart/surecart//single-product'
+				);
+			return (
+				template?.title?.rendered ||
+				template?.slug ||
+				__('Default template', 'surecart')
 			);
-		return (
-			template?.title?.rendered ||
-			template?.slug ||
-			__('Default template', 'surecart')
-		);
-	}, []);
+		},
+		[product?.metadata?.wp_template_id]
+	);
 
 	return (
 		<Button

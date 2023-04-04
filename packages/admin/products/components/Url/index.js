@@ -1,3 +1,6 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/react';
+
 /**
  * WordPress dependencies
  */
@@ -17,15 +20,35 @@ export default ({ product, updateProduct }) => {
 	);
 
 	return (
-		<PanelRow className="edit-post-post-url" ref={setPopoverAnchor}>
-			<span>{__('URL')}</span>
+		<PanelRow
+			css={css`
+				align-items: flex-start;
+				justify-content: flex-start;
+				width: 100%;
+			`}
+			ref={setPopoverAnchor}
+		>
+			<span
+				css={css`
+					display: block;
+					flex-shrink: 0;
+					padding: 6px 0;
+					width: 45%;
+				`}
+			>
+				{__('URL')}
+			</span>
 			<Dropdown
 				popoverProps={popoverProps}
 				className="edit-post-post-url__dropdown"
 				contentClassName="edit-post-post-url__dialog"
 				focusOnMount
 				renderToggle={({ isOpen, onToggle }) => (
-					<PostURLToggle isOpen={isOpen} onClick={onToggle} />
+					<PostURLToggle
+						isOpen={isOpen}
+						onClick={onToggle}
+						product={product}
+					/>
 				)}
 				renderContent={({ onClose }) => (
 					<Form
@@ -39,11 +62,16 @@ export default ({ product, updateProduct }) => {
 	);
 };
 
-function PostURLToggle({ isOpen, onClick }) {
-	const label = 'asdf';
+function PostURLToggle({ isOpen, onClick, product }) {
+	const label = `${scData?.home_url}/${scData?.product_page_slug}/${product?.slug}`;
 	return (
 		<Button
-			className="edit-post-post-url__toggle"
+			css={css`
+				height: auto;
+				text-align: left;
+				white-space: normal !important;
+				word-break: break-word;
+			`}
 			variant="tertiary"
 			aria-expanded={isOpen}
 			// translators: %s: Current post URL.
