@@ -24,14 +24,17 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		global $sc_product;
+		$product = get_query_var( 'surecart_current_product' );
+		if ( empty( $product ) ) {
+			return '';
+		}
 		ob_start(); ?>
 
 		<div class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
 			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
 			<sc-prose>
 				<sc-product-text text="description">
-					<?php echo wp_kses_post( $sc_product->description ); ?>
+					<?php echo wp_kses_post( $product->description ); ?>
 				</sc-product-text>
 			</sc-prose>
 		</div>

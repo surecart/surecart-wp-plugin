@@ -34,18 +34,21 @@ class ProductsController extends AdminController {
 		// enqueue needed script.
 		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( ProductScriptsController::class, 'enqueue' ) );
 
-		// add instant checkout link
-		add_action('admin_bar_menu', function($wp_admin_bar) use ($request) {
-			$product = Product::find($request->query('id'));
-			$wp_admin_bar->add_node(
-				[
-					'id'    => 'view-instant-checkout',
-					'title' => __( 'View Instant Checkout', 'surecart' ),
-					'href'  => $product->buyLink()->url()
-				]
-			);
-		}, 99);
-
+		// add instant checkout link.
+		add_action(
+			'admin_bar_menu',
+			function( $wp_admin_bar ) use ( $request ) {
+				$product = Product::find( $request->query( 'id' ) );
+				$wp_admin_bar->add_node(
+					[
+						'id'    => 'view-product-page',
+						'title' => __( 'View Product', 'surecart' ),
+						'href'  => esc_url( $product->permalink ),
+					]
+				);
+			},
+			99
+		);
 
 		// return view.
 		return '<div id="app"></div>';
@@ -56,7 +59,7 @@ class ProductsController extends AdminController {
 			[
 				'id'    => 'edit',
 				'title' => __( 'Edit Product', 'surecart' ),
-				'href'  => '#'
+				'href'  => '#',
 			]
 		);
 	}

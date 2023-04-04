@@ -109,6 +109,7 @@ class Product extends Model {
 	 * @return \WP_Template
 	 */
 	public function getTemplateAttribute() {
-		return get_block_template( $this->attributes['metadata']->wp_template_id ?? 'surecart/surecart//surecart-product' );
+		return get_block_template( $this->attributes['metadata']->wp_template_id ?? 'surecart/surecart//single-product' );
 	}
 }
+

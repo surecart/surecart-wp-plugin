@@ -261,15 +261,6 @@ export default ({ product, updateProduct, loading }) => {
 						</ScSwitch>
 						<ScDivider />
 						<ScInput
-							label={__('URL Slug', 'surecart')}
-							help={__('The last part of the URL', 'surecart')}
-							value={product?.slug}
-							onScInput={(e) =>
-								updateProduct({ slug: e.target.value })
-							}
-							required
-						/>
-						<ScInput
 							label={__('Link', 'surecart')}
 							readonly
 							value={`${scData?.home_url}/${scData?.buy_page_slug}/${product?.slug}`}

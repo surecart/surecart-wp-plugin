@@ -25,14 +25,17 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		global $sc_product;
+		$product = get_query_var( 'surecart_current_product' );
+		if ( empty( $product ) ) {
+			return '';
+		}
 		ob_start(); ?>
 
 		<sc-product-price
 			class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
 			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
-			<?php if ( ! empty( $sc_product->prices->data[0] ) ) : ?>
-				<?php echo esc_html( Currency::format( $sc_product->prices->data[0]->amount, $sc_product->prices->data[0]->currency ) ); ?>
+			<?php if ( ! empty( $product->prices->data[0] ) ) : ?>
+				<?php echo esc_html( Currency::format( $product->prices->data[0]->amount, $product->prices->data[0]->currency ) ); ?>
 			<?php endif; ?>
 		</sc-product-price>
 

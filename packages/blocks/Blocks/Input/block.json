@@ -4,11 +4,16 @@
 	"description": "Displays a form text input field. This is saved with the order as additional metadata.",
 	"category": "surecart",
 	"keywords": ["text", "input", "custom", "field"],
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,
 		"html": false
+	},
+	"example": {
+		"attributes": {
+			"label": "Input"
+		}
 	},
 	"attributes": {
 		"required": {
@@ -50,5 +55,7 @@
 			"type": "string",
 			"default": "input"
 		}
-	}
+	},
+	"script": "surecart-components",
+	"style": "surecart-theme-default"
 }

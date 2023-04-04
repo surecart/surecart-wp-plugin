@@ -17,10 +17,9 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		global $sc_product;
-		// no product found.
-		if ( ! $sc_product ) {
-			return false;
+		$product = get_query_var( 'surecart_current_product' );
+		if ( empty( $product ) ) {
+			return '';
 		}
 
 		return sprintf(
@@ -30,7 +29,7 @@ class Block extends BaseBlock {
 			'h' . (int) ( $attributes['level'] ?? 1 ),
 			esc_attr( $this->getClasses( $attributes, 'surecart-block product-title' ) ),
 			esc_attr( $this->getStyles( $attributes ) ),
-			$sc_product->name
+			$product->name
 		);
 	}
 }

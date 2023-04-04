@@ -18,7 +18,6 @@ class ProductPageMiddleware {
 	 * @return function
 	 */
 	public function handle( RequestInterface $request, Closure $next ) {
-		wp_die( var_dump( $request->getArguments() ) );
 		return $next( $request );
 	}
 }

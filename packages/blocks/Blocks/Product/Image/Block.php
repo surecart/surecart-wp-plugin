@@ -24,13 +24,16 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		global $sc_product;
+		$product = get_query_var( 'surecart_current_product' );
+		if ( empty( $product ) ) {
+			return '';
+		}
 		ob_start(); ?>
 
 		<div class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
 			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
 			<sc-product-image>
-				<img href="<?php echo esc_url( $sc_product->image->url ?? '' ); ?>">
+				<img href="<?php echo esc_url( $product->image->url ?? '' ); ?>">
 			</sc-product-image>
 		</div>
 

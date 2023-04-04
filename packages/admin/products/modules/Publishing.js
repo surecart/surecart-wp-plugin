@@ -2,22 +2,40 @@
 import { css, jsx } from '@emotion/core';
 import {
 	ScButton,
-	ScDivider,
 	ScIcon,
 	ScInput,
 	ScRadio,
 	ScRadioGroup,
 	ScFormControl,
+	ScDivider,
 } from '@surecart/components-react';
 import { addQueryArgs } from '@wordpress/url';
 import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
+import { store as noticesStore } from '@wordpress/notices';
 
 import Box from '../../ui/Box';
 import SelectTemplate from '../components/SelectTemplate';
 
 export default ({ product, updateProduct, loading }) => {
+	const { createSuccessNotice, createErrorNotice } =
+		useDispatch(noticesStore);
+
+	const copy = async (text) => {
+		try {
+			await navigator.clipboard.writeText(text);
+			createSuccessNotice(__('Copied to clipboard.', 'surecart'), {
+				type: 'snackbar',
+			});
+		} catch (err) {
+			console.error(err);
+			createErrorNotice(__('Error copying to clipboard.', 'surecart'), {
+				type: 'snackbar',
+			});
+		}
+	};
+
 	const { template, loadingTemplate } = useSelect(
 		(select) => {
 			const queryArgs = [
@@ -57,20 +75,8 @@ export default ({ product, updateProduct, loading }) => {
 					gap: var(--sc-spacing-large);
 				`}
 			>
-				<ScFormControl label={__('Permalink', 'surecart')}>
-					<a href={`https://surecart.test/products/${product.slug}`}>
-						{`https://surecart.test/products/${product.slug}`}
-					</a>
-				</ScFormControl>
-				<ScInput
-					label={__('URL Slug')}
-					help={__('The last part of the URL', 'surecart')}
-					value={product?.slug}
-					onScInput={(e) => updateProduct({ slug: e.target.value })}
-					required
-				/>
-
 				<ScRadioGroup
+					label={__('Status', 'surecart')}
 					onScChange={(e) => {
 						updateProduct({ status: e.target.value });
 					}}
@@ -90,6 +96,34 @@ export default ({ product, updateProduct, loading }) => {
 						{__('Published', 'surecart')}
 					</ScRadio>
 				</ScRadioGroup>
+
+				<ScInput
+					label={__('URL Slug', 'surecart')}
+					help={__('The last part of the URL', 'surecart')}
+					value={product?.slug}
+					onScInput={(e) => updateProduct({ slug: e.target.value })}
+					required
+				/>
+
+				<ScInput
+					label={__('Permalink', 'surecart')}
+					readonly
+					value={`${scData?.home_url}/${scData?.product_page_slug}/${product?.slug}`}
+				>
+					<ScButton
+						type="text"
+						slot="suffix"
+						onClick={() =>
+							copy(
+								`${scData?.home_url}/${scData?.product_page_slug}/${product?.slug}`
+							)
+						}
+					>
+						<ScIcon name="copy" />
+					</ScButton>
+				</ScInput>
+
+				<ScDivider />
 				<div>
 					<SelectTemplate
 						label={__('Template', 'surecart')}

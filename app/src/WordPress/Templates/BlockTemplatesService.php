@@ -17,6 +17,7 @@ class BlockTemplatesService {
 	 * BlockTemplatesService constructor.
 	 */
 	public function __construct() {
+		add_theme_support( 'block-template-parts' );
 		$this->utility = \SureCart::utility()->blockTemplates();
 	}
 
@@ -102,9 +103,9 @@ class BlockTemplatesService {
 	 */
 	public function addBlockTemplates( $query_result, $query, $template_type ) {
 		// does not support block templates.
-		if ( ! $this->utility->supportsBlockTemplates() ) {
-			return $query_result;
-		}
+		// if ( ! $this->utility->supportsBlockTemplates() ) {
+		// return $query_result;
+		// }
 
 		$post_type = $query['post_type'] ?? '';
 		$slugs     = $query['slug__in'] ?? [];

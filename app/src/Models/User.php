@@ -330,6 +330,23 @@ class User implements ArrayAccess, JsonSerializable {
 			]
 		);
 
+		$meta_query = [
+			'relation' => 'OR', // Lets it know that either of the following is acceptable.
+		];
+		foreach ( $customer_ids as $id ) {
+			$meta_query = [
+				'key'     => $this->customer_id_key,
+				'value'   => $id, // the customer id.
+				'compare' => 'LIKE',
+			];
+		}
+
+		$users = new \WP_User_Query(
+			[
+				'meta_query' => $meta_query,
+			]
+		);
+
 		if ( empty( $users->results ) ) {
 			return false;
 		}
