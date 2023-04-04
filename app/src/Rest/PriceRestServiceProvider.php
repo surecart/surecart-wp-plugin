@@ -123,7 +123,7 @@ class PriceRestServiceProvider extends RestServiceProvider implements RestServic
 	 */
 	public function get_items_permissions_check( $request ) {
 		if ( $request['archived'] ) {
-			return current_user_can( 'edit_sc_prices' );
+			return current_user_can( 'edit_sc_products' );
 		}
 
 		return true;
@@ -136,7 +136,7 @@ class PriceRestServiceProvider extends RestServiceProvider implements RestServic
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function create_item_permissions_check( $request ) {
-		return current_user_can( 'publish_sc_prices' );
+		return current_user_can( 'publish_sc_products' );
 	}
 
 	/**
@@ -146,7 +146,7 @@ class PriceRestServiceProvider extends RestServiceProvider implements RestServic
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		return current_user_can( 'edit_sc_prices' );
+		return current_user_can( 'edit_sc_products' );
 	}
 
 	/**
@@ -156,6 +156,6 @@ class PriceRestServiceProvider extends RestServiceProvider implements RestServic
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function delete_item_permissions_check( $request ) {
-		return current_user_can( 'delete_sc_prices' );
+		return current_user_can( 'delete_sc_products' );
 	}
 }
