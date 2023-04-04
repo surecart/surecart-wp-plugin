@@ -54,6 +54,36 @@ export const getSpacingPresetCssVar = (value: string) => {
 	return `var(--wp--preset--spacing--${slug[1]})`;
 };
 
+/**
+ * Converts a font size preset into a custom value.
+ *
+ * @param {string} value Value to convert.
+ *
+ * @return {string} CSS var string for given spacing preset value.
+ */
+export const getFontSizePresetCssVar = (value) => {
+	if (!value) {
+		return;
+	}
+
+	return `var(--wp--preset--font-size--${value})`;
+};
+
+/**
+ * Converts a color preset into a custom value.
+ *
+ * @param {string} value Value to convert.
+ *
+ * @return {string} CSS var string for given spacing preset value.
+ */
+export const getColorPresetCssVar = (value) => {
+	if (!value) {
+		return;
+	}
+
+	return `var(--wp--preset--color--${value})`;
+};
+
 export const sortByArray = (item, key, orderArray) =>
   (item || []).sort((a, b) => {
     if (orderArray.indexOf(a?.[key]) === -1) return 1;

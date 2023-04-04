@@ -1,37 +1,25 @@
-import { css } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, RangeControl } from '@wordpress/components';
+import {
+	AlignmentToolbar,
+	BlockControls,
+	useBlockProps,
+} from '@wordpress/block-editor';
 import { ScProductItemTitle } from '@surecart/components-react';
 
-import { getSpacingPresetCssVar } from '../../util';
-
 export default ({ attributes, setAttributes }) => {
-	const { title, fontSize, style: styleAttribute } = attributes;
-	const { padding } = styleAttribute?.spacing || {};
-
+	const { title, align } = attributes;
 	const blockProps = useBlockProps();
 
 	return (
 		<>
-			<InspectorControls>
-				<PanelBody title={__('Title Settings', 'surecart')}>
-					<RangeControl
-						label={__('Font Size', 'surecart')}
-						value={fontSize}
-						onChange={(fontSize) => {
-							setAttributes({ fontSize });
-						}}
-						min={6}
-						max={40}
-					/>
-				</PanelBody>
-			</InspectorControls>
+			<BlockControls>
+				<AlignmentToolbar
+					value={align}
+					onChange={(value) => setAttributes({ align: value })}
+				/>
+			</BlockControls>
 			<div {...blockProps}>
 				<ScProductItemTitle
-					style={{
-						'--sc-product-title-font-size': `${fontSize ?? 16}px`,
-					}}
+					style={{ '--sc-product-title-align': align }}
 				>
 					{title}
 				</ScProductItemTitle>

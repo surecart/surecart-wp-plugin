@@ -1,8 +1,20 @@
-import { getSpacingPresetCssVar } from '../../util';
+import {
+	getColorPresetCssVar,
+	getFontSizePresetCssVar,
+	getSpacingPresetCssVar,
+} from '../../util';
 
 export default function save({ attributes }) {
-	const { title, fontSize, style: styleAttribute } = attributes;
+	const {
+		title,
+		align,
+		fontSize,
+		textColor,
+		style: styleAttribute,
+	} = attributes;
 	const { padding } = styleAttribute?.spacing || {};
+	const { fontSize: customFontSize } = styleAttribute?.typography || {};
+	const { text: color } = styleAttribute?.color || {};
 
 	return (
 		<sc-product-item-title
@@ -19,7 +31,13 @@ export default function save({ attributes }) {
 				'--sc-product-title-padding-right': getSpacingPresetCssVar(
 					padding?.right
 				),
-				'--sc-product-title-font-size': `${fontSize ?? 18}px`,
+				'--sc-product-title-font-size': fontSize
+					? getFontSizePresetCssVar(fontSize)
+					: customFontSize,
+				'--sc-product-title-text-color': textColor
+					? getColorPresetCssVar(textColor)
+					: color,
+				'--sc-product-title-align': align,
 			}}
 		>
 			{title}

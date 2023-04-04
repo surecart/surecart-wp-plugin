@@ -130,6 +130,7 @@ export const ScPriceRange = /*@__PURE__*/createReactComponent<JSX.ScPriceRange, 
 export const ScProductItem = /*@__PURE__*/createReactComponent<JSX.ScProductItem, HTMLScProductItemElement>('sc-product-item');
 export const ScProductItemImage = /*@__PURE__*/createReactComponent<JSX.ScProductItemImage, HTMLScProductItemImageElement>('sc-product-item-image');
 export const ScProductItemList = /*@__PURE__*/createReactComponent<JSX.ScProductItemList, HTMLScProductItemListElement>('sc-product-item-list');
+export const ScProductItemPrice = /*@__PURE__*/createReactComponent<JSX.ScProductItemPrice, HTMLScProductItemPriceElement>('sc-product-item-price');
 export const ScProductItemTitle = /*@__PURE__*/createReactComponent<JSX.ScProductItemTitle, HTMLScProductItemTitleElement>('sc-product-item-title');
 export const ScProductLineItem = /*@__PURE__*/createReactComponent<JSX.ScProductLineItem, HTMLScProductLineItemElement>('sc-product-line-item');
 export const ScProductSelectedPrice = /*@__PURE__*/createReactComponent<JSX.ScProductSelectedPrice, HTMLScProductSelectedPriceElement>('sc-product-selected-price');

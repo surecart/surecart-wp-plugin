@@ -6,5 +6,28 @@
 	"description": "Displays the price of the product with the scratched price.",
 	"category": "surecart",
 	"keywords": ["product", "price", "discount"],
-	"ancestor": ["surecart/product-item-list"]
+	"ancestor": ["surecart/product-item-list"],
+	"attributes": {
+		"align": {
+			"type": "string"
+		}
+	},
+	"supports": {
+		"spacing": {
+			"padding": ["top", "bottom"],
+			"__experimentalDefaultControls": {
+				"padding": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
+		},
+		"color": {
+			"text": true,
+			"background": false,
+			"enableContrastChecker": true
+		}
+	}
 }

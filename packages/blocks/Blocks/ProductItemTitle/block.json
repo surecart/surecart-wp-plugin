@@ -11,9 +11,8 @@
 		"title": {
 			"type": "string"
 		},
-		"fontSize": {
-			"type": "number",
-			"default": 18
+		"align": {
+			"type": "string"
 		}
 	},
 	"supports": {
@@ -22,6 +21,16 @@
 			"__experimentalDefaultControls": {
 				"padding": true
 			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
+		},
+		"color": {
+			"text": true,
+			"background": false,
+			"enableContrastChecker": true
 		}
 	}
 }

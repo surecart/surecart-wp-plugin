@@ -2,10 +2,26 @@
   border-style: none !important;
 }
 
+.product-item-list-wrapper {
+  container-type: inline-size;
+
+  @container (max-width: 576px) {
+    .product-item-list {
+      grid-template-columns: 1fr;
+    }
+  }
+  @container (min-width: 576px) and (max-width: 768px) {
+    .product-item-list {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
+
 .product-item-list {
   display: grid;
   grid-template-columns: repeat(var(--sc-product-item-list-column), 1fr);
   gap: var(--sc-product-item-list-gap);
+
   &__loader {
     display: grid;
     gap: 0.88rem;

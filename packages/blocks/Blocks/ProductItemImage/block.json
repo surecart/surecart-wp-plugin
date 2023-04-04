@@ -13,6 +13,9 @@
 		},
 		"sizing": {
 			"type": "string"
+		},
+		"ratio": {
+			"type": "string"
 		}
 	},
 	"supports": {

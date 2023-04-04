@@ -1,0 +1,14 @@
+:host {
+  border-style: none;
+}
+
+.product-price {
+  padding-top: var(--sc-product-price-padding-top);
+  padding-bottom: var(--sc-product-price-padding-bottom);
+  padding-left: var(--sc-product-price-padding-left);
+  padding-right: var(--sc-product-price-padding-right);
+  text-align: var(--sc-product-price-align);
+  font-size: var(--sc-product-price-font-size);
+  font-weight: var(--sc-product-price-font-weight);
+  color: var(--sc-product-price-text-color);
+}

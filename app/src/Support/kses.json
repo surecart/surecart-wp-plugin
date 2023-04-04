@@ -1384,6 +1384,13 @@
     "class": true,
     "slot": true
   },
+  "sc-product-item-price": {
+    "prices": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-product-item-title": {
     "style": true,
     "id": true,

@@ -43,11 +43,11 @@ export class ScPriceRange {
     return (
       <Host>
         {this.maxPrice.amount == this.minPrice.amount ? (
-          <span class="price-range-display">
+          <span>
             <sc-format-number type="currency" currency={this.maxPrice.currency} value={this.maxPrice.amount}></sc-format-number>
           </span>
         ) : (
-          <span class="price-range-display">
+          <span>
             <sc-format-number type="currency" currency={this.minPrice.currency} value={this.minPrice.amount}></sc-format-number> {' - '}
             <sc-format-number type="currency" currency={this.maxPrice.currency} value={this.maxPrice.amount}></sc-format-number>
           </span>

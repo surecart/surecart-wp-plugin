@@ -206,6 +206,7 @@ export interface Product extends Object {
   tax_category: string;
   tax_enabled: boolean;
   purchase_limit: number;
+  permalink: string;
   prices: {
     object: 'list';
     pagination: Pagination;
