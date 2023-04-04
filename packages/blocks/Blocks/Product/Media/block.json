@@ -1,10 +1,10 @@
 {
 	"apiVersion": 2,
-	"name": "surecart/product-image",
-	"title": "Product Image",
-	"description": "A container to display the product image",
+	"name": "surecart/product-media",
+	"title": "Product Media",
+	"description": "A container to display the product media",
 	"category": "surecart",
-	"keywords": ["image", "product"],
+	"keywords": ["image", "media"],
 	"supports": {
 		"reusable": false,
 		"html": false,

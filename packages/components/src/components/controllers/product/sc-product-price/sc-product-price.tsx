@@ -1,7 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Price } from '../../../../types';
-import state from '../../../../store/product';
+import { state } from '@store/product';
 
 @Component({
   tag: 'sc-product-price',
@@ -26,7 +26,7 @@ export class ScProductPrice {
         )}
         <sc-format-number type="currency" value={price?.amount} currency={price?.currency} />
         {!!price?.scratch_amount && (
-          <sc-tag type="primary" pill>
+          <sc-tag type="primary" pill class="sale-badge">
             {__('Sale', 'surecart')}
           </sc-tag>
         )}

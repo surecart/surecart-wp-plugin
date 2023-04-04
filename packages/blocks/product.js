@@ -1,6 +1,6 @@
 import * as BuyButtons from './Blocks/Product/BuyButtons';
 import * as Description from './Blocks/Product/Description';
-import * as Image from './Blocks/Product/Image';
+import * as Media from './Blocks/Product/Media';
 import * as Info from './Blocks/Product/Info';
 import * as Price from './Blocks/Product/Price';
 import * as Quantity from './Blocks/Product/Quantity';
@@ -27,7 +27,7 @@ registerBlocks([
 	BuyButtons,
 	Quantity,
 	Title,
-	Image,
+	Media,
 	Description,
 	Price,
 	PriceChoices,

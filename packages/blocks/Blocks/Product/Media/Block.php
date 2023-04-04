@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCartBlocks\Blocks\Product\Image;
+namespace SureCartBlocks\Blocks\Product\Media;
 
 use SureCartBlocks\Blocks\BaseBlock;
 

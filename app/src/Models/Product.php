@@ -69,7 +69,7 @@ class Product extends Model {
 	 * @return string|false
 	 */
 	public function getPermalinkAttribute() {
-		if ( ! $this->attributes['id'] ) {
+		if ( empty( $this->attributes['id'] ) ) {
 			return false;
 		}
 		return trailingslashit( get_home_url() ) . trailingslashit( 'products' ) . $this->slug;

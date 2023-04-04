@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop } from '@stencil/core';
-import state from '../../../../store/product';
+import { state } from '@store/product';
 
 @Component({
   tag: 'sc-product-text',

@@ -152,7 +152,7 @@ return [
 		\SureCartBlocks\Blocks\Product\Title\Block::class,
 		\SureCartBlocks\Blocks\Product\Price\Block::class,
 		\SureCartBlocks\Blocks\Product\PriceChoices\Block::class,
-		\SureCartBlocks\Blocks\Product\Image\Block::class,
+		\SureCartBlocks\Blocks\Product\Media\Block::class,
 		\SureCartBlocks\Blocks\Product\Quantity\Block::class,
 		\SureCartBlocks\Blocks\Product\BuyButtons\Block::class,
 

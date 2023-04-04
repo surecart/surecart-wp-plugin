@@ -7295,7 +7295,7 @@ __metadata:
     "@wordpress/env": ^4.8.0
     "@wordpress/format-library": ^1.23.0
     "@wordpress/i18n": ^3.15.0
-    "@wordpress/icons": ^6.1.1
+    "@wordpress/icons": ^9.21.0
     "@wordpress/interface": ^0.8.0
     "@wordpress/media-utils": ^1.16.0
     "@wordpress/prettier-config": ^1.4.0
@@ -8572,6 +8572,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-dom@npm:^18.0.6":
+  version: 18.0.11
+  resolution: "@types/react-dom@npm:18.0.11"
+  dependencies:
+    "@types/react": "*"
+  checksum: 579691e4d5ec09688087568037c35edf8cfb1ab3e07f6c60029280733ee7b5c06d66df6fcc90786702c93ac8cb13bc7ff16c79ddfc75d082938fbaa36e1cdbf4
+  languageName: node
+  linkType: hard
+
 "@types/react-router-config@npm:*, @types/react-router-config@npm:^5.0.6":
   version: 5.0.6
   resolution: "@types/react-router-config@npm:5.0.6"
@@ -8641,6 +8650,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: c3ef0c479e0c53f62057cae6dfe89785c855e697ea106e7c71da18210307a8d90a7f6bd285ca1370ee1ce859b1c241e173f4c6d0fab73c35e1d321d30b4dc4cc
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^18.0.21":
+  version: 18.0.33
+  resolution: "@types/react@npm:18.0.33"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: 4fbd2b2b6a26378bdfde121081a6406ec2d39e4ba87ea5f6897ab7bb2198713165e6fd703ad4ed7ba1d4f23ef54a4c9f108f3105c7ed8e136411ee6bdebc5669
   languageName: node
   linkType: hard
 
@@ -10229,6 +10249,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@wordpress/element@npm:^5.7.0":
+  version: 5.7.0
+  resolution: "@wordpress/element@npm:5.7.0"
+  dependencies:
+    "@babel/runtime": ^7.16.0
+    "@types/react": ^18.0.21
+    "@types/react-dom": ^18.0.6
+    "@wordpress/escape-html": ^2.30.0
+    change-case: ^4.1.2
+    is-plain-object: ^5.0.0
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: 6bd63add9567eb56f7f25e30b5b9a31aa36d6916e6a7d58f3ba7760f0d5c655537d2c68a2e83b9632f1a0cb7e540e45bcb0b9670f54eee39207571edd13521d9
+  languageName: node
+  linkType: hard
+
 "@wordpress/env@npm:^4.8.0":
   version: 4.8.0
   resolution: "@wordpress/env@npm:4.8.0"
@@ -10275,6 +10311,15 @@ __metadata:
   dependencies:
     "@babel/runtime": ^7.16.0
   checksum: fc3a0b1edef02f1c47198c26707422b9f639f490b57dc10518a6939d8bd09ddbbc2bd88778456f7d3a69984082c9da30f2714a4ec79d2efa2ef25d64ffa17181
+  languageName: node
+  linkType: hard
+
+"@wordpress/escape-html@npm:^2.30.0":
+  version: 2.30.0
+  resolution: "@wordpress/escape-html@npm:2.30.0"
+  dependencies:
+    "@babel/runtime": ^7.16.0
+  checksum: b9bed9d081541ad8db220672c07f40fc3f66302d2dd0da184445f07d6d6613849b8f3ba8141228c4af5710d7748d8d707cbc1f62c71f3eee54d649c0138dbd4b
   languageName: node
   linkType: hard
 
@@ -10474,14 +10519,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wordpress/icons@npm:^6.1.1":
-  version: 6.3.0
-  resolution: "@wordpress/icons@npm:6.3.0"
+"@wordpress/icons@npm:^9.21.0":
+  version: 9.21.0
+  resolution: "@wordpress/icons@npm:9.21.0"
   dependencies:
     "@babel/runtime": ^7.16.0
-    "@wordpress/element": ^4.1.1
-    "@wordpress/primitives": ^3.1.1
-  checksum: cdcfa41c24c48c6a3602ba447399accc296fe887e62df6abe87f03854781bd4d3225dd4954370afd9127051b7635b8343519de913660e69015595760f1f18ec2
+    "@wordpress/element": ^5.7.0
+    "@wordpress/primitives": ^3.28.0
+  checksum: 19e7eaea9a50f55d9797acd912f20ab2718a047fb67a1dd5131b4eeef333efd2899c468d5ad8117b92fa0e128a5acb6859b4f38c467f891e4cc6803bccf423da
   languageName: node
   linkType: hard
 
@@ -10746,14 +10791,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wordpress/primitives@npm:^3.1.1":
-  version: 3.1.1
-  resolution: "@wordpress/primitives@npm:3.1.1"
+"@wordpress/primitives@npm:^3.28.0":
+  version: 3.28.0
+  resolution: "@wordpress/primitives@npm:3.28.0"
   dependencies:
     "@babel/runtime": ^7.16.0
-    "@wordpress/element": ^4.1.1
+    "@wordpress/element": ^5.7.0
     classnames: ^2.3.1
-  checksum: 2120d8d7fff6ec2dc447996721539688320b6f3e9d82146277f14383a3b261ab7ede6818ab759c8179ab5564e4579522ab19848ef976dc78babdd25e621d9097
+  checksum: f89c9ebbb0f3f3e196be367ee82d0ae3467081ff1a1e1f1a3a8ce5bf247eb778e6876e3bf5e4ed88a706f3b2e467cf16078dcfb045dc58a99f7744c07784bc2f
   languageName: node
   linkType: hard
 

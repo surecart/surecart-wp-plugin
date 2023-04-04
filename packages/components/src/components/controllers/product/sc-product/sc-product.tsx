@@ -1,6 +1,7 @@
 import { Component, h, Prop, Watch } from '@stencil/core';
 import { Product } from '../../../../types';
-import state from '../../../../store/product';
+import { state } from '@store/product';
+import { availablePrices } from '@store/product/getters';
 
 @Component({
   tag: 'sc-product',
@@ -35,7 +36,7 @@ export class ScProduct {
   handleProductChange() {
     state.product = this.product;
     state.prices = this.product?.prices?.data || [];
-    state.selectedPrice = this.product?.prices?.data?.[0];
+    state.selectedPrice = (availablePrices() || [])[0];
   }
 
   render() {
@@ -43,27 +44,12 @@ export class ScProduct {
       <div
         class={{
           'product-info': true,
-          'product-info__no-media': !state.product?.image_url,
-          'product-info__has-media-right': this.mediaPosition === 'right',
         }}
         part="base"
       >
-        {state.product?.image_url ? (
-          <sc-columns style={{ '--sc-column-spacing': this.columnGap }}>
-            <sc-column class="media-column" style={{ flexBasis: this.mediaWidth }}>
-              <sc-product-image />
-            </sc-column>
-            <sc-column>
-              <div class="product-info__content">
-                <slot />
-              </div>
-            </sc-column>
-          </sc-columns>
-        ) : (
-          <div class="product-info__content">
-            <slot />
-          </div>
-        )}
+        <div class="product-info__content">
+          <slot />
+        </div>
       </div>
     );
   }

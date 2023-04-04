@@ -24,7 +24,6 @@ import Licensing from './modules/Licensing';
 import Prices from './modules/Prices';
 import Publishing from './modules/Publishing';
 import SearchEngine from './modules/SearchEngine';
-import Summary from './modules/Summary';
 import Tax from './modules/Tax';
 
 export default ({ id }) => {
@@ -203,16 +202,10 @@ export default ({ id }) => {
 			}
 			sidebar={
 				<>
-					<Summary
-						id={id}
-						product={product}
-						isSaving={savingProduct}
-						onToggleArchiveProduct={onToggleArchiveProduct}
-						loading={!hasLoadedProduct}
-					/>
 					<Publishing
 						id={id}
 						product={product}
+						onToggleArchiveProduct={onToggleArchiveProduct}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>

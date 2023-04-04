@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop } from '@stencil/core';
-import state from '../../../../store/product';
+import { state } from '@store/product';
 let id = 0;
 
 @Component({

@@ -1,9 +1,8 @@
 import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
 import { addLineItem } from '../../../../services/session';
 import { getOrder, setOrder } from '../../../../store/checkouts';
-import state from '../../../../store/product';
+import { state } from '../../../../store/product';
 import { toggleCart } from '../../../../store/ui';
 import { Checkout } from '../../../../types';
 
@@ -27,6 +26,9 @@ export class ScProductBuyButton {
 
   /** Show a full-width button. */
   @Prop() full: boolean = true;
+
+  /** Outline */
+  @Prop() outline: boolean = false;
 
   /** Icon to show. */
   @Prop() icon: string;
@@ -70,35 +72,9 @@ export class ScProductBuyButton {
 
   render() {
     return (
-      <sc-button
-        href={
-          state.selectedPrice?.id
-            ? addQueryArgs(state.checkoutUrl, {
-                line_items: [
-                  {
-                    price_id: state.selectedPrice?.id,
-                    quantity: state.quantity,
-                  },
-                ],
-              })
-            : '#'
-        }
-        type={this.type}
-        size={this.size}
-        full={this.full}
-        loading={this.busy}
-        disabled={this.busy}
-        onClick={e => this.handleCartClick(e)}
-      >
+      <sc-button type={this.type} size={this.size} full={this.full} loading={this.busy} disabled={this.busy} outline={this.outline} onClick={e => this.handleCartClick(e)}>
         {!!this.icon && <sc-icon name={this.icon} slot="prefix"></sc-icon>}
         <slot />
-        {this.showTotal &&
-          state.selectedPrice?.tot(
-            <span>
-              {'\u00A0'}
-              <sc-total></sc-total>
-            </span>,
-          )}
       </sc-button>
     );
   }

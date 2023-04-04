@@ -1,7 +1,7 @@
 import { Component, Element, h, Listen, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
-import state, { store } from '../../../../store/product';
+import { state, onChange } from '@store/product';
 // import { getOrder, setOrder } from '../../../../store/checkouts';
 
 /**
@@ -43,8 +43,8 @@ export class ScProductBuyButtons {
     this.buyButton = this.el.querySelector('[data-action="buy"]');
 
     // listen for change events and update button links.
-    store.onChange('selectedPrice', () => this.updateLinks());
-    store.onChange('quantity', () => this.updateLinks());
+    onChange('selectedPrice', () => this.updateLinks());
+    onChange('quantity', () => this.updateLinks());
 
     // update the links before load.
     this.updateLinks();

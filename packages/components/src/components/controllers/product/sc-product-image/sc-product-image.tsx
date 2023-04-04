@@ -1,6 +1,6 @@
 import { Component, h, Host, Prop } from '@stencil/core';
 import { Product } from '../../../../types';
-import state from '../../../../store/product';
+import { state } from '@store/product';
 
 @Component({
   tag: 'sc-product-image',
