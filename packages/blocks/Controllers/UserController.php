@@ -33,8 +33,8 @@ class UserController extends BaseController {
 					'user'    => [
 						'display_name' => $user->display_name,
 						'email'        => $user->user_email,
-						'first_name'   => $data->user_firstname,
-						'last_name'    => $data->user_lastname,
+						'first_name'   => $data->user_firstname ?? '',
+						'last_name'    => $data->user_lastname ?? '',
 					],
 				]
 			)->render()

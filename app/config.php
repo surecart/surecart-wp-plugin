@@ -128,18 +128,21 @@ return [
 		\SureCartBlocks\Blocks\LogoutButton\Block::class,
 		\SureCartBlocks\Blocks\ProductItemList\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\WordPressAccount\Block::class,
-		\SureCartBlocks\Blocks\Dashboard\CustomerCharges\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerDashboard\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerOrders\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerDownloads\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerBillingDetails\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerPaymentMethods\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerSubscriptions\Block::class,
-		\SureCartBlocks\Blocks\Dashboard\CustomerInvoices\Block::class,
+		\SureCartBlocks\Blocks\Dashboard\CustomerDashboardArea\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\DashboardPage\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\DashboardTab\Block::class,
 		\SureCartBlocks\Blocks\ConditionalForm\Block::class,
 		\SureCartBlocks\Blocks\StoreLogo\Block::class,
+
+		// Deprecated.
+		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerInvoices\Block::class,
+		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerCharges\Block::class,
 	],
 
 	/** Which components to preload for each block. */
