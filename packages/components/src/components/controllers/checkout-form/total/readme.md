@@ -20,7 +20,6 @@
  - [sc-line-item-total](../line-item-total)
  - [sc-order-submit](../order-submit)
  - [sc-order-summary](../order-summary)
- - [sc-product-buy-button](../../product/sc-product-buy-button)
 
 ### Depends on
 
@@ -33,7 +32,6 @@ graph TD;
   sc-line-item-total --> sc-total
   sc-order-submit --> sc-total
   sc-order-summary --> sc-total
-  sc-product-buy-button --> sc-total
   style sc-total fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

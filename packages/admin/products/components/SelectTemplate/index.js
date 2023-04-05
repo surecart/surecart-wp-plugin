@@ -22,6 +22,21 @@ export default function PostTemplate({ product, updateProduct }) {
 		[popoverAnchor]
 	);
 
+	const template = useSelect(
+		(select) => {
+			return (
+				select(coreStore).canUser('create', 'templates') &&
+				select(coreStore).getEntityRecord(
+					'postType',
+					'wp_template',
+					product?.metadata?.wp_template_id ||
+						'surecart/surecart//single-product'
+				)
+			);
+		},
+		[product?.metadata?.wp_template_id]
+	);
+
 	return (
 		<PanelRow className="edit-post-post-template" ref={setPopoverAnchor}>
 			<span>{__('Template')}</span>
@@ -34,12 +49,13 @@ export default function PostTemplate({ product, updateProduct }) {
 					<PostTemplateToggle
 						isOpen={isOpen}
 						onClick={onToggle}
-						product={product}
+						template={template}
 					/>
 				)}
 				renderContent={({ onClose }) => (
 					<PostTemplateForm
 						onClose={onClose}
+						template={template}
 						product={product}
 						updateProduct={updateProduct}
 					/>
@@ -49,25 +65,11 @@ export default function PostTemplate({ product, updateProduct }) {
 	);
 }
 
-function PostTemplateToggle({ isOpen, onClick, product }) {
-	const templateTitle = useSelect(
-		(select) => {
-			const template =
-				select(coreStore).canUser('create', 'templates') &&
-				select(coreStore).getEntityRecord(
-					'postType',
-					'wp_template',
-					product?.metadata?.wp_template_id ||
-						'surecart/surecart//single-product'
-				);
-			return (
-				template?.title?.rendered ||
-				template?.slug ||
-				__('Default template', 'surecart')
-			);
-		},
-		[product?.metadata?.wp_template_id]
-	);
+function PostTemplateToggle({ isOpen, onClick, template }) {
+	const templateTitle =
+		template?.title?.rendered ||
+		template?.slug ||
+		__('Single Product', 'surecart');
 
 	return (
 		<Button

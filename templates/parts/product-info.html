@@ -1,14 +1,22 @@
-<!-- wp:surecart/product-info {"media_width":"60%","align":"wide","column_gap":"3em","align":"wide","style":{"spacing":{"margin":{"top":"var:preset|spacing|70","right":"0","bottom":"var:preset|spacing|70","left":"0"}}}} -->
-<!-- wp:surecart/product-title {"style":{"typography":{"fontSize":"30px"}}} /-->
+<!-- wp:surecart/product-info {"media_width":"60%","column_gap":"3em","align":"wide","style":{"spacing":{"margin":{"top":"var:preset|spacing|70","right":"0","bottom":"var:preset|spacing|70","left":"0"}}}} -->
+<!-- wp:surecart/columns -->
+<sc-columns is-stacked-on-mobile="1" class="wp-block-surecart-columns"><!-- wp:surecart/column -->
+	<sc-column class="wp-block-surecart-column"><!-- wp:surecart/product-media /--></sc-column>
+	<!-- /wp:surecart/column -->
 
-<!-- wp:surecart/product-price {"style":{"typography":{"fontSize":"24px"}}} /-->
+	<!-- wp:surecart/column {"width":"420px"} -->
+	<sc-column class="wp-block-surecart-column"
+		style="flex-basis:420px"><!-- wp:surecart/product-title {"style":{"typography":{"fontSize":"30px"},"spacing":{"margin":{"top":"0px","bottom":"24px"}}}} /-->
 
-<!-- wp:surecart/product-description /-->
+		<!-- wp:surecart/product-price {"style":{"typography":{"fontSize":"24px"}}} /-->
 
-<!-- wp:surecart/product-price-choices /-->
+		<!-- wp:surecart/product-description {"style":{"typography":{"fontSize":"16px"},"spacing":{"margin":{"top":"0px","bottom":"24px"}}}} /-->
 
-<!-- wp:surecart/product-quantity {"label":"Quantity","style":{"spacing":{"margin":{"top":"0px","bottom":"0px"}}}} /-->
+		<!-- wp:surecart/product-price-choices {"style":{"spacing":{"margin":{"top":"0px","bottom":"24px"}},"typography":{"fontSize":"16px"}}} /-->
 
-<!-- wp:surecart/product-buy-buttons /-->
+		<!-- wp:surecart/product-quantity {"label":"Quantity","style":{"spacing":{"margin":{"top":"0px","bottom":"24px"}},"typography":{"fontSize":"16px"}}} /-->
 
+		<!-- wp:surecart/product-buy-buttons /--></sc-column>
+	<!-- /wp:surecart/column --></sc-columns>
+<!-- /wp:surecart/columns -->
 <!-- /wp:surecart/product-info -->

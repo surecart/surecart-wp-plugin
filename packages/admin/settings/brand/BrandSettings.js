@@ -19,11 +19,13 @@ import Error from '../../components/Error';
 import useSave from '../UseSave';
 import Logo from './Logo';
 import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 
 export default () => {
 	const [error, setError] = useState(null);
 	const { save } = useSave();
+
+	const { editEntityRecord } = useDispatch(coreStore);
 
 	const [scThemeData, setScThemeData] = useEntityProp(
 		'root',
@@ -32,7 +34,8 @@ export default () => {
 	);
 
 	/** Edit Item */
-	const editItem = (data) => editEntityRecord(name, type, id, data);
+	const editItem = (data) =>
+		editEntityRecord('surecart', 'store', 'brand', data);
 
 	/** Load Item */
 	const { item, itemError, hasLoadedItem } = useSelect((select) => {

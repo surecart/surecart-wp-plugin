@@ -1,10 +1,9 @@
 /**
  * WordPress dependencies
  */
-import { useSelect } from '@wordpress/data';
-import { store as editorStore } from '@wordpress/editor';
+import { useDispatch } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
-import { serialize, createBlock } from '@wordpress/blocks';
 import {
 	Modal,
 	TextControl,
@@ -12,6 +11,7 @@ import {
 	__experimentalHStack as HStack,
 	__experimentalVStack as VStack,
 } from '@wordpress/components';
+import { cleanForSlug } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -19,18 +19,17 @@ import { __ } from '@wordpress/i18n';
  */
 // import { store as editPostStore } from '../../../store';
 
-const DEFAULT_TITLE = __('Custom Template');
+const DEFAULT_TITLE = __('Custom Single Product Page', 'surecart');
 
-export default function PostTemplateCreateModal({ onClose }) {
-	const defaultBlockTemplate = useSelect(
-		(select) =>
-			select(editorStore).getEditorSettings().defaultBlockTemplate,
-		[]
-	);
-
+export default function PostTemplateCreateModal({
+	onClose,
+	template,
+	product,
+	updateProduct,
+}) {
 	const [title, setTitle] = useState('');
-
 	const [isBusy, setIsBusy] = useState(false);
+	const { saveEntityRecord } = useDispatch(coreStore);
 
 	const cancel = () => {
 		setTitle('');
@@ -46,46 +45,20 @@ export default function PostTemplateCreateModal({ onClose }) {
 
 		setIsBusy(true);
 
-		const newTemplateContent =
-			defaultBlockTemplate ??
-			serialize([
-				createBlock(
-					'core/group',
-					{
-						tagName: 'header',
-						layout: { inherit: true },
-					},
-					[
-						createBlock('core/site-title'),
-						createBlock('core/site-tagline'),
-					]
-				),
-				createBlock('core/separator'),
-				createBlock(
-					'core/group',
-					{
-						tagName: 'main',
-					},
-					[
-						createBlock(
-							'core/group',
-							{
-								layout: { inherit: true },
-							},
-							[createBlock('core/post-title')]
-						),
-						createBlock('core/post-content', {
-							layout: { inherit: true },
-						}),
-					]
-				),
-			]);
+		const newTemplateContent = template?.content?.raw;
 
-		// await __unstableCreateTemplate({
-		// 	slug: cleanForSlug(title || DEFAULT_TITLE),
-		// 	content: newTemplateContent,
-		// 	title: title || DEFAULT_TITLE,
-		// });
+		const { id } = await saveEntityRecord('postType', 'wp_template', {
+			slug: cleanForSlug(title || DEFAULT_TITLE),
+			content: newTemplateContent,
+			title: title || DEFAULT_TITLE,
+		});
+
+		updateProduct({
+			metadata: {
+				...product.metadata,
+				wp_template_id: id,
+			},
+		});
 
 		setIsBusy(false);
 		cancel();
@@ -95,7 +68,7 @@ export default function PostTemplateCreateModal({ onClose }) {
 
 	return (
 		<Modal
-			title={__('Create custom template')}
+			title={__('Duplicate Template', 'surecart')}
 			onRequestClose={cancel}
 			className="edit-post-post-template__create-modal"
 		>
@@ -112,7 +85,7 @@ export default function PostTemplateCreateModal({ onClose }) {
 						placeholder={DEFAULT_TITLE}
 						disabled={isBusy}
 						help={__(
-							'Describe the template, e.g. "Post with sidebar". A custom template can be manually applied to any post or page.'
+							'Describe the template, e.g. "T-Shirt Template". A custom template can be manually applied to any product.'
 						)}
 					/>
 					<HStack justify="right">

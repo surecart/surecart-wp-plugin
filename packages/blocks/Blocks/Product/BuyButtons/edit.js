@@ -42,15 +42,42 @@ export default ({ attributes, setAttributes, className }) => {
 	});
 
 	return (
-		<ScButton {...blockProps}>
-			<RichText
-				aria-label={__('Button text')}
-				placeholder={__('Add text…')}
-				value={text}
-				onChange={(text) => setAttributes({ text })}
-				withoutInteractiveFormatting
-				allowedFormats={['core/bold', 'core/italic']}
-			/>
-		</ScButton>
+		<div {...blockProps}>
+			<ScButton
+				type={type}
+				full={full}
+				size={size}
+				className={classNames(className)}
+				style={{
+					...(colorProps?.style?.backgroundColor
+						? {
+								'--primary-background':
+									colorProps?.style.backgroundColor,
+						  }
+						: {}),
+					...(colorProps?.style?.background
+						? {
+								'--primary-background':
+									colorProps?.style.background,
+						  }
+						: {}),
+					...(colorProps?.style?.color
+						? { '--primary-color': colorProps?.style.color }
+						: {}),
+					...(borderStyle?.borderRadius
+						? { '--button-border-radius': borderStyle.borderRadius }
+						: {}),
+				}}
+			>
+				<RichText
+					aria-label={__('Button text')}
+					placeholder={__('Add text…')}
+					value={text}
+					onChange={(text) => setAttributes({ text })}
+					withoutInteractiveFormatting
+					allowedFormats={['core/bold', 'core/italic']}
+				/>
+			</ScButton>
+		</div>
 	);
 };

@@ -17,10 +17,16 @@ import { addQueryArgs } from '@wordpress/url';
  */
 import PostTemplateCreateModal from './create-modal';
 
-export default function PostTemplateForm({ onClose, product, updateProduct }) {
+export default function PostTemplateForm({
+	onClose,
+	product,
+	updateProduct,
+	template,
+}) {
 	const { templates, canCreate, canEdit } = useSelect((select) => {
 		const { canUser, getEntityRecords } = select(coreStore);
 		const canCreateTemplates = canUser('create', 'templates');
+		const canEditTemplate = !!scData?.is_block_theme || !!template?.wp_id;
 		return {
 			templates:
 				getEntityRecords('postType', 'wp_template', {
@@ -28,13 +34,15 @@ export default function PostTemplateForm({ onClose, product, updateProduct }) {
 					post_type: 'surecart-product',
 				}) || [],
 			canCreate: canCreateTemplates,
-			canEdit: canCreateTemplates,
+			canEdit: canCreateTemplates && canEditTemplate,
 		};
 	}, []);
 
-	const options = (templates ?? []).map(({ id, title }) => ({
+	const options = (templates ?? []).map(({ id, title, wp_id }) => ({
 		value: id,
-		label: title?.rendered || slug,
+		label: `${title?.rendered || slug}${
+			!wp_id ? ` (${__('Default', 'surecart')})` : ''
+		}`,
 	}));
 
 	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -104,8 +112,10 @@ export default function PostTemplateForm({ onClose, product, updateProduct }) {
 											?.wp_template_id,
 										canvas: 'edit',
 								  })
-								: scData?.edit_template_url +
-								  '&post_type=surecart-product'
+								: addQueryArgs('post.php', {
+										post: template?.wp_id,
+										action: 'edit',
+								  })
 						}
 						target="_blank"
 					>
@@ -116,6 +126,9 @@ export default function PostTemplateForm({ onClose, product, updateProduct }) {
 
 			{isCreateModalOpen && (
 				<PostTemplateCreateModal
+					template={template}
+					product={product}
+					updateProduct={updateProduct}
 					onClose={() => setIsCreateModalOpen(false)}
 				/>
 			)}

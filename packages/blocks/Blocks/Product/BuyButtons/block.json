@@ -17,7 +17,7 @@
 		},
 		"size": {
 			"type": "string",
-			"default": "large"
+			"default": "medium"
 		},
 		"full": {
 			"type": "boolean",

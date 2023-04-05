@@ -24,23 +24,6 @@
 | `"base"` |             |
 
 
-## Dependencies
-
-### Depends on
-
-- [sc-columns](../../../ui/columns)
-- [sc-column](../../../ui/column)
-- [sc-product-image](../sc-product-image)
-
-### Graph
-```mermaid
-graph TD;
-  sc-product --> sc-columns
-  sc-product --> sc-column
-  sc-product --> sc-product-image
-  style sc-product fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

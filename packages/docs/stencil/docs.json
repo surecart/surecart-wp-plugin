@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-03-30T19:21:42",
+  "timestamp": "2023-04-04T22:01:53",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -5226,7 +5226,6 @@
       "dependents": [
         "sc-cancel-survey",
         "sc-order-bump",
-        "sc-product-price-choices",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
         "sc-subscription-switch"
@@ -5237,9 +5236,6 @@
           "sc-choice"
         ],
         "sc-order-bump": [
-          "sc-choice"
-        ],
-        "sc-product-price-choices": [
           "sc-choice"
         ],
         "sc-subscription-payment": [
@@ -5535,11 +5531,15 @@
         }
       ],
       "dependents": [
-        "sc-price-choice"
+        "sc-price-choice",
+        "sc-price-choice-container"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-price-choice": [
+          "sc-choice-container"
+        ],
+        "sc-price-choice-container": [
           "sc-choice-container"
         ]
       }
@@ -5834,15 +5834,11 @@
       "parts": [],
       "dependents": [
         "sc-customer-edit",
-        "sc-product",
         "sc-wordpress-user-edit"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-customer-edit": [
-          "sc-column"
-        ],
-        "sc-product": [
           "sc-column"
         ],
         "sc-wordpress-user-edit": [
@@ -5932,15 +5928,11 @@
       "parts": [],
       "dependents": [
         "sc-customer-edit",
-        "sc-product",
         "sc-wordpress-user-edit"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-customer-edit": [
-          "sc-columns"
-        ],
-        "sc-product": [
           "sc-columns"
         ],
         "sc-wordpress-user-edit": [
@@ -12709,6 +12701,7 @@
           "reflectToAttr": false,
           "docs": "The minimum number of fraction digits to use. Possible values are 0 - 20.",
           "docsTags": [],
+          "default": "null",
           "values": [
             {
               "type": "number"
@@ -12846,6 +12839,7 @@
         "sc-order-summary",
         "sc-orders-list",
         "sc-price-choice",
+        "sc-price-choice-container",
         "sc-price-range",
         "sc-product-line-item",
         "sc-product-price",
@@ -12896,6 +12890,9 @@
           "sc-format-number"
         ],
         "sc-price-choice": [
+          "sc-format-number"
+        ],
+        "sc-price-choice-container": [
           "sc-format-number"
         ],
         "sc-price-range": [
@@ -20612,6 +20609,203 @@
       }
     },
     {
+      "filePath": "./src/components/ui/sc-price-choice-container/sc-price-choice-container.tsx",
+      "encapsulation": "none",
+      "tag": "sc-price-choice-container",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "checked",
+          "type": "boolean",
+          "mutable": true,
+          "attr": "checked",
+          "reflectToAttr": true,
+          "docs": "Is this checked by default",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "mutable": false,
+          "attr": "description",
+          "reflectToAttr": false,
+          "docs": "Label for the choice.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "Label for the choice.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "mutable": true,
+          "attr": "loading",
+          "reflectToAttr": false,
+          "docs": "Is this loading",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "price",
+          "type": "Price",
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "Stores the price",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Price"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showControl",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-control",
+          "reflectToAttr": false,
+          "docs": "Show the radio/checkbox control",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showLabel",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-label",
+          "reflectToAttr": false,
+          "docs": "Show the label",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showPrice",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-price",
+          "reflectToAttr": false,
+          "docs": "Show the price amount",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "type",
+          "type": "\"checkbox\" | \"radio\"",
+          "mutable": false,
+          "attr": "type",
+          "reflectToAttr": false,
+          "docs": "Choice Type",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "checkbox",
+              "type": "string"
+            },
+            {
+              "value": "radio",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scChange",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-product-price-choices"
+      ],
+      "dependencies": [
+        "sc-format-number",
+        "sc-choice-container",
+        "sc-skeleton"
+      ],
+      "dependencyGraph": {
+        "sc-price-choice-container": [
+          "sc-format-number",
+          "sc-choice-container",
+          "sc-skeleton"
+        ],
+        "sc-product-price-choices": [
+          "sc-price-choice-container"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/controllers/checkout-form/price-choices/sc-price-choices.tsx",
       "encapsulation": "none",
       "tag": "sc-price-choices",
@@ -21442,23 +21636,14 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "sc-columns",
-        "sc-column",
-        "sc-product-image"
-      ],
-      "dependencyGraph": {
-        "sc-product": [
-          "sc-columns",
-          "sc-column",
-          "sc-product-image"
-        ]
-      }
+      "dependencies": [],
+      "dependencyGraph": {}
     },
     {
       "filePath": "./src/components/controllers/product/sc-product-buy-button/sc-product-buy-button.tsx",
       "encapsulation": "shadow",
       "tag": "sc-product-buy-button",
+      "readme": "# sc-product-buy-button\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -21523,6 +21708,23 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "outline",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "outline",
+          "reflectToAttr": false,
+          "docs": "Outline",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -21626,20 +21828,15 @@
       "dependents": [],
       "dependencies": [
         "sc-button",
-        "sc-icon",
-        "sc-total"
+        "sc-icon"
       ],
       "dependencyGraph": {
         "sc-product-buy-button": [
           "sc-button",
-          "sc-icon",
-          "sc-total"
+          "sc-icon"
         ],
         "sc-button": [
           "sc-spinner"
-        ],
-        "sc-total": [
-          "sc-format-number"
         ]
       }
     },
@@ -21647,6 +21844,7 @@
       "filePath": "./src/components/controllers/product/sc-product-buy-buttons/sc-product-buy-buttons.tsx",
       "encapsulation": "shadow",
       "tag": "sc-product-buy-buttons",
+      "readme": "# sc-product-buy-buttons\n\n\n",
       "docs": "",
       "docsTags": [
         {
@@ -21803,15 +22001,9 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "sc-product"
-      ],
+      "dependents": [],
       "dependencies": [],
-      "dependencyGraph": {
-        "sc-product": [
-          "sc-product-image"
-        ]
-      }
+      "dependencyGraph": {}
     },
     {
       "filePath": "./src/components/ui/product-line-item/sc-product-line-item.tsx",
@@ -22289,6 +22481,7 @@
       "filePath": "./src/components/controllers/product/sc-product-price-choices/sc-product-price-choices.tsx",
       "encapsulation": "shadow",
       "tag": "sc-product-price-choices",
+      "readme": "# sc-product-price-choices\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -22320,19 +22513,24 @@
       "dependencies": [
         "sc-format-number",
         "sc-choices",
-        "sc-choice"
+        "sc-price-choice-container"
       ],
       "dependencyGraph": {
         "sc-product-price-choices": [
           "sc-format-number",
           "sc-choices",
-          "sc-choice"
+          "sc-price-choice-container"
         ],
         "sc-choices": [
           "sc-form-control"
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ],
+        "sc-price-choice-container": [
+          "sc-format-number",
+          "sc-choice-container",
+          "sc-skeleton"
         ]
       }
     },
@@ -22340,6 +22538,7 @@
       "filePath": "./src/components/controllers/product/sc-product-quantity/sc-product-quantity.tsx",
       "encapsulation": "shadow",
       "tag": "sc-product-quantity",
+      "readme": "# sc-product-quantity\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -24672,6 +24871,7 @@
         "sc-payment-methods-list",
         "sc-paypal-buttons",
         "sc-price-choice",
+        "sc-price-choice-container",
         "sc-purchase-downloads-list",
         "sc-stripe-add-method",
         "sc-stripe-payment-element",
@@ -24745,6 +24945,9 @@
           "sc-skeleton"
         ],
         "sc-price-choice": [
+          "sc-skeleton"
+        ],
+        "sc-price-choice-container": [
           "sc-skeleton"
         ],
         "sc-purchase-downloads-list": [
@@ -29960,8 +30163,7 @@
       "dependents": [
         "sc-line-item-total",
         "sc-order-submit",
-        "sc-order-summary",
-        "sc-product-buy-button"
+        "sc-order-summary"
       ],
       "dependencies": [
         "sc-format-number"
@@ -29977,9 +30179,6 @@
           "sc-total"
         ],
         "sc-order-summary": [
-          "sc-total"
-        ],
-        "sc-product-buy-button": [
           "sc-total"
         ]
       }

@@ -11,10 +11,10 @@ import { intervalString } from '../../../functions/price';
 })
 export class ScPriceChoiceContainer {
   /** Stores the price */
-  @Prop({ mutable: true }) price: Price;
+  @Prop() price: Price;
 
   /** Is this loading */
-  @Prop({ mutable: true }) loading: boolean = false;
+  @Prop() loading: boolean = false;
 
   /** Label for the choice. */
   @Prop() label: string;
@@ -42,7 +42,7 @@ export class ScPriceChoiceContainer {
   renderPrice() {
     return (
       <Fragment>
-        <sc-format-number type="currency" value={this.price.amount} currency={this.price.currency}></sc-format-number>
+        <sc-format-number type="currency" value={this.price?.amount} currency={this.price?.currency}></sc-format-number>
         {intervalString(this.price, {
           showOnce: true,
           abbreviate: true,
@@ -58,6 +58,7 @@ export class ScPriceChoiceContainer {
   }
 
   render() {
+    console.log(this.price);
     if (this.loading) {
       return (
         <sc-choice-container showControl={this.showControl} name="loading" disabled>
@@ -86,7 +87,7 @@ export class ScPriceChoiceContainer {
                   __('Custom Amount', 'surecart')
                 ) : (
                   <Fragment>
-                    <sc-format-number type="currency" value={this.price.amount} currency={this.price.currency}></sc-format-number>
+                    <sc-format-number type="currency" value={this.price?.amount} currency={this.price?.currency}></sc-format-number>
                     {intervalString(this.price, {
                       showOnce: true,
                       abbreviate: true,
@@ -101,16 +102,16 @@ export class ScPriceChoiceContainer {
                 )}
               </div>
 
-              {!!this.price.trial_duration_days && (
+              {!!this.price?.trial_duration_days && (
                 <div class="price-choice__trial">
                   {sprintf(_n('Starting in %s day', 'Starting in %s days', this.price.trial_duration_days, 'surecart'), this.price.trial_duration_days)}
                 </div>
               )}
 
-              {!!this.price.setup_fee_enabled && this.price?.setup_fee_amount && (
+              {!!this.price?.setup_fee_enabled && this.price?.setup_fee_amount && (
                 <div class="price-choice__setup-fee">
-                  <sc-format-number type="currency" value={this.price.setup_fee_amount} currency={this.price.currency}></sc-format-number>{' '}
-                  {this.price.setup_fee_name || __('Setup Fee', 'surecart')}
+                  <sc-format-number type="currency" value={this.price.setup_fee_amount} currency={this.price?.currency}></sc-format-number>{' '}
+                  {this.price?.setup_fee_name || __('Setup Fee', 'surecart')}
                 </div>
               )}
             </div>

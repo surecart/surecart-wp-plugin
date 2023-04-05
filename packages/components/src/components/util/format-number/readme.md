@@ -14,7 +14,7 @@
 | `locale`                   | `locale`                     | The locale to use when formatting the number.                                                  | `string`                                         | `undefined` |
 | `maximumFractionDigits`    | `maximum-fraction-digits`    | The maximum number of fraction digits to use. Possible values are 0 - 20.                      | `number`                                         | `undefined` |
 | `maximumSignificantDigits` | `maximum-significant-digits` | The maximum number of significant digits to use,. Possible values are 1 - 21.                  | `number`                                         | `undefined` |
-| `minimumFractionDigits`    | `minimum-fraction-digits`    | The minimum number of fraction digits to use. Possible values are 0 - 20.                      | `number`                                         | `undefined` |
+| `minimumFractionDigits`    | `minimum-fraction-digits`    | The minimum number of fraction digits to use. Possible values are 0 - 20.                      | `number`                                         | `null`      |
 | `minimumIntegerDigits`     | `minimum-integer-digits`     | The minimum number of integer digits to use. Possible values are 1 - 21.                       | `number`                                         | `undefined` |
 | `minimumSignificantDigits` | `minimum-significant-digits` | The minimum number of significant digits to use. Possible values are 1 - 21.                   | `number`                                         | `undefined` |
 | `noConvert`                | `no-convert`                 |                                                                                                | `boolean`                                        | `undefined` |
@@ -40,6 +40,7 @@
  - [sc-order-summary](../../controllers/checkout-form/order-summary)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
+ - [sc-price-choice-container](../../ui/sc-price-choice-container)
  - [sc-price-range](../../ui/sc-price-range)
  - [sc-product-line-item](../../ui/product-line-item)
  - [sc-product-price](../../controllers/product/sc-product-price)
@@ -67,6 +68,7 @@ graph TD;
   sc-order-summary --> sc-format-number
   sc-orders-list --> sc-format-number
   sc-price-choice --> sc-format-number
+  sc-price-choice-container --> sc-format-number
   sc-price-range --> sc-format-number
   sc-product-line-item --> sc-format-number
   sc-product-price --> sc-format-number

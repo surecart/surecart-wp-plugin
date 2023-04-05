@@ -25,7 +25,7 @@ export default ({ attributes: { textAlign }, setAttributes }) => {
 					<ScFormatNumber
 						type="currency"
 						currency={scBlockData?.currency}
-						value={1234}
+						value={1900}
 					/>
 				</ScProductPrice>
 			</div>

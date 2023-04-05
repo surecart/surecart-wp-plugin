@@ -155,7 +155,7 @@ class TemplatePostTypeService {
 		}
 
 		// show the UI if it's a surecart template.
-		$args['show_ui'] = get_post_meta( $post_id, 'is_surecart_template', true );
+		$args['show_ui'] = true;
 
 		// return args.
 		return $args;
