@@ -30,22 +30,24 @@ export default ({ open, onRequestClose, currentPeriodEndAt }) => {
 	const { invalidateResolutionForStore } = useDispatch(coreStore);
 	const [cancelBehavior, setCancelBehavior] = useState('pending');
 	const [pauseUntil, setPauseUntil] = useState(new Date());
-	const [section, setSection] = useState(CHOOSE_PAUSE_BEHAVIOR_SECTION);
+	const [section, setSection] = useState(CHOOSE_DATE_SECTION);
 
-	useEffect(() => {
+	const getDefaultPauseDate = () => {
 		const pauseDate =
-			cancelBehavior === 'pending'
+			cancelBehavior === 'pending' && !!currentPeriodEndAt
 				? new Date(currentPeriodEndAt * 1000)
 				: new Date();
 		pauseDate.setDate(pauseDate.getDate() + 1);
-		setPauseUntil(pauseDate);
+		return pauseDate;
+	};
+	useEffect(() => {
+		setPauseUntil(getDefaultPauseDate());
 	}, [cancelBehavior, currentPeriodEndAt]);
 
 	const cancel = () => {
 		setCancelBehavior('pending');
-		setPauseUntil(new Date());
 		onRequestClose();
-		setSection(CHOOSE_PAUSE_BEHAVIOR_SECTION);
+		setPauseUntil(getDefaultPauseDate());
 	};
 
 	const onUpdatePauseUntil = async () => {
@@ -180,10 +182,10 @@ export default ({ open, onRequestClose, currentPeriodEndAt }) => {
 			<ScButton
 				type="text"
 				slot="footer"
-				onClick={() => setSection(CHOOSE_PAUSE_BEHAVIOR_SECTION)}
+				onClick={() => cancel()}
 				disabled={loading}
 			>
-				{__('Back', 'surecart')}
+				{__("Don't Pause", 'surecart')}
 			</ScButton>
 
 			<ScButton
