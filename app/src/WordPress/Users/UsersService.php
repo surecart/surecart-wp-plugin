@@ -38,13 +38,18 @@ class UsersService {
 
 		foreach ( $customer_ids as $id ) {
 			\SureCart\Models\Customer::update(
-				[
-					'id'         => $id,
-					'first_name' => $userdata['first_name'],
-					'last_name'  => $userdata['last_name'],
-					'email'      => $userdata['user_email'],
-					'phone'      => $userdata['phone'] ?? null,
-				]
+				array_filter(
+					[
+						'id'         => $id,
+						'first_name' => $userdata['first_name'],
+						'last_name'  => $userdata['last_name'],
+						'email'      => $userdata['user_email'],
+						'phone'      => $userdata['phone'] ?? null,
+					],
+					function( $x ) {
+						return null !== $x;
+					}
+				)
 			);
 		}
 	}
