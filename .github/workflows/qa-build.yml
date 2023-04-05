@@ -1,4 +1,4 @@
-name: Build Zip For QA
+name: Upload artifact for QA
 
 on:
   pull_request:
@@ -21,4 +21,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: surecart
-          path: 'app/hooks.php'
+          path: 'app/helpers'
+
