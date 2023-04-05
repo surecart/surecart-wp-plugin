@@ -16,6 +16,7 @@ describe('sc-customer-phone', () => {
       html: `<sc-customer-phone></sc-customer-phone>`,
     });
     expect(page.root).toMatchSnapshot();
+    page.rootInstance.disconnectedCallback();
   });
 
   it('Uses the customer phone number on load', async () => {
@@ -24,7 +25,9 @@ describe('sc-customer-phone', () => {
       template: () => <sc-customer-phone></sc-customer-phone>,
     });
     checkoutStore.checkout = { customer: { phone: '999' } as Customer } as Checkout;
+    await page.waitForChanges();
     expect(page.root).toMatchSnapshot();
+    page.rootInstance.disconnectedCallback();
   });
 
   it('Uses the checkout phone number on load', async () => {
@@ -33,7 +36,9 @@ describe('sc-customer-phone', () => {
       template: () => <sc-customer-phone></sc-customer-phone>,
     });
     checkoutStore.checkout = { phone: '111' } as Checkout;
+    await page.waitForChanges();
     expect(page.root).toMatchSnapshot();
+    page.rootInstance.disconnectedCallback();
   });
 
   it('Uses checkout as a preference if both customer and checkout load a phone number.', async () => {
@@ -44,5 +49,6 @@ describe('sc-customer-phone', () => {
     checkoutStore.checkout = { phone: '111', customer: { phone: '999' } } as Checkout;
     await page.waitForChanges();
     expect(page.root).toMatchSnapshot();
+    page.rootInstance.disconnectedCallback();
   });
 });
