@@ -1,4 +1,4 @@
-name: Upload artifact for QA
+name: QA Build
 
 on:
   pull_request:
