@@ -12,14 +12,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # - uses: ./.github/actions/build
-      #   with:
-      #     bootstrap: true
-      #     package: true
+      - uses: ./.github/actions/build
+        with:
+          bootstrap: true
+          package: true
 
       - name: Upload Zip
         uses: actions/upload-artifact@v3
         with:
           name: surecart
-          path: 'app/helpers'
+          path: '@surecart/surecart'
 
