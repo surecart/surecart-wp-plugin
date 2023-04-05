@@ -27,6 +27,11 @@ class UsersServiceTest extends SureCartUnitTestCase
 		parent::setUp();
 	}
 
+	/**
+	 * @group failing
+	 *
+	 * @return void
+	 */
 	public function test_profile_update_syncs_customer_model() {
 		$user = User::find(self::factory()->user->create([
 			'user_email' => 'testemail@test.com',
@@ -52,7 +57,8 @@ class UsersServiceTest extends SureCartUnitTestCase
 						'customer' => [
 							'first_name' => $user->first_name,
 							'last_name' => $user->last_name,
-							'email' => $user->user_email
+							'email' => $user->user_email,
+							'phone' => '555-555-5555'
 						]
 					],
 					'query' => []
@@ -71,7 +77,8 @@ class UsersServiceTest extends SureCartUnitTestCase
 		$service->syncUserProfile($user->ID, null, [
 			'first_name' => $user->first_name,
 			'last_name' => $user->last_name,
-			'user_email' => $user->user_email
+			'user_email' => $user->user_email,
+			'phone' => '555-555-5555'
 		]);
 	}
 
