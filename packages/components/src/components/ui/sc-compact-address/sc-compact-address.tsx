@@ -51,6 +51,13 @@ export class ScCompactAddress {
     state: 'shipping_state',
   };
 
+  /**Placeholders */
+  @Prop() placeholders: Partial<Address> = {
+    country: '',
+    postal_code: '',
+    state: '',
+  };
+
   /** Label for the address */
   @Prop() label: string = __('Country or region', 'surecart');
 
@@ -129,6 +136,14 @@ export class ScCompactAddress {
     return reportChildrenValidity(this.el);
   }
 
+  getStatePlaceholder() {
+    if (this.placeholders?.state) return this.placeholders.state;
+
+    if (this.address?.country === 'US') return __('State', 'surecart');
+
+    return __('Province/Region', 'surecart');
+  }
+
   render() {
     return (
       <div class="sc-address" part="base">
@@ -142,7 +157,7 @@ export class ScCompactAddress {
             }}
             choices={this.countryChoices}
             autocomplete={'country-name'}
-            placeholder={__('Select Your Country', 'surecart')}
+            placeholder={this.placeholders?.country || __('Select Your Country', 'surecart')}
             name={this.names.country}
             search
             unselect={false}
@@ -154,7 +169,7 @@ export class ScCompactAddress {
             {this.showState && (
               <sc-select
                 exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty"
-                placeholder={this.address.country === 'US' ? __('State', 'surecart') : __('Province/Region', 'surecart')}
+                placeholder={this.getStatePlaceholder()}
                 name={this.names.state}
                 autocomplete={'address-level1'}
                 value={this?.address?.state}
@@ -170,7 +185,7 @@ export class ScCompactAddress {
             {this.showPostal && (
               <sc-input
                 exportparts="base:input__base, input, form-control, label, help-text"
-                placeholder={__('Postal Code/Zip', 'surecart')}
+                placeholder={this.placeholders?.postal_code || __('Postal Code/Zip', 'surecart')}
                 name={this.names.postal_code}
                 onScChange={(e: any) => this.updateAddress({ postal_code: e.target.value || null })}
                 onScInput={(e: any) => this.handleAddressInput({ name: e.target.value || null })}

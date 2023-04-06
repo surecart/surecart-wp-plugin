@@ -78,7 +78,7 @@ export class ScPasswordNag {
   render() {
     if (this.success) {
       return (
-        <sc-alert style={{ marginBottom: 'var(--sc-spacing-xx-large)' }} type="success" open>
+        <sc-alert type="success" open>
           <span slot="title">{__('Succcess!', 'surecart')}</span>
           {__('You have successfully set your password.', 'surecart')}
         </sc-alert>
@@ -86,12 +86,7 @@ export class ScPasswordNag {
     }
 
     return (
-      <sc-alert
-        type={this.type}
-        open={this.open}
-        exportparts="base, icon, text, title, message, close-icon"
-        style={{ marginBottom: this.open ? 'var(--sc-spacing-xx-large)' : '0', position: 'relative' }}
-      >
+      <sc-alert type={this.type} open={this.open} exportparts="base, icon, text, title, message, close-icon" style={{ position: 'relative' }}>
         {!!this.error && this.error}
         {this.set ? (
           <sc-dashboard-module class="customer-details">

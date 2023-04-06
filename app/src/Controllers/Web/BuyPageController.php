@@ -161,9 +161,9 @@ class BuyPageController {
 	public function styles() {
 		wp_enqueue_style(
 			'surecart/instant-checkout',
-			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/templates/buy.css',
+			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/templates/instant-checkout.css',
 			[],
-			filemtime( trailingslashit( plugin_dir_path( SURECART_PLUGIN_FILE ) ) . 'dist/templates/buy.css' ),
+			filemtime( trailingslashit( plugin_dir_path( SURECART_PLUGIN_FILE ) ) . 'dist/templates/instant-checkout.css' ),
 		);
 	}
 
@@ -189,7 +189,7 @@ class BuyPageController {
 		if ( ! empty( $terms_url ) && ! empty( $privacy_url ) ) {
 			return sprintf(
 				// translators: %1$1s is the store name, %2$2s is the opening anchor tag, %3$3s is the closing anchor tag, %4$4s is the opening anchor tag, %5$5s is the closing anchor tag.
-				__( "I agree to %1$1s's %2$2sTerms%3$3s and %4$4sPrivacy Policy%5$5s", 'Surecart' ),
+				__( "I agree to %1$1s's %2$2sTerms%3$3s and %4$4sPrivacy Policy%5$5s", 'surecart' ),
 				esc_html( \SureCart::account()->name ),
 				'<a href="' . esc_url( $terms_url ) . '" target="_blank">',
 				'</a>',
@@ -201,7 +201,7 @@ class BuyPageController {
 		if ( $terms_url ) {
 			return sprintf(
 				// translators: %1$1s is the store name, %2$2s is the opening anchor tag, %3$3s is the closing anchor tag.
-				__( "I agree to %1$1s's %2$2sTerms%3$3s", 'Surecart' ),
+				__( "I agree to %1$1s's %2$2sTerms%3$3s", 'surecart' ),
 				esc_html( \SureCart::account()->name ),
 				'<a href="' . esc_url( $terms_url ) . '" target="_blank">',
 				'</a>'
@@ -211,7 +211,7 @@ class BuyPageController {
 		if ( $privacy_url ) {
 			return sprintf(
 				// translators: %1$1s is the store name, %2$2s is the opening anchor tag, %3$3s is the closing anchor tag.
-				__( "I agree to %1$1s's %2$2sPrivacy Policy%3$3s", 'Surecart' ),
+				__( "I agree to %1$1s's %2$2sPrivacy Policy%3$3s", 'surecart' ),
 				esc_html( \SureCart::account()->name ),
 				'<a href="' . esc_url( $privacy_url ) . '" target="_blank">',
 				'</a>'
