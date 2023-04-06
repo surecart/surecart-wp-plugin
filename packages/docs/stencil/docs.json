@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-05T08:49:03",
+  "timestamp": "2023-03-29T20:19:01",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -6067,6 +6067,22 @@
           "docs": "",
           "docsTags": [],
           "default": "{\n    country: 'shipping_country',\n    city: 'shipping_city',\n    line_1: 'shipping_line_1',\n    line_2: 'shipping_line_2',\n    postal_code: 'shipping_postal_code',\n    state: 'shipping_state',\n  }",
+          "values": [
+            {
+              "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "placeholders",
+          "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Placeholders",
+          "docsTags": [],
+          "default": "{\n    country: '',\n    postal_code: '',\n    state: '',\n  }",
           "values": [
             {
               "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
@@ -27493,7 +27509,7 @@
           "reflectToAttr": false,
           "docs": "AU zone label",
           "docsTags": [],
-          "default": "'ABN Number'",
+          "default": "__('ABN Number', 'surecart')",
           "values": [
             {
               "type": "string"
@@ -27510,7 +27526,7 @@
           "reflectToAttr": false,
           "docs": "GST zone label",
           "docsTags": [],
-          "default": "'GST Number'",
+          "default": "__('GST Number', 'surecart')",
           "values": [
             {
               "type": "string"
@@ -27543,7 +27559,7 @@
           "reflectToAttr": false,
           "docs": "EU zone label",
           "docsTags": [],
-          "default": "'EU VAT'",
+          "default": "__('EU VAT', 'surecart')",
           "values": [
             {
               "type": "string"
@@ -27560,7 +27576,7 @@
           "reflectToAttr": false,
           "docs": "UK zone label",
           "docsTags": [],
-          "default": "'UK VAT'",
+          "default": "__('UK VAT', 'surecart')",
           "values": [
             {
               "type": "string"
@@ -27626,7 +27642,7 @@
           "reflectToAttr": false,
           "docs": "Other zones label",
           "docsTags": [],
-          "default": "'Other'",
+          "default": "__('Tax ID', 'surecart')",
           "values": [
             {
               "type": "string"

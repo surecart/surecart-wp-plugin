@@ -3,7 +3,7 @@
 exports[`sc-payment-method-choice renders 1`] = `
 <sc-payment-method-choice>
   <mock:shadow-root>
-    <div borderless="" shady="" show-control="">
+    <div borderless="" show-control="">
       <slot></slot>
     </div>
   </mock:shadow-root>

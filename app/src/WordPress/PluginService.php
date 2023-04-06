@@ -46,6 +46,15 @@ class PluginService {
 	}
 
 	/**
+	 * Has the plugin version changed?
+	 *
+	 * @return boolean
+	 */
+	public function versionChanged() {
+		return version_compare( $this->version(), get_option( 'surecart_migration_version', '0.0.0' ), '!=' );
+	}
+
+	/**
 	 * Shortcute to \SureCart\Account\AccountService
 	 *
 	 * @return \SureCart\Account\AccountService
