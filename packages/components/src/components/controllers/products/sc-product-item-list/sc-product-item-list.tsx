@@ -61,7 +61,7 @@ export class ScProductItemList {
     const params = Object.fromEntries(urlSearchParams.entries());
     const page = Number(params?.['product-page']);
 
-    if (!Number.isNaN(page)) {
+    if (page && !Number.isNaN(page)) {
       this.currentPage = page;
     } else {
       this.currentPage = 1;
