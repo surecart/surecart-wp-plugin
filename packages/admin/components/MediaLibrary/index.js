@@ -10,6 +10,7 @@ import {
 	ScBlockUi,
 	ScCard,
 	ScEmpty,
+	ScFlex,
 	ScFormatBytes,
 	ScTable,
 	ScTableCell,
@@ -27,15 +28,16 @@ export default ({
 	multiple = false,
 	onClose,
 	onSelect,
+	isMultiSelect = false,
 }) => {
 	const [perPage, setPerPage] = useState(50);
 	const [open, setOpen] = useState(false);
-	const [selected, setSelected] = useState(null);
 	const [uploading, setUploading] = useState(false);
 	const [error, setError] = useState(null);
 	const [page, setPage] = useState(1);
 	const uploadFile = useFileUpload();
 	const { saveEntityRecord } = useDispatch(coreStore);
+	const [selectedMedia, setSelectedMedia] = useState({});
 
 	const { medias, fetching } = useSelect(
 		(select) => {
@@ -61,6 +63,24 @@ export default ({
 		},
 		[page, open]
 	);
+
+	const onMediaItemClick = (media) => {
+		if (
+			selectedMedia[media.id]?.id &&
+			media?.id === selectedMedia[media.id]?.id
+		) {
+			delete selectedMedia[media.id];
+			setSelectedMedia({ ...selectedMedia });
+		} else {
+			if (!isMultiSelect) {
+				setSelectedMedia({ [media.id]: media });
+				return;
+			}
+
+			selectedMedia[media.id] = media;
+			setSelectedMedia({ ...selectedMedia });
+		}
+	};
 
 	const renderMedias = () => {
 		if (!medias?.length) {
@@ -97,17 +117,10 @@ export default ({
 							<MediaItem
 								media={media}
 								key={media.id}
-								selected={selected?.id === media?.id}
+								selected={!!selectedMedia[media.id]}
 								onClick={(e) => {
 									e.preventDefault();
-									if (
-										selected?.id &&
-										media?.id === selected?.id
-									) {
-										setSelected(null);
-									} else {
-										setSelected(media);
-									}
+									onMediaItemClick(media);
 								}}
 							/>
 						);
@@ -150,6 +163,14 @@ export default ({
 			},
 			{ throwOnError: true }
 		);
+	};
+
+	const onChooseClicked = () => {
+		if (!!onSelect) {
+			const selected = Object.values(selectedMedia);
+			onSelect(isMultiSelect ? selected : selected[0]);
+		}
+		setOpen(false);
 	};
 
 	const fileLimit = window.scData.entitlements?.media_byte_size?.limit;
@@ -319,27 +340,44 @@ export default ({
 									margin-left: auto;
 								`}
 								isPrimary
-								disabled={!selected?.id}
-								onClick={() => {
-									onSelect && onSelect(selected);
-									setOpen(false);
-								}}
+								disabled={!Object.values(selectedMedia).length}
+								onClick={onChooseClicked}
 							>
-								{__('Choose', 'surecart')}
+								{__(
+									`Choose ${
+										Object.values(selectedMedia).length > 1
+											? 'images'
+											: 'image'
+									}`,
+									'surecart'
+								)}
 							</Button>
 						</div>
 					}
 					sidebar={
-						selected && (
+						!!Object.values(selectedMedia).length && (
 							<div
 								css={css`
 									padding: 15px 0;
 								`}
 							>
-								<Preview
-									media={selected}
-									onDeleted={() => setSelected(null)}
-								/>
+								<ScFlex flexDirection="column">
+									{Object.values(selectedMedia).map(
+										(media) => (
+											<Preview
+												media={media}
+												onDeleted={() => {
+													delete selectedMedia[
+														media.id
+													];
+													setSelectedMedia({
+														...selectedMedia,
+													});
+												}}
+											/>
+										)
+									)}
+								</ScFlex>
 							</div>
 						)
 					}
