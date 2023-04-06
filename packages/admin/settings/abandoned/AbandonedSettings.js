@@ -289,6 +289,23 @@ export default () => {
 				loading={!hasLoadedItem}
 			>
 				<ScSwitch
+					checked={!!item?.test_mode_enabled}
+					onScChange={(e) =>
+						editItem({
+							test_mode_enabled: e.target.checked ? 1 : 0,
+						})
+					}
+				>
+					{__('Enabled In Test Mode', 'surecart')}
+					<span slot="description">
+						{__(
+							'Also enable abandoned checkouts in test mode.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				<ScSwitch
 					checked={item?.ignore_purchased_products}
 					onScChange={(e) =>
 						editItem({
