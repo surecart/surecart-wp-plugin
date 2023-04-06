@@ -4,13 +4,76 @@ import { __ } from '@wordpress/i18n';
 import { ScButton, ScFormControl, ScIcon } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import MediaLibrary from '../../components/MediaLibrary';
+import { useDispatch } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
+import { useState } from 'react';
+import { ScBlockUi } from '@surecart/components-react';
 
 export default ({ product, updateProduct, loading }) => {
+	const { saveEntityRecord } = useDispatch(coreStore);
+	const [isSaving, setIsSaving] = useState(false);
+
+	const { fetchingMedia, productMedia } = useSelect(
+		(select) => {
+			if (!product?.id) {
+				return {
+					productMedia: [],
+					fetchingMedia: false,
+				};
+			}
+
+			const queryArgs = [
+				'surecart',
+				'product-medias',
+				{
+					context: 'edit',
+					product_ids: [product?.id],
+					expand: ['media'],
+				},
+			];
+
+			return {
+				productMedia:
+					select(coreStore).getEntityRecords(...queryArgs) || [],
+				fetchingMedia: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
+		},
+		[product?.id]
+	);
+
 	const onSelectMedia = (media) => {
 		return updateProduct({
 			image: media?.id,
 			image_url: media?.url,
 		});
+	};
+
+	const saveProductMedia = async (media) => {
+		return saveEntityRecord(
+			'surecart',
+			'product-medias',
+			{
+				product_id: product.id,
+				media_id: media.id,
+			},
+			{ throwOnError: true }
+		);
+	};
+
+	const onAddMedia = async (medias) => {
+		setIsSaving(true);
+		try {
+			await Promise.all(medias.map((media) => saveProductMedia(media)));
+		} catch (e) {
+			console.error(e);
+			setError(e?.message || __('Something went wrong.', 'surecart'));
+		} finally {
+			setIsSaving(false);
+		}
 	};
 
 	const onRemoveMedia = (media) => {
@@ -89,8 +152,9 @@ export default ({ product, updateProduct, loading }) => {
 		} else {
 			return (
 				<MediaLibrary
-					onSelect={onSelectMedia}
+					onSelect={onAddMedia}
 					isPrivate={false}
+					isMultiSelect={true}
 					render={({ setOpen }) => {
 						return (
 							<ScButton onClick={() => setOpen(true)}>
@@ -107,7 +171,7 @@ export default ({ product, updateProduct, loading }) => {
 	return (
 		<Box
 			title={__('Product Image', 'surecart')}
-			loading={loading}
+			loading={loading || fetchingMedia}
 			footer={
 				<ScFormControl
 					label={__('Product Image', 'surecart')}
@@ -118,6 +182,12 @@ export default ({ product, updateProduct, loading }) => {
 			}
 		>
 			{renderImage()}
+			{isSaving && (
+				<ScBlockUi
+					style={{ '--sc-block-ui-opacity': '0.75' }}
+					spinner
+				/>
+			)}
 		</Box>
 	);
 };
