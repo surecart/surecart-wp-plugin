@@ -88,7 +88,7 @@ export default ({ id }) => {
 			);
 		} catch (e) {
 			console.error(e);
-			createErrorNotice(e?.message, { type: 'snackbar' });
+			setError(e);
 		}
 	};
 
@@ -186,29 +186,6 @@ export default ({ id }) => {
 				/>
 
 				<Products id={id} />
-
-				{/* <Prices
-					productId={id}
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-
-				<Integrations id={id} />
-
-				<Downloads
-					id={id}
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-
-				<Licensing
-					id={id}
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/> */}
 			</Fragment>
 		</UpdateModel>
 	);
