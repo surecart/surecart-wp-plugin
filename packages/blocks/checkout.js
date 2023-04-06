@@ -11,6 +11,7 @@ import * as divider from '@blocks/Divider';
 import * as donation from '@blocks/Donation';
 import * as donationAmount from '@blocks/DonationAmount';
 import * as email from '@blocks/Email';
+import * as phone from '@blocks/Phone';
 import * as expressPayment from '@blocks/ExpressPayment';
 import * as firstName from '@blocks/FirstName';
 import * as form from '@blocks/Form';
@@ -56,6 +57,7 @@ registerBlocks([
 	taxIdInput,
 	divider,
 	email,
+	phone,
 	expressPayment,
 	form,
 	heading,
