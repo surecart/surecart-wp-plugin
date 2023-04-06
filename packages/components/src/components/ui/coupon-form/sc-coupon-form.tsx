@@ -192,8 +192,8 @@ export class ScCouponForm {
           </sc-input>
           <sc-button
             exportparts="base:button__base, label:button_label"
-            slot="suffix"
-            type="text"
+            type="primary"
+            outline
             loading={this.busy}
             size="medium"
             class="coupon-button-mobile"

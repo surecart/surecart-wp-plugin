@@ -18,11 +18,8 @@ sc-button {
   }
 
   .coupon-button-mobile {
+    margin-top: var(--sc-input-label-margin);
     display: none;
-    width: fit-content;
-    &::part(label) {
-      padding: 0;
-    }
   }
 
   &--has-value {
