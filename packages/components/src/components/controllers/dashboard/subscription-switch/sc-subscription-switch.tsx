@@ -77,7 +77,8 @@ export class ScSubscriptionSwitch {
     this.prices = this.products
       .map(product => (product as Product)?.prices?.data)
       .flat()
-      .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i); // remove duplicates.
+      .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i) // remove duplicates.
+      .filter(price => !price?.archived); // remove archived
 
     this.showFilters = this.prices?.length > this.filterAbove;
   }
