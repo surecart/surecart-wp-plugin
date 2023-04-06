@@ -7,12 +7,14 @@ import MediaLibrary from '../../components/MediaLibrary';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ScBlockUi } from '@surecart/components-react';
+import $ from 'jquery';
 
 export default ({ product, updateProduct, loading }) => {
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const [isSaving, setIsSaving] = useState(false);
+	const imageContainerRef = useRef(null);
 
 	const { fetchingMedia, productMedia } = useSelect(
 		(select) => {
@@ -44,6 +46,18 @@ export default ({ product, updateProduct, loading }) => {
 		},
 		[product?.id]
 	);
+
+	useEffect(() => {
+		if (!!imageContainerRef && !!productMedia?.length) {
+			const productImageList = $(imageContainerRef.current);
+			productImageList.sortable();
+			$('#product-images-container').hide(200);
+
+			return () => {
+				productImageList.sortable('destroy');
+			};
+		}
+	}, [imageContainerRef]);
 
 	const onSelectMedia = (media) => {
 		return updateProduct({
@@ -83,29 +97,35 @@ export default ({ product, updateProduct, loading }) => {
 		});
 	};
 
-	const renderImage = () => {
-		if (product?.image_url) {
+	const renderImages = () => {
+		if (!!productMedia?.length) {
 			return (
 				<div
 					css={css`
 						display: grid;
 						gap: 1em;
+						grid-template-columns: repeat(2, 1fr);
 					`}
+					ref={imageContainerRef}
+					id="product-images-container"
 				>
-					<img
-						src={product?.image_url}
-						alt="product image"
-						css={css`
-							max-width: 100%;
-							width: 380px;
-							aspect-ratio: 1/1;
-							object-fit: cover;
-							height: auto;
-							display: block;
-							border-radius: var(--sc-border-radius-medium);
-							background: #f3f3f3;
-						`}
-					/>
+					{productMedia.map((pMedia) => (
+						<img
+							key={pMedia.id}
+							src={pMedia?.media?.url}
+							alt="product image"
+							css={css`
+								max-width: 100%;
+								width: 380px;
+								aspect-ratio: 1/1;
+								object-fit: cover;
+								height: auto;
+								display: block;
+								border-radius: var(--sc-border-radius-medium);
+								background: #f3f3f3;
+							`}
+						/>
+					))}
 				</div>
 			);
 		}
@@ -181,7 +201,7 @@ export default ({ product, updateProduct, loading }) => {
 				</ScFormControl>
 			}
 		>
-			{renderImage()}
+			{renderImages()}
 			{isSaving && (
 				<ScBlockUi
 					style={{ '--sc-block-ui-opacity': '0.75' }}

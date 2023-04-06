@@ -46,6 +46,10 @@ class ProductsController extends AdminController {
 			);
 		}, 99);
 
+		//Add jquery sortable script
+		wp_enqueue_script( 'jquery');
+		wp_enqueue_script( 'jquery-ui-sortable');
+
 
 		// return view.
 		return '<div id="app"></div>';
