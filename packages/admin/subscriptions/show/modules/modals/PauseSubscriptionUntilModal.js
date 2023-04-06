@@ -18,8 +18,7 @@ import Error from '../../../../components/Error';
 import { addQueryArgs } from '@wordpress/url';
 import { useEffect } from 'react';
 
-const CHOOSE_PAUSE_BEHAVIOR_SECTION = 1;
-const CHOOSE_DATE_SECTION = 2;
+const CANCEL_BEHAVIOR = 'pending';
 
 export default ({ open, onRequestClose, currentPeriodEndAt }) => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
@@ -28,24 +27,20 @@ export default ({ open, onRequestClose, currentPeriodEndAt }) => {
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 	const { invalidateResolutionForStore } = useDispatch(coreStore);
-	const [cancelBehavior, setCancelBehavior] = useState('pending');
 	const [pauseUntil, setPauseUntil] = useState(new Date());
-	const [section, setSection] = useState(CHOOSE_DATE_SECTION);
 
 	const getDefaultPauseDate = () => {
-		const pauseDate =
-			cancelBehavior === 'pending' && !!currentPeriodEndAt
-				? new Date(currentPeriodEndAt * 1000)
-				: new Date();
+		const pauseDate = !!currentPeriodEndAt
+			? new Date(currentPeriodEndAt * 1000)
+			: new Date();
 		pauseDate.setDate(pauseDate.getDate() + 1);
 		return pauseDate;
 	};
 	useEffect(() => {
 		setPauseUntil(getDefaultPauseDate());
-	}, [cancelBehavior, currentPeriodEndAt]);
+	}, [currentPeriodEndAt]);
 
 	const cancel = () => {
-		setCancelBehavior('pending');
 		onRequestClose();
 		setPauseUntil(getDefaultPauseDate());
 	};
@@ -58,7 +53,7 @@ export default ({ open, onRequestClose, currentPeriodEndAt }) => {
 			await apiFetch({
 				method: 'PATCH',
 				path: addQueryArgs(`surecart/v1/subscriptions/${id}/cancel`, {
-					cancel_behavior: cancelBehavior,
+					cancel_behavior: CANCEL_BEHAVIOR,
 				}),
 				data: {
 					restore_at: Date.parse(pauseUntil) / 1000,
@@ -89,68 +84,6 @@ export default ({ open, onRequestClose, currentPeriodEndAt }) => {
 		}
 	};
 
-	if (section === CHOOSE_PAUSE_BEHAVIOR_SECTION) {
-		return (
-			<ScDialog
-				label={__('Pause Subscription', 'surecart')}
-				open={open}
-				onScRequestClose={cancel}
-				style={{
-					'--width': '23rem',
-					'--body-spacing': 'var(--sc-spacing-medium)',
-					'--footer-spacing': 'var(--sc-spacing-medium)',
-				}}
-			>
-				<Error error={error} setError={setError} />
-
-				<ScChoices>
-					{currentPeriodEndAt !== null && (
-						<ScChoice
-							name="pause_behavior"
-							checked={cancelBehavior === 'pending'}
-							value="pending"
-							onClick={() => {
-								setCancelBehavior('pending');
-							}}
-						>
-							{__('At end of current period', 'surecart')}
-							<div slot="description">
-								{__(
-									'Let customer finish their current period',
-									'surecart'
-								)}
-							</div>
-						</ScChoice>
-					)}
-
-					<ScChoice
-						name="pause_behavior"
-						value="immediate"
-						checked={cancelBehavior === 'immediate'}
-						onClick={() => setCancelBehavior('immediate')}
-					>
-						{__('Immediately', 'surecart')}
-						<div slot="description">
-							{__(
-								'This will revoke access immediately',
-								'surecart'
-							)}
-						</div>
-					</ScChoice>
-				</ScChoices>
-
-				<ScButton
-					type="primary"
-					slot="footer"
-					onClick={() => setSection(CHOOSE_DATE_SECTION)}
-				>
-					{__('Next', 'surecart')}
-					<ScIcon name="arrow-right" slot="suffix" />
-				</ScButton>
-			</ScDialog>
-		);
-	}
-
 	return (
 		<ScDialog
 			label={__('Pause Subscription Until', 'surecart')}
@@ -168,15 +101,10 @@ export default ({ open, onRequestClose, currentPeriodEndAt }) => {
 			<DateTimePicker
 				currentDate={pauseUntil}
 				onChange={(pauseUntil) => setPauseUntil(pauseUntil)}
-				isInvalidDate={(date) => {
-					if (cancelBehavior === 'pending' && currentPeriodEndAt) {
-						return (
-							Date.parse(new Date(currentPeriodEndAt * 1000)) >
-							Date.parse(date)
-						);
-					}
-					return Date.parse(new Date()) > Date.parse(date);
-				}}
+				isInvalidDate={(date) =>
+					Date.parse(new Date(currentPeriodEndAt * 1000)) >
+					Date.parse(date)
+				}
 			/>
 
 			<ScButton
