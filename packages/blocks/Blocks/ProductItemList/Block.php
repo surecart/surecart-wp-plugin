@@ -110,8 +110,10 @@ class Block extends BaseBlock {
 			'sc-product-item-list',
 			'#selector-' . self::$instance,
 			[
-				'layoutConfig' => $layout_config,
-				'style'        => $this->getStyle( $attributes, $product_item_attributes ),
+				'layoutConfig' 			=> $layout_config,
+				'paginationAlignment' 	=> $attributes['pagination_alignment'],
+				'limit' 				=> $attributes['limit'],
+				'style'        			=> $this->getStyle( $attributes, $product_item_attributes ),
 			]
 		);
 

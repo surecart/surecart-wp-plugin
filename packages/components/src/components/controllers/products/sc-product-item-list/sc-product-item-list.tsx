@@ -28,21 +28,62 @@ export class ScProductItemList {
   /* Item styles */
   @Prop() itemStyles: any = {};
 
+  /* Pagination alignment */
+  @Prop() paginationAlignment: string = 'center';
+
+  /* Limit per page */
+  @Prop() limit: number = 15;
+
+  /* Current page */
+  @State() currentPage: number = 1;
+
+  @State() pagination: {
+    total: number;
+    total_pages: number;
+  } = {
+    total: 0,
+    total_pages: 0,
+  };
+
   componentWillLoad() {
     this.getProducts();
   }
 
-  // fetch all products
+  // Append URL if no 'product-page' found
+  appendParam() {
+    const newUrl = addQueryArgs(location.href, { 'product-page': 1 });
+    window.history.pushState({ path: newUrl }, '', newUrl);
+  }
+
+  // Fetch all products
   async getProducts() {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+    const page = Number(params?.['product-page']);
+
+    if (!Number.isNaN(page)) {
+      this.currentPage = page;
+    } else {
+      this.currentPage = 1;
+      this.appendParam();
+    }
+
     try {
       this.loading = true;
       const response = (await apiFetch({
         path: addQueryArgs(`surecart/v1/products/`, {
           expand: ['prices'],
           archived: 0,
+          per_page: this.limit,
+          page: this.currentPage,
         }),
-      })) as Product[];
-      this.products = response;
+        parse: false,
+      })) as Response;
+      this.pagination = {
+        total: parseInt(response.headers.get('X-WP-Total')),
+        total_pages: parseInt(response.headers.get('X-WP-TotalPages')),
+      };
+      this.products = (await response.json()) as Product[];
     } catch (error) {
     } finally {
       this.loading = false;
@@ -53,7 +94,7 @@ export class ScProductItemList {
     return (
       <div
         class={{
-          'product-item-list-wrapper': true,
+          'product-item-list__wrapper': true,
         }}
       >
         <div
@@ -95,6 +136,18 @@ export class ScProductItemList {
             <p>{__('No Product Found.', 'surecart')}</p>
           )}
         </div>
+        {this.products?.length && this.pagination.total > this.products.length && (
+          <div
+            class={{
+              'product-item-list__pagination': true,
+              '--is-aligned-left': this.paginationAlignment === 'left',
+              '--is-aligned-center': this.paginationAlignment === 'center',
+              '--is-aligned-right': this.paginationAlignment === 'right',
+            }}
+          >
+            <sc-products-pagination currentPage={this.currentPage} totalPages={this.pagination.total_pages}></sc-products-pagination>
+          </div>
+        )}
       </div>
     );
   }

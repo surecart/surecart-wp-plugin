@@ -7,12 +7,12 @@
 
 ## Properties
 
-| Property       | Attribute     | Description | Type                                        | Default     |
-| -------------- | ------------- | ----------- | ------------------------------------------- | ----------- |
-| `formId`       | `form-id`     |             | `string`                                    | `undefined` |
-| `itemStyles`   | `item-styles` |             | `any`                                       | `{}`        |
-| `layoutConfig` | --            |             | `{ blockName: string; attributes: any; }[]` | `undefined` |
-| `mode`         | `mode`        |             | `"live" \| "test"`                          | `undefined` |
+| Property              | Attribute              | Description | Type                                        | Default     |
+| --------------------- | ---------------------- | ----------- | ------------------------------------------- | ----------- |
+| `itemStyles`          | `item-styles`          |             | `any`                                       | `{}`        |
+| `layoutConfig`        | --                     |             | `{ blockName: string; attributes: any; }[]` | `undefined` |
+| `limit`               | `limit`                |             | `number`                                    | `15`        |
+| `paginationAlignment` | `pagination-alignment` |             | `string`                                    | `'center'`  |
 
 
 ## Dependencies
@@ -21,16 +21,22 @@
 
 - [sc-skeleton](../../../ui/skeleton)
 - [sc-product-item](../sc-product-item)
+- [sc-products-pagination](../sc-products-pagination)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-product-item-list --> sc-skeleton
   sc-product-item-list --> sc-product-item
+  sc-product-item-list --> sc-products-pagination
   sc-product-item --> sc-product-item-title
   sc-product-item --> sc-product-item-image
-  sc-product-item --> sc-price-range
+  sc-product-item --> sc-product-item-price
+  sc-product-item-price --> sc-price-range
   sc-price-range --> sc-format-number
+  sc-products-pagination --> sc-button
+  sc-products-pagination --> sc-icon
+  sc-button --> sc-spinner
   style sc-product-item-list fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

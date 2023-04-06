@@ -15,6 +15,8 @@ import {
 	Notice,
 	ToolbarGroup,
 	Disabled,
+	__experimentalToggleGroupControl as ToggleGroupControl,
+	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from '@wordpress/components';
 import { Fragment, useEffect, useState } from '@wordpress/element';
 
@@ -27,7 +29,7 @@ import { PRODUCT_ITEM_LAYOUT } from '../ProductItem/edit';
 export default ({ attributes, setAttributes, clientId }) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [layoutConfig, setLayoutConfig] = useState(null);
-	const { columns, style } = attributes;
+	const { columns, limit, pagination_alignment, style } = attributes;
 	const blockProps = useBlockProps();
 
 	function togglePreview() {
@@ -81,13 +83,47 @@ export default ({ attributes, setAttributes, clientId }) => {
 						min={1}
 						max={10}
 					/>
-					{columns > 5 && (
-						<Notice status="warning" isDismissible={false}>
+					{columns > 6 && (
+						<Notice
+							status="warning"
+							isDismissible={false}
+							css={css`
+								margin-bottom: 20px;
+							`}
+						>
 							{__(
 								'This column count exceeds the recommended amount and may cause visual breakage.'
 							)}
 						</Notice>
 					)}
+					<RangeControl
+						label="Per page limit"
+						value={limit}
+						onChange={(limit) => setAttributes({ limit })}
+						step={5}
+						min={5}
+						max={40}
+					/>
+					<ToggleGroupControl
+						label={__('Pagination Alignment', 'surecart')}
+						value={pagination_alignment}
+						onChange={(align) =>
+							setAttributes({ pagination_alignment: align })
+						}
+					>
+						<ToggleGroupControlOption
+							value="left"
+							label={__('Left', 'surecart')}
+						/>
+						<ToggleGroupControlOption
+							value="center"
+							label={__('Center', 'surecart')}
+						/>
+						<ToggleGroupControlOption
+							value="right"
+							label={__('Right', 'surecart')}
+						/>
+					</ToggleGroupControl>
 				</PanelBody>
 			</InspectorControls>
 			<div {...blockProps}>
@@ -169,6 +205,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 									),
 							}}
 							layoutConfig={layoutConfig}
+							paginationAlignment={pagination_alignment}
 						></ScProductItemList>
 					</Disabled>
 				</div>

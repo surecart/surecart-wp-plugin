@@ -21,6 +21,14 @@
 		"columns": {
 			"type": "number",
 			"default": 4
+		},
+		"limit": {
+			"type": "number",
+			"default": 15
+		},
+		"pagination_alignment": {
+			"type": "string",
+			"default": "center"
 		}
 	}
 }

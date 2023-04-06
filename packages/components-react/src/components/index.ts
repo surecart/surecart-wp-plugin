@@ -134,6 +134,7 @@ export const ScProductItemPrice = /*@__PURE__*/createReactComponent<JSX.ScProduc
 export const ScProductItemTitle = /*@__PURE__*/createReactComponent<JSX.ScProductItemTitle, HTMLScProductItemTitleElement>('sc-product-item-title');
 export const ScProductLineItem = /*@__PURE__*/createReactComponent<JSX.ScProductLineItem, HTMLScProductLineItemElement>('sc-product-line-item');
 export const ScProductSelectedPrice = /*@__PURE__*/createReactComponent<JSX.ScProductSelectedPrice, HTMLScProductSelectedPriceElement>('sc-product-selected-price');
+export const ScProductsPagination = /*@__PURE__*/createReactComponent<JSX.ScProductsPagination, HTMLScProductsPaginationElement>('sc-products-pagination');
 export const ScProse = /*@__PURE__*/createReactComponent<JSX.ScProse, HTMLScProseElement>('sc-prose');
 export const ScProvider = /*@__PURE__*/createReactComponent<JSX.ScProvider, HTMLScProviderElement>('sc-provider');
 export const ScPurchaseDownloadsList = /*@__PURE__*/createReactComponent<JSX.ScPurchaseDownloadsList, HTMLScPurchaseDownloadsListElement>('sc-purchase-downloads-list');
