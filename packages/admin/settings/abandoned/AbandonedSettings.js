@@ -303,7 +303,7 @@ export default () => {
 					{__('Enabled In Test Mode', 'surecart')}
 					<span slot="description">
 						{__(
-							'Also enable abandoned checkout in test mode.',
+							'Also enable abandoned checkouts in test mode.',
 							'surecart'
 						)}
 					</span>
