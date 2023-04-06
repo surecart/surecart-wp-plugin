@@ -1,11 +1,4 @@
-import {
-	ScBlockUi,
-	ScButton,
-	ScChoice,
-	ScChoices,
-	ScDialog,
-	ScIcon,
-} from '@surecart/components-react';
+import { ScBlockUi, ScButton, ScDialog } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import apiFetch from '@wordpress/api-fetch';
 import { DateTimePicker } from '@wordpress/components';
