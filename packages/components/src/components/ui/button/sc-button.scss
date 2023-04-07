@@ -429,7 +429,7 @@
     border-color: transparent;
   }
 
-  &.button--has-prefix {
+  &.button--has-prefix:not(.button--text) {
     &.button--small,
     &.button--medium,
     &.button--large {
@@ -439,7 +439,7 @@
         }
     }
   }
-  &.button--has-suffix {
+  &.button--has-suffix:not(.button--text) {
     &.button--small,
     &.button--medium,
     &.button--large {
@@ -624,7 +624,7 @@ sc-spinner::part(base) {
   }
 }
 
-.button--has-prefix {
+.button--has-prefix:not(.button--text) {
   &.button--small {
     padding-left: var(--sc-spacing-x-small);
 
