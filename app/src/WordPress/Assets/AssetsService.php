@@ -92,9 +92,6 @@ class AssetsService {
 			// enqueue it.
 			wp_enqueue_style( 'surecart-themes-default' );
 
-			// add our inline brand styles.
-			$this->styles->addInlineThemeColors( 'surecart-themes-default' );
-
 			$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/templates/customer-dashboard.asset.php';
 			wp_enqueue_style(
 				'surecart-templates-customer-dashboard',
