@@ -30,36 +30,63 @@ class Block extends BaseBlock {
 	/**
 	 * Get the style for the block
 	 *
-	 * @param  array $attributes Product Item attributes.
+	 * @param  array $attributes Style variables.
 	 * @return string
 	 */
-	public function getProductItemStyle( $attr ) {
+	public function getVars( $attr, $prefix ) {
 		$style = '';
-		// var_dump($attr);
+		// padding
 		if ( ! empty( $attr['style']['spacing']['padding'] ) ) {
 			$padding = $attr['style']['spacing']['padding'];
-			$style  .= '--sc-product-item-padding-top: ' . $this->getSpacingPresetCssVar( array_key_exists( 'top', $padding ) ? $padding['top'] : '0.88rem' ) . ';';
-			$style  .= '--sc-product-item-padding-bottom: ' . $this->getSpacingPresetCssVar( array_key_exists( 'bottom', $padding ) ? $padding['bottom'] : '0.88rem' ) . ';';
-			$style  .= '--sc-product-item-padding-left: ' . $this->getSpacingPresetCssVar( array_key_exists( 'left', $padding ) ? $padding['left'] : '0.88rem' ) . ';';
-			$style  .= '--sc-product-item-padding-right: ' . $this->getSpacingPresetCssVar( array_key_exists( 'right', $padding ) ? $padding['right'] : '0.88rem' ) . ';';
+			$style  .= '--sc-product-' . $prefix . '-padding-top: ' . $this->getSpacingPresetCssVar( array_key_exists( 'top', $padding ) ? $padding['top'] : '0' ) . ';';
+			$style  .= '--sc-product-' . $prefix . '-padding-bottom: ' . $this->getSpacingPresetCssVar( array_key_exists( 'bottom', $padding ) ? $padding['bottom'] : '0' ) . ';';
+			$style  .= '--sc-product-' . $prefix . '-padding-left: ' . $this->getSpacingPresetCssVar( array_key_exists( 'left', $padding ) ? $padding['left'] : '0' ) . ';';
+			$style  .= '--sc-product-' . $prefix . '-padding-right: ' . $this->getSpacingPresetCssVar( array_key_exists( 'right', $padding ) ? $padding['right'] : '0' ) . ';';
 		}
+		// margin
 		if ( ! empty( $attr['style']['spacing']['margin'] ) ) {
 			$margin = $attr['style']['spacing']['margin'];
-			$style .= '--sc-product-item-margin-top: ' . $this->getSpacingPresetCssVar( array_key_exists( 'top', $margin ) ? $margin['top'] : '0' ) . ';';
-			$style .= '--sc-product-item-margin-bottom: ' . $this->getSpacingPresetCssVar( array_key_exists( 'bottom', $margin ) ? $margin['bottom'] : '0' ) . ';';
-			$style .= '--sc-product-item-margin-left: ' . $this->getSpacingPresetCssVar( array_key_exists( 'left', $margin ) ? $margin['left'] : '0' ) . ';';
-			$style .= '--sc-product-item-margin-right: ' . $this->getSpacingPresetCssVar( array_key_exists( 'right', $margin ) ? $margin['right'] : '0' ) . ';';
+			$style .= '--sc-product-' . $prefix . '-margin-top: ' . $this->getSpacingPresetCssVar( array_key_exists( 'top', $margin ) ? $margin['top'] : '0' ) . ';';
+			$style .= '--sc-product-' . $prefix . '-margin-bottom: ' . $this->getSpacingPresetCssVar( array_key_exists( 'bottom', $margin ) ? $margin['bottom'] : '0' ) . ';';
+			$style .= '--sc-product-' . $prefix . '-margin-left: ' . $this->getSpacingPresetCssVar( array_key_exists( 'left', $margin ) ? $margin['left'] : '0' ) . ';';
+			$style .= '--sc-product-' . $prefix . '-margin-right: ' . $this->getSpacingPresetCssVar( array_key_exists( 'right', $margin ) ? $margin['right'] : '0' ) . ';';
 		}
-		if ( ! empty( $attr['style']['border']['color'] ) ) {
-			$style .= '--sc-product-item-border-color: ' . $attr['style']['border']['color'] . ';';
+		// aspect ratio
+		if ( ! empty( $attr['ratio'] ) ) {
+			$style .= '--sc-product-' . $prefix . '-aspect-ratio: ' . $attr['ratio'] . ';';
 		}
+		// border width
 		if ( ! empty( $attr['style']['border']['width'] ) ) {
-			$style .= '--sc-product-item-border-width: ' . $attr['style']['border']['width'] . ';';
+			$style .= '--sc-product-' . $prefix . '-border-width: ' . $attr['style']['border']['width'] . ';';
 		}
+		// border radius
 		if ( ! empty( $attr['style']['border']['radius'] ) ) {
-			$style .= '--sc-product-item-border-radius: ' . $attr['style']['border']['radius'] . ';';
+			$style .= '--sc-product-' . $prefix . '-border-radius: ' . $attr['style']['border']['radius'] . ';';
 		}
-		// var_dump($attr['borderColor']);
+		// font weight
+		if ( ! empty( $attr['style']['typography']['fontWeight'] ) ) {
+			$style .= '--sc-product-' . $prefix . '-font-weight: ' . $attr['style']['typography']['fontWeight'] . ';';
+		}
+		// font size
+		if ( ! empty( $attr['fontSize'] ) || ! empty( $attr['style']['typography']['fontSize'] ) ) {
+			$font_size = ! empty( $attr['fontSize'] ) ? $this->getFontSizePresetCssVar( $attr['fontSize'] ) : $attr['style']['typography']['fontSize'];
+			$style .= '--sc-product-' . $prefix . '-font-size: ' . $font_size . ';';
+		}
+		// border color
+		if ( ! empty( $attr['borderColor'] ) || ! empty( $attr['style']['border']['color'] ) ) {
+			$border_color = ! empty( $attr['borderColor'] ) ? $this->getColorPresetCssVar( $attr['borderColor'] ) : $attr['style']['border']['color'];
+			$style .= '--sc-product-' . $prefix . '-border-color: ' . $border_color . ';';
+		}
+		// text color
+		if ( ! empty( $attr['textColor'] ) || ! empty( $attr['style']['color']['text'] ) ) {
+			$text_color = ! empty( $attr['textColor'] ) ? $this->getColorPresetCssVar( $attr['textColor'] ) : $attr['style']['color']['text'];
+			$style .= '--sc-product-' . $prefix . '-text-color: ' . $text_color . ';';
+		}
+		// text align
+		if ( ! empty( $attr['align'] ) ) {
+			$style .= '--sc-product-' . $prefix . '-align: ' . $attr['align'] . ';';
+		}
+
 		return $style;
 	}
 
@@ -72,7 +99,7 @@ class Block extends BaseBlock {
 	public function getStyle( $attr, $item_attributes ) {
 		$style  = 'border-style: none !important;';
 		$style .= $this->getProductListStyle( $attr );
-		$style .= $this->getProductItemStyle( $item_attributes );
+		$style .= $this->getVars( $item_attributes, 'item' );
 		return $style;
 	}
 
@@ -106,6 +133,25 @@ class Block extends BaseBlock {
 			$product_item_inner_blocks
 		);
 
+		$style = '';
+		$style .= $this->getStyle( $attributes, $product_item_attributes );
+
+		foreach ($product_item_inner_blocks as $inner_blocks) {
+			switch ($inner_blocks['blockName']) {
+				case 'surecart/product-item-image':
+					$style .= $this->getVars($inner_blocks['attrs'], 'image');
+					break;
+				case 'surecart/product-item-title':
+					$style .= $this->getVars($inner_blocks['attrs'], 'title');
+					break;
+				case 'surecart/product-item-price':
+					$style .= $this->getVars($inner_blocks['attrs'], 'price');
+					break;
+				default:
+					break;
+			}
+		}
+
 		\SureCart::assets()->addComponentData(
 			'sc-product-item-list',
 			'#selector-' . self::$instance,
@@ -113,7 +159,7 @@ class Block extends BaseBlock {
 				'layoutConfig' 			=> $layout_config,
 				'paginationAlignment' 	=> $attributes['pagination_alignment'],
 				'limit' 				=> $attributes['limit'],
-				'style'        			=> $this->getStyle( $attributes, $product_item_attributes ),
+				'style'        			=> $style,
 			]
 		);
 

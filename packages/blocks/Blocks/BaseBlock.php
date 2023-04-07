@@ -86,6 +86,36 @@ abstract class BaseBlock {
 		return "var(--wp--preset--spacing--$matches[1])";
 	}
 
+	/**
+	 * Get the font size preset css variable.
+	 *
+	 * @param string $value The value.
+	 *
+	 * @return string|void
+	 */
+	public function getFontSizePresetCssVar( $value ) {
+		if ( ! $value ) {
+			return;
+		}
+
+		return "var(--wp--preset--font-size--$value)";
+	}
+
+	/**
+	 * Get the color preset css variable.
+	 *
+	 * @param string $value The value.
+	 *
+	 * @return string|void
+	 */
+	public function getColorPresetCssVar( $value ) {
+		if ( ! $value ) {
+			return;
+		}
+
+		return "var(--wp--preset--color--$value)";
+	}
+
 
 	/**
 	 * Register the block for dynamic output

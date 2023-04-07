@@ -23,7 +23,11 @@ import { Fragment, useEffect, useState } from '@wordpress/element';
 import EditLayoutConfig from './modules/EditLayoutConfig';
 import { ScProductItemList } from '@surecart/components-react';
 import { useSelect } from '@wordpress/data';
-import { getSpacingPresetCssVar } from '../../util';
+import {
+	getColorPresetCssVar,
+	getFontSizePresetCssVar,
+	getSpacingPresetCssVar,
+} from '../../util';
 import { PRODUCT_ITEM_LAYOUT } from '../ProductItem/edit';
 
 export default ({ attributes, setAttributes, clientId }) => {
@@ -43,6 +47,86 @@ export default ({ attributes, setAttributes, clientId }) => {
 	);
 
 	const productBlockAttr = block?.attributes;
+
+	const getVars = (prefix, attributes) => {
+		let vars = {};
+		const spacing = attributes?.style?.spacing;
+		const border = attributes?.style?.border;
+		const typography = attributes?.style?.typography;
+		const color = attributes?.style?.color;
+
+		if (attributes?.fontSize || typography?.fontSize) {
+			vars[`--sc-product-${prefix}-font-size`] = attributes?.fontSize
+				? getFontSizePresetCssVar(attributes?.fontSize)
+				: typography?.fontSize;
+		}
+		if (attributes?.textColor || color?.text) {
+			vars[`--sc-product-${prefix}-text-color`] = attributes?.textColor
+				? getColorPresetCssVar(attributes?.textColor)
+				: color?.text;
+		}
+		if (spacing?.padding) {
+			['top', 'bottom', 'left', 'right'].forEach((dir) => {
+				vars[`--sc-product-${prefix}-padding-${dir}`] =
+					getSpacingPresetCssVar(spacing.padding[dir]);
+			});
+		}
+		if (spacing?.margin) {
+			['top', 'bottom', 'left', 'right'].forEach((dir) => {
+				vars[`--sc-product-${prefix}-margin-${dir}`] =
+					getSpacingPresetCssVar(spacing.margin[dir]);
+			});
+		}
+		if (attributes?.borderColor)
+			vars[`--sc-product-${prefix}-border-color`] = getColorPresetCssVar(
+				attributes?.borderColor
+			);
+		if (border?.radius)
+			vars[`--sc-product-${prefix}-border-radius`] = border?.radius;
+		if (border?.width)
+			vars[`--sc-product-${prefix}-border-width`] = border?.width;
+		if (attributes?.ratio)
+			vars[`--sc-product-${prefix}-aspect-ratio`] = attributes?.ratio;
+		if (attributes?.align)
+			vars[`--sc-product-${prefix}-align`] = attributes?.align;
+		if (typography?.fontWeight)
+			vars[`--sc-product-${prefix}-font-weight`] = typography?.fontWeight;
+
+		return vars;
+	};
+
+	const getConfigStyles = (config) => {
+		let styles = {};
+		for (let i = 0; i < config.length; i++) {
+			const layout = config[i];
+
+			switch (layout.blockName) {
+				case 'surecart/product-item-title':
+					styles = {
+						...styles,
+						...getVars('title', layout.attributes),
+					};
+					break;
+
+				case 'surecart/product-item-image':
+					styles = {
+						...styles,
+						...getVars('image', layout.attributes),
+					};
+					break;
+
+				case 'surecart/product-item-price':
+					styles = {
+						...styles,
+						...getVars('price', layout.attributes),
+					};
+					break;
+				default:
+					break;
+			}
+		}
+		return styles;
+	};
 
 	useEffect(() => {
 		const layoutConfig =
@@ -144,69 +228,22 @@ export default ({ attributes, setAttributes, clientId }) => {
 					`}
 				>
 					<Disabled>
-						<ScProductItemList
-							style={{
-								'--sc-product-item-list-column': columns,
-								'--sc-product-item-list-gap':
-									getSpacingPresetCssVar(
-										style?.spacing?.blockGap
-									) || '40px',
-								'--sc-product-item-padding-top':
-									getSpacingPresetCssVar(
-										productBlockAttr?.style?.spacing
-											?.padding?.top
-									),
-								'--sc-product-item-padding-bottom':
-									getSpacingPresetCssVar(
-										productBlockAttr?.style?.spacing
-											?.padding?.bottom
-									),
-								'--sc-product-item-padding-left':
-									getSpacingPresetCssVar(
-										productBlockAttr?.style?.spacing
-											?.padding?.left
-									),
-								'--sc-product-item-padding-right':
-									getSpacingPresetCssVar(
-										productBlockAttr?.style?.spacing
-											?.padding?.right
-									),
-								'--sc-product-item-margin-top':
-									getSpacingPresetCssVar(
-										productBlockAttr?.style?.spacing?.margin
-											?.top
-									),
-								'--sc-product-item-margin-bottom':
-									getSpacingPresetCssVar(
-										productBlockAttr?.style?.spacing?.margin
-											?.bottom
-									),
-								'--sc-product-item-margin-left':
-									getSpacingPresetCssVar(
-										productBlockAttr?.style?.spacing?.margin
-											?.left
-									),
-								'--sc-product-item-margin-right':
-									getSpacingPresetCssVar(
-										productBlockAttr?.style?.spacing?.margin
-											?.right
-									),
-								'--sc-product-item-border-color':
-									getSpacingPresetCssVar(
-										productBlockAttr?.style?.border?.color
-									),
-								'--sc-product-item-border-width':
-									getSpacingPresetCssVar(
-										productBlockAttr?.style?.border?.width
-									),
-								'--sc-product-item-border-radius':
-									getSpacingPresetCssVar(
-										productBlockAttr?.style?.border?.radius
-									),
-							}}
-							layoutConfig={layoutConfig}
-							paginationAlignment={pagination_alignment}
-						></ScProductItemList>
+						{layoutConfig && (
+							<ScProductItemList
+								style={{
+									'border-style': 'none',
+									'--sc-product-item-list-column': columns,
+									'--sc-product-item-list-gap':
+										getSpacingPresetCssVar(
+											style?.spacing?.blockGap
+										) || '40px',
+									...getVars('item', productBlockAttr),
+									...getConfigStyles(layoutConfig),
+								}}
+								layoutConfig={layoutConfig}
+								paginationAlignment={pagination_alignment}
+							></ScProductItemList>
+						)}
 					</Disabled>
 				</div>
 			</div>
