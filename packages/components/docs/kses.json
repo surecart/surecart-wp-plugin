@@ -1425,14 +1425,6 @@
     "class": true,
     "slot": true
   },
-  "sc-products-pagination": {
-    "current-page": true,
-    "total-pages": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "sc-prose": {
     "style": true,
     "id": true,

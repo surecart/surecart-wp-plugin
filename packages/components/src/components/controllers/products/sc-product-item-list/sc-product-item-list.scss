@@ -36,6 +36,7 @@
   &__pagination {
     padding: 40px 0 0;
     display: flex;
+    font-size: var(--wp--preset--font-size--x-small);
     &.--is-aligned-left {
       justify-content: start;
     }

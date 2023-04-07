@@ -50,8 +50,12 @@ export class ScProductItemList {
   }
 
   // Append URL if no 'product-page' found
-  appendParam() {
-    const newUrl = addQueryArgs(location.href, { 'product-page': 1 });
+  appendParam(page: number, push: boolean = false) {
+    const newUrl = addQueryArgs(location.href, { 'product-page': page });
+    if (push) {
+      window.location.replace(newUrl);
+      return;
+    }
     window.history.pushState({ path: newUrl }, '', newUrl);
   }
 
@@ -65,7 +69,7 @@ export class ScProductItemList {
       this.currentPage = page;
     } else {
       this.currentPage = 1;
-      this.appendParam();
+      this.appendParam(1);
     }
 
     try {
@@ -145,7 +149,15 @@ export class ScProductItemList {
               '--is-aligned-right': this.paginationAlignment === 'right',
             }}
           >
-            <sc-products-pagination currentPage={this.currentPage} totalPages={this.pagination.total_pages}></sc-products-pagination>
+            <sc-pagination
+              page={this.currentPage}
+              perPage={this.limit}
+              total={this.pagination.total}
+              totalPages={this.pagination.total_pages}
+              totalShowing={this.limit}
+              onScNextPage={() => this.appendParam(this.currentPage + 1, true)}
+              onScPrevPage={() => this.appendParam(this.currentPage - 1, true)}
+            ></sc-pagination>
           </div>
         )}
       </div>
