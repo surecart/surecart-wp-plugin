@@ -63,6 +63,9 @@ class AssetsService {
 		// register assets we will reuse.
 		add_action( 'init', [ $this->scripts, 'register' ] );
 		add_action( 'init', [ $this->styles, 'register' ] );
+		// globals.
+		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueGlobals' ] );
+
 		add_filter( 'render_block_data', [ $this, 'preloadComponents' ] );
 
 		// block editor.
@@ -77,6 +80,29 @@ class AssetsService {
 		$this->loader->whenRendered( 'surecart/customer-dashboard', [ $this, 'enqueueComponents' ] );
 		$this->loader->whenRendered( 'surecart/checkout-form', [ $this, 'enqueueComponents' ] );
 		$this->loader->whenRendered( 'surecart/order-confirmation', [ $this, 'enqueueComponents' ] );
+	}
+
+	/**
+	 * Enqueue global styles.
+	 *
+	 * @return void
+	 */
+	public function enqueueGlobals() {
+		if ( is_page_template( 'pages/template-surecart-dashboard.php' ) ) {
+			// enqueue it.
+			wp_enqueue_style( 'surecart-themes-default' );
+
+			// add our inline brand styles.
+			$this->styles->addInlineThemeColors( 'surecart-themes-default' );
+
+			$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/templates/customer-dashboard.asset.php';
+			wp_enqueue_style(
+				'surecart-templates-customer-dashboard',
+				trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/templates/customer-dashboard.css',
+				[ 'surecart-themes-default' ],
+				$asset_file['version'],
+			);
+		}
 	}
 
 	/**
