@@ -84,7 +84,7 @@ export default () => {
 	const [cartMenuSelectedIds, setCartMenuSelectedIds] = useEntityProp(
 		'root',
 		'site',
-		'surecart_cart_menu_selected_id'
+		'surecart_cart_menu_selected_ids'
 	);
 
 	const handleMenuSelect = (menuId) => {
