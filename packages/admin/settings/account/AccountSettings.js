@@ -9,6 +9,7 @@ import {
 	ScSwitch,
 	ScButton,
 	ScIcon,
+	ScTag,
 } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
@@ -80,11 +81,23 @@ export default () => {
 		'site',
 		'surecart_cart_menu_always_shown'
 	);
-	const [cartMenuSelectedId, setCartMenuSelectedId] = useEntityProp(
+	const [cartMenuSelectedIds, setCartMenuSelectedIds] = useEntityProp(
 		'root',
 		'site',
 		'surecart_cart_menu_selected_id'
 	);
+
+	const handleMenuSelect = (menuId) => {
+		let updatedIds = [];
+		if (cartMenuSelectedIds?.includes(menuId)) {
+			updatedIds = (cartMenuSelectedIds ?? []).filter(
+				(_id) => _id !== menuId
+			);
+		} else {
+			updatedIds = [...(cartMenuSelectedIds ?? []), menuId];
+		}
+		setCartMenuSelectedIds(updatedIds);
+	};
 
 	/**
 	 * Form is submitted.
@@ -345,22 +358,59 @@ export default () => {
 						`}
 					>
 						{menus && (
-							<ScSelect
-								label={__('Select Menu', 'surecart')}
-								placeholder={__('Select Menu', 'surecart')}
-								value={cartMenuSelectedId}
-								help={__(
-									'Select the menu you wish to display the Menu Cart'
-								)}
-								choices={menus?.map((item) => ({
-									label: `${item.name} (slug - ${item.slug})`,
-									value: item.id,
-								}))}
-								unselect={false}
-								onScChange={(e) =>
-									setCartMenuSelectedId(e.target.value)
-								}
-							/>
+							<div
+								css={css`
+									gap: 1em;
+									display: flex;
+									flex-direction: column;
+								`}
+							>
+								<ScSelect
+									search={true}
+									label={__('Select Menu', 'surecart')}
+									placeholder={__('Select Menu', 'surecart')}
+									value={__('Select Menu', 'surecart')}
+									help={__(
+										'Select the menu you wish to display the Menu Cart'
+									)}
+									choices={menus?.map((item) => ({
+										label: `${item.name} (${item.slug})`,
+										value: item.id,
+									}))}
+									unselect={false}
+									onScChange={(e) =>
+										handleMenuSelect(Number(e.target.value))
+									}
+								/>
+								{cartMenuSelectedIds?.length ? (
+									<div
+										css={css`
+											gap: 1em;
+											display: flex;
+										`}
+									>
+										{cartMenuSelectedIds?.map((menuId) => {
+											return (
+												<ScTag
+													pill={true}
+													clearable={true}
+													onScClear={() =>
+														handleMenuSelect(menuId)
+													}
+												>
+													{
+														menus?.find(
+															(item) =>
+																item?.id ===
+																menuId
+														)?.slug
+													}
+												</ScTag>
+											);
+										})}
+									</div>
+								) : null}
+							</div>
 						)}
 						<ScSelect
 							label={__('Position of cart button', 'surecart')}
