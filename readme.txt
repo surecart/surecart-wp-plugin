@@ -3,7 +3,7 @@ Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
-Tested up to: 6.1
+Tested up to: 6.2
 Stable tag: 1.9.2
 Requires PHP: 7.4
 License: GPLv2 or later
