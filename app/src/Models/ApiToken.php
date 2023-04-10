@@ -26,7 +26,7 @@ class ApiToken {
 	 *
 	 * @return bool True if the value was updated, false otherwise.
 	 */
-	public function clear() {
+	protected function clear() {
 		return delete_option( $this->key );
 	}
 
