@@ -205,7 +205,7 @@ class RequestService {
 	public function makeUncachedRequest( $endpoint, $args = [] ) {
 		// must have a token for the request.
 		if ( empty( $this->token ) ) {
-			return new \WP_Error( 'missing_token', __( 'Please enter an API token.', 'surecart' ) );
+			return new \WP_Error( 'missing_token', __( 'Please connect your site to SureCart.', 'surecart' ) );
 		}
 
 		// make sure we send json.
