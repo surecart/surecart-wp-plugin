@@ -22,6 +22,15 @@ class ApiToken {
 	final public function __construct() {}
 
 	/**
+	 * Clear the API token.
+	 *
+	 * @return bool True if the value was updated, false otherwise.
+	 */
+	public function clear() {
+		return delete_option( $this->key );
+	}
+
+	/**
 	 * Save and encrypt the API token.
 	 *
 	 * @param string $value The API token.
