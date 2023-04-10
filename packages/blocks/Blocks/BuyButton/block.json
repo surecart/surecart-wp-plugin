@@ -4,14 +4,14 @@
 	"description": "Display a button to immediately redirect to the checkout page with the product in the cart.",
 	"category": "surecart",
 	"keywords": ["name", "customer"],
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"parent": null,
 	"supports": {
 		"reusable": false,
 		"html": false
 	},
 	"attributes": {
-    "price_id": {
+		"price_id": {
 			"type": "string"
 		},
 		"label": {
@@ -46,5 +46,7 @@
 			"type": "array",
 			"default": []
 		}
-	}
+	},
+	"script": "surecart-components",
+	"style": "surecart-themes-default"
 }
