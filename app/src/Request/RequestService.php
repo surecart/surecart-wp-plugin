@@ -2,6 +2,7 @@
 
 namespace SureCart\Request;
 
+use SureCart\Models\ApiToken;
 use SureCart\Support\Errors\ErrorsService;
 
 /**
@@ -202,6 +203,11 @@ class RequestService {
 	 * @return mixed
 	 */
 	public function makeUncachedRequest( $endpoint, $args = [] ) {
+		// must have a token for the request.
+		if ( empty( $this->token ) ) {
+			return new \WP_Error( 'missing_token', __( 'Please enter an API token.', 'surecart' ) );
+		}
+
 		// make sure we send json.
 		if ( empty( $args['headers']['Content-Type'] ) ) {
 			$args['headers']['Content-Type'] = 'application/json';
@@ -269,6 +275,12 @@ class RequestService {
 			} catch ( \Exception $e ) {
 				error_log( $e->getMessage() );
 			}
+		}
+
+		// Handle invalid token first.
+		if ( 401 === $response_code ) {
+			ApiToken::clear();
+			return new \WP_Error( 'invalid_token', __( 'Invalid API token.', 'surecart' ) );
 		}
 
 		// check for errors.
