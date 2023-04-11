@@ -238,6 +238,8 @@ export default () => {
 
 	/** Render the pause button */
 	const renderPauseButton = () => {
+		if (subscription?.finite) return null;
+
 		if (
 			subscription?.cancel_at_period_end &&
 			subscription.current_period_end_at &&
