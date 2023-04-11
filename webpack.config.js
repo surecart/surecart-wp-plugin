@@ -21,6 +21,10 @@ module.exports = {
 		},
 	},
 	entry: {
+		['admin/onboarding']: path.resolve(
+			__dirname,
+			'packages/admin/onboarding/index.js'
+		),
 		['admin/dashboard']: path.resolve(
 			__dirname,
 			'packages/admin/dashboard/index.js'

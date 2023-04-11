@@ -27,7 +27,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'user.can:manage_options' )
 ->middleware( 'assets.components' )
 ->middleware( 'assets.brand_colors' )
-->handle( 'Onboarding@show' );
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Onboarding\\' )
+->handle( 'OnboardingController@show' );
 
 /*
 |--------------------------------------------------------------------------
