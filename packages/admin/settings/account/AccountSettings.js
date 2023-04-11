@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { useEffect, useState } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import {
 	ScAlert,
 	ScInput,
@@ -9,7 +9,6 @@ import {
 	ScSwitch,
 	ScButton,
 	ScIcon,
-	ScTag,
 } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
@@ -18,9 +17,9 @@ import Error from '../../components/Error';
 import useSave from '../UseSave';
 import { useEntityProp } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
+import CartMenuSelector from './components/CartMenuSelector';
 
 export default () => {
-	const [menus, setMenus] = useState(null);
 	const [error, setError] = useState(null);
 	const { save } = useSave();
 	const [showNotice, setShowNotice] = useState(false);
@@ -37,10 +36,6 @@ export default () => {
 		editItem: editSettingItem,
 		hasLoadedItem: hasLoadedSettingItem,
 	} = useEntity('store', 'settings');
-
-	const navMenuData = useSelect((select) =>
-		select('core').getEntityRecords('taxonomy', 'nav_menu')
-	);
 
 	// honeypot.
 	const [honeypotEnabled, setHoneypotEnabled] = useEntityProp(
@@ -87,18 +82,6 @@ export default () => {
 		'surecart_cart_menu_selected_ids'
 	);
 
-	const handleMenuSelect = (menuId) => {
-		let updatedIds = [];
-		if (cartMenuSelectedIds?.includes(menuId)) {
-			updatedIds = (cartMenuSelectedIds ?? []).filter(
-				(_id) => _id !== menuId
-			);
-		} else {
-			updatedIds = [...(cartMenuSelectedIds ?? []), menuId];
-		}
-		setCartMenuSelectedIds(updatedIds);
-	};
-
 	/**
 	 * Form is submitted.
 	 */
@@ -124,12 +107,6 @@ export default () => {
 		}).formatToParts();
 		return currency?.value;
 	};
-
-	useEffect(() => {
-		if (navMenuData && navMenuData.length) {
-			setMenus(navMenuData);
-		}
-	}, [navMenuData]);
 
 	return (
 		<SettingsTemplate
@@ -290,151 +267,90 @@ export default () => {
 							'surecart'
 						)}
 						required
-					></ScSelect>
-				</div>
-				<div
-					css={css`
-						gap: var(--sc-form-row-spacing);
-						display: grid;
-						grid-template-columns: repeat(1, minmax(0, 1fr));
-						padding-top: var(--sc-form-row-spacing);
-					`}
-				>
-					<ScSwitch
-						checked={!settingItem?.slide_out_cart_disabled}
-						onClick={(e) => {
-							e.preventDefault();
-							editSettingItem({
-								slide_out_cart_disabled:
-									!settingItem?.slide_out_cart_disabled,
-							});
-						}}
-					>
-						{__('Enable Slide-Out Cart', 'surecart')}
-						<span slot="description" style={{ lineHeight: '1.4' }}>
-							{__(
-								'If you do not wish to use the slide-out cart, you can disable this to prevent scripts from loading on your pages.',
-								'surecart'
-							)}
-						</span>
-					</ScSwitch>
-
-					<ScSwitch
-						checked={settingItem?.cart_menu_button_enabled}
-						onClick={(e) => {
-							e.preventDefault();
-							editSettingItem({
-								cart_menu_button_enabled:
-									!settingItem?.cart_menu_button_enabled,
-							});
-						}}
-					>
-						{__('Enable Menu Cart Button', 'surecart')}
-						<span slot="description" style={{ lineHeight: '1.4' }}>
-							{__(
-								'If you wish to have a cart button in the navigation bar, you can enable this option.',
-								'surecart'
-							)}
-						</span>
-					</ScSwitch>
+					/>
 				</div>
 			</SettingsBox>
 
-			{settingItem?.cart_menu_button_enabled && (
-				<SettingsBox
-					title={__('Menu Cart', 'surecart')}
-					loading={!hasLoadedAccountItem && !hasLoadedSettingItem}
-					description={__(
-						'Change menu cart button settings.',
-						'surecart'
-					)}
+			<SettingsBox
+				title={__('Cart', 'surecart')}
+				loading={!hasLoadedAccountItem && !hasLoadedSettingItem}
+				description={__(
+					'Change menu cart button settings.',
+					'surecart'
+				)}
+			>
+				<ScSwitch
+					checked={!settingItem?.slide_out_cart_disabled}
+					onClick={(e) => {
+						e.preventDefault();
+						editSettingItem({
+							slide_out_cart_disabled:
+								!settingItem?.slide_out_cart_disabled,
+						});
+					}}
 				>
-					<div
-						css={css`
-							gap: 2em;
-							display: grid;
-							align-items: flex-start;
-							grid-template-columns: repeat(2, minmax(0, 1fr));
-						`}
-					>
-						{menus && (
-							<div
-								css={css`
-									gap: 1em;
-									display: flex;
-									flex-direction: column;
-								`}
-							>
-								<ScSelect
-									search={true}
-									label={__('Select Menu', 'surecart')}
-									placeholder={__('Select Menu', 'surecart')}
-									value={__('Select Menu', 'surecart')}
-									help={__(
-										'Select the menu you wish to display the Menu Cart'
-									)}
-									choices={menus?.map((item) => ({
-										label: `${item.name} (${item.slug})`,
-										value: item.id,
-									}))}
-									unselect={false}
-									onScChange={(e) =>
-										handleMenuSelect(Number(e.target.value))
-									}
-								/>
-								{cartMenuSelectedIds?.length ? (
-									<div
-										css={css`
-											gap: 1em;
-											display: flex;
-										`}
-									>
-										{cartMenuSelectedIds?.map((menuId) => {
-											return (
-												<ScTag
-													pill={true}
-													clearable={true}
-													onScClear={() =>
-														handleMenuSelect(menuId)
-													}
-												>
-													{
-														menus?.find(
-															(item) =>
-																item?.id ===
-																menuId
-														)?.slug
-													}
-												</ScTag>
-											);
-										})}
-									</div>
-								) : null}
-							</div>
+					{__('Enable Cart', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'If you do not wish to use the cart, you can disable this to prevent cart scripts from loading on your pages.',
+							'surecart'
 						)}
+					</span>
+				</ScSwitch>
+
+				{!settingItem?.slide_out_cart_disabled && (
+					<>
 						<ScSelect
-							label={__('Position of cart button', 'surecart')}
-							placeholder={__('Select Position', 'surecart')}
-							value={cartMenuAlignment}
-							onScChange={(e) =>
-								setCartMenuAlignment(e.target.value)
-							}
-							unselect={false}
-							help={__(
-								'Select the cart button position, i.e. left or right, where it will look best with your website design.',
-								'surecart'
-							)}
+							label={__('Cart Type', 'surecart')}
+							value={'both'}
+							help={__('What type of cart do you want to use?')}
 							choices={[
 								{
-									label: __('Right', 'surecart'),
-									value: 'right',
+									label: __('Floating Icon', 'surecart'),
+									value: 'floating',
 								},
 								{
-									label: __('Left', 'surecart'),
-									value: 'left',
+									label: __('Menu Item', 'surecart'),
+									value: 'menu',
+								},
+								{
+									label: __('Both', 'surecart'),
+									value: 'both',
 								},
 							]}
+							onScChange={() => {}}
 						/>
+
+						<CartMenuSelector />
+
+						<div>
+							<ScSelect
+								label={__(
+									'Position of cart button',
+									'surecart'
+								)}
+								placeholder={__('Select Position', 'surecart')}
+								value={cartMenuAlignment}
+								onScChange={(e) =>
+									setCartMenuAlignment(e.target.value)
+								}
+								unselect={false}
+								help={__(
+									'Select the cart button position, i.e. left or right, where it will look best with your website design.',
+									'surecart'
+								)}
+								choices={[
+									{
+										label: __('Right', 'surecart'),
+										value: 'right',
+									},
+									{
+										label: __('Left', 'surecart'),
+										value: 'left',
+									},
+								]}
+							/>
+						</div>
 
 						<ScSwitch
 							checked={cartMenuAlwaysShown}
@@ -454,9 +370,9 @@ export default () => {
 								)}
 							</span>
 						</ScSwitch>
-					</div>
-				</SettingsBox>
-			)}
+					</>
+				)}
+			</SettingsBox>
 
 			<SettingsBox
 				title={__('Spam Protection & Security', 'surecart')}
