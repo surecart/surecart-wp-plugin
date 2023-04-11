@@ -4,12 +4,20 @@
 	"description": "Display the store logo.",
 	"category": "surecart",
 	"keywords": ["logo", "image", "store", "store logo"],
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"supports": {
 		"html": false,
 		"spacing": {
 			"margin": true,
 			"padding": true
+		},
+		"__experimentalBorder": {
+			"width": true,
+			"color": true,
+			"__experimentalDefaultControls": {
+				"width": true,
+				"color": true
+			}
 		}
 	},
 	"attributes": {
