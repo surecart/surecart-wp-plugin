@@ -114,7 +114,7 @@ class ThemeServiceProvider implements ServiceProviderInterface {
 		$cart_menu_ids     = (array) get_option( 'surecart_cart_menu_selected_ids', null );
 		$cart_menu_enabled = (bool) get_option( 'sc_cart_menu_button_enabled', false );
 
-		if ( ! $cart_menu_enabled || $cart_menu_id != $args->menu->term_id ) {
+		if ( !$cart_menu_enabled || !in_array($args->menu->term_id,$cart_menu_ids) ) {
 			return $items;
 		}
 
