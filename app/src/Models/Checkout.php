@@ -55,26 +55,29 @@ class Checkout extends Model {
 	/**
 	 * Create a new model
 	 *
-	 * @param array   $attributes Attributes to create.
-	 * @param boolean $create_user Whether to create a corresponding WordPress user.
+	 * @param array $attributes Attributes to create.
 	 *
 	 * @return $this|\WP_Error|false
 	 */
-	protected function create($attributes = []){
-		$ip_address = null;
-		if(isset($_SERVER['HTTP_CLIENT_IP'])){
-			$ip_address = $_SERVER['HTTP_CLIENT_IP'];
-		}
-		else if(isset($_SERVER['HTTP_X_FORWARDED_FOR'])){
-			$ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
-		}
-		else{
-			$ip_address = $_SERVER['REMOTE_ADDR'];
-		}
+	protected function create( $attributes = [] ) {
+		$this->setAttribute( 'ip_address', $this->getIPAddress() );
+		return parent::create( $attributes );
+	}
 
-		$this->setAttribute('ip_address',$ip_address);
-		$saved = parent::create($attributes);
-		return $saved;
+	/**
+	 * Get the IP address of the user
+	 *
+	 * TOD0: Move this to a helper class.
+	 *
+	 * @return string
+	 */
+	protected function getIPAddress() {
+		if ( isset( $_SERVER['HTTP_CLIENT_IP'] ) ) {
+			return $_SERVER['HTTP_CLIENT_IP'];
+		} elseif ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+			return $_SERVER['HTTP_X_FORWARDED_FOR'];
+		}
+		return $_SERVER['REMOTE_ADDR'];
 	}
 
 	/**
