@@ -117,7 +117,7 @@ class SettingService {
 				'type'              => 'string',
 				'show_in_rest'      => true,
 				'sanitize_callback' => 'sanitize_text_field',
-				'defalt'			=> 'right',
+				'defalt'            => 'right',
 			]
 		);
 		$this->register(
@@ -132,11 +132,11 @@ class SettingService {
 		);
 		$this->register(
 			'surecart',
-			'cart_menu_selected_id',
+			'cart_menu_selected_ids',
 			[
-				'type'              => 'array',
-				'show_in_rest'      => true,
-				'sanitize_callback' => 'sanitize_text_field',
+				'type'         => 'array',
+				'items'        => 'integer',
+				'show_in_rest' => true,
 			]
 		);
 	}
