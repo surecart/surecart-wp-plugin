@@ -1,0 +1,25 @@
+name: QA Build
+
+on:
+  pull_request:
+    types: [ labeled ]
+
+jobs:
+  build:
+    if: ${{ github.event.label.name == 'qa ready' }}
+    name: "Build Zip For QA"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/build
+        with:
+          bootstrap: true
+          package: true
+
+      - name: Upload Zip
+        uses: actions/upload-artifact@v3
+        with:
+          name: surecart
+          path: '@surecart/surecart'
+
