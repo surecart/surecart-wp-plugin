@@ -1,16 +1,5 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import {
-	ScButton,
-	ScIcon,
-	ScInput,
-	ScRadio,
-	ScRadioGroup,
-	ScFormControl,
-	ScDivider,
-	ScSwitch,
-} from '@surecart/components-react';
-import { addQueryArgs } from '@wordpress/url';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
@@ -18,7 +7,6 @@ import { store as noticesStore } from '@wordpress/notices';
 
 import Box from '../../ui/Box';
 import SelectTemplate from '../components/SelectTemplate';
-import { Button, PanelRow } from '@wordpress/components';
 import Status from '../components/Status';
 import Availability from '../components/Availability';
 import Url from '../components/Url';
@@ -41,27 +29,9 @@ export default ({ product, updateProduct, loading }) => {
 		}
 	};
 
-	const { template, loadingTemplate } = useSelect(
-		(select) => {
-			const queryArgs = [
-				'postType',
-				'wp_template',
-				product?.metadata?.wp_template_id, // || default template id.
-			];
-			return {
-				template: select(coreStore).getEditedEntityRecord(...queryArgs),
-				loading: select(coreStore).isResolving(
-					'getEditedEntityRecord',
-					queryArgs
-				),
-			};
-		},
-		[product?.metadata?.wp_template_id]
-	);
-
 	return (
 		<Box
-			loading={loading || loadingTemplate}
+			loading={loading}
 			title={
 				<div
 					css={css`
