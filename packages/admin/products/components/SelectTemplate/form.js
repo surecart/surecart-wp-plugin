@@ -23,20 +23,20 @@ export default function PostTemplateForm({
 	updateProduct,
 	template,
 }) {
-	const { templates, canCreate, canEdit } = useSelect((select) => {
+	const { templates, canCreate } = useSelect((select) => {
 		const { canUser, getEntityRecords } = select(coreStore);
-		const canCreateTemplates = canUser('create', 'templates');
-		const canEditTemplate = !!scData?.is_block_theme || !!template?.wp_id;
 		return {
 			templates:
 				getEntityRecords('postType', 'wp_template', {
 					per_page: -1,
 					post_type: 'surecart-product',
 				}) || [],
-			canCreate: canCreateTemplates,
-			canEdit: canCreateTemplates && canEditTemplate,
+			canCreate: canUser('create', 'templates'),
 		};
 	}, []);
+
+	const canEdit =
+		canCreate && (!!scData?.is_block_theme || !!template?.wp_id);
 
 	const options = (templates ?? []).map(({ id, title, wp_id }) => ({
 		value: id,
