@@ -72,13 +72,7 @@ class Checkout extends Model {
 	 * @return string
 	 */
 	protected function getIPAddress() {
-		if ( isset( $_SERVER['HTTP_CLIENT_IP'] ) ) {
-			return $_SERVER['HTTP_CLIENT_IP'];
-		}
-		if ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-			return $_SERVER['HTTP_X_FORWARDED_FOR'];
-		}
-		return $_SERVER['REMOTE_ADDR'] ?? '';
+		return $_SERVER['HTTP_CLIENT_IP'] ?? $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '';
 	}
 
 	/**
