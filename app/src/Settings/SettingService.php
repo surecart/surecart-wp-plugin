@@ -134,7 +134,7 @@ class SettingService {
 			'surecart',
 			'cart_menu_selected_id',
 			[
-				'type'              => 'number',
+				'type'              => 'array',
 				'show_in_rest'      => true,
 				'sanitize_callback' => 'sanitize_text_field',
 			]

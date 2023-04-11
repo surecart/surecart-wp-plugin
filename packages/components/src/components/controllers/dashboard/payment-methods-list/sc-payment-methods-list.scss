@@ -16,3 +16,9 @@
     color: var(--sc-color-primary-500);
   }
 }
+
+.payment-id {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
