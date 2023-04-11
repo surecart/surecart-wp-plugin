@@ -61,7 +61,18 @@ class Checkout extends Model {
 	 * @return $this|\WP_Error|false
 	 */
 	protected function create($attributes = []){
-		$this->setAttribute('ip_address',$_SERVER['REMOTE_ADDR']);
+		$ip_address = null;
+		if(isset($_SERVER['HTTP_CLIENT_IP'])){
+			$ip_address = $_SERVER['HTTP_CLIENT_IP'];
+		}
+		else if(isset($_SERVER['HTTP_X_FORWARDED_FOR'])){
+			$ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
+		}
+		else{
+			$ip_address = $_SERVER['REMOTE_ADDR'];
+		}
+
+		$this->setAttribute('ip_address',$ip_address);
 		$saved = parent::create($attributes);
 		return $saved;
 	}
