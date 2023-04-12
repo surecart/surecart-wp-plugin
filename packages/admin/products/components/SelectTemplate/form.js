@@ -71,15 +71,13 @@ export default function PostTemplateForm({
 					'Templates define the way this product is displayed when viewing your site.'
 				)}
 				actions={
-					canCreate
-						? [
-								{
-									icon: addTemplate,
-									label: __('Add template'),
-									onClick: () => setIsCreateModalOpen(true),
-								},
-						  ]
-						: []
+					canCreate && [
+						{
+							icon: addTemplate,
+							label: __('Duplicate Template', 'surecart'),
+							onClick: () => setIsCreateModalOpen(true),
+						},
+					]
 				}
 				onClose={onClose}
 			/>
