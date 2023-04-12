@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScButton } from '@surecart/components-react';
+import { ScButton, ScTag } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { select, useDispatch, useSelect } from '@wordpress/data';
 import { Fragment, useState } from '@wordpress/element';
@@ -128,6 +128,17 @@ export default ({ id }) => {
 		}
 	};
 
+	const renderStatusBadge = () => {
+		if (!product?.id) return null;
+		if (product?.archived) {
+			return <ScTag type="warning">{__('Archived', 'surecart')}</ScTag>;
+		}
+		if (product?.status === 'published') {
+			return <ScTag type="success">{__('Published', 'surecart')}</ScTag>;
+		}
+		return <ScTag>{__('Draft', 'surecart')}</ScTag>;
+	};
+
 	return (
 		<UpdateModel
 			onSubmit={onSubmit}
@@ -156,14 +167,7 @@ export default ({ id }) => {
 						<sc-breadcrumb>
 							<sc-flex style={{ gap: '1em' }}>
 								{__('Edit Product', 'surecart')}
-								{product?.archived && (
-									<>
-										{' '}
-										<sc-tag type="warning">
-											{__('Archived', 'surecart')}
-										</sc-tag>
-									</>
-								)}
+								{renderStatusBadge()}
 							</sc-flex>
 						</sc-breadcrumb>
 					</sc-breadcrumbs>
