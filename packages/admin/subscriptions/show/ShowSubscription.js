@@ -10,6 +10,8 @@ import {
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
+	ScUpgradeRequired,
+	ScPremiumTag,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import { store as coreStore } from '@wordpress/core-data';
@@ -249,10 +251,17 @@ export default () => {
 		if (['completed', 'canceled'].includes(subscription?.status))
 			return null;
 
+		const upgradeRequired =
+			!window.scData?.entitlements?.subscription_restore_at;
 		return (
-			<ScMenuItem onClick={() => setModal('pause')}>
-				{__('Pause Subscription...', 'surecart')}
-			</ScMenuItem>
+			<ScUpgradeRequired required={upgradeRequired}>
+				<ScMenuItem onClick={() => setModal('pause')}>
+					{upgradeRequired
+						? __('Pause Subscription...', 'surecart')
+						: __('Pause', 'surecart')}{' '}
+					{upgradeRequired ? <ScPremiumTag slot="suffix" /> : null}
+				</ScMenuItem>
+			</ScUpgradeRequired>
 		);
 	};
 	const renderPayOffButton = () => {
