@@ -63,7 +63,7 @@ class CheckoutTest extends SureCartUnitTestCase
 									"price_id" => "85109619-529d-47b3-98c3-ca90d22913e4",
 									"quantity" => 2
 								]
-							]
+								],
 						]
 					],
 					'query' => []
@@ -76,7 +76,8 @@ class CheckoutTest extends SureCartUnitTestCase
 						"price_id" => "85109619-529d-47b3-98c3-ca90d22913e4",
 						"quantity" => 2
 					]
-				]
+				],
+				'ip_address' => '127.0.0.1'
 			]);
 
 		$created = (new Checkout([
@@ -97,7 +98,8 @@ class CheckoutTest extends SureCartUnitTestCase
 					"price_id" => "85109619-529d-47b3-98c3-ca90d22913e4",
 					"quantity" => 2
 				]
-			]
+			],
+			'ip_address' => '127.0.0.1'
 		]);
 	}
 
