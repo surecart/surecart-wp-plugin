@@ -257,8 +257,8 @@ export default () => {
 			<ScUpgradeRequired required={upgradeRequired}>
 				<ScMenuItem onClick={() => setModal('pause')}>
 					{upgradeRequired
-						? __('Pause Subscription...', 'surecart')
-						: __('Pause', 'surecart')}{' '}
+						? __('Pause', 'surecart')
+						: __('Pause Subscription...', 'surecart')}{' '}
 					{upgradeRequired ? <ScPremiumTag slot="suffix" /> : null}
 				</ScMenuItem>
 			</ScUpgradeRequired>
