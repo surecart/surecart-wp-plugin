@@ -4,12 +4,10 @@ import { __ } from '@wordpress/i18n';
 import { ScButton, ScFormControl, ScIcon } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import MediaLibrary from '../../components/MediaLibrary';
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
 import { useEffect, useRef, useState } from 'react';
 import { ScBlockUi } from '@surecart/components-react';
-import $ from 'jquery';
 
 export default ({ product, updateProduct, loading }) => {
 	const { saveEntityRecord } = useDispatch(coreStore);
@@ -47,17 +45,33 @@ export default ({ product, updateProduct, loading }) => {
 		[product?.id]
 	);
 
-	useEffect(() => {
-		if (!!imageContainerRef && !!productMedia?.length) {
-			const productImageList = $(imageContainerRef.current);
-			productImageList.sortable();
-			$('#product-images-container').hide(200);
+	// dispatchers.
+	const { editEntityRecord, deleteEntityRecord, saveEditedEntityRecord } =
+		useDispatch(coreStore);
 
-			return () => {
-				productImageList.sortable('destroy');
-			};
+	const onDragStop = (e) => {
+		const imgTags = e.target?.children || [];
+		for (let i = 0; i < imgTags.length; i++) {
+			editEntityRecord(
+				'surecart',
+				'product-medias',
+				imgTags[i].getAttribute('media-id'),
+				{
+					position: i,
+				}
+			);
 		}
-	}, [imageContainerRef]);
+	};
+
+	useEffect(() => {
+		jQuery(document).ready(function ($) {
+			if (!!productMedia?.length) {
+				$('#product-images-container').sortable({
+					stop: onDragStop,
+				});
+			}
+		});
+	}, [productMedia]);
 
 	const onSelectMedia = (media) => {
 		return updateProduct({
@@ -106,7 +120,6 @@ export default ({ product, updateProduct, loading }) => {
 						gap: 1em;
 						grid-template-columns: repeat(2, 1fr);
 					`}
-					ref={imageContainerRef}
 					id="product-images-container"
 				>
 					{productMedia.map((pMedia) => (
@@ -114,6 +127,7 @@ export default ({ product, updateProduct, loading }) => {
 							key={pMedia.id}
 							src={pMedia?.media?.url}
 							alt="product image"
+							media-id={pMedia.id}
 							css={css`
 								max-width: 100%;
 								width: 380px;
@@ -121,6 +135,7 @@ export default ({ product, updateProduct, loading }) => {
 								object-fit: cover;
 								height: auto;
 								display: block;
+								cursor: crosshair;
 								border-radius: var(--sc-border-radius-medium);
 								background: #f3f3f3;
 							`}
