@@ -56,7 +56,7 @@ class Block extends BaseBlock {
 			column-gap="<?php echo esc_attr( $attributes['column_gap'] ); ?>"
 			sticky-content="<?php echo esc_attr( $attributes['sticky_content'] ); ?>"
 			class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
-			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>"
+			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?> --sc-font-sans: initial; --sc-input-font-family: initial;"
 		>
 				<?php echo filter_block_content( $content, 'post' ); ?>
 		</sc-product>
