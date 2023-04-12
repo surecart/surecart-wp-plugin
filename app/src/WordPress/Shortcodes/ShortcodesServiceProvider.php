@@ -111,6 +111,39 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			\SureCartBlocks\Blocks\OrderConfirmationLineItems\Block::class,
 		);
 
+		// product page.
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_product_info',
+			\SureCartBlocks\Blocks\Product\Info\Block::class,
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_product_description',
+			\SureCartBlocks\Blocks\Product\Description\Block::class,
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_product_title',
+			\SureCartBlocks\Blocks\Product\Title\Block::class,
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_product_price',
+			\SureCartBlocks\Blocks\Product\Price\Block::class,
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_product_price',
+			\SureCartBlocks\Blocks\Product\PriceChoices\Block::class,
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_product_media',
+			\SureCartBlocks\Blocks\Product\Media\Block::class,
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_product_quantity',
+			\SureCartBlocks\Blocks\Product\Quantity\Block::class,
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_product_quantity',
+			\SureCartBlocks\Blocks\Product\BuyButtons\Block::class,
+		);
 	}
 
 	/**
