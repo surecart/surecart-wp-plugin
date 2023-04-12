@@ -7,7 +7,7 @@ export default ({ title, model }) => {
 			<sc-button
 				size="small"
 				slot="suffix"
-				href={`${scData?.app_url}/exports/${model}?hide_sidebar=false`}
+				href={`${scData?.app_url}/exports`}
 				target="_blank"
 			>
 				<sc-icon name="download" slot="suffix"></sc-icon>

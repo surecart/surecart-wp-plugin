@@ -76,6 +76,7 @@ class CustomerController extends RestController {
 					'user_email' => ! empty( $request['email'] ) ? $request['email'] : $wp_user->user_email,
 					'first_name' => ! empty( $request['first_name'] ) ? $request['first_name'] : $wp_user->first_name,
 					'last_name'  => ! empty( $request['last_name'] ) ? $request['last_name'] : $wp_user->last_name,
+					'phone'      => ! empty( $request['phone'] ) ? $request['phone'] : $wp_user->phone,
 				]
 			);
 		}

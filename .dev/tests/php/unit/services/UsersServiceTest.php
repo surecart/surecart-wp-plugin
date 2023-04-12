@@ -27,6 +27,11 @@ class UsersServiceTest extends SureCartUnitTestCase
 		parent::setUp();
 	}
 
+	/**
+	 * @group failing
+	 *
+	 * @return void
+	 */
 	public function test_profile_update_syncs_customer_model() {
 		$user = User::find(self::factory()->user->create([
 			'user_email' => 'testemail@test.com',
@@ -52,7 +57,8 @@ class UsersServiceTest extends SureCartUnitTestCase
 						'customer' => [
 							'first_name' => $user->first_name,
 							'last_name' => $user->last_name,
-							'email' => $user->user_email
+							'email' => $user->user_email,
+							'phone' => '555-555-5555'
 						]
 					],
 					'query' => []
@@ -71,7 +77,61 @@ class UsersServiceTest extends SureCartUnitTestCase
 		$service->syncUserProfile($user->ID, null, [
 			'first_name' => $user->first_name,
 			'last_name' => $user->last_name,
-			'user_email' => $user->user_email
+			'user_email' => $user->user_email,
+			'phone' => '555-555-5555'
+		]);
+	}
+
+	/**
+	 * @group failing
+	 *
+	 * @return void
+	 */
+	public function test_profile_update_syncs_doesnt_send_phone_if_empty() {
+		$user = User::find(self::factory()->user->create([
+			'user_email' => 'testemail@test.com',
+			'first_name' => 'firstnametest',
+			'last_name' => 'lastnametest'
+		]));
+		$user->setCustomerId('testcustomerid');
+
+		// mock requests
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		// then make the request./**
+		$requests->shouldReceive('makeRequest')
+			->once()
+			->withArgs([
+				'customers/testcustomerid',
+				[
+					'method' => 'PATCH',
+					'body' => [
+						'customer' => [
+							'first_name' => $user->first_name,
+							'last_name' => $user->last_name,
+							'email' => $user->user_email,
+						]
+					],
+					'query' => []
+				],
+				false,
+				''
+			])
+			->andReturn((object)[
+				'first_name' => $user->first_name,
+				'last_name' => $user->last_name,
+				'email' => $user->user_email
+			]);
+
+
+		$service = new UsersService();
+		$service->syncUserProfile($user->ID, null, [
+			'first_name' => $user->first_name,
+			'last_name' => $user->last_name,
+			'user_email' => $user->user_email,
 		]);
 	}
 
