@@ -1,18 +1,23 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { ScButton, ScFormControl, ScIcon } from '@surecart/components-react';
-import Box from '../../ui/Box';
-import MediaLibrary from '../../components/MediaLibrary';
+import Box from '../../../ui/Box';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ScBlockUi } from '@surecart/components-react';
+import AddImage from './AddImage';
+import ImageDisplay from './ImageDisplay';
+import ConfirmDeleteImage from './ConfirmDeleteImage';
 
+const modals = {
+	CONFIRM_DELETE_IMAGE: 'confirm_delete_image',
+};
 export default ({ product, updateProduct, loading }) => {
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const [isSaving, setIsSaving] = useState(false);
-	const imageContainerRef = useRef(null);
+	const [currentModal, setCurrentModal] = useState('');
+	const [selectedImage, setSelectedImage] = useState();
 
 	const { fetchingMedia, productMedia } = useSelect(
 		(select) => {
@@ -52,6 +57,9 @@ export default ({ product, updateProduct, loading }) => {
 	const onDragStop = (e) => {
 		const imgTags = e.target?.children || [];
 		for (let i = 0; i < imgTags.length; i++) {
+			if (!imgTags[i]?.getAttribute('media-id')) {
+				continue;
+			}
 			editEntityRecord(
 				'surecart',
 				'product-medias',
@@ -68,6 +76,7 @@ export default ({ product, updateProduct, loading }) => {
 			if (!!productMedia?.length) {
 				$('#product-images-container').sortable({
 					stop: onDragStop,
+					cancel: '.cancel-sortable',
 				});
 			}
 		});
@@ -104,13 +113,6 @@ export default ({ product, updateProduct, loading }) => {
 		}
 	};
 
-	const onRemoveMedia = (media) => {
-		return updateProduct({
-			image: null,
-			image_url: null,
-		});
-	};
-
 	const renderImages = () => {
 		if (!!productMedia?.length) {
 			return (
@@ -123,82 +125,17 @@ export default ({ product, updateProduct, loading }) => {
 					id="product-images-container"
 				>
 					{productMedia.map((pMedia) => (
-						<img
+						<ImageDisplay
+							onDeleteImage={(image) => {
+								setSelectedImage(image);
+								setCurrentModal(modals.CONFIRM_DELETE_IMAGE);
+							}}
 							key={pMedia.id}
-							src={pMedia?.media?.url}
-							alt="product image"
-							media-id={pMedia.id}
-							css={css`
-								max-width: 100%;
-								width: 380px;
-								aspect-ratio: 1/1;
-								object-fit: cover;
-								height: auto;
-								display: block;
-								cursor: crosshair;
-								border-radius: var(--sc-border-radius-medium);
-								background: #f3f3f3;
-							`}
+							productMedia={pMedia}
 						/>
 					))}
+					<AddImage onAddMedia={onAddMedia} />
 				</div>
-			);
-		}
-	};
-
-	const renderMediaLibrary = () => {
-		if (product?.image_url) {
-			return (
-				<div
-					css={css`
-						display: flex;
-						align-items: center;
-						gap: 0.5em;
-					`}
-				>
-					<MediaLibrary
-						onSelect={onSelectMedia}
-						isPrivate={false}
-						render={({ setOpen }) => {
-							return (
-								<>
-									<ScButton onClick={() => setOpen(true)}>
-										<ScIcon
-											name="repeat"
-											slot="prefix"
-										></ScIcon>
-										{__('Replace', 'surecart')}
-									</ScButton>
-									<ScButton
-										css={css`
-											color: var(--sc-color-gray-600);
-										`}
-										type="text"
-										onClick={onRemoveMedia}
-									>
-										{__('Remove', 'surecart')}
-									</ScButton>
-								</>
-							);
-						}}
-					></MediaLibrary>
-				</div>
-			);
-		} else {
-			return (
-				<MediaLibrary
-					onSelect={onAddMedia}
-					isPrivate={false}
-					isMultiSelect={true}
-					render={({ setOpen }) => {
-						return (
-							<ScButton onClick={() => setOpen(true)}>
-								<ScIcon name="plus" slot="prefix"></ScIcon>
-								{__('Add Image', 'surecart')}
-							</ScButton>
-						);
-					}}
-				></MediaLibrary>
 			);
 		}
 	};
@@ -207,14 +144,6 @@ export default ({ product, updateProduct, loading }) => {
 		<Box
 			title={__('Product Image', 'surecart')}
 			loading={loading || fetchingMedia}
-			footer={
-				<ScFormControl
-					label={__('Product Image', 'surecart')}
-					showLabel={false}
-				>
-					{renderMediaLibrary()}
-				</ScFormControl>
-			}
 		>
 			{renderImages()}
 			{isSaving && (
@@ -223,6 +152,14 @@ export default ({ product, updateProduct, loading }) => {
 					spinner
 				/>
 			)}
+			<ConfirmDeleteImage
+				open={currentModal === modals.CONFIRM_DELETE_IMAGE}
+				onRequestClose={() => {
+					setSelectedImage();
+					setCurrentModal('');
+				}}
+				selectedImage={selectedImage}
+			/>
 		</Box>
 	);
 };
