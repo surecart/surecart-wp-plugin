@@ -110,7 +110,7 @@ export class ScCustomerEdit {
               </sc-column>
             </sc-columns>
             <sc-column>
-              <sc-input label={__('Phone', 'surecart')} name="phone" value={this.customer?.phone} />
+              <sc-phone-input label={__('Phone', 'surecart')} name="phone" value={this.customer?.phone} />
             </sc-column>
             <div>
               <sc-address

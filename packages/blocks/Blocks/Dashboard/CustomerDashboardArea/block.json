@@ -9,5 +9,7 @@
 	"supports": {
 		"reusable": false,
 		"html": false
-	}
+	},
+	"script": "surecart-components",
+	"style": "surecart-themes-default"
 }

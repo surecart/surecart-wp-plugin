@@ -55,6 +55,7 @@ describe('sc-form', () => {
       <!-- Order form fields -->
       <sc-customer-name value="Testy McTesterson"></sc-customer-name>
       <sc-customer-email value="order@email.com"></sc-customer-email>
+      <sc-customer-phone value="0987654321"></sc-customer-phone>
       <sc-order-shipping-address></sc-order-shipping-address>
       <sc-order-tax-id-input></sc-order-tax-id-input>
       <sc-order-password value="pass"></sc-order-password>
@@ -89,6 +90,7 @@ describe('sc-form', () => {
       'ce_check_choice_1': 'CE Choice Check 1',
       'email': 'order@email.com',
       'name': 'Testy McTesterson',
+      'phone': '0987654321',
       'password': 'pass',
       'shipping_country': 'US',
       'shipping_postal_code': '12345',

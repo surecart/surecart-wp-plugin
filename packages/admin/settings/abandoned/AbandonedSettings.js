@@ -46,18 +46,11 @@ export default () => {
 		}
 	}, [item?.coupon]);
 
-	const updateNotification = (value, index) =>
-		editItem({
-			notification_delays: (item?.notification_delays || []).map(
-				(item, i) => {
-					if (i !== index) {
-						// This isn't the item we care about - keep it as-is
-						return item;
-					}
-					return parseInt(value);
-				}
-			),
-		});
+	const updateNotification = (value, index) => {
+		const notification_delays = [...item?.notification_delays];
+		notification_delays[index] = parseInt(value);
+		editItem({ notification_delays });
+	};
 
 	/**
 	 * Form is submitted.
@@ -113,6 +106,7 @@ export default () => {
 						<ScSelect
 							label={__('First Email Delay', 'surecart')}
 							value={item?.notification_delays?.[0]}
+							placeholder={__("Don't send", 'surecart')}
 							onScChange={(e) =>
 								updateNotification(e.target.value, 0)
 							}
@@ -121,6 +115,7 @@ export default () => {
 						<ScSelect
 							label={__('Second Email Delay', 'surecart')}
 							value={item?.notification_delays?.[1]}
+							placeholder={__("Don't send", 'surecart')}
 							onScChange={(e) =>
 								updateNotification(e.target.value, 1)
 							}
@@ -129,6 +124,7 @@ export default () => {
 						<ScSelect
 							label={__('Final Email Delay', 'surecart')}
 							value={item?.notification_delays?.[2]}
+							placeholder={__("Don't send", 'surecart')}
 							onScChange={(e) =>
 								updateNotification(e.target.value, 2)
 							}
@@ -292,6 +288,23 @@ export default () => {
 				)}
 				loading={!hasLoadedItem}
 			>
+				<ScSwitch
+					checked={!!item?.test_mode_enabled}
+					onScChange={(e) =>
+						editItem({
+							test_mode_enabled: e.target.checked ? 1 : 0,
+						})
+					}
+				>
+					{__('Enabled In Test Mode', 'surecart')}
+					<span slot="description">
+						{__(
+							'Also enable abandoned checkouts in test mode.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
 				<ScSwitch
 					checked={item?.ignore_purchased_products}
 					onScChange={(e) =>
