@@ -83,7 +83,13 @@ export default ({ open, onRequestClose, subscription }) => {
 				currentDate={renewAt}
 				onChange={onChangeDate}
 				isInvalidDate={(date) => {
-					return Date.parse(new Date()) > Date.parse(date);
+					return !!subscription?.cancel_at_period_end
+						? Date.parse(
+								new Date(
+									subscription?.current_period_end_at * 1000
+								)
+						  ) > Date.parse(date)
+						: Date.parse(new Date()) > Date.parse(date);
 				}}
 			/>
 
