@@ -44,7 +44,8 @@ export default ({ subscription, customer, product, loading }) => {
 
 		if (
 			subscription?.cancel_at_period_end &&
-			subscription.current_period_end_at
+			subscription.current_period_end_at &&
+			!subscription?.restore_at
 		) {
 			return (
 				<div>
