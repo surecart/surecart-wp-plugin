@@ -67,3 +67,30 @@ add_filter(
 		return $url;
 	}
 );
+
+
+// function wp1482371_custom_post_type_args( $args, $post_type ) {
+// if ( $post_type === 'wp_template' ) {
+// $args['public']       = true;
+// $args['sbow_in_menu'] = true;
+// }
+
+// flush_rewrite_rules();
+
+// return $args;
+// }
+// add_filter( 'register_post_type_args', 'wp1482371_custom_post_type_args', 20, 2 );
+
+// add_action(
+// 'elementor/documents/register',
+// function( $documents_manager ) {
+// $documents_manager->register_document_type( 'surecart', \Elementor\Modules\Library\Documents\Page::get_class_full_name() );
+// }
+// );
+
+// add_action(
+// 'pre_get_posts',
+// function() {
+// var_dump( get_query_var( 'post' ) );
+// }
+// );

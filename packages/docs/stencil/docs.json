@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-04T22:01:53",
+  "timestamp": "2023-04-13T14:04:17",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -20612,6 +20612,7 @@
       "filePath": "./src/components/ui/sc-price-choice-container/sc-price-choice-container.tsx",
       "encapsulation": "none",
       "tag": "sc-price-choice-container",
+      "readme": "# sc-price-choice-container\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -20668,7 +20669,7 @@
         {
           "name": "loading",
           "type": "boolean",
-          "mutable": true,
+          "mutable": false,
           "attr": "loading",
           "reflectToAttr": false,
           "docs": "Is this loading",
@@ -20685,7 +20686,7 @@
         {
           "name": "price",
           "type": "Price",
-          "mutable": true,
+          "mutable": false,
           "reflectToAttr": false,
           "docs": "Stores the price",
           "docsTags": [],

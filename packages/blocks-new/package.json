@@ -23,7 +23,7 @@
 	"module": "build-module/index.js",
 	"prettier": "@wordpress/prettier-config",
 	"scripts": {
-		"build": "wp-scripts build --webpack-src-dir=Blocks",
+		"build": "wp-scripts build",
 		"release": "yarn build",
 		"check-engines": "wp-scripts check-engines",
 		"check-licenses": "wp-scripts check-licenses",
@@ -34,17 +34,15 @@
 		"lint:md:js": "wp-scripts lint-md-js",
 		"lint:pkg-json": "wp-scripts lint-pkg-json",
 		"packages-update": "wp-scripts packages-update",
-		"watch": "wp-scripts start --webpack-src-dir=Blocks",
+		"watch": "wp-scripts start",
 		"test:e2e": "wp-scripts test-e2e",
 		"test:unit": "wp-scripts test-unit-js"
 	},
 	"dependencies": {
-		"@surecart/components": "^1.0.0",
-		"@surecart/components-react": "^1.0.1",
-		"react-select": "^5.7.0"
+		"@surecart/components": "^1.0.0"
 	},
 	"devDependencies": {
-		"@wordpress/prettier-config": "^1.1.1",
+		"@wordpress/prettier-config": "^2.14.0",
 		"@wordpress/scripts": "^26.2.0",
 		"prettier": "^2.5.1",
 		"webpack-cli": "^4.9.2"

@@ -29,4 +29,43 @@ class ShortcodesService {
 			2
 		);
 	}
+
+	/**
+	 * Register shortcode by name
+	 *
+	 * @param string $name Name of the shortcode.
+	 * @param string $block_name The registered block name.
+	 * @param array  $defaults Default attributes.
+	 *
+	 * @return void
+	 */
+	public function registerBlockShortcodeByName( $name, $block_name, $defaults = [] ) {
+		add_shortcode(
+			$name,
+			function( $attributes, $content ) use ( $name, $block_name, $defaults ) {
+				$block = new \WP_Block(
+					[
+						'blockName'    => $block_name,
+						'attributes'   => shortcode_atts(
+							$defaults,
+							$attributes,
+							$name
+						),
+						'innerContent' => do_shortcode( $content ),
+					]
+				);
+				return $block->render();
+			}
+		);
+
+		$block = new \WP_Block(
+			[
+				'blockName'  => 'surecart/address',
+				'attributes' => [
+					'text' => 'text',
+				],
+			]
+		);
+		echo $block->render();
+	}
 }

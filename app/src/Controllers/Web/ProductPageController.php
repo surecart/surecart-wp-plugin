@@ -39,12 +39,23 @@ class ProductPageController extends ProductTypePageController {
 		// add the filters.
 		$this->filters();
 
+		$args = array(
+			'post_type'      => 'elementor_library',
+			'posts_per_page' => 30,
+		);
+
+		  $elementor_templates = get_posts( $args );
+
+		// foreach ( $elementor_templates as $elementor_template ) {
+		// var_dump( $elementor_template );
+		// }
+
 		// check to see if the product has a page or template.
 		return \SureCart::view(
 			wp_is_block_theme() ? 'web/product-canvas' : 'web/product'
 		)->with(
 			[
-				'content' => $this->product->template->content ?? '',
+				'content' => $elementor_templates[0]->post_content ?? $this->product->template->content ?? '',
 			]
 		);
 	}

@@ -147,7 +147,7 @@ return [
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerInvoices\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerCharges\Block::class,
 
-		\SureCartBlocks\Blocks\Product\Info\Block::class,
+		// \SureCartBlocks\Blocks\Product\Info\Block::class,
 		\SureCartBlocks\Blocks\Product\Description\Block::class,
 		\SureCartBlocks\Blocks\Product\Title\Block::class,
 		\SureCartBlocks\Blocks\Product\Price\Block::class,

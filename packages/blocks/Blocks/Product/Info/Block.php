@@ -4,6 +4,7 @@ namespace SureCartBlocks\Blocks\Product\Info;
 
 use SureCart\Models\Form;
 use SureCartBlocks\Blocks\BaseBlock;
+use SureCartBlocks\Util\BlockStyleAttributes;
 
 /**
  * Checkout block
@@ -55,7 +56,7 @@ class Block extends BaseBlock {
 			media-width="<?php echo esc_attr( $attributes['media_width'] ); ?>"
 			column-gap="<?php echo esc_attr( $attributes['column_gap'] ); ?>"
 			sticky-content="<?php echo esc_attr( $attributes['sticky_content'] ); ?>"
-			class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
+			class="<?php echo esc_attr( BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes ) ); ?>"
 			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?> --sc-font-sans: initial; --sc-input-font-family: initial;"
 		>
 				<?php echo filter_block_content( $content, 'post' ); ?>

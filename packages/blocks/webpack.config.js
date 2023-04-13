@@ -23,20 +23,20 @@ module.exports = {
 			),
 		},
 	},
-	// entry: {
-	// 	...defaultConfig.entry,
-	// 	library: path.resolve(__dirname, 'index.js'),
-	// 	cart: path.resolve(__dirname, 'cart.js'),
-	// 	cloak: path.resolve(__dirname, 'styles/cloak.js'),
-	// },
-	// output: {
-	// 	...defaultConfig.output,
-	// 	path: path.resolve(__dirname, 'dist'),
-	// },
-	// plugins: [
-	// 	...defaultConfig.plugins,
-	// 	new webpack.optimize.LimitChunkCountPlugin({
-	// 		maxChunks: 1,
-	// 	}),
-	// ],
+	entry: {
+		...defaultConfig.entry,
+		library: path.resolve(__dirname, 'index.js'),
+		cart: path.resolve(__dirname, 'cart.js'),
+		cloak: path.resolve(__dirname, 'styles/cloak.js'),
+	},
+	output: {
+		...defaultConfig.output,
+		path: path.resolve(__dirname, 'dist'),
+	},
+	plugins: [
+		...defaultConfig.plugins,
+		new webpack.optimize.LimitChunkCountPlugin({
+			maxChunks: 1,
+		}),
+	],
 };
