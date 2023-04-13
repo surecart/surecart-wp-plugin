@@ -23,6 +23,21 @@ export default ({ productMedia, onDeleteImage }) => {
 			`}
 			media-id={productMedia.id}
 		>
+			{productMedia.position === 0 && (
+				<span
+					css={css`
+						position: absolute;
+						top: 0;
+						left: 0;
+						background-color: var(--sc-color-danger-500);
+						color: var(--sc-color-white);
+						padding: 0.3rem 0.4rem;
+						border-bottom-right-radius: 4px;
+					`}
+				>
+					{__('Featured', 'surecart')}
+				</span>
+			)}
 			<ScIcon
 				className="delete-icon"
 				onClick={() => onDeleteImage(productMedia)}
