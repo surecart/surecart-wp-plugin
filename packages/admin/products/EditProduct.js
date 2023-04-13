@@ -20,6 +20,7 @@ import Integrations from './modules/integrations/Integrations';
 import Licensing from './modules/Licensing';
 import Prices from './modules/Prices';
 import Sidebar from './Sidebar';
+import Image from './modules/Image';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
@@ -214,6 +215,12 @@ export default ({ id }) => {
 				/>
 
 				<Details
+					product={product}
+					updateProduct={editProduct}
+					loading={!hasLoadedProduct}
+				/>
+
+				<Image
 					product={product}
 					updateProduct={editProduct}
 					loading={!hasLoadedProduct}

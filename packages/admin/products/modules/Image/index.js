@@ -9,9 +9,11 @@ import { ScBlockUi } from '@surecart/components-react';
 import AddImage from './AddImage';
 import ImageDisplay from './ImageDisplay';
 import ConfirmDeleteImage from './ConfirmDeleteImage';
+import AddUrlImage from './AddUrlImage';
 
 const modals = {
 	CONFIRM_DELETE_IMAGE: 'confirm_delete_image',
+	ADD_IMAGE_FROM_URL: 'add_image_from_url',
 };
 export default ({ product, updateProduct, loading }) => {
 	const { saveEntityRecord } = useDispatch(coreStore);
@@ -51,8 +53,7 @@ export default ({ product, updateProduct, loading }) => {
 	);
 
 	// dispatchers.
-	const { editEntityRecord, deleteEntityRecord, saveEditedEntityRecord } =
-		useDispatch(coreStore);
+	const { editEntityRecord } = useDispatch(coreStore);
 
 	const onDragStop = (e) => {
 		const imgTags = e.target?.children || [];
@@ -81,13 +82,6 @@ export default ({ product, updateProduct, loading }) => {
 			}
 		});
 	}, [productMedia]);
-
-	const onSelectMedia = (media) => {
-		return updateProduct({
-			image: media?.id,
-			image_url: media?.url,
-		});
-	};
 
 	const saveProductMedia = async (media) => {
 		return saveEntityRecord(
@@ -120,7 +114,7 @@ export default ({ product, updateProduct, loading }) => {
 					css={css`
 						display: grid;
 						gap: 1em;
-						grid-template-columns: repeat(2, 1fr);
+						grid-template-columns: repeat(3, 1fr);
 					`}
 					id="product-images-container"
 				>
@@ -134,10 +128,24 @@ export default ({ product, updateProduct, loading }) => {
 							productMedia={pMedia}
 						/>
 					))}
-					<AddImage onAddMedia={onAddMedia} />
+					<AddImage
+						onAddMedia={onAddMedia}
+						onAddFromURL={() => {
+							setCurrentModal(modals.ADD_IMAGE_FROM_URL);
+						}}
+					/>
 				</div>
 			);
 		}
+
+		return (
+			<AddImage
+				onAddMedia={onAddMedia}
+				onAddFromURL={() => {
+					setCurrentModal(modals.ADD_IMAGE_FROM_URL);
+				}}
+			/>
+		);
 	};
 
 	return (
@@ -159,6 +167,13 @@ export default ({ product, updateProduct, loading }) => {
 					setCurrentModal('');
 				}}
 				selectedImage={selectedImage}
+			/>
+			<AddUrlImage
+				open={currentModal === modals.ADD_IMAGE_FROM_URL}
+				onRequestClose={() => {
+					setCurrentModal('');
+				}}
+				productId={product?.id}
 			/>
 		</Box>
 	);

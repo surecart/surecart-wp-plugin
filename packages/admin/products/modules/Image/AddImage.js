@@ -4,7 +4,7 @@ import { ScButton, ScFlex, ScIcon } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import MediaLibrary from '../../../components/MediaLibrary';
 
-export default ({ onAddMedia }) => {
+export default ({ onAddMedia, onAddFromURL }) => {
 	return (
 		<div
 			className="cancel-sortable"
@@ -41,7 +41,7 @@ export default ({ onAddMedia }) => {
 					}}
 				></MediaLibrary>
 
-				<ScButton onClick={() => setOpen(true)} type="link">
+				<ScButton onClick={onAddFromURL} type="link">
 					{__('Add from URL', 'surecart')}
 				</ScButton>
 			</ScFlex>

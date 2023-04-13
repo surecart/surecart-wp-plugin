@@ -53,7 +53,7 @@ export default ({ productMedia, onDeleteImage }) => {
 				`}
 			></div>
 			<img
-				src={productMedia?.media?.url}
+				src={productMedia?.url || productMedia?.media?.url}
 				alt="product image"
 				css={css`
 					max-width: 100%;
