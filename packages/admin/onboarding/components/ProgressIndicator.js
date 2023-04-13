@@ -68,7 +68,7 @@ export default ({ totalSteps, currentStep, onStepChange }) => {
 				<sc-button
 					type="primary"
 					size="large"
-					disabled={currentStep === 3}
+					// disabled={currentStep === 3}
 					onClick={() => onStepChange('forward')}
 				>
 					{__('Continue', 'surecart')}
