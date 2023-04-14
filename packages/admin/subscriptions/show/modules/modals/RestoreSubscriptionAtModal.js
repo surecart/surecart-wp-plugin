@@ -1,4 +1,11 @@
-import { ScBlockUi, ScButton, ScDialog } from '@surecart/components-react';
+import {
+	ScBlockUi,
+	ScButton,
+	ScDialog,
+	ScSpacing,
+	ScFormatDate,
+	ScText,
+} from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import apiFetch from '@wordpress/api-fetch';
 import { DateTimePicker } from '@wordpress/components';
@@ -11,7 +18,7 @@ import Error from '../../../../components/Error';
 import { addQueryArgs } from '@wordpress/url';
 import { useEffect } from 'react';
 
-export default ({ open, onRequestClose, currentRestoreAt }) => {
+export default ({ open, onRequestClose, subscription }) => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
@@ -20,10 +27,10 @@ export default ({ open, onRequestClose, currentRestoreAt }) => {
 	const [restoreAt, setRestoreAt] = useState(new Date());
 
 	useEffect(() => {
-		if (currentRestoreAt) {
-			setRestoreAt(new Date(currentRestoreAt * 1000));
+		if (!!subscription?.restore_at) {
+			setRestoreAt(new Date(subscription.restore_at * 1000));
 		}
-	}, [currentRestoreAt]);
+	}, [subscription?.restore_at]);
 
 	const onChangeDate = (date) => {
 		setRestoreAt(date);
@@ -65,6 +72,30 @@ export default ({ open, onRequestClose, currentRestoreAt }) => {
 		}
 	};
 
+	const isInvalidDate = (date) => {
+		const today = new Date();
+		const oneYearFromNow = new Date(
+			today.getFullYear() + 1,
+			today.getMonth(),
+			today.getDate()
+		);
+
+		return (
+			Date.parse(new Date(subscription?.current_period_end_at * 1000)) >
+				Date.parse(date) ||
+			Date.parse(date) > Date.parse(oneYearFromNow)
+		);
+	};
+
+	const isSetToPause = () => {
+		return (
+			!!subscription?.cancel_at_period_end &&
+			!!subscription?.current_period_end_at &&
+			subscription?.status !== 'canceled' &&
+			!!subscription?.restore_at
+		);
+	};
+
 	return (
 		<ScDialog
 			label={__('Restore Subscription At', 'surecart')}
@@ -78,14 +109,34 @@ export default ({ open, onRequestClose, currentRestoreAt }) => {
 			}}
 		>
 			<Error error={error} setError={setError} />
-
-			<DateTimePicker
-				currentDate={restoreAt}
-				onChange={onChangeDate}
-				isInvalidDate={(date) => {
-					return Date.parse(new Date()) > Date.parse(date);
-				}}
-			/>
+			<ScSpacing>
+				{isSetToPause() && (
+					<ScText>
+						{__(
+							'This subscription is going to be paused on ',
+							'surecart '
+						)}
+						<strong>
+							<ScFormatDate
+								date={subscription?.current_period_end_at}
+								type="timestamp"
+								month="long"
+								day="numeric"
+								year="numeric"
+							></ScFormatDate>
+						</strong>
+						{__(
+							'. When would you like the subscription to be restored?',
+							'surecart'
+						)}
+					</ScText>
+				)}
+				<DateTimePicker
+					currentDate={restoreAt}
+					onChange={onChangeDate}
+					isInvalidDate={isInvalidDate}
+				/>
+			</ScSpacing>
 
 			<ScButton
 				type="text"
@@ -101,7 +152,8 @@ export default ({ open, onRequestClose, currentRestoreAt }) => {
 				slot="footer"
 				onClick={() => onUpdateRestoreAt()}
 				disabled={
-					loading || restoreAt <= new Date(currentRestoreAt * 1000)
+					loading ||
+					restoreAt <= new Date(subscription?.restore_at * 1000)
 				}
 			>
 				{__('Update Subscription', 'surecart')}

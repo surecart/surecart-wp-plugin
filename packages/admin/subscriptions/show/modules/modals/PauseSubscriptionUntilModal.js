@@ -84,6 +84,21 @@ export default ({ open, onRequestClose, currentPeriodEndAt }) => {
 		}
 	};
 
+	const isInvalidDate = (date) => {
+		const today = new Date();
+		const oneYearFromNow = new Date(
+			today.getFullYear() + 1,
+			today.getMonth(),
+			today.getDate()
+		);
+
+		return (
+			Date.parse(new Date(currentPeriodEndAt * 1000)) >
+				Date.parse(date) ||
+			Date.parse(date) > Date.parse(oneYearFromNow)
+		);
+	};
+
 	return (
 		<ScDialog
 			label={__('Pause Subscription', 'surecart')}
@@ -122,10 +137,7 @@ export default ({ open, onRequestClose, currentPeriodEndAt }) => {
 				<DateTimePicker
 					currentDate={pauseUntil}
 					onChange={(pauseUntil) => setPauseUntil(pauseUntil)}
-					isInvalidDate={(date) =>
-						Date.parse(new Date(currentPeriodEndAt * 1000)) >
-						Date.parse(date)
-					}
+					isInvalidDate={isInvalidDate}
 				/>
 			</ScSpacing>
 

@@ -458,7 +458,7 @@ export default () => {
 			<RestoreSubscriptionAtModal
 				open={modal === 'restore_at'}
 				onRequestClose={onRequestCloseModal}
-				currentRestoreAt={subscription?.restore_at}
+				subscription={subscription}
 			/>
 			<PauseSubscriptionUntilModal
 				open={modal === 'pause'}
