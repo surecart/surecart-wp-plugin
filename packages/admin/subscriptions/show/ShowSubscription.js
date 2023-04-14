@@ -279,7 +279,13 @@ export default () => {
 
 	/** Render the restore at button */
 	const renderRestoreAtButton = () => {
-		if (subscription?.status !== 'canceled') return null;
+		const isSetToPause =
+			!!subscription?.cancel_at_period_end &&
+			!!subscription?.current_period_end_at &&
+			subscription?.status !== 'canceled' &&
+			!!subscription?.restore_at;
+
+		if (subscription?.status !== 'canceled' && !isSetToPause) return null;
 
 		return (
 			<ScMenuItem onClick={() => setModal('restore_at')}>
@@ -290,6 +296,13 @@ export default () => {
 
 	/** Render the renew at button */
 	const renderRenewAtButton = () => {
+		const isSetToPause =
+			!!subscription?.cancel_at_period_end &&
+			!!subscription?.current_period_end_at &&
+			subscription?.status !== 'canceled' &&
+			!!subscription?.restore_at;
+		if (isSetToPause) return null;
+
 		if (!['past_due', 'active'].includes(subscription?.status)) return null;
 
 		return (
