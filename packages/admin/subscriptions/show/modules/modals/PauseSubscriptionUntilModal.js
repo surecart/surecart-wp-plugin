@@ -1,4 +1,11 @@
-import { ScBlockUi, ScButton, ScDialog } from '@surecart/components-react';
+import {
+	ScBlockUi,
+	ScButton,
+	ScDialog,
+	ScFormatDate,
+	ScSpacing,
+	ScText,
+} from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import apiFetch from '@wordpress/api-fetch';
 import { DateTimePicker } from '@wordpress/components';
@@ -79,7 +86,7 @@ export default ({ open, onRequestClose, currentPeriodEndAt }) => {
 
 	return (
 		<ScDialog
-			label={__('Pause Subscription Until', 'surecart')}
+			label={__('Pause Subscription', 'surecart')}
 			open={open}
 			onScRequestClose={cancel}
 			style={{
@@ -91,14 +98,36 @@ export default ({ open, onRequestClose, currentPeriodEndAt }) => {
 		>
 			<Error error={error} setError={setError} />
 
-			<DateTimePicker
-				currentDate={pauseUntil}
-				onChange={(pauseUntil) => setPauseUntil(pauseUntil)}
-				isInvalidDate={(date) =>
-					Date.parse(new Date(currentPeriodEndAt * 1000)) >
-					Date.parse(date)
-				}
-			/>
+			<ScSpacing>
+				<ScText>
+					{__(
+						'This subscription is going to be paused on ',
+						'surecart '
+					)}
+					<strong>
+						<ScFormatDate
+							date={currentPeriodEndAt}
+							type="timestamp"
+							month="long"
+							day="numeric"
+							year="numeric"
+						></ScFormatDate>
+					</strong>
+					{__(
+						'. When would you like the subscription to be restored?',
+						'surecart'
+					)}
+				</ScText>
+
+				<DateTimePicker
+					currentDate={pauseUntil}
+					onChange={(pauseUntil) => setPauseUntil(pauseUntil)}
+					isInvalidDate={(date) =>
+						Date.parse(new Date(currentPeriodEndAt * 1000)) >
+						Date.parse(date)
+					}
+				/>
+			</ScSpacing>
 
 			<ScButton
 				type="text"
