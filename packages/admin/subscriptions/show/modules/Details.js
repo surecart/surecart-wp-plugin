@@ -11,7 +11,6 @@ import { __, sprintf } from '@wordpress/i18n';
 
 export default ({ subscription, customer, product, loading }) => {
 	const renderStartDate = () => {
-		if (subscription?.status === 'canceled') return null;
 		if (subscription?.current_period_end_at == null) {
 			return (
 				<div>
@@ -23,7 +22,13 @@ export default ({ subscription, customer, product, loading }) => {
 			);
 		}
 
-		if (subscription?.restore_at && subscription?.status === 'canceled') {
+		if (
+			(subscription?.restore_at && subscription?.status === 'canceled') ||
+			(!!subscription?.cancel_at_period_end &&
+				!!subscription?.current_period_end_at &&
+				subscription?.status !== 'canceled' &&
+				!!subscription?.restore_at)
+		) {
 			return (
 				<div>
 					<div>
@@ -41,6 +46,8 @@ export default ({ subscription, customer, product, loading }) => {
 				</div>
 			);
 		}
+
+		if (subscription?.status === 'canceled') return null;
 
 		if (
 			subscription?.cancel_at_period_end &&
