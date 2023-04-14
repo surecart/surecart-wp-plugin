@@ -88,9 +88,85 @@ add_filter(
 // }
 // );
 
+add_action(
+	'pre_get_posts',
+	function( $wp_query ) {
+		// Pages.
+		$page_id = isset( $wp_query->query['page_id'] ) ? $wp_query->query['page_id'] : null;
+
+		// Posts, including custom post types.
+		$p = isset( $wp_query->query['p'] ) ? $wp_query->query['p'] : null;
+
+		$post_id = $page_id ? $page_id : $p;
+		$type    = get_post_type( $post_id );
+
+		if ( 'wp_template' === $type ) {
+			$wp_query->set( 'post_type', 'wp_template' );
+		}
+	}
+);
+
 // add_action(
-// 'pre_get_posts',
+// 'init',
 // function() {
-// var_dump( get_query_var( 'post' ) );
+
+// register_post_type(
+// 'surecart_template',
+// array(
+// 'labels'                => array(
+// 'name'                  => _x( 'Templates', 'post type general name' ),
+// 'singular_name'         => _x( 'Template', 'post type singular name' ),
+// 'add_new'               => _x( 'Add New', 'Template' ),
+// 'add_new_item'          => __( 'Add New Template' ),
+// 'new_item'              => __( 'New Template' ),
+// 'edit_item'             => __( 'Edit Template' ),
+// 'view_item'             => __( 'View Template' ),
+// 'all_items'             => __( 'Templates' ),
+// 'search_items'          => __( 'Search Templates' ),
+// 'parent_item_colon'     => __( 'Parent Template:' ),
+// 'not_found'             => __( 'No templates found.' ),
+// 'not_found_in_trash'    => __( 'No templates found in Trash.' ),
+// 'archives'              => __( 'Template archives' ),
+// 'insert_into_item'      => __( 'Insert into template' ),
+// 'uploaded_to_this_item' => __( 'Uploaded to this template' ),
+// 'filter_items_list'     => __( 'Filter templates list' ),
+// 'items_list_navigation' => __( 'Templates list navigation' ),
+// 'items_list'            => __( 'Templates list' ),
+// ),
+// 'description'           => __( 'Templates to include in your theme.' ),
+// 'public'                => true,
+// 'has_archive'           => true,
+// 'show_ui'               => true,
+// 'show_in_menu'          => true,
+// 'show_in_rest'          => true,
+// 'rewrite'               => true,
+// 'rest_base'             => 'templates',
+// 'rest_controller_class' => 'WP_REST_Templates_Controller',
+// 'capability_type'       => array( 'template', 'templates' ),
+// 'capabilities'          => array(
+// 'create_posts'           => 'edit_theme_options',
+// 'delete_posts'           => 'edit_theme_options',
+// 'delete_others_posts'    => 'edit_theme_options',
+// 'delete_private_posts'   => 'edit_theme_options',
+// 'delete_published_posts' => 'edit_theme_options',
+// 'edit_posts'             => 'edit_theme_options',
+// 'edit_others_posts'      => 'edit_theme_options',
+// 'edit_private_posts'     => 'edit_theme_options',
+// 'edit_published_posts'   => 'edit_theme_options',
+// 'publish_posts'          => 'edit_theme_options',
+// 'read'                   => 'edit_theme_options',
+// 'read_private_posts'     => 'edit_theme_options',
+// ),
+// 'map_meta_cap'          => true,
+// 'supports'              => array(
+// 'title',
+// 'slug',
+// 'excerpt',
+// 'editor',
+// 'revisions',
+// 'author',
+// ),
+// )
+// );
 // }
 // );

@@ -149,13 +149,15 @@ class TemplatePostTypeService {
 		}
 
 		// get the post that is trying to be edited.
-		$post_id = $_GET['post'] ?? null;
-		if ( ! $post_id ) {
-			return $args;
-		}
+		// $post_id = $_GET['post'] ?? null;
+		// if ( ! $post_id ) {
+		// return $args;
+		// }
 
 		// show the UI if it's a surecart template.
-		$args['show_ui'] = true;
+		$args['show_ui']     = true;
+		$args['public']      = true;
+		$args['has_archive'] = true;
 
 		// return args.
 		return $args;
