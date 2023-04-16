@@ -102,6 +102,11 @@ class BlockTemplatesService {
 	 * @return array
 	 */
 	public function addBlockTemplates( $query_result, $query, $template_type ) {
+		// does not support block templates.
+		if ( 'wp_template' === $template_type && ! $this->utility->supportsBlockTemplates() ) {
+			return $query_result;
+		}
+
 		$post_type = $query['post_type'] ?? '';
 		$slugs     = $query['slug__in'] ?? [];
 

@@ -13,7 +13,7 @@ class ProductPageController extends ProductTypePageController {
 	 * @param string                                  $id The id of the product.
 	 * @return function
 	 */
-	public function show() {
+	public function show( $request, $view ) {
 		// get the product from the query var.
 		$id = get_query_var( 'sc_product_page_id' );
 
@@ -33,30 +33,39 @@ class ProductPageController extends ProductTypePageController {
 			return \SureCart::redirect()->to( $this->product->permalink );
 		}
 
-		// set the product in the global query.
-		set_query_var( 'surecart_current_product', $this->product );
+		set_query_var( 'sc_product_page_id', $this->product->id );
 
 		// add the filters.
 		$this->filters();
 
-		$args = array(
-			'post_type'      => 'elementor_library',
-			'posts_per_page' => 30,
-		);
-
-		  $elementor_templates = get_posts( $args );
-
-		// foreach ( $elementor_templates as $elementor_template ) {
-		// var_dump( $elementor_template );
+		// handle FSE themes.
+		// if ( wp_is_block_theme() ) {
+		// return \SureCart::view( 'web/product-canvas' );
 		// }
 
-		// check to see if the product has a page or template.
-		return \SureCart::view(
-			wp_is_block_theme() ? 'web/product-canvas' : 'web/product'
-		)->with(
-			[
-				'content' => $elementor_templates[0]->post_content ?? $this->product->template->content ?? '',
-			]
-		);
+		include $view;
+
+		return \SureCart::response();
+
+		// $templates = [];
+
+		// if ( isset( $this->product->template->wp_id ) ) {
+		// $templates[] = get_post_meta( $this->product->template->wp_id, '_wp_page_template', true );
+		// }
+
+		// $templates[] = 'page.php';
+
+		// // var_dump( get_post_meta( $this->product->template->wp_id, '_wp_page_template', true ) );
+
+		// // check to see if the product has a page or template.
+		// return \SureCart::view(
+		// wp_is_block_theme() ? 'web/product-canvas' : 'web/product'
+		// 'web/product'
+		// )->with(
+		// [
+		// 'template'  => get_post_meta( $this->product->template->wp_id, '_wp_page_template', true ),
+		// 'templates' => $templates,
+		// ]
+		// );
 	}
 }

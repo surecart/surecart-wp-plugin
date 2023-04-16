@@ -37,13 +37,11 @@ class ProductCondition extends \ElementorPro\Modules\ThemeBuilder\Conditions\Con
 	/**
 	 * Check condition.
 	 *
-	 * Validate logged-in user condition to ensure it complies with certain rules.
-	 *
 	 * @since 1.0.0
 	 * @access public
 	 * @return bool
 	 */
 	public function check( $args ) {
-		return is_user_logged_in();
+		return true;
 	}
 }

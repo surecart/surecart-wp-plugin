@@ -8,7 +8,7 @@
 	<body <?php body_class(); ?>>
 		<?php wp_body_open(); ?>
 
-		<?php echo surecart_get_the_block_template_html( $content ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+		<?php the_content(); ?>
 
 		<?php wp_footer(); ?>
 	</body>

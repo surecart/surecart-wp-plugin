@@ -7,6 +7,8 @@ import { store as noticesStore } from '@wordpress/notices';
 
 import Box from '../../ui/Box';
 import SelectTemplate from '../components/SelectTemplate';
+import SelectTemplatePart from '../components/SelectTemplatePart';
+import SelectLayout from '../components/SelectLayout';
 import Status from '../components/Status';
 import Availability from '../components/Availability';
 import Url from '../components/Url';
@@ -47,7 +49,12 @@ export default ({ product, updateProduct, loading }) => {
 			<div>
 				<Status product={product} updateProduct={updateProduct} />
 				<Availability product={product} updateProduct={updateProduct} />
-				<SelectTemplate
+				{/* <SelectLayout product={product} updateProduct={updateProduct} /> */}
+				{/* <SelectTemplate
+					product={product}
+					updateProduct={updateProduct}
+				/> */}
+				<SelectTemplatePart
 					product={product}
 					updateProduct={updateProduct}
 				/>

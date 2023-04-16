@@ -26,6 +26,16 @@ class TemplatesServiceProvider implements ServiceProviderInterface {
 			);
 		};
 
+		$container['surecart.templates.page'] = function( $c ) {
+			return new TemplatesService(
+				$c,
+				[
+					'pages/template-surecart-product.php' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
+				'wp_template'
+			);
+		};
+
 		$container['surecart.templates.blocks'] = function( $c ) {
 			$root_path = trailingslashit( $c[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . '/templates/';
 			return new BlockTemplatesService( $root_path . 'templates', $root_path . 'parts' );

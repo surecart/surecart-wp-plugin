@@ -29,15 +29,14 @@ class ProductSingle extends \ElementorPro\Modules\ThemeBuilder\Conditions\Condit
 	}
 
 	public function check( $args ) {
-		return true;
-		// if ( isset( $args['id'] ) ) {
-		// $id = (int) $args['id'];
-		// if ( $id ) {
-		// return is_singular() && get_queried_object_id() === $id;
-		// }
-		// }
-
-		// return true;
+		if ( isset( $args['id'] ) ) {
+			$id = (int) $args['id'];
+			if ( $id ) {
+				$sc_product_page_id = get_query_var( 'sc_product_page_id' );
+				return $sc_product_page_id === $id;
+			}
+		}
+		return get_query_var( 'sc_product_page_id' );
 	}
 
 	protected function register_controls() {
