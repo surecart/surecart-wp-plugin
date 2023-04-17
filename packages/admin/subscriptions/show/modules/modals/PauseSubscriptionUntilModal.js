@@ -1,22 +1,19 @@
-import {
-	ScBlockUi,
-	ScButton,
-	ScDialog,
-	ScFormatDate,
-	ScSpacing,
-	ScText,
-} from '@surecart/components-react';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/react';
+import { ScBlockUi, ScButton, ScDialog } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import apiFetch from '@wordpress/api-fetch';
 import { DateTimePicker } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import Error from '../../../../components/Error';
 import { addQueryArgs } from '@wordpress/url';
 import { useEffect } from 'react';
+import { ScAlert } from '@surecart/components-react';
+import { formatTime } from '../../../../util/time';
 
 const CANCEL_BEHAVIOR = 'pending';
 
@@ -113,33 +110,32 @@ export default ({ open, onRequestClose, currentPeriodEndAt }) => {
 		>
 			<Error error={error} setError={setError} />
 
-			<ScSpacing>
-				<ScText>
-					{__(
-						'This subscription is going to be paused on ',
-						'surecart '
-					)}
-					<strong>
-						<ScFormatDate
-							date={currentPeriodEndAt}
-							type="timestamp"
-							month="long"
-							day="numeric"
-							year="numeric"
-						></ScFormatDate>
-					</strong>
-					{__(
-						'. When would you like the subscription to be restored?',
-						'surecart'
-					)}
-				</ScText>
+			<div
+				css={css`
+					display: grid;
+					gap: var(--sc-spacing-small);
+				`}
+			>
+				{!!currentPeriodEndAt && (
+					<ScAlert type="info" open>
+						{sprintf(
+							__(
+								'This will automatically pause the subscription on %s. Please choose an restoration date.',
+								'surecart '
+							),
+							formatTime(currentPeriodEndAt, {
+								dateStyle: 'medium',
+							})
+						)}
+					</ScAlert>
+				)}
 
 				<DateTimePicker
 					currentDate={pauseUntil}
 					onChange={(pauseUntil) => setPauseUntil(pauseUntil)}
 					isInvalidDate={isInvalidDate}
 				/>
-			</ScSpacing>
+			</div>
 
 			<ScButton
 				type="text"
