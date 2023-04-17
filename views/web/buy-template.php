@@ -3,11 +3,7 @@
 	<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right" style="border-style:none;border-width:0px;padding:30px 5rem 5rem 5rem;--sc-column-content-width:450px;--sc-form-row-spacing:30px">
 
 		<?php if ( $show_image && ! empty( $product->image->url ) ) : ?>
-			<!-- wp:image {"sizeSlug":"full","linkDestination":"none","style":{"border":{"radius":"5px"}}} -->
-				<figure class="wp-block-image size-full is-resized has-custom-border">
-					<img src="<?php echo esc_url( $product->image->url ); ?>" alt="<?php echo esc_attr( $product->name ); ?>" style="border-radius:5px" />
-				</figure>
-			<!-- /wp:image -->
+			<sc-product-image-carousel product-id="<?php echo esc_attr( $product->id ); ?>"></sc-product-image-carousel>
 		<?php endif; ?>
 
 
