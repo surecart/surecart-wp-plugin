@@ -52,15 +52,7 @@ class Block extends BaseBlock {
 			form-id="<?php echo esc_attr( $form->ID ); ?>"
 			mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>"
 			checkout-url="<?php echo esc_url( $checkout_link ); ?>"
-			media-position="<?php echo esc_attr( $attributes['media_position'] ); ?>"
-			media-width="<?php echo esc_attr( $attributes['media_width'] ); ?>"
-			column-gap="<?php echo esc_attr( $attributes['column_gap'] ); ?>"
-			sticky-content="<?php echo esc_attr( $attributes['sticky_content'] ); ?>"
-			class="<?php echo esc_attr( BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes ) ); ?>"
-			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?> --sc-font-sans: initial; --sc-input-font-family: initial;"
-		>
-				<?php echo filter_block_content( $content, 'post' ); ?>
-		</sc-product>
+		></sc-product>
 
 		<?php
 		return ob_get_clean();

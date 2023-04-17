@@ -118,5 +118,21 @@ class Product extends Model {
 
 		return get_block_template( 'surecart/surecart//single-product' );
 	}
+
+	/**
+	 * Get the product template part template.
+	 *
+	 * @return \WP_Template
+	 */
+	public function getTemplatePartAttribute() {
+		if ( ! empty( $this->attributes['metadata']->wp_template_part_id ) ) {
+			$template = get_block_template( $this->attributes['metadata']->wp_template_part_id, 'wp_template_part' );
+			if ( $template ) {
+				return $template;
+			}
+		}
+
+		return get_block_template( 'surecart/surecart//product-info', 'wp_template_part' );
+	}
 }
 

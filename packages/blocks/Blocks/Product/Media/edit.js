@@ -15,8 +15,11 @@ export default () => {
 				style={{
 					maxWidth: '100%',
 					height: 'auto',
-					background: '#f3f3f3',
+					background: '#fff',
 					border: '1px solid var(--sc-input-border-color)',
+					width: '100%',
+					objectFit: 'scale-down',
+					margin: 0,
 				}}
 			/>
 			{/* <ScProductImage {...blockProps} /> */}

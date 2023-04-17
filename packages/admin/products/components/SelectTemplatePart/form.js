@@ -36,14 +36,8 @@ export default function PostTemplateForm({
 		};
 	}, []);
 
-	// templates.
-	const templates = useSelect(
-		(select) =>
-			select(coreStore).getEntityRecords('postType', 'wp_template', {
-				per_page: -1,
-				post_type: 'sc_product',
-			}) || [],
-		[]
+	const selected = parts.find(
+		(part) => part.id === product?.metadata?.wp_template_part_id
 	);
 
 	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -86,7 +80,7 @@ export default function PostTemplateForm({
 			<div style={{ marginBottom: '16px' }}>
 				<SelectControl
 					label={__('Page Layout', 'surecart')}
-					value={product?.metadata?.wp_template_id}
+					value={product?.metadata?.wp_template_id || ''}
 					options={Object.keys(scData?.availableTemplates || {}).map(
 						(value) => {
 							const label = scData?.availableTemplates[value];
@@ -110,10 +104,7 @@ export default function PostTemplateForm({
 			<SelectControl
 				__nextHasNoMarginBottom
 				label={__('Template')}
-				value={
-					product?.metadata?.wp_template_part_id ||
-					'surecart/surecart//product-info'
-				}
+				value={selected?.id || 'surecart/surecart//product-info'}
 				options={(parts ?? []).map(({ id, title, wp_id }) => ({
 					value: id,
 					label: `${title?.rendered || slug}${
@@ -137,7 +128,7 @@ export default function PostTemplateForm({
 						href={addQueryArgs('site-editor.php', {
 							postType: 'wp_template_part',
 							postId:
-								product?.metadata?.wp_template_part_id ||
+								selected?.id ||
 								'surecart/surecart//product-info',
 							canvas: 'edit',
 						})}

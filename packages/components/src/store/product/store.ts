@@ -13,15 +13,18 @@ interface Store {
   adHocAmount: number;
   error: string;
 }
+const product = window?.scData?.product_data?.product || null;
+const prices = product?.prices?.data || [];
+const selectedPrice = (prices || []).find(price => !price?.archived);
 
 const { state, onChange, on, dispose } = createStore<Store>(
   {
-    formId: null,
+    formId: window?.scData?.product_data?.form?.id,
     mode: 'live',
-    product: null,
-    prices: [],
+    product,
+    prices,
     quantity: 1,
-    selectedPrice: null,
+    selectedPrice,
     total: null,
     adHocAmount: null,
     error: null,

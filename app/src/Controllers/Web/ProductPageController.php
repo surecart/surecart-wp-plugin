@@ -38,6 +38,15 @@ class ProductPageController extends ProductTypePageController {
 		// add the filters.
 		$this->filters();
 
+		// handle block theme.
+		if ( wp_is_block_theme() ) {
+			return \SureCart::view( 'web/product-canvas' )->with(
+				[
+					'content' => $this->product->template->content,
+				]
+			);
+		}
+
 		include $view;
 
 		return \SureCart::response();
@@ -53,13 +62,9 @@ class ProductPageController extends ProductTypePageController {
 		// // var_dump( get_post_meta( $this->product->template->wp_id, '_wp_page_template', true ) );
 
 		// // check to see if the product has a page or template.
-		// return \SureCart::view(
-		// wp_is_block_theme() ? 'web/product-canvas' : 'web/product'
-		// 'web/product'
-		// )->with(
+		// return \SureCart::view( 'web/product-canvas' )->with(
 		// [
-		// 'template'  => get_post_meta( $this->product->template->wp_id, '_wp_page_template', true ),
-		// 'templates' => $templates,
+		// 'template' => get_post_meta( $this->product->template->wp_id, '_wp_page_template', true ),
 		// ]
 		// );
 	}

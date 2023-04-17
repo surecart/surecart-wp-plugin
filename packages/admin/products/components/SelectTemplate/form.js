@@ -29,7 +29,7 @@ export default function PostTemplateForm({
 			templates:
 				getEntityRecords('postType', 'wp_template', {
 					per_page: -1,
-					post_type: 'surecart-product',
+					post_type: 'sc_product',
 				}) || [],
 			canCreate: canUser('create', 'templates'),
 		};
@@ -44,6 +44,10 @@ export default function PostTemplateForm({
 			!wp_id ? ` (${__('Default', 'surecart')})` : ''
 		}`,
 	}));
+
+	const selected = templates.find(
+		(template) => template.id === product?.metadata?.wp_template_id
+	);
 
 	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
@@ -74,7 +78,7 @@ export default function PostTemplateForm({
 					canCreate && [
 						{
 							icon: addTemplate,
-							label: __('Duplicate Template', 'surecart'),
+							label: __('Add Template', 'surecart'),
 							onClick: () => setIsCreateModalOpen(true),
 						},
 					]
@@ -86,7 +90,7 @@ export default function PostTemplateForm({
 				__nextHasNoMarginBottom
 				hideLabelFromVision
 				label={__('Template')}
-				value={product?.metadata?.wp_template_id}
+				value={selected?.id}
 				options={options}
 				onChange={(slug) => {
 					updateProduct({
@@ -102,20 +106,13 @@ export default function PostTemplateForm({
 				<p>
 					<Button
 						variant="link"
-						href={
-							scData?.is_block_theme
-								? addQueryArgs('site-editor.php', {
-										postType: 'wp_template',
-										postId: product?.metadata
-											?.wp_template_id,
-										canvas: 'edit',
-								  })
-								: addQueryArgs('post.php', {
-										post: template?.wp_id,
-										action: 'edit',
-								  })
-						}
-						target="_blank"
+						href={addQueryArgs('site-editor.php', {
+							postType: 'wp_template',
+							postId:
+								selected?.id ||
+								'surecart/surecart//single-product',
+							canvas: 'edit',
+						})}
 					>
 						{__('Edit template')}
 					</Button>

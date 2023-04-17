@@ -49,15 +49,17 @@ export default ({ product, updateProduct, loading }) => {
 			<div>
 				<Status product={product} updateProduct={updateProduct} />
 				<Availability product={product} updateProduct={updateProduct} />
-				{/* <SelectLayout product={product} updateProduct={updateProduct} /> */}
-				{/* <SelectTemplate
-					product={product}
-					updateProduct={updateProduct}
-				/> */}
-				<SelectTemplatePart
-					product={product}
-					updateProduct={updateProduct}
-				/>
+				{scData?.is_block_theme ? (
+					<SelectTemplate
+						product={product}
+						updateProduct={updateProduct}
+					/>
+				) : (
+					<SelectTemplatePart
+						product={product}
+						updateProduct={updateProduct}
+					/>
+				)}
 				<Url product={product} updateProduct={updateProduct} />
 			</div>
 		</Box>

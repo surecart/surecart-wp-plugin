@@ -27,14 +27,17 @@ abstract class ProductTypePageController {
 		// add scripts.
 		add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ] );
 
-		if ( get_query_var( 'sc_product_id' ) ) {
-			add_action(
-				'wp_head',
-				function() {
-					echo do_shortcode( '[sc_product_info]' );
-				}
-			);
-		}
+		add_filter(
+			'surecart-components/scData',
+			function( $data ) {
+				$data['product_data'] = [
+					'product'       => $this->product,
+					'form'          => \SureCart::forms()->getDefault(),
+					'checkout_link' => \SureCart::pages()->url( 'checkout' ),
+				];
+				return $data;
+			}
+		);
 	}
 
 	/**
@@ -88,6 +91,7 @@ abstract class ProductTypePageController {
 	 */
 	public function scripts() {
 		\SureCart::assets()->enqueueComponents();
+		// add data for product store here.
 	}
 
 	/**

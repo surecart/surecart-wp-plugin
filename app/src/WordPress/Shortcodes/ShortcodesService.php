@@ -57,15 +57,5 @@ class ShortcodesService {
 				return $block->render();
 			}
 		);
-
-		$block = new \WP_Block(
-			[
-				'blockName'  => 'surecart/address',
-				'attributes' => [
-					'text' => 'text',
-				],
-			]
-		);
-		echo $block->render();
 	}
 }

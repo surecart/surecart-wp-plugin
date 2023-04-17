@@ -29,6 +29,12 @@ declare global {
       nonce_endpoint: string;
       recaptcha_site_key: string;
       theme: string;
+      product_data: {
+        form: {
+          id: number;
+        };
+        product: Product;
+      };
       pages: {
         dashboard: string;
         checkout: string;
