@@ -7331,6 +7331,7 @@ __metadata:
     stylelint-order: ^4.0.0
     stylelint-scss: ^3.17.1
     svg-sprite-loader: ^4.2.5
+    swiper: ^9.2.2
     swr: ^1.2.2
     thread-loader: ^3.0.4
     tmp: ^0.2.1
@@ -32705,6 +32706,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ssr-window@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "ssr-window@npm:4.0.2"
+  checksum: df182600927f4f3225224cf8c02338ea637c9750519505bbfb9a9236741a2a7ec088386fb948bca7b447b8303d9109e7dc7672e3de041c79ac2a0e03665af7d2
+  languageName: node
+  linkType: hard
+
 "ssri@npm:^6.0.1":
   version: 6.0.2
   resolution: "ssri@npm:6.0.2"
@@ -33815,6 +33823,15 @@ __metadata:
     traverse: ~0.6.6
     url: ~0.11.0
   checksum: 919e64fc638ead6c2aec8171f984697801386f2e0a32c9c1afa1888bcbd92294f85e7d4af0b4e5ae5b7040c0c9e332d57864f0ff0cd42bf05bdc55e2d5251e7c
+  languageName: node
+  linkType: hard
+
+"swiper@npm:^9.2.2":
+  version: 9.2.2
+  resolution: "swiper@npm:9.2.2"
+  dependencies:
+    ssr-window: ^4.0.2
+  checksum: a277d5b0a2463286a11796e2aee39af8e973d12889bd10a9487910095a007d4ea55ba4e5e91a9821b1177949ce200aa218c95498a6c779df55533a6d2089578a
   languageName: node
   linkType: hard
 

@@ -1359,6 +1359,13 @@
     "class": true,
     "slot": true
   },
+  "sc-product-image-carousel": {
+    "product-id": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-product-line-item": {
     "amount": true,
     "currency": true,

@@ -2448,6 +2448,12 @@ export namespace Components {
          */
         "prices": Price[];
     }
+    interface ScProductImageCarousel {
+        /**
+          * The product id.
+         */
+        "productId": string;
+    }
     interface ScProductLineItem {
         /**
           * Product monetary amount
@@ -4309,6 +4315,12 @@ declare global {
         prototype: HTMLScPriceRangeElement;
         new (): HTMLScPriceRangeElement;
     };
+    interface HTMLScProductImageCarouselElement extends Components.ScProductImageCarousel, HTMLStencilElement {
+    }
+    var HTMLScProductImageCarouselElement: {
+        prototype: HTMLScProductImageCarouselElement;
+        new (): HTMLScProductImageCarouselElement;
+    };
     interface HTMLScProductLineItemElement extends Components.ScProductLineItem, HTMLStencilElement {
     }
     var HTMLScProductLineItemElement: {
@@ -4741,6 +4753,7 @@ declare global {
         "sc-price-choices": HTMLScPriceChoicesElement;
         "sc-price-input": HTMLScPriceInputElement;
         "sc-price-range": HTMLScPriceRangeElement;
+        "sc-product-image-carousel": HTMLScProductImageCarouselElement;
         "sc-product-line-item": HTMLScProductLineItemElement;
         "sc-product-selected-price": HTMLScProductSelectedPriceElement;
         "sc-prose": HTMLScProseElement;
@@ -7533,6 +7546,12 @@ declare namespace LocalJSX {
          */
         "prices"?: Price[];
     }
+    interface ScProductImageCarousel {
+        /**
+          * The product id.
+         */
+        "productId"?: string;
+    }
     interface ScProductLineItem {
         /**
           * Product monetary amount
@@ -8647,6 +8666,7 @@ declare namespace LocalJSX {
         "sc-price-choices": ScPriceChoices;
         "sc-price-input": ScPriceInput;
         "sc-price-range": ScPriceRange;
+        "sc-product-image-carousel": ScProductImageCarousel;
         "sc-product-line-item": ScProductLineItem;
         "sc-product-selected-price": ScProductSelectedPrice;
         "sc-prose": ScProse;
@@ -8824,6 +8844,7 @@ declare module "@stencil/core" {
             "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
             "sc-price-range": LocalJSX.ScPriceRange & JSXBase.HTMLAttributes<HTMLScPriceRangeElement>;
+            "sc-product-image-carousel": LocalJSX.ScProductImageCarousel & JSXBase.HTMLAttributes<HTMLScProductImageCarouselElement>;
             "sc-product-line-item": LocalJSX.ScProductLineItem & JSXBase.HTMLAttributes<HTMLScProductLineItemElement>;
             "sc-product-selected-price": LocalJSX.ScProductSelectedPrice & JSXBase.HTMLAttributes<HTMLScProductSelectedPriceElement>;
             "sc-prose": LocalJSX.ScProse & JSXBase.HTMLAttributes<HTMLScProseElement>;
