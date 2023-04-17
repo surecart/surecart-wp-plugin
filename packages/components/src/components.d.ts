@@ -2449,10 +2449,7 @@ export namespace Components {
         "prices": Price[];
     }
     interface ScProductImageCarousel {
-        /**
-          * The product id.
-         */
-        "productId": string;
+        "images": { src: string; alt: string }[];
     }
     interface ScProductLineItem {
         /**
@@ -7547,10 +7544,7 @@ declare namespace LocalJSX {
         "prices"?: Price[];
     }
     interface ScProductImageCarousel {
-        /**
-          * The product id.
-         */
-        "productId"?: string;
+        "images"?: { src: string; alt: string }[];
     }
     interface ScProductLineItem {
         /**

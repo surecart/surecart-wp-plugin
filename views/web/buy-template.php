@@ -2,8 +2,28 @@
 <sc-columns is-stacked-on-mobile="1" is-full-height class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right is-full-height" style="gap:0px 0px;"><!-- wp:surecart/column {"layout":{"type":"constrained","contentSize":"550px","justifyContent":"right"},"width":"","style":{"spacing":{"padding":{"top":"100px","right":"100px","bottom":"100px","left":"100px"},"blockGap":"30px"},"border":{"width":"0px","style":"none"},"color":{"background":"#fafafa"}}} -->
 	<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right" style="border-style:none;border-width:0px;padding:30px 5rem 5rem 5rem;--sc-column-content-width:450px;--sc-form-row-spacing:30px">
 
-		<?php if ( $show_image && ! empty( $product->image->url ) ) : ?>
-			<sc-product-image-carousel product-id="<?php echo esc_attr( $product->id ); ?>"></sc-product-image-carousel>
+		<?php if ( $show_image && ! empty( $product->product_medias->data ) ) : ?>
+			<sc-product-image-carousel id="sc-product-media-<?php echo esc_attr( esc_attr( $product->id ) ); ?>"></sc-product-image-carousel>
+			<?php
+			\SureCart::assets()->addComponentData(
+				'sc-product-image-carousel',
+				'#sc-product-media-' . $product->id,
+				[
+					'images' => array_map(
+						function( $product_media ) use ( $product ) {
+							if ( empty( $product_media->media->url ) ) {
+								return;
+							}
+							return [
+								'src' => $product_media->media->url ?? '',
+								'alt' => $product_media->media->filename ?? $product->name ?? '',
+							];
+						},
+						$product->product_medias->data
+					),
+				]
+			);
+			?>
 		<?php endif; ?>
 
 
