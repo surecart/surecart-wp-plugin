@@ -53,6 +53,29 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Create a new model
+	 *
+	 * @param array $attributes Attributes to create.
+	 *
+	 * @return $this|\WP_Error|false
+	 */
+	protected function create( $attributes = [] ) {
+		$this->setAttribute( 'ip_address', $this->getIPAddress() );
+		return parent::create( $attributes );
+	}
+
+	/**
+	 * Get the IP address of the user
+	 *
+	 * TOD0: Move this to a helper class.
+	 *
+	 * @return string
+	 */
+	protected function getIPAddress() {
+		return $_SERVER['HTTP_CLIENT_IP'] ?? $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '';
+	}
+
+	/**
 	 * Set the product attribute
 	 *
 	 * @param  object $value Product properties.
