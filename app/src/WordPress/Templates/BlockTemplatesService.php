@@ -187,9 +187,9 @@ class BlockTemplatesService {
 	 * @return array WP_Block_Template[] An array of block template objects.
 	 */
 	public function getBlockTemplates( $slugs = [], $template_type = 'wp_template' ) {
-		$templates_from_db  = $this->getBlockTemplatesFromDB( $slugs, $template_type );
-		$templates_from_woo = $this->getBlockTemplatesFromSureCart( $slugs, $templates_from_db, $template_type );
-		return array_merge( $templates_from_db, $templates_from_woo );
+		$templates_from_db = $this->getBlockTemplatesFromDB( $slugs, $template_type );
+		$templates_from_sc = $this->getBlockTemplatesFromSureCart( $slugs, $templates_from_db, $template_type );
+		return array_merge( $templates_from_db, $templates_from_sc );
 	}
 
 	/**

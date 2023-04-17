@@ -68,7 +68,7 @@ export default function PostTemplateCreateModal({
 
 	return (
 		<Modal
-			title={__('Duplicate Template', 'surecart')}
+			title={__('Create Template', 'surecart')}
 			onRequestClose={cancel}
 			className="edit-post-post-template__create-modal"
 		>

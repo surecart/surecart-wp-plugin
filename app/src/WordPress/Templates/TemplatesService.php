@@ -261,12 +261,18 @@ class TemplatesService {
 			return $template;
 		}
 
+		if ( ! empty( $product->metadata->wp_template_id ) ) {
+			$page_template = $product->metadata->wp_template_id;
+		} else {
+			$page_template = get_post_meta( $id, '_wp_page_template', true );
+		}
+
 		// if the set template does not match one of these templates.
-		if ( ! isset( $this->templates[ get_post_meta( $id, '_wp_page_template', true ) ] ) ) {
+		if ( empty( $page_template ) ) {
 			return $template;
 		}
 
-		$file = trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . '/templates/' . get_post_meta( $id, '_wp_page_template', true );
+		$file = trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . '/templates/' . $page_template;
 
 		// Return file if it exists.
 		if ( file_exists( $file ) ) {

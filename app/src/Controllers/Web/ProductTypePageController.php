@@ -26,6 +26,13 @@ abstract class ProductTypePageController {
 		add_action( 'admin_bar_menu', [ $this, 'addEditProductLink' ], 99 );
 		// add scripts.
 		add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ] );
+
+		add_action(
+			'wp_head',
+			function() {
+				echo do_shortcode( '[sc_product_info]' );
+			}
+		);
 	}
 
 	/**

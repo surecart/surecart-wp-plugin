@@ -38,11 +38,6 @@ class ProductPageController extends ProductTypePageController {
 		// add the filters.
 		$this->filters();
 
-		// handle FSE themes.
-		// if ( wp_is_block_theme() ) {
-		// return \SureCart::view( 'web/product-canvas' );
-		// }
-
 		include $view;
 
 		return \SureCart::response();

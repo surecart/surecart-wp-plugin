@@ -23,27 +23,28 @@ export default function PostTemplateForm({
 	updateProduct,
 	template,
 }) {
-	const { templates, canCreate } = useSelect((select) => {
+	// template parts.
+	const { parts, canCreate } = useSelect((select) => {
 		const { canUser, getEntityRecords } = select(coreStore);
 		return {
-			templates:
+			parts:
 				getEntityRecords('postType', 'wp_template_part', {
 					per_page: -1,
-					post_type: 'surecart-product',
+					post_type: 'sc_product',
 				}) || [],
 			canCreate: canUser('create', 'templates'),
 		};
 	}, []);
 
-	const canEdit =
-		canCreate && (!!scData?.is_block_theme || !!template?.wp_id);
-
-	const options = (templates ?? []).map(({ id, title, wp_id }) => ({
-		value: id,
-		label: `${title?.rendered || slug}${
-			!wp_id ? ` (${__('Default', 'surecart')})` : ''
-		}`,
-	}));
+	// templates.
+	const templates = useSelect(
+		(select) =>
+			select(coreStore).getEntityRecords('postType', 'wp_template', {
+				per_page: -1,
+				post_type: 'sc_product',
+			}) || [],
+		[]
+	);
 
 	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
@@ -74,7 +75,7 @@ export default function PostTemplateForm({
 					canCreate && [
 						{
 							icon: addTemplate,
-							label: __('Duplicate Template', 'surecart'),
+							label: __('Add Template', 'surecart'),
 							onClick: () => setIsCreateModalOpen(true),
 						},
 					]
@@ -82,15 +83,43 @@ export default function PostTemplateForm({
 				onClose={onClose}
 			/>
 
+			<div style={{ marginBottom: '16px' }}>
+				<SelectControl
+					label={__('Page Layout', 'surecart')}
+					value={product?.metadata?.wp_template_id}
+					options={Object.keys(scData?.availableTemplates || {}).map(
+						(value) => {
+							const label = scData?.availableTemplates[value];
+							return {
+								value,
+								label,
+							};
+						}
+					)}
+					onChange={(slug) => {
+						updateProduct({
+							metadata: {
+								...product.metadata,
+								wp_template_id: slug,
+							},
+						});
+					}}
+				/>
+			</div>
+
 			<SelectControl
 				__nextHasNoMarginBottom
-				hideLabelFromVision
 				label={__('Template')}
 				value={
 					product?.metadata?.wp_template_part_id ||
 					'surecart/surecart//product-info'
 				}
-				options={options}
+				options={(parts ?? []).map(({ id, title, wp_id }) => ({
+					value: id,
+					label: `${title?.rendered || slug}${
+						!wp_id ? ` (${__('Default', 'surecart')})` : ''
+					}`,
+				}))}
 				onChange={(slug) => {
 					updateProduct({
 						metadata: {
@@ -101,7 +130,7 @@ export default function PostTemplateForm({
 				}}
 			/>
 
-			{canEdit && (
+			{canCreate && (
 				<p>
 					<Button
 						variant="link"

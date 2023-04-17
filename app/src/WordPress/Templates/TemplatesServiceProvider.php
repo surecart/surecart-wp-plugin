@@ -26,13 +26,13 @@ class TemplatesServiceProvider implements ServiceProviderInterface {
 			);
 		};
 
-		$container['surecart.templates.page'] = function( $c ) {
+		$container['surecart.templates.product'] = function( $c ) {
 			return new TemplatesService(
 				$c,
 				[
-					'pages/template-surecart-product.php' => esc_html__( 'SureCart Product', 'surecart' ),
+					'pages/template-surecart-product.php' => esc_html__( 'Default SureCart Product', 'surecart' ),
 				],
-				'wp_template'
+				'sc_product'
 			);
 		};
 
@@ -53,6 +53,7 @@ class TemplatesServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$container['surecart.templates.page']->bootstrap();
+		$container['surecart.templates.product']->bootstrap();
 		$container['surecart.templates.blocks']->bootstrap();
 	}
 }
