@@ -82,17 +82,23 @@ export default ({ open, onRequestClose, subscription }) => {
 		);
 
 		return (
+			// the chosen datedate is less than the subscription end period.
 			Date.parse(new Date(subscription?.current_period_end_at * 1000)) >
 				Date.parse(date) ||
+			// the chosen date is greater than one year from now.
 			Date.parse(date) > Date.parse(oneYearFromNow)
 		);
 	};
 
 	const isSetToPause = () => {
 		return (
+			// subscription is not set to cancel
 			!!subscription?.cancel_at_period_end &&
+			// subscription has an end data.
 			!!subscription?.current_period_end_at &&
+			// subscription is not canceled.
 			subscription?.status !== 'canceled' &&
+			// subscription is set to restore.
 			!!subscription?.restore_at
 		);
 	};
