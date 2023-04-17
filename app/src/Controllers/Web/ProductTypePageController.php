@@ -27,12 +27,14 @@ abstract class ProductTypePageController {
 		// add scripts.
 		add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ] );
 
-		add_action(
-			'wp_head',
-			function() {
-				echo do_shortcode( '[sc_product_info]' );
-			}
-		);
+		if ( get_query_var( 'sc_product_id' ) ) {
+			add_action(
+				'wp_head',
+				function() {
+					echo do_shortcode( '[sc_product_info]' );
+				}
+			);
+		}
 	}
 
 	/**
