@@ -8,7 +8,6 @@ import { store as noticesStore } from '@wordpress/notices';
 import Box from '../../ui/Box';
 import SelectTemplate from '../components/SelectTemplate';
 import SelectTemplatePart from '../components/SelectTemplatePart';
-import SelectLayout from '../components/SelectLayout';
 import Status from '../components/Status';
 import Availability from '../components/Availability';
 import Url from '../components/Url';

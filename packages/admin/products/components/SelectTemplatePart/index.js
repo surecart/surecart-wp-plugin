@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { useState, useMemo } from '@wordpress/element';
-import { PanelRow, Dropdown, Button } from '@wordpress/components';
+import { PanelRow, Dropdown, Button, Spinner } from '@wordpress/components';
 import { __, sprintf } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
@@ -39,7 +39,7 @@ export default function PostTemplate({ product, updateProduct }) {
 
 	return (
 		<PanelRow className="edit-post-post-template" ref={setPopoverAnchor}>
-			<span>{__('Template')}</span>
+			<span>{__('Template', 'surecart')}</span>
 			<Dropdown
 				popoverProps={popoverProps}
 				className="edit-post-post-template__dropdown"
@@ -65,11 +65,19 @@ export default function PostTemplate({ product, updateProduct }) {
 	);
 }
 
+function getTemplateTitle(template) {
+	if (template?.id === 'surecart/surecart//product-info') {
+		return template?.wp_id
+			? __('Default (Customized)', 'surecart')
+			: __('Default', 'surecart');
+	}
+
+	return template?.title?.rendered || template?.slug;
+}
+
 function PostTemplateToggle({ isOpen, onClick, template }) {
-	const templateTitle =
-		template?.title?.rendered ||
-		template?.slug ||
-		__('Single Product', 'surecart');
+	if (!template) return <Spinner />;
+	const templateTitle = getTemplateTitle(template);
 
 	return (
 		<Button
@@ -80,14 +88,14 @@ function PostTemplateToggle({ isOpen, onClick, template }) {
 				templateTitle
 					? sprintf(
 							// translators: %s: Name of the currently selected template.
-							__('Select template: %s'),
+							__('Select template: %s', 'surecart'),
 							templateTitle
 					  )
-					: __('Select template')
+					: __('Select template', 'surecart')
 			}
 			onClick={onClick}
 		>
-			{templateTitle ?? __('Default template')}
+			{templateTitle ?? __('Select template', 'surecart')}
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"

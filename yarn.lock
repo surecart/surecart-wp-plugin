@@ -5764,21 +5764,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stencil/core@npm:2.17.1":
-  version: 2.17.1
-  resolution: "@stencil/core@npm:2.17.1"
+"@stencil/core@npm:3":
+  version: 3.2.1
+  resolution: "@stencil/core@npm:3.2.1"
   bin:
     stencil: bin/stencil
-  checksum: dc660f9219952e569c7357ee0f601b6835f71bfae33997f7be7b5eb14694cc725e19166da20f6af49f467456402551e6dfffcee13205158eeb77aaf1c5911a65
+  checksum: b7349e0e7551d287264a6052ea0c3246ae6e55c173bffaf7b8db73e16f128ba1bb4e704b7b6d76810a22fc38b9e14daf67d273133f9c435ad327f1a4bd4434b5
   languageName: node
   linkType: hard
 
-"@stencil/react-output-target@npm:^0.3.1":
-  version: 0.3.1
-  resolution: "@stencil/react-output-target@npm:0.3.1"
+"@stencil/react-output-target@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "@stencil/react-output-target@npm:0.4.0"
   peerDependencies:
-    "@stencil/core": ^2.9.0
-  checksum: fe311ba81f79119598524ceedf7125ff77bba22999b7394de774231262e5b7be28d5c46f6e05df1cde8947e24b03ccac797aa725738aa7bb6912536277b61d79
+    "@stencil/core": ^2.9.0 || ^3.0.0-beta.0
+  checksum: a88a53f4d8f41c0b0a665f59dddd88986be095b6ed3d9fbbab30f5376cd1247c7d04711fe6ac0530777ddb67d5b79bbc2c6660d49409449e39fb2bf186f76ccd
   languageName: node
   linkType: hard
 
@@ -7280,18 +7280,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@surecart/blocks-new@workspace:packages/blocks-new":
-  version: 0.0.0-use.local
-  resolution: "@surecart/blocks-new@workspace:packages/blocks-new"
-  dependencies:
-    "@surecart/components": ^1.0.0
-    "@wordpress/prettier-config": ^2.14.0
-    "@wordpress/scripts": ^26.2.0
-    prettier: ^2.5.1
-    webpack-cli: ^4.9.2
-  languageName: unknown
-  linkType: soft
-
 "@surecart/blocks@workspace:packages/blocks":
   version: 0.0.0-use.local
   resolution: "@surecart/blocks@workspace:packages/blocks"
@@ -7335,8 +7323,8 @@ __metadata:
     "@floating-ui/dom": ^0.5.0
     "@mdx-js/react": ^1.6.22
     "@paypal/paypal-js": ^5.0.4
-    "@stencil/core": 2.17.1
-    "@stencil/react-output-target": ^0.3.1
+    "@stencil/core": 3
+    "@stencil/react-output-target": ^0.4.0
     "@stencil/sass": ^1.4.0
     "@stencil/store": ^2.0.0
     "@storybook/addon-a11y": ^6.5.6

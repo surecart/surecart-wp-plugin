@@ -7,6 +7,8 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 import { LineItemData as LineItemData1, Price as Price1 } from "src/types";
+export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+export { LineItemData as LineItemData1, Price as Price1 } from "src/types";
 export namespace Components {
     interface ScAddress {
         /**
@@ -533,6 +535,9 @@ export namespace Components {
          */
         "validate": () => Promise<boolean>;
     }
+    /**
+     * This component listens for a confirmed event and redirects to the success url.
+     */
     interface ScCheckoutFormErrors {
         /**
           * The current order.
@@ -1358,6 +1363,9 @@ export namespace Components {
          */
         "size": 'small' | 'medium' | 'large';
     }
+    /**
+     * This component listens for a confirmed event and redirects to the success url.
+     */
     interface ScFormErrorProvider {
         /**
           * The current order.
@@ -1366,6 +1374,9 @@ export namespace Components {
     }
     interface ScFormRow {
     }
+    /**
+     * This component listens for a confirmed event and redirects to the success url.
+     */
     interface ScFormStateProvider {
     }
     interface ScFormatBytes {
@@ -1790,6 +1801,10 @@ export namespace Components {
          */
         "checkout": Checkout;
     }
+    /**
+     * This component listens to the order status
+     * and confirms the order when payment is successful.
+     */
     interface ScOrderConfirmProvider {
         /**
           * Success text for the form.
@@ -3898,6 +3913,9 @@ declare global {
         prototype: HTMLScCheckoutElement;
         new (): HTMLScCheckoutElement;
     };
+    /**
+     * This component listens for a confirmed event and redirects to the success url.
+     */
     interface HTMLScCheckoutFormErrorsElement extends Components.ScCheckoutFormErrors, HTMLStencilElement {
     }
     var HTMLScCheckoutFormErrorsElement: {
@@ -4108,6 +4126,9 @@ declare global {
         prototype: HTMLScFormControlElement;
         new (): HTMLScFormControlElement;
     };
+    /**
+     * This component listens for a confirmed event and redirects to the success url.
+     */
     interface HTMLScFormErrorProviderElement extends Components.ScFormErrorProvider, HTMLStencilElement {
     }
     var HTMLScFormErrorProviderElement: {
@@ -4120,6 +4141,9 @@ declare global {
         prototype: HTMLScFormRowElement;
         new (): HTMLScFormRowElement;
     };
+    /**
+     * This component listens for a confirmed event and redirects to the success url.
+     */
     interface HTMLScFormStateProviderElement extends Components.ScFormStateProvider, HTMLStencilElement {
     }
     var HTMLScFormStateProviderElement: {
@@ -4282,6 +4306,10 @@ declare global {
         prototype: HTMLScOrderConfirmComponentsValidatorElement;
         new (): HTMLScOrderConfirmComponentsValidatorElement;
     };
+    /**
+     * This component listens to the order status
+     * and confirms the order when payment is successful.
+     */
     interface HTMLScOrderConfirmProviderElement extends Components.ScOrderConfirmProvider, HTMLStencilElement {
     }
     var HTMLScOrderConfirmProviderElement: {
@@ -5571,6 +5599,9 @@ declare namespace LocalJSX {
          */
         "taxProtocol"?: TaxProtocol;
     }
+    /**
+     * This component listens for a confirmed event and redirects to the success url.
+     */
     interface ScCheckoutFormErrors {
         /**
           * The current order.
@@ -6550,6 +6581,9 @@ declare namespace LocalJSX {
          */
         "size"?: 'small' | 'medium' | 'large';
     }
+    /**
+     * This component listens for a confirmed event and redirects to the success url.
+     */
     interface ScFormErrorProvider {
         /**
           * The current order.
@@ -6566,6 +6600,9 @@ declare namespace LocalJSX {
     }
     interface ScFormRow {
     }
+    /**
+     * This component listens for a confirmed event and redirects to the success url.
+     */
     interface ScFormStateProvider {
         /**
           * Set the state.
@@ -7023,6 +7060,10 @@ declare namespace LocalJSX {
          */
         "checkout"?: Checkout;
     }
+    /**
+     * This component listens to the order status
+     * and confirms the order when payment is successful.
+     */
     interface ScOrderConfirmProvider {
         /**
           * Error event.
@@ -9105,6 +9146,9 @@ declare module "@stencil/core" {
             "sc-charges-list": LocalJSX.ScChargesList & JSXBase.HTMLAttributes<HTMLScChargesListElement>;
             "sc-checkbox": LocalJSX.ScCheckbox & JSXBase.HTMLAttributes<HTMLScCheckboxElement>;
             "sc-checkout": LocalJSX.ScCheckout & JSXBase.HTMLAttributes<HTMLScCheckoutElement>;
+            /**
+             * This component listens for a confirmed event and redirects to the success url.
+             */
             "sc-checkout-form-errors": LocalJSX.ScCheckoutFormErrors & JSXBase.HTMLAttributes<HTMLScCheckoutFormErrorsElement>;
             "sc-checkout-mollie-payment": LocalJSX.ScCheckoutMolliePayment & JSXBase.HTMLAttributes<HTMLScCheckoutMolliePaymentElement>;
             "sc-checkout-unsaved-changes-warning": LocalJSX.ScCheckoutUnsavedChangesWarning & JSXBase.HTMLAttributes<HTMLScCheckoutUnsavedChangesWarningElement>;
@@ -9140,8 +9184,14 @@ declare module "@stencil/core" {
             "sc-form": LocalJSX.ScForm & JSXBase.HTMLAttributes<HTMLScFormElement>;
             "sc-form-components-validator": LocalJSX.ScFormComponentsValidator & JSXBase.HTMLAttributes<HTMLScFormComponentsValidatorElement>;
             "sc-form-control": LocalJSX.ScFormControl & JSXBase.HTMLAttributes<HTMLScFormControlElement>;
+            /**
+             * This component listens for a confirmed event and redirects to the success url.
+             */
             "sc-form-error-provider": LocalJSX.ScFormErrorProvider & JSXBase.HTMLAttributes<HTMLScFormErrorProviderElement>;
             "sc-form-row": LocalJSX.ScFormRow & JSXBase.HTMLAttributes<HTMLScFormRowElement>;
+            /**
+             * This component listens for a confirmed event and redirects to the success url.
+             */
             "sc-form-state-provider": LocalJSX.ScFormStateProvider & JSXBase.HTMLAttributes<HTMLScFormStateProviderElement>;
             "sc-format-bytes": LocalJSX.ScFormatBytes & JSXBase.HTMLAttributes<HTMLScFormatBytesElement>;
             "sc-format-date": LocalJSX.ScFormatDate & JSXBase.HTMLAttributes<HTMLScFormatDateElement>;
@@ -9169,6 +9219,10 @@ declare module "@stencil/core" {
             "sc-order-bump": LocalJSX.ScOrderBump & JSXBase.HTMLAttributes<HTMLScOrderBumpElement>;
             "sc-order-bumps": LocalJSX.ScOrderBumps & JSXBase.HTMLAttributes<HTMLScOrderBumpsElement>;
             "sc-order-confirm-components-validator": LocalJSX.ScOrderConfirmComponentsValidator & JSXBase.HTMLAttributes<HTMLScOrderConfirmComponentsValidatorElement>;
+            /**
+             * This component listens to the order status
+             * and confirms the order when payment is successful.
+             */
             "sc-order-confirm-provider": LocalJSX.ScOrderConfirmProvider & JSXBase.HTMLAttributes<HTMLScOrderConfirmProviderElement>;
             "sc-order-confirmation": LocalJSX.ScOrderConfirmation & JSXBase.HTMLAttributes<HTMLScOrderConfirmationElement>;
             "sc-order-confirmation-customer": LocalJSX.ScOrderConfirmationCustomer & JSXBase.HTMLAttributes<HTMLScOrderConfirmationCustomerElement>;

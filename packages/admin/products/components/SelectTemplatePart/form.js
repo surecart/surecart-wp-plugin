@@ -24,21 +24,36 @@ export default function PostTemplateForm({
 	template,
 }) {
 	// template parts.
-	const { parts, canCreate } = useSelect((select) => {
-		const { canUser, getEntityRecords } = select(coreStore);
-		return {
-			parts:
-				getEntityRecords('postType', 'wp_template_part', {
+	const { parts, canCreate } = useSelect(
+		(select) => {
+			const { canUser, getEntityRecords } = select(coreStore);
+			const parts = [
+				...(getEntityRecords('postType', 'wp_template_part', {
 					per_page: -1,
 					post_type: 'sc_product',
-				}) || [],
-			canCreate: canUser('create', 'templates'),
-		};
-	}, []);
-
-	const selected = parts.find(
-		(part) => part.id === product?.metadata?.wp_template_part_id
+				}) || []),
+				template,
+			];
+			return {
+				parts: parts.filter(
+					(obj, index, self) =>
+						index === self.findIndex((el) => el === obj)
+				),
+				canCreate: canUser('create', 'templates'),
+			};
+		},
+		[template]
 	);
+
+	function getTemplateTitle(template) {
+		if (template?.id === 'surecart/surecart//product-info') {
+			return template?.wp_id
+				? __('Default (Customized)', 'surecart')
+				: __('Default', 'surecart');
+		}
+
+		return template?.title?.rendered || template?.slug;
+	}
 
 	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
@@ -104,13 +119,13 @@ export default function PostTemplateForm({
 			<SelectControl
 				__nextHasNoMarginBottom
 				label={__('Template')}
-				value={selected?.id || 'surecart/surecart//product-info'}
-				options={(parts ?? []).map(({ id, title, wp_id }) => ({
-					value: id,
-					label: `${title?.rendered || slug}${
-						!wp_id ? ` (${__('Default', 'surecart')})` : ''
-					}`,
-				}))}
+				value={template?.id || 'surecart/surecart//product-info'}
+				options={(parts ?? []).map((part) => {
+					return {
+						value: part?.id,
+						label: getTemplateTitle(part),
+					};
+				})}
 				onChange={(slug) => {
 					updateProduct({
 						metadata: {
@@ -128,7 +143,7 @@ export default function PostTemplateForm({
 						href={addQueryArgs('site-editor.php', {
 							postType: 'wp_template_part',
 							postId:
-								selected?.id ||
+								template?.id ||
 								'surecart/surecart//product-info',
 							canvas: 'edit',
 						})}
