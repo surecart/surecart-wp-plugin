@@ -1416,6 +1416,46 @@
     "class": true,
     "slot": true
   },
+  "sc-product-item": {
+    "layout-config": true,
+    "product": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-item-image": {
+    "alt": true,
+    "sizing": true,
+    "src": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-item-list": {
+    "item-styles": true,
+    "layout-config": true,
+    "limit": true,
+    "pagination-alignment": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-item-price": {
+    "prices": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-item-title": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-product-line-item": {
     "amount": true,
     "currency": true,

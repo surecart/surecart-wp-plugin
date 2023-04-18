@@ -16,7 +16,6 @@
 		"packages/blocks/**/*.php",
 		"packages/blocks/**/Blocks/*.php",
 		"packages/blocks/**/Blocks/**/*.json",
-		"packages/blocks/**/Controllers/**/*.php",
 		"templates/",
 		"images/",
 		"core/",
