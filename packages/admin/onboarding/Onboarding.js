@@ -14,7 +14,7 @@ import StarterTemplates from './components/StarterTemplates';
 
 let confettiIntervalId;
 let confettiTimerId;
-const CONFETTI_DURATION = 5000;
+const CONFETTI_DURATION = 3000;
 
 function randomInRange(min, max) {
 	return Math.random() * (max - min) + min;
