@@ -2,15 +2,33 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import StepHeader from './StepHeader';
+import { useEffect, useState } from 'react';
+
+let showVideoTimerId;
+const TIMEOUT = 2000;
 
 export default () => {
+	const [showVideo, setShowVideo] = useState(false);
+
+	useEffect(() => {
+		showVideoTimerId = setTimeout(() => {
+			setShowVideo(true);
+		}, TIMEOUT);
+
+		return () => {
+			clearTimeout(showVideoTimerId);
+		};
+	}, []);
+
 	return (
 		<div
-			style={{
-				textAlign: 'center',
-				position: 'relative',
-				zIndex: 9,
-			}}
+			css={css`
+				position: relative;
+				z-index: 9;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			`}
 		>
 			<StepHeader
 				imageNode={
@@ -39,20 +57,18 @@ export default () => {
 					{__('View My Store', 'surecart')}
 				</sc-button>
 			</div>
-			<div
-				style={{
-					marginTop: '45px',
-				}}
-			>
-				<iframe
-					width="560"
-					height="315"
-					src="https://www.youtube.com/embed/tYKJXq1kPj4"
-					title="YouTube video player"
-					frameborder="0"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-					allowfullscreen
-				></iframe>
+			<div style={{ marginTop: '45px', height: '315px' }}>
+				{showVideo && (
+					<iframe
+						width="560"
+						height="315"
+						src="https://www.youtube.com/embed/tYKJXq1kPj4"
+						title="YouTube video player"
+						frameborder="0"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+						allowfullscreen
+					></iframe>
+				)}
 			</div>
 		</div>
 	);

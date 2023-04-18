@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { addQueryArgs } from '@wordpress/url';
 import OnboardingModel from '../../templates/OnboardingModel';
 import Logo from '../../templates/Logo';
 
@@ -15,13 +16,12 @@ export default ({ children }) => {
 				`}
 			>
 				<Logo display="block" />
-				<span
-					css={css`
-						cursor: pointer;
-					`}
+				<a
+					href={addQueryArgs('index.php')}
+					style={{ color: 'var(--sc-color-gray-700)' }}
 				>
 					<sc-icon name="x" style={{ fontSize: '28px' }}></sc-icon>
-				</span>
+				</a>
 			</div>
 			<div
 				css={css`
