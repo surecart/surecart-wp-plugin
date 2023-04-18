@@ -120,7 +120,7 @@ export default ({ open, onRequestClose, currentPeriodEndAt }) => {
 					<ScAlert type="info" open>
 						{sprintf(
 							__(
-								'This will automatically pause the subscription on %s. Please choose an restoration date.',
+								'This will automatically pause the subscription on %s. Please choose a restoration date.',
 								'surecart '
 							),
 							formatTime(currentPeriodEndAt, {
