@@ -26,6 +26,7 @@ export default () => {
 				size="large"
 				placeholder={__('Enter email address', 'surecart')}
 				required={true}
+				autofocus={true}
 				style={{ width: '480px' }}
 			>
 				<sc-button
