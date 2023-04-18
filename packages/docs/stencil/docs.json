@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-03-29T20:19:01",
+  "timestamp": "2023-04-18T18:02:03",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -18991,6 +18991,7 @@
         "sc-dashboard-downloads-list",
         "sc-invoices-list",
         "sc-orders-list",
+        "sc-product-item-list",
         "sc-subscriptions-list"
       ],
       "dependencies": [
@@ -19015,6 +19016,9 @@
           "sc-pagination"
         ],
         "sc-orders-list": [
+          "sc-pagination"
+        ],
+        "sc-product-item-list": [
           "sc-pagination"
         ],
         "sc-subscriptions-list": [
@@ -21261,7 +21265,7 @@
       "slots": [],
       "parts": [],
       "dependents": [
-        "sc-product-item"
+        "sc-product-item-price"
       ],
       "dependencies": [
         "sc-format-number"
@@ -21270,7 +21274,7 @@
         "sc-price-range": [
           "sc-format-number"
         ],
-        "sc-product-item": [
+        "sc-product-item-price": [
           "sc-price-range"
         ]
       }
@@ -21285,22 +21289,6 @@
       "usage": {},
       "props": [
         {
-          "name": "formId",
-          "type": "string",
-          "mutable": false,
-          "attr": "form-id",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "layoutConfig",
           "type": "{ blockName: string; attributes: any; }[]",
           "mutable": false,
@@ -21310,27 +21298,6 @@
           "values": [
             {
               "type": "{ blockName: string; attributes: any; }[]"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "mode",
-          "type": "\"live\" | \"test\"",
-          "mutable": false,
-          "attr": "mode",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "value": "live",
-              "type": "string"
-            },
-            {
-              "value": "test",
-              "type": "string"
             }
           ],
           "optional": false,
@@ -21364,12 +21331,15 @@
       "dependencies": [
         "sc-product-item-title",
         "sc-product-item-image",
-        "sc-price-range"
+        "sc-product-item-price"
       ],
       "dependencyGraph": {
         "sc-product-item": [
           "sc-product-item-title",
           "sc-product-item-image",
+          "sc-product-item-price"
+        ],
+        "sc-product-item-price": [
           "sc-price-range"
         ],
         "sc-price-range": [
@@ -21469,22 +21439,6 @@
       "usage": {},
       "props": [
         {
-          "name": "formId",
-          "type": "string",
-          "mutable": false,
-          "attr": "form-id",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "itemStyles",
           "type": "any",
           "mutable": false,
@@ -21517,20 +21471,33 @@
           "required": false
         },
         {
-          "name": "mode",
-          "type": "\"live\" | \"test\"",
+          "name": "limit",
+          "type": "number",
           "mutable": false,
-          "attr": "mode",
+          "attr": "limit",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
+          "default": "15",
           "values": [
             {
-              "value": "live",
-              "type": "string"
-            },
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "paginationAlignment",
+          "type": "string",
+          "mutable": false,
+          "attr": "pagination-alignment",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "'center'",
+          "values": [
             {
-              "value": "test",
               "type": "string"
             }
           ],
@@ -21547,20 +21514,81 @@
       "dependents": [],
       "dependencies": [
         "sc-skeleton",
-        "sc-product-item"
+        "sc-product-item",
+        "sc-pagination"
       ],
       "dependencyGraph": {
         "sc-product-item-list": [
           "sc-skeleton",
-          "sc-product-item"
+          "sc-product-item",
+          "sc-pagination"
         ],
         "sc-product-item": [
           "sc-product-item-title",
           "sc-product-item-image",
+          "sc-product-item-price"
+        ],
+        "sc-product-item-price": [
           "sc-price-range"
         ],
         "sc-price-range": [
           "sc-format-number"
+        ],
+        "sc-pagination": [
+          "sc-flex",
+          "sc-button"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/products/sc-product-item-price/sc-product-item-price.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-product-item-price",
+      "readme": "# sc-product-item-price\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "prices",
+          "type": "Price[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Price[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-product-item"
+      ],
+      "dependencies": [
+        "sc-price-range"
+      ],
+      "dependencyGraph": {
+        "sc-product-item-price": [
+          "sc-price-range"
+        ],
+        "sc-price-range": [
+          "sc-format-number"
+        ],
+        "sc-product-item": [
+          "sc-product-item-price"
         ]
       }
     },

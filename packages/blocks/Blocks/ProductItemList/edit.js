@@ -242,7 +242,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 								}}
 								layoutConfig={layoutConfig}
 								paginationAlignment={pagination_alignment}
-							></ScProductItemList>
+							/>
 						)}
 					</Disabled>
 				</div>

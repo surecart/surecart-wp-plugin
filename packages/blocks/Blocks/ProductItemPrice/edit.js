@@ -8,7 +8,7 @@ import {
 } from '@wordpress/block-editor';
 import { ScProductItemPrice } from '@surecart/components-react';
 
-export const priceList = [
+export const DEMO_PRICES = [
 	{
 		id: 'da12c72c-bbbf-4b70-baba-f5a92c54e556',
 		amount: 4900,
@@ -35,13 +35,13 @@ export default ({ attributes, setAttributes }) => {
 			<BlockControls>
 				<AlignmentToolbar
 					value={align}
-					onChange={(value) => setAttributes({ align: value })}
+					onChange={(align) => setAttributes({ align })}
 				/>
 			</BlockControls>
 			<div {...blockProps}>
 				<ScProductItemPrice
 					style={{ '--sc-product-price-align': align }}
-					prices={priceList}
+					prices={DEMO_PRICES}
 				/>
 			</div>
 		</>
