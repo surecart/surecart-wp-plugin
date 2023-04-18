@@ -10,10 +10,18 @@ export class ScProductItemPrice {
   /* Prices */
   @Prop() prices: Price[];
 
+  /** Show price range? */
+  @Prop() range: boolean = true;
+
   render() {
+    const price = (this.prices || []).find(p => !p?.archived);
     return (
-      <div class={{ 'product-price': true }}>
-        <sc-price-range prices={this.prices}></sc-price-range>
+      <div class="product-price" part="base">
+        {!this.range && this.prices?.length ? (
+          <sc-format-number type="currency" currency={price?.currency || 'usd'} value={price?.amount}></sc-format-number>
+        ) : (
+          <sc-price-range prices={this.prices}></sc-price-range>
+        )}
       </div>
     );
   }

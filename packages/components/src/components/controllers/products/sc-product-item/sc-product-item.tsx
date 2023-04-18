@@ -19,6 +19,7 @@ export class ScProductItem {
       <a href={this.product?.permalink} class={{ 'product-item': true }}>
         {this.product &&
           this.layoutConfig.map(layout => {
+            const attributes = layout.attributes || {};
             switch (layout.blockName) {
               case 'surecart/product-item-title':
                 return <sc-product-item-title>{this.product?.name}</sc-product-item-title>;
@@ -27,7 +28,7 @@ export class ScProductItem {
                 return <sc-product-item-image src={this.product?.image_url} sizing={layout.attributes?.sizing}></sc-product-item-image>;
 
               case 'surecart/product-item-price':
-                return <sc-product-item-price prices={this.product?.prices.data}></sc-product-item-price>;
+                return <sc-product-item-price prices={this.product?.prices.data} range={!!attributes?.range}></sc-product-item-price>;
 
               default:
                 return null;

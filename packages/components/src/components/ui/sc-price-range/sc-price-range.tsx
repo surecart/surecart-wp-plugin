@@ -17,15 +17,17 @@ export class ScPriceRange {
   handlePricesChange() {
     let min: Price, max: Price;
 
-    this.prices?.forEach(price => {
-      if (!max || price.amount > max.amount) {
-        max = price;
-      }
+    (this.prices || [])
+      .filter(p => !p?.archived)
+      .forEach(price => {
+        if (!max || price.amount > max.amount) {
+          max = price;
+        }
 
-      if (!min || price.amount < min.amount) {
-        min = price;
-      }
-    });
+        if (!min || price.amount < min.amount) {
+          min = price;
+        }
+      });
 
     this.minPrice = min;
     this.maxPrice = max;

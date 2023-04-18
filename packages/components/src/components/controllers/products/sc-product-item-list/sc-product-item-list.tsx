@@ -1,5 +1,5 @@
 import { Component, h, Prop, State } from '@stencil/core';
-import { addQueryArgs } from '@wordpress/url';
+import { addQueryArgs, getQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 
 import { Product } from '../../../../types';
@@ -16,23 +16,26 @@ export type LayoutConfig = {
   shadow: true,
 })
 export class ScProductItemList {
-  /* Product list */
-  @State() products: Product[];
-
-  /* Loading indicator */
-  @State() loading: boolean = false;
+  /** Limit to a set of ids.  */
+  @Prop() ids: string[];
 
   /* Layout configuration */
   @Prop() layoutConfig: LayoutConfig;
 
-  /* Item styles */
-  @Prop() itemStyles: any = {};
+  /** Should we paginate? */
+  @Prop() paginate: boolean = true;
 
   /* Pagination alignment */
   @Prop() paginationAlignment: string = 'center';
 
   /* Limit per page */
   @Prop() limit: number = 15;
+
+  /* Product list */
+  @State() products: Product[];
+
+  /* Loading indicator */
+  @State() loading: boolean = false;
 
   /* Current page */
   @State() currentPage: number = 1;
@@ -61,12 +64,10 @@ export class ScProductItemList {
 
   // Fetch all products
   async getProducts() {
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const params = Object.fromEntries(urlSearchParams.entries());
-    const page = Number(params?.['product-page']);
+    const { 'product-page': page } = getQueryArgs(window.location.href) as { 'product-page': string };
 
-    if (page && !Number.isNaN(page)) {
-      this.currentPage = page;
+    if (page) {
+      this.currentPage = parseInt(page);
     } else {
       this.currentPage = 1;
       this.appendParam(1);
@@ -77,9 +78,11 @@ export class ScProductItemList {
       const response = (await apiFetch({
         path: addQueryArgs(`surecart/v1/products/`, {
           expand: ['prices'],
-          archived: 0,
+          archived: false,
+          status: ['published'],
           per_page: this.limit,
           page: this.currentPage,
+          ...(this.ids?.length ? { ids: this.ids } : {}),
         }),
         parse: false,
       })) as Response;

@@ -2586,13 +2586,24 @@ export namespace Components {
         "src": string;
     }
     interface ScProductItemList {
-        "itemStyles": any;
+        /**
+          * Limit to a set of ids.
+         */
+        "ids": string[];
         "layoutConfig": LayoutConfig1;
         "limit": number;
+        /**
+          * Should we paginate?
+         */
+        "paginate": boolean;
         "paginationAlignment": string;
     }
     interface ScProductItemPrice {
         "prices": Price1[];
+        /**
+          * Show price range?
+         */
+        "range": boolean;
     }
     interface ScProductItemTitle {
     }
@@ -7969,13 +7980,24 @@ declare namespace LocalJSX {
         "src"?: string;
     }
     interface ScProductItemList {
-        "itemStyles"?: any;
+        /**
+          * Limit to a set of ids.
+         */
+        "ids"?: string[];
         "layoutConfig"?: LayoutConfig1;
         "limit"?: number;
+        /**
+          * Should we paginate?
+         */
+        "paginate"?: boolean;
         "paginationAlignment"?: string;
     }
     interface ScProductItemPrice {
         "prices"?: Price1[];
+        /**
+          * Show price range?
+         */
+        "range"?: boolean;
     }
     interface ScProductItemTitle {
     }

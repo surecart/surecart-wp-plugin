@@ -7,6 +7,8 @@ import {
 	useBlockProps,
 } from '@wordpress/block-editor';
 import { ScProductItemPrice } from '@surecart/components-react';
+import { InspectorControls } from '@wordpress/block-editor';
+import { PanelBody, ToggleControl } from '@wordpress/components';
 
 export const DEMO_PRICES = [
 	{
@@ -21,17 +23,30 @@ export const DEMO_PRICES = [
 	},
 	{
 		id: 'f46f809c-b63f-4a58-9c84-c5df7e6dcd8b',
-		amount: 2999,
+		amount: 2900,
 		currency: 'usd',
 	},
 ];
 
 export default ({ attributes, setAttributes }) => {
-	const { align } = attributes;
+	const { align, range } = attributes;
 	const blockProps = useBlockProps();
 
 	return (
 		<>
+			<InspectorControls>
+				<PanelBody title={__('Options', 'surecart')}>
+					<ToggleControl
+						label={__('Price Range', 'surecart')}
+						help={__(
+							'Show a range of prices if multiple prices are available.',
+							'surecart'
+						)}
+						checked={range}
+						onChange={(range) => setAttributes({ range })}
+					/>
+				</PanelBody>
+			</InspectorControls>
 			<BlockControls>
 				<AlignmentToolbar
 					value={align}
@@ -42,6 +57,7 @@ export default ({ attributes, setAttributes }) => {
 				<ScProductItemPrice
 					style={{ '--sc-product-price-align': align }}
 					prices={DEMO_PRICES}
+					range={range}
 				/>
 			</div>
 		</>

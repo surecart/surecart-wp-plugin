@@ -1434,9 +1434,10 @@
     "slot": true
   },
   "sc-product-item-list": {
-    "item-styles": true,
+    "ids": true,
     "layout-config": true,
     "limit": true,
+    "paginate": true,
     "pagination-alignment": true,
     "style": true,
     "id": true,
@@ -1445,6 +1446,7 @@
   },
   "sc-product-item-price": {
     "prices": true,
+    "range": true,
     "style": true,
     "id": true,
     "class": true,

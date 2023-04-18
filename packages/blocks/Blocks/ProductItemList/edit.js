@@ -184,8 +184,8 @@ export default ({ attributes, setAttributes, clientId }) => {
 						label="Per page limit"
 						value={limit}
 						onChange={(limit) => setAttributes({ limit })}
-						step={5}
-						min={5}
+						step={1}
+						min={1}
 						max={40}
 					/>
 					<ToggleGroupControl
