@@ -12,6 +12,12 @@
 					'images' => array_map(
 						function( $product_media ) use ( $product ) {
 							if ( empty( $product_media->media->url ) ) {
+								if ( ! empty( $product_media->url ) ) {
+									return [
+										'src' => $product_media->url ?? '',
+										'alt' => '',
+									];
+								}
 								return;
 							}
 							return [
