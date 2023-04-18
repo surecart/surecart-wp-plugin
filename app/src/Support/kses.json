@@ -1439,6 +1439,8 @@
     "limit": true,
     "paginate": true,
     "pagination-alignment": true,
+    "query": true,
+    "sort": true,
     "style": true,
     "id": true,
     "class": true,

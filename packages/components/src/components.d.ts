@@ -2597,6 +2597,14 @@ export namespace Components {
          */
         "paginate": boolean;
         "paginationAlignment": string;
+        /**
+          * Query to search for
+         */
+        "query": string;
+        /**
+          * Sort
+         */
+        "sort": string;
     }
     interface ScProductItemPrice {
         "prices": Price1[];
@@ -7991,6 +7999,14 @@ declare namespace LocalJSX {
          */
         "paginate"?: boolean;
         "paginationAlignment"?: string;
+        /**
+          * Query to search for
+         */
+        "query"?: string;
+        /**
+          * Sort
+         */
+        "sort"?: string;
     }
     interface ScProductItemPrice {
         "prices"?: Price1[];
