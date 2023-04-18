@@ -221,12 +221,12 @@ class Currency {
 				$money = ( 2 === $cents ? '0.00' : '0' ); // output zero.
 			} else { // value.
 				if ( floor( $number ) == $number ) { // whole number.
-					$money = number_format( $number, ( 2 === $cents ? 2 : 0 ) ); // format.
+					$money = number_format_i18n( $number, ( 2 === $cents ? 2 : 0 ) ); // format.
 				} else { // cents.
-					$money = number_format( round( $number, 2 ), ( 0 === $cents ? 0 : 2 ) ); // format.
+					$money = number_format_i18n( round( $number, 2 ), ( 0 === $cents ? 0 : 2 ) ); // format.
 				} // integer or decimal.
 			} // value.
-			return $money;
+			return number_format_i18n( $money, 2 );
 		} // numeric.
 	}
 

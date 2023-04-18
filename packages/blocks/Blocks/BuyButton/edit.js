@@ -5,8 +5,8 @@ import { css, jsx } from '@emotion/core';
  */
 import { __ } from '@wordpress/i18n';
 import {
-  InspectorControls,
-  PanelColorSettings,
+	InspectorControls,
+	PanelColorSettings,
 	RichText,
 	__experimentalUseColorProps as useColorProps,
 	__experimentalUseBorderProps as useBorderProps,
@@ -28,13 +28,17 @@ import PriceSelector from '@scripts/blocks/components/PriceSelector';
 import PriceInfo from '@scripts/blocks/components/PriceInfo';
 
 export default ({ className, attributes, setAttributes }) => {
-	const { price_id, type, label, size, line_items, backgroundColor, textColor } = attributes;
-	const borderProps = useBorderProps(attributes);
-	const { style: borderStyle } = borderProps;
-	const colorProps = useColorProps(attributes);
-	const { style: colorStyle } = colorProps;
+	const {
+		price_id,
+		type,
+		label,
+		size,
+		line_items,
+		backgroundColor,
+		textColor,
+	} = attributes;
 
-  if (!price_id) {
+	if (!price_id) {
 		return (
 			<div>
 				<PriceSelector
@@ -58,9 +62,7 @@ export default ({ className, attributes, setAttributes }) => {
 					...(backgroundColor
 						? { '--primary-background': backgroundColor }
 						: {}),
-					...(textColor
-						? { '--primary-color': textColor }
-						: {}),
+					...(textColor ? { '--primary-color': textColor } : {}),
 				}}
 			>
 				<RichText
@@ -134,26 +136,28 @@ export default ({ className, attributes, setAttributes }) => {
 						/>
 					</PanelRow>
 				</PanelBody>
-        <PanelColorSettings
-          title={__('Color Settings')}
-          colorSettings={[
-            {
-              value: backgroundColor,
-              onChange: (backgroundColor) => setAttributes({ backgroundColor }),
-              label: __('Background Color', 'surecart'),
-            },
-            {
-              value: textColor,
-              onChange: (textColor) => setAttributes({ textColor }),
-              label: __('Text Color', 'surecart'),
-            },
-          ]}
-        ></PanelColorSettings>
-        <PanelBody title={__('Product Info', 'surecart')}>
-          <PanelRow>
-            <PriceInfo price_id={price_id} />
-          </PanelRow>
-        </PanelBody>
+				<PanelColorSettings
+					title={__('Color Settings')}
+					colorSettings={[
+						{
+							value: backgroundColor,
+							onChange: (backgroundColor) =>
+								setAttributes({ backgroundColor }),
+							label: __('Background Color', 'surecart'),
+						},
+						{
+							value: textColor,
+							onChange: (textColor) =>
+								setAttributes({ textColor }),
+							label: __('Text Color', 'surecart'),
+						},
+					]}
+				></PanelColorSettings>
+				<PanelBody title={__('Product Info', 'surecart')}>
+					<PanelRow>
+						<PriceInfo price_id={price_id} />
+					</PanelRow>
+				</PanelBody>
 			</InspectorControls>
 
 			{renderButton()}

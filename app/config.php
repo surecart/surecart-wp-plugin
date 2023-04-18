@@ -14,6 +14,7 @@ return [
 	'providers'              => [
 		\SureCartAppCore\AppCore\AppCoreServiceProvider::class,
 		\SureCartAppCore\Config\ConfigServiceProvider::class,
+		\SureCart\Support\UtilityServiceProvider::class,
 		\SureCart\Database\MigrationsServiceProvider::class,
 		\SureCart\Database\UpdateMigrationServiceProvider::class,
 		\SureCart\Account\AccountServiceProvider::class,
@@ -74,6 +75,7 @@ return [
 		\SureCart\Rest\RefundsRestServiceProvider::class,
 		\SureCart\Rest\DownloadRestServiceProvider::class,
 		\SureCart\Rest\LicenseRestServiceProvider::class,
+		\SureCart\Rest\LineItemsRestServiceProvider::class,
 		\SureCart\Rest\ActivationRestServiceProvider::class,
 		\SureCart\Rest\MediaRestServiceProvider::class,
 		\SureCart\Rest\SubscriptionRestServiceProvider::class,
@@ -122,6 +124,7 @@ return [
 		\SureCartBlocks\Blocks\CartCoupon\Block::class,
 		\SureCartBlocks\Blocks\CartSubtotal\Block::class,
 		\SureCartBlocks\Blocks\CartBumpLineItem\Block::class,
+		\SureCartBlocks\Blocks\CollapsibleRow\Block::class,
 		\SureCartBlocks\Blocks\OrderConfirmationLineItems\Block::class,
 		\SureCartBlocks\Blocks\Form\Block::class,
 		\SureCartBlocks\Blocks\Payment\Block::class,
@@ -143,6 +146,16 @@ return [
 		// Deprecated.
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerInvoices\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerCharges\Block::class,
+
+		// \SureCartBlocks\Blocks\Product\Info\Block::class,
+		\SureCartBlocks\Blocks\Product\Description\Block::class,
+		\SureCartBlocks\Blocks\Product\Title\Block::class,
+		\SureCartBlocks\Blocks\Product\Price\Block::class,
+		\SureCartBlocks\Blocks\Product\PriceChoices\Block::class,
+		\SureCartBlocks\Blocks\Product\Media\Block::class,
+		\SureCartBlocks\Blocks\Product\Quantity\Block::class,
+		\SureCartBlocks\Blocks\Product\BuyButtons\Block::class,
+
 	],
 
 	/** Which components to preload for each block. */

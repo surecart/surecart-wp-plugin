@@ -7,14 +7,15 @@
 
 ## Properties
 
-| Property   | Attribute   | Description  | Type          | Default     |
-| ---------- | ----------- | ------------ | ------------- | ----------- |
-| `clickEl`  | --          |              | `HTMLElement` | `undefined` |
-| `disabled` | `disabled`  |              | `boolean`     | `undefined` |
-| `hasFocus` | `has-focus` | Inputs focus | `boolean`     | `undefined` |
-| `max`      | `max`       |              | `number`      | `Infinity`  |
-| `min`      | `min`       |              | `number`      | `1`         |
-| `quantity` | `quantity`  |              | `number`      | `0`         |
+| Property   | Attribute   | Description  | Type                             | Default     |
+| ---------- | ----------- | ------------ | -------------------------------- | ----------- |
+| `clickEl`  | --          |              | `HTMLElement`                    | `undefined` |
+| `disabled` | `disabled`  |              | `boolean`                        | `undefined` |
+| `hasFocus` | `has-focus` | Inputs focus | `boolean`                        | `undefined` |
+| `max`      | `max`       |              | `number`                         | `Infinity`  |
+| `min`      | `min`       |              | `number`                         | `1`         |
+| `quantity` | `quantity`  |              | `number`                         | `0`         |
+| `size`     | `size`      |              | `"large" \| "medium" \| "small"` | `'medium'`  |
 
 
 ## Events
@@ -44,6 +45,7 @@
 ### Used by
 
  - [sc-product-line-item](../product-line-item)
+ - [sc-product-quantity](../../controllers/product/sc-product-quantity)
 
 ### Depends on
 
@@ -54,6 +56,7 @@
 graph TD;
   sc-quantity-select --> sc-icon
   sc-product-line-item --> sc-quantity-select
+  sc-product-quantity --> sc-quantity-select
   style sc-quantity-select fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

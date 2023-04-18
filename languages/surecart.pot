@@ -43,7 +43,7 @@ msgstr ""
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:56
 #: src/Controllers/Admin/Orders/OrdersListTable.php:65
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:63
-#: src/Controllers/Admin/Products/ProductsListTable.php:56
+#: src/Controllers/Admin/Products/ProductsListTable.php:64
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:60
 msgid "All"
 msgstr ""
@@ -191,7 +191,7 @@ msgstr ""
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:236
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:123
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:61
-#: src/Controllers/Admin/Products/ProductsListTable.php:54
+#: src/Controllers/Admin/Products/ProductsListTable.php:62
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:61
 #: licenses/modules/Details/index.js:14
 #: util.js:44
@@ -217,7 +217,7 @@ msgstr ""
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:75
 #: src/Controllers/Admin/Customers/CustomersListTable.php:49
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:103
-#: src/Controllers/Admin/Products/ProductsListTable.php:97
+#: src/Controllers/Admin/Products/ProductsListTable.php:105
 #: src/Support/Errors/Translations/attributes.php:11
 #: web/buy-template.php:51
 #: bumps/modules/Name.js:7
@@ -918,6 +918,7 @@ msgstr ""
 #: Blocks/CheckoutForm/components/PriceChoices.js:48
 #: Blocks/CheckoutForm/entities.js:12
 #: components/PriceChoices.js:15
+#: plugins/product-panel.js:17
 msgid "Product"
 msgstr ""
 
@@ -1231,7 +1232,7 @@ msgstr ""
 #: coupons/modules/SelectCustomer.js:240
 #: customers/CreateCustomer.js:112
 #: product-groups/CreateProductGroup.js:74
-#: products/CreateProduct.js:70
+#: products/CreateProduct.js:80
 #: products/modules/Upgrades.js:124
 #: settings/processors/CreateEditPaymentMethod.js:125
 #: settings/subscription-preservation/EditReason.js:146
@@ -1330,7 +1331,7 @@ msgid "A specific product id."
 msgstr ""
 
 #: src/Integrations/ThriveAutomator/DataFields/ProductNameDataField.php:29
-#: products/CreateProduct.js:54
+#: products/CreateProduct.js:64
 msgid "Product Name"
 msgstr ""
 
@@ -3878,6 +3879,85 @@ msgstr ""
 msgid "(no title)"
 msgstr ""
 
+#: src/WordPress/PostTypes/ProductPostTypeService.php:192
+msgctxt "post type general name"
+msgid "Product Pages"
+msgstr ""
+
+#: src/WordPress/PostTypes/ProductPostTypeService.php:193
+msgctxt "post type singular name"
+msgid "Product Page"
+msgstr ""
+
+#: src/WordPress/PostTypes/ProductPostTypeService.php:194
+msgctxt "Product"
+msgid "Add New"
+msgstr ""
+
+#: src/WordPress/PostTypes/ProductPostTypeService.php:195
+msgid "Add New Product Page"
+msgstr ""
+
+#: src/WordPress/PostTypes/ProductPostTypeService.php:196
+msgid "New Product Page"
+msgstr ""
+
+#: src/WordPress/PostTypes/ProductPostTypeService.php:197
+msgid "Edit Product Page"
+msgstr ""
+
+#: src/WordPress/PostTypes/ProductPostTypeService.php:198
+msgid "View Product Page"
+msgstr ""
+
+#: src/WordPress/PostTypes/ProductPostTypeService.php:199
+msgid "All Product Pages"
+msgstr ""
+
+#: src/WordPress/PostTypes/ProductPostTypeService.php:200
+msgid "Search Product Pages"
+msgstr ""
+
+#: src/WordPress/PostTypes/ProductPostTypeService.php:201
+msgid "No product pages found."
+msgstr ""
+
+#: src/WordPress/PostTypes/ProductPostTypeService.php:202
+msgid "No product pages found in Trash."
+msgstr ""
+
+#: src/WordPress/PostTypes/ProductPostTypeService.php:203
+msgid "Filter product pages list"
+msgstr ""
+
+#: src/WordPress/PostTypes/ProductPostTypeService.php:204
+msgid "Product pages list navigation"
+msgstr ""
+
+#: src/WordPress/PostTypes/ProductPostTypeService.php:205
+msgid "Product pages list"
+msgstr ""
+
+#: src/WordPress/PostTypes/ProductPostTypeService.php:206
+msgid "Product page published."
+msgstr ""
+
+#: src/WordPress/PostTypes/ProductPostTypeService.php:207
+msgid "Product page published privately."
+msgstr ""
+
+#: src/WordPress/PostTypes/ProductPostTypeService.php:208
+msgid "Product page reverted to draft."
+msgstr ""
+
+#: src/WordPress/PostTypes/ProductPostTypeService.php:209
+msgid "Product page scheduled."
+msgstr ""
+
+#: src/WordPress/PostTypes/ProductPostTypeService.php:210
+msgid "Product page updated."
+msgstr ""
+
 #: src/WordPress/RecaptchaValidationService.php:100
 #: src/WordPress/RecaptchaValidationService.php:105
 msgid "Your request could not be validated. Please try again."
@@ -5898,7 +5978,7 @@ msgid "%d months"
 msgstr ""
 
 #: coupons/Sidebar.js:52
-#: products/Sidebar.js:34
+#: products/modules/Summary.js:27
 #: subscriptions/edit/modules/Summary.js:8
 #: subscriptions/edit/modules/UpcomingPeriod.js:109
 #: sc-order-summary.js:20
@@ -5911,12 +5991,12 @@ msgid "Duration"
 msgstr ""
 
 #: coupons/Sidebar.js:88
-#: products/Sidebar.js:67
+#: products/modules/Summary.js:55
 msgid "Last Updated"
 msgstr ""
 
 #: coupons/Sidebar.js:109
-#: products/Sidebar.js:57
+#: products/modules/Summary.js:45
 msgid "Archived On"
 msgstr ""
 
@@ -9690,6 +9770,7 @@ msgstr ""
 #: Blocks/CustomerDashboardButton/edit.js:121
 #: Blocks/LogoutButton/edit.js:70
 #: Blocks/OrderConfirmationCustomer/edit.js:36
+#: Blocks/ProductCartButton/edit.js:47
 #: Blocks/Submit/edit.js:120
 msgid "Button text"
 msgstr ""
@@ -9701,6 +9782,7 @@ msgstr ""
 #: Blocks/CustomerDashboardButton/edit.js:122
 #: Blocks/LogoutButton/edit.js:71
 #: Blocks/OrderConfirmationCustomer/edit.js:37
+#: Blocks/ProductCartButton/edit.js:48
 #: Blocks/Submit/edit.js:121
 msgid "Add text…"
 msgstr ""
@@ -10674,6 +10756,31 @@ msgstr ""
 msgid "Label Name"
 msgstr ""
 
+#: Blocks/ProductTitle/edit.js:47
+msgid "No Title"
+msgstr ""
+
+#: Blocks/ProductTitle/heading-level-dropdown.js:42
+msgid "Change heading level"
+msgstr ""
+
+#. translators: %s: heading level e.g: "1", "2", "3"
+#: Blocks/ProductTitle/heading-level-dropdown.js:56
+msgid "Heading %d"
+msgstr ""
+
+#: Blocks/Radio/edit.js:57
+msgid "Radio Text"
+msgstr ""
+
+#: Blocks/Radio/edit.js:58
+msgid "Click here to add some radio text..."
+msgstr ""
+
+#: Blocks/RadioGroup/edit.js:65
+msgid "Label Name"
+msgstr ""
+
 #: Blocks/SessionDetail/edit.js:83
 msgid "(Not in this example order, but will be conditionally displayed)"
 msgstr ""
@@ -11188,6 +11295,10 @@ msgid "Display a checkout form"
 msgstr ""
 
 #: Blocks/CheckoutForm/block.json
+#: Blocks/ProductCartButton/block.json
+#: Blocks/ProductForm/block.json
+#: Blocks/ProductQuantity/block.json
+#: Blocks/ProductTitle/block.json
 msgctxt "block keyword"
 msgid "form"
 msgstr ""
@@ -11602,6 +11713,7 @@ msgid "heading"
 msgstr ""
 
 #: Blocks/Heading/block.json
+#: Blocks/ProductTitle/block.json
 msgctxt "block keyword"
 msgid "title"
 msgstr ""
@@ -11783,12 +11895,18 @@ msgstr ""
 
 #: Blocks/PriceChoice/block.json
 #: Blocks/PriceSelector/block.json
+#: Blocks/ProductPrices/block.json
 msgctxt "block keyword"
 msgid "price"
 msgstr ""
 
 #: Blocks/PriceChoice/block.json
 #: Blocks/PriceSelector/block.json
+#: Blocks/ProductCartButton/block.json
+#: Blocks/ProductForm/block.json
+#: Blocks/ProductPrices/block.json
+#: Blocks/ProductQuantity/block.json
+#: Blocks/ProductTitle/block.json
 msgctxt "block keyword"
 msgid "product"
 msgstr ""

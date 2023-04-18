@@ -50,7 +50,9 @@ abstract class BaseBlock {
 		[ 'classes' => $classes ] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes );
 		// get text align class.
 		['class' => $text_align_class] = BlockStyleAttributes::getTextAlignClassAndStyle( $attributes );
-		return implode( ' ', array_filter( [ $classes, $text_align_class ] ) );
+		// get text align class.
+		[ 'class' => $align_class ] = BlockStyleAttributes::getAlignClassAndStyle( $attributes );
+		return implode( ' ', array_filter( [ $classes, $text_align_class, $align_class ] ) );
 	}
 
 	/**

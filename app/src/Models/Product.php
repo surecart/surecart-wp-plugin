@@ -64,6 +64,18 @@ class Product extends Model {
 	}
 
 	/**
+	 * Get the product permalink.
+	 *
+	 * @return string|false
+	 */
+	public function getPermalinkAttribute() {
+		if ( empty( $this->attributes['id'] ) ) {
+			return false;
+		}
+		return trailingslashit( get_home_url() ) . trailingslashit( 'products' ) . $this->slug;
+	}
+
+	/**
 	 * Return attached active prices.
 	 *
 	 * @return array
@@ -90,4 +102,37 @@ class Product extends Model {
 
 		return $active_prices;
 	}
+
+	/**
+	 * Get the product template
+	 *
+	 * @return \WP_Template
+	 */
+	public function getTemplateAttribute() {
+		if ( ! empty( $this->attributes['metadata']->wp_template_id ) ) {
+			$template = get_block_template( $this->attributes['metadata']->wp_template_id );
+			if ( $template ) {
+				return $template;
+			}
+		}
+
+		return get_block_template( 'surecart/surecart//single-product' );
+	}
+
+	/**
+	 * Get the product template part template.
+	 *
+	 * @return \WP_Template
+	 */
+	public function getTemplatePartAttribute() {
+		if ( ! empty( $this->attributes['metadata']->wp_template_part_id ) ) {
+			$template = get_block_template( $this->attributes['metadata']->wp_template_part_id, 'wp_template_part' );
+			if ( $template ) {
+				return $template;
+			}
+		}
+
+		return get_block_template( 'surecart/surecart//product-info', 'wp_template_part' );
+	}
 }
+

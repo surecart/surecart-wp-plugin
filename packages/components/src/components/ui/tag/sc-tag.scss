@@ -23,9 +23,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 .tag--primary {
-  background-color: var(--sc-tag-primary-background-color, var(--sc-color-primary-100));
-  border-color:  var(--sc-tag-primary-border-color, var(--sc-color-primary-200));
-  color:  var(--sc-tag-primary-color, var(--sc-color-primary-700));
+  background-color: var(--sc-tag-primary-background-color, var(--sc-color-primary-500));
+  border-color:  var(--sc-tag-primary-border-color, var(--sc-color-primary-500));
+  color:  var(--sc-tag-primary-color, var(--sc-color-white));
 }
 
 .tag--success {

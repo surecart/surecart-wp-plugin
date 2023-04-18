@@ -34,6 +34,7 @@ class StylesService {
 			[],
 			filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.css' ),
 		);
+		$this->addInlineThemeColors( 'surecart-themes-default' );
 	}
 
 	/**

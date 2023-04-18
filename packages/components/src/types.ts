@@ -1,8 +1,16 @@
+import { ObservableMap } from '@stencil/store';
 import { IconLibraryMutator, IconLibraryResolver } from './components/ui/icon/library';
 
 declare global {
   interface Window {
     grecaptcha: any;
+    surecart?: {
+      product?: {
+        store: ObservableMap<any>;
+        state: any;
+        update: Function;
+      };
+    };
     wp: {
       apiFetch: any;
       blocks: any;
@@ -21,6 +29,12 @@ declare global {
       nonce_endpoint: string;
       recaptcha_site_key: string;
       theme: string;
+      product_data: {
+        form: {
+          id: number;
+        };
+        product: Product;
+      };
       pages: {
         dashboard: string;
         checkout: string;
@@ -259,6 +273,7 @@ export interface LineItem extends Object {
   name: string;
   object: string;
   quantity: number;
+  checkout: string | Checkout;
   bump: string | Bump;
   fees?: {
     object: 'list';
@@ -275,6 +290,13 @@ export interface LineItem extends Object {
   updated_at: number;
   price?: Price;
   price_id: string;
+}
+
+export interface DeletedItem {
+  cache_status: string;
+  deleted: boolean;
+  id: string;
+  object: string;
 }
 
 export interface Fee {

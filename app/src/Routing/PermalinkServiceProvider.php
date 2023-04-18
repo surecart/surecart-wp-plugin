@@ -16,13 +16,47 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.permalink'] = function () {
-			return new PermalinkService();
+		$container['surecart.settings.permalinks.product'] = function() {
+			return new PermalinkSettingService(
+				[
+					'slug'        => 'product',
+					'label'       => __( 'SureCart Product Permalinks', 'surecart' ),
+					/* translators: %s: Home URL */
+					'description' => sprintf( __( 'If you like, you may enter custom structures for your product page URLs here. For example, using <code>products</code> would make your product buy links like <code>%sproducts/sample-product/</code>.', 'surecart' ), esc_url( home_url( '/' ) ) ),
+					'options'     => [
+						[
+							'value' => 'products',
+							'label' => __( 'Default', 'surecart' ),
+						],
+						[
+							'value' => 'shop',
+							'label' => __( 'Shop', 'surecart' ),
+						],
+					],
+				]
+			);
 		};
 
-		$app = $container[ SURECART_APPLICATION_KEY ];
-
-		$app->alias( 'permalink', 'surecart.permalink' );
+		$container['surecart.settings.permalinks.buy'] = function() {
+			return new PermalinkSettingService(
+				[
+					'slug'        => 'buy',
+					'label'       => __( 'SureCart Instant Checkout Permalinks', 'surecart' ),
+					/* translators: %s: Home URL */
+					'description' => sprintf( __( 'If you like, you may enter custom structures for your instant checkout URLs here. For example, using <code>buy</code> would make your product buy links like <code>%sbuy/sample-product/</code>.', 'surecart' ), esc_url( home_url( '/' ) ) ),
+					'options'     => [
+						[
+							'value' => 'buy',
+							'label' => __( 'Default', 'surecart' ),
+						],
+						[
+							'value' => 'purchase',
+							'label' => __( 'Purchase', 'surecart' ),
+						],
+					],
+				]
+			);
+		};
 	}
 
 	/**
@@ -32,6 +66,25 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function bootstrap( $container ) {
-		// Nothing to bootstrap.
+		$container['surecart.settings.permalinks.product']->bootstrap();
+		( new PermalinkService() )
+			->params( [ 'sc_product_page_id' ] )
+			->url( untrailingslashit( 'products' ) . '/([a-z0-9-]+)[/]?$' )
+			->query( 'index.php?sc_product_page_id=$matches[1]' )
+			->create();
+
+		$container['surecart.settings.permalinks.buy']->bootstrap();
+		( new PermalinkService() )
+			->params( [ 'sc_checkout_product_id' ] )
+			->url( untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'buy_page' ) ) . '/([a-z0-9-]+)[/]?$' )
+			->query( 'index.php?sc_checkout_product_id=$matches[1]' )
+			->create();
+
+		// Redirect.
+		( new PermalinkService() )
+			->params( [ 'sc_redirect' ] )
+			->url( 'surecart/redirect' )
+			->query( 'index.php?sc_redirect=1' )
+			->create();
 	}
 }

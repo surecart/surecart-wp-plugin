@@ -53,7 +53,7 @@
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-paypal-buttons](../paypal-buttons)
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
- - [sc-product-item-list](../../controllers/products/sc-product-item-list)
+ - [sc-price-choice-container](../sc-price-choice-container)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-stripe-add-method](../sc-stripe-add-method)
  - [sc-stripe-payment-element](../stripe-payment-element)
@@ -90,7 +90,7 @@ graph TD;
   sc-payment-methods-list --> sc-skeleton
   sc-paypal-buttons --> sc-skeleton
   sc-price-choice --> sc-skeleton
-  sc-product-item-list --> sc-skeleton
+  sc-price-choice-container --> sc-skeleton
   sc-purchase-downloads-list --> sc-skeleton
   sc-stripe-add-method --> sc-skeleton
   sc-stripe-payment-element --> sc-skeleton
