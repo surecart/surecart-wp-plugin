@@ -14,10 +14,8 @@
 	},
 	"supports": {
 		"spacing": {
-			"padding": ["top", "bottom"],
-			"__experimentalDefaultControls": {
-				"padding": true
-			}
+			"padding": true,
+			"margin": ["top", "bottom"]
 		},
 		"typography": {
 			"fontSize": true,
