@@ -1,6 +1,8 @@
-import { Component, Prop, State, h } from '@stencil/core';
+import { Component, Prop, State, Watch, h } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import Swiper from 'swiper';
+
+const THUMBS_PER_PAGE = 5;
 
 @Component({
   tag: 'sc-product-image-carousel',
@@ -16,6 +18,15 @@ export class ScProductImageCarousel {
 
   /** Current Slide Index */
   @State() currentSliderIndex: number = 0;
+
+  @Watch('currentSliderIndex')
+  handleThumbPaginate() {
+    if (!this.thumbsSwiper) return;
+    const slideInView = this.currentSliderIndex >= this.thumbsSwiper.activeIndex && this.currentSliderIndex < this.thumbsSwiper.activeIndex + THUMBS_PER_PAGE;
+    if (!slideInView) {
+      this.thumbsSwiper.slideTo(this.currentSliderIndex);
+    }
+  }
 
   componentDidLoad() {
     if (this.swiperContainerRef) {
@@ -33,7 +44,8 @@ export class ScProductImageCarousel {
       this.thumbsSwiper = new Swiper(this.swiperThumbsRef, {
         direction: 'horizontal',
         loop: false,
-        slidesPerView: 5,
+        slidesPerView: THUMBS_PER_PAGE,
+        slidesPerGroup: THUMBS_PER_PAGE,
         spaceBetween: 10,
       });
     }
