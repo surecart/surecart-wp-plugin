@@ -1,9 +1,9 @@
 import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addLineItem } from '../../../../services/session';
-import { getOrder, setOrder } from '../../../../store/checkouts';
-import { state } from '../../../../store/product';
-import { toggleCart } from '../../../../store/ui';
+import { getOrder, setOrder } from '@store/checkouts';
+import { state } from '@store/product';
+import { toggleCart } from '@store/ui';
 import { Checkout } from '../../../../types';
 
 @Component({
@@ -72,9 +72,17 @@ export class ScProductBuyButton {
 
   render() {
     return (
-      <sc-button type={this.type} size={this.size} full={this.full} loading={this.busy} disabled={this.busy} outline={this.outline} onClick={e => this.handleCartClick(e)}>
+      <sc-button
+        type={this.type}
+        size={this.size}
+        full={this.full}
+        loading={this.busy}
+        disabled={this.busy || state?.product?.archived}
+        outline={this.outline}
+        onClick={e => this.handleCartClick(e)}
+      >
         {!!this.icon && <sc-icon name={this.icon} slot="prefix"></sc-icon>}
-        <slot />
+        {state?.product?.archived ? __('Currently Unavailable', 'surecart') : <slot />}
       </sc-button>
     );
   }
