@@ -36,7 +36,7 @@ function getAnimationSettings(originXA, originXB) {
 }
 
 export default () => {
-	const [currentStep, setCurrentStep] = useState(4);
+	const [currentStep, setCurrentStep] = useState(0);
 	const refAnimationInstance = useRef(null);
 
 	const getInstance = useCallback((instance) => {
