@@ -3,7 +3,7 @@
 .swiper-slide,
 swiper-slide {
   &.product-carousel__slider {
-    height: 310px !important;
+    height: var(--sc-product-slider-height) !important;
     > .swiper-slide-img {
       width: 100%;
       height: 100%;

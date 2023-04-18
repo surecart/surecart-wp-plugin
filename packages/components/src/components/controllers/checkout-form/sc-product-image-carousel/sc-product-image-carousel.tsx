@@ -11,6 +11,9 @@ const THUMBS_PER_PAGE = 5;
 })
 export class ScProductImageCarousel {
   @Prop() images: { src: string; alt: string }[] = [];
+  /** Height of the slider */
+  @Prop() height: number = 310;
+
   @State() swiper?: Swiper;
   @State() swiperContainerRef?: HTMLDivElement;
   @State() thumbsSwiper?: Swiper;
@@ -63,7 +66,7 @@ export class ScProductImageCarousel {
           <div class={{ 'swiper-wrapper': true }}>
             {!!this.images.length &&
               this.images.map(({ src, alt }, index) => (
-                <div key={index} class={{ 'swiper-slide': true, 'product-carousel__slider': true }}>
+                <div key={index} class={{ 'swiper-slide': true, 'product-carousel__slider': true }} style={{ '--sc-product-slider-height': `${this.height}px` }}>
                   <div class={{ 'swiper-slide-img': true }}>
                     <img src={src} alt={alt} />
                   </div>

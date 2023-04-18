@@ -1360,6 +1360,7 @@
     "slot": true
   },
   "sc-product-image-carousel": {
+    "height": true,
     "images": true,
     "style": true,
     "id": true,
