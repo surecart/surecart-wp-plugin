@@ -49,13 +49,17 @@ export default () => {
 			<div
 				css={css`
 					display: grid;
-					grid-template-columns: repeat(3, 1fr);
+					grid-template-columns: repeat(1, 1fr);
 					gap: 40px;
-					padding: 60px 60px 0;
-					@media (min-width: 1660px) {
+					padding: 60px 20px 0;
+					@media (min-width: 781px) {
+						padding: 60px 120px 0;
+						grid-template-columns: repeat(3, 1fr);
+					}
+					@media (min-width: 1760px) {
 						grid-template-columns: repeat(4, 1fr);
 					}
-					@media (min-width: 1980px) {
+					@media (min-width: 2180px) {
 						grid-template-columns: repeat(5, 1fr);
 					}
 				`}
