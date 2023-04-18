@@ -40,6 +40,7 @@
  - [sc-express-payment](../../controllers/checkout-form/express-payment)
  - [sc-form-state-provider](../../providers/form-state-provider)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-login-form](../../controllers/login)
  - [sc-mollie-add-method](../sc-mollie-add-method)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
@@ -79,6 +80,7 @@ graph TD;
   sc-express-payment --> sc-block-ui
   sc-form-state-provider --> sc-block-ui
   sc-invoices-list --> sc-block-ui
+  sc-licenses-list --> sc-block-ui
   sc-login-form --> sc-block-ui
   sc-mollie-add-method --> sc-block-ui
   sc-orders-list --> sc-block-ui

@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export namespace Components {
     interface ScAddress {
         /**
@@ -1577,10 +1577,25 @@ export namespace Components {
     interface ScLicenseActivations {
     }
     interface ScLicensesList {
-        "activations": Activation[];
-        "copied": boolean;
+        /**
+          * View all link
+         */
+        "allLink": string;
+        /**
+          * The heading of the licenses
+         */
         "heading": string;
-        "licenses": License[];
+        /**
+          * Whether the current user is customer
+         */
+        "isCustomer": boolean;
+        /**
+          * Query to fetch licenses
+         */
+        "query": {
+    page: number;
+    per_page: number;
+  };
     }
     interface ScLineItem {
         /**
@@ -6441,10 +6456,25 @@ declare namespace LocalJSX {
     interface ScLicenseActivations {
     }
     interface ScLicensesList {
-        "activations"?: Activation[];
-        "copied"?: boolean;
+        /**
+          * View all link
+         */
+        "allLink"?: string;
+        /**
+          * The heading of the licenses
+         */
         "heading"?: string;
-        "licenses"?: License[];
+        /**
+          * Whether the current user is customer
+         */
+        "isCustomer"?: boolean;
+        /**
+          * Query to fetch licenses
+         */
+        "query"?: {
+    page: number;
+    per_page: number;
+  };
     }
     interface ScLineItem {
         /**

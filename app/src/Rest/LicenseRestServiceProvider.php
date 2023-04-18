@@ -14,7 +14,7 @@ class LicenseRestServiceProvider extends RestServiceProvider implements RestServ
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'licences';
+	protected $endpoint = 'licenses';
 
 	/**
 	 * Rest Controller

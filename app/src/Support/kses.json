@@ -814,10 +814,10 @@
     "slot": true
   },
   "sc-licenses-list": {
-    "activations": true,
-    "copied": true,
+    "all-link": true,
     "heading": true,
-    "licenses": true,
+    "is-customer": true,
+    "query": true,
     "style": true,
     "id": true,
     "class": true,
