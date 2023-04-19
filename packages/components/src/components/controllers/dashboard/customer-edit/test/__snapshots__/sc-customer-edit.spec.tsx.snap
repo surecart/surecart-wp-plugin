@@ -21,7 +21,7 @@ exports[`sc-customer-edit renders 1`] = `
             </sc-column>
           </sc-columns>
           <sc-column>
-            <sc-input label="Phone" name="phone"></sc-input>
+            <sc-phone-input label="Phone" name="phone"></sc-phone-input>
           </sc-column>
           <div>
             <sc-address label="Shipping Address" showname=""></sc-address>

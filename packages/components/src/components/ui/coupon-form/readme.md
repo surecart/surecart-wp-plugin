@@ -10,6 +10,7 @@
 | Property         | Attribute         | Description                   | Type               | Default     |
 | ---------------- | ----------------- | ----------------------------- | ------------------ | ----------- |
 | `busy`           | `busy`            | Is the form calculating       | `boolean`          | `undefined` |
+| `collapsed`      | `collapsed`       |                               | `boolean`          | `undefined` |
 | `currency`       | `currency`        | Currency                      | `string`           | `undefined` |
 | `discount`       | --                | The discount                  | `DiscountResponse` | `undefined` |
 | `discountAmount` | `discount-amount` | The discount amount           | `number`           | `undefined` |
@@ -18,6 +19,7 @@
 | `label`          | `label`           | The label for the coupon form | `string`           | `undefined` |
 | `loading`        | `loading`         | Is the form loading           | `boolean`          | `undefined` |
 | `open`           | `open`            | Is it open                    | `boolean`          | `undefined` |
+| `placeholder`    | `placeholder`     | The placeholder for the input | `string`           | `undefined` |
 
 
 ## Events
@@ -70,6 +72,7 @@
 - [sc-button](../button)
 - [sc-alert](../alert)
 - [sc-block-ui](../block-ui)
+- [sc-form-control](../form-control)
 
 ### Graph
 ```mermaid
@@ -82,6 +85,7 @@ graph TD;
   sc-coupon-form --> sc-button
   sc-coupon-form --> sc-alert
   sc-coupon-form --> sc-block-ui
+  sc-coupon-form --> sc-form-control
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
   sc-button --> sc-spinner

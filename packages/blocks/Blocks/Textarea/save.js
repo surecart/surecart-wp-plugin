@@ -7,7 +7,6 @@ export default ({ className, attributes }) => {
 		autocomplete,
 		inputmode,
 		max,
-		maxlength,
 		min,
 		minlength,
 		name,

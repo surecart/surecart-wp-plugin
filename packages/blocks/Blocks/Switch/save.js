@@ -13,7 +13,9 @@ export default ({ className, attributes }) => {
 			required={required || false}
 		>
 			<RichText.Content value={label} />
-			<span slot="description">{stripHTML(description)}</span>
+			{!!description?.length && (
+				<span slot="description">{stripHTML(description)}</span>
+			)}
 		</sc-switch>
 	);
 };

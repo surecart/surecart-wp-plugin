@@ -7,10 +7,10 @@ exports[`sc-checkout renders 1`] = `
     <sc-checkout-unsaved-changes-warning state="idle"></sc-checkout-unsaved-changes-warning>
     <sc-login-provider>
       <sc-form-state-provider>
-        <sc-form-error-provider checkoutstate="idle">
+        <sc-form-error-provider checkoutstate="draft">
           <sc-form-components-validator>
             <sc-order-confirm-provider success-url="">
-              <sc-session-provider currency-code="usd" group-id="" mode="live" persist="" processor="stripe"></sc-session-provider>
+              <sc-session-provider persist=""></sc-session-provider>
             </sc-order-confirm-provider>
           </sc-form-components-validator>
         </sc-form-error-provider>

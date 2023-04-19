@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property   | Attribute   | Description            | Type      | Default     |
-| ---------- | ----------- | ---------------------- | --------- | ----------- |
-| `loggedIn` | `logged-in` | Is the user logged in. | `boolean` | `undefined` |
-| `order`    | --          |                        | `Order`   | `undefined` |
+| Property   | Attribute   | Description            | Type       | Default     |
+| ---------- | ----------- | ---------------------- | ---------- | ----------- |
+| `loggedIn` | `logged-in` | Is the user logged in. | `boolean`  | `undefined` |
+| `order`    | --          |                        | `Checkout` | `undefined` |
 
 
 ## Events

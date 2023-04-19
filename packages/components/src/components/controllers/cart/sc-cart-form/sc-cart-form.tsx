@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
 
 import { convertLineItemsToLineItemData } from '../../../../functions/line-items';
-import { createOrUpdateOrder } from '../../../../services/session';
+import { createOrUpdateCheckout } from '../../../../services/session';
 import { getOrder, setOrder } from '@store/checkouts';
 import uiStore from '@store/ui';
 import { Checkout, LineItemData } from '../../../../types';
@@ -95,7 +95,7 @@ export class ScCartForm {
     let existingData = convertLineItemsToLineItemData(this.getOrder()?.line_items || []);
 
     // Line item does not exist. Add it.
-    return (await createOrUpdateOrder({
+    return (await createOrUpdateCheckout({
       id: this.getOrder()?.id,
       data: {
         live_mode: this.mode === 'live',

@@ -15,21 +15,12 @@ class TemplatesServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		// $container['surecart.templates'] = function( $c ) {
-		// return new TemplatesService(
-		// $c,
-		// [
-		// 'template-surecart-no-sidebar.php' => esc_html__( 'SureCart: Full Width No Sidebar', 'surecart' ),
-		// ],
-		// $c['surecart.product.post']->getPostType()
-		// );
-		// };
-
 		$container['surecart.templates.page'] = function( $c ) {
 			return new TemplatesService(
 				$c,
 				[
 					'pages/template-surecart-blank.php' => esc_html__( 'SureCart', 'surecart' ),
+					'pages/template-surecart-dashboard.php' => esc_html__( 'SureCart Customer Dashboard', 'surecart' ),
 				],
 				'page'
 			);

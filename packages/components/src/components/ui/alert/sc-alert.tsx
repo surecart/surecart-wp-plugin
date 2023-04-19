@@ -1,4 +1,5 @@
 import { Component, Prop, Method, State, Event, EventEmitter, Watch, h, Element, Host } from '@stencil/core';
+import { isRtl } from '../../../functions/page-align';
 
 /**
  * @part base - The elements base wrapper.
@@ -125,6 +126,7 @@ export class ScAlert {
             'alert--info': this.type === 'info',
             'alert--warning': this.type === 'warning',
             'alert--danger': this.type === 'danger',
+            'alert--is-rtl':isRtl()
           }}
           part="base"
           role="alert"

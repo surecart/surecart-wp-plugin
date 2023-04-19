@@ -2,6 +2,8 @@
 
 namespace SureCartBlocks\Blocks;
 
+use SureCartBlocks\Util\BlockStyleAttributes;
+
 /**
  * Checkout block
  */
@@ -19,6 +21,71 @@ abstract class BaseBlock {
 	 * @var object
 	 */
 	protected $block;
+
+	/**
+	 * Get the class name for the color.
+	 *
+	 * @param string $color_context_name The color context name (color, background-color).
+	 * @param string $color_slug (foreground, background, etc.).
+	 *
+	 * @return string
+	 */
+	public function getColorClassName( $color_context_name, $color_slug ) {
+		if ( ! $color_context_name || ! $color_slug ) {
+			return false;
+		}
+		$color_slug = _wp_to_kebab_case( $color_slug );
+		return "has-$color_slug-$color_context_name";
+	}
+
+	/**
+	 * Get the classes.
+	 *
+	 * @param array $attributes The block attributes.
+	 *
+	 * @return string
+	 */
+	public function getClasses( $attributes ) {
+		// get block classes and styles.
+		[ 'classes' => $classes ] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes );
+		// get text align class.
+		['class' => $text_align_class] = BlockStyleAttributes::getTextAlignClassAndStyle( $attributes );
+		return implode( ' ', array_filter( [ $classes, $text_align_class ] ) );
+	}
+
+	/**
+	 * Get the styles
+	 *
+	 * @param array $attributes The block attributes.
+	 *
+	 * @return string
+	 */
+	public function getStyles( $attributes ) {
+		[ 'styles' => $styles ] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes );
+		return $styles;
+	}
+
+	/**
+	 * Get the spacing preset css variable.
+	 *
+	 * @param string $value The value.
+	 *
+	 * @return string|void
+	 */
+	public function getSpacingPresetCssVar( $value ) {
+		if ( ! $value ) {
+			return;
+		}
+
+		preg_match( '/var:preset\|spacing\|(.+)/', $value, $matches );
+
+		if ( ! $matches ) {
+			return $value;
+		}
+
+		return "var(--wp--preset--spacing--$matches[1])";
+	}
+
 
 	/**
 	 * Register the block for dynamic output

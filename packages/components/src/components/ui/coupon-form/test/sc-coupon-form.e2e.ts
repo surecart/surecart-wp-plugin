@@ -7,7 +7,7 @@ describe('sc-coupon-form', () => {
 
   beforeEach(async () => {
     page = await newE2EPage();
-    await page.setContent(`<${selector} label="Add A Coupon"></${selector}>`);
+    await page.setContent(`<${selector} label="Add A Coupon" collapsed></${selector}>`);
     wrapper = await page.find(`${selector} >>> .coupon-form`);
     element = await page.find(`${selector}`);
     trigger = await page.find(`${selector} >>> .trigger`);

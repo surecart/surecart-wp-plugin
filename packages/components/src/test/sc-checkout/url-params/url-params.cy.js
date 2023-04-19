@@ -186,7 +186,7 @@ describe('Abandoned Cart', () => {
 
     cy.visit('/test/sc-checkout/url-params?checkout_id=test&coupon=TESTCOUPON');
     cy.wait('@fetchMismatchLiveMode');
-    cy.get('sc-order-summary').shadow().find('p').contains('Your cart is empty');
+    cy.get('sc-order-summary').contains('Your cart is empty');
   });
 });
 

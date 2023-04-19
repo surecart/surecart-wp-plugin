@@ -164,7 +164,7 @@ exports[`sc-tax-id-input renders 1`] = `
 <sc-tax-id-input>
   <mock:shadow-root>
     <sc-input name="tax_identifier.number_type" value="other" style="display: none;"></sc-input>
-    <sc-input label="Other" name="tax_identifier.number">
+    <sc-input label="Tax ID" name="tax_identifier.number">
       <sc-dropdown position="bottom-right" slot="suffix">
         <sc-button caret="" slot="trigger" type="text" style="color: var(--sc-input-label-color);">
           Other

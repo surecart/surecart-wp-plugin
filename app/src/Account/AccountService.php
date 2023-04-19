@@ -66,7 +66,7 @@ class AccountService {
 		$this->account = get_transient( $this->cache_key );
 		if ( false === $this->account ) {
 			$this->account = $this->fetchAccount();
-			set_transient( $this->cache_key, $this->account, 60 );
+			set_transient( $this->cache_key, $this->account, 5 * MINUTE_IN_SECONDS );
 		}
 		return $this->account;
 	}

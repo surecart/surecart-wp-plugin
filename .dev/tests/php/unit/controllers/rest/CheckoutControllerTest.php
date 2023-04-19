@@ -50,7 +50,8 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 	/**
 	 * Test login credentials validation.
 	 */
-	public function test_maybeValidateLoginCreds() {
+	public function test_maybeValidateLoginCreds()
+	{
 		self::factory()->user->create_and_get([
 			'user_login' => 'testuser',
 			'user_email' => 'testuser@test.com',
@@ -67,7 +68,8 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 	/**
 	 * Test validation.
 	 */
-	public function test_validate() {
+	public function test_validate()
+	{
 		$request = new WP_REST_Request('POST', '/surecart/v1/checkouts/finalize');
 		$request->set_param('email', 'testuser@test.com');
 		$request->set_param('password', 'pass123');
@@ -93,7 +95,8 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 		$this->assertTrue($errors->has_errors());
 	}
 
-	public function test_finalize() {
+	public function test_finalize()
+	{
 		// finalized checkout
 		$finalized_checkout = (object) [
 			'id' => 'testid',
@@ -102,9 +105,15 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 			'status' => 'finalized'
 		];
 
+		$form_id = self::factory()->post->create([
+			'post_type' => 'sc_form',
+			'content' => '<!-- wp:surecart/form {"mode":"live"} --> <!-- /wp:surecart/form --> '
+		]);
+
 		// set up request.
 		$request = new WP_REST_Request('POST', '/surecart/v1/checkouts/testcheckout/finalize');
 		$request->set_param('id', 'test_checkout');
+		$request->set_param('form_id', $form_id);
 		$request->set_param('processor_type', 'stripe');
 
 		// mock controller.
@@ -136,7 +145,8 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 	 * @group rest
 	 * @group integration
 	 */
-	public function test_confirm() {
+	public function test_confirm()
+	{
 		// set up request.
 		$request = new WP_REST_Request('POST', '/surecart/v1/checkouts/testcheckout/finalize');
 		$request->set_param('id', 'test_checkout');
@@ -176,20 +186,21 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 	}
 
 
-	public function test_linkCustomerId() {
+	public function test_linkCustomerId()
+	{
 		$user = User::find(self::factory()->user->create())
 			->setCustomerId('testcustomerid');
-		$wrong = (new CheckoutsController())->linkCustomerId(new Checkout(['customer'=> [ 'id' => 'wrong'], 'email' => 'wrong@email.com', 'live_mode' => true]), new WP_REST_Request());
+		$wrong = (new CheckoutsController())->linkCustomerId(new Checkout(['customer' => ['id' => 'wrong'], 'email' => 'wrong@email.com', 'live_mode' => true]), new WP_REST_Request());
 		$this->assertNotSame($wrong->ID, $user->ID);
-		$correct = (new CheckoutsController())->linkCustomerId(new Checkout(['customer'=> 'testcustomerid', 'email' => 'any@email.com', 'live_mode' => true]), new WP_REST_Request());
-		$this->assertSame($correct->ID, $user->ID , 'User should be linked to checkout based on customer id.');
+		$correct = (new CheckoutsController())->linkCustomerId(new Checkout(['customer' => 'testcustomerid', 'email' => 'any@email.com', 'live_mode' => true]), new WP_REST_Request());
+		$this->assertSame($correct->ID, $user->ID, 'User should be linked to checkout based on customer id.');
 
 		// a user should be given a customer id if they don't have one.
 		$user_not_yet_customer = User::find(self::factory()->user->create([
 			'user_email' => 'usernotyetcustomer@email.com'
 		]));
 		$this->assertNotEmpty($user_not_yet_customer->user_email);
-		$user = (new CheckoutsController())->linkCustomerId(new Checkout(['customer'=> 'anewcustomerid', 'email' => $user_not_yet_customer->user_email, 'live_mode' => true]), new WP_REST_Request());
+		$user = (new CheckoutsController())->linkCustomerId(new Checkout(['customer' => 'anewcustomerid', 'email' => $user_not_yet_customer->user_email, 'live_mode' => true]), new WP_REST_Request());
 		$this->assertSame($user_not_yet_customer->ID, $user->ID, 'An existing user should be linked to an checkout based on email.');
 		$this->assertSame($user_not_yet_customer->customerId(), 'anewcustomerid', 'An existing user is not given a customer id.');
 
@@ -210,5 +221,4 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 		$this->assertSame('First', $user->first_name);
 		$this->assertSame('Last', $user->last_name);
 	}
-
 }

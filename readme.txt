@@ -3,8 +3,8 @@ Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
-Tested up to: 6.1
-Stable tag: 1.7.2
+Tested up to: 6.2
+Stable tag: 1.9.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,63 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.9.2 - April 10, 2023 =
+* Fix export links change for data export.
+* Fix issue with customer dashboard page styling missing if slide out cart is disabled.
+* Don't allow API requests without token to requests to SureCart server on unconnected stores.
+* Fix issue with adding new payment method not working with Japanese characters as tab.
+
+= 1.9.1 - March 30, 2023 =
+* Fix: Issue with store logo causing error due to missing file.
+
+= 1.9.0 - March 30, 2023 =
+* New: Paypal subscriptions enabled for all connected PayPal accounts.
+* New: Default customer dashboard template.
+* Fix: Issue with Elementor when no forms are published.
+* Fix: Issue with Elementor not loading when all forms are unpublished.
+* Fix: Invalid URL error notice on Elementor editor.
+
+= 1.8.5 - March 27, 2023 =
+* Fix: Some missing translations on instant checkouts.
+* Fix: Tax ID input default translations.
+* Fix: Make sure block placeholder options apply to compact shipping address.
+
+= 1.8.4 - March 24, 2023 =
+* Fix: Issue with changing tax id input field not allowing checkout after update.
+
+= 1.8.3 - March 23, 2023 =
+* Fix: Issue with buy page links compatibility with SEO plugins "404 redirect to homepage" setting.
+* Fix: Issue with download links not working in iOS.
+* Fix: New translations missing from pot file.
+
+= 1.8.2 - March 21, 2023 =
+* Fix: Issue with forms not loading on the backend for some non-premium users.
+* Fix: Issue with changing account currency not allowing add to cart buttons to work.
+
+= 1.8.1 - March 20, 2023 =
+* Fix: Disabled form manual payment methods still showing in form.
+* Fix: Issue with some themes setting max content width on instant checkout pages.
+* Fix: Issue with instant checkout pages not loading components if slide out cart is disabled.
+
+= 1.8.0 - March 20, 2023 =
+* New: "Instant Checkouts" for products.
+* New: Subscription setup fees.
+* New: Subscription paid trials.
+* New: Administrators can pause subscriptions.
+* New: Arabic language support.
+* Improvement: Price selector styling.
+* Improvement: Secure notice is now automatically added below forms for secure connections.
+* Improvement: Allow editing compact address label.
+* Improvement: Show remaining payments on customer dashboard subscription details for payment plans.
+* Improvement: Price list on merchant product page.
+* Fix: Customer dashboard orders list should show amount due instead of total amount.
+* Fix: Edge case where an order could be set to processing without a manual payment ID.
+* Fix: Max length for textarea field on checkout forms.
+* Fix: Responsive issue with columns padding.
+* Fix: Switch block description sometimes saving as undefined.
+* Fix: RTL issue on order bump.
+* Fix: Wrapping of total line item if amount and scratch price were too wide.
 
 = 1.7.2 - March 4, 2023 =
 * Fix: Issue with some page builders not saving default checkout page due to validations.

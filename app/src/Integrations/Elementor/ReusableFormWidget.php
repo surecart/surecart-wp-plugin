@@ -154,6 +154,8 @@ class ReusableFormWidget extends Widget_Base {
 
 		$get_forms = \SureCart::forms()->get_forms( $args );
 
+		$options = [];
+
 		foreach ( $get_forms as $form ) {
 			$options[ $form ] = get_the_title( $form );
 		}

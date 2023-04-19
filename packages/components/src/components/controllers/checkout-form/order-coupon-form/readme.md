@@ -7,14 +7,15 @@
 
 ## Properties
 
-| Property    | Attribute    | Description | Type       | Default     |
-| ----------- | ------------ | ----------- | ---------- | ----------- |
-| `busy`      | `busy`       |             | `boolean`  | `undefined` |
-| `error`     | `error`      |             | `any`      | `undefined` |
-| `forceOpen` | `force-open` |             | `boolean`  | `undefined` |
-| `label`     | `label`      |             | `string`   | `undefined` |
-| `loading`   | `loading`    |             | `boolean`  | `undefined` |
-| `order`     | --           |             | `Checkout` | `undefined` |
+| Property      | Attribute     | Description | Type       | Default     |
+| ------------- | ------------- | ----------- | ---------- | ----------- |
+| `busy`        | `busy`        |             | `boolean`  | `undefined` |
+| `collapsed`   | `collapsed`   |             | `boolean`  | `undefined` |
+| `error`       | `error`       |             | `any`      | `undefined` |
+| `label`       | `label`       |             | `string`   | `undefined` |
+| `loading`     | `loading`     |             | `boolean`  | `undefined` |
+| `order`       | --            |             | `Checkout` | `undefined` |
+| `placeholder` | `placeholder` |             | `string`   | `undefined` |
 
 
 ## Events
@@ -42,6 +43,7 @@ graph TD;
   sc-coupon-form --> sc-button
   sc-coupon-form --> sc-alert
   sc-coupon-form --> sc-block-ui
+  sc-coupon-form --> sc-form-control
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
   sc-button --> sc-spinner

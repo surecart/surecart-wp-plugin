@@ -1,7 +1,9 @@
-import { store as uiStore } from '../ui';
+import { store as coreStore } from '@wordpress/core-data';
 import { createRegistrySelector } from '@wordpress/data';
-import { getQueryArg, addQueryArgs } from '@wordpress/url';
+import { addQueryArgs, getQueryArg } from '@wordpress/url';
 import { get } from 'dot-prop-immutable';
+
+import { store as uiStore } from '../ui';
 
 export const getEntity = (state, name) => {
 	return state.config.find((item) => item.name === name);
@@ -136,3 +138,12 @@ export function prepareFetchRequest(state, name, data) {
 		}),
 	};
 }
+
+export const getEditedEntityRecords = createRegistrySelector(
+	(select) => ( state, kind, name, query) =>  {
+    const records = select(coreStore).getEntityRecords(kind, name, query);
+    return records.map((record) => {
+
+    });
+  }
+)

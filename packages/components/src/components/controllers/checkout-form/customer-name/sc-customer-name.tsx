@@ -1,5 +1,5 @@
 import { Customer, Checkout } from '../../../../types';
-import { createOrUpdateOrder } from '../../../../services/session';
+import { createOrUpdateCheckout } from '../../../../services/session';
 import { Component, Prop, h, Event, EventEmitter, Watch, Method } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 
@@ -91,7 +91,7 @@ export class ScCustomerName {
 
     // update order.
     try {
-      const order = await createOrUpdateOrder({ id: this.order?.id, data: { name: this.input.value } });
+      const order = await createOrUpdateCheckout({ id: this.order?.id, data: { name: this.input.value } });
       this.scUpdateOrderState.emit(order);
     } catch (error) {
       console.error(error);

@@ -70,7 +70,7 @@ export class ScOrder {
 
   /** Get order */
   async getOrder() {
-    this.order = (await await apiFetch({
+    this.order = (await apiFetch({
       path: addQueryArgs(`surecart/v1/orders/${this.orderId}`, {
         expand: [
           'checkout',

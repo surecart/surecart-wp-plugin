@@ -118,9 +118,10 @@ class PageSeeder {
 					'page_template' => 'pages/template-surecart-blank.php',
 				],
 				'dashboard' => [
-					'name'    => _x( 'customer-dashboard', 'Page slug', 'surecart' ),
-					'title'   => _x( 'Dashboard', 'Page title', 'surecart' ),
-					'content' => $customer_dashboard['content'],
+					'name'          => _x( 'customer-dashboard', 'Page slug', 'surecart' ),
+					'title'         => _x( 'Dashboard', 'Page title', 'surecart' ),
+					'content'       => $customer_dashboard['content'],
+					'page_template' => 'pages/template-surecart-dashboard.php',
 				],
 			)
 		);

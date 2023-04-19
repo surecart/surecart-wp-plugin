@@ -38,9 +38,7 @@
   <sc-checkout form-id="1" mode="test">
     <sc-form>
       <sc-payment label="Payment">
-        <sc-stripe-element slot="stripe" mode="test" account-id="acct_1KgGVf2E2Wr9trjm"
-          publishable-key="pk_test_51KeWoQFugiAKLuJycCZesY1aYEzfauqW2SHSZSUj5xCorx7h7oZd5i6Vz2whx7Y5fMZr6WQQTeOoQEtaEnpk4fkB00dinySlbK">
-        </sc-stripe-element>
+        <sc-stripe-element slot="stripe" mode="test"></sc-stripe-element>
         <sc-secure-notice>
           Secure Notice
         </sc-secure-notice>
@@ -51,7 +49,16 @@
 </body>
 
 <script>
-  document.querySelector('sc-checkout').processors = [{ id: 'test', processor_type: 'stripe', live_mode: false }];
+  document.querySelector('sc-checkout').processors = [
+    {
+      "live_mode": false,
+      "processor_data": {
+        "account_id": "acct_1KgGVf2E2Wr9trjm",
+        "publishable_key": "pk_test_51KeWoQFugiAKLuJycCZesY1aYEzfauqW2SHSZSUj5xCorx7h7oZd5i6Vz2whx7Y5fMZr6WQQTeOoQEtaEnpk4fkB00dinySlbK"
+      },
+      "processor_type": "stripe",
+      "recurring_enabled": true
+    }]
 </script>
 
 </html>

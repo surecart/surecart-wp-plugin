@@ -74,7 +74,9 @@
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment-method](../sc-payment-method)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-product-selected-price](../../controllers/checkout-form/sc-product-selected-price)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
+ - [sc-rich-text](../rich-text)
  - [sc-stripe-add-method](../sc-stripe-add-method)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
@@ -123,7 +125,9 @@ graph TD;
   sc-password-nag --> sc-button
   sc-payment-method --> sc-button
   sc-payment-methods-list --> sc-button
+  sc-product-selected-price --> sc-button
   sc-purchase-downloads-list --> sc-button
+  sc-rich-text --> sc-button
   sc-stripe-add-method --> sc-button
   sc-subscription --> sc-button
   sc-subscription-ad-hoc-confirm --> sc-button

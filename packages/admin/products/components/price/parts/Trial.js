@@ -33,23 +33,42 @@ export default ({ className, price, updatePrice }) => {
 					</>
 				)}
 			</ScSwitch>
+
 			{!!price?.trial_duration_days && (
-				<ScInput
-					label={__('Free Trial Days', 'surecart')}
-					className={className}
-					type="number"
-					min={1}
-					max={365}
-					value={price?.trial_duration_days || 1}
-					onScInput={(e) =>
-						e.target.value &&
-						updatePrice({
-							trial_duration_days: parseInt(e.target.value),
-						})
-					}
-				>
-					<span slot="suffix">{__('Days', 'surecart')}</span>
-				</ScInput>
+				<>
+					<ScInput
+						label={__('Free Trial Days', 'surecart')}
+						className={className}
+						type="number"
+						min={1}
+						max={365}
+						value={price?.trial_duration_days || 1}
+						onScInput={(e) =>
+							e.target.value &&
+							updatePrice({
+								trial_duration_days: parseInt(e.target.value),
+							})
+						}
+					>
+						<span slot="suffix">{__('Days', 'surecart')}</span>
+					</ScInput>
+
+					{!!price?.setup_fee_enabled && (
+						<ScSwitch
+							checked={price.setup_fee_trial_enabled === false}
+							onScChange={(e) =>
+								updatePrice({
+									setup_fee_trial_enabled: !e.target.checked,
+								})
+							}
+						>
+							{__(
+								'Charge setup fee during free trial',
+								'surecart'
+							)}
+						</ScSwitch>
+					)}
+				</>
 			)}
 		</ScUpgradeRequired>
 	);

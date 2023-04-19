@@ -18,7 +18,7 @@ import { isZeroDecimal, maybeConvertAmount } from '../../util/format-number/func
 })
 export class ScPriceInput {
   @Element() el: HTMLScPriceInputElement;
-  private scInput: HTMLScInputElement;
+  private input: HTMLScInputElement;
 
   private formController: any;
 
@@ -92,32 +92,42 @@ export class ScPriceInput {
   @Event({ composed: true })
   scChange: EventEmitter<void>;
 
+  /** Emitted when the control's value changes. */
+  @Event({ composed: true })
+  scInput: EventEmitter<void>;
+
+  /** Emitted when the control gains focus. */
+  @Event() scFocus: EventEmitter<void>;
+
+  /** Emitted when the control loses focus. */
+  @Event() scBlur: EventEmitter<void>;
+
   @Method()
   async reportValidity() {
-    return this.scInput.shadowRoot.querySelector('input').reportValidity();
+    return this.input.shadowRoot.querySelector('input').reportValidity();
   }
 
   /** Sets focus on the input. */
   @Method()
   async triggerFocus(options?: FocusOptions) {
-    return this.scInput.triggerFocus(options);
+    return this.input.triggerFocus(options);
   }
 
   /** Sets a custom validation message. If `message` is not empty, the field will be considered invalid. */
   @Method()
   async setCustomValidity(message: string) {
-    this.scInput.setCustomValidity(message);
+    this.input.setCustomValidity(message);
   }
 
   /** Removes focus from the input. */
   @Method()
   async triggerBlur() {
-    return this.scInput.blur();
+    return this.input.blur();
   }
 
   @Watch('hasFocus')
   handleFocusChange() {
-    this.hasFocus ? this.scInput?.focus?.() : this.scInput?.blur?.();
+    this.hasFocus ? this.input?.focus?.() : this.input?.blur?.();
   }
 
   handleChange() {
@@ -126,18 +136,19 @@ export class ScPriceInput {
 
   handleInput() {
     this.updateValue();
+    this.scInput.emit();
   }
 
   updateValue() {
-    const val = isZeroDecimal(this.currencyCode) ? parseFloat(this.scInput.value) : (parseFloat(this.scInput.value) * 100).toFixed(2);
-    this.value = this.scInput.value ? val.toString() : '';
+    const val = isZeroDecimal(this.currencyCode) ? parseFloat(this.input.value) : (parseFloat(this.input.value) * 100).toFixed(2);
+    this.value = this.input.value ? val.toString() : '';
   }
 
   componentDidLoad() {
     this.handleFocusChange();
     this.formController = new FormSubmitController(this.el).addFormData();
     document.addEventListener('wheel', () => {
-      this.scInput.triggerBlur();
+      this.input.triggerBlur();
     });
   }
 
@@ -153,7 +164,7 @@ export class ScPriceInput {
         label={this.label}
         showLabel={this.showLabel}
         help={this.help}
-        ref={el => (this.scInput = el as HTMLScInputElement)}
+        ref={el => (this.input = el as HTMLScInputElement)}
         type="number"
         name={this.name}
         disabled={this.disabled}
@@ -170,6 +181,8 @@ export class ScPriceInput {
         inputmode={'decimal'}
         onScChange={() => this.handleChange()}
         onScInput={() => this.handleInput()}
+        onScBlur={() => this.scBlur.emit()}
+        onScFocus={() => this.scFocus.emit()}
         value={maybeConvertAmount(parseFloat(this.value), this.currencyCode).toString()}
       >
         <span style={{ opacity: '0.5' }} slot="prefix">

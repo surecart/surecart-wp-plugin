@@ -79,7 +79,7 @@
   height: var(--sc-product-line-item-image-size, 4em);
   object-fit: cover;
   border-radius: 4px;
-  border: 1px solid var(--sc-color-gray-200);
+  border: solid 1px var(--sc-input-border-color, var(--sc-input-border));
   display: block;
   box-shadow: var(--sc-input-box-shadow);
 }
@@ -118,6 +118,9 @@
 .item--is-rtl{
   &.price {
     text-align: right;
+  }
+  .item__price {
+    text-align: left;
   }
 }
 

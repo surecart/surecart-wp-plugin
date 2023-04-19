@@ -13,6 +13,7 @@ import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import ActionsDropdown from './components/product/ActionsDropdown';
 import SaveButton from './components/product/SaveButton';
+import BuyLink from './modules/BuyLink';
 import Details from './modules/Details';
 import Downloads from './modules/Downloads';
 import Integrations from './modules/integrations/Integrations';
@@ -122,33 +123,6 @@ export default ({ id }) => {
 		}
 	};
 
-	const button = !hasLoadedProduct ? (
-		<sc-skeleton
-			style={{
-				width: '120px',
-				height: '35px',
-				display: 'inline-block',
-			}}
-		></sc-skeleton>
-	) : (
-		<div
-			css={css`
-				display: flex;
-				align-items: center;
-				gap: 0.5em;
-			`}
-		>
-			<ActionsDropdown
-				product={product}
-				onDelete={onDeleteProduct}
-				onToggleArchive={onToggleArchiveProduct}
-			/>
-			<SaveButton busy={deletingProduct || savingProduct}>
-				{__('Save Product', 'surecart')}
-			</SaveButton>
-		</div>
-	);
-
 	return (
 		<UpdateModel
 			onSubmit={onSubmit}
@@ -190,7 +164,37 @@ export default ({ id }) => {
 					</sc-breadcrumbs>
 				</div>
 			}
-			button={button}
+			button={
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: 0.5em;
+					`}
+				>
+					<ActionsDropdown
+						product={product}
+						onDelete={onDeleteProduct}
+						onToggleArchive={onToggleArchiveProduct}
+					/>
+
+					<BuyLink
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+
+					<SaveButton
+						busy={
+							deletingProduct ||
+							savingProduct ||
+							!hasLoadedProduct
+						}
+					>
+						{__('Save Product', 'surecart')}
+					</SaveButton>
+				</div>
+			}
 			sidebar={
 				<Sidebar
 					id={id}

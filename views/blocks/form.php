@@ -21,6 +21,7 @@
 	'#' . $id,
 	[
 		'prices'                     => $prices,
+		'product'                    => $product,
 		'customer'                   => $customer ?? '',
 		'formId'                     => $form_id ?? '',
 		'currencyCode'               => $currency_code ?? null,

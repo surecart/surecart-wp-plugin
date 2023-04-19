@@ -26,8 +26,6 @@ class Block extends BaseBlock {
 		$styles = 'object-fit: contain; object-position: left;';
 		if ( ! empty( $attributes['width'] ) ) {
 			$styles .= 'width: ' . $attributes['width'] . 'px; ';
-		}
-		if ( ! empty( $attributes['maxWidth'] ) ) {
 			$styles .= 'max-width: ' . $attributes['maxWidth'] . 'px; ';
 		}
 		if ( ! empty( $attributes['maxHeight'] ) ) {
@@ -39,7 +37,9 @@ class Block extends BaseBlock {
 		<div>
 
 		<?php if ( $attributes['isLinkToHome'] ) { ?>
-			<a href="<?php echo esc_url( get_home_url() ); ?>" rel="home">
+			<a href="<?php echo esc_url( get_home_url() ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?> rel="home">
+		<?php } else { ?>
+			<div style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
 		<?php } ?>
 
 			<img
@@ -50,6 +50,8 @@ class Block extends BaseBlock {
 
 		<?php if ( $attributes['isLinkToHome'] ) { ?>
 			</a>
+		<?php } else { ?>
+			</div>
 		<?php } ?>
 
 		</div>

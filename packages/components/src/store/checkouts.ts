@@ -2,6 +2,7 @@ import { Checkout } from '../types';
 import { createLocalStore } from './local';
 import { createStore } from '@stencil/store';
 import { state as checkoutState } from '@store/checkout';
+import { addQueryArgs, removeQueryArgs } from '@wordpress/url';
 
 const store = window?.scData?.do_not_persist_cart
   ? createStore<{ live: any; test: any }>({
@@ -32,12 +33,17 @@ export const setOrder = (data: Checkout, formId: number | string) => {
   if (checkoutState.formId === formId && checkoutState.mode === mode) {
     checkoutState.checkout = data;
   }
+  // set in url only if we are not persisting the cart.
+  if (window?.scData?.do_not_persist_cart && data?.id) {
+    window.history.replaceState({}, document.title, addQueryArgs(window.location.href, { checkout_id: data?.id }));
+  }
 };
 export const setCheckout = setOrder;
 
 /** Clear the order from the store. */
 export const clearOrder = (formId: number | string, mode: 'live' | 'test') => {
   const { [formId]: remove, ...checkouts } = store.state[mode];
+  window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'redirect_status', 'coupon', 'line_items', 'confirm_checkout_id', 'checkout_id'));
   return store.set(mode, checkouts);
 };
 export const clearCheckout = clearOrder;

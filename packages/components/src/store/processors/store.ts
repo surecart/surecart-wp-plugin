@@ -15,6 +15,11 @@ interface Store {
       mollie: string[];
     };
   };
+  config: {
+    stripe: {
+      paymentElement: boolean;
+    };
+  };
 }
 
 const { state, onChange, on, dispose } = createStore<Store>(
@@ -30,6 +35,11 @@ const { state, onChange, on, dispose } = createStore<Store>(
       manualPaymentMethods: [],
       paymentMethods: {
         mollie: ['creditcard', 'paypal'],
+      },
+    },
+    config: {
+      stripe: {
+        paymentElement: false,
       },
     },
   },

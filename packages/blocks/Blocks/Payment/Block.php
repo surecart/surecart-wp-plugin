@@ -25,8 +25,9 @@ class Block extends BaseBlock {
 	 *
 	 * @return string
 	 */
-	public function render( $attributes, $content ) {
-		$mode = $this->block->context['surecart/form/mode'] ?? 'live';
+	public function render( $attributes, $content = '' ) {
+		$this->attributes = $attributes;
+		$mode             = $this->block->context['surecart/form/mode'] ?? 'live';
 
 		$processors      = Processor::where( [ 'live_mode' => 'test' === $mode ? false : true ] )->get();
 		$stripe          = $this->getProcessorByType( 'stripe', $processors ) ?? null;
@@ -39,7 +40,7 @@ class Block extends BaseBlock {
 				'label'                  => $attributes['label'] ?? '',
 				'disabledProcessorTypes' => $attributes['disabled_methods'] ?? [],
 				'manualPaymentMethods'   => ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? [],
-				'secureNotice'           => $attributes['secure_notice'],
+				'secureNotice'           => $attributes['secure_notice'] ?? '',
 			]
 		);
 
@@ -51,22 +52,9 @@ class Block extends BaseBlock {
 			class="<?php echo esc_attr( $attributes['className'] ?? '' ); ?>"
 		>
 			<?php if ( $payment_element ) : ?>
-				<sc-card slot="stripe">
-					<sc-stripe-payment-element></sc-stripe-payment-element>
-				</sc-card>
+				<sc-stripe-payment-element slot="stripe"></sc-stripe-payment-element>
 			<?php else : ?>
-				<span slot="stripe">
-					<sc-stripe-element
-						mode="<?php echo esc_attr( $mode ); ?>"
-						account-id="<?php echo esc_attr( $stripe->processor_data->account_id ?? null ); ?>"
-						publishable-key="<?php echo esc_attr( $stripe->processor_data->publishable_key ?? null ); ?>">
-					</sc-stripe-element>
-					<?php if ( ! empty( $attributes['secure_notice'] ) ) : ?>
-						<sc-secure-notice>
-							<?php echo wp_kses_post( $attributes['secure_notice'] ); ?>
-						</sc-secure-notice>
-					<?php endif; ?>
-				</span>
+				<sc-stripe-element slot="stripe"></sc-stripe-element>
 			<?php endif; ?>
 		</sc-payment>
 		<?php

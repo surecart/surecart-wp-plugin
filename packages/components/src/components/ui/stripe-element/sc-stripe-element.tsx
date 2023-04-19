@@ -5,6 +5,7 @@ import { openWormhole } from 'stencil-wormhole';
 import { state as selectedProcessor } from '@store/selected-processor';
 
 import { Checkout, FormState, FormStateSetter, ProcessorName } from '../../../types';
+import { availableProcessors } from '@store/processors/getters';
 
 @Component({
   tag: 'sc-stripe-element',
@@ -23,12 +24,6 @@ export class ScStripeElement {
 
   /** The checkout session object for finalizing intents */
   @Prop() order: Checkout;
-
-  /** Your stripe connected account id. */
-  @Prop() accountId: string;
-
-  /** Stripe publishable key */
-  @Prop() publishableKey: string;
 
   /** Mode for the payment */
   @Prop() mode: 'live' | 'test' = 'live';
@@ -63,12 +58,13 @@ export class ScStripeElement {
   @State() confirming: boolean;
 
   async componentWillLoad() {
-    if (!this.publishableKey || !this.accountId) {
+    const processor = (availableProcessors() || []).find(processor => processor.processor_type === 'stripe');
+    if (!processor) {
       return;
     }
-
+    const { account_id, publishable_key } = processor?.processor_data || {};
     try {
-      this.stripe = await loadStripe(this.publishableKey, { stripeAccount: this.accountId });
+      this.stripe = await loadStripe(publishable_key, { stripeAccount: account_id });
       this.elements = this.stripe.elements();
     } catch (e) {
       this.error = e?.message || __('Stripe could not be loaded', 'surecart');
