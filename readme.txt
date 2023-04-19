@@ -243,6 +243,11 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.9.3 - April 19, 2023 =
+* Fix: Overflow issue with order bumps that have long titles.
+* Fix: Issue with price inputs in iOS Safari that contain decimals.
+* Fix: Permissions denied issue with switching between name your own price subscriptions.
+
 = 1.9.2 - April 10, 2023 =
 * Fix export links change for data export.
 * Fix issue with customer dashboard page styling missing if slide out cart is disabled.
