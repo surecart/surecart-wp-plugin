@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 import { ScIcon, ScTag } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
-export default ({ productMedia, onDeleteImage, isFeatured }) => {
+export default ({ productMedia, onDeleteImage }) => {
 	return (
 		<div
 			css={css`
@@ -81,19 +81,21 @@ export default ({ productMedia, onDeleteImage, isFeatured }) => {
 					z-index: 2;
 				`}
 			></div>
-			<img
-				src={productMedia?.url || productMedia?.media?.url}
-				alt="product image"
-				css={css`
-					max-width: 100%;
-					width: 380px;
-					aspect-ratio: 1/1;
-					object-fit: contain;
-					height: auto;
-					display: block;
-					border-radius: var(--sc-border-radius-medium);
-				`}
-			/>
+			{(!!productMedia?.url || !!productMedia?.media?.url) && (
+				<img
+					src={productMedia?.url || productMedia?.media?.url}
+					alt="product image"
+					css={css`
+						max-width: 100%;
+						width: 380px;
+						aspect-ratio: 1/1;
+						object-fit: contain;
+						height: auto;
+						display: block;
+						border-radius: var(--sc-border-radius-medium);
+					`}
+				/>
+			)}
 		</div>
 	);
 };

@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
 import { ScSkeleton } from '@surecart/components-react';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { select, useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { useEffect, useState, useRef } from 'react';
 import { ScBlockUi } from '@surecart/components-react';
@@ -24,6 +24,7 @@ export default ({ productId }) => {
 	const [error, setError] = useState();
 	const [currentModal, setCurrentModal] = useState('');
 	const [selectedImage, setSelectedImage] = useState();
+	const { editEntityRecord } = useDispatch(coreStore);
 
 	const { loading, fetching, saving, productMedia } = useSelect(
 		(select) => {
@@ -37,7 +38,7 @@ export default ({ productId }) => {
 				},
 			];
 
-			const productMedia =
+			const media =
 				select(coreStore).getEntityRecords(...queryArgs) || [];
 			const loading = select(coreStore).isResolving(
 				'getEntityRecords',
@@ -45,7 +46,7 @@ export default ({ productId }) => {
 			);
 
 			// are we saving any prices?
-			const saving = (productMedia || []).some((price) =>
+			const saving = (media || []).some((price) =>
 				select(coreStore).isSavingEntityRecord(
 					'surecart',
 					'product-media',
@@ -53,26 +54,48 @@ export default ({ productId }) => {
 				)
 			);
 
+			console.log({ media });
+
+			// const productMedia = (media || [])
+			// 	.map((media) => {
+			// 		return {
+			// 			...media,
+			// 			...select(coreStore).getRawEntityRecord(
+			// 				'surecart',
+			// 				'product-media',
+			// 				media?.id
+			// 			),
+			// 			...select(coreStore).getEntityRecordEdits(
+			// 				'surecart',
+			// 				'product-media',
+			// 				media?.id
+			// 			),
+			// 		};
+			// 	})
+			// 	// sort by position.
+			// 	.sort((a, b) => a?.position - b?.position);
+
+			// console.log({ productMedia });
+
 			return {
-				productMedia,
-				loading: loading && !productMedia?.length,
-				fetching: loading && productMedia?.length,
+				productMedia: media,
+				loading: loading && !media?.length,
+				fetching: loading && media?.length,
 				saving,
 			};
 		},
 		[productId]
 	);
 
-	const onDragStop = (e) => {
+	const onDragStop = () => {
 		try {
 			const order = jQuery(container.current).sortable('toArray', {
 				attribute: 'media-id',
 			});
-			// $(node).sortable('cancel');
-			order.forEach((id, index) => {
+			order.forEach((id, position) => {
 				if (!id) return;
 				editEntityRecord('surecart', 'product-media', id, {
-					position: index,
+					position,
 				});
 			});
 		} catch (e) {
@@ -81,16 +104,28 @@ export default ({ productId }) => {
 		}
 	};
 
-	// dispatchers.
-	const { editEntityRecord } = useDispatch(coreStore);
-
 	useEffect(() => {
-		if (!container.current) return;
 		jQuery(container.current).sortable({
-			stop: onDragStop,
+			stop: () => onDragStop(),
 			cancel: '.cancel-sortable',
 		});
-	}, [container]);
+	}, []);
+
+	// useEffect(() => {
+	// 	if (!productMedia?.length) return;
+	// 	const first = select(coreStore).getEntityRecord(
+	// 		'surecart',
+	// 		'product-media',
+	// 		productMedia[0]?.id
+	// 	);
+	// 	if (first?.id) {
+	// 		editEntityRecord('surecart', 'product-media', first.id, {
+	// 			position: 3,
+	// 		});
+
+	// 		console.log(first, productMedia[0]);
+	// 	}
+	// }, [productMedia]);
 
 	const saveProductMedia = async (media) => {
 		return saveEntityRecord(
@@ -115,7 +150,7 @@ export default ({ productId }) => {
 
 	return (
 		<Box title={__('Images', 'surecart')}>
-			<Error error={error} setError={setError} />
+			<Error error={error} setError={setError} margin="100px" />
 			<div
 				css={css`
 					display: grid;
