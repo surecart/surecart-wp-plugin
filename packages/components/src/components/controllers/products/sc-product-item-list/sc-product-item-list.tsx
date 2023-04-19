@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 import { addQueryArgs, getQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 
@@ -16,6 +16,7 @@ export type LayoutConfig = {
   shadow: true,
 })
 export class ScProductItemList {
+  @Element() el: HTMLScProductItemListElement;
   /** Limit to a set of ids.  */
   @Prop() ids: string[];
 
@@ -25,11 +26,20 @@ export class ScProductItemList {
   /** Query to search for */
   @Prop({ mutable: true }) query: string;
 
-  /* Layout configuration */
-  @Prop() layoutConfig: LayoutConfig;
+  /** Should allow search */
+  @Prop() searchEnabled: boolean = true;
+
+  /** Should allow search */
+  @Prop() sortEnabled: boolean = true;
 
   /** Should we paginate? */
-  @Prop() paginate: boolean = true;
+  @Prop() paginationEnabled: boolean = true;
+
+  /** Should we paginate? */
+  @Prop() ajaxPagination: boolean = true;
+
+  /* Layout configuration */
+  @Prop() layoutConfig: LayoutConfig;
 
   /* Pagination alignment */
   @Prop() paginationAlignment: string = 'center';
@@ -62,25 +72,25 @@ export class ScProductItemList {
   }
 
   // Append URL if no 'product-page' found
-  appendParam(page: number, push: boolean = false) {
-    const newUrl = addQueryArgs(location.href, { 'product-page': page });
-    if (push) {
-      window.location.replace(newUrl);
+  doPagination(page: number) {
+    // handle ajax pagination
+    if (this.ajaxPagination) {
+      this.currentPage = page;
+      this.updateProducts();
+      this.el.scrollIntoView({ behavior: 'smooth' });
       return;
     }
-    window.history.pushState({ path: newUrl }, '', newUrl);
+
+    // handle server pagination.
+    const newUrl = addQueryArgs(location.href, { 'product-page': page });
+    window.location.replace(newUrl);
   }
 
   // Fetch all products
   async getProducts() {
     const { 'product-page': page } = getQueryArgs(window.location.href) as { 'product-page': string };
 
-    if (page) {
-      this.currentPage = parseInt(page);
-    } else {
-      this.currentPage = 1;
-      this.appendParam(1);
-    }
+    this.currentPage = this.paginationEnabled && page ? parseInt(page) : 1;
 
     try {
       this.loading = true;
@@ -147,43 +157,47 @@ export class ScProductItemList {
   render() {
     return (
       <div class={{ 'product-item-list__wrapper': true, 'product-item-list__has-search': !!this.query }}>
-        <div class="product-item-list__header">
-          <div class="product-item-list__sort">
-            <sc-dropdown style={{ '--panel-width': '15rem' }}>
-              <sc-button type="text" caret slot="trigger">
-                {this.renderSortName()}
-              </sc-button>
-              <sc-menu>
-                <sc-menu-item onClick={() => (this.sort = 'created_at:desc')}>{__('Latest', 'surecart')}</sc-menu-item>
-                <sc-menu-item onClick={() => (this.sort = 'created_at:asc')}>{__('Oldest', 'surecart')}</sc-menu-item>
-                <sc-menu-item onClick={() => (this.sort = 'name:asc')}>{__('Alphabetical, A-Z', 'surecart')}</sc-menu-item>
-                <sc-menu-item onClick={() => (this.sort = 'name:desc')}>{__('Alphabetical, Z-A', 'surecart')}</sc-menu-item>
-              </sc-menu>
-            </sc-dropdown>
+        {(this.searchEnabled || this.sortEnabled) && (
+          <div class="product-item-list__header">
+            <div class="product-item-list__sort">
+              {this.sortEnabled && (
+                <sc-dropdown style={{ '--panel-width': '15rem' }}>
+                  <sc-button type="text" caret slot="trigger">
+                    {this.renderSortName()}
+                  </sc-button>
+                  <sc-menu>
+                    <sc-menu-item onClick={() => (this.sort = 'created_at:desc')}>{__('Latest', 'surecart')}</sc-menu-item>
+                    <sc-menu-item onClick={() => (this.sort = 'created_at:asc')}>{__('Oldest', 'surecart')}</sc-menu-item>
+                    <sc-menu-item onClick={() => (this.sort = 'name:asc')}>{__('Alphabetical, A-Z', 'surecart')}</sc-menu-item>
+                    <sc-menu-item onClick={() => (this.sort = 'name:desc')}>{__('Alphabetical, Z-A', 'surecart')}</sc-menu-item>
+                  </sc-menu>
+                </sc-dropdown>
+              )}
+            </div>
+            <div class="product-item-list__search">
+              {this.searchEnabled && (
+                <sc-input type="text" placeholder="Search" size="small" value={this.query} onScInput={e => (this.query = e.target.value)}>
+                  {this.query ? (
+                    <sc-icon
+                      class="clear-button"
+                      slot="prefix"
+                      name="x"
+                      onClick={() => {
+                        this.query = '';
+                        this.updateProducts();
+                      }}
+                    />
+                  ) : (
+                    <sc-icon slot="prefix" name="search" />
+                  )}
+                  <sc-button class="search-button" type="link" slot="suffix" onClick={() => this.updateProducts()}>
+                    {__('Search', 'surecart')}
+                  </sc-button>
+                </sc-input>
+              )}
+            </div>
           </div>
-          <div class="product-item-list__search">
-            <sc-button
-              class="clear-button"
-              type="text"
-              slot="suffix"
-              size="small"
-              onClick={() => {
-                this.query = '';
-                this.updateProducts();
-              }}
-            >
-              <sc-icon name="x" slot="prefix" />
-              {__('Clear', 'surecart')}
-            </sc-button>
-
-            <sc-input type="text" placeholder="Search" size="small" value={this.query} onScInput={e => (this.query = e.target.value)}>
-              <sc-button class="search-button" type="link" slot="suffix" size="small" onClick={() => this.updateProducts()}>
-                <sc-icon name="search" slot="prefix" />
-                {__('Search', 'surecart')}
-              </sc-button>
-            </sc-input>
-          </div>
-        </div>
+        )}
 
         {!this.products?.length && !this.loading && (
           <sc-empty class="product-item-list__empty" icon="shopping-bag">
@@ -193,7 +207,7 @@ export class ScProductItemList {
 
         <div class="product-item-list">
           {this.loading
-            ? [...Array(10)].map(() => (
+            ? [...Array(this.ids?.length || this.limit || 10)].map(() => (
                 <div class="product-item-list__loader">
                   {this.layoutConfig?.map(layout => {
                     switch (layout.blockName) {
@@ -222,7 +236,7 @@ export class ScProductItemList {
                 return <sc-product-item product={product} layoutConfig={this.layoutConfig}></sc-product-item>;
               })}
         </div>
-        {!!this.products?.length && this.pagination.total > this.products.length && (
+        {!!this.products?.length && this.pagination.total > this.products.length && this.paginationEnabled && (
           <div
             class={{
               'product-item-list__pagination': true,
@@ -237,8 +251,8 @@ export class ScProductItemList {
               total={this.pagination.total}
               totalPages={this.pagination.total_pages}
               totalShowing={this.limit}
-              onScNextPage={() => this.appendParam(this.currentPage + 1, true)}
-              onScPrevPage={() => this.appendParam(this.currentPage - 1, true)}
+              onScNextPage={() => this.doPagination(this.currentPage + 1)}
+              onScPrevPage={() => this.doPagination(this.currentPage - 1)}
             ></sc-pagination>
           </div>
         )}

@@ -15,8 +15,8 @@ import {
 	Notice,
 	ToolbarGroup,
 	Disabled,
-	__experimentalToggleGroupControl as ToggleGroupControl,
-	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
+	PanelRow,
+	ToggleControl,
 } from '@wordpress/components';
 import { Fragment, useEffect, useState } from '@wordpress/element';
 
@@ -33,7 +33,16 @@ import { PRODUCT_ITEM_LAYOUT } from '../ProductItem/edit';
 export default ({ attributes, setAttributes, clientId }) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [layoutConfig, setLayoutConfig] = useState(null);
-	const { columns, limit, pagination_alignment, style } = attributes;
+	const {
+		columns,
+		limit,
+		pagination_alignment,
+		style,
+		sort_enabled,
+		search_enabled,
+		pagination_enabled,
+		ajax_pagination,
+	} = attributes;
 	const blockProps = useBlockProps();
 
 	function togglePreview() {
@@ -181,33 +190,60 @@ export default ({ attributes, setAttributes, clientId }) => {
 						</Notice>
 					)}
 					<RangeControl
-						label="Per page limit"
+						label={
+							pagination_enabled
+								? __('Per page limit', 'surecart')
+								: __('Limit', 'surecart')
+						}
 						value={limit}
 						onChange={(limit) => setAttributes({ limit })}
 						step={1}
 						min={1}
 						max={40}
 					/>
-					<ToggleGroupControl
-						label={__('Pagination Alignment', 'surecart')}
-						value={pagination_alignment}
-						onChange={(align) =>
-							setAttributes({ pagination_alignment: align })
-						}
-					>
-						<ToggleGroupControlOption
-							value="left"
-							label={__('Left', 'surecart')}
+					<PanelRow>
+						<ToggleControl
+							label={__('Paginate', 'surecart')}
+							checked={pagination_enabled}
+							onChange={(pagination_enabled) =>
+								setAttributes({ pagination_enabled })
+							}
 						/>
-						<ToggleGroupControlOption
-							value="center"
-							label={__('Center', 'surecart')}
+					</PanelRow>
+					{pagination_enabled && (
+						<PanelRow>
+							<ToggleControl
+								label={__('Ajax Pagination', 'surecart')}
+								checked={ajax_pagination}
+								onChange={(ajax_pagination) =>
+									setAttributes({ ajax_pagination })
+								}
+							/>
+						</PanelRow>
+					)}
+					<PanelRow>
+						<ToggleControl
+							label={__('Sort', 'surecart')}
+							help={__(
+								'Allow the user to sort by newest, alphabetical and more.',
+								'surecart'
+							)}
+							checked={sort_enabled}
+							onChange={(sort_enabled) =>
+								setAttributes({ sort_enabled })
+							}
 						/>
-						<ToggleGroupControlOption
-							value="right"
-							label={__('Right', 'surecart')}
+					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={__('Search', 'surecart')}
+							help={__('Show a search box.', 'surecart')}
+							checked={search_enabled}
+							onChange={(search_enabled) =>
+								setAttributes({ search_enabled })
+							}
 						/>
-					</ToggleGroupControl>
+					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 			<div {...blockProps}>
@@ -242,6 +278,9 @@ export default ({ attributes, setAttributes, clientId }) => {
 								}}
 								layoutConfig={layoutConfig}
 								paginationAlignment={pagination_alignment}
+								sortEnabled={sort_enabled}
+								searchEnabled={search_enabled}
+								paginationEnabled={pagination_enabled}
 							/>
 						)}
 					</Disabled>

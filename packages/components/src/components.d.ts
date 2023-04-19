@@ -2587,24 +2587,36 @@ export namespace Components {
     }
     interface ScProductItemList {
         /**
+          * Should we paginate?
+         */
+        "ajaxPagination": boolean;
+        /**
           * Limit to a set of ids.
          */
         "ids": string[];
         "layoutConfig": LayoutConfig1;
         "limit": number;
+        "paginationAlignment": string;
         /**
           * Should we paginate?
          */
-        "paginate": boolean;
-        "paginationAlignment": string;
+        "paginationEnabled": boolean;
         /**
           * Query to search for
          */
         "query": string;
         /**
+          * Should allow search
+         */
+        "searchEnabled": boolean;
+        /**
           * Sort
          */
         "sort": string;
+        /**
+          * Should allow search
+         */
+        "sortEnabled": boolean;
     }
     interface ScProductItemPrice {
         "prices": Price1[];
@@ -7989,24 +8001,36 @@ declare namespace LocalJSX {
     }
     interface ScProductItemList {
         /**
+          * Should we paginate?
+         */
+        "ajaxPagination"?: boolean;
+        /**
           * Limit to a set of ids.
          */
         "ids"?: string[];
         "layoutConfig"?: LayoutConfig1;
         "limit"?: number;
+        "paginationAlignment"?: string;
         /**
           * Should we paginate?
          */
-        "paginate"?: boolean;
-        "paginationAlignment"?: string;
+        "paginationEnabled"?: boolean;
         /**
           * Query to search for
          */
         "query"?: string;
         /**
+          * Should allow search
+         */
+        "searchEnabled"?: boolean;
+        /**
           * Sort
          */
         "sort"?: string;
+        /**
+          * Should allow search
+         */
+        "sortEnabled"?: boolean;
     }
     interface ScProductItemPrice {
         "prices"?: Price1[];

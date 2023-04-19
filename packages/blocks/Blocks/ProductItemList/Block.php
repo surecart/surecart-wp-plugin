@@ -13,12 +13,74 @@ class Block extends BaseBlock {
 	 *
 	 * @var integer
 	 */
-	static $instance;
+	public static $instance;
 
 	/**
-	 * Get the style for the block
+	 * Default block template.
 	 *
-	 * @param  array $attributes Product List attributes.
+	 * @var array
+	 */
+	protected $default_block_template = [
+		[
+			'blockName' => 'surecart/product-item-image',
+			'attrs'     => [
+				'sizing' => 'cover',
+				'ratio'  => '1/1.33',
+				'style'  => [
+					'border'  => [
+						'radius' => '6px',
+					],
+					'spacing' => [
+						'margin' => [
+							'bottom' => '16px',
+						],
+					],
+				],
+			],
+		],
+		[
+			'blockName' => 'surecart/product-item-title',
+			'attrs'     => [
+				'level' => 3,
+				'style' => [
+					'typography' => [
+						'fontSize' => '18px',
+					],
+					'color'      => [
+						'text' => '#000000',
+					],
+					'spacing'    => [
+						'margin' => [
+							'bottom' => '8px',
+						],
+					],
+				],
+			],
+		],
+		[
+			'blockName' => 'surecart/product-item-price',
+			'attrs'     => [
+				'style' => [
+					'typography' => [
+						'fontSize' => '16px',
+					],
+					'color'      => [
+						'text' => '#000000',
+					],
+					'spacing'    => [
+						'margin' => [
+							'bottom' => '8px',
+						],
+					],
+				],
+			],
+		],
+	];
+
+	/**
+	 * Get the style for the block.
+	 *
+	 * @param  array $attr Product List attributes.
 	 * @return string
 	 */
 	public function getProductListStyle( $attr ) {
@@ -70,17 +132,17 @@ class Block extends BaseBlock {
 		// font size
 		if ( ! empty( $attr['fontSize'] ) || ! empty( $attr['style']['typography']['fontSize'] ) ) {
 			$font_size = ! empty( $attr['fontSize'] ) ? $this->getFontSizePresetCssVar( $attr['fontSize'] ) : $attr['style']['typography']['fontSize'];
-			$style .= '--sc-product-' . $prefix . '-font-size: ' . $font_size . ';';
+			$style    .= '--sc-product-' . $prefix . '-font-size: ' . $font_size . ';';
 		}
 		// border color
 		if ( ! empty( $attr['borderColor'] ) || ! empty( $attr['style']['border']['color'] ) ) {
 			$border_color = ! empty( $attr['borderColor'] ) ? $this->getColorPresetCssVar( $attr['borderColor'] ) : $attr['style']['border']['color'];
-			$style .= '--sc-product-' . $prefix . '-border-color: ' . $border_color . ';';
+			$style       .= '--sc-product-' . $prefix . '-border-color: ' . $border_color . ';';
 		}
 		// text color
 		if ( ! empty( $attr['textColor'] ) || ! empty( $attr['style']['color']['text'] ) ) {
 			$text_color = ! empty( $attr['textColor'] ) ? $this->getColorPresetCssVar( $attr['textColor'] ) : $attr['style']['color']['text'];
-			$style .= '--sc-product-' . $prefix . '-text-color: ' . $text_color . ';';
+			$style     .= '--sc-product-' . $prefix . '-text-color: ' . $text_color . ';';
 		}
 		// text align
 		if ( ! empty( $attr['align'] ) ) {
@@ -115,13 +177,9 @@ class Block extends BaseBlock {
 		self::$instance++;
 
 		// check for inner blocks.
-		$product_inner_blocks = $this->block->parsed_block['innerBlocks'];
-		if ( empty( $product_inner_blocks[0]['innerBlocks'] ) ) {
-			return;
-		}
-
-		$product_item_inner_blocks = $product_inner_blocks[0]['innerBlocks'];
-		$product_item_attributes   = $product_inner_blocks[0]['attrs'];
+		$product_inner_blocks      = $this->block->parsed_block['innerBlocks'] ?? [];
+		$product_item_inner_blocks = $product_inner_blocks[0]['innerBlocks'] ?? $this->default_block_template;
+		$product_item_attributes   = $product_inner_blocks[0]['attrs'] ?? $attributes;
 
 		$layout_config = array_map(
 			function( $inner_block ) {
@@ -133,19 +191,19 @@ class Block extends BaseBlock {
 			$product_item_inner_blocks
 		);
 
-		$style = '';
+		$style  = '';
 		$style .= $this->getStyle( $attributes, $product_item_attributes );
 
-		foreach ($product_item_inner_blocks as $inner_blocks) {
-			switch ($inner_blocks['blockName']) {
+		foreach ( $product_item_inner_blocks as $inner_blocks ) {
+			switch ( $inner_blocks['blockName'] ) {
 				case 'surecart/product-item-image':
-					$style .= $this->getVars($inner_blocks['attrs'], 'image');
+					$style .= $this->getVars( $inner_blocks['attrs'], 'image' );
 					break;
 				case 'surecart/product-item-title':
-					$style .= $this->getVars($inner_blocks['attrs'], 'title');
+					$style .= $this->getVars( $inner_blocks['attrs'], 'title' );
 					break;
 				case 'surecart/product-item-price':
-					$style .= $this->getVars($inner_blocks['attrs'], 'price');
+					$style .= $this->getVars( $inner_blocks['attrs'], 'price' );
 					break;
 				default:
 					break;
@@ -156,10 +214,15 @@ class Block extends BaseBlock {
 			'sc-product-item-list',
 			'#selector-' . self::$instance,
 			[
-				'layoutConfig' 			=> $layout_config,
-				'paginationAlignment' 	=> $attributes['pagination_alignment'],
-				'limit' 				=> $attributes['limit'],
-				'style'        			=> $style,
+				'layoutConfig'        => $layout_config,
+				'paginationAlignment' => $attributes['pagination_alignment'],
+				'limit'               => $attributes['limit'],
+				'style'               => $style,
+				'ids'                 => $attributes['ids'],
+				'paginationEnabled'   => $attributes['pagination_enabled'],
+				'ajaxPagination'      => $attributes['ajax_pagination'],
+				'searchEnabled'       => $attributes['search_enabled'],
+				'sortEnabled'         => $attributes['sort_enabled'],
 			]
 		);
 

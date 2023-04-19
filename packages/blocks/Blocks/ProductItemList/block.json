@@ -26,9 +26,32 @@
 			"type": "number",
 			"default": 15
 		},
+		"pagination_enabled": {
+			"type": "boolean",
+			"default": true
+		},
+		"ajax_pagination": {
+			"type": "boolean",
+			"default": true
+		},
+		"search_enabled": {
+			"type": "boolean",
+			"default": true
+		},
+		"sort_enabled": {
+			"type": "boolean",
+			"default": true
+		},
 		"pagination_alignment": {
 			"type": "string",
 			"default": "center"
+		},
+		"ids": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			},
+			"default": []
 		}
 	}
 }

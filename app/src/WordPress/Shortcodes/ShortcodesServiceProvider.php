@@ -113,8 +113,17 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 
 		// product page.
 		$container['surecart.shortcodes']->registerBlockShortcodeByName(
-			'sc_product_info',
-			'surecart/product-info',
+			'sc_product_list',
+			'surecart/product-item-list',
+			[
+				'ids'                => [],
+				'columns'            => 4,
+				'sort_enabled'       => false,
+				'search_enabled'     => false,
+				'pagination_enabled' => true,
+				'ajax_pagination'    => true,
+				'limit'              => 10,
+			]
 		);
 		// $container['surecart.shortcodes']->registerBlockShortcode(
 		// 'sc_product_description',

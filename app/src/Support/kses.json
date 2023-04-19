@@ -1434,13 +1434,16 @@
     "slot": true
   },
   "sc-product-item-list": {
+    "ajax-pagination": true,
     "ids": true,
     "layout-config": true,
     "limit": true,
-    "paginate": true,
     "pagination-alignment": true,
+    "pagination-enabled": true,
     "query": true,
+    "search-enabled": true,
     "sort": true,
+    "sort-enabled": true,
     "style": true,
     "id": true,
     "class": true,

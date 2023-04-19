@@ -43,14 +43,23 @@ class ShortcodesService {
 		add_shortcode(
 			$name,
 			function( $attributes, $content ) use ( $name, $block_name, $defaults ) {
+				// convert comma separated attributes to array.
+				foreach ( $attributes as $key => $value ) {
+					if ( strpos( $value, ',' ) !== 0 && is_array( $defaults[ $key ] ) ) {
+						$attributes[ $key ] = explode( ',', $value );
+					}
+				}
+
+				$shortcode_attrs = shortcode_atts(
+					$defaults,
+					$attributes,
+					$name
+				);
+
 				$block = new \WP_Block(
 					[
 						'blockName'    => $block_name,
-						'attributes'   => shortcode_atts(
-							$defaults,
-							$attributes,
-							$name
-						),
+						'attrs'        => $shortcode_attrs,
 						'innerContent' => do_shortcode( $content ),
 					]
 				);
