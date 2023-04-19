@@ -65,9 +65,10 @@ export default () => {
 	return (
 		<>
 			<ScSelect
-				label={__('Cart Type', 'surecart')}
+				label={__('Cart Icon Type', 'surecart')}
 				value={cartIconType}
-				help={__('What type of cart do you want to use?')}
+				help={__('What type of cart icon do you want to use?')}
+				unselect={false}
 				choices={[
 					{
 						label: __('Floating Icon', 'surecart'),

@@ -117,7 +117,7 @@ class SettingService {
 				'type'              => 'string',
 				'show_in_rest'      => true,
 				'sanitize_callback' => 'sanitize_text_field',
-				'default'            => 'right',
+				'default'           => 'right',
 			]
 		);
 		$this->register(
@@ -146,7 +146,7 @@ class SettingService {
 				'type'              => 'string',
 				'show_in_rest'      => true,
 				'sanitize_callback' => 'sanitize_text_field',
-				'default'            => 'both', // both, floating_icon, menu_icon
+				'default'           => 'both', // both, floating_icon, menu_icon
 			]
 		);
 	}
