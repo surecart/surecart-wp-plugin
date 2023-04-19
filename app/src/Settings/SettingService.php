@@ -139,6 +139,16 @@ class SettingService {
 				'show_in_rest' => true,
 			]
 		);
+		$this->register(
+			'surecart',
+			'cart_icon_type',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+				'defalt'            => 'both', // both, floating_icon, menu_icon
+			]
+		);
 	}
 
 	/**

@@ -24,7 +24,6 @@ class SettingsController {
 				'stripe_payment_element'   			=> (bool) get_option( 'sc_stripe_payment_element', false ),
 				'use_esm_loader'           			=> (bool) get_option( 'surecart_use_esm_loader', false ),
 				'slide_out_cart_disabled'  			=> (bool) get_option( 'sc_slide_out_cart_disabled', false ),
-				'cart_menu_button_enabled' 			=> (bool) get_option( 'sc_cart_menu_button_enabled', false ),
 			]
 		);
 	}
@@ -66,11 +65,6 @@ class SettingsController {
 		// update slide out cart option.
 		if ( isset( $request['slide_out_cart_disabled'] ) ) {
 			update_option( 'sc_slide_out_cart_disabled', (bool) $request->get_param( 'slide_out_cart_disabled' ) );
-		}
-
-		// update menu cart button visibility.
-		if ( isset( $request['cart_menu_button_enabled'] ) ) {
-			update_option( 'sc_cart_menu_button_enabled', (bool) $request->get_param( 'cart_menu_button_enabled' ) );
 		}
 
 		return rest_ensure_response( $this->find( $request ) );

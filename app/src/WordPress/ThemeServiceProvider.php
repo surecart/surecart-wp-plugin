@@ -111,20 +111,20 @@ class ThemeServiceProvider implements ServiceProviderInterface {
 	 * @return array
 	 */
 	public function addCartMenu( $items, $args ) {
-		$cart_menu_ids     = (array) get_option( 'surecart_cart_menu_selected_ids', null );
-		$cart_menu_enabled = (bool) get_option( 'sc_cart_menu_button_enabled', false );
+		$cart_menu_ids    = (array) get_option( 'surecart_cart_menu_selected_ids', null );
+		$cart_icon_type   = (string) get_option( 'surecart_cart_icon_type', null );
 
-		if ( !$cart_menu_enabled || !in_array($args->menu->term_id,$cart_menu_ids) ) {
+		if ( $cart_icon_type === 'floating_icon' || !in_array( $args->menu->term_id, $cart_menu_ids ) ) {
 			return $items;
 		}
 
-		$cart_menu_always_shown = (bool) get_option('surecart_cart_menu_always_shown',false);
-		$cart_menu_alignment = get_option( 'surecart_cart_menu_alignment', 'left' );
-		$form                = \SureCart::forms()->getDefault();
-		$mode                = Form::getMode( $form->ID );
+		$cart_menu_always_shown   = (bool) get_option( 'surecart_cart_menu_always_shown', false );
+		$cart_menu_alignment 	  = (string) get_option( 'surecart_cart_menu_alignment', 'left' );
+		$form                	  = \SureCart::forms()->getDefault();
+		$mode                	  = Form::getMode( $form->ID );
 
-		$menu = "<li><sc-cart-button cart-menu-always-shown='".esc_attr($cart_menu_always_shown?'true':'false')."' form-id='" . esc_attr( $form->ID ) . "' mode='" . esc_attr( $mode ) . "'/></li>";
-
+		$menu = "<li><sc-cart-button cart-menu-always-shown='" . esc_attr( $cart_menu_always_shown ? 'true' : 'false' ) . "' form-id='" . esc_attr( $form->ID ) . "' mode='" . esc_attr( $mode ) . "'/></li>";
+		
 		if ( 'right' === $cart_menu_alignment ) {
 			$items = $menu . $items;
 		} else {

@@ -248,10 +248,6 @@ export namespace Components {
          */
         "alwaysShow": boolean;
         /**
-          * Whether the cart menu button is enabled
-         */
-        "cartMenuButtonEnabled": boolean;
-        /**
           * The template for the cart to inject when opened.
          */
         "cartTemplate": string;
@@ -260,6 +256,10 @@ export namespace Components {
           * The checkout url for the button.
          */
         "checkoutUrl": string;
+        /**
+          * Whether the floating button should be visible
+         */
+        "floatingIconEnabled": boolean;
         /**
           * The form id to use for the cart.
          */
@@ -5086,10 +5086,6 @@ declare namespace LocalJSX {
          */
         "alwaysShow"?: boolean;
         /**
-          * Whether the cart menu button is enabled
-         */
-        "cartMenuButtonEnabled"?: boolean;
-        /**
           * The template for the cart to inject when opened.
          */
         "cartTemplate"?: string;
@@ -5098,6 +5094,10 @@ declare namespace LocalJSX {
           * The checkout url for the button.
          */
         "checkoutUrl"?: string;
+        /**
+          * Whether the floating button should be visible
+         */
+        "floatingIconEnabled"?: boolean;
         /**
           * The form id to use for the cart.
          */

@@ -39,13 +39,20 @@ class CartService
     public function cartTemplate()
     {
         $form = $this->getForm();
+
         if (empty($form->ID)) {
             return '';
         }
+
         $cart = \SureCart::cartPost()->get();
+
         if (empty($cart->post_content)) {
             return '';
         }
+
+        $cart_icon_type = (string) get_option('surecart_cart_icon_type', null);
+        $floating_icon_enabled = $cart_icon_type !== 'menu_icon' ? 'true' : 'false';
+
         ob_start();
         ?>
 
@@ -56,13 +63,13 @@ class CartService
 			mode="<?php echo esc_attr(Form::getMode($form->ID)); ?>"
 			checkout-link="<?php echo esc_attr(\SureCart::pages()->url('checkout')); ?>"
 			style="font-size: 16px"
-			cart-menu-button-enabled="<?php echo esc_attr((bool) get_option('sc_cart_menu_button_enabled', false) ? 'true' : 'false'); ?>"
-			>
+			floating-icon-enabled="<?php echo esc_attr( $floating_icon_enabled ); ?>"
+		>
 			<?php echo wp_kses_post(do_blocks($cart->post_content)); ?>
-
 		</sc-cart>
+
 		<?php
-return trim(preg_replace('/\s+/', ' ', ob_get_clean()));
+        return trim(preg_replace('/\s+/', ' ', ob_get_clean()));
     }
 
     /**

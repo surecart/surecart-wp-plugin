@@ -16,8 +16,7 @@ import useEntity from '../../hooks/useEntity';
 import Error from '../../components/Error';
 import useSave from '../UseSave';
 import { useEntityProp } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
-import CartMenuSelector from './components/CartMenuSelector';
+import CartSettings from './components/CartSettings';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -64,22 +63,6 @@ export default () => {
 		'root',
 		'site',
 		'surecart_load_stripe_js'
-	);
-
-	const [cartMenuAlignment, setCartMenuAlignment] = useEntityProp(
-		'root',
-		'site',
-		'surecart_cart_menu_alignment'
-	);
-	const [cartMenuAlwaysShown, setCartMenuAlwaysShown] = useEntityProp(
-		'root',
-		'site',
-		'surecart_cart_menu_always_shown'
-	);
-	const [cartMenuSelectedIds, setCartMenuSelectedIds] = useEntityProp(
-		'root',
-		'site',
-		'surecart_cart_menu_selected_ids'
 	);
 
 	/**
@@ -274,10 +257,7 @@ export default () => {
 			<SettingsBox
 				title={__('Cart', 'surecart')}
 				loading={!hasLoadedAccountItem && !hasLoadedSettingItem}
-				description={__(
-					'Change menu cart button settings.',
-					'surecart'
-				)}
+				description={__('Change cart settings.', 'surecart')}
 			>
 				<ScSwitch
 					checked={!settingItem?.slide_out_cart_disabled}
@@ -292,86 +272,13 @@ export default () => {
 					{__('Enable Cart', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							'If you do not wish to use the cart, you can disable this to prevent cart scripts from loading on your pages.',
+							'This will enable slide-out cart. If you do not wish to use the cart, you can disable this to prevent cart scripts from loading on your pages.',
 							'surecart'
 						)}
 					</span>
 				</ScSwitch>
 
-				{!settingItem?.slide_out_cart_disabled && (
-					<>
-						<ScSelect
-							label={__('Cart Type', 'surecart')}
-							value={'both'}
-							help={__('What type of cart do you want to use?')}
-							choices={[
-								{
-									label: __('Floating Icon', 'surecart'),
-									value: 'floating',
-								},
-								{
-									label: __('Menu Item', 'surecart'),
-									value: 'menu',
-								},
-								{
-									label: __('Both', 'surecart'),
-									value: 'both',
-								},
-							]}
-							onScChange={() => {}}
-						/>
-
-						<CartMenuSelector />
-
-						<div>
-							<ScSelect
-								label={__(
-									'Position of cart button',
-									'surecart'
-								)}
-								placeholder={__('Select Position', 'surecart')}
-								value={cartMenuAlignment}
-								onScChange={(e) =>
-									setCartMenuAlignment(e.target.value)
-								}
-								unselect={false}
-								help={__(
-									'Select the cart button position, i.e. left or right, where it will look best with your website design.',
-									'surecart'
-								)}
-								choices={[
-									{
-										label: __('Right', 'surecart'),
-										value: 'right',
-									},
-									{
-										label: __('Left', 'surecart'),
-										value: 'left',
-									},
-								]}
-							/>
-						</div>
-
-						<ScSwitch
-							checked={cartMenuAlwaysShown}
-							onClick={(e) => {
-								e.preventDefault();
-								setCartMenuAlwaysShown(!cartMenuAlwaysShown);
-							}}
-						>
-							{__('Always show cart', 'surecart')}
-							<span
-								slot="description"
-								style={{ lineHeight: '1.4' }}
-							>
-								{__(
-									'Enable to always show the cart button, even your cart is empty.',
-									'surecart'
-								)}
-							</span>
-						</ScSwitch>
-					</>
-				)}
+				{!settingItem?.slide_out_cart_disabled && <CartSettings />}
 			</SettingsBox>
 
 			<SettingsBox
