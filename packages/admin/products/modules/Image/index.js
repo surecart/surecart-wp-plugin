@@ -2,93 +2,102 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
+import { ScSkeleton } from '@surecart/components-react';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { ScBlockUi } from '@surecart/components-react';
 import AddImage from './AddImage';
 import ImageDisplay from './ImageDisplay';
 import ConfirmDeleteImage from './ConfirmDeleteImage';
 import AddUrlImage from './AddUrlImage';
+import Error from '../../../components/Error';
 
 const modals = {
 	CONFIRM_DELETE_IMAGE: 'confirm_delete_image',
 	ADD_IMAGE_FROM_URL: 'add_image_from_url',
 };
-export default ({ product, updateProduct, loading }) => {
+
+export default ({ productId }) => {
 	const { saveEntityRecord } = useDispatch(coreStore);
-	const [isSaving, setIsSaving] = useState(false);
+	const container = useRef();
+	const [error, setError] = useState();
 	const [currentModal, setCurrentModal] = useState('');
 	const [selectedImage, setSelectedImage] = useState();
 
-	const { fetchingMedia, productMedia } = useSelect(
+	const { loading, fetching, saving, productMedia } = useSelect(
 		(select) => {
-			if (!product?.id) {
-				return {
-					productMedia: [],
-					fetchingMedia: false,
-				};
-			}
-
 			const queryArgs = [
 				'surecart',
-				'product-medias',
+				'product-media',
 				{
 					context: 'edit',
-					product_ids: [product?.id],
+					product_ids: [productId],
 					expand: ['media'],
 				},
 			];
 
+			const productMedia =
+				select(coreStore).getEntityRecords(...queryArgs) || [];
+			const loading = select(coreStore).isResolving(
+				'getEntityRecords',
+				queryArgs
+			);
+
+			// are we saving any prices?
+			const saving = (productMedia || []).some((price) =>
+				select(coreStore).isSavingEntityRecord(
+					'surecart',
+					'product-media',
+					price?.id
+				)
+			);
+
 			return {
-				productMedia:
-					select(coreStore).getEntityRecords(...queryArgs) || [],
-				fetchingMedia: select(coreStore).isResolving(
-					'getEntityRecords',
-					queryArgs
-				),
+				productMedia,
+				loading: loading && !productMedia?.length,
+				fetching: loading && productMedia?.length,
+				saving,
 			};
 		},
-		[product?.id]
+		[productId]
 	);
+
+	const onDragStop = (e) => {
+		try {
+			const order = jQuery(container.current).sortable('toArray', {
+				attribute: 'media-id',
+			});
+			// $(node).sortable('cancel');
+			order.forEach((id, index) => {
+				if (!id) return;
+				editEntityRecord('surecart', 'product-media', id, {
+					position: index,
+				});
+			});
+		} catch (e) {
+			console.error(e);
+			setError(e);
+		}
+	};
 
 	// dispatchers.
 	const { editEntityRecord } = useDispatch(coreStore);
 
-	const onDragStop = (e) => {
-		const imgTags = e.target?.children || [];
-		for (let i = 0; i < imgTags.length; i++) {
-			if (!imgTags[i]?.getAttribute('media-id')) {
-				continue;
-			}
-			editEntityRecord(
-				'surecart',
-				'product-medias',
-				imgTags[i].getAttribute('media-id'),
-				{
-					position: i,
-				}
-			);
-		}
-	};
-
 	useEffect(() => {
-		jQuery(document).ready(function ($) {
-			if (!!productMedia?.length) {
-				$('#product-images-container').sortable({
-					stop: onDragStop,
-					cancel: '.cancel-sortable',
-				});
-			}
+		if (!container.current) return;
+		jQuery(container.current).sortable({
+			stop: onDragStop,
+			cancel: '.cancel-sortable',
 		});
-	}, [productMedia]);
+	}, [container]);
 
 	const saveProductMedia = async (media) => {
 		return saveEntityRecord(
 			'surecart',
-			'product-medias',
+			'product-media',
 			{
-				product_id: product.id,
+				product_id: productId,
 				media_id: media.id,
 			},
 			{ throwOnError: true }
@@ -96,70 +105,70 @@ export default ({ product, updateProduct, loading }) => {
 	};
 
 	const onAddMedia = async (medias) => {
-		setIsSaving(true);
 		try {
 			await Promise.all(medias.map((media) => saveProductMedia(media)));
 		} catch (e) {
 			console.error(e);
-			setError(e?.message || __('Something went wrong.', 'surecart'));
-		} finally {
-			setIsSaving(false);
+			setError(e);
 		}
-	};
-
-	const renderImages = () => {
-		if (!!productMedia?.length) {
-			return (
-				<div
-					css={css`
-						display: grid;
-						gap: 1em;
-						grid-template-columns: repeat(3, 1fr);
-					`}
-					id="product-images-container"
-				>
-					{productMedia.map((pMedia) => (
-						<ImageDisplay
-							onDeleteImage={(image) => {
-								setSelectedImage(image);
-								setCurrentModal(modals.CONFIRM_DELETE_IMAGE);
-							}}
-							key={pMedia.id}
-							productMedia={pMedia}
-						/>
-					))}
-					<AddImage
-						onAddMedia={onAddMedia}
-						onAddFromURL={() => {
-							setCurrentModal(modals.ADD_IMAGE_FROM_URL);
-						}}
-					/>
-				</div>
-			);
-		}
-
-		return (
-			<AddImage
-				onAddMedia={onAddMedia}
-				onAddFromURL={() => {
-					setCurrentModal(modals.ADD_IMAGE_FROM_URL);
-				}}
-			/>
-		);
 	};
 
 	return (
-		<Box
-			title={__('Product Image', 'surecart')}
-			loading={loading || fetchingMedia}
-		>
-			{renderImages()}
-			{isSaving && (
+		<Box title={__('Images', 'surecart')}>
+			<Error error={error} setError={setError} />
+			<div
+				css={css`
+					display: grid;
+					gap: 1em;
+					grid-template-columns: repeat(4, 1fr);
+				`}
+				ref={container}
+			>
+				{loading ? (
+					[...Array(4)].map(() => {
+						return (
+							<ScSkeleton
+								style={{
+									aspectRatio: '1 / 1',
+									'--border-radius':
+										'var(--sc-border-radius-medium)',
+								}}
+							/>
+						);
+					})
+				) : (
+					<>
+						{productMedia.map((pMedia, index) => (
+							<ImageDisplay
+								onDeleteImage={(image) => {
+									setSelectedImage(image);
+									setCurrentModal(
+										modals.CONFIRM_DELETE_IMAGE
+									);
+								}}
+								id={pMedia.id}
+								key={pMedia.id}
+								isFeatured={index === 0}
+								productMedia={pMedia}
+							/>
+						))}
+						<AddImage
+							onAddMedia={onAddMedia}
+							onAddFromURL={() => {
+								setCurrentModal(modals.ADD_IMAGE_FROM_URL);
+							}}
+						/>
+					</>
+				)}
+			</div>
+
+			{(!!saving || !!fetching) && (
 				<ScBlockUi
 					style={{ '--sc-block-ui-opacity': '0.75' }}
 					spinner
 				/>
 			)}
+
 			<ConfirmDeleteImage
 				open={currentModal === modals.CONFIRM_DELETE_IMAGE}
 				onRequestClose={() => {
@@ -168,12 +177,13 @@ export default ({ product, updateProduct, loading }) => {
 				}}
 				selectedImage={selectedImage}
 			/>
+
 			<AddUrlImage
 				open={currentModal === modals.ADD_IMAGE_FROM_URL}
 				onRequestClose={() => {
 					setCurrentModal('');
 				}}
-				productId={product?.id}
+				productId={productId}
 			/>
 		</Box>
 	);

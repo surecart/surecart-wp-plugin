@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-17T21:09:59",
+  "timestamp": "2023-04-19T15:35:24",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -21280,16 +21280,33 @@
       "usage": {},
       "props": [
         {
-          "name": "productId",
-          "type": "string",
+          "name": "height",
+          "type": "number",
           "mutable": false,
-          "attr": "product-id",
+          "attr": "height",
           "reflectToAttr": false,
-          "docs": "The product id.",
+          "docs": "Height of the slider",
           "docsTags": [],
+          "default": "310",
           "values": [
             {
-              "type": "string"
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "images",
+          "type": "{ src: string; alt: string; }[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "[]",
+          "values": [
+            {
+              "type": "{ src: string; alt: string; }[]"
             }
           ],
           "optional": false,
@@ -21303,14 +21320,8 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [
-        "sc-skeleton"
-      ],
-      "dependencyGraph": {
-        "sc-product-image-carousel": [
-          "sc-skeleton"
-        ]
-      }
+      "dependencies": [],
+      "dependencyGraph": {}
     },
     {
       "filePath": "./src/components/ui/product-line-item/sc-product-line-item.tsx",
@@ -23838,7 +23849,6 @@
         "sc-payment-methods-list",
         "sc-paypal-buttons",
         "sc-price-choice",
-        "sc-product-image-carousel",
         "sc-purchase-downloads-list",
         "sc-stripe-add-method",
         "sc-stripe-payment-element",
@@ -23912,9 +23922,6 @@
           "sc-skeleton"
         ],
         "sc-price-choice": [
-          "sc-skeleton"
-        ],
-        "sc-product-image-carousel": [
           "sc-skeleton"
         ],
         "sc-purchase-downloads-list": [

@@ -7,23 +7,11 @@
 
 ## Properties
 
-| Property    | Attribute    | Description     | Type     | Default     |
-| ----------- | ------------ | --------------- | -------- | ----------- |
-| `productId` | `product-id` | The product id. | `string` | `undefined` |
+| Property | Attribute | Description          | Type                              | Default |
+| -------- | --------- | -------------------- | --------------------------------- | ------- |
+| `height` | `height`  | Height of the slider | `number`                          | `310`   |
+| `images` | --        |                      | `{ src: string; alt: string; }[]` | `[]`    |
 
-
-## Dependencies
-
-### Depends on
-
-- [sc-skeleton](../../../ui/skeleton)
-
-### Graph
-```mermaid
-graph TD;
-  sc-product-image-carousel --> sc-skeleton
-  style sc-product-image-carousel fill:#f9f,stroke:#333,stroke-width:4px
-```
 
 ----------------------------------------------
 

@@ -14,6 +14,16 @@ export default ({ productMedia, onDeleteImage, isFeatured }) => {
 				border: var(--sc-input-border);
 				box-shadow: var(--sc-input-box-shadow);
 
+				.featured-badge {
+					display: none;
+				}
+
+				&:first-child {
+					.featured-badge {
+						display: block;
+					}
+				}
+
 				.overlay,
 				.delete-icon {
 					opacity: 0;
@@ -29,18 +39,19 @@ export default ({ productMedia, onDeleteImage, isFeatured }) => {
 			`}
 			media-id={productMedia.id}
 		>
-			{isFeatured && (
-				<ScTag
-					type="info"
-					css={css`
-						position: absolute;
-						top: 5px;
-						right: 5px;
-					`}
-				>
-					{__('Featured', 'surecart')}
-				</ScTag>
-			)}
+			<ScTag
+				type="info"
+				className="featured-badge"
+				size="small"
+				css={css`
+					position: absolute;
+					top: 5px;
+					right: 5px;
+				`}
+			>
+				{__('Featured', 'surecart')}
+			</ScTag>
+
 			<ScIcon
 				className="delete-icon"
 				onClick={() => onDeleteImage(productMedia)}
