@@ -27,7 +27,7 @@ export default ({ open, onRequestClose, productId }) => {
 			setLoading(true);
 			await saveEntityRecord(
 				'surecart',
-				'product-medias',
+				'product-media',
 				{
 					product_id: productId,
 					url: imageUrl,

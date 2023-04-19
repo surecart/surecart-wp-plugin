@@ -22,7 +22,7 @@ export default ({ open, onRequestClose, selectedImage }) => {
 			setLoading(true);
 			await deleteEntityRecord(
 				'surecart',
-				'product-medias',
+				'product-media',
 				selectedImage?.id
 			);
 			onRequestClose();
