@@ -9,6 +9,13 @@ use SureCart\Models\ProductMedia;
  */
 class ProductMediaController extends RestController {
 	/**
+	 * Always fetch with these subcollections.
+	 *
+	 * @var array
+	 */
+	protected $with = [ 'media' ];
+
+	/**
 	 * Class to make the requests.
 	 *
 	 * @var string
