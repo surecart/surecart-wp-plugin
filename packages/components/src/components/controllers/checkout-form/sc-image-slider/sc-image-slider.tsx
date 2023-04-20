@@ -2,8 +2,6 @@ import { Component, Prop, State, Watch, h } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import Swiper, { Navigation } from 'swiper';
 
-const THUMBS_PER_PAGE = 5;
-
 @Component({
   tag: 'sc-image-slider',
   styleUrl: 'sc-image-slider.scss',
@@ -14,12 +12,12 @@ export class ScImageSlider {
   private swiperContainerRef?: HTMLDivElement;
   private previous: HTMLDivElement;
   private next: HTMLDivElement;
+  private swiper: Swiper;
+  private thumbsSwiper: Swiper;
 
   @Prop() images: { src: string; alt: string }[] = [];
   @Prop() thumbnails: boolean;
-
-  @State() swiper?: Swiper;
-  @State() thumbsSwiper?: Swiper;
+  @Prop() thumbnailsPerPage: number = 5;
 
   /** Current Slide Index */
   @State() currentSliderIndex: number = 0;
@@ -27,7 +25,7 @@ export class ScImageSlider {
   @Watch('currentSliderIndex')
   handleThumbPaginate() {
     if (!this.thumbsSwiper) return;
-    const slideInView = this.currentSliderIndex >= this.thumbsSwiper.activeIndex && this.currentSliderIndex < this.thumbsSwiper.activeIndex + THUMBS_PER_PAGE;
+    const slideInView = this.currentSliderIndex >= this.thumbsSwiper.activeIndex && this.currentSliderIndex < this.thumbsSwiper.activeIndex + this.thumbnailsPerPage;
     if (!slideInView) {
       this.thumbsSwiper.slideTo(this.currentSliderIndex);
     }
@@ -50,15 +48,20 @@ export class ScImageSlider {
         modules: [Navigation],
         direction: 'horizontal',
         loop: false,
-        slidesPerView: THUMBS_PER_PAGE,
-        slidesPerGroup: THUMBS_PER_PAGE,
+        slidesPerView: this.thumbnailsPerPage,
+        slidesPerGroup: this.thumbnailsPerPage,
         spaceBetween: 10,
+        slideToClickedSlide: true,
         navigation: {
           nextEl: this.next,
           prevEl: this.previous,
         },
       });
     }
+  }
+  disconnectedCallback() {
+    this.swiper.destroy(true, true);
+    this.thumbsSwiper.destroy(true, true);
   }
 
   render() {
@@ -86,10 +89,11 @@ export class ScImageSlider {
               <div class="swiper-wrapper">
                 {!!this.images.length &&
                   this.images.map(({ src, alt }, index) => (
-                    <div class="swiper-slide product-carousel__thumb">
-                      <div class={{ 'swiper-slide-img': true, 'swiper-slide-img--is-active': this.currentSliderIndex === index }} onClick={() => this.swiper?.slideTo(index)}>
-                        <img src={src} alt={alt} />
-                      </div>
+                    <div
+                      class={{ 'swiper-slide': true, 'product-carousel__thumb': true, 'product-carousel__thumb--is-active': this.currentSliderIndex === index }}
+                      onClick={() => this.swiper?.slideTo?.(index)}
+                    >
+                      <img src={src} alt={alt} />
                     </div>
                   ))}
               </div>

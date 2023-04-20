@@ -46,5 +46,7 @@ describe('sc-image-slider', () => {
     expect(thumbsContainer).toHaveClass('product-carousel__thumbs--has-navigation');
     const thumbs = await page.findAll(`sc-image-slider >>> .product-carousel__thumb`);
     expect(thumbs.length).toBe(6);
+    console.log(thumbs[0].outerHTML);
+    expect(thumbs[0]).toHaveClass('swiper-slide-active');
   });
 });
