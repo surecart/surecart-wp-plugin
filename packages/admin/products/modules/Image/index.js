@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
 import { ScSkeleton } from '@surecart/components-react';
-import { select, useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { useEffect, useState, useRef } from 'react';
 import { ScBlockUi } from '@surecart/components-react';
@@ -32,9 +32,7 @@ export default ({ productId }) => {
 				'surecart',
 				'product-media',
 				{
-					context: 'edit',
 					product_ids: [productId],
-					expand: ['media'],
 				},
 			];
 
@@ -53,29 +51,6 @@ export default ({ productId }) => {
 					price?.id
 				)
 			);
-
-			console.log({ media });
-
-			// const productMedia = (media || [])
-			// 	.map((media) => {
-			// 		return {
-			// 			...media,
-			// 			...select(coreStore).getRawEntityRecord(
-			// 				'surecart',
-			// 				'product-media',
-			// 				media?.id
-			// 			),
-			// 			...select(coreStore).getEntityRecordEdits(
-			// 				'surecart',
-			// 				'product-media',
-			// 				media?.id
-			// 			),
-			// 		};
-			// 	})
-			// 	// sort by position.
-			// 	.sort((a, b) => a?.position - b?.position);
-
-			// console.log({ productMedia });
 
 			return {
 				productMedia: media,
@@ -110,22 +85,6 @@ export default ({ productId }) => {
 			cancel: '.cancel-sortable',
 		});
 	}, []);
-
-	// useEffect(() => {
-	// 	if (!productMedia?.length) return;
-	// 	const first = select(coreStore).getEntityRecord(
-	// 		'surecart',
-	// 		'product-media',
-	// 		productMedia[0]?.id
-	// 	);
-	// 	if (first?.id) {
-	// 		editEntityRecord('surecart', 'product-media', first.id, {
-	// 			position: 3,
-	// 		});
-
-	// 		console.log(first, productMedia[0]);
-	// 	}
-	// }, [productMedia]);
 
 	const saveProductMedia = async (media) => {
 		return saveEntityRecord(
