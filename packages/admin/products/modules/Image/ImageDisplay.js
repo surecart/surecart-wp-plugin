@@ -57,11 +57,11 @@ export default ({ productMedia, onDeleteImage }) => {
 				onClick={() => onDeleteImage(productMedia)}
 				css={css`
 					position: absolute;
-					top: 2px;
-					right: 2px;
+					top: 4px;
+					right: 4px;
 					z-index: 10;
 					cursor: pointer;
-					padding: var(--sc-spacing-xxx-small);
+					padding: var(--sc-spacing-xx-small);
 					border-radius: var(--sc-border-radius-small);
 					color: var(--sc-color-white);
 					font-weight: var(--sc-font-weight-semibold);
@@ -87,7 +87,6 @@ export default ({ productMedia, onDeleteImage }) => {
 					alt="product image"
 					css={css`
 						max-width: 100%;
-						width: 380px;
 						aspect-ratio: 1/1;
 						object-fit: contain;
 						height: auto;

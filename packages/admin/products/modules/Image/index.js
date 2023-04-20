@@ -5,6 +5,7 @@ import Box from '../../../ui/Box';
 import { ScSkeleton } from '@surecart/components-react';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
 import { useEffect, useState, useRef } from 'react';
 import { ScBlockUi } from '@surecart/components-react';
 import AddImage from './AddImage';
@@ -25,6 +26,7 @@ export default ({ productId }) => {
 	const [currentModal, setCurrentModal] = useState('');
 	const [selectedImage, setSelectedImage] = useState();
 	const { editEntityRecord } = useDispatch(coreStore);
+	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	const { loading, fetching, saving, productMedia } = useSelect(
 		(select) => {
@@ -33,6 +35,7 @@ export default ({ productId }) => {
 				'product-media',
 				{
 					product_ids: [productId],
+					per_page: 100,
 				},
 			];
 
@@ -43,14 +46,10 @@ export default ({ productId }) => {
 				queryArgs
 			);
 
-			// are we saving any prices?
-			const saving = (media || []).some((price) =>
-				select(coreStore).isSavingEntityRecord(
-					'surecart',
-					'product-media',
-					price?.id
-				)
-			);
+			// are we saving any product media?
+			const saving = (
+				select(coreStore)?.__experimentalGetEntitiesBeingSaved?.() || []
+			).find((entity) => entity.name === 'product-media');
 
 			return {
 				productMedia: media,
@@ -101,6 +100,9 @@ export default ({ productId }) => {
 	const onAddMedia = async (medias) => {
 		try {
 			await Promise.all(medias.map((media) => saveProductMedia(media)));
+			createSuccessNotice(__('Images updated.', 'surecart'), {
+				type: 'snackbar',
+			});
 		} catch (e) {
 			console.error(e);
 			setError(e);
@@ -147,6 +149,9 @@ export default ({ productId }) => {
 							/>
 						))}
 						<AddImage
+							existingMediaIds={(productMedia || []).map(
+								(pMedia) => pMedia.media?.id
+							)}
 							onAddMedia={onAddMedia}
 							onAddFromURL={() => {
 								setCurrentModal(modals.ADD_IMAGE_FROM_URL);

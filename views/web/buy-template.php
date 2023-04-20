@@ -3,33 +3,42 @@
 	<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right" style="border-style:none;border-width:0px;padding:30px 5rem 5rem 5rem;--sc-column-content-width:450px;--sc-form-row-spacing:30px">
 
 		<?php if ( $show_image && ! empty( $product->product_medias->data ) ) : ?>
-			<sc-product-image-carousel id="sc-product-media-<?php echo esc_attr( esc_attr( $product->id ) ); ?>"></sc-product-image-carousel>
-			<?php
-			\SureCart::assets()->addComponentData(
-				'sc-product-image-carousel',
-				'#sc-product-media-' . $product->id,
-				[
-					'images' => array_map(
-						function( $product_media ) use ( $product ) {
-							if ( empty( $product_media->media->url ) ) {
-								if ( ! empty( $product_media->url ) ) {
-									return [
-										'src' => $product_media->url ?? '',
-										'alt' => '',
-									];
+			<?php if ( count( $product->product_medias->data ) > 1 ) : ?>
+				<sc-image-slider id="sc-product-media-<?php echo esc_attr( esc_attr( $product->id ) ); ?>" style="--sc-product-slider-height: 310px;"></sc-image-slider>
+				<?php
+				\SureCart::assets()->addComponentData(
+					'sc-image-slider',
+					'#sc-product-media-' . $product->id,
+					[
+						'thumbnails' => true,
+						'images'     => array_map(
+							function( $product_media ) use ( $product ) {
+								if ( empty( $product_media->media->url ) ) {
+									if ( ! empty( $product_media->url ) ) {
+										return [
+											'src' => $product_media->url ?? '',
+											'alt' => '',
+										];
+									}
+									return;
 								}
-								return;
-							}
-							return [
-								'src' => $product_media->media->url ?? '',
-								'alt' => $product_media->media->filename ?? $product->name ?? '',
-							];
-						},
-						$product->product_medias->data
-					),
-				]
-			);
-			?>
+								return [
+									'src' => $product_media->media->url ?? '',
+									'alt' => $product_media->media->filename ?? $product->name ?? '',
+								];
+							},
+							$product->product_medias->data
+						),
+					]
+				);
+				?>
+			<?php else : ?>
+				<!-- wp:image {"sizeSlug":"full","linkDestination":"none","style":{"border":{"radius":"5px"}}} -->
+					<figure class="wp-block-image size-full is-resized has-custom-border">
+						<img src="<?php echo esc_url( $product->image->url ); ?>" alt="<?php echo esc_attr( $product->name ); ?>" style="border-radius:5px" />
+					</figure>
+				<!-- /wp:image -->
+			<?php endif; ?>
 		<?php endif; ?>
 
 

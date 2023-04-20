@@ -29,6 +29,7 @@ export default ({
 	onClose,
 	onSelect,
 	isMultiSelect = false,
+	disabled = [],
 }) => {
 	const [perPage, setPerPage] = useState(50);
 	const [open, setOpen] = useState(false);
@@ -110,7 +111,7 @@ export default ({
 						slot="head"
 						style={{ width: '100px', textAlign: 'right' }}
 					>
-						Added
+						{__('Added', 'surecart')}
 					</ScTableCell>
 					{(medias || []).map((media) => {
 						return (
@@ -118,6 +119,7 @@ export default ({
 								media={media}
 								key={media.id}
 								selected={!!selectedMedia[media.id]}
+								disabled={disabled.includes(media.id)}
 								onClick={(e) => {
 									e.preventDefault();
 									onMediaItemClick(media);
@@ -132,6 +134,7 @@ export default ({
 
 	const onRequestClose = () => {
 		setOpen(false);
+		setSelectedMedia({});
 		onClose && onClose();
 	};
 
@@ -359,25 +362,22 @@ export default ({
 							<div
 								css={css`
 									padding: 15px 0;
+									display: flex;
+									flex-direction: column;
+									gap: 1em;
 								`}
 							>
-								<ScFlex flexDirection="column">
-									{Object.values(selectedMedia).map(
-										(media) => (
-											<Preview
-												media={media}
-												onDeleted={() => {
-													delete selectedMedia[
-														media.id
-													];
-													setSelectedMedia({
-														...selectedMedia,
-													});
-												}}
-											/>
-										)
-									)}
-								</ScFlex>
+								{Object.values(selectedMedia).map((media) => (
+									<Preview
+										media={media}
+										onDeleted={() => {
+											delete selectedMedia[media.id];
+											setSelectedMedia({
+												...selectedMedia,
+											});
+										}}
+									/>
+								))}
 							</div>
 						)
 					}

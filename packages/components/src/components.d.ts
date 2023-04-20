@@ -2449,11 +2449,8 @@ export namespace Components {
         "prices": Price[];
     }
     interface ScProductImageCarousel {
-        /**
-          * Height of the slider
-         */
-        "height": number;
         "images": { src: string; alt: string }[];
+        "thumbnails": boolean;
     }
     interface ScProductLineItem {
         /**
@@ -7548,11 +7545,8 @@ declare namespace LocalJSX {
         "prices"?: Price[];
     }
     interface ScProductImageCarousel {
-        /**
-          * Height of the slider
-         */
-        "height"?: number;
         "images"?: { src: string; alt: string }[];
+        "thumbnails"?: boolean;
     }
     interface ScProductLineItem {
         /**

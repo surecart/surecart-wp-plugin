@@ -42,7 +42,7 @@ export default ({ open, onRequestClose, selectedImage }) => {
 		>
 			<Error error={error} setError={setError} />
 			<ScText>
-				{__('Are you sure you want to delete product image?')}
+				{__('Are you sure you want remove this product image?')}
 			</ScText>
 			<ScButton
 				type="text"
@@ -50,7 +50,7 @@ export default ({ open, onRequestClose, selectedImage }) => {
 				disabled={loading}
 				slot="footer"
 			>
-				{__("Don't delete", 'surecart')}
+				{__('Cancel', 'surecart')}
 			</ScButton>{' '}
 			<ScButton
 				type="primary"
@@ -58,7 +58,7 @@ export default ({ open, onRequestClose, selectedImage }) => {
 				disabled={loading}
 				slot="footer"
 			>
-				{__('Delete image', 'surecart')}
+				{__('Remove', 'surecart')}
 			</ScButton>
 			{loading && (
 				<ScBlockUi

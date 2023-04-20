@@ -1,50 +1,67 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScButton, ScFlex, ScIcon } from '@surecart/components-react';
+import { ScButton, ScFlex, ScTag } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import MediaLibrary from '../../../components/MediaLibrary';
 
-export default ({ onAddMedia, onAddFromURL }) => {
+export default ({ onAddMedia, onAddFromURL, existingMediaIds = [] }) => {
 	return (
-		<div
-			className="cancel-sortable"
-			css={css`
-				background: var(--sc-choice-background-color);
-				border: var(--sc-choice-border);
-				border-style: dashed;
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-				min-height: 9.3rem;
-			`}
-		>
-			<ScFlex
-				flexDirection="column"
-				alignItems="center"
-				justifyContent="center"
-				css={css`
-					margin-top: auto;
-					margin-bottom: auto;
-				`}
-			>
-				<MediaLibrary
-					onSelect={onAddMedia}
-					isPrivate={false}
-					isMultiSelect={true}
-					render={({ setOpen }) => {
-						return (
-							<ScButton onClick={() => setOpen(true)}>
-								<ScIcon name="plus" slot="prefix"></ScIcon>
-								{__('Add Image', 'surecart')}
-							</ScButton>
-						);
-					}}
-				></MediaLibrary>
+		<MediaLibrary
+			onSelect={onAddMedia}
+			isPrivate={false}
+			isMultiSelect={true}
+			disabled={existingMediaIds}
+			render={({ setOpen }) => {
+				return (
+					<div
+						className="cancel-sortable"
+						css={css`
+							background: var(--sc-choice-background-color);
+							border: var(--sc-choice-border);
+							border-radius: var(--sc-border-radius-medium);
+							border-style: dashed;
+							display: flex;
+							flex-direction: column;
+							justify-content: center;
+							min-height: 9.3rem;
+							cursor: pointer;
+							transition: background-color
+								var(--sc-transition-medium) ease-in-out;
 
-				<ScButton onClick={onAddFromURL} type="link">
-					{__('Add from URL', 'surecart')}
-				</ScButton>
-			</ScFlex>
-		</div>
+							&:hover {
+								background: var(--sc-color-gray-100);
+							}
+						`}
+						onClick={() => setOpen(true)}
+					>
+						<ScFlex
+							flexDirection="column"
+							alignItems="center"
+							justifyContent="center"
+							css={css`
+								margin-top: auto;
+								margin-bottom: auto;
+							`}
+						>
+							<ScTag>{__('Add', 'surecart')}</ScTag>
+							<ScButton
+								onClick={(e) => {
+									e.preventDefault();
+									e.stopPropagation();
+									onAddFromURL();
+								}}
+								type="link"
+								style={{
+									'--sc-button-link-text-decoration':
+										'underline',
+								}}
+							>
+								{__('Add From URL', 'surecart')}
+							</ScButton>
+						</ScFlex>
+					</div>
+				);
+			}}
+		/>
 	);
 };

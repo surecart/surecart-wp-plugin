@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import {
 	ScBlockUi,
 	ScButton,
@@ -22,6 +20,8 @@ export default ({ open, onRequestClose, productId }) => {
 
 	const onAddImage = async (e) => {
 		e.preventDefault();
+		e.stopPropagation();
+		if (!imageUrl) return;
 
 		try {
 			setLoading(true);
@@ -50,19 +50,24 @@ export default ({ open, onRequestClose, productId }) => {
 			onScRequestClose={onRequestClose}
 		>
 			<Error error={error} setError={setError} />
-			<ScForm onScFormSubmit={onAddImage}>
+			<ScForm
+				onScFormSubmit={onAddImage}
+				onScSubmit={(e) => {
+					e.preventDefault();
+					e.stopPropagation();
+				}}
+			>
 				<div>
 					<ScInput
-						required
-						name="imageUrl"
+						type="url"
 						label={__('Image URL', 'surecart')}
-						value={imageUrl}
-						type="text"
 						placeholder={__('https://', 'surecart')}
+						value={imageUrl}
 						onScInput={(e) => setImageUrl(e.target.value)}
+						required
 					/>
 				</div>
-				<ScFlex justifyContent="space-between">
+				<ScFlex justifyContent="flex-end">
 					<ScButton
 						type="text"
 						onClick={onRequestClose}
@@ -75,6 +80,7 @@ export default ({ open, onRequestClose, productId }) => {
 					</ScButton>
 				</ScFlex>
 			</ScForm>
+
 			{loading && (
 				<ScBlockUi
 					style={{ '--sc-block-ui-opacity': '0.75' }}
