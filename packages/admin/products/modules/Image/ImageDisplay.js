@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 import { ScIcon, ScTag } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
-export default ({ productMedia, onDeleteImage, isFeatured }) => {
+export default ({ productMedia, onDeleteImage }) => {
 	return (
 		<div
 			css={css`
@@ -13,6 +13,16 @@ export default ({ productMedia, onDeleteImage, isFeatured }) => {
 				border-radius: var(--sc-border-radius-medium);
 				border: var(--sc-input-border);
 				box-shadow: var(--sc-input-box-shadow);
+
+				.featured-badge {
+					display: none;
+				}
+
+				&:first-child {
+					.featured-badge {
+						display: block;
+					}
+				}
 
 				.overlay,
 				.delete-icon {
@@ -29,18 +39,19 @@ export default ({ productMedia, onDeleteImage, isFeatured }) => {
 			`}
 			media-id={productMedia.id}
 		>
-			{isFeatured && (
-				<ScTag
-					type="info"
-					css={css`
-						position: absolute;
-						top: 5px;
-						right: 5px;
-					`}
-				>
-					{__('Featured', 'surecart')}
-				</ScTag>
-			)}
+			<ScTag
+				type="info"
+				className="featured-badge"
+				size="small"
+				css={css`
+					position: absolute;
+					top: 5px;
+					right: 5px;
+				`}
+			>
+				{__('Featured', 'surecart')}
+			</ScTag>
+
 			<ScIcon
 				className="delete-icon"
 				onClick={() => onDeleteImage(productMedia)}
@@ -70,19 +81,21 @@ export default ({ productMedia, onDeleteImage, isFeatured }) => {
 					z-index: 2;
 				`}
 			></div>
-			<img
-				src={productMedia?.url || productMedia?.media?.url}
-				alt="product image"
-				css={css`
-					max-width: 100%;
-					width: 380px;
-					aspect-ratio: 1/1;
-					object-fit: contain;
-					height: auto;
-					display: block;
-					border-radius: var(--sc-border-radius-medium);
-				`}
-			/>
+			{(!!productMedia?.url || !!productMedia?.media?.url) && (
+				<img
+					src={productMedia?.url || productMedia?.media?.url}
+					alt="product image"
+					css={css`
+						max-width: 100%;
+						width: 380px;
+						aspect-ratio: 1/1;
+						object-fit: contain;
+						height: auto;
+						display: block;
+						border-radius: var(--sc-border-radius-medium);
+					`}
+				/>
+			)}
 		</div>
 	);
 };

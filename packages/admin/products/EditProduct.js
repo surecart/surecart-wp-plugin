@@ -221,7 +221,7 @@ export default ({ id }) => {
 				/>
 
 				<Image
-					product={product}
+					productId={id}
 					updateProduct={editProduct}
 					loading={!hasLoadedProduct}
 				/>
