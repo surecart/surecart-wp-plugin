@@ -112,7 +112,7 @@ export class ScLicense {
   }
 
   renderContent() {
-    if (this.loading) {
+    if (this.loading && !this.license?.id) {
       return this.renderLoading();
     }
 
@@ -170,6 +170,7 @@ export class ScLicense {
                 ))}
               </sc-stacked-list>
             ):<sc-empty>{__('No activations present.', 'surecart')}</sc-empty>}
+            {this.loading && <sc-block-ui style={{ '--sc-block-ui-opacity': '0.75' }} spinner />}
           </sc-card>
         </sc-dashboard-module>
       </Fragment>

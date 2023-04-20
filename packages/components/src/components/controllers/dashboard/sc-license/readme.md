@@ -27,8 +27,8 @@
 - [sc-input](../../../ui/input)
 - [sc-button](../../../ui/button)
 - [sc-icon](../../../ui/icon)
-- [sc-dialog](../../../ui/sc-dialog)
 - [sc-block-ui](../../../ui/block-ui)
+- [sc-dialog](../../../ui/sc-dialog)
 - [sc-spacing](../../../ui/spacing)
 
 ### Graph
@@ -45,8 +45,8 @@ graph TD;
   sc-license --> sc-input
   sc-license --> sc-button
   sc-license --> sc-icon
-  sc-license --> sc-dialog
   sc-license --> sc-block-ui
+  sc-license --> sc-dialog
   sc-license --> sc-spacing
   sc-empty --> sc-icon
   sc-dashboard-module --> sc-alert
@@ -54,9 +54,9 @@ graph TD;
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
   sc-button --> sc-spinner
+  sc-block-ui --> sc-spinner
   sc-dialog --> sc-button
   sc-dialog --> sc-icon
-  sc-block-ui --> sc-spinner
   style sc-license fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
