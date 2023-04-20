@@ -26,6 +26,7 @@
 
  - [sc-customer-details](../customer-details)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
@@ -45,6 +46,7 @@ graph TD;
   sc-empty --> sc-icon
   sc-customer-details --> sc-empty
   sc-invoices-list --> sc-empty
+  sc-license --> sc-empty
   sc-licenses-list --> sc-empty
   sc-order --> sc-empty
   sc-orders-list --> sc-empty

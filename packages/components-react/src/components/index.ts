@@ -80,6 +80,7 @@ export const ScHeading = /*@__PURE__*/createReactComponent<JSX.ScHeading, HTMLSc
 export const ScIcon = /*@__PURE__*/createReactComponent<JSX.ScIcon, HTMLScIconElement>('sc-icon');
 export const ScInput = /*@__PURE__*/createReactComponent<JSX.ScInput, HTMLScInputElement>('sc-input');
 export const ScInvoicesList = /*@__PURE__*/createReactComponent<JSX.ScInvoicesList, HTMLScInvoicesListElement>('sc-invoices-list');
+export const ScLicense = /*@__PURE__*/createReactComponent<JSX.ScLicense, HTMLScLicenseElement>('sc-license');
 export const ScLicenseActivations = /*@__PURE__*/createReactComponent<JSX.ScLicenseActivations, HTMLScLicenseActivationsElement>('sc-license-activations');
 export const ScLicensesList = /*@__PURE__*/createReactComponent<JSX.ScLicensesList, HTMLScLicensesListElement>('sc-licenses-list');
 export const ScLineItem = /*@__PURE__*/createReactComponent<JSX.ScLineItem, HTMLScLineItemElement>('sc-line-item');

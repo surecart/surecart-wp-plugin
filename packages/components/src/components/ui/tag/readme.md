@@ -42,6 +42,7 @@
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
@@ -68,6 +69,7 @@ graph TD;
   sc-customer-edit --> sc-tag
   sc-downloads-list --> sc-tag
   sc-invoices-list --> sc-tag
+  sc-license --> sc-tag
   sc-licenses-list --> sc-tag
   sc-order --> sc-tag
   sc-order-confirmation-details --> sc-tag

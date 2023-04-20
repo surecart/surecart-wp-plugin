@@ -1,6 +1,6 @@
 import { Component, Element, h, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { License } from '../../../../types';
+import { License , Purchase, Product} from '../../../../types';
 import { onFirstVisible } from '../../../../functions/lazy';
 import apiFetch from '../../../../functions/fetch';
 import { addQueryArgs } from '@wordpress/url';
@@ -39,8 +39,6 @@ export class ScLicensesList {
     total: 0,
     total_pages: 0,
   };
-  @State() selectedLicenseId: string;
-  @State() showDeleteConfirm: boolean = false;
 
   /** Only fetch if visible */
   componentWillLoad() {
@@ -54,7 +52,7 @@ export class ScLicensesList {
       this.loading = true;
       await this.getLicenses();
     } catch (e) {
-      console.error(this.error);
+      console.error(e);
       this.error = e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.loading = false;
@@ -68,7 +66,7 @@ export class ScLicensesList {
 
     const response = (await await apiFetch({
       path: addQueryArgs('surecart/v1/licenses', {
-        expand: ['purchase', 'activations'],
+        expand: ['purchase', 'purchase.product', 'activations'],
         ...this.query,
       }),
       parse: false,
@@ -80,24 +78,6 @@ export class ScLicensesList {
     };
     this.licenses = (await response.json()) as License[];
     return this.licenses;
-  }
-
-  async deleteLicense() {
-    try {
-      this.loading = true;
-
-      await apiFetch({
-        path: `surecart/v1/licenses/${this.selectedLicenseId}`,
-        method: 'DELETE',
-      });
-      this.initialFetch();
-      this.onCloseDeleteModal();
-    } catch (e) {
-      console.error(this.error);
-      this.error = e?.message || __('Something went wrong', 'surecart');
-    } finally {
-      this.loading = false;
-    }
   }
 
   renderStatus(status: string) {
@@ -147,7 +127,7 @@ export class ScLicensesList {
       <div>
         <sc-divider style={{ '--spacing': '0' }}></sc-divider>
         <slot name="empty">
-          <sc-empty icon="">{__("You don't have any licenses.", 'surecart')}</sc-empty>
+          <sc-empty icon="file-text">{__("You don't have any licenses.", 'surecart')}</sc-empty>
         </slot>
       </div>
     );
@@ -162,68 +142,28 @@ export class ScLicensesList {
 
     return (
       <sc-card no-padding>
-        <sc-table>
-          <sc-table-cell slot="head">{__('Key', 'surecart')}</sc-table-cell>
-          <sc-table-cell slot="head" style={{ width: '100px' }}>
-            {__('Status', 'surecart')}
-          </sc-table-cell>
-          <sc-table-cell slot="head" style={{ width: '100px' }}>
-            {__('Activations', 'surecart')}
-          </sc-table-cell>
-          <sc-table-cell slot="head" style={{ width: '100px' }}></sc-table-cell>
-          {this.licenses.map(({ id, key, status, activations, activation_limit }) => {
-            return (
-              <sc-table-row style={{ '--columns': '3' }}>
-                <sc-table-cell>
-                  <sc-input value={key} readonly>
-                    <sc-button type="default" size="small" slot="suffix" onClick={() => this.copyKey(key)}>
-                      {this.copied ? __('Copied!', 'surecart') : __('Copy', 'surecart')}
-                    </sc-button>
-                  </sc-input>
-                </sc-table-cell>
-                <sc-table-cell>{this.renderStatus(status)}</sc-table-cell>
-                <sc-table-cell>
-                  {activations?.pagination?.count} / {activation_limit || <span>&infin;</span>}
-                </sc-table-cell>
-                <sc-table-cell>
-                  <sc-button
-                    onClick={() => {
-                      this.selectedLicenseId = id;
-                      this.showDeleteConfirm = true;
-                    }}
-                  >
-                    <sc-icon name="trash"></sc-icon>
-                  </sc-button>
-                </sc-table-cell>
-              </sc-table-row>
-            );
-          })}
-        </sc-table>
+        <sc-sc-stacked-list>
+          {this.licenses?.map(({ id,purchase, status, activations, activation_limit }) => (
+            <sc-stacked-list-row
+              key={id}
+              href={addQueryArgs(window.location.href, {
+                action: 'show',
+                model: 'license',
+                id,
+              })}
+              style={{ '--columns': '3' }}
+            >
+              <div>{((purchase as Purchase)?.product as Product)?.name}</div>
+              <div>
+                {this.renderStatus(status)}
+              </div>
+              <div>
+                {activations?.pagination?.count} / {activation_limit || <span>&infin;</span>}
+              </div>
+            </sc-stacked-list-row>
+          ))}
+        </sc-sc-stacked-list>
       </sc-card>
-    );
-  }
-
-  onCloseDeleteModal = () => {
-    this.showDeleteConfirm = false;
-    this.selectedLicenseId = '';
-  };
-
-  renderConfirmDelete() {
-    return (
-      <sc-dialog open={this.showDeleteConfirm} style={{ '--body-spacing': 'var(--sc-spacing-x-large)' }} noHeader onScRequestClose={this.onCloseDeleteModal}>
-        <sc-dashboard-module heading={__('Confirm', 'surecart')} style={{ '--sc-dashboard-module-spacing': 'var(--sc-spacing-x-large)', 'textAlign': 'center' }}>
-          <span slot="description">{__('Are you sure you want to delete license?', 'surecart')}</span>
-        </sc-dashboard-module>
-        <div slot="footer">
-          <sc-button type="text" onClick={this.onCloseDeleteModal} disabled={this.loading}>
-            {__("Don't delete", 'surecart')}
-          </sc-button>
-          <sc-button type="primary" onClick={this.deleteLicense} disabled={this.loading}>
-            {__('Delete license', 'surecart')}
-          </sc-button>
-        </div>
-        {this.loading && <sc-block-ui style={{ '--sc-block-ui-opacity': '0.75' }} spinner />}
-      </sc-dialog>
     );
   }
 
@@ -241,7 +181,6 @@ export class ScLicensesList {
         )}
 
         {this.renderContent()}
-        {this.renderConfirmDelete()}
       </sc-dashboard-module>
     );
   }

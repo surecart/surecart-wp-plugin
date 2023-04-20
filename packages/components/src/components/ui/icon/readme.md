@@ -51,6 +51,7 @@
  - [sc-drawer](../sc-drawer)
  - [sc-empty](../empty)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-login-form](../../controllers/login)
  - [sc-order](../../controllers/dashboard/order)
@@ -99,6 +100,7 @@ graph TD;
   sc-drawer --> sc-icon
   sc-empty --> sc-icon
   sc-invoices-list --> sc-icon
+  sc-license --> sc-icon
   sc-licenses-list --> sc-icon
   sc-login-form --> sc-icon
   sc-order --> sc-icon

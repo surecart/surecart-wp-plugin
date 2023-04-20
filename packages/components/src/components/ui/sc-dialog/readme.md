@@ -45,7 +45,7 @@
 ### Used by
 
  - [sc-cancel-dialog](../../controllers/dashboard/sc-cancel-dialog)
- - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
+ - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-login-provider](../../providers/sc-login-provider)
  - [sc-order-confirm-provider](../../providers/order-confirm-provider)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
@@ -64,7 +64,7 @@ graph TD;
   sc-dialog --> sc-icon
   sc-button --> sc-spinner
   sc-cancel-dialog --> sc-dialog
-  sc-licenses-list --> sc-dialog
+  sc-license --> sc-dialog
   sc-login-provider --> sc-dialog
   sc-order-confirm-provider --> sc-dialog
   sc-payment-methods-list --> sc-dialog
