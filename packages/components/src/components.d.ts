@@ -1518,6 +1518,10 @@ export namespace Components {
          */
         "src": string;
     }
+    interface ScImageSlider {
+        "images": { src: string; alt: string }[];
+        "thumbnails": boolean;
+    }
     interface ScInput {
         /**
           * The input's autocomplete attribute.
@@ -2447,10 +2451,6 @@ export namespace Components {
           * The array of price objects
          */
         "prices": Price[];
-    }
-    interface ScProductImageCarousel {
-        "images": { src: string; alt: string }[];
-        "thumbnails": boolean;
     }
     interface ScProductLineItem {
         /**
@@ -4013,6 +4013,12 @@ declare global {
         prototype: HTMLScIconElement;
         new (): HTMLScIconElement;
     };
+    interface HTMLScImageSliderElement extends Components.ScImageSlider, HTMLStencilElement {
+    }
+    var HTMLScImageSliderElement: {
+        prototype: HTMLScImageSliderElement;
+        new (): HTMLScImageSliderElement;
+    };
     interface HTMLScInputElement extends Components.ScInput, HTMLStencilElement {
     }
     var HTMLScInputElement: {
@@ -4312,12 +4318,6 @@ declare global {
     var HTMLScPriceRangeElement: {
         prototype: HTMLScPriceRangeElement;
         new (): HTMLScPriceRangeElement;
-    };
-    interface HTMLScProductImageCarouselElement extends Components.ScProductImageCarousel, HTMLStencilElement {
-    }
-    var HTMLScProductImageCarouselElement: {
-        prototype: HTMLScProductImageCarouselElement;
-        new (): HTMLScProductImageCarouselElement;
     };
     interface HTMLScProductLineItemElement extends Components.ScProductLineItem, HTMLStencilElement {
     }
@@ -4701,6 +4701,7 @@ declare global {
         "sc-format-number": HTMLScFormatNumberElement;
         "sc-heading": HTMLScHeadingElement;
         "sc-icon": HTMLScIconElement;
+        "sc-image-slider": HTMLScImageSliderElement;
         "sc-input": HTMLScInputElement;
         "sc-invoices-list": HTMLScInvoicesListElement;
         "sc-licenses-list": HTMLScLicensesListElement;
@@ -4751,7 +4752,6 @@ declare global {
         "sc-price-choices": HTMLScPriceChoicesElement;
         "sc-price-input": HTMLScPriceInputElement;
         "sc-price-range": HTMLScPriceRangeElement;
-        "sc-product-image-carousel": HTMLScProductImageCarouselElement;
         "sc-product-line-item": HTMLScProductLineItemElement;
         "sc-product-selected-price": HTMLScProductSelectedPriceElement;
         "sc-prose": HTMLScProseElement;
@@ -6525,6 +6525,10 @@ declare namespace LocalJSX {
          */
         "src"?: string;
     }
+    interface ScImageSlider {
+        "images"?: { src: string; alt: string }[];
+        "thumbnails"?: boolean;
+    }
     interface ScInput {
         /**
           * The input's autocomplete attribute.
@@ -7543,10 +7547,6 @@ declare namespace LocalJSX {
           * The array of price objects
          */
         "prices"?: Price[];
-    }
-    interface ScProductImageCarousel {
-        "images"?: { src: string; alt: string }[];
-        "thumbnails"?: boolean;
     }
     interface ScProductLineItem {
         /**
@@ -8612,6 +8612,7 @@ declare namespace LocalJSX {
         "sc-format-number": ScFormatNumber;
         "sc-heading": ScHeading;
         "sc-icon": ScIcon;
+        "sc-image-slider": ScImageSlider;
         "sc-input": ScInput;
         "sc-invoices-list": ScInvoicesList;
         "sc-licenses-list": ScLicensesList;
@@ -8662,7 +8663,6 @@ declare namespace LocalJSX {
         "sc-price-choices": ScPriceChoices;
         "sc-price-input": ScPriceInput;
         "sc-price-range": ScPriceRange;
-        "sc-product-image-carousel": ScProductImageCarousel;
         "sc-product-line-item": ScProductLineItem;
         "sc-product-selected-price": ScProductSelectedPrice;
         "sc-prose": ScProse;
@@ -8790,6 +8790,7 @@ declare module "@stencil/core" {
             "sc-format-number": LocalJSX.ScFormatNumber & JSXBase.HTMLAttributes<HTMLScFormatNumberElement>;
             "sc-heading": LocalJSX.ScHeading & JSXBase.HTMLAttributes<HTMLScHeadingElement>;
             "sc-icon": LocalJSX.ScIcon & JSXBase.HTMLAttributes<HTMLScIconElement>;
+            "sc-image-slider": LocalJSX.ScImageSlider & JSXBase.HTMLAttributes<HTMLScImageSliderElement>;
             "sc-input": LocalJSX.ScInput & JSXBase.HTMLAttributes<HTMLScInputElement>;
             "sc-invoices-list": LocalJSX.ScInvoicesList & JSXBase.HTMLAttributes<HTMLScInvoicesListElement>;
             "sc-licenses-list": LocalJSX.ScLicensesList & JSXBase.HTMLAttributes<HTMLScLicensesListElement>;
@@ -8840,7 +8841,6 @@ declare module "@stencil/core" {
             "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
             "sc-price-range": LocalJSX.ScPriceRange & JSXBase.HTMLAttributes<HTMLScPriceRangeElement>;
-            "sc-product-image-carousel": LocalJSX.ScProductImageCarousel & JSXBase.HTMLAttributes<HTMLScProductImageCarouselElement>;
             "sc-product-line-item": LocalJSX.ScProductLineItem & JSXBase.HTMLAttributes<HTMLScProductLineItemElement>;
             "sc-product-selected-price": LocalJSX.ScProductSelectedPrice & JSXBase.HTMLAttributes<HTMLScProductSelectedPriceElement>;
             "sc-prose": LocalJSX.ScProse & JSXBase.HTMLAttributes<HTMLScProseElement>;
