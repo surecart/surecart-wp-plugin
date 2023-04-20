@@ -1521,6 +1521,7 @@ export namespace Components {
     interface ScImageSlider {
         "images": { src: string; alt: string }[];
         "thumbnails": boolean;
+        "thumbnailsPerPage": number;
     }
     interface ScInput {
         /**
@@ -6528,6 +6529,7 @@ declare namespace LocalJSX {
     interface ScImageSlider {
         "images"?: { src: string; alt: string }[];
         "thumbnails"?: boolean;
+        "thumbnailsPerPage"?: number;
     }
     interface ScInput {
         /**
