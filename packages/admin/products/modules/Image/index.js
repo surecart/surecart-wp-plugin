@@ -6,7 +6,7 @@ import { ScSkeleton } from '@surecart/components-react';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
-import { useEffect, useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { ScBlockUi } from '@surecart/components-react';
 import AddImage from './AddImage';
 import ImageDisplay from './ImageDisplay';
@@ -89,7 +89,6 @@ export default ({ productId }) => {
 		// edit entity record to update indexes.
 		(result || []).forEach(({ id, position }, index) => {
 			if (index === position) return;
-			console.log(index, position);
 			editEntityRecord('surecart', 'product-media', id, {
 				position: index,
 			});
