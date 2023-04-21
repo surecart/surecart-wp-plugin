@@ -2,26 +2,26 @@
 
 namespace SureCart\Rest;
 
-use SureCart\Controllers\Rest\ShippingProfileController;
+use SureCart\Controllers\Rest\ShippingMethodController;
 use SureCart\Rest\RestServiceInterface;
 
 /**
- * Service provider for Shipping Profile Rest Requests
+ * Service provider for Shipping Method Rest Requests
  */
-class ShippingProfileRestProvider extends RestServiceProvider implements RestServiceInterface {
+class ShippingMethodRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
 	/**
 	 * Endpoint.
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'shipping_profiles';
+	protected $endpoint = 'shipping_methods';
 
 	/**
 	 * Rest Controller
 	 *
 	 * @var string
 	 */
-	protected $controller = ShippingProfileController::class;
+	protected $controller = ShippingMethodController::class;
 
 	/**
 	 * Methods allowed for the model.
