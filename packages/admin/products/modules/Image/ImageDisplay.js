@@ -12,6 +12,7 @@ export default ({ productMedia, onDeleteImage, isFeatured }) => {
 				border-radius: var(--sc-border-radius-medium);
 				border: var(--sc-input-border);
 				box-shadow: var(--sc-input-box-shadow);
+				aspect-ratio: 1 / 1;
 
 				.overlay,
 				.delete-icon {
@@ -72,21 +73,20 @@ export default ({ productMedia, onDeleteImage, isFeatured }) => {
 					z-index: 2;
 				`}
 			></div>
-			{(!!productMedia?.url || !!productMedia?.media?.url) && (
-				<img
-					src={productMedia?.url || productMedia?.media?.url}
-					alt="product image"
-					css={css`
-						max-width: 100%;
-						aspect-ratio: 1/1;
-						object-fit: contain;
-						height: auto;
-						display: block;
-						border-radius: var(--sc-border-radius-medium);
-						pointer-events: none;
-					`}
-				/>
-			)}
+
+			<img
+				src={productMedia?.url || productMedia?.media?.url}
+				alt="product image"
+				css={css`
+					max-width: 100%;
+					aspect-ratio: 1 / 1;
+					object-fit: contain;
+					height: auto;
+					display: block;
+					border-radius: var(--sc-border-radius-medium);
+					pointer-events: none;
+				`}
+			/>
 		</div>
 	);
 };
