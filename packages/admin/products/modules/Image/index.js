@@ -6,7 +6,7 @@ import { ScSkeleton } from '@surecart/components-react';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { ScBlockUi } from '@surecart/components-react';
 import AddImage from './AddImage';
 import ImageDisplay from './ImageDisplay';
@@ -23,7 +23,6 @@ const modals = {
 
 export default ({ productId }) => {
 	const { saveEntityRecord } = useDispatch(coreStore);
-	const container = useRef();
 	const [error, setError] = useState();
 	const [currentModal, setCurrentModal] = useState('');
 	const [selectedImage, setSelectedImage] = useState();
