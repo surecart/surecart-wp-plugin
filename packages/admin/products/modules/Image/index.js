@@ -13,6 +13,8 @@ import ImageDisplay from './ImageDisplay';
 import ConfirmDeleteImage from './ConfirmDeleteImage';
 import AddUrlImage from './AddUrlImage';
 import Error from '../../../components/Error';
+import SortableList, { SortableItem } from 'react-easy-sort';
+import arrayMove from 'array-move';
 
 const modals = {
 	CONFIRM_DELETE_IMAGE: 'confirm_delete_image',
@@ -39,7 +41,7 @@ export default ({ productId }) => {
 				},
 			];
 
-			const media =
+			const medias =
 				select(coreStore).getEntityRecords(...queryArgs) || [];
 			const loading = select(coreStore).isResolving(
 				'getEntityRecords',
@@ -51,39 +53,48 @@ export default ({ productId }) => {
 				select(coreStore)?.__experimentalGetEntitiesBeingSaved?.() || []
 			).find((entity) => entity.name === 'product-media');
 
+			// for all medias, merge with edits
+			// we always show the edited version of the media.
+			const productMedia = (medias || [])
+				.map((media) => {
+					return {
+						...media,
+						...select(coreStore).getRawEntityRecord(
+							'surecart',
+							'product-media',
+							media?.id
+						),
+						...select(coreStore).getEntityRecordEdits(
+							'surecart',
+							'product-media',
+							media?.id
+						),
+					};
+				})
+				// sort by position.
+				.sort((a, b) => a?.position - b?.position);
+
 			return {
-				productMedia: media,
-				loading: loading && !media?.length,
-				fetching: loading && media?.length,
+				productMedia,
+				loading: loading && !productMedia?.length,
+				fetching: loading && productMedia?.length,
 				saving,
 			};
 		},
 		[productId]
 	);
 
-	const onDragStop = () => {
-		try {
-			const order = jQuery(container.current).sortable('toArray', {
-				attribute: 'media-id',
+	const onDragStop = (oldIndex, newIndex) => {
+		const result = arrayMove(productMedia, oldIndex, newIndex);
+		// edit entity record to update indexes.
+		(result || []).forEach(({ id, position }, index) => {
+			if (index === position) return;
+			console.log(index, position);
+			editEntityRecord('surecart', 'product-media', id, {
+				position: index,
 			});
-			order.forEach((id, position) => {
-				if (!id) return;
-				editEntityRecord('surecart', 'product-media', id, {
-					position,
-				});
-			});
-		} catch (e) {
-			console.error(e);
-			setError(e);
-		}
-	};
-
-	useEffect(() => {
-		jQuery(container.current).sortable({
-			stop: () => onDragStop(),
-			cancel: '.cancel-sortable',
 		});
-	}, []);
+	};
 
 	const saveProductMedia = async (media) => {
 		return saveEntityRecord(
@@ -112,13 +123,13 @@ export default ({ productId }) => {
 	return (
 		<Box title={__('Images', 'surecart')}>
 			<Error error={error} setError={setError} margin="100px" />
-			<div
+			<SortableList
 				css={css`
 					display: grid;
 					gap: 1em;
 					grid-template-columns: repeat(4, 1fr);
 				`}
-				ref={container}
+				onSortEnd={onDragStop}
 			>
 				{loading ? (
 					[...Array(4)].map(() => {
@@ -134,19 +145,27 @@ export default ({ productId }) => {
 					})
 				) : (
 					<>
-						{productMedia.map((pMedia, index) => (
-							<ImageDisplay
-								onDeleteImage={(image) => {
-									setSelectedImage(image);
-									setCurrentModal(
-										modals.CONFIRM_DELETE_IMAGE
-									);
-								}}
-								id={pMedia.id}
-								key={pMedia.id}
-								isFeatured={index === 0}
-								productMedia={pMedia}
-							/>
+						{productMedia.map((pMedia) => (
+							<SortableItem key={pMedia.id}>
+								<div
+									css={css`
+										user-select: none;
+										cursor: grab;
+									`}
+								>
+									<ImageDisplay
+										onDeleteImage={(image) => {
+											setSelectedImage(image);
+											setCurrentModal(
+												modals.CONFIRM_DELETE_IMAGE
+											);
+										}}
+										id={pMedia.id}
+										isFeatured={pMedia?.position === 0}
+										productMedia={pMedia}
+									/>
+								</div>
+							</SortableItem>
 						))}
 						<AddImage
 							existingMediaIds={(productMedia || []).map(
@@ -159,7 +178,7 @@ export default ({ productId }) => {
 						/>
 					</>
 				)}
-			</div>
+			</SortableList>
 
 			{(!!saving || !!fetching) && (
 				<ScBlockUi

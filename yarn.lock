@@ -7118,6 +7118,7 @@ __metadata:
   dependencies:
     "@wordpress/prettier-config": ^1.1.1
     prettier: ^2.5.1
+    react-easy-sort: ^1.5.1
   languageName: unknown
   linkType: soft
 
@@ -11917,6 +11918,13 @@ __metadata:
     get-intrinsic: ^1.1.1
     is-string: ^1.0.7
   checksum: 69967c38c52698f84b50a7aed5554aadc89c6ac6399b6d92ad061a5952f8423b4bba054c51d40963f791dfa294d7247cdd7988b6b1f2c5861477031c6386e1c0
+  languageName: node
+  linkType: hard
+
+"array-move@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "array-move@npm:3.0.1"
+  checksum: 4b550fe07f89750e5830be6e0b0165e5900a8d087ac51c4f7bf8cac6f87b4e96dfda05629cb962cdc33f64a3b0be49ee783595d74ccd2278e5a588fc436481d0
   languageName: node
   linkType: hard
 
@@ -29734,6 +29742,19 @@ __metadata:
     react: ">=16.4.0"
     react-dom: ">=16.4.0"
   checksum: 3401cea2072c43a50dcaa51fda17d9c1ecace8ef61902a166783e171fbefc6778b7bb149b39790e88898505958286e013621f496bbd413fee109d6f595270258
+  languageName: node
+  linkType: hard
+
+"react-easy-sort@npm:^1.5.1":
+  version: 1.5.1
+  resolution: "react-easy-sort@npm:1.5.1"
+  dependencies:
+    array-move: ^3.0.1
+    tslib: 2.0.1
+  peerDependencies:
+    react: ">=16.4.0"
+    react-dom: ">=16.4.0"
+  checksum: 9503d10761eb6e0e1dab875ca54269d6733d4c159c04b181f13cede5cd94c70f3619d44ce1599f12d550a435158efa16d04aec65c5640347b3858296731e4da4
   languageName: node
   linkType: hard
 
