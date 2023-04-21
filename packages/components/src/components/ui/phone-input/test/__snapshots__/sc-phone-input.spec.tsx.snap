@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-phone-input renders 1`] = `
+<sc-phone-input size="medium" value="">
+  <mock:shadow-root>
+    <sc-form-control exportparts="label, help-text, form-control" help="" helpid="phone-input-help-text-1" inputid="phone-input-1" labelid="phone-input-label-1" showlabel="" size="medium">
+      <slot name="label-end" slot="label-end"></slot>
+      <div class="input input--medium" part="base">
+        <span class="input__prefix" part="prefix">
+          <slot name="prefix"></slot>
+        </span>
+        <slot>
+          <input class="input__control" id="phone-input-1" inputmode="numeric" part="input" type="text" value="">
+        </slot>
+        <span class="input__suffix" part="suffix">
+          <slot name="suffix"></slot>
+        </span>
+      </div>
+    </sc-form-control>
+  </mock:shadow-root>
+</sc-phone-input>
+`;

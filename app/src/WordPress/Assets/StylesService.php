@@ -34,6 +34,21 @@ class StylesService {
 			[],
 			filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.css' ),
 		);
+
+		$brand = \SureCart::account()->brand;
+
+		$style = file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'dist/blocks/cloak.css' );
+
+		$style .= ':root {';
+		$style .= '--sc-color-primary-500: #' . ( $brand->color ?? '000' ) . ';';
+		$style .= '--sc-focus-ring-color-primary: #' . ( $brand->color ?? '000' ) . ';';
+		$style .= '--sc-input-border-color-focus: #' . ( $brand->color ?? '000' ) . ';';
+		$style .= '}';
+
+		wp_add_inline_style(
+			'surecart-themes-default',
+			$style
+		);
 	}
 
 	/**
@@ -46,18 +61,6 @@ class StylesService {
 		$this->register();
 		// enqueue it.
 		wp_enqueue_style( 'surecart-themes-default' );
-		// add our inline brand styles.
-		$this->addInlineThemeColors( 'surecart-themes-default' );
-
-		if ( is_page_template( 'pages/template-surecart-dashboard.php' ) ) {
-			$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/templates/customer-dashboard.asset.php';
-			wp_enqueue_style(
-				'surecart-templates-customer-dashboard',
-				trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/templates/customer-dashboard.css',
-				[ 'surecart-themes-default' ],
-				$asset_file['version'],
-			);
-		}
 	}
 
 	/**
@@ -70,32 +73,6 @@ class StylesService {
 		$this->register();
 		// enqueue it.
 		wp_enqueue_style( 'surecart-themes-default' );
-		// add our inline brand styles.
-		$this->addInlineThemeColors( 'surecart-themes-default' );
-	}
-
-	/**
-	 * Add inline brand styles to theme.
-	 *
-	 * @param string $handle The handle to add the styles to.
-	 *
-	 * @return void
-	 */
-	public function addInlineThemeColors( $handle ) {
-		$brand = \SureCart::account()->brand;
-
-		$style = file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'dist/blocks/cloak.css' );
-
-		$style .= ':root {';
-		$style .= '--sc-color-primary-500: #' . ( $brand->color ?? '000' ) . ';';
-		$style .= '--sc-focus-ring-color-primary: #' . ( $brand->color ?? '000' ) . ';';
-		$style .= '--sc-input-border-color-focus: #' . ( $brand->color ?? '000' ) . ';';
-		$style .= '}';
-
-		wp_add_inline_style(
-			$handle,
-			$style
-		);
 	}
 
 	/**

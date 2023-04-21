@@ -60,7 +60,7 @@ export class ScOrderSubmit {
   @Prop() secureNotice: boolean = true;
 
   renderPayPalButton(buttons) {
-    const { client_id, account_id, merchant_initiated } = getProcessorData(availableProcessors(), 'paypal', this.mode);
+    const { client_id, account_id, merchant_initiated_enabled } = getProcessorData(availableProcessors(), 'paypal', this.mode);
     if (!client_id && !account_id) return null;
 
     return (
@@ -69,7 +69,7 @@ export class ScOrderSubmit {
         busy={this.busy || checkoutIsLocked()}
         mode={this.mode}
         order={this.order}
-        merchantInitiated={merchant_initiated}
+        merchantInitiated={merchant_initiated_enabled}
         currency-code={this.currencyCode}
         client-id={client_id}
         merchant-id={account_id}

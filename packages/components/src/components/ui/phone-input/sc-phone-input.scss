@@ -1,0 +1,287 @@
+/**
+ * @prop --focus-ring: The focus ring style to use when the control receives focus, a `box-shadow` property.
+ */
+:host {
+  --focus-ring: 0 0 0 var(--sc-focus-ring-width) var(--sc-focus-ring-color-primary);
+  display: block;
+  position: relative;
+}
+
+.input__control[type='number'] {
+  -moz-appearance:textfield;
+}
+
+.input__control::-webkit-outer-spin-button,
+.input__control::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+
+.input {
+  flex: 1 1 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: start;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--sc-input-font-family);
+  font-weight: var(--sc-input-font-weight);
+  letter-spacing: var(--sc-input-letter-spacing);
+  background-color: var(--sc-input-background-color);
+  border: solid 1px var(--sc-input-border-color, var(--sc-input-border));
+  vertical-align: middle;
+  box-shadow: var(--sc-input-box-shadow);
+  transition: var(--sc-transition-fast) color, var(--sc-transition-fast) border, var(--sc-transition-fast) box-shadow;
+  cursor: text;
+
+  &:hover:not(.input--disabled) {
+    background-color: var(--sc-input-background-color-hover);
+    border-color: var(--sc-input-border-color-hover);
+    z-index: 7;
+
+    .input__control {
+      color: var(--sc-input-color-hover);
+    }
+  }
+
+  &.input--focused:not(.input--disabled) {
+    background-color: var(--sc-input-background-color-focus);
+    border-color: var(--sc-input-border-color-focus);
+    box-shadow: var(--focus-ring);
+    z-index: 8;
+
+    .input__control {
+      color: var(--sc-input-color-focus);
+    }
+  }
+
+  &.input--disabled {
+    background-color: var(--sc-input-background-color-disabled);
+    border-color: var(--sc-input-border-color-disabled);
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    .input__control {
+      color: var(--sc-input-color-disabled);
+
+      &::placeholder {
+        color: var(--sc-input-placeholder-color-disabled);
+      }
+    }
+  }
+}
+
+.input__control {
+  flex: 1 1 auto;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  min-width: 0;
+  height: 100%;
+  color: var(--sc-input-color);
+  border: none;
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  cursor: inherit;
+  -webkit-appearance: none;
+
+  &::-webkit-search-decoration,
+  &::-webkit-search-cancel-button,
+  &::-webkit-search-results-button,
+  &::-webkit-search-results-decoration {
+    -webkit-appearance: none;
+  }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    box-shadow: 0 0 0 var(--sc-input-height-large) var(--sc-input-background-color-hover) inset !important;
+    -webkit-text-fill-color: var(--sc-input-color);
+  }
+
+  &::placeholder {
+    color: var(--sc-input-placeholder-color);
+    user-select: none;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.input__prefix,
+.input__suffix {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  color: var(--sc-input-color);
+  cursor: default;
+
+  ::slotted(sc-icon) {
+    color: var(--sc-input-icon-color);
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Size modifiers
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+.input--small {
+  border-radius: var(--sc-input-border-radius-small);
+  font-size: var(--sc-input-font-size-small);
+  height: var(--sc-input-height-small);
+
+  .input__control {
+    height: calc(var(--sc-input-height-small) - var(--sc-input-border-width) * 2);
+    padding: 0 var(--sc-input-spacing-small);
+  }
+
+  .input__clear,
+  .input__password-toggle {
+    margin-right: var(--sc-input-spacing-small);
+  }
+
+  .input__prefix ::slotted(*) {
+    margin-left: var(--sc-input-spacing-small);
+  }
+
+  .input__suffix ::slotted(*) {
+    margin-right: var(--sc-input-spacing-small);
+  }
+
+  .input__suffix ::slotted(sc-dropdown) {
+    margin: 0;
+  }
+}
+
+.input--medium {
+  border-radius: var(--sc-input-border-radius-medium);
+  font-size: var(--sc-input-font-size-medium);
+  height: var(--sc-input-height-medium);
+
+  .input__control {
+    height: calc(var(--sc-input-height-medium) - var(--sc-input-border-width) * 2);
+    padding: 0 var(--sc-input-spacing-medium);
+  }
+
+  .input__clear,
+  .input__password-toggle {
+    margin-right: var(--sc-input-spacing-medium);
+  }
+
+  .input__prefix ::slotted(*) {
+    margin-left: var(--sc-input-spacing-medium) !important;
+  }
+
+  .input__suffix ::slotted(:not(sc-button[size="medium"])) {
+    margin-right: var(--sc-input-spacing-medium) !important;
+  }
+
+  .input__suffix ::slotted(sc-tag) {
+    margin-right: var(--sc-input-spacing-small) !important;
+  }
+
+  .input__suffix ::slotted(sc-dropdown) {
+    margin: 3px;
+  }
+}
+
+.input--large {
+  border-radius: var(--sc-input-border-radius-large);
+  font-size: var(--sc-input-font-size-large);
+  height: var(--sc-input-height-large);
+
+  .input__control {
+    height: calc(var(--sc-input-height-large) - var(--sc-input-border-width) * 2);
+    padding: 0 var(--sc-input-spacing-large);
+  }
+
+  .input__clear,
+  .input__password-toggle {
+    margin-right: var(--sc-input-spacing-large);
+  }
+
+  .input__prefix ::slotted(*) {
+    margin-left: var(--sc-input-spacing-large);
+  }
+
+  .input__suffix ::slotted(*) {
+    margin-right: var(--sc-input-spacing-large);
+  }
+
+  .input__suffix ::slotted(sc-dropdown) {
+    margin: 3px;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Pill modifier
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.input--pill {
+  &.input--small {
+    border-radius: var(--sc-input-height-small);
+  }
+
+  &.input--medium {
+    border-radius: var(--sc-input-height-medium);
+  }
+
+  &.input--large {
+    border-radius: var(--sc-input-height-large);
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Clearable + Password Toggle
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.input__clear,
+.input__password-toggle {
+  display: inline-flex;
+  align-items: center;
+  font-size: inherit;
+  color: var(--sc-input-icon-color);
+  border: none;
+  background: none;
+  padding: 0;
+  transition: var(--sc-transition-fast) color;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--sc-input-icon-color-hover);
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.input--empty .input__clear {
+  visibility: hidden;
+}
+
+.input {
+  &--squared {
+    border-radius: 0;
+  }
+  &--squared-top {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  &--squared-bottom {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  &--squared-left {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  &--squared-right {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
