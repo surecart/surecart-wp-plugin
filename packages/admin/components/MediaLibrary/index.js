@@ -10,7 +10,6 @@ import {
 	ScBlockUi,
 	ScCard,
 	ScEmpty,
-	ScFlex,
 	ScFormatBytes,
 	ScTable,
 	ScTableCell,
@@ -172,6 +171,7 @@ export default ({
 		if (!!onSelect) {
 			const selected = Object.values(selectedMedia);
 			onSelect(isMultiSelect ? selected : selected[0]);
+			setSelectedMedia({});
 		}
 		setOpen(false);
 	};
