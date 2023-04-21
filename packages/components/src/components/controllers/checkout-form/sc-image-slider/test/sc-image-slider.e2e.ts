@@ -41,10 +41,10 @@ describe('sc-image-slider', () => {
     ]);
     await page.waitForChanges();
     expect(element).toHaveClass('hydrated');
-    const thumbsContainer = await page.find(`sc-image-slider >>> .product-carousel__thumbs`);
+    const thumbsContainer = await page.find(`sc-image-slider >>> .image-slider__thumbs`);
     expect(thumbsContainer).not.toBeNull();
-    expect(thumbsContainer).toHaveClass('product-carousel__thumbs--has-navigation');
-    const thumbs = await page.findAll(`sc-image-slider >>> .product-carousel__thumb`);
+    expect(thumbsContainer).toHaveClass('image-slider__thumbs--has-navigation');
+    const thumbs = await page.findAll(`sc-image-slider >>> .image-slider__thumb`);
     expect(thumbs.length).toBe(6);
     console.log(thumbs[0].outerHTML);
     expect(thumbs[0]).toHaveClass('swiper-slide-active');
