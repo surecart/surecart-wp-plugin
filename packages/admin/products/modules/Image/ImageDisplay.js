@@ -3,26 +3,15 @@ import { css, jsx } from '@emotion/core';
 import { ScIcon, ScTag } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
-export default ({ productMedia, onDeleteImage }) => {
+export default ({ productMedia, onDeleteImage, isFeatured }) => {
 	return (
 		<div
 			css={css`
 				background: #f3f3f3;
-				cursor: move;
 				position: relative;
 				border-radius: var(--sc-border-radius-medium);
 				border: var(--sc-input-border);
 				box-shadow: var(--sc-input-box-shadow);
-
-				.featured-badge {
-					display: none;
-				}
-
-				&:first-child {
-					.featured-badge {
-						display: block;
-					}
-				}
 
 				.overlay,
 				.delete-icon {
@@ -39,18 +28,20 @@ export default ({ productMedia, onDeleteImage }) => {
 			`}
 			media-id={productMedia.id}
 		>
-			<ScTag
-				type="info"
-				className="featured-badge"
-				size="small"
-				css={css`
-					position: absolute;
-					top: 5px;
-					right: 5px;
-				`}
-			>
-				{__('Featured', 'surecart')}
-			</ScTag>
+			{isFeatured && (
+				<ScTag
+					type="info"
+					className="featured-badge"
+					size="small"
+					css={css`
+						position: absolute;
+						top: 5px;
+						right: 5px;
+					`}
+				>
+					{__('Featured', 'surecart')}
+				</ScTag>
+			)}
 
 			<ScIcon
 				className="delete-icon"
@@ -92,6 +83,7 @@ export default ({ productMedia, onDeleteImage }) => {
 						height: auto;
 						display: block;
 						border-radius: var(--sc-border-radius-medium);
+						pointer-events: none;
 					`}
 				/>
 			)}
