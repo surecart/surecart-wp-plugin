@@ -125,7 +125,9 @@ export default ({ productId }) => {
 				css={css`
 					display: grid;
 					gap: 1em;
-					grid-template-columns: repeat(4, 1fr);
+					grid-template-columns: ${loading || productMedia?.length
+						? 'repeat(4, 1fr)'
+						: '1fr'};
 				`}
 				onSortEnd={onDragStop}
 			>
