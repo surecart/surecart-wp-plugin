@@ -27,7 +27,6 @@ export default ({ onAddMedia, onAddFromURL, existingMediaIds = [] }) => {
 							cursor: pointer;
 							transition: background-color
 								var(--sc-transition-medium) ease-in-out;
-
 							&:hover {
 								background: var(--sc-color-gray-100);
 							}
