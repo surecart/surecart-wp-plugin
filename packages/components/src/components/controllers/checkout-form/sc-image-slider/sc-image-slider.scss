@@ -1,6 +1,6 @@
 @import './styles/swiper.scss';
 
-.product-carousel {
+.image-slider {
   &__thumbs {
     margin-top: var(--sc-slider-spacing, var(--sc-spacing-small));
     display: flex;
@@ -10,11 +10,11 @@
       flex: 1; // important to prevent slideshow from collapsing.
     }
 
-    .product-carousel__navigation {
+    .image-slider__navigation {
       display: none;
     }
     &--has-navigation {
-      .product-carousel__navigation {
+      .image-slider__navigation {
         display: flex;
       }
     }
@@ -26,8 +26,9 @@
     justify-content: center;
     align-items: center;
     font-size: 24px;
+    cursor: pointer;
 
-    &.product-carousel {
+    &.image-slider {
       &--is-prev {
         padding-right: 8px;
       }

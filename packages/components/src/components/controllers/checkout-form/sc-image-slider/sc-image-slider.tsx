@@ -66,11 +66,11 @@ export class ScImageSlider {
 
   render() {
     return (
-      <div class="product-carousel" part="base">
+      <div class="image-slider" part="base">
         <div class="swiper" ref={el => (this.swiperContainerRef = el)}>
           <div class="swiper-wrapper">
             {(this.images || []).map(({ src, alt }, index) => (
-              <div key={index} class="swiper-slide product-carousel__slider">
+              <div key={index} class="swiper-slide image-slider__slider">
                 <div class="swiper-slide-img">
                   <img src={src} alt={alt} />
                 </div>
@@ -80,8 +80,8 @@ export class ScImageSlider {
         </div>
 
         {this.thumbnails && (
-          <div class={{ 'product-carousel__thumbs': true, 'product-carousel__thumbs--has-navigation': this.images.length > 5 }}>
-            <div class="product-carousel__navigation product-carousel--is-prev" ref={el => (this.previous = el)}>
+          <div class={{ 'image-slider__thumbs': true, 'image-slider__thumbs--has-navigation': this.images.length > 5 }}>
+            <div class="image-slider__navigation image-slider--is-prev" ref={el => (this.previous = el)}>
               <sc-icon name="chevron-left" />
             </div>
 
@@ -90,7 +90,7 @@ export class ScImageSlider {
                 {!!this.images.length &&
                   this.images.map(({ src, alt }, index) => (
                     <div
-                      class={{ 'swiper-slide': true, 'product-carousel__thumb': true, 'product-carousel__thumb--is-active': this.currentSliderIndex === index }}
+                      class={{ 'swiper-slide': true, 'image-slider__thumb': true, 'image-slider__thumb--is-active': this.currentSliderIndex === index }}
                       onClick={() => this.swiper?.slideTo?.(index)}
                     >
                       <img src={src} alt={alt} />
@@ -99,7 +99,7 @@ export class ScImageSlider {
               </div>
             </div>
 
-            <div class="product-carousel__navigation product-carousel--is-next" ref={el => (this.next = el)}>
+            <div class="image-slider__navigation image-slider--is-next" ref={el => (this.next = el)}>
               <sc-icon name="chevron-right" />
             </div>
           </div>
