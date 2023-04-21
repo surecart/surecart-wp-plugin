@@ -93,6 +93,7 @@ return [
 		\SureCart\Rest\VerificationCodeRestServiceProvider::class,
 		\SureCart\Rest\CheckEmailRestServiceProvider::class,
 		\SureCart\Rest\ShippingProfileRestProvider::class,
+		\SureCart\Rest\ShippingMethodRestProvider::class,
 
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,
