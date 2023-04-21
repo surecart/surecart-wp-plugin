@@ -1,6 +1,8 @@
 @import './styles/swiper.scss';
 
 .image-slider {
+  user-select: none;
+
   &__thumbs {
     margin-top: var(--sc-slider-spacing, var(--sc-spacing-small));
     display: flex;
@@ -38,7 +40,8 @@
     }
 
     &.swiper-button-disabled {
-      opacity: 0.5;
+      opacity: 0.25;
+      cursor: default;
     }
   }
 
