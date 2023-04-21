@@ -7,12 +7,13 @@ import {
 	ScInput,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import Error from '../../../components/Error';
 
 export default ({ open, onRequestClose, productId }) => {
+	const input = useRef();
 	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const { saveEntityRecord } = useDispatch(coreStore);
@@ -34,6 +35,7 @@ export default ({ open, onRequestClose, productId }) => {
 				},
 				{ throwOnError: true }
 			);
+			setImageUrl('');
 			onRequestClose();
 		} catch (e) {
 			console.error(e);
@@ -42,6 +44,12 @@ export default ({ open, onRequestClose, productId }) => {
 			setLoading(false);
 		}
 	};
+
+	useEffect(() => {
+		if (open) {
+			input.current.triggerFocus();
+		}
+	}, [open]);
 
 	return (
 		<ScDialog
@@ -59,6 +67,7 @@ export default ({ open, onRequestClose, productId }) => {
 			>
 				<div>
 					<ScInput
+						ref={input}
 						type="url"
 						label={__('Image URL', 'surecart')}
 						placeholder={__('https://', 'surecart')}
