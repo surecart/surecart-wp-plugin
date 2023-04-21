@@ -94,6 +94,7 @@ return [
 		\SureCart\Rest\CheckEmailRestServiceProvider::class,
 		\SureCart\Rest\ShippingProfileRestProvider::class,
 		\SureCart\Rest\ShippingMethodRestProvider::class,
+		\SureCart\Rest\ShippingRateRestServiceProvider::class,
 
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,
