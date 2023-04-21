@@ -14,8 +14,7 @@ class CartService
      *
      * @return void
      */
-    public function bootstrap()
-    {
+    public function bootstrap() {
         // Slide-out is disabled. Do not load scripts.
         if ((bool) get_option('sc_slide_out_cart_disabled', false)) {
             return;
@@ -36,8 +35,7 @@ class CartService
      *
      * @return string
      */
-    public function cartTemplate()
-    {
+    public function cartTemplate() {
         $form = $this->getForm();
 
         if (empty($form->ID)) {
@@ -50,8 +48,7 @@ class CartService
             return '';
         }
 
-        $cart_icon_type = (string) get_option('surecart_cart_icon_type', null);
-        $floating_icon_enabled = $cart_icon_type !== 'menu_icon' ? 'true' : 'false';
+        $floating_icon_enabled = $this->isFloatingIconEnabled();
 
         ob_start();
         ?>
@@ -77,8 +74,7 @@ class CartService
      *
      * @return void
      */
-    public function renderCartComponent()
-    {
+    public function renderCartComponent() {
         $form = $this->getForm();
         if (empty($form->ID)) {
             return;
@@ -91,15 +87,37 @@ class CartService
 			template='<?php echo esc_attr($template); ?>'>
 		</sc-cart-loader>
 		<?php
-}
+    }
 
     /**
      * Get the form
      *
      * @return \WP_Post The default form post.
      */
-    public function getForm()
-    {
+    public function getForm() {
         return \SureCart::forms()->getDefault();
+    }
+
+    /**
+     * Check if floating cart icon is enabled
+     * 
+     * @return string
+     */
+    public function isFloatingIconEnabled() {
+        $cart_icon_type = (string) get_option('surecart_cart_icon_type', null);
+        return $cart_icon_type === 'menu_icon' ? 'false' : 'true';
+    }
+    
+    /**
+     * Check if menu cart icon is enabled
+     * 
+     * @param integer $term_id Term ID.
+     * @return bool
+     */
+    public function isMenuIconEnabled( $term_id ) {
+        $cart_menu_ids    = (array) get_option( 'surecart_cart_menu_selected_ids', null );
+		$cart_icon_type   = (string) get_option( 'surecart_cart_icon_type', null );
+        
+        return $cart_icon_type === 'floating_icon' || !in_array( $term_id, $cart_menu_ids );
     }
 }

@@ -111,10 +111,7 @@ class ThemeServiceProvider implements ServiceProviderInterface {
 	 * @return array
 	 */
 	public function addCartMenu( $items, $args ) {
-		$cart_menu_ids    = (array) get_option( 'surecart_cart_menu_selected_ids', null );
-		$cart_icon_type   = (string) get_option( 'surecart_cart_icon_type', null );
-
-		if ( $cart_icon_type === 'floating_icon' || !in_array( $args->menu->term_id, $cart_menu_ids ) ) {
+		if ( ! \SureCart::cart()->isMenuIconEnabled( $args->menu->term_id ) ) {
 			return $items;
 		}
 
