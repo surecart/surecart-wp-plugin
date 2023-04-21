@@ -136,7 +136,14 @@ class SettingService {
 			[
 				'type'         => 'array',
 				'items'        => 'integer',
-				'show_in_rest' => true,
+				'show_in_rest' => [
+					'schema' => [
+						'type'  => 'array',
+						'items' => [
+							'type' => 'string',
+						],
+					],
+				],
 			]
 		);
 		$this->register(
@@ -146,7 +153,7 @@ class SettingService {
 				'type'              => 'string',
 				'show_in_rest'      => true,
 				'sanitize_callback' => 'sanitize_text_field',
-				'default'           => 'both', // both, floating_icon, menu_icon
+				'default'           => 'both', // both, floating_icon, menu_icon.
 			]
 		);
 	}
