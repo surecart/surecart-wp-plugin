@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-19T21:26:18",
+  "timestamp": "2023-04-21T18:57:27",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -13085,6 +13085,7 @@
         "sc-downloads-list",
         "sc-drawer",
         "sc-empty",
+        "sc-image-slider",
         "sc-invoices-list",
         "sc-login-form",
         "sc-order",
@@ -13161,6 +13162,9 @@
           "sc-icon"
         ],
         "sc-empty": [
+          "sc-icon"
+        ],
+        "sc-image-slider": [
           "sc-icon"
         ],
         "sc-invoices-list": [
@@ -13242,6 +13246,86 @@
           "sc-icon"
         ],
         "sc-wordpress-user": [
+          "sc-icon"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/checkout-form/sc-image-slider/sc-image-slider.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-image-slider",
+      "readme": "# sc-product-image-carousel\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "images",
+          "type": "{ src: string; alt: string; }[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "[]",
+          "values": [
+            {
+              "type": "{ src: string; alt: string; }[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "thumbnails",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "thumbnails",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "thumbnailsPerPage",
+          "type": "number",
+          "mutable": false,
+          "attr": "thumbnails-per-page",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "5",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "sc-icon"
+      ],
+      "dependencyGraph": {
+        "sc-image-slider": [
           "sc-icon"
         ]
       }
@@ -21269,59 +21353,6 @@
           "sc-format-number"
         ]
       }
-    },
-    {
-      "filePath": "./src/components/controllers/checkout-form/sc-product-image-carousel/sc-product-image-carousel.tsx",
-      "encapsulation": "shadow",
-      "tag": "sc-product-image-carousel",
-      "readme": "# sc-product-image-carousel\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "height",
-          "type": "number",
-          "mutable": false,
-          "attr": "height",
-          "reflectToAttr": false,
-          "docs": "Height of the slider",
-          "docsTags": [],
-          "default": "310",
-          "values": [
-            {
-              "type": "number"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "images",
-          "type": "{ src: string; alt: string; }[]",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "[]",
-          "values": [
-            {
-              "type": "{ src: string; alt: string; }[]"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
-      "methods": [],
-      "events": [],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
-      "dependents": [],
-      "dependencies": [],
-      "dependencyGraph": {}
     },
     {
       "filePath": "./src/components/ui/product-line-item/sc-product-line-item.tsx",
