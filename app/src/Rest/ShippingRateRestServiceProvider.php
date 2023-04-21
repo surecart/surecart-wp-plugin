@@ -2,7 +2,7 @@
 
 namespace SureCart\Rest;
 
-use SureCart\Controllers\Rest\ShippingProfileController;
+use SureCart\Controllers\Rest\ShippingRateController;
 use SureCart\Rest\RestServiceInterface;
 
 /**
@@ -21,7 +21,7 @@ class ShippingRateRestServiceProvider extends RestServiceProvider implements Res
 	 *
 	 * @var string
 	 */
-	protected $controller = ShippingProfileController::class;
+	protected $controller = ShippingRateController::class;
 
 	/**
 	 * Methods allowed for the model.
