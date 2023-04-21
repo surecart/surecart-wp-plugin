@@ -26,6 +26,7 @@
 - [sc-order-tax-id-input](../../controllers/checkout-form/order-tax-id-input)
 - [sc-order-bumps](../../controllers/checkout-form/sc-order-bumps)
 - [sc-line-item-tax](../../controllers/checkout-form/line-item-tax)
+- [sc-line-item-shipping](../../controllers/checkout-form/sc-line-item-shipping)
 
 ### Graph
 ```mermaid
@@ -34,6 +35,7 @@ graph TD;
   sc-form-components-validator --> sc-order-tax-id-input
   sc-form-components-validator --> sc-order-bumps
   sc-form-components-validator --> sc-line-item-tax
+  sc-form-components-validator --> sc-line-item-shipping
   sc-order-shipping-address --> sc-address
   sc-order-shipping-address --> sc-compact-address
   sc-address --> sc-form-control
@@ -71,6 +73,9 @@ graph TD;
   sc-order-bump --> sc-divider
   sc-line-item-tax --> sc-line-item
   sc-line-item-tax --> sc-format-number
+  sc-line-item-shipping --> sc-line-item
+  sc-line-item-shipping --> sc-skeleton
+  sc-line-item-shipping --> sc-format-number
   sc-checkout --> sc-form-components-validator
   style sc-form-components-validator fill:#f9f,stroke:#333,stroke-width:4px
 ```

@@ -34,6 +34,9 @@ export class ScFormComponentsValidator {
   /** Is there a bump line? */
   @State() hasBumpLine: boolean;
 
+  /** Is there a shipping amount */
+  @State() hasShippingAmount: boolean;
+
   @Watch('order')
   handleOrderChange() {
     // bail if we don't have address invalid error or disabled.
@@ -49,6 +52,10 @@ export class ScFormComponentsValidator {
     if (!!this.order?.tax_amount) {
       this.addTaxLine();
     }
+
+    if(!!this.order?.shipping_amount){
+      this.addShippingAmount();
+    }
   }
 
   componentWillLoad() {
@@ -56,6 +63,7 @@ export class ScFormComponentsValidator {
     this.hasTaxIDField = !!this.el.querySelector('sc-order-tax-id-input');
     this.hasBumpsField = !!this.el.querySelector('sc-order-bumps');
     this.hasTaxLine = !!this.el.querySelector('sc-line-item-tax');
+    this.hasShippingAmount = !!this.el.querySelector('sc-line-item-shipping');
 
     // automatically add address field if tax is enabled.
     if (this.taxProtocol?.tax_enabled) {
@@ -108,6 +116,21 @@ export class ScFormComponentsValidator {
       total.parentNode.insertBefore(tax, total);
     }
     this.hasTaxLine = true;
+  }
+
+  addShippingAmount() {
+    if (this.hasShippingAmount) return;
+
+    let insertBeforeElement:Element = this.el.querySelector('sc-line-item-tax');
+    const total = this.el.querySelector('sc-line-item-total[total=total]');
+
+    if(!insertBeforeElement){
+      insertBeforeElement = total?.previousElementSibling?.tagName === 'SC-DIVIDER'? total.previousElementSibling: total;
+    }
+
+    const shippingAmount = document.createElement('sc-line-item-shipping');
+    insertBeforeElement.parentNode.insertBefore( shippingAmount,insertBeforeElement);
+    this.hasShippingAmount = true;
   }
 
   render() {
