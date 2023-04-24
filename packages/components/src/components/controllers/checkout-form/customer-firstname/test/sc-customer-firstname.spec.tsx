@@ -7,7 +7,7 @@ const TEST_CUSTOMER: Customer = {
   id: 'd4f37b81-3448-4cae-ad46-4201432527ff',
   billing_matches_shipping: true,
   email: 'customer-21@example.com',
-  first_name: 'Jack',
+  first_name: 'Customer',
   last_name: null,
   live_mode: true,
   name: null,
@@ -31,8 +31,8 @@ describe('sc-customer-email', () => {
     expect(page.root).toMatchSnapshot();
   });
 
-  it('renders the url first name when  not logged in', async () => {
-    const mockUrl = new URLSearchParams('?first_name=John');
+  it('renders the url first name when not logged in', async () => {
+    const mockUrl = new URLSearchParams('?first_name=Url');
 
     // Set the mock URL as the window location
     global.window = Object.create(window);
@@ -52,7 +52,7 @@ describe('sc-customer-email', () => {
   });
 
   it('renders the logged in customer firstname when logged in', async () => {
-    const mockUrl = new URLSearchParams('?first_name=John');
+    const mockUrl = new URLSearchParams('?first_name=Url');
 
     // Set the mock URL as the window location
     global.window = Object.create(window);

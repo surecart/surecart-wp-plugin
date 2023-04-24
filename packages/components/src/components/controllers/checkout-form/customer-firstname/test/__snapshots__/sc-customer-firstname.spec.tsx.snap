@@ -11,15 +11,15 @@ exports[`sc-customer-email renders 1`] = `
 exports[`sc-customer-email renders the logged in customer firstname when logged in 1`] = `
 <sc-customer-firstname size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="first_name" disabled="" help="" name="first_name" type="text" value="Jack"></sc-input>
+    <sc-input autocomplete="first_name" disabled="" help="" name="first_name" type="text" value="Customer"></sc-input>
   </mock:shadow-root>
 </sc-customer-firstname>
 `;
 
-exports[`sc-customer-email renders the url first name when  not logged in 1`] = `
+exports[`sc-customer-email renders the url first name when not logged in 1`] = `
 <sc-customer-firstname size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="first_name" help="" name="first_name" type="text" value="John"></sc-input>
+    <sc-input autocomplete="first_name" help="" name="first_name" type="text" value="Url"></sc-input>
   </mock:shadow-root>
 </sc-customer-firstname>
 `;

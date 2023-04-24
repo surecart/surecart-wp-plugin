@@ -7,10 +7,10 @@ const TEST_CUSTOMER: Customer = {
   id: 'd4f37b81-3448-4cae-ad46-4201432527ff',
   billing_matches_shipping: true,
   email: 'customer-21@example.com',
-  first_name: 'Jack',
-  last_name: null,
+  first_name: 'CustomerFirst',
+  last_name: 'CustomerLast',
   live_mode: true,
-  name: 'Jack Burrows',
+  name: 'CustomerFirst CustomerLast',
   phone: null,
   unsubscribed: false,
   billing_address: null,
@@ -31,7 +31,7 @@ describe('sc-customer-name', () => {
   });
 
   it('Renders the passed full name when the customer is not logged in', async () => {
-    const mockUrl = new URLSearchParams('?full_name=John Doe');
+    const mockUrl = new URLSearchParams('?full_name=UrlFirst UrlLast');
 
     // Set the mock URL as the window location
     global.window = Object.create(window);
@@ -51,7 +51,7 @@ describe('sc-customer-name', () => {
   });
 
   it('Renders the logged in customer full name when logged in is true', async () => {
-    const mockUrl = new URLSearchParams('?full_name=John Doe');
+    const mockUrl = new URLSearchParams('?full_name=UrlFirst UrlLast');
 
     // Set the mock URL as the window location
     global.window = Object.create(window);
