@@ -54,8 +54,7 @@ class ShippingProfileRestServiceProviderTest extends SureCartUnitTestCase
     }
 
     /**
-     * @group api
-     * @group permissions
+	 * @dataProvider requestProvider
      */
     public function test_permissions($caps, $method, $route, $status)
     {
