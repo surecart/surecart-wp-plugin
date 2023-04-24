@@ -51,6 +51,7 @@ export class ScImageSlider {
         slidesPerView: this.thumbnailsPerPage,
         slidesPerGroup: this.thumbnailsPerPage,
         spaceBetween: 10,
+        centerInsufficientSlides: true,
         slideToClickedSlide: true,
         navigation: {
           nextEl: this.next,
