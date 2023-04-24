@@ -1,0 +1,29 @@
+{
+	"name": "surecart/image-slider",
+	"title": "Image Slider",
+	"description": "Displays a image slider.",
+	"category": "surecart",
+	"keywords": ["images", "image slider", "carousel", "slider"],
+	"textdomain": "surecart",
+	"supports": {
+		"html": false
+	},
+	"attributes": {
+		"images": {
+			"type": "array",
+			"default": []
+		},
+		"height": {
+			"type": "string",
+			"default": "310px"
+		},
+		"show_thumbnails": {
+			"type": "boolean",
+			"default": true
+		},
+		"thumbnails_per_page": {
+			"type": "number",
+			"default": 5
+		}
+	}
+}
