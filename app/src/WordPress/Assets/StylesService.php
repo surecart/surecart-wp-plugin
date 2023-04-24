@@ -34,7 +34,20 @@ class StylesService {
 			[],
 			filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.css' ),
 		);
-		$this->addInlineThemeColors( 'surecart-themes-default' );
+		$brand = \SureCart::account()->brand;
+
+		$style = file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'dist/blocks/cloak.css' );
+
+		$style .= ':root {';
+		$style .= '--sc-color-primary-500: #' . ( $brand->color ?? '000' ) . ';';
+		$style .= '--sc-focus-ring-color-primary: #' . ( $brand->color ?? '000' ) . ';';
+		$style .= '--sc-input-border-color-focus: #' . ( $brand->color ?? '000' ) . ';';
+		$style .= '}';
+
+		wp_add_inline_style(
+			'surecart-themes-default',
+			$style
+		);
 	}
 
 	/**
