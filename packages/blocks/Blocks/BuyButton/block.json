@@ -25,7 +25,6 @@
 	},
 	"attributes": {
 		"price_id": {
-		"price_id": {
 			"type": "string"
 		},
 		"label": {
