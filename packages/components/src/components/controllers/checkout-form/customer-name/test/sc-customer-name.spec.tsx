@@ -1,72 +1,189 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { h } from '@stencil/core';
 import { ScCustomerName } from '../sc-customer-name';
-import { Customer } from '../../../../../types';
-
-const TEST_CUSTOMER: Customer = {
-  id: 'd4f37b81-3448-4cae-ad46-4201432527ff',
-  billing_matches_shipping: true,
-  email: 'customer-21@example.com',
-  first_name: 'CustomerFirst',
-  last_name: 'CustomerLast',
-  live_mode: true,
-  name: 'CustomerFirst CustomerLast',
-  phone: null,
-  unsubscribed: false,
-  billing_address: null,
-  default_payment_method: null,
-  shipping_address: null,
-  tax_identifier: null,
-  created_at: 1679586369,
-  updated_at: 1679586369,
-};
+import { Checkout } from '../../../../../types';
+import { dispose as disposeCheckout, state as checkoutState } from '@store/checkout';
+import { dispose as disposeUser, state as userState } from '@store/user';
 
 describe('sc-customer-name', () => {
-  it('renders', async () => {
-    const page = await newSpecPage({
-      components: [ScCustomerName],
-      html: `<sc-customer-name></sc-customer-name>`,
-    });
-    expect(page.root).toMatchSnapshot();
+  beforeEach(() => {
+    disposeCheckout();
+    disposeUser();
   });
 
-  it('Renders the passed full name when the customer is not logged in', async () => {
-    const mockUrl = new URLSearchParams('?full_name=UrlFirst UrlLast');
+  const checkouts = [
+    {
+      testLabel: 'Customer and Checkout names provided',
+      checkout: {
+        name: 'CheckoutFirst CheckoutLast',
+        customer: {
+          name: 'CustomerFirst CustomerLast',
+        },
+      } as Checkout,
+    },
+    {
+      testLabel: 'Customer name provided',
+      checkout: {
+        customer: {
+          name: 'CustomerFirst CustomerLast',
+        },
+      } as Checkout,
+    },
+    {
+      testLabel: 'Checkout name provided',
+      checkout: {
+        name: 'CheckoutFirst CheckoutLast',
+      } as Checkout,
+    },
+  ];
 
+  function addUrlParams(params) {
     // Set the mock URL as the window location
     global.window = Object.create(window);
     Object.defineProperty(window, 'location', {
       value: {
-        search: mockUrl.toString(),
+        search: params ? new URLSearchParams('?full_name=UrlFirst UrlLast').toString() : '',
       },
       writable: true,
     });
+  }
 
-    const page = await newSpecPage({
-      components: [ScCustomerName],
-      html: `<sc-customer-name></sc-customer-name>`,
+  describe.each(checkouts)('Logged In', test => {
+    it(`${test.testLabel} with URL Params`, async () => {
+      addUrlParams(true);
+      userState.loggedIn = true;
+      checkoutState.checkout = test.checkout;
+
+      const page = await newSpecPage({
+        components: [ScCustomerName],
+        html: `<sc-customer-name></sc-customer-name>`,
+      });
+
+      expect(page.root).toMatchSnapshot();
+      page.rootInstance.disconnectedCallback();
     });
 
-    expect(page.root).toMatchSnapshot();
+    it(`${test.testLabel} without URL Params`, async () => {
+      addUrlParams(false);
+      userState.loggedIn = true;
+      checkoutState.checkout = test.checkout;
+
+      const page = await newSpecPage({
+        components: [ScCustomerName],
+        html: `<sc-customer-name></sc-customer-name>`,
+      });
+
+      expect(page.root).toMatchSnapshot();
+      page.rootInstance.disconnectedCallback();
+    });
   });
 
-  it('Renders the logged in customer full name when logged in is true', async () => {
-    const mockUrl = new URLSearchParams('?full_name=UrlFirst UrlLast');
+  describe.each(checkouts)('Logged Out', test => {
+    it(`${test.testLabel} with URL Params`, async () => {
+      addUrlParams(true);
+      userState.loggedIn = false;
+      checkoutState.checkout = test.checkout;
 
-    // Set the mock URL as the window location
-    global.window = Object.create(window);
-    Object.defineProperty(window, 'location', {
-      value: {
-        search: mockUrl.toString(),
-      },
-      writable: true,
+      const page = await newSpecPage({
+        components: [ScCustomerName],
+        html: `<sc-customer-name></sc-customer-name>`,
+      });
+
+      expect(page.root).toMatchSnapshot();
+      page.rootInstance.disconnectedCallback();
     });
 
-    const page = await newSpecPage({
-      components: [ScCustomerName],
-      template: () => <sc-customer-name customer={TEST_CUSTOMER} loggedIn={true}></sc-customer-name>,
-    });
+    it(`${test.testLabel} without URL Params`, async () => {
+      addUrlParams(false);
+      userState.loggedIn = false;
+      checkoutState.checkout = test.checkout;
 
-    expect(page.root).toMatchSnapshot();
+      const page = await newSpecPage({
+        components: [ScCustomerName],
+        html: `<sc-customer-name></sc-customer-name>`,
+      });
+
+      expect(page.root).toMatchSnapshot();
+      page.rootInstance.disconnectedCallback();
+    });
   });
+
+  // it('renders', async () => {
+  //   const page = await newSpecPage({
+  //     components: [ScCustomerName],
+  //     html: `<sc-customer-name></sc-customer-name>`,
+  //   });
+  //   expect(page.root).toMatchSnapshot();
+  //   page.rootInstance.disconnectedCallback();
+  // });
+
+  // it('Renders the passed full name when the customer is not logged in', async () => {
+  //   addUrlParams(true);
+  //   userState.loggedIn = false;
+
+  //   const page = await newSpecPage({
+  //     components: [ScCustomerName],
+  //     html: `<sc-customer-name></sc-customer-name>`,
+  //   });
+
+  //   expect(page.root).toMatchSnapshot();
+  //   page.rootInstance.disconnectedCallback();
+  // });
+
+  // it('Renders the logged in customer full name from checkout', async () => {
+  //   addUrlParams(true);
+  //   userState.loggedIn = true;
+  //   checkoutState.checkout = {
+  //     customer: {
+  //       name: 'CustomerFirst CustomerLast',
+  //     },
+  //   } as Checkout;
+
+  //   const page = await newSpecPage({
+  //     components: [ScCustomerName],
+  //     template: () => <sc-customer-name></sc-customer-name>,
+  //   });
+
+  //   expect(page.root).toMatchSnapshot();
+  //   page.rootInstance.disconnectedCallback();
+  // });
+
+  // it('Renders the checkout name if no url params', async () => {
+  //   addUrlParams(false);
+
+  //   userState.loggedIn = false;
+  //   checkoutState.checkout = {
+  //     name: 'CheckoutFirst CheckoutLast',
+  //     customer: {
+  //       name: 'CustomerFirst CustomerLast',
+  //     },
+  //   } as Checkout;
+
+  //   const page = await newSpecPage({
+  //     components: [ScCustomerName],
+  //     template: () => <sc-customer-name></sc-customer-name>,
+  //   });
+
+  //   expect(page.root).toMatchSnapshot();
+  //   page.rootInstance.disconnectedCallback();
+  // });
+
+  // it('Uses url params if checkout name is provided and not logged in.', async () => {
+  //   addUrlParams(true);
+
+  //   userState.loggedIn = false;
+  //   checkoutState.checkout = {
+  //     name: 'CheckoutFirst CheckoutLast',
+  //     customer: {
+  //       name: 'CustomerFirst CustomerLast',
+  //     },
+  //   } as Checkout;
+
+  //   const page = await newSpecPage({
+  //     components: [ScCustomerName],
+  //     template: () => <sc-customer-name></sc-customer-name>,
+  //   });
+
+  //   expect(page.root).toMatchSnapshot();
+  //   page.rootInstance.disconnectedCallback();
+  // });
 });

@@ -426,6 +426,8 @@ export interface Checkout extends Object {
   trial_amount?: number;
   charge?: string | Charge;
   name?: string;
+  first_name?: string;
+  last_name?: string;
   email?: string;
   live_mode?: boolean;
   currency?: string;

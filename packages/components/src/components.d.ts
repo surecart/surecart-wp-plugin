@@ -998,10 +998,6 @@ export namespace Components {
          */
         "autofocus": boolean;
         /**
-          * Force a customer.
-         */
-        "customer": Customer;
-        /**
           * Disables the input.
          */
         "disabled": boolean;
@@ -1041,6 +1037,9 @@ export namespace Components {
           * Makes the input readonly.
          */
         "readonly": boolean;
+        /**
+          * Don't allow a blank space as an input here.
+         */
         "reportValidity": () => Promise<boolean>;
         /**
           * Makes the input a required field.
@@ -1057,7 +1056,7 @@ export namespace Components {
         /**
           * The input's value attribute.
          */
-        "value": string;
+        "value": any;
     }
     interface ScCustomerName {
         /**
@@ -1065,10 +1064,6 @@ export namespace Components {
          */
         "autofocus": boolean;
         /**
-          * Force a customer.
-         */
-        "customer": Customer;
-        /**
           * Disables the input.
          */
         "disabled": boolean;
@@ -1089,14 +1084,6 @@ export namespace Components {
          */
         "label": string;
         /**
-          * Is the user logged in.
-         */
-        "loggedIn": boolean;
-        /**
-          * (passed from the sc-checkout component automatically)
-         */
-        "order": Checkout;
-        /**
           * Draws a pill-style input with rounded edges.
          */
         "pill": boolean;
@@ -1108,6 +1095,9 @@ export namespace Components {
           * Makes the input readonly.
          */
         "readonly": boolean;
+        /**
+          * Don't allow a blank space as an input here.
+         */
         "reportValidity": () => Promise<boolean>;
         /**
           * Makes the input a required field.
@@ -1124,7 +1114,7 @@ export namespace Components {
         /**
           * The input's value attribute.
          */
-        "value": string;
+        "value": any;
     }
     interface ScDashboardCustomerDetails {
         "customerId": string;
@@ -5894,10 +5884,6 @@ declare namespace LocalJSX {
          */
         "autofocus"?: boolean;
         /**
-          * Force a customer.
-         */
-        "customer"?: Customer;
-        /**
           * Disables the input.
          */
         "disabled"?: boolean;
@@ -5926,14 +5912,6 @@ declare namespace LocalJSX {
          */
         "onScBlur"?: (event: ScCustomerLastnameCustomEvent<void>) => void;
         /**
-          * Emitted when the control's value changes.
-         */
-        "onScChange"?: (event: ScCustomerLastnameCustomEvent<void>) => void;
-        /**
-          * Emitted when the clear button is activated.
-         */
-        "onScClear"?: (event: ScCustomerLastnameCustomEvent<void>) => void;
-        /**
           * Emitted when the control gains focus.
          */
         "onScFocus"?: (event: ScCustomerLastnameCustomEvent<void>) => void;
@@ -5941,8 +5919,6 @@ declare namespace LocalJSX {
           * Emitted when the control receives input.
          */
         "onScInput"?: (event: ScCustomerLastnameCustomEvent<void>) => void;
-        "onScUpdateCustomer"?: (event: ScCustomerLastnameCustomEvent<{ email: string }>) => void;
-        "onScUpdateOrderState"?: (event: ScCustomerLastnameCustomEvent<Partial<Checkout>>) => void;
         /**
           * (passed from the sc-checkout component automatically)
          */
@@ -5974,17 +5950,13 @@ declare namespace LocalJSX {
         /**
           * The input's value attribute.
          */
-        "value"?: string;
+        "value"?: any;
     }
     interface ScCustomerName {
         /**
           * The input's autofocus attribute.
          */
         "autofocus"?: boolean;
-        /**
-          * Force a customer.
-         */
-        "customer"?: Customer;
         /**
           * Disables the input.
          */
@@ -6006,21 +5978,9 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
-          * Is the user logged in.
-         */
-        "loggedIn"?: boolean;
-        /**
           * Emitted when the control loses focus.
          */
         "onScBlur"?: (event: ScCustomerNameCustomEvent<void>) => void;
-        /**
-          * Emitted when the control's value changes.
-         */
-        "onScChange"?: (event: ScCustomerNameCustomEvent<void>) => void;
-        /**
-          * Emitted when the clear button is activated.
-         */
-        "onScClear"?: (event: ScCustomerNameCustomEvent<void>) => void;
         /**
           * Emitted when the control gains focus.
          */
@@ -6029,12 +5989,6 @@ declare namespace LocalJSX {
           * Emitted when the control receives input.
          */
         "onScInput"?: (event: ScCustomerNameCustomEvent<void>) => void;
-        "onScUpdateCustomer"?: (event: ScCustomerNameCustomEvent<{ email: string }>) => void;
-        "onScUpdateOrderState"?: (event: ScCustomerNameCustomEvent<Partial<Checkout>>) => void;
-        /**
-          * (passed from the sc-checkout component automatically)
-         */
-        "order"?: Checkout;
         /**
           * Draws a pill-style input with rounded edges.
          */
@@ -6062,7 +6016,7 @@ declare namespace LocalJSX {
         /**
           * The input's value attribute.
          */
-        "value"?: string;
+        "value"?: any;
     }
     interface ScDashboardCustomerDetails {
         "customerId"?: string;
