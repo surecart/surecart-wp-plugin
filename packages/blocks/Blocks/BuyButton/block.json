@@ -5,6 +5,7 @@
 	"category": "surecart",
 	"keywords": ["name", "customer"],
 	"textdomain": "surecart",
+	"textdomain": "surecart",
 	"parent": null,
 	"supports": {
 		"reusable": false,
@@ -23,6 +24,7 @@
 		}
 	},
 	"attributes": {
+		"price_id": {
 		"price_id": {
 			"type": "string"
 		},
@@ -60,6 +62,5 @@
 		}
 	},
 	"script": "surecart-components",
-	"editorScript": "surecart-components",
-	"style": "surecart-theme-default"
+	"style": "surecart-themes-default"
 }

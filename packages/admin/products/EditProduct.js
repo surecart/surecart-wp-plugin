@@ -25,6 +25,7 @@ import Prices from './modules/Prices';
 import Publishing from './modules/Publishing';
 import SearchEngine from './modules/SearchEngine';
 import Tax from './modules/Tax';
+import Image from './modules/Image';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
@@ -240,6 +241,12 @@ export default ({ id }) => {
 
 				<Details
 					product={product}
+					updateProduct={editProduct}
+					loading={!hasLoadedProduct}
+				/>
+
+				<Image
+					productId={id}
 					updateProduct={editProduct}
 					loading={!hasLoadedProduct}
 				/>

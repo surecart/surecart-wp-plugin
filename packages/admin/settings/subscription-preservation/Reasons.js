@@ -1,12 +1,11 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { __ } from '@wordpress/i18n';
-import apiFetch from '@wordpress/api-fetch';
-import { Container, Draggable } from 'react-smooth-dnd';
+import SortableList, { SortableItem } from 'react-easy-sort';
+import arrayMove from 'array-move';
 import {
-	ScBlockUi,
 	ScButton,
 	ScCard,
 	ScEmpty,
@@ -16,70 +15,20 @@ import {
 } from '@surecart/components-react';
 import Reason from './Reason';
 import EditReason from './EditReason';
-import { store as noticesStore } from '@wordpress/notices';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-export default ({ reasons: sortedReasons, setReasons: setSortedReasons }) => {
-	const { createErrorNotice, createSuccessNotice } =
-		useDispatch(noticesStore);
+export default ({ reasons, loading }) => {
 	const [modal, setModal] = useState(false);
-	const [busy, setBusy] = useState(false);
-	const { reasons, loading, fetching } = useSelect((select) => {
-		const queryArgs = ['surecart', 'cancellation_reason'];
-		const reasons = select(coreStore).getEntityRecords(...queryArgs);
-		const loading = select(coreStore).isResolving(
-			'getEntityRecords',
-			queryArgs
+	const { editEntityRecord } = useDispatch(coreStore);
+
+	const applyDrag = async (oldIndex, newIndex) => {
+		const result = arrayMove(reasons, oldIndex, newIndex);
+		// edit entity record to update indexes.
+		(result || []).forEach((reason, index) =>
+			editEntityRecord('surecart', 'cancellation_reason', reason.id, {
+				position: index,
+			})
 		);
-		return {
-			reasons,
-			loading: loading && !reasons?.length,
-			fetching: loading && reasons?.length,
-		};
-	});
-
-	useEffect(() => {
-		setSortedReasons(reasons);
-	}, [reasons]);
-
-	const applyDrag = async (arr, dragResult) => {
-		const { removedIndex, addedIndex, payload } = dragResult;
-		if (removedIndex === null && addedIndex === null) return;
-		const result = [...arr];
-		let itemToAdd = payload;
-
-		if (removedIndex !== null) {
-			itemToAdd = result.splice(removedIndex, 1)[0];
-		}
-
-		if (addedIndex !== null) {
-			result.splice(addedIndex, 0, itemToAdd);
-		}
-
-		setSortedReasons(result);
-
-		try {
-			setBusy(true);
-			// save reason.
-			await apiFetch({
-				method: 'PATCH',
-				path: `surecart/v1/cancellation_reasons/${payload?.id}`,
-				data: {
-					position: addedIndex + 1,
-				},
-			});
-
-			createSuccessNotice(__('Answers updated.', 'surecart'), {
-				type: 'snackbar',
-			});
-		} catch (e) {
-			console.error(e);
-			createErrorNotice(e?.message, { type: 'snackbar' });
-		} finally {
-			setBusy(false);
-		}
-
-		return result;
 	};
 
 	if (loading) {
@@ -113,41 +62,32 @@ export default ({ reasons: sortedReasons, setReasons: setSortedReasons }) => {
 							</ScEmpty>
 						</ScCard>
 					) : (
-						<ScStackedList
-							css={css`
-								.smooth-dnd-container.vertical
-									> .smooth-dnd-draggable-wrapper {
-									overflow: visible;
-									border: 1px solid var(--sc-color-gray-200);
-									margin-top: -1px;
-									margin-left: -1px;
-									margin-right: -1px;
-									margin-bottom: -1px;
-								}
-							`}
-						>
+						<ScStackedList>
 							<ScCard noPadding>
-								<Container
-									onDrop={(e) => applyDrag(sortedReasons, e)}
-									getChildPayload={(index) =>
-										sortedReasons?.[index]
-									}
-									dragHandleSelector=".dragger"
-								>
-									{(sortedReasons || []).map((reason) => (
-										<Draggable key={reason.id}>
-											<Reason
-												reason={reason}
-												key={reason?.id}
-											/>
-										</Draggable>
+								<SortableList onSortEnd={applyDrag}>
+									{(reasons || []).map((reason) => (
+										<SortableItem key={reason.id}>
+											<div
+												css={css`
+													overflow: visible;
+													border: 1px solid
+														var(--sc-color-gray-200);
+													background: #fff;
+													margin-top: -1px;
+													margin-left: -1px;
+													margin-right: -1px;
+													margin-bottom: -1px;
+												`}
+											>
+												<Reason reason={reason} />
+											</div>
+										</SortableItem>
 									))}
-								</Container>
+								</SortableList>
 							</ScCard>
 						</ScStackedList>
 					)}
 				</ScFormControl>
-				{(!!busy || !!fetching) && <ScBlockUi spinner />}
 			</div>
 			<ScButton onClick={() => setModal(true)}>
 				<ScIcon name="plus" slot="prefix" />

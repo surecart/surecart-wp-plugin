@@ -77,6 +77,7 @@ export const ScFormatInterval = /*@__PURE__*/createReactComponent<JSX.ScFormatIn
 export const ScFormatNumber = /*@__PURE__*/createReactComponent<JSX.ScFormatNumber, HTMLScFormatNumberElement>('sc-format-number');
 export const ScHeading = /*@__PURE__*/createReactComponent<JSX.ScHeading, HTMLScHeadingElement>('sc-heading');
 export const ScIcon = /*@__PURE__*/createReactComponent<JSX.ScIcon, HTMLScIconElement>('sc-icon');
+export const ScImageSlider = /*@__PURE__*/createReactComponent<JSX.ScImageSlider, HTMLScImageSliderElement>('sc-image-slider');
 export const ScInput = /*@__PURE__*/createReactComponent<JSX.ScInput, HTMLScInputElement>('sc-input');
 export const ScInvoicesList = /*@__PURE__*/createReactComponent<JSX.ScInvoicesList, HTMLScInvoicesListElement>('sc-invoices-list');
 export const ScLicensesList = /*@__PURE__*/createReactComponent<JSX.ScLicensesList, HTMLScLicensesListElement>('sc-licenses-list');
