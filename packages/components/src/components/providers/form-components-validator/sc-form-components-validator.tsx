@@ -53,7 +53,7 @@ export class ScFormComponentsValidator {
       this.addTaxLine();
     }
 
-    if(!!this.order?.shipping_amount){
+    if (!!this.order?.shipping_amount) {
       this.addShippingAmount();
     }
   }
@@ -121,15 +121,15 @@ export class ScFormComponentsValidator {
   addShippingAmount() {
     if (this.hasShippingAmount) return;
 
-    let insertBeforeElement:Element = this.el.querySelector('sc-line-item-tax');
+    let insertBeforeElement: Element = this.el.querySelector('sc-line-item-tax');
     const total = this.el.querySelector('sc-line-item-total[total=total]');
 
-    if(!insertBeforeElement){
-      insertBeforeElement = total?.previousElementSibling?.tagName === 'SC-DIVIDER'? total.previousElementSibling: total;
+    if (!insertBeforeElement) {
+      insertBeforeElement = total?.previousElementSibling?.tagName === 'SC-DIVIDER' ? total.previousElementSibling : total;
     }
 
     const shippingAmount = document.createElement('sc-shipping-line-item');
-    insertBeforeElement.parentNode.insertBefore( shippingAmount,insertBeforeElement);
+    insertBeforeElement.parentNode.insertBefore(shippingAmount, insertBeforeElement);
     this.hasShippingAmount = true;
   }
 
