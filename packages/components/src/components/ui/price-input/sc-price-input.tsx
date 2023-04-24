@@ -140,6 +140,11 @@ export class ScPriceInput {
   }
 
   updateValue() {
+    // This fixes issues on mobile Safari where a decimal point is added to the end of the input value
+    // does not have an input value.
+    if (!this.input.shadowRoot.querySelector('input').checkValidity()) {
+      return;
+    }
     const val = isZeroDecimal(this.currencyCode) ? parseFloat(this.input.value) : (parseFloat(this.input.value) * 100).toFixed(2);
     this.value = this.input.value ? val.toString() : '';
   }
