@@ -36,6 +36,7 @@ export class ScImageSlider {
       this.swiper = new Swiper(this.swiperContainerRef, {
         direction: 'horizontal',
         loop: false,
+        autoHeight: true,
         on: {
           slideChange: swiper => {
             this.currentSliderIndex = swiper.activeIndex;
