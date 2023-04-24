@@ -19,4 +19,11 @@ class ProductMedia extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'product_media';
+
+	/**
+	 * Does an update clear account cache?
+	 *
+	 * @var boolean
+	 */
+	protected $clears_account_cache = true;
 }
