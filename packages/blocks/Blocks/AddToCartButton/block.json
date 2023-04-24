@@ -4,7 +4,7 @@
 	"description": "Display a button to add a specific price to the cart.",
 	"category": "surecart",
 	"keywords": ["name", "customer"],
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"parent": null,
 	"supports": {
 		"html": false
@@ -47,5 +47,7 @@
 		"price_id": {
 			"type": "string"
 		}
-	}
+	},
+	"script": "surecart-components",
+	"style": "surecart-themes-default"
 }

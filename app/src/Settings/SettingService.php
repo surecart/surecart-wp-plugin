@@ -136,7 +136,14 @@ class SettingService {
 			[
 				'type'         => 'array',
 				'items'        => 'integer',
-				'show_in_rest' => true,
+				'show_in_rest' => [
+					'schema' => [
+						'type'  => 'array',
+						'items' => [
+							'type' => 'string',
+						],
+					],
+				],
 			]
 		);
 		$this->register(
