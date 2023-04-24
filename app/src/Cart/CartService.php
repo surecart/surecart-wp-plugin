@@ -48,7 +48,7 @@ class CartService
             return '';
         }
 
-        $floating_icon_enabled = $this->isFloatingIconEnabled();
+        $floating_icon_enabled = $this->isFloatingIconEnabled() ? 'false' : 'true';
 
         ob_start();
         ?>
@@ -105,7 +105,7 @@ class CartService
      */
     public function isFloatingIconEnabled() {
         $cart_icon_type = (string) get_option('surecart_cart_icon_type', null);
-        return $cart_icon_type === 'menu_icon' ? 'false' : 'true';
+        return $cart_icon_type === 'menu_icon';
     }
     
     /**
