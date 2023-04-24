@@ -29,11 +29,11 @@
 ### Graph
 ```mermaid
 graph TD;
-  sc-line-item-shipping --> sc-line-item
-  sc-line-item-shipping --> sc-skeleton
-  sc-line-item-shipping --> sc-format-number
-  sc-form-components-validator --> sc-line-item-shipping
-  style sc-line-item-shipping fill:#f9f,stroke:#333,stroke-width:4px
+  sc-shipping-line-item --> sc-line-item
+  sc-shipping-line-item --> sc-skeleton
+  sc-shipping-line-item --> sc-format-number
+  sc-form-components-validator --> sc-shipping-line-item
+  style sc-shipping-line-item fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

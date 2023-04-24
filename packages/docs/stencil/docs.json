@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-21T13:58:57",
+  "timestamp": "2023-04-24T10:01:03",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -4537,7 +4537,7 @@
           "sc-order-tax-id-input",
           "sc-order-bumps",
           "sc-line-item-tax",
-          "sc-line-item-shipping"
+          "sc-shipping-line-item"
         ],
         "sc-order-shipping-address": [
           "sc-address",
@@ -4590,7 +4590,7 @@
           "sc-line-item",
           "sc-format-number"
         ],
-        "sc-line-item-shipping": [
+        "sc-shipping-line-item": [
           "sc-line-item",
           "sc-skeleton",
           "sc-format-number"
@@ -11415,7 +11415,7 @@
         "sc-order-tax-id-input",
         "sc-order-bumps",
         "sc-line-item-tax",
-        "sc-line-item-shipping"
+        "sc-shipping-line-item"
       ],
       "dependencyGraph": {
         "sc-form-components-validator": [
@@ -11423,7 +11423,7 @@
           "sc-order-tax-id-input",
           "sc-order-bumps",
           "sc-line-item-tax",
-          "sc-line-item-shipping"
+          "sc-shipping-line-item"
         ],
         "sc-order-shipping-address": [
           "sc-address",
@@ -11488,7 +11488,7 @@
           "sc-line-item",
           "sc-format-number"
         ],
-        "sc-line-item-shipping": [
+        "sc-shipping-line-item": [
           "sc-line-item",
           "sc-skeleton",
           "sc-format-number"
@@ -12826,7 +12826,6 @@
         "sc-coupon-form",
         "sc-invoices-list",
         "sc-line-item-bump",
-        "sc-line-item-shipping",
         "sc-line-item-tax",
         "sc-line-item-total",
         "sc-order",
@@ -12839,6 +12838,7 @@
         "sc-price-range",
         "sc-product-line-item",
         "sc-product-selected-price",
+        "sc-shipping-line-item",
         "sc-subscription-details",
         "sc-subscription-next-payment",
         "sc-subscription-switch",
@@ -12857,9 +12857,6 @@
           "sc-format-number"
         ],
         "sc-line-item-bump": [
-          "sc-format-number"
-        ],
-        "sc-line-item-shipping": [
           "sc-format-number"
         ],
         "sc-line-item-tax": [
@@ -12896,6 +12893,9 @@
           "sc-format-number"
         ],
         "sc-product-selected-price": [
+          "sc-format-number"
+        ],
+        "sc-shipping-line-item": [
           "sc-format-number"
         ],
         "sc-subscription-details": [
@@ -14562,7 +14562,6 @@
       "dependents": [
         "sc-coupon-form",
         "sc-line-item-bump",
-        "sc-line-item-shipping",
         "sc-line-item-tax",
         "sc-line-item-total",
         "sc-line-items",
@@ -14572,6 +14571,7 @@
         "sc-order-confirmation-totals",
         "sc-order-summary",
         "sc-product-line-item",
+        "sc-shipping-line-item",
         "sc-subscription-next-payment",
         "sc-upcoming-invoice"
       ],
@@ -14581,9 +14581,6 @@
           "sc-line-item"
         ],
         "sc-line-item-bump": [
-          "sc-line-item"
-        ],
-        "sc-line-item-shipping": [
           "sc-line-item"
         ],
         "sc-line-item-tax": [
@@ -14611,6 +14608,9 @@
           "sc-line-item"
         ],
         "sc-product-line-item": [
+          "sc-line-item"
+        ],
+        "sc-shipping-line-item": [
           "sc-line-item"
         ],
         "sc-subscription-next-payment": [
@@ -14693,88 +14693,6 @@
         "sc-line-item-bump": [
           "sc-line-item",
           "sc-format-number"
-        ]
-      }
-    },
-    {
-      "filePath": "./src/components/controllers/checkout-form/sc-line-item-shipping/sc-line-item-shipping.tsx",
-      "encapsulation": "shadow",
-      "tag": "sc-line-item-shipping",
-      "readme": "# sc-shipping-amount\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "label",
-          "type": "string",
-          "mutable": false,
-          "attr": "label",
-          "reflectToAttr": false,
-          "docs": "Label",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "loading",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "loading",
-          "reflectToAttr": false,
-          "docs": "Whether parent is loading",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "order",
-          "type": "Checkout",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "The order",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Checkout"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
-      "methods": [],
-      "events": [],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
-      "dependents": [
-        "sc-form-components-validator"
-      ],
-      "dependencies": [
-        "sc-line-item",
-        "sc-skeleton",
-        "sc-format-number"
-      ],
-      "dependencyGraph": {
-        "sc-line-item-shipping": [
-          "sc-line-item",
-          "sc-skeleton",
-          "sc-format-number"
-        ],
-        "sc-form-components-validator": [
-          "sc-line-item-shipping"
         ]
       }
     },
@@ -23812,6 +23730,88 @@
       }
     },
     {
+      "filePath": "./src/components/controllers/checkout-form/sc-line-item-shipping/sc-shipping-line-item.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-shipping-line-item",
+      "readme": "# sc-shipping-amount\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "Label",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "loading",
+          "reflectToAttr": false,
+          "docs": "Whether parent is loading",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "order",
+          "type": "Checkout",
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "The order",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Checkout"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-form-components-validator"
+      ],
+      "dependencies": [
+        "sc-line-item",
+        "sc-skeleton",
+        "sc-format-number"
+      ],
+      "dependencyGraph": {
+        "sc-shipping-line-item": [
+          "sc-line-item",
+          "sc-skeleton",
+          "sc-format-number"
+        ],
+        "sc-form-components-validator": [
+          "sc-shipping-line-item"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/ui/skeleton/sc-skeleton.tsx",
       "encapsulation": "shadow",
       "tag": "sc-skeleton",
@@ -23887,7 +23887,6 @@
         "sc-customer-details",
         "sc-donation-choices",
         "sc-invoices-list",
-        "sc-line-item-shipping",
         "sc-line-item-total",
         "sc-line-items",
         "sc-mollie-add-method",
@@ -23901,6 +23900,7 @@
         "sc-paypal-buttons",
         "sc-price-choice",
         "sc-purchase-downloads-list",
+        "sc-shipping-line-item",
         "sc-stripe-add-method",
         "sc-stripe-payment-element",
         "sc-subscription",
@@ -23937,9 +23937,6 @@
           "sc-skeleton"
         ],
         "sc-invoices-list": [
-          "sc-skeleton"
-        ],
-        "sc-line-item-shipping": [
           "sc-skeleton"
         ],
         "sc-line-item-total": [
@@ -23979,6 +23976,9 @@
           "sc-skeleton"
         ],
         "sc-purchase-downloads-list": [
+          "sc-skeleton"
+        ],
+        "sc-shipping-line-item": [
           "sc-skeleton"
         ],
         "sc-stripe-add-method": [

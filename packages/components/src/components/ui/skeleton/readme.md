@@ -41,7 +41,6 @@
  - [sc-customer-details](../customer-details)
  - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
- - [sc-line-item-shipping](../../controllers/checkout-form/sc-line-item-shipping)
  - [sc-line-item-total](../../controllers/checkout-form/line-item-total)
  - [sc-line-items](../../controllers/checkout-form/line-items)
  - [sc-mollie-add-method](../sc-mollie-add-method)
@@ -55,6 +54,7 @@
  - [sc-paypal-buttons](../paypal-buttons)
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
+ - [sc-shipping-line-item](../../controllers/checkout-form/sc-line-item-shipping)
  - [sc-stripe-add-method](../sc-stripe-add-method)
  - [sc-stripe-payment-element](../stripe-payment-element)
  - [sc-subscription](../../controllers/dashboard/subscription)
@@ -78,7 +78,6 @@ graph TD;
   sc-customer-details --> sc-skeleton
   sc-donation-choices --> sc-skeleton
   sc-invoices-list --> sc-skeleton
-  sc-line-item-shipping --> sc-skeleton
   sc-line-item-total --> sc-skeleton
   sc-line-items --> sc-skeleton
   sc-mollie-add-method --> sc-skeleton
@@ -92,6 +91,7 @@ graph TD;
   sc-paypal-buttons --> sc-skeleton
   sc-price-choice --> sc-skeleton
   sc-purchase-downloads-list --> sc-skeleton
+  sc-shipping-line-item --> sc-skeleton
   sc-stripe-add-method --> sc-skeleton
   sc-stripe-payment-element --> sc-skeleton
   sc-subscription --> sc-skeleton

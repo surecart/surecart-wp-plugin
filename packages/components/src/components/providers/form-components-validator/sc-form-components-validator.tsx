@@ -63,7 +63,7 @@ export class ScFormComponentsValidator {
     this.hasTaxIDField = !!this.el.querySelector('sc-order-tax-id-input');
     this.hasBumpsField = !!this.el.querySelector('sc-order-bumps');
     this.hasTaxLine = !!this.el.querySelector('sc-line-item-tax');
-    this.hasShippingAmount = !!this.el.querySelector('sc-line-item-shipping');
+    this.hasShippingAmount = !!this.el.querySelector('sc-shipping-line-item');
 
     // automatically add address field if tax is enabled.
     if (this.taxProtocol?.tax_enabled) {
@@ -128,7 +128,7 @@ export class ScFormComponentsValidator {
       insertBeforeElement = total?.previousElementSibling?.tagName === 'SC-DIVIDER'? total.previousElementSibling: total;
     }
 
-    const shippingAmount = document.createElement('sc-line-item-shipping');
+    const shippingAmount = document.createElement('sc-shipping-line-item');
     insertBeforeElement.parentNode.insertBefore( shippingAmount,insertBeforeElement);
     this.hasShippingAmount = true;
   }

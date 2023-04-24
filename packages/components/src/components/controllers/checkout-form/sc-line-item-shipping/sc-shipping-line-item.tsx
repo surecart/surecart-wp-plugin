@@ -4,21 +4,19 @@ import { openWormhole } from 'stencil-wormhole';
 import { __ } from '@wordpress/i18n';
 
 @Component({
-  tag: 'sc-line-item-shipping',
-  styleUrl: 'sc-line-item-shipping.scss',
+  tag: 'sc-shipping-line-item',
+  styleUrl: 'sc-shipping-line-item.scss',
   shadow: true,
 })
-export class ScLineItemShipping {
+export class ScShippingLineItem {
   /** The order */
-  @Prop() order: Checkout;
+  @Prop({mutable:true}) order: Checkout;
   /** Whether parent is loading */
   @Prop() loading: boolean;
   /**Label */
   @Prop() label:string ;
 
   render() {
-    if (this.order?.shipping_amount === 0) return;
-
     if (this.loading) {
       return (
         <sc-line-item>
@@ -27,8 +25,6 @@ export class ScLineItemShipping {
         </sc-line-item>
       );
     }
-
-    if (!this.order?.currency) return;
 
     return (
       <sc-line-item>
@@ -43,4 +39,4 @@ export class ScLineItemShipping {
   }
 }
 
-openWormhole(ScLineItemShipping, ['order', 'loading', 'calculating'], false);
+openWormhole(ScShippingLineItem, ['order', 'loading', 'calculating'], false);
