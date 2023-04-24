@@ -1,4 +1,5 @@
 {
+	"apiVersion": "2",
 	"name": "surecart/image-slider",
 	"title": "Image Slider",
 	"description": "Displays a image slider.",

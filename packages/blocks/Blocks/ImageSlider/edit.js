@@ -1,14 +1,15 @@
-import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/block-editor';
-import { Fragment, useEffect, useState } from '@wordpress/element';
+import { ScImageSlider } from '@surecart/components-react';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
+import { Disabled } from '@wordpress/components';
 import {
 	PanelBody,
-	__experimentalUseCustomUnits as useCustomUnits,
-	__experimentalUnitControl as UnitControl,
 	RangeControl,
 	ToggleControl,
+	__experimentalUnitControl as UnitControl,
+	__experimentalUseCustomUnits as useCustomUnits,
 } from '@wordpress/components';
-import { ScImageSlider } from '@surecart/components-react';
+import { Fragment, useEffect, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 const imagesArr = [
 	{
@@ -33,27 +34,22 @@ const imagesArr = [
 	},
 ];
 
-let timerId;
-
-export default ({ attributes, setAttributes }) => {
+export default ({ attributes, setAttributes, isSelected }) => {
 	const { height, images, show_thumbnails, thumbnails_per_page } = attributes;
-	const [propChanging, setPropChanging] = useState(false);
+	const [renderKey, setRenderKey] = useState(0);
+	const blockProps = useBlockProps({
+		images: images?.length ? images : imagesArr,
+		thumbnails: show_thumbnails,
+		thumbnailsPerPage: thumbnails_per_page,
+		style: { '--sc-product-slider-height': height },
+	});
 
 	const units = useCustomUnits({
 		availableUnits: ['px', 'em', 'rem', 'vh'],
 	});
 
 	useEffect(() => {
-		setPropChanging(true);
-		clearTimeout(timerId);
-
-		timerId = setTimeout(() => {
-			setPropChanging(false);
-		}, 100);
-
-		() => {
-			clearTimeout(timerId);
-		};
+		setRenderKey(renderKey + 1);
 	}, [height, show_thumbnails, thumbnails_per_page]);
 
 	return (
@@ -96,17 +92,16 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<div style={{ padding: '1rem' }}>
-				{propChanging ? (
-					<p>Loading...</p>
-				) : (
+			<div {...blockProps}>
+				<Disabled isDisabled={!isSelected}>
 					<ScImageSlider
-						images={images?.length ? images : imagesArr}
+						key={renderKey}
+						images={imagesArr}
 						thumbnails={show_thumbnails}
 						thumbnailsPerPage={thumbnails_per_page}
 						style={{ '--sc-product-slider-height': height }}
 					/>
-				)}
+				</Disabled>
 			</div>
 		</Fragment>
 	);
