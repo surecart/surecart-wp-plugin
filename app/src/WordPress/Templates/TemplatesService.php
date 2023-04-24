@@ -141,7 +141,7 @@ class TemplatesService {
 		}
 
 		remove_filter( 'posts_pre_query', 'wpse_change_product_post_query' );
-		$product = \SureCart\Models\Product::with( [ 'prices', 'image' ] )->find( $product_id );
+		$product = \SureCart\Models\Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media' ] )->find( $product_id );
 		if ( is_wp_error( $product ) ) {
 			$wp_query->is_404 = true;
 			return;
