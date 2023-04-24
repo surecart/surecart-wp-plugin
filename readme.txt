@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.2
-Stable tag: 1.9.3
+Stable tag: 1.9.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,13 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.9.4 - April 24, 2023 =
+* Improvement: Clicking add to cart button now increases the quantity.
+* Improvement: Disallow spaces as inputs for firstname, lastname or full name fields.
+* Fix: CSS issue for subscription saver modal being more than 2 columns.
+* Fix: Issue where coupon field gets too wide if button text is longer on mobile.
+* Fix: Issue with Kadence blocks styles being displayed for some themes in SureCart columns.
 
 = 1.9.3 - April 19, 2023 =
 * Fix: Overflow issue with order bumps and subscription saver items that have long titles.
