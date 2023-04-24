@@ -1,12 +1,10 @@
 import { __ } from '@wordpress/i18n';
-import useSnackbar from '../hooks/useSnackbar';
 import { store as noticesStore } from '@wordpress/notices';
 import { select, useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 
 export default function useSave() {
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { addSnackbarNotice } = useSnackbar();
 	const { saveEditedEntityRecord } = useDispatch(coreStore);
 
 	/**
@@ -33,10 +31,6 @@ export default function useSave() {
 
 		createSuccessNotice(successMessage, {
 			type: 'snackbar',
-		});
-		// save success.
-		addSnackbarNotice({
-			content: successMessage,
 		});
 	};
 

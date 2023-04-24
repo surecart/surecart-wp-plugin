@@ -16,8 +16,14 @@
   color: var(--sc-stacked-list-row-text-color, var(--color));
 
   &.is-truncated {
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.text--is-rtl {
+  .text {
+    text-align: right;
   }
 }

@@ -62,12 +62,12 @@ export default ({
 
 		if (paymentType === 'stripe')
 			return `https://dashboard.stripe.com/${
-				!isLiveMode && 'test/'
+				!isLiveMode ? 'test/' : ''
 			}charges/${externalChargeId}`;
 
 		if (paymentType === 'paypal') {
 			return `https://www.${
-				!isLiveMode && 'sandbox.'
+				!isLiveMode ? 'sandbox.' : ''
 			}paypal.com/activity/payment/${externalChargeId}`;
 		}
 	};

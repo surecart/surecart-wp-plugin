@@ -152,7 +152,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-color-danger-950: #481111;
   --sc-color-danger-text: var(--sc-color-white);
   --sc-border-radius-small: 0.15em;
-  --sc-border-radius-medium: 0.25em;
+  --sc-border-radius-medium: 0.35em;
   --sc-border-radius-large: 0.5em;
   --sc-border-radius-x-large: 0.75em;
   --sc-border-radius-circle: 50%;
@@ -174,7 +174,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-spacing-xxxx-large: 4.5em;
   --sc-transition-x-slow: 1000ms;
   --sc-transition-slow: 500ms;
-  --sc-transition-medium: 250ms;
+  --sc-transition-medium: 350ms;
   --sc-transition-fast: 150ms;
   --sc-transition-x-fast: 50ms;
   --sc-font-mono: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
@@ -187,8 +187,8 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-font-size-large: 1.15em;
   --sc-font-size-x-large: 1.25em;
   --sc-font-size-xx-large: 1.45em;
-  --sc-font-size-xxx-large: 3em;
-  --sc-font-size-xxxx-large: 4.5em;
+  --sc-font-size-xxx-large: 2em;
+  --sc-font-size-xxxx-large: 3em;
   --sc-font-weight-light: 300;
   --sc-font-weight-normal: 400;
   --sc-font-weight-semibold: 500;
@@ -223,6 +223,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-drawer-header-spacing: var(--sc-spacing-large);
   --sc-drawer-body-spacing: var(--sc-spacing-large);
   --sc-drawer-footer-spacing: var(--sc-spacing-large);
+  --sc-input-transition: var(--sc-transition-medium);
   --sc-input-box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   --sc-input-height-small: 2.25em;
   --sc-input-height-medium: 2.8em;
@@ -276,6 +277,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-toggle-size: 1em;
   --sc-toggle-shady-color: var(--sc-color-gray-50);
   --sc-radio-size: 1em;
+  --sc-toggle-radio-size: 0.85em;
   --sc-checkbox-size: 1em;
   --sc-overlay-background-color: #37415180;
   --sc-panel-background-color: var(--sc-color-white);
@@ -310,6 +312,7 @@ sc-checkout [hidden] {
 }
 
 .surecart-theme-dark {
+  color: var(--sc-color-white);
   /** Let's make these less blue for basic dark mode **/
   --sc-color-gray-50: var(--sc-color-neutral-50);
   --sc-color-gray-100: var(--sc-color-neutral-100);
@@ -324,7 +327,7 @@ sc-checkout [hidden] {
   --sc-color-gray-950: var(--sc-color-neutral-950);
 
   /* Inputs */
-  --sc-input-label-color: var(--sc-color-gray-300);
+  --sc-input-label-color: var(--sc-color-gray-200);
   --sc-input-background-color: var(--sc-color-gray-900);
   --sc-input-background-color-hover: var(--sc-color-gray-900);
   --sc-input-background-color-focus: var(--sc-color-gray-900);
@@ -452,6 +455,9 @@ sc-checkout [hidden] {
   /** Cart **/
   --sc-cart-counter-background: var(--sc-color-gray-50);
   --sc-cart-counter-color: var(--sc-color-gray-950);
+
+  /** Selected Price **/
+  --sc-selected-price-color: var(--sc-color-gray-50);
 }
 
 /* Avatar */
@@ -664,7 +670,7 @@ sc-checkout [hidden] {
 
 .surecart-theme-dark sc-tab:not([disabled])::part(base):hover,
 .surecart-theme-dark sc-tab[active]::part(base) {
-  color: var(--sc-color-primary-500);
+  color: var(--sc-color-primary-white);
 }
 
 /* Tag */

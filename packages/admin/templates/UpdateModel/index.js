@@ -69,30 +69,6 @@ export default ({
 							float: right;
 						}
 
-						/* .components-text-control__input,
-						.components-input-control__container
-							.components-input-control__input {
-							&[type='text'],
-							&[type='tel'],
-							&[type='time'],
-							&[type='url'],
-							&[type='week'],
-							&[type='password'],
-							&[type='color'],
-							&[type='date'],
-							&[type='datetime'],
-							&[type='datetime-local'],
-							&[type='email'],
-							&[type='month'],
-							&[type='number'] {
-								height: 40px;
-								border-radius: 4px;
-								border: 1px solid #9898a0;
-								padding: 10px 12px;
-								box-shadow: rgb(0 0 0 / 5%) 0px 1px 2px 0px;
-							}
-						} */
-
 						.is-error {
 							.components-text-control__input {
 								border-color: #cc1818;
@@ -107,12 +83,10 @@ export default ({
 					<div
 						css={css`
 							position: sticky;
-							/* background: #fff; */
-							background-color: rgba(255, 255, 255, 0.75);
-							backdrop-filter: blur(5px);
+							background: #fff;
 							top: 32px;
 							width: 100%;
-							z-index: 4;
+							z-index: 99999;
 							margin-bottom: var(
 								--sc-spacing-xx-large
 							) !important;

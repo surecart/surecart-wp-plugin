@@ -1,8 +1,9 @@
-import { Customer, Checkout } from '../../../../types';
-import { Component, Prop, h, Event, EventEmitter, Watch, Method, Host } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
-import { createOrUpdateOrder } from '../../../../services/session';
+import { Component, Event, EventEmitter, h, Host, Method, Prop, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+import { openWormhole } from 'stencil-wormhole';
+
+import { createOrUpdateCheckout } from '../../../../services/session';
+import { Checkout, Customer } from '../../../../types';
 import { getValueFromUrl } from '../../../../functions/util';
 
 @Component({
@@ -100,7 +101,7 @@ export class ScCustomerEmail {
 
     // update order state.
     try {
-      const order = (await createOrUpdateOrder({ id: this.order?.id, data: { email: this.input.value } })) as Checkout;
+      const order = (await createOrUpdateCheckout({ id: this.order?.id, data: { email: this.input.value } })) as Checkout;
       this.scUpdateOrderState.emit(order);
     } catch (error) {
       console.error(error);

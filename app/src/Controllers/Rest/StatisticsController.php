@@ -3,6 +3,8 @@
 namespace SureCart\Controllers\Rest;
 
 use SureCart\Models\AbandonedCheckout;
+use SureCart\Models\CancellationAct;
+use SureCart\Models\CancellationReason;
 use SureCart\Models\Order;
 
 /**
@@ -15,8 +17,10 @@ class StatisticsController {
 	 * @var array
 	 */
 	protected $models = [
-		'orders'              => Order::class,
-		'abandoned_checkouts' => AbandonedCheckout::class,
+		'orders'               => Order::class,
+		'abandoned_checkouts'  => AbandonedCheckout::class,
+		'cancellation_reasons' => CancellationReason::class,
+		'cancellation_acts'    => CancellationAct::class,
 	];
 
 	/**

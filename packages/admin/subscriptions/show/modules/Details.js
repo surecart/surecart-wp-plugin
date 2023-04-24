@@ -11,6 +11,7 @@ import { __, sprintf } from '@wordpress/i18n';
 
 export default ({ subscription, customer, product, loading }) => {
 	const renderStartDate = () => {
+		if (subscription?.status === 'canceled') return null;
 		if (subscription?.current_period_end_at == null) {
 			return (
 				<div>
@@ -18,6 +19,25 @@ export default ({ subscription, customer, product, loading }) => {
 						<strong>{sprintf(__('Lifetime', 'surecart'))}</strong>
 					</div>
 					{__('Lifetime Subscription', 'surecart')}
+				</div>
+			);
+		}
+
+		if (subscription?.restore_at && subscription?.status === 'canceled') {
+			return (
+				<div>
+					<div>
+						<strong>
+							{sprintf(__('Restores on', 'surecart'))}
+						</strong>
+					</div>
+					<ScFormatDate
+						date={subscription.restore_at}
+						type="timestamp"
+						month="long"
+						day="numeric"
+						year="numeric"
+					></ScFormatDate>
 				</div>
 			);
 		}

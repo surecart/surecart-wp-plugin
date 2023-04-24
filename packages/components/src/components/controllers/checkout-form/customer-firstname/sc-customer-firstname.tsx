@@ -1,5 +1,6 @@
 import { Customer, Checkout } from '../../../../types';
 import { Component, Prop, h, Event, EventEmitter, Watch, Method } from '@stencil/core';
+import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 import { getValueFromUrl } from '../../../../functions/util';
 
@@ -83,7 +84,19 @@ export class ScCustomerFirstname {
 
   @Method()
   async reportValidity() {
-    return this.input?.reportValidity?.();
+    this.input?.setCustomValidity?.('');
+
+    if (!this.input?.value.trim().length) {
+      this.input.setCustomValidity(__('Field must not be empty.', 'surecart'));
+    }
+
+    const valid = await this.input?.reportValidity?.();
+
+    if (!valid) {
+      return false;
+    }
+
+    return valid;
   }
 
   /** Sync customer email with session if it's updated by other means */

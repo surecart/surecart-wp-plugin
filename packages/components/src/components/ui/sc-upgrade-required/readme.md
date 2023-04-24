@@ -7,16 +7,16 @@
 
 ## Properties
 
-| Property | Attribute | Description     | Type                             | Default   |
-| -------- | --------- | --------------- | -------------------------------- | --------- |
-| `size`   | `size`    | The tag's size. | `"large" \| "medium" \| "small"` | `'small'` |
+| Property   | Attribute  | Description     | Type                             | Default   |
+| ---------- | ---------- | --------------- | -------------------------------- | --------- |
+| `required` | `required` |                 | `boolean`                        | `true`    |
+| `size`     | `size`     | The tag's size. | `"large" \| "medium" \| "small"` | `'small'` |
 
 
 ## Dependencies
 
 ### Depends on
 
-- [sc-tag](../tag)
 - [sc-dialog](../sc-dialog)
 - [sc-icon](../icon)
 - [sc-button](../button)
@@ -24,7 +24,6 @@
 ### Graph
 ```mermaid
 graph TD;
-  sc-upgrade-required --> sc-tag
   sc-upgrade-required --> sc-dialog
   sc-upgrade-required --> sc-icon
   sc-upgrade-required --> sc-button

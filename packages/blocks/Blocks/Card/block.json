@@ -3,10 +3,11 @@
 	"apiVersion": 2,
 	"name": "surecart/card",
 	"title": "Card",
-	"description": "Display an card block.",
+	"description": "Display a card block.",
 	"category": "surecart",
 	"ancestor": ["surecart/form"],
 	"keywords": ["card", "details", "confirm"],
+	"textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false

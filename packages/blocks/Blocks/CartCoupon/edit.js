@@ -21,11 +21,14 @@ import { ScCouponForm } from '@surecart/components-react';
 import useCartStyles from '../../hooks/useCartStyles';
 import CartInspectorControls from '../../components/CartInspectorControls';
 
-export default ({ attributes, setAttributes, isSelected }) => {
-	const { text, button_text, disabled, border } = attributes;
+export default ({ attributes, setAttributes }) => {
+	const { text, button_text, disabled, collapsed, placeholder } = attributes;
 
 	const blockProps = useBlockProps({
 		style: useCartStyles({ attributes }),
+		collapsed,
+		placeholder,
+		label: text,
 	});
 
 	return (
@@ -37,10 +40,28 @@ export default ({ attributes, setAttributes, isSelected }) => {
 				/>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
+						<ToggleControl
+							label={__('Collapsed', 'surecart')}
+							checked={collapsed}
+							onChange={(collapsed) =>
+								setAttributes({ collapsed })
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
 						<TextControl
-							label={__('Text', 'surecart')}
+							label={__('Label', 'surecart')}
 							value={text}
 							onChange={(text) => setAttributes({ text })}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Placeholder', 'surecart')}
+							value={placeholder}
+							onChange={(placeholder) =>
+								setAttributes({ placeholder })
+							}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -55,7 +76,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScCouponForm forceOpen={isSelected} {...blockProps}>
+			<ScCouponForm {...blockProps}>
 				<span
 					css={css`
 						display: flex;

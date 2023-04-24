@@ -1,55 +1,75 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { ScFormControl, ScInput, ScTag } from '@surecart/components-react';
-import { useDispatch } from '@wordpress/data';
-import { store as uiStore } from '@surecart/ui-data';
+import {
+	ScUpgradeRequired,
+	ScInput,
+	ScSwitch,
+	ScPremiumTag,
+} from '@surecart/components-react';
 
 export default ({ className, price, updatePrice }) => {
-	const { setUpgradeModal } = useDispatch(uiStore);
-
-	// must have the
-	if (!scData?.entitlements?.subscription_trials) {
-		return (
-			<ScFormControl label={true} style={{ flex: 1 }}>
-				<span slot="label">
-					{__('Free Trial Days', 'surecart')}{' '}
-					<ScTag type="success" size="small" pill slot="prefix">
-						{__('Premium', 'surecart')}
-					</ScTag>
-				</span>
-				<ScInput
-					onClick={() => setUpgradeModal(true)}
-					className={className}
-					type="number"
-					min={1}
-					max={365}
-					value={price?.trial_duration_days}
-					onScInput={() =>
-						updatePrice({
-							trial_duration_days: null,
-						})
-					}
-				>
-					<span slot="suffix">{__('Days', 'surecart')}</span>
-				</ScInput>
-			</ScFormControl>
-		);
-	}
-
 	return (
-		<ScInput
-			label={__('Free Trial Days', 'surecart')}
-			className={className}
-			type="number"
-			min={1}
-			max={365}
-			value={price?.trial_duration_days}
-			onScInput={(e) =>
-				updatePrice({
-					trial_duration_days: parseInt(e.target.value),
-				})
-			}
+		<ScUpgradeRequired
+			required={!scData?.entitlements?.subscription_trials}
+			css={css`
+				display: grid;
+				gap: var(--sc-spacing-small);
+			`}
 		>
-			<span slot="suffix">{__('Days', 'surecart')}</span>
-		</ScInput>
+			<ScSwitch
+				checked={!!price.trial_duration_days}
+				onScChange={(e) =>
+					updatePrice({
+						trial_duration_days: e.target.checked ? 15 : null,
+					})
+				}
+			>
+				{__('Free Trial', 'surecart')}
+				{!scData?.entitlements?.subscription_trials && (
+					<>
+						{' '}
+						<ScPremiumTag />
+					</>
+				)}
+			</ScSwitch>
+
+			{!!price?.trial_duration_days && (
+				<>
+					<ScInput
+						label={__('Free Trial Days', 'surecart')}
+						className={className}
+						type="number"
+						min={1}
+						max={365}
+						value={price?.trial_duration_days || 1}
+						onScInput={(e) =>
+							e.target.value &&
+							updatePrice({
+								trial_duration_days: parseInt(e.target.value),
+							})
+						}
+					>
+						<span slot="suffix">{__('Days', 'surecart')}</span>
+					</ScInput>
+
+					{!!price?.setup_fee_enabled && (
+						<ScSwitch
+							checked={price.setup_fee_trial_enabled === false}
+							onScChange={(e) =>
+								updatePrice({
+									setup_fee_trial_enabled: !e.target.checked,
+								})
+							}
+						>
+							{__(
+								'Charge setup fee during free trial',
+								'surecart'
+							)}
+						</ScSwitch>
+					)}
+				</>
+			)}
+		</ScUpgradeRequired>
 	);
 };

@@ -152,7 +152,7 @@ export default ({
 		);
 	};
 
-	const fileLimit = window.scData.entitlements.media_byte_size?.limit;
+	const fileLimit = window.scData.entitlements?.media_byte_size?.limit;
 	const header = () => {
 		return (
 			<div

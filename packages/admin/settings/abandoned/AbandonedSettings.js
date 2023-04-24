@@ -284,6 +284,70 @@ export default () => {
 					/>
 				)}
 			</SettingsBox>
+			<SettingsBox
+				title={__('Advanced Settings', 'surecart')}
+				description={__(
+					'Advanced settings for abandoned checkouts',
+					'surecart'
+				)}
+				loading={!hasLoadedItem}
+			>
+				<ScSwitch
+					checked={item?.ignore_purchased_products}
+					onScChange={(e) =>
+						editItem({
+							ignore_purchased_products: e.target.checked ? 1 : 0,
+						})
+					}
+				>
+					{__('Ignore Purchased Products', 'surecart')}
+					<span slot="description">
+						{__(
+							"Don't create abandoned checkout if all products in checkout have been purchased.",
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				<ScSwitch
+					checked={!!item?.grace_period_days}
+					onScChange={(e) =>
+						editItem({
+							grace_period_days: e.target.checked ? 1 : 0,
+						})
+					}
+				>
+					{__('Grace Period', 'surecart')}
+					<span slot="description">
+						{__(
+							'Wait for a period of time after a customer has made a purchase to send other abandoned checkouts.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				{!!item?.grace_period_days && (
+					<ScInput
+						type="number"
+						label={__('Grace Period', 'surecart')}
+						showLabel={false}
+						help={__(
+							"The number of days to wait after a customer's purchase before allowing an abandoned checkout to be created. This helps to prevent abandoned checkouts being created for customers very soon after they have made a different purchase.",
+							'surecart'
+						)}
+						value={item?.grace_period_days}
+						onScInput={(e) => {
+							if (e.target.value) {
+								editItem({
+									grace_period_days: e.target.value,
+								});
+							}
+						}}
+					>
+						<span slot="suffix">{__('Days', 'surecart')}</span>
+					</ScInput>
+				)}
+			</SettingsBox>
 		</SettingsTemplate>
 	);
 };

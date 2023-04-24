@@ -7,15 +7,17 @@ export default (props) => {
 	const { id } = props;
 	const { item, hasLoadedItem } = useSelect(
 		(select) => {
+			const queryArgs = [
+				'surecart',
+				'product',
+				id,
+				{ expand: ['prices'] },
+			];
 			return {
-				item: select(coreStore).getEntityRecord(
-					'surecart',
-					'product',
-					id
-				),
+				item: select(coreStore).getEntityRecord(...queryArgs),
 				hasLoadedItem: select(coreStore).hasFinishedResolution(
 					'getEntityRecord',
-					['surecart', 'product', id]
+					queryArgs
 				),
 			};
 		},

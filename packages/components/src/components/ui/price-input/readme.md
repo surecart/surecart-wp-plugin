@@ -36,7 +36,10 @@
 
 | Event      | Description                               | Type                |
 | ---------- | ----------------------------------------- | ------------------- |
+| `scBlur`   | Emitted when the control loses focus.     | `CustomEvent<void>` |
 | `scChange` | Emitted when the control's value changes. | `CustomEvent<void>` |
+| `scFocus`  | Emitted when the control gains focus.     | `CustomEvent<void>` |
+| `scInput`  | Emitted when the control's value changes. | `CustomEvent<void>` |
 
 
 ## Methods
@@ -99,7 +102,7 @@ Type: `Promise<void>`
 
  - [sc-custom-order-price-input](../../controllers/checkout-form/custom-order-price-input)
  - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
- - [sc-price-choice](../../controllers/checkout-form/price-choice)
+ - [sc-product-selected-price](../../controllers/checkout-form/sc-product-selected-price)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
 
 ### Depends on
@@ -114,7 +117,7 @@ graph TD;
   sc-form-control --> sc-tooltip
   sc-custom-order-price-input --> sc-price-input
   sc-donation-choices --> sc-price-input
-  sc-price-choice --> sc-price-input
+  sc-product-selected-price --> sc-price-input
   sc-subscription-ad-hoc-confirm --> sc-price-input
   style sc-price-input fill:#f9f,stroke:#333,stroke-width:4px
 ```

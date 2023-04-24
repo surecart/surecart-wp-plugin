@@ -2,6 +2,7 @@
 
 namespace SureCart\Request;
 
+use SureCart\Models\ApiToken;
 use SureCart\Support\Errors\ErrorsService;
 
 /**
@@ -81,7 +82,7 @@ class RequestService {
 	 * Get the base url.
 	 */
 	public function getBaseUrl() {
-		return untrailingslashit( SURECART_APP_URL ) . trailingslashit( $this->base_path );
+		return untrailingslashit( SURECART_API_URL ) . trailingslashit( $this->base_path );
 	}
 
 	/**
@@ -202,6 +203,11 @@ class RequestService {
 	 * @return mixed
 	 */
 	public function makeUncachedRequest( $endpoint, $args = [] ) {
+		// must have a token for the request.
+		if ( empty( $this->token ) ) {
+			return new \WP_Error( 'missing_token', __( 'Please connect your site to SureCart.', 'surecart' ) );
+		}
+
 		// make sure we send json.
 		if ( empty( $args['headers']['Content-Type'] ) ) {
 			$args['headers']['Content-Type'] = 'application/json';
@@ -269,6 +275,12 @@ class RequestService {
 			} catch ( \Exception $e ) {
 				error_log( $e->getMessage() );
 			}
+		}
+
+		// Handle invalid token first.
+		if ( 401 === $response_code ) {
+			ApiToken::clear();
+			return new \WP_Error( 'invalid_token', __( 'Invalid API token.', 'surecart' ) );
 		}
 
 		// check for errors.
@@ -386,6 +398,11 @@ class RequestService {
 			// convert bool to int to prevent getting unset.
 			if ( is_bool( $arg ) ) {
 				$args[ $key ] = $arg ? 1 : 0;
+			}
+
+			// url encode any strings.
+			if ( is_string( $arg ) ) {
+				$args[ $key ] = urlencode( $arg );
 			}
 		}
 

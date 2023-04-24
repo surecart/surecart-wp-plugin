@@ -202,6 +202,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 );
 
+/*
+|--------------------------------------------------------------------------
+| Cancellation Insights
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+->where( 'admin', 'sc-cancellation-insights' )
+->middleware( 'user.can:edit_sc_subscriptions' )
+->middleware( 'assets.components' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\CancellationInsights\\' )
+->group(
+	function() {
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'CancellationInsightsController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'show', 'action' )->handle( 'CancellationInsightsController@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'CancellationInsightsController@edit' );
+	}
+);
+
+
 \SureCart::route()
 ->where( 'admin', 'cart' )
 ->middleware( 'user.can:manage_options' )
@@ -288,6 +307,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		\SureCart::route()->get()->where( 'sc_url_var', 'brand', 'tab' )->name( 'settings.brand' )->handle( 'BrandSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'order', 'tab' )->name( 'settings.order' )->handle( 'OrderSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'abandoned_checkout', 'tab' )->name( 'settings.abandoned_checkout' )->handle( 'AbandonedCheckoutSettings@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'subscription_preservation', 'tab' )->name( 'settings.subscription_preservation' )->handle( 'SubscriptionPreservationSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'customer_notification_protocol', 'tab' )->name( 'settings.customer' )->handle( 'CustomerSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'subscription_protocol', 'tab' )->name( 'settings.subscription' )->handle( 'SubscriptionSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'portal_protocol', 'tab' )->name( 'settings.portal' )->handle( 'PortalSettings@show' );

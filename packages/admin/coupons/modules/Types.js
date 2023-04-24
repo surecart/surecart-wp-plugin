@@ -62,9 +62,10 @@ export default ({ coupon, loading, updateCoupon }) => {
 					<ScInput
 						className="sc-percent-off"
 						type="number"
-						min="0"
 						disabled={type !== 'percentage'}
+						min="0"
 						max="100"
+						step="0.01"
 						attribute="percent_off"
 						label={__('Percent Off', 'surecart')}
 						value={coupon?.percent_off || null}

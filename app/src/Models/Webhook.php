@@ -2,8 +2,6 @@
 
 namespace SureCart\Models;
 
-use SureCart\Support\Encryption;
-
 /**
  * Price model
  */
@@ -28,7 +26,7 @@ class Webhook extends Model {
 	 * @return string
 	 */
 	protected function getListenerUrl() {
-		return get_site_url( null, '/surecart/webhooks', is_ssl() ? 'https' : 'http' );
+		return get_home_url( null, '/surecart/webhooks', is_ssl() ? 'https' : 'http' );
 	}
 
 	/**

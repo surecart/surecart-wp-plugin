@@ -7,58 +7,54 @@
 
 ## Properties
 
-| Property         | Attribute         | Description | Type           | Default     |
-| ---------------- | ----------------- | ----------- | -------------- | ----------- |
-| `backUrl`        | `back-url`        |             | `string`       | `undefined` |
-| `heading`        | `heading`         |             | `string`       | `undefined` |
-| `subscription`   | --                |             | `Subscription` | `undefined` |
-| `subscriptionId` | `subscription-id` |             | `string`       | `undefined` |
-| `successUrl`     | `success-url`     |             | `string`       | `undefined` |
+| Property       | Attribute     | Description | Type                   | Default     |
+| -------------- | ------------- | ----------- | ---------------------- | ----------- |
+| `backUrl`      | `back-url`    |             | `string`               | `undefined` |
+| `comment`      | `comment`     |             | `string`               | `undefined` |
+| `heading`      | `heading`     |             | `string`               | `undefined` |
+| `protocol`     | --            |             | `SubscriptionProtocol` | `undefined` |
+| `reason`       | --            |             | `CancellationReason`   | `undefined` |
+| `subscription` | --            |             | `Subscription`         | `undefined` |
+| `successUrl`   | `success-url` |             | `string`               | `undefined` |
+
+
+## Events
+
+| Event         | Description | Type                |
+| ------------- | ----------- | ------------------- |
+| `scAbandon`   |             | `CustomEvent<void>` |
+| `scCancelled` |             | `CustomEvent<void>` |
 
 
 ## Dependencies
 
+### Used by
+
+ - [sc-cancel-dialog](../sc-cancel-dialog)
+
 ### Depends on
 
-- [sc-subscription-details](../subscription-details)
-- [sc-alert](../../../ui/alert)
 - [sc-format-date](../../../util/format-date)
 - [sc-skeleton](../../../ui/skeleton)
 - [sc-dashboard-module](../../../ui/dashboard-module)
-- [sc-card](../../../ui/card)
+- [sc-flex](../../../ui/flex)
 - [sc-button](../../../ui/button)
 - [sc-block-ui](../../../ui/block-ui)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-subscription-cancel --> sc-subscription-details
-  sc-subscription-cancel --> sc-alert
   sc-subscription-cancel --> sc-format-date
   sc-subscription-cancel --> sc-skeleton
   sc-subscription-cancel --> sc-dashboard-module
-  sc-subscription-cancel --> sc-card
+  sc-subscription-cancel --> sc-flex
   sc-subscription-cancel --> sc-button
   sc-subscription-cancel --> sc-block-ui
-  sc-subscription-details --> sc-subscription-status-badge
-  sc-subscription-details --> sc-format-date
-  sc-subscription-details --> sc-skeleton
-  sc-subscription-details --> sc-format-number
-  sc-subscription-details --> sc-flex
-  sc-subscription-details --> sc-tag
-  sc-subscription-details --> sc-text
-  sc-subscription-details --> sc-dialog
-  sc-subscription-details --> sc-card
-  sc-subscription-details --> sc-stacked-list
-  sc-subscription-details --> sc-stacked-list-row
-  sc-subscription-status-badge --> sc-format-date
-  sc-subscription-status-badge --> sc-tag
-  sc-dialog --> sc-button
-  sc-dialog --> sc-icon
-  sc-button --> sc-spinner
-  sc-alert --> sc-icon
   sc-dashboard-module --> sc-alert
+  sc-alert --> sc-icon
+  sc-button --> sc-spinner
   sc-block-ui --> sc-spinner
+  sc-cancel-dialog --> sc-subscription-cancel
   style sc-subscription-cancel fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

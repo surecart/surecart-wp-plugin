@@ -51,11 +51,11 @@
  - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-payment-method](../sc-payment-method)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-premium-tag](../sc-premium-tag)
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscription-status-badge](../subscription-status-badge)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
- - [sc-upgrade-required](../sc-upgrade-required)
 
 ### Graph
 ```mermaid
@@ -77,11 +77,11 @@ graph TD;
   sc-payment --> sc-tag
   sc-payment-method --> sc-tag
   sc-payment-methods-list --> sc-tag
+  sc-premium-tag --> sc-tag
   sc-subscription-details --> sc-tag
   sc-subscription-payment-method --> sc-tag
   sc-subscription-status-badge --> sc-tag
   sc-subscription-switch --> sc-tag
-  sc-upgrade-required --> sc-tag
   style sc-tag fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

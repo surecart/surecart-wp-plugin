@@ -17,37 +17,47 @@ export default ({ price, updatePrice }) => {
 			{!!price?.ad_hoc && (
 				<div
 					css={css`
-						display: flex;
-						gap: var(--sc-form-row-spacing);
-
-						> * {
-							flex: 1;
-						}
+						display: grid;
 					`}
 				>
-					<ScPriceInput
-						label={__('Minimum Price', 'surecart')}
-						className="sc-ad-hoc-min-amount"
-						currencyCode={price?.currency || scData.currency_code}
-						value={price?.ad_hoc_min_amount}
-						onScInput={(e) =>
-							updatePrice({
-								ad_hoc_min_amount: e.target.value,
-							})
-						}
-					/>
-					<ScPriceInput
-						label={__('Maximum Price', 'surecart')}
-						className="sc-ad-hoc-max-amount"
-						currencyCode={price?.currency || scData.currency_code}
-						value={price?.ad_hoc_max_amount}
-						min={price?.ad_hoc_min_amount / 100}
-						onScInput={(e) =>
-							updatePrice({
-								ad_hoc_max_amount: e.target.value,
-							})
-						}
-					/>
+					<div
+						css={css`
+							display: flex;
+							gap: var(--sc-form-row-spacing);
+							margin-bottom: var(--sc-spacing-small);
+							> * {
+								flex: 1;
+							}
+						`}
+					>
+						<ScPriceInput
+							label={__('Minimum Price', 'surecart')}
+							className="sc-ad-hoc-min-amount"
+							currencyCode={
+								price?.currency || scData.currency_code
+							}
+							value={price?.ad_hoc_min_amount}
+							onScInput={(e) =>
+								updatePrice({
+									ad_hoc_min_amount: e.target.value,
+								})
+							}
+						/>
+						<ScPriceInput
+							label={__('Maximum Price', 'surecart')}
+							className="sc-ad-hoc-max-amount"
+							currencyCode={
+								price?.currency || scData.currency_code
+							}
+							value={price?.ad_hoc_max_amount}
+							min={price?.ad_hoc_min_amount / 100}
+							onScInput={(e) =>
+								updatePrice({
+									ad_hoc_max_amount: e.target.value,
+								})
+							}
+						/>
+					</div>
 				</div>
 			)}
 		</>

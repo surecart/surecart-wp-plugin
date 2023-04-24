@@ -18,6 +18,9 @@ class Block extends DashboardPage {
 	 * @return function
 	 */
 	public function render( $attributes, $content ) {
-		return ( new CustomerController() )->show( $attributes, $content );
+		if ( ! is_user_logged_in() ) {
+			return;
+		}
+		return ( new CustomerController() )->preview( $attributes, $content );
 	}
 }

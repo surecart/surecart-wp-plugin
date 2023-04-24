@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-mollie-add-method renders 1`] = `
+<sc-mollie-add-method>
+  <mock:shadow-root>
+    <sc-form style="position: relative;">
+      <sc-toggles theme="container"></sc-toggles>
+      <sc-button full="" submit="" type="primary">
+        Add Payment Method
+      </sc-button>
+    </sc-form>
+  </mock:shadow-root>
+</sc-mollie-add-method>
+`;

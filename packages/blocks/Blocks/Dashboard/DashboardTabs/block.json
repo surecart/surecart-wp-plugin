@@ -5,6 +5,7 @@
 	"description": "Displays the users customer dashboard tabs.",
 	"category": "surecart",
 	"keywords": ["name", "customer", "dashboard"],
+  "textdomain": "surecart",
 	"parent": ["surecart/customer-dashboard"],
 	"supports": {
 		"reusable": false,

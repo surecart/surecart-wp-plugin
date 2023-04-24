@@ -28,7 +28,7 @@ class PeriodRestServiceProvider extends RestServiceProvider implements RestServi
 	 *
 	 * @var array
 	 */
-	protected $methods = [ 'index', 'find' ];
+	protected $methods = [ 'index', 'find','edit' ];
 
 	/**
 	 * Register REST Routes
@@ -111,5 +111,15 @@ class PeriodRestServiceProvider extends RestServiceProvider implements RestServi
 	 */
 	public function retry_payment_permissions_check( $request ) {
 		return current_user_can( 'edit_sc_subscription', $request->get_params() );
+	}
+
+	/**
+	 * Check update permissions.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function update_item_permissions_check( $request ) {
+		return current_user_can( 'edit_sc_subscriptions',$request->get_params() );
 	}
 }

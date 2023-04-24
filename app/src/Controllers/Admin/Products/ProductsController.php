@@ -11,7 +11,6 @@ use SureCart\Controllers\Admin\Products\ProductsListTable;
  * Handles product admin requests.
  */
 class ProductsController extends AdminController {
-
 	/**
 	 * Products index.
 	 */
@@ -31,11 +30,35 @@ class ProductsController extends AdminController {
 	/**
 	 * Edit a product.
 	 */
-	public function edit() {
+	public function edit( $request ) {
 		// enqueue needed script.
 		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( ProductScriptsController::class, 'enqueue' ) );
+
+		// add instant checkout link
+		add_action('admin_bar_menu', function($wp_admin_bar) use ($request) {
+			$product = Product::find($request->query('id'));
+			$wp_admin_bar->add_node(
+				[
+					'id'    => 'view-instant-checkout',
+					'title' => __( 'View Instant Checkout', 'surecart' ),
+					'href'  => $product->buyLink()->url()
+				]
+			);
+		}, 99);
+
+
 		// return view.
 		return '<div id="app"></div>';
+	}
+
+	public function addInstantCheckoutLink( $wp_admin_bar ) {
+		$wp_admin_bar->add_node(
+			[
+				'id'    => 'edit',
+				'title' => __( 'Edit Product', 'surecart' ),
+				'href'  => '#'
+			]
+		);
 	}
 
 	/**

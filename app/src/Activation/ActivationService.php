@@ -65,6 +65,19 @@ class ActivationService {
 		$this->removeFormPosts();
 		// remove all options from the options table.
 		$this->removeOptions();
+		// remove all tables
+		$this->removeTables();
+	}
+
+	/**
+	 * Remove all tables.
+	 *
+	 * @return void
+	 */
+	public function removeTables() {
+		// Delete the integration table.
+		$integrations = new \SureCart\Database\Tables\Integrations( new \SureCart\Database\Table() );
+		$integrations->uninstall();
 	}
 
 	/**

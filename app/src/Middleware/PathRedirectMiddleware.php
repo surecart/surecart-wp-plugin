@@ -28,7 +28,7 @@ class PathRedirectMiddleware {
 
 		$path = $request->query( 'path' );
 		return ( new RedirectResponse( $request ) )->to(
-			esc_url_raw( $this->buildUrl( untrailingslashit( get_site_url() ) . $path, $request ) )
+			esc_url_raw( $this->buildUrl( untrailingslashit( get_home_url() ) . $path, $request ) )
 		);
 	}
 

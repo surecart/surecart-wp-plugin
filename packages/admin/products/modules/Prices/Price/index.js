@@ -1,63 +1,50 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { store as noticesStore } from '@wordpress/notices';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { store as noticesStore } from '@wordpress/notices';
 
 import Error from '../../../../components/Error';
 // hocs
 import Multiple from '../../../components/price/Multiple';
 import OneTime from '../../../components/price/OneTime';
+import PriceName from '../../../components/price/parts/PriceName';
 // components
 import Tax from '../../../components/price/parts/Tax';
 import Subscription from '../../../components/price/Subscription';
 import Header from './Header';
 
-export default ({ id, prices, product }) => {
+export default ({ price, product }) => {
 	// are the price details open?
 	const [isOpen, setIsOpen] = useState(false);
 	const [error, setError] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 
-	const {
-		price,
-		hasLoadedPrice,
-		savingPrice,
-		deletingPrice,
-		savePriceError,
-	} = useSelect(
+	// get any save errors.
+	const { savePriceError } = useSelect(
 		(select) => {
-			const entityData = ['surecart', 'price', id];
+			if (!price?.id) return {};
+			const entityData = ['surecart', 'price', price?.id];
 			return {
-				price: select(coreStore).getEditedEntityRecord(...entityData),
-				hasLoadedPrice: select(coreStore)?.hasFinishedResolution?.(
-					'getEditedEntityRecord',
-					[...entityData]
-				),
-				savingPrice: select(coreStore)?.isSavingEntityRecord?.(
-					...entityData
-				),
 				savePriceError: select(coreStore)?.getLastEntitySaveError?.(
-					...entityData
-				),
-				deletingPrice: select(coreStore)?.isDeletingEntityRecord?.(
 					...entityData
 				),
 			};
 		},
-		[id]
+		[price?.id]
 	);
 
 	// dispatchers.
 	const { editEntityRecord, deleteEntityRecord, saveEditedEntityRecord } =
 		useDispatch(coreStore);
 	const savePrice = (options = {}) =>
-		saveEditedEntityRecord('surecart', 'price', id, options);
+		saveEditedEntityRecord('surecart', 'price', price?.id, options);
 	const deletePrice = (options = {}) =>
-		deleteEntityRecord('surecart', 'price', id, {}, options);
-	const editPrice = (data) => editEntityRecord('surecart', 'price', id, data);
+		deleteEntityRecord('surecart', 'price', price?.id, {}, options);
+	const editPrice = (data) =>
+		editEntityRecord('surecart', 'price', price?.id, data);
 
 	// toggle the archive.
 	const toggleArchive = async () => {
@@ -136,6 +123,7 @@ export default ({ id, prices, product }) => {
 				border-radius: var(--sc-border-radius-medium);
 				box-shadow: var(--sc-shadow-small);
 				display: grid;
+				background: #fff;
 			`}
 		>
 			<Header
@@ -144,7 +132,6 @@ export default ({ id, prices, product }) => {
 				price={price}
 				onArchive={toggleArchive}
 				onDelete={onDelete}
-				loading={!hasLoadedPrice}
 				css={css`
 					padding: var(--sc-spacing-large);
 				`}
@@ -164,6 +151,8 @@ export default ({ id, prices, product }) => {
 					display: ${isOpen ? 'grid' : 'none'};
 				`}
 			>
+				<PriceName price={price} updatePrice={editPrice} />
+
 				{getPriceType() === 'subscription' && (
 					<Subscription price={price} updatePrice={editPrice} />
 				)}
@@ -186,10 +175,6 @@ export default ({ id, prices, product }) => {
 					updatePrice={editPrice}
 				/>
 			</div>
-
-			{(savingPrice || deletingPrice) && (
-				<sc-block-ui spinner></sc-block-ui>
-			)}
 		</div>
 	);
 };

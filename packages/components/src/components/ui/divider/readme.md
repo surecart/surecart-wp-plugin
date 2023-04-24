@@ -32,6 +32,7 @@
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-payment-selected](../payment-selected)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
+ - [sc-subscription-next-payment](../../controllers/dashboard/subscription-details)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
@@ -50,6 +51,7 @@ graph TD;
   sc-payment-methods-list --> sc-divider
   sc-payment-selected --> sc-divider
   sc-purchase-downloads-list --> sc-divider
+  sc-subscription-next-payment --> sc-divider
   sc-subscriptions-list --> sc-divider
   sc-upcoming-invoice --> sc-divider
   style sc-divider fill:#f9f,stroke:#333,stroke-width:4px

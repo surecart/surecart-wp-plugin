@@ -25,6 +25,27 @@ class ProcessorRestServiceProvider extends RestServiceProvider implements RestSe
 	protected $controller = ProcessorController::class;
 
 	/**
+	 * Register Additional REST Routes
+	 *
+	 * @return void
+	 */
+	public function registerRoutes() {
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/payment_method_types/',
+			[
+				[
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => $this->callback( $this->controller, 'paymentMethodTypes' ),
+					'permission_callback' => [ $this, 'get_items_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+	}
+
+	/**
 	 * Get our sample schema for a post.
 	 *
 	 * @return array The sample schema for a post

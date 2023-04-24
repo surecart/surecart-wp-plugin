@@ -1,4 +1,5 @@
 import { Component, Prop, State, h, Method } from '@stencil/core';
+import { isRtl } from '../../../functions/page-align';
 
 @Component({
   tag: 'sc-menu-item',
@@ -53,6 +54,7 @@ export class ScMenuItem {
           'menu-item--checked': this.checked,
           'menu-item--disabled': this.disabled,
           'menu-item--focused': this.hasFocus,
+          'menu-item--is-rtl':isRtl()
         }}
         href={this.href}
         role="menuitem"

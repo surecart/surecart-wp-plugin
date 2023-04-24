@@ -14,7 +14,7 @@ class SubscriptionProtocolController {
 	 * @return Model
 	 */
 	public function find( \WP_REST_Request $request ) {
-		return SubscriptionProtocol::find();
+		return SubscriptionProtocol::with( [ 'preservation_coupon' ] )->find();
 	}
 
 	/**

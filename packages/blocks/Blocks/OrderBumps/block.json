@@ -6,6 +6,7 @@
 	"description": "Display your order bumps.",
 	"category": "surecart",
 	"keywords": ["customer", "thank you", "confirm"],
+  "textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false,

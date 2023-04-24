@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>Manual Payment Methods Fixture</title>
+  <link href="/build/surecart.css" rel="stylesheet">
+  <script type="module" src="/build/surecart.esm.js"></script>
+  <script nomodule src="/build/surecart.js"></script>
+  <script>
+    window.scIcons = {
+      path: '/build/icon-assets'
+    }
+    window.wp = {
+      i18n: {
+        __: () => { }
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <sc-cancel-dialog open></sc-cancel-dialog>
+  <script>
+    const dialog = document.querySelector('sc-cancel-dialog');
+    dialog.subscription = { id: 'subscription_id' };
+    dialog.protocol = {
+      "id": "4df25784-5306-4ac5-8edc-24a2e15c8dd7",
+      "object": "subscription_protocol",
+      "cancel_behavior": "pending",
+      "downgrade_behavior": "pending",
+      "payment_retry_window_weeks": 1,
+      "preservation_enabled": true,
+      "preservation_locales": {
+        "reasons_title": "We're sad to see you go",
+        "reasons_description": "Before you cancel, please let us know the reason you're leaving.",
+        "skip_link": "Never mind, I don't want to cancel.",
+        "preserve_title": "Take {{ amount }} off your next payment?",
+        "preserve_description": "We'd be happy to offer you  {{ amount }} off your next payment if you'd stay with us.",
+        "preserve_button": "Yes, I'll take it.",
+        "cancel_link": "No thanks, I'd still like to cancel."
+      },
+      "require_upfront_payment_method": true,
+      "revoke_purchases_on_past_due": false,
+      "upgrade_behavior": "immediate",
+      "preservation_coupon": {
+        "id": "fa08681f-c6a1-480f-a5a2-3fd125e9c591",
+        "object": "coupon",
+        "archived": false,
+        "archived_at": null,
+        "amount_off": 500,
+        "currency": "usd",
+        "duration": "once",
+        "duration_in_months": null,
+        "expired": false,
+        "metadata": {},
+        "max_redemptions": null,
+        "max_redemptions_per_customer": null,
+        "name": "Test Coupon",
+        "percent_off": null,
+        "product_ids": [],
+        "redeem_by": null,
+        "times_redeemed": 0,
+        "discarded_at": null,
+        "created_at": 1672340576,
+        "updated_at": 1672340576
+      },
+      "created_at": 1672340601,
+      "updated_at": 1672340601
+    };
+  </script>
+</body>
+
+</html>

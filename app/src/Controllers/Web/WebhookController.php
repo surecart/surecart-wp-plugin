@@ -144,7 +144,7 @@ class WebhookController {
 		// create the event name.
 		$event = $this->createEventName( $request['type'] );
 		$id    = $this->getObjectId( $request['data'] );
-		$model = new $this->models[ $request['data']['object']['object'] ]( $request['data'] );
+		$model = new $this->models[ $request['data']['object']['object'] ]( $request['data']['object'] );
 
 		// broadcast the webhook.
 		do_action( $event, $model, $request );

@@ -38,7 +38,7 @@ export default ({ invoice, charge: chargeInput, loading }) => {
 						`}
 					>
 						<ScButton
-							href={addQueryArgs(invoice?.pdf_url, {
+							href={addQueryArgs(invoice?.statement_url, {
 								receipt: true,
 							})}
 							type="default"
@@ -48,7 +48,7 @@ export default ({ invoice, charge: chargeInput, loading }) => {
 							<sc-icon slot="prefix" name="download"></sc-icon>
 						</ScButton>
 						<ScButton
-							href={invoice?.pdf_url}
+							href={invoice?.statement_url}
 							type="primary"
 							size="small"
 						>

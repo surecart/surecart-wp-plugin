@@ -4,19 +4,12 @@ import Box from '../../ui/Box';
 
 export default ({ loading, bump, updateBump }) => {
 	return (
-		<Box
-			title={
-				<>
-					{__('Add a name', 'surecart')}{' '}
-					<ScTag>{__('Optional', 'surecart')}</ScTag>
-				</>
-			}
-			loading={loading}
-		>
+		<Box title={__('Name', 'surecart')} loading={loading}>
 			<ScInput
 				label={__('Bump Name', 'surecart')}
+				required
 				help={__(
-					'A name for this bump that will be visible to customers. If empty, the product name will be used.',
+					'A name for this bump that will be visible to customers.',
 					'surecart'
 				)}
 				onScInput={(e) => updateBump({ name: e.target.value })}

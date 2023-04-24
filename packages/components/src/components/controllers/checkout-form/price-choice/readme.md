@@ -9,6 +9,7 @@
 
 | Property      | Attribute      | Description                     | Type                         | Default     |
 | ------------- | -------------- | ------------------------------- | ---------------------------- | ----------- |
+| `blank`       | `blank`        | Is this blank?                  | `boolean`                    | `false`     |
 | `checked`     | `checked`      | Is this checked by default      | `boolean`                    | `false`     |
 | `description` | `description`  | Label for the choice.           | `string`                     | `undefined` |
 | `error`       | --             | Errors from response            | `ResponseError`              | `undefined` |
@@ -40,23 +41,18 @@
 
 ### Depends on
 
-- [sc-price-input](../../../ui/price-input)
 - [sc-alert](../../../ui/alert)
 - [sc-format-number](../../../util/format-number)
-- [sc-choice](../../../ui/choice)
+- [sc-choice-container](../../../ui/choice-container)
 - [sc-skeleton](../../../ui/skeleton)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-price-choice --> sc-price-input
   sc-price-choice --> sc-alert
   sc-price-choice --> sc-format-number
-  sc-price-choice --> sc-choice
+  sc-price-choice --> sc-choice-container
   sc-price-choice --> sc-skeleton
-  sc-price-input --> sc-input
-  sc-input --> sc-form-control
-  sc-form-control --> sc-tooltip
   sc-alert --> sc-icon
   style sc-price-choice fill:#f9f,stroke:#333,stroke-width:4px
 ```

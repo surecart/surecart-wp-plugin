@@ -32,6 +32,7 @@ export default ({ open, onRequestClose }) => {
 			});
 			onRequestClose();
 		} catch (e) {
+			console.error(e);
 			setError(e);
 		} finally {
 			setLoading(false);

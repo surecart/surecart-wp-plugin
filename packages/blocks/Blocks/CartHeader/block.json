@@ -5,6 +5,7 @@
 	"title": "Cart Header",
 	"description": "Display a cart header",
 	"category": "surecart",
+  "textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false,

@@ -66,7 +66,7 @@ class AccountService {
 		$this->account = get_transient( $this->cache_key );
 		if ( false === $this->account ) {
 			$this->account = $this->fetchAccount();
-			set_transient( $this->cache_key, $this->account, 60 );
+			set_transient( $this->cache_key, $this->account, 5 * MINUTE_IN_SECONDS );
 		}
 		return $this->account;
 	}
@@ -77,7 +77,7 @@ class AccountService {
 	 * @return \SureCart\Models\Account
 	 */
 	protected function fetchAccount() {
-		$this->account = Account::with( [ 'brand', 'brand.address', 'portal_protocol', 'tax_protocol', 'tax_protocol.address' ] )->find();
+		$this->account = Account::with( [ 'brand', 'brand.address', 'portal_protocol', 'tax_protocol', 'tax_protocol.address', 'subscription_protocol' ] )->find();
 		return $this->account;
 	}
 

@@ -33,6 +33,6 @@ class ProductScriptsController extends AdminModelEditController {
 	 * Add the app url to the data.
 	 */
 	public function __construct() {
-		$this->data['app_url'] = \SureCart::requests()->getBaseUrl();
+		$this->data['api_url'] = \SureCart::requests()->getBaseUrl();
 	}
 }

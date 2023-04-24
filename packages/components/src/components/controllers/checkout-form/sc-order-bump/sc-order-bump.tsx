@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, Fragment, h, Prop } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop } from '@stencil/core';
 import { sprintf, __ } from '@wordpress/i18n';
 import { isBumpInOrder } from '../../../../functions/line-items';
 import { intervalString } from '../../../../functions/price';
@@ -58,6 +58,12 @@ export class ScOrderBump {
     return amount;
   }
 
+  renderInterval() {
+    const interval = intervalString(this.bump?.price as Price, { labels: { interval: '/', period: __('for', 'surecart') } });
+    if (!interval.trim().length) return null;
+    return <span class="bump__interval">{interval}</span>;
+  }
+
   renderPrice() {
     return (
       <div slot="description" class={{ 'bump__price': true, 'bump__price--has-discount': !!this.bump?.percent_off || !!this.bump?.amount_off }} part="price">
@@ -69,11 +75,9 @@ export class ScOrderBump {
         ></sc-format-number>{' '}
         {this.newPrice() === 0 && __('Free', 'surecart')}
         {this.newPrice() !== null && this.newPrice() > 0 && (
-          <Fragment>
-            <sc-format-number type="currency" class="bump__new-price" value={this.newPrice()} currency={(this.bump?.price as Price).currency} />
-            <span class="bump__interval">{intervalString(this.bump?.price as Price, { labels: { interval: '/', period: __('for', 'surecart') } })}</span>
-          </Fragment>
+          <sc-format-number type="currency" class="bump__new-price" value={this.newPrice()} currency={(this.bump?.price as Price).currency} />
         )}
+        {this.renderInterval()}
       </div>
     );
   }

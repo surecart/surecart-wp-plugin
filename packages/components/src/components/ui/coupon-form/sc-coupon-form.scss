@@ -8,12 +8,18 @@ sc-button {
 
 .coupon-form {
   position: relative;
+  container-type: inline-size;
 
   .coupon-button {
     opacity: 0;
     visibility: hidden;
     transform: scale(0.90);
     transition: all var(--sc-transition-fast) ease;
+  }
+
+  .coupon-button-mobile {
+    margin-top: var(--sc-input-label-margin);
+    display: none;
   }
 
   &--has-value {
@@ -25,12 +31,23 @@ sc-button {
   }
 }
 
+@container (max-width: 320px) {
+  .coupon-form {
+    .coupon-button {
+      display: none;
+    }
+    .coupon-button-mobile {
+      display: block;
+    }
+  }
+}
+
 .form {
   opacity: 0;
   visibility: hidden;
   height: 0;
   transform: translateY(5px);
-  transition: opacity var(--sc-transition-fast) ease, transform var(--sc-transition-fast) ease;
+  transition: opacity var(--sc-transition-medium) ease, transform var(--sc-transition-medium) ease;
   position: relative;
   gap: var(--sc-spacing-small);
 }
@@ -45,7 +62,6 @@ sc-button {
   }
 
   .trigger {
-    color: var(--sc-input-label-color);
     display: none;
   }
 }
@@ -53,10 +69,17 @@ sc-button {
 .trigger {
   cursor: pointer;
   font-size: var(--sc-font-size-small);
+  line-height: var(--sc-line-height-dense);
   color: var(--sc-input-label-color);
   user-select: none;
 
   &:hover {
     text-decoration: underline;
+  }
+}
+
+.coupon-form--is-rtl{
+  .trigger{
+    text-align: right;
   }
 }

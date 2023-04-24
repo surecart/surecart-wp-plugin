@@ -4,6 +4,7 @@
 	"description": "Displays a password field to let a new user set a password.",
 	"category": "surecart",
 	"keywords": ["password", "input"],
+  "textdomain": "surecart",
 	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,

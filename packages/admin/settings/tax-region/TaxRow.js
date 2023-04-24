@@ -2,10 +2,11 @@
 import { css, jsx } from '@emotion/core';
 import { addQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
+import { ScIcon, ScStackedListRow } from '@surecart/components-react';
 
 export default ({ title, icon, description, region }) => {
 	return (
-		<sc-stacked-list-row
+		<ScStackedListRow
 			href={addQueryArgs(window.location.href, {
 				type: 'region',
 				region,
@@ -30,7 +31,7 @@ export default ({ title, icon, description, region }) => {
 				{title}
 			</strong>
 			<div style={{ opacity: '0.75' }}>{description}</div>
-			<sc-icon name="chevron-right" slot="suffix"></sc-icon>
-		</sc-stacked-list-row>
+			<ScIcon name="chevron-right" slot="suffix"></ScIcon>
+		</ScStackedListRow>
 	);
 };

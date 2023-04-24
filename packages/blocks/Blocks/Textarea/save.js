@@ -7,7 +7,6 @@ export default ({ className, attributes }) => {
 		autocomplete,
 		inputmode,
 		max,
-		maxlength,
 		min,
 		minlength,
 		name,
@@ -29,7 +28,7 @@ export default ({ className, attributes }) => {
 			autofocus={autofocus ? '1' : null}
 			autocomplete={autocomplete ? '1' : null}
 			inputmode={inputmode}
-			maxlength={maxlength}
+			maxlength={500}
 			minlength={minlength}
 			name={name}
 			placeholder={placeholder}

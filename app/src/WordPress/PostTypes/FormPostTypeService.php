@@ -126,7 +126,7 @@ class FormPostTypeService {
 		}
 
 		if ( $post->ID === $this->getDefaultId() ) {
-			$states[] = __( 'Default', 'surecart' );
+			$states[] = __( 'Store Checkout', 'surecart' );
 		}
 
 		return $states;
@@ -371,7 +371,7 @@ class FormPostTypeService {
 
 	/**
 	 * Get the SC forms list.
-	 * 
+	 *
 	 * @param array $args Form query data.
 	 *
 	 * @return array

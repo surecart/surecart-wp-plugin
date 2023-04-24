@@ -21,6 +21,7 @@ import ToggleHeader from '../../../../components/ToggleHeader';
 import { intervalString } from '../../../../util/translations';
 import { useState } from 'react';
 import CopyInput from './CopyInput';
+import { getFormattedPrice } from '../../../../util';
 
 export default ({
 	isOpen,
@@ -41,6 +42,21 @@ export default ({
 						{' '}
 						<sc-tag type="info" size="small">
 							{__('Free Trial', 'surecart')}
+						</sc-tag>
+					</>
+				)}
+			</>
+		);
+	};
+
+	const setupFee = () => {
+		return (
+			<>
+				{!!price?.setup_fee_enabled && (
+					<>
+						{' '}
+						<sc-tag type="default" size="small">
+							{__('Setup Fee', 'surecart')}
 						</sc-tag>
 					</>
 				)}
@@ -90,6 +106,7 @@ export default ({
 				<div>
 					{priceType()}
 					{trial()}
+					{setupFee()}
 				</div>
 
 				<div
@@ -97,40 +114,48 @@ export default ({
 						display: flex;
 						align-items: center;
 						gap: 0.5em;
+						flex-wrap: wrap;
 					`}
 				>
+					{!!price?.name && (
+						<div>
+							<strong>{price?.name}</strong> &mdash;
+						</div>
+					)}
 					{price?.ad_hoc ? (
 						__('Custom Amount', 'surecart')
 					) : (
 						<>
 							{!!price?.scratch_amount &&
 								price?.scratch_amount > price?.amount && (
-									<ScFormatNumber
+									<div
 										css={css`
 											font-weight: bold;
 											font-size: 14px;
 											opacity: 0.75;
 											text-decoration: line-through;
 										`}
-										type="currency"
-										currency={
-											price?.currency ||
-											scData.currency_code
-										}
-										value={price?.scratch_amount}
-									/>
+									>
+										{getFormattedPrice({
+											amount: price?.scratch_amount,
+											currency:
+												price?.currency ||
+												scData.currency_code,
+										})}
+									</div>
 								)}
-							<ScFormatNumber
+							<div
 								css={css`
 									font-weight: bold;
 									font-size: 14px;
 								`}
-								type="currency"
-								currency={
-									price?.currency || scData.currency_code
-								}
-								value={price?.amount}
-							/>
+							>
+								{getFormattedPrice({
+									amount: price?.amount,
+									currency:
+										price?.currency || scData.currency_code,
+								})}
+							</div>
 						</>
 					)}{' '}
 					<div

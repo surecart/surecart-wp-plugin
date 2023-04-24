@@ -5,8 +5,8 @@
 	"description": "Display a logout button.",
 	"category": "surecart",
 	"keywords": ["name", "customer", "dashboard"],
+  "textdomain": "surecart",
 	"parent": null,
-	"textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false

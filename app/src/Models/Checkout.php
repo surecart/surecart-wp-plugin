@@ -99,4 +99,42 @@ class Checkout extends Model {
 
 		return $this;
 	}
+
+	/**
+	 * Cancel an checkout
+	 *
+	 * @return $this|\WP_Error
+	 */
+	protected function cancel() {
+		if ( $this->fireModelEvent( 'cancelling' ) === false ) {
+			return false;
+		}
+
+		if ( empty( $this->attributes['id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please create the order.' );
+		}
+
+		$cancelled = $this->makeRequest(
+			[
+				'method' => 'PATCH',
+				'query'  => $this->query,
+				'body'   => [
+					$this->object_name => $this->getAttributes(),
+				],
+			],
+			$this->endpoint . '/' . $this->attributes['id'] . '/cancel/'
+		);
+
+		if ( is_wp_error( $cancelled ) ) {
+			return $cancelled;
+		}
+
+		$this->resetAttributes();
+
+		$this->fill( $cancelled );
+
+		$this->fireModelEvent( 'cancelled' );
+
+		return $this;
+	}
 }

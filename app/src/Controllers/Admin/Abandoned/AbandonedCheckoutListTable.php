@@ -189,11 +189,15 @@ class AbandonedCheckoutListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_recovery_status( $abandoned ) {
-		if ( $abandoned->recovered_checkout ) {
-			return '<sc-tag type="success">' . __( 'Recovered', 'surecart' ) . '</sc-tag>';
-		} else {
-			return '<sc-tag type="warning">' . __( 'Abandoned', 'surecart' ) . '</sc-tag>';
+		switch ( $abandoned->recovery_status ) {
+			case 'abandoned':
+				return '<sc-tag type="warning">' . __( 'Abandoned', 'surecart' ) . '</sc-tag>';
+			case 'assisted_recovered':
+				return '<sc-tag type="success">' . __( 'Recovered', 'surecart' ) . '</sc-tag>';
+			case 'unassisted_recovered':
+				return '<sc-tag type="info">' . __( 'Recovered Before Email Was Sent', 'surecart' ) . '</sc-tag>';
 		}
+		return '<sc-tag type="success">' . $abandoned->recovery_status . '</sc-tag>';
 	}
 
 	/**

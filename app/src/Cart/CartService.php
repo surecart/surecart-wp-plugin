@@ -35,7 +35,6 @@ class CartService {
 	 * @return string
 	 */
 	public function cartTemplate() {
-		ob_start();
 		$form = $this->getForm();
 		if ( empty( $form->ID ) ) {
 			return '';
@@ -44,6 +43,7 @@ class CartService {
 		if ( empty( $cart->post_content ) ) {
 			return '';
 		}
+		ob_start();
 		?>
 
 		<sc-cart

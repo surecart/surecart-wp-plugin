@@ -15,12 +15,16 @@ declare global {
     scData: {
       root_url: string;
       page_id: string;
-      do_not_persist_cart: string;
+      do_not_persist_cart: boolean;
       nonce: string;
       base_url: string;
       nonce_endpoint: string;
       recaptcha_site_key: string;
       theme: string;
+      pages: {
+        dashboard: string;
+        checkout: string;
+      };
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;
@@ -60,6 +64,11 @@ export interface Price {
   ad_hoc: boolean;
   ad_hoc_max_amount: number;
   ad_hoc_min_amount: number;
+  scratch_amount: number;
+  setup_fee_enabled: boolean;
+  setup_fee_amount: number;
+  setup_fee_name: string;
+  setup_fee_trial_enabled: boolean;
   recurring_period_count: number;
   archived: boolean;
   product_id?: string;
@@ -110,13 +119,16 @@ export interface Download {
   id: string;
   object: 'download';
   archived: boolean;
+  archived_at?: number;
   media: string | Media;
+  name?: string;
   product: string | Product;
   update_at: number;
   created_at: number;
+  url?: string;
 }
 
-export type FormState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalizing' | 'paying' | 'confirming' | 'confirmed' | 'paid' | 'failure' | 'expired';
+export type FormState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalizing' | 'paying' | 'confirming' | 'confirmed' | 'paid' | 'failure' | 'expired' | 'redirecting';
 export type FormStateSetter = 'RESOLVE' | 'REJECT' | 'FINALIZE' | 'PAYING' | 'PAID' | 'EXPIRE' | 'FETCH';
 
 export interface License {
@@ -131,6 +143,21 @@ export interface License {
   };
   status: 'inactive' | 'active' | 'revoked';
   purchase: string | Purchase;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface CancellationReason {
+  id: string;
+  object: 'cancellation_reason';
+  archived: boolean;
+  comment_enabled: false;
+  comment_prompt: string | null;
+  coupon_enabled: boolean;
+  label: string;
+  position: number;
+  archived_at: number;
+  discarded_at: number;
   created_at: number;
   updated_at: number;
 }
@@ -232,6 +259,11 @@ export interface LineItem extends Object {
   object: string;
   quantity: number;
   bump: string | Bump;
+  fees?: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Fee>;
+  };
   bump_amount: number;
   discount_amount: number;
   subtotal_amount: number;
@@ -242,6 +274,17 @@ export interface LineItem extends Object {
   updated_at: number;
   price?: Price;
   price_id: string;
+}
+
+export interface Fee {
+  id: string;
+  object: 'fee';
+  amount: number;
+  description: string;
+  fee_type: 'manual' | 'bump' | 'setup';
+  line_item: string | LineItem;
+  created_at: number;
+  updated_at: number;
 }
 
 export interface InvoiceItem extends LineItem {}
@@ -358,7 +401,7 @@ export interface Order extends Object {
   object: 'order';
   number?: string;
   order_type?: 'checkout' | 'subscription';
-  pdf_url?: string;
+  statement_url?: string;
   status?: OrderStatus;
   checkout?: Checkout | string;
   created_at: number;
@@ -366,12 +409,13 @@ export interface Order extends Object {
 }
 export interface Checkout extends Object {
   id?: string;
-  status?: 'finalized' | 'draft' | 'paid' | 'requires_approval';
+  status?: 'canceled' | 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'processing';
   staged_payment_intents: {
     object: 'list';
     pagination: Pagination;
     data: Array<PaymentIntent>;
   };
+  abandoned_checkout_enabled: boolean;
   bump_amount: number;
   payment_method_required?: boolean;
   manual_payment: boolean;
@@ -392,7 +436,9 @@ export interface Checkout extends Object {
   total_savings_amount?: number;
   applied_balance_amount?: number;
   discounts?: number;
+  tax_enabled: boolean;
   tax_amount: number;
+  email_exists: boolean;
   tax_inclusive_amount: number;
   tax_exclusive_amount: number;
   tax_status: 'disabled' | 'address_invalid' | 'estimated' | 'calculated';
@@ -445,6 +491,10 @@ export interface ProcessorData {
     client_id: string;
     merchant_initiated: boolean;
   };
+  mollie?: {
+    account_id: 'string';
+    checkout_url: 'string';
+  };
 }
 
 export interface ManualPaymentMethod {
@@ -459,7 +509,14 @@ export interface ManualPaymentMethod {
   updated_at: number;
 }
 
+export interface PaymentMethodType {
+  id: string;
+  description: string;
+  image: string;
+}
+
 export interface Processor {
+  id: string;
   live_mode: boolean;
   processor_data: {
     account_id: string;
@@ -468,7 +525,7 @@ export interface Processor {
     merchant_initiated?: boolean;
   };
   recurring_enabled: boolean;
-  processor_type: 'paypal' | 'stripe';
+  processor_type: 'paypal' | 'stripe' | 'mollie';
 }
 
 export interface Purchase {
@@ -515,11 +572,13 @@ export interface Subscription extends Object {
   status: SubscriptionStatus;
   live_mode: boolean;
   external_subscription_id: string;
+  current_cancellation_act: string | CancellationAct;
   trial_end_at: number;
   processor_type: 'stripe' | 'paypal';
   order: Order;
   customer: Customer;
   discount: DiscountResponse;
+  finite: boolean;
   pending_update: {
     ad_hoc_amount?: number;
     price?: string;
@@ -538,6 +597,20 @@ export interface Subscription extends Object {
   ad_hoc_amount: number;
   created_at: number;
   updated_at: number;
+  restore_at?: number;
+}
+
+export interface CancellationAct {
+  id: string;
+  object: 'cancellation_act';
+  cancellation_reason: string | CancellationReason;
+  comment: string;
+  coupon_applied: boolean;
+  preserved: boolean;
+  subscription: string | Subscription;
+  performed_at: number;
+  created_at: number;
+  updated_at: number;
 }
 
 export interface SubscriptionProtocol {
@@ -547,6 +620,17 @@ export interface SubscriptionProtocol {
   downgrade_behavior: 'pending' | 'immediate';
   payment_retry_window_weeks: number;
   upgrade_behavior: 'pending' | 'immediate';
+  preservation_enabled: boolean;
+  preservation_locales: {
+    reasons_title: string;
+    reasons_description: string;
+    skip_link: string;
+    preserve_title: string;
+    preserve_description: string;
+    preserve_button: string;
+    cancel_link: string;
+  };
+  preservation_coupon: Coupon | string;
   created_at: number;
   updated_at: number;
 }
@@ -554,7 +638,7 @@ export interface SubscriptionProtocol {
 export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid' | 'completed';
 
 export type CheckoutStatus = 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'requires_approval';
-export type OrderStatus = 'paid' | 'payment_failed' | 'processing' | 'void';
+export type OrderStatus = 'paid' | 'payment_failed' | 'processing' | 'void' | 'canceled';
 
 export interface PaymentMethod extends Object {
   id: string;
@@ -742,4 +826,26 @@ export interface PriceData extends Object {
   price_id: string;
   quantity: number;
   removeable: boolean;
+}
+
+export type TaxZone = {
+  label: string;
+  label_small: string;
+};
+
+export type TaxZones = {
+  [key in 'ca_gst' | 'au_abn' | 'gb_vat' | 'eu_vat' | 'other']: TaxZone;
+};
+
+export type RuleName = 'total' | 'coupons' | 'products' | 'shipping_country' | 'billing_country' | 'processors';
+export type ArrayOperators = 'all' | 'any' | 'none' | 'exist' | 'not_exist';
+export type NumberOperators = '==' | '!=' | '<' | '>' | '<=' | '>=';
+export interface RuleGroup {
+  group_id: string;
+  rules: Rule[];
+}
+export interface Rule {
+  condition: RuleName;
+  operator: NumberOperators | ArrayOperators;
+  value: string | string[] | { value: string }[];
 }

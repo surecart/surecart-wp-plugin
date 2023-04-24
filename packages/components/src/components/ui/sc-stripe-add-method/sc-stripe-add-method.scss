@@ -1,5 +1,9 @@
 sc-stripe-add-method {
   display: block;
+
+  [hidden] {
+    display: none;
+  }
 }
 
 .loader {

@@ -17,11 +17,7 @@ export default ({ attributes, setAttributes, context }) => {
 				label={label}
 				mode={mode}
 				hideTestModeBadge={mode === 'live'}
-			>
-				<Stripe attributes={attributes} mode={mode} />
-				<PayPal attributes={attributes} mode={mode} />
-				<ManualPaymentMethods attributes={attributes} />
-			</ScPayment>
+			/>
 		</>
 	);
 };

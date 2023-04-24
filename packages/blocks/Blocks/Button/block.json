@@ -5,7 +5,14 @@
 	"description": "Display a checkout form button.",
 	"category": "surecart",
 	"keywords": ["button", "submit", "checkout", "engine"],
+	"textdomain": "surecart",
 	"ancestor": ["surecart/form"],
+	"example": {
+		"attributes": {
+			"type": "primary",
+			"text": "Button Text"
+		}
+	},
 	"supports": {
 		"reusable": false,
 		"html": false
@@ -31,5 +38,10 @@
 			"type": "boolean",
 			"default": true
 		}
-	}
+	},
+	"editorScript": "surecart-components",
+	"script": "surecart-components",
+	"viewScript": "surecart-components",
+	"editorStyle": "surecart-themes-default",
+	"style": "surecart-themes-default"
 }

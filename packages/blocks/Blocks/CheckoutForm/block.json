@@ -6,6 +6,7 @@
 	"description": "Display a checkout form",
 	"category": "surecart",
 	"keywords": ["form", "checkout", "form"],
+  "textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false,

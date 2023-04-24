@@ -54,7 +54,7 @@ class SubscriptionController extends BaseController {
 			'sc-subscriptions-list',
 			'#customer-subscriptions-index',
 			[
-				'heading'    => $attributes['title'] ?? __( 'Subscriptions', 'surecart' ),
+				'heading'    => $attributes['title'] ?? __( 'Plans', 'surecart' ),
 				'isCustomer' => User::current()->isCustomer(),
 				'query'      => [
 					'customer_ids' => array_values( User::current()->customerIds() ),
@@ -64,7 +64,21 @@ class SubscriptionController extends BaseController {
 				],
 			]
 		);
-		return '<sc-subscriptions-list id="customer-subscriptions-index"></sc-subscriptions-list>';
+		ob_start();
+		?>
+		<sc-spacing style="--spacing: var(--sc-spacing-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>">
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
+					<?php esc_html_e( 'Plans', 'surecart' ); ?>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
+			<sc-subscriptions-list id="customer-subscriptions-index"></sc-subscriptions-list>
+		</sc-spacing>
+		<?php
+		return ob_get_clean();
 	}
 
 	/**
@@ -87,20 +101,39 @@ class SubscriptionController extends BaseController {
 				'current_period',
 				'period.checkout',
 				'purchase',
+				'discount',
+				'discount.coupon',
 				'purchase.license',
 				'license.activations',
 			]
 		)->find( $id );
 
-		ob_start(); ?>
+		ob_start();
+		?>
 
 		<sc-spacing style="--spacing: var(--sc-spacing-large)">
 			<sc-breadcrumbs>
 				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>">
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</sc-breadcrumb>
+				<sc-breadcrumb href="
+				<?php
+				echo esc_url(
+					add_query_arg(
+						[
+							'tab'    => $this->getTab(),
+							'action' => 'index',
+							'model'  => 'subscription',
+						],
+						remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+					)
+				);
+				?>
+				">
+					<?php esc_html_e( 'Plans', 'surecart' ); ?>
+				</sc-breadcrumb>
 				<sc-breadcrumb>
-					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
+					<?php esc_html_e( 'Plan', 'surecart' ); ?>
 				</sc-breadcrumb>
 			</sc-breadcrumbs>
 
@@ -112,6 +145,7 @@ class SubscriptionController extends BaseController {
 					[
 						'heading'      => __( 'Current Plan', 'surecart' ),
 						'showCancel'   => \SureCart::account()->portal_protocol->subscription_cancellations_enabled && ! $subscription->remaining_period_count,
+						'protocol'     => SubscriptionProtocol::with( [ 'preservation_coupon' ] )->find(), // \SureCart::account()->subscription_protocol,
 						'subscription' => $subscription,
 					]
 				)->render()
@@ -161,6 +195,8 @@ class SubscriptionController extends BaseController {
 				'price.product',
 				'current_period',
 				'period.checkout',
+				'discount',
+				'discount.coupon',
 			]
 		)->find( $id );
 
@@ -178,6 +214,22 @@ class SubscriptionController extends BaseController {
 					add_query_arg(
 						[
 							'tab'    => $this->getTab(),
+							'action' => 'index',
+							'model'  => 'subscription',
+						],
+						remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+					)
+				);
+				?>
+				">
+					<?php esc_html_e( 'Plans', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb href="
+				<?php
+				echo esc_url(
+					add_query_arg(
+						[
+							'tab'    => $this->getTab(),
 							'action' => 'edit',
 							'model'  => 'subscription',
 							'id'     => $this->getId(),
@@ -187,7 +239,7 @@ class SubscriptionController extends BaseController {
 				);
 				?>
 				">
-					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
+					<?php esc_html_e( 'Plan', 'surecart' ); ?>
 				</sc-breadcrumb>
 				<sc-breadcrumb>
 					<?php esc_html_e( 'Update Payment Method', 'surecart' ); ?>
@@ -281,7 +333,7 @@ class SubscriptionController extends BaseController {
 				);
 				?>
 				">
-					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
+					<?php esc_html_e( 'Plan', 'surecart' ); ?>
 				</sc-breadcrumb>
 				<sc-breadcrumb>
 					<?php esc_html_e( 'Enter Amount', 'surecart' ); ?>
@@ -338,7 +390,7 @@ class SubscriptionController extends BaseController {
 				);
 				?>
 				">
-					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
+					<?php esc_html_e( 'Plan', 'surecart' ); ?>
 				</sc-breadcrumb>
 				<sc-breadcrumb>
 					<?php esc_html_e( 'Confirm', 'surecart' ); ?>
@@ -401,7 +453,7 @@ class SubscriptionController extends BaseController {
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</sc-breadcrumb>
 				<sc-breadcrumb href="<?php echo esc_url( $edit_subscription_url ); ?>" >
-					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
+					<?php esc_html_e( 'Plan', 'surecart' ); ?>
 				</sc-breadcrumb>
 				<sc-breadcrumb>
 					<?php esc_html_e( 'Cancel', 'surecart' ); ?>
@@ -412,56 +464,6 @@ class SubscriptionController extends BaseController {
 			echo wp_kses_post(
 				Component::tag( 'sc-subscription-cancel' )
 				->id( 'customer-subscription-cancel' )
-				->with(
-					[
-						'subscriptionId' => $this->getId(),
-						'backUrl'        => esc_url_raw( $edit_subscription_url ),
-						'successUrl'     => esc_url_raw( $back_url ),
-					]
-				)->render()
-			);
-			?>
-
-		</sc-spacing>
-		<?php
-		return ob_get_clean();
-	}
-
-	/**
-	 * Confirm renew subscription
-	 *
-	 * @return function
-	 */
-	public function renew() {
-		$back_url              = add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$edit_subscription_url = add_query_arg(
-			[
-				'tab'    => $this->getTab(),
-				'action' => 'edit',
-				'model'  => 'subscription',
-				'id'     => $this->getId(),
-			],
-			remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		);
-		ob_start();
-		?>
-		<sc-spacing style="--spacing: var(--sc-spacing-xx-large)">
-			<sc-breadcrumbs>
-				<sc-breadcrumb href="<?php echo esc_url( $back_url ); ?>">
-					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
-				</sc-breadcrumb>
-				<sc-breadcrumb href="<?php echo esc_url( $edit_subscription_url ); ?>" >
-					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
-				</sc-breadcrumb>
-				<sc-breadcrumb>
-					<?php esc_html_e( 'Renew', 'surecart' ); ?>
-				</sc-breadcrumb>
-			</sc-breadcrumbs>
-
-			<?php
-			echo wp_kses_post(
-				Component::tag( 'sc-subscription-renew' )
-				->id( 'customer-subscription-renew' )
 				->with(
 					[
 						'subscriptionId' => $this->getId(),
@@ -517,7 +519,7 @@ class SubscriptionController extends BaseController {
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</sc-breadcrumb>
 				<sc-breadcrumb href="<?php echo esc_url( $edit_subscription_url ); ?>">
-					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
+					<?php esc_html_e( 'Plan', 'surecart' ); ?>
 				</sc-breadcrumb>
 				<sc-breadcrumb href="<?php echo esc_url( $confirm_subscription_url ); ?>">
 					<?php esc_html_e( 'Confirm', 'surecart' ); ?>

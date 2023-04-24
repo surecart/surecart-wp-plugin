@@ -13,9 +13,16 @@ export class ScLineItemTax {
   @Prop() loading: boolean;
 
   renderLabel() {
+    let label = sprintf(__('Estimated %s', 'surecart'), this?.order?.tax_label || '');
+
+    if (this?.order?.tax_status === 'calculated') {
+      label = this.order?.tax_label ||'';
+    }
+
+
     return (
       <Fragment>
-        {this?.order?.tax_status === 'calculated' ? this.order?.tax_label : sprintf(__('Estimated %s', 'surecart'), this?.order?.tax_label)}
+        {`${__('Tax:', 'surecart')} ${label}`}
         {this.renderPercent()}
       </Fragment>
     );

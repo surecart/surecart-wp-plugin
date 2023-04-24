@@ -1,6 +1,7 @@
 import { Component, Prop, h, Watch, Element, Event, EventEmitter } from '@stencil/core';
 import { getAnimation, setDefaultAnimation } from '../../../functions/animation-registry';
 import { animateTo, shimKeyframesHeightAuto, stopAnimations } from '../../../functions/animate';
+import { isRtl } from '../../../functions/page-align';
 
 @Component({
   tag: 'sc-toggle',
@@ -103,16 +104,20 @@ export class ScToggle {
       this.scShow.emit();
       await stopAnimations(this.body);
       this.body.hidden = false;
+      this.body.style.overflow = 'hidden';
       const { keyframes, options } = getAnimation(this.el, 'details.show');
       await animateTo(this.body, shimKeyframesHeightAuto(keyframes, this.body.scrollHeight), options);
       this.body.style.height = 'auto';
+      this.body.style.overflow = 'visible';
     } else {
       this.scHide.emit();
       await stopAnimations(this.body);
+      this.body.style.overflow = 'hidden';
       const { keyframes, options } = getAnimation(this.el, 'details.hide');
       await animateTo(this.body, shimKeyframesHeightAuto(keyframes, this.body.scrollHeight), options);
       this.body.hidden = true;
       this.body.style.height = 'auto';
+      this.body.style.overflow = 'visible';
     }
   }
 
@@ -126,6 +131,7 @@ export class ScToggle {
           'details--disabled': this.disabled,
           'details--borderless': this.borderless,
           'details--shady': this.shady,
+          'details--is-rtl': isRtl(),
         }}
       >
         <header

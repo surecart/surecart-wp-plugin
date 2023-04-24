@@ -1,8 +1,9 @@
 import { Customer, Checkout } from '../../../../types';
-import { createOrUpdateOrder } from '../../../../services/session';
+import { createOrUpdateCheckout } from '../../../../services/session';
 import { Component, Prop, h, Event, EventEmitter, Watch, Method } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { getValueFromUrl } from '../../../../functions/util';
+import { __ } from '@wordpress/i18n';
 
 @Component({
   tag: 'sc-customer-name',
@@ -84,7 +85,19 @@ export class ScCustomerName {
 
   @Method()
   async reportValidity() {
-    return this.input?.reportValidity?.();
+    this.input?.setCustomValidity?.('');
+
+    if (!this.input?.value.trim().length) {
+      this.input.setCustomValidity(__('Field must not be empty.', 'surecart'));
+    }
+
+    const valid = await this.input?.reportValidity?.();
+
+    if (!valid) {
+      return false;
+    }
+
+    return valid;
   }
 
   async handleChange() {
@@ -92,7 +105,7 @@ export class ScCustomerName {
 
     // update order.
     try {
-      const order = await createOrUpdateOrder({ id: this.order?.id, data: { name: this.input.value } });
+      const order = await createOrUpdateCheckout({ id: this.order?.id, data: { name: this.input.value } });
       this.scUpdateOrderState.emit(order);
     } catch (error) {
       console.error(error);

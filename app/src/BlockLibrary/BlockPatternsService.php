@@ -30,6 +30,7 @@ class BlockPatternsService {
 
 		$this->patterns = [
 			'default',
+			'full-page',
 			'simple',
 			'sections',
 			'two-column',

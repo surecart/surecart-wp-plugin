@@ -21,20 +21,22 @@ describe('Order Confirmation', () => {
         total_amount: 3000,
         currency: 'usd',
         line_items: {
-          data: [{
-            id:'test_line_item',
-            amount: 2000,
-            price: {
-              id: 'test_price_id',
+          data: [
+            {
+              id: 'test_line_item',
               amount: 2000,
-              currency: 'usd',
-              product: {
-                id: 'product_id',
-                name: 'Test Product'
-              }
-            }
-          }]
-        }
+              price: {
+                id: 'test_price_id',
+                amount: 2000,
+                currency: 'usd',
+                product: {
+                  id: 'product_id',
+                  name: 'Test Product',
+                },
+              },
+            },
+          ],
+        },
       },
     ).as('checkout');
 

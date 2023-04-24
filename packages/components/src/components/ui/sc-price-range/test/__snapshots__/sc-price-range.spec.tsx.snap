@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-price-range It should render one price if only one is passed 1`] = `
+<sc-price-range>
+  <mock:shadow-root>
+    <span class="price-range-display">
+      <sc-format-number currency="usd" type="currency" value="2900"></sc-format-number>
+    </span>
+  </mock:shadow-root>
+</sc-price-range>
+`;
+
+exports[`sc-price-range It should render the correct minimum and maximum price in a range 1`] = `
+<sc-price-range>
+  <mock:shadow-root>
+    <span class="price-range-display">
+      <sc-format-number currency="usd" type="currency" value="120"></sc-format-number>
+      -
+      <sc-format-number currency="usd" type="currency" value="2900"></sc-format-number>
+    </span>
+  </mock:shadow-root>
+</sc-price-range>
+`;
+
+exports[`sc-price-range renders 1`] = `
+<sc-price-range>
+  <mock:shadow-root></mock:shadow-root>
+</sc-price-range>
+`;

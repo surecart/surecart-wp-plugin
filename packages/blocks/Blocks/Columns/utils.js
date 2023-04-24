@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { sumBy, merge, mapValues } from 'lodash';
+import { getSpacingPresetCssVar } from '../../util';
 
 /**
  * Returns a column width attribute value rounded to standard precision.
@@ -167,4 +168,24 @@ export function getWidthWithUnit(width, unit) {
  */
 export function isPercentageUnit(unit) {
 	return unit === '%';
+}
+
+/**
+ * Returns preset wp variables as an object
+ *
+ * @param {object} styles Column width unit.
+ */
+export function getPresetStyles(styles) {
+	if (!styles?.spacing || !styles?.spacing?.blockGap) return;
+	const {
+		spacing: { blockGap },
+	} = styles;
+
+	let styleObj = {};
+	styleObj['gap'] =
+		getSpacingPresetCssVar(blockGap?.top) +
+		' ' +
+		getSpacingPresetCssVar(blockGap?.left);
+
+	return styleObj;
 }

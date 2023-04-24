@@ -21,15 +21,18 @@ export default ({ loading, imageUrl, onRemove, icon, children }) => {
 		>
 			{loading ? (
 				<ScFlex alignItems="center" justifyContent="flex-start">
-					<ScSkeleton
-						css={css`
-							width: 40px;
-							height: 40px;
-						`}
-						style={{
-							'--border-radius': ' var(--sc-border-radius-small)',
-						}}
-					/>
+					{(!!imageUrl || !!icon) && (
+						<ScSkeleton
+							css={css`
+								width: 40px;
+								height: 40px;
+							`}
+							style={{
+								'--border-radius':
+									' var(--sc-border-radius-small)',
+							}}
+						/>
+					)}
 					<ScSkeleton style={{ width: '25%' }} />
 				</ScFlex>
 			) : (

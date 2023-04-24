@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property   | Attribute  | Description         | Type      | Default     |
-| ---------- | ---------- | ------------------- | --------- | ----------- |
-| `columns`  | `columns`  | Number of columns   | `number`  | `1`         |
-| `label`    | `label`    | Selector label      | `string`  | `undefined` |
-| `required` | `required` | Required by default | `boolean` | `true`      |
+| Property   | Attribute  | Description         | Type       | Default     |
+| ---------- | ---------- | ------------------- | ---------- | ----------- |
+| `columns`  | `columns`  | Number of columns   | `number`   | `1`         |
+| `label`    | `label`    | Selector label      | `string`   | `undefined` |
+| `order`    | --         | Session             | `Checkout` | `undefined` |
+| `required` | `required` | Required by default | `boolean`  | `true`      |
 
 
 ## Events

@@ -9,11 +9,16 @@ export default ({ order, loading }) => {
 		return null;
 	}
 
-	const { wp_created_by, page_id, page_url, ...metadata } =
-		order?.checkout?.metadata || {};
+	const {
+		wp_created_by,
+		page_id,
+		page_url,
+		buy_page_product_id,
+		...metadata
+	} = order?.checkout?.metadata || {};
 
 	return (
-		<Box title={__('Metadata', 'surecart')}>
+		<Box title={__('Additional Order Data', 'surecart')}>
 			<div
 				css={css`
 					display: grid;
