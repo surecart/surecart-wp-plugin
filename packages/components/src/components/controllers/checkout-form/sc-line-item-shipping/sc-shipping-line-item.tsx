@@ -1,4 +1,4 @@
-import { Component, Prop, h } from '@stencil/core';
+import { Component, Host, Prop, h } from '@stencil/core';
 import { Checkout } from 'src/types';
 import { openWormhole } from 'stencil-wormhole';
 import { __ } from '@wordpress/i18n';
@@ -10,13 +10,18 @@ import { __ } from '@wordpress/i18n';
 })
 export class ScShippingLineItem {
   /** The order */
-  @Prop({mutable:true}) order: Checkout;
+  @Prop({ mutable: true }) order: Checkout;
   /** Whether parent is loading */
   @Prop() loading: boolean;
   /**Label */
-  @Prop() label:string ;
+  @Prop() label: string;
 
   render() {
+    // don't show if no shipping amount.
+    if (!this.order?.shipping_amount) {
+      return <Host style={{ display: 'none' }}></Host>;
+    }
+
     if (this.loading) {
       return (
         <sc-line-item>
@@ -28,12 +33,10 @@ export class ScShippingLineItem {
 
     return (
       <sc-line-item>
-        <span slot="description">
-          {this.label || __('Shipping Amount','surecart') }
-        </span>
+        <span slot="description">{this.label || __('Shipping Amount', 'surecart')}</span>
         <span slot="price">
           <sc-format-number type="currency" currency={this.order?.currency} value={this.order?.shipping_amount}></sc-format-number>
-          </span>
+        </span>
       </sc-line-item>
     );
   }
