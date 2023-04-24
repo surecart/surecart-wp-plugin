@@ -16,7 +16,7 @@ exports[`sc-customer-email renders the logged in customer firstname when logged 
 </sc-customer-firstname>
 `;
 
-exports[`sc-customer-email renders the passed first name when  not logged in 1`] = `
+exports[`sc-customer-email renders the url first name when  not logged in 1`] = `
 <sc-customer-firstname size="medium">
   <mock:shadow-root>
     <sc-input autocomplete="first_name" help="" name="first_name" type="text" value="John"></sc-input>
