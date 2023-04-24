@@ -52,18 +52,26 @@ class RequestService {
 	protected $cache_status = 'none';
 
 	/**
+	 * Is this request authorized?
+	 *
+	 * @var boolean
+	 */
+	protected $authorized = true;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param string $token The rest api base path.
 	 */
-	public function __construct( $token = '', $base_path = '/v1', $errors_service = null ) {
+	public function __construct( $token = '', $base_path = '/v1', $errors_service = null, $authorized = true ) {
 		// error handing service.
 		$this->errors_service = $errors_service ? $errors_service : new ErrorsService();
 		// set the token.
 		$this->token = $token;
 		// set the base path and url.
-		$this->base_path = $base_path;
-		$this->base_url  = $this->getBaseUrl();
+		$this->base_path  = $base_path;
+		$this->base_url   = $this->getBaseUrl();
+		$this->authorized = $authorized;
 	}
 
 	/**
@@ -204,7 +212,7 @@ class RequestService {
 	 */
 	public function makeUncachedRequest( $endpoint, $args = [] ) {
 		// must have a token for the request.
-		if ( empty( $this->token ) ) {
+		if ( $this->authorized && empty( $this->token ) ) {
 			return new \WP_Error( 'missing_token', __( 'Please connect your site to SureCart.', 'surecart' ) );
 		}
 
@@ -214,7 +222,7 @@ class RequestService {
 		}
 
 		// add auth.
-		if ( empty( $args['headers']['Authorization'] ) ) {
+		if ( $this->authorized && ! empty( $this->token ) && empty( $args['headers']['Authorization'] ) ) {
 			$args['headers']['Authorization'] = "Bearer $this->token";
 		}
 
@@ -278,7 +286,7 @@ class RequestService {
 		}
 
 		// Handle invalid token first.
-		if ( 401 === $response_code ) {
+		if ( $this->authorized && 401 === $response_code ) {
 			ApiToken::clear();
 			return new \WP_Error( 'invalid_token', __( 'Invalid API token.', 'surecart' ) );
 		}
