@@ -32,9 +32,7 @@ class Block extends BaseBlock {
 
 		<div class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
 			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
-			<sc-product-text text="description">
 				<?php echo wp_kses_post( $product->description ); ?>
-			</sc-product-text>
 		</div>
 
 		<?php
