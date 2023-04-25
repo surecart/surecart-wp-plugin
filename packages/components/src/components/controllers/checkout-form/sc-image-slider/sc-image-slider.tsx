@@ -15,12 +15,14 @@ export class ScImageSlider {
   private swiper: Swiper;
   private thumbsSwiper: Swiper;
 
-  @Prop() images: { src: string; alt: string }[] = [];
+  /** Accept a string or an array of objects */
+  @Prop() images: string | { src: string; alt: string }[];
   @Prop() thumbnails: boolean;
   @Prop() thumbnailsPerPage: number = 5;
 
   /** Current Slide Index */
   @State() currentSliderIndex: number = 0;
+  @State() imagesData: { src: string; alt: string }[] = [];
 
   @Watch('currentSliderIndex')
   handleThumbPaginate() {
@@ -31,12 +33,22 @@ export class ScImageSlider {
     }
   }
 
+  @Watch('images')
+  parseImages(newValue: string | { src: string; alt: string }[]) {
+    if (newValue) this.imagesData = typeof newValue == 'string' ? JSON.parse(newValue) : newValue;
+  }
+
+  componentWillLoad() {
+    this.parseImages(this.images);
+  }
+
   componentDidLoad() {
     if (this.swiperContainerRef) {
       this.swiper = new Swiper(this.swiperContainerRef, {
         direction: 'horizontal',
         loop: false,
         autoHeight: true,
+        centeredSlides: true,
         on: {
           slideChange: swiper => {
             this.currentSliderIndex = swiper.activeIndex;
@@ -61,9 +73,12 @@ export class ScImageSlider {
       });
     }
   }
+
   disconnectedCallback() {
     this.swiper.destroy(true, true);
-    this.thumbsSwiper.destroy(true, true);
+    if (this.thumbsSwiper) {
+      this.thumbsSwiper.destroy(true, true);
+    }
   }
 
   render() {
@@ -71,7 +86,7 @@ export class ScImageSlider {
       <div class="image-slider" part="base">
         <div class="swiper" ref={el => (this.swiperContainerRef = el)}>
           <div class="swiper-wrapper">
-            {(this.images || []).map(({ src, alt }, index) => (
+            {(this.imagesData || []).map(({ src, alt }, index) => (
               <div key={index} class="swiper-slide image-slider__slider">
                 <div class="swiper-slide-img">
                   <img src={src} alt={alt} />
@@ -82,15 +97,15 @@ export class ScImageSlider {
         </div>
 
         {this.thumbnails && (
-          <div class={{ 'image-slider__thumbs': true, 'image-slider__thumbs--has-navigation': this.images.length > 5 }}>
+          <div class={{ 'image-slider__thumbs': true, 'image-slider__thumbs--has-navigation': this.imagesData.length > 5 }}>
             <div class="image-slider__navigation image-slider--is-prev" ref={el => (this.previous = el)}>
               <sc-icon name="chevron-left" />
             </div>
 
             <div class="swiper" ref={el => (this.swiperThumbsRef = el)}>
               <div class="swiper-wrapper">
-                {!!this.images.length &&
-                  this.images.map(({ src, alt }, index) => (
+                {!!this.imagesData.length &&
+                  this.imagesData.map(({ src, alt }, index) => (
                     <div
                       class={{ 'swiper-slide': true, 'image-slider__thumb': true, 'image-slider__thumb--is-active': this.currentSliderIndex === index }}
                       onClick={() => this.swiper?.slideTo?.(index)}
