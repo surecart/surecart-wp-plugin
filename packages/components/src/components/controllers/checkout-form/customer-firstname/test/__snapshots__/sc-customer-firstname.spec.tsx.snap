@@ -1,25 +1,97 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sc-customer-email renders 1`] = `
+exports[`sc-customer-firstname Logged In Checkout first name provided with URL Params 1`] = `
 <sc-customer-firstname size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="first_name" help="" name="first_name" type="text"></sc-input>
+    <sc-input autocomplete="first_name" help="" name="first_name" type="text" value="UrlFirst"></sc-input>
   </mock:shadow-root>
 </sc-customer-firstname>
 `;
 
-exports[`sc-customer-email renders the logged in customer firstname when logged in 1`] = `
+exports[`sc-customer-firstname Logged In Checkout first name provided without URL Params 1`] = `
 <sc-customer-firstname size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="first_name" disabled="" help="" name="first_name" type="text" value="Customer"></sc-input>
+    <sc-input autocomplete="first_name" help="" name="first_name" type="text" value="CheckoutFirst"></sc-input>
   </mock:shadow-root>
 </sc-customer-firstname>
 `;
 
-exports[`sc-customer-email renders the url first name when not logged in 1`] = `
+exports[`sc-customer-firstname Logged In Customer and Checkout first name provided with URL Params 1`] = `
 <sc-customer-firstname size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="first_name" help="" name="first_name" type="text" value="Url"></sc-input>
+    <sc-input autocomplete="first_name" help="" name="first_name" type="text" value="UrlFirst"></sc-input>
+  </mock:shadow-root>
+</sc-customer-firstname>
+`;
+
+exports[`sc-customer-firstname Logged In Customer and Checkout first name provided without URL Params 1`] = `
+<sc-customer-firstname size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="first_name" help="" name="first_name" type="text" value="CheckoutFirst"></sc-input>
+  </mock:shadow-root>
+</sc-customer-firstname>
+`;
+
+exports[`sc-customer-firstname Logged In Customer first name provided with URL Params 1`] = `
+<sc-customer-firstname size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="first_name" help="" name="first_name" type="text" value="UrlFirst"></sc-input>
+  </mock:shadow-root>
+</sc-customer-firstname>
+`;
+
+exports[`sc-customer-firstname Logged In Customer first name provided without URL Params 1`] = `
+<sc-customer-firstname size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="first_name" help="" name="first_name" type="text" value="CustomerFirst"></sc-input>
+  </mock:shadow-root>
+</sc-customer-firstname>
+`;
+
+exports[`sc-customer-firstname Logged Out Checkout first name provided with URL Params 1`] = `
+<sc-customer-firstname size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="first_name" help="" name="first_name" type="text" value="UrlFirst"></sc-input>
+  </mock:shadow-root>
+</sc-customer-firstname>
+`;
+
+exports[`sc-customer-firstname Logged Out Checkout first name provided without URL Params 1`] = `
+<sc-customer-firstname size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="first_name" help="" name="first_name" type="text" value="CheckoutFirst"></sc-input>
+  </mock:shadow-root>
+</sc-customer-firstname>
+`;
+
+exports[`sc-customer-firstname Logged Out Customer and Checkout first name provided with URL Params 1`] = `
+<sc-customer-firstname size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="first_name" help="" name="first_name" type="text" value="UrlFirst"></sc-input>
+  </mock:shadow-root>
+</sc-customer-firstname>
+`;
+
+exports[`sc-customer-firstname Logged Out Customer and Checkout first name provided without URL Params 1`] = `
+<sc-customer-firstname size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="first_name" help="" name="first_name" type="text" value="CustomerFirst"></sc-input>
+  </mock:shadow-root>
+</sc-customer-firstname>
+`;
+
+exports[`sc-customer-firstname Logged Out Customer first name provided with URL Params 1`] = `
+<sc-customer-firstname size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="first_name" help="" name="first_name" type="text" value="UrlFirst"></sc-input>
+  </mock:shadow-root>
+</sc-customer-firstname>
+`;
+
+exports[`sc-customer-firstname Logged Out Customer first name provided without URL Params 1`] = `
+<sc-customer-firstname size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="first_name" help="" name="first_name" type="text" value="CustomerFirst"></sc-input>
   </mock:shadow-root>
 </sc-customer-firstname>
 `;
