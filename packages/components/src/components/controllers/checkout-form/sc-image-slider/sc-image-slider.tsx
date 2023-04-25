@@ -111,7 +111,7 @@ export class ScImageSlider {
                       class={{ 'swiper-slide': true, 'image-slider__thumb': true, 'image-slider__thumb--is-active': this.currentSliderIndex === index }}
                       onClick={() => this.swiper?.slideTo?.(index)}
                     >
-                      <img src={src} alt={alt} />
+                      <img src={src} alt={alt} loading="lazy" />
                     </div>
                   ))}
               </div>
