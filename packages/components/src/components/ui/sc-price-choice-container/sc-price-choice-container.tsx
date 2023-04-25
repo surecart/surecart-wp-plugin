@@ -58,7 +58,6 @@ export class ScPriceChoiceContainer {
   }
 
   render() {
-    console.log(this.price);
     if (this.loading) {
       return (
         <sc-choice-container showControl={this.showControl} name="loading" disabled>
