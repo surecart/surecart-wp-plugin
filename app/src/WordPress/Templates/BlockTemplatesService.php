@@ -18,6 +18,9 @@ class BlockTemplatesService {
 	 */
 	public function __construct() {
 		add_theme_support( 'block-template-parts' );
+		add_theme_support( 'appearance-tools' );
+		add_theme_support( 'custom-spacing' );
+		add_theme_support( 'custom-line-height' );
 		$this->utility = \SureCart::utility()->blockTemplates();
 	}
 
