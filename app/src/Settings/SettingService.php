@@ -153,7 +153,7 @@ class SettingService {
 				'type'              => 'string',
 				'show_in_rest'      => true,
 				'sanitize_callback' => 'sanitize_text_field',
-				'default'           => 'floating_icon', // both, floating_icon, menu_icon
+				'default'           => 'floating_icon', // both, floating_icon, menu_icon.
 			]
 		);
 	}
