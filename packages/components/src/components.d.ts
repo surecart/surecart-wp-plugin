@@ -1534,7 +1534,11 @@ export namespace Components {
         "src": string;
     }
     interface ScImageSlider {
-        "images": { src: string; alt: string }[];
+        "autoHeight": boolean;
+        /**
+          * Accept a string or an array of objects
+         */
+        "images": string | { src: string; alt: string }[];
         "thumbnails": boolean;
         "thumbnailsPerPage": number;
     }
@@ -6870,7 +6874,11 @@ declare namespace LocalJSX {
         "src"?: string;
     }
     interface ScImageSlider {
-        "images"?: { src: string; alt: string }[];
+        "autoHeight"?: boolean;
+        /**
+          * Accept a string or an array of objects
+         */
+        "images"?: string | { src: string; alt: string }[];
         "thumbnails"?: boolean;
         "thumbnailsPerPage"?: number;
     }

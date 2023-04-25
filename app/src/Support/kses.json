@@ -790,6 +790,7 @@
     "slot": true
   },
   "sc-image-slider": {
+    "auto-height": true,
     "images": true,
     "thumbnails": true,
     "thumbnails-per-page": true,

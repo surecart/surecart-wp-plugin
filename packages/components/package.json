@@ -10,14 +10,13 @@
   "types": "dist/types/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
-  "unpkg": "dist/ce-components/ce-components.js",
+  "unpkg": "dist/surecart/surecart.esm.js",
   "repository": {
     "url": "https://github.com/surecart/surecart-wp.git"
   },
   "files": [
     "dist/",
-    "loader/",
-    "src/"
+    "loader/"
   ],
   "scripts": {
     "stencil": "stencil",

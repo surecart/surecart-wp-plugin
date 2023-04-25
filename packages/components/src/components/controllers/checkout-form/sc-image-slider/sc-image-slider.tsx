@@ -19,6 +19,7 @@ export class ScImageSlider {
   @Prop() images: string | { src: string; alt: string }[];
   @Prop() thumbnails: boolean;
   @Prop() thumbnailsPerPage: number = 5;
+  @Prop() autoHeight: boolean;
 
   /** Current Slide Index */
   @State() currentSliderIndex: number = 0;
@@ -47,7 +48,7 @@ export class ScImageSlider {
       this.swiper = new Swiper(this.swiperContainerRef, {
         direction: 'horizontal',
         loop: false,
-        autoHeight: true,
+        autoHeight: this.autoHeight,
         centeredSlides: true,
         on: {
           slideChange: swiper => {

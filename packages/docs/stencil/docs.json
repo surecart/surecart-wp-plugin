@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-21T18:57:27",
+  "timestamp": "2023-04-25T15:12:32",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -1099,6 +1099,7 @@
         "sc-orders-list",
         "sc-password-nag",
         "sc-payment-methods-list",
+        "sc-product-item-list",
         "sc-purchase-downloads-list",
         "sc-subscription",
         "sc-subscription-ad-hoc-confirm",
@@ -1173,6 +1174,9 @@
           "sc-block-ui"
         ],
         "sc-payment-methods-list": [
+          "sc-block-ui"
+        ],
+        "sc-product-item-list": [
           "sc-block-ui"
         ],
         "sc-purchase-downloads-list": [
@@ -1831,6 +1835,7 @@
         "sc-payment-method",
         "sc-payment-methods-list",
         "sc-product-buy-button",
+        "sc-product-item-list",
         "sc-product-selected-price",
         "sc-purchase-downloads-list",
         "sc-rich-text",
@@ -1932,6 +1937,9 @@
           "sc-button"
         ],
         "sc-product-buy-button": [
+          "sc-button"
+        ],
+        "sc-product-item-list": [
           "sc-button"
         ],
         "sc-product-selected-price": [
@@ -3768,7 +3776,8 @@
         ],
         "sc-pagination": [
           "sc-flex",
-          "sc-button"
+          "sc-button",
+          "sc-icon"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -9173,7 +9182,8 @@
         ],
         "sc-pagination": [
           "sc-flex",
-          "sc-button"
+          "sc-button",
+          "sc-icon"
         ]
       }
     },
@@ -10581,12 +10591,16 @@
       ],
       "dependents": [
         "sc-payment-methods-list",
+        "sc-product-item-list",
         "sc-select",
         "sc-tax-id-input"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-payment-methods-list": [
+          "sc-dropdown"
+        ],
+        "sc-product-item-list": [
           "sc-dropdown"
         ],
         "sc-select": [
@@ -10653,6 +10667,7 @@
         "sc-order",
         "sc-orders-list",
         "sc-payment-methods-list",
+        "sc-product-item-list",
         "sc-purchase-downloads-list",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
@@ -10678,6 +10693,9 @@
           "sc-empty"
         ],
         "sc-payment-methods-list": [
+          "sc-empty"
+        ],
+        "sc-product-item-list": [
           "sc-empty"
         ],
         "sc-purchase-downloads-list": [
@@ -12841,6 +12859,7 @@
         "sc-price-choice",
         "sc-price-choice-container",
         "sc-price-range",
+        "sc-product-item-price",
         "sc-product-line-item",
         "sc-product-price",
         "sc-product-price-choices",
@@ -12896,6 +12915,9 @@
           "sc-format-number"
         ],
         "sc-price-range": [
+          "sc-format-number"
+        ],
+        "sc-product-item-price": [
           "sc-format-number"
         ],
         "sc-product-line-item": [
@@ -13121,11 +13143,13 @@
         "sc-order-confirm-provider",
         "sc-order-submit",
         "sc-orders-list",
+        "sc-pagination",
         "sc-password-nag",
         "sc-payment",
         "sc-payment-method",
         "sc-payment-methods-list",
         "sc-product-buy-button",
+        "sc-product-item-list",
         "sc-product-line-item",
         "sc-product-selected-price",
         "sc-purchase-downloads-list",
@@ -13215,6 +13239,9 @@
         "sc-orders-list": [
           "sc-icon"
         ],
+        "sc-pagination": [
+          "sc-icon"
+        ],
         "sc-password-nag": [
           "sc-icon"
         ],
@@ -13228,6 +13255,9 @@
           "sc-icon"
         ],
         "sc-product-buy-button": [
+          "sc-icon"
+        ],
+        "sc-product-item-list": [
           "sc-icon"
         ],
         "sc-product-line-item": [
@@ -13294,15 +13324,15 @@
       "props": [
         {
           "name": "images",
-          "type": "{ src: string; alt: string; }[]",
+          "type": "string",
           "mutable": false,
+          "attr": "images",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
-          "default": "[]",
           "values": [
             {
-              "type": "{ src: string; alt: string; }[]"
+              "type": "string"
             }
           ],
           "optional": false,
@@ -14167,6 +14197,7 @@
         "sc-order-password",
         "sc-password-nag",
         "sc-price-input",
+        "sc-product-item-list",
         "sc-select",
         "sc-tax-id-input",
         "sc-wordpress-password-edit",
@@ -14222,6 +14253,9 @@
           "sc-input"
         ],
         "sc-price-input": [
+          "sc-input"
+        ],
+        "sc-product-item-list": [
           "sc-input"
         ],
         "sc-select": [
@@ -14357,7 +14391,8 @@
         ],
         "sc-pagination": [
           "sc-flex",
-          "sc-button"
+          "sc-button",
+          "sc-icon"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -15436,12 +15471,16 @@
       ],
       "dependents": [
         "sc-payment-methods-list",
+        "sc-product-item-list",
         "sc-select",
         "sc-tax-id-input"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-payment-methods-list": [
+          "sc-menu"
+        ],
+        "sc-product-item-list": [
           "sc-menu"
         ],
         "sc-select": [
@@ -15605,12 +15644,16 @@
       ],
       "dependents": [
         "sc-payment-methods-list",
+        "sc-product-item-list",
         "sc-select",
         "sc-tax-id-input"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-payment-methods-list": [
+          "sc-menu-item"
+        ],
+        "sc-product-item-list": [
           "sc-menu-item"
         ],
         "sc-select": [
@@ -18976,7 +19019,8 @@
         ],
         "sc-pagination": [
           "sc-flex",
-          "sc-button"
+          "sc-button",
+          "sc-icon"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -19113,12 +19157,14 @@
       ],
       "dependencies": [
         "sc-flex",
-        "sc-button"
+        "sc-button",
+        "sc-icon"
       ],
       "dependencyGraph": {
         "sc-pagination": [
           "sc-flex",
-          "sc-button"
+          "sc-button",
+          "sc-icon"
         ],
         "sc-button": [
           "sc-spinner"
@@ -22159,6 +22205,7 @@
           "sc-product-item-price"
         ],
         "sc-product-item-price": [
+          "sc-format-number",
           "sc-price-range"
         ],
         "sc-price-range": [
@@ -22258,17 +22305,32 @@
       "usage": {},
       "props": [
         {
-          "name": "itemStyles",
-          "type": "any",
+          "name": "ajaxPagination",
+          "type": "boolean",
           "mutable": false,
-          "attr": "item-styles",
+          "attr": "ajax-pagination",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Should we paginate?",
           "docsTags": [],
-          "default": "{}",
+          "default": "true",
           "values": [
             {
-              "type": "any"
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "ids",
+          "type": "string[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Limit to a set of ids.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string[]"
             }
           ],
           "optional": false,
@@ -22322,6 +22384,90 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "paginationEnabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "pagination-enabled",
+          "reflectToAttr": false,
+          "docs": "Should we paginate?",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "query",
+          "type": "string",
+          "mutable": true,
+          "attr": "query",
+          "reflectToAttr": false,
+          "docs": "Query to search for",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "searchEnabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "search-enabled",
+          "reflectToAttr": false,
+          "docs": "Should allow search",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "mutable": true,
+          "attr": "sort",
+          "reflectToAttr": false,
+          "docs": "Sort",
+          "docsTags": [],
+          "default": "'created_at:desc'",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "sortEnabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "sort-enabled",
+          "reflectToAttr": false,
+          "docs": "Should allow search",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -22332,15 +22478,43 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
+        "sc-dropdown",
+        "sc-button",
+        "sc-menu",
+        "sc-menu-item",
+        "sc-input",
+        "sc-icon",
+        "sc-empty",
         "sc-skeleton",
         "sc-product-item",
-        "sc-pagination"
+        "sc-pagination",
+        "sc-block-ui"
       ],
       "dependencyGraph": {
         "sc-product-item-list": [
+          "sc-dropdown",
+          "sc-button",
+          "sc-menu",
+          "sc-menu-item",
+          "sc-input",
+          "sc-icon",
+          "sc-empty",
           "sc-skeleton",
           "sc-product-item",
-          "sc-pagination"
+          "sc-pagination",
+          "sc-block-ui"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-input": [
+          "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
+        ],
+        "sc-empty": [
+          "sc-icon"
         ],
         "sc-product-item": [
           "sc-product-item-title",
@@ -22348,6 +22522,7 @@
           "sc-product-item-price"
         ],
         "sc-product-item-price": [
+          "sc-format-number",
           "sc-price-range"
         ],
         "sc-price-range": [
@@ -22355,9 +22530,10 @@
         ],
         "sc-pagination": [
           "sc-flex",
-          "sc-button"
+          "sc-button",
+          "sc-icon"
         ],
-        "sc-button": [
+        "sc-block-ui": [
           "sc-spinner"
         ]
       }
@@ -22385,6 +22561,23 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "range",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "range",
+          "reflectToAttr": false,
+          "docs": "Show price range?",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -22392,15 +22585,22 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        }
+      ],
       "dependents": [
         "sc-product-item"
       ],
       "dependencies": [
+        "sc-format-number",
         "sc-price-range"
       ],
       "dependencyGraph": {
         "sc-product-item-price": [
+          "sc-format-number",
           "sc-price-range"
         ],
         "sc-price-range": [
@@ -28154,7 +28354,8 @@
         ],
         "sc-pagination": [
           "sc-flex",
-          "sc-button"
+          "sc-button",
+          "sc-icon"
         ],
         "sc-block-ui": [
           "sc-spinner"

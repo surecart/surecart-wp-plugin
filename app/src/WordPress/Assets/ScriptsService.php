@@ -63,7 +63,7 @@ class ScriptsService {
 	 */
 	public function register() {
 		// should we use the esm loader directly?
-		if ( \SureCart::assets()->usesEsmLoader() ) {
+		if ( ! is_admin() && \SureCart::assets()->usesEsmLoader() ) {
 			wp_register_script(
 				'surecart-components',
 				trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/surecart/surecart.esm.js',

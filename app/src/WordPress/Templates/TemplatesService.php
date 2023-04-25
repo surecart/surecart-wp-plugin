@@ -180,6 +180,13 @@ class TemplatesService {
 		$wp_query->queried_object    = $post;
 		$wp_query->queried_object_id = $post->ID;
 
+		add_filter(
+			'post_thumbnail_url',
+			function( $url ) use ( $product ) {
+				return $product->image_url;
+			}
+		);
+
 		return $posts;
 	}
 
