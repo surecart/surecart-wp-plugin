@@ -17,7 +17,7 @@ const product = window?.scData?.product_data?.product || null;
 const prices = product?.prices?.data || [];
 const selectedPrice = (prices || []).find(price => !price?.archived);
 
-const { state, onChange, on, dispose } = createStore<Store>(
+const store = createStore<Store>(
   {
     formId: window?.scData?.product_data?.form?.ID,
     mode: window?.scData?.product_data?.mode || 'live',
@@ -35,5 +35,10 @@ const { state, onChange, on, dispose } = createStore<Store>(
   },
 );
 
+const { state, onChange, on, dispose, forceUpdate } = store;
 export default state;
-export { state, onChange, on, dispose };
+export { state, onChange, on, dispose, forceUpdate };
+
+if (window?.sc?.store) {
+  window.sc.store.product = store;
+}
