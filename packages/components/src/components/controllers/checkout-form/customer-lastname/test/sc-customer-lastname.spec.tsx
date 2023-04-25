@@ -24,14 +24,14 @@ describe('sc-customer-lastname', () => {
       testLabel: 'Customer last name provided',
       checkout: {
         customer: {
-          name: 'CustomerLast',
+          last_name: 'CustomerLast',
         },
       } as Checkout,
     },
     {
       testLabel: 'Checkout last name provided',
       checkout: {
-        name: 'CheckoutLast',
+        last_name: 'CheckoutLast',
       } as Checkout,
     },
   ];
@@ -45,15 +45,6 @@ describe('sc-customer-lastname', () => {
       writable: true,
     });
   }
-
-  // it('renders', async () => {
-  //   const page = await newSpecPage({
-  //     components: [ScCustomerLastname],
-  //     html: `<sc-customer-lastname></sc-customer-lastname>`,
-  //   });
-
-  //   expect(page.root).toMatchSnapshot();
-  // });
 
   describe.each(checkouts)('Logged In', test => {
     it(`${test.testLabel} with URL Params`, async () => {

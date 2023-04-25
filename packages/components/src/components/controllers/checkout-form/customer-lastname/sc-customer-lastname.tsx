@@ -92,7 +92,7 @@ export class ScCustomerLastname {
     }
   }
 
-  /** Sync customer email with session if it's updated by other means */
+  /** Sync customer last name with session if it's updated by other means */
   handleSessionChange() {
     // we already have a value.
     if (this.value) return;
