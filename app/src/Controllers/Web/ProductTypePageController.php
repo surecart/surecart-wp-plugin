@@ -28,6 +28,8 @@ abstract class ProductTypePageController {
 		add_action( 'admin_bar_menu', [ $this, 'addEditProductLink' ], 99 );
 		// add scripts.
 		add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ] );
+		// preload image.
+		add_action( 'wp_head', [ $this, 'preloadImage' ] );
 
 		// add data needed for product to load.
 		add_filter(
@@ -45,6 +47,20 @@ abstract class ProductTypePageController {
 				return $data;
 			}
 		);
+	}
+
+	/**
+	 * Preload the product image.
+	 *
+	 * @return void
+	 */
+	public function preloadImage() {
+		if ( empty( $this->product->image_url ) ) {
+			return;
+		}
+		?>
+		<link rel="preload" href="<?php echo esc_url( $this->product->image_url ); ?>" as="image">
+		<?php
 	}
 
 	/**
@@ -98,6 +114,13 @@ abstract class ProductTypePageController {
 	 */
 	public function scripts() {
 		\SureCart::assets()->enqueueComponents();
+		wp_localize_script(
+			'surecart-components',
+			'sc',
+			[
+				'store' => (object) [],
+			]
+		);
 		// add data for product store here.
 	}
 
