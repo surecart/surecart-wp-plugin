@@ -1,6 +1,8 @@
 <?php
 namespace SureCart\Controllers\Web;
 
+use SureCart\Models\Form;
+
 /**
  * Handles webhooks
  */
@@ -27,14 +29,19 @@ abstract class ProductTypePageController {
 		// add scripts.
 		add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ] );
 
+		// add data needed for product to load.
 		add_filter(
 			'surecart-components/scData',
 			function( $data ) {
+				$form = \SureCart::forms()->getDefault();
+
 				$data['product_data'] = [
 					'product'       => $this->product,
-					'form'          => \SureCart::forms()->getDefault(),
+					'form'          => $form,
+					'mode'          => Form::getMode( $form->ID ),
 					'checkout_link' => \SureCart::pages()->url( 'checkout' ),
 				];
+
 				return $data;
 			}
 		);

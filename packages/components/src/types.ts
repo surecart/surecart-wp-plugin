@@ -30,8 +30,10 @@ declare global {
       recaptcha_site_key: string;
       theme: string;
       product_data: {
+        checkout_link: string;
+        mode: 'live' | 'test';
         form: {
-          id: number;
+          ID: number;
         };
         product: Product;
       };

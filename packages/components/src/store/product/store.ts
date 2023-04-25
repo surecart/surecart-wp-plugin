@@ -19,8 +19,8 @@ const selectedPrice = (prices || []).find(price => !price?.archived);
 
 const { state, onChange, on, dispose } = createStore<Store>(
   {
-    formId: window?.scData?.product_data?.form?.id,
-    mode: 'live',
+    formId: window?.scData?.product_data?.form?.ID,
+    mode: window?.scData?.product_data?.mode || 'live',
     product,
     prices,
     quantity: 1,
@@ -28,7 +28,7 @@ const { state, onChange, on, dispose } = createStore<Store>(
     total: null,
     adHocAmount: null,
     error: null,
-    checkoutUrl: null,
+    checkoutUrl: window?.scData?.product_data?.checkout_link,
   },
   (newValue, oldValue) => {
     return JSON.stringify(newValue) !== JSON.stringify(oldValue);
