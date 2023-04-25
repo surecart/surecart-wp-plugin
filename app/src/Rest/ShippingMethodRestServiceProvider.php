@@ -28,7 +28,7 @@ class ShippingMethodRestServiceProvider extends RestServiceProvider implements R
 	 *
 	 * @var array
 	 */
-	protected $methods = [ 'index', 'find','edit','create','delete' ];
+	protected $methods = [ 'index', 'find','edit','create' ];
 
 
 	/**
@@ -63,7 +63,7 @@ class ShippingMethodRestServiceProvider extends RestServiceProvider implements R
 	}
 
 	/**
-	 * Get permissions.
+	 * Retrieve permissions.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
@@ -83,17 +83,18 @@ class ShippingMethodRestServiceProvider extends RestServiceProvider implements R
 	}
 
 	/**
-	 * Retry payment permissions
+	 * Create permissions
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
-	public function retry_payment_permissions_check( $request ) {
-		return current_user_can( 'manage_sc_shop_settings', $request->get_params() );
+	public function create_item_permissions_check( $request ) {
+		return current_user_can( 'manage_sc_shop_settings' );
 	}
 
+
 	/**
-	 * Check update permissions.
+	 * Update permissions.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
