@@ -24,7 +24,7 @@ class Block extends BaseBlock {
 
 		return sprintf(
 			'<%1$s class="%2$s" style="%3$s">
-				<sc-product-text text="name">%4$s</sc-product-text>
+				%4$s
 			</%1$s>',
 			'h' . (int) ( $attributes['level'] ?? 1 ),
 			esc_attr( $this->getClasses( $attributes, 'surecart-block product-title' ) ),
