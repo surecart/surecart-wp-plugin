@@ -16,6 +16,11 @@ declare global {
       blocks: any;
       i18n: any;
     };
+    sc?: {
+      store?: {
+        product?: any;
+      };
+    };
     scStore: any;
     registerSureCartIconPath: (path: string) => void;
     registerSureCartIconLibrary: (name: string, options: { resolver: IconLibraryResolver; mutator?: IconLibraryMutator }) => void;
