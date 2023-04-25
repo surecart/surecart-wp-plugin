@@ -19,9 +19,6 @@ export class ScCustomerLastname {
   /** Is the user logged in. */
   @Prop() loggedIn: boolean;
 
-  /** (passed from the sc-checkout component automatically) */
-  @Prop() order: Checkout;
-
   /** The input's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
 
