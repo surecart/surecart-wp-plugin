@@ -4,7 +4,6 @@
 	"title": "Product Price",
 	"description": "Displays the product price or price range.",
 	"category": "surecart",
-	"ancestor": ["surecart/product-info"],
 	"keywords": ["price", "product"],
 	"attributes": {},
 	"supports": {

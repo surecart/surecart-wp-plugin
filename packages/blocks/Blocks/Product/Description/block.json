@@ -4,7 +4,6 @@
 	"title": "Product Description",
 	"description": "Display the product description",
 	"category": "surecart",
-	"ancestor": ["surecart/product-info"],
 	"keywords": ["description"],
 	"supports": {
 		"reusable": false,
