@@ -1,72 +1,108 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { h } from '@stencil/core';
+import { dispose as disposeCheckout, state as checkoutState } from '@store/checkout';
+import { dispose as disposeUser, state as userState } from '@store/user';
+import { Checkout } from '../../../../../types';
 import { ScCustomerEmail } from '../sc-customer-email';
-import { Customer } from '../../../../../types';
-
-const TEST_CUSTOMER: Customer = {
-  id: 'd4f37b81-3448-4cae-ad46-4201432527ff',
-  billing_matches_shipping: true,
-  email: 'customer-21@example.com',
-  first_name: 'Jack',
-  last_name: null,
-  live_mode: true,
-  name: null,
-  phone: null,
-  unsubscribed: false,
-  billing_address: null,
-  default_payment_method: null,
-  shipping_address: null,
-  tax_identifier: null,
-  created_at: 1679586369,
-  updated_at: 1679586369,
-};
 
 describe('sc-customer-email', () => {
-  it('renders', async () => {
-    const page = await newSpecPage({
-      components: [ScCustomerEmail],
-      html: `<sc-customer-email></sc-customer-email>`,
-    });
-    expect(page.root).toMatchSnapshot();
+  beforeEach(() => {
+    disposeCheckout();
+    disposeUser();
   });
 
-  it('Renders the url email when the customer is not logged in', async () => {
-    const mockUrl = new URLSearchParams('?email=johndoe@gmail.com');
+  const checkouts = [
+    {
+      testLabel: 'Customer and Checkout email provided',
+      checkout: {
+        email: 'CheckoutEmail',
+        customer: {
+          email: 'CustomerEmail',
+        },
+      } as Checkout,
+    },
+    {
+      testLabel: 'Customer email provided',
+      checkout: {
+        customer: {
+          email: 'CustomerEmail',
+        },
+      } as Checkout,
+    },
+    {
+      testLabel: 'Checkout email provided',
+      checkout: {
+        email: 'CheckoutEmail',
+      } as Checkout,
+    },
+  ];
 
-    // Set the mock URL as the window location
+  function addUrlParams(params: boolean) {
     global.window = Object.create(window);
     Object.defineProperty(window, 'location', {
       value: {
-        search: mockUrl.toString(),
+        search: params ? new URLSearchParams('?email=UrlEmail').toString() : '',
       },
       writable: true,
     });
+  }
 
-    const page = await newSpecPage({
-      components: [ScCustomerEmail],
-      html: `<sc-customer-email></sc-customer-email>`,
+  describe.each(checkouts)('Logged In', test => {
+    it(`${test.testLabel} with URL Params`, async () => {
+      addUrlParams(true);
+      userState.loggedIn = true;
+      checkoutState.checkout = test.checkout;
+
+      const page = await newSpecPage({
+        components: [ScCustomerEmail],
+        html: `<sc-customer-email></sc-customer-email>`,
+      });
+
+      expect(page.root).toMatchSnapshot();
+      page.rootInstance.disconnectedCallback();
     });
 
-    expect(page.root).toMatchSnapshot();
+    it(`${test.testLabel} without URL Params`, async () => {
+      addUrlParams(false);
+      userState.loggedIn = true;
+      checkoutState.checkout = test.checkout;
+
+      const page = await newSpecPage({
+        components: [ScCustomerEmail],
+        html: `<sc-customer-email></sc-customer-email>`,
+      });
+
+      expect(page.root).toMatchSnapshot();
+      page.rootInstance.disconnectedCallback();
+    });
   });
 
-  it('Renders the logged in customer email when the customer is logged in', async () => {
-    const mockUrl = new URLSearchParams('?email=johndoe@gmail.com');
+  describe.each(checkouts)('Logged Out', test => {
+    it(`${test.testLabel} with URL Params`, async () => {
+      addUrlParams(true);
+      userState.loggedIn = false;
+      checkoutState.checkout = test.checkout;
 
-    // Set the mock URL as the window location
-    global.window = Object.create(window);
-    Object.defineProperty(window, 'location', {
-      value: {
-        search: mockUrl.toString(),
-      },
-      writable: true,
+      const page = await newSpecPage({
+        components: [ScCustomerEmail],
+        html: `<sc-customer-email></sc-customer-email>`,
+      });
+
+      expect(page.root).toMatchSnapshot();
+      page.rootInstance.disconnectedCallback();
     });
 
-    const page = await newSpecPage({
-      components: [ScCustomerEmail],
-      template: () => <sc-customer-email customer={TEST_CUSTOMER} loggedIn={true}></sc-customer-email>,
-    });
+    it(`${test.testLabel} without URL Params`, async () => {
+      addUrlParams(false);
+      userState.loggedIn = false;
+      checkoutState.checkout = test.checkout;
 
-    expect(page.root).toMatchSnapshot();
+      const page = await newSpecPage({
+        components: [ScCustomerEmail],
+        html: `<sc-customer-email></sc-customer-email>`,
+      });
+
+      expect(page.root).toMatchSnapshot();
+      page.rootInstance.disconnectedCallback();
+    });
   });
 });

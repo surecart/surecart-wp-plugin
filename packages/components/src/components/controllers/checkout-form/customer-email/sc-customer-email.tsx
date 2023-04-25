@@ -1,10 +1,11 @@
-import { Component, Event, EventEmitter, h, Host, Method, Prop, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Host, Method, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { openWormhole } from 'stencil-wormhole';
 
 import { createOrUpdateCheckout } from '../../../../services/session';
 import { Checkout, Customer } from '../../../../types';
 import { getValueFromUrl } from '../../../../functions/util';
+import { state as userState } from '@store/user';
+import { state as checkoutState, onChange } from '@store/checkout';
 
 @Component({
   tag: 'sc-customer-email',
@@ -14,17 +15,11 @@ import { getValueFromUrl } from '../../../../functions/util';
 export class ScCustomerEmail {
   private input: HTMLScInputElement;
 
-  /** Is the user logged in. */
-  @Prop() loggedIn: boolean;
-
-  /** (passed from the sc-checkout component automatically) */
-  @Prop() order: Checkout;
+   private removeCheckoutListener: () => void;
 
   /** A message for tracking confirmation. */
   @Prop() trackingConfirmationMessage: string;
 
-  /** Force a customer.  */
-  @Prop() customer: Customer;
 
   /** The input's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
@@ -68,9 +63,6 @@ export class ScCustomerEmail {
   /** Inputs focus */
   @Prop({ mutable: true, reflect: true }) hasFocus: boolean;
 
-  /** Is abandoned checkout enabled? */
-  @Prop() abandonedCheckoutEnabled: boolean;
-
   /** Emitted when the control's value changes. */
   @Event({ composed: true }) scChange: EventEmitter<void>;
 
@@ -99,22 +91,11 @@ export class ScCustomerEmail {
     this.value = this.input.value;
     this.scChange.emit();
 
-    // update order state.
-    try {
-      const order = (await createOrUpdateCheckout({ id: this.order?.id, data: { email: this.input.value } })) as Checkout;
-      this.scUpdateOrderState.emit(order);
-    } catch (error) {
-      console.error(error);
+    try{
+      checkoutState.checkout = (await createOrUpdateCheckout({ id: checkoutState.checkout.id, data: { email: this.input.value } })) as Checkout;
     }
-  }
-
-  /** Sync customer email with session if it's updated by other means */
-  @Watch('order')
-  handleSessionChange(val) {
-    if (val?.email) {
-      if (val.email !== this.value) {
-        this.value = val.email;
-      }
+    catch(error){
+       console.log(error)
     }
   }
 
@@ -123,10 +104,40 @@ export class ScCustomerEmail {
     return this.input?.reportValidity?.();
   }
 
+  /** Sync customer email with session if it's updated by other means */
+  handleSessionChange() {
+    // we already have a value.
+    if (this.value) return;
+
+    const fromUrl = getValueFromUrl('email');
+    if (!userState.loggedIn && !!fromUrl) {
+      this.value = fromUrl;
+      return;
+    }
+
+    if (userState.loggedIn) {
+      this.value = (checkoutState?.checkout?.customer as Customer)?.email || checkoutState?.checkout?.email;
+    } else {
+      this.value = checkoutState?.checkout?.email || (checkoutState?.checkout?.customer as Customer)?.email;
+    }
+  }
+
+   /** Listen to checkout. */
+  componentWillLoad() {
+    this.handleSessionChange();
+    this.removeCheckoutListener = onChange('checkout', () => this.handleSessionChange());
+  }
+
+  /** Remove listener. */
+  disconnectedCallback() {
+    this.removeCheckoutListener();
+  }
+
+
   renderOptIn() {
     if (!this.trackingConfirmationMessage) return null;
 
-    if (this.abandonedCheckoutEnabled !== false) {
+    if (checkoutState.abandonedCheckoutEnabled !== false) {
       return (
         <div class="tracking-confirmation-message">
           <span>{this.trackingConfirmationMessage}</span>{' '}
@@ -158,12 +169,12 @@ export class ScCustomerEmail {
           type="email"
           name="email"
           ref={el => (this.input = el as HTMLScInputElement)}
-          value={this.customer?.email || this.value}
+          value={this.value}
           help={this.help}
           label={this.label}
           autocomplete={'email'}
           placeholder={this.placeholder}
-          disabled={!!this.loggedIn}
+          disabled={!!userState.loggedIn}
           readonly={this.readonly}
           required={true}
           invalid={this.invalid}
@@ -174,19 +185,6 @@ export class ScCustomerEmail {
           onScFocus={() => this.scFocus.emit()}
           onScBlur={() => this.scBlur.emit()}
         >
-          {/* {!this.loggedIn && (
-            <a
-              href="#"
-              class="customer-email__login-link"
-              slot="label-end"
-              onClick={e => {
-                e.preventDefault();
-                this.scLoginPrompt.emit();
-              }}
-            >
-              {__('Login', 'surecart')}
-            </a>
-          )} */}
         </sc-input>
 
         {this.renderOptIn()}
@@ -194,5 +192,3 @@ export class ScCustomerEmail {
     );
   }
 }
-
-openWormhole(ScCustomerEmail, ['order', 'customer', 'loggedIn', 'abandonedCheckoutEnabled'], false);

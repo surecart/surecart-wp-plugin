@@ -1,25 +1,97 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sc-customer-email Renders the logged in customer email when the customer is logged in 1`] = `
+exports[`sc-customer-email Logged In Checkout email provided with URL Params 1`] = `
 <sc-customer-email size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="email" disabled="" exportparts="base, input, form-control, label, help-text, prefix, suffix" help="" name="email" required="" type="email" value="customer-21@example.com"></sc-input>
+    <sc-input autocomplete="email" disabled="" exportparts="base, input, form-control, label, help-text, prefix, suffix" help="" name="email" required="" type="email" value="UrlEmail"></sc-input>
   </mock:shadow-root>
 </sc-customer-email>
 `;
 
-exports[`sc-customer-email Renders the url email when the customer is not logged in 1`] = `
+exports[`sc-customer-email Logged In Checkout email provided without URL Params 1`] = `
 <sc-customer-email size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="email" exportparts="base, input, form-control, label, help-text, prefix, suffix" help="" name="email" required="" type="email" value="johndoe@gmail.com"></sc-input>
+    <sc-input autocomplete="email" disabled="" exportparts="base, input, form-control, label, help-text, prefix, suffix" help="" name="email" required="" type="email" value="CheckoutEmail"></sc-input>
   </mock:shadow-root>
 </sc-customer-email>
 `;
 
-exports[`sc-customer-email renders 1`] = `
+exports[`sc-customer-email Logged In Customer and Checkout email provided with URL Params 1`] = `
 <sc-customer-email size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="email" exportparts="base, input, form-control, label, help-text, prefix, suffix" help="" name="email" required="" type="email"></sc-input>
+    <sc-input autocomplete="email" disabled="" exportparts="base, input, form-control, label, help-text, prefix, suffix" help="" name="email" required="" type="email" value="UrlEmail"></sc-input>
+  </mock:shadow-root>
+</sc-customer-email>
+`;
+
+exports[`sc-customer-email Logged In Customer and Checkout email provided without URL Params 1`] = `
+<sc-customer-email size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="email" disabled="" exportparts="base, input, form-control, label, help-text, prefix, suffix" help="" name="email" required="" type="email" value="CustomerEmail"></sc-input>
+  </mock:shadow-root>
+</sc-customer-email>
+`;
+
+exports[`sc-customer-email Logged In Customer email provided with URL Params 1`] = `
+<sc-customer-email size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="email" disabled="" exportparts="base, input, form-control, label, help-text, prefix, suffix" help="" name="email" required="" type="email" value="UrlEmail"></sc-input>
+  </mock:shadow-root>
+</sc-customer-email>
+`;
+
+exports[`sc-customer-email Logged In Customer email provided without URL Params 1`] = `
+<sc-customer-email size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="email" disabled="" exportparts="base, input, form-control, label, help-text, prefix, suffix" help="" name="email" required="" type="email" value="CustomerEmail"></sc-input>
+  </mock:shadow-root>
+</sc-customer-email>
+`;
+
+exports[`sc-customer-email Logged Out Checkout email provided with URL Params 1`] = `
+<sc-customer-email size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="email" exportparts="base, input, form-control, label, help-text, prefix, suffix" help="" name="email" required="" type="email" value="UrlEmail"></sc-input>
+  </mock:shadow-root>
+</sc-customer-email>
+`;
+
+exports[`sc-customer-email Logged Out Checkout email provided without URL Params 1`] = `
+<sc-customer-email size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="email" exportparts="base, input, form-control, label, help-text, prefix, suffix" help="" name="email" required="" type="email" value="CheckoutEmail"></sc-input>
+  </mock:shadow-root>
+</sc-customer-email>
+`;
+
+exports[`sc-customer-email Logged Out Customer and Checkout email provided with URL Params 1`] = `
+<sc-customer-email size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="email" exportparts="base, input, form-control, label, help-text, prefix, suffix" help="" name="email" required="" type="email" value="UrlEmail"></sc-input>
+  </mock:shadow-root>
+</sc-customer-email>
+`;
+
+exports[`sc-customer-email Logged Out Customer and Checkout email provided without URL Params 1`] = `
+<sc-customer-email size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="email" exportparts="base, input, form-control, label, help-text, prefix, suffix" help="" name="email" required="" type="email" value="CheckoutEmail"></sc-input>
+  </mock:shadow-root>
+</sc-customer-email>
+`;
+
+exports[`sc-customer-email Logged Out Customer email provided with URL Params 1`] = `
+<sc-customer-email size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="email" exportparts="base, input, form-control, label, help-text, prefix, suffix" help="" name="email" required="" type="email" value="UrlEmail"></sc-input>
+  </mock:shadow-root>
+</sc-customer-email>
+`;
+
+exports[`sc-customer-email Logged Out Customer email provided without URL Params 1`] = `
+<sc-customer-email size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="email" exportparts="base, input, form-control, label, help-text, prefix, suffix" help="" name="email" required="" type="email" value="CustomerEmail"></sc-input>
   </mock:shadow-root>
 </sc-customer-email>
 `;
