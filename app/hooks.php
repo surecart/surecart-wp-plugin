@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 add_filter(
 	'do_redirect_guess_404_permalink',
 	function( $guess ) {
-		if ( ( strpos( $_SERVER['REQUEST_URI'], '/' . untrailingslashit( \SureCart::permalinks()->getBase( 'buy_page' ) ) . '/' ) !== false ) ) {
+		if ( ( strpos( $_SERVER['REQUEST_URI'], '/' . untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'buy_page' ) ) . '/' ) !== false ) ) {
 			return false;
 		}
 		if ( ( strpos( $_SERVER['REQUEST_URI'], 'surecart/webhooks' ) !== false ) ) {
@@ -33,22 +33,6 @@ add_filter(
 		return $guess;
 	},
 	9999999999
-);
-
-/**
- * Add rewrite rules for surecart.
- *
- * We don't actually use these for routing, but these are
- * needed to prevent other plugins from 404ing our web routes.
- */
-add_action(
-	'init',
-	function() {
-		// This is causing issues.
-		// add_rewrite_rule( untrailingslashit( \SureCart::permalinks()->getBase( 'buy_page' ) ) . '/([a-z0-9-]+)[/]?$', 'index.php', 'top' );
-		// add_rewrite_rule( 'surecart/redirect', 'index.php', 'top' );
-		// add_rewrite_rule( 'surecart/webhooks', 'index.php', 'top' );
-	}
 );
 
 register_uninstall_hook( SURECART_PLUGIN_FILE, 'surecart_uninstall' );

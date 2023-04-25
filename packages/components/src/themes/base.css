@@ -670,7 +670,7 @@ sc-checkout [hidden] {
 
 .surecart-theme-dark sc-tab:not([disabled])::part(base):hover,
 .surecart-theme-dark sc-tab[active]::part(base) {
-  color: var(--sc-color-primary-500);
+  color: var(--sc-color-primary-white);
 }
 
 /* Tag */

@@ -3,8 +3,8 @@ Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
-Tested up to: 6.1
-Stable tag: 1.8.2
+Tested up to: 6.2
+Stable tag: 1.9.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,47 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.9.4 - April 24, 2023 =
+* Improvement: Clicking add to cart button now increases the quantity.
+* Improvement: Disallow spaces as inputs for firstname, lastname or full name fields.
+* Fix: CSS issue for subscription saver modal being more than 2 columns.
+* Fix: Issue where coupon field gets too wide if button text is longer on mobile.
+* Fix: Issue with Kadence blocks styles being displayed for some themes in SureCart columns.
+
+= 1.9.3 - April 19, 2023 =
+* Fix: Overflow issue with order bumps and subscription saver items that have long titles.
+* Fix: Issue with price inputs in iOS Safari that contain decimals.
+* Fix: Permissions denied issue with switching between name your own price subscriptions.
+
+= 1.9.2 - April 10, 2023 =
+* Fix export links change for data export.
+* Fix issue with customer dashboard page styling missing if slide out cart is disabled.
+* Don't allow API requests without token to requests to SureCart server on unconnected stores.
+* Fix issue with adding new payment method not working with Japanese characters as tab.
+
+= 1.9.1 - March 30, 2023 =
+* Fix: Issue with store logo causing error due to missing file.
+
+= 1.9.0 - March 30, 2023 =
+* New: Paypal subscriptions enabled for all connected PayPal accounts.
+* New: Default customer dashboard template.
+* Fix: Issue with Elementor when no forms are published.
+* Fix: Issue with Elementor not loading when all forms are unpublished.
+* Fix: Invalid URL error notice on Elementor editor.
+
+= 1.8.5 - March 27, 2023 =
+* Fix: Some missing translations on instant checkouts.
+* Fix: Tax ID input default translations.
+* Fix: Make sure block placeholder options apply to compact shipping address.
+
+= 1.8.4 - March 24, 2023 =
+* Fix: Issue with changing tax id input field not allowing checkout after update.
+
+= 1.8.3 - March 23, 2023 =
+* Fix: Issue with buy page links compatibility with SEO plugins "404 redirect to homepage" setting.
+* Fix: Issue with download links not working in iOS.
+* Fix: New translations missing from pot file.
 
 = 1.8.2 - March 21, 2023 =
 * Fix: Issue with forms not loading on the backend for some non-premium users.

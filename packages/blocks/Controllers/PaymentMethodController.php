@@ -125,10 +125,27 @@ class PaymentMethodController extends BaseController {
 		<sc-spacing style="--spacing: var(--sc-spacing-large)">
 			<sc-breadcrumbs>
 				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) );  // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>">
-				<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb  href="
+					<?php
+					echo esc_url(
+						add_query_arg(
+							[
+								'tab'    => $this->getTab(),
+								'model'  => 'customer',
+								'action' => 'show',
+								'id'     => User::current()->customerId( 'false' === $_GET['live_mode'] ? 'test' : 'live' ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+							],
+							remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+						)
+					);
+					?>
+				 ">
+					<?php esc_html_e( 'Billing', 'surecart' ); ?>
 				</sc-breadcrumb>
 				<sc-breadcrumb>
-				<?php esc_html_e( 'Add Payment Method', 'surecart' ); ?>
+					<?php esc_html_e( 'Add Payment Method', 'surecart' ); ?>
 				</sc-breadcrumb>
 			</sc-breadcrumbs>
 

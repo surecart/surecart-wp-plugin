@@ -4,11 +4,12 @@
 	"description": "Displays the customers shipping addresses and lets them update details.",
 	"category": "surecart",
 	"keywords": ["name", "customer", "dashboard"],
-  "textdomain": "surecart",
-	"ancestor": ["surecart/dashboard-page"],
+	"textdomain": "surecart",
+	"ancestor": ["surecart/dashbaord-page", "surecart/dashboard-area"],
 	"supports": {
 		"reusable": false,
-		"html": false
+		"html": false,
+		"inserter": false
 	},
 	"attributes": {
 		"label": {

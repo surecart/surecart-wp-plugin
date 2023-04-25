@@ -167,7 +167,7 @@ export class ScPaymentMethodsList {
         <sc-stacked-list-row style={{ '--columns': billing_agreement ? '2' : '3' }}>
           <sc-payment-method paymentMethod={paymentMethod} />
 
-          <div>
+          <div class="payment-id">
             {!!card?.exp_month && (
               <span>
                 {__('Exp.', 'surecart')}

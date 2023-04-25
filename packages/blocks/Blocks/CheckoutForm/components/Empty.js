@@ -5,20 +5,13 @@ import { css, jsx } from '@emotion/core';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { Placeholder, Button } from '@wordpress/components';
-import { useState, Fragment } from '@wordpress/element';
+import { Placeholder } from '@wordpress/components';
+import { useState } from '@wordpress/element';
 import { dispatch } from '@wordpress/data';
 import { useBlockProps } from '@wordpress/block-editor';
-import {
-	createBlock,
-	parse,
-	serialize,
-	createBlocksFromInnerBlocksTemplate,
-} from '@wordpress/blocks';
-import apiFetch from '@wordpress/api-fetch';
+import { createBlock, serialize } from '@wordpress/blocks';
 
 import { receipt as icon } from '@wordpress/icons';
-import admin from '../../../../admin/styles/admin';
 
 /**
  * Components

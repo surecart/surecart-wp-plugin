@@ -1,5 +1,5 @@
 import { Component, Prop, Method, State, Event, EventEmitter, Watch, h, Element, Host } from '@stencil/core';
-import { isRtl } from 'src/functions/page-align';
+import { isRtl } from '../../../functions/page-align';
 
 /**
  * @part base - The elements base wrapper.

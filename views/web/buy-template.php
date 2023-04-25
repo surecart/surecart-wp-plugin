@@ -45,23 +45,21 @@
 			<sc-checkout-form-errors></sc-checkout-form-errors>
 		<!-- /wp:surecart/checkout-errors -->
 
-		<!-- wp:surecart/email {"placeholder":"Your email address"} /-->
+		<!-- wp:surecart/email {"placeholder":"<?php esc_attr_e( 'Your email address', 'surecart' ); ?>","label":"<?php esc_attr_e( 'Email', 'surecart' ); ?>"} /-->
 
-		<!-- wp:surecart/name {"required":true,"placeholder":"Your name"} -->
+		<!-- wp:surecart/name {"required":true,"placeholder":"<?php esc_attr_e( 'Your name', 'surecart' ); ?>"} -->
 		<sc-customer-name label="<?php esc_attr_e( 'Name', 'surecart' ); ?>" placeholder="<?php esc_attr_e( 'Your name', 'surecart' ); ?>" required></sc-customer-name>
 		<!-- /wp:surecart/name -->
 
-		<!-- wp:surecart/payment {"secure_notice":"This is a secure, encrypted payment"} -->
-		<sc-payment label="Payment" default-processor="stripe" secure-notice="This is a secure, encrypted payment" class="wp-block-surecart-payment"></sc-payment>
-		<!-- /wp:surecart/payment -->
+		<!-- wp:surecart/payment {"label":"<?php esc_attr_e( 'Payment', 'surecart' ); ?>"} --><!-- /wp:surecart/payment -->
 
 		<sc-order-bumps label="<?php esc_attr_e( 'Recommended', 'surecart' ); ?>"></sc-order-bumps>
 
 		<?php if ( $show_coupon ) : ?>
-			<!-- wp:surecart/coupon {"text":"Coupon Code","collapsed":false} /-->
+			<!-- wp:surecart/coupon {"text":"<?php esc_attr_e( 'Coupon Code', 'surecart' ); ?>","collapsed":false,"placeholder":"<?php esc_attr_e( 'Enter coupon code', 'surecart' ); ?>","button_text":"<?php esc_attr_e( 'Apply', 'surecart' ); ?>"} /-->
 		<?php endif; ?>
 
-		<sc-order-summary collapsible="true" collapsed="true" closed-text="Total" open-text="Total">
+		<sc-order-summary collapsible="true" collapsed="true" closed-text="<?php esc_attr_e( 'Total', 'surecart' ); ?>" open-text="<?php esc_attr_e( 'Total', 'surecart' ); ?>">
 
 			<sc-divider></sc-divider>
 
@@ -70,7 +68,9 @@
 			<sc-divider></sc-divider>
 
 			<!-- wp:surecart/subtotal -->
-			<sc-line-item-total total="subtotal" class="wp-block-surecart-subtotal"><span slot="description">Subtotal</span></sc-line-item-total>
+			<sc-line-item-total total="subtotal" class="wp-block-surecart-subtotal">
+				<span slot="description"><?php esc_html_e( 'Subtotal', 'surecart' ); ?></span>
+			</sc-line-item-total>
 			<!-- /wp:surecart/subtotal -->
 
 			<!-- wp:surecart/tax-line-item -->
@@ -78,7 +78,10 @@
 			<!-- /wp:surecart/tax-line-item -->
 
 			<!-- wp:surecart/total -->
-			<sc-line-item-total total="total" size="large" show-currency="1" class="wp-block-surecart-total"><span slot="title">Total</span><span slot="subscription-title">Total Due Today</span></sc-line-item-total>
+			<sc-line-item-total total="total" size="large" show-currency="1" class="wp-block-surecart-total">
+				<span slot="title"><?php esc_html_e( 'Total', 'surecart' ); ?></span>
+				<span slot="subscription-title"><?php esc_html_e( 'Total Due Today', 'surecart' ); ?></span>
+			</sc-line-item-total>
 			<!-- /wp:surecart/total -->
 		</sc-order-summary>
 
@@ -86,8 +89,10 @@
 			<sc-checkbox name="terms_and_privacy" value="accepted" required><?php echo wp_kses_post( $terms_text ); ?></sc-checkbox>
 		<?php endif; ?>
 
-		<!-- wp:surecart/submit {"text":"Buy Now","show_total":true,"full":true} -->
-		<sc-order-submit type="primary" full="true" size="large" icon="lock" show-total="true" class="wp-block-surecart-submit">Buy Now</sc-order-submit>
+		<!-- wp:surecart/submit {"text":"<?php esc_attr_e( 'Purchase', 'surecart' ); ?>","show_total":true,"full":true} -->
+		<sc-order-submit type="primary" full="true" size="large" icon="lock" show-total="true" class="wp-block-surecart-submit">
+			<?php esc_html_e( 'Purchase', 'surecart' ); ?>
+		</sc-order-submit>
 		<!-- /wp:surecart/submit --></sc-column>
 	<!-- /wp:surecart/column --></sc-columns>
 <!-- /wp:surecart/columns -->

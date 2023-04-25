@@ -73,7 +73,7 @@ export class ScOrderTaxIdInput {
       console.error(e);
       this.scError.emit(e);
     } finally {
-      unLockCheckout('tax_ident');
+      unLockCheckout('tax_identifier');
     }
   }
 

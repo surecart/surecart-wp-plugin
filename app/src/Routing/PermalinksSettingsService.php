@@ -2,6 +2,8 @@
 
 namespace SureCart\Routing;
 
+use SureCart\Routing\PermalinkService;
+
 /**
  * Permalinks settings service.
  */
@@ -26,7 +28,29 @@ class PermalinksSettingsService {
 	public function bootstrap() {
 		add_action( 'admin_init', [ $this, 'addSettingsSections' ] );
 		add_action( 'admin_init', [ $this, 'maybeSaveSettings' ] );
+		$this->addRewriteRules();
 	}
+
+	/**
+	 * Add any rewrite rules we will need.
+	 *
+	 * @return void
+	 */
+	public function addRewriteRules() {
+		// Buy pages.
+		( new PermalinkService() )
+			->params( [ 'sc_checkout_product_id' ] )
+			->url( untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'buy_page' ) ) . '/([a-z0-9-]+)[/]?$' )
+			->query( 'index.php?sc_checkout_product_id=$matches[1]' )
+			->create();
+		// Redirect.
+		( new PermalinkService() )
+			->params( [ 'sc_redirect' ] )
+			->url( 'surecart/redirect' )
+			->query( 'index.php?sc_redirect=1' )
+			->create();
+	}
+
 
 	/**
 	 * Add sections to permalinks page.

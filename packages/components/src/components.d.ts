@@ -730,6 +730,10 @@ export namespace Components {
          */
         "loading": boolean;
         "names": Partial<Address>;
+        /**
+          * Placeholders
+         */
+        "placeholders": Partial<Address>;
         "reportValidity": () => Promise<boolean>;
         /**
           * Is this required?
@@ -750,6 +754,10 @@ export namespace Components {
           * Is the form calculating
          */
         "busy": boolean;
+        /**
+          * The text for apply button
+         */
+        "buttonText": string;
         "collapsed": boolean;
         /**
           * Currency
@@ -1838,6 +1846,7 @@ export namespace Components {
     }
     interface ScOrderCouponForm {
         "busy": boolean;
+        "buttonText": string;
         "collapsed": boolean;
         "error": any;
         "label": string;
@@ -5570,6 +5579,10 @@ declare namespace LocalJSX {
          */
         "onScInputAddress"?: (event: ScCompactAddressCustomEvent<Partial<Address>>) => void;
         /**
+          * Placeholders
+         */
+        "placeholders"?: Partial<Address>;
+        /**
           * Is this required?
          */
         "required"?: boolean;
@@ -5589,6 +5602,10 @@ declare namespace LocalJSX {
           * Is the form calculating
          */
         "busy"?: boolean;
+        /**
+          * The text for apply button
+         */
+        "buttonText"?: string;
         "collapsed"?: boolean;
         /**
           * Currency
@@ -6872,6 +6889,7 @@ declare namespace LocalJSX {
     }
     interface ScOrderCouponForm {
         "busy"?: boolean;
+        "buttonText"?: string;
         "collapsed"?: boolean;
         "error"?: any;
         "label"?: string;
