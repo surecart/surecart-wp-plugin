@@ -63,7 +63,7 @@ class ShippingProfileRestServiceProvider extends RestServiceProvider implements 
 	}
 
 	/**
-	 * Get permissions.
+	 * Retrieve permissions.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
@@ -83,22 +83,33 @@ class ShippingProfileRestServiceProvider extends RestServiceProvider implements 
 	}
 
 	/**
-	 * Retry payment permissions
+	 * Create permissions
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
-	public function retry_payment_permissions_check( $request ) {
-		return current_user_can( 'manage_sc_shop_settings', $request->get_params() );
+	public function create_item_permissions_check( $request ) {
+		return current_user_can( 'manage_sc_shop_settings' );
 	}
 
+
 	/**
-	 * Check update permissions.
+	 * Update permissions.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
 		return current_user_can( 'manage_sc_shop_settings',$request->get_params() );
+	}
+
+	/**
+	 * Delete permissions
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function delete_item_permissions_check( $request ) {
+		return current_user_can( 'manage_sc_shop_settings' );
 	}
 }
