@@ -852,17 +852,9 @@ export namespace Components {
     }
     interface ScCustomerEmail {
         /**
-          * Is abandoned checkout enabled?
-         */
-        "abandonedCheckoutEnabled": boolean;
-        /**
           * The input's autofocus attribute.
          */
         "autofocus": boolean;
-        /**
-          * Force a customer.
-         */
-        "customer": Customer;
         /**
           * Disables the input.
          */
@@ -883,14 +875,6 @@ export namespace Components {
           * The input's label.
          */
         "label": string;
-        /**
-          * Is the user logged in.
-         */
-        "loggedIn": boolean;
-        /**
-          * (passed from the sc-checkout component automatically)
-         */
-        "order": Checkout;
         /**
           * Draws a pill-style input with rounded edges.
          */
@@ -931,10 +915,6 @@ export namespace Components {
          */
         "autofocus": boolean;
         /**
-          * Force a customer.
-         */
-        "customer": Customer;
-        /**
           * Disables the input.
          */
         "disabled": boolean;
@@ -958,10 +938,6 @@ export namespace Components {
           * Is the user logged in.
          */
         "loggedIn": boolean;
-        /**
-          * (passed from the sc-checkout component automatically)
-         */
-        "order": Checkout;
         /**
           * Draws a pill-style input with rounded edges.
          */
@@ -1021,10 +997,6 @@ export namespace Components {
           * Is the user logged in.
          */
         "loggedIn": boolean;
-        /**
-          * (passed from the sc-checkout component automatically)
-         */
-        "order": Checkout;
         /**
           * Draws a pill-style input with rounded edges.
          */
@@ -5686,17 +5658,9 @@ declare namespace LocalJSX {
     }
     interface ScCustomerEmail {
         /**
-          * Is abandoned checkout enabled?
-         */
-        "abandonedCheckoutEnabled"?: boolean;
-        /**
           * The input's autofocus attribute.
          */
         "autofocus"?: boolean;
-        /**
-          * Force a customer.
-         */
-        "customer"?: Customer;
         /**
           * Disables the input.
          */
@@ -5717,10 +5681,6 @@ declare namespace LocalJSX {
           * The input's label.
          */
         "label"?: string;
-        /**
-          * Is the user logged in.
-         */
-        "loggedIn"?: boolean;
         /**
           * Emitted when the control loses focus.
          */
@@ -5753,10 +5713,6 @@ declare namespace LocalJSX {
           * Update the order state.
          */
         "onScUpdateOrderState"?: (event: ScCustomerEmailCustomEvent<Checkout>) => void;
-        /**
-          * (passed from the sc-checkout component automatically)
-         */
-        "order"?: Checkout;
         /**
           * Draws a pill-style input with rounded edges.
          */
@@ -5795,10 +5751,6 @@ declare namespace LocalJSX {
           * The input's autofocus attribute.
          */
         "autofocus"?: boolean;
-        /**
-          * Force a customer.
-         */
-        "customer"?: Customer;
         /**
           * Disables the input.
          */
@@ -5845,10 +5797,6 @@ declare namespace LocalJSX {
         "onScInput"?: (event: ScCustomerFirstnameCustomEvent<void>) => void;
         "onScUpdateCustomer"?: (event: ScCustomerFirstnameCustomEvent<{ email: string }>) => void;
         "onScUpdateOrderState"?: (event: ScCustomerFirstnameCustomEvent<Partial<Checkout>>) => void;
-        /**
-          * (passed from the sc-checkout component automatically)
-         */
-        "order"?: Checkout;
         /**
           * Draws a pill-style input with rounded edges.
          */
@@ -5919,10 +5867,6 @@ declare namespace LocalJSX {
           * Emitted when the control receives input.
          */
         "onScInput"?: (event: ScCustomerLastnameCustomEvent<void>) => void;
-        /**
-          * (passed from the sc-checkout component automatically)
-         */
-        "order"?: Checkout;
         /**
           * Draws a pill-style input with rounded edges.
          */

@@ -47,32 +47,36 @@ describe('sc-customer-email', () => {
   }
 
   describe.each(checkouts)('Logged In', test => {
-    it(`${test.testLabel} with URL Params`, async () => {
-      addUrlParams(true);
-      userState.loggedIn = true;
-      checkoutState.checkout = test.checkout;
+    describe('Url Params', () => {
+      it(test.testLabel, async () => {
+        addUrlParams(true);
+        userState.loggedIn = true;
+        checkoutState.checkout = test.checkout;
 
-      const page = await newSpecPage({
-        components: [ScCustomerEmail],
-        html: `<sc-customer-email></sc-customer-email>`,
+        const page = await newSpecPage({
+          components: [ScCustomerEmail],
+          html: `<sc-customer-email></sc-customer-email>`,
+        });
+
+        expect(page.root).toMatchSnapshot();
+        page.rootInstance.disconnectedCallback();
       });
-
-      expect(page.root).toMatchSnapshot();
-      page.rootInstance.disconnectedCallback();
     });
 
-    it(`${test.testLabel} without URL Params`, async () => {
-      addUrlParams(false);
-      userState.loggedIn = true;
-      checkoutState.checkout = test.checkout;
+    describe('Without Url Params', () => {
+      it(test.testLabel, async () => {
+        addUrlParams(false);
+        userState.loggedIn = true;
+        checkoutState.checkout = test.checkout;
 
-      const page = await newSpecPage({
-        components: [ScCustomerEmail],
-        html: `<sc-customer-email></sc-customer-email>`,
+        const page = await newSpecPage({
+          components: [ScCustomerEmail],
+          html: `<sc-customer-email></sc-customer-email>`,
+        });
+
+        expect(page.root).toMatchSnapshot();
+        page.rootInstance.disconnectedCallback();
       });
-
-      expect(page.root).toMatchSnapshot();
-      page.rootInstance.disconnectedCallback();
     });
   });
 

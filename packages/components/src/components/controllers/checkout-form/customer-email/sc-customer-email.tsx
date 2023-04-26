@@ -15,11 +15,10 @@ import { state as checkoutState, onChange } from '@store/checkout';
 export class ScCustomerEmail {
   private input: HTMLScInputElement;
 
-   private removeCheckoutListener: () => void;
+  private removeCheckoutListener: () => void;
 
   /** A message for tracking confirmation. */
   @Prop() trackingConfirmationMessage: string;
-
 
   /** The input's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
@@ -91,11 +90,10 @@ export class ScCustomerEmail {
     this.value = this.input.value;
     this.scChange.emit();
 
-    try{
+    try {
       checkoutState.checkout = (await createOrUpdateCheckout({ id: checkoutState.checkout.id, data: { email: this.input.value } })) as Checkout;
-    }
-    catch(error){
-       console.log(error)
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -109,20 +107,22 @@ export class ScCustomerEmail {
     // we already have a value.
     if (this.value) return;
 
+    // we are logged in already.
+    if (userState.loggedIn) {
+      this.value = (checkoutState?.checkout?.customer as Customer)?.email || checkoutState?.checkout?.email;
+      return;
+    }
+
     const fromUrl = getValueFromUrl('email');
     if (!userState.loggedIn && !!fromUrl) {
       this.value = fromUrl;
       return;
     }
 
-    if (userState.loggedIn) {
-      this.value = (checkoutState?.checkout?.customer as Customer)?.email || checkoutState?.checkout?.email;
-    } else {
-      this.value = checkoutState?.checkout?.email || (checkoutState?.checkout?.customer as Customer)?.email;
-    }
+    this.value = checkoutState?.checkout?.email || (checkoutState?.checkout?.customer as Customer)?.email;
   }
 
-   /** Listen to checkout. */
+  /** Listen to checkout. */
   componentWillLoad() {
     this.handleSessionChange();
     this.removeCheckoutListener = onChange('checkout', () => this.handleSessionChange());
@@ -132,7 +132,6 @@ export class ScCustomerEmail {
   disconnectedCallback() {
     this.removeCheckoutListener();
   }
-
 
   renderOptIn() {
     if (!this.trackingConfirmationMessage) return null;
@@ -184,8 +183,7 @@ export class ScCustomerEmail {
           onScInput={() => this.scInput.emit()}
           onScFocus={() => this.scFocus.emit()}
           onScBlur={() => this.scBlur.emit()}
-        >
-        </sc-input>
+        ></sc-input>
 
         {this.renderOptIn()}
       </Host>
