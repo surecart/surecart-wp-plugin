@@ -2,6 +2,7 @@ import { Customer, Checkout } from '../../../../types';
 import { createOrUpdateCheckout } from '../../../../services/session';
 import { Component, Prop, h, Event, EventEmitter, Watch, Method } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
+import { __ } from '@wordpress/i18n';
 
 @Component({
   tag: 'sc-customer-name',
@@ -83,7 +84,19 @@ export class ScCustomerName {
 
   @Method()
   async reportValidity() {
-    return this.input?.reportValidity?.();
+    this.input?.setCustomValidity?.('');
+
+    if (!this.input?.value.trim().length) {
+      this.input.setCustomValidity(__('Field must not be empty.', 'surecart'));
+    }
+
+    const valid = await this.input?.reportValidity?.();
+
+    if (!valid) {
+      return false;
+    }
+
+    return valid;
   }
 
   async handleChange() {
