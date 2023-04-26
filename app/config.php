@@ -200,6 +200,11 @@ return [
 		'surecart/total'                     => [ 'sc-line-item-total', 'sc-format-number' ],
 		'surecart/totals'                    => [ 'sc-order-summary' ],
 		'surecart/conditional-from'          => [ 'sc-conditional-form' ],
+		'surecart/product-price'             => [ 'sc-product-price', 'sc-tag', 'sc-format-number' ],
+		'surecart/product-media'             => [],
+		'surecart/product-buy-buttons'       => [ 'sc-button' ],
+		'surecart/product-price-choices'     => [ 'sc-choices', 'sc-price-choice-container', 'sc-choice-container' ],
+		'surecart/product-quantity'          => [],
 	],
 
 	/**
