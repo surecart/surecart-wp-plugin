@@ -7,17 +7,9 @@
 
 ## Properties
 
-| Property | Attribute | Description       | Type      | Default     |
-| -------- | --------- | ----------------- | --------- | ----------- |
-| `prices` | --        |                   | `Price[]` | `undefined` |
-| `range`  | `range`   | Show price range? | `boolean` | `true`      |
-
-
-## Shadow Parts
-
-| Part     | Description |
-| -------- | ----------- |
-| `"base"` |             |
+| Property | Attribute | Description | Type      | Default     |
+| -------- | --------- | ----------- | --------- | ----------- |
+| `prices` | --        |             | `Price[]` | `undefined` |
 
 
 ## Dependencies
@@ -28,13 +20,11 @@
 
 ### Depends on
 
-- [sc-format-number](../../../util/format-number)
 - [sc-price-range](../../../ui/sc-price-range)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-product-item-price --> sc-format-number
   sc-product-item-price --> sc-price-range
   sc-price-range --> sc-format-number
   sc-product-item --> sc-product-item-price

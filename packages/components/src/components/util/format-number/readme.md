@@ -42,7 +42,6 @@
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
  - [sc-price-choice-container](../../ui/sc-price-choice-container)
  - [sc-price-range](../../ui/sc-price-range)
- - [sc-product-item-price](../../controllers/products/sc-product-item-price)
  - [sc-product-line-item](../../ui/product-line-item)
  - [sc-product-price](../../controllers/product/sc-product-price)
  - [sc-product-price-choices](../../controllers/product/sc-product-price-choices)
@@ -71,7 +70,6 @@ graph TD;
   sc-price-choice --> sc-format-number
   sc-price-choice-container --> sc-format-number
   sc-price-range --> sc-format-number
-  sc-product-item-price --> sc-format-number
   sc-product-line-item --> sc-format-number
   sc-product-price --> sc-format-number
   sc-product-price-choices --> sc-format-number

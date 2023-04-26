@@ -39,14 +39,12 @@
 
 - [sc-flex](../flex)
 - [sc-button](../button)
-- [sc-icon](../icon)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-pagination --> sc-flex
   sc-pagination --> sc-button
-  sc-pagination --> sc-icon
   sc-button --> sc-spinner
   sc-charges-list --> sc-pagination
   sc-dashboard-downloads-list --> sc-pagination

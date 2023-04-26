@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-26T17:06:38",
+  "timestamp": "2023-04-25T15:12:32",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -13323,35 +13323,16 @@
       "usage": {},
       "props": [
         {
-          "name": "autoHeight",
-          "type": "boolean",
+          "name": "images",
+          "type": "string",
           "mutable": false,
-          "attr": "auto-height",
+          "attr": "images",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
           "values": [
             {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "images",
-          "type": "string | { src: string; alt: string; }[]",
-          "mutable": false,
-          "attr": "images",
-          "reflectToAttr": false,
-          "docs": "Accept a string or an array of objects",
-          "docsTags": [],
-          "values": [
-            {
               "type": "string"
-            },
-            {
-              "type": "{ src: string; alt: string; }[]"
             }
           ],
           "optional": false,

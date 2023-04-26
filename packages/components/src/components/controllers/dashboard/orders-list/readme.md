@@ -62,7 +62,6 @@ graph TD;
   sc-button --> sc-spinner
   sc-pagination --> sc-flex
   sc-pagination --> sc-button
-  sc-pagination --> sc-icon
   sc-block-ui --> sc-spinner
   style sc-orders-list fill:#f9f,stroke:#333,stroke-width:4px
 ```

@@ -75,7 +75,6 @@
  - [sc-payment-method](../sc-payment-method)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-product-buy-button](../../controllers/product/sc-product-buy-button)
- - [sc-product-item-list](../../controllers/products/sc-product-item-list)
  - [sc-product-selected-price](../../controllers/checkout-form/sc-product-selected-price)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-rich-text](../rich-text)
@@ -128,7 +127,6 @@ graph TD;
   sc-payment-method --> sc-button
   sc-payment-methods-list --> sc-button
   sc-product-buy-button --> sc-button
-  sc-product-item-list --> sc-button
   sc-product-selected-price --> sc-button
   sc-purchase-downloads-list --> sc-button
   sc-rich-text --> sc-button
