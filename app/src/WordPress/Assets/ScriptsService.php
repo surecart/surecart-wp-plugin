@@ -63,32 +63,32 @@ class ScriptsService {
 	 */
 	public function register() {
 		// should we use the esm loader directly?
-		if ( ! is_admin() && \SureCart::assets()->usesEsmLoader() ) {
-			wp_register_script(
-				'surecart-components',
-				trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/surecart/surecart.esm.js',
-				[ 'wp-i18n' ],
-				filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.esm.js' ) . '-' . \SureCart::plugin()->version(),
-				false
-			);
-		} else {
-			// instead, use a static loader that injects the script at runtime.
-			$static_assets = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/static-loader.asset.php';
-			wp_register_script(
-				'surecart-components',
-				trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/static-loader.js',
-				array_merge( [ 'wp-i18n' ], $static_assets['dependencies'] ),
-				$static_assets['version'] . '-' . \SureCart::plugin()->version(),
-				true
-			);
-			wp_localize_script(
-				'surecart-components',
-				'surecartComponents',
-				[
-					'url' => trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/surecart/surecart.esm.js?ver=' . filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.esm.js' ),
-				]
-			);
-		}
+		// if ( ! is_admin() && \SureCart::assets()->usesEsmLoader() ) {
+		// wp_register_script(
+		// 'surecart-components',
+		// trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/surecart/surecart.esm.js',
+		// [ 'wp-i18n' ],
+		// filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.esm.js' ) . '-' . \SureCart::plugin()->version(),
+		// false
+		// );
+		// } else {
+		// instead, use a static loader that injects the script at runtime.
+		// $static_assets = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/static-loader.asset.php';
+		// wp_register_script(
+		// 'surecart-components',
+		// trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/static-loader.js',
+		// array_merge( [ 'wp-i18n' ], $static_assets['dependencies'] ),
+		// $static_assets['version'] . '-' . \SureCart::plugin()->version(),
+		// true
+		// );
+		// wp_localize_script(
+		// 'surecart-components',
+		// 'surecartComponents',
+		// [
+		// 'url' => trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/surecart/surecart.esm.js?ver=' . filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.esm.js' ),
+		// ]
+		// );
+		// }
 
 		wp_set_script_translations( 'surecart-components', 'surecart' );
 
@@ -305,7 +305,14 @@ class ScriptsService {
 				'root_url'             => esc_url_raw( get_rest_url() ),
 				'nonce'                => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 				'nonce_endpoint'       => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
-				'processors'           => (array) Processor::get() ?? [],
+				'processors'           => array_values(
+					array_filter(
+						(array) Processor::get() ?? [],
+						function( $processor ) {
+							return $processor->enabled;
+						}
+					)
+				),
 				'manualPaymentMethods' => (array) ManualPaymentMethod::get() ?? [],
 				'plugin_url'           => \SureCart::core()->assets()->getUrl(),
 				'currency'             => \SureCart::account()->currency,

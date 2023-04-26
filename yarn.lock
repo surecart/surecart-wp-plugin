@@ -7281,6 +7281,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@surecart/blocks-next@workspace:packages/blocks-next":
+  version: 0.0.0-use.local
+  resolution: "@surecart/blocks-next@workspace:packages/blocks-next"
+  dependencies:
+    "@surecart/components": ^1.0.0
+    "@wordpress/prettier-config": ^1.1.1
+    "@wordpress/scripts": ^26.2.0
+  languageName: unknown
+  linkType: soft
+
 "@surecart/blocks@workspace:packages/blocks":
   version: 0.0.0-use.local
   resolution: "@surecart/blocks@workspace:packages/blocks"

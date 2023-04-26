@@ -31,6 +31,7 @@ graph TD;
   sc-product-item --> sc-product-item-title
   sc-product-item --> sc-product-item-image
   sc-product-item --> sc-product-item-price
+  sc-product-item-price --> sc-format-number
   sc-product-item-price --> sc-price-range
   sc-price-range --> sc-format-number
   sc-product-item-list --> sc-product-item
