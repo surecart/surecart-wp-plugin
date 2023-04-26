@@ -4,7 +4,7 @@ namespace SureCart\Tests\Feature\Rest;
 
 use SureCart\Request\RequestService;
 use SureCart\Request\RequestServiceProvider;
-use SureCart\Rest\ShippingZoneRestServiceProvider;
+use SureCart\Rest\ProvisionalAccountRestServiceProvider;
 use SureCart\Support\Errors\ErrorsServiceProvider;
 use SureCart\Tests\SureCartUnitTestCase;
 
@@ -22,7 +22,7 @@ class ProvisionalAccountRestServiceProviderTest extends SureCartUnitTestCase
         //Set up an app instance with whatever stubs and mocks we need before every test.
         \SureCart::make()->bootstrap([
             'providers' => [
-                ProvisionalAccountRestServiceProviderTest::class,
+                ProvisionalAccountRestServiceProvider::class,
                 RequestServiceProvider::class,
                 ErrorsServiceProvider::class,
             ],
