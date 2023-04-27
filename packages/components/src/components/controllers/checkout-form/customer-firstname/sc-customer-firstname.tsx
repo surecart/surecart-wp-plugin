@@ -19,7 +19,6 @@ export class ScCustomerFirstname {
   /** Is the user logged in. */
   @Prop() loggedIn: boolean;
 
-
   /** The input's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
 
@@ -111,29 +110,28 @@ export class ScCustomerFirstname {
   /** Sync customer first name with session if it's updated by other means */
   handleSessionChange() {
     //return if we already have a value
-    if(this.value) return;
+    if (this.value) return;
 
-    const fromUrl = getValueFromUrl('first_name')
-    if(!userState.loggedIn && !!fromUrl){
+    const fromUrl = getValueFromUrl('first_name');
+    if (!userState.loggedIn && !!fromUrl) {
       this.value = fromUrl;
       return;
     }
 
-    if(!userState.loggedIn ){
+    if (!userState.loggedIn) {
       this.value = (checkoutState?.checkout?.customer as Customer)?.first_name || checkoutState?.checkout?.first_name;
-    }
-    else{
+    } else {
       this.value = checkoutState?.checkout?.first_name || (checkoutState?.checkout?.customer as Customer)?.first_name;
     }
   }
 
-   /** Listen to checkout. */
+  /** Listen to checkout. */
   componentWillLoad() {
     this.handleSessionChange();
     this.removeCheckoutListener = onChange('checkout', () => this.handleSessionChange());
   }
 
-   /** Remove listener. */
+  /** Remove listener. */
   disconnectedCallback() {
     this.removeCheckoutListener();
   }
@@ -145,7 +143,7 @@ export class ScCustomerFirstname {
         name="first_name"
         ref={el => (this.input = el as HTMLScInputElement)}
         value={this.value}
-        disabled={!!this.loggedIn}
+        disabled={!!userState.loggedIn}
         label={this.label}
         help={this.help}
         autocomplete="first_name"
@@ -163,4 +161,3 @@ export class ScCustomerFirstname {
     );
   }
 }
-
