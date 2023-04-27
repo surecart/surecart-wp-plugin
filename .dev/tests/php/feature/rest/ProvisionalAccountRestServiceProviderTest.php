@@ -59,7 +59,7 @@ class ProvisionalAccountRestServiceProviderTest extends SureCartUnitTestCase
                 $user->add_cap($cap);
             }
 
-            wp_set_current_user($user->id ?? null);
+            wp_set_current_user($user->ID ?? null);
         }
 
         $request = new \WP_REST_Request($method, $route);
