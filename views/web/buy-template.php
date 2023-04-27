@@ -2,10 +2,10 @@
 <sc-columns is-stacked-on-mobile="1" is-full-height class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right is-full-height" style="gap:0px 0px;"><!-- wp:surecart/column {"layout":{"type":"constrained","contentSize":"550px","justifyContent":"right"},"width":"","style":{"spacing":{"padding":{"top":"100px","right":"100px","bottom":"100px","left":"100px"},"blockGap":"30px"},"border":{"width":"0px","style":"none"},"color":{"background":"#fafafa"}}} -->
 	<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right" style="border-style:none;border-width:0px;padding:30px 5rem 5rem 5rem;--sc-column-content-width:450px;--sc-form-row-spacing:30px">
 
-		<?php if ( $show_image && ! empty( $product->image->url ) ) : ?>
+		<?php if ( $show_image && ! empty( $product->image_url ) ) : ?>
 			<!-- wp:image {"sizeSlug":"full","linkDestination":"none","style":{"border":{"radius":"5px"}}} -->
 				<figure class="wp-block-image size-full is-resized has-custom-border">
-					<img src="<?php echo esc_url( $product->image->url ); ?>" alt="<?php echo esc_attr( $product->name ); ?>" style="border-radius:5px" />
+					<img src="<?php echo esc_url( $product->image_url ); ?>" alt="<?php echo esc_attr( $product->name ); ?>" style="border-radius:5px" />
 				</figure>
 			<!-- /wp:image -->
 		<?php endif; ?>
