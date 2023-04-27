@@ -33,11 +33,11 @@ class Block extends BaseBlock {
 			size="<?php echo esc_attr( $attributes['size'] ?? 'medium' ); ?>"
 			value="<?php echo esc_attr( $attributes['value'] ?? '' ); ?>"
 			required="<?php echo esc_attr( $attributes['required'] ?? false ); ?>"
-			confirmation="<?php echo esc_attr( $attributes['confirmation'] ? '1' : null ); ?>"
+			confirmation="<?php echo esc_attr( $attributes['confirmation'] ? 'true' : 'false' ); ?>"
 			confirmation-label="<?php echo esc_attr( $attributes['confirmation_label'] ?? '' ); ?>"
 			confirmation-placeholder="<?php echo esc_attr( $attributes['confirmation_placeholder'] ?? '' ); ?>"
 			confirmation-help="<?php echo esc_attr( $attributes['confirmation_help'] ?? '' ); ?>"
-			enable-validation="<?php echo get_option( 'surecart_password_validation_enabled', true ) ? 'true' : 'false' ; ?>"
+			enable-validation="<?php echo get_option( 'surecart_password_validation_enabled', true ) ? 'true' : 'false'; ?>"
 		>
 		</sc-order-password>
 
