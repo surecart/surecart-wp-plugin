@@ -14,19 +14,106 @@ class CartService {
 	 * @return void
 	 */
 	public function bootstrap() {
+		add_filter( 'wp_nav_menu_items', [ $this, 'addCartMenu' ], 10, 2 );
+
 		// Slide-out is disabled. Do not load scripts.
-		if ( (bool) get_option( 'sc_slide_out_cart_disabled', false ) ) {
-			return;
+		if ( ! (bool) get_option( 'sc_slide_out_cart_disabled', false ) ) {
+			add_action(
+				'wp_enqueue_scripts',
+				function () {
+					\SureCart::assets()->enqueueComponents();
+				}
+			);
+			add_action( 'wp_footer', [ $this, 'renderCartComponent' ] );
+		}
+	}
+
+
+	/**
+	 * Get selected ids.
+	 *
+	 * @return array|false
+	 */
+	public function getSelectedIds() {
+		return get_option( 'surecart_cart_menu_selected_ids', false );
+	}
+
+	/**
+	 * Get icon type.
+	 *
+	 * @return array|false
+	 */
+	public function getIconType() {
+		return get_option( 'surecart_cart_icon_type', 'floating_icon' );
+	}
+
+	/**
+	 * Check if cart menu is always shown.
+	 *
+	 * @return boolean
+	 */
+	public function isAlwaysShown() {
+		return (bool) get_option( 'surecart_cart_menu_always_shown', false );
+	}
+
+	/**
+	 * Get cart menu alignment.
+	 *
+	 * @return 'left'|'right
+	 */
+	public function getAlignment() {
+		return (string) get_option( 'surecart_cart_menu_alignment', 'right' );
+	}
+
+	/**
+	 * Get mode.
+	 *
+	 * @return string
+	 */
+	public function getMode() {
+		$form = $this->getForm();
+		return Form::getMode( $form->ID );
+	}
+
+	/**
+	 * Add cart to menu.
+	 *
+	 * @param array  $items Menu items.
+	 * @param object $args Menu args.
+	 *
+	 * @return array
+	 */
+	public function addCartMenu( $items, $args ) {
+		if ( ! $this->isMenuIconEnabled( $args->menu->term_id ) ) {
+			return $items;
 		}
 
-		// enqueue scripts needed for slide out cart.
-		add_action(
-			'wp_enqueue_scripts',
-			function () {
-				\SureCart::assets()->enqueueComponents();
-			}
-		);
-		add_action( 'wp_footer', [ $this, 'renderCartComponent' ] );
+		$cart_menu_alignment = $this->getAlignment();
+
+		$menu = $this->menuItemTemplate();
+
+		// left or right.
+		$items = 'right' === $cart_menu_alignment ? $items . $menu : $menu . $items;
+
+		return $items;
+	}
+
+	public function menuItemTemplate() {
+		$form = $this->getForm();
+		$mode = $this->getMode();
+
+		ob_start(); ?>
+			<li>
+				<sc-cart-button
+					href="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>"
+					class='menu-item'
+					cart-menu-always-shown='<?php echo esc_attr( $this->isAlwaysShown() ? 'true' : 'false' ); ?>'
+					form-id='<?php echo esc_attr( $form->ID ); ?>'
+					mode='<?php echo esc_attr( $mode ); ?>'>
+				</sc-cart-button>
+			</li>
+		<?php
+		return ob_get_clean();
 	}
 
 	/**
@@ -104,7 +191,7 @@ class CartService {
 	 */
 	public function isFloatingIconEnabled() {
 		$cart_icon_type = (string) get_option( 'surecart_cart_icon_type', null );
-		return $cart_icon_type === 'menu_icon';
+		return 'menu_icon' === $cart_icon_type;
 	}
 
 	/**
@@ -114,9 +201,11 @@ class CartService {
 	 * @return bool
 	 */
 	public function isMenuIconEnabled( $term_id ) {
-		$cart_menu_ids  = (array) get_option( 'surecart_cart_menu_selected_ids', null );
-		$cart_icon_type = (string) get_option( 'surecart_cart_icon_type', null );
-
-		return 'floating_icon' === $cart_icon_type || ! in_array( $term_id, $cart_menu_ids );
+		$cart_menu_ids  = (array) $this->getSelectedIds();
+		$cart_icon_type = (string) $this->getIconType();
+		if ( ! in_array( $cart_icon_type, [ 'floatin_icon', 'both' ] ) ) {
+			return;
+		}
+		return in_array( $term_id, $cart_menu_ids );
 	}
 }
