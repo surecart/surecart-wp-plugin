@@ -12,8 +12,8 @@ import {
 	ScSwitch,
 	ScTag,
 } from '@surecart/components-react';
-import { useSelect } from '@wordpress/data';
 import { store as coreStore, useEntityProp } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
 export default () => {
@@ -53,7 +53,9 @@ export default () => {
 	);
 
 	const addCartMenu = (menuId) =>
-		setCartMenuSelectedIds([...new Set([...cartMenuSelectedIds, menuId])]);
+		setCartMenuSelectedIds([
+			...new Set([...(cartMenuSelectedIds || []), menuId]),
+		]);
 
 	const removeCartMenu = (menuId) => {
 		const newCartMenuSelectedIds = cartMenuSelectedIds.filter(
@@ -62,37 +64,20 @@ export default () => {
 		setCartMenuSelectedIds(newCartMenuSelectedIds);
 	};
 
-	return (
-		<>
-			<ScSelect
-				label={__('Cart Icon Type', 'surecart')}
-				value={cartIconType}
-				help={__('What type of cart icon do you want to use?')}
-				unselect={false}
-				choices={[
-					{
-						label: __('Floating Icon', 'surecart'),
-						value: 'floating_icon',
-					},
-					{
-						label: __('Menu Icon', 'surecart'),
-						value: 'menu_icon',
-					},
-					{
-						label: __('Both', 'surecart'),
-						value: 'both',
-					},
-				]}
-				onScChange={(e) => {
-					setCartIconType(e.target.value);
-				}}
-			/>
-			{loading ? (
+	const renderContent = () => {
+		// we are loading.
+		if (loading) {
+			return (
 				<>
 					<ScSkeleton style={{ width: '100%', marginBottom: 15 }} />
 					<ScSkeleton style={{ width: '60%' }} />
 				</>
-			) : cartIconType !== 'floating_icon' ? (
+			);
+		}
+
+		// need additional options for non-floating icon.
+		if (cartIconType !== 'floating_icon') {
+			return (
 				<>
 					<div>
 						<ScFormControl
@@ -109,27 +94,25 @@ export default () => {
 									padding: 0.44em 0;
 								`}
 							>
-								{cartMenuSelectedIds?.length
-									? cartMenuSelectedIds?.map((menuId) => {
-											return (
-												<ScTag
-													pill={true}
-													clearable={true}
-													onScClear={() =>
-														removeCartMenu(menuId)
-													}
-												>
-													{
-														menus?.find(
-															(item) =>
-																item?.id ===
-																menuId
-														)?.name
-													}
-												</ScTag>
-											);
-									  })
-									: null}
+								{(cartMenuSelectedIds || []).map((menuId) => {
+									return (
+										<ScTag
+											pill={true}
+											clearable={true}
+											key={menuId}
+											onScClear={() =>
+												removeCartMenu(menuId)
+											}
+										>
+											{
+												menus?.find(
+													(item) =>
+														item?.id === menuId
+												)?.name
+											}
+										</ScTag>
+									);
+								})}
 								<ScDropdown position="bottom-right">
 									<ScButton
 										type="default"
@@ -142,6 +125,7 @@ export default () => {
 									<ScMenu>
 										{menus?.map((item) => (
 											<ScMenuItem
+												key={item.id}
 												onClick={() =>
 													addCartMenu(Number(item.id))
 												}
@@ -200,7 +184,36 @@ export default () => {
 						</span>
 					</ScSwitch>
 				</>
-			) : null}
+			);
+		}
+	};
+
+	return (
+		<>
+			<ScSelect
+				label={__('Cart Icon Type', 'surecart')}
+				value={cartIconType}
+				help={__('What type of cart icon do you want to use?')}
+				unselect={false}
+				choices={[
+					{
+						label: __('Floating Icon', 'surecart'),
+						value: 'floating_icon',
+					},
+					{
+						label: __('Menu Icon', 'surecart'),
+						value: 'menu_icon',
+					},
+					{
+						label: __('Both', 'surecart'),
+						value: 'both',
+					},
+				]}
+				onScChange={(e) => {
+					setCartIconType(e.target.value);
+				}}
+			/>
+			{renderContent()}
 		</>
 	);
 };
