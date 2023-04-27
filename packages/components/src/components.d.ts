@@ -1088,6 +1088,65 @@ export namespace Components {
          */
         "value": any;
     }
+    interface ScCustomerPhone {
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus": boolean;
+        /**
+          * Disables the input.
+         */
+        "disabled": boolean;
+        /**
+          * Error focus
+         */
+        "error": boolean;
+        /**
+          * Inputs focus
+         */
+        "hasFocus": boolean;
+        /**
+          * The input's help text.
+         */
+        "help": string;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid": boolean;
+        /**
+          * The input's label.
+         */
+        "label": string;
+        /**
+          * Draws a pill-style input with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder": string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly": boolean;
+        "reportValidity": () => Promise<boolean>;
+        /**
+          * Makes the input a required field.
+         */
+        "required": boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel": boolean;
+        /**
+          * The input's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The input's value attribute.
+         */
+        "value": string;
+    }
     interface ScDashboardCustomerDetails {
         "customerId": string;
         "heading": string;
@@ -2228,6 +2287,130 @@ export namespace Components {
           * The order.
          */
         "order": Checkout;
+    }
+    interface ScPhoneInput {
+        /**
+          * The input's autocomplete attribute.
+         */
+        "autocomplete": string;
+        /**
+          * The input's autocorrect attribute.
+         */
+        "autocorrect": string;
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus": boolean;
+        /**
+          * Adds a clear button when the input is populated.
+         */
+        "clearable": boolean;
+        /**
+          * Disables the input.
+         */
+        "disabled": boolean;
+        /**
+          * Inputs focus
+         */
+        "hasFocus": boolean;
+        /**
+          * The input's help text.
+         */
+        "help": string;
+        /**
+          * Hidden
+         */
+        "hidden": boolean;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid": boolean;
+        /**
+          * The input's label.
+         */
+        "label": string;
+        /**
+          * The input's maximum value.
+         */
+        "max": number | string;
+        /**
+          * The maximum length of input that will be considered valid.
+         */
+        "maxlength": number;
+        /**
+          * The input's minimum value.
+         */
+        "min": number | string;
+        /**
+          * The minimum length of input that will be considered valid.
+         */
+        "minlength": number;
+        /**
+          * The input's name attribute.
+         */
+        "name": string;
+        /**
+          * A pattern to validate input against.
+         */
+        "pattern": string;
+        /**
+          * Draws a pill-style input with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder": string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly": boolean;
+        "reportValidity": () => Promise<boolean>;
+        /**
+          * Makes the input a required field.
+         */
+        "required": boolean;
+        /**
+          * Sets a custom validation message. If `message` is not empty, the field will be considered invalid.
+         */
+        "setCustomValidity": (message: string) => Promise<void>;
+        /**
+          * Should we show the label
+         */
+        "showLabel": boolean;
+        /**
+          * The input's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * Enables spell checking on the input.
+         */
+        "spellcheck": boolean;
+        "squared": boolean;
+        "squaredBottom": boolean;
+        "squaredLeft": boolean;
+        "squaredRight": boolean;
+        "squaredTop": boolean;
+        /**
+          * The input's step attribute.
+         */
+        "step": number;
+        /**
+          * Adds a password toggle button to password inputs.
+         */
+        "togglePassword": boolean;
+        /**
+          * Removes focus from the input.
+         */
+        "triggerBlur": () => Promise<void>;
+        /**
+          * Sets focus on the input.
+         */
+        "triggerFocus": (options?: FocusOptions) => Promise<void>;
+        /**
+          * The input's value attribute.
+         */
+        "value": string;
     }
     interface ScPremiumTag {
         /**
@@ -3402,6 +3585,10 @@ export interface ScCustomerNameCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScCustomerNameElement;
 }
+export interface ScCustomerPhoneCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCustomerPhoneElement;
+}
 export interface ScDialogCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScDialogElement;
@@ -3489,6 +3676,10 @@ export interface ScPaginationCustomEvent<T> extends CustomEvent<T> {
 export interface ScPaypalButtonsCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScPaypalButtonsElement;
+}
+export interface ScPhoneInputCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScPhoneInputElement;
 }
 export interface ScPriceChoiceCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -3842,6 +4033,12 @@ declare global {
     var HTMLScCustomerNameElement: {
         prototype: HTMLScCustomerNameElement;
         new (): HTMLScCustomerNameElement;
+    };
+    interface HTMLScCustomerPhoneElement extends Components.ScCustomerPhone, HTMLStencilElement {
+    }
+    var HTMLScCustomerPhoneElement: {
+        prototype: HTMLScCustomerPhoneElement;
+        new (): HTMLScCustomerPhoneElement;
     };
     interface HTMLScDashboardCustomerDetailsElement extends Components.ScDashboardCustomerDetails, HTMLStencilElement {
     }
@@ -4269,6 +4466,12 @@ declare global {
         prototype: HTMLScPaypalButtonsElement;
         new (): HTMLScPaypalButtonsElement;
     };
+    interface HTMLScPhoneInputElement extends Components.ScPhoneInput, HTMLStencilElement {
+    }
+    var HTMLScPhoneInputElement: {
+        prototype: HTMLScPhoneInputElement;
+        new (): HTMLScPhoneInputElement;
+    };
     interface HTMLScPremiumTagElement extends Components.ScPremiumTag, HTMLStencilElement {
     }
     var HTMLScPremiumTagElement: {
@@ -4656,6 +4859,7 @@ declare global {
         "sc-customer-firstname": HTMLScCustomerFirstnameElement;
         "sc-customer-lastname": HTMLScCustomerLastnameElement;
         "sc-customer-name": HTMLScCustomerNameElement;
+        "sc-customer-phone": HTMLScCustomerPhoneElement;
         "sc-dashboard-customer-details": HTMLScDashboardCustomerDetailsElement;
         "sc-dashboard-downloads-list": HTMLScDashboardDownloadsListElement;
         "sc-dashboard-module": HTMLScDashboardModuleElement;
@@ -4727,6 +4931,7 @@ declare global {
         "sc-payment-selected": HTMLScPaymentSelectedElement;
         "sc-paypal-add-method": HTMLScPaypalAddMethodElement;
         "sc-paypal-buttons": HTMLScPaypalButtonsElement;
+        "sc-phone-input": HTMLScPhoneInputElement;
         "sc-premium-tag": HTMLScPremiumTagElement;
         "sc-price-choice": HTMLScPriceChoiceElement;
         "sc-price-choices": HTMLScPriceChoicesElement;
@@ -5985,6 +6190,84 @@ declare namespace LocalJSX {
           * The input's value attribute.
          */
         "value"?: any;
+    }
+    interface ScCustomerPhone {
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus"?: boolean;
+        /**
+          * Disables the input.
+         */
+        "disabled"?: boolean;
+        /**
+          * Error focus
+         */
+        "error"?: boolean;
+        /**
+          * Inputs focus
+         */
+        "hasFocus"?: boolean;
+        /**
+          * The input's help text.
+         */
+        "help"?: string;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid"?: boolean;
+        /**
+          * The input's label.
+         */
+        "label"?: string;
+        /**
+          * Emitted when the control loses focus.
+         */
+        "onScBlur"?: (event: ScCustomerPhoneCustomEvent<void>) => void;
+        /**
+          * Emitted when the control's value changes.
+         */
+        "onScChange"?: (event: ScCustomerPhoneCustomEvent<void>) => void;
+        /**
+          * Emitted when the clear button is activated.
+         */
+        "onScClear"?: (event: ScCustomerPhoneCustomEvent<void>) => void;
+        /**
+          * Emitted when the control gains focus.
+         */
+        "onScFocus"?: (event: ScCustomerPhoneCustomEvent<void>) => void;
+        /**
+          * Emitted when the control receives input.
+         */
+        "onScInput"?: (event: ScCustomerPhoneCustomEvent<void>) => void;
+        /**
+          * Draws a pill-style input with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder"?: string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly"?: boolean;
+        /**
+          * Makes the input a required field.
+         */
+        "required"?: boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel"?: boolean;
+        /**
+          * The input's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The input's value attribute.
+         */
+        "value"?: string;
     }
     interface ScDashboardCustomerDetails {
         "customerId"?: string;
@@ -7256,6 +7539,137 @@ declare namespace LocalJSX {
          */
         "order"?: Checkout;
     }
+    interface ScPhoneInput {
+        /**
+          * The input's autocomplete attribute.
+         */
+        "autocomplete"?: string;
+        /**
+          * The input's autocorrect attribute.
+         */
+        "autocorrect"?: string;
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus"?: boolean;
+        /**
+          * Adds a clear button when the input is populated.
+         */
+        "clearable"?: boolean;
+        /**
+          * Disables the input.
+         */
+        "disabled"?: boolean;
+        /**
+          * Inputs focus
+         */
+        "hasFocus"?: boolean;
+        /**
+          * The input's help text.
+         */
+        "help"?: string;
+        /**
+          * Hidden
+         */
+        "hidden"?: boolean;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid"?: boolean;
+        /**
+          * The input's label.
+         */
+        "label"?: string;
+        /**
+          * The input's maximum value.
+         */
+        "max"?: number | string;
+        /**
+          * The maximum length of input that will be considered valid.
+         */
+        "maxlength"?: number;
+        /**
+          * The input's minimum value.
+         */
+        "min"?: number | string;
+        /**
+          * The minimum length of input that will be considered valid.
+         */
+        "minlength"?: number;
+        /**
+          * The input's name attribute.
+         */
+        "name"?: string;
+        /**
+          * Emitted when the control loses focus.
+         */
+        "onScBlur"?: (event: ScPhoneInputCustomEvent<void>) => void;
+        /**
+          * Emitted when the control's value changes.
+         */
+        "onScChange"?: (event: ScPhoneInputCustomEvent<void>) => void;
+        /**
+          * Emitted when the clear button is activated.
+         */
+        "onScClear"?: (event: ScPhoneInputCustomEvent<void>) => void;
+        /**
+          * Emitted when the control gains focus.
+         */
+        "onScFocus"?: (event: ScPhoneInputCustomEvent<void>) => void;
+        /**
+          * Emitted when the control receives input.
+         */
+        "onScInput"?: (event: ScPhoneInputCustomEvent<void>) => void;
+        /**
+          * A pattern to validate input against.
+         */
+        "pattern"?: string;
+        /**
+          * Draws a pill-style input with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder"?: string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly"?: boolean;
+        /**
+          * Makes the input a required field.
+         */
+        "required"?: boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel"?: boolean;
+        /**
+          * The input's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * Enables spell checking on the input.
+         */
+        "spellcheck"?: boolean;
+        "squared"?: boolean;
+        "squaredBottom"?: boolean;
+        "squaredLeft"?: boolean;
+        "squaredRight"?: boolean;
+        "squaredTop"?: boolean;
+        /**
+          * The input's step attribute.
+         */
+        "step"?: number;
+        /**
+          * Adds a password toggle button to password inputs.
+         */
+        "togglePassword"?: boolean;
+        /**
+          * The input's value attribute.
+         */
+        "value"?: string;
+    }
     interface ScPremiumTag {
         /**
           * The tag's size.
@@ -8521,6 +8935,7 @@ declare namespace LocalJSX {
         "sc-customer-firstname": ScCustomerFirstname;
         "sc-customer-lastname": ScCustomerLastname;
         "sc-customer-name": ScCustomerName;
+        "sc-customer-phone": ScCustomerPhone;
         "sc-dashboard-customer-details": ScDashboardCustomerDetails;
         "sc-dashboard-downloads-list": ScDashboardDownloadsList;
         "sc-dashboard-module": ScDashboardModule;
@@ -8592,6 +9007,7 @@ declare namespace LocalJSX {
         "sc-payment-selected": ScPaymentSelected;
         "sc-paypal-add-method": ScPaypalAddMethod;
         "sc-paypal-buttons": ScPaypalButtons;
+        "sc-phone-input": ScPhoneInput;
         "sc-premium-tag": ScPremiumTag;
         "sc-price-choice": ScPriceChoice;
         "sc-price-choices": ScPriceChoices;
@@ -8699,6 +9115,7 @@ declare module "@stencil/core" {
             "sc-customer-firstname": LocalJSX.ScCustomerFirstname & JSXBase.HTMLAttributes<HTMLScCustomerFirstnameElement>;
             "sc-customer-lastname": LocalJSX.ScCustomerLastname & JSXBase.HTMLAttributes<HTMLScCustomerLastnameElement>;
             "sc-customer-name": LocalJSX.ScCustomerName & JSXBase.HTMLAttributes<HTMLScCustomerNameElement>;
+            "sc-customer-phone": LocalJSX.ScCustomerPhone & JSXBase.HTMLAttributes<HTMLScCustomerPhoneElement>;
             "sc-dashboard-customer-details": LocalJSX.ScDashboardCustomerDetails & JSXBase.HTMLAttributes<HTMLScDashboardCustomerDetailsElement>;
             "sc-dashboard-downloads-list": LocalJSX.ScDashboardDownloadsList & JSXBase.HTMLAttributes<HTMLScDashboardDownloadsListElement>;
             "sc-dashboard-module": LocalJSX.ScDashboardModule & JSXBase.HTMLAttributes<HTMLScDashboardModuleElement>;
@@ -8770,6 +9187,7 @@ declare module "@stencil/core" {
             "sc-payment-selected": LocalJSX.ScPaymentSelected & JSXBase.HTMLAttributes<HTMLScPaymentSelectedElement>;
             "sc-paypal-add-method": LocalJSX.ScPaypalAddMethod & JSXBase.HTMLAttributes<HTMLScPaypalAddMethodElement>;
             "sc-paypal-buttons": LocalJSX.ScPaypalButtons & JSXBase.HTMLAttributes<HTMLScPaypalButtonsElement>;
+            "sc-phone-input": LocalJSX.ScPhoneInput & JSXBase.HTMLAttributes<HTMLScPhoneInputElement>;
             "sc-premium-tag": LocalJSX.ScPremiumTag & JSXBase.HTMLAttributes<HTMLScPremiumTagElement>;
             "sc-price-choice": LocalJSX.ScPriceChoice & JSXBase.HTMLAttributes<HTMLScPriceChoiceElement>;
             "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;
