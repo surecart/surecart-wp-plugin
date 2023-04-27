@@ -115,13 +115,13 @@ class ThemeServiceProvider implements ServiceProviderInterface {
 			return $items;
 		}
 
-		$cart_menu_always_shown   = (bool) get_option( 'surecart_cart_menu_always_shown', false );
-		$cart_menu_alignment 	  = (string) get_option( 'surecart_cart_menu_alignment', 'left' );
-		$form                	  = \SureCart::forms()->getDefault();
-		$mode                	  = Form::getMode( $form->ID );
+		$cart_menu_always_shown = (bool) get_option( 'surecart_cart_menu_always_shown', false );
+		$cart_menu_alignment    = (string) get_option( 'surecart_cart_menu_alignment', 'left' );
+		$form                   = \SureCart::forms()->getDefault();
+		$mode                   = Form::getMode( $form->ID );
 
 		$menu = "<li><sc-cart-button cart-menu-always-shown='" . esc_attr( $cart_menu_always_shown ? 'true' : 'false' ) . "' form-id='" . esc_attr( $form->ID ) . "' mode='" . esc_attr( $mode ) . "'/></li>";
-		
+
 		if ( 'right' === $cart_menu_alignment ) {
 			$items = $menu . $items;
 		} else {
