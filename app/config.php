@@ -202,9 +202,9 @@ return [
 		'surecart/conditional-from'          => [ 'sc-conditional-form' ],
 		'surecart/product-price'             => [ 'sc-product-price', 'sc-tag', 'sc-format-number' ],
 		'surecart/product-media'             => [],
-		'surecart/product-buy-buttons'       => [ 'sc-button' ],
-		'surecart/product-price-choices'     => [ 'sc-choices', 'sc-price-choice-container', 'sc-choice-container' ],
-		'surecart/product-quantity'          => [],
+		'surecart/product-buy-buttons'       => [ 'sc-product-buy-button', 'sc-button' ],
+		'surecart/product-price-choices'     => [ 'sc-product-price-choices', 'sc-choices', 'sc-price-choice-container', 'sc-choice-container', 'sc-format-number', 'sc-skeleton' ],
+		'surecart/product-quantity'          => [ 'sc-product-quantity', 'sc-form-control', 'sc-icon', 'sc-quantity-select' ],
 	],
 
 	/**
