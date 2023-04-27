@@ -1858,6 +1858,10 @@ export namespace Components {
          */
         "emailExists": boolean;
         /**
+          * Ensures strong password validation.
+         */
+        "enableValidation": boolean;
+        /**
           * The input's help text.
          */
         "help": string;
@@ -2104,6 +2108,10 @@ export namespace Components {
         "totalShowing": number;
     }
     interface ScPasswordNag {
+        /**
+          * Ensures strong password validation.
+         */
+        "enableValidation": boolean;
         "open": boolean;
         /**
           * The success url.
@@ -3287,6 +3295,10 @@ export namespace Components {
         "size": 'small' | 'medium' | 'large';
     }
     interface ScWordpressPasswordEdit {
+        /**
+          * Ensures strong password validation.
+         */
+        "enableValidation": boolean;
         "heading": string;
         "successUrl": string;
         "user": WordPressUser;
@@ -6826,6 +6838,10 @@ declare namespace LocalJSX {
          */
         "emailExists"?: boolean;
         /**
+          * Ensures strong password validation.
+         */
+        "enableValidation"?: boolean;
+        /**
           * The input's help text.
          */
         "help"?: string;
@@ -7098,6 +7114,10 @@ declare namespace LocalJSX {
         "totalShowing"?: number;
     }
     interface ScPasswordNag {
+        /**
+          * Ensures strong password validation.
+         */
+        "enableValidation"?: boolean;
         "open"?: boolean;
         /**
           * The success url.
@@ -8422,6 +8442,10 @@ declare namespace LocalJSX {
         "size"?: 'small' | 'medium' | 'large';
     }
     interface ScWordpressPasswordEdit {
+        /**
+          * Ensures strong password validation.
+         */
+        "enableValidation"?: boolean;
         "heading"?: string;
         "successUrl"?: string;
         "user"?: WordPressUser;

@@ -5,16 +5,20 @@ import { __ } from '@wordpress/i18n';
 import { InspectorControls } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 import {
+	Button,
+	Card,
+	CardBody,
 	PanelBody,
 	PanelRow,
 	TextControl,
 	ToggleControl,
 } from '@wordpress/components';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Component Dependencies
  */
-import { ScInput, ScOrderPassword } from '@surecart/components-react';
+import { ScOrderPassword } from '@surecart/components-react';
 
 export default ({ className, attributes, setAttributes, isSelected }) => {
 	const {
@@ -31,6 +35,23 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
+				<Card size="small">
+					<CardBody size="small">
+						<p>
+							You can override the global password validation by
+							going to the site settings.
+						</p>
+						<Button
+							variant="primary"
+							isSmall
+							href={addQueryArgs('admin.php', {
+								page: 'sc-settings',
+							})}
+						>
+							Site Settings
+						</Button>
+					</CardBody>
+				</Card>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl

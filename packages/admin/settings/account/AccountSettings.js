@@ -54,6 +54,12 @@ export default () => {
 		'site',
 		'surecart_load_stripe_js'
 	);
+	// password validation.
+	const [passwordValidation, setPasswordValidation] = useEntityProp(
+		'root',
+		'site',
+		'surecart_password_validation_enabled'
+	);
 
 	/**
 	 * Form is submitted.
@@ -181,9 +187,7 @@ export default () => {
 
 					<ScSelect
 						value={item?.locale}
-						onScChange={(e) =>
-							editItem({ locale: e.target.value })
-						}
+						onScChange={(e) => editItem({ locale: e.target.value })}
 						choices={[
 							{
 								value: 'en',
@@ -366,6 +370,18 @@ export default () => {
 						</span>
 					</ScSwitch>
 				)}
+				<ScSwitch
+					checked={passwordValidation}
+					onScChange={(e) => setPasswordValidation(e.target.checked)}
+				>
+					{__('Password Validation', 'surecart')}
+					<span slot="description">
+						{__(
+							'This ensures all the password fields have a stronger validation for user password input i.e. at least 6 characters and one special character.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
 			</SettingsBox>
 			<SettingsBox
 				title={__('Clear Test Data', 'surecart')}
