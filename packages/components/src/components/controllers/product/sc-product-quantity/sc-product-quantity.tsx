@@ -34,6 +34,9 @@ export class ScProductQuantity {
   @Prop() help: string;
 
   render() {
+    if (state.selectedPrice?.ad_hoc) {
+      return <Host style={{ display: 'none' }}></Host>;
+    }
     return (
       <Host>
         <sc-form-control
