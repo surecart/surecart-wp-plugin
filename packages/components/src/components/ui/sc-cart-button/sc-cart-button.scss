@@ -1,4 +1,4 @@
-:host {
+sc-cart-button {
   display: inline-block;
   height: 100%;
 }
@@ -25,7 +25,7 @@
     color: var(--sc-cart-counter-color, var(--sc-color-white));
     background: var(--sc-cart-counter-background, var(--sc-color-gray-900));
     box-shadow: var(--sc-cart-icon-box-shadow, var(--sc-shadow-x-large));
-    padding: 2px 8px;
+    padding: 2px 6px;
     line-height: 14px;
     z-index: 1;
   }

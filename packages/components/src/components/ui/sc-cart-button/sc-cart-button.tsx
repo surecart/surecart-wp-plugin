@@ -9,7 +9,7 @@ import { getCheckout } from '@store/checkouts';
 @Component({
   tag: 'sc-cart-button',
   styleUrl: 'sc-cart-button.scss',
-  shadow: true,
+  shadow: false,
 })
 export class ScCartButton {
   /** Is this open or closed? */
@@ -17,6 +17,8 @@ export class ScCartButton {
 
   /** The order count */
   @State() count: number = 0;
+
+  @Prop() href: string = '#';
 
   /** The icon to show. */
   @Prop() icon: string = 'shopping-bag';
@@ -50,18 +52,24 @@ export class ScCartButton {
     }
 
     return (
-      <div class="cart__button" part="base">
+      <a
+        href={this.href}
+        onClick={e => {
+          e.preventDefault();
+          uiStore.state.cart = { ...uiStore.state.cart, open: !uiStore.state.cart.open };
+        }}
+        class="cart__button"
+        part="base"
+      >
         <div class="cart__content">
           {!!this.getItemsCount() && (
             <span class="cart__count" part="count">
               {this.getItemsCount()}
             </span>
           )}
-          <div class="cart__icon" onClick={() => (uiStore.state.cart = { ...uiStore.state.cart, open: !uiStore.state.cart.open })}>
-            {this.icon && <sc-icon name={this.icon}></sc-icon>}
-          </div>
+          <div class="cart__icon">{this.icon && <sc-icon name={this.icon}></sc-icon>}</div>
         </div>
-      </div>
+      </a>
     );
   }
 }
