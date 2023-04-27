@@ -140,7 +140,7 @@ class SettingService {
 					'schema' => [
 						'type'  => 'array',
 						'items' => [
-							'type' => 'string',
+							'type' => 'integer',
 						],
 					],
 				],
