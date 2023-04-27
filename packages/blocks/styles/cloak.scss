@@ -84,37 +84,6 @@ sc-tab {
 		visibility: hidden;
 	}
 }
-sc-product-price:not(.hydrated) {
-	/** This is where the intrinsic sizing is set. Once hydrated, the component authors CSS can take over.  **/
-	display: block;
-	contain: strict;
-	content-visibility: hidden;
-	contain-intrinsic-height: 45px;
-	@include sheen();
-}
-sc-product-price-choices:not(.hydrated) {
-	/** This is where the intrinsic sizing is set. Once hydrated, the component authors CSS can take over.  **/
-	display: block;
-	contain: strict;
-	content-visibility: hidden;
-	contain-intrinsic-height: 100px;
-	@include sheen();
-}
-sc-product-quantity:not(.hydrated) {
-	display: block;
-	contain: strict;
-	content-visibility: hidden;
-	contain-intrinsic-height: 65px;
-	@include sheen();
-}
-sc-product-buy-button:not(.hydrated) {
-	/** This is where the intrinsic sizing is set. Once hydrated, the component authors CSS can take over.  **/
-	display: block;
-	contain: strict;
-	content-visibility: hidden;
-	contain-intrinsic-height: var(--sc-input-height-medium);
-	@include sheen();
-}
 
 //// columns
 sc-column {

@@ -38,5 +38,6 @@
 				"radius": true
 			}
 		}
-	}
+	},
+	"style": "file:./preload.css"
 }

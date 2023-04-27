@@ -38,5 +38,6 @@
 				"textTransform": true
 			}
 		}
-	}
+	},
+	"style": "file:./preload.css"
 }
