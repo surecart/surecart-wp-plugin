@@ -117,6 +117,6 @@ class CartService {
 		$cart_menu_ids  = (array) get_option( 'surecart_cart_menu_selected_ids', null );
 		$cart_icon_type = (string) get_option( 'surecart_cart_icon_type', null );
 
-		return $cart_icon_type === 'floating_icon' || ! in_array( $term_id, $cart_menu_ids );
+		return 'floating_icon' === $cart_icon_type || ! in_array( $term_id, $cart_menu_ids );
 	}
 }
