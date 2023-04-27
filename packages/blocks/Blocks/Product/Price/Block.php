@@ -29,13 +29,23 @@ class Block extends BaseBlock {
 		if ( empty( $product ) ) {
 			return '';
 		}
+
+		$active_prices = array_values(
+			array_filter(
+				$product->prices->data ?? [],
+				function( $price ) {
+					return ! $price->archived;
+				}
+			)
+		);
+
 		ob_start(); ?>
 
 		<sc-product-price
 			class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
 			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
-			<?php if ( ! empty( $product->prices->data[0] ) ) : ?>
-				<?php echo esc_html( Currency::format( $product->prices->data[0]->amount, $product->prices->data[0]->currency ) ); ?>
+			<?php if ( ! empty( $active_prices[0] ) ) : ?>
+				<?php echo esc_html( Currency::format( $active_prices[0]->amount, $active_prices[0]->currency ) ); ?>
 			<?php endif; ?>
 		</sc-product-price>
 
