@@ -790,6 +790,15 @@
     "class": true,
     "slot": true
   },
+  "sc-image-slider": {
+    "images": true,
+    "thumbnails": true,
+    "thumbnails-per-page": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-input": {
     "autocomplete": true,
     "autocorrect": true,
