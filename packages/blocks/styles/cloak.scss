@@ -209,7 +209,7 @@ sc-column {
   }
 
 
-  > :not(.wp-block-spacer):not(:last-child):not(.is-empty) {
+  > :not(.wp-block-spacer):not(:last-child):not(.is-empty):not(style) {
     margin-bottom: var(--sc-form-row-spacing, 0.75em);
     display: block;
   }
