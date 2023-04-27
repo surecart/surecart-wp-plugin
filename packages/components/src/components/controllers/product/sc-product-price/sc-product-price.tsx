@@ -19,6 +19,10 @@ export class ScProductPrice {
   }
 
   renderPrice(price) {
+    if (price?.ad_hoc) {
+      return __('Custom Amount', 'surecart');
+    }
+
     return (
       <div class="price">
         {!!price?.scratch_amount && (
