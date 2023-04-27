@@ -1,10 +1,10 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { ScCustomerName } from '../sc-customer-name';
-import { Checkout } from '../../../../../types';
+import { ScCustomerLastname } from '../sc-customer-lastname';
 import { dispose as disposeCheckout, state as checkoutState } from '@store/checkout';
 import { dispose as disposeUser, state as userState } from '@store/user';
+import { Checkout } from '../../../../../types';
 
-describe('sc-customer-name', () => {
+describe('sc-customer-lastname', () => {
   beforeEach(() => {
     disposeCheckout();
     disposeUser();
@@ -12,36 +12,35 @@ describe('sc-customer-name', () => {
 
   const checkouts = [
     {
-      testLabel: 'Customer and Checkout names provided',
+      testLabel: 'Customer and Checkout last name provided',
       checkout: {
-        name: 'CheckoutFirst CheckoutLast',
+        last_name: 'CheckoutLast',
         customer: {
-          name: 'CustomerFirst CustomerLast',
+          last_name: 'CustomerLast',
         },
       } as Checkout,
     },
     {
-      testLabel: 'Customer name provided',
+      testLabel: 'Customer last name provided',
       checkout: {
         customer: {
-          name: 'CustomerFirst CustomerLast',
+          last_name: 'CustomerLast',
         },
       } as Checkout,
     },
     {
-      testLabel: 'Checkout name provided',
+      testLabel: 'Checkout last name provided',
       checkout: {
-        name: 'CheckoutFirst CheckoutLast',
+        last_name: 'CheckoutLast',
       } as Checkout,
     },
   ];
 
-  function addUrlParams(params) {
-    // Set the mock URL as the window location
+  function addUrlParams(params: boolean) {
     global.window = Object.create(window);
     Object.defineProperty(window, 'location', {
       value: {
-        search: params ? new URLSearchParams('?full_name=UrlFirst UrlLast').toString() : '',
+        search: params ? new URLSearchParams('?last_name=UrlLast').toString() : '',
       },
       writable: true,
     });
@@ -54,8 +53,8 @@ describe('sc-customer-name', () => {
       checkoutState.checkout = test.checkout;
 
       const page = await newSpecPage({
-        components: [ScCustomerName],
-        html: `<sc-customer-name></sc-customer-name>`,
+        components: [ScCustomerLastname],
+        html: `<sc-customer-lastname></sc-customer-lastname>`,
       });
 
       expect(page.root).toMatchSnapshot();
@@ -68,8 +67,8 @@ describe('sc-customer-name', () => {
       checkoutState.checkout = test.checkout;
 
       const page = await newSpecPage({
-        components: [ScCustomerName],
-        html: `<sc-customer-name></sc-customer-name>`,
+        components: [ScCustomerLastname],
+        html: `<sc-customer-lastname></sc-customer-lastname>`,
       });
 
       expect(page.root).toMatchSnapshot();
@@ -84,8 +83,8 @@ describe('sc-customer-name', () => {
       checkoutState.checkout = test.checkout;
 
       const page = await newSpecPage({
-        components: [ScCustomerName],
-        html: `<sc-customer-name></sc-customer-name>`,
+        components: [ScCustomerLastname],
+        html: `<sc-customer-lastname></sc-customer-lastname>`,
       });
 
       expect(page.root).toMatchSnapshot();
@@ -98,8 +97,8 @@ describe('sc-customer-name', () => {
       checkoutState.checkout = test.checkout;
 
       const page = await newSpecPage({
-        components: [ScCustomerName],
-        html: `<sc-customer-name></sc-customer-name>`,
+        components: [ScCustomerLastname],
+        html: `<sc-customer-lastname></sc-customer-lastname>`,
       });
 
       expect(page.root).toMatchSnapshot();
