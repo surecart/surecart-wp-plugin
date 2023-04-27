@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.2
-Stable tag: 1.9.4
+Stable tag: 1.9.5
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,10 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.9.5 - April 27, 2023 =
+* Improvement: Don't log non-essential errors to error log.
+* Fix: Missing product image from buy page due to API change.
 
 = 1.9.4 - April 24, 2023 =
 * Improvement: Clicking add to cart button now increases the quantity.
