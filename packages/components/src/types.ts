@@ -3,6 +3,8 @@ import { IconLibraryMutator, IconLibraryResolver } from './components/ui/icon/li
 declare global {
   interface Window {
     grecaptcha: any;
+    dataLayer: any;
+    gtag: any;
     wp: {
       apiFetch: any;
       blocks: any;
