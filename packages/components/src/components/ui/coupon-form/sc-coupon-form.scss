@@ -8,6 +8,7 @@ sc-button {
 
 .coupon-form {
   position: relative;
+  container-type: inline-size;
 
   .coupon-button {
     opacity: 0;
@@ -16,11 +17,27 @@ sc-button {
     transition: all var(--sc-transition-fast) ease;
   }
 
+  .coupon-button-mobile {
+    margin-top: var(--sc-input-label-margin);
+    display: none;
+  }
+
   &--has-value {
     .coupon-button {
       opacity: 1;
       visibility: visible;
       transform: scale(1);
+    }
+  }
+}
+
+@container (max-width: 320px) {
+  .coupon-form {
+    .coupon-button {
+      display: none;
+    }
+    .coupon-button-mobile {
+      display: block;
     }
   }
 }
