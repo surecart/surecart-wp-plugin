@@ -249,6 +249,8 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * New: Phone number block for checkout.
 * New: Pre-populate name and email fields from url parameters.
 * Improvement: Subscription pausing UX in merchant admin.
+* Improvement: Option to disable individual abandonded checkout emails.
+* Improvement: Ability to turn on/off abandoned checkouts in test mode.
 
 
 = 1.9.5 - April 27, 2023 =
