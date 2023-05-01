@@ -28,5 +28,8 @@
 	},
 	"publishConfig": {
 		"access": "public"
+	},
+	"dependencies": {
+		"react-easy-sort": "^1.5.1"
 	}
 }
