@@ -35,7 +35,7 @@
 			<?php else : ?>
 				<!-- wp:image {"sizeSlug":"full","linkDestination":"none","style":{"border":{"radius":"5px"}}} -->
 					<figure class="wp-block-image size-full is-resized has-custom-border">
-						<img src="<?php echo esc_url( $product->image->url ); ?>" alt="<?php echo esc_attr( $product->name ); ?>" style="border-radius:5px" />
+						<img src="<?php echo esc_url( $product->image_url ); ?>" alt="<?php echo esc_attr( $product->name ); ?>" style="border-radius:5px" />
 					</figure>
 				<!-- /wp:image -->
 			<?php endif; ?>

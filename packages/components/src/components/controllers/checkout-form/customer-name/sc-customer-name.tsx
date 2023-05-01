@@ -1,7 +1,10 @@
 import { Customer, Checkout } from '../../../../types';
 import { createOrUpdateCheckout } from '../../../../services/session';
-import { Component, Prop, h, Event, EventEmitter, Watch, Method } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
+import { Component, Prop, h, Event, EventEmitter, Method } from '@stencil/core';
+import { state as userState } from '@store/user';
+import { state as checkoutState, onChange } from '@store/checkout';
+import { getValueFromUrl } from '../../../../functions/util';
+import { __ } from '@wordpress/i18n';
 
 @Component({
   tag: 'sc-customer-name',
@@ -11,20 +14,13 @@ import { openWormhole } from 'stencil-wormhole';
 export class ScCustomerName {
   private input: HTMLScInputElement;
 
-  /** Is the user logged in. */
-  @Prop() loggedIn: boolean;
-
-  /** (passed from the sc-checkout component automatically) */
-  @Prop() order: Checkout;
-
-  /** Force a customer. */
-  @Prop() customer: Customer;
+  private removeCheckoutListener: () => void;
 
   /** The input's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
 
   /** The input's value attribute. */
-  @Prop({ mutable: true }) value = '';
+  @Prop({ mutable: true }) value = null;
 
   /** Draws a pill-style input with rounded edges. */
   @Prop({ reflect: true }) pill = false;
@@ -62,14 +58,6 @@ export class ScCustomerName {
   /** Inputs focus */
   @Prop({ mutable: true, reflect: true }) hasFocus: boolean;
 
-  /** Emitted when the control's value changes. */
-  @Event({ composed: true }) scChange: EventEmitter<void>;
-
-  @Event() scUpdateOrderState: EventEmitter<Partial<Checkout>>;
-
-  /** Emitted when the clear button is activated. */
-  @Event() scClear: EventEmitter<void>;
-
   /** Emitted when the control receives input. */
   @Event() scInput: EventEmitter<void>;
 
@@ -79,33 +67,57 @@ export class ScCustomerName {
   /** Emitted when the control loses focus. */
   @Event() scBlur: EventEmitter<void>;
 
-  @Event() scUpdateCustomer: EventEmitter<{ email: string }>;
-
+  /** Don't allow a blank space as an input here. */
   @Method()
   async reportValidity() {
-    return this.input?.reportValidity?.();
+    this.input?.setCustomValidity?.('');
+
+    if (!this.input?.value.trim().length) {
+      this.input.setCustomValidity(__('Field must not be empty.', 'surecart'));
+    }
+
+    return await this.input?.reportValidity?.();
   }
 
+  /** Silently update the checkout when the input changes. */
   async handleChange() {
     this.value = this.input.value;
-
-    // update order.
     try {
-      const order = await createOrUpdateCheckout({ id: this.order?.id, data: { name: this.input.value } });
-      this.scUpdateOrderState.emit(order);
+      checkoutState.checkout = (await createOrUpdateCheckout({ id: checkoutState.checkout.id, data: { name: this.input.value } })) as Checkout;
     } catch (error) {
       console.error(error);
     }
   }
 
   /** Sync customer email with session if it's updated by other means */
-  @Watch('order')
-  handleSessionChange(val) {
-    if (val?.name) {
-      if (val.name !== this.value) {
-        this.value = val?.name;
-      }
+  handleSessionChange() {
+    // we already have a value.
+    if (this.value) return;
+
+    const fromUrl = getValueFromUrl('full_name');
+    if (!userState.loggedIn && !!fromUrl) {
+      this.value = fromUrl;
+      return;
     }
+
+    // we want the customer name to be forced if the user is logged in.
+    if (userState.loggedIn) {
+      this.value = (checkoutState?.checkout?.customer as Customer)?.name || checkoutState?.checkout?.name;
+      // otherwise we use the checkout name first.
+    } else {
+      this.value = checkoutState?.checkout?.name || (checkoutState?.checkout?.customer as Customer)?.name;
+    }
+  }
+
+  /** Listen to checkout. */
+  componentWillLoad() {
+    this.handleSessionChange();
+    this.removeCheckoutListener = onChange('checkout', () => this.handleSessionChange());
+  }
+
+  /** Remove listener. */
+  disconnectedCallback() {
+    this.removeCheckoutListener();
   }
 
   render() {
@@ -114,8 +126,8 @@ export class ScCustomerName {
         type="text"
         name="name"
         ref={el => (this.input = el as HTMLScInputElement)}
-        value={this.customer?.name || this.value}
-        disabled={!!this.loggedIn}
+        value={this.value}
+        disabled={!!userState.loggedIn}
         label={this.label}
         help={this.help}
         autocomplete="name"
@@ -133,5 +145,3 @@ export class ScCustomerName {
     );
   }
 }
-
-openWormhole(ScCustomerName, ['order', 'customer'], false);

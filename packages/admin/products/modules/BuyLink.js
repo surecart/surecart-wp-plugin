@@ -283,7 +283,6 @@ export default ({ product, updateProduct, loading }) => {
 							{product?.metadata?.wp_buy_link_enabled === 'true'
 								? __('View', 'surecart')
 								: __('Preview', 'surecart')}
-							<ScIcon name="external-link" slot="suffix" />
 						</ScButton>
 					</div>
 				</ScMenu>

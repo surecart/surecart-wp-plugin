@@ -466,7 +466,10 @@ export interface Checkout extends Object {
   trial_amount?: number;
   charge?: string | Charge;
   name?: string;
+  first_name?: string;
+  last_name?: string;
   email?: string;
+  phone?: string;
   live_mode?: boolean;
   currency?: string;
   total_amount?: number;
@@ -723,6 +726,7 @@ export interface BillingAgreement {
   first_name: string;
   id: string;
   last_name: string;
+  phone: string;
   object: 'billing_agreement';
   created_at: number;
   updated_at: number;

@@ -56,7 +56,6 @@
     display: inline-block;
     font-weight: var(--sc-input-label-font-weight);
     font-size: var(--sc-input-label-font-size-medium);
-    white-space: nowrap;
   }
 
   &--size-small {
@@ -187,7 +186,6 @@
   display: inline-block;
   color: var(--sc-color-gray-500);
   font-size: var(--sc-font-size-medium);
-  white-space: nowrap;
 }
 
 .choice__label-text {

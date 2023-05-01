@@ -70,7 +70,7 @@ export class ScForm {
       for (const el of formControlsThatReport) {
         // element is hidden, don't client-side validate.
         if (!(el.offsetWidth || el.offsetHeight || el.getClientRects().length)) {
-          return true;
+          continue;
         }
 
         const isValid = await el.reportValidity();
