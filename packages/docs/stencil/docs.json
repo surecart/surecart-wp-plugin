@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-27T17:48:38",
+  "timestamp": "2023-05-01T17:45:34",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -20728,6 +20728,7 @@
           "reflectToAttr": false,
           "docs": "A pattern to validate input against.",
           "docsTags": [],
+          "default": "'[-s#0-9_+/().]*'",
           "values": [
             {
               "type": "string"
