@@ -117,7 +117,7 @@ class SettingService {
 				'type'              => 'boolean',
 				'show_in_rest'      => true,
 				'sanitize_callback' => 'boolval',
-				'default'           => true,
+				'default'           => false,
 			]
 		);
 	}

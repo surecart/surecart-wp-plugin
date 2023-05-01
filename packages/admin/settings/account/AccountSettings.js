@@ -1,21 +1,15 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
-import {
-	ScAlert,
-	ScInput,
-	ScSelect,
-	ScSwitch,
-	ScButton,
-	ScIcon,
-} from '@surecart/components-react';
-import SettingsTemplate from '../SettingsTemplate';
-import SettingsBox from '../SettingsBox';
-import useEntity from '../../hooks/useEntity';
-import Error from '../../components/Error';
-import useSave from '../UseSave';
+import { ScAlert, ScButton, ScIcon, ScInput, ScSelect, ScSwitch } from '@surecart/components-react';
 import { useEntityProp } from '@wordpress/core-data';
+import { useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+
+import Error from '../../components/Error';
+import useEntity from '../../hooks/useEntity';
+import SettingsBox from '../SettingsBox';
+import SettingsTemplate from '../SettingsTemplate';
+import useSave from '../UseSave';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -370,7 +364,7 @@ export default () => {
 						</span>
 					</ScSwitch>
 				)}
-				<ScSwitch
+				{/* <ScSwitch
 					checked={passwordValidation}
 					onScChange={(e) => setPasswordValidation(e.target.checked)}
 				>
@@ -381,7 +375,7 @@ export default () => {
 							'surecart'
 						)}
 					</span>
-				</ScSwitch>
+				</ScSwitch> */}
 			</SettingsBox>
 			<SettingsBox
 				title={__('Clear Test Data', 'surecart')}

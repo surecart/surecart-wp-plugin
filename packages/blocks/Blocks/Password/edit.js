@@ -1,9 +1,8 @@
 /**
- * WordPress dependencies
+ * Component Dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { ScOrderPassword } from '@surecart/components-react';
 import { InspectorControls } from '@wordpress/block-editor';
-import { Fragment } from '@wordpress/element';
 import {
 	Button,
 	Card,
@@ -13,12 +12,12 @@ import {
 	TextControl,
 	ToggleControl,
 } from '@wordpress/components';
-import { addQueryArgs } from '@wordpress/url';
-
+import { Fragment } from '@wordpress/element';
 /**
- * Component Dependencies
+ * WordPress dependencies
  */
-import { ScOrderPassword } from '@surecart/components-react';
+import { __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
 
 export default ({ className, attributes, setAttributes, isSelected }) => {
 	const {
@@ -35,7 +34,7 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<Card size="small">
+				{/* <Card size="small">
 					<CardBody size="small">
 						<p>
 							You can override the global password validation by
@@ -51,7 +50,7 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 							Site Settings
 						</Button>
 					</CardBody>
-				</Card>
+				</Card> */}
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
