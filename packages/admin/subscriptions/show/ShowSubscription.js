@@ -254,11 +254,14 @@ export default () => {
 		const upgradeRequired =
 			!window.scData?.entitlements?.subscription_restore_at;
 		return (
-			<ScUpgradeRequired required={upgradeRequired}>
+			<ScUpgradeRequired
+				style={{ display: 'block' }}
+				required={upgradeRequired}
+			>
 				<ScMenuItem onClick={() => setModal('pause')}>
 					{upgradeRequired
 						? __('Pause', 'surecart')
-						: __('Pause Subscription...', 'surecart')}{' '}
+						: __('Pause Subscription', 'surecart')}{' '}
 					{upgradeRequired ? <ScPremiumTag slot="suffix" /> : null}
 				</ScMenuItem>
 			</ScUpgradeRequired>
@@ -307,7 +310,7 @@ export default () => {
 
 		return (
 			<ScMenuItem onClick={() => setModal('renew_at')}>
-				{__('Renew At...', 'surecart')}
+				{__('Change Renewal Date', 'surecart')}
 			</ScMenuItem>
 		);
 	};
