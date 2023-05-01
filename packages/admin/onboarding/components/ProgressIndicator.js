@@ -1,11 +1,12 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { ScButton } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
-export default ({ totalSteps, currentStep, onStepChange }) => {
-	function renderSteps(total, current) {
+export default ({ currentStep, onBackwardClick, onForwardClick }) => {
+	function renderSteps(current) {
 		let steps = [];
-		for (let i = 0; i < total; i++) {
+		for (let i = 0; i < 4; i++) {
 			steps.push(i);
 		}
 		return steps.map((step) => (
@@ -36,19 +37,21 @@ export default ({ totalSteps, currentStep, onStepChange }) => {
 				position: absolute;
 				width: 100%;
 				box-sizing: border-box;
+				left: 0;
 				bottom: 0;
 				background-color: #f0f0f1;
 			`}
 		>
 			{[1, 2].includes(currentStep) ? (
-				<sc-button
+				<ScButton
 					type="link"
 					size="large"
-					onClick={() => onStepChange('backward')}
+					onClick={onBackwardClick}
+					disabled={!onBackwardClick}
 				>
 					<sc-icon name="arrow-left" slot="prefix"></sc-icon>
 					{__('Back', 'surecart')}
-				</sc-button>
+				</ScButton>
 			) : (
 				<div />
 			)}
@@ -62,18 +65,18 @@ export default ({ totalSteps, currentStep, onStepChange }) => {
 					transform: translate(-50%, -50%);
 				`}
 			>
-				{renderSteps(totalSteps, currentStep)}
+				{renderSteps(currentStep)}
 			</div>
 			{currentStep !== 0 && (
-				<sc-button
+				<ScButton
 					type="primary"
 					size="large"
-					// disabled={currentStep === 3}
-					onClick={() => onStepChange('forward')}
+					onClick={onForwardClick}
+					disabled={!onForwardClick}
 				>
 					{__('Continue', 'surecart')}
 					<sc-icon name="arrow-right" slot="suffix"></sc-icon>
-				</sc-button>
+				</ScButton>
 			)}
 		</div>
 	);

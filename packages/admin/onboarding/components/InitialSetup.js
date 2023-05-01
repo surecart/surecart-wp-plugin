@@ -2,6 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import StepHeader from './StepHeader';
+import ProgressIndicator from './ProgressIndicator';
 
 export default ({ handleStepChange }) => {
 	return (
@@ -43,6 +44,7 @@ export default ({ handleStepChange }) => {
 					{__('Connect Existing Store', 'surecart')}
 				</sc-button>
 			</div>
+			<ProgressIndicator currentStep={0} />
 		</div>
 	);
 };

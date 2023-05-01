@@ -5,12 +5,12 @@ import { __ } from '@wordpress/i18n';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 
 import Layout from './components/Layout';
-import ProgressIndicator from './components/ProgressIndicator';
 import InitialSetup from './components/InitialSetup';
 import ConfirmEmail from './components/ConfirmEmail';
 import SetupDone from './components/SetupDone';
 import SetupProgress from './components/SetupProgress';
 import StarterTemplates from './components/StarterTemplates';
+import ConfirmExit from './components/ConfirmExit';
 
 let confettiIntervalId;
 let confettiTimerId;
@@ -68,7 +68,12 @@ export default () => {
 			case 0:
 				return <InitialSetup handleStepChange={handleStepChange} />;
 			case 1:
-				return <ConfirmEmail />;
+				return (
+					<ConfirmEmail
+						currentStep={currentStep}
+						handleStepChange={handleStepChange}
+					/>
+				);
 			case 2:
 				return <StarterTemplates />;
 			case 3:
@@ -98,13 +103,6 @@ export default () => {
 	return (
 		<>
 			<Layout>{renderContent(currentStep)}</Layout>
-			{currentStep !== 4 && (
-				<ProgressIndicator
-					totalSteps={4}
-					currentStep={currentStep}
-					onStepChange={handleStepChange}
-				/>
-			)}
 			<ReactCanvasConfetti
 				refConfetti={getInstance}
 				style={{
@@ -116,6 +114,7 @@ export default () => {
 					left: 0,
 				}}
 			/>
+			<ConfirmExit />
 		</>
 	);
 };
