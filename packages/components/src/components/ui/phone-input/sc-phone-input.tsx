@@ -90,7 +90,7 @@ export class ScPhoneInput {
   @Prop() step: number;
 
   /** A pattern to validate input against. */
-  @Prop() pattern: string;
+  @Prop() pattern: string = '[-s#0-9_+/().]*';
 
   /** Makes the input a required field. */
   @Prop({ reflect: true }) required = false;
@@ -263,7 +263,7 @@ export class ScPhoneInput {
                 id={this.inputId}
                 class="input__control"
                 ref={el => (this.input = el as HTMLInputElement)}
-                type="text"
+                type="tel"
                 name={this.name}
                 disabled={this.disabled}
                 readonly={this.readonly}
@@ -275,7 +275,7 @@ export class ScPhoneInput {
                 max={this.max}
                 step={this.step}
                 // TODO: Test These below
-                autocomplete={this.autocomplete}
+                autocomplete={'tel'}
                 autocorrect={this.autocorrect}
                 autofocus={this.autofocus}
                 spellcheck={this.spellcheck}
