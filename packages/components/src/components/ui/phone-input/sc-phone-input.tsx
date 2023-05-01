@@ -1,4 +1,5 @@
 import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, Watch } from '@stencil/core';
+import { applyFilters } from '@wordpress/hooks';
 
 import { FormSubmitController } from '../../../functions/form-data';
 
@@ -279,7 +280,7 @@ export class ScPhoneInput {
                 autocorrect={this.autocorrect}
                 autofocus={this.autofocus}
                 spellcheck={this.spellcheck}
-                pattern={this.pattern}
+                pattern={applyFilters('surecart/sc-phone-input/pattern', this.pattern) as string}
                 inputmode={'numeric'}
                 aria-labelledby={this.label}
                 aria-invalid={this.invalid ? true : false}
