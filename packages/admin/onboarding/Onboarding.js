@@ -36,6 +36,8 @@ function getAnimationSettings(originXA, originXB) {
 }
 
 export default () => {
+	const [email, setEmail] = useState('');
+	const [selectedTemplate, setSelectedTemplate] = useState(null);
 	const [currentStep, setCurrentStep] = useState(0);
 	const refAnimationInstance = useRef(null);
 
@@ -63,6 +65,22 @@ export default () => {
 			setCurrentStep((step) => step - 1);
 	}
 
+	async function onEmailSubmit() {
+		try {
+			await apiFetch({
+				method: 'POST',
+				path: 'surecart/v1/public/provisional_accounts/',
+				data: {
+					account_name: 'Deba Store',
+					email: email.trim(),
+				},
+			});
+			handleStepChange('forward');
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
 	function renderContent(step) {
 		switch (step) {
 			case 0:
@@ -70,12 +88,24 @@ export default () => {
 			case 1:
 				return (
 					<ConfirmEmail
+						email={email}
 						currentStep={currentStep}
 						handleStepChange={handleStepChange}
+						onSubmitEmail={(email) => {
+							setEmail(email);
+							handleStepChange('forward');
+						}}
 					/>
 				);
 			case 2:
-				return <StarterTemplates />;
+				return (
+					<StarterTemplates
+						currentStep={currentStep}
+						handleStepChange={handleStepChange}
+						selectedTemplate={selectedTemplate}
+						onSelectTemplate={setSelectedTemplate}
+					/>
+				);
 			case 3:
 				return <SetupProgress />;
 			case 4:

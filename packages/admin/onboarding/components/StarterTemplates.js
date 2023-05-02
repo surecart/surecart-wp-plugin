@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useState } from 'react';
 import { __ } from '@wordpress/i18n';
 import StepHeader from './StepHeader';
 import TemplateDefaultImg from '../template_default.svg';
+import ProgressIndicator from './ProgressIndicator';
 
 const templates = [
 	{
@@ -25,9 +25,13 @@ const templates = [
 	},
 ];
 
-export default () => {
-	const [selectedTemplate, setSelectedTemplate] = useState();
-
+export default ({
+	currentStep,
+	handleStepChange,
+	selectedTemplate,
+	onSelectTemplate,
+}) => {
+	console.log('selectedTemplate', selectedTemplate);
 	return (
 		<div>
 			<StepHeader
@@ -67,17 +71,26 @@ export default () => {
 				<TemplateItem
 					template={{ name: 'Start From Scratch' }}
 					active={selectedTemplate === 0}
-					onItemClick={() => setSelectedTemplate(0)}
+					onItemClick={() => onSelectTemplate(0)}
 				/>
 				{templates.map((template, idx) => (
 					<TemplateItem
 						key={idx}
 						active={selectedTemplate === idx + 1}
 						template={template}
-						onItemClick={() => setSelectedTemplate(idx + 1)}
+						onItemClick={() => onSelectTemplate(idx + 1)}
 					/>
 				))}
 			</div>
+			<ProgressIndicator
+				currentStep={currentStep}
+				onBackwardClick={() => handleStepChange('backward')}
+				onForwardClick={
+					selectedTemplate !== null
+						? () => handleStepChange('forward')
+						: undefined
+				}
+			/>
 		</div>
 	);
 };

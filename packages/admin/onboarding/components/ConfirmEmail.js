@@ -3,37 +3,21 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import StepHeader from './StepHeader';
 import ProgressIndicator from './ProgressIndicator';
-import apiFetch from '@wordpress/api-fetch';
 import { useState } from '@wordpress/element';
-import {
-	ScBlockUi,
-	ScButton,
-	ScError,
-	ScInput,
-} from '@surecart/components-react';
+import { ScAlert, ScButton, ScIcon, ScInput } from '@surecart/components-react';
 
-export default ({ currentStep, handleStepChange }) => {
+export default ({ email, currentStep, handleStepChange, onSubmitEmail }) => {
+	const [userEmail, setUserEmail] = useState(email ?? '');
 	const [error, setError] = useState(null);
-	const [loading, setLoading] = useState(false);
-	const [email, setEmail] = useState('');
 
-	async function onSubmit() {
+	function onSubmit() {
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		setError(null);
-		setLoading(true);
-		try {
-			await apiFetch({
-				method: 'POST',
-				path: 'surecart/v1/public/provisional_accounts/',
-				data: {
-					account_name: 'Deba Store',
-					email: email.trim(),
-				},
-			});
-			handleStepChange('forward');
-		} catch (error) {
-			setError(error);
-		} finally {
-			setLoading(false);
+
+		if (emailRegex.test(userEmail.trim())) {
+			onSubmitEmail(userEmail.trim());
+		} else {
+			setError('Invalid email address!');
 		}
 	}
 
@@ -63,35 +47,36 @@ export default ({ currentStep, handleStepChange }) => {
 						required={true}
 						autofocus={true}
 						type="email"
-						style={{ width: '480px' }}
-						value={email}
-						onScInput={(e) => {
-							setEmail(e.target.value);
-							if (error) setError(null);
-						}}
+						style={{ width: '460px' }}
+						value={userEmail}
+						onScInput={(e) => setUserEmail(e.target.value)}
 					>
 						<ScButton
 							slot="suffix"
 							type="text"
 							size="medium"
 							onClick={onSubmit}
-							disabled={!email?.length}
+							disabled={!userEmail?.length}
 							style={{
 								color: 'var(--sc-color-brand-primary)',
 								marginRight: 0,
 							}}
 						>
-							{__('Confirm', 'surecart')}
+							<ScIcon
+								name="arrow-right"
+								style={{ fontSize: 20 }}
+							/>
 						</ScButton>
 					</ScInput>
 				</div>
-				{error && <ScError error={error} />}
-				{loading && <ScBlockUi spinner />}
+				<ScAlert open={error} type="danger">
+					{error}
+				</ScAlert>
 			</div>
 			<ProgressIndicator
 				currentStep={currentStep}
 				onBackwardClick={() => handleStepChange('backward')}
-				onForwardClick={!loading && !!email?.length && onSubmit}
+				onForwardClick={!!userEmail?.trim().length && onSubmit}
 			/>
 		</>
 	);
