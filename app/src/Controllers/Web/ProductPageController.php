@@ -47,25 +47,9 @@ class ProductPageController extends ProductTypePageController {
 			);
 		}
 
+		// include the default view.
 		include $view;
 
 		return \SureCart::response();
-
-		// $templates = [];
-
-		// if ( isset( $this->product->template->wp_id ) ) {
-		// $templates[] = get_post_meta( $this->product->template->wp_id, '_wp_page_template', true );
-		// }
-
-		// $templates[] = 'page.php';
-
-		// // var_dump( get_post_meta( $this->product->template->wp_id, '_wp_page_template', true ) );
-
-		// // check to see if the product has a page or template.
-		// return \SureCart::view( 'web/product-canvas' )->with(
-		// [
-		// 'template' => get_post_meta( $this->product->template->wp_id, '_wp_page_template', true ),
-		// ]
-		// );
 	}
 }
