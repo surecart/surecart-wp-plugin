@@ -156,7 +156,7 @@ return [
 		\SureCartBlocks\Blocks\Product\PriceChoices\Block::class,
 		\SureCartBlocks\Blocks\Product\Media\Block::class,
 		\SureCartBlocks\Blocks\Product\Quantity\Block::class,
-		\SureCartBlocks\Blocks\Product\BuyButtons\Block::class,
+		\SureCartBlocks\Blocks\Product\BuyButton\Block::class,
 
 	],
 

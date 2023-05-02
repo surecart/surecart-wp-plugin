@@ -11,6 +11,7 @@ import { store as coreStore } from '@wordpress/core-data';
  * Internal dependencies
  */
 import PostTemplateForm from './form';
+import { getTemplateTitle } from '../../utility';
 
 export default function PostTemplate({ product, updateProduct }) {
 	// Use internal state instead of a ref to make sure that the component
@@ -65,18 +66,7 @@ export default function PostTemplate({ product, updateProduct }) {
 	);
 }
 
-function getTemplateTitle(template) {
-	if (template?.id === 'surecart/surecart//product-info') {
-		return template?.wp_id
-			? __('Default (Customized)', 'surecart')
-			: __('Default', 'surecart');
-	}
-
-	return template?.title?.rendered || template?.slug;
-}
-
 function PostTemplateToggle({ isOpen, onClick, template }) {
-	if (!template) return <Spinner />;
 	const templateTitle = getTemplateTitle(template);
 
 	return (

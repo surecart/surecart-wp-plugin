@@ -182,6 +182,29 @@ class BlockTemplatesService {
 	}
 
 	/**
+	 * Set the template name
+	 *
+	 * @param [type] $template
+	 *
+	 * @return void
+	 */
+	public function setTemplateName( $template ) {
+		if ( preg_match( '/(sc-products)-(.+)/', $template->slug, $matches ) ) {
+			$type = $matches[1];
+
+			if ( 'sc-products' === $type ) {
+				$template->title = sprintf(
+					// translators: Represents the title of a user's custom template in the Site Editor, where %s is the author's name, e.g. "Author: Jane Doe".
+					__( 'Product: %s', 'surecart' ),
+					$template->title
+				);
+				$template->description = __( 'Template used for single SureCart product pages.', 'surecart' );
+			}
+		}
+		return $template;
+	}
+
+	/**
 	 * Get and build the block template objects from the block template files.
 	 *
 	 * @param array  $slugs An array of slugs to retrieve templates for.

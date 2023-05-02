@@ -1,15 +1,14 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 
 import Box from '../../ui/Box';
+import Availability from '../components/Availability';
 import SelectTemplate from '../components/SelectTemplate';
 import SelectTemplatePart from '../components/SelectTemplatePart';
 import Status from '../components/Status';
-import Availability from '../components/Availability';
 import Url from '../components/Url';
 
 export default ({ product, updateProduct, loading }) => {

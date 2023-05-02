@@ -104,19 +104,42 @@ class Product extends Model {
 	}
 
 	/**
+	 * Get the product template id.
+	 *
+	 * @return string|false
+	 */
+	public function getTemplateIdAttribute() {
+		if ( ! empty( $this->attributes['metadata']->wp_template_id ) ) {
+			// we have a php file, switch to default.
+			if ( wp_is_block_theme() && false !== strpos( $this->attributes['metadata']->wp_template_id, '.php' ) ) {
+				return 'surecart/surecart//single-product';
+			}
+
+			// this is acceptable.
+			return $this->attributes['metadata']->wp_template_id;
+		}
+		return 'surecart/surecart//single-product';
+	}
+
+	/**
 	 * Get the product template
 	 *
 	 * @return \WP_Template
 	 */
 	public function getTemplateAttribute() {
-		if ( ! empty( $this->attributes['metadata']->wp_template_id ) ) {
-			$template = get_block_template( $this->attributes['metadata']->wp_template_id );
-			if ( $template ) {
-				return $template;
-			}
-		}
+		return get_block_template( $this->getTemplateIdAttribute() );
+	}
 
-		return get_block_template( 'surecart/surecart//single-product' );
+	/**
+	 * Get the product template id.
+	 *
+	 * @return string|false
+	 */
+	public function getTemplatePartIdAttribute() {
+		if ( ! empty( $this->attributes['metadata']->wp_template_part_id ) ) {
+			return $this->attributes['metadata']->wp_template_part_id;
+		}
+		return 'surecart/surecart//product-info';
 	}
 
 	/**
@@ -125,14 +148,7 @@ class Product extends Model {
 	 * @return \WP_Template
 	 */
 	public function getTemplatePartAttribute() {
-		if ( ! empty( $this->attributes['metadata']->wp_template_part_id ) ) {
-			$template = get_block_template( $this->attributes['metadata']->wp_template_part_id, 'wp_template_part' );
-			if ( $template ) {
-				return $template;
-			}
-		}
-
-		return get_block_template( 'surecart/surecart//product-info', 'wp_template_part' );
+		return get_block_template( $this->getTemplatePartIdAttribute(), 'wp_template_part' );
 	}
 }
 

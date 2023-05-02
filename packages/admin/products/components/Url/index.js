@@ -1,12 +1,12 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react';
-
+import { Button, Dropdown, PanelRow } from '@wordpress/components';
 /**
  * WordPress dependencies
  */
 import { useMemo, useState } from '@wordpress/element';
-import { PanelRow, Dropdown, Button } from '@wordpress/components';
 import { __, sprintf } from '@wordpress/i18n';
+
 import Form from './form';
 
 export default ({ product, updateProduct }) => {
@@ -68,7 +68,7 @@ function PostURLToggle({ isOpen, onClick, product }) {
 		<Button
 			css={css`
 				height: auto;
-				text-align: left;
+				text-align: right;
 				white-space: normal !important;
 				word-break: break-word;
 			`}

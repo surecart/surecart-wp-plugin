@@ -16,6 +16,7 @@ import { addQueryArgs } from '@wordpress/url';
  * Internal dependencies
  */
 import PostTemplateCreateModal from './create-modal';
+import { getTemplateTitle } from '../../utility';
 
 export default function PostTemplateForm({
 	onClose,
@@ -27,33 +28,21 @@ export default function PostTemplateForm({
 	const { parts, canCreate } = useSelect(
 		(select) => {
 			const { canUser, getEntityRecords } = select(coreStore);
-			const parts = [
-				...(getEntityRecords('postType', 'wp_template_part', {
-					per_page: -1,
-					post_type: 'sc_product',
-				}) || []),
-				template,
-			];
+			const parts = (
+				getEntityRecords('postType', 'wp_template_part') || []
+			).filter((template) => {
+				return (
+					template.theme === 'surecart/surecart' ||
+					template.slug.includes('sc-part-products-info')
+				);
+			});
 			return {
-				parts: parts.filter(
-					(obj, index, self) =>
-						index === self.findIndex((el) => el === obj)
-				),
+				parts,
 				canCreate: canUser('create', 'templates'),
 			};
 		},
 		[template]
 	);
-
-	function getTemplateTitle(template) {
-		if (template?.id === 'surecart/surecart//product-info') {
-			return template?.wp_id
-				? __('Default (Customized)', 'surecart')
-				: __('Default', 'surecart');
-		}
-
-		return template?.title?.rendered || template?.slug;
-	}
 
 	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 

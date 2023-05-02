@@ -1,18 +1,18 @@
+import {
+	Button,
+	__experimentalHStack as HStack,
+	Modal,
+	TextControl,
+	__experimentalVStack as VStack,
+} from '@wordpress/components';
+import { store as coreStore } from '@wordpress/core-data';
 /**
  * WordPress dependencies
  */
 import { useDispatch } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
-import {
-	Modal,
-	TextControl,
-	Button,
-	__experimentalHStack as HStack,
-	__experimentalVStack as VStack,
-} from '@wordpress/components';
-import { cleanForSlug } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
+import { cleanForSlug } from '@wordpress/url';
 
 /**
  * Internal dependencies
@@ -48,7 +48,7 @@ export default function PostTemplateCreateModal({
 		const newTemplateContent = template?.content?.raw;
 
 		const { id } = await saveEntityRecord('postType', 'wp_template', {
-			slug: cleanForSlug(title || DEFAULT_TITLE),
+			slug: `sc-products-${cleanForSlug(title || DEFAULT_TITLE)}`,
 			content: newTemplateContent,
 			title: title || DEFAULT_TITLE,
 		});
@@ -62,13 +62,11 @@ export default function PostTemplateCreateModal({
 
 		setIsBusy(false);
 		cancel();
-
-		// __unstableSwitchToTemplateMode(true);
 	};
 
 	return (
 		<Modal
-			title={__('Duplicate Template', 'surecart')}
+			title={__('Create Template', 'surecart')}
 			onRequestClose={cancel}
 			className="edit-post-post-template__create-modal"
 		>

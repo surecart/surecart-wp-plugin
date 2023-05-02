@@ -16,6 +16,7 @@ import { addQueryArgs } from '@wordpress/url';
  * Internal dependencies
  */
 import PostTemplateCreateModal from './create-modal';
+import { getTemplateTitle } from '../../utility';
 
 export default function PostTemplateForm({
 	onClose,
@@ -23,26 +24,26 @@ export default function PostTemplateForm({
 	updateProduct,
 	template,
 }) {
-	const { templates, canCreate } = useSelect((select) => {
+	const { templates, canCreate, canEdit } = useSelect((select) => {
 		const { canUser, getEntityRecords } = select(coreStore);
+		const selectorArgs = ['postType', 'wp_template'];
 		return {
-			templates:
-				getEntityRecords('postType', 'wp_template', {
-					per_page: -1,
-					post_type: 'sc_product',
-				}) || [],
+			templates: (getEntityRecords(...selectorArgs) || []).filter(
+				(template) => {
+					return (
+						template.theme === 'surecart/surecart' ||
+						template.slug.includes('sc-products')
+					);
+				}
+			),
 			canCreate: canUser('create', 'templates'),
+			canEdit: canUser('create', 'templates'),
 		};
 	}, []);
 
-	const canEdit =
-		canCreate && (!!scData?.is_block_theme || !!template?.wp_id);
-
-	const options = (templates ?? []).map(({ id, title, wp_id }) => ({
-		value: id,
-		label: `${title?.rendered || slug}${
-			!wp_id ? ` (${__('Default', 'surecart')})` : ''
-		}`,
+	const options = (templates ?? []).map((template) => ({
+		value: template?.id,
+		label: getTemplateTitle(template),
 	}));
 
 	const selected = templates.find(
@@ -90,7 +91,7 @@ export default function PostTemplateForm({
 				__nextHasNoMarginBottom
 				hideLabelFromVision
 				label={__('Template')}
-				value={selected?.id}
+				value={selected?.id || 'surecart/surecart//single-product'}
 				options={options}
 				onChange={(slug) => {
 					updateProduct({

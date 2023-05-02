@@ -1,16 +1,16 @@
-/**
- * WordPress dependencies
- */
-import { useState, useMemo } from '@wordpress/element';
-import { PanelRow, Dropdown, Button } from '@wordpress/components';
-import { __, sprintf } from '@wordpress/i18n';
-import { useSelect } from '@wordpress/data';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+import { Button, Dropdown, PanelRow, Spinner } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
+import { useMemo, useState } from '@wordpress/element';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import PostTemplateForm from './form';
+import { getTemplateTitle } from '../../utility';
 
 export default function PostTemplate({ product, updateProduct }) {
 	// Use internal state instead of a ref to make sure that the component
@@ -66,13 +66,20 @@ export default function PostTemplate({ product, updateProduct }) {
 }
 
 function PostTemplateToggle({ isOpen, onClick, template }) {
-	const templateTitle =
-		template?.title?.rendered ||
-		template?.slug ||
-		__('Single Product', 'surecart');
+	// if (!template) {
+	// 	return <Spinner />;
+	// }
+
+	let templateTitle = getTemplateTitle(template);
 
 	return (
 		<Button
+			css={css`
+				height: auto;
+				text-align: right;
+				white-space: normal !important;
+				word-break: break-word;
+			`}
 			className="edit-post-post-template__toggle"
 			variant="tertiary"
 			aria-expanded={isOpen}

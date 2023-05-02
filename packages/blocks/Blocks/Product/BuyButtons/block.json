@@ -5,46 +5,36 @@
 	"description": "Displays product buy and add to cart buttons",
 	"category": "surecart",
 	"keywords": ["button", "buy", "product"],
-	"attributes": {
-		"text": {
-			"type": "string",
-			"default": "Add To Cart"
-		},
-		"type": {
-			"type": "string",
-			"default": "primary"
-		},
-		"size": {
-			"type": "string",
-			"default": "medium"
-		},
-		"full": {
-			"type": "boolean",
-			"default": true
-		}
-	},
 	"supports": {
-		"reusable": false,
+		"anchor": true,
+		"align": ["wide", "full"],
 		"html": false,
-		"multiple": false,
-		"align": true,
-		"alignWide": false,
-		"color": {
-			"__experimentalSkipSerialization": true,
-			"gradients": true,
+		"__experimentalExposeControlsToChildren": true,
+		"spacing": {
+			"blockGap": true,
+			"margin": ["top", "bottom"],
 			"__experimentalDefaultControls": {
-				"background": true,
-				"text": true
+				"blockGap": true
 			}
 		},
 		"typography": {
-			"fontSize": true
-		},
-		"__experimentalBorder": {
-			"radius": true,
-			"__experimentalSkipSerialization": true,
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
 			"__experimentalDefaultControls": {
-				"radius": true
+				"fontSize": true
+			}
+		},
+		"__experimentalLayout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"default": {
+				"type": "flex"
 			}
 		}
 	},
