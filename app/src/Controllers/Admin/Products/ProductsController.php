@@ -27,6 +27,46 @@ class ProductsController extends AdminController {
 		return \SureCart::view( 'admin/products/index' )->with( [ 'table' => $table ] );
 	}
 
+
+	/**
+	 * Preload API Requests
+	 *
+	 * @param \SureCart\Models\Product $product The product.
+	 *
+	 * @return void
+	 */
+	public function preloadAPIRequests( $product ) {
+		$preload_paths = array(
+			array( '/wp/v2/templates', 'OPTIONS' ),
+			'/wp/v2/settings',
+			'/wp/v2/types/wp_template?context=edit',
+			'/wp/v2/types/wp_template-part?context=edit',
+			'/wp/v2/templates?context=edit',
+			'/wp/v2/template-parts?context=edit',
+			'/wp/v2/users/me',
+			'/wp/v2/types?context=view',
+			'/wp/v2/types?context=edit',
+			'/wp/v2/templates/' . $product->template_id . '?context=edit',
+			'/wp/v2/template-parts/' . $product->template_part_id . '?context=edit',
+			'/surecart/v1/products/' . $product->id . '?context=edit',
+		);
+
+		wp_add_inline_script(
+			'wp-api-fetch',
+			sprintf(
+				'wp.apiFetch.use( wp.apiFetch.createPreloadingMiddleware( %s ) );',
+				wp_json_encode(
+					array_reduce(
+						$preload_paths,
+						'rest_preload_api_request',
+						array()
+					)
+				)
+			),
+			'after'
+		);
+	}
+
 	/**
 	 * Edit a product.
 	 */
@@ -34,11 +74,14 @@ class ProductsController extends AdminController {
 		// enqueue needed script.
 		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( ProductScriptsController::class, 'enqueue' ) );
 
+		$product = Product::find( $request->query( 'id' ) );
+
+		$this->preloadAPIRequests( $product );
+
 		// add instant checkout link.
 		add_action(
 			'admin_bar_menu',
-			function( $wp_admin_bar ) use ( $request ) {
-				$product = Product::find( $request->query( 'id' ) );
+			function( $wp_admin_bar ) use ( $product ) {
 				$wp_admin_bar->add_node(
 					[
 						'id'    => 'view-product-page',
