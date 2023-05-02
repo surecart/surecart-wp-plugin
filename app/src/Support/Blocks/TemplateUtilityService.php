@@ -47,8 +47,8 @@ class TemplateUtilityService {
 		$this->template_parts_directory = $template_parts_directory;
 		$this->plugin_template_types    = [
 			'single-product' => [
-				'title'       => _x( 'Single Product', 'Template name', 'surecart' ),
-				'description' => __( 'Displays a single product.', 'surecart' ),
+				'title'       => _x( 'SureCart Product', 'Template name', 'surecart' ),
+				'description' => __( 'Displays a single surecart product.', 'surecart' ),
 			],
 			'product-info'   => [
 				'title'       => _x( 'Product Info', 'Template name', 'surecart' ),
