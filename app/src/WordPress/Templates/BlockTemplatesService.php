@@ -212,7 +212,7 @@ class BlockTemplatesService {
 				array(
 					'taxonomy' => 'wp_theme',
 					'field'    => 'name',
-					'terms'    => [ 'surecart/surecart', get_stylesheet() ],
+					'terms'    => [ 'surecart/surecart' ],
 				),
 			),
 		);
