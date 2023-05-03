@@ -249,7 +249,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 = 1.10.0 - April 27, 2023 =
 * New: Multiple product images.
-* New: Instanct checkout product images slideshow.
+* New: Instant checkout product images slideshow.
 * New: Phone number block for checkout.
 * New: Pre-populate name and email fields from url parameters.
 * Improvement: Subscription pausing UX in merchant admin.
