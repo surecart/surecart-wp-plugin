@@ -2,7 +2,7 @@ import { render } from '@wordpress/element';
 import ErrorBoundary from '../../components/error-boundary';
 import '../store';
 
-import Settings from './ShippingProfileSettings';
+import Settings from './ShippingSettings';
 
 render(
 	<ErrorBoundary>

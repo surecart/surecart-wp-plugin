@@ -210,6 +210,13 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'shipping_profiles',
+		kind: 'surecart',
+		label: __('Shipping Profiles', 'surecart'),
+		baseURL: 'surecart/v1/shipping_profiles',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'stat',
 		kind: 'surecart',
 		label: __('Statistic', 'surecart'),
