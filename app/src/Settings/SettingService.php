@@ -156,6 +156,16 @@ class SettingService {
 				'default'           => 'floating_icon', // both, floating_icon, menu_icon.
 			]
 		);
+		$this->register(
+			'surecart',
+			'password_validation_enabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => false,
+			]
+		);
 	}
 
 	/**

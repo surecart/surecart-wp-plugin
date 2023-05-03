@@ -351,6 +351,16 @@ export interface ProductGroup {
   created_at: number;
   updated_at: number;
 }
+export interface ProductMedia {
+  id: string;
+  object: 'product_media';
+  position: number;
+  url: null;
+  media: string | Media;
+  product: string | Product;
+  created_at: number;
+  updated_at: number;
+}
 export interface Charge extends Object {
   amount: number;
   created_at: number;
@@ -426,6 +436,8 @@ export interface Checkout extends Object {
   trial_amount?: number;
   charge?: string | Charge;
   name?: string;
+  first_name?: string;
+  last_name?: string;
   email?: string;
   phone?: string;
   live_mode?: boolean;

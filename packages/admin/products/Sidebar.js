@@ -89,12 +89,6 @@ export default ({
 				loading={loading}
 			/>
 
-			<Image
-				product={product}
-				updateProduct={updateProduct}
-				loading={loading}
-			/>
-
 			<Advanced
 				product={product}
 				updateProduct={updateProduct}

@@ -92,6 +92,7 @@ return [
 		\SureCart\Rest\WebhooksRestServiceProvider::class,
 		\SureCart\Rest\VerificationCodeRestServiceProvider::class,
 		\SureCart\Rest\CheckEmailRestServiceProvider::class,
+		\SureCart\Rest\ProductMediaRestServiceProvider::class,
 
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,
@@ -138,6 +139,7 @@ return [
 		\SureCartBlocks\Blocks\Dashboard\DashboardTab\Block::class,
 		\SureCartBlocks\Blocks\ConditionalForm\Block::class,
 		\SureCartBlocks\Blocks\StoreLogo\Block::class,
+		\SureCartBlocks\Blocks\Password\Block::class,
 
 		// Deprecated.
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerInvoices\Block::class,

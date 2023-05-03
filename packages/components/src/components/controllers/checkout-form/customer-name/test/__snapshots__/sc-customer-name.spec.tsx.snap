@@ -1,17 +1,97 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sc-customer-name is disabled when logged in 1`] = `
-<sc-customer-name logged-in="" size="medium">
+exports[`sc-customer-name Logged In Checkout name provided with URL Params 1`] = `
+<sc-customer-name size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="name" disabled="" help="" name="name" type="text" value=""></sc-input>
+    <sc-input autocomplete="name" disabled="" help="" name="name" type="text" value="CheckoutFirst CheckoutLast"></sc-input>
   </mock:shadow-root>
 </sc-customer-name>
 `;
 
-exports[`sc-customer-name renders 1`] = `
+exports[`sc-customer-name Logged In Checkout name provided without URL Params 1`] = `
 <sc-customer-name size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="name" help="" name="name" type="text" value=""></sc-input>
+    <sc-input autocomplete="name" disabled="" help="" name="name" type="text" value="CheckoutFirst CheckoutLast"></sc-input>
+  </mock:shadow-root>
+</sc-customer-name>
+`;
+
+exports[`sc-customer-name Logged In Customer and Checkout names provided with URL Params 1`] = `
+<sc-customer-name size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="name" disabled="" help="" name="name" type="text" value="CustomerFirst CustomerLast"></sc-input>
+  </mock:shadow-root>
+</sc-customer-name>
+`;
+
+exports[`sc-customer-name Logged In Customer and Checkout names provided without URL Params 1`] = `
+<sc-customer-name size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="name" disabled="" help="" name="name" type="text" value="CustomerFirst CustomerLast"></sc-input>
+  </mock:shadow-root>
+</sc-customer-name>
+`;
+
+exports[`sc-customer-name Logged In Customer name provided with URL Params 1`] = `
+<sc-customer-name size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="name" disabled="" help="" name="name" type="text" value="CustomerFirst CustomerLast"></sc-input>
+  </mock:shadow-root>
+</sc-customer-name>
+`;
+
+exports[`sc-customer-name Logged In Customer name provided without URL Params 1`] = `
+<sc-customer-name size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="name" disabled="" help="" name="name" type="text" value="CustomerFirst CustomerLast"></sc-input>
+  </mock:shadow-root>
+</sc-customer-name>
+`;
+
+exports[`sc-customer-name Logged Out Checkout name provided with URL Params 1`] = `
+<sc-customer-name size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="name" help="" name="name" type="text" value="UrlFirst UrlLast"></sc-input>
+  </mock:shadow-root>
+</sc-customer-name>
+`;
+
+exports[`sc-customer-name Logged Out Checkout name provided without URL Params 1`] = `
+<sc-customer-name size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="name" help="" name="name" type="text" value="CheckoutFirst CheckoutLast"></sc-input>
+  </mock:shadow-root>
+</sc-customer-name>
+`;
+
+exports[`sc-customer-name Logged Out Customer and Checkout names provided with URL Params 1`] = `
+<sc-customer-name size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="name" help="" name="name" type="text" value="UrlFirst UrlLast"></sc-input>
+  </mock:shadow-root>
+</sc-customer-name>
+`;
+
+exports[`sc-customer-name Logged Out Customer and Checkout names provided without URL Params 1`] = `
+<sc-customer-name size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="name" help="" name="name" type="text" value="CheckoutFirst CheckoutLast"></sc-input>
+  </mock:shadow-root>
+</sc-customer-name>
+`;
+
+exports[`sc-customer-name Logged Out Customer name provided with URL Params 1`] = `
+<sc-customer-name size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="name" help="" name="name" type="text" value="UrlFirst UrlLast"></sc-input>
+  </mock:shadow-root>
+</sc-customer-name>
+`;
+
+exports[`sc-customer-name Logged Out Customer name provided without URL Params 1`] = `
+<sc-customer-name size="medium">
+  <mock:shadow-root>
+    <sc-input autocomplete="name" help="" name="name" type="text" value="CustomerFirst CustomerLast"></sc-input>
   </mock:shadow-root>
 </sc-customer-name>
 `;
