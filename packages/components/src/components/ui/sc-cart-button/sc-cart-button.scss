@@ -33,5 +33,9 @@ sc-cart-button {
   &__icon {
     font-size: var(--sc-cart-icon-size, 1.1em);
     cursor: pointer;
+
+    sc-icon {
+      display: block;
+    }
   }
 }
