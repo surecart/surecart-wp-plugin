@@ -57,6 +57,13 @@ class CartService {
 	}
 
 	/**
+	 * Is the cart enabled?
+	 */
+	public function isCartEnabled() {
+		return ! (bool) get_option( 'sc_slide_out_cart_disabled', false );
+	}
+
+	/**
 	 * Get cart menu alignment.
 	 *
 	 * @return 'left'|'right
@@ -84,7 +91,7 @@ class CartService {
 	 * @return array
 	 */
 	public function addCartMenu( $items, $args ) {
-		if ( ! $this->isMenuIconEnabled( $args->menu->term_id ) ) {
+		if ( ! $this->isMenuIconEnabled( $args->menu->term_id ) || ! $this->isCartEnabled() ) {
 			return $items;
 		}
 
@@ -203,7 +210,7 @@ class CartService {
 	public function isMenuIconEnabled( $term_id ) {
 		$cart_menu_ids  = (array) $this->getSelectedIds();
 		$cart_icon_type = (string) $this->getIconType();
-		if ( ! in_array( $cart_icon_type, [ 'floatin_icon', 'both' ] ) ) {
+		if ( ! in_array( $cart_icon_type, [ 'menu_icon', 'both' ] ) ) {
 			return;
 		}
 		return in_array( $term_id, $cart_menu_ids );
