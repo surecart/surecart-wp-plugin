@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-03-30T21:34:14+00:00\n"
+"POT-Creation-Date: 2023-05-01T17:46:10+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -101,8 +101,8 @@ msgstr ""
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:101
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:67
 #: src/Controllers/Admin/Orders/OrdersListTable.php:106
-#: web/buy-template.php:62
-#: web/buy-template.php:82
+#: web/buy-template.php:93
+#: web/buy-template.php:113
 #: abandoned-checkouts/modules/LineItems/index.js:126
 #: customers/modules/Orders.js:58
 #: dashboard/components/overview/charts/ChartSummary.js:142
@@ -176,14 +176,14 @@ msgstr ""
 #: src/Controllers/Admin/Bumps/BumpsController.php:66
 #: src/Controllers/Admin/Customers/CustomersController.php:68
 #: src/Controllers/Admin/Licenses/LicensesController.php:68
-#: src/Controllers/Admin/Products/ProductsController.php:89
+#: src/Controllers/Admin/Products/ProductsController.php:93
 msgid "Product archived."
 msgstr ""
 
 #: src/Controllers/Admin/Bumps/BumpsController.php:66
 #: src/Controllers/Admin/Customers/CustomersController.php:68
 #: src/Controllers/Admin/Licenses/LicensesController.php:68
-#: src/Controllers/Admin/Products/ProductsController.php:89
+#: src/Controllers/Admin/Products/ProductsController.php:93
 msgid "Product restored."
 msgstr ""
 
@@ -206,7 +206,7 @@ msgstr ""
 #: src/Controllers/Admin/Products/ProductsListTable.php:55
 #: coupons/modules/Code.js:118
 #: product-groups/EditProductGroup.js:95
-#: products/EditProduct.js:158
+#: products/EditProduct.js:159
 #: products/modules/Prices/Price/Header.js:225
 #: products/modules/SingleDownload.js:259
 #: util.js:42
@@ -219,7 +219,7 @@ msgstr ""
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:103
 #: src/Controllers/Admin/Products/ProductsListTable.php:97
 #: src/Support/Errors/Translations/attributes.php:11
-#: web/buy-template.php:51
+#: web/buy-template.php:82
 #: bumps/modules/Name.js:7
 #: licenses/modules/Activations/Activation.js:149
 #: products/components/price/parts/PriceName.js:8
@@ -243,7 +243,7 @@ msgstr ""
 #: bumps/modules/Price.js:27
 #: coupons/modules/NewRestriction.js:83
 #: products/components/price/parts/SingleAmount.js:11
-#: store/add-entities.js:187
+#: store/add-entities.js:194
 #: subscriptions/edit/modules/Price.js:37
 #: subscriptions/show/modules/CurrentPlan.js:23
 #: Blocks/CheckoutForm/entities.js:19
@@ -269,8 +269,8 @@ msgstr ""
 #: invoices/store/entities.js:70
 #: products/modules/Prices/NewPrice/index.js:160
 #: products/modules/Prices/Price/Header.js:86
-#: store/add-entities.js:222
 #: store/add-entities.js:229
+#: store/add-entities.js:236
 #: subscriptions/edit/EditSubscription.js:214
 #: sc-subscription-details2.js:33
 #: sc-subscription.js:137
@@ -301,7 +301,7 @@ msgstr ""
 #: licenses/modules/Activations/Activation.js:221
 #: settings/customer/EmailRow.js:40
 #: settings/processors/ManualPaymentMethod.js:114
-#: settings/subscription-preservation/Reason.js:98
+#: settings/subscription-preservation/Reason.js:103
 msgid "Edit"
 msgstr ""
 
@@ -555,10 +555,10 @@ msgid "Customers"
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:50
-#: web/buy-template.php:48
+#: web/buy-template.php:79
 #: coupons/modules/CustomerSelector.js:132
 #: coupons/modules/SelectCustomer.js:223
-#: customers/modules/Details.js:59
+#: customers/modules/Details.js:61
 #: settings/brand/BrandSettings.js:203
 msgid "Email"
 msgstr ""
@@ -686,11 +686,11 @@ msgstr ""
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:62
 #: src/Integrations/TutorLMS/add-to-cart-surecart.php:21
 #: src/Routing/PermalinksSettingsService.php:79
-#: web/buy-template.php:92
-#: web/buy-template.php:94
+#: web/buy-template.php:123
+#: web/buy-template.php:125
 #: invoices/store/entities.js:86
 #: licenses/modules/Purchase.js:39
-#: store/add-entities.js:201
+#: store/add-entities.js:208
 #: sc-order-submit.js:46
 msgid "Purchase"
 msgstr ""
@@ -826,7 +826,7 @@ msgstr ""
 #: bumps/modules/Conditions.js:72
 #: coupons/modules/Restrictions.js:59
 #: product-groups/modules/Products.js:43
-#: products/EditProduct.js:149
+#: products/EditProduct.js:150
 #: Blocks/CheckoutForm/components/Setup.js:115
 #: Blocks/Form/components/SelectPrices.js:84
 msgid "Products"
@@ -836,9 +836,9 @@ msgstr ""
 msgid "View Instant Checkout"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsController.php:58
+#: src/Controllers/Admin/Products/ProductsController.php:62
 #: src/Controllers/Web/BuyPageController.php:82
-#: products/EditProduct.js:153
+#: products/EditProduct.js:154
 #: components/PriceInfo.js:75
 msgid "Edit Product"
 msgstr ""
@@ -879,7 +879,7 @@ msgstr ""
 #: customers/modules/Subscriptions.js:51
 #: settings/export/ExportSettings.js:43
 #: settings/subscription/SubscriptionSettings.js:55
-#: subscriptions/show/ShowSubscription.js:306
+#: subscriptions/show/ShowSubscription.js:343
 #: sc-subscriptions-list.js:131
 msgid "Subscriptions"
 msgstr ""
@@ -1027,7 +1027,7 @@ msgstr ""
 #: dashboard/components/RecentOrders.js:184
 #: Blocks/Form/components/Mode.js:11
 #: Blocks/Form/components/Mode.js:31
-#: sc-customer-edit.js:89
+#: sc-customer-edit.js:90
 #: sc-payment-methods-list.js:152
 #: sc-subscription-payment-method.js:143
 msgid "Test"
@@ -1043,16 +1043,16 @@ msgstr ""
 msgid "The username <strong>%s</strong> is not registered on this site. If you are unsure of your username, try your email address instead."
 msgstr ""
 
-#: src/Controllers/Rest/CheckoutsController.php:269
+#: src/Controllers/Rest/CheckoutsController.php:270
 msgid "Invalid request. Please try again."
 msgstr ""
 
-#: src/Controllers/Rest/CheckoutsController.php:348
+#: src/Controllers/Rest/CheckoutsController.php:349
 msgid "This product is invalid."
 msgstr ""
 
-#: src/Controllers/Rest/CheckoutsController.php:353
-#: src/Controllers/Rest/CheckoutsController.php:370
+#: src/Controllers/Rest/CheckoutsController.php:354
+#: src/Controllers/Rest/CheckoutsController.php:371
 #: src/Middleware/CheckoutRedirectMiddleware.php:42
 msgid "This product is not available for purchase."
 msgstr ""
@@ -1441,6 +1441,14 @@ msgstr ""
 msgid "SureCart Customer"
 msgstr ""
 
+#: src/Request/RequestService.php:208
+msgid "Please connect your site to SureCart."
+msgstr ""
+
+#: src/Request/RequestService.php:283
+msgid "Invalid API token."
+msgstr ""
+
 #: src/Rest/AbandonedCheckoutProtocolRestServiceProvider.php:81
 #: src/Rest/AbandonedCheckoutRestServiceProvider.php:53
 #: src/Rest/AccountRestServiceProvider.php:76
@@ -1472,6 +1480,7 @@ msgstr ""
 #: src/Rest/PriceRestServiceProvider.php:47
 #: src/Rest/ProcessorRestServiceProvider.php:68
 #: src/Rest/ProductGroupsRestServiceProvider.php:47
+#: src/Rest/ProductMediaRestServiceProvider.php:54
 #: src/Rest/ProductsRestServiceProvider.php:47
 #: src/Rest/PromotionRestServiceProvider.php:46
 #: src/Rest/PurchasesRestServiceProvider.php:88
@@ -1563,6 +1572,7 @@ msgstr ""
 #: src/Rest/LicenseRestServiceProvider.php:73
 #: src/Rest/MediaRestServiceProvider.php:73
 #: src/Rest/PriceRestServiceProvider.php:98
+#: src/Rest/ProductMediaRestServiceProvider.php:93
 #: src/Rest/ProductsRestServiceProvider.php:133
 #: src/Rest/StatisticRestServiceProvider.php:72
 msgid "The page of items you want returned."
@@ -1575,6 +1585,7 @@ msgstr ""
 #: src/Rest/LicenseRestServiceProvider.php:77
 #: src/Rest/MediaRestServiceProvider.php:77
 #: src/Rest/PriceRestServiceProvider.php:102
+#: src/Rest/ProductMediaRestServiceProvider.php:97
 #: src/Rest/ProductsRestServiceProvider.php:137
 #: src/Rest/StatisticRestServiceProvider.php:76
 msgid "A limit on the number of items to be returned, between 1 and 100."
@@ -1582,6 +1593,7 @@ msgstr ""
 
 #: src/Rest/ActivationRestServiceProvider.php:97
 #: src/Rest/PriceRestServiceProvider.php:82
+#: src/Rest/ProductMediaRestServiceProvider.php:77
 #: src/Rest/ProductsRestServiceProvider.php:117
 msgid "Ensure result set excludes specific IDs."
 msgstr ""
@@ -1821,6 +1833,7 @@ msgstr ""
 
 #: src/Rest/PriceRestServiceProvider.php:53
 #: src/Rest/ProductGroupsRestServiceProvider.php:53
+#: src/Rest/ProductMediaRestServiceProvider.php:60
 #: src/Rest/UploadsRestServiceProvider.php:60
 msgid "The content for the object."
 msgstr ""
@@ -1840,7 +1853,12 @@ msgid "The query to be used for full text search of this collection."
 msgstr ""
 
 #: src/Rest/PriceRestServiceProvider.php:90
+#: src/Rest/ProductMediaRestServiceProvider.php:85
 msgid "Only return objects that belong to the given products."
+msgstr ""
+
+#: src/Rest/ProductMediaRestServiceProvider.php:101
+msgid "A limit on the number of records returned"
 msgstr ""
 
 #: src/Rest/ProductsRestServiceProvider.php:53
@@ -3891,11 +3909,11 @@ msgstr ""
 msgid "SureCart Customer Dashboard"
 msgstr ""
 
-#: src/WordPress/Users/UsersService.php:73
+#: src/WordPress/Users/UsersService.php:79
 msgid "Limit result set to users with a customer."
 msgstr ""
 
-#: src/WordPress/Users/UsersService.php:77
+#: src/WordPress/Users/UsersService.php:83
 msgid "Limit result set to users with specific customer ids."
 msgstr ""
 
@@ -3913,7 +3931,7 @@ msgid "Upgrade"
 msgstr ""
 
 #: admin/advanced.php:30
-#: settings/abandoned/AbandonedSettings.js:288
+#: settings/abandoned/AbandonedSettings.js:284
 #: settings/advanced/AdvancedSettings.js:35
 msgid "Advanced Settings"
 msgstr ""
@@ -3923,7 +3941,7 @@ msgstr ""
 #: admin/connection.php:37
 #: settings/SettingsBox.js:51
 #: settings/SettingsTemplate.js:76
-#: sc-customer-edit.js:114
+#: sc-customer-edit.js:115
 #: sc-order-bump2.js:63
 #: sc-wordpress-user-edit.js:56
 msgid "Save"
@@ -4215,7 +4233,7 @@ msgstr ""
 #: coupons/modules/CustomerSelector.js:77
 #: coupons/modules/SelectCustomer.js:167
 #: settings/processors/ManualPaymentMethods.js:80
-#: settings/subscription-preservation/Reasons.js:154
+#: settings/subscription-preservation/Reasons.js:94
 #: sc-subscription-payment-method.js:136
 #: sc-subscription-payment-method.js:157
 msgid "Add New"
@@ -4259,7 +4277,7 @@ msgstr ""
 
 #: layouts/partials/admin-settings-sidebar.php:26
 #: abandoned-checkouts/AbandonedCheckout.js:113
-#: settings/abandoned/AbandonedSettings.js:79
+#: settings/abandoned/AbandonedSettings.js:72
 msgid "Abandoned Checkout"
 msgstr ""
 
@@ -4322,7 +4340,8 @@ msgstr ""
 #: Blocks/Name/edit.js:52
 #: Blocks/NameYourPrice/edit.js:65
 #: Blocks/Password/components/Inspector.js:39
-#: Blocks/Password/edit.js:60
+#: Blocks/Password/edit.js:80
+#: Blocks/Phone/edit.js:42
 #: Blocks/Switch/components/Inspector.js:39
 #: Blocks/Textarea/edit.js:58
 msgid "Help"
@@ -4332,16 +4351,16 @@ msgstr ""
 msgid "Log Out"
 msgstr ""
 
-#: web/buy-template.php:48
+#: web/buy-template.php:79
 msgid "Your email address"
 msgstr ""
 
-#: web/buy-template.php:50
-#: web/buy-template.php:51
+#: web/buy-template.php:81
+#: web/buy-template.php:82
 msgid "Your name"
 msgstr ""
 
-#: web/buy-template.php:54
+#: web/buy-template.php:85
 #: web/dashboard/orders/show.php:34
 #: invoices/modules/Refunds.js:11
 #: sc-subscription-next-payment2.js:97
@@ -4349,26 +4368,26 @@ msgstr ""
 msgid "Payment"
 msgstr ""
 
-#: web/buy-template.php:56
+#: web/buy-template.php:87
 #: Blocks/OrderBumps/edit.js:16
 #: sc-order-bumps2.js:23
 msgid "Recommended"
 msgstr ""
 
-#: web/buy-template.php:59
+#: web/buy-template.php:90
 msgid "Coupon Code"
 msgstr ""
 
-#: web/buy-template.php:59
+#: web/buy-template.php:90
 #: Blocks/CartCoupon/deprecated.js:48
 #: Blocks/Coupon/deprecated.js:25
 msgid "Enter coupon code"
 msgstr ""
 
-#: web/buy-template.php:59
+#: web/buy-template.php:90
 #: dashboard/DatePicker.js:24
 #: Blocks/CartCoupon/Block.php:28
-#: Blocks/Coupon/Block.php:26
+#: Blocks/Coupon/Block.php:25
 #: Blocks/CartCoupon/deprecated.js:51
 #: Blocks/Coupon/deprecated.js:28
 #: components/ColorPopup.js:83
@@ -4376,7 +4395,7 @@ msgstr ""
 msgid "Apply"
 msgstr ""
 
-#: web/buy-template.php:72
+#: web/buy-template.php:103
 #: abandoned-checkouts/modules/LineItems/index.js:63
 #: invoices/modules/LineItems.js:115
 #: orders/modules/LineItems/index.js:154
@@ -4390,7 +4409,7 @@ msgstr ""
 msgid "Subtotal"
 msgstr ""
 
-#: web/buy-template.php:83
+#: web/buy-template.php:114
 #: Blocks/Totals/edit.js:68
 #: sc-line-item-total2.js:32
 msgid "Total Due Today"
@@ -4542,16 +4561,17 @@ msgstr ""
 #: products/modules/SingleDownload.js:47
 #: settings/processors/ManualPaymentMethod.js:50
 #: settings/processors/ManualPaymentMethod.js:81
-#: settings/subscription-preservation/Reason.js:43
+#: settings/subscription-preservation/Reason.js:45
 #: subscriptions/edit/EditSubscription.js:181
-#: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:56
+#: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:70
+#: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:75
 #: subscriptions/show/modules/modals/RenewSubscriptionAtModal.js:60
-#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:60
+#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:68
 #: subscriptions/show/modules/Tax.js:42
-#: subscriptions/show/ShowSubscription.js:103
+#: subscriptions/show/ShowSubscription.js:105
 #: sc-cart-form.js:65
 #: sc-charges-list.js:69
-#: sc-customer-edit.js:83
+#: sc-customer-edit.js:84
 #: sc-dashboard-customer-details.js:49
 #: sc-dashboard-downloads-list.js:56
 #: sc-dashboard-downloads-list.js:72
@@ -4567,8 +4587,8 @@ msgstr ""
 #: sc-order.js:78
 #: sc-orders-list.js:56
 #: sc-orders-list.js:69
-#: sc-password-nag.js:49
-#: sc-password-nag.js:76
+#: sc-password-nag.js:51
+#: sc-password-nag.js:87
 #: sc-payment-methods-list.js:70
 #: sc-payment-methods-list.js:97
 #: sc-payment-methods-list.js:112
@@ -4592,7 +4612,7 @@ msgstr ""
 #: sc-upcoming-invoice.js:112
 #: sc-upcoming-invoice.js:126
 #: sc-upcoming-invoice.js:154
-#: sc-wordpress-password-edit.js:52
+#: sc-wordpress-password-edit.js:63
 #: sc-wordpress-user-edit.js:50
 msgid "Something went wrong"
 msgstr ""
@@ -4602,7 +4622,7 @@ msgid "View Abandoned Checkout"
 msgstr ""
 
 #: abandoned-checkouts/AbandonedCheckout.js:139
-#: orders/Sidebar.js:17
+#: orders/Sidebar.js:25
 msgid "Shipping & Tax Address"
 msgstr ""
 
@@ -4647,7 +4667,7 @@ msgstr ""
 #: abandoned-checkouts/modules/Coupon.js:31
 #: bumps/modules/Discount.js:34
 #: coupons/Sidebar.js:61
-#: settings/subscription-preservation/Reason.js:67
+#: settings/subscription-preservation/Reason.js:69
 #: sc-coupon-form2.js:58
 #: sc-order-confirmation-totals2.js:30
 #: sc-order.js:130
@@ -4670,12 +4690,12 @@ msgstr ""
 #: abandoned-checkouts/modules/Details.js:69
 #: cancellation-insights/LiveModeToggle.js:29
 #: customers/CreateCustomer.js:99
-#: customers/modules/Details.js:21
+#: customers/modules/Details.js:22
 #: dashboard/Dashboard.js:51
 #: invoices/modules/Details.js:77
 #: orders/modules/Details.js:55
 #: products/modules/BuyLink.js:138
-#: subscriptions/show/modules/Details.js:186
+#: subscriptions/show/modules/Details.js:194
 #: Blocks/Dashboard/DashboardPage/Block.php:34
 #: Blocks/Dashboard/DashboardPage/Block.php:42
 #: Controllers/PaymentMethodController.php:154
@@ -4688,7 +4708,7 @@ msgstr ""
 #: invoices/modules/Details.js:70
 #: licenses/modules/Details/index.js:39
 #: orders/modules/Details.js:60
-#: subscriptions/show/modules/Details.js:178
+#: subscriptions/show/modules/Details.js:186
 msgid "Created on %s"
 msgstr ""
 
@@ -4751,7 +4771,7 @@ msgid "Upcoming"
 msgstr ""
 
 #: bumps/CreateBump.js:43
-#: components/Error.js:25
+#: components/Error.js:29
 #: coupons/CreateCoupon.js:60
 #: customers/CreateCustomer.js:44
 #: hooks/useDataApi/index.js:53
@@ -4820,6 +4840,8 @@ msgstr ""
 #: product-groups/modules/NewProduct.js:78
 #: products/CreateProduct.js:76
 #: products/modules/AddExternalUrlModal.js:93
+#: products/modules/Image/AddUrlImage.js:85
+#: products/modules/Image/ConfirmDeleteImage.js:53
 #: products/modules/integrations/NewIntegration.js:106
 #: products/modules/Prices/NewPrice/index.js:202
 #: products/modules/Upgrades.js:130
@@ -4830,10 +4852,9 @@ msgstr ""
 #: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:56
 #: subscriptions/show/modules/modals/ConfirmRevokeModal.js:179
 #: subscriptions/show/modules/modals/DontCancelModal.js:59
-#: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:92
 #: subscriptions/show/modules/modals/PayOffSubscriptionModal.js:74
-#: subscriptions/show/modules/modals/RenewSubscriptionAtModal.js:96
-#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:96
+#: subscriptions/show/modules/modals/RenewSubscriptionAtModal.js:111
+#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:152
 #: subscriptions/show/modules/modals/RestoreSubscriptionModal.js:93
 #: subscriptions/show/modules/modals/RetryPaymentModal.js:89
 #: Controllers/SubscriptionController.php:459
@@ -4845,7 +4866,7 @@ msgstr ""
 #: components/ColorPopup.js:80
 #: controls/AddPriceUI.js:89
 #: formats/AddPriceUI.js:113
-#: sc-password-nag.js:84
+#: sc-password-nag.js:95
 #: sc-payment-methods-list.js:179
 msgid "Cancel"
 msgstr ""
@@ -4895,7 +4916,7 @@ msgstr ""
 #: products/modules/integrations/Integration.js:273
 #: products/modules/Prices/Price/Header.js:213
 #: settings/processors/ManualPaymentMethod.js:148
-#: settings/subscription-preservation/Reason.js:106
+#: settings/subscription-preservation/Reason.js:111
 #: settings/tax-region/RegistrationForm.js:250
 #: sc-payment-methods-list.js:152
 #: sc-payment-methods-list.js:179
@@ -5024,8 +5045,8 @@ msgstr ""
 
 #: bumps/modules/Preview.js:17
 #: products/modules/BuyLink.js:294
-#: settings/subscription-preservation/PreservationSettings.js:187
-#: settings/subscription-preservation/PreservationSettings.js:235
+#: settings/subscription-preservation/PreservationSettings.js:222
+#: settings/subscription-preservation/PreservationSettings.js:270
 msgid "Preview"
 msgstr ""
 
@@ -5126,7 +5147,7 @@ msgstr ""
 #: components/data-tables/charges-data-table/Refund.js:126
 #: components/data-tables/charges-data-table/Refund.js:254
 #: settings/customer/CustomerSettings.js:369
-#: store/add-entities.js:208
+#: store/add-entities.js:215
 msgid "Refund"
 msgstr ""
 
@@ -5255,7 +5276,7 @@ msgstr ""
 #: components/subscriptions/Cancel.js:37
 #: components/subscriptions/Cancel.js:86
 #: subscriptions/show/modules/modals/CancelSubscriptionModal.js:115
-#: subscriptions/show/ShowSubscription.js:182
+#: subscriptions/show/ShowSubscription.js:191
 msgid "Cancel Subscription"
 msgstr ""
 
@@ -5276,7 +5297,7 @@ msgstr ""
 #: components/data-tables/subscriptions-data-table/subscription-item.js:117
 #: components/data-tables/subscriptions-data-table/UnCancel.js:58
 #: components/subscriptions/Cancel.js:92
-#: subscriptions/show/ShowSubscription.js:176
+#: subscriptions/show/ShowSubscription.js:185
 msgid "Don't Cancel"
 msgstr ""
 
@@ -5312,7 +5333,7 @@ msgstr ""
 
 #: components/data-tables/subscriptions-data-table/subscription-item.js:74
 #: subscriptions/shared/EndDate.js:41
-#: subscriptions/show/modules/Details.js:69
+#: subscriptions/show/modules/Details.js:77
 msgid "Ended"
 msgstr ""
 
@@ -5337,7 +5358,6 @@ msgid "Select date"
 msgstr ""
 
 #: components/DatePicker.js:100
-#: components/MediaLibrary/index.js:328
 #: Blocks/CheckoutForm/components/Empty.js:140
 msgid "Choose"
 msgstr ""
@@ -5347,7 +5367,7 @@ msgstr ""
 #: coupons/modules/ProductRestrictions.js:128
 #: coupons/modules/SelectCustomer.js:146
 #: product-groups/modules/Product.js:77
-#: products/modules/Image.js:81
+#: products/modules/Image/ConfirmDeleteImage.js:61
 #: products/modules/SingleDownload.js:322
 #: settings/brand/Logo.js:81
 #: subscriptions/edit/modules/Trial.js:43
@@ -5367,50 +5387,55 @@ msgstr ""
 msgid "Could not download the file."
 msgstr ""
 
-#: components/MediaLibrary/index.js:79
+#: components/MediaLibrary/index.js:99
 msgid "No items found"
 msgstr ""
 
-#: components/MediaLibrary/index.js:136
+#: components/MediaLibrary/index.js:113
+#: components/MediaLibrary/Preview.js:117
+msgid "Added"
+msgstr ""
+
+#: components/MediaLibrary/index.js:151
 #: settings/processors/CreateEditPaymentMethod.js:53
 msgid "Something went wrong. Please try again."
 msgstr ""
 
-#: components/MediaLibrary/index.js:176
+#: components/MediaLibrary/index.js:200
 msgid "Upload Media"
 msgstr ""
 
-#: components/MediaLibrary/index.js:178
+#: components/MediaLibrary/index.js:202
 msgid "or drag and drop a file to upload."
 msgstr ""
 
-#: components/MediaLibrary/index.js:182
+#: components/MediaLibrary/index.js:206
 msgid "Max"
 msgstr ""
 
-#: components/MediaLibrary/index.js:242
+#: components/MediaLibrary/index.js:266
 msgid "Previous Page"
 msgstr ""
 
-#: components/MediaLibrary/index.js:250
+#: components/MediaLibrary/index.js:274
 msgid "Next Page"
 msgstr ""
 
-#: components/MediaLibrary/index.js:281
+#: components/MediaLibrary/index.js:305
 msgid "SureCart Media"
 msgstr ""
 
-#: components/MediaLibrary/index.js:287
-#: components/MediaLibrary/MediaItem.js:93
+#: components/MediaLibrary/index.js:311
+#: components/MediaLibrary/MediaItem.js:98
 msgid "Private"
 msgstr ""
 
-#: components/MediaLibrary/index.js:294
-#: components/MediaLibrary/MediaItem.js:91
+#: components/MediaLibrary/index.js:318
+#: components/MediaLibrary/MediaItem.js:96
 msgid "Public"
 msgstr ""
 
-#: components/MediaLibrary/Preview.js:52
+#: components/MediaLibrary/Preview.js:51
 msgid "Are you sure you wish to delete this media item? This cannot be undone."
 msgstr ""
 
@@ -5424,10 +5449,6 @@ msgstr ""
 #: Blocks/CustomerDashboardButton/edit.js:57
 #: Blocks/Submit/edit.js:65
 msgid "Size"
-msgstr ""
-
-#: components/MediaLibrary/Preview.js:117
-msgid "Added"
 msgstr ""
 
 #: components/MediaLibrary/Preview.js:156
@@ -5552,7 +5573,7 @@ msgstr ""
 
 #: coupons/components/CouponActionsDropdown.js:36
 #: customers/EditCustomer.js:79
-#: products/EditProduct.js:78
+#: products/EditProduct.js:79
 msgid "Permanently delete %s? You cannot undo this action."
 msgstr ""
 
@@ -5674,9 +5695,9 @@ msgstr ""
 
 #: coupons/modules/CustomerSelector.js:113
 #: coupons/modules/SelectCustomer.js:202
-#: customers/modules/Details.js:34
+#: customers/modules/Details.js:35
 #: Blocks/Dashboard/WordPressAccount/edit.js:60
-#: sc-customer-edit.js:89
+#: sc-customer-edit.js:90
 #: sc-wordpress-user-edit.js:56
 #: sc-wordpress-user.js:25
 msgid "First Name"
@@ -5684,9 +5705,9 @@ msgstr ""
 
 #: coupons/modules/CustomerSelector.js:123
 #: coupons/modules/SelectCustomer.js:214
-#: customers/modules/Details.js:46
+#: customers/modules/Details.js:47
 #: Blocks/Dashboard/WordPressAccount/edit.js:65
-#: sc-customer-edit.js:89
+#: sc-customer-edit.js:90
 #: sc-wordpress-user-edit.js:56
 #: sc-wordpress-user.js:25
 msgid "Last Name"
@@ -5998,20 +6019,33 @@ msgstr ""
 msgid "No more charges."
 msgstr ""
 
-#: customers/modules/Details.js:16
+#: customers/modules/Details.js:17
 msgid "Customer Details"
 msgstr ""
 
-#: customers/modules/Details.js:36
+#: customers/modules/Details.js:37
 msgid "Your customer's first name."
 msgstr ""
 
-#: customers/modules/Details.js:48
+#: customers/modules/Details.js:49
 msgid "Your customer's last name."
 msgstr ""
 
-#: customers/modules/Details.js:61
+#: customers/modules/Details.js:63
 msgid "Your customer's email address."
+msgstr ""
+
+#: customers/modules/Details.js:77
+#: orders/modules/Phone.js:6
+#: orders/Sidebar.js:17
+#: settings/brand/BrandSettings.js:210
+#: Blocks/Dashboard/CustomerBillingDetails/edit.js:82
+#: sc-customer-edit.js:90
+msgid "Phone"
+msgstr ""
+
+#: customers/modules/Details.js:79
+msgid "Your customer's phone number."
 msgstr ""
 
 #: customers/modules/Notifications.js:16
@@ -6231,6 +6265,7 @@ msgstr ""
 #: hocs/withConfirm.js:51
 #: orders/modules/OrderCancelConfirmModal.js:53
 #: orders/modules/OrderStatusConfirmModal.js:64
+#: products/modules/Image/ConfirmDeleteImage.js:39
 #: subscriptions/show/modules/modals/CancelSubscriptionModal.js:69
 #: subscriptions/show/modules/modals/CancelUpdateModal.js:44
 #: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:41
@@ -6299,7 +6334,7 @@ msgstr ""
 
 #: invoices/Sidebar.js:15
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:60
-#: sc-customer-edit.js:89
+#: sc-customer-edit.js:90
 #: sc-order-shipping-address2.js:100
 msgid "Shipping Address"
 msgstr ""
@@ -6529,7 +6564,7 @@ msgid "Mark as Paid"
 msgstr ""
 
 #: orders/Order.js:170
-#: subscriptions/show/ShowSubscription.js:340
+#: subscriptions/show/ShowSubscription.js:377
 msgid "Actions"
 msgstr ""
 
@@ -6612,7 +6647,7 @@ msgid "Number of Payments"
 msgstr ""
 
 #: products/components/price/Multiple.js:33
-#: subscriptions/show/modules/Details.js:127
+#: subscriptions/show/modules/Details.js:135
 msgid "Payments"
 msgstr ""
 
@@ -6694,9 +6729,8 @@ msgid "Free Trial Days"
 msgstr ""
 
 #: products/components/price/parts/Trial.js:53
-#: settings/abandoned/AbandonedSettings.js:244
-#: settings/abandoned/AbandonedSettings.js:347
-#: settings/abandoned/Delay.js:19
+#: settings/abandoned/AbandonedSettings.js:240
+#: settings/abandoned/AbandonedSettings.js:360
 msgid "Days"
 msgstr ""
 
@@ -6713,19 +6747,19 @@ msgstr ""
 msgid "A name for your product."
 msgstr ""
 
-#: products/EditProduct.js:64
+#: products/EditProduct.js:65
 msgid "Product updated."
 msgstr ""
 
-#: products/EditProduct.js:102
+#: products/EditProduct.js:103
 msgid "Un-Archive %s? This will make the product purchaseable again."
 msgstr ""
 
-#: products/EditProduct.js:109
+#: products/EditProduct.js:110
 msgid "Archive %s? This product will not be purchaseable and all unsaved changes will be lost."
 msgstr ""
 
-#: products/EditProduct.js:194
+#: products/EditProduct.js:195
 msgid "Save Product"
 msgstr ""
 
@@ -6833,8 +6867,8 @@ msgstr ""
 
 #: products/modules/Details.js:29
 #: settings/processors/CreateEditPaymentMethod.js:92
-#: settings/subscription-preservation/PreservationSettings.js:204
-#: settings/subscription-preservation/PreservationSettings.js:251
+#: settings/subscription-preservation/PreservationSettings.js:239
+#: settings/subscription-preservation/PreservationSettings.js:286
 #: Blocks/Form/edit.js:396
 #: Blocks/Heading/edit.js:33
 #: Blocks/Heading/edit.js:56
@@ -6875,20 +6909,47 @@ msgstr ""
 msgid "Show Archived"
 msgstr ""
 
-#: products/modules/Image.js:72
-#: products/modules/SingleDownload.js:297
-#: settings/brand/Logo.js:75
-msgid "Replace"
+#: products/modules/Image/AddImage.js:45
+#: Blocks/Dashboard/CustomerPaymentMethods/edit.js:47
+#: sc-payment-methods-list.js:179
+msgid "Add"
 msgstr ""
 
-#: products/modules/Image.js:98
+#: products/modules/Image/AddImage.js:58
+msgid "Add From URL"
+msgstr ""
+
+#: products/modules/Image/AddUrlImage.js:56
+msgid "Add Product Image"
+msgstr ""
+
+#: products/modules/Image/AddUrlImage.js:72
+msgid "Image URL"
+msgstr ""
+
+#: products/modules/Image/AddUrlImage.js:73
+msgid "https://"
+msgstr ""
+
+#: products/modules/Image/AddUrlImage.js:88
 #: settings/brand/Logo.js:97
 msgid "Add Image"
 msgstr ""
 
-#: products/modules/Image.js:109
-#: products/modules/Image.js:113
-msgid "Product Image"
+#: products/modules/Image/ConfirmDeleteImage.js:45
+msgid "Are you sure you want remove this product image?"
+msgstr ""
+
+#: products/modules/Image/ImageDisplay.js:43
+msgid "Featured"
+msgstr ""
+
+#: products/modules/Image/index.js:112
+msgid "Images updated."
+msgstr ""
+
+#: products/modules/Image/index.js:122
+msgid "Images"
 msgstr ""
 
 #: products/modules/integrations/Integration.js:70
@@ -7158,6 +7219,11 @@ msgstr ""
 msgid "Secure"
 msgstr ""
 
+#: products/modules/SingleDownload.js:297
+#: settings/brand/Logo.js:75
+msgid "Replace"
+msgstr ""
+
 #: products/modules/Tax.js:16
 #: products/modules/Tax.js:58
 msgid "Charge tax on this product"
@@ -7203,7 +7269,7 @@ msgstr ""
 msgid "Created On"
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:69
+#: settings/abandoned/AbandonedSettings.js:62
 #: settings/account/AccountSettings.js:65
 #: settings/advanced/AdvancedSettings.js:25
 #: settings/brand/BrandSettings.js:43
@@ -7211,7 +7277,7 @@ msgstr ""
 #: settings/customer/CustomerSettings.js:36
 #: settings/order/OrderProtocol.js:30
 #: settings/portal/PortalSettings.js:29
-#: settings/subscription-preservation/PreservationSettings.js:100
+#: settings/subscription-preservation/PreservationSettings.js:135
 #: settings/subscription/SubscriptionSettings.js:34
 #: settings/tax-region/TaxRegionSettings.js:134
 #: settings/tax/TaxSettings.js:32
@@ -7219,182 +7285,185 @@ msgstr ""
 msgid "Settings Updated."
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:91
+#: settings/abandoned/AbandonedSettings.js:84
 #: settings/customer/CustomerSettings.js:57
 msgid "Notification Settings"
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:92
+#: settings/abandoned/AbandonedSettings.js:85
 msgid "Notification settings for abandoned checkouts"
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:102
-#: settings/subscription-preservation/PreservationSettings.js:152
+#: settings/abandoned/AbandonedSettings.js:95
+#: settings/subscription-preservation/PreservationSettings.js:187
 msgid "Enabled"
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:104
+#: settings/abandoned/AbandonedSettings.js:97
 msgid "Turn on abandoned cart for your store."
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:114
+#: settings/abandoned/AbandonedSettings.js:107
 msgid "First Email Delay"
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:122
+#: settings/abandoned/AbandonedSettings.js:109
+#: settings/abandoned/AbandonedSettings.js:118
+#: settings/abandoned/AbandonedSettings.js:127
+#: settings/abandoned/util.js:9
+msgid "Don't send"
+msgstr ""
+
+#: settings/abandoned/AbandonedSettings.js:116
 msgid "Second Email Delay"
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:130
+#: settings/abandoned/AbandonedSettings.js:125
 msgid "Final Email Delay"
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:143
+#: settings/abandoned/AbandonedSettings.js:139
 msgid "Discount Settings"
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:144
+#: settings/abandoned/AbandonedSettings.js:140
 msgid "Your discount settings for abandoned cart."
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:160
+#: settings/abandoned/AbandonedSettings.js:156
 msgid "Abandoned Checkout Discount"
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:162
+#: settings/abandoned/AbandonedSettings.js:158
 msgid "Add a discount incentive for abandoned cart."
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:173
+#: settings/abandoned/AbandonedSettings.js:169
 msgid "When should we offer the discount?"
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:188
+#: settings/abandoned/AbandonedSettings.js:184
 msgid "On the first email"
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:195
+#: settings/abandoned/AbandonedSettings.js:191
 msgid "On the second email"
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:202
+#: settings/abandoned/AbandonedSettings.js:198
 msgid "On the final email"
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:221
+#: settings/abandoned/AbandonedSettings.js:217
 msgid "Discount Expires"
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:229
+#: settings/abandoned/AbandonedSettings.js:225
 msgid "Number of days until expiration"
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:254
+#: settings/abandoned/AbandonedSettings.js:250
 msgid "GDPR Settings"
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:255
+#: settings/abandoned/AbandonedSettings.js:251
 msgid "Data collection settings for GDPR."
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:267
+#: settings/abandoned/AbandonedSettings.js:263
 msgid "Tracking Confirmation"
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:269
+#: settings/abandoned/AbandonedSettings.js:265
 msgid "Note: By checking this, it will show confirmation text below the email on checkout forms."
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:278
+#: settings/abandoned/AbandonedSettings.js:274
 msgid "GDPR Message"
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:289
+#: settings/abandoned/AbandonedSettings.js:285
 msgid "Advanced settings for abandoned checkouts"
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:303
+#: settings/abandoned/AbandonedSettings.js:299
+msgid "Enabled In Test Mode"
+msgstr ""
+
+#: settings/abandoned/AbandonedSettings.js:301
+msgid "Also enable abandoned checkouts in test mode."
+msgstr ""
+
+#: settings/abandoned/AbandonedSettings.js:316
 msgid "Ignore Purchased Products"
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:305
+#: settings/abandoned/AbandonedSettings.js:318
 msgid "Don't create abandoned checkout if all products in checkout have been purchased."
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:320
-#: settings/abandoned/AbandonedSettings.js:332
+#: settings/abandoned/AbandonedSettings.js:333
+#: settings/abandoned/AbandonedSettings.js:345
 msgid "Grace Period"
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:322
+#: settings/abandoned/AbandonedSettings.js:335
 msgid "Wait for a period of time after a customer has made a purchase to send other abandoned checkouts."
 msgstr ""
 
-#: settings/abandoned/AbandonedSettings.js:334
+#: settings/abandoned/AbandonedSettings.js:347
 msgid "The number of days to wait after a customer's purchase before allowing an abandoned checkout to be created. This helps to prevent abandoned checkouts being created for customers very soon after they have made a different purchase."
 msgstr ""
 
-#: settings/abandoned/Delay.js:17
-msgid "Minutes"
-msgstr ""
-
-#: settings/abandoned/Delay.js:18
-msgid "Hours"
-msgstr ""
-
-#: settings/abandoned/Delay.js:20
-msgid "Weeks"
-msgstr ""
-
-#: settings/abandoned/util.js:9
+#: settings/abandoned/util.js:13
 msgid "1 Hour"
 msgstr ""
 
-#: settings/abandoned/util.js:13
+#: settings/abandoned/util.js:17
 msgid "2 Hours"
 msgstr ""
 
-#: settings/abandoned/util.js:17
+#: settings/abandoned/util.js:21
 msgid "3 Hours"
 msgstr ""
 
-#: settings/abandoned/util.js:21
+#: settings/abandoned/util.js:25
 msgid "6 Hours"
 msgstr ""
 
-#: settings/abandoned/util.js:25
+#: settings/abandoned/util.js:29
 msgid "12 Hours"
 msgstr ""
 
-#: settings/abandoned/util.js:29
+#: settings/abandoned/util.js:33
 msgid "1 Day"
 msgstr ""
 
-#: settings/abandoned/util.js:33
+#: settings/abandoned/util.js:37
 msgid "1.5 Days"
 msgstr ""
 
-#: settings/abandoned/util.js:37
+#: settings/abandoned/util.js:41
 msgid "2 Days"
 msgstr ""
 
-#: settings/abandoned/util.js:41
+#: settings/abandoned/util.js:45
 msgid "3 Days"
 msgstr ""
 
-#: settings/abandoned/util.js:45
+#: settings/abandoned/util.js:49
 msgid "4 Days"
 msgstr ""
 
-#: settings/abandoned/util.js:49
+#: settings/abandoned/util.js:53
 msgid "5 Days"
 msgstr ""
 
-#: settings/abandoned/util.js:53
+#: settings/abandoned/util.js:57
 msgid "6 Days"
 msgstr ""
 
-#: settings/abandoned/util.js:57
+#: settings/abandoned/util.js:61
 msgid "1 week"
 msgstr ""
 
@@ -7444,83 +7513,83 @@ msgstr ""
 msgid "Change this if you want the store to be in a different time zone than your server."
 msgstr ""
 
-#: settings/account/AccountSettings.js:233
+#: settings/account/AccountSettings.js:231
 msgid "Store Language"
 msgstr ""
 
-#: settings/account/AccountSettings.js:234
+#: settings/account/AccountSettings.js:232
 msgid "The language used for notifications, invoices, etc."
 msgstr ""
 
-#: settings/account/AccountSettings.js:244
+#: settings/account/AccountSettings.js:242
 msgid "Spam Protection & Security"
 msgstr ""
 
-#: settings/account/AccountSettings.js:245
+#: settings/account/AccountSettings.js:243
 msgid "Change your checkout spam protection and security settings."
 msgstr ""
 
-#: settings/account/AccountSettings.js:255
+#: settings/account/AccountSettings.js:253
 msgid "Honeypot"
 msgstr ""
 
-#: settings/account/AccountSettings.js:257
+#: settings/account/AccountSettings.js:255
 msgid "This adds a field that is invisible to users, but visible to bots in an attempt to trick them into filling it out."
 msgstr ""
 
-#: settings/account/AccountSettings.js:271
+#: settings/account/AccountSettings.js:269
 msgid "Recaptcha v3"
 msgstr ""
 
-#: settings/account/AccountSettings.js:273
+#: settings/account/AccountSettings.js:271
 msgid "Enable Recaptcha spam protection on checkout forms."
 msgstr ""
 
-#: settings/account/AccountSettings.js:282
+#: settings/account/AccountSettings.js:280
 msgid "Important"
 msgstr ""
 
-#: settings/account/AccountSettings.js:283
+#: settings/account/AccountSettings.js:281
 msgid "Please clear checkout page cache after changing this setting."
 msgstr ""
 
-#: settings/account/AccountSettings.js:304
-#: settings/account/AccountSettings.js:305
+#: settings/account/AccountSettings.js:302
+#: settings/account/AccountSettings.js:303
 msgid "reCaptcha Site Key"
 msgstr ""
 
-#: settings/account/AccountSettings.js:313
-#: settings/account/AccountSettings.js:329
+#: settings/account/AccountSettings.js:311
+#: settings/account/AccountSettings.js:327
 msgid "You can find this on your google Recaptcha dashboard."
 msgstr ""
 
-#: settings/account/AccountSettings.js:320
-#: settings/account/AccountSettings.js:321
+#: settings/account/AccountSettings.js:318
+#: settings/account/AccountSettings.js:319
 msgid "reCaptcha Secret Key"
 msgstr ""
 
-#: settings/account/AccountSettings.js:337
+#: settings/account/AccountSettings.js:335
 msgid "To get your Recaptcha keys"
 msgstr ""
 
-#: settings/account/AccountSettings.js:342
+#: settings/account/AccountSettings.js:340
 msgid "register a new site and choose v3."
 msgstr ""
 
-#: settings/account/AccountSettings.js:360
+#: settings/account/AccountSettings.js:358
 msgid "Stripe Fraud Monitoring"
 msgstr ""
 
-#: settings/account/AccountSettings.js:362
+#: settings/account/AccountSettings.js:360
 msgid "This will load stripe.js on every page to help with Fraud monitoring."
 msgstr ""
 
-#: settings/account/AccountSettings.js:371
-#: settings/account/AccountSettings.js:385
+#: settings/account/AccountSettings.js:381
+#: settings/account/AccountSettings.js:395
 msgid "Clear Test Data"
 msgstr ""
 
-#: settings/account/AccountSettings.js:372
+#: settings/account/AccountSettings.js:382
 msgid "Clear out all of your test data with one-click."
 msgstr ""
 
@@ -7590,12 +7659,6 @@ msgstr ""
 
 #: settings/brand/BrandSettings.js:205
 msgid "Enter an email"
-msgstr ""
-
-#: settings/brand/BrandSettings.js:210
-#: Blocks/Dashboard/CustomerBillingDetails/edit.js:82
-#: sc-customer-edit.js:89
-msgid "Phone"
 msgstr ""
 
 #: settings/brand/BrandSettings.js:212
@@ -8052,8 +8115,9 @@ msgstr ""
 #: Blocks/NameYourPrice/edit.js:49
 #: Blocks/OrderBumps/edit.js:25
 #: Blocks/Password/components/Inspector.js:23
-#: Blocks/Password/edit.js:44
+#: Blocks/Password/edit.js:64
 #: Blocks/Payment/components/Inspector.js:23
+#: Blocks/Phone/edit.js:26
 #: Blocks/PriceChoice/edit.js:63
 #: Blocks/PriceSelector/edit.js:105
 #: Blocks/SessionDetail/edit.js:72
@@ -8092,32 +8156,32 @@ msgstr ""
 msgid "The prompt that will appear when you request more information."
 msgstr ""
 
-#: settings/subscription-preservation/PreservationSettings.js:121
+#: settings/subscription-preservation/PreservationSettings.js:156
 msgid "Subscription Saver & Cancellation Insights"
 msgstr ""
 
-#: settings/subscription-preservation/PreservationSettings.js:132
+#: settings/subscription-preservation/PreservationSettings.js:167
 msgid "Subscription Saver & Cancelation Insights"
 msgstr ""
 
-#: settings/subscription-preservation/PreservationSettings.js:155
+#: settings/subscription-preservation/PreservationSettings.js:190
 msgid "Pro"
 msgstr ""
 
-#: settings/subscription-preservation/PreservationSettings.js:159
+#: settings/subscription-preservation/PreservationSettings.js:194
 msgid "Turning this on will collect subscription cancelation reasons and optionally offer a discount to keep their subscription active."
 msgstr ""
 
-#: settings/subscription-preservation/PreservationSettings.js:170
+#: settings/subscription-preservation/PreservationSettings.js:205
 msgid "Cancellation Survey"
 msgstr ""
 
-#: settings/subscription-preservation/PreservationSettings.js:171
+#: settings/subscription-preservation/PreservationSettings.js:206
 msgid "Cancellation survey options."
 msgstr ""
 
-#: settings/subscription-preservation/PreservationSettings.js:197
-#: settings/subscription-preservation/PreservationSettings.js:244
+#: settings/subscription-preservation/PreservationSettings.js:232
+#: settings/subscription-preservation/PreservationSettings.js:279
 #: Blocks/Card/edit.js:28
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:22
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:33
@@ -8141,41 +8205,37 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: settings/subscription-preservation/PreservationSettings.js:213
+#: settings/subscription-preservation/PreservationSettings.js:248
 msgid "Skip Link"
 msgstr ""
 
-#: settings/subscription-preservation/PreservationSettings.js:221
+#: settings/subscription-preservation/PreservationSettings.js:256
 msgid "Renewal Discount"
 msgstr ""
 
-#: settings/subscription-preservation/PreservationSettings.js:222
+#: settings/subscription-preservation/PreservationSettings.js:257
 msgid "Provide a discount to keep a subscription."
 msgstr ""
 
-#: settings/subscription-preservation/PreservationSettings.js:260
+#: settings/subscription-preservation/PreservationSettings.js:295
 #: Blocks/BuyButton/edit.js:127
 #: Blocks/CustomerDashboardButton/edit.js:93
 msgid "Button"
 msgstr ""
 
-#: settings/subscription-preservation/PreservationSettings.js:269
+#: settings/subscription-preservation/PreservationSettings.js:304
 msgid "Cancel Link"
 msgstr ""
 
-#: settings/subscription-preservation/Reason.js:29
+#: settings/subscription-preservation/Reason.js:31
 msgid "Are you sure you want to delete this?"
 msgstr ""
 
-#: settings/subscription-preservation/Reasons.js:72
-msgid "Answers updated."
-msgstr ""
-
-#: settings/subscription-preservation/Reasons.js:105
+#: settings/subscription-preservation/Reasons.js:54
 msgid "Survey Answers"
 msgstr ""
 
-#: settings/subscription-preservation/Reasons.js:109
+#: settings/subscription-preservation/Reasons.js:58
 msgid "You don't have any survey answers. Please add at least one to collect cancellation feedback."
 msgstr ""
 
@@ -8636,19 +8696,23 @@ msgid "Billing Period"
 msgstr ""
 
 #: store/add-entities.js:173
+msgid "Product Media"
+msgstr ""
+
+#: store/add-entities.js:180
 #: Blocks/ConditionalForm/translations.js:7
 msgid "Processor"
 msgstr ""
 
-#: store/add-entities.js:180
+#: store/add-entities.js:187
 msgid "Product Group"
 msgstr ""
 
-#: store/add-entities.js:194
+#: store/add-entities.js:201
 msgid "Promotion"
 msgstr ""
 
-#: store/add-entities.js:215
+#: store/add-entities.js:222
 msgid "Statistic"
 msgstr ""
 
@@ -8664,13 +8728,13 @@ msgstr ""
 
 #: subscriptions/edit/EditSubscription.js:112
 #: subscriptions/show/modules/modals/RenewSubscriptionAtModal.js:52
-#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:53
+#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:61
 msgid "Subscription updated."
 msgstr ""
 
 #: subscriptions/edit/EditSubscription.js:223
 #: subscriptions/show/modules/SubscriptionItems.js:39
-#: subscriptions/show/ShowSubscription.js:310
+#: subscriptions/show/ShowSubscription.js:347
 msgid "Subscription Details"
 msgstr ""
 
@@ -8679,9 +8743,9 @@ msgid "Update Immediately"
 msgstr ""
 
 #: subscriptions/edit/EditSubscription.js:253
-#: subscriptions/show/modules/modals/RenewSubscriptionAtModal.js:105
-#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:107
-#: subscriptions/show/ShowSubscription.js:227
+#: subscriptions/show/modules/modals/RenewSubscriptionAtModal.js:120
+#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:164
+#: subscriptions/show/ShowSubscription.js:236
 msgid "Update Subscription"
 msgstr ""
 
@@ -8754,37 +8818,37 @@ msgid "Prorate Charges"
 msgstr ""
 
 #: subscriptions/shared/EndDate.js:10
-#: subscriptions/show/modules/Details.js:19
+#: subscriptions/show/modules/Details.js:18
 #: util.js:41
 #: sc-subscription-switch.js:133
 msgid "Lifetime"
 msgstr ""
 
 #: subscriptions/shared/EndDate.js:12
-#: subscriptions/show/modules/Details.js:21
+#: subscriptions/show/modules/Details.js:20
 msgid "Lifetime Subscription"
 msgstr ""
 
 #: subscriptions/shared/EndDate.js:24
-#: subscriptions/show/modules/Details.js:52
+#: subscriptions/show/modules/Details.js:60
 msgid "Cancels on"
 msgstr ""
 
 #: subscriptions/shared/EndDate.js:58
-#: subscriptions/show/modules/Details.js:87
+#: subscriptions/show/modules/Details.js:95
 msgid "Trial ends on"
 msgstr ""
 
 #: subscriptions/shared/EndDate.js:77
-#: subscriptions/show/modules/Details.js:108
+#: subscriptions/show/modules/Details.js:116
 msgid "Renews on"
 msgstr ""
 
-#: subscriptions/show/modules/Details.js:31
+#: subscriptions/show/modules/Details.js:36
 msgid "Restores on"
 msgstr ""
 
-#: subscriptions/show/modules/Details.js:130
+#: subscriptions/show/modules/Details.js:138
 msgid "%d Remaining"
 msgstr ""
 
@@ -8830,7 +8894,7 @@ msgid "Are you sure you want to complete this payment plan? This will eliminate 
 msgstr ""
 
 #: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:63
-#: subscriptions/show/ShowSubscription.js:198
+#: subscriptions/show/ShowSubscription.js:207
 msgid "Complete Subscription"
 msgstr ""
 
@@ -8890,15 +8954,25 @@ msgstr ""
 msgid "Resume Subscription"
 msgstr ""
 
-#: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:48
+#: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:62
 msgid "Subscription paused."
 msgstr ""
 
-#: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:66
-msgid "Pause Subscription Until"
+#: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:101
+msgid "Pause Subscription"
 msgstr ""
 
-#: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:101
+#: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:122
+msgid "This will automatically pause the subscription on %s. Please choose a restoration date."
+msgstr ""
+
+#: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:146
+#: subscriptions/show/ShowSubscription.js:178
+msgid "Don't Pause"
+msgstr ""
+
+#: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:155
+#: subscriptions/show/ShowSubscription.js:260
 msgid "Pause"
 msgstr ""
 
@@ -8914,12 +8988,16 @@ msgstr ""
 msgid "Pay off"
 msgstr ""
 
-#: subscriptions/show/modules/modals/RenewSubscriptionAtModal.js:70
+#: subscriptions/show/modules/modals/RenewSubscriptionAtModal.js:87
 msgid "Renew Subscription At"
 msgstr ""
 
-#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:70
+#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:108
 msgid "Restore Subscription At"
+msgstr ""
+
+#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:129
+msgid "This subscription is going to be paused on %s. When would you like the subscription to be restored?"
 msgstr ""
 
 #: subscriptions/show/modules/modals/RestoreSubscriptionModal.js:36
@@ -8991,31 +9069,31 @@ msgstr ""
 msgid "Tax disabled."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:98
+#: subscriptions/show/ShowSubscription.js:100
 msgid "Payment method updated."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:207
+#: subscriptions/show/ShowSubscription.js:216
 msgid "Restore Now"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:239
+#: subscriptions/show/ShowSubscription.js:261
 msgid "Pause Subscription..."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:251
+#: subscriptions/show/ShowSubscription.js:275
 msgid "Pay Off Subscription"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:262
+#: subscriptions/show/ShowSubscription.js:292
 msgid "Restore At..."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:273
+#: subscriptions/show/ShowSubscription.js:310
 msgid "Renew At..."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:348
+#: subscriptions/show/ShowSubscription.js:385
 msgid "Cancel Pending Update"
 msgstr ""
 
@@ -9367,7 +9445,7 @@ msgid "Billing Details"
 msgstr ""
 
 #: Controllers/CustomerController.php:123
-#: sc-customer-edit.js:89
+#: sc-customer-edit.js:90
 msgid "Update Billing Details"
 msgstr ""
 
@@ -9470,8 +9548,8 @@ msgid "Update Account Details"
 msgstr ""
 
 #: Controllers/UserController.php:95
-#: sc-password-nag.js:84
-#: sc-wordpress-password-edit.js:57
+#: sc-password-nag.js:95
+#: sc-wordpress-password-edit.js:68
 msgid "Update Password"
 msgstr ""
 
@@ -9513,8 +9591,9 @@ msgstr ""
 #: Blocks/OrderBumps/edit.js:22
 #: Blocks/OrderConfirmationCustomer/edit.js:24
 #: Blocks/Password/components/Inspector.js:13
-#: Blocks/Password/edit.js:34
+#: Blocks/Password/edit.js:54
 #: Blocks/Payment/components/Inspector.js:20
+#: Blocks/Phone/edit.js:16
 #: Blocks/PriceChoice/edit.js:60
 #: Blocks/PriceSelector/edit.js:102
 #: Blocks/Radio/edit.js:20
@@ -9538,7 +9617,8 @@ msgstr ""
 #: Blocks/LastName/edit.js:29
 #: Blocks/Name/edit.js:29
 #: Blocks/NameYourPrice/edit.js:42
-#: Blocks/Password/edit.js:37
+#: Blocks/Password/edit.js:57
+#: Blocks/Phone/edit.js:19
 #: Blocks/RadioGroup/edit.js:72
 #: Blocks/Switch/edit.js:29
 #: Blocks/Textarea/edit.js:28
@@ -9759,7 +9839,8 @@ msgstr ""
 #: Blocks/Name/edit.js:43
 #: Blocks/NameYourPrice/edit.js:56
 #: Blocks/Password/components/Inspector.js:30
-#: Blocks/Password/edit.js:51
+#: Blocks/Password/edit.js:71
+#: Blocks/Phone/edit.js:33
 #: Blocks/Switch/components/Inspector.js:30
 #: Blocks/Textarea/edit.js:49
 msgid "Placeholder"
@@ -10311,7 +10392,7 @@ msgid "Billing Email"
 msgstr ""
 
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:71
-#: sc-customer-edit.js:104
+#: sc-customer-edit.js:105
 msgid "Billing Address"
 msgstr ""
 
@@ -10339,11 +10420,6 @@ msgstr ""
 #: Blocks/Dashboard/CustomerDownloads/edit.js:83
 #: Blocks/Dashboard/OrderDownloads/edit.js:81
 msgid "Application UI Icon Pack"
-msgstr ""
-
-#: Blocks/Dashboard/CustomerPaymentMethods/edit.js:47
-#: sc-payment-methods-list.js:179
-msgid "Add"
 msgstr ""
 
 #: Blocks/Dashboard/DashboardPage/edit.js:45
@@ -10489,7 +10565,7 @@ msgid "Processing Payment"
 msgstr ""
 
 #: Blocks/Form/edit.js:324
-#: sc-checkout.js:196
+#: sc-checkout.js:198
 msgid "Processing payment..."
 msgstr ""
 
@@ -10498,7 +10574,7 @@ msgid "Confirming Payment"
 msgstr ""
 
 #: Blocks/Form/edit.js:342
-#: sc-checkout.js:196
+#: sc-checkout.js:198
 msgid "Finalizing order..."
 msgstr ""
 
@@ -10508,7 +10584,7 @@ msgid "Success Text"
 msgstr ""
 
 #: Blocks/Form/edit.js:357
-#: sc-checkout.js:196
+#: sc-checkout.js:198
 msgid "Success! Redirecting..."
 msgstr ""
 
@@ -10574,19 +10650,19 @@ msgstr ""
 msgid "Show control"
 msgstr ""
 
-#: Blocks/Password/edit.js:67
+#: Blocks/Password/edit.js:87
 msgid "Password Confirmation"
 msgstr ""
 
-#: Blocks/Password/edit.js:78
+#: Blocks/Password/edit.js:98
 msgid "Password Confirmation Label"
 msgstr ""
 
-#: Blocks/Password/edit.js:90
+#: Blocks/Password/edit.js:110
 msgid "Password Confirmation Placeholder"
 msgstr ""
 
-#: Blocks/Password/edit.js:104
+#: Blocks/Password/edit.js:124
 msgid "Password Confirmation Help"
 msgstr ""
 
@@ -10933,6 +11009,7 @@ msgstr ""
 #: Blocks/NameYourPrice/block.json
 #: Blocks/OrderBumps/block.json
 #: Blocks/OrderConfirmationCustomer/block.json
+#: Blocks/Phone/block.json
 #: Blocks/SessionDetail/block.json
 msgctxt "block keyword"
 msgid "customer"
@@ -11769,6 +11846,26 @@ msgstr ""
 #: Blocks/Payment/block.json
 msgctxt "block keyword"
 msgid "stripe"
+msgstr ""
+
+#: Blocks/Phone/block.json
+msgctxt "block title"
+msgid "Phone"
+msgstr ""
+
+#: Blocks/Phone/block.json
+msgctxt "block description"
+msgid "Display a phone number collection field."
+msgstr ""
+
+#: Blocks/Phone/block.json
+msgctxt "block keyword"
+msgid "phone"
+msgstr ""
+
+#: Blocks/Phone/block.json
+msgctxt "block keyword"
+msgid "tel"
 msgstr ""
 
 #: Blocks/PriceChoice/block.json
@@ -13119,11 +13216,11 @@ msgstr ""
 msgid "Your payment is processing. Exiting this page could cause an error in your order. Please do not navigate away from this page."
 msgstr ""
 
-#: sc-checkout.js:189
+#: sc-checkout.js:191
 msgid "Due to processor restrictions, only one checkout form is allowed on the page."
 msgstr ""
 
-#: sc-checkout.js:196
+#: sc-checkout.js:198
 msgid "Submitting order..."
 msgstr ""
 
@@ -13153,16 +13250,22 @@ msgstr ""
 msgid "This price has been archived."
 msgstr ""
 
-#: sc-customer-edit.js:104
+#: sc-customer-edit.js:105
 msgid "Billing address same as shipping"
 msgstr ""
 
-#: sc-customer-email.js:77
+#: sc-customer-email.js:95
 msgid "No Thanks"
 msgstr ""
 
-#: sc-customer-email.js:79
+#: sc-customer-email.js:97
 msgid "You won't receive further emails from us."
+msgstr ""
+
+#: sc-customer-firstname.js:50
+#: sc-customer-lastname.js:47
+#: sc-customer-name.js:47
+msgid "Field must not be empty."
 msgstr ""
 
 #. translators: Close this modal window.
@@ -13276,11 +13379,17 @@ msgstr ""
 msgid "This order could not be found. Please try again."
 msgstr ""
 
-#: sc-order-password.js:41
+#: sc-order-password.js:44
 msgid "Password does not match."
 msgstr ""
 
-#: sc-order-password.js:61
+#: sc-order-password.js:50
+#: sc-password-nag.js:71
+#: sc-wordpress-password-edit.js:43
+msgid "Passwords should at least 6 characters and contain one special character."
+msgstr ""
+
+#: sc-order-password.js:76
 msgid "Confirm Password"
 msgstr ""
 
@@ -13320,42 +13429,42 @@ msgstr ""
 msgid "Displaying %1d to %2d of %3d items"
 msgstr ""
 
-#: sc-password-nag.js:60
-#: sc-wordpress-password-edit.js:32
+#: sc-password-nag.js:68
+#: sc-wordpress-password-edit.js:40
 msgid "Passwords do not match."
 msgstr ""
 
-#: sc-password-nag.js:82
+#: sc-password-nag.js:93
 msgid "Succcess!"
 msgstr ""
 
-#: sc-password-nag.js:82
+#: sc-password-nag.js:93
 msgid "You have successfully set your password."
 msgstr ""
 
-#: sc-password-nag.js:84
+#: sc-password-nag.js:95
 msgid "Set A Password"
 msgstr ""
 
-#: sc-password-nag.js:84
-#: sc-wordpress-password-edit.js:57
+#: sc-password-nag.js:95
+#: sc-wordpress-password-edit.js:68
 msgid "New Password"
 msgstr ""
 
-#: sc-password-nag.js:84
-#: sc-wordpress-password-edit.js:57
+#: sc-password-nag.js:95
+#: sc-wordpress-password-edit.js:68
 msgid "Confirm New Password"
 msgstr ""
 
-#: sc-password-nag.js:84
+#: sc-password-nag.js:95
 msgid "Reminder"
 msgstr ""
 
-#: sc-password-nag.js:84
+#: sc-password-nag.js:95
 msgid "You have not yet set a password. Please set a password for your account."
 msgstr ""
 
-#: sc-password-nag.js:84
+#: sc-password-nag.js:95
 msgid "Dismiss"
 msgstr ""
 
@@ -13581,6 +13690,10 @@ msgstr ""
 msgid "Select a payment method"
 msgstr ""
 
+#: sc-subscription-status-badge2.js:47
+msgid "Pauses"
+msgstr ""
+
 #: sc-subscription-status-badge2.js:51
 msgid "Incomplete"
 msgstr ""
@@ -13642,7 +13755,7 @@ msgstr ""
 msgid "Upgrade Now"
 msgstr ""
 
-#: sc-wordpress-password-edit.js:24
+#: sc-wordpress-password-edit.js:26
 #: sc-wordpress-user-edit.js:26
 #: sc-wordpress-user.js:28
 msgid "User not found."

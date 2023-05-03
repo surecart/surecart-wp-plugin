@@ -65,6 +65,23 @@ export default ({ open, onRequestClose, subscription }) => {
 		}
 	};
 
+	const isInvalidDate = (date) => {
+		if (!!subscription?.cancel_at_period_end) {
+			let isInvalid =
+				Date.parse(
+					new Date(subscription?.current_period_end_at * 1000)
+				) > Date.parse(date);
+			if (!!subscription?.restore_at) {
+				isInvalid |=
+					Date.parse(new Date(subscription?.restore_at * 1000)) <
+					Date.parse(date);
+			}
+
+			return isInvalid;
+		}
+		return Date.parse(new Date()) > Date.parse(date);
+	};
+
 	return (
 		<ScDialog
 			label={__('Renew Subscription At', 'surecart')}
@@ -82,9 +99,7 @@ export default ({ open, onRequestClose, subscription }) => {
 			<DateTimePicker
 				currentDate={renewAt}
 				onChange={onChangeDate}
-				isInvalidDate={(date) => {
-					return Date.parse(new Date()) > Date.parse(date);
-				}}
+				isInvalidDate={isInvalidDate}
 			/>
 
 			<ScButton

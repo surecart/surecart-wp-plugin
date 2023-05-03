@@ -68,13 +68,15 @@ export class ScForm {
 
     if (!this.novalidate) {
       for (const el of formControlsThatReport) {
-        // must be not hidden to validate.
-        if (el.offsetParent !== null) {
-          const isValid = await el.reportValidity();
+        // element is hidden, don't client-side validate.
+        if (!(el.offsetWidth || el.offsetHeight || el.getClientRects().length)) {
+          continue;
+        }
 
-          if (!isValid) {
-            return false;
-          }
+        const isValid = await el.reportValidity();
+
+        if (!isValid) {
+          return false;
         }
       }
     }

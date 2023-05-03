@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property     | Attribute     | Description | Type            | Default     |
-| ------------ | ------------- | ----------- | --------------- | ----------- |
-| `heading`    | `heading`     |             | `string`        | `undefined` |
-| `successUrl` | `success-url` |             | `string`        | `undefined` |
-| `user`       | --            |             | `WordPressUser` | `undefined` |
+| Property           | Attribute           | Description                         | Type            | Default     |
+| ------------------ | ------------------- | ----------------------------------- | --------------- | ----------- |
+| `enableValidation` | `enable-validation` | Ensures strong password validation. | `boolean`       | `true`      |
+| `heading`          | `heading`           |                                     | `string`        | `undefined` |
+| `successUrl`       | `success-url`       |                                     | `string`        | `undefined` |
+| `user`             | --                  |                                     | `WordPressUser` | `undefined` |
 
 
 ## Dependencies

@@ -14,6 +14,8 @@ import {
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch } from '@wordpress/data';
+import { SortableKnob } from 'react-easy-sort';
+
 import { __ } from '@wordpress/i18n';
 import { useState } from 'react';
 import EditReason from './EditReason';
@@ -70,15 +72,18 @@ export default ({ reason, loading }) => {
 					</div>
 				)}
 
-				<ScIcon
-					class="dragger"
-					name="menu"
-					slot="prefix"
-					css={css`
-						color: var(--sc-color-gray-400);
-						cursor: move;
-					`}
-				/>
+				<div slot="prefix">
+					<SortableKnob>
+						<ScIcon
+							class="dragger"
+							name="menu"
+							css={css`
+								color: var(--sc-color-gray-400);
+								cursor: move;
+							`}
+						/>
+					</SortableKnob>
+				</div>
 
 				<ScDropdown
 					class="dropdown"
