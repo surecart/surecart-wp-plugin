@@ -14,16 +14,12 @@ import { getCheckout } from '@store/checkouts';
 export class ScCartButton {
   /** The cart element. */
   @Element() el: HTMLScCartButtonElement;
+
   /** Is this open or closed? */
   @State() open: boolean = null;
 
   /** The order count */
   @State() count: number = 0;
-
-  @Prop() href: string = '#';
-
-  /** The icon to show. */
-  @Prop() icon: string = 'shopping-bag';
 
   /** The form id to use for the cart. */
   @Prop({ reflect: true }) formId: string;
@@ -69,7 +65,9 @@ export class ScCartButton {
               {this.getItemsCount()}
             </span>
           )}
-          <div class="cart__icon">{this.icon && <sc-icon name={this.icon}></sc-icon>}</div>
+          <div class="cart__icon">
+            <slot />
+          </div>
         </div>
       </div>
     );

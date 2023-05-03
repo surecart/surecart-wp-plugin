@@ -158,7 +158,6 @@
   "sc-cart-button": {
     "cart-menu-always-shown": true,
     "form-id": true,
-    "icon": true,
     "mode": true,
     "style": true,
     "id": true,
@@ -195,7 +194,9 @@
   },
   "sc-cart-icon": {
     "count": true,
+    "form-id": true,
     "icon": true,
+    "mode": true,
     "style": true,
     "id": true,
     "class": true,

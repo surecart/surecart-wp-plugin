@@ -109,7 +109,13 @@ class CartService {
 		$form = $this->getForm();
 		$mode = $this->getMode();
 
-		$icon = apply_filters( 'sc_cart_menu_icon', '<sc-icon name="shopping-cart"></sc-icon>' );
+		/**
+		 * Allow filtering of the cart menu icon.
+		 *
+		 * @param string $icon The icon.
+		 * @param string $mode The icon position.
+		 */
+		$icon = apply_filters( 'sc_cart_menu_icon', '<sc-icon name="shopping-cart"></sc-icon>', 'menu' );
 
 		ob_start(); ?>
 			<li class='menu-item'>
@@ -144,7 +150,13 @@ class CartService {
 			return '';
 		}
 
-		$floating_icon_enabled = $this->isFloatingIconEnabled() ? 'false' : 'true';
+		/**
+		 * Allow filtering of the cart menu icon.
+		 *
+		 * @param string $icon The icon.
+		 * @param string $mode The icon position.
+		 */
+		$icon = apply_filters( 'sc_cart_menu_icon', '<sc-icon name="shopping-cart"></sc-icon>', 'floating' );
 
 		ob_start();
 		?>
@@ -156,10 +168,18 @@ class CartService {
 			mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>"
 			checkout-link="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>"
 			style="font-size: 16px"
-			floating-icon-enabled="<?php echo esc_attr( $floating_icon_enabled ); ?>"
 		>
 			<?php echo wp_kses_post( do_blocks( $cart->post_content ) ); ?>
 		</sc-cart>
+
+		<?php if ( $this->isFloatingIconEnabled() ) : ?>
+			<sc-cart-icon
+				form-id="<?php echo esc_attr( $form->ID ); ?>"
+				style="font-size: 16px"
+				mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>">
+				<?php echo wp_kses_post( $icon ); ?>
+			</sc-cart-icon>
+		<?php endif; ?>
 
 		<?php
 		return trim( preg_replace( '/\s+/', ' ', ob_get_clean() ) );
@@ -201,7 +221,7 @@ class CartService {
 	 */
 	public function isFloatingIconEnabled() {
 		$cart_icon_type = (string) get_option( 'surecart_cart_icon_type', null );
-		return 'menu_icon' === $cart_icon_type;
+		return in_array( $cart_icon_type, [ 'floating', 'both' ] );
 	}
 
 	/**

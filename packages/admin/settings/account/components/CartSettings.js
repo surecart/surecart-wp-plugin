@@ -2,6 +2,8 @@
 import { css, jsx } from '@emotion/core';
 import {
 	ScButton,
+	ScChoice,
+	ScChoices,
 	ScDropdown,
 	ScFormControl,
 	ScIcon,
@@ -50,6 +52,12 @@ export default () => {
 		'root',
 		'site',
 		'surecart_cart_icon_type'
+	);
+
+	const [cartIcon, setCartIcon] = useEntityProp(
+		'root',
+		'site',
+		'surecart_cart_icon'
 	);
 
 	const addCartMenu = (menuId) =>
@@ -190,6 +198,26 @@ export default () => {
 
 	return (
 		<>
+			<ScChoices
+				label={__('Icon', 'surecart')}
+				onScChange={(e) => setCartIcon(e.target.value)}
+				style={{ '--sc-choice-padding': '1.3em' }}
+				autoWidth
+			>
+				<ScChoice
+					showControl={false}
+					checked={cartIcon === 'shopping-bag'}
+				>
+					<ScIcon name="shopping-bag" />
+				</ScChoice>
+				<ScChoice
+					showControl={false}
+					checked={cartIcon === 'shopping-cart'}
+				>
+					<ScIcon name="shopping-cart" />
+				</ScChoice>
+			</ScChoices>
+
 			<ScSelect
 				label={__('Cart Icon Type', 'surecart')}
 				value={cartIconType}

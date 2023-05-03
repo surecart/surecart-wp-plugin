@@ -28,7 +28,7 @@
   border-radius: var(--sc-input-border-radius-large);
   box-shadow: var(--sc-choice-box-shadow);
   cursor: pointer;
-  padding: 1.3em 1.1em;
+  padding: var(--sc-choice-padding, 1.3em 1.1em);
   position: relative;
   text-decoration: none;
   color: var(--sc-input-color);

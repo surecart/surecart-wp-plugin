@@ -283,10 +283,6 @@ export namespace Components {
          */
         "formId": string;
         /**
-          * The icon to show.
-         */
-        "icon": string;
-        /**
           * Are we in test or live mode.
          */
         "mode": 'test' | 'live';
@@ -340,9 +336,17 @@ export namespace Components {
          */
         "count": number;
         /**
+          * The form id to use for the cart.
+         */
+        "formId": string;
+        /**
           * The icon to show.
          */
         "icon": string;
+        /**
+          * Are we in test or live mode.
+         */
+        "mode": 'test' | 'live';
     }
     interface ScCartLoader {
         /**
@@ -5317,10 +5321,6 @@ declare namespace LocalJSX {
          */
         "formId"?: string;
         /**
-          * The icon to show.
-         */
-        "icon"?: string;
-        /**
           * Are we in test or live mode.
          */
         "mode"?: 'test' | 'live';
@@ -5375,9 +5375,17 @@ declare namespace LocalJSX {
          */
         "count"?: number;
         /**
+          * The form id to use for the cart.
+         */
+        "formId"?: string;
+        /**
           * The icon to show.
          */
         "icon"?: string;
+        /**
+          * Are we in test or live mode.
+         */
+        "mode"?: 'test' | 'live';
     }
     interface ScCartLoader {
         /**

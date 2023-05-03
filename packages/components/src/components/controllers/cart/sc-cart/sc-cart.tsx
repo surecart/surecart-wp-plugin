@@ -170,8 +170,6 @@ export class ScCart {
               onScUpdateOrderState={e => this.setOrder(e.detail)}
               onScError={e => (this.error = e.detail as ResponseError)}
             >
-              {this.floatingIconEnabled && <sc-cart-icon count={this.getItemsCount()} onClick={() => (this.open = !this.open)}></sc-cart-icon>}
-
               <sc-drawer open={this.open} onScAfterHide={() => (this.open = false)} onScAfterShow={() => (this.open = true)}>
                 {this.open === true && (
                   <Fragment>

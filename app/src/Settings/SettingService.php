@@ -148,6 +148,16 @@ class SettingService {
 		);
 		$this->register(
 			'surecart',
+			'cart_icon',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+				'default'           => 'shopping-bag', // shopping-bag, shopping-cart.
+			]
+		);
+		$this->register(
+			'surecart',
 			'cart_icon_type',
 			[
 				'type'              => 'string',
