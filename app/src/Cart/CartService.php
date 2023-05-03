@@ -16,8 +16,8 @@ class CartService {
 	public function bootstrap() {
 		add_filter( 'wp_nav_menu_items', [ $this, 'addCartMenu' ], 10, 2 );
 
-		// Slide-out is disabled. Do not load scripts.
-		if ( ! (bool) get_option( 'sc_slide_out_cart_disabled', false ) ) {
+		// only load scripts if cart is enabled.
+		if ( $this->isCartEnabled() ) {
 			add_action(
 				'wp_enqueue_scripts',
 				function () {
