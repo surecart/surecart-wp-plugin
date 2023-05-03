@@ -109,15 +109,16 @@ class CartService {
 		$form = $this->getForm();
 		$mode = $this->getMode();
 
+		$icon = apply_filters( 'sc_cart_menu_icon', '<sc-icon name="shopping-cart"></sc-icon>' );
+
 		ob_start(); ?>
 			<li class='menu-item'>
-				<a href="#">
+				<a href="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>">
 					<sc-cart-button
-						href="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>"
 						cart-menu-always-shown='<?php echo esc_attr( $this->isAlwaysShown() ? 'true' : 'false' ); ?>'
 						form-id='<?php echo esc_attr( $form->ID ); ?>'
-						icon="shopping-cart"
 						mode='<?php echo esc_attr( $mode ); ?>'>
+						<?php echo wp_kses_post( $icon ); ?>
 					</sc-cart-button>
 				</a>
 			</li>
