@@ -110,14 +110,16 @@ class CartService {
 		$mode = $this->getMode();
 
 		ob_start(); ?>
-			<li>
-				<sc-cart-button
-					href="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>"
-					class='menu-item'
-					cart-menu-always-shown='<?php echo esc_attr( $this->isAlwaysShown() ? 'true' : 'false' ); ?>'
-					form-id='<?php echo esc_attr( $form->ID ); ?>'
-					mode='<?php echo esc_attr( $mode ); ?>'>
-				</sc-cart-button>
+			<li class='menu-item'>
+				<a href="#">
+					<sc-cart-button
+						href="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>"
+						cart-menu-always-shown='<?php echo esc_attr( $this->isAlwaysShown() ? 'true' : 'false' ); ?>'
+						form-id='<?php echo esc_attr( $form->ID ); ?>'
+						icon="shopping-cart"
+						mode='<?php echo esc_attr( $mode ); ?>'>
+					</sc-cart-button>
+				</a>
 			</li>
 		<?php
 		return ob_get_clean();

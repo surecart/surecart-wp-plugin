@@ -1,4 +1,4 @@
-import { Component, h, Prop, State } from '@stencil/core';
+import { Component, Element, h, Prop, State } from '@stencil/core';
 import uiStore from '@store/ui';
 import { getCheckout } from '@store/checkouts';
 
@@ -9,9 +9,11 @@ import { getCheckout } from '@store/checkouts';
 @Component({
   tag: 'sc-cart-button',
   styleUrl: 'sc-cart-button.scss',
-  shadow: false,
+  shadow: true,
 })
 export class ScCartButton {
+  /** The cart element. */
+  @Element() el: HTMLScCartButtonElement;
   /** Is this open or closed? */
   @State() open: boolean = null;
 
@@ -46,21 +48,21 @@ export class ScCartButton {
     return count;
   }
 
+  componentDidLoad() {
+    // this is to keep the structure that WordPress expects for theme styling.
+    this.el.closest('a').addEventListener('click', e => {
+      e.preventDefault();
+      uiStore.state.cart = { ...uiStore.state.cart, open: !uiStore.state.cart.open };
+    });
+  }
+
   render() {
     if (!this.cartMenuAlwaysShown && !this.getItemsCount()) {
       return null;
     }
 
     return (
-      <a
-        href={this.href}
-        onClick={e => {
-          e.preventDefault();
-          uiStore.state.cart = { ...uiStore.state.cart, open: !uiStore.state.cart.open };
-        }}
-        class="cart__button"
-        part="base"
-      >
+      <div class="cart__button" part="base">
         <div class="cart__content">
           {!!this.getItemsCount() && (
             <span class="cart__count" part="count">
@@ -69,7 +71,7 @@ export class ScCartButton {
           )}
           <div class="cart__icon">{this.icon && <sc-icon name={this.icon}></sc-icon>}</div>
         </div>
-      </a>
+      </div>
     );
   }
 }
