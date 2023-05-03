@@ -237,7 +237,7 @@ export class ScCouponForm {
             class="coupon-button"
             onClick={() => this.applyCoupon()}
           >
-            <slot />
+            <slot>{this.buttonText}</slot>
           </sc-button>
         </sc-input>
         {!!this.error && (
