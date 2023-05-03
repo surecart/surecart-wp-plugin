@@ -245,6 +245,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 = 1.10.1 - May 2, 2023 =
 * Fix: Issue with expanded coupon form not showing apply text.
+* Fix: Issue with payment block when all processors are disabled and manual processors are enabled.
 
 = 1.10.0 - April 27, 2023 =
 * New: Multiple product images.
