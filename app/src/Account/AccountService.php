@@ -75,7 +75,7 @@ class AccountService {
 			}
 
 			// set the transient.
-			set_transient( $this->cache_key, $this->account, 5 * MINUTE_IN_SECONDS );
+			set_transient( $this->cache_key, $this->account, 15 * MINUTE_IN_SECONDS );
 		}
 		return $this->account;
 	}
