@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.2
-Stable tag: 1.10.0
+Stable tag: 1.10.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -243,9 +243,13 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.10.0 - April 27, 2023 =
+= 1.10.1 - May 2, 2023 =
+* Fix: Issue with expanded coupon form not showing apply text.
+* Fix: Issue with payment block when all processors are disabled and manual processors are enabled.
+
+= 1.10.0 - May 1, 2023 =
 * New: Multiple product images.
-* New: Instanct checkout product images slideshow.
+* New: Instant checkout product images slideshow.
 * New: Phone number block for checkout.
 * New: Pre-populate name and email fields from url parameters.
 * Improvement: Subscription pausing UX in merchant admin.
