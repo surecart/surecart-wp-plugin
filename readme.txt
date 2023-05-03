@@ -243,6 +243,11 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.10.2 - May 4, 2023 =
+* Fix: Pricing line breaking awkwardness in checkout for larger numbers.
+* Fix: Sometimes showing dashboard error after activation if API token was replaced or was previously incorrect.
+* Fix: Add missing translation string for "one or more line items are referencing prices that are not purchasable".
+
 = 1.10.1 - May 2, 2023 =
 * Fix: Issue with expanded coupon form not showing apply text.
 * Fix: Issue with payment block when all processors are disabled and manual processors are enabled.
