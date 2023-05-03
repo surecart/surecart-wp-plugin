@@ -207,12 +207,14 @@ export default () => {
 				<ScChoice
 					showControl={false}
 					checked={cartIcon === 'shopping-bag'}
+					value={'shopping-bag'}
 				>
 					<ScIcon name="shopping-bag" />
 				</ScChoice>
 				<ScChoice
 					showControl={false}
 					checked={cartIcon === 'shopping-cart'}
+					value={'shopping-cart'}
 				>
 					<ScIcon name="shopping-cart" />
 				</ScChoice>

@@ -48,7 +48,9 @@ export class ScCartButton {
     // this is to keep the structure that WordPress expects for theme styling.
     this.el.closest('a').addEventListener('click', e => {
       e.preventDefault();
+      e.stopImmediatePropagation();
       uiStore.state.cart = { ...uiStore.state.cart, open: !uiStore.state.cart.open };
+      return false;
     });
   }
 

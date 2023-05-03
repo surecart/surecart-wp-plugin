@@ -28,6 +28,34 @@ class CartService {
 		}
 	}
 
+	/**
+	 * Get the icon name saved in the settings
+	 *
+	 * @return string
+	 */
+	public function getIconNameFromSettings() {
+		return get_option( 'surecart_cart_icon', 'shopping-bag' );
+	}
+
+	/**
+	 * Get the icon.
+	 *
+	 * @param 'menu'|'floating' $type Menu type.
+	 *
+	 * @return string
+	 */
+	public function getIcon( $type ) {
+		$icon = '<sc-icon name="' . $this->getIconNameFromSettings() . '"></sc-icon>';
+
+		/**
+		 * Allow filtering of the cart menu icon.
+		 *
+		 * @param string $icon The icon.
+		 * @param string $mode The icon position.
+		 */
+		return apply_filters( 'sc_cart_menu_icon', $icon, $type );
+	}
+
 
 	/**
 	 * Get selected ids.
@@ -91,7 +119,9 @@ class CartService {
 	 * @return array
 	 */
 	public function addCartMenu( $items, $args ) {
-		if ( ! $this->isMenuIconEnabled( $args->menu->term_id ) || ! $this->isCartEnabled() ) {
+		$id = is_int( $args->menu ) ? $args->menu : $args->menu->term_id;
+
+		if ( ! $this->isMenuIconEnabled( $id ) || ! $this->isCartEnabled() ) {
 			return $items;
 		}
 
@@ -109,14 +139,6 @@ class CartService {
 		$form = $this->getForm();
 		$mode = $this->getMode();
 
-		/**
-		 * Allow filtering of the cart menu icon.
-		 *
-		 * @param string $icon The icon.
-		 * @param string $mode The icon position.
-		 */
-		$icon = apply_filters( 'sc_cart_menu_icon', '<sc-icon name="shopping-cart"></sc-icon>', 'menu' );
-
 		ob_start(); ?>
 			<li class='menu-item'>
 				<a href="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>">
@@ -124,7 +146,7 @@ class CartService {
 						cart-menu-always-shown='<?php echo esc_attr( $this->isAlwaysShown() ? 'true' : 'false' ); ?>'
 						form-id='<?php echo esc_attr( $form->ID ); ?>'
 						mode='<?php echo esc_attr( $mode ); ?>'>
-						<?php echo wp_kses_post( $icon ); ?>
+						<?php echo wp_kses_post( $this->getIcon( 'menu' ) ); ?>
 					</sc-cart-button>
 				</a>
 			</li>
@@ -150,14 +172,6 @@ class CartService {
 			return '';
 		}
 
-		/**
-		 * Allow filtering of the cart menu icon.
-		 *
-		 * @param string $icon The icon.
-		 * @param string $mode The icon position.
-		 */
-		$icon = apply_filters( 'sc_cart_menu_icon', '<sc-icon name="shopping-cart"></sc-icon>', 'floating' );
-
 		ob_start();
 		?>
 
@@ -177,7 +191,7 @@ class CartService {
 				form-id="<?php echo esc_attr( $form->ID ); ?>"
 				style="font-size: 16px"
 				mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>">
-				<?php echo wp_kses_post( $icon ); ?>
+				<?php echo wp_kses_post( $this->getIcon( 'floating' ) ); ?>
 			</sc-cart-icon>
 		<?php endif; ?>
 

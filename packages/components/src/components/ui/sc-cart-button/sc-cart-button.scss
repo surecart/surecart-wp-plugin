@@ -1,6 +1,7 @@
-sc-cart-button {
+:host {
   display: inline-block;
-  height: 100%;
+  vertical-align: middle;
+  line-height: 1;
 }
 
 ::slotted(*) {
