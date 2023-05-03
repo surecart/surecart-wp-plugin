@@ -1,21 +1,15 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
-import {
-	ScAlert,
-	ScInput,
-	ScSelect,
-	ScSwitch,
-	ScButton,
-	ScIcon,
-} from '@surecart/components-react';
-import SettingsTemplate from '../SettingsTemplate';
-import SettingsBox from '../SettingsBox';
-import useEntity from '../../hooks/useEntity';
-import Error from '../../components/Error';
-import useSave from '../UseSave';
+import { ScAlert, ScButton, ScIcon, ScInput, ScSelect, ScSwitch } from '@surecart/components-react';
 import { useEntityProp } from '@wordpress/core-data';
+import { useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+
+import Error from '../../components/Error';
+import useEntity from '../../hooks/useEntity';
+import SettingsBox from '../SettingsBox';
+import SettingsTemplate from '../SettingsTemplate';
+import useSave from '../UseSave';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -53,6 +47,12 @@ export default () => {
 		'root',
 		'site',
 		'surecart_load_stripe_js'
+	);
+	// password validation.
+	const [passwordValidation, setPasswordValidation] = useEntityProp(
+		'root',
+		'site',
+		'surecart_password_validation_enabled'
 	);
 
 	/**
@@ -181,9 +181,7 @@ export default () => {
 
 					<ScSelect
 						value={item?.locale}
-						onScChange={(e) =>
-							editItem({ locale: e.target.value })
-						}
+						onScChange={(e) => editItem({ locale: e.target.value })}
 						choices={[
 							{
 								value: 'en',
@@ -366,6 +364,18 @@ export default () => {
 						</span>
 					</ScSwitch>
 				)}
+				{/* <ScSwitch
+					checked={passwordValidation}
+					onScChange={(e) => setPasswordValidation(e.target.checked)}
+				>
+					{__('Password Validation', 'surecart')}
+					<span slot="description">
+						{__(
+							'This ensures all the password fields have a stronger validation for user password input i.e. at least 6 characters and one special character.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch> */}
 			</SettingsBox>
 			<SettingsBox
 				title={__('Clear Test Data', 'surecart')}

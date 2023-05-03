@@ -168,6 +168,13 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'product-media',
+		kind: 'surecart',
+		label: __('Product Media', 'surecart'),
+		baseURL: 'surecart/v1/product_medias',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'processor',
 		kind: 'surecart',
 		label: __('Processor', 'surecart'),
