@@ -35,6 +35,8 @@
     var(--sc-input-transition, var(--sc-transition-medium)) border, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow,
     var(--sc-input-transition, var(--sc-transition-medium)) opacity;
   cursor: inherit;
+  border-width: var(--sc-button-border-width, 0);
+  border-style: solid;
 
   &::-moz-focus-inner {
     border: 0;
@@ -94,7 +96,7 @@
 .button.button--standard {
   &.button--default {
     background: var(--sc-button-default-background-color, var(--sc-color-white));
-    border-color: var(--sc-button-default-border-color, var(--sc-color-gray-300));
+    border-color: var(--sc-button-default-border-color, var(--sc-button-border-color, var(--sc-color-gray-300)));
     color: var(--sc-button-default-color, var(--sc-color-gray-600));
 
     &:hover:not(.button--disabled) {
@@ -118,9 +120,9 @@
   }
 
   &.button--primary {
-    background: var(--primary-background);
-    border-color: var(--primary-background);
-    color: var(--primary-color);
+    background: var(--sc-button-primary-background-color, var(--sc-button-background-color, var(--primary-background)));
+    border-color: var(--sc-button-primary-button-border-color, var(--sc-button-border-color, var(--primary-background)));
+    color: var(--sc-button-primary-button-text-color, var(--sc-button-text-color, var(--primary-color)));
 
     &:hover:not(.button--disabled) {
       opacity: 0.8;
@@ -462,21 +464,21 @@
   font-size: var(--sc-button-font-size-small);
   height: var(--sc-input-height-small);
   line-height: calc(var(--sc-input-height-small) - var(--sc-input-border-width) * 2);
-  border-radius: var(--button-border-radius, var(--sc-input-border-radius-small));
+  border-radius: var(--sc-button-small-border-radius, var(--sc-button-border-radius, var(--sc-input-border-radius-small)));
 }
 
 .button--medium {
   font-size: var(--sc-button-font-size-medium);
   height: var(--sc-input-height-medium);
   line-height: calc(var(--sc-input-height-medium) - var(--sc-input-border-width) * 2);
-  border-radius: var(--button-border-radius, var(--sc-input-border-radius-medium));
+  border-radius: var(--sc-button-small-border-radius, var(--sc-button-border-radius, var(--sc-input-border-radius-medium)));
 }
 
 .button--large {
   font-size: var(--sc-button-font-size-large);
   height: var(--sc-input-height-large);
   line-height: calc(var(--sc-input-height-large) - var(--sc-input-border-width) * 2);
-  border-radius: var(--button-border-radius, var(--sc-input-border-radius-large));
+  border-radius: var(--sc-button-small-border-radius, var(--sc-button-border-radius, var(--sc-input-border-radius-large)));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -625,7 +627,6 @@ sc-spinner::part(base) {
   }
 
   &.button--large .button__label {
-    padding: 0 var(--sc-spacing-large);
     padding: var(--sc-button-large-padding-top, 0) var(--sc-button-large-padding-right, var(--sc-spacing-large)) var(--sc-button-large-padding-bottom, 0)
       var(--sc-button-large-padding-left, var(--sc-spacing-large));
   }
