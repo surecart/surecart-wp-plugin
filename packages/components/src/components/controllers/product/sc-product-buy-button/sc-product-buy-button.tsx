@@ -26,11 +26,11 @@ export class ScProductBuyButton {
   /** The button's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
 
-  /** Show a full-width button. */
-  @Prop() full: boolean = true;
-
   /** Outline */
   @Prop() outline: boolean = false;
+
+  /** Full */
+  @Prop() full: boolean = false;
 
   /** Icon to show. */
   @Prop() icon: string;
@@ -98,8 +98,8 @@ export class ScProductBuyButton {
         <sc-button
           type={this.type}
           size={this.size}
-          full={this.full}
           loading={this.busy}
+          full={this.full}
           disabled={this.busy || state?.product?.archived}
           outline={this.outline}
           onClick={e => this.handleCartClick(e)}
