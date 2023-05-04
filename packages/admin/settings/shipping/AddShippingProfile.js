@@ -49,7 +49,7 @@ export default ({ open, onRequestClose }) => {
 				setError(error?.additional_errors?.[0]?.message);
 			} else {
 				setError(
-					e?.message ||
+					error?.message ||
 						__('Failed to add shipping profile.', 'surecart')
 				);
 			}

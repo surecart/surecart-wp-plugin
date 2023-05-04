@@ -1,24 +1,28 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import SettingsTemplate from '../../SettingsTemplate';
 import { getQueryArg, removeQueryArgs } from '@wordpress/url';
-import { useState, Fragment } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import SettingsBox from '../../SettingsBox';
-import { ScCard, ScInput } from '@surecart/components-react';
+import { ScInput } from '@surecart/components-react';
 import useEntity from '../../../hooks/useEntity';
 import Error from '../../../components/Error';
+import Products from './Products';
 
 export default () => {
 	const [error, setError] = useState();
 	const shippingProfileId = getQueryArg(window.location.href, 'profile');
+
 	const {
 		item: shippingProfile,
 		hasLoadedItem: hasLoadedShippingProfile,
 		itemError: shippingProfileError,
 		editItem: editShippingProfile,
 		saveItem: saveShippingProfile,
-	} = useEntity('shipping-profile', shippingProfileId);
+	} = useEntity('shipping-profile', shippingProfileId, {
+		expand: ['products'],
+	});
 
 	const onSubmit = async () => {
 		setError(null);
@@ -70,6 +74,11 @@ export default () => {
 					help={__("Customers won't see this.", 'surecart')}
 				/>
 			</SettingsBox>
+			<Products
+				shippingProfileId={shippingProfile?.id}
+				loading={!hasLoadedShippingProfile}
+				products={shippingProfile?.products?.data}
+			/>
 		</SettingsTemplate>
 	);
 };
