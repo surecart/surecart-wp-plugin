@@ -120,7 +120,7 @@ export class ScOrderBump {
           <div slot="footer">
             <sc-divider style={{ '--spacing': 'var(--sc-spacing-medium)' }}></sc-divider>
             <div class="bump__product">
-              {!!product?.image_url && <img src={product.image_url} class="bump__image" />}
+              {!!product?.image_url && <img src={`${window.scData.cdn_root}fit=scale-down,format=auto,width=130/${product?.image_url}`} class="bump__image" />}
               <div class="bump__product-text">
                 {!!this.bump?.metadata?.cta && <div class="bump__product-title">{this.bump.name || product?.name}</div>}
                 {!!this.bump?.metadata?.description && <div class="bump__product-description">{this.bump?.metadata?.description}</div>}
