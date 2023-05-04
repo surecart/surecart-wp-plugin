@@ -2705,7 +2705,7 @@ export namespace Components {
          */
         "busy": boolean;
         /**
-          * Show a full-width button.
+          * Full
          */
         "full": boolean;
         /**
@@ -8319,7 +8319,7 @@ declare namespace LocalJSX {
          */
         "busy"?: boolean;
         /**
-          * Show a full-width button.
+          * Full
          */
         "full"?: boolean;
         /**
