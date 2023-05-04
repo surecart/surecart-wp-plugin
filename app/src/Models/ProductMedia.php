@@ -26,4 +26,14 @@ class ProductMedia extends Model {
 	 * @var boolean
 	 */
 	protected $clears_account_cache = true;
+
+	/**
+	 * Set the media attribute
+	 *
+	 * @param  string $value Media properties.
+	 * @return void
+	 */
+	public function setMediaAttribute( $value ) {
+		$this->setRelation( 'media', $value, Media::class );
+	}
 }
