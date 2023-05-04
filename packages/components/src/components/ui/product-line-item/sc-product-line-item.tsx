@@ -127,7 +127,7 @@ export class ScProductLineItem {
     return (
       <div class="base" part="base">
         <div part="product-line-item" class={{ 'item': true, 'item--has-image': !!this.imageUrl, 'item--is-rtl': isRtl() }}>
-          {!!this.imageUrl && <img part="image" src={`${window.scData.cdn_root}fit=scale-down,format=auto,width=130/${this.imageUrl}`} class="item__image" />}
+          {!!this.imageUrl && <img part="image" src={`${window.scData.cdn_root}/fit=scale-down,format=auto,width=130/${this.imageUrl}`} class="item__image" />}
           <div class="item__text" part="text">
             <div class="item__title" part="title">
               <slot name="title">{this.name}</slot>
