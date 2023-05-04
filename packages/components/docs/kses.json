@@ -800,6 +800,7 @@
     "slot": true
   },
   "sc-image-slider": {
+    "has-thumbnails": true,
     "images": true,
     "thumbnails": true,
     "thumbnails-per-page": true,
