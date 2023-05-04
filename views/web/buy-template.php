@@ -10,21 +10,23 @@
 					'sc-image-slider',
 					'#sc-product-media-' . $product->id,
 					[
-						'thumbnails' => true,
-						'images'     => array_map(
+						'hasThumbnails' => true,
+						'images'        => array_map(
 							function( $product_media ) use ( $product ) {
-								if ( empty( $product_media->media->url ) ) {
-									if ( ! empty( $product_media->url ) ) {
-										return [
-											'src' => $product_media->url ?? '',
-											'alt' => '',
-										];
-									}
-									return;
-								}
 								return [
-									'src' => $product_media->media->url ?? '',
-									'alt' => $product_media->media->filename ?? $product->name ?? '',
+									'src'   => $product_media->media->getUrl( 450 ) ?? '',
+									'alt'   => $product_media->media->filename ?? $product->name ?? '',
+									'width' => 450,
+								];
+							},
+							$product->product_medias->data
+						),
+						'thumbnails'    => array_map(
+							function( $product_media ) use ( $product ) {
+								return [
+									'src'   => $product_media->media->getUrl( 90 ) ?? '',
+									'alt'   => $product_media->media->filename ?? $product->name ?? '',
+									'width' => 90,
 								];
 							},
 							$product->product_medias->data
@@ -35,7 +37,7 @@
 			<?php else : ?>
 				<!-- wp:image {"sizeSlug":"full","linkDestination":"none","style":{"border":{"radius":"5px"}}} -->
 					<figure class="wp-block-image size-full is-resized has-custom-border">
-						<img src="<?php echo esc_url( $product->image_url ); ?>" alt="<?php echo esc_attr( $product->name ); ?>" style="border-radius:5px" />
+						<img src="<?php echo esc_url( $product->getImageUrl( 450 ) ); ?>" srcset="<?php echo esc_attr( $product->image_srcset ); ?>" alt="<?php echo esc_attr( $product->name ); ?>" style="border-radius:5px" />
 					</figure>
 				<!-- /wp:image -->
 			<?php endif; ?>
