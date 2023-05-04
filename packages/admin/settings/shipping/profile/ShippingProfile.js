@@ -9,6 +9,7 @@ import { ScInput } from '@surecart/components-react';
 import useEntity from '../../../hooks/useEntity';
 import Error from '../../../components/Error';
 import Products from './Products';
+import ShippingZones from './ShippingZones';
 
 export default () => {
 	const [error, setError] = useState();
@@ -21,7 +22,7 @@ export default () => {
 		editItem: editShippingProfile,
 		saveItem: saveShippingProfile,
 	} = useEntity('shipping-profile', shippingProfileId, {
-		expand: ['products'],
+		expand: ['products', 'shipping_zones'],
 	});
 
 	const onSubmit = async () => {
@@ -78,6 +79,11 @@ export default () => {
 				shippingProfileId={shippingProfile?.id}
 				loading={!hasLoadedShippingProfile}
 				products={shippingProfile?.products?.data}
+			/>
+			<ShippingZones
+				shippingProfileId={shippingProfile?.id}
+				shippingZones={shippingProfile?.shipping_zones?.data}
+				loading={!hasLoadedShippingProfile}
 			/>
 		</SettingsTemplate>
 	);

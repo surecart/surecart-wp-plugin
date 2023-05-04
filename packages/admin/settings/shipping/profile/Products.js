@@ -71,14 +71,6 @@ export default ({ shippingProfileId, products, loading }) => {
 				method: 'PATCH',
 			});
 			await invalidateResolutionForStore();
-			await receiveEntityRecords(
-				'surecart',
-				'shipping-profile',
-				shippingProfileId,
-				{
-					expand: ['products'],
-				}
-			);
 		} catch (error) {
 			console.error(error);
 			if (error?.additional_errors?.[0]?.message) {
