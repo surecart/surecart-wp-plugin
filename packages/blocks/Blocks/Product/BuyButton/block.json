@@ -61,13 +61,6 @@
 		},
 		"reusable": false,
 		"shadow": true,
-		"spacing": {
-			"__experimentalSkipSerialization": true,
-			"padding": ["horizontal", "vertical"],
-			"__experimentalDefaultControls": {
-				"padding": true
-			}
-		},
 		"__experimentalBorder": {
 			"color": true,
 			"radius": true,
@@ -80,13 +73,12 @@
 				"style": true,
 				"width": true
 			}
-		},
-		"__experimentalSelector": ".wp-block-button .wp-block-button__link"
+		}
 	},
 	"styles": [
-		{ "name": "fill", "label": "Fill", "isDefault": true },
-		{ "name": "outline", "label": "Outline" }
+		{ "name": "primary", "label": "Default", "isDefault": true },
+		{ "name": "default", "label": "Secondary" }
 	],
-	"editorStyle": "wp-block-button-editor",
-	"style": "wp-block-button"
+	"script": "surecart-components",
+	"style": "surecart-themes-default"
 }

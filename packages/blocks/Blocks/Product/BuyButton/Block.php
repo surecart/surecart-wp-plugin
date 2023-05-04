@@ -70,9 +70,18 @@ class Block extends BaseBlock {
 			$text_color = ! empty( $attr['textColor'] ) ? $this->getColorPresetCssVar( $attr['textColor'] ) : $attr['style']['color']['text'];
 			$style     .= $prefix . '-text-color: ' . $text_color . ';';
 		}
+		// background color.
+		if ( ! empty( $attr['backgroundColor'] ) || ! empty( $attr['style']['color']['background'] ) ) {
+			$text_color = ! empty( $attr['backgroundColor'] ) ? $this->getColorPresetCssVar( $attr['backgroundColor'] ) : $attr['style']['color']['background'];
+			$style     .= $prefix . '-background-color: ' . $text_color . ';';
+		}
 		// text align.
 		if ( ! empty( $attr['align'] ) ) {
 			$style .= $prefix . '-align: ' . $attr['align'] . ';';
+		}
+
+		if ( ! empty( $attr['width'] ) ) {
+			$style .= $prefix . '-width: ' . $attr['width'] . '%;';
 		}
 
 		return $style;
@@ -90,7 +99,7 @@ class Block extends BaseBlock {
 		ob_start();
 		?>
 
-		<sc-product-buy-button add-to-cart href="#" type="primary" style="<?php echo esc_attr( $this->getVars( $attributes, '--sc-button' ) ); ?>">
+		<sc-product-buy-button add-to-cart href="#" full="<?php echo ! empty( $attributes['width'] ) ? 'true' : 'false'; ?>" type="primary" style="<?php echo esc_attr( $this->getVars( $attributes, '--sc-button' ) ); ?>">
 			<?php echo esc_html( $attributes['text'] ); ?>
 		</sc-product-buy-button>
 

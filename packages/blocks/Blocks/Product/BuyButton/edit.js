@@ -159,14 +159,6 @@ export default (props) => {
 					setAttributes={setAttributes}
 				/>
 			</InspectorControls>
-			<InspectorControls group="advanced">
-				<TextControl
-					__nextHasNoMarginBottom
-					label={__('Link rel')}
-					value={rel || ''}
-					onChange={(newRel) => setAttributes({ rel: newRel })}
-				/>
-			</InspectorControls>
 		</>
 	);
 };
