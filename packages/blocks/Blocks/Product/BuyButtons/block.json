@@ -38,5 +38,6 @@
 			}
 		}
 	},
-	"style": "file:./preload.css"
+	"style": ["file:./preload.css", "surecar-themes-default"],
+	"script": "surecart-components"
 }

@@ -17,6 +17,7 @@ import { useSelect } from '@wordpress/data';
  * Internal dependencies
  */
 import { name as buttonBlockName } from '../BuyButton';
+import { __ } from '@wordpress/i18n';
 
 const ALLOWED_BLOCKS = [buttonBlockName];
 
@@ -57,10 +58,19 @@ export default ({ attributes, setAttributes, className }) => {
 		template: [
 			[
 				buttonBlockName,
-				{ className: preferredStyle && `is-style-${preferredStyle}` },
+				{
+					className: preferredStyle && `is-style-${preferredStyle}`,
+					text: __('Add To Cart', 'surecart'),
+				},
+			],
+			[
+				buttonBlockName,
+				{
+					className: preferredStyle && `is-style-${preferredStyle}`,
+					text: __('Buy Now', 'surecart'),
+				},
 			],
 		],
-
 		templateInsertUpdatesSelection: true,
 	});
 
