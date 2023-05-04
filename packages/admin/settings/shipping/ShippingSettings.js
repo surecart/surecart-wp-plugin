@@ -15,6 +15,7 @@ import Error from '../../components/Error';
 import SettingsBox from '../SettingsBox';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import { addQueryArgs } from '@wordpress/url';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -22,7 +23,7 @@ export default () => {
 	const { shippingProfiles, loading, busy } = useSelect((select) => {
 		const queryArgs = [
 			'surecart',
-			'shipping_profiles',
+			'shipping-profile',
 			{
 				context: 'edit',
 				per_page: 100,
@@ -40,8 +41,6 @@ export default () => {
 			busy: !!(items?.length && resolving),
 		};
 	});
-
-	console.log({ shippingProfiles, loading });
 
 	return (
 		<SettingsTemplate
@@ -75,7 +74,10 @@ export default () => {
 							{shippingProfiles.map((shippingProfile) => (
 								<ScStackedListRow
 									key={shippingProfile.id}
-									href="sololearn.com"
+									href={addQueryArgs(window.location.href, {
+										type: 'shipping_profile',
+										profile: shippingProfile.id,
+									})}
 									style={{
 										'--columns': '2',
 									}}
@@ -107,7 +109,9 @@ export default () => {
 										>
 											{shippingProfile?.shipping_zones?.data.map(
 												(shippingZone) => (
-													<li>{shippingZone.name}</li>
+													<li key={shippingZone.id}>
+														{shippingZone.name}
+													</li>
 												)
 											)}
 										</ul>
