@@ -5,6 +5,7 @@ import SettingsBox from '../../SettingsBox';
 import {
 	ScBlockUi,
 	ScButton,
+	ScCard,
 	ScDropdown,
 	ScEmpty,
 	ScIcon,
@@ -109,6 +110,7 @@ export default ({ shippingProfileId }) => {
 	return (
 		<SettingsBox
 			title={__('Products', 'surecart')}
+			wrapperTag="div"
 			end={
 				<ScButton
 					type="primary"
@@ -127,70 +129,90 @@ export default ({ shippingProfileId }) => {
 		>
 			<Error error={error} setError={setError} />
 			{products?.length || !!draftProducts ? (
-				<ScStackedList>
-					{products.map((product) => (
-						<ScStackedListRow key={product.id}>
-							<Product id={product.id} />
-							<ScDropdown slot="suffix" placement="bottom-end">
-								<ScButton type="text" slot="trigger" circle>
-									<ScIcon name="more-horizontal" />
-								</ScButton>
-								<ScMenu>
-									<ScMenuItem
-										onClick={() =>
-											onRemoveProduct(product.id)
-										}
-									>
-										<ScIcon slot="prefix" name="trash" />
-										{__('Remove', 'surecart')}
-									</ScMenuItem>
-								</ScMenu>
-							</ScDropdown>
-						</ScStackedListRow>
-					))}
-					{[...Array(draftProducts)].map((_, index) => (
-						<ScStackedListRow key={`draft-product-${index}`}>
-							<ModelSelector
-								css={css`
-									min-width: 380px;
-								`}
-								key={index}
-								name="product"
-								placeholder={__(
-									'Find a product...',
-									'surecart'
-								)}
-								requestQuery={{
-									archived: false,
-									expand: ['prices'],
-								}}
-								exclude={products?.map((product) => product.id)}
-								onSelect={(id) => {
-									onSelectProduct(id);
-								}}
-							/>
-							<ScDropdown slot="suffix" placement="bottom-end">
-								<ScButton type="text" slot="trigger" circle>
-									<ScIcon name="more-horizontal" />
-								</ScButton>
-								<ScMenu>
-									<ScMenuItem
-										onClick={() =>
-											setDraftProducts(draftProducts - 1)
-										}
-									>
-										<ScIcon slot="prefix" name="trash" />
-										{__('Remove', 'surecart')}
-									</ScMenuItem>
-								</ScMenu>
-							</ScDropdown>
-						</ScStackedListRow>
-					))}
-				</ScStackedList>
+				<ScCard noPadding>
+					<ScStackedList>
+						{products.map((product) => (
+							<ScStackedListRow key={product.id}>
+								<Product id={product.id} />
+								<ScDropdown
+									slot="suffix"
+									placement="bottom-end"
+								>
+									<ScButton type="text" slot="trigger" circle>
+										<ScIcon name="more-horizontal" />
+									</ScButton>
+									<ScMenu>
+										<ScMenuItem
+											onClick={() =>
+												onRemoveProduct(product.id)
+											}
+										>
+											<ScIcon
+												slot="prefix"
+												name="trash"
+											/>
+											{__('Remove', 'surecart')}
+										</ScMenuItem>
+									</ScMenu>
+								</ScDropdown>
+							</ScStackedListRow>
+						))}
+						{[...Array(draftProducts)].map((_, index) => (
+							<ScStackedListRow key={`draft-product-${index}`}>
+								<ModelSelector
+									css={css`
+										min-width: 380px;
+									`}
+									key={index}
+									name="product"
+									placeholder={__(
+										'Find a product...',
+										'surecart'
+									)}
+									requestQuery={{
+										archived: false,
+										expand: ['prices'],
+									}}
+									exclude={products?.map(
+										(product) => product.id
+									)}
+									onSelect={(id) => {
+										onSelectProduct(id);
+									}}
+								/>
+								<ScDropdown
+									slot="suffix"
+									placement="bottom-end"
+								>
+									<ScButton type="text" slot="trigger" circle>
+										<ScIcon name="more-horizontal" />
+									</ScButton>
+									<ScMenu>
+										<ScMenuItem
+											onClick={() =>
+												setDraftProducts(
+													draftProducts - 1
+												)
+											}
+										>
+											<ScIcon
+												slot="prefix"
+												name="trash"
+											/>
+											{__('Remove', 'surecart')}
+										</ScMenuItem>
+									</ScMenu>
+								</ScDropdown>
+							</ScStackedListRow>
+						))}
+					</ScStackedList>
+				</ScCard>
 			) : (
-				<ScEmpty icon="shopping-cart">
-					{__('No products added yet.', 'surecart')}
-				</ScEmpty>
+				<ScCard noPadding>
+					<ScEmpty icon="shopping-cart">
+						{__('No products added yet.', 'surecart')}
+					</ScEmpty>
+				</ScCard>
 			)}
 			{busy && (
 				<ScBlockUi
