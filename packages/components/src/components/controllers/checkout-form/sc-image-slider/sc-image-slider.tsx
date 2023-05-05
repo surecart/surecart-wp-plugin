@@ -67,6 +67,7 @@ export class ScImageSlider {
   }
 
   render() {
+    const thumbnails = this.thumbnails?.length ? this.thumbnails : this.images;
     return (
       <div class="image-slider" part="base">
         <div class="swiper" ref={el => (this.swiperContainerRef = el)}>
@@ -89,15 +90,14 @@ export class ScImageSlider {
 
             <div class="swiper" ref={el => (this.swiperThumbsRef = el)}>
               <div class="swiper-wrapper">
-                {!!(this.thumbnails.length || this.images.length) &&
-                  (this.thumbnails || this.images).map(({ src, alt, srcset, width, sizes }, index) => (
-                    <div
-                      class={{ 'swiper-slide': true, 'image-slider__thumb': true, 'image-slider__thumb--is-active': this.currentSliderIndex === index }}
-                      onClick={() => this.swiper?.slideTo?.(index)}
-                    >
-                      <img src={src} alt={alt} srcset={srcset} width={width} sizes={sizes} loading={index > this.thumbnailsPerPage - 1 ? 'lazy' : 'eager'} />
-                    </div>
-                  ))}
+                {(thumbnails || []).map(({ src, alt, srcset, width, sizes }, index) => (
+                  <div
+                    class={{ 'swiper-slide': true, 'image-slider__thumb': true, 'image-slider__thumb--is-active': this.currentSliderIndex === index }}
+                    onClick={() => this.swiper?.slideTo?.(index)}
+                  >
+                    <img src={src} alt={alt} srcset={srcset} width={width} sizes={sizes} loading={index > this.thumbnailsPerPage - 1 ? 'lazy' : 'eager'} />
+                  </div>
+                ))}
               </div>
             </div>
 
