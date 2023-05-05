@@ -10,31 +10,56 @@ import useEntity from '../../../hooks/useEntity';
 import Error from '../../../components/Error';
 import Products from './Products';
 import ShippingZones from './ShippingZones';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect, useDispatch } from '@wordpress/data';
 
 export default () => {
 	const [error, setError] = useState();
 	const shippingProfileId = getQueryArg(window.location.href, 'profile');
 
-	const {
-		item: shippingProfile,
-		hasLoadedItem: hasLoadedShippingProfile,
-		itemError: shippingProfileError,
-		editItem: editShippingProfile,
-		saveItem: saveShippingProfile,
-	} = useEntity('shipping-profile', shippingProfileId, {
-		expand: ['products', 'shipping_zones'],
-	});
+	const { shippingProfile, loadingShippingProfile } = useSelect(
+		(select) => {
+			const queryArgs = [
+				'surecart',
+				'shipping-profile',
+				shippingProfileId,
+				{
+					expand: ['products', 'shipping_zones'],
+				},
+			];
+
+			return {
+				shippingProfile: select(coreStore).getEditedEntityRecord(
+					...queryArgs
+				),
+				loadingShippingProfile: select(coreStore).isResolving(
+					'getEditedEntityRecord',
+					queryArgs
+				),
+			};
+		},
+		[shippingProfileId]
+	);
+	const { editEntityRecord, saveEntityRecord } = useDispatch(coreStore);
 
 	const onSubmit = async () => {
 		setError(null);
 		try {
-			await saveShippingProfile({
-				successMessage: __('Settings Updated.', 'surecart'),
-			});
+			await saveEntityRecord(
+				'surecart',
+				'shipping-profile',
+				shippingProfile
+			);
 		} catch (e) {
 			console.error(e);
 			setError(e);
 		}
+	};
+
+	const onEdit = (key, value) => {
+		editEntityRecord('surecart', 'shipping-profile', shippingProfileId, {
+			[key]: value,
+		});
 	};
 
 	return (
@@ -56,34 +81,28 @@ export default () => {
 			onSubmit={onSubmit}
 			noButton
 		>
-			<Error
-				error={error || shippingProfileError}
-				setError={setError}
-				margin="80px"
-			/>
-			<SettingsBox loading={!hasLoadedShippingProfile}>
+			<Error error={error} setError={setError} margin="80px" />
+			<SettingsBox loading={loadingShippingProfile}>
 				<ScInput
 					label={__('Name', 'surecart')}
 					type="text"
 					required
 					value={shippingProfile?.name}
 					onScInput={(e) => {
-						editShippingProfile({
-							name: e.target.value || null,
-						});
+						onEdit('name', e.target.value || null);
 					}}
 					help={__("Customers won't see this.", 'surecart')}
 				/>
 			</SettingsBox>
 			<Products
 				shippingProfileId={shippingProfile?.id}
-				loading={!hasLoadedShippingProfile}
+				loading={loadingShippingProfile}
 				products={shippingProfile?.products?.data}
 			/>
 			<ShippingZones
 				shippingProfileId={shippingProfile?.id}
 				shippingZones={shippingProfile?.shipping_zones?.data}
-				loading={!hasLoadedShippingProfile}
+				loading={loadingShippingProfile}
 			/>
 		</SettingsTemplate>
 	);
