@@ -6,7 +6,6 @@ import { getQueryArg, removeQueryArgs } from '@wordpress/url';
 import { useState } from '@wordpress/element';
 import SettingsBox from '../../SettingsBox';
 import { ScInput } from '@surecart/components-react';
-import useEntity from '../../../hooks/useEntity';
 import Error from '../../../components/Error';
 import Products from './Products';
 import ShippingZones from './ShippingZones';
@@ -24,7 +23,7 @@ export default () => {
 				'shipping-profile',
 				shippingProfileId,
 				{
-					expand: ['products', 'shipping_zones'],
+					expand: ['shipping_zones'],
 				},
 			];
 
@@ -95,12 +94,12 @@ export default () => {
 				/>
 			</SettingsBox>
 			<Products
-				shippingProfileId={shippingProfile?.id}
+				shippingProfileId={shippingProfileId}
 				loading={loadingShippingProfile}
 				products={shippingProfile?.products?.data}
 			/>
 			<ShippingZones
-				shippingProfileId={shippingProfile?.id}
+				shippingProfileId={shippingProfileId}
 				shippingZones={shippingProfile?.shipping_zones?.data}
 				loading={loadingShippingProfile}
 			/>

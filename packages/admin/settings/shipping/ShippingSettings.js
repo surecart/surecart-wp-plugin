@@ -6,6 +6,7 @@ import SettingsTemplate from '../SettingsTemplate';
 import {
 	ScButton,
 	ScCard,
+	ScEmpty,
 	ScIcon,
 	ScStackedList,
 	ScStackedListRow,
@@ -135,7 +136,9 @@ export default () => {
 								))}
 							</ScStackedList>
 						) : (
-							<ScText>{__('No shipping present')}</ScText>
+							<ScEmpty icon="truck">
+								{__('No shipping present')}
+							</ScEmpty>
 						)}
 					</ScCard>
 				</SettingsBox>

@@ -6,6 +6,7 @@ import {
 	ScBlockUi,
 	ScButton,
 	ScDropdown,
+	ScEmpty,
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
@@ -16,32 +17,55 @@ import {
 import Product from '../../../coupons/modules/Product';
 import { useState } from '@wordpress/element';
 import ModelSelector from '../../../components/ModelSelector';
-import apiFetch from '@wordpress/api-fetch';
-import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import Error from '../../../components/Error';
+import { useDispatch, useSelect } from '@wordpress/data';
 
-export default ({ shippingProfileId, products, loading }) => {
-	const [draftProducts, setDraftProducts] = useState(0);
-	const [busy, setBusy] = useState(false);
-	const { invalidateResolutionForStore, receiveEntityRecords } =
-		useDispatch(coreStore);
+export default ({ shippingProfileId }) => {
 	const [error, setError] = useState(null);
+	const [busy, setBusy] = useState(false);
+	const [draftProducts, setDraftProducts] = useState(0);
+	const { saveEntityRecord } = useDispatch(coreStore);
+
+	const { products, loading } = useSelect(
+		(select) => {
+			const queryArgs = [
+				'surecart',
+				'product',
+				{
+					archived: false,
+					shipping_profile_ids: [shippingProfileId],
+					per_page: 100,
+				},
+			];
+
+			// are we loading products?
+			const loading = select(coreStore).isResolving(
+				'getEntityRecords',
+				queryArgs
+			);
+
+			return {
+				products: (
+					select(coreStore).getEntityRecords(...queryArgs) || []
+				).filter(
+					(product) => product.shipping_profile === shippingProfileId
+				),
+				loading: loading && !products?.length,
+			};
+		},
+		[shippingProfileId]
+	);
 
 	const onRemoveProduct = async (id) => {
 		if (!id) return;
 		setBusy(true);
 
 		try {
-			await apiFetch({
-				path: `surecart/v1/products/${id}`,
-				data: {
-					shipping_profile: null,
-				},
-				method: 'PATCH',
+			await saveEntityRecord('surecart', 'product', {
+				id,
+				shipping_profile: null,
 			});
-
-			await invalidateResolutionForStore();
 		} catch (error) {
 			console.error(error);
 			if (error?.additional_errors?.[0]?.message) {
@@ -59,18 +83,13 @@ export default ({ shippingProfileId, products, loading }) => {
 
 	const onSelectProduct = async (id) => {
 		if (!id) return;
-		setDraftProducts(draftProducts - 1);
 		setBusy(true);
 
 		try {
-			await apiFetch({
-				path: `surecart/v1/products/${id}`,
-				data: {
-					shipping_profile: shippingProfileId,
-				},
-				method: 'PATCH',
+			await saveEntityRecord('surecart', 'product', {
+				id,
+				shipping_profile: shippingProfileId,
 			});
-			await invalidateResolutionForStore();
 		} catch (error) {
 			console.error(error);
 			if (error?.additional_errors?.[0]?.message) {
@@ -85,6 +104,8 @@ export default ({ shippingProfileId, products, loading }) => {
 		}
 	};
 
+	console.log({ products });
+
 	return (
 		<SettingsBox
 			title={__('Products', 'surecart')}
@@ -95,7 +116,7 @@ export default ({ shippingProfileId, products, loading }) => {
 					disabled={draftProducts > 0}
 				>
 					<ScIcon name="plus" />
-					Add New
+					{__('Add New', 'surecart')}
 				</ScButton>
 			}
 			loading={loading}
@@ -167,7 +188,9 @@ export default ({ shippingProfileId, products, loading }) => {
 					))}
 				</ScStackedList>
 			) : (
-				<ScText>{__('No products added yet.', 'surecart')}</ScText>
+				<ScEmpty icon="shopping-cart">
+					{__('No products added yet.', 'surecart')}
+				</ScEmpty>
 			)}
 			{busy && (
 				<ScBlockUi

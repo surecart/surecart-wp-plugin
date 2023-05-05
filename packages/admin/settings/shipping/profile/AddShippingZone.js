@@ -106,6 +106,7 @@ export default ({ open, onRequestClose, shippingProfileId }) => {
 			open={open}
 			label={__('Add Zone')}
 			onScRequestClose={onRequestClose}
+			style={{ '--dialog-body-overflow': 'visible' }}
 		>
 			<Error error={error} setError={setError} />
 			<ScForm onScFormSubmit={onSubmit}>
@@ -122,12 +123,7 @@ export default ({ open, onRequestClose, shippingProfileId }) => {
 						name="zone-name"
 						value={zoneName}
 					/>
-					<ScFormControl
-						label={__('Select Countries', 'surecart')}
-						css={css`
-							min-height: 20rem;
-						`}
-					>
+					<ScFormControl label={__('Select Countries', 'surecart')}>
 						<ScFlex
 							columnGap="1em"
 							justifyContent="flex-start"
