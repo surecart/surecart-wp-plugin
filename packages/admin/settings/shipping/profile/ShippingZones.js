@@ -14,9 +14,12 @@ import {
 } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import AddShippingZone from './AddShippingZone';
+import EditShippingZone from './EditShippingZone';
 
 export default ({ shippingProfileId, shippingZones, loading }) => {
 	const [showAddZone, setShowAddZone] = useState(false);
+	const [selectedZone, setSelectedZone] = useState();
+	const [showEditZone, setShowEditZone] = useState();
 
 	return (
 		<SettingsBox
@@ -34,8 +37,16 @@ export default ({ shippingProfileId, shippingZones, loading }) => {
 					shippingZones.map((shippingZone) => (
 						<ScCard>
 							<ScFlex justifyContent="space-between">
-								<div>{shippingZone.name}</div>
-								<ScButton type="text">Edit Zone</ScButton>
+								<strong>{shippingZone.name}</strong>
+								<ScButton
+									type="text"
+									onClick={() => {
+										setShowEditZone(true);
+										setSelectedZone(shippingZone);
+									}}
+								>
+									Edit Zone
+								</ScButton>
 							</ScFlex>
 							<ScTable>
 								<ScTableCell slot="head">
@@ -80,6 +91,16 @@ export default ({ shippingProfileId, shippingZones, loading }) => {
 			<AddShippingZone
 				open={showAddZone}
 				onRequestClose={() => setShowAddZone(false)}
+				shippingProfileId={shippingProfileId}
+			/>
+			<EditShippingZone
+				open={showEditZone}
+				onRequestClose={() => {
+					setShowEditZone(false);
+					setSelectedZone();
+				}}
+				selectedZone={selectedZone}
+				shippingProfileId={shippingProfileId}
 			/>
 		</SettingsBox>
 	);

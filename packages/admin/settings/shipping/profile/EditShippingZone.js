@@ -19,7 +19,7 @@ import { useDispatch } from '@wordpress/data';
 import { countryChoices } from '@surecart/components';
 import { store as noticesStore } from '@wordpress/notices';
 
-export default ({ open, onRequestClose, shippingProfileId }) => {
+export default ({ open, onRequestClose, selectedZone }) => {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [zoneName, setZoneName] = useState('');
@@ -27,6 +27,11 @@ export default ({ open, onRequestClose, shippingProfileId }) => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	useEffect(() => {
+		if (selectedZone) {
+			setZoneName(selectedZone.name);
+			setZoneCountries(selectedZone.countries);
+		}
+
 		return () => {
 			setZoneCountries([]);
 			setZoneName('');
@@ -38,7 +43,7 @@ export default ({ open, onRequestClose, shippingProfileId }) => {
 		e.preventDefault();
 		if (!zoneCountries.length) {
 			setError({
-				message: 'Select at least one country to create zone.',
+				message: 'Select at least one country to edit zone.',
 			});
 			return;
 		}
@@ -46,26 +51,24 @@ export default ({ open, onRequestClose, shippingProfileId }) => {
 		setLoading(true);
 		try {
 			await apiFetch({
-				path: 'surecart/v1/shipping_zones',
+				path: `surecart/v1/shipping_zones/${selectedZone.id}`,
 				data: {
 					name: zoneName,
-					shipping_profile_id: shippingProfileId,
 					countries: zoneCountries,
 				},
-				method: 'POST',
+				method: 'PATCH',
 			});
 			onRequestClose();
-			createSuccessNotice(__('Shipping zone created.', 'surecart'));
+			createSuccessNotice(__('Shipping zone edited.', 'surecart'));
 		} catch (error) {
 			console.error(error);
 			if (error?.additional_errors?.[0]?.message) {
 				setError(error?.additional_errors?.[0]);
 			} else {
-				setError({
-					message:
-						error?.message ||
-						__('Failed to add shipping zone.', 'surecart'),
-				});
+				setError(
+					error?.message ||
+						__('Failed to add shipping zone.', 'surecart')
+				);
 			}
 		} finally {
 			setLoading(false);
@@ -104,7 +107,7 @@ export default ({ open, onRequestClose, shippingProfileId }) => {
 	return (
 		<ScDialog
 			open={open}
-			label={__('Add Zone')}
+			label={__('Edit Zone')}
 			onScRequestClose={onRequestClose}
 		>
 			<Error error={error} setError={setError} />
@@ -154,7 +157,7 @@ export default ({ open, onRequestClose, shippingProfileId }) => {
 				</ScFlex>
 				<ScFlex justifyContent="flex-start">
 					<ScButton type="primary" disabled={loading} submit={true}>
-						{__('Add', 'surecart')}
+						{__('Edit', 'surecart')}
 					</ScButton>{' '}
 					<ScButton
 						type="text"
