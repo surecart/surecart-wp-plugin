@@ -24,9 +24,11 @@
 						'thumbnails'    => array_map(
 							function( $product_media ) use ( $product ) {
 								return [
-									'src'   => $product_media->media->getUrl( 90 ) ?? '',
-									'alt'   => $product_media->media->filename ?? $product->name ?? '',
-									'width' => 90,
+									'src'    => $product_media->media->getUrl( 90 ) ?? '',
+									'srcset' => $product_media->media->withImageSizes( [ 90, 120, 240 ] )->srcset,
+									'sizes'  => '(min-width: 780px) 45px, 120px',
+									'alt'    => $product_media->media->filename ?? $product->name ?? '',
+									'width'  => 90,
 								];
 							},
 							$product->product_medias->data

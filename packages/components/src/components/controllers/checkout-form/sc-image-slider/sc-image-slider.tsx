@@ -15,8 +15,8 @@ export class ScImageSlider {
   private swiper: Swiper;
   private thumbsSwiper: Swiper;
 
-  @Prop() images: { src: string; alt: string; srcset; width: number }[] = [];
-  @Prop() thumbnails: { src: string; alt: string; srcset; width: number }[] = [];
+  @Prop() images: { src: string; alt: string; srcset; width: number; sizes: string }[] = [];
+  @Prop() thumbnails: { src: string; alt: string; srcset; width: number; sizes: string }[] = [];
   @Prop() hasThumbnails: boolean;
   @Prop() thumbnailsPerPage: number = 5;
 
@@ -71,10 +71,10 @@ export class ScImageSlider {
       <div class="image-slider" part="base">
         <div class="swiper" ref={el => (this.swiperContainerRef = el)}>
           <div class="swiper-wrapper">
-            {(this.images || []).map(({ src, alt, srcset, width }, index) => (
+            {(this.images || []).map(({ src, alt, srcset, width, sizes }, index) => (
               <div key={index} class="swiper-slide image-slider__slider">
                 <div class="swiper-slide-img">
-                  <img src={src} alt={alt} srcset={srcset} width={width} loading={index > 0 ? 'lazy' : 'eager'} />
+                  <img src={src} alt={alt} srcset={srcset} width={width} sizes={sizes} loading={index > 0 ? 'lazy' : 'eager'} />
                 </div>
               </div>
             ))}
@@ -90,12 +90,12 @@ export class ScImageSlider {
             <div class="swiper" ref={el => (this.swiperThumbsRef = el)}>
               <div class="swiper-wrapper">
                 {!!(this.thumbnails.length || this.images.length) &&
-                  (this.thumbnails || this.images).map(({ src, alt, srcset, width }, index) => (
+                  (this.thumbnails || this.images).map(({ src, alt, srcset, width, sizes }, index) => (
                     <div
                       class={{ 'swiper-slide': true, 'image-slider__thumb': true, 'image-slider__thumb--is-active': this.currentSliderIndex === index }}
                       onClick={() => this.swiper?.slideTo?.(index)}
                     >
-                      <img src={src} alt={alt} srcset={srcset} width={width} loading={index > this.thumbnailsPerPage - 1 ? 'lazy' : 'eager'} />
+                      <img src={src} alt={alt} srcset={srcset} width={width} sizes={sizes} loading={index > this.thumbnailsPerPage - 1 ? 'lazy' : 'eager'} />
                     </div>
                   ))}
               </div>

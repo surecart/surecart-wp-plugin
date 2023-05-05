@@ -30,10 +30,35 @@ trait HasImageSizes {
 	];
 
 	/**
+	 * Set the image sizes.
+	 *
+	 * @param array $sizes Image sizes.
+	 *
+	 * @return $this
+	 */
+	public function withImageSizes( $sizes ) {
+		$this->image_sizes = $sizes;
+		return $this;
+	}
+
+	/**
+	 * Set the image resize options.
+	 *
+	 * @param array $options Image resize options.
+	 *
+	 * @return $this
+	 */
+	public function withResizeOptions( $options ) {
+		$this->resize_options = $options;
+		return $this;
+	}
+
+	/**
 	 * Get the URL.
 	 *
 	 * @param string  $url The full url to the image.
 	 * @param integer $size The size to use.
+	 * @param boolean $append_width Append the width to the url.
 	 *
 	 * @return string
 	 */
@@ -61,12 +86,12 @@ trait HasImageSizes {
 	}
 
 	/**
-	 * Get the image image_sizes.
+	 * Get the image_sizes
 	 *
 	 * @return array
 	 */
 	public function getImageSizes() {
-		return apply_filters( 'surecart/image_sizes', $this->image_sizes, $this );
+		return apply_filters( 'surecart/default_image_sizes', $this->image_sizes, $this );
 	}
 
 	/**
