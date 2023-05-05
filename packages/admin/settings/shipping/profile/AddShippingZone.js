@@ -8,6 +8,7 @@ import {
 	ScFlex,
 	ScFormControl,
 	ScSelect,
+	ScTag,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
@@ -21,9 +22,37 @@ export default ({ open, onRequestClose }) => {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [zoneName, setZoneName] = useState('');
-	const [zoneCountries, setZoneCountries] = useState([]);
+	const [zoneCountries, setZoneCountries] = useState({});
+	const [formattedChoices, setFormattedChoices] = useState({});
+
+	useEffect(() => {
+		setFormattedChoices(
+			countryChoices.reduce((acc, curr) => {
+				acc[curr.value] = curr;
+				return acc;
+			}, {})
+		);
+	}, []);
 
 	const onSubmit = () => {};
+
+	const onCountrySelect = (e) => {
+		const value = e.target.value;
+		setZoneCountries({
+			...zoneCountries,
+			[value]: formattedChoices[value],
+		});
+
+		delete formattedChoices[value];
+		setFormattedChoices({ ...formattedChoices });
+	};
+
+	const onRemoveZoneCountry = (value) => {
+		formattedChoices[value] = zoneCountries[value];
+		delete zoneCountries[value];
+		setZoneCountries({ ...zoneCountries });
+		setFormattedChoices({ ...formattedChoices });
+	};
 
 	return (
 		<ScDialog
@@ -44,15 +73,41 @@ export default ({ open, onRequestClose }) => {
 					onScInput={(e) => setZoneName(e.target.value)}
 					name="zone-name"
 				/>
-				<ScFormControl label={__('Select Countries', 'surecart')}>
+				<ScFormControl
+					label={__('Select Countries', 'surecart')}
+					css={css`
+						min-height: 20rem;
+					`}
+				>
 					<ScSelect
 						search
-						onScChange={(e) => {
-							console.log(e.target.value);
-						}}
-						choices={countryChoices}
+						onScChange={onCountrySelect}
+						choices={Object.values(formattedChoices)}
 						required
+						value=""
 					/>
+					<ScFlex
+						columnGap="1em"
+						justifyContent="flex-start"
+						css={css`
+							padding: 0.44em 0;
+							margin-top: var(--sc-spacing-medium);
+						`}
+						flexWrap="wrap"
+					>
+						{Object.values(zoneCountries).map((zoneCountry) => (
+							<ScTag
+								key={`zone-country-${zoneCountry.value}`}
+								pill
+								clearable
+								onScClear={() =>
+									onRemoveZoneCountry(zoneCountry.value)
+								}
+							>
+								{zoneCountry.label}
+							</ScTag>
+						))}
+					</ScFlex>
 				</ScFormControl>
 			</ScFlex>
 			<ScFlex justifyContent="flex-start" slot="footer">
