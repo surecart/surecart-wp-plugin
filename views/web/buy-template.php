@@ -26,7 +26,7 @@
 								return [
 									'src'    => $product_media->media->getUrl( 90 ) ?? '',
 									'srcset' => $product_media->media->withImageSizes( [ 90, 120, 240 ] )->srcset,
-									'sizes'  => '(min-width: 780px) 45px, 120px',
+									'sizes'  => '(min-width: 780px) 90px, 13vw',
 									'alt'    => $product_media->media->filename ?? $product->name ?? '',
 									'width'  => 90,
 								];
