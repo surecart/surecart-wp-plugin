@@ -23,9 +23,9 @@ export const settings = {
 			viewBox="0 0 24 24"
 			stroke="currentColor"
 			style={{ fill: 'none' }}
-			stroke-width="1.5"
-			stroke-linecap="round"
-			stroke-linejoin="round"
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"
 		>
 			<circle cx="9" cy="21" r="1"></circle>
 			<circle cx="20" cy="21" r="1"></circle>
