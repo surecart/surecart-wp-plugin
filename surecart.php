@@ -36,6 +36,9 @@ if ( ! defined( 'SURECART_APP_URL' ) ) {
 if ( ! defined( 'SURECART_API_URL' ) ) {
 	define( 'SURECART_API_URL', 'https://api.surecart.com' );
 }
+if ( ! defined( 'SURECART_CDN_IMAGE_BASE' ) ) {
+	define( 'SURECART_CDN_IMAGE_BASE', 'https://surecart.com/cdn-cgi/image' );
+}
 
 // Load composer dependencies.
 if ( file_exists( __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php' ) ) {
