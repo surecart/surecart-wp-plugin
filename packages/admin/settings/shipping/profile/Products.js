@@ -45,12 +45,14 @@ export default ({ shippingProfileId }) => {
 				queryArgs
 			);
 
+			const products = (
+				select(coreStore).getEntityRecords(...queryArgs) || []
+			).filter(
+				(product) => product.shipping_profile === shippingProfileId
+			);
+
 			return {
-				products: (
-					select(coreStore).getEntityRecords(...queryArgs) || []
-				).filter(
-					(product) => product.shipping_profile === shippingProfileId
-				),
+				products,
 				loading: loading && !products?.length,
 			};
 		},
