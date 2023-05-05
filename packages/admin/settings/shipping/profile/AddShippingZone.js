@@ -26,13 +26,19 @@ export default ({ open, onRequestClose }) => {
 	const [formattedChoices, setFormattedChoices] = useState({});
 
 	useEffect(() => {
-		setFormattedChoices(
-			countryChoices.reduce((acc, curr) => {
-				acc[curr.value] = curr;
-				return acc;
-			}, {})
-		);
-	}, []);
+		if (open) {
+			setFormattedChoices(
+				countryChoices.reduce((acc, curr) => {
+					acc[curr.value] = curr;
+					return acc;
+				}, {})
+			);
+		}
+
+		return () => {
+			setZoneCountries({});
+		};
+	}, [open]);
 
 	const onSubmit = () => {};
 
@@ -79,19 +85,12 @@ export default ({ open, onRequestClose }) => {
 						min-height: 20rem;
 					`}
 				>
-					<ScSelect
-						search
-						onScChange={onCountrySelect}
-						choices={Object.values(formattedChoices)}
-						required
-						value=""
-					/>
 					<ScFlex
 						columnGap="1em"
 						justifyContent="flex-start"
 						css={css`
 							padding: 0.44em 0;
-							margin-top: var(--sc-spacing-medium);
+							margin-bottom: var(--sc-spacing-medium);
 						`}
 						flexWrap="wrap"
 					>
@@ -108,6 +107,13 @@ export default ({ open, onRequestClose }) => {
 							</ScTag>
 						))}
 					</ScFlex>
+					<ScSelect
+						search
+						onScChange={onCountrySelect}
+						choices={Object.values(formattedChoices)}
+						required
+						value=""
+					/>
 				</ScFormControl>
 			</ScFlex>
 			<ScFlex justifyContent="flex-start" slot="footer">
