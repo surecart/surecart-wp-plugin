@@ -44,8 +44,9 @@ class BuyPageController {
 			return;
 		}
 		$product_media = $this->product->product_medias->data[0];
+
 		?>
-		<link rel="preload" fetchpriority="high" as="image" href="<?php echo esc_url( $product_media->media->getUrl( 450 ) ); ?>">
+		<link rel="preload" fetchpriority="high" as="image" href="<?php echo esc_url( $product_media->getUrl( 450 ) ); ?>">
 		<?php
 	}
 

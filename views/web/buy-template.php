@@ -14,7 +14,7 @@
 						'images'        => array_map(
 							function( $product_media ) use ( $product ) {
 								return [
-									'src'   => $product_media->media->getUrl( 450 ) ?? '',
+									'src'   => $product_media->getUrl( 450 ),
 									'alt'   => $product_media->media->filename ?? $product->name ?? '',
 									'width' => 450,
 								];
@@ -24,8 +24,8 @@
 						'thumbnails'    => array_map(
 							function( $product_media ) use ( $product ) {
 								return [
-									'src'    => $product_media->media->getUrl( 90 ) ?? '',
-									'srcset' => $product_media->media->withImageSizes( [ 90, 120, 240 ] )->srcset,
+									'src'    => $product_media->getUrl( 90 ),
+									'srcset' => $product_media->getSrcset( [ 90, 120, 240 ] ),
 									'sizes'  => '(min-width: 780px) 90px, 13vw', // 13vw = 13% of the viewport width because of 5 thumbnails per page, plus spacing for arrows.
 									'alt'    => $product_media->media->filename ?? $product->name ?? '',
 									'width'  => 90,
@@ -39,7 +39,7 @@
 			<?php else : ?>
 				<!-- wp:image {"sizeSlug":"full","linkDestination":"none","style":{"border":{"radius":"5px"}}} -->
 					<figure class="wp-block-image size-full is-resized has-custom-border">
-						<img src="<?php echo esc_url( $product->getImageUrl( 450 ) ); ?>" srcset="<?php echo esc_attr( $product->image_srcset ); ?>" alt="<?php echo esc_attr( $product->name ); ?>" style="border-radius:5px" />
+						<img src="<?php echo esc_url( $product->product_medias->data[0]->getUrl( 450 ) ); ?>" alt="<?php echo esc_attr( $product->name ); ?>" style="border-radius:5px" />
 					</figure>
 				<!-- /wp:image -->
 			<?php endif; ?>

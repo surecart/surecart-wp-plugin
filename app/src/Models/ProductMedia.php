@@ -36,4 +36,28 @@ class ProductMedia extends Model {
 	public function setMediaAttribute( $value ) {
 		$this->setRelation( 'media', $value, Media::class );
 	}
+
+	/**
+	 * Get the url for the product media.
+	 * We do this because the media object is not always set.
+	 *
+	 * @param integer $size The size.
+	 *
+	 * @return string
+	 */
+	public function getUrl( $size ) {
+		return ! empty( $this->media ) ? $this->media->getUrl( $size ) : $this->url;
+	}
+
+	/**
+	 * Get the srcset for the product media.
+	 * We do this because the media object is not always set.
+	 *
+	 * @param array[integer] $sizes The sizes.
+	 *
+	 * @return string
+	 */
+	public function getSrcset( $sizes ) {
+		return ! empty( $this->media ) ? $this->media->withImageSizes( $sizes )->srcset : '';
+	}
 }
