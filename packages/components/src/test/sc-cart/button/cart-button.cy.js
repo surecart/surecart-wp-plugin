@@ -53,6 +53,6 @@ describe('Cart', () => {
     closeCart();
 
     // the icon and counter should be correct.
-    cy.get('sc-cart-icon').shadow().find('.cart').should('be.visible').find('.cart__counter').contains('1');
+    cy.get('sc-cart-icon').find('.cart__counter').should('be.visible').contains('1');
   });
 });
