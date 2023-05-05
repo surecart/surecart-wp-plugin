@@ -104,8 +104,6 @@ export default ({ shippingProfileId }) => {
 		}
 	};
 
-	console.log({ products });
-
 	return (
 		<SettingsBox
 			title={__('Products', 'surecart')}
