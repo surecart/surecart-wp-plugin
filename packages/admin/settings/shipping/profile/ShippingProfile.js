@@ -11,10 +11,13 @@ import Products from './Products';
 import ShippingZones from './ShippingZones';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect, useDispatch } from '@wordpress/data';
+import { store as noticesStore } from '@wordpress/notices';
 
 export default () => {
 	const [error, setError] = useState();
 	const shippingProfileId = getQueryArg(window.location.href, 'profile');
+
+	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	const { shippingProfile, loadingShippingProfile } = useSelect(
 		(select) => {
@@ -49,6 +52,9 @@ export default () => {
 				'shipping-profile',
 				shippingProfile
 			);
+			createSuccessNotice(__('Updated', 'surecart'), {
+				type: 'snackbar',
+			});
 		} catch (e) {
 			console.error(e);
 			setError(e);
