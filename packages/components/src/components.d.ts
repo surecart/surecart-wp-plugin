@@ -286,6 +286,10 @@ export namespace Components {
           * Are we in test or live mode.
          */
         "mode": 'test' | 'live';
+        /**
+          * Whether the cart count will be shown or not when the cart is empty
+         */
+        "showEmptyCount": boolean;
     }
     interface ScCartForm {
         /**
@@ -5324,6 +5328,10 @@ declare namespace LocalJSX {
           * Are we in test or live mode.
          */
         "mode"?: 'test' | 'live';
+        /**
+          * Whether the cart count will be shown or not when the cart is empty
+         */
+        "showEmptyCount"?: boolean;
     }
     interface ScCartForm {
         /**

@@ -1,0 +1,30 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"name": "surecart/cart-menu-button",
+	"title": "Cart Menu Button",
+	"description": "The cart menu button",
+	"category": "surecart",
+	"textdomain": "surecart",
+	"supports": {
+		"reusable": false,
+		"html": false,
+		"multiple": false,
+		"color": {
+			"text": false,
+			"background": false
+		}
+	},
+	"attributes": {
+		"cartIcon": {
+			"type": "string",
+			"default": "shopping-bag"
+		},
+		"cartMenuAlwaysShown": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"script": "surecart-components",
+	"style": "surecart-themes-default"
+}

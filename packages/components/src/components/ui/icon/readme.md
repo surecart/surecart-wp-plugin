@@ -39,7 +39,6 @@
  - [sc-breadcrumbs](../breadcrumbs)
  - [sc-cancel-dialog](../../controllers/dashboard/sc-cancel-dialog)
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
- - [sc-cart-button](../sc-cart-button)
  - [sc-cart-form-submit](../../controllers/cart/cart-form-submit)
  - [sc-cart-header](../../controllers/cart/cart-header)
  - [sc-cart-icon](../sc-cart-icon)
@@ -88,7 +87,6 @@ graph TD;
   sc-breadcrumbs --> sc-icon
   sc-cancel-dialog --> sc-icon
   sc-cancel-survey --> sc-icon
-  sc-cart-button --> sc-icon
   sc-cart-form-submit --> sc-icon
   sc-cart-header --> sc-icon
   sc-cart-icon --> sc-icon

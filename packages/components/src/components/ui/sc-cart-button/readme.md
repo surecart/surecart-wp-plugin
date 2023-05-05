@@ -7,12 +7,11 @@
 
 ## Properties
 
-| Property              | Attribute                | Description                                                  | Type               | Default          |
-| --------------------- | ------------------------ | ------------------------------------------------------------ | ------------------ | ---------------- |
-| `cartMenuAlwaysShown` | `cart-menu-always-shown` | Whether the cart icon is always shown when the cart is empty | `boolean`          | `true`           |
-| `formId`              | `form-id`                | The form id to use for the cart.                             | `string`           | `undefined`      |
-| `icon`                | `icon`                   | The icon to show.                                            | `string`           | `'shopping-bag'` |
-| `mode`                | `mode`                   | Are we in test or live mode.                                 | `"live" \| "test"` | `'live'`         |
+| Property              | Attribute                | Description                                                  | Type               | Default     |
+| --------------------- | ------------------------ | ------------------------------------------------------------ | ------------------ | ----------- |
+| `cartMenuAlwaysShown` | `cart-menu-always-shown` | Whether the cart icon is always shown when the cart is empty | `boolean`          | `true`      |
+| `formId`              | `form-id`                | The form id to use for the cart.                             | `string`           | `undefined` |
+| `mode`                | `mode`                   | Are we in test or live mode.                                 | `"live" \| "test"` | `'live'`    |
 
 
 ## Shadow Parts
@@ -22,19 +21,6 @@
 | `"base"`  | The elements base wrapper. |
 | `"count"` | The icon base wrapper.     |
 
-
-## Dependencies
-
-### Depends on
-
-- [sc-icon](../icon)
-
-### Graph
-```mermaid
-graph TD;
-  sc-cart-button --> sc-icon
-  style sc-cart-button fill:#f9f,stroke:#333,stroke-width:4px
-```
 
 ----------------------------------------------
 

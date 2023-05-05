@@ -159,6 +159,7 @@
     "cart-menu-always-shown": true,
     "form-id": true,
     "mode": true,
+    "show-empty-count": true,
     "style": true,
     "id": true,
     "class": true,

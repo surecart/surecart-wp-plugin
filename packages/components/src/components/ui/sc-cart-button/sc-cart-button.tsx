@@ -27,8 +27,11 @@ export class ScCartButton {
   /** Are we in test or live mode. */
   @Prop() mode: 'test' | 'live' = 'live';
 
-  /**Whether the cart icon is always shown when the cart is empty */
+  /** Whether the cart icon is always shown when the cart is empty */
   @Prop() cartMenuAlwaysShown: boolean = true;
+
+  /** Whether the cart count will be shown or not when the cart is empty */
+  @Prop() showEmptyCount: boolean = false;
 
   order() {
     return getCheckout(this.formId, this.mode);
@@ -62,7 +65,7 @@ export class ScCartButton {
     return (
       <div class="cart__button" part="base">
         <div class="cart__content">
-          {!!this.getItemsCount() && (
+          {(this.showEmptyCount || !!this.getItemsCount()) && (
             <span class="cart__count" part="count">
               {this.getItemsCount()}
             </span>
