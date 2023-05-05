@@ -15,17 +15,26 @@ import {
 import { useState } from '@wordpress/element';
 import AddShippingZone from './AddShippingZone';
 import EditShippingZone from './EditShippingZone';
+import AddShippingMethod from './AddShippingMethod';
+
+const modals = {
+	EDIT_ZONE: 'edit_shipping_zone',
+	ADD_ZONE: 'add_shipping_zone',
+	ADD_RATE: 'add_shipping_rate',
+};
 
 export default ({ shippingProfileId, shippingZones, loading }) => {
-	const [showAddZone, setShowAddZone] = useState(false);
+	const [currentModal, setCurrentModal] = useState('');
 	const [selectedZone, setSelectedZone] = useState();
-	const [showEditZone, setShowEditZone] = useState();
 
 	return (
 		<SettingsBox
 			title={__('Shipping Zones', 'surecart')}
 			end={
-				<ScButton type="primary" onClick={() => setShowAddZone(true)}>
+				<ScButton
+					type="primary"
+					onClick={() => setCurrentModal(modals.ADD_ZONE)}
+				>
 					<ScIcon name="plus" /> Create Zone
 				</ScButton>
 			}
@@ -41,7 +50,7 @@ export default ({ shippingProfileId, shippingZones, loading }) => {
 								<ScButton
 									type="text"
 									onClick={() => {
-										setShowEditZone(true);
+										setCurrentModal(modals.EDIT_ZONE);
 										setSelectedZone(shippingZone);
 									}}
 								>
@@ -79,28 +88,39 @@ export default ({ shippingProfileId, shippingZones, loading }) => {
 									)
 								)}
 							</ScTable>
+							<ScButton
+								onClick={() => {
+									setCurrentModal(modals.ADD_RATE);
+									setSelectedZone(shippingZone);
+								}}
+							>
+								<ScIcon name="plus" /> Add Rate
+							</ScButton>
 						</ScCard>
 					))
 				) : (
 					<ScText>No shipping zones present.</ScText>
 				)}
 			</ScFlex>
-			<ScButton>
-				<ScIcon name="plus" /> Add Rate
-			</ScButton>
+
 			<AddShippingZone
-				open={showAddZone}
-				onRequestClose={() => setShowAddZone(false)}
+				open={currentModal === modals.ADD_ZONE}
+				onRequestClose={() => setCurrentModal('')}
 				shippingProfileId={shippingProfileId}
 			/>
 			<EditShippingZone
-				open={showEditZone}
+				open={currentModal === modals.EDIT_ZONE}
 				onRequestClose={() => {
-					setShowEditZone(false);
+					setCurrentModal('');
 					setSelectedZone();
 				}}
 				selectedZone={selectedZone}
 				shippingProfileId={shippingProfileId}
+			/>
+			<AddShippingMethod
+				open={currentModal === modals.ADD_RATE}
+				onRequestClose={() => setCurrentModal('')}
+				shippingZoneId={selectedZone?.id}
 			/>
 		</SettingsBox>
 	);
