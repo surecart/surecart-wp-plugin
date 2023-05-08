@@ -65,8 +65,17 @@ class AccountService {
 	public function fetchCachedAccount() {
 		$this->account = get_transient( $this->cache_key );
 		if ( false === $this->account ) {
+			// fetch account.
 			$this->account = $this->fetchAccount();
-			set_transient( $this->cache_key, $this->account, 5 * MINUTE_IN_SECONDS );
+
+			// there was an error or the account could not be fetched by other means.
+			if ( is_wp_error( $this->account ) || empty( $this->account->id ) ) {
+				delete_transient( $this->cache_key );
+				return $this->account;
+			}
+
+			// set the transient.
+			set_transient( $this->cache_key, $this->account, 15 * MINUTE_IN_SECONDS );
 		}
 		return $this->account;
 	}
