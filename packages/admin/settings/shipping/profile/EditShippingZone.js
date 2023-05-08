@@ -15,7 +15,6 @@ import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import Error from '../../../components/Error';
-import { useDispatch } from '@wordpress/data';
 import { countryChoices } from '@surecart/components';
 
 export default ({ open, onRequestClose, selectedZone }) => {
@@ -99,6 +98,7 @@ export default ({ open, onRequestClose, selectedZone }) => {
 			open={open}
 			label={__('Edit Zone')}
 			onScRequestClose={onRequestClose}
+			style={{ '--dialog-body-overflow': 'visible' }}
 		>
 			<Error error={error} setError={setError} />
 			<ScForm onScFormSubmit={onSubmit}>
@@ -115,12 +115,7 @@ export default ({ open, onRequestClose, selectedZone }) => {
 						name="zone-name"
 						value={zoneName}
 					/>
-					<ScFormControl
-						label={__('Select Countries', 'surecart')}
-						css={css`
-							min-height: 20rem;
-						`}
-					>
+					<ScFormControl label={__('Select Countries', 'surecart')}>
 						<ScFlex
 							columnGap="1em"
 							justifyContent="flex-start"
