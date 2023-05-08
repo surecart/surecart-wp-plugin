@@ -2,6 +2,7 @@ import { Component, h, Prop, Event, EventEmitter, Element, Fragment } from '@ste
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
 import { Fee, Media } from '../../../types';
+import { sizeImage } from '../../../functions/media';
 
 /**
  * @part base - The elements base wrapper.
@@ -127,14 +128,10 @@ export class ScProductLineItem {
   }
 
   render() {
-    const imageUrl =
-      (this.imageUrl || '').includes('surecart.com') && window.scData?.cdn_root
-        ? `${window.scData?.cdn_root}/fit=scale-down,format=auto,width=130/${this.imageUrl}`
-        : this.imageUrl;
     return (
       <div class="base" part="base">
         <div part="product-line-item" class={{ 'item': true, 'item--has-image': !!this.imageUrl, 'item--is-rtl': isRtl() }}>
-          {!!this.imageUrl && <img part="image" src={imageUrl} class="item__image" />}
+          {!!this.imageUrl && <img part="image" src={sizeImage(this.imageUrl, 130)} class="item__image" />}
           <div class="item__text" part="text">
             <div class="item__title" part="title">
               <slot name="title">{this.name}</slot>
