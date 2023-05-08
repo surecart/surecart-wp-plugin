@@ -7,8 +7,6 @@ import { __ } from '@wordpress/i18n';
 import {
 	InspectorControls,
 	PanelColorSettings,
-	InspectorControls,
-	PanelColorSettings,
 	RichText,
 } from '@wordpress/block-editor';
 import {
