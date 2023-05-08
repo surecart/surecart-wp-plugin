@@ -9,7 +9,6 @@
 	"supports": {
 		"reusable": false,
 		"html": false,
-		"multiple": false,
 		"color": {
 			"text": false,
 			"background": false
