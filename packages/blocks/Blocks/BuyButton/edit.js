@@ -7,16 +7,15 @@ import { __ } from '@wordpress/i18n';
 import {
 	InspectorControls,
 	PanelColorSettings,
+	InspectorControls,
+	PanelColorSettings,
 	RichText,
-	__experimentalUseColorProps as useColorProps,
-	__experimentalUseBorderProps as useBorderProps,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	PanelRow,
 	SelectControl,
 	TextControl,
-	ColorPicker,
 } from '@wordpress/components';
 
 /**
@@ -24,8 +23,6 @@ import {
  */
 import { ScButton } from '@surecart/components-react';
 import Placeholder from './Placeholder';
-import PriceSelector from '@scripts/blocks/components/PriceSelector';
-import PriceInfo from '@scripts/blocks/components/PriceInfo';
 
 export default ({ className, attributes, setAttributes }) => {
 	const {
