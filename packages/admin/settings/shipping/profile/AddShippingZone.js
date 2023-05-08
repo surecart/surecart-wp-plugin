@@ -14,6 +14,8 @@ import {
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
+import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch } from '@wordpress/data';
 import Error from '../../../components/Error';
 import { countryChoices } from '@surecart/components';
 
@@ -22,6 +24,7 @@ export default ({ open, onRequestClose, shippingProfileId }) => {
 	const [loading, setLoading] = useState(false);
 	const [zoneName, setZoneName] = useState('');
 	const [zoneCountries, setZoneCountries] = useState([]);
+	const { saveEntityRecord } = useDispatch(coreStore);
 
 	useEffect(() => {
 		return () => {
@@ -42,14 +45,10 @@ export default ({ open, onRequestClose, shippingProfileId }) => {
 
 		setLoading(true);
 		try {
-			await apiFetch({
-				path: 'surecart/v1/shipping_zones',
-				data: {
-					name: zoneName,
-					shipping_profile_id: shippingProfileId,
-					countries: zoneCountries,
-				},
-				method: 'POST',
+			await saveEntityRecord('surecart', 'shipping-zone', {
+				name: zoneName,
+				shipping_profile_id: shippingProfileId,
+				countries: zoneCountries,
 			});
 			onRequestClose();
 		} catch (error) {

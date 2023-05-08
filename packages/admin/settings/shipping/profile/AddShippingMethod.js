@@ -29,8 +29,6 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 		amount: 0,
 		rate_type: rate_types.ITEM_WEIGHT,
 		shipping_method_id: '',
-		min_amount: 0,
-		max_amount: 0,
 	});
 
 	const onSubmit = async (e) => {

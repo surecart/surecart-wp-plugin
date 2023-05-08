@@ -13,6 +13,9 @@ import {
 	ScTableCell,
 	ScTableRow,
 	ScText,
+	ScDropdown,
+	ScMenu,
+	ScMenuItem,
 } from '@surecart/components-react';
 import { Fragment, useState } from '@wordpress/element';
 import AddShippingZone from './AddShippingZone';
@@ -59,6 +62,8 @@ export default ({ shippingProfileId }) => {
 		};
 	});
 
+	const onRemoveShippingRate = (shippingRateId) => {};
+
 	const renderShippingRates = (shippingRates) => {
 		if (!shippingRates?.data?.length) {
 			return (
@@ -89,7 +94,25 @@ export default ({ shippingProfileId }) => {
 								currency={shippingRate.currency}
 							/>
 						</ScTableCell>
-						<ScTableCell></ScTableCell>
+						<ScTableCell>
+							<ScDropdown placement="bottom-end">
+								<ScButton type="text" slot="trigger" circle>
+									<ScIcon name="more-horizontal" />
+								</ScButton>
+								<ScMenu>
+									<ScMenuItem
+										onClick={() =>
+											onRemoveShippingRate(
+												shippingRate.id
+											)
+										}
+									>
+										<ScIcon slot="prefix" name="trash" />
+										{__('Remove', 'surecart')}
+									</ScMenuItem>
+								</ScMenu>
+							</ScDropdown>
+						</ScTableCell>
 					</ScTableRow>
 				))}
 			</ScTable>
@@ -117,8 +140,6 @@ export default ({ shippingProfileId }) => {
 
 		return `${shippingRate.min_amount}${shippingRate.weight_unit} - ${shippingRate.max_amount}${shippingRate.weight_unit}`;
 	};
-
-	console.log(shippingZones);
 
 	return (
 		<SettingsBox

@@ -13,15 +13,17 @@ import {
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
-import apiFetch from '@wordpress/api-fetch';
 import Error from '../../../components/Error';
 import { countryChoices } from '@surecart/components';
+import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch } from '@wordpress/data';
 
 export default ({ open, onRequestClose, selectedZone }) => {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [zoneName, setZoneName] = useState('');
 	const [zoneCountries, setZoneCountries] = useState([]);
+	const { saveEntityRecord } = useDispatch(coreStore);
 
 	useEffect(() => {
 		if (selectedZone) {
@@ -47,14 +49,12 @@ export default ({ open, onRequestClose, selectedZone }) => {
 
 		setLoading(true);
 		try {
-			await apiFetch({
-				path: `surecart/v1/shipping_zones/${selectedZone.id}`,
-				data: {
-					name: zoneName,
-					countries: zoneCountries,
-				},
-				method: 'PATCH',
+			await saveEntityRecord('surecart', 'shipping-zone', {
+				id: selectedZone.id,
+				name: zoneName,
+				countries: zoneCountries,
 			});
+
 			onRequestClose();
 		} catch (error) {
 			console.error(error);
