@@ -15,16 +15,13 @@ import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import Error from '../../../components/Error';
-import { useDispatch } from '@wordpress/data';
 import { countryChoices } from '@surecart/components';
-import { store as noticesStore } from '@wordpress/notices';
 
 export default ({ open, onRequestClose, shippingProfileId }) => {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [zoneName, setZoneName] = useState('');
 	const [zoneCountries, setZoneCountries] = useState([]);
-	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	useEffect(() => {
 		return () => {
@@ -55,7 +52,6 @@ export default ({ open, onRequestClose, shippingProfileId }) => {
 				method: 'POST',
 			});
 			onRequestClose();
-			createSuccessNotice(__('Shipping zone created.', 'surecart'));
 		} catch (error) {
 			console.error(error);
 			setError(error);

@@ -17,14 +17,12 @@ import apiFetch from '@wordpress/api-fetch';
 import Error from '../../../components/Error';
 import { useDispatch } from '@wordpress/data';
 import { countryChoices } from '@surecart/components';
-import { store as noticesStore } from '@wordpress/notices';
 
 export default ({ open, onRequestClose, selectedZone }) => {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [zoneName, setZoneName] = useState('');
 	const [zoneCountries, setZoneCountries] = useState([]);
-	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	useEffect(() => {
 		if (selectedZone) {
@@ -59,7 +57,6 @@ export default ({ open, onRequestClose, selectedZone }) => {
 				method: 'PATCH',
 			});
 			onRequestClose();
-			createSuccessNotice(__('Shipping zone edited.', 'surecart'));
 		} catch (error) {
 			console.error(error);
 			setError(error);

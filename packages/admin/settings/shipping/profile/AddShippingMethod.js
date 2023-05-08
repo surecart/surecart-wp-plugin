@@ -14,8 +14,6 @@ import {
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
-import { useDispatch } from '@wordpress/data';
-import { store as noticesStore } from '@wordpress/notices';
 import Error from '../../../components/Error';
 
 const rate_types = {
@@ -24,8 +22,6 @@ const rate_types = {
 };
 
 export default ({ open, onRequestClose, shippingZoneId }) => {
-	const { createSuccessNotice } = useDispatch(noticesStore);
-
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [methodName, setMethodName] = useState('');
@@ -65,7 +61,6 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 			});
 
 			onRequestClose();
-			createSuccessNotice(__('Shipping rate created.', 'surecart'));
 		} catch (error) {
 			console.error(error);
 			setError(error);

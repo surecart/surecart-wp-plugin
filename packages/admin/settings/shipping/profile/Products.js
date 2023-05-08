@@ -19,6 +19,7 @@ import Product from '../../../coupons/modules/Product';
 import { useState } from '@wordpress/element';
 import ModelSelector from '../../../components/ModelSelector';
 import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
 import Error from '../../../components/Error';
 import { useDispatch, useSelect } from '@wordpress/data';
 
@@ -27,6 +28,7 @@ export default ({ shippingProfileId }) => {
 	const [busy, setBusy] = useState(false);
 	const [draftProducts, setDraftProducts] = useState(0);
 	const { saveEntityRecord } = useDispatch(coreStore);
+	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	const { products, loading } = useSelect(
 		(select) => {
@@ -69,6 +71,9 @@ export default ({ shippingProfileId }) => {
 				id,
 				shipping_profile: null,
 			});
+			createSuccessNotice(__('Product removed', 'surecart'), {
+				type: 'snackbar',
+			});
 		} catch (error) {
 			console.error(error);
 			setError(error);
@@ -87,6 +92,9 @@ export default ({ shippingProfileId }) => {
 				shipping_profile: shippingProfileId,
 			});
 			setDraftProducts(0);
+			createSuccessNotice(__('Product added', 'surecart'), {
+				type: 'snackbar',
+			});
 		} catch (error) {
 			console.error(error);
 			setError(error);
