@@ -20,15 +20,22 @@ class Block extends BaseBlock {
 		$form = \SureCart::cart()->getForm();
 		$mode = \SureCart::cart()->getMode();
 
+		// Stop if no form or mode found as for deletion.
+		if ( empty( $form->ID ) || empty( $mode ) ) {
+			return '';
+		}
+
 		ob_start(); ?>
-			<a href="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>">
-				<sc-cart-button
-					cart-menu-always-shown='<?php echo esc_attr( $attributes['cartMenuAlwaysShown'] ? 'true' : 'false' ); ?>'
-					form-id='<?php echo esc_attr( $form->ID ); ?>'
-					mode='<?php echo esc_attr( $mode ); ?>'>
-					<sc-icon name='<?php echo esc_attr( $attributes['cartIcon'] ); ?>'></sc-icon>
-				</sc-cart-button>
-			</a>
+
+		<a href="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>">
+			<sc-cart-button
+				cart-menu-always-shown='<?php echo esc_attr( $attributes['cartMenuAlwaysShown'] ? 'true' : 'false' ); ?>'
+				form-id='<?php echo esc_attr( $form->ID ); ?>'
+				mode='<?php echo esc_attr( $mode ); ?>'>
+				<sc-icon name='<?php echo esc_attr( $attributes['cartIcon'] ); ?>'></sc-icon>
+			</sc-cart-button>
+		</a>
+
 		<?php
 		return ob_get_clean();
 	}

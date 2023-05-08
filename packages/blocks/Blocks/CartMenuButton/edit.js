@@ -18,7 +18,7 @@ import {
 import {
 	ScIcon,
 	ScChoice,
-	ScFlex,
+  ScChoices,
 	ScCartButton,
 } from '@surecart/components-react';
 
@@ -36,37 +36,35 @@ export default ({ attributes, setAttributes }) => {
 		<div>
 			<InspectorControls>
 				<PanelBody title={__('Cart menu button settings')}>
-					<div style={{ marginBottom: 20 }}>
-						<label style={{ marginBottom: 10, display: 'block' }}>
-							{__('Icon', 'surecart')}
-						</label>
-						<ScFlex justify-content="flex-start">
-							<ScChoice
-								showControl={false}
-								checked={cartIcon === 'shopping-bag'}
-								value={'shopping-bag'}
-								onClick={(e) =>
+					<PanelRow>
+						<div style={{ marginBottom: 20, width: '100%', flex: 'flex-1' }}>
+							<ScChoices
+								label={__('Icon', 'surecart')}
+								onScChange={(e) =>
 									setAttributes({
-										cartIcon: 'shopping-bag',
+										cartIcon: e.target.value
 									})
 								}
+								style={{ '--sc-choice-padding': '1.3em' }}
+								autoWidth
 							>
-								<ScIcon name="shopping-bag" />
-							</ScChoice>
-							<ScChoice
-								showControl={false}
-								checked={cartIcon === 'shopping-cart'}
-								value={'shopping-cart'}
-								onClick={(e) =>
-									setAttributes({
-										cartIcon: 'shopping-cart',
-									})
-								}
-							>
-								<ScIcon name="shopping-cart" />
-							</ScChoice>
-						</ScFlex>
-					</div>
+								<ScChoice
+									showControl={false}
+									checked={cartIcon === 'shopping-bag'}
+									value='shopping-bag'
+								>
+									<ScIcon name="shopping-bag" />
+								</ScChoice>
+								<ScChoice
+									showControl={false}
+									checked={cartIcon === 'shopping-cart'}
+									value='shopping-cart'
+								>
+									<ScIcon name="shopping-cart" />
+								</ScChoice>
+							</ScChoices>
+						</div>
+					</PanelRow>
 
 					<PanelRow>
 						<ToggleControl
@@ -89,19 +87,14 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<div {...blockProps}>
+			<a {...blockProps}>
 				<ScCartButton
-					cartMenuAlwaysShown={cartMenuAlwaysShown}
+					cartMenuAlwaysShown={true}
 					showEmptyCount={true}
-					style={{
-						border: !cartMenuAlwaysShown ? '1px solid #ccc' : '0',
-						padding: !cartMenuAlwaysShown ? 15 : 0,
-						borderRadius: !cartMenuAlwaysShown ? 4 : 0
-					}}
 				>
 					<ScIcon name={cartIcon} />
 				</ScCartButton>
-			</div>
+			</a>
 		</div>
 	);
 };
