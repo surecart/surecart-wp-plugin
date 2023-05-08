@@ -10,7 +10,7 @@ import Error from '../../../components/Error';
 import Products from './Products';
 import ShippingZones from './ShippingZones';
 import { store as coreStore } from '@wordpress/core-data';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useSelect, useDispatch, select } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
 
 export default () => {
@@ -39,16 +39,27 @@ export default () => {
 		},
 		[shippingProfileId]
 	);
-	const { editEntityRecord, saveEntityRecord } = useDispatch(coreStore);
+	const { editEntityRecord, saveEditedEntityRecord } = useDispatch(coreStore);
 
 	const onSubmit = async () => {
 		setError(null);
 		try {
-			await saveEntityRecord(
-				'surecart',
-				'shipping-profile',
-				shippingProfile
-			);
+			// build up pending records to save.
+			const dirtyRecords =
+				select(coreStore).__experimentalGetDirtyEntityRecords();
+			const pendingSavedRecords = [];
+			dirtyRecords.forEach(({ kind, name, key }) => {
+				pendingSavedRecords.push(
+					saveEditedEntityRecord(kind, name, key)
+				);
+			});
+
+			// check values.
+			const values = await Promise.all(pendingSavedRecords);
+			if (values.some((value) => typeof value === 'undefined')) {
+				throw new Error('Saving failed.');
+			}
+
 			createSuccessNotice(__('Updated', 'surecart'), {
 				type: 'snackbar',
 			});
