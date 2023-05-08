@@ -13,7 +13,7 @@ export class ScFormatNumber {
   @Prop({ mutable: true }) locale: string;
 
   /** The formatting style to use. */
-  @Prop() type: 'currency' | 'decimal' | 'percent' = 'decimal';
+  @Prop() type: 'currency' | 'decimal' | 'percent' | 'unit' = 'decimal';
 
   /** Turns off grouping separators. */
   @Prop({ attribute: 'no-grouping' }) noGrouping: boolean = false;
@@ -39,7 +39,15 @@ export class ScFormatNumber {
   /** The maximum number of significant digits to use,. Possible values are 1 - 21. */
   @Prop() maximumSignificantDigits: number;
 
+  /** Whether to convert */
   @Prop() noConvert: boolean;
+
+  /** The unit type for formatting type=unit */
+  @Prop() unitType: 'kg' | 'lb' = 'kg';
+
+  /** The unit display type */
+  @Prop() unitDisplay: 'long' | 'short' | 'narrow' = 'narrow';
+
 
   render() {
     if (isNaN(this.value)) {
@@ -56,6 +64,8 @@ export class ScFormatNumber {
       maximumFractionDigits: this.maximumFractionDigits,
       minimumSignificantDigits: this.minimumSignificantDigits,
       maximumSignificantDigits: this.maximumSignificantDigits,
+      unit: this.unitType,
+      unitDisplay: this.unitDisplay
     }).format(this.noConvert ? this.value : maybeConvertAmount(this.value, this.currency.toUpperCase()));
   }
 }
