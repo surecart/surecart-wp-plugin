@@ -260,6 +260,9 @@ class ScriptsService {
 	 * @return void
 	 */
 	public function registerBlocks() {
+		$enabledPaymentProcessors = array_values(array_filter((array) Processor::get() ?? [], function($paymentMethod){
+			return $paymentMethod->enabled;
+		}));
 		// blocks.
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/library.asset.php';
 		$deps       = $asset_file['dependencies'];
@@ -305,7 +308,7 @@ class ScriptsService {
 				'root_url'             => esc_url_raw( get_rest_url() ),
 				'nonce'                => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 				'nonce_endpoint'       => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
-				'processors'           => (array) Processor::get() ?? [],
+				'processors'           => $enabledPaymentProcessors,
 				'manualPaymentMethods' => (array) ManualPaymentMethod::get() ?? [],
 				'plugin_url'           => \SureCart::core()->assets()->getUrl(),
 				'currency'             => \SureCart::account()->currency,
