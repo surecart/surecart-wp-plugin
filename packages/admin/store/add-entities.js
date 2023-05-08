@@ -217,6 +217,13 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'shipping-zone',
+		kind: 'surecart',
+		label: __('Shipping Zone', 'surecart'),
+		baseURL: 'surecart/v1/shipping_zones',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'stat',
 		kind: 'surecart',
 		label: __('Statistic', 'surecart'),

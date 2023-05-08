@@ -80,6 +80,9 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 						onScInput={(e) => {
 							updateShippingRate('min_amount', e.target.value);
 						}}
+						css={css`
+							min-width: 0;
+						`}
 					/>
 					<ScPriceInput
 						label={__('Maximum Price', 'surecart')}
@@ -89,6 +92,9 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 						onScInput={(e) => {
 							updateShippingRate('max_amount', e.target.value);
 						}}
+						css={css`
+							min-width: 0;
+						`}
 					/>
 				</ScFlex>
 			);
@@ -101,6 +107,9 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 						onScInput={(e) => {
 							updateShippingRate('min_amount', e.target.value);
 						}}
+						css={css`
+							min-width: 0;
+						`}
 					/>
 					<ScInput
 						label={__('Minimum weight', 'surecart')}
@@ -109,6 +118,9 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 						onScInput={(e) => {
 							updateShippingRate('max_amount', e.target.value);
 						}}
+						css={css`
+							min-width: 0;
+						`}
 					/>
 				</ScFlex>
 			);
@@ -156,7 +168,9 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 						}}
 					/>
 					<ScRadioGroup
-						onScChange={(e) => console.log(e.target)}
+						onScChange={(e) =>
+							updateShippingRate('rate_type', e.target.value)
+						}
 						value={shippingRate.rate_type}
 					>
 						<ScRadio

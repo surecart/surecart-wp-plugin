@@ -25,9 +25,6 @@ export default () => {
 				'surecart',
 				'shipping-profile',
 				shippingProfileId,
-				{
-					expand: ['shipping_zones'],
-				},
 			];
 
 			return {
@@ -106,7 +103,6 @@ export default () => {
 			/>
 			<ShippingZones
 				shippingProfileId={shippingProfileId}
-				shippingZones={shippingProfile?.shipping_zones?.data}
 				loading={loadingShippingProfile}
 			/>
 		</SettingsTemplate>
