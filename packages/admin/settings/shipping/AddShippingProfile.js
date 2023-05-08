@@ -45,15 +45,7 @@ export default ({ open, onRequestClose }) => {
 			}
 		} catch (error) {
 			console.error(error);
-			if (error?.additional_errors?.[0]?.message) {
-				setError(error?.additional_errors?.[0]);
-			} else {
-				setError({
-					message:
-						error?.message ||
-						__('Failed to add shipping zone.', 'surecart'),
-				});
-			}
+			setError(error);
 		} finally {
 			setLoading(false);
 		}

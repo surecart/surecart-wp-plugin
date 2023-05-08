@@ -71,14 +71,7 @@ export default ({ shippingProfileId }) => {
 			});
 		} catch (error) {
 			console.error(error);
-			if (error?.additional_errors?.[0]?.message) {
-				setError(error?.additional_errors?.[0]?.message);
-			} else {
-				setError(
-					error?.message ||
-						__('Failed to remove product.', 'surecart')
-				);
-			}
+			setError(error);
 		} finally {
 			setBusy(false);
 		}
@@ -93,15 +86,10 @@ export default ({ shippingProfileId }) => {
 				id,
 				shipping_profile: shippingProfileId,
 			});
+			setDraftProducts(0);
 		} catch (error) {
 			console.error(error);
-			if (error?.additional_errors?.[0]?.message) {
-				setError(error?.additional_errors?.[0]?.message);
-			} else {
-				setError(
-					error?.message || __('Failed to add product.', 'surecart')
-				);
-			}
+			setError(error);
 		} finally {
 			setBusy(false);
 		}
