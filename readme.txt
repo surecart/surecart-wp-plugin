@@ -245,6 +245,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 = 1.10.3 - May 9, 2023 =
 * Improvement: Remove US Commonwealth countries from country selector to avoid confusion since they already exist as states.
+* Improvement: Added clarification text that coupon redemption limits are not applied in test mode.
 * Fix: Issue with updating prices not immediately changing on existing carts.
 * Fix: Issue with Paypal checkout not succeeding if status of charge is "processing".
 * Fix: Checkout line items not being passed with scOrderPaid event.
