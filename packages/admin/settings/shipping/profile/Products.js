@@ -8,6 +8,8 @@ import {
 	ScCard,
 	ScDropdown,
 	ScEmpty,
+	ScFlex,
+	ScFormatNumber,
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
@@ -22,6 +24,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import Error from '../../../components/Error';
 import { useDispatch, useSelect } from '@wordpress/data';
+import { intervalString } from '../../../util/translations';
 
 export default ({ shippingProfileId }) => {
 	const [error, setError] = useState(null);
@@ -39,6 +42,7 @@ export default ({ shippingProfileId }) => {
 					archived: false,
 					shipping_profile_ids: [shippingProfileId],
 					per_page: 100,
+					expand: ['prices'],
 				},
 			];
 
@@ -103,6 +107,72 @@ export default ({ shippingProfileId }) => {
 		}
 	};
 
+	const renderProduct = (product) => {
+		const activePrices = product?.prices?.data?.filter(
+			(price) => !price?.archived
+		);
+		const firstPrice = activePrices?.[0];
+		const totalPrices = activePrices?.length;
+
+		return (
+			<ScFlex alignItems="center" justifyContent="flex-start">
+				{product?.image_url ? (
+					<img
+						src={product.image_url}
+						css={css`
+							width: 40px;
+							height: 40px;
+							object-fit: cover;
+							background: #f3f3f3;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							border-radius: var(--sc-border-radius-small);
+						`}
+					/>
+				) : (
+					<div
+						css={css`
+							width: 40px;
+							height: 40px;
+							object-fit: cover;
+							background: var(--sc-color-gray-100);
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							border-radius: var(--sc-border-radius-small);
+						`}
+					>
+						<ScIcon
+							style={{
+								width: '18px',
+								height: '18px',
+							}}
+							name={'image'}
+						/>
+					</div>
+				)}
+				<div>
+					<div>
+						<strong>{product?.name}</strong>
+					</div>
+					{totalPrices > 1 ? (
+						sprintf(__('%d prices', 'surecart'), totalPrices)
+					) : (
+						<>
+							<ScFormatNumber
+								value={firstPrice?.amount}
+								type="currency"
+								currency={firstPrice?.currency}
+							/>
+							{intervalString(firstPrice)}
+						</>
+					)}
+				</div>
+			</ScFlex>
+		);
+	};
+
 	return (
 		<SettingsBox
 			title={__('Products', 'surecart')}
@@ -129,7 +199,7 @@ export default ({ shippingProfileId }) => {
 					<ScStackedList>
 						{products.map((product) => (
 							<ScStackedListRow key={product.id}>
-								<Product id={product.id} />
+								{renderProduct(product)}
 								<ScDropdown
 									slot="suffix"
 									placement="bottom-end"
