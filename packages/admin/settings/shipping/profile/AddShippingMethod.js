@@ -4,9 +4,13 @@ import {
 	ScBlockUi,
 	ScButton,
 	ScDialog,
+	ScDropdown,
 	ScFlex,
 	ScForm,
+	ScIcon,
 	ScInput,
+	ScMenu,
+	ScMenuItem,
 	ScPriceInput,
 	ScRadio,
 	ScRadioGroup,
@@ -21,6 +25,13 @@ const rate_types = {
 	ORDER_PRICE: 'amount',
 };
 
+const WEIGHT_UNIT_TYPES = [
+	__('lb', 'surecart'),
+	__('kg', 'surecart'),
+	__('oz', 'surecart'),
+	__('g', 'surecart'),
+];
+
 export default ({ open, onRequestClose, shippingZoneId }) => {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
@@ -29,6 +40,7 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 		amount: 0,
 		rate_type: rate_types.ITEM_WEIGHT,
 		shipping_method_id: '',
+		weight_unit: WEIGHT_UNIT_TYPES[0],
 	});
 
 	const onSubmit = async (e) => {
@@ -65,6 +77,28 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 		} finally {
 			setLoading(false);
 		}
+	};
+
+	const renderWeightDropdown = (shippingRate) => {
+		return (
+			<ScDropdown slot="suffix" placement="bottom-end">
+				<ScButton type="text" slot="trigger" circle>
+					{shippingRate.weight_unit} <ScIcon name="chevron-down" />
+				</ScButton>
+				<ScMenu>
+					{WEIGHT_UNIT_TYPES.map((unit) => (
+						<ScMenuItem
+							onClick={() =>
+								updateShippingRate('weight_unit', unit)
+							}
+							key={unit}
+						>
+							{unit}
+						</ScMenuItem>
+					))}
+				</ScMenu>
+			</ScDropdown>
+		);
 	};
 
 	const renderMaxMinInputs = () => {
@@ -108,7 +142,9 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 						css={css`
 							min-width: 0;
 						`}
-					/>
+					>
+						{renderWeightDropdown(shippingRate)}
+					</ScInput>
 					<ScInput
 						label={__('Minimum weight', 'surecart')}
 						value={shippingRate.max_amount}
@@ -119,7 +155,9 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 						css={css`
 							min-width: 0;
 						`}
-					/>
+					>
+						{renderWeightDropdown(shippingRate)}
+					</ScInput>
 				</ScFlex>
 			);
 		}
@@ -139,6 +177,7 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 			open={open}
 			label={__('Add New Shipping Rate')}
 			onScRequestClose={onRequestClose}
+			style={{ '--dialog-body-overflow': 'visible' }}
 		>
 			<Error error={error} setError={setError} />
 			<ScForm onScFormSubmit={onSubmit}>
