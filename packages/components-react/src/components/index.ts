@@ -134,6 +134,7 @@ export const ScPriceRange = /*@__PURE__*/createReactComponent<JSX.ScPriceRange, 
 export const ScProduct = /*@__PURE__*/createReactComponent<JSX.ScProduct, HTMLScProductElement>('sc-product');
 export const ScProductBuyButton = /*@__PURE__*/createReactComponent<JSX.ScProductBuyButton, HTMLScProductBuyButtonElement>('sc-product-buy-button');
 export const ScProductBuyButtons = /*@__PURE__*/createReactComponent<JSX.ScProductBuyButtons, HTMLScProductBuyButtonsElement>('sc-product-buy-buttons');
+export const ScProductForm = /*@__PURE__*/createReactComponent<JSX.ScProductForm, HTMLScProductFormElement>('sc-product-form');
 export const ScProductImage = /*@__PURE__*/createReactComponent<JSX.ScProductImage, HTMLScProductImageElement>('sc-product-image');
 export const ScProductItem = /*@__PURE__*/createReactComponent<JSX.ScProductItem, HTMLScProductItemElement>('sc-product-item');
 export const ScProductItemImage = /*@__PURE__*/createReactComponent<JSX.ScProductItemImage, HTMLScProductItemImageElement>('sc-product-item-image');

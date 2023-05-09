@@ -21,5 +21,5 @@ export default function save({ attributes, className }) {
 	});
 
 	const innerBlocksProps = useInnerBlocksProps.save(blockProps);
-	return <div {...innerBlocksProps} />;
+	return <sc-product-form {...innerBlocksProps} />;
 }

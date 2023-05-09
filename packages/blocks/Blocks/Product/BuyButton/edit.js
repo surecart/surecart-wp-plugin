@@ -27,6 +27,7 @@ import {
 } from '@wordpress/block-editor';
 import { isKeyboardEvent } from '@wordpress/keycodes';
 import { createBlock } from '@wordpress/blocks';
+import { ScButton } from '@surecart/components-react';
 
 function WidthPanel({ selectedWidth, setAttributes }) {
 	function handleChange(newWidth) {
@@ -70,13 +71,10 @@ export default (props) => {
 		onReplace,
 		mergeBlocks,
 	} = props;
-	const { textAlign, placeholder, rel, style, text, width } = attributes;
+	const { textAlign, placeholder, rel, style, text, width, type } =
+		attributes;
 
-	function setButtonText(newText) {
-		// Remove anchor tags from button text content.
-		setAttributes({ text: newText.replace(/<\/?a[^>]*>/g, '') });
-	}
-
+	console.log(attributes?.className);
 	function onKeyDown(event) {
 		if (isKeyboardEvent.primary(event, 'k')) {
 			startEditing(event);
@@ -99,6 +97,7 @@ export default (props) => {
 		onKeyDown,
 	});
 
+	console.log({ colorProps, borderProps, spacingProps });
 	return (
 		<>
 			<div
@@ -108,42 +107,29 @@ export default (props) => {
 					[`has-custom-width wp-block-button__width-${width}`]: width,
 					[`has-custom-font-size`]: blockProps.style.fontSize,
 				})}
+				style={{
+					'--sc-button-background-color':
+						colorProps?.style?.backgroundColor,
+					'--sc-button-text-color': colorProps?.style?.color,
+					'--sc-button-border-color': colorProps?.style?.borderColor,
+					'--sc-button-border-radius':
+						borderProps?.style?.borderRadius,
+					'--sc-button-border-width': borderProps?.style?.borderWidth,
+					'--sc-button-border-style': borderProps?.style?.borderStyle,
+					'--sc-button-border-color': borderProps?.style?.borderColor,
+					border: 'none',
+				}}
 			>
-				<RichText
-					ref={richTextRef}
-					aria-label={__('Button text')}
-					placeholder={placeholder || __('Add text…')}
-					value={text}
-					onChange={(value) => setButtonText(value)}
-					withoutInteractiveFormatting
-					className={classnames(
-						className,
-						'wp-block-button__link',
-						colorProps.className,
-						borderProps.className,
-						{
-							[`has-text-align-${textAlign}`]: textAlign,
-							// For backwards compatibility add style that isn't
-							// provided via block support.
-							'no-border-radius': style?.border?.radius === 0,
-						},
-						__experimentalGetElementClassName('button')
-					)}
-					style={{
-						...borderProps.style,
-						...colorProps.style,
-						...spacingProps.style,
-					}}
-					onSplit={(value) =>
-						createBlock('core/button', {
-							...attributes,
-							text: value,
-						})
-					}
-					onReplace={onReplace}
-					onMerge={mergeBlocks}
-					identifier="text"
-				/>
+				<ScButton type="primary" full={width ? true : false}>
+					<RichText
+						aria-label={__('Button text')}
+						placeholder={__('Add text…')}
+						value={text}
+						onChange={(value) => setAttributes({ text: value })}
+						withoutInteractiveFormatting
+						allowedFormats={['core/bold', 'core/italic']}
+					/>
+				</ScButton>
 			</div>
 			<BlockControls group="block">
 				<AlignmentControl

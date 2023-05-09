@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-01T17:45:34",
+  "timestamp": "2023-05-08T21:46:26",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -8103,7 +8103,7 @@
         },
         {
           "event": "scUpdateOrderState",
-          "detail": "{ id?: string; status?: \"draft\" | \"paid\" | \"canceled\" | \"finalized\" | \"payment_intent_canceled\" | \"payment_failed\" | \"processing\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "detail": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -9724,6 +9724,7 @@
         "sc-login-provider",
         "sc-order-confirm-provider",
         "sc-payment-methods-list",
+        "sc-product-buy-button",
         "sc-subscription-details",
         "sc-upgrade-required"
       ],
@@ -9749,6 +9750,9 @@
           "sc-dialog"
         ],
         "sc-payment-methods-list": [
+          "sc-dialog"
+        ],
+        "sc-product-buy-button": [
           "sc-dialog"
         ],
         "sc-subscription-details": [
@@ -11420,6 +11424,8 @@
         "sc-login-provider",
         "sc-mollie-add-method",
         "sc-password-nag",
+        "sc-product-buy-button",
+        "sc-product-form",
         "sc-product-selected-price",
         "sc-stripe-add-method",
         "sc-subscription-ad-hoc-confirm",
@@ -11451,6 +11457,12 @@
           "sc-form"
         ],
         "sc-password-nag": [
+          "sc-form"
+        ],
+        "sc-product-buy-button": [
+          "sc-form"
+        ],
+        "sc-product-form": [
           "sc-form"
         ],
         "sc-product-selected-price": [
@@ -11892,6 +11904,7 @@
         "sc-order-bumps",
         "sc-payment",
         "sc-phone-input",
+        "sc-product-quantity",
         "sc-rich-text",
         "sc-select",
         "sc-stripe-element",
@@ -11929,6 +11942,9 @@
           "sc-form-control"
         ],
         "sc-phone-input": [
+          "sc-form-control"
+        ],
+        "sc-product-quantity": [
           "sc-form-control"
         ],
         "sc-rich-text": [
@@ -13436,16 +13452,35 @@
       "usage": {},
       "props": [
         {
-          "name": "images",
-          "type": "string",
+          "name": "autoHeight",
+          "type": "boolean",
           "mutable": false,
-          "attr": "images",
+          "attr": "auto-height",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
           "values": [
             {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "images",
+          "type": "string | { src: string; alt: string; }[]",
+          "mutable": false,
+          "attr": "images",
+          "reflectToAttr": false,
+          "docs": "Accept a string or an array of objects",
+          "docsTags": [],
+          "values": [
+            {
               "type": "string"
+            },
+            {
+              "type": "{ src: string; alt: string; }[]"
             }
           ],
           "optional": false,
@@ -18843,7 +18878,7 @@
         },
         {
           "name": "order",
-          "type": "{ id?: string; status?: \"draft\" | \"paid\" | \"canceled\" | \"finalized\" | \"payment_intent_canceled\" | \"payment_failed\" | \"processing\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "type": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "The order",
@@ -22448,6 +22483,7 @@
       "dependents": [
         "sc-custom-order-price-input",
         "sc-donation-choices",
+        "sc-product-buy-button",
         "sc-product-selected-price",
         "sc-subscription-ad-hoc-confirm"
       ],
@@ -22468,6 +22504,9 @@
           "sc-price-input"
         ],
         "sc-donation-choices": [
+          "sc-price-input"
+        ],
+        "sc-product-buy-button": [
           "sc-price-input"
         ],
         "sc-product-selected-price": [
@@ -22709,9 +22748,9 @@
           "mutable": false,
           "attr": "full",
           "reflectToAttr": false,
-          "docs": "Show a full-width button.",
+          "docs": "Full",
           "docsTags": [],
-          "default": "true",
+          "default": "false",
           "values": [
             {
               "type": "boolean"
@@ -22851,15 +22890,34 @@
       "dependents": [],
       "dependencies": [
         "sc-button",
-        "sc-icon"
+        "sc-icon",
+        "sc-dialog",
+        "sc-form",
+        "sc-price-input"
       ],
       "dependencyGraph": {
         "sc-product-buy-button": [
           "sc-button",
-          "sc-icon"
+          "sc-icon",
+          "sc-dialog",
+          "sc-form",
+          "sc-price-input"
         ],
         "sc-button": [
           "sc-spinner"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-price-input": [
+          "sc-input"
+        ],
+        "sc-input": [
+          "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
         ]
       }
     },
@@ -22992,6 +23050,30 @@
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/controllers/product/sc-product-form/sc-product-form.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-product-form",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-form"
+      ],
+      "dependencyGraph": {
+        "sc-product-form": [
+          "sc-form"
+        ]
+      }
     },
     {
       "filePath": "./src/components/controllers/product/sc-product-image/sc-product-image.tsx",

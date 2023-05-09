@@ -2740,6 +2740,8 @@ export namespace Components {
          */
         "mode": 'test' | 'live';
     }
+    interface ScProductForm {
+    }
     interface ScProductImage {
         "product": Product;
     }
@@ -4766,6 +4768,12 @@ declare global {
         prototype: HTMLScProductBuyButtonsElement;
         new (): HTMLScProductBuyButtonsElement;
     };
+    interface HTMLScProductFormElement extends Components.ScProductForm, HTMLStencilElement {
+    }
+    var HTMLScProductFormElement: {
+        prototype: HTMLScProductFormElement;
+        new (): HTMLScProductFormElement;
+    };
     interface HTMLScProductImageElement extends Components.ScProductImage, HTMLStencilElement {
     }
     var HTMLScProductImageElement: {
@@ -5265,6 +5273,7 @@ declare global {
         "sc-product": HTMLScProductElement;
         "sc-product-buy-button": HTMLScProductBuyButtonElement;
         "sc-product-buy-buttons": HTMLScProductBuyButtonsElement;
+        "sc-product-form": HTMLScProductFormElement;
         "sc-product-image": HTMLScProductImageElement;
         "sc-product-item": HTMLScProductItemElement;
         "sc-product-item-image": HTMLScProductItemImageElement;
@@ -8354,6 +8363,8 @@ declare namespace LocalJSX {
          */
         "mode"?: 'test' | 'live';
     }
+    interface ScProductForm {
+    }
     interface ScProductImage {
         "product"?: Product;
     }
@@ -9573,6 +9584,7 @@ declare namespace LocalJSX {
         "sc-product": ScProduct;
         "sc-product-buy-button": ScProductBuyButton;
         "sc-product-buy-buttons": ScProductBuyButtons;
+        "sc-product-form": ScProductForm;
         "sc-product-image": ScProductImage;
         "sc-product-item": ScProductItem;
         "sc-product-item-image": ScProductItemImage;
@@ -9780,6 +9792,7 @@ declare module "@stencil/core" {
             "sc-product": LocalJSX.ScProduct & JSXBase.HTMLAttributes<HTMLScProductElement>;
             "sc-product-buy-button": LocalJSX.ScProductBuyButton & JSXBase.HTMLAttributes<HTMLScProductBuyButtonElement>;
             "sc-product-buy-buttons": LocalJSX.ScProductBuyButtons & JSXBase.HTMLAttributes<HTMLScProductBuyButtonsElement>;
+            "sc-product-form": LocalJSX.ScProductForm & JSXBase.HTMLAttributes<HTMLScProductFormElement>;
             "sc-product-image": LocalJSX.ScProductImage & JSXBase.HTMLAttributes<HTMLScProductImageElement>;
             "sc-product-item": LocalJSX.ScProductItem & JSXBase.HTMLAttributes<HTMLScProductItemElement>;
             "sc-product-item-image": LocalJSX.ScProductItemImage & JSXBase.HTMLAttributes<HTMLScProductItemImageElement>;

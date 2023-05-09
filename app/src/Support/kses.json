@@ -1469,6 +1469,12 @@
     "class": true,
     "slot": true
   },
+  "sc-product-form": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-product-image": {
     "product": true,
     "style": true,

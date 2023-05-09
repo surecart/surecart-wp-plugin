@@ -99,9 +99,12 @@ class Block extends BaseBlock {
 		ob_start();
 		?>
 
+<button type="submit" data-action="add-to-cart"><?php echo esc_html( $attributes['text'] ); ?></button>
+<!--
 		<sc-product-buy-button add-to-cart href="#" full="<?php echo ! empty( $attributes['width'] ) ? 'true' : 'false'; ?>" type="primary" style="<?php echo esc_attr( $this->getVars( $attributes, '--sc-button' ) ); ?>">
 			<?php echo esc_html( $attributes['text'] ); ?>
 		</sc-product-buy-button>
+	-->
 
 		<?php
 		return ob_get_clean();

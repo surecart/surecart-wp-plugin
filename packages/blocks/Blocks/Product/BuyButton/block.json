@@ -75,10 +75,6 @@
 			}
 		}
 	},
-	"styles": [
-		{ "name": "primary", "label": "Default", "isDefault": true },
-		{ "name": "default", "label": "Secondary" }
-	],
 	"script": "surecart-components",
 	"style": "surecart-themes-default"
 }
