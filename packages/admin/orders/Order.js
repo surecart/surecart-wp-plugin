@@ -157,24 +157,33 @@ export default () => {
 					position="bottom-right"
 					style={{ '--panel-width': '14em' }}
 				>
-					{order?.status === 'processing' &&
-						order?.checkout?.manual_payment &&
-						order?.status !== 'canceled' && (
-							<>
-								<ScButton
-									type="primary"
-									slot="trigger"
-									caret
-									loading={!hasLoadedOrder}
-								>
-									{__('Actions', 'surecart')}
-								</ScButton>
-								<ScMenu>
-									{renderMarkPaidButton()}{' '}
-									{renderOrderCancelButton()}
-								</ScMenu>
-							</>
-						)}
+					<>
+						<ScButton
+							type="primary"
+							slot="trigger"
+							caret
+							loading={!hasLoadedOrder}
+						>
+							{__('Actions', 'surecart')}
+						</ScButton>
+						<ScMenu>
+							{
+								(
+									order?.status !== 'draft' &&
+									order?.status !== 'paid'
+								) &&
+								renderMarkPaidButton()
+							}
+							{' '}
+							{
+								(
+									order?.status === 'paid' ||
+									order?.status === 'processing'
+								) &&
+								renderOrderCancelButton()
+							}
+						</ScMenu>
+					</>
 				</ScDropdown>
 			}
 			sidebar={
