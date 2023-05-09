@@ -91,7 +91,7 @@ export default () => {
 						<ScFormControl
 							label={__('Select Menus', 'surecart')}
 							help={__(
-								'Select the menus in which the cart icon will appear',
+								'Select the menu(s) where the cart icon will appear.',
 								'surecart'
 							)}
 						>
@@ -131,19 +131,34 @@ export default () => {
 										Add Menu
 									</ScButton>
 									<ScMenu>
-										{menus?.map((item) => (
-											<ScMenuItem
-												key={item.id}
-												onClick={() =>
-													addCartMenu(Number(item.id))
-												}
-												disabled={(
-													cartMenuSelectedIds || []
-												).includes(item.id)}
-											>
-												{item.name}
-											</ScMenuItem>
-										))}
+										{menus?.map((item) => {
+											const checked = (
+												cartMenuSelectedIds || []
+											).includes(item.id);
+											return (
+												<ScMenuItem
+													style={{
+														'--sc-menu-item-white-space':
+															'wrap',
+														'--sc-menu-item-line-height':
+															'var(--sc-line-height-dense)',
+													}}
+													key={item.id}
+													onClick={() =>
+														!checked
+															? addCartMenu(
+																	item.id
+															  )
+															: removeCartMenu(
+																	item.id
+															  )
+													}
+													checked={checked}
+												>
+													{item.name}
+												</ScMenuItem>
+											);
+										})}
 									</ScMenu>
 								</ScDropdown>
 							</div>
@@ -196,8 +211,8 @@ export default () => {
 		}
 	};
 
-	return (
-		<>
+	const renderCartIcons = () => {
+		return (
 			<ScChoices
 				label={__('Icon', 'surecart')}
 				onScChange={(e) => setCartIcon(e.target.value)}
@@ -219,15 +234,44 @@ export default () => {
 					<ScIcon name="shopping-cart" />
 				</ScChoice>
 			</ScChoices>
+		);
+	};
 
-			{scData?.is_block_theme ? (
-				<div>Block Theme</div>
+	return (
+		<>
+			{!!scData?.is_block_theme ? (
+				<>
+					<ScSwitch
+						checked={['floating_icon', 'both'].includes(
+							cartIconType
+						)}
+						onScChange={(e) => {
+							setCartIconType(
+								e.target.checked ? 'floating_icon' : 'menu_icon'
+							);
+						}}
+					>
+						{__('Show Floating Cart Icon', 'surecart')}
+						<span slot="description" style={{ lineHeight: '1.4' }}>
+							{__(
+								'Show a floating cart icon in the bottom corner of your site, if there are items in the cart.',
+								'surecart'
+							)}
+						</span>
+					</ScSwitch>
+					{['floating_icon', 'both'].includes(cartIconType) &&
+						renderCartIcons()}
+				</>
 			) : (
 				<>
+					{renderCartIcons()}
 					<ScSelect
 						label={__('Cart Icon Type', 'surecart')}
 						value={cartIconType}
-						help={__('What type of cart icon do you want to use?')}
+						help={__(
+							'What type of cart icon would you like to use?',
+							'surecart'
+						)}
 						unselect={false}
 						choices={[
 							{
