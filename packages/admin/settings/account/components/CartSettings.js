@@ -99,6 +99,7 @@ export default () => {
 								css={css`
 									gap: 1em;
 									display: flex;
+									flex-wrap: wrap;
 									padding: 0.44em 0;
 								`}
 							>
