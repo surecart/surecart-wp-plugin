@@ -50,6 +50,7 @@
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-drawer](../sc-drawer)
  - [sc-empty](../empty)
+ - [sc-image-slider](../../controllers/checkout-form/sc-image-slider)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
@@ -99,6 +100,7 @@ graph TD;
   sc-downloads-list --> sc-icon
   sc-drawer --> sc-icon
   sc-empty --> sc-icon
+  sc-image-slider --> sc-icon
   sc-invoices-list --> sc-icon
   sc-license --> sc-icon
   sc-licenses-list --> sc-icon

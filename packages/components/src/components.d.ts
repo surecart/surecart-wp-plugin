@@ -754,6 +754,10 @@ export namespace Components {
           * Is the form calculating
          */
         "busy": boolean;
+        /**
+          * The text for apply button
+         */
+        "buttonText": string;
         "collapsed": boolean;
         /**
           * Currency
@@ -848,17 +852,9 @@ export namespace Components {
     }
     interface ScCustomerEmail {
         /**
-          * Is abandoned checkout enabled?
-         */
-        "abandonedCheckoutEnabled": boolean;
-        /**
           * The input's autofocus attribute.
          */
         "autofocus": boolean;
-        /**
-          * Force a customer.
-         */
-        "customer": Customer;
         /**
           * Disables the input.
          */
@@ -879,14 +875,6 @@ export namespace Components {
           * The input's label.
          */
         "label": string;
-        /**
-          * Is the user logged in.
-         */
-        "loggedIn": boolean;
-        /**
-          * (passed from the sc-checkout component automatically)
-         */
-        "order": Checkout;
         /**
           * Draws a pill-style input with rounded edges.
          */
@@ -927,10 +915,6 @@ export namespace Components {
          */
         "autofocus": boolean;
         /**
-          * Force a customer.
-         */
-        "customer": Customer;
-        /**
           * Disables the input.
          */
         "disabled": boolean;
@@ -954,10 +938,6 @@ export namespace Components {
           * Is the user logged in.
          */
         "loggedIn": boolean;
-        /**
-          * (passed from the sc-checkout component automatically)
-         */
-        "order": Checkout;
         /**
           * Draws a pill-style input with rounded edges.
          */
@@ -994,10 +974,6 @@ export namespace Components {
          */
         "autofocus": boolean;
         /**
-          * Force a customer.
-         */
-        "customer": Customer;
-        /**
           * Disables the input.
          */
         "disabled": boolean;
@@ -1022,10 +998,6 @@ export namespace Components {
          */
         "loggedIn": boolean;
         /**
-          * (passed from the sc-checkout component automatically)
-         */
-        "order": Checkout;
-        /**
           * Draws a pill-style input with rounded edges.
          */
         "pill": boolean;
@@ -1037,6 +1009,9 @@ export namespace Components {
           * Makes the input readonly.
          */
         "readonly": boolean;
+        /**
+          * Don't allow a blank space as an input here.
+         */
         "reportValidity": () => Promise<boolean>;
         /**
           * Makes the input a required field.
@@ -1053,17 +1028,13 @@ export namespace Components {
         /**
           * The input's value attribute.
          */
-        "value": string;
+        "value": any;
     }
     interface ScCustomerName {
         /**
           * The input's autofocus attribute.
          */
         "autofocus": boolean;
-        /**
-          * Force a customer.
-         */
-        "customer": Customer;
         /**
           * Disables the input.
          */
@@ -1085,13 +1056,67 @@ export namespace Components {
          */
         "label": string;
         /**
-          * Is the user logged in.
+          * Draws a pill-style input with rounded edges.
          */
-        "loggedIn": boolean;
+        "pill": boolean;
         /**
-          * (passed from the sc-checkout component automatically)
+          * The input's placeholder text.
          */
-        "order": Checkout;
+        "placeholder": string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly": boolean;
+        /**
+          * Don't allow a blank space as an input here.
+         */
+        "reportValidity": () => Promise<boolean>;
+        /**
+          * Makes the input a required field.
+         */
+        "required": boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel": boolean;
+        /**
+          * The input's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The input's value attribute.
+         */
+        "value": any;
+    }
+    interface ScCustomerPhone {
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus": boolean;
+        /**
+          * Disables the input.
+         */
+        "disabled": boolean;
+        /**
+          * Error focus
+         */
+        "error": boolean;
+        /**
+          * Inputs focus
+         */
+        "hasFocus": boolean;
+        /**
+          * The input's help text.
+         */
+        "help": string;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid": boolean;
+        /**
+          * The input's label.
+         */
+        "label": string;
         /**
           * Draws a pill-style input with rounded edges.
          */
@@ -1577,6 +1602,11 @@ export namespace Components {
          */
         "src": string;
     }
+    interface ScImageSlider {
+        "images": { src: string; alt: string }[];
+        "thumbnails": boolean;
+        "thumbnailsPerPage": number;
+    }
     interface ScInput {
         /**
           * The input's autocomplete attribute.
@@ -1924,6 +1954,7 @@ export namespace Components {
     }
     interface ScOrderCouponForm {
         "busy": boolean;
+        "buttonText": string;
         "collapsed": boolean;
         "error": any;
         "label": string;
@@ -1972,6 +2003,10 @@ export namespace Components {
           * Does the email exist?
          */
         "emailExists": boolean;
+        /**
+          * Ensures strong password validation.
+         */
+        "enableValidation": boolean;
         /**
           * The input's help text.
          */
@@ -2219,6 +2254,10 @@ export namespace Components {
         "totalShowing": number;
     }
     interface ScPasswordNag {
+        /**
+          * Ensures strong password validation.
+         */
+        "enableValidation": boolean;
         "open": boolean;
         /**
           * The success url.
@@ -3526,6 +3565,10 @@ export namespace Components {
         "size": 'small' | 'medium' | 'large';
     }
     interface ScWordpressPasswordEdit {
+        /**
+          * Ensures strong password validation.
+         */
+        "enableValidation": boolean;
         "heading": string;
         "successUrl": string;
         "user": WordPressUser;
@@ -4229,6 +4272,12 @@ declare global {
         prototype: HTMLScIconElement;
         new (): HTMLScIconElement;
     };
+    interface HTMLScImageSliderElement extends Components.ScImageSlider, HTMLStencilElement {
+    }
+    var HTMLScImageSliderElement: {
+        prototype: HTMLScImageSliderElement;
+        new (): HTMLScImageSliderElement;
+    };
     interface HTMLScInputElement extends Components.ScInput, HTMLStencilElement {
     }
     var HTMLScInputElement: {
@@ -4930,6 +4979,7 @@ declare global {
         "sc-format-number": HTMLScFormatNumberElement;
         "sc-heading": HTMLScHeadingElement;
         "sc-icon": HTMLScIconElement;
+        "sc-image-slider": HTMLScImageSliderElement;
         "sc-input": HTMLScInputElement;
         "sc-invoices-list": HTMLScInvoicesListElement;
         "sc-license": HTMLScLicenseElement;
@@ -5827,6 +5877,10 @@ declare namespace LocalJSX {
           * Is the form calculating
          */
         "busy"?: boolean;
+        /**
+          * The text for apply button
+         */
+        "buttonText"?: string;
         "collapsed"?: boolean;
         /**
           * Currency
@@ -5929,17 +5983,9 @@ declare namespace LocalJSX {
     }
     interface ScCustomerEmail {
         /**
-          * Is abandoned checkout enabled?
-         */
-        "abandonedCheckoutEnabled"?: boolean;
-        /**
           * The input's autofocus attribute.
          */
         "autofocus"?: boolean;
-        /**
-          * Force a customer.
-         */
-        "customer"?: Customer;
         /**
           * Disables the input.
          */
@@ -5960,10 +6006,6 @@ declare namespace LocalJSX {
           * The input's label.
          */
         "label"?: string;
-        /**
-          * Is the user logged in.
-         */
-        "loggedIn"?: boolean;
         /**
           * Emitted when the control loses focus.
          */
@@ -5996,10 +6038,6 @@ declare namespace LocalJSX {
           * Update the order state.
          */
         "onScUpdateOrderState"?: (event: ScCustomerEmailCustomEvent<Checkout>) => void;
-        /**
-          * (passed from the sc-checkout component automatically)
-         */
-        "order"?: Checkout;
         /**
           * Draws a pill-style input with rounded edges.
          */
@@ -6038,10 +6076,6 @@ declare namespace LocalJSX {
           * The input's autofocus attribute.
          */
         "autofocus"?: boolean;
-        /**
-          * Force a customer.
-         */
-        "customer"?: Customer;
         /**
           * Disables the input.
          */
@@ -6089,10 +6123,6 @@ declare namespace LocalJSX {
         "onScUpdateCustomer"?: (event: ScCustomerFirstnameCustomEvent<{ email: string }>) => void;
         "onScUpdateOrderState"?: (event: ScCustomerFirstnameCustomEvent<Partial<Checkout>>) => void;
         /**
-          * (passed from the sc-checkout component automatically)
-         */
-        "order"?: Checkout;
-        /**
           * Draws a pill-style input with rounded edges.
          */
         "pill"?: boolean;
@@ -6127,10 +6157,6 @@ declare namespace LocalJSX {
          */
         "autofocus"?: boolean;
         /**
-          * Force a customer.
-         */
-        "customer"?: Customer;
-        /**
           * Disables the input.
          */
         "disabled"?: boolean;
@@ -6159,14 +6185,6 @@ declare namespace LocalJSX {
          */
         "onScBlur"?: (event: ScCustomerLastnameCustomEvent<void>) => void;
         /**
-          * Emitted when the control's value changes.
-         */
-        "onScChange"?: (event: ScCustomerLastnameCustomEvent<void>) => void;
-        /**
-          * Emitted when the clear button is activated.
-         */
-        "onScClear"?: (event: ScCustomerLastnameCustomEvent<void>) => void;
-        /**
           * Emitted when the control gains focus.
          */
         "onScFocus"?: (event: ScCustomerLastnameCustomEvent<void>) => void;
@@ -6174,12 +6192,6 @@ declare namespace LocalJSX {
           * Emitted when the control receives input.
          */
         "onScInput"?: (event: ScCustomerLastnameCustomEvent<void>) => void;
-        "onScUpdateCustomer"?: (event: ScCustomerLastnameCustomEvent<{ email: string }>) => void;
-        "onScUpdateOrderState"?: (event: ScCustomerLastnameCustomEvent<Partial<Checkout>>) => void;
-        /**
-          * (passed from the sc-checkout component automatically)
-         */
-        "order"?: Checkout;
         /**
           * Draws a pill-style input with rounded edges.
          */
@@ -6207,17 +6219,13 @@ declare namespace LocalJSX {
         /**
           * The input's value attribute.
          */
-        "value"?: string;
+        "value"?: any;
     }
     interface ScCustomerName {
         /**
           * The input's autofocus attribute.
          */
         "autofocus"?: boolean;
-        /**
-          * Force a customer.
-         */
-        "customer"?: Customer;
         /**
           * Disables the input.
          */
@@ -6239,21 +6247,9 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
-          * Is the user logged in.
-         */
-        "loggedIn"?: boolean;
-        /**
           * Emitted when the control loses focus.
          */
         "onScBlur"?: (event: ScCustomerNameCustomEvent<void>) => void;
-        /**
-          * Emitted when the control's value changes.
-         */
-        "onScChange"?: (event: ScCustomerNameCustomEvent<void>) => void;
-        /**
-          * Emitted when the clear button is activated.
-         */
-        "onScClear"?: (event: ScCustomerNameCustomEvent<void>) => void;
         /**
           * Emitted when the control gains focus.
          */
@@ -6262,12 +6258,84 @@ declare namespace LocalJSX {
           * Emitted when the control receives input.
          */
         "onScInput"?: (event: ScCustomerNameCustomEvent<void>) => void;
-        "onScUpdateCustomer"?: (event: ScCustomerNameCustomEvent<{ email: string }>) => void;
-        "onScUpdateOrderState"?: (event: ScCustomerNameCustomEvent<Partial<Checkout>>) => void;
         /**
-          * (passed from the sc-checkout component automatically)
+          * Draws a pill-style input with rounded edges.
          */
-        "order"?: Checkout;
+        "pill"?: boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder"?: string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly"?: boolean;
+        /**
+          * Makes the input a required field.
+         */
+        "required"?: boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel"?: boolean;
+        /**
+          * The input's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The input's value attribute.
+         */
+        "value"?: any;
+    }
+    interface ScCustomerPhone {
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus"?: boolean;
+        /**
+          * Disables the input.
+         */
+        "disabled"?: boolean;
+        /**
+          * Error focus
+         */
+        "error"?: boolean;
+        /**
+          * Inputs focus
+         */
+        "hasFocus"?: boolean;
+        /**
+          * The input's help text.
+         */
+        "help"?: string;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid"?: boolean;
+        /**
+          * The input's label.
+         */
+        "label"?: string;
+        /**
+          * Emitted when the control loses focus.
+         */
+        "onScBlur"?: (event: ScCustomerPhoneCustomEvent<void>) => void;
+        /**
+          * Emitted when the control's value changes.
+         */
+        "onScChange"?: (event: ScCustomerPhoneCustomEvent<void>) => void;
+        /**
+          * Emitted when the clear button is activated.
+         */
+        "onScClear"?: (event: ScCustomerPhoneCustomEvent<void>) => void;
+        /**
+          * Emitted when the control gains focus.
+         */
+        "onScFocus"?: (event: ScCustomerPhoneCustomEvent<void>) => void;
+        /**
+          * Emitted when the control receives input.
+         */
+        "onScInput"?: (event: ScCustomerPhoneCustomEvent<void>) => void;
         /**
           * Draws a pill-style input with rounded edges.
          */
@@ -6834,6 +6902,11 @@ declare namespace LocalJSX {
          */
         "src"?: string;
     }
+    interface ScImageSlider {
+        "images"?: { src: string; alt: string }[];
+        "thumbnails"?: boolean;
+        "thumbnailsPerPage"?: number;
+    }
     interface ScInput {
         /**
           * The input's autocomplete attribute.
@@ -7211,6 +7284,7 @@ declare namespace LocalJSX {
     }
     interface ScOrderCouponForm {
         "busy"?: boolean;
+        "buttonText"?: string;
         "collapsed"?: boolean;
         "error"?: any;
         "label"?: string;
@@ -7260,6 +7334,10 @@ declare namespace LocalJSX {
           * Does the email exist?
          */
         "emailExists"?: boolean;
+        /**
+          * Ensures strong password validation.
+         */
+        "enableValidation"?: boolean;
         /**
           * The input's help text.
          */
@@ -7533,6 +7611,10 @@ declare namespace LocalJSX {
         "totalShowing"?: number;
     }
     interface ScPasswordNag {
+        /**
+          * Ensures strong password validation.
+         */
+        "enableValidation"?: boolean;
         "open"?: boolean;
         /**
           * The success url.
@@ -8988,6 +9070,10 @@ declare namespace LocalJSX {
         "size"?: 'small' | 'medium' | 'large';
     }
     interface ScWordpressPasswordEdit {
+        /**
+          * Ensures strong password validation.
+         */
+        "enableValidation"?: boolean;
         "heading"?: string;
         "successUrl"?: string;
         "user"?: WordPressUser;
@@ -9072,6 +9158,7 @@ declare namespace LocalJSX {
         "sc-format-number": ScFormatNumber;
         "sc-heading": ScHeading;
         "sc-icon": ScIcon;
+        "sc-image-slider": ScImageSlider;
         "sc-input": ScInput;
         "sc-invoices-list": ScInvoicesList;
         "sc-license": ScLicense;
@@ -9253,6 +9340,7 @@ declare module "@stencil/core" {
             "sc-format-number": LocalJSX.ScFormatNumber & JSXBase.HTMLAttributes<HTMLScFormatNumberElement>;
             "sc-heading": LocalJSX.ScHeading & JSXBase.HTMLAttributes<HTMLScHeadingElement>;
             "sc-icon": LocalJSX.ScIcon & JSXBase.HTMLAttributes<HTMLScIconElement>;
+            "sc-image-slider": LocalJSX.ScImageSlider & JSXBase.HTMLAttributes<HTMLScImageSliderElement>;
             "sc-input": LocalJSX.ScInput & JSXBase.HTMLAttributes<HTMLScInputElement>;
             "sc-invoices-list": LocalJSX.ScInvoicesList & JSXBase.HTMLAttributes<HTMLScInvoicesListElement>;
             "sc-license": LocalJSX.ScLicense & JSXBase.HTMLAttributes<HTMLScLicenseElement>;

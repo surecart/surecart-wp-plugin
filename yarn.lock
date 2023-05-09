@@ -7118,6 +7118,7 @@ __metadata:
   dependencies:
     "@wordpress/prettier-config": ^1.1.1
     prettier: ^2.5.1
+    react-easy-sort: ^1.5.1
   languageName: unknown
   linkType: soft
 
@@ -7320,7 +7321,6 @@ __metadata:
     react: 17.0.2
     react-apexcharts: ^1.4.0
     react-dom: 17.0.2
-    react-smooth-dnd: ^0.11.1
     react-test-renderer: 17.0.2
     replace-in-file: ^6.0.0
     sass-loader: ^10
@@ -7331,6 +7331,7 @@ __metadata:
     stylelint-order: ^4.0.0
     stylelint-scss: ^3.17.1
     svg-sprite-loader: ^4.2.5
+    swiper: ^9.2.2
     swr: ^1.2.2
     thread-loader: ^3.0.4
     tmp: ^0.2.1
@@ -11916,6 +11917,13 @@ __metadata:
     get-intrinsic: ^1.1.1
     is-string: ^1.0.7
   checksum: 69967c38c52698f84b50a7aed5554aadc89c6ac6399b6d92ad061a5952f8423b4bba054c51d40963f791dfa294d7247cdd7988b6b1f2c5861477031c6386e1c0
+  languageName: node
+  linkType: hard
+
+"array-move@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "array-move@npm:3.0.1"
+  checksum: 4b550fe07f89750e5830be6e0b0165e5900a8d087ac51c4f7bf8cac6f87b4e96dfda05629cb962cdc33f64a3b0be49ee783595d74ccd2278e5a588fc436481d0
   languageName: node
   linkType: hard
 
@@ -28949,7 +28957,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:>=15.6.0, prop-types@npm:^15.0.0, prop-types@npm:^15.5.6, prop-types@npm:^15.5.7, prop-types@npm:^15.5.8, prop-types@npm:^15.6.0, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.0, prop-types@npm:^15.7.2":
+"prop-types@npm:^15.0.0, prop-types@npm:^15.5.6, prop-types@npm:^15.5.7, prop-types@npm:^15.5.8, prop-types@npm:^15.6.0, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.0, prop-types@npm:^15.7.2":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -29736,6 +29744,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-easy-sort@npm:^1.5.1":
+  version: 1.5.1
+  resolution: "react-easy-sort@npm:1.5.1"
+  dependencies:
+    array-move: ^3.0.1
+    tslib: 2.0.1
+  peerDependencies:
+    react: ">=16.4.0"
+    react-dom: ">=16.4.0"
+  checksum: 9503d10761eb6e0e1dab875ca54269d6733d4c159c04b181f13cede5cd94c70f3619d44ce1599f12d550a435158efa16d04aec65c5640347b3858296731e4da4
+  languageName: node
+  linkType: hard
+
 "react-error-overlay@npm:^6.0.11":
   version: 6.0.11
   resolution: "react-error-overlay@npm:6.0.11"
@@ -30053,18 +30074,6 @@ __metadata:
     shallowequal: ^1.1.0
     throttle-debounce: ^3.0.1
   checksum: 97cb852c24bbd50acb310da89df564e0d069415f6635676dae3d3bdc583ece88090c0f2ee88a6b0dc36d2793af4a11e83bf6bbb41b86225dd0cf338e8f7e8552
-  languageName: node
-  linkType: hard
-
-"react-smooth-dnd@npm:^0.11.1":
-  version: 0.11.1
-  resolution: "react-smooth-dnd@npm:0.11.1"
-  dependencies:
-    prop-types: ">=15.6.0"
-    smooth-dnd: 0.12.1
-  peerDependencies:
-    react: ^16.3.0
-  checksum: 11e2fb5da2da46c1eb96e01ea9444742269f9d812cb014caffed0ab094e37e20d796d1a36ea6fbf6b2cee5bb399f65100138fe2bb2ad3d03037577bd841a1e70
   languageName: node
   linkType: hard
 
@@ -32319,13 +32328,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"smooth-dnd@npm:0.12.1":
-  version: 0.12.1
-  resolution: "smooth-dnd@npm:0.12.1"
-  checksum: 533befb0552f04b2f27113436bf1851a2c672ebe8c384de3d65a2d87a86ce728cb5cfd8b039522252bf2cef66181d3ebaef92a5d6662184b1906acadd1568203
-  languageName: node
-  linkType: hard
-
 "snake-case@npm:^3.0.4":
   version: 3.0.4
   resolution: "snake-case@npm:3.0.4"
@@ -32702,6 +32704,13 @@ __metadata:
     sshpk-sign: bin/sshpk-sign
     sshpk-verify: bin/sshpk-verify
   checksum: ba109f65c8e6c35133b8e6ed5576abeff8aa8d614824b7275ec3ca308f081fef483607c28d97780c1e235818b0f93ed8c8b56d0a5968d5a23fd6af57718c7597
+  languageName: node
+  linkType: hard
+
+"ssr-window@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "ssr-window@npm:4.0.2"
+  checksum: df182600927f4f3225224cf8c02338ea637c9750519505bbfb9a9236741a2a7ec088386fb948bca7b447b8303d9109e7dc7672e3de041c79ac2a0e03665af7d2
   languageName: node
   linkType: hard
 
@@ -33815,6 +33824,15 @@ __metadata:
     traverse: ~0.6.6
     url: ~0.11.0
   checksum: 919e64fc638ead6c2aec8171f984697801386f2e0a32c9c1afa1888bcbd92294f85e7d4af0b4e5ae5b7040c0c9e332d57864f0ff0cd42bf05bdc55e2d5251e7c
+  languageName: node
+  linkType: hard
+
+"swiper@npm:^9.2.2":
+  version: 9.2.2
+  resolution: "swiper@npm:9.2.2"
+  dependencies:
+    ssr-window: ^4.0.2
+  checksum: a277d5b0a2463286a11796e2aee39af8e973d12889bd10a9487910095a007d4ea55ba4e5e91a9821b1177949ce200aa218c95498a6c779df55533a6d2089578a
   languageName: node
   linkType: hard
 

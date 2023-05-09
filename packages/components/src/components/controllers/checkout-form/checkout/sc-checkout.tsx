@@ -2,6 +2,7 @@ import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State
 import { state as checkoutState } from '@store/checkout';
 import { state as processorsState } from '@store/processors';
 import { state as formState } from '@store/form';
+import { state as userState } from '@store/user';
 import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
 
@@ -207,6 +208,7 @@ export class ScCheckout {
     checkoutState.currencyCode = this.currencyCode;
     checkoutState.groupId = this.el.id;
     checkoutState.abandonedCheckoutReturnUrl = this.abandonedCheckoutReturnUrl;
+    userState.loggedIn = this.loggedIn;
   }
 
   state() {

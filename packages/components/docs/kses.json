@@ -390,6 +390,7 @@
   },
   "sc-coupon-form": {
     "busy": true,
+    "button-text": true,
     "collapsed": true,
     "currency": true,
     "discount": true,
@@ -442,16 +443,12 @@
     "slot": true
   },
   "sc-customer-email": {
-    "abandoned-checkout-enabled": true,
     "autofocus": true,
-    "customer": true,
     "disabled": true,
     "has-focus": true,
     "help": true,
     "invalid": true,
     "label": true,
-    "logged-in": true,
-    "order": true,
     "pill": true,
     "placeholder": true,
     "readonly": true,
@@ -467,14 +464,12 @@
   },
   "sc-customer-firstname": {
     "autofocus": true,
-    "customer": true,
     "disabled": true,
     "has-focus": true,
     "help": true,
     "invalid": true,
     "label": true,
     "logged-in": true,
-    "order": true,
     "pill": true,
     "placeholder": true,
     "readonly": true,
@@ -489,14 +484,12 @@
   },
   "sc-customer-lastname": {
     "autofocus": true,
-    "customer": true,
     "disabled": true,
     "has-focus": true,
     "help": true,
     "invalid": true,
     "label": true,
     "logged-in": true,
-    "order": true,
     "pill": true,
     "placeholder": true,
     "readonly": true,
@@ -511,14 +504,31 @@
   },
   "sc-customer-name": {
     "autofocus": true,
-    "customer": true,
     "disabled": true,
     "has-focus": true,
     "help": true,
     "invalid": true,
     "label": true,
-    "logged-in": true,
-    "order": true,
+    "pill": true,
+    "placeholder": true,
+    "readonly": true,
+    "required": true,
+    "show-label": true,
+    "size": true,
+    "value": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-customer-phone": {
+    "autofocus": true,
+    "disabled": true,
+    "error": true,
+    "has-focus": true,
+    "help": true,
+    "invalid": true,
+    "label": true,
     "pill": true,
     "placeholder": true,
     "readonly": true,
@@ -809,6 +819,15 @@
     "class": true,
     "slot": true
   },
+  "sc-image-slider": {
+    "images": true,
+    "thumbnails": true,
+    "thumbnails-per-page": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-input": {
     "autocomplete": true,
     "autocorrect": true,
@@ -1077,6 +1096,7 @@
   },
   "sc-order-coupon-form": {
     "busy": true,
+    "button-text": true,
     "collapsed": true,
     "error": true,
     "label": true,
@@ -1116,6 +1136,7 @@
     "confirmation-placeholder": true,
     "disabled": true,
     "email-exists": true,
+    "enable-validation": true,
     "help": true,
     "label": true,
     "logged-in": true,
@@ -1237,6 +1258,7 @@
     "slot": true
   },
   "sc-password-nag": {
+    "enable-validation": true,
     "open": true,
     "success-url": true,
     "type": true,
@@ -1966,6 +1988,7 @@
     "slot": true
   },
   "sc-wordpress-password-edit": {
+    "enable-validation": true,
     "heading": true,
     "success-url": true,
     "user": true,

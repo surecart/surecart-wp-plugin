@@ -36,7 +36,7 @@ export default ({
 			<div
 				css={css`
 					@media screen and (min-width: 780px) {
-						margin: -24px -32px;
+						margin: 0 -32px -24px -32px;
 						display: grid;
 						flex: 1;
 						max-height: calc(100vh - 68px);
@@ -47,6 +47,7 @@ export default ({
 							'main main sidebar'
 							'footer footer footer';
 						overflow: hidden;
+						border-top: 1px solid #ddd;
 					}
 				`}
 				data-cy="media-modal"
