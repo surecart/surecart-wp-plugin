@@ -25,6 +25,11 @@ class Block extends BaseBlock {
 			return '';
 		}
 
+		// Don't render if the cart is disabled.
+		if ( ! \SureCart::cart()->isCartEnabled() ) {
+			return '';
+		}
+
 		ob_start(); ?>
 
 		<a href="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>">
