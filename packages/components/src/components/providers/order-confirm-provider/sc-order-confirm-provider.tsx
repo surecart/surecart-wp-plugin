@@ -55,7 +55,7 @@ export class ScOrderConfirmProvider {
     try {
       this.confirmedCheckout = (await apiFetch({
         method: 'PATCH',
-        path: addQueryArgs(`surecart/v1/checkouts/${checkoutState?.checkout?.id}/confirm`, [expand]),
+        path: addQueryArgs(`surecart/v1/checkouts/${checkoutState?.checkout?.id}/confirm`, { expand }),
       })) as Checkout;
       this.scSetState.emit('CONFIRMED');
       // emit the order paid event for tracking scripts.
