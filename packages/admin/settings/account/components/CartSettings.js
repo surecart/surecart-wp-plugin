@@ -220,30 +220,36 @@ export default () => {
 				</ScChoice>
 			</ScChoices>
 
-			<ScSelect
-				label={__('Cart Icon Type', 'surecart')}
-				value={cartIconType}
-				help={__('What type of cart icon do you want to use?')}
-				unselect={false}
-				choices={[
-					{
-						label: __('Floating Icon', 'surecart'),
-						value: 'floating_icon',
-					},
-					{
-						label: __('Menu Icon', 'surecart'),
-						value: 'menu_icon',
-					},
-					{
-						label: __('Both', 'surecart'),
-						value: 'both',
-					},
-				]}
-				onScChange={(e) => {
-					setCartIconType(e.target.value);
-				}}
-			/>
-			{renderContent()}
+			{scData?.is_block_theme ? (
+				<div>Block Theme</div>
+			) : (
+				<>
+					<ScSelect
+						label={__('Cart Icon Type', 'surecart')}
+						value={cartIconType}
+						help={__('What type of cart icon do you want to use?')}
+						unselect={false}
+						choices={[
+							{
+								label: __('Floating Icon', 'surecart'),
+								value: 'floating_icon',
+							},
+							{
+								label: __('Menu Icon', 'surecart'),
+								value: 'menu_icon',
+							},
+							{
+								label: __('Both', 'surecart'),
+								value: 'both',
+							},
+						]}
+						onScChange={(e) => {
+							setCartIconType(e.target.value);
+						}}
+					/>
+					{renderContent()}
+				</>
+			)}
 		</>
 	);
 };
