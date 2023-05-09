@@ -16,3 +16,11 @@ sc-line-item {
   font-size: var(--sc-font-size-small);
   margin-right: var(--sc-spacing-xx-small);
 }
+
+sc-line-item::part(base) {
+  grid-template-columns: max-content auto auto;
+}
+
+.total-price {
+  white-space: nowrap;
+}

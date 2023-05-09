@@ -70,7 +70,7 @@ export class ScLineItemTotal {
           {!!this.order?.total_savings_amount && this.total === 'total' && (
             <sc-format-number class="scratch-price" type="currency" value={-this.order?.total_savings_amount + this.order?.total_amount} currency={this.order?.currency || 'usd'} />
           )}
-          <sc-total order={this.order} total={this.total}></sc-total>
+          <sc-total class="total-price" order={this.order} total={this.total}></sc-total>
         </span>
       </sc-line-item>
     );

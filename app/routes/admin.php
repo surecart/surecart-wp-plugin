@@ -38,7 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 \SureCart::route()
 ->get()
 ->where( 'admin', 'sc-dashboard' )
-->middleware( 'user.can:manage_options' )
+->middleware( 'user.can:manage_sc_shop_settings' )
 ->middleware( 'assets.components' )
 ->name( 'dashboard.show' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Dashboard\\' )
