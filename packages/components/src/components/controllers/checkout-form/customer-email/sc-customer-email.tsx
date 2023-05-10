@@ -104,6 +104,9 @@ export class ScCustomerEmail {
 
   /** Sync customer email with session if it's updated by other means */
   handleSessionChange() {
+    // we already have a value and we are not yet logged in.
+    if (this.value && !userState.loggedIn) return;
+
     // we are logged in already.
     if (userState.loggedIn) {
       // get email from user state fist.
