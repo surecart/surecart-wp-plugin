@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-08T09:20:33",
+  "timestamp": "2023-05-10T22:27:28",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -22608,6 +22608,21 @@
           "values": [
             {
               "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "media",
+          "type": "Media",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "The product media",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Media"
             }
           ],
           "optional": false,
