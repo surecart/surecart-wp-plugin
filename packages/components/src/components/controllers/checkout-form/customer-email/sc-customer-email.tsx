@@ -104,12 +104,10 @@ export class ScCustomerEmail {
 
   /** Sync customer email with session if it's updated by other means */
   handleSessionChange() {
-    // we already have a value.
-    if (this.value) return;
-
     // we are logged in already.
     if (userState.loggedIn) {
-      this.value = (checkoutState?.checkout?.customer as Customer)?.email || checkoutState?.checkout?.email;
+      // get email from user state fist.
+      this.value = userState.email || (checkoutState?.checkout?.customer as Customer)?.email || checkoutState?.checkout?.email;
       return;
     }
 

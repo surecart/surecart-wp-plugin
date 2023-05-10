@@ -76,16 +76,15 @@ class CheckoutsController extends RestController {
 			return $class;
 		}
 
-		// get the customer id.
-		$user_customer_id = $user->customerId( ! empty( $request['live_mode'] ) ? 'live' : 'test' );
+		// always force the user email.
+		$class['email'] = $user->user_email;
 
-		// just use the customer id if it exists.
-		if ( ! empty( $user_customer_id ) ) {
-			$class['customer'] = $user_customer_id;
-		} else {
-			$class['email'] = $user->user_email;
-			$class['name']  = $user->display_name;
-			$class['phone'] = $user->phone;
+		// if this is a new session, populate the name and phone from the user data.
+		if ( $request->get_method() === 'POST' ) {
+			$class['name']       = $user->display_name;
+			$class['first_name'] = $user->first_name;
+			$class['last_name']  = $user->last_name;
+			$class['phone']      = $user->phone;
 		}
 
 		return $class;
