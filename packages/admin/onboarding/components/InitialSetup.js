@@ -3,8 +3,9 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import StepHeader from './StepHeader';
 import ProgressIndicator from './ProgressIndicator';
+import { ScButton } from '@surecart/components-react';
 
-export default ({ handleStepChange }) => {
+export default ({ handleStepChange, setShowConnect }) => {
 	return (
 		<div>
 			<StepHeader
@@ -22,11 +23,14 @@ export default ({ handleStepChange }) => {
 					gap: 10px;
 				`}
 			>
-				<sc-button
+				<ScButton
 					size="large"
 					type="primary"
 					style={{ width: '230px' }}
-					onClick={() => handleStepChange('forward')}
+					onClick={() => {
+						setShowConnect(false);
+						handleStepChange('forward');
+					}}
 				>
 					<sc-icon
 						name="shopping-bag"
@@ -34,17 +38,28 @@ export default ({ handleStepChange }) => {
 						style={{ fontSize: '18px' }}
 					></sc-icon>
 					{__('Create New Store', 'surecart')}
-				</sc-button>
-				<sc-button size="large" style={{ width: '230px' }}>
+				</ScButton>
+				<ScButton
+					size="large"
+					style={{ width: '230px' }}
+					onClick={() => {
+						setShowConnect(true);
+						handleStepChange('forward');
+					}}
+				>
 					<sc-icon
 						name="upload-cloud"
 						slot="prefix"
 						style={{ fontSize: '18px' }}
 					></sc-icon>
 					{__('Connect Existing Store', 'surecart')}
-				</sc-button>
+				</ScButton>
 			</div>
-			<ProgressIndicator currentStep={0} />
+			<ProgressIndicator
+				currentStep={0}
+				onForwardClick={null}
+				onBackwardClick={null}
+			/>
 		</div>
 	);
 };

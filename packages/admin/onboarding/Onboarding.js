@@ -3,14 +3,16 @@ import { css, jsx } from '@emotion/core';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 import ReactCanvasConfetti from 'react-canvas-confetti';
+import apiFetch from '@wordpress/api-fetch';
 
 import Layout from './components/Layout';
 import InitialSetup from './components/InitialSetup';
-import ConfirmEmail from './components/ConfirmEmail';
+import ConfirmBasicDetails from './components/ConfirmBasicDetails';
 import SetupDone from './components/SetupDone';
 import SetupProgress from './components/SetupProgress';
 import StarterTemplates from './components/StarterTemplates';
 import ConfirmExit from './components/ConfirmExit';
+import ConnectStore from './components/ConnectStore';
 
 let confettiIntervalId;
 let confettiTimerId;
@@ -36,10 +38,15 @@ function getAnimationSettings(originXA, originXB) {
 }
 
 export default () => {
-	const [email, setEmail] = useState('');
+	const [showConnect, setShowConnect] = useState(false);
+	const [accountEmail, setAccountEmail] = useState('');
+	const [accountCurrency, setAccountCurrency] = useState(null);
 	const [selectedTemplate, setSelectedTemplate] = useState(null);
 	const [currentStep, setCurrentStep] = useState(0);
 	const refAnimationInstance = useRef(null);
+	const [error, setError] = useState(null);
+	const [storeInfo, setStoreInfo] = useState(null);
+	const [confirmExit, setConfirmExit] = useState(true);
 
 	const getInstance = useCallback((instance) => {
 		refAnimationInstance.current = instance;
@@ -65,36 +72,48 @@ export default () => {
 			setCurrentStep((step) => step - 1);
 	}
 
-	async function onEmailSubmit() {
+	async function createProvisionalAccount() {
 		try {
-			await apiFetch({
+			const res = await apiFetch({
 				method: 'POST',
 				path: 'surecart/v1/public/provisional_accounts/',
 				data: {
-					account_name: 'Deba Store',
-					email: email.trim(),
+					account_currency: 'eur',
+					// account_name: "Ben's Mercantile",
+					// account_url: 'https://bartling.io',
+					email: accountEmail,
+					source_account_id: selectedTemplate,
 				},
 			});
+			setStoreInfo(res);
 			handleStepChange('forward');
 		} catch (error) {
-			console.error(error);
+			setError(error);
 		}
 	}
 
 	function renderContent(step) {
 		switch (step) {
 			case 0:
-				return <InitialSetup handleStepChange={handleStepChange} />;
-			case 1:
 				return (
-					<ConfirmEmail
-						email={email}
+					<InitialSetup
+						handleStepChange={handleStepChange}
+						setShowConnect={setShowConnect}
+					/>
+				);
+			case 1:
+				return showConnect ? (
+					<ConnectStore
 						currentStep={currentStep}
 						handleStepChange={handleStepChange}
-						onSubmitEmail={(email) => {
-							setEmail(email);
-							handleStepChange('forward');
-						}}
+						setConfirmExit={setConfirmExit}
+					/>
+				) : (
+					<ConfirmBasicDetails
+						currentStep={currentStep}
+						handleStepChange={handleStepChange}
+						email={accountEmail}
+						onSubmitEmail={setAccountEmail}
 					/>
 				);
 			case 2:
@@ -104,12 +123,13 @@ export default () => {
 						handleStepChange={handleStepChange}
 						selectedTemplate={selectedTemplate}
 						onSelectTemplate={setSelectedTemplate}
+						createAccount={createProvisionalAccount}
 					/>
 				);
 			case 3:
 				return <SetupProgress />;
 			case 4:
-				return <SetupDone />;
+				return <SetupDone claimUrl={storeInfo?.claim_url} />;
 			default:
 				break;
 		}
@@ -144,7 +164,7 @@ export default () => {
 					left: 0,
 				}}
 			/>
-			<ConfirmExit />
+			{confirmExit && <ConfirmExit />}
 		</>
 	);
 };

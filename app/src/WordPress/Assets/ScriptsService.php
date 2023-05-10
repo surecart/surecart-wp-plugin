@@ -261,7 +261,7 @@ class ScriptsService {
 	 */
 	public function registerBlocks() {
 		$enabledPaymentProcessors = array_values(array_filter((array) Processor::get() ?? [], function($paymentMethod){
-			return $paymentMethod->enabled;
+			return $paymentMethod['enabled'] ?? null;
 		}));
 		// blocks.
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/library.asset.php';

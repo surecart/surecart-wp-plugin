@@ -42,7 +42,7 @@ export default ({ currentStep, onBackwardClick, onForwardClick }) => {
 				background-color: #f0f0f1;
 			`}
 		>
-			{[1, 2].includes(currentStep) ? (
+			{onBackwardClick !== null ? (
 				<ScButton
 					type="link"
 					size="large"
@@ -67,7 +67,7 @@ export default ({ currentStep, onBackwardClick, onForwardClick }) => {
 			>
 				{renderSteps(currentStep)}
 			</div>
-			{currentStep !== 0 && (
+			{onForwardClick !== null && (
 				<ScButton
 					type="primary"
 					size="large"

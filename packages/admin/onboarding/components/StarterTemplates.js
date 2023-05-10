@@ -30,8 +30,8 @@ export default ({
 	handleStepChange,
 	selectedTemplate,
 	onSelectTemplate,
+	createAccount,
 }) => {
-	console.log('selectedTemplate', selectedTemplate);
 	return (
 		<div>
 			<StepHeader
@@ -71,7 +71,9 @@ export default ({
 				<TemplateItem
 					template={{ name: 'Start From Scratch' }}
 					active={selectedTemplate === 0}
-					onItemClick={() => onSelectTemplate(0)}
+					onItemClick={() =>
+						onSelectTemplate('fd1e9000-384e-42cd-b0a7-080fcf098aad')
+					}
 				/>
 				{templates.map((template, idx) => (
 					<TemplateItem
@@ -87,7 +89,10 @@ export default ({
 				onBackwardClick={() => handleStepChange('backward')}
 				onForwardClick={
 					selectedTemplate !== null
-						? () => handleStepChange('forward')
+						? () => {
+								handleStepChange('forward');
+								createAccount();
+						  }
 						: undefined
 				}
 			/>
