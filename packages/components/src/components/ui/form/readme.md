@@ -84,7 +84,6 @@ Type: `Promise<boolean>`
  - [sc-mollie-add-method](../sc-mollie-add-method)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-product-buy-button](../../controllers/product/sc-product-buy-button)
- - [sc-product-form](../../controllers/product/sc-product-form)
  - [sc-product-selected-price](../../controllers/checkout-form/sc-product-selected-price)
  - [sc-stripe-add-method](../sc-stripe-add-method)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
@@ -106,7 +105,6 @@ graph TD;
   sc-mollie-add-method --> sc-form
   sc-password-nag --> sc-form
   sc-product-buy-button --> sc-form
-  sc-product-form --> sc-form
   sc-product-selected-price --> sc-form
   sc-stripe-add-method --> sc-form
   sc-subscription-ad-hoc-confirm --> sc-form

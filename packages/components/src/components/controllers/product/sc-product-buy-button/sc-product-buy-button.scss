@@ -13,6 +13,17 @@ sc-dialog {
 sc-button {
   --sc-input-font-family: initial;
 }
+.sc-button {
+  position: relative;
+}
+
+.sc-button sc-spinner::part(base) {
+  --indicator-color: currentColor;
+  --spinner-size: 12px;
+  position: absolute;
+  top: calc(50% - var(--spinner-size) + (var(--spinner-size) / 4));
+  left: calc(50% - var(--spinner-size) + (var(--spinner-size) / 4));
+}
 
 .dialog {
   &__header {

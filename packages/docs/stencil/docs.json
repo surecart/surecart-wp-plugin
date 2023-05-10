@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-05T20:57:22",
+  "timestamp": "2023-05-10T20:45:19",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -11425,7 +11425,6 @@
         "sc-mollie-add-method",
         "sc-password-nag",
         "sc-product-buy-button",
-        "sc-product-form",
         "sc-product-selected-price",
         "sc-stripe-add-method",
         "sc-subscription-ad-hoc-confirm",
@@ -11460,9 +11459,6 @@
           "sc-form"
         ],
         "sc-product-buy-button": [
-          "sc-form"
-        ],
-        "sc-product-form": [
           "sc-form"
         ],
         "sc-product-selected-price": [
@@ -13452,6 +13448,22 @@
       "usage": {},
       "props": [
         {
+          "name": "autoHeight",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "auto-height",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "hasThumbnails",
           "type": "boolean",
           "mutable": false,
@@ -13469,13 +13481,16 @@
         },
         {
           "name": "images",
-          "type": "{ src: string; alt: string; srcset: any; width: number; sizes: string; }[]",
+          "type": "string | { src: string; alt: string; srcset: any; width: number; sizes: string; }[]",
           "mutable": false,
-          "attr": "auto-height",
+          "attr": "images",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Accept a string or an array of objects",
           "docsTags": [],
           "values": [
+            {
+              "type": "string"
+            },
             {
               "type": "{ src: string; alt: string; srcset: any; width: number; sizes: string; }[]"
             }
@@ -13485,13 +13500,17 @@
         },
         {
           "name": "thumbnails",
-          "type": "{ src: string; alt: string; srcset: any; width: number; sizes: string; }[]",
+          "type": "string | { src: string; alt: string; srcset: any; width: number; sizes: string; }[]",
           "mutable": false,
+          "attr": "thumbnails",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
           "default": "[]",
           "values": [
+            {
+              "type": "string"
+            },
             {
               "type": "{ src: string; alt: string; srcset: any; width: number; sizes: string; }[]"
             }
@@ -23067,8 +23086,9 @@
     },
     {
       "filePath": "./src/components/controllers/product/sc-product-form/sc-product-form.tsx",
-      "encapsulation": "shadow",
+      "encapsulation": "none",
       "tag": "sc-product-form",
+      "readme": "# sc-product-form\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -23080,14 +23100,8 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [
-        "sc-form"
-      ],
-      "dependencyGraph": {
-        "sc-product-form": [
-          "sc-form"
-        ]
-      }
+      "dependencies": [],
+      "dependencyGraph": {}
     },
     {
       "filePath": "./src/components/controllers/product/sc-product-image/sc-product-image.tsx",
@@ -23794,6 +23808,21 @@
           "values": [
             {
               "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "media",
+          "type": "Media",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "The product media",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Media"
             }
           ],
           "optional": false,

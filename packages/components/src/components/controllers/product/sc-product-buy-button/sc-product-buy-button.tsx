@@ -9,7 +9,7 @@ import { Checkout } from '../../../../types';
 @Component({
   tag: 'sc-product-buy-button',
   styleUrl: 'sc-product-buy-button.scss',
-  shadow: true,
+  shadow: false,
 })
 export class ScProductBuyButton {
   private priceInput: HTMLScPriceInputElement;
@@ -37,6 +37,8 @@ export class ScProductBuyButton {
 
   /** Show the total. */
   @Prop() showTotal: boolean;
+
+  @Prop() text: string;
 
   /** Is the dialog open? */
   @State() dialog: boolean = false;
@@ -92,21 +94,22 @@ export class ScProductBuyButton {
     }
   }
 
+  renderContent() {
+    if (this.busy) {
+      return <sc-spinner />;
+    }
+    if (state?.product?.archived) {
+      return __('Currently Unavailable', 'surecart');
+    }
+    return this.text;
+  }
+
   render() {
     return (
       <Host>
-        <sc-button
-          type={this.type}
-          size={this.size}
-          loading={this.busy}
-          full={this.full}
-          disabled={this.busy || state?.product?.archived}
-          outline={this.outline}
-          onClick={e => this.handleCartClick(e)}
-        >
-          {!!this.icon && <sc-icon name={this.icon} slot="prefix"></sc-icon>}
-          {state?.product?.archived ? __('Currently Unavailable', 'surecart') : <slot />}
-        </sc-button>
+        <button class="wp-block-button__link wp-element-button sc-button" onClick={e => this.handleCartClick(e)}>
+          {this.renderContent()}
+        </button>
 
         {state?.selectedPrice?.ad_hoc && (
           <sc-dialog open={this.dialog} onScRequestClose={() => (this.dialog = false)}>

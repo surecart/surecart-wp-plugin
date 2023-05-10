@@ -2726,6 +2726,7 @@ export namespace Components {
           * The button's size.
          */
         "size": 'small' | 'medium' | 'large';
+        "text": string;
         /**
           * The button type.
          */
@@ -8355,6 +8356,7 @@ declare namespace LocalJSX {
           * The button's size.
          */
         "size"?: 'small' | 'medium' | 'large';
+        "text"?: string;
         /**
           * The button type.
          */

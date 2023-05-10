@@ -1456,6 +1456,7 @@
     "outline": true,
     "show-total": true,
     "size": true,
+    "text": true,
     "type": true,
     "style": true,
     "id": true,
