@@ -243,7 +243,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.10.4 - May 9, 2023 =
+= 1.10.4 - May 10, 2023 =
 * Fix: Issue with email and name fields being disabled and blank if a user has created a checkout, then logs in and visits the same page.
 
 = 1.10.3 - May 9, 2023 =
