@@ -128,7 +128,6 @@ export class ScCustomerLastname {
         name="last_name"
         ref={el => (this.input = el as HTMLScInputElement)}
         value={this.value}
-        disabled={!!userState.loggedIn}
         label={this.label}
         help={this.help}
         autocomplete="last_name"
