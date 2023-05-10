@@ -97,11 +97,16 @@ class Block extends BaseBlock {
 	 */
 	public function render( $attributes, $content ) {
 		ob_start();
+
+		// set width class.
+		$width_class = ! empty( $attributes['width'] ) ? 'has-custom-width wp-block-button__width-' . $attributes['width'] : '';
 		?>
 
-		<sc-product-buy-button class="wp-block-button has-custom-width wp-block-button__width-50" add-to-cart href="#" full="<?php echo ! empty( $attributes['width'] ) ? 'true' : 'false'; ?>" type="primary" style="<?php echo esc_attr( $this->getVars( $attributes, '--sc-button' ) ); ?>" text="<?php echo esc_attr( $attributes['text'] ); ?>">
+		<sc-product-buy-button
+			add-to-cart
+			class="wp-block-button <?php echo esc_attr( $width_class ); ?> <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>"
+			style="<?php echo esc_attr( $this->getVars( $attributes, '--sc-button' ) ); ?>" text="<?php echo esc_attr( $attributes['text'] ); ?>">
 		</sc-product-buy-button>
-
 
 		<?php
 		return ob_get_clean();
