@@ -173,7 +173,7 @@ export class ScCustomerEmail {
           label={this.label}
           autocomplete={'email'}
           placeholder={this.placeholder}
-          disabled={!!userState.loggedIn}
+          disabled={!!userState.loggedIn && !!this.value?.length && !this.invalid}
           readonly={this.readonly}
           required={true}
           invalid={this.invalid}
