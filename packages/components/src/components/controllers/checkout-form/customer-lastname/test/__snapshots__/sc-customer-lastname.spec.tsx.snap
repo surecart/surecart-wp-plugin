@@ -3,7 +3,7 @@
 exports[`sc-customer-lastname Logged In Checkout last name provided with URL Params 1`] = `
 <sc-customer-lastname size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="last_name" disabled="" help="" name="last_name" type="text" value="CheckoutLast"></sc-input>
+    <sc-input autocomplete="last_name" help="" name="last_name" type="text" value="CheckoutLast"></sc-input>
   </mock:shadow-root>
 </sc-customer-lastname>
 `;
@@ -11,7 +11,7 @@ exports[`sc-customer-lastname Logged In Checkout last name provided with URL Par
 exports[`sc-customer-lastname Logged In Checkout last name provided without URL Params 1`] = `
 <sc-customer-lastname size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="last_name" disabled="" help="" name="last_name" type="text" value="CheckoutLast"></sc-input>
+    <sc-input autocomplete="last_name" help="" name="last_name" type="text" value="CheckoutLast"></sc-input>
   </mock:shadow-root>
 </sc-customer-lastname>
 `;
@@ -19,7 +19,7 @@ exports[`sc-customer-lastname Logged In Checkout last name provided without URL 
 exports[`sc-customer-lastname Logged In Customer and Checkout last name provided with URL Params 1`] = `
 <sc-customer-lastname size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="last_name" disabled="" help="" name="last_name" type="text" value="CustomerLast"></sc-input>
+    <sc-input autocomplete="last_name" help="" name="last_name" type="text" value="CustomerLast"></sc-input>
   </mock:shadow-root>
 </sc-customer-lastname>
 `;
@@ -27,7 +27,7 @@ exports[`sc-customer-lastname Logged In Customer and Checkout last name provided
 exports[`sc-customer-lastname Logged In Customer and Checkout last name provided without URL Params 1`] = `
 <sc-customer-lastname size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="last_name" disabled="" help="" name="last_name" type="text" value="CustomerLast"></sc-input>
+    <sc-input autocomplete="last_name" help="" name="last_name" type="text" value="CustomerLast"></sc-input>
   </mock:shadow-root>
 </sc-customer-lastname>
 `;
@@ -35,7 +35,7 @@ exports[`sc-customer-lastname Logged In Customer and Checkout last name provided
 exports[`sc-customer-lastname Logged In Customer last name provided with URL Params 1`] = `
 <sc-customer-lastname size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="last_name" disabled="" help="" name="last_name" type="text" value="CustomerLast"></sc-input>
+    <sc-input autocomplete="last_name" help="" name="last_name" type="text" value="CustomerLast"></sc-input>
   </mock:shadow-root>
 </sc-customer-lastname>
 `;
@@ -43,7 +43,7 @@ exports[`sc-customer-lastname Logged In Customer last name provided with URL Par
 exports[`sc-customer-lastname Logged In Customer last name provided without URL Params 1`] = `
 <sc-customer-lastname size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="last_name" disabled="" help="" name="last_name" type="text" value="CustomerLast"></sc-input>
+    <sc-input autocomplete="last_name" help="" name="last_name" type="text" value="CustomerLast"></sc-input>
   </mock:shadow-root>
 </sc-customer-lastname>
 `;
