@@ -1,6 +1,6 @@
 import { Component, Element, h, Prop, State } from '@stencil/core';
 import uiStore from '@store/ui';
-import { getCheckout } from '@store/checkouts';
+import store, { getCheckout } from '@store/checkouts';
 
 /**
  * @part base - The elements base wrapper.
@@ -12,6 +12,7 @@ import { getCheckout } from '@store/checkouts';
   shadow: true,
 })
 export class ScCartButton {
+  private link: HTMLAnchorElement;
   /** The cart element. */
   @Element() el: HTMLScCartButtonElement;
 
@@ -48,20 +49,25 @@ export class ScCartButton {
   }
 
   componentDidLoad() {
+    this.link = this.el.closest('a');
     // this is to keep the structure that WordPress expects for theme styling.
-    this.el.closest('a').addEventListener('click', e => {
+    this.link.addEventListener('click', e => {
       e.preventDefault();
       e.stopImmediatePropagation();
       uiStore.state.cart = { ...uiStore.state.cart, open: !uiStore.state.cart.open };
       return false;
     });
+
+    // maybe hide the parent <a> if there are no items in the cart.
+    this.handleParentLinkDisplay();
+    store.onChange(this.mode, () => this.handleParentLinkDisplay());
+  }
+
+  handleParentLinkDisplay() {
+    this.link.style.display = !this.cartMenuAlwaysShown && !this.getItemsCount() ? 'none' : null;
   }
 
   render() {
-    if (!this.cartMenuAlwaysShown && !this.getItemsCount()) {
-      return null;
-    }
-
     return (
       <div class="cart__button" part="base">
         <div class="cart__content">
