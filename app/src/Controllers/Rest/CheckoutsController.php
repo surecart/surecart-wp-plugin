@@ -68,11 +68,6 @@ class CheckoutsController extends RestController {
 	 * @return \SureCart\Models\Model|\WP_Error
 	 */
 	protected function maybeSetUser( \SureCart\Models\Model $class, \WP_REST_Request $request ) {
-		// we only care about new sessions for now.
-		if ( $request->get_method() !== 'POST' ) {
-			return $class;
-		}
-
 		// get current user.
 		$user = User::current();
 
@@ -81,16 +76,17 @@ class CheckoutsController extends RestController {
 			return $class;
 		}
 
-		// fetch the user's customer object.
-		$customer = $user->customer( ! empty( $request['live_mode'] ) ? 'live' : 'test' );
+		// get the customer id.
+		$user_customer_id = $user->customerId( ! empty( $request['live_mode'] ) ? 'live' : 'test' );
 
-		if ( ! empty( $customer->id ) ) {
-			$class['customer'] = $customer;
-			$class['phone']    = isset( $customer->phone ) ? $customer->phone : '';
+		// just use the customer id if it exists.
+		if ( ! empty( $user_customer_id ) ) {
+			$class['customer'] = $user_customer_id;
+		} else {
+			$class['email'] = $user->user_email;
+			$class['name']  = $user->display_name;
+			$class['phone'] = $user->phone;
 		}
-
-		$class['email'] = $customer->email ?? $user->user_email;
-		$class['name']  = $customer->name ?? $user->display_name;
 
 		return $class;
 	}
