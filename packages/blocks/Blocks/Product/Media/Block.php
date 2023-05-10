@@ -33,23 +33,27 @@ class Block extends BaseBlock {
 			return '';
 		}
 
-		$images = array_map(
+		$images     = array_map(
 			function( $product_media ) use ( $product ) {
-				if ( empty( $product_media->media->url ) ) {
-					if ( ! empty( $product_media->url ) ) {
-						return [
-							'src' => $product_media->url ?? '',
-							'alt' => '',
-						];
-					}
-					return;
-				}
 				return [
-					'src' => $product_media->media->url ?? '',
-					'alt' => $product_media->media->filename ?? $product->name ?? '',
+					'src'   => $product_media->getUrl( 450 ),
+					'alt'   => $product_media->media->filename ?? $product->name ?? '',
+					'width' => 450,
 				];
 			},
-			$product->product_medias->data ?? []
+			$product->product_medias->data
+		);
+		$thumbnails = array_map(
+			function( $product_media ) use ( $product ) {
+				return [
+					'src'    => $product_media->getUrl( 90 ),
+					'srcset' => $product_media->getSrcset( [ 90, 120, 240 ] ),
+					'sizes'  => '(min-width: 780px) 90px, 13vw', // 13vw = 13% of the viewport width because of 5 thumbnails per page, plus spacing for arrows.
+					'alt'    => $product_media->media->filename ?? $product->name ?? '',
+					'width'  => 90,
+				];
+			},
+			$product->product_medias->data
 		);
 
 		ob_start(); ?>
@@ -58,14 +62,15 @@ class Block extends BaseBlock {
 			<sc-image-slider
 				id="sc-product-media-<?php echo esc_attr( esc_attr( $product->id ) ); ?>"
 				images='<?php echo wp_json_encode( $images ); ?>'
-				thumbnails
+				thumbnails='<?php echo wp_json_encode( $thumbnails ); ?>'
+				hasThumbnails
 				thumbnails-per-page="<?php echo esc_attr( $attributes['thumbnails_per_page'] ?? 5 ); ?>"
 				auto-height="<?php echo esc_attr( ! empty( $attributes['auto_height'] ) ? 'true' : 'false' ); ?>"
 				style="--sc-product-slider-height: <?php echo ! empty( $attributes['auto_height'] ) ? 'auto' : ( esc_attr( $attributes['height'] ?? 'auto' ) ); ?>
 				"></sc-image-slider>
 		<?php else : ?>
 			<figure class="wp-block-image size-full is-resized has-custom-border">
-				<img src="<?php echo esc_url( $product->image->url ); ?>" alt="<?php echo esc_attr( $product->name ); ?>" style="border-radius:5px" />
+				<img src="<?php echo esc_url( $product->product_medias->data[0]->getUrl( 800 ) ); ?>" alt="<?php echo esc_attr( $product->name ); ?>" style="border-radius:5px" />
 			</figure>
 		<?php endif; ?>
 
