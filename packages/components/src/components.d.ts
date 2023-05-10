@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 import { LineItemData as LineItemData1 } from "src/types";
 export namespace Components {
     interface ScAddress {
@@ -1574,8 +1574,9 @@ export namespace Components {
         "src": string;
     }
     interface ScImageSlider {
-        "images": { src: string; alt: string }[];
-        "thumbnails": boolean;
+        "hasThumbnails": boolean;
+        "images": { src: string; alt: string; srcset; width: number; sizes: string }[];
+        "thumbnails": { src: string; alt: string; srcset; width: number; sizes: string }[];
         "thumbnailsPerPage": number;
     }
     interface ScInput {
@@ -1828,6 +1829,7 @@ export namespace Components {
           * The bump
          */
         "bump": Bump;
+        "cdnRoot": string;
         /**
           * The checkout
          */
@@ -2670,6 +2672,10 @@ export namespace Components {
           * The max allowed.
          */
         "max": number;
+        /**
+          * The product media
+         */
+        "media": Media;
         /**
           * Product name
          */
@@ -6796,8 +6802,9 @@ declare namespace LocalJSX {
         "src"?: string;
     }
     interface ScImageSlider {
-        "images"?: { src: string; alt: string }[];
-        "thumbnails"?: boolean;
+        "hasThumbnails"?: boolean;
+        "images"?: { src: string; alt: string; srcset; width: number; sizes: string }[];
+        "thumbnails"?: { src: string; alt: string; srcset; width: number; sizes: string }[];
         "thumbnailsPerPage"?: number;
     }
     interface ScInput {
@@ -7063,6 +7070,7 @@ declare namespace LocalJSX {
           * The bump
          */
         "bump"?: Bump;
+        "cdnRoot"?: string;
         /**
           * The checkout
          */
@@ -7988,6 +7996,10 @@ declare namespace LocalJSX {
           * The max allowed.
          */
         "max"?: number;
+        /**
+          * The product media
+         */
+        "media"?: Media;
         /**
           * Product name
          */

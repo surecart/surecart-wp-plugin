@@ -15,8 +15,9 @@ export class ScImageSlider {
   private swiper: Swiper;
   private thumbsSwiper: Swiper;
 
-  @Prop() images: { src: string; alt: string }[] = [];
-  @Prop() thumbnails: boolean;
+  @Prop() images: { src: string; alt: string; srcset; width: number; sizes: string }[] = [];
+  @Prop() thumbnails: { src: string; alt: string; srcset; width: number; sizes: string }[] = [];
+  @Prop() hasThumbnails: boolean;
   @Prop() thumbnailsPerPage: number = 5;
 
   /** Current Slide Index */
@@ -66,21 +67,22 @@ export class ScImageSlider {
   }
 
   render() {
+    const thumbnails = this.thumbnails?.length ? this.thumbnails : this.images;
     return (
       <div class="image-slider" part="base">
         <div class="swiper" ref={el => (this.swiperContainerRef = el)}>
           <div class="swiper-wrapper">
-            {(this.images || []).map(({ src, alt }, index) => (
+            {(this.images || []).map(({ src, alt, srcset, width, sizes }, index) => (
               <div key={index} class="swiper-slide image-slider__slider">
                 <div class="swiper-slide-img">
-                  <img src={src} alt={alt} />
+                  <img src={src} alt={alt} srcset={srcset} width={width} sizes={sizes} loading={index > 0 ? 'lazy' : 'eager'} />
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {this.thumbnails && (
+        {this.hasThumbnails && (
           <div class={{ 'image-slider__thumbs': true, 'image-slider__thumbs--has-navigation': this.images.length > 5 }}>
             <div class="image-slider__navigation image-slider--is-prev" ref={el => (this.previous = el)}>
               <sc-icon name="chevron-left" />
@@ -88,15 +90,14 @@ export class ScImageSlider {
 
             <div class="swiper" ref={el => (this.swiperThumbsRef = el)}>
               <div class="swiper-wrapper">
-                {!!this.images.length &&
-                  this.images.map(({ src, alt }, index) => (
-                    <div
-                      class={{ 'swiper-slide': true, 'image-slider__thumb': true, 'image-slider__thumb--is-active': this.currentSliderIndex === index }}
-                      onClick={() => this.swiper?.slideTo?.(index)}
-                    >
-                      <img src={src} alt={alt} />
-                    </div>
-                  ))}
+                {(thumbnails || []).map(({ src, alt, srcset, width, sizes }, index) => (
+                  <div
+                    class={{ 'swiper-slide': true, 'image-slider__thumb': true, 'image-slider__thumb--is-active': this.currentSliderIndex === index }}
+                    onClick={() => this.swiper?.slideTo?.(index)}
+                  >
+                    <img src={src} alt={alt} srcset={srcset} width={width} sizes={sizes} loading={index > this.thumbnailsPerPage - 1 ? 'lazy' : 'eager'} />
+                  </div>
+                ))}
               </div>
             </div>
 

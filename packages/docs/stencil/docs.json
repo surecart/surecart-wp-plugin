@@ -13532,8 +13532,24 @@
       "usage": {},
       "props": [
         {
+          "name": "hasThumbnails",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "has-thumbnails",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "images",
-          "type": "{ src: string; alt: string; }[]",
+          "type": "{ src: string; alt: string; srcset: any; width: number; sizes: string; }[]",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
@@ -13541,7 +13557,7 @@
           "default": "[]",
           "values": [
             {
-              "type": "{ src: string; alt: string; }[]"
+              "type": "{ src: string; alt: string; srcset: any; width: number; sizes: string; }[]"
             }
           ],
           "optional": false,
@@ -13549,15 +13565,15 @@
         },
         {
           "name": "thumbnails",
-          "type": "boolean",
+          "type": "{ src: string; alt: string; srcset: any; width: number; sizes: string; }[]",
           "mutable": false,
-          "attr": "thumbnails",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
+          "default": "[]",
           "values": [
             {
-              "type": "boolean"
+              "type": "{ src: string; alt: string; srcset: any; width: number; sizes: string; }[]"
             }
           ],
           "optional": false,
@@ -16223,6 +16239,23 @@
           "values": [
             {
               "type": "Bump"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "cdnRoot",
+          "type": "string",
+          "mutable": false,
+          "attr": "cdn-root",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "window.scData?.cdn_root",
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,

@@ -13,27 +13,6 @@ class BuyPageController {
 	protected $product;
 
 	/**
-	 * Preload these blocks.
-	 *
-	 * @var array
-	 */
-	protected $preload = [
-		'surecart/column',
-		'surecart/columns',
-		'surecart/coupon',
-		'surecart/name',
-		'surecart/email',
-		'surecart/address',
-		'surecart/totals',
-		'surecart/total',
-		'surecart/submit',
-		'surecart/price-selector',
-		'surecart/price-choice',
-		'surecart/payment',
-	];
-
-
-	/**
 	 * Handle filters.
 	 *
 	 * @return void
@@ -51,18 +30,24 @@ class BuyPageController {
 		add_action( 'wp_enqueue_scripts', [ $this, 'styles' ] );
 		// add scripts.
 		add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ] );
+		// preload the image above the fold.
+		add_action( 'wp_head', [ $this, 'preloadImage' ] );
 	}
 
 	/**
-	 * Preload components.
+	 * Preload the image above the fold.
 	 *
 	 * @return void
 	 */
-	public function preloadComponents() {
-		$config = \SureCart::resolve( SURECART_CONFIG_KEY );
-		foreach ( $this->preload as $name ) {
-			\SureCart::preload()->add( $config['preload'][ $name ] );
+	public function preloadImage() {
+		if ( empty( $this->product->product_medias->data ) || is_wp_error( $this->product->product_medias->data ) ) {
+			return;
 		}
+		$product_media = $this->product->product_medias->data[0];
+
+		?>
+		<link rel="preload" fetchpriority="high" as="image" href="<?php echo esc_url( $product_media->getUrl( 450 ) ); ?>">
+		<?php
 	}
 
 	/**
@@ -125,9 +110,6 @@ class BuyPageController {
 
 		// add the filters.
 		$this->filters();
-
-		// preload the components.
-		$this->preloadComponents();
 
 		// render the view.
 		return \SureCart::view( 'web/buy' )->with(
