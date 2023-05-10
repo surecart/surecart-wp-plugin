@@ -800,6 +800,7 @@
     "slot": true
   },
   "sc-image-slider": {
+    "auto-height": true,
     "has-thumbnails": true,
     "images": true,
     "thumbnails": true,

@@ -6,7 +6,13 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-import { LineItemData as LineItemData1 } from "src/types";
+import { LineItemData as LineItemData1, Price as Price1 } from "src/types";
+import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
+import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
+export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+export { LineItemData as LineItemData1, Price as Price1 } from "src/types";
+export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
+export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export namespace Components {
     interface ScAddress {
         /**
@@ -1553,9 +1559,13 @@ export namespace Components {
         "src": string;
     }
     interface ScImageSlider {
+        "autoHeight": boolean;
         "hasThumbnails": boolean;
-        "images": { src: string; alt: string; srcset; width: number; sizes: string }[];
-        "thumbnails": { src: string; alt: string; srcset; width: number; sizes: string }[];
+        /**
+          * Accept a string or an array of objects
+         */
+        "images": string | { src: string; alt: string; srcset; width: number; sizes: string }[];
+        "thumbnails": string | { src: string; alt: string; srcset; width: number; sizes: string }[];
         "thumbnailsPerPage": number;
     }
     interface ScInput {
@@ -7081,9 +7091,13 @@ declare namespace LocalJSX {
         "src"?: string;
     }
     interface ScImageSlider {
+        "autoHeight"?: boolean;
         "hasThumbnails"?: boolean;
-        "images"?: { src: string; alt: string; srcset; width: number; sizes: string }[];
-        "thumbnails"?: { src: string; alt: string; srcset; width: number; sizes: string }[];
+        /**
+          * Accept a string or an array of objects
+         */
+        "images"?: string | { src: string; alt: string; srcset; width: number; sizes: string }[];
+        "thumbnails"?: string | { src: string; alt: string; srcset; width: number; sizes: string }[];
         "thumbnailsPerPage"?: number;
     }
     interface ScInput {
