@@ -32,7 +32,7 @@ class Block extends BaseBlock {
 
 		ob_start(); ?>
 
-		<a href="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>" class="menu-link <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
+		<a href="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>" class="menu-link <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?> line-height: 0;">
 			<sc-cart-button
 				cart-menu-always-shown='<?php echo esc_attr( $attributes['cartMenuAlwaysShown'] ? 'true' : 'false' ); ?>'
 				form-id='<?php echo esc_attr( $form->ID ); ?>'
