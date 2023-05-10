@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-01T17:45:34",
+  "timestamp": "2023-05-08T09:20:33",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -2746,6 +2746,23 @@
           "required": false
         },
         {
+          "name": "floatingIconEnabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "floating-icon-enabled",
+          "reflectToAttr": false,
+          "docs": "Whether the floating button should be visible",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "formId",
           "type": "string",
           "mutable": false,
@@ -2825,7 +2842,6 @@
       "dependents": [],
       "dependencies": [
         "sc-cart-session-provider",
-        "sc-cart-icon",
         "sc-drawer",
         "sc-error",
         "sc-block-ui"
@@ -2833,16 +2849,12 @@
       "dependencyGraph": {
         "sc-cart": [
           "sc-cart-session-provider",
-          "sc-cart-icon",
           "sc-drawer",
           "sc-error",
           "sc-block-ui"
         ],
         "sc-cart-session-provider": [
           "sc-line-items-provider"
-        ],
-        "sc-cart-icon": [
-          "sc-icon"
         ],
         "sc-drawer": [
           "sc-icon"
@@ -2857,6 +2869,116 @@
           "sc-spinner"
         ]
       }
+    },
+    {
+      "filePath": "./src/components/ui/sc-cart-button/sc-cart-button.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-cart-button",
+      "readme": "# sc-cart-button\n\n\n",
+      "docs": "",
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "count - The icon base wrapper."
+        }
+      ],
+      "usage": {},
+      "props": [
+        {
+          "name": "cartMenuAlwaysShown",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "cart-menu-always-shown",
+          "reflectToAttr": false,
+          "docs": "Whether the cart icon is always shown when the cart is empty",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "formId",
+          "type": "string",
+          "mutable": false,
+          "attr": "form-id",
+          "reflectToAttr": true,
+          "docs": "The form id to use for the cart.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "mode",
+          "type": "\"live\" | \"test\"",
+          "mutable": false,
+          "attr": "mode",
+          "reflectToAttr": false,
+          "docs": "Are we in test or live mode.",
+          "docsTags": [],
+          "default": "'live'",
+          "values": [
+            {
+              "value": "live",
+              "type": "string"
+            },
+            {
+              "value": "test",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showEmptyCount",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-empty-count",
+          "reflectToAttr": false,
+          "docs": "Whether the cart count will be shown or not when the cart is empty",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "count",
+          "docs": "The icon base wrapper."
+        }
+      ],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
     },
     {
       "filePath": "./src/components/controllers/cart/sc-cart-form/sc-cart-form.tsx",
@@ -3205,6 +3327,22 @@
           "required": false
         },
         {
+          "name": "formId",
+          "type": "string",
+          "mutable": false,
+          "attr": "form-id",
+          "reflectToAttr": true,
+          "docs": "The form id to use for the cart.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "icon",
           "type": "string",
           "mutable": false,
@@ -3215,6 +3353,28 @@
           "default": "'shopping-bag'",
           "values": [
             {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "mode",
+          "type": "\"live\" | \"test\"",
+          "mutable": false,
+          "attr": "mode",
+          "reflectToAttr": false,
+          "docs": "Are we in test or live mode.",
+          "docsTags": [],
+          "default": "'live'",
+          "values": [
+            {
+              "value": "live",
+              "type": "string"
+            },
+            {
+              "value": "test",
               "type": "string"
             }
           ],
@@ -3241,18 +3401,13 @@
           "docs": "The icon base wrapper."
         }
       ],
-      "dependents": [
-        "sc-cart"
-      ],
+      "dependents": [],
       "dependencies": [
         "sc-icon"
       ],
       "dependencyGraph": {
         "sc-cart-icon": [
           "sc-icon"
-        ],
-        "sc-cart": [
-          "sc-cart-icon"
         ]
       }
     },

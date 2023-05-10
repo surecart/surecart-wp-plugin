@@ -310,9 +310,11 @@ sc-checkout [hidden] {
 .sc-scroll-lock {
   overflow: hidden !important;
 }
+.surecart-theme-dark sc-checkout {
+  color: var(--sc-color-white);
+}
 
 .surecart-theme-dark {
-  color: var(--sc-color-white);
   /** Let's make these less blue for basic dark mode **/
   --sc-color-gray-50: var(--sc-color-neutral-50);
   --sc-color-gray-100: var(--sc-color-neutral-100);

@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import { ScSwitch } from '@surecart/components-react';
@@ -63,24 +65,6 @@ export default () => {
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
 							'This can slightly increase page load speed, but may require you to enable CORS headers for .js files on your CDN. Please check your checkout forms after you enable this option in a private browser window.',
-							'surecart'
-						)}
-					</span>
-				</ScSwitch>
-				<ScSwitch
-					checked={!item?.slide_out_cart_disabled}
-					onClick={(e) => {
-						e.preventDefault();
-						editItem({
-							slide_out_cart_disabled:
-								!item?.slide_out_cart_disabled,
-						});
-					}}
-				>
-					{__('Enable Slide-Out Cart', 'surecart')}
-					<span slot="description" style={{ lineHeight: '1.4' }}>
-						{__(
-							'If you do not wish to use the slide-out cart, you can disable this to prevent scripts from loading on your pages.',
 							'surecart'
 						)}
 					</span>
