@@ -15,11 +15,11 @@
 		}
 	},
 	"attributes": {
-		"cartIcon": {
+		"cart_icon": {
 			"type": "string",
 			"default": "shopping-bag"
 		},
-		"cartMenuAlwaysShown": {
+		"cart_menu_always_shown": {
 			"type": "boolean",
 			"default": true
 		}

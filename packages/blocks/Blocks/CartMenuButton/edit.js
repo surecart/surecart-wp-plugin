@@ -16,7 +16,7 @@ import {
 } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes }) => {
-	const { cartIcon, cartMenuAlwaysShown } = attributes;
+	const { cart_icon, cart_menu_always_shown } = attributes;
 
 	const blockProps = useBlockProps({
 		style: {
@@ -41,7 +41,7 @@ export default ({ attributes, setAttributes }) => {
 								label={__('Icon', 'surecart')}
 								onScChange={(e) =>
 									setAttributes({
-										cartIcon: e.target.value,
+										cart_icon: e.target.value,
 									})
 								}
 								style={{ '--sc-choice-padding': '1.3em' }}
@@ -49,14 +49,14 @@ export default ({ attributes, setAttributes }) => {
 							>
 								<ScChoice
 									showControl={false}
-									checked={cartIcon === 'shopping-bag'}
+									checked={cart_icon === 'shopping-bag'}
 									value="shopping-bag"
 								>
 									<ScIcon name="shopping-bag" />
 								</ScChoice>
 								<ScChoice
 									showControl={false}
-									checked={cartIcon === 'shopping-cart'}
+									checked={cart_icon === 'shopping-cart'}
 									value="shopping-cart"
 								>
 									<ScIcon name="shopping-cart" />
@@ -72,10 +72,11 @@ export default ({ attributes, setAttributes }) => {
 								'Enable to always show the cart button, even your cart is empty.',
 								'surecart'
 							)}
-							checked={cartMenuAlwaysShown}
+							checked={cart_menu_always_shown}
 							onChange={() =>
 								setAttributes({
-									cartMenuAlwaysShown: !cartMenuAlwaysShown,
+									cart_menu_always_shown:
+										!cart_menu_always_shown,
 								})
 							}
 						/>
@@ -85,7 +86,7 @@ export default ({ attributes, setAttributes }) => {
 
 			<a {...blockProps}>
 				<ScCartButton cartMenuAlwaysShown={true} showEmptyCount={true}>
-					<ScIcon name={cartIcon} />
+					<ScIcon name={cart_icon} />
 				</ScCartButton>
 			</a>
 		</div>

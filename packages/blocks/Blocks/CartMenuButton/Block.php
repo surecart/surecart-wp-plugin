@@ -34,10 +34,10 @@ class Block extends BaseBlock {
 
 		<a href="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>" class="menu-link <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?> line-height: 0;">
 			<sc-cart-button
-				cart-menu-always-shown='<?php echo esc_attr( $attributes['cartMenuAlwaysShown'] ? 'true' : 'false' ); ?>'
+				cart-menu-always-shown='<?php echo esc_attr( ! empty( $attributes['cart_menu_always_shown'] ) ? 'true' : 'false' ); ?>'
 				form-id='<?php echo esc_attr( $form->ID ); ?>'
 				mode='<?php echo esc_attr( $mode ); ?>'>
-				<sc-icon name='<?php echo esc_attr( $attributes['cartIcon'] ); ?>'></sc-icon>
+				<sc-icon name='<?php echo esc_attr( $attributes['cart_icon'] ?? 'shopping-bag' ); ?>'></sc-icon>
 			</sc-cart-button>
 		</a>
 
