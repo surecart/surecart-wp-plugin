@@ -3,7 +3,7 @@
 exports[`sc-customer-firstname Logged In Checkout first name provided with URL Params 1`] = `
 <sc-customer-firstname size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="first_name" disabled="" help="" name="first_name" type="text" value="UrlFirst"></sc-input>
+    <sc-input autocomplete="first_name" help="" name="first_name" type="text" value="UrlFirst"></sc-input>
   </mock:shadow-root>
 </sc-customer-firstname>
 `;
@@ -11,7 +11,7 @@ exports[`sc-customer-firstname Logged In Checkout first name provided with URL P
 exports[`sc-customer-firstname Logged In Checkout first name provided without URL Params 1`] = `
 <sc-customer-firstname size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="first_name" disabled="" help="" name="first_name" type="text" value="CheckoutFirst"></sc-input>
+    <sc-input autocomplete="first_name" help="" name="first_name" type="text" value="CheckoutFirst"></sc-input>
   </mock:shadow-root>
 </sc-customer-firstname>
 `;
@@ -19,7 +19,7 @@ exports[`sc-customer-firstname Logged In Checkout first name provided without UR
 exports[`sc-customer-firstname Logged In Customer and Checkout first name provided with URL Params 1`] = `
 <sc-customer-firstname size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="first_name" disabled="" help="" name="first_name" type="text" value="UrlFirst"></sc-input>
+    <sc-input autocomplete="first_name" help="" name="first_name" type="text" value="UrlFirst"></sc-input>
   </mock:shadow-root>
 </sc-customer-firstname>
 `;
@@ -27,7 +27,7 @@ exports[`sc-customer-firstname Logged In Customer and Checkout first name provid
 exports[`sc-customer-firstname Logged In Customer and Checkout first name provided without URL Params 1`] = `
 <sc-customer-firstname size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="first_name" disabled="" help="" name="first_name" type="text" value="CheckoutFirst"></sc-input>
+    <sc-input autocomplete="first_name" help="" name="first_name" type="text" value="CheckoutFirst"></sc-input>
   </mock:shadow-root>
 </sc-customer-firstname>
 `;
@@ -35,7 +35,7 @@ exports[`sc-customer-firstname Logged In Customer and Checkout first name provid
 exports[`sc-customer-firstname Logged In Customer first name provided with URL Params 1`] = `
 <sc-customer-firstname size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="first_name" disabled="" help="" name="first_name" type="text" value="UrlFirst"></sc-input>
+    <sc-input autocomplete="first_name" help="" name="first_name" type="text" value="UrlFirst"></sc-input>
   </mock:shadow-root>
 </sc-customer-firstname>
 `;
@@ -43,7 +43,7 @@ exports[`sc-customer-firstname Logged In Customer first name provided with URL P
 exports[`sc-customer-firstname Logged In Customer first name provided without URL Params 1`] = `
 <sc-customer-firstname size="medium">
   <mock:shadow-root>
-    <sc-input autocomplete="first_name" disabled="" help="" name="first_name" type="text" value="CustomerFirst"></sc-input>
+    <sc-input autocomplete="first_name" help="" name="first_name" type="text" value="CustomerFirst"></sc-input>
   </mock:shadow-root>
 </sc-customer-firstname>
 `;

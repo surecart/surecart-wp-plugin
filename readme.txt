@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.2
-Stable tag: 1.10.0
+Stable tag: 1.10.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -243,9 +243,32 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.10.0 - April 27, 2023 =
+= 1.10.4 - May 10, 2023 =
+* Fix: Issue with email and name fields being disabled and blank if a user has created a checkout, then logs in and visits the same page.
+
+= 1.10.3 - May 9, 2023 =
+* Improvement: Remove US commonwealth countries from the country selector to avoid confusion, as they already exist as states.
+* Improvement: Added clarification text indicating that coupon redemption limits are not applied in test mode.
+* Fix: Resolved issue with updating prices not immediately reflecting changes in existing carts.
+* Fix: Addressed issue with PayPal checkout not succeeding if the status of the charge is "processing."
+* Fix: Corrected the problem of checkout line items not being passed with the scOrderPaid event.
+
+= 1.10.2 - May 4, 2023 =
+* Fix: Pricing line breaking awkwardness in checkout for larger numbers.
+* Fix: Sometimes showing dashboard error after activation if API token was replaced or was previously incorrect.
+* Fix: Add missing translation string for "one or more line items are referencing prices that are not purchasable".
+* Fix: Issue with needing to select the product twice on buy and add to cart buttons.
+* Fix: Admin menu permissions denied on dashboard for SureCart Store Manager roles.
+* Fix: Issue with blank dashboard page that occurred intermittently on first connection.
+* Fix: Processor block blank in admin for Stripe.
+
+= 1.10.1 - May 2, 2023 =
+* Fix: Issue with expanded coupon form not showing apply text.
+* Fix: Issue with payment block when all processors are disabled and manual processors are enabled.
+
+= 1.10.0 - May 1, 2023 =
 * New: Multiple product images.
-* New: Instanct checkout product images slideshow.
+* New: Instant checkout product images slideshow.
 * New: Phone number block for checkout.
 * New: Pre-populate name and email fields from url parameters.
 * Improvement: Subscription pausing UX in merchant admin.

@@ -33,7 +33,8 @@
   opacity: 0;
   visibility: hidden;
   transform: translateY(5px);
-  transition: var(--sc-input-transition, var(--sc-transition-medium)) visibility ease, var(--sc-input-transition, var(--sc-transition-medium)) opacity ease, var(--sc-input-transition, var(--sc-transition-medium)) transform ease;
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) visibility ease, var(--sc-input-transition, var(--sc-transition-medium)) opacity ease,
+    var(--sc-input-transition, var(--sc-transition-medium)) transform ease;
 
   &--collapsed {
     opacity: 1;
@@ -73,4 +74,8 @@
 }
 sc-line-item ~ sc-line-item {
   margin-top: 14px;
+}
+
+.total-price {
+  white-space: nowrap;
 }
