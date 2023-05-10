@@ -10,7 +10,7 @@
 		"reusable": false,
 		"html": false,
 		"color": {
-			"text": false,
+			"text": true,
 			"background": false
 		}
 	},
