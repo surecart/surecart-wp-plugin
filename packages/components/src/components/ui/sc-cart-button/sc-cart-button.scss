@@ -28,9 +28,9 @@
     text-align: center;
     font-size: 10px;
     font-weight: bold;
-    border-radius: var(--sc-cart-counter-border-radius, 9999px);
-    color: var(--sc-cart-counter-color, var(--sc-color-white));
-    background: var(--sc-cart-counter-background, var(--sc-color-primary-500));
+    border-radius: var(--sc-cart-icon-counter-border-radius, 9999px);
+    color: var(--sc-cart-icon-counter-color, var(--sc-color-white));
+    background: var(--sc-cart-icon-counter-background, var(--sc-color-primary-500));
     box-shadow: var(--sc-cart-icon-box-shadow, var(--sc-shadow-x-large));
     padding: 2px 6px;
     line-height: 14px;
