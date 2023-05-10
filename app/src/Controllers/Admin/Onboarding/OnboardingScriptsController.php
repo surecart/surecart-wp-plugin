@@ -21,4 +21,11 @@ class OnboardingScriptsController extends AdminModelEditController {
 	 * @var string
 	 */
 	protected $path = 'admin/onboarding';
+
+	/**
+	 * Include supported currencies.
+	 *
+	 * @var array
+	 */
+	protected $with_data = [ 'supported_currencies' ];
 }
