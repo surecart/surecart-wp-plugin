@@ -81,7 +81,7 @@ class CartService {
 	 * @return boolean
 	 */
 	public function isAlwaysShown() {
-		return (bool) get_option( 'surecart_cart_menu_always_shown', false );
+		return (bool) get_option( 'surecart_cart_menu_always_shown', true );
 	}
 
 	/**
