@@ -209,6 +209,8 @@ export class ScCheckout {
     checkoutState.groupId = this.el.id;
     checkoutState.abandonedCheckoutReturnUrl = this.abandonedCheckoutReturnUrl;
     userState.loggedIn = this.loggedIn;
+    userState.email = this.customer?.email;
+    userState.name = this.customer?.name;
   }
 
   state() {

@@ -68,11 +68,6 @@ class CheckoutsController extends RestController {
 	 * @return \SureCart\Models\Model|\WP_Error
 	 */
 	protected function maybeSetUser( \SureCart\Models\Model $class, \WP_REST_Request $request ) {
-		// we only care about new sessions for now.
-		if ( $request->get_method() !== 'POST' ) {
-			return $class;
-		}
-
 		// get current user.
 		$user = User::current();
 
@@ -81,16 +76,22 @@ class CheckoutsController extends RestController {
 			return $class;
 		}
 
-		// fetch the user's customer object.
-		$customer = $user->customer( ! empty( $request['live_mode'] ) ? 'live' : 'test' );
+		// set the email.
+		$class['email'] = $user->user_email;
 
-		if ( ! empty( $customer->id ) ) {
-			$class['customer'] = $customer;
-			$class['phone']    = isset( $customer->phone ) ? $customer->phone : '';
+		// force the customer id, if it exists.
+		$customer_id = $user->customerId( ! empty( $request['live_mode'] ) ? 'live' : 'test' );
+		if ( ! empty( $customer_id ) ) {
+			$class['customer'] = $customer_id;
 		}
 
-		$class['email'] = $customer->email ?? $user->user_email;
-		$class['name']  = $customer->name ?? $user->display_name;
+		// if this is a new session, populate the name and phone from the user data.
+		if ( $request->get_method() === 'POST' ) {
+			$class['name']       = $user->display_name;
+			$class['first_name'] = $user->first_name;
+			$class['last_name']  = $user->last_name;
+			$class['phone']      = $user->phone;
+		}
 
 		return $class;
 	}
