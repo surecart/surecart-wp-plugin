@@ -30,6 +30,8 @@ class Block extends BaseBlock {
 			return '';
 		}
 
+		$icon = '<sc-icon name="' . esc_attr( $attributes['cart_icon'] ?? 'shopping-bag' ) . '"></sc-icon>';
+
 		ob_start(); ?>
 
 		<a href="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>" class="menu-link <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?> line-height: 0;">
@@ -37,7 +39,14 @@ class Block extends BaseBlock {
 				cart-menu-always-shown='<?php echo esc_attr( ! empty( $attributes['cart_menu_always_shown'] ) ? 'true' : 'false' ); ?>'
 				form-id='<?php echo esc_attr( $form->ID ); ?>'
 				mode='<?php echo esc_attr( $mode ); ?>'>
-				<sc-icon name='<?php echo esc_attr( $attributes['cart_icon'] ?? 'shopping-bag' ); ?>'></sc-icon>
+				<?php
+				/**
+				 * Allow filtering of the cart menu icon.
+				 *
+				 * @param string $icon The icon.
+				 * @param string $mode The icon position.
+				 */
+				echo wp_kses_post( apply_filters( 'sc_cart_menu_icon', $icon, 'block' ) ); ?>
 			</sc-cart-button>
 		</a>
 
