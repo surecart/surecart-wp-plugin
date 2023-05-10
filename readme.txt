@@ -243,6 +243,11 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 1.11.0 - May 11, 2023 =
+* New: Cart icon in menu for classic and FSE themes.
+* New: Automatic Google Analytics purchase events.
+* Improvement: Responsive image sizes for instant checkout and line items.
+
 = 1.10.4 - May 10, 2023 =
 * Fix: Issue with email and name fields being disabled and blank if a user has created a checkout, then logs in and visits the same page.
 
