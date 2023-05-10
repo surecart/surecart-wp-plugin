@@ -26,6 +26,7 @@ declare global {
     registerSureCartIconLibrary: (name: string, options: { resolver: IconLibraryResolver; mutator?: IconLibraryMutator }) => void;
     scIcons: { path: string };
     scData: {
+      cdn_root: string;
       root_url: string;
       page_id: string;
       do_not_persist_cart: boolean;

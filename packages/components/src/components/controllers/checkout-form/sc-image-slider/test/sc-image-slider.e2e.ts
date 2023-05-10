@@ -10,7 +10,7 @@ describe('sc-image-slider', () => {
   });
   it('renders with images', async () => {
     const page = await newE2EPage();
-    await page.setContent('<sc-image-slider thumbnails></sc-image-slider>');
+    await page.setContent('<sc-image-slider has-thumbnails></sc-image-slider>');
 
     const element = await page.find('sc-image-slider');
     element.setProperty('images', [
@@ -46,7 +46,6 @@ describe('sc-image-slider', () => {
     expect(thumbsContainer).toHaveClass('image-slider__thumbs--has-navigation');
     const thumbs = await page.findAll(`sc-image-slider >>> .image-slider__thumb`);
     expect(thumbs.length).toBe(6);
-    console.log(thumbs[0].outerHTML);
     expect(thumbs[0]).toHaveClass('swiper-slide-active');
   });
 });

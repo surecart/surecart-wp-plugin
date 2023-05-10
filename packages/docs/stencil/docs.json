@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-08T21:46:26",
+  "timestamp": "2023-05-05T20:57:22",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -13452,10 +13452,10 @@
       "usage": {},
       "props": [
         {
-          "name": "autoHeight",
+          "name": "hasThumbnails",
           "type": "boolean",
           "mutable": false,
-          "attr": "auto-height",
+          "attr": "has-thumbnails",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
@@ -13469,18 +13469,15 @@
         },
         {
           "name": "images",
-          "type": "string | { src: string; alt: string; }[]",
+          "type": "{ src: string; alt: string; srcset: any; width: number; sizes: string; }[]",
           "mutable": false,
-          "attr": "images",
+          "attr": "auto-height",
           "reflectToAttr": false,
-          "docs": "Accept a string or an array of objects",
+          "docs": "",
           "docsTags": [],
           "values": [
             {
-              "type": "string"
-            },
-            {
-              "type": "{ src: string; alt: string; }[]"
+              "type": "{ src: string; alt: string; srcset: any; width: number; sizes: string; }[]"
             }
           ],
           "optional": false,
@@ -13488,15 +13485,15 @@
         },
         {
           "name": "thumbnails",
-          "type": "boolean",
+          "type": "{ src: string; alt: string; srcset: any; width: number; sizes: string; }[]",
           "mutable": false,
-          "attr": "thumbnails",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
+          "default": "[]",
           "values": [
             {
-              "type": "boolean"
+              "type": "{ src: string; alt: string; srcset: any; width: number; sizes: string; }[]"
             }
           ],
           "optional": false,
@@ -16175,6 +16172,23 @@
           "values": [
             {
               "type": "Bump"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "cdnRoot",
+          "type": "string",
+          "mutable": false,
+          "attr": "cdn-root",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "window.scData?.cdn_root",
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,

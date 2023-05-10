@@ -62,6 +62,7 @@ class ScriptsService {
 	 * @return void
 	 */
 	public function register() {
+
 		// should we use the esm loader directly?
 		if ( ! is_admin() && \SureCart::assets()->usesEsmLoader() ) {
 			wp_register_script(
@@ -90,6 +91,14 @@ class ScriptsService {
 			);
 		}
 
+		// wp_register_script(
+		// 'surecart-components',
+		// 'https://unpkg.com/@surecart/components@1.0.1-beta.1/dist/surecart/surecart.esm.js',
+		// [ 'wp-i18n' ],
+		// null,
+		// false
+		// );
+
 		wp_set_script_translations( 'surecart-components', 'surecart' );
 
 		wp_localize_script(
@@ -98,6 +107,7 @@ class ScriptsService {
 			apply_filters(
 				'surecart-components/scData',
 				[
+					'cdn_root'            => SURECART_CDN_IMAGE_BASE,
 					'root_url'            => esc_url_raw( get_rest_url() ),
 					'plugin_url'          => \SureCart::core()->assets()->getUrl(),
 					'api_url'             => \SureCart::requests()->getBaseUrl(),

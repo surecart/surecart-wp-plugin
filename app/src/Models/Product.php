@@ -6,6 +6,8 @@ namespace SureCart\Models;
  * Price model
  */
 class Product extends Model {
+	use Traits\HasImageSizes;
+
 	/**
 	 * Rest API endpoint
 	 *
@@ -35,6 +37,32 @@ class Product extends Model {
 	protected $cache_key = 'products_updated_at';
 
 	/**
+	 * Image srcset.
+	 *
+	 * @return string
+	 */
+	public function getImageSrcsetAttribute() {
+		if ( empty( $this->attributes['image_url'] ) ) {
+			return '';
+		}
+		return $this->imageSrcSet( $this->attributes['image_url'] );
+	}
+
+	/**
+	 * Get the image url for a specific size.
+	 *
+	 * @param integer $size The size.
+	 *
+	 * @return string
+	 */
+	public function getImageUrl( $size = 0 ) {
+		if ( empty( $this->attributes['image_url'] ) ) {
+			return '';
+		}
+		return $size ? $this->imageUrl( $this->attributes['image_url'], $size ) : $this->attributes['image_url'];
+	}
+
+	/**
 	 * Set the prices attribute.
 	 *
 	 * @param  object $value Array of price objects.
@@ -52,6 +80,16 @@ class Product extends Model {
 	 */
 	public function setPurchaseAttribute( $value ) {
 		$this->setRelation( 'purchase', $value, Purchase::class );
+	}
+
+	/**
+	 * Set the product media attribute
+	 *
+	 * @param  string $value ProductMedia properties.
+	 * @return void
+	 */
+	public function setProductMediasAttribute( $value ) {
+		$this->setCollection( 'product_medias', $value, ProductMedia::class );
 	}
 
 	/**

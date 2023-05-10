@@ -988,6 +988,7 @@
   },
   "sc-order-bump": {
     "bump": true,
+    "cdn-root": true,
     "checkout": true,
     "show-control": true,
     "style": true,
@@ -1537,6 +1538,7 @@
     "image-url": true,
     "interval": true,
     "max": true,
+    "media": true,
     "name": true,
     "quantity": true,
     "removable": true,

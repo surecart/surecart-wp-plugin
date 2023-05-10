@@ -37,18 +37,46 @@ class BuyPageController extends ProductTypePageController {
 		add_filter( 'surecart-components/scData', [ $this, 'doNotPersistCart' ], 10, 2 );
 		// add styles.
 		add_action( 'wp_enqueue_scripts', [ $this, 'styles' ] );
+		// add scripts.
+		add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ] );
+		// preload the image above the fold.
+		add_action( 'wp_head', [ $this, 'preloadImage' ] );
 	}
 
 	/**
-	 * Preload components.
+	 * Preload the image above the fold.
 	 *
 	 * @return void
 	 */
 	public function preloadComponents() {
-		$config = \SureCart::resolve( SURECART_CONFIG_KEY );
-		foreach ( $this->preload as $name ) {
-			\SureCart::preload()->add( $config['preload'][ $name ] );
+		if ( empty( $this->product->product_medias->data ) || is_wp_error( $this->product->product_medias->data ) ) {
+			return;
 		}
+		$product_media = $this->product->product_medias->data[0];
+
+		?>
+		<link rel="preload" fetchpriority="high" as="image" href="<?php echo esc_url( $product_media->getUrl( 450 ) ); ?>">
+		<?php
+	}
+
+	/**
+	 * Add edit links
+	 *
+	 * @param \WP_Admin_bar $wp_admin_bar The admin bar.
+	 *
+	 * @return void
+	 */
+	public function addEditProductLink( $wp_admin_bar ) {
+		if ( empty( $this->product->id ) ) {
+			return;
+		}
+		$wp_admin_bar->add_node(
+			[
+				'id'    => 'edit',
+				'title' => __( 'Edit Product', 'surecart' ),
+				'href'  => esc_url( \SureCart::getUrl()->edit( 'product', $this->product->id ) ),
+			]
+		);
 	}
 
 	/**
@@ -91,9 +119,6 @@ class BuyPageController extends ProductTypePageController {
 
 		// add the filters.
 		$this->filters();
-
-		// preload the components.
-		$this->preloadComponents();
 
 		// render the view.
 		return \SureCart::view( 'web/buy' )->with(
