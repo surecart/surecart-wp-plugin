@@ -109,6 +109,7 @@ abstract class BaseSettings {
 				'brand_color'          => \SureCart::account()->brand->color ?? null,
 				'plan_name'            => \SureCart::account()->plan->name ?? '',
 				'processors'           => Processor::get(),
+				'is_block_theme'       => (bool) wp_is_block_theme(),
 			]
 		);
 	}
