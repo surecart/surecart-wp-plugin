@@ -17,7 +17,6 @@ import {
 	ScStackedListRow,
 	ScText,
 } from '@surecart/components-react';
-import Product from '../../../coupons/modules/Product';
 import { useState } from '@wordpress/element';
 import ModelSelector from '../../../components/ModelSelector';
 import { store as coreStore } from '@wordpress/core-data';

@@ -7,18 +7,22 @@ import {
 	ScDropdown,
 	ScFlex,
 	ScForm,
+	ScFormControl,
 	ScIcon,
 	ScInput,
 	ScMenu,
+	ScMenuDivider,
 	ScMenuItem,
 	ScPriceInput,
 	ScRadio,
 	ScRadioGroup,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
-import apiFetch from '@wordpress/api-fetch';
+import { useEffect, useState } from '@wordpress/element';
 import Error from '../../../components/Error';
+import ModelSelector from '../../../components/ModelSelector';
+import { useDispatch } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 
 const rate_types = {
 	ITEM_WEIGHT: 'weight',
@@ -42,33 +46,48 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 		shipping_method_id: '',
 		weight_unit: WEIGHT_UNIT_TYPES[0],
 	});
+	const [showAddNew, setShowAddNew] = useState(false);
+	const { saveEntityRecord, invalidateResolutionForStore } =
+		useDispatch(coreStore);
+
+	useEffect(() => {
+		return () => {
+			setShippingRate({
+				amount: 0,
+				rate_type: rate_types.ITEM_WEIGHT,
+				shipping_method_id: '',
+				weight_unit: WEIGHT_UNIT_TYPES[0],
+			});
+		};
+	}, [open]);
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		setLoading(true);
 		try {
-			const shippingMethod = await apiFetch({
-				path: 'surecart/v1/shipping_methods',
-				data: {
-					name: methodName,
-				},
-				method: 'POST',
-			});
+			if (!shippingRate.shipping_method_id) {
+				const shippingMethod = await saveEntityRecord(
+					'surecart',
+					'shipping-method',
+					{
+						name: methodName,
+					}
+				);
 
-			if (!shippingMethod.id)
+				shippingRate.shipping_method_id = shippingMethod.id;
+			}
+
+			if (!shippingRate.shipping_method_id)
 				throw new Error(
 					__('Failed to create shipping method', 'surecart')
 				);
 
-			await apiFetch({
-				path: 'surecart/v1/shipping_rates',
-				data: {
-					...shippingRate,
-					shipping_zone_id: shippingZoneId,
-					shipping_method_id: shippingMethod.id,
-				},
-				method: 'POST',
+			await saveEntityRecord('surecart', 'shipping-rate', {
+				...shippingRate,
+				shipping_zone_id: shippingZoneId,
 			});
+
+			await invalidateResolutionForStore();
 
 			onRequestClose();
 		} catch (error) {
@@ -187,13 +206,51 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 						gap: var(--sc-spacing-medium);
 					`}
 				>
-					<ScInput
-						required
-						label={__('Name', 'surecart')}
-						onScInput={(e) => setMethodName(e.target.value)}
-						name="method-name"
-						value={methodName}
-					/>
+					{showAddNew ? (
+						<ScInput
+							required
+							label={__('Name', 'surecart')}
+							onScInput={(e) => setMethodName(e.target.value)}
+							name="method-name"
+							value={methodName}
+						/>
+					) : (
+						<ScFormControl
+							label={__('Shipping Method', 'surecart')}
+						>
+							<ModelSelector
+								name="shipping-method"
+								placeholder={__('Select', 'surecart')}
+								value={shippingRate.shipping_method_id}
+								prefix={
+									<div slot="prefix">
+										<ScMenuItem
+											onClick={() => {
+												setShowAddNew(true);
+												updateShippingRate(
+													'shipping_method_id',
+													null
+												);
+											}}
+										>
+											<ScIcon slot="prefix" name="plus" />
+											{__('Add New', 'surecart')}
+										</ScMenuItem>
+										<ScMenuDivider />
+									</div>
+								}
+								display={(shippingMethod) => {
+									return shippingMethod.name;
+								}}
+								onSelect={(shippingMethodId) =>
+									updateShippingRate(
+										'shipping_method_id',
+										shippingMethodId
+									)
+								}
+							/>
+						</ScFormControl>
+					)}
 
 					<ScPriceInput
 						label={__('Price', 'surecart')}
@@ -231,17 +288,40 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 					</ScRadioGroup>
 					<div>{renderMaxMinInputs()}</div>
 				</ScFlex>
+
 				<ScFlex justifyContent="flex-start">
 					<ScButton type="primary" disabled={loading} submit={true}>
-						{__('Add Rate', 'surecart')}
+						{showAddNew
+							? __('Add Rate', 'surecart')
+							: __('Add', 'surecart')}
 					</ScButton>{' '}
-					<ScButton
-						type="text"
-						onClick={onRequestClose}
-						disabled={loading}
-					>
-						{__('Cancel', 'surecart')}
-					</ScButton>
+					{showAddNew ? (
+						<ScFlex justifyContent="flex-start">
+							<ScButton
+								type="text"
+								onClick={() => {
+									setShowAddNew(false);
+									updateShippingRate(
+										'shipping_method_id',
+										null
+									);
+								}}
+								disabled={loading}
+							>
+								{__('Back', 'surecart')}
+							</ScButton>
+						</ScFlex>
+					) : (
+						<ScFlex justifyContent="flex-start">
+							<ScButton
+								type="text"
+								onClick={onRequestClose}
+								disabled={loading}
+							>
+								{__('Cancel', 'surecart')}
+							</ScButton>
+						</ScFlex>
+					)}
 				</ScFlex>
 			</ScForm>
 			{loading && (

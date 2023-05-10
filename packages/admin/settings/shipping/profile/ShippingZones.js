@@ -2,27 +2,14 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import SettingsBox from '../../SettingsBox';
-import {
-	ScButton,
-	ScCard,
-	ScEmpty,
-	ScFlex,
-	ScFormatNumber,
-	ScIcon,
-	ScTable,
-	ScTableCell,
-	ScTableRow,
-	ScText,
-	ScDropdown,
-	ScMenu,
-	ScMenuItem,
-} from '@surecart/components-react';
-import { Fragment, useState } from '@wordpress/element';
+import { ScButton, ScFlex, ScIcon, ScText } from '@surecart/components-react';
+import { useState } from '@wordpress/element';
 import AddShippingZone from './AddShippingZone';
 import EditShippingZone from './EditShippingZone';
 import AddShippingMethod from './AddShippingMethod';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import ShippingZone from './ShippingZone';
 
 const modals = {
 	EDIT_ZONE: 'edit_shipping_zone',
@@ -33,7 +20,8 @@ const modals = {
 export default ({ shippingProfileId }) => {
 	const [currentModal, setCurrentModal] = useState('');
 	const [selectedZone, setSelectedZone] = useState();
-	const { shippingZones, loading } = useSelect((select) => {
+
+	const { shippingZones, loading, busy } = useSelect((select) => {
 		const queryArgs = [
 			'surecart',
 			'shipping-zone',
@@ -59,87 +47,9 @@ export default ({ shippingProfileId }) => {
 		return {
 			shippingZones,
 			loading: loading && !shippingZones?.length,
+			busy: loading && !!shippingZones?.length,
 		};
 	});
-
-	const onRemoveShippingRate = (shippingRateId) => {};
-
-	const renderShippingRates = (shippingRates) => {
-		if (!shippingRates?.data?.length) {
-			return (
-				<ScEmpty>{__('No shipping rates present', 'surecart')}</ScEmpty>
-			);
-		}
-
-		return (
-			<ScTable>
-				<ScTableCell slot="head">{__('Name', 'surecart')}</ScTableCell>
-				<ScTableCell slot="head">
-					{__('Condition', 'surecart')}
-				</ScTableCell>
-				<ScTableCell slot="head">{__('Price', 'surecart')}</ScTableCell>
-				<ScTableCell slot="head"></ScTableCell>
-				{shippingRates?.data?.map((shippingRate) => (
-					<ScTableRow href="#" key={shippingRate.id}>
-						<ScTableCell>
-							{shippingRate.shipping_method?.name}
-						</ScTableCell>
-						<ScTableCell>
-							{renderCondition(shippingRate)}
-						</ScTableCell>
-						<ScTableCell>
-							<ScFormatNumber
-								value={shippingRate.amount}
-								type="currency"
-								currency={shippingRate.currency}
-							/>
-						</ScTableCell>
-						<ScTableCell>
-							<ScDropdown placement="bottom-end">
-								<ScButton type="text" slot="trigger" circle>
-									<ScIcon name="more-horizontal" />
-								</ScButton>
-								<ScMenu>
-									<ScMenuItem
-										onClick={() =>
-											onRemoveShippingRate(
-												shippingRate.id
-											)
-										}
-									>
-										<ScIcon slot="prefix" name="trash" />
-										{__('Remove', 'surecart')}
-									</ScMenuItem>
-								</ScMenu>
-							</ScDropdown>
-						</ScTableCell>
-					</ScTableRow>
-				))}
-			</ScTable>
-		);
-	};
-
-	const renderCondition = (shippingRate) => {
-		if (shippingRate.rate_type === 'amount') {
-			return (
-				<Fragment>
-					<ScFormatNumber
-						value={shippingRate.min_amount}
-						type="currency"
-						currency={shippingRate.currency}
-					/>{' '}
-					-{' '}
-					<ScFormatNumber
-						value={shippingRate.max_amount}
-						type="currency"
-						currency={shippingRate.currency}
-					/>
-				</Fragment>
-			);
-		}
-
-		return `${shippingRate.min_amount}${shippingRate.weight_unit} - ${shippingRate.max_amount}${shippingRate.weight_unit}`;
-	};
 
 	return (
 		<SettingsBox
@@ -158,29 +68,21 @@ export default ({ shippingProfileId }) => {
 			<ScFlex flexDirection="column">
 				{!!shippingZones?.length ? (
 					shippingZones.map((shippingZone) => (
-						<ScCard key={shippingZone.id}>
-							<ScFlex justifyContent="space-between">
-								<strong>{shippingZone.name}</strong>
-								<ScButton
-									type="text"
-									onClick={() => {
-										setCurrentModal(modals.EDIT_ZONE);
-										setSelectedZone(shippingZone);
-									}}
-								>
-									Edit Zone
-								</ScButton>
-							</ScFlex>
-							{renderShippingRates(shippingZone?.shipping_rates)}
-							<ScButton
-								onClick={() => {
-									setCurrentModal(modals.ADD_RATE);
-									setSelectedZone(shippingZone);
-								}}
-							>
-								<ScIcon name="plus" /> Add Rate
-							</ScButton>
-						</ScCard>
+						<ShippingZone
+							key={shippingZone.id}
+							shippingZone={shippingZone}
+							onEditZone={() => {
+								setCurrentModal(modals.EDIT_ZONE);
+								setSelectedZone(shippingZone);
+							}}
+							onAddRate={() => {
+								setCurrentModal(modals.ADD_RATE);
+								setSelectedZone(shippingZone);
+							}}
+							parentBusy={
+								busy && selectedZone?.id === shippingZone.id
+							}
+						/>
 					))
 				) : (
 					<ScText>No shipping zones present.</ScText>
@@ -196,7 +98,6 @@ export default ({ shippingProfileId }) => {
 				open={currentModal === modals.EDIT_ZONE}
 				onRequestClose={() => {
 					setCurrentModal('');
-					setSelectedZone();
 				}}
 				selectedZone={selectedZone}
 				shippingProfileId={shippingProfileId}
