@@ -1449,16 +1449,6 @@
     "slot": true
   },
   "sc-product-buy-button": {
-    "add-to-cart": true,
-    "busy": true,
-    "button-text": true,
-    "full": true,
-    "icon": true,
-    "outline": true,
-    "show-total": true,
-    "size": true,
-    "text": true,
-    "type": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1562,6 +1552,13 @@
   },
   "sc-product-price-choices": {
     "label": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-price-modal": {
+    "button-text": true,
     "style": true,
     "id": true,
     "class": true,

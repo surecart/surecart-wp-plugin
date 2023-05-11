@@ -42,6 +42,7 @@
 		"anchor": true,
 		"align": false,
 		"alignWide": false,
+		"multiple": false,
 		"color": {
 			"__experimentalSkipSerialization": true,
 			"gradients": true,
@@ -89,17 +90,6 @@
 				"add_to_cart": true
 			},
 			"isDefault": true,
-			"isActive": ["add_to_cart"],
-			"scope": ["inserter", "block", "transform"]
-		},
-		{
-			"name": "buy",
-			"title": "Buy Now Button",
-			"icon": "store",
-			"description": "Add a button to buy the product.",
-			"attributes": {
-				"add_to_cart": false
-			},
 			"isActive": ["add_to_cart"],
 			"scope": ["inserter", "block", "transform"]
 		}

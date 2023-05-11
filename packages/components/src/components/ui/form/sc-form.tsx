@@ -87,7 +87,6 @@ export class ScForm {
   }
 
   submitForm() {
-    console.log('submitForm');
     // Calling form.submit() seems to bypass the submit event and constraint validation. Instead, we can inject a
     // native submit button into the form, click it, then remove it to simulate a standard form submission.
     const button = document.createElement('button');
@@ -112,6 +111,7 @@ export class ScForm {
         <form
           part="form"
           ref={el => (this.formElement = el as HTMLFormElement)}
+          class="test"
           onSubmit={async e => {
             console.log('submitted');
             e.preventDefault();

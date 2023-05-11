@@ -114,6 +114,8 @@ class Block extends BaseBlock {
 			</a>
 		</sc-product-buy-button>
 
+		<sc-product-price-modal></sc-product-price-modal>
+
 		<?php
 		return ob_get_clean();
 	}

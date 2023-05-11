@@ -2698,40 +2698,6 @@ export namespace Components {
         "product": Product;
     }
     interface ScProductBuyButton {
-        /**
-          * Is this an add to cart button?
-         */
-        "addToCart": boolean;
-        /**
-          * Is the order busy
-         */
-        "busy": boolean;
-        "buttonText": string;
-        /**
-          * Full
-         */
-        "full": boolean;
-        /**
-          * Icon to show.
-         */
-        "icon": string;
-        /**
-          * Outline
-         */
-        "outline": boolean;
-        /**
-          * Show the total.
-         */
-        "showTotal": boolean;
-        /**
-          * The button's size.
-         */
-        "size": 'small' | 'medium' | 'large';
-        "text": string;
-        /**
-          * The button type.
-         */
-        "type": 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
     }
     interface ScProductBuyButtons {
         /**
@@ -2863,6 +2829,9 @@ export namespace Components {
     }
     interface ScProductPriceChoices {
         "label": string;
+    }
+    interface ScProductPriceModal {
+        "buttonText": string;
     }
     interface ScProductQuantity {
         /**
@@ -4836,6 +4805,12 @@ declare global {
         prototype: HTMLScProductPriceChoicesElement;
         new (): HTMLScProductPriceChoicesElement;
     };
+    interface HTMLScProductPriceModalElement extends Components.ScProductPriceModal, HTMLStencilElement {
+    }
+    var HTMLScProductPriceModalElement: {
+        prototype: HTMLScProductPriceModalElement;
+        new (): HTMLScProductPriceModalElement;
+    };
     interface HTMLScProductQuantityElement extends Components.ScProductQuantity, HTMLStencilElement {
     }
     var HTMLScProductQuantityElement: {
@@ -5291,6 +5266,7 @@ declare global {
         "sc-product-line-item": HTMLScProductLineItemElement;
         "sc-product-price": HTMLScProductPriceElement;
         "sc-product-price-choices": HTMLScProductPriceChoicesElement;
+        "sc-product-price-modal": HTMLScProductPriceModalElement;
         "sc-product-quantity": HTMLScProductQuantityElement;
         "sc-product-selected-price": HTMLScProductSelectedPriceElement;
         "sc-product-text": HTMLScProductTextElement;
@@ -8329,40 +8305,6 @@ declare namespace LocalJSX {
         "product"?: Product;
     }
     interface ScProductBuyButton {
-        /**
-          * Is this an add to cart button?
-         */
-        "addToCart"?: boolean;
-        /**
-          * Is the order busy
-         */
-        "busy"?: boolean;
-        "buttonText"?: string;
-        /**
-          * Full
-         */
-        "full"?: boolean;
-        /**
-          * Icon to show.
-         */
-        "icon"?: string;
-        /**
-          * Outline
-         */
-        "outline"?: boolean;
-        /**
-          * Show the total.
-         */
-        "showTotal"?: boolean;
-        /**
-          * The button's size.
-         */
-        "size"?: 'small' | 'medium' | 'large';
-        "text"?: string;
-        /**
-          * The button type.
-         */
-        "type"?: 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
     }
     interface ScProductBuyButtons {
         /**
@@ -8502,6 +8444,9 @@ declare namespace LocalJSX {
     }
     interface ScProductPriceChoices {
         "label"?: string;
+    }
+    interface ScProductPriceModal {
+        "buttonText"?: string;
     }
     interface ScProductQuantity {
         /**
@@ -9610,6 +9555,7 @@ declare namespace LocalJSX {
         "sc-product-line-item": ScProductLineItem;
         "sc-product-price": ScProductPrice;
         "sc-product-price-choices": ScProductPriceChoices;
+        "sc-product-price-modal": ScProductPriceModal;
         "sc-product-quantity": ScProductQuantity;
         "sc-product-selected-price": ScProductSelectedPrice;
         "sc-product-text": ScProductText;
@@ -9818,6 +9764,7 @@ declare module "@stencil/core" {
             "sc-product-line-item": LocalJSX.ScProductLineItem & JSXBase.HTMLAttributes<HTMLScProductLineItemElement>;
             "sc-product-price": LocalJSX.ScProductPrice & JSXBase.HTMLAttributes<HTMLScProductPriceElement>;
             "sc-product-price-choices": LocalJSX.ScProductPriceChoices & JSXBase.HTMLAttributes<HTMLScProductPriceChoicesElement>;
+            "sc-product-price-modal": LocalJSX.ScProductPriceModal & JSXBase.HTMLAttributes<HTMLScProductPriceModalElement>;
             "sc-product-quantity": LocalJSX.ScProductQuantity & JSXBase.HTMLAttributes<HTMLScProductQuantityElement>;
             "sc-product-selected-price": LocalJSX.ScProductSelectedPrice & JSXBase.HTMLAttributes<HTMLScProductSelectedPriceElement>;
             "sc-product-text": LocalJSX.ScProductText & JSXBase.HTMLAttributes<HTMLScProductTextElement>;
