@@ -104,6 +104,12 @@ export default () => {
 								`}
 							>
 								{(cartMenuSelectedIds || []).map((menuId) => {
+									// find the menu by id.
+									const menu = menus?.find(
+										(item) => item?.id === menuId
+									);
+									// bail if it's been deleted or no name.
+									if (!menu?.name) return null;
 									return (
 										<ScTag
 											pill={true}
@@ -113,12 +119,7 @@ export default () => {
 												removeCartMenu(menuId)
 											}
 										>
-											{
-												menus?.find(
-													(item) =>
-														item?.id === menuId
-												)?.name
-											}
+											{menu.name}
 										</ScTag>
 									);
 								})}
