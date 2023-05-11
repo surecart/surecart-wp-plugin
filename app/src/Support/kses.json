@@ -766,6 +766,8 @@
     "no-convert": true,
     "no-grouping": true,
     "type": true,
+    "unit": true,
+    "unit-display": true,
     "value": true,
     "style": true,
     "id": true,
