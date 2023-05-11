@@ -165,7 +165,7 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 						{renderWeightDropdown(shippingRate)}
 					</ScInput>
 					<ScInput
-						label={__('Minimum weight', 'surecart')}
+						label={__('Maximum weight', 'surecart')}
 						value={shippingRate.max_amount}
 						placeholder="No limit"
 						onScInput={(e) => {

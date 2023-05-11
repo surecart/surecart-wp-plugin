@@ -22,5 +22,21 @@ export default ({ shippingRate }) => {
 		);
 	}
 
+	return (
+		<Fragment>
+			<ScFormatNumber
+				value={shippingRate.min_amount}
+				type="unit"
+				unit={shippingRate.weight_unit}
+			/>{' '}
+			-{' '}
+			<ScFormatNumber
+				value={shippingRate.min_amount}
+				type="unit"
+				unit={shippingRate.weight_unit}
+			/>
+		</Fragment>
+	);
+
 	return `${shippingRate.min_amount}${shippingRate.weight_unit} - ${shippingRate.max_amount}${shippingRate.weight_unit}`;
 };
