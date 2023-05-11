@@ -21,4 +21,33 @@ class OnboardingScriptsController extends AdminModelEditController {
 	 * @var string
 	 */
 	protected $path = 'admin/onboarding';
+
+	/**
+	 * Include supported currencies.
+	 *
+	 * @var array
+	 */
+	protected $with_data = [ 'supported_currencies' ];
+
+	/**
+	 * Add additional data.
+	 *
+	 * @return void
+	 */
+	public function enqueue() {
+		$this->data['connect_url'] = esc_url(
+			add_query_arg(
+				[
+					'onboarding' => [
+						'account_name'      => get_bloginfo( 'name' ),
+						'account_url'       => get_site_url(),
+						'return_url'        => esc_url_raw( admin_url( 'admin.php?page=sc-complete-signup' ) ),
+						'account_time_zone' => wp_timezone_string(),
+					],
+				],
+				untrailingslashit( SURECART_APP_URL ) . '/sign_up'
+			)
+		);
+		parent::enqueue();
+	}
 }
