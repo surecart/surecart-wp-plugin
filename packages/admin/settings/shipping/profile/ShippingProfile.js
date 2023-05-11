@@ -12,6 +12,7 @@ import ShippingZones from './ShippingZones';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect, useDispatch, select } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
+import FallbackZone from './FallbackZone';
 
 export default () => {
 	const [error, setError] = useState();
@@ -115,6 +116,12 @@ export default () => {
 			<ShippingZones
 				shippingProfileId={shippingProfileId}
 				loading={loadingShippingProfile}
+				fallbackZoneId={shippingProfile?.fallback_shipping_zone}
+			/>
+			<FallbackZone
+				shippingProfile={shippingProfile}
+				loading={loadingShippingProfile}
+				onEditShippingProfile={onEdit}
 			/>
 		</SettingsTemplate>
 	);

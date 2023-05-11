@@ -22,7 +22,13 @@ import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import Error from '../../../components/Error';
 
-export default ({ shippingZone, onEditZone, onAddRate, parentBusy }) => {
+export default ({
+	shippingZone,
+	onEditZone,
+	onAddRate,
+	parentBusy,
+	isFallback,
+}) => {
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState(null);
 
@@ -110,7 +116,20 @@ export default ({ shippingZone, onEditZone, onAddRate, parentBusy }) => {
 			`}
 		>
 			<ScFlex justifyContent="space-between">
-				<strong>{shippingZone.name}</strong>
+				<div>
+					<strong
+						css={css`
+							margin-right: var(--sc-spacing-small);
+						`}
+					>
+						{shippingZone.name}
+					</strong>
+					{isFallback && (
+						<sc-tag type="success" size="medium">
+							Fallback
+						</sc-tag>
+					)}
+				</div>
 				<ScButton type="text" onClick={onEditZone}>
 					Edit Zone
 				</ScButton>

@@ -17,7 +17,7 @@ const modals = {
 	ADD_RATE: 'add_shipping_rate',
 };
 
-export default ({ shippingProfileId }) => {
+export default ({ shippingProfileId, fallbackZoneId }) => {
 	const [currentModal, setCurrentModal] = useState('');
 	const [selectedZone, setSelectedZone] = useState();
 
@@ -82,6 +82,7 @@ export default ({ shippingProfileId }) => {
 							parentBusy={
 								busy && selectedZone?.id === shippingZone.id
 							}
+							isFallback={shippingZone?.id === fallbackZoneId}
 						/>
 					))
 				) : (
