@@ -53,9 +53,15 @@ export default ({ shippingProfileId }) => {
 
 			const products = (
 				select(coreStore).getEntityRecords(...queryArgs) || []
-			).filter(
-				(product) => product.shipping_profile === shippingProfileId
-			);
+			).reduce((uniqueProducts, product) => {
+				if (
+					product.shipping_profile === shippingProfileId &&
+					uniqueProducts.findIndex((p) => p.id === product.id) === -1
+				) {
+					uniqueProducts.push(product);
+				}
+				return uniqueProducts;
+			}, []);
 
 			return {
 				products,
