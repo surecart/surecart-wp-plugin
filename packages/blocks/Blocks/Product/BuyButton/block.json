@@ -43,6 +43,10 @@
 		"align": false,
 		"alignWide": false,
 		"multiple": false,
+		"spacing": {
+			"__experimentalSkipSerialization": true,
+			"padding": ["horizontal", "vertical"]
+		},
 		"color": {
 			"__experimentalSkipSerialization": true,
 			"gradients": true,
@@ -51,6 +55,7 @@
 				"text": true
 			}
 		},
+		"__experimentalSelector": ".wp-block-button .wp-block-button__link",
 		"typography": {
 			"fontSize": true,
 			"lineHeight": true,

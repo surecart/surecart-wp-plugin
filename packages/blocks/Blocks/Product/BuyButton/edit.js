@@ -63,18 +63,9 @@ function WidthPanel({ selectedWidth, setAttributes }) {
 }
 
 export default (props) => {
-	const {
-		attributes,
-		setAttributes,
-		className,
-		isSelected,
-		onReplace,
-		mergeBlocks,
-	} = props;
-	const { textAlign, placeholder, rel, style, text, width, type } =
-		attributes;
+	const { attributes, setAttributes, className } = props;
+	const { textAlign, style, text, width } = attributes;
 
-	console.log(attributes?.className);
 	function onKeyDown(event) {
 		if (isKeyboardEvent.primary(event, 'k')) {
 			startEditing(event);
