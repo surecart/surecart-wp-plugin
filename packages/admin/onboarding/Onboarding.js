@@ -12,7 +12,6 @@ import SetupDone from './components/SetupDone';
 import SetupProgress from './components/SetupProgress';
 import StarterTemplates from './components/StarterTemplates';
 import ConfirmExit from './components/ConfirmExit';
-import ConnectStore from './components/ConnectStore';
 
 let confettiIntervalId;
 let confettiTimerId;
@@ -39,7 +38,6 @@ function getAnimationSettings(originXA, originXB) {
 
 export default () => {
 	const [currentStep, setCurrentStep] = useState(0);
-	const [showConnect, setShowConnect] = useState(false);
 	const [accountEmail, setAccountEmail] = useState('');
 	const [accountCurrency, setAccountCurrency] = useState(null);
 	const [selectedTemplate, setSelectedTemplate] = useState(null);
@@ -77,7 +75,7 @@ export default () => {
 				method: 'POST',
 				path: 'surecart/v1/public/provisional_accounts/',
 				data: {
-					account_currency: accountCurrency ?? 'eur',
+					account_currency: accountCurrency,
 					// account_name: "Ben's Mercantile",
 					// account_url: 'https://bartling.io',
 					email: accountEmail,
@@ -94,20 +92,9 @@ export default () => {
 	function renderContent(step) {
 		switch (step) {
 			case 0:
-				return (
-					<InitialSetup
-						handleStepChange={handleStepChange}
-						setShowConnect={setShowConnect}
-					/>
-				);
+				return <InitialSetup handleStepChange={handleStepChange} />;
 			case 1:
-				return showConnect ? (
-					<ConnectStore
-						currentStep={currentStep}
-						handleStepChange={handleStepChange}
-						setConfirmExit={setConfirmExit}
-					/>
-				) : (
+				return (
 					<ConfirmBasicDetails
 						currentStep={currentStep}
 						handleStepChange={handleStepChange}
@@ -165,7 +152,7 @@ export default () => {
 					left: 0,
 				}}
 			/>
-			{confirmExit && <ConfirmExit />}
+			{confirmExit && currentStep !== 0 && <ConfirmExit />}
 		</>
 	);
 };
