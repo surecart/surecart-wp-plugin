@@ -2706,6 +2706,7 @@ export namespace Components {
           * Is the order busy
          */
         "busy": boolean;
+        "buttonText": string;
         /**
           * Full
          */
@@ -8336,6 +8337,7 @@ declare namespace LocalJSX {
           * Is the order busy
          */
         "busy"?: boolean;
+        "buttonText"?: string;
         /**
           * Full
          */

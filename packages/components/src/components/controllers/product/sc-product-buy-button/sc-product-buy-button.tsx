@@ -1,10 +1,12 @@
-import { Component, h, Host, Prop, State, Watch } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
-import { addLineItem } from '../../../../services/session';
+import { Component, Element, h, Host, Prop, State, Watch } from '@stencil/core';
 import { getOrder, setOrder } from '@store/checkouts';
-import { state } from '@store/product';
+import { onChange, state } from '@store/product';
 import { toggleCart } from '@store/ui';
+import { __ } from '@wordpress/i18n';
+
+import { addLineItem } from '../../../../services/session';
 import { Checkout } from '../../../../types';
+import { addQueryArgs } from '@wordpress/url';
 
 @Component({
   tag: 'sc-product-buy-button',
@@ -12,13 +14,18 @@ import { Checkout } from '../../../../types';
   shadow: false,
 })
 export class ScProductBuyButton {
+  @Element() el: HTMLScProductBuyButtonElement;
+
   private priceInput: HTMLScPriceInputElement;
+  private button: HTMLAnchorElement;
 
   /** Is this an add to cart button? */
   @Prop() addToCart: boolean;
 
   /** Is the order busy */
   @Prop() busy: boolean;
+
+  @Prop() buttonText: string;
 
   /** The button type. */
   @Prop({ reflect: true }) type: 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link' = 'default';
@@ -59,7 +66,6 @@ export class ScProductBuyButton {
   }
 
   handleCartClick(e) {
-    if (!this.addToCart) return true;
     e.preventDefault();
     if (state?.selectedPrice?.ad_hoc) {
       this.dialog = true;
@@ -70,7 +76,6 @@ export class ScProductBuyButton {
 
   /** Add the item to cart. */
   async addPriceToCart() {
-    console.log({ state });
     if (!state.selectedPrice?.id) return;
     if (state.selectedPrice?.ad_hoc && !state.adHocAmount) return;
     try {
@@ -85,24 +90,39 @@ export class ScProductBuyButton {
         live_mode: state.mode !== 'test',
       });
       setOrder(checkout as Checkout, state.formId);
-      toggleCart(true);
-      this.dialog = false;
+      if (!this.addToCart) {
+        window.location.assign(state.checkoutUrl);
+      } else {
+        toggleCart(true);
+        this.busy = false;
+        this.dialog = false;
+      }
     } catch (e) {
       console.error(e);
       state.error = e;
-    } finally {
-      this.busy = false;
     }
   }
 
-  renderContent() {
-    if (this.busy) {
-      return <sc-spinner />;
+  componentWillLoad() {
+    this.button = this.el.querySelector('a');
+    if (this.button) {
+      this.setButtonLink();
+      onChange('selectedPrice', () => this.setButtonLink());
+      onChange('adHocAmount', () => this.setButtonLink());
+      onChange('quantity', () => this.setButtonLink());
     }
-    if (state?.product?.archived) {
-      return __('Currently Unavailable', 'surecart');
-    }
-    return this.text;
+  }
+
+  setButtonLink() {
+    this.button.href = addQueryArgs(state?.checkoutUrl, {
+      line_items: [
+        {
+          price: state.selectedPrice?.id,
+          quantity: state.adHocAmount ? 1 : state.quantity,
+          ...(state.selectedPrice?.ad_hoc ? { ad_hoc_amount: state.adHocAmount } : {}),
+        },
+      ],
+    });
   }
 
   render() {
@@ -126,6 +146,7 @@ export class ScProductBuyButton {
 
             <sc-form
               onScSubmit={e => {
+                console.log(e);
                 e.stopImmediatePropagation();
                 this.addPriceToCart();
               }}
@@ -141,7 +162,7 @@ export class ScProductBuyButton {
                 required
               />
               <sc-button type="primary" full submit busy={this.busy}>
-                {__('Add To Cart', 'surecart')}
+                {this.buttonText || __('Add To Cart', 'surecart')}
               </sc-button>
             </sc-form>
           </sc-dialog>

@@ -3,6 +3,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { button as icon } from '@wordpress/icons';
+import { addFilter } from '@wordpress/hooks';
 
 /**
  * Internal dependencies

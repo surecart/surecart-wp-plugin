@@ -53,14 +53,15 @@ export default ({ attributes, setAttributes, className }) => {
 
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		allowedBlocks: ALLOWED_BLOCKS,
-		__experimentalDefaultBlock: DEFAULT_BLOCK,
-		__experimentalDirectInsert: true,
+		// __experimentalDefaultBlock: DEFAULT_BLOCK,
+		// __experimentalDirectInsert: true,
 		template: [
 			[
 				buttonBlockName,
 				{
 					className: preferredStyle && `is-style-${preferredStyle}`,
 					text: __('Add To Cart', 'surecart'),
+					add_to_cart: true,
 				},
 			],
 			[
@@ -68,6 +69,7 @@ export default ({ attributes, setAttributes, className }) => {
 				{
 					className: preferredStyle && `is-style-${preferredStyle}`,
 					text: __('Buy Now', 'surecart'),
+					add_to_cart: false,
 				},
 			],
 		],
