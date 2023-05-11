@@ -50,7 +50,7 @@ export default ({ currentStep, handleStepChange, setConfirmExit }) => {
 				}
 				title={__('Connect Existing Store', 'surecart')}
 				label={__(
-					'Please enter your existing store API token to connect SureCart.',
+					'Please enter your existing store API token to connect.',
 					'surecart'
 				)}
 			/>

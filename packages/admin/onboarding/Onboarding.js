@@ -38,15 +38,14 @@ function getAnimationSettings(originXA, originXB) {
 }
 
 export default () => {
+	const [currentStep, setCurrentStep] = useState(0);
 	const [showConnect, setShowConnect] = useState(false);
 	const [accountEmail, setAccountEmail] = useState('');
 	const [accountCurrency, setAccountCurrency] = useState(null);
 	const [selectedTemplate, setSelectedTemplate] = useState(null);
-	const [currentStep, setCurrentStep] = useState(0);
 	const refAnimationInstance = useRef(null);
-	const [error, setError] = useState(null);
-	const [storeInfo, setStoreInfo] = useState(null);
 	const [confirmExit, setConfirmExit] = useState(true);
+	const [error, setError] = useState(null);
 
 	const getInstance = useCallback((instance) => {
 		refAnimationInstance.current = instance;
@@ -74,20 +73,20 @@ export default () => {
 
 	async function createProvisionalAccount() {
 		try {
-			const res = await apiFetch({
+			await apiFetch({
 				method: 'POST',
 				path: 'surecart/v1/public/provisional_accounts/',
 				data: {
-					account_currency: 'eur',
+					account_currency: accountCurrency ?? 'eur',
 					// account_name: "Ben's Mercantile",
 					// account_url: 'https://bartling.io',
 					email: accountEmail,
 					source_account_id: selectedTemplate,
 				},
 			});
-			setStoreInfo(res);
 			handleStepChange('forward');
 		} catch (error) {
+			setCurrentStep(1);
 			setError(error);
 		}
 	}
@@ -113,7 +112,9 @@ export default () => {
 						currentStep={currentStep}
 						handleStepChange={handleStepChange}
 						email={accountEmail}
+						currency={accountCurrency}
 						onSubmitEmail={setAccountEmail}
+						onSelectCurrency={setAccountCurrency}
 					/>
 				);
 			case 2:
@@ -129,7 +130,7 @@ export default () => {
 			case 3:
 				return <SetupProgress />;
 			case 4:
-				return <SetupDone claimUrl={storeInfo?.claim_url} />;
+				return <SetupDone setConfirmExit={setConfirmExit} />;
 			default:
 				break;
 		}

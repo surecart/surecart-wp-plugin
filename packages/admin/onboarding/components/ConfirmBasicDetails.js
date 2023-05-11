@@ -6,14 +6,18 @@ import ProgressIndicator from './ProgressIndicator';
 import { useState } from '@wordpress/element';
 import {
 	ScAlert,
-	ScButton,
 	ScFormControl,
-	ScIcon,
 	ScInput,
 	ScSelect,
 } from '@surecart/components-react';
 
-export default ({ email, currentStep, handleStepChange, onSubmitEmail }) => {
+export default ({
+	email,
+	currentStep,
+	handleStepChange,
+	onSubmitEmail,
+	onSelectCurrency,
+}) => {
 	const [userEmail, setUserEmail] = useState(email ?? '');
 	const [accountCurrency, setAccountCurrency] = useState(null);
 	const [error, setError] = useState(null);
@@ -54,9 +58,9 @@ export default ({ email, currentStep, handleStepChange, onSubmitEmail }) => {
 							}}
 						></sc-icon>
 					}
-					title={__('Confirm Store Email', 'surecart')}
+					title={__('Confirm Store Details', 'surecart')}
 					label={__(
-						'Confirm an email for your store notifications.',
+						'Confirm the details for your store.',
 						'surecart'
 					)}
 				/>
@@ -68,7 +72,7 @@ export default ({ email, currentStep, handleStepChange, onSubmitEmail }) => {
 						gap: 20px;
 					`}
 				>
-					<ScFormControl label="Email Address">
+					<ScFormControl label={__('Email Address')}>
 						<ScInput
 							size="large"
 							placeholder={__('Enter email address', 'surecart')}
@@ -78,47 +82,31 @@ export default ({ email, currentStep, handleStepChange, onSubmitEmail }) => {
 							style={{ width: '460px' }}
 							value={userEmail}
 							onScInput={(e) => setUserEmail(e.target.value)}
-						>
-							<ScButton
-								slot="suffix"
-								type="text"
-								size="medium"
-								onClick={onSubmit}
-								disabled={!userEmail?.length}
-								style={{
-									color: 'var(--sc-color-brand-primary)',
-									marginRight: 0,
-								}}
-							>
-								<ScIcon
-									name="arrow-right"
-									style={{ fontSize: 20 }}
-								/>
-							</ScButton>
-						</ScInput>
+						/>
 					</ScFormControl>
-					<ScSelect
-						search
-						size="large"
-						onScChange={(e) =>
-							console.log({ currency: e.target.value })
-						}
-						choices={Object.keys(
-							scData?.supported_currencies || {}
-						).map((value) => {
-							const label = scData?.supported_currencies[value];
-							return {
-								label: `${label} (${getCurrencySymbol(value)})`,
-								value,
-							};
-						})}
-						label={__('Default Currency', 'surecart')}
-						help={__(
-							'The default currency for new products.',
-							'surecart'
-						)}
-						required
-					></ScSelect>
+					<ScFormControl label={__('Default Currency', 'surecart')}>
+						<ScSelect
+							required
+							search
+							size="large"
+							onScChange={(e) => onSelectCurrency(e.target.value)}
+							choices={Object.keys(
+								scData?.supported_currencies || {}
+							).map((value) => {
+								const label =
+									scData?.supported_currencies[value];
+								return {
+									label: `${label} (${getCurrencySymbol(
+										value
+									)})`,
+									value,
+								};
+							})}
+							style={{
+								fontSize: 'var(--sc-input-font-size-large)',
+							}}
+						></ScSelect>
+					</ScFormControl>
 				</div>
 				<ScAlert open={error} type="danger">
 					{error}
