@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-10T20:45:19",
+  "timestamp": "2023-05-11T13:26:34",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -13273,7 +13273,6 @@
         "sc-payment",
         "sc-payment-method",
         "sc-payment-methods-list",
-        "sc-product-buy-button",
         "sc-product-item-list",
         "sc-product-line-item",
         "sc-product-selected-price",
@@ -13377,9 +13376,6 @@
           "sc-icon"
         ],
         "sc-payment-methods-list": [
-          "sc-icon"
-        ],
-        "sc-product-buy-button": [
           "sc-icon"
         ],
         "sc-product-item-list": [
@@ -22736,7 +22732,7 @@
     },
     {
       "filePath": "./src/components/controllers/product/sc-product-buy-button/sc-product-buy-button.tsx",
-      "encapsulation": "shadow",
+      "encapsulation": "none",
       "tag": "sc-product-buy-button",
       "readme": "# sc-product-buy-button\n\n\n",
       "docs": "",
@@ -22868,6 +22864,22 @@
           "required": false
         },
         {
+          "name": "text",
+          "type": "string",
+          "mutable": false,
+          "attr": "text",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "type",
           "type": "\"danger\" | \"default\" | \"info\" | \"link\" | \"primary\" | \"success\" | \"text\" | \"warning\"",
           "mutable": false,
@@ -22922,26 +22934,26 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
-        "sc-button",
-        "sc-icon",
+        "sc-spinner",
         "sc-dialog",
         "sc-form",
-        "sc-price-input"
+        "sc-price-input",
+        "sc-button"
       ],
       "dependencyGraph": {
         "sc-product-buy-button": [
-          "sc-button",
-          "sc-icon",
+          "sc-spinner",
           "sc-dialog",
           "sc-form",
-          "sc-price-input"
-        ],
-        "sc-button": [
-          "sc-spinner"
+          "sc-price-input",
+          "sc-button"
         ],
         "sc-dialog": [
           "sc-button",
           "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-price-input": [
           "sc-input"
@@ -26700,6 +26712,7 @@
       "dependents": [
         "sc-block-ui",
         "sc-button",
+        "sc-product-buy-button",
         "sc-select",
         "sc-tax-id-input"
       ],
@@ -26709,6 +26722,9 @@
           "sc-spinner"
         ],
         "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-product-buy-button": [
           "sc-spinner"
         ],
         "sc-select": [

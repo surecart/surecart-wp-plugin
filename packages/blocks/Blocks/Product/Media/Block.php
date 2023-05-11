@@ -63,7 +63,7 @@ class Block extends BaseBlock {
 				id="sc-product-media-<?php echo esc_attr( esc_attr( $product->id ) ); ?>"
 				images='<?php echo wp_json_encode( $images ); ?>'
 				thumbnails='<?php echo wp_json_encode( $thumbnails ); ?>'
-				hasThumbnails
+				has-thumbnails
 				thumbnails-per-page="<?php echo esc_attr( $attributes['thumbnails_per_page'] ?? 5 ); ?>"
 				auto-height="<?php echo esc_attr( ! empty( $attributes['auto_height'] ) ? 'true' : 'false' ); ?>"
 				style="--sc-product-slider-height: <?php echo ! empty( $attributes['auto_height'] ) ? 'auto' : ( esc_attr( $attributes['height'] ?? 'auto' ) ); ?>

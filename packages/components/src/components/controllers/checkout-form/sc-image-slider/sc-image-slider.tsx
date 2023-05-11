@@ -91,6 +91,7 @@ export class ScImageSlider {
 
   render() {
     const thumbnails = this.thumbnailsData?.length ? this.thumbnailsData : this.imagesData;
+    console.log({ thumbnails });
     return (
       <div class="image-slider" part="base">
         <div class="swiper" ref={el => (this.swiperContainerRef = el)}>

@@ -92,7 +92,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 					<sc-image-slider
 						key={renderKey}
 						images={JSON.stringify(imagesArr)}
-						thumbnails={true}
+						has-thumbnails
 						thumbnails-per-page={thumbnails_per_page}
 						autoHeight={auto_height}
 						style={{

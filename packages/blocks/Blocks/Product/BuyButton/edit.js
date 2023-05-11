@@ -97,7 +97,6 @@ export default (props) => {
 		onKeyDown,
 	});
 
-	console.log({ colorProps, borderProps, spacingProps });
 	return (
 		<>
 			<div
@@ -107,29 +106,33 @@ export default (props) => {
 					[`has-custom-width wp-block-button__width-${width}`]: width,
 					[`has-custom-font-size`]: blockProps.style.fontSize,
 				})}
-				style={{
-					'--sc-button-background-color':
-						colorProps?.style?.backgroundColor,
-					'--sc-button-text-color': colorProps?.style?.color,
-					'--sc-button-border-color': colorProps?.style?.borderColor,
-					'--sc-button-border-radius':
-						borderProps?.style?.borderRadius,
-					'--sc-button-border-width': borderProps?.style?.borderWidth,
-					'--sc-button-border-style': borderProps?.style?.borderStyle,
-					'--sc-button-border-color': borderProps?.style?.borderColor,
-					border: 'none',
-				}}
 			>
-				<ScButton type="primary" full={width ? true : false}>
-					<RichText
-						aria-label={__('Button text')}
-						placeholder={__('Add text…')}
-						value={text}
-						onChange={(value) => setAttributes({ text: value })}
-						withoutInteractiveFormatting
-						allowedFormats={['core/bold', 'core/italic']}
-					/>
-				</ScButton>
+				<RichText
+					aria-label={__('Button text')}
+					placeholder={__('Add text…')}
+					className={classnames(
+						className,
+						'wp-block-button__link',
+						colorProps.className,
+						borderProps.className,
+						{
+							[`has-text-align-${textAlign}`]: textAlign,
+							// For backwards compatibility add style that isn't
+							// provided via block support.
+							'no-border-radius': style?.border?.radius === 0,
+						},
+						__experimentalGetElementClassName('button')
+					)}
+					style={{
+						...borderProps.style,
+						...colorProps.style,
+						...spacingProps.style,
+					}}
+					value={text}
+					onChange={(value) => setAttributes({ text: value })}
+					withoutInteractiveFormatting
+					allowedFormats={['core/bold', 'core/italic']}
+				/>
 			</div>
 			<BlockControls group="block">
 				<AlignmentControl

@@ -16,6 +16,7 @@
 | `outline`   | `outline`     | Outline                        | `boolean`                                                                                    | `false`     |
 | `showTotal` | `show-total`  | Show the total.                | `boolean`                                                                                    | `undefined` |
 | `size`      | `size`        | The button's size.             | `"large" \| "medium" \| "small"`                                                             | `'medium'`  |
+| `text`      | `text`        |                                | `string`                                                                                     | `undefined` |
 | `type`      | `type`        | The button type.               | `"danger" \| "default" \| "info" \| "link" \| "primary" \| "success" \| "text" \| "warning"` | `'default'` |
 
 
@@ -23,23 +24,23 @@
 
 ### Depends on
 
-- [sc-button](../../../ui/button)
-- [sc-icon](../../../ui/icon)
+- [sc-spinner](../../../ui/spinner)
 - [sc-dialog](../../../ui/sc-dialog)
 - [sc-form](../../../ui/form)
 - [sc-price-input](../../../ui/price-input)
+- [sc-button](../../../ui/button)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-product-buy-button --> sc-button
-  sc-product-buy-button --> sc-icon
+  sc-product-buy-button --> sc-spinner
   sc-product-buy-button --> sc-dialog
   sc-product-buy-button --> sc-form
   sc-product-buy-button --> sc-price-input
-  sc-button --> sc-spinner
+  sc-product-buy-button --> sc-button
   sc-dialog --> sc-button
   sc-dialog --> sc-icon
+  sc-button --> sc-spinner
   sc-price-input --> sc-input
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip

@@ -107,9 +107,11 @@ export class ScProductBuyButton {
   render() {
     return (
       <Host>
-        <button class="wp-block-button__link wp-element-button sc-button" onClick={e => this.handleCartClick(e)}>
+        <slot />
+
+        {/* <button class="wp-block-button__link wp-element-button sc-button" onClick={e => this.handleCartClick(e)}>
           {this.renderContent()}
-        </button>
+        </button> */}
 
         {state?.selectedPrice?.ad_hoc && (
           <sc-dialog open={this.dialog} onScRequestClose={() => (this.dialog = false)}>
