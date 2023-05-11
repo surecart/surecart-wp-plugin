@@ -70,6 +70,7 @@ export class ScProductBuyButton {
 
   /** Add the item to cart. */
   async addPriceToCart() {
+    console.log({ state });
     if (!state.selectedPrice?.id) return;
     if (state.selectedPrice?.ad_hoc && !state.adHocAmount) return;
     try {
@@ -106,12 +107,8 @@ export class ScProductBuyButton {
 
   render() {
     return (
-      <Host>
+      <Host class={{ 'is-busy': this.busy }} onClick={e => this.handleCartClick(e)}>
         <slot />
-
-        {/* <button class="wp-block-button__link wp-element-button sc-button" onClick={e => this.handleCartClick(e)}>
-          {this.renderContent()}
-        </button> */}
 
         {state?.selectedPrice?.ad_hoc && (
           <sc-dialog open={this.dialog} onScRequestClose={() => (this.dialog = false)}>

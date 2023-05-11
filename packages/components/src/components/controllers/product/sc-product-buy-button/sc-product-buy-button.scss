@@ -4,6 +4,29 @@
   width: var(--sc-button-width, auto);
 }
 
+sc-product-buy-button {
+  .sc-button-text,
+  .sc-busy-indicator {
+    transition: opacity var(--sc-transition-fast) ease-in-out, visibility var(--sc-transition-fast) ease-in-out;
+  }
+
+  .sc-busy-indicator {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  &.is-busy {
+    .sc-button-text {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .sc-busy-indicator {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
 sc-dialog {
   color: var(--sc-color-gray-600);
   text-decoration: none;

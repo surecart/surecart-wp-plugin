@@ -108,8 +108,8 @@ class Block extends BaseBlock {
 			add-to-cart
 			class="wp-block-button <?php echo esc_attr( $width_class ); ?>">
 			<button class="wp-block-button__link wp-element-button sc-button <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
-				<span><?php echo esc_attr( $attributes['text'] ); ?></span>
-				<sc-spinner></sc-spinner>
+				<span class="sc-button-text"><?php echo esc_attr( $attributes['text'] ); ?></span>
+				<sc-spinner class="sc-busy-indicator"></sc-spinner>
 			</button>
 		</sc-product-buy-button>
 
