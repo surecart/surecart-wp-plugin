@@ -5,7 +5,7 @@ import StepHeader from './StepHeader';
 import ProgressIndicator from './ProgressIndicator';
 import { ScButton } from '@surecart/components-react';
 
-export default ({ handleStepChange, setShowConnect }) => {
+export default ({ handleStepChange }) => {
 	return (
 		<div>
 			<StepHeader
@@ -21,16 +21,16 @@ export default ({ handleStepChange, setShowConnect }) => {
 					display: flex;
 					justify-content: center;
 					gap: 10px;
+					@media (max-width: 768px) {
+						flex-wrap: wrap;
+					}
 				`}
 			>
 				<ScButton
 					size="large"
 					type="primary"
 					style={{ width: '230px' }}
-					onClick={() => {
-						setShowConnect(false);
-						handleStepChange('forward');
-					}}
+					onClick={() => handleStepChange('forward')}
 				>
 					<sc-icon
 						name="shopping-bag"
@@ -39,21 +39,20 @@ export default ({ handleStepChange, setShowConnect }) => {
 					></sc-icon>
 					{__('Create New Store', 'surecart')}
 				</ScButton>
-				<ScButton
-					size="large"
-					style={{ width: '230px' }}
-					onClick={() => {
-						setShowConnect(true);
-						handleStepChange('forward');
-					}}
-				>
-					<sc-icon
-						name="upload-cloud"
-						slot="prefix"
-						style={{ fontSize: '18px' }}
-					></sc-icon>
-					{__('Connect Existing Store', 'surecart')}
-				</ScButton>
+				{scData?.connect_url && (
+					<ScButton
+						size="large"
+						style={{ width: '230px' }}
+						href={scData.connect_url}
+					>
+						<sc-icon
+							name="upload-cloud"
+							slot="prefix"
+							style={{ fontSize: '18px' }}
+						></sc-icon>
+						{__('Connect Existing Store', 'surecart')}
+					</ScButton>
+				)}
 			</div>
 			<ProgressIndicator
 				currentStep={0}

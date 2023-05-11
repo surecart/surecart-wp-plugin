@@ -54,9 +54,10 @@ export default ({
 				css={css`
 					display: grid;
 					grid-template-columns: repeat(1, 1fr);
-					gap: 40px;
-					padding: 60px 20px 0;
+					gap: 30px;
+					padding: 20px 0 0;
 					@media (min-width: 781px) {
+						gap: 40px;
 						padding: 60px 120px 0;
 						grid-template-columns: repeat(3, 1fr);
 					}

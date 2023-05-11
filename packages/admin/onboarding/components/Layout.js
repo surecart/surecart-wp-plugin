@@ -13,6 +13,9 @@ export default ({ children }) => {
 					display: flex;
 					align-items: center;
 					justify-content: space-between;
+					@media (max-width: 768px) {
+						padding: 30px;
+					}
 				`}
 			>
 				<Logo display="block" />
@@ -30,6 +33,9 @@ export default ({ children }) => {
 					display: grid;
 					align-items: center;
 					overflow: auto;
+					@media (max-width: 768px) {
+						padding: 20px 20px 100px;
+					}
 				`}
 			>
 				{children}

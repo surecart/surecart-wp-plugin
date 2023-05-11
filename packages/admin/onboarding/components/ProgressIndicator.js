@@ -40,6 +40,13 @@ export default ({ currentStep, onBackwardClick, onForwardClick }) => {
 				left: 0;
 				bottom: 0;
 				background-color: #f0f0f1;
+				@media (max-width: 768px) {
+					height: 86px;
+					padding: 0 24px;
+					border-top: ${onBackwardClick === null &&
+					onForwardClick === null &&
+					'none'};
+				}
 			`}
 		>
 			{onBackwardClick !== null ? (
@@ -63,6 +70,9 @@ export default ({ currentStep, onBackwardClick, onForwardClick }) => {
 					left: 50%;
 					top: 50%;
 					transform: translate(-50%, -50%);
+					@media (max-width: 768px) {
+						display: none;
+					}
 				`}
 			>
 				{renderSteps(currentStep)}

@@ -13,6 +13,9 @@ export default ({ imageNode, title, label }) => {
 				css={css`
 					font-size: 28px;
 					margin: 20px 0;
+					@media (max-width: 768px) {
+						font-size: 24px;
+					}
 				`}
 			>
 				{title}
@@ -22,6 +25,9 @@ export default ({ imageNode, title, label }) => {
 					font-size: 18px;
 					margin: 20px 0;
 					color: var(--sc-color-gray-500);
+					@media (max-width: 768px) {
+						font-size: 16px;
+					}
 				`}
 			>
 				{label}

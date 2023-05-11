@@ -16,10 +16,10 @@ export default ({
 	currentStep,
 	handleStepChange,
 	onSubmitEmail,
+	currency,
 	onSelectCurrency,
 }) => {
 	const [userEmail, setUserEmail] = useState(email ?? '');
-	const [accountCurrency, setAccountCurrency] = useState(null);
 	const [error, setError] = useState(null);
 
 	function onSubmit() {
@@ -47,7 +47,7 @@ export default ({
 
 	return (
 		<>
-			<div style={{ margin: 'auto' }}>
+			<div>
 				<StepHeader
 					imageNode={
 						<sc-icon
@@ -66,10 +66,11 @@ export default ({
 				/>
 				<div
 					css={css`
-						margin: 20px 0 0;
+						margin: 20px auto;
 						display: flex;
 						flex-direction: column;
 						gap: 20px;
+						max-width: 370px;
 					`}
 				>
 					<ScFormControl label={__('Email Address')}>
@@ -79,7 +80,6 @@ export default ({
 							required={true}
 							autofocus={true}
 							type="email"
-							style={{ width: '460px' }}
 							value={userEmail}
 							onScInput={(e) => setUserEmail(e.target.value)}
 						/>
@@ -90,6 +90,7 @@ export default ({
 							search
 							size="large"
 							onScChange={(e) => onSelectCurrency(e.target.value)}
+							value={currency}
 							choices={Object.keys(
 								scData?.supported_currencies || {}
 							).map((value) => {
@@ -115,7 +116,9 @@ export default ({
 			<ProgressIndicator
 				currentStep={currentStep}
 				onBackwardClick={() => handleStepChange('backward')}
-				onForwardClick={!!userEmail?.trim().length && onSubmit}
+				onForwardClick={
+					!!userEmail?.trim().length && !!currency && onSubmit
+				}
 			/>
 		</>
 	);

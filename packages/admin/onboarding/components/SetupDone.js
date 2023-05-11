@@ -68,8 +68,16 @@ export default ({ setConfirmExit }) => {
 			<div style={{ marginTop: '45px', height: '315px' }}>
 				{showVideo && (
 					<iframe
-						width="560"
-						height="315"
+						css={css`
+							width: 270px;
+							aspect-ratio: 16/9;
+							@media (min-width: 512px) {
+								width: 380px;
+							}
+							@media (min-width: 782px) {
+								width: 560px;
+							}
+						`}
 						src="https://www.youtube.com/embed/tYKJXq1kPj4"
 						title="YouTube video player"
 						frameborder="0"
