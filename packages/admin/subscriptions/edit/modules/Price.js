@@ -8,6 +8,8 @@ import {
 	ScInput,
 	ScPriceInput,
 	ScFormatNumber,
+	ScIcon,
+	ScButton,
 } from '@surecart/components-react';
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -23,6 +25,40 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 		}
 	}, [lineItem]);
 
+	const changePrice = (e) => {
+		updateSubscription({
+			ad_hoc_amount: e.target.value,
+		});
+	};
+
+	const renderChangePriceButton = () => {
+		return (
+			<ScButton
+				size="small"
+				onClick={() => {
+					if (!open) {
+						setOpen(true);
+						setPrice(false);
+					} else {
+						setOpen(false);
+						if (lineItem?.price?.id) {
+							setPrice(lineItem?.price);
+						}
+					}
+				}}
+				css={
+					open
+						? css`
+								margin-left: 20px;
+						  `
+						: ''
+				}
+			>
+				{!open ? __('Change', 'surecart') : <ScIcon name="x" />}
+			</ScButton>
+		);
+	};
+
 	return (
 		<div
 			css={css`
@@ -32,13 +68,18 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 			<DataTable
 				loading={price === null}
 				title={__('Pricing', 'surecart')}
+				tableRowStyle={{
+					display: 'grid',
+					alignItems: 'center',
+					gridTemplateColumns: '4fr 1fr 2fr',
+					width: 'auto',
+				}}
 				columns={{
 					product: {
 						label: __('Price', 'surecart'),
 					},
 					quantity: {
 						label: __('Qty', 'surecart'),
-						width: '75px',
 					},
 					total: {
 						label: (
@@ -68,12 +109,13 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 										<ScPriceInput
 											label={price?.product?.name}
 											value={lineItem?.total_amount}
-											onScChange={(e) =>
-												updateSubscription({
-													ad_hoc_amount:
-														e.target.value,
-												})
-											}
+											onScInput={changePrice}
+											onScChange={changePrice}
+											css={css`
+												@media screen and (max-width: 1115px) {
+													max-width: 150px;
+												}
+											`}
 										/>
 									) : (
 										<div>
@@ -91,34 +133,36 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 										</div>
 									)}
 
-									<sc-button
-										size="small"
-										onClick={() => {
-											setPrice(false);
-											setOpen(true);
-										}}
-									>
-										{__('Change', 'surecart')}
-									</sc-button>
+									{renderChangePriceButton()}
 								</div>
 							</div>
 						) : (
-							<PriceSelector
-								open={open}
-								required
-								value={price?.id}
-								onSelect={(price) => {
-									if (price) {
-										updateSubscription({
-											price,
-										});
-									}
-								}}
-								requestQuery={{
-									archived: false,
-									recurring: true,
-								}}
-							/>
+							<div
+								css={css`
+									display: grid;
+									align-items: center;
+									grid-template-columns: 4fr 1fr;
+								`}
+							>
+								<PriceSelector
+									open={open}
+									required
+									value={price?.id}
+									onSelect={(price) => {
+										if (price) {
+											updateSubscription({
+												price,
+											});
+										}
+									}}
+									requestQuery={{
+										archived: false,
+										recurring: true,
+									}}
+								/>
+
+								{renderChangePriceButton()}
+							</div>
 						),
 						quantity: (
 							<ScInput
@@ -130,6 +174,7 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 										quantity: e.target.value,
 									});
 								}}
+								style={{ maxWidth: 75 }}
 								required
 							></ScInput>
 						),
