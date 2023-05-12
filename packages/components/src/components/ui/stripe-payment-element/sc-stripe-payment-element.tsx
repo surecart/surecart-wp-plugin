@@ -87,54 +87,43 @@ export class ScStripePaymentElement {
     this.unlistenToCheckout();
   }
 
+  getElementsConfig() {
+    const styles = getComputedStyle(this.el);
+    return {
+      mode: checkoutState.checkout?.reusable_payment_method_required ? 'payment' : 'subscription',
+      amount: checkoutState.checkout?.amount_due,
+      currency: checkoutState.checkout?.currency,
+      setupFutureUsage: checkoutState.checkout.reusable_payment_method_required ? 'off_session' : 'on_session',
+      appearance: {
+        variables: {
+          colorPrimary: styles.getPropertyValue('--sc-color-primary-500'),
+          colorText: styles.getPropertyValue('--sc-input-label-color'),
+          borderRadius: styles.getPropertyValue('--sc-input-border-radius-medium'),
+          colorBackground: styles.getPropertyValue('--sc-input-background-color'),
+          fontSizeBase: styles.getPropertyValue('--sc-input-font-size-medium'),
+          colorLogo: styles.getPropertyValue('--sc-stripe-color-logo'),
+          colorLogoTab: styles.getPropertyValue('--sc-stripe-color-logo-tab'),
+          colorLogoTabSelected: styles.getPropertyValue('--sc-stripe-color-logo-tab-selected'),
+          colorTextPlaceholder: styles.getPropertyValue('--sc-input-placeholder-color'),
+        },
+        rules: {
+          '.Input': {
+            border: styles.getPropertyValue('--sc-input-border'),
+          },
+        },
+      },
+    };
+  }
+
   /** Update the payment element mode, amount and currency when it changes. */
   createOrUpdateElements() {
     // need an order amount, etc.
     if (!checkoutState.checkout) return;
 
-    // get the computed styles.
-    const styles = getComputedStyle(this.el);
-
-    console.log({
-      variables: {
-        colorPrimary: styles.getPropertyValue('--sc-color-primary-500'),
-        colorText: styles.getPropertyValue('--sc-input-label-color'),
-        borderRadius: styles.getPropertyValue('--sc-input-border-radius-medium'),
-        colorBackground: styles.getPropertyValue('--sc-input-background-color'),
-        fontSizeBase: styles.getPropertyValue('--sc-input-font-size-medium'),
-        colorLogo: styles.getPropertyValue('--sc-stripe-color-logo'),
-        colorLogoTabSelected: styles.getPropertyValue('--sc-stripe-color-logo-tab-selected'),
-        colorTextPlaceholder: styles.getPropertyValue('--sc-input-placeholder-color'),
-      },
-    });
-
     // create the elements if they have not yet been created.
     if (!this.elements) {
       // we have what we need, load elements.
-      this.elements = this.stripe.elements({
-        mode: checkoutState.checkout.reusable_payment_method_required ? 'payment' : 'subscription',
-        amount: checkoutState.checkout.amount_due,
-        currency: checkoutState.checkout.currency,
-        setupFutureUsage: checkoutState.checkout.reusable_payment_method_required ? 'off_session' : 'on_session',
-        appearance: {
-          variables: {
-            colorPrimary: styles.getPropertyValue('--sc-color-primary-500'),
-            colorText: styles.getPropertyValue('--sc-input-label-color'),
-            borderRadius: styles.getPropertyValue('--sc-input-border-radius-medium'),
-            colorBackground: styles.getPropertyValue('--sc-input-background-color'),
-            fontSizeBase: styles.getPropertyValue('--sc-input-font-size-medium'),
-            colorLogo: styles.getPropertyValue('--sc-stripe-color-logo'),
-            colorLogoTab: styles.getPropertyValue('--sc-stripe-color-logo-tab'),
-            colorLogoTabSelected: styles.getPropertyValue('--sc-stripe-color-logo-tab-selected'),
-            colorTextPlaceholder: styles.getPropertyValue('--sc-input-placeholder-color'),
-          },
-          rules: {
-            '.Input': {
-              border: styles.getPropertyValue('--sc-input-border'),
-            },
-          },
-        },
-      });
+      this.elements = this.stripe.elements(this.getElementsConfig() as any);
 
       const { line_1: line1, line_2: line2, city, state, country, postal_code } = (checkoutState.checkout?.shipping_address as ShippingAddress) || {};
 
@@ -167,30 +156,7 @@ export class ScStripePaymentElement {
       this.element.on('ready', () => (this.loaded = true));
       return;
     }
-    this.elements.update({
-      mode: checkoutState.checkout?.reusable_payment_method_required ? 'payment' : 'subscription',
-      amount: checkoutState.checkout?.amount_due,
-      currency: checkoutState.checkout?.currency,
-      setupFutureUsage: checkoutState.checkout.reusable_payment_method_required ? 'off_session' : 'on_session',
-      appearance: {
-        variables: {
-          colorPrimary: styles.getPropertyValue('--sc-color-primary-500'),
-          colorText: styles.getPropertyValue('--sc-input-label-color'),
-          borderRadius: styles.getPropertyValue('--sc-input-border-radius-medium'),
-          colorBackground: styles.getPropertyValue('--sc-input-background-color'),
-          fontSizeBase: styles.getPropertyValue('--sc-input-font-size-medium'),
-          colorLogo: styles.getPropertyValue('--sc-stripe-color-logo'),
-          colorLogoTab: styles.getPropertyValue('--sc-stripe-color-logo-tab'),
-          colorLogoTabSelected: styles.getPropertyValue('--sc-stripe-color-logo-tab-selected'),
-          colorTextPlaceholder: styles.getPropertyValue('--sc-input-placeholder-color'),
-        },
-        rules: {
-          '.Input': {
-            border: styles.getPropertyValue('--sc-input-border'),
-          },
-        },
-      },
-    });
+    this.elements.update(this.getElementsConfig());
   }
 
   /** Update the default attributes of the element when they cahnge. */
