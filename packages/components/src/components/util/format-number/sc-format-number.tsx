@@ -9,10 +9,10 @@ interface NumberFormatOptionsWithUnit extends Intl.NumberFormatOptions {
 
 const UNIT_TYPES = {
   kg: 'kilogram',
-  lb:  'pound',
+  lb: 'pound',
   g: 'gram',
   oz: 'ounce',
-}
+};
 
 @Component({
   tag: 'sc-format-number',
@@ -26,7 +26,7 @@ export class ScFormatNumber {
   @Prop({ mutable: true }) locale: string;
 
   /** The formatting style to use. */
-  @Prop() type: 'currency' | 'decimal' | 'percent' | 'unit'  = 'decimal';
+  @Prop() type: 'currency' | 'decimal' | 'percent' | 'unit' = 'decimal';
 
   /** Turns off grouping separators. */
   @Prop({ attribute: 'no-grouping' }) noGrouping: boolean = false;
@@ -58,9 +58,6 @@ export class ScFormatNumber {
   /** The unit to use when formatting.  */
   @Prop() unit: string = 'lb';
 
-  /** The unit display type. */
-  @Prop() unitDisplay: 'long' | 'short' | 'narrow' = 'narrow';
-
   render() {
     if (isNaN(this.value)) {
       return '';
@@ -77,7 +74,6 @@ export class ScFormatNumber {
       minimumSignificantDigits: this.minimumSignificantDigits,
       maximumSignificantDigits: this.maximumSignificantDigits,
       unit: UNIT_TYPES[this.unit],
-      unitDisplay: this.unitDisplay,
     } as NumberFormatOptionsWithUnit).format(this.noConvert ? this.value : maybeConvertAmount(this.value, this.currency.toUpperCase()));
   }
 }

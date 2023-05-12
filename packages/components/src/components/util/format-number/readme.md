@@ -21,7 +21,6 @@
 | `noGrouping`               | `no-grouping`                | Turns off grouping separators.                                                                 | `boolean`                                        | `false`     |
 | `type`                     | `type`                       | The formatting style to use.                                                                   | `"currency" \| "decimal" \| "percent" \| "unit"` | `'decimal'` |
 | `unit`                     | `unit`                       | The unit to use when formatting.                                                               | `string`                                         | `'lb'`      |
-| `unitDisplay`              | `unit-display`               | The unit display type.                                                                         | `"long" \| "narrow" \| "short"`                  | `'narrow'`  |
 | `value`                    | `value`                      | The number to format.                                                                          | `number`                                         | `0`         |
 
 

@@ -1500,10 +1500,6 @@ export namespace Components {
          */
         "unit": string;
         /**
-          * The unit display type.
-         */
-        "unitDisplay": 'long' | 'short' | 'narrow';
-        /**
           * The number to format.
          */
         "value": number;
@@ -6498,10 +6494,6 @@ declare namespace LocalJSX {
           * The unit to use when formatting.
          */
         "unit"?: string;
-        /**
-          * The unit display type.
-         */
-        "unitDisplay"?: 'long' | 'short' | 'narrow';
         /**
           * The number to format.
          */
