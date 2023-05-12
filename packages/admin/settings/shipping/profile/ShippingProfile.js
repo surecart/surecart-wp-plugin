@@ -118,6 +118,7 @@ export default () => {
 				loading={loadingShippingProfile}
 				fallbackZoneId={shippingProfile?.fallback_shipping_zone}
 			/>
+
 			<FallbackZone
 				shippingProfile={shippingProfile}
 				loading={loadingShippingProfile}
