@@ -140,7 +140,9 @@ export default () => {
 
 	return (
 		<>
-			<Layout>{renderContent(currentStep)}</Layout>
+			<Layout currentStep={currentStep}>
+				{renderContent(currentStep)}
+			</Layout>
 			<ReactCanvasConfetti
 				refConfetti={getInstance}
 				style={{

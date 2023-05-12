@@ -4,7 +4,7 @@ import { addQueryArgs } from '@wordpress/url';
 import OnboardingModel from '../../templates/OnboardingModel';
 import Logo from '../../templates/Logo';
 
-export default ({ children }) => {
+export default ({ children, currentStep }) => {
 	return (
 		<OnboardingModel>
 			<div
@@ -20,7 +20,13 @@ export default ({ children }) => {
 			>
 				<Logo display="block" />
 				<a
-					href={addQueryArgs('index.php')}
+					href={
+						currentStep === 4
+							? addQueryArgs('admin.php', {
+									page: 'sc-dashboard',
+							  })
+							: addQueryArgs('index.php')
+					}
 					style={{ color: 'var(--sc-color-gray-700)' }}
 				>
 					<sc-icon name="x" style={{ fontSize: '28px' }}></sc-icon>
