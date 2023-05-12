@@ -10,7 +10,7 @@ const { state, onChange, on, set, get, dispose } = createStore<Store>(
     formState: checkoutMachine.initialState,
   },
   (newValue, oldValue) => {
-    return newValue?.value !== oldValue?.value;
+    return JSON.stringify(newValue) !== JSON.stringify(oldValue);
   },
 );
 
