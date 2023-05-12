@@ -16,8 +16,17 @@ export class ScWordPressPasswordEdit {
   @State() loading: boolean;
   @State() error: string;
 
+  /** Ensures strong password validation. */
+  @Prop({ reflect: true }) enableValidation = true;
+
   renderEmpty() {
     return <slot name="empty">{__('User not found.', 'surecart')}</slot>;
+  }
+
+  validatePassword(password: string) {
+    const regex = new RegExp('^(?=.*?[#?!@$%^&*-]).{6,}$');
+    if (regex.test(password)) return true;
+    return false;
   }
 
   async handleSubmit(e) {
@@ -27,6 +36,9 @@ export class ScWordPressPasswordEdit {
       const { password, password_confirm } = await e.target.getFormJson();
       if (password !== password_confirm) {
         throw { message: __('Passwords do not match.', 'surecart') };
+      }
+      if (this.enableValidation && !this.validatePassword(password)) {
+        throw { message: __('Passwords should at least 6 characters and contain one special character.', 'surecart') };
       }
       await apiFetch({
         path: `wp/v2/users/me`,

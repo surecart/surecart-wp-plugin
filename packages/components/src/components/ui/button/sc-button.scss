@@ -402,6 +402,7 @@
   box-shadow: none;
   color: var(--sc-button-link-color, var(--primary-background));
   transition: opacity var(--sc-input-transition, var(--sc-transition-medium)) ease;
+  text-decoration: var(--sc-button-link-text-decoration, none);
 
   &.button--has-label {
     &.button--small,

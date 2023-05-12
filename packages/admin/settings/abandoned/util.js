@@ -6,6 +6,10 @@ export const DAY = HOUR * 24;
 export const WEEK = DAY * 7;
 export const TIME_CHOICES = [
 	{
+		label: __("Don't send", 'surecart'),
+		value: null,
+	},
+	{
 		label: __('1 Hour', 'surecart'),
 		value: HOUR,
 	},

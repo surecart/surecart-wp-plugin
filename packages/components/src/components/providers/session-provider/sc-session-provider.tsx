@@ -264,6 +264,7 @@ export class ScSessionProvider {
       return this.loadUpdate({
         id,
         discount: { promotion_code },
+        refresh_price_versions: true,
       });
     }
 
@@ -319,6 +320,7 @@ export class ScSessionProvider {
     clearCheckout();
     return this.loadUpdate({
       line_items,
+      refresh_price_versions: true,
       ...(promotion_code ? { discount: { promotion_code } } : {}),
       ...(address?.defaultCountry
         ? {
@@ -371,6 +373,7 @@ export class ScSessionProvider {
         id,
         data: {
           ...(promotion_code ? { discount: { promotion_code } } : {}),
+          refresh_price_versions: true,
         },
       })) as Checkout;
       updateFormState('RESOLVE');

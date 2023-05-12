@@ -61,16 +61,27 @@ export class ScOrderPassword {
   /** The input's confirmation help text. */
   @Prop() confirmationHelp: string;
 
+  /** Ensures strong password validation. */
+  @Prop({ reflect: true }) enableValidation = true;
+
   @Method()
   async reportValidity() {
     if (this.loggedIn) return true;
 
+    this.input?.setCustomValidity?.('');
     this.confirmInput?.setCustomValidity?.('');
 
     // confirmation is enabled.
     if (this.confirmation) {
       if (this.confirmInput?.value && this.input?.value !== this.confirmInput?.value) {
         this.confirmInput.setCustomValidity(__('Password does not match.', 'surecart'));
+      }
+    }
+
+    if (this.enableValidation) {
+      const validPassword = this.validatePassword(this.input?.value);
+      if (!validPassword) {
+        this.input.setCustomValidity(__('Passwords should at least 6 characters and contain one special character.', 'surecart'));
       }
     }
 
@@ -84,6 +95,12 @@ export class ScOrderPassword {
     }
 
     return valid;
+  }
+
+  validatePassword(password: string) {
+    const regex = new RegExp('^(?=.*?[#?!@$%^&*-]).{6,}$');
+    if (regex.test(password)) return true;
+    return false;
   }
 
   render() {

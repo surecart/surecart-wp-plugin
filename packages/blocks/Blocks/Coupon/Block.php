@@ -22,8 +22,8 @@ class Block extends BaseBlock {
 		<sc-order-coupon-form
 			label="<?php echo esc_attr( $attributes['text'] ?? '' ); ?>"
 			placeholder="<?php echo esc_attr( $attributes['placeholder'] ); ?>"
+			button-text="<?php echo esc_attr( $attributes['button_text'] ?? __( 'Apply', 'surecart' ) ); ?>"
 			<?php echo ! empty( $attributes['collapsed'] ) || ! isset( $attributes['collapsed'] ) ? 'collapsed' : ''; ?>>
-			<?php echo wp_kses_post( $attributes['button_text'] ?? __( 'Apply', 'surecart' ) ); ?>
 		</sc-order-coupon-form>
 		<?php
 		return ob_get_clean();

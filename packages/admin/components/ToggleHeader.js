@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 import { ScButton, ScIcon } from '@surecart/components-react';
+import { SortableKnob } from 'react-easy-sort';
 
 export default ({
 	isOpen,
@@ -35,14 +36,15 @@ export default ({
 					letter-spacing: var(--sc-input-label-letter-spacing, 0);
 				`}
 			>
-				<ScIcon
-					class="dragger"
-					name="drag"
-					css={css`
-						font-size: 16px;
-						cursor: grab;
-					`}
-				/>
+				<SortableKnob>
+					<ScIcon
+						name="drag"
+						css={css`
+							font-size: 16px;
+							cursor: grab;
+						`}
+					/>
+				</SortableKnob>
 				{children}
 			</div>
 			<div
