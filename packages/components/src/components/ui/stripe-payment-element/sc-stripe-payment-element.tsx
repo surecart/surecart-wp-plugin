@@ -5,7 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { state as selectedProcessor } from '@store/selected-processor';
 
-import { FormState, FormStateSetter, ShippingAddress } from '../../../types';
+import { FormStateSetter, ShippingAddress } from '../../../types';
 import { availableProcessors } from '@store/processors/getters';
 import { state as checkoutState, onChange } from '@store/checkout';
 import { onChange as onChangeFormState } from '@store/form';
@@ -78,7 +78,12 @@ export class ScStripePaymentElement {
 
     // we need to listen to the form state and pay when the form state enters the paying state.
     this.unlistenToFormState = onChangeFormState('formState', () => {
-      this.maybeConfirmOrder(currentFormState());
+      if ('finalizing' === currentFormState()) {
+        this.submit();
+      }
+      if ('paying' === currentFormState()) {
+        this.maybeConfirmOrder();
+      }
     });
   }
 
@@ -93,7 +98,7 @@ export class ScStripePaymentElement {
       mode: checkoutState.checkout?.reusable_payment_method_required ? 'payment' : 'subscription',
       amount: checkoutState.checkout?.amount_due,
       currency: checkoutState.checkout?.currency,
-      setupFutureUsage: checkoutState.checkout.reusable_payment_method_required ? 'off_session' : 'on_session',
+      setupFutureUsage: checkoutState.checkout.reusable_payment_method_required ? 'off_session' : null,
       appearance: {
         variables: {
           colorPrimary: styles.getPropertyValue('--sc-color-primary-500'),
@@ -122,6 +127,7 @@ export class ScStripePaymentElement {
 
     // create the elements if they have not yet been created.
     if (!this.elements) {
+      console.log(this.getElementsConfig());
       // we have what we need, load elements.
       this.elements = this.stripe.elements(this.getElementsConfig() as any);
 
@@ -156,6 +162,7 @@ export class ScStripePaymentElement {
       this.element.on('ready', () => (this.loaded = true));
       return;
     }
+    console.log(this.getElementsConfig());
     this.elements.update(this.getElementsConfig());
   }
 
@@ -190,12 +197,24 @@ export class ScStripePaymentElement {
     });
   }
 
+  async submit() {
+    // this processor is not selected.
+    if (selectedProcessor?.id !== 'stripe') return;
+    // submit the elements.
+    const { error } = await this.elements.submit();
+    if (error) {
+      console.error({ error });
+      console.error(error);
+      this.scPayError.emit(error);
+      this.error = error.message;
+      return;
+    }
+  }
+
   /**
    * Watch order status and maybe confirm the order.
    */
-  async maybeConfirmOrder(val: FormState) {
-    // must be finalized
-    if (val !== 'paying') return;
+  async maybeConfirmOrder() {
     // this processor is not selected.
     if (selectedProcessor?.id !== 'stripe') return;
     // must be a stripe session
@@ -204,12 +223,6 @@ export class ScStripePaymentElement {
     if (!checkoutState.checkout?.payment_intent?.processor_data?.stripe?.type) return;
     // we need a client secret.
     if (!checkoutState.checkout?.payment_intent?.processor_data?.stripe?.client_secret) return;
-    // submit the elements.
-    const { error } = await this.elements.submit();
-    if (error) {
-      this.error = error.message;
-      return;
-    }
     // confirm the intent.
     return await this.confirm(checkoutState.checkout?.payment_intent?.processor_data?.stripe?.type);
   }
