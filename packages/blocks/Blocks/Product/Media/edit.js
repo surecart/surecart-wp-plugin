@@ -1,4 +1,3 @@
-import { ScImageSlider } from '@surecart/components-react';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { Disabled } from '@wordpress/components';
 import {
@@ -8,7 +7,7 @@ import {
 	__experimentalUnitControl as UnitControl,
 	__experimentalUseCustomUnits as useCustomUnits,
 } from '@wordpress/components';
-import { useEffect, useState, useRef } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 const imagesArr = [
