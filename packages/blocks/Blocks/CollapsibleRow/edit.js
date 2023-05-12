@@ -19,13 +19,7 @@ import { __ } from '@wordpress/i18n';
 
 export default ({ attributes, setAttributes }) => {
 	const { heading, icon } = attributes;
-	const blockProps = useBlockProps({
-		summary: heading,
-		borderless: true,
-		style: {
-			width: '100%',
-		},
-	});
+	const blockProps = useBlockProps({});
 	const innerBlocksProps = useInnerBlocksProps();
 	return (
 		<>
@@ -88,37 +82,27 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<Global
-				styles={css`
-					sc-toggle + sc-toggle {
-						margin-top: -20px;
-					}
-					sc-toggle {
-						width: 100%;
-						border-top: solid var(--sc-input-border-width)
-							var(--sc-input-border-color);
-					}
-					sc-toggle {
-						--sc-toggle-header-padding: var(--sc-toggle-padding) 0;
-						--sc-toggle-content-padding: 0;
-					}
-					sc-toggle::part(body) {
-						border-top: 0;
-					}
-				`}
-			/>
-			<ScToggle {...blockProps}>
-				<span slot="summary">
-					{icon && (
-						<sc-icon
-							name={icon}
-							style={{ fontSize: '18px' }}
-						></sc-icon>
-					)}
-					<span>{heading}</span>
-				</span>
-				<span {...innerBlocksProps}></span>
-			</ScToggle>
+			<div {...blockProps}>
+				<ScToggle
+					summary={heading}
+					borderless={true}
+					style={{
+						width: '100%',
+					}}
+					class="sc-collapsible-row"
+				>
+					<span slot="summary">
+						{icon && (
+							<sc-icon
+								name={icon}
+								style={{ fontSize: '18px' }}
+							></sc-icon>
+						)}
+						<span>{heading}</span>
+					</span>
+					<span {...innerBlocksProps}></span>
+				</ScToggle>
+			</div>
 		</>
 	);
 };

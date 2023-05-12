@@ -10,7 +10,7 @@
 
 [hidden] {
   border: 0 !important;
-  clip: rect(0 0 0 0)  !important;
+  clip: rect(0 0 0 0) !important;
   height: 1px !important;
   margin: -1px !important;
   overflow: hidden !important;
@@ -26,7 +26,7 @@
   font-weight: var(--sc-input-font-weight);
   user-select: none;
   border: var(--sc-choice-border);
-  border-radius: var(--sc-input-border-radius-large);
+  border-radius: var(--sc-choice-border-radius, var(--sc-input-border-radius-large));
   box-shadow: var(--sc-choice-box-shadow);
   cursor: pointer;
   padding: 1.3em 1.1em;
@@ -49,7 +49,7 @@
   &--checked {
     border-color: var(--sc-color-primary-500);
     box-shadow: 0 0 0 1px var(--sc-color-primary-500);
-    z-index:1;
+    z-index: 1;
   }
 
   &__title {
@@ -86,7 +86,8 @@
   border: solid var(--sc-input-border-width) var(--sc-input-border-color);
   background-color: var(--sc-input-background-color);
   color: transparent;
-  transition: var(--sc-input-transition, var(--sc-transition-medium)) border-color, var(--sc-input-transition, var(--sc-transition-medium)) background-color, var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) border-color, var(--sc-input-transition, var(--sc-transition-medium)) background-color,
+    var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
 
   &.choice__radio {
     width: var(--sc-radio-size);

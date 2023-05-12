@@ -11,6 +11,7 @@ import { availablePrices } from '@store/product/getters';
 })
 export class ScProductPriceChoices {
   @Prop() label: string;
+  @Prop() showPrice: boolean;
 
   renderPrice(price) {
     return (
@@ -35,19 +36,22 @@ export class ScProductPriceChoices {
     if (prices?.length < 2) return <Host style={{ display: 'none' }}></Host>;
 
     return (
-      <sc-choices label={this.label} required style={{ '--columns': '2', '--sc-input-required-indicator': ' ' }}>
-        {(prices || []).map(price => (
-          <sc-price-choice-container
-            label={price?.name || state.product?.name}
-            price={price}
-            checked={state?.selectedPrice?.id === price?.id}
-            onScChange={e => {
-              if (e.target.checked) {
-                state.selectedPrice = price;
-              }
-            }}
-          />
-        ))}
+      <sc-choices label={this.label} required style={{ '--sc-input-required-indicator': ' ' }}>
+        {(prices || [])
+          .sort((a, b) => a?.position - b?.position) // sort by position.
+          .map(price => (
+            <sc-price-choice-container
+              label={price?.name || state.product?.name}
+              showPrice={!!this.showPrice}
+              price={price}
+              checked={state?.selectedPrice?.id === price?.id}
+              onScChange={e => {
+                if (e.target.checked) {
+                  state.selectedPrice = price;
+                }
+              }}
+            />
+          ))}
       </sc-choices>
     );
   }

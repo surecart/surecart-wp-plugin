@@ -5,6 +5,8 @@ onChange('selectedPrice', value => {
   state.total = state.adHocAmount || value?.amount || 0;
   // set the ad hoc amount to the selected product amount.
   state.adHocAmount = value?.amount;
+  // update disabled based on if price is archived or product is archived.
+  state.disabled = value?.archived || state.product?.archived;
 });
 
 // update the line item when any of these change.

@@ -11,6 +11,7 @@ interface Store {
   selectedPrice: Price;
   total: number;
   busy: boolean;
+  disabled: boolean;
   checkoutUrl: string;
   adHocAmount: number;
   dialog: string;
@@ -33,6 +34,7 @@ const store = createStore<Store>(
     total: null,
     dialog: null,
     busy: false,
+    disabled: selectedPrice?.archived || product?.archived,
     adHocAmount,
     error: null,
     checkoutUrl: window?.scData?.product_data?.checkout_link,

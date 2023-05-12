@@ -2533,7 +2533,7 @@ export namespace Components {
         /**
           * Stores the price
          */
-        "price": Price1;
+        "price": string | Price1;
         /**
           * Show the radio/checkbox control
          */
@@ -2826,9 +2826,11 @@ export namespace Components {
     }
     interface ScProductPrice {
         "prices": Price[];
+        "saleText": string;
     }
     interface ScProductPriceChoices {
         "label": string;
+        "showPrice": boolean;
     }
     interface ScProductPriceModal {
         "buttonText": string;
@@ -8129,7 +8131,7 @@ declare namespace LocalJSX {
         /**
           * Stores the price
          */
-        "price"?: Price1;
+        "price"?: string | Price1;
         /**
           * Show the radio/checkbox control
          */
@@ -8441,9 +8443,11 @@ declare namespace LocalJSX {
     }
     interface ScProductPrice {
         "prices"?: Price[];
+        "saleText"?: string;
     }
     interface ScProductPriceChoices {
         "label"?: string;
+        "showPrice"?: boolean;
     }
     interface ScProductPriceModal {
         "buttonText"?: string;

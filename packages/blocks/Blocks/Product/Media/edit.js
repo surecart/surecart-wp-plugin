@@ -1,3 +1,4 @@
+import { ScImageSlider } from '@surecart/components-react';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { Disabled } from '@wordpress/components';
 import {
@@ -88,7 +89,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 
 			<div {...blockProps}>
 				<Disabled isDisabled={!isSelected}>
-					<sc-image-slider
+					<ScImageSlider
 						key={renderKey}
 						images={JSON.stringify(imagesArr)}
 						has-thumbnails

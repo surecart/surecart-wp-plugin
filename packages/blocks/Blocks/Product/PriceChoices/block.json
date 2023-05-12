@@ -9,6 +9,14 @@
 		"label": {
 			"type": "string",
 			"default": "Pricing"
+		},
+		"columns": {
+			"type": "number",
+			"default": 2
+		},
+		"show_price": {
+			"type": "boolean",
+			"default": true
 		}
 	},
 	"supports": {
@@ -16,6 +24,7 @@
 		"html": false,
 		"multiple": false,
 		"color": {
+			"__experimentalSkipSerialization": true,
 			"gradients": true,
 			"link": false,
 			"__experimentalDefaultControls": {
@@ -25,8 +34,14 @@
 			}
 		},
 		"spacing": {
+			"__experimentalSkipSerialization": true,
 			"margin": true,
 			"padding": true
+		},
+		"__experimentalBorder": {
+			"__experimentalSkipSerialization": true,
+			"color": true,
+			"radius": true
 		},
 		"typography": {
 			"fontSize": true,

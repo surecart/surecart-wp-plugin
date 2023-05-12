@@ -1,6 +1,10 @@
 sc-product-buy-button {
   position: relative;
 
+  a.wp-block-button__link {
+    text-decoration: none;
+  }
+
   sc-spinner::part(base) {
     --indicator-color: currentColor;
     --spinner-size: 12px;
@@ -17,6 +21,10 @@ sc-product-buy-button {
   [data-loader] {
     opacity: 0;
     visibility: hidden;
+  }
+
+  &.is-disabled {
+    pointer-events: none;
   }
 
   &.is-busy {

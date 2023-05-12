@@ -5,7 +5,12 @@
 	"description": "Displays the product price or price range.",
 	"category": "surecart",
 	"keywords": ["price", "product"],
-	"attributes": {},
+	"attributes": {
+		"sale_text": {
+			"type": "string",
+			"default": "Sale"
+		}
+	},
 	"supports": {
 		"reusable": false,
 		"html": false,

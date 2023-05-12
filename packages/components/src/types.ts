@@ -98,6 +98,7 @@ export interface Price {
   created_at: number;
   updated_at: number;
   product?: Product | string;
+  position: number;
   metadata: { [key: string]: string };
 }
 

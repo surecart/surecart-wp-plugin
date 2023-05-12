@@ -10,6 +10,7 @@ import { state } from '@store/product';
 })
 export class ScProductPrice {
   @Prop() prices: Price[];
+  @Prop() saleText: string;
 
   renderRange() {
     if (state.prices.length === 1) {
@@ -31,7 +32,7 @@ export class ScProductPrice {
         <sc-format-number type="currency" value={price?.amount} currency={price?.currency} />
         {!!price?.scratch_amount && (
           <sc-tag type="primary" pill class="sale-badge">
-            {__('Sale', 'surecart')}
+            {this.saleText || __('Sale', 'surecart')}
           </sc-tag>
         )}
       </div>

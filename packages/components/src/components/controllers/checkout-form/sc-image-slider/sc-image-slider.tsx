@@ -50,6 +50,10 @@ export class ScImageSlider {
     this.parseImages(this.images);
   }
 
+  componentDidUpdate() {
+    this.swiper.update();
+  }
+
   componentDidLoad() {
     if (this.swiperContainerRef) {
       this.swiper = new Swiper(this.swiperContainerRef, {

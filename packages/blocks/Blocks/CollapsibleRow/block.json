@@ -19,5 +19,6 @@
 			"type": "string",
 			"default": "check"
 		}
-	}
+	},
+	"style": "file:./style.css"
 }

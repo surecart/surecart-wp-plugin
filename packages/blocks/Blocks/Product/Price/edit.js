@@ -2,11 +2,13 @@ import { ScFormatNumber, ScProductPrice } from '@surecart/components-react';
 import {
 	AlignmentControl,
 	BlockControls,
+	InspectorControls,
 	useBlockProps,
 } from '@wordpress/block-editor';
+import { PanelBody, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
-export default ({ attributes: { textAlign }, setAttributes }) => {
+export default ({ attributes: { textAlign, sale_text }, setAttributes }) => {
 	const blockProps = useBlockProps();
 
 	return (
@@ -19,6 +21,19 @@ export default ({ attributes: { textAlign }, setAttributes }) => {
 					}}
 				/>
 			</BlockControls>
+			<InspectorControls>
+				<PanelBody>
+					<TextControl
+						label={__('Sale Text', 'surecart')}
+						help={__(
+							'This text will be displayed if there is a compare at price selected.',
+							'surecart'
+						)}
+						value={sale_text}
+						onChange={(sale_text) => setAttributes({ sale_text })}
+					/>
+				</PanelBody>
+			</InspectorControls>
 
 			<div {...blockProps}>
 				<ScProductPrice>
