@@ -45,11 +45,16 @@ export default ({ open, onRequestClose, shippingProfileId }) => {
 
 		setLoading(true);
 		try {
-			await saveEntityRecord('surecart', 'shipping-zone', {
-				name: zoneName,
-				shipping_profile_id: shippingProfileId,
-				countries: zoneCountries,
-			});
+			await saveEntityRecord(
+				'surecart',
+				'shipping-zone',
+				{
+					name: zoneName,
+					shipping_profile_id: shippingProfileId,
+					countries: zoneCountries,
+				},
+				{ throwOnError: true }
+			);
 			onRequestClose();
 		} catch (error) {
 			console.error(error);

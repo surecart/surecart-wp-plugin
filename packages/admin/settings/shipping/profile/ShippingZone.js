@@ -41,7 +41,8 @@ export default ({
 			await deleteEntityRecord(
 				'surecart',
 				'shipping-rate',
-				shippingRateId
+				shippingRateId,
+				{ throwOnError: true }
 			);
 			await invalidateResolutionForStore();
 		} catch (error) {

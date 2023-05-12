@@ -85,7 +85,8 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 			await saveEntityRecord('surecart', 'shipping-rate', {
 				...shippingRate,
 				shipping_zone_id: shippingZoneId,
-			});
+			},
+      { throwOnError: true });
 
 			await invalidateResolutionForStore();
 

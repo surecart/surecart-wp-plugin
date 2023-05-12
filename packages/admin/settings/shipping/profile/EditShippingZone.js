@@ -49,11 +49,16 @@ export default ({ open, onRequestClose, selectedZone }) => {
 
 		setLoading(true);
 		try {
-			await saveEntityRecord('surecart', 'shipping-zone', {
-				id: selectedZone.id,
-				name: zoneName,
-				countries: zoneCountries,
-			});
+			await saveEntityRecord(
+				'surecart',
+				'shipping-zone',
+				{
+					id: selectedZone.id,
+					name: zoneName,
+					countries: zoneCountries,
+				},
+				{ throwOnError: true }
+			);
 
 			onRequestClose();
 		} catch (error) {
