@@ -110,11 +110,21 @@ export default () => {
 											<strong>
 												{__('Zones', 'surecart')}
 											</strong>
+
 											<ul
 												css={css`
 													list-style: none;
 												`}
 											>
+												{shippingProfile?.shipping_zones
+													?.data.length === 0 && (
+													<li>
+														{__(
+															'0 zones',
+															'surecart'
+														)}
+													</li>
+												)}
 												{shippingProfile?.shipping_zones?.data.map(
 													(shippingZone) => (
 														<li
