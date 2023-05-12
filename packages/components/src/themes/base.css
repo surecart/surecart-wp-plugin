@@ -301,6 +301,11 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-checkout-columns: 1;
   --sc-dashboard-module-spacing: var(--sc-spacing-x-small);
   --sc-border-width-zero: 0px;
+
+  --sc-stripe-color-logo: 'light';
+  --sc-stripe-color-tag: 'light';
+  --sc-stripe-color-logo-tab-selected: 'light';
+  --sc-stripe-color-tab-selected: 'light';
 }
 
 sc-checkout [hidden] {
