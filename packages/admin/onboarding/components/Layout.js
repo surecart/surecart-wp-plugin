@@ -29,7 +29,7 @@ export default ({ children }) => {
 			<div
 				css={css`
 					flex: 1 0 0px;
-					padding: 20px 36px 158px;
+					padding: 20px 36px 150px;
 					display: grid;
 					align-items: center;
 					overflow: auto;
