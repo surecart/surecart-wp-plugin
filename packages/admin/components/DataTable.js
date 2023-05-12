@@ -15,6 +15,9 @@ export default ({
 	empty = '',
 	loading,
 	updating,
+	tableStyle = {},
+	tableRowStyle = {},
+	tableCellStyle = {},
 }) => {
 	if ((items || []).length === 0 && !loading && !updating) {
 		return (
@@ -55,26 +58,45 @@ export default ({
 						'--border-radius': '0',
 						borderLeft: '0',
 						borderRight: '0',
+						...tableStyle,
 					}}
 				>
-					{!hideHeader &&
-						Object.keys(columns).map((key) => (
-							<ScTableCell
-								slot="head"
-								style={{ width: columns[key]?.width }}
-								key={key}
-							>
-								{columns[key]?.label}
-							</ScTableCell>
-						))}
-
-					{(items || []).map((item) => (
-						<ScTableRow key={item.id}>
+					{!hideHeader && (
+						<div
+							style={{
+								width: 'max-content',
+								display: 'contents',
+								...tableRowStyle,
+							}}
+						>
 							{Object.keys(columns).map((key) => (
-								<ScTableCell key={key}>{item[key]}</ScTableCell>
+								<ScTableCell
+									slot="head"
+									style={{
+										width: columns[key]?.width,
+										...tableCellStyle,
+									}}
+									key={key}
+								>
+									{columns[key]?.label}
+								</ScTableCell>
 							))}
-						</ScTableRow>
-					))}
+						</div>
+					)}
+
+					{items?.length > 0 &&
+						(items || []).map((item) => (
+							<ScTableRow key={item.id} style={tableRowStyle}>
+								{Object.keys(columns).map((key) => (
+									<ScTableCell
+										key={key}
+										style={tableCellStyle}
+									>
+										{item[key]}
+									</ScTableCell>
+								))}
+							</ScTableRow>
+						))}
 				</ScTable>
 
 				{children}
