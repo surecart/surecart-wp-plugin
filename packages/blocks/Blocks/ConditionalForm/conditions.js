@@ -49,7 +49,7 @@ const RULE_SETTINGS_FIELDS = {
 		fields: [
 			{
 				type: 'coupons',
-				placeholder: __('Search for coupons..', 'surecart'),
+				placeholder: __('Search for coupons...', 'surecart'),
 				isMulti: true,
 			},
 		],
@@ -59,7 +59,7 @@ const RULE_SETTINGS_FIELDS = {
 		fields: [
 			{
 				type: 'select2',
-				placeholder: __('Search for country..', 'surecart'),
+				placeholder: __('Search for country...', 'surecart'),
 				isMulti: true,
 				options: countryChoices,
 			},
@@ -70,7 +70,7 @@ const RULE_SETTINGS_FIELDS = {
 		fields: [
 			{
 				type: 'select2',
-				placeholder: __('Search for country..', 'surecart'),
+				placeholder: __('Search for country...', 'surecart'),
 				isMulti: true,
 				options: countryChoices,
 			},
