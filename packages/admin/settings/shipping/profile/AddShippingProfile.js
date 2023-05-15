@@ -9,30 +9,34 @@ import {
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import apiFetch from '@wordpress/api-fetch';
-import Error from '../../components/Error';
 import { addQueryArgs } from '@wordpress/url';
+import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch } from '@wordpress/data';
+import Error from '../../../components/Error';
 
 export default ({ open, onRequestClose }) => {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [profileName, setProfileName] = useState('');
+	const { saveEntityRecord } = useDispatch(coreStore);
 
 	const onSubmit = async (e) => {
 		if (!profileName) {
-			setError({ message: 'The profile name is required.' });
+			setError({
+				message: __('The profile name is required.', 'surecart'),
+			});
 			return;
 		}
 
 		setLoading(true);
 		try {
-			const response = await apiFetch({
-				path: 'surecart/v1/shipping_profiles',
-				data: {
+			const response = await saveEntityRecord(
+				'surecart',
+				'shipping-profile',
+				{
 					name: profileName,
-				},
-				method: 'POST',
-			});
+				}
+			);
 
 			if (!!response?.id) {
 				onRequestClose();
