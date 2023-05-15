@@ -17,7 +17,7 @@ import SettingsBox from '../SettingsBox';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
-import AddShippingProfile from './AddShippingProfile';
+import AddShippingProfile from './profile/AddShippingProfile';
 
 export default () => {
 	const [error, setError] = useState(null);
