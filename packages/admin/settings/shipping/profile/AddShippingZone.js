@@ -37,7 +37,10 @@ export default ({ open, onRequestClose, shippingProfileId }) => {
 		e.preventDefault();
 		if (!zoneCountries.length) {
 			setError({
-				message: 'Select at least one country to create zone.',
+				message: __(
+					'Select at least one country to create zone.',
+					'surecart'
+				),
 			});
 			return;
 		}
@@ -95,7 +98,7 @@ export default ({ open, onRequestClose, shippingProfileId }) => {
 	return (
 		<ScDialog
 			open={open}
-			label={__('Add Zone')}
+			label={__('Add Zone', 'surecart')}
 			onScRequestClose={onRequestClose}
 			style={{ '--dialog-body-overflow': 'visible' }}
 		>

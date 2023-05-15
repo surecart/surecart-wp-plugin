@@ -64,7 +64,7 @@ export default () => {
 							onClick={() => setShowAddShipping(true)}
 						>
 							<ScIcon name="plus" />
-							Add New
+							{__('Add New', 'surecart')}
 						</ScButton>
 					}
 					loading={loading}
@@ -147,7 +147,7 @@ export default () => {
 							</ScStackedList>
 						) : (
 							<ScEmpty icon="truck">
-								{__('No shipping present')}
+								{__('No shipping present', 'surecart')}
 							</ScEmpty>
 						)}
 					</ScCard>

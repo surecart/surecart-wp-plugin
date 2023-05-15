@@ -127,18 +127,18 @@ export default ({
 					</strong>
 					{isFallback && (
 						<sc-tag type="success" size="medium">
-							Fallback
+							{__('Fallback', 'surecart')}
 						</sc-tag>
 					)}
 				</div>
 				<ScButton type="text" onClick={onEditZone}>
-					Edit Zone
+					{__('Edit Zone', 'surecart')}
 				</ScButton>
 			</ScFlex>
 			<Error error={error} setError={setError} />
 			{renderShippingRates(shippingZone?.shipping_rates)}
 			<ScButton onClick={onAddRate}>
-				<ScIcon name="plus" /> Add Rate
+				<ScIcon name="plus" /> {__('Add Rate', 'surecart')}
 			</ScButton>
 			{(busy || parentBusy) && (
 				<ScBlockUi

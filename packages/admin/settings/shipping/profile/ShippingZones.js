@@ -59,7 +59,7 @@ export default ({ shippingProfileId, fallbackZoneId }) => {
 					type="primary"
 					onClick={() => setCurrentModal(modals.ADD_ZONE)}
 				>
-					<ScIcon name="plus" /> Create Zone
+					<ScIcon name="plus" /> {__('Create Zone', 'surecart')}
 				</ScButton>
 			}
 			loading={loading}

@@ -58,7 +58,7 @@ export default () => {
 			// check values.
 			const values = await Promise.all(pendingSavedRecords);
 			if (values.some((value) => typeof value === 'undefined')) {
-				throw new Error('Saving failed.');
+				throw new Error(__('Saving failed.', 'surecart'));
 			}
 
 			createSuccessNotice(__('Updated', 'surecart'), {

@@ -54,7 +54,7 @@ export default ({ loading, shippingProfile, onEditShippingProfile }) => {
 				`}
 				onClick={() => setShowAdvanced(!showAdvanced)}
 			>
-				Advanced Options <ScIcon name="chevron-down" />
+				{__('Fallback Zone', 'surecart')} <ScIcon name="chevron-down" />
 			</ScFlex>
 			{showAdvanced && (
 				<SettingsBox

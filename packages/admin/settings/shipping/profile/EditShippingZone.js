@@ -42,7 +42,10 @@ export default ({ open, onRequestClose, selectedZone }) => {
 		e.preventDefault();
 		if (!zoneCountries.length) {
 			setError({
-				message: 'Select at least one country to edit zone.',
+				message: __(
+					'Select at least one country to edit zone.',
+					'surecart'
+				),
 			});
 			return;
 		}
@@ -101,7 +104,7 @@ export default ({ open, onRequestClose, selectedZone }) => {
 	return (
 		<ScDialog
 			open={open}
-			label={__('Edit Zone')}
+			label={__('Edit Zone', 'surecart')}
 			onScRequestClose={onRequestClose}
 			style={{ '--dialog-body-overflow': 'visible' }}
 		>
