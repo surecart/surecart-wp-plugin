@@ -31,7 +31,7 @@ const RULE_SETTINGS_FIELDS = {
 		fields: [
 			{
 				type: 'products',
-				placeholder: __('Search for products..', 'surecart'),
+				placeholder: __('Search for products...', 'surecart'),
 				isMulti: true,
 			},
 		],
