@@ -149,6 +149,7 @@ class BuyPageController {
 				'show_image'       => $this->product->buyLink()->templatePartEnabled( 'image' ),
 				'show_description' => $this->product->buyLink()->templatePartEnabled( 'description' ),
 				'show_coupon'      => $this->product->buyLink()->templatePartEnabled( 'coupon' ),
+				'metadata_json'	   => $this->getJsonMeta() ?? null,
 			]
 		);
 	}
@@ -284,6 +285,35 @@ class BuyPageController {
 			return $this->notFound();
 		}
 		wp_die( esc_html( implode( ' ', $wp_error->get_error_messages() ) ) );
+	}
+
+	/**
+	 * Get JSON-LD Metadata.
+	 *
+	 * @return string
+	 */
+	public function getJsonMeta() {
+		if( $this->product->buyLink()->getMode() === 'test' ) {
+			return null;
+		}
+
+		$active_prices = $this->product->activePrices();
+
+		$metadata = array(
+			"@context" => "http://schema.org",
+			"@type" => "Product",
+			"name" => $this->product->name,
+			"image" => $this->product->image_url,
+			"description" => $this->product->description,
+			"offers" => array(
+				"@type" => "Offer",
+				"price" => $active_prices[0]->amount,
+				"priceCurrency" => $this->product->metrics->currency,
+				"availability" => "https://schema.org/InStock"
+			)
+		);
+
+		return json_encode($metadata);
 	}
 
 	/**

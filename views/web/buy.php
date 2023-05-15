@@ -20,6 +20,9 @@ use SureCartBlocks\Blocks\Form\Block as FormBlock;
 		margin-top: 0;
 	}
 	</style>
+	<?php if ( ! empty( $metadata_json ) ) : ?>
+		<script type="application/ld+json"><?php echo $metadata_json; ?></script>
+	<?php endif; ?>
 </head>
 
 <body <?php body_class( 'sc-buy-page' ); ?>>
