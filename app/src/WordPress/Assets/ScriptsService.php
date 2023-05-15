@@ -240,6 +240,7 @@ class ScriptsService {
 		$this->enqueueBlocks();
 		$this->enqueuePageTemplateEditor();
 		$this->enqueueCartBlocks();
+		$this->enqueueProductBlocks();
 	}
 
 	/**
@@ -249,6 +250,20 @@ class ScriptsService {
 	 */
 	public function enqueuePageTemplateEditor() {
 		wp_enqueue_script( 'surecart-templates-admin' );
+	}
+
+	/**
+	 * We only want these available in FSE.
+	 *
+	 * @return void
+	 */
+	public function enqueueProductBlocks() {
+		global $pagenow;
+		if ( 'site-editor.php' !== $pagenow ) {
+			return;
+		}
+
+		wp_enqueue_script( 'surecart-product-blocks' );
 	}
 
 	/**
@@ -270,9 +285,14 @@ class ScriptsService {
 	 * @return void
 	 */
 	public function registerBlocks() {
-		$enabledPaymentProcessors = array_values(array_filter((array) Processor::get() ?? [], function($paymentMethod){
-			return $paymentMethod->enabled;
-		}));
+		$enabledPaymentProcessors = array_values(
+			array_filter(
+				(array) Processor::get() ?? [],
+				function( $paymentMethod ) {
+					return $paymentMethod->enabled;
+				}
+			)
+		);
 		// blocks.
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/library.asset.php';
 		$deps       = $asset_file['dependencies'];
@@ -283,6 +303,19 @@ class ScriptsService {
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/blocks/library.js',
 			$deps,
 			$asset_file['version'] . '-' . \SureCart::plugin()->version(),
+			true
+		);
+
+		// only register
+		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/product.asset.php';
+		$deps       = $asset_file['dependencies'];
+		// fix bug in deps array.
+		$deps[ array_search( 'wp-blockEditor', $deps ) ] = 'wp-block-editor';
+		wp_register_script(
+			'surecart-product-blocks',
+			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/blocks/product.js',
+			$deps,
+			$asset_file['version'],
 			true
 		);
 

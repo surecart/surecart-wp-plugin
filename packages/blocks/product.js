@@ -1,4 +1,4 @@
-import * as BuyButtons from './Blocks/Product/BuyButtons';
+// import * as BuyButtons from './Blocks/Product/BuyButtons';
 import * as BuyButton from './Blocks/Product/BuyButton';
 import * as Description from './Blocks/Product/Description';
 import * as Media from './Blocks/Product/Media';
@@ -10,7 +10,7 @@ import { registerBlocks } from './register-block';
 import { __ } from '@wordpress/i18n';
 
 registerBlocks([
-	BuyButtons,
+	// BuyButtons,
 	BuyButton,
 	Quantity,
 	Title,

@@ -65,7 +65,7 @@ abstract class BaseBlock {
 		// font size.
 		if ( ! empty( $attr['fontSize'] ) || ! empty( $attr['style']['typography']['fontSize'] ) ) {
 			$font_size = ! empty( $attr['fontSize'] ) ? $this->getFontSizePresetCssVar( $attr['fontSize'] ) : $attr['style']['typography']['fontSize'];
-			$style    .= $prefix . '-font-size: ' . $font_size . ';';
+			$style    .= 'font-size: ' . $font_size . ';';
 		}
 		// border color.
 		if ( ! empty( $attr['borderColor'] ) || ! empty( $attr['style']['border']['color'] ) ) {

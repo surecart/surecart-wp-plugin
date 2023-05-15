@@ -16,9 +16,7 @@ import {
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
-import { getQueryArg } from '@wordpress/url';
-// import { useDispatch, select, useSelect } from '@wordpress/data';
-// import { store as siteEditorStore } from '@wordpress/site-editor';
+import useProductPageWarning from '../../../hooks/useProductPageWarning';
 
 export default ({ attributes, setAttributes, context }) => {
 	const { label, columns, show_price } = attributes;
@@ -27,17 +25,14 @@ export default ({ attributes, setAttributes, context }) => {
 		showPrice: show_price,
 	});
 
-	const postId = getQueryArg(window.location.href, 'postId');
-	if (
-		!postId.includes('sc-products') &&
-		!postId.includes('surecart/surecart')
-	) {
-		console.log('show warning');
-	}
-
 	const borderProps = useBorderProps(attributes);
 	const colorProps = useColorProps(attributes);
 	const spacingProps = useSpacingProps(attributes);
+
+	const warning = useProductPageWarning();
+	if (warning) {
+		return <div {...blockProps}>{warning}</div>;
+	}
 
 	return (
 		<>

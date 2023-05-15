@@ -28,6 +28,7 @@ import {
 import { isKeyboardEvent } from '@wordpress/keycodes';
 import { createBlock } from '@wordpress/blocks';
 import { ScButton } from '@surecart/components-react';
+import useProductPageWarning from '../../../hooks/useProductPageWarning';
 
 function WidthPanel({ selectedWidth, setAttributes }) {
 	function handleChange(newWidth) {
@@ -87,6 +88,11 @@ export default (props) => {
 		ref,
 		onKeyDown,
 	});
+
+	const warning = useProductPageWarning();
+	if (warning) {
+		return <div {...blockProps}>{warning}</div>;
+	}
 
 	return (
 		<>

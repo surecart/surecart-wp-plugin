@@ -1,15 +1,12 @@
 <!-- wp:template-part {"slug":"header","tagName":"header"} /-->
 
-<!-- wp:group {"layout":{"inherit":true}} -->
-<div class="wp-block-group">
-	<!-- wp:group {"align":"wide"} -->
-	<div class="wp-block-group alignwide">
-		<!-- wp:surecart/columns -->
-		<sc-columns is-stacked-on-mobile="1" class="wp-block-surecart-columns">
-			<!-- wp:surecart/column {"layout":{"type":"constrained","justifyContent":"center"}} -->
-			<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-center">
-				<!-- wp:surecart/product-media /-->
-			</sc-column>
+<!-- wp:group {"layout":{"inherit":true,"type":"constrained"},"UAGDay":[]} -->
+<div class="wp-block-group"><!-- wp:group {"align":"wide","UAGDay":[]} -->
+	<div class="wp-block-group alignwide"><!-- wp:surecart/columns -->
+		<sc-columns is-stacked-on-mobile="1"
+			class="wp-block-surecart-columns"><!-- wp:surecart/column {"layout":{"type":"constrained","justifyContent":"center"}} -->
+			<sc-column
+				class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-center"><!-- wp:surecart/product-media /--></sc-column>
 			<!-- /wp:surecart/column -->
 
 			<!-- wp:surecart/column {"width":"420px"} -->
@@ -24,10 +21,8 @@
 
 				<!-- wp:surecart/product-quantity {"label":"Quantity","style":{"spacing":{"margin":{"top":"0px","bottom":"32px"}},"typography":{"fontSize":"16px"}}} /-->
 
-				<!-- wp:surecart/product-buy-buttons /-->
-			</sc-column>
-			<!-- /wp:surecart/column -->
-		</sc-columns>
+				<!-- wp:surecart/product-buy-button {"add_to_cart":true,"text":"Add To Cart","width":100,"style":{"spacing":{"padding":{"top":"16px","right":"16px","bottom":"16px","left":"16px"}}}} /--></sc-column>
+			<!-- /wp:surecart/column --></sc-columns>
 		<!-- /wp:surecart/columns -->
 	</div>
 	<!-- /wp:group -->

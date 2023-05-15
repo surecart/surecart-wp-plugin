@@ -7,9 +7,15 @@ import {
 } from '@wordpress/block-editor';
 import { PanelBody, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import useProductPageWarning from '../../../hooks/useProductPageWarning';
 
 export default ({ attributes: { textAlign, sale_text }, setAttributes }) => {
 	const blockProps = useBlockProps();
+
+	const warning = useProductPageWarning();
+	if (warning) {
+		return <div {...blockProps}>{warning}</div>;
+	}
 
 	return (
 		<>
