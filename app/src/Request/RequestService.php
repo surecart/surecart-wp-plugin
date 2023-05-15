@@ -285,9 +285,6 @@ class RequestService {
 
 		// check for errors.
 		if ( ! in_array( $response_code, [ 200, 201 ], true ) ) {
-			error_log( print_r( $response_body, 1 ) );
-			error_log( print_r( $url, 1 ) );
-			error_log( print_r( $args, 1 ) );
 			$body = json_decode( $response_body, true );
 			if ( is_string( $body ) ) {
 				return new \WP_Error( 'error', $response_body );

@@ -96,6 +96,7 @@ return [
 		\SureCart\Rest\ShippingMethodRestServiceProvider::class,
 		\SureCart\Rest\ShippingRateRestServiceProvider::class,
 		\SureCart\Rest\ShippingZoneRestServiceProvider::class,
+		\SureCart\Rest\ProductMediaRestServiceProvider::class,
 
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,
@@ -142,6 +143,7 @@ return [
 		\SureCartBlocks\Blocks\Dashboard\DashboardTab\Block::class,
 		\SureCartBlocks\Blocks\ConditionalForm\Block::class,
 		\SureCartBlocks\Blocks\StoreLogo\Block::class,
+		\SureCartBlocks\Blocks\Password\Block::class,
 
 		// Deprecated.
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerInvoices\Block::class,
@@ -170,6 +172,7 @@ return [
 		'surecart/donation'                  => [ 'sc-donation-choices', 'sc-choices', 'sc-choice' ],
 		'surecart/donation-amount'           => [ 'sc-choice', 'sc-format-number' ],
 		'surecart/email'                     => [ 'sc-input', 'sc-customer-email' ],
+		'surecart/phone'                     => [ 'sc-input', 'sc-phone-input', 'sc-customer-phone' ],
 		'surecart/express-payment'           => [ 'sc-express-payment', 'sc-divider', 'sc-stripe-payment-request' ],
 		'surecart/form'                      => [ 'sc-checkout', 'sc-form', 'sc-checkout-unsaved-changes-warning', 'sc-line-items-provider', 'sc-block-ui' ],
 		'surecart/heading'                   => [ 'sc-heading' ],

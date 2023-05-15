@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property     | Attribute     | Description        | Type                                                        | Default     |
-| ------------ | ------------- | ------------------ | ----------------------------------------------------------- | ----------- |
-| `open`       | `open`        |                    | `boolean`                                                   | `true`      |
-| `successUrl` | `success-url` | The success url.   | `string`                                                    | `undefined` |
-| `type`       | `type`        | The type of alert. | `"danger" \| "info" \| "primary" \| "success" \| "warning"` | `'primary'` |
+| Property           | Attribute           | Description                         | Type                                                        | Default     |
+| ------------------ | ------------------- | ----------------------------------- | ----------------------------------------------------------- | ----------- |
+| `enableValidation` | `enable-validation` | Ensures strong password validation. | `boolean`                                                   | `true`      |
+| `open`             | `open`              |                                     | `boolean`                                                   | `true`      |
+| `successUrl`       | `success-url`       | The success url.                    | `string`                                                    | `undefined` |
+| `type`             | `type`              | The type of alert.                  | `"danger" \| "info" \| "primary" \| "success" \| "warning"` | `'primary'` |
 
 
 ## Dependencies

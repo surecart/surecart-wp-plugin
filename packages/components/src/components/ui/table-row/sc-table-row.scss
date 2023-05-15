@@ -1,5 +1,6 @@
 :host {
   display: table-row;
+  border: 1px solid var(--sc-table-row-border-bottom-color, var(--sc-color-gray-200));
 }
 :host([href]) {
   cursor: pointer;
@@ -7,7 +8,3 @@
 :host([href]:hover) {
   background: var(--sc-color-gray-50);
 }
-:host(:not(:last-child)) {
-  border-bottom: 1px solid var(--sc-table-row-border-bottom-color, var(--sc-color-gray-200));
-}
-

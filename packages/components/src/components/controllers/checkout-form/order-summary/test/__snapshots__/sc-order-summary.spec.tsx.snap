@@ -15,7 +15,7 @@ exports[`sc-order-summary does not render scratch price amount_due is different 
           <slot name="description"></slot>
         </span>
         <span class="price price--collapsed" slot="price">
-          <sc-total total="total"></sc-total>
+          <sc-total class="total-price" total="total"></sc-total>
         </span>
       </sc-line-item>
       <div class="summary__content summary__content--empty" style="overflow: hidden;">
@@ -59,8 +59,8 @@ exports[`sc-order-summary renders scratch price if no trial has total savings am
           <slot name="description"></slot>
         </span>
         <span class="price price--collapsed" slot="price">
-          <sc-format-number class="scratch-price" currency="usd" type="currency" value="1100"></sc-format-number>
-          <sc-total total="total"></sc-total>
+          <sc-format-number class="scratch-price total-price" currency="usd" type="currency" value="1100"></sc-format-number>
+          <sc-total class="total-price" total="total"></sc-total>
         </span>
       </sc-line-item>
       <div class="summary__content summary__content--empty" style="overflow: hidden;">
