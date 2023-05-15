@@ -9,7 +9,9 @@ import {
 import {
 	Notice,
 	PanelBody,
+	PanelRow,
 	RangeControl,
+	TextControl,
 	ToggleControl,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
@@ -55,15 +57,22 @@ export default ({ attributes, setAttributes, context }) => {
 							)}
 						</Notice>
 					)}
-				</PanelBody>
-				<PanelBody>
-					<ToggleControl
-						label={__('Show Price', 'surecart')}
-						checked={show_price}
-						onChange={() =>
-							setAttributes({ show_price: !show_price })
-						}
-					/>
+					<PanelRow>
+						<ToggleControl
+							label={__('Show Price', 'surecart')}
+							checked={show_price}
+							onChange={() =>
+								setAttributes({ show_price: !show_price })
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Label', 'surecart')}
+							value={label}
+							onChange={(label) => setAttributes({ label })}
+						/>
+					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 
@@ -74,6 +83,7 @@ export default ({ attributes, setAttributes, context }) => {
 					style={{
 						'--columns': columns,
 						border: 'none',
+						'--sc-input-required-indicator': '/\\00a0',
 						'--sc-choice-text-color': colorProps?.style?.color,
 						'--sc-choice-background-color':
 							colorProps?.style?.backgroundColor,

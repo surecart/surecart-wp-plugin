@@ -24,6 +24,7 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
+		global $content_width;
 		$product = get_query_var( 'surecart_current_product' );
 		if ( empty( $product ) ) {
 			return '';
@@ -33,12 +34,14 @@ class Block extends BaseBlock {
 			return '';
 		}
 
+		$width = $attributes['width'] ?? $content_width ?? 1170;
+
 		$images     = array_map(
-			function( $product_media ) use ( $product ) {
+			function( $product_media ) use ( $product, $width ) {
 				return [
-					'src'   => $product_media->getUrl( 450 ),
+					'src'   => $product_media->getUrl( $width ),
 					'alt'   => $product_media->media->filename ?? $product->name ?? '',
-					'width' => 450,
+					'width' => $width,
 				];
 			},
 			$product->product_medias->data
@@ -69,7 +72,7 @@ class Block extends BaseBlock {
 				style="--sc-product-slider-height: <?php echo ! empty( $attributes['auto_height'] ) ? 'auto' : ( esc_attr( $attributes['height'] ?? 'auto' ) ); ?>
 				"></sc-image-slider>
 		<?php else : ?>
-			<figure class="wp-block-image size-full is-resized has-custom-border">
+			<figure class="wp-block-image sc-block-image">
 				<img src="<?php echo esc_url( $product->product_medias->data[0]->getUrl( 800 ) ); ?>" alt="<?php echo esc_attr( $product->name ); ?>" style="border-radius:5px" />
 			</figure>
 		<?php endif; ?>

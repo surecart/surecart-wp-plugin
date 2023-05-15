@@ -24,7 +24,6 @@ export default ({ attributes, setAttributes }) => {
 				  }
 				: {}),
 		},
-		label,
 	});
 
 	return (
@@ -42,7 +41,7 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				<ScFormControl>
+				<ScFormControl label={label}>
 					<ScQuantitySelect
 						style={{
 							...(borderStyle?.borderRadius

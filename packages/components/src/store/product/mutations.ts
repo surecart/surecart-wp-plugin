@@ -7,6 +7,7 @@ import { toggleCart } from '@store/ui';
 export const submitCartForm = async () => {
   if (!state.selectedPrice?.id) return;
   if (state.selectedPrice?.ad_hoc && !state.adHocAmount) return;
+  console.log(state.quantity);
   try {
     state.busy = true;
     const checkout = await addLineItem({
@@ -14,7 +15,7 @@ export const submitCartForm = async () => {
       data: {
         price: state.selectedPrice?.id,
         ad_hoc_amount: state.adHocAmount,
-        quantity: state.adHocAmount ? 1 : state.quantity,
+        quantity: state.selectedPrice?.ad_hoc ? 1 : state.quantity,
       },
       live_mode: state.mode !== 'test',
     });

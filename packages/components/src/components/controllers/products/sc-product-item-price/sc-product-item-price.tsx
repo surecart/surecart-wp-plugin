@@ -14,7 +14,7 @@ export class ScProductItemPrice {
   @Prop() range: boolean = true;
 
   render() {
-    const price = (this.prices || []).find(p => !p?.archived);
+    const price = (this.prices || []).sort((a, b) => a?.position - b?.position).find(price => !price?.archived);
     return (
       <div class="product-price" part="base">
         {!this.range && this.prices?.length ? (

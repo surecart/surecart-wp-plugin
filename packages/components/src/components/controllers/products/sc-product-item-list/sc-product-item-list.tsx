@@ -59,6 +59,8 @@ export class ScProductItemList {
   /* Current page */
   @State() currentPage: number = 1;
 
+  @State() currentQuery: string;
+
   @State() pagination: {
     total: number;
     total_pages: number;
@@ -108,6 +110,7 @@ export class ScProductItemList {
   }
 
   async updateProducts() {
+    if (this.busy) return;
     try {
       this.busy = true;
       await this.fetchProducts();
@@ -132,6 +135,7 @@ export class ScProductItemList {
       }),
       parse: false,
     })) as Response;
+    this.currentQuery = this.query;
     this.pagination = {
       total: parseInt(response.headers.get('X-WP-Total')),
       total_pages: parseInt(response.headers.get('X-WP-TotalPages')),
@@ -175,26 +179,51 @@ export class ScProductItemList {
               )}
             </div>
             <div class="product-item-list__search">
-              {this.searchEnabled && (
-                <sc-input type="text" placeholder="Search" size="small" value={this.query} onScInput={e => (this.query = e.target.value)}>
-                  {this.query ? (
-                    <sc-icon
-                      class="clear-button"
-                      slot="prefix"
-                      name="x"
-                      onClick={() => {
+              {this.searchEnabled &&
+                (this.query?.length && this.query === this.currentQuery ? (
+                  <div class="product-item-list__search-tag">
+                    <div class="product-item-list__search-label">{__('Search Results:', 'surecart')}</div>
+                    <sc-tag
+                      clearable
+                      onScClear={() => {
                         this.query = '';
+                        this.currentQuery = '';
                         this.updateProducts();
                       }}
-                    />
-                  ) : (
-                    <sc-icon slot="prefix" name="search" />
-                  )}
-                  <sc-button class="search-button" type="link" slot="suffix" onClick={() => this.updateProducts()}>
-                    {__('Search', 'surecart')}
-                  </sc-button>
-                </sc-input>
-              )}
+                    >
+                      {this.query}
+                    </sc-tag>
+                  </div>
+                ) : (
+                  <sc-input
+                    type="text"
+                    placeholder="Search"
+                    size="small"
+                    onKeyDown={e => {
+                      if (e.key === 'Enter') {
+                        this.updateProducts();
+                      }
+                    }}
+                    value={this.query}
+                    onScInput={e => (this.query = e.target.value)}
+                  >
+                    {this.query ? (
+                      <sc-icon
+                        class="clear-button"
+                        slot="prefix"
+                        name="x"
+                        onClick={() => {
+                          this.query = '';
+                        }}
+                      />
+                    ) : (
+                      <sc-icon slot="prefix" name="search" />
+                    )}
+                    <sc-button class="search-button" type="link" slot="suffix" busy={this.busy} onClick={() => this.updateProducts()}>
+                      {__('Search', 'surecart')}
+                    </sc-button>
+                  </sc-input>
+                ))}
             </div>
           </div>
         )}
@@ -256,7 +285,7 @@ export class ScProductItemList {
             ></sc-pagination>
           </div>
         )}
-        {this.busy && <sc-block-ui />}
+        {(this.busy || this.loading) && <sc-block-ui />}
       </div>
     );
   }

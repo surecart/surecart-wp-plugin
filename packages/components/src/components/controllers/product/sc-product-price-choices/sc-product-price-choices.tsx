@@ -37,21 +37,19 @@ export class ScProductPriceChoices {
 
     return (
       <sc-choices label={this.label} required style={{ '--sc-input-required-indicator': ' ' }}>
-        {(prices || [])
-          .sort((a, b) => a?.position - b?.position) // sort by position.
-          .map(price => (
-            <sc-price-choice-container
-              label={price?.name || state.product?.name}
-              showPrice={!!this.showPrice}
-              price={price}
-              checked={state?.selectedPrice?.id === price?.id}
-              onScChange={e => {
-                if (e.target.checked) {
-                  state.selectedPrice = price;
-                }
-              }}
-            />
-          ))}
+        {(prices || []).map(price => (
+          <sc-price-choice-container
+            label={price?.name || state.product?.name}
+            showPrice={!!this.showPrice}
+            price={price}
+            checked={state?.selectedPrice?.id === price?.id}
+            onScChange={e => {
+              if (e.target.checked) {
+                state.selectedPrice = price;
+              }
+            }}
+          />
+        ))}
       </sc-choices>
     );
   }

@@ -34,12 +34,10 @@ export default ({ attributes: { textAlign }, setAttributes }) => {
 
 			<div {...blockProps}>
 				<ScProductText text="description">
-					The Basic Tee 6-Pack allows you to fully express your
-					vibrant personality with three grayscale options. Feeling
-					adventurous? Put on a heather gray tee. Want to be a
-					trendsetter? Try our exclusive colorway: "Black". Need to
-					add an extra pop of color to your outfit? Our white tee has
-					you covered.
+					{__(
+						'Experience the next level of convenience with our innovative widget. Melding cutting-edge technology with user-friendly design, this product provides unparalleled functionality that caters to your lifestyle.',
+						'surecart'
+					)}
 				</ScProductText>
 			</div>
 		</>

@@ -45,7 +45,7 @@ export default ({ attributes: { level, textAlign }, setAttributes }) => {
 
 			<TagName {...blockProps}>
 				<ScProductText text="name">
-					{__('Basic Tee 6-Pack', 'surecart')}
+					{__('Product Title', 'surecart')}
 				</ScProductText>
 			</TagName>
 		</>

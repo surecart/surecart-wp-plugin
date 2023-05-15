@@ -20,7 +20,7 @@ interface Store {
 }
 const product = window?.scData?.product_data?.product || null;
 const prices = product?.prices?.data || [];
-const selectedPrice = (prices || []).find(price => !price?.archived);
+const selectedPrice = (prices || []).sort((a, b) => a?.position - b?.position).find(price => !price?.archived);
 const adHocAmount = selectedPrice?.amount || null;
 
 const store = createStore<Store>(

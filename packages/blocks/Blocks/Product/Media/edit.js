@@ -5,38 +5,17 @@ import {
 	PanelBody,
 	RangeControl,
 	ToggleControl,
+	__experimentalNumberControl as NumberControl,
 	__experimentalUnitControl as UnitControl,
 	__experimentalUseCustomUnits as useCustomUnits,
 } from '@wordpress/components';
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
-const imagesArr = [
-	{
-		src: 'https://unsplash.com/photos/PDX_a_82obo/download?ixid=MnwxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjgyMzMwMTk4&force=true&w=640',
-		alt: '',
-	},
-	{
-		src: 'https://unsplash.com/photos/PvIz8BmuwDw/download?ixid=MnwxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjgyMzMwMjg4&force=true&w=640',
-		alt: '',
-	},
-	{
-		src: 'https://unsplash.com/photos/oBI4NBP2Lhg/download?force=true&w=640',
-		alt: '',
-	},
-	{
-		src: 'https://unsplash.com/photos/GI6L2pkiZgQ/download?force=true&w=640',
-		alt: '',
-	},
-	{
-		src: 'https://unsplash.com/photos/cZWZjymwI9o/download?force=true&w=640',
-		alt: '',
-	},
-];
-
 export default ({ attributes, setAttributes, isSelected }) => {
-	const { height, show_thumbnails, thumbnails_per_page, auto_height } =
+	const { height, show_thumbnails, thumbnails_per_page, auto_height, width } =
 		attributes;
+	const [images, setImages] = useState([]);
 	const [renderKey, setRenderKey] = useState(0);
 	const blockProps = useBlockProps({});
 
@@ -46,7 +25,18 @@ export default ({ attributes, setAttributes, isSelected }) => {
 
 	useEffect(() => {
 		setRenderKey(renderKey + 1);
-	}, [show_thumbnails, thumbnails_per_page, imagesArr, height, auto_height]);
+	}, [show_thumbnails, thumbnails_per_page, images, height, auto_height]);
+
+	useEffect(() => {
+		setImages(
+			[...Array(thumbnails_per_page + 1)].map(() => {
+				return {
+					src: scBlockData?.plugin_url + '/images/placeholder.jpg',
+					width: width,
+				};
+			})
+		);
+	}, [width, thumbnails_per_page]);
 
 	return (
 		<>
@@ -73,6 +63,17 @@ export default ({ attributes, setAttributes, isSelected }) => {
 						/>
 					)}
 
+					<NumberControl
+						label={__('Max Image Width', 'surecart')}
+						placeholder={__('Unlimited', 'surecart')}
+						value={width}
+						min={1}
+						spinControls={'custom'}
+						onChange={(width) =>
+							setAttributes({ width: parseInt(width) })
+						}
+					/>
+
 					<RangeControl
 						label={__('Thumbnails Per Page', 'surecart')}
 						min={2}
@@ -91,7 +92,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 				<Disabled isDisabled={!isSelected}>
 					<ScImageSlider
 						key={renderKey}
-						images={JSON.stringify(imagesArr)}
+						images={JSON.stringify(images)}
 						has-thumbnails
 						thumbnails-per-page={thumbnails_per_page}
 						autoHeight={auto_height}

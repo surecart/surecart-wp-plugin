@@ -44,7 +44,8 @@
 		"multiple": false,
 		"spacing": {
 			"__experimentalSkipSerialization": true,
-			"padding": ["horizontal", "vertical"]
+			"padding": ["horizontal", "vertical"],
+			"margin": ["top", "bottom"]
 		},
 		"color": {
 			"__experimentalSkipSerialization": true,
@@ -57,16 +58,10 @@
 		"__experimentalSelector": ".wp-block-button .wp-block-button__link",
 		"typography": {
 			"fontSize": true,
-			"lineHeight": true,
 			"__experimentalFontFamily": true,
 			"__experimentalFontWeight": true,
 			"__experimentalFontStyle": true,
-			"__experimentalTextTransform": true,
-			"__experimentalTextDecoration": true,
-			"__experimentalLetterSpacing": true,
-			"__experimentalDefaultControls": {
-				"fontSize": true
-			}
+			"__experimentalTextTransform": true
 		},
 		"reusable": false,
 		"shadow": true,
@@ -87,7 +82,7 @@
 	"variations": [
 		{
 			"name": "cart",
-			"title": "Add To Cart Button",
+			"title": "Product Add To Cart Button",
 			"icon": "cart",
 			"description": "Add a button to add the product to the cart.",
 			"attributes": {

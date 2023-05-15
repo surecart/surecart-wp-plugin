@@ -1,4 +1,7 @@
 @import './styles/swiper.scss';
+:host {
+  display: block;
+}
 
 .image-slider {
   user-select: none;

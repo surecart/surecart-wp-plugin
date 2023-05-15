@@ -14,6 +14,12 @@ onChange('selectedPrice', () => setLineItem());
 onChange('adHocAmount', () => setLineItem());
 onChange('quantity', () => setLineItem());
 
+onChange('line_item', value => {
+  // update the total when the line item changes.
+
+  console.log({ value });
+});
+
 const setLineItem = () => {
   state.line_item = {
     price_id: state.selectedPrice?.id,

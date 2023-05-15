@@ -75,6 +75,29 @@ class PageSeeder {
 	}
 
 	/**
+	 * Create shop page.
+	 *
+	 * @return void
+	 */
+	public function createShopPage() {
+		$pattern = require plugin_dir_path( SURECART_PLUGIN_FILE ) . 'templates/shop.php';
+
+		$shop = apply_filters(
+			'surecart/create_shop',
+			[
+				'shop' => [
+					'name'      => _x( 'shop', 'Shop page slug', 'surecart' ),
+					'title'     => _x( 'Shop', 'Shop page title', 'surecart' ),
+					'content'   => $pattern['content'],
+					'post_type' => 'page',
+				],
+			]
+		);
+
+		$this->createPosts( $shop );
+	}
+
+	/**
 	 * Create the main checkout form.
 	 *
 	 * @return void
@@ -105,7 +128,6 @@ class PageSeeder {
 	 * @return array
 	 */
 	public function getPages( $form = null ) {
-		$order_confirmation = require plugin_dir_path( SURECART_PLUGIN_FILE ) . 'templates/confirmation/order-confirmation.php';
 		$customer_dashboard = require plugin_dir_path( SURECART_PLUGIN_FILE ) . 'templates/dashboard/customer-dashboard.php';
 
 		return apply_filters(
