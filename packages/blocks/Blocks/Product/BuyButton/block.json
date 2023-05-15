@@ -4,7 +4,6 @@
 	"name": "surecart/product-buy-button",
 	"title": "Product Cart Button",
 	"category": "surecart",
-	"parent": ["surecart/product-buy-buttons"],
 	"description": "Add a buy now or add to cart button.",
 	"keywords": ["buy"],
 	"textdomain": "default",

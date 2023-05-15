@@ -14,12 +14,24 @@ import {
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
-export default ({ attributes, setAttributes }) => {
+import { getQueryArg } from '@wordpress/url';
+// import { useDispatch, select, useSelect } from '@wordpress/data';
+// import { store as siteEditorStore } from '@wordpress/site-editor';
+
+export default ({ attributes, setAttributes, context }) => {
 	const { label, columns, show_price } = attributes;
 	const blockProps = useBlockProps({
 		label,
 		showPrice: show_price,
 	});
+
+	const postId = getQueryArg(window.location.href, 'postId');
+	if (
+		!postId.includes('sc-products') &&
+		!postId.includes('surecart/surecart')
+	) {
+		console.log('show warning');
+	}
 
 	const borderProps = useBorderProps(attributes);
 	const colorProps = useColorProps(attributes);
@@ -107,7 +119,7 @@ export default ({ attributes, setAttributes }) => {
 					{columns > 2 && (
 						<ScPriceChoiceContainer
 							label={__('Payment Plan', 'surecart')}
-							showPrice={!!show_price}
+							show-price={!!show_price}
 							price={JSON.stringify({
 								amount: 12000,
 								currency: scData?.currency,

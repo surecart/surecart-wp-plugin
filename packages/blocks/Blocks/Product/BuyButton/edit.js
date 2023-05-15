@@ -90,40 +90,43 @@ export default (props) => {
 
 	return (
 		<>
-			<div
-				{...blockProps}
-				className={classnames(blockProps.className, {
-					'wp-block-button': true,
-					[`has-custom-width wp-block-button__width-${width}`]: width,
-					[`has-custom-font-size`]: blockProps.style.fontSize,
-				})}
-			>
-				<RichText
-					aria-label={__('Button text')}
-					placeholder={__('Add text…')}
-					className={classnames(
-						className,
-						'wp-block-button__link',
-						colorProps.className,
-						borderProps.className,
-						{
-							[`has-text-align-${textAlign}`]: textAlign,
-							// For backwards compatibility add style that isn't
-							// provided via block support.
-							'no-border-radius': style?.border?.radius === 0,
-						},
-						__experimentalGetElementClassName('button')
-					)}
-					style={{
-						...borderProps.style,
-						...colorProps.style,
-						...spacingProps.style,
-					}}
-					value={text}
-					onChange={(value) => setAttributes({ text: value })}
-					withoutInteractiveFormatting
-					allowedFormats={['core/bold', 'core/italic']}
-				/>
+			<div class="wp-block-buttons">
+				<div
+					{...blockProps}
+					className={classnames(blockProps.className, {
+						'wp-block-button': true,
+						[`has-custom-width wp-block-button__width-${width}`]:
+							width,
+						[`has-custom-font-size`]: blockProps.style.fontSize,
+					})}
+				>
+					<RichText
+						aria-label={__('Button text')}
+						placeholder={__('Add text…')}
+						className={classnames(
+							className,
+							'wp-block-button__link',
+							colorProps.className,
+							borderProps.className,
+							{
+								[`has-text-align-${textAlign}`]: textAlign,
+								// For backwards compatibility add style that isn't
+								// provided via block support.
+								'no-border-radius': style?.border?.radius === 0,
+							},
+							__experimentalGetElementClassName('button')
+						)}
+						style={{
+							...borderProps.style,
+							...colorProps.style,
+							...spacingProps.style,
+						}}
+						value={text}
+						onChange={(value) => setAttributes({ text: value })}
+						withoutInteractiveFormatting
+						allowedFormats={['core/bold', 'core/italic']}
+					/>
+				</div>
 			</div>
 			<BlockControls group="block">
 				<AlignmentControl
