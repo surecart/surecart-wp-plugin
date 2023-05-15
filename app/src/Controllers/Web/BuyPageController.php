@@ -1,6 +1,8 @@
 <?php
 namespace SureCart\Controllers\Web;
 
+use SureCart\Support\Currency;
+
 /**
  * Handles webhooks
  */
@@ -298,6 +300,7 @@ class BuyPageController {
 		}
 
 		$active_prices = $this->product->activePrices();
+		$single_price = Currency::maybeConvertAmount( $active_prices[0]->amount, $this->product->metrics->currency );
 
 		$metadata = array(
 			"@context" => "http://schema.org",
@@ -307,7 +310,7 @@ class BuyPageController {
 			"description" => $this->product->description,
 			"offers" => array(
 				"@type" => "Offer",
-				"price" => $active_prices[0]->amount,
+				"price" => $single_price,
 				"priceCurrency" => $this->product->metrics->currency,
 				"availability" => "https://schema.org/InStock"
 			)
