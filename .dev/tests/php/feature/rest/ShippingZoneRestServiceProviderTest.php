@@ -8,7 +8,7 @@ use SureCart\Rest\ShippingZoneRestServiceProvider;
 use SureCart\Support\Errors\ErrorsServiceProvider;
 use SureCart\Tests\SureCartUnitTestCase;
 
-class ShippingRateRestServiceProviderTest extends SureCartUnitTestCase
+class ShippingZoneRestServiceProviderTest extends SureCartUnitTestCase
 {
     use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
@@ -37,7 +37,7 @@ class ShippingRateRestServiceProviderTest extends SureCartUnitTestCase
         return [
             'List: Unauthenticated' => [null, 'GET', '/surecart/v1/shipping_zones', 401],
             'List: Missing Capability' => [[], 'GET', '/surecart/v1/shipping_zones', 403],
-            'List: Has Capability' => [['manage_sc_shop_settings', '/surecart/v1/shipping_zones', 200]],
+            'List: Has Capability' => [['manage_sc_shop_settings'],'GET', '/surecart/v1/shipping_zones', 200],
             'Find: Unauthenticated' => [null, 'GET', '/surecart/v1/shipping_zones/test', 401],
             'Find: Missing Capability' => [[], 'GET', '/surecart/v1/shipping_zones/test', 403],
             'Find: Has Capability' => [['manage_sc_shop_settings'], 'GET', '/surecart/v1/shipping_zones/test', 200],
@@ -75,7 +75,7 @@ class ShippingRateRestServiceProviderTest extends SureCartUnitTestCase
                 $user->add_cap($cap);
             }
 
-            wp_set_current_user($user->id ?? null);
+            wp_set_current_user($user->ID ?? null);
         }
 
         $request = new \WP_REST_Request($method, $route);

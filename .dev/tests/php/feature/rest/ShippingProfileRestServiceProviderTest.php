@@ -37,7 +37,7 @@ class ShippingProfileRestServiceProviderTest extends SureCartUnitTestCase
         return [
             'List: Unauthenticated' => [null, 'GET', '/surecart/v1/shipping_profiles', 401],
             'List: Missing Capability' => [[], 'GET', '/surecart/v1/shipping_profiles', 403],
-            'List: Has Capability' => [['manage_sc_shop_settings', '/surecart/v1/shipping_profiles', 200]],
+            'List: Has Capability' => [['manage_sc_shop_settings'],'GET', '/surecart/v1/shipping_profiles', 200],
             'Find: Unauthenticated' => [null, 'GET', '/surecart/v1/shipping_profiles/test', 401],
             'Find: Missing Capability' => [[], 'GET', '/surecart/v1/shipping_profiles/test', 403],
             'Find: Has Capability' => [['manage_sc_shop_settings'], 'GET', '/surecart/v1/shipping_profiles/test', 200],
@@ -75,7 +75,7 @@ class ShippingProfileRestServiceProviderTest extends SureCartUnitTestCase
                 $user->add_cap($cap);
             }
 
-            wp_set_current_user($user->id ?? null);
+            wp_set_current_user($user->ID ?? null);
         }
 
         $request = new \WP_REST_Request($method, $route);
