@@ -13,10 +13,15 @@ export class ScProductBuyButton {
 
   handleCartClick(e) {
     e.preventDefault();
+
+    // already busy, do nothing.
+    if (state.busy) return;
+
     // ad hoc price, use the dialog.
     if (state?.selectedPrice?.ad_hoc) {
       return (state.dialog = 'ad_hoc');
     }
+
     // submit the cart form.
     submitCartForm();
   }
