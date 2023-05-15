@@ -104,12 +104,13 @@ export class ScCustomerEmail {
 
   /** Sync customer email with session if it's updated by other means */
   handleSessionChange() {
-    // we already have a value.
-    if (this.value) return;
+    // we already have a value and we are not yet logged in.
+    if (this.value && !userState.loggedIn) return;
 
     // we are logged in already.
     if (userState.loggedIn) {
-      this.value = (checkoutState?.checkout?.customer as Customer)?.email || checkoutState?.checkout?.email;
+      // get email from user state fist.
+      this.value = userState.email || (checkoutState?.checkout?.customer as Customer)?.email || checkoutState?.checkout?.email;
       return;
     }
 
@@ -173,7 +174,7 @@ export class ScCustomerEmail {
           label={this.label}
           autocomplete={'email'}
           placeholder={this.placeholder}
-          disabled={!!userState.loggedIn}
+          disabled={!!userState.loggedIn && !!this.value?.length && !this.invalid}
           readonly={this.readonly}
           required={true}
           invalid={this.invalid}
