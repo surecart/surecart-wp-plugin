@@ -31,7 +31,7 @@ export default ({ loading, product, updateProduct }) => {
 				open={!!product?.shipping_enabled}
 				onClick={() => {
 					updateProduct({
-						shipping_enabled: !product?.shipping_enabled,
+						shipping_enabled: true,
 					});
 				}}
 				summary={__('Physical product', 'surecart')}
@@ -80,7 +80,7 @@ export default ({ loading, product, updateProduct }) => {
 				open={!product?.shipping_enabled}
 				onClick={() => {
 					updateProduct({
-						shipping_enabled: !product?.shipping_enabled,
+						shipping_enabled: false,
 					});
 				}}
 				summary={__('Digital product or service', 'surecart')}
