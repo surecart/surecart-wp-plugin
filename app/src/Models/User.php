@@ -41,11 +41,13 @@ class User implements ArrayAccess, JsonSerializable {
 	/**
 	 * Get the user's customer id.
 	 *
+	 * @param string $mode Customer mode.
+	 *
 	 * @return int|null
 	 */
 	protected function customerId( $mode = 'live' ) {
 		if ( empty( $this->user->ID ) ) {
-			return '';
+			return null;
 		}
 		$meta = (array) get_user_meta( $this->user->ID, $this->customer_id_key, true );
 		if ( isset( $meta[ $mode ] ) ) {

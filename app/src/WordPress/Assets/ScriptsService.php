@@ -285,11 +285,11 @@ class ScriptsService {
 	 * @return void
 	 */
 	public function registerBlocks() {
-		$enabledPaymentProcessors = array_values(
+		$enabled_payment_processors = array_values(
 			array_filter(
 				(array) Processor::get() ?? [],
-				function( $paymentMethod ) {
-					return $paymentMethod->enabled;
+				function( $payment_method ) {
+					return $payment_method->enabled ?? false;
 				}
 			)
 		);
@@ -351,7 +351,7 @@ class ScriptsService {
 				'root_url'             => esc_url_raw( get_rest_url() ),
 				'nonce'                => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 				'nonce_endpoint'       => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
-				'processors'           => $enabledPaymentProcessors,
+				'processors'           => $enabled_payment_processors,
 				'manualPaymentMethods' => (array) ManualPaymentMethod::get() ?? [],
 				'plugin_url'           => \SureCart::core()->assets()->getUrl(),
 				'currency'             => \SureCart::account()->currency,

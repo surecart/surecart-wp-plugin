@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.2
-Stable tag: 1.10.2
+Stable tag: 1.10.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,16 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.10.4 - May 10, 2023 =
+* Fix: Issue with email and name fields being disabled and blank if a user has created a checkout, then logs in and visits the same page.
+
+= 1.10.3 - May 9, 2023 =
+* Improvement: Remove US commonwealth countries from the country selector to avoid confusion, as they already exist as states.
+* Improvement: Added clarification text indicating that coupon redemption limits are not applied in test mode.
+* Fix: Resolved issue with updating prices not immediately reflecting changes in existing carts.
+* Fix: Addressed issue with PayPal checkout not succeeding if the status of the charge is "processing."
+* Fix: Corrected the problem of checkout line items not being passed with the scOrderPaid event.
 
 = 1.10.2 - May 4, 2023 =
 * Fix: Pricing line breaking awkwardness in checkout for larger numbers.
