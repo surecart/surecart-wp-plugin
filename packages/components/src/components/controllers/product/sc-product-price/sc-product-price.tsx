@@ -24,6 +24,10 @@ export class ScProductPrice {
       return __('Custom Amount', 'surecart');
     }
 
+    if (price?.amount === 0) {
+      return __('Free', 'surecart');
+    }
+
     return (
       <div class="price">
         {!!price?.scratch_amount && (
