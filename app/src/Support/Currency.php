@@ -215,17 +215,6 @@ class Currency {
 	}
 
 	/**
-	 * Convert the amount to cents if needed.
-	 *
-	 * @param integer $amount Amount as an integer.
-	 * @param string  $currency_code 3 digit currency code.
-	 * @return integer
-	 */
-	public static function maybeConvertAmount( $amount, $currency_code ) {
-		return in_array( strtolower( $currency_code ), [ 'bif', 'clp', 'djf', 'gnf', 'jpy', 'kmf', 'krw' ], true ) ? $amount : $amount / 100;
-	}
-
-	/**
 	 * Format the cents.
 	 *
 	 * @param integer $number Number.
