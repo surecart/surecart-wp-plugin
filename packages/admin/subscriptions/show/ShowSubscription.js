@@ -273,10 +273,22 @@ export default () => {
 
 		if (!subscription?.finite) return null;
 
+		// const upgradeRequired =
+		// 	!window.scData?.entitlements?.subscription_pay_off;
+		const upgradeRequired = true;
+
 		return (
-			<ScMenuItem onClick={() => setModal('pay_off')}>
-				{__('Pay Off Subscription', 'surecart')}
-			</ScMenuItem>
+			<ScUpgradeRequired
+				style={{ display: 'block' }}
+				required={upgradeRequired}
+			>
+				<ScMenuItem onClick={() => setModal('pay_off')}>
+					{upgradeRequired
+						? __('Pay Off', 'surecart')
+						: __('Pay Off Subscription', 'surecart')}
+					{upgradeRequired ? <ScPremiumTag slot="suffix" /> : null}
+				</ScMenuItem>
+			</ScUpgradeRequired>
 		);
 	};
 
