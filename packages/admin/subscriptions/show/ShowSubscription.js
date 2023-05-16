@@ -273,9 +273,8 @@ export default () => {
 
 		if (!subscription?.finite) return null;
 
-		// const upgradeRequired =
-		// 	!window.scData?.entitlements?.subscription_pay_off;
-		const upgradeRequired = true;
+		const upgradeRequired =
+			!window.scData?.entitlements?.subscription_pay_off;
 
 		return (
 			<ScUpgradeRequired
