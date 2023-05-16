@@ -57,10 +57,12 @@
  - [sc-order-confirm-provider](../../providers/order-confirm-provider)
  - [sc-order-submit](../../controllers/checkout-form/order-submit)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
+ - [sc-pagination](../pagination)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-payment-method](../sc-payment-method)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-product-item-list](../../controllers/products/sc-product-item-list)
  - [sc-product-line-item](../product-line-item)
  - [sc-product-selected-price](../../controllers/checkout-form/sc-product-selected-price)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
@@ -105,10 +107,12 @@ graph TD;
   sc-order-confirm-provider --> sc-icon
   sc-order-submit --> sc-icon
   sc-orders-list --> sc-icon
+  sc-pagination --> sc-icon
   sc-password-nag --> sc-icon
   sc-payment --> sc-icon
   sc-payment-method --> sc-icon
   sc-payment-methods-list --> sc-icon
+  sc-product-item-list --> sc-icon
   sc-product-line-item --> sc-icon
   sc-product-selected-price --> sc-icon
   sc-purchase-downloads-list --> sc-icon

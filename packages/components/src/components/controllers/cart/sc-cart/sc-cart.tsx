@@ -6,6 +6,7 @@ import { Creator, Universe } from 'stencil-wormhole';
 import { baseUrl } from '../../../../services/session';
 import { getOrder, setOrder } from '@store/checkouts';
 import uiStore from '@store/ui';
+import { expand } from '../../../../services/session';
 import { Checkout, ResponseError } from '../../../../types';
 
 @Component({
@@ -101,21 +102,7 @@ export class ScCart {
       const order = (await apiFetch({
         method: 'GET', // create or update
         path: addQueryArgs(`${baseUrl}${this.order()?.id}`, {
-          expand: [
-            'line_items',
-            'line_item.price',
-            'price.product',
-            'customer',
-            'customer.shipping_address',
-            'payment_intent',
-            'discount',
-            'discount.promotion',
-            'discount.coupon',
-            'recommended_bumps',
-            'bump.price',
-            'shipping_address',
-            'tax_identifier',
-          ],
+          expand,
         }),
       })) as Checkout;
       this.setOrder(order);

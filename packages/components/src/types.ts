@@ -1,18 +1,32 @@
+import { ObservableMap } from '@stencil/store';
 import { IconLibraryMutator, IconLibraryResolver } from './components/ui/icon/library';
 
 declare global {
   interface Window {
     grecaptcha: any;
+    surecart?: {
+      product?: {
+        store: ObservableMap<any>;
+        state: any;
+        update: Function;
+      };
+    };
     wp: {
       apiFetch: any;
       blocks: any;
       i18n: any;
+    };
+    sc?: {
+      store?: {
+        product?: any;
+      };
     };
     scStore: any;
     registerSureCartIconPath: (path: string) => void;
     registerSureCartIconLibrary: (name: string, options: { resolver: IconLibraryResolver; mutator?: IconLibraryMutator }) => void;
     scIcons: { path: string };
     scData: {
+      cdn_root: string;
       root_url: string;
       page_id: string;
       do_not_persist_cart: boolean;
@@ -21,6 +35,14 @@ declare global {
       nonce_endpoint: string;
       recaptcha_site_key: string;
       theme: string;
+      product_data: {
+        checkout_link: string;
+        mode: 'live' | 'test';
+        form: {
+          ID: number;
+        };
+        product: Product;
+      };
       pages: {
         dashboard: string;
         checkout: string;
@@ -76,6 +98,7 @@ export interface Price {
   created_at: number;
   updated_at: number;
   product?: Product | string;
+  position: number;
   metadata: { [key: string]: string };
 }
 
@@ -206,6 +229,7 @@ export interface Product extends Object {
   tax_category: string;
   tax_enabled: boolean;
   purchase_limit: number;
+  permalink: string;
   prices: {
     object: 'list';
     pagination: Pagination;
@@ -258,6 +282,7 @@ export interface LineItem extends Object {
   name: string;
   object: string;
   quantity: number;
+  checkout: string | Checkout;
   bump: string | Bump;
   fees?: {
     object: 'list';
@@ -274,6 +299,13 @@ export interface LineItem extends Object {
   updated_at: number;
   price?: Price;
   price_id: string;
+}
+
+export interface DeletedItem {
+  cache_status: string;
+  deleted: boolean;
+  id: string;
+  object: string;
 }
 
 export interface Fee {

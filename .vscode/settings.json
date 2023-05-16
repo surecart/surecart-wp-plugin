@@ -2,6 +2,7 @@
     "prettier.prettierPath": "node_modules/prettier",
     "editor.defaultFormatter": "wongjn.php-sniffer",
     "editor.acceptSuggestionOnCommitCharacter": false,
+    "phpcs.composerJsonPath": "composer.json",
     "[php]": {
       "editor.defaultFormatter": "wongjn.php-sniffer"
     },
@@ -23,5 +24,8 @@
     },
     "[html]": {
       "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "[scss]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
 }

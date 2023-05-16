@@ -1,4 +1,7 @@
 @import './styles/swiper.scss';
+:host {
+  display: block;
+}
 
 .image-slider {
   user-select: none;
@@ -56,6 +59,8 @@
       text-align: center;
 
       img {
+        display: block;
+        margin: auto;
         max-width: 100%;
         max-height: 100%;
         object-fit: contain;
@@ -66,22 +71,22 @@
 
   /** Thumbnails **/
   &__thumb {
-      cursor: pointer;
+    cursor: pointer;
+    width: 100%;
+
+    img {
       width: 100%;
+      display: block;
+      object-fit: var(--sc-image-slideshow-thumb-object-fit, cover);
+      border-radius: var(--sc-border-radius-medium);
+      aspect-ratio: var(--sc-image-slideshow-thumb-aspect-ratio, 4 / 3);
+    }
 
+    &--is-active {
       img {
-        width: 100%;
-        display: block;
-        object-fit: var(--sc-image-slideshow-thumb-object-fit, cover);
-        border-radius: var(--sc-border-radius-medium);
-        aspect-ratio: var(--sc-image-slideshow-thumb-aspect-ratio, 4 / 3);
+        outline: var(--sc-image-slideshow-thumb-active-outline, 2px solid var(--sc-focus-ring-color-primary, var(--sc-color-primary-500)));
+        outline-offset: -2px;
       }
-
-      &--is-active {
-        img {
-          outline: var(--sc-image-slideshow-thumb-active-outline, 2px solid var(--sc-focus-ring-color-primary, var(--sc-color-primary-500)));
-          outline-offset: -2px;
-        }
-      }
+    }
   }
 }

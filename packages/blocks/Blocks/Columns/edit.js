@@ -168,7 +168,7 @@ function ColumnsEditContainer({
 						min={1}
 						max={Math.max(6, count)}
 					/>
-					{count > 6 && (
+					{columns > 3 && (
 						<Notice status="warning" isDismissible={false}>
 							{__(
 								'This column count exceeds the recommended amount and may cause visual breakage.'

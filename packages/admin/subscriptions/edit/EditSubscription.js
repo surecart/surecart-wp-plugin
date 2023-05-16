@@ -46,7 +46,11 @@ export default () => {
 				'subscription',
 				id,
 				{
-					expand: ['current_period', 'current_period.checkout'],
+					expand: [
+						'current_period',
+						'current_period.checkout',
+						'discount',
+					],
 				},
 			];
 
@@ -238,7 +242,9 @@ export default () => {
 								checked={updateBehavior === 'immediate'}
 								onScChange={(e) =>
 									setUpdateBehavior(
-										e.target.checked ? 'immediate' : 'pending'
+										e.target.checked
+											? 'immediate'
+											: 'pending'
 									)
 								}
 							>

@@ -6,14 +6,7 @@ use SureCart\Support\Currency;
 /**
  * Handles webhooks
  */
-class BuyPageController {
-	/**
-	 * Product.
-	 *
-	 * @var \SureCart\Models\Product
-	 */
-	protected $product;
-
+class BuyPageController extends ProductTypePageController {
 	/**
 	 * Preload these blocks.
 	 *
@@ -41,12 +34,7 @@ class BuyPageController {
 	 * @return void
 	 */
 	public function filters() {
-		// set the document title.
-		add_filter( 'document_title_parts', [ $this, 'documentTitle' ] );
-		// disallow pre title filter.
-		add_filter( 'pre_get_document_title', [ $this, 'disallowPreTitle' ], 214748364 );
-		// add edit product link.
-		add_action( 'admin_bar_menu', [ $this, 'addEditProductLink' ], 99 );
+		parent::filters();
 		// do not persist the cart for this page.
 		add_filter( 'surecart-components/scData', [ $this, 'doNotPersistCart' ], 10, 2 );
 		// add styles.
@@ -55,6 +43,8 @@ class BuyPageController {
 		add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ] );
 		// maybe add json schema.
 		add_action( 'wp_head', [ $this, 'displaySchema' ] );
+		// preload the image above the fold.
+		add_action( 'wp_head', [ $this, 'preloadImage' ] );
 	}
 
 	/**
@@ -72,15 +62,19 @@ class BuyPageController {
 	}
 
 	/**
-	 * Preload components.
+	 * Preload the image above the fold.
 	 *
 	 * @return void
 	 */
-	public function preloadComponents() {
-		$config = \SureCart::resolve( SURECART_CONFIG_KEY );
-		foreach ( $this->preload as $name ) {
-			\SureCart::preload()->add( $config['preload'][ $name ] );
+	public function preloadImage() {
+		if ( empty( $this->product->product_medias->data ) || is_wp_error( $this->product->product_medias->data ) ) {
+			return;
 		}
+		$product_media = $this->product->product_medias->data[0];
+
+		?>
+		<link rel="preload" fetchpriority="high" as="image" href="<?php echo esc_url( $product_media->getUrl( 450 ) ); ?>">
+		<?php
 	}
 
 	/**
@@ -144,9 +138,6 @@ class BuyPageController {
 		// add the filters.
 		$this->filters();
 
-		// preload the components.
-		$this->preloadComponents();
-
 		// render the view.
 		return \SureCart::view( 'web/buy' )->with(
 			[
@@ -183,16 +174,6 @@ class BuyPageController {
 			[],
 			filemtime( trailingslashit( plugin_dir_path( SURECART_PLUGIN_FILE ) ) . 'dist/templates/instant-checkout.css' ),
 		);
-	}
-
-
-	/**
-	 * Enqueue scripts.
-	 *
-	 * @return void
-	 */
-	public function scripts() {
-		\SureCart::assets()->enqueueComponents();
 	}
 
 	/**
@@ -305,36 +286,6 @@ class BuyPageController {
 	}
 
 	/**
-	 * Get JSON-LD Metadata.
-	 *
-	 * @return string
-	 */
-	public function getJsonMeta() {
-		if ( $this->product->buyLink()->getMode() === 'test' ) {
-			return null;
-		}
-
-		$active_prices = $this->product->activePrices();
-		$single_price  = Currency::maybeConvertAmount( $active_prices[0]->amount, $this->product->metrics->currency );
-
-		$metadata = array(
-			'@context'    => 'http://schema.org',
-			'@type'       => 'Product',
-			'name'        => $this->product->name,
-			'image'       => $this->product->image_url,
-			'description' => sanitize_text_field( $this->product->description ),
-			'offers'      => array(
-				'@type'         => 'Offer',
-				'price'         => $single_price,
-				'priceCurrency' => $this->product->metrics->currency,
-				'availability'  => 'https://schema.org/InStock',
-			),
-		);
-
-		return json_encode( $metadata );
-	}
-
-	/**
 	 * Handle not found error.
 	 *
 	 * @return void
@@ -346,4 +297,6 @@ class BuyPageController {
 		get_template_part( 404 );
 		exit();
 	}
+	=== === =
+	>> >> >> > product - shop - pages
 }

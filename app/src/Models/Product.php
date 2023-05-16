@@ -8,6 +8,8 @@ use SureCart\Support\Currency;
  * Price model
  */
 class Product extends Model {
+	use Traits\HasImageSizes;
+
 	/**
 	 * Rest API endpoint
 	 *
@@ -37,6 +39,32 @@ class Product extends Model {
 	protected $cache_key = 'products_updated_at';
 
 	/**
+	 * Image srcset.
+	 *
+	 * @return string
+	 */
+	public function getImageSrcsetAttribute() {
+		if ( empty( $this->attributes['image_url'] ) ) {
+			return '';
+		}
+		return $this->imageSrcSet( $this->attributes['image_url'] );
+	}
+
+	/**
+	 * Get the image url for a specific size.
+	 *
+	 * @param integer $size The size.
+	 *
+	 * @return string
+	 */
+	public function getImageUrl( $size = 0 ) {
+		if ( empty( $this->attributes['image_url'] ) ) {
+			return '';
+		}
+		return $size ? $this->imageUrl( $this->attributes['image_url'], $size ) : $this->attributes['image_url'];
+	}
+
+	/**
 	 * Set the prices attribute.
 	 *
 	 * @param  object $value Array of price objects.
@@ -57,12 +85,34 @@ class Product extends Model {
 	}
 
 	/**
+	 * Set the product media attribute
+	 *
+	 * @param  string $value ProductMedia properties.
+	 * @return void
+	 */
+	public function setProductMediasAttribute( $value ) {
+		$this->setCollection( 'product_medias', $value, ProductMedia::class );
+	}
+
+	/**
 	 * Buy link model
 	 *
 	 * @return \SureCart\Models\BuyLink
 	 */
 	public function buyLink() {
 		return new BuyLink( $this );
+	}
+
+	/**
+	 * Get the product permalink.
+	 *
+	 * @return string|false
+	 */
+	public function getPermalinkAttribute() {
+		if ( empty( $this->attributes['id'] ) ) {
+			return false;
+		}
+		return trailingslashit( get_home_url() ) . trailingslashit( 'products' ) . $this->slug;
 	}
 
 	/**
@@ -126,4 +176,53 @@ class Product extends Model {
 			$this
 		);
 	}
+
+	/**
+	 * Get the product template id.
+	 *
+	 * @return string|false
+	 */
+	public function getTemplateIdAttribute() {
+		if ( ! empty( $this->attributes['metadata']->wp_template_id ) ) {
+			// we have a php file, switch to default.
+			if ( wp_is_block_theme() && false !== strpos( $this->attributes['metadata']->wp_template_id, '.php' ) ) {
+				return 'surecart/surecart//single-product';
+			}
+
+			// this is acceptable.
+			return $this->attributes['metadata']->wp_template_id;
+		}
+		return 'surecart/surecart//single-product';
+	}
+
+	/**
+	 * Get the product template
+	 *
+	 * @return \WP_Template
+	 */
+	public function getTemplateAttribute() {
+		return get_block_template( $this->getTemplateIdAttribute() );
+	}
+
+	/**
+	 * Get the product template id.
+	 *
+	 * @return string|false
+	 */
+	public function getTemplatePartIdAttribute() {
+		if ( ! empty( $this->attributes['metadata']->wp_template_part_id ) ) {
+			return $this->attributes['metadata']->wp_template_part_id;
+		}
+		return 'surecart/surecart//product-info';
+	}
+
+	/**
+	 * Get the product template part template.
+	 *
+	 * @return \WP_Template
+	 */
+	public function getTemplatePartAttribute() {
+		return get_block_template( $this->getTemplatePartIdAttribute(), 'wp_template_part' );
+	}
 }
+

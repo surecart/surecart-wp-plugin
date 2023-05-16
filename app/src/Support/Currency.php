@@ -195,7 +195,7 @@ class Currency {
 	public static function format( $amount, $currency_code = 'USD' ) {
 		if ( class_exists( 'NumberFormatter' ) ) {
 			$fmt = new \NumberFormatter( get_locale(), \NumberFormatter::CURRENCY );
-			return $fmt->formatCurrency( self::formatCurrencyNumber( $amount ), $currency_code );
+			return $fmt->formatCurrency( self::maybeConvertAmount( $amount, $currency_code ), strtoupper( $currency_code ) );
 		}
 
 		return self::getCurrencySymbol( $currency_code ) . self::formatCurrencyNumber( $amount );
@@ -214,6 +214,25 @@ class Currency {
 		return self::formatCents( $amount / 100, 1 );
 	}
 
+	/**
+	 * Convert the amount to cents if needed.
+	 *
+	 * @param integer $amount Amount as an integer.
+	 * @param string  $currency_code 3 digit currency code.
+	 * @return integer
+	 */
+	public static function maybeConvertAmount( $amount, $currency_code ) {
+		return in_array( strtolower( $currency_code ), [ 'bif', 'clp', 'djf', 'gnf', 'jpy', 'kmf', 'krw' ], true ) ? $amount : $amount / 100;
+	}
+
+	/**
+	 * Format the cents.
+	 *
+	 * @param integer $number Number.
+	 * @param integer $cents Cents.
+	 *
+	 * @return string
+	 */
 	public static function formatCents( $number, $cents = 1 ) {
 		// cents: 0=never, 1=if needed, 2=always.
 		if ( is_numeric( $number ) ) { // a number.
@@ -221,12 +240,12 @@ class Currency {
 				$money = ( 2 === $cents ? '0.00' : '0' ); // output zero.
 			} else { // value.
 				if ( floor( $number ) == $number ) { // whole number.
-					$money = number_format( $number, ( 2 === $cents ? 2 : 0 ) ); // format.
+					$money = number_format_i18n( $number, ( 2 === $cents ? 2 : 0 ) ); // format.
 				} else { // cents.
-					$money = number_format( round( $number, 2 ), ( 0 === $cents ? 0 : 2 ) ); // format.
+					$money = number_format_i18n( round( $number, 2 ), ( 0 === $cents ? 0 : 2 ) ); // format.
 				} // integer or decimal.
 			} // value.
-			return $money;
+			return number_format_i18n( $money, 2 );
 		} // numeric.
 	}
 

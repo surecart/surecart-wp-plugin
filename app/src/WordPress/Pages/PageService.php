@@ -128,6 +128,10 @@ class PageService {
 			$states[] = __( 'Order Confirmation', 'surecart' );
 		}
 
+		if ( $post->ID === $this->getId( 'shop' ) ) {
+			$states[] = __( 'Shop Page', 'surecart' );
+		}
+
 		return $states;
 	}
 
