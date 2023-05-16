@@ -118,12 +118,7 @@ export default () => {
 											>
 												{shippingProfile?.shipping_zones
 													?.data.length === 0 && (
-													<li>
-														{__(
-															'0 zones',
-															'surecart'
-														)}
-													</li>
+													<li>_</li>
 												)}
 												{shippingProfile?.shipping_zones?.data.map(
 													(shippingZone) => (
