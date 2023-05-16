@@ -307,7 +307,7 @@ class BuyPageController {
 			"@type" => "Product",
 			"name" => $this->product->name,
 			"image" => $this->product->image_url,
-			"description" => $this->product->description,
+			"description" => sanitize_text_field( $this->product->description ),
 			"offers" => array(
 				"@type" => "Offer",
 				"price" => $single_price,
