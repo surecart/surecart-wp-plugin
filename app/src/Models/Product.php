@@ -160,7 +160,7 @@ class Product extends Model {
 					'availability'  => 'https://schema.org/InStock',
 				];
 			},
-			$active_prices
+			$active_prices ?? []
 		);
 
 		return apply_filters(

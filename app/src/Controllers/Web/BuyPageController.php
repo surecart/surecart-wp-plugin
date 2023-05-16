@@ -20,24 +20,6 @@ class BuyPageController extends ProductTypePageController {
 		add_action( 'wp_enqueue_scripts', [ $this, 'styles' ] );
 		// add scripts.
 		add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ] );
-		// maybe add json schema.
-		add_action( 'wp_head', [ $this, 'displaySchema' ] );
-		// preload the image above the fold.
-		add_action( 'wp_head', [ $this, 'preloadImage' ] );
-	}
-
-	/**
-	 * Display the JSON Schema.
-	 *
-	 * @return void
-	 */
-	public function displaySchema() {
-		$schema = $this->product->getJsonSchemaArray();
-		if ( empty( $schema ) ) {
-			return;
-		} ?>
-		<script type="application/ld+json"><?php echo wp_json_encode( $schema ); ?></script>
-		<?php
 	}
 
 	/**
@@ -50,7 +32,6 @@ class BuyPageController extends ProductTypePageController {
 			return;
 		}
 		$product_media = $this->product->product_medias->data[0];
-
 		?>
 		<link rel="preload" fetchpriority="high" as="image" href="<?php echo esc_url( $product_media->getUrl( 450 ) ); ?>">
 		<?php
