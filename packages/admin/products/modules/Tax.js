@@ -67,18 +67,6 @@ export default ({ loading, product, updateProduct }) => {
 	return (
 		<Box loading={loading} title={__('Tax and Shipping', 'surecart')}>
 			{renderTaxInput()}
-			<Definition
-				title={__('This product requires shipping', 'surecart')}
-			>
-				<ScSwitch
-					checked={product?.shipping_enabled}
-					onScChange={(e) =>
-						updateProduct({
-							shipping_enabled: !!e.target.checked,
-						})
-					}
-				/>
-			</Definition>
 		</Box>
 	);
 };
