@@ -32,8 +32,11 @@ class ProductSingle extends \ElementorPro\Modules\ThemeBuilder\Conditions\Condit
 		if ( isset( $args['id'] ) ) {
 			$id = (int) $args['id'];
 			if ( $id ) {
-				$sc_product_page_id = get_query_var( 'sc_product_page_id' );
-				return $sc_product_page_id === $id;
+				$product = get_query_var( 'surecart_current_product' );
+				if ( is_wp_error( $product ) || empty( $product->id ) ) {
+					return false;
+				}
+				return $product->id === $id;
 			}
 		}
 		return get_query_var( 'sc_product_page_id' );
@@ -49,9 +52,11 @@ class ProductSingle extends \ElementorPro\Modules\ThemeBuilder\Conditions\Condit
 					'dropdownCssClass' => 'elementor-conditions-select2-dropdown',
 				],
 				'autocomplete'   => [
-					'object' => QueryModule::QUERY_OBJECT_POST,
-					'query'  => [
-						'post_type' => 'post',
+					'object'      => 'surecart-product',
+					'display'     => 'minimal',
+					'filter_type' => '',
+					'query'       => [
+						'post_type' => 'sc-product',
 					],
 				],
 			]

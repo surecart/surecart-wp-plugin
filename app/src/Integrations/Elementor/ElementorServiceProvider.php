@@ -3,6 +3,7 @@ namespace SureCart\Integrations\Elementor;
 
 use SureCart\Integrations\Elementor\Conditions\Conditions;
 use SureCart\Integrations\Elementor\Documents\ProductDocument;
+use SureCart\Models\Product;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -25,7 +26,7 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 * @param  \Pimple\Container $container Service Container.
 	 */
 	public function bootstrap( $container ) {
-		if ( ! class_exists( '\Elementor\Plugin' ) ) {
+		if ( ! class_exists( '\Elementor\Plugin' ) && ! class_exists( '\ElementorPro\Plugin' ) ) {
 			return;
 		}
 		add_action( 'elementor/widgets/widgets_registered', [ $this, 'widget' ] );
@@ -33,7 +34,33 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 		add_action( 'elementor/elements/categories_registered', [ $this, 'categories_registered' ] );
 		add_action( 'elementor/documents/register', [ $this, 'register_document' ] );
 		add_action( 'elementor/theme/register_conditions', [ $this, 'product_theme_conditions' ] );
+		add_filter( 'elementor/query/get_autocomplete/', [ $this, 'get_autocomplete' ], 10, 2 );
 	}
+
+	/**
+	 * Get autocomplete
+	 *
+	 * @param array $results The results
+	 * @param array $data Request data.
+	 *
+	 * @return array
+	 */
+	public function get_autocomplete( $results, $data ) {
+		if ( 'surecart-product' !== $data['autocomplete']['object'] ) {
+			return $results;
+		}
+
+		$products = Product::where( [ 'query' => $data['q'] ] )->get();
+
+		foreach ( $products as $product ) {
+			$results[] = [
+				'id'   => $product->id,
+				'text' => $product->name,
+			];
+		}
+		return $results;
+	}
+
 
 	/**
 	 * Elementor load scripts
