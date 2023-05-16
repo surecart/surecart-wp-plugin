@@ -4,8 +4,6 @@ import { __ } from '@wordpress/i18n';
 import SettingsBox from '../../SettingsBox';
 import { ScButton, ScFlex, ScIcon, ScText } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
-import AddShippingZone from './AddShippingZone';
-import EditShippingZone from './EditShippingZone';
 import AddShippingMethod from './AddShippingMethod';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
