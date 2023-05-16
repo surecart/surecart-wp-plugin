@@ -407,12 +407,12 @@ class Currency {
 	/**
 	 * Convery product amount.
 	 *
-	 * @param int $amount The Amount.
+	 * @param int    $amount The Amount.
 	 * @param string $currency The Currency.
 	 *
 	 * @return int
 	 */
 	public static function maybeConvertAmount( $amount, $currency ) {
-		return self::isZeroDecimal( $currency ) ? $amount / 100 : $amount;
+		return self::isZeroDecimal( $currency ) ? $amount : $amount / 100;
 	}
 }
