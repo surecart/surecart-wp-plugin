@@ -78,7 +78,7 @@ export default () => {
 
 	return (
 		<SettingsTemplate
-			title={__('Manage Shipping Profile')}
+			title={__('Manage Shipping Profile', 'surecart')}
 			prefix={
 				<sc-button
 					href={removeQueryArgs(
