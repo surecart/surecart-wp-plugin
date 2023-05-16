@@ -65,7 +65,7 @@ export default ({ loading, product, updateProduct }) => {
 	};
 
 	return (
-		<Box loading={loading} title={__('Tax and Shipping', 'surecart')}>
+		<Box loading={loading} title={__('Tax', 'surecart')}>
 			{renderTaxInput()}
 		</Box>
 	);
