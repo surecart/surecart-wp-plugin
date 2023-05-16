@@ -29,9 +29,11 @@ class Block extends BaseBlock {
 		if ( empty( $product ) ) {
 			return '';
 		}
-		// TODO: Show placeholder if product is empty.
+
 		if ( empty( $product->product_medias->data ) ) {
-			return '';
+			return '<figure class="wp-block-image sc-block-image">
+			<img src="' . esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ) . '" alt="' . esc_attr( $product->name ) . '" />
+		</figure>';
 		}
 
 		$width = $attributes['width'] ?? $content_width ?? 1170;
@@ -73,7 +75,7 @@ class Block extends BaseBlock {
 				"></sc-image-slider>
 		<?php else : ?>
 			<figure class="wp-block-image sc-block-image">
-				<img src="<?php echo esc_url( $product->product_medias->data[0]->getUrl( 800 ) ); ?>" alt="<?php echo esc_attr( $product->name ); ?>" style="border-radius:5px" />
+				<img src="<?php echo esc_url( $product->product_medias->data[0]->getUrl( 800 ) ); ?>" alt="<?php echo esc_attr( $product->name ); ?>" />
 			</figure>
 		<?php endif; ?>
 
