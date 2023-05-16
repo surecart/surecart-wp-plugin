@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
+import { __, _n } from '@wordpress/i18n';
 import SettingsBox from '../../SettingsBox';
 import {
 	ScBlockUi,
@@ -162,7 +162,15 @@ export default ({ shippingProfileId }) => {
 						<strong>{product?.name}</strong>
 					</div>
 					{totalPrices > 1 ? (
-						sprintf(__('%d prices', 'surecart'), totalPrices)
+						sprintf(
+							_n(
+								'%d price',
+								'%d prices',
+								totalPrices,
+								'surecart'
+							),
+							totalPrices
+						)
 					) : (
 						<>
 							<ScFormatNumber
