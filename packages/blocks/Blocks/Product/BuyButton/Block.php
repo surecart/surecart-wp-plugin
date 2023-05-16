@@ -114,7 +114,7 @@ class Block extends BaseBlock {
 				class="wp-block-button <?php echo esc_attr( $width_class ); ?>"
 				button-text="<?php echo esc_attr( $attributes['text'] ); ?>">
 				<a class="wp-block-button__link wp-element-button sc-button <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
-					<span data-text><?php echo wp_kses_post( $product->archived ? __( 'Unavailable For Purchase', 'surecart' ) : $attributes['text'] ); ?></span>
+					<span data-text><?php echo wp_kses_post( $product->archived || empty( $product->prices->data ) ? __( 'Unavailable For Purchase', 'surecart' ) : $attributes['text'] ); ?></span>
 					<sc-spinner data-loader></sc-spinner>
 				</a>
 			</sc-product-buy-button>
