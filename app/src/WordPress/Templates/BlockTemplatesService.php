@@ -110,6 +110,11 @@ class BlockTemplatesService {
 			return $query_result;
 		}
 
+		// supports block templates, don't use parts.
+		if ( 'wp_template_part' === $template_type && $this->utility->supportsBlockTemplates() ) {
+			return $query_result;
+		}
+
 		$post_type = $query['post_type'] ?? '';
 		$slugs     = $query['slug__in'] ?? [];
 
