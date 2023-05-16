@@ -53,6 +53,22 @@ class BuyPageController {
 		add_action( 'wp_enqueue_scripts', [ $this, 'styles' ] );
 		// add scripts.
 		add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ] );
+		// maybe add json schema.
+		add_action( 'wp_head', [ $this, 'displaySchema' ] );
+	}
+
+	/**
+	 * Display the JSON Schema.
+	 *
+	 * @return void
+	 */
+	public function displaySchema() {
+		$schema = $this->product->getJsonSchemaArray();
+		if ( empty( $schema ) ) {
+			return;
+		} ?>
+		<script type="application/ld+json"><?php echo wp_json_encode( $schema ); ?></script>
+		<?php
 	}
 
 	/**
@@ -151,7 +167,6 @@ class BuyPageController {
 				'show_image'       => $this->product->buyLink()->templatePartEnabled( 'image' ),
 				'show_description' => $this->product->buyLink()->templatePartEnabled( 'description' ),
 				'show_coupon'      => $this->product->buyLink()->templatePartEnabled( 'coupon' ),
-				'metadata_json'	   => $this->getJsonMeta() ?? null,
 			]
 		);
 	}
@@ -295,28 +310,28 @@ class BuyPageController {
 	 * @return string
 	 */
 	public function getJsonMeta() {
-		if( $this->product->buyLink()->getMode() === 'test' ) {
+		if ( $this->product->buyLink()->getMode() === 'test' ) {
 			return null;
 		}
 
 		$active_prices = $this->product->activePrices();
-		$single_price = Currency::maybeConvertAmount( $active_prices[0]->amount, $this->product->metrics->currency );
+		$single_price  = Currency::maybeConvertAmount( $active_prices[0]->amount, $this->product->metrics->currency );
 
 		$metadata = array(
-			"@context" => "http://schema.org",
-			"@type" => "Product",
-			"name" => $this->product->name,
-			"image" => $this->product->image_url,
-			"description" => sanitize_text_field( $this->product->description ),
-			"offers" => array(
-				"@type" => "Offer",
-				"price" => $single_price,
-				"priceCurrency" => $this->product->metrics->currency,
-				"availability" => "https://schema.org/InStock"
-			)
+			'@context'    => 'http://schema.org',
+			'@type'       => 'Product',
+			'name'        => $this->product->name,
+			'image'       => $this->product->image_url,
+			'description' => sanitize_text_field( $this->product->description ),
+			'offers'      => array(
+				'@type'         => 'Offer',
+				'price'         => $single_price,
+				'priceCurrency' => $this->product->metrics->currency,
+				'availability'  => 'https://schema.org/InStock',
+			),
 		);
 
-		return json_encode($metadata);
+		return json_encode( $metadata );
 	}
 
 	/**
