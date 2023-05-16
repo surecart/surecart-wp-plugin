@@ -40,6 +40,7 @@ class PageSeeder {
 		$this->createCheckoutForm();
 		$this->createPages();
 		$this->createCartPost();
+		$this->createShopPage();
 	}
 
 	/**
