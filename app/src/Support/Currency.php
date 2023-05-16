@@ -422,4 +422,16 @@ class Currency {
 
 		return in_array( strtoupper( $currency ), $is_zero );
 	}
+
+	/**
+	 * Convery product amount.
+	 *
+	 * @param int    $amount The Amount.
+	 * @param string $currency The Currency.
+	 *
+	 * @return int
+	 */
+	public static function maybeConvertAmount( $amount, $currency ) {
+		return self::isZeroDecimal( $currency ) ? $amount : $amount / 100;
+	}
 }

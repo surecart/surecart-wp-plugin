@@ -2,6 +2,8 @@
 
 namespace SureCart\Models;
 
+use SureCart\Support\Currency;
+
 /**
  * Price model
  */
@@ -139,6 +141,40 @@ class Product extends Model {
 		);
 
 		return $active_prices;
+	}
+
+	/**
+	 * Get the JSON Schema Array
+	 *
+	 * @return array
+	 */
+	protected function getJsonSchemaArray() {
+		$active_prices = (array) $this->activePrices();
+
+		$offers = array_map(
+			function( $price ) {
+				return [
+					'@type'         => 'Offer',
+					'price'         => Currency::maybeConvertAmount( $price->amount, $price->currency ),
+					'priceCurrency' => $price->currency,
+					'availability'  => 'https://schema.org/InStock',
+				];
+			},
+			$active_prices ?? []
+		);
+
+		return apply_filters(
+			'surecart/product/json_schema',
+			[
+				'@context'    => 'http://schema.org',
+				'@type'       => 'Product',
+				'name'        => $this->name,
+				'image'       => $this->image_url ?? '',
+				'description' => sanitize_text_field( $this->description ),
+				'offers'      => $offers,
+			],
+			$this
+		);
 	}
 
 	/**

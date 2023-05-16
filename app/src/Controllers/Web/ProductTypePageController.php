@@ -30,6 +30,8 @@ abstract class ProductTypePageController {
 		add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ] );
 		// preload image.
 		add_action( 'wp_head', [ $this, 'preloadImage' ] );
+		// maybe add json schema.
+		add_action( 'wp_head', [ $this, 'displaySchema' ] );
 
 		// add data needed for product to load.
 		add_filter(
@@ -47,6 +49,20 @@ abstract class ProductTypePageController {
 				return $data;
 			}
 		);
+	}
+
+	/**
+	 * Display the JSON Schema.
+	 *
+	 * @return void
+	 */
+	public function displaySchema() {
+		$schema = $this->product->getJsonSchemaArray();
+		if ( empty( $schema ) ) {
+			return;
+		} ?>
+		<script type="application/ld+json"><?php echo wp_json_encode( $schema ); ?></script>
+		<?php
 	}
 
 	/**

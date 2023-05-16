@@ -1,31 +1,12 @@
 <?php
 namespace SureCart\Controllers\Web;
 
+use SureCart\Support\Currency;
+
 /**
  * Handles webhooks
  */
 class BuyPageController extends ProductTypePageController {
-	/**
-	 * Preload these blocks.
-	 *
-	 * @var array
-	 */
-	protected $preload = [
-		'surecart/column',
-		'surecart/columns',
-		'surecart/coupon',
-		'surecart/name',
-		'surecart/email',
-		'surecart/address',
-		'surecart/totals',
-		'surecart/total',
-		'surecart/submit',
-		'surecart/price-selector',
-		'surecart/price-choice',
-		'surecart/payment',
-	];
-
-
 	/**
 	 * Handle filters.
 	 *
@@ -39,8 +20,6 @@ class BuyPageController extends ProductTypePageController {
 		add_action( 'wp_enqueue_scripts', [ $this, 'styles' ] );
 		// add scripts.
 		add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ] );
-		// preload the image above the fold.
-		add_action( 'wp_head', [ $this, 'preloadImage' ] );
 	}
 
 	/**
@@ -48,12 +27,11 @@ class BuyPageController extends ProductTypePageController {
 	 *
 	 * @return void
 	 */
-	public function preloadComponents() {
+	public function preloadImage() {
 		if ( empty( $this->product->product_medias->data ) || is_wp_error( $this->product->product_medias->data ) ) {
 			return;
 		}
 		$product_media = $this->product->product_medias->data[0];
-
 		?>
 		<link rel="preload" fetchpriority="high" as="image" href="<?php echo esc_url( $product_media->getUrl( 450 ) ); ?>">
 		<?php
