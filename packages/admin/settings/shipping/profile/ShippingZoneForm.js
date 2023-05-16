@@ -13,12 +13,18 @@ import {
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
-import Error from '../../../components/Error';
-import { countryChoices } from '@surecart/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
+import Error from '../../../components/Error';
+import { countryChoices } from '@surecart/components';
 
-export default ({ open, onRequestClose, selectedZone }) => {
+export default ({
+	open,
+	onRequestClose,
+	shippingProfileId,
+	selectedZone,
+	isEdit,
+}) => {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [zoneName, setZoneName] = useState('');
@@ -26,11 +32,6 @@ export default ({ open, onRequestClose, selectedZone }) => {
 	const { saveEntityRecord } = useDispatch(coreStore);
 
 	useEffect(() => {
-		if (selectedZone) {
-			setZoneName(selectedZone.name);
-			setZoneCountries(selectedZone.countries);
-		}
-
 		return () => {
 			setZoneCountries([]);
 			setZoneName('');
@@ -38,12 +39,45 @@ export default ({ open, onRequestClose, selectedZone }) => {
 		};
 	}, [open]);
 
+	useEffect(() => {
+		if (isEdit) {
+			setZoneName(selectedZone?.name || '');
+			setZoneCountries(selectedZone?.countries || []);
+		}
+	}, [isEdit]);
+
+	const addShippingZone = async () => {
+		await saveEntityRecord(
+			'surecart',
+			'shipping-zone',
+			{
+				name: zoneName,
+				shipping_profile_id: shippingProfileId,
+				countries: zoneCountries,
+			},
+			{ throwOnError: true }
+		);
+	};
+
+	const editShippingZone = async () => {
+		await saveEntityRecord(
+			'surecart',
+			'shipping-zone',
+			{
+				id: selectedZone.id,
+				name: zoneName,
+				countries: zoneCountries,
+			},
+			{ throwOnError: true }
+		);
+	};
+
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		if (!zoneCountries.length) {
 			setError({
 				message: __(
-					'Select at least one country to edit zone.',
+					'Select at least one country to create zone.',
 					'surecart'
 				),
 			});
@@ -52,16 +86,11 @@ export default ({ open, onRequestClose, selectedZone }) => {
 
 		setLoading(true);
 		try {
-			await saveEntityRecord(
-				'surecart',
-				'shipping-zone',
-				{
-					id: selectedZone.id,
-					name: zoneName,
-					countries: zoneCountries,
-				},
-				{ throwOnError: true }
-			);
+			if (isEdit) {
+				await editShippingZone();
+			} else {
+				await addShippingZone();
+			}
 
 			onRequestClose();
 		} catch (error) {
@@ -104,7 +133,11 @@ export default ({ open, onRequestClose, selectedZone }) => {
 	return (
 		<ScDialog
 			open={open}
-			label={__('Edit Zone', 'surecart')}
+			label={
+				isEdit
+					? __('Edit Zone', 'surecart')
+					: __('Add Zone', 'surecart')
+			}
 			onScRequestClose={onRequestClose}
 			style={{ '--dialog-body-overflow': 'visible' }}
 		>
@@ -150,7 +183,9 @@ export default ({ open, onRequestClose, selectedZone }) => {
 				</ScFlex>
 				<ScFlex justifyContent="flex-start">
 					<ScButton type="primary" disabled={loading} submit={true}>
-						{__('Edit', 'surecart')}
+						{isEdit
+							? __('Edit', 'surecart')
+							: __('Add', 'surecart')}
 					</ScButton>{' '}
 					<ScButton
 						type="text"

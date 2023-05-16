@@ -10,6 +10,7 @@ import AddShippingMethod from './AddShippingMethod';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import ShippingZone from './ShippingZone';
+import ShippingZoneForm from './ShippingZoneForm';
 
 const modals = {
 	EDIT_ZONE: 'edit_shipping_zone',
@@ -90,19 +91,17 @@ export default ({ shippingProfileId, fallbackZoneId }) => {
 				)}
 			</ScFlex>
 
-			<AddShippingZone
-				open={currentModal === modals.ADD_ZONE}
+			<ShippingZoneForm
+				open={
+					currentModal === modals.ADD_ZONE ||
+					currentModal === modals.EDIT_ZONE
+				}
 				onRequestClose={() => setCurrentModal('')}
 				shippingProfileId={shippingProfileId}
-			/>
-			<EditShippingZone
-				open={currentModal === modals.EDIT_ZONE}
-				onRequestClose={() => {
-					setCurrentModal('');
-				}}
 				selectedZone={selectedZone}
-				shippingProfileId={shippingProfileId}
+				isEdit={currentModal === modals.EDIT_ZONE}
 			/>
+
 			<AddShippingMethod
 				open={currentModal === modals.ADD_RATE}
 				onRequestClose={() => setCurrentModal('')}
