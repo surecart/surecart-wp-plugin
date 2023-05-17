@@ -30,7 +30,7 @@ class ProductSingle extends \ElementorPro\Modules\ThemeBuilder\Conditions\Condit
 
 	public function check( $args ) {
 		if ( isset( $args['id'] ) ) {
-			$id = (int) $args['id'];
+			$id = $args['id'];
 			if ( $id ) {
 				$product = get_query_var( 'surecart_current_product' );
 				if ( is_wp_error( $product ) || empty( $product->id ) ) {
@@ -39,12 +39,12 @@ class ProductSingle extends \ElementorPro\Modules\ThemeBuilder\Conditions\Condit
 				return $product->id === $id;
 			}
 		}
-		return get_query_var( 'sc_product_page_id' );
+		return false;
 	}
 
 	protected function register_controls() {
 		$this->add_control(
-			'post_id',
+			'surecart_product_id',
 			[
 				'section'        => 'settings',
 				'type'           => QueryModule::QUERY_CONTROL_ID,
