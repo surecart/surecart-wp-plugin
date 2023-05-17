@@ -1,4 +1,5 @@
 import { state as checkoutState } from '@store/checkout';
+import { state as processorsState } from '@store/processors';
 import { addQueryArgs, getQueryArg } from '@wordpress/url';
 
 import apiFetch from '../../functions/fetch';
@@ -46,6 +47,7 @@ export const withDefaultData = (data: { metadata?: any } = {}) => ({
 export const withDefaultQuery = (query = {}) => ({
   ...(!!checkoutState?.formId && { form_id: checkoutState?.formId }),
   ...(!!checkoutState?.product?.id && { product_id: checkoutState?.product?.id }),
+  ...(!!processorsState.config.stripe.paymentElement && { stage_processor_type: 'stripe' }),
   ...query,
 });
 
