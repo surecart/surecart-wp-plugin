@@ -95,7 +95,7 @@ export class ScStripePaymentElement {
   getElementsConfig() {
     const styles = getComputedStyle(this.el);
     return {
-      mode: checkoutState.checkout?.reusable_payment_method_required ? 'payment' : 'subscription',
+      mode: checkoutState.checkout?.reusable_payment_method_required ? 'subscription' : 'payment',
       amount: checkoutState.checkout?.amount_due,
       currency: checkoutState.checkout?.currency,
       setupFutureUsage: checkoutState.checkout.reusable_payment_method_required ? 'off_session' : null,
