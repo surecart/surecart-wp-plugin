@@ -276,7 +276,7 @@ class TemplatesService {
 		}
 
 		// if the set template does not match one of these templates.
-		if ( empty( $page_template ) ) {
+		if ( empty( $page_template ) || false === strpos( $page_template, '.php' ) ) {
 			return $template;
 		}
 
