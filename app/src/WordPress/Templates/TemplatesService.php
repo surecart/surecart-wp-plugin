@@ -84,9 +84,13 @@ class TemplatesService {
 			return $value;
 		}
 
-		// get the product in case the product page id query var is the slug.
-		$product_id = get_query_var( 'sc_product_page_id' );
-		$product    = \SureCart\Models\Product::with( [ 'prices', 'image' ] )->find( $product_id );
+		$product = get_query_var( 'surecart_current_product' );
+
+		if ( ! $product ) {
+			// get the product in case the product page id query var is the slug.
+			$product_id = get_query_var( 'sc_product_page_id' );
+			$product    = \SureCart\Models\Product::with( [ 'prices', 'image' ] )->find( $product_id );
+		}
 
 		// we don't have an id or slug.
 		if ( empty( $product->id ) || empty( $product->slug ) ) {
